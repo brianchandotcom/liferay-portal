@@ -102,6 +102,10 @@ public class Schema {
 		return _type;
 	}
 
+	public XML getXml() {
+		return _xml;
+	}
+
 	public boolean isDeprecated() {
 		return _deprecated;
 	}
@@ -205,6 +209,10 @@ public class Schema {
 		_writeOnly = writeOnly;
 	}
 
+	public void setXML(XML xml) {
+		_xml = xml;
+	}
+
 	private Schema _additionalPropertySchema;
 	private List<Schema> _allOfSchemas;
 	private List<Schema> _anyOfSchemas;
@@ -225,5 +233,6 @@ public class Schema {
 	private List<String> _requiredPropertySchemaNames;
 	private String _type;
 	private boolean _writeOnly;
+	private XML _xml;
 
 }

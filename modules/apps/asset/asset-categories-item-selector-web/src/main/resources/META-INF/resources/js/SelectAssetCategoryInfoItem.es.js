@@ -91,7 +91,7 @@ function SelectAssetCategory({
 	return (
 		<div className="select-category">
 			<form
-				className="select-category-filter"
+				className="mb-0 select-category-filter"
 				onSubmit={(event) => event.preventDefault()}
 				role="search"
 			>
@@ -117,7 +117,7 @@ function SelectAssetCategory({
 
 			{selectedItemsCount ? (
 				<ClayLayout.Container
-					className="category-tree-count-feedback mb-3"
+					className="category-tree-count-feedback"
 					containerElement="section"
 					fluid
 				>
@@ -138,7 +138,7 @@ function SelectAssetCategory({
 			<form name={`${namespace}selectCategoryFm`}>
 				<ClayLayout.ContainerFluid containerElement="fieldset">
 					<div
-						className="category-tree"
+						className="category-tree mt-3"
 						id={`${namespace}categoryContainer`}
 					>
 						{flattenedNodes.length > 0 ? (

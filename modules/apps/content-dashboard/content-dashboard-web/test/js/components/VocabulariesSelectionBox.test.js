@@ -12,7 +12,7 @@
  * details.
  */
 
-import {cleanup, fireEvent, render} from '@testing-library/react';
+import {fireEvent, render} from '@testing-library/react';
 import React from 'react';
 
 import '@testing-library/jest-dom/extend-expect';
@@ -108,10 +108,6 @@ const mockPropsWithoutSelected = {
 };
 
 describe('VocabulariesSelectionBox', () => {
-	beforeEach(() => {
-		cleanup();
-	});
-
 	it('renders a VocabulariesSelectionBox with selected and not selected vocabularies', () => {
 		const {container, getByText} = render(
 			<VocabulariesSelectionBox {...mockProps} />

@@ -85,8 +85,6 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 
 	public static final String NO_INITIAL_DELAY = "file.install.noInitialDelay";
 
-	public static final String POLL = "file.install.poll";
-
 	public static final String START_LEVEL = "file.install.start.level";
 
 	public static final String START_NEW_BUNDLES =
@@ -114,7 +112,7 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 		_filter = bundleContext.getProperty(FILTER);
 		_noInitialDelay = GetterUtil.getBoolean(
 			bundleContext.getProperty(NO_INITIAL_DELAY));
-		_poll = GetterUtil.getLong(bundleContext.getProperty(POLL), 2000);
+		_poll = PropsValues.MODULE_FRAMEWORK_AUTO_DEPLOY_INTERVAL;
 		_startBundles = GetterUtil.getBoolean(
 			bundleContext.getProperty(START_NEW_BUNDLES), true);
 		_startLevel = GetterUtil.getInteger(

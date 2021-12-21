@@ -1712,7 +1712,8 @@ public class PropsValues {
 
 	public static final long MODULE_FRAMEWORK_AUTO_DEPLOY_INTERVAL =
 		GetterUtil.getLong(
-			PropsUtil.get(PropsKeys.MODULE_FRAMEWORK_AUTO_DEPLOY_INTERVAL));
+			PropsUtil.get(PropsKeys.MODULE_FRAMEWORK_AUTO_DEPLOY_INTERVAL),
+			2000);
 
 	public static final String MODULE_FRAMEWORK_BASE_DIR = PropsUtil.get(
 		PropsKeys.MODULE_FRAMEWORK_BASE_DIR);

@@ -613,8 +613,6 @@ definition {
 			Masterclass.gotoNavItem(navItem = "Sign Out");
 
 			Click(locator1 = "Masterclass#NAV_TAB");
-
-			var myURL = Navigator.getCurrentURL();
 		}
 
 		task ("Create a New Account") {
@@ -624,20 +622,15 @@ definition {
 				lastName = "User",
 				password = "test",
 				screenName = "User");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "user@liferay.com");
 		}
 
 		task ("Sign In the New Account and Assert the User Name") {
 			User.firstLoginUI(
 				password = "test",
-				specificURL = "${myURL}",
+				specificURL = "http://localhost:8080/web/test-masterclass-name/sign-in",
 				userEmailAddress = "user@liferay.com");
 
-			ApplicationsMenu.gotoSite(site = "Test Masterclass Name");
+			User.resetPassword();
 
 			AssertElementPresent(
 				locator1 = "Masterclass#FIRST_LOGIN",

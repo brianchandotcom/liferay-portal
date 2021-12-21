@@ -111,11 +111,15 @@ definition {
 			fieldFieldLabel = "Select from List",
 			index = "5");
 
+		DataEngine.waitForAutoSave();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
 		DataEngine.removeFieldOption(
 			fieldFieldLabel = "Select from List",
 			index = "4");
 
-		WebContentStructures.saveCP();
+		DataEngine.waitForAutoSave();
 
 		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
 

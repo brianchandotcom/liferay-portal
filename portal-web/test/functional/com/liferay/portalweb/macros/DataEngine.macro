@@ -1304,10 +1304,6 @@ definition {
 				index = "${index}",
 				locator1 = "DataEngineBuilder#OPTION_REMOVE_BUTTON_INDEXED");
 		}
-
-		if (isSet(fieldFieldLabel)) {
-			Click(locator1 = "Sidebar#BACK");
-		}
 	}
 
 	macro tearDownInstance {
@@ -1685,6 +1681,12 @@ definition {
 			locator1 = "DataEngineBuilder#OPTION_SELECTED");
 
 		Click(locator1 = "Sidebar#BACK");
+	}
+
+	macro waitForAutoSave {
+		Pause(locator1 = "1000");
+
+		Button.clickSave();
 	}
 
 }

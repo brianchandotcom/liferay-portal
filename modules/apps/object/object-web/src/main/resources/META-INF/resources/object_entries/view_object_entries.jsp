@@ -18,17 +18,32 @@
 
 <%
 ViewObjectEntriesDisplayContext viewObjectEntriesDisplayContext = (ViewObjectEntriesDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+
+ObjectDefinition objectDefinition = viewObjectEntriesDisplayContext.getObjectDefinition();
+
+String type = layout.getType();
 %>
 
-<clay:headless-data-set-display
-	apiURL="<%= viewObjectEntriesDisplayContext.getAPIURL() %>"
-	clayDataSetActionDropdownItems="<%= viewObjectEntriesDisplayContext.getClayDataSetActionDropdownItems() %>"
-	creationMenu="<%= viewObjectEntriesDisplayContext.getCreationMenu() %>"
-	formName="fm"
-	id="<%= viewObjectEntriesDisplayContext.getClayHeadlessDataSetDisplayId() %>"
-	itemsPerPage="<%= 20 %>"
-	namespace="<%= liferayPortletResponse.getNamespace() %>"
-	pageNumber="<%= 1 %>"
-	portletURL="<%= liferayPortletResponse.createRenderURL() %>"
-	style="fluid"
-/>
+<c:choose>
+	<c:when test='<%= objectDefinition.isPortlet() || type.equals("control_panel") %>'>
+		<clay:headless-data-set-display
+			apiURL="<%= viewObjectEntriesDisplayContext.getAPIURL() %>"
+			clayDataSetActionDropdownItems="<%= viewObjectEntriesDisplayContext.getClayDataSetActionDropdownItems() %>"
+			creationMenu="<%= viewObjectEntriesDisplayContext.getCreationMenu() %>"
+			formName="fm"
+			id="<%= viewObjectEntriesDisplayContext.getClayHeadlessDataSetDisplayId() %>"
+			itemsPerPage="<%= 20 %>"
+			namespace="<%= liferayPortletResponse.getNamespace() %>"
+			pageNumber="<%= 1 %>"
+			portletURL="<%= liferayPortletResponse.createRenderURL() %>"
+			style="fluid"
+		/>
+	</c:when>
+	<c:otherwise>
+		<clay:alert
+			displayType="warning"
+			message="this-object-is-not-available"
+			title="Warning"
+		/>
+	</c:otherwise>
+</c:choose>

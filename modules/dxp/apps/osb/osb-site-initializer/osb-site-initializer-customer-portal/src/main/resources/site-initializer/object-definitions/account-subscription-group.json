@@ -64,10 +64,5 @@
 		"en_US": "Account Subscription Groups"
 	},
 	"scope": "company",
-	"status": {
-		"code": 0,
-		"label": "approved",
-		"label_i18n": "Approved"
-	},
 	"system": false
 }

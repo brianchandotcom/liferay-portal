@@ -53,6 +53,17 @@
 			"indexedAsKeyword": false,
 			"indexedLanguageId": null,
 			"label": {
+				"en-US": "DXP Version"
+			},
+			"name": "dxpVersion",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": null,
+			"label": {
 				"en-US": "Max Requestors"
 			},
 			"name": "maxRequestors",

@@ -64,6 +64,17 @@
 			"indexedAsKeyword": false,
 			"indexedLanguageId": null,
 			"label": {
+				"en-US": "Provisioned"
+			},
+			"name": "provisioned",
+			"required": false,
+			"type": "Integer"
+		},
+		{
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": null,
+			"label": {
 				"en-US": "Quantity"
 			},
 			"name": "quantity",

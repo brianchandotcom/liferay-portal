@@ -1,53 +1,49 @@
 {
 	"label": {
-		"en-US": "SetupDXPCloud"
+		"en-US": "Setup DXP Cloud"
 	},
 	"name": "SetupDXPCloud",
 	"objectFields": [
 		{
 			"indexed": true,
 			"indexedAsKeyword": false,
-			"indexedLanguageId": "",
+			"indexedLanguageId": null,
 			"label": {
 				"en-US": "Admins"
 			},
-			"listTypeDefinitionId": 0,
 			"name": "admins",
-			"required": false,
+			"required": true,
 			"type": "String"
 		},
 		{
 			"indexed": true,
 			"indexedAsKeyword": false,
-			"indexedLanguageId": "",
+			"indexedLanguageId": null,
 			"label": {
 				"en-US": "Data Center Region"
 			},
-			"listTypeDefinitionId": 0,
 			"name": "dataCenterRegion",
-			"required": false,
+			"required": true,
 			"type": "String"
 		},
 		{
 			"indexed": true,
 			"indexedAsKeyword": false,
-			"indexedLanguageId": "",
+			"indexedLanguageId": null,
 			"label": {
 				"en-US": "Project Id"
 			},
-			"listTypeDefinitionId": 0,
 			"name": "projectId",
-			"required": false,
+			"required": true,
 			"type": "String"
 		},
 		{
 			"indexed": true,
 			"indexedAsKeyword": false,
-			"indexedLanguageId": "",
+			"indexedLanguageId": null,
 			"label": {
 				"en-US": "Disaster Data Center Region"
 			},
-			"listTypeDefinitionId": 0,
 			"name": "disasterDataCenterRegion",
 			"required": false,
 			"type": "String"
@@ -55,13 +51,8 @@
 	],
 	"panelCategoryKey": "control_panel.object",
 	"pluralLabel": {
-		"en_US": "SetupDXPClouds"
+		"en_US": "Setups DXP Cloud"
 	},
-	"scope": "site",
-	"status": {
-		"code": 0,
-		"label": "approved",
-		"label_i18n": "Approved"
-	},
+	"scope": "company",
 	"system": false
 }

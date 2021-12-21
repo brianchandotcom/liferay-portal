@@ -42,7 +42,7 @@
 			"indexedAsKeyword": false,
 			"indexedLanguageId": null,
 			"label": {
-				"en-US": "Has Disaster Data Center Region?"
+				"en-US": "Has Disaster Data Center Region"
 			},
 			"listTypeDefinitionId": 0,
 			"name": "hasDisasterDataCenterRegion",

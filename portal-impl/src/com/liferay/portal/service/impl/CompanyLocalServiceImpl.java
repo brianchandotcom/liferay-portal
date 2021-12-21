@@ -1267,6 +1267,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		if (DBPartitionUtil.removeDBPartition(companyId)) {
 			_clearCompanyCache(companyId);
+			_clearVirtualHostCache(companyId);
 
 			Callable<Void> callable = new Callable<Void>() {
 
@@ -2060,6 +2061,25 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 				});
 
 			companyPersistence.clearCache(company);
+		}
+	}
+
+	private void _clearVirtualHostCache(long companyId) {
+		Company company = companyPersistence.fetchByPrimaryKey(companyId);
+
+		if (company != null) {
+			VirtualHost virtualHost = _virtualHostPersistence.fetchByHostname(
+				company.getVirtualHostname());
+
+			TransactionCommitCallbackUtil.registerCallback(
+				() -> {
+					EntityCacheUtil.removeResult(
+						virtualHost.getClass(), virtualHost.getPrimaryKeyObj());
+
+					return null;
+				});
+
+			_virtualHostPersistence.clearCache(virtualHost);
 		}
 	}
 

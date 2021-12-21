@@ -342,6 +342,38 @@ public class PageCollectionDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected PaginationType paginationType;
 
+	@Schema(
+		description = "Whether to show all items when pagination is enabled."
+	)
+	public Boolean getShowAllItems() {
+		return showAllItems;
+	}
+
+	public void setShowAllItems(Boolean showAllItems) {
+		this.showAllItems = showAllItems;
+	}
+
+	@JsonIgnore
+	public void setShowAllItems(
+		UnsafeSupplier<Boolean, Exception> showAllItemsUnsafeSupplier) {
+
+		try {
+			showAllItems = showAllItemsUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(
+		description = "Whether to show all items when pagination is enabled."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean showAllItems;
+
 	@Schema(description = "The page collection's template key.")
 	public String getTemplateKey() {
 		return templateKey;
@@ -508,6 +540,16 @@ public class PageCollectionDefinition implements Serializable {
 			sb.append(paginationType);
 
 			sb.append("\"");
+		}
+
+		if (showAllItems != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"showAllItems\": ");
+
+			sb.append(showAllItems);
 		}
 
 		if (templateKey != null) {

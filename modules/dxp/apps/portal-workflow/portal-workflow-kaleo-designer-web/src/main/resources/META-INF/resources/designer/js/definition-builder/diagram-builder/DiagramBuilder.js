@@ -26,6 +26,7 @@ import ReactFlow, {
 } from 'react-flow-renderer';
 
 import {DefinitionBuilderContext} from '../DefinitionBuilderContext';
+import DefinitionDiagramController from '../source-builder/definitionDiagramController';
 import {singleEventObserver} from '../util/EventObserver';
 import {DiagramBuilderContextProvider} from './DiagramBuilderContext';
 import {nodeTypes} from './components/nodes/utils';
@@ -66,11 +67,16 @@ const isPositionAvailable = (elements, newElementPosition) => {
 	return available;
 };
 
+const definitionDiagramController = new DefinitionDiagramController();
+
 export default function DiagramBuilder({version}) {
 	const {
+		currentEditor,
 		defaultLanguageId,
+		deserialize,
 		elements,
 		selectedLanguageId,
+		setDeserialize,
 		setElements,
 	} = useContext(DefinitionBuilderContext);
 	const reactFlowWrapperRef = useRef(null);
@@ -217,6 +223,20 @@ export default function DiagramBuilder({version}) {
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [selectedNode, selectedNodeNewId]);
+
+	useEffect(() => {
+		if (deserialize && currentEditor) {
+			const xmlDefinition = currentEditor.getData();
+
+			definitionDiagramController.updateXMLDefinition(xmlDefinition);
+
+			const nodes = definitionDiagramController.getNodes();
+
+			setElements(nodes);
+
+			setDeserialize(false);
+		}
+	}, [currentEditor, deserialize, setDeserialize, setElements]);
 
 	const contextProps = {
 		availableArea,

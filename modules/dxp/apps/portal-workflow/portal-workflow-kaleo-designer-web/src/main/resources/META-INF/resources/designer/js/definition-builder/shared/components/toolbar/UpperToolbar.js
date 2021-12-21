@@ -20,6 +20,7 @@ import PropTypes from 'prop-types';
 import React, {useContext, useEffect, useRef} from 'react';
 
 import {DefinitionBuilderContext} from '../../../DefinitionBuilderContext';
+import XMLUtil from '../../../source-builder/xmlUtil';
 import {getAvailableLocalesObject} from '../../../util/availableLocales';
 
 export default function UpperToolbar({
@@ -29,11 +30,14 @@ export default function UpperToolbar({
 	version,
 }) {
 	const {
+		currentEditor,
 		defaultLanguageId,
 		definitionTitle,
 		selectedLanguageId,
 		setDefinitionTitle,
+		setDeserialize,
 		setSelectedLanguageId,
+		setShowInvalidContentError,
 		setSourceView,
 		sourceView,
 	} = useContext(DefinitionBuilderContext);
@@ -140,7 +144,19 @@ export default function UpperToolbar({
 						{sourceView ? (
 							<ClayButtonWithIcon
 								displayType="secondary"
-								onClick={() => setSourceView(false)}
+								onClick={() => {
+									if (
+										XMLUtil.validateDefinition(
+											currentEditor.getData()
+										)
+									) {
+										setSourceView(false);
+										setDeserialize(true);
+									}
+									else {
+										setShowInvalidContentError(true);
+									}
+								}}
 								symbol="rules"
 								title={Liferay.Language.get('diagram-view')}
 							/>

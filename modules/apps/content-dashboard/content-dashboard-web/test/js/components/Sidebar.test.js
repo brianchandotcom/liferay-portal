@@ -12,7 +12,7 @@
  * details.
  */
 
-import {act, cleanup, fireEvent, render} from '@testing-library/react';
+import {act, fireEvent, render} from '@testing-library/react';
 import React, {useState} from 'react';
 
 import Sidebar from '../../../src/main/resources/META-INF/resources/js/components/Sidebar';
@@ -36,7 +36,6 @@ describe('Sidebar', () => {
 
 	afterEach(() => {
 		jest.clearAllTimers();
-		cleanup();
 	});
 
 	it('renders an open sidebar', () => {

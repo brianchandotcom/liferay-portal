@@ -12,7 +12,7 @@
  * details.
  */
 
-import {cleanup, render} from '@testing-library/react';
+import {render} from '@testing-library/react';
 import React from 'react';
 
 import EmptyAuditBarChart from '../../../src/main/resources/META-INF/resources/js/components/EmptyAuditBarChart';
@@ -24,8 +24,6 @@ const LEARN_HOW_URL =
 
 describe('EmptyAuditBarChart', () => {
 	Liferay.Util.sub.mockImplementation((langKey) => langKey);
-
-	afterEach(cleanup);
 
 	it('renders empty bar chart if there is no content labeled with categories', () => {
 		const {getByText} = render(

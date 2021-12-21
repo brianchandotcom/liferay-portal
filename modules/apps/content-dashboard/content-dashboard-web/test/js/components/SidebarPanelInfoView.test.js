@@ -12,7 +12,7 @@
  * details.
  */
 
-import {cleanup, render} from '@testing-library/react';
+import {render} from '@testing-library/react';
 import React from 'react';
 
 import '@testing-library/jest-dom/extend-expect';
@@ -39,7 +39,6 @@ const _getSidebarComponent = (props) => {
 describe('SidebarPanelInfoView', () => {
 	afterEach(() => {
 		jest.clearAllMocks();
-		cleanup();
 	});
 
 	it('renders', () => {

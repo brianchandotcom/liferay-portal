@@ -177,7 +177,7 @@ export default function AuditBarChart({namespace, rtl, vocabularies}) {
 									size={2}
 								>
 									<ClayCheckbox
-										aria-labelledby={entry.value}
+										aria-labelledby={entry.key}
 										checked={checkboxes[entry.dataKey]}
 										className={`custom-control-color-${entry.dataKey}`}
 										inline
@@ -193,6 +193,7 @@ export default function AuditBarChart({namespace, rtl, vocabularies}) {
 										<span
 											className="content-dashboard-checkbox-label pl-1 small text-secondary text-truncate"
 											data-tooltip-align="bottom"
+											id={entry.key}
 											title={entry.value}
 										>
 											{entry.value}

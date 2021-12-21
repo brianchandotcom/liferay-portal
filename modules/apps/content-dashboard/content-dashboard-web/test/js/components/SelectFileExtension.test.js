@@ -12,7 +12,7 @@
  * details.
  */
 
-import {cleanup, render} from '@testing-library/react';
+import {render} from '@testing-library/react';
 import React from 'react';
 
 import '@testing-library/jest-dom/extend-expect';
@@ -78,8 +78,6 @@ const mockProps = {
 
 describe('SelectFileExtension', () => {
 	beforeEach(() => {
-		cleanup();
-
 		window.Liferay.Util.getOpener = jest.fn().mockReturnValue({
 			Liferay: {
 				fire: jest.fn(),

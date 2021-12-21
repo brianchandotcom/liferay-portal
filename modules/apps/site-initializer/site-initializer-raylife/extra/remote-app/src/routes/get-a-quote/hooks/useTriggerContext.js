@@ -1,7 +1,6 @@
 import {useContext} from 'react';
 
-import {AppContext} from '../context/AppContext';
-import {setSelectedTrigger} from '../context/actions';
+import {ActionTypes, AppContext} from '../context/AppContextProvider';
 
 export function useTriggerContext() {
 	const {
@@ -13,17 +12,12 @@ export function useTriggerContext() {
 		return label === selectedTrigger;
 	};
 
-	const updateState = (label) => {
-		if (label === selectedTrigger) {
-			dispatch(setSelectedTrigger(''));
-		}
-		else {
-			dispatch(setSelectedTrigger(label));
-		}
-	};
-
 	return {
 		isSelected,
-		updateState,
+		updateState: (label) =>
+			dispatch({
+				payload: label === selectedTrigger ? '' : label,
+				type: ActionTypes.SET_SELECTED_TRIGGER,
+			}),
 	};
 }

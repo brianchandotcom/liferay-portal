@@ -3,8 +3,10 @@ import {useFormContext} from 'react-hook-form';
 import {CardFormActions} from '../../../../../../../common/components/fragments/Card/FormActions';
 import FormCard from '../../../../../../../common/components/fragments/Card/FormCard';
 import {smoothScroll} from '../../../../../../../common/utils/scroll';
-import {AppContext} from '../../../../../context/AppContext';
-import {setSelectedProduct} from '../../../../../context/actions';
+import {
+	ActionTypes,
+	AppContext,
+} from '../../../../../context/AppContextProvider';
 import {useStepWizard} from '../../../../../hooks/useStepWizard';
 import {AVAILABLE_STEPS} from '../../../../../utils/constants';
 import {BusinessTypeSearch} from './Search';
@@ -20,7 +22,10 @@ export function FormBasicBusinessType({form}) {
 
 		if (state.selectedProduct !== newSelectedProduct) {
 			setValue('business', '');
-			dispatch(setSelectedProduct(newSelectedProduct));
+			dispatch({
+				payload: newSelectedProduct,
+				type: ActionTypes.SET_SELECTED_PRODUCT,
+			});
 		}
 
 		smoothScroll();
@@ -38,6 +43,7 @@ export function FormBasicBusinessType({form}) {
 				<BusinessTypeSearch
 					form={form}
 					setNewSelectedProduct={setNewSelectedProduct}
+					taxonomyVocabularyId={state.taxonomyVocabulary.id}
 				/>
 			</div>
 

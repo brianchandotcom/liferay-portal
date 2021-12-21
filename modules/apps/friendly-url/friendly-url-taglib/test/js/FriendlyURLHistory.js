@@ -12,12 +12,7 @@
  * details.
  */
 
-import {
-	cleanup,
-	fireEvent,
-	render,
-	waitForElement,
-} from '@testing-library/react';
+import {fireEvent, render} from '@testing-library/react';
 import React from 'react';
 import {act} from 'react-dom/test-utils';
 
@@ -91,8 +86,6 @@ const renderComponent = (props) => render(<FriendlyURLHistory {...props} />);
 describe('FriendlyURLHistory', () => {
 	let historyButton;
 
-	afterEach(cleanup);
-
 	beforeAll(() => {
 		Liferay.component = jest.fn().mockImplementation(() => {
 			return {
@@ -138,23 +131,19 @@ describe('FriendlyURLHistory', () => {
 		});
 
 		it('renders a modal when user clicks on history button', async () => {
-			const title = await waitForElement(() =>
-				result.getByText('history')
-			);
+			const title = await result.findByText('history');
 
 			expect(title).toBeTruthy();
 		});
 
 		it('renders the active url', async () => {
-			const activeUrlElement = await waitForElement(() =>
-				result.getByText(activeUrl)
-			);
+			const activeUrlElement = await result.findByText(activeUrl);
 
 			expect(activeUrlElement).toBeTruthy();
 		});
 
 		it('renders the old friendly urls', async () => {
-			await waitForElement(() => result.getAllByRole('listitem'));
+			await result.findAllByRole('listitem');
 
 			const listUrlItems = result.baseElement.querySelectorAll(
 				'.modal-content li.list-group-item'
@@ -172,9 +161,7 @@ describe('FriendlyURLHistory', () => {
 		it('deletes the third old friendly url', async () => {
 			fetch.mockResponseOnce(JSON.stringify({success: true}));
 
-			const listItems = await waitForElement(() =>
-				result.getAllByRole('listitem')
-			);
+			const listItems = await result.findAllByRole('listitem');
 
 			const deleteButtons = listItems.map((listitem) =>
 				listitem.querySelector('button[data-title="forget-url"]')
@@ -197,9 +184,7 @@ describe('FriendlyURLHistory', () => {
 			fetch.mockResponseOnce(JSON.stringify({success: true}));
 			fetch.mockResponseOnce(JSON.stringify(fetchResponseAfterRestore));
 
-			const listItems = await waitForElement(() =>
-				result.getAllByRole('listitem')
-			);
+			const listItems = await result.findAllByRole('listitem');
 
 			const restoreButtons = listItems.map((listitem) =>
 				listitem.querySelector('button[data-title="restore-url"]')

@@ -12,7 +12,7 @@
  * details.
  */
 
-import {cleanup, render, wait} from '@testing-library/react';
+import {render, waitFor} from '@testing-library/react';
 import React from 'react';
 
 import CriteriaRow from '../../../../src/main/resources/META-INF/resources/js/components/criteria_builder/CriteriaRow.es';
@@ -23,8 +23,6 @@ import '@testing-library/jest-dom/extend-expect';
 const connectDnd = jest.fn((element) => element);
 
 describe('CriteriaRow', () => {
-	afterEach(cleanup);
-
 	it('renders', () => {
 		const OriginalCriteriaRow = CriteriaRow.DecoratedComponent;
 
@@ -128,7 +126,7 @@ describe('CriteriaRow', () => {
 			/>
 		);
 
-		await wait(() =>
+		await waitFor(() =>
 			expect(
 				getByText('unknown-element-message-edit')
 			).toBeInTheDocument()
@@ -175,7 +173,7 @@ describe('CriteriaRow', () => {
 			/>
 		);
 
-		await wait(() =>
+		await waitFor(() =>
 			expect(
 				getByText('unknown-element-message-view')
 			).toBeInTheDocument()
@@ -225,7 +223,7 @@ describe('CriteriaRow', () => {
 			/>
 		);
 
-		await wait(() =>
+		await waitFor(() =>
 			expect(
 				getByText('criteria-warning-message-view')
 			).toBeInTheDocument()
@@ -275,7 +273,7 @@ describe('CriteriaRow', () => {
 			/>
 		);
 
-		await wait(() =>
+		await waitFor(() =>
 			expect(
 				getByText('criteria-warning-message-edit')
 			).toBeInTheDocument()
@@ -326,7 +324,7 @@ describe('CriteriaRow', () => {
 			/>
 		);
 
-		await wait(() => expect(onChangeMock).toHaveBeenCalled());
+		await waitFor(() => expect(onChangeMock).toHaveBeenCalled());
 
 		expect(onChangeMock).toHaveBeenCalledWith(
 			expect.objectContaining({
@@ -374,7 +372,7 @@ describe('CriteriaRow', () => {
 			/>
 		);
 
-		await wait(() => expect(onChangeMock).toHaveBeenCalled());
+		await waitFor(() => expect(onChangeMock).toHaveBeenCalled());
 
 		expect(onChangeMock).toHaveBeenCalledWith(
 			expect.objectContaining({

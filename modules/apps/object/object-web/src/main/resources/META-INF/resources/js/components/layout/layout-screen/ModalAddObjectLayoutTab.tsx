@@ -21,7 +21,7 @@ import classNames from 'classnames';
 import React, {useContext, useMemo, useState} from 'react';
 
 import useForm from '../../../hooks/useForm';
-import {normalizeLanguageId} from '../../../utils/string';
+import {normalizeLanguageId, separateCamelCase} from '../../../utils/string';
 import AutoComplete from '../../form/AutoComplete';
 import Input from '../../form/Input';
 import LayoutContext, {TYPES as EVENT_TYPES} from '../context';
@@ -242,14 +242,19 @@ const ModalAddObjectLayoutTab: React.FC<IModalAddObjectLayoutTabProps> = ({
 							label={Liferay.Language.get('relationship')}
 							onChangeQuery={setQuery}
 							onSelectItem={(item) => {
+								const {type} = item;
+								const selectedItem = {
+									...item,
+									type: separateCamelCase(type),
+								};
 								const syntheticEvent: any = {
 									target: {
 										name: 'objectRelationshipId',
-										value: item.id,
+										value: selectedItem.id,
 									},
 								};
 
-								setSelectedRelationship(item);
+								setSelectedRelationship(selectedItem);
 								handleChange(syntheticEvent);
 							}}
 							query={query}
@@ -268,10 +273,7 @@ const ModalAddObjectLayoutTab: React.FC<IModalAddObjectLayoutTabProps> = ({
 
 									<div className="object-web-relationship-item-label">
 										<ClayLabel displayType="secondary">
-											{type.replace(
-												/([a-z])([A-Z])/g,
-												'$1 $2'
-											)}
+											{separateCamelCase(type)}
 										</ClayLabel>
 									</div>
 								</div>

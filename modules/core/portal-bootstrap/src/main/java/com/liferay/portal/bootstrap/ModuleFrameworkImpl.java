@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.module.framework.ModuleFramework;
 import com.liferay.portal.util.PropsValues;
 
@@ -395,12 +394,6 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		properties.put(Constants.BUNDLE_NAME, ReleaseInfo.getName());
 		properties.put(Constants.BUNDLE_VENDOR, ReleaseInfo.getVendor());
 		properties.put(Constants.BUNDLE_VERSION, ReleaseInfo.getVersion());
-
-		// Fileinstall. See LPS-56385.
-
-		properties.put(
-			FrameworkPropsKeys.FILE_INSTALL_TMPDIR,
-			SystemProperties.get(SystemProperties.TMP_DIR));
 
 		// Framework
 

@@ -142,7 +142,7 @@ public class DBPartitionUtil {
 			return _migrateDBPartition(companyId);
 		}
 
-		return true;
+		return _dropDBPartition(companyId);
 	}
 
 	public static void setDefaultCompanyId(Connection connection)
@@ -214,6 +214,48 @@ public class DBPartitionUtil {
 				"insert ", toSchemaName, StringPool.PERIOD, tableName,
 				" select * from ", fromSchemaName, StringPool.PERIOD, tableName,
 				whereClause));
+	}
+
+	private static boolean _dropDBPartition(long companyId)
+		throws PortalException {
+
+		Connection connection = CurrentConnectionUtil.getConnection(
+			InfrastructureUtil.getDataSource());
+
+		DBInspector dbInspector = new DBInspector(connection);
+
+		try {
+			DatabaseMetaData databaseMetaData = connection.getMetaData();
+
+			try (ResultSet resultSet = databaseMetaData.getTables(
+					_defaultSchemaName, dbInspector.getSchema(), null,
+					new String[] {"TABLE"});
+				Statement statement = connection.createStatement()) {
+
+				while (resultSet.next()) {
+					String tableName = resultSet.getString("TABLE_NAME");
+
+					if (_isControlTable(dbInspector, tableName) &&
+						dbInspector.hasColumn(tableName, "companyId")) {
+
+						statement.executeUpdate(
+							StringBundler.concat(
+								"delete from ", _defaultSchemaName,
+								StringPool.PERIOD, tableName,
+								" where companyId = ", companyId));
+					}
+				}
+
+				statement.executeUpdate(
+					"drop schema " + _getSchemaName(companyId));
+			}
+		}
+		catch (Exception exception) {
+			throw new PortalException(
+				"Unable to drop database partition", exception);
+		}
+
+		return true;
 	}
 
 	private static Connection _getConnectionWrapper(Connection connection) {

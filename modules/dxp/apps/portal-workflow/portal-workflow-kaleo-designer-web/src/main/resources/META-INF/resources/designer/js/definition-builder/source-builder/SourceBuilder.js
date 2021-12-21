@@ -13,7 +13,7 @@
 import ClayLayout from '@clayui/layout';
 import ClayToolbar from '@clayui/toolbar';
 import {Editor} from 'frontend-editor-ckeditor-web';
-import React, {useContext, useEffect, useRef, useState} from 'react';
+import React, {useContext, useEffect, useRef} from 'react';
 import {isNode} from 'react-flow-renderer';
 
 import {DefinitionBuilderContext} from '../DefinitionBuilderContext';
@@ -26,9 +26,15 @@ const config = {
 };
 
 export default function SourceBuilder({version}) {
-	const {definitionTitle, elements} = useContext(DefinitionBuilderContext);
+	const {
+		currentEditor,
+		definitionTitle,
+		elements,
+		setCurrentEditor,
+		setShowInvalidContentError,
+		showInvalidContentError,
+	} = useContext(DefinitionBuilderContext);
 	const editorRef = useRef();
-	const [currentEditor, setCurrentEditor] = useState(null);
 
 	useEffect(() => {
 		if (elements) {
@@ -47,6 +53,20 @@ export default function SourceBuilder({version}) {
 		}
 	}, [currentEditor, definitionTitle, elements, version]);
 
+	useEffect(() => {
+		if (showInvalidContentError) {
+			document.addEventListener('keydown', () => {
+				setShowInvalidContentError(false);
+			});
+
+			return () => {
+				document.removeEventListener('keydown', () => {
+					setShowInvalidContentError(false);
+				});
+			};
+		}
+	}, [setShowInvalidContentError, showInvalidContentError]);
+
 	return (
 		<>
 			<ClayToolbar className="source-toolbar">
@@ -55,6 +75,16 @@ export default function SourceBuilder({version}) {
 						<ClayToolbar.Item>
 							<span>{Liferay.Language.get('source')}</span>
 						</ClayToolbar.Item>
+
+						{showInvalidContentError && (
+							<ClayToolbar.Item className="error ml-4">
+								<span>
+									{Liferay.Language.get(
+										'please-enter-valid-content'
+									)}
+								</span>
+							</ClayToolbar.Item>
+						)}
 					</ClayToolbar.Nav>
 				</ClayLayout.ContainerFluid>
 			</ClayToolbar>

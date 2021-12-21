@@ -10,6 +10,14 @@
 .source-toolbar {
 	background-color: white;
 
+	.error {
+		span {
+			color: red;
+			font-size: 16px;
+			font-weight: normal;
+		}
+	}
+
 	span {
 		color: #272833;
 		font-size: 20px;

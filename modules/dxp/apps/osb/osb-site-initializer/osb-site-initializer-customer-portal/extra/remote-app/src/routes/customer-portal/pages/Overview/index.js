@@ -21,11 +21,7 @@ const Overview = ({project, userAccount}) => {
 	] = useState([]);
 
 	const dispatchEvent = useCustomEvent(CUSTOM_EVENTS.PROJECT);
-	const {loading} = usePageGuard(
-		userAccount,
-		project.accountKey,
-		'overview'
-	);
+	const {loading} = usePageGuard(userAccount, project.accountKey, 'overview');
 
 	const {data, loading: isLoadingKoroneiki} = useQuery(getKoroneikiAccounts, {
 		variables: {

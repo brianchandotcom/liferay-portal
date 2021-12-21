@@ -53,7 +53,7 @@ const AppContextProvider = ({assetsPath, children}) => {
 			query: getKoroneikiAccounts,
 			variables: {
 				filter: `accountKey eq '${projectExternalReferenceCode}'`,
-			}
+			},
 		});
 
 		if (projects) {
@@ -62,7 +62,7 @@ const AppContextProvider = ({assetsPath, children}) => {
 				type: actionTypes.UPDATE_PROJECT,
 			});
 		}
-	}
+	};
 
 	useEffect(() => {
 		const projectExternalReferenceCode = SearchParams.get(

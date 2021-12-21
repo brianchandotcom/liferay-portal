@@ -22,7 +22,7 @@ const KeyValueRow = ({
 	onChange = () => {},
 	onDelete = () => {},
 	showLabels = false,
-	valueObject = {}, // {key: '', value: ''}
+	valueObject = {key: '', value: ''},
 }) => {
 	const {key, value} = valueObject;
 
@@ -89,6 +89,10 @@ const PreviewAttributesModal = ({onSubmit = () => {}}) => {
 		onClose: () => setVisible(false),
 	});
 
+	const _handleAddRow = () => {
+		setAttributes([...attributes, {key: '', value: ''}]);
+	};
+
 	/**
 	 * Replaces the attribute object at the given index of the attributes array.
 	 * @param {number} index The index of the attribute to replace.
@@ -150,9 +154,7 @@ const PreviewAttributesModal = ({onSubmit = () => {}}) => {
 									)}
 									displayType="secondary"
 									monospaced
-									onClick={() => {
-										setAttributes(attributes.concat({}));
-									}}
+									onClick={_handleAddRow}
 								>
 									<ClayIcon symbol="plus" />
 								</ClayButton>

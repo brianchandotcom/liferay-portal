@@ -10,7 +10,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {cleanup, render, wait} from '@testing-library/react';
+import {render, waitFor} from '@testing-library/react';
 import React from 'react';
 
 import TrafficSources from '../../../src/main/resources/META-INF/resources/js/components/TrafficSources';
@@ -18,8 +18,6 @@ import TrafficSources from '../../../src/main/resources/META-INF/resources/js/co
 const noop = () => {};
 
 describe('TrafficSources', () => {
-	afterEach(cleanup);
-
 	it('displays the traffic sources with buttons to view keywords', async () => {
 		const mockTrafficSourcesDataProvider = jest.fn(() =>
 			Promise.resolve([
@@ -72,7 +70,7 @@ describe('TrafficSources', () => {
 			/>
 		);
 
-		await wait(() => {
+		await waitFor(() => {
 			expect(mockTrafficSourcesDataProvider).toHaveBeenCalledTimes(1);
 		});
 
@@ -143,7 +141,7 @@ describe('TrafficSources', () => {
 			/>
 		);
 
-		await wait(() =>
+		await waitFor(() =>
 			expect(mockTrafficSourcesDataProvider).toHaveBeenCalledTimes(1)
 		);
 
@@ -209,7 +207,7 @@ describe('TrafficSources', () => {
 			/>
 		);
 
-		await wait(() =>
+		await waitFor(() =>
 			expect(mockTrafficSourcesDataProvider).toHaveBeenCalledTimes(1)
 		);
 
@@ -256,7 +254,7 @@ describe('TrafficSources', () => {
 			/>
 		);
 
-		await wait(() =>
+		await waitFor(() =>
 			expect(mockTrafficSourcesDataProvider).toHaveBeenCalledTimes(1)
 		);
 
@@ -300,7 +298,7 @@ describe('TrafficSources', () => {
 			/>
 		);
 
-		await wait(() =>
+		await waitFor(() =>
 			expect(mockTrafficSourcesDataProvider).toHaveBeenCalledTimes(1)
 		);
 

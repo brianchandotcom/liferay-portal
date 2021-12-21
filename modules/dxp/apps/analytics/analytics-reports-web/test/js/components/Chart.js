@@ -10,7 +10,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {cleanup, render, wait} from '@testing-library/react';
+import {render, waitFor} from '@testing-library/react';
 import React from 'react';
 
 import Chart from '../../../src/main/resources/META-INF/resources/js/components/Chart';
@@ -145,7 +145,6 @@ const mockTimeSpanOptions = [
 describe('Chart', () => {
 	afterEach(() => {
 		jest.clearAllMocks();
-		cleanup();
 	});
 
 	it('displays total views and date range title for default time span', async () => {
@@ -171,7 +170,7 @@ describe('Chart', () => {
 			</StoreContextProvider>
 		);
 
-		await wait(() =>
+		await waitFor(() =>
 			expect(mockViewsDataProvider).toHaveBeenCalledTimes(1)
 		);
 
@@ -208,7 +207,7 @@ describe('Chart', () => {
 			</StoreContextProvider>
 		);
 
-		await wait(() => {
+		await waitFor(() => {
 			expect(mockViewsDataProvider).toHaveBeenCalledTimes(1);
 			expect(mockReadsDataProvider).toHaveBeenCalledTimes(1);
 		});

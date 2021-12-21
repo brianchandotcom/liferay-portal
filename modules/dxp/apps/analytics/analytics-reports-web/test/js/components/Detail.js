@@ -10,7 +10,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {cleanup, fireEvent, render, wait, within} from '@testing-library/react';
+import {fireEvent, render, waitFor, within} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
@@ -244,7 +244,6 @@ const mockTimeSpanOptions = [
 describe('Detail', () => {
 	afterEach(() => {
 		jest.clearAllMocks();
-		cleanup();
 	});
 
 	it('displays 10 urls when clicking on the view more button', async () => {
@@ -277,7 +276,7 @@ describe('Detail', () => {
 			</StoreContextProvider>
 		);
 
-		await wait(() => {
+		await waitFor(() => {
 			expect(mockTrafficShareDataProvider).toHaveBeenCalled();
 			expect(mockTrafficVolumeDataProvider).toHaveBeenCalled();
 		});
@@ -307,7 +306,7 @@ describe('Detail', () => {
 				/>
 			);
 
-			await wait(() => {
+			await waitFor(() => {
 				expect(mockTrafficShareDataProvider).toHaveBeenCalled();
 				expect(mockTrafficVolumeDataProvider).toHaveBeenCalled();
 			});
@@ -332,7 +331,7 @@ describe('Detail', () => {
 				/>
 			);
 
-			await wait(() => {
+			await waitFor(() => {
 				expect(mockTrafficShareDataProvider).toHaveBeenCalled();
 				expect(mockTrafficVolumeDataProvider).toHaveBeenCalled();
 			});
@@ -370,7 +369,7 @@ describe('Detail', () => {
 				/>
 			);
 
-			await wait(() => {
+			await waitFor(() => {
 				expect(mockTrafficShareDataProvider).toHaveBeenCalled();
 				expect(mockTrafficVolumeDataProvider).toHaveBeenCalled();
 			});
@@ -395,7 +394,7 @@ describe('Detail', () => {
 				/>
 			);
 
-			await wait(() => {
+			await waitFor(() => {
 				expect(mockTrafficShareDataProvider).toHaveBeenCalled();
 				expect(mockTrafficVolumeDataProvider).toHaveBeenCalled();
 			});
@@ -418,7 +417,7 @@ describe('Detail', () => {
 				/>
 			);
 
-			await wait(() => {
+			await waitFor(() => {
 				expect(mockTrafficShareDataProvider).toHaveBeenCalled();
 				expect(mockTrafficVolumeDataProvider).toHaveBeenCalled();
 			});
@@ -458,7 +457,7 @@ describe('Detail', () => {
 				/>
 			);
 
-			await wait(() => {
+			await waitFor(() => {
 				expect(mockTrafficShareDataProvider).toHaveBeenCalled();
 				expect(mockTrafficVolumeDataProvider).toHaveBeenCalled();
 			});
@@ -520,7 +519,7 @@ describe('Detail', () => {
 				</StoreContextProvider>
 			);
 
-			await wait(() => {
+			await waitFor(() => {
 				expect(mockTrafficShareDataProvider).toHaveBeenCalled();
 				expect(mockTrafficVolumeDataProvider).toHaveBeenCalled();
 			});
@@ -596,7 +595,7 @@ describe('Detail', () => {
 				</StoreContextProvider>
 			);
 
-			await wait(() => {
+			await waitFor(() => {
 				expect(mockTrafficShareDataProvider).toHaveBeenCalled();
 				expect(mockTrafficVolumeDataProvider).toHaveBeenCalled();
 			});

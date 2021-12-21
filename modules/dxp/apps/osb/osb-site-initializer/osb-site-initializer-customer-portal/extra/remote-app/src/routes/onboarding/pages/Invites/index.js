@@ -110,7 +110,7 @@ const Invites = () => {
 	const disableAdminOptions = (isDisabled) => {
 		setAccountRoles((prevAccountRoles) => {
 			const requestorRoleIndex = prevAccountRoles.findIndex(
-				({value}) => value === roles.REQUESTOR
+				({value}) => value === roles.REQUESTOR.id
 			);
 
 			if (requestorRoleIndex !== -1) {
@@ -121,7 +121,7 @@ const Invites = () => {
 			}
 
 			const adminRoleIndex = prevAccountRoles.findIndex(
-				({value}) => value === roles.ADMIN
+				({value}) => value === roles.ADMIN.id
 			);
 
 			if (adminRoleIndex !== -1) {
@@ -149,26 +149,36 @@ const Invites = () => {
 			!SLA_CURRENT.includes(SLA.platinum)
 		) {
 			filterRoles = filterRoles.filter(
-				(label) => label !== roles.REQUESTOR
+				(label) => label !== roles.REQUESTOR.id
 			);
 		}
 
 		if (!isPartner) {
 			filterRoles = filterRoles.filter(
 				(label) =>
-					label !== roles.PARTNER_MANAGER &&
-					label !== roles.PARTNER_MEMBER
+					label !== roles.PARTNER_MANAGER.id &&
+					label !== roles.PARTNER_MEMBER.id
 			);
 		}
 		setFieldValue(
 			'invites[0].roleId',
-			filterRoles.find((role) => role === roles.REQUESTOR) ||
-				filterRoles.find((role) => role === roles.ADMIN)
+			filterRoles.find((role) => role === roles.REQUESTOR.id) ||
+				roles.ADMIN.id
 		);
 
-		setAccountRoles(
-			filterRoles.map((role) => ({disabled: false, value: role}))
-		);
+		const mapRolesName = filterRoles.map((role) => {
+			return {
+				disabled: false,
+				label:
+					Object.values(roles).find(({id}) => id === role)?.name ||
+					role,
+				value:
+					Object.values(roles).find(({id}) => id === role)?.id ||
+					role,
+			};
+		});
+
+		setAccountRoles(mapRolesName);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [project, rolesData]);
 
@@ -177,8 +187,8 @@ const Invites = () => {
 			const totalAdmins = values.invites.reduce(
 				(invitesTotal, currentInvite) => {
 					if (
-						currentInvite.roleId === roles.REQUESTOR ||
-						currentInvite.roleId === roles.ADMIN
+						currentInvite.roleId === roles.REQUESTOR.id ||
+						currentInvite.roleId === roles.ADMIN.id
 					) {
 						const total = invitesTotal + 1;
 
@@ -272,7 +282,7 @@ const Invites = () => {
 							setBaseButtonDisabled(false);
 							setFieldValue('invites', [
 								...values.invites,
-								getInitialInvite(roles.MEMBER),
+								getInitialInvite(roles.MEMBER.id),
 							]);
 						}}
 						prependIcon="plus"
@@ -289,8 +299,8 @@ const Invites = () => {
 						{`${
 							project.slaCurrent.includes(SLA.gold) ||
 							project.slaCurrent.includes(SLA.platinum)
-								? roles.REQUESTOR
-								: roles.ADMIN
+								? roles.REQUESTOR.name
+								: roles.ADMIN.name
 						}	roles available: ${availableAdminsRoles} of ${
 							project.maxRequestors
 						}`}

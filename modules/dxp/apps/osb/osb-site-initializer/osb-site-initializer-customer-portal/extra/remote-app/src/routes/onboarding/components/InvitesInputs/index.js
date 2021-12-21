@@ -56,9 +56,9 @@ const InvitesInputs = ({
 					groupStyle="m-0"
 					label="Role"
 					name={`invites[${id}].roleId`}
-					options={options.map(({disabled, value}) => ({
+					options={options.map(({disabled, label, value}) => ({
 						disabled,
-						label: value,
+						label,
 						value,
 					}))}
 				/>

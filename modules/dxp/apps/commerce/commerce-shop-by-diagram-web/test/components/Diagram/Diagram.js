@@ -12,13 +12,7 @@
 import Diagram from '../../../src/main/resources/META-INF/resources/js/Diagram/Diagram';
 
 import '@testing-library/jest-dom/extend-expect';
-import {
-	act,
-	cleanup,
-	fireEvent,
-	render,
-	waitForElement,
-} from '@testing-library/react';
+import {act, fireEvent, render} from '@testing-library/react';
 import fetchMock from 'fetch-mock';
 import React from 'react';
 
@@ -57,8 +51,6 @@ describe('Diagram', () => {
 
 		afterEach(() => {
 			diagram?.unmount();
-
-			cleanup();
 		});
 
 		it('must render a Diagram', async () => {
@@ -80,9 +72,8 @@ describe('Diagram', () => {
 		});
 
 		it('must show the pins', async () => {
-			const pinsNodes = await waitForElement(async () =>
-				diagram.getAllByRole('pin')
-			);
+			const pinsNodes = await diagram.findAllByRole('pin');
+
 			const sequences = adminPinsData.map((pin) => pin.sequence);
 
 			expect(sequences.length).toBe(pinsNodes.length);
@@ -93,10 +84,7 @@ describe('Diagram', () => {
 		});
 
 		it('must show a tooltip when a pin is clicked', async () => {
-			const pinsNodes = await waitForElement(async () =>
-				diagram.getAllByRole('pin')
-			);
-
+			const pinsNodes = await diagram.findAllByRole('pin');
 			fireEvent.click(pinsNodes[0]);
 
 			const tooltip = document.querySelector('.diagram-tooltip');
@@ -105,9 +93,7 @@ describe('Diagram', () => {
 		});
 
 		it('must show consistent data within the tooltip', async () => {
-			const pinsNodes = await waitForElement(async () =>
-				diagram.getAllByRole('pin')
-			);
+			const pinsNodes = await diagram.findAllByRole('pin');
 
 			pinsNodes.forEach((pin, index) => {
 				fireEvent.click(pin);
@@ -158,9 +144,7 @@ describe('Diagram', () => {
 		});
 
 		it('must show the pins', async () => {
-			const pinsNodes = await waitForElement(
-				async () => await diagram.getAllByRole('pin')
-			);
+			const pinsNodes = await diagram.findAllByRole('pin');
 			const sequences = frontStorePinsData.map((pin) => pin.sequence);
 
 			expect(sequences.length).toBe(pinsNodes.length);
@@ -171,9 +155,7 @@ describe('Diagram', () => {
 		});
 
 		it('must show consistent data within the tooltip', async () => {
-			const pinsNodes = await waitForElement(
-				async () => await diagram.getAllByRole('pin')
-			);
+			const pinsNodes = await diagram.findAllByRole('pin');
 
 			fireEvent.click(pinsNodes[0]);
 

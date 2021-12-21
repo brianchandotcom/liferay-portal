@@ -280,6 +280,12 @@ public interface ObjectEntryLocalService
 			long groupId, long objectDefinitionId, int start, int end)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ObjectEntry> getObjectEntries(
+			long groupId, long objectDefinitionId, int status, int start,
+			int end)
+		throws PortalException;
+
 	/**
 	 * Returns all the object entries matching the UUID and company.
 	 *

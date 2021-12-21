@@ -366,6 +366,17 @@ public class ObjectEntryLocalServiceWrapper
 			groupId, objectDefinitionId, start, end);
 	}
 
+	@Override
+	public java.util.List<com.liferay.object.model.ObjectEntry>
+			getObjectEntries(
+				long groupId, long objectDefinitionId, int status, int start,
+				int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectEntryLocalService.getObjectEntries(
+			groupId, objectDefinitionId, status, start, end);
+	}
+
 	/**
 	 * Returns all the object entries matching the UUID and company.
 	 *

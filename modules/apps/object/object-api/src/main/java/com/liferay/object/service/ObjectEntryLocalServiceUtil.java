@@ -324,6 +324,15 @@ public class ObjectEntryLocalServiceUtil {
 			groupId, objectDefinitionId, start, end);
 	}
 
+	public static List<ObjectEntry> getObjectEntries(
+			long groupId, long objectDefinitionId, int status, int start,
+			int end)
+		throws PortalException {
+
+		return getService().getObjectEntries(
+			groupId, objectDefinitionId, status, start, end);
+	}
+
 	/**
 	 * Returns all the object entries matching the UUID and company.
 	 *

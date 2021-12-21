@@ -28,11 +28,9 @@ export default function (props) {
 	);
 	const [sourceView, setSourceView] = useState(false);
 	const [definitionTitle, setDefinitionTitle] = useState(props.title);
-	const defaultLanguageId = themeDisplay.getLanguageId();
 
 	const contextProps = {
 		currentEditor,
-		defaultLanguageId,
 		definitionTitle,
 		deserialize,
 		elements,

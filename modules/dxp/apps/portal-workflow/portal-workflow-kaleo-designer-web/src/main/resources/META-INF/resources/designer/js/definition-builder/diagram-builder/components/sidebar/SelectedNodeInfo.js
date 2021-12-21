@@ -15,14 +15,13 @@ import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
 import {DefinitionBuilderContext} from '../../../DefinitionBuilderContext';
+import {defaultLanguageId} from '../../../constants';
 import {DiagramBuilderContext} from '../../DiagramBuilderContext';
 import SidebarPanel from './SidebarPanel';
 import {isIdDuplicated} from './utils';
 
 export default function SelectedNodeInfo({errors, setErrors}) {
-	const {defaultLanguageId, selectedLanguageId} = useContext(
-		DefinitionBuilderContext
-	);
+	const {selectedLanguageId} = useContext(DefinitionBuilderContext);
 	const {
 		elements,
 		selectedItem,

@@ -9,12 +9,11 @@
  * distribution rights of the Software.
  */
 
+import {defaultLanguageId} from '../../../constants';
 import EndNode from './state/EndNode';
 import StartNode from './state/StartNode';
 import StateNode from './state/StateNode';
 import TaskNode from './state/TaskNode';
-
-const defaultLanguageId = themeDisplay.getLanguageId();
 
 const defaultNodes = [
 	{

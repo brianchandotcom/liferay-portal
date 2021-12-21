@@ -15,6 +15,7 @@ import React, {useContext, useEffect, useRef} from 'react';
 import {Handle} from 'react-flow-renderer';
 
 import {DefinitionBuilderContext} from '../../../DefinitionBuilderContext';
+import {defaultLanguageId} from '../../../constants';
 import {singleEventObserver} from '../../../util/EventObserver';
 import {DiagramBuilderContext} from '../../DiagramBuilderContext';
 import {sourceHandles, targetHandles} from './nodeHandles';
@@ -36,9 +37,7 @@ export default function BaseNode({
 }) {
 	const sourcehandlesRef = useRef();
 	const targethandlesRef = useRef();
-	const {defaultLanguageId, selectedLanguageId} = useContext(
-		DefinitionBuilderContext
-	);
+	const {selectedLanguageId} = useContext(DefinitionBuilderContext);
 
 	const {collidingElements, selectedItem, setSelectedItem} = useContext(
 		DiagramBuilderContext

@@ -104,7 +104,7 @@ definition {
 		}
 
 		task ("Check that the default event was hidden") {
-			ACCustomEvents.viewHideCustomEvent(customEventNameList = "${defaultEventName}");
+			ACDefinitions.viewHiddenEvents(customEventNameList = "${defaultEventName}");
 		}
 
 		task ("Navigation to assetDepthReached") {
@@ -155,15 +155,15 @@ definition {
 		}
 
 		task ("Check that the default event was hidden") {
-			ACCustomEvents.viewHideCustomEvent(customEventNameList = "${defaultEventName}");
+			ACDefinitions.viewHiddenEvents(customEventNameList = "${defaultEventName}");
 		}
 
 		task ("Hide all default events") {
-			ACCustomEvents.hideAllCustomEvents();
+			ACDefinitions.hideAllEvents();
 		}
 
 		task ("Check that the all default events were hidden") {
-			ACCustomEvents.viewHideCustomEvent(customEventNameList = "${defaultEventNameList}");
+			ACDefinitions.viewHiddenEvents(customEventNameList = "${defaultEventNameList}");
 		}
 
 		task ("Navigation to custom events tab") {
@@ -177,7 +177,7 @@ definition {
 		}
 
 		task ("Check that the custom event was hidden") {
-			ACCustomEvents.viewHideCustomEvent(customEventNameList = "${customEventName}");
+			ACDefinitions.viewHiddenEvents(customEventNameList = "${customEventName}");
 		}
 	}
 
@@ -216,11 +216,11 @@ definition {
 		}
 
 		task ("Unhide default event") {
-			ACCustomEvents.unhideCustomEvent(customEventName = "${defaultEventName}");
+			ACDefinitions.unhideEvent(customEventName = "${defaultEventName}");
 		}
 
 		task ("Check that the default event was hidden") {
-			ACCustomEvents.viewUnhideCustomEvent(customEventNameList = "${defaultEventName}");
+			ACDefinitions.viewUnhideEvent(customEventNameList = "${defaultEventName}");
 		}
 
 		task ("Hide default event") {
@@ -228,11 +228,11 @@ definition {
 		}
 
 		task ("Unhide all default events") {
-			ACCustomEvents.unhideAllCustomEvents();
+			ACDefinitions.unhideAllEvents();
 		}
 
 		task ("Check that the all default events were hidden") {
-			ACCustomEvents.viewUnhideCustomEvent(customEventNameList = "${defaultEventNameList}");
+			ACDefinitions.viewUnhideEvent(customEventNameList = "${defaultEventNameList}");
 		}
 
 		task ("Navigation to custom events tab") {
@@ -246,11 +246,11 @@ definition {
 		task ("Unhide custom event") {
 			ACUtils.searchBar(searchItem = "${customEventName}");
 
-			ACCustomEvents.unhideCustomEvent(customEventName = "${customEventName}");
+			ACDefinitions.unhideEvent(customEventName = "${customEventName}");
 		}
 
 		task ("Check that the custom event was unhide") {
-			ACCustomEvents.viewUnhideCustomEvent(customEventNameList = "${customEventName}");
+			ACDefinitions.viewUnhideEvent(customEventNameList = "${customEventName}");
 		}
 	}
 
@@ -372,7 +372,7 @@ definition {
 		}
 
 		task ("Assert certain events hidden by default") {
-			ACCustomEvents.viewHideCustomEvent(customEventNameList = "${defaultEventNameList}");
+			ACDefinitions.viewHiddenEvents(customEventNameList = "${defaultEventNameList}");
 		}
 	}
 

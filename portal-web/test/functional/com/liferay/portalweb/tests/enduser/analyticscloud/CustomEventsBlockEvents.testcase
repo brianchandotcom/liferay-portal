@@ -257,7 +257,7 @@ definition {
 
 			AssertElementNotPresent(
 				key_actionButton = "Block",
-				locator1 = "ACCustomEvents#BLOCK_HIDE_BUTTON");
+				locator1 = "ACCustomEvents#BLOCK_UNBLOCK_EVENT_BUTTON");
 
 			AssertElementNotPresent(locator1 = "ACSettings#SELECT_ALL_CHECKBOX");
 		}
@@ -325,7 +325,7 @@ definition {
 
 			AssertElementNotPresent(
 				key_actionButton = "Unblock Event",
-				locator1 = "ACCustomEvents#BLOCK_HIDE_BUTTON");
+				locator1 = "ACCustomEvents#BLOCK_UNBLOCK_EVENT_BUTTON");
 
 			AssertElementNotPresent(locator1 = "ACSettings#SELECT_ALL_CHECKBOX");
 		}

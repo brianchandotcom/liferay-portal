@@ -138,4 +138,75 @@ definition {
 			locator1 = "ACDefinitions#PRESENT_SEARCH_QUERY_INPUT");
 	}
 
+	macro viewHiddenEvents {
+		for (var customEventName : list "${customEventNameList}") {
+			var key_actionButton = "Show";
+			var key_nameList = "${customEventName}";
+
+			AssertElementPresent(locator1 = "ACDefinitions#HIDE_EVENT_ICON");
+
+			MouseOver(locator1 = "ACUtils#NAME_LIST");
+
+			AssertElementPresent(locator1 = "ACDefinitions#HIDE_UNHIDE_EVENT_BUTTON");
+		}
+	}
+
+	macro hideAllEvents {
+		var key_actionButton = "Hide";
+
+		KeyPress(
+			locator1 = "ACSettings#SELECT_ALL_CHECKBOX",
+			value1 = "\SPACE");
+
+		ACUtils.clickAnyButton(button = "${key_actionButton}");
+
+		ACUtils.clickAnyButton(button = "${key_actionButton}");
+
+		KeyPress(
+			locator1 = "ACSettings#SELECT_ALL_CHECKBOX",
+			value1 = "\SPACE");
+	}
+
+	macro unhideAllEvents {
+		var key_actionButton = "Show";
+
+		KeyPress(
+			locator1 = "ACSettings#SELECT_ALL_CHECKBOX",
+			value1 = "\SPACE");
+
+		ACUtils.clickAnyButton(button = "${key_actionButton}");
+
+		KeyPress(
+			locator1 = "ACSettings#SELECT_ALL_CHECKBOX",
+			value1 = "\SPACE");
+	}
+
+	macro unhideEvent {
+		var key_actionButton = "Show";
+		var key_nameList = "${customEventName}";
+
+		WaitForPageLoad();
+
+		if (IsElementNotPresent(locator1 = "ACUtils#NAME_LIST")) {
+			ACUtils.searchBar(searchItem = "${customEventName}");
+		}
+
+		MouseOver(locator1 = "ACUtils#NAME_LIST");
+
+		Click(locator1 = "ACDefinitions#HIDE_UNHIDE_EVENT_BUTTON");
+	}
+
+	macro viewUnhideEvent {
+		for (var customEventName : list "${customEventNameList}") {
+			var key_actionButton = "Hide";
+			var key_nameList = "${customEventName}";
+
+			AssertElementNotPresent(locator1 = "ACDefinitions#HIDE_EVENT_ICON");
+
+			MouseOver(locator1 = "ACUtils#NAME_LIST");
+
+			AssertElementPresent(locator1 = "ACDefinitions#HIDE_UNHIDE_EVENT_BUTTON");
+		}
+	}
+
 }

@@ -1,5 +1,13 @@
 import {STORAGE_KEYS, Storage} from '../../../common/services/liferay/storage';
 
+export function truncateSearch(text, maxLength) {
+	if (!text || text.length <= maxLength) {
+		return text;
+	}
+
+	return text.slice(0, maxLength) + '...';
+}
+
 export function getApplicationIdSearchParam() {
 	const searchParams = new URLSearchParams(window.location.search);
 	const applicationId = searchParams.get('applicationId');

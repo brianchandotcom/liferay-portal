@@ -1,155 +1,94 @@
 import ClayButton from '@clayui/button';
-import ClayIcon from '@clayui/icon';
-import ClayLabel from '@clayui/label';
 
-import classNames from 'classnames';
-import useDebounce from 'lodash.debounce';
-
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useFormContext} from 'react-hook-form';
 import {WarningBadge} from '../../../../../../../common/components/fragments/Badges/Warning';
 import {SearchInput} from '../../../../../../../common/components/fragments/Forms/Input/Search';
-import {useCustomEvent} from '../../../../../../../common/hooks/useCustomEvent';
+import {useDebounce} from '../../../../../../../common/hooks/useDebounce';
 import {calculatePercentage} from '../../../../../../../common/utils';
-import {TIP_EVENT} from '../../../../../../../common/utils/events';
-import {useBusinessTypes} from '../../../../../hooks/useBusinessTypes';
 import {useStepWizard} from '../../../../../hooks/useStepWizard';
-import {useTriggerContext} from '../../../../../hooks/useTriggerContext';
+import {getTaxonomyCategories} from '../../../../../services/TaxonomyVolucabularies';
 import {AVAILABLE_STEPS, TOTAL_OF_FIELD} from '../../../../../utils/constants';
-import {getLoadedContentFlag} from '../../../../../utils/util';
+import {getLoadedContentFlag, truncateSearch} from '../../../../../utils/util';
+import BusinessTypeRadioGroup from './BusinessTypeRadioGroup';
 
-import {BusinessTypeRadioGroup} from './RadioGroup';
+import InfoPanelButton from './InfoPanelButton';
 
 const MAX_LENGTH_TO_TRUNCATE = 28;
 
-export function BusinessTypeSearch({form, setNewSelectedProduct}) {
+export function BusinessTypeSearch({
+	form,
+	setNewSelectedProduct,
+	taxonomyVocabularyId,
+}) {
+	const [taxonomyCategories, setTaxonomyCategories] = useState([]);
+	const [error, setError] = useState();
 	const {register, setValue} = useFormContext();
-	const [dispatchEvent] = useCustomEvent(TIP_EVENT);
 
 	const {selectedStep, setPercentage} = useStepWizard();
-	const {businessTypes, isError, reload} = useBusinessTypes();
-	const {isSelected, updateState} = useTriggerContext();
 	const [isLoading, setIsLoading] = useState(false);
 	const {applicationId, backToEdit} = getLoadedContentFlag();
 
-	const templateName = 'i-am-unable-to-find-my-industry';
-	const selectedTrigger = isSelected(templateName);
-	let auxSearchToChange = '';
+	const businessSearchDebounced = useDebounce(
+		form?.basics?.businessSearch,
+		500
+	);
+
+	const _getTaxonomyCategories = async (search = '') => {
+		if (!search) {
+			return setTaxonomyCategories([]);
+		}
+
+		try {
+			const taxonomyCategoriesResponse = await getTaxonomyCategories(
+				taxonomyVocabularyId,
+				search
+			);
+
+			const taxonomyCategories =
+				taxonomyCategoriesResponse.data.items || [];
+
+			setError('');
+
+			setTaxonomyCategories(taxonomyCategories);
+		} catch (error) {
+			setError('Unable to make the request. Please try again later.');
+		}
+	};
+
+	const getTaxonomyCategoriesBySearchName = async (searchTerm) => {
+		setIsLoading(true);
+
+		if (!searchTerm) {
+			if (applicationId || backToEdit) {
+				setPercentage(
+					calculatePercentage(
+						TOTAL_OF_FIELD.BASICS - 1,
+						TOTAL_OF_FIELD.BASICS
+					),
+					AVAILABLE_STEPS.BASICS_BUSINESS_TYPE.section
+				);
+			}
+
+			setValue('basics.businessCategoryId', '');
+			setValue('basics.properties.businessClassCode', '');
+			setValue('basics.properties.naics', '');
+			setValue('basics.properties.segment', '');
+			setValue('basics.product', '');
+		}
+
+		await _getTaxonomyCategories(searchTerm);
+
+		setIsLoading(false);
+	};
 
 	useEffect(() => {
-		auxSearchToChange = form?.basics?.businessSearch;
-		onSearch(form?.basics?.businessSearch);
-		setIsLoading(true);
+		getTaxonomyCategoriesBySearchName(businessSearchDebounced);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [form?.basics?.businessSearch]);
+	}, [businessSearchDebounced]);
 
-	const onSearch = useCallback(
-		useDebounce(async (searchTerm = '') => {
-			if (!searchTerm || auxSearchToChange !== searchTerm) {
-				setValue('basics.businessCategoryId', '');
-				auxSearchToChange = searchTerm;
-			}
-			await reload(searchTerm);
-			if (!searchTerm) {
-				if (applicationId || backToEdit) {
-					setPercentage(
-						calculatePercentage(
-							TOTAL_OF_FIELD.BASICS - 1,
-							TOTAL_OF_FIELD.BASICS
-						),
-						AVAILABLE_STEPS.BASICS_BUSINESS_TYPE.section
-					);
-				}
-				setValue('basics.properties.businessClassCode', '');
-				setValue('basics.properties.naics', '');
-				setValue('basics.properties.segment', '');
-				setValue('basics.product', '');
-			}
-			setIsLoading(false);
-		}, 500),
-		[]
-	);
-
-	const truncateSearch = (text) => {
-		if (!text || text.length <= MAX_LENGTH_TO_TRUNCATE) {
-			return text;
-		}
-
-		return text.slice(0, MAX_LENGTH_TO_TRUNCATE) + '...';
-	};
-
-	const showInfoPanel = () => {
-		updateState(templateName);
-		dispatchEvent({
-			hide: selectedTrigger,
-			step: selectedStep,
-			templateName,
-		});
-	};
-
-	const infoPanelButton = () => (
-		<ClayLabel
-			className={classNames('btn-info-panel mt-3', {
-				'label-inverse-primary': selectedTrigger,
-				'label-tonal-primary': !selectedTrigger,
-			})}
-			onClick={showInfoPanel}
-		>
-			<div className="align-items-center d-flex mx-2">
-				<span className="text-paragraph-sm">
-					I am unable to find my industry
-				</span>
-
-				<span className="inline-item inline-item-after">
-					<ClayIcon
-						symbol={
-							selectedTrigger
-								? 'question-circle-full'
-								: 'question-circle'
-						}
-					/>
-				</span>
-			</div>
-		</ClayLabel>
-	);
-
-	const renderResults = () => {
-		if (isLoading || !form?.basics?.businessSearch) {
-			return;
-		}
-
-		if (isError) {
-			return (
-				<>
-					<WarningBadge>{isError}</WarningBadge>
-				</>
-			);
-		}
-
-		if (businessTypes.length) {
-			return (
-				<>
-					<BusinessTypeRadioGroup
-						businessTypes={businessTypes}
-						form={form}
-						setNewSelectedProduct={setNewSelectedProduct}
-					/>
-					{infoPanelButton()}
-				</>
-			);
-		}
-
-		return (
-			<>
-				<WarningBadge>
-					There are no results for &quot;
-					{truncateSearch(form?.basics?.businessSearch)}
-					&quot;. Please try a different search.
-				</WarningBadge>
-				{infoPanelButton()}
-			</>
-		);
-	};
+	const noResults =
+		!taxonomyCategories.length && !isLoading && businessSearchDebounced;
 
 	return (
 		<>
@@ -168,9 +107,6 @@ export function BusinessTypeSearch({form, setNewSelectedProduct}) {
 					<ClayButton
 						className="font-weight-bolder ml-3 search text-paragraph text-small-caps"
 						displayType="primary"
-						onClick={() => {
-							onSearch(form?.basics?.businessSearch);
-						}}
 					>
 						Search
 					</ClayButton>
@@ -180,7 +116,29 @@ export function BusinessTypeSearch({form, setNewSelectedProduct}) {
 					i.e. Apartments, Coffee, Medical, Pet Stores, etc
 				</p>
 			</div>
-			{renderResults()}
+
+			<BusinessTypeRadioGroup
+				businessTypes={taxonomyCategories}
+				form={form}
+				setNewSelectedProduct={setNewSelectedProduct}
+			/>
+
+			{noResults && (
+				<WarningBadge>
+					There are no results for &quot;
+					{truncateSearch(
+						form?.basics?.businessSearch,
+						MAX_LENGTH_TO_TRUNCATE
+					)}
+					&quot;. Please try a different search.
+				</WarningBadge>
+			)}
+
+			{error && <WarningBadge>{error}</WarningBadge>}
+
+			{businessSearchDebounced && !isLoading && (
+				<InfoPanelButton selectedStep={selectedStep} />
+			)}
 		</>
 	);
 }

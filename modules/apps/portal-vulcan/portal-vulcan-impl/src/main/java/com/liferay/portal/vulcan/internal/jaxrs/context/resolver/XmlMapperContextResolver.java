@@ -18,6 +18,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import com.fasterxml.jackson.module.jaxb.JaxbAnnotationModule;
 
 import javax.ws.rs.ext.ContextResolver;
 import javax.ws.rs.ext.Provider;
@@ -38,6 +39,7 @@ public class XmlMapperContextResolver implements ContextResolver<XmlMapper> {
 		private static final XmlMapper _XML_MAPPER = new XmlMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
+				registerModule(new JaxbAnnotationModule());
 				setDateFormat(new ISO8601DateFormat());
 				setDefaultUseWrapper(false);
 				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);

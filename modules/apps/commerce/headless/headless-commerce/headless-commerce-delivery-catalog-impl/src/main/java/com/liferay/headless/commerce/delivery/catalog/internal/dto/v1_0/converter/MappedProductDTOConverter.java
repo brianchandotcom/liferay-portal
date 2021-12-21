@@ -378,12 +378,9 @@ public class MappedProductDTOConverter
 
 		BigDecimal unitPromoPrice = unitPromoPriceCommerceMoney.getPrice();
 
-		int compareUnitPricePromoPrice = unitPromoPrice.compareTo(
-			unitPriceCommerceMoney.getPrice());
-
 		if ((unitPromoPrice != null) &&
 			(unitPromoPrice.compareTo(BigDecimal.ZERO) > 0) &&
-			(compareUnitPricePromoPrice < 0)) {
+			(unitPromoPrice.compareTo(unitPriceCommerceMoney.getPrice()) < 0)) {
 
 			price.setPromoPrice(unitPromoPrice.doubleValue());
 			price.setPromoPriceFormatted(

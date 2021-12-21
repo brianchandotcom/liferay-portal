@@ -12,13 +12,7 @@
 import Diagram from '../../../src/main/resources/META-INF/resources/js/DiagramWithAutomapping/Diagram';
 
 import '@testing-library/jest-dom/extend-expect';
-import {
-	act,
-	cleanup,
-	fireEvent,
-	render,
-	waitForElement,
-} from '@testing-library/react';
+import {act, fireEvent, render, waitFor} from '@testing-library/react';
 import fetchMock from 'fetch-mock';
 import React from 'react';
 
@@ -69,7 +63,7 @@ describe('Diagram', () => {
 				);
 			});
 
-			await waitForElement(async () =>
+			await waitFor(async () =>
 				diagram.container.querySelector('.sequences')
 			);
 
@@ -80,8 +74,6 @@ describe('Diagram', () => {
 
 		afterEach(() => {
 			diagram?.unmount();
-
-			cleanup();
 		});
 
 		it('must render a Diagram', () => {
@@ -165,7 +157,7 @@ describe('Diagram', () => {
 				);
 			});
 
-			await waitForElement(async () =>
+			await waitFor(async () =>
 				diagram.container.querySelector('.sequences')
 			);
 		});

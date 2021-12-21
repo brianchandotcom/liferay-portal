@@ -5,18 +5,6 @@ import {toSlug} from '../../utils';
 const _formatCommerceProductPrice = (price) => parseInt(price, 10);
 
 /**
- * @param {AssetCategoryResponse[]}  data Array of matched categories
- * @returns {BusinessType[]} Array of business types
- */
-const adaptToBusinessType = (data) =>
-	data.map(({description, id, name, taxonomyCategoryProperties}) => ({
-		description,
-		id,
-		taxonomyCategoryProperties,
-		title: name,
-	}));
-
-/**
  * @param {DataForm}  data Basics form object
  * @returns {BasicsFormApplicationRequest} Basics Form ready for application request
  */
@@ -177,7 +165,6 @@ const adaptToProductQuote = (data = []) =>
 	}));
 
 export const LiferayAdapt = {
-	adaptToBusinessType,
 	adaptToFormApplicationRequest,
 	adaptToProductQuote,
 	adaptToRaylifeApplicationToForm,

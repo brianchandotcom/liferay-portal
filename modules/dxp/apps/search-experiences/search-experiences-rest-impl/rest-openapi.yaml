@@ -32,10 +32,8 @@ components:
                     properties:
                         parameterName:
                             type: string
-                        values:
-                            items:
-                                type: object
-                            type: array
+                        value:
+                            type: object
                     type: object
                 allConditions:
                     items:
@@ -51,10 +49,6 @@ components:
                             type: string
                         value:
                             type: object
-                        values:
-                            items:
-                                type: object
-                            type: array
                     type: object
                 equals:
                     properties:
@@ -86,12 +80,6 @@ components:
                             type: object
                         parameterName:
                             type: string
-                        value:
-                            type: object
-                        values:
-                            items:
-                                type: object
-                            type: array
                     type: object
             type: object
         Configuration:

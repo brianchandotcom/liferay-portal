@@ -21,7 +21,7 @@ public class DateTimeFDSTableSchemaField extends BaseDateFDSTableSchemaField {
 
 	@Override
 	public String getContentRenderer() {
-		return "datetime";
+		return "dateTime";
 	}
 
 }

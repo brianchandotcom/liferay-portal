@@ -16,7 +16,7 @@ package com.liferay.portal.workflow.instance.tracker.web.internal.url.provider;
 
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
+import com.liferay.portal.kernel.bean.BeanProperties;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.UnicodeLanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -59,10 +59,10 @@ public class WorkflowInstanceTrackerURLProviderImpl
 					WorkflowInstanceLink workflowInstanceLink =
 						_workflowInstanceLinkLocalService.
 							getWorkflowInstanceLink(
-								BeanPropertiesUtil.getLong(bean, "companyId"),
-								BeanPropertiesUtil.getLong(bean, "groupId"),
+								_beanProperties.getLong(bean, "companyId"),
+								_beanProperties.getLong(bean, "groupId"),
 								modelClass.getName(),
-								BeanPropertiesUtil.getLong(bean, "primaryKey"));
+								_beanProperties.getLong(bean, "primaryKey"));
 
 					return workflowInstanceLink.getWorkflowInstanceId();
 				}
@@ -92,6 +92,9 @@ public class WorkflowInstanceTrackerURLProviderImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		WorkflowInstanceTrackerURLProviderImpl.class);
+
+	@Reference
+	private BeanProperties _beanProperties;
 
 	@Reference
 	private Portal _portal;

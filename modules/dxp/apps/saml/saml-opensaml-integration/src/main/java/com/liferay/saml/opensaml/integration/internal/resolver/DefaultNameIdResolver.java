@@ -16,7 +16,7 @@ package com.liferay.saml.opensaml.integration.internal.resolver;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
+import com.liferay.portal.kernel.bean.BeanProperties;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.saml.opensaml.integration.internal.metadata.MetadataManager;
@@ -71,8 +71,7 @@ public class DefaultNameIdResolver implements NameIdResolver {
 			return nameIdAttributeName.substring(7);
 		}
 
-		return _toString(
-			BeanPropertiesUtil.getObject(user, nameIdAttributeName));
+		return _toString(_beanProperties.getObject(user, nameIdAttributeName));
 	}
 
 	private String _toString(Object object) {
@@ -82,6 +81,9 @@ public class DefaultNameIdResolver implements NameIdResolver {
 
 		return object.toString();
 	}
+
+	@Reference
+	private BeanProperties _beanProperties;
 
 	private MetadataManager _metadataManager;
 

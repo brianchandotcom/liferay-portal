@@ -40,7 +40,7 @@ definition {
 		}
 
 		if ("${editOption}" == "Filter") {
-			Click(locator1 = "ACEventAnalysis#CONDITION_BUTTON");
+			Click(locator1 = "ACEventAnalysis#FILTER_BUTTON");
 
 			Click(locator1 = "ACEventAnalysis#EDIT_PENCIL");
 
@@ -92,7 +92,7 @@ definition {
 		ACCustomEvents.viewDataType(typeValue = "${newDataType}");
 
 		if (("${newDataType}" != "STRING") && ("${newDataType}" != "BOOLEAN")) {
-			Click(locator1 = "ACEventAnalysis#CONDITION_BUTTON");
+			Click(locator1 = "ACEventAnalysis#FILTER_BUTTON");
 		}
 
 		if (("${newDataType}" == "NUMBER") || ("${newDataType}" == "DURATION")) {

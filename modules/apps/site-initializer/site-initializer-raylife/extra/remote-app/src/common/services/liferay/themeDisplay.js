@@ -5,7 +5,8 @@ export function getLiferayGroupId() {
 	try {
 		// eslint-disable-next-line no-undef
 		return Liferay.ThemeDisplay.getSiteGroupId();
-	} catch (error) {
+	}
+	catch (error) {
 		console.warn('Not able to find Liferay Group Id\n', error);
 
 		return '';
@@ -19,7 +20,8 @@ export function getScopeGroupId() {
 	try {
 		// eslint-disable-next-line no-undef
 		return Liferay.ThemeDisplay.getScopeGroupId();
-	} catch (error) {
+	}
+	catch (error) {
 		console.warn('Not able to find Liferay Scope Group Id\n', error);
 
 		return '';
@@ -33,7 +35,8 @@ export function getCompanyGroupId() {
 	try {
 		// eslint-disable-next-line no-undef
 		return Liferay.ThemeDisplay.getCompanyGroupId();
-	} catch (error) {
+	}
+	catch (error) {
 		console.warn('Not able to find Liferay Scope Group Id\n', error);
 
 		return '';

@@ -114,6 +114,22 @@ definition {
 		Click(locator1 = "ACDefinitions#DEFINITION_TYPE");
 	}
 
+	macro hideAllEvents {
+		var key_actionButton = "Hide";
+
+		KeyPress(
+			locator1 = "ACSettings#SELECT_ALL_CHECKBOX",
+			value1 = "\SPACE");
+
+		ACUtils.clickAnyButton(button = "${key_actionButton}");
+
+		ACUtils.clickAnyButton(button = "${key_actionButton}");
+
+		KeyPress(
+			locator1 = "ACSettings#SELECT_ALL_CHECKBOX",
+			value1 = "\SPACE");
+	}
+
 	macro noViewAddSearchQueryButton {
 		AssertElementNotPresent(
 			key_query = "${query}",
@@ -130,41 +146,6 @@ definition {
 		var key_attributeName = "${attributeName}";
 
 		Click(locator1 = "ACDefinitions#ATTRIBUTE_NAME");
-	}
-
-	macro viewSearchQuery {
-		AssertElementPresent(
-			key_query = "${query}",
-			locator1 = "ACDefinitions#PRESENT_SEARCH_QUERY_INPUT");
-	}
-
-	macro viewHiddenEvents {
-		for (var customEventName : list "${customEventNameList}") {
-			var key_actionButton = "Show";
-			var key_nameList = "${customEventName}";
-
-			AssertElementPresent(locator1 = "ACDefinitions#HIDE_EVENT_ICON");
-
-			MouseOver(locator1 = "ACUtils#NAME_LIST");
-
-			AssertElementPresent(locator1 = "ACDefinitions#HIDE_UNHIDE_EVENT_BUTTON");
-		}
-	}
-
-	macro hideAllEvents {
-		var key_actionButton = "Hide";
-
-		KeyPress(
-			locator1 = "ACSettings#SELECT_ALL_CHECKBOX",
-			value1 = "\SPACE");
-
-		ACUtils.clickAnyButton(button = "${key_actionButton}");
-
-		ACUtils.clickAnyButton(button = "${key_actionButton}");
-
-		KeyPress(
-			locator1 = "ACSettings#SELECT_ALL_CHECKBOX",
-			value1 = "\SPACE");
 	}
 
 	macro unhideAllEvents {
@@ -194,6 +175,25 @@ definition {
 		MouseOver(locator1 = "ACUtils#NAME_LIST");
 
 		Click(locator1 = "ACDefinitions#HIDE_UNHIDE_EVENT_BUTTON");
+	}
+
+	macro viewHiddenEvents {
+		for (var customEventName : list "${customEventNameList}") {
+			var key_actionButton = "Show";
+			var key_nameList = "${customEventName}";
+
+			AssertElementPresent(locator1 = "ACDefinitions#HIDE_EVENT_ICON");
+
+			MouseOver(locator1 = "ACUtils#NAME_LIST");
+
+			AssertElementPresent(locator1 = "ACDefinitions#HIDE_UNHIDE_EVENT_BUTTON");
+		}
+	}
+
+	macro viewSearchQuery {
+		AssertElementPresent(
+			key_query = "${query}",
+			locator1 = "ACDefinitions#PRESENT_SEARCH_QUERY_INPUT");
 	}
 
 	macro viewUnhideEvent {

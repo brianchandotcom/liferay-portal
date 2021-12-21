@@ -27,6 +27,17 @@ definition {
 		Click(locator1 = "CKEditor#TABLE_ICON");
 
 		Click(locator1 = "CKEditor#OK_BUTTON");
+		
+	macro addPageSummary {
+		var key_text = "Summary";
+
+		if (IsNotVisible(locator1 = "TextInput#ANY")) {
+			Panel.expandPanel(panel = "Configuration");
+		}
+
+		Type(
+			locator1 = "TextInput#ANY",
+			value1 = "${wikiPageSummary}");
 	}
 
 	macro addPageTitle {

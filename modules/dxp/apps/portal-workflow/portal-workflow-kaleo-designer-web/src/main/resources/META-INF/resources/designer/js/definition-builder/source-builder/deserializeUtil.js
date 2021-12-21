@@ -427,6 +427,7 @@ XMLDefinition.prototype = {
 					locator: 'labels',
 				},
 				'metadata',
+				'name',
 				'script',
 				{
 					key: 'scriptLanguage',

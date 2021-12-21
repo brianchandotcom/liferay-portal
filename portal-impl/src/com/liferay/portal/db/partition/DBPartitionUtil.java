@@ -138,61 +138,7 @@ public class DBPartitionUtil {
 			return false;
 		}
 
-		Connection connection = CurrentConnectionUtil.getConnection(
-			InfrastructureUtil.getDataSource());
-
-		DBInspector dbInspector = new DBInspector(connection);
-
-		List<String> controlTableNames = new ArrayList<>();
-
-		try {
-			DatabaseMetaData databaseMetaData = connection.getMetaData();
-
-			try (ResultSet resultSet = databaseMetaData.getTables(
-					_defaultSchemaName, dbInspector.getSchema(), null,
-					new String[] {"TABLE"});
-				Statement statement = connection.createStatement()) {
-
-				while (resultSet.next()) {
-					String tableName = resultSet.getString("TABLE_NAME");
-
-					if (_isControlTable(dbInspector, tableName)) {
-						controlTableNames.add(tableName);
-
-						_migrateTable(
-							companyId, tableName, statement, dbInspector);
-					}
-				}
-			}
-		}
-		catch (Exception exception1) {
-			if (ListUtil.isEmpty(controlTableNames)) {
-				throw new PortalException(exception1);
-			}
-
-			try {
-				for (String tableName : controlTableNames) {
-					try (Statement statement = connection.createStatement()) {
-						_restoreTable(
-							companyId, tableName, statement, dbInspector);
-					}
-				}
-			}
-			catch (Exception exception2) {
-				throw new PortalException(
-					StringBundler.concat(
-						"Unable to rollback the removal of database ",
-						"partition. Recover a backup of the database schema ",
-						_getSchemaName(companyId), "."),
-					exception2);
-			}
-
-			throw new PortalException(
-				"Removal of database partition removal was rolled back",
-				exception1);
-		}
-
-		return true;
+		return _migrateDBPartition(companyId);
 	}
 
 	public static void setDefaultCompanyId(Connection connection)
@@ -479,6 +425,66 @@ public class DBPartitionUtil {
 		}
 
 		return false;
+	}
+
+	private static boolean _migrateDBPartition(long companyId)
+		throws PortalException {
+
+		Connection connection = CurrentConnectionUtil.getConnection(
+			InfrastructureUtil.getDataSource());
+
+		DBInspector dbInspector = new DBInspector(connection);
+
+		List<String> controlTableNames = new ArrayList<>();
+
+		try {
+			DatabaseMetaData databaseMetaData = connection.getMetaData();
+
+			try (ResultSet resultSet = databaseMetaData.getTables(
+					_defaultSchemaName, dbInspector.getSchema(), null,
+					new String[] {"TABLE"});
+				Statement statement = connection.createStatement()) {
+
+				while (resultSet.next()) {
+					String tableName = resultSet.getString("TABLE_NAME");
+
+					if (_isControlTable(dbInspector, tableName)) {
+						controlTableNames.add(tableName);
+
+						_migrateTable(
+							companyId, tableName, statement, dbInspector);
+					}
+				}
+			}
+		}
+		catch (Exception exception1) {
+			if (ListUtil.isEmpty(controlTableNames)) {
+				throw new PortalException(exception1);
+			}
+
+			try {
+				for (String tableName : controlTableNames) {
+					try (Statement statement = connection.createStatement()) {
+						_restoreTable(
+							companyId, tableName, statement, dbInspector);
+					}
+				}
+			}
+			catch (Exception exception2) {
+				throw new PortalException(
+					StringBundler.concat(
+						"Unable to rollback the removal of database ",
+						"partition. Recover a backup of the database schema ",
+						_getSchemaName(companyId), "."),
+					exception2);
+			}
+
+			throw new PortalException(
+				"Removal of database partition removal was rolled back",
+				exception1);
+		}
+
+		return true;
 	}
 
 	private static void _migrateTable(

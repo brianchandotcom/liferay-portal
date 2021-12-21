@@ -9,11 +9,6 @@
 		"react": "16.12.0",
 		"react-dom": "16.12.0"
 	},
-	"jest": {
-		"setupFilesAfterEnv": [
-			"@testing-library/react/cleanup-after-each"
-		]
-	},
 	"main": "js/index-synonym-sets.es.js",
 	"name": "portal-search-synonyms-web",
 	"private": true,

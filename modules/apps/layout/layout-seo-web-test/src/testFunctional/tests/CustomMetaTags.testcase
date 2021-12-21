@@ -49,6 +49,8 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanClearCustomTag {
+		property portal.acceptance = "true";
+
 		var portalURL = PropsUtil.get("portal.url");
 
 		CustomMetaTags.openToCustomMetaTags(
@@ -77,6 +79,8 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanEditTag {
+		property portal.acceptance = "true";
+
 		var portalURL = PropsUtil.get("portal.url");
 
 		CustomMetaTags.openToCustomMetaTags(
@@ -107,6 +111,8 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanViewMultipleTranslatedTags {
+		property portal.acceptance = "true";
+
 		var portalURL = PropsUtil.get("portal.url");
 
 		CustomMetaTags.openToCustomMetaTags(
@@ -141,6 +147,8 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanViewTagAfterEditingPage {
+		property portal.acceptance = "true";
+
 		var portalURL = PropsUtil.get("portal.url");
 
 		CustomMetaTags.openToCustomMetaTags(
@@ -179,6 +187,8 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanViewTagWithoutPropertyOrContent {
+		property portal.acceptance = "true";
+
 		var portalURL = PropsUtil.get("portal.url");
 
 		CustomMetaTags.openToCustomMetaTags(
@@ -228,6 +238,8 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanViewTranslatedTagWithDefaultValue {
+		property portal.acceptance = "true";
+
 		var portalURL = PropsUtil.get("portal.url");
 
 		CustomMetaTags.openToCustomMetaTags(

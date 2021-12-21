@@ -1,6 +1,7 @@
 @component-name = "portal-collaboration"
 definition {
 
+	property portal.acceptance = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Friendly URL Service";
@@ -311,6 +312,8 @@ definition {
 	@description = "This test covers LPS-119836. It ensures the localized URL with special characters can be escaped correctly and viewed in friendly URL history."
 	@priority = "4"
 	test ViewFriendlyURLWithSpecialCharacters {
+		property portal.acceptance = "false";
+
 		PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 		PagesAdmin.gotoPageEllipsisMenuItem(

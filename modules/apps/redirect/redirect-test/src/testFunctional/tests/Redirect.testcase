@@ -1,6 +1,7 @@
 @component-name = "portal-collaboration"
 definition {
 
+	property portal.acceptance = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Redirect";
@@ -821,6 +822,8 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanOrder404URLsByRequests {
+		property portal.acceptance = "false";
+
 		var portalURL = PropsUtil.get("portal.url");
 
 		JSONLayout.addPublicLayout(
@@ -916,6 +919,8 @@ definition {
 	@priority = "3"
 	@refactordone
 	test CanSearchForEntry {
+		property portal.acceptance = "false";
+
 		var portalURL = PropsUtil.get("portal.url");
 
 		JSONRedirect.addRedirect(

@@ -32,6 +32,8 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanPreviewAfterReplacingImage {
+		property portal.acceptance = "true";
+
 		var portalURL = PropsUtil.get("portal.url");
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
@@ -90,6 +92,8 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanPreviewInheritedSEO {
+		property portal.acceptance = "true";
+
 		var portalURL = PropsUtil.get("portal.url");
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
@@ -185,6 +189,8 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanPreviewWithLongInputs {
+		property portal.acceptance = "true";
+
 		var portalURL = PropsUtil.get("portal.url");
 
 		JSONLayout.addPublicLayout(
@@ -228,6 +234,8 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanReturnToDefault {
+		property portal.acceptance = "true";
+
 		var portalURL = PropsUtil.get("portal.url");
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
@@ -265,6 +273,8 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanViewArabicTranslation {
+		property portal.acceptance = "true";
+
 		var portalURL = PropsUtil.get("portal.url");
 
 		JSONLayout.addPublicLayout(
@@ -347,6 +357,8 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanViewSpecialImages {
+		property portal.acceptance = "true";
+
 		var portalURL = PropsUtil.get("portal.url");
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
@@ -380,6 +392,8 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanViewTranslatedLanguages {
+		property portal.acceptance = "true";
+
 		var portalURL = PropsUtil.get("portal.url");
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
@@ -467,6 +481,8 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanViewUntranslatedLanguage {
+		property portal.acceptance = "true";
+
 		var portalURL = PropsUtil.get("portal.url");
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");

@@ -13,12 +13,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {
-	cleanup,
-	fireEvent,
-	render,
-	waitForElement,
-} from '@testing-library/react';
+import {fireEvent, render} from '@testing-library/react';
 import React from 'react';
 import {act} from 'react-dom/test-utils';
 
@@ -50,7 +45,6 @@ describe('Checkin', () => {
 		components[id] = component;
 	};
 	Liferay.componentReady = (id) => Promise.resolve(components[id]);
-	afterEach(cleanup);
 
 	describe('when the file is checked out', () => {
 		describe('and the component is rendered', () => {
@@ -74,17 +68,15 @@ describe('Checkin', () => {
 				});
 
 				it('renders the form', async () => {
-					const form = await waitForElement(() =>
-						result.getByRole('form')
-					);
+					const form = await result.findByRole('form');
+
 					expect(form).toBeTruthy();
 				});
 
 				describe('and the form is submitted', () => {
 					beforeEach(async () => {
-						const form = await waitForElement(() =>
-							result.getByRole('form')
-						);
+						const form = await result.findByRole('form');
+
 						act(() => {
 							fireEvent.submit(form);
 						});
@@ -100,14 +92,14 @@ describe('Checkin', () => {
 
 				describe('and the save button is cliked with changes in version and changeLog', () => {
 					beforeEach(async () => {
-						const saveButton = await waitForElement(() =>
-							result.getByText('save')
+						const saveButton = await result.findByText('save');
+
+						const changeLogField = await result.findByLabelText(
+							'version-notes'
 						);
-						const changeLogField = await waitForElement(() =>
-							result.getByLabelText('version-notes')
-						);
-						const minorVersionRadio = await waitForElement(() =>
-							result.getByLabelText('minor-version')
+
+						const minorVersionRadio = await result.findByLabelText(
+							'minor-version'
 						);
 
 						act(() => {
@@ -153,17 +145,14 @@ describe('Checkin', () => {
 				});
 
 				it('renders the form', async () => {
-					const form = await waitForElement(() =>
-						result.getByRole('form')
-					);
+					const form = await result.findByRole('form');
 					expect(form).toBeTruthy();
 				});
 
 				describe('and the form is submitted', () => {
 					beforeEach(async () => {
-						const form = await waitForElement(() =>
-							result.getByRole('form')
-						);
+						const form = await result.findByRole('form');
+
 						act(() => {
 							fireEvent.submit(form);
 						});

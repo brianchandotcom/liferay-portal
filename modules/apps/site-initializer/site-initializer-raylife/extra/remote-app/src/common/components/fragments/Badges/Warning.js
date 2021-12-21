@@ -8,7 +8,7 @@ export function WarningBadge({children}) {
 			<div className="align-items-center badge d-flex m-0 warning">
 				<span className="inline-item inline-item-before">
 					<ClayIcon
-						className="c-ml-4 c-mr-2"
+						className="c-ml-2 c-mr-2"
 						symbol="exclamation-full"
 					/>
 				</span>

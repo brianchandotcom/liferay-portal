@@ -58,6 +58,7 @@ public abstract class BaseDBColumnSizeUpgradeProcess extends UpgradeProcess {
 
 	private void _upgradeTables() throws Exception {
 		DatabaseMetaData databaseMetaData = connection.getMetaData();
+		DB db = DBManagerUtil.getDB();
 
 		DBInspector dbInspector = new DBInspector(connection);
 
@@ -86,13 +87,27 @@ public abstract class BaseDBColumnSizeUpgradeProcess extends UpgradeProcess {
 					}
 				}
 
-				try (ResultSet indexResultSet = databaseMetaData.getIndexInfo(
-						catalog, schema, tableName, false, false)) {
+				ResultSet indexResultSet = null;
 
+				if (db.getDBType() == DBType.ORACLE) {
+					indexResultSet = databaseMetaData.getIndexInfo(
+						catalog, schema, tableName, false, true);
+				}
+				else {
+					indexResultSet = databaseMetaData.getIndexInfo(
+						catalog, schema, tableName, false, false);
+				}
+
+				try {
 					while (indexResultSet.next()) {
 						invalidColumnNames.add(
 							StringUtil.toUpperCase(
 								indexResultSet.getString("COLUMN_NAME")));
+					}
+				}
+				finally {
+					if (indexResultSet != null) {
+						indexResultSet.close();
 					}
 				}
 

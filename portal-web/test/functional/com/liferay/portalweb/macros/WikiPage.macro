@@ -1829,6 +1829,32 @@ definition {
 		}
 	}
 
+	macro viewSummary {
+		var key_wikiPageRevision = "${wikiPageRevision}";
+		var key_wikiPageTitle = "${wikiPageTitle}";
+		var key_wikiVersionSummary = "${wikiVersionSummary}";
+
+		AssertTextEquals(
+			locator1 = "Portlet#H3_HEADER",
+			value1 = "${wikiPageTitle}");
+
+		AssertClick(
+			locator1 = "Link#DETAILS",
+			value1 = "Details");
+
+		AssertClick(
+			locator1 = "Wiki#PAGE_TABS_HISTORY",
+			value1 = "History");
+
+		AssertClick(
+			locator1 = "Wiki#HISTORY_VERSIONS_TAB",
+			value1 = "Versions");
+
+		AssertTextEquals(
+			locator1 = "Wiki#HISTORY_VERSIONS_SUMMARY",
+			value1 = "${wikiVersionSummary}");
+	}
+
 	macro viewTagViaAddPG {
 		for (var tagName : list "${tagNameList}") {
 			var key_tagName = "${tagName}";

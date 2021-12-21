@@ -22,6 +22,8 @@ export default function ({namespace}) {
 			const openerWindow = Liferay.Util.getOpener();
 			const form = document.getElementById(`${namespace}fm`);
 
+			form.classList.add('hide');
+
 			openerWindow.document.body.appendChild(form);
 			openerWindow.submitForm(form);
 		});

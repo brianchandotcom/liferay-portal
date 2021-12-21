@@ -13,7 +13,7 @@ import React from 'react';
 
 const markerEndId = 'arrowclosed';
 
-export default function MarkerEndDefinition() {
+export default function MarkerEndDefinition({color}) {
 	return (
 		<defs>
 			<marker
@@ -27,9 +27,9 @@ export default function MarkerEndDefinition() {
 				viewBox="-5 -5 10 10"
 			>
 				<polyline
-					fill="#80ACFF"
+					fill={color}
 					points="-4,-3 0,0 -4,3 -4,-3"
-					stroke="#80ACFF"
+					stroke={color}
 					strokeLinecap="round"
 					strokeLinejoin="round"
 					strokeWidth="1"

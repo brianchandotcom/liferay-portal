@@ -9,7 +9,8 @@
  * distribution rights of the Software.
  */
 
-import React, {useMemo} from 'react';
+import PropTypes from 'prop-types';
+import React, {useContext, useMemo} from 'react';
 import {
 	EdgeText,
 	getBezierPath,
@@ -18,22 +19,36 @@ import {
 	useStoreState,
 } from 'react-flow-renderer';
 
+import {DefinitionBuilderContext} from '../../../DefinitionBuilderContext';
+import {DiagramBuilderContext} from '../../DiagramBuilderContext';
 import MarkerEndDefinition, {markerEndId} from './MarkerEndDefinition';
 import {getEdgeParams} from './utils';
 
-function Edge({
-	data: {label},
-	id,
-	source,
-	sourceX,
-	sourceY,
-	sourcePosition,
-	style = {},
-	target,
-	targetPosition,
-	targetX,
-	targetY,
-}) {
+function Edge(props) {
+	const {
+		data: {defaultEdge = true, label = {}},
+		id,
+		source,
+		sourceX,
+		sourceY,
+		sourcePosition,
+		style = {},
+		target,
+		targetPosition,
+		targetX,
+		targetY,
+	} = props;
+	const {defaultLanguageId, selectedLanguageId} = useContext(
+		DefinitionBuilderContext
+	);
+	const {selectedItem, setSelectedItem} = useContext(DiagramBuilderContext);
+
+	let edgeLabel = label[defaultLanguageId];
+
+	if (selectedLanguageId && label[selectedLanguageId]) {
+		edgeLabel = label[selectedLanguageId];
+	}
+
 	const edgePath = getSmoothStepPath({
 		sourcePosition,
 		sourceX,
@@ -100,15 +115,25 @@ function Edge({
 		targetY: ty,
 	});
 
+	const [strokeColor, labelBg] =
+		selectedItem?.id === id
+			? ['#80ACFF', '#0B5FFF']
+			: ['#A7A9BC', '#6B6C7E'];
+
 	const edgeStyle = {
 		...style,
-		stroke: '#80ACFF',
+		stroke: strokeColor,
+		strokeDasharray: 0,
 		strokeWidth: 2,
 	};
 
+	if (!defaultEdge) {
+		edgeStyle.strokeDasharray = 5;
+	}
+
 	return (
 		<g className="react-flow__connection">
-			<MarkerEndDefinition />
+			<MarkerEndDefinition color={strokeColor} />
 
 			<path
 				className="react-flow__edge-path"
@@ -119,20 +144,39 @@ function Edge({
 			/>
 
 			<EdgeText
-				label={label.toUpperCase()}
+				className="reaft-flow-__edge-text"
+				label={edgeLabel.toUpperCase()}
 				labelBgBorderRadius="13px"
 				labelBgPadding={[8, 4]}
 				labelBgStyle={{
-					fill: '#0B5FFF',
+					fill: labelBg,
 				}}
 				labelShowBg={true}
 				labelStyle={{fill: '#FFF', fontWeight: 600}}
+				onClick={() => setSelectedItem(props)}
 				x={labelPositionX}
 				y={labelPositionY}
 			/>
 		</g>
 	);
 }
+
+Edge.propTypes = {
+	data: PropTypes.shape({
+		defaultEdge: PropTypes.bool,
+		label: PropTypes.object,
+	}),
+	id: PropTypes.string.isRequired,
+	source: PropTypes.string,
+	sourcePosition: PropTypes.string,
+	sourceX: PropTypes.string,
+	sourceY: PropTypes.string,
+	style: PropTypes.object,
+	target: PropTypes.string,
+	targetPosition: PropTypes.string,
+	targetX: PropTypes.string,
+	targetY: PropTypes.string,
+};
 
 const edgeTypes = {
 	transition: Edge,

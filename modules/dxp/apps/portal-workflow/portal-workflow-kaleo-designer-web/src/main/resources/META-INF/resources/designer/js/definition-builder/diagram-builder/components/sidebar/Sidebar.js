@@ -13,6 +13,7 @@ import React, {useContext, useEffect, useState} from 'react';
 import {isNode} from 'react-flow-renderer';
 
 import {DiagramBuilderContext} from '../../DiagramBuilderContext';
+import SelectedEdgeInfo from './SelectedEdgeInfo';
 import SelectedNodeInfo from './SelectedNodeInfo';
 import SidebarBody from './SidebarBody';
 import SidebarHeader from './SidebarHeader';
@@ -29,6 +30,10 @@ const contents = {
 	state: {
 		component: SelectedNodeInfo,
 		title: Liferay.Language.get('state'),
+	},
+	transition: {
+		component: SelectedEdgeInfo,
+		title: Liferay.Language.get('transition'),
 	},
 };
 

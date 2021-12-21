@@ -13,6 +13,7 @@ import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayModal, {useModal} from '@clayui/modal';
 import PropTypes from 'prop-types';
 import React, {useContext, useEffect, useState} from 'react';
+import {isNode} from 'react-flow-renderer';
 
 import {DefinitionBuilderContext} from '../../../DefinitionBuilderContext';
 import {DiagramBuilderContext} from '../../DiagramBuilderContext';
@@ -47,7 +48,11 @@ export default function SidebarHeader({
 
 	useEffect(() => {
 		if (selectedItem) {
-			setModalInfo(getModalInfo(selectedItem.type));
+			setModalInfo(
+				getModalInfo(
+					isNode(selectedItem) ? selectedItem.type : 'transition'
+				)
+			);
 
 			const handleKeyDown = (event) => {
 				if (

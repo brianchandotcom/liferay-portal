@@ -10,7 +10,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {cleanup, fireEvent, render, wait} from '@testing-library/react';
+import {fireEvent, render, waitFor} from '@testing-library/react';
 import React from 'react';
 
 import Main from '../../../src/main/resources/META-INF/resources/js/components/Main';
@@ -233,7 +233,6 @@ const mockedProps = {
 describe('Main', () => {
 	afterEach(() => {
 		jest.clearAllMocks();
-		cleanup();
 	});
 
 	it('displays date range selector and charts for default time span', async () => {
@@ -245,7 +244,7 @@ describe('Main', () => {
 			</StoreContextProvider>
 		);
 
-		await wait(() => {
+		await waitFor(() => {
 			expect(mockTotalViewsDataProvider).toHaveBeenCalledTimes(1);
 			expect(mockTrafficSourcesDataProvider).toHaveBeenCalledTimes(1);
 		});
@@ -268,14 +267,14 @@ describe('Main', () => {
 		);
 
 		expect(getByText('20 - Jan 26, 2020')).toBeInTheDocument();
-		await wait(() => {
+		await waitFor(() => {
 			expect(mockTrafficSourcesDataProvider).toHaveBeenCalledTimes(2);
 		});
 
 		fireEvent.click(container.querySelector('[aria-label="next-period"]'));
 
 		expect(getByText('Jan 27 - Feb 2, 2020')).toBeInTheDocument();
-		await wait(() => {
+		await waitFor(() => {
 			expect(mockTrafficSourcesDataProvider).toHaveBeenCalledTimes(3);
 		});
 	});

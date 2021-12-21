@@ -39,7 +39,7 @@ describe('The CurrentNodes component should', () => {
 	let container;
 	let getByText;
 
-	beforeAll(() => {
+	beforeEach(() => {
 		const result = render(
 			<CurrentNodes
 				nodesNames={['create', 'review', 'update', 'forward', 'finish']}

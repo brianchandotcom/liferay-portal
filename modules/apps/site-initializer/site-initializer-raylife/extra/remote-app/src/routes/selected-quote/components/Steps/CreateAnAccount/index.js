@@ -1,5 +1,5 @@
 import ClayButton from '@clayui/button';
-import {ClayInput} from '@clayui/form';
+import ClayForm, {ClayInput} from '@clayui/form';
 import classNames from 'classnames';
 import React, {useContext, useEffect, useState} from 'react';
 import {WarningBadge} from '../../../../../common/components/fragments/Badges/Warning';
@@ -92,10 +92,12 @@ export function CreateAnAccount() {
 				to your dashboard.
 			</h5>
 
-			<div className="create-account__form">
+			<ClayForm autoComplete="off" className="create-account__form">
 				<div className="create-account__form__content-input filled form-condensed form-group mb-1 mt-4">
 					<ClayInput
+						autoComplete="off"
 						className="bg-neutral-0 email"
+						name="email"
 						onChange={(event) => {
 							setEmail(event.target.value);
 						}}
@@ -125,6 +127,7 @@ export function CreateAnAccount() {
 					)}
 				>
 					<ClayInput
+						autoComplete="off"
 						onBlur={() => {
 							if (!password) {
 								setPasswordLabel('Create a Password');
@@ -157,6 +160,7 @@ export function CreateAnAccount() {
 					)}
 				>
 					<ClayInput
+						autoComplete="off"
 						onChange={(event) => {
 							setConfirmPassword(event.target.value);
 							setObjValidate(
@@ -172,7 +176,7 @@ export function CreateAnAccount() {
 				</div>
 
 				<ListRules objValidate={objValidate} />
-			</div>
+			</ClayForm>
 
 			<div className="d-flex justify-content-end">
 				<ClayButton

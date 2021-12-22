@@ -30,7 +30,7 @@ const SelectedQuote = () => {
 
 			<div className="selected-quote-right-page">
 				<Panel
-					PanelRight={CheckButton}
+					Right={CheckButton}
 					id="createAnAccount"
 					title="1. Create an Account"
 				>
@@ -38,14 +38,14 @@ const SelectedQuote = () => {
 				</Panel>
 
 				<Panel
-					PanelMiddle={({checked, expanded}) => (
+					Middle={({checked, expanded}) => (
 						<div className="panel-middle">
 							{!expanded && checked && (
 								<ViewFilesPanel sections={sections} />
 							)}
 						</div>
 					)}
-					PanelRight={DiscardChanges}
+					Right={DiscardChanges}
 					changeable
 					hasError={hasError}
 					id="uploadDocuments"
@@ -55,6 +55,9 @@ const SelectedQuote = () => {
 				</Panel>
 
 				<Panel
+					Footer={({show}) =>
+						show ? null : <div style={{height: '743px'}} />
+					}
 					id="selectPaymentMethod"
 					title="3. Select Payment Method"
 				>

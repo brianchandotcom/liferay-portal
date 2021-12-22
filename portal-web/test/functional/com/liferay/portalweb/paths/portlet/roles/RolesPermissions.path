@@ -145,6 +145,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONTROL_PANEL_OBJECTS_PERMISSIONS_RESOURCE_PERMISSIONS_DELETE_CHECKBOX</td>
+	<td>//input[contains(@name,'_com_liferay_roles_admin_web_portlet_RolesAdminPortlet_rowIds') and contains(@value,'DELETE')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.portal.diff;
+package com.liferay.diff.internal;
 
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.diff.DiffHtml;
+import com.liferay.diff.DiffHtml;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -93,7 +93,7 @@ public class DiffHtmlImpl implements DiffHtml {
 
 			ContentHandler contentHandler = xslFilter.xsl(
 				tranformHandler,
-				"com/liferay/portal/util/dependencies/diff_html.xsl");
+				"com/liferay/diff/internal/dependencies/diff_html.xsl");
 
 			HtmlCleaner htmlCleaner = new HtmlCleaner();
 

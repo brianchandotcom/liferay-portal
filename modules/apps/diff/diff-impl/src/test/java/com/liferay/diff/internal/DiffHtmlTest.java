@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.diff;
+package com.liferay.diff.internal;
 
-import com.liferay.portal.kernel.diff.DiffHtml;
+import com.liferay.diff.DiffHtml;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 

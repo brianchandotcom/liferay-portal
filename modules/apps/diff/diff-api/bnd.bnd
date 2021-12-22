@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Diff API
+Bundle-SymbolicName: com.liferay.diff.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.diff,\
+	com.liferay.diff.exception,\
+	com.liferay.diff.util

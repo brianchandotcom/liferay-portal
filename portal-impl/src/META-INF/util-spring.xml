@@ -73,16 +73,6 @@
 			<bean class="com.liferay.portal.deploy.hot.HotDeployImpl" />
 		</property>
 	</bean>
-	<bean class="com.liferay.portal.kernel.diff.DiffHtmlUtil" id="com.liferay.portal.kernel.diff.DiffHtmlUtil">
-		<property name="diffHtml">
-			<bean class="com.liferay.portal.diff.DiffHtmlImpl" />
-		</property>
-	</bean>
-	<bean class="com.liferay.portal.kernel.diff.DiffUtil" id="com.liferay.portal.kernel.diff.DiffUtil">
-		<property name="diff">
-			<bean class="com.liferay.portal.diff.DiffImpl" />
-		</property>
-	</bean>
 	<bean class="com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactoryUtil" id="com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactory">
 		<property name="editorConfigurationFactory" ref="com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactoryImpl" />
 	</bean>

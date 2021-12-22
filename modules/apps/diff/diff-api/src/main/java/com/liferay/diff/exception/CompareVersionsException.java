@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.diff;
+package com.liferay.diff.exception;
 
 import com.liferay.portal.kernel.exception.PortalException;
 

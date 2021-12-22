@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.diff;
+package com.liferay.diff;
 
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;

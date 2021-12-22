@@ -12,7 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.kernel.diff;
+package com.liferay.diff.util;
+
+import com.liferay.diff.Diff;
+import com.liferay.diff.DiffResult;
 
 import java.io.Reader;
 

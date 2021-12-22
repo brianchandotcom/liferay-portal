@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.diff;
+package com.liferay.diff;
 
 import java.util.List;
 

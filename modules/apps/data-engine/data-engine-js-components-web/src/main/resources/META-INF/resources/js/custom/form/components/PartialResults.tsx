@@ -16,7 +16,7 @@ import ClayButton from '@clayui/button';
 import {useResource} from '@clayui/data-provider';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 
 // @ts-ignore
 
@@ -29,7 +29,22 @@ const PartialResults: React.FC<IProps> = ({
 	onShow,
 	reportDataURL,
 }) => {
-	const {resource} = useResource({fetch, link: reportDataURL});
+	const [resourceState, setResourceState] = useState(() => 'loading');
+	const {resource} = useResource({
+		fetch,
+		link: reportDataURL,
+		onNetworkStatusChange: (status) => {
+			let resourceState = 'idle';
+			if (status < 4) {
+				resourceState = 'loading';
+			}
+			else if (status === 5) {
+				resourceState = 'error';
+			}
+			setResourceState(resourceState);
+		},
+	});
+
 	const {
 		data,
 		fields = [],
@@ -68,39 +83,44 @@ const PartialResults: React.FC<IProps> = ({
 
 				{Liferay.Language.get('back')}
 			</ClayButton>
+			{resourceState !== 'loading' && (
+				<>
+					<div className="lfr-de__partial-results-entries">
+						<div className="align-items-center">
+							<span className="lfr-de__partial-results-title text-truncate">
+								{totalItems === 1
+									? Liferay.Util.sub(
+											Liferay.Language.get('x-entry'),
+											[totalItems]
+									  )
+									: Liferay.Util.sub(
+											Liferay.Language.get('x-entries'),
+											[totalItems]
+									  )}
+							</span>
+						</div>
 
-			<div className="lfr-de__partial-results-entries">
-				<div className="align-items-center">
-					<span className="lfr-de__partial-results-title text-truncate">
-						{totalItems === 1
-							? Liferay.Util.sub(
-									Liferay.Language.get('x-entry'),
-									[totalItems]
-							  )
-							: Liferay.Util.sub(
-									Liferay.Language.get('x-entries'),
-									[totalItems]
-							  )}
-					</span>
-				</div>
+						<div className="align-items-center">
+							<span className="lfr-de__partial-results-subtitle text-truncate">
+								{totalItems > 0
+									? lastModifiedDate
+									: Liferay.Language.get(
+											'there-are-no-entries'
+									  )}
+							</span>
+						</div>
+					</div>
 
-				<div className="align-items-center">
-					<span className="lfr-de__partial-results-subtitle text-truncate">
-						{totalItems > 0
-							? lastModifiedDate
-							: Liferay.Language.get('there-are-no-entries')}
-					</span>
-				</div>
-			</div>
-
-			<FormReport
-				data={data}
-				fields={fields}
-				formReportRecordsFieldValuesURL={
-					formReportRecordsFieldValuesURL
-				}
-				portletNamespace={portletNamespace}
-			/>
+					<FormReport
+						data={data}
+						fields={fields}
+						formReportRecordsFieldValuesURL={
+							formReportRecordsFieldValuesURL
+						}
+						portletNamespace={portletNamespace}
+					/>
+				</>
+			)}
 		</>
 	);
 };

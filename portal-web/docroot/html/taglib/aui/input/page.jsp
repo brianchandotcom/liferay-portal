@@ -252,6 +252,7 @@ boolean choiceField = checkboxField || radioField;
 			id="<%= id %>"
 			ignoreRequestValue="<%= ignoreRequestValue %>"
 			languageId="<%= languageId %>"
+			languagesDropdownDirection="<%= languagesDropdownDirection %>"
 			model="<%= model %>"
 			placeholder="<%= placeholder %>"
 			timeFormat='<%= GetterUtil.getString(dynamicAttributes.get("timeFormat")) %>'
@@ -383,6 +384,7 @@ boolean choiceField = checkboxField || radioField;
 					id="<%= id %>"
 					ignoreRequestValue="<%= ignoreRequestValue %>"
 					languageId="<%= languageId %>"
+					languagesDropdownDirection="<%= languagesDropdownDirection %>"
 					name="<%= name %>"
 					onChange="<%= onChange %>"
 					onClick="<%= onClick %>"

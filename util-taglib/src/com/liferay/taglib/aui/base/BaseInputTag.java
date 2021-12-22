@@ -156,6 +156,10 @@ public abstract class BaseInputTag extends com.liferay.taglib.BaseValidatorTagSu
 		return _languageId;
 	}
 
+	public java.lang.String getLanguagesDropdownDirection() {
+		return _languagesDropdownDirection;
+	}
+
 	public boolean getLast() {
 		return _last;
 	}
@@ -376,6 +380,10 @@ public abstract class BaseInputTag extends com.liferay.taglib.BaseValidatorTagSu
 		_languageId = languageId;
 	}
 
+	public void setLanguagesDropdownDirection(java.lang.String languagesDropdownDirection) {
+		_languagesDropdownDirection = languagesDropdownDirection;
+	}
+
 	public void setLast(boolean last) {
 		_last = last;
 	}
@@ -503,6 +511,7 @@ public abstract class BaseInputTag extends com.liferay.taglib.BaseValidatorTagSu
 		_label = null;
 		_labelCssClass = null;
 		_languageId = null;
+		_languagesDropdownDirection = null;
 		_last = false;
 		_localized = false;
 		_localizeLabel = true;
@@ -566,6 +575,7 @@ public abstract class BaseInputTag extends com.liferay.taglib.BaseValidatorTagSu
 		setNamespacedAttribute(request, "label", _label);
 		setNamespacedAttribute(request, "labelCssClass", _labelCssClass);
 		setNamespacedAttribute(request, "languageId", _languageId);
+		setNamespacedAttribute(request, "languagesDropdownDirection", _languagesDropdownDirection);
 		setNamespacedAttribute(request, "last", _last);
 		setNamespacedAttribute(request, "localized", _localized);
 		setNamespacedAttribute(request, "localizeLabel", _localizeLabel);
@@ -627,6 +637,7 @@ public abstract class BaseInputTag extends com.liferay.taglib.BaseValidatorTagSu
 	private java.lang.String _label = null;
 	private java.lang.String _labelCssClass = null;
 	private java.lang.String _languageId = null;
+	private java.lang.String _languagesDropdownDirection = null;
 	private boolean _last = false;
 	private boolean _localized = false;
 	private boolean _localizeLabel = true;

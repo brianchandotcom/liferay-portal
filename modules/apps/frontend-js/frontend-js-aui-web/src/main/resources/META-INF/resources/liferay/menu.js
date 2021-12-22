@@ -49,6 +49,11 @@ AUI.add(
 
 		var STR_TOP = 't';
 
+		var MAP_ALIGN_DOWN = {
+			downleft: ['tr', 'br'],
+			downright: DEFAULT_ALIGN_POINTS,
+		};
+
 		var MAP_ALIGN_HORIZONTAL_OVERLAY = {
 			left: STR_RIGHT,
 			right: STR_LEFT,
@@ -81,7 +86,7 @@ AUI.add(
 
 		var MAP_LIVE_SEARCH = {};
 
-		var REGEX_DIRECTION = /\bdirection-(down|left|right|up)\b/;
+		var REGEX_DIRECTION = /\bdirection-(downleft|downright|down|left|right|up)\b/;
 
 		var REGEX_MAX_DISPLAY_ITEMS = /max-display-items-(\d+)/;
 
@@ -171,7 +176,9 @@ AUI.add(
 					var direction =
 						(directionMatch && directionMatch[1]) || AUTO;
 
-					if (direction !== 'down') {
+					if (direction.startsWith('down')) {
+						alignPoints = MAP_ALIGN_DOWN[direction] || MAP_ALIGN_DOWN.downright;
+					} else {
 						var overlayHorizontal =
 							mapAlignHorizontalOverlay[direction] ||
 							defaultOverlayHorizontalAlign;

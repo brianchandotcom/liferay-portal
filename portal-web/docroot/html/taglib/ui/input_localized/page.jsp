@@ -134,7 +134,7 @@
 			%>
 
 			<liferay-ui:icon-menu
-				direction="left-side"
+				direction="<%= languagesDropdownDirection %>"
 				icon="<%= StringUtil.toLowerCase(normalizedSelectedLanguageId) %>"
 				id='<%= namespace + id + "Menu" %>'
 				markupView="lexicon"

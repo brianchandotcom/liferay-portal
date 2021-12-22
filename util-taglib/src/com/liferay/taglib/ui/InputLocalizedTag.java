@@ -87,6 +87,10 @@ public class InputLocalizedTag extends IncludeTag {
 		return _languageId;
 	}
 
+	public String getLanguagesDropdownDirection() {
+		return _languagesDropdownDirection;
+	}
+
 	public String getMaxLength() {
 		return _maxLength;
 	}
@@ -207,6 +211,10 @@ public class InputLocalizedTag extends IncludeTag {
 		_languageId = languageId;
 	}
 
+	public void setLanguagesDropdownDirection(String languagesDropdownDirection) {
+		_languagesDropdownDirection = languagesDropdownDirection;
+	}
+
 	public void setMaxLength(String maxLength) {
 		_maxLength = maxLength;
 	}
@@ -257,6 +265,7 @@ public class InputLocalizedTag extends IncludeTag {
 		_ignoreRequestValue = false;
 		_inputAddon = null;
 		_languageId = null;
+		_languagesDropdownDirection = null;
 		_maxLength = null;
 		_name = null;
 		_placeholder = null;
@@ -337,6 +346,8 @@ public class InputLocalizedTag extends IncludeTag {
 		httpServletRequest.setAttribute(
 			"liferay-ui:input-localized:languageId", _languageId);
 		httpServletRequest.setAttribute(
+			"liferay-ui:input-localized:languagesDropdownDirection", _languagesDropdownDirection);
+		httpServletRequest.setAttribute(
 			"liferay-ui:input-localized:maxLength", _maxLength);
 		httpServletRequest.setAttribute(
 			"liferay-ui:input-localized:name", _name);
@@ -376,6 +387,7 @@ public class InputLocalizedTag extends IncludeTag {
 	private boolean _ignoreRequestValue;
 	private String _inputAddon;
 	private String _languageId;
+	private String _languagesDropdownDirection;
 	private String _maxLength;
 	private String _name;
 	private String _placeholder;

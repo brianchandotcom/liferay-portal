@@ -833,6 +833,12 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description><![CDATA[The direction the translation admin dropdown should open.]]></description>
+			<name>languagesDropdownDirection</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<description><![CDATA[Whether the component should be the last element of the form.]]></description>
 			<name>last</name>
 			<required>false</required>

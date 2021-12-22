@@ -81,6 +81,10 @@ public class InputFieldTag extends IncludeTag {
 		return _languageId;
 	}
 
+	public String getLanguagesDropdownDirection() {
+		return _languagesDropdownDirection;
+	}
+
 	public Class<?> getModel() {
 		return _model;
 	}
@@ -181,6 +185,10 @@ public class InputFieldTag extends IncludeTag {
 		_languageId = languageId;
 	}
 
+	public void setLanguagesDropdownDirection(String languagesDropdownDirection) {
+		_languagesDropdownDirection = languagesDropdownDirection;
+	}
+
 	public void setModel(Class<?> model) {
 		_model = model;
 	}
@@ -211,6 +219,7 @@ public class InputFieldTag extends IncludeTag {
 		_id = null;
 		_ignoreRequestValue = false;
 		_languageId = null;
+		_languagesDropdownDirection = null;
 		_model = null;
 		_placeholder = null;
 	}
@@ -272,6 +281,8 @@ public class InputFieldTag extends IncludeTag {
 		httpServletRequest.setAttribute(
 			"liferay-ui:input-field:languageId", _languageId);
 		httpServletRequest.setAttribute(
+			"liferay-ui:input-field:languagesDropdownDirection", _languagesDropdownDirection);
+		httpServletRequest.setAttribute(
 			"liferay-ui:input-field:model", _model.getName());
 		httpServletRequest.setAttribute(
 			"liferay-ui:input-field:placeholder", _placeholder);
@@ -297,6 +308,7 @@ public class InputFieldTag extends IncludeTag {
 	private String _id;
 	private boolean _ignoreRequestValue;
 	private String _languageId;
+	private String _languagesDropdownDirection;
 	private Class<?> _model;
 	private String _placeholder;
 

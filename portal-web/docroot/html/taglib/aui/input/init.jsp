@@ -50,6 +50,7 @@ java.lang.String inlineLabel = GetterUtil.getString((java.lang.String)request.ge
 java.lang.String label = GetterUtil.getString((java.lang.String)request.getAttribute("aui:input:label"));
 java.lang.String labelCssClass = GetterUtil.getString((java.lang.String)request.getAttribute("aui:input:labelCssClass"));
 java.lang.String languageId = GetterUtil.getString((java.lang.String)request.getAttribute("aui:input:languageId"));
+java.lang.String languagesDropdownDirection = GetterUtil.getString((java.lang.String)request.getAttribute("aui:input:languagesDropdownDirection"));
 boolean last = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:input:last")));
 boolean localized = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:input:localized")));
 boolean localizeLabel = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:input:localizeLabel")), true);

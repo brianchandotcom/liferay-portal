@@ -36,6 +36,7 @@ String formName = (String)request.getAttribute("liferay-ui:input-field:formName"
 String id = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-field:id"));
 boolean ignoreRequestValue = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-field:ignoreRequestValue"));
 String languageId = (String)request.getAttribute("liferay-ui:input-field:languageId");
+String languagesDropdownDirection = (String)request.getAttribute("liferay-ui:input-field:languagesDropdownDirection");
 String model = (String)request.getAttribute("liferay-ui:input-field:model");
 String placeholder = (String)request.getAttribute("liferay-ui:input-field:placeholder");
 
@@ -448,6 +449,7 @@ if (hints != null) {
 								id="<%= id %>"
 								ignoreRequestValue="<%= ignoreRequestValue %>"
 								languageId="<%= languageId %>"
+								languagesDropdownDirection="<%= languagesDropdownDirection %>"
 								maxLength="<%= maxLength %>"
 								name="<%= fieldParam %>"
 								placeholder="<%= placeholder %>"
@@ -495,6 +497,7 @@ if (hints != null) {
 								id="<%= id %>"
 								ignoreRequestValue="<%= ignoreRequestValue %>"
 								languageId="<%= languageId %>"
+								languagesDropdownDirection="<%= languagesDropdownDirection %>"
 								maxLength="<%= maxLength %>"
 								name="<%= fieldParam %>"
 								placeholder="<%= placeholder %>"
@@ -523,6 +526,7 @@ if (hints != null) {
 								id="<%= id %>"
 								ignoreRequestValue="<%= ignoreRequestValue %>"
 								languageId="<%= languageId %>"
+								languagesDropdownDirection="<%= languagesDropdownDirection %>"
 								maxLength="<%= maxLength %>"
 								name="<%= fieldParam %>"
 								onKeyDown='<%= (checkTab ? "Liferay.Util.checkTab(this); " : StringPool.BLANK) + "Liferay.Util.disableEsc();" %>'

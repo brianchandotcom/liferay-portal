@@ -1,0 +1,31 @@
+definition {
+
+	macro _addAccountEntryUser {
+		Variables.assertDefined(parameterList = "${accountEntryName}");
+
+		var companyId = JSONCompany.getCompanyId();
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var userId = JSONUserSetter.setUserId(userEmailAddress = "${creatorEmailAddress}");
+
+		var curl = '''
+			${portalURL}/api/jsonws/account.accountentryuserrel/add-account-entry-user-rel \
+				-u ${creatorEmailAddress}:${creatorPassword} \
+				-d accountEntryId=${accountEntryId} \
+				-d creatorUserId=${userId} \
+				-d screenName=${userScreenName} \
+				-d emailAddress=${userEmailAddress} \
+				-d locale= \
+				-d firstName=${userFirstName} \
+				-d middleName= \
+				-d lastName=${userLastName} \
+				-d prefixId=0 \
+				-d suffixId=0 \
+				-d jobTitle=
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
+}

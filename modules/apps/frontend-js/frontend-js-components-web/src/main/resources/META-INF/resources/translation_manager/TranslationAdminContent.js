@@ -120,6 +120,7 @@ const TranslationAdminContent = ({
 											key={availableLocale.label}
 											onClick={() => {
 												onAddLocale(availableLocale.id);
+												setCreationMenuActive(false);
 											}}
 											symbolLeft={availableLocale.symbol}
 										>

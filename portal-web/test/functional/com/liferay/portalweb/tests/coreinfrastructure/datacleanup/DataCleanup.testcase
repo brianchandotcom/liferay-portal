@@ -90,20 +90,8 @@ definition {
 		}
 	}
 
-	@priority = "4"
-	test FileConfigsWillTriggerDataCleanup {
-		property data.archive.type = "data-archive-portal";
-		property osgi.module.configuration.file.names = "com.liferay.data.cleanup.internal.configuration.DataCleanupConfiguration.config:com.liferay.data.cleanup.internal.configuration.DataRemovalConfiguration.config";
-		property osgi.module.configurations = "cleanUpSoftwareCatalogModuleData=B&quot;true&quot;:removeExpiredJournalArticles=B&quot;true&quot;";
-		property portal.version = "6.2.10.21";
-
-		AssertConsoleTextPresent(value1 = "Completed upgrade process com.liferay.data.cleanup.internal.upgrade.ExpiredJournalArticleUpgradeProcess");
-
-		AssertConsoleTextPresent(value1 = "Completed upgrade process com.liferay.data.cleanup.internal.upgrade.SoftwareCatalogUpgradeProcess");
-	}
-
 	@priority = "3"
-	test RemoveSoftwareCatalogDataAfterUpgrade {
+	test CanCleanupSoftwareCatalogDataAfterUpgrade {
 		property data.archive.type = "data-archive-portal";
 		property database.types = "mysql";
 		property portal.version = "6.2.10.21";
@@ -175,6 +163,18 @@ definition {
 
 			fail("Failed: Software catalog data still present in ResourceAction table.");
 		}
+	}
+
+	@priority = "4"
+	test FileConfigsWillTriggerDataCleanup {
+		property data.archive.type = "data-archive-portal";
+		property osgi.module.configuration.file.names = "com.liferay.data.cleanup.internal.configuration.DataCleanupConfiguration.config:com.liferay.data.cleanup.internal.configuration.DataRemovalConfiguration.config";
+		property osgi.module.configurations = "cleanUpSoftwareCatalogModuleData=B&quot;true&quot;:removeExpiredJournalArticles=B&quot;true&quot;";
+		property portal.version = "6.2.10.21";
+
+		AssertConsoleTextPresent(value1 = "Completed upgrade process com.liferay.data.cleanup.internal.upgrade.ExpiredJournalArticleUpgradeProcess");
+
+		AssertConsoleTextPresent(value1 = "Completed upgrade process com.liferay.data.cleanup.internal.upgrade.SoftwareCatalogUpgradeProcess");
 	}
 
 	@priority = "5"

@@ -67,7 +67,7 @@ definition {
 		}
 	}
 
-	@description = "This test asserts that an account cannot be created if its name exceeds 100 characters and will provide an error message"
+	@description = "This test asserts that an account name will automatically truncate and will stop adding more characters as you type after it reaches the character limit of 100."
 	@priority = "5"
 	test AccountNameCannotExceed100Characters {
 		task ("Try to add account where name character count is over 100") {

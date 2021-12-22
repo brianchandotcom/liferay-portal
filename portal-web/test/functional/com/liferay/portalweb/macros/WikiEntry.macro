@@ -23,6 +23,12 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
+	macro addPageContentTable {
+		Click(locator1 = "CKEditor#TABLE_ICON");
+
+		Click(locator1 = "CKEditor#OK_BUTTON");
+	}
+
 	macro addPageTitle {
 		if (isSet(wikiPageTitle)) {
 			var title = "${wikiPageTitle}";

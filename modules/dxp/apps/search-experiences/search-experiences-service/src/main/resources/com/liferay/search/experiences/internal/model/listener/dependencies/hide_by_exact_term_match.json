@@ -1,6 +1,6 @@
 {
 	"description_i18n": {
-		"en_US": "Hide results by an exact term match."
+		"en_US": "Hide results by exact term match."
 	},
 	"elementDefinition": {
 		"category": "hide",
@@ -52,6 +52,6 @@
 		}
 	},
 	"title_i18n": {
-		"en_US": "Hide by an Exact Term Match"
+		"en_US": "Hide by Exact Term Match"
 	}
 }

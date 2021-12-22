@@ -85,18 +85,6 @@ renderResponse.setTitle(LanguageUtil.get(request, "export"));
 								md="6"
 							>
 								<clay:checkbox
-									id='<%= liferayPortletResponse.getNamespace() + "saveExport" %>'
-									label="save-export"
-									name='<%= liferayPortletResponse.getNamespace() + "saveExport" %>'
-								/>
-							</clay:col>
-						</clay:row>
-
-						<clay:row>
-							<clay:col
-								md="6"
-							>
-								<clay:checkbox
 									checked="<%= true %>"
 									id='<%= liferayPortletResponse.getNamespace() + "containsHeaders" %>'
 									label="contains-headers"

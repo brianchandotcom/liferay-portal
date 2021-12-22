@@ -20,10 +20,11 @@
 String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:icon-menu:cssClass"));
 Map<String, Object> data = (Map<String, Object>)request.getAttribute("liferay-ui:icon-menu:data");
 String direction = (String)request.getAttribute("liferay-ui:icon-menu:direction");
-boolean hasMessage = (message != null) && !message.isEmpty();
 String icon = GetterUtil.getString((String)request.getAttribute("liferay-ui:icon-menu:icon"));
 String id = GetterUtil.getString((String)request.getAttribute("liferay-ui:icon-menu:id"));
 String message = (String)request.getAttribute("liferay-ui:icon-menu:message");
+
+boolean hasMessage = (message != null) && !message.isEmpty();
 boolean scroll = GetterUtil.getBoolean(request.getAttribute("liferay-ui:icon-menu:scroll"));
 String triggerCssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:icon-menu:triggerCssClass"));
 String triggerLabel = GetterUtil.getString((String)request.getAttribute("liferay-ui:icon-menu:triggerLabel"));

@@ -59,6 +59,13 @@ const DiscardChanges = ({checked, expanded, hasError}) => {
 								},
 								type: ACTIONS.SET_STEP_CHECKED,
 							});
+							dispatch({
+								payload: {
+									panelKey: 'selectPaymentMethod',
+									value: false,
+								},
+								type: ACTIONS.SET_EXPANDED,
+							});
 						}}
 					>
 						Change

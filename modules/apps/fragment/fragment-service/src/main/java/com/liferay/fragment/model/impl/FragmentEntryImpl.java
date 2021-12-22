@@ -155,6 +155,10 @@ public class FragmentEntryImpl extends FragmentEntryBaseImpl {
 
 		FileEntry previewFileEntry = _getPreviewFileEntry();
 
+		if (Validator.isNotNull(_icon)) {
+			jsonObject.put("icon", _icon);
+		}
+
 		if (previewFileEntry != null) {
 			jsonObject.put(
 				"thumbnailPath",

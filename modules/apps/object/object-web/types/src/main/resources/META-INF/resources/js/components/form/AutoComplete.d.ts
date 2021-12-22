@@ -13,6 +13,7 @@
  */
 
 import React from 'react';
+import './AutoComplete.scss';
 interface IAutoCompleteProps extends React.HTMLAttributes<HTMLElement> {
 	children: (item: any) => React.ReactNode;
 	contentRight?: React.ReactNode;

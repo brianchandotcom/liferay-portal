@@ -22,6 +22,8 @@ import ErrorFeedback from './ErrorFeedback';
 import FeedbackMessage from './FeedbackMessage';
 import RequiredMask from './RequiredMask';
 
+import './AutoComplete.scss';
+
 interface IAutoCompleteProps extends React.HTMLAttributes<HTMLElement> {
 	children: (item: any) => React.ReactNode;
 	contentRight?: React.ReactNode;

@@ -3,6 +3,10 @@
 .lfr-ddm__default-page {
 	margin-top: 2rem;
 
+	&-background {
+		background-color: $light !important;
+	}
+
 	&-buttons {
 		display: flex;
 		gap: 1rem;

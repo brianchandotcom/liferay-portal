@@ -14,7 +14,7 @@
 
 import ClayButton from '@clayui/button';
 import {PartialResults} from 'data-engine-js-components-web';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import './DefaultPage.scss';
 import DefaultPageHeader from './DefaultPageHeader';
@@ -29,6 +29,14 @@ const DefaultPage: React.FC<IProps> = ({
 	showSubmitAgainButton,
 }) => {
 	const [showReport, setShowReport] = useState(false);
+
+	useEffect(() => {
+		const portalPopup = document.querySelector('.portal-popup');
+		portalPopup?.classList.add('lfr-ddm__default-page-background');
+
+		return () =>
+			portalPopup?.classList.remove('lfr-ddm__default-page-background');
+	}, []);
 
 	return (
 		<div className="container-fluid container-fluid-max-xl lfr-ddm__default-page">

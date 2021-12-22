@@ -12,13 +12,7 @@
  * details.
  */
 
-import {
-	act,
-	cleanup,
-	fireEvent,
-	render,
-	waitForElement,
-} from '@testing-library/react';
+import {act, fireEvent, render} from '@testing-library/react';
 import {PageProvider} from 'data-engine-js-components-web';
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -99,8 +93,6 @@ describe('Field LocalizableText', () => {
 			return element;
 		});
 	});
-
-	afterEach(cleanup);
 
 	beforeEach(() => {
 		jest.useFakeTimers();
@@ -284,7 +276,7 @@ describe('Field LocalizableText', () => {
 	});
 
 	it('fills with the selected language value when the selected language is translated', async () => {
-		const {container, getByTestId} = render(
+		const {container, findByTestId, getByTestId} = render(
 			<LocalizableTextWithProvider
 				{...defaultLocalizableTextConfig}
 				onChange={jest.fn()}
@@ -304,8 +296,8 @@ describe('Field LocalizableText', () => {
 			jest.runAllTimers();
 		});
 
-		const dropdownItem = await waitForElement(() =>
-			getByTestId('availableLocalesDropdownca_ES')
+		const dropdownItem = await findByTestId(
+			'availableLocalesDropdownca_ES'
 		);
 
 		fireEvent.click(dropdownItem);
@@ -314,9 +306,7 @@ describe('Field LocalizableText', () => {
 			jest.runAllTimers();
 		});
 
-		const inputElement = await waitForElement(() =>
-			getByTestId('visibleChangeInput')
-		);
+		const inputElement = await findByTestId('visibleChangeInput');
 
 		expect(inputElement.value).toEqual('Teste ES');
 
@@ -326,7 +316,7 @@ describe('Field LocalizableText', () => {
 	});
 
 	it('fills with the default language value when the selected language is not translated', async () => {
-		const {container, getByTestId} = render(
+		const {container, findByTestId, getByTestId} = render(
 			<LocalizableTextWithProvider
 				{...defaultLocalizableTextConfig}
 				onChange={jest.fn()}
@@ -348,8 +338,8 @@ describe('Field LocalizableText', () => {
 			jest.runAllTimers();
 		});
 
-		const dropdownItem = await waitForElement(() =>
-			getByTestId('availableLocalesDropdownja_JP')
+		const dropdownItem = await findByTestId(
+			'availableLocalesDropdownja_JP'
 		);
 
 		fireEvent.click(dropdownItem);
@@ -368,7 +358,7 @@ describe('Field LocalizableText', () => {
 	});
 
 	it('adds a new translation for an untranslated item', async () => {
-		const {container, getByTestId} = render(
+		const {container, findByTestId, getByTestId} = render(
 			<LocalizableTextWithProvider
 				{...defaultLocalizableTextConfig}
 				onChange={jest.fn()}
@@ -390,8 +380,8 @@ describe('Field LocalizableText', () => {
 			jest.runAllTimers();
 		});
 
-		const dropdownItem = await waitForElement(() =>
-			getByTestId('availableLocalesDropdownja_JP')
+		const dropdownItem = await findByTestId(
+			'availableLocalesDropdownja_JP'
 		);
 
 		fireEvent.click(dropdownItem);
@@ -420,7 +410,7 @@ describe('Field LocalizableText', () => {
 	});
 
 	it('removes the translation of an item already translated', async () => {
-		const {container, getByTestId} = render(
+		const {container, findByTestId, getByTestId} = render(
 			<LocalizableTextWithProvider
 				{...defaultLocalizableTextConfig}
 				onChange={jest.fn()}
@@ -440,8 +430,8 @@ describe('Field LocalizableText', () => {
 			jest.runAllTimers();
 		});
 
-		const dropdownItem = await waitForElement(() =>
-			getByTestId('availableLocalesDropdownpt_BR')
+		const dropdownItem = await findByTestId(
+			'availableLocalesDropdownpt_BR'
 		);
 
 		fireEvent.click(dropdownItem);
@@ -471,7 +461,7 @@ describe('Field LocalizableText', () => {
 
 	describe('Submit Button Label', () => {
 		it('changes the placeholder according to the current editing locale', async () => {
-			const {getByTestId} = render(
+			const {findByTestId, getByTestId} = render(
 				<LocalizableTextWithProvider
 					{...defaultLocalizableTextConfig}
 					fieldName="submitLabel"
@@ -492,8 +482,8 @@ describe('Field LocalizableText', () => {
 				jest.runAllTimers();
 			});
 
-			const dropdownItem = await waitForElement(() =>
-				getByTestId('availableLocalesDropdownde_DE')
+			const dropdownItem = await findByTestId(
+				'availableLocalesDropdownde_DE'
 			);
 
 			fireEvent.click(dropdownItem);
@@ -502,9 +492,7 @@ describe('Field LocalizableText', () => {
 				jest.runAllTimers();
 			});
 
-			const inputComponent = await waitForElement(() =>
-				getByTestId('visibleChangeInput')
-			);
+			const inputComponent = await findByTestId('visibleChangeInput');
 
 			expect(inputComponent.placeholder).toBe('Senden');
 		});

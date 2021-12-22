@@ -13,7 +13,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {cleanup, render} from '@testing-library/react';
+import {render} from '@testing-library/react';
 import {FormProvider} from 'data-engine-js-components-web';
 import React from 'react';
 
@@ -95,8 +95,6 @@ describe('ValidationDate', () => {
 	afterAll(() => {
 		Liferay.Language.direction = globalLanguageDirection;
 	});
-
-	afterEach(cleanup);
 
 	it('shows future dates validation', () => {
 		const {container} = render(
@@ -181,7 +179,7 @@ describe('ValidationDate', () => {
 		};
 
 		const localizedValue = jest.fn(() => parameter['en_US']);
-		const {getAllByRole} = render(
+		const {getByText} = render(
 			<ValidationDateProvider
 				defaultLanguageId="en_US"
 				editingLanguageId="en_US"
@@ -199,9 +197,13 @@ describe('ValidationDate', () => {
 				visible={true}
 			/>
 		);
+
 		const [acceptedDate, operation, quantity, unit] = [
-			...getAllByRole('textbox'),
-		];
+			getByText('accepted-date'),
+			getByText('operation'),
+			getByText('quantity'),
+			getByText('unit'),
+		].map((element) => element.querySelector('input'));
 
 		expect(acceptedDate).toHaveValue('futureDates');
 		expect(operation).toHaveValue('plus');
@@ -222,7 +224,7 @@ describe('ValidationDate', () => {
 		};
 
 		const localizedValue = jest.fn(() => parameter['en_US']);
-		const {getAllByRole} = render(
+		const {getByText} = render(
 			<ValidationDateProvider
 				defaultLanguageId="en_US"
 				editingLanguageId="en_US"
@@ -242,8 +244,11 @@ describe('ValidationDate', () => {
 		);
 
 		const [acceptedDate, operation, quantity, unit] = [
-			...getAllByRole('textbox'),
-		];
+			getByText('accepted-date'),
+			getByText('operation'),
+			getByText('quantity'),
+			getByText('unit'),
+		].map((element) => element.querySelector('input'));
 
 		expect(acceptedDate).toHaveValue('pastDates');
 		expect(operation).toHaveValue('minus');
@@ -548,7 +553,7 @@ describe('ValidationDate', () => {
 		};
 
 		const localizedValue = jest.fn(() => parameter['en_US']);
-		const {getAllByRole} = render(
+		const {getAllByRole, getByText} = render(
 			<ValidationDateProvider
 				dateFieldTypeValidationEnabled={true}
 				defaultLanguageId="en_US"
@@ -570,8 +575,11 @@ describe('ValidationDate', () => {
 		);
 
 		const [acceptedDate, operation, quantity, unit] = [
-			...getAllByRole('textbox'),
-		];
+			getByText('accepted-date'),
+			getByText('operation'),
+			getByText('quantity'),
+			getByText('unit'),
+		].map((element) => element.querySelector('input'));
 
 		const availableDates = [...getAllByRole('button')];
 

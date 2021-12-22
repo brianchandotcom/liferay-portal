@@ -26,7 +26,7 @@ activeLanguageIds.add("ca_ES");
 activeLanguageIds.add("fr_FR");
 %>
 
-<div className="frontend-js-components-sample-web">
+<div class="frontend-js-components-sample-web">
 	<h1>Translation Manager</h1>
 
 	<h2>React Component</h2>

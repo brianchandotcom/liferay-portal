@@ -1116,6 +1116,17 @@ definition {
 		DMMetadataSet.delete(metadataSetName = "Document Metadata Set Name Edit");
 	}
 
+	macro deleteImageResolution {
+		AdaptiveMedia.openAdaptiveMediaAdmin();
+
+		AdaptiveMedia.disableImageResolution(
+			imageName = "Low Resolution",
+			imageState = "Disabled",
+			percentAdapted = "0");
+
+		AdaptiveMedia.deleteImageResolution(imageName = "Low Resolution");
+	}
+
 	macro editAndDeleteBlogEntry {
 		if (isSet(video)) {
 			Navigator.gotoPage(pageName = "Blogs");
@@ -1372,6 +1383,20 @@ definition {
 		AssertElementPresent(
 			key_fieldFieldLabel = "Phone Number",
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+	}
+
+	macro editImageResolution {
+		AdaptiveMedia.openAdaptiveMediaAdmin();
+
+		AdaptiveMedia.editImageResolution(
+			imageName = "Low Resolution",
+			imageNameEdit = "Low Resolution Edited",
+			maxHeightEdit = "480",
+			maxWidthEdit = "320");
+
+		AdaptiveMedia.selectAdaptiveMediaImage(imageName = "Low Resolution Edited");
+
+		AdaptiveMedia.viewNumberOfAdaptedImages(numberOfAdaptedImages = "0/1");
 	}
 
 	macro editTagsAndDeleteAutoTaggedBlogsEntry {
@@ -2913,6 +2938,27 @@ definition {
 		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry After Upgrade Content",
 			entryTitle = "Blogs Entry After Upgrade Title");
+	}
+
+	macro viewAndAddImageResolution {
+		AdaptiveMedia.openAdaptiveMediaAdmin();
+
+		AdaptiveMedia.selectAdaptiveMediaImage(imageName = "Thumbnail 300x300");
+
+		AdaptiveMedia.viewNumberOfAdaptedImages(numberOfAdaptedImages = "2/2");
+
+		AdaptiveMedia.openToAddImageResolution();
+
+		AdaptiveMedia.addImageResolution(
+			imageName = "Low Resolution",
+			maxHeight = "480",
+			maxWidth = "320");
+
+		AdaptiveMedia.viewImageResolutionTableEntry(
+			imageName = "Low Resolution",
+			maxHeight = "480",
+			maxWidth = "320",
+			percentAdapted = "0");
 	}
 
 	macro viewAndAddKBArticle {

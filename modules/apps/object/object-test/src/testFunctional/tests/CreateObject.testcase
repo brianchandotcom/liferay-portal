@@ -5275,12 +5275,18 @@ definition {
 	}
 
 	@description = "LPS-135649 - Verify that when Objects are not scoped by Site it should not be displayed on the Workflow settings from the Site Menu"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test ObjectNotScopedBySiteNotDisplayedOnSiteMenu {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-		// TODO LPS-141633 ObjectNotScopedBySiteNotDisplayedOnSiteMenu pending implementation
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
 
+		Workflow.openWorkflowAdmin(siteURLKey = "guest");
+
+		Workflow.viewDefinitionNotPresent(workflowDefinitionTitle = "Custom Object");
 	}
 
 	@description = "LPS-139005 - Verify that the Object portlet is no longer displayed on the Open Menu when inactivated"

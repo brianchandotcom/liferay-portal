@@ -4828,7 +4828,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	private Alert _alert;
 	private String _clipBoard = "";
 	private String _defaultWindowHandle;
-	private Stack<WebElement> _frameWebElements = new Stack<>();
+	private final Stack<WebElement> _frameWebElements = new Stack<>();
 	private int _navigationBarHeight = 120;
 	private String _primaryTestSuiteName;
 	private int _totalPauseDuration;

@@ -78,7 +78,7 @@ definition {
 	@description = "Feature ID: LRAC-7858 | Automation ID: LRAC-10212 | Test Summary: Global attributes in settings"
 	@priority = "5"
 	test AssertGlobalAttributesInSettings {
-        var globalAttributesList = "canonicalUrl,pageDescription,pageKeywords,pageTitle,referrer,url";
+		var globalAttributesList = "canonicalUrl,pageDescription,pageKeywords,pageTitle,referrer,url";
 
 		task ("Fill fields and create custom event") {
 			var customEventName = ACCustomEvents.generateCustomEventName();
@@ -107,20 +107,19 @@ definition {
 
 			ACNavigation.openItem(itemName = "Global Attributes");
 
-            ACNavigation.viewActiveSwitchTab(tabName = "Global Attributes");
+			ACNavigation.viewActiveSwitchTab(tabName = "Global Attributes");
 		}
 
-        task ("View the default attributes") {
+		task ("View the default attributes") {
 			ACUtils.viewNameList(nameList = "${globalAttributesList}");
 		}
 	}
 
-    @description = "Feature ID: LRAC-7858 | Automation ID: LRAC-10213 | Test Summary: Global attributes data shows sample data and last accessed"
+	@description = "Feature ID: LRAC-7858 | Automation ID: LRAC-10213 | Test Summary: Global attributes data shows sample data and last accessed"
 	@priority = "5"
 	test AssertSampleDataAndLastAccessInGlobalAttributes {
-        var globalAttributeName = "pageTitle";
-
-        var dataSource = StringUtil.extractFirst("${assignedPropertyName}", " ");
+		var globalAttributeName = "pageTitle";
+		var dataSource = StringUtil.extractFirst("${assignedPropertyName}", " ");
 
 		task ("Fill fields and create custom event") {
 			var customEventName = ACCustomEvents.generateCustomEventName();
@@ -150,78 +149,24 @@ definition {
 			ACNavigation.openItem(itemName = "Global Attributes");
 		}
 
-        task ("Select a global attribute") {
+		task ("Select a global attribute") {
 			ACUtils.searchBar(searchItem = "${globalAttributeName}");
 
-            var sampleRawDataValue = ACCustomEvents.getSampleRawData(attributeName = "${globalAttributeName}");
+			var sampleRawDataValue = ACCustomEvents.getSampleRawData(attributeName = "${globalAttributeName}");
 
 			ACNavigation.openItem(itemName = "${globalAttributeName}");
 		}
 
-        task ("View the sample data") {
+		task ("View the sample data") {
 			ACCustomEvents.viewDataAttribute(attributeValueList = "${sampleRawDataValue}");
 
-            ACCustomEvents.viewDataAttributeInOrder(
-                index = "1",
-                attributeValue = "AC Page - Site Name - ${dataSource}");
+			ACCustomEvents.viewDataAttributeInOrder(
+				attributeValue = "AC Page - Site Name - ${dataSource}",
+				index = "1");
 		}
 	}
 
-    @description = "Feature ID: LRAC-7858 | Automation ID: LRAC-10214 | Test Summary: Edit global attributes name"
-	@priority = "5"
-	test RenameGlobalAttribute {
-        var globalAttributeName = "pageTitle";
-
-		task ("Fill fields and create custom event") {
-			var customEventName = ACCustomEvents.generateCustomEventName();
-
-			ACCustomEvents.createCustomEvent(
-				customEventName = "${customEventName}",
-				timeToSendCustomEvent = "1");
-		}
-
-		task ("Close sessions") {
-			ACUtils.closeAllSessionsAndWait();
-		}
-
-		task ("Switch the property in AC") {
-			ACUtils.launchAC();
-
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
-		}
-
-		task ("Navigation to global attributes tab") {
-			ACNavigation.goToSettings();
-
-			ACSettings.goToDefinitions();
-
-			ACSettings.goToEventAttributes();
-
-			ACNavigation.openItem(itemName = "Global Attributes");
-		}
-
-		task ("Edit the global attribute") {
-			ACNavigation.openItem(itemName = "${globalAttributeName}");
-
-			ACUtils.clickAnyButton(button = "Edit");
-		}
-
-		task ("Change the display name of the global attribute") {
-			ACCustomEvents.changeCustomEventDisplayNameOrDescription(newDisplayName = "${globalAttributeName} Display Name");
-		}
-
-		task ("Back to Event Attributes and Navigation to global attributes tab") {
-			ACNavigation.backNavigation(pageName = "Event Attributes");
-
-			ACNavigation.openItem(itemName = "Global Attributes");
-		}
-
-		task ("Check if the display name has been changed") {
-			ACCustomEvents.viewDisplayNameOrDescriptionList(nameValue = "${globalAttributeName} Display Name");
-		}
-	}
-
-    @description = "Feature ID: LRAC-4265 | Automation ID: LRAC-10215 | Test Summary: Edit global attribute description"
+	@description = "Feature ID: LRAC-4265 | Automation ID: LRAC-10215 | Test Summary: Edit global attribute description"
 	@priority = "5"
 	test EditGlobalAttributeDescription {
 		var globalAttributeName = "pageTitle";
@@ -273,9 +218,63 @@ definition {
 		task ("Check if the description has been changed") {
 			ACCustomEvents.viewDisplayNameOrDescriptionList(nameValue = "${globalAttributeName} Description");
 		}
-    }
+	}
 
-    @description = "Feature ID: LRAC-4265 | Automation ID: LRAC-10216 | Test Summary: Edit global attribute name with a name already in use"
+	@description = "Feature ID: LRAC-7858 | Automation ID: LRAC-10214 | Test Summary: Edit global attributes name"
+	@priority = "5"
+	test RenameGlobalAttribute {
+		var globalAttributeName = "pageTitle";
+
+		task ("Fill fields and create custom event") {
+			var customEventName = ACCustomEvents.generateCustomEventName();
+
+			ACCustomEvents.createCustomEvent(
+				customEventName = "${customEventName}",
+				timeToSendCustomEvent = "1");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch the property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+		}
+
+		task ("Navigation to global attributes tab") {
+			ACNavigation.goToSettings();
+
+			ACSettings.goToDefinitions();
+
+			ACSettings.goToEventAttributes();
+
+			ACNavigation.openItem(itemName = "Global Attributes");
+		}
+
+		task ("Edit the global attribute") {
+			ACNavigation.openItem(itemName = "${globalAttributeName}");
+
+			ACUtils.clickAnyButton(button = "Edit");
+		}
+
+		task ("Change the display name of the global attribute") {
+			ACCustomEvents.changeCustomEventDisplayNameOrDescription(newDisplayName = "${globalAttributeName} Display Name");
+		}
+
+		task ("Back to Event Attributes and Navigation to global attributes tab") {
+			ACNavigation.backNavigation(pageName = "Event Attributes");
+
+			ACNavigation.openItem(itemName = "Global Attributes");
+		}
+
+		task ("Check if the display name has been changed") {
+			ACCustomEvents.viewDisplayNameOrDescriptionList(nameValue = "${globalAttributeName} Display Name");
+		}
+	}
+
+	@description = "Feature ID: LRAC-4265 | Automation ID: LRAC-10216 | Test Summary: Edit global attribute name with a name already in use"
 	@priority = "4"
 	test RenameGlobalAttributeWithNameAlreadyInUse {
 		var globalAttributeName1 = "url";
@@ -349,10 +348,10 @@ definition {
 		}
 	}
 
-    @description = "Feature ID: LRAC-4265 | Automation ID: LRAC-10217 | Test Summary: Search for global attribute"
+	@description = "Feature ID: LRAC-4265 | Automation ID: LRAC-10217 | Test Summary: Search for global attribute"
 	@priority = "4"
 	test SearchForGlobalAttribute {
-        var globalAttributesList = "canonicalUrl,pageDescription,pageTitle";
+		var globalAttributesList = "canonicalUrl,pageDescription,pageTitle";
 
 		task ("Fill fields and create custom event") {
 			var customEventName = ACCustomEvents.generateCustomEventName();

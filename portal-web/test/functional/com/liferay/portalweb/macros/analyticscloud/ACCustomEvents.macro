@@ -131,6 +131,25 @@ definition {
 		return "${customEventName}";
 	}
 
+	macro getSampleRawData {
+		var key_attributeName = "${attributeName}";
+		var sampleRawDataValue = selenium.getText("ACCustomEvents#SAMPLE_RAW_DATA_LIST");
+
+		return "${sampleRawDataValue}";
+	}
+
+	macro hideAllCustomEvents {
+		var key_actionButton = "Block";
+
+		KeyPress(
+			locator1 = "ACSettings#SELECT_ALL_CHECKBOX",
+			value1 = "\SPACE");
+
+		ACUtils.clickAnyButton(button = "${key_actionButton}");
+
+		ACUtils.clickAnyButton(button = "${key_actionButton}");
+	}
+
 	macro hideCustomEvent {
 		var key_actionButton = "Hide";
 		var key_nameList = "${customEventName}";
@@ -221,13 +240,6 @@ definition {
 		AssertElementPresent(
 			key_text = "Save",
 			locator1 = "Button#ANY_DISABLED");
-	}
-
-	macro getSampleRawData {
-		var key_attributeName = "${attributeName}";
-		var sampleRawDataValue = selenium.getText("ACCustomEvents#SAMPLE_RAW_DATA_LIST");
-
-		return "${sampleRawDataValue}";
 	}
 
 }

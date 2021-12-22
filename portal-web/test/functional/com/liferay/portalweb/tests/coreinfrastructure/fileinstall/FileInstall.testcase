@@ -46,9 +46,9 @@ definition {
 
 		GogoShell.openGogoShellAdmin();
 
-		GogoShell.executeCommand(commandName = "lb | grep 'Cluster Sample'");
+		GogoShell.executeCommand(commandName = "lb | grep 'Cluster Multiple Sample'");
 
-		GogoShell.viewOutput(outputContent = "Cluster Sample");
+		GogoShell.viewOutput(outputContent = "Cluster Multiple Sample");
 
 		GogoShell.viewOutput(outputContent = "Active");
 	}

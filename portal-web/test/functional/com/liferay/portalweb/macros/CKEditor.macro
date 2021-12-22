@@ -88,6 +88,8 @@ definition {
 
 		SelectWindow(locator1 = "title=${windowID}");
 
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
 		Click(
 			key_fieldLabel = "${fieldLabel}",
 			locator1 = "CKEditor#TOOLBAR_LINK_BUTTON");

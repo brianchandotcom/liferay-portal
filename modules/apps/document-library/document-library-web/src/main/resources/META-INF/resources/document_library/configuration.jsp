@@ -105,9 +105,10 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 
 					<%
 					String taglibRemoveFolder = "Liferay.Util.removeEntitySelection('rootFolderId', 'rootFolderName', this, '" + liferayPortletResponse.getNamespace() + "');";
+					String taglibRemoveRepository = "Liferay.Util.removeEntitySelection('selectedRepositoryId', '', this, '" + liferayPortletResponse.getNamespace() + "');";
 					%>
 
-					<aui:button disabled="<%= dlAdminDisplayContext.getRootFolderId() <= 0 %>" name="removeFolderButton" onClick="<%= taglibRemoveFolder %>" value="remove" />
+					<aui:button disabled="<%= (dlAdminDisplayContext.getRootFolderId() == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) && (dlAdminDisplayContext.getSelectedRepositoryId() == scopeGroupId) %>" name="removeFolderButton" onClick="<%= taglibRemoveFolder + taglibRemoveRepository %>" value="remove" />
 				</div>
 			</liferay-frontend:fieldset>
 

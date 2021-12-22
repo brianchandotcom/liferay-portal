@@ -91,9 +91,10 @@ IGConfigurationDisplayContext igConfigurationDisplayContext = (IGConfigurationDi
 
 						<%
 						String taglibRemoveFolder = "Liferay.Util.removeEntitySelection('rootFolderId', 'rootFolderName', this, '" + liferayPortletResponse.getNamespace() + "');";
+						String taglibRemoveRepository = "Liferay.Util.removeEntitySelection('selectedRepositoryId', '', this, '" + liferayPortletResponse.getNamespace() + "');";
 						%>
 
-						<aui:button disabled="<%= igConfigurationDisplayContext.getRootFolderId() == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID %>" name="removeFolderButton" onClick="<%= taglibRemoveFolder %>" value="remove" />
+						<aui:button disabled="<%= (igConfigurationDisplayContext.getRootFolderId() == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) && (igConfigurationDisplayContext.getSelectedRepositoryId() == scopeGroupId) %>" name="removeFolderButton" onClick="<%= taglibRemoveFolder + taglibRemoveRepository %>" value="remove" />
 					</div>
 				</aui:field-wrapper>
 			</liferay-frontend:fieldset>

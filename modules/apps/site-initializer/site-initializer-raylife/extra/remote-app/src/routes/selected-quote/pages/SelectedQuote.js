@@ -55,9 +55,6 @@ const SelectedQuote = () => {
 				</Panel>
 
 				<Panel
-					Footer={({show}) =>
-						show ? null : <div style={{height: '743px'}} />
-					}
 					id="selectPaymentMethod"
 					title="3. Select Payment Method"
 				>

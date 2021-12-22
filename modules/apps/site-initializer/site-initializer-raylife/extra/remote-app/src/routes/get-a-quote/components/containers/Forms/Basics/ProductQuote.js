@@ -11,7 +11,7 @@ import {
 } from '../../../../../../common/services/liferay/storage';
 import {TIP_EVENT} from '../../../../../../common/utils/events';
 import {clearExitAlert} from '../../../../../../common/utils/exitAlert';
-import useFormActions from '../../../../hooks/useFormActions';
+import {smoothScroll} from '../../../../../../common/utils/scroll';
 import {useProductQuotes} from '../../../../hooks/useProductQuotes';
 import {useStepWizard} from '../../../../hooks/useStepWizard';
 import {useTriggerContext} from '../../../../hooks/useTriggerContext';
@@ -19,13 +19,8 @@ import {AVAILABLE_STEPS} from '../../../../utils/constants';
 
 export function FormBasicProductQuote({form}) {
 	const {control, setValue} = useFormContext();
-	const {selectedStep} = useStepWizard();
+	const {selectedStep, setSection} = useStepWizard();
 	const {productQuotes} = useProductQuotes();
-	const {onNext} = useFormActions(
-		form,
-		null,
-		AVAILABLE_STEPS.BASICS_BUSINESS_TYPE
-	);
 
 	useEffect(() => {
 		const productQuoteId = form?.basics?.productQuote;
@@ -47,6 +42,12 @@ export function FormBasicProductQuote({form}) {
 		if (Storage.itemExist(STORAGE_KEYS.BACK_TO_EDIT)) {
 			Storage.removeItem(STORAGE_KEYS.BACK_TO_EDIT);
 		}
+	};
+
+	const onNext = () => {
+		setSection(AVAILABLE_STEPS.BASICS_BUSINESS_TYPE);
+
+		smoothScroll();
 	};
 
 	const {isSelected, updateState} = useTriggerContext();

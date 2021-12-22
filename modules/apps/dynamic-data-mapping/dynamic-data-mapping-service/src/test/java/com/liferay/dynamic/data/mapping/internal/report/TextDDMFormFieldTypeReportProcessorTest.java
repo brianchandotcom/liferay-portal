@@ -514,7 +514,7 @@ public class TextDDMFormFieldTypeReportProcessorTest extends PowerMockito {
 		DDMFormValues ddmFormValues = mock(DDMFormValues.class);
 
 		when(
-			ddmFormValues.getDDMFormFieldValuesMap(false)
+			ddmFormValues.getDDMFormFieldValuesMap(true)
 		).thenReturn(
 			HashMapBuilder.<String, List<DDMFormFieldValue>>put(
 				"field1", Arrays.asList(ddmFormFieldValue)

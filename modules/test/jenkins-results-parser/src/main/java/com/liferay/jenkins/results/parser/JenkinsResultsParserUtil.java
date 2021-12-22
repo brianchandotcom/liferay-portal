@@ -4163,6 +4163,12 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static List<PathMatcher> toPathMatchers(
+		String prefix, List<String> globs) {
+
+		return toPathMatchers(prefix, globs.toArray(new String[0]));
+	}
+
+	public static List<PathMatcher> toPathMatchers(
 		String prefix, String... globs) {
 
 		if (prefix == null) {

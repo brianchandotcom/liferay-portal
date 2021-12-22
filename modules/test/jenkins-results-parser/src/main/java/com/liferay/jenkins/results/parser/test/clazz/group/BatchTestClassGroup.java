@@ -40,6 +40,9 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 /**
  * @author Michael Hashimoto
  */
@@ -125,6 +128,22 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 
 	public Properties getJobProperties() {
 		return jobProperties;
+	}
+
+	public JSONObject getJSONObject() {
+		JSONObject jsonObject = new JSONObject();
+
+		jsonObject.put("batch_name", getBatchName());
+
+		JSONArray axesJSONArray = new JSONArray();
+
+		jsonObject.put("axes", axesJSONArray);
+
+		for (AxisTestClassGroup axisTestClassGroup : getAxisTestClassGroups()) {
+			axesJSONArray.put(axisTestClassGroup.getJSONObject());
+		}
+
+		return jsonObject;
 	}
 
 	public Integer getMaximumSlavesPerHost() {

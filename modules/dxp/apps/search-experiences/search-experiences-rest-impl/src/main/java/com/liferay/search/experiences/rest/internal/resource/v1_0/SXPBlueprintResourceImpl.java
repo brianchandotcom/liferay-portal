@@ -20,9 +20,11 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
@@ -159,16 +161,39 @@ public class SXPBlueprintResourceImpl
 				}
 			},
 			sorts,
-			document -> _sxpBlueprintDTOConverter.toDTO(
-				new DefaultDTOConverterContext(
-					contextAcceptLanguage.isAcceptAllLanguages(),
-					new HashMap<>(), _dtoConverterRegistry,
-					contextHttpServletRequest,
-					document.get(Field.ENTRY_CLASS_PK),
-					contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
-					contextUser),
-				_sxpBlueprintService.getSXPBlueprint(
-					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
+			document -> {
+				Long sxpBlueprintId = GetterUtil.getLong(
+					document.get(Field.ENTRY_CLASS_PK));
+
+				SXPBlueprint sxpBlueprint = _sxpBlueprintDTOConverter.toDTO(
+					new DefaultDTOConverterContext(
+						contextAcceptLanguage.isAcceptAllLanguages(),
+						new HashMap<>(), _dtoConverterRegistry,
+						contextHttpServletRequest,
+						document.get(Field.ENTRY_CLASS_PK),
+						contextAcceptLanguage.getPreferredLocale(),
+						contextUriInfo, contextUser),
+					_sxpBlueprintService.getSXPBlueprint(sxpBlueprintId));
+
+				String permissionName =
+					com.liferay.search.experiences.model.SXPBlueprint.class.
+						getName();
+
+				sxpBlueprint.setActions(
+					HashMapBuilder.put(
+						"delete",
+						() -> addAction(
+							ActionKeys.DELETE, "deleteSXPBlueprint",
+							permissionName, sxpBlueprintId)
+					).put(
+						"view",
+						() -> addAction(
+							ActionKeys.VIEW, "getSXPBlueprint", permissionName,
+							sxpBlueprintId)
+					).build());
+
+				return sxpBlueprint;
+			});
 	}
 
 	@Override

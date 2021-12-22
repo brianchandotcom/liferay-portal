@@ -20,8 +20,10 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
@@ -151,16 +153,45 @@ public class SXPElementResourceImpl
 				}
 			},
 			sorts,
-			document -> _sxpElementDTOConverter.toDTO(
-				new DefaultDTOConverterContext(
-					contextAcceptLanguage.isAcceptAllLanguages(),
-					new HashMap<>(), _dtoConverterRegistry,
-					contextHttpServletRequest,
-					document.get(Field.ENTRY_CLASS_PK),
-					contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
-					contextUser),
-				_sxpElementService.getSXPElement(
-					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
+			document -> {
+				Long sxpElementId = GetterUtil.getLong(
+					document.get(Field.ENTRY_CLASS_PK));
+
+				SXPElement sxpElement = _sxpElementDTOConverter.toDTO(
+					new DefaultDTOConverterContext(
+						contextAcceptLanguage.isAcceptAllLanguages(),
+						new HashMap<>(), _dtoConverterRegistry,
+						contextHttpServletRequest,
+						document.get(Field.ENTRY_CLASS_PK),
+						contextAcceptLanguage.getPreferredLocale(),
+						contextUriInfo, contextUser),
+					_sxpElementService.getSXPElement(sxpElementId));
+
+				String permissionName =
+					com.liferay.search.experiences.model.SXPElement.class.
+						getName();
+
+				sxpElement.setActions(
+					HashMapBuilder.put(
+						"delete",
+						() -> {
+							if (sxpElement.getReadOnly()) {
+								return null;
+							}
+
+							return addAction(
+								ActionKeys.DELETE, "deleteSXPElement",
+								permissionName, sxpElementId);
+						}
+					).put(
+						"view",
+						() -> addAction(
+							ActionKeys.VIEW, "getSXPElement", permissionName,
+							sxpElementId)
+					).build());
+
+				return sxpElement;
+			});
 	}
 
 	@Override

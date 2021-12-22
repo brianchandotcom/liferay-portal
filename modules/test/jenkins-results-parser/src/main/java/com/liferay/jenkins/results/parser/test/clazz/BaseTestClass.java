@@ -14,6 +14,7 @@
 
 package com.liferay.jenkins.results.parser.test.clazz;
 
+import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
 import com.liferay.jenkins.results.parser.test.clazz.group.BatchTestClassGroup;
 
@@ -21,6 +22,9 @@ import java.io.File;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  * @author Michael Hashimoto
@@ -34,6 +38,34 @@ public abstract class BaseTestClass implements TestClass {
 		}
 
 		return _testClassFile.compareTo(testClass.getTestClassFile());
+	}
+
+	@Override
+	public JSONObject getJSONObject() {
+		JSONObject jsonObject = new JSONObject();
+
+		jsonObject.put("file", getTestClassFile());
+		jsonObject.put("name", getName());
+
+		JSONArray methodsJSONArray = new JSONArray();
+
+		jsonObject.put("methods", methodsJSONArray);
+
+		for (TestClassMethod testClassMethod : getTestClassMethods()) {
+			methodsJSONArray.put(testClassMethod.getName());
+		}
+
+		return jsonObject;
+	}
+
+	@Override
+	public String getName() {
+		PortalGitWorkingDirectory portalGitWorkingDirectory =
+			getPortalGitWorkingDirectory();
+
+		return JenkinsResultsParserUtil.getPathRelativeTo(
+			getTestClassFile(),
+			portalGitWorkingDirectory.getWorkingDirectory());
 	}
 
 	@Override

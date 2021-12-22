@@ -14,6 +14,7 @@
 
 package com.liferay.jenkins.results.parser.test.clazz;
 
+import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.test.clazz.group.BatchTestClassGroup;
 import com.liferay.poshi.core.PoshiContext;
 
@@ -44,6 +45,16 @@ public class FunctionalTestClass extends BaseTestClass {
 
 		return _testClassMethodName.compareTo(
 			functionalTestClass.getTestClassMethodName());
+	}
+
+	@Override
+	public String getName() {
+		String name = super.getName();
+		String testClassMethodName = getTestClassMethodName();
+
+		return JenkinsResultsParserUtil.combine(
+			name.replaceAll("([^\\.]+)\\..*", "$1"), "#",
+			testClassMethodName.replaceAll("([^#]+#)?(.*)", "$2"));
 	}
 
 	public Properties getPoshiProperties() {

@@ -18,10 +18,16 @@ import java.io.File;
 
 import java.util.List;
 
+import org.json.JSONObject;
+
 /**
  * @author Michael Hashimoto
  */
 public interface TestClass extends Comparable<TestClass> {
+
+	public JSONObject getJSONObject();
+
+	public String getName();
 
 	public File getTestClassFile();
 

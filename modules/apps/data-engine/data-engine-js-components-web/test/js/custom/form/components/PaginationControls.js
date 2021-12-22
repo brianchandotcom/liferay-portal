@@ -13,7 +13,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {cleanup, render} from '@testing-library/react';
+import {render} from '@testing-library/react';
 import React from 'react';
 
 import {ConfigProvider} from '../../../../../src/main/resources/META-INF/resources/js/core/hooks/useConfig.es';
@@ -34,10 +34,6 @@ const WithProvider = ({children, config}) => (
 );
 
 describe('Pagination Controls', () => {
-	afterEach(() => {
-		cleanup();
-	});
-
 	it('shows see partial results button if showPartialResultsToRespondents settings is enabled', () => {
 		const {queryByRole} = render(
 			<WithProvider config={INITIAL_CONFIG}>
@@ -46,7 +42,7 @@ describe('Pagination Controls', () => {
 		);
 
 		expect(
-			queryByRole('button', {name: /see partial results/i})
+			queryByRole('button', {name: /see-partial-results/i})
 		).toBeInTheDocument();
 	});
 
@@ -63,7 +59,7 @@ describe('Pagination Controls', () => {
 		);
 
 		expect(
-			queryByRole('button', {name: /see partial results/i})
+			queryByRole('button', {name: /see-partial-results/i})
 		).not.toBeInTheDocument();
 	});
 });

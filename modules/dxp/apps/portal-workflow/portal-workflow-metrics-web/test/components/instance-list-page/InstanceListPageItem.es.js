@@ -324,7 +324,7 @@ describe('The instance list item should', () => {
 		expect(dateText).toBeTruthy();
 	});
 
-	it('Be rendered with remaining time when the SLA is less than a minute.', () => {
+	it('Be rendered with remaining time when the SLA is less than a minute.', async () => {
 		const slaResult = {
 			dateOverdue: '2021-04-16T12:44:25Z',
 			name: 'SLA Test',

@@ -134,13 +134,13 @@ describe('The App component should', () => {
 		});
 	});
 
-	it('Render the process metrics page on dashboard tab', () => {
+	it('Render the process metrics page on dashboard tab', async () => {
 		expect(window.location.hash).toContain(
 			'#/metrics/1234/dashboard/20/1/overdueInstanceCount%3Aasc'
 		);
 
 		const tabs = container.querySelectorAll('a.nav-link');
-		const metricsCalculated = findByText('SLA Metrics calculated');
+		const metricsCalculated = await findByText('SLA Metrics calculated');
 
 		expect(tabs[0]).toHaveTextContent('dashboard');
 		expect(tabs[0].className.includes('active')).toBe(true);
@@ -155,8 +155,8 @@ describe('The App component should', () => {
 		fireEvent.click(tabs[1]);
 	});
 
-	it('Render the process metrics page on performance tab and back to dashboard', () => {
-		const metricsCalculated = findByText('SLA Metrics calculated');
+	it('Render the process metrics page on performance tab and back to dashboard', async () => {
+		const metricsCalculated = await findByText('SLA Metrics calculated');
 		const tabs = container.querySelectorAll('a.nav-link');
 
 		expect(tabs[0]).toHaveTextContent('dashboard');
@@ -173,7 +173,7 @@ describe('The App component should', () => {
 		expect(window.location.hash).toContain('#/metrics/1234/dashboard');
 	});
 
-	it('Navigate to new SLA page', () => {
+	it('Navigate to new SLA page', async () => {
 		const slaInfoLink = getByText('add-a-new-sla');
 
 		fireEvent.click(slaInfoLink);

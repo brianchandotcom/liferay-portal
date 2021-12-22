@@ -88,6 +88,28 @@ definition {
 		}
 	}
 
+	macro clickToAddBreakdownButton {
+		var key_sectionType = "breakdown";
+
+		Click(locator1 = "ACEventAnalysis#ADD_ATTRIBUTE_BUTTON");
+	}
+
+	macro clickToAddEventButton {
+		Click(locator1 = "ACEventAnalysis#ADD_EVENT_BUTTON");
+	}
+
+	macro clickToAddFilterButton {
+		var key_sectionType = "filter";
+
+		Click(locator1 = "ACEventAnalysis#ADD_ATTRIBUTE_BUTTON");
+	}
+
+	macro searchEventAnalysis {
+		Type(
+			locator1 = "ACEventAnalysis#SEARCH_BAR_EVENT_ANALYSE",
+			value1 = "${searchItem}");
+	}
+
 	macro viewChangedAttributeDataType {
 		var key_buttonName = "${attributeName}";
 
@@ -95,16 +117,38 @@ definition {
 
 		ACCustomEvents.viewDataType(typeValue = "${newDataType}");
 
-		if ("${newDataType}" != "STRING" && "${newDataType}" != "BOOLEAN") {
+		if (("${newDataType}" != "STRING") && ("${newDataType}" != "BOOLEAN")) {
 			Click(locator1 = "ACEventAnalysis#CONDITION_BUTTON");
 		}
 
-		if ("${newDataType}" == "NUMBER" || "${newDataType}" == "DURATION") {
+		if (("${newDataType}" == "NUMBER") || ("${newDataType}" == "DURATION")) {
 			AssertElementPresent(locator1 = "ACEventAnalysis#INPUT_CONDITION");
 		}
 
 		if ("${newDataType}" == "DATE") {
 			AssertElementPresent(locator1 = "Select#SELECT");
+		}
+	}
+
+	macro viewEventAnalysisList {
+		for (var name : list "${eventList}") {
+			var key_buttonName = "${name}";
+
+			while (IsElementNotPresent(locator1 = "ACUtils#GENERIC_BUTTON") && (maxIterations = "50")) {
+				ACEventAnalysis.searchEventAnalysis(searchItem = "${name}");
+			}
+
+			AssertTextEquals(
+				locator1 = "ACUtils#GENERIC_BUTTON",
+				value1 = "${name}");
+		}
+	}
+
+	macro viewEventAnalysisListNotPresent {
+		for (var name : list "${eventList}") {
+			var key_buttonName = "${name}";
+
+			AssertElementNotPresent(locator1 = "ACUtils#GENERIC_BUTTON");
 		}
 	}
 

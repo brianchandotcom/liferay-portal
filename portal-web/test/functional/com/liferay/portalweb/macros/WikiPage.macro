@@ -932,6 +932,8 @@ definition {
 		SelectFrame(value1 = "relative=top");
 
 		if ("${minorEdit}" == "true") {
+			Panel.expandPanel(panel = "Configuration");
+
 			Check(locator1 = "Checkbox#THIS_IS_A_MINOR_EDIT");
 		}
 

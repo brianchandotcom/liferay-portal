@@ -34,6 +34,7 @@ definition {
 	@description = "This ensures that a translator without permissions cannot translate a content page to Chinese."
 	@priority = "5"
 	test CannotTranslateToChineseWithoutPermissions {
+		property portal.acceptance = "true";
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
 		ContentPagesNavigator.openEditContentPage(

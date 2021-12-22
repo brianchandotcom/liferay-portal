@@ -14,6 +14,7 @@
 
 package com.liferay.journal.web.internal.portlet.action;
 
+import com.liferay.diff.exception.CompareVersionsException;
 import com.liferay.dynamic.data.mapping.exception.TemplateScriptException;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureServiceUtil;
@@ -32,7 +33,6 @@ import com.liferay.journal.web.internal.portlet.JournalPortlet;
 import com.liferay.journal.web.internal.security.permission.resource.JournalPermission;
 import com.liferay.journal.web.internal.util.JournalHelperUtil;
 import com.liferay.journal.web.internal.util.JournalUtil;
-import com.liferay.portal.kernel.diff.CompareVersionsException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

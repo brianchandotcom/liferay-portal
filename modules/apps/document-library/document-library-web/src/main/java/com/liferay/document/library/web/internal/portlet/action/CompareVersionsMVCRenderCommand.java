@@ -14,6 +14,8 @@
 
 package com.liferay.document.library.web.internal.portlet.action;
 
+import com.liferay.diff.DiffResult;
+import com.liferay.diff.util.DiffUtil;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.document.conversion.DocumentConversionUtil;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
@@ -21,8 +23,6 @@ import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.diff.DiffResult;
-import com.liferay.portal.kernel.diff.DiffUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;

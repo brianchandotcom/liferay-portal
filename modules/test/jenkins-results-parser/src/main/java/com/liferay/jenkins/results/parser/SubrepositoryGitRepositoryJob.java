@@ -30,7 +30,7 @@ import java.util.Set;
 /**
  * @author Michael Hashimoto
  */
-public class SubrepositoryGitRepositoryJob<_portalUpstreamBranchName>
+public class SubrepositoryGitRepositoryJob
 	extends GitRepositoryJob
 	implements BatchDependentJob, SubrepositoryTestClassJob {
 

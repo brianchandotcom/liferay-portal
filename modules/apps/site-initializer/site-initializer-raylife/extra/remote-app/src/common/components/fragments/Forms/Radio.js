@@ -1,11 +1,13 @@
 import ClayCard from '@clayui/card';
 import {ClayRadio} from '@clayui/form';
+import classNames from 'classnames';
 import React from 'react';
 
 export function Radio({
 	description,
 	label,
 	name,
+	onChange,
 	renderActions,
 	selected = false,
 	sideLabel,
@@ -14,13 +16,15 @@ export function Radio({
 }) {
 	return (
 		<ClayCard
-			className={`align-items-baseline flex-row d-flex mb-3 mt-3 pb-3 pr-3 pl-3
-			pt-3 radio-card rounded user-select-auto  ${
-				selected &&
-				'bg-brand-primary-lighten-5 border border-primary text-brand-primary'
-			}`}
+			className={classNames(
+				'align-items-baseline d-flex flex-row mb-3 pb-3 pl-3 pr-3 pt-3 radio-card rounded user-select-auto',
+				{
+					'bg-brand-primary-lighten-5 border border-primary text-brand-primary': selected,
+					'card-outlined': !selected,
+				}
+			)}
 			onClick={() =>
-				props.onChange({
+				onChange({
 					target: {
 						value,
 					},
@@ -34,7 +38,7 @@ export function Radio({
 				inline={true}
 				name={name}
 				onChange={() =>
-					props.onChange({
+					onChange({
 						target: {
 							value,
 						},

@@ -176,7 +176,7 @@ export function BusinessTypeSearch({form, setNewSelectedProduct}) {
 					</ClayButton>
 				</SearchInput>
 
-				<p className="paragraph">
+				<p className="mt-1 paragraph">
 					i.e. Apartments, Coffee, Medical, Pet Stores, etc
 				</p>
 			</div>

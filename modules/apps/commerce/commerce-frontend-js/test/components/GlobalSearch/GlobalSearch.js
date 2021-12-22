@@ -15,12 +15,7 @@
 import '../../utils/polyfills';
 
 import '@testing-library/jest-dom/extend-expect';
-import {
-	cleanup,
-	fireEvent,
-	render,
-	waitForElement,
-} from '@testing-library/react';
+import {fireEvent, render} from '@testing-library/react';
 import fetchMock from 'fetch-mock';
 import React from 'react';
 
@@ -69,7 +64,6 @@ describe('Global Search', () => {
 
 		afterEach(() => {
 			fetchMock.restore();
-			cleanup();
 		});
 
 		describe('When input is empty', () => {
@@ -97,18 +91,14 @@ describe('Global Search', () => {
 
 			describe('after the results are loaded', () => {
 				beforeEach(async () => {
-					await waitForElement(() =>
-						renderedComponent.getByText(
-							`search-${query}-in-accounts`
-						)
+					await renderedComponent.findByText(
+						`search-${query}-in-accounts`
 					);
-					await waitForElement(() =>
-						renderedComponent.getByText(
-							`search-${query}-in-catalog`
-						)
+					await renderedComponent.findByText(
+						`search-${query}-in-catalog`
 					);
-					await waitForElement(() =>
-						renderedComponent.getByText(`search-${query}-in-orders`)
+					await renderedComponent.findByText(
+						`search-${query}-in-orders`
 					);
 				});
 
@@ -240,7 +230,6 @@ describe('Global Search', () => {
 
 		afterEach(() => {
 			fetchMock.restore();
-			cleanup();
 		});
 
 		describe('When input is filled', () => {
@@ -253,24 +242,20 @@ describe('Global Search', () => {
 			describe('after the results are loaded', () => {
 				it('must show coherent messages', async () => {
 					expect(
-						await waitForElement(() =>
-							renderedComponent.getByText(`no-orders-were-found`)
+						await renderedComponent.findByText(
+							`no-orders-were-found`
 						)
 					).toBeInTheDocument();
 
 					expect(
-						await waitForElement(() =>
-							renderedComponent.getByText(
-								`no-products-were-found`
-							)
+						await renderedComponent.findByText(
+							`no-products-were-found`
 						)
 					).toBeInTheDocument();
 
 					expect(
-						await waitForElement(() =>
-							renderedComponent.getByText(
-								`no-accounts-were-found`
-							)
+						await renderedComponent.findByText(
+							`no-accounts-were-found`
 						)
 					).toBeInTheDocument();
 

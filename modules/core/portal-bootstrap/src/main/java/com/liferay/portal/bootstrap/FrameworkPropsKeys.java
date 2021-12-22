@@ -20,21 +20,6 @@ package com.liferay.portal.bootstrap;
  */
 public interface FrameworkPropsKeys {
 
-	public static final String FILE_INSTALL_DIR = "file.install.dir";
-
-	public static final String FILE_INSTALL_LOG_LEVEL =
-		"file.install.log.level";
-
-	public static final String FILE_INSTALL_POLL = "file.install.poll";
-
-	public static final String FILE_INSTALL_START_LEVEL =
-		"file.install.start.level";
-
-	public static final String FILE_INSTALL_TMPDIR = "file.install.tmpdir";
-
-	public static final String FILE_INSTALL_WEB_START_LEVEL =
-		"file.install.start.level";
-
 	public static final String OSGI_FRAMEWORK = "osgi.framework";
 
 	public static final String OSGI_INSTALL_AREA = "osgi.install.area";

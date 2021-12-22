@@ -84,16 +84,14 @@ public class JobFactory {
 	private static String _getPortalUpstreamBranchName(
 		TopLevelBuild topLevelBuild) {
 
-		String upstreamBranchName = topLevelBuild.getBranchName();
-
 		String portalUpstreamBranchName = topLevelBuild.getParameterValue(
 			"PORTAL_UPSTREAM_BRANCH_NAME");
 
-		if (!JenkinsResultsParserUtil.isNullOrEmpty(portalUpstreamBranchName)) {
-			upstreamBranchName = portalUpstreamBranchName;
+		if (JenkinsResultsParserUtil.isNullOrEmpty(portalUpstreamBranchName)) {
+			portalUpstreamBranchName = topLevelBuild.getBranchName();
 		}
 
-		return upstreamBranchName;
+		return portalUpstreamBranchName;
 	}
 
 	private static boolean _isCentralMergePullRequest(
@@ -127,10 +125,10 @@ public class JobFactory {
 	private static Job _newJob(
 		String jobName, String testSuiteName, String branchName,
 		String repositoryName, Job.BuildProfile buildProfile,
-		String upstreamBranchName, List<String> projectNames) {
+		String portalUpstreamBranchName, List<String> projectNames) {
 
-		if (upstreamBranchName == null) {
-			upstreamBranchName = branchName;
+		if (JenkinsResultsParserUtil.isNullOrEmpty(portalUpstreamBranchName)) {
+			portalUpstreamBranchName = branchName;
 		}
 
 		if (buildProfile == null) {
@@ -414,7 +412,7 @@ public class JobFactory {
 				jobKey,
 				new SubrepositoryAcceptancePullRequestJob(
 					jobName, buildProfile, testSuiteName, repositoryName,
-					upstreamBranchName));
+					portalUpstreamBranchName));
 
 			return _jobs.get(jobKey);
 		}

@@ -142,15 +142,15 @@ public class SubrepositoryGitRepositoryJob
 
 	protected SubrepositoryGitRepositoryJob(
 		String jobName, BuildProfile buildProfile, String repositoryName,
-		String upstreamBranchName) {
+		String portalUpstreamBranchName) {
 
 		super(jobName, buildProfile);
 
-		_portalUpstreamBranchName = upstreamBranchName;
+		_portalUpstreamBranchName = portalUpstreamBranchName;
 
 		gitWorkingDirectory =
 			GitWorkingDirectoryFactory.newSubrepositoryGitWorkingDirectory(
-				upstreamBranchName, repositoryName);
+				portalUpstreamBranchName, repositoryName);
 
 		setGitRepositoryDir(gitWorkingDirectory.getWorkingDirectory());
 

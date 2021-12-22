@@ -603,8 +603,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 			serviceContext.setScopeGroupId(entry.getGroupId());
 
-			serviceContext.setAttribute(
-				WorkflowConstants.SCHEDULER_INVOCATION, Boolean.TRUE);
+			serviceContext.setAttribute(_SCHEDULER_INVOCATION, Boolean.TRUE);
 
 			blogsEntryLocalService.updateStatus(
 				entry.getStatusByUserId(), entry.getEntryId(),
@@ -1908,8 +1907,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			serviceContext.getAttribute("sendEmailEntryUpdated"));
 
 		boolean schedulerInvocation = GetterUtil.getBoolean(
-			serviceContext.getAttribute(
-				WorkflowConstants.SCHEDULER_INVOCATION));
+			serviceContext.getAttribute(_SCHEDULER_INVOCATION));
 
 		if (serviceContext.isCommandAdd() &&
 			blogsGroupServiceSettings.isEmailEntryAddedEnabled()) {
@@ -2393,6 +2391,9 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	}
 
 	private static final String _COVER_IMAGE_FOLDER_NAME = "Cover Image";
+
+	private static final String _SCHEDULER_INVOCATION =
+		BlogsEntry.class.getName() + "SCHEDULER_INVOCATION";
 
 	private static final String _SMALL_IMAGE_FOLDER_NAME = "Small Image";
 

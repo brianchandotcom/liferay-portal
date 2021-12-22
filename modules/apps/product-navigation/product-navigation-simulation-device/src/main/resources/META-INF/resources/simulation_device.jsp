@@ -112,11 +112,13 @@
 			custom: {
 				height: '#<portlet:namespace />height',
 				resizable: true,
+				skin: 'custom',
 				width: '#<portlet:namespace />width',
 			},
 			desktop: {
 				height: 1050,
 				selected: true,
+				skin: 'desktop',
 				width: 1300,
 			},
 			smartphone: {

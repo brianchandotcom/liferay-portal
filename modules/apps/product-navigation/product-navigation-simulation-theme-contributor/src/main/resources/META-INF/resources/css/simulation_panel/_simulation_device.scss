@@ -81,8 +81,32 @@ html#{$cadmin-selector} {
 		}
 
 		&.smartphone,
-		&.tablet {
+		&.tablet,
+		&.desktop {
 			background: #333;
+		}
+
+		&.smartphone,
+		&.tablet,
+		&.desktop,
+		&.custom {
+			.modal-body.dialog-iframe-bd {
+				margin-top: 0;
+			}
+		}
+
+		&.desktop {
+			padding: 24px;
+			border-radius: 16px;
+		}
+
+		&.custom {
+			background-color: var(--btn-outline-primary-hover-border-color);
+			padding: 2px;
+
+			&.show {
+				overflow: visible;
+			}
 		}
 	}
 }

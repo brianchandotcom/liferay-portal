@@ -112,13 +112,27 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136988. It checks that a table of contents can be added to a page."
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanAddTableOfContents {
-		property portal.acceptance = "false";
+		WikiNavigator.openToAddPage(
+			groupName = "Guest",
+			layoutURLKey = "wiki-test-page",
+			siteURLKey = "guest",
+			wikiNodeName = "Main");
 
-		// TODO LPS-136988 CanAddTableOfContents pending implementation
+		WikiEntry.addPageTitle(wikiPageTitle = "Wiki Page Title");
 
+		WikiEntry.addPageContentTable();
+
+		Button.clickPublish();
+
+		WikiNavigator.openToWikiPage(
+			layoutURLKey = "wiki-test-page",
+			siteURLKey = "guest",
+			wikiNodeName = "Main",
+			wikiPageTitle = "Wiki Page Title");
+
+		AssertElementPresent(locator1 = "WikiEntry#BODY_TABLE");
 	}
 
 	@description = "This is a test for LPS-136995. It checks that page versions can be compared."

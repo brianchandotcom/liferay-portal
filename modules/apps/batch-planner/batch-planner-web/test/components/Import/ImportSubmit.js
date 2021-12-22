@@ -13,7 +13,13 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {act, cleanup, fireEvent, render, wait} from '@testing-library/react';
+import {
+	act,
+	configure,
+	fireEvent,
+	render,
+	waitFor,
+} from '@testing-library/react';
 import fetchMock from 'fetch-mock';
 import React from 'react';
 
@@ -38,6 +44,8 @@ const externalFieldName = 'external';
 let mockApi;
 const mockTaskID = '1234';
 
+configure({asyncUtilTimeout: 5000});
+
 describe('ImportSubmit', () => {
 	beforeEach(() => {
 		const form = document.createElement('form');
@@ -56,7 +64,6 @@ describe('ImportSubmit', () => {
 
 	afterEach(() => {
 		fetchMock.restore();
-		cleanup();
 	});
 
 	it('must start import task', () => {
@@ -97,16 +104,17 @@ describe('ImportSubmit', () => {
 			fireEvent.click(getByText(Liferay.Language.get('import')));
 		});
 
-		await wait(() => {
+		await act(async () => {
 			jest.advanceTimersByTime(POLL_INTERVAL);
+		});
+
+		await waitFor(() => {
 			expect(mockApi.called(importTaskStatusURL)).toBeTruthy();
 		});
 		jest.useRealTimers();
 	});
 
 	it('must enable button when import process is completed', async () => {
-		jest.useFakeTimers();
-
 		const importTaskStatusURL = getImportTaskStatusURL(mockTaskID);
 
 		mockApi.mock(
@@ -129,20 +137,16 @@ describe('ImportSubmit', () => {
 		);
 		const {getByText} = render(<ImportSubmit {...BASE_PROPS} />);
 
-		act(() => {
+		await act(async () => {
 			fireEvent.click(getByText(Liferay.Language.get('import')));
 		});
 
-		await wait(() => {
-			jest.advanceTimersByTime(POLL_INTERVAL);
-
+		await waitFor(() => {
 			expect(
 				getByText(Liferay.Language.get('done'), {
 					selector: 'button',
 				})
 			).not.toBeDisabled();
 		});
-
-		jest.useRealTimers();
 	});
 });

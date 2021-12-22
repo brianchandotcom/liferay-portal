@@ -389,6 +389,8 @@ public class DLAdminDisplayContext {
 		_rootFolderName = StringPool.BLANK;
 
 		if (_rootFolderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			_rootFolderName = LanguageUtil.get(_httpServletRequest, "home");
+
 			return;
 		}
 

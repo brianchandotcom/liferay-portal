@@ -25,6 +25,7 @@ import com.liferay.item.selector.criteria.FolderItemSelectorReturnType;
 import com.liferay.item.selector.criteria.folder.criterion.FolderItemSelectorCriterion;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
@@ -121,7 +122,7 @@ public class IGConfigurationDisplayContext {
 		_initFolder();
 
 		if (Objects.equals(_folderName, StringPool.BLANK)) {
-			_getFolderName();
+			_folderName = _getFolderName();
 		}
 
 		return _folderName;
@@ -181,24 +182,24 @@ public class IGConfigurationDisplayContext {
 		}
 	}
 
-	private void _getFolderName() {
+	private String _getFolderName() {
 		if ((_folderId == null) ||
 			(_folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
 
-			return;
+			return LanguageUtil.get(_httpServletRequest, "home");
 		}
 
 		Folder folder = _getFolder();
 
 		if (folder == null) {
-			return;
+			return StringPool.BLANK;
 		}
-
-		_folderName = folder.getName();
 
 		if (_folderInTrash) {
-			_folderName = _trashHelper.getOriginalTitle(_folder.getName());
+			return _trashHelper.getOriginalTitle(_folder.getName());
 		}
+
+		return folder.getName();
 	}
 
 	private PortletPreferences _getPortletPreferences() {

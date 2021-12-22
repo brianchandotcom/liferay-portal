@@ -351,6 +351,13 @@ components:
                     type: string
         SXPBlueprint:
             properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    readOnly: true
+                    type: object
                 configuration:
                     $ref: "#/components/schemas/Configuration"
                 createDate:
@@ -385,6 +392,13 @@ components:
             type: object
         SXPElement:
             properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    readOnly: true
+                    type: object
                 createDate:
                     format: date
                     type: string

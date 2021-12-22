@@ -1144,12 +1144,82 @@ definition {
 	}
 
 	@description = "LPS-135390 - Verify it is possible to delete an Object with the Delete permission"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanDeleteObjectWithDeletePermission {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-		// TODO LPS-141604 CanDeleteObjectWithDeletePermission pending implementation
+		JSONRole.addRegularRole(
+			roleKey = "Regular Role",
+			roleTitle = "Regular Role");
 
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles");
+
+		Role.definePermissionCP(
+			permissionDefinitionKey = "CONTROL_PANEL_OBJECTS_PERMISSIONS_APLICATION_PERMISSION_ACCESS_CONTROL_PANEL_CHECKBOX",
+			permissionDefinitionValue = "",
+			permissionNavigationKey = "CONTROL_PANEL_OBJECTS_PERMISSIONS",
+			permissionNavigationValue = "Custom Objects",
+			roleTitle = "Regular Role",
+			roleType = "Regular");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles");
+
+		Role.definePermissionCP(
+			permissionDefinitionKey = "CONTROL_PANEL_OBJECTS_PERMISSIONS_RESOURCE_PERMISSION_VIEW_OBJECT_DEFINITION_CHECKBOX",
+			permissionDefinitionValue = "",
+			permissionNavigationKey = "CONTROL_PANEL_OBJECTS_PERMISSIONS",
+			permissionNavigationValue = "Objects",
+			roleTitle = "Regular Role",
+			roleType = "Regular");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles");
+
+		Role.definePermissionCP(
+			permissionDefinitionKey = "CONTROL_PANEL_OBJECTS_PERMISSIONS_RESOURCE_PERMISSIONS_DELETE_CHECKBOX",
+			permissionDefinitionValue = "",
+			permissionNavigationKey = "CONTROL_PANEL_OBJECTS_PERMISSIONS",
+			permissionNavigationValue = "Objects",
+			roleTitle = "Regular Role",
+			roleType = "Regular");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Regular Role",
+			userEmailAddress = "userea@liferay.com");
+
+		Navigator.openURL();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		ObjectAdmin.openObjectAdmin();
+
+		CreateObject.deleteObjectViaUI(objectName = "Custom Object");
+
+		CreateObject.assertObjectNotPresent(objectName = "Custom Object");
 	}
 
 	@description = "LPS-135401 - Verify that it is possible to delete a relation with an entry on the Relationship tab"

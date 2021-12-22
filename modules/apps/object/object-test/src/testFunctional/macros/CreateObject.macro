@@ -134,6 +134,12 @@ definition {
 			value1 = "${labelName}");
 	}
 
+	macro assertObjectNotPresent {
+		AssertElementNotPresent(
+			key_tabName = "${objectName}",
+			locator1 = "ObjectAdmin#ANY_TAB_ON_ENTRY");
+	}
+
 	macro assertObjectPluralLabel {
 		AssertTextEquals(
 			locator1 = "CreateObject#OBJECT_PLURAL_LABEL",
@@ -212,6 +218,14 @@ definition {
 		Click(locator1 = "CreateObject#KEBAB_MENU_BLOCK_FIELD");
 
 		Click(locator1 = "CreateObject#KEBAB_MENU_BLOCK_FIELD_OPTION_DELETE");
+	}
+
+	macro deleteObjectViaUI {
+		Click(
+			key_text = "${objectName}",
+			locator1 = "Icon#ANY_VERTICAL_ELLIPSIS");
+
+		MenuItem.clickNoError(menuItem = "Delete");
 	}
 
 	macro editLabel {

@@ -90,6 +90,7 @@ definition {
 		}
 	}
 
+	@ignore = "true"
 	@priority = "3"
 	test CanCleanupSoftwareCatalogDataAfterUpgrade {
 		property data.archive.type = "data-archive-portal";

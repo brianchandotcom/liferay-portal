@@ -6375,12 +6375,44 @@ definition {
 	}
 
 	@description = "LPS-135649 - Verify that a withdrawn pending entry is displayed with a Draft status"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test WithdrawnEntryDisplaysDraftStatus {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-		// TODO LPS-141630 WithdrawnEntryDisplaysDraftStatus pending implementation
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "Custom Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject");
 
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		ObjectAdmin.openWorkflowProcessBuilderConfiguration();
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Custom Object");
+
+		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+			fieldName = "customObjectField",
+			objectName = "CustomObject",
+			value = "Entry Test");
+
+		ObjectAdmin.openMySubmissions();
+
+		CreateObject.withdrawObjectTask(objectName = "Custom Object");
+
+		Navigator.openURL();
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+		ObjectPortlet.assertEntryStauts(
+			key_entry = "Entry Test",
+			key_status = "Draft");
 	}
 
 	@description = "LPS-135649 - Verify that the workflow is triggered when submitting an entry through Forms"

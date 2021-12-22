@@ -290,4 +290,14 @@ definition {
 			locator1 = "CreateObject#VIEW_OBJECT");
 	}
 
+	macro withdrawObjectTask {
+		Click(
+			key_taskName = "${objectName}",
+			locator1 = "WorkflowSubmissions#SUBMISSIONS_TASK_NAME");
+
+		Click(locator1 = "WorkflowSubmissions#SUBMISSIONS_DETAILS_PAGE_ELLIPSIS");
+
+		MenuItem.click(menuItem = "Withdraw Submission");
+	}
+
 }

@@ -7,7 +7,6 @@
 		{
 			"indexed": true,
 			"indexedAsKeyword": false,
-			"indexedLanguageId": null,
 			"label": {
 				"en-US": "Account Key"
 			},
@@ -18,7 +17,6 @@
 		{
 			"indexed": true,
 			"indexedAsKeyword": false,
-			"indexedLanguageId": null,
 			"label": {
 				"en-US": "AC Workspace Name"
 			},
@@ -29,7 +27,6 @@
 		{
 			"indexed": true,
 			"indexedAsKeyword": false,
-			"indexedLanguageId": null,
 			"label": {
 				"en-US": "Code"
 			},
@@ -40,7 +37,6 @@
 		{
 			"indexed": true,
 			"indexedAsKeyword": false,
-			"indexedLanguageId": null,
 			"label": {
 				"en-US": "Data Region"
 			},
@@ -51,7 +47,6 @@
 		{
 			"indexed": true,
 			"indexedAsKeyword": false,
-			"indexedLanguageId": null,
 			"label": {
 				"en-US": "DXP Version"
 			},
@@ -62,7 +57,6 @@
 		{
 			"indexed": true,
 			"indexedAsKeyword": false,
-			"indexedLanguageId": null,
 			"label": {
 				"en-US": "Max Requestors"
 			},
@@ -73,7 +67,6 @@
 		{
 			"indexed": true,
 			"indexedAsKeyword": false,
-			"indexedLanguageId": null,
 			"label": {
 				"en-US": "Partner"
 			},
@@ -84,7 +77,6 @@
 		{
 			"indexed": true,
 			"indexedAsKeyword": false,
-			"indexedLanguageId": null,
 			"label": {
 				"en-US": "Region"
 			},
@@ -95,7 +87,6 @@
 		{
 			"indexed": true,
 			"indexedAsKeyword": false,
-			"indexedLanguageId": null,
 			"label": {
 				"en-US": "SLA Current"
 			},
@@ -106,7 +97,6 @@
 		{
 			"indexed": true,
 			"indexedAsKeyword": false,
-			"indexedLanguageId": null,
 			"label": {
 				"en-US": "SLA Current Start Date"
 			},
@@ -117,7 +107,6 @@
 		{
 			"indexed": true,
 			"indexedAsKeyword": false,
-			"indexedLanguageId": null,
 			"label": {
 				"en-US": "SLA Current End Date"
 			},
@@ -128,7 +117,6 @@
 		{
 			"indexed": true,
 			"indexedAsKeyword": false,
-			"indexedLanguageId": null,
 			"label": {
 				"en-US": "SLA Expired"
 			},
@@ -139,7 +127,6 @@
 		{
 			"indexed": true,
 			"indexedAsKeyword": false,
-			"indexedLanguageId": null,
 			"label": {
 				"en-US": "SLA Expired Start Date"
 			},
@@ -150,7 +137,6 @@
 		{
 			"indexed": true,
 			"indexedAsKeyword": false,
-			"indexedLanguageId": null,
 			"label": {
 				"en-US": "SLA Expired End Date"
 			},
@@ -161,7 +147,6 @@
 		{
 			"indexed": true,
 			"indexedAsKeyword": false,
-			"indexedLanguageId": null,
 			"label": {
 				"en-US": "SLA Future"
 			},
@@ -172,7 +157,6 @@
 		{
 			"indexed": true,
 			"indexedAsKeyword": false,
-			"indexedLanguageId": null,
 			"label": {
 				"en-US": "SLA Future Start Date"
 			},
@@ -183,7 +167,6 @@
 		{
 			"indexed": true,
 			"indexedAsKeyword": false,
-			"indexedLanguageId": null,
 			"label": {
 				"en-US": "SLA Future End Date"
 			},
@@ -194,7 +177,6 @@
 		{
 			"indexed": true,
 			"indexedAsKeyword": false,
-			"indexedLanguageId": null,
 			"label": {
 				"en-US": "Liferay Contact Name"
 			},
@@ -205,7 +187,6 @@
 		{
 			"indexed": true,
 			"indexedAsKeyword": false,
-			"indexedLanguageId": null,
 			"label": {
 				"en-US": "Liferay Contact Role"
 			},
@@ -216,7 +197,6 @@
 		{
 			"indexed": true,
 			"indexedAsKeyword": false,
-			"indexedLanguageId": null,
 			"label": {
 				"en-US": "Liferay Contact Email Address"
 			},

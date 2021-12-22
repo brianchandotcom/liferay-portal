@@ -7,7 +7,6 @@
 		{
 			"indexed": true,
 			"indexedAsKeyword": false,
-			"indexedLanguageId": null,
 			"label": {
 				"en-US": "Admins"
 			},
@@ -18,7 +17,6 @@
 		{
 			"indexed": true,
 			"indexedAsKeyword": false,
-			"indexedLanguageId": null,
 			"label": {
 				"en-US": "Data Center Region"
 			},
@@ -29,7 +27,6 @@
 		{
 			"indexed": true,
 			"indexedAsKeyword": false,
-			"indexedLanguageId": null,
 			"label": {
 				"en-US": "Project Id"
 			},
@@ -40,7 +37,6 @@
 		{
 			"indexed": true,
 			"indexedAsKeyword": false,
-			"indexedLanguageId": null,
 			"label": {
 				"en-US": "Disaster Data Center Region"
 			},
@@ -53,6 +49,6 @@
 	"pluralLabel": {
 		"en_US": "Setups DXP Cloud"
 	},
-	"scope": "company",
+	"scope": "site",
 	"system": false
 }

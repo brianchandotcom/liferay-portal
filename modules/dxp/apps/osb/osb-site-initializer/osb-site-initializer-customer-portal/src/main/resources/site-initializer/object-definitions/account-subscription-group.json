@@ -7,7 +7,6 @@
 		{
 			"indexed": true,
 			"indexedAsKeyword": false,
-			"indexedLanguageId": null,
 			"label": {
 				"en-US": "Account Key"
 			},
@@ -18,7 +17,6 @@
 		{
 			"indexed": true,
 			"indexedAsKeyword": false,
-			"indexedLanguageId": null,
 			"label": {
 				"en-US": "Activation Status"
 			},
@@ -29,7 +27,6 @@
 		{
 			"indexed": true,
 			"indexedAsKeyword": false,
-			"indexedLanguageId": null,
 			"label": {
 				"en-US": "Manage Contacts URL"
 			},
@@ -40,7 +37,6 @@
 		{
 			"indexed": true,
 			"indexedAsKeyword": false,
-			"indexedLanguageId": null,
 			"label": {
 				"en-US": "Has Activation"
 			},
@@ -51,7 +47,6 @@
 		{
 			"indexed": true,
 			"indexedAsKeyword": false,
-			"indexedLanguageId": null,
 			"label": {
 				"en-US": "Name"
 			},

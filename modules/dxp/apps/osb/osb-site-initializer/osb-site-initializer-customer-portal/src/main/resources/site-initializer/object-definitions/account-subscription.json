@@ -7,7 +7,6 @@
 		{
 			"indexed": true,
 			"indexedAsKeyword": false,
-			"indexedLanguageId": null,
 			"label": {
 				"en-US": "Account Key"
 			},
@@ -18,7 +17,6 @@
 		{
 			"indexed": true,
 			"indexedAsKeyword": false,
-			"indexedLanguageId": null,
 			"label": {
 				"en-US": "Account Subscription Group ERC"
 			},
@@ -29,7 +27,6 @@
 		{
 			"indexed": true,
 			"indexedAsKeyword": false,
-			"indexedLanguageId": null,
 			"label": {
 				"en-US": "End Date"
 			},
@@ -40,7 +37,6 @@
 		{
 			"indexed": true,
 			"indexedAsKeyword": false,
-			"indexedLanguageId": null,
 			"label": {
 				"en-US": "Has Disaster Data Center Region"
 			},
@@ -63,7 +59,6 @@
 		{
 			"indexed": true,
 			"indexedAsKeyword": false,
-			"indexedLanguageId": null,
 			"label": {
 				"en-US": "Name"
 			},
@@ -74,7 +69,6 @@
 		{
 			"indexed": true,
 			"indexedAsKeyword": false,
-			"indexedLanguageId": null,
 			"label": {
 				"en-US": "Quantity"
 			},
@@ -85,7 +79,6 @@
 		{
 			"indexed": true,
 			"indexedAsKeyword": false,
-			"indexedLanguageId": null,
 			"label": {
 				"en-US": "Start Date"
 			},
@@ -96,7 +89,6 @@
 		{
 			"indexed": true,
 			"indexedAsKeyword": false,
-			"indexedLanguageId": null,
 			"label": {
 				"en-US": "Status"
 			},

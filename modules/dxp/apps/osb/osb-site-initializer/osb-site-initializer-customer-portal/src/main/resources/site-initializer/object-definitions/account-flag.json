@@ -7,7 +7,6 @@
 		{
 			"indexed": true,
 			"indexedAsKeyword": false,
-			"indexedLanguageId": null,
 			"label": {
 				"en-US": "Account Key"
 			},
@@ -18,7 +17,6 @@
 		{
 			"indexed": true,
 			"indexedAsKeyword": false,
-			"indexedLanguageId": null,
 			"label": {
 				"en-US": "User UUID"
 			},
@@ -29,7 +27,6 @@
 		{
 			"indexed": true,
 			"indexedAsKeyword": false,
-			"indexedLanguageId": null,
 			"label": {
 				"en-US": "Name"
 			},
@@ -40,7 +37,6 @@
 		{
 			"indexed": true,
 			"indexedAsKeyword": false,
-			"indexedLanguageId": null,
 			"label": {
 				"en-US": "Value"
 			},

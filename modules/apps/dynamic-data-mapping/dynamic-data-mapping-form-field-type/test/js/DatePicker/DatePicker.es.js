@@ -12,8 +12,7 @@
  * details.
  */
 
-import {wait} from '@testing-library/dom';
-import {act, cleanup, render} from '@testing-library/react';
+import {act, render, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import {PageProvider} from 'data-engine-js-components-web';
 import moment from 'moment';
@@ -59,8 +58,6 @@ describe('DatePicker', () => {
 		// eslint-disable-next-line no-console
 		console.warn = originalWarn;
 	});
-
-	afterEach(cleanup);
 
 	beforeEach(() => {
 		jest.useFakeTimers();
@@ -126,7 +123,7 @@ describe('DatePicker', () => {
 			jest.runAllTimers();
 		});
 
-		await wait(() =>
+		await waitFor(() =>
 			expect(
 				document.body.querySelector('.date-picker-dropdown-menu.show')
 			).toBeTruthy()
@@ -157,7 +154,7 @@ describe('DatePicker', () => {
 			jest.runAllTimers();
 		});
 
-		await wait(() =>
+		await waitFor(() =>
 			expect(
 				getAllByDisplayValue(moment().format('MM/DD/YYYY'))
 			).toHaveLength(2)
@@ -192,7 +189,7 @@ describe('DatePicker', () => {
 
 		const date = moment().format('YYYY-MM-DD');
 
-		await wait(() => expect(getAllByDisplayValue(date)).toBeTruthy());
+		await waitFor(() => expect(getAllByDisplayValue(date)).toBeTruthy());
 
 		expect(onChange).toHaveBeenCalledWith({}, date);
 	});
@@ -222,7 +219,7 @@ describe('DatePicker', () => {
 			jest.runAllTimers();
 		});
 
-		await wait(() =>
+		await waitFor(() =>
 			expect(
 				getAllByDisplayValue(moment().format('YYYY/MM/DD'))
 			).toBeTruthy()

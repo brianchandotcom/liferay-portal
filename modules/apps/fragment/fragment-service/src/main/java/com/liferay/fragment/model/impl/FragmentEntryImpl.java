@@ -153,11 +153,11 @@ public class FragmentEntryImpl extends FragmentEntryBaseImpl {
 			"name", getName()
 		);
 
-		FileEntry previewFileEntry = _getPreviewFileEntry();
-
 		if (Validator.isNotNull(_icon)) {
 			jsonObject.put("icon", _icon);
 		}
+
+		FileEntry previewFileEntry = _getPreviewFileEntry();
 
 		if (previewFileEntry != null) {
 			jsonObject.put(

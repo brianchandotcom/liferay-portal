@@ -180,9 +180,7 @@ definition {
 		}
 
 		task ("Add a widget page") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name 1",
-				layoutName = "Test Page Name");
+			PagesAdmin.addPublicPage(pageName = "Test Page Name");
 		}
 
 		task ("View current languages are shown in Pages admin") {

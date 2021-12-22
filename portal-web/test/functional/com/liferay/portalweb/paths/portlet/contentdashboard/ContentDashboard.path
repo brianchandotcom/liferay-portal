@@ -290,7 +290,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SEARCH_CATEGORY_FIELD</td>
+	<td>SEARCH_FIELD_MODAL</td>
 	<td>//*[contains(@class, 'form-control h-100 input-group-inset input-group-inset-after')]</td>
 	<td></td>
 </tr>

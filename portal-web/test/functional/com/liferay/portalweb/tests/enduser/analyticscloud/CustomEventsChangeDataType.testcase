@@ -104,7 +104,7 @@ definition {
 		}
 
 		task ("Add the custom event to analysis") {
-			ACEventAnalysis.addEventToAnalysis(customEventName = "${customEventName}");
+			ACEventAnalysis.addEvent(customEventName = "${customEventName}");
 		}
 
 		task ("Change the type of the attribute") {
@@ -154,7 +154,7 @@ definition {
 		}
 
 		task ("Add the custom event to analysis") {
-			ACEventAnalysis.addEventToAnalysis(customEventName = "${customEventName}");
+			ACEventAnalysis.addEvent(customEventName = "${customEventName}");
 		}
 
 		task ("Change the type of the attribute") {
@@ -206,7 +206,7 @@ definition {
 		}
 
 		task ("Add the custom event to analysis") {
-			ACEventAnalysis.addEventToAnalysis(customEventName = "${customEventName}");
+			ACEventAnalysis.addEvent(customEventName = "${customEventName}");
 		}
 
 		task ("Change the type of the attribute to boolean") {
@@ -256,7 +256,7 @@ definition {
 		}
 
 		task ("Add the custom event to analysis") {
-			ACEventAnalysis.addEventToAnalysis(customEventName = "${customEventName}");
+			ACEventAnalysis.addEvent(customEventName = "${customEventName}");
 		}
 
 		task ("Change the type of the attribute to duration (Time)") {
@@ -279,7 +279,7 @@ definition {
 		}
 	}
 
-    @description = "Feature ID: LRAC-7185 | Automation ID: LRAC-10206 | Test Summary: Undefined for results cannot be interpreted"
+	@description = "Feature ID: LRAC-7185 | Automation ID: LRAC-10206 | Test Summary: Undefined for results cannot be interpreted"
 	@priority = "3"
 	test ViewUndefinedResultsIsDisplayedWhenChangeDataTypeThatCannotBeInterpreted {
 		var attributeName = "company";
@@ -308,22 +308,22 @@ definition {
 		}
 
 		task ("Add the custom event to analysis") {
-			ACEventAnalysis.addEventToAnalysis(customEventName = "${customEventName}");
+			ACEventAnalysis.addEvent(customEventName = "${customEventName}");
 		}
 
-        task ("Add the breakdown to analysis") {
-			ACEventAnalysis.addBreakdownToAnalysis(attributeName = "${attributeName}");
+		task ("Add the breakdown to analysis") {
+			ACEventAnalysis.addBreakdown(attributeName = "${attributeName}");
 		}
 
-        task ("Check that the attribute's value appears in the analysis") {
-            ACTimeFilter.clickTimeFilterButton();
+		task ("Check that the attribute's value appears in the analysis") {
+			ACTimeFilter.clickTimeFilterButton();
 
 			ACTimeFilter.setLast24Hours();
 
 			ACEventAnalysis.viewAnalysisInformation(informationValueList = "${attributeValue}");
 		}
 
-        task ("Remove the attribute from the analysis") {
+		task ("Remove the attribute from the analysis") {
 			ACEventAnalysis.removeFromAnalysis(removeValue = "${attributeName}");
 		}
 
@@ -337,10 +337,10 @@ definition {
 		}
 
 		task ("Add the breakdown to analysis") {
-			ACEventAnalysis.addBreakdownToAnalysis(attributeName = "${attributeName}");
+			ACEventAnalysis.addBreakdown(attributeName = "${attributeName}");
 		}
 
-        task ("Check that the attribute value does not appear in the analysis when it has a different data type") {
+		task ("Check that the attribute value does not appear in the analysis when it has a different data type") {
 			ACEventAnalysis.viewAnalysisInformation(informationValueList = "undefined");
 		}
 	}

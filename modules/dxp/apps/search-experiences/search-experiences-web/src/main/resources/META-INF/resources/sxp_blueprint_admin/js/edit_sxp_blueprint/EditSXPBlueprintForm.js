@@ -489,6 +489,11 @@ function EditSXPBlueprintForm({
 				body: JSON.stringify({
 					configuration: {
 						...configuration,
+						generalConfiguration: {
+							...configuration?.generalConfiguration,
+							explain: true,
+							includeResponseString: true,
+						},
 						searchContextAttributes: transformToSearchContextAttributes(
 							attributes
 						),

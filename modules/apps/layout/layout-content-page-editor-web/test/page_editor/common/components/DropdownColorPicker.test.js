@@ -18,15 +18,9 @@ import React from 'react';
 
 import {DropdownColorPicker} from '../../../../src/main/resources/META-INF/resources/page_editor/common/components/DropdownColorPicker';
 
-jest.mock(
-	'../../../../src/main/resources/META-INF/resources/page_editor/app/config',
-	() => ({
-		config: {
-			tokenReuseEnabled: true,
-		},
-	})
-);
-
+const CONFIG = {
+	tokenReuseEnabled: true,
+};
 const COLORS = {
 	'Category 1': {
 		'TokenSet 1': [
@@ -67,6 +61,7 @@ const renderDropdownColorPicker = ({
 		<DropdownColorPicker
 			active={active}
 			colors={COLORS}
+			config={CONFIG}
 			label={label}
 			onSetActive={onSetActive}
 			onValueChange={onValueChange}

@@ -1704,7 +1704,7 @@ definition {
 				userFirstName = "userfn",
 				userLastName = "userln",
 				userScreenName = "usersn");
-			
+
 			JSONRole.assignRoleToUser(
 				roleTitle = "Administrator",
 				userEmailAddress = "userea@liferay.com");
@@ -1776,59 +1776,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-124960 When there's a WebContent1 of type Subtype1 and WebContent2 of type Subtype2, and the user filters by Subtype1 and Subtype2, both web content are shown in the list"
-	@priority = "3"
-	test FilterBySubtypeFromDifferentAssets {
-		task ("Create a basic web content via JSONWS") {
-			JSONWebcontent.addWebContent(
-				content = "Web Content Content",
-				groupName = "Test Site Name",
-				title = "Web Content Title 1");
-		}
-
-		task ("Create a web content structure") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			NavItem.gotoStructures();
-
-			WebContentStructures.addCP(structureName = "WC Structure Name");
-
-			DataEngine.addField(
-				fieldFieldLabel = "Text",
-				fieldName = "Text");
-
-			WebContentStructures.saveCP();
-		}
-
-		task ("Create a web content based on the structure created") {
-			NavItem.click(navItem = "Web Content");
-
-			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
-
-			WebContent.addWithStructureCP(
-				webContentText = "Web Content Content",
-				webContentTitle = "Web Content Title 2");
-
-			PortletEntry.publish();
-		}
-
-		task ("Navigate to Content Dashbaord") {
-			ContentDashboard.goToContentDashboard();
-		}
-
-		task ("Filter assets by both structure types") {
-			ContentDashboard.filterByAssetType(typeNames = "Basic Web Content,WC Structure Name");
-		}
-
-		task ("Assert if both assets are displayed") {
-			for (var assetName : list "Web Content Title 1,Web Content Title 2") {
-				AssertElementPresent(
-					key_tableEntry = "${assetName}",
-					locator1 = "LexiconTable#TABLE_ENTRY");
-			}
-		}
-	}
-
 	@description = "Validate if the user can filter by category"
 	@priority = "5"
 	test FilterByCategory {
@@ -1893,7 +1840,7 @@ definition {
 				userFirstName = "userfn",
 				userLastName = "userln",
 				userScreenName = "usersn");
-			
+
 			JSONRole.assignRoleToUser(
 				roleTitle = "Administrator",
 				userEmailAddress = "userea@liferay.com");
@@ -1986,7 +1933,7 @@ definition {
 				userFirstName = "userfn",
 				userLastName = "userln",
 				userScreenName = "usersn");
-			
+
 			JSONRole.assignRoleToUser(
 				roleTitle = "Administrator",
 				userEmailAddress = "userea@liferay.com");
@@ -2349,6 +2296,59 @@ definition {
 			AssertTextPresent(
 				locator1 = "ContentDashboard#FILTER_TEXT",
 				value1 = "Subtype: Basic Web Content");
+		}
+	}
+
+	@description = "LPS-124960 When there's a WebContent1 of type Subtype1 and WebContent2 of type Subtype2, and the user filters by Subtype1 and Subtype2, both web content are shown in the list"
+	@priority = "3"
+	test FilterBySubtypeFromDifferentAssets {
+		task ("Create a basic web content via JSONWS") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title 1");
+		}
+
+		task ("Create a web content structure") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(structureName = "WC Structure Name");
+
+			DataEngine.addField(
+				fieldFieldLabel = "Text",
+				fieldName = "Text");
+
+			WebContentStructures.saveCP();
+		}
+
+		task ("Create a web content based on the structure created") {
+			NavItem.click(navItem = "Web Content");
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+			WebContent.addWithStructureCP(
+				webContentText = "Web Content Content",
+				webContentTitle = "Web Content Title 2");
+
+			PortletEntry.publish();
+		}
+
+		task ("Navigate to Content Dashbaord") {
+			ContentDashboard.goToContentDashboard();
+		}
+
+		task ("Filter assets by both structure types") {
+			ContentDashboard.filterByAssetType(typeNames = "Basic Web Content,WC Structure Name");
+		}
+
+		task ("Assert if both assets are displayed") {
+			for (var assetName : list "Web Content Title 1,Web Content Title 2") {
+				AssertElementPresent(
+					key_tableEntry = "${assetName}",
+					locator1 = "LexiconTable#TABLE_ENTRY");
+			}
 		}
 	}
 

@@ -10,6 +10,7 @@
  */
 
 import React, {useState} from 'react';
+import {ReactFlowProvider} from 'react-flow-renderer';
 
 import '../../css/definition-builder/main.scss';
 import {DefinitionBuilderContextProvider} from './DefinitionBuilderContext';
@@ -51,11 +52,13 @@ export default function (props) {
 			<div className="definition-builder-app">
 				<UpperToolbar {...props} />
 
-				{sourceView ? (
-					<SourceBuilder version={props.version} />
-				) : (
-					<DiagramBuilder version={props.version} />
-				)}
+				<ReactFlowProvider>
+					{sourceView ? (
+						<SourceBuilder version={props.version} />
+					) : (
+						<DiagramBuilder version={props.version} />
+					)}
+				</ReactFlowProvider>
 			</div>
 		</DefinitionBuilderContextProvider>
 	);

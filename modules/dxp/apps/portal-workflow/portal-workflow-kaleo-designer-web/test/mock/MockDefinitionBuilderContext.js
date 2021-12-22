@@ -10,6 +10,7 @@
  */
 
 import React, {useState} from 'react';
+import {ReactFlowProvider} from 'react-flow-renderer';
 
 import {DefinitionBuilderContextProvider} from '../../src/main/resources/META-INF/resources/designer/js/definition-builder/DefinitionBuilderContext';
 
@@ -24,7 +25,7 @@ export default function MockDefinitionBuilderContext({children}) {
 
 	return (
 		<DefinitionBuilderContextProvider {...contextProps}>
-			{children}
+			<ReactFlowProvider>{children}</ReactFlowProvider>
 		</DefinitionBuilderContextProvider>
 	);
 }

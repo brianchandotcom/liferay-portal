@@ -177,8 +177,11 @@ AUI.add(
 						(directionMatch && directionMatch[1]) || AUTO;
 
 					if (direction.startsWith('down')) {
-						alignPoints = MAP_ALIGN_DOWN[direction] || MAP_ALIGN_DOWN.downright;
-					} else {
+						alignPoints =
+							MAP_ALIGN_DOWN[direction] ||
+							MAP_ALIGN_DOWN.downright;
+					}
+					else {
 						var overlayHorizontal =
 							mapAlignHorizontalOverlay[direction] ||
 							defaultOverlayHorizontalAlign;

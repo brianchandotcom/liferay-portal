@@ -17,7 +17,10 @@ package com.liferay.layout.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalServiceUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.layout.util.LayoutCopyHelper;
+import com.liferay.layout.util.comparator.LayoutCreateDateComparator;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -32,10 +35,14 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Collections;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -109,6 +116,80 @@ public class LayoutLocalServiceTest {
 			layout2,
 			_layoutLocalService.getFriendlyURLLayout(
 				_group.getGroupId(), true, friendlyURL1));
+	}
+
+	@Test
+	public void testGetPublishedLayouts() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		_layoutLocalService.addLayout(
+			TestPropsValues.getUserId(), _group.getGroupId(), false,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+			RandomTestUtil.randomString(), null, RandomTestUtil.randomString(),
+			LayoutConstants.TYPE_CONTENT, false, false, null, serviceContext);
+
+		Layout publishedLayout = _layoutLocalService.addLayout(
+			TestPropsValues.getUserId(), _group.getGroupId(), false,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+			RandomTestUtil.randomString(), null, RandomTestUtil.randomString(),
+			LayoutConstants.TYPE_CONTENT, false, false, null, serviceContext);
+
+		Layout draftLayout = publishedLayout.fetchDraftLayout();
+
+		if (draftLayout == null) {
+			UnicodeProperties unicodeProperties =
+				publishedLayout.getTypeSettingsProperties();
+
+			draftLayout = _layoutLocalService.addLayout(
+				publishedLayout.getUserId(), publishedLayout.getGroupId(),
+				publishedLayout.isPrivateLayout(),
+				publishedLayout.getParentLayoutId(),
+				_portal.getClassNameId(Layout.class), publishedLayout.getPlid(),
+				publishedLayout.getNameMap(), publishedLayout.getTitleMap(),
+				publishedLayout.getDescriptionMap(),
+				publishedLayout.getKeywordsMap(),
+				publishedLayout.getRobotsMap(), publishedLayout.getType(),
+				unicodeProperties.toString(), true, true,
+				Collections.emptyMap(), publishedLayout.getMasterLayoutPlid(),
+				serviceContext);
+
+			draftLayout = _layoutCopyHelper.copyLayout(
+				publishedLayout, draftLayout);
+		}
+
+		_layoutLocalService.updateStatus(
+			draftLayout.getUserId(), draftLayout.getPlid(),
+			WorkflowConstants.STATUS_APPROVED, serviceContext);
+
+		publishedLayout = _layoutLocalService.updateStatus(
+			publishedLayout.getUserId(), publishedLayout.getPlid(),
+			WorkflowConstants.STATUS_APPROVED, serviceContext);
+
+		Layout widgetLayout = _layoutLocalService.addLayout(
+			TestPropsValues.getUserId(), _group.getGroupId(), true,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+			RandomTestUtil.randomString(), null, RandomTestUtil.randomString(),
+			LayoutConstants.TYPE_PORTLET, false, false, null, serviceContext);
+
+		Assert.assertEquals(
+			2,
+			_layoutLocalService.getPublishedLayoutsCount(_group.getGroupId()));
+
+		List<Layout> layouts = _layoutLocalService.getPublishedLayouts(
+			_group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			new LayoutCreateDateComparator());
+
+		Assert.assertEquals(layouts.toString(), 2, layouts.size());
+
+		Layout layout1 = layouts.get(0);
+
+		Assert.assertEquals(publishedLayout.getPlid(), layout1.getPlid());
+
+		Layout layout2 = layouts.get(1);
+
+		Assert.assertEquals(widgetLayout.getPlid(), layout2.getPlid());
 	}
 
 	@Test
@@ -269,6 +350,12 @@ public class LayoutLocalServiceTest {
 	private Group _group;
 
 	@Inject
+	private LayoutCopyHelper _layoutCopyHelper;
+
+	@Inject
 	private LayoutLocalService _layoutLocalService;
+
+	@Inject
+	private Portal _portal;
 
 }

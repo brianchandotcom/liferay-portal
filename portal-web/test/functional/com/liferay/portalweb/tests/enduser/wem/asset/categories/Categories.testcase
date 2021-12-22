@@ -396,6 +396,53 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-143167. The user cannot add duplicated categories properties."
+	@priority = "4"
+	test CannotAddDuplicatedCategoryProperties {
+		task ("Add a category") {
+			JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category Name",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("Add a property in category") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+			Category.addPropertyCP(
+				categoryName = "Category Name",
+				propertiesKeyField = "Category Property",
+				propertiesValueField = "Category Property",
+				propertyNumber = "0");
+		}
+
+		task ("Add a duplicate property") {
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Edit",
+				rowEntry = "Category Name");
+
+			Navigator.gotoNavUnderline(navUnderline = "Properties");
+
+			Click(locator1 = "Button#ADD_ROW_LAST");
+
+			Type(
+				locator1 = "CategoriesEditCategory#PROPERTIES_KEY_FIELD",
+				value1 = "Category Property",
+				key_pathNumber = "1");
+
+			Type(
+				locator1 = "CategoriesEditCategory#PROPERTIES_VALUE_FIELD",
+				value1 = "Category Property",
+				key_pathNumber = "1");
+
+			Button.clickSave();
+		}
+		
+		task ("Assert error message is shown") {
+			Alert.viewErrorMessage(errorMessage = "Error:Please enter a unique property key.");
+		}
+	}
+
 	@description = "Cannot add a duplicate subcategory."
 	@priority = "3"
 	test CannotAddDuplicateSubCategory {

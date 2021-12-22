@@ -12,26 +12,24 @@
  * details.
  */
 
-package com.liferay.asset.list.configuration;
+package com.liferay.asset.list.web.internal.configuration;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import org.osgi.service.component.annotations.Component;
 
 import java.util.Map;
-
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Yurena Cabrera
  */
+
+@Component
 public class FFCollectionsVariationsPrioritizationConfigurationUtil {
 
 	public static boolean prioritizationEnabled() {
 		return _ffCollectionsVariationsPrioritizationConfiguration.enabled();
 	}
 
-	@Activate
-	@Modified
 	protected void activate(Map<String, Object> properties) {
 		_ffCollectionsVariationsPrioritizationConfiguration =
 			ConfigurableUtil.createConfigurable(

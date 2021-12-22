@@ -150,7 +150,7 @@ definition {
 			password = "test",
 			userEmailAddress = "user@liferay.com");
 
-		Click(locator1 = "Button#DONE");
+		Button.click(button = "Finalizado");
 
 		AssertTextEquals(
 			locator1 = "Home#SITE_NAME",

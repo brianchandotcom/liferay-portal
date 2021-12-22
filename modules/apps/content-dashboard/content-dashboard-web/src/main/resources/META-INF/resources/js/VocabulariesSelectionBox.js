@@ -16,6 +16,8 @@ import {ClayDualListBox} from '@clayui/form';
 import PropTypes from 'prop-types';
 import React, {useEffect, useRef, useState} from 'react';
 
+const MAX_VOCABULARIES_ON_GRAPH = 2;
+
 const VocabulariesSelectionBox = ({
 	leftBoxName,
 	leftList,
@@ -76,6 +78,31 @@ const VocabulariesSelectionBox = ({
 		});
 	};
 
+	const handleDisableLeftToRight = () => {
+		const noRoomForCurrentSelection =
+			leftSelected.length + rightElements.length >
+			MAX_VOCABULARIES_ON_GRAPH;
+
+		if (
+			leftSelected.length < MAX_VOCABULARIES_ON_GRAPH &&
+			!noRoomForCurrentSelection
+		) {
+			return false;
+		}
+
+		const currentSelectionTypesAreNotValid = leftSelected.every(
+			(itemSelectedId) => {
+				const currentItem = items
+					.flat()
+					.find((item) => item.value === itemSelectedId);
+
+				return !currentItem?.global;
+			}
+		);
+
+		return noRoomForCurrentSelection || currentSelectionTypesAreNotValid;
+	};
+
 	useEffect(() => {
 		enableAllOptions();
 		disableNonSelectableOptions();
@@ -93,7 +120,7 @@ const VocabulariesSelectionBox = ({
 		<div ref={selectorRef}>
 			<ClayDualListBox
 				className="vocabularies-selection"
-				disableLTR={leftSelected.length + rightElements.length > 2}
+				disableLTR={handleDisableLeftToRight()}
 				disableRTL={rightElements.length === 0}
 				items={items}
 				left={{

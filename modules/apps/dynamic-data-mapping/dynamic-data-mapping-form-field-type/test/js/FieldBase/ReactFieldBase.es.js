@@ -12,13 +12,7 @@
  * details.
  */
 
-import {
-	act,
-	cleanup,
-	fireEvent,
-	render,
-	waitForElement,
-} from '@testing-library/react';
+import {act, fireEvent, render} from '@testing-library/react';
 import {PageProvider} from 'data-engine-js-components-web';
 import React from 'react';
 
@@ -57,8 +51,6 @@ describe('ReactFieldBase', () => {
 		// eslint-disable-next-line no-console
 		console.warn = originalWarn;
 	});
-
-	afterEach(cleanup);
 
 	beforeEach(() => {
 		jest.useFakeTimers();
@@ -206,7 +198,7 @@ describe('ReactFieldBase', () => {
 	});
 
 	it('shows the popover for Format field when hovering over the tooltip icon', async () => {
-		const {container, getByRole, getByTestId, getByText} = render(
+		const {container, findByTestId, getByRole, getByText} = render(
 			<FieldBaseWithProvider
 				fieldName="inputMaskFormat"
 				spritemap={spritemap}
@@ -218,9 +210,7 @@ describe('ReactFieldBase', () => {
 
 		fireEvent.mouseOver(tooltipIcon);
 
-		const clayPopover = await waitForElement(() =>
-			getByTestId('clayPopover')
-		);
+		const clayPopover = await findByTestId('clayPopover');
 
 		expect(clayPopover.style).toHaveProperty('maxWidth', '256px');
 

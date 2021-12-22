@@ -13,13 +13,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {
-	act,
-	cleanup,
-	fireEvent,
-	render,
-	waitForElement,
-} from '@testing-library/react';
+import {act, fireEvent, render} from '@testing-library/react';
 import {PageProvider} from 'data-engine-js-components-web';
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -69,8 +63,6 @@ describe('Select', () => {
 			return element;
 		});
 	});
-
-	afterEach(cleanup);
 
 	beforeEach(() => {
 		jest.useFakeTimers();
@@ -365,7 +357,7 @@ describe('Select', () => {
 	it('calls onChange callback when an item is selected', async () => {
 		const handleFieldEdited = jest.fn();
 
-		const {container, getByTestId} = render(
+		const {container, findByTestId} = render(
 			<SelectWithProvider
 				dataSourceType="manual"
 				onChange={handleFieldEdited}
@@ -388,9 +380,7 @@ describe('Select', () => {
 			jest.runAllTimers();
 		});
 
-		const dropdownItem = await waitForElement(() =>
-			getByTestId('dropdownItem-0')
-		);
+		const dropdownItem = await findByTestId('dropdownItem-0');
 
 		fireEvent.click(dropdownItem);
 
@@ -404,7 +394,7 @@ describe('Select', () => {
 	it('calls onChange callback when an item is selected using multiselect', async () => {
 		const handleFieldEdited = jest.fn();
 
-		const {container, getByTestId} = render(
+		const {container, findByTestId} = render(
 			<SelectWithProvider
 				dataSourceType="manual"
 				multiple={true}
@@ -424,9 +414,7 @@ describe('Select', () => {
 			jest.runAllTimers();
 		});
 
-		const labelItem = await waitForElement(() =>
-			getByTestId('labelItem-item7')
-		);
+		const labelItem = await findByTestId('labelItem-item7');
 
 		fireEvent.click(labelItem);
 
@@ -494,7 +482,7 @@ describe('Select', () => {
 	it('filters according to the input and calls onChange callback when an item is selected using search', async () => {
 		const handleFieldEdited = jest.fn();
 
-		const {container, getByTestId} = render(
+		const {container, findByTestId} = render(
 			<SelectWithProvider
 				dataSourceType="manual"
 				multiple={true}
@@ -528,9 +516,7 @@ describe('Select', () => {
 
 		expect(container).toMatchSnapshot();
 
-		const labelItem = await waitForElement(() =>
-			getByTestId('labelItem-item11')
-		);
+		const labelItem = await findByTestId('labelItem-item11');
 
 		fireEvent.click(labelItem);
 

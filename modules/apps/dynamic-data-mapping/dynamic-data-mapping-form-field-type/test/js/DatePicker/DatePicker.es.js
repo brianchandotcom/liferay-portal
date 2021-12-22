@@ -13,7 +13,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {cleanup, render} from '@testing-library/react';
+import {render} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import moment from 'moment';
 import React from 'react';
@@ -21,8 +21,6 @@ import React from 'react';
 import DatePicker from '../../../src/main/resources/META-INF/resources/DatePicker/DatePicker.es';
 
 describe('DatePicker', () => {
-	afterEach(cleanup);
-
 	it('renders the help text', () => {
 		const {container} = render(<DatePicker tip="Type something" />);
 

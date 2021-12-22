@@ -96,13 +96,15 @@ export default function App({displayNames, languageIds}) {
 						adminMode
 						availableLocales={availableLocales}
 						defaultLanguageId={defaultLanguageId}
-						onActiveLanguageIdsChange={(e) => {
-							console.log('onActiveLanguageIdsChange');
-							console.log('event:', e);
+						onActiveLanguageIdsChange={() => {
+
+							// console.log('onActiveLanguageIdsChange');
+
 						}}
-						onSelectedLanguageIdChange={(e) => {
-							console.log('onSelectedLanguageIdChange');
-							console.log('event:', e);
+						onSelectedLanguageIdChange={() => {
+
+							// console.log('onSelectedLanguageIdChange');
+
 						}}
 						translations={translations}
 					/>

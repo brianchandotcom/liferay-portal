@@ -1332,13 +1332,11 @@ definition {
 				portlet = "Web Content");
 
 			WebContentNavigator.gotoAddCP();
-
-			WebContent.addCP(webContentContent = "Web Content Content");
 		}
 
 		task ("Add link to page and verify the URL is correct") {
 			CKEditor.addTextWithLink(
-				displayText = "link",
+				displayText = "Web Content Content",
 				entryExternalURL = "/web/test-site-name/test-page-name",
 				fieldLabel = "content",
 				pageName = "Test Page Name");

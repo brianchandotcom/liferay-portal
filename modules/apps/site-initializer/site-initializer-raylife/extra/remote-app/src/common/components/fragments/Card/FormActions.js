@@ -28,7 +28,8 @@ export function CardFormActions({isValid = true, onNext, onPrevious, onSave}) {
 		try {
 			await onSave();
 			setShowProgressModal(true);
-		} catch (error) {
+		}
+		catch (error) {
 			console.error(error);
 		}
 

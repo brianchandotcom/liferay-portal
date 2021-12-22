@@ -261,7 +261,7 @@ public class NumericDDMFormFieldTypeReportProcessor
 						ddmFormInstanceRecord.getDDMFormValues();
 
 					Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
-						ddmFormValues.getDDMFormFieldValuesMap(false);
+						ddmFormValues.getDDMFormFieldValuesMap(true);
 
 					List<DDMFormFieldValue> ddmFormFieldValues =
 						ddmFormFieldValuesMap.get(ddmFormFieldValueName);

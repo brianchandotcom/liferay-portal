@@ -34,10 +34,12 @@ public class ListTypeEntryModelDocumentContributor
 
 	@Override
 	public void contribute(Document document, ListTypeEntry listTypeEntry) {
-		document.addLocalizedText(Field.NAME, listTypeEntry.getNameMap());
 		document.addText("key", listTypeEntry.getKey());
 		document.addKeyword(
 			"listTypeDefinitionId", listTypeEntry.getListTypeDefinitionId());
+		document.addLocalizedText(Field.NAME, listTypeEntry.getNameMap());
+		document.addLocalizedKeyword(
+			"localized_name", listTypeEntry.getNameMap(), true, true);
 		document.remove(Field.USER_NAME);
 	}
 

@@ -28,17 +28,18 @@ definition {
 			accountEntryName = "Account Name",
 			accountEntryType = "Business");
 
-		Accounts.openAccountsAdmin();
-
-		LexiconEntry.gotoEntry(rowEntry = "Account Name");
-
-		Accounts.addNewUserToBusinessAccount(
-			accountName = "Account Name",
-			assigneeName = "userfn",
+		JSONAccountEntryUser.addAccountEntryUser(
+			accountEntryName = "Account Name",
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
 			userScreenName = "usersn");
+
+		Accounts.openAccountsAdmin();
+
+		LexiconEntry.gotoEntry(rowEntry = "Account Name");
+
+		Accounts.gotoAssigneeTab(assigneeTab = "Users");
 
 		Accounts.addAssigneeToRoleViaRolesTab(
 			accountRoleTitle = "Account Administrator",
@@ -132,13 +133,8 @@ definition {
 	@description = "This test asserts that an Account Admin can add a new user to an account"
 	@priority = "5"
 	test AccountAdminCanAddNewUserToAccount {
-		Navigator.gotoPage(pageName = "2B Account Page");
-
-		LexiconEntry.gotoEntry(rowEntry = "Account Name");
-
-		Accounts.addNewUserToBusinessAccount(
-			accountName = "Account Name",
-			assigneeName = "userfn1",
+		JSONAccountEntryUser.addAccountEntryUser(
+			accountEntryName = "Account Name",
 			userEmailAddress = "userea1@liferay.com",
 			userFirstName = "userfn1",
 			userLastName = "userln1",
@@ -191,17 +187,16 @@ definition {
 	@priority = "5"
 	test AccountAdminCanAssignRolesToUsers {
 		task ("Add a new user into the 'Account Name' account") {
-			LexiconEntry.gotoEntryMenuItemNoError(
-				menuItem = "Manage Users",
-				rowEntry = "Account Name");
-
-			Accounts.addNewUserToBusinessAccount(
-				accountName = "Account Name",
-				assigneeName = "user1",
+			JSONAccountEntryUser.addAccountEntryUser(
+				accountEntryName = "Account Name",
 				userEmailAddress = "user1@liferay.com",
 				userFirstName = "user1",
 				userLastName = "user1",
 				userScreenName = "user1");
+
+			LexiconEntry.gotoEntry(rowEntry = "Account Name");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Users");
 
 			WaitForElementPresent(
 				key_rowEntry = "user1 user1",
@@ -275,13 +270,8 @@ definition {
 				userLoginEmailAddress = "test@liferay.com",
 				userLoginFullName = "Test Test");
 
-			Navigator.gotoPage(pageName = "2B Account Page");
-
-			LexiconEntry.gotoEntry(rowEntry = "Account Name");
-
-			Accounts.addNewUserToBusinessAccount(
-				accountName = "Account Name",
-				assigneeName = "userfn1",
+			JSONAccountEntryUser.addAccountEntryUser(
+				accountEntryName = "Account Name",
 				userEmailAddress = "userea1@liferay.com",
 				userFirstName = "userfn1",
 				userLastName = "userln1",
@@ -612,21 +602,15 @@ definition {
 				userLoginEmailAddress = "test@liferay.com",
 				userLoginFullName = "Test Test");
 
-			Accounts.openAccountsAdmin();
-
-			LexiconEntry.gotoEntry(rowEntry = "Account Name");
-
-			Accounts.addNewUserToBusinessAccount(
-				accountName = "Account Name",
-				assigneeName = "userfn1",
+			JSONAccountEntryUser.addAccountEntryUser(
+				accountEntryName = "Account Name",
 				userEmailAddress = "userea1@liferay.com",
 				userFirstName = "userfn1",
 				userLastName = "userln5",
 				userScreenName = "usersn1");
 
-			Accounts.addNewUserToBusinessAccount(
-				accountName = "Account Name",
-				assigneeName = "userfn5",
+			JSONAccountEntryUser.addAccountEntryUser(
+				accountEntryName = "Account Name",
 				userEmailAddress = "userea3@liferay.com",
 				userFirstName = "userfn5",
 				userLastName = "userln2",
@@ -711,14 +695,9 @@ definition {
 				userLoginEmailAddress = "test@liferay.com",
 				userLoginFullName = "Test Test");
 
-			Accounts.openAccountsAdmin();
-
-			LexiconEntry.gotoEntry(rowEntry = "Account Name");
-
 			for (var userNum : list "2,3,4") {
-				Accounts.addNewUserToBusinessAccount(
-					accountName = "Account Name",
-					assigneeName = "userfn${userNum}",
+				JSONAccountEntryUser.addAccountEntryUser(
+					accountEntryName = "Account Name",
 					userEmailAddress = "userea${userNum}@liferay.com",
 					userFirstName = "userfn${userNum}",
 					userLastName = "userln${userNum}",
@@ -775,14 +754,9 @@ definition {
 				userLoginEmailAddress = "test@liferay.com",
 				userLoginFullName = "Test Test");
 
-			Accounts.openAccountsAdmin();
-
-			LexiconEntry.gotoEntry(rowEntry = "Account Name");
-
 			for (var userNum : list "2,3,4") {
-				Accounts.addNewUserToBusinessAccount(
-					accountName = "Account Name",
-					assigneeName = "userfn${userNum}",
+				JSONAccountEntryUser.addAccountEntryUser(
+					accountEntryName = "Account Name",
 					userEmailAddress = "userea${userNum}@liferay.com",
 					userFirstName = "userfn${userNum}",
 					userLastName = "userln${userNum}",
@@ -965,14 +939,9 @@ definition {
 				userLoginEmailAddress = "test@liferay.com",
 				userLoginFullName = "Test Test");
 
-			Accounts.openAccountsAdmin();
-
-			LexiconEntry.gotoEntry(rowEntry = "Account Name");
-
 			for (var userNum : list "2,3,4") {
-				Accounts.addNewUserToBusinessAccount(
-					accountName = "Account Name",
-					assigneeName = "userfn${userNum}",
+				JSONAccountEntryUser.addAccountEntryUser(
+					accountEntryName = "Account Name",
 					userEmailAddress = "userea${userNum}@liferay.com",
 					userFirstName = "userfn${userNum}",
 					userLastName = "userln${userNum}",
@@ -1258,15 +1227,8 @@ definition {
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "Test Test");
 
-		Navigator.gotoPage(pageName = "2B Account Page");
-
-		LexiconEntry.gotoEntryMenuItemNoError(
-			menuItem = "Manage Users",
-			rowEntry = "Account Name");
-
-		Accounts.addNewUserToBusinessAccount(
-			accountName = "Account Name",
-			assigneeName = "user1",
+		JSONAccountEntryUser.addAccountEntryUser(
+			accountEntryName = "Account Name",
 			userEmailAddress = "user1@liferay.com",
 			userFirstName = "user1",
 			userLastName = "user1",
@@ -1276,19 +1238,18 @@ definition {
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
+		JSONAccountEntryUser.addAccountEntryUser(
+			accountEntryName = "Account Name",
+			userEmailAddress = "user2@liferay.com",
+			userFirstName = "user2",
+			userLastName = "user2",
+			userScreenName = "user2");
+
 		Navigator.gotoPage(pageName = "2B Account Page");
 
 		LexiconEntry.gotoEntryMenuItemNoError(
 			menuItem = "Manage Users",
 			rowEntry = "Account Name");
-
-		Accounts.addNewUserToBusinessAccount(
-			accountName = "Account Name",
-			assigneeName = "user2",
-			userEmailAddress = "user2@liferay.com",
-			userFirstName = "user2",
-			userLastName = "user2",
-			userScreenName = "user2");
 
 		AssertElementPresent(
 			key_tab = "Users",

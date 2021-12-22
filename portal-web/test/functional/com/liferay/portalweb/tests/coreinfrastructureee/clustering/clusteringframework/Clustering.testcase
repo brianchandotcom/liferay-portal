@@ -222,6 +222,39 @@ definition {
 		}
 	}
 
+	@priority = "4"
+	test CanUpdateLogLevelsForAllNodes {
+		property test.name.skip.portal.instance = "Clustering#CanUpdateLogLevelsForAllNodes";
+
+		ApplicationsMenu.gotoPortlet(
+			category = "System",
+			panel = "Control Panel",
+			portlet = "Server Administration");
+
+		ServerAdministration.addCategoryLogLevels(
+			categoryName = "com.liferay.portal.cluster",
+			categoryPriority = "DEBUG");
+
+		ServerAdministration.viewCategoryLogLevels(
+			categoryName = "com.liferay.portal.cluster",
+			categoryLevel = "DEBUG");
+
+		User.logoutPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		User.loginPG(
+			nodePort = "9080",
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		for (var serverPort : list "8080,9080") {
+			Clustering.viewTextPresentOnSpecificNode(
+				expectedText = "Send multicast message",
+				nodePort = "${serverPort}");
+		}
+	}
+
 	@priority = "5"
 	test ShutdownAndStartupNodes {
 		property portal.upstream = "quarantine";

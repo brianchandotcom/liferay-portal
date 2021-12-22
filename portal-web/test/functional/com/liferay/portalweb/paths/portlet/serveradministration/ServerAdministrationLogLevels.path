@@ -20,6 +20,16 @@
 	<td>//select[contains(@id,'priority')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>CATEGORY_NAME</td>
+	<td>//*[@data-qa-id='row']//*[contains(text(),'${key_categoryName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORY_LEVEL_SELECT</td>
+	<td>//*[@data-qa-id='row']//*[contains(text(),'${key_categoryName}')]/following-sibling::td/select</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

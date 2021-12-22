@@ -211,6 +211,21 @@ definition {
 			value1 = "Your request completed successfully.");
 	}
 
+	macro viewCategoryLogLevels {
+		Navigator.gotoNavItem(navItem = "Log Levels");
+
+		Search.searchCP(searchTerm = "${categoryName}");
+
+		AssertElementPresent(
+			key_categoryName = "${categoryName}",
+			locator1 = "ServerAdministrationLogLevels#CATEGORY_NAME");
+
+		AssertSelectedLabel(
+			key_categoryName = "${categoryName}",
+			locator1 = "ServerAdministrationLogLevels#CATEGORY_LEVEL_SELECT",
+			value1 = "DEBUG");
+	}
+
 	macro viewForbiddenErrorMessageAlert {
 		AssertTextEquals(
 			locator1 = "Home#ERROR_MESSAGE_ALERT_ERROR",

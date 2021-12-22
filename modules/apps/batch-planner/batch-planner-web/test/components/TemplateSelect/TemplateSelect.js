@@ -13,7 +13,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {act, cleanup, fireEvent, render, wait} from '@testing-library/react';
+import {act, fireEvent, render, waitFor} from '@testing-library/react';
 import fetchMock from 'fetch-mock';
 import React from 'react';
 
@@ -60,8 +60,6 @@ describe('TemplateSelect', () => {
 		fetchMock.restore();
 
 		jest.resetAllMocks();
-
-		cleanup();
 	});
 
 	it('must have label', () => {
@@ -84,7 +82,7 @@ describe('TemplateSelect', () => {
 		documentReadyEvent.initEvent('readystatechange', false, true);
 		document.dispatchEvent(documentReadyEvent);
 
-		await wait(() => {
+		await waitFor(() => {
 			const expectedEvent = new CustomEvent(TEMPLATE_SELECTED_EVENT);
 
 			expectedEvent.template = {...initialTemplate};
@@ -113,7 +111,7 @@ describe('TemplateSelect', () => {
 			});
 		});
 
-		await wait(() => {
+		await waitFor(() => {
 			const expectedEvent = new CustomEvent(TEMPLATE_SELECTED_EVENT);
 
 			expectedEvent.template = null;
@@ -137,7 +135,7 @@ describe('TemplateSelect', () => {
 			});
 		});
 
-		await wait(() => {
+		await waitFor(() => {
 			const expectedEvent = new CustomEvent(TEMPLATE_SELECTED_EVENT);
 
 			expectedEvent.template = {...initialTemplate};

@@ -13,14 +13,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {
-	act,
-	cleanup,
-	fireEvent,
-	render,
-	wait,
-	waitForElement,
-} from '@testing-library/react';
+import {act, fireEvent, render, waitFor} from '@testing-library/react';
 import fetchMock from 'fetch-mock';
 import React from 'react';
 
@@ -51,7 +44,6 @@ describe('SaveTemplateModal', () => {
 
 	afterEach(() => {
 		fetchMock.restore();
-		cleanup();
 	});
 
 	it('must render save template button', () => {
@@ -97,7 +89,9 @@ describe('SaveTemplateModal', () => {
 	});
 
 	it('must show modal when the button is clicked', async () => {
-		const {getByText} = render(<SaveTemplate {...BASE_PROPS} />);
+		const {findByText, getByText} = render(
+			<SaveTemplate {...BASE_PROPS} />
+		);
 
 		act(() => {
 			fireSchemaChangeEvent();
@@ -109,37 +103,14 @@ describe('SaveTemplateModal', () => {
 			);
 		});
 
-		const saveButton = await waitForElement(() =>
-			getByText(Liferay.Language.get('save'))
-		);
+		const saveButton = await findByText(Liferay.Language.get('save'));
 
 		expect(saveButton).toBeInTheDocument();
 	});
 
 	describe('modal', () => {
 		it('must has button disabled if no text input provided', async () => {
-			const {getByText} = render(<SaveTemplate {...BASE_PROPS} />);
-
-			act(() => {
-				fireSchemaChangeEvent();
-			});
-
-			act(() => {
-				fireEvent.click(
-					getByText(Liferay.Language.get('save-as-template'))
-				);
-			});
-
-			const saveButton = await waitForElement(() =>
-				getByText(Liferay.Language.get('save'))
-			);
-
-			expect(saveButton).toBeDisabled();
-		});
-
-		it('must has button enabled if text input provided', async () => {
-			const testName = 'test';
-			const {getByPlaceholderText, getByText} = render(
+			const {findByText, getByText} = render(
 				<SaveTemplate {...BASE_PROPS} />
 			);
 
@@ -153,7 +124,28 @@ describe('SaveTemplateModal', () => {
 				);
 			});
 
-			await waitForElement(() => getByText(Liferay.Language.get('save')));
+			const saveButton = await findByText(Liferay.Language.get('save'));
+
+			expect(saveButton).toBeDisabled();
+		});
+
+		it('must has button enabled if text input provided', async () => {
+			const testName = 'test';
+			const {findByText, getByPlaceholderText, getByText} = render(
+				<SaveTemplate {...BASE_PROPS} />
+			);
+
+			act(() => {
+				fireSchemaChangeEvent();
+			});
+
+			act(() => {
+				fireEvent.click(
+					getByText(Liferay.Language.get('save-as-template'))
+				);
+			});
+
+			await findByText(Liferay.Language.get('save'));
 
 			act(() => {
 				fireEvent.change(
@@ -174,9 +166,12 @@ describe('SaveTemplateModal', () => {
 			);
 
 			const testName = 'test';
-			const {getByPlaceholderText, getByText, queryByLabelText} = render(
-				<SaveTemplate {...BASE_PROPS} />
-			);
+			const {
+				findByText,
+				getByPlaceholderText,
+				getByText,
+				queryByLabelText,
+			} = render(<SaveTemplate {...BASE_PROPS} />);
 
 			act(() => {
 				fireSchemaChangeEvent();
@@ -188,7 +183,7 @@ describe('SaveTemplateModal', () => {
 				);
 			});
 
-			await waitForElement(() => getByText(Liferay.Language.get('save')));
+			await findByText(Liferay.Language.get('save'));
 
 			act(() => {
 				fireEvent.change(
@@ -203,7 +198,7 @@ describe('SaveTemplateModal', () => {
 
 			expect(mockedApi.called()).toBe(true);
 
-			await wait(() => {
+			await waitFor(() => {
 				expect(
 					queryByLabelText(Liferay.Language.get('name'))
 				).toBeNull();

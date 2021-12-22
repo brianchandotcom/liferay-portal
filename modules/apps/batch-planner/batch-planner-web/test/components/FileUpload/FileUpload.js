@@ -48,10 +48,10 @@ describe('FileUpload', () => {
 			onComplete(fileSchema)
 		);
 
-		const {getByRole} = render(<FileUpload portletNamespace="test" />);
+		const {getByLabelText} = render(<FileUpload portletNamespace="test" />);
 
 		act(() => {
-			fireEvent.change(getByRole('textbox'), {target: {files: [file]}});
+			fireEvent.change(getByLabelText('file'), {target: {files: [file]}});
 		});
 
 		expect(mockFileSchemaListener.mock.calls[0][0].schema).toStrictEqual(

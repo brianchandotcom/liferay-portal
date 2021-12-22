@@ -15,11 +15,10 @@
 import '@testing-library/jest-dom/extend-expect';
 import {
 	act,
-	cleanup,
+	configure,
 	fireEvent,
 	render,
-	wait,
-	waitForElement,
+	waitFor,
 } from '@testing-library/react';
 import fetchMock from 'fetch-mock';
 import React from 'react';
@@ -29,7 +28,6 @@ import {
 	getExportTaskStatusURL,
 } from '../../../src/main/resources/META-INF/resources/js/BatchPlannerExport';
 import {
-	POLL_INTERVAL,
 	PROCESS_COMPLETED,
 	PROCESS_FAILED,
 	PROCESS_STARTED,
@@ -50,6 +48,8 @@ let mockApi;
 const mockCreateObjectUrl = jest.fn(() => 'test.url/bloburl');
 window.URL.createObjectURL = mockCreateObjectUrl;
 window.URL.revokeObjectURL = jest.fn();
+
+configure({asyncUtilTimeout: 5000});
 
 jest.mock(
 	'../../../src/main/resources/META-INF/resources/js/BatchPlannerExport',
@@ -95,7 +95,6 @@ describe('Export', () => {
 
 	afterEach(() => {
 		fetchMock.restore();
-		cleanup();
 	});
 
 	it('must render export button', () => {
@@ -121,7 +120,7 @@ describe('Export', () => {
 	});
 
 	it('must show modal when the button is clicked', async () => {
-		const {getByText} = render(<Export {...BASE_PROPS} />);
+		const {findByText, getByText} = render(<Export {...BASE_PROPS} />);
 
 		act(() => {
 			fireSchemaChangeEvent();
@@ -131,15 +130,13 @@ describe('Export', () => {
 			fireEvent.click(getByText(Liferay.Language.get('export')));
 		});
 
-		const exportButton = await waitForElement(() =>
-			getByText(Liferay.Language.get('download'))
-		);
+		const exportButton = await findByText(Liferay.Language.get('download'));
 
 		expect(exportButton).toBeInTheDocument();
 	});
 
 	it('must show modal with disabled button', async () => {
-		const {getByText} = render(<Export {...BASE_PROPS} />);
+		const {findByText, getByText} = render(<Export {...BASE_PROPS} />);
 
 		act(() => {
 			fireSchemaChangeEvent();
@@ -149,15 +146,13 @@ describe('Export', () => {
 			fireEvent.click(getByText(Liferay.Language.get('export')));
 		});
 
-		const exportButton = await waitForElement(() =>
-			getByText(Liferay.Language.get('download'))
-		);
+		const exportButton = await findByText(Liferay.Language.get('download'));
 
 		expect(exportButton).toBeDisabled();
 	});
 
 	it('must call export API only one time on mount', async () => {
-		const {getByText} = render(<Export {...BASE_PROPS} />);
+		const {findByText, getByText} = render(<Export {...BASE_PROPS} />);
 
 		act(() => {
 			fireSchemaChangeEvent();
@@ -167,14 +162,12 @@ describe('Export', () => {
 			fireEvent.click(getByText(Liferay.Language.get('export')));
 		});
 
-		await waitForElement(() => getByText(Liferay.Language.get('download')));
+		await findByText(Liferay.Language.get('download'));
 
 		expect(mockApi.calls(BASE_PROPS.formExportURL).length).toBe(1);
 	});
 
 	it('must show the correct progress percentage', async () => {
-		jest.useFakeTimers();
-
 		const exportTaskStatusURL = getExportTaskStatusURL(mockTaskID);
 
 		fetchMock.mock(exportTaskStatusURL, () => ({
@@ -192,7 +185,7 @@ describe('Export', () => {
 			},
 		}));
 
-		const {getByText} = render(<Export {...BASE_PROPS} />);
+		const {findByText, getByText} = render(<Export {...BASE_PROPS} />);
 
 		act(() => {
 			fireSchemaChangeEvent();
@@ -202,17 +195,12 @@ describe('Export', () => {
 			fireEvent.click(getByText(Liferay.Language.get('export')));
 		});
 
-		await wait(() => {
-			jest.advanceTimersByTime(POLL_INTERVAL);
-			expect(getByText('50%')).toBeInTheDocument();
-		});
+		const progress = await findByText('50%');
 
-		jest.runOnlyPendingTimers();
-		jest.useRealTimers();
+		expect(progress).toBeInTheDocument();
 	});
 
 	it('must show the error when execcuteStatus FAILED', async () => {
-		jest.useFakeTimers();
 		const error = 'some test error';
 
 		const exportTaskStatusURL = getExportTaskStatusURL(mockTaskID);
@@ -236,7 +224,7 @@ describe('Export', () => {
 				},
 			}));
 
-		const {getByText} = render(<Export {...BASE_PROPS} />);
+		const {findByText, getByText} = render(<Export {...BASE_PROPS} />);
 
 		act(() => {
 			fireSchemaChangeEvent();
@@ -246,18 +234,12 @@ describe('Export', () => {
 			fireEvent.click(getByText(Liferay.Language.get('export')));
 		});
 
-		await wait(() => {
-			jest.advanceTimersByTime(POLL_INTERVAL);
-			expect(getByText(error)).toBeInTheDocument();
-		});
+		const errorElement = await findByText(error);
 
-		jest.runOnlyPendingTimers();
-		jest.useRealTimers();
+		expect(errorElement).toBeInTheDocument();
 	});
 
 	it('must enable the download button when export task is COMPLETED', async () => {
-		jest.useFakeTimers();
-
 		const exportTaskStatusURL = getExportTaskStatusURL(mockTaskID);
 
 		fetchMock.mock(exportTaskStatusURL, () => ({
@@ -285,22 +267,16 @@ describe('Export', () => {
 			fireEvent.click(getByText(Liferay.Language.get('export')));
 		});
 
-		await wait(() => {
-			jest.advanceTimersByTime(POLL_INTERVAL);
+		await waitFor(() => {
 			expect(
 				getByText(Liferay.Language.get('download'), {
 					selector: 'button',
 				})
 			).not.toBeDisabled();
 		});
-
-		jest.runOnlyPendingTimers();
-		jest.useRealTimers();
 	});
 
 	it('must create the blob file and download it when download button pressed', async () => {
-		jest.useFakeTimers();
-
 		const exportTaskStatusURL = getExportTaskStatusURL(mockTaskID);
 
 		fetchMock.mock(exportTaskStatusURL, () => ({
@@ -324,16 +300,16 @@ describe('Export', () => {
 			fireSchemaChangeEvent();
 		});
 
-		act(() => {
+		await act(async () => {
 			fireEvent.click(getByText(Liferay.Language.get('export')));
 		});
 
-		await wait(() => {
-			jest.advanceTimersByTime(POLL_INTERVAL);
-
-			getByText(Liferay.Language.get('download'), {
-				selector: 'button',
-			});
+		await waitFor(() => {
+			expect(
+				getByText(Liferay.Language.get('download'), {
+					selector: 'button',
+				})
+			).not.toBeDisabled();
 		});
 
 		act(() => {
@@ -344,11 +320,8 @@ describe('Export', () => {
 			);
 		});
 
-		await wait(() => {
+		await waitFor(() => {
 			expect(fetchExportedFile).toBeCalled();
 		});
-
-		jest.runOnlyPendingTimers();
-		jest.useRealTimers();
 	});
 });

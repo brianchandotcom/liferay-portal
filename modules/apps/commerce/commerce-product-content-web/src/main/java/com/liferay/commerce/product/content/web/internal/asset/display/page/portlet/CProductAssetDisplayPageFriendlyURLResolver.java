@@ -19,9 +19,9 @@ import com.liferay.asset.display.page.portlet.BaseAssetDisplayPageFriendlyURLRes
 import com.liferay.asset.display.page.util.AssetDisplayPageUtil;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
+import com.liferay.commerce.account.constants.CommerceAccountConstants;
+import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.util.CommerceAccountHelper;
-import com.liferay.commerce.constants.CommerceWebKeys;
-import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.configuration.CPDisplayLayoutConfiguration;
 import com.liferay.commerce.product.constants.CPConstants;
@@ -38,7 +38,6 @@ import com.liferay.commerce.product.service.CProductLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.url.CPFriendlyURL;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
-import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.info.item.InfoItemReference;
@@ -241,10 +240,8 @@ public class CProductAssetDisplayPageFriendlyURLResolver
 		Locale locale = _portal.getLocale(httpServletRequest);
 
 		CPCatalogEntry cpCatalogEntry = _cpDefinitionHelper.getCPCatalogEntry(
-			CommerceUtil.getCommerceAccountId(
-				(CommerceContext)httpServletRequest.getAttribute(
-					CommerceWebKeys.COMMERCE_CONTEXT)),
-			groupId, cProduct.getPublishedCPDefinitionId(), locale);
+			_getCommerceAccountId(groupId, httpServletRequest), groupId,
+			cProduct.getPublishedCPDefinitionId(), locale);
 
 		Layout layout = _getProductLayout(
 			groupId, privateLayout, cpCatalogEntry.getCPDefinitionId());
@@ -311,6 +308,25 @@ public class CProductAssetDisplayPageFriendlyURLResolver
 		_portal.addPageSubtitle(subtitle, httpServletRequest);
 
 		return layoutActualURL;
+	}
+
+	private long _getCommerceAccountId(
+			long groupId, HttpServletRequest httpServletRequest)
+		throws PortalException {
+
+		CommerceAccount commerceAccount =
+			_commerceAccountHelper.getCurrentCommerceAccount(
+				_commerceChannelLocalService.
+					getCommerceChannelGroupIdBySiteGroupId(groupId),
+				httpServletRequest);
+
+		long commerceAccountId = CommerceAccountConstants.ACCOUNT_ID_GUEST;
+
+		if (commerceAccount != null) {
+			commerceAccountId = commerceAccount.getCommerceAccountId();
+		}
+
+		return commerceAccountId;
 	}
 
 	private LayoutDisplayPageObjectProvider<?>

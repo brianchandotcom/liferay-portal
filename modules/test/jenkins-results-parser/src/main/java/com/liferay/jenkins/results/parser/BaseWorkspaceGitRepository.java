@@ -160,16 +160,24 @@ public abstract class BaseWorkspaceGitRepository
 			localGitCommitsSize = localGitCommits.size();
 		}
 
-		if (count > localGitCommitsSize) {
-			throw new IllegalArgumentException(
-				JenkinsResultsParserUtil.combine(
-					String.valueOf(localGitCommitsSize),
-					" commits cannot be split into ", String.valueOf(count),
-					" lists"));
-		}
-
 		List<LocalGitCommit> lastLocalGitCommitsPartition = Lists.newArrayList(
 			localGitCommits.get(localGitCommitsSize - 1));
+
+		if (count > localGitCommitsSize) {
+			List<List<LocalGitCommit>> localGitCommitsPartitions =
+				new ArrayList<>(localGitCommitsSize);
+
+			if (localGitCommits.size() > 1) {
+				localGitCommitsPartitions.addAll(
+					JenkinsResultsParserUtil.partitionByCount(
+						localGitCommits.subList(0, localGitCommitsSize - 2),
+						localGitCommitsSize - 1));
+			}
+
+			localGitCommitsPartitions.add(lastLocalGitCommitsPartition);
+
+			return localGitCommitsPartitions;
+		}
 
 		List<List<LocalGitCommit>> localGitCommitsPartitions = new ArrayList<>(
 			count);

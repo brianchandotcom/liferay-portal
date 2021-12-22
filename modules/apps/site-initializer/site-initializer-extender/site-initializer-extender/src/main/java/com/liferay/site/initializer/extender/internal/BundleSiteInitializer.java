@@ -434,10 +434,20 @@ public class BundleSiteInitializer implements SiteInitializer {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(json);
 
 		for (int i = 0; i < jsonArray.length(); i++) {
-			Account account = Account.toDTO(
+			Account account1 = Account.toDTO(
 				String.valueOf(jsonArray.getJSONObject(i)));
 
-			accountResource.postAccount(account);
+			Account account2 =
+				accountResource.getAccountByExternalReferenceCode(
+					account1.getExternalReferenceCode());
+
+			if (account2 == null) {
+				accountResource.postAccount(account1);
+
+				continue;
+			}
+
+			accountResource.patchAccount(account2.getId(), account1);
 		}
 	}
 

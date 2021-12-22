@@ -5,8 +5,9 @@ import {SelectedQuoteContext} from '../../context/SelectedQuoteContextProvider';
 const Panel = ({
 	children,
 	id,
-	PanelMiddle = () => null,
-	PanelRight = () => null,
+	Footer = () => null,
+	Middle = () => null,
+	Right = () => null,
 	title = '',
 	hasError = false,
 }) => {
@@ -16,22 +17,26 @@ const Panel = ({
 	const show = expanded || hasError;
 
 	return (
-		<div className="panel-container">
-			<div className="panel-header">
-				<div className="panel-left">{title}</div>
+		<div className="panel">
+			<div className="panel-container">
+				<div className="panel-header">
+					<div className="panel-left">{title}</div>
 
-				<PanelMiddle checked={checked} expanded={expanded} />
+					<Middle checked={checked} expanded={expanded} />
 
-				<PanelRight checked={checked} expanded={expanded} />
+					<Right checked={checked} expanded={expanded} />
+				</div>
+
+				<div
+					className={classNames('panel-content', {
+						show,
+					})}
+				>
+					{show && children}
+				</div>
 			</div>
 
-			<div
-				className={classNames('panel-content', {
-					show,
-				})}
-			>
-				{show && children}
-			</div>
+			<Footer show={show} />
 		</div>
 	);
 };

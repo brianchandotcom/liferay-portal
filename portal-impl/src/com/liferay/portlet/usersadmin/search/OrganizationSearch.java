@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.usersadmin.search;
 
-import com.liferay.portal.kernel.dao.search.BaseModelSearchContainer;
+import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Organization;
@@ -35,7 +35,7 @@ import javax.portlet.PortletURL;
 /**
  * @author Brian Wing Shun Chan
  */
-public class OrganizationSearch extends BaseModelSearchContainer<Organization> {
+public class OrganizationSearch extends SearchContainer<Organization> {
 
 	public static final String EMPTY_RESULTS_MESSAGE =
 		"no-organizations-were-found";

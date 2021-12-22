@@ -17,39 +17,16 @@ package com.liferay.portal.kernel.dao.search;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 
-import java.util.List;
-
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
-
 /**
  * @author Mariano Álvaro Sáiz
  */
-public class BaseModelSearchContainer<R extends BaseModel<R>>
-	extends SearchContainer<R> {
+public class BaseModelSearchContainerAdapter {
 
-	public BaseModelSearchContainer(
-		PortletRequest portletRequest, DisplayTerms displayTerms,
-		DisplayTerms searchTerms, String curParam, int delta,
-		PortletURL iteratorURL, List<String> headerNames,
-		String emptyResultsMessage) {
+	public static <T extends BaseModel<T>> void setResultsAndTotal(
+		SearchContainer<T> searchContainer,
+		BaseModelSearchResult<T> baseModelSearchResult) {
 
-		super(
-			portletRequest, displayTerms, searchTerms, curParam, delta,
-			iteratorURL, headerNames, emptyResultsMessage);
-	}
-
-	public BaseModelSearchContainer(
-		PortletRequest portletRequest, PortletURL iteratorURL,
-		List<String> headerNames, String emptyResultsMessage) {
-
-		super(portletRequest, iteratorURL, headerNames, emptyResultsMessage);
-	}
-
-	public void setResultsAndTotal(
-		BaseModelSearchResult<R> baseModelSearchResult) {
-
-		setResultsAndTotal(
+		searchContainer.setResultsAndTotal(
 			baseModelSearchResult::getBaseModels,
 			baseModelSearchResult.getLength());
 	}

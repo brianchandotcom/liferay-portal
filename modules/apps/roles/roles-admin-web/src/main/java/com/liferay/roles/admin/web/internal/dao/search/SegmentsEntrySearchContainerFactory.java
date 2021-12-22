@@ -14,7 +14,7 @@
 
 package com.liferay.roles.admin.web.internal.dao.search;
 
-import com.liferay.portal.kernel.dao.search.BaseModelSearchContainer;
+import com.liferay.portal.kernel.dao.search.BaseModelSearchContainerAdapter;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -51,17 +51,16 @@ public class SegmentsEntrySearchContainerFactory {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws Exception {
 
-		BaseModelSearchContainer<SegmentsEntry> baseModelSearchContainer =
-			new BaseModelSearchContainer(
-				renderRequest,
-				PortletURLUtil.getCurrent(renderRequest, renderResponse), null,
-				"no-segments-were-found");
+		SearchContainer<SegmentsEntry> searchContainer = new SearchContainer(
+			renderRequest,
+			PortletURLUtil.getCurrent(renderRequest, renderResponse), null,
+			"no-segments-were-found");
 
-		baseModelSearchContainer.setId("segmentsEntries");
-		baseModelSearchContainer.setOrderByCol(
+		searchContainer.setId("segmentsEntries");
+		searchContainer.setOrderByCol(
 			SearchOrderByUtil.getOrderByCol(
 				renderRequest, RolesAdminPortletKeys.ROLES_ADMIN, "name"));
-		baseModelSearchContainer.setOrderByType(
+		searchContainer.setOrderByType(
 			SearchOrderByUtil.getOrderByType(
 				renderRequest, RolesAdminPortletKeys.ROLES_ADMIN, "asc"));
 
@@ -85,22 +84,21 @@ public class SegmentsEntrySearchContainerFactory {
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		baseModelSearchContainer.setResultsAndTotal(
+		BaseModelSearchContainerAdapter.setResultsAndTotal(
+			searchContainer,
 			SegmentsEntryLocalServiceUtil.searchSegmentsEntries(
 				_buildSearchContext(
 					themeDisplay.getCompanyId(),
 					themeDisplay.getCompanyGroupId(),
 					ParamUtil.getString(renderRequest, "keywords"), params,
-					baseModelSearchContainer.getStart(),
-					baseModelSearchContainer.getEnd(),
+					searchContainer.getStart(), searchContainer.getEnd(),
 					_getSort(
-						baseModelSearchContainer.getOrderByCol(),
-						baseModelSearchContainer.getOrderByType(),
-						themeDisplay))));
+						searchContainer.getOrderByCol(),
+						searchContainer.getOrderByType(), themeDisplay))));
 
-		baseModelSearchContainer.setRowChecker(rowChecker);
+		searchContainer.setRowChecker(rowChecker);
 
-		return baseModelSearchContainer;
+		return searchContainer;
 	}
 
 	private static SearchContext _buildSearchContext(

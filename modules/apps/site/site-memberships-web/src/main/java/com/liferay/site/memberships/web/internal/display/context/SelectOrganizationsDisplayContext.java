@@ -15,6 +15,7 @@
 package com.liferay.site.memberships.web.internal.display.context;
 
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.dao.search.BaseModelSearchContainerAdapter;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
@@ -163,7 +164,8 @@ public class SelectOrganizationsDisplayContext {
 			organizationParams.put(
 				"expandoAttributes", searchTerms.getKeywords());
 
-			organizationSearch.setResultsAndTotal(
+			BaseModelSearchContainerAdapter.setResultsAndTotal(
+				organizationSearch,
 				OrganizationLocalServiceUtil.searchOrganizations(
 					themeDisplay.getCompanyId(),
 					OrganizationConstants.ANY_PARENT_ORGANIZATION_ID,

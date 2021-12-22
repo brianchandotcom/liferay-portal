@@ -24,6 +24,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.search.BaseModelSearchContainerAdapter;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -301,7 +302,8 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 
 			organizationParams.put("expandoAttributes", getKeywords());
 
-			organizationSearch.setResultsAndTotal(
+			BaseModelSearchContainerAdapter.setResultsAndTotal(
+				organizationSearch,
 				OrganizationLocalServiceUtil.searchOrganizations(
 					themeDisplay.getCompanyId(), parentOrganizationId,
 					searchTerms.getKeywords(), organizationParams,

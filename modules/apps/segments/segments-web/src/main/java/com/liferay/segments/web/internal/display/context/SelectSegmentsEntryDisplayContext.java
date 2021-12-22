@@ -18,7 +18,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.search.BaseModelSearchContainer;
+import com.liferay.portal.kernel.dao.search.BaseModelSearchContainerAdapter;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -152,16 +152,16 @@ public class SelectSegmentsEntryDisplayContext {
 			return _searchContainer;
 		}
 
-		BaseModelSearchContainer<SegmentsEntry> baseModelSearchContainer =
-			new BaseModelSearchContainer(
-				_renderRequest, _getPortletURL(), null,
-				"there-are-no-segments");
+		SearchContainer<SegmentsEntry> searchContainer = new SearchContainer(
+			_renderRequest, _getPortletURL(), null, "there-are-no-segments");
 
-		baseModelSearchContainer.setId("selectSegmentsEntry");
-		baseModelSearchContainer.setOrderByCol(_getOrderByCol());
-		baseModelSearchContainer.setOrderByComparator(_getOrderByComparator());
-		baseModelSearchContainer.setOrderByType(getOrderByType());
-		baseModelSearchContainer.setResultsAndTotal(
+		searchContainer.setId("selectSegmentsEntry");
+		searchContainer.setOrderByCol(_getOrderByCol());
+		searchContainer.setOrderByComparator(_getOrderByComparator());
+		searchContainer.setOrderByType(getOrderByType());
+
+		BaseModelSearchContainerAdapter.setResultsAndTotal(
+			searchContainer,
 			_segmentsEntryLocalService.searchSegmentsEntries(
 				_themeDisplay.getCompanyId(), _themeDisplay.getScopeGroupId(),
 				_getKeywords(), true,
@@ -170,10 +170,10 @@ public class SelectSegmentsEntryDisplayContext {
 				).put(
 					"excludedSources", _getExcludedSources()
 				).build(),
-				baseModelSearchContainer.getStart(),
-				baseModelSearchContainer.getEnd(), _getSort()));
+				searchContainer.getStart(), searchContainer.getEnd(),
+				_getSort()));
 
-		_searchContainer = baseModelSearchContainer;
+		_searchContainer = searchContainer;
 
 		return _searchContainer;
 	}

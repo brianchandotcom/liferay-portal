@@ -18,6 +18,7 @@ import com.liferay.dynamic.data.mapping.BaseDDMTestCase;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceReport;
+import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
@@ -25,6 +26,8 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -90,21 +93,39 @@ public class DDMFormReportDataUtilTest extends BaseDDMTestCase {
 				"TextField",
 				DDMFormValuesTestUtil.createLocalizedValue(
 					"Test 2", LocaleUtil.US)));
-		ddmFormValues.addDDMFormFieldValue(
+
+		DDMFormFieldValue ddmFormFieldValue =
 			DDMFormValuesTestUtil.createDDMFormFieldValue(
 				"TextField",
 				DDMFormValuesTestUtil.createLocalizedValue(
-					"Test 3", "Teste 3", LocaleUtil.BRAZIL)));
+					"Test 3", "Teste 3", LocaleUtil.BRAZIL));
+
+		ddmFormFieldValue.addNestedDDMFormFieldValue(
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"nestedTextField",
+				DDMFormValuesTestUtil.createLocalizedValue(
+					"Test 4", "Teste 4", LocaleUtil.BRAZIL)));
+
+		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
+
+		List<DDMFormInstanceRecord> ddmFormInstanceRecords = ListUtil.fromArray(
+			_mockDDMFormInstanceRecord(ddmFormValues));
 
 		JSONAssert.assertEquals(
 			JSONUtil.putAll(
-				new String[] {"Test 1", "Test 2", "Teste 3"}
+				"Test 1", "Test 2", "Teste 3"
 			).toString(),
 			String.valueOf(
 				DDMFormReportDataUtil.getFieldValuesJSONArray(
-					ListUtil.fromArray(
-						_mockDDMFormInstanceRecord(ddmFormValues)),
-					"TextField")),
+					ddmFormInstanceRecords, "TextField")),
+			JSONCompareMode.STRICT_ORDER);
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"Teste 4"
+			).toString(),
+			String.valueOf(
+				DDMFormReportDataUtil.getFieldValuesJSONArray(
+					ddmFormInstanceRecords, "nestedTextField")),
 			JSONCompareMode.STRICT_ORDER);
 	}
 

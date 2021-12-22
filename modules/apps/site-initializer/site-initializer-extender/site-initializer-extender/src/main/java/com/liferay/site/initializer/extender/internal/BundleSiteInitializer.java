@@ -345,6 +345,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			_invoke(() -> _addSAPEntries(serviceContext));
 			_invoke(() -> _addStyleBookEntries(serviceContext));
 			_invoke(() -> _addTaxonomyVocabularies(serviceContext));
+			_invoke(() -> _addUserAccounts(serviceContext));
 			_invoke(() -> _updateLayoutSets(serviceContext));
 
 			Map<String, String> assetListEntryIdsStringUtilReplaceValues =
@@ -2418,6 +2419,54 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 
 		return taxonomyCategory;
+	}
+
+	private void _addUserAccounts(ServiceContext serviceContext)
+		throws Exception {
+
+		String json = _read("/site-initializer/user-accounts.json");
+
+		if (json == null) {
+			return;
+		}
+
+		UserAccountResource.Builder userAccountResourceBuilder =
+			_userAccountResourceFactory.create();
+
+		UserAccountResource userAccountResource =
+			userAccountResourceBuilder.user(
+				serviceContext.fetchUser()
+			).build();
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(json);
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			UserAccount userAccount1 = UserAccount.toDTO(
+				String.valueOf(jsonObject));
+
+			String externalReferenceCode = jsonObject.getString(
+				"externalReferenceCode");
+
+			Page<UserAccount> userAccountPage =
+				userAccountResource.
+					getAccountUserAccountsByExternalReferenceCodePage(
+						externalReferenceCode, null, null, null, null);
+
+			UserAccount userAccount2 = userAccountPage.fetchFirstItem();
+
+			if (userAccount2 == null) {
+				userAccountResource.
+					postAccountUserAccountByExternalReferenceCode(
+						externalReferenceCode, userAccount1);
+
+				continue;
+			}
+
+			userAccountResource.patchUserAccount(
+				userAccount2.getId(), userAccount1);
+		}
 	}
 
 	private long[] _getAssetCategoryIds(

@@ -20,7 +20,7 @@ const BusinessTypeRadioGroup = ({
 			setNewSelectedProduct(form.basics.businessCategoryId);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [form?.basics?.businessCategoryId]);
+	}, [form?.basics?.businessCategoryId, selectedBusinessType]);
 
 	const setCategoryProperties = async () => {
 		try {

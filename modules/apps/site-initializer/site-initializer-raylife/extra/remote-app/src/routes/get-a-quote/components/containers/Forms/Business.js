@@ -21,12 +21,22 @@ import {AVAILABLE_STEPS} from '../../../utils/constants';
 const setFormPath = (value) => `business.${value}`;
 
 export function FormBusiness({form}) {
+	const {selectedStep} = useStepWizard();
 	const {
 		control,
 		formState: {isValid},
 		getValues,
 		setValue,
 	} = useFormContext();
+
+	const {onNext, onPrevious, onSave} = useFormActions(
+		form,
+		AVAILABLE_STEPS.BASICS_BUSINESS_INFORMATION,
+		AVAILABLE_STEPS.EMPLOYEES
+	);
+
+	const {isSelected, updateState} = useTriggerContext();
+
 	const forceValidation = () => {
 		setValue(
 			setFormPath('hasAutoPolicy'),
@@ -39,15 +49,6 @@ export function FormBusiness({form}) {
 		forceValidation();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
-
-	const {selectedStep} = useStepWizard();
-	const {onNext, onPrevious, onSave} = useFormActions(
-		form,
-		AVAILABLE_STEPS.BASICS_PRODUCT_QUOTE,
-		AVAILABLE_STEPS.EMPLOYEES
-	);
-
-	const {isSelected, updateState} = useTriggerContext();
 
 	return (
 		<FormCard>

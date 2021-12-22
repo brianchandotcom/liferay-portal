@@ -72,13 +72,14 @@ DefinitionDiagramController.prototype = {
 
 				let label = {};
 
-				item.labels?.map((itemLabel) => {
-					Object.entries(itemLabel).map(([key, value]) => {
-						label[key] = replaceTabSpaces(removeNewLine(value));
+				if (Array.isArray(item.labels)) {
+					item.labels?.map((itemLabel) => {
+						Object.entries(itemLabel).map(([key, value]) => {
+							label[key] = replaceTabSpaces(removeNewLine(value));
+						});
 					});
-				});
-
-				if (!item.labels) {
+				}
+				else {
 					label = {[defaultLanguageId]: item.name};
 				}
 
@@ -86,16 +87,23 @@ DefinitionDiagramController.prototype = {
 					description: item.description,
 					label,
 					script: item.script,
-					scriptLanguage: item.scriptLanguage || DEFAULT_LANGUAGE,
 				};
+
+				if (type === 'task') {
+					data.scriptLanguage =
+						item.scriptLanguage || DEFAULT_LANGUAGE;
+				}
 
 				let id;
 
 				if (item.id) {
 					id = item.id;
 				}
-				else {
+				else if (item.name) {
 					id = item.name;
+				}
+				else {
+					return;
 				}
 
 				// To be removed after next stories

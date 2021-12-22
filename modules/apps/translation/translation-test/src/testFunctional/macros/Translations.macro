@@ -484,11 +484,6 @@ definition {
 		Click.clickNoMouseOver(
 			key_title = "Auto Translate ${fieldName} Field",
 			locator1 = "Button#ANY_TITLE");
-
-		AssertTextEquals(
-			key_fieldName = "${fieldName}",
-			locator1 = "Message#SUCCESS_SPECIFIC_FORM_FIELD_REQUIRED",
-			value1 = "Field Translated");
 	}
 
 	macro translateWithGoogle {

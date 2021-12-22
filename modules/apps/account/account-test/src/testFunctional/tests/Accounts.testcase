@@ -82,11 +82,14 @@ definition {
 			Button.clickSave();
 		}
 
-		task ("Assert error is displayed and that account is not saved in Accounts") {
+		task ("Assert that only the first 100 characters are saved, and does not exist other char") {
 			AssertTextEquals(
-				key_alertMessage = "Please enter no more than 100 characters.",
-				locator1 = "Message#ERROR_ENTER_A_VALID_VALUE",
-				value1 = "${key_alertMessage}");
+				locator1 = "TextInput#NAME",
+				value1 = "Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor s");
+
+			AssertTextNotEquals(
+				locator1 = "TextInput#NAME",
+				value1 = "Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet");
 
 			Accounts.openAccountsAdmin();
 

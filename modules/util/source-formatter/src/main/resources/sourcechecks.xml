@@ -1175,7 +1175,6 @@
 		<check name="MarkdownEmptyLinesCheck">
 			<category name="Styling" />
 			<description name="Finds missing and unnecessary empty lines." />
-			<property name="enabled" value="false" />
 		</check>
 		<check name="MarkdownFileExtensionCheck">
 			<category name="Styling" />

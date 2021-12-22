@@ -121,6 +121,17 @@ public class DLExportImportPortletPreferencesProcessor
 				throw new PortletDataException(sb.toString(), portalException);
 			}
 
+			try {
+				portletPreferences.setValue(
+					"selectedRepositoryId",
+					String.valueOf(folder.getRepositoryId()));
+			}
+			catch (ReadOnlyException readOnlyException) {
+				throw new PortletDataException(
+					"Unable to update portlet preferences during import",
+					readOnlyException);
+			}
+
 			StagedModelDataHandlerUtil.exportReferenceStagedModel(
 				portletDataContext, portletId, folder);
 
@@ -310,6 +321,17 @@ public class DLExportImportPortletPreferencesProcessor
 				try {
 					portletPreferences.setValue(
 						"rootFolderId", String.valueOf(rootFolderId));
+
+					Folder folder = _dlAppLocalService.getFolder(rootFolderId);
+
+					portletPreferences.setValue(
+						"selectedRepositoryId",
+						String.valueOf(folder.getRepositoryId()));
+				}
+				catch (PortalException portalException) {
+					throw new PortletDataException(
+						"Invalid root folder ID " + rootFolderId,
+						portalException);
 				}
 				catch (ReadOnlyException readOnlyException) {
 					throw new PortletDataException(
@@ -319,7 +341,7 @@ public class DLExportImportPortletPreferencesProcessor
 			}
 		}
 
-		// Root folder is is not set, need to import everything
+		// Root folder is not set, need to import everything
 
 		try {
 			portletDataContext.importPortletPermissions(

@@ -71,13 +71,11 @@ definition {
 	@priority = "5"
 	test AccountNameCannotExceed100Characters {
 		task ("Try to add account where name character count is over 100") {
-			var accountName = "Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet";
-
 			Accounts.openAccountsAdmin();
 
 			LexiconEntry.gotoAdd();
 
-			PortletEntry.inputName(name = "${accountName}");
+			PortletEntry.inputName(name = "Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet");
 
 			Button.clickSave();
 		}
@@ -93,7 +91,7 @@ definition {
 
 			Accounts.openAccountsAdmin();
 
-			LexiconEntry.viewNoEntry(rowEntry = "${accountName}");
+			LexiconEntry.viewNoEntry(rowEntry = "Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet");
 		}
 	}
 

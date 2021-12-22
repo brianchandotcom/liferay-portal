@@ -28,16 +28,16 @@ import React, {
 } from 'react';
 
 import {TAB_KEYCODE} from '../../app/config/constants/keycodes';
-import {config} from '../../app/config/index';
 import SearchForm from '../../common/components/SearchForm';
 
 export function DropdownColorPicker({
 	active,
-	onSetActive,
 	colors,
+	config,
 	disabled,
 	label = null,
 	onValueChange = () => {},
+	onSetActive,
 	showSelector = true,
 	small,
 	value = '#FFFFFF',
@@ -163,6 +163,7 @@ export function DropdownColorPicker({
 				{active ? (
 					<Wrapper
 						colors={filteredColors}
+						config={config}
 						dropdownContainerRef={dropdownContainerRef}
 						onKeyDown={handleKeyDownWrapper}
 						onSetActive={onSetActive}
@@ -181,6 +182,7 @@ export function DropdownColorPicker({
 						<ClayInput.GroupText className="page-editor__dropdown-color-picker__input-group-text--rounded-left">
 							<Splotch
 								className="dropdown-toggle"
+								config={config}
 								disabled={disabled}
 								onClick={() => onSetActive((active) => !active)}
 								onKeyPress={() =>
@@ -205,6 +207,7 @@ export function DropdownColorPicker({
 						{active ? (
 							<Wrapper
 								colors={filteredColors}
+								config={config}
 								dropdownContainerRef={dropdownContainerRef}
 								onKeyDown={handleKeyDownWrapper}
 								onSetActive={onSetActive}
@@ -222,6 +225,7 @@ export function DropdownColorPicker({
 
 const Wrapper = ({
 	colors,
+	config,
 	dropdownContainerRef,
 	onKeyDown,
 	onSetActive,
@@ -269,6 +273,7 @@ const Wrapper = ({
 												key={name}
 											>
 												<Splotch
+													config={config}
 													onClick={() => {
 														onValueChange({
 															label,
@@ -308,7 +313,10 @@ const Wrapper = ({
 };
 
 const Splotch = React.forwardRef(
-	({active, className, onClick, onKeyPress, size, title, value}, ref) => (
+	(
+		{active, className, config, onClick, onKeyPress, size, title, value},
+		ref
+	) => (
 		<button
 			className={classNames(
 				`btn clay-color-btn clay-color-btn-bordered lfr-portal-tooltip rounded${

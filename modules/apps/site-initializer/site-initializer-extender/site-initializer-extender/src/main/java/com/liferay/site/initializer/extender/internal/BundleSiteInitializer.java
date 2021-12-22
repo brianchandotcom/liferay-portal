@@ -41,7 +41,9 @@ import com.liferay.headless.admin.taxonomy.dto.v1_0.TaxonomyVocabulary;
 import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyCategoryResource;
 import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyVocabularyResource;
 import com.liferay.headless.admin.user.dto.v1_0.Account;
+import com.liferay.headless.admin.user.dto.v1_0.UserAccount;
 import com.liferay.headless.admin.user.resource.v1_0.AccountResource;
+import com.liferay.headless.admin.user.resource.v1_0.UserAccountResource;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Catalog;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.CatalogResource;
 import com.liferay.headless.commerce.admin.channel.dto.v1_0.Channel;
@@ -216,6 +218,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		TaxonomyCategoryResource.Factory taxonomyCategoryResourceFactory,
 		TaxonomyVocabularyResource.Factory taxonomyVocabularyResourceFactory,
 		ThemeLocalService themeLocalService,
+		UserAccountResource.Factory userAccountResourceFactory,
 		UserLocalService userLocalService) {
 
 		if (_log.isDebugEnabled()) {
@@ -272,6 +275,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_taxonomyCategoryResourceFactory = taxonomyCategoryResourceFactory;
 		_taxonomyVocabularyResourceFactory = taxonomyVocabularyResourceFactory;
 		_themeLocalService = themeLocalService;
+		_userAccountResourceFactory = userAccountResourceFactory;
 		_userLocalService = userLocalService;
 
 		BundleWiring bundleWiring = _bundle.adapt(BundleWiring.class);
@@ -2724,6 +2728,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private final TaxonomyVocabularyResource.Factory
 		_taxonomyVocabularyResourceFactory;
 	private final ThemeLocalService _themeLocalService;
+	private final UserAccountResource.Factory _userAccountResourceFactory;
 	private final UserLocalService _userLocalService;
 
 }

@@ -537,7 +537,7 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 
 	@Override
 	protected String[] getDataPortletPreferences() {
-		return new String[] {"rootFolderId"};
+		return new String[] {"rootFolderId", "selectedRepositoryId"};
 	}
 
 	@Override

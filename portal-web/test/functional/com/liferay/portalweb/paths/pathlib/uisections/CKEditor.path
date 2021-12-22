@@ -81,6 +81,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TABLE_ICON</td>
+	<td>//div[contains(@id,'contentEditorContainer')]//span[contains(@class,'table_icon')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

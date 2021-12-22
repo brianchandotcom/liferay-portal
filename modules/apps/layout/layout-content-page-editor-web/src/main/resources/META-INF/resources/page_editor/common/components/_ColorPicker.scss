@@ -1,53 +1,45 @@
-@import 'cadmin-variables';
-
 html#{$cadmin-selector} {
 	.cadmin {
-		.form-group-sm
-			.input-group
-			> .input-group-item
-			> .input-group-text.page-editor__color-picker__input-group-text--rounded-left {
-			border-radius: 4px 0 0 4px;
-		}
-
 		.page-editor__color-picker {
-			&__color-palette .sheet-subtitle {
-				border-color: $cadmin-secondary-l3;
-				border-width: 1px 0 0;
-				font-size: 0.75rem;
+			.input-group
+				> .input-group-item
+				> .form-control.page-editor__color-picker__autocomplete__input {
+				border-radius: 0 4px 4px 0;
+				font-weight: 600;
+				transition: none;
 			}
 
-			&__empty-result {
-				.c-empty-state-image {
-					max-width: 120px;
+			.clay-color > .input-group-item > .input-group-text {
+				border-radius: 4px 0 0 4px;
+			}
 
-					& + .c-empty-state-title {
-						font-size: 1rem;
-						margin-top: 32px;
-					}
-
-					& + .c-empty-state-text {
-						margin-top: 4px;
-					}
+			&.has-warning {
+				.clay-color > .input-group-item > .input-group-text {
+					border-color: $cadmin-warning-l1;
 				}
 			}
 
-			&__search-form {
-				& + .page-editor__color-picker__color-palette .sheet-subtitle {
-					border-width: 0;
+			&:not(.has-warning),
+			&.has-warning:not(:hover):not(:focus-within):not(.hovered) {
+				.input-group
+					> .input-group-item
+					> .form-control.page-editor__color-picker__autocomplete__input {
+					background-color: transparent;
 				}
 			}
 
-			&__selector {
-				&.btn {
-					padding: 6px 9px;
+			&.hovered .page-editor__color-picker__selector {
+				background-color: $cadmin-gray-100;
+			}
+
+			&:not(:hover):not(:focus-within):not(.hovered) {
+				.page-editor__color-picker__action-button {
+					opacity: 0;
 				}
 
-				&-splotch {
-					border: 1px solid $cadmin-gray-300;
-					height: 20px;
-					margin-right: 18px;
-					margin-top: 1px;
-					min-width: 20px;
+				.clay-color > .input-group-item > .input-group-text,
+				.page-editor__color-picker__autocomplete__input {
+					border-color: transparent;
 				}
 			}
 		}

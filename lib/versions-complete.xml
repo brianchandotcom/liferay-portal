@@ -965,6 +965,41 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>com.liferay.diff.impl.jar!java-diff.jar</file-name>
+				<version>1.1</version>
+				<project-name>Java Diff</project-name>
+				<project-url>http://incava.org/projects/java/java-diff/</project-url>
+				<licenses>
+					<license>
+						<license-name>BSD</license-name>
+						<license-url>http://www.opensource.org/licenses/bsd-license.php</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.diff.impl.jar!nekohtml.jar</file-name>
+				<version>1.9.22</version>
+				<project-name>Neko HTML</project-name>
+				<project-url>http://nekohtml.sourceforge.net/</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.diff.impl.jar!org.outerj.daisy.diff.jar</file-name>
+				<version>1.2.0-atlassian-hosted.LIFERAY-PATCHED-1</version>
+				<project-name>org.outerj.daisy.diff</project-name>
+				<licenses>
+					<license>
+						<license-name>LGPL 2.1</license-name>
+						<license-url>http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>com.liferay.digital.signature.impl.jar!oauth.jar</file-name>
 				<version>20100527</version>
 				<project-name>OAuth Core</project-name>
@@ -6451,19 +6486,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/portal/daisydiff.jar</file-name>
-				<version>1.2.0-atlassian-hosted.LIFERAY-PATCHED-1</version>
-				<project-name>DaisyDiff</project-name>
-				<project-url>http://code.google.com/p/daisydiff</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-				<comments>Removed org.apache.*, org.cyberneko.*, and org.w3c.* because it conflicts with nekohtml.jar and xercesImpl.jar.</comments>
-			</library>
-			<library>
 				<file-name>lib/portal/dom4j.jar</file-name>
 				<version>2.1.3</version>
 				<project-name>dom4j</project-name>
@@ -6691,18 +6713,6 @@
 					<license>
 						<license-name>Apache License 2.0</license-name>
 						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/portal/java-diff.jar</file-name>
-				<version>1.1</version>
-				<project-name>Java Diff</project-name>
-				<project-url>http://repo1.maven.org/maven2/org/incava/java-diff/1.1</project-url>
-				<licenses>
-					<license>
-						<license-name>BSD Style License</license-name>
-						<license-url>http://en.wikipedia.org/wiki/BSD_licenses</license-url>
 					</license>
 				</licenses>
 			</library>

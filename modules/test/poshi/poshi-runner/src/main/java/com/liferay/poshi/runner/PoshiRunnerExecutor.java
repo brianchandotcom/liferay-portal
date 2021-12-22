@@ -862,7 +862,8 @@ public class PoshiRunnerExecutor {
 
 			if (argument == null) {
 				if (i == 0) {
-					if (selenium.equals("assertAlertText") ||
+					if (_isJavaScriptMethod(selenium) ||
+						selenium.equals("assertAlertText") ||
 						selenium.equals("assertConfirmation") ||
 						selenium.equals("assertConsoleTextNotPresent") ||
 						selenium.equals("assertConsoleTextPresent") ||
@@ -882,13 +883,7 @@ public class PoshiRunnerExecutor {
 						selenium.equals("waitForConsoleTextNotPresent") ||
 						selenium.equals("waitForConsoleTextPresent") ||
 						selenium.equals("waitForTextNotPresent") ||
-						selenium.equals("waitForTextPresent") ||
-						selenium.equals("executeJavaScript") ||
-						selenium.equals("getJavaScriptResult") ||
-						selenium.equals("waitForJavaScript") ||
-						selenium.equals("assertJavaScript") ||
-						selenium.equals("waitForJavaScriptNoError") ||
-						selenium.equals("verifyJavaScript")) {
+						selenium.equals("waitForTextPresent")) {
 
 						argument = PoshiVariablesUtil.getStringFromCommandMap(
 							"value1");
@@ -905,10 +900,7 @@ public class PoshiRunnerExecutor {
 					if (selenium.equals("clickAt")) {
 						argument = "";
 					}
-					else if (selenium.equals("executeJavaScript") ||
-							 selenium.equals("getJavaScriptResult") ||
-							 selenium.equals("waitForJavaScript")) {
-
+					else if (_isJavaScriptMethod(selenium)) {
 						argument = PoshiVariablesUtil.getStringFromCommandMap(
 							"value2");
 					}
@@ -918,13 +910,7 @@ public class PoshiRunnerExecutor {
 						argument = PoshiVariablesUtil.getStringFromCommandMap(
 							"value1");
 					}
-					else if (selenium.equals("executeJavaScript") ||
-							 selenium.equals("getJavaScriptResult") ||
-							 selenium.equals("waitForJavaScript") ||
-							 selenium.equals("assertJavaScript") ||
-							 selenium.equals("waitForJavaScriptNoError") ||
-							 selenium.equals("verifyJavaScript")) {
-
+					else if (_isJavaScriptMethod(selenium)) {
 						argument = PoshiVariablesUtil.getStringFromCommandMap(
 							"value3");
 					}
@@ -1346,6 +1332,20 @@ public class PoshiRunnerExecutor {
 		}
 
 		return null;
+	}
+
+	private boolean _isJavaScriptMethod(String methodName) {
+		if (methodName.equals("assertJavaScript") ||
+			methodName.equals("executeJavaScript") ||
+			methodName.equals("getJavaScriptResult") ||
+			methodName.equals("waitForJavaScript") ||
+			methodName.equals("waitForJavaScriptNoError") ||
+			methodName.equals("verifyJavaScript")) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private static final Pattern _locatorKeyPattern = Pattern.compile(

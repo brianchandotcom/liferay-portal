@@ -76,8 +76,6 @@ definition {
 			LexiconEntry.gotoAdd();
 
 			PortletEntry.inputName(name = "Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet");
-
-			Button.clickSave();
 		}
 
 		task ("Then only the first 100 characters are typed in. No more than 100 characters can be added") {
@@ -88,6 +86,8 @@ definition {
 			AssertTextNotEquals(
 				locator1 = "TextInput#NAME",
 				value1 = "Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet");
+
+			Button.clickSave();
 
 			Accounts.openAccountsAdmin();
 

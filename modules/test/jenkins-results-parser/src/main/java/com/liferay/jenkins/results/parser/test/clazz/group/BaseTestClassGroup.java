@@ -47,7 +47,9 @@ public abstract class BaseTestClassGroup implements TestClassGroup {
 	}
 
 	protected void addTestClass(TestClass testClass) {
-		testClasses.add(testClass);
+		if (!testClasses.contains(testClass)) {
+			testClasses.add(testClass);
+		}
 	}
 
 	protected String getBuildStartProperty(String propertyName) {

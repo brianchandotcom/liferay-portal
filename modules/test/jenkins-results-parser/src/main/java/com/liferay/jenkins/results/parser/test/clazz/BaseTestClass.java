@@ -22,6 +22,7 @@ import java.io.File;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -38,6 +39,23 @@ public abstract class BaseTestClass implements TestClass {
 		}
 
 		return _testClassFile.compareTo(testClass.getTestClassFile());
+	}
+
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
+		if (!(object instanceof TestClass)) {
+			return false;
+		}
+
+		if (Objects.equals(hashCode(), object.hashCode())) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override
@@ -76,6 +94,11 @@ public abstract class BaseTestClass implements TestClass {
 	@Override
 	public List<TestClassMethod> getTestClassMethods() {
 		return _testClassMethods;
+	}
+
+	@Override
+	public int hashCode() {
+		return _testClassFile.hashCode();
 	}
 
 	@Override

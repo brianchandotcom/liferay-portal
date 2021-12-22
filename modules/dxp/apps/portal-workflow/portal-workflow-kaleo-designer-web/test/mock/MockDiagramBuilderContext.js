@@ -10,7 +10,6 @@
  */
 
 import React, {useState} from 'react';
-import {ReactFlowProvider} from 'react-flow-renderer';
 
 import {DiagramBuilderContextProvider} from '../../src/main/resources/META-INF/resources/designer/js/definition-builder/diagram-builder/DiagramBuilderContext';
 import {defaultNodes} from '../../src/main/resources/META-INF/resources/designer/js/definition-builder/diagram-builder/components/nodes/utils';
@@ -35,7 +34,7 @@ export default function MockDiagramBuilderContext({
 
 	return (
 		<DiagramBuilderContextProvider {...contextProps}>
-			<ReactFlowProvider>{children}</ReactFlowProvider>
+			{children}
 		</DiagramBuilderContextProvider>
 	);
 }

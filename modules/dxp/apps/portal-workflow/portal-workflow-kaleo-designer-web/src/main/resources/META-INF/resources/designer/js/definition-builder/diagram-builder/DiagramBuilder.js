@@ -21,10 +21,8 @@ import React, {
 import ReactFlow, {
 	Background,
 	Controls,
-	ReactFlowProvider,
 	addEdge,
 	isEdge,
-	isNode,
 } from 'react-flow-renderer';
 
 import {DefinitionBuilderContext} from '../DefinitionBuilderContext';
@@ -243,11 +241,9 @@ export default function DiagramBuilder({version}) {
 
 	const contextProps = {
 		collidingElements,
-		elements,
 		selectedItem,
 		selectedItemNewId,
 		setCollidingElements,
-		setElements,
 		setSelectedItem,
 		setSelectedItemNewId,
 	};
@@ -256,25 +252,23 @@ export default function DiagramBuilder({version}) {
 		<DiagramBuilderContextProvider {...contextProps}>
 			<div className="diagram-builder">
 				<div className="diagram-area" ref={reactFlowWrapperRef}>
-					<ReactFlowProvider>
-						<ReactFlow
-							connectionLineComponent={FloatingConnectionLine}
-							edgeTypes={edgeTypes}
-							elements={elements}
-							minZoom="0.1"
-							nodeTypes={nodeTypes}
-							onConnect={onConnect}
-							onConnectEnd={onConnectEnd}
-							onConnectStart={onConnectStart}
-							onDragOver={onDragOver}
-							onDrop={onDrop}
-							onLoad={onLoad}
-						/>
+					<ReactFlow
+						connectionLineComponent={FloatingConnectionLine}
+						edgeTypes={edgeTypes}
+						elements={elements}
+						minZoom="0.1"
+						nodeTypes={nodeTypes}
+						onConnect={onConnect}
+						onConnectEnd={onConnectEnd}
+						onConnectStart={onConnectStart}
+						onDragOver={onDragOver}
+						onDrop={onDrop}
+						onLoad={onLoad}
+					/>
 
-						<Controls showInteractive={false} />
+					<Controls showInteractive={false} />
 
-						<Background size={1} />
-					</ReactFlowProvider>
+					<Background size={1} />
 				</div>
 
 				<Sidebar />

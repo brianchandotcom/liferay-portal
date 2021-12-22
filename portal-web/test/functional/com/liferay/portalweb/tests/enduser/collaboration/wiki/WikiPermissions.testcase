@@ -36,13 +36,52 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136986. It checks that page permissions can be configured via More Options."
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanConfigurePermissionsViaMoreOptions {
-		property portal.acceptance = "false";
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Wiki");
 
-		// TODO LPS-136986 CanConfigurePermissionsViaMoreOptions pending implementation
+		WikiNode.viewCP(
+			numberOfWikiPages = "1",
+			wikiNodeName = "Main");
 
+		WikiNode.addWikiPage(
+			wikiPageContent = "Wiki Page Content",
+			wikiPageTitle = "Wiki Page Name");
+
+		Panel.expandPanel(panel = "Permissions");
+
+		Click(
+			key_text = "More Options",
+			locator1 = "Button#ANY");
+
+		for (var permissions : list "UPDATE,SUBSCRIBE,ADD_DISCUSSION") {
+			Uncheck(
+				key_permissions = "${permissions}",
+				key_roleTitle = "Site Member",
+				locator1 = "Wiki#MORE_PERMISSIONS_VIEW_CHECKBOX");
+		}
+
+		PortletEntry.publish();
+
+		LexiconEntry.openEntryMenu(rowEntry = "Wiki Page Name");
+
+		MenuItem.click(menuItem = "Permissions");
+
+		IFrame.selectModalFrame();
+
+		AssertNotChecked(
+			key_roleTitle = "Site Member",
+			locator1 = "Permissions#CONTENT_PERMISSIONS_UPDATE_CHECKBOX");
+
+		AssertNotChecked(
+			key_roleTitle = "site-member",
+			locator1 = "Permissions#CONFIGURATION_PERMISSIONS_SUBSCRIBE_CHECKBOX");
+
+		AssertNotChecked(
+			key_roleTitle = "site-member",
+			locator1 = "Permissions#CONTENT_PERMISSIONS_ADD_DISCUSSION_CHECKBOX");
 	}
 
 	@description = "This ensures that a regular role with permissions can delete a wiki node."

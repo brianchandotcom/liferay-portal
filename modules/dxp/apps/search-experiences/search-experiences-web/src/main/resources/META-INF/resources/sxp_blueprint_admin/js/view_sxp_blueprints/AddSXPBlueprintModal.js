@@ -10,97 +10,25 @@
  */
 
 import ClayButton from '@clayui/button';
-import ClayCard from '@clayui/card';
-import {ClayRadio} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import ClayLayout from '@clayui/layout';
 import ClayModal, {ClayModalProvider, useModal} from '@clayui/modal';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
 import getCN from 'classnames';
 import {fetch, navigate} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
-import {DEFAULT_ERROR, SXP_ELEMENT_TYPE} from '../utils/constants';
+import {DEFAULT_ERROR} from '../utils/constants';
 import {
-	BASELINE_CLAUSE_CONTRIBUTORS_CONFIGURATION,
 	DEFAULT_ADVANCED_CONFIGURATION,
-	DEFAULT_BASELINE_SXP_ELEMENTS,
 	DEFAULT_HIGHLIGHT_CONFIGURATION,
 	DEFAULT_PARAMETER_CONFIGURATION,
 	DEFAULT_SORT_CONFIGURATION,
 } from '../utils/data';
 import {fetchData} from '../utils/fetch';
-import {FRAMEWORK_TYPES} from '../utils/frameworkTypes';
-import {getConfigurationEntry, getUIConfigurationValues} from '../utils/utils';
 
 const ADD_EVENT = 'addSXPBlueprint';
 
-const DEFAULT_SELECTED_BASELINE_SXP_ELEMENTS = DEFAULT_BASELINE_SXP_ELEMENTS.map(
-	(sxpElement) => {
-		const uiConfigurationValues = getUIConfigurationValues(sxpElement);
-
-		return {
-			configurationEntry: getConfigurationEntry({
-				sxpElement,
-				uiConfigurationValues,
-			}),
-			sxpElement,
-			type: sxpElement.type || SXP_ELEMENT_TYPE.QUERY,
-			uiConfigurationValues,
-		};
-	}
-);
-
-const FrameworkCard = ({
-	checked,
-	children,
-	description,
-	imagePath,
-	onChange,
-	title,
-	value,
-}) => {
-	return (
-		<ClayCard
-			className={checked ? 'selected' : ''}
-			displayType="file"
-			onClick={onChange}
-			selectable
-		>
-			<ClayRadio checked={checked} onChange={onChange} value={value}>
-				<ClayCard.AspectRatio className="card-item-first">
-					<div className="aspect-ratio-item aspect-ratio-item-center-middle aspect-ratio-item-fluid">
-						<img alt={title} src={imagePath} />
-					</div>
-				</ClayCard.AspectRatio>
-			</ClayRadio>
-
-			<ClayCard.Body>
-				<ClayCard.Row>
-					<div className="autofit-col autofit-col-expand">
-						<section className="autofit-section">
-							<ClayCard.Description displayType="title">
-								{title}
-							</ClayCard.Description>
-
-							<ClayCard.Description
-								displayType="subtitle"
-								truncate={false}
-							>
-								{description}
-							</ClayCard.Description>
-
-							{children}
-						</section>
-					</div>
-				</ClayCard.Row>
-			</ClayCard.Body>
-		</ClayCard>
-	);
-};
-
 const AddModal = ({
-	contextPath,
 	defaultLocale,
 	editSXPBlueprintURL,
 	keywordQueryContributors = [],
@@ -113,7 +41,6 @@ const AddModal = ({
 }) => {
 	const isMounted = useIsMounted();
 	const [errorMessage, setErrorMessage] = useState();
-	const [framework, setFramework] = useState(FRAMEWORK_TYPES.ALL);
 	const [loadingResponse, setLoadingResponse] = useState(false);
 	const [inputValue, setInputValue] = useState('');
 	const [descriptionInputValue, setDescriptionInputValue] = useState('');
@@ -128,16 +55,12 @@ const AddModal = ({
 		advancedConfiguration: DEFAULT_ADVANCED_CONFIGURATION,
 		aggregationConfiguration: {},
 		generalConfiguration: {
-			...(framework === FRAMEWORK_TYPES.BASELINE
-				? BASELINE_CLAUSE_CONTRIBUTORS_CONFIGURATION
-				: {
-						clauseContributorsExcludes: [],
-						clauseContributorsIncludes: [
-							...keywordQueryContributors,
-							...modelPrefilterContributors,
-							...queryPrefilterContributors,
-						],
-				  }),
+			clauseContributorsExcludes: [],
+			clauseContributorsIncludes: [
+				...keywordQueryContributors,
+				...modelPrefilterContributors,
+				...queryPrefilterContributors,
+			],
 			searchableAssetTypes: searchableTypes,
 		},
 		highlightConfiguration: DEFAULT_HIGHLIGHT_CONFIGURATION,
@@ -155,10 +78,7 @@ const AddModal = ({
 			body: JSON.stringify({
 				configuration: _getConfiguration(),
 				description_i18n: {[defaultLocale]: descriptionInputValue},
-				elementInstances:
-					framework === FRAMEWORK_TYPES.BASELINE
-						? DEFAULT_SELECTED_BASELINE_SXP_ELEMENTS
-						: [],
+				elementInstances: [],
 				title_i18n: {[defaultLocale]: inputValue},
 			}),
 			headers: new Headers({
@@ -290,55 +210,6 @@ const AddModal = ({
 							type="hidden"
 							value={descriptionInputValue}
 						/>
-					</div>
-
-					<div className="form-group">
-						<label
-							className="control-label"
-							htmlFor={`${portletNamespace}framework`}
-						>
-							{Liferay.Language.get('start-with')}
-
-							<span className="reference-mark">
-								<ClayIcon symbol="asterisk" />
-							</span>
-						</label>
-
-						<ClayLayout.Row>
-							<ClayLayout.Col size={6}>
-								<FrameworkCard
-									checked={framework === FRAMEWORK_TYPES.ALL}
-									description={Liferay.Language.get(
-										'select-all-clauses-description'
-									)}
-									imagePath={`${contextPath}/sxp_blueprint_admin/images/all-clauses.svg`}
-									onChange={() =>
-										setFramework(FRAMEWORK_TYPES.ALL)
-									}
-									title={Liferay.Language.get('all-clauses')}
-									value={FRAMEWORK_TYPES.ALL}
-								/>
-							</ClayLayout.Col>
-
-							<ClayLayout.Col size={6}>
-								<FrameworkCard
-									checked={
-										framework === FRAMEWORK_TYPES.BASELINE
-									}
-									description={Liferay.Language.get(
-										'select-baseline-clauses-description'
-									)}
-									imagePath={`${contextPath}/sxp_blueprint_admin/images/baseline-clauses.svg`}
-									onChange={() =>
-										setFramework(FRAMEWORK_TYPES.BASELINE)
-									}
-									title={Liferay.Language.get(
-										'baseline-clauses'
-									)}
-									value={FRAMEWORK_TYPES.BASELINE}
-								/>
-							</ClayLayout.Col>
-						</ClayLayout.Row>
 					</div>
 				</ClayModal.Body>
 

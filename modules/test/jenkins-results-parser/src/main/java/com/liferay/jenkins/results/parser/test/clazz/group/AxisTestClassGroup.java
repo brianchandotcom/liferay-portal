@@ -16,10 +16,14 @@ package com.liferay.jenkins.results.parser.test.clazz.group;
 
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.Job;
+import com.liferay.jenkins.results.parser.test.clazz.TestClass;
 
 import java.io.File;
 
 import java.util.List;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  * @author Michael Hashimoto
@@ -59,6 +63,27 @@ public class AxisTestClassGroup extends BaseTestClassGroup {
 	@Override
 	public Job getJob() {
 		return _batchTestClassGroup.getJob();
+	}
+
+	public JSONObject getJSONObject() {
+		JSONObject jsonObject = new JSONObject();
+
+		jsonObject.put("axis_name", getAxisName());
+
+		JSONArray testClassesJSONArray = new JSONArray();
+
+		jsonObject.put("test_classes", testClassesJSONArray);
+
+		for (TestClass testClass : getTestClasses()) {
+			if (testClass == null) {
+				throw new RuntimeException(
+					"Could not find testClass in " + getAxisName());
+			}
+
+			testClassesJSONArray.put(testClass.getJSONObject());
+		}
+
+		return jsonObject;
 	}
 
 	public Integer getMinimumSlaveRAM() {

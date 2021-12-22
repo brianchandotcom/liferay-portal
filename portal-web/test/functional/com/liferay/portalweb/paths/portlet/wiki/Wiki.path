@@ -300,6 +300,17 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--PERMISSIONS-->
+<tr>
+	<td>MORE_PERMISSIONS_VIEW_CHECKBOX</td>
+	<td>//input[contains(@title,'${key_roleTitle}') and @value='${key_permissions}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--SEARCH-->
 <tr>
 	<td>SEARCH_CREATE_NEW_PAGE_LINK</td>

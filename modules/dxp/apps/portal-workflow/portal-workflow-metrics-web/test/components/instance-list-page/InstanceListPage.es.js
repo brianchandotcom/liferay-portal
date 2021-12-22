@@ -191,8 +191,8 @@ describe('The instance list card should', () => {
 		expect(label).toBeTruthy();
 	});
 
-	it('Show last metrics calculated info', () => {
-		const metricsCalculated = findByText('Metrics calculated');
+	it('Show last metrics calculated info', async () => {
+		const metricsCalculated = await findByText('metrics-calculated');
 
 		expect(metricsCalculated).toBeTruthy();
 	});

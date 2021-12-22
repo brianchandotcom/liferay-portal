@@ -54,7 +54,7 @@
 		"build": "liferay-npm-scripts build",
 		"checkFormat": "liferay-npm-scripts check",
 		"format": "liferay-npm-scripts fix",
-		"test": "liferay-npm-scripts test"
+		"test": "RTL_SKIP_AUTO_CLEANUP=true liferay-npm-scripts test"
 	},
 	"version": "3.0.31"
 }

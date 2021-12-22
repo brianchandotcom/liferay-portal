@@ -17,7 +17,7 @@ import moment from '../../../../src/main/resources/META-INF/resources/js/shared/
 import {MockRouter} from '../../../../test/mock/MockRouter.es';
 
 describe('MetricsCalculatedInfo', () => {
-	test('will be correctly rendered', () => {
+	test('will be correctly rendered', async () => {
 		const date = moment
 			.utc(new Date())
 			.format(Liferay.Language.get('mmm-dd-hh-mm-a'));
@@ -33,7 +33,7 @@ describe('MetricsCalculatedInfo', () => {
 			</MockRouter>
 		);
 
-		const labelText = findByText(
+		const labelText = await findByText(
 			Liferay.Language.get('metrics-calculated')
 		);
 

@@ -44,8 +44,8 @@ definition {
 			portlet = "Server Administration");
 
 		ServerAdministration.addCategoryLogLevels(
-			categoryName = "${categoryName}",
-			categoryPriority = "DEBUG");
+			categoryLevel = "DEBUG",
+			categoryName = "${categoryName}");
 	}
 
 	@description = "Get cluster node control address in console"

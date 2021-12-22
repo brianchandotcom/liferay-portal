@@ -41,8 +41,8 @@ definition {
 			ServerAdministration.openServerAdmin();
 
 			ServerAdministration.addCategoryLogLevels(
-				categoryName = "com.liferay.saml.opensaml.integration",
-				categoryPriority = "DEBUG");
+				categoryLevel = "DEBUG",
+				categoryName = "com.liferay.saml.opensaml.integration");
 		}
 
 		task ("Add site role") {
@@ -2807,8 +2807,8 @@ definition {
 			ServerAdministration.openServerAdmin();
 
 			ServerAdministration.addCategoryLogLevels(
-				categoryName = "com.liferay.saml.opensaml.integration",
-				categoryPriority = "DEBUG");
+				categoryLevel = "DEBUG",
+				categoryName = "com.liferay.saml.opensaml.integration");
 
 			User.logoutPG();
 
@@ -3332,8 +3332,8 @@ definition {
 			ServerAdministration.openServerAdmin();
 
 			ServerAdministration.addCategoryLogLevels(
-				categoryName = "com.liferay.saml.opensaml.integration",
-				categoryPriority = "DEBUG");
+				categoryLevel = "DEBUG",
+				categoryName = "com.liferay.saml.opensaml.integration");
 		}
 
 		task ("Logout and execute IdP initiated SSO") {

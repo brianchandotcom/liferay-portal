@@ -469,12 +469,12 @@ definition {
 		ServerAdministration.openServerAdmin();
 
 		ServerAdministration.addCategoryLogLevels(
-			categoryName = "com.liferay.saml.opensaml.integration",
-			categoryPriority = "DEBUG");
+			categoryLevel = "DEBUG",
+			categoryName = "com.liferay.saml.opensaml.integration");
 
 		ServerAdministration.addCategoryLogLevels(
-			categoryName = "com.liferay.saml.web.internal.opensaml.integration.field.expression.resolver",
-			categoryPriority = "DEBUG");
+			categoryLevel = "DEBUG",
+			categoryName = "com.liferay.saml.web.internal.opensaml.integration.field.expression.resolver");
 	}
 
 	@description = "7.4-SAML-S2: Configure Portal Instance to act as a SAML Service Provider"

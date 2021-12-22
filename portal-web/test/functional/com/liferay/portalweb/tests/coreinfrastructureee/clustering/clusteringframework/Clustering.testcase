@@ -232,12 +232,12 @@ definition {
 			portlet = "Server Administration");
 
 		ServerAdministration.addCategoryLogLevels(
-			categoryName = "com.liferay.portal.cluster",
-			categoryPriority = "DEBUG");
+			categoryLevel = "DEBUG",
+			categoryName = "com.liferay.portal.cluster");
 
 		ServerAdministration.viewCategoryLogLevels(
-			categoryName = "com.liferay.portal.cluster",
-			categoryLevel = "DEBUG");
+			categoryLevel = "DEBUG",
+			categoryName = "com.liferay.portal.cluster");
 
 		User.logoutPG(
 			password = "test",

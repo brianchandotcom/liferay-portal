@@ -11,7 +11,7 @@ definition {
 
 		Select(
 			locator1 = "ServerAdministrationLogLevels#ADD_CATEGORY_PRIORITY_SELECT",
-			value1 = "${categoryPriority}");
+			value1 = "${categoryLevel}");
 
 		PortletEntry.save();
 	}

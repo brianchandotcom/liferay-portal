@@ -245,8 +245,23 @@ if (recurrence != null) {
 	var recurrenceContainerNode = A.one(
 		'#<portlet:namespace />recurrenceContainer'
 	);
+
 	var repeatCheckboxNode = document.getElementById('<portlet:namespace />repeat');
 	var summaryNode = A.one('#<portlet:namespace />summary');
+
+	var afterInput = A.one('#<portlet:namespace />ends_3');
+	var neverInput = A.one('#<portlet:namespace />ends_1');
+
+	let onRadioChange = (radioButton) => {
+		radioButton.on('change', (event) => {
+			document
+				.querySelector('span.has-success')
+				.classList.remove('has-success');
+		});
+	};
+
+	onRadioChange(afterInput);
+	onRadioChange(neverInput);
 
 	var recurrenceDialogController = new Liferay.RecurrenceDialogController({
 		container: '#<portlet:namespace />recurrenceContainer',

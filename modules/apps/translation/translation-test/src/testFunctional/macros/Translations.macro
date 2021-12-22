@@ -441,12 +441,14 @@ definition {
 	}
 
 	macro translateFragmentField {
-		AssertSelectedLabel(
-			locator1 = "Select#SELECT_ID",
-			selectFieldId = "experience-selector",
-			value1 = "Default");
+		if ("${ff}" == "true") {
+			AssertSelectedLabel(
+				locator1 = "Select#SELECT_ID",
+				selectFieldId = "experience-selector",
+				value1 = "Default");
 
-		AssertElementPresent(locator1 = "Translation#BASIC_INFORMATION");
+			AssertElementPresent(locator1 = "Translation#BASIC_INFORMATION");
+		}
 
 		if (isSet(experienceName)) {
 			Select(

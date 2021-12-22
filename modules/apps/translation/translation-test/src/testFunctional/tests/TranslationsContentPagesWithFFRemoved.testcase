@@ -166,6 +166,7 @@ definition {
 
 		Translations.translateFragmentField(
 			experienceName = "Segment Email Experience",
+			ff = "true",
 			fieldName = "element-text",
 			fragmentText = "esta es la nueva experiencia");
 
@@ -235,6 +236,7 @@ definition {
 
 		Translations.translateFragmentField(
 			experienceName = "Segment Email Experience",
+			ff = "true",
 			fieldName = "element-text",
 			fragmentText = "経験をテストする");
 
@@ -299,6 +301,7 @@ definition {
 			newTargetLocale = "ja-JP");
 
 		Translations.translateFragmentField(
+			ff = "true",
 			fieldName = "link",
 			fragmentText = "これはボタンリンクです");
 
@@ -348,6 +351,7 @@ definition {
 			newTargetLocale = "es-ES");
 
 		Translations.translateFragmentField(
+			ff = "true",
 			fieldName = "HTML",
 			fragmentText = "este es un campo html");
 
@@ -401,6 +405,7 @@ definition {
 			newTargetLocale = "ja-JP");
 
 		Translations.translateFragmentField(
+			ff = "true",
 			fieldName = "Name",
 			fragmentText = "テストページ");
 

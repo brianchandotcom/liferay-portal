@@ -70,7 +70,7 @@ definition {
 	@description = "This test asserts that an account name will automatically truncate and will stop adding more characters as you type after it reaches the character limit of 100."
 	@priority = "5"
 	test AccountNameCannotExceed100Characters {
-		task ("Try to add account where name character count is over 100") {
+		task ("When a user types an account name with more than 100 characters") {
 			Accounts.openAccountsAdmin();
 
 			LexiconEntry.gotoAdd();
@@ -80,7 +80,7 @@ definition {
 			Button.clickSave();
 		}
 
-		task ("Assert that only the first 100 characters are saved, and does not exist other char") {
+		task ("Then only the first 100 characters are typed in. No more than 100 characters can be added") {
 			AssertTextEquals(
 				locator1 = "TextInput#NAME",
 				value1 = "Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor s");

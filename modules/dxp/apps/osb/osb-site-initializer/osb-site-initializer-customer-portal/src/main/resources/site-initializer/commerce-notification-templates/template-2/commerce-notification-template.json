@@ -8,7 +8,6 @@
 		"en-US": "Customer Portal"
 	},
 	"name": "Team Members Invitation Notification Template",
-	"objectDefinitionName": "C_TeamMembersInvitation",
 	"subject": {
 		"en-US": "Customer Portal email"
 	},

@@ -8,7 +8,6 @@
 		"en-US": "Customer Portal"
 	},
 	"name": "SetupDXP notification template",
-	"objectDefinitionName": "C_SetupDXPCloud",
 	"subject": {
 		"en-US": "Customer Portal email"
 	},

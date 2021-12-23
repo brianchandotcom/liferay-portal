@@ -21,7 +21,7 @@ import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetLinkLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
-import com.liferay.diff.util.DiffHtmlUtil;
+import com.liferay.diff.DiffHtml;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
@@ -3062,7 +3062,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		subscriptionSender.setContextAttribute(
 			"[$PAGE_CONTENT$]", pageContent, false);
 		subscriptionSender.setContextAttribute(
-			"[$PAGE_DIFFS$]", DiffHtmlUtil.replaceStyles(pageDiffs), false);
+			"[$PAGE_DIFFS$]", _diffHtml.replaceStyles(pageDiffs), false);
 
 		WikiNode node = page.getNode();
 
@@ -3453,6 +3453,9 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private DiffHtml _diffHtml;
 
 	@Reference
 	private ExpandoRowLocalService _expandoRowLocalService;

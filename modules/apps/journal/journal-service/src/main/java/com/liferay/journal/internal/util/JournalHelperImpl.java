@@ -14,8 +14,8 @@
 
 package com.liferay.journal.internal.util;
 
+import com.liferay.diff.DiffHtml;
 import com.liferay.diff.exception.CompareVersionsException;
-import com.liferay.diff.util.DiffHtmlUtil;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
@@ -114,7 +114,7 @@ public class JournalHelperImpl implements JournalHelper {
 				targetArticle, null, Constants.VIEW, languageId, 1,
 				portletRequestModel, themeDisplay);
 
-		String diff = DiffHtmlUtil.diff(
+		String diff = _diffHtml.diff(
 			new UnsyncStringReader(sourceArticleDisplay.getContent()),
 			new UnsyncStringReader(targetArticleDisplay.getContent()));
 
@@ -381,6 +381,9 @@ public class JournalHelperImpl implements JournalHelper {
 
 	@Reference
 	private DDMTemplateLocalService _ddmTemplateLocalService;
+
+	@Reference
+	private DiffHtml _diffHtml;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

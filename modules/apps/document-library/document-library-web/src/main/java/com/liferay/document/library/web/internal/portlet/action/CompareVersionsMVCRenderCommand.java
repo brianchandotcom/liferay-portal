@@ -14,8 +14,8 @@
 
 package com.liferay.document.library.web.internal.portlet.action;
 
+import com.liferay.diff.Diff;
 import com.liferay.diff.DiffResult;
-import com.liferay.diff.util.DiffUtil;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.document.conversion.DocumentConversionUtil;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
@@ -104,7 +104,7 @@ public class CompareVersionsMVCRenderCommand implements MVCRenderCommand {
 		InputStream targetInputStream = _getFileVersionInputStream(
 			targetFileVersion);
 
-		List<DiffResult>[] diffResults = DiffUtil.diff(
+		List<DiffResult>[] diffResults = _diff.diff(
 			new InputStreamReader(sourceInputStream),
 			new InputStreamReader(targetInputStream));
 
@@ -150,6 +150,9 @@ public class CompareVersionsMVCRenderCommand implements MVCRenderCommand {
 			DocumentConversionUtil.convert(
 				tempFileId, inputStream, fileVersion.getExtension(), "txt"));
 	}
+
+	@Reference
+	private Diff _diff;
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;

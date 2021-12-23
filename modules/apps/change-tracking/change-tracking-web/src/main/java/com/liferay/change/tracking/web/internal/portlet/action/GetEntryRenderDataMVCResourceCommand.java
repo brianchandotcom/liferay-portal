@@ -24,7 +24,7 @@ import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
 import com.liferay.change.tracking.web.internal.display.BasePersistenceRegistry;
 import com.liferay.change.tracking.web.internal.display.CTDisplayRendererRegistry;
 import com.liferay.change.tracking.web.internal.display.DisplayContextImpl;
-import com.liferay.diff.util.DiffHtmlUtil;
+import com.liferay.diff.DiffHtml;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.CharPool;
@@ -527,7 +527,7 @@ public class GetEntryRenderDataMVCResourceCommand
 
 			jsonObject.put(
 				"unifiedPreview",
-				DiffHtmlUtil.diff(
+				_diffHtml.diff(
 					new UnsyncStringReader(leftPreview),
 					new UnsyncStringReader(rightPreview)));
 		}
@@ -550,7 +550,7 @@ public class GetEntryRenderDataMVCResourceCommand
 
 					unifiedLocalizedPreviewJSONObject.put(
 						languageId,
-						DiffHtmlUtil.diff(
+						_diffHtml.diff(
 							new UnsyncStringReader(leftLocalizedPreview),
 							new UnsyncStringReader(rightLocalizedPreview)));
 				}
@@ -577,7 +577,7 @@ public class GetEntryRenderDataMVCResourceCommand
 
 					unifiedLocalizedRenderJSONObject.put(
 						languageId,
-						DiffHtmlUtil.diff(
+						_diffHtml.diff(
 							new UnsyncStringReader(leftLocalizedRender),
 							new UnsyncStringReader(rightLocalizedRender)));
 				}
@@ -590,7 +590,7 @@ public class GetEntryRenderDataMVCResourceCommand
 		if ((leftRender != null) && (rightRender != null)) {
 			jsonObject.put(
 				"unifiedRender",
-				DiffHtmlUtil.diff(
+				_diffHtml.diff(
 					new UnsyncStringReader(leftRender),
 					new UnsyncStringReader(rightRender)));
 		}
@@ -825,6 +825,9 @@ public class GetEntryRenderDataMVCResourceCommand
 
 	@Reference
 	private CTEntryLocalService _ctEntryLocalService;
+
+	@Reference
+	private DiffHtml _diffHtml;
 
 	@Reference
 	private Language _language;

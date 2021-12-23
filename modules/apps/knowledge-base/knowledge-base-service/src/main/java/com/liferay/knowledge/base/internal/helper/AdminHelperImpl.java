@@ -14,6 +14,7 @@
 
 package com.liferay.knowledge.base.internal.helper;
 
+import com.liferay.diff.DiffHtml;
 import com.liferay.diff.DiffVersion;
 import com.liferay.diff.DiffVersionsInfo;
 import com.liferay.knowledge.base.internal.util.KBArticleDiffUtil;
@@ -91,13 +92,16 @@ public class AdminHelperImpl implements AdminHelper {
 
 		return KBArticleDiffUtil.getKBArticleDiff(
 			version -> _kbArticleService.getKBArticle(resourcePrimKey, version),
-			sourceVersion, targetVersion, param);
+			sourceVersion, targetVersion, param, _diffHtml);
 	}
 
 	@Override
 	public String[] unescapeSections(String sections) {
 		return KBSectionEscapeUtil.unescapeSections(sections);
 	}
+
+	@Reference
+	private DiffHtml _diffHtml;
 
 	@Reference
 	private KBArticleService _kbArticleService;

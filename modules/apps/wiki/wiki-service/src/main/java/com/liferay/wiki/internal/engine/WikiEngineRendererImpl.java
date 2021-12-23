@@ -14,7 +14,7 @@
 
 package com.liferay.wiki.internal.engine;
 
-import com.liferay.diff.util.DiffHtmlUtil;
+import com.liferay.diff.DiffHtml;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapListener;
@@ -126,7 +126,7 @@ public class WikiEngineRendererImpl implements WikiEngineRenderer {
 				targetPage, viewPageURL, editPageURL, attachmentURLPrefix);
 		}
 
-		return DiffHtmlUtil.diff(
+		return _diffHtml.diff(
 			new UnsyncStringReader(sourceContent),
 			new UnsyncStringReader(targetContent));
 	}
@@ -238,6 +238,9 @@ public class WikiEngineRendererImpl implements WikiEngineRenderer {
 		"\\[\\$BEGIN_PAGE_TITLE\\$\\](.*?)\\[\\$END_PAGE_TITLE\\$\\]");
 
 	private BundleContext _bundleContext;
+
+	@Reference
+	private DiffHtml _diffHtml;
 
 	@Reference
 	private MultiVMPool _multiVMPool;

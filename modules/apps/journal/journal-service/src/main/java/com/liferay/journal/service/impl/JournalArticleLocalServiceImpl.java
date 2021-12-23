@@ -28,7 +28,7 @@ import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetLinkLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
-import com.liferay.diff.util.DiffHtmlUtil;
+import com.liferay.diff.DiffHtml;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.util.DLUtil;
@@ -8260,8 +8260,7 @@ public class JournalArticleLocalServiceImpl
 		subscriptionSender.setContextAttribute(
 			"[$ARTICLE_CONTENT$]", articleContent, false);
 		subscriptionSender.setContextAttribute(
-			"[$ARTICLE_DIFFS$]", DiffHtmlUtil.replaceStyles(articleDiffs),
-			false);
+			"[$ARTICLE_DIFFS$]", _diffHtml.replaceStyles(articleDiffs), false);
 
 		String articleURL = JournalUtil.getJournalControlPanelLink(
 			article.getFolderId(), article.getGroupId(),
@@ -9274,6 +9273,9 @@ public class JournalArticleLocalServiceImpl
 
 	@Reference
 	private DDMStructureVersionLocalService _ddmStructureVersionLocalService;
+
+	@Reference
+	private DiffHtml _diffHtml;
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;

@@ -19,6 +19,7 @@ import com.liferay.asset.kernel.model.AssetLink;
 import com.liferay.asset.kernel.model.AssetLinkConstants;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetLinkLocalService;
+import com.liferay.diff.DiffHtml;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
@@ -1612,7 +1613,8 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 				value = KBArticleDiffUtil.getKBArticleDiff(
 					version -> getKBArticle(
 						kbArticle.getResourcePrimKey(), version),
-					kbArticle.getVersion() - 1, kbArticle.getVersion(), param);
+					kbArticle.getVersion() - 1, kbArticle.getVersion(), param,
+					_diffHtml);
 			}
 			catch (Exception exception) {
 				_log.error(exception, exception);
@@ -2089,6 +2091,9 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private DiffHtml _diffHtml;
 
 	@Reference
 	private DLURLHelper _dlURLHelper;

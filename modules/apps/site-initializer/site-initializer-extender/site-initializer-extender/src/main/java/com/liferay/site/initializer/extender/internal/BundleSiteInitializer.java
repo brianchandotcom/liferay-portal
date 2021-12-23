@@ -434,20 +434,20 @@ public class BundleSiteInitializer implements SiteInitializer {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(json);
 
 		for (int i = 0; i < jsonArray.length(); i++) {
-			Account account1 = Account.toDTO(
+			Account account = Account.toDTO(
 				String.valueOf(jsonArray.getJSONObject(i)));
 
-			Account account2 =
+			Account existingAccount =
 				accountResource.getAccountByExternalReferenceCode(
-					account1.getExternalReferenceCode());
+					account.getExternalReferenceCode());
 
-			if (account2 == null) {
-				accountResource.postAccount(account1);
+			if (existingAccount == null) {
+				accountResource.postAccount(account);
 
 				continue;
 			}
 
-			accountResource.patchAccount(account2.getId(), account1);
+			accountResource.patchAccount(existingAccount.getId(), account);
 		}
 	}
 
@@ -2453,7 +2453,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-			UserAccount userAccount1 = UserAccount.toDTO(
+			UserAccount userAccount = UserAccount.toDTO(
 				String.valueOf(jsonObject));
 
 			String externalReferenceCode = jsonObject.getString(
@@ -2464,18 +2464,18 @@ public class BundleSiteInitializer implements SiteInitializer {
 					getAccountUserAccountsByExternalReferenceCodePage(
 						externalReferenceCode, null, null, null, null);
 
-			UserAccount userAccount2 = userAccountPage.fetchFirstItem();
+			UserAccount existingUserAccount = userAccountPage.fetchFirstItem();
 
-			if (userAccount2 == null) {
+			if (existingUserAccount == null) {
 				userAccountResource.
 					postAccountUserAccountByExternalReferenceCode(
-						externalReferenceCode, userAccount1);
+						externalReferenceCode, userAccount);
 
 				continue;
 			}
 
 			userAccountResource.patchUserAccount(
-				userAccount2.getId(), userAccount1);
+				existingUserAccount.getId(), userAccount);
 		}
 	}
 

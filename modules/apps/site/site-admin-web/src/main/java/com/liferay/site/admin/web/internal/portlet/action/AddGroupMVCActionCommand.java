@@ -142,6 +142,7 @@ public class AddGroupMVCActionCommand extends BaseMVCActionCommand {
 			throw ctTransactionException;
 		}
 		catch (Exception exception) {
+			hideDefaultErrorMessage(actionRequest);
 			hideDefaultSuccessMessage(actionRequest);
 
 			_groupExceptionRequestHandler.handlePortalException(

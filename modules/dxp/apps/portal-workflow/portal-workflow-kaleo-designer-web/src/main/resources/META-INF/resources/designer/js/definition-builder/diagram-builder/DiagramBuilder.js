@@ -27,7 +27,7 @@ import ReactFlow, {
 
 import {DefinitionBuilderContext} from '../DefinitionBuilderContext';
 import {defaultLanguageId} from '../constants';
-import DefinitionDiagramController from '../source-builder/definitionDiagramController';
+import DeserializeUtil from '../source-builder/deserializeUtil';
 import {singleEventObserver} from '../util/EventObserver';
 import {baseURL, headers} from '../util/fetchUtil';
 import {getCollidingElements} from '../util/utils';
@@ -41,7 +41,7 @@ import FloatingConnectionLine from './components/transitions/FloatingConnectionL
 let id = 2;
 const getId = () => `item_${id++}`;
 
-const definitionDiagramController = new DefinitionDiagramController();
+const deserializeUtil = new DeserializeUtil();
 
 export default function DiagramBuilder({version}) {
 	const {
@@ -203,9 +203,9 @@ export default function DiagramBuilder({version}) {
 		if (deserialize && currentEditor) {
 			const xmlDefinition = currentEditor.getData();
 
-			definitionDiagramController.updateXMLDefinition(xmlDefinition);
+			deserializeUtil.updateXMLDefinition(xmlDefinition);
 
-			const nodes = definitionDiagramController.getNodes();
+			const nodes = deserializeUtil.getNodes();
 
 			setElements(nodes);
 
@@ -228,9 +228,9 @@ export default function DiagramBuilder({version}) {
 			)
 				.then((response) => response.json())
 				.then(({content}) => {
-					definitionDiagramController.updateXMLDefinition(content);
+					deserializeUtil.updateXMLDefinition(content);
 
-					const nodes = definitionDiagramController.getNodes();
+					const nodes = deserializeUtil.getNodes();
 
 					setElements(nodes);
 				});

@@ -375,3 +375,47 @@ definition {
 			ACDefinitions.viewHiddenEvents(customEventNameList = "${defaultEventNameList}");
 		}
 	}
+
+	@description = "Feature ID: LRAC-7865 | Automation ID: LRAC-10235 | Test Summary: Search for a hidden event "
+	@priority = "3"
+	test CanSearchForAHiddenEvent {
+		task ("Fill fields and create custom event") {
+			var customEventName = ACCustomEvents.generateCustomEventName();
+
+			ACCustomEvents.createCustomEvent(
+				customEventName = "${customEventName}",
+				timeToSendCustomEvent = "1");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch the property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+		}
+
+		task ("Navigation to custom events tab") {
+			ACNavigation.goToSettings();
+
+			ACSettings.goToDefinitions();
+
+			ACSettings.goToEvents();
+
+			ACNavigation.openItem(itemName = "Custom Events");
+		}
+
+		task ("Hide custom event") {
+			ACUtils.searchBar(searchItem = "${customEventName}");
+
+			ACCustomEvents.hideCustomEvent(customEventName = "${customEventName}");
+		}
+
+		task ("Check that the custom event was hidden") {
+			ACUtils.searchBar(searchItem = "${customEventName}");
+
+			ACDefinitions.viewHiddenEvents(customEventNameList = "${customEventName}");
+		}
+	}

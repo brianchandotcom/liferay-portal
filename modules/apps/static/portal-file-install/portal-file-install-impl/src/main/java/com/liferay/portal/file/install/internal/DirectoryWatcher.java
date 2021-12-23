@@ -81,8 +81,6 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 
 		_bundleContext = bundleContext;
 
-		_activeLevel = PropsValues.MODULE_FRAMEWORK_FILE_INSTALL_ACTIVE_LEVEL;
-		_filter = PropsValues.MODULE_FRAMEWORK_FILE_INSTALL_FILTER;
 		_systemBundle = bundleContext.getBundle(
 			Constants.SYSTEM_BUNDLE_LOCATION);
 
@@ -130,7 +128,7 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 			});
 
 		_scanner = new Scanner(
-			_watchedDirs, _filter,
+			_watchedDirs, PropsValues.MODULE_FRAMEWORK_FILE_INSTALL_FILTER,
 			PropsValues.MODULE_FRAMEWORK_FILE_INSTALL_SUBDIR_MODE);
 
 		_bundleContext.addBundleListener(this);
@@ -211,7 +209,9 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 				FrameworkStartLevel frameworkStartLevel = _systemBundle.adapt(
 					FrameworkStartLevel.class);
 
-				if ((frameworkStartLevel.getStartLevel() >= _activeLevel) &&
+				if ((frameworkStartLevel.getStartLevel() >=
+						PropsValues.
+							MODULE_FRAMEWORK_FILE_INSTALL_ACTIVE_LEVEL) &&
 					(_systemBundle.getState() == Bundle.ACTIVE)) {
 
 					Set<File> files = _scanner.scan(false);
@@ -535,8 +535,11 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 
 		Pattern filePattern = null;
 
-		if ((_filter != null) && !_filter.isEmpty()) {
-			filePattern = Pattern.compile(_filter);
+		if ((PropsValues.MODULE_FRAMEWORK_FILE_INSTALL_FILTER != null) &&
+			!PropsValues.MODULE_FRAMEWORK_FILE_INSTALL_FILTER.isEmpty()) {
+
+			filePattern = Pattern.compile(
+				PropsValues.MODULE_FRAMEWORK_FILE_INSTALL_FILTER);
 		}
 
 		List<String> watchedDirPaths = _getWatchedDirPaths();
@@ -1355,14 +1358,12 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DirectoryWatcher.class);
 
-	private final int _activeLevel;
 	private final BundleContext _bundleContext;
 	private final Set<Bundle> _consistentlyFailingBundles = new HashSet<>();
 	private final Map<File, Artifact> _currentManagedArtifacts =
 		new HashMap<>();
 	private final Set<Bundle> _delayedStart = new HashSet<>();
 	private final ServiceTrackerList<FileInstaller> _fileInstallers;
-	private final String _filter;
 	private int _frameworkStartLevel;
 	private final Map<File, Artifact> _installationFailures = new HashMap<>();
 	private final Set<File> _processingFailures = new HashSet<>();

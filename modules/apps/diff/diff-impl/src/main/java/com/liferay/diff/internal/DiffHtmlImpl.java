@@ -14,9 +14,9 @@
 
 package com.liferay.diff.internal;
 
+import com.liferay.diff.DiffHtml;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.string.StringPool;
-import com.liferay.diff.DiffHtml;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -28,6 +28,8 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.sax.SAXTransformerFactory;
 import javax.xml.transform.sax.TransformerHandler;
 import javax.xml.transform.stream.StreamResult;
+
+import org.osgi.service.component.annotations.Component;
 
 import org.outerj.daisy.diff.HtmlCleaner;
 import org.outerj.daisy.diff.XslFilter;
@@ -47,6 +49,7 @@ import org.xml.sax.helpers.AttributesImpl;
  *
  * @author Julio Camarero
  */
+@Component(immediate = true, service = DiffHtml.class)
 public class DiffHtmlImpl implements DiffHtml {
 
 	/**

@@ -14,9 +14,9 @@
 
 package com.liferay.diff.internal;
 
+import com.liferay.diff.DiffResult;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.diff.DiffResult;
 import com.liferay.portal.kernel.util.FileUtil;
 
 import java.io.Reader;
@@ -26,6 +26,8 @@ import java.util.List;
 
 import org.incava.util.diff.Diff;
 import org.incava.util.diff.Difference;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * This class can compare two different versions of a text. Source refers to the
@@ -37,6 +39,7 @@ import org.incava.util.diff.Difference;
  *
  * @author Bruno Farache
  */
+@Component(immediate = true, service = com.liferay.diff.Diff.class)
 public class DiffImpl implements com.liferay.diff.Diff {
 
 	/**

@@ -20,7 +20,6 @@ import java.util.List;
 
 /**
  * @author Bruno Farache
- * @see    DiffUtil
  */
 public interface Diff {
 

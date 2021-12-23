@@ -326,11 +326,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>TREE_FILTER_CLEAR</td>
-	<td>//*[contains(@class, 'tree-filter-clear')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>

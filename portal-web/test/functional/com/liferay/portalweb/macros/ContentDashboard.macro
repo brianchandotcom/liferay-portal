@@ -26,40 +26,6 @@ definition {
 		Button.clickPublish();
 	}
 
-	macro filterByAssetType {
-		if (IsElementPresent(locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN")) {
-			AssertClickNoError(
-				locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN",
-				value1 = "Filter and Order");
-		}
-
-		var filterOption = "Type";
-
-		Click(locator1 = "ContentDashboard#FILTER_BY_OPTION");
-
-		WaitForLiferayEvent.initializeLiferayEventLog();
-
-		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#IFRAME");
-
-		Portlet.expandTree();
-
-		for (var typeName : list "${typeNames}") {
-			Click(
-				key_nodeName = "${typeName}",
-				locator1 = "Treeview#NODE_ITEM");
-		}
-
-		SelectFrame(value1 = "relative=top");
-
-		AssertClickNoError(
-			locator1 = "Button#SELECT",
-			value1 = "Select");
-
-		SelectFrame(value1 = "relative=top");
-
-		WaitForElementPresent(locator1 = "ContentDashboard#ASSET_MENU_DROPDOWN_BUTTON");
-	}
-
 	macro filterByAuthorAll {
 		if (IsElementPresent(locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN")) {
 			AssertClickNoError(
@@ -179,17 +145,11 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		Click(locator1 = "ContentDashboard#AUTHOR_SELECT_DISPLAY_MODE_BUTTON");
-
-		Click(locator1 = "ContentDashboard#AUTHOR_TABLE_DISPLAY_OPTION");
-
-		Click(locator1 = "ContentDashboard#SEARCH_FIELD");
-
-		if (!(isSet(authorsNames))) {
-			var authorsNames = "Test Test";
+		if (!(isSet(authorNameList))) {
+			var authorNameList = "Test Test";
 		}
 
-		for (var authorName : list "${authorsNames}") {
+		for (var authorName : list "${authorNameList}") {
 			Check(
 				key_tableEntry = "${authorName}",
 				locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
@@ -223,7 +183,7 @@ definition {
 
 		Portlet.expandTree();
 
-		for (var categoryName : list "${categoriesNames}") {
+		for (var categoryName : list "${categoryNameList}") {
 			Click(
 				key_nodeName = "${categoryName}",
 				locator1 = "Treeview#NODE_ITEM");
@@ -410,27 +370,29 @@ definition {
 				value1 = "Filter and Order");
 		}
 
-		var key_filterOption = "${filterOption}";
+		Click(
+			filterOption = "Type",
+			locator1 = "ContentDashboard#FILTER_BY_OPTION");
 
-		Click(locator1 = "ContentDashboard#FILTER_BY_OPTION");
+		WaitForLiferayEvent.initializeLiferayEventLog();
 
-		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_IFRAME");
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#IFRAME");
 
-		Click(locator1 = "ContentDashboard#SEARCH_SUBTYPE_FIELD");
+		Portlet.expandTree();
 
-		Type(
-			locator1 = "ContentDashboard#SEARCH_SUBTYPE_FIELD",
-			value1 = "${subtypeName}");
+		for (var typeName : list "${typeNameList}") {
+			Click(
+				key_nodeName = "${typeName}",
+				locator1 = "Treeview#NODE_ITEM");
+		}
 
-		Click(locator1 = "ContentDashboard#SUBTYPE_NAME_ELEMENT");
+		SelectFrame(value1 = "relative=top");
+
+		Button.clickSelect();
 
 		SelectFrame(value1 = "relative=top");
 
-		AssertClickNoError(
-			locator1 = "Button#SELECT",
-			value1 = "Select");
-
-		SelectFrame(value1 = "relative=top");
+		WaitForElementPresent(locator1 = "ContentDashboard#ASSET_MENU_DROPDOWN_BUTTON");
 	}
 
 	macro flipAxesButtonClick {

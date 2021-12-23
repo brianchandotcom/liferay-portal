@@ -170,7 +170,7 @@ definition {
 				portlet = "Content Dashboard");
 
 			ContentDashboard.filterByCategory(
-				categoriesNames = "Test",
+				categoryNameList = "Test",
 				filterOption = "Categories");
 
 			AssertTextPresent(
@@ -1686,6 +1686,8 @@ definition {
 	@description = "LPS-124960 When there's a WebContent1 authored by Author1 and has Category1 and Category2 and a WebContent2 authored by Author2 and has Category1, and the user filters by Author1 and Category1 and Category2, only the WebContent1 is shown in the list"
 	@priority = "3"
 	test FilterByCategoriesAndAuthor {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
 		task ("Create two categories") {
 			var categoryId1 = JSONCategory.addCategory(
 				groupName = "Global",
@@ -1729,7 +1731,7 @@ definition {
 				panel = "Control Panel",
 				portlet = "Instance Settings");
 
-			SystemSettings.gotoConfiguration(
+			PortalSettings.gotoConfiguration(
 				configurationCategory = "User Authentication",
 				configurationName = "General",
 				configurationScope = "Virtual Instance Scope");
@@ -1757,7 +1759,7 @@ definition {
 
 		task ("Filter by Category: Category1 and Category2") {
 			ContentDashboard.filterByCategory(
-				categoriesNames = "Category1,Category2",
+				categoryNameList = "Category1,Category2",
 				filterOption = "Categories");
 		}
 
@@ -1766,13 +1768,9 @@ definition {
 		}
 
 		task ("Assert if only one asset is displayed") {
-			AssertElementPresent(
-				key_tableEntry = "Web Content Title 1",
-				locator1 = "LexiconTable#TABLE_ENTRY");
+			LexiconTable.viewTableEntryTitle(tableEntry = "Web Content Title 1");
 
-			AssertElementNotPresent(
-				key_tableEntry = "Web Content Title 2",
-				locator1 = "LexiconTable#TABLE_ENTRY");
+			LexiconTable.viewTableEntryNotPresent(tableEntry = "Web Content Title 2");
 		}
 	}
 
@@ -1804,7 +1802,7 @@ definition {
 
 		task ("Filter by category") {
 			ContentDashboard.filterByCategory(
-				categoriesNames = "Category Name",
+				categoryNameList = "Category Name",
 				filterOption = "Categories");
 
 			AssertTextPresent(
@@ -1822,6 +1820,8 @@ definition {
 	@description = "LPS-124960 When there's a WebContent1 authored by Author1 and has Category1 and Category2 and a WebContent2 authored by Author2 and has Category1, and the user filters by Author1 and Category1, only the WebContent1 is shown in the list"
 	@priority = "3"
 	test FilterByCategoryAndAuthor {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
 		task ("Create two categories") {
 			var categoryId1 = JSONCategory.addCategory(
 				groupName = "Global",
@@ -1865,7 +1865,7 @@ definition {
 				panel = "Control Panel",
 				portlet = "Instance Settings");
 
-			SystemSettings.gotoConfiguration(
+			PortalSettings.gotoConfiguration(
 				configurationCategory = "User Authentication",
 				configurationName = "General",
 				configurationScope = "Virtual Instance Scope");
@@ -1893,7 +1893,7 @@ definition {
 
 		task ("Filter by Category: Category1") {
 			ContentDashboard.filterByCategory(
-				categoriesNames = "Category1",
+				categoryNameList = "Category1",
 				filterOption = "Categories");
 		}
 
@@ -1902,19 +1902,17 @@ definition {
 		}
 
 		task ("Assert if only one asset is displayed") {
-			AssertElementPresent(
-				key_tableEntry = "Web Content Title 1",
-				locator1 = "LexiconTable#TABLE_ENTRY");
+			LexiconTable.viewTableEntryTitle(tableEntry = "Web Content Title 1");
 
-			AssertElementNotPresent(
-				key_tableEntry = "Web Content Title 2",
-				locator1 = "LexiconTable#TABLE_ENTRY");
+			LexiconTable.viewTableEntryNotPresent(tableEntry = "Web Content Title 2");
 		}
 	}
 
 	@description = "LPS-124960 When there's a WebContent1 authored by Author1 and has Category1 and Category2 and a WebContent2 authored by Author2 and has Category1, and the user filters by Author1, Author2 and Category1, both web content are shown in the list"
 	@priority = "3"
 	test FilterByCategoryAndAuthors {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
 		task ("Create two categories") {
 			var categoryId1 = JSONCategory.addCategory(
 				groupName = "Global",
@@ -1958,7 +1956,7 @@ definition {
 				panel = "Control Panel",
 				portlet = "Instance Settings");
 
-			SystemSettings.gotoConfiguration(
+			PortalSettings.gotoConfiguration(
 				configurationCategory = "User Authentication",
 				configurationName = "General",
 				configurationScope = "Virtual Instance Scope");
@@ -1986,21 +1984,19 @@ definition {
 
 		task ("Filter by Category: Category1") {
 			ContentDashboard.filterByCategory(
-				categoriesNames = "Category1",
+				categoryNameList = "Category1",
 				filterOption = "Categories");
 		}
 
 		task ("Filter by Author: Test test and userfn userln") {
 			ContentDashboard.filterByAuthorTable(
-				authorsNames = "Test,userfn",
+				authorNameList = "Test,userfn",
 				filterOption = "Author");
 		}
 
 		task ("Assert if both assets are displayed") {
 			for (var assetName : list "Web Content Title 1,Web Content Title 2") {
-				AssertElementPresent(
-					key_tableEntry = "${assetName}",
-					locator1 = "LexiconTable#TABLE_ENTRY");
+				LexiconTable.viewTableEntryTitle(tableEntry = "${assetName}");
 			}
 		}
 	}
@@ -2044,7 +2040,7 @@ definition {
 
 		task ("Filter by Category: Category1") {
 			ContentDashboard.filterByCategory(
-				categoriesNames = "Category1",
+				categoryNameList = "Category1",
 				filterOption = "Categories");
 		}
 
@@ -2055,13 +2051,9 @@ definition {
 		}
 
 		task ("Assert if only one asset is displayed") {
-			AssertElementPresent(
-				key_tableEntry = "Web Content Title 1",
-				locator1 = "LexiconTable#TABLE_ENTRY");
+			LexiconTable.viewTableEntryTitle(tableEntry = "Web Content Title 1");
 
-			AssertElementNotPresent(
-				key_tableEntry = "Web Content Title 2",
-				locator1 = "LexiconTable#TABLE_ENTRY");
+			LexiconTable.viewTableEntryNotPresent(tableEntry = "Web Content Title 2");
 		}
 	}
 
@@ -2283,9 +2275,7 @@ definition {
 		}
 
 		task ("Filter by Type") {
-			ContentDashboard.filterByType(
-				filterOption = "Type",
-				subtypeName = "Basic Web Content");
+			ContentDashboard.filterByType(typeNameList = "Basic Web Content");
 		}
 
 		task ("Assert that the web content and filter label are present") {
@@ -2301,7 +2291,7 @@ definition {
 
 	@description = "LPS-124960 When there's a WebContent1 of type Subtype1 and WebContent2 of type Subtype2, and the user filters by Subtype1 and Subtype2, both web content are shown in the list"
 	@priority = "3"
-	test FilterBySubtypeFromDifferentAssets {
+	test FilterByMultipleTypes {
 		task ("Create a basic web content via JSONWS") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",
@@ -2340,14 +2330,12 @@ definition {
 		}
 
 		task ("Filter assets by both structure types") {
-			ContentDashboard.filterByAssetType(typeNames = "Basic Web Content,WC Structure Name");
+			ContentDashboard.filterByType(typeNameList = "Basic Web Content,WC Structure Name");
 		}
 
 		task ("Assert if both assets are displayed") {
 			for (var assetName : list "Web Content Title 1,Web Content Title 2") {
-				AssertElementPresent(
-					key_tableEntry = "${assetName}",
-					locator1 = "LexiconTable#TABLE_ENTRY");
+				LexiconTable.viewTableEntryTitle(tableEntry = "${assetName}");
 			}
 		}
 	}

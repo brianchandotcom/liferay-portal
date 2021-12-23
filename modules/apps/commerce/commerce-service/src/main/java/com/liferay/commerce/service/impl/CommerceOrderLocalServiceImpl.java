@@ -945,6 +945,10 @@ public class CommerceOrderLocalServiceImpl
 				QueryUtil.ALL_POS);
 
 		for (CommerceOrderItem commerceOrderItem : commerceOrderItems) {
+			if (commerceOrderItem.getParentCommerceOrderItemId() != 0) {
+				continue;
+			}
+
 			commerceOrderItemLocalService.addCommerceOrderItem(
 				newCommerceOrder.getCommerceOrderId(),
 				commerceOrderItem.getCPInstanceId(),

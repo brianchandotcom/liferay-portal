@@ -419,3 +419,57 @@ definition {
 			ACDefinitions.viewHiddenEvents(customEventNameList = "${customEventName}");
 		}
 	}
+
+	@description = "Feature ID: LRAC-7865 | Automation ID: LRAC-10227 | Test Summary: Hidden custom event should not be visible on the Segment > Event criteria list"
+	@priority = "5"
+	test ViewIfCustomEventIsNotVisibleOnSegmentEventCriteriaList {
+		task ("Fill fields and create custom event") {
+			var customEventName = ACCustomEvents.generateCustomEventName();
+
+			ACCustomEvents.createCustomEvent(
+				customEventName = "${customEventName}",
+				timeToSendCustomEvent = "1");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch the property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+		}
+
+		task ("Navigation to custom events tab") {
+			ACNavigation.goToSettings();
+
+			ACSettings.goToDefinitions();
+
+			ACSettings.goToEvents();
+
+			ACNavigation.openItem(itemName = "Custom Events");
+		}
+
+		task ("Hide custom event") {
+			ACUtils.searchBar(searchItem = "${customEventName}");
+
+			ACCustomEvents.hideCustomEvent(customEventName = "${customEventName}");
+		}
+
+		task ("Navigation to segments") {
+			ACNavigation.exitSettings();
+
+			ACNavigation.goToSegments();
+		}
+
+		task ("Create a new dynamic segment and check that the custom event that has been hidden does not appear") {
+			ACSegments.createDynamicSegment();
+
+			ACUtils.searchBar(searchItem = "${customEventName}");
+
+			AssertElementPresent(
+				key_SegmentField = "No results were found.",
+				locator1 = "ACSegments#SEGMENT_CRITERION_ITEM");
+		}
+	}

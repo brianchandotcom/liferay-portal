@@ -183,6 +183,27 @@ public class SXPBlueprint implements Cloneable, Serializable {
 
 	protected Date modifiedDate;
 
+	public String getSchemaVersion() {
+		return schemaVersion;
+	}
+
+	public void setSchemaVersion(String schemaVersion) {
+		this.schemaVersion = schemaVersion;
+	}
+
+	public void setSchemaVersion(
+		UnsafeSupplier<String, Exception> schemaVersionUnsafeSupplier) {
+
+		try {
+			schemaVersion = schemaVersionUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String schemaVersion;
+
 	public String getTitle() {
 		return title;
 	}

@@ -262,6 +262,34 @@ public class SXPBlueprint implements Serializable {
 	protected Date modifiedDate;
 
 	@Schema
+	public String getSchemaVersion() {
+		return schemaVersion;
+	}
+
+	public void setSchemaVersion(String schemaVersion) {
+		this.schemaVersion = schemaVersion;
+	}
+
+	@JsonIgnore
+	public void setSchemaVersion(
+		UnsafeSupplier<String, Exception> schemaVersionUnsafeSupplier) {
+
+		try {
+			schemaVersion = schemaVersionUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String schemaVersion;
+
+	@Schema
 	public String getTitle() {
 		return title;
 	}
@@ -465,6 +493,20 @@ public class SXPBlueprint implements Serializable {
 			sb.append("\"");
 
 			sb.append(liferayToJSONDateFormat.format(modifiedDate));
+
+			sb.append("\"");
+		}
+
+		if (schemaVersion != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"schemaVersion\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(schemaVersion));
 
 			sb.append("\"");
 		}

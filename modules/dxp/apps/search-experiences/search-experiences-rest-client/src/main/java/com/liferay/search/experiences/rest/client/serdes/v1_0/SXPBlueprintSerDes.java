@@ -160,6 +160,20 @@ public class SXPBlueprintSerDes {
 			sb.append("\"");
 		}
 
+		if (sxpBlueprint.getSchemaVersion() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"schemaVersion\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(sxpBlueprint.getSchemaVersion()));
+
+			sb.append("\"");
+		}
+
 		if (sxpBlueprint.getTitle() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -280,6 +294,15 @@ public class SXPBlueprintSerDes {
 				liferayToJSONDateFormat.format(sxpBlueprint.getModifiedDate()));
 		}
 
+		if (sxpBlueprint.getSchemaVersion() == null) {
+			map.put("schemaVersion", null);
+		}
+		else {
+			map.put(
+				"schemaVersion",
+				String.valueOf(sxpBlueprint.getSchemaVersion()));
+		}
+
 		if (sxpBlueprint.getTitle() == null) {
 			map.put("title", null);
 		}
@@ -370,6 +393,11 @@ public class SXPBlueprintSerDes {
 				if (jsonParserFieldValue != null) {
 					sxpBlueprint.setModifiedDate(
 						toDate((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "schemaVersion")) {
+				if (jsonParserFieldValue != null) {
+					sxpBlueprint.setSchemaVersion((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "title")) {

@@ -59,8 +59,8 @@ definition {
 
 		for (var num : list "1,2") {
 			Click(
-				key_nodeName = "Wiki Page Title${num}",
-				locator1 = "Treeview#NODE_ITEM_LIST");
+				key_text = "Wiki Page Title${num}",
+				locator1 = "Link#ANY");
 
 			WikiPage.viewPagePG(
 				wikiPageContent = "Wiki Page Content${num}",

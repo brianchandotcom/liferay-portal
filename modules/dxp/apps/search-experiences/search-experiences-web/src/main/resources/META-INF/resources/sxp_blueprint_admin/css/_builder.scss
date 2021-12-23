@@ -48,7 +48,7 @@
 }
 
 @media (min-width: calc(#{$builderMinWidth} + #{$sidebarWidth})) {
-	.open-sidebar .builder-content-shift {
+	.open-add-sxp-element .builder-content-shift {
 		margin-right: calc(
 			max(
 				50% - (#{$builderMaxWidth} / 2),
@@ -64,6 +64,17 @@
 			max(
 				50% - (#{$builderMaxWidth} / 2),
 				#{$previewSidebarWidth} - (50vw - 50%) + 24px
+			)
+		);
+	}
+}
+
+@media (min-width: calc(#{$builderMinWidth} + #{$clauseContributorsSidebarWidth})) {
+	.open-clause-contributors .builder-content-shift {
+		margin-right: calc(
+			max(
+				50% - (#{$builderMaxWidth} / 2),
+				#{$clauseContributorsSidebarWidth} - (50vw - 50%) + 24px
 			)
 		);
 	}

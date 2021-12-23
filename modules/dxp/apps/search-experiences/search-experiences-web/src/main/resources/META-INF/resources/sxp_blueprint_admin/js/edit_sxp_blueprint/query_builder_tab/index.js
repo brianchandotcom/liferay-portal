@@ -9,38 +9,35 @@
  * distribution rights of the Software.
  */
 
-import ClayButton from '@clayui/button';
-import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import {ClayVerticalNav} from '@clayui/nav';
-import ClayPanel from '@clayui/panel';
-import {ClayTooltipProvider} from '@clayui/tooltip';
 import {PropTypes} from 'prop-types';
 import React, {useContext, useEffect, useState} from 'react';
 
-import JSONSXPElement from '../../shared/JSONSXPElement';
 import ThemeContext from '../../shared/ThemeContext';
-import SXPElement from '../../shared/sxp_element/index';
-import {SXP_ELEMENT_PREFIX} from '../../utils/constants';
 import {fetchData} from '../../utils/fetch';
-import SelectTypes from './SelectTypes';
+import QuerySXPElements from './QuerySXPElements';
+import QuerySettings from './QuerySettings';
 
 const VERTICAL_NAV_KEYS = {
-	QUERY_ELEMENTS: 'queryElements',
 	QUERY_SETTINGS: 'querySettings',
+	QUERY_SXP_ELEMENTS: 'querySXPElements',
 };
 
 function QueryBuilderTab({
+	applyIndexerClauses,
 	elementInstances,
 	entityJSON,
 	errors = [],
 	frameworkConfig = {},
 	isSubmitting,
+	onApplyIndexerClausesChange,
 	onBlur,
 	onChange,
+	onChangeAddSXPElementVisibility,
+	onChangeClauseContributorsVisibility,
 	onDeleteSXPElement,
 	onFrameworkConfigChange,
-	onToggleSidebar,
 	setFieldTouched,
 	setFieldValue,
 	touched = [],
@@ -48,11 +45,21 @@ function QueryBuilderTab({
 	const {locale} = useContext(ThemeContext);
 
 	const [activeVerticalNavKey, setActiveVerticalNavKey] = useState(
-		VERTICAL_NAV_KEYS.QUERY_ELEMENTS
+		VERTICAL_NAV_KEYS.QUERY_SXP_ELEMENTS
 	);
-	const [collapseAll, setCollapseAll] = useState(false);
 	const [searchableTypes, setSearchableTypes] = useState(null);
 	const [indexFields, setIndexFields] = useState(null);
+	const [keywordQueryContributors, setKeywordQueryContributors] = useState(
+		null
+	);
+	const [
+		modelPrefilterContributors,
+		setModelPrefilterContributors,
+	] = useState(null);
+	const [
+		queryPrefilterContributors,
+		setQueryPrefilterContributors,
+	] = useState(null);
 
 	useEffect(() => {
 		fetchData(
@@ -68,9 +75,46 @@ function QueryBuilderTab({
 			(responseContent) => setIndexFields(responseContent.items),
 			() => setIndexFields([])
 		);
+
+		[
+			{
+				setProperty: setKeywordQueryContributors,
+				url:
+					'/o/search-experiences-rest/v1.0/keyword-query-contributors',
+			},
+			{
+				setProperty: setModelPrefilterContributors,
+				url:
+					'/o/search-experiences-rest/v1.0/model-prefilter-contributors',
+			},
+			{
+				setProperty: setQueryPrefilterContributors,
+				url:
+					'/o/search-experiences-rest/v1.0/query-prefilter-contributors',
+			},
+		].forEach(({setProperty, url}) =>
+			fetchData(
+				url,
+				{method: 'GET'},
+				(responseContent) =>
+					setProperty(
+						responseContent.items
+							.map(({className}) => className)
+							.filter((item) => item)
+							.sort()
+					),
+				() => setProperty([])
+			)
+		);
 	}, []); //eslint-disable-line
 
-	if (!searchableTypes || !indexFields) {
+	if (
+		!searchableTypes ||
+		!indexFields ||
+		!keywordQueryContributors ||
+		!modelPrefilterContributors ||
+		!queryPrefilterContributors
+	) {
 		return null;
 	}
 
@@ -80,162 +124,14 @@ function QueryBuilderTab({
 	 */
 	const _handleClickVerticalNav = (verticalNavKey) => () => {
 		setActiveVerticalNavKey(verticalNavKey);
+
+		if (verticalNavKey === VERTICAL_NAV_KEYS.QUERY_SXP_ELEMENTS) {
+			onChangeAddSXPElementVisibility(true);
+		}
+		else {
+			onChangeClauseContributorsVisibility(false);
+		}
 	};
-
-	const _renderContentQueryElements = () => {
-		return (
-			<>
-				<ClayLayout.Row
-					className="configuration-header"
-					justify="between"
-				>
-					<ClayLayout.Col size={6}>
-						{Liferay.Language.get('query-builder')}
-					</ClayLayout.Col>
-
-					<ClayLayout.Col size={6}>
-						<div className="builder-actions">
-							<ClayButton
-								aria-label={Liferay.Language.get(
-									'collapse-all'
-								)}
-								className="collapse-button"
-								displayType="unstyled"
-								onClick={() => setCollapseAll(!collapseAll)}
-							>
-								{collapseAll
-									? Liferay.Language.get('expand-all')
-									: Liferay.Language.get('collapse-all')}
-							</ClayButton>
-
-							<ClayTooltipProvider>
-								<ClayButton
-									aria-label={Liferay.Language.get(
-										'add-query-element'
-									)}
-									displayType="primary"
-									monospaced
-									onClick={onToggleSidebar}
-									small
-									title={Liferay.Language.get(
-										'add-query-element'
-									)}
-								>
-									<ClayIcon symbol="plus" />
-								</ClayButton>
-							</ClayTooltipProvider>
-						</div>
-					</ClayLayout.Col>
-				</ClayLayout.Row>
-
-				{elementInstances.length === 0 ? (
-					<div className="sheet">
-						<div className="selected-sxp-elements-empty-text">
-							{Liferay.Language.get(
-								'add-elements-to-optimize-search-results-for-your-use-cases'
-							)}
-						</div>
-					</div>
-				) : (
-					_renderSelectedElements()
-				)}
-			</>
-		);
-	};
-
-	const _renderContentQuerySettings = () => {
-		return (
-			<>
-				<ClayLayout.Row
-					className="configuration-header"
-					justify="between"
-				>
-					<ClayLayout.Col size={12}>
-						{Liferay.Language.get('query-settings')}
-					</ClayLayout.Col>
-				</ClayLayout.Row>
-
-				<div className="settings-content-container sheet">
-					<ClayPanel.Group flush>
-						<ClayPanel
-							className="searchable-types"
-							collapsable
-							displayTitle={Liferay.Language.get(
-								'searchable-types'
-							)}
-							displayType="unstyled"
-							showCollapseIcon
-						>
-							<ClayPanel.Body>
-								<div className="sheet-text">
-									{Liferay.Language.get(
-										'select-the-searchable-types-description'
-									)}
-								</div>
-
-								<SelectTypes
-									onFrameworkConfigChange={
-										onFrameworkConfigChange
-									}
-									searchableTypes={searchableTypes}
-									selectedTypes={
-										frameworkConfig.searchableAssetTypes
-									}
-								/>
-							</ClayPanel.Body>
-						</ClayPanel>
-					</ClayPanel.Group>
-				</div>
-			</>
-		);
-	};
-
-	const _renderSelectedElements = () => (
-		<>
-			{elementInstances.map(
-				({id, sxpElement, uiConfigurationValues}, index) => {
-					return sxpElement.elementDefinition?.uiConfiguration ? (
-						<SXPElement
-							collapseAll={collapseAll}
-							entityJSON={entityJSON}
-							error={errors[index]}
-							id={id}
-							index={index}
-							indexFields={indexFields}
-							isSubmitting={isSubmitting}
-							key={id}
-							onBlur={onBlur}
-							onChange={onChange}
-							onDeleteSXPElement={onDeleteSXPElement}
-							prefixedId={`${SXP_ELEMENT_PREFIX.QUERY}-${index}`}
-							searchableTypes={searchableTypes}
-							setFieldTouched={setFieldTouched}
-							setFieldValue={setFieldValue}
-							sxpElement={sxpElement}
-							touched={touched[index]}
-							uiConfigurationValues={uiConfigurationValues}
-						/>
-					) : (
-						<JSONSXPElement
-							collapseAll={collapseAll}
-							error={errors[index]}
-							id={id}
-							index={index}
-							isSubmitting={isSubmitting}
-							key={id}
-							onDeleteSXPElement={onDeleteSXPElement}
-							prefixedId={`${SXP_ELEMENT_PREFIX.QUERY}-${index}`}
-							setFieldTouched={setFieldTouched}
-							setFieldValue={setFieldValue}
-							sxpElement={sxpElement}
-							touched={touched[index]}
-							uiConfigurationValues={uiConfigurationValues}
-						/>
-					);
-				}
-			)}
-		</>
-	);
 
 	return (
 		<ClayLayout.ContainerFluid
@@ -250,12 +146,12 @@ function QueryBuilderTab({
 								{
 									active:
 										activeVerticalNavKey ===
-										VERTICAL_NAV_KEYS.QUERY_ELEMENTS,
+										VERTICAL_NAV_KEYS.QUERY_SXP_ELEMENTS,
 									label: Liferay.Language.get(
 										'query-elements'
 									),
 									onClick: _handleClickVerticalNav(
-										VERTICAL_NAV_KEYS.QUERY_ELEMENTS
+										VERTICAL_NAV_KEYS.QUERY_SXP_ELEMENTS
 									),
 								},
 								{
@@ -276,12 +172,52 @@ function QueryBuilderTab({
 					<ClayLayout.Col md={9} sm={12}>
 						<div className="vertical-nav-content-wrapper">
 							{activeVerticalNavKey ===
-								VERTICAL_NAV_KEYS.QUERY_ELEMENTS &&
-								_renderContentQueryElements()}
+								VERTICAL_NAV_KEYS.QUERY_SXP_ELEMENTS && (
+								<QuerySXPElements
+									elementInstances={elementInstances}
+									entityJSON={entityJSON}
+									errors={errors}
+									indexFields={indexFields}
+									isSubmitting={isSubmitting}
+									onBlur={onBlur}
+									onChange={onChange}
+									onChangeAddSXPElementVisibility={
+										onChangeAddSXPElementVisibility
+									}
+									onDeleteSXPElement={onDeleteSXPElement}
+									searchableTypes={searchableTypes}
+									setFieldTouched={setFieldTouched}
+									setFieldValue={setFieldValue}
+									touched={touched}
+								/>
+							)}
 
 							{activeVerticalNavKey ===
-								VERTICAL_NAV_KEYS.QUERY_SETTINGS &&
-								_renderContentQuerySettings()}
+								VERTICAL_NAV_KEYS.QUERY_SETTINGS && (
+								<QuerySettings
+									applyIndexerClauses={applyIndexerClauses}
+									frameworkConfig={frameworkConfig}
+									keywordQueryContributors={
+										keywordQueryContributors
+									}
+									modelPrefilterContributors={
+										modelPrefilterContributors
+									}
+									onApplyIndexerClausesChange={
+										onApplyIndexerClausesChange
+									}
+									onChangeClauseContributorsVisibility={
+										onChangeClauseContributorsVisibility
+									}
+									onFrameworkConfigChange={
+										onFrameworkConfigChange
+									}
+									queryPrefilterContributors={
+										queryPrefilterContributors
+									}
+									searchableTypes={searchableTypes}
+								/>
+							)}
 						</div>
 					</ClayLayout.Col>
 				</ClayLayout.Row>
@@ -291,16 +227,20 @@ function QueryBuilderTab({
 }
 
 QueryBuilderTab.propTypes = {
+	applyIndexerClauses: PropTypes.bool,
 	elementInstances: PropTypes.arrayOf(PropTypes.object),
 	entityJSON: PropTypes.object,
 	errors: PropTypes.arrayOf(PropTypes.object),
 	frameworkConfig: PropTypes.object,
 	isSubmitting: PropTypes.bool,
+	onApplyIndexerClausesChange: PropTypes.func,
 	onBlur: PropTypes.func,
 	onChange: PropTypes.func,
+	onChangeAddSXPElementVisibility: PropTypes.func,
+	onChangeClauseContributorsVisibility: PropTypes.func,
+	onCloseQuerySidebars: PropTypes.func,
 	onDeleteSXPElement: PropTypes.func,
 	onFrameworkConfigChange: PropTypes.func,
-	onToggleSidebar: PropTypes.func,
 	setFieldTouched: PropTypes.func,
 	setFieldValue: PropTypes.func,
 	touched: PropTypes.arrayOf(PropTypes.object),

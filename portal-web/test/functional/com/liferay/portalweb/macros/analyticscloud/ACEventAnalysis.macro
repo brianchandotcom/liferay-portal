@@ -154,4 +154,24 @@ definition {
 		}
 	}
 
+	macro viewAnalysisDashboard {
+		if (isSet(eventName)) {
+			AssertElementPresent(
+				locator1 = "ACUtils#GENERIC_BUTTON",
+				key_buttonName = "${eventName}");
+		}
+
+		if (isSet(attributeName)) {
+			AssertElementPresent(
+				locator1 = "ACEventAnalysis#VIEW_DASHBOARD_INFORMATION",
+				key_attributeName = "${attributeName}");
+		}
+
+		if (isSet(filterName)) {
+			AssertElementPresent(
+				locator1 = "ACEventAnalysis#VIEW_DASHBOARD_INFORMATION",
+				key_attributeName = "${filterName}");
+		}
+	}
+
 }

@@ -14,6 +14,7 @@
 
 package com.liferay.search.experiences.rest.internal.resource.v1_0;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.search.Field;
@@ -47,6 +48,8 @@ import java.util.HashMap;
 
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
+
+import org.apache.commons.lang.StringUtils;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -108,6 +111,11 @@ public class SXPBlueprintResourceImpl
 				"elementInstances",
 				_jsonFactory.createJSONArray(
 					sxpBlueprint.getElementInstancesJSON())
+			).put(
+				"schemaVersion",
+				_jsonFactory.createJSONObject(
+					_jsonFactory.looseSerialize(
+						sxpBlueprint.getSchemaVersion()))
 			).put(
 				"title_i18n",
 				_jsonFactory.createJSONObject(
@@ -183,7 +191,7 @@ public class SXPBlueprintResourceImpl
 					contextAcceptLanguage.getPreferredLocale(),
 					sxpBlueprint.getDescription(),
 					sxpBlueprint.getDescription_i18n()),
-				_getElementInstancesJSON(sxpBlueprint),
+				_getElementInstancesJSON(sxpBlueprint), _getSchemaVersion(),
 				LocalizedMapUtil.getLocalizedMap(
 					contextAcceptLanguage.getPreferredLocale(),
 					sxpBlueprint.getTitle(), sxpBlueprint.getTitle_i18n()),
@@ -209,7 +217,7 @@ public class SXPBlueprintResourceImpl
 					contextAcceptLanguage.getPreferredLocale(),
 					sxpBlueprint.getDescription(),
 					sxpBlueprint.getDescription_i18n()),
-				_getElementInstancesJSON(sxpBlueprint),
+				_getElementInstancesJSON(sxpBlueprint), _getSchemaVersion(),
 				LocalizedMapUtil.getLocalizedMap(
 					contextAcceptLanguage.getPreferredLocale(),
 					sxpBlueprint.getTitle(), sxpBlueprint.getTitle_i18n()),
@@ -234,6 +242,7 @@ public class SXPBlueprintResourceImpl
 				sxpBlueprint.getConfigurationJSON(),
 				sxpBlueprint.getDescriptionMap(),
 				sxpBlueprint.getElementInstancesJSON(),
+				sxpBlueprint.getSchemaVersion(),
 				TitleMapUtil.copy(sxpBlueprint.getTitleMap()),
 				ServiceContextFactory.getInstance(contextHttpServletRequest)));
 	}
@@ -258,6 +267,11 @@ public class SXPBlueprintResourceImpl
 
 		return Arrays.toString(
 			ElementInstanceUtil.unpack(sxpBlueprint.getElementInstances()));
+	}
+
+	private String _getSchemaVersion() {
+		return StringUtils.substringBetween(
+			contextUriInfo.getPath(), "v", StringPool.SLASH);
 	}
 
 	@Reference

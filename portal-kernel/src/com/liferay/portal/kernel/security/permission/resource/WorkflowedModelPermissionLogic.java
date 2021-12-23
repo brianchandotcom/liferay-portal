@@ -73,7 +73,8 @@ public class WorkflowedModelPermissionLogic<T extends GroupedModel>
 
 			Group group = _groupLocalService.getGroup(model.getGroupId());
 
-			if (!group.isStaged() || group.isStagingGroup()) {
+			if (!group.isStaged() || group.isStagingGroup() || 
+					group.isStagedRemotely()) {
 				return false;
 			}
 

@@ -20,6 +20,7 @@ import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.web.internal.display.CTDisplayRendererRegistry;
+import com.liferay.change.tracking.web.internal.util.PublicationsPortletURLUtil;
 import com.liferay.learn.LearnMessage;
 import com.liferay.learn.LearnMessageUtil;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
@@ -46,6 +47,7 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.TimeZone;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceURL;
@@ -245,19 +247,68 @@ public class ViewConflictsDisplayContext {
 			if (!conflictInfo.isResolved()) {
 				JSONArray actionsJSONArray = JSONFactoryUtil.createJSONArray();
 
-				if (_ctCollection.getCtCollectionId() ==
-						_activeCtCollectionId) {
+				String editURL = _ctDisplayRendererRegistry.getEditURL(
+					_httpServletRequest, ctEntry);
 
-					String editURL = _ctDisplayRendererRegistry.getEditURL(
-						_httpServletRequest, ctEntry);
+				if (Validator.isNotNull(editURL)) {
+					String editInPublicationURL = editURL;
 
-					if (Validator.isNotNull(editURL)) {
+					if (_activeCtCollectionId !=
+							_ctCollection.getCtCollectionId()) {
+
+						editInPublicationURL =
+							PublicationsPortletURLUtil.getHref(
+								_renderResponse.createActionURL(),
+								ActionRequest.ACTION_NAME,
+								"/change_tracking/checkout_ct_collection",
+								"redirect", editURL, "ctCollectionId",
+								String.valueOf(
+									_ctCollection.getCtCollectionId()));
+					}
+
+					actionsJSONArray.put(
+						JSONUtil.put(
+							"href", editInPublicationURL
+						).put(
+							"label",
+							_language.format(
+								_httpServletRequest, "edit-in-x",
+								new Object[] {_ctCollection.getName()}, false)
+						).put(
+							"symbol", "pencil"
+						));
+
+					T productionModel = _ctDisplayRendererRegistry.fetchCTModel(
+						modelClassNameId, conflictInfo.getTargetPrimaryKey());
+
+					if (productionModel != null) {
+						String editInProductionURL =
+							_ctDisplayRendererRegistry.getEditURL(
+								_httpServletRequest, productionModel,
+								modelClassNameId);
+
+						if (_activeCtCollectionId !=
+								CTConstants.CT_COLLECTION_ID_PRODUCTION) {
+
+							editInProductionURL =
+								PublicationsPortletURLUtil.getHref(
+									_renderResponse.createActionURL(),
+									ActionRequest.ACTION_NAME,
+									"/change_tracking/checkout_ct_collection",
+									"redirect", editInProductionURL,
+									"ctCollectionId",
+									String.valueOf(
+										CTConstants.
+											CT_COLLECTION_ID_PRODUCTION));
+						}
+
 						actionsJSONArray.put(
 							JSONUtil.put(
-								"href", editURL
+								"href", editInProductionURL
 							).put(
 								"label",
-								_language.get(_httpServletRequest, "edit-item")
+								_language.get(
+									_httpServletRequest, "edit-in-production")
 							).put(
 								"symbol", "pencil"
 							));

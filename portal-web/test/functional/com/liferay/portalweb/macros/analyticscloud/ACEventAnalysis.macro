@@ -10,6 +10,24 @@ definition {
 		Click(locator1 = "ACUtils#GENERIC_BUTTON");
 	}
 
+	macro addEvent {
+		var key_buttonName = "${customEventName}";
+
+		ACEventAnalysis.clickToAddEventButton();
+
+		ACEventAnalysis.searchEventAnalysis(searchItem = "${customEventName}");
+
+		while (IsElementNotPresent(locator1 = "ACUtils#GENERIC_BUTTON") && (maxIterations = "50")) {
+			TestUtils.hardRefresh();
+
+			ACEventAnalysis.clickToAddEventButton();
+
+			ACEventAnalysis.searchEventAnalysis(searchItem = "${customEventName}");
+		}
+
+		Click(locator1 = "ACUtils#GENERIC_BUTTON");
+	}
+
 	macro addFilter {
 		ACEventAnalysis.clickToAddFilterButton();
 
@@ -30,24 +48,6 @@ definition {
 		Click(
 			key_buttonName = "Done",
 			locator1 = "ACUtils#GENERIC_BUTTON");
-	}
-
-	macro addEvent {
-		var key_buttonName = "${customEventName}";
-
-		ACEventAnalysis.clickToAddEventButton();
-
-		ACEventAnalysis.searchEventAnalysis(searchItem = "${customEventName}");
-
-		while (IsElementNotPresent(locator1 = "ACUtils#GENERIC_BUTTON") && (maxIterations = "50")) {
-			TestUtils.hardRefresh();
-
-			ACEventAnalysis.clickToAddEventButton();
-
-			ACEventAnalysis.searchEventAnalysis(searchItem = "${customEventName}");
-		}
-
-		Click(locator1 = "ACUtils#GENERIC_BUTTON");
 	}
 
 	macro changeAttributeDataType {
@@ -104,6 +104,26 @@ definition {
 			value1 = "${searchItem}");
 	}
 
+	macro viewAnalysisDashboard {
+		if (isSet(eventName)) {
+			AssertElementPresent(
+				key_buttonName = "${eventName}",
+				locator1 = "ACUtils#GENERIC_BUTTON");
+		}
+
+		if (isSet(attributeName)) {
+			AssertElementPresent(
+				key_attributeName = "${attributeName}",
+				locator1 = "ACEventAnalysis#VIEW_DASHBOARD_INFORMATION");
+		}
+
+		if (isSet(filterName)) {
+			AssertElementPresent(
+				key_attributeName = "${filterName}",
+				locator1 = "ACEventAnalysis#VIEW_DASHBOARD_INFORMATION");
+		}
+	}
+
 	macro viewAnalysisInformation {
 		for (var informationValue : list "${informationValueList}") {
 			var key_informationValue = "${informationValue}";
@@ -151,26 +171,6 @@ definition {
 			var key_buttonName = "${name}";
 
 			AssertElementNotPresent(locator1 = "ACUtils#GENERIC_BUTTON");
-		}
-	}
-
-	macro viewAnalysisDashboard {
-		if (isSet(eventName)) {
-			AssertElementPresent(
-				locator1 = "ACUtils#GENERIC_BUTTON",
-				key_buttonName = "${eventName}");
-		}
-
-		if (isSet(attributeName)) {
-			AssertElementPresent(
-				locator1 = "ACEventAnalysis#VIEW_DASHBOARD_INFORMATION",
-				key_attributeName = "${attributeName}");
-		}
-
-		if (isSet(filterName)) {
-			AssertElementPresent(
-				locator1 = "ACEventAnalysis#VIEW_DASHBOARD_INFORMATION",
-				key_attributeName = "${filterName}");
 		}
 	}
 

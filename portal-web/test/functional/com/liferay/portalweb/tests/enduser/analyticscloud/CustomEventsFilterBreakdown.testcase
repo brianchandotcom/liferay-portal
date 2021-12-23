@@ -78,7 +78,7 @@ definition {
 	@description = "Feature ID: LRAC-7868 | Automation ID: LRAC-10264 | Test Summary: Event Analysis creation with Attribute ad Filter Attribute"
 	@priority = "5"
 	test AddAttributeAndAttributeFilterInEventsAnalysis {
-        var attributeName = "pageTitle";
+		var attributeName = "pageTitle";
 
 		task ("Fill fields and create custom event") {
 			var customEventName = ACCustomEvents.generateCustomEventName();
@@ -104,7 +104,7 @@ definition {
 			ACEventAnalysis.addEvent(customEventName = "${customEventName}");
 		}
 
-        task ("After adding an event, assert there is no '+' under Analyze") {
+		task ("After adding an event, assert there is no '+' under Analyze") {
 			AssertElementNotPresent(locator1 = "ACEventAnalysis#ADD_EVENT_BUTTON");
 		}
 
@@ -112,18 +112,18 @@ definition {
 			ACEventAnalysis.addBreakdown(attributeName = "${attributeName}");
 		}
 
-        task ("Add the filter to analysis") {
+		task ("Add the filter to analysis") {
 			ACEventAnalysis.addFilter(
-                optionValue = "contains",
-                filterName = "url",
-                inputValue = "site");
+				filterName = "url",
+				inputValue = "site",
+				optionValue = "contains");
 		}
 
-        task ("Check that the analysis dashboard contains the event,attribute and filter") {
+		task ("Check that the analysis dashboard contains the event,attribute and filter") {
 			ACEventAnalysis.viewAnalysisDashboard(
-                eventName = "${customEventName}",
-                attributeName = "${attributeName}",
-                filterName = "contains "site"");
+				attributeName = "${attributeName}",
+				eventName = "${customEventName}",
+				filterName = "contains &quot;site&quot;");
 		}
 	}
 

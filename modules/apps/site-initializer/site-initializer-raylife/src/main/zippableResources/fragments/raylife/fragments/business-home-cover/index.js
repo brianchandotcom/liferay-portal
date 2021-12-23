@@ -67,6 +67,8 @@ newQuoteButton.onclick = function () {
 	retrieveQuoteContainer.classList.remove('d-none', 'invisible');
 };
 
+continueQuoteButton.classList.add('disabled');
+
 emailInput.oninput = function () {
 	emailContainer.classList.remove('has-error');
 	emailErrorFeedback.innerText = '';

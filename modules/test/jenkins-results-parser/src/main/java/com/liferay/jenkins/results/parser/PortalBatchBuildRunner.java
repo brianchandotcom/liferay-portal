@@ -56,10 +56,13 @@ public abstract class PortalBatchBuildRunner<T extends PortalBatchBuildData>
 			else {
 				workspaceGitRepository.addPropertyOption("unix");
 			}
-
-			workspaceGitRepository.setSenderBranchSHA(
-				portalBatchBuildData.getPortalBranchSHA());
 		}
+
+		WorkspaceGitRepository primaryWorkspaceGitRepository =
+			_workspace.getPrimaryWorkspaceGitRepository();
+
+		primaryWorkspaceGitRepository.setSenderBranchSHA(
+			portalBatchBuildData.getPortalBranchSHA());
 
 		return _workspace;
 	}

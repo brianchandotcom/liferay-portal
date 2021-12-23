@@ -54,10 +54,13 @@ public abstract class PortalTopLevelBuildRunner
 			else {
 				workspaceGitRepository.addPropertyOption("unix");
 			}
-
-			workspaceGitRepository.setGitHubURL(
-				portalTopLevelBuildData.getPortalGitHubURL());
 		}
+
+		WorkspaceGitRepository primaryWorkspaceGitRepository =
+			_workspace.getPrimaryWorkspaceGitRepository();
+
+		primaryWorkspaceGitRepository.setGitHubURL(
+			portalTopLevelBuildData.getPortalGitHubURL());
 
 		return _workspace;
 	}

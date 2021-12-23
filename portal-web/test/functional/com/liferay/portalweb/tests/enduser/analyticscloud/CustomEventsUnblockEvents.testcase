@@ -218,7 +218,7 @@ definition {
 			ACCustomEvents.blockCustomEvent(customEventName = "${customEventName}");
 		}
 
-		task ("Navigation to segments") {
+		task ("Navigation to event analysis") {
 			ACNavigation.exitSettings();
 
 			ACNavigation.goToEventAnalysis();

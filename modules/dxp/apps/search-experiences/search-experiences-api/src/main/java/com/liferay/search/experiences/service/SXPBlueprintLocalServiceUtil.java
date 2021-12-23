@@ -48,13 +48,14 @@ public class SXPBlueprintLocalServiceUtil {
 	public static SXPBlueprint addSXPBlueprint(
 			long userId, String configurationJSON,
 			Map<java.util.Locale, String> descriptionMap,
-			String elementInstancesJSON, Map<java.util.Locale, String> titleMap,
+			String elementInstancesJSON, String schemaVersion,
+			Map<java.util.Locale, String> titleMap,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addSXPBlueprint(
 			userId, configurationJSON, descriptionMap, elementInstancesJSON,
-			titleMap, serviceContext);
+			schemaVersion, titleMap, serviceContext);
 	}
 
 	/**
@@ -351,13 +352,14 @@ public class SXPBlueprintLocalServiceUtil {
 	public static SXPBlueprint updateSXPBlueprint(
 			long userId, long sxpBlueprintId, String configurationJSON,
 			Map<java.util.Locale, String> descriptionMap,
-			String elementInstancesJSON, Map<java.util.Locale, String> titleMap,
+			String elementInstancesJSON, String schemaVersion,
+			Map<java.util.Locale, String> titleMap,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().updateSXPBlueprint(
 			userId, sxpBlueprintId, configurationJSON, descriptionMap,
-			elementInstancesJSON, titleMap, serviceContext);
+			elementInstancesJSON, schemaVersion, titleMap, serviceContext);
 	}
 
 	/**

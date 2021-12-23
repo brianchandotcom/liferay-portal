@@ -41,13 +41,14 @@ public class SXPElementServiceUtil {
 	public static SXPElement addSXPElement(
 			Map<java.util.Locale, String> descriptionMap,
 			String elementDefinitionJSON, boolean readOnly,
-			Map<java.util.Locale, String> titleMap, int type,
+			String schemaVersion, Map<java.util.Locale, String> titleMap,
+			int type,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addSXPElement(
-			descriptionMap, elementDefinitionJSON, readOnly, titleMap, type,
-			serviceContext);
+			descriptionMap, elementDefinitionJSON, readOnly, schemaVersion,
+			titleMap, type, serviceContext);
 	}
 
 	public static SXPElement deleteSXPElement(long sxpElementId)
@@ -73,14 +74,14 @@ public class SXPElementServiceUtil {
 
 	public static SXPElement updateSXPElement(
 			long sxpElementId, Map<java.util.Locale, String> descriptionMap,
-			String elementDefinitionJSON, boolean hidden,
+			String elementDefinitionJSON, String schemaVersion, boolean hidden,
 			Map<java.util.Locale, String> titleMap,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().updateSXPElement(
-			sxpElementId, descriptionMap, elementDefinitionJSON, hidden,
-			titleMap, serviceContext);
+			sxpElementId, descriptionMap, elementDefinitionJSON, schemaVersion,
+			hidden, titleMap, serviceContext);
 	}
 
 	public static SXPElementService getService() {

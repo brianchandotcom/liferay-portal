@@ -77,6 +77,7 @@ public class SXPBlueprintLocalServiceImpl
 		sxpBlueprint.setConfigurationJSON(configurationJSON);
 		sxpBlueprint.setDescriptionMap(descriptionMap);
 		sxpBlueprint.setElementInstancesJSON(elementInstancesJSON);
+		sxpBlueprint.setSchemaVersion(schemaVersion);
 		sxpBlueprint.setTitleMap(titleMap);
 		sxpBlueprint.setStatus(WorkflowConstants.STATUS_DRAFT);
 		sxpBlueprint.setStatusByUserId(user.getUserId());

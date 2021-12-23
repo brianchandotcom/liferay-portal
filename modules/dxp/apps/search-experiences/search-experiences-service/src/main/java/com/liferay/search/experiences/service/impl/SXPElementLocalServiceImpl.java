@@ -74,6 +74,7 @@ public class SXPElementLocalServiceImpl extends SXPElementLocalServiceBaseImpl {
 		sxpElement.setElementDefinitionJSON(elementDefinitionJSON);
 		sxpElement.setHidden(false);
 		sxpElement.setReadOnly(readOnly);
+		sxpElement.setSchemaVersion(schemaVersion);
 		sxpElement.setTitleMap(titleMap);
 		sxpElement.setType(type);
 		sxpElement.setStatus(WorkflowConstants.STATUS_APPROVED);
@@ -160,6 +161,7 @@ public class SXPElementLocalServiceImpl extends SXPElementLocalServiceBaseImpl {
 		sxpElement.setDescriptionMap(descriptionMap);
 		sxpElement.setElementDefinitionJSON(elementDefinitionJSON);
 		sxpElement.setHidden(hidden);
+		sxpElement.setSchemaVersion(schemaVersion);
 		sxpElement.setTitleMap(titleMap);
 
 		return updateSXPElement(sxpElement);

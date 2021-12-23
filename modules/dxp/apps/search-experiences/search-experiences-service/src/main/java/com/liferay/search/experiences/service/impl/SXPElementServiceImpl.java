@@ -60,7 +60,7 @@ public class SXPElementServiceImpl extends SXPElementServiceBaseImpl {
 
 		return sxpElementLocalService.addSXPElement(
 			getUserId(), descriptionMap, elementDefinitionJSON, readOnly,
-			titleMap, type, serviceContext);
+			schemaVersion, titleMap, type, serviceContext);
 	}
 
 	@Override
@@ -103,7 +103,7 @@ public class SXPElementServiceImpl extends SXPElementServiceBaseImpl {
 
 		return _sxpElementLocalService.updateSXPElement(
 			getUserId(), sxpElementId, descriptionMap, elementDefinitionJSON,
-			hidden, titleMap, serviceContext);
+			hidden, schemaVersion, titleMap, serviceContext);
 	}
 
 	@Reference(target = "(resource.name=" + SXPConstants.RESOURCE_NAME + ")")

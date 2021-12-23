@@ -61,7 +61,7 @@ public class SXPBlueprintServiceImpl extends SXPBlueprintServiceBaseImpl {
 
 		return sxpBlueprintLocalService.addSXPBlueprint(
 			getUserId(), configurationJSON, descriptionMap,
-			elementInstancesJSON, titleMap, serviceContext);
+			elementInstancesJSON, schemaVersion, titleMap, serviceContext);
 	}
 
 	@Override
@@ -101,7 +101,7 @@ public class SXPBlueprintServiceImpl extends SXPBlueprintServiceBaseImpl {
 
 		return _sxpBlueprintLocalService.updateSXPBlueprint(
 			getUserId(), sxpBlueprintId, configurationJSON, descriptionMap,
-			elementInstancesJSON, titleMap, serviceContext);
+			elementInstancesJSON, schemaVersion, titleMap, serviceContext);
 	}
 
 	@Reference

@@ -24,5 +24,6 @@ String portletName = ParamUtil.getString(request, "testRuntimePortletId");
 %>
 
 <liferay-portlet:runtime
+	persistSettings='<%= ParamUtil.getBoolean(request, "persistSettings", true) %>'
 	portletName='<%= Validator.isBlank(portletName) ? (String)request.getAttribute("testRuntimePortletId") : portletName %>'
 />

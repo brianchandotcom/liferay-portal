@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.PortletKeys;
@@ -158,6 +159,69 @@ public class EmbeddedPortletWhenEmbeddingPortletUsingRuntimeTagTest
 
 			Assert.assertTrue(testPortlet.isCalledRender());
 		}
+	}
+
+	@Test
+	public void testShouldNotCreatePortletPreferencesEmbeddedAndRuntimePortlets()
+		throws Exception {
+
+		TestPortlet testPortlet = new TestPortlet() {
+
+			@Override
+			public void render(
+					RenderRequest renderRequest, RenderResponse renderResponse)
+				throws IOException, PortletException {
+
+				super.render(renderRequest, renderResponse);
+
+				PortletContext portletContext = getPortletContext();
+
+				PortletRequestDispatcher portletRequestDispatcher =
+					portletContext.getRequestDispatcher("/runtime_portlet.jsp");
+
+				portletRequestDispatcher.include(renderRequest, renderResponse);
+			}
+
+		};
+
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
+
+		setUpPortlet(testPortlet, properties, TEST_PORTLET_ID);
+
+		TestRuntimePortlet testRuntimePortlet = new TestRuntimePortlet();
+		String testRuntimePortletId = "testRuntimePortletId";
+
+		setUpPortlet(
+			testRuntimePortlet, properties, testRuntimePortletId, false);
+
+		PortletContainerTestUtil.Response response =
+			PortletContainerTestUtil.request(
+				PortletURLBuilder.create(
+					_portletURLFactory.create(
+						PortletContainerTestUtil.getHttpServletRequest(
+							group, layout),
+						TEST_PORTLET_ID, layout.getPlid(),
+						PortletRequest.RENDER_PHASE)
+				).setParameters(
+					HashMapBuilder.put(
+						"persistSettings",
+						new String[] {Boolean.FALSE.toString()}
+					).put(
+						"testRuntimePortletId",
+						new String[] {testRuntimePortletId}
+					).build()
+				).buildString());
+
+		long count = _portletPreferencesLocalService.getPortletPreferencesCount(
+			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid(),
+			testRuntimePortletId);
+
+		Assert.assertTrue("portletPreferences count should be 0", count == 0);
+
+		Assert.assertEquals(200, response.getCode());
+
+		Assert.assertTrue(testPortlet.isCalledRender());
+		Assert.assertTrue(testRuntimePortlet.isCalledRender());
 	}
 
 	@Test

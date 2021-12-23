@@ -139,7 +139,7 @@ const ModalAddObjectRelationship: React.FC<IProps> = ({
 	useEffect(() => {
 		const makeRequest = async () => {
 			const result = await Liferay.Util.fetch(
-				'/o/object-admin/v1.0/object-definitions',
+				'/o/object-admin/v1.0/object-definitions?page=-1',
 				{
 					headers,
 					method: 'GET',

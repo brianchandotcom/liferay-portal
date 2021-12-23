@@ -120,7 +120,7 @@ public class SXPBlueprintSearchRequestContributorTest {
 					testName.getMethodName(), ".json")),
 			Collections.singletonMap(
 				LocaleUtil.US, RandomTestUtil.randomString()),
-			"",
+			"", "",
 			Collections.singletonMap(
 				LocaleUtil.US, RandomTestUtil.randomString()),
 			ServiceContextTestUtil.getServiceContext());

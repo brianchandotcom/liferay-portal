@@ -71,7 +71,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portlet.expando.util.test.ExpandoTestUtil;
 import com.liferay.search.experiences.model.SXPBlueprint;
-import com.liferay.search.experiences.service.SXPBlueprintLocalServiceUtil;
+import com.liferay.search.experiences.service.SXPBlueprintLocalService;
 import com.liferay.segments.criteria.Criteria;
 import com.liferay.segments.criteria.CriteriaSerializer;
 import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributor;
@@ -124,9 +124,9 @@ public class SXPBlueprintSearchResultTest {
 
 		_user = TestPropsValues.getUser();
 
-		_sxpBlueprint = SXPBlueprintLocalServiceUtil.addSXPBlueprint(
+		_sxpBlueprint = _sxpBlueprintLocalService.addSXPBlueprint(
 			_user.getUserId(), "{}",
-			Collections.singletonMap(LocaleUtil.US, ""), null,
+			Collections.singletonMap(LocaleUtil.US, ""), null, "",
 			Collections.singletonMap(
 				LocaleUtil.US, RandomTestUtil.randomString()),
 			_serviceContext);
@@ -911,11 +911,12 @@ public class SXPBlueprintSearchResultTest {
 			}
 		}
 
-		SXPBlueprintLocalServiceUtil.updateSXPBlueprint(
+		_sxpBlueprintLocalService.updateSXPBlueprint(
 			_sxpBlueprint.getUserId(), _sxpBlueprint.getSXPBlueprintId(), json,
 			_sxpBlueprint.getDescriptionMap(),
 			_sxpBlueprint.getElementInstancesJSON(),
-			_sxpBlueprint.getTitleMap(), _serviceContext);
+			_sxpBlueprint.getSchemaVersion(), _sxpBlueprint.getTitleMap(),
+			_serviceContext);
 
 		unsafeRunnable.run();
 	}
@@ -956,6 +957,9 @@ public class SXPBlueprintSearchResultTest {
 
 	@DeleteAfterTestRun
 	private SXPBlueprint _sxpBlueprint;
+
+	@Inject
+	private SXPBlueprintLocalService _sxpBlueprintLocalService;
 
 	private User _user;
 

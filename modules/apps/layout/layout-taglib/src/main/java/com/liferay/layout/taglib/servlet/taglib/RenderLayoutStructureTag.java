@@ -249,6 +249,14 @@ public class RenderLayoutStructureTag extends IncludeTag {
 					renderCollectionLayoutStructureItemDisplayContext.
 						getNumberOfRows();
 
+				ContainerTag containerTag = new ContainerTag();
+
+				containerTag.setCssClass("overflow-hidden px-0");
+				containerTag.setFluid(true);
+				containerTag.setPageContext(pageContext);
+
+				containerTag.doStartTag();
+
 				for (int i = 0; i < numberOfRows; i++) {
 					RowTag rowTag = new RowTag();
 
@@ -302,6 +310,8 @@ public class RenderLayoutStructureTag extends IncludeTag {
 
 					rowTag.doEndTag();
 				}
+
+				containerTag.doEndTag();
 			}
 			finally {
 				httpServletRequest.removeAttribute(

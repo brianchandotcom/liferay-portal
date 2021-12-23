@@ -77,6 +77,7 @@ public class SXPBlueprintDTOConverter
 					sxpBlueprint.getElementInstancesJSON());
 				id = sxpBlueprint.getSXPBlueprintId();
 				modifiedDate = sxpBlueprint.getModifiedDate();
+				schemaVersion = sxpBlueprint.getSchemaVersion();
 				title = sxpBlueprint.getTitle(dtoConverterContext.getLocale());
 				title_i18n = LocalizedMapUtil.getI18nMap(
 					dtoConverterContext.isAcceptAllLanguages(),
@@ -102,6 +103,7 @@ public class SXPBlueprintDTOConverter
 					sxpBlueprint.getElementInstancesJSON());
 				id = sxpBlueprint.getSXPBlueprintId();
 				modifiedDate = sxpBlueprint.getModifiedDate();
+				schemaVersion = sxpBlueprint.getSchemaVersion();
 				title = sxpBlueprint.getTitle();
 				title_i18n = LocalizedMapUtil.getI18nMap(
 					true, sxpBlueprint.getTitleMap());

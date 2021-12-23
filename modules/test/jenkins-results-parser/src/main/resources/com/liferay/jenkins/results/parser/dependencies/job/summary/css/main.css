@@ -1,0 +1,57 @@
+* {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+ul {
+	list-style-type: none;
+}
+
+summary {
+	margin-block-end: 0.5em;
+	margin-block-start: 0.5em;
+	margin-inline-end: 0px;
+	margin-inline-start: 0px;
+	overflow-y: hidden;
+	white-space: nowrap;
+}
+
+.info-box {
+	background-color: #eee;
+	border: 1px dashed #555;
+	margin: 1em;
+	padding: 1em;
+}
+
+.info-item-list {
+	background-color: #fff;
+	border: 1px dashed #666;
+	font-family: monospace;
+	margin: 0.5em;
+	overflow-y: hidden;
+	padding: 0.5em;
+	white-space: nowrap;
+}
+
+.info-item-title {
+	font-weight: bold;
+}
+
+.level-1 {
+	font-size: 2em;
+}
+
+.level-2 {
+	font-size: 1.75em;
+}
+
+.level-3 {
+	font-size: 1.5em;
+}
+
+.level-4 {
+	font-size: 1.25em;
+}
+
+.level-5 {
+	font-size: 1em;
+}

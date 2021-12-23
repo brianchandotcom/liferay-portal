@@ -32,6 +32,7 @@ import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -42,7 +43,28 @@ public class PoshiSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected List<String> doGetFileNames() throws IOException {
-		return getFileNames(new String[0], getIncludes());
+		List<String> fileNames = getFileNames(new String[0], getIncludes());
+
+		Iterator<String> iterator = fileNames.iterator();
+
+		while (iterator.hasNext()) {
+			String fileName = iterator.next();
+
+			if (fileName.endsWith(".jar") || fileName.endsWith(".lar") ||
+				fileName.endsWith(".war") || fileName.endsWith(".zip")) {
+
+				if (fileName.matches(".*/tests?/.*/dependencies/.+")) {
+					processMessage(
+						fileName,
+						"Do not add binary archive files for test, they must " +
+							"be expanded");
+				}
+
+				iterator.remove();
+			}
+		}
+
+		return fileNames;
 	}
 
 	@Override
@@ -136,7 +158,8 @@ public class PoshiSourceProcessor extends BaseSourceProcessor {
 	}
 
 	private static final String[] _INCLUDES = {
-		"**/*.function", "**/*.macro", "**/*.path", "**/*.testcase"
+		"**/*.function", "**/*.jar", "**/*.lar", "**/*.macro", "**/*.path",
+		"**/*.testcase", "**/*.war", "**/*.zip"
 	};
 
 	private static final String[] _SKIP_DIR_NAMES = {

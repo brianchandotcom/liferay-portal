@@ -178,9 +178,9 @@ const FriendlyURLHistoryModal = ({
 				'POST'
 			).then(({success} = {}) => {
 				if (isMounted() && success) {
-					if (localizable) {
-						getFriendlyUrlLocalizations();
+					getFriendlyUrlLocalizations();
 
+					if (localizable) {
 						const inputLocalizableComponent = Liferay.component(
 							elementId
 						);

@@ -277,10 +277,9 @@ definition {
 
 		ProductMenuHelper.openProductMenu();
 
-		var key_siteName = "${userScreenName}";
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "SitePages#SITE_NAME",
+		AssertTextEquals(
+			key_siteName = "${userScreenName}",
+			locator1 = "ProductMenu#SITE_NAME",
 			value1 = "${userScreenName}");
 	}
 

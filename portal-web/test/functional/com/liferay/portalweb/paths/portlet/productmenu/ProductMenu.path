@@ -66,6 +66,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LIVE_LINK</td>
+	<td>//*[@data-qa-id='live']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PAGES</td>
 	<td>//div[@class='list-group-item']//span[contains(.,'${key_page}')]/a</td>
 	<td></td>
@@ -91,8 +96,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>LIVE_LINK</td>
-	<td>//*[@data-qa-id='live']</td>
+	<td>SITE_NAME</td>
+	<td>//*[contains(@class,'site-name') and contains(.,'${key_siteName}')]</td>
 	<td></td>
 </tr>
 <tr>

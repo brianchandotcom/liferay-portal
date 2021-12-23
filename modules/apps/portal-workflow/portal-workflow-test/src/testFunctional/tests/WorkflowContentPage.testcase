@@ -336,7 +336,10 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		AssertElementPresent(locator1 = "SitePages#SITE_PENDING_STATUS");
+		PagesAdmin.viewPageStatus(
+			index = "2",
+			pageName = "Test Page Name",
+			status = "Pending");
 	}
 
 }

@@ -1703,9 +1703,37 @@ public class PropsValues {
 			PropsUtil.get(
 				PropsKeys.MODULE_FRAMEWORK_EXPORT_PASSWORD_ATTRIBUTES));
 
+	public static final boolean
+		MODULE_FRAMEWORK_FILE_INSTALL_BUNDLES_START_ACTIVATION_POLICY =
+			GetterUtil.getBoolean(
+				PropsUtil.get(
+					PropsKeys.
+						MODULE_FRAMEWORK_FILE_INSTALL_BUNDLES_START_ACTIVATION_POLICY),
+				true);
+
+	public static final boolean
+		MODULE_FRAMEWORK_FILE_INSTALL_BUNDLES_START_NEW = GetterUtil.getBoolean(
+			PropsUtil.get(
+				PropsKeys.MODULE_FRAMEWORK_FILE_INSTALL_BUNDLES_START_NEW));
+
+	public static final boolean
+		MODULE_FRAMEWORK_FILE_INSTALL_BUNDLES_START_TRANSIENT =
+			GetterUtil.getBoolean(
+				PropsUtil.get(
+					PropsKeys.
+						MODULE_FRAMEWORK_FILE_INSTALL_BUNDLES_START_TRANSIENT));
+
 	public static final boolean MODULE_FRAMEWORK_FILE_INSTALL_CFG_ENABLED =
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.MODULE_FRAMEWORK_FILE_INSTALL_CFG_ENABLED));
+
+	public static final boolean MODULE_FRAMEWORK_FILE_INSTALL_NO_INITIAL_DELAY =
+		GetterUtil.getBoolean(
+			PropsUtil.get(
+				PropsKeys.MODULE_FRAMEWORK_FILE_INSTALL_NO_INITIAL_DELAY));
+
+	public static final String MODULE_FRAMEWORK_FILE_INSTALL_SUBDIR_MODE =
+		PropsUtil.get(PropsKeys.MODULE_FRAMEWORK_FILE_INSTALL_SUBDIR_MODE);
 
 	public static final String MODULE_FRAMEWORK_MARKETPLACE_DIR = PropsUtil.get(
 		PropsKeys.MODULE_FRAMEWORK_MARKETPLACE_DIR);

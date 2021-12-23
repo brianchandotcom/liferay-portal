@@ -2017,8 +2017,25 @@ public interface PropsKeys {
 	public static final String MODULE_FRAMEWORK_EXPORT_PASSWORD_ATTRIBUTES =
 		"module.framework.export.password.attributes";
 
+	public static final String
+		MODULE_FRAMEWORK_FILE_INSTALL_BUNDLES_START_ACTIVATION_POLICY =
+			"module.framework.file.install.bundles.start.activation.policy";
+
+	public static final String MODULE_FRAMEWORK_FILE_INSTALL_BUNDLES_START_NEW =
+		"module.framework.file.install.bundles.start.new";
+
+	public static final String
+		MODULE_FRAMEWORK_FILE_INSTALL_BUNDLES_START_TRANSIENT =
+			"module.framework.file.install.bundles.start.transient";
+
 	public static final String MODULE_FRAMEWORK_FILE_INSTALL_CFG_ENABLED =
 		"module.framework.file.install.cfg.enabled";
+
+	public static final String MODULE_FRAMEWORK_FILE_INSTALL_NO_INITIAL_DELAY =
+		"module.framework.file.install.no.initial.delay";
+
+	public static final String MODULE_FRAMEWORK_FILE_INSTALL_SUBDIR_MODE =
+		"module.framework.file.install.subdir.mode";
 
 	public static final String MODULE_FRAMEWORK_MARKETPLACE_DIR =
 		"module.framework.marketplace.dir";

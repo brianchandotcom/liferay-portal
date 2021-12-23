@@ -204,6 +204,27 @@ public class SXPElement implements Cloneable, Serializable {
 
 	protected Boolean readOnly;
 
+	public String getSchemaVersion() {
+		return schemaVersion;
+	}
+
+	public void setSchemaVersion(String schemaVersion) {
+		this.schemaVersion = schemaVersion;
+	}
+
+	public void setSchemaVersion(
+		UnsafeSupplier<String, Exception> schemaVersionUnsafeSupplier) {
+
+		try {
+			schemaVersion = schemaVersionUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String schemaVersion;
+
 	public String getTitle() {
 		return title;
 	}

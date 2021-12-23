@@ -242,7 +242,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {sXPBlueprint(sxpBlueprintId: ___){configuration, createDate, description, description_i18n, elementInstances, id, modifiedDate, title, title_i18n, userName}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {sXPBlueprint(sxpBlueprintId: ___){configuration, createDate, description, description_i18n, elementInstances, id, modifiedDate, schemaVersion, title, title_i18n, userName}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public SXPBlueprint sXPBlueprint(
@@ -301,7 +301,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {sXPElement(sxpElementId: ___){createDate, description, description_i18n, elementDefinition, hidden, id, modifiedDate, readOnly, title, title_i18n, type, userName}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {sXPElement(sxpElementId: ___){createDate, description, description_i18n, elementDefinition, hidden, id, modifiedDate, readOnly, schemaVersion, title, title_i18n, type, userName}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public SXPElement sXPElement(@GraphQLName("sxpElementId") Long sxpElementId)

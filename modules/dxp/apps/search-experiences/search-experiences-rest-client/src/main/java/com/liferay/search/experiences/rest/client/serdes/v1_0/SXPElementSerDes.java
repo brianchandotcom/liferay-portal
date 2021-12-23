@@ -153,6 +153,20 @@ public class SXPElementSerDes {
 			sb.append(sxpElement.getReadOnly());
 		}
 
+		if (sxpElement.getSchemaVersion() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"schemaVersion\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(sxpElement.getSchemaVersion()));
+
+			sb.append("\"");
+		}
+
 		if (sxpElement.getTitle() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -286,6 +300,14 @@ public class SXPElementSerDes {
 			map.put("readOnly", String.valueOf(sxpElement.getReadOnly()));
 		}
 
+		if (sxpElement.getSchemaVersion() == null) {
+			map.put("schemaVersion", null);
+		}
+		else {
+			map.put(
+				"schemaVersion", String.valueOf(sxpElement.getSchemaVersion()));
+		}
+
 		if (sxpElement.getTitle() == null) {
 			map.put("title", null);
 		}
@@ -380,6 +402,11 @@ public class SXPElementSerDes {
 			else if (Objects.equals(jsonParserFieldName, "readOnly")) {
 				if (jsonParserFieldValue != null) {
 					sxpElement.setReadOnly((Boolean)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "schemaVersion")) {
+				if (jsonParserFieldValue != null) {
+					sxpElement.setSchemaVersion((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "title")) {

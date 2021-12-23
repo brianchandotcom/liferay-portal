@@ -27,7 +27,8 @@ definition {
 		Click(locator1 = "CKEditor#TABLE_ICON");
 
 		Click(locator1 = "CKEditor#OK_BUTTON");
-		
+	}
+
 	macro addPageSummary {
 		Panel.expandPanel(panel = "Configuration");
 

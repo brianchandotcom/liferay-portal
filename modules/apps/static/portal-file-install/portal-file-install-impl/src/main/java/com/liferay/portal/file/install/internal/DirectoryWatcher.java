@@ -91,17 +91,8 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 		_activeLevel = GetterUtil.getInteger(
 			bundleContext.getProperty(ACTIVE_LEVEL));
 		_filter = bundleContext.getProperty(FILTER);
-		_noInitialDelay =
-			PropsValues.MODULE_FRAMEWORK_FILE_INSTALL_NO_INITIAL_DELAY;
-		_startBundles =
-			PropsValues.MODULE_FRAMEWORK_FILE_INSTALL_BUNDLES_START_NEW;
 		_systemBundle = bundleContext.getBundle(
 			Constants.SYSTEM_BUNDLE_LOCATION);
-		_useStartActivationPolicy =
-			PropsValues.
-				MODULE_FRAMEWORK_FILE_INSTALL_BUNDLES_START_ACTIVATION_POLICY;
-		_useStartTransient =
-			PropsValues.MODULE_FRAMEWORK_FILE_INSTALL_BUNDLES_START_TRANSIENT;
 
 		for (String dir : PropsValues.MODULE_FRAMEWORK_AUTO_DEPLOY_DIRS) {
 			_watchedDirs.add(new File(dir));
@@ -208,7 +199,7 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 
 	@Override
 	public void run() {
-		if (!_noInitialDelay) {
+		if (!PropsValues.MODULE_FRAMEWORK_FILE_INSTALL_NO_INITIAL_DELAY) {
 			try {
 				Thread.sleep(PropsValues.MODULE_FRAMEWORK_AUTO_DEPLOY_INTERVAL);
 			}
@@ -271,7 +262,7 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 
 	@Override
 	public void start() {
-		if (_noInitialDelay) {
+		if (PropsValues.MODULE_FRAMEWORK_FILE_INSTALL_NO_INITIAL_DELAY) {
 			_initializeCurrentManagedBundles();
 
 			Set<File> files = _scanner.scan(true);
@@ -1043,7 +1034,7 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 			}
 		}
 
-		if (_startBundles) {
+		if (PropsValues.MODULE_FRAMEWORK_FILE_INSTALL_BUNDLES_START_NEW) {
 			FrameworkStartLevel frameworkStartLevel = _systemBundle.adapt(
 				FrameworkStartLevel.class);
 
@@ -1129,7 +1120,8 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 
 					if ((state != Bundle.STARTING) &&
 						(state != Bundle.ACTIVE) &&
-						(_useStartTransient ||
+						(PropsValues.
+							MODULE_FRAMEWORK_FILE_INSTALL_BUNDLES_START_TRANSIENT ||
 						 bundleStartLevel.isPersistentlyStarted()) &&
 						(frameworkStartLevel.getStartLevel() >=
 							bundleStartLevel.getStartLevel())) {
@@ -1147,18 +1139,22 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 		BundleStartLevel bundleStartLevel = bundle.adapt(
 			BundleStartLevel.class);
 
-		if (_startBundles && (bundle.getState() != Bundle.UNINSTALLED) &&
-			!_isFragment(bundle) &&
+		if (PropsValues.MODULE_FRAMEWORK_FILE_INSTALL_BUNDLES_START_NEW &&
+			(bundle.getState() != Bundle.UNINSTALLED) && !_isFragment(bundle) &&
 			(_frameworkStartLevel >= bundleStartLevel.getStartLevel())) {
 
 			try {
 				int options = 0;
 
-				if (_useStartTransient) {
+				if (PropsValues.
+						MODULE_FRAMEWORK_FILE_INSTALL_BUNDLES_START_TRANSIENT) {
+
 					options = Bundle.START_TRANSIENT;
 				}
 
-				if (_useStartActivationPolicy) {
+				if (PropsValues.
+						MODULE_FRAMEWORK_FILE_INSTALL_BUNDLES_START_ACTIVATION_POLICY) {
+
 					options |= Bundle.START_ACTIVATION_POLICY;
 				}
 
@@ -1212,7 +1208,9 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 	}
 
 	private void _stopTransient(Bundle bundle) throws BundleException {
-		if (_startBundles && !_isFragment(bundle)) {
+		if (PropsValues.MODULE_FRAMEWORK_FILE_INSTALL_BUNDLES_START_NEW &&
+			!_isFragment(bundle)) {
+
 			bundle.stop(Bundle.STOP_TRANSIENT);
 		}
 	}
@@ -1375,14 +1373,10 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 	private final String _filter;
 	private int _frameworkStartLevel;
 	private final Map<File, Artifact> _installationFailures = new HashMap<>();
-	private final boolean _noInitialDelay;
 	private final Set<File> _processingFailures = new HashSet<>();
 	private final Scanner _scanner;
-	private final boolean _startBundles;
 	private final AtomicBoolean _stateChanged = new AtomicBoolean();
 	private final Bundle _systemBundle;
-	private final boolean _useStartActivationPolicy;
-	private final boolean _useStartTransient;
 	private final List<File> _watchedDirs = new ArrayList<>();
 
 }

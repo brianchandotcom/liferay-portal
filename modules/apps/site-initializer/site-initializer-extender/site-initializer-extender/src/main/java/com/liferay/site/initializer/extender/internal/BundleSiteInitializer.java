@@ -2459,12 +2459,12 @@ public class BundleSiteInitializer implements SiteInitializer {
 			String externalReferenceCode = jsonObject.getString(
 				"externalReferenceCode");
 
-			Page<UserAccount> userAccountPage =
+			Page<UserAccount> userAccountsPage =
 				userAccountResource.
 					getAccountUserAccountsByExternalReferenceCodePage(
 						externalReferenceCode, null, null, null, null);
 
-			UserAccount existingUserAccount = userAccountPage.fetchFirstItem();
+			UserAccount existingUserAccount = userAccountsPage.fetchFirstItem();
 
 			if (existingUserAccount == null) {
 				userAccountResource.

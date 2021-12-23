@@ -1,12 +1,12 @@
 <html>
 <head>
-<title>SitePagesEditPage</title>
+<title>PagesAdmin</title>
 </head>
 
 <body>
 <table border="1" cellpadding="1" cellspacing="1">
 <thead>
-<tr><td rowspan="1" colspan="3">SitePagesEditPage</td></tr>
+<tr><td rowspan="1" colspan="3">PagesAdmin</td></tr>
 </thead>
 
 <tbody>
@@ -19,11 +19,6 @@
 <tr>
 	<td>LAYOUT_CARD_SELECTED</td>
 	<td>//div[label[contains(.,'${key_columnName}')]]//img[contains(@class,'layout-selected')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>LAYOUT_PAGE_TEMPLATE_SELECT</td>
-	<td>//select[contains(@name,'layoutPageTemplate')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -54,11 +49,6 @@
 <tr>
 	<td>PAGE_TYPE_FULL_PAGE_APPLICATION_SELECT</td>
 	<td>//select[contains(@id,'fullPageApplication')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--SEO-->

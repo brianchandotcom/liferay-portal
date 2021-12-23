@@ -137,7 +137,7 @@ definition {
 		Navigator.gotoNavTab(navTab = "Look and Feel");
 
 		AssertTextNotPresent(
-			locator1 = "SitePagesEditPage#VIEW_THEME",
+			locator1 = "PagesAdmin#VIEW_THEME",
 			value1 = "Classic Theme");
 	}
 
@@ -269,9 +269,9 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Look and Feel");
 
-		Click(locator1 = "SitePagesEditPage#REGULAR_UNIQUE_LOOK_AND_FEEL");
+		Click(locator1 = "PagesAdmin#REGULAR_UNIQUE_LOOK_AND_FEEL");
 
-		Click(locator1 = "SitePagesEditPage#CHANGE_CURRENT_THEME_BUTTON");
+		Click(locator1 = "PagesAdmin#CHANGE_CURRENT_THEME_BUTTON");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -341,9 +341,9 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Look and Feel");
 
-		Click(locator1 = "SitePagesEditPage#REGULAR_UNIQUE_LOOK_AND_FEEL");
+		Click(locator1 = "PagesAdmin#REGULAR_UNIQUE_LOOK_AND_FEEL");
 
-		Click(locator1 = "SitePagesEditPage#CHANGE_CURRENT_THEME_BUTTON");
+		Click(locator1 = "PagesAdmin#CHANGE_CURRENT_THEME_BUTTON");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -378,9 +378,9 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Look and Feel");
 
-		Click(locator1 = "SitePagesEditPage#REGULAR_UNIQUE_LOOK_AND_FEEL");
+		Click(locator1 = "PagesAdmin#REGULAR_UNIQUE_LOOK_AND_FEEL");
 
-		Click(locator1 = "SitePagesEditPage#CHANGE_CURRENT_THEME_BUTTON");
+		Click(locator1 = "PagesAdmin#CHANGE_CURRENT_THEME_BUTTON");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -566,9 +566,9 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Look and Feel");
 
-		Click(locator1 = "SitePagesEditPage#REGULAR_UNIQUE_LOOK_AND_FEEL");
+		Click(locator1 = "PagesAdmin#REGULAR_UNIQUE_LOOK_AND_FEEL");
 
-		Click(locator1 = "SitePagesEditPage#CHANGE_CURRENT_THEME_BUTTON");
+		Click(locator1 = "PagesAdmin#CHANGE_CURRENT_THEME_BUTTON");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 

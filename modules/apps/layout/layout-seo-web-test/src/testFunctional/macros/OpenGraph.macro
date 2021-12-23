@@ -317,14 +317,14 @@ definition {
 
 	macro viewNoPreviewDescription {
 		AssertTextEquals(
-			locator1 = "SitePagesEditPage#PREVIEW_DESCRIPTION",
+			locator1 = "PagesAdmin#PREVIEW_DESCRIPTION",
 			value1 = "");
 	}
 
 	macro viewNoPreviewImage {
 		AssertElementNotPresent(
 			key_imageName = "${imageName}",
-			locator1 = "SitePagesEditPage#PREVIEW_IMAGE");
+			locator1 = "PagesAdmin#PREVIEW_IMAGE");
 	}
 
 	macro viewNoTab {
@@ -342,7 +342,7 @@ definition {
 	macro viewPreviewImage {
 		AssertVisible(
 			key_imageName = "${imageName}",
-			locator1 = "SitePagesEditPage#PREVIEW_IMAGE");
+			locator1 = "PagesAdmin#PREVIEW_IMAGE");
 	}
 
 }

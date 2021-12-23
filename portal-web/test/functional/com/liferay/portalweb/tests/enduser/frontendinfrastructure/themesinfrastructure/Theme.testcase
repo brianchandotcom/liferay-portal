@@ -211,7 +211,7 @@ definition {
 			pageName = "Theme Test Page",
 			themeName = "Classic");
 
-		Click(locator1 = "SitePagesEditPage#CHANGE_CURRENT_THEME_BUTTON");
+		Click(locator1 = "PagesAdmin#CHANGE_CURRENT_THEME_BUTTON");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -233,7 +233,7 @@ definition {
 			pageName = "Theme Test Page",
 			themeName = "Classic");
 
-		Click(locator1 = "SitePagesEditPage#CHANGE_CURRENT_THEME_BUTTON");
+		Click(locator1 = "PagesAdmin#CHANGE_CURRENT_THEME_BUTTON");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 

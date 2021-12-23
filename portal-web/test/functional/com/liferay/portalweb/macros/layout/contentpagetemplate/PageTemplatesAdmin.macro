@@ -92,7 +92,7 @@ definition {
 
 		Click(
 			key_columnName = "${columnName}",
-			locator1 = "SitePagesEditPage#LAYOUT_CARD");
+			locator1 = "PagesAdmin#LAYOUT_CARD");
 
 		PortletEntry.save();
 	}

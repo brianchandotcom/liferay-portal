@@ -218,7 +218,7 @@ definition {
 
 			AssertTextEquals(
 				key_styleBookName = "Inherited",
-				locator1 = "SitePagesEditPage#STYLE_BOOK_NAME",
+				locator1 = "PagesAdmin#STYLE_BOOK_NAME",
 				value1 = "Inherited");
 
 			AssertClick(
@@ -230,7 +230,7 @@ definition {
 
 			AssertTextEquals(
 				key_styleBookName = "Test Style Book Name",
-				locator1 = "SitePagesEditPage#STYLE_BOOK_NAME",
+				locator1 = "PagesAdmin#STYLE_BOOK_NAME",
 				value1 = "Test Style Book Name");
 
 			Button.clickSave();
@@ -291,7 +291,7 @@ definition {
 
 			AssertTextEquals(
 				key_styleBookName = "Test Style Book Name",
-				locator1 = "SitePagesEditPage#STYLE_BOOK_NAME",
+				locator1 = "PagesAdmin#STYLE_BOOK_NAME",
 				value1 = "Test Style Book Name");
 
 			AssertClick(
@@ -303,7 +303,7 @@ definition {
 
 			AssertTextEquals(
 				key_styleBookName = "Inherited from Master",
-				locator1 = "SitePagesEditPage#STYLE_BOOK_NAME",
+				locator1 = "PagesAdmin#STYLE_BOOK_NAME",
 				value1 = "Inherited from Master");
 
 			Button.clickSave();
@@ -417,7 +417,7 @@ definition {
 
 			AssertTextEquals(
 				key_styleBookName = "Inherited",
-				locator1 = "SitePagesEditPage#STYLE_BOOK_NAME",
+				locator1 = "PagesAdmin#STYLE_BOOK_NAME",
 				value1 = "Inherited");
 
 			AssertClick(
@@ -429,7 +429,7 @@ definition {
 
 			AssertTextEquals(
 				key_styleBookName = "Test Style Book Name",
-				locator1 = "SitePagesEditPage#STYLE_BOOK_NAME",
+				locator1 = "PagesAdmin#STYLE_BOOK_NAME",
 				value1 = "Test Style Book Name");
 
 			Button.clickSave();
@@ -458,7 +458,7 @@ definition {
 
 			AssertTextEquals(
 				key_styleBookName = "Test Style Book Name",
-				locator1 = "SitePagesEditPage#STYLE_BOOK_NAME",
+				locator1 = "PagesAdmin#STYLE_BOOK_NAME",
 				value1 = "Test Style Book Name");
 
 			AssertClick(
@@ -470,7 +470,7 @@ definition {
 
 			AssertTextEquals(
 				key_styleBookName = "Inherited from Master",
-				locator1 = "SitePagesEditPage#STYLE_BOOK_NAME",
+				locator1 = "PagesAdmin#STYLE_BOOK_NAME",
 				value1 = "Inherited from Master");
 
 			Button.clickSave();

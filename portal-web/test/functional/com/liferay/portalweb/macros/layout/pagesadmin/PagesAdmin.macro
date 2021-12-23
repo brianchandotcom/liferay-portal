@@ -36,7 +36,7 @@ definition {
 		}
 		else if ("${sitePageType}" == "Link to a Page of This Site") {
 			if (isSet(linkPageName)) {
-				Click(locator1 = "SitePagesEditPage#LINK_TO_PAGE_SELECT_BUTTON");
+				Click(locator1 = "PagesAdmin#LINK_TO_PAGE_SELECT_BUTTON");
 
 				SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -726,7 +726,7 @@ definition {
 			locator1 = "Message#ERROR_3",
 			value1 = "Some page settings are unavailable because Inherit Changes is enabled. To change these settings, disable Inherit Changes under the General section.");
 
-		AssertChecked.assertCheckedNotVisible(locator1 = "SitePagesEditPage#PAGE_TYPE_TEMPLATE_AUTOMATICALLY_APPLY_CHANGES_CHECKBOX_GENERIC");
+		AssertChecked.assertCheckedNotVisible(locator1 = "PagesAdmin#PAGE_TYPE_TEMPLATE_AUTOMATICALLY_APPLY_CHANGES_CHECKBOX_GENERIC");
 	}
 
 	macro viewPageType {
@@ -761,7 +761,7 @@ definition {
 				var key_componentOrPortletName = StringUtil.extractChars("${portletName}");
 			}
 
-			AssertElementPresent(locator1 = "SitePagesEditPage#PAGE_TYPE_PANEL_CHECKBOX_INPUT");
+			AssertElementPresent(locator1 = "PagesAdmin#PAGE_TYPE_PANEL_CHECKBOX_INPUT");
 		}
 	}
 
@@ -785,9 +785,7 @@ definition {
 		Navigator.gotoNavTab(navTab = "Look and Feel");
 
 		if (isSet(themeName)) {
-			AssertTextPresent(
-				locator1 = "SitePagesEditPage#VIEW_THEME",
-				value1 = "${themeName}");
+			AssertTextPresent(value1 = "${themeName}");
 		}
 
 		if (isSet(checkThemeSettingList)) {

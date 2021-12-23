@@ -15,7 +15,7 @@ definition {
 	}
 
 	macro viewPreviewDefault {
-		AssertVisible(locator1 = "SitePagesEditPage#PREVIEW_SERP");
+		AssertVisible(locator1 = "PagesAdmin#PREVIEW_SERP");
 	}
 
 }

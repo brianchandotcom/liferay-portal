@@ -6,24 +6,24 @@ definition {
 			value1 = "${pageTypeURL}");
 
 		AssertTextEquals.assertPartialText(
-			locator1 = "SitePagesEditPage#PAGE_TYPE_DESCRIPTION",
+			locator1 = "PagesAdmin#PAGE_TYPE_DESCRIPTION",
 			value1 = "Show content from another website.");
 	}
 
 	macro _addPageTypeFullPageApplication {
 		Select(
-			locator1 = "SitePagesEditPage#PAGE_TYPE_FULL_PAGE_APPLICATION_SELECT",
+			locator1 = "PagesAdmin#PAGE_TYPE_FULL_PAGE_APPLICATION_SELECT",
 			value1 = "${portlet}");
 	}
 
 	macro _addPageTypePanel {
 		var key_componentOrPortletName = "${componentName}";
 
-		Click(locator1 = "SitePagesEditPage#PAGE_TYPE_PANEL_CHECKBOX");
+		Click(locator1 = "PagesAdmin#PAGE_TYPE_PANEL_CHECKBOX");
 
 		var key_componentOrPortletName = StringUtil.lowerCase("${componentName}");
 
-		AssertElementPresent(locator1 = "SitePagesEditPage#PAGE_TYPE_PANEL_CHECKBOX_INPUT");
+		AssertElementPresent(locator1 = "PagesAdmin#PAGE_TYPE_PANEL_CHECKBOX_INPUT");
 	}
 
 	macro _configurePage {
@@ -34,14 +34,9 @@ definition {
 			Page._addPageTypePanel(componentName = "${componentName}");
 		}
 		else if ("${sitePageType}" == "Widget Page") {
-			var key_columnName = "${columnName}";
-
-			Click(locator1 = "SitePagesEditPage#LAYOUT_CARD");
-		}
-		else if ("${sitePageType}" == "Content Page") {
-			Select(
-				locator1 = "SitePagesEditPage#LAYOUT_PAGE_TEMPLATE_SELECT",
-				value1 = "${layoutPageTemplateName}");
+			Click(
+				key_columnName = "${columnName}",
+				locator1 = "PagesAdmin#LAYOUT_CARD");
 		}
 		else if ("${sitePageType}" == "Full Page Application") {
 			Page._addPageTypeFullPageApplication(portlet = "${portlet}");
@@ -130,9 +125,9 @@ definition {
 
 		Click(locator1 = "PageEditor#MORE_LINK");
 
-		Click(locator1 = "SitePagesEditPage#REGULAR_UNIQUE_LOOK_AND_FEEL");
+		Click(locator1 = "PagesAdmin#REGULAR_UNIQUE_LOOK_AND_FEEL");
 
-		Click(locator1 = "SitePagesEditPage#CHANGE_CURRENT_THEME_BUTTON");
+		Click(locator1 = "PagesAdmin#CHANGE_CURRENT_THEME_BUTTON");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -744,7 +739,7 @@ definition {
 	macro viewPageLayoutColumn {
 		AssertElementPresent(
 			key_columnName = "${columnName}",
-			locator1 = "SitePagesEditPage#LAYOUT_CARD");
+			locator1 = "PagesAdmin#LAYOUT_CARD");
 	}
 
 	macro viewPageLockCheck {
@@ -810,11 +805,11 @@ definition {
 
 	macro viewPreview {
 		if (isSet(key_imageName)) {
-			AssertVisible(locator1 = "SitePagesEditPage#PREVIEW_IMAGE");
+			AssertVisible(locator1 = "PagesAdmin#PREVIEW_IMAGE");
 		}
 
 		AssertTextEquals(
-			locator1 = "SitePagesEditPage#PREVIEW_TITLE",
+			locator1 = "PagesAdmin#PREVIEW_TITLE",
 			value1 = "${htmlTitle}");
 
 		var pageNameURL = StringUtil.lowerCase("${pageName}");
@@ -846,12 +841,12 @@ definition {
 		}
 
 		AssertTextEquals(
-			locator1 = "SitePagesEditPage#PREVIEW_URL",
+			locator1 = "PagesAdmin#PREVIEW_URL",
 			value1 = "${url}");
 
 		if (isSet(description)) {
 			AssertTextEquals(
-				locator1 = "SitePagesEditPage#PREVIEW_DESCRIPTION",
+				locator1 = "PagesAdmin#PREVIEW_DESCRIPTION",
 				value1 = "${description}");
 		}
 
@@ -863,25 +858,25 @@ definition {
 			if (isSet(openGraph)) {
 				ScrollWebElementIntoView(locator1 = "Button#SAVE");
 
-				SikuliAssertElementPresent(locator1 = "SitePagesEditPage#PREVIEW_TITLE_ELLIPSES_OG");
+				SikuliAssertElementPresent(locator1 = "PagesAdmin#PREVIEW_TITLE_ELLIPSES_OG");
 			}
 			else {
 				ScrollWebElementIntoView(locator1 = "//label[contains(.,'Change Frequency')]");
 
-				SikuliAssertElementPresent(locator1 = "SitePagesEditPage#PREVIEW_TITLE_ELLIPSES");
+				SikuliAssertElementPresent(locator1 = "PagesAdmin#PREVIEW_TITLE_ELLIPSES");
 			}
 		}
 
 		if (isSet(truncatedURL)) {
 			if (isSet(openGraph)) {
-				SikuliAssertElementPresent(locator1 = "SitePagesEditPage#PREVIEW_URL_ELLIPSES_OG");
+				SikuliAssertElementPresent(locator1 = "PagesAdmin#PREVIEW_URL_ELLIPSES_OG");
 			}
 			else {
 				ScrollWebElementIntoView(locator1 = "//label[contains(.,'Change Frequency')]");
 
 				ProductMenuHelper.closeProductMenu();
 
-				SikuliAssertElementPresent(locator1 = "SitePagesEditPage#PREVIEW_URL_ELLIPSES");
+				SikuliAssertElementPresent(locator1 = "PagesAdmin#PREVIEW_URL_ELLIPSES");
 			}
 		}
 	}
@@ -915,7 +910,7 @@ definition {
 	macro viewSelectedLayoutColumn {
 		AssertElementPresent(
 			key_columnName = "${columnName}",
-			locator1 = "SitePagesEditPage#LAYOUT_CARD_SELECTED");
+			locator1 = "PagesAdmin#LAYOUT_CARD_SELECTED");
 	}
 
 	macro viewSiteNameTranslationsPG {

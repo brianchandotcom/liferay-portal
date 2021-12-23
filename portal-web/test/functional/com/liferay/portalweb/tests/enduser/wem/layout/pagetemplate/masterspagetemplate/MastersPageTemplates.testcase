@@ -270,7 +270,7 @@ definition {
 
 			AssertTextEquals(
 				key_masterLayoutName = "Blank",
-				locator1 = "SitePagesEditPage#MASTER_LAYOUT_NAME",
+				locator1 = "PagesAdmin#MASTER_LAYOUT_NAME",
 				value1 = "Blank");
 
 			AssertClick(
@@ -282,12 +282,12 @@ definition {
 
 			AssertTextEquals(
 				key_masterLayoutName = "Custom Masters Page Template",
-				locator1 = "SitePagesEditPage#MASTER_LAYOUT_NAME",
+				locator1 = "PagesAdmin#MASTER_LAYOUT_NAME",
 				value1 = "Custom Masters Page Template");
 
 			AssertElementNotPresent(
 				key_sectionTitle = "Theme",
-				locator1 = "SitePagesEditPage#SECTION_TITLE");
+				locator1 = "PagesAdmin#SECTION_TITLE");
 
 			Button.clickSave();
 
@@ -325,7 +325,7 @@ definition {
 
 			AssertTextEquals(
 				key_masterLayoutName = "Custom Masters Page Template",
-				locator1 = "SitePagesEditPage#MASTER_LAYOUT_NAME",
+				locator1 = "PagesAdmin#MASTER_LAYOUT_NAME",
 				value1 = "Custom Masters Page Template");
 
 			AssertVisible(
@@ -341,12 +341,12 @@ definition {
 
 			AssertTextEquals(
 				key_masterLayoutName = "Blank",
-				locator1 = "SitePagesEditPage#MASTER_LAYOUT_NAME",
+				locator1 = "PagesAdmin#MASTER_LAYOUT_NAME",
 				value1 = "Blank");
 
 			AssertVisible(
 				key_sectionTitle = "Theme",
-				locator1 = "SitePagesEditPage#SECTION_TITLE");
+				locator1 = "PagesAdmin#SECTION_TITLE");
 
 			AssertNotVisible(
 				key_text = "Edit Master",
@@ -423,7 +423,7 @@ definition {
 
 			AssertTextEquals(
 				key_masterLayoutName = "Blank",
-				locator1 = "SitePagesEditPage#MASTER_LAYOUT_NAME",
+				locator1 = "PagesAdmin#MASTER_LAYOUT_NAME",
 				value1 = "Blank");
 
 			AssertClick(
@@ -435,12 +435,12 @@ definition {
 
 			AssertTextEquals(
 				key_masterLayoutName = "Custom Masters Page Template",
-				locator1 = "SitePagesEditPage#MASTER_LAYOUT_NAME",
+				locator1 = "PagesAdmin#MASTER_LAYOUT_NAME",
 				value1 = "Custom Masters Page Template");
 
 			AssertElementNotPresent(
 				key_sectionTitle = "Theme",
-				locator1 = "SitePagesEditPage#SECTION_TITLE");
+				locator1 = "PagesAdmin#SECTION_TITLE");
 
 			Button.clickSave();
 
@@ -488,7 +488,7 @@ definition {
 
 			AssertTextEquals(
 				key_masterLayoutName = "Custom Masters Page Template",
-				locator1 = "SitePagesEditPage#MASTER_LAYOUT_NAME",
+				locator1 = "PagesAdmin#MASTER_LAYOUT_NAME",
 				value1 = "Custom Masters Page Template");
 
 			AssertVisible(
@@ -504,12 +504,12 @@ definition {
 
 			AssertTextEquals(
 				key_masterLayoutName = "Blank",
-				locator1 = "SitePagesEditPage#MASTER_LAYOUT_NAME",
+				locator1 = "PagesAdmin#MASTER_LAYOUT_NAME",
 				value1 = "Blank");
 
 			AssertVisible(
 				key_sectionTitle = "Theme",
-				locator1 = "SitePagesEditPage#SECTION_TITLE");
+				locator1 = "PagesAdmin#SECTION_TITLE");
 
 			AssertNotVisible(
 				key_text = "Edit Master",
@@ -625,7 +625,7 @@ definition {
 
 			AssertTextEquals(
 				key_masterLayoutName = "Blank",
-				locator1 = "SitePagesEditPage#MASTER_LAYOUT_NAME",
+				locator1 = "PagesAdmin#MASTER_LAYOUT_NAME",
 				value1 = "Blank");
 
 			AssertClick(
@@ -637,12 +637,12 @@ definition {
 
 			AssertTextEquals(
 				key_masterLayoutName = "Custom Masters Page Template",
-				locator1 = "SitePagesEditPage#MASTER_LAYOUT_NAME",
+				locator1 = "PagesAdmin#MASTER_LAYOUT_NAME",
 				value1 = "Custom Masters Page Template");
 
 			AssertElementNotPresent(
 				key_sectionTitle = "Theme",
-				locator1 = "SitePagesEditPage#SECTION_TITLE");
+				locator1 = "PagesAdmin#SECTION_TITLE");
 
 			Button.clickSave();
 
@@ -685,7 +685,7 @@ definition {
 
 			AssertTextEquals(
 				key_masterLayoutName = "Custom Masters Page Template",
-				locator1 = "SitePagesEditPage#MASTER_LAYOUT_NAME",
+				locator1 = "PagesAdmin#MASTER_LAYOUT_NAME",
 				value1 = "Custom Masters Page Template");
 
 			AssertVisible(
@@ -701,12 +701,12 @@ definition {
 
 			AssertTextEquals(
 				key_masterLayoutName = "Blank",
-				locator1 = "SitePagesEditPage#MASTER_LAYOUT_NAME",
+				locator1 = "PagesAdmin#MASTER_LAYOUT_NAME",
 				value1 = "Blank");
 
 			AssertVisible(
 				key_sectionTitle = "Theme",
-				locator1 = "SitePagesEditPage#SECTION_TITLE");
+				locator1 = "PagesAdmin#SECTION_TITLE");
 
 			AssertNotVisible(
 				key_text = "Edit Master",
@@ -770,7 +770,7 @@ definition {
 
 			AssertTextEquals(
 				key_masterLayoutName = "Blank",
-				locator1 = "SitePagesEditPage#MASTER_LAYOUT_NAME",
+				locator1 = "PagesAdmin#MASTER_LAYOUT_NAME",
 				value1 = "Blank");
 
 			AssertClick(
@@ -782,12 +782,12 @@ definition {
 
 			AssertTextEquals(
 				key_masterLayoutName = "Custom Masters Page Template",
-				locator1 = "SitePagesEditPage#MASTER_LAYOUT_NAME",
+				locator1 = "PagesAdmin#MASTER_LAYOUT_NAME",
 				value1 = "Custom Masters Page Template");
 
 			AssertElementNotPresent(
 				key_sectionTitle = "Theme",
-				locator1 = "SitePagesEditPage#SECTION_TITLE");
+				locator1 = "PagesAdmin#SECTION_TITLE");
 
 			Button.clickSave();
 
@@ -821,7 +821,7 @@ definition {
 
 			AssertTextEquals(
 				key_masterLayoutName = "Custom Masters Page Template",
-				locator1 = "SitePagesEditPage#MASTER_LAYOUT_NAME",
+				locator1 = "PagesAdmin#MASTER_LAYOUT_NAME",
 				value1 = "Custom Masters Page Template");
 
 			AssertVisible(
@@ -837,12 +837,12 @@ definition {
 
 			AssertTextEquals(
 				key_masterLayoutName = "Blank",
-				locator1 = "SitePagesEditPage#MASTER_LAYOUT_NAME",
+				locator1 = "PagesAdmin#MASTER_LAYOUT_NAME",
 				value1 = "Blank");
 
 			AssertVisible(
 				key_sectionTitle = "Theme",
-				locator1 = "SitePagesEditPage#SECTION_TITLE");
+				locator1 = "PagesAdmin#SECTION_TITLE");
 
 			AssertNotVisible(
 				key_text = "Edit Master",
@@ -923,7 +923,7 @@ definition {
 
 			AssertTextEquals(
 				key_masterLayoutName = "Blank",
-				locator1 = "SitePagesEditPage#MASTER_LAYOUT_NAME",
+				locator1 = "PagesAdmin#MASTER_LAYOUT_NAME",
 				value1 = "Blank");
 
 			AssertClick(
@@ -935,12 +935,12 @@ definition {
 
 			AssertTextEquals(
 				key_masterLayoutName = "Custom Masters Page Template",
-				locator1 = "SitePagesEditPage#MASTER_LAYOUT_NAME",
+				locator1 = "PagesAdmin#MASTER_LAYOUT_NAME",
 				value1 = "Custom Masters Page Template");
 
 			AssertElementNotPresent(
 				key_sectionTitle = "Theme",
-				locator1 = "SitePagesEditPage#SECTION_TITLE");
+				locator1 = "PagesAdmin#SECTION_TITLE");
 
 			Button.clickSave();
 
@@ -974,7 +974,7 @@ definition {
 
 			AssertTextEquals(
 				key_masterLayoutName = "Custom Masters Page Template",
-				locator1 = "SitePagesEditPage#MASTER_LAYOUT_NAME",
+				locator1 = "PagesAdmin#MASTER_LAYOUT_NAME",
 				value1 = "Custom Masters Page Template");
 
 			AssertVisible(
@@ -990,12 +990,12 @@ definition {
 
 			AssertTextEquals(
 				key_masterLayoutName = "Blank",
-				locator1 = "SitePagesEditPage#MASTER_LAYOUT_NAME",
+				locator1 = "PagesAdmin#MASTER_LAYOUT_NAME",
 				value1 = "Blank");
 
 			AssertVisible(
 				key_sectionTitle = "Theme",
-				locator1 = "SitePagesEditPage#SECTION_TITLE");
+				locator1 = "PagesAdmin#SECTION_TITLE");
 
 			AssertNotVisible(
 				key_text = "Edit Master",
@@ -1433,7 +1433,7 @@ definition {
 
 			AssertTextEquals(
 				key_masterLayoutName = "Custom Masters Page Template",
-				locator1 = "SitePagesEditPage#MASTER_LAYOUT_NAME",
+				locator1 = "PagesAdmin#MASTER_LAYOUT_NAME",
 				value1 = "Custom Masters Page Template");
 
 			Button.clickSave();

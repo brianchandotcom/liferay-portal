@@ -367,6 +367,21 @@ public interface SXPElementModel
 	public void setReadOnly(boolean readOnly);
 
 	/**
+	 * Returns the schema version of this sxp element.
+	 *
+	 * @return the schema version of this sxp element
+	 */
+	@AutoEscape
+	public String getSchemaVersion();
+
+	/**
+	 * Sets the schema version of this sxp element.
+	 *
+	 * @param schemaVersion the schema version of this sxp element
+	 */
+	public void setSchemaVersion(String schemaVersion);
+
+	/**
 	 * Returns the title of this sxp element.
 	 *
 	 * @return the title of this sxp element

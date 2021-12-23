@@ -24,6 +24,7 @@
 			<sanitize content-type="text/plain" modes="ALL" />
 			<validator name="required" />
 		</field>
+		<field name="schemaVersion" type="String" />
 		<field name="status" type="int" />
 		<field name="statusByUserId" type="long" />
 		<field name="statusByUserName" type="String" />
@@ -46,6 +47,7 @@
 		</field>
 		<field name="hidden" type="boolean" />
 		<field name="readOnly" type="boolean" />
+		<field name="schemaVersion" type="String" />
 		<field localized="true" name="title" type="String">
 			<hint name="max-length">500</hint>
 			<sanitize content-type="text/plain" modes="ALL" />

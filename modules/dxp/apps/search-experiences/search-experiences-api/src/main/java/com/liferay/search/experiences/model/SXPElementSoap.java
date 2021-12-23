@@ -45,6 +45,7 @@ public class SXPElementSoap implements Serializable {
 		soapModel.setElementDefinitionJSON(model.getElementDefinitionJSON());
 		soapModel.setHidden(model.isHidden());
 		soapModel.setReadOnly(model.isReadOnly());
+		soapModel.setSchemaVersion(model.getSchemaVersion());
 		soapModel.setTitle(model.getTitle());
 		soapModel.setType(model.getType());
 		soapModel.setStatus(model.getStatus());
@@ -205,6 +206,14 @@ public class SXPElementSoap implements Serializable {
 		_readOnly = readOnly;
 	}
 
+	public String getSchemaVersion() {
+		return _schemaVersion;
+	}
+
+	public void setSchemaVersion(String schemaVersion) {
+		_schemaVersion = schemaVersion;
+	}
+
 	public String getTitle() {
 		return _title;
 	}
@@ -241,6 +250,7 @@ public class SXPElementSoap implements Serializable {
 	private String _elementDefinitionJSON;
 	private boolean _hidden;
 	private boolean _readOnly;
+	private String _schemaVersion;
 	private String _title;
 	private int _type;
 	private int _status;

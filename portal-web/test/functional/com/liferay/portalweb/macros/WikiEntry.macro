@@ -29,15 +29,16 @@ definition {
 		Click(locator1 = "CKEditor#OK_BUTTON");
 		
 	macro addPageSummary {
-		var key_text = "Summary";
-
-		if (IsNotVisible(locator1 = "TextInput#ANY")) {
-			Panel.expandPanel(panel = "Configuration");
-		}
+		Panel.expandPanel(panel = "Configuration");
 
 		Type(
+			key_text = "Summary",
 			locator1 = "TextInput#ANY",
 			value1 = "${wikiPageSummary}");
+
+		Button.clickPublish();
+
+		Alert.viewSuccessMessage();
 	}
 
 	macro addPageTitle {

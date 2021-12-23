@@ -119,10 +119,6 @@ definition {
 
 		WikiEntry.addPageSummary(wikiPageSummary = "Wiki Page Summary");
 
-		Button.clickPublish();
-
-		Alert.viewSuccessMessage();
-
 		WikiNavigator.openToWikiPage(
 			layoutURLKey = "wiki-test-page",
 			siteURLKey = "guest",

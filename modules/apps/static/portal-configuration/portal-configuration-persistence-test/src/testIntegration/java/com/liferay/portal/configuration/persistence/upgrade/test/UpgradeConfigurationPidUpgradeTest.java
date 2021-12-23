@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.file.install.constants.FileInstallConstants;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
@@ -202,7 +203,7 @@ public class UpgradeConfigurationPidUpgradeTest {
 		throws Exception {
 
 		Dictionary<String, String> dictionary = HashMapDictionaryBuilder.put(
-			"felix.fileinstall.filename",
+			FileInstallConstants.FELIX_FILE_INSTALL_FILENAME,
 			() -> {
 				if (fileinstallFileName != null) {
 					return fileinstallFileName;
@@ -246,7 +247,8 @@ public class UpgradeConfigurationPidUpgradeTest {
 
 				Assert.assertEquals(
 					fileinstallFileName,
-					dictionary.get("felix.fileinstall.filename"));
+					dictionary.get(
+						FileInstallConstants.FELIX_FILE_INSTALL_FILENAME));
 			}
 		}
 	}

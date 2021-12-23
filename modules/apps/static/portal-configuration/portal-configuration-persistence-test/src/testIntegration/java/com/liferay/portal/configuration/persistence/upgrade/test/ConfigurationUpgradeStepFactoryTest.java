@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.persistence.upgrade.ConfigurationUpgradeStepFactory;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
+import com.liferay.portal.file.install.constants.FileInstallConstants;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.HashMapDictionary;
@@ -210,12 +211,14 @@ public class ConfigurationUpgradeStepFactoryTest {
 		Dictionary<String, String> dictionary = _persistenceManager.load(
 			existentPid);
 
-		String fileName = dictionary.get("felix.fileinstall.filename");
+		String fileName = dictionary.get(
+			FileInstallConstants.FELIX_FILE_INSTALL_FILENAME);
 
 		if (!felixFileName) {
 			Assert.assertNull(
-				"Configuration property felix.fileinstall.filename should " +
-					"not exist",
+				"Configuration property " +
+					FileInstallConstants.FELIX_FILE_INSTALL_FILENAME +
+						" should not exist",
 				fileName);
 
 			return;
@@ -261,7 +264,8 @@ public class ConfigurationUpgradeStepFactoryTest {
 				URI uri = oldConfigFile.toURI();
 
 				properties = MapUtil.singletonDictionary(
-					"felix.fileinstall.filename", uri.toString());
+					FileInstallConstants.FELIX_FILE_INSTALL_FILENAME,
+					uri.toString());
 			}
 			else {
 				properties = new HashMapDictionary<>();

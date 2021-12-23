@@ -79,8 +79,6 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 
 	public static final String CONFIG_ENCODING = "file.install.configEncoding";
 
-	public static final String FILENAME = "felix.fileinstall.filename";
-
 	public static final String FILTER = "file.install.filter";
 
 	public static final String NO_INITIAL_DELAY = "file.install.noInitialDelay";

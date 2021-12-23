@@ -17,6 +17,7 @@ package com.liferay.portal.configuration.persistence.internal.upgrade;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.persistence.upgrade.ConfigurationUpgradeStepFactory;
+import com.liferay.portal.file.install.constants.FileInstallConstants;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
@@ -75,11 +76,11 @@ public class ConfigurationUpgradeStepFactoryImpl
 					dictionary.put("service.pid", newServicePid);
 
 					String fileName = dictionary.get(
-						"felix.fileinstall.filename");
+						FileInstallConstants.FELIX_FILE_INSTALL_FILENAME);
 
 					if (fileName != null) {
 						dictionary.put(
-							"felix.fileinstall.filename",
+							FileInstallConstants.FELIX_FILE_INSTALL_FILENAME,
 							StringUtil.replace(fileName, oldPid, newPid));
 					}
 

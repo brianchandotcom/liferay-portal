@@ -17,6 +17,7 @@ package com.liferay.portal.configuration.persistence.internal.upgrade.v1_0_0;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.file.install.constants.FileInstallConstants;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
@@ -75,7 +76,7 @@ public class UpgradeConfigurationPid extends UpgradeProcess {
 					"configurationId");
 
 				String felixFileInstallFilename = dictionary.get(
-					"felix.fileinstall.filename");
+					FileInstallConstants.FELIX_FILE_INSTALL_FILENAME);
 
 				int serviceFactoryPidEndIndex = serviceFactoryPid.length();
 
@@ -94,7 +95,8 @@ public class UpgradeConfigurationPid extends UpgradeProcess {
 								CharPool.PERIOD));
 					}
 					else {
-						dictionary.remove("felix.fileinstall.filename");
+						dictionary.remove(
+							FileInstallConstants.FELIX_FILE_INSTALL_FILENAME);
 					}
 				}
 

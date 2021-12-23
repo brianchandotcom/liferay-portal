@@ -18,7 +18,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.file.install.FileInstaller;
-import com.liferay.portal.file.install.internal.DirectoryWatcher;
+import com.liferay.portal.file.install.constants.FileInstallConstants;
 import com.liferay.portal.file.install.internal.properties.ConfigurationProperties;
 import com.liferay.portal.file.install.internal.properties.ConfigurationPropertiesFactory;
 import com.liferay.portal.kernel.log.Log;
@@ -109,7 +109,8 @@ public class ConfigurationFileInstaller implements FileInstaller {
 		String oldFileName = null;
 
 		if (old != null) {
-			oldFileName = (String)old.remove(DirectoryWatcher.FILENAME);
+			oldFileName = (String)old.remove(
+				FileInstallConstants.FELIX_FILE_INSTALL_FILENAME);
 
 			old.remove(Constants.SERVICE_PID);
 			old.remove(ConfigurationAdmin.SERVICE_FACTORYPID);
@@ -129,7 +130,9 @@ public class ConfigurationFileInstaller implements FileInstaller {
 		if (!_equals(dictionary, old) ||
 			!Objects.equals(oldFileName, currentFileName)) {
 
-			dictionary.put(DirectoryWatcher.FILENAME, currentFileName);
+			dictionary.put(
+				FileInstallConstants.FELIX_FILE_INSTALL_FILENAME,
+				currentFileName);
 
 			String logString = StringPool.BLANK;
 
@@ -226,7 +229,8 @@ public class ConfigurationFileInstaller implements FileInstaller {
 
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
 			StringBundler.concat(
-				StringPool.OPEN_PARENTHESIS, DirectoryWatcher.FILENAME,
+				StringPool.OPEN_PARENTHESIS,
+				FileInstallConstants.FELIX_FILE_INSTALL_FILENAME,
 				StringPool.EQUAL, _escapeFilterValue(fileName),
 				StringPool.CLOSE_PARENTHESIS));
 

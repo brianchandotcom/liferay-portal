@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.persistence.ConfigurationOverridePropertiesUtil;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
+import com.liferay.portal.file.install.constants.FileInstallConstants;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -217,7 +218,8 @@ public class ConfigurationPersistenceManagerTest {
 		ReflectionTestUtil.invoke(
 			_persistenceManager, "_verifyDictionary",
 			new Class<?>[] {String.class, String.class}, "whitespace.pid",
-			"felix.fileinstall.filename=\"file:/whitespace path/file.config\"");
+			FileInstallConstants.FELIX_FILE_INSTALL_FILENAME +
+				"=\"file:/whitespace path/file.config\"");
 	}
 
 	private void _assertConfiguration(boolean factory) throws Exception {

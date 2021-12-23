@@ -23,6 +23,7 @@ import com.liferay.portal.configuration.persistence.ConfigurationOverridePropert
 import com.liferay.portal.configuration.persistence.ReloadablePersistenceManager;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException;
+import com.liferay.portal.file.install.constants.FileInstallConstants;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
@@ -259,12 +260,14 @@ public class ConfigurationPersistenceManager
 		Dictionary<Object, Object> newDictionary = _copyDictionary(dictionary);
 
 		String fileName = (String)newDictionary.get(
-			_FELIX_FILE_INSTALL_FILENAME);
+			FileInstallConstants.FELIX_FILE_INSTALL_FILENAME);
 
 		if (fileName != null) {
 			File file = new File(URI.create(fileName));
 
-			newDictionary.put(_FELIX_FILE_INSTALL_FILENAME, file.getName());
+			newDictionary.put(
+				FileInstallConstants.FELIX_FILE_INSTALL_FILENAME,
+				file.getName());
 		}
 
 		Lock lock = _readWriteLock.writeLock();
@@ -275,7 +278,8 @@ public class ConfigurationPersistenceManager
 			_storeInDatabase(pid, newDictionary);
 
 			if (fileName != null) {
-				newDictionary.put(_FELIX_FILE_INSTALL_FILENAME, fileName);
+				newDictionary.put(
+					FileInstallConstants.FELIX_FILE_INSTALL_FILENAME, fileName);
 			}
 
 			_dictionaries.put(pid, _overrideDictionary(pid, newDictionary));
@@ -312,14 +316,17 @@ public class ConfigurationPersistenceManager
 			new UnsyncByteArrayInputStream(
 				dictionaryString.getBytes(StringPool.UTF8)));
 
-		String fileName = (String)dictionary.get(_FELIX_FILE_INSTALL_FILENAME);
+		String fileName = (String)dictionary.get(
+			FileInstallConstants.FELIX_FILE_INSTALL_FILENAME);
 
 		if (fileName != null) {
 			File file = _getCanonicalConfigFile(fileName);
 
 			URI uri = file.toURI();
 
-			dictionary.put(_FELIX_FILE_INSTALL_FILENAME, uri.toString());
+			dictionary.put(
+				FileInstallConstants.FELIX_FILE_INSTALL_FILENAME,
+				uri.toString());
 		}
 
 		return dictionary;
@@ -518,7 +525,7 @@ public class ConfigurationPersistenceManager
 				dictionaryString.getBytes(StringPool.UTF8)));
 
 		String felixFileInstallFileName = (String)dictionary.get(
-			_FELIX_FILE_INSTALL_FILENAME);
+			FileInstallConstants.FELIX_FILE_INSTALL_FILENAME);
 
 		if (felixFileInstallFileName == null) {
 			return dictionary;
@@ -542,12 +549,15 @@ public class ConfigurationPersistenceManager
 				configFile = new File(felixFileInstallFileName);
 			}
 
-			dictionary.put(_FELIX_FILE_INSTALL_FILENAME, configFile.getName());
+			dictionary.put(
+				FileInstallConstants.FELIX_FILE_INSTALL_FILENAME,
+				configFile.getName());
 
 			_storeInDatabase(pid, dictionary);
 
 			dictionary.put(
-				_FELIX_FILE_INSTALL_FILENAME, felixFileInstallFileName);
+				FileInstallConstants.FELIX_FILE_INSTALL_FILENAME,
+				felixFileInstallFileName);
 
 			needSave = false;
 		}
@@ -556,7 +566,9 @@ public class ConfigurationPersistenceManager
 
 			URI uri = configFile.toURI();
 
-			dictionary.put(_FELIX_FILE_INSTALL_FILENAME, uri.toString());
+			dictionary.put(
+				FileInstallConstants.FELIX_FILE_INSTALL_FILENAME,
+				uri.toString());
 		}
 
 		if (needSave) {
@@ -599,9 +611,6 @@ public class ConfigurationPersistenceManager
 				ConfigurationModelListenerException.class);
 		}
 	}
-
-	private static final String _FELIX_FILE_INSTALL_FILENAME =
-		"felix.fileinstall.filename";
 
 	private static final String _SERVIE_BUNDLE_LOCATION =
 		"service.bundleLocation";

@@ -92,12 +92,9 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8423 | Test Summary: Forms audience card shows expected amount of known and anonymous individuals"
-	@ignore = "true"
 	@priority = "5"
 	test AudienceCardShowsExpectedAmountKnowAndAnonymousIndividualsInForms {
 		property portal.upstream = "quarantine";
-
-		// AC Bug Ticket: LRAC-10154
 
 		var usernameList = "ac,ac2";
 		var emailList = "ac@liferay.com,ac2@liferay.com";
@@ -163,12 +160,9 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8424 | Test Summary: Forms audience card shows expected amount of segmented and unsegmented individuals"
-	@ignore = "true"
 	@priority = "5"
 	test AudienceCardShowsExpectedAmountSegmentedAndUnsegmentedInForms {
 		property portal.upstream = "quarantine";
-
-		// AC Bug Ticket: LRAC-10154
 
 		var usernameList = "ac,ac2";
 		var emailList = "ac@liferay.com,ac2@liferay.com";
@@ -261,12 +255,9 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8417 | Test Summary: Forms list is searchable"
-	@ignore = "true"
 	@priority = "5"
 	test CanFormsListSearchable {
 		property portal.upstream = "quarantine";
-
-		// AC Bug Ticket: LRAC-10154
 
 		var formNameList = "Created Form Name,Created Form Name 1";
 
@@ -314,12 +305,9 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8121 | Test Summary: Assert clicking a form in the forms list navigates to the form overview page"
-	@ignore = "true"
 	@priority = "5"
 	test CanNavigatesToFormsOverviewPage {
 		property portal.upstream = "quarantine";
-
-		// AC Bug Ticket: LRAC-10154
 
 		Navigator.openURL();
 
@@ -450,12 +438,9 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8431 | Test Summary: Form abandonment card shows the expected amount of form abandonment based on how many times the form was started but not completed"
-	@ignore = "true"
 	@priority = "5"
 	test FormAbandonmentCardShowsExpectedAmountFormAbandonment {
 		property portal.upstream = "quarantine";
-
-		// AC Bug Ticket: LRAC-10154
 
 		Navigator.openURL();
 
@@ -555,12 +540,9 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8429 | Test Summary: Form submissions by technology card shows views by expected browser"
-	@ignore = "true"
 	@priority = "5"
 	test FormsTechnologyCardShowsViewsByExpectedBrowser {
 		property portal.upstream = "quarantine";
-
-		// AC Bug Ticket: LRAC-10154
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
@@ -606,12 +588,9 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8428 | Test Summary: Form submissions by technology card shows views by expected device"
-	@ignore = "true"
 	@priority = "5"
 	test FormsTechnologyCardShowsViewsByExpectedDevice {
 		property portal.upstream = "quarantine";
-
-		// AC Bug Ticket: LRAC-10154
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
@@ -655,12 +634,9 @@ definition {
 	}
 
 	@description = "Form known individuals shows which individuals interact with the form"
-	@ignore = "true"
 	@priority = "5"
 	test KnownIndividualsShowsWhichIndividualsInteractWithForm {
 		property portal.upstream = "quarantine";
-
-		// AC Bug Ticket: LRAC-10154
 
 		var nameList = "ac ac,liferay liferay,dxp dxp";
 		var usernameList = "ac,liferay,dxp";
@@ -711,12 +687,9 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8120 | Test Summary: Assert forms list shows all of the forms in a list"
-	@ignore = "true"
 	@priority = "5"
 	test ViewAllFormsShownInAssetList {
 		property portal.upstream = "quarantine";
-
-		// AC Bug Ticket: LRAC-10154
 
 		var formNameList = "Created Form Name,Created Form Name 1,Created Form Name 2,Created Form Name 3";
 
@@ -760,13 +733,10 @@ definition {
 	}
 
 	@description = "Forms visitor behavior card shows expected amount of views"
-	@ignore = "true"
 	@priority = "5"
 	test VisitorBehaviorCardShowsExpectedAmountOfViews {
 		property portal.acceptance = "false";
 		property portal.upstream = "quarantine";
-
-		// AC Bug Ticket: LRAC-10154
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 

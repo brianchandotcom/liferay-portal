@@ -125,14 +125,10 @@ public class DLFolderItemSelectorView
 			DLSelectFolderDisplayContext.class.getName(),
 			new DLSelectFolderDisplayContext(
 				_dlAppService, _fetchFolder(folderId),
-				(HttpServletRequest)servletRequest, portletURL,
-				BeanParamUtil.getLong(
-					itemSelectorCriterion, (HttpServletRequest)servletRequest,
-					"selectedRepositoryId"),
-				BeanParamUtil.getLong(
-					itemSelectorCriterion, (HttpServletRequest)servletRequest,
-					"selectedFolderId", folderId),
-				repositoryId, _isShowGroupSelector(itemSelectorCriterion)));
+				(HttpServletRequest)servletRequest, portletURL, repositoryId,
+				itemSelectorCriterion.getSelectedFolderId(),
+				itemSelectorCriterion.getSelectedRepositoryId(),
+				_isShowGroupSelector(itemSelectorCriterion)));
 
 		requestDispatcher.include(servletRequest, servletResponse);
 	}

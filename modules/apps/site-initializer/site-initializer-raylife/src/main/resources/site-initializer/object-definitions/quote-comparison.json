@@ -11,7 +11,7 @@
 				"en_US": "Most Popular"
 			},
 			"name": "mostPopular",
-			"required": true,
+			"required": false,
 			"type": "Boolean"
 		},
 		{

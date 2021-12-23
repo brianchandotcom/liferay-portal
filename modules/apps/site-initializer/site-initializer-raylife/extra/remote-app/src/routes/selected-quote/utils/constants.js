@@ -1,0 +1,4 @@
+export const SKU = {
+	INSTALLMENT: 'INSTALLMENT',
+	PAY_IN_FULL: 'PAY IN FULL',
+};

@@ -39,6 +39,7 @@ AddGroupDisplayContext addGroupDisplayContext = new AddGroupDisplayContext(reque
 							<liferay-asset:asset-categories-selector
 								className="<%= Group.class.getName() %>"
 								classPK="<%= 0 %>"
+								groupIds="<%= addGroupDisplayContext.getGroupIds() %>"
 								showOnlyRequiredVocabularies="<%= true %>"
 								visibilityTypes="<%= AssetVocabularyConstants.VISIBILITY_TYPES %>"
 							/>

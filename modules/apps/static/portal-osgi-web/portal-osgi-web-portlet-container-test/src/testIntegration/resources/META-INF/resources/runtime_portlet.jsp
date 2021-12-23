@@ -16,14 +16,9 @@
 
 <%@ taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %>
 
-<%@ page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
-page import="com.liferay.portal.kernel.util.Validator" %>
-
-<%
-String portletName = ParamUtil.getString(request, "testRuntimePortletId");
-%>
+<%@ page import="com.liferay.portal.kernel.util.ParamUtil" %>
 
 <liferay-portlet:runtime
 	persistSettings='<%= ParamUtil.getBoolean(request, "persistSettings", true) %>'
-	portletName='<%= Validator.isBlank(portletName) ? (String)request.getAttribute("testRuntimePortletId") : portletName %>'
+	portletName='<%= ParamUtil.getString(request, "testRuntimePortletId", (String)request.getAttribute("testRuntimePortletId")) %>'
 />

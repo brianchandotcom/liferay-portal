@@ -13,15 +13,24 @@ definition {
 	}
 
 	macro viewPG {
+		var serverVersion = SearchAdministration.getServerVersion();
+
+		Navigator.gotoPage(pageName = "Elasticsearch Monitoring Page");
+
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#ELASTICSEARCH_MONITORING");
 
 		AssertTextPresent(
 			locator1 = "ElasticsearchMonitoring#CLUSTER_NAME",
 			value1 = "LiferayElasticsearchCluster");
 
-		AssertElementPresent(
-			key_title = "Cluster overview",
-			locator1 = "Header#H1_TITLE");
+		if (contains("${serverVersion}", "7.16.1")) {
+			AssertElementPresent(
+				key_title = "Cluster overview",
+				locator1 = "Header#H1_TITLE");
+		}
+		else {
+			AssertElementPresent(locator1 = "ElasticsearchMonitoring#MONITORING_CLUSTER_OVERVIEW");
+		}
 
 		AssertElementPresent(
 			key_title = "Elasticsearch",

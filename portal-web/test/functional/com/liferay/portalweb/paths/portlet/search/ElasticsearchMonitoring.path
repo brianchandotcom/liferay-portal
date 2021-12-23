@@ -15,6 +15,11 @@
 	<td>//a[@data-test-subj='clusterName']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>MONITORING_CLUSTER_OVERVIEW</td>
+	<td>//div[@id='monitoringClusterOverviewApp']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -84,7 +84,7 @@ public class ViewSXPElementsDisplayContext {
 				).buildString(),
 				"pencil", "edit",
 				LanguageUtil.get(_sxpRequestHelper.getRequest(), "edit"), "get",
-				null, null),
+				"view", null),
 			new FDSActionDropdownItem(
 				getAPIURL() + "/{id}/export", "download", "export",
 				LanguageUtil.get(_sxpRequestHelper.getRequest(), "export"),
@@ -95,7 +95,7 @@ public class ViewSXPElementsDisplayContext {
 					"are-you-sure-you-want-to-delete-this-entry"),
 				getAPIURL() + "/{id}", "trash", "delete",
 				LanguageUtil.get(_sxpRequestHelper.getRequest(), "delete"),
-				"delete", null, "async"));
+				"delete", "delete", "async"));
 	}
 
 	public PortletURL getPortletURL() throws PortletException {

@@ -643,6 +643,23 @@ definition {
 		Pause(locator1 = "1000");
 	}
 
+	macro modifyModuleDefinitionTimeout {
+		Form.openToJavaScriptLoader();
+
+		Type(
+			locator1 = "//div[@data-field-name=&quot;waitTimeout&quot;]//input[@type=&quot;text&quot;]",
+			value1 = "${timeout}");
+
+		if (IsElementPresent(locator1 = "Button#UPDATE")) {
+			PortletEntry.update();
+		}
+		else if (IsElementPresent(locator1 = "Button#SAVE")) {
+			PortletEntry.save();
+		}
+
+		Navigator.openURL();
+	}
+
 	macro moveFieldToRow {
 		if (isSet(formPageNumber)) {
 			var key_formPageNumber = "${formPageNumber}";
@@ -675,6 +692,12 @@ definition {
 		Click(
 			key_formPageName = "${formPageName}",
 			locator1 = "Form#PAGE_MOVE_UP_ENABLED");
+	}
+
+	macro openToJavaScriptLoader {
+		var baseURL = PropsUtil.get("portal.url");
+
+		Open(locator1 = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_factoryPid=com.liferay.frontend.js.loader.modules.extender.internal.configuration.Details&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fedit_configuration&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_pid=com.liferay.frontend.js.loader.modules.extender.internal.configuration.Details");
 	}
 
 	macro pageReset {

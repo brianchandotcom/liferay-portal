@@ -81,19 +81,6 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 
 	public static final String FILTER = "file.install.filter";
 
-	public static final String NO_INITIAL_DELAY = "file.install.noInitialDelay";
-
-	public static final String START_NEW_BUNDLES =
-		"file.install.bundles.new.start";
-
-	public static final String SUBDIR_MODE = "file.install.subdir.mode";
-
-	public static final String USE_START_ACTIVATION_POLICY =
-		"file.install.bundles.startActivationPolicy";
-
-	public static final String USE_START_TRANSIENT =
-		"file.install.bundles.startTransient";
-
 	public DirectoryWatcher(BundleContext bundleContext) {
 		super("fileinstall-directory-watcher");
 
@@ -104,16 +91,17 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 		_activeLevel = GetterUtil.getInteger(
 			bundleContext.getProperty(ACTIVE_LEVEL));
 		_filter = bundleContext.getProperty(FILTER);
-		_noInitialDelay = GetterUtil.getBoolean(
-			bundleContext.getProperty(NO_INITIAL_DELAY));
-		_startBundles = GetterUtil.getBoolean(
-			bundleContext.getProperty(START_NEW_BUNDLES), true);
+		_noInitialDelay =
+			PropsValues.MODULE_FRAMEWORK_FILE_INSTALL_NO_INITIAL_DELAY;
+		_startBundles =
+			PropsValues.MODULE_FRAMEWORK_FILE_INSTALL_BUNDLES_START_NEW;
 		_systemBundle = bundleContext.getBundle(
 			Constants.SYSTEM_BUNDLE_LOCATION);
-		_useStartActivationPolicy = GetterUtil.getBoolean(
-			bundleContext.getProperty(USE_START_ACTIVATION_POLICY), true);
-		_useStartTransient = GetterUtil.getBoolean(
-			bundleContext.getProperty(USE_START_TRANSIENT));
+		_useStartActivationPolicy =
+			PropsValues.
+				MODULE_FRAMEWORK_FILE_INSTALL_BUNDLES_START_ACTIVATION_POLICY;
+		_useStartTransient =
+			PropsValues.MODULE_FRAMEWORK_FILE_INSTALL_BUNDLES_START_TRANSIENT;
 
 		for (String dir : PropsValues.MODULE_FRAMEWORK_AUTO_DEPLOY_DIRS) {
 			_watchedDirs.add(new File(dir));
@@ -159,7 +147,8 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 			});
 
 		_scanner = new Scanner(
-			_watchedDirs, _filter, bundleContext.getProperty(SUBDIR_MODE));
+			_watchedDirs, _filter,
+			PropsValues.MODULE_FRAMEWORK_FILE_INSTALL_SUBDIR_MODE);
 
 		_bundleContext.addBundleListener(this);
 	}

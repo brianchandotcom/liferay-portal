@@ -21,44 +21,129 @@ const cookieBanner = document.querySelector('.cookies-banner');
 
 const editMode = document.body.classList.contains('has-edit-mode-menu');
 
-function hideBanner() {
+function hideCookiesBanner() {
 	cookieBanner.style.display = 'none';
+}
+
+function showCookiesBanner() {
+	cookieBanner.style.display = 'block';
+}
+
+function checkCookiesConsent() {
+	if (
+		localStorage.getItem('liferay.cookie.consent.functional') ===
+			'accepted' ||
+		localStorage.getItem('liferay.cookie.consent.functional') ===
+			'decline' ||
+		localStorage.getItem('liferay.cookie.consent.performance') ===
+			'accepted' ||
+		localStorage.getItem('liferay.cookie.consent.performance') ===
+			'decline' ||
+		localStorage.getItem('liferay.cookie.consent.personalization') ===
+			'accepted' ||
+		localStorage.getItem('liferay.cookie.consent.personalization') ===
+			'decline'
+	) {
+		hideCookiesBanner();
+	}
+	else {
+		showCookiesBanner();
+	}
+}
+
+function cookiesAcceptAll() {
+	localStorage.setItem('liferay.cookie.consent.functional', 'accepted');
+	localStorage.setItem('liferay.cookie.consent.performance', 'accepted');
+	localStorage.setItem('liferay.cookie.consent.personalization', 'accepted');
+}
+
+function cookiesDeclineAll() {
+	localStorage.setItem('liferay.cookie.consent.functional', 'decline');
+	localStorage.setItem('liferay.cookie.consent.performance', 'decline');
+	localStorage.setItem('liferay.cookie.consent.personalization', 'decline');
 }
 
 export default function ({configurationTitle, configurationUrl}) {
 	if (!editMode) {
-		if (
-			localStorage.getItem('liferay.cookie.consent') === 'accepted' ||
-			localStorage.getItem('liferay.cookie.consent') === 'decline'
-		) {
-			hideBanner();
-		}
-		else {
-			buttonAccept.addEventListener(
-				'click',
-				function handleButtonClickAccept() {
-					hideBanner();
+		checkCookiesConsent();
 
-					localStorage.setItem('liferay.cookie.consent', 'accepted2');
-				}
-			);
-			buttonConfiguration.addEventListener(
-				'click',
-				function handleButtonClickConfiguration() {
-					Liferay.Util.openModal({
-						title: configurationTitle,
-						url: configurationUrl,
-					});
-				}
-			);
-			buttonDecline.addEventListener(
-				'click',
-				function handleButtonClickDecline() {
-					hideBanner();
+		buttonAccept.addEventListener(
+			'click',
+			function handleButtonClickAccept() {
+				hideCookiesBanner();
 
-					localStorage.setItem('liferay.cookie.consent', 'decline2');
-				}
-			);
-		}
+				cookiesAcceptAll();
+			}
+		);
+
+		buttonConfiguration.addEventListener(
+			'click',
+			function handleButtonClickConfiguration() {
+				Liferay.Util.openModal({
+					buttons: [
+						{
+							label: 'Decline all',
+							onClick() {
+								cookiesDeclineAll();
+
+								checkCookiesConsent();
+
+								Liferay.Util.getOpener().Liferay.fire(
+									'closeModal',
+									{
+										id: 'cookiesBannerConfiguration',
+									}
+								);
+							},
+						},
+						{
+							displayType: 'secondary',
+							label: 'Confirm',
+							onClick() {
+								checkCookiesConsent();
+
+								Liferay.Util.getOpener().Liferay.fire(
+									'closeModal',
+									{
+										id: 'cookiesBannerConfiguration',
+									}
+								);
+							},
+						},
+						{
+							displayType: 'secondary',
+							label: 'Accept all',
+							onClick() {
+								cookiesAcceptAll();
+
+								checkCookiesConsent();
+
+								Liferay.Util.getOpener().Liferay.fire(
+									'closeModal',
+									{
+										id: 'cookiesBannerConfiguration',
+									}
+								);
+							},
+						},
+					],
+					displayType: 'primary',
+					height: '70vh',
+					id: 'cookiesBannerConfiguration',
+					size: 'lg',
+					title: configurationTitle,
+					url: configurationUrl,
+				});
+			}
+		);
+
+		buttonDecline.addEventListener(
+			'click',
+			function handleButtonClickDecline() {
+				hideCookiesBanner();
+
+				cookiesDeclineAll();
+			}
+		);
 	}
 }

@@ -929,18 +929,11 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			configurationFileInstallerClass.getDeclaredMethod(
 				"transformURL", File.class);
 
-		String encoding = bundleContext.getProperty(
-			"file.install.configEncoding");
-
-		if (encoding == null) {
-			encoding = StringPool.UTF8;
-		}
-
 		Object configurationFileInstaller = constructor.newInstance(
 			bundleContext.getService(
 				bundleContext.getServiceReference(
 					"org.osgi.service.cm.ConfigurationAdmin")),
-			encoding);
+			PropsValues.MODULE_FRAMEWORK_FILE_INSTALL_CONFIG_ENCODING);
 
 		File dir = new File(PropsValues.MODULE_FRAMEWORK_CONFIGS_DIR);
 

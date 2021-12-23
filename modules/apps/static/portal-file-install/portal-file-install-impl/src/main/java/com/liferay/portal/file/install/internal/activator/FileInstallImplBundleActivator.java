@@ -14,13 +14,13 @@
 
 package com.liferay.portal.file.install.internal.activator;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.file.install.FileInstaller;
 import com.liferay.portal.file.install.internal.DefaultJarInstaller;
 import com.liferay.portal.file.install.internal.DirectoryWatcher;
 import com.liferay.portal.file.install.internal.Scanner;
 import com.liferay.portal.file.install.internal.configuration.ConfigurationFileInstaller;
 import com.liferay.portal.file.install.internal.configuration.FileSyncConfigurationListener;
+import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
 
@@ -60,24 +60,21 @@ public class FileInstallImplBundleActivator implements BundleActivator {
 					ConfigurationAdmin configurationAdmin =
 						bundleContext.getService(serviceReference);
 
-					String encoding = bundleContext.getProperty(
-						DirectoryWatcher.CONFIG_ENCODING);
-
-					if (encoding == null) {
-						encoding = StringPool.UTF8;
-					}
-
 					return Arrays.asList(
 						_bundleContext.registerService(
 							FileInstaller.class.getName(),
 							new ConfigurationFileInstaller(
-								configurationAdmin, encoding),
+								configurationAdmin,
+								PropsValues.
+									MODULE_FRAMEWORK_FILE_INSTALL_CONFIG_ENCODING),
 							null),
 						_bundleContext.registerService(
 							ConfigurationListener.class.getName(),
 							new FileSyncConfigurationListener(
 								configurationAdmin,
-								FileInstallImplBundleActivator.this, encoding),
+								FileInstallImplBundleActivator.this,
+								PropsValues.
+									MODULE_FRAMEWORK_FILE_INSTALL_CONFIG_ENCODING),
 							null));
 				}
 

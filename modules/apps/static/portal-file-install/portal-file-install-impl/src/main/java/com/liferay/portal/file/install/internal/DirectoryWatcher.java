@@ -24,7 +24,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.file.install.FileInstaller;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.BufferedInputStream;
@@ -75,12 +74,6 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
  */
 public class DirectoryWatcher extends Thread implements BundleListener {
 
-	public static final String ACTIVE_LEVEL = "file.install.active.level";
-
-	public static final String CONFIG_ENCODING = "file.install.configEncoding";
-
-	public static final String FILTER = "file.install.filter";
-
 	public DirectoryWatcher(BundleContext bundleContext) {
 		super("fileinstall-directory-watcher");
 
@@ -88,9 +81,8 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 
 		_bundleContext = bundleContext;
 
-		_activeLevel = GetterUtil.getInteger(
-			bundleContext.getProperty(ACTIVE_LEVEL));
-		_filter = bundleContext.getProperty(FILTER);
+		_activeLevel = PropsValues.MODULE_FRAMEWORK_FILE_INSTALL_ACTIVE_LEVEL;
+		_filter = PropsValues.MODULE_FRAMEWORK_FILE_INSTALL_FILTER;
 		_systemBundle = bundleContext.getBundle(
 			Constants.SYSTEM_BUNDLE_LOCATION);
 

@@ -154,7 +154,7 @@ definition {
 
 			Click(
 				key_pageName = "${pageName}",
-				locator1 = "SitePages#LIST_GROUP_ITEM_ELLIPSIS_ICON");
+				locator1 = "PagesAdmin#LIST_GROUP_ITEM_ELLIPSIS_ICON");
 		}
 		else {
 			LexiconEntry.changeDisplayStyle(displayStyle = "list");
@@ -173,7 +173,7 @@ definition {
 
 			Click(
 				key_pageName = "${pageName}",
-				locator1 = "SitePages#LIST_GROUP_ITEM_ELLIPSIS_ICON");
+				locator1 = "PagesAdmin#LIST_GROUP_ITEM_ELLIPSIS_ICON");
 		}
 		else {
 			Click.waitForMenuToggleJSClick(

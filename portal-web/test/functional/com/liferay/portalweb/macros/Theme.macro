@@ -3,7 +3,9 @@ definition {
 	macro changeCurrentTheme {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
-		Click(locator1 = "PagesAdmin#CHANGE_CURRENT_THEME_BUTTON");
+		Click(
+			key_text = "Change Current Theme",
+			locator1 = "Button#ANY");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 

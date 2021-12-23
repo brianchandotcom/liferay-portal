@@ -12,7 +12,8 @@ definition {
 
 	macro _addPageTypeFullPageApplication {
 		Select(
-			locator1 = "PagesAdmin#PAGE_TYPE_FULL_PAGE_APPLICATION_SELECT",
+			key_fieldLabel = "Full Page Application",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
 			value1 = "${portlet}");
 	}
 
@@ -35,8 +36,8 @@ definition {
 		}
 		else if ("${sitePageType}" == "Widget Page") {
 			Click(
-				key_columnName = "${columnName}",
-				locator1 = "PagesAdmin#LAYOUT_CARD");
+				key_card = "${columnName}",
+				locator1 = "Card#CARD");
 		}
 		else if ("${sitePageType}" == "Full Page Application") {
 			Page._addPageTypeFullPageApplication(portlet = "${portlet}");
@@ -125,9 +126,11 @@ definition {
 
 		Click(locator1 = "PageEditor#MORE_LINK");
 
-		Click(locator1 = "PagesAdmin#REGULAR_UNIQUE_LOOK_AND_FEEL");
+		Theme.configureLookAndFeelSpecificLook();
 
-		Click(locator1 = "PagesAdmin#CHANGE_CURRENT_THEME_BUTTON");
+		Click(
+			key_text = "Change Current Theme",
+			locator1 = "Button#ANY");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -360,11 +363,11 @@ definition {
 	macro removeOldFriendlyURL {
 		AssertVisible(
 			key_oldFriendlyURL = "${oldFriendlyURL}",
-			locator1 = "SitePages#FRIENDLY_URL_HISTORY_ITEM");
+			locator1 = "PagesAdmin#FRIENDLY_URL_HISTORY_ITEM");
 
 		MouseOver(
 			key_oldFriendlyURL = "${oldFriendlyURL}",
-			locator1 = "SitePages#FRIENDLY_URL_HISTORY_ITEM");
+			locator1 = "PagesAdmin#FRIENDLY_URL_HISTORY_ITEM");
 
 		Click(
 			key_oldFriendlyURL = "${oldFriendlyURL}",
@@ -372,23 +375,23 @@ definition {
 
 		AssertElementNotPresent(
 			key_oldFriendlyURL = "${oldFriendlyURL}",
-			locator1 = "SitePages#FRIENDLY_URL_HISTORY_ITEM");
+			locator1 = "PagesAdmin#FRIENDLY_URL_HISTORY_ITEM");
 	}
 
 	macro restoreOldFriendlyURL {
 		MouseOver(
 			key_oldFriendlyURL = "${oldFriendlyURL}",
-			locator1 = "SitePages#FRIENDLY_URL_HISTORY_ITEM");
+			locator1 = "PagesAdmin#FRIENDLY_URL_HISTORY_ITEM");
 
 		Click(locator1 = "Icon#FRIENDLY_URL_HISTORY_ITEM_RESTORE");
 
 		AssertVisible(
 			key_activeURL = "${restoredURL}",
-			locator1 = "SitePages#FRIENDLY_URL_ACTIVE_URL");
+			locator1 = "PagesAdmin#FRIENDLY_URL_ACTIVE_URL");
 
 		AssertVisible(
 			key_oldFriendlyURL = "${activeURL}",
-			locator1 = "SitePages#FRIENDLY_URL_HISTORY_ITEM");
+			locator1 = "PagesAdmin#FRIENDLY_URL_HISTORY_ITEM");
 
 		Click(locator1 = "Modal#CLOSE_BUTTON");
 
@@ -525,12 +528,15 @@ definition {
 
 	macro uploadFileForLogo {
 		AssertClick(
-			locator1 = "Button#CHANGE_LOGO",
+			key_text = "Change",
+			locator1 = "Button#ANY",
 			value1 = "Change");
 
-		SelectFrame(locator1 = "SitePages#LOGO_UPLOAD_IMAGE_IFRAME");
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		AssertElementPresent(locator1 = "SitePages#LOGO_UPLOAD_IMAGE_BUTTON");
+		AssertElementPresent(
+			buttonId = "uploadImage",
+			locator1 = "Button#BUTTON_ID");
 
 		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
 			locator1 = "TextInput#FILE",
@@ -550,7 +556,7 @@ definition {
 	macro viewActiveURL {
 		AssertVisible(
 			key_activeURL = "${activeURL}",
-			locator1 = "SitePages#FRIENDLY_URL_ACTIVE_URL");
+			locator1 = "PagesAdmin#FRIENDLY_URL_ACTIVE_URL");
 	}
 
 	macro viewChildPageDropdown {
@@ -620,7 +626,7 @@ definition {
 
 	macro viewFriendlyURL {
 		AssertTextEquals(
-			locator1 = "SitePages#DETAILS_FRIENDLY_BASE_URL",
+			locator1 = "PagesAdmin#DETAILS_FRIENDLY_BASE_URL",
 			value1 = "${siteFriendlyURL}");
 	}
 
@@ -670,18 +676,18 @@ definition {
 		if (isSet(pageName)) {
 			Click(
 				key_itemName = "${pageName}",
-				locator1 = "SitePages#LIST_GROUP_ITEM");
+				locator1 = "PagesAdmin#LIST_GROUP_ITEM");
 		}
 
 		Click.waitForMenuToggleJSClick(
 			key_pageName = "${page}",
-			locator1 = "SitePages#LIST_GROUP_ITEM_ELLIPSIS_ICON");
+			locator1 = "PagesAdmin#LIST_GROUP_ITEM_ELLIPSIS_ICON");
 
 		MenuItem.viewNotPresent(menuItem = "Delete");
 
 		Click.waitForMenuToggleJSClick(
 			key_pageName = "${page}",
-			locator1 = "SitePages#LIST_GROUP_ITEM_ELLIPSIS_ICON");
+			locator1 = "PagesAdmin#LIST_GROUP_ITEM_ELLIPSIS_ICON");
 
 		PortletEntry.selectAll();
 
@@ -694,7 +700,7 @@ definition {
 		for (var oldFriendlyURL : list "${oldFriendlyURLs}") {
 			AssertElementNotPresent(
 				key_oldFriendlyURL = "${oldFriendlyURL}",
-				locator1 = "SitePages#FRIENDLY_URL_HISTORY_ITEM");
+				locator1 = "PagesAdmin#FRIENDLY_URL_HISTORY_ITEM");
 		}
 	}
 
@@ -716,12 +722,12 @@ definition {
 		if (isSet(lastOldFriendlyURL)) {
 			AssertVisible(
 				key_oldFriendlyURL = "${lastOldFriendlyURL}",
-				locator1 = "SitePages#FRIENDLY_URL_HISTORY_ITEM_LAST");
+				locator1 = "PagesAdmin#FRIENDLY_URL_HISTORY_ITEM_LAST");
 		}
 
 		AssertVisible(
 			key_oldFriendlyURL = "${oldFriendlyURL}",
-			locator1 = "SitePages#FRIENDLY_URL_HISTORY_ITEM");
+			locator1 = "PagesAdmin#FRIENDLY_URL_HISTORY_ITEM");
 	}
 
 	macro viewPageFriendlyURLPG {
@@ -738,8 +744,8 @@ definition {
 
 	macro viewPageLayoutColumn {
 		AssertElementPresent(
-			key_columnName = "${columnName}",
-			locator1 = "PagesAdmin#LAYOUT_CARD");
+			key_card = "${columnName}",
+			locator1 = "Card#CARD");
 	}
 
 	macro viewPageLockCheck {
@@ -909,8 +915,8 @@ definition {
 
 	macro viewSelectedLayoutColumn {
 		AssertElementPresent(
-			key_columnName = "${columnName}",
-			locator1 = "PagesAdmin#LAYOUT_CARD_SELECTED");
+			key_card = "${columnName}",
+			locator1 = "Card#CARD_SELECTED");
 	}
 
 	macro viewSiteNameTranslationsPG {

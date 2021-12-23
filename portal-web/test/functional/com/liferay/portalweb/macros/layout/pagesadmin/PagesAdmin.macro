@@ -36,7 +36,9 @@ definition {
 		}
 		else if ("${sitePageType}" == "Link to a Page of This Site") {
 			if (isSet(linkPageName)) {
-				Click(locator1 = "PagesAdmin#LINK_TO_PAGE_SELECT_BUTTON");
+				Click(
+					buttonId = "selectLayoutButton",
+					locator1 = "Button#BUTTON_ID");
 
 				SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -154,11 +156,11 @@ definition {
 	macro addChildPage {
 		MouseOver(
 			key_itemName = "${parentPageName}",
-			locator1 = "SitePages#LIST_GROUP_ITEM");
+			locator1 = "PagesAdmin#LIST_GROUP_ITEM");
 
 		Click(
 			key_pageName = "${parentPageName}",
-			locator1 = "SitePages#LIST_GROUP_ITEM_PLUS_ICON");
+			locator1 = "PagesAdmin#LIST_GROUP_ITEM_PLUS_ICON");
 
 		DropdownMenuItem.click(menuItem = "Add Page");
 
@@ -179,12 +181,13 @@ definition {
 
 		Panel.expandPanel(panel = "JavaScript");
 
-		AssertTextEquals(
-			locator1 = "SitePages#JAVASCRIPT_LABEL",
-			value1 = "Paste JavaScript code that is executed at the bottom of the page.");
+		AssertElementPresent(
+			key_fieldLabel = "Paste JavaScript code that is executed at the bottom of the page.",
+			locator1 = "FormFields#LABEL");
 
 		Type(
-			locator1 = "SitePages#JAVASCRIPT_TEXTAREA",
+			key_text = "javascript",
+			locator1 = "TextArea#ANY",
 			value1 = "${javaScript}");
 
 		AssertClickNoError(
@@ -478,7 +481,7 @@ definition {
 
 		Click(
 			key_pageName = "${pageName}",
-			locator1 = "SitePages#LIST_GROUP_ITEM_ELLIPSIS_ICON");
+			locator1 = "PagesAdmin#LIST_GROUP_ITEM_ELLIPSIS_ICON");
 
 		MenuItem.clickNoError(menuItem = "Delete");
 
@@ -520,7 +523,7 @@ definition {
 
 			Click(
 				key_depth = "${index}",
-				locator1 = "SitePages#LIST_GROUP_ITEM_DEPTH");
+				locator1 = "PagesAdmin#LIST_GROUP_ITEM_DEPTH");
 
 			var count = ${count} + 1;
 		}
@@ -534,7 +537,7 @@ definition {
 		}
 
 		var key_friendlyURL = "";
-		var friendlyURL = selenium.getElementValue("SitePages#FRIENDLY_URL");
+		var friendlyURL = selenium.getElementValue("PagesAdmin#FRIENDLY_URL");
 
 		return "${baseURL}/web/guest${friendlyURL}";
 	}
@@ -565,8 +568,8 @@ definition {
 		var key_pageNameTo = "${pageNameTo}";
 
 		DragAndDrop.javaScriptDragAndDropToUp(
-			locator1 = "SitePages#LIST_GROUP_ITEM_DRAG_HANDLER",
-			locator2 = "SitePages#LIST_GROUP_ITEM_DROP_TARGET",
+			locator1 = "PagesAdmin#LIST_GROUP_ITEM_DRAG_HANDLER",
+			locator2 = "PagesAdmin#LIST_GROUP_ITEM_DROP_TARGET",
 			value1 = "");
 	}
 
@@ -578,13 +581,13 @@ definition {
 			for (var parentPage : list "${parentPagesHierarchy}") {
 				Click(
 					key_itemName = "${parentPage}",
-					locator1 = "SitePages#LIST_GROUP_ITEM");
+					locator1 = "PagesAdmin#LIST_GROUP_ITEM");
 			}
 		}
 
 		Click(
 			key_pageName = "${pageName}",
-			locator1 = "SitePages#LIST_GROUP_ITEM_ELLIPSIS_ICON");
+			locator1 = "PagesAdmin#LIST_GROUP_ITEM_ELLIPSIS_ICON");
 	}
 
 	macro openPagesAdmin {
@@ -599,7 +602,7 @@ definition {
 	macro selectPageItem {
 		var key_pageName = "${pageName}";
 
-		Check.checkNotVisible(locator1 = "SitePages#LIST_GROUP_ITEM_CHECKBOX");
+		Check.checkNotVisible(locator1 = "PagesAdmin#LIST_GROUP_ITEM_CHECKBOX");
 	}
 
 	@summary = "Delete all pages except the Welcome and Search Page"
@@ -608,10 +611,10 @@ definition {
 
 		Pause(locator1 = "5000");
 
-		while (IsElementPresent(key_index = "4", locator1 = "SitePages#LIST_GROUP_ITEM_ROW_ELLIPSIS")) {
+		while (IsElementPresent(key_index = "4", locator1 = "PagesAdmin#LIST_GROUP_ITEM_ROW_ELLIPSIS")) {
 			Click.waitForMenuToggleJSClick(
 				key_index = "4",
-				locator1 = "SitePages#LIST_GROUP_ITEM_ROW_ELLIPSIS");
+				locator1 = "PagesAdmin#LIST_GROUP_ITEM_ROW_ELLIPSIS");
 
 			MenuItem.clickNoError(menuItem = "Delete");
 
@@ -620,14 +623,14 @@ definition {
 
 		AssertElementNotPresent(
 			key_index = "4",
-			locator1 = "SitePages#LIST_GROUP_ITEM_ROW_ELLIPSIS");
+			locator1 = "PagesAdmin#LIST_GROUP_ITEM_ROW_ELLIPSIS");
 
-		while (IsElementPresent(key_pageName = "Home", locator1 = "SitePages#LIST_GROUP_ITEM_CHILD_INDICATOR")) {
+		while (IsElementPresent(key_pageName = "Home", locator1 = "PagesAdmin#LIST_GROUP_ITEM_CHILD_INDICATOR")) {
 			PagesAdmin.expandPageTree(depth = "2");
 
 			Click.waitForMenuToggleJSClick(
 				key_index = "4",
-				locator1 = "SitePages#LIST_GROUP_ITEM_ROW_ELLIPSIS");
+				locator1 = "PagesAdmin#LIST_GROUP_ITEM_ROW_ELLIPSIS");
 
 			MenuItem.clickNoError(menuItem = "Delete");
 
@@ -635,7 +638,7 @@ definition {
 
 			AssertElementNotPresent(
 				key_index = "4",
-				locator1 = "SitePages#LIST_GROUP_ITEM_ROW_ELLIPSIS");
+				locator1 = "PagesAdmin#LIST_GROUP_ITEM_ROW_ELLIPSIS");
 		}
 	}
 
@@ -645,7 +648,7 @@ definition {
 		if (IsElementNotPresent(key_breadcrumbName = "${privacy}", locator1 = "Breadcrumb#BREADCRUMB_ENTRY_EXACT_MATCH")) {
 			Click(
 				key_itemName = "${privacy}",
-				locator1 = "SitePages#LIST_GROUP_ITEM");
+				locator1 = "PagesAdmin#LIST_GROUP_ITEM");
 		}
 	}
 
@@ -660,7 +663,7 @@ definition {
 
 		AssertElementNotPresent(
 			key_pageName = "${pageName}",
-			locator1 = "SitePages#LIST_GROUP_ITEM");
+			locator1 = "PagesAdmin#LIST_GROUP_ITEM");
 	}
 
 	macro viewPageItemPresent {
@@ -678,7 +681,7 @@ definition {
 
 		AssertElementPresent(
 			key_itemName = "${pageName}",
-			locator1 = "SitePages#LIST_GROUP_ITEM");
+			locator1 = "PagesAdmin#LIST_GROUP_ITEM");
 	}
 
 	macro viewPagesOrder {
@@ -688,7 +691,7 @@ definition {
 			AssertTextEquals(
 				key_depth = "${depth}",
 				key_index = "${index}",
-				locator1 = "SitePages#LIST_GROUP_ITEM_ROW_ENTRY",
+				locator1 = "PagesAdmin#LIST_GROUP_ITEM_ROW_ENTRY",
 				value1 = "${pageName}");
 
 			var index = ${index} + 1;
@@ -703,7 +706,7 @@ definition {
 		AssertTextEquals(
 			index = "${index}",
 			key_itemName = "${pageName}",
-			locator1 = "SitePages#LIST_GROUP_ITEM_PAGE_STATUS",
+			locator1 = "PagesAdmin#LIST_GROUP_ITEM_PAGE_STATUS",
 			value1 = "${status}");
 	}
 
@@ -726,14 +729,16 @@ definition {
 			locator1 = "Message#ERROR_3",
 			value1 = "Some page settings are unavailable because Inherit Changes is enabled. To change these settings, disable Inherit Changes under the General section.");
 
-		AssertChecked.assertCheckedNotVisible(locator1 = "PagesAdmin#PAGE_TYPE_TEMPLATE_AUTOMATICALLY_APPLY_CHANGES_CHECKBOX_GENERIC");
+		AssertChecked.assertCheckedNotVisible(
+			checkboxName = "Inherit Changes",
+			locator1 = "Checkbox#ANY_CHECKBOX");
 	}
 
 	macro viewPageType {
 		AssertElementPresent(
 			key_pageName = "${pageName}",
 			key_pageType = "${pageType}",
-			locator1 = "SitePages#LIST_GROUP_ITEM_PAGE_TYPE");
+			locator1 = "PagesAdmin#LIST_GROUP_ITEM_PAGE_TYPE");
 	}
 
 	macro viewPanelPortletList {
@@ -747,11 +752,11 @@ definition {
 
 		var key_componentName = "${componentName}";
 
-		if (IsElementPresent(locator1 = "SitePages#DETAILS_PAGE_TYPE_PANEL_COMPONENT_TREE_ARROW")) {
-			Click(locator1 = "SitePages#DETAILS_PAGE_TYPE_PANEL_COMPONENT_TREE_ARROW");
+		if (IsElementPresent(locator1 = "PagesAdmin#DETAILS_PAGE_TYPE_PANEL_COMPONENT_TREE_ARROW")) {
+			Click(locator1 = "PagesAdmin#DETAILS_PAGE_TYPE_PANEL_COMPONENT_TREE_ARROW");
 		}
 
-		AssertElementPresent(locator1 = "SitePages#DETAILS_PAGE_TYPE_PANEL_COMPONENT_TREE_EXPANDED");
+		AssertElementPresent(locator1 = "PagesAdmin#DETAILS_PAGE_TYPE_PANEL_COMPONENT_TREE_EXPANDED");
 
 		for (var portletName : list "${portletNameList}") {
 			if ("${portletName}" == "Portal Directory") {
@@ -768,7 +773,7 @@ definition {
 	macro viewSelectedPageItem {
 		AssertChecked.assertCheckedNotVisible(
 			key_pageName = "${pageName}",
-			locator1 = "SitePages#LIST_GROUP_ITEM_CHECKBOX");
+			locator1 = "PagesAdmin#LIST_GROUP_ITEM_CHECKBOX");
 	}
 
 	macro viewWidgetPageCurrentTheme {

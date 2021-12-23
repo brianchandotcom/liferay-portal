@@ -56,7 +56,7 @@ definition {
 
 		AssertElementNotPresent(
 			key_itemName = "Test Page Name",
-			locator1 = "SitePages#LIST_GROUP_ITEM");
+			locator1 = "PagesAdmin#LIST_GROUP_ITEM");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",

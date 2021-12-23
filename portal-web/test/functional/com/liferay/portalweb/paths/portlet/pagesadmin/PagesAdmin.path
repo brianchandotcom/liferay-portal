@@ -12,8 +12,8 @@
 <tbody>
 <!--DETAILS-->
 <tr>
-	<td>LAYOUT_CARD</td>
-	<td>//div[contains(@class,'card')]//span[contains(.,'${key_columnName}')]</td>
+	<td>DETAILS_FRIENDLY_BASE_URL</td>
+	<td>//div[contains(@class,'friendly-url')]/div[contains(@class,'form-text')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -22,18 +22,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>LINK_TO_PAGE_SELECT_BUTTON</td>
-	<td>//button[contains(@id,'selectLayoutButton')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>PAGE_TYPE_DESCRIPTION</td>
 	<td>//p[contains(@class,'text')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PAGE_TYPE_TEMPLATE_AUTOMATICALLY_APPLY_CHANGES_CHECKBOX_GENERIC</td>
-	<td>//label[contains(.,'Inherit Changes')]//input</td>
 	<td></td>
 </tr>
 <tr>
@@ -46,9 +36,97 @@
 	<td>//input[@type="hidden"][contains(@id,'panelSelectedPortlets')][contains(@value,'${key_componentOrPortletName}')]</td>
 	<td></td>
 </tr>
+<!--DETAILS_PAGE_TYPE_PANEL-->
 <tr>
-	<td>PAGE_TYPE_FULL_PAGE_APPLICATION_SELECT</td>
-	<td>//select[contains(@id,'fullPageApplication')]</td>
+	<td>DETAILS_PAGE_TYPE_PANEL_COMPONENT_TREE_ARROW</td>
+	<td>//div[contains(@id,'selectPortletsTree')]//span[contains(.,'${key_componentName}')]/../span[contains(@class,'tree-hitarea')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAILS_PAGE_TYPE_PANEL_COMPONENT_TREE_EXPANDED</td>
+	<td>//div[contains(@class,'tree-expanded')]//span[contains(.,'${key_componentName}')]/../span[contains(@class,'tree-hitarea')]</td>
+	<td></td>
+</tr>
+<!--FRIENDLY_URL-->
+<tr>
+	<td>FRIENDLY_URL_ACTIVE_URL</td>
+	<td>//div[contains(@class,'modal-dialog')]//div[contains(@class,'active-url')]//p[normalize-space(text())='${key_activeURL}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FRIENDLY_URL_HISTORY_ITEM</td>
+	<td>//div[contains(@class,'modal-dialog')]//ul/li[contains(@class,'list-group-item')]//p[normalize-space(text())='${key_oldFriendlyURL}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FRIENDLY_URL_HISTORY_ITEM_LAST</td>
+	<td>xpath=(//div[contains(@class,'modal-dialog')]//ul/li[contains(@class,'list-group-item')]//p[normalize-space(text())='${key_oldFriendlyURL}'])[last()]</td>
+	<td></td>
+</tr>
+<!--LIST_GROUP_ITEM-->
+<tr>
+	<td>LIST_GROUP_ITEM</td>
+	<td>//li[contains(@class,'list-group-item')][contains(.,'${key_itemName}')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LIST_GROUP_ITEM_CHECKBOX</td>
+	<td>//li[contains(.,'${key_pageName}')]//input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LIST_GROUP_ITEM_CHILD_INDICATOR</td>
+	<td>//li[contains(.,'${key_pageName}')]//*[contains(@class,'child-indicator')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LIST_GROUP_ITEM_DEPTH</td>
+	<td>//ul[${key_depth}]/li[contains(@class,'list-group-item')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LIST_GROUP_ITEM_DRAG_HANDLER</td>
+	<td>//div[contains(@class,'miller-columns')]//li[contains(.,'${key_pageName}')]/div[contains(@class,'drag-handler')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LIST_GROUP_ITEM_DROP_TARGET</td>
+	<td>//li[contains(.,'${key_pageNameTo}')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LIST_GROUP_ITEM_ELLIPSIS_ICON</td>
+	<td>//li[contains(.,'${key_pageName}')]//*[*[name()='svg'][contains(@class,'ellipsis-v')]]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LIST_GROUP_ITEM_ENTRY_TITLE_LINK</td>
+	<td>//li[contains(@class,'list-group-item')]//a[normalize-space(text())='${key_pageName}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LIST_GROUP_ITEM_PAGE_STATUS</td>
+	<td>xpath=(//li[contains(@class,'list-group-item') and contains(.,'${key_itemName}')]//*[contains(@class,'label-item')])[${index}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LIST_GROUP_ITEM_PAGE_TYPE</td>
+	<td>//li[contains(@class,'list-group-item')]//h5[contains(.,'${key_pageType}')]/../ h4[contains(.,'${key_pageName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LIST_GROUP_ITEM_PLUS_ICON</td>
+	<td>//li[contains(.,'${key_pageName}')]//*[*[name()='svg'][contains(@class,'icon-plus')]]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LIST_GROUP_ITEM_ROW_ENTRY</td>
+	<td>//ul[${key_depth}]/li[contains(@class,'list-group-item')][${key_index}]//*[contains(@class,'list-group-title')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LIST_GROUP_ITEM_ROW_ELLIPSIS</td>
+	<td>xpath=(//li[contains(@class,'list-group-item')])[${key_index}]//button[*[name()='svg'][contains(@class,'icon-ellipsis-v')]]</td>
 	<td></td>
 </tr>
 <!--SEO-->
@@ -99,18 +177,8 @@
 </tr>
 <!--LOOK_AND_FEEL-->
 <tr>
-	<td>CHANGE_CURRENT_THEME_BUTTON</td>
-	<td>//button[contains(.,'Change Current Theme')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>MASTER_LAYOUT_NAME</td>
 	<td>//div[@class='sheet-section']//span[contains(@id,'masterLayoutName')][contains(.,'${key_masterLayoutName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>REGULAR_UNIQUE_LOOK_AND_FEEL</td>
-	<td>//input[contains(@id,'regularUniqueLookAndFeel')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -121,11 +189,6 @@
 <tr>
 	<td>STYLE_BOOK_NAME</td>
 	<td>//div[@class='sheet-section']//span[contains(@id,'styleBookName')][contains(.,'${key_styleBookName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>VIEW_THEME</td>
-	<td>//div[contains(@class, 'main-content-card')]//h4[contains(.,'Name')]/following-sibling::p[1]</td>
 	<td></td>
 </tr>
 <tr>

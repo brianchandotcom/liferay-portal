@@ -21,11 +21,11 @@ definition {
 	macro addChildPage {
 		MouseOver(
 			key_itemName = "${parentPageName}",
-			locator1 = "SitePages#LIST_GROUP_ITEM");
+			locator1 = "PagesAdmin#LIST_GROUP_ITEM");
 
 		Click(
 			key_pageName = "${parentPageName}",
-			locator1 = "SitePages#LIST_GROUP_ITEM_PLUS_ICON");
+			locator1 = "PagesAdmin#LIST_GROUP_ITEM_PLUS_ICON");
 
 		ContentPages._selectCard(
 			basicTemplate = "${basicTemplate}",

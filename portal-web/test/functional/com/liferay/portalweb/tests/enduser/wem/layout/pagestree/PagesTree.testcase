@@ -284,7 +284,7 @@ definition {
 
 			AssertVisible(
 				key_itemName = "Test Page Name",
-				locator1 = "SitePages#LIST_GROUP_ITEM");
+				locator1 = "PagesAdmin#LIST_GROUP_ITEM");
 		}
 
 		task ("Configure page via Page Tree panel") {

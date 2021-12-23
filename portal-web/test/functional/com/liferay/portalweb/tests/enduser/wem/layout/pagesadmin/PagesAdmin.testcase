@@ -408,11 +408,11 @@ definition {
 		task ("View plus icon is shown when mouse over the page name") {
 			MouseOver(
 				key_itemName = "Child Page Name 1",
-				locator1 = "SitePages#LIST_GROUP_ITEM");
+				locator1 = "PagesAdmin#LIST_GROUP_ITEM");
 
 			AssertVisible(
 				key_pageName = "Child Page Name 1",
-				locator1 = "SitePages#LIST_GROUP_ITEM_PLUS_ICON");
+				locator1 = "PagesAdmin#LIST_GROUP_ITEM_PLUS_ICON");
 		}
 
 		task ("View child page via kebab menu action") {
@@ -428,7 +428,7 @@ definition {
 
 			Click(
 				key_pageName = "Test Page Name 1",
-				locator1 = "SitePages#LIST_GROUP_ITEM_ENTRY_TITLE_LINK");
+				locator1 = "PagesAdmin#LIST_GROUP_ITEM_ENTRY_TITLE_LINK");
 
 			ControlMenu.viewHeaderTitle(headerTitle = "Test Page Name 1");
 		}
@@ -514,7 +514,7 @@ definition {
 			for (var name : list "Test,Child") {
 				Click(
 					key_itemName = "${name} Page Name 1",
-					locator1 = "SitePages#LIST_GROUP_ITEM");
+					locator1 = "PagesAdmin#LIST_GROUP_ITEM");
 			}
 
 			for (var pageName : list "Test Page Name 2,Child Child Page Name 1") {
@@ -605,7 +605,7 @@ definition {
 
 			Click(
 				key_itemName = "Test Page Name 3",
-				locator1 = "SitePages#LIST_GROUP_ITEM");
+				locator1 = "PagesAdmin#LIST_GROUP_ITEM");
 
 			for (var n : list "1,2") {
 				PagesAdmin.selectPageItem(pageName = "Test Page Name ${n}");
@@ -613,7 +613,7 @@ definition {
 
 			DragAndDrop.javaScriptDragAndDropToUp(
 				key_pageName = "Test Page Name 1",
-				locator1 = "SitePages#LIST_GROUP_ITEM_DRAG_HANDLER",
+				locator1 = "PagesAdmin#LIST_GROUP_ITEM_DRAG_HANDLER",
 				locator2 = "//ul[contains(@class,'col')][3]",
 				value1 = "");
 		}
@@ -950,7 +950,7 @@ definition {
 
 			AssertVisible(
 				key_pageName = "Child Page Name",
-				locator1 = "SitePages#LIST_GROUP_ITEM_PLUS_ICON");
+				locator1 = "PagesAdmin#LIST_GROUP_ITEM_PLUS_ICON");
 		}
 
 		task ("View child page via action menu") {

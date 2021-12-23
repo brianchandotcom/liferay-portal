@@ -186,7 +186,7 @@ definition {
 			AssertElementNotPresent(
 				index = "2",
 				key_itemName = "Test Page Name",
-				locator1 = "SitePages#LIST_GROUP_ITEM_PAGE_STATUS");
+				locator1 = "PagesAdmin#LIST_GROUP_ITEM_PAGE_STATUS");
 		}
 
 		task ("View modification is shown to guest after approve") {
@@ -334,7 +334,7 @@ definition {
 			AssertElementNotPresent(
 				index = "2",
 				key_itemName = "Test Page Name",
-				locator1 = "SitePages#LIST_GROUP_ITEM_PAGE_STATUS");
+				locator1 = "PagesAdmin#LIST_GROUP_ITEM_PAGE_STATUS");
 		}
 
 		task ("View preview action is not shown and edit is shown in Pages Admin") {

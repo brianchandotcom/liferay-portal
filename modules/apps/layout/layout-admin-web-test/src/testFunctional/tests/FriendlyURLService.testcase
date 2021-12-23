@@ -261,13 +261,13 @@ definition {
 
 		AssertElementNotPresent(
 			key_activeURL = "/test-page",
-			locator1 = "SitePages#FRIENDLY_URL_ACTIVE_URL");
+			locator1 = "PagesAdmin#FRIENDLY_URL_ACTIVE_URL");
 
 		Page.viewOldFriendlyURL(oldFriendlyURL = "/test-page");
 
 		AssertElementNotPresent(
 			key_oldFriendlyURL = "/new-test-page",
-			locator1 = "SitePages#FRIENDLY_URL_HISTORY_ITEM");
+			locator1 = "PagesAdmin#FRIENDLY_URL_HISTORY_ITEM");
 	}
 
 	@description = "This test covers LPS-116068. It ensures that both the active URL and old friendlyURL can be viewed from the history of a default page."
@@ -287,13 +287,13 @@ definition {
 
 		AssertElementNotPresent(
 			key_activeURL = "/search",
-			locator1 = "SitePages#FRIENDLY_URL_ACTIVE_URL");
+			locator1 = "PagesAdmin#FRIENDLY_URL_ACTIVE_URL");
 
 		Page.viewOldFriendlyURL(oldFriendlyURL = "/search");
 
 		AssertElementNotPresent(
 			key_oldFriendlyURL = "/new-search-page",
-			locator1 = "SitePages#FRIENDLY_URL_HISTORY_ITEM");
+			locator1 = "PagesAdmin#FRIENDLY_URL_HISTORY_ITEM");
 	}
 
 	@description = "This test covers LPS-119836. It ensures the localized URL with special characters can be escaped correctly and viewed in friendly URL history."
@@ -380,13 +380,13 @@ definition {
 
 		AssertElementNotPresent(
 			key_activeURL = "/pagina-de-prueba",
-			locator1 = "SitePages#FRIENDLY_URL_ACTIVE_URL");
+			locator1 = "PagesAdmin#FRIENDLY_URL_ACTIVE_URL");
 
 		Page.viewOldFriendlyURL(oldFriendlyURL = "/pagina-de-prueba");
 
 		AssertElementNotPresent(
 			key_oldFriendlyURL = "/nueva-pagina-de-prueba",
-			locator1 = "SitePages#FRIENDLY_URL_HISTORY_ITEM");
+			locator1 = "PagesAdmin#FRIENDLY_URL_HISTORY_ITEM");
 	}
 
 	@description = "This ensures that the multiple old friendlyURLs can be viewed from the history. This test also covers the first old friendlyURL is the last one."

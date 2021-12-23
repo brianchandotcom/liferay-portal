@@ -254,15 +254,17 @@ definition {
 
 		Page.editFriendlyURL(friendlyURLEdit = "/test-page-edited");
 
-		AssertVisible(
-			key_friendlyURL = "/test-page-edited",
-			locator1 = "SitePages#FRIENDLY_URL");
+		AssertTextEquals(
+			key_text = "Friendly URL",
+			locator1 = "TextInput#ANY",
+			value1 = "/test-page-edited");
 
 		Publications.workOnProduction();
 
-		AssertVisible(
-			key_friendlyURL = "/test-page",
-			locator1 = "SitePages#FRIENDLY_URL");
+		AssertTextEquals(
+			key_text = "Friendly URL",
+			locator1 = "TextInput#ANY",
+			value1 = "/test-page");
 
 		JSONPublications.publishPublication(publicationName = "Publication Name");
 
@@ -274,9 +276,10 @@ definition {
 			menuItem = "Configure",
 			pageName = "Test Page");
 
-		AssertVisible(
-			key_friendlyURL = "/test-page-edited",
-			locator1 = "SitePages#FRIENDLY_URL");
+		AssertTextEquals(
+			key_text = "Friendly URL",
+			locator1 = "TextInput#ANY",
+			value1 = "/test-page-edited");
 
 		PublicationsNavigator.openPublicationsHistory();
 
@@ -288,9 +291,10 @@ definition {
 			menuItem = "Configure",
 			pageName = "Test Page");
 
-		AssertVisible(
-			key_friendlyURL = "/test-page",
-			locator1 = "SitePages#FRIENDLY_URL");
+		AssertTextEquals(
+			key_text = "Friendly URL",
+			locator1 = "TextInput#ANY",
+			value1 = "/test-page");
 	}
 
 }

@@ -1418,7 +1418,7 @@ definition {
 
 			Click.waitForMenuToggleJSClick(
 				key_pageName = "Test Page Name",
-				locator1 = "SitePages#LIST_GROUP_ITEM_ELLIPSIS_ICON");
+				locator1 = "PagesAdmin#LIST_GROUP_ITEM_ELLIPSIS_ICON");
 
 			MenuItem.click(menuItem = "Configure");
 

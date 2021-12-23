@@ -207,21 +207,21 @@ definition {
 
 		MouseOver(
 			key_itemName = "Home",
-			locator1 = "SitePages#LIST_GROUP_ITEM");
+			locator1 = "PagesAdmin#LIST_GROUP_ITEM");
 
 		AssertElementNotPresent(
 			key_pageName = "Home",
-			locator1 = "SitePages#LIST_GROUP_ITEM_PLUS_ICON");
+			locator1 = "PagesAdmin#LIST_GROUP_ITEM_PLUS_ICON");
 
 		Click(
 			key_itemName = "Home",
-			locator1 = "SitePages#LIST_GROUP_ITEM");
+			locator1 = "PagesAdmin#LIST_GROUP_ITEM");
 
 		AssertElementNotPresent(locator1 = "Button#NEW");
 
 		Click(
 			key_itemName = "Test Page",
-			locator1 = "SitePages#LIST_GROUP_ITEM");
+			locator1 = "PagesAdmin#LIST_GROUP_ITEM");
 
 		Click(locator1 = "Button#NEW");
 

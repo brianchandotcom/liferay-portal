@@ -126,7 +126,8 @@ definition {
 		Panel.expandPanel(panel = "JavaScript");
 
 		Type(
-			locator1 = "SitePages#JAVASCRIPT_TEXTAREA",
+			key_text = "javascript",
+			locator1 = "TextArea#ANY",
 			value1 = "${javaScript}");
 
 		AssertClickNoError(
@@ -554,7 +555,8 @@ definition {
 		Panel.expandPanel(panel = "JavaScript");
 
 		AssertTextEquals(
-			locator1 = "SitePages#JAVASCRIPT_TEXTAREA",
+			key_text = "javascript",
+			locator1 = "TextArea#ANY",
 			value1 = "${javaScript}");
 	}
 

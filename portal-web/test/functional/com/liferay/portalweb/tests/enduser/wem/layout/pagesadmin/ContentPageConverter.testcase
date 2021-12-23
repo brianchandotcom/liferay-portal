@@ -1226,7 +1226,7 @@ definition {
 		task ("View menu action is shown") {
 			Click.waitForMenuToggleJSClick(
 				key_pageName = "Test Page Name",
-				locator1 = "SitePages#LIST_GROUP_ITEM_ELLIPSIS_ICON");
+				locator1 = "PagesAdmin#LIST_GROUP_ITEM_ELLIPSIS_ICON");
 
 			MenuItem.viewPresent(menuItem = "Discard Conversion Draft");
 		}

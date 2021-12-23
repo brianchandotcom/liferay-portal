@@ -136,9 +136,7 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Look and Feel");
 
-		AssertTextNotPresent(
-			locator1 = "PagesAdmin#VIEW_THEME",
-			value1 = "Classic Theme");
+		AssertTextNotPresent(value1 = "Classic Theme");
 	}
 
 	@priority = "3"
@@ -269,9 +267,11 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Look and Feel");
 
-		Click(locator1 = "PagesAdmin#REGULAR_UNIQUE_LOOK_AND_FEEL");
+		Theme.configureLookAndFeelSpecificLook();
 
-		Click(locator1 = "PagesAdmin#CHANGE_CURRENT_THEME_BUTTON");
+		Click(
+			key_text = "Change Current Theme",
+			locator1 = "Button#ANY");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -341,9 +341,11 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Look and Feel");
 
-		Click(locator1 = "PagesAdmin#REGULAR_UNIQUE_LOOK_AND_FEEL");
+		Theme.configureLookAndFeelSpecificLook();
 
-		Click(locator1 = "PagesAdmin#CHANGE_CURRENT_THEME_BUTTON");
+		Click(
+			key_text = "Change Current Theme",
+			locator1 = "Button#ANY");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -378,9 +380,11 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Look and Feel");
 
-		Click(locator1 = "PagesAdmin#REGULAR_UNIQUE_LOOK_AND_FEEL");
+		Theme.configureLookAndFeelSpecificLook();
 
-		Click(locator1 = "PagesAdmin#CHANGE_CURRENT_THEME_BUTTON");
+		Click(
+			key_text = "Change Current Theme",
+			locator1 = "Button#ANY");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -566,9 +570,11 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Look and Feel");
 
-		Click(locator1 = "PagesAdmin#REGULAR_UNIQUE_LOOK_AND_FEEL");
+		Theme.configureLookAndFeelSpecificLook();
 
-		Click(locator1 = "PagesAdmin#CHANGE_CURRENT_THEME_BUTTON");
+		Click(
+			key_text = "Change Current Theme",
+			locator1 = "Button#ANY");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 

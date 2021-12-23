@@ -1121,7 +1121,7 @@ definition {
 
 			AssertVisible(
 				key_itemName = "Test Content Page Name",
-				locator1 = "SitePages#LIST_GROUP_ITEM");
+				locator1 = "PagesAdmin#LIST_GROUP_ITEM");
 		}
 	}
 
@@ -1162,7 +1162,7 @@ definition {
 
 			AssertVisible(
 				key_itemName = "Test Content Page Name",
-				locator1 = "SitePages#LIST_GROUP_ITEM");
+				locator1 = "PagesAdmin#LIST_GROUP_ITEM");
 		}
 	}
 
@@ -1203,7 +1203,7 @@ definition {
 
 			AssertVisible(
 				key_itemName = "Test Widget Page Name",
-				locator1 = "SitePages#LIST_GROUP_ITEM");
+				locator1 = "PagesAdmin#LIST_GROUP_ITEM");
 		}
 
 		task ("Add a page with category via JSONWS") {
@@ -1218,7 +1218,7 @@ definition {
 
 			AssertVisible(
 				key_itemName = "Test Page Name 2",
-				locator1 = "SitePages#LIST_GROUP_ITEM");
+				locator1 = "PagesAdmin#LIST_GROUP_ITEM");
 		}
 	}
 

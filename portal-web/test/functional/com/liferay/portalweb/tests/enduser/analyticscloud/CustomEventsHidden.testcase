@@ -473,3 +473,53 @@ definition {
 				locator1 = "ACSegments#SEGMENT_CRITERION_ITEM");
 		}
 	}
+
+	@description = "Feature ID: LRAC-7865 | Automation ID: LRAC-10234 | Test Summary: Non-admin cannot hide events"
+	@priority = "5"
+	test NonAdminUserCannotHideEvents {
+		task ("Fill fields and create custom event") {
+			var customEventName = ACCustomEvents.generateCustomEventName();
+
+			ACCustomEvents.createCustomEvent(
+				customEventName = "${customEventName}",
+				timeToSendCustomEvent = "1");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Login as a non-admin user and switch the property in AC") {
+			ACUtils.launchAC(emailAddress = "corbin.murakami@faro.io");
+
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+		}
+
+		task ("Navigation to custom events tab") {
+			ACNavigation.goToSettings();
+
+			ACSettings.goToDefinitions();
+
+			ACSettings.goToEvents();
+
+			ACNavigation.openItem(itemName = "Custom Events");
+		}
+
+		task ("Assert hidden event icon is not present") {
+			var key_nameList = "${customEventName}";
+
+			if (IsElementNotPresent(locator1 = "ACUtils#NAME_LIST")) {
+				ACUtils.searchBar(searchItem = "${customEventName}");
+			}
+
+			MouseOver(locator1 = "ACUtils#NAME_LIST");
+
+			AssertElementNotPresent(
+				key_actionButton = "Block",
+				locator1 = "ACDefinitions#HIDE_UNHIDE_EVENT_BUTTON");
+
+			AssertElementNotPresent(locator1 = "ACSettings#SELECT_ALL_CHECKBOX");
+		}
+	}
+
+}

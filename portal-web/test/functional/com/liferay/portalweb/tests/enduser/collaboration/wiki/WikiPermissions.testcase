@@ -38,50 +38,40 @@ definition {
 	@description = "This is a test for LPS-136986. It checks that page permissions can be configured via More Options."
 	@priority = "3"
 	test CanConfigurePermissionsViaMoreOptions {
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Wiki");
-
-		WikiNode.viewCP(
-			numberOfWikiPages = "1",
+		WikiNavigator.openToAddPage(
+			groupName = "Guest",
+			siteURLKey = "guest",
 			wikiNodeName = "Main");
 
-		WikiNode.addWikiPage(
-			wikiPageContent = "Wiki Page Content",
-			wikiPageTitle = "Wiki Page Name");
+		WikiEntry.addPageTitle(wikiPageTitle = "Wiki Page Title");
+
+		WikiEntry.addPageContent(wikiPageContent = "Wiki Page Content");
 
 		Panel.expandPanel(panel = "Permissions");
 
-		Click(
-			key_text = "More Options",
-			locator1 = "Button#ANY");
-
-		for (var permissions : list "UPDATE,SUBSCRIBE,ADD_DISCUSSION") {
-			Uncheck(
-				key_permissions = "${permissions}",
-				key_roleTitle = "Site Member",
-				locator1 = "Wiki#MORE_PERMISSIONS_VIEW_CHECKBOX");
-		}
+		PermissionsInline.addOrRemoveEntryPermissionsFromAllRoles(
+			addOrRemoveViewPermission = "Remove",
+			key_roleTitle = "Site Member",
+			permissionDefinitionKeyList = "UPDATE,SUBSCRIBE,ADD_DISCUSSION");
 
 		PortletEntry.publish();
 
-		LexiconEntry.openEntryMenu(rowEntry = "Wiki Page Name");
+		WikiNavigator.openToWikiNode(
+			groupName = "Guest",
+			siteURLKey = "guest",
+			wikiNodeName = "Main");
 
-		MenuItem.click(menuItem = "Permissions");
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Permissions",
+			rowEntry = "Wiki Page Title");
 
-		IFrame.selectModalFrame();
+		IFrame.selectPermissionsFrame();
 
-		AssertNotChecked(
-			key_roleTitle = "Site Member",
-			locator1 = "Permissions#CONTENT_PERMISSIONS_UPDATE_CHECKBOX");
-
-		AssertNotChecked(
-			key_roleTitle = "site-member",
-			locator1 = "Permissions#CONFIGURATION_PERMISSIONS_SUBSCRIBE_CHECKBOX");
-
-		AssertNotChecked(
-			key_roleTitle = "site-member",
-			locator1 = "Permissions#CONTENT_PERMISSIONS_ADD_DISCUSSION_CHECKBOX");
+		for (var permissionDefinitionKey : list "INLINE_PERMISSIONS_ADD_DISCUSSION_CHECKBOX,INLINE_PERMISSIONS_SUBSCRIBE_CHECKBOX,INLINE_PERMISSIONS_UPDATE_CHECKBOX") {
+			PermissionsInline.viewPermissionsRemoved(
+				permissionDefinitionKey = "${permissionDefinitionKey}",
+				roleTitle = "Site Member");
+		}
 	}
 
 	@description = "This ensures that a regular role with permissions can delete a wiki node."

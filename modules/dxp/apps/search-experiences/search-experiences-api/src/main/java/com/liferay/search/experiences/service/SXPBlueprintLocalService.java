@@ -72,7 +72,8 @@ public interface SXPBlueprintLocalService
 	public SXPBlueprint addSXPBlueprint(
 			long userId, String configurationJSON,
 			Map<Locale, String> descriptionMap, String elementInstancesJSON,
-			Map<Locale, String> titleMap, ServiceContext serviceContext)
+			String schemaVersion, Map<Locale, String> titleMap,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -315,7 +316,8 @@ public interface SXPBlueprintLocalService
 	public SXPBlueprint updateSXPBlueprint(
 			long userId, long sxpBlueprintId, String configurationJSON,
 			Map<Locale, String> descriptionMap, String elementInstancesJSON,
-			Map<Locale, String> titleMap, ServiceContext serviceContext)
+			String schemaVersion, Map<Locale, String> titleMap,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	/**

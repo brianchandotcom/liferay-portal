@@ -55,6 +55,7 @@ public class SXPElementServiceHttp {
 			HttpPrincipal httpPrincipal,
 			java.util.Map<java.util.Locale, String> descriptionMap,
 			String elementDefinitionJSON, boolean readOnly,
+			String schemaVersion,
 			java.util.Map<java.util.Locale, String> titleMap, int type,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -66,7 +67,7 @@ public class SXPElementServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, descriptionMap, elementDefinitionJSON, readOnly,
-				titleMap, type, serviceContext);
+				schemaVersion, titleMap, type, serviceContext);
 
 			Object returnObj = null;
 
@@ -180,7 +181,8 @@ public class SXPElementServiceHttp {
 			updateSXPElement(
 				HttpPrincipal httpPrincipal, long sxpElementId,
 				java.util.Map<java.util.Locale, String> descriptionMap,
-				String elementDefinitionJSON, boolean hidden,
+				String elementDefinitionJSON, String schemaVersion,
+				boolean hidden,
 				java.util.Map<java.util.Locale, String> titleMap,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -192,7 +194,7 @@ public class SXPElementServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, sxpElementId, descriptionMap, elementDefinitionJSON,
-				hidden, titleMap, serviceContext);
+				schemaVersion, hidden, titleMap, serviceContext);
 
 			Object returnObj = null;
 
@@ -227,7 +229,7 @@ public class SXPElementServiceHttp {
 
 	private static final Class<?>[] _addSXPElementParameterTypes0 =
 		new Class[] {
-			java.util.Map.class, String.class, boolean.class,
+			java.util.Map.class, String.class, boolean.class, String.class,
 			java.util.Map.class, int.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
@@ -237,8 +239,8 @@ public class SXPElementServiceHttp {
 		new Class[] {long.class};
 	private static final Class<?>[] _updateSXPElementParameterTypes3 =
 		new Class[] {
-			long.class, java.util.Map.class, String.class, boolean.class,
-			java.util.Map.class,
+			long.class, java.util.Map.class, String.class, String.class,
+			boolean.class, java.util.Map.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 

@@ -1,5 +1,4 @@
 dependencies {
-	compileInclude group: "com.liferay", name: "org.monte", version: "0.7.7"
 	compileInclude group: "org.im4java", name: "im4java", version: "1.2.0"
 
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"

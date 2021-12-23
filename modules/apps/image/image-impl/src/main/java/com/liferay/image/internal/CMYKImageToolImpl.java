@@ -19,30 +19,20 @@ import com.liferay.portal.kernel.exception.ImageResolutionException;
 import com.liferay.portal.kernel.image.CMYKImageTool;
 import com.liferay.portal.kernel.image.ImageBag;
 import com.liferay.portal.kernel.image.ImageMagick;
-import com.liferay.portal.kernel.image.ImageTool;
 import com.liferay.portal.kernel.image.ImageToolUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.FileImpl;
-import com.liferay.portal.util.PropsValues;
 
 import java.awt.image.RenderedImage;
 
 import java.io.File;
 import java.io.IOException;
 
-import java.util.Iterator;
 import java.util.concurrent.Future;
 
-import javax.imageio.ImageIO;
-import javax.imageio.spi.IIORegistry;
-import javax.imageio.spi.ImageReaderSpi;
-
 import org.im4java.core.IMOperation;
-
-import org.monte.media.jpeg.CMYKJPEGImageReaderSpi;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -126,46 +116,6 @@ public class CMYKImageToolImpl implements CMYKImageTool {
 		}
 
 		return null;
-	}
-
-	protected void orderImageReaderSpis() {
-		IIORegistry defaultIIORegistry = IIORegistry.getDefaultInstance();
-
-		ImageReaderSpi firstImageReaderSpi = null;
-		ImageReaderSpi secondImageReaderSpi = null;
-
-		Iterator<ImageReaderSpi> iterator =
-			defaultIIORegistry.getServiceProviders(ImageReaderSpi.class, true);
-
-		while (iterator.hasNext()) {
-			ImageReaderSpi imageReaderSpi = iterator.next();
-
-			if (imageReaderSpi instanceof CMYKJPEGImageReaderSpi) {
-				secondImageReaderSpi = imageReaderSpi;
-			}
-			else {
-				String[] formatNames = imageReaderSpi.getFormatNames();
-
-				if (ArrayUtil.contains(
-						formatNames, ImageTool.TYPE_JPEG, true) ||
-					ArrayUtil.contains(formatNames, "jpeg", true)) {
-
-					firstImageReaderSpi = imageReaderSpi;
-				}
-			}
-		}
-
-		if ((firstImageReaderSpi != null) && (secondImageReaderSpi != null)) {
-			defaultIIORegistry.setOrdering(
-				ImageReaderSpi.class, firstImageReaderSpi,
-				secondImageReaderSpi);
-		}
-	}
-
-	private CMYKImageToolImpl() {
-		ImageIO.setUseCache(PropsValues.IMAGE_IO_USE_DISK_CACHE);
-
-		orderImageReaderSpis();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

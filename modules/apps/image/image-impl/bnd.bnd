@@ -1,4 +1,3 @@
 Bundle-Name: Liferay Image Implementation
 Bundle-SymbolicName: com.liferay.image.impl
 Bundle-Version: 1.0.5
--fixupmessages: "The default package '.' is not permitted ...";is:=ignore

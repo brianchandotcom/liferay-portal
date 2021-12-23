@@ -55,6 +55,11 @@
 	<td>//span[text()='${key_informationValue}']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>VIEW_DASHBOARD_INFORMATION</td>
+	<td>//div[@class='attribute-value'and text()='${key_attributeName}']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

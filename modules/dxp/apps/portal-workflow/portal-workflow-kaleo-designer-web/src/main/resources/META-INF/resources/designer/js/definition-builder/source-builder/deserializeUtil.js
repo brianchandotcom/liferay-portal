@@ -10,462 +10,125 @@
  *
  */
 
-import {COL_TYPES_FIELD, STR_BLANK, xmlNamespace} from './constants';
-import XMLSchemaUtil from './xmlSchemaUtil';
-import XMLUtil from './xmlUtil';
+import {defaultLanguageId} from '../constants';
+import {removeNewLine, replaceTabSpaces} from '../util/utils';
+import {DEFAULT_LANGUAGE} from './constants';
+import XMLDefinition from './xmlDefinition';
 
-const isNumber = (value) => value instanceof Number;
-
-const isString = (value) => value instanceof String;
-
-let ATTRS;
-
-export default function XMLDefinition(config) {
+export default function DeserializeUtil(content) {
 	const instance = this;
-	ATTRS = {};
 
-	const value = instance.sanitizeDefinitionXML(config.value);
-
-	if (!value || XMLUtil.validateDefinition(value)) {
-		const parser = new DOMParser();
-
-		instance.definitionDoc = parser.parseFromString(value, 'text/xml');
-	}
-
-	const metadata = instance.getDefinitionMetadata();
-
-	if (metadata) {
-		instance.setAttrs(metadata);
-	}
+	instance.definition = new XMLDefinition({
+		value: content,
+	});
 }
 
-XMLDefinition.prototype = {
-	forEachField(fn) {
+DeserializeUtil.prototype = {
+	getConnectors() {
 		const instance = this;
 
-		COL_TYPES_FIELD.forEach((item) => {
-			const fieldData = instance.translate(item);
+		const connectors = [];
 
-			if (fn && !fieldData.error) {
-				fn.call(instance, item, fieldData);
-			}
-		});
-	},
-
-	getAttrs() {
-		return {
-			...ATTRS,
-			description: {
-				validator: isString,
-				value: STR_BLANK,
-			},
-			name: {
-				validator: isString,
-			},
-			value: {},
-			version: {
-				validator: isNumber,
-				value: 1,
-			},
-			xmlNamespace: {value: xmlNamespace},
-		};
-	},
-
-	getDefinitionMetadata() {
-		const instance = this;
-
-		const output = XMLSchemaUtil.applySchema(
-			{
-				metaFields: {
-					description: '//workflow-definition/description',
-					name: '//workflow-definition/name',
-					version: '//workflow-definition/version',
-				},
-			},
-			instance.definitionDoc
-		);
-
-		return output.meta;
-	},
-
-	getSchemaActions(key, tagName) {
-		return {
-			key: key || 'actions',
-			schema: {
-				resultFields: [
-					{
-						key: 'description',
-						locator: 'description',
-					},
-					{
-						key: 'executionType',
-						locator: 'execution-type',
-					},
-					{
-						key: 'name',
-						locator: 'name',
-					},
-					{
-						key: 'priority',
-						locator: 'priority',
-					},
-					{
-						key: 'script',
-						locator: 'script',
-					},
-					{
-						key: 'scriptLanguage',
-						locator: 'script-language',
-					},
-				],
-				resultListLocator: tagName || 'action',
-			},
-		};
-	},
-
-	getSchemaAssignments(key, tagName) {
-		return {
-			key: key || 'assignments',
-			schema: {
-				resultFields: [
-					{
-						key: 'address',
-						locator: 'address',
-					},
-					{
-						key: 'resourceActions',
-						schema: {
-							resultFields: [
-								{
-									key: 'resourceAction',
-									locator: 'resource-action',
-								},
-							],
-							resultListLocator: 'resource-actions',
+		instance.definition.forEachField((_, fieldData) => {
+			fieldData.results.forEach((item1) => {
+				item1.transitions.forEach((item2) => {
+					connectors.push({
+						connector: {
+							default: item2.default,
+							name: item2.name,
 						},
-					},
-					{
-						key: 'roleId',
-						schema: {
-							resultFields: [
-								{
-									key: 'roleId',
-									locator: 'role-id',
-								},
-								{
-									key: 'roleNameAC',
-									locator: 'role-name-ac',
-								},
-							],
-							resultListLocator: 'role',
-						},
-					},
-					{
-						key: 'roleType',
-						schema: {
-							resultFields: [
-								{
-									key: 'autoCreate',
-									locator: 'auto-create',
-								},
-								{
-									key: 'roleName',
-									locator: 'name',
-								},
-								{
-									key: 'roleType',
-									locator: 'role-type',
-								},
-							],
-							resultListLocator: 'role',
-						},
-					},
-					{
-						key: 'scriptedAssignment',
-						schema: {
-							resultFields: [
-								{
-									key: 'script',
-									locator: 'script',
-								},
-								{
-									key: 'scriptLanguage',
-									locator: 'script-language',
-								},
-							],
-							resultListLocator: 'scripted-assignment',
-						},
-					},
-					{
-						key: 'scriptedRecipient',
-						schema: {
-							resultFields: [
-								{
-									key: 'script',
-									locator: 'script',
-								},
-								{
-									key: 'scriptLanguage',
-									locator: 'script-language',
-								},
-							],
-							resultListLocator: 'scripted-recipient',
-						},
-					},
-					{
-						key: 'taskAssignees',
-						locator: 'assignees',
-					},
-					{
-						key: 'user',
-						schema: {
-							resultFields: [
-								{
-									key: 'emailAddress',
-									locator: 'email-address',
-								},
-								{
-									key: 'fullName',
-									locator: 'full-name',
-								},
-								{
-									key: 'screenName',
-									locator: 'screen-name',
-								},
-								{
-									key: 'userId',
-									locator: 'user-id',
-								},
-							],
-							resultListLocator: 'user',
-						},
-					},
-					{
-						key: 'receptionType',
-						locator: '@receptionType',
-					},
-				],
-				resultListLocator: tagName || 'assignments',
-			},
-		};
-	},
-
-	getSchemaNotifications(key, tagName, assignmentKey, assignmentTagName) {
-		const instance = this;
-
-		assignmentKey = assignmentKey || 'recipients';
-		assignmentTagName = assignmentTagName || 'recipients';
-
-		return {
-			key: key || 'notifications',
-			schema: {
-				resultFields: [
-					{
-						key: 'description',
-						locator: 'description',
-					},
-					{
-						key: 'executionType',
-						locator: 'execution-type',
-					},
-					{
-						key: 'name',
-						locator: 'name',
-					},
-					{
-						key: 'notificationTypes',
-						schema: {
-							resultFields: [
-								{
-									key: 'notificationType',
-									locator: '.',
-								},
-							],
-							resultListLocator: 'notification-type',
-						},
-					},
-					{
-						key: 'template',
-						locator: 'template',
-					},
-					{
-						key: 'templateLanguage',
-						locator: 'template-language',
-					},
-					instance.getSchemaAssignments(
-						assignmentKey,
-						assignmentTagName
-					),
-				],
-				resultListLocator: tagName || 'notification',
-			},
-		};
-	},
-
-	getSchemaTaskTimers(key, tagNode) {
-		const instance = this;
-
-		return {
-			key: key || 'taskTimers',
-			schema: {
-				resultFields: [
-					{
-						key: 'blocking',
-						locator: 'blocking',
-					},
-					{
-						key: 'delay',
-						schema: {
-							resultFields: [
-								{
-									key: 'duration',
-									locator: 'duration',
-								},
-								{
-									key: 'scale',
-									locator: 'scale',
-								},
-							],
-							resultListLocator: 'delay',
-						},
-					},
-					{
-						key: 'description',
-						locator: 'description',
-					},
-					{
-						key: 'name',
-						locator: 'name',
-					},
-					{
-						key: 'recurrence',
-						schema: {
-							resultFields: [
-								{
-									key: 'duration',
-									locator: 'duration',
-								},
-								{
-									key: 'scale',
-									locator: 'scale',
-								},
-							],
-							resultListLocator: 'recurrence',
-						},
-					},
-					instance.getSchemaActions('timerActions', 'timer-action'),
-					instance.getSchemaAssignments(
-						'reassignments',
-						'reassignments'
-					),
-					instance.getSchemaNotifications(
-						'timerNotifications',
-						'timer-notification'
-					),
-				],
-				resultListLocator: tagNode || 'task-timer',
-			},
-		};
-	},
-
-	getSchemaTransitions(key, tagName) {
-		return {
-			key: key || 'transitions',
-			schema: {
-				resultFields: [
-					{
-						key: 'default',
-						locator: 'default',
-					},
-					{
-						key: 'name',
-						locator: 'name',
-					},
-					{
-						key: 'target',
-						locator: 'target',
-					},
-				],
-				resultListLocator: tagName || 'transition',
-			},
-		};
-	},
-
-	sanitizeDefinitionXML(value) {
-		const instance = this;
-
-		value = decodeURIComponent(value);
-
-		value = value.replace(/\s*(<!\[CDATA\[)/g, '$1');
-		value = value.replace(/(\]\]>)\s*/g, '$1');
-
-		instance.updateXMLNamespace(value);
-
-		return value.replace(/(<workflow-definition)[^>]*(>)/, '$1$2');
-	},
-
-	set(key, value) {
-		ATTRS[key] = value;
-	},
-
-	setAttrs(attrs) {
-		Object.entries(attrs).forEach(([key, value]) => {
-			ATTRS[key] = value;
-		});
-	},
-
-	translate(tagName) {
-		const instance = this;
-
-		const schema = {
-			resultFields: [
-				'description',
-				'id',
-				'initial',
-				{
-					key: 'labels',
-					locator: 'labels',
-				},
-				'metadata',
-				'name',
-				'script',
-				{
-					key: 'scriptLanguage',
-					locator: 'script-language',
-				},
-				instance.getSchemaActions(),
-				instance.getSchemaAssignments(),
-				instance.getSchemaNotifications(),
-				instance.getSchemaTaskTimers(),
-				instance.getSchemaTransitions(),
-			],
-			resultListLocator: tagName,
-		};
-
-		return XMLSchemaUtil.applySchema(schema, instance.definitionDoc);
-	},
-
-	updateXMLNamespace(definition) {
-		const instance = this;
-
-		const workflowDefinition = /(<workflow-definition)[^>]*(>)/.exec(
-			definition
-		);
-
-		if (workflowDefinition) {
-			const xmlns = /xmlns="([^"]*)"/.exec(workflowDefinition);
-			const xmlnsXsi = /xmlns:xsi="([^"]*)"/.exec(workflowDefinition);
-			const xsiSchemaLocation = /xsi:schemaLocation="([^"]*)"/.exec(
-				workflowDefinition
-			);
-
-			if (xmlns && xmlnsXsi && xsiSchemaLocation) {
-				instance.set('xmlNamespace', {
-					'xmlns': xmlns[1],
-					'xmlns:xsi': xmlnsXsi[1],
-					'xsi:schemaLocation': xsiSchemaLocation[1],
+						source: item1.name,
+						target: item2.target,
+					});
 				});
-			}
-		}
+			});
+		});
+
+		return connectors;
+	},
+
+	getNodes() {
+		const instance = this;
+
+		const nodes = [];
+
+		instance.definition.forEachField((tagName, fieldData) => {
+			fieldData.results.forEach((item) => {
+				const position = {};
+				let type = tagName;
+
+				if (item.initial) {
+					type = 'start';
+				}
+
+				const metadata = JSON.parse(item.metadata);
+
+				if (metadata.terminal) {
+					type = 'end';
+				}
+
+				position.x = metadata.xy[0];
+				position.y = metadata.xy[1];
+
+				let label = {};
+
+				if (Array.isArray(item.labels)) {
+					item.labels?.map((itemLabel) => {
+						Object.entries(itemLabel).map(([key, value]) => {
+							label[key] = replaceTabSpaces(removeNewLine(value));
+						});
+					});
+				}
+				else {
+					label = {[defaultLanguageId]: item.name};
+				}
+
+				const data = {
+					description: item.description,
+					label,
+					script: item.script,
+				};
+
+				if (type === 'task') {
+					data.scriptLanguage =
+						item.scriptLanguage || DEFAULT_LANGUAGE;
+				}
+
+				let id;
+
+				if (item.id) {
+					id = item.id;
+				}
+				else if (item.name) {
+					id = item.name;
+				}
+				else {
+					return;
+				}
+
+				// To be removed after next stories
+
+				if (type !== 'start' && type !== 'end' && type !== 'state') {
+					type = 'state';
+				}
+
+				nodes.push({
+					data,
+					id,
+					position,
+					type,
+				});
+			});
+		});
+
+		return nodes;
+	},
+
+	updateXMLDefinition(content) {
+		const instance = this;
+
+		instance.definition = new XMLDefinition({
+			value: content,
+		});
 	},
 };

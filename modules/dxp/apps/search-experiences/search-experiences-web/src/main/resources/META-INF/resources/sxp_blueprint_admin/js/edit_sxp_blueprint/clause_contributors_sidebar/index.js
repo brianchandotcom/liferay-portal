@@ -9,12 +9,12 @@
  * distribution rights of the Software.
  */
 
+import ClayButton from '@clayui/button';
 import {ClayCheckbox, ClayToggle} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import ClayLayout from '@clayui/layout';
 import ClayList from '@clayui/list';
-import ClaySticker from '@clayui/sticker';
-import ClayTable from '@clayui/table';
-import {ClayTooltipProvider} from '@clayui/tooltip';
+import getCN from 'classnames';
 import React, {useEffect, useState} from 'react';
 
 import {
@@ -50,8 +50,9 @@ const getClassDisplayName = (className) => {
 		.join(' ');
 };
 
-function ClauseContributorsTab({
-	applyIndexerClauses,
+function ClauseContributorsSidebar({
+	onToggle,
+	visible,
 	frameworkConfig,
 	initialClauseContributorsList = [],
 	onFrameworkConfigChange,
@@ -107,17 +108,6 @@ function ClauseContributorsTab({
 			],
 			label: Liferay.Language.get('filter-by-category'),
 			name: 'filter-by-category',
-			type: 'group',
-		},
-		{
-			items: [
-				{
-					active: true,
-					label: Liferay.Language.get('name'),
-				},
-			],
-			label: Liferay.Language.get('order-by'),
-			name: 'order-by',
 			type: 'group',
 		},
 	];
@@ -191,10 +181,6 @@ function ClauseContributorsTab({
 		setEnabled(baselineEnabledState);
 	};
 
-	const _handleApplyIndexerClausesChange = () => {
-		onApplyIndexerClausesChange(!applyIndexerClauses);
-	};
-
 	const _handleSelectChange = (className) => () => {
 		setSelected(
 			selected.includes(className)
@@ -236,179 +222,122 @@ function ClauseContributorsTab({
 	};
 
 	return (
-		<div className="clause-contributors-tab">
-			<div className="container-fluid container-fluid-max-xl">
-				<div className="container-view">
-					<div className="clause-content-shift">
-						<ClayList>
-							<ClayList.Item flex>
-								<ClayList.ItemField expand>
-									<ClayList.ItemTitle>
-										{Liferay.Language.get(
-											'liferay-indexer-clauses'
-										)}
+		<div
+			className={getCN(
+				'clause-contributors-sidebar',
+				'sidebar',
+				'sidebar-light',
+				{
+					open: visible,
+				}
+			)}
+		>
+			<div className="sidebar-header">
+				<h4 className="component-title">
+					<span className="text-truncate-inline">
+						<span className="text-truncate">
+							{Liferay.Language.get('clause-contributors')}
+						</span>
+					</span>
+				</h4>
 
-										<ClayTooltipProvider>
-											<ClaySticker
-												displayType="unstyled"
-												size="sm"
-												title={Liferay.Language.get(
-													'liferay-indexer-clauses-help'
-												)}
-											>
-												<ClayIcon
-													data-tooltip-align="top"
-													symbol="info-circle"
-												/>
-											</ClaySticker>
-										</ClayTooltipProvider>
-									</ClayList.ItemTitle>
-								</ClayList.ItemField>
-
-								<ClayList.ItemField className="toggle-item">
-									<ClayToggle
-										label={
-											applyIndexerClauses
-												? Liferay.Language.get('on')
-												: Liferay.Language.get('off')
-										}
-										onToggle={
-											_handleApplyIndexerClausesChange
-										}
-										toggled={applyIndexerClauses || false}
-									/>
-								</ClayList.ItemField>
-							</ClayList.Item>
-						</ClayList>
-
-						<ManagementToolbar
-							allItems={contributors.reduce(
-								(acc, curr) => [...curr.value, ...acc],
-								[]
-							)}
-							category={category}
-							filterItems={filterItems}
-							keyword={keyword}
-							onApplyBaseline={_handleApplyBaseline}
-							onClearCategory={() => setCategory(ALL)}
-							onClearStatus={() => setStatus(ALL)}
-							onReverseSort={() =>
-								setSortDirection(
-									sortDirection === ASCENDING
-										? DESCENDING
-										: ASCENDING
-								)
-							}
-							onUpdateEnabled={_handleUpdateEnabled}
-							selected={selected}
-							setKeyword={setKeyword}
-							setSelected={setSelected}
-							sortDirection={sortDirection}
-							status={status}
-						/>
-
-						<ClayTable hover={false}>
-							<ClayTable.Head>
-								<ClayTable.Row>
-									<ClayTable.Cell headingCell />
-
-									<ClayTable.Cell
-										className="table-cell-expand-small"
-										expanded
-										headingCell
-									>
-										{Liferay.Language.get('title')}
-									</ClayTable.Cell>
-
-									<ClayTable.Cell expanded headingCell>
-										{Liferay.Language.get('class-name')}
-									</ClayTable.Cell>
-
-									<ClayTable.Cell
-										className="table-cell-expand-smallest"
-										headingCell
-									>
-										{Liferay.Language.get('enabled')}
-									</ClayTable.Cell>
-								</ClayTable.Row>
-							</ClayTable.Head>
-
-							<ClayTable.Body>
-								{contributors.map((contributor) => (
-									<React.Fragment key={contributor.label}>
-										<ClayTable.Row
-											divider
-											key={contributor.label}
-										>
-											<ClayTable.Cell colSpan="9">
-												{contributor.label}
-											</ClayTable.Cell>
-										</ClayTable.Row>
-
-										{contributor.value.map((className) => (
-											<ClayTable.Row
-												active={selected.includes(
-													className
-												)}
-												key={className}
-											>
-												<ClayTable.Cell>
-													<ClayCheckbox
-														aria-label={Liferay.Language.get(
-															'checkbox'
-														)}
-														checked={selected.includes(
-															className
-														)}
-														onChange={_handleSelectChange(
-															className
-														)}
-													/>
-												</ClayTable.Cell>
-
-												<ClayTable.Cell
-													expanded
-													headingTitle
-												>
-													{getClassDisplayName(
-														className
-													)}
-												</ClayTable.Cell>
-
-												<ClayTable.Cell expanded>
-													{className}
-												</ClayTable.Cell>
-
-												<ClayTable.Cell className="table-cell-expand-smallest">
-													<ClayToggle
-														label={
-															enabled[className]
-																? Liferay.Language.get(
-																		'on'
-																  )
-																: Liferay.Language.get(
-																		'off'
-																  )
-														}
-														onToggle={_handleToggle(
-															className
-														)}
-														toggled={
-															enabled[
-																className
-															] || false
-														}
-													/>
-												</ClayTable.Cell>
-											</ClayTable.Row>
-										))}
-									</React.Fragment>
-								))}
-							</ClayTable.Body>
-						</ClayTable>
-					</div>
-				</div>
+				<span>
+					<ClayButton
+						aria-label={Liferay.Language.get('close')}
+						borderless
+						displayType="secondary"
+						monospaced
+						onClick={() => onToggle(false)}
+						small
+					>
+						<ClayIcon symbol="times" />
+					</ClayButton>
+				</span>
 			</div>
+
+			<ClayLayout.ContainerFluid className="clause-contributors-list">
+				<ManagementToolbar
+					allItems={contributors.reduce(
+						(acc, curr) => [...curr.value, ...acc],
+						[]
+					)}
+					category={category}
+					filterItems={filterItems}
+					keyword={keyword}
+					onApplyBaseline={_handleApplyBaseline}
+					onClearCategory={() => setCategory(ALL)}
+					onClearStatus={() => setStatus(ALL)}
+					onReverseSort={() =>
+						setSortDirection(
+							sortDirection === ASCENDING ? DESCENDING : ASCENDING
+						)
+					}
+					onUpdateEnabled={_handleUpdateEnabled}
+					selected={selected}
+					setKeyword={setKeyword}
+					setSelected={setSelected}
+					sortDirection={sortDirection}
+					status={status}
+				/>
+
+				<ClayList>
+					{contributors.map((contributor) => (
+						<React.Fragment key={contributor.label}>
+							<ClayList.Header>
+								{contributor.label}
+							</ClayList.Header>
+
+							{contributor.value.map((className) => (
+								<ClayList.Item
+									active={selected.includes(className)}
+									flex
+									key={className}
+								>
+									<ClayList.ItemField>
+										<ClayCheckbox
+											aria-label={Liferay.Language.get(
+												'checkbox'
+											)}
+											checked={selected.includes(
+												className
+											)}
+											onChange={_handleSelectChange(
+												className
+											)}
+										/>
+									</ClayList.ItemField>
+
+									<ClayList.ItemField expand>
+										<ClayList.ItemTitle>
+											{getClassDisplayName(className)}
+										</ClayList.ItemTitle>
+
+										<ClayList.ItemText>
+											{className}
+										</ClayList.ItemText>
+									</ClayList.ItemField>
+
+									<ClayList.ItemField>
+										<ClayToggle
+											label={
+												enabled[className]
+													? Liferay.Language.get('on')
+													: Liferay.Language.get(
+															'off'
+													  )
+											}
+											onToggle={_handleToggle(className)}
+											toggled={
+												enabled[className] || false
+											}
+										/>
+									</ClayList.ItemField>
+								</ClayList.Item>
+							))}
+						</React.Fragment>
+					))}
+				</ClayList>
+			</ClayLayout.ContainerFluid>
 		</div>
 	);
 }
@@ -418,28 +347,38 @@ export default function ({
 	frameworkConfig,
 	onApplyIndexerClausesChange,
 	onFrameworkConfigChange,
+	onToggle,
+	visible,
 }) {
-	const [keywordQuery, setKeywordQuery] = useState(null);
-	const [modelPrefilter, setModelPrefilter] = useState(null);
-	const [queryPrefilter, setQueryPrefilter] = useState(null);
+	const [keywordQueryContributors, setKeywordQueryContributors] = useState(
+		null
+	);
+	const [
+		modelPrefilterContributors,
+		setModelPrefilterContributors,
+	] = useState(null);
+	const [
+		queryPrefilterContributors,
+		setQueryPrefilterContributors,
+	] = useState(null);
 
 	useEffect(() => {
 		[
 			{
 				label: 'KeywordQueryContributor',
-				setProperty: setKeywordQuery,
+				setProperty: setKeywordQueryContributors,
 				url:
 					'/o/search-experiences-rest/v1.0/keyword-query-contributors',
 			},
 			{
 				label: 'ModelPrefilterContributor',
-				setProperty: setModelPrefilter,
+				setProperty: setModelPrefilterContributors,
 				url:
 					'/o/search-experiences-rest/v1.0/model-prefilter-contributors',
 			},
 			{
 				label: 'QueryPrefilterContributor',
-				setProperty: setQueryPrefilter,
+				setProperty: setQueryPrefilterContributors,
 				url:
 					'/o/search-experiences-rest/v1.0/query-prefilter-contributors',
 			},
@@ -460,21 +399,27 @@ export default function ({
 		);
 	}, []); //eslint-disable-line
 
-	if (!keywordQuery || !modelPrefilter || !queryPrefilter) {
+	if (
+		!keywordQueryContributors ||
+		!modelPrefilterContributors ||
+		!queryPrefilterContributors
+	) {
 		return null;
 	}
 
 	return (
-		<ClauseContributorsTab
+		<ClauseContributorsSidebar
 			applyIndexerClauses={applyIndexerClauses}
 			frameworkConfig={frameworkConfig}
 			initialClauseContributorsList={[
-				keywordQuery,
-				modelPrefilter,
-				queryPrefilter,
+				keywordQueryContributors,
+				modelPrefilterContributors,
+				queryPrefilterContributors,
 			]}
 			onApplyIndexerClausesChange={onApplyIndexerClausesChange}
 			onFrameworkConfigChange={onFrameworkConfigChange}
+			onToggle={onToggle}
+			visible={visible}
 		/>
 	);
 }

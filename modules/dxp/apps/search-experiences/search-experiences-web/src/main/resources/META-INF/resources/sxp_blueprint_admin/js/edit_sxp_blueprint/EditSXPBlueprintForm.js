@@ -40,7 +40,7 @@ import {
 } from '../utils/validation';
 import AddSXPElementSidebar from './AddSXPElementSidebar';
 import PreviewSidebar from './PreviewSidebar';
-import ClauseContributorsTab from './clause_contributors_tab/index';
+import ClauseContributorsSidebar from './clause_contributors_sidebar/index';
 import QueryBuilderTab from './query_builder_tab/index';
 import SettingsTab from './settings_tab/index';
 
@@ -48,7 +48,6 @@ import SettingsTab from './settings_tab/index';
 /* eslint-disable sort-keys */
 const TABS = {
 	'query-builder': Liferay.Language.get('query-builder'),
-	'clause-contributors': Liferay.Language.get('clause-contributors'),
 	'settings': Liferay.Language.get('settings'),
 };
 /* eslint-enable sort-keys */
@@ -68,8 +67,9 @@ function EditSXPBlueprintForm({
 		loading: false,
 		results: {},
 	}));
-	const [showSidebar, setShowSidebar] = useState(true);
+	const [showAddSXPElement, setShowAddSXPElement] = useState(true);
 	const [showPreview, setShowPreview] = useState(false);
+	const [showClauseContributors, setShowClauseContributors] = useState(false);
 	const [showSubmitWarningModal, setShowSubmitWarningModal] = useState(false);
 	const [tab, setTab] = useState('query-builder');
 
@@ -412,6 +412,22 @@ function EditSXPBlueprintForm({
 		});
 	};
 
+	const _handleChangeAddSXPElementVisibility = (
+		show = !showAddSXPElement
+	) => {
+		setShowPreview(false);
+		setShowClauseContributors(false);
+		setShowAddSXPElement(show);
+	};
+
+	const _handleChangeClauseContributorsVisibility = (
+		show = !showClauseContributors
+	) => {
+		setShowPreview(false);
+		setShowAddSXPElement(false);
+		setShowClauseContributors(show);
+	};
+
 	const _handleDeleteSXPElement = (id) => {
 		const index = formik.values.elementInstances.findIndex(
 			(item) => item.id === id
@@ -605,33 +621,37 @@ function EditSXPBlueprintForm({
 						touched={formik.touched}
 					/>
 				);
-			case 'clause-contributors':
-				return (
-					<ClauseContributorsTab
-						applyIndexerClauses={formik.values.applyIndexerClauses}
-						frameworkConfig={formik.values.frameworkConfig}
-						onApplyIndexerClausesChange={
-							_handleApplyIndexerClausesChange
-						}
-						onFrameworkConfigChange={_handleFrameworkConfigChange}
-					/>
-				);
 			default:
 				return (
 					<>
 						<AddSXPElementSidebar
 							onAddSXPElement={_handleAddSXPElement}
-							onToggle={setShowSidebar}
-							visible={showSidebar}
+							onToggle={setShowAddSXPElement}
+							visible={showAddSXPElement}
+						/>
+
+						<ClauseContributorsSidebar
+							frameworkConfig={formik.values.frameworkConfig}
+							onApplyIndexerClausesChange={
+								_handleApplyIndexerClausesChange
+							}
+							onFrameworkConfigChange={
+								_handleFrameworkConfigChange
+							}
+							onToggle={setShowClauseContributors}
+							visible={showClauseContributors}
 						/>
 
 						<div
-							className={getCN('query-builder', {
-								'open-preview': showPreview,
-								'open-sidebar': showSidebar,
+							className={getCN({
+								'open-add-sxp-element': showAddSXPElement,
+								'open-clause-contributors': showClauseContributors,
 							})}
 						>
 							<QueryBuilderTab
+								applyIndexerClauses={
+									formik.values.applyIndexerClauses
+								}
 								elementInstances={
 									formik.values.elementInstances
 								}
@@ -641,16 +661,21 @@ function EditSXPBlueprintForm({
 								isSubmitting={
 									formik.isSubmitting || previewInfo.loading
 								}
+								onApplyIndexerClausesChange={
+									_handleApplyIndexerClausesChange
+								}
 								onBlur={formik.handleBlur}
 								onChange={formik.handleChange}
+								onChangeAddSXPElementVisibility={
+									_handleChangeAddSXPElementVisibility
+								}
+								onChangeClauseContributorsVisibility={
+									_handleChangeClauseContributorsVisibility
+								}
 								onDeleteSXPElement={_handleDeleteSXPElement}
 								onFrameworkConfigChange={
 									_handleFrameworkConfigChange
 								}
-								onToggleSidebar={() => {
-									setShowPreview(false);
-									setShowSidebar(!showSidebar);
-								}}
 								setFieldTouched={formik.setFieldTouched}
 								setFieldValue={formik.setFieldValue}
 								touched={formik.touched.elementInstances}
@@ -679,7 +704,13 @@ function EditSXPBlueprintForm({
 				initialTitle={initialTitle}
 				isSubmitting={formik.isSubmitting}
 				onCancel={redirectURL}
-				onChangeTab={setTab}
+				onChangeTab={(tab) => {
+					if (tab === 'configuration') {
+						setShowClauseContributors(false);
+					}
+
+					setTab(tab);
+				}}
 				onSubmit={_handleSubmit}
 				tab={tab}
 				tabs={TABS}
@@ -692,7 +723,8 @@ function EditSXPBlueprintForm({
 						})}
 						displayType="secondary"
 						onClick={() => {
-							setShowSidebar(false);
+							setShowAddSXPElement(false);
+							setShowClauseContributors(false);
 							setShowPreview(!showPreview);
 						}}
 						small

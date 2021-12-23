@@ -24,14 +24,12 @@ import React, {useState} from 'react';
 
 import {ALL, ASCENDING} from '../../utils/constants';
 import {sub} from '../../utils/language';
-import ApplyBaselineModal from './ApplyBaselineModal';
 
 function ManagementToolbar({
 	allItems,
 	category,
 	filterItems,
 	keyword,
-	onApplyBaseline,
 	onClearCategory,
 	onClearStatus,
 	onReverseSort,
@@ -42,7 +40,6 @@ function ManagementToolbar({
 	sortDirection,
 	status,
 }) {
-	const [showModal, setShowModal] = useState(false);
 	const [value, setValue] = useState('');
 
 	return (
@@ -127,18 +124,18 @@ function ManagementToolbar({
 								<ClayButtonGroup spaced>
 									<ClayButton
 										displayType="secondary"
-										onClick={() => onUpdateEnabled(false)}
-										small
-									>
-										{Liferay.Language.get('turn-off')}
-									</ClayButton>
-
-									<ClayButton
-										displayType="secondary"
 										onClick={() => onUpdateEnabled(true)}
 										small
 									>
 										{Liferay.Language.get('turn-on')}
+									</ClayButton>
+
+									<ClayButton
+										displayType="secondary"
+										onClick={() => onUpdateEnabled(false)}
+										small
+									>
+										{Liferay.Language.get('turn-off')}
 									</ClayButton>
 								</ClayButtonGroup>
 							</ClayManagementToolbar.Item>
@@ -155,22 +152,16 @@ function ManagementToolbar({
 											className="nav-link"
 											displayType="unstyled"
 										>
-											<span className="navbar-breakpoint-full">
-												<span className="navbar-text-truncate">
-													{Liferay.Language.get(
-														'filter-and-order'
-													)}
-												</span>
-
-												<ClayIcon
-													className="inline-item inline-item-after"
-													symbol="caret-bottom"
-												/>
+											<span className="navbar-text-truncate">
+												{Liferay.Language.get(
+													'filter-and-order'
+												)}
 											</span>
 
-											<span className="navbar-breakpoint-compact">
-												<ClayIcon symbol="filter" />
-											</span>
+											<ClayIcon
+												className="inline-item inline-item-after"
+												symbol="caret-bottom"
+											/>
 										</ClayButton>
 									}
 								/>
@@ -240,37 +231,6 @@ function ManagementToolbar({
 										</ClayInput.GroupInsetItem>
 									</ClayInput.GroupItem>
 								</ClayInput.Group>
-							</ClayManagementToolbar.Item>
-						</ClayManagementToolbar.ItemList>
-
-						<ClayManagementToolbar.ItemList>
-							<ClayManagementToolbar.Item>
-								<ApplyBaselineModal
-									onClose={() => setShowModal(false)}
-									onSubmit={onApplyBaseline}
-									visible={showModal}
-								/>
-
-								<span className="navbar-breakpoint-full">
-									<ClayButton
-										displayType="secondary"
-										onClick={() => setShowModal(true)}
-									>
-										{Liferay.Language.get(
-											'reset-to-baseline'
-										)}
-									</ClayButton>
-								</span>
-
-								<span className="navbar-breakpoint-compact">
-									<ClayButton
-										displayType="secondary"
-										onClick={() => setShowModal(true)}
-										small
-									>
-										{Liferay.Language.get('reset')}
-									</ClayButton>
-								</span>
 							</ClayManagementToolbar.Item>
 						</ClayManagementToolbar.ItemList>
 					</>

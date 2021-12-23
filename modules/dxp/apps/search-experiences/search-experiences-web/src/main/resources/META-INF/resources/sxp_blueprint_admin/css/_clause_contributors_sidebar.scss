@@ -1,0 +1,53 @@
+.clause-contributors-sidebar {
+	width: $clauseContributorsSidebarWidth;
+
+	.clause-contributors-list {
+		overflow-y: scroll;
+	}
+
+	.list-group {
+		.list-group-header {
+			&:first-child {
+				border-top-left-radius: 0;
+				border-top-right-radius: 0;
+			}
+
+			&:last-child {
+				border-bottom-left-radius: 0;
+				border-bottom-right-radius: 0;
+			}
+		}
+
+		.list-group-header-title {
+			text-transform: none;
+		}
+
+		.list-group-text {
+			color: $secondary;
+		}
+	}
+
+	.management-bar {
+		border-bottom: 0;
+
+		.container-fluid {
+			padding-left: 12px;
+			padding-right: 12px;
+		}
+
+		.search {
+			padding-left: 12px;
+			width: 100%;
+		}
+	}
+
+	.sidebar-header {
+		border-bottom: 1px solid $mainLighten74;
+	}
+
+	.subnav-tbar {
+		.component-label {
+			margin-right: 8px;
+		}
+	}
+}

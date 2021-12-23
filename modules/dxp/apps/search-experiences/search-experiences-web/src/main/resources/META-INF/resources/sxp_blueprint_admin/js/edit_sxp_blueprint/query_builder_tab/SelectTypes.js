@@ -73,10 +73,13 @@ function SelectTypes({
 			<ClayButton
 				className="select-types"
 				displayType="secondary"
-				onClick={() => setVisible(true)}
+				onClick={() => {
+					setVisible(true);
+					setModalSelectedTypes(selectedTypes);
+				}}
 				small
 			>
-				{Liferay.Language.get('select-types')}
+				{Liferay.Language.get('select-asset-types')}
 			</ClayButton>
 
 			{selectedTypes.length > 0 && (

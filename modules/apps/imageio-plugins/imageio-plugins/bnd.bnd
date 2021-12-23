@@ -3,8 +3,15 @@ Bundle-Name: Liferay ImageIO Plugins
 Bundle-SymbolicName: com.liferay.imageio.plugins
 Bundle-Version: 5.0.5
 Import-Package:\
+	!com.sun.awt,\
+	!com.sun.imageio.plugins.jpeg,\
+	\
 	!com.twelvemonkeys.*,\
 	\
+	!javax.media.jai,\
+	\
 	!magick,\
+	\
+	!sun.audio,\
 	\
 	*

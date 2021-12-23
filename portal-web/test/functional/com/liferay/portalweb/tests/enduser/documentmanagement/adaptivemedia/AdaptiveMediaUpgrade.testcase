@@ -1,0 +1,69 @@
+@component-name = "portal-upgrades"
+definition {
+
+	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property test.assert.warning.exceptions = "true";
+	property testray.component.names = "Adaptive Media";
+	property testray.main.component.name = "Upgrades Collaboration";
+
+	setUp {
+		SignIn.signIn();
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		AssertLocation(value1 = "${portalURL}/web/guest?SM_USER=test@liferay.com");
+
+		SearchAdministration.executeReindex();
+	}
+
+	@priority = "4"
+	test CanViewAdaptiveMediaArchive71105 {
+		property data.archive.type = "data-archive-adaptive-media";
+		property portal.version = "7.1.10.5";
+
+		Upgrade.viewAndAddImageResolution();
+
+		Upgrade.editImageResolution();
+
+		Upgrade.deleteImageResolution();
+	}
+
+	@priority = "4"
+	test CanViewAdaptiveMediaArchive72104 {
+		property data.archive.type = "data-archive-adaptive-media";
+		property portal.version = "7.2.10.4";
+
+		Upgrade.viewAndAddImageResolution();
+
+		Upgrade.editImageResolution();
+
+		Upgrade.deleteImageResolution();
+	}
+
+	@priority = "4"
+	test CanViewAdaptiveMediaArchive73101 {
+		property data.archive.type = "data-archive-adaptive-media";
+		property portal.version = "7.3.10.1";
+
+		Upgrade.viewAndAddImageResolution();
+
+		Upgrade.editImageResolution();
+
+		Upgrade.deleteImageResolution();
+	}
+
+	@priority = "4"
+	test CanViewAdaptiveMediaArchive701015 {
+		property data.archive.type = "data-archive-adaptive-media";
+		property portal.version = "7.0.10.15";
+
+		Upgrade.viewAndAddImageResolution();
+
+		Upgrade.editImageResolution();
+
+		Upgrade.deleteImageResolution();
+	}
+
+}

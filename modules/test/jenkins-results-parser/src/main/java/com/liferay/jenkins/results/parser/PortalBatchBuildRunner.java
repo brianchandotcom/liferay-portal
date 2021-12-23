@@ -34,31 +34,32 @@ public abstract class PortalBatchBuildRunner<T extends PortalBatchBuildData>
 			portalBatchBuildData.getPortalGitHubRepositoryName(),
 			portalBatchBuildData.getPortalUpstreamBranchName());
 
-		WorkspaceGitRepository workspaceGitRepository =
-			_workspace.getPrimaryWorkspaceGitRepository();
+		for (WorkspaceGitRepository workspaceGitRepository :
+				_workspace.getWorkspaceGitRepositories()) {
 
-		workspaceGitRepository.addPropertyOption(
-			portalBatchBuildData.getBatchName());
-		workspaceGitRepository.addPropertyOption(
-			String.valueOf(portalBatchBuildData.getBuildProfile()));
-		workspaceGitRepository.addPropertyOption(
-			portalBatchBuildData.getPortalUpstreamBranchName());
+			workspaceGitRepository.addPropertyOption(
+				portalBatchBuildData.getBatchName());
+			workspaceGitRepository.addPropertyOption(
+				String.valueOf(portalBatchBuildData.getBuildProfile()));
+			workspaceGitRepository.addPropertyOption(
+				workspaceGitRepository.getUpstreamBranchName());
 
-		String dockerEnabled = System.getenv("DOCKER_ENABLED");
+			String dockerEnabled = System.getenv("DOCKER_ENABLED");
 
-		if ((dockerEnabled != null) && dockerEnabled.equals("true")) {
-			workspaceGitRepository.addPropertyOption("docker");
+			if ((dockerEnabled != null) && dockerEnabled.equals("true")) {
+				workspaceGitRepository.addPropertyOption("docker");
+			}
+
+			if (JenkinsResultsParserUtil.isWindows()) {
+				workspaceGitRepository.addPropertyOption("windows");
+			}
+			else {
+				workspaceGitRepository.addPropertyOption("unix");
+			}
+
+			workspaceGitRepository.setSenderBranchSHA(
+				portalBatchBuildData.getPortalBranchSHA());
 		}
-
-		if (JenkinsResultsParserUtil.isWindows()) {
-			workspaceGitRepository.addPropertyOption("windows");
-		}
-		else {
-			workspaceGitRepository.addPropertyOption("unix");
-		}
-
-		workspaceGitRepository.setSenderBranchSHA(
-			portalBatchBuildData.getPortalBranchSHA());
 
 		return _workspace;
 	}

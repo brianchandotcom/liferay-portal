@@ -31,15 +31,9 @@ definition {
 	test CanDismissLoadingPageInfoPanel {
 		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
-		RaylifeHomePage.getAQuote();
-
-		RaylifeIndustry.typeIndustry();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeHomePage.startFlow();
 
 		RaylifeContactInfo.typeAllBasicsInfoFields();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
 		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
@@ -75,15 +69,9 @@ definition {
 	test CanReachLoadingPageByPropertyPage {
 		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
-		RaylifeHomePage.getAQuote();
-
-		RaylifeIndustry.typeIndustry();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeHomePage.startFlow();
 
 		RaylifeContactInfo.typeAllBasicsInfoFields();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
 		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
@@ -115,15 +103,9 @@ definition {
 	test CanRedirectToQuotePage {
 		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
-		RaylifeHomePage.getAQuote();
-
-		RaylifeIndustry.typeIndustry();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeHomePage.startFlow();
 
 		RaylifeContactInfo.typeAllBasicsInfoFields();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
 		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 

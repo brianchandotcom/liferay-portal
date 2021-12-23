@@ -33,14 +33,6 @@ definition {
 
 		RaylifeHomePage.getAQuote();
 
-		RaylifeIndustry.typeIndustry();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
-
-		RaylifeContactInfo.typeAllBasicsInfoFields();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
-
 		Click(
 			locator1 = "Raylife#BUTTON_MORE_INFO_PRODUCTS",
 			productName = "Business Owners Policy");
@@ -48,10 +40,6 @@ definition {
 		Click(locator1 = "Raylife#BUTTON_DISMISS");
 
 		AssertElementPresent(locator1 = "RaylifeProduct#INFO_PANEL_TIP_HIDE");
-
-		Click(
-			locator1 = "RaylifeNavigation#SECTION_COMPLETED",
-			section = "Basics");
 
 		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 	}
@@ -61,17 +49,13 @@ definition {
 	test CanGoBackOnProductSelectionKeepingAllData {
 		ApplicationsMenu.gotoSite(site = "Raylife");
 
-		RaylifeHomePage.getAQuote();
-
-		RaylifeIndustry.typeIndustry();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeHomePage.startFlow();
 
 		RaylifeContactInfo.typeAllBasicsInfoFields();
 
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
-
 		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
 		RaylifeContactInfo.viewBasicsInfo();
 
@@ -89,19 +73,7 @@ definition {
 
 		RaylifeHomePage.getAQuote();
 
-		RaylifeIndustry.typeIndustry();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
-
-		RaylifeContactInfo.typeAllBasicsInfoFields();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
-
 		AssertElementPresent(locator1 = "RaylifeProduct#RADIO_BUTTON");
-
-		Click(
-			locator1 = "RaylifeNavigation#SECTION_COMPLETED",
-			section = "Basics");
 
 		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 	}
@@ -113,23 +85,11 @@ definition {
 
 		RaylifeHomePage.getAQuote();
 
-		RaylifeIndustry.typeIndustry();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
-
-		RaylifeContactInfo.typeAllBasicsInfoFields();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
-
 		Click(
 			locator1 = "Raylife#BUTTON_MORE_INFO_PRODUCTS",
 			productName = "Business Owners Policy");
 
 		AssertElementPresent(locator1 = "RaylifeProduct#INFO_PANEL_TIP");
-
-		Click(
-			locator1 = "RaylifeNavigation#SECTION_COMPLETED",
-			section = "Basics");
 
 		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 	}

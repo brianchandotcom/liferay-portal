@@ -33,12 +33,13 @@ definition {
 
 		RaylifeHomePage.getAQuote();
 
-		Type(
-			label = "basics.businessSearch",
-			locator1 = "Raylife#FORMS_FIELDS",
-			value1 = "pet");
+		Click(
+			locator1 = "RaylifeProduct#SELECT_PRODUCT",
+			selectProduct = "Business Owners Policy");
 
-		Click(locator1 = "RaylifeIndustry#SELECTED_INDUSTRY");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeIndustry.typeIndustry();
 
 		AssertElementNotPresent(locator1 = "Raylife#BUTTON_CONTINUE_DISABLED");
 
@@ -51,6 +52,12 @@ definition {
 		ApplicationsMenu.gotoSite(site = "Raylife");
 
 		RaylifeHomePage.getAQuote();
+
+		Click(
+			locator1 = "RaylifeProduct#SELECT_PRODUCT",
+			selectProduct = "Business Owners Policy");
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
 		Type(
 			label = "basics.businessSearch",
@@ -71,6 +78,12 @@ definition {
 
 		RaylifeHomePage.getAQuote();
 
+		Click(
+			locator1 = "RaylifeProduct#SELECT_PRODUCT",
+			selectProduct = "Business Owners Policy");
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
 		Type(
 			label = "basics.businessSearch",
 			locator1 = "Raylife#FORMS_FIELDS",
@@ -90,6 +103,12 @@ definition {
 
 		RaylifeHomePage.getAQuote();
 
+		Click(
+			locator1 = "RaylifeProduct#SELECT_PRODUCT",
+			selectProduct = "Business Owners Policy");
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
 		Type(
 			label = "basics.businessSearch",
 			locator1 = "Raylife#FORMS_FIELDS",
@@ -108,6 +127,12 @@ definition {
 		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
 		RaylifeHomePage.getAQuote();
+
+		Click(
+			locator1 = "RaylifeProduct#SELECT_PRODUCT",
+			selectProduct = "Business Owners Policy");
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
 		Type(
 			label = "basics.businessSearch",
@@ -130,6 +155,12 @@ definition {
 
 		RaylifeHomePage.getAQuote();
 
+		Click(
+			locator1 = "RaylifeProduct#SELECT_PRODUCT",
+			selectProduct = "Business Owners Policy");
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
 		AssertElementPresent(locator1 = "RaylifeIndustry#MAX_NUMBER_OF_CHARACTERS");
 
 		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
@@ -141,6 +172,12 @@ definition {
 		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
 		RaylifeHomePage.getAQuote();
+
+		Click(
+			locator1 = "RaylifeProduct#SELECT_PRODUCT",
+			selectProduct = "Business Owners Policy");
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
 		Type(
 			label = "basics.businessSearch",
@@ -155,6 +192,10 @@ definition {
 			locator1 = "Raylife#INFO_PANEL_DISMISS_BUTTON",
 			value1 = "I am unable to find my industry");
 
+		Click(
+			locator1 = "RaylifeNavigation#SECTION_INCOMPLETED",
+			section = "Basics");
+
 		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 	}
 
@@ -164,6 +205,12 @@ definition {
 		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
 		RaylifeHomePage.getAQuote();
+
+		Click(
+			locator1 = "RaylifeProduct#SELECT_PRODUCT",
+			selectProduct = "Business Owners Policy");
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
 		Type(
 			label = "basics.businessSearch",
@@ -176,6 +223,10 @@ definition {
 			locator1 = "RaylifeIndustry#BUTTON_HIGHLIGHTED",
 			value1 = "I am unable to find my industry");
 
+		Click(
+			locator1 = "RaylifeNavigation#SECTION_INCOMPLETED",
+			section = "Basics");
+
 		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 	}
 
@@ -186,21 +237,40 @@ definition {
 
 		RaylifeHomePage.getAQuote();
 
+		Click(
+			locator1 = "RaylifeProduct#SELECT_PRODUCT",
+			selectProduct = "Business Owners Policy");
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
 		Type(
 			label = "basics.businessSearch",
 			locator1 = "Raylife#FORMS_FIELDS",
 			value1 = "pet");
 
-		Click(locator1 = "RaylifeIndustry#SELECTED_INDUSTRY");
+		Click(locator1 = "RaylifeIndustry#BUTTON_TIP_INDUSTRY");
+
+		Click(
+			locator1 = "RaylifeNavigation#SECTION_INCOMPLETED",
+			section = "Basics");
 
 		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 
 		RaylifeHomePage.getAQuote();
 
-		AssertTextNotEquals(
-			label = "basics.businessSearch",
-			locator1 = "Raylife#FORMS_FIELDS",
-			value1 = "pet");
+		Click(
+			locator1 = "RaylifeProduct#SELECT_PRODUCT",
+			selectProduct = "Business Owners Policy");
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		AssertElementNotPresent(
+			label = "Pet Stores",
+			locator1 = "RaylifeIndustry#INDUSTRY_LABEL");
+
+		Click(
+			locator1 = "RaylifeNavigation#SECTION_INCOMPLETED",
+			section = "Basics");
 
 		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 	}
@@ -211,6 +281,12 @@ definition {
 		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
 		RaylifeHomePage.getAQuote();
+
+		Click(
+			locator1 = "RaylifeProduct#SELECT_PRODUCT",
+			selectProduct = "Business Owners Policy");
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
 		Type(
 			label = "basics.businessSearch",

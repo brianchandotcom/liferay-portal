@@ -31,11 +31,7 @@ definition {
 	test CanContinueOnContactsInfoWithAllFilled {
 		ApplicationsMenu.gotoSite(site = "Raylife");
 
-		RaylifeHomePage.getAQuote();
-
-		RaylifeIndustry.typeIndustry();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeHomePage.startFlow();
 
 		AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE_DISABLED");
 
@@ -43,7 +39,9 @@ definition {
 
 		AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE");
 
-		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
+		Click(
+			locator1 = "RaylifeNavigation#SECTION_COMPLETED",
+			section = "Basics");
 
 		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 	}
@@ -53,13 +51,7 @@ definition {
 	test CanViewErrorMessageForEmail {
 		ApplicationsMenu.gotoSite(site = "Raylife");
 
-		RaylifeHomePage.getAQuote();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
-
-		RaylifeIndustry.typeIndustry();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeHomePage.startFlow();
 
 		Type(
 			label = "basics.businessInformation.business.email",
@@ -70,7 +62,9 @@ definition {
 			locator1 = "Raylife#ERROR_MESSAGE",
 			value1 = "Must be a valid email address.");
 
-		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
+		Click(
+			locator1 = "RaylifeNavigation#SECTION_INCOMPLETED_SELECTED",
+			section = "Basics");
 
 		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 	}
@@ -80,13 +74,7 @@ definition {
 	test CanViewErrorMessageForInvalidZipCode {
 		ApplicationsMenu.gotoSite(site = "Raylife");
 
-		RaylifeHomePage.getAQuote();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
-
-		RaylifeIndustry.typeIndustry();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeHomePage.startFlow();
 
 		Type(
 			label = "basics.businessInformation.business.location.zip",
@@ -96,13 +84,15 @@ definition {
 		Type(
 			label = "basics.businessInformation.business.location.zip",
 			locator1 = "Raylife#FORMS_FIELDS",
-			value1 = "\BACK_SPACE");
+			value1 = "");
 
 		AssertTextEquals(
 			locator1 = "Raylife#ERROR_MESSAGE",
 			value1 = "ZIP is required.");
 
-		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
+		Click(
+			locator1 = "RaylifeNavigation#SECTION_INCOMPLETED_SELECTED",
+			section = "Basics");
 
 		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 	}
@@ -112,13 +102,7 @@ definition {
 	test CanViewErrorMessageForPhoneNumber {
 		ApplicationsMenu.gotoSite(site = "Raylife");
 
-		RaylifeHomePage.getAQuote();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
-
-		RaylifeIndustry.typeIndustry();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeHomePage.startFlow();
 
 		Type(
 			label = "basics.businessInformation.business.phone",
@@ -128,13 +112,15 @@ definition {
 		Type(
 			label = "basics.businessInformation.business.phone",
 			locator1 = "Raylife#FORMS_FIELDS",
-			value1 = "\BACK_SPACE");
+			value1 = "");
 
 		AssertTextEquals(
 			locator1 = "Raylife#ERROR_MESSAGE",
 			value1 = "Phone number is required.");
 
-		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
+		Click(
+			locator1 = "RaylifeNavigation#SECTION_INCOMPLETED_SELECTED",
+			section = "Basics");
 
 		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 	}
@@ -144,26 +130,22 @@ definition {
 	test CanViewFirstNameInTip {
 		ApplicationsMenu.gotoSite(site = "Raylife");
 
-		RaylifeHomePage.getAQuote();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
-
-		RaylifeIndustry.typeIndustry();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeHomePage.startFlow();
 
 		RaylifeContactInfo.typeAllBasicsInfoFields();
 
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
-
 		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
 		AssertElementPresent(
 			label = "basics.businessInformation.firstName",
 			locator1 = "Raylife#FORMS_VALUE",
 			value = "FirstName");
 
-		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
+		Click(
+			locator1 = "RaylifeNavigation#SECTION_COMPLETED",
+			section = "Basics");
 
 		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 	}
@@ -173,13 +155,7 @@ definition {
 	test FirstNameMaxNumber {
 		ApplicationsMenu.gotoSite(site = "Raylife");
 
-		RaylifeHomePage.getAQuote();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
-
-		RaylifeIndustry.typeIndustry();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeHomePage.startFlow();
 
 		AssertElementPresent(
 			locator1 = "RaylifeContactInfo#BASICS_NAME_MAX_NUMBER",
@@ -197,13 +173,7 @@ definition {
 	test LastNameMaxNumber {
 		ApplicationsMenu.gotoSite(site = "Raylife");
 
-		RaylifeHomePage.getAQuote();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
-
-		RaylifeIndustry.typeIndustry();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeHomePage.startFlow();
 
 		AssertElementPresent(
 			locator1 = "RaylifeContactInfo#BASICS_NAME_MAX_NUMBER",

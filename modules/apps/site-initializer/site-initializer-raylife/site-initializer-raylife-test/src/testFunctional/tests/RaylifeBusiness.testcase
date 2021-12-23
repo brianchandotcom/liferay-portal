@@ -31,15 +31,9 @@ definition {
 	test CanContinueOnBusinessInfoWithAllFilled {
 		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
-		RaylifeHomePage.getAQuote();
-
-		RaylifeIndustry.typeIndustry();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeHomePage.startFlow();
 
 		RaylifeContactInfo.typeAllBasicsInfoFields();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
 		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
@@ -47,7 +41,7 @@ definition {
 
 		RaylifeBusiness.typeAllBusinessInfoFields();
 
-		AssertElementNotPresent(locator1 = "Raylife#BUTTON_CONTINUE_DISABLED");
+		AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE");
 
 		Click(
 			locator1 = "RaylifeNavigation#SECTION_COMPLETED",
@@ -61,15 +55,9 @@ definition {
 	test CanDismissSalesMerchandiseInfoPanel {
 		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
-		RaylifeHomePage.getAQuote();
-
-		RaylifeIndustry.typeIndustry();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeHomePage.startFlow();
 
 		RaylifeContactInfo.typeAllBasicsInfoFields();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
 		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
@@ -95,15 +83,9 @@ definition {
 	test CanDismissYearsOfExperienceInfoPanel {
 		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
-		RaylifeHomePage.getAQuote();
-
-		RaylifeIndustry.typeIndustry();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeHomePage.startFlow();
 
 		RaylifeContactInfo.typeAllBasicsInfoFields();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
 		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
@@ -129,23 +111,17 @@ definition {
 	test CanGoBackOnBusinessInfoKeepingAllData {
 		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
-		RaylifeHomePage.getAQuote();
-
-		RaylifeIndustry.typeIndustry();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeHomePage.startFlow();
 
 		RaylifeContactInfo.typeAllBasicsInfoFields();
 
 		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
-
 		RaylifeBusiness.typeAllBusinessInfoFields();
 
-		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
-
 		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 
 		RaylifeBusiness.viewBusinessInfo();
 
@@ -161,15 +137,9 @@ definition {
 	test CanViewSalesMerchandiseInfoPanel {
 		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
-		RaylifeHomePage.getAQuote();
-
-		RaylifeIndustry.typeIndustry();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeHomePage.startFlow();
 
 		RaylifeContactInfo.typeAllBasicsInfoFields();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
 		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
@@ -193,15 +163,9 @@ definition {
 	test CanViewYearsOfExperienceInfoPanel {
 		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
-		RaylifeHomePage.getAQuote();
-
-		RaylifeIndustry.typeIndustry();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeHomePage.startFlow();
 
 		RaylifeContactInfo.typeAllBasicsInfoFields();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
 		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
@@ -225,15 +189,9 @@ definition {
 	test OverallSalesIsRequired {
 		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
-		RaylifeHomePage.getAQuote();
-
-		RaylifeIndustry.typeIndustry();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeHomePage.startFlow();
 
 		RaylifeContactInfo.typeAllBasicsInfoFields();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
 		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
@@ -285,15 +243,9 @@ definition {
 	test OverallSalesNotAbove100 {
 		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
-		RaylifeHomePage.getAQuote();
-
-		RaylifeIndustry.typeIndustry();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeHomePage.startFlow();
 
 		RaylifeContactInfo.typeAllBasicsInfoFields();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
 		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
@@ -341,15 +293,9 @@ definition {
 	test SalesMerchandiseIsRequired {
 		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
-		RaylifeHomePage.getAQuote();
-
-		RaylifeIndustry.typeIndustry();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeHomePage.startFlow();
 
 		RaylifeContactInfo.typeAllBasicsInfoFields();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
 		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
@@ -377,15 +323,9 @@ definition {
 	test SalesMerchandiseNotAbove100 {
 		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
-		RaylifeHomePage.getAQuote();
-
-		RaylifeIndustry.typeIndustry();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeHomePage.startFlow();
 
 		RaylifeContactInfo.typeAllBasicsInfoFields();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
 		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
@@ -425,15 +365,9 @@ definition {
 	test YearsOfExperienceIsRequired {
 		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
-		RaylifeHomePage.getAQuote();
-
-		RaylifeIndustry.typeIndustry();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeHomePage.startFlow();
 
 		RaylifeContactInfo.typeAllBasicsInfoFields();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
 		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
@@ -461,15 +395,9 @@ definition {
 	test YearsOfExperienceNotBelowZero {
 		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
-		RaylifeHomePage.getAQuote();
-
-		RaylifeIndustry.typeIndustry();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeHomePage.startFlow();
 
 		RaylifeContactInfo.typeAllBasicsInfoFields();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
 		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 

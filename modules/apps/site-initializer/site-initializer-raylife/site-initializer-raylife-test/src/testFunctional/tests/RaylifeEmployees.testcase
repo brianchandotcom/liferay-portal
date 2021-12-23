@@ -31,15 +31,9 @@ definition {
 	test AnnualPayrollForEmployeesIsRequired {
 		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
-		RaylifeHomePage.getAQuote();
-
-		RaylifeIndustry.typeIndustry();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeHomePage.startFlow();
 
 		RaylifeContactInfo.typeAllBasicsInfoFields();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
 		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
@@ -71,15 +65,9 @@ definition {
 	test AnnualPayrollForOwnerIsRequired {
 		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
-		RaylifeHomePage.getAQuote();
-
-		RaylifeIndustry.typeIndustry();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeHomePage.startFlow();
 
 		RaylifeContactInfo.typeAllBasicsInfoFields();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
 		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
@@ -111,15 +99,9 @@ definition {
 	test CanContinueOnEmployeeInfoWithAllFilled {
 		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
-		RaylifeHomePage.getAQuote();
-
-		RaylifeIndustry.typeIndustry();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeHomePage.startFlow();
 
 		RaylifeContactInfo.typeAllBasicsInfoFields();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
 		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
@@ -145,15 +127,9 @@ definition {
 	test CanDismissFEINInfoPanel {
 		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
-		RaylifeHomePage.getAQuote();
-
-		RaylifeIndustry.typeIndustry();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeHomePage.startFlow();
 
 		RaylifeContactInfo.typeAllBasicsInfoFields();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
 		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
@@ -187,15 +163,9 @@ definition {
 	test CanDismissPartTimeEmployeesInfoPanel {
 		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
-		RaylifeHomePage.getAQuote();
-
-		RaylifeIndustry.typeIndustry();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeHomePage.startFlow();
 
 		RaylifeContactInfo.typeAllBasicsInfoFields();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
 		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
@@ -225,15 +195,9 @@ definition {
 	test CanGoBackOnEmployeeInfoKeepingAllData {
 		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
-		RaylifeHomePage.getAQuote();
-
-		RaylifeIndustry.typeIndustry();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeHomePage.startFlow();
 
 		RaylifeContactInfo.typeAllBasicsInfoFields();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
 		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
@@ -261,15 +225,9 @@ definition {
 	test CanViewFEINInfoPanel {
 		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
-		RaylifeHomePage.getAQuote();
-
-		RaylifeIndustry.typeIndustry();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeHomePage.startFlow();
 
 		RaylifeContactInfo.typeAllBasicsInfoFields();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
 		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
@@ -301,15 +259,9 @@ definition {
 	test CanViewPartTimeEmployeesInfoPanel {
 		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
-		RaylifeHomePage.getAQuote();
-
-		RaylifeIndustry.typeIndustry();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeHomePage.startFlow();
 
 		RaylifeContactInfo.typeAllBasicsInfoFields();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
 		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
@@ -337,15 +289,9 @@ definition {
 	test DoesFEINInputFieldShowsUp {
 		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
-		RaylifeHomePage.getAQuote();
-
-		RaylifeIndustry.typeIndustry();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeHomePage.startFlow();
 
 		RaylifeContactInfo.typeAllBasicsInfoFields();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
 		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
@@ -373,15 +319,9 @@ definition {
 	test EstimatedAnnualGrossRevenueIsRequired {
 		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
-		RaylifeHomePage.getAQuote();
-
-		RaylifeIndustry.typeIndustry();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeHomePage.startFlow();
 
 		RaylifeContactInfo.typeAllBasicsInfoFields();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
 		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
@@ -413,15 +353,9 @@ definition {
 	test FEINIsRequired {
 		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
-		RaylifeHomePage.getAQuote();
-
-		RaylifeIndustry.typeIndustry();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeHomePage.startFlow();
 
 		RaylifeContactInfo.typeAllBasicsInfoFields();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
 		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
@@ -457,15 +391,9 @@ definition {
 	test FEINIsValid {
 		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
-		RaylifeHomePage.getAQuote();
-
-		RaylifeIndustry.typeIndustry();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeHomePage.startFlow();
 
 		RaylifeContactInfo.typeAllBasicsInfoFields();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
 		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
@@ -497,15 +425,9 @@ definition {
 	test PartTimeEmployeeIsRequired {
 		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
-		RaylifeHomePage.getAQuote();
-
-		RaylifeIndustry.typeIndustry();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeHomePage.startFlow();
 
 		RaylifeContactInfo.typeAllBasicsInfoFields();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
 		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
@@ -537,15 +459,9 @@ definition {
 	test PartTimeEmployeeNotBelowOne {
 		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
-		RaylifeHomePage.getAQuote();
-
-		RaylifeIndustry.typeIndustry();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeHomePage.startFlow();
 
 		RaylifeContactInfo.typeAllBasicsInfoFields();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
 		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
@@ -573,15 +489,9 @@ definition {
 	test StartBusinessYearIsNotFuture {
 		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
-		RaylifeHomePage.getAQuote();
-
-		RaylifeIndustry.typeIndustry();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeHomePage.startFlow();
 
 		RaylifeContactInfo.typeAllBasicsInfoFields();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
 		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
@@ -609,15 +519,9 @@ definition {
 	test StartBusinessYearIsRequired {
 		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
-		RaylifeHomePage.getAQuote();
-
-		RaylifeIndustry.typeIndustry();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeHomePage.startFlow();
 
 		RaylifeContactInfo.typeAllBasicsInfoFields();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
 		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 

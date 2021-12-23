@@ -12,12 +12,12 @@
 <tbody>
 <tr>
 	<td>SELECTED_INDUSTRY</td>
-	<td>//fieldset[@id='businessType']</td>
+	<td>//div[contains(@class, 'radio-card')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>BUTTON_TIP_INDUSTRY</td>
-	<td>//span[contains(@class, 'label-inverse-primary')]</td>
+	<td>//span[contains(@class, 'btn-info-panel')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -27,7 +27,12 @@
 </tr>
 <tr>
 	<td>BUTTON_HIGHLIGHTED</td>
-	<td>//span[contains(@class, 'label-solid-info')]</td>
+	<td>//span[contains(@class, 'inverse-primary')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INDUSTRY_LABEL</td>
+	<td>//label[contains(.,'${label}')]</td>
 	<td></td>
 </tr>
 </tbody>

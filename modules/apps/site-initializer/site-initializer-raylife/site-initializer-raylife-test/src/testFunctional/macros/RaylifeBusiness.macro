@@ -1,5 +1,35 @@
 definition {
 
+	macro gotoContactInfoByBusiness {
+		RaylifeBusiness.typeBusinessInfoFields(
+			label = "business.yearsOfExperience",
+			value = "3");
+
+		Click(
+			field = "Do you store personally identifiable information about your customers?",
+			locator1 = "Raylife#BUTTON_NO_OPTION");
+
+		Click(
+			field = "Do you have a Raylife Auto policy?",
+			locator1 = "Raylife#BUTTON_NO_OPTION");
+
+		Select(
+			locator1 = "RaylifeBusiness#SELECT_LEGAL_ENTITY",
+			value1 = "Association");
+
+		RaylifeBusiness.typeBusinessInfoFields(
+			label = "business.salesMerchandise",
+			value = "3%");
+
+		Click(
+			field = "Do you sell products under your own brand or label?",
+			locator1 = "Raylife#BUTTON_YES_OPTION");
+
+		RaylifeBusiness.typeBusinessInfoFields(
+			label = "business.overallSales",
+			value = "3%");
+	}
+
 	macro typeAllBusinessInfoFields {
 		RaylifeBusiness.typeBusinessInfoFields(
 			label = "business.yearsOfExperience",

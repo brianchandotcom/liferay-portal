@@ -31,15 +31,9 @@ definition {
 	test CanNavigateByClickingInSections {
 		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
-		RaylifeHomePage.getAQuote();
-
-		RaylifeIndustry.typeIndustry();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeHomePage.startFlow();
 
 		RaylifeContactInfo.typeAllBasicsInfoFields();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
 		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
@@ -75,15 +69,9 @@ definition {
 	test SectionIsCompleted {
 		ApplicationsMenu.gotoSite(site = "Raylife");
 
-		RaylifeHomePage.getAQuote();
-
-		RaylifeIndustry.typeIndustry();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeHomePage.startFlow();
 
 		RaylifeContactInfo.typeAllBasicsInfoFields();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
 		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
@@ -103,17 +91,15 @@ definition {
 	test SectionIsHighlighted {
 		ApplicationsMenu.gotoSite(site = "Raylife");
 
-		RaylifeHomePage.getAQuote();
-
-		RaylifeIndustry.typeIndustry();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeHomePage.startFlow();
 
 		AssertElementPresent(
 			locator1 = "RaylifeNavigation#SECTION_INCOMPLETED_SELECTED",
 			section = "Basics");
 
-		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
+		Click(
+			locator1 = "RaylifeNavigation#SECTION_INCOMPLETED_SELECTED",
+			section = "Basics");
 
 		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 	}
@@ -123,17 +109,15 @@ definition {
 	test SectionIsIncomplete {
 		ApplicationsMenu.gotoSite(site = "Raylife");
 
-		RaylifeHomePage.getAQuote();
-
-		RaylifeIndustry.typeIndustry();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeHomePage.startFlow();
 
 		AssertElementPresent(
 			locator1 = "RaylifeNavigation#SECTION_UNSTARTED",
 			section = "Basics");
 
-		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
+		Click(
+			locator1 = "RaylifeNavigation#SECTION_INCOMPLETED_SELECTED",
+			section = "Basics");
 
 		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 	}

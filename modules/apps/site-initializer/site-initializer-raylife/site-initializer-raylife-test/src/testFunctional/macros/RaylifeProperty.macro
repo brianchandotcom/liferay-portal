@@ -1,5 +1,39 @@
 definition {
 
+	macro gotoContactInfoByProperty {
+		Click(
+			field = "Do you own the building",
+			locator1 = "Raylife#BUTTON_YES_OPTION");
+
+		RaylifeProperty.typePropertyInfoFields(
+			label = "property.stories",
+			value = "11");
+
+		RaylifeProperty.typePropertyInfoFields(
+			label = "property.buildingSquareFeetOccupied",
+			value = "11 ft²");
+
+		RaylifeProperty.typePropertyInfoFields(
+			label = "property.totalBuildingSquareFeet",
+			value = "11 ft²");
+
+		RaylifeProperty.typePropertyInfoFields(
+			label = "property.yearBuilding",
+			value = "2000");
+
+		Click(
+			field = "Is this the primary location where you conduct business?",
+			locator1 = "Raylife#BUTTON_NO_OPTION");
+
+		Click(
+			field = "Are there swimming pool(s) on the premises?",
+			locator1 = "Raylife#BUTTON_YES_OPTION");
+
+		Click(
+			field = "Are there diving boards or slides?",
+			locator1 = "Raylife#BUTTON_YES_OPTION");
+	}
+
 	macro typeAllPropertyInfoFields {
 		Click(
 			field = "Do you own the building at Address?",

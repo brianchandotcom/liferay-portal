@@ -31,45 +31,13 @@ definition {
 	test CanDismissContactAgentPageInfoPanel {
 		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
-		RaylifeHomePage.getAQuote();
-
-		RaylifeIndustry.typeIndustry();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeHomePage.startFlow();
 
 		RaylifeContactInfo.typeAllBasicsInfoFields();
 
 		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
-
-		RaylifeBusiness.typeBusinessInfoFields(
-			label = "business.yearsOfExperience",
-			value = "3");
-
-		Click(
-			field = "Do you store personally identifiable information about your customers?",
-			locator1 = "Raylife#BUTTON_NO_OPTION");
-
-		Click(
-			field = "Do you have a Raylife Auto policy?",
-			locator1 = "Raylife#BUTTON_NO_OPTION");
-
-		Select(
-			locator1 = "RaylifeBusiness#SELECT_LEGAL_ENTITY",
-			value1 = "Association");
-
-		RaylifeBusiness.typeBusinessInfoFields(
-			label = "business.salesMerchandise",
-			value = "3%");
-
-		Click(
-			field = "Do you sell products under your own brand or label?",
-			locator1 = "Raylife#BUTTON_YES_OPTION");
-
-		RaylifeBusiness.typeBusinessInfoFields(
-			label = "business.overallSales",
-			value = "3%");
+		RaylifeBusiness.gotoContactInfoByBusiness();
 
 		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
@@ -93,45 +61,13 @@ definition {
 	test CanReachContactPageByBusinessPage {
 		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
-		RaylifeHomePage.getAQuote();
-
-		RaylifeIndustry.typeIndustry();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeHomePage.startFlow();
 
 		RaylifeContactInfo.typeAllBasicsInfoFields();
 
 		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
-
-		RaylifeBusiness.typeBusinessInfoFields(
-			label = "business.yearsOfExperience",
-			value = "3");
-
-		Click(
-			field = "Do you store personally identifiable information about your customers?",
-			locator1 = "Raylife#BUTTON_NO_OPTION");
-
-		Click(
-			field = "Do you have a Raylife Auto policy?",
-			locator1 = "Raylife#BUTTON_NO_OPTION");
-
-		Select(
-			locator1 = "RaylifeBusiness#SELECT_LEGAL_ENTITY",
-			value1 = "Association");
-
-		RaylifeBusiness.typeBusinessInfoFields(
-			label = "business.salesMerchandise",
-			value = "3%");
-
-		Click(
-			field = "Do you sell products under your own brand or label?",
-			locator1 = "Raylife#BUTTON_YES_OPTION");
-
-		RaylifeBusiness.typeBusinessInfoFields(
-			label = "business.overallSales",
-			value = "3%");
+		RaylifeBusiness.gotoContactInfoByBusiness();
 
 		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
@@ -153,15 +89,9 @@ definition {
 	test CanReachContactPageByEmployeesPage {
 		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
-		RaylifeHomePage.getAQuote();
-
-		RaylifeIndustry.typeIndustry();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeHomePage.startFlow();
 
 		RaylifeContactInfo.typeAllBasicsInfoFields();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
 		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
@@ -169,33 +99,7 @@ definition {
 
 		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-		Click(
-			field = "Does your business have a Federal Employer Identification Number (FEIN)?",
-			locator1 = "Raylife#BUTTON_NO_OPTION");
-
-		RaylifeEmployees.typeEmployeesInfoFields(
-			label = "employees.startBusinessAtYear",
-			value = "2000");
-
-		Click(
-			field = "Does your business operate year round?",
-			locator1 = "Raylife#BUTTON_NO_OPTION");
-
-		RaylifeEmployees.typeEmployeesInfoFields(
-			label = "employees.partTimeEmployees",
-			value = "200");
-
-		RaylifeEmployees.typeEmployeesInfoFields(
-			label = "employees.estimatedAnnualGrossRevenue",
-			value = "$111.00");
-
-		RaylifeEmployees.typeEmployeesInfoFields(
-			label = "employees.annualPayrollForOwner",
-			value = "$111.00");
-
-		RaylifeEmployees.typeEmployeesInfoFields(
-			label = "employees.annualPayrollForEmployees",
-			value = "$111.00");
+		RaylifeEmployees.gotoContactInfoByEmployees();
 
 		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
@@ -219,6 +123,12 @@ definition {
 
 		RaylifeHomePage.getAQuote();
 
+		Click(
+			locator1 = "RaylifeProduct#SELECT_PRODUCT",
+			selectProduct = "Business Owners Policy");
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
 		RaylifeIndustry.typeIndustry(primaryIndustry = "Residential");
 
 		Click(locator1 = "Raylife#BUTTON_CONTINUE");
@@ -227,23 +137,7 @@ definition {
 
 		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
-
-		RaylifeBusiness.typeBusinessInfoFields(
-			label = "business.yearsOfExperience",
-			value = "3");
-
-		Click(
-			field = "Do you store personally identifiable information about your customers?",
-			locator1 = "Raylife#BUTTON_NO_OPTION");
-
-		Click(
-			field = "Do you have a Raylife Auto policy?",
-			locator1 = "Raylife#BUTTON_NO_OPTION");
-
-		Select(
-			locator1 = "RaylifeBusiness#SELECT_LEGAL_ENTITY",
-			value1 = "Association");
+		RaylifeBusiness.typeAllBusinessInfoFieldsResidential();
 
 		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
@@ -251,37 +145,7 @@ definition {
 
 		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-		Click(
-			field = "Do you own the building",
-			locator1 = "Raylife#BUTTON_YES_OPTION");
-
-		RaylifeProperty.typePropertyInfoFields(
-			label = "property.stories",
-			value = "11");
-
-		RaylifeProperty.typePropertyInfoFields(
-			label = "property.buildingSquareFeetOccupied",
-			value = "11 ft²");
-
-		RaylifeProperty.typePropertyInfoFields(
-			label = "property.totalBuildingSquareFeet",
-			value = "11 ft²");
-
-		RaylifeProperty.typePropertyInfoFields(
-			label = "property.yearBuilding",
-			value = "2000");
-
-		Click(
-			field = "Is this the primary location where you conduct business?",
-			locator1 = "Raylife#BUTTON_NO_OPTION");
-
-		Click(
-			field = "Are there swimming pool(s) on the premises?",
-			locator1 = "Raylife#BUTTON_YES_OPTION");
-
-		Click(
-			field = "Are there diving boards or slides?",
-			locator1 = "Raylife#BUTTON_YES_OPTION");
+		RaylifeProperty.gotoContactInfoByProperty();
 
 		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
@@ -303,45 +167,13 @@ definition {
 	test CanViewApplicationId {
 		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
-		RaylifeHomePage.getAQuote();
-
-		RaylifeIndustry.typeIndustry();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeHomePage.startFlow();
 
 		RaylifeContactInfo.typeAllBasicsInfoFields();
 
 		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
-
-		RaylifeBusiness.typeBusinessInfoFields(
-			label = "business.yearsOfExperience",
-			value = "3");
-
-		Click(
-			field = "Do you store personally identifiable information about your customers?",
-			locator1 = "Raylife#BUTTON_NO_OPTION");
-
-		Click(
-			field = "Do you have a Raylife Auto policy?",
-			locator1 = "Raylife#BUTTON_NO_OPTION");
-
-		Select(
-			locator1 = "RaylifeBusiness#SELECT_LEGAL_ENTITY",
-			value1 = "Association");
-
-		RaylifeBusiness.typeBusinessInfoFields(
-			label = "business.salesMerchandise",
-			value = "3%");
-
-		Click(
-			field = "Do you sell products under your own brand or label?",
-			locator1 = "Raylife#BUTTON_YES_OPTION");
-
-		RaylifeBusiness.typeBusinessInfoFields(
-			label = "business.overallSales",
-			value = "3%");
+		RaylifeBusiness.gotoContactInfoByBusiness();
 
 		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
@@ -361,45 +193,13 @@ definition {
 	test DataPersistsWhenTryToEditInfo {
 		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
-		RaylifeHomePage.getAQuote();
-
-		RaylifeIndustry.typeIndustry();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeHomePage.startFlow();
 
 		RaylifeContactInfo.typeAllBasicsInfoFields();
 
 		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
-
-		RaylifeBusiness.typeBusinessInfoFields(
-			label = "business.yearsOfExperience",
-			value = "3");
-
-		Click(
-			field = "Do you store personally identifiable information about your customers?",
-			locator1 = "Raylife#BUTTON_NO_OPTION");
-
-		Click(
-			field = "Do you have a Raylife Auto policy?",
-			locator1 = "Raylife#BUTTON_NO_OPTION");
-
-		Select(
-			locator1 = "RaylifeBusiness#SELECT_LEGAL_ENTITY",
-			value1 = "Association");
-
-		RaylifeBusiness.typeBusinessInfoFields(
-			label = "business.salesMerchandise",
-			value = "3%");
-
-		Click(
-			field = "Do you sell products under your own brand or label?",
-			locator1 = "Raylife#BUTTON_YES_OPTION");
-
-		RaylifeBusiness.typeBusinessInfoFields(
-			label = "business.overallSales",
-			value = "3%");
+		RaylifeBusiness.gotoContactInfoByBusiness();
 
 		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 

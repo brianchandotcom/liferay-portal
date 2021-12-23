@@ -5,19 +5,25 @@ definition {
 			var zipCode = "12345";
 		}
 
-		if (!(isSet(productOption))) {
-			var productOption = "Business Owners Policy";
-		}
-
 		Type(
 			locator1 = "RaylifeHomePage#HOME_PAGE_ZIP_CODE",
 			value1 = "${zipCode}");
 
-		Select(
-			locator1 = "RaylifeHomePage#HOME_PAGE_PRODUCT",
-			value1 = "${productOption}");
-
 		Click(locator1 = "RaylifeHomePage#HOME_PAGE_GET_A_QUOTE");
+	}
+
+	macro startFlow {
+		RaylifeHomePage.getAQuote();
+
+		Click(
+			locator1 = "RaylifeProduct#SELECT_PRODUCT",
+			selectProduct = "Business Owners Policy");
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeIndustry.typeIndustry();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 	}
 
 }

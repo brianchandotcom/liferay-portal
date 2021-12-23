@@ -30,6 +30,11 @@
 	<td>//label[contains(., '${productName}')]/parent::div//span[contains(@class,'btn-more-info')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SELECT_PRODUCT</td>
+	<td>//label[contains(@for,'basics.productQuote')][text()='${selectProduct}']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

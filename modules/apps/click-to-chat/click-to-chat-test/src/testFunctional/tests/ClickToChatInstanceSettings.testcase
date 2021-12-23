@@ -47,7 +47,7 @@ definition {
 
 		Type(
 			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",
-			value1 = "nonexistent/b0198459-60fd-4aea-bf65-3c163efc9f8d");
+			value1 = "nonexistent/66b6b4b2-d096-45a1-b25d-7dab3f332167");
 
 		SystemSettings.saveConfiguration();
 

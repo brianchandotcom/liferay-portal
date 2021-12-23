@@ -3,20 +3,16 @@ import ClayIcon from '@clayui/icon';
 import {useContext, useState} from 'react';
 import {WarningBadge} from '../../../../../common/components/fragments/Badges/Warning';
 import {ApplicationPropertiesContext} from '../../../../../common/context/ApplicationPropertiesProvider';
-import {getItem} from '../../../../../common/services/liferay/storage';
 import {smoothScroll} from '../../../../../common/utils/scroll';
 import {
 	ACTIONS,
 	SelectedQuoteContext,
 } from '../../../context/SelectedQuoteContextProvider';
-import {getChannel} from '../../../services/Channel';
 import {
 	createDocumentInFolder,
 	createFolderIfNotExist,
 	createRootFolders,
 } from '../../../services/DocumentsAndMedia';
-import {createOrder} from '../../../services/Order';
-import {getSku} from '../../../services/Product';
 
 import UploadFiles from './UploadFiles';
 
@@ -30,9 +26,7 @@ const dropAreaProps = {
 
 const UploadDocuments = () => {
 	const properties = useContext(ApplicationPropertiesContext);
-	const [{accountId, product, sections}, dispatch] = useContext(
-		SelectedQuoteContext
-	);
+	const [{sections}, dispatch] = useContext(SelectedQuoteContext);
 	const [loading, setLoading] = useState(false);
 
 	const setSections = (newSections) => {
@@ -82,41 +76,6 @@ const UploadDocuments = () => {
 		);
 	};
 
-	const getChannelId = async () => {
-		const {
-			data: {items},
-		} = await getChannel();
-
-		return items[0].id;
-	};
-
-	const getSkuId = async () => {
-		const {
-			basics: {productQuote},
-		} = JSON.parse(getItem('raylife-application-form'));
-
-		const {
-			data: {items},
-		} = await getSku(productQuote);
-
-		return items[0].id;
-	};
-
-	const _createOrder = async () => {
-		const [channelId, skuId] = await Promise.all([
-			getChannelId(),
-			getSkuId(),
-		]);
-
-		const order = await createOrder(accountId, channelId, skuId, product);
-
-		const {
-			data: {id},
-		} = order;
-
-		dispatch({payload: id, type: ACTIONS.SET_ORDER_ID});
-	};
-
 	const onClickConfirmUpload = async () => {
 		setLoading(true);
 
@@ -164,8 +123,6 @@ const UploadDocuments = () => {
 				}
 			}
 		}
-
-		await _createOrder();
 
 		setLoading(false);
 

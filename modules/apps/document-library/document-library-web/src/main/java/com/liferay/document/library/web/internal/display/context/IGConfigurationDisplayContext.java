@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.RepositoryLocalService;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -150,7 +151,12 @@ public class IGConfigurationDisplayContext {
 
 		return _itemSelector.getItemSelectorURL(
 			RequestBackedPortletURLFactoryUtil.create(_httpServletRequest),
-			getItemSelectedEventName(), folderItemSelectorCriterion);
+			GroupLocalServiceUtil.getGroup(
+				GetterUtil.getLong(
+					getSelectedRepositoryId(),
+					_themeDisplay.getScopeGroupId())),
+			_themeDisplay.getScopeGroupId(), getItemSelectedEventName(),
+			folderItemSelectorCriterion);
 	}
 
 	public boolean isRootFolderInTrash() throws PortalException {

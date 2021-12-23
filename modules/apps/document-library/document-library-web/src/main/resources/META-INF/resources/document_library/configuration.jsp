@@ -200,7 +200,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 							folderItemSelectorCriterion.setShowGroupSelector(true);
 							folderItemSelectorCriterion.setShowMountFolder(false);
 
-							PortletURL selectFolderURL = itemSelector.getItemSelectorURL(RequestBackedPortletURLFactoryUtil.create(request), portletDisplay.getNamespace() + "folderSelected", folderItemSelectorCriterion);
+							PortletURL selectFolderURL = itemSelector.getItemSelectorURL(RequestBackedPortletURLFactoryUtil.create(request), GroupLocalServiceUtil.getGroup(GetterUtil.getLong(dlAdminDisplayContext.getSelectedRepositoryId(), themeDisplay.getScopeGroupId())), themeDisplay.getScopeGroupId(), portletDisplay.getNamespace() + "folderSelected", folderItemSelectorCriterion);
 							%>
 
 							url: '<%= HtmlUtil.escapeJS(selectFolderURL.toString()) %>',

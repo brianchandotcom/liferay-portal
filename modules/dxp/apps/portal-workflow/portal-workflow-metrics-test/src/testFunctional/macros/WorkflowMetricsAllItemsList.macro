@@ -1,5 +1,41 @@
 definition {
 
+	macro assertInfoItemByIDEntry {
+		Click(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");
+
+		SelectFrame(locator1 = "WorkflowDefinition#DIALOG_BOX_BODY");
+
+		AssertElementPresent(
+			key_itemName = "${processStatus}",
+			key_rowName = "Process Status",
+			locator1 = "WorkflowMetricsAllItemsList#ASSERT_ALL_ITEMS_LIST_BY_DETAILS");
+
+		AssertElementPresent(
+			key_itemName = "${createdBy}",
+			key_rowName = "Created By",
+			locator1 = "WorkflowMetricsAllItemsList#ASSERT_ALL_ITEMS_LIST_BY_DETAILS");
+
+		AssertElementPresent(
+			key_itemName = "${assetType}",
+			key_rowName = "Asset Type",
+			locator1 = "WorkflowMetricsAllItemsList#ASSERT_ALL_ITEMS_LIST_BY_DETAILS");
+
+		AssertElementPresent(
+			key_itemName = "${assetTitle}",
+			key_rowName = "Asset Title",
+			locator1 = "WorkflowMetricsAllItemsList#ASSERT_ALL_ITEMS_LIST_BY_DETAILS");
+
+		AssertElementPresent(
+			key_itemName = "${currentStep}",
+			key_rowName = "Current Step",
+			locator1 = "WorkflowMetricsAllItemsList#ASSERT_ALL_ITEMS_LIST_BY_DETAILS");
+
+		AssertElementPresent(
+			key_itemName = "${currentAssignee}",
+			key_rowName = "Current Assignee",
+			locator1 = "WorkflowMetricsAllItemsList#ASSERT_ALL_ITEMS_LIST_BY_DETAILS");
+	}
+
 	macro assertProcessStepTooltipMessage {
 		MouseOver(
 			key_workflowInstanceName = "${workflowInstanceName}",

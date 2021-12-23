@@ -8,6 +8,10 @@ definition {
 		Click(locator1 = "ContentDashboard#AUDIT_GRAPH_FIRST_BAR");
 	}
 
+	macro clickOnFirstBarColor {
+		Click(locator1 = "ContentDashboard#BAR_FROM_NO_VOCABULARY_SPECIFIED");
+	}
+
 	macro deleteSecondCategoryFilter {
 		Click(locator1 = "ContentDashboard#DELETE_SECOND_FILTER_SELECTED");
 	}

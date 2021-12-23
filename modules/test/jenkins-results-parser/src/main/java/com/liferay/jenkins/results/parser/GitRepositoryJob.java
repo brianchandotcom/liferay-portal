@@ -15,9 +15,14 @@
 package com.liferay.jenkins.results.parser;
 
 import java.io.File;
+import java.io.IOException;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.json.JSONObject;
 
 /**
  * @author Michael Hashimoto
@@ -56,6 +61,15 @@ public abstract class GitRepositoryJob extends BaseJob {
 		return gitWorkingDirectory;
 	}
 
+	@Override
+	public JSONObject getJSONObject() {
+		JSONObject jsonObject = super.getJSONObject();
+
+		jsonObject.put("branch", _getBranchJSONObject());
+
+		return jsonObject;
+	}
+
 	public void setGitRepositoryDir(File gitRepositoryDir) {
 		if (this.gitRepositoryDir != null) {
 			throw new IllegalStateException(
@@ -91,6 +105,69 @@ public abstract class GitRepositoryJob extends BaseJob {
 
 	protected File gitRepositoryDir;
 	protected GitWorkingDirectory gitWorkingDirectory;
+
+	private JSONObject _getBranchJSONObject() {
+		JSONObject branchJSONObject = new JSONObject();
+
+		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
+
+		LocalGitBranch currentLocalGitBranch =
+			gitWorkingDirectory.getCurrentLocalGitBranch();
+
+		branchJSONObject.put(
+			"current_branch_name", currentLocalGitBranch.getName());
+		branchJSONObject.put(
+			"current_branch_sha", currentLocalGitBranch.getSHA());
+
+		LocalGitBranch upstreamLocalGitBranch =
+			gitWorkingDirectory.getUpstreamLocalGitBranch();
+
+		branchJSONObject.put(
+			"upstream_branch_name", upstreamLocalGitBranch.getName());
+		branchJSONObject.put(
+			"upstream_branch_sha", upstreamLocalGitBranch.getSHA());
+
+		branchJSONObject.put(
+			"merge_branch_sha",
+			gitWorkingDirectory.getMergeBaseCommitSHA(
+				currentLocalGitBranch, upstreamLocalGitBranch));
+
+		File workingDirectory = gitWorkingDirectory.getWorkingDirectory();
+
+		List<String> modifiedFiles = new ArrayList<>();
+
+		for (File modifiedFile : gitWorkingDirectory.getModifiedFilesList()) {
+			modifiedFiles.add(
+				JenkinsResultsParserUtil.getPathRelativeTo(
+					modifiedFile, workingDirectory));
+		}
+
+		branchJSONObject.put("modified_files", modifiedFiles);
+
+		if (gitWorkingDirectory instanceof PortalGitWorkingDirectory) {
+			PortalGitWorkingDirectory portalGitWorkingDirectory =
+				(PortalGitWorkingDirectory)gitWorkingDirectory;
+
+			List<String> modifiedModuleDirs = new ArrayList<>();
+
+			try {
+				for (File modifiedModuleDir :
+						portalGitWorkingDirectory.getModifiedModuleDirsList()) {
+
+					modifiedModuleDirs.add(
+						JenkinsResultsParserUtil.getPathRelativeTo(
+							modifiedModuleDir, workingDirectory));
+				}
+
+				branchJSONObject.put("modified_modules", modifiedModuleDirs);
+			}
+			catch (IOException ioException) {
+				throw new RuntimeException(ioException);
+			}
+		}
+
+		return branchJSONObject;
+	}
 
 	private static final Pattern _jobNamePattern = Pattern.compile(
 		"[^\\(]+\\((?<branchName>[^\\)]+)\\)");

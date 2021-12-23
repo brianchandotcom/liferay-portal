@@ -24,6 +24,8 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
+import org.json.JSONObject;
+
 /**
  * @author Michael Hashimoto
  */
@@ -56,6 +58,8 @@ public interface Job {
 	public String getJobProperty(String key);
 
 	public String getJobURL(JenkinsMaster jenkinsMaster);
+
+	public JSONObject getJSONObject();
 
 	public Set<String> getSegmentNames();
 

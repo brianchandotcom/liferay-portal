@@ -184,6 +184,32 @@ public abstract class BaseJob implements Job {
 	}
 
 	@Override
+	public JSONObject getJSONObject() {
+		JSONObject jsonObject = new JSONObject();
+
+		jsonObject.put("build_profile", getBuildProfile());
+		jsonObject.put("job_name", getJobName());
+
+		if (this instanceof TestSuiteJob) {
+			TestSuiteJob testSuiteJob = (TestSuiteJob)this;
+
+			jsonObject.put("test_suite_name", testSuiteJob.getTestSuiteName());
+		}
+
+		JSONArray batchesJSONArray = new JSONArray();
+
+		for (BatchTestClassGroup batchTestClassGroup :
+				getBatchTestClassGroups()) {
+
+			batchesJSONArray.put(batchTestClassGroup.getJSONObject());
+		}
+
+		jsonObject.put("batches", batchesJSONArray);
+
+		return jsonObject;
+	}
+
+	@Override
 	public Set<String> getSegmentNames() {
 		return getFilteredSegmentNames(getRawBatchNames());
 	}

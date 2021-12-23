@@ -2017,6 +2017,9 @@ public interface PropsKeys {
 	public static final String MODULE_FRAMEWORK_EXPORT_PASSWORD_ATTRIBUTES =
 		"module.framework.export.password.attributes";
 
+	public static final String MODULE_FRAMEWORK_FILE_INSTALL_ACTIVE_LEVEL =
+		"module.framework.file.install.active.level";
+
 	public static final String
 		MODULE_FRAMEWORK_FILE_INSTALL_BUNDLES_START_ACTIVATION_POLICY =
 			"module.framework.file.install.bundles.start.activation.policy";
@@ -2030,6 +2033,12 @@ public interface PropsKeys {
 
 	public static final String MODULE_FRAMEWORK_FILE_INSTALL_CFG_ENABLED =
 		"module.framework.file.install.cfg.enabled";
+
+	public static final String MODULE_FRAMEWORK_FILE_INSTALL_CONFIG_ENCODING =
+		"module.framework.file.install.config.encoding";
+
+	public static final String MODULE_FRAMEWORK_FILE_INSTALL_FILTER =
+		"module.framework.file.install.filter";
 
 	public static final String MODULE_FRAMEWORK_FILE_INSTALL_NO_INITIAL_DELAY =
 		"module.framework.file.install.no.initial.delay";

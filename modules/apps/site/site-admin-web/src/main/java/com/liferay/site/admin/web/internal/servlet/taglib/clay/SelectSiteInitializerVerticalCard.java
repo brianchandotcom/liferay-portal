@@ -17,6 +17,7 @@ package com.liferay.site.admin.web.internal.servlet.taglib.clay;
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.VerticalCard;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -56,20 +57,25 @@ public class SelectSiteInitializerVerticalCard implements VerticalCard {
 	public Map<String, String> getDynamicAttributes() {
 		return HashMapBuilder.put(
 			"data-add-site-url",
-			() -> PortletURLBuilder.createActionURL(
+			() -> PortletURLBuilder.createRenderURL(
 				_renderResponse
-			).setActionName(
+			).setMVCRenderCommandName(
 				"/site_admin/add_group"
-			).setMVCPath(
-				"/select_layout_set_prototype_entry.jsp"
+			).setBackURL(
+				ParamUtil.getString(_httpServletRequest, "redirect")
 			).setParameter(
 				"creationType", _siteInitializerItem.getType()
+			).setParameter(
+				"layoutSetPrototypeId",
+				_siteInitializerItem.getLayoutSetPrototypeId()
 			).setParameter(
 				"parentGroupId",
 				ParamUtil.getLong(_httpServletRequest, "parentGroupId")
 			).setParameter(
 				"siteInitializerKey",
 				_siteInitializerItem.getSiteInitializerKey()
+			).setWindowState(
+				LiferayWindowState.POP_UP
 			).buildString()
 		).put(
 			"data-checkbox-field-name",

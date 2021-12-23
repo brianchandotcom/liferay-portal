@@ -132,7 +132,9 @@ definition {
 			wikiNodeName = "Main",
 			wikiPageTitle = "Wiki Page Title");
 
-		AssertElementPresent(locator1 = "WikiEntry#BODY_TABLE");
+		WikiPage.viewPG(
+			wikiPageContentTable = "true",
+			wikiPageTitle = "Wiki Page Title");
 	}
 
 	@description = "This is a test for LPS-136995. It checks that page versions can be compared."

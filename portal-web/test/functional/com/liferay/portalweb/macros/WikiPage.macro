@@ -1645,6 +1645,9 @@ definition {
 				locator1 = "WikiEntry#BODY_LINK",
 				value1 = "${wikiPageContent}");
 		}
+		else if ("${wikiPageContentTable}" == "true") {
+			AssertElementPresent(locator1 = "WikiEntry#BODY_TABLE");
+		}
 		else {
 			AssertTextEquals(
 				locator1 = "WikiEntry#BODY",

@@ -1984,26 +1984,46 @@ public class VerifyProperties extends VerifyProcess {
 		},
 		{
 			"module.framework.properties.felix.fileinstall.bundles.new.start",
-			"module.framework.properties.file.install.bundles.new.start"
+			"module.framework.file.install.bundles.start.new"
+		},
+		{
+			"module.framework.properties.file.install.bundles.new.start",
+			"module.framework.file.install.bundles.start.new"
 		},
 		{
 			"module.framework.properties.felix.fileinstall.bundles." +
 				"startActivationPolicy",
+			"module.framework.file.install.bundles.use.start.activation.policy"
+		},
+		{
 			"module.framework.properties.file.install.bundles." +
-				"startActivationPolicy"
+				"startActivationPolicy",
+			"module.framework.file.install.bundles.use.start.activation.policy"
 		},
 		{
 			"module.framework.properties.felix.fileinstall.bundles." +
 				"startTransient",
-			"module.framework.properties.file.install.bundles.startTransient"
+			"module.framework.file.install.bundles.start.transient"
+		},
+		{
+			"module.framework.properties.file.install.bundles.startTransient",
+			"module.framework.file.install.bundles.start.transient"
 		},
 		{
 			"module.framework.properties.felix.fileinstall.noInitialDelay",
-			"module.framework.properties.file.install.noInitialDelay"
+			"module.framework.file.install.no.initial.delay"
+		},
+		{
+			"module.framework.properties.file.install.noInitialDelay",
+			"module.framework.file.install.no.initial.delay"
 		},
 		{
 			"module.framework.properties.felix.fileinstall.subdir.mode",
-			"module.framework.properties.file.install.subdir.mode"
+			"module.framework.file.install.subdir.mode"
+		},
+		{
+			"module.framework.properties.file.install.subdir.mode",
+			"module.framework.file.install.subdir.mode"
 		},
 		{
 			"passwords.passwordpolicytoolkit.charset.lowercase",

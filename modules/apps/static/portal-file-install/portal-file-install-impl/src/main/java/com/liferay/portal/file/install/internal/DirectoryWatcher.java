@@ -24,6 +24,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.file.install.FileInstaller;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.BufferedInputStream;
@@ -535,8 +536,8 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 
 		Pattern filePattern = null;
 
-		if ((PropsValues.MODULE_FRAMEWORK_FILE_INSTALL_FILTER != null) &&
-			!PropsValues.MODULE_FRAMEWORK_FILE_INSTALL_FILTER.isEmpty()) {
+		if (!Validator.isBlank(
+				PropsValues.MODULE_FRAMEWORK_FILE_INSTALL_FILTER)) {
 
 			filePattern = Pattern.compile(
 				PropsValues.MODULE_FRAMEWORK_FILE_INSTALL_FILTER);

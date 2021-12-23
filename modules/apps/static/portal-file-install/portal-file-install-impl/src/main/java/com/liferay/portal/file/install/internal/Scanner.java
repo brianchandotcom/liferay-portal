@@ -15,6 +15,7 @@
 package com.liferay.portal.file.install.internal;
 
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -50,7 +51,7 @@ public class Scanner {
 
 		_watchedDirs = _canononize(dirs);
 
-		if ((filterString != null) && (filterString.length() > 0)) {
+		if (!Validator.isBlank(filterString)) {
 			_filenameFilter = new FilenameFilter() {
 
 				@Override

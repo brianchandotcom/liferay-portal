@@ -67,10 +67,10 @@ public class NumericDDMFormFieldTemplateContextContributor
 		Map<String, Object> parameters = new HashMap<>();
 
 		String dataType = GetterUtil.getString(
-			getPropertyValue(
+			DDMFormFieldTypeUtil.getChangedPropertyValue(
 				ddmFormField, ddmFormFieldRenderingContext, "dataType"));
 		boolean inputMask = GetterUtil.getBoolean(
-			getPropertyValue(
+			DDMFormFieldTypeUtil.getChangedPropertyValue(
 				ddmFormField, ddmFormFieldRenderingContext, "inputMask"));
 		Locale locale = ddmFormFieldRenderingContext.getLocale();
 
@@ -167,26 +167,6 @@ public class NumericDDMFormFieldTemplateContextContributor
 		}
 
 		return value;
-	}
-
-	protected Object getPropertyValue(
-		DDMFormField ddmFormField,
-		DDMFormFieldRenderingContext ddmFormFieldRenderingContext,
-		String propertyName) {
-
-		Map<String, Object> changedProperties =
-			(Map<String, Object>)ddmFormFieldRenderingContext.getProperty(
-				"changedProperties");
-
-		if (MapUtil.isNotEmpty(changedProperties)) {
-			Object propertyValue = changedProperties.get(propertyName);
-
-			if (propertyValue != null) {
-				return propertyValue;
-			}
-		}
-
-		return ddmFormField.getProperty(propertyName);
 	}
 
 	protected Map<String, String> getSymbolsMap(Locale locale) {

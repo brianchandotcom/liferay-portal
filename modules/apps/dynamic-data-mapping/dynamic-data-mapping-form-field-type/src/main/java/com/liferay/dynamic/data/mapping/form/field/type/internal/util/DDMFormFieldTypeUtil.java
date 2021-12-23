@@ -24,14 +24,36 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 
 import java.util.Locale;
+import java.util.Map;
 import java.util.stream.Stream;
 
 /**
  * @author Marcela Cunha
  */
 public class DDMFormFieldTypeUtil {
+
+	public static Object getChangedPropertyValue(
+		DDMFormField ddmFormField,
+		DDMFormFieldRenderingContext ddmFormFieldRenderingContext,
+		String propertyName) {
+
+		Map<String, Object> changedProperties =
+			(Map<String, Object>)ddmFormFieldRenderingContext.getProperty(
+				"changedProperties");
+
+		if (MapUtil.isNotEmpty(changedProperties)) {
+			Object changedProperty = changedProperties.get(propertyName);
+
+			if (changedProperty != null) {
+				return changedProperty;
+			}
+		}
+
+		return ddmFormField.getProperty(propertyName);
+	}
 
 	public static String getPropertyValue(
 		DDMFormField ddmFormField, Locale locale, String propertyName) {

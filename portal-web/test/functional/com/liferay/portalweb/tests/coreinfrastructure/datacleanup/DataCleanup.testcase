@@ -168,6 +168,67 @@ definition {
 	}
 
 	@priority = "4"
+	test CanRemoveExpiredJournalArticle {
+		var journalArticleQuery = "SELECT * FROM JournalArticle WHERE urlTitle LIKE '%wc-webcontent-title%';";
+
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Guest",
+			title = "WC WebContent Title");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		WebContent.expireCP(webContentTitleList = "WC WebContent Title");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+
+		WebContent.viewStatus(
+			webContentContent = "WC WebContent Content",
+			webContentStatus = "Expired",
+			webContentTitle = "WC WebContent Title");
+
+		var journalArticleTable = SQL.executeMySQLStatement(mysqlStatement = "${journalArticleQuery}");
+
+		if (!(contains("${journalArticleTable}", "wc-webcontent-title"))) {
+			echo("${journalArticleTable}");
+
+			fail("Failed to find expired journal article in JournalArticle table.");
+		}
+
+		AssertConsoleTextNotPresent(value1 = "Completed upgrade process com.liferay.data.cleanup.internal.upgrade.ExpiredJournalArticleUpgradeProcess");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Upgrades",
+			configurationName = "Data Removal",
+			configurationScope = "System Scope");
+
+		var key_settingFieldName = "Remove expired journal articles.";
+
+		Check.toggleSwitch(locator1 = "SystemSettings#SETTING_FIELD_NAME_CHECKBOX");
+
+		SystemSettings.saveConfiguration();
+
+		AssertConsoleTextPresent(value1 = "Completed upgrade process com.liferay.data.cleanup.internal.upgrade.ExpiredJournalArticleUpgradeProcess");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		WebContent.viewNotPresentCP(webContentTitle = "WC WebContent Title");
+
+		var journalArticleTable = SQL.executeMySQLStatement(mysqlStatement = "${journalArticleQuery}");
+
+		if (contains("${journalArticleTable}", "wc-webcontent-title")) {
+			echo("${journalArticleTable}");
+
+			fail("Failed: Expired journal article data still present in JournalArticle table.");
+		}
+	}
+
+	@priority = "4"
 	test FileConfigsWillTriggerDataCleanup {
 		property data.archive.type = "data-archive-portal";
 		property osgi.module.configuration.file.names = "com.liferay.data.cleanup.internal.configuration.DataCleanupConfiguration.config:com.liferay.data.cleanup.internal.configuration.DataRemovalConfiguration.config";

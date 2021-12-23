@@ -45,6 +45,7 @@ public class SXPBlueprintSoap implements Serializable {
 		soapModel.setDescription(model.getDescription());
 		soapModel.setElementInstancesJSON(model.getElementInstancesJSON());
 		soapModel.setTitle(model.getTitle());
+		soapModel.setSchemaVersion(model.getSchemaVersion());
 		soapModel.setStatus(model.getStatus());
 		soapModel.setStatusByUserId(model.getStatusByUserId());
 		soapModel.setStatusByUserName(model.getStatusByUserName());
@@ -198,6 +199,14 @@ public class SXPBlueprintSoap implements Serializable {
 		_title = title;
 	}
 
+	public String getSchemaVersion() {
+		return _schemaVersion;
+	}
+
+	public void setSchemaVersion(String schemaVersion) {
+		_schemaVersion = schemaVersion;
+	}
+
 	public int getStatus() {
 		return _status;
 	}
@@ -242,6 +251,7 @@ public class SXPBlueprintSoap implements Serializable {
 	private String _description;
 	private String _elementInstancesJSON;
 	private String _title;
+	private String _schemaVersion;
 	private int _status;
 	private long _statusByUserId;
 	private String _statusByUserName;

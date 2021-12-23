@@ -55,6 +55,7 @@ public class SXPBlueprintWrapper
 		attributes.put("description", getDescription());
 		attributes.put("elementInstancesJSON", getElementInstancesJSON());
 		attributes.put("title", getTitle());
+		attributes.put("schemaVersion", getSchemaVersion());
 		attributes.put("status", getStatus());
 		attributes.put("statusByUserId", getStatusByUserId());
 		attributes.put("statusByUserName", getStatusByUserName());
@@ -136,6 +137,12 @@ public class SXPBlueprintWrapper
 
 		if (title != null) {
 			setTitle(title);
+		}
+
+		String schemaVersion = (String)attributes.get("schemaVersion");
+
+		if (schemaVersion != null) {
+			setSchemaVersion(schemaVersion);
 		}
 
 		Integer status = (Integer)attributes.get("status");
@@ -322,6 +329,16 @@ public class SXPBlueprintWrapper
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
+	}
+
+	/**
+	 * Returns the schema version of this sxp blueprint.
+	 *
+	 * @return the schema version of this sxp blueprint
+	 */
+	@Override
+	public String getSchemaVersion() {
+		return model.getSchemaVersion();
 	}
 
 	/**
@@ -735,6 +752,16 @@ public class SXPBlueprintWrapper
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
+	}
+
+	/**
+	 * Sets the schema version of this sxp blueprint.
+	 *
+	 * @param schemaVersion the schema version of this sxp blueprint
+	 */
+	@Override
+	public void setSchemaVersion(String schemaVersion) {
+		model.setSchemaVersion(schemaVersion);
 	}
 
 	/**

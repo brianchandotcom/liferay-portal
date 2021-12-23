@@ -55,6 +55,7 @@ public class SXPElementWrapper
 		attributes.put("elementDefinitionJSON", getElementDefinitionJSON());
 		attributes.put("hidden", isHidden());
 		attributes.put("readOnly", isReadOnly());
+		attributes.put("schemaVersion", getSchemaVersion());
 		attributes.put("title", getTitle());
 		attributes.put("type", getType());
 		attributes.put("status", getStatus());
@@ -135,6 +136,12 @@ public class SXPElementWrapper
 
 		if (readOnly != null) {
 			setReadOnly(readOnly);
+		}
+
+		String schemaVersion = (String)attributes.get("schemaVersion");
+
+		if (schemaVersion != null) {
+			setSchemaVersion(schemaVersion);
 		}
 
 		String title = (String)attributes.get("title");
@@ -325,6 +332,16 @@ public class SXPElementWrapper
 	@Override
 	public boolean getReadOnly() {
 		return model.getReadOnly();
+	}
+
+	/**
+	 * Returns the schema version of this sxp element.
+	 *
+	 * @return the schema version of this sxp element
+	 */
+	@Override
+	public String getSchemaVersion() {
+		return model.getSchemaVersion();
 	}
 
 	/**
@@ -658,6 +675,16 @@ public class SXPElementWrapper
 	@Override
 	public void setReadOnly(boolean readOnly) {
 		model.setReadOnly(readOnly);
+	}
+
+	/**
+	 * Sets the schema version of this sxp element.
+	 *
+	 * @param schemaVersion the schema version of this sxp element
+	 */
+	@Override
+	public void setSchemaVersion(String schemaVersion) {
+		model.setSchemaVersion(schemaVersion);
 	}
 
 	/**

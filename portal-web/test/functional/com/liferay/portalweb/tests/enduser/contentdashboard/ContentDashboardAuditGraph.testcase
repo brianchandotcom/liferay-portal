@@ -75,8 +75,8 @@ definition {
 		task ("Assert both filters are applied") {
 			for (var category : list "Audience 1,Stage 1") {
 				AssertElementPresent(
-				categoryName = "${category}",
-				locator1 = "ContentDashboard#FILTER_CATEGORY_NAME");
+					categoryName = "${category}",
+					locator1 = "ContentDashboard#FILTER_CATEGORY_NAME");
 			}
 		}
 

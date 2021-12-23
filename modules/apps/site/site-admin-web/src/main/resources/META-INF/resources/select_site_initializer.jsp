@@ -65,20 +65,12 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-site-template"));
 				var data = event.delegateTarget.querySelector('.add-site-action-card')
 					.dataset;
 
-				openSimpleInputModal.default({
-					checkboxFieldLabel:
-						'<liferay-ui:message key="create-default-pages-as-private-available-only-to-members-if-unchecked-they-will-be-public-available-to-anyone" />',
-					checkboxFieldName: data.checkboxFieldName,
-					checkboxFieldValue: false,
-					dialogTitle: '<liferay-ui:message key="add-site" />',
-					formSubmitURL: data.addSiteUrl,
-					idFieldName: 'layoutSetPrototypeId',
-					idFieldValue: data.layoutSetPrototypeId,
-					mainFieldName: 'name',
-					mainFieldLabel: '<liferay-ui:message key="name" />',
-					namespace: '<portlet:namespace />',
-					spritemap:
-						'<%= themeDisplay.getPathThemeImages() %>/clay/icons.svg',
+				Liferay.Util.openModal({
+					height: '60vh',
+					id: '<portlet:namespace />addSiteDialog',
+					size: 'md',
+					title: '<liferay-ui:message key="add-site" />',
+					url: data.addSiteUrl,
 				});
 			}
 		);

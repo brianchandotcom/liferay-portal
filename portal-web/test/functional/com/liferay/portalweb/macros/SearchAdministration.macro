@@ -95,6 +95,16 @@ definition {
 		}
 	}
 
+	macro getServerVersion {
+		SearchAdministration.openSearchAdmin();
+
+		Panel.expandPanel(panel = "Nodes (1)");
+
+		var serverVersion = selenium.getText("SearchAdmin#SERVER_VERSION");
+
+		return "${serverVersion}";
+	}
+
 	macro openIndexActions {
 		Navigator.openWithAppendToBaseURL(
 			baseURL = "${baseURL}",

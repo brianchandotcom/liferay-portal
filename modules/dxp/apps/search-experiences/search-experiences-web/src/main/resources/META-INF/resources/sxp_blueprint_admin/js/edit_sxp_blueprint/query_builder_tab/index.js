@@ -12,6 +12,7 @@
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
+import {ClayVerticalNav} from '@clayui/nav';
 import ClayPanel from '@clayui/panel';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import {PropTypes} from 'prop-types';
@@ -23,6 +24,11 @@ import SXPElement from '../../shared/sxp_element/index';
 import {SXP_ELEMENT_PREFIX} from '../../utils/constants';
 import {fetchData} from '../../utils/fetch';
 import SelectTypes from './SelectTypes';
+
+const VERTICAL_NAV_KEYS = {
+	QUERY_ELEMENTS: 'queryElements',
+	QUERY_SETTINGS: 'querySettings',
+};
 
 function QueryBuilderTab({
 	elementInstances,
@@ -41,6 +47,9 @@ function QueryBuilderTab({
 }) {
 	const {locale} = useContext(ThemeContext);
 
+	const [activeVerticalNavKey, setActiveVerticalNavKey] = useState(
+		VERTICAL_NAV_KEYS.QUERY_ELEMENTS
+	);
 	const [collapseAll, setCollapseAll] = useState(false);
 	const [searchableTypes, setSearchableTypes] = useState(null);
 	const [indexFields, setIndexFields] = useState(null);
@@ -65,59 +74,17 @@ function QueryBuilderTab({
 		return null;
 	}
 
-	const _renderSelectedElements = () => (
-		<>
-			{elementInstances.map(
-				({id, sxpElement, uiConfigurationValues}, index) => {
-					return sxpElement.elementDefinition?.uiConfiguration ? (
-						<SXPElement
-							collapseAll={collapseAll}
-							entityJSON={entityJSON}
-							error={errors[index]}
-							id={id}
-							index={index}
-							indexFields={indexFields}
-							isSubmitting={isSubmitting}
-							key={id}
-							onBlur={onBlur}
-							onChange={onChange}
-							onDeleteSXPElement={onDeleteSXPElement}
-							prefixedId={`${SXP_ELEMENT_PREFIX.QUERY}-${index}`}
-							searchableTypes={searchableTypes}
-							setFieldTouched={setFieldTouched}
-							setFieldValue={setFieldValue}
-							sxpElement={sxpElement}
-							touched={touched[index]}
-							uiConfigurationValues={uiConfigurationValues}
-						/>
-					) : (
-						<JSONSXPElement
-							collapseAll={collapseAll}
-							error={errors[index]}
-							id={id}
-							index={index}
-							isSubmitting={isSubmitting}
-							key={id}
-							onDeleteSXPElement={onDeleteSXPElement}
-							prefixedId={`${SXP_ELEMENT_PREFIX.QUERY}-${index}`}
-							setFieldTouched={setFieldTouched}
-							setFieldValue={setFieldValue}
-							sxpElement={sxpElement}
-							touched={touched[index]}
-							uiConfigurationValues={uiConfigurationValues}
-						/>
-					);
-				}
-			)}
-		</>
-	);
+	/**
+	 * Handles navigating to a different vertical nav tab.
+	 * @param {string} key A `VERTICAL_NAV_KEYS` value.
+	 */
+	const _handleClickVerticalNav = (verticalNavKey) => () => {
+		setActiveVerticalNavKey(verticalNavKey);
+	};
 
-	return (
-		<ClayLayout.ContainerFluid
-			className="builder query-builder-tab"
-			size="xl"
-		>
-			<div className="builder-content-shift">
+	const _renderContentQueryElements = () => {
+		return (
+			<>
 				<ClayLayout.Row
 					className="configuration-header"
 					justify="between"
@@ -172,9 +139,15 @@ function QueryBuilderTab({
 				) : (
 					_renderSelectedElements()
 				)}
+			</>
+		);
+	};
 
+	const _renderContentQuerySettings = () => {
+		return (
+			<>
 				<ClayLayout.Row
-					className="configuration-header configuration-header-settings"
+					className="configuration-header"
 					justify="between"
 				>
 					<ClayLayout.Col size={12}>
@@ -213,6 +186,105 @@ function QueryBuilderTab({
 						</ClayPanel>
 					</ClayPanel.Group>
 				</div>
+			</>
+		);
+	};
+
+	const _renderSelectedElements = () => (
+		<>
+			{elementInstances.map(
+				({id, sxpElement, uiConfigurationValues}, index) => {
+					return sxpElement.elementDefinition?.uiConfiguration ? (
+						<SXPElement
+							collapseAll={collapseAll}
+							entityJSON={entityJSON}
+							error={errors[index]}
+							id={id}
+							index={index}
+							indexFields={indexFields}
+							isSubmitting={isSubmitting}
+							key={id}
+							onBlur={onBlur}
+							onChange={onChange}
+							onDeleteSXPElement={onDeleteSXPElement}
+							prefixedId={`${SXP_ELEMENT_PREFIX.QUERY}-${index}`}
+							searchableTypes={searchableTypes}
+							setFieldTouched={setFieldTouched}
+							setFieldValue={setFieldValue}
+							sxpElement={sxpElement}
+							touched={touched[index]}
+							uiConfigurationValues={uiConfigurationValues}
+						/>
+					) : (
+						<JSONSXPElement
+							collapseAll={collapseAll}
+							error={errors[index]}
+							id={id}
+							index={index}
+							isSubmitting={isSubmitting}
+							key={id}
+							onDeleteSXPElement={onDeleteSXPElement}
+							prefixedId={`${SXP_ELEMENT_PREFIX.QUERY}-${index}`}
+							setFieldTouched={setFieldTouched}
+							setFieldValue={setFieldValue}
+							sxpElement={sxpElement}
+							touched={touched[index]}
+							uiConfigurationValues={uiConfigurationValues}
+						/>
+					);
+				}
+			)}
+		</>
+	);
+
+	return (
+		<ClayLayout.ContainerFluid
+			className="builder query-builder-tab"
+			size="xl"
+		>
+			<div className="builder-content-shift">
+				<ClayLayout.Row>
+					<ClayLayout.Col md={3} sm={12}>
+						<ClayVerticalNav
+							items={[
+								{
+									active:
+										activeVerticalNavKey ===
+										VERTICAL_NAV_KEYS.QUERY_ELEMENTS,
+									label: Liferay.Language.get(
+										'query-elements'
+									),
+									onClick: _handleClickVerticalNav(
+										VERTICAL_NAV_KEYS.QUERY_ELEMENTS
+									),
+								},
+								{
+									active:
+										activeVerticalNavKey ===
+										VERTICAL_NAV_KEYS.QUERY_SETTINGS,
+									label: Liferay.Language.get(
+										'query-settings'
+									),
+									onClick: _handleClickVerticalNav(
+										VERTICAL_NAV_KEYS.QUERY_SETTINGS
+									),
+								},
+							]}
+						/>
+					</ClayLayout.Col>
+
+					<ClayLayout.Col md={9} sm={12}>
+						<div className="vertical-nav-content-wrapper">
+							{activeVerticalNavKey ===
+								VERTICAL_NAV_KEYS.QUERY_ELEMENTS &&
+								_renderContentQueryElements()}
+
+							{activeVerticalNavKey ===
+								VERTICAL_NAV_KEYS.QUERY_SETTINGS &&
+								_renderContentQuerySettings()}
+						</div>
+					</ClayLayout.Col>
+				</ClayLayout.Row>
 			</div>
 		</ClayLayout.ContainerFluid>
 	);

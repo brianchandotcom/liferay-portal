@@ -40,4 +40,17 @@
 			box-shadow: 0 0 0 0.25rem $white, 0 0 0 0.375rem $primaryL2; // Fixes gray border to white
 		}
 	}
+
+	.vertical-nav-content-wrapper {
+		max-width: 680px;
+	}
+}
+
+// Fix for vertical nav on small screens where the dropdown isn't aligned
+// to the top and the white background makes it look misaligned.
+
+@media (max-width: 767.98px) {
+	.menubar-vertical-expand-md.menubar-transparent {
+		background-color: transparent;
+	}
 }

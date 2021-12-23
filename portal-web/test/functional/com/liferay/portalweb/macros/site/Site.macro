@@ -808,7 +808,7 @@ definition {
 		Button.click(button = "Import");
 
 		AssertTextEquals(
-			locator1 = "SitePagesImport#CURRENT_AND_PREVIOUS_STATUS_1",
+			locator1 = "ExportImport#CURRENT_AND_PREVIOUS_STATUS_1",
 			value1 = "Successful");
 	}
 

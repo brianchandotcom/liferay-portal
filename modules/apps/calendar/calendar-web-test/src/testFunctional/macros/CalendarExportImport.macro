@@ -54,7 +54,7 @@ definition {
 		if (isSet(importValidationErrorMessage)) {
 			AssertTextEquals.assertPartialText(
 				importValidationErrorMessage = "${importValidationErrorMessage}",
-				locator1 = "SitePagesImport#VALIDATION_ERROR_MESSAGE_HEADER",
+				locator1 = "ExportImport#VALIDATION_ERROR_MESSAGE_HEADER",
 				value1 = "${importValidationErrorMessage}");
 		}
 		else {

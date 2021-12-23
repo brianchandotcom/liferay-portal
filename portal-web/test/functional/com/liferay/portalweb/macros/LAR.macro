@@ -153,13 +153,14 @@ definition {
 		AssertVisible(locator1 = "Button#BACK");
 
 		AssertClickNoError(
-			locator1 = "SitePagesImport#IMPORT_BUTTON",
+			key_text = "Import",
+			locator1 = "Button#ANY",
 			value1 = "Import");
 
 		Pause(locator1 = "5000");
 
 		AssertTextEquals(
-			locator1 = "SitePagesImport#CURRENT_AND_PREVIOUS_STATUS_1",
+			locator1 = "ExportImport#CURRENT_AND_PREVIOUS_STATUS_1",
 			value1 = "Successful");
 	}
 
@@ -191,44 +192,44 @@ definition {
 				value1 = "${larFileName}");
 		}
 
-		while ((IsElementNotPresent(locator1 = "Button#CONTINUE")) && (IsElementNotPresent(locator1 = "SitePagesImport#VALIDATION_ERROR_MESSAGE_HEADER"))) {
+		while ((IsElementNotPresent(locator1 = "Button#CONTINUE")) && (IsElementNotPresent(locator1 = "ExportImport#VALIDATION_ERROR_MESSAGE_HEADER"))) {
 			Pause(locator1 = "1000");
 		}
 
 		if ("${cannotImport}" == "true") {
 			AssertTextEquals(
-				locator1 = "SitePagesImport#VALIDATION_ERROR_MESSAGE_HEADER",
+				locator1 = "ExportImport#VALIDATION_ERROR_MESSAGE_HEADER",
 				value1 = "The file ${larFileName} cannot be imported.");
 		}
 		else if (isSet(importSchemaVersionMismatching)) {
 			AssertTextEquals(
-				locator1 = "SitePagesImport#VALIDATION_ERROR_MESSAGE_HEADER",
+				locator1 = "ExportImport#VALIDATION_ERROR_MESSAGE_HEADER",
 				value1 = "The file ${larFileName} cannot be imported.");
 
 			AssertTextPresent(
-				locator1 = "SitePagesImport#VALIDATION_ERROR_MESSAGE",
+				locator1 = "ExportImport#VALIDATION_ERROR",
 				value1 = "LAR schema version 1.0.0 does not match deployed export/import schema version 4.0.0.");
 		}
 		else if (isSet(importValidationMissingItem)) {
 			AssertTextEquals(
-				locator1 = "SitePagesImport#VALIDATION_ERROR_MESSAGE_HEADER",
+				locator1 = "ExportImport#VALIDATION_ERROR_MESSAGE_HEADER",
 				value1 = "The file ${larFileName} cannot be imported.");
 
 			AssertTextEquals(
-				locator1 = "SitePagesImport#VALIDATION_ERROR_MESSAGE",
+				locator1 = "ExportImport#VALIDATION_ERROR",
 				value1 = "There are missing references that could not be found in the current environment. Please import the following elements first:");
 
 			AssertTextEquals.assertPartialText(
-				locator1 = "SitePagesImport#VALIDATION_ERROR_LIST_ITEM",
+				locator1 = "ExportImport#VALIDATION_ERROR_LIST_ITEM",
 				value1 = "${importValidationMissingItem}");
 		}
 		else if (isSet(import6210buildNumber)) {
 			AssertTextEquals(
-				locator1 = "SitePagesImport#VALIDATION_ERROR_MESSAGE_HEADER",
+				locator1 = "ExportImport#VALIDATION_ERROR_MESSAGE_HEADER",
 				value1 = "The file ${larFileName} cannot be imported.");
 
 			AssertTextPresent(
-				locator1 = "SitePagesImport#VALIDATION_ERROR_MESSAGE",
+				locator1 = "ExportImport#VALIDATION_ERROR",
 				value1 = "LAR build number 6210 does not match portal build number");
 		}
 		else {
@@ -299,36 +300,36 @@ definition {
 		}
 
 		if (isSet(importValidationMissingItem) || isSet(importCampaignValidationError) || isSet(importCampaignValidationError)) {
-			while ((IsElementNotPresent(locator1 = "SitePagesImport#VALIDATION_ERROR_MESSAGE")) && (IsElementNotPresent(locator1 = "ExportImport#CURRENT_AND_PREVIOUS_STATUS_1"))) {
+			while ((IsElementNotPresent(locator1 = "ExportImport#VALIDATION_ERROR")) && (IsElementNotPresent(locator1 = "ExportImport#CURRENT_AND_PREVIOUS_STATUS_1"))) {
 				Pause(locator1 = "1000");
 			}
 		}
 
 		if (isSet(importValidationMissingItem)) {
 			AssertTextEquals.assertPartialText(
-				locator1 = "SitePagesImport#VALIDATION_ERROR_MESSAGE_HEADER",
+				locator1 = "ExportImport#VALIDATION_ERROR_MESSAGE_HEADER",
 				value1 = "cannot be imported.");
 
 			AssertTextEquals(
-				locator1 = "SitePagesImport#VALIDATION_ERROR_MESSAGE",
+				locator1 = "ExportImport#VALIDATION_ERROR",
 				value1 = "There are missing references that could not be found in the current environment. Please import the following elements first:");
 
 			AssertTextEquals.assertPartialText(
-				locator1 = "SitePagesImport#VALIDATION_ERROR_LIST_ITEM",
+				locator1 = "ExportImport#VALIDATION_ERROR_LIST_ITEM",
 				value1 = "${importValidationMissingItem}");
 		}
 
 		if ("${importCampaignValidationError}" == "true") {
 			AssertTextEquals(
-				locator1 = "SitePagesImport#VALIDATION_ERROR_MESSAGE",
+				locator1 = "ExportImport#VALIDATION_ERROR",
 				value1 = "The following data will not be imported:");
 
 			AssertTextEquals.assertPartialText(
-				locator1 = "SitePagesImport#VALIDATION_ERROR_LIST_ITEM",
+				locator1 = "ExportImport#VALIDATION_ERROR_LIST_ITEM",
 				value1 = "Campaign Tracking Action");
 
 			AssertTextEquals.assertPartialText(
-				locator1 = "SitePagesImport#VALIDATION_ERROR_LIST_ITEM",
+				locator1 = "ExportImport#VALIDATION_ERROR_LIST_ITEM",
 				value1 = "The original Referenced Asset does not exist in the current environment.");
 		}
 

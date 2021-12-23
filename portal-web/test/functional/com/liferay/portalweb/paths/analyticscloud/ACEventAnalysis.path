@@ -60,6 +60,11 @@
 	<td>//div[@class='attribute-value'and text()='${key_attributeName}']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>CHOOSE_FILTER</td>
+	<td>//div[contains(@class,'show')]//button[contains(@class,'button-root')and text()='${key_filterName}']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

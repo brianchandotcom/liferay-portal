@@ -10,6 +10,28 @@ definition {
 		Click(locator1 = "ACUtils#GENERIC_BUTTON");
 	}
 
+	macro addFilter {
+		ACEventAnalysis.clickToAddFilterButton();
+
+		ACEventAnalysis.searchEventAnalysis(searchItem = "${filterName}");
+
+		Click(
+			key_filterName = "${filterName}",
+			locator1 = "ACEventAnalysis#CHOOSE_FILTER");
+
+		Select(
+			locator1 = "Select#SELECT",
+			value1 = "${optionValue}");
+
+		Type(
+			locator1 = "ACEventAnalysis#INPUT_CONDITION",
+			value1 = "${inputValue}");
+
+		Click(
+			key_buttonName = "Done",
+			locator1 = "ACUtils#GENERIC_BUTTON");
+	}
+
 	macro addEvent {
 		var key_buttonName = "${customEventName}";
 

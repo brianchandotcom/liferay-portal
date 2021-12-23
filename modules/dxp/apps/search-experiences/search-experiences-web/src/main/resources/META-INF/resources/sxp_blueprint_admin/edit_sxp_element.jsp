@@ -32,7 +32,7 @@ if (Validator.isNull(redirect)) {
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
-renderResponse.setTitle(LanguageUtil.get(request, "edit-element"));
+renderResponse.setTitle(LanguageUtil.get(request, "view-element"));
 %>
 
 <div>

@@ -82,8 +82,8 @@ public class ViewSXPElementsDisplayContext {
 				).setParameter(
 					"sxpElementId", "{id}"
 				).buildString(),
-				"pencil", "edit",
-				LanguageUtil.get(_sxpRequestHelper.getRequest(), "edit"), "get",
+				"view", "view",
+				LanguageUtil.get(_sxpRequestHelper.getRequest(), "view"), "get",
 				"view", null),
 			new FDSActionDropdownItem(
 				getAPIURL() + "/{id}/export", "download", "export",

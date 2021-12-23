@@ -140,10 +140,9 @@ public class IGConfigurationDisplayContext {
 		folderItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new FolderItemSelectorReturnType());
 
-		folderItemSelectorCriterion.setFolderId(
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+		folderItemSelectorCriterion.setFolderId(getRootFolderId());
 		folderItemSelectorCriterion.setIgnoreRootFolder(true);
-		folderItemSelectorCriterion.setRepositoryId(0);
+		folderItemSelectorCriterion.setRepositoryId(getSelectedRepositoryId());
 		folderItemSelectorCriterion.setSelectedFolderId(getRootFolderId());
 		folderItemSelectorCriterion.setSelectedRepositoryId(
 			getSelectedRepositoryId());

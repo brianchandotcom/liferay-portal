@@ -188,6 +188,86 @@ definition {
 		Alert.viewErrorMessage(errorMessage = "Close Error:You do not have the required permissions.");
 	}
 
+	@description = "This test covers LPS-130664, This ensures that a user can not view the subscribed message via the notification without permissions on widget page."
+	@priority = "4"
+	test CannotViewMessageViaNotificationWithoutPermissionsOnWidgetPage {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONMBMessage.addMessage(
+			groupName = "Guest",
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Message Boards Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "2",
+			groupName = "Guest",
+			layoutName = "Message Boards Page",
+			widgetName = "Message Boards");
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		PermissionsInline.gotoMessageBoardsThreadPG(threadSubject = "MB Thread Message Subject");
+
+		PermissionsInline.addOrRemoveSubscribePermissionFromAllRoles(
+			addOrRemoveViewPermission = "Add",
+			roleList = "User");
+
+		PermissionsInline.addOrRemoveViewPermissionFromAllRoles(
+			addOrRemoveViewPermission = "Add",
+			roleList = "User");
+
+		JSONMBMessage.subscribeToMessage(
+			groupName = "Guest",
+			threadSubject = "MB Thread Message Subject",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONMBMessage.addMessageReply(
+			groupName = "Guest",
+			replyBody = "MB Body Reply",
+			threadSubject = "MB Thread Message Subject");
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		PermissionsInline.gotoMessageBoardsThreadPG(threadSubject = "MB Thread Message Subject");
+
+		PermissionsInline.addOrRemoveSubscribePermissionFromAllRoles(
+			addOrRemoveViewPermission = "Remove",
+			roleList = "User");
+
+		PermissionsInline.addOrRemoveViewPermissionFromAllRoles(
+			addOrRemoveViewPermission = "Remove",
+			roleList = "User,Guest");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		Notifications.gotoNotifications();
+
+		Notifications.navigateToContent(contentBody = "MB Thread Message Subject");
+
+		AssertElementNotPresent(
+			key_threadBody = "MB Body Reply",
+			locator1 = "MessageBoardsThread#THREAD_BODY");
+
+		Alert.viewErrorMessage(errorMessage = "Close Error:You do not have the required permissions.");
+	}
+
 	@priority = "3"
 	@refactordone
 	test CanViewCorrectViewPermissionsInMessageBoardsQuickReplyInPrivateSite {
@@ -417,6 +497,76 @@ definition {
 		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "site-name");
 
 		MessageboardsPortlet.viewNoPermissionCP();
+	}
+
+	@description = "This test covers LPS-135908, This ensures that a user can view the reply message of a thread via the notification."
+	@priority = "3"
+	test CanViewMessageViaNotificationOnContentPage {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONMBMessage.addMessage(
+			groupName = "Guest",
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Message Boards Page",
+			type = "content");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Message Boards Page",
+			siteName = "Guest");
+
+		PageEditor.addWidget(portletName = "Message Boards");
+
+		PageEditor.clickPublish();
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		PermissionsInline.gotoMessageBoardsThreadPG(threadSubject = "MB Thread Message Subject");
+
+		PermissionsInline.addOrRemoveSubscribePermissionFromAllRoles(
+			addOrRemoveViewPermission = "Add",
+			roleList = "User");
+
+		PermissionsInline.addOrRemoveViewPermissionFromAllRoles(
+			addOrRemoveViewPermission = "Add",
+			roleList = "User");
+
+		JSONMBMessage.subscribeToMessage(
+			groupName = "Guest",
+			threadSubject = "MB Thread Message Subject",
+			userEmailAddress = "userea@liferay.com");
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsThread.replyPG(
+			threadReplyBody = "MB Thread Reply Body",
+			threadSubject = "MB Thread Message Subject");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		Notifications.gotoNotifications();
+
+		Notifications.navigateToContent(contentBody = "MB Thread Message Subject");
+
+		AssertVisible(
+			key_threadBody = "MB Thread Reply Body",
+			locator1 = "MessageBoardsThread#THREAD_BODY");
 	}
 
 	@description = "This is a test for LPS-136939. It checks that a guest cannot view a thread without permissions."

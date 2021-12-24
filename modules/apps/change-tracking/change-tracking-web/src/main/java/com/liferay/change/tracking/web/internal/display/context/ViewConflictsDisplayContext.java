@@ -251,11 +251,17 @@ public class ViewConflictsDisplayContext {
 					_httpServletRequest, ctEntry);
 
 				if (Validator.isNotNull(editURL)) {
+					String editInPublicationConfirmationMessage = null;
 					String editInPublicationURL = editURL;
 
 					if (_activeCtCollectionId !=
 							_ctCollection.getCtCollectionId()) {
 
+						editInPublicationConfirmationMessage = _language.format(
+							_httpServletRequest,
+							"you-are-currently-working-on-production.-work-" +
+								"on-x",
+							new Object[] {_ctCollection.getName()}, false);
 						editInPublicationURL =
 							PublicationsPortletURLUtil.getHref(
 								_renderResponse.createActionURL(),
@@ -268,6 +274,9 @@ public class ViewConflictsDisplayContext {
 
 					actionsJSONArray.put(
 						JSONUtil.put(
+							"confirmationMessage",
+							editInPublicationConfirmationMessage
+						).put(
 							"href", editInPublicationURL
 						).put(
 							"label",
@@ -282,6 +291,7 @@ public class ViewConflictsDisplayContext {
 						modelClassNameId, conflictInfo.getTargetPrimaryKey());
 
 					if (productionModel != null) {
+						String editInProductionConfirmationMessage = null;
 						String editInProductionURL =
 							_ctDisplayRendererRegistry.getEditURL(
 								_httpServletRequest, productionModel,
@@ -290,6 +300,13 @@ public class ViewConflictsDisplayContext {
 						if (_activeCtCollectionId !=
 								CTConstants.CT_COLLECTION_ID_PRODUCTION) {
 
+							editInProductionConfirmationMessage =
+								_language.format(
+									_httpServletRequest,
+									"you-are-currently-working-on-x.-work-on-" +
+										"production",
+									new Object[] {_ctCollection.getName()},
+									false);
 							editInProductionURL =
 								PublicationsPortletURLUtil.getHref(
 									_renderResponse.createActionURL(),
@@ -304,6 +321,9 @@ public class ViewConflictsDisplayContext {
 
 						actionsJSONArray.put(
 							JSONUtil.put(
+								"confirmationMessage",
+								editInProductionConfirmationMessage
+							).put(
 								"href", editInProductionURL
 							).put(
 								"label",

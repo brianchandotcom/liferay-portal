@@ -13,7 +13,7 @@
  */
 
 import ClayAlert from '@clayui/alert';
-import {ClayButtonWithIcon} from '@clayui/button';
+import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayDatePicker from '@clayui/date-picker';
 import {Align, ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
@@ -278,18 +278,43 @@ const ConflictsTable = ({conflicts, spritemap}) => {
 			for (let i = 0; i < conflict.actions.length; i++) {
 				const action = conflict.actions[i];
 
-				buttons.push(
-					<a className="btn btn-secondary btn-sm" href={action.href}>
-						<span className="inline-item inline-item-before">
-							<ClayIcon
-								spritemap={spritemap}
-								symbol={action.symbol}
-							/>
-						</span>
+				if (action.confirmationMessage) {
+					buttons.push(
+						<ClayButton
+							displayType="secondary"
+							onClick={() =>
+								confirm(action.confirmationMessage) &&
+								submitForm(document.hrefFm, action.href)
+							}
+						>
+							<span className="inline-item inline-item-before">
+								<ClayIcon
+									spritemap={spritemap}
+									symbol={action.symbol}
+								/>
+							</span>
 
-						{action.label}
-					</a>
-				);
+							{action.label}
+						</ClayButton>
+					);
+				}
+				else {
+					buttons.push(
+						<a
+							className="btn btn-secondary btn-sm"
+							href={action.href}
+						>
+							<span className="inline-item inline-item-before">
+								<ClayIcon
+									spritemap={spritemap}
+									symbol={action.symbol}
+								/>
+							</span>
+
+							{action.label}
+						</a>
+					);
+				}
 			}
 		}
 

@@ -385,6 +385,68 @@ definition {
 			position = "300,0");
 	}
 
+	@description = "Verify user can use the pin tooltip to edit the information of a diagram product image pin"
+	@priority = "3"
+	test UseToolTip {
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And given a diagram product with a diagram image") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Master",
+				productName = "Diagram T-Shirt",
+				productType = "diagram");
+
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.searchEntry(entryName = "Diagram T-Shirt");
+
+			CommerceNavigator.gotoEntry(entryName = "Diagram T-Shirt");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Diagram");
+
+			CommerceProductImages.addDiagramImages(
+				imageTitles = "Black",
+				productType = "Diagram");
+
+			Button.clickPublish();
+
+			Alert.viewSuccessMessage();
+
+			Refresh();
+		}
+
+		task ("And given a pin on the product") {
+			CPCommerceCatalog.addPin(
+				label = "Test",
+				position = "1",
+				quantity = "1",
+				selectType = "Not Linked to a Catalog");
+		}
+
+		task ("When I change the pin information") {
+			CommerceDiagram.changePinInfo(
+				pinNumber = "1",
+				position = "2",
+				quantity = "2",
+				selectType = "Linked to a SKU",
+				SKU = "MIN93015");
+		}
+
+		task ("Then I should be able to see the updated pin information when I click on the pin") {
+			CommerceDiagram.viewPin(pinNumber = "2");
+
+			CommerceDiagram.assertPinToolTipInfo(
+				pinType = "SKU",
+				positionNumber = "2",
+				quantity = "2",
+				SKU = "MIN93015");
+		}
+	}
+
 	@description = "This is a test for COMMERCE-7035. UseZoomAndDragBackground"
 	@priority = "3"
 	test UseZoomAndDragBackground {

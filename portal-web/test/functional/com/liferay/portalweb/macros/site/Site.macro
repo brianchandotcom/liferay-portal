@@ -56,6 +56,8 @@ definition {
 
 			LexiconCard.clickCard(card = "${siteTemplateName}");
 
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
 			PortletEntry.inputName(name = "${siteName}");
 
 			Modal.save();
@@ -137,6 +139,8 @@ definition {
 		LexiconEntry.gotoAdd();
 
 		LexiconCard.clickCard(card = "${siteTemplateName}");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		PortletEntry.inputName(name = "${siteName}");
 
@@ -1243,6 +1247,8 @@ definition {
 		WaitForElementPresent.waitForLastScript();
 
 		LexiconEntry.gotoEntry(rowEntry = "Blank Site");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		PortletEntry.inputName(name = "${siteName}");
 

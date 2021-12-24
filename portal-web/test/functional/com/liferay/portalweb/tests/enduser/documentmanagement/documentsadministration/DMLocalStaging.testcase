@@ -49,6 +49,8 @@ definition {
 	@description = "This is a test for LPS-136819. It checks that a file version can be deleted and published."
 	@priority = "4"
 	test CanPublishDeletedFileVersion {
+		property portal.acceptance = "true";
+
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "Document_2.jpg",
@@ -140,6 +142,8 @@ definition {
 	@description = "This is a test for LPS-136818. It checks that a folder with multiple files can be published using the SAP."
 	@priority = "4"
 	test CanPublishFolderWithMultipleFilesViaSAP {
+		property portal.acceptance = "true";
+
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name",
@@ -332,6 +336,8 @@ definition {
 	@description = "This is a test for LPS-136817. It checks that a shortcut can be published using the SAP."
 	@priority = "4"
 	test CanPublishShortcutViaSAP {
+		property portal.acceptance = "true";
+
 		JSONGroup.addGroup(groupName = "Test Site Name");
 
 		JSONDocument.addFileWithUploadedFile(
@@ -625,6 +631,8 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test DeleteDocumentWithCustomType {
+		property portal.acceptance = "true";
+
 		DMNavigator.gotoDocumentType();
 
 		DMDocumentType.add(
@@ -677,6 +685,8 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test EditDocumentWithCustomType {
+		property portal.acceptance = "true";
+
 		DMNavigator.gotoDocumentType();
 
 		DMDocumentType.add(
@@ -745,6 +755,8 @@ definition {
 	@priority = "5"
 	@refactordone
 	test PendingEntryWillNotBePublishedToLive {
+		property portal.acceptance = "true";
+
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder 1",
@@ -790,6 +802,8 @@ definition {
 	@description = "LPS-90557 - Publishing deletion of shortcut target results in PortletDataException."
 	@priority = "5"
 	test PublishDeletionOfShortcutTarget {
+		property portal.acceptance = "true";
+
 		DMNavigator.gotoAddDocumentTypeCP();
 
 		DMDocument.editDocument(
@@ -917,6 +931,8 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test PublishDocumentTypeViaSAP {
+		property portal.acceptance = "true";
+
 		DMNavigator.gotoDocumentType();
 
 		DMDocumentType.add(
@@ -1031,6 +1047,8 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test PublishEditsToDocumentUsingCustomTypeAndSet {
+		property portal.acceptance = "true";
+
 		DMNavigator.gotoMetadataSets();
 
 		DMMetadataSet.addTitle(metadataSetName = "Document Metadata Set Name");
@@ -1217,6 +1235,7 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test PublishSubfolderWithDocumentsViaSAP {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "StagingDM#PublishSubfolderWithDocumentsViaSAP";
 
 		JSONFolder.addFolder(
@@ -1620,6 +1639,8 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test ViewWebContentWithDeletedImage {
+		property portal.acceptance = "true";
+
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_2.jpg",
@@ -1711,6 +1732,8 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test ViewWebContentWithRepublishedImage {
+		property portal.acceptance = "true";
+
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_2.jpg",

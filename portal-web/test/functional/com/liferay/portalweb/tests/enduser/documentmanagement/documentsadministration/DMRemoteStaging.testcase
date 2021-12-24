@@ -51,6 +51,7 @@ definition {
 	@description = "This test covers LPS-83426. It ensures repository actions are all available after enabling remote staging."
 	@priority = "5"
 	test AllActionsAreAvailableInRepository {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "DMRemoteStagingDM#AllActionsAreAvailableInRepository";
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
@@ -67,6 +68,7 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test DeleteDocumentWithCustomType {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "RemoteStagingDM#DeleteDocumentWithCustomType";
 
 		DMNavigator.openDocumentTypesAdmin(siteURLKey = "site-name");
@@ -144,6 +146,7 @@ definition {
 	@refactorneeded
 	test DocumentCanBeRepublishedAfterCheckout {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "RemoteStagingDM#DocumentCanBeRepublishedAfterCheckout";
 
 		Navigator.gotoSitePage(
@@ -259,6 +262,7 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test EditDocumentWithCustomType {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "RemoteStagingDM#EditDocumentWithCustomType";
 
 		DMNavigator.openDocumentTypesAdmin(siteURLKey = "site-name");
@@ -455,6 +459,7 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test PublishEditsToDocumentUsingCustomTypeAndSet {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "RemoteStagingDM#PublishEditsToDocumentUsingCustomTypeAndSet";
 
 		DMNavigator.openMetadataSetsAdmin(siteURLKey = "site-name");
@@ -691,6 +696,7 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test ViewRepublishedDocumentInfo {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "RemoteStagingDM#ViewRepublishedDocumentInfo";
 
 		Navigator.gotoSitePage(
@@ -844,6 +850,7 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test ViewWebContentWithDeletedImage {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "RemoteStagingDM#ViewWebContentWithDeletedImage";
 
 		JSONLayout.addWidgetToPublicLayout(
@@ -963,6 +970,7 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test ViewWebContentWithRepublishedImage {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "RemoteStagingDM#ViewWebContentWithRepublishedImage";
 
 		JSONLayout.addWidgetToPublicLayout(

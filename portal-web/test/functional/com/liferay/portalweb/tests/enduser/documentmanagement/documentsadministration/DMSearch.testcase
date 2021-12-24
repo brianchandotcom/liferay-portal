@@ -51,6 +51,8 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanSearchForDocumentInFolder {
+		property portal.acceptance = "true";
+
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name",
@@ -78,6 +80,8 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanSearchForDocumentThroughContent {
+		property portal.acceptance = "true";
+
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document Title",
@@ -99,6 +103,8 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanSearchForDocumentThroughFileName {
+		property portal.acceptance = "true";
+
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document Title",
@@ -120,6 +126,8 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanSearchForDocumentThroughTitle {
+		property portal.acceptance = "true";
+
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document Title",

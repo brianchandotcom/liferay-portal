@@ -113,6 +113,7 @@ definition {
 	test AddDMDocumentSiteMemberRoleInline {
 		property custom.properties = "default.layout.template.id=1_column";
 		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property portal.acceptance = "true";
 
 		Permissions.setUpSiteMemberRoleLoginUserPG(
 			pageName = "Documents and Media Page",
@@ -206,6 +207,7 @@ definition {
 	@refactorneeded
 	test AddDMDocumentSiteRole {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property portal.acceptance = "true";
 
 		Permissions.setUpSiteRoleLoginUserPG(
 			page = "Public Pages",
@@ -338,6 +340,7 @@ definition {
 	@refactorneeded
 	test CannotViewFolderAsSiteMember {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 
 		JSONUser.addUser(
@@ -459,6 +462,7 @@ definition {
 	@refactorneeded
 	test CannotViewMultipleDocumentsAsSiteMember {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 
 		JSONUser.addUser(
@@ -520,6 +524,7 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test DeleteDMFolderRegRoleInline {
+		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 
 		Permissions.setUpRegRoleLoginUserPG(
@@ -615,6 +620,7 @@ definition {
 	@refactorneeded
 	test EntryCanNotBeEditedWithoutPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property portal.acceptance = "true";
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -1023,6 +1029,7 @@ definition {
 	@refactorneeded
 	test ImportAudioAndLimitPermissionsToSubfolder {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 
 		JSONGroup.addGroup(groupName = "Moon Rocks 101");
@@ -2100,6 +2107,8 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test ViewDMDocumentNoGuestRole {
+		property portal.acceptance = "true";
+
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "Documents and Media Page");
@@ -2142,6 +2151,8 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test ViewDMFolderGuestInline {
+		property portal.acceptance = "true";
+
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			portlet = "Pages");
@@ -2253,6 +2264,7 @@ definition {
 	@refactorneeded
 	test ViewDocumentAfterDeletingAuthor {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property portal.acceptance = "true";
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -2362,6 +2374,8 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test ViewDocumentsAndMediaPortletSiteRole {
+		property portal.acceptance = "true";
+
 		Permissions.setUpSiteRoleLoginUserCP(
 			pageName = "Documents and Media Page",
 			portletName = "Documents and Media",
@@ -2410,6 +2424,8 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test ViewDocumentViaDisplayPage {
+		property portal.acceptance = "true";
+
 		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 			contentType = "Document",
 			displayPageTemplateEntryName = "Display Page Name",
@@ -2474,6 +2490,7 @@ definition {
 	@refactorneeded
 	test ViewDocumentWithOwnerAccessOnly {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property portal.acceptance = "true";
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -2552,6 +2569,7 @@ definition {
 	@refactorneeded
 	test ViewFolderAsOrganizationUser {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 
 		JSONUser.addUser(
@@ -2716,6 +2734,7 @@ definition {
 	@refactorneeded
 	test ViewSearchResultsForChildObjectRespectsParentFolderPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "DMPermissions#ViewSearchResultsForChildObjectRespectsParentFolderPermissions";
 		property testray.component.names = "Training";
 

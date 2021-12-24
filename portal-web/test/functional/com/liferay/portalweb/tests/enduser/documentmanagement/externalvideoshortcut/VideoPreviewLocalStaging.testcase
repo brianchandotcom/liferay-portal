@@ -54,6 +54,7 @@ definition {
 	@refactorneeded
 	@uitest
 	test PublishKBAfterDeletingEmbeddedVideo {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "DLVideoLocalStaging#PublishKBAfterDeletingEmbeddedVideo";
 
 		JSONDepot.connectSite(
@@ -145,6 +146,7 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test PublishWCAfterEditingEmbeddedVideo {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "DLVideoLocalStaging#PublishWCAfterEditingEmbeddedVideo";
 
 		for (var entryCount : list "1,2") {

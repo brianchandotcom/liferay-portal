@@ -39,6 +39,8 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanAddDocumentInFolder {
+		property portal.acceptance = "true";
+
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name",
@@ -62,6 +64,8 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanAddImageInFolder {
+		property portal.acceptance = "true";
+
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name",
@@ -123,6 +127,8 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanAddMultipleSubFolders {
+		property portal.acceptance = "true";
+
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name",
@@ -182,6 +188,8 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanDeleteFolderWithDocument {
+		property portal.acceptance = "true";
+
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name",
@@ -209,6 +217,8 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test CanDeleteSubFolder {
+		property portal.acceptance = "true";
+
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name",
@@ -257,6 +267,8 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanEditSubFolder {
+		property portal.acceptance = "true";
+
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name",
@@ -322,6 +334,8 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanMoveDocumentWithSlashesInTitle {
+		property portal.acceptance = "true";
+
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentTitle = "/D/M/Document Title",
 			groupName = "Guest",
@@ -351,6 +365,8 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanMoveFolderToFolder {
+		property portal.acceptance = "true";
+
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder1 Description",
 			dmFolderName = "DM Folder1 Name",

@@ -67,6 +67,7 @@ definition {
 	@refactorneeded
 	test CanReceiveEmailNotificationForNewComment {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property portal.acceptance = "true";
 		property test.smtp.server.enabled = "true";
 
 		JSONUser.addUser(
@@ -185,6 +186,7 @@ The DM file [$DOCUMENT_TITLE$] has been added to Home folder.
 	@refactorneeded
 	test CanViewEmailNotificationForNewDocumentInFolder {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property portal.acceptance = "true";
 		property test.smtp.server.enabled = "true";
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
@@ -294,6 +296,8 @@ The DM file [$DOCUMENT_TITLE$] has been added to Home folder.
 	@priority = "4"
 	@refactordone
 	test CanViewWebsiteNotificationForNewDocumentInFolder {
+		property portal.acceptance = "true";
+
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name",
@@ -342,6 +346,8 @@ The DM file [$DOCUMENT_TITLE$] has been added to Home folder.
 	@priority = "4"
 	@refactordone
 	test CanViewWebsiteNotificationForUpdatedDocumentInFolder {
+		property portal.acceptance = "true";
+
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name",
@@ -393,6 +399,8 @@ The DM file [$DOCUMENT_TITLE$] has been added to Home folder.
 	@priority = "4"
 	@refactordone
 	test NoWebsiteNotificationAppearsForNewDocumentInFolder {
+		property portal.acceptance = "true";
+
 		Navigator.gotoNotifications();
 
 		Portlet.gotoPortletOptions(portletOption = "Configuration");
@@ -441,6 +449,8 @@ The DM file [$DOCUMENT_TITLE$] has been added to Home folder.
 	@priority = "4"
 	@refactordone
 	test NoWebsiteNotificationAppearsForUpdatedDocumentInFolder {
+		property portal.acceptance = "true";
+
 		Navigator.gotoNotifications();
 
 		Portlet.gotoPortletOptions(portletOption = "Configuration");

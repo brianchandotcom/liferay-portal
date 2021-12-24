@@ -62,6 +62,7 @@ definition {
 	@refactorneeded
 	@uitest
 	test PublishBlogWithEmbeddedVideo {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "DLVideoRemoteStaging#PublishBlogWithEmbeddedVideo";
 
 		User.logoutPG();

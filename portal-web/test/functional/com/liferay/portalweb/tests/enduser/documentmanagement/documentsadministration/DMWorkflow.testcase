@@ -29,6 +29,8 @@ definition {
 	@description = "This is a test for LPS-136855. It checks that a pending file cannot be added to another asset."
 	@priority = "4"
 	test CannotAddPendingFileToAsset {
+		property portal.acceptance = "true";
+
 		JSONGroup.addGroup(groupName = "Site Name");
 
 		JSONLayout.addPublicLayout(
@@ -133,6 +135,8 @@ definition {
 	@description = "This is a test for LPS-136853. It checks that a file can be resubmitted after it has been rejected."
 	@priority = "4"
 	test CanResubmitRejectedDocument {
+		property portal.acceptance = "true";
+
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name",

@@ -37,6 +37,7 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanAddCommentToDocument {
+		property portal.acceptance = "true";
 		property testray.component.names = "Comment";
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
@@ -65,6 +66,8 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanAddMajorVersionIncrement {
+		property portal.acceptance = "true";
+
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document Title",
@@ -91,6 +94,8 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanAddMinorVersionIncrement {
+		property portal.acceptance = "true";
+
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document Title",
@@ -116,6 +121,7 @@ definition {
 	@refactordone
 	test CanAddPDFAfterEnablingTextExtraction {
 		property custom.properties = "text.extraction.fork.process.enabled=true${line.separator}text.extraction.fork.process.mime.types=application/x-tika-ooxml,application/pdf";
+		property portal.acceptance = "true";
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -140,6 +146,8 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanAddWithDocumentTypeViaMultipleUpload {
+		property portal.acceptance = "true";
+
 		DMNavigator.openDocumentTypesAdmin(siteURLKey = "guest");
 
 		DMDocumentType.add(
@@ -167,6 +175,7 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanAutoCompleteCategory {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "DMFileEntry#CanAutoCompleteCategory";
 
 		JSONCategory.addVocabulary(
@@ -230,6 +239,7 @@ definition {
 	@refactordone
 	test CanBlacklistCharacters {
 		property custom.properties = "dl.char.blacklist=\\\\,//,:,*,?,<,#,|,../,/..";
+		property portal.acceptance = "true";
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -262,6 +272,8 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanCancelCheckout {
+		property portal.acceptance = "true";
+
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document Title",
@@ -286,6 +298,8 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanChangeDocumentType {
+		property portal.acceptance = "true";
+
 		DMNavigator.openDocumentTypesAdmin(siteURLKey = "guest");
 
 		DMDocumentType.add(
@@ -414,6 +428,8 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanCheckInAsCurrentVersion {
+		property portal.acceptance = "true";
+
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentTitle = "Check in as current version",
 			groupName = "Guest",
@@ -454,6 +470,8 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanCheckInAsMajorVersion {
+		property portal.acceptance = "true";
+
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentTitle = "Check in as major version",
 			groupName = "Guest",
@@ -487,6 +505,8 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanCheckInAsMinorVersion {
+		property portal.acceptance = "true";
+
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentTitle = "Check in as minor version",
 			groupName = "Guest",
@@ -520,6 +540,8 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanCheckInViaManagementBar {
+		property portal.acceptance = "true";
+
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentTitle = "Check in as current version",
 			groupName = "Guest",
@@ -553,6 +575,8 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanDeleteAllDocumentsAtOnce {
+		property portal.acceptance = "true";
+
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentTitle = "Document_1.doc",
 			groupName = "Guest",
@@ -585,6 +609,8 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanDeleteDocumentInSitePage {
+		property portal.acceptance = "true";
+
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentTitle = "/D/M/Document Title",
 			groupName = "Guest",
@@ -608,6 +634,8 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanDeleteMultipleDocumentsViaActionsButton {
+		property portal.acceptance = "true";
+
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMDocument.enableActionsMenuOnPortlet();
@@ -640,6 +668,8 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanDownloadDocumentMovedBetweenFolders {
+		property portal.acceptance = "true";
+
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		JSONFolder.addFolder(
@@ -681,6 +711,8 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanDownloadMultipleFilesSimultaneously {
+		property portal.acceptance = "true";
+
 		JSONGroup.addGroup(groupName = "Site_1");
 
 		for (var entryCount : list "1,2") {
@@ -705,6 +737,8 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanDownloadThroughURLWithFileName {
+		property portal.acceptance = "true";
+
 		var portalURL = PropsUtil.get("portal.url");
 
 		var siteID = JSONGroupAPI._getGroupIdByName(
@@ -731,6 +765,8 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanDownloadThroughURLWithTitle {
+		property portal.acceptance = "true";
+
 		var portalURL = PropsUtil.get("portal.url");
 
 		var siteID = JSONGroupAPI._getGroupIdByName(
@@ -757,6 +793,8 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanDownloadThroughURLWithUpdatedFileName {
+		property portal.acceptance = "true";
+
 		var portalURL = PropsUtil.get("portal.url");
 
 		var siteID = JSONGroupAPI._getGroupIdByName(
@@ -789,6 +827,8 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanDownloadThroughURLWithUpdatedTitle {
+		property portal.acceptance = "true";
+
 		var portalURL = PropsUtil.get("portal.url");
 
 		var siteID = JSONGroupAPI._getGroupIdByName(
@@ -820,6 +860,8 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanDownloadWithCustomFileName {
+		property portal.acceptance = "true";
+
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.addCP(
@@ -840,6 +882,8 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanDownloadWithSpecialCharactersInTitle {
+		property portal.acceptance = "true";
+
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentTitle = "/D/M/@!# Title",
 			groupName = "Guest",
@@ -1068,6 +1112,8 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanMoveFromOneFolderToAnother {
+		property portal.acceptance = "true";
+
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder1 Description",
 			dmFolderName = "DM Folder1 Name",
@@ -1112,6 +1158,8 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanMoveWithSlashesInTitle {
+		property portal.acceptance = "true";
+
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentTitle = "/D/M/Document Title",
 			groupName = "Guest",
@@ -1141,6 +1189,8 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CannotAddDocumentWithDuplicateName {
+		property portal.acceptance = "true";
+
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentTitle = "DM Document Title",
 			groupName = "Guest",
@@ -1163,6 +1213,8 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CannotAddSpecialCharacterToName {
+		property portal.acceptance = "true";
+
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMDocument.enableActionsMenuOnPortlet();
@@ -1182,6 +1234,7 @@ definition {
 	@refactordone
 	test CannotEditCheckedOutDocument {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property portal.acceptance = "true";
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -1234,6 +1287,8 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CannotMoveToFolderWithDuplicateTitle {
+		property portal.acceptance = "true";
+
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder1 Description",
 			dmFolderName = "DM Folder1 Name",
@@ -1278,6 +1333,7 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CannotPreviewFileThatExceedsLimit {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "DMFileEntry#CannotPreviewFileThatExceedsLimit";
 
 		DMNavigator.openToConfigInSystemSettings(portlet = "File Entries");
@@ -1385,6 +1441,8 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanPreviewEmptyState {
+		property portal.acceptance = "true";
+
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "Document_1.doc",
@@ -1408,6 +1466,8 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanPreviewImageThroughURL {
+		property portal.acceptance = "true";
+
 		var portalURL = PropsUtil.get("portal.url");
 
 		var siteID = JSONGroupAPI._getGroupIdByName(
@@ -1488,6 +1548,8 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanPreviewPNG {
+		property portal.acceptance = "true";
+
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "Document_1.png",
@@ -1540,6 +1602,8 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanPublishTitleWithSpecialCharacters {
+		property portal.acceptance = "true";
+
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMDocument.enableActionsMenuOnPortlet();
@@ -1652,6 +1716,7 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanRestrictFileExtensionToDoc {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "DocumentsadministrationUsecase#CanRestrictFileExtensionToDoc";
 
 		DMDocument.updateFileExtensions(fieldValue = ".doc");
@@ -1684,6 +1749,8 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanRevertToOriginal {
+		property portal.acceptance = "true";
+
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document Title",
@@ -1892,6 +1959,8 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanSearchForDocumentBasedOnContent {
+		property portal.acceptance = "true";
+
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "Document_5.txt",
@@ -1912,6 +1981,8 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanSearchForDocumentWithPartialText {
+		property portal.acceptance = "true";
+
 		JSONDocument.addFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document Title",
@@ -1928,6 +1999,8 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanViewDocumentWithEditedDisplayPageTemplate {
+		property portal.acceptance = "true";
+
 		JSONGroup.addGroup(groupName = "Test Site Name");
 
 		DMNavigator.openDocumentTypesAdmin(siteURLKey = "test-site-name");
@@ -1999,6 +2072,8 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanViewDocumentWithTopics {
+		property portal.acceptance = "true";
+
 		JSONCategory.addCategory(
 			groupName = "Global",
 			title = "Apple",
@@ -2137,6 +2212,8 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanViewImageFromInfoPanel {
+		property portal.acceptance = "true";
+
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document Title",
@@ -2162,6 +2239,8 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanViewInDifferentDisplayStyles {
+		property portal.acceptance = "true";
+
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentTitle = "Document_2",
 			groupName = "Guest",
@@ -2192,6 +2271,8 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanViewOlderVersion {
+		property portal.acceptance = "true";
+
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document Title",
@@ -2304,6 +2385,7 @@ definition {
 	@priority = "4"
 	@refactordone
 	test StagingFileSizeIsNotAffectedByDLRestrictions {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "DocumentsadministrationUsecase#StagingFileSizeIsNotAffectedByDLRestrictions";
 
 		JSONDocument.addFileWithUploadedFile(

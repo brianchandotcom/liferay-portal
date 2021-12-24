@@ -71,6 +71,8 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test DeleteEntry {
+		property portal.acceptance = "true";
+
 		DMNavigator.openMetadataSetsAdmin(siteURLKey = "guest");
 
 		DMMetadataSet.viewDefaultCP();
@@ -96,6 +98,8 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test DeleteEntryViaManagementBar {
+		property portal.acceptance = "true";
+
 		DMNavigator.openMetadataSetsAdmin(siteURLKey = "guest");
 
 		DMMetadataSet.addTitle(metadataSetName = "DM Metadata Set Name");
@@ -326,6 +330,8 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test ViewDocumentwithEditedUploadField {
+		property portal.acceptance = "true";
+
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentTitle = "Document_1.doc",
 			groupName = "Guest",

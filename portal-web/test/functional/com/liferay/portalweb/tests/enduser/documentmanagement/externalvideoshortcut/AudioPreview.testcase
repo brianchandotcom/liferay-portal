@@ -63,6 +63,7 @@ definition {
 	@description = "This test ensures that the audio preview generated for a document remains intact after FFmpeg is disabled."
 	@priority = "4"
 	test PreviewRemainsAfterDisablingFFmpeg {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "AudioPreview#PreviewRemainsAfterDisablingFFmpeg";
 
 		DMNavigator.openToEntryInAdmin(

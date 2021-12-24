@@ -30,6 +30,8 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test CreateTagUsingAutocomplete {
+		property portal.acceptance = "true";
+
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "Test Content Page Name",
@@ -111,6 +113,8 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test EditFolderDocument {
+		property portal.acceptance = "true";
+
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "Test Content Page Name",

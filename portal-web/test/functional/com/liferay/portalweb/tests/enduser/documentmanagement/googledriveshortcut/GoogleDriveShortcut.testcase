@@ -2,6 +2,7 @@
 definition {
 
 	property custom.properties = "default.layout.template.id=1_column";
+	property portal.acceptance = "true";
 	property portal.release = "false";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Document Management";

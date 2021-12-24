@@ -45,6 +45,7 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test AddBlogEntryWithEmbeddedVideo {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "VideoPreview#AddBlogEntryWithEmbeddedVideo";
 
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "Site Name");
@@ -74,6 +75,7 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test AddKBArticleWithEmbeddedVideo {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "VideoPreview#AddKBArticleWithEmbeddedVideo";
 
 		KBAdmin.openKBAdmin(siteURLKey = "Site Name");
@@ -328,6 +330,7 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test ImportExportedKBWithEmbeddedVideo {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "VideoPreview#ImportExportedKBWithEmbeddedVideo";
 
 		JSONDepot.addDepot(
@@ -383,6 +386,7 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test ImportExportedWebContentWithEmbeddedVideo {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "VideoPreview#ImportExportedWebContentWithEmbeddedVideo";
 
 		JSONDepot.addDepot(
@@ -443,6 +447,7 @@ definition {
 	@description = "This test ensures that the video preview generated for a document remains intact after FFmpeg is disabled."
 	@priority = "4"
 	test PreviewRemainsAfterDisablingFFmpeg {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "VideoPreview#PreviewRemainsAfterDisablingFFmpeg";
 
 		DMNavigator.openToEntryInAdmin(
@@ -474,6 +479,7 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test ViewFromDisconnectedSite {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "VideoPreview#ViewFromDisconnectedSite";
 
 		JSONDepot.addDepot(

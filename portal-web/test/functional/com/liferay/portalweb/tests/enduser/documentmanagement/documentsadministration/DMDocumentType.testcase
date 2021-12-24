@@ -30,6 +30,8 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test AddDuplicateFields {
+		property portal.acceptance = "true";
+
 		DMNavigator.openToAddDocumentType(siteURLKey = "guest");
 
 		PortletEntry.inputName(name = "DM Document Type Name");
@@ -135,6 +137,8 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test AddEntryWithNoTitle {
+		property portal.acceptance = "true";
+
 		DMNavigator.openMetadataSetsAdmin(siteURLKey = "guest");
 
 		DMMetadataSet.addTitle(metadataSetName = "Document Metadata Set Name");
@@ -181,6 +185,8 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test AddMultipleEntries {
+		property portal.acceptance = "true";
+
 		DMNavigator.openDocumentTypesAdmin(siteURLKey = "guest");
 
 		DMDocumentType.add(
@@ -225,6 +231,8 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test AddPredefinedImageViaImageField {
+		property portal.acceptance = "true";
+
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "Document_1.jpg",
@@ -280,6 +288,8 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test AddPredefinedImageViaRichText {
+		property portal.acceptance = "true";
+
 		DMNavigator.openToAddDocumentType(siteURLKey = "guest");
 
 		PortletEntry.inputName(name = "DM Document Type Name");
@@ -319,6 +329,8 @@ definition {
 	@description = "This is a test for LPS-136815. It checks that a document type cannot be deleted when it is being used by a document."
 	@priority = "4"
 	test CannotDeleteWhenBeingUsed {
+		property portal.acceptance = "true";
+
 		DMNavigator.openToAddDocumentType(siteURLKey = "guest");
 
 		DMDocumentType.add(
@@ -378,6 +390,8 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test CheckOutDocumentWithCustomField {
+		property portal.acceptance = "true";
+
 		DMNavigator.openDocumentTypesAdmin(siteURLKey = "guest");
 
 		DMDocumentType.add(
@@ -410,6 +424,8 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test DeleteEntry {
+		property portal.acceptance = "true";
+
 		DMNavigator.openDocumentTypesAdmin(siteURLKey = "guest");
 
 		DMDocumentType.viewDefaultCP();
@@ -510,6 +526,8 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test ViewDocumentwithEditedImageField {
+		property portal.acceptance = "true";
+
 		DMNavigator.openDocumentTypesAdmin(siteURLKey = "guest");
 
 		DMDocumentType.add(
@@ -570,6 +588,8 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test ViewDocumentwithEditedTextField {
+		property portal.acceptance = "true";
+
 		DMNavigator.openDocumentTypesAdmin(siteURLKey = "guest");
 
 		DMDocumentType.add(
@@ -635,6 +655,8 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test ViewDocumentwithEditedUploadField {
+		property portal.acceptance = "true";
+
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentTitle = "Document_1.doc",
 			groupName = "Guest",
@@ -701,6 +723,8 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test ViewDocumentwithRepeatableImageField {
+		property portal.acceptance = "true";
+
 		DMNavigator.openToAddDocumentType(siteURLKey = "guest");
 
 		PortletEntry.inputName(name = "DM Document Type Name");

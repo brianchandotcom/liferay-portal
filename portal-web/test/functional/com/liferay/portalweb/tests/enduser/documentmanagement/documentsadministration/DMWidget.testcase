@@ -52,6 +52,8 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanReferenceDocumentFromOtherSiteAfterSettingRootFolder {
+		property portal.acceptance = "true";
+
 		JSONGroup.addGroup(groupName = "Site Name");
 
 		JSONLayout.addPublicLayout(
@@ -100,6 +102,8 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanRemoveCurrentDisplayStyleViews {
+		property portal.acceptance = "true";
+
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMPortlet.configureDisplaySettingsPG(currentDisplayStyleViews = "");
@@ -118,6 +122,8 @@ definition {
 	@priority = "4"
 	@refactordone
 	test ConfigurationsAreIndependentAcrossPages {
+		property portal.acceptance = "true";
+
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "Documents and Media Page 2");
@@ -145,6 +151,7 @@ definition {
 	@description = "This is a use case for LPS-95662. Selecting an asset from the second does not invoke the management toolbar on the first."
 	@priority = "4"
 	test SelectAssetFromSecondWidgetInvokesSecondManagementToolbar {
+		property portal.acceptance = "true";
 		property test.assert.javascript.errors = "true";
 		property test.assert.warning.exceptions = "true";
 
@@ -167,6 +174,8 @@ definition {
 	@priority = "4"
 	@refactordone
 	test SelectionPersistsWhenTraversingPages {
+		property portal.acceptance = "true";
+
 		for (var documentName : list "Document_2.doc,Document_1.xls,Document_4.jpg,Document_3.jpg,Document_2.xls,Document_1.txt,Document_4.txt,Document_3.xls,Document_2.jpg,Document_1.doc") {
 			var extension = StringUtil.extractLast("${documentName}", ".");
 

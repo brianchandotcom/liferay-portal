@@ -41,6 +41,7 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test AddAutoAssertionCategoryViaDMDocument {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "DocumentsadministrationUsecase#AddAutoAssertionCategoryViaDMDocument";
 
 		JSONCategory.addVocabulary(
@@ -106,6 +107,7 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanRestrictFileExtensionToDoc {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "DocumentsadministrationUsecase#CanRestrictFileExtensionToDoc";
 
 		DMDocument.updateFileExtensions(fieldValue = ".doc");
@@ -209,6 +211,8 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test RemoveCurrentDisplayStyleViews {
+		property portal.acceptance = "true";
+
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "Documents and Media Page");
@@ -228,6 +232,7 @@ definition {
 	@priority = "4"
 	@refactordone
 	test StagingFileSizeIsNotAffectedByDLRestrictions {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "DocumentsadministrationUsecase#StagingFileSizeIsNotAffectedByDLRestrictions";
 
 		JSONDocument.addFileWithUploadedFile(
@@ -260,6 +265,8 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test ValidateFileNameRestrictions {
+		property portal.acceptance = "true";
+
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.addCP(
@@ -309,6 +316,7 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test ViewDocumentWithGlobalScope {
+		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 
 		JSONLayout.addPublicLayout(
@@ -456,6 +464,7 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test ViewFileCategoryAndTags {
+		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 
 		JSONCategory.addVocabulary(
@@ -547,6 +556,8 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test ViewPaginationToolbarCheckboxAndMoveMultiplePaginationDocuments {
+		property portal.acceptance = "true";
+
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "Documents and Media Page");

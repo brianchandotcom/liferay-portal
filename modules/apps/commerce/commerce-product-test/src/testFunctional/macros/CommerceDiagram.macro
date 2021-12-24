@@ -15,14 +15,24 @@ definition {
 			key_linkedType = "${pinType}",
 			locator1 = "CommerceDiagrams#DIAGRAM_ADMIN_TOOLTIP_LINKED_TYPE");
 
-		AssertElementPresent(
-			key_quantity = "${quantity}",
-			locator1 = "CommerceDiagrams#DIAGRAM_ADMIN_TOOLTIP_QUANTITY");
-
-		if (isSet(inputItem)) {
+		if ("${pinType}" != "Diagram") {
 			AssertElementPresent(
-				key_inputItem = "${inputItem}",
-				locator1 = "CommerceDiagrams#DIAGRAM_ADMIN_TOOLTIP_INPUT_GROUP_ITEM");
+				key_quantity = "${quantity}",
+				locator1 = "CommerceDiagrams#DIAGRAM_ADMIN_TOOLTIP_QUANTITY");
+		}
+
+		if (isSet(SKU)) {
+			var key_inputItem = "${SKU}";
+		}
+		else if (isSet(diagram)) {
+			var key_inputItem = "${diagram}";
+		}
+		else if (isSet(label)) {
+			var key_inputItem = "${label}";
+		}
+
+		if (isSet(key_inputItem)) {
+			AssertElementPresent(locator1 = "CommerceDiagrams#DIAGRAM_ADMIN_TOOLTIP_INPUT_GROUP_ITEM");
 		}
 	}
 

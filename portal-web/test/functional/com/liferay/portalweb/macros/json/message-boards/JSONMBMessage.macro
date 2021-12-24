@@ -166,6 +166,10 @@ definition {
 			var anonymous = "false";
 		}
 
+		if (!(isSet(addGuestPermissions))) {
+			var addGuestPermissions = "true";
+		}
+
 		var portalURL = JSONCompany.getPortalURL();
 
 		var serviceContext = JSONServiceContextUtil.setServiceContext(

@@ -53,7 +53,10 @@ public class PoshiSourceProcessor extends BaseSourceProcessor {
 			if (fileName.endsWith(".jar") || fileName.endsWith(".lar") ||
 				fileName.endsWith(".war") || fileName.endsWith(".zip")) {
 
-				if (fileName.matches(".*/tests?/.*/dependencies/.+")) {
+				if (fileName.matches(
+						".*/(modules/.*/test|portal-web/test)/.*/" +
+							"dependencies/.+")) {
+
 					processMessage(
 						fileName,
 						"Do not add binary archive files for test, they must " +

@@ -60,7 +60,11 @@ definition {
 
 			PortletEntry.inputName(name = "${siteName}");
 
-			Modal.save();
+			Button.clickAdd();
+
+			SelectFrameTop();
+
+			Alert.viewSuccessMessage();
 		}
 
 		if ("${siteType}" == "Site Template") {
@@ -144,7 +148,11 @@ definition {
 
 		PortletEntry.inputName(name = "${siteName}");
 
-		Modal.save();
+		Button.clickAdd();
+
+		SelectFrameTop();
+
+		Alert.viewSuccessMessage();
 
 		Click(
 			key_itemName = "Site Configuration",
@@ -1252,7 +1260,7 @@ definition {
 
 		PortletEntry.inputName(name = "${siteName}");
 
-		Button.clickSave();
+		Button.clickAdd();
 
 		if ("${siteNameInvalid}" == "Duplicate") {
 			AssertTextEquals.assertPartialText(

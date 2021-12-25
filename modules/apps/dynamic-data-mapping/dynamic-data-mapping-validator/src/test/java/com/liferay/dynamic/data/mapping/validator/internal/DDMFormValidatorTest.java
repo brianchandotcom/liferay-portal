@@ -41,7 +41,7 @@ import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.Mus
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetValidValidationExpression;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetValidVisibilityExpression;
 import com.liferay.portal.bean.BeanPropertiesImpl;
-import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -71,7 +71,8 @@ public class DDMFormValidatorTest {
 
 	@Before
 	public void setUp() {
-		setUpBeanPropertiesUtil();
+		ReflectionTestUtil.setFieldValue(
+			_ddmFormValidatorImpl, "_beanProperties", new BeanPropertiesImpl());
 		setUpDDMFormFieldTypeServicesTracker();
 		setUpDDMFormValidator();
 	}
@@ -553,12 +554,6 @@ public class DDMFormValidatorTest {
 
 	protected Set<Locale> createAvailableLocales(Locale... locales) {
 		return DDMFormTestUtil.createAvailableLocales(locales);
-	}
-
-	protected void setUpBeanPropertiesUtil() {
-		BeanPropertiesUtil beanPropertiesUtil = new BeanPropertiesUtil();
-
-		beanPropertiesUtil.setBeanProperties(new BeanPropertiesImpl());
 	}
 
 	protected void setUpDDMFormFieldTypeServicesTracker() {

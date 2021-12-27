@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -147,7 +148,10 @@ public class ObjectFieldResourceImpl
 			HashMapBuilder.put(
 				"delete",
 				() -> {
-					if (!updateable) {
+					if (!updateable ||
+						Validator.isNotNull(
+							objectField.getRelationshipType())) {
+
 						return null;
 					}
 

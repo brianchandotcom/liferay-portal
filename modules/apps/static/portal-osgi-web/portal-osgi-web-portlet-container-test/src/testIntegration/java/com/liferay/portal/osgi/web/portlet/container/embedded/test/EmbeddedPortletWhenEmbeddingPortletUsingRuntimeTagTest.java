@@ -212,11 +212,11 @@ public class EmbeddedPortletWhenEmbeddingPortletUsingRuntimeTagTest
 					).build()
 				).buildString());
 
-		long count = _portletPreferencesLocalService.getPortletPreferencesCount(
-			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid(),
-			testRuntimePortletId);
-
-		Assert.assertTrue("portletPreferences count should be 0", count == 0);
+		Assert.assertEquals(
+			"portletPreferences count should be 0", 0,
+			_portletPreferencesLocalService.getPortletPreferencesCount(
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid(),
+				testRuntimePortletId));
 
 		Assert.assertEquals(200, response.getCode());
 

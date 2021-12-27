@@ -157,11 +157,13 @@ definition {
 	}
 
 	@description = "LRQA-72024 - Verify that a mini Calendar is displayed on sidebar"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test MiniCalendarIsDisplayed {
+		Navigator.gotoPage(pageName = "Calendar Page");
 
-		// TODO LRQA-72031 MiniCalendarIsDisplayed pending implementation
+		CalendarPage.viewMiniCalendarSideBar();
+
+		CalendarPage.viewMonthCurrentMiniCalendar(monthCurrent = "December 2021");
 
 	}
 

@@ -1,0 +1,26 @@
+<html>
+<head>
+<title>CalendarPage</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CalendarPage</td></tr>
+</thead>
+
+<tbody>
+<tr>
+	<td>MINI_CALENDAR_SIDEBAR</td>
+	<td>//div[contains(@class,'yui3-g yui3-calendar-pane')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CURRENT_MONTH_MINI_CALENDAR</td>
+	<td>//h1[contains(@class, 'yui3-u yui3-calendar-header-label')][contains(text(),'${monthCurrent}')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

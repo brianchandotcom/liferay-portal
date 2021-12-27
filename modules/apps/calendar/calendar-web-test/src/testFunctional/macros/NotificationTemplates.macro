@@ -10,14 +10,12 @@ definition {
 		Calendar._gotoMenulistOption(menuListOption = "${menuListOption}");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
 	}
 
 	macro gotoNotificationTemplatesTab {
 		AssertClick(
 			locator1 = "CalendarEditCalendar#NAVIGATION_NOTIFICATION_TEMPLATES_TAB",
 			value1 = "Notification Templates");
-
 	}
 
 	macro gotoReminderEmailTab {
@@ -26,10 +24,10 @@ definition {
 			value1 = "Reminder Email");
 	}
 
-    macro viewUserEmailDisplayedFromAdressField {
-        AssertTextEquals(
-            locator1 = "CalendarEditCalendar#NOTIFICATION_TEMPLATES_FROM_ADDRESS_FIELD",
-            value1 = "${userEmail}");
-    }
+	macro viewUserEmailDisplayedFromAdressField {
+		AssertTextEquals(
+			locator1 = "CalendarEditCalendar#NOTIFICATION_TEMPLATES_FROM_ADDRESS_FIELD",
+			value1 = "${userEmail}");
+	}
 
-} 
+}

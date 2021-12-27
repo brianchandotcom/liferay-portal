@@ -66,12 +66,10 @@ definition {
 		NotificationTemplates.gotoNotificationTemplatesTab();
 
 		NotificationTemplates.viewUserEmailDisplayedFromAdressField(userEmail = "test@liferay.com");
-		
+
 		NotificationTemplates.gotoReminderEmailTab();
 
 		NotificationTemplates.viewUserEmailDisplayedFromAdressField(userEmail = "test@liferay.com");
-
-
 	}
 
 	@description = "LRQA-71892 - Verify that the user name is displayed on -From Name- field, on Notification Templates tab"

@@ -47,6 +47,12 @@ definition {
 			locator1 = "ACEventAnalysis#INPUT_CONDITION",
 			value1 = "${inputValue}");
 
+		if ("${optionValue}" == "between") {
+			Type(
+				locator1 = "ACEventAnalysis#INPUT_CONDITION_END_VALUE",
+				value1 = "${inputEndValue}");
+		}
+
 		Click(
 			key_buttonName = "Done",
 			locator1 = "ACUtils#GENERIC_BUTTON");

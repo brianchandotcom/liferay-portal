@@ -2381,12 +2381,22 @@ definition {
 	}
 
 	@description = "LPS-135547 - Verify it is possible to search for a Custom Object"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanSearchForCustomObject {
+		for (var letter : list "A,B") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object ${letter}",
+				objectName = "CustomObject${letter}",
+				pluralLabelName = "Custom Objects ${letter}");
+		}
 
-		// TODO LPS-141638 CanSearchForCustomObject pending implementation
+		ObjectAdmin.openObjectAdmin();
 
+		Search.searchCP(searchTerm = "CustomObjectA");
+
+		CreateObject.assertCustomObject(labelName = "Custom Object A");
+
+		CreateObject.assertCustomObjectNotPresent(labelName = "Custom Object B");
 	}
 
 	@description = "LPS-135547 - Verify it is possible to search for a field from a Custom Object"

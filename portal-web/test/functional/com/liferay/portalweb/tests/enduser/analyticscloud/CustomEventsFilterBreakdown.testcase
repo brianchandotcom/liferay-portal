@@ -570,4 +570,90 @@ definition {
 		}
 	}
 
+	@description = "Feature ID: LRAC-7868 | Automation ID: LRAC-10277 | Test Summary: Event Analysis creation with Filtered Attribute (Number) and (Is greater than/Is less than/Is between) condition"
+	@priority = "3"
+	test CreateEventAnalysisWithNumberAttributeFilterIsGreaterAndIsLessAndBetweenThanCondition {
+		var attributeName = "pageTitle";
+
+		var filterName = "price";
+
+		var dataSource = StringUtil.extractFirst("${assignedPropertyName}", " ");
+
+		task ("Fill fields and create custom event") {
+			var customEventName = ACCustomEvents.generateCustomEventName();
+
+			ACCustomEvents.createCustomEvent(
+				customEventName = "${customEventName}",
+				timeToSendCustomEvent = "1");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch the property in AC and go to event analysis") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+
+			ACNavigation.goToEventAnalysis();
+		}
+
+		task ("Add the custom event to analysis") {
+			ACEventAnalysis.addEvent(customEventName = "${customEventName}");
+		}
+
+		task ("Add the breakdown to analysis") {
+			ACEventAnalysis.addBreakdown(attributeNameList = "${attributeName}");
+		}
+
+		task ("Add the filter to analysis") {
+			ACEventAnalysis.addFilter(
+				filterName = "${filterName}",
+				inputValue = "250",
+				optionValue = "is greater than");
+		}
+
+		task ("Change the time filter to 24 hours") {
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast24Hours();
+		}
+
+		task ("Check that the analysis result appears") {
+			ACEventAnalysis.viewAnalysisInformation(informationValueList = "ac page - site name - ${dataSource}");
+		}
+
+		task ("Remove the filter from the analysis") {
+			ACEventAnalysis.removeFromAnalysis(removeValue = "${filterName}");
+		}
+
+		task ("Add the filter to analysis") {
+			ACEventAnalysis.addFilter(
+				filterName = "${filterName}",
+				inputValue = "250",
+				optionValue = "is less than");
+		}
+
+		task ("Check that the analysis result does not appear") {
+			ACEventAnalysis.viewAnalysisInformationNotPresent(informationValueList = "ac page - site name - ${dataSource}");
+		}
+
+		task ("Remove the filter from the analysis") {
+			ACEventAnalysis.removeFromAnalysis(removeValue = "${filterName}");
+		}
+
+		task ("Add the filter to analysis") {
+			ACEventAnalysis.addFilter(
+				filterName = "${filterName}",
+				inputValue = "259.95",
+				inputEndValue = "260",
+				optionValue = "between");
+		}
+
+		task ("Check that the analysis result appears") {
+			ACEventAnalysis.viewAnalysisInformation(informationValueList = "ac page - site name - ${dataSource}");
+		}
+	}
+
 }

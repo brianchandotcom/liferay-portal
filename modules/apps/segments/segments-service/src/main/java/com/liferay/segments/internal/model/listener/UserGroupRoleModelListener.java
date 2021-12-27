@@ -17,8 +17,8 @@ package com.liferay.segments.internal.model.listener;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModelListener;
-import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.ModelListener;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.segments.SegmentsEntryRetriever;
@@ -44,27 +44,27 @@ public class UserGroupRoleModelListener
 		throws ModelListenerException {
 
 		try {
-			_deleteUserGroupRoleSegmentData(userGroupRole);
+			_deleteUserGroupRoleSegmentsData(userGroupRole);
 		}
 		catch (Exception exception) {
 			throw new ModelListenerException(exception);
 		}
 	}
 
-	private void _deleteUserGroupRoleSegmentData(UserGroupRole userGroupRole)
+	private void _deleteUserGroupRoleSegmentsData(UserGroupRole userGroupRole)
 		throws PortalException {
 
-		long[] userSegmentIDsInGroup =
+		long[] groupUserSegmentIds =
 			_segmentsEntryRetriever.getSegmentsEntryIds(
 				userGroupRole.getGroupId(), userGroupRole.getUserId(), null);
 
-		for (long userSegmentIDInGroup : userSegmentIDsInGroup) {
-			SegmentsEntry userSegment =
+		for (long groupUserSegmentId : groupUserSegmentIds) {
+			SegmentsEntry userSegmentsEntry =
 				_segmentsEntryLocalService.fetchSegmentsEntry(
-					userSegmentIDInGroup);
+					groupUserSegmentId);
 
-			if (userSegment != null) {
-				Criteria criteria = userSegment.getCriteriaObj();
+			if (userSegmentsEntry != null) {
+				Criteria criteria = userSegmentsEntry.getCriteriaObj();
 
 				Map<String, String> filterStrings = criteria.getFilterStrings();
 
@@ -78,19 +78,16 @@ public class UserGroupRoleModelListener
 						filterString.contains(
 							String.valueOf(deletedUserGroupRoleRoleID))) {
 
-						ClassName className =
-							_classNameLocalService.getClassName(
-								"com.liferay.portal.kernel.model.User");
-
-						long classNameId = className.getClassNameId();
+						long classNameId =
+							_classNameLocalService.getClassNameId(User.class);
 
 						if (_segmentsEntryRelLocalService.hasSegmentsEntryRel(
-								userSegmentIDInGroup, classNameId,
+								groupUserSegmentId, classNameId,
 								userGroupRole.getUserId())) {
 
 							_segmentsEntryRelLocalService.
 								deleteSegmentsEntryRel(
-									userSegmentIDInGroup, classNameId,
+									groupUserSegmentId, classNameId,
 									userGroupRole.getUserId());
 						}
 					}

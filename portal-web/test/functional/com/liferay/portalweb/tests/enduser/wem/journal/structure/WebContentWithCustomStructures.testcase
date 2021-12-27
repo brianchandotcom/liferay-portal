@@ -257,6 +257,111 @@ definition {
 			webContentWebContent = "WC WebContent 1 Title");
 	}
 
+	@description = "LPS-102795 - Adding Translations to removable fields sets contents to null."
+	@priority = "4"
+	test AddTranslationsToRemovableFields {
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Web Content Display Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Web Content Display Page",
+			widgetName = "Web Content Display");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Text",
+			fieldName = "Text",
+			fieldType = "Multiple Lines");
+
+		DataEngine.toggleFieldRepeatable(fieldFieldLabel = "Text");
+
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
+
+		WebContentNavigator.gotoManageTemplatesViaStructures(structureName = "WC Structure Name");
+
+		var templateScript = '''
+<#if Text.getSiblings()?has_content>
+	<#list Text.getSiblings() as cur_Text>
+		<#if (cur_Text.getData())??>
+			${cur_Text.getData()}
+		</#if>
+	</#list>
+</#if>
+''';
+
+		WebContentTemplates.addCP(
+			templateName = "WC Template Name",
+			templateScript = "${templateScript}");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+		WebContent.addWithStructureCP(
+			fieldName = "Text",
+			fieldType = "Multiple Lines",
+			structureName = "WC Structure Name",
+			webContentText = "English Title",
+			webContentTitle = "WC Title");
+
+		DataEngine.addRepeatableField(fieldLabel = "Text");
+
+		Type(
+			key_fieldFieldLabel = "Text",
+			locator1 = "DDMField#MULTIPLE_LINES_2",
+			value1 = "Content");
+
+		PortletEntry.publish();
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Test Site Name");
+
+		WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC Title");
+
+		Navigator.openSiteURL(siteName = "Test Site Name");
+
+		Portlet.viewBody(
+			portletBody = "English Title Content",
+			portletName = "WC Title");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC Title");
+
+		PortletEntry.changeLocale(locale = "es-ES");
+
+		Type(
+			key_fieldFieldLabel = "Text",
+			locator1 = "DDMField#MULTIPLE_LINES",
+			value1 = "Spanish Title");
+
+		PortletEntry.publish();
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Test Site Name");
+
+		Portlet.viewBody(
+			portletBody = "English Title Content",
+			portletName = "WC Title");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "es/web/test-site-name");
+
+		Portlet.viewBody(
+			portletBody = "Spanish Title Content",
+			portletName = "WC Title");
+	}
+
 	@priority = "4"
 	test AddWebContentViaWCDWithGlobalStructureAndLocalTemplate {
 		property testray.component.names = "Web Content Administration";

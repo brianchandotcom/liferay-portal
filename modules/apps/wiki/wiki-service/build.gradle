@@ -5,7 +5,6 @@ buildService {
 
 dependencies {
 	compileInclude group: "antlr", name: "antlr", version: "2.7.7"
-	compileInclude group: "com.liferay", name: "org.apache.commons.jrcs.diff", version: "0.3.0"
 	compileInclude group: "net.htmlparser.jericho", name: "jericho-html", version: "3.1"
 	compileInclude group: "org.antlr", name: "antlr", version: "3.0.1"
 	compileInclude group: "org.antlr", name: "stringtemplate", version: "3.0"

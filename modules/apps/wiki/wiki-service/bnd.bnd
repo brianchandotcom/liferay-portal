@@ -23,7 +23,6 @@ Import-Package:\
 	\
 	!org.apache.commons.dbcp.*,\
 	!org.apache.commons.fileupload.*,\
-	!org.apache.commons.jrcs.*,\
 	!org.apache.commons.pool.impl.*,\
 	!org.apache.lucene.*,\
 	!org.apache.xerces.framework,\

@@ -984,12 +984,12 @@ definition {
 	}
 
 	macro viewGeneralLanguageOptions {
-		Page.viewFriendlyURLLanguageOptionsPG(
-			currentLanguageList = "${currentLanguageList}",
+		PagesAdmin.viewAvailableLanguages(
+			availableLanguageList = "${currentLanguageList}",
 			fieldName = "Name");
 
-		Page.viewFriendlyURLLanguageOptionsPG(
-			currentLanguageList = "${currentLanguageList}",
+		PagesAdmin.viewAvailableLanguages(
+			availableLanguageList = "${currentLanguageList}",
 			fieldName = "Description");
 	}
 

@@ -794,6 +794,35 @@ definition {
 			key_activeURL = "${activeURL}",
 			locator1 = "PagesAdmin#FRIENDLY_URL_ACTIVE_URL");
 	}
+
+	macro viewAvailableLanguages {
+		WaitForElementPresent(
+			key_fieldName = "${fieldName}",
+			locator1 = "Button#LOCALIZATION");
+
+		Click(
+			key_fieldName = "${fieldName}",
+			locator1 = "Button#LOCALIZATION");
+
+		for (var availableLanguage : list "${availableLanguageList}") {
+			AssertElementPresent(
+				key_locale = "${availableLanguage}",
+				locator1 = "Translation#LOCALIZATION_NAME");
+		}
+
+		if (isSet(unavailableLanguageList)) {
+			for (var unavailableLanguage : list "${unavailableLanguageList}") {
+				AssertElementNotPresent(
+					key_locale = "${unavailableLanguage}",
+					locator1 = "Translation#LOCALIZATION_NAME");
+			}
+		}
+
+		Click(
+			key_fieldName = "${fieldName}",
+			locator1 = "Button#LOCALIZATION");
+	}
+
 	macro viewBaseFriendlyURL {
 		AssertTextEquals(
 			locator1 = "PagesAdmin#DETAILS_FRIENDLY_BASE_URL",

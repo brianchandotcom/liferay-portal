@@ -196,9 +196,8 @@ definition {
 				menuItem = "Configurar",
 				pageName = "Test Page Name");
 
-			Page.viewFriendlyURLLanguageOptionsPG(
-				assertUnavailableLanguages = "true",
-				currentLanguageList = "es-ES,pt-BR",
+			PagesAdmin.viewAvailableLanguages(
+				availableLanguageList = "es-ES,pt-BR",
 				fieldName = "Nombre",
 				unavailableLanguageList = "en-US");
 		}

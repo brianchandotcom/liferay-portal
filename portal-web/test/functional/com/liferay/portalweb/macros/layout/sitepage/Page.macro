@@ -503,38 +503,6 @@ definition {
 			locator1 = "NavBar#GO_TO_HOME_PAGE_LINK");
 	}
 
-	macro viewFriendlyURL {
-		AssertTextEquals(
-			locator1 = "PagesAdmin#DETAILS_FRIENDLY_BASE_URL",
-			value1 = "${siteFriendlyURL}");
-	}
-
-	macro viewFriendlyURLLanguageOptionsPG {
-		Pause(locator1 = "3000");
-
-		Click(
-			key_fieldName = "${fieldName}",
-			locator1 = "Button#LOCALIZATION");
-
-		for (var locale : list "${currentLanguageList}") {
-			AssertElementPresent(
-				key_locale = "${locale}",
-				locator1 = "Translation#LOCALIZATION_NAME");
-		}
-
-		if ("${assertUnavailableLanguages}" == "true") {
-			for (var locale : list "${unavailableLanguageList}") {
-				AssertElementNotPresent(
-					key_locale = "${locale}",
-					locator1 = "Translation#LOCALIZATION_NAME");
-			}
-		}
-
-		Click(
-			key_fieldName = "${fieldName}",
-			locator1 = "Button#LOCALIZATION");
-	}
-
 	macro viewInactiveRequestMessage {
 		AssertTextEquals(
 			key_resource = "${resource}",

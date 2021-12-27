@@ -43,6 +43,11 @@
 	<td>//input[contains(@class,'input-root')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>INPUT_CONDITION_END_VALUE</td>
+	<td>//input[contains(@class,'input-root') and @id='endValue']</td>
+	<td></td>
+</tr>
 <!-- REMOVE_BUTTON -->
 <tr>
 	<td>REMOVE_BUTTON</td>

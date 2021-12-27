@@ -38,6 +38,8 @@ definition {
 	@description = "Verify that the Action label of a Rule changes when the corresponding Field's Label is edited"
 	@priority = "5"
 	test ActionIsUpdatedWhenFieldLabelIsEdited {
+		property forms.functional = "true";
+
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -92,6 +94,7 @@ definition {
 	@description = "LPS-73332 - Verify that when a Form is duplicated, the Rules in that Form are also duplicated"
 	@priority = "2"
 	test AreDuplicatedWhenTheFormIsDuplicated {
+		property forms.functional = "true";
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "FormRules#AreDuplicatedWhenTheFormIsDuplicated";
@@ -158,6 +161,7 @@ definition {
 	@description = "LPS-73332 - Verify that when creating a new Form, rules from a pre-existing Form are not copied into the new Form"
 	@priority = "2"
 	test AreNotCopiedIntoANewForm {
+		property forms.functional = "true";
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
 
@@ -209,6 +213,8 @@ definition {
 	@description = "Verify that a Rule is autosaved when exiting the Form without saving the Rule"
 	@priority = "5"
 	test AreSavedWhenExitingTheForm {
+		property forms.functional = "true";
+
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -261,6 +267,8 @@ definition {
 	@description = "Verify that a Rule can be created"
 	@priority = "5"
 	test CanBeCreated {
+		property forms.functional = "true";
+
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -299,6 +307,7 @@ definition {
 	@description = "LPS-71466 - Verify that a Rule can be created using a Field with a Predefined Value"
 	@priority = "2"
 	test CanBeCreatedUsingAFieldWithAPredefinedValue {
+		property forms.functional = "true";
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "FormRules#CanBeCreatedUsingAFieldWithAPredefinedValue";
@@ -385,6 +394,8 @@ definition {
 	@description = "Verify that a Rule can be deleted"
 	@priority = "5"
 	test CanBeDeleted {
+		property forms.functional = "true";
+
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -427,6 +438,7 @@ definition {
 	@description = "LPS-79095 - Verify that a Rule can be edited"
 	@priority = "5"
 	test CanBeEdited {
+		property forms.functional = "true";
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "FormRules#CanBeEdited";
@@ -503,6 +515,7 @@ definition {
 	@description = "LPS-119818 - Verify that it is not possible to save a Form when a field that was used in a rule is deleted"
 	@priority = "5"
 	test CannotBeSavedWhenFieldThatBelongsToARuleIsDeleted {
+		property forms.functional = "true";
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
 
@@ -558,6 +571,7 @@ definition {
 	@description = "LPS-89260 - Verify that rules are working for multiple selection fields"
 	@priority = "4"
 	test CanUseRuleOnMultipleSelectionField {
+		property forms.functional = "true";
 		property test.name.skip.portal.instance = "FormRules#CanUseRuleOnMultipleSelectionField";
 
 		FormsAdmin.addForm();
@@ -623,6 +637,8 @@ definition {
 	@description = "Verify that the Condition label of a Rule changes when the corresponding Field's Label is edited"
 	@priority = "5"
 	test ConditionIsUpdatedWhenFieldLabelIsEdited {
+		property forms.functional = "true";
+
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -683,6 +699,8 @@ definition {
 	@description = "Verify that a Rule creation can be canceled"
 	@priority = "5"
 	test CreationCanBeCanceled {
+		property forms.functional = "true";
+
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -775,6 +793,7 @@ definition {
 	@description = "LPS-122103 - Verify that the calculator displays the Field Reference instead of Field ID"
 	@priority = "5"
 	test DisplaysFieldReferenceInCalculator {
+		property forms.functional = "true";
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
 
@@ -933,6 +952,7 @@ definition {
 	@description = "LPS-77284 - Verify that sync between rule builder and fields/pages "
 	@priority = "5"
 	test SyncBetweenFormAndRuleBuilder {
+		property forms.functional = "true";
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "FormRules#SyncBetweenFormAndRuleBuilder";

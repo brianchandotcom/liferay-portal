@@ -34,6 +34,8 @@ definition {
 	@description = "Verify that a Separator Field can be created"
 	@priority = "5"
 	test CanBeCreated {
+		property forms.functional = "true";
+
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -56,6 +58,8 @@ definition {
 	@description = "Verify that a Separator Field can be deleted"
 	@priority = "5"
 	test CanBeDeleted {
+		property forms.functional = "true";
+
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -116,6 +120,8 @@ definition {
 	@description = "Verify that a Separator Field can be edited"
 	@priority = "5"
 	test CanBeEdited {
+		property forms.functional = "true";
+
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");

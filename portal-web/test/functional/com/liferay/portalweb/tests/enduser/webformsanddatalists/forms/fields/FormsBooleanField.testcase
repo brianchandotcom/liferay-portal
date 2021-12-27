@@ -34,6 +34,8 @@ definition {
 	@description = "Verify that a form with the boolean field can be created"
 	@priority = "5"
 	test CanBeCreated {
+		property forms.functional = "true";
+
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -56,6 +58,8 @@ definition {
 	@description = "Verify that a form with the boolean field can be deleted"
 	@priority = "5"
 	test CanBeDeleted {
+		property forms.functional = "true";
+
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -90,6 +94,8 @@ definition {
 	@description = "Verify that a form with the boolean field can be duplicated"
 	@priority = "5"
 	test CanBeDuplicated {
+		property forms.functional = "true";
+
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -120,6 +126,8 @@ definition {
 	@description = "Verify that a form with the boolean field can be edited"
 	@priority = "5"
 	test CanBeEdited {
+		property forms.functional = "true";
+
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -156,6 +164,8 @@ definition {
 	@description = "Verify that a form with the boolean field can be required"
 	@priority = "5"
 	test CanBeRequired {
+		property forms.functional = "true";
+
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -200,6 +210,8 @@ definition {
 	@description = "Verify that a form with the boolean field can be set to show as a switch"
 	@priority = "5"
 	test CanBeSetToShowAsASwitch {
+		property forms.functional = "true";
+
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -242,6 +254,8 @@ definition {
 	@description = "Verify that a form with more than one boolean field can be submitted and if the entries are stored correctly"
 	@priority = "5"
 	test CanBeSubmittedAndCheckEntries {
+		property forms.functional = "true";
+
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -308,6 +322,8 @@ definition {
 	@description = "Verify that a form with the boolean field having a help text can be added"
 	@priority = "5"
 	test HelpTextCanBeAdded {
+		property forms.functional = "true";
+
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -342,6 +358,8 @@ definition {
 	@description = "Verify that the boolean field can have its label edited"
 	@priority = "5"
 	test LabelCanBeEdited {
+		property forms.functional = "true";
+
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -370,6 +388,8 @@ definition {
 	@description = "Verify that a form with the boolean field having a predefined value can be added"
 	@priority = "5"
 	test PredefinedValueCanBeAdded {
+		property forms.functional = "true";
+
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -418,6 +438,8 @@ definition {
 	@description = "Verify that the boolean field reference can be edited"
 	@priority = "5"
 	test ReferenceCanBeEdited {
+		property forms.functional = "true";
+
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");

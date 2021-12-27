@@ -34,6 +34,8 @@ definition {
 	@description = "Verify that a Grid can be created"
 	@priority = "5"
 	test CanBeCreated {
+		property forms.functional = "true";
+
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -56,6 +58,8 @@ definition {
 	@description = "Verify that a Grid can be deleted"
 	@priority = "5"
 	test CanBeDeleted {
+		property forms.functional = "true";
+
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -151,6 +155,8 @@ definition {
 	@description = "Verify that a Grid can be edited"
 	@priority = "5"
 	test CanBeEdited {
+		property forms.functional = "true";
+
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -187,6 +193,7 @@ definition {
 	@description = "LPS-78697 - Verify that a Grid that has been translated can be edited"
 	@priority = "4"
 	test CanBeEditedAfterTranslation {
+		property forms.functional = "true";
 		property test.name.skip.portal.instance = "FormsGridField#CanBeEditedAfterTranslation";
 
 		FormsAdmin.addForm();
@@ -339,6 +346,8 @@ definition {
 	@description = "Verify that a Grid can be required"
 	@priority = "5"
 	test CanBeRequired {
+		property forms.functional = "true";
+
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -476,6 +485,8 @@ definition {
 	@description = "Verify that an option's Field References can be edited"
 	@priority = "5"
 	test FieldReferencesOfOptionsCanBeEdited {
+		property forms.functional = "true";
+
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -597,6 +608,8 @@ definition {
 	@description = "Verify that the Field Label can be hidden"
 	@priority = "5"
 	test LabelCanBeHidden {
+		property forms.functional = "true";
+
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -621,6 +634,8 @@ definition {
 	@description = "Verify that options can be added"
 	@priority = "5"
 	test OptionsCanBeAdded {
+		property forms.functional = "true";
+
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -667,6 +682,8 @@ definition {
 	@description = "Verify that option can be deleted"
 	@priority = "5"
 	test OptionsCanBeDeleted {
+		property forms.functional = "true";
+
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -719,6 +736,8 @@ definition {
 	@description = "Verify that options can be rearranged"
 	@priority = "5"
 	test OptionsCanBeRearranged {
+		property forms.functional = "true";
+
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -771,6 +790,8 @@ definition {
 	@description = "Verify that the Field Reference can be edited"
 	@priority = "5"
 	test ReferenceCanBeEdited {
+		property forms.functional = "true";
+
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");

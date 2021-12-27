@@ -223,6 +223,27 @@ public class FragmentViewportStyle implements Cloneable, Serializable {
 
 	protected String paddingTop;
 
+	public String getTextAlign() {
+		return textAlign;
+	}
+
+	public void setTextAlign(String textAlign) {
+		this.textAlign = textAlign;
+	}
+
+	public void setTextAlign(
+		UnsafeSupplier<String, Exception> textAlignUnsafeSupplier) {
+
+		try {
+			textAlign = textAlignUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String textAlign;
+
 	@Override
 	public FragmentViewportStyle clone() throws CloneNotSupportedException {
 		return (FragmentViewportStyle)super.clone();

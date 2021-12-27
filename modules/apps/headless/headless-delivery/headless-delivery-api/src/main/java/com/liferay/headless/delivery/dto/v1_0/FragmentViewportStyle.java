@@ -316,6 +316,34 @@ public class FragmentViewportStyle implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String paddingTop;
 
+	@Schema(description = "The fragment viewport's text align.")
+	public String getTextAlign() {
+		return textAlign;
+	}
+
+	public void setTextAlign(String textAlign) {
+		this.textAlign = textAlign;
+	}
+
+	@JsonIgnore
+	public void setTextAlign(
+		UnsafeSupplier<String, Exception> textAlignUnsafeSupplier) {
+
+		try {
+			textAlign = textAlignUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(description = "The fragment viewport's text align.")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String textAlign;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -462,6 +490,20 @@ public class FragmentViewportStyle implements Serializable {
 			sb.append("\"");
 
 			sb.append(_escape(paddingTop));
+
+			sb.append("\"");
+		}
+
+		if (textAlign != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"textAlign\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(textAlign));
 
 			sb.append("\"");
 		}

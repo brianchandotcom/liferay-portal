@@ -177,6 +177,20 @@ public class FragmentViewportStyleSerDes {
 			sb.append("\"");
 		}
 
+		if (fragmentViewportStyle.getTextAlign() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"textAlign\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(fragmentViewportStyle.getTextAlign()));
+
+			sb.append("\"");
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -278,6 +292,15 @@ public class FragmentViewportStyleSerDes {
 				String.valueOf(fragmentViewportStyle.getPaddingTop()));
 		}
 
+		if (fragmentViewportStyle.getTextAlign() == null) {
+			map.put("textAlign", null);
+		}
+		else {
+			map.put(
+				"textAlign",
+				String.valueOf(fragmentViewportStyle.getTextAlign()));
+		}
+
 		return map;
 	}
 
@@ -350,6 +373,12 @@ public class FragmentViewportStyleSerDes {
 			else if (Objects.equals(jsonParserFieldName, "paddingTop")) {
 				if (jsonParserFieldValue != null) {
 					fragmentViewportStyle.setPaddingTop(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "textAlign")) {
+				if (jsonParserFieldValue != null) {
+					fragmentViewportStyle.setTextAlign(
 						(String)jsonParserFieldValue);
 				}
 			}

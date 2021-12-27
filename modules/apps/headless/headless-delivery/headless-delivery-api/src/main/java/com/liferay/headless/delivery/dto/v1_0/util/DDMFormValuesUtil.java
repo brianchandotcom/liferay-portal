@@ -29,6 +29,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.headless.delivery.dto.v1_0.ContentField;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
@@ -211,11 +212,11 @@ public class DDMFormValuesUtil {
 		String valueString = Optional.ofNullable(
 			localizedValue.getString(localizedValue.getDefaultLocale())
 		).orElse(
-			""
+			StringPool.BLANK
 		);
 
 		if (Objects.equals(valueString, "[]")) {
-			valueString = "";
+			valueString = StringPool.BLANK;
 		}
 
 		if (ddmFormField.isLocalizable()) {

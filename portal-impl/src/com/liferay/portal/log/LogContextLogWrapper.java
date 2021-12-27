@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.BasePortalLifecycle;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalLifecycle;
 import com.liferay.portal.kernel.util.PortalLifecycleUtil;
+import org.apache.logging.log4j.ThreadContext;
 
 import java.util.Collections;
 import java.util.List;
@@ -139,8 +140,6 @@ public class LogContextLogWrapper extends LogWrapper {
 			return message;
 		}
 
-		StringBundler sb = new StringBundler();
-
 		for (LogContext logContext : serviceTrackerList) {
 			Map<String, String> context = logContext.getContext();
 
@@ -148,39 +147,17 @@ public class LogContextLogWrapper extends LogWrapper {
 				continue;
 			}
 
-			sb.append(StringPool.OPEN_CURLY_BRACE);
-			sb.append(logContext.getName());
-			sb.append(StringPool.OPEN_CURLY_BRACE);
-
 			List<String> keys = ListUtil.fromMapKeys(context);
 
 			Collections.sort(keys);
 
 			for (String key : keys) {
-				sb.append(StringPool.QUOTE);
-				sb.append(key);
-				sb.append("\":\"");
-				sb.append(context.get(key));
-				sb.append(StringPool.QUOTE);
-				sb.append(StringPool.COMMA);
+				ThreadContext.put(
+					logContext.getName() + "." + key, context.get(key));
 			}
-
-			sb.setStringAt(StringPool.DOUBLE_CLOSE_CURLY_BRACE, sb.index() - 1);
-			sb.append(StringPool.COMMA);
 		}
 
-		if (sb.index() == 0) {
-			return message;
-		}
-
-		if (message != null) {
-			sb.setStringAt(message.toString(), sb.index() - 1);
-		}
-		else {
-			sb.setIndex(sb.index() - 1);
-		}
-
-		return sb.toString();
+		return message;
 	}
 
 	private static volatile ServiceTrackerList<LogContext> _serviceTrackerList;

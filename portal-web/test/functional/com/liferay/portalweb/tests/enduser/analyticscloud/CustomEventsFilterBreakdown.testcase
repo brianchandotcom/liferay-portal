@@ -173,4 +173,70 @@ definition {
 		}
 	}
 
+	@description = "Feature ID: LRAC-7868 | Automation ID: LRAC-10266 | Test Summary: Event Analysis is reset when removing the event"
+	@priority = "4"
+	test AssertRemovedEventIsNotPresent {
+		var attributeName = "pageTitle";
+
+		var filterName = "url";
+
+		task ("Fill fields and create custom event") {
+			var customEventName = ACCustomEvents.generateCustomEventName();
+
+			ACCustomEvents.createCustomEvent(
+				customEventName = "${customEventName}",
+				timeToSendCustomEvent = "1");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch the property in AC and go to event analysis") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+
+			ACNavigation.goToEventAnalysis();
+		}
+
+		task ("Add the custom event to analysis") {
+			ACEventAnalysis.addEvent(customEventName = "${customEventName}");
+		}
+
+		task ("Add the breakdown to analysis") {
+			ACEventAnalysis.addBreakdown(attributeNameList = "${attributeName}");
+		}
+
+		task ("Add the filter to analysis") {
+			ACEventAnalysis.addFilter(
+				filterName = "${filterName}",
+				inputValue = "site",
+				optionValue = "contains");
+		}
+
+		task ("Check that the analysis dashboard contains the event,attribute and filter") {
+			ACEventAnalysis.viewAnalysisDashboard(
+				attributeName = "${attributeName}",
+				eventName = "${customEventName}",
+				filterName = "${filterName}");
+		}
+
+		task ("Remove the attribute from the analysis") {
+			ACEventAnalysis.removeFromAnalysis(removeValue = "${customEventName}");
+		}
+
+		task ("Check that the analysis dashboard contains the event,attribute and filter") {
+			AssertNotVisible(
+				key_buttonName = "${customEventName}",
+				locator1 = "ACUtils#GENERIC_BUTTON");
+
+			for (var attributeName : list "${attributeName},${filterName}") {
+				AssertElementNotPresent(
+					key_attributeName = "${attributeName}",
+					locator1 = "ACEventAnalysis#VIEW_DASHBOARD_INFORMATION");
+			}
+		}
+	}
+
 }

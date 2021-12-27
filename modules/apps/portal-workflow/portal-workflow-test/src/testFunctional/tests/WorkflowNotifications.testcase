@@ -38,11 +38,79 @@ definition {
 	}
 
 	@description = "LPS-135888 - Verify that the user with Account role type receives the notification for review"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test AccountUserReceivesNotification {
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		
+		JSONAccountEntry.addAccountEntry(
+			accountEntryName = "Test",
+			accountEntryType = "Business");
 
-		// TODO LRQA-69117 AccountUserReceivesNotification pending implementation
+		Accounts.openAccountsAdmin();
+
+		LexiconEntry.gotoEntry(rowEntry = "Test");
+
+		Accounts.addNewUserToBusinessAccount(
+			accountName = "Test",
+			assigneeName = "userfn",
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		Accounts.addAssigneeToRoleViaRolesTab(
+			accountRoleTitle = "Account Administrator",
+			assigneeName = "userfn");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Store Management",
+			panel = "Commerce",
+			portlet = "Channels");
+
+		CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+		Select(
+			key_title = "Buyer Order Approval Workflow",
+			locator1 = "CommerceEntry#CATALOGS_FORM",
+			value1 = "Single Approver (Version 1)");
+		
+		Button.clickSave();
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		FrontStore.addInitializerProductToCart(
+			productName = "U-Joint",
+			productQuantity = "1");
+
+		FrontStore.addInitializerProductToCart(
+			productName = "Transmission Cooler Line Assembly",
+			productQuantity = "1");
+
+		CommerceNavigator.gotoMiniCart();
+
+		Button.click(button = "Review Order");
+
+		Button.click(button = "Submit");
+
+		Workflow.viewWorkflowStatus(status = "Pending");
+
+		AccountUsers.openAccountUsersAdmin();
+
+		AccountUsers.setUserPassword(
+			accountUser = "userfn",
+			accountUserPassword = "pass");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		UserBar.gotoDropdownItem(dropdownItem = "Notifications");
+
+		Notifications.viewSuccessfulPublication(
+			contentBody = "for review in the workflow.",
+			portletName = "Test Test",
+			publicationType = "sent you a Commerce Order");
+
 
 	}
 

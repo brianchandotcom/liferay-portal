@@ -343,6 +343,8 @@ definition {
 
 		LexiconEntry.gotoAdd();
 
+		Refresh();
+
 		Type(
 			locator1 = "UsersAndOrganizationsEditUser#DETAILS_SCREEN_NAME_FIELD",
 			value1 = "${userScreenName}");

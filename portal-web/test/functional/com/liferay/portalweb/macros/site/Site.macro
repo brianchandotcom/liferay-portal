@@ -511,7 +511,7 @@ definition {
 
 		Panel.expandPanel(panel = "Logo");
 
-		Page.uploadFileForLogo(logoFile = "${logoFile}");
+		PagesAdmin.uploadFileForLogo(logoFile = "${logoFile}");
 	}
 
 	macro configureCurrentLanguagesCP {

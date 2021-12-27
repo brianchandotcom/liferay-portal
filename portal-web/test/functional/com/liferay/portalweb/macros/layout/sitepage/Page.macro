@@ -382,33 +382,6 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
-	macro uploadFileForLogo {
-		AssertClick(
-			key_text = "Change",
-			locator1 = "Button#ANY",
-			value1 = "Change");
-
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		AssertElementPresent(
-			buttonId = "uploadImage",
-			locator1 = "Button#BUTTON_ID");
-
-		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
-			locator1 = "TextInput#FILE",
-			value1 = "${logoFile}");
-
-		Pause(locator1 = "10000");
-
-		Button.clickDone();
-
-		Pause(locator1 = "5000");
-
-		SelectFrameTop();
-
-		PortletEntry.save();
-	}
-
 	macro viewChildPageDropdown {
 		ClickNoError(locator1 = "Home#${viewChildPageDropdown}");
 

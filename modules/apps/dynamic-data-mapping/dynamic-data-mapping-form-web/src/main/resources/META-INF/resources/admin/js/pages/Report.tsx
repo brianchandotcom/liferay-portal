@@ -12,23 +12,31 @@
  * details.
  */
 
+import {useResource} from '@clayui/data-provider';
 import ClayLink from '@clayui/link';
 import ClayNavigationBar from '@clayui/navigation-bar';
-import {FormReport} from 'data-engine-js-components-web';
+import {FormReport, useConfig} from 'data-engine-js-components-web';
 import React from 'react';
 
-import './index.scss';
+import './Report.scss';
 
-export default function Index({
-	lastModifiedDate,
-	totalItems,
-	...otherProps
-}: IProps) {
+export function Report() {
+	const {formReportDataURL} = useConfig();
+	const {resource} = useResource({link: formReportDataURL});
+	const {
+		data,
+		fields = [],
+		formReportRecordsFieldValuesURL = '',
+		lastModifiedDate,
+		portletNamespace = '',
+		totalItems = 0,
+	} = (resource as IReportDataResponse) ?? {};
+
 	return (
 		<>
-			<div className="portlet-ddm-form-report__header">
+			<div className="lfr-ddm__form-report__header">
 				<div className="container-fluid container-fluid-max-xl">
-					<h2 className="portlet-ddm-form-report__title text-truncate">
+					<h2 className="lfr-ddm__form-report__title text-truncate">
 						{Liferay.Util.sub(
 							totalItems === 1
 								? Liferay.Language.get('x-entry')
@@ -37,7 +45,7 @@ export default function Index({
 						)}
 					</h2>
 
-					<span className="portlet-ddm-form-report__subtitle text-truncate">
+					<span className="lfr-ddm__form-report__subtitle text-truncate">
 						{totalItems > 0
 							? lastModifiedDate
 							: Liferay.Language.get('there-are-no-entries')}
@@ -46,7 +54,7 @@ export default function Index({
 			</div>
 
 			<ClayNavigationBar
-				className="portlet-ddm-form-report__tabs"
+				className="lfr-ddm__form-report__tabs"
 				triggerLabel={Liferay.Language.get('summary')}
 			>
 				{
@@ -71,15 +79,22 @@ export default function Index({
 			<hr className="m-0" />
 
 			<div className="container-fluid container-fluid-max-xl">
-				<FormReport {...otherProps} />
+				<FormReport
+					data={data}
+					fields={fields}
+					formReportRecordsFieldValuesURL={
+						formReportRecordsFieldValuesURL
+					}
+					portletNamespace={portletNamespace}
+				/>
 			</div>
 		</>
 	);
 }
 
-interface IProps {
+interface IReportDataResponse {
 	data?: string;
-	fields: unknown;
+	fields: unknown[];
 	formReportRecordsFieldValuesURL: string;
 	lastModifiedDate: string;
 	portletNamespace: string;

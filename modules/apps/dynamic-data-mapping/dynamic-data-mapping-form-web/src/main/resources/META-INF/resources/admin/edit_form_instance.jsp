@@ -138,6 +138,9 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 		<aui:input name="serializedSettingsContext" type="hidden" value="" />
 
 		<%@ include file="/admin/exceptions.jspf" %>
+		<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/dynamic_data_mapping_form/get_form_report_data" var="formReportDataURL">
+			<portlet:param name="formInstanceId" value="<%= String.valueOf(formInstanceId) %>" />
+		</liferay-portlet:resourceURL>
 
 		<div id="<portlet:namespace />-container">
 			<react:component
@@ -167,6 +170,8 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 						"fieldTypes", ddmFormAdminDisplayContext.getDDMFormFieldTypesJSONArray()
 					).put(
 						"formInstanceId", formInstanceId
+					).put(
+						"formReportDataURL", formReportDataURL.toString()
 					).put(
 						"formSettingsContext", ddmFormAdminDisplayContext.getDDMFormSettingsContext(pageContext)
 					).put(
@@ -207,11 +212,6 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 		</div>
 	</aui:form>
 </div>
-
-<liferay-portlet:runtime
-	portletName="<%= DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_REPORT %>"
-	queryString='<%= "formInstanceId=" + formInstanceId %>'
-/>
 
 <aui:script>
 	var clearPortletHandlers = function (event) {

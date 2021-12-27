@@ -635,7 +635,7 @@
 </tr>
 <tr>
 	<td>ENTRIES_TITLE_CONTENT</td>
-	<td>//h2[contains(@class,'portlet-ddm-form-report') and contains(text(),'${key_text}')]</td>
+	<td>//h2[contains(@class,'lfr-ddm__form-report__title') and contains(.,'${key_text}')]</td>
 	<td></td>
 </tr>
 <tr>

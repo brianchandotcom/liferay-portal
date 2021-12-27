@@ -45,6 +45,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM,
+		"javax.portlet.name=" + DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN,
 		"mvc.command.name=/dynamic_data_mapping_form/get_form_report_data"
 	},
 	service = MVCResourceCommand.class
@@ -66,7 +67,7 @@ public class GetFormReportDataMVCResourceCommand
 					getFormInstanceReportByFormInstanceId(formInstanceId);
 
 			String portletNamespace = _portal.getPortletNamespace(
-				DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM);
+				_portal.getPortletId(resourceRequest));
 
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse,

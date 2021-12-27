@@ -29,6 +29,7 @@ const PartialResults: React.FC<IProps> = ({
 	onShow,
 	reportDataURL,
 }) => {
+	const {resource} = useResource({fetch, link: reportDataURL});
 	const {
 		data,
 		fields = [],
@@ -36,9 +37,7 @@ const PartialResults: React.FC<IProps> = ({
 		lastModifiedDate,
 		portletNamespace,
 		totalItems = 0,
-	} =
-		(useResource({fetch, link: reportDataURL})
-			.resource as IReportDataResponse | null) ?? {};
+	} = (resource as IReportDataResponse) ?? {};
 
 	useEffect(() => {
 		const formsPortlet = document.querySelector('.portlet-forms');
@@ -117,8 +116,8 @@ interface IProps {
 interface IReportDataResponse {
 	data?: string;
 	fields: unknown[];
-	formReportRecordsFieldValuesURL: unknown;
+	formReportRecordsFieldValuesURL: string;
 	lastModifiedDate: string;
-	portletNamespace: unknown;
+	portletNamespace: string;
 	totalItems: number;
 }

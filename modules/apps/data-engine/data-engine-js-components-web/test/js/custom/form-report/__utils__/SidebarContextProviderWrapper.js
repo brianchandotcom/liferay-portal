@@ -36,8 +36,7 @@ export default function SidebarContextProviderWrapper({
 	const context = {
 		...sidebarState,
 		formReportRecordsFieldValuesURL: 'http://localhost:8080/',
-		portletNamespace:
-			'_com_liferay_dynamic_data_mapping_form_report_web_portlet_DDMFormReportPortlet_',
+		portletNamespace: '_portlet_namespace_',
 		toggleSidebar: jest.fn(() => !sidebarState.isOpen),
 		...otherProps,
 	};

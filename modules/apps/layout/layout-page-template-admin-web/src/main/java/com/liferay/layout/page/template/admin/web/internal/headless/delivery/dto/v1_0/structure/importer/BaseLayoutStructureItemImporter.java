@@ -233,6 +233,8 @@ public abstract class BaseLayoutStructureItemImporter {
 				"paddingRight", fragmentViewportStyle.get("paddingRight")
 			).put(
 				"paddingTop", fragmentViewportStyle.get("paddingTop")
+			).put(
+				"textAlign", fragmentViewportStyle.get("textAlign")
 			));
 	}
 

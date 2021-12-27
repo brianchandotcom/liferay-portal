@@ -79,6 +79,12 @@ definition {
 		AssertElementPresent(locator1 = "MediaGallery#ADT_CAROUSEL_MENU_INDEX");
 	}
 
+	macro viewDefault {
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "There are no media files in this folder.");
+	}
+
 	macro viewShowAllPG {
 		Click.waitForMenuToggleJSClick(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
 

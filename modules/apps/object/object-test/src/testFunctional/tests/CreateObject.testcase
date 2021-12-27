@@ -1408,12 +1408,29 @@ definition {
 	}
 
 	@description = "LPS-139160 - Verify it is not possible to delete an Object via API after it was published"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CannotDeletePublishedObjectViaApi {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-		// TODO LPS-141680 CannotDeletePublishedObjectViaApi pending implementation
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject");
 
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		ObjectAdmin.deleteAllCustomObjectsViaAPI();
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectAdmin.assertObjectStatus(
+			label = "Custom Object",
+			status = "Approved");
 	}
 
 	@description = "LPS-135400 - Verify it is not possible to delete a Relationship when an Object is published"

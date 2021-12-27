@@ -127,4 +127,50 @@ definition {
 		}
 	}
 
+	@description = "Feature ID: LRAC-7868 | Automation ID: LRAC-10265 | Test Summary: Max of 3 breakdowns options are allowed"
+	@priority = "4"
+	test AddMaxOf3AttributesToEvent {
+		var attributeNameList = "category,pageTitle,url";
+
+		task ("Fill fields and create custom event") {
+			var customEventName = ACCustomEvents.generateCustomEventName();
+
+			ACCustomEvents.createCustomEvent(
+				customEventName = "${customEventName}",
+				timeToSendCustomEvent = "1");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch the property in AC and go to event analysis") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+
+			ACNavigation.goToEventAnalysis();
+		}
+
+		task ("Add the custom event to analysis") {
+			ACEventAnalysis.addEvent(customEventName = "${customEventName}");
+		}
+
+		task ("Add the 3 breakdown to analysis") {
+			ACEventAnalysis.addBreakdown(attributeNameList = "${attributeNameList}");
+		}
+
+		task ("Check that the analysis dashboard contains the 3 attributes") {
+			for (var attributeName : list "${attributeNameList}") {
+				ACEventAnalysis.viewAnalysisDashboard(attributeName = "${attributeName}");
+			}
+		}
+
+		task ("Assert there is no “+” after having 3 breakdown") {
+			AssertElementNotPresent(
+				key_sectionType = "breakdown",
+				locator1 = "ACEventAnalysis#ADD_ATTRIBUTE_BUTTON");
+		}
+	}
+
 }

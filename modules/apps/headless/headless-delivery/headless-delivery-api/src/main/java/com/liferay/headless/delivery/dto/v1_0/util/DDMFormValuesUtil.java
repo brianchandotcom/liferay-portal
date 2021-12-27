@@ -208,10 +208,13 @@ public class DDMFormValuesUtil {
 
 		LocalizedValue localizedValue = ddmFormField.getPredefinedValue();
 
-		String valueString = localizedValue.getString(
-			localizedValue.getDefaultLocale());
+		String valueString = Optional.ofNullable(
+			localizedValue.getString(localizedValue.getDefaultLocale())
+		).orElse(
+			""
+		);
 
-		if (valueString.equals("[]")) {
+		if (Objects.equals(valueString, "[]")) {
 			valueString = "";
 		}
 

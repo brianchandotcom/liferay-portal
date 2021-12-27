@@ -1,7 +1,5 @@
 <#if cpCatalogEntry??>
 	<#assign
-		image = cpCatalogEntry.getDefaultImageFileUrl()
-
 		name = cpCatalogEntry.getName()
 
 		description = cpCatalogEntry.getDescription()
@@ -13,6 +11,8 @@
 		commerceAccount = commerceContext.getCommerceAccount()
 
 		commerceAccountId = commerceAccount.getCommerceAccountId()
+
+		image = cpContentHelper.getDefaultImageFileURL(commerceAccountId, cpCatalogEntry.getCPDefinitionId())
 
 		itemID = cpCatalogEntry.CPDefinitionId
 

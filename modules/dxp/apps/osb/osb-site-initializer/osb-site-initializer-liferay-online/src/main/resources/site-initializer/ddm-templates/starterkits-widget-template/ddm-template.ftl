@@ -33,7 +33,7 @@
 		<div class="liferay-online-list row">
 			<#list entries as curCPCatalogEntry>
 				<#assign
-					image = curCPCatalogEntry.getDefaultImageFileUrl()
+					image = cpContentHelper.getDefaultImageFileURL(commerceAccountId, curCPCatalogEntry.getCPDefinitionId())
 
 					friendlyURL = cpContentHelper.getFriendlyURL(curCPCatalogEntry, themeDisplay)
 

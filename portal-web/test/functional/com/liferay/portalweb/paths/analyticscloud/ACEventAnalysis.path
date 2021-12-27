@@ -24,7 +24,7 @@
 <!-- SEARCH_EVENT_ANALYSE -->
 <tr>
 	<td>SEARCH_BAR_EVENT_ANALYSE</td>
-	<td>//div[contains(@class,'show')]/..//input[@type='text'and @placeholder='Search' and not(@disabled)]</td>
+	<td>//div[contains(@class,'show')]/..//input[@type='text' and @placeholder='Search' and not(@disabled)]</td>
 	<td></td>
 </tr>
 <!-- EDIT_ATTRIBUTE -->
@@ -57,12 +57,12 @@
 </tr>
 <tr>
 	<td>VIEW_DASHBOARD_INFORMATION</td>
-	<td>//div[contains(@class,'attribute')and contains(text(),'${key_attributeName}')]</td>
+	<td>//div[contains(@class,'attribute') and contains(text(),'${key_attributeName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CHOOSE_FILTER</td>
-	<td>//div[contains(@class,'show')]//button[contains(@class,'button-root')and text()='${key_filterName}']</td>
+	<td>//div[contains(@class,'show')]//button[contains(@class,'button-root') and text()='${key_filterName}']</td>
 	<td></td>
 </tr>
 </tbody>

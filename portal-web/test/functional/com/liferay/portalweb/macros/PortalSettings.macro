@@ -333,99 +333,75 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro editConfigurationUsersDefaultUserAssociationsOrganizationSitesCP {
+	macro editConfigurationUsersDefaultUserAssociationsCP {
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "Users",
 			configurationName = "Default User Associations",
 			configurationScope = "Virtual Instance Scope");
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ORGANIZATION_SITES_HEADER",
-			value1 = "Organization Sites");
+		if (isSet(orgName)) {
+			AssertTextEquals.assertPartialText(
+				locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ORGANIZATION_SITES_HEADER",
+				value1 = "Organization Sites");
 
-		Type(
-			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ORGANIZATION_SITES_FIELD",
-			value1 = "${orgName}");
+			Type(
+				locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ORGANIZATION_SITES_FIELD",
+				value1 = "${orgName}");
 
-		PortletEntry.save();
+			PortletEntry.save();
 
-		PortalSettings.gotoConfiguration(
-			configurationCategory = "Users",
-			configurationName = "Default User Associations",
-			configurationScope = "Virtual Instance Scope");
+			AssertTextEquals(
+				locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ORGANIZATION_SITES_FIELD",
+				value1 = "${orgName}");
+		}
 
-		AssertTextEquals(
-			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ORGANIZATION_SITES_FIELD",
-			value1 = "${orgName}");
-	}
+		if (isSet(roleTitle)) {
+			AssertTextEquals.assertPartialText(
+				locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ROLES_HEADER",
+				value1 = "Roles");
 
-	macro editConfigurationUsersDefaultUserAssociationsRolesCP {
-		PortalSettings.gotoConfiguration(
-			configurationCategory = "Users",
-			configurationName = "Default User Associations",
-			configurationScope = "Virtual Instance Scope");
+			Type(
+				locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ROLES_FIELD",
+				value1 = "${roleTitle}");
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ROLES_HEADER",
-			value1 = "Roles");
+			PortletEntry.save();
 
-		Type(
-			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ROLES_FIELD",
-			value1 = "${roleTitle}");
+			AssertTextEquals(
+				locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ROLES_FIELD",
+				value1 = "${roleTitle}");
+		}
 
-		PortletEntry.save();
-	}
+		if (isSet(userGroupName)) {
+			AssertTextEquals.assertPartialText(
+				locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_USER_GROUPS_HEADER",
+				value1 = "User Groups");
 
-	macro editConfigurationUsersDefaultUserAssociationsSitesCP {
-		PortalSettings.gotoConfiguration(
-			configurationCategory = "Users",
-			configurationName = "Default User Associations",
-			configurationScope = "Virtual Instance Scope");
+			Type(
+				locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_USER_GROUPS_FIELD",
+				value1 = "${userGroupName}");
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_SITES_HEADER",
-			value1 = "Sites");
+			PortletEntry.save();
 
-		Type(
-			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_SITES_FIELD",
-			value1 = "${siteName}");
+			AssertTextEquals(
+				locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_USER_GROUPS_FIELD",
+				value1 = "${userGroupName}");
+		}
 
-		PortletEntry.save();
+		if (isSet(siteName)) {
+			AssertTextEquals.assertPartialText(
+				locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ORGANIZATION_SITES_HEADER",
+				value1 = "Organization Sites");
 
-		PortalSettings.gotoConfiguration(
-			configurationCategory = "Users",
-			configurationName = "Default User Associations",
-			configurationScope = "Virtual Instance Scope");
+			Type(
+				locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_SITES_FIELD",
+				value1 = "${siteName}");
 
-		AssertTextEquals(
-			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_SITES_FIELD",
-			value1 = "${siteName}");
-	}
+			PortletEntry.save();
 
-	macro editConfigurationUsersDefaultUserAssociationsUserGroupsCP {
-		PortalSettings.gotoConfiguration(
-			configurationCategory = "Users",
-			configurationName = "Default User Associations",
-			configurationScope = "Virtual Instance Scope");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_USER_GROUPS_HEADER",
-			value1 = "User Groups");
-
-		Type(
-			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_USER_GROUPS_FIELD",
-			value1 = "${userGroupName}");
-
-		PortletEntry.save();
-
-		PortalSettings.gotoConfiguration(
-			configurationCategory = "Users",
-			configurationName = "Default User Associations",
-			configurationScope = "Virtual Instance Scope");
-
-		AssertTextEquals(
-			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_USER_GROUPS_FIELD",
-			value1 = "${userGroupName}");
+			AssertTextEquals(
+				locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_SITES_FIELD",
+				value1 = "${siteName}");
+		}
 	}
 
 	macro editConfigurationUsersEmailNotificationsCP {

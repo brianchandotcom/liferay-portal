@@ -41,6 +41,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MULTIPLE_LINES_2</td>
+	<td>xpath=(//label[normalize-space(text())='${key_fieldFieldLabel}']//following-sibling::textarea)[2]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NESTED_INPUT</td>
 	<td>//div[contains(@class,'nested-separator')][//following-sibling::div[1][//label[normalize-space(text())='${key_fieldName}']]]//following-sibling::div[2]//label[normalize-space(text())='${key_nestedFieldName}']//following-sibling::input</td>
 	<td></td>

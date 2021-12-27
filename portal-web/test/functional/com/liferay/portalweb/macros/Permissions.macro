@@ -234,7 +234,7 @@ definition {
 	}
 
 	macro setUpRegRoleLoginUserCP {
-		PortalSettings.editConfigurationUsersDefaultUserAssociationsRolesCP(roleTitle = "");
+		PortalSettings.editConfigurationUsersDefaultUserAssociationsCP(roleTitle = "");
 
 		JSONUser.addUser(
 			userEmailAddress = "${userEmailAddress}",
@@ -348,7 +348,7 @@ definition {
 
 		Portlet.waitForForm();
 
-		PortalSettings.editConfigurationUsersDefaultUserAssociationsRolesCP(roleTitle = "");
+		PortalSettings.editConfigurationUsersDefaultUserAssociationsCP(roleTitle = "");
 
 		JSONUser.addUser(
 			userEmailAddress = "${userEmailAddress}",

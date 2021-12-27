@@ -1,8 +1,10 @@
 .frontend-js-components-sample-web {
-	h1,
-	h2,
-	h3,
-	.col {
+	h2 {
+		margin-bottom: 1rem;
+	}
+
+	hr {
 		margin-bottom: 2rem;
+		margin-top: 2rem;
 	}
 }

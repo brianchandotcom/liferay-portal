@@ -135,29 +135,6 @@ definition {
 		AssertElementNotPresent(locator1 = "PageEditor#APPLIED_FILTERS_FILTER_LIST_PLACEHOLDER");
 	}
 
-	macro configureCanonicalURL {
-		var checkboxName = "Use Custom Canonical URL";
-
-		if (IsNotChecked(locator1 = "Checkbox#ANY_CHECKBOX")) {
-			Click(locator1 = "Checkbox#ANY_CHECKBOX");
-
-			AssertVisible(
-				key_infoMessage = "Info:Due to the customization of the canonical URL, depending on the platform this page is shared, the Open Graph metadata shown might not be the one configured in this page.",
-				locator1 = "Message#INFO_SPECIFIC",
-				value1 = "Info:Due to the customization of the canonical URL, depending on the platform this page is shared, the Open Graph metadata shown might not be the one configured in this page.");
-		}
-
-		if (isSet(locale)) {
-			PortletEntry.changeLocale(locale = "${locale}");
-		}
-
-		Type(
-			locator1 = "TextInput#CUSTOM_CANONICAL_URL",
-			value1 = "${customCanonicalURL}");
-
-		PortletEntry.save();
-	}
-
 	macro deleteFriendlyURLPG {
 		Navigator.gotoNavTab(navTab = "General");
 

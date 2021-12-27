@@ -430,4 +430,74 @@ definition {
 		}
 	}
 
+	@description = "Feature ID: LRAC-7868 | Automation ID: LRAC-10273 | Test Summary: Event Analysis creation with Filtered Attribute (String) and (Contains/Does not Contains) condition"
+	@priority = "5"
+	test CreateEventAnalysisWithStringAttributeFilterContainsAndNotContains {
+		var attributeName = "pageTitle";
+
+		var filterName = "category";
+
+		var dataSource = StringUtil.extractFirst("${assignedPropertyName}", " ");
+
+		task ("Fill fields and create custom event") {
+			var customEventName = ACCustomEvents.generateCustomEventName();
+
+			ACCustomEvents.createCustomEvent(
+				customEventName = "${customEventName}",
+				timeToSendCustomEvent = "1");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch the property in AC and go to event analysis") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+
+			ACNavigation.goToEventAnalysis();
+		}
+
+		task ("Add the custom event to analysis") {
+			ACEventAnalysis.addEvent(customEventName = "${customEventName}");
+		}
+
+		task ("Add the breakdown to analysis") {
+			ACEventAnalysis.addBreakdown(attributeNameList = "${attributeName}");
+		}
+
+		task ("Add the filter to analysis") {
+			ACEventAnalysis.addFilter(
+				filterName = "${filterName}",
+				inputValue = "w",
+				optionValue = "contains");
+		}
+
+		task ("Change the time filter to 24 hours") {
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast24Hours();
+		}
+
+		task ("Check that the analysis result appears") {
+			ACEventAnalysis.viewAnalysisInformation(informationValueList = "ac page - site name - ${dataSource}");
+		}
+
+		task ("Remove the filter from the analysis") {
+			ACEventAnalysis.removeFromAnalysis(removeValue = "${filterName}");
+		}
+
+		task ("Add the filter to analysis") {
+			ACEventAnalysis.addFilter(
+				filterName = "${filterName}",
+				inputValue = "w",
+				optionValue = "not contains");
+		}
+
+		task ("Check that the analysis result does not appear") {
+			ACEventAnalysis.viewAnalysisInformationNotPresent(informationValueList = "ac page - site name - ${dataSource}");
+		}
+	}
+
 }

@@ -572,7 +572,7 @@ definition {
 
 	@description = "Feature ID: LRAC-7868 | Automation ID: LRAC-10277 | Test Summary: Event Analysis creation with Filtered Attribute (Number) and (Is greater than/Is less than/Is between) condition"
 	@priority = "3"
-	test CreateEventAnalysisWithNumberAttributeFilterIsGreaterAndIsLessAndBetweenThanCondition {
+	test CreateEventAnalysisWithNumberAttributeFilterAllCondition {
 		var attributeName = "pageTitle";
 
 		var filterName = "price";

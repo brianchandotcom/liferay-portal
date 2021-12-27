@@ -115,6 +115,10 @@ public class ImportTranslationDisplayContext {
 	}
 
 	private boolean _isAnyTranslationPending() {
+		if (_classPK == 0) {
+			return false;
+		}
+
 		int translationEntriesCount =
 			_translationEntryLocalService.getTranslationEntriesCount(
 				PortalUtil.getClassName(_classNameId), _classPK,

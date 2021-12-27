@@ -18,6 +18,7 @@ import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
@@ -64,10 +65,6 @@ public class ImportTranslationMVCRenderCommand implements MVCRenderCommand {
 				new TranslationRequestHelper(
 					_infoItemServiceTracker, renderRequest);
 
-			Object model = _getModel(
-				translationRequestHelper.getModelClassName(),
-				translationRequestHelper.getModelClassPK());
-
 			renderRequest.setAttribute(
 				ImportTranslationDisplayContext.class.getName(),
 				new ImportTranslationDisplayContext(
@@ -78,7 +75,8 @@ public class ImportTranslationMVCRenderCommand implements MVCRenderCommand {
 					_portal.getHttpServletRequest(renderRequest),
 					_portal.getLiferayPortletResponse(renderResponse),
 					_getTitle(
-						translationRequestHelper.getModelClassName(), model,
+						translationRequestHelper.getModelClassName(),
+						translationRequestHelper.getModelClassPKs(),
 						themeDisplay.getLocale()),
 					_translationEntryLocalService,
 					_workflowDefinitionLinkLocalService));
@@ -100,13 +98,19 @@ public class ImportTranslationMVCRenderCommand implements MVCRenderCommand {
 		return infoItemObjectProvider.getInfoItem(classPK);
 	}
 
-	private String _getTitle(String className, Object model, Locale locale) {
+	private String _getTitle(String className, long[] classPKs, Locale locale)
+		throws PortalException {
+
+		if (classPKs.length != 1) {
+			return StringPool.BLANK;
+		}
+
 		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
 			_infoItemServiceTracker.getFirstInfoItemService(
 				InfoItemFieldValuesProvider.class, className);
 
 		InfoFieldValue<Object> infoFieldValue = _getTitleInfoFieldValue(
-			infoItemFieldValuesProvider, model);
+			infoItemFieldValuesProvider, _getModel(className, classPKs[0]));
 
 		return (String)infoFieldValue.getValue(locale);
 	}

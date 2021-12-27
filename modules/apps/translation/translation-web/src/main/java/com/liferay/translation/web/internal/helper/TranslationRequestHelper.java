@@ -115,7 +115,11 @@ public class TranslationRequestHelper {
 	public long getModelClassPK() throws PortalException {
 		long[] modelClassPKs = getModelClassPKs();
 
-		return modelClassPKs[0];
+		if (modelClassPKs.length > 0) {
+			return modelClassPKs[0];
+		}
+
+		return 0;
 	}
 
 	public long[] getModelClassPKs() throws PortalException {

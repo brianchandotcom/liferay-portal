@@ -1042,6 +1042,12 @@ definition {
 		}
 	}
 
+	macro viewSelectedLayoutColumn {
+		AssertElementPresent(
+			key_card = "${columnName}",
+			locator1 = "Card#CARD_SELECTED");
+	}
+
 	macro viewSelectedPageItem {
 		AssertChecked.assertCheckedNotVisible(
 			key_pageName = "${pageName}",

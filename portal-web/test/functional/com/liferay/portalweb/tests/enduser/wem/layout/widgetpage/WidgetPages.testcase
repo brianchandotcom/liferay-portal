@@ -322,7 +322,7 @@ definition {
 
 				Navigator.gotoEditPageViaControlMenu(pageName = "Test Page Name");
 
-				Page.viewSelectedLayoutColumn(columnName = "${layoutTemplate}");
+				PagesAdmin.viewSelectedLayoutColumn(columnName = "${layoutTemplate}");
 			}
 		}
 	}
@@ -429,7 +429,7 @@ definition {
 				menuItem = "Configure",
 				pageName = "Test Page Name 2");
 
-			Page.viewSelectedLayoutColumn(columnName = "1 Column");
+			PagesAdmin.viewSelectedLayoutColumn(columnName = "1 Column");
 		}
 
 		task ("Edit the name of the second page") {

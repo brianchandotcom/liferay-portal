@@ -666,12 +666,6 @@ definition {
 			value1 = "${sideNavWidth}");
 	}
 
-	macro viewSelectedLayoutColumn {
-		AssertElementPresent(
-			key_card = "${columnName}",
-			locator1 = "Card#CARD_SELECTED");
-	}
-
 	macro viewSiteNameTranslationsPG {
 		var list1 = ListUtil.newListFromString("${localeList}");
 		var list2 = ListUtil.newListFromString("${siteNameList}");

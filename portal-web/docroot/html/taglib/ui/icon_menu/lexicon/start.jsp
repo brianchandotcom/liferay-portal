@@ -36,7 +36,7 @@ if (Validator.isNull(icon)) {
 <div class="dropdown lfr-icon-menu <%= cssClass %>" <%= AUIUtil.buildData(data) %>>
 	<c:choose>
 		<c:when test='<%= triggerType.equals("button") %>'>
-			<button aria-expanded="false" aria-haspopup="true" class="btn btn-monospaced btn-secondary direction-<%= direction %> dropdown-toggle <%= triggerCssClass %>" id="<%= id %>" <%= (message != null) && !message.isEmpty() ? "title=\"" + message + "\"" : StringPool.BLANK %> type="button">
+			<button aria-expanded="false" aria-haspopup="true" class="btn btn-monospaced btn-secondary direction-<%= direction %> dropdown-toggle <%= triggerCssClass %>" id="<%= id %>" <%= ((message != null) && !message.isEmpty()) ? "title=\"" + message + "\"" : StringPool.BLANK %> type="button">
 				<aui:icon cssClass="inline-item" image="<%= icon %>" markupView="lexicon" />
 
 				<c:if test="<%= Validator.isNotNull(triggerLabel) %>">

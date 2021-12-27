@@ -195,6 +195,40 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-114001. The placeholder values are the same as the default Language's value."
+	@priority = "4"
+	test AssertPlaceholderValuesSameAsTheDefaultLanguage {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		PortletEntry.viewLocale(locale = "en-US");
+
+		WebContent.addCP(
+			webContentContent = "Web Content Content",
+			webContentTitle = "Web Content Title");
+
+		PortletEntry.changeLocale(locale = "ca-ES");
+
+		WebContent.viewCP(
+			webContentContent = "Web Content Content",
+			webContentTitle = "Web Content Title");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		WebContent.addCP(
+			webContentContent = "网页内容",
+			webContentTitle = "网页内容标题");
+
+		PortletEntry.changeLocale(locale = "nl-NL");
+
+		WebContent.viewCP(
+			webContentContent = "Web Content Content",
+			webContentTitle = "Web Content Title");
+
+		PortletEntry.publish();
+	}
+
 	@description = "This is a use case for LPS-83319. The user could change default language of web content after enable Changeable Default Language."
 	@priority = "5"
 	test ChangeWebContentDefaultLanguage {

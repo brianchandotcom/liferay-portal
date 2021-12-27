@@ -109,7 +109,7 @@ definition {
 		}
 
 		task ("Add the breakdown to analysis") {
-			ACEventAnalysis.addBreakdown(attributeName = "${attributeName}");
+			ACEventAnalysis.addBreakdown(attributeNameList = "${attributeName}");
 		}
 
 		task ("Add the filter to analysis") {

@@ -266,6 +266,44 @@ definition {
 		DMDocument.viewNoFilesViaMG(mgDocumentTitle = "Document_1.jpeg");
 	}
 
+	@description = "This test ensures that a users can view file after configuring a new root folder."
+	@priority = "3"
+	test CanViewFileAfterConfiguringRootFolder {
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Guest");
+
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM SubFolder Name",
+			groupName = "Guest",
+			parentFolderName = "DM Folder Name");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description1",
+			dmDocumentTitle = "Document_1.jpg",
+			folderName = "DM Folder Name",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
+
+		Navigator.gotoPage(pageName = "Media Gallery Page");
+
+		MGPortlet.setRootFolder(
+			dmFolderName = "DM Folder Name",
+			dmRootFolderName = "DM SubFolder Name",
+			selectSubfolder = "true");
+
+		MGPortlet.viewDefault();
+
+		MGPortlet.setRootFolder(
+			dmRootFolderName = "DM Folder Name",
+			selectHomeFolder = "true");
+
+		DMDocument.viewPGViaMG(mgDocumentTitle = "Document_1.jpg");
+	}
+
 	@priority = "5"
 	@refactorneeded
 	test DeleteFolderDocument {

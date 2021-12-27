@@ -23,6 +23,7 @@ import {debounce} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useRef, useState} from 'react';
 
+import {getValidHexColor} from '../../app/utils/getValidHexColor';
 import {useId} from '../../app/utils/useId';
 import useControlledState from '../../core/hooks/useControlledState';
 import {ConfigurationFieldPropTypes} from '../../prop-types/index';
@@ -39,8 +40,6 @@ const ERROR_MESSAGES = {
 	),
 	valueNotExist: Liferay.Language.get('this-token-does-not-exist'),
 };
-
-const MAX_HEX_LENGTH = 7;
 
 const debouncedOnValueSelect = debounce(
 	(onValueSelect, fieldName, value) => onValueSelect(fieldName, value),
@@ -121,7 +120,7 @@ export function ColorPicker({
 	const onBlurAutocompleteInput = ({target}) => {
 		const isHexColor = target.value.startsWith('#');
 		let nextValue = isHexColor
-			? target.value.substring(0, MAX_HEX_LENGTH)
+			? getValidHexColor(target.value)
 			: target.value;
 
 		if (!nextValue) {
@@ -143,7 +142,7 @@ export function ColorPicker({
 					return;
 				}
 
-				if (editedTokenValues?.[nextValue].name === field.name) {
+				if (editedTokenValues?.[nextValue]?.name === field.name) {
 					setError(ERROR_MESSAGES.mutuallyReferenced);
 
 					return;
@@ -292,7 +291,11 @@ export function ColorPicker({
 												}
 												ref={inputRef}
 												role="combobox"
-												value={color}
+												value={
+													color.startsWith('#')
+														? color.toUpperCase()
+														: color
+												}
 											/>
 
 											<ClayAutocomplete.DropDown

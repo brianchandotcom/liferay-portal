@@ -379,6 +379,8 @@ public abstract class BaseStyledLayoutStructureItemMapper
 								"paddingRight", null);
 							paddingTop = styleJSONObject.getString(
 								"paddingTop", null);
+							textAlign = styleJSONObject.getString(
+								"textAlign", null);
 
 							setHidden(
 								() -> {

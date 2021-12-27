@@ -169,7 +169,7 @@ definition {
 			menuItem = "Configure",
 			pageName = "Staging Test Page");
 
-		Page.viewPageLayoutColumn(columnName = "1 Column");
+		PagesAdmin.viewPageLayoutColumn(columnName = "1 Column");
 
 		Navigator.openStagingSiteURL(siteName = "Site Name");
 
@@ -181,7 +181,7 @@ definition {
 			menuItem = "Configure",
 			pageName = "Staging Test Page");
 
-		Page.viewPageLayoutColumn(columnName = "2 Columns");
+		PagesAdmin.viewPageLayoutColumn(columnName = "2 Columns");
 
 		Navigator.openStagingSiteURL(siteName = "Site Name");
 
@@ -193,7 +193,7 @@ definition {
 			menuItem = "Configure",
 			pageName = "Staging Test Page");
 
-		Page.viewPageLayoutColumn(columnName = "1 Column");
+		PagesAdmin.viewPageLayoutColumn(columnName = "1 Column");
 
 		Navigator.openStagingSiteURL(siteName = "Site Name");
 
@@ -207,7 +207,7 @@ definition {
 			menuItem = "Configure",
 			pageName = "Staging Test Page");
 
-		Page.viewPageLayoutColumn(columnName = "1 Column");
+		PagesAdmin.viewPageLayoutColumn(columnName = "1 Column");
 	}
 
 	@priority = "4"

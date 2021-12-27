@@ -501,12 +501,6 @@ definition {
 			locator1 = "AssetCategorization#CATEGORY_SELECT");
 	}
 
-	macro viewPageLayoutColumn {
-		AssertElementPresent(
-			key_card = "${columnName}",
-			locator1 = "Card#CARD");
-	}
-
 	macro viewPageLockCheck {
 		Click(locator1 = "ControlMenu#INFO");
 

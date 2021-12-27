@@ -950,6 +950,12 @@ definition {
 			locator1 = "PagesAdmin#LIST_GROUP_ITEM");
 	}
 
+	macro viewPageLayoutColumn {
+		AssertElementPresent(
+			key_card = "${columnName}",
+			locator1 = "Card#CARD");
+	}
+
 	macro viewPagesOrder {
 		var index = "1";
 

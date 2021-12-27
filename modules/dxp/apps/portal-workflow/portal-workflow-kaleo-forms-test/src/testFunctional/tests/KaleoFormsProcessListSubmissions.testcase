@@ -180,6 +180,10 @@ definition {
 
 		KaleoFormsAdmin.saveProcessRecord();
 
+		Alert.viewSuccessMessage();
+
+		Alert.closeMessage(messageType = "SUCCESS");
+
 		LexiconEntry.gotoAdd();
 
 		KaleoFormsNewSubmissions.addNewContacts(ddlCompany = "Process B");
@@ -275,6 +279,10 @@ definition {
 		KaleoFormsNewSubmissions.addNewContacts(ddlCompany = "Process A");
 
 		KaleoFormsAdmin.saveProcessRecord();
+
+		Alert.viewSuccessMessage();
+
+		Alert.closeMessage(messageType = "SUCCESS");
 
 		LexiconEntry.gotoAdd();
 

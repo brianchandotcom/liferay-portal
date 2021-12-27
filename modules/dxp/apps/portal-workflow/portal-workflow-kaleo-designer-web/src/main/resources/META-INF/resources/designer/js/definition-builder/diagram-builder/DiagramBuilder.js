@@ -50,6 +50,8 @@ export default function DiagramBuilder({version}) {
 		deserialize,
 		elements,
 		selectedLanguageId,
+		setActive,
+		setDefinitionId,
 		setDeserialize,
 		setElements,
 	} = useContext(DefinitionBuilderContext);
@@ -224,10 +226,16 @@ export default function DiagramBuilder({version}) {
 		if (version !== '0' && !deserialize) {
 			fetch(
 				`${baseURL}/workflow-definitions/by-name/${definitionTitle}`,
-				{headers, method: 'GET'}
+				{
+					headers,
+					method: 'GET',
+				}
 			)
 				.then((response) => response.json())
-				.then(({content}) => {
+				.then(({active, content, name}) => {
+					setActive(active);
+					setDefinitionId(name);
+
 					deserializeUtil.updateXMLDefinition(content);
 
 					const nodes = deserializeUtil.getNodes();

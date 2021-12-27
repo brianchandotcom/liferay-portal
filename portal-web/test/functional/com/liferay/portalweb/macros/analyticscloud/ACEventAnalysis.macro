@@ -43,7 +43,7 @@ definition {
 			locator1 = "Select#SELECT",
 			value1 = "${optionValue}");
 
-		if (IsElementNotPresent(locator1 = "Icon#ANY",key_text = "calendar")) {
+		if ((IsElementNotPresent(locator1 = "Icon#ANY",key_text = "calendar")) && "${optionValue}" != "True" && "${optionValue}" != "False") {
 			Type(
 				locator1 = "ACEventAnalysis#INPUT_CONDITION",
 				value1 = "${inputValue}");

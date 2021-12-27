@@ -57,7 +57,7 @@
 </tr>
 <tr>
 	<td>VIEW_DASHBOARD_INFORMATION</td>
-	<td>//div[@class='attribute-value'and text()='${key_attributeName}']</td>
+	<td>//div[contains(@class,'attribute')and contains(text(),'${key_attributeName}')]</td>
 	<td></td>
 </tr>
 <tr>

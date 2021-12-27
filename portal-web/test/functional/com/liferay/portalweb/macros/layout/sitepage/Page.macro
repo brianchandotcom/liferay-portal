@@ -382,19 +382,6 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
-	macro togglePageTemplateInheritChanges {
-		if ("${toggleValue}" == "enable") {
-			Check.checkToggleSwitch(
-				key_toggleSwitchLabel = "Inherit Changes",
-				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
-		}
-		else if ("${toggleValue}" == "disable") {
-			Uncheck.uncheckToggleSwitch(
-				key_toggleSwitchLabel = "Inherit Changes",
-				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
-		}
-	}
-
 	macro uploadFileForLogo {
 		AssertClick(
 			key_text = "Change",

@@ -104,7 +104,7 @@ definition {
 		SelectFrame.selectFrameTop();
 
 		if (isSet(inheritChanges)) {
-			Page.togglePageTemplateInheritChanges(toggleValue = "${inheritChanges}");
+			PagesAdmin.togglePageTemplateInheritChanges(toggleValue = "${inheritChanges}");
 		}
 
 		if ("${sitePageType}" != "Content Page") {

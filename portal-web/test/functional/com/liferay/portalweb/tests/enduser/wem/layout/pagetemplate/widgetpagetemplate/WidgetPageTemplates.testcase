@@ -93,7 +93,7 @@ definition {
 				menuItem = "Configure",
 				pageName = "Site Page");
 
-			Page.togglePageTemplateInheritChanges(toggleValue = "disable");
+			PagesAdmin.togglePageTemplateInheritChanges(toggleValue = "disable");
 
 			Button.clickSave();
 		}

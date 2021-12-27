@@ -37,7 +37,7 @@ definition {
 		}
 
 		if (isSet(inheritChanges)) {
-			Page.togglePageTemplateInheritChanges(toggleValue = "${inheritChanges}");
+			PagesAdmin.togglePageTemplateInheritChanges(toggleValue = "${inheritChanges}");
 		}
 
 		VerifyElementPresent(locator1 = "Message#SUCCESS");

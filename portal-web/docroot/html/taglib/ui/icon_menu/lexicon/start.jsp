@@ -23,8 +23,6 @@ String direction = (String)request.getAttribute("liferay-ui:icon-menu:direction"
 String icon = GetterUtil.getString((String)request.getAttribute("liferay-ui:icon-menu:icon"));
 String id = GetterUtil.getString((String)request.getAttribute("liferay-ui:icon-menu:id"));
 String message = (String)request.getAttribute("liferay-ui:icon-menu:message");
-
-boolean hasMessage = (message != null) && !message.isEmpty();
 boolean scroll = GetterUtil.getBoolean(request.getAttribute("liferay-ui:icon-menu:scroll"));
 String triggerCssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:icon-menu:triggerCssClass"));
 String triggerLabel = GetterUtil.getString((String)request.getAttribute("liferay-ui:icon-menu:triggerLabel"));
@@ -38,7 +36,7 @@ if (Validator.isNull(icon)) {
 <div class="dropdown lfr-icon-menu <%= cssClass %>" <%= AUIUtil.buildData(data) %>>
 	<c:choose>
 		<c:when test='<%= triggerType.equals("button") %>'>
-			<button aria-expanded="false" aria-haspopup="<%= hasMessage %>" class="btn btn-monospaced btn-secondary direction-<%= direction %> dropdown-toggle <%= triggerCssClass %>" id="<%= id %>" <%= hasMessage ? "title=\"" + message + "\"" : StringPool.BLANK %> type="button">
+			<button aria-expanded="false" aria-haspopup="true" class="btn btn-monospaced btn-secondary direction-<%= direction %> dropdown-toggle <%= triggerCssClass %>" id="<%= id %>" <%= (message != null) && !message.isEmpty() ? "title=\"" + message + "\"" : StringPool.BLANK %> type="button">
 				<aui:icon cssClass="inline-item" image="<%= icon %>" markupView="lexicon" />
 
 				<c:if test="<%= Validator.isNotNull(triggerLabel) %>">

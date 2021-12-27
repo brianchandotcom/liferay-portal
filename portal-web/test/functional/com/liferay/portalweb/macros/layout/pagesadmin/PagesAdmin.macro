@@ -236,7 +236,7 @@ definition {
 
 			var i = ${i} + 1;
 			var i = StringUtil.valueOf("${i}");
-		}	
+		}
 	}
 
 	macro addLocalizedFriendlyURL {
@@ -256,7 +256,8 @@ definition {
 				locale = "${friendlyUrlLocalized}");
 
 			Type(
-				locator1 = "TextInput#FRIENDLY_URL",
+				inputFieldId = "friendlyURL",
+				locator1 = "TextInput#INPUT_ID",
 				value1 = "${localizedFriendlyURL}");
 
 			if ("${localizedName}" != "-") {

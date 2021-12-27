@@ -570,7 +570,8 @@ definition {
 			pageName = "1");
 
 		AssertTextEquals(
-			locator1 = "TextInput#FRIENDLY_URL",
+			inputFieldId = "friendlyURL",
+			locator1 = "TextInput#INPUT_ID",
 			value1 = "/1");
 
 		JSONLayout.addPublicLayout(
@@ -586,7 +587,8 @@ definition {
 			pageName = "2");
 
 		AssertTextEquals(
-			locator1 = "TextInput#FRIENDLY_URL",
+			inputFieldId = "friendlyURL",
+			locator1 = "TextInput#INPUT_ID",
 			value1 = "/2");
 
 		JSONLayout.addPublicLayout(
@@ -602,7 +604,8 @@ definition {
 			pageName = "Hello");
 
 		AssertTextEquals(
-			locator1 = "TextInput#FRIENDLY_URL",
+			inputFieldId = "friendlyURL",
+			locator1 = "TextInput#INPUT_ID",
 			value1 = "/hello");
 
 		LAR.exportSiteCP(

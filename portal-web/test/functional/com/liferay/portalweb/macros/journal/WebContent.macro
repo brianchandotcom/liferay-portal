@@ -469,7 +469,8 @@ definition {
 		Panel.expandPanel(panel = "Friendly URL");
 
 		Type.typePause(
-			locator1 = "TextInput#FRIENDLY_URL",
+			inputFieldId = "friendlyURL",
+			locator1 = "TextInput#INPUT_ID",
 			value1 = "${friendlyUrl}");
 
 		PortletEntry.publish();
@@ -1330,7 +1331,8 @@ definition {
 		Panel.expandPanel(panel = "Friendly URL");
 
 		Type.typePause(
-			locator1 = "TextInput#FRIENDLY_URL",
+			inputFieldId = "friendlyURL",
+			locator1 = "TextInput#INPUT_ID",
 			value1 = "${webContentFriendlyURL}");
 	}
 
@@ -2306,7 +2308,8 @@ definition {
 		Panel.expandPanel(panel = "Friendly URL");
 
 		AssertTextEquals(
-			locator1 = "TextInput#FRIENDLY_URL",
+			inputFieldId = "friendlyURL",
+			locator1 = "TextInput#INPUT_ID",
 			value1 = "${friendlyUrl}");
 	}
 

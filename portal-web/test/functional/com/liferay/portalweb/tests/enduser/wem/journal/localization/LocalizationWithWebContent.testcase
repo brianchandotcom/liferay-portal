@@ -347,7 +347,8 @@ definition {
 				locator1 = "Translation#LOCALIZATION_NAME");
 
 			Type(
-				locator1 = "TextInput#FRIENDLY_URL",
+				inputFieldId = "friendlyURL",
+				locator1 = "TextInput#INPUT_ID",
 				value1 = "webcontentspanish");
 		}
 

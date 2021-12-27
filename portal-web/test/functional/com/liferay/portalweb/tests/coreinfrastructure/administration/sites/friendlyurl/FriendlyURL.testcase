@@ -51,7 +51,8 @@ definition {
 			value1 = "Test Page");
 
 		Type(
-			locator1 = "TextInput#FRIENDLY_URL",
+			inputFieldId = "friendlyURL",
+			locator1 = "TextInput#INPUT_ID",
 			value1 = "/teszt-page");
 
 		Button.clickSave();

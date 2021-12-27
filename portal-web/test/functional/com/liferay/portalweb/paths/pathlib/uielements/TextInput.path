@@ -286,11 +286,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FRIENDLY_URL</td>
-	<td>//input[contains(@id,'friendlyURL')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>FRIENDLY_URL_SITE_SETTINGS</td>
 	<td>//input[contains(@id,'FriendlyURL')]</td>
 	<td></td>

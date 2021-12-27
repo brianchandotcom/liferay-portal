@@ -141,7 +141,8 @@ definition {
 
 	macro editFriendlyURL {
 		Type(
-			locator1 = "TextInput#FRIENDLY_URL",
+			inputFieldId = "friendlyURL",
+			locator1 = "TextInput#INPUT_ID",
 			value1 = "${friendlyURLEdit}");
 
 		Button.clickSave();
@@ -343,7 +344,8 @@ definition {
 		Click(locator1 = "Modal#CLOSE_BUTTON");
 
 		AssertVisible(
-			locator1 = "TextInput#FRIENDLY_URL",
+			inputFieldId = "friendlyURL",
+			locator1 = "TextInput#INPUT_ID",
 			value1 = "${friendlyURLEdit}");
 
 		Button.clickSave();
@@ -685,7 +687,8 @@ definition {
 		}
 
 		AssertTextEquals(
-			locator1 = "TextInput#FRIENDLY_URL",
+			inputFieldId = "friendlyURL",
+			locator1 = "TextInput#INPUT_ID",
 			value1 = "/${pageName}");
 	}
 

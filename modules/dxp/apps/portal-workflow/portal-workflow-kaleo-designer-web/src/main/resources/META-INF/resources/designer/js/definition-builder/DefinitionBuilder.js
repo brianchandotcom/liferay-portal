@@ -20,7 +20,9 @@ import UpperToolbar from './shared/components/toolbar/UpperToolbar';
 import SourceBuilder from './source-builder/SourceBuilder';
 
 export default function (props) {
+	const [active, setActive] = useState(true);
 	const [currentEditor, setCurrentEditor] = useState(null);
+	const [definitionId, setDefinitionId] = useState(null);
 	const [deserialize, setDeserialize] = useState(false);
 	const [elements, setElements] = useState(defaultNodes);
 	const [selectedLanguageId, setSelectedLanguageId] = useState('');
@@ -31,12 +33,16 @@ export default function (props) {
 	const [definitionTitle, setDefinitionTitle] = useState(props.title);
 
 	const contextProps = {
+		active,
 		currentEditor,
+		definitionId,
 		definitionTitle,
 		deserialize,
 		elements,
 		selectedLanguageId,
+		setActive,
 		setCurrentEditor,
+		setDefinitionId,
 		setDefinitionTitle,
 		setDeserialize,
 		setElements,
@@ -50,9 +56,9 @@ export default function (props) {
 	return (
 		<DefinitionBuilderContextProvider {...contextProps}>
 			<div className="definition-builder-app">
-				<UpperToolbar {...props} />
-
 				<ReactFlowProvider>
+					<UpperToolbar {...props} />
+
 					{sourceView ? (
 						<SourceBuilder version={props.version} />
 					) : (

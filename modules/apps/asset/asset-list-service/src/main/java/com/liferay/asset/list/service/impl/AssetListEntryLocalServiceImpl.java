@@ -262,11 +262,13 @@ public class AssetListEntryLocalServiceImpl
 
 		assetListEntry.setModifiedDate(new Date());
 
-		String assetEntryType = _getManualAssetEntryType(assetListEntryId);
+		if (Validator.isNull(assetListEntry.getAssetEntryType())) {
+			String assetEntryType = _getManualAssetEntryType(assetListEntryId);
 
-		assetListEntry.setAssetEntrySubtype(
-			_getManualAssetEntrySubtype(assetEntryType, assetListEntryId));
-		assetListEntry.setAssetEntryType(assetEntryType);
+			assetListEntry.setAssetEntrySubtype(
+				_getManualAssetEntrySubtype(assetEntryType, assetListEntryId));
+			assetListEntry.setAssetEntryType(assetEntryType);
+		}
 
 		assetListEntryPersistence.update(assetListEntry);
 	}

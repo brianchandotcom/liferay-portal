@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
@@ -29,7 +28,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TreeNode;
-import com.liferay.portal.theme.ThemeDisplayFactory;
 import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
 import com.liferay.wiki.engine.creole.internal.antlrwiki.translator.internal.UnformattedHeadingTextVisitor;
 import com.liferay.wiki.engine.creole.internal.antlrwiki.translator.internal.UnformattedLinksTextVisitor;
@@ -199,7 +197,7 @@ public class XhtmlTranslator extends XhtmlTranslationVisitor {
 		append("<div class=\"toc-index\">");
 
 		appendTableOfContents(tableOfContents, 1);
- 
+
 		append("</div>");
 		append("</div>");
 		append("</div>");
@@ -354,23 +352,22 @@ public class XhtmlTranslator extends XhtmlTranslationVisitor {
 		return null;
 	}
 
+	private ResourceBundle _getResourceBundle(Locale locale) {
+		Class<?> clazz = getClass();
+
+		return ResourceBundleUtil.getBundle(
+			"content.Language", locale, clazz.getClassLoader());
+	}
+
 	private String _getTableOfContentsLabel() {
 		Locale locale = LocaleThreadLocal.getSiteDefaultLocale();
 
 		if (locale == null) {
 			locale = LocaleUtil.getDefault();
 		}
-		ResourceBundle resourceBundle = _getResourceBundle(
-			locale);
 
-		return LanguageUtil.get(resourceBundle, "table-of-contents");
-	}
-
-	private ResourceBundle _getResourceBundle(Locale locale) {
-		Class<?> clazz = getClass();
-
-		return ResourceBundleUtil.getBundle(
-			"content.Language", locale, clazz.getClassLoader());
+		return LanguageUtil.get(
+			_getResourceBundle(locale), "table-of-contents");
 	}
 
 	private static final String _HEADING_ANCHOR_PREFIX = "section-";

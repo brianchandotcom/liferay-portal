@@ -267,6 +267,13 @@ definition {
 			objectName = "CustomObject",
 			pluralLabelName = "Custom Objects");
 
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "Custom Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject");
+
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
 
 		PopulateObjectFormsConfiguration.openForm();

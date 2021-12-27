@@ -140,6 +140,14 @@ definition {
 		}
 	}
 
+	macro viewAnalysisInformationNotPresent {
+		for (var informationValue : list "${informationValueList}") {
+			var key_informationValue = "${informationValue}";
+
+			AssertElementNotPresent(locator1 = "ACEventAnalysis#VIEW_ANALYSIS_INFORMATION");
+		}
+	}
+
 	macro viewAnalysisInformationInOrder {
 		var key_commonInformation = "${commonInformation}";
 		var index = "${index}";

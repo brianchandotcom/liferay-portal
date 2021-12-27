@@ -57,11 +57,20 @@ definition {
 	}
 
 	@description = "LRQA-71892 - Verify that the user email is displayed on -From Adress- field, on Notification Templates tab"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test FromAdressFieldDisplaysUserEmail {
+		NotificationTemplates.gotoCalendarMenuOption(
+			calendarName = "Test Test",
+			menuListOption = "Calendar Settings");
 
-		// TODO LRQA-71970 FromAdressFieldDisplaysUserEmail pending implementation
+		NotificationTemplates.gotoNotificationTemplatesTab();
+
+		NotificationTemplates.viewUserEmailDisplayedFromAdressField(userEmail = "test@liferay.com");
+		
+		NotificationTemplates.gotoReminderEmailTab();
+
+		NotificationTemplates.viewUserEmailDisplayedFromAdressField(userEmail = "test@liferay.com");
+
 
 	}
 

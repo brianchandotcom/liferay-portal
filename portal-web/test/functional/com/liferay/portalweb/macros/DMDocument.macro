@@ -1771,6 +1771,10 @@ definition {
 
 		if ("${dmFolderName}" == "Home") {
 			if (IsElementPresent(key_breadcrumbName = "Home", locator1 = "BreadcrumbPortlet#BREADCRUMB_FOLDER")) {
+				AssertVisible(
+					key_text = "Select This Folder",
+					locator1 = "Button#ANY_DISABLED");
+
 				AssertClick(
 					key_breadcrumbName = "Home",
 					locator1 = "BreadcrumbPortlet#BREADCRUMB_FOLDER",

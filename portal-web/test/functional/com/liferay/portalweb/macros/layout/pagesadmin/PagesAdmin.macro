@@ -153,6 +153,12 @@ definition {
 		LexiconCard.clickCard(card = "${sitePageType}");
 	}
 
+	macro addCategory {
+		AssetCategorization.addCategory(
+			categoryName = "${categoryName}",
+			vocabularyName = "${vocabularyName}");
+	}
+
 	macro addChildPage {
 		MouseOver(
 			key_itemName = "${parentPageName}",

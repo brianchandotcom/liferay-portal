@@ -354,7 +354,7 @@ definition {
 				menuItem = "Configure",
 				pageName = "Test Content Page Name");
 
-			Page.addCategory(
+			PagesAdmin.addCategory(
 				categoryName = "Category Name",
 				vocabularyName = "Vocabulary Name");
 

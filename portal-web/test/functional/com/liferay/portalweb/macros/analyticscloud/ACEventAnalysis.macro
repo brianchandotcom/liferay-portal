@@ -134,6 +134,15 @@ definition {
 		}
 	}
 
+	macro viewAnalysisInformationInOrder {
+		var key_commonInformation = "${commonInformation}";
+		var index = "${index}";
+
+		AssertTextEquals(
+			locator1 = "ACEventAnalysis#VIEW_ANALYSIS_INFORMATION_SPECIFC_ORDER",
+			value1 = "${informationValue}");
+	}
+
 	macro viewChangedAttributeDataType {
 		var key_buttonName = "${attributeName}";
 

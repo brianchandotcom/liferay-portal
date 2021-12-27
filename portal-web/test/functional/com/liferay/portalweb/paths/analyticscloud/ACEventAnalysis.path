@@ -18,7 +18,7 @@
 </tr>
 <tr>
 	<td>ADD_ATTRIBUTE_BUTTON</td>
-	<td>//div[contains(@class,'attribute-${key_sectionType}-section-root')]//button</td>
+	<td>//div[contains(@class,'attribute-${key_sectionType}-section-root')]//button[contains(@class,'add-attribute')]</td>
 	<td></td>
 </tr>
 <!-- SEARCH_EVENT_ANALYSE -->

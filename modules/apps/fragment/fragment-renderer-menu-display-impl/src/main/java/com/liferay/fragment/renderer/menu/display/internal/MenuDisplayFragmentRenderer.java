@@ -15,7 +15,7 @@
 package com.liferay.fragment.renderer.menu.display.internal;
 
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
-import com.liferay.dynamic.data.mapping.service.DDMTemplateService;
+import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
@@ -249,7 +249,7 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 			ddmTemplateKey = "LIST-MENU-FTL";
 		}
 
-		return _ddmTemplateService.fetchTemplate(
+		return _ddmTemplateLocalService.fetchTemplate(
 			companyGroup.getGroupId(), _portal.getClassNameId(NavItem.class),
 			ddmTemplateKey);
 	}
@@ -300,7 +300,7 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 	}
 
 	@Reference
-	private DDMTemplateService _ddmTemplateService;
+	private DDMTemplateLocalService _ddmTemplateLocalService;
 
 	@Reference
 	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;

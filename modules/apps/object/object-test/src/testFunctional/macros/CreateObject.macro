@@ -140,6 +140,12 @@ definition {
 			locator1 = "CreateObject#PANEL_CATEGORY_KEY_SELECTED");
 	}
 
+	macro assertRelatedObject {
+		AssertElementPresent(
+			key_RelatedObject = "${relatedObject}",
+			locator1 = "CreateObject#VIEW_RELATED_OBJECT_ON_RELATIONSHIP_FIELD");
+	}
+
 	macro assertSearchableSectionOptionsAppears {
 		AssertElementPresent(
 			key_radioOption = "${radioOption}",

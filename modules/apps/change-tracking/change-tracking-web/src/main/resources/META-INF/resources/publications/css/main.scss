@@ -41,6 +41,12 @@
 
 		.list-group-item {
 			word-wrap: break-word;
+
+			.btn-group.dropdown .dropdown-toggle {
+				border-bottom-left-radius: 0;
+				border-top-left-radius: 0;
+				margin-left: -1px;
+			}
 		}
 
 		.list-group-title {

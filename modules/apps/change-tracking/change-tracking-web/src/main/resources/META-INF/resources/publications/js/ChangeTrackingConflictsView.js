@@ -356,65 +356,126 @@ const ConflictsTable = ({conflicts, spritemap}) => {
 	};
 
 	const getDropdownMenu = (conflict) => {
-		if (!conflict.actions) {
+		if (!conflict.actions || conflict.actions.length === 0) {
 			return '';
 		}
 
-		const items = [];
+		const firstAction = conflict.actions[0];
 
-		for (let i = 0; i < conflict.actions.length; i++) {
-			const action = conflict.actions[i];
-
-			items.push({
-				href: action.href,
-				label: action.label,
-				symbolLeft: action.symbol,
-			});
-		}
-
-		return (
-			<ClayList.ItemField>
-				<ClayDropDownWithItems
-					alignmentPosition={Align.BottomLeft}
-					items={items}
-					spritemap={spritemap}
-					trigger={
-						<ClayButtonWithIcon
-							displayType="unstyled"
+		if (conflict.actions.length === 1) {
+			return (
+				<ClayList.ItemField>
+					{firstAction.confirmationMessage ? (
+						<ClayButton
+							displayType="secondary"
+							onClick={() =>
+								confirm(firstAction.confirmationMessage) &&
+								submitForm(document.hrefFm, firstAction.href)
+							}
 							small
-							spritemap={spritemap}
-							symbol="ellipsis-v"
-						/>
-					}
-				/>
-			</ClayList.ItemField>
-		);
-	};
+						>
+							<span className="inline-item inline-item-before">
+								<ClayIcon
+									spritemap={spritemap}
+									symbol={firstAction.symbol}
+								/>
+							</span>
 
-	const getQuickActionMenu = (conflict) => {
-		if (!conflict.actions) {
-			return '';
-		}
+							{firstAction.label}
+						</ClayButton>
+					) : (
+						<a
+							className="btn btn-secondary btn-sm"
+							href={firstAction.href}
+						>
+							<span className="inline-item inline-item-before">
+								<ClayIcon
+									spritemap={spritemap}
+									symbol={firstAction.symbol}
+								/>
+							</span>
 
-		const items = [];
-
-		for (let i = 0; i < conflict.actions.length; i++) {
-			const action = conflict.actions[i];
-
-			items.push(
-				<ClayList.QuickActionMenu.Item
-					data-tooltip-align="top"
-					href={action.href}
-					spritemap={spritemap}
-					symbol={action.symbol}
-					title={action.label}
-				/>
+							{firstAction.label}
+						</a>
+					)}
+				</ClayList.ItemField>
 			);
 		}
 
+		const items = [];
+
+		for (let i = 0; i < conflict.actions.length; i++) {
+			const action = conflict.actions[i];
+
+			if (action.confirmationMessage) {
+				items.push({
+					label: action.label,
+					onClick: () =>
+						confirm(action.confirmationMessage) &&
+						submitForm(document.hrefFm, action.href),
+					symbolLeft: action.symbol,
+				});
+			}
+			else {
+				items.push({
+					href: action.href,
+					label: action.label,
+					symbolLeft: action.symbol,
+				});
+			}
+		}
+
 		return (
 			<ClayList.ItemField>
-				<ClayList.QuickActionMenu>{items}</ClayList.QuickActionMenu>
+				<ClayButton.Group className="dropdown">
+					{firstAction.confirmationMessage ? (
+						<ClayButton
+							displayType="secondary"
+							onClick={() =>
+								confirm(firstAction.confirmationMessage) &&
+								submitForm(document.hrefFm, firstAction.href)
+							}
+							small
+						>
+							<span className="inline-item inline-item-before">
+								<ClayIcon
+									spritemap={spritemap}
+									symbol={firstAction.symbol}
+								/>
+							</span>
+
+							{firstAction.label}
+						</ClayButton>
+					) : (
+						<a
+							className="btn btn-secondary btn-sm"
+							href={firstAction.href}
+						>
+							<span className="inline-item inline-item-before">
+								<ClayIcon
+									spritemap={spritemap}
+									symbol={firstAction.symbol}
+								/>
+							</span>
+
+							{firstAction.label}
+						</a>
+					)}
+
+					<ClayDropDownWithItems
+						alignmentPosition={Align.BottomLeft}
+						items={items}
+						spritemap={spritemap}
+						trigger={
+							<ClayButtonWithIcon
+								displayType="secondary"
+								small
+								spritemap={spritemap}
+								symbol="caret-bottom"
+							/>
+						}
+					/>
+				</ClayButton.Group>
 			</ClayList.ItemField>
 		);
 	};
@@ -464,8 +525,6 @@ const ConflictsTable = ({conflicts, spritemap}) => {
 					</ClayList.ItemField>
 
 					{getDismissAction(conflict)}
-
-					{getQuickActionMenu(conflict)}
 
 					{getDropdownMenu(conflict)}
 				</ClayList.Item>

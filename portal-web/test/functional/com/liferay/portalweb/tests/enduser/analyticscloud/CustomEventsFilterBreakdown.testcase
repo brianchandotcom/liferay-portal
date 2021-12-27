@@ -80,6 +80,8 @@ definition {
 	test AddAttributeAndAttributeFilterInEventsAnalysis {
 		var attributeName = "pageTitle";
 
+		var filterName = "url";
+
 		task ("Fill fields and create custom event") {
 			var customEventName = ACCustomEvents.generateCustomEventName();
 
@@ -114,7 +116,7 @@ definition {
 
 		task ("Add the filter to analysis") {
 			ACEventAnalysis.addFilter(
-				filterName = "url",
+				filterName = "${filterName}",
 				inputValue = "site",
 				optionValue = "contains");
 		}
@@ -123,7 +125,7 @@ definition {
 			ACEventAnalysis.viewAnalysisDashboard(
 				attributeName = "${attributeName}",
 				eventName = "${customEventName}",
-				filterName = "contains &quot;site&quot;");
+				filterName = "${filterName}");
 		}
 	}
 

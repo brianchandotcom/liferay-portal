@@ -2289,9 +2289,35 @@ definition {
 		}
 	}
 
+	@description = "Validate if the user can filter by tag"
+	@priority = "5"
+	test FilterByTag {
+		property portal.acceptance = "true";
+
+		task ("Add web content with tag to the first site") {
+			JSONWebcontent.addWebContent(
+				assetTagNames = "test_tag",
+				content = "Web Content With Tag",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+		}
+
+		task ("Filter by tag at Content Dashboard") {
+			ContentDashboard.goToContentDashboard();
+
+			ContentDashboard.filterByTag(
+				filterOption = "Tags",
+				tagName = "test_tag");
+
+			AssertTextPresent(
+				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
+				value1 = "Web Content Title");
+		}
+	}
+
 	@description = "LPS-124960 When there's a WebContent1 of type Subtype1 and WebContent2 of type Subtype2, and the user filters by Subtype1 and Subtype2, both web content are shown in the list"
 	@priority = "3"
-	test FilterByMultipleTypes {
+	test FilterByTypes {
 		task ("Create a basic web content via JSONWS") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",
@@ -2337,32 +2363,6 @@ definition {
 			for (var assetName : list "Web Content Title 1,Web Content Title 2") {
 				LexiconTable.viewTableEntryTitle(tableEntry = "${assetName}");
 			}
-		}
-	}
-
-	@description = "Validate if the user can filter by tag"
-	@priority = "5"
-	test FilterByTag {
-		property portal.acceptance = "true";
-
-		task ("Add web content with tag to the first site") {
-			JSONWebcontent.addWebContent(
-				assetTagNames = "test_tag",
-				content = "Web Content With Tag",
-				groupName = "Test Site Name",
-				title = "Web Content Title");
-		}
-
-		task ("Filter by tag at Content Dashboard") {
-			ContentDashboard.goToContentDashboard();
-
-			ContentDashboard.filterByTag(
-				filterOption = "Tags",
-				tagName = "test_tag");
-
-			AssertTextPresent(
-				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
-				value1 = "Web Content Title");
 		}
 	}
 

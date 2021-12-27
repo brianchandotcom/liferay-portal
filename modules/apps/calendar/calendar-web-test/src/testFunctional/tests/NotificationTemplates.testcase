@@ -75,12 +75,10 @@ definition {
 		NotificationTemplates.gotoNotificationTemplatesTab();
 
 		NotificationTemplates.viewUserNameDisplayedFromNameField(userName = "Test Test");
-		
+
 		NotificationTemplates.gotoReminderEmailTab();
 
 		NotificationTemplates.viewUserNameDisplayedFromNameField(userName = "Test Test");
-
-
 	}
 
 }

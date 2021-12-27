@@ -10,26 +10,24 @@ definition {
 		Calendar._gotoMenulistOption(menuListOption = "${menuListOption}");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
 	}
 
 	macro gotoNotificationTemplatesTab {
 		AssertClick(
 			locator1 = "CalendarEditCalendar#NAVIGATION_NOTIFICATION_TEMPLATES_TAB",
 			value1 = "Notification Templates");
-
-	}
-	
-	macro viewUserNameDisplayedFromNameField {
-		AssertTextEquals(
-			locator1 = "CalendarEditCalendar#NOTIFICATION_TEMPLATES_FROM_NAME_FIELD",
-			value1 = "${userName}");
 	}
 
 	macro gotoReminderEmailTab {
 		AssertClick(
 			locator1 = "CalendarEditCalendar#NOTIFICATION_TEMPLATES_REMINDER_EMAIL_TAB_INACTIVE",
 			value1 = "Reminder Email");
+	}
+
+	macro viewUserNameDisplayedFromNameField {
+		AssertTextEquals(
+			locator1 = "CalendarEditCalendar#NOTIFICATION_TEMPLATES_FROM_NAME_FIELD",
+			value1 = "${userName}");
 	}
 
 }

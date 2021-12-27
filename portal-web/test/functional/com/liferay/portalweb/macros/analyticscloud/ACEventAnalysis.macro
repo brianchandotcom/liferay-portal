@@ -106,6 +106,12 @@ definition {
 			value1 = "${searchItem}");
 	}
 
+	macro sortAnalysis {
+		var key_attributeName = "${attributeName}";
+
+		Click(locator1 = "ACEventAnalysis#SORT_ANALYSIS");
+	}
+
 	macro viewAnalysisDashboard {
 		if (isSet(eventName)) {
 			AssertElementPresent(

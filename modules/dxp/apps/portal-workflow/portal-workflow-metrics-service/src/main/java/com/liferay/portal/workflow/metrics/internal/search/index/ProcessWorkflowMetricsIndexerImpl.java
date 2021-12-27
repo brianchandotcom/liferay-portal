@@ -25,6 +25,7 @@ import com.liferay.portal.search.engine.adapter.document.UpdateDocumentRequest;
 import com.liferay.portal.search.script.ScriptBuilder;
 import com.liferay.portal.search.script.ScriptType;
 import com.liferay.portal.workflow.metrics.internal.search.index.util.WorkflowMetricsIndexerUtil;
+import com.liferay.portal.workflow.metrics.model.AddProcessRequest;
 import com.liferay.portal.workflow.metrics.search.index.ProcessWorkflowMetricsIndexer;
 
 import java.util.Date;
@@ -94,6 +95,49 @@ public class ProcessWorkflowMetricsIndexerImpl
 		}
 
 		searchEngineAdapter.execute(bulkDocumentRequest);
+	}
+
+	@Override
+	public Document addProcess(AddProcessRequest addProcessRequest) {
+		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
+
+		documentBuilder.setValue(
+			"active", addProcessRequest.isActive()
+		).setLong(
+			"companyId", addProcessRequest.getCompanyId()
+		).setDate(
+			"createDate", getDate(addProcessRequest.getCreateDate())
+		).setValue(
+			"deleted", false
+		).setString(
+			"description", addProcessRequest.getDescription()
+		).setDate(
+			"modifiedDate", getDate(addProcessRequest.getModifiedDate())
+		).setString(
+			"name", addProcessRequest.getName()
+		).setLong(
+			"processId", addProcessRequest.getProcessId()
+		).setString(
+			"title", addProcessRequest.getTitle()
+		).setString(
+			"uid",
+			digest(
+				addProcessRequest.getCompanyId(),
+				addProcessRequest.getProcessId())
+		).setString(
+			"version", addProcessRequest.getVersion()
+		).setStrings(
+			"versions", addProcessRequest.getVersions()
+		);
+
+		setLocalizedField(
+			documentBuilder, "title", addProcessRequest.getTitleMap());
+
+		Document document = documentBuilder.build();
+
+		workflowMetricsPortalExecutor.execute(() -> addDocument(document));
+
+		return document;
 	}
 
 	@Override

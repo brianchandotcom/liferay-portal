@@ -15,6 +15,7 @@
 package com.liferay.portal.workflow.metrics.search.index;
 
 import com.liferay.portal.search.document.Document;
+import com.liferay.portal.workflow.metrics.model.AddProcessRequest;
 
 import java.util.Date;
 import java.util.Locale;
@@ -24,6 +25,8 @@ import java.util.Map;
  * @author Rafael Praxedes
  */
 public interface ProcessWorkflowMetricsIndexer {
+
+	public Document addProcess(AddProcessRequest addProcessRequest);
 
 	public Document addProcess(
 		boolean active, long companyId, Date createDate, String description,

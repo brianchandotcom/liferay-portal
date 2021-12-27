@@ -43,14 +43,41 @@ definition {
 			locator1 = "Select#SELECT",
 			value1 = "${optionValue}");
 
-		Type(
-			locator1 = "ACEventAnalysis#INPUT_CONDITION",
-			value1 = "${inputValue}");
-
-		if ("${optionValue}" == "between") {
+		if (IsElementNotPresent(locator1 = "Icon#ANY",key_text = "calendar")) {
 			Type(
-				locator1 = "ACEventAnalysis#INPUT_CONDITION_END_VALUE",
-				value1 = "${inputEndValue}");
+				locator1 = "ACEventAnalysis#INPUT_CONDITION",
+				value1 = "${inputValue}");
+
+			if ("${optionValue}" == "between") {
+				Type(
+					locator1 = "ACEventAnalysis#INPUT_CONDITION_END_VALUE",
+					value1 = "${inputEndValue}");
+			}
+		}
+
+		if (IsElementPresent(locator1 = "Icon#ANY",key_text = "calendar")) {
+			Click(
+				key_text = "calendar",
+				locator1 = "Icon#ANY");
+
+			Select(
+				key_indexCalendar = "1",
+				locator1 = "ACSegments#MONTH_AND_YEAR_CALENDAR",
+				value1 = "${month}");
+
+			Click(
+				key_day = "${inputValue}",
+				locator1 = "ACSegments#DAY_CALENDAR_OPTION");
+
+			if ("${optionValue}" == "is between") {
+				Click(
+					key_day = "${inputEndValue}",
+					locator1 = "ACSegments#DAY_CALENDAR_OPTION");
+			}
+
+			Click(
+				key_text = "calendar",
+				locator1 = "Icon#ANY");
 		}
 
 		Click(

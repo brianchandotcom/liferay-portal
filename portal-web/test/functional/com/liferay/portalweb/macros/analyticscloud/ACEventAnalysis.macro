@@ -1,13 +1,15 @@
 definition {
 
 	macro addBreakdown {
-		var key_buttonName = "${attributeName}";
+		for (var attributeName : list "${attributeNameList}") {
+			ACEventAnalysis.clickToAddBreakdownButton();
 
-		ACEventAnalysis.clickToAddBreakdownButton();
+			ACEventAnalysis.searchEventAnalysis(searchItem = "${attributeName}");
 
-		ACEventAnalysis.searchEventAnalysis(searchItem = "${attributeName}");
-
-		Click(locator1 = "ACUtils#GENERIC_BUTTON");
+			Click(
+				key_buttonName = "${attributeName}",
+				locator1 = "ACUtils#GENERIC_BUTTON");
+		}
 	}
 
 	macro addEvent {

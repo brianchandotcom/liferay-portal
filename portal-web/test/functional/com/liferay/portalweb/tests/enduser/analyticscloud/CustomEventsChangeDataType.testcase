@@ -312,7 +312,7 @@ definition {
 		}
 
 		task ("Add the breakdown to analysis") {
-			ACEventAnalysis.addBreakdown(attributeName = "${attributeName}");
+			ACEventAnalysis.addBreakdown(attributeNameList = "${attributeName}");
 		}
 
 		task ("Check that the attribute's value appears in the analysis") {
@@ -337,7 +337,7 @@ definition {
 		}
 
 		task ("Add the breakdown to analysis") {
-			ACEventAnalysis.addBreakdown(attributeName = "${attributeName}");
+			ACEventAnalysis.addBreakdown(attributeNameList = "${attributeName}");
 		}
 
 		task ("Check that the attribute value does not appear in the analysis when it has a different data type") {

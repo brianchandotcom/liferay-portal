@@ -513,6 +513,21 @@ definition {
 		PortletEntry.save();
 	}
 
+	macro deleteFriendlyURL {
+		Navigator.gotoNavTab(navTab = "General");
+
+		PortletEntry.changeLocale(
+			fieldName = "Name",
+			locale = "${localizedFriendlyURL}");
+
+		Type(
+			inputFieldId = "friendlyURL",
+			locator1 = "TextInput#INPUT_ID",
+			value1 = " ");
+
+		PortletEntry.save();
+	}
+
 	macro deleteLogo {
 		if (IsTextNotEqual(locator1 = "ControlMenu#HEADING", value1 = "Pages")) {
 			ProductMenu.gotoPortlet(

@@ -135,20 +135,6 @@ definition {
 		AssertElementNotPresent(locator1 = "PageEditor#APPLIED_FILTERS_FILTER_LIST_PLACEHOLDER");
 	}
 
-	macro deleteFriendlyURLPG {
-		Navigator.gotoNavTab(navTab = "General");
-
-		PortletEntry.changeLocale(
-			fieldName = "Name",
-			locale = "${friendlyUrlLocalized}");
-
-		Type(
-			locator1 = "TextInput#FRIENDLY_URL",
-			value1 = " ");
-
-		Button.clickSave();
-	}
-
 	macro disableMobileDeviceRulesAreInheritedFromPublicPages {
 		Uncheck.uncheckHiddenToggleSwitch(locator1 = "ToggleSwitch#INHERIT_MOBILE_DEVICE_RULES_FROM_PAGE");
 	}

@@ -256,7 +256,7 @@ definition {
 		}
 
 		task ("Delete default friendly url") {
-			Page.deleteFriendlyURLPG(friendlyUrlLocalized = "en-US");
+			PagesAdmin.deleteFriendlyURL(localizedFriendlyURL = "en-US");
 		}
 
 		task ("View no error thrown on console when navigating to page") {

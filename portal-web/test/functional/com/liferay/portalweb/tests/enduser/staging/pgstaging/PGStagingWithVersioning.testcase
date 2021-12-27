@@ -79,8 +79,8 @@ definition {
 			menuItem = "Configure",
 			pageName = "Staging Test Page");
 
-		Page.viewPageFriendlyURLPG(
-			friendlyUrlLocalized = "de-DE",
+		PagesAdmin.viewFriendlyURL(
+			localizedFriendlyURL = "de-DE",
 			pageName = "german");
 	}
 

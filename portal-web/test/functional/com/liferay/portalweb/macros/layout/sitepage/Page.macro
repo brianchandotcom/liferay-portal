@@ -139,19 +139,6 @@ definition {
 		Uncheck.uncheckHiddenToggleSwitch(locator1 = "ToggleSwitch#INHERIT_MOBILE_DEVICE_RULES_FROM_PAGE");
 	}
 
-	macro editFriendlyURL {
-		Type(
-			inputFieldId = "friendlyURL",
-			locator1 = "TextInput#INPUT_ID",
-			value1 = "${friendlyURLEdit}");
-
-		Button.clickSave();
-
-		Alert.viewSuccessMessage();
-
-		Alert.closeMessage(messageType = "SUCCESS");
-	}
-
 	macro editName {
 		Alert.closeMessage(messageType = "SUCCESS");
 
@@ -245,10 +232,6 @@ definition {
 			tableEntry = "${tableEntry}");
 	}
 
-	macro gotoFriendlyURLHistory {
-		Click(locator1 = "Icon#FRIENDLY_URL_HISTORY");
-	}
-
 	macro gotoPagePanelPortlet {
 		var key_portletName = "${portletName}";
 
@@ -306,53 +289,6 @@ definition {
 		Navigator.openSpecificURL(url = "${localizationPageURL}");
 
 		AssertLocation(value1 = "${localizationPageURL}");
-	}
-
-	macro removeOldFriendlyURL {
-		AssertVisible(
-			key_oldFriendlyURL = "${oldFriendlyURL}",
-			locator1 = "PagesAdmin#FRIENDLY_URL_HISTORY_ITEM");
-
-		MouseOver(
-			key_oldFriendlyURL = "${oldFriendlyURL}",
-			locator1 = "PagesAdmin#FRIENDLY_URL_HISTORY_ITEM");
-
-		Click(
-			key_oldFriendlyURL = "${oldFriendlyURL}",
-			locator1 = "Icon#FRIENDLY_URL_HISTORY_ITEM_DELETE");
-
-		AssertElementNotPresent(
-			key_oldFriendlyURL = "${oldFriendlyURL}",
-			locator1 = "PagesAdmin#FRIENDLY_URL_HISTORY_ITEM");
-	}
-
-	macro restoreOldFriendlyURL {
-		MouseOver(
-			key_oldFriendlyURL = "${oldFriendlyURL}",
-			locator1 = "PagesAdmin#FRIENDLY_URL_HISTORY_ITEM");
-
-		Click(locator1 = "Icon#FRIENDLY_URL_HISTORY_ITEM_RESTORE");
-
-		AssertVisible(
-			key_activeURL = "${restoredURL}",
-			locator1 = "PagesAdmin#FRIENDLY_URL_ACTIVE_URL");
-
-		AssertVisible(
-			key_oldFriendlyURL = "${activeURL}",
-			locator1 = "PagesAdmin#FRIENDLY_URL_HISTORY_ITEM");
-
-		Click(locator1 = "Modal#CLOSE_BUTTON");
-
-		AssertVisible(
-			inputFieldId = "friendlyURL",
-			locator1 = "TextInput#INPUT_ID",
-			value1 = "${friendlyURLEdit}");
-
-		Button.clickSave();
-
-		Alert.viewSuccessMessage();
-
-		Alert.closeMessage(messageType = "SUCCESS");
 	}
 
 	macro searchInCollectionFilter {
@@ -502,12 +438,6 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro viewActiveURL {
-		AssertVisible(
-			key_activeURL = "${activeURL}",
-			locator1 = "PagesAdmin#FRIENDLY_URL_ACTIVE_URL");
-	}
-
 	macro viewChildPageDropdown {
 		ClickNoError(locator1 = "Home#${viewChildPageDropdown}");
 
@@ -645,14 +575,6 @@ definition {
 			locator1 = "Icon#ANY_DISABLED");
 	}
 
-	macro viewNoOldFriendlyURL {
-		for (var oldFriendlyURL : list "${oldFriendlyURLs}") {
-			AssertElementNotPresent(
-				key_oldFriendlyURL = "${oldFriendlyURL}",
-				locator1 = "PagesAdmin#FRIENDLY_URL_HISTORY_ITEM");
-		}
-	}
-
 	macro viewNoPG {
 		var key_pageName = "${pageName}";
 
@@ -665,31 +587,6 @@ definition {
 		AssertElementNotPresent(
 			key_vocabularyName = "${vocabularyName}",
 			locator1 = "AssetCategorization#CATEGORY_SELECT");
-	}
-
-	macro viewOldFriendlyURL {
-		if (isSet(lastOldFriendlyURL)) {
-			AssertVisible(
-				key_oldFriendlyURL = "${lastOldFriendlyURL}",
-				locator1 = "PagesAdmin#FRIENDLY_URL_HISTORY_ITEM_LAST");
-		}
-
-		AssertVisible(
-			key_oldFriendlyURL = "${oldFriendlyURL}",
-			locator1 = "PagesAdmin#FRIENDLY_URL_HISTORY_ITEM");
-	}
-
-	macro viewPageFriendlyURLPG {
-		if (isSet(friendlyUrlLocalized)) {
-			PortletEntry.changeLocale(
-				fieldName = "Friendly URL",
-				locale = "${friendlyUrlLocalized}");
-		}
-
-		AssertTextEquals(
-			inputFieldId = "friendlyURL",
-			locator1 = "TextInput#INPUT_ID",
-			value1 = "/${pageName}");
 	}
 
 	macro viewPageLayoutColumn {

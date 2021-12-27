@@ -274,7 +274,7 @@ definition {
 				menuItem = "Configure",
 				pageName = "Test Page Name");
 
-			Page.viewPageFriendlyURLPG(pageName = "test-page-name");
+			PagesAdmin.viewFriendlyURL(pageName = "test-page-name");
 		}
 	}
 

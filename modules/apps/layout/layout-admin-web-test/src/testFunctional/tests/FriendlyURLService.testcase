@@ -58,7 +58,7 @@ definition {
 			menuItem = "Configure",
 			pageName = "Test Source Page");
 
-		Page.editFriendlyURL(friendlyURLEdit = "/new-test-page");
+		PagesAdmin.editFriendlyURL(friendlyURLEdit = "/new-test-page");
 
 		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-source-page");
 
@@ -109,11 +109,11 @@ definition {
 			menuItem = "Configure",
 			pageName = "Test Page");
 
-		Page.editFriendlyURL(friendlyURLEdit = "/new-test-page");
+		PagesAdmin.editFriendlyURL(friendlyURLEdit = "/new-test-page");
 
-		Page.gotoFriendlyURLHistory();
+		PagesAdmin.gotoFriendlyURLHistory();
 
-		Page.removeOldFriendlyURL(oldFriendlyURL = "/test-page");
+		PagesAdmin.removeOldFriendlyURL(oldFriendlyURL = "/test-page");
 
 		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page");
 
@@ -135,11 +135,11 @@ definition {
 			menuItem = "Configure",
 			pageName = "Test Page");
 
-		Page.editFriendlyURL(friendlyURLEdit = "/new-test-page");
+		PagesAdmin.editFriendlyURL(friendlyURLEdit = "/new-test-page");
 
-		Page.gotoFriendlyURLHistory();
+		PagesAdmin.gotoFriendlyURLHistory();
 
-		Page.restoreOldFriendlyURL(
+		PagesAdmin.restoreOldFriendlyURL(
 			activeURL = "/new-test-page",
 			friendlyURLEdit = "/test-page",
 			oldFriendlyURL = "/test-page",
@@ -165,7 +165,7 @@ definition {
 			menuItem = "Configure",
 			pageName = "Test Source Page");
 
-		Page.editFriendlyURL(friendlyURLEdit = "/new-test-page");
+		PagesAdmin.editFriendlyURL(friendlyURLEdit = "/new-test-page");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Test Source Page",
@@ -253,17 +253,17 @@ definition {
 			menuItem = "Configure",
 			pageName = "Test Page");
 
-		Page.editFriendlyURL(friendlyURLEdit = "/new-test-page");
+		PagesAdmin.editFriendlyURL(friendlyURLEdit = "/new-test-page");
 
-		Page.gotoFriendlyURLHistory();
+		PagesAdmin.gotoFriendlyURLHistory();
 
-		Page.viewActiveURL(activeURL = "/new-test-page");
+		PagesAdmin.viewActiveURL(activeURL = "/new-test-page");
 
 		AssertElementNotPresent(
 			key_activeURL = "/test-page",
 			locator1 = "PagesAdmin#FRIENDLY_URL_ACTIVE_URL");
 
-		Page.viewOldFriendlyURL(oldFriendlyURL = "/test-page");
+		PagesAdmin.viewOldFriendlyURL(oldFriendlyURL = "/test-page");
 
 		AssertElementNotPresent(
 			key_oldFriendlyURL = "/new-test-page",
@@ -279,17 +279,17 @@ definition {
 			menuItem = "Configure",
 			pageName = "Search");
 
-		Page.editFriendlyURL(friendlyURLEdit = "/new-search-page");
+		PagesAdmin.editFriendlyURL(friendlyURLEdit = "/new-search-page");
 
-		Page.gotoFriendlyURLHistory();
+		PagesAdmin.gotoFriendlyURLHistory();
 
-		Page.viewActiveURL(activeURL = "/new-search-page");
+		PagesAdmin.viewActiveURL(activeURL = "/new-search-page");
 
 		AssertElementNotPresent(
 			key_activeURL = "/search",
 			locator1 = "PagesAdmin#FRIENDLY_URL_ACTIVE_URL");
 
-		Page.viewOldFriendlyURL(oldFriendlyURL = "/search");
+		PagesAdmin.viewOldFriendlyURL(oldFriendlyURL = "/search");
 
 		AssertElementNotPresent(
 			key_oldFriendlyURL = "/new-search-page",
@@ -333,15 +333,15 @@ definition {
 			localizedFriendlyURLList = "/página-de-prueba",
 			localizedNameList = "-");
 
-		Page.gotoFriendlyURLHistory();
+		PagesAdmin.gotoFriendlyURLHistory();
 
 		PortletEntry.changeLocale(
 			friendlyURLHistory = "true",
 			localizedFriendlyURL = "es-ES");
 
-		Page.viewActiveURL(activeURL = "/página-de-prueba");
+		PagesAdmin.viewActiveURL(activeURL = "/página-de-prueba");
 
-		Page.viewOldFriendlyURL(oldFriendlyURL = "/^_^");
+		PagesAdmin.viewOldFriendlyURL(oldFriendlyURL = "/^_^");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "es/web/test-site-name/test-source-page");
 
@@ -363,26 +363,26 @@ definition {
 			menuItem = "Configure",
 			pageName = "Test Page");
 
-		Page.editFriendlyURL(friendlyURLEdit = "/new-test-page");
+		PagesAdmin.editFriendlyURL(friendlyURLEdit = "/new-test-page");
 
 		PagesAdmin.addLocalizedFriendlyURL(
 			friendlyUrlLocalizedList = "es-ES,es-ES",
 			localizedFriendlyURLList = "/pagina-de-prueba,/nueva-pagina-de-prueba",
 			localizedNameList = "Pagina de prueba,-");
 
-		Page.gotoFriendlyURLHistory();
+		PagesAdmin.gotoFriendlyURLHistory();
 
 		PortletEntry.changeLocale(
 			friendlyURLHistory = "true",
 			localizedFriendlyURL = "es-ES");
 
-		Page.viewActiveURL(activeURL = "/nueva-pagina-de-prueba");
+		PagesAdmin.viewActiveURL(activeURL = "/nueva-pagina-de-prueba");
 
 		AssertElementNotPresent(
 			key_activeURL = "/pagina-de-prueba",
 			locator1 = "PagesAdmin#FRIENDLY_URL_ACTIVE_URL");
 
-		Page.viewOldFriendlyURL(oldFriendlyURL = "/pagina-de-prueba");
+		PagesAdmin.viewOldFriendlyURL(oldFriendlyURL = "/pagina-de-prueba");
 
 		AssertElementNotPresent(
 			key_oldFriendlyURL = "/nueva-pagina-de-prueba",
@@ -402,15 +402,15 @@ definition {
 			menuItem = "Configure",
 			pageName = "Test Page");
 
-		Page.editFriendlyURL(friendlyURLEdit = "/new-test-page");
+		PagesAdmin.editFriendlyURL(friendlyURLEdit = "/new-test-page");
 
-		Page.editFriendlyURL(friendlyURLEdit = "/new-test-page1");
+		PagesAdmin.editFriendlyURL(friendlyURLEdit = "/new-test-page1");
 
-		Page.gotoFriendlyURLHistory();
+		PagesAdmin.gotoFriendlyURLHistory();
 
-		Page.viewActiveURL(activeURL = "/new-test-page1");
+		PagesAdmin.viewActiveURL(activeURL = "/new-test-page1");
 
-		Page.viewOldFriendlyURL(
+		PagesAdmin.viewOldFriendlyURL(
 			lastOldFriendlyURL = "/test-page",
 			oldFriendlyURL = "/new-test-page");
 	}
@@ -428,7 +428,7 @@ definition {
 			menuItem = "Configure",
 			pageName = "Test Page");
 
-		Page.editFriendlyURL(friendlyURLEdit = "/new-test-page");
+		PagesAdmin.editFriendlyURL(friendlyURLEdit = "/new-test-page");
 
 		PortletEntry.changeLocale(
 			fieldName = "Friendly URL",
@@ -442,11 +442,11 @@ definition {
 			fieldName = "Friendly URL",
 			locale = "es-ES");
 
-		Page.gotoFriendlyURLHistory();
+		PagesAdmin.gotoFriendlyURLHistory();
 
-		Page.viewActiveURL(activeURL = "/new-test-page");
+		PagesAdmin.viewActiveURL(activeURL = "/new-test-page");
 
-		Page.viewNoOldFriendlyURL(oldFriendlyURLs = "/test-page");
+		PagesAdmin.viewNoOldFriendlyURL(oldFriendlyUrlList = "/test-page");
 	}
 
 }

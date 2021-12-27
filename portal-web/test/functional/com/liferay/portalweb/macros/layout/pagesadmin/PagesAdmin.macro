@@ -592,6 +592,15 @@ definition {
 		}
 	}
 
+	macro editFriendlyURL {
+		Type(
+			inputFieldId = "friendlyURL",
+			locator1 = "TextInput#INPUT_ID",
+			value1 = "${friendlyURLEdit}");
+
+		PortletEntry.save();
+	}
+
 	macro expandPageTree {
 		if (!(isSet(depth))) {
 			var depth = "1";
@@ -632,6 +641,10 @@ definition {
 		Click.waitForMenuToggleJSClick(locator1 = "Dropdown#EMPTY_MESSAGE_DROPDOWN");
 
 		Click(locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+	}
+
+	macro gotoFriendlyURLHistory {
+		Click(locator1 = "Icon#FRIENDLY_URL_HISTORY");
 	}
 
 	@summary = "Go to the ellipsis menu item of a page. Parent pages hierarchy is required to navigate to child pages."
@@ -678,6 +691,49 @@ definition {
 		Navigator.openWithAppendToBaseURL(
 			baseURL = "${baseURL}",
 			urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_layout_admin_web_portlet_GroupPagesPortlet");
+	}
+
+	macro removeOldFriendlyURL {
+		AssertVisible(
+			key_oldFriendlyURL = "${oldFriendlyURL}",
+			locator1 = "PagesAdmin#FRIENDLY_URL_HISTORY_ITEM");
+
+		MouseOver(
+			key_oldFriendlyURL = "${oldFriendlyURL}",
+			locator1 = "PagesAdmin#FRIENDLY_URL_HISTORY_ITEM");
+
+		Click(
+			key_oldFriendlyURL = "${oldFriendlyURL}",
+			locator1 = "Icon#FRIENDLY_URL_HISTORY_ITEM_DELETE");
+
+		AssertElementNotPresent(
+			key_oldFriendlyURL = "${oldFriendlyURL}",
+			locator1 = "PagesAdmin#FRIENDLY_URL_HISTORY_ITEM");
+	}
+
+	macro restoreOldFriendlyURL {
+		MouseOver(
+			key_oldFriendlyURL = "${oldFriendlyURL}",
+			locator1 = "PagesAdmin#FRIENDLY_URL_HISTORY_ITEM");
+
+		Click(locator1 = "Icon#FRIENDLY_URL_HISTORY_ITEM_RESTORE");
+
+		AssertVisible(
+			key_activeURL = "${restoredURL}",
+			locator1 = "PagesAdmin#FRIENDLY_URL_ACTIVE_URL");
+
+		AssertVisible(
+			key_oldFriendlyURL = "${activeURL}",
+			locator1 = "PagesAdmin#FRIENDLY_URL_HISTORY_ITEM");
+
+		Click(locator1 = "Modal#CLOSE_BUTTON");
+
+		AssertVisible(
+			inputFieldId = "friendlyURL",
+			locator1 = "TextInput#INPUT_ID",
+			value1 = "${friendlyURLEdit}");
+
+		PortletEntry.save();
 	}
 
 	macro selectPageItem {
@@ -731,6 +787,50 @@ definition {
 				key_itemName = "${privacy}",
 				locator1 = "PagesAdmin#LIST_GROUP_ITEM");
 		}
+	}
+
+	macro viewActiveURL {
+		AssertVisible(
+			key_activeURL = "${activeURL}",
+			locator1 = "PagesAdmin#FRIENDLY_URL_ACTIVE_URL");
+	}
+	macro viewBaseFriendlyURL {
+		AssertTextEquals(
+			locator1 = "PagesAdmin#DETAILS_FRIENDLY_BASE_URL",
+			value1 = "${siteFriendlyURL}");
+	}
+
+	macro viewFriendlyURL {
+		if (isSet(localizedFriendlyURL)) {
+			PortletEntry.changeLocale(
+				fieldName = "Friendly URL",
+				locale = "${friendlyUrlLocalized}");
+		}
+
+		AssertTextEquals(
+			inputFieldId = "friendlyURL",
+			locator1 = "TextInput#INPUT_ID",
+			value1 = "/${pageName}");
+	}
+
+	macro viewNoOldFriendlyURL {
+		for (var oldFriendlyURL : list "${oldFriendlyUrlList}") {
+			AssertElementNotPresent(
+				key_oldFriendlyURL = "${oldFriendlyURL}",
+				locator1 = "PagesAdmin#FRIENDLY_URL_HISTORY_ITEM");
+		}
+	}
+
+	macro viewOldFriendlyURL {
+		if (isSet(lastOldFriendlyURL)) {
+			AssertVisible(
+				key_oldFriendlyURL = "${lastOldFriendlyURL}",
+				locator1 = "PagesAdmin#FRIENDLY_URL_HISTORY_ITEM_LAST");
+		}
+
+		AssertVisible(
+			key_oldFriendlyURL = "${oldFriendlyURL}",
+			locator1 = "PagesAdmin#FRIENDLY_URL_HISTORY_ITEM");
 	}
 
 	macro viewPageItemNotPresent {

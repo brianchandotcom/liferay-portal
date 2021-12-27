@@ -336,9 +336,7 @@ definition {
 				menuItem = "Configure",
 				pageName = "Site Page");
 
-			Page.viewFriendlyURL(
-				pageName = "Site Page",
-				siteFriendlyURL = "${portalURL}/web/site-name");
+			PagesAdmin.viewBaseFriendlyURL(siteFriendlyURL = "${portalURL}/web/site-name");
 		}
 	}
 

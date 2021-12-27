@@ -252,7 +252,7 @@ definition {
 			menuItem = "Configure",
 			pageName = "Test Page");
 
-		Page.editFriendlyURL(friendlyURLEdit = "/test-page-edited");
+		PagesAdmin.editFriendlyURL(friendlyURLEdit = "/test-page-edited");
 
 		AssertTextEquals(
 			key_text = "Friendly URL",

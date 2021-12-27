@@ -44,16 +44,6 @@ definition {
 		}
 	}
 
-	macro addPageTranslations {
-		PortletEntry.changeLocale(
-			fieldName = "Name",
-			locale = "${pageTranslation}");
-
-		PortletEntry.inputName(name = "${pageTranslationName}");
-
-		Button.clickSave();
-	}
-
 	macro assertAlternateURL {
 		var HTML = '''<link data-senna-track="temporary" href="''';
 

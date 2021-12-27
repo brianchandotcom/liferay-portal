@@ -234,6 +234,27 @@ definition {
 		}
 	}
 
+	macro addLocalizedName {
+		var list1 = ListUtil.newListFromString("${localeList}");
+		var list2 = ListUtil.newListFromString("${localizedNameList}");
+		var size = ListUtil.size("${list1}");
+		var i = "0";
+
+		while ("${i}" != "${size}") {
+			var locale = ListUtil.get("${list1}", "${i}");
+			var localizedName = ListUtil.get("${list2}", "${i}");
+
+			PortletEntry.inputLocalizedName(
+				language = "${locale}",
+				localizedName = "${localizedName}");
+
+			var i = ${i} + 1;
+			var i = StringUtil.valueOf("${i}");
+		}
+
+		PortletEntry.save();
+	}
+
 	macro addPrivateChildPage {
 		if (IsTextNotEqual(locator1 = "ControlMenu#HEADING", value1 = "Pages")) {
 			ProductMenu.gotoPortlet(

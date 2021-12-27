@@ -1054,10 +1054,9 @@ definition {
 			menuItem = "Configure",
 			pageName = "Page1");
 
-		Page.addPageTranslations(
-			page = "Page1",
-			pageTranslation = "es-ES",
-			pageTranslationName = "Página1");
+		PagesAdmin.addLocalizedName(
+			localeList = "es-ES",
+			localizedNameList = "Página1");
 
 		PagesAdmin.openPagesAdmin(siteURLKey = "site-name-staging");
 
@@ -1074,10 +1073,9 @@ definition {
 			pageName = "Page2",
 			parentPagesHierarchy = "Page1");
 
-		Page.addPageTranslations(
-			page = "Page2",
-			pageTranslation = "es-ES",
-			pageTranslationName = "Página2");
+		PagesAdmin.addLocalizedName(
+			localeList = "es-ES",
+			localizedNameList = "Página2");
 
 		Navigator.openStagingSiteURL(siteName = "Site Name");
 

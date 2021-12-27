@@ -170,10 +170,9 @@ definition {
 				menuItem = "Configure",
 				pageName = "Test Page Name");
 
-			Page.addPageTranslations(
-				page = "Test Page Name",
-				pageTranslation = "es-ES",
-				pageTranslationName = "Nombre de la página de prueba");
+			PagesAdmin.addLocalizedName(
+				localeList = "es-ES",
+				localizedNameList = "Nombre de la página de prueba");
 		}
 
 		task ("Add a navigation menu") {

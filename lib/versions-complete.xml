@@ -7007,18 +7007,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/portal/jrcs-diff.jar</file-name>
-				<version>0.3.0</version>
-				<project-name>JRCS diff utilities</project-name>
-				<project-url>http://www.suigeneris.org/kb/display/jrcs/JRCS+Home</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 1.1</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-1.1</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/portal/json-java.jar</file-name>
 				<version>20180813</version>
 				<project-name>JSON in Java</project-name>

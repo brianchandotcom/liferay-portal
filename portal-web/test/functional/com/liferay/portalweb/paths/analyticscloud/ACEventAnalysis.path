@@ -56,6 +56,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>VIEW_ANALYSIS_INFORMATION_SPECIFC_ORDER</td>
+	<td>xpath=(//span[@class='text-truncate' and contains(text(),'${key_commonInformation}')])[${index}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>VIEW_DASHBOARD_INFORMATION</td>
 	<td>//div[contains(@class,'attribute') and contains(text(),'${key_attributeName}')]</td>
 	<td></td>

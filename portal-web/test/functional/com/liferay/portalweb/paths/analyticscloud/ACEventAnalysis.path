@@ -70,6 +70,11 @@
 	<td>//div[contains(@class,'show')]//button[contains(@class,'button-root') and text()='${key_filterName}']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SORT_ANALYSIS</td>
+	<td>//div[text()='${key_attributeName}']//ancestor::button//*[contains(@class,'lexicon-icon-order-arrow')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

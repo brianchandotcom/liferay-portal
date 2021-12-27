@@ -46,7 +46,7 @@
 <!-- REMOVE_BUTTON -->
 <tr>
 	<td>REMOVE_BUTTON</td>
-	<td>//div[contains(@class,'chip-root')]//*[text()='${key_removeValue}']/ancestor::div/button[contains(@class,'remove-button')]</td>
+	<td>//div[contains(@class,'chip-root')]//*[contains(text(),'${key_removeValue}')]/ancestor::div/button[contains(@class,'remove-button')]</td>
 	<td></td>
 </tr>
 <!-- VIEW_ANALYSIS -->

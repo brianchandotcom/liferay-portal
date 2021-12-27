@@ -571,6 +571,10 @@ public class XLIFFInfoFormTranslationImporter
 			InfoItemReference infoItemReference, String xliffDocumentName)
 		throws XLIFFFileException {
 
+		if (infoItemReference == null) {
+			return;
+		}
+
 		Matcher matcher = _pattern.matcher(xliffDocumentName);
 
 		if (!matcher.matches()) {

@@ -15,6 +15,7 @@
 package com.liferay.translation.web.internal.portlet.action;
 
 import com.liferay.document.library.kernel.exception.FileSizeException;
+import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
@@ -277,6 +278,16 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
+	private InfoItemReference _getInfoItemReference(
+		String className, long classPK) {
+
+		if (classPK == 0) {
+			return null;
+		}
+
+		return new InfoItemReference(className, classPK);
+	}
+
 	private void _importXLIFFFile(
 			ActionRequest actionRequest, long groupId, String className,
 			long classPK, InputStream inputStream)
@@ -284,14 +295,16 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 
 		TranslationSnapshot translationSnapshot =
 			_translationSnapshotProvider.getTranslationSnapshot(
-				groupId, new InfoItemReference(className, classPK),
+				groupId, _getInfoItemReference(className, classPK),
 				inputStream);
+
+		InfoItemFieldValues infoItemFieldValues =
+			translationSnapshot.getInfoItemFieldValues();
 
 		_translationEntryService.addOrUpdateTranslationEntry(
 			groupId,
 			_language.getLanguageId(translationSnapshot.getTargetLocale()),
-			new InfoItemReference(className, classPK),
-			translationSnapshot.getInfoItemFieldValues(),
+			infoItemFieldValues.getInfoItemReference(), infoItemFieldValues,
 			ServiceContextFactory.getInstance(actionRequest));
 	}
 

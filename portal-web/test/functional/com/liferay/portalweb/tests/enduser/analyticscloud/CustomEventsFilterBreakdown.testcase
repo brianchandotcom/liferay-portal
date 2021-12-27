@@ -761,4 +761,104 @@ definition {
 		}
 	}
 
+	@description = "Feature ID: LRAC-7868 | Automation ID: LRAC-10286 | Test Summary: Event Analysis creation with Filtered Attribute (Boolean) and (True/False) condition"
+	@priority = "3"
+	test CreateEventAnalysisWithBooleanAttributeFilterTrueAndFalseCondition {
+		var attributeName = "pageTitle";
+
+		var filterName1 = "like";
+
+		var filterName2 = "dislike";
+
+		var dataSource = StringUtil.extractFirst("${assignedPropertyName}", " ");
+
+		task ("Fill fields and create custom event") {
+			var customEventName = ACCustomEvents.generateCustomEventName();
+
+			ACCustomEvents.createCustomEvent(
+				customEventName = "${customEventName}",
+				attributesName = "${filterName1},${filterName2}",
+				attributesValue = "true,false",
+				timeToSendCustomEvent = "1");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch the property in AC and go to event analysis") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+
+			ACNavigation.goToEventAnalysis();
+		}
+
+		task ("Add the custom event to analysis") {
+			ACEventAnalysis.addEvent(customEventName = "${customEventName}");
+		}
+
+		task ("Add the breakdown to analysis") {
+			ACEventAnalysis.addBreakdown(attributeNameList = "${attributeName}");
+		}
+
+		task ("Add the filter to analysis") {
+			ACEventAnalysis.addFilter(
+				filterName = "${filterName1}",
+				optionValue = "True");
+		}
+
+		task ("Change the time filter to 24 hours") {
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast24Hours();
+		}
+
+		task ("Check that the analysis result appears") {
+			ACEventAnalysis.viewAnalysisInformation(informationValueList = "ac page - site name - ${dataSource}");
+		}
+
+		task ("Remove the filter from the analysis") {
+			ACEventAnalysis.removeFromAnalysis(removeValue = "${filterName1}");
+		}
+
+		task ("Add the filter to analysis") {
+			ACEventAnalysis.addFilter(
+				filterName = "${filterName1}",
+				optionValue = "False");
+		}
+
+		task ("Check that the analysis result does not appear") {
+			ACEventAnalysis.viewAnalysisInformationNotPresent(informationValueList = "ac page - site name - ${dataSource}");
+		}
+
+		task ("Remove the filter from the analysis") {
+			ACEventAnalysis.removeFromAnalysis(removeValue = "${filterName1}");
+		}
+
+		task ("Add the filter to analysis") {
+			ACEventAnalysis.addFilter(
+				filterName = "${filterName2}",
+				optionValue = "False");
+		}
+
+		task ("Check that the analysis result appears") {
+			ACEventAnalysis.viewAnalysisInformation(informationValueList = "ac page - site name - ${dataSource}");
+		}
+
+		task ("Remove the filter from the analysis") {
+			ACEventAnalysis.removeFromAnalysis(removeValue = "${filterName2}");
+		}
+
+		task ("Add the filter to analysis") {
+			ACEventAnalysis.addFilter(
+				filterName = "${filterName2}",
+				optionValue = "True");
+		}
+
+		task ("Check that the analysis result does not appear") {
+			ACEventAnalysis.viewAnalysisInformationNotPresent(informationValueList = "ac page - site name - ${dataSource}");
+		}
+	}
+
 }

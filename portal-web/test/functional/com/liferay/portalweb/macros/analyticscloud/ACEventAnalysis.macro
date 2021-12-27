@@ -43,7 +43,7 @@ definition {
 			locator1 = "Select#SELECT",
 			value1 = "${optionValue}");
 
-		if ((IsElementNotPresent(locator1 = "Icon#ANY",key_text = "calendar")) && "${optionValue}" != "True" && "${optionValue}" != "False") {
+		if ((IsElementNotPresent(key_text = "calendar", locator1 = "Icon#ANY")) && ("${optionValue}" != "True") && ("${optionValue}" != "False")) {
 			Type(
 				locator1 = "ACEventAnalysis#INPUT_CONDITION",
 				value1 = "${inputValue}");
@@ -55,7 +55,7 @@ definition {
 			}
 		}
 
-		if (IsElementPresent(locator1 = "Icon#ANY",key_text = "calendar")) {
+		if (IsElementPresent(key_text = "calendar", locator1 = "Icon#ANY")) {
 			Click(
 				key_text = "calendar",
 				locator1 = "Icon#ANY");
@@ -173,14 +173,6 @@ definition {
 		}
 	}
 
-	macro viewAnalysisInformationNotPresent {
-		for (var informationValue : list "${informationValueList}") {
-			var key_informationValue = "${informationValue}";
-
-			AssertElementNotPresent(locator1 = "ACEventAnalysis#VIEW_ANALYSIS_INFORMATION");
-		}
-	}
-
 	macro viewAnalysisInformationInOrder {
 		var key_commonInformation = "${commonInformation}";
 		var index = "${index}";
@@ -188,6 +180,14 @@ definition {
 		AssertTextEquals(
 			locator1 = "ACEventAnalysis#VIEW_ANALYSIS_INFORMATION_SPECIFC_ORDER",
 			value1 = "${informationValue}");
+	}
+
+	macro viewAnalysisInformationNotPresent {
+		for (var informationValue : list "${informationValueList}") {
+			var key_informationValue = "${informationValue}";
+
+			AssertElementNotPresent(locator1 = "ACEventAnalysis#VIEW_ANALYSIS_INFORMATION");
+		}
 	}
 
 	macro viewChangedAttributeDataType {

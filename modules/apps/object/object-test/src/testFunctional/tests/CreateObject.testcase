@@ -2418,12 +2418,20 @@ definition {
 	}
 
 	@description = "LPS-135547 - Verify it is possible to search for a System Object"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanSearchForSystemObject {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object A",
+			objectName = "CustomObjectA",
+			pluralLabelName = "Custom Objects A");
 
-		// TODO LPS-141639 CanSearchForSystemObject pending implementation
+		ObjectAdmin.openObjectAdmin();
 
+		Search.searchCP(searchTerm = "User");
+
+		CreateObject.assertCustomObject(labelName = "User");
+
+		CreateObject.assertCustomObjectNotPresent(labelName = "Custom Object A");
 	}
 
 	@description = "LPS-139803 - Verify it is possible to search for the Object Entry Title on the Relationship field"

@@ -49,7 +49,7 @@
 
 					group_id = commerceContext.getCommerceChannelGroupId()
 
-					publicFriendlyURL = themeDisplay.getPathFriendlyURLPublic() + themeDisplay.getSiteGroup().getFriendlyURL()
+					publicFriendlyURL = themeDisplay.getPortalURL() + themeDisplay.getPathFriendlyURLPublic() + themeDisplay.getSiteGroup().getFriendlyURL()
 				/>
 
 				<div class="col-md-4 mb-5">

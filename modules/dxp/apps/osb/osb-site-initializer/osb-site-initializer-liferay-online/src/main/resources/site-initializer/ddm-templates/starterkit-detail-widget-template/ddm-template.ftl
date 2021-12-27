@@ -24,7 +24,7 @@
 
 		group_id = commerceContext.getCommerceChannelGroupId()
 
-		publicFriendlyURL = themeDisplay.getPathFriendlyURLPublic() + themeDisplay.getSiteGroup().getFriendlyURL()
+		publicFriendlyURL = themeDisplay.getPortalURL() + themeDisplay.getPathFriendlyURLPublic() + themeDisplay.getSiteGroup().getFriendlyURL()
 	/>
 
 	<div class="d-flex mb-6">

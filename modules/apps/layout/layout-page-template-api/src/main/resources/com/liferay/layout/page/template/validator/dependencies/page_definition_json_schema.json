@@ -646,6 +646,10 @@
 						"paddingTop": {
 							"title": "The paddingTop Schema",
 							"type": "string"
+						},
+						"textAlign": {
+							"title": "The textAlign Schema",
+							"type": "string"
 						}
 					},
 					"title": "The fragmentViewportStyle Schema",

@@ -298,6 +298,10 @@ definition {
 		Check.toggleSwitch(locator1 = "CreateObject#TOGGLE_MANDATORY");
 	}
 
+	macro viewEmptyFieldTable {
+		AssertElementPresent(locator1 = "RemoteApps#EMPTY_REMOTE_TABLE_MESSAGE");
+	}
+
 	macro viewObject {
 		Click(
 			key_labelName = "${labelName}",

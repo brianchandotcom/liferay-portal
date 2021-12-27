@@ -39,7 +39,7 @@ import {BUILDER_INITIAL_STATE, initState} from './config/initialState.es';
 import {AutoSaveProvider} from './hooks/useAutoSave.es';
 import {ToastProvider} from './hooks/useToast.es';
 import {FormBuilder} from './pages/FormBuilder.es';
-import {Report} from './pages/Report.es';
+import {Report} from './pages/Report';
 import {RuleBuilder} from './pages/RuleBuilder.es';
 import {
 	elementSetReducer,

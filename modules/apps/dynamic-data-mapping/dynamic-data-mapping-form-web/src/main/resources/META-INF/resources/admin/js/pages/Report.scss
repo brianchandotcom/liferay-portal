@@ -1,12 +1,14 @@
-.portlet-ddm-form-report {
+@import 'atlas-variables';
+
+.lfr-ddm__form-report {
 	&__header {
-		background-color: #fff;
+		background-color: $white;
 		height: 124px;
 		padding-top: 24px;
 	}
 
 	&__subtitle {
-		color: #6b6c7e;
+		color: $secondary;
 		font-size: 14px;
 		font-weight: 400;
 	}

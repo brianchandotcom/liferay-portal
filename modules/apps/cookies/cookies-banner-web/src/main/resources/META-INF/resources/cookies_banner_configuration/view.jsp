@@ -146,5 +146,6 @@
 </clay:container-fluid>
 
 <liferay-frontend:component
+	componentId="CookiesBannerConfiguration"
 	module="cookies_banner_configuration/js/CookiesBannerConfiguration"
 />

@@ -65,6 +65,7 @@ CookiesBannerDisplayContext cookiesBannerDisplayContext = (CookiesBannerDisplayC
 </clay:container-fluid>
 
 <liferay-frontend:component
+	componentId="CookiesBanner"
 	context='<%=
 		HashMapBuilder.<String, Object>put(
 			"configurationTitle", LanguageUtil.get(request, "cookies-configuration")

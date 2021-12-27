@@ -18,11 +18,11 @@
 
 <%
 List<String> activeLanguageIds = new ArrayList<String>();
+Set<Locale> availableLocales = LanguageUtil.getAvailableLocales();
+String defaultLanguageId = LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault());
 Map<String, Object> translations = HashMapBuilder.<String, Object>put(
 	"ca-ES", "Lorem"
 ).build();
-Set<Locale> availableLocales = LanguageUtil.getAvailableLocales();
-String defaultLanguageId = LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault());
 
 activeLanguageIds.add(defaultLanguageId);
 

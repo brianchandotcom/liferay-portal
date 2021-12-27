@@ -58,6 +58,12 @@ definition {
 			locator1 = "CreateObject#OBJECT_NAME");
 	}
 
+	macro assertCustomObjectNotPresent {
+		AssertElementNotPresent(
+			key_labelName = "${labelName}",
+			locator1 = "CreateObject#OBJECT_NAME");
+	}
+
 	macro assertDisabledFieldName {
 		AssertElementPresent(locator1 = "CreateObject#DISABLED_FIELD_NAME");
 	}

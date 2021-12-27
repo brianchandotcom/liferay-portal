@@ -382,22 +382,6 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
-	macro toggleHiddenFromNavigationMenuWidget {
-		if ("${toggleValue}" == "enable") {
-			Check.checkToggleSwitch(
-				key_toggleSwitchLabel = "Hidden from Navigation Menu Widget",
-				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
-		}
-		else if ("${toggleValue}" == "disable") {
-			Uncheck.uncheckToggleSwitch(
-				key_toggleSwitchLabel = "Hidden from Navigation Menu Widget",
-				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
-		}
-		else {
-			fail("Failed. Please set ${toggleValue} to enable or disable.");
-		}
-	}
-
 	macro togglePageTemplateInheritChanges {
 		if ("${toggleValue}" == "enable") {
 			Check.checkToggleSwitch(

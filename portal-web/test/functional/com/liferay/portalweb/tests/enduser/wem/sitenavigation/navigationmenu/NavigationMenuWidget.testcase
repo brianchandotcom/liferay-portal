@@ -297,7 +297,7 @@ definition {
 				menuItem = "Configure",
 				pageName = "Test Page Name 2");
 
-			Page.toggleHiddenFromNavigationMenuWidget(toggleValue = "enable");
+			PagesAdmin.toggleHiddenFromNavigationMenuWidget(toggleValue = "enable");
 
 			PortletEntry.save();
 		}

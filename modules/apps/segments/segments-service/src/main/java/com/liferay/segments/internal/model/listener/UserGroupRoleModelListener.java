@@ -71,12 +71,12 @@ public class UserGroupRoleModelListener
 				for (Map.Entry<String, String> entry :
 						filterStrings.entrySet()) {
 
-					long deletedUserGroupRoleRoleID = userGroupRole.getRoleId();
+					long deletedUserGroupRoleRoleId = userGroupRole.getRoleId();
 					String filterString = entry.getValue();
 
 					if (filterString.contains("userGroupRoleIds") &&
 						filterString.contains(
-							String.valueOf(deletedUserGroupRoleRoleID))) {
+							String.valueOf(deletedUserGroupRoleRoleId))) {
 
 						long classNameId =
 							_classNameLocalService.getClassNameId(User.class);

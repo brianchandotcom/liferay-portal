@@ -16,113 +16,25 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-String defaultLanguageId = LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault());
-Set<Locale> availableLocales = LanguageUtil.getAvailableLocales();
-List<String> activeLanguageIds = new ArrayList<String>();
-
-activeLanguageIds.add(defaultLanguageId);
-activeLanguageIds.add("ca_ES");
-activeLanguageIds.add("fr_FR");
-%>
-
 <div class="frontend-js-components-sample-web">
-	<h1>Translation Manager</h1>
+	<liferay-ui:tabs
+		names="Translation Manager"
+		refresh="<%= false %>"
+	>
 
-	<h2>React Component</h2>
+		<%
+		String[] sections = {"translation_manager"};
 
-	<div>
-		<react:component
-			module="js/App"
-			props='<%=
-				HashMapBuilder.<String, Object>put(
-					"displayNames", LocaleUtil.toDisplayNames(availableLocales, locale)
-				).put(
-					"languageIds", LocaleUtil.toLanguageIds(availableLocales)
-				).build()
-			%>'
-		/>
-	</div>
+		for (int i = 0; i < sections.length; i++) {
+		%>
 
-	<h2>AUI Tag</h2>
+			<liferay-ui:section>
+				<liferay-util:include page='<%= "/partials/" + sections[i] + ".jsp" %>' servletContext="<%= application %>" />
+			</liferay-ui:section>
 
-	<clay:container-fluid>
-		<clay:row>
-			<clay:col>
-				<h3>Default</h3>
+		<%
+		}
+		%>
 
-				<form>
-					<aui:input activeLanguageIds="<%= activeLanguageIds %>" availableLocales="<%= availableLocales %>" defaultLanguageId="<%= defaultLanguageId %>" label="" localized="<%= true %>" name="tm-aui-1" type="text" />
-				</form>
-			</clay:col>
-
-			<clay:col>
-				<h3>Admin</h3>
-
-				<form>
-					<aui:input activeLanguageIds="<%= activeLanguageIds %>" adminMode="<%= true %>" availableLocales="<%= availableLocales %>" defaultLanguageId="<%= defaultLanguageId %>" label="" localized="<%= true %>" name="tm-aui-2" type="text" />
-				</form>
-			</clay:col>
-
-			<clay:col>
-				<h3>Functions (field)</h3>
-
-				<form>
-					<aui:input activeLanguageIds="<%= activeLanguageIds %>" adminMode="<%= true %>" availableLocales="<%= availableLocales %>" defaultLanguageId="<%= defaultLanguageId %>" label="" localized="<%= true %>" name="tm-aui-3" onChange="console.log('onChange', event);" onClick="console.log('onClick', event);" type="text" />
-				</form>
-			</clay:col>
-		</clay:row>
-	</clay:container-fluid>
-
-	<h2>Liferay UI Tag</h2>
-
-	<clay:container-fluid>
-		<clay:row>
-			<clay:col>
-				<h3>Default</h3>
-
-				<form>
-					<liferay-ui:input-localized
-						activeLanguageIds="<%= activeLanguageIds %>"
-						availableLocales="<%= availableLocales %>"
-						defaultLanguageId="<%= defaultLanguageId %>"
-						name="tm-liferay-ui-1"
-						xml=""
-					/>
-				</form>
-			</clay:col>
-
-			<clay:col>
-				<h3>Admin</h3>
-
-				<form>
-					<liferay-ui:input-localized
-						activeLanguageIds="<%= activeLanguageIds %>"
-						adminMode="<%= true %>"
-						availableLocales="<%= availableLocales %>"
-						defaultLanguageId="<%= defaultLanguageId %>"
-						name="tm-liferay-ui-2"
-						xml=""
-					/>
-				</form>
-			</clay:col>
-
-			<clay:col>
-				<h3>Functions (field)</h3>
-
-				<form>
-					<liferay-ui:input-localized
-						activeLanguageIds="<%= activeLanguageIds %>"
-						adminMode="<%= true %>"
-						availableLocales="<%= availableLocales %>"
-						defaultLanguageId="<%= defaultLanguageId %>"
-						name="tm-liferay-ui-3"
-						onChange="console.log('onChange', event);"
-						onClick="console.log('onClick', event);"
-						xml=""
-					/>
-				</form>
-			</clay:col>
-		</clay:row>
-	</clay:container-fluid>
+	</liferay-ui:tabs>
 </div>

@@ -164,7 +164,6 @@ definition {
 		CalendarPage.viewMiniCalendarSideBar();
 
 		CalendarPage.viewMonthCurrentMiniCalendar(monthCurrent = "December 2021");
-
 	}
 
 	@description = "LRQA-72024 - Verify that the Today button brings the user back for the current day"

@@ -16,15 +16,13 @@ definition {
 	}
 
 	macro viewMiniCalendarSideBar {
-        AssertElementPresent(locator1 ="CalendarPage#MINI_CALENDAR_SIDEBAR");
+		AssertElementPresent(locator1 = "CalendarPage#MINI_CALENDAR_SIDEBAR");
+	}
 
-    }
+	macro viewMonthCurrentMiniCalendar {
+		AssertTextEquals(
+			locator1 = "CalendarPage#CURRENT_MONTH_MINI_CALENDAR",
+			value1 = "${monthCurrent}");
+	}
 
-    macro viewMonthCurrentMiniCalendar {
-        AssertTextEquals(
-            locator1 ="CalendarPage#CURRENT_MONTH_MINI_CALENDAR",
-            value1 = "${monthCurrent}");
-
-    }
-    
 }

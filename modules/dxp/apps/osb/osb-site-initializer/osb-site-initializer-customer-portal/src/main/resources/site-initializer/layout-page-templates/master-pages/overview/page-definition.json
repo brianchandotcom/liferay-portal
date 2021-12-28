@@ -27,10 +27,8 @@
 							"fragment": {
 								"key": "side-bar"
 							},
-							"fragmentConfig": {
-							},
-							"fragmentFields": [
-							]
+							"fragmentConfig": {},
+							"fragmentFields": []
 						},
 						"type": "Fragment"
 					},
@@ -67,7 +65,7 @@
 										"align": "Center",
 										"borderWidth": 0,
 										"contentDisplay": "FlexRow",
-										"justify": "End",
+										"justify": "SpaceBetween",
 										"marginBottom": 0,
 										"marginLeft": 0,
 										"marginRight": 2,
@@ -83,17 +81,28 @@
 									{
 										"definition": {
 											"fragment": {
+												"key": "select-project"
+											},
+											"fragmentConfig": {},
+											"fragmentFields": [],
+											"fragmentStyle": {
+												"marginLeft": "4"
+											}
+										},
+										"type": "Fragment"
+									},
+									{
+										"definition": {
+											"fragment": {
 												"key": "select-user"
 											},
-											"fragmentConfig": {
-											},
+											"fragmentConfig": {},
 											"fragmentFields": [
 												{
 													"id": "user-name",
 													"value": {
 														"fragmentLink": {
-															"value_i18n": {
-															}
+															"value_i18n": {}
 														}
 													}
 												},
@@ -101,8 +110,7 @@
 													"id": "select-icon",
 													"value": {
 														"fragmentLink": {
-															"value_i18n": {
-															}
+															"value_i18n": {}
 														}
 													}
 												},
@@ -110,8 +118,7 @@
 													"id": "user-icon",
 													"value": {
 														"fragmentLink": {
-															"value_i18n": {
-															}
+															"value_i18n": {}
 														}
 													}
 												}
@@ -173,10 +180,8 @@
 													"fragment": {
 														"key": "side-menu"
 													},
-													"fragmentConfig": {
-													},
-													"fragmentFields": [
-													],
+													"fragmentConfig": {},
+													"fragmentFields": [],
 													"fragmentStyle": {
 														"backgroundColor": "",
 														"marginLeft": "3",
@@ -219,8 +224,7 @@
 											{
 												"definition": {
 													"fragmentSettings": {
-														"unallowedFragments": [
-														]
+														"unallowedFragments": []
 													}
 												},
 												"type": "DropZone"

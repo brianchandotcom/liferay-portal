@@ -14,8 +14,6 @@
 
 package com.liferay.poshi.core.elements;
 
-import com.google.common.reflect.ClassPath;
-
 import com.liferay.poshi.core.script.PoshiScriptParserException;
 import com.liferay.poshi.core.script.UnbalancedCodeException;
 import com.liferay.poshi.core.util.Dom4JUtil;
@@ -39,6 +37,8 @@ import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.Node;
+
+import org.reflections.Reflections;
 
 /**
  * @author Kenji Heigel
@@ -214,17 +214,11 @@ public abstract class PoshiNodeFactory {
 
 	static {
 		try {
-			ClassPath classPath = ClassPath.from(
-				PoshiNode.class.getClassLoader());
+			Reflections reflections = new Reflections(
+				"com.liferay.poshi.core.elements");
 
-			List<Class<?>> poshiElementClasses = new ArrayList<>();
-
-			for (ClassPath.ClassInfo classInfo :
-					classPath.getTopLevelClasses(
-						"com.liferay.poshi.core.elements")) {
-
-				poshiElementClasses.add(classInfo.load());
-			}
+			List<Class<?>> poshiElementClasses = new ArrayList<>(
+				reflections.getSubTypesOf(PoshiNode.class));
 
 			Collections.sort(
 				poshiElementClasses,
@@ -293,9 +287,7 @@ public abstract class PoshiNodeFactory {
 
 			_definitionPoshiElement = _getDefinitionPoshiElement();
 		}
-		catch (IllegalAccessException | InstantiationException | IOException
-					exception) {
-
+		catch (IllegalAccessException | InstantiationException exception) {
 			throw new RuntimeException(exception);
 		}
 	}

@@ -232,4 +232,12 @@ definition {
 		}
 	}
 
+	macro changeBreakdownPosition {
+		DragAndDrop.javaScriptDragAndDropToObject(
+			indexStart = "${indexStart}",
+			locator1 = "ACEventAnalysis#BREAKDOWN_ORIGINAL_POSITION",
+			indexEnd = "${indexEnd}",
+			locator2 = "ACEventAnalysis#BREAKDOWN_NEW_POSITION");
+	}
+
 }

@@ -34,6 +34,7 @@ import java.nio.file.StandardCopyOption;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -340,6 +341,9 @@ public class PublishNodeModuleTask extends ExecutePackageManagerTask {
 		_updatePackageJsonValue(map, "license", getModuleLicense());
 		_updatePackageJsonValue(map, "main", getModuleMain());
 		_updatePackageJsonValue(map, "name", getModuleName());
+		_updatePackageJsonValue(
+			map, "publishConfig",
+			Collections.singletonMap("registry", "https://registry.npmjs.org"));
 		_updatePackageJsonValue(map, "repository", getModuleRepository());
 		_updatePackageJsonValue(map, "version", getModuleVersion());
 

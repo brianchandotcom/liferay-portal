@@ -52,6 +52,7 @@ const Invites = () => {
 	const totalEmails = values?.invites?.length || 0;
 	const failedEmails = errors?.invites?.filter((email) => email).length || 0;
 	const filledEmails = values?.invites?.filter(({email}) => email).length;
+	const maxRequestors = project.maxRequestors < 1 ? 1 : project.maxRequestors;
 
 	const {data} = useQuery(getAccountSubscriptionGroups, {
 		variables: {
@@ -136,52 +137,59 @@ const Invites = () => {
 	};
 
 	useEffect(() => {
-		let filterRoles = [
-			...new Set(
-				rolesData?.accountAccountRoles?.items.map(({name}) => name)
-			),
-		];
-		const SLA_CURRENT = project.slaCurrent;
-		const isPartner = project.partner;
+		if (rolesData) {
+			let filterRoles = [
+				...new Set(
+					rolesData?.accountAccountRoles?.items.map(({name}) => name)
+				),
+			];
+			const SLA_CURRENT = project.slaCurrent;
+			const isPartner = project.partner;
 
-		if (
-			!SLA_CURRENT.includes(SLA.gold) &&
-			!SLA_CURRENT.includes(SLA.platinum)
-		) {
-			filterRoles = filterRoles.filter(
-				(label) => label !== roles.REQUESTOR.key
+			if (
+				!SLA_CURRENT.includes(SLA.gold) &&
+				!SLA_CURRENT.includes(SLA.platinum)
+			) {
+				filterRoles = filterRoles.filter(
+					(label) => label !== roles.REQUESTOR.key
+				);
+			}
+
+			if (!isPartner) {
+				filterRoles = filterRoles.filter(
+					(label) =>
+						label !== roles.PARTNER_MANAGER.key &&
+						label !== roles.PARTNER_MEMBER.key
+				);
+			}
+
+			setFieldValue(
+				'invites[0].roleId',
+				maxRequestors === 1
+					? roles.MEMBER.key
+					: filterRoles.find(
+							(role) => role === roles.REQUESTOR.key
+					  ) || roles.ADMIN.key
 			);
+
+			const mapRolesName = filterRoles.map((role) => {
+				const roleProperty = Object.values(roles).find(
+					({key}) => key === role
+				);
+
+				return {
+					disabled: false,
+					label: roleProperty?.name || role,
+					value: roleProperty?.key || role,
+				};
+			});
+			setAccountRoles(mapRolesName);
 		}
-
-		if (!isPartner) {
-			filterRoles = filterRoles.filter(
-				(label) =>
-					label !== roles.PARTNER_MANAGER.key &&
-					label !== roles.PARTNER_MEMBER.key
-			);
-		}
-		setFieldValue(
-			'invites[0].roleId',
-			filterRoles.find((role) => role === roles.REQUESTOR.key) ||
-				roles.ADMIN.key
-		);
-
-		const mapRolesName = filterRoles.map((role) => {
-			const roleProperty = Object.values(roles).find(
-				({key}) => key === role
-			);
-
-			return {
-				disabled: false,
-				label: roleProperty?.name || role,
-				value: roleProperty?.key || role,
-			};
-		});
-		setAccountRoles(mapRolesName);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [project, rolesData]);
+
 	useEffect(() => {
-		if (values) {
+		if (values && rolesData) {
 			const totalAdmins = values.invites.reduce(
 				(totalInvites, currentInvite) => {
 					if (
@@ -197,14 +205,14 @@ const Invites = () => {
 				},
 				1
 			);
-
-			const remainingAdmins = project.maxRequestors - totalAdmins;
+			const remainingAdmins = maxRequestors - totalAdmins;
 
 			disableAdminOptions(remainingAdmins === 0);
 
 			setAvailableAdminsRoles(remainingAdmins);
 		}
-	}, [values, project]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [values, project, rolesData]);
 
 	useEffect(() => {
 		if (filledEmails) {
@@ -299,13 +307,13 @@ const Invites = () => {
 							project.slaCurrent.includes(SLA.platinum)
 								? roles.REQUESTOR.name
 								: roles.ADMIN.name
-						}	roles available: ${availableAdminsRoles} of ${
-							project.maxRequestors
-						}`}
+						}	roles available: ${availableAdminsRoles} of ${maxRequestors}`}
 					</h5>
 
 					<p className="mb-0 text-neutral-7 text-paragraph-sm">
-						{`Only ${project.maxRequestors} members per project (including yourself) have
+						{`Only ${maxRequestors} member${
+							maxRequestors > 1 ? 's' : ''
+						} per project (including yourself) have
 						role permissions (Admins & Requestors) to open Support
 						tickets. `}
 

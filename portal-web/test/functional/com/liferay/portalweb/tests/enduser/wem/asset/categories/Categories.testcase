@@ -426,18 +426,18 @@ definition {
 			Click(locator1 = "Button#ADD_ROW_LAST");
 
 			Type(
+				key_pathNumber = "1",
 				locator1 = "CategoriesEditCategory#PROPERTIES_KEY_FIELD",
-				value1 = "Category Property",
-				key_pathNumber = "1");
+				value1 = "Category Property");
 
 			Type(
+				key_pathNumber = "1",
 				locator1 = "CategoriesEditCategory#PROPERTIES_VALUE_FIELD",
-				value1 = "Category Property",
-				key_pathNumber = "1");
+				value1 = "Category Property");
 
 			Button.clickSave();
 		}
-		
+
 		task ("Assert error message is shown") {
 			Alert.viewErrorMessage(errorMessage = "Error:Please enter a unique property key.");
 		}

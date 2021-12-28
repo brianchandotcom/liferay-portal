@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
@@ -35,15 +36,13 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
-
-import java.util.Locale;
-import java.util.Map;
-
-import javax.ws.rs.core.MultivaluedMap;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
+
+import javax.ws.rs.core.MultivaluedMap;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * @author Javier Gamarra
@@ -141,6 +140,18 @@ public class WorkflowDefinitionResourceImpl
 			_workflowDefinitionManager.updateActive(
 				contextCompany.getCompanyId(), contextUser.getUserId(), name,
 				GetterUtil.getInteger(version), active));
+	}
+
+	private String _getTitle(WorkflowDefinition workflowDefinition)
+		throws Exception {
+
+		if (MapUtil.isEmpty(workflowDefinition.getTitle_i18n())) {
+			return workflowDefinition.getTitle();
+		}
+
+		return LocalizationUtil.getXml(
+			workflowDefinition.getTitle_i18n(),
+			_language.getLanguageId(contextCompany.getLocale()), "title");
 	}
 
 	private OrderByComparator

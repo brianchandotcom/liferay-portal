@@ -310,8 +310,6 @@ definition {
 		}
 
 		task ("Go to add a child site to the Site Name site") {
-			Navigator.openURL();
-
 			ApplicationsMenu.gotoPortlet(
 				category = "Sites",
 				panel = "Control Panel",
@@ -325,14 +323,18 @@ definition {
 
 			LexiconEntry.gotoEntry(rowEntry = "Blank Site");
 
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
 			PortletEntry.inputName(name = "Child SiteName2");
 
-			PortletEntry.save();
+			Button.clickAdd();
+
+			SelectFrameTop();
+
+			Alert.viewSuccessMessage();
 		}
 
 		task ("Go to add a child site to the Child SiteName1 site") {
-			Navigator.openURL();
-
 			ApplicationsMenu.gotoPortlet(
 				category = "Sites",
 				panel = "Control Panel",

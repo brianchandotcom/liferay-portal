@@ -155,7 +155,9 @@ public class SiteNavigationMenuLocalServiceUtil {
 		return getService().deleteSiteNavigationMenu(siteNavigationMenu);
 	}
 
-	public static void deleteSiteNavigationMenus(long groupId) {
+	public static void deleteSiteNavigationMenus(long groupId)
+		throws PortalException {
+
 		getService().deleteSiteNavigationMenus(groupId);
 	}
 

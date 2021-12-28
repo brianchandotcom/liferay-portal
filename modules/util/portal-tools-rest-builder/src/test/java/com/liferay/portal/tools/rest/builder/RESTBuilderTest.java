@@ -26,6 +26,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Stream;
+
 import org.apache.commons.io.FileUtils;
 
 import org.junit.Assert;
@@ -56,8 +60,12 @@ public class RESTBuilderTest {
 
 		_assertResourceFilesExist(filesPath, "Document");
 		_assertResourceFilesExist(filesPath, "Folder");
+		_assertResourceFilesExist(filesPath, "Test");
 
 		_assertForcePredictableOperationId(filesPath);
+
+		_assertHyphensSupportInProperties(
+			filesPath, "Test", "property-with-hyphens");
 
 		File sampleApiDir = new File(filesPath + "/sample-api");
 
@@ -84,6 +92,37 @@ public class RESTBuilderTest {
 			Files.readAllBytes(queryJavaFile.toPath()), StandardCharsets.UTF_8);
 
 		Assert.assertFalse(text.contains("ForcePredictableOperationIdTest"));
+	}
+
+	private void _assertHyphensSupportInProperties(
+			String filesPath, String resourceName, String propertyName)
+		throws Exception {
+
+		File dtoResourceFile = new File(
+			_getResourcePath(
+				filesPath,
+				"/sample-api/src/main/java/com/example/sample/dto/v1_0_0/",
+				resourceName, ".java"));
+
+		List<String> lines = Files.readAllLines(dtoResourceFile.toPath());
+
+		Stream<String> stream = lines.stream();
+
+		Optional<String> propertyWithHyphensOptional = stream.filter(
+			line -> line.contains(
+				"access = JsonProperty.Access.READ_WRITE, value = \"" +
+					propertyName + "\"")
+		).findFirst();
+
+		Assert.assertTrue(propertyWithHyphensOptional.isPresent());
+
+		stream = lines.stream();
+
+		Optional<String> serializePropertyWithHyphensOptional = stream.filter(
+			line -> line.contains("sb.append(\"" + propertyName + "\": \");")
+		).findFirst();
+
+		Assert.assertTrue(serializePropertyWithHyphensOptional.isPresent());
 	}
 
 	private void _assertResourceFilesExist(

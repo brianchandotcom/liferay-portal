@@ -164,14 +164,10 @@ public abstract class BaseWorkspaceGitRepository
 			List<List<LocalGitCommit>> localGitCommitsPartitions =
 				new ArrayList<>(localGitCommitsSize);
 
-			if (localGitCommits.size() > 1) {
-				localGitCommitsPartitions.addAll(
-					JenkinsResultsParserUtil.partitionByCount(
-						localGitCommits.subList(0, localGitCommitsSize - 2),
-						localGitCommitsSize - 1));
+			for (LocalGitCommit localGitCommit : localGitCommits) {
+				localGitCommitsPartitions.add(
+					Lists.newArrayList(localGitCommit));
 			}
-
-			localGitCommitsPartitions.add(lastLocalGitCommitsPartition);
 
 			return localGitCommitsPartitions;
 		}

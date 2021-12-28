@@ -91,7 +91,7 @@ public class AddMultipleDisplayPageTypeSiteNavigationMenuItemMVCActionCommand
 
 			try {
 				List<InfoItemReference> infoItemReferences = new ArrayList<>();
-				Map<Long, JSONObject> jsonObjectByClassPKMap = new HashMap<>();
+				Map<Long, JSONObject> jsonObjects = new HashMap<>();
 
 				JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
 					ParamUtil.getString(actionRequest, "items"));
@@ -109,7 +109,7 @@ public class AddMultipleDisplayPageTypeSiteNavigationMenuItemMVCActionCommand
 								itemJSONObject.getString("className"),
 								itemJSONObject.getLong("classPK")));
 
-						jsonObjectByClassPKMap.put(
+						jsonObjects.put(
 							itemJSONObject.getLong("classPK"), itemJSONObject);
 					}
 				}
@@ -129,8 +129,8 @@ public class AddMultipleDisplayPageTypeSiteNavigationMenuItemMVCActionCommand
 				for (InfoItemReference infoItemReference : infoItemReferences) {
 					_addSiteNavigationMenuItem(
 						themeDisplay.getScopeGroupId(), infoItemReference,
-						jsonObjectByClassPKMap, 0, serviceContext,
-						siteNavigationMenuId, siteNavigationMenuItemType);
+						jsonObjects, 0, serviceContext, siteNavigationMenuId,
+						siteNavigationMenuItemType);
 				}
 			}
 			catch (PortalException portalException) {
@@ -167,13 +167,12 @@ public class AddMultipleDisplayPageTypeSiteNavigationMenuItemMVCActionCommand
 
 	private void _addSiteNavigationMenuItem(
 			long groupId, InfoItemReference infoItemReference,
-			Map<Long, JSONObject> jsonObjectByClassPKMap,
+			Map<Long, JSONObject> jsonObjects,
 			long parentSiteNavigationMenuItemId, ServiceContext serviceContext,
 			long siteNavigationMenuId, String siteNavigationMenuItemType)
 		throws PortalException {
 
-		JSONObject jsonObject = jsonObjectByClassPKMap.get(
-			_getClassPK(infoItemReference));
+		JSONObject jsonObject = jsonObjects.get(_getClassPK(infoItemReference));
 
 		if (jsonObject == null) {
 			return;
@@ -212,8 +211,7 @@ public class AddMultipleDisplayPageTypeSiteNavigationMenuItemMVCActionCommand
 				infoItemHierarchicalReference.getChildren()) {
 
 			_addSiteNavigationMenuItem(
-				groupId, childInfoItemHierarchicalReference,
-				jsonObjectByClassPKMap,
+				groupId, childInfoItemHierarchicalReference, jsonObjects,
 				siteNavigationMenuItem.getSiteNavigationMenuItemId(),
 				serviceContext, siteNavigationMenuId,
 				siteNavigationMenuItemType);

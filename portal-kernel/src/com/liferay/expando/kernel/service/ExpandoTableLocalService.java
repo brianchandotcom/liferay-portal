@@ -116,9 +116,11 @@ public interface ExpandoTableLocalService
 	 *
 	 * @param expandoTable the expando table
 	 * @return the expando table that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
-	public ExpandoTable deleteExpandoTable(ExpandoTable expandoTable);
+	public ExpandoTable deleteExpandoTable(ExpandoTable expandoTable)
+		throws PortalException;
 
 	/**
 	 * Deletes the expando table with the primary key from the database. Also notifies the appropriate model listeners.
@@ -141,7 +143,7 @@ public interface ExpandoTableLocalService
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	public void deleteTable(ExpandoTable table);
+	public void deleteTable(ExpandoTable table) throws PortalException;
 
 	public void deleteTable(long tableId) throws PortalException;
 
@@ -151,9 +153,11 @@ public interface ExpandoTableLocalService
 	public void deleteTable(long companyId, String className, String name)
 		throws PortalException;
 
-	public void deleteTables(long companyId, long classNameId);
+	public void deleteTables(long companyId, long classNameId)
+		throws PortalException;
 
-	public void deleteTables(long companyId, String className);
+	public void deleteTables(long companyId, String className)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <T> T dslQuery(DSLQuery dslQuery);

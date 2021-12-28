@@ -113,8 +113,11 @@ public class ExpandoTableLocalServiceUtil {
 	 *
 	 * @param expandoTable the expando table
 	 * @return the expando table that was removed
+	 * @throws PortalException
 	 */
-	public static ExpandoTable deleteExpandoTable(ExpandoTable expandoTable) {
+	public static ExpandoTable deleteExpandoTable(ExpandoTable expandoTable)
+		throws PortalException {
+
 		return getService().deleteExpandoTable(expandoTable);
 	}
 
@@ -145,7 +148,7 @@ public class ExpandoTableLocalServiceUtil {
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static void deleteTable(ExpandoTable table) {
+	public static void deleteTable(ExpandoTable table) throws PortalException {
 		getService().deleteTable(table);
 	}
 
@@ -167,11 +170,15 @@ public class ExpandoTableLocalServiceUtil {
 		getService().deleteTable(companyId, className, name);
 	}
 
-	public static void deleteTables(long companyId, long classNameId) {
+	public static void deleteTables(long companyId, long classNameId)
+		throws PortalException {
+
 		getService().deleteTables(companyId, classNameId);
 	}
 
-	public static void deleteTables(long companyId, String className) {
+	public static void deleteTables(long companyId, String className)
+		throws PortalException {
+
 		getService().deleteTables(companyId, className);
 	}
 

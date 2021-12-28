@@ -91,7 +91,9 @@ public class ExpandoColumnLocalServiceUtil {
 		return getService().createPersistedModel(primaryKeyObj);
 	}
 
-	public static void deleteColumn(ExpandoColumn column) {
+	public static void deleteColumn(ExpandoColumn column)
+		throws PortalException {
+
 		getService().deleteColumn(column);
 	}
 
@@ -106,7 +108,9 @@ public class ExpandoColumnLocalServiceUtil {
 		getService().deleteColumn(companyId, classNameId, tableName, name);
 	}
 
-	public static void deleteColumn(long tableId, String name) {
+	public static void deleteColumn(long tableId, String name)
+		throws PortalException {
+
 		getService().deleteColumn(tableId, name);
 	}
 
@@ -117,7 +121,7 @@ public class ExpandoColumnLocalServiceUtil {
 		getService().deleteColumn(companyId, className, tableName, name);
 	}
 
-	public static void deleteColumns(long tableId) {
+	public static void deleteColumns(long tableId) throws PortalException {
 		getService().deleteColumns(tableId);
 	}
 

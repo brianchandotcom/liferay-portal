@@ -103,7 +103,7 @@ public interface ExpandoColumnLocalService
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
-	public void deleteColumn(ExpandoColumn column);
+	public void deleteColumn(ExpandoColumn column) throws PortalException;
 
 	public void deleteColumn(long columnId) throws PortalException;
 
@@ -111,13 +111,13 @@ public interface ExpandoColumnLocalService
 			long companyId, long classNameId, String tableName, String name)
 		throws PortalException;
 
-	public void deleteColumn(long tableId, String name);
+	public void deleteColumn(long tableId, String name) throws PortalException;
 
 	public void deleteColumn(
 			long companyId, String className, String tableName, String name)
 		throws PortalException;
 
-	public void deleteColumns(long tableId);
+	public void deleteColumns(long tableId) throws PortalException;
 
 	public void deleteColumns(
 			long companyId, long classNameId, String tableName)

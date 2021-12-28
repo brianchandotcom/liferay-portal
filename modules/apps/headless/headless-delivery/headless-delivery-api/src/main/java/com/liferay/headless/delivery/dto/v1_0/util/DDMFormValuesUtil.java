@@ -31,6 +31,7 @@ import com.liferay.journal.service.JournalArticleService;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
@@ -209,11 +210,8 @@ public class DDMFormValuesUtil {
 
 		LocalizedValue localizedValue = ddmFormField.getPredefinedValue();
 
-		String valueString = Optional.ofNullable(
-			localizedValue.getString(localizedValue.getDefaultLocale())
-		).orElse(
-			StringPool.BLANK
-		);
+		String valueString = GetterUtil.getString(
+			localizedValue.getString(localizedValue.getDefaultLocale()));
 
 		if (Objects.equals(valueString, "[]")) {
 			valueString = StringPool.BLANK;

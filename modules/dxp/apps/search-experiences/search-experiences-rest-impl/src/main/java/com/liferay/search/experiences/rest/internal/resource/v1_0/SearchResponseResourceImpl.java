@@ -14,13 +14,26 @@
 
 package com.liferay.search.experiences.rest.internal.resource.v1_0;
 
+import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
+import com.liferay.asset.kernel.model.AssetRenderer;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.search.document.Field;
 import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.search.experiences.blueprint.search.request.enhancer.SXPBlueprintSearchRequestEnhancer;
+import com.liferay.search.experiences.rest.dto.v1_0.Document;
+import com.liferay.search.experiences.rest.dto.v1_0.DocumentField;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
 import com.liferay.search.experiences.rest.dto.v1_0.SearchResponse;
 import com.liferay.search.experiences.rest.dto.v1_0.util.SXPBlueprintUtil;
@@ -30,6 +43,12 @@ import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Stream;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -37,7 +56,6 @@ import org.osgi.service.component.annotations.ServiceScope;
 /**
  * @author Brian Wing Shun Chan
  * @author André de Oliveira
- * @author Petteri Karttunen
  */
 @Component(
 	enabled = false,
@@ -108,14 +126,124 @@ public class SearchResponseResourceImpl extends BaseSearchResponseResourceImpl {
 
 		return new SearchResponse() {
 			{
+				documents = _toDocuments(searchResponse.getDocumentsStream());
 				page = portalSearchRequest.getFrom();
 				pageSize = portalSearchRequest.getSize();
+				request = _createJSONObject(searchResponse.getRequestString());
 				requestString = searchResponse.getRequestString();
+				response = _createJSONObject(
+					searchResponse.getResponseString());
 				responseString = searchResponse.getResponseString();
 				totalHits = searchResponse.getTotalHits();
 			}
+
+			private JSONObject _createJSONObject(String string) {
+				try {
+					return JSONFactoryUtil.createJSONObject(string);
+				}
+				catch (JSONException jsonException) {
+					return null;
+				}
+			}
+
 		};
 	}
+
+	private AssetRenderer<?> _getAssetRenderer(Map<String, Field> fields) {
+		try {
+			Field entryClassNameField = fields.get(
+				com.liferay.portal.kernel.search.Field.ENTRY_CLASS_NAME);
+
+			AssetRendererFactory<?> assetRendererFactory =
+				AssetRendererFactoryRegistryUtil.
+					getAssetRendererFactoryByClassName(
+						GetterUtil.getString(entryClassNameField.getValue()));
+
+			Field entryClassPKField = fields.get(
+				com.liferay.portal.kernel.search.Field.ENTRY_CLASS_PK);
+
+			return assetRendererFactory.getAssetRenderer(
+				GetterUtil.getLong(entryClassPKField.getValue()));
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+		}
+
+		return null;
+	}
+
+	private Map<String, DocumentField> _toDocumentFields(
+		Map<String, Field> fields) {
+
+		Map<String, DocumentField> documentFields = new LinkedHashMap<>();
+
+		MapUtil.isNotEmptyForEach(
+			fields,
+			(name, field) -> {
+				List<Object> valuesList = field.getValues();
+
+				documentFields.put(
+					name,
+					new DocumentField() {
+						{
+							values = valuesList.toArray();
+						}
+					});
+			});
+
+		if (MapUtil.isEmpty(fields)) {
+			return documentFields;
+		}
+
+		AssetRenderer<?> assetRenderer = _getAssetRenderer(fields);
+
+		if (assetRenderer == null) {
+			return documentFields;
+		}
+
+		documentFields.put(
+			"assetSearchSummary",
+			new DocumentField() {
+				{
+					values = new String[] {
+						assetRenderer.getSearchSummary(
+							contextAcceptLanguage.getPreferredLocale())
+					};
+				}
+			});
+		documentFields.put(
+			"assetTitle",
+			new DocumentField() {
+				{
+					values = new String[] {
+						assetRenderer.getTitle(
+							contextAcceptLanguage.getPreferredLocale())
+					};
+				}
+			});
+
+		return documentFields;
+	}
+
+	private Document[] _toDocuments(
+		Stream<com.liferay.portal.search.document.Document> stream) {
+
+		List<Document> documents = new ArrayList<>();
+
+		stream.forEach(
+			document -> documents.add(
+				new Document() {
+					{
+						documentFields = _toDocumentFields(
+							document.getFields());
+					}
+				}));
+
+		return documents.toArray(new Document[0]);
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SearchResponseResourceImpl.class);
 
 	@Reference
 	private Searcher _searcher;

@@ -312,26 +312,30 @@ public class RuntimeTag extends TagSupport implements DirectTag {
 				writeObject = true;
 			}
 
-			long count =
-				PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
-					PortletKeys.PREFS_OWNER_TYPE_LAYOUT, themeDisplay.getPlid(),
-					portletInstanceKey);
+			if (persistSettings) {
+				long count =
+					PortletPreferencesLocalServiceUtil.
+						getPortletPreferencesCount(
+							PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
+							themeDisplay.getPlid(), portletInstanceKey);
 
-			if (count < 1) {
-				PortletPreferencesFactoryUtil.getLayoutPortletSetup(
-					layout, portletInstanceKey, defaultPreferences);
-				PortletPreferencesFactoryUtil.getPortletSetup(
-					httpServletRequest, portletInstanceKey, defaultPreferences);
+				if (count < 1) {
+					PortletPreferencesFactoryUtil.getLayoutPortletSetup(
+						layout, portletInstanceKey, defaultPreferences);
+					PortletPreferencesFactoryUtil.getPortletSetup(
+						httpServletRequest, portletInstanceKey,
+						defaultPreferences);
 
-				PortletLayoutListener portletLayoutListener =
-					portlet.getPortletLayoutListenerInstance();
+					PortletLayoutListener portletLayoutListener =
+						portlet.getPortletLayoutListenerInstance();
 
-				if (portletLayoutListener != null) {
-					portletLayoutListener.onAddToLayout(
-						portletInstanceKey, themeDisplay.getPlid());
+					if (portletLayoutListener != null) {
+						portletLayoutListener.onAddToLayout(
+							portletInstanceKey, themeDisplay.getPlid());
+					}
+
+					writeObject = true;
 				}
-
-				writeObject = true;
 			}
 
 			if (writeObject) {

@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutSetBranch;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -247,17 +248,34 @@ public class LayoutsTreeTag extends IncludeTag {
 			return checkedNodesJSONArray.toString();
 		}
 
-		for (long checkedLayoutId : StringUtil.split(checkedLayoutIds, 0L)) {
-			Layout checkedLayout = LayoutLocalServiceUtil.fetchLayout(
-				_groupId, _privateLayout, checkedLayoutId);
+		long[] checkedLayoutIdsArray = StringUtil.split(checkedLayoutIds, 0L);
 
-			if (checkedLayout != null) {
-				checkedNodesJSONArray.put(
-					String.valueOf(checkedLayout.getPlid()));
+		if (ArrayUtil.contains(
+				checkedLayoutIdsArray, LayoutConstants.DEFAULT_PLID)) {
+
+			checkedNodesJSONArray.put(
+				String.valueOf(LayoutConstants.DEFAULT_PLID));
+
+			for (Layout layout :
+					LayoutLocalServiceUtil.getLayouts(
+						_groupId, _privateLayout)) {
+
+				checkedNodesJSONArray.put(String.valueOf(layout.getPlid()));
 			}
-			else if (checkedLayoutId == LayoutConstants.DEFAULT_PLID) {
-				checkedNodesJSONArray.put(
-					String.valueOf(LayoutConstants.DEFAULT_PLID));
+		}
+		else {
+			for (long checkedLayoutId : checkedLayoutIdsArray) {
+				Layout checkedLayout = LayoutLocalServiceUtil.fetchLayout(
+					_groupId, _privateLayout, checkedLayoutId);
+
+				if (checkedLayout != null) {
+					checkedNodesJSONArray.put(
+						String.valueOf(checkedLayout.getPlid()));
+				}
+				else if (checkedLayoutId == LayoutConstants.DEFAULT_PLID) {
+					checkedNodesJSONArray.put(
+						String.valueOf(LayoutConstants.DEFAULT_PLID));
+				}
 			}
 		}
 

@@ -21,6 +21,16 @@
 	<td>//div[contains(@class,'attribute-${key_sectionType}-section-root')]//button[contains(@class,'add-attribute')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>BREAKDOWN_ORIGINAL_POSITION</td>
+	<td>xpath=(//div[contains(@class,'attribute-list')]//div[@class='drag-handle'])[${indexStart}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BREAKDOWN_NEW_POSITION</td>
+	<td>xpath=(//div[contains(@class,'attribute-list')]//div[@class='drag-handle'])[${indexEnd}]</td>
+	<td></td>
+</tr>
 <!-- SEARCH_EVENT_ANALYSE -->
 <tr>
 	<td>SEARCH_BAR_EVENT_ANALYSE</td>

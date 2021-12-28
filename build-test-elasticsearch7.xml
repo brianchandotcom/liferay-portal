@@ -124,7 +124,8 @@ path.repo: ${liferay.home}/data/elasticsearch7/repo</echo>
 	<macrodef name="configure-elasticsearch-properties">
 		<sequential>
 			<echo append="true" file="${elasticsearch.dir}/config/elasticsearch.yml">${line.separator}bootstrap.system_call_filter: false
-cluster.name: LiferayElasticsearchCluster</echo>
+cluster.name: LiferayElasticsearchCluster
+xpack.license.self_generated.type: trial</echo>
 		</sequential>
 	</macrodef>
 
@@ -133,7 +134,8 @@ cluster.name: LiferayElasticsearchCluster</echo>
 			<echo file="${elasticsearch.dir}-2/config/elasticsearch.yml">${line.separator}bootstrap.system_call_filter: false
 cluster.name: LiferayElasticsearchClusterTwo
 http.port: 9202
-transport.port: 9500-9600</echo>
+transport.port: 9500-9600
+xpack.license.self_generated.type: trial</echo>
 		</sequential>
 	</macrodef>
 
@@ -658,58 +660,6 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 		</sequential>
 	</macrodef>
 
-	<macrodef name="start-elastic-trial">
-		<attribute default="" name="authentication.type" />
-		<attribute default="9200" name="elasticsearch.port" />
-
-		<sequential>
-			<if>
-				<equals arg1="@{authentication.type}" arg2="basic" />
-				<then>
-					<exec executable="curl" outputproperty="curl.elastic.trial.output">
-						<arg value="-X POST" />
-						<arg value="https://localhost:@{elasticsearch.port}/_license/start_trial?acknowledge=true" />
-						<arg value="-ku" />
-						<arg value="elastic:${elastic.xpack.elastic.user.password}" />
-					</exec>
-				</then>
-				<elseif>
-					<equals arg1="@{authentication.type}" arg2="PKI" />
-					<then>
-						<exec executable="curl" outputproperty="curl.elastic.trial.output">
-							<arg value="-X POST" />
-							<arg value="https://localhost:@{elasticsearch.port}/_license/start_trial?acknowledge=true" />
-							<arg value="--cert" />
-							<arg value="${elasticsearch.dir}/config/certs/elastic-certificates.crt" />
-							<arg value="--key" />
-							<arg value="${elasticsearch.dir}/config/certs/elastic-certificates.key" />
-							<arg value="-ku" />
-							<arg value="elastic:${elastic.xpack.elastic.user.password}" />
-						</exec>
-					</then>
-				</elseif>
-				<else>
-					<exec executable="curl" outputproperty="curl.elastic.trial.output">
-						<arg value="-X POST" />
-						<arg value="http://localhost:@{elasticsearch.port}/_license/start_trial?acknowledge=true" />
-					</exec>
-				</else>
-			</if>
-
-			<echo>${curl.elastic.trial.output}</echo>
-
-			<if>
-				<contains string="${curl.elastic.trial.output}" substring="&quot;trial_was_started&quot;:true" />
-				<then>
-					<echo>Trial license activated on Elasticsearch port @{elasticsearch.port}.</echo>
-				</then>
-				<else>
-					<fail>Trial license failed to activate on Elasticsearch port @{elasticsearch.port}.</fail>
-				</else>
-			</if>
-		</sequential>
-	</macrodef>
-
 	<macrodef name="start-elasticsearch-with-clustering">
 		<sequential>
 			<set-up-standard-elasticsearch />
@@ -799,10 +749,6 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 			<if>
 				<istrue value="${elasticsearch.ccr.enabled}" />
 				<then>
-					<start-elastic-trial />
-
-					<start-elastic-trial elasticsearch.port="9202" />
-
 					<configure-portal-ccr-osgi-properties />
 				</then>
 				<else>
@@ -847,19 +793,11 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 			<if>
 				<equals arg1="${elastic.pki.authentication.enabled}" arg2="true" />
 				<then>
-					<start-elastic-trial authentication.type="PKI" />
-
-					<antcall target="stop-elasticsearch" />
-
-					<antcall target="start-elasticsearch-node" />
-
 					<check-elasticsearch-security authentication.type="PKI" />
 
 					<configure-portal-x-pack-pki-osgi-properties />
 				</then>
 				<else>
-					<start-elastic-trial authentication.type="basic" />
-
 					<check-elasticsearch-security authentication.type="basic" />
 
 					<configure-portal-x-pack-osgi-properties />

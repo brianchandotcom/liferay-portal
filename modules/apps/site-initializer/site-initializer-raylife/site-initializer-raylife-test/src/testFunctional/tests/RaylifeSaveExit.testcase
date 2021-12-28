@@ -130,17 +130,17 @@ definition {
 
 		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
-		RaylifeHomePage.getAQuote();
+		RaylifeHomePage.startFlow();
 
-		Click(
-			locator1 = "RaylifeProduct#SELECT_PRODUCT",
-			selectProduct = "Business Owners Policy");
+		RaylifeContactInfo.typeBasicsInfoFields(
+			label = "basics.businessInformation.business.email",
+			value = "test@liferay.com");
 
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		Click(locator1 = "RaylifeSaveExit#SAVE_EXIT");
 
 		AssertTextEquals(
 			locator1 = "Raylife#ERROR_MESSAGE",
-			value1 = "There was an error processing your request. Please try again.");
+			value1 = "Unable to save your information. Please try again.");
 
 		Click(
 			locator1 = "RaylifeNavigation#SECTION_INCOMPLETED",

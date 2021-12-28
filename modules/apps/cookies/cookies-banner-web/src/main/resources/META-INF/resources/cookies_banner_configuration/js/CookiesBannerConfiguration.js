@@ -12,17 +12,16 @@
  * details.
  */
 
-const toggleFunctional = document.querySelector(
-	'.toggle-switch-check-functional'
-);
-const togglePerformance = document.querySelector(
-	'.toggle-switch-check-performance'
-);
-const togglePersonalization = document.querySelector(
-	'.toggle-switch-check-personalization'
-);
-
 export default function () {
+	const toggleFunctional = document.querySelector(
+		'.toggle-switch-check-functional'
+	);
+	const togglePerformance = document.querySelector(
+		'.toggle-switch-check-performance'
+	);
+	const togglePersonalization = document.querySelector(
+		'.toggle-switch-check-personalization'
+	);
 	if (
 		localStorage.getItem('liferay.cookie.consent.functional') === 'accepted'
 	) {

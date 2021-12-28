@@ -12,24 +12,7 @@
  * details.
  */
 
-const buttonAccept = document.querySelector('.cookies-banner-button-accept');
-const buttonConfiguration = document.querySelector(
-	'.cookies-banner-button-configuration'
-);
-const buttonDecline = document.querySelector('.cookies-banner-button-decline');
-const cookieBanner = document.querySelector('.cookies-banner');
-
-const editMode = document.body.classList.contains('has-edit-mode-menu');
-
-function hideCookiesBanner() {
-	cookieBanner.style.display = 'none';
-}
-
-function showCookiesBanner() {
-	cookieBanner.style.display = 'block';
-}
-
-function checkCookiesConsent() {
+function checkCookiesConsent(cookieBanner) {
 	if (
 		localStorage.getItem('liferay.cookie.consent.functional') ===
 			'accepted' ||
@@ -44,10 +27,10 @@ function checkCookiesConsent() {
 		localStorage.getItem('liferay.cookie.consent.personalization') ===
 			'decline'
 	) {
-		hideCookiesBanner();
+		cookieBanner.style.display = 'none';
 	}
 	else {
-		showCookiesBanner();
+		cookieBanner.style.display = 'block';
 	}
 }
 
@@ -64,13 +47,25 @@ function cookiesDeclineAll() {
 }
 
 export default function ({configurationTitle, configurationUrl}) {
+	const buttonAccept = document.querySelector(
+		'.cookies-banner-button-accept'
+	);
+	const buttonConfiguration = document.querySelector(
+		'.cookies-banner-button-configuration'
+	);
+	const buttonDecline = document.querySelector(
+		'.cookies-banner-button-decline'
+	);
+	const cookieBanner = document.querySelector('.cookies-banner');
+	const editMode = document.body.classList.contains('has-edit-mode-menu');
+
 	if (!editMode) {
-		checkCookiesConsent();
+		checkCookiesConsent(cookieBanner);
 
 		buttonAccept.addEventListener(
 			'click',
 			function handleButtonClickAccept() {
-				hideCookiesBanner();
+				cookieBanner.style.display = 'none';
 
 				cookiesAcceptAll();
 			}
@@ -86,7 +81,7 @@ export default function ({configurationTitle, configurationUrl}) {
 							onClick() {
 								cookiesDeclineAll();
 
-								checkCookiesConsent();
+								checkCookiesConsent(cookieBanner);
 
 								Liferay.Util.getOpener().Liferay.fire(
 									'closeModal',
@@ -100,7 +95,7 @@ export default function ({configurationTitle, configurationUrl}) {
 							displayType: 'secondary',
 							label: 'Confirm',
 							onClick() {
-								checkCookiesConsent();
+								checkCookiesConsent(cookieBanner);
 
 								Liferay.Util.getOpener().Liferay.fire(
 									'closeModal',
@@ -116,7 +111,7 @@ export default function ({configurationTitle, configurationUrl}) {
 							onClick() {
 								cookiesAcceptAll();
 
-								checkCookiesConsent();
+								checkCookiesConsent(cookieBanner);
 
 								Liferay.Util.getOpener().Liferay.fire(
 									'closeModal',
@@ -140,7 +135,7 @@ export default function ({configurationTitle, configurationUrl}) {
 		buttonDecline.addEventListener(
 			'click',
 			function handleButtonClickDecline() {
-				hideCookiesBanner();
+				cookieBanner.style.display = 'none';
 
 				cookiesDeclineAll();
 			}

@@ -190,6 +190,14 @@ definition {
 		}
 	}
 
+	macro viewAnalysisColumnInOrder {
+		var index = "${index}";
+
+		AssertTextEquals(
+			locator1 = "ACEventAnalysis#VIEW_ORDER_ANALYSIS_COLUMN",
+			value1 = "${columnName}");
+	}
+
 	macro viewChangedAttributeDataType {
 		var key_buttonName = "${attributeName}";
 

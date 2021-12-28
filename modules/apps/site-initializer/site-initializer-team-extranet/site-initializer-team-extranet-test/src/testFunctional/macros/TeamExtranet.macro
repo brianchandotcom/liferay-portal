@@ -1,0 +1,27 @@
+definition {
+
+	macro addTeamExtranetSite {
+		ApplicationsMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites");
+
+		LexiconEntry.gotoAdd();
+
+		LexiconCard.clickCard(card = "Team Extranet");
+
+		PortletEntry.inputName(name = "${siteName}");
+
+		Modal.save();
+
+		while (IsElementNotPresent(locator1 = "Raylife#SITE_TITLE", siteTitle = "${siteName}")) {
+			WaitForPageLoad();
+		}
+
+		Click(locator1 = "ProductMenu#TOGGLE");
+
+		WaitForElementPresent(
+			locator1 = "Raylife#SITE_TITLE",
+			siteTitle = "${siteName}");
+	}
+}

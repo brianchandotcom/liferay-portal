@@ -1,0 +1,25 @@
+[
+	{
+		"externalReferenceCode": "RAYLIFE_OPTION",
+		"facetable": false,
+		"key": "raylife-option",
+		"fieldType": "select",
+		"name": "Raylife Option",
+		"values": [
+			{
+				"externalReferenceCode": "PAY_IN_FULL",
+				"key": "pay_in_full",
+				"name": "Pay in Full",
+				"priority": 1
+			},
+			{
+				"externalReferenceCode": "INSTALLMENT",
+				"key": "installment",
+				"name": "Installment",
+				"priority": 0
+			}
+		],
+		"required": true,
+		"skuContributor": true
+	}
+]

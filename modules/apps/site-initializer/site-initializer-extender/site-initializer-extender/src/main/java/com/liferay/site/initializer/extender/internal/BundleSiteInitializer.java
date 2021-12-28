@@ -22,6 +22,8 @@ import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
+import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceCatalogLocalServiceUtil;
 import com.liferay.document.library.kernel.model.DLFileEntry;
@@ -47,7 +49,11 @@ import com.liferay.headless.admin.user.dto.v1_0.UserAccount;
 import com.liferay.headless.admin.user.resource.v1_0.AccountResource;
 import com.liferay.headless.admin.user.resource.v1_0.UserAccountResource;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Catalog;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Option;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductOption;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.CatalogResource;
+import com.liferay.headless.commerce.admin.catalog.resource.v1_0.OptionResource;
+import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductOptionResource;
 import com.liferay.headless.commerce.admin.channel.dto.v1_0.Channel;
 import com.liferay.headless.commerce.admin.channel.resource.v1_0.ChannelResource;
 import com.liferay.headless.delivery.dto.v1_0.Document;
@@ -587,6 +593,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 		for (String resourcePath : resourcePaths) {
 			if (resourcePath.endsWith(".options.json") ||
 				resourcePath.endsWith(".products.json") ||
+				resourcePath.endsWith(
+					".products.subscriptions.properties.json") ||
 				!resourcePath.endsWith(".json")) {
 
 				continue;
@@ -620,6 +628,12 @@ public class BundleSiteInitializer implements SiteInitializer {
 				assetVocabularyName, catalog, channel,
 				commerceInventoryWarehouses,
 				StringUtil.replaceLast(resourcePath, ".json", ".products.json"),
+				serviceContext);
+
+			_addSkuSubscriptions(
+				StringUtil.replaceLast(
+					resourcePath, ".json",
+					".products.subscriptions.properties.json"),
 				serviceContext);
 		}
 	}
@@ -2314,6 +2328,117 @@ public class BundleSiteInitializer implements SiteInitializer {
 			_addSiteNavigationMenu(
 				jsonArray.getJSONObject(i), serviceContext,
 				siteNavigationMenuItemSettings);
+		}
+	}
+
+	private void _addSkuSubscriptions(
+			String resourcePath, ServiceContext serviceContext)
+		throws Exception {
+
+		String json = _read(resourcePath);
+
+		if (json == null) {
+			return;
+		}
+
+		ProductOptionResource.Builder productOptionResourceBuilder =
+			_commerceReferencesHolder.productOptionResourceFactory.create();
+
+		ProductOptionResource productOptionResource =
+			productOptionResourceBuilder.user(
+				serviceContext.fetchUser()
+			).build();
+
+		OptionResource.Builder optionResourceBuilder =
+			_commerceReferencesHolder.optionResourceFactory.create();
+
+		OptionResource optionResource = optionResourceBuilder.user(
+			serviceContext.fetchUser()
+		).build();
+
+		JSONArray propertiesJSONArray = JSONFactoryUtil.createJSONArray(json);
+
+		for (int i = 0; i < propertiesJSONArray.length(); i++) {
+			JSONObject jsonObject = propertiesJSONArray.getJSONObject(i);
+
+			Page<Option> optionsPage = optionResource.getOptionsPage(
+				null,
+				optionResource.toFilter(
+					StringBundler.concat(
+						"name eq '",
+						StringUtil.toLowerCase(
+							jsonObject.getString("optionName")),
+						"'")),
+				null, null);
+
+			Option option = optionsPage.fetchFirstItem();
+
+			if (option != null) {
+				ProductOption[] productOptions = new ProductOption[1];
+
+				productOptions[0] = new ProductOption() {
+					{
+						facetable = option.getFacetable();
+						fieldType = option.getFieldType(
+						).toString();
+						key = option.getKey();
+						name = option.getName();
+						optionId = option.getId();
+						required = option.getRequired();
+						skuContributor = option.getSkuContributor();
+					}
+				};
+
+				CPDefinition cpDefinition =
+					_commerceReferencesHolder.cpDefinitionLocalService.
+						fetchCPDefinitionByCProductExternalReferenceCode(
+							jsonObject.getString(
+								"cpDefinitionExternalReferenceCode"),
+							serviceContext.getCompanyId());
+
+				productOptionResource.postProductIdProductOptionsPage(
+					cpDefinition.getCProductId(), productOptions);
+
+				_commerceReferencesHolder.cpInstanceLocalService.
+					buildCPInstances(
+						cpDefinition.getCPDefinitionId(), serviceContext);
+
+				JSONObject subscriptionTypeSettingsJSONObject =
+					jsonObject.getJSONObject("subscriptionTypeSettings");
+
+				UnicodeProperties subscriptionUnicodeProperties =
+					new UnicodeProperties();
+
+				if (subscriptionTypeSettingsJSONObject != null) {
+					for (String key :
+							subscriptionTypeSettingsJSONObject.keySet()) {
+
+						subscriptionUnicodeProperties.put(
+							key,
+							subscriptionTypeSettingsJSONObject.getString(key));
+					}
+				}
+
+				CPInstance cpInstance =
+					_commerceReferencesHolder.cpInstanceLocalService.
+						getCPInstance(
+							cpDefinition.getCPDefinitionId(), "INSTALLMENT");
+
+				_commerceReferencesHolder.cpInstanceLocalService.
+					updateSubscriptionInfo(
+						cpInstance.getCPInstanceId(),
+						jsonObject.getBoolean("overrideSubscriptionInfo"),
+						jsonObject.getBoolean("subscriptionEnabled"),
+						jsonObject.getInt("subscriptionLength"),
+						jsonObject.getString("subscriptionType"),
+						subscriptionUnicodeProperties,
+						jsonObject.getLong("maxSubscriptionCycles"),
+						jsonObject.getBoolean("deliverySubscriptionEnabled"),
+						jsonObject.getInt("deliverySubscriptionLength"),
+						jsonObject.getString("deliverySubscriptionType"),
+						new UnicodeProperties(),
+						jsonObject.getLong("deliveryMaxSubscriptionCycles"));
+			}
 		}
 	}
 

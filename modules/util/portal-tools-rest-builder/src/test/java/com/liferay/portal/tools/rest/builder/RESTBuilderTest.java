@@ -27,7 +27,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Stream;
 
 import org.apache.commons.io.FileUtils;
@@ -66,6 +65,8 @@ public class RESTBuilderTest {
 
 		_assertHyphensSupportInProperties(
 			filesPath, "Test", "property-with-hyphens");
+
+		_assertXMLSupportInProperties(filesPath, "Test", "xmlProperty");
 
 		File sampleApiDir = new File(filesPath + "/sample-api");
 
@@ -108,21 +109,18 @@ public class RESTBuilderTest {
 
 		Stream<String> stream = lines.stream();
 
-		Optional<String> propertyWithHyphensOptional = stream.filter(
-			line -> line.contains(
-				"access = JsonProperty.Access.READ_WRITE, value = \"" +
-					propertyName + "\"")
-		).findFirst();
-
-		Assert.assertTrue(propertyWithHyphensOptional.isPresent());
+		Assert.assertTrue(
+			stream.anyMatch(
+				line -> line.contains(
+					"access = JsonProperty.Access.READ_WRITE, value = \"" +
+						propertyName + "\"")));
 
 		stream = lines.stream();
 
-		Optional<String> serializePropertyWithHyphensOptional = stream.filter(
-			line -> line.contains("sb.append(\"" + propertyName + "\": \");")
-		).findFirst();
-
-		Assert.assertTrue(serializePropertyWithHyphensOptional.isPresent());
+		Assert.assertTrue(
+			stream.anyMatch(
+				line -> line.contains(
+					"sb.append(\"" + propertyName + "\": \");")));
 	}
 
 	private void _assertResourceFilesExist(
@@ -169,6 +167,26 @@ public class RESTBuilderTest {
 				resourceName, "Resource.java"));
 
 		Assert.assertTrue(resourceFolderFile.exists());
+	}
+
+	private void _assertXMLSupportInProperties(
+			String filesPath, String resourceName, String xmlPropertyName)
+		throws Exception {
+
+		File dtoResourceFile = new File(
+			_getResourcePath(
+				filesPath,
+				"/sample-api/src/main/java/com/example/sample/dto/v1_0_0/",
+				resourceName, ".java"));
+
+		List<String> lines = Files.readAllLines(dtoResourceFile.toPath());
+
+		Stream<String> stream = lines.stream();
+
+		Assert.assertTrue(
+			stream.anyMatch(
+				line -> line.contains(
+					"@XmlElement(name = \"" + xmlPropertyName + "\")")));
 	}
 
 	private String _getDependenciesPath() {

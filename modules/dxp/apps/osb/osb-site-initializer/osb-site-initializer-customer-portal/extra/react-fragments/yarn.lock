@@ -928,7 +928,7 @@
     "@babel/helper-validator-identifier" "^7.15.7"
     to-fast-properties "^2.0.0"
 
-"@clayui/button@^3.40.0":
+"@clayui/button@3.40.0", "@clayui/button@^3.40.0":
   version "3.40.0"
   resolved "https://registry.yarnpkg.com/@clayui/button/-/button-3.40.0.tgz#4a25d8edf820c1d8c3f0a0ea6fe2e6a2998b0e8b"
   integrity sha512-KB9S58B1aWFKs0oPEKOZC6ZPz4NrrUfgs3fggtIPH6fsjQO7vCTC+IQHD1oTX3WD/YwlawUQBZfWYESN5kXopw==
@@ -936,15 +936,15 @@
     "@clayui/icon" "^3.40.0"
     classnames "^2.2.6"
 
-"@clayui/css@^3.40.1":
-  version "3.40.1"
-  resolved "https://registry.yarnpkg.com/@clayui/css/-/css-3.40.1.tgz#d87b61c6940b08c4ca1b0d9efd717021cd591ac0"
-  integrity sha512-/srml/LVVFvtUlzOX/gsCaO/glMU9sNUUJ68lEtTPwvmlDNlPDJPgA9gSl80CaGo8Z/qiTmNta4w5Wr0ud7hTw==
+"@clayui/css@3.41.0":
+  version "3.41.0"
+  resolved "https://registry.yarnpkg.com/@clayui/css/-/css-3.41.0.tgz#8fb3d1568528a11caccaf7fd3a4eff25642a528e"
+  integrity sha512-ajAm3JJ/2LiDgqdS59JSTKI//2WhWIUFKVNAche1v5Eawf5n/G8kNFaj51LXQqIof+u8eZpJ2KHycr96HyaH/A==
 
-"@clayui/drop-down@^3.40.0":
-  version "3.40.0"
-  resolved "https://registry.yarnpkg.com/@clayui/drop-down/-/drop-down-3.40.0.tgz#59097336a08d85fbe12e1485f306ec18bb6685b6"
-  integrity sha512-7hE69t3n7KrWRztUi0ntOXYfDxj/u//Lxg2MJVq09xgBCy/DGaUrviqOQUuy9pttEmVyXvJQN2R6Nc0XExo9aQ==
+"@clayui/drop-down@3.41.0":
+  version "3.41.0"
+  resolved "https://registry.yarnpkg.com/@clayui/drop-down/-/drop-down-3.41.0.tgz#214a26606cfe99e69d7a6eb2b78c0c5d17022e47"
+  integrity sha512-4Dwaj/ip2rK9Mb2IU1GLWpnHslxqUCYszlmaycq8AKZ8CzdwZwc6vqa8q7vLxXAQThJun6ARXi+IBeICIoeF+w==
   dependencies:
     "@clayui/button" "^3.40.0"
     "@clayui/form" "^3.40.0"
@@ -2131,15 +2131,15 @@ randombytes@^2.1.0:
   dependencies:
     safe-buffer "^5.1.0"
 
-react-dom@16.8.6:
-  version "16.8.6"
-  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.8.6.tgz#71d6303f631e8b0097f56165ef608f051ff6e10f"
-  integrity sha512-1nL7PIq9LTL3fthPqwkvr2zY7phIPjYrT0jp4HjyEQrEROnw4dG41VVwi/wfoCneoleqrNX7iAD+pXebJZwrwA==
+react-dom@16.12.0:
+  version "16.12.0"
+  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.12.0.tgz#0da4b714b8d13c2038c9396b54a92baea633fe11"
+  integrity sha512-LMxFfAGrcS3kETtQaCkTKjMiifahaMySFDn71fZUNpPHZQEzmk/GiAeIT8JSOrHB23fnuCOMruL2a8NYlw+8Gw==
   dependencies:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
     prop-types "^15.6.2"
-    scheduler "^0.13.6"
+    scheduler "^0.18.0"
 
 react-is@^16.8.1:
   version "16.13.1"
@@ -2156,15 +2156,14 @@ react-transition-group@^4.4.1:
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
 
-react@16.8.6:
-  version "16.8.6"
-  resolved "https://registry.yarnpkg.com/react/-/react-16.8.6.tgz#ad6c3a9614fd3a4e9ef51117f54d888da01f2bbe"
-  integrity sha512-pC0uMkhLaHm11ZSJULfOBqV4tIZkx87ZLvbbQYunNixAAvjnC+snJCg0XQXn9VIsttVsbZP/H/ewzgsd5fxKXw==
+react@16.12.0:
+  version "16.12.0"
+  resolved "https://registry.yarnpkg.com/react/-/react-16.12.0.tgz#0c0a9c6a142429e3614834d5a778e18aa78a0b83"
+  integrity sha512-fglqy3k5E+81pA8s+7K0/T3DBCF0ZDOher1elBFzF7O6arXJgzyu/FW+COxFvAWXJoJN9KIZbT2LXlukwphYTA==
   dependencies:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
     prop-types "^15.6.2"
-    scheduler "^0.13.6"
 
 read-json-sync@^2.0.1:
   version "2.0.1"
@@ -2277,10 +2276,10 @@ sax@^1.2.4:
   resolved "https://registry.yarnpkg.com/sax/-/sax-1.2.4.tgz#2816234e2378bddc4e5354fab5caa895df7100d9"
   integrity sha512-NqVDv9TpANUjFm0N8uM5GxL36UgKi9/atZw+x7YFnQ8ckwFGKrl4xX4yWtrey3UJm5nP1kUbnYgLopqWNSRhWw==
 
-scheduler@^0.13.6:
-  version "0.13.6"
-  resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.13.6.tgz#466a4ec332467b31a91b9bf74e5347072e4cd889"
-  integrity sha512-IWnObHt413ucAYKsD9J1QShUKkbKLQQHdxRyw73sw4FN26iWr3DY/H34xGPe4nmL1DwXyWmSWmMrA9TfQbE/XQ==
+scheduler@^0.18.0:
+  version "0.18.0"
+  resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.18.0.tgz#5901ad6659bc1d8f3fdaf36eb7a67b0d6746b1c4"
+  integrity sha512-agTSHR1Nbfi6ulI0kYNK0203joW2Y5W4po4l+v03tOoiJKpTBbxpNhWDvqc/4IcOw+KLmSiQLTasZ4cab2/UWQ==
   dependencies:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"

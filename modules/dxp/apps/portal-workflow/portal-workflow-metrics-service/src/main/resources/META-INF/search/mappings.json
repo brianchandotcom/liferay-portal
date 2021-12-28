@@ -1141,6 +1141,10 @@
 				"store": true,
 				"type": "boolean"
 			},
+			"blocked": {
+				"store": true,
+				"type": "boolean"
+			},
 			"companyId": {
 				"store": true,
 				"type": "long"

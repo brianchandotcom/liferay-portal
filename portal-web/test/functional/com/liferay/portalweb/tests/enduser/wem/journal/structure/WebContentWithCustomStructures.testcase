@@ -1103,6 +1103,82 @@ definition {
 			webContentTitle = "WC WebContent Title");
 	}
 
+	@description = "LPS-102867 - Repeatable Select loses options"
+	@priority = "4"
+	test RepeatableSelectDisplaysOptions {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Select from List",
+			fieldName = "Select from List");
+
+		var index = "1";
+
+		for (var optionValue : list "option 1,option 2,option 3") {
+			DataEngine.addFieldOption(
+				fieldFieldLabel = "Select from List",
+				index = "${index}",
+				optionValue = "${optionValue}");
+
+			var index = ${index} + 1;
+		}
+
+		DataEngine.toggleFieldRepeatable(fieldFieldLabel = "Select from List");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Color",
+			fieldName = "Color");
+
+		DataEngine.toggleFieldRepeatable(fieldFieldLabel = "Color");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Geolocation",
+			fieldName = "Geolocation");
+
+		DataEngine.toggleFieldRepeatable(fieldFieldLabel = "Geolocation");
+
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+		WebContent.addWithStructureCP(
+			webContentSelectFromList = "option 1",
+			webContentSelectFromListFieldLabel = "Select from List",
+			webContentTitle = "WC WebContent Title");
+
+		Click(
+			key_fieldFieldLabel = "Select from List",
+			locator1 = "WCEditWebContent#SELECT_FIELD_TRIGGER");
+
+		for (var webContentSelectFromList1 : list "Choose an Option,option 1,option 2,option 3") {
+			AssertElementPresent(
+				key_menuItem = "${webContentSelectFromList1}",
+				locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+		}
+
+		DataEngine.addRepeatableField(fieldLabel = "Color");
+
+		DataEngine.addRepeatableField(fieldLabel = "Geolocation");
+
+		DataEngine.addRepeatableField(fieldLabel = "Select from List");
+
+		for (var webContentSelectFromList2 : list "Choose an Option,option 1,option 2,option 3") {
+			Click(
+				key_fieldFieldLabel = "Select from List",
+				locator1 = "WCEditWebContent#SELECT_FIELD_TRIGGER_2");
+
+			DropdownMenuItem.click(menuItem = "${webContentSelectFromList2}");
+		}
+	}
+
 	@description = "This is a test for LPS-96545. Cancel reset and reset the default values when edit default values in imported web content structure."
 	@priority = "4"
 	test ResetStructureDefaultValues {

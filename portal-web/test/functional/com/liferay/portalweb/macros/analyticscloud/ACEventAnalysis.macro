@@ -105,6 +105,14 @@ definition {
 		}
 	}
 
+	macro changeBreakdownPosition {
+		DragAndDrop.javaScriptDragAndDropToObject(
+			indexEnd = "${indexEnd}",
+			indexStart = "${indexStart}",
+			locator1 = "ACEventAnalysis#BREAKDOWN_ORIGINAL_POSITION",
+			locator2 = "ACEventAnalysis#BREAKDOWN_NEW_POSITION");
+	}
+
 	macro clickToAddBreakdownButton {
 		var key_sectionType = "breakdown";
 
@@ -143,6 +151,14 @@ definition {
 		var key_attributeName = "${attributeName}";
 
 		Click(locator1 = "ACEventAnalysis#SORT_ANALYSIS");
+	}
+
+	macro viewAnalysisColumnInOrder {
+		var index = "${index}";
+
+		AssertTextEquals(
+			locator1 = "ACEventAnalysis#VIEW_ORDER_ANALYSIS_COLUMN",
+			value1 = "${columnName}");
 	}
 
 	macro viewAnalysisDashboard {
@@ -190,14 +206,6 @@ definition {
 		}
 	}
 
-	macro viewAnalysisColumnInOrder {
-		var index = "${index}";
-
-		AssertTextEquals(
-			locator1 = "ACEventAnalysis#VIEW_ORDER_ANALYSIS_COLUMN",
-			value1 = "${columnName}");
-	}
-
 	macro viewChangedAttributeDataType {
 		var key_buttonName = "${attributeName}";
 
@@ -238,14 +246,6 @@ definition {
 
 			AssertElementNotPresent(locator1 = "ACUtils#GENERIC_BUTTON");
 		}
-	}
-
-	macro changeBreakdownPosition {
-		DragAndDrop.javaScriptDragAndDropToObject(
-			indexStart = "${indexStart}",
-			locator1 = "ACEventAnalysis#BREAKDOWN_ORIGINAL_POSITION",
-			indexEnd = "${indexEnd}",
-			locator2 = "ACEventAnalysis#BREAKDOWN_NEW_POSITION");
 	}
 
 }

@@ -255,6 +255,124 @@ definition {
 		}
 	}
 
+	@description = "Feature ID: LRAC-7868 | Automation ID: LRAC-10267 | Test Summary: Rearrange breakdown and assert data change and after rearrange to return to original state"
+	@priority = "4"
+	test AssertDataChangeWhenRearrangeBreakdownAndReturnOriginalState {
+		var attributeNameList = "category,pageTitle,url";
+
+		task ("Fill fields and create custom event") {
+			var customEventName = ACCustomEvents.generateCustomEventName();
+
+			ACCustomEvents.createCustomEvent(
+				customEventName = "${customEventName}",
+				timeToSendCustomEvent = "1");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch the property in AC and go to event analysis") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+
+			ACNavigation.goToEventAnalysis();
+		}
+
+		task ("Add the custom event to analysis") {
+			ACEventAnalysis.addEvent(customEventName = "${customEventName}");
+		}
+
+		task ("Add the 3 breakdown to analysis") {
+			ACEventAnalysis.addBreakdown(attributeNameList = "${attributeNameList}");
+		}
+
+		task ("Change the time filter to 24 hours") {
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast24Hours();
+		}
+
+		task ("Check the order of analysis columns") {
+			ACEventAnalysis.viewAnalysisColumnInOrder(
+				columnName = "category",
+				index = "1");
+
+			ACEventAnalysis.viewAnalysisColumnInOrder(
+				columnName = "pageTitle",
+				index = "2");
+
+			ACEventAnalysis.viewAnalysisColumnInOrder(
+				columnName = "url",
+				index = "3");
+		}
+
+		task ("Change the breakdown position order") {
+			ACEventAnalysis.changeBreakdownPosition(
+				indexEnd = "1",
+				indexStart = "2");
+		}
+
+		task ("Check the order of the columns of the analysis has changed") {
+			ACEventAnalysis.viewAnalysisColumnInOrder(
+				columnName = "pageTitle",
+				index = "1");
+
+			ACEventAnalysis.viewAnalysisColumnInOrder(
+				columnName = "category",
+				index = "2");
+
+			ACEventAnalysis.viewAnalysisColumnInOrder(
+				columnName = "url",
+				index = "3");
+		}
+
+		task ("Change the breakdown position order") {
+			ACEventAnalysis.changeBreakdownPosition(
+				indexEnd = "1",
+				indexStart = "3");
+		}
+
+		task ("Check the order of the columns of the analysis has changed") {
+			ACEventAnalysis.viewAnalysisColumnInOrder(
+				columnName = "url",
+				index = "1");
+
+			ACEventAnalysis.viewAnalysisColumnInOrder(
+				columnName = "pageTitle",
+				index = "2");
+
+			ACEventAnalysis.viewAnalysisColumnInOrder(
+				columnName = "category",
+				index = "3");
+		}
+
+		task ("Change the breakdown position order to return to the original positions") {
+			ACEventAnalysis.changeBreakdownPosition(
+				indexEnd = "3",
+				indexStart = "1");
+
+			ACEventAnalysis.changeBreakdownPosition(
+				indexEnd = "1",
+				indexStart = "3");
+		}
+
+		task ("Check that the order of the analysis columns returned to the original order") {
+			ACEventAnalysis.viewAnalysisColumnInOrder(
+				columnName = "category",
+				index = "1");
+
+			ACEventAnalysis.viewAnalysisColumnInOrder(
+				columnName = "pageTitle",
+				index = "2");
+
+			ACEventAnalysis.viewAnalysisColumnInOrder(
+				columnName = "url",
+				index = "3");
+		}
+	}
+
 	@description = "Feature ID: LRAC-7868 | Automation ID: LRAC-10266 | Test Summary: Event Analysis is reset when removing the event"
 	@priority = "4"
 	test AssertRemovedEventIsNotPresent {
@@ -844,124 +962,6 @@ definition {
 		}
 	}
 
-	@description = "Feature ID: LRAC-7868 | Automation ID: LRAC-10267 | Test Summary: Rearrange breakdown and assert data change and after rearrange to return to original state"
-	@priority = "4"
-	test AssertDataChangeWhenRearrangeBreakdownAndReturnOriginalState {
-		var attributeNameList = "category,pageTitle,url";
-
-		task ("Fill fields and create custom event") {
-			var customEventName = ACCustomEvents.generateCustomEventName();
-
-			ACCustomEvents.createCustomEvent(
-				customEventName = "${customEventName}",
-				timeToSendCustomEvent = "1");
-		}
-
-		task ("Close sessions") {
-			ACUtils.closeAllSessionsAndWait();
-		}
-
-		task ("Switch the property in AC and go to event analysis") {
-			ACUtils.launchAC();
-
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
-
-			ACNavigation.goToEventAnalysis();
-		}
-
-		task ("Add the custom event to analysis") {
-			ACEventAnalysis.addEvent(customEventName = "${customEventName}");
-		}
-
-		task ("Add the 3 breakdown to analysis") {
-			ACEventAnalysis.addBreakdown(attributeNameList = "${attributeNameList}");
-		}
-
-		task ("Change the time filter to 24 hours") {
-			ACTimeFilter.clickTimeFilterButton();
-
-			ACTimeFilter.setLast24Hours();
-		}
-
-		task ("Check the order of analysis columns") {
-			ACEventAnalysis.viewAnalysisColumnInOrder(
-				index = "1",
-				columnName = "category");
-
-			ACEventAnalysis.viewAnalysisColumnInOrder(
-				index = "2",
-				columnName = "pageTitle");
-
-			ACEventAnalysis.viewAnalysisColumnInOrder(
-				index = "3",
-				columnName = "url");
-		}
-
-		task ("Change the breakdown position order") {
-			ACEventAnalysis.changeBreakdownPosition(
-				indexStart = "2",
-				indexEnd = "1");
-		}
-
-		task ("Check the order of the columns of the analysis has changed") {
-			ACEventAnalysis.viewAnalysisColumnInOrder(
-				index = "1",
-				columnName = "pageTitle");
-
-			ACEventAnalysis.viewAnalysisColumnInOrder(
-				index = "2",
-				columnName = "category");
-
-			ACEventAnalysis.viewAnalysisColumnInOrder(
-				index = "3",
-				columnName = "url");
-		}
-
-		task ("Change the breakdown position order") {
-			ACEventAnalysis.changeBreakdownPosition(
-				indexStart = "3",
-				indexEnd = "1");
-		}
-
-		task ("Check the order of the columns of the analysis has changed") {
-			ACEventAnalysis.viewAnalysisColumnInOrder(
-				index = "1",
-				columnName = "url");
-
-			ACEventAnalysis.viewAnalysisColumnInOrder(
-				index = "2",
-				columnName = "pageTitle");
-
-			ACEventAnalysis.viewAnalysisColumnInOrder(
-				index = "3",
-				columnName = "category");
-		}
-
-		task ("Change the breakdown position order to return to the original positions") {
-			ACEventAnalysis.changeBreakdownPosition(
-				indexStart = "1",
-				indexEnd = "3");
-
-			ACEventAnalysis.changeBreakdownPosition(
-				indexStart = "3",
-				indexEnd = "1");
-		}
-
-		task ("Check that the order of the analysis columns returned to the original order") {
-			ACEventAnalysis.viewAnalysisColumnInOrder(
-				index = "1",
-				columnName = "category");
-
-			ACEventAnalysis.viewAnalysisColumnInOrder(
-				index = "2",
-				columnName = "pageTitle");
-
-			ACEventAnalysis.viewAnalysisColumnInOrder(
-				index = "3",
-				columnName = "url");
-		}
-	}
-
 	@description = "Feature ID: LRAC-7868 | Automation ID: LRAC-10272 | Test Summary: Sorting the analysis result after rearranging the breakdowns"
 	@priority = "3"
 	test SortTheResultsAnalysisAfterRearrangingBreakdowns {
@@ -1029,8 +1029,8 @@ definition {
 
 		task ("Change the breakdown position order") {
 			ACEventAnalysis.changeBreakdownPosition(
-				indexStart = "3",
-				indexEnd = "1");
+				indexEnd = "1",
+				indexStart = "3");
 		}
 
 		task ("Sort the analysis list and check the positions") {
@@ -1054,8 +1054,8 @@ definition {
 
 		task ("Change the breakdown position order") {
 			ACEventAnalysis.changeBreakdownPosition(
-				indexStart = "3",
-				indexEnd = "1");
+				indexEnd = "1",
+				indexStart = "3");
 		}
 
 		task ("Sort the analysis list and check the positions") {

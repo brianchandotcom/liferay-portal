@@ -119,14 +119,14 @@ public class BasicFragmentCompositionVerticalCard
 
 	@Override
 	public String getSubtitle() {
-		Date statusDate = _fragmentComposition.getStatusDate();
+		Date modifiedDate = _fragmentComposition.getModifiedDate();
 
-		String statusDateDescription = LanguageUtil.getTimeDescription(
+		String modifiedDateDescription = LanguageUtil.getTimeDescription(
 			_httpServletRequest,
-			System.currentTimeMillis() - statusDate.getTime(), true);
+			System.currentTimeMillis() - modifiedDate.getTime(), true);
 
 		return LanguageUtil.format(
-			_httpServletRequest, "x-ago", statusDateDescription);
+			_httpServletRequest, "modified-x-ago", modifiedDateDescription);
 	}
 
 	@Override

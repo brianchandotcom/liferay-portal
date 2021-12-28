@@ -51,7 +51,8 @@ public class TransactionContainerRequestFilter
 		throws IOException {
 
 		boolean transactionDisabledHeader = GetterUtil.getBoolean(
-			containerRequestContext.getHeaderString("X-Transaction-Disabled"));
+			containerRequestContext.getHeaderString(
+				"X-Liferay-Transaction-Disabled"));
 
 		if (transactionDisabledHeader) {
 			if (_log.isDebugEnabled()) {

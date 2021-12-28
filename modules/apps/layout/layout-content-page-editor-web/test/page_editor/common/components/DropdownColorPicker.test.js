@@ -51,6 +51,7 @@ const COLORS = {
 
 const renderDropdownColorPicker = ({
 	active = false,
+	fieldName,
 	label = 'default',
 	onSetActive = () => {},
 	onValueChange = () => {},
@@ -62,6 +63,7 @@ const renderDropdownColorPicker = ({
 			active={active}
 			colors={COLORS}
 			config={CONFIG}
+			fieldName={fieldName}
 			label={label}
 			onSetActive={onSetActive}
 			onValueChange={onValueChange}
@@ -198,5 +200,16 @@ describe('DropdownColorPicker', () => {
 		});
 
 		expect(queryByText('no-results-found')).toBeInTheDocument();
+	});
+
+	it('disables the color splotch if the field name matches the token', () => {
+		const {getByTitle} = renderDropdownColorPicker({
+			active: true,
+			fieldName: 'color3',
+		});
+
+		expect(getByTitle('Color 1')).not.toBeDisabled();
+		expect(getByTitle('Color 2')).not.toBeDisabled();
+		expect(getByTitle('Color 3')).toBeDisabled();
 	});
 });

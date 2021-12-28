@@ -142,13 +142,6 @@ function ManagementToolbar({
 						/>
 					)}
 
-					{showInfoButton && (
-						<InfoPanelControl
-							infoPanelId={infoPanelId}
-							onInfoButtonClick={onInfoButtonClick}
-						/>
-					)}
-
 					{active ? (
 						<>
 							<ActionControls
@@ -204,6 +197,13 @@ function ManagementToolbar({
 								</ClayManagementToolbar.Item>
 							)}
 						</>
+					)}
+
+					{showInfoButton && (
+						<InfoPanelControl
+							infoPanelId={infoPanelId}
+							onInfoButtonClick={onInfoButtonClick}
+						/>
 					)}
 				</ClayManagementToolbar.ItemList>
 			</ClayManagementToolbar>

@@ -27,6 +27,8 @@ import ResultsBar from './ResultsBar';
 import SearchControls from './SearchControls';
 import SelectionControls from './SelectionControls';
 
+import './ManagementToolbar.scss';
+
 function ManagementToolbar({
 	clearResultsURL,
 	clearSelectionURL,
@@ -214,6 +216,7 @@ function ManagementToolbar({
 						<InfoPanelControl
 							infoPanelId={infoPanelId}
 							onInfoButtonClick={onInfoButtonClick}
+							separator={active}
 						/>
 					)}
 				</ClayManagementToolbar.ItemList>

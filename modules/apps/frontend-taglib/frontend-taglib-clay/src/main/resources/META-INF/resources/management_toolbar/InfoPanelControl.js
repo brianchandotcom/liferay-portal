@@ -14,9 +14,13 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayManagementToolbar from '@clayui/management-toolbar';
-import React, {useEffect, useRef} from 'react';
+import classNames from 'classnames';
+import React, {useContext, useEffect, useRef} from 'react';
 
-const InfoPanelControl = ({infoPanelId, onInfoButtonClick}) => {
+import FeatureFlagContext from './FeatureFlagContext';
+
+const InfoPanelControl = ({infoPanelId, onInfoButtonClick, separator}) => {
+	const {showDesignImprovements} = useContext(FeatureFlagContext);
 	const infoButtonRef = useRef();
 
 	useEffect(() => {
@@ -42,7 +46,14 @@ const InfoPanelControl = ({infoPanelId, onInfoButtonClick}) => {
 	}, [infoButtonRef, infoPanelId]);
 
 	return (
-		<ClayManagementToolbar.Item>
+		<ClayManagementToolbar.Item
+			className={
+				showDesignImprovements &&
+				classNames('d-none d-md-flex', {
+					'management-bar-separator-left': separator,
+				})
+			}
+		>
 			<ClayButtonWithIcon
 				className="nav-link nav-link-monospaced"
 				displayType="unstyled"

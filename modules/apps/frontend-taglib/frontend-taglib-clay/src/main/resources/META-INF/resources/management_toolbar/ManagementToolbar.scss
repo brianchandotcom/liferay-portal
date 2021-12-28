@@ -1,0 +1,9 @@
+@import 'atlas-variables';
+
+.management-bar-separator-left::before {
+	background-color: $gray-500;
+	content: '';
+	height: 16px;
+	margin: 0 10px;
+	width: 1px;
+}

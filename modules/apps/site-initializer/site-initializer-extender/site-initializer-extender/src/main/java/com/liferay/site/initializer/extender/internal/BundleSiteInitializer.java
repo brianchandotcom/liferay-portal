@@ -2449,12 +2449,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 			String externalReferenceCode = jsonObject.getString(
 				"externalReferenceCode");
 
-			Page<UserAccount> userAccountsPage =
-				userAccountResource.
-					getAccountUserAccountsByExternalReferenceCodePage(
-						externalReferenceCode, null, null, null, null);
-
-			UserAccount existingUserAccount = userAccountsPage.fetchFirstItem();
+			User existingUserAccount =
+				_userLocalService.fetchUserByEmailAddress(
+					serviceContext.getCompanyId(),
+					userAccount.getEmailAddress());
 
 			if (existingUserAccount == null) {
 				userAccountResource.
@@ -2464,8 +2462,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 				continue;
 			}
 
-			userAccountResource.patchUserAccount(
-				existingUserAccount.getId(), userAccount);
+			userAccountResource.
+				postAccountUserAccountByExternalReferenceCodeByEmailAddress(
+					externalReferenceCode,
+					existingUserAccount.getEmailAddress());
 		}
 	}
 

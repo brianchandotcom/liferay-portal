@@ -37,7 +37,7 @@ describe('The Sidebar component should', () => {
 
 		const nodes = container.querySelectorAll('div.node');
 
-		expect(nodes.length).toBe(3);
+		expect(nodes.length).toBe(4);
 		expect(nodes[0].classList).toContain('end-node');
 		expect(nodes[1].classList).toContain('start-node');
 		expect(nodes[2].classList).toContain('state-node');

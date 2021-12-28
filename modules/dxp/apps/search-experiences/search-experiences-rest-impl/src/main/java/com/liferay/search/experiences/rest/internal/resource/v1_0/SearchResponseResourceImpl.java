@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.document.Field;
 import com.liferay.portal.search.searcher.SearchRequest;
+import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -71,36 +72,7 @@ public class SearchResponseResourceImpl extends BaseSearchResponseResourceImpl {
 		throws Exception {
 
 		try {
-			return toSearchResponse(
-				_searcher.search(
-					_searchRequestBuilderFactory.builder(
-					).companyId(
-						contextCompany.getCompanyId()
-					).emptySearchEnabled(
-						true
-					).from(
-						pagination.getStartPosition()
-					).queryString(
-						queryString
-					).size(
-						pagination.getPageSize()
-					).withSearchContext(
-						searchContext -> searchContext.setAttribute(
-							"search.experiences.ip.address",
-							contextHttpServletRequest.getRemoteAddr())
-					).withSearchContext(
-						searchContext -> searchContext.setUserId(
-							contextUser.getUserId())
-					).withSearchRequestBuilder(
-						searchRequestBuilder -> {
-							if (sxpBlueprint != null) {
-								_sxpBlueprintSearchRequestEnhancer.enhance(
-									searchRequestBuilder,
-									String.valueOf(
-										SXPBlueprintUtil.unpack(sxpBlueprint)));
-							}
-						}
-					).build()));
+			return search(pagination, queryString, sxpBlueprint);
 		}
 		catch (RuntimeException runtimeException) {
 			if ((runtimeException.getClass() == RuntimeException.class) &&
@@ -116,6 +88,68 @@ public class SearchResponseResourceImpl extends BaseSearchResponseResourceImpl {
 
 			throw runtimeException;
 		}
+	}
+
+	protected SearchResponse search(
+		Pagination pagination, String queryString, SXPBlueprint sxpBlueprint) {
+
+		SearchRequestBuilder searchRequestBuilder =
+			_searchRequestBuilderFactory.builder(
+			).companyId(
+				contextCompany.getCompanyId()
+			).emptySearchEnabled(
+				true
+			).from(
+				pagination.getStartPosition()
+			).queryString(
+				queryString
+			).size(
+				pagination.getPageSize()
+			).withSearchContext(
+				searchContext -> searchContext.setAttribute(
+					"search.experiences.ip.address",
+					contextHttpServletRequest.getRemoteAddr())
+			).withSearchContext(
+				searchContext -> searchContext.setUserId(
+					contextUser.getUserId())
+			);
+
+		RuntimeException runtimeException = new RuntimeException();
+
+		try {
+			if (sxpBlueprint != null) {
+				_sxpBlueprintSearchRequestEnhancer.enhance(
+					searchRequestBuilder,
+					String.valueOf(SXPBlueprintUtil.unpack(sxpBlueprint)));
+			}
+		}
+		catch (Exception exception) {
+			runtimeException.addSuppressed(exception);
+		}
+
+		if (_hasErrors(runtimeException)) {
+			throw runtimeException;
+		}
+
+		try {
+			SearchResponse searchResponse = toSearchResponse(
+				_searcher.search(searchRequestBuilder.build()));
+
+			// TODO add warnings to SearchResponse DTO for client side rendering
+
+			if (ArrayUtil.isNotEmpty(runtimeException.getSuppressed())) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(runtimeException);
+				}
+			}
+
+			return searchResponse;
+		}
+		catch (Exception exception) {
+			runtimeException.addSuppressed(exception);
+		}
+
+		throw runtimeException;
 	}
 
 	protected SearchResponse toSearchResponse(
@@ -172,6 +206,38 @@ public class SearchResponseResourceImpl extends BaseSearchResponseResourceImpl {
 		}
 
 		return null;
+	}
+
+	private boolean _hasErrors(Throwable throwable1) {
+		if (_isWarning(throwable1)) {
+			return false;
+		}
+
+		if ((throwable1.getClass() == RuntimeException.class) &&
+			Validator.isBlank(throwable1.getMessage())) {
+
+			for (Throwable throwable2 : throwable1.getSuppressed()) {
+				if (_hasErrors(throwable2)) {
+					return true;
+				}
+			}
+
+			return false;
+		}
+
+		return true;
+	}
+
+	private boolean _isWarning(Throwable throwable) {
+		Class<? extends Throwable> clazz = throwable.getClass();
+
+		String simpleName = clazz.getSimpleName();
+
+		if (simpleName.equals("InvalidElementInstanceException")) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private Map<String, DocumentField> _toDocumentFields(

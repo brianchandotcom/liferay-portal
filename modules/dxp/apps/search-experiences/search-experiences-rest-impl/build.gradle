@@ -21,4 +21,5 @@ dependencies {
 	compileOnly project(":dxp:apps:search-experiences:search-experiences-rest-api")
 
 	testCompile project(":apps:portal-search:portal-search")
+	testCompile project(":dxp:apps:search-experiences:search-experiences-service")
 }

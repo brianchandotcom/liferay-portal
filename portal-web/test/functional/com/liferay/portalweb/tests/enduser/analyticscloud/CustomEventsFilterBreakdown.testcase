@@ -962,4 +962,120 @@ definition {
 		}
 	}
 
+	@description = "Feature ID: LRAC-7868 | Automation ID: LRAC-10272 | Test Summary: Sorting the analysis result after rearranging the breakdowns"
+	@priority = "3"
+	test SortTheResultsAnalysisAfterRearrangingBreakdowns {
+		var attributeNameList = "pageTitle,url,category";
+		var layoutNameList = "Custom 1,Custom 2";
+		var dataSource = StringUtil.extractFirst("${assignedPropertyName}", " ");
+
+		task ("Fill fields and create custom event") {
+			var customEventName = ACCustomEvents.generateCustomEventName();
+
+			ACCustomEvents.createCustomEvent(
+				customEventName = "${customEventName}",
+				timeToSendCustomEvent = "3");
+		}
+
+		task ("Create new pages and place custom event fields") {
+			for (var layoutName : list "${layoutNameList}") {
+				ACUtils.addPage(layoutName = "${layoutName}");
+
+				ACCustomEvents.addWCWithCustomEventToPage(layoutName = "${layoutName}");
+			}
+		}
+
+		task ("Fill fields and make new interactions with custom event") {
+			ACCustomEvents.createCustomEvent(
+				customEventName = "${customEventName}",
+				timeToSendCustomEvent = "2");
+		}
+
+		task ("Fill fields and make new interactions with custom event") {
+			ACUtils.navigateToSitePage(
+				pageName = "Custom 1",
+				siteName = "Site Name");
+
+			ACCustomEvents.createCustomEvent(
+				customEventName = "${customEventName}",
+				timeToSendCustomEvent = "1");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch the property in AC and go to event analysis") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+
+			ACNavigation.goToEventAnalysis();
+		}
+
+		task ("Add the custom event to analysis") {
+			ACEventAnalysis.addEvent(customEventName = "${customEventName}");
+		}
+
+		task ("Add the breakdown to analysis") {
+			ACEventAnalysis.addBreakdown(attributeNameList = "${attributeNameList}");
+		}
+
+		task ("Change the time filter to 24 hours") {
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast24Hours();
+		}
+
+		task ("Change the breakdown position order") {
+			ACEventAnalysis.changeBreakdownPosition(
+				indexStart = "3",
+				indexEnd = "1");
+		}
+
+		task ("Sort the analysis list and check the positions") {
+			ACEventAnalysis.sortAnalysis(attributeName = "pageTitle");
+
+			ACEventAnalysis.viewAnalysisInformationInOrder(
+				commonInformation = "site name",
+				index = "1",
+				informationValue = "custom 1 - site name - ${dataSource}");
+
+			ACEventAnalysis.viewAnalysisInformationInOrder(
+				commonInformation = "site name",
+				index = "2",
+				informationValue = "custom 2 - site name - ${dataSource}");
+
+			ACEventAnalysis.viewAnalysisInformationInOrder(
+				commonInformation = "site name",
+				index = "3",
+				informationValue = "ac page - site name - ${dataSource}");
+		}
+
+		task ("Change the breakdown position order") {
+			ACEventAnalysis.changeBreakdownPosition(
+				indexStart = "3",
+				indexEnd = "1");
+		}
+
+		task ("Sort the analysis list and check the positions") {
+			ACEventAnalysis.sortAnalysis(attributeName = "pageTitle");
+
+			ACEventAnalysis.viewAnalysisInformationInOrder(
+				commonInformation = "site name",
+				index = "1",
+				informationValue = "ac page - site name - ${dataSource}");
+
+			ACEventAnalysis.viewAnalysisInformationInOrder(
+				commonInformation = "site name",
+				index = "2",
+				informationValue = "custom 2 - site name - ${dataSource}");
+
+			ACEventAnalysis.viewAnalysisInformationInOrder(
+				commonInformation = "site name",
+				index = "3",
+				informationValue = "custom 1 - site name - ${dataSource}");
+		}
+	}
+
 }

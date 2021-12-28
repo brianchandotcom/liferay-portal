@@ -603,6 +603,8 @@ definition {
 				configurationCategory = "User Authentication",
 				configurationName = "General",
 				configurationScope = "Virtual Instance Scope");
+
+			PortalSettings.uncheckStrangersVerifyEmailCheckbox();
 		}
 
 		task ("Go to Masterclass Site") {
@@ -617,24 +619,26 @@ definition {
 
 		task ("Create a New Account") {
 			Masterclass.createAccount(
-				emailAddress = "user@liferay.com",
-				firstName = "User",
-				lastName = "User",
+				emailAddress = "usera@liferay.com",
+				firstName = "Usera",
+				lastName = "Usera",
 				password = "user",
-				screenName = "User");
+				screenName = "Usera");
 		}
 
 		task ("Sign In the New Account and Assert the User Name") {
 			User.firstLoginUI(
-				password = "test",
+				password = "user",
 				specificURL = "http://localhost:8080/web/test-masterclass-name/sign-in",
-				userEmailAddress = "user@liferay.com");
+				userEmailAddress = "usera@liferay.com");
 
 			User.resetPassword();
 
+			User.answerPasswordReminder();
+
 			AssertElementPresent(
-				locator1 = "Masterclass#FIRST_LOGIN",
-				userName = "User");
+				labelName = "Usera",
+				locator1 = "Masterclass#LABEL_NAME");
 		}
 	}
 

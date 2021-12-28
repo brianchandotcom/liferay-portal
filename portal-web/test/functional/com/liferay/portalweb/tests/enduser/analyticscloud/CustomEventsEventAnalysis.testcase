@@ -1,0 +1,158 @@
+@component-name = "portal-analytics-cloud"
+definition {
+
+	property custom.properties = "jsonws.web.service.paths.excludes=";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property property.group = "analytics.cloud.profile";
+	property testray.main.component.name = "Analytics Cloud";
+
+	setUp {
+		task ("Copy the token from AC") {
+			ACUtils.launchAC();
+
+			ACSettings.takeTokenFromAnalyticsCloud();
+		}
+
+		task ("Set up instance and sign in DXP") {
+			TestCase.setUpPortalInstance();
+
+			ACUtils.launchDXP();
+		}
+
+		task ("Add a new site with a public widget page") {
+			ACUtils.addSiteAndPage();
+		}
+
+		task ("Add a Web Content Display to page and display the custom event") {
+			ACCustomEvents.createWCWithCustomEventAndAddToPage();
+		}
+
+		task ("Add a new user") {
+			JSONUser.addUser(
+				userEmailAddress = "ac@liferay.com",
+				userFirstName = "ac",
+				userLastName = "ac",
+				userScreenName = "ac");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "ac@liferay.com");
+		}
+
+		task ("Connect the DXP to AC") {
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Sign in as new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "ac@liferay.com",
+				userLoginFullName = "ac ac");
+		}
+
+		task ("View the site page") {
+			ACUtils.navigateToSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		ACUtils.tearDownDXP();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
+		}
+
+		JSONUser.tearDownNonAdminUsers();
+
+		ACUtils.tearDownAC();
+	}
+
+	@description = "Feature ID: LRAC-4266 | Automation ID: LRAC-10292 | Test Summary: Creating Events from All tab, default tab and custom tab and Event Attributes"
+	@priority = "5"
+	test CreateEventAnalysisFromAllAndDefaultAndCustomTab {
+		var attributeName = "pageTitle";
+        var defaultEventName = "pageViewed";
+        var dataSource = StringUtil.extractFirst("${assignedPropertyName}", " ");
+
+		task ("Fill fields and create custom event") {
+			var customEventName = ACCustomEvents.generateCustomEventName();
+
+			ACCustomEvents.createCustomEvent(
+				customEventName = "${customEventName}",
+				timeToSendCustomEvent = "1");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch the property in AC and go to event analysis") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+
+			ACNavigation.goToEventAnalysis();
+		}
+
+		task ("Add the custom event to analysis by the all tab") {
+			ACEventAnalysis.addEvent(customEventName = "${customEventName}");
+		}
+
+		task ("Add the breakdown to analysis") {
+			ACEventAnalysis.addBreakdown(attributeName = "${attributeName}");
+		}
+
+		task ("Check the analysis result appears") {
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast24Hours();
+
+			ACEventAnalysis.viewAnalysisInformation(informationValueList = "ac page - site name - ${dataSource}");
+		}
+
+        task ("Remove the custom event from the analysis") {
+			ACEventAnalysis.removeFromAnalysis(removeValue = "${customEventName}");
+        }
+
+        task ("Add the default event to analysis by the default tab") {
+			ACEventAnalysis.addEvent(
+                tabName = "Default",
+                customEventName = "${defaultEventName}");
+		}
+
+        task ("Add the breakdown to analysis") {
+			ACEventAnalysis.addBreakdown(attributeName = "${attributeName}");
+		}
+
+        task ("Check the analysis result appears") {
+			ACEventAnalysis.viewAnalysisInformation(informationValueList = "ac page - site name - ${dataSource}");
+		}
+
+        task ("Remove the default event from the analysis") {
+			ACEventAnalysis.removeFromAnalysis(removeValue = "${defaultEventName}");
+        }
+
+        task ("Add the custom event for analysis by the custom tab") {
+			ACEventAnalysis.addEvent(
+                tabName = "Custom",
+                customEventName = "${customEventName}");
+		}
+
+        task ("Add the breakdown to analysis") {
+			ACEventAnalysis.addBreakdown(attributeName = "${attributeName}");
+		}
+
+        task ("Check the analysis result appears") {
+			ACEventAnalysis.viewAnalysisInformation(informationValueList = "ac page - site name - ${dataSource}");
+		}
+	}
+
+}

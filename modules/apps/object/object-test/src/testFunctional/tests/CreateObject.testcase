@@ -1066,12 +1066,29 @@ definition {
 	}
 
 	@description = "LPS-137879 - Verify it is possible to delete a Custom Object field before the Object is published"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanDeleteCustomObjectFieldBeforePublished {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-		// TODO LPS-141643 CanDeleteCustomObjectFieldBeforePublished pending implementation
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "Custom Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject");
 
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+		ObjectAdmin.goToFieldsTab();
+
+		ObjectAdmin.deleteObjectField(fieldName = "Custom Field");
+
+		ObjectAdmin.assertObjectFieldNotPresent(fieldLabel = "Custom Field");
 	}
 
 	@description = "LPS-135397 - Verify if it's possible to delete a Field"

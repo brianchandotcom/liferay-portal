@@ -480,6 +480,11 @@
 		<td>//input[@id='objectDefinitionName']/following-sibling::div//span[contains(text(),'Required')]</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>BODY_VERTICAL_ELLIPSIS</td>
+		<td>//div[@class='table-list-title']/../../../*[contains(.,'${key_value}')]//*[name()='svg'][contains(@class,'icon-ellipsis')]</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

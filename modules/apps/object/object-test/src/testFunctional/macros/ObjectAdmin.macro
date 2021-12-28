@@ -548,6 +548,14 @@ definition {
 			value = "${value}");
 	}
 
+	macro deleteObjectField {
+		Click(
+			key_value = "${fieldName}",
+			locator1 = "ObjectAdmin#BODY_VERTICAL_ELLIPSIS");
+
+		ClickNoError(locator1 = "ObjectPortlet#DELETE_ENTRY_BUTTON");
+	}
+
 	macro deleteObjectViaAPI {
 		JSONObject.deleteObject(
 			objectName = "${objectName}",

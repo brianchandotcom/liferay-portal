@@ -958,7 +958,7 @@ The `getSegmentsExperienceIds` methods from `FragmentEntryProcessorContext`, `De
 
 ### Who is affected?
 
-This affects anyone using `FragmentEntryProcessorContext`, `DefaultFragmentEntryProcessorContext`, `FragmentRendererContext` or `DefaultFragmentRendererContext` to get the `long array` of `segmentsExperienceIds`. Or if you use the method with signature `getContextObjects(JSONObject, String)` from `FragmentEntryConfigurationParser`.
+This affects anyone using `FragmentEntryProcessorContext`, `DefaultFragmentEntryProcessorContext`, `FragmentRendererContext` or `DefaultFragmentRendererContext` to get the `long array` of `segmentsExperienceIds`, or if you use the method with signature `getContextObjects(JSONObject, String)` from `FragmentEntryConfigurationParser`.
 
 ### How should I update my code?
 

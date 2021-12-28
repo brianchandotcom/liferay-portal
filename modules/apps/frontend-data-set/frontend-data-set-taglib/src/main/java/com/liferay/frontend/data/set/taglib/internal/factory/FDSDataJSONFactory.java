@@ -104,13 +104,13 @@ public class FDSDataJSONFactory {
 
 	private class FDSResponse {
 
-		public FDSResponse(List<FDSDataRow> fdsRows, int totalCount) {
-			_fdsRows = fdsRows;
+		public FDSResponse(List<FDSDataRow> fdsDataRows, int totalCount) {
+			_fdsDataRows = fdsDataRows;
 			_totalCount = totalCount;
 		}
 
 		@JsonProperty("items")
-		private final List<FDSDataRow> _fdsRows;
+		private final List<FDSDataRow> _fdsDataRows;
 
 		@JsonProperty("totalCount")
 		private final int _totalCount;

@@ -22,10 +22,12 @@ import com.liferay.headless.admin.workflow.client.serdes.v1_0.WorkflowDefinition
 import com.liferay.headless.admin.workflow.resource.v1_0.test.util.WorkflowDefinitionTestUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
 import com.liferay.portal.test.rule.Inject;
 
@@ -184,7 +186,8 @@ public class WorkflowDefinitionResourceTest
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {
-			"active", "name", "nodes", "title", "transitions", "version"
+			"active", "name", "nodes", "title", "title_i18n", "transitions",
+			"version"
 		};
 	}
 
@@ -229,6 +232,11 @@ public class WorkflowDefinitionResourceTest
 					}
 				}
 			});
+		workflowDefinition.setTitle_i18n(
+			HashMapBuilder.put(
+				LanguageUtil.getLanguageId(LocaleUtil.US),
+				workflowDefinition.getTitle()
+			).build());
 		workflowDefinition.setTransitions(
 			new Transition[] {
 				new Transition() {

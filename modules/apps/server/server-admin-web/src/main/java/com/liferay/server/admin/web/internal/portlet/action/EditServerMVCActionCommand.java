@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.SingleVMPool;
 import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
-import com.liferay.portal.kernel.cluster.ClusterMasterExecutorUtil;
+import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -235,7 +235,7 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 
 		Log4JUtil.setLevel(loggerName, priority, true);
 
-		if (ClusterMasterExecutorUtil.isMaster()) {
+		if (_clusterMasterExecutor.isMaster()) {
 			_notifySlaves(_updateLogLevelsMethodKey, _getLog4JLevelConfigs());
 		}
 		else {
@@ -551,7 +551,7 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 
 	private void _notifyMaster(MethodKey methodKey, Object... arguments) {
 		try {
-			ClusterMasterExecutorUtil.executeOnMaster(
+			_clusterMasterExecutor.executeOnMaster(
 				new MethodHandler(methodKey, arguments));
 		}
 		catch (Throwable throwable) {
@@ -714,7 +714,7 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 			}
 		}
 
-		if (ClusterMasterExecutorUtil.isMaster()) {
+		if (_clusterMasterExecutor.isMaster()) {
 			_notifySlaves(_updateLogLevelsMethodKey, _getLog4JLevelConfigs());
 		}
 		else if (!log4JLevelConfigs.isEmpty()) {
@@ -729,7 +729,7 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 				log4JLevelConfig.isCustom());
 		}
 
-		if (ClusterMasterExecutorUtil.isMaster()) {
+		if (_clusterMasterExecutor.isMaster()) {
 			_notifySlaves(_updateLogLevelsMethodKey, _getLog4JLevelConfigs());
 		}
 	}
@@ -840,6 +840,9 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 
 	private static final MethodKey _updateLogLevelsMethodKey = new MethodKey(
 		EditServerMVCActionCommand.class, "_updateLogLevels", List.class);
+
+	@Reference
+	private ClusterMasterExecutor _clusterMasterExecutor;
 
 	@Reference
 	private DirectServletRegistry _directServletRegistry;

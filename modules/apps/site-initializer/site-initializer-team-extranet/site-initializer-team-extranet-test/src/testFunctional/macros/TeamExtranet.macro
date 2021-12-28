@@ -24,4 +24,5 @@ definition {
 			locator1 = "Raylife#SITE_TITLE",
 			siteTitle = "${siteName}");
 	}
+
 }

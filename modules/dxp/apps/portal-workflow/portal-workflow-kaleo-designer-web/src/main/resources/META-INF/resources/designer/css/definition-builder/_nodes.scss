@@ -54,6 +54,12 @@
 			fill: #ffb46e;
 		}
 	}
+
+	&.task-node {
+		.node-icon svg {
+			fill: #50d2a0;
+		}
+	}
 }
 
 .node-border-area {

@@ -173,7 +173,9 @@ function ManagementToolbar({
 												<ClayButton
 													className="nav-link"
 													displayType="unstyled"
-													title={Liferay.Language.get('show-view-options')}
+													title={Liferay.Language.get(
+														'show-view-options'
+													)}
 												>
 													<ClayIcon
 														symbol={

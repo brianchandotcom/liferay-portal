@@ -50,6 +50,7 @@ import com.liferay.portal.search.sort.FieldSort;
 import com.liferay.portal.search.sort.Sort;
 import com.liferay.portal.search.sort.SortOrder;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
+import com.liferay.search.experiences.internal.blueprint.exception.InvalidElementInstanceException;
 import com.liferay.search.experiences.internal.blueprint.exception.InvalidQueryEntryException;
 import com.liferay.search.experiences.internal.blueprint.exception.UnresolvedTemplateVariableException;
 import com.liferay.search.experiences.internal.blueprint.parameter.SXPParameterDataCreator;
@@ -329,7 +330,14 @@ public class SXPBlueprintSearchRequestEnhancerImplTest {
 
 			// TODO Remove the whole key just like client side expansion
 
-			Throwable throwable = runtimeException.getSuppressed()[0];
+			InvalidElementInstanceException invalidElementInstanceException =
+				(InvalidElementInstanceException)
+					runtimeException.getSuppressed()[0];
+
+			Assert.assertEquals(0, invalidElementInstanceException.getIndex());
+
+			Throwable throwable =
+				invalidElementInstanceException.getSuppressed()[0];
 
 			InvalidQueryEntryException invalidQueryEntryException =
 				(InvalidQueryEntryException)throwable.getSuppressed()[0];

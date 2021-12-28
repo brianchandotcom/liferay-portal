@@ -41,6 +41,7 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.search.experiences.blueprint.parameter.SXPParameter;
 import com.liferay.search.experiences.blueprint.search.request.enhancer.SXPBlueprintSearchRequestEnhancer;
+import com.liferay.search.experiences.internal.blueprint.exception.InvalidElementInstanceException;
 import com.liferay.search.experiences.internal.blueprint.highlight.HighlightConverter;
 import com.liferay.search.experiences.internal.blueprint.parameter.SXPParameterData;
 import com.liferay.search.experiences.internal.blueprint.parameter.SXPParameterDataCreator;
@@ -67,6 +68,8 @@ import com.liferay.search.experiences.rest.dto.v1_0.TypeOptions;
 import com.liferay.search.experiences.rest.dto.v1_0.UiConfiguration;
 import com.liferay.search.experiences.rest.dto.v1_0.util.ConfigurationUtil;
 import com.liferay.search.experiences.rest.dto.v1_0.util.SXPBlueprintUtil;
+
+import java.beans.ExceptionListener;
 
 import java.io.Serializable;
 
@@ -106,16 +109,8 @@ public class SXPBlueprintSearchRequestEnhancerImpl
 		SearchRequestBuilder searchRequestBuilder,
 		com.liferay.search.experiences.model.SXPBlueprint sxpBlueprint) {
 
-		DTOConverter
-			<com.liferay.search.experiences.model.SXPBlueprint, SXPBlueprint>
-				dtoConverter = _getDTOConverter();
-
-		try {
-			_enhance(searchRequestBuilder, dtoConverter.toDTO(sxpBlueprint));
-		}
-		catch (Exception exception) {
-			throw new RuntimeException(exception);
-		}
+		_enhance(
+			searchRequestBuilder, _toDTO(_getDTOConverter(), sxpBlueprint));
 	}
 
 	@Activate
@@ -141,14 +136,13 @@ public class SXPBlueprintSearchRequestEnhancerImpl
 	}
 
 	private void _contributeSXPSearchRequestBodyContributors(
-		Configuration configuration, SearchRequestBuilder searchRequestBuilder,
+		Configuration configuration, ExceptionListener exceptionListener,
+		SearchRequestBuilder searchRequestBuilder,
 		SXPParameterData sxpParameterData) {
 
 		if (ListUtil.isEmpty(_sxpSearchRequestBodyContributors)) {
 			return;
 		}
-
-		RuntimeException runtimeException = new RuntimeException();
 
 		for (SXPSearchRequestBodyContributor sxpSearchRequestBodyContributor :
 				_sxpSearchRequestBodyContributors) {
@@ -158,17 +152,13 @@ public class SXPBlueprintSearchRequestEnhancerImpl
 					configuration, searchRequestBuilder, sxpParameterData);
 			}
 			catch (Exception exception) {
-				runtimeException.addSuppressed(exception);
+				exceptionListener.exceptionThrown(exception);
 			}
-		}
-
-		if (ArrayUtil.isNotEmpty(runtimeException.getSuppressed())) {
-			throw runtimeException;
 		}
 	}
 
 	private void _enhance(
-		ElementInstance elementInstance,
+		int index, ElementInstance elementInstance,
 		SearchRequestBuilder searchRequestBuilder,
 		SXPParameterData sxpParameterData) {
 
@@ -179,8 +169,18 @@ public class SXPBlueprintSearchRequestEnhancerImpl
 			return;
 		}
 
+		InvalidElementInstanceException invalidElementInstanceException =
+			InvalidElementInstanceException.at(index);
+
 		_contributeSXPSearchRequestBodyContributors(
-			configuration, searchRequestBuilder, sxpParameterData);
+			configuration, invalidElementInstanceException::addSuppressed,
+			searchRequestBuilder, sxpParameterData);
+
+		if (ArrayUtil.isNotEmpty(
+				invalidElementInstanceException.getSuppressed())) {
+
+			throw invalidElementInstanceException;
+		}
 	}
 
 	private void _enhance(
@@ -207,19 +207,25 @@ public class SXPBlueprintSearchRequestEnhancerImpl
 				searchContext -> searchContext),
 			sxpBlueprint);
 
+		RuntimeException runtimeException = new RuntimeException();
+
 		if (configuration != null) {
 			_contributeSXPSearchRequestBodyContributors(
 				_expand(
 					configuration,
 					(name, options) -> _resolveProperty(
 						name, options, sxpParameterData)),
-				searchRequestBuilder, sxpParameterData);
+				runtimeException::addSuppressed, searchRequestBuilder,
+				sxpParameterData);
 		}
 
-		ArrayUtil.isNotEmptyForEach(
-			sxpBlueprint.getElementInstances(),
-			elementInstance -> _enhance(
-				elementInstance, searchRequestBuilder, sxpParameterData));
+		_processElementInstances(
+			sxpBlueprint.getElementInstances(), runtimeException::addSuppressed,
+			searchRequestBuilder, sxpParameterData);
+
+		if (ArrayUtil.isNotEmpty(runtimeException.getSuppressed())) {
+			throw runtimeException;
+		}
 	}
 
 	private Configuration _expand(
@@ -367,6 +373,27 @@ public class SXPBlueprintSearchRequestEnhancerImpl
 		return GetterUtil.getBoolean(typeOptions.getNullable());
 	}
 
+	private void _processElementInstances(
+		ElementInstance[] elementInstances, ExceptionListener exceptionListener,
+		SearchRequestBuilder searchRequestBuilder,
+		SXPParameterData sxpParameterData) {
+
+		if (ArrayUtil.isEmpty(elementInstances)) {
+			return;
+		}
+
+		for (int index = 0; index < elementInstances.length; index++) {
+			try {
+				_enhance(
+					index, elementInstances[index], searchRequestBuilder,
+					sxpParameterData);
+			}
+			catch (Exception exception) {
+				exceptionListener.exceptionThrown(exception);
+			}
+		}
+	}
+
 	private Object _resolveProperty(
 		String name, Map<String, String> options,
 		SXPParameterData sxpParameterData) {
@@ -379,6 +406,20 @@ public class SXPBlueprintSearchRequestEnhancerImpl
 		}
 
 		return sxpParameter.evaluateToString(options);
+	}
+
+	private SXPBlueprint _toDTO(
+		DTOConverter
+			<com.liferay.search.experiences.model.SXPBlueprint, SXPBlueprint>
+				dtoConverter,
+		com.liferay.search.experiences.model.SXPBlueprint sxpBlueprint) {
+
+		try {
+			return dtoConverter.toDTO(sxpBlueprint);
+		}
+		catch (Exception exception) {
+			return ReflectionUtil.throwException(exception);
+		}
 	}
 
 	private String _toFieldMappingString(JSONObject jsonObject) {

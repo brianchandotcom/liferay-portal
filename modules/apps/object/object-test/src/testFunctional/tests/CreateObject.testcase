@@ -385,6 +385,7 @@ definition {
 	@description = "LPS-135400 - Verify it is possible to add a relation with an entry through the Relationship field"
 	@priority = "5"
 	test CanAddRelationOnRelationshipField {
+		property portal.upstream = "quarantine";
 		property portal.acceptance = "true";
 
 		ObjectAdmin.addObjectViaAPI(
@@ -4531,6 +4532,7 @@ definition {
 	@description = "LPS-135649 - Verify the Asset Title, Asset Type and Item Subject of a Object's entry on the Workflow Metrics page"
 	@priority = "4"
 	test ObjectInfoDisplayedOnWorkflowMetrics {
+		property portal.upstream = "quarantine";
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",

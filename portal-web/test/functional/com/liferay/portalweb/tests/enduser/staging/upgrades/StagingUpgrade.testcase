@@ -578,9 +578,11 @@ definition {
 		}
 
 		task ("Delete the AP widget from the created template") {
-			SiteTemplates.openSiteTemplateInEditMode(siteTemplateName = "Site Template Name");
+			SiteTemplates.openSiteTemplateInEditMode(
+				siteTemplateName = "Site Template Name",
+				widgetPage = "true");
 
-			PageEditor.removeFragment(fragmentName = "Asset Publisher");
+			Portlet.deletePG(key_portletName = "Asset Publisher");
 		}
 
 		task ("Verify that the AP Widget is still present on the Site Name page") {

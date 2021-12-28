@@ -79,8 +79,6 @@ const VariationsNav = ({
 						<ClayLink href={createNewSegmentURL}>
 							{Liferay.Language.get('create-your-first-segment')}
 						</ClayLink>
-
-						<span>.</span>
 					</p>
 				)}
 

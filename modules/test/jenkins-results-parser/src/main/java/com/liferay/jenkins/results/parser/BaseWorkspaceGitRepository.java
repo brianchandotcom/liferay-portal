@@ -154,14 +154,11 @@ public abstract class BaseWorkspaceGitRepository
 			throw new IllegalArgumentException("Invalid count " + count);
 		}
 
-		int localGitCommitsSize = 0;
-
-		if ((localGitCommits != null) && !localGitCommits.isEmpty()) {
-			localGitCommitsSize = localGitCommits.size();
+		if ((localGitCommits == null) || localGitCommits.isEmpty()) {
+			return Collections.emptyList();
 		}
 
-		List<LocalGitCommit> lastLocalGitCommitsPartition = Lists.newArrayList(
-			localGitCommits.get(localGitCommitsSize - 1));
+		int localGitCommitsSize = localGitCommits.size();
 
 		if (count > localGitCommitsSize) {
 			List<List<LocalGitCommit>> localGitCommitsPartitions =

@@ -437,17 +437,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			Account account = Account.toDTO(
 				String.valueOf(jsonArray.getJSONObject(i)));
 
-			Account existingAccount =
-				accountResource.getAccountByExternalReferenceCode(
-					account.getExternalReferenceCode());
-
-			if (existingAccount == null) {
-				accountResource.postAccount(account);
-
-				continue;
-			}
-
-			accountResource.patchAccount(existingAccount.getId(), account);
+			accountResource.putAccountByExternalReferenceCode(account.getExternalReferenceCode(), account);
 		}
 	}
 

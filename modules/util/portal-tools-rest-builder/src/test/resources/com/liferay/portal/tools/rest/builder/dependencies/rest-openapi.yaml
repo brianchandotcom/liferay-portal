@@ -45,6 +45,19 @@ components:
                 subFolders:
                     $ref: "#/components/schemas/Folder"
             type: object
+        Test:
+            description:
+                Test Component to test the REST Builder support for advanced features
+            properties:
+                id:
+                    format: int64
+                    type: integer
+                jsonProperty:
+                    type: string
+                    xml:
+                        name: xmlProperty
+                property-with-hyphens:
+                    type: string
 info:
     title: ""
     version: "1.0.0"
@@ -112,5 +125,22 @@ paths:
                         "application/json":
                             schema:
                                 $ref: "#/components/schemas/Folder"
+                    description:
+                        "OK"
+    /tests/{testId}:
+        get:
+            parameters:
+                - in: path
+                  name: testId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/Test"
                     description:
                         "OK"

@@ -149,9 +149,8 @@ SearchContainer<CommerceOrderItem> commerceOrderItemSearchContainer = commerceCa
 		<aui:button cssClass="btn-lg" disabled="<%= !commerceCartContentTotalDisplayContext.isValidCommerceOrder() %>" href="<%= checkoutPortletURL.toString() %>" value="checkout" />
 	</aui:button-row>
 
-	<aui:script>
-		Liferay.after('current-order-updated', (event) => {
-			Liferay.Portlet.refresh('#p_p_id<portlet:namespace />');
-		});
-	</aui:script>
+	<liferay-frontend:component
+	module="js/cart_total/view"
+/>
+
 </liferay-ddm:template-renderer>

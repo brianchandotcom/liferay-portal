@@ -279,7 +279,6 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 	<%@ include file="/cart_mini/transition.jspf" %>
 
-	<aui:script use="aui-base">
 		var orderTransition = A.one('#<portlet:namespace />orderTransition');
 
 		if (orderTransition) {
@@ -291,11 +290,8 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 				'.transition-link'
 			);
 		}
-	</aui:script>
-
-	<aui:script>
+	
 		Liferay.after('current-order-updated', (event) => {
 			Liferay.Portlet.refresh('#p_p_id<portlet:namespace />');
 		});
-	</aui:script>
 </liferay-ddm:template-renderer>

@@ -219,10 +219,9 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultMap = 
 			</liferay-ui:search-container>
 		</div>
 	</div>
+	
+<liferay-frontend:component
+	module="js/cart_total/view"
+/>
 
-	<aui:script>
-		Liferay.after('current-order-updated', (event) => {
-			Liferay.Portlet.refresh('#p_p_id<portlet:namespace />');
-		});
-	</aui:script>
 </liferay-ddm:template-renderer>

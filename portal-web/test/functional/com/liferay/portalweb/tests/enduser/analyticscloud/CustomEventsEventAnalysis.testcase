@@ -227,4 +227,57 @@ definition {
 		}
 	}
 
+    @description = "Feature ID: LRAC-4266 | Automation ID: LRAC-10301 | Test Summary: Search Event Attribute from Event tab"
+	@priority = "3"
+	test SearchEventAttributeInEventTab {
+        var defaultAttributeName = "pageTitle";
+        var customAttributeName = "category";
+
+		task ("Fill fields and create custom event") {
+			var customEventName = ACCustomEvents.generateCustomEventName();
+
+			ACCustomEvents.createCustomEvent(
+				customEventName = "${customEventName}",
+				timeToSendCustomEvent = "1");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch the property in AC and go to event analysis") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+
+			ACNavigation.goToEventAnalysis();
+		}
+
+		task ("Add the custom event to analysis by the all tab") {
+			ACEventAnalysis.addEvent(customEventName = "${customEventName}");
+		}
+
+        task ("Click to add breakdown") {
+			ACEventAnalysis.clickToAddBreakdownButton();
+		}
+
+        task ("Search for attribute and check that it appears") {
+			ACEventAnalysis.searchEventAnalysis(searchItem = "${defaultAttributeName}");
+
+			ACEventAnalysis.viewEventAnalysisList(eventList = "${defaultAttributeName}");
+        }
+
+        task ("Search for attribute and check that it appears") {
+            ACEventAnalysis.searchEventAnalysis(searchItem = "${customAttributeName}");
+
+			ACEventAnalysis.viewEventAnalysisList(eventList = "${customAttributeName}");
+        }
+
+        task ("Search for an attribute that doesn't exist and check that it doesn't appear") {
+            ACEventAnalysis.searchEventAnalysis(searchItem = "acqa");
+
+			ACUtils.viewNoResultsMessage(noResultMessage = "There are no items found.");
+        }
+	}
+
 }

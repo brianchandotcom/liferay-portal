@@ -21,6 +21,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>IMPORT_PAGES_MEDIAWIKI</td>
+	<td>//label[contains(text(),'${key_tag}')]/following-sibling::input[(@type='file')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ENTRY_TITLE</td>
 	<td>//input[contains(@id,'title')]</td>
 	<td></td>

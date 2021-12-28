@@ -35,14 +35,17 @@ import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
-import com.liferay.portal.vulcan.util.LocalizedMapUtil;
+
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import javax.ws.rs.core.MultivaluedMap;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
-
-import javax.ws.rs.core.MultivaluedMap;
-import java.util.Locale;
-import java.util.Map;
 
 /**
  * @author Javier Gamarra
@@ -176,9 +179,6 @@ public class WorkflowDefinitionResourceImpl
 		com.liferay.portal.kernel.workflow.WorkflowDefinition
 			workflowDefinition) {
 
-		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
-			workflowDefinition.getTitle());
-
 		return new WorkflowDefinition() {
 			{
 				active = workflowDefinition.isActive();
@@ -193,12 +193,21 @@ public class WorkflowDefinitionResourceImpl
 						contextAcceptLanguage.getPreferredLocale(),
 						workflowNode),
 					Node.class);
-				title = titleMap.get(
-					contextAcceptLanguage.getPreferredLocale());
-				title_i18n = LocalizedMapUtil.getI18nMap(
-					contextAcceptLanguage.isAcceptAllLanguages(),
+				title = workflowDefinition.getTitle(
+					_language.getLanguageId(
+						contextAcceptLanguage.getPreferredLocale()));
+				title_i18n = Stream.of(
 					LocalizationUtil.getLocalizationMap(
-						workflowDefinition.getTitle()));
+						workflowDefinition.getTitle())
+				).map(
+					Map::entrySet
+				).flatMap(
+					Set::stream
+				).collect(
+					Collectors.toMap(
+						entry -> _language.getLanguageId(entry.getKey()),
+						Map.Entry::getValue)
+				);
 				transitions = transformToArray(
 					workflowDefinition.getWorkflowTransitions(),
 					workflowTransition -> TransitionUtil.toTransition(

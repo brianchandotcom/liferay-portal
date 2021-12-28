@@ -35,7 +35,7 @@ import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.navigation.admin.constants.SiteNavigationAdminPortletKeys;
@@ -178,27 +178,26 @@ public class AddMultipleDisplayPageTypeSiteNavigationMenuItemMVCActionCommand
 			return;
 		}
 
-		UnicodeProperties typeSettingsUnicodeProperties = new UnicodeProperties(
-			true);
-
-		typeSettingsUnicodeProperties.setProperty(
-			"className", jsonObject.getString("className"));
-		typeSettingsUnicodeProperties.setProperty(
-			"classNameId", jsonObject.getString("classNameId"));
-		typeSettingsUnicodeProperties.setProperty(
-			"classPK", jsonObject.getString("classPK"));
-		typeSettingsUnicodeProperties.setProperty(
-			"classTypeId", jsonObject.getString("classTypeId"));
-		typeSettingsUnicodeProperties.setProperty(
-			"title", jsonObject.getString("title"));
-		typeSettingsUnicodeProperties.setProperty(
-			"type", jsonObject.getString("type"));
-
 		SiteNavigationMenuItem siteNavigationMenuItem =
 			_siteNavigationMenuItemService.addSiteNavigationMenuItem(
 				groupId, siteNavigationMenuId, parentSiteNavigationMenuItemId,
 				siteNavigationMenuItemType,
-				typeSettingsUnicodeProperties.toString(), serviceContext);
+				UnicodePropertiesBuilder.create(
+					true
+				).put(
+					"className", jsonObject.getString("className")
+				).put(
+					"classNameId", jsonObject.getString("classNameId")
+				).put(
+					"classPK", jsonObject.getString("classPK")
+				).put(
+					"classTypeId", jsonObject.getString("classTypeId")
+				).put(
+					"title", jsonObject.getString("title")
+				).put(
+					"type", jsonObject.getString("type")
+				).buildString(),
+				serviceContext);
 
 		if (!(infoItemReference instanceof InfoItemHierarchicalReference)) {
 			return;

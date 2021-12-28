@@ -2611,6 +2611,8 @@ definition {
 			addressStreet3 = "1005",
 			phoneNumber = "+86 (0)411 88120855");
 
+		LexiconEntry.viewEntryName(rowEntry = "Liferay Dalian Software Co., Ltd.");
+
 		Accounts.addAddress(
 			addressCity = "Diamond Bar",
 			addressCountry = "United States",

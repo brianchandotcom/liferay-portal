@@ -261,6 +261,76 @@ definition {
 		}
 	}
 
+	@description = "Bug: LRAC-9883 | Automation ID: LRAC-10262 | Test Summary: Custom Event is shown when pagination and searching are applied"
+	@priority = "4"
+	test CustomEventIsShownWhenPaginatingAndSearching {
+		task ("Fill fields and create custom event") {
+			var customEventName = ACCustomEvents.generateCustomEventName();
+
+			ACCustomEvents.createCustomEvent(
+				customEventName = "${customEventName}",
+				timeToSendCustomEvent = "1");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch the property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+		}
+
+		task ("Navigation to custom events tab") {
+			ACNavigation.goToSettings();
+
+			ACSettings.goToDefinitions();
+
+			ACSettings.goToEvents();
+
+			ACNavigation.openItem(itemName = "Custom Events");
+		}
+
+		task ("Check that the custom event appears in the list") {
+			ACUtils.viewNameList(nameList = "${customEventName}");
+		}
+
+		task ("Search for the name of the custom event and verify that it was found") {
+			ACUtils.searchBar(searchItem = "${customEventName}");
+
+			ACUtils.viewNameList(nameList = "${customEventName}");
+		}
+
+		task ("Clear the search and check that the custom event appears in the list") {
+			ACUtils.clearSearchBar();
+
+			ACUtils.viewNameList(nameList = "${customEventName}");
+		}
+
+		task ("Search for the name of the custom event and verify that it was found") {
+			ACUtils.searchBar(searchItem = "${customEventName}");
+
+			ACUtils.viewNameList(nameList = "${customEventName}");
+		}
+
+		task ("Change the pagination to "30"") {
+			ACUtils.changePagination(itemsPerPage = "30");
+		}
+
+		task ("Clear the search and check that the custom event appears in the list") {
+			ACUtils.clearSearchBar();
+
+			ACUtils.viewNameList(nameList = "${customEventName}");
+		}
+
+		task ("Change the pagination to "20" and check that the custom event appears in the list") {
+			ACUtils.changePagination(itemsPerPage = "20");
+
+			ACUtils.viewNameList(nameList = "${customEventName}");
+		}
+	}
+
 	@description = "Feature ID: LRAC-4265 | Automation ID: LRAC-10007 | Test Summary: Search for Custom Event"
 	@priority = "3"
 	test CustomEventListSearchable {
@@ -396,76 +466,6 @@ definition {
 
 		task ("Check that the display name cannot be renamed to an existing one") {
 			ACCustomEvents.viewInvalidCustomEventEdition(invalidMessage = "An event already exists with that display name. Please enter a different display name.");
-		}
-	}
-
-	@description = "Bug: LRAC-9883 | Automation ID: LRAC-10262 | Test Summary: Custom Event is shown when pagination and searching are applied"
-	@priority = "4"
-	test CustomEventIsShownWhenPaginatingAndSearching {
-		task ("Fill fields and create custom event") {
-			var customEventName = ACCustomEvents.generateCustomEventName();
-
-			ACCustomEvents.createCustomEvent(
-				customEventName = "${customEventName}",
-				timeToSendCustomEvent = "1");
-		}
-
-		task ("Close sessions") {
-			ACUtils.closeAllSessionsAndWait();
-		}
-
-		task ("Switch the property in AC") {
-			ACUtils.launchAC();
-
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
-		}
-
-		task ("Navigation to custom events tab") {
-			ACNavigation.goToSettings();
-
-			ACSettings.goToDefinitions();
-
-			ACSettings.goToEvents();
-
-			ACNavigation.openItem(itemName = "Custom Events");
-		}
-
-		task ("Check that the custom event appears in the list") {
-			ACUtils.viewNameList(nameList = "${customEventName}");
-		}
-
-		task ("Search for the name of the custom event and verify that it was found") {
-			ACUtils.searchBar(searchItem = "${customEventName}");
-
-			ACUtils.viewNameList(nameList = "${customEventName}");
-		}
-
-		task ("Clear the search and check that the custom event appears in the list") {
-			ACUtils.clearSearchBar();
-
-			ACUtils.viewNameList(nameList = "${customEventName}");
-		}
-
-		task ("Search for the name of the custom event and verify that it was found") {
-			ACUtils.searchBar(searchItem = "${customEventName}");
-
-			ACUtils.viewNameList(nameList = "${customEventName}");
-		}
-
-		task ("Change the pagination to "30"") {
-			ACUtils.changePagination(itemsPerPage = "30");
-		}
-
-		task ("Clear the search and check that the custom event appears in the list") {
-			ACUtils.clearSearchBar();
-
-			ACUtils.viewNameList(nameList = "${customEventName}");
-		}
-
-		task ("Change the pagination to "20" and check that the custom event appears in the list") {
-			ACUtils.changePagination(itemsPerPage = "20");
-
-			ACUtils.viewNameList(nameList = "${customEventName}");
 		}
 	}
 

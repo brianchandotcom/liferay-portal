@@ -120,7 +120,7 @@ public class RESTBuilderTest {
 		Assert.assertTrue(
 			stream.anyMatch(
 				line -> line.contains(
-					"sb.append(\"" + propertyName + "\": \");")));
+					"sb.append(\"\\\"" + propertyName + "\\\": \");")));
 	}
 
 	private void _assertResourceFilesExist(

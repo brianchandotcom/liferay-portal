@@ -235,7 +235,7 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 			</#if>
 		)
 		<#if propertySchema.xml??>
-			@XmlElement(name="${propertySchema.xml.name}")
+			@XmlElement(name = "${propertySchema.xml.name}")
 		</#if>
 		<#if schema.requiredPropertySchemaNames?? && schema.requiredPropertySchemaNames?seq_contains(propertyName)>
 			<#if stringUtil.equals(propertyType, "String")>
@@ -285,14 +285,23 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 		</#list>
 
 		<#list properties?keys as propertyName>
-			<#assign propertyType = properties[propertyName] />
+			<#assign
+				propertySchema = freeMarkerTool.getDTOPropertySchema(propertyName, schema)
+				propertyType = properties[propertyName]
+			/>
 
 			if (${propertyName} != null) {
 				if (sb.length() > 1) {
 					sb.append(", ");
 				}
 
-				sb.append("\"${propertyName}\": ");
+				<#if propertySchema.name?? && !stringUtil.equals(propertyName, propertySchema.name)>
+					<#assign key = propertySchema.name />
+				<#else>
+					<#assign key = propertyName />
+				</#if>
+
+				sb.append("\"${key}\": ");
 
 				<#if allSchemas[propertyType]??>
 					sb.append(String.valueOf(${propertyName}));

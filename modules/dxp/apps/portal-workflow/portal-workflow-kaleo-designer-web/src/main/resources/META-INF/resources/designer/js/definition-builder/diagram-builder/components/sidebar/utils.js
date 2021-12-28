@@ -46,6 +46,14 @@ function getModalInfo(itemType) {
 			title: Liferay.Language.get('delete-state-node'),
 		};
 	}
+	else if (itemType === 'task') {
+		return {
+			message: Liferay.Language.get(
+				'are-you-sure-you-want-to-delete-the-selected-task-node'
+			),
+			title: Liferay.Language.get('delete-task-node'),
+		};
+	}
 	else if (itemType === 'transition') {
 		return {
 			message: Liferay.Language.get(

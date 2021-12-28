@@ -31,6 +31,10 @@ const contents = {
 		component: SelectedNodeInfo,
 		title: Liferay.Language.get('state'),
 	},
+	task: {
+		component: SelectedNodeInfo,
+		title: Liferay.Language.get('task'),
+	},
 	transition: {
 		component: SelectedEdgeInfo,
 		title: Liferay.Language.get('transition'),

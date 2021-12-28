@@ -4533,6 +4533,7 @@ definition {
 	@priority = "4"
 	test ObjectInfoDisplayedOnWorkflowMetrics {
 		property portal.upstream = "quarantine";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",

@@ -201,46 +201,25 @@ definition {
 	@description = "This is a test for LPS-136989. It checks that pages can be imported into a specific node."
 	@priority = "3"
 	test CanImportPagesIntoSpecificNode {
+		JSONWiki.addWikiNode(
+			groupName = "Guest",
+			wikiNodeDescription = "Wiki Node Description",
+			wikiNodeName = "Wiki Node Name");
+
 		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
 
-		WikiNode.addCP(wikiNodeName = "Wiki Node Name");
+		WikiNode.importWikiPage(
+			fileName = "Liferay-sample2.xml",
+			wikiNodeName = "Wiki Node Name");
 
-		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
+		WikiNavigator.openToWikiPage(
+			siteURLKey = "guest",
+			wikiNodeName = "Wiki Node Name",
+			wikiPageTitle = "Liferay");
 
-		AssertTextEquals(
-			key_wikiNodeName = "Wiki Node Name",
-			locator1 = "Wiki#NODE_TABLE_NUMBER_OF_PAGES",
-			value1 = "0");
-
-		Click(
-			key_wikiNodeName = "Wiki Node Name",
-			locator1 = "Wiki#NODE_TABLE_ACTIONS_DROPDOWN");
-
-		MenuItem.click(menuItem = "Import Pages");
-
-		var dependencyFilePath = TestCase.getDependenciesDirPath(fileName = "Liferay-sample2.xml");
-
-		UploadFile(
-			key_tag = "Pages File",
-			locator1 = "Wiki#IMPORT_PAGES_MEDIAWIKI",
-			value1 = "${dependencyFilePath}");
-
-		Click(
-			key_text = "Import",
-			locator1 = "Button#ANY");
-
-		AssertTextEquals(
-			key_wikiNodeName = "Wiki Node Name",
-			locator1 = "Wiki#NODE_TABLE_NUMBER_OF_PAGES",
-			value1 = "1");
-
-		WikiNavigator.gotoNode(wikiNodeName = "Wiki Node Name");
-
-		WikiNavigator.gotoEntryViaPGTable(wikiPageTitle = "Liferay");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "WikiEntry#BODY",
-			value1 = "Liferay, Inc., is an open-source company");
+		WikiPage.viewCP(
+			wikiPageContent = "Liferay, Inc., is an open-source company that provides free documentation and paid professional service to users of its software. Mainly focused on enterprise portal] technology, the company has its headquarters in Diamond Bar, California, United States.",
+			wikiPageTitle = "Liferay");
 	}
 
 	@description = "This is a test for LPS-136984. It checks that Javascript will not be excuted from the page title."

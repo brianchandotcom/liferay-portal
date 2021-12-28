@@ -15,6 +15,7 @@
 package com.liferay.portal.workflow.metrics.internal.search.index;
 
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.document.Document;
@@ -37,6 +38,25 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class SLAInstanceResultWorkflowMetricsIndexer
 	extends BaseSLAWorkflowMetricsIndexer {
+
+	public void blockDocuments(
+		long companyId, long processId, long slaDefinitionId) {
+
+		BooleanQuery booleanQuery = queries.booleanQuery();
+
+		booleanQuery.addMustNotQueryClauses(
+			queries.term("instanceCompleted", Boolean.TRUE));
+
+		updateDocuments(
+			companyId,
+			HashMapBuilder.<String, Object>put(
+				"blocked", Boolean.TRUE
+			).build(),
+			booleanQuery.addMustQueryClauses(
+				queries.term("companyId", companyId),
+				queries.term("processId", processId),
+				queries.term("slaDefinitionId", slaDefinitionId)));
+	}
 
 	public Document creatDefaultDocument(long companyId, long processId) {
 		WorkflowMetricsSLAInstanceResult workflowMetricsSLAInstanceResult =

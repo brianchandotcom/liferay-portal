@@ -139,10 +139,13 @@ public abstract class RedirectEntryLocalServiceBaseImpl
 	 *
 	 * @param redirectEntry the redirect entry
 	 * @return the redirect entry that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public RedirectEntry deleteRedirectEntry(RedirectEntry redirectEntry) {
+	public RedirectEntry deleteRedirectEntry(RedirectEntry redirectEntry)
+		throws PortalException {
+
 		return redirectEntryPersistence.remove(redirectEntry);
 	}
 

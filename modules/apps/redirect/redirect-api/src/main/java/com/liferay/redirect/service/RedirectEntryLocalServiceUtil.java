@@ -155,9 +155,10 @@ public class RedirectEntryLocalServiceUtil {
 	 *
 	 * @param redirectEntry the redirect entry
 	 * @return the redirect entry that was removed
+	 * @throws PortalException
 	 */
-	public static RedirectEntry deleteRedirectEntry(
-		RedirectEntry redirectEntry) {
+	public static RedirectEntry deleteRedirectEntry(RedirectEntry redirectEntry)
+		throws PortalException {
 
 		return getService().deleteRedirectEntry(redirectEntry);
 	}

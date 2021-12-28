@@ -162,10 +162,12 @@ public class RedirectEntryLocalServiceWrapper
 	 *
 	 * @param redirectEntry the redirect entry
 	 * @return the redirect entry that was removed
+	 * @throws PortalException
 	 */
 	@Override
 	public com.liferay.redirect.model.RedirectEntry deleteRedirectEntry(
-		com.liferay.redirect.model.RedirectEntry redirectEntry) {
+			com.liferay.redirect.model.RedirectEntry redirectEntry)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _redirectEntryLocalService.deleteRedirectEntry(redirectEntry);
 	}

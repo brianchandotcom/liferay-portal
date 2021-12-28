@@ -1253,14 +1253,38 @@ definition {
 		Pagination.viewResults(results = "Showing 21 to 30 of 30 entries.");
 	}
 
-	@description = "This is a test for LPS-136945. It checks that only 'File Upload,' 'Folder,' and 'External Video Shortcut' options appear when adding a document."
-	@ignore = "Test Stub"
+	@description = "This is a test for LPS-136945. It checks that only 'File Upload,' 'Folder,' 'Google Drive Shortcut' and 'External Video Shortcut' options appear when adding a document."
 	@priority = "3"
 	test OnlyRelevantSelectionsAppearWhenAddingDocuments {
-		property portal.acceptance = "false";
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
-		// TODO LPS-136945 OnlyRelevantSelectionsAppearWhenAddingDocuments pending implementation
+		NavItem.gotoStructures();
 
+		WebContentStructures.addCP(structureName = "Structure Name");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Upload",
+			fieldName = "Upload");
+
+		WebContentStructures.saveCP(structureName = "Structure Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		LexiconEntry.gotoAddMenuItem(menuItem = "Structure Name");
+
+		Click(
+			key_text = "Select",
+			locator1 = "Button#ANY_LAST");
+
+		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
+
+		ItemSelector.switchTab(navTab = "Documents and Media");
+
+		LexiconEntry.gotoAdd();
+
+		for (var menuItem : list "File Upload,Folder,Google Drive Shortcut,External Video Shortcut") {
+			MenuItem.viewPresent(menuItem = "${menuItem}");
+		}
 	}
 
 	@description = "This is a test for LPS-136943. It checks that only 'File Upload' and 'Folder' options appear when adding images."

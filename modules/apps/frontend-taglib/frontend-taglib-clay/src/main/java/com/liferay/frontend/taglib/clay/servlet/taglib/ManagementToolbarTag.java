@@ -1029,8 +1029,14 @@ public class ManagementToolbarTag extends BaseContainerTag {
 			if (getViewTypeItems() != null) {
 				jspWriter.write("<li class=\"nav-item\"><div class=\"dropdown");
 				jspWriter.write("\"><button class=\"dropdown-toggle nav-link");
-				jspWriter.write(" nav-link-monospaced btn btn-monospaced");
-				jspWriter.write(" btn-unstyled\" type=\"button\">");
+
+				if (!FFManagementToolbarConfigurationUtil.
+						showDesignImprovements()) {
+
+					jspWriter.write(" nav-link-monospaced btn btn-monospaced");
+				}
+
+				jspWriter.write(" btn btn-unstyled\" type=\"button\">");
 
 				for (ViewTypeItem viewTypeItem : getViewTypeItems()) {
 					if ((Boolean)viewTypeItem.get("active")) {
@@ -1039,6 +1045,19 @@ public class ManagementToolbarTag extends BaseContainerTag {
 						iconTag.setSymbol((String)viewTypeItem.get("icon"));
 
 						iconTag.doTag(pageContext);
+
+						if (FFManagementToolbarConfigurationUtil.
+								showDesignImprovements()) {
+
+							iconTag = new IconTag();
+
+							iconTag.setCssClass(
+								"inline-item inline-item-after");
+
+							iconTag.setSymbol("caret-double-l");
+
+							iconTag.doTag(pageContext);
+						}
 
 						break;
 					}

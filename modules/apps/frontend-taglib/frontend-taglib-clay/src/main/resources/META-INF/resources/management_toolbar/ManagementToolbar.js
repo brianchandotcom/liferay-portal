@@ -12,8 +12,9 @@
  * details.
  */
 
-import {ClayButtonWithIcon} from '@clayui/button';
+import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
+import ClayIcon from '@clayui/icon';
 import ClayManagementToolbar from '@clayui/management-toolbar';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
@@ -168,15 +169,38 @@ function ManagementToolbar({
 									<ClayDropDownWithItems
 										items={viewTypeItems}
 										trigger={
-											<ClayButtonWithIcon
-												className="nav-link nav-link-monospaced"
-												displayType="unstyled"
-												symbol={
-													viewTypeItems.find(
-														(item) => item.active
-													)?.icon || ''
-												}
-											/>
+											showDesignImprovementsFF ? (
+												<ClayButton
+													className="nav-link"
+													displayType="unstyled"
+													title="Show view options"
+												>
+													<ClayIcon
+														symbol={
+															viewTypeItems.find(
+																(item) =>
+																	item.active
+															)?.icon || ''
+														}
+													/>
+
+													<ClayIcon
+														className="inline-item inline-item-after"
+														symbol="caret-double-l"
+													/>
+												</ClayButton>
+											) : (
+												<ClayButtonWithIcon
+													className="nav-link nav-link-monospaced"
+													displayType="unstyled"
+													symbol={
+														viewTypeItems.find(
+															(item) =>
+																item.active
+														)?.icon || ''
+													}
+												/>
+											)
 										}
 									/>
 								</ClayManagementToolbar.Item>

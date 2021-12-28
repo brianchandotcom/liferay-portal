@@ -34,12 +34,22 @@ public class JournalArticleDisplayTag extends IncludeTag {
 		return _wrapperCssClass;
 	}
 
+	public boolean isDataAnalyticsTrackEnabled() {
+		return _dataAnalyticsTrackEnabled;
+	}
+
 	public boolean isShowTitle() {
 		return _showTitle;
 	}
 
 	public void setArticleDisplay(JournalArticleDisplay articleDisplay) {
 		_articleDisplay = articleDisplay;
+	}
+
+	public void setDataAnalyticsTrackEnabled(
+		boolean dataAnalyticsTrackEnabled) {
+
+		_dataAnalyticsTrackEnabled = dataAnalyticsTrackEnabled;
 	}
 
 	@Override
@@ -62,6 +72,7 @@ public class JournalArticleDisplayTag extends IncludeTag {
 		super.cleanUp();
 
 		_articleDisplay = null;
+		_dataAnalyticsTrackEnabled = true;
 		_showTitle = false;
 		_wrapperCssClass = null;
 	}
@@ -76,6 +87,9 @@ public class JournalArticleDisplayTag extends IncludeTag {
 		httpServletRequest.setAttribute(
 			"liferay-journal:journal-article:articleDisplay", _articleDisplay);
 		httpServletRequest.setAttribute(
+			"liferay-journal:journal-article:dataAnalyticsTrackEnabled",
+			String.valueOf(_dataAnalyticsTrackEnabled));
+		httpServletRequest.setAttribute(
 			"liferay-journal:journal-article:showTitle",
 			String.valueOf(_showTitle));
 		httpServletRequest.setAttribute(
@@ -86,6 +100,7 @@ public class JournalArticleDisplayTag extends IncludeTag {
 	private static final String _PAGE = "/journal_article/page.jsp";
 
 	private JournalArticleDisplay _articleDisplay;
+	private boolean _dataAnalyticsTrackEnabled = true;
 	private boolean _showTitle;
 	private String _wrapperCssClass;
 

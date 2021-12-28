@@ -15,6 +15,7 @@
 package com.liferay.headless.commerce.admin.catalog.internal.odata.entity.v1_0;
 
 import com.liferay.commerce.product.constants.CPField;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.entity.StringEntityField;
@@ -32,7 +33,6 @@ public class OptionEntityModel implements EntityModel {
 	public OptionEntityModel() {
 		_entityFieldsMap = Stream.of(
 			new StringEntityField("key", locale -> "key"),
-			new StringEntityField("name", locale -> "name"),
 			new StringEntityField(
 				"fieldType", locale -> CPField.DDM_FORM_FIELD_TYPE_NAME)
 		).collect(

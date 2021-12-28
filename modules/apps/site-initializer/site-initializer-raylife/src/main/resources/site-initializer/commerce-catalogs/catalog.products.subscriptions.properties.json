@@ -1,0 +1,19 @@
+[
+	{
+		"cpDefinitionExternalReferenceCode": "RAY004",
+		"optionName": "Raylife Option",
+		"overrideSubscriptionInfo": true,
+		"subscriptionEnabled": true,
+		"subscriptionLength": 2,
+		"subscriptionType": "monthly",
+		"subscriptionTypeSettings": {
+			"monthDay": "1",
+			"monthlyMode": "0"
+		},
+		"maxSubscriptionCycles": 2,
+		"deliverySubscriptionEnabled": false,
+		"deliverySubscriptionLength": 1,
+		"deliverySubscriptionType": "daily",
+		"deliveryMaxSubscriptionCycles": 0
+	}
+]

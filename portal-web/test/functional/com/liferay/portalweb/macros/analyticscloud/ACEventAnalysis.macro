@@ -15,7 +15,13 @@ definition {
 	macro addEvent {
 		var key_buttonName = "${customEventName}";
 
+		if (!(isSet(tabName))) {
+			var tabName = "All";
+		}
+
 		ACEventAnalysis.clickToAddEventButton();
+
+		ACNavigation.switchTabInCard(tabName = "${tabName}");
 
 		ACEventAnalysis.searchEventAnalysis(searchItem = "${customEventName}");
 

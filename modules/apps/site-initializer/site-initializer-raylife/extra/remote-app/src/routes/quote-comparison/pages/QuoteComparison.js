@@ -24,7 +24,7 @@ const QuoteComparison = () => {
 	const onClickPolicyDetails = () => {};
 
 	return (
-		<div className="d-flex flex-wrap quote-comparison">
+		<div className="d-flex flex-wrap mb-7 quote-comparison">
 			{quotes.map((quote, index) => (
 				<ProductComparison
 					key={index}

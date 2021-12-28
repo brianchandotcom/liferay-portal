@@ -37,7 +37,7 @@
 		</div>
 	</div>
 
-	 <br />
+	<br />
 
 	<@getRatings
 		cssClass="page-ratings"

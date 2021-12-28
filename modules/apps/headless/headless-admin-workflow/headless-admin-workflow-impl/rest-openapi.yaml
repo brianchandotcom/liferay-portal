@@ -227,7 +227,6 @@ components:
                 title_i18n:
                     additionalProperties:
                         type: string
-                    readOnly: true
                     type: object
                 transitions:
                     items:

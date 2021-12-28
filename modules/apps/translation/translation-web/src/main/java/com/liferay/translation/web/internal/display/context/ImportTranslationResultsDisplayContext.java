@@ -16,9 +16,11 @@ package com.liferay.translation.web.internal.display.context;
 
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.translation.model.TranslationEntry;
@@ -28,6 +30,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -97,6 +100,13 @@ public class ImportTranslationResultsDisplayContext implements Serializable {
 	}
 
 	public String getSuccessMessageLabel(Locale locale) {
+		if (Objects.equals(
+				Layout.class.getName(),
+				PortalUtil.getClassName(_classNameId))) {
+
+			return _getLayoutSuccessMessageLabel(locale);
+		}
+
 		boolean workflowEnabled =
 			_workflowDefinitionLinkLocalService.hasWorkflowDefinitionLink(
 				_companyId, _groupId, TranslationEntry.class.getName());
@@ -130,6 +140,22 @@ public class ImportTranslationResultsDisplayContext implements Serializable {
 
 	public String getTitle() {
 		return _title;
+	}
+
+	private String _getLayoutSuccessMessageLabel(Locale locale) {
+		if ((getSuccessMessagesCount() > 1) &&
+			(getFailureMessagesCount() == 0)) {
+
+			return LanguageUtil.get(locale, "all-files-saved");
+		}
+
+		String pattern = "x-files-saved";
+
+		if (getSuccessMessagesCount() == 1) {
+			pattern = "x-file-saved";
+		}
+
+		return LanguageUtil.format(locale, pattern, getSuccessMessagesCount());
 	}
 
 	private String _getWorkflowSuccessMessageLabel(Locale locale) {

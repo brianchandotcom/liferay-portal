@@ -38,7 +38,7 @@ public class DLFileEntryTypeIconProviderUtil {
 			return dlFileEntryTypeIconProvider.getIcon();
 		}
 
-		return null;
+		return "file-template";
 	}
 
 	@Activate

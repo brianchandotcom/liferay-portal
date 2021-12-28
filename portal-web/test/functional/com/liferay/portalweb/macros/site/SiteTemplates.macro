@@ -406,7 +406,12 @@ definition {
 	macro openSiteTemplateInEditMode {
 		var templateID = SiteTemplates.getSiteTemplateID(siteTemplateName = "${siteTemplateName}");
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "group/${templateID}?p_l_mode=edit");
+		if (isSet(widgetPage)) {
+			Navigator.openWithAppendToBaseURL(urlAppend = "group/${templateID}");
+		}
+		else {
+			Navigator.openWithAppendToBaseURL(urlAppend = "group/${templateID}?p_l_mode=edit");
+		}
 	}
 
 	macro resetPageChanges {

@@ -29,10 +29,10 @@ definition {
 		}
 	}
 
-    @description = "This is a test for LPS-142641. Create a Site based on Team-Extranet"
+	@description = "This is a test for LPS-142641. Create a Site based on Team-Extranet"
 	@priority = "5"
 	test AddTeamExtranetSite {
-       task ("Go to Team Extranet Site") {
+		task ("Go to Team Extranet Site") {
 			ApplicationsMenu.gotoSite(site = "Test Site Team Extranet");
 		}
 
@@ -41,77 +41,78 @@ definition {
 				key_title = "Welcome to the team!",
 				locator1 = "TeamExtranet#FRAGMENT_HEADER");
 		}
-    }
+	}
 
-    @description = "This is a test for LPS-142641. Verify the Stylebook One is marked as default and includes a thumbnail"
-    @ignore = "Test Stub"
+	@description = "This is a test for LPS-142641. Verify the Stylebook One is marked as default and includes a thumbnail"
+	@ignore = "Test Stub"
 	@priority = "4"
 	test StylebookOneIsDefaultAndIncludesAThumbnail {
 
-        // TODO LPS-142641 StylebookOneIsDefaultAndIncludesAThumbnail pending implementation
-    
-    }
+		// TODO LPS-142641 StylebookOneIsDefaultAndIncludesAThumbnail pending implementation
 
-    @description = "This is a test for LPS-142641. View the Team Extranet Fragments"
-    @ignore = "Test Stub"
-	@priority = "4"
-	test ViewTeamExtranetFragments {
+	}
 
-        // TODO LPS-142641 ViewTeamExtranetFragments pending implementation
-    
-    }
-
-    @description = "This is a test for LPS-142641. View the Team Extranet Page Templates"
-    @ignore = "Test Stub"
-	@priority = "4"
-	test ViewTeamExtranetPageTemplates {
-
-        // TODO LPS-142641 ViewTeamExtranetPageTemplates pending implementation
-    
-    }
-
-    @description = "This is a test for LPS-142641. View the Team Extranet Pages"
-    @ignore = "Test Stub"
-	@priority = "4"
-	test ViewTeamExtranetPages {
-
-        // TODO LPS-142641 ViewTeamExtranetPages pending implementation
-    
-    }
-
-    @description = "This is a test for LPS-142641. View the Team Extranet Collections"
-    @ignore = "Test Stub"
-	@priority = "3"
-	test ViewTeamExtranetCollections {
-
-        // TODO LPS-142641 ViewTeamExtranetCollections pending implementation
-    
-    }
-
-    @description = "This is a test for LPS-142641. View the Team Extranet Web Content"
-    @ignore = "Test Stub"
-	@priority = "4"
-	test ViewTeamExtranetWebContent {
-
-        // TODO LPS-142641 ViewTeamExtranetWebContent pending implementation
-    
-    }
-
-    @description = "This is a test for LPS-142641. View the Team Extranet Documents and Media"
-    @ignore = "Test Stub"
-	@priority = "4"
-	test ViewTeamExtranetDocumentsAndMedia {
-
-        // TODO LPS-142641 ViewTeamExtranetDocumentsAndMedia pending implementation
-    
-    }
-
-    @description = "This is a test for LPS-142641. View the Team Extranet Categories"
-    @ignore = "Test Stub"
+	@description = "This is a test for LPS-142641. View the Team Extranet Categories"
+	@ignore = "Test Stub"
 	@priority = "3"
 	test ViewTeamExtranetCategories {
 
-        // TODO LPS-142641 ViewTeamExtranetCategories pending implementation
-    
-    }
+		// TODO LPS-142641 ViewTeamExtranetCategories pending implementation
+
+	}
+
+	@description = "This is a test for LPS-142641. View the Team Extranet Collections"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test ViewTeamExtranetCollections {
+
+		// TODO LPS-142641 ViewTeamExtranetCollections pending implementation
+
+	}
+
+	@description = "This is a test for LPS-142641. View the Team Extranet Documents and Media"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ViewTeamExtranetDocumentsAndMedia {
+
+		// TODO LPS-142641 ViewTeamExtranetDocumentsAndMedia pending implementation
+
+	}
+
+	@description = "This is a test for LPS-142641. View the Team Extranet Fragments"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ViewTeamExtranetFragments {
+
+		// TODO LPS-142641 ViewTeamExtranetFragments pending implementation
+
+	}
+
+	@description = "This is a test for LPS-142641. View the Team Extranet Pages"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ViewTeamExtranetPages {
+
+		// TODO LPS-142641 ViewTeamExtranetPages pending implementation
+
+	}
+
+	@description = "This is a test for LPS-142641. View the Team Extranet Page Templates"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ViewTeamExtranetPageTemplates {
+
+		// TODO LPS-142641 ViewTeamExtranetPageTemplates pending implementation
+
+	}
+
+	@description = "This is a test for LPS-142641. View the Team Extranet Web Content"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ViewTeamExtranetWebContent {
+
+		// TODO LPS-142641 ViewTeamExtranetWebContent pending implementation
+
+	}
+
 }

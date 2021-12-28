@@ -73,6 +73,25 @@ public class TranslationURLProviderImpl implements TranslationURLProvider {
 	}
 
 	@Override
+	public PortletURL getImportTranslationURL(
+			long groupId, long classNameId,
+			RequestBackedPortletURLFactory requestBackedPortletURLFactory)
+		throws PortalException {
+
+		return PortletURLBuilder.create(
+			requestBackedPortletURLFactory.createControlPanelRenderURL(
+				TranslationPortletKeys.TRANSLATION,
+				_groupLocalService.getGroup(groupId), 0, 0)
+		).setMVCRenderCommandName(
+			"/translation/import_translation"
+		).setParameter(
+			"classNameId", classNameId
+		).setParameter(
+			"groupId", groupId
+		).buildPortletURL();
+	}
+
+	@Override
 	public PortletURL getTranslateURL(
 			long groupId, long classNameId, long classPK,
 			RequestBackedPortletURLFactory requestBackedPortletURLFactory)

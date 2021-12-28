@@ -146,7 +146,7 @@ function ManagementToolbar({
 						/>
 					)}
 
-					{showInfoButton && (
+					{!showDesignImprovementsFF && showInfoButton && (
 						<InfoPanelControl
 							infoPanelId={infoPanelId}
 							onInfoButtonClick={onInfoButtonClick}
@@ -208,6 +208,13 @@ function ManagementToolbar({
 								</ClayManagementToolbar.Item>
 							)}
 						</>
+					)}
+
+					{showDesignImprovementsFF && showInfoButton && (
+						<InfoPanelControl
+							infoPanelId={infoPanelId}
+							onInfoButtonClick={onInfoButtonClick}
+						/>
 					)}
 				</ClayManagementToolbar.ItemList>
 			</ClayManagementToolbar>

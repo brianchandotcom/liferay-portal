@@ -2483,12 +2483,35 @@ definition {
 	}
 
 	@description = "LPS-135547 - Verify it is possible to search for a field from a Custom Object"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanSearchForFieldCustomObject {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-		// TODO LPS-141641 CanSearchForFieldCustomObject pending implementation
+		for (var letter : list "A,B") {
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldLabelName = "Custom Field ${letter}",
+				fieldName = "customObjectField${letter}",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject");
+		}
 
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+		ObjectAdmin.goToFieldsTab();
+
+		Search.searchCP(searchTerm = "customObjectFieldA");
+
+		ObjectAdmin.assertObjectField(
+			fieldLabel = "Custom Field A",
+			fieldType = "String");
+
+		ObjectAdmin.assertObjectFieldNotPresent(fieldLabel = "Custom Field B");
 	}
 
 	@description = "LPS-135547 - Verify it is possible to search for a field from a System Object"

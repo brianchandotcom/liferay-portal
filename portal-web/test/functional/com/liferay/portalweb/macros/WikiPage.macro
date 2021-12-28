@@ -1326,7 +1326,7 @@ definition {
 			locator1 = "Wiki#PAGE_HEADER",
 			value1 = "${wikiPageTitle}");
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "WikiEntry#BODY",
 			value1 = "${wikiPageContent}");
 

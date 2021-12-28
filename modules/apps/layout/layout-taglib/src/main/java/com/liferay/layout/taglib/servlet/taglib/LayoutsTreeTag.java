@@ -272,10 +272,6 @@ public class LayoutsTreeTag extends IncludeTag {
 					checkedNodesJSONArray.put(
 						String.valueOf(checkedLayout.getPlid()));
 				}
-				else if (checkedLayoutId == LayoutConstants.DEFAULT_PLID) {
-					checkedNodesJSONArray.put(
-						String.valueOf(LayoutConstants.DEFAULT_PLID));
-				}
 			}
 		}
 

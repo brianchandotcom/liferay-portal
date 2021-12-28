@@ -113,7 +113,7 @@ public class WorkflowDefinitionResourceImpl
 		return _toWorkflowDefinition(
 			_workflowDefinitionManager.deployWorkflowDefinition(
 				contextCompany.getCompanyId(), contextUser.getUserId(),
-				workflowDefinition.getTitle(), workflowDefinition.getName(),
+				_getTitle(workflowDefinition), workflowDefinition.getName(),
 				content.getBytes()));
 	}
 
@@ -127,7 +127,7 @@ public class WorkflowDefinitionResourceImpl
 		return _toWorkflowDefinition(
 			_workflowDefinitionManager.saveWorkflowDefinition(
 				contextCompany.getCompanyId(), contextUser.getUserId(),
-				workflowDefinition.getTitle(), workflowDefinition.getName(),
+				_getTitle(workflowDefinition), workflowDefinition.getName(),
 				content.getBytes()));
 	}
 

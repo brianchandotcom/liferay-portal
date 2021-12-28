@@ -155,4 +155,76 @@ definition {
 		}
 	}
 
+    @description = "Feature ID: LRAC-4266 | Automation ID: LRAC-10295 | Test Summary: Search for events in different tabs"
+	@priority = "3"
+	test SearchEventsInDifferentTabs {
+        var defaultEventName = "pageViewed";
+
+		task ("Fill fields and create custom event") {
+			var customEventName = ACCustomEvents.generateCustomEventName();
+
+			ACCustomEvents.createCustomEvent(
+				customEventName = "${customEventName}",
+				timeToSendCustomEvent = "1");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch the property in AC and go to event analysis") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+
+			ACNavigation.goToEventAnalysis();
+		}
+
+		task ("Click to add event and switch tab to all") {
+			ACEventAnalysis.clickToAddEventButton();
+
+			ACNavigation.switchTabInCard(tabName = "All");
+        }
+
+        task ("Search for default event in the all tab and check that it appears") {
+			ACEventAnalysis.searchEventAnalysis(searchItem = "${defaultEventName}");
+
+			ACEventAnalysis.viewEventAnalysisList(eventList = "${defaultEventName}");
+        }
+
+        task ("Search for custom event in the all tab and check that it appears") {
+            ACEventAnalysis.searchEventAnalysis(searchItem = "${customEventName}");
+
+			ACEventAnalysis.viewEventAnalysisList(eventList = "${customEventName}");
+        }
+
+        task ("Switch tab to default and search for default event in the default tab and check that it appears") {
+			ACNavigation.switchTabInCard(tabName = "Default");
+
+            ACEventAnalysis.searchEventAnalysis(searchItem = "${defaultEventName}");
+
+			ACEventAnalysis.viewEventAnalysisList(eventList = "${defaultEventName}");
+        }
+
+        task ("Search for custom event in the default tab and check that it doesn't appear") {
+			ACEventAnalysis.searchEventAnalysis(searchItem = "${customEventName}");
+
+			ACEventAnalysis.viewEventAnalysisListNotPresent(eventList = "${customEventName}");
+		}
+
+        task ("Switch tab to Custom and search for default event in the custom tab and check that it doesn't appear") {
+			ACNavigation.switchTabInCard(tabName = "Custom");
+
+            ACEventAnalysis.searchEventAnalysis(searchItem = "${defaultEventName}");
+
+			ACEventAnalysis.viewEventAnalysisListNotPresent(eventList = "${defaultEventName}");
+        }
+
+        task ("Search for custom event in the custom tab and check that it appears") {
+			ACEventAnalysis.searchEventAnalysis(searchItem = "${customEventName}");
+
+			ACEventAnalysis.viewEventAnalysisList(eventList = "${customEventName}");
+		}
+	}
+
 }

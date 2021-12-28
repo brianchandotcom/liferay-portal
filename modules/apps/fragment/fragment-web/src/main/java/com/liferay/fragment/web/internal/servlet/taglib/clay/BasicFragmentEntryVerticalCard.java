@@ -120,14 +120,14 @@ public class BasicFragmentEntryVerticalCard
 
 	@Override
 	public String getSubtitle() {
-		Date statusDate = fragmentEntry.getStatusDate();
+		Date modifiedDate = fragmentEntry.getModifiedDate();
 
-		String statusDateDescription = LanguageUtil.getTimeDescription(
+		String modifiedDateDescription = LanguageUtil.getTimeDescription(
 			_httpServletRequest,
-			System.currentTimeMillis() - statusDate.getTime(), true);
+			System.currentTimeMillis() - modifiedDate.getTime(), true);
 
 		return LanguageUtil.format(
-			_httpServletRequest, "x-ago", statusDateDescription);
+			_httpServletRequest, "x-ago", modifiedDateDescription);
 	}
 
 	@Override

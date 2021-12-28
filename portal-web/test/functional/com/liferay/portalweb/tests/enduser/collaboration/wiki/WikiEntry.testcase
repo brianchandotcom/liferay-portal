@@ -199,13 +199,48 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136989. It checks that pages can be imported into a specific node."
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanImportPagesIntoSpecificNode {
-		property portal.acceptance = "false";
+		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
 
-		// TODO LPS-136989 CanImportPagesIntoSpecificNode pending implementation
+		WikiNode.addCP(wikiNodeName = "Wiki Node Name");
 
+		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
+
+		AssertTextEquals(
+			key_wikiNodeName = "Wiki Node Name",
+			locator1 = "Wiki#NODE_TABLE_NUMBER_OF_PAGES",
+			value1 = "0");
+
+		Click(
+			key_wikiNodeName = "Wiki Node Name",
+			locator1 = "Wiki#NODE_TABLE_ACTIONS_DROPDOWN");
+
+		MenuItem.click(menuItem = "Import Pages");
+
+		var dependencyFilePath = TestCase.getDependenciesDirPath(fileName = "Liferay-sample2.xml");
+
+		UploadFile(
+			key_tag = "Pages File",
+			locator1 = "Wiki#IMPORT_PAGES_MEDIAWIKI",
+			value1 = "${dependencyFilePath}");
+
+		Click(
+			key_text = "Import",
+			locator1 = "Button#ANY");
+
+		AssertTextEquals(
+			key_wikiNodeName = "Wiki Node Name",
+			locator1 = "Wiki#NODE_TABLE_NUMBER_OF_PAGES",
+			value1 = "1");
+
+		WikiNavigator.gotoNode(wikiNodeName = "Wiki Node Name");
+
+		WikiNavigator.gotoEntryViaPGTable(wikiPageTitle = "Liferay");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "WikiEntry#BODY",
+			value1 = "Liferay, Inc., is an open-source company");
 	}
 
 	@description = "This is a test for LPS-136984. It checks that Javascript will not be excuted from the page title."

@@ -211,7 +211,7 @@ definition {
 	@priority = "4"
 	test CanMapDateTypeAndViewEntries {
 		property portal.upstream = "quarantine";
-		
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",

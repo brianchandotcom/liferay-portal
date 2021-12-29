@@ -26,7 +26,7 @@ import com.liferay.portal.convert.ConvertProcess;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.SingleVMPool;
-import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
+import com.liferay.portal.kernel.cluster.ClusterExecutor;
 import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -678,7 +678,7 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 
 			clusterRequest.setFireAndForget(true);
 
-			ClusterExecutorUtil.execute(clusterRequest);
+			_clusterExecutor.execute(clusterRequest);
 		}
 		else {
 			_clusterMasterExecutor.executeOnMaster(
@@ -795,6 +795,9 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 		Map.class);
 	private static final MethodKey _updateLogLevelsMethodKey = new MethodKey(
 		EditServerMVCActionCommand.class, "_updateLogLevels", Map.class);
+
+	@Reference
+	private ClusterExecutor _clusterExecutor;
 
 	@Reference
 	private ClusterMasterExecutor _clusterMasterExecutor;

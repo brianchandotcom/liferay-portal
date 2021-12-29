@@ -14,6 +14,8 @@
 
 package com.liferay.journal.web.internal.info.item.provider;
 
+import com.liferay.info.exception.InfoItemPermissionException;
+import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.provider.InfoItemPermissionProvider;
 import com.liferay.journal.model.JournalArticle;
@@ -28,6 +30,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Objects;
+import java.util.Optional;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -45,8 +48,15 @@ public class JournalArticleInfoItemPermissionProvider
 			InfoItemReference infoItemReference, String actionId)
 		throws InfoItemPermissionException {
 
-		return _hasPermission(
-			permissionChecker, infoItemReference.getClassPK(), actionId);
+		InfoItemIdentifier infoItemIdentifier =
+			infoItemReference.getInfoItemIdentifier();
+
+		return hasPermission(
+			permissionChecker,
+			_getArticle(
+				infoItemReference.getClassPK(),
+				infoItemIdentifier.getVersionOptional()),
+			actionId);
 	}
 
 	@Override
@@ -59,30 +69,48 @@ public class JournalArticleInfoItemPermissionProvider
 			permissionChecker, journalArticle.getId(), actionId);
 	}
 
-	private JournalArticle _getArticle(long classPK, String version)
-		throws PortalException {
+	private JournalArticle _getArticle(
+			long classPK, Optional<String> versionOptional)
+		throws InfoItemPermissionException {
 
-		if (Validator.isNull(version) ||
-			Objects.equals(
-				version, InfoItemIdentifier.VERSION_LATEST_APPROVED)) {
+		String version = null;
 
-			return _journalArticleLocalService.fetchLatestArticle(classPK);
+		if (versionOptional.isPresent()) {
+			version = versionOptional.get();
 		}
-		else if (Objects.equals(version, InfoItemIdentifier.VERSION_LATEST)) {
-			JournalArticleResource articleResource =
-				_journalArticleResourceLocalService.getArticleResource(classPK);
 
-			return _journalArticleLocalService.fetchLatestArticle(
-				articleResource.getGroupId(), articleResource.getArticleId(),
-				WorkflowConstants.STATUS_ANY);
+		try {
+			if (Validator.isNull(version) ||
+				Objects.equals(
+					version, InfoItemIdentifier.VERSION_LATEST_APPROVED)) {
+
+				return _journalArticleLocalService.fetchLatestArticle(classPK);
+			}
+			else if (Objects.equals(
+						version, InfoItemIdentifier.VERSION_LATEST)) {
+
+				JournalArticleResource articleResource =
+					_journalArticleResourceLocalService.getArticleResource(
+						classPK);
+
+				return _journalArticleLocalService.fetchLatestArticle(
+					articleResource.getGroupId(),
+					articleResource.getArticleId(),
+					WorkflowConstants.STATUS_ANY);
+			}
+			else {
+				JournalArticleResource articleResource =
+					_journalArticleResourceLocalService.getArticleResource(
+						classPK);
+
+				return _journalArticleLocalService.getArticle(
+					articleResource.getGroupId(),
+					articleResource.getArticleId(),
+					GetterUtil.getDouble(version));
+			}
 		}
-		else {
-			JournalArticleResource articleResource =
-				_journalArticleResourceLocalService.getArticleResource(classPK);
-
-			return _journalArticleLocalService.getArticle(
-				articleResource.getGroupId(), articleResource.getArticleId(),
-				GetterUtil.getDouble(version));
+		catch (PortalException portalException) {
+			throw new InfoItemPermissionException(classPK, portalException);
 		}
 	}
 

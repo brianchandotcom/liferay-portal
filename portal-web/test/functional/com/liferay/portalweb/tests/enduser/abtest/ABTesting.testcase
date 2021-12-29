@@ -546,7 +546,7 @@ definition {
 		task ("Go to the content page created") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Content Page 2",
-				siteName = "Test Site Name 2");		
+				siteName = "Test Site Name 2");
 		}
 
 		task ("Open and assert that Ab Test Panel displays instructions to sync to AC and do not 'Don't show me this again' button and the message is not displayed") {

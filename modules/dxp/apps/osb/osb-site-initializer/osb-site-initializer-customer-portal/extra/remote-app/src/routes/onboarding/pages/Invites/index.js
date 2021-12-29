@@ -45,7 +45,7 @@ const Invites = () => {
 	const {data: rolesData} = useQuery(getAccountRolesAndAccountFlags, {
 		variables: {
 			accountFlagsFilter: '',
-			accountId: 0,
+			accountId: project.id,
 		},
 	});
 
@@ -63,14 +63,17 @@ const Invites = () => {
 	const hasSubscriptionsDXPCloud = !!data?.c?.accountSubscriptionGroups?.items
 		?.length;
 
-	const nextStep = hasSubscriptionsDXPCloud
-		? steps.dxpCloud
-		: steps.successDxpCloud;
-
-	const handleSkip = () => {
-		window.location.href = `${API_BASE_URL}${LiferayTheme.getLiferaySiteName()}/overview?${
-			PARAMS_KEYS.PROJECT_APPLICATION_EXTERNAL_REFERENCE_CODE
-		}=${project.accountKey}`;
+	const nextPage = () => {
+		if (hasSubscriptionsDXPCloud) {
+			dispatch({
+				payload: steps.dxpCloud,
+				type: actionTypes.CHANGE_STEP,
+			});
+		} else {
+			window.location.href = `${API_BASE_URL}${LiferayTheme.getLiferaySiteName()}/overview?${
+				PARAMS_KEYS.PROJECT_APPLICATION_EXTERNAL_REFERENCE_CODE
+			}=${project.accountKey}`;
+		}
 	};
 
 	const handleSubmit = async () => {
@@ -92,11 +95,9 @@ const Invites = () => {
 						})
 					)
 			);
+
 			if (!error) {
-				dispatch({
-					payload: nextStep,
-					type: actionTypes.CHANGE_STEP,
-				});
+				nextPage();
 			}
 		}
 		else {
@@ -227,7 +228,7 @@ const Invites = () => {
 		<Layout
 			footerProps={{
 				leftButton: (
-					<BaseButton borderless onClick={handleSkip}>
+					<BaseButton borderless onClick={nextPage}>
 						Skip for now
 					</BaseButton>
 				),

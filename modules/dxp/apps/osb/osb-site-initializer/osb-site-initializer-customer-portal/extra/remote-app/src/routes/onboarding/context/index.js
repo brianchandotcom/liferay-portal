@@ -48,7 +48,7 @@ const AppContextProvider = ({assetsPath, children}) => {
 		variables: {id: LiferayTheme.getUserId()},
 	});
 
-	const getProject = async (projectExternalReferenceCode) => {
+	const getProject = async (projectExternalReferenceCode, accountBrief) => {
 		const {data: projects} = await client.query({
 			query: getKoroneikiAccounts,
 			variables: {
@@ -58,21 +58,15 @@ const AppContextProvider = ({assetsPath, children}) => {
 
 		if (projects) {
 			dispatch({
-				payload: projects.c.koroneikiAccounts.items[0],
+				payload: {
+					...projects.c.koroneikiAccounts.items[0],
+					id: accountBrief.id,
+					name: accountBrief.name 
+				},
 				type: actionTypes.UPDATE_PROJECT,
 			});
 		}
 	};
-
-	useEffect(() => {
-		const projectExternalReferenceCode = SearchParams.get(
-			PARAMS_KEYS.PROJECT_APPLICATION_EXTERNAL_REFERENCE_CODE
-		);
-
-		if (projectExternalReferenceCode) {
-			getProject(projectExternalReferenceCode);
-		}
-	}, []);
 
 	useEffect(() => {
 		if (data) {
@@ -80,6 +74,18 @@ const AppContextProvider = ({assetsPath, children}) => {
 				payload: data.userAccount,
 				type: actionTypes.UPDATE_USER_ACCOUNT,
 			});
+
+			const projectExternalReferenceCode = SearchParams.get(
+				PARAMS_KEYS.PROJECT_APPLICATION_EXTERNAL_REFERENCE_CODE
+			);
+	
+			if (projectExternalReferenceCode) {
+				const accountBrief = data.userAccount.accountBriefs.find((accountBrief) => accountBrief.externalReferenceCode === projectExternalReferenceCode);
+
+				if (accountBrief) {
+					getProject(projectExternalReferenceCode, accountBrief);
+				}
+			}
 		}
 	}, [data]);
 

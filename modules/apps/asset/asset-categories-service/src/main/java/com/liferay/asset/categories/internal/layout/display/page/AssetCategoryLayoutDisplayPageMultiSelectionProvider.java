@@ -166,10 +166,11 @@ public class AssetCategoryLayoutDisplayPageMultiSelectionProvider
 					infoItemReference.getClassName(),
 					infoItemReference.getInfoItemIdentifier());
 
-			hierarchicalInfoItemReference.setChildren(
-				_getChildren(
-					itemsByParentCategoryIdMap,
-					_getClassPK(infoItemReference)));
+			hierarchicalInfoItemReference.
+				setChildrenHierarchicalInfoItemReferences(
+					_getChildren(
+						itemsByParentCategoryIdMap,
+						_getClassPK(infoItemReference)));
 
 			children.add(hierarchicalInfoItemReference);
 		}

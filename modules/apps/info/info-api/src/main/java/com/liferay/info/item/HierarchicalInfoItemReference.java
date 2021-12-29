@@ -47,29 +47,39 @@ public class HierarchicalInfoItemReference extends InfoItemReference {
 			(HierarchicalInfoItemReference)object;
 
 		return Objects.equals(
-			_children, hierarchicalInfoItemReference._children);
+			_childrenHierarchicalInfoItemReferences,
+			hierarchicalInfoItemReference.
+				_childrenHierarchicalInfoItemReferences);
 	}
 
-	public List<HierarchicalInfoItemReference> getChildren() {
-		return _children;
+	public List<HierarchicalInfoItemReference>
+		getChildrenHierarchicalInfoItemReferences() {
+
+		return _childrenHierarchicalInfoItemReferences;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(super.hashCode(), _children);
+		return Objects.hash(
+			super.hashCode(), _childrenHierarchicalInfoItemReferences);
 	}
 
-	public void setChildren(List<HierarchicalInfoItemReference> children) {
-		_children = children;
+	public void setChildrenHierarchicalInfoItemReferences(
+		List<HierarchicalInfoItemReference>
+			childrenHierarchicalInfoItemReferences) {
+
+		_childrenHierarchicalInfoItemReferences =
+			childrenHierarchicalInfoItemReferences;
 	}
 
 	@Override
 	public String toString() {
 		return StringBundler.concat(
-			"{infoItemReference=", super.toString(), ", _children=", _children,
-			"}");
+			"{infoItemReference=", super.toString(), ", _children=",
+			_childrenHierarchicalInfoItemReferences, "}");
 	}
 
-	private List<HierarchicalInfoItemReference> _children = new ArrayList<>();
+	private List<HierarchicalInfoItemReference>
+		_childrenHierarchicalInfoItemReferences = new ArrayList<>();
 
 }

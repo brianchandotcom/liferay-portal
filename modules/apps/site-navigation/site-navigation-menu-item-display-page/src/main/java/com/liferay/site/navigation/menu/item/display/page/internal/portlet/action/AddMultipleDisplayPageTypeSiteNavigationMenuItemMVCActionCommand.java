@@ -207,7 +207,8 @@ public class AddMultipleDisplayPageTypeSiteNavigationMenuItemMVCActionCommand
 			(HierarchicalInfoItemReference)infoItemReference;
 
 		for (HierarchicalInfoItemReference childHierarchicalInfoItemReference :
-				hierarchicalInfoItemReference.getChildren()) {
+				hierarchicalInfoItemReference.
+					getChildrenHierarchicalInfoItemReferences()) {
 
 			_addSiteNavigationMenuItem(
 				groupId, childHierarchicalInfoItemReference, jsonObjects,

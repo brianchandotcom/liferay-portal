@@ -1,0 +1,28 @@
+@component-name = "portal-commerce"
+definition {
+
+	property portal.release = "quarantine";
+	property portal.upstream = "quarantine";
+	property testray.main.component.name = "Order Management";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		Navigator.openURL();
+
+		if (IsElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE")) {
+			User.logoutPG();
+		}
+
+		User.firstLoginPG();
+
+		CommerceConfiguration.commerceAdminTearDown();
+
+		CommerceConfiguration.commerceInitializersTearDown();
+	}
+
+}

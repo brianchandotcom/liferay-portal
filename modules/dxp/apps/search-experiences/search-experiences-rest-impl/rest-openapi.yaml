@@ -121,6 +121,8 @@ components:
                             type: boolean
                         includeResponseString:
                             type: boolean
+                        queryString:
+                            type: string
                         searchableAssetTypes:
                             items:
                                 type: string

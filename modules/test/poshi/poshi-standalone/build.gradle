@@ -12,6 +12,4 @@ buildscript {
 	}
 }
 
-apply plugin: "com.liferay.poshi.runner"
-apply plugin: "com.liferay.poshi.runner.resources.defaults"
-apply plugin: "com.liferay.source.formatter"
+apply plugin: "com.liferay.poshi.defaults"

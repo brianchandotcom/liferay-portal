@@ -207,6 +207,34 @@ public class GeneralConfiguration implements Serializable {
 	protected Boolean includeResponseString;
 
 	@Schema
+	public String getQueryString() {
+		return queryString;
+	}
+
+	public void setQueryString(String queryString) {
+		this.queryString = queryString;
+	}
+
+	@JsonIgnore
+	public void setQueryString(
+		UnsafeSupplier<String, Exception> queryStringUnsafeSupplier) {
+
+		try {
+			queryString = queryStringUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String queryString;
+
+	@Schema
 	public String[] getSearchableAssetTypes() {
 		return searchableAssetTypes;
 	}
@@ -339,6 +367,20 @@ public class GeneralConfiguration implements Serializable {
 			sb.append("\"includeResponseString\": ");
 
 			sb.append(includeResponseString);
+		}
+
+		if (queryString != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"queryString\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(queryString));
+
+			sb.append("\"");
 		}
 
 		if (searchableAssetTypes != null) {

@@ -42,16 +42,6 @@ public class InfoItemFieldValues {
 	 * @deprecated As of Athanasius (7.3.x)
 	 */
 	@Deprecated
-	public InfoItemFieldValues(
-		InfoItemClassPKReference infoItemClassPKReference) {
-
-		this(builder().infoItemClassPKReference(infoItemClassPKReference));
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x)
-	 */
-	@Deprecated
 	public InfoItemFieldValues add(InfoFieldValue<Object> infoFieldValue) {
 		_builder.infoFieldValue(infoFieldValue);
 
@@ -97,15 +87,6 @@ public class InfoItemFieldValues {
 			infoFieldName, Collections.emptyList());
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getInfoItemReference()}
-	 */
-	@Deprecated
-	public InfoItemClassPKReference getInfoItemClassPKReference() {
-		return _builder._infoItemClassPKReference;
-	}
-
 	public InfoItemReference getInfoItemReference() {
 		return _builder._infoItemReference;
 	}
@@ -123,16 +104,6 @@ public class InfoItemFieldValues {
 		}
 
 		return map;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x)
-	 */
-	@Deprecated
-	public void setInfoItemClassPKReference(
-		InfoItemClassPKReference infoItemClassPKReference) {
-
-		_builder.infoItemClassPKReference(infoItemClassPKReference);
 	}
 
 	@Override
@@ -181,19 +152,6 @@ public class InfoItemFieldValues {
 			return this;
 		}
 
-		/**
-		 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-		 *             #infoItemReference(InfoItemReference)}
-		 */
-		@Deprecated
-		public Builder infoItemClassPKReference(
-			InfoItemClassPKReference infoItemClassPKReference) {
-
-			_infoItemClassPKReference = infoItemClassPKReference;
-
-			return this;
-		}
-
 		public Builder infoItemReference(InfoItemReference infoItemReference) {
 			_infoItemReference = infoItemReference;
 
@@ -204,7 +162,6 @@ public class InfoItemFieldValues {
 			new LinkedHashSet<>();
 		private final Map<String, Collection<InfoFieldValue<Object>>>
 			_infoFieldValuesMap = new HashMap<>();
-		private InfoItemClassPKReference _infoItemClassPKReference;
 		private InfoItemReference _infoItemReference;
 
 	}

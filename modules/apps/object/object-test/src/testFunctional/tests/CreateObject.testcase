@@ -3837,13 +3837,76 @@ definition {
 	}
 
 	@description = "LPS-135401 - Verify if Disassociate deletion type of Relationship One to Many will allow the entry with relation (from the parent Object) to be deleted and its relations to be disassociated"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test DisassociateDeletionOneToManyWillAllowDeleteParent {
 		property portal.acceptance = "true";
 
-		// TODO LPS-141676 DisassociateDeletionOneToManyWillAllowDeleteParent pending implementation
+		for (var nameObject : list "A,B") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object ${nameObject}",
+				objectName = "CustomObject${nameObject}",
+				pluralLabelName = "Custom Objects ${nameObject}");
+		}
 
+		for (var nameField : list "A,B") {
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldLabelName = "Custom Field ${nameField}",
+				fieldName = "customObjectField${nameField}",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject${nameField}");
+		}
+
+		ObjectAdmin.addObjectRelationshipViaAPI(
+			deletionType = "disassociate",
+			objectName_1 = "CustomObjectA",
+			objectName_2 = "CustomObjectB",
+			relationshipLabel = "Relationship",
+			relationshipName = "relationship",
+			relationshipType = "oneToMany");
+
+		Navigator.openURL();
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object A");
+
+		CreateObject.selectTitleField(fieldLabel = "Custom Field A");
+
+		Button.clickSave();
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObjectA");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObjectB");
+
+		for (var nameEntry : list "A,B") {
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customObjectField${nameEntry}",
+				objectName = "CustomObject${nameEntry}",
+				value = "Entry ${nameEntry}");
+		}
+
+		Navigator.openURL();
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObjectB");
+
+		ObjectPortlet.viewEntryDetails(entry = "Entry B");
+
+		ObjectPortlet.chooseEntryOnRelationshipField(entryOption = "Entry A");
+
+		Navigator.openURL();
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObjectA");
+
+		ObjectPortlet.deleteEntry(entry = "Entry A");
+
+		ObjectPortlet.assertEntryNotPresent(entry = "Entry A");
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObjectB");
+
+		ObjectPortlet.viewEntryDetails(entry = "Entry B");
+
+		ObjectPortlet.assertEntryOnRelationshipFieldNotPresent(customObject = "Entry A");
 	}
 
 	@description = "LPS-135547 - Verify the empty state when searching for an Object returns nothing"

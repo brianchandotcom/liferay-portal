@@ -155,9 +155,19 @@
 		<td>//input[contains(@name,'r_relationship_c_customObjectId') and contains(@value,'${key_entry}')]</td>
 		<td></td>
 	</tr>
-		<tr>
+	<tr>
 		<td>VIEW_RELATED_OBJECT_ON_RELATIONSHIP_FIELD</td>
 		<td>//div[contains(@class,'dnd-tbody')]//div[contains(text(),'${key_RelatedObject}')][1]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>SELECT_OBJECT_FIELD_IN_TABLE</td>
+		<td>//div[contains(@class,'table-list-title')]//a[contains(text(),'${key_name}')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>SELECT_DELETION_TYPE</td>
+		<td>//select[@id='_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_deletionType']</td>
 		<td></td>
 	</tr>
 </tbody>

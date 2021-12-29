@@ -226,6 +226,22 @@ definition {
 		WaitForSPARefresh();
 	}
 
+	macro selectDeletionType {
+		ObjectAdmin.gotoRelationshipsTab();
+
+		ObjectAdmin.goToRelationshipsDetails(fieldName = "${fieldName}");
+
+		WaitForSPARefresh();
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Select(
+			locator1 = "CreateObject#SELECT_DELETION_TYPE",
+			value1 = "${deletionType}");
+
+		Button.clickSave();
+	}
+
 	macro selectPanelCategoryKey {
 		Select(
 			locator1 = "CreateObject#PANEL_CATEGORY_KEY",

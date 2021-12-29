@@ -120,6 +120,40 @@ public class MappedProduct implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Availability availability;
 
+	@Schema
+	@Valid
+	public MappedProduct getFirstAvailableReplacementMappedProduct() {
+		return firstAvailableReplacementMappedProduct;
+	}
+
+	public void setFirstAvailableReplacementMappedProduct(
+		MappedProduct firstAvailableReplacementMappedProduct) {
+
+		this.firstAvailableReplacementMappedProduct =
+			firstAvailableReplacementMappedProduct;
+	}
+
+	@JsonIgnore
+	public void setFirstAvailableReplacementMappedProduct(
+		UnsafeSupplier<MappedProduct, Exception>
+			firstAvailableReplacementMappedProductUnsafeSupplier) {
+
+		try {
+			firstAvailableReplacementMappedProduct =
+				firstAvailableReplacementMappedProductUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected MappedProduct firstAvailableReplacementMappedProduct;
+
 	@DecimalMin("0")
 	@Schema
 	public Long getId() {
@@ -414,6 +448,67 @@ public class MappedProduct implements Serializable {
 	protected Integer quantity;
 
 	@Schema
+	@Valid
+	public MappedProduct getReplacementMappedProduct() {
+		return replacementMappedProduct;
+	}
+
+	public void setReplacementMappedProduct(
+		MappedProduct replacementMappedProduct) {
+
+		this.replacementMappedProduct = replacementMappedProduct;
+	}
+
+	@JsonIgnore
+	public void setReplacementMappedProduct(
+		UnsafeSupplier<MappedProduct, Exception>
+			replacementMappedProductUnsafeSupplier) {
+
+		try {
+			replacementMappedProduct =
+				replacementMappedProductUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected MappedProduct replacementMappedProduct;
+
+	@Schema
+	public String getReplacementMessage() {
+		return replacementMessage;
+	}
+
+	public void setReplacementMessage(String replacementMessage) {
+		this.replacementMessage = replacementMessage;
+	}
+
+	@JsonIgnore
+	public void setReplacementMessage(
+		UnsafeSupplier<String, Exception> replacementMessageUnsafeSupplier) {
+
+		try {
+			replacementMessage = replacementMessageUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String replacementMessage;
+
+	@Schema
 	public String getSequence() {
 		return sequence;
 	}
@@ -664,6 +759,16 @@ public class MappedProduct implements Serializable {
 			sb.append(String.valueOf(availability));
 		}
 
+		if (firstAvailableReplacementMappedProduct != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"firstAvailableReplacementMappedProduct\": ");
+
+			sb.append(String.valueOf(firstAvailableReplacementMappedProduct));
+		}
+
 		if (id != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -776,6 +881,30 @@ public class MappedProduct implements Serializable {
 			sb.append("\"quantity\": ");
 
 			sb.append(quantity);
+		}
+
+		if (replacementMappedProduct != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"replacementMappedProduct\": ");
+
+			sb.append(String.valueOf(replacementMappedProduct));
+		}
+
+		if (replacementMessage != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"replacementMessage\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(replacementMessage));
+
+			sb.append("\"");
 		}
 
 		if (sequence != null) {

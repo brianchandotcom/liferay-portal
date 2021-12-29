@@ -1,6 +1,6 @@
 {
 	"configuration": {
-		"general": {
+		"generalConfiguration": {
 			"INVALID_1": ""
 		},
 		"queryConfiguration": {

@@ -957,52 +957,25 @@ definition {
 	test SearchWithMoreThanTenSynonymSets {
 		SearchTuning.openSynonymsAdmin();
 
-		var index = "0";
-		var list1 = ListUtil.newListFromString("123,234,345,456,567,678,789,890,901,012,101");
-		var list2 = ListUtil.newListFromString("ABC,BCD,CDE,DEF,EFG,FGH,GHI,HIJ,IJK,JKL,AAA");
+		var digit = "1";
 
-		for (var list1item : list "${list1}") {
-			var list2item = ListUtil.get("${list2}", "${index}");
+		for (var number : list "one,two,three,four,five,six,seven,eight,nine,ten,eleven") {
+			SearchTuning.addSynonymSet(synonyms = "${digit},${number}");
 
-			SearchTuning.addSynonymSet(synonyms = "${list1item} Building,${list2item} Building");
-
-			var index = ${index} + 1;
+			var digit = ${digit} + 1;
 		}
 
 		JSONWebcontent.addWebContent(
-			content = "CDE Building",
+			content = "",
 			groupName = "Guest",
-			title = "Web Content Article 1");
-
-		JSONWebcontent.addWebContent(
-			content = "AAA Building",
-			groupName = "Guest",
-			title = "Web Content Article 2");
+			title = "eleven");
 
 		Navigator.openURL();
 
-		SearchPortlets.searchEmbedded(searchTerm = "345 Building");
+		SearchPortlets.searchEmbedded(searchTerm = "11");
 
 		SearchResultPortlet.viewSearchResults(
-			highlightedSearchAssetSummary = "CDE",
-			searchAssetTitle = "Web Content Article 1",
-			searchAssetType = "Web Content Article");
-
-		SearchResultPortlet.viewSearchResults(
-			highlightedSearchAssetSummary = "Building",
-			searchAssetTitle = "Web Content Article 1",
-			searchAssetType = "Web Content Article");
-
-		SearchPortlets.searchEmbedded(searchTerm = "101 Building");
-
-		SearchResultPortlet.viewSearchResults(
-			highlightedSearchAssetSummary = "AAA",
-			searchAssetTitle = "Web Content Article 2",
-			searchAssetType = "Web Content Article");
-
-		SearchResultPortlet.viewSearchResults(
-			highlightedSearchAssetSummary = "Building",
-			searchAssetTitle = "Web Content Article 2",
+			searchAssetTitle = "eleven",
 			searchAssetType = "Web Content Article");
 	}
 

@@ -2,9 +2,9 @@ Bundle-Name: Liferay Batch Engine Service
 Bundle-SymbolicName: com.liferay.batch.engine.service
 Bundle-Version: 4.0.18
 Import-Package:\
-	com.github.*;resolution:=optional,\
+	!com.graphbuilder.*,\
 	\
-	com.graphbuilder.*;resolution:=optional,\
+	com.github.*;resolution:=optional,\
 	\
 	com.microsoft.schemas.office.powerpoint.*;resolution:=optional,\
 	com.microsoft.schemas.office.word.*;resolution:=optional,\

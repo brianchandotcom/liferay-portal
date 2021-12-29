@@ -2,7 +2,7 @@ Bundle-Name: Liferay Content Dashboard Web
 Bundle-SymbolicName: com.liferay.content.dashboard.web
 Bundle-Version: 2.0.33
 Import-Package:\
-	com.graphbuilder.*;resolution:=optional,\
+	!com.graphbuilder.*,\
 	\
 	com.microsoft.schemas.office.powerpoint.*;resolution:=optional,\
 	com.microsoft.schemas.office.word.*;resolution:=optional,\

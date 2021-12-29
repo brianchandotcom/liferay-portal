@@ -2,9 +2,9 @@ Bundle-Name: Liferay Dynamic Data Lists Service
 Bundle-SymbolicName: com.liferay.dynamic.data.lists.service
 Bundle-Version: 5.0.17
 Import-Package:\
-	com.github.*;resolution:=optional,\
+	!com.graphbuilder.*,\
 	\
-	com.graphbuilder.*;resolution:=optional,\
+	com.github.*;resolution:=optional,\
 	\
 	com.microsoft.schemas.office.powerpoint.*;resolution:=optional,\
 	com.microsoft.schemas.office.word.*;resolution:=optional,\

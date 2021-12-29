@@ -7,11 +7,11 @@ Import-Package:\
 	\
 	!com.google.gson.*,\
 	\
+	!com.graphbuilder.*,\
+	\
 	!org.apache.tapestry5.json.*,\
 	\
 	com.github.*;resolution:=optional,\
-	\
-	com.graphbuilder.*;resolution:=optional,\
 	\
 	com.microsoft.schemas.office.powerpoint.*;resolution:=optional,\
 	com.microsoft.schemas.office.word.*;resolution:=optional,\

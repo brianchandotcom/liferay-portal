@@ -969,7 +969,7 @@ definition {
 			menuItem = "Configure",
 			pageName = "Test Page Name");
 
-		PagesAdmin.viewPageLayoutColumn(columnName = "1 Column");
+		PagesAdmin.viewSelectedLayoutColumn(columnName = "1 Column");
 	}
 
 	@priority = "4"

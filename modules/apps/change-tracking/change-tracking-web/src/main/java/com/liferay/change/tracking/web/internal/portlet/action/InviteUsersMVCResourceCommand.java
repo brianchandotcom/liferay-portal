@@ -227,11 +227,8 @@ public class InviteUsersMVCResourceCommand
 
 		if (role == null) {
 			role = _roleLocalService.addRole(
-				themeDisplay.getDefaultUserId(), null, 0, name,
-				HashMapBuilder.put(
-					LocaleUtil.getDefault(), name
-				).build(),
-				null, RoleConstants.TYPE_PUBLICATIONS, null, null);
+				themeDisplay.getDefaultUserId(), null, 0, name, null, null,
+				RoleConstants.TYPE_PUBLICATIONS, null, null);
 
 			for (String actionId :
 					PublicationRoleConstants.getModelResourceActions(

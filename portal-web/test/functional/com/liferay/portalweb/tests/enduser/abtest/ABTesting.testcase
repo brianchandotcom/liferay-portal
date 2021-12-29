@@ -509,6 +509,65 @@ definition {
 		}
 	}
 
+	@description = "LPS-108147: When user opens AB testing panel and AC is connected and synced, the AB testing panel display all its functionalities"
+	@priority = "5"
+	test CheckABTestPanelInfo {
+		property portal.acceptance = "true";
+
+		task ("Open AB Test Panel") {
+			ABTest.openABTestPanel();
+		}
+
+		task ("Assert that the message and the button for creating the AB Test are present") {
+			AssertVisible(
+				key_title = "No active tests were found for the selected experience.",
+				locator1 = "Header#H4_TITLE");
+
+			AssertVisible(
+				key_message = "Create a new A/B test to optimize your page or experience.",
+				locator1 = "ABTest#SIDEBAR_MESSAGE");
+
+			AssertElementPresent(locator1 = "ABTest#CREATE_TEST_BUTTON");
+		}
+	}
+
+	@description = "LPS-108147: When user opens AB testing panel and AC is connected but not synced, the AB testing panel displays instructions to sync to AC ('Don't show me this again' button and the message is not displayed)"
+	@priority = "3"
+	test CheckABTestPanelInfoNotSyncAC {
+		task ("Create a new Site and Page") {
+			JSONGroup.addGroup(groupName = "Test Site Name 2");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name 2",
+				layoutName = "Content Page 2",
+				type = "content");
+		}
+
+		task ("Go to the content page created") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page 2",
+				siteName = "Test Site Name 2");		
+		}
+
+		task ("Open and assert that Ab Test Panel displays instructions to sync to AC and do not 'Don't show me this again' button and the message is not displayed") {
+			ABTest.openABTestPanel();
+
+			AssertVisible(
+				key_title = "Sync to Liferay Analytics Cloud",
+				locator1 = "Header#H4_TITLE");
+
+			AssertVisible(
+				key_message = "In order to perform an A/B test, your site has to be synced to Liferay Analytics Cloud.",
+				locator1 = "ABTest#SIDEBAR_MESSAGE");
+
+			AssertElementNotPresent(locator1 = "ABTest#HIDE_AB_TEST_BUTTON");
+
+			AssertElementNotPresent(
+				key_title = "Connect to Liferay Analytics Cloud",
+				locator1 = "Header#H4_TITLE");
+		}
+	}
+
 	@description = "LPS-100945: Validate if the Button components have the ID"
 	@priority = "3"
 	test CheckButtonElementId {

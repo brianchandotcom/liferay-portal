@@ -246,6 +246,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SIDEBAR_MESSAGE</td>
+	<td>//div[contains(@class,'sidebar-body')]//p[contains(text(),'${key_message}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TARGET_ELEMENT</td>
 	<td>//div[contains(@class,"lfr-segments-experiment-click-goal-target-overlay-selected") and contains(@data-target-selector, "${key_idElement}")]</td>
 	<td></td>

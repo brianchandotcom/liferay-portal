@@ -997,6 +997,20 @@ definition {
 				MenuItem.viewNotPresent(menuItem = "${menuItem}");
 			}
 		}
+
+		if (isSet(addVideoOptions)) {
+			ItemSelector.switchTab(navTab = "Documents and Media");
+
+			LexiconEntry.gotoAdd();
+
+			for (var menuItem : list "File Upload,Folder,External Video Shortcut") {
+				MenuItem.viewPresent(menuItem = "${menuItem}");
+			}
+
+			for (var menuItem : list "Google Drive Shortcut") {
+				MenuItem.viewNotPresent(menuItem = "${menuItem}");
+			}
+		}
 	}
 
 	macro viewWCCurrentSiteFilterResults {

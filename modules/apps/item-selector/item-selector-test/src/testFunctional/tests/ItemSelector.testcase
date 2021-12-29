@@ -1284,19 +1284,7 @@ definition {
 
 		ItemSelector.gotoItemSelectorViaCKEditor(video = "true");
 
-		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
-
-		ItemSelector.switchTab(navTab = "Documents and Media");
-
-		LexiconEntry.gotoAdd();
-
-		for (var menuItem : list "File Upload,Folder,External Video Shortcut") {
-			MenuItem.viewPresent(menuItem = "${menuItem}");
-		}
-
-		for (var menuItem : list "Google Drive Shortcut") {
-			MenuItem.viewNotPresent(menuItem = "${menuItem}");
-		}
+		ItemSelector.viewRelevantSelections(addVideoOptions = "true");
 	}
 
 	@description = "This test covers LPS-96564. It ensures that a private site cannot be viewed by a non-site member in calendar widget."

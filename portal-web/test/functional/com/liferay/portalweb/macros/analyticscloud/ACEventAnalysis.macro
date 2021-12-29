@@ -119,6 +119,26 @@ definition {
 			locator2 = "ACEventAnalysis#BREAKDOWN_NEW_POSITION");
 	}
 
+	macro changeCustomEventDisplayName {
+		var key_buttonName = "${elementName}";
+
+		MouseOver(locator1 = "ACUtils#GENERIC_BUTTON");
+
+		if ("${editOption}" == "Description") {
+			Click(locator1 = "ACEventAnalysis#EDIT_PENCIL");
+
+			ACCustomEvents.changeCustomEventDisplayNameOrDescription(newDisplayName = "${newDisplayName}");
+		}
+
+		if ("${editOption}" == "Filter") {
+			Click(locator1 = "ACEventAnalysis#FILTER_BUTTON");
+
+			Click(locator1 = "ACEventAnalysis#EDIT_PENCIL");
+
+			ACCustomEvents.changeCustomEventDisplayNameOrDescription(newDisplayName = "${newDisplayName}");
+		}
+	}
+
 	macro clickToAddBreakdownButton {
 		var key_sectionType = "breakdown";
 

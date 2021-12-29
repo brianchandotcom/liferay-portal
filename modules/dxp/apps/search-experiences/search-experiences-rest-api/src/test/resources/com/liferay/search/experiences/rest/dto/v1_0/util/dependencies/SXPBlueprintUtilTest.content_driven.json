@@ -8,17 +8,17 @@
 				"includes": [
 					"articleId",
 					"content",
-					"content${context.language_id}",
+					"content_${context.language_id}",
 					"createDate",
 					"description",
-					"description{context.language_id}",
+					"description_${context.language_id}",
 					"entryClassName",
 					"entryClassPK",
 					"fullName",
-					"localized_title${context.language_id}",
+					"localized_title_${context.language_id}",
 					"name",
-					"name{context.language_id}",
-					"title${context.language_id}",
+					"name_${context.language_id}",
+					"title_${context.language_id}",
 					"modified"
 				]
 			}
@@ -57,13 +57,13 @@
 		},
 		"highlightConfiguration": {
 			"fields": {
-				"content${context.language_id}": {
+				"content_${context.language_id}": {
 					"fragment_offset": 10
 				},
 				"name{context.language_id}": {
 					"fragment_offset": 10
 				},
-				"title${context.language_id}": {
+				"title_${context.language_id}": {
 					"fragment_offset": 10
 				}
 			},
@@ -92,13 +92,13 @@
 								"multi_match": {
 									"boost": 1,
 									"fields": [
-										"localized_title${context.language_id}^2",
-										"title${context.language_id}^2",
-										"name${context.language_id}^2",
+										"localized_title_${context.language_id}^2",
+										"title_${context.language_id}^2",
+										"name_${context.language_id}^2",
 										"name^2",
 										"description^1",
 										"description^1",
-										"content${context.language_id}",
+										"content_${context.language_id}",
 										"content",
 										"specificationOptionsValuesNames",
 										"externalReferenceCode"
@@ -172,7 +172,7 @@
 									"boost": 30,
 									"field_value_factor": {
 										"factor": 1.5,
-										"field": "content${context.language_id}_length_sortable",
+										"field": "content_${context.language_id}_length_sortable",
 										"missing": 1,
 										"modifier": "ln"
 									}
@@ -227,13 +227,13 @@
 								"multi_match": {
 									"boost": 10,
 									"fields": [
-										"localized_title${context.language_id}^2",
-										"title${context.language_id}^2",
-										"name${context.language_id}^2",
+										"localized_title_${context.language_id}^2",
+										"title_${context.language_id}^2",
+										"name_${context.language_id}^2",
 										"name^2",
-										"description${context.language_id}",
+										"description_${context.language_id}",
 										"description",
-										"content${context.language_id}",
+										"content_${context.language_id}",
 										"content",
 										"specificationOptionsValuesNames",
 										"externalReferenceCode"
@@ -947,7 +947,7 @@
 													"boost": "${configuration.boost}",
 													"field_value_factor": {
 														"factor": "${configuration.factor}",
-														"field": "content${context.language_id}_length_sortable",
+														"field": "content_${context.language_id}_length_sortable",
 														"missing": 1,
 														"modifier": "${configuration.modifier}"
 													}

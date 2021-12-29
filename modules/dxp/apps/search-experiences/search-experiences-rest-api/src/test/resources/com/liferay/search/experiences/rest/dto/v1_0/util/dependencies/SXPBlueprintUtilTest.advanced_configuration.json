@@ -7,17 +7,17 @@
 				"includes": [
 					"articleId",
 					"content",
-					"content${context.language_id}",
+					"content_${context.language_id}",
 					"createDate",
 					"description",
-					"description{context.language_id}",
+					"description_{context.language_id}",
 					"entryClassName",
 					"entryClassPK",
 					"fullName",
-					"localized_title${context.language_id}",
+					"localized_title_${context.language_id}",
 					"name",
-					"name{context.language_id}",
-					"title${context.language_id}",
+					"name_{context.language_id}",
+					"title_${context.language_id}",
 					"modified"
 				]
 			}

@@ -109,11 +109,11 @@
 		},
 		"highlightConfiguration": {
 			"fields": {
-				"content${context.language_id}": {
+				"content_${context.language_id}": {
 				},
-				"name${context.language_id}": {
+				"name_${context.language_id}": {
 				},
-				"title${context.language_id}": {
+				"title_${context.language_id}": {
 				}
 			},
 			"fragment_size": 100,

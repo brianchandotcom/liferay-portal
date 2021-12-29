@@ -503,9 +503,9 @@
 								"from": 0,
 								"highlight": {
 									"fields": {
-										"content${context.language_id}": {
+										"content_${context.language_id}": {
 										},
-										"title${context.language_id}": {
+										"title_${context.language_id}": {
 										}
 									},
 									"fragment_size": 50,

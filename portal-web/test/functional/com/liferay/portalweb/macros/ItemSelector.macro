@@ -986,6 +986,16 @@ definition {
 	macro viewRelevantSelections {
 		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
 
+		if (isSet(addDocumentOptions)) {
+			ItemSelector.switchTab(navTab = "Documents and Media");
+
+			LexiconEntry.gotoAdd();
+
+			for (var menuItem : list "File Upload,Folder,Google Drive Shortcut,External Video Shortcut") {
+				MenuItem.viewPresent(menuItem = "${menuItem}");
+			}
+		}
+
 		if (isSet(addImageOptions)) {
 			LexiconEntry.gotoAdd();
 

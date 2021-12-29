@@ -14,13 +14,20 @@
 
 package com.liferay.journal.web.internal.info.item.provider;
 
-import com.liferay.info.exception.InfoItemPermissionException;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.provider.InfoItemPermissionProvider;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.model.JournalArticleResource;
+import com.liferay.journal.service.JournalArticleLocalService;
+import com.liferay.journal.service.JournalArticleResourceLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -52,6 +59,33 @@ public class JournalArticleInfoItemPermissionProvider
 			permissionChecker, journalArticle.getId(), actionId);
 	}
 
+	private JournalArticle _getArticle(long classPK, String version)
+		throws PortalException {
+
+		if (Validator.isNull(version) ||
+			Objects.equals(
+				version, InfoItemIdentifier.VERSION_LATEST_APPROVED)) {
+
+			return _journalArticleLocalService.fetchLatestArticle(classPK);
+		}
+		else if (Objects.equals(version, InfoItemIdentifier.VERSION_LATEST)) {
+			JournalArticleResource articleResource =
+				_journalArticleResourceLocalService.getArticleResource(classPK);
+
+			return _journalArticleLocalService.fetchLatestArticle(
+				articleResource.getGroupId(), articleResource.getArticleId(),
+				WorkflowConstants.STATUS_ANY);
+		}
+		else {
+			JournalArticleResource articleResource =
+				_journalArticleResourceLocalService.getArticleResource(classPK);
+
+			return _journalArticleLocalService.getArticle(
+				articleResource.getGroupId(), articleResource.getArticleId(),
+				GetterUtil.getDouble(version));
+		}
+	}
+
 	private boolean _hasPermission(
 			PermissionChecker permissionChecker, long id, String actionId)
 		throws InfoItemPermissionException {
@@ -65,10 +99,17 @@ public class JournalArticleInfoItemPermissionProvider
 		}
 	}
 
+	@Reference
+	private JournalArticleLocalService _journalArticleLocalService;
+
 	@Reference(
 		target = "(model.class.name=com.liferay.journal.model.JournalArticle)"
 	)
 	private ModelResourcePermission<JournalArticle>
 		_journalArticleModelResourcePermission;
+
+	@Reference
+	private JournalArticleResourceLocalService
+		_journalArticleResourceLocalService;
 
 }

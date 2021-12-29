@@ -1276,15 +1276,7 @@ definition {
 			key_text = "Select",
 			locator1 = "Button#ANY_LAST");
 
-		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
-
-		ItemSelector.switchTab(navTab = "Documents and Media");
-
-		LexiconEntry.gotoAdd();
-
-		for (var menuItem : list "File Upload,Folder,Google Drive Shortcut,External Video Shortcut") {
-			MenuItem.viewPresent(menuItem = "${menuItem}");
-		}
+		ItemSelector.viewRelevantSelections(addDocumentOptions = "true");
 	}
 
 	@description = "This is a test for LPS-136943. It checks that only 'File Upload' and 'Folder' options appear when adding images."

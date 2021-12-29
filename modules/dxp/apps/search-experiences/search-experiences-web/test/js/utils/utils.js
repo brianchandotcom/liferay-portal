@@ -259,7 +259,7 @@ describe('utils', () => {
 	});
 
 	describe('getDefaultValue', () => {
-		it('gets default value for MM-DD-YYYY dates', () => {
+		xit('gets default value for MM-DD-YYYY dates', () => {
 			expect(
 				getDefaultValue({
 					defaultValue: '01-01-2021',

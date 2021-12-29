@@ -115,7 +115,7 @@ public class JournalArticleInfoItemObjectProvider
 			if ((article != null) &&
 				!Objects.equals(
 					version, InfoItemIdentifier.VERSION_LATEST_APPROVED) &&
-				!_hasPermission(article)) {
+				_isSignedIn() && !_hasPermission(article)) {
 
 				article = _getArticle(
 					article.getResourcePrimKey(),
@@ -251,6 +251,17 @@ public class JournalArticleInfoItemObjectProvider
 		}
 
 		return false;
+	}
+
+	private boolean _isSignedIn() {
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		if (permissionChecker == null) {
+			return false;
+		}
+
+		return permissionChecker.isSignedIn();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

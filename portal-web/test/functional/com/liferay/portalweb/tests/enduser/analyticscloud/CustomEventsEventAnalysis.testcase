@@ -396,4 +396,38 @@ definition {
 		}
 	}
 
+	@description = "Feature ID: LRAC-7868 | Automation ID: LRAC-10314 | Test Summary: Event Analysis in an empty state"
+	@priority = "3"
+	test AssertEventAnalysisEmptyState {
+		task ("Switch the property in AC and go to event analysis") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+
+			ACNavigation.goToEventAnalysis();
+		}
+
+		task ("Assert there is '+' button under analyze") {
+			var key_definitionsOptions = "event-analysis/create";
+
+			if (IsElementPresent(locator1 = "ACSettings#DEFINITIONS_OPTIONS")) {
+				Click(locator1 = "ACSettings#DEFINITIONS_OPTIONS");
+			}
+
+			AssertElementPresent(locator1 = "ACEventAnalysis#ADD_EVENT_BUTTON");
+		}
+
+		task ("Assert there is no '+' button under breakdown") {
+			var key_sectionType = "breakdown";
+
+			AssertElementNotPresent(locator1 = "ACEventAnalysis#ADD_ATTRIBUTE_BUTTON");
+		}
+
+		task ("Assert there is no '+' button under filter") {
+			var key_sectionType = "filter";
+
+			AssertElementNotPresent(locator1 = "ACEventAnalysis#ADD_ATTRIBUTE_BUTTON");
+		}
+	}
+
 }

@@ -173,6 +173,10 @@ definition {
 
 		Alert.viewRequestFailedToComplete();
 
+		ScrollWebElementIntoView(
+			key_panel = "Schedule",
+			locator1 = "Panel#PANEL");
+
 		Alert.viewExpireContentFailedMessage();
 	}
 

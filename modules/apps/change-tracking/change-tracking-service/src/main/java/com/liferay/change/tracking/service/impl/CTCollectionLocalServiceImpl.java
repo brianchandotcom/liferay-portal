@@ -60,7 +60,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
-import com.liferay.portal.kernel.dao.jdbc.CurrentConnectionUtil;
+import com.liferay.portal.kernel.dao.jdbc.CurrentConnection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -385,7 +385,7 @@ public class CTCollectionLocalServiceImpl
 
 			ctService.updateWithUnsafeFunction(
 				ctPersistence -> {
-					Connection connection = CurrentConnectionUtil.getConnection(
+					Connection connection = _currentConnection.getConnection(
 						ctPersistence.getDataSource());
 
 					try (PreparedStatement preparedStatement =
@@ -913,6 +913,9 @@ public class CTCollectionLocalServiceImpl
 
 	@Reference
 	private CTServiceRegistry _ctServiceRegistry;
+
+	@Reference
+	private CurrentConnection _currentConnection;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

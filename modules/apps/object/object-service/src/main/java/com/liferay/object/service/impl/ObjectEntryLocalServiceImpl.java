@@ -51,7 +51,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.dao.jdbc.postgresql.PostgreSQLJDBCUtil;
-import com.liferay.portal.kernel.dao.jdbc.CurrentConnectionUtil;
+import com.liferay.portal.kernel.dao.jdbc.CurrentConnection;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -1114,7 +1114,7 @@ public class ObjectEntryLocalServiceImpl
 			_log.debug("SQL: " + sql);
 		}
 
-		Connection connection = CurrentConnectionUtil.getConnection(
+		Connection connection = _currentConnection.getConnection(
 			objectEntryPersistence.getDataSource());
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
@@ -1499,7 +1499,7 @@ public class ObjectEntryLocalServiceImpl
 			_log.debug("SQL: " + sql);
 		}
 
-		Connection connection = CurrentConnectionUtil.getConnection(
+		Connection connection = _currentConnection.getConnection(
 			objectEntryPersistence.getDataSource());
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
@@ -1592,7 +1592,7 @@ public class ObjectEntryLocalServiceImpl
 
 		int count = 0;
 
-		Connection connection = CurrentConnectionUtil.getConnection(
+		Connection connection = _currentConnection.getConnection(
 			objectEntryPersistence.getDataSource());
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
@@ -1631,7 +1631,7 @@ public class ObjectEntryLocalServiceImpl
 
 		int count = 0;
 
-		Connection connection = CurrentConnectionUtil.getConnection(
+		Connection connection = _currentConnection.getConnection(
 			objectEntryPersistence.getDataSource());
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
@@ -1698,6 +1698,9 @@ public class ObjectEntryLocalServiceImpl
 
 	@Reference
 	private AssetLinkLocalService _assetLinkLocalService;
+
+	@Reference
+	private CurrentConnection _currentConnection;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

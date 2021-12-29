@@ -803,7 +803,7 @@ definition {
 	}
 
 	macro goToDefinitionsOptions {
-		var key_DefinitionsOptions = "${definitionsOptions}";
+		var key_definitionsOptions = "${definitionsOptions}";
 
 		Click(locator1 = "ACSettings#DEFINITIONS_OPTIONS");
 	}

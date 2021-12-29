@@ -100,7 +100,7 @@ const getMaskedValue = ({
 	});
 
 	const regex = new RegExp(
-		dataType === 'double' ? `[^${symbols.decimalSymbol}|\\d]` : '[^\\d]',
+		dataType === 'double' ? `[^-${symbols.decimalSymbol}\\d]` : '[^\\d]',
 		'g'
 	);
 
@@ -213,7 +213,7 @@ const Numeric: React.FC<IProps> = ({
 			'';
 
 		if (dataType === 'double') {
-			const symbolsValue = newValue.match(NON_NUMERIC_REGEX);
+			const symbolsValue = newValue.match(/[^-\d]/g);
 
 			newValue = symbolsValue
 				? newValue.replace(symbolsValue[0], symbols.decimalSymbol)

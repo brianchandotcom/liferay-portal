@@ -90,7 +90,7 @@ const ValidationTextAndNumeric = ({
 						let parameter = event.target.value;
 
 						if (dataType === 'double') {
-							const decimalSymbol = parameter.match(/[\D]/g);
+							const decimalSymbol = parameter.match(/[^-\d]/g);
 
 							parameter = decimalSymbol
 								? parameter.replace(decimalSymbol[0], '.')

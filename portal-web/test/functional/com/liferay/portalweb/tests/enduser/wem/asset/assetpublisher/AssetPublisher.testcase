@@ -226,6 +226,24 @@ definition {
 		}
 	}
 
+	@description = "LPS-96038 - Global Categories do not appear as filters in Asset Publisher Configuration."
+	@priority = "4"
+	test ConfigureAPPortletDisplaysGlobalCategoriesAsFilters {
+		Category.openCategoriesAdmin(siteURLKey = "global");
+
+		Category.addCP(
+			categoryName = "Category Name",
+			vocabularyName = "Topic");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name");
+
+		AssetPublisherPortlet.configureCategoriesFilterPG(
+			categoryName = "Category Name",
+			portletName = "Asset Publisher");
+	}
+
 	@description = "Configure scope of Asset Publisher with multiple sites."
 	@priority = "5"
 	@uitest

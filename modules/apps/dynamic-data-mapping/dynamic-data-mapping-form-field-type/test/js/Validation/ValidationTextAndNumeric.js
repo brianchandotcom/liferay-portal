@@ -124,7 +124,7 @@ describe('ValidationTextAndNumeric', () => {
 			'input[name="validation_parameter"]'
 		);
 
-		userEvent.type(inputParameter, '1,2');
+		userEvent.type(inputParameter, '-1,2');
 
 		expect(onChange).toHaveBeenLastCalledWith({
 			target: {
@@ -132,7 +132,7 @@ describe('ValidationTextAndNumeric', () => {
 					...value,
 					enableValidation: true,
 					parameter: {
-						en_US: '1.2',
+						en_US: '-1.2',
 					},
 				},
 			},

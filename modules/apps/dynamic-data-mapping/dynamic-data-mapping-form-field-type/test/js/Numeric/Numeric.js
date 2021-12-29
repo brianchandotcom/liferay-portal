@@ -164,11 +164,11 @@ describe('Field Numeric', () => {
 			<Numeric
 				dataType="double"
 				symbols={{decimalSymbol: ','}}
-				value="1.2"
+				value="-1.2"
 			/>
 		);
 
-		expect(container.querySelector('input').value).toBe('1,2');
+		expect(container.querySelector('input').value).toBe('-1,2');
 	});
 
 	it('updates decimal symbol using the localizedSymbols based on current editing language', () => {

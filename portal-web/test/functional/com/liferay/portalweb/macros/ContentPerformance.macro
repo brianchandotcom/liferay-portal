@@ -24,7 +24,7 @@ definition {
 	}
 
 	macro showMetricsButton {
-		Click.clickNoMouseOver(locator1 = "ContentDashboard#ROW_PANEL_WC");
+		Click(locator1 = "ContentDashboard#ROW_PANEL_WC");
 
 		Click(locator1 = "ContentPerformance#ICON_VIEW_METRICS");
 	}

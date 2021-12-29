@@ -427,39 +427,398 @@ definition {
 	}
 
 	@description = "LPS-113835: When the user with edit permissions edits the content of the display page, the Metrics button is shown"
-	@ignore = "true"
 	@priority = "4"
 	test MetricsWithEditPermissions {
+		task ("Create a Web Content") {
+			JSONWebcontent.addWebContent(
+				content = "WC Content",
+				groupName = "Test Site Name",
+				title = "WC Title");
+		}
 
-		// TODO LPS-139252 MetricsWithEditPermissions pending implementation
+		task ("Create an User") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
 
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				newPassword = "test",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Create a DPT and set as Default") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name",
+				subType = "Basic Web Content");
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			Button.clickPublish();
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+		}
+
+		task("Create role and assign to user") {
+   			JSONRole.addRegularRole(
+        		roleKey = "Content Dashboard Permissions",
+        		roleTitle = "Content Dashboard Permissions");
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW_SITE_ADMINISTRATION",
+				resourceName = "com.liferay.portal.kernel.model.Group",
+				roleTitle = "Content Dashboard Permissions");
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "ACCESS_IN_CONTROL_PANEL",
+				resourceName = "com_liferay_content_dashboard_web_portlet_ContentDashboardAdminPortlet",
+				roleTitle = "Content Dashboard Permissions");
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW_CONTROL_PANEL",
+				resourceName = "90",
+				roleTitle = "Content Dashboard Permissions");
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "UPDATE",
+				resourceName = "com.liferay.portal.kernel.model.Layout",
+				roleTitle = "Content Dashboard Permissions");
+			JSONRole.assignRoleToUser(
+				roleTitle = "Content Dashboard Permissions",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Disable option to strangers to verify email") {
+            ApplicationsMenu.gotoPortlet(
+                category = "Configuration",
+                panel = "Control Panel",
+                portlet = "Instance Settings");
+            SystemSettings.gotoConfiguration(
+                configurationCategory = "User Authentication",
+                configurationName = "General",
+                configurationScope = "Virtual Instance Scope");
+            PortalSettings.uncheckStrangersVerifyEmailCheckbox();
+        }
+
+		task ("Logout and login with created user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
+
+		task ("Check if button is present in Content Dashboard") {
+			ContentDashboard.goToContentDashboard();
+
+			Click(locator1 = "ContentDashboard#ROW_PANEL_WC");
+
+			AssertElementPresent(
+				locator1 = "ContentPerformance#ICON_VIEW_METRICS");
+		}
+
+		task ("Go to DXP portal, login and create site") {
+			User.firstLoginPG();
+
+			Navigator.openURL();
+		}
+			
 	}
 
 	@description = "LPS-113835: When the user with edit permissions and no permissions to edit the page, the Metrics button is shown"
-	@ignore = "true"
 	@priority = "4"
 	test MetricsWithEditPermissionsNotEditPage {
+		task ("Create a Web Content") {
+			JSONWebcontent.addWebContent(
+				content = "WC Content",
+				groupName = "Test Site Name",
+				title = "WC Title");
+		}
 
-		// TODO LPS-139252 MetricsWithEditPermissionsNotEditPage pending implementation
+		task ("Create an User") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				newPassword = "test",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Create a DPT and set as Default") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name",
+				subType = "Basic Web Content");
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			Button.clickPublish();
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+		}
+
+		task("Crete a Role with proper permissons") {
+			JSONRole.addRegularRole(
+				roleKey = "Web Content Creator Edit Permissions",
+				roleTitle = "Web Content Creator Edit Permissions");
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "ACCESS_IN_CONTROL_PANEL",
+				resourceName = "com_liferay_journal_web_portlet_JournalPortlet",
+				roleTitle = "Web Content Creator Edit Permissions");
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "ACCESS_IN_CONTROL_PANEL",
+				resourceName = "com_liferay_content_dashboard_web_portlet_ContentDashboardAdminPortlet",
+				roleTitle = "Web Content Creator Edit Permissions");
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW",
+				resourceName = "com.liferay.journal",
+				roleTitle = "Web Content Creator Edit Permissions");
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "ADD_ARTICLE",
+				resourceName = "com.liferay.journal",
+				roleTitle = "Web Content Creator Edit Permissions");
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW_SITE_ADMINISTRATION",
+				resourceName = "com.liferay.portal.kernel.model.Group",
+				roleTitle = "Web Content Creator Edit Permissions");
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW_CONTROL_PANEL",
+				resourceName = "90",
+				roleTitle = "Web Content Creator Edit Permissions");
+			JSONRole.assignRoleToUser(
+				roleTitle = "Web Content Creator Edit Permissions",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Disable option to strangers to verify email") {
+            ApplicationsMenu.gotoPortlet(
+                category = "Configuration",
+                panel = "Control Panel",
+                portlet = "Instance Settings");
+            SystemSettings.gotoConfiguration(
+                configurationCategory = "User Authentication",
+                configurationName = "General",
+                configurationScope = "Virtual Instance Scope");
+            PortalSettings.uncheckStrangersVerifyEmailCheckbox();
+        }
+
+		task ("Logout and login with created user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
+
+		task ("Check if button is present in Content Dashboard") {
+			ContentDashboard.goToContentDashboard();
+
+			Click(locator1 = "ContentDashboard#ROW_PANEL_WC");
+
+			AssertElementPresent(
+				locator1 = "ContentPerformance#ICON_VIEW_METRICS");
+		}
+
+		task ("Go to DXP portal, login and create site") {
+			User.firstLoginPG();
+
+			Navigator.openURL();
+		}
+		
 
 	}
 
 	@description = "LPS-113835: When the user has no permissions to edit the content of a display page, the Metrics button is not shown"
-	@ignore = "true"
 	@priority = "4"
 	test MetricsWithoutEditPermissions {
+		task ("Create a Web Content") {
+			JSONWebcontent.addWebContent(
+				content = "WC Content",
+				groupName = "Test Site Name",
+				title = "WC Title");
+		}
 
-		// TODO LPS-139252 MetricsWithoutEditPermissions pending implementation
+		task ("Create an User") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
 
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				newPassword = "test",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Disable option to strangers to verify email") {
+            ApplicationsMenu.gotoPortlet(
+                category = "Configuration",
+                panel = "Control Panel",
+                portlet = "Instance Settings");
+            SystemSettings.gotoConfiguration(
+                configurationCategory = "User Authentication",
+                configurationName = "General",
+                configurationScope = "Virtual Instance Scope");
+            PortalSettings.uncheckStrangersVerifyEmailCheckbox();
+        }
+
+		task("Create a Role") {
+			JSONRole.addRegularRole(
+				roleKey = "Content Dashboard Permissions",
+				roleTitle = "Content Dashboard Permissions");
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW_SITE_ADMINISTRATION",
+				resourceName = "com.liferay.portal.kernel.model.Group",
+				roleTitle = "Content Dashboard Permissions");
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "ACCESS_IN_CONTROL_PANEL",
+				resourceName = "com_liferay_content_dashboard_web_portlet_ContentDashboardAdminPortlet",
+				roleTitle = "Content Dashboard Permissions");
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW_CONTROL_PANEL",
+				resourceName = "90",
+				roleTitle = "Content Dashboard Permissions");
+			JSONRole.assignRoleToUser(
+				roleTitle = "Content Dashboard Permissions",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Logout and login with created user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
+
+		task ("Check if button is present in Content Dashboard") {
+			ContentDashboard.goToContentDashboard();
+
+			Click(locator1 = "ContentDashboard#ROW_PANEL_WC");
+
+			AssertElementNotPresent(
+				locator1 = "ContentPerformance#ICON_VIEW_METRICS");
+
+			Navigator.openURL();
+		}
+
+		task ("Go to DXP portal, login and create site") {
+			User.firstLoginPG();
+
+			Navigator.openURL();
+		}
 	}
 
 	@description = "LPS-113835: When the user has no permissions to edit the content of and has permission to edit the display page, the Metrics button is shown"
-	@ignore = "true"
 	@priority = "4"
 	test MetricsWithoutEditPermissionsYesEditPage {
+		task ("Create a Web Content") {
+			JSONWebcontent.addWebContent(
+				content = "WC Content",
+				groupName = "Test Site Name",
+				title = "WC Title");
+		}
+		
+		task ("Create an User") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
 
-		// TODO LPS-139252 MetricsWithoutEditPermissionsYesEditPage pending implementation
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				newPassword = "test",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
 
+		task ("Create a DPT and set as Default") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name",
+				subType = "Basic Web Content");
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			Button.clickPublish();
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+		}
+
+		task("Create role and assign to user") {
+   			JSONRole.addRegularRole(
+        		roleKey = "Content Dashboard Permissions",
+        		roleTitle = "Content Dashboard Permissions");
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW_SITE_ADMINISTRATION",
+				resourceName = "com.liferay.portal.kernel.model.Group",
+				roleTitle = "Content Dashboard Permissions");
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "ACCESS_IN_CONTROL_PANEL",
+				resourceName = "com_liferay_content_dashboard_web_portlet_ContentDashboardAdminPortlet",
+				roleTitle = "Content Dashboard Permissions");
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW_CONTROL_PANEL",
+				resourceName = "90",
+				roleTitle = "Content Dashboard Permissions");
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "UPDATE",
+				resourceName = "com.liferay.portal.kernel.model.Layout",
+				roleTitle = "Content Dashboard Permissions");
+			JSONRole.assignRoleToUser(
+				roleTitle = "Content Dashboard Permissions",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Disable option to strangers to verify email") {
+            ApplicationsMenu.gotoPortlet(
+                category = "Configuration",
+                panel = "Control Panel",
+                portlet = "Instance Settings");
+            SystemSettings.gotoConfiguration(
+                configurationCategory = "User Authentication",
+                configurationName = "General",
+                configurationScope = "Virtual Instance Scope");
+            PortalSettings.uncheckStrangersVerifyEmailCheckbox();
+        }
+
+		task ("Logout and login with created user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
+
+		task ("Check if button is present in Content Dashboard") {
+			ContentDashboard.goToContentDashboard();
+
+			Click(locator1 = "ContentDashboard#ROW_PANEL_WC");
+
+			AssertElementPresent(
+				locator1 = "ContentPerformance#ICON_VIEW_METRICS");
+		}
+
+		task ("Go to DXP portal, login and create site") {
+			User.firstLoginPG();
+
+			Navigator.openURL();
+		}
 	}
 
 	@description = "LPS-111042: As a content writer I want to know the keywords driving traffic to my contents by different countries"

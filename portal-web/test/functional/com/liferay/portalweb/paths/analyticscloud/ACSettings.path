@@ -39,7 +39,7 @@
 </tr>
 <tr>
 	<td>DEFINITIONS_OPTIONS</td>
-	<td>//a[contains(@href,'${key_DefinitionsOptions}')]</td>
+	<td>//a[contains(@href,'${key_definitionsOptions}')]</td>
 	<td></td>
 </tr>
 <!-- SETTINGS TOOLBAR -->

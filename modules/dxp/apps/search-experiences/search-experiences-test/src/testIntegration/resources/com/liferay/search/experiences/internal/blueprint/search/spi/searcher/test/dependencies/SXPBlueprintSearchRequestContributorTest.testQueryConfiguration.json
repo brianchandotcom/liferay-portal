@@ -9,7 +9,7 @@
 						"occur": "must",
 						"query": {
 							"match": {
-								"localized_title${context.language_id}": {
+								"localized_title_${context.language_id}": {
 									"boost": 2,
 									"operator": "or",
 									"query": "${keywords}"

@@ -12,8 +12,8 @@
 								"boost": 1,
 								"default_operator": "and",
 								"fields": [
-									"localized_title${context.language_id}^2",
-									"content${context.language_id}^2"
+									"localized_title_${context.language_id}^2",
+									"content_${context.language_id}^2"
 								],
 								"query": "${keywords}"
 							}

@@ -11,8 +11,8 @@
 							"multi_match": {
 								"boost": "10",
 								"fields": [
-									"localized_title${context.language_id}^2",
-									"content${context.language_id}^1"
+									"localized_title_${context.language_id}^2",
+									"content_${context.language_id}^1"
 								],
 								"fuzziness": "AUTO",
 								"operator": "or",

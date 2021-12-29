@@ -86,10 +86,17 @@ class ChangeTrackingConflictsView extends ChangeTrackingBaseScheduleView {
 						<ClayAlert
 							displayType="warning"
 							spritemap={this.spritemap}
-							title={Liferay.Language.get(
-								'this-publication-contains-conflicting-changes-that-must-be-manually-resolved-before-publishing'
-							)}
-						/>
+						>
+							<span>
+								{Liferay.Language.get(
+									'this-publication-contains-conflicting-changes-that-must-be-manually-resolved-before-publishing'
+								) + ' '}
+							</span>
+
+							<a href="https://learn.liferay.com/dxp/latest/en/site-building/publishing-tools/publications/resolving-conflicts.html#manually-resolving-conflicts">
+								{Liferay.Language.get('learn-more')}
+							</a>
+						</ClayAlert>
 					)}
 
 					{this.unresolvedConflicts.length === 0 && (

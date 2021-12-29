@@ -11,8 +11,11 @@
 
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayRadio, ClayRadioGroup, ClayToggle} from '@clayui/form';
+import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import ClayPanel from '@clayui/panel';
+import ClaySticker from '@clayui/sticker';
+import {ClayTooltipProvider} from '@clayui/tooltip';
 import React, {useState} from 'react';
 
 import SelectTypes from './SelectTypes';
@@ -128,9 +131,27 @@ function QuerySettings({
 
 					<ClayPanel
 						collapsable
-						displayTitle={Liferay.Language.get(
-							'search-framework-indexer-clauses'
-						)}
+						displayTitle={
+							<ClayPanel.Title>
+								<span className="panel-title">
+									{Liferay.Language.get(
+										'search-framework-indexer-clauses'
+									)}
+								</span>
+
+								<ClayTooltipProvider>
+									<ClaySticker
+										displayType="secondary"
+										size="md"
+										title={Liferay.Language.get(
+											'search-framework-indexer-clauses-help'
+										)}
+									>
+										<ClayIcon symbol="question-circle" />
+									</ClaySticker>
+								</ClayTooltipProvider>
+							</ClayPanel.Title>
+						}
 						displayType="unstyled"
 						showCollapseIcon
 					>
@@ -165,9 +186,27 @@ function QuerySettings({
 
 					<ClayPanel
 						collapsable
-						displayTitle={Liferay.Language.get(
-							'search-framework-query-contributors'
-						)}
+						displayTitle={
+							<ClayPanel.Title>
+								<span className="panel-title">
+									{Liferay.Language.get(
+										'search-framework-query-contributors'
+									)}
+								</span>
+
+								<ClayTooltipProvider>
+									<ClaySticker
+										displayType="secondary"
+										size="md"
+										title={Liferay.Language.get(
+											'search-framework-query-contributors-help'
+										)}
+									>
+										<ClayIcon symbol="question-circle" />
+									</ClaySticker>
+								</ClayTooltipProvider>
+							</ClayPanel.Title>
+						}
 						displayType="unstyled"
 						showCollapseIcon
 					>

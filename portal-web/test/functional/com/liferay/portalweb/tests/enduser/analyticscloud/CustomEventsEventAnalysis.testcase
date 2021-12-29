@@ -335,4 +335,65 @@ definition {
         }
 	}
 
+	@description = "Feature ID: LRAC-4266 | Automation ID: LRAC-10306 | Test Summary: Remove Attribute"
+	@priority = "5"
+	test RemoveAttribute {
+		var attributeName = "pageTitle";
+        var dataSource = StringUtil.extractFirst("${assignedPropertyName}", " ");
+
+		task ("Fill fields and create custom event") {
+			var customEventName = ACCustomEvents.generateCustomEventName();
+
+			ACCustomEvents.createCustomEvent(
+				customEventName = "${customEventName}",
+				timeToSendCustomEvent = "1");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch the property in AC and go to event analysis") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+
+			ACNavigation.goToEventAnalysis();
+		}
+
+		task ("Add the custom event to analysis") {
+			ACEventAnalysis.addEvent(customEventName = "${customEventName}");
+		}
+
+		task ("Add the breakdown to analysis") {
+			ACEventAnalysis.addBreakdown(attributeName = "${attributeName}");
+		}
+
+		task ("Check the analysis result appears") {
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast24Hours();
+
+			ACEventAnalysis.viewAnalysisInformation(informationValueList = "ac page - site name - ${dataSource}");
+		}
+
+        task ("Remove the breakdown from the analysis") {
+			ACEventAnalysis.removeFromAnalysis(removeValue = "${attributeName}");
+        }
+
+        task ("Check that the breakdown information does not appear in the result") {
+			ACEventAnalysis.viewAnalysisInformationNotPresent(informationValueList = "ac page - site name - ${dataSource}");
+		}
+
+		task ("Check that the breakdown does not appear on the dashboard") {
+			AssertElementNotPresent(
+				key_attributeName = "${attributeName}",
+				locator1 = "ACEventAnalysis#VIEW_DASHBOARD_INFORMATION");
+		}
+
+		task ("Check that the analysis result still appears even without the breakdown") {
+			ACEventAnalysis.viewAnalysisInformation(informationValueList = "${customEventName}");
+		}
+	}
+
 }

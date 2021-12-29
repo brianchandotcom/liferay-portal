@@ -195,6 +195,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FILTER_LABEL</td>
+	<td>//li[contains(@class,'tbar')]//span[contains(@class,'label-item-expand')][starts-with(.,'${filterLabel}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FILTER_PARENT_EXTENSION</td>
 	<td>//*[contains(@class, 'card-body')]//*[contains(@class, 'text-truncate') and contains (text(), '${parentExtension}')]</td>
 	<td></td>

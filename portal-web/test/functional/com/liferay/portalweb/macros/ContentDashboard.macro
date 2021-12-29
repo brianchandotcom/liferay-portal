@@ -9,7 +9,9 @@ definition {
 	}
 
 	macro clickOnFirstBarColor {
-		Click(locator1 = "ContentDashboard#BAR_FROM_NO_VOCABULARY_SPECIFIED");
+		Click(
+			fillColor = "${fillColor}",
+			locator1 = "ContentDashboard#BAR_FROM_NO_VOCABULARY_SPECIFIED");
 	}
 
 	macro deleteSecondCategoryFilter {
@@ -594,6 +596,14 @@ definition {
 		Click.javaScriptClick(
 			checkboxName = "Stage 1",
 			locator1 = "Checkbox#ANY_CHECKBOX");
+	}
+
+	macro viewAppliedFilters {
+		for (var filterLabel : list "${filterLabelList}") {
+			AssertElementPresent(
+				filterLabel = "${filterLabel}",
+				locator1 = "ContentDashboard#FILTER_LABEL");
+		}
 	}
 
 }

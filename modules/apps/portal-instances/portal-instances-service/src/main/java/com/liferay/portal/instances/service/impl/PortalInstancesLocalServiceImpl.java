@@ -22,12 +22,21 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutTypePortlet;
+import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.portlet.InvokerPortlet;
+import com.liferay.portal.kernel.portlet.LiferayRenderRequest;
+import com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletInstanceFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -37,24 +46,40 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.CompanyService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.ThemeLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.servlet.DummyHttpServletResponse;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ColorSchemeFactoryUtil;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PortalInstances;
+import com.liferay.portal.util.PrefsPropsUtil;
+import com.liferay.portlet.RenderRequestFactory;
+import com.liferay.portlet.RenderResponseFactory;
 import com.liferay.site.initializer.SiteInitializer;
 import com.liferay.site.initializer.SiteInitializerRegistry;
 
 import java.sql.SQLException;
 
 import java.util.List;
+
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletMode;
+import javax.portlet.PortletRequest;
+import javax.portlet.WindowState;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -280,8 +305,24 @@ public class PortalInstancesLocalServiceImpl
 
 			themeDisplay.setCompany(company);
 			themeDisplay.setLayout(controlPanelLayout);
+			themeDisplay.setLayoutSet(controlPanelLayout.getLayoutSet());
+			themeDisplay.setLayoutTypePortlet(
+				(LayoutTypePortlet)controlPanelLayout.getLayoutType());
+			themeDisplay.setLocale(LocaleUtil.getSiteDefault());
+
+			String themeId = PrefsPropsUtil.getString(
+				company.getCompanyId(),
+				PropsKeys.CONTROL_PANEL_LAYOUT_REGULAR_THEME_ID);
+
+			Theme theme = _themeLocalService.getTheme(
+				company.getCompanyId(), themeId);
+
+			themeDisplay.setLookAndFeel(
+				theme, ColorSchemeFactoryUtil.getDefaultRegularColorScheme());
+
 			themeDisplay.setPermissionChecker(permissionChecker);
 			themeDisplay.setPlid(controlPanelPlid);
+			themeDisplay.setRealUser(user);
 			themeDisplay.setRequest(httpServletRequest);
 			themeDisplay.setScopeGroupId(group.getGroupId());
 			themeDisplay.setSiteGroupId(group.getGroupId());
@@ -289,6 +330,47 @@ public class PortalInstancesLocalServiceImpl
 
 			httpServletRequest.setAttribute(
 				WebKeys.THEME_DISPLAY, themeDisplay);
+
+			PortletRequest portletRequest =
+				(PortletRequest)httpServletRequest.getAttribute(
+					JavaConstants.JAVAX_PORTLET_REQUEST);
+
+			if (portletRequest == null) {
+				Portlet portlet = _portletLocalService.getPortletById(
+					CompanyConstants.SYSTEM, PortletKeys.PORTAL);
+
+				try {
+					InvokerPortlet invokerPortlet =
+						PortletInstanceFactoryUtil.create(
+							portlet, httpServletRequest.getServletContext());
+
+					PortletConfig portletConfig =
+						PortletConfigFactoryUtil.create(
+							portlet, httpServletRequest.getServletContext());
+
+					LiferayRenderRequest liferayRenderRequest =
+						RenderRequestFactory.create(
+							httpServletRequest, portlet, invokerPortlet,
+							portletConfig.getPortletContext(),
+							WindowState.NORMAL, PortletMode.VIEW,
+							PortletPreferencesFactoryUtil.fromDefaultXML(
+								portlet.getDefaultPreferences()),
+							themeDisplay.getPlid());
+
+					httpServletRequest.setAttribute(
+						JavaConstants.JAVAX_PORTLET_REQUEST,
+						liferayRenderRequest);
+
+					httpServletRequest.setAttribute(
+						JavaConstants.JAVAX_PORTLET_RESPONSE,
+						RenderResponseFactory.create(
+							new DummyHttpServletResponse(),
+							liferayRenderRequest));
+				}
+				catch (Exception exception) {
+					_log.error(exception, exception);
+				}
+			}
 		}
 
 		return serviceContext;
@@ -316,10 +398,16 @@ public class PortalInstancesLocalServiceImpl
 	private Portal _portal;
 
 	@Reference
+	private PortletLocalService _portletLocalService;
+
+	@Reference
 	private RoleLocalService _roleLocalService;
 
 	@Reference
 	private SiteInitializerRegistry _siteInitializerRegistry;
+
+	@Reference
+	private ThemeLocalService _themeLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

@@ -73,11 +73,7 @@ definition {
 		}
 
 		task ("Assert both filters are applied") {
-			for (var category : list "Audience 1,Stage 1") {
-				AssertElementPresent(
-					categoryName = "${category}",
-					locator1 = "ContentDashboard#FILTER_CATEGORY_NAME");
-			}
+			ContentDashboard.viewAppliedFilters(filterLabelList = "Audience 1,Stage 1");
 		}
 
 		task ("Assert if only one asset is displayed") {

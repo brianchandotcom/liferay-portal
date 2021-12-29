@@ -51,18 +51,34 @@ const TOKEN_VALUES = {
 	},
 };
 
-const renderColorPicker = ({onValueSelect = () => {}, value = 'white'}) =>
+const FIELD = {label: INPUT_NAME, name: INPUT_NAME};
+
+const renderColorPicker = ({
+	onValueSelect = () => {},
+	value = 'green',
+	field = FIELD,
+	editedTokenValues = {},
+}) =>
 	render(
 		<StoreContextProvider initialState={{}} reducer={(state) => state}>
 			<ColorPicker
 				config={CONFIG}
-				field={{label: INPUT_NAME, name: INPUT_NAME}}
+				editedTokenValues={editedTokenValues}
+				field={field}
 				onValueSelect={onValueSelect}
 				tokenValues={TOKEN_VALUES}
 				value={value}
 			/>
 		</StoreContextProvider>
 	);
+
+const onTypeValue = (input, value) => {
+	fireEvent.change(input, {
+		target: {value},
+	});
+
+	fireEvent.blur(input);
+};
 
 describe('ColorPicker', () => {
 	afterEach(() => {
@@ -77,10 +93,8 @@ describe('ColorPicker', () => {
 		).toBeInTheDocument();
 	});
 
-	it('clears the value', async () => {
-		const {getByLabelText, getByTitle} = renderColorPicker({
-			value: 'green',
-		});
+	it('clears the value and sets "default"', async () => {
+		const {getByLabelText, getByTitle} = renderColorPicker({});
 
 		fireEvent.click(getByTitle('clear-selection'));
 
@@ -89,22 +103,30 @@ describe('ColorPicker', () => {
 		});
 	});
 
+	it('clears the value and sets the default value of the field if it exists', async () => {
+		const {getByRole, getByTitle} = renderColorPicker({
+			field: {...FIELD, defaultValue: '#abcabc'},
+		});
+
+		fireEvent.click(getByTitle('clear-selection'));
+
+		await wait(() => {
+			expect(getByRole('combobox').value).toBe('#ABCABC');
+		});
+	});
+
 	describe('When the value is an existing token', () => {
-		it('renders the stylebook color picker', () => {
-			const {getByLabelText, getByTitle} = renderColorPicker({
-				value: 'orange',
-			});
+		it('renders the dropdown color picker', () => {
+			const {getByLabelText, getByTitle} = renderColorPicker({});
 
 			expect(getByTitle('detach-token')).toBeInTheDocument();
-			expect(getByLabelText('Orange')).toBeInTheDocument();
+			expect(getByLabelText('Green')).toBeInTheDocument();
 		});
 
 		it('shows action buttons when the color picker is clicked', async () => {
-			const {baseElement, getByLabelText} = renderColorPicker({
-				value: 'orange',
-			});
+			const {baseElement, getByLabelText} = renderColorPicker({});
 
-			fireEvent.click(getByLabelText('Orange'));
+			fireEvent.click(getByLabelText('Green'));
 
 			await wait(() => {
 				expect(
@@ -114,15 +136,13 @@ describe('ColorPicker', () => {
 		});
 
 		it('change to autocomplete color picker when detach token button is clicked', async () => {
-			const {baseElement, getByRole, getByTitle} = renderColorPicker({
-				value: 'orange',
-			});
+			const {baseElement, getByRole, getByTitle} = renderColorPicker({});
 
 			fireEvent.click(getByTitle('detach-token'));
 
 			await wait(() => {
 				expect(getByTitle('value-from-stylebook')).toBeInTheDocument();
-				expect(getByRole('combobox').value).toBe('#ffb46e');
+				expect(getByRole('combobox').value).toBe('#9BE169');
 				expect(
 					baseElement.querySelector('.clay-color-picker')
 				).toBeInTheDocument();
@@ -148,13 +168,13 @@ describe('ColorPicker', () => {
 			});
 
 			expect(getByTitle('value-from-stylebook')).toBeInTheDocument();
-			expect(getByRole('combobox').value).toBe('#ffb46e');
+			expect(getByRole('combobox').value).toBe('#FFB46E');
 			expect(
 				baseElement.querySelector('.clay-color-picker')
 			).toBeInTheDocument();
 		});
 
-		it('change to stylebook color picker when value from stylebook button is clicked', async () => {
+		it('change to dropdown color picker when value from stylebook button is clicked', async () => {
 			const {getByLabelText, getByTitle} = renderColorPicker({
 				value: '#fff',
 			});
@@ -168,38 +188,12 @@ describe('ColorPicker', () => {
 			});
 		});
 
-		it('renders an error when the written token is wrong', async () => {
-			const {getByRole, getByText} = renderColorPicker({
-				value: '#fff',
-			});
-
-			const input = getByRole('combobox');
-
-			fireEvent.change(input, {
-				target: {value: 'prim'},
-			});
-
-			fireEvent.blur(input);
-
-			await wait(() => {
-				expect(
-					getByText('this-token-does-not-exist')
-				).toBeInTheDocument();
-			});
-		});
-
 		it('sets a token if the written value is an existing token', async () => {
 			const {getByLabelText, getByRole, getByTitle} = renderColorPicker({
 				value: '#fff',
 			});
 
-			const input = getByRole('combobox');
-
-			fireEvent.change(input, {
-				target: {value: 'green'},
-			});
-
-			fireEvent.blur(input);
+			onTypeValue(getByRole('combobox'), 'green');
 
 			await wait(() => {
 				expect(getByTitle('detach-token')).toBeInTheDocument();
@@ -223,21 +217,147 @@ describe('ColorPicker', () => {
 			});
 		});
 
+		it('disables autocomplete dropdown option when the token references itself', async () => {
+			const {getByRole} = renderColorPicker({
+				field: {...FIELD, name: 'blue'},
+				value: '#fff',
+			});
+
+			fireEvent.change(getByRole('combobox'), {
+				target: {value: 'blu'},
+			});
+
+			await wait(() => {
+				expect(getByRole('option')).toBeDisabled();
+			});
+		});
+
+		it('disables autocomplete dropdown options when the tokens are mutually referenced', async () => {
+			const {getByRole} = renderColorPicker({
+				editedTokenValues: {
+					orange: {
+						name: 'blue',
+						value: '#ffb46e',
+					},
+				},
+				field: {...FIELD, name: 'blue'},
+				value: '#fff',
+			});
+
+			fireEvent.change(getByRole('combobox'), {
+				target: {value: 'ora'},
+			});
+
+			await wait(() => {
+				expect(getByRole('option')).toBeDisabled();
+			});
+		});
+
 		it('sets the previous value when the input value is removed', async () => {
 			const {getByRole} = renderColorPicker({
 				value: '#444444',
 			});
-
 			const input = getByRole('combobox');
 
-			fireEvent.change(input, {
-				target: {value: ''},
-			});
-
-			fireEvent.blur(input);
+			onTypeValue(input, '');
 
 			await wait(() => {
-				expect(getByRole('combobox').value).toBe('#444444');
+				expect(input.value).toBe('#444444');
+			});
+		});
+
+		it('sets the previous value when the input value is an invalid hexcolor', async () => {
+			const {getByRole} = renderColorPicker({
+				value: '#444444',
+			});
+			const input = getByRole('combobox');
+
+			onTypeValue(input, '#44');
+
+			await wait(() => {
+				expect(input.value).toBe('#444444');
+			});
+		});
+
+		it('takes a 6-digit hexcolor even if the input value has more digits', async () => {
+			const {getByRole} = renderColorPicker({
+				value: '#444444',
+			});
+			const input = getByRole('combobox');
+
+			onTypeValue(input, '#55555555555');
+
+			await wait(() => {
+				expect(input.value).toBe('#555555');
+			});
+		});
+
+		it('converts the 3-digit hexcolor to a 6-digit hexcolor', async () => {
+			const {getByRole} = renderColorPicker({
+				value: '#444444',
+			});
+			const input = getByRole('combobox');
+
+			onTypeValue(input, '#abc');
+
+			await wait(() => {
+				expect(input.value).toBe('#AABBCC');
+			});
+		});
+
+		describe('Input errors', () => {
+			it('renders an error when the written token does not exist', async () => {
+				const {getByRole, getByText} = renderColorPicker({
+					value: '#fff',
+				});
+
+				onTypeValue(getByRole('combobox'), 'prim');
+
+				await wait(() => {
+					expect(
+						getByText('this-token-does-not-exist')
+					).toBeInTheDocument();
+				});
+			});
+
+			it('renders an error when the written token is the same that the name field', async () => {
+				const {getByRole, getByText} = renderColorPicker({
+					field: {...FIELD, name: 'orange'},
+					value: '#fff',
+				});
+
+				onTypeValue(getByRole('combobox'), 'orange');
+
+				await wait(() => {
+					expect(
+						getByText(
+							'invalid-value.-tokens-cannot-reference-itself'
+						)
+					).toBeInTheDocument();
+				});
+			});
+
+			it('renders an error when two tokens are mutually referenced', async () => {
+				const {getByRole, getByText} = renderColorPicker({
+					editedTokenValues: {
+						blue: {
+							name: 'orange',
+							value: '#ffb46e',
+						},
+					},
+					field: {...FIELD, name: 'orange'},
+					value: '#fff',
+				});
+
+				onTypeValue(getByRole('combobox'), 'blue');
+
+				await wait(() => {
+					expect(
+						getByText(
+							'invalid-value.-tokens-cannot-be-mutually-referenced'
+						)
+					).toBeInTheDocument();
+				});
 			});
 		});
 	});

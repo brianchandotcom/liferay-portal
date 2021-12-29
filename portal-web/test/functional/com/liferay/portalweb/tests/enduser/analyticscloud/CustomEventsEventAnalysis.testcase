@@ -107,7 +107,7 @@ definition {
 		}
 
 		task ("Add the breakdown to analysis") {
-			ACEventAnalysis.addBreakdown(attributeName = "${attributeName}");
+			ACEventAnalysis.addBreakdown(attributeNameList = "${attributeName}");
 		}
 
 		task ("Check the analysis result appears") {
@@ -129,7 +129,7 @@ definition {
 		}
 
         task ("Add the breakdown to analysis") {
-			ACEventAnalysis.addBreakdown(attributeName = "${attributeName}");
+			ACEventAnalysis.addBreakdown(attributeNameList = "${attributeName}");
 		}
 
         task ("Check the analysis result appears") {
@@ -147,7 +147,7 @@ definition {
 		}
 
         task ("Add the breakdown to analysis") {
-			ACEventAnalysis.addBreakdown(attributeName = "${attributeName}");
+			ACEventAnalysis.addBreakdown(attributeNameList = "${attributeName}");
 		}
 
         task ("Check the analysis result appears") {
@@ -366,7 +366,7 @@ definition {
 		}
 
 		task ("Add the breakdown to analysis") {
-			ACEventAnalysis.addBreakdown(attributeName = "${attributeName}");
+			ACEventAnalysis.addBreakdown(attributeNameList = "${attributeName}");
 		}
 
 		task ("Check the analysis result appears") {
@@ -486,7 +486,7 @@ definition {
 		}
 
 		task ("Add the breakdown to analysis") {
-			ACEventAnalysis.addBreakdown(attributeName = "${attributeName}");
+			ACEventAnalysis.addBreakdown(attributeNameList = "${attributeName}");
 		}
 
 		task ("Change the time filter to 24 hours") {
@@ -584,7 +584,7 @@ definition {
 		}
 
 		task ("Add the breakdown to analysis") {
-			ACEventAnalysis.addBreakdown(attributeName = "${attributeName}");
+			ACEventAnalysis.addBreakdown(attributeNameList = "${attributeName}");
 		}
 
 		task ("Change the time filter to 24 hours") {

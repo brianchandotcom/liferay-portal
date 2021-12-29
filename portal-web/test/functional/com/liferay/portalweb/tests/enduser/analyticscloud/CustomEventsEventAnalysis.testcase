@@ -280,4 +280,59 @@ definition {
         }
 	}
 
+	@description = "Feature ID: LRAC-4266 | Automation ID: LRAC-10304 | Test Summary: Edit Attribute Event name"
+	@priority = "3"
+	test EditEventName {
+        var attributeName = "color";
+
+		task ("Fill fields and create custom event") {
+			var customEventName = ACCustomEvents.generateCustomEventName();
+
+			ACCustomEvents.createCustomEvent(
+				customEventName = "${customEventName}",
+				attributesName = "${attributeName}",
+				attributesValue = "red",
+				timeToSendCustomEvent = "1");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch the property in AC and go to event analysis") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+
+			ACNavigation.goToEventAnalysis();
+		}
+
+		task ("Add the custom event to analysis") {
+			ACEventAnalysis.addEvent(customEventName = "${customEventName}");
+		}
+
+        task ("Click to add breakdown") {
+			ACEventAnalysis.clickToAddBreakdownButton();
+		}
+
+		task ("Change the attribute display name") {
+			ACEventAnalysis.searchEventAnalysis(searchItem = "${attributeName}");
+
+			ACEventAnalysis.changeCustomEventDisplayName(
+				editOption = "Description",
+				elementName = "${attributeName}",
+				newDisplayName = "${attributeName} Display Name");
+		}
+
+		task ("Click to add breakdown") {
+			ACEventAnalysis.clickToAddBreakdownButton();
+		}
+
+        task ("Check that the name has changed") {
+            ACEventAnalysis.searchEventAnalysis(searchItem = "${attributeName} Display Name");
+
+			ACEventAnalysis.viewEventAnalysisList(eventList = "${attributeName} Display Name");
+        }
+	}
+
 }

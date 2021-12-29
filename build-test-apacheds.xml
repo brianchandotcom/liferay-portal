@@ -74,6 +74,14 @@
 					apacheds.instance.custom.zip.name="${apacheds.instance.blank.user.password.custom.zip.name}"
 				/>
 			</then>
+			<elseif>
+				<equals arg1="${apacheds.multiple.users.enabled}" arg2="true" />
+				<then>
+					<unzip-apacheds-instance-custom
+						apacheds.instance.custom.zip.name="${apacheds.instance.multiple.users.custom.zip.name}"
+					/>
+				</then>
+			</elseif>
 			<else>
 				<unzip-apacheds-instance-custom
 					apacheds.instance.custom.zip.name="${apacheds.instance.custom.zip.name}"

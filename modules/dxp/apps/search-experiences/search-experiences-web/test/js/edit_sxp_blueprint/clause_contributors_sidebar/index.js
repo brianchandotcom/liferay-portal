@@ -12,7 +12,7 @@
 import {render} from '@testing-library/react';
 import React from 'react';
 
-import ClauseContributors from '../../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/edit_sxp_blueprint/clause_contributors_tab';
+import ClauseContributorsSidebar from '../../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/edit_sxp_blueprint/clause_contributors_sidebar';
 const Toasts = require('../../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/utils/toasts');
 import {mockClassNames} from '../../mocks/data';
 
@@ -43,7 +43,7 @@ afterAll(() => {
 
 function renderClause(props) {
 	return render(
-		<ClauseContributors
+		<ClauseContributorsSidebar
 			applyIndexerClauses={false}
 			frameworkConfig={{
 				clauseContributorsExcludes: [],
@@ -51,13 +51,15 @@ function renderClause(props) {
 			}}
 			onApplyIndexerClausesChange={jest.fn()}
 			onFrameworkConfigChange={jest.fn()}
+			onToggle={jest.fn()}
+			visible={false}
 			{...props}
 		/>
 	);
 }
 
 describe('QueryBuilder', () => {
-	it('renders the clause contributors tab', () => {
+	it('renders the clause contributors sidebar', () => {
 		const {container} = renderClause();
 
 		expect(container).not.toBeNull();

@@ -71,9 +71,9 @@ describe('QueryBuilder', () => {
 	});
 
 	it('renders the title for the selected query element', async () => {
-		const {findByText, getByText} = renderBuilder();
+		const {findAllByText, getByText} = renderBuilder();
 
-		await findByText('query-builder');
+		await findAllByText('query-elements');
 
 		QUERY_SXP_ELEMENTS.map((sxpElement) =>
 			getByText(sxpElement.title_i18n['en_US'])
@@ -81,9 +81,9 @@ describe('QueryBuilder', () => {
 	});
 
 	it('renders the description for the selected query element', async () => {
-		const {findByText, getByText} = renderBuilder();
+		const {findAllByText, getByText} = renderBuilder();
 
-		await findByText('query-builder');
+		await findAllByText('query-elements');
 
 		QUERY_SXP_ELEMENTS.map((sxpElement) =>
 			getByText(sxpElement.description_i18n['en_US'])
@@ -91,9 +91,9 @@ describe('QueryBuilder', () => {
 	});
 
 	it('can collapse all the query elements', async () => {
-		const {container, findByText, getByText} = renderBuilder();
+		const {container, findAllByText, getByText} = renderBuilder();
 
-		await findByText('query-builder');
+		await findAllByText('query-elements');
 
 		fireEvent.click(getByText('collapse-all'));
 

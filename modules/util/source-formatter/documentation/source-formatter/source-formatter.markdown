@@ -141,3 +141,10 @@ SourceFormatter calls [Checker.process](https://checkstyle.org/apidocs/com/puppy
 Checkstyle only checks java source code. Since there is a lot java source inside `jsp` files, SourceFormatter uses logic that finds java source code blocks in `jsp` files, converts it into a temporary java file, which inserts placeholders on lines that are not java source, in order to keep the correct line numbers, and passes that temporary file to the Checkstyle checks.
 
 For example, [view.jsp](https://github.com/liferay/liferay-portal/blob/7.4.3.4-ga4/modules/apps/account/account-admin-web/src/main/resources/META-INF/resources/account_entries_admin/view.jsp) would be converted to a [temporary java file](/modules/util/source-formatter/documentation/source-formatter/view.java) and this temporary file would be processed by Checkstyle.
+
+## Improving performance
+
+In order to see performance of the different checks, the following command can be run from `portal-impl`:
+  - `ant format-source-all -Dsource.formatter.show.debug.information=true`
+
+When running this command, it will show the runtime per check (as a percentage of the total runtime).

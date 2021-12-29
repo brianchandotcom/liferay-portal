@@ -15,7 +15,7 @@
 package com.liferay.site.navigation.menu.item.display.page.internal.portlet.action;
 
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
-import com.liferay.info.item.InfoItemHierarchicalReference;
+import com.liferay.info.item.HierarchicalInfoItemReference;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.layout.display.page.LayoutDisplayPageMultiSelectionProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageMultiSelectionProviderTracker;
@@ -199,18 +199,18 @@ public class AddMultipleDisplayPageTypeSiteNavigationMenuItemMVCActionCommand
 				).buildString(),
 				serviceContext);
 
-		if (!(infoItemReference instanceof InfoItemHierarchicalReference)) {
+		if (!(infoItemReference instanceof HierarchicalInfoItemReference)) {
 			return;
 		}
 
-		InfoItemHierarchicalReference infoItemHierarchicalReference =
-			(InfoItemHierarchicalReference)infoItemReference;
+		HierarchicalInfoItemReference hierarchicalInfoItemReference =
+			(HierarchicalInfoItemReference)infoItemReference;
 
-		for (InfoItemHierarchicalReference childInfoItemHierarchicalReference :
-				infoItemHierarchicalReference.getChildren()) {
+		for (HierarchicalInfoItemReference childHierarchicalInfoItemReference :
+				hierarchicalInfoItemReference.getChildren()) {
 
 			_addSiteNavigationMenuItem(
-				groupId, childInfoItemHierarchicalReference, jsonObjects,
+				groupId, childHierarchicalInfoItemReference, jsonObjects,
 				siteNavigationMenuItem.getSiteNavigationMenuItemId(),
 				serviceContext, siteNavigationMenuId,
 				siteNavigationMenuItemType);

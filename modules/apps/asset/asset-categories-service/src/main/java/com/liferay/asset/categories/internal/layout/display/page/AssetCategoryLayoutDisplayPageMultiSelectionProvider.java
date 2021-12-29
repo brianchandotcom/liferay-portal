@@ -20,7 +20,7 @@ import com.liferay.asset.kernel.model.AssetVocabularyConstants;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
-import com.liferay.info.item.InfoItemHierarchicalReference;
+import com.liferay.info.item.HierarchicalInfoItemReference;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.layout.display.page.LayoutDisplayPageMultiSelectionProvider;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -139,7 +139,7 @@ public class AssetCategoryLayoutDisplayPageMultiSelectionProvider
 		return itemsHierarchy;
 	}
 
-	private List<InfoItemHierarchicalReference> _getChildren(
+	private List<HierarchicalInfoItemReference> _getChildren(
 		Map<Long, List<InfoItemReference>> itemsByParentCategoryIdMap,
 		long parentCategoryId) {
 
@@ -147,7 +147,7 @@ public class AssetCategoryLayoutDisplayPageMultiSelectionProvider
 			return Collections.emptyList();
 		}
 
-		List<InfoItemHierarchicalReference> children = new ArrayList<>();
+		List<HierarchicalInfoItemReference> children = new ArrayList<>();
 
 		List<InfoItemReference> items = ListUtil.sort(
 			itemsByParentCategoryIdMap.get(parentCategoryId),
@@ -161,17 +161,17 @@ public class AssetCategoryLayoutDisplayPageMultiSelectionProvider
 				}));
 
 		for (InfoItemReference infoItemReference : items) {
-			InfoItemHierarchicalReference infoItemHierarchicalReference =
-				new InfoItemHierarchicalReference(
+			HierarchicalInfoItemReference hierarchicalInfoItemReference =
+				new HierarchicalInfoItemReference(
 					infoItemReference.getClassName(),
 					infoItemReference.getInfoItemIdentifier());
 
-			infoItemHierarchicalReference.setChildren(
+			hierarchicalInfoItemReference.setChildren(
 				_getChildren(
 					itemsByParentCategoryIdMap,
 					_getClassPK(infoItemReference)));
 
-			children.add(infoItemHierarchicalReference);
+			children.add(hierarchicalInfoItemReference);
 		}
 
 		return children;

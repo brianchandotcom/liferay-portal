@@ -23,34 +23,34 @@ import java.util.Objects;
 /**
  * @author Lourdes Fernández Besada
  */
-public class InfoItemHierarchicalReference extends InfoItemReference {
+public class HierarchicalInfoItemReference extends InfoItemReference {
 
-	public InfoItemHierarchicalReference(
+	public HierarchicalInfoItemReference(
 		String className, InfoItemIdentifier infoItemIdentifier) {
 
 		super(className, infoItemIdentifier);
 	}
 
-	public InfoItemHierarchicalReference(String className, long classPK) {
+	public HierarchicalInfoItemReference(String className, long classPK) {
 		super(className, classPK);
 	}
 
 	@Override
 	public boolean equals(Object object) {
 		if (!super.equals(object) ||
-			!(object instanceof InfoItemHierarchicalReference)) {
+			!(object instanceof HierarchicalInfoItemReference)) {
 
 			return false;
 		}
 
-		InfoItemHierarchicalReference infoItemHierarchicalReference =
-			(InfoItemHierarchicalReference)object;
+		HierarchicalInfoItemReference hierarchicalInfoItemReference =
+			(HierarchicalInfoItemReference)object;
 
 		return Objects.equals(
-			_children, infoItemHierarchicalReference._children);
+			_children, hierarchicalInfoItemReference._children);
 	}
 
-	public List<InfoItemHierarchicalReference> getChildren() {
+	public List<HierarchicalInfoItemReference> getChildren() {
 		return _children;
 	}
 
@@ -59,7 +59,7 @@ public class InfoItemHierarchicalReference extends InfoItemReference {
 		return Objects.hash(super.hashCode(), _children);
 	}
 
-	public void setChildren(List<InfoItemHierarchicalReference> children) {
+	public void setChildren(List<HierarchicalInfoItemReference> children) {
 		_children = children;
 	}
 
@@ -70,6 +70,6 @@ public class InfoItemHierarchicalReference extends InfoItemReference {
 			"}");
 	}
 
-	private List<InfoItemHierarchicalReference> _children = new ArrayList<>();
+	private List<HierarchicalInfoItemReference> _children = new ArrayList<>();
 
 }

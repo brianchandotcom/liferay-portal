@@ -66,6 +66,11 @@
 </tr>
 <!-- VIEW_ANALYSIS -->
 <tr>
+	<td>VIEW_TOTAL_NUMBER_RELATED_COLUMN_INFORMATION</td>
+	<td>//span[text()='${key_columnInformationValue}']/ancestor::tr//span[text()='${key_totalEventsValue}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>VIEW_ANALYSIS_INFORMATION</td>
 	<td>//span[text()='${key_informationValue}']</td>
 	<td></td>

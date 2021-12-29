@@ -81,6 +81,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>VIEW_REPEATED_FILTER_DASHBOARD</td>
+	<td>xpath=(//div[contains(@class,'attribute') and contains(text(),'${key_attributeName}')])[${index}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>VIEW_ORDER_ANALYSIS_COLUMN</td>
 	<td>xpath=(//button[contains(@class,'text-truncate-inline')])[${index}]</td>
 	<td></td>

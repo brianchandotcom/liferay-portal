@@ -56,6 +56,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGE_ITERATOR</td>
+	<td>//div[@class='clearfix lfr-pagination']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PAGINATION_BAR</td>
 	<td>//div[@data-qa-id='paginator']</td>
 	<td></td>

@@ -50,6 +50,7 @@ public class SearchResponseResourceTest
 		super.testPostSearch();
 
 		_testPostSearch();
+		_testPostSearchZeroResults();
 
 		if (false) {
 
@@ -222,6 +223,19 @@ public class SearchResponseResourceTest
 						"defined in Configuration. The property \"INVALID_1\" ",
 						"is not defined in General.")));
 		}
+	}
+
+	private void _testPostSearchZeroResults() throws Exception {
+		SearchResponse searchResponse = _postSearch(_read());
+
+		Assert.assertEquals(Integer.valueOf(0), searchResponse.getTotalHits());
+
+		String response = String.valueOf(searchResponse.getResponse());
+
+		Assert.assertThat(response, CoreMatchers.containsString("hits"));
+		Assert.assertThat(
+			response,
+			CoreMatchers.not(CoreMatchers.containsString("max_score")));
 	}
 
 	private static final String _CLASS_NAME_ELASTICSEARCH_INDEX_SEARCHER =

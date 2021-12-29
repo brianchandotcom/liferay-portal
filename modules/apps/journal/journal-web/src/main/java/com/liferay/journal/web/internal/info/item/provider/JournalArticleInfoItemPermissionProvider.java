@@ -49,21 +49,19 @@ public class JournalArticleInfoItemPermissionProvider
 		throws InfoItemPermissionException {
 
 		return _hasPermission(
-			permissionChecker, journalArticle.getResourcePrimKey(), actionId);
+			permissionChecker, journalArticle.getId(), actionId);
 	}
 
 	private boolean _hasPermission(
-			PermissionChecker permissionChecker, long resourcePrimKey,
-			String actionId)
+			PermissionChecker permissionChecker, long id, String actionId)
 		throws InfoItemPermissionException {
 
 		try {
 			return _journalArticleModelResourcePermission.contains(
-				permissionChecker, resourcePrimKey, actionId);
+				permissionChecker, id, actionId);
 		}
 		catch (PortalException portalException) {
-			throw new InfoItemPermissionException(
-				resourcePrimKey, portalException);
+			throw new InfoItemPermissionException(id, portalException);
 		}
 	}
 

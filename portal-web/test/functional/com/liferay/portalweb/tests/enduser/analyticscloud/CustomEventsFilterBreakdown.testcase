@@ -421,11 +421,11 @@ definition {
 				filterName = "${filterName}");
 		}
 
-		task ("Remove the attribute from the analysis") {
+		task ("Remove the custom event from the analysis") {
 			ACEventAnalysis.removeFromAnalysis(removeValue = "${customEventName}");
 		}
 
-		task ("Check that the analysis dashboard contains the event,attribute and filter") {
+		task ("Check that the analysis dashboard does not contain the event, attribute and filter") {
 			AssertNotVisible(
 				key_buttonName = "${customEventName}",
 				locator1 = "ACUtils#GENERIC_BUTTON");
@@ -539,6 +539,73 @@ definition {
 				commonInformation = "site name",
 				index = "3",
 				informationValue = "custom 1 - site name - ${dataSource}");
+		}
+	}
+
+	@description = "Feature ID: LRAC-8171 | Automation ID: LRAC-10316 | Test Summary: Add a duplicate filter in Event Analysis"
+	@priority = "4"
+	test CanAddDuplicateFilterInEventAnalysis {
+		var attributeName = "pageTitle";
+		var filterName = "category";
+		var dataSource = StringUtil.extractFirst("${assignedPropertyName}", " ");
+
+		task ("Fill fields and create custom event") {
+			var customEventName = ACCustomEvents.generateCustomEventName();
+
+			ACCustomEvents.createCustomEvent(
+				customEventName = "${customEventName}",
+				timeToSendCustomEvent = "1");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch the property in AC and go to event analysis") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+
+			ACNavigation.goToEventAnalysis();
+		}
+
+		task ("Add the custom event to analysis") {
+			ACEventAnalysis.addEvent(customEventName = "${customEventName}");
+		}
+
+		task ("Add the breakdown to analysis") {
+			ACEventAnalysis.addBreakdown(attributeNameList = "${attributeName}");
+		}
+
+		task ("Add the filter to analysis") {
+			ACEventAnalysis.addFilter(
+				filterName = "${filterName}",
+				inputValue = "wetsuit",
+				optionValue = "is");
+		}
+
+		task ("Add the same filter to analysis") {
+			ACEventAnalysis.addFilter(
+				filterName = "${filterName}",
+				inputValue = "wetsuit",
+				optionValue = "is");
+		}
+
+		task ("Check that the two equal filters are present in the dashboard") {
+			for (var index : list "1,2") {
+				AssertElementPresent(
+					index = "${index}",
+					key_attributeName = "${filterName}",
+					locator1 = "ACEventAnalysis#VIEW_REPEATED_FILTER_DASHBOARD");
+			}
+		}
+
+		task ("Check that the analysis result appears") {
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast24Hours();
+
+			ACEventAnalysis.viewAnalysisInformation(informationValueList = "ac page - site name - ${dataSource}");
 		}
 	}
 

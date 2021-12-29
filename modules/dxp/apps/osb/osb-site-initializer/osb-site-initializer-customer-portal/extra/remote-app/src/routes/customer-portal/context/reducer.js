@@ -1,6 +1,7 @@
 export const actionTypes = {
 	UPDATE_PAGE: 'UPDATE_PAGE',
 	UPDATE_PROJECT: 'UPDATE_PROJECT',
+	UPDATE_QUICK_LINKS: 'UPDATE_QUICK_LINKS',
 	UPDATE_SESSION_ID: 'UPDATE_SESSION_ID',
 	UPDATE_SUBSCRIPTION_GROUPS: 'UPDATE_SUBSCRIPTION_GROUPS',
 	UPDATE_USER_ACCOUNT: 'UPDATE_USER_ACCOUNT',
@@ -18,6 +19,12 @@ const reducer = (state, action) => {
 			return {
 				...state,
 				project: action.payload,
+			};
+		}
+		case actionTypes.UPDATE_QUICK_LINKS: {
+			return {
+				...state,
+				quickLinks: action.payload,
 			};
 		}
 		case actionTypes.UPDATE_SUBSCRIPTION_GROUPS: {

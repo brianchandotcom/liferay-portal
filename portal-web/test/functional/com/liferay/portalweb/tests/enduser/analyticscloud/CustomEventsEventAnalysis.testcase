@@ -551,6 +551,7 @@ definition {
 	}
 
 	@description = "Feature ID: LRAC-4266 | Automation ID: LRAC-10310 | Test Summary: Change chart date range"
+	@ignore = "true"
 	@priority = "4"
 	test CanChangeChartDateRange {
 		// AC Refactor: It is not possible to assert the chart because this test needs data from the past.

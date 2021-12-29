@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ArgumentsUtil;
 import com.liferay.portal.tools.GitException;
@@ -74,33 +73,6 @@ import java.util.concurrent.LinkedBlockingQueue;
  * @author Hugo Huijser
  */
 public class SourceFormatter {
-
-	public static final ExcludeSyntaxPattern[] DEFAULT_EXCLUDE_SYNTAX_PATTERNS =
-		{
-			new ExcludeSyntaxPattern(ExcludeSyntax.GLOB, "**/.git/**"),
-			new ExcludeSyntaxPattern(ExcludeSyntax.GLOB, "**/.gradle/**"),
-			new ExcludeSyntaxPattern(ExcludeSyntax.GLOB, "**/.idea/**"),
-			new ExcludeSyntaxPattern(ExcludeSyntax.GLOB, "**/.m2/**"),
-			new ExcludeSyntaxPattern(ExcludeSyntax.GLOB, "**/.settings/**"),
-			new ExcludeSyntaxPattern(ExcludeSyntax.GLOB, "**/bin/**"),
-			new ExcludeSyntaxPattern(ExcludeSyntax.GLOB, "**/build/**"),
-			new ExcludeSyntaxPattern(ExcludeSyntax.GLOB, "**/classes/**"),
-			new ExcludeSyntaxPattern(
-				ExcludeSyntax.GLOB, "**/liferay-theme.json"),
-			new ExcludeSyntaxPattern(
-				ExcludeSyntax.GLOB, "**/npm-shrinkwrap.json"),
-			new ExcludeSyntaxPattern(
-				ExcludeSyntax.GLOB, "**/package-lock.json"),
-			new ExcludeSyntaxPattern(ExcludeSyntax.GLOB, "**/test-classes/**"),
-			new ExcludeSyntaxPattern(ExcludeSyntax.GLOB, "**/test-coverage/**"),
-			new ExcludeSyntaxPattern(ExcludeSyntax.GLOB, "**/test-results/**"),
-			new ExcludeSyntaxPattern(ExcludeSyntax.GLOB, "**/tmp/**"),
-			new ExcludeSyntaxPattern(
-				ExcludeSyntax.GLOB, "**/node_modules_cache/**"),
-			new ExcludeSyntaxPattern(
-				ExcludeSyntax.REGEX,
-				"^((?!/frontend-js-node-shims/src/).)*/node_modules/.*")
-		};
 
 	public static void main(String[] args) throws Exception {
 		Map<String, String> arguments = ArgumentsUtil.parseArguments(args);
@@ -976,8 +948,34 @@ public class SourceFormatter {
 	}
 
 	private void _init() throws Exception {
-		_sourceFormatterExcludes = new SourceFormatterExcludes(
-			SetUtil.fromArray(DEFAULT_EXCLUDE_SYNTAX_PATTERNS));
+		_sourceFormatterExcludes.addDefaultExcludeSyntaxPatterns(
+			ListUtil.fromArray(
+				new ExcludeSyntaxPattern(ExcludeSyntax.GLOB, "**/.git/**"),
+				new ExcludeSyntaxPattern(ExcludeSyntax.GLOB, "**/.gradle/**"),
+				new ExcludeSyntaxPattern(ExcludeSyntax.GLOB, "**/.idea/**"),
+				new ExcludeSyntaxPattern(ExcludeSyntax.GLOB, "**/.m2/**"),
+				new ExcludeSyntaxPattern(ExcludeSyntax.GLOB, "**/.settings/**"),
+				new ExcludeSyntaxPattern(ExcludeSyntax.GLOB, "**/bin/**"),
+				new ExcludeSyntaxPattern(ExcludeSyntax.GLOB, "**/build/**"),
+				new ExcludeSyntaxPattern(ExcludeSyntax.GLOB, "**/classes/**"),
+				new ExcludeSyntaxPattern(
+					ExcludeSyntax.GLOB, "**/liferay-theme.json"),
+				new ExcludeSyntaxPattern(
+					ExcludeSyntax.GLOB, "**/npm-shrinkwrap.json"),
+				new ExcludeSyntaxPattern(
+					ExcludeSyntax.GLOB, "**/package-lock.json"),
+				new ExcludeSyntaxPattern(
+					ExcludeSyntax.GLOB, "**/test-classes/**"),
+				new ExcludeSyntaxPattern(
+					ExcludeSyntax.GLOB, "**/test-coverage/**"),
+				new ExcludeSyntaxPattern(
+					ExcludeSyntax.GLOB, "**/test-results/**"),
+				new ExcludeSyntaxPattern(ExcludeSyntax.GLOB, "**/tmp/**"),
+				new ExcludeSyntaxPattern(
+					ExcludeSyntax.GLOB, "**/node_modules_cache/**"),
+				new ExcludeSyntaxPattern(
+					ExcludeSyntax.REGEX,
+					"^((?!/frontend-js-node-shims/src/).)*/node_modules/.*")));
 
 		_portalSource = _containsDir("portal-impl");
 
@@ -1342,7 +1340,8 @@ public class SourceFormatter {
 	private Map<String, Properties> _propertiesMap;
 	private final SourceFormatterArgs _sourceFormatterArgs;
 	private SourceFormatterConfiguration _sourceFormatterConfiguration;
-	private SourceFormatterExcludes _sourceFormatterExcludes;
+	private final SourceFormatterExcludes _sourceFormatterExcludes =
+		new SourceFormatterExcludes();
 	private final Set<SourceFormatterMessage> _sourceFormatterMessages =
 		new ConcurrentSkipListSet<>();
 	private SourceFormatterSuppressions _sourceFormatterSuppressions;

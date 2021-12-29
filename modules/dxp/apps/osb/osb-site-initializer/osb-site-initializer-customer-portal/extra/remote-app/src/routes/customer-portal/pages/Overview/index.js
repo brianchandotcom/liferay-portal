@@ -3,19 +3,21 @@ import {useEffect, useState} from 'react';
 import {useCustomEvent} from '../../../../common/hooks/useCustomEvent';
 import {usePageGuard} from '../../../../common/hooks/usePageGuard';
 import {getAccountSubscriptionGroups} from '../../../../common/services/liferay/graphql/queries';
-import {Storage} from '../../../../common/services/liferay/storage';
 import Subscriptions from '../../components/Subscriptions';
 import {useCustomerPortal} from '../../context';
 import {actionTypes} from '../../context/reducer';
 import {CUSTOM_EVENTS} from '../../utils/constants';
 import {getWebContents} from '../../utils/webContentsGenerator';
-
 const Overview = ({project, userAccount}) => {
 	const [, dispatch] = useCustomerPortal();
 	const [
 		slaCurrentVersionAndProducts,
 		setSLACurrentVersionAndProducts,
 	] = useState([]);
+	const [
+		SLACurrentVersionAndProductsComplete,
+		setSLACurrentVersionAndProductsComplete,
+	] = useState(false);
 	const dispatchEvent = useCustomEvent(CUSTOM_EVENTS.PROJECT);
 	const {loading} = usePageGuard(userAccount, project.accountKey, 'overview');
 
@@ -25,7 +27,6 @@ const Overview = ({project, userAccount}) => {
 			project.slaCurrent,
 			project.dxpVersion,
 		]);
-
 		dispatchEvent(project);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [project]);
@@ -35,7 +36,7 @@ const Overview = ({project, userAccount}) => {
 		loading: isLoadingSubscritionsGroups,
 	} = useQuery(getAccountSubscriptionGroups, {
 		variables: {
-			filter: `accountKey eq '${project.accountKey}'`,
+			filter: `accountKey eq '${project.accountKey}' and hasActivation eq true`,
 		},
 	});
 
@@ -47,17 +48,27 @@ const Overview = ({project, userAccount}) => {
 				payload: subscriptionGroupsItems,
 				type: actionTypes.UPDATE_SUBSCRIPTION_GROUPS,
 			});
+
 			setSLACurrentVersionAndProducts(
-				...slaCurrentVersionAndProducts,
-				...subscriptionGroupsItems.map((group) => group.name)
+				(prevSlaCurrentVersionAndProducts) => [
+					...prevSlaCurrentVersionAndProducts,
+					...subscriptionGroupsItems.map((group) => group.name),
+				]
 			);
+			setSLACurrentVersionAndProductsComplete(true);
 		}
-		Storage.setItem(
-			'cp-tip-container-primary',
-			JSON.stringify(getWebContents(slaCurrentVersionAndProducts))
-		);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [dataSubscriptionGroups, slaCurrentVersionAndProducts]);
+	}, [dataSubscriptionGroups]);
+
+	useEffect(() => {
+		if (SLACurrentVersionAndProductsComplete) {
+			dispatch({
+				payload: getWebContents(slaCurrentVersionAndProducts),
+				type: actionTypes.UPDATE_QUICK_LINKS,
+			});
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [SLACurrentVersionAndProductsComplete]);
 
 	if (loading || isLoadingSubscritionsGroups) {
 		return <div>Overview Skeleton</div>;

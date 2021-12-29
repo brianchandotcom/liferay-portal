@@ -24,6 +24,27 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-143257. LDAP credentials should not expose in URL."
+	@priority = "5"
+	test AssertLDAPCredentialsDoesNotExposeInURL {
+		property apacheds.multiple.users.enabled = "true";
+		property test.name.skip.portal.instance = "LDAP#AssertLDAPCredentialsDoesNotExposeInURL";
+
+		task ("Add LDAP server and test connection") {
+			LDAP.addLDAPServerAndTestConnection(LDAPServerName = "ApacheDS Server");
+		}
+
+		task ("Assert no pagination display in the page") {
+			LDAP.assertNoPagination(LDAPServerName = "ApacheDS Server");
+		}
+
+		task ("Assert LDAP security credentials are obscured") {
+			AssertTextEquals(
+				locator1 = "LDAP#LDAP_CONNECTION_CREDENTIAL_FIELD",
+				value1 = "TEMP_OBFUSCATION_VALUE");
+		}
+	}
+
 	@description = "This is a use case for LPS-65498. LDAP user can be imported with blank password."
 	@priority = "5"
 	test CanImportLDAPUserWithBlankPassword {

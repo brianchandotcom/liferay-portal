@@ -118,7 +118,7 @@ function SingleFileUploader({
 
 	return (
 		<>
-			<div>
+			<>
 				<div
 					{...getRootProps({
 						className: classNames('dropzone', {
@@ -173,7 +173,7 @@ function SingleFileUploader({
 						</ClayForm.FeedbackItem>
 					</ClayForm.FeedbackGroup>
 				)}
-			</div>
+			</>
 
 			{showPreview && (
 				<div className="item-selector-preview-container">

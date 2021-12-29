@@ -1,6 +1,8 @@
 @import 'atlas-variables';
 
 .dropzone {
+	$component: &;
+
 	align-items: center;
 	background-color: $light;
 	border-radius: 0.5rem;
@@ -9,7 +11,6 @@
 	font-size: 0.875rem;
 	font-weight: $font-weight-semi-bold;
 	justify-content: center;
-	margin-top: 1rem;
 	min-height: 6rem;
 	outline: 2px dashed $secondary-l2;
 	transition-duration: 0.2s;
@@ -38,6 +39,14 @@
 
 	&-error {
 		animation: dropzone-error-in-out 1s;
+	}
+
+	&-wrapper {
+		margin-top: 1rem;
+
+		&-search-container-empty #{$component} {
+			height: 25rem;
+		}
 	}
 
 	@keyframes dropzone-error-in-out {

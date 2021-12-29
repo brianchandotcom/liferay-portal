@@ -60,6 +60,10 @@ RepositoryEntryBrowserDisplayContext repositoryEntryBrowserDisplayContext = new 
 
 ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositoryEntryManagementToolbarDisplayContext = new ItemSelectorRepositoryEntryManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, repositoryEntryBrowserDisplayContext);
 
+if (FFItemSelectorSingleFileUploaderConfigurationUtil.enabled()) {
+	emptyResultsMessage = null;
+}
+
 SearchContainer<?> searchContainer = new SearchContainer(renderRequest, itemSelectorRepositoryEntryManagementToolbarDisplayContext.getCurrentSortingURL(), null, emptyResultsMessage);
 %>
 
@@ -113,7 +117,7 @@ SearchContainer<?> searchContainer = new SearchContainer(renderRequest, itemSele
 	<c:if test="<%= showDragAndDropZone && !showSearchInfo && DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_DOCUMENT) %>">
 		<c:choose>
 			<c:when test="<%= FFItemSelectorSingleFileUploaderConfigurationUtil.enabled() %>">
-				<div>
+				<div class="dropzone-wrapper <%= (repositoryEntriesCount == 0) ? "dropzone-wrapper-search-container-empty" : StringPool.BLANK %>">
 					<div class="dropzone dropzone-disabled"><span aria-hidden="true" class="loading-animation loading-animation-sm"></span></div>
 
 					<react:component

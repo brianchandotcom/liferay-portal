@@ -301,7 +301,8 @@ public class ObjectRelationship implements Cloneable, Serializable {
 
 	public static enum Type {
 
-		ONE_TO_MANY("oneToMany"), MANY_TO_MANY("manyToMany");
+		ONE_TO_MANY("oneToMany"), ONE_TO_ONE("oneToOne"),
+		MANY_TO_MANY("manyToMany");
 
 		public static Type create(String value) {
 			for (Type type : values()) {

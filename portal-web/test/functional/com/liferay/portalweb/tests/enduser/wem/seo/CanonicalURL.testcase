@@ -139,7 +139,7 @@ definition {
 			pageName = "Test Page");
 
 		PagesAdmin.addLocalizedCanonicalURL(
-			localeList = "-,es-ES,zh-CN",
+			localeList = "en-US,es-ES,zh-CN",
 			localizedCanonicalUrlList = "localhost:8080/english-canonical-url,localhost:8080/spain-canonical-url,localhost:8080/chinese-canonical-url");
 
 		User.logoutPG();

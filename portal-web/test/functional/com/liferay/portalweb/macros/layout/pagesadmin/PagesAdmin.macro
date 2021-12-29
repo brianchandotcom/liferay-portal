@@ -224,9 +224,7 @@ definition {
 			var locale = ListUtil.get("${list1}", "${i}");
 			var localizedCanonicalURL = ListUtil.get("${list2}", "${i}");
 
-			if ("${locale}" != "-") {
-				PortletEntry.changeLocale(locale = "${locale}");
-			}
+			PortletEntry.changeLocale(locale = "${locale}");
 
 			Type(
 				locator1 = "TextInput#CUSTOM_CANONICAL_URL",

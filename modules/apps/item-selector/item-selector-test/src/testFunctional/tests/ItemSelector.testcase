@@ -1272,17 +1272,7 @@ definition {
 
 		ItemSelector.gotoItemSelectorViaCKEditor();
 
-		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
-
-		LexiconEntry.gotoAdd();
-
-		for (var menuItem : list "File Upload,Folder") {
-			MenuItem.viewPresent(menuItem = "${menuItem}");
-		}
-
-		for (var menuItem : list "External Video Shortcut,Google Drive Shortcut") {
-			MenuItem.viewNotPresent(menuItem = "${menuItem}");
-		}
+		ItemSelector.viewRelevantSelections(addImageOptions = "true");
 	}
 
 	@description = "This is a test for LPS-136944. It checks that only 'File Upload,' 'Folder,' and 'External Video Shortcut' options appear when adding a video."

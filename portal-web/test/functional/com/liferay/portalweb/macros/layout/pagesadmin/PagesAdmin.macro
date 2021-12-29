@@ -434,7 +434,7 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Advanced");
 
-		PagesAdmin.uploadFileForLogo(logoFile = "${logoFile}");
+		PagesAdmin.uploadLogo(logoFile = "${logoFile}");
 	}
 
 	macro changeSiteCurrentTheme {
@@ -816,7 +816,7 @@ definition {
 		}
 	}
 
-	macro uploadFileForLogo {
+	macro uploadLogo {
 		AssertClick(
 			key_text = "Change",
 			locator1 = "Button#ANY",
@@ -835,8 +835,6 @@ definition {
 		Pause(locator1 = "10000");
 
 		Button.clickDone();
-
-		Pause(locator1 = "5000");
 
 		SelectFrameTop();
 
@@ -896,14 +894,6 @@ definition {
 			value1 = "/${pageName}");
 	}
 
-	macro viewNoOldFriendlyURL {
-		for (var oldFriendlyURL : list "${oldFriendlyUrlList}") {
-			AssertElementNotPresent(
-				key_oldFriendlyURL = "${oldFriendlyURL}",
-				locator1 = "PagesAdmin#FRIENDLY_URL_HISTORY_ITEM");
-		}
-	}
-
 	macro viewOldFriendlyURL {
 		if (isSet(lastOldFriendlyURL)) {
 			AssertVisible(
@@ -914,6 +904,14 @@ definition {
 		AssertVisible(
 			key_oldFriendlyURL = "${oldFriendlyURL}",
 			locator1 = "PagesAdmin#FRIENDLY_URL_HISTORY_ITEM");
+	}
+
+	macro viewOldFriendlyURLNotPresent {
+		for (var oldFriendlyURL : list "${oldFriendlyUrlList}") {
+			AssertElementNotPresent(
+				key_oldFriendlyURL = "${oldFriendlyURL}",
+				locator1 = "PagesAdmin#FRIENDLY_URL_HISTORY_ITEM");
+		}
 	}
 
 	macro viewPageItemNotPresent {

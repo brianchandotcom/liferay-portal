@@ -427,7 +427,7 @@ definition {
 			key_text = "Delete",
 			locator1 = "Button#ANY_DISABLED");
 
-		PagesAdmin.uploadFileForLogo(logoFile = "Document_2.png");
+		PagesAdmin.uploadLogo(logoFile = "Document_2.png");
 
 		AssertElementPresent(
 			key_text = "Delete",

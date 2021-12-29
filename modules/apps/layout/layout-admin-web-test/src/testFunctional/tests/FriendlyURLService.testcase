@@ -446,7 +446,7 @@ definition {
 
 		PagesAdmin.viewActiveURL(activeURL = "/new-test-page");
 
-		PagesAdmin.viewNoOldFriendlyURL(oldFriendlyUrlList = "/test-page");
+		PagesAdmin.viewOldFriendlyURLNotPresent(oldFriendlyUrlList = "/test-page");
 	}
 
 }

@@ -31,6 +31,10 @@ import com.liferay.item.selector.ItemSelectorReturnType;
  * <code>plid</code>: The plid of the selected layout
  * </li>
  * <li>
+ * <code>previewURL</code>: The URL to preview the selected layout page template
+ * entry
+ * </li>
+ * <li>
  * <code>private</code>: Is true if the layout is private, false another case
  * </li>
  * <li>

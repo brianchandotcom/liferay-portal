@@ -27,11 +27,14 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -353,6 +356,17 @@ public class SelectLayoutTag extends IncludeTag {
 				"name", layout.getName(themeDisplay.getLocale())
 			).put(
 				"plid", layout.getPlid()
+			).put(
+				"previewURL",
+				() -> {
+					String layoutURL = HttpUtil.addParameter(
+						PortalUtil.getLayoutFullURL(layout, themeDisplay),
+						"p_l_mode", Constants.PREVIEW);
+
+					return HttpUtil.addParameter(
+						layoutURL, "p_p_auth",
+						AuthTokenUtil.getToken(getRequest()));
+				}
 			).put(
 				"private", layout.isPrivateLayout()
 			).put(

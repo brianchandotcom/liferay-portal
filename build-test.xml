@@ -13143,11 +13143,13 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 
 		<get-testcase-property property.name="apacheds.blank.user.password.enabled" />
 		<get-testcase-property property.name="apacheds.enabled" />
+		<get-testcase-property property.name="apacheds.multiple.users.enabled" />
 
 		<if>
 			<or>
 				<equals arg1="${apacheds.blank.user.password.enabled}" arg2="true" />
 				<equals arg1="${apacheds.enabled}" arg2="true" />
+				<equals arg1="${apacheds.multiple.users.enabled}" arg2="true" />
 			</or>
 			<then>
 				<ant antfile="build-test-apacheds.xml" target="start-apacheds" />

@@ -953,6 +953,7 @@ definition {
 		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "Liferay Journal/Web Content Article,New Site Article/Web Content Article,New Site Journal/Web Content Article");
 	}
 
+	@description = "This is a use case for LPS-126743"
 	@priority = "4"
 	test SearchWithMoreThanTenSynonymSets {
 		SearchTuning.openSynonymsAdmin();

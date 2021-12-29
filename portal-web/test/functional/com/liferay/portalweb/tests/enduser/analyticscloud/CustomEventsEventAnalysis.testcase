@@ -75,327 +75,6 @@ definition {
 		ACUtils.tearDownAC();
 	}
 
-	@description = "Feature ID: LRAC-4266 | Automation ID: LRAC-10292 | Test Summary: Creating Events from All tab, default tab and custom tab and Event Attributes"
-	@priority = "5"
-	test CreateEventAnalysisFromAllAndDefaultAndCustomTab {
-		var attributeName = "pageTitle";
-        var defaultEventName = "pageViewed";
-        var dataSource = StringUtil.extractFirst("${assignedPropertyName}", " ");
-
-		task ("Fill fields and create custom event") {
-			var customEventName = ACCustomEvents.generateCustomEventName();
-
-			ACCustomEvents.createCustomEvent(
-				customEventName = "${customEventName}",
-				timeToSendCustomEvent = "1");
-		}
-
-		task ("Close sessions") {
-			ACUtils.closeAllSessionsAndWait();
-		}
-
-		task ("Switch the property in AC and go to event analysis") {
-			ACUtils.launchAC();
-
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
-
-			ACNavigation.goToEventAnalysis();
-		}
-
-		task ("Add the custom event to analysis by the all tab") {
-			ACEventAnalysis.addEvent(customEventName = "${customEventName}");
-		}
-
-		task ("Add the breakdown to analysis") {
-			ACEventAnalysis.addBreakdown(attributeNameList = "${attributeName}");
-		}
-
-		task ("Check the analysis result appears") {
-			ACTimeFilter.clickTimeFilterButton();
-
-			ACTimeFilter.setLast24Hours();
-
-			ACEventAnalysis.viewAnalysisInformation(informationValueList = "ac page - site name - ${dataSource}");
-		}
-
-        task ("Remove the custom event from the analysis") {
-			ACEventAnalysis.removeFromAnalysis(removeValue = "${customEventName}");
-        }
-
-        task ("Add the default event to analysis by the default tab") {
-			ACEventAnalysis.addEvent(
-                tabName = "Default",
-                customEventName = "${defaultEventName}");
-		}
-
-        task ("Add the breakdown to analysis") {
-			ACEventAnalysis.addBreakdown(attributeNameList = "${attributeName}");
-		}
-
-        task ("Check the analysis result appears") {
-			ACEventAnalysis.viewAnalysisInformation(informationValueList = "ac page - site name - ${dataSource}");
-		}
-
-        task ("Remove the default event from the analysis") {
-			ACEventAnalysis.removeFromAnalysis(removeValue = "${defaultEventName}");
-        }
-
-        task ("Add the custom event for analysis by the custom tab") {
-			ACEventAnalysis.addEvent(
-                tabName = "Custom",
-                customEventName = "${customEventName}");
-		}
-
-        task ("Add the breakdown to analysis") {
-			ACEventAnalysis.addBreakdown(attributeNameList = "${attributeName}");
-		}
-
-        task ("Check the analysis result appears") {
-			ACEventAnalysis.viewAnalysisInformation(informationValueList = "ac page - site name - ${dataSource}");
-		}
-	}
-
-    @description = "Feature ID: LRAC-4266 | Automation ID: LRAC-10295 | Test Summary: Search for events in different tabs"
-	@priority = "3"
-	test SearchEventsInDifferentTabs {
-        var defaultEventName = "pageViewed";
-
-		task ("Fill fields and create custom event") {
-			var customEventName = ACCustomEvents.generateCustomEventName();
-
-			ACCustomEvents.createCustomEvent(
-				customEventName = "${customEventName}",
-				timeToSendCustomEvent = "1");
-		}
-
-		task ("Close sessions") {
-			ACUtils.closeAllSessionsAndWait();
-		}
-
-		task ("Switch the property in AC and go to event analysis") {
-			ACUtils.launchAC();
-
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
-
-			ACNavigation.goToEventAnalysis();
-		}
-
-		task ("Click to add event and switch tab to all") {
-			ACEventAnalysis.clickToAddEventButton();
-
-			ACNavigation.switchTabInCard(tabName = "All");
-        }
-
-        task ("Search for default event in the all tab and check that it appears") {
-			ACEventAnalysis.searchEventAnalysis(searchItem = "${defaultEventName}");
-
-			ACEventAnalysis.viewEventAnalysisList(eventList = "${defaultEventName}");
-        }
-
-        task ("Search for custom event in the all tab and check that it appears") {
-            ACEventAnalysis.searchEventAnalysis(searchItem = "${customEventName}");
-
-			ACEventAnalysis.viewEventAnalysisList(eventList = "${customEventName}");
-        }
-
-        task ("Switch tab to default and search for default event in the default tab and check that it appears") {
-			ACNavigation.switchTabInCard(tabName = "Default");
-
-            ACEventAnalysis.searchEventAnalysis(searchItem = "${defaultEventName}");
-
-			ACEventAnalysis.viewEventAnalysisList(eventList = "${defaultEventName}");
-        }
-
-        task ("Search for custom event in the default tab and check that it doesn't appear") {
-			ACEventAnalysis.searchEventAnalysis(searchItem = "${customEventName}");
-
-			ACEventAnalysis.viewEventAnalysisListNotPresent(eventList = "${customEventName}");
-		}
-
-        task ("Switch tab to Custom and search for default event in the custom tab and check that it doesn't appear") {
-			ACNavigation.switchTabInCard(tabName = "Custom");
-
-            ACEventAnalysis.searchEventAnalysis(searchItem = "${defaultEventName}");
-
-			ACEventAnalysis.viewEventAnalysisListNotPresent(eventList = "${defaultEventName}");
-        }
-
-        task ("Search for custom event in the custom tab and check that it appears") {
-			ACEventAnalysis.searchEventAnalysis(searchItem = "${customEventName}");
-
-			ACEventAnalysis.viewEventAnalysisList(eventList = "${customEventName}");
-		}
-	}
-
-    @description = "Feature ID: LRAC-4266 | Automation ID: LRAC-10301 | Test Summary: Search Event Attribute from Event tab"
-	@priority = "3"
-	test SearchEventAttributeInEventTab {
-        var defaultAttributeName = "pageTitle";
-        var customAttributeName = "category";
-
-		task ("Fill fields and create custom event") {
-			var customEventName = ACCustomEvents.generateCustomEventName();
-
-			ACCustomEvents.createCustomEvent(
-				customEventName = "${customEventName}",
-				timeToSendCustomEvent = "1");
-		}
-
-		task ("Close sessions") {
-			ACUtils.closeAllSessionsAndWait();
-		}
-
-		task ("Switch the property in AC and go to event analysis") {
-			ACUtils.launchAC();
-
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
-
-			ACNavigation.goToEventAnalysis();
-		}
-
-		task ("Add the custom event to analysis by the all tab") {
-			ACEventAnalysis.addEvent(customEventName = "${customEventName}");
-		}
-
-        task ("Click to add breakdown") {
-			ACEventAnalysis.clickToAddBreakdownButton();
-		}
-
-        task ("Search for attribute and check that it appears") {
-			ACEventAnalysis.searchEventAnalysis(searchItem = "${defaultAttributeName}");
-
-			ACEventAnalysis.viewEventAnalysisList(eventList = "${defaultAttributeName}");
-        }
-
-        task ("Search for attribute and check that it appears") {
-            ACEventAnalysis.searchEventAnalysis(searchItem = "${customAttributeName}");
-
-			ACEventAnalysis.viewEventAnalysisList(eventList = "${customAttributeName}");
-        }
-
-        task ("Search for an attribute that doesn't exist and check that it doesn't appear") {
-            ACEventAnalysis.searchEventAnalysis(searchItem = "acqa");
-
-			ACUtils.viewNoResultsMessage(noResultMessage = "There are no items found.");
-        }
-	}
-
-	@description = "Feature ID: LRAC-4266 | Automation ID: LRAC-10304 | Test Summary: Edit Attribute Event name"
-	@priority = "3"
-	test EditEventName {
-        var attributeName = "color";
-
-		task ("Fill fields and create custom event") {
-			var customEventName = ACCustomEvents.generateCustomEventName();
-
-			ACCustomEvents.createCustomEvent(
-				customEventName = "${customEventName}",
-				attributesName = "${attributeName}",
-				attributesValue = "red",
-				timeToSendCustomEvent = "1");
-		}
-
-		task ("Close sessions") {
-			ACUtils.closeAllSessionsAndWait();
-		}
-
-		task ("Switch the property in AC and go to event analysis") {
-			ACUtils.launchAC();
-
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
-
-			ACNavigation.goToEventAnalysis();
-		}
-
-		task ("Add the custom event to analysis") {
-			ACEventAnalysis.addEvent(customEventName = "${customEventName}");
-		}
-
-        task ("Click to add breakdown") {
-			ACEventAnalysis.clickToAddBreakdownButton();
-		}
-
-		task ("Change the attribute display name") {
-			ACEventAnalysis.searchEventAnalysis(searchItem = "${attributeName}");
-
-			ACEventAnalysis.changeCustomEventDisplayName(
-				editOption = "Description",
-				elementName = "${attributeName}",
-				newDisplayName = "${attributeName} Display Name");
-		}
-
-		task ("Click to add breakdown") {
-			ACEventAnalysis.clickToAddBreakdownButton();
-		}
-
-        task ("Check that the name has changed") {
-            ACEventAnalysis.searchEventAnalysis(searchItem = "${attributeName} Display Name");
-
-			ACEventAnalysis.viewEventAnalysisList(eventList = "${attributeName} Display Name");
-        }
-	}
-
-	@description = "Feature ID: LRAC-4266 | Automation ID: LRAC-10306 | Test Summary: Remove Attribute"
-	@priority = "5"
-	test RemoveAttribute {
-		var attributeName = "pageTitle";
-        var dataSource = StringUtil.extractFirst("${assignedPropertyName}", " ");
-
-		task ("Fill fields and create custom event") {
-			var customEventName = ACCustomEvents.generateCustomEventName();
-
-			ACCustomEvents.createCustomEvent(
-				customEventName = "${customEventName}",
-				timeToSendCustomEvent = "1");
-		}
-
-		task ("Close sessions") {
-			ACUtils.closeAllSessionsAndWait();
-		}
-
-		task ("Switch the property in AC and go to event analysis") {
-			ACUtils.launchAC();
-
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
-
-			ACNavigation.goToEventAnalysis();
-		}
-
-		task ("Add the custom event to analysis") {
-			ACEventAnalysis.addEvent(customEventName = "${customEventName}");
-		}
-
-		task ("Add the breakdown to analysis") {
-			ACEventAnalysis.addBreakdown(attributeNameList = "${attributeName}");
-		}
-
-		task ("Check the analysis result appears") {
-			ACTimeFilter.clickTimeFilterButton();
-
-			ACTimeFilter.setLast24Hours();
-
-			ACEventAnalysis.viewAnalysisInformation(informationValueList = "ac page - site name - ${dataSource}");
-		}
-
-        task ("Remove the breakdown from the analysis") {
-			ACEventAnalysis.removeFromAnalysis(removeValue = "${attributeName}");
-        }
-
-        task ("Check that the breakdown information does not appear in the result") {
-			ACEventAnalysis.viewAnalysisInformationNotPresent(informationValueList = "ac page - site name - ${dataSource}");
-		}
-
-		task ("Check that the breakdown does not appear on the dashboard") {
-			AssertElementNotPresent(
-				key_attributeName = "${attributeName}",
-				locator1 = "ACEventAnalysis#VIEW_DASHBOARD_INFORMATION");
-		}
-
-		task ("Check that the analysis result still appears even without the breakdown") {
-			ACEventAnalysis.viewAnalysisInformation(informationValueList = "${customEventName}");
-		}
-	}
-
 	@description = "Feature ID: LRAC-7868 | Automation ID: LRAC-10314 | Test Summary: Event Analysis in an empty state"
 	@priority = "3"
 	test AssertEventAnalysisEmptyState {
@@ -427,6 +106,75 @@ definition {
 			var key_sectionType = "filter";
 
 			AssertElementNotPresent(locator1 = "ACEventAnalysis#ADD_ATTRIBUTE_BUTTON");
+		}
+	}
+
+	@description = "Feature ID: LRAC-4266 | Automation ID: LRAC-10310 | Test Summary: Change chart date range"
+	@ignore = "true"
+	@priority = "4"
+	test CanChangeChartDateRange {
+
+		// AC Refactor: It is not possible to assert the chart because this test needs data from the past.
+
+		var attributeName = "pageTitle";
+		var dataSource = StringUtil.extractFirst("${assignedPropertyName}", " ");
+
+		task ("Fill fields and create custom event") {
+			var customEventName = ACCustomEvents.generateCustomEventName();
+
+			ACCustomEvents.createCustomEvent(
+				customEventName = "${customEventName}",
+				timeToSendCustomEvent = "1");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch the property in AC and go to event analysis") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+
+			ACNavigation.goToEventAnalysis();
+		}
+
+		task ("Add the custom event to analysis by the all tab") {
+			ACEventAnalysis.addEvent(customEventName = "${customEventName}");
+		}
+
+		task ("Add the breakdown to analysis") {
+			ACEventAnalysis.addBreakdown(attributeNameList = "${attributeName}");
+		}
+
+		task ("Change the time filter to 24 hours") {
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast30Days();
+		}
+
+		task ("Check the analysis result appears") {
+
+			// It is not possible to assert the chart because this test needs data from the past.
+
+			ACEventAnalysis.viewAnalysisInformation(informationValueList = "ac page - site name - ${dataSource}");
+		}
+
+		task ("Change the time filter to 24 hours") {
+			ACTimeFilter.setCustomRange(
+				endDay = "13",
+				endMonth = "July",
+				endYear = "2020",
+				startDay = "1",
+				startMonth = "July",
+				startYear = "2020");
+		}
+
+		task ("Check the analysis result appears") {
+
+			// It is not possible to assert the chart because this test needs data from the past.
+
+			ACEventAnalysis.viewAnalysisInformation(informationValueList = "ac page - site name - ${dataSource}");
 		}
 	}
 
@@ -497,67 +245,65 @@ definition {
 
 		task ("Switch tab to total") {
 			ACNavigation.switchTabInCard(tabName = "Total");
-        }
+		}
 
 		task ("Check that the chart appears for the total tab") {
 			ACEventAnalysis.viewTotalNumberRelatedToColumnInformation(
-				totalEventsValue = "3",
-				columnInformationValue = "ac page - site name - ${dataSource}");
+				columnInformationValue = "ac page - site name - ${dataSource}",
+				totalEventsValue = "3");
 
 			ACEventAnalysis.viewTotalNumberRelatedToColumnInformation(
-				totalEventsValue = "2",
-				columnInformationValue = "custom 2 - site name - ${dataSource}");
+				columnInformationValue = "custom 2 - site name - ${dataSource}",
+				totalEventsValue = "2");
 
 			ACEventAnalysis.viewTotalNumberRelatedToColumnInformation(
-				totalEventsValue = "1",
-				columnInformationValue = "custom 1 - site name - ${dataSource}");
+				columnInformationValue = "custom 1 - site name - ${dataSource}",
+				totalEventsValue = "1");
 		}
 
 		task ("Switch tab to unique") {
 			ACNavigation.switchTabInCard(tabName = "Unique");
-        }
+		}
 
 		task ("Check that the chart appears for the unique tab") {
 			ACEventAnalysis.viewTotalNumberRelatedToColumnInformation(
-				totalEventsValue = "1",
-				columnInformationValue = "ac page - site name - ${dataSource}");
+				columnInformationValue = "ac page - site name - ${dataSource}",
+				totalEventsValue = "1");
 
 			ACEventAnalysis.viewTotalNumberRelatedToColumnInformation(
-				totalEventsValue = "1",
-				columnInformationValue = "custom 2 - site name - ${dataSource}");
+				columnInformationValue = "custom 2 - site name - ${dataSource}",
+				totalEventsValue = "1");
 
 			ACEventAnalysis.viewTotalNumberRelatedToColumnInformation(
-				totalEventsValue = "1",
-				columnInformationValue = "custom 1 - site name - ${dataSource}");
+				columnInformationValue = "custom 1 - site name - ${dataSource}",
+				totalEventsValue = "1");
 		}
 
 		task ("Switch tab to average") {
 			ACNavigation.switchTabInCard(tabName = "Average");
-        }
+		}
 
 		task ("Check that the chart appears for the average tab") {
 			ACEventAnalysis.viewTotalNumberRelatedToColumnInformation(
-				totalEventsValue = "3",
-				columnInformationValue = "ac page - site name - ${dataSource}");
+				columnInformationValue = "ac page - site name - ${dataSource}",
+				totalEventsValue = "3");
 
 			ACEventAnalysis.viewTotalNumberRelatedToColumnInformation(
-				totalEventsValue = "2",
-				columnInformationValue = "custom 2 - site name - ${dataSource}");
+				columnInformationValue = "custom 2 - site name - ${dataSource}",
+				totalEventsValue = "2");
 
 			ACEventAnalysis.viewTotalNumberRelatedToColumnInformation(
-				totalEventsValue = "1",
-				columnInformationValue = "custom 1 - site name - ${dataSource}");
+				columnInformationValue = "custom 1 - site name - ${dataSource}",
+				totalEventsValue = "1");
 		}
 	}
 
-	@description = "Feature ID: LRAC-4266 | Automation ID: LRAC-10310 | Test Summary: Change chart date range"
-	@ignore = "true"
-	@priority = "4"
-	test CanChangeChartDateRange {
-		// AC Refactor: It is not possible to assert the chart because this test needs data from the past.
-
+	@description = "Feature ID: LRAC-4266 | Automation ID: LRAC-10292 | Test Summary: Creating Events from All tab, default tab and custom tab and Event Attributes"
+	@priority = "5"
+	test CreateEventAnalysisFromAllAndDefaultAndCustomTab {
 		var attributeName = "pageTitle";
-        var dataSource = StringUtil.extractFirst("${assignedPropertyName}", " ");
+		var defaultEventName = "pageViewed";
+		var dataSource = StringUtil.extractFirst("${assignedPropertyName}", " ");
 
 		task ("Fill fields and create custom event") {
 			var customEventName = ACCustomEvents.generateCustomEventName();
@@ -587,32 +333,289 @@ definition {
 			ACEventAnalysis.addBreakdown(attributeNameList = "${attributeName}");
 		}
 
-		task ("Change the time filter to 24 hours") {
+		task ("Check the analysis result appears") {
 			ACTimeFilter.clickTimeFilterButton();
 
-			ACTimeFilter.setLast30Days();
+			ACTimeFilter.setLast24Hours();
+
+			ACEventAnalysis.viewAnalysisInformation(informationValueList = "ac page - site name - ${dataSource}");
+		}
+
+		task ("Remove the custom event from the analysis") {
+			ACEventAnalysis.removeFromAnalysis(removeValue = "${customEventName}");
+		}
+
+		task ("Add the default event to analysis by the default tab") {
+			ACEventAnalysis.addEvent(
+				customEventName = "${defaultEventName}",
+				tabName = "Default");
+		}
+
+		task ("Add the breakdown to analysis") {
+			ACEventAnalysis.addBreakdown(attributeNameList = "${attributeName}");
 		}
 
 		task ("Check the analysis result appears") {
-			// It is not possible to assert the chart because this test needs data from the past.
+			ACEventAnalysis.viewAnalysisInformation(informationValueList = "ac page - site name - ${dataSource}");
+		}
+
+		task ("Remove the default event from the analysis") {
+			ACEventAnalysis.removeFromAnalysis(removeValue = "${defaultEventName}");
+		}
+
+		task ("Add the custom event for analysis by the custom tab") {
+			ACEventAnalysis.addEvent(
+				customEventName = "${customEventName}",
+				tabName = "Custom");
+		}
+
+		task ("Add the breakdown to analysis") {
+			ACEventAnalysis.addBreakdown(attributeNameList = "${attributeName}");
+		}
+
+		task ("Check the analysis result appears") {
+			ACEventAnalysis.viewAnalysisInformation(informationValueList = "ac page - site name - ${dataSource}");
+		}
+	}
+
+	@description = "Feature ID: LRAC-4266 | Automation ID: LRAC-10304 | Test Summary: Edit Attribute Event name"
+	@priority = "3"
+	test EditEventName {
+		var attributeName = "color";
+
+		task ("Fill fields and create custom event") {
+			var customEventName = ACCustomEvents.generateCustomEventName();
+
+			ACCustomEvents.createCustomEvent(
+				attributesName = "${attributeName}",
+				attributesValue = "red",
+				customEventName = "${customEventName}",
+				timeToSendCustomEvent = "1");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch the property in AC and go to event analysis") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+
+			ACNavigation.goToEventAnalysis();
+		}
+
+		task ("Add the custom event to analysis") {
+			ACEventAnalysis.addEvent(customEventName = "${customEventName}");
+		}
+
+		task ("Click to add breakdown") {
+			ACEventAnalysis.clickToAddBreakdownButton();
+		}
+
+		task ("Change the attribute display name") {
+			ACEventAnalysis.searchEventAnalysis(searchItem = "${attributeName}");
+
+			ACEventAnalysis.changeCustomEventDisplayName(
+				editOption = "Description",
+				elementName = "${attributeName}",
+				newDisplayName = "${attributeName} Display Name");
+		}
+
+		task ("Click to add breakdown") {
+			ACEventAnalysis.clickToAddBreakdownButton();
+		}
+
+		task ("Check that the name has changed") {
+			ACEventAnalysis.searchEventAnalysis(searchItem = "${attributeName} Display Name");
+
+			ACEventAnalysis.viewEventAnalysisList(eventList = "${attributeName} Display Name");
+		}
+	}
+
+	@description = "Feature ID: LRAC-4266 | Automation ID: LRAC-10306 | Test Summary: Remove Attribute"
+	@priority = "5"
+	test RemoveAttribute {
+		var attributeName = "pageTitle";
+		var dataSource = StringUtil.extractFirst("${assignedPropertyName}", " ");
+
+		task ("Fill fields and create custom event") {
+			var customEventName = ACCustomEvents.generateCustomEventName();
+
+			ACCustomEvents.createCustomEvent(
+				customEventName = "${customEventName}",
+				timeToSendCustomEvent = "1");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch the property in AC and go to event analysis") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+
+			ACNavigation.goToEventAnalysis();
+		}
+
+		task ("Add the custom event to analysis") {
+			ACEventAnalysis.addEvent(customEventName = "${customEventName}");
+		}
+
+		task ("Add the breakdown to analysis") {
+			ACEventAnalysis.addBreakdown(attributeNameList = "${attributeName}");
+		}
+
+		task ("Check the analysis result appears") {
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast24Hours();
 
 			ACEventAnalysis.viewAnalysisInformation(informationValueList = "ac page - site name - ${dataSource}");
 		}
 
-        task ("Change the time filter to 24 hours") {
-			ACTimeFilter.setCustomRange(
-				endDay = "13",
-				endMonth = "July",
-				endYear = "2020",
-				startDay = "1",
-				startMonth = "July",
-				startYear = "2020");
+		task ("Remove the breakdown from the analysis") {
+			ACEventAnalysis.removeFromAnalysis(removeValue = "${attributeName}");
 		}
 
-        task ("Check the analysis result appears") {
-			// It is not possible to assert the chart because this test needs data from the past.
+		task ("Check that the breakdown information does not appear in the result") {
+			ACEventAnalysis.viewAnalysisInformationNotPresent(informationValueList = "ac page - site name - ${dataSource}");
+		}
 
-			ACEventAnalysis.viewAnalysisInformation(informationValueList = "ac page - site name - ${dataSource}");
+		task ("Check that the breakdown does not appear on the dashboard") {
+			AssertElementNotPresent(
+				key_attributeName = "${attributeName}",
+				locator1 = "ACEventAnalysis#VIEW_DASHBOARD_INFORMATION");
+		}
+
+		task ("Check that the analysis result still appears even without the breakdown") {
+			ACEventAnalysis.viewAnalysisInformation(informationValueList = "${customEventName}");
+		}
+	}
+
+	@description = "Feature ID: LRAC-4266 | Automation ID: LRAC-10301 | Test Summary: Search Event Attribute from Event tab"
+	@priority = "3"
+	test SearchEventAttributeInEventTab {
+		var defaultAttributeName = "pageTitle";
+		var customAttributeName = "category";
+
+		task ("Fill fields and create custom event") {
+			var customEventName = ACCustomEvents.generateCustomEventName();
+
+			ACCustomEvents.createCustomEvent(
+				customEventName = "${customEventName}",
+				timeToSendCustomEvent = "1");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch the property in AC and go to event analysis") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+
+			ACNavigation.goToEventAnalysis();
+		}
+
+		task ("Add the custom event to analysis by the all tab") {
+			ACEventAnalysis.addEvent(customEventName = "${customEventName}");
+		}
+
+		task ("Click to add breakdown") {
+			ACEventAnalysis.clickToAddBreakdownButton();
+		}
+
+		task ("Search for attribute and check that it appears") {
+			ACEventAnalysis.searchEventAnalysis(searchItem = "${defaultAttributeName}");
+
+			ACEventAnalysis.viewEventAnalysisList(eventList = "${defaultAttributeName}");
+		}
+
+		task ("Search for attribute and check that it appears") {
+			ACEventAnalysis.searchEventAnalysis(searchItem = "${customAttributeName}");
+
+			ACEventAnalysis.viewEventAnalysisList(eventList = "${customAttributeName}");
+		}
+
+		task ("Search for an attribute that doesn't exist and check that it doesn't appear") {
+			ACEventAnalysis.searchEventAnalysis(searchItem = "acqa");
+
+			ACUtils.viewNoResultsMessage(noResultMessage = "There are no items found.");
+		}
+	}
+
+	@description = "Feature ID: LRAC-4266 | Automation ID: LRAC-10295 | Test Summary: Search for events in different tabs"
+	@priority = "3"
+	test SearchEventsInDifferentTabs {
+		var defaultEventName = "pageViewed";
+
+		task ("Fill fields and create custom event") {
+			var customEventName = ACCustomEvents.generateCustomEventName();
+
+			ACCustomEvents.createCustomEvent(
+				customEventName = "${customEventName}",
+				timeToSendCustomEvent = "1");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch the property in AC and go to event analysis") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+
+			ACNavigation.goToEventAnalysis();
+		}
+
+		task ("Click to add event and switch tab to all") {
+			ACEventAnalysis.clickToAddEventButton();
+
+			ACNavigation.switchTabInCard(tabName = "All");
+		}
+
+		task ("Search for default event in the all tab and check that it appears") {
+			ACEventAnalysis.searchEventAnalysis(searchItem = "${defaultEventName}");
+
+			ACEventAnalysis.viewEventAnalysisList(eventList = "${defaultEventName}");
+		}
+
+		task ("Search for custom event in the all tab and check that it appears") {
+			ACEventAnalysis.searchEventAnalysis(searchItem = "${customEventName}");
+
+			ACEventAnalysis.viewEventAnalysisList(eventList = "${customEventName}");
+		}
+
+		task ("Switch tab to default and search for default event in the default tab and check that it appears") {
+			ACNavigation.switchTabInCard(tabName = "Default");
+
+			ACEventAnalysis.searchEventAnalysis(searchItem = "${defaultEventName}");
+
+			ACEventAnalysis.viewEventAnalysisList(eventList = "${defaultEventName}");
+		}
+
+		task ("Search for custom event in the default tab and check that it doesn't appear") {
+			ACEventAnalysis.searchEventAnalysis(searchItem = "${customEventName}");
+
+			ACEventAnalysis.viewEventAnalysisListNotPresent(eventList = "${customEventName}");
+		}
+
+		task ("Switch tab to Custom and search for default event in the custom tab and check that it doesn't appear") {
+			ACNavigation.switchTabInCard(tabName = "Custom");
+
+			ACEventAnalysis.searchEventAnalysis(searchItem = "${defaultEventName}");
+
+			ACEventAnalysis.viewEventAnalysisListNotPresent(eventList = "${defaultEventName}");
+		}
+
+		task ("Search for custom event in the custom tab and check that it appears") {
+			ACEventAnalysis.searchEventAnalysis(searchItem = "${customEventName}");
+
+			ACEventAnalysis.viewEventAnalysisList(eventList = "${customEventName}");
 		}
 	}
 

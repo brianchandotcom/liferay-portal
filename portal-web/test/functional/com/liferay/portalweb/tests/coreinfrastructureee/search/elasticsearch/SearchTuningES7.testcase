@@ -975,7 +975,7 @@ definition {
 	}
 
 	@priority = "4"
-	test SearchSynonymSetsBeyondTen {
+	test SearchWithMoreThanTenSynonymSets {
 		ApplicationsMenu.gotoPortlet(
 			category = "Search Tuning",
 			panel = "Applications",

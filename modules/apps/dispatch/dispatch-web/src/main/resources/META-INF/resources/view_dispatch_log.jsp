@@ -25,33 +25,97 @@ DispatchLog dispatchLog = dispatchLogDisplayContext.getDispatchLog();
 <portlet:actionURL name="/dispatch/edit_dispatch_log" var="editDispatchLogActionURL" />
 
 <div class="container-fluid container-fluid-max-xl container-view">
-	<div class="sheet">
-		<aui:form action="<%= editDispatchLogActionURL %>" method="post" name="fm">
-			<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-			<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-			<aui:input name="dispatchLogId" type="hidden" value="<%= String.valueOf(dispatchLog.getDispatchLogId()) %>" />
+	<div class="card">
+		<div class="card-body">
+			<clay:content-row>
+				<clay:content-col
+					expand="<%= true %>"
+				>
+					<clay:row>
+						<clay:col
+							md="2"
+						>
+							<%= LanguageUtil.get(request, "start-date") %>
+						</clay:col>
 
-			<div class="lfr-form-content">
-				<aui:fieldset>
-					<aui:input disabled="<%= true %>" label="start-date" name="startDate" value='<%= (dispatchLog.getStartDate() != null) ? fastDateFormat.format(dispatchLog.getStartDate()) : "" %>' />
+						<clay:col
+							md="8"
+						>
+							<%= (dispatchLog.getStartDate() != null) ? fastDateFormat.format(dispatchLog.getStartDate()) : "" %>
+						</clay:col>
+					</clay:row>
 
-					<%
-					DispatchTaskStatus dispatchTaskStatus = DispatchTaskStatus.valueOf(dispatchLog.getStatus());
-					%>
+					<clay:row>
 
-					<aui:input disabled="<%= true %>" name="status" value="<%= LanguageUtil.get(request, dispatchTaskStatus.getLabel()) %>" />
+						<%
+						DispatchTaskStatus dispatchTaskStatus = DispatchTaskStatus.valueOf(dispatchLog.getStatus());
+						%>
 
-					<aui:input disabled="<%= true %>" label="runtime" name="runTime" value='<%= dispatchLogDisplayContext.getExecutionTimeMills() + " ms" %>' />
+						<clay:col
+							md="2"
+						>
+							<%= LanguageUtil.get(request, "status") %>
+						</clay:col>
 
-					<aui:input disabled="<%= true %>" label="error" name="error" type="textarea" value="<%= dispatchLog.getError() %>" />
+						<clay:col
+							md="8"
+						>
+							<%= dispatchTaskStatus.valueOf(dispatchLog.getStatus()) %>
+						</clay:col>
+					</clay:row>
 
-					<aui:input disabled="<%= true %>" label="output" name="output" type="textarea" value="<%= dispatchLog.getOutput() %>" />
-				</aui:fieldset>
+					<clay:row>
+						<clay:col
+							md="2"
+						>
+							<%= LanguageUtil.get(request, "runtime") %>
+						</clay:col>
 
-				<div class="sheet-footer">
-					<aui:button href="<%= backURL %>" type="cancel" />
-				</div>
+						<clay:col
+							md="8"
+						>
+							<%= dispatchLogDisplayContext.getExecutionTimeMills() + " ms" %>
+						</clay:col>
+					</clay:row>
+
+					<clay:row>
+						<clay:col
+							md="2"
+						>
+							<%= LanguageUtil.get(request, "error") %>
+						</clay:col>
+
+						<clay:col
+							md="8"
+						>
+							<%= dispatchLog.getError() %>
+						</clay:col>
+					</clay:row>
+
+					<clay:row>
+						<clay:col
+							md="2"
+						>
+							<%= LanguageUtil.get(request, "output") %>
+						</clay:col>
+
+						<clay:col
+							md="8"
+						>
+							<%= dispatchLog.getOutput() %>
+						</clay:col>
+					</clay:row>
+				</clay:content-col>
+			</clay:content-row>
+
+			<div class="mt-4">
+				<clay:link
+					displayType="primary"
+					href="<%= backURL %>"
+					label="back"
+					type="button"
+				/>
 			</div>
-		</aui:form>
+		</div>
 	</div>
 </div>

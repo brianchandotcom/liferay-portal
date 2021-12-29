@@ -5855,12 +5855,47 @@ definition {
 	}
 
 	@description = "LPS-135551 - Verify that when the Object is scoped by Site each site will have its own entries"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test ObjectScopedBySiteEntries {
+		for (var sites : list "A,B") {
+			JSONGroup.addGroup(groupName = "Site ${sites}");
+		}
 
-		// TODO LPS-141649 ObjectScopedBySiteEntries pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			panelCategoryKey = "site_administration.content",
+			pluralLabelName = "Custom Objects",
+			scope = "site");
 
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		PagesAdmin.openPagesAdmin(siteURLKey = "site-a");
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Custom Objects");
+
+		ObjectPortlet.addSingleFieldEntryViaUI(entry = "Entry Test");
+
+		Navigator.gotoBack();
+
+		ObjectPortlet.viewEntry(entry = "Entry Test");
+
+		PagesAdmin.openPagesAdmin(siteURLKey = "site-b");
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Custom Objects");
+
+		ObjectPortlet.assertEntryNotPresent(entry = "Entry Test");
 	}
 
 	@description = "LPS-137741 - Verify that Objects created on a Virtual Instance are not displayed on the Panel of the Main Instance and vice versa"

@@ -119,22 +119,22 @@ public class SearchResponseResourceImpl extends BaseSearchResponseResourceImpl {
 	}
 
 	protected SearchResponse toSearchResponse(
-			com.liferay.portal.search.searcher.SearchResponse searchResponse)
+			com.liferay.portal.search.searcher.SearchResponse searchResponse1)
 		throws Exception {
 
-		SearchRequest portalSearchRequest = searchResponse.getRequest();
+		SearchRequest portalSearchRequest = searchResponse1.getRequest();
 
-		return new SearchResponse() {
+		SearchResponse searchResponse2 = new SearchResponse() {
 			{
-				documents = _toDocuments(searchResponse.getDocumentsStream());
+				documents = _toDocuments(searchResponse1.getDocumentsStream());
 				page = portalSearchRequest.getFrom();
 				pageSize = portalSearchRequest.getSize();
-				request = _createJSONObject(searchResponse.getRequestString());
-				requestString = searchResponse.getRequestString();
+				request = _createJSONObject(searchResponse1.getRequestString());
+				requestString = searchResponse1.getRequestString();
 				response = _createJSONObject(
-					searchResponse.getResponseString());
-				responseString = searchResponse.getResponseString();
-				totalHits = searchResponse.getTotalHits();
+					searchResponse1.getResponseString());
+				responseString = searchResponse1.getResponseString();
+				totalHits = searchResponse1.getTotalHits();
 			}
 
 			private JSONObject _createJSONObject(String string) {
@@ -147,6 +147,8 @@ public class SearchResponseResourceImpl extends BaseSearchResponseResourceImpl {
 			}
 
 		};
+
+		return SearchResponse.unsafeToDTO(searchResponse2.toString());
 	}
 
 	private AssetRenderer<?> _getAssetRenderer(Map<String, Field> fields) {

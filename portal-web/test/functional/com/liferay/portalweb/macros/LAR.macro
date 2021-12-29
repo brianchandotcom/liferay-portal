@@ -435,7 +435,7 @@ definition {
 		AssertClick(
 			key_columnName = "title",
 			key_tableEntry = "${exportTemplateName}",
-			locator1 = "LexiconTable#TABLE_ENTRY_INFO",
+			locator1 = "LexiconTable#TABLE_ENTRY_COLUMN_LINK",
 			value1 = "${exportTemplateName}");
 
 		PortletEntry.inputName(name = "${exportTemplateNameEdit}");

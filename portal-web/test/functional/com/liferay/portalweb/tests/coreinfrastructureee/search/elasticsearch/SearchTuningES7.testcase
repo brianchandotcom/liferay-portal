@@ -267,10 +267,7 @@ definition {
 			groupName = "Guest",
 			title = "Journal 2");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Search Tuning",
-			panel = "Applications",
-			portlet = "Synonyms");
+		SearchTuning.openSynonymsAdmin();
 
 		SearchTuning.addSynonymSet(synonyms = "Article,Journal");
 
@@ -301,10 +298,7 @@ definition {
 
 		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "Article 1,Article 2,Journal 1,Journal 2");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Search Tuning",
-			panel = "Applications",
-			portlet = "Synonyms");
+		SearchTuning.openSynonymsAdmin();
 
 		SearchTuning.deleteSynonymSet(synonymSet = "Article, Journal");
 
@@ -383,10 +377,7 @@ definition {
 
 		Button.clickSave();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Search Tuning",
-			panel = "Applications",
-			portlet = "Synonyms");
+		SearchTuning.openSynonymsAdmin();
 
 		SearchTuning.addSynonymSet(synonyms = "Article,Journal");
 
@@ -432,10 +423,7 @@ definition {
 
 	@priority = "3"
 	test AssertSynonymBulkActions {
-		ApplicationsMenu.gotoPortlet(
-			category = "Search Tuning",
-			panel = "Applications",
-			portlet = "Synonyms");
+		SearchTuning.openSynonymsAdmin();
 
 		AssertElementNotPresent(locator1 = "Pagination#PAGINATION_BAR");
 
@@ -506,10 +494,7 @@ definition {
 	test AssertSynonymsPagination {
 		property custom.properties = "search.container.page.default.delta=5";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Search Tuning",
-			panel = "Applications",
-			portlet = "Synonyms");
+		SearchTuning.openSynonymsAdmin();
 
 		AssertElementNotPresent(locator1 = "Pagination#PAGINATION_BAR");
 
@@ -853,10 +838,7 @@ definition {
 	test ReindexingRestoresSynonymsIndex {
 		property test.name.skip.portal.instance = "SearchTuningES7#ReindexingRestoresSynonymsIndex";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Search Tuning",
-			panel = "Applications",
-			portlet = "Synonyms");
+		SearchTuning.openSynonymsAdmin();
 
 		SearchTuning.addSynonymSet(synonyms = "liferay,company");
 
@@ -864,10 +846,7 @@ definition {
 
 		SearchAdministration.executeReindex();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Search Tuning",
-			panel = "Applications",
-			portlet = "Synonyms");
+		SearchTuning.openSynonymsAdmin();
 
 		AssertElementPresent(
 			key_synonyms = "liferay, company",
@@ -976,10 +955,7 @@ definition {
 
 	@priority = "4"
 	test SearchWithMoreThanTenSynonymSets {
-		ApplicationsMenu.gotoPortlet(
-			category = "Search Tuning",
-			panel = "Applications",
-			portlet = "Synonyms");
+		SearchTuning.openSynonymsAdmin();
 
 		var index = "0";
 		var list1 = ListUtil.newListFromString("123,234,345,456,567,678,789,890,901,012,101");
@@ -1064,10 +1040,7 @@ definition {
 				searchTerm = "${searchTerm}");
 		}
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Search Tuning",
-			panel = "Applications",
-			portlet = "Synonyms");
+		SearchTuning.openSynonymsAdmin();
 
 		SearchTuning.editSynonymSet(
 			addSynonyms = "pear",
@@ -1106,10 +1079,7 @@ definition {
 			resultsList = "red apple/Web Content Article,blue.berry!/Web Content Article,&quot;xigua&quot;/Web Content Article",
 			searchTerm = "red apple");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Search Tuning",
-			panel = "Applications",
-			portlet = "Synonyms");
+		SearchTuning.openSynonymsAdmin();
 
 		SearchTuning.addSynonymSet(synonyms = "red apple,citrus-orange");
 
@@ -1131,10 +1101,7 @@ definition {
 			resultsList = "red apple/Web Content Article,citrus-orange/Web Content Article",
 			searchTerm = "citrus-orange");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Search Tuning",
-			panel = "Applications",
-			portlet = "Synonyms");
+		SearchTuning.openSynonymsAdmin();
 
 		SearchTuning.deleteSynonymSet(synonymSet = "red apple, blue.berry!, &quot;xigua&quot;, fruit, sweet, pear");
 

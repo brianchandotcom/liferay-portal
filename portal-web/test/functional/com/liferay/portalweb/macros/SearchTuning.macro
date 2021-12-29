@@ -134,6 +134,12 @@ definition {
 			locator1 = "SearchTuning#RESULT_RANKINGS_RESULT");
 	}
 
+	macro openSynonymsAdmin {
+		Navigator.openWithAppendToBaseURL(
+			baseURL = "${baseURL}",
+			urlAppend = "group/control_panel/manage?p_p_id=com_liferay_portal_search_tuning_synonyms_web_internal_portlet_SynonymsPortlet");
+	}
+
 	macro pinResult {
 		SearchTuning._clickResultEllipsisItem(
 			assetTitle = "${assetTitle}",

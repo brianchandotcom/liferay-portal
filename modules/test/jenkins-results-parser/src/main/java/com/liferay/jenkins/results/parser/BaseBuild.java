@@ -205,6 +205,17 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
+	public File getArchiveRootDir() {
+		Build parentBuild = getParentBuild();
+
+		if (parentBuild == null) {
+			return _archiveRootDir;
+		}
+
+		return parentBuild.getArchiveRootDir();
+	}
+
+	@Override
 	public long getAverageDelayTime() {
 		if (getDownstreamBuildCount(null) == 0) {
 			return 0;
@@ -990,7 +1001,7 @@ public abstract class BaseBuild implements Build {
 
 		if (fromArchive) {
 			return JenkinsResultsParserUtil.combine(
-				"${dependencies.url}/", archiveName, "/",
+				Build.DEPENDENCIES_URL_TOKEN, "/", archiveName, "/",
 				_jenkinsMaster.getName(), "/", jobName);
 		}
 
@@ -1800,7 +1811,8 @@ public abstract class BaseBuild implements Build {
 		text = text.replaceAll(
 			getBuildURLRegex(),
 			Matcher.quoteReplacement(
-				"${dependencies.url}/" + getArchivePath()));
+				JenkinsResultsParserUtil.combine(
+					Build.DEPENDENCIES_URL_TOKEN, "/", getArchivePath())));
 
 		Build parentBuild = getParentBuild();
 
@@ -1808,12 +1820,29 @@ public abstract class BaseBuild implements Build {
 			text = text.replaceAll(
 				parentBuild.getBuildURLRegex(),
 				Matcher.quoteReplacement(
-					"${dependencies.url}/" + parentBuild.getArchivePath()));
+					Build.DEPENDENCIES_URL_TOKEN +
+						parentBuild.getArchivePath()));
 
 			parentBuild = parentBuild.getParentBuild();
 		}
 
 		return text;
+	}
+
+	@Override
+	public void setArchiveRootDir(File archiveRootDir) {
+		if (archiveRootDir == null) {
+			archiveRootDir = new File(
+				JenkinsResultsParserUtil.URL_DEPENDENCIES_FILE.substring(
+					"file:".length()));
+		}
+
+		if (!archiveRootDir.exists()) {
+			throw new IllegalArgumentException(
+				archiveRootDir.getPath() + " does not exist");
+		}
+
+		_archiveRootDir = archiveRootDir;
 	}
 
 	@Override
@@ -3433,10 +3462,7 @@ public abstract class BaseBuild implements Build {
 		throws IOException {
 
 		JenkinsResultsParserUtil.write(
-			JenkinsResultsParserUtil.combine(
-				JenkinsResultsParserUtil.URL_DEPENDENCIES_FILE.substring(
-					"file:".length()),
-				"/", path),
+			new File(getArchiveRootDir(), path),
 			JenkinsResultsParserUtil.redact(replaceBuildURL(content)));
 	}
 
@@ -3848,7 +3874,7 @@ public abstract class BaseBuild implements Build {
 
 	private static final Pattern _archiveBuildURLPattern = Pattern.compile(
 		JenkinsResultsParserUtil.combine(
-			"(", Pattern.quote("${dependencies.url}"), "|",
+			"(", Pattern.quote(Build.DEPENDENCIES_URL_TOKEN), "|",
 			Pattern.quote(JenkinsResultsParserUtil.URL_DEPENDENCIES_FILE), "|",
 			Pattern.quote(JenkinsResultsParserUtil.URL_DEPENDENCIES_HTTP),
 			")/*(?<archiveName>.*)/(?<master>[^/]+)/+(?<jobName>[^/]+)",
@@ -3873,6 +3899,9 @@ public abstract class BaseBuild implements Build {
 			"jenkins.report.time.zone");
 	}
 
+	private File _archiveRootDir = new File(
+		JenkinsResultsParserUtil.URL_DEPENDENCIES_FILE.substring(
+			"file:".length()));
 	private final Map<String, BranchInformation> _branchInformationMap =
 		new HashMap<>();
 	private String _buildDescription;

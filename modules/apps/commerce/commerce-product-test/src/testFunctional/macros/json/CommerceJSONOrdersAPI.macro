@@ -1,5 +1,65 @@
 definition {
 
+	macro _addOrderType {
+		Variables.assertDefined(parameterList = "${orderTypeName}");
+
+		var baseURL = "${baseURL}";
+
+		if (contains("${baseURL}", "{baseURL}")) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		if (!(isSet(active))) {
+			var active = "false";
+		}
+
+		if (!(isSet(expirationDate))) {
+			var displayDateYear = DateUtil.getCurrentYear();
+			var displayDateYear = ${displayDateYear} + 1;
+			var expirationDate = "${displayDateYear}-01-01T01:01:00Z";
+		}
+
+		if (!(isSet(displayOrder))) {
+			var displayOrder = "0";
+		}
+
+		if (!(isSet(neverExpire))) {
+			var neverExpire = "true";
+		}
+
+		if (!(isSet(orderTypeDescription))) {
+			var orderTypeDescription = "Test Order Type Description";
+		}
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-order/v1.0/order-types \
+			-u test@liferay.com:test \
+			-H 'accept: application/json' \
+ 			-H 'Content-Type: application/json' \
+  			-d '{
+  					"active": ${active},
+					"customFields": {},
+					"description": {
+						"en_US": "${orderTypeDescription}"
+					},
+					"displayOrder": ${displayOrder},
+					"expirationDate": "${expirationDate}",
+					"externalReferenceCode": "",
+					"name": {
+						"en_US": "${orderTypeName}"
+					},
+					"neverExpire": ${neverExpire},
+					"workflowStatusInfo": {
+					"code": 0,
+					"label": "approved",
+					"label_i18n": "Approved"
+					}
+				}'
+			''';
+
+		JSONCurlUtil.post("${curl}");
+	}
+
 	macro _deleteAllCommerceOrders {
 		var baseURL = "${baseURL}";
 

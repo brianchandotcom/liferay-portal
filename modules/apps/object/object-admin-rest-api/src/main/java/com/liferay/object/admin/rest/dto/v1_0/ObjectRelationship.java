@@ -515,7 +515,8 @@ public class ObjectRelationship implements Serializable {
 	@GraphQLName("Type")
 	public static enum Type {
 
-		ONE_TO_MANY("oneToMany"), MANY_TO_MANY("manyToMany");
+		ONE_TO_MANY("oneToMany"), ONE_TO_ONE("oneToOne"),
+		MANY_TO_MANY("manyToMany");
 
 		@JsonCreator
 		public static Type create(String value) {

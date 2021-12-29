@@ -25,15 +25,6 @@ import java.util.Set;
  */
 public class SourceFormatterExcludes {
 
-	public SourceFormatterExcludes() {
-	}
-
-	public SourceFormatterExcludes(
-		Set<ExcludeSyntaxPattern> defaultExcludeSyntaxPatterns) {
-
-		_defaultExcludeSyntaxPatterns = defaultExcludeSyntaxPatterns;
-	}
-
 	public void addDefaultExcludeSyntaxPatterns(
 		List<ExcludeSyntaxPattern> defaultExcludeSyntaxPatterns) {
 
@@ -58,7 +49,7 @@ public class SourceFormatterExcludes {
 		return _excludeSyntaxPatternsMap;
 	}
 
-	private Set<ExcludeSyntaxPattern> _defaultExcludeSyntaxPatterns =
+	private final Set<ExcludeSyntaxPattern> _defaultExcludeSyntaxPatterns =
 		new HashSet<>();
 	private final Map<String, List<ExcludeSyntaxPattern>>
 		_excludeSyntaxPatternsMap = new HashMap<>();

@@ -1,8 +1,13 @@
 import ClayIcon from '@clayui/icon';
 import DOMPurify from 'dompurify';
 import {useCallback, useEffect, useState} from 'react';
+import {LiferayTheme} from '../../../../common/services/liferay';
 import {fetchHeadless} from '../../../../common/services/liferay/api';
 import {useCustomerPortal} from '../../context';
+
+const WEB_CONTENT_FOLDER_NAME = 'actions';
+const WEB_CONTENT_TEMPLATE_NAME = 'Action Card';
+const SITE_GROUP_ID = LiferayTheme.getScopeGroupId();
 
 const QuickLinksPanel = () => {
 	const [{quickLinks}] = useCustomerPortal();
@@ -10,30 +15,25 @@ const QuickLinksPanel = () => {
 	const [quickLinksData, setQuickLinksData] = useState([]);
 
 	const fetchQuickLinksPanelContent = useCallback(async () => {
-		const webContentFolderName = 'actions';
-		const webContentTemplateName = 'Action Card';
-
-		const siteGroupId = Liferay.ThemeDisplay.getSiteGroupId();
-
 		const structuredContentFolders = await fetchHeadless({
-			url: `/sites/${siteGroupId}/structured-content-folders`,
+			url: `/sites/${SITE_GROUP_ID}/structured-content-folders`,
 		});
 
-		const {id: quickLinksInstructionsFolderID} =
+		const {id: quickLinksInstructionsFolderId} =
 			structuredContentFolders.items.find(
-				({name}) => name === webContentFolderName
+				({name}) => name === WEB_CONTENT_FOLDER_NAME
 			) || {};
 
 		const contentTemplates = await fetchHeadless({
-			url: `/sites/${siteGroupId}/content-templates`,
+			url: `/sites/${SITE_GROUP_ID}/content-templates`,
 		});
 
 		const contentTemplate = contentTemplates.items.find(
-			({name}) => name === webContentTemplateName
+			({name}) => name === WEB_CONTENT_TEMPLATE_NAME
 		);
 
 		const structuredContents = await fetchHeadless({
-			url: `/structured-content-folders/${quickLinksInstructionsFolderID}/structured-contents`,
+			url: `/structured-content-folders/${quickLinksInstructionsFolderId}/structured-contents`,
 		});
 
 		const renderedQuickLinksData = await quickLinks.reduce(
@@ -85,24 +85,11 @@ const QuickLinksPanel = () => {
 					<a
 						className="borderless btn c-my-0 c-pr-3 c-py-4 h6 neutral text-neutral-8"
 						id="hide-link"
-						onClick={() =>
-							setExpandedPanel(
-								(prevExpandedPanel) => !prevExpandedPanel
-							)
-						}
+						onClick={() => setExpandedPanel(!expandedPanel)}
 					>
-						<svg
-							className="lexicon-icon lexicon-icon-hr"
-							focusable="false"
-							id="customer-portal-arrow"
-							role="presentation"
-						>
-							<ClayIcon
-								symbol={
-									expandedPanel ? 'hr' : 'order-arrow-left'
-								}
-							/>
-						</svg>
+						<ClayIcon
+							symbol={expandedPanel ? 'hr' : 'order-arrow-left'}
+						/>
 
 						<u>{expandedPanel ? 'Hide' : 'Show'}</u>
 					</a>

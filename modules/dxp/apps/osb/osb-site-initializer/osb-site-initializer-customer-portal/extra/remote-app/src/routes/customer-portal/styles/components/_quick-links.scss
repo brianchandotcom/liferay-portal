@@ -1,10 +1,10 @@
+.link-body {
+	background: var(--color-action-primary-lighten-1, rgba(250, 251, 255, 1));
+	border: 1px solid rgba(0, 74, 215, 0.1);
+}
+
 .quick-links-container {
 	min-width: 343px;
 	right: 0;
 	width: 343px;
-}
-
-.link-body {
-	background: var(--color-action-primary-lighten-1, rgba(250, 251, 255, 1));
-	border: 1px solid rgba(0, 74, 215, 0.1);
 }

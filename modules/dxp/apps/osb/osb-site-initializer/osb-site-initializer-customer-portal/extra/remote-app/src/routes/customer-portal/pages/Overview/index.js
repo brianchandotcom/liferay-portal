@@ -68,7 +68,7 @@ const Overview = ({project, userAccount}) => {
 			});
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [SLACurrentVersionAndProductsComplete]);
+	}, [SLACurrentVersionAndProductsComplete, slaCurrentVersionAndProducts]);
 
 	if (loading || isLoadingSubscritionsGroups) {
 		return <div>Overview Skeleton</div>;

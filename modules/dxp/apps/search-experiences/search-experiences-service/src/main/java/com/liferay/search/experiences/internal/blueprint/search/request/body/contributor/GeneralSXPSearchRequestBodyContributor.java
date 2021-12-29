@@ -51,6 +51,11 @@ public class GeneralSXPSearchRequestBodyContributor
 				generalConfiguration.getIncludeResponseString());
 		}
 
+		if (generalConfiguration.getQueryString() != null) {
+			searchRequestBuilder.queryString(
+				generalConfiguration.getQueryString());
+		}
+
 		if (generalConfiguration.getSearchableAssetTypes() != null) {
 			searchRequestBuilder.modelIndexerClassNames(
 				generalConfiguration.getSearchableAssetTypes());

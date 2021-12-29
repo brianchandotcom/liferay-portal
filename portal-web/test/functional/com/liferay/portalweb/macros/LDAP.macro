@@ -9,6 +9,21 @@ definition {
 		PortalSettings.testLDAPConnection();
 	}
 
+	@description = "Assert no pagination display in the LDAP connection page"
+	macro assertNoPagination {
+		PortalSettings.editLDAPServer(LDAPServerName = "${LDAPServerName}");
+
+		AssertClick(
+			locator1 = "PortalSettingsAuthentication#LDAP_SERVER_TEST_LDAP_USERS_BUTTON",
+			value1 = "Test LDAP Users");
+
+		AssertElementNotPresent(locator1 = "Pagination#PAGE_ITERATOR");
+
+		Click(
+			key_modalTitle = "LDAP",
+			locator1 = "Button#CLOSE_MODAL");
+	}
+
 	@description = "Enable various LDAP related settings"
 	macro enableLDAPSettings {
 		PortalSettings.configureLDAPSetting(enableSettingList = "${enableSettingList}");

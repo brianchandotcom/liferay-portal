@@ -1,3 +1,4 @@
+import Layout from '../components/Layout';
 import {useCustomerPortal} from '../context';
 import {pages} from '../utils/constants';
 import ActivationKeys from './ActivationKeys';
@@ -39,7 +40,14 @@ const Pages = () => {
 	};
 
 	if ((project || page === pages.HOME) && userAccount && sessionId) {
-		return PageComponent[page];
+		return (
+			<Layout
+				hasProjectContacts={page === pages.OVERVIEW}
+				hasQuickLinks={page !== pages.TEAM_MEMBERS}
+			>
+				{PageComponent[page]}
+			</Layout>
+		);
 	}
 
 	return PageSkeletons[page];

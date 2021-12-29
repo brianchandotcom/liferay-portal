@@ -41,14 +41,14 @@ import {
 import AddSXPElementSidebar from './AddSXPElementSidebar';
 import PreviewSidebar from './PreviewSidebar';
 import ClauseContributorsSidebar from './clause_contributors_sidebar/index';
+import ConfigurationTab from './configuration_tab/index';
 import QueryBuilderTab from './query_builder_tab/index';
-import SettingsTab from './settings_tab/index';
 
 // Tabs in display order
 /* eslint-disable sort-keys */
 const TABS = {
 	'query-builder': Liferay.Language.get('query-builder'),
-	'settings': Liferay.Language.get('settings'),
+	'configuration': Liferay.Language.get('configuration'),
 };
 /* eslint-enable sort-keys */
 
@@ -324,7 +324,7 @@ function EditSXPBlueprintForm({
 			errors.elementInstances = elementInstancesArray;
 		}
 
-		// Validate all JSON inputs on the settings tab
+		// Validate all JSON inputs on the configuration tab
 
 		[
 			'advancedConfig',
@@ -607,9 +607,9 @@ function EditSXPBlueprintForm({
 
 	const _renderTabContent = () => {
 		switch (tab) {
-			case 'settings':
+			case 'configuration':
 				return (
-					<SettingsTab
+					<ConfigurationTab
 						advancedConfig={formik.values.advancedConfig}
 						aggregationConfig={formik.values.aggregationConfig}
 						errors={formik.errors}

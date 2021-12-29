@@ -2287,11 +2287,11 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static String getLocalURL(String remoteURL) {
-		if (remoteURL.contains("${dependencies.url}")) {
+		if (remoteURL.contains(Build.DEPENDENCIES_URL_TOKEN)) {
 			remoteURL = fixFileName(remoteURL);
 
 			String fileURL = remoteURL.replace(
-				"${dependencies.url}", URL_DEPENDENCIES_FILE);
+				Build.DEPENDENCIES_URL_TOKEN, URL_DEPENDENCIES_FILE);
 
 			File file = new File(fileURL.substring("file:".length()));
 
@@ -2300,7 +2300,7 @@ public class JenkinsResultsParserUtil {
 			}
 			else {
 				remoteURL = remoteURL.replace(
-					"${dependencies.url}", URL_DEPENDENCIES_HTTP);
+					Build.DEPENDENCIES_URL_TOKEN, URL_DEPENDENCIES_HTTP);
 			}
 		}
 
@@ -4468,11 +4468,11 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static void write(String path, String content) throws IOException {
-		if (path.startsWith("${dependencies.url}")) {
-			path = path.replace(
-				"${dependencies.url}",
-				URL_DEPENDENCIES_FILE.replace("file:", ""));
-		}
+		//		if (path.startsWith(BaseBuild.DEPENDENCIES_URL_TOKEN)) {
+		//			path = path.replace(
+		//				BaseBuild.DEPENDENCIES_URL_TOKEN),
+		//				URL_DEPENDENCIES_FILE.replace("file:", ""));
+		//		}
 
 		write(new File(path), content);
 	}

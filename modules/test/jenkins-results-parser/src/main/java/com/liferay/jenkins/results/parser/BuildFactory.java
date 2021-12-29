@@ -178,7 +178,8 @@ public class BuildFactory {
 
 	public static Build newBuildFromArchive(String archiveName) {
 		String url = JenkinsResultsParserUtil.combine(
-			"${dependencies.url}/", archiveName, "/", "archive.properties");
+			Build.DEPENDENCIES_URL_TOKEN, "/", archiveName, "/",
+			"archive.properties");
 
 		Properties archiveProperties = new Properties();
 

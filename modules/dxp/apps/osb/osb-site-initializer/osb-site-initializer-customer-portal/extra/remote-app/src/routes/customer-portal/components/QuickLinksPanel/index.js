@@ -3,6 +3,7 @@ import DOMPurify from 'dompurify';
 import {useCallback, useEffect, useState} from 'react';
 import {LiferayTheme} from '../../../../common/services/liferay';
 import {fetchHeadless} from '../../../../common/services/liferay/api';
+import {Storage} from '../../../../common/services/liferay/storage';
 import {useCustomerPortal} from '../../context';
 
 const WEB_CONTENT_FOLDER_NAME = 'actions';
@@ -13,6 +14,12 @@ const QuickLinksPanel = () => {
 	const [{quickLinks}] = useCustomerPortal();
 	const [expandedPanel, setExpandedPanel] = useState(true);
 	const [quickLinksData, setQuickLinksData] = useState([]);
+
+	useEffect(() => {
+		setExpandedPanel(
+			JSON.parse(Storage.getItem('quick-links-container-expanded'))
+		);
+	}, []);
 
 	const fetchQuickLinksPanelContent = useCallback(async () => {
 		const structuredContentFolders = await fetchHeadless({
@@ -85,7 +92,13 @@ const QuickLinksPanel = () => {
 					<a
 						className="borderless btn c-my-0 c-pr-3 c-py-4 h6 neutral text-neutral-8"
 						id="hide-link"
-						onClick={() => setExpandedPanel(!expandedPanel)}
+						onClick={() => {
+							setExpandedPanel(!expandedPanel);
+							Storage.setItem(
+								'quick-links-container-expanded',
+								JSON.stringify(!expandedPanel)
+							);
+						}}
 					>
 						<ClayIcon
 							symbol={expandedPanel ? 'hr' : 'order-arrow-left'}

@@ -87,10 +87,12 @@ public abstract class BaseBuild implements Build {
 							return BuildFactory.newBuild(buildURL, thisBuild);
 						}
 						catch (RuntimeException runtimeException) {
-							NotificationUtil.sendSlackNotification(
-								runtimeException.getMessage() +
-									"\nBuild URL: " + buildURL,
-								"ci-notifications", "Build Object Failure");
+							if (!isFromArchive()) {
+								NotificationUtil.sendSlackNotification(
+									runtimeException.getMessage() +
+										"\nBuild URL: " + buildURL,
+									"ci-notifications", "Build Object Failure");
+							}
 
 							return null;
 						}

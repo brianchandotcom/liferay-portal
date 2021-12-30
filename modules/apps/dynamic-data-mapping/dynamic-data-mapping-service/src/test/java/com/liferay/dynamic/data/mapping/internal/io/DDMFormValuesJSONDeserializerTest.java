@@ -63,7 +63,7 @@ public class DDMFormValuesJSONDeserializerTest extends BaseDDMTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 
-		setUpDDMFormValuesJSONDeserializer();
+		_setUpDDMFormValuesJSONDeserializer();
 	}
 
 	@Test
@@ -190,7 +190,7 @@ public class DDMFormValuesJSONDeserializerTest extends BaseDDMTestCase {
 			DDMFormFieldValue separatorDDMFormFieldValue =
 				ddmFormFieldValues.get(i);
 
-			testSeparatorDDMFormFieldValueValue(separatorDDMFormFieldValue);
+			_testSeparatorDDMFormFieldValueValue(separatorDDMFormFieldValue);
 
 			List<DDMFormFieldValue> separatorNestedDDMFormFieldValues =
 				separatorDDMFormFieldValue.getNestedDDMFormFieldValues();
@@ -199,7 +199,7 @@ public class DDMFormValuesJSONDeserializerTest extends BaseDDMTestCase {
 				separatorNestedDDMFormFieldValues.toString(), 1,
 				separatorNestedDDMFormFieldValues.size());
 
-			testTextDDMFormFieldValue(
+			_testTextDDMFormFieldValue(
 				separatorNestedDDMFormFieldValues.get(0), "Content " + i,
 				"Conteudo " + i);
 		}
@@ -225,7 +225,7 @@ public class DDMFormValuesJSONDeserializerTest extends BaseDDMTestCase {
 			ddmFormFieldValues.toString(), 3, ddmFormFieldValues.size());
 
 		for (int i = 0; i < ddmFormFieldValues.size(); i++) {
-			testTextDDMFormFieldValue(
+			_testTextDDMFormFieldValue(
 				ddmFormFieldValues.get(i), "Name " + i, "Nome " + i);
 		}
 	}
@@ -281,13 +281,13 @@ public class DDMFormValuesJSONDeserializerTest extends BaseDDMTestCase {
 		Assert.assertEquals(
 			ddmFormFieldValues.toString(), 7, ddmFormFieldValues.size());
 
-		testBooleanDDMFormFieldValueValues(ddmFormFieldValues.get(0));
-		testDocumentLibraryDDMFormFieldValueValues(ddmFormFieldValues.get(1));
-		testGeolocationDDMFormFieldValueValues(ddmFormFieldValues.get(2));
-		testHTMLDDMFormFieldValueValues(ddmFormFieldValues.get(3));
-		testImageDDMFormFieldValueValues(ddmFormFieldValues.get(4));
-		testLinkToPageDDMFormFieldValueValues(ddmFormFieldValues.get(5));
-		testSelectDDMFormFieldValueValues(ddmFormFieldValues.get(6));
+		_testBooleanDDMFormFieldValueValues(ddmFormFieldValues.get(0));
+		_testDocumentLibraryDDMFormFieldValueValues(ddmFormFieldValues.get(1));
+		_testGeolocationDDMFormFieldValueValues(ddmFormFieldValues.get(2));
+		_testHTMLDDMFormFieldValueValues(ddmFormFieldValues.get(3));
+		_testImageDDMFormFieldValueValues(ddmFormFieldValues.get(4));
+		_testLinkToPageDDMFormFieldValueValues(ddmFormFieldValues.get(5));
+		_testSelectDDMFormFieldValueValues(ddmFormFieldValues.get(6));
 	}
 
 	@Test
@@ -365,7 +365,24 @@ public class DDMFormValuesJSONDeserializerTest extends BaseDDMTestCase {
 		return ddmFormValuesDeserializerDeserializeResponse.getDDMFormValues();
 	}
 
-	protected void setUpDDMFormValuesJSONDeserializer() throws Exception {
+	protected void testAvailableLocales(DDMFormValues ddmFormValues) {
+		Set<Locale> availableLocales = ddmFormValues.getAvailableLocales();
+
+		Assert.assertEquals(
+			availableLocales.toString(), 2, availableLocales.size());
+		Assert.assertTrue(
+			availableLocales.toString(),
+			availableLocales.contains(LocaleUtil.US));
+		Assert.assertTrue(
+			availableLocales.toString(),
+			availableLocales.contains(LocaleUtil.BRAZIL));
+	}
+
+	protected void testDefaultLocale(DDMFormValues ddmFormValues) {
+		Assert.assertEquals(LocaleUtil.US, ddmFormValues.getDefaultLocale());
+	}
+
+	private void _setUpDDMFormValuesJSONDeserializer() throws Exception {
 		field(
 			DDMFormValuesJSONDeserializer.class, "_jsonFactory"
 		).set(
@@ -380,20 +397,7 @@ public class DDMFormValuesJSONDeserializerTest extends BaseDDMTestCase {
 		);
 	}
 
-	protected void testAvailableLocales(DDMFormValues ddmFormValues) {
-		Set<Locale> availableLocales = ddmFormValues.getAvailableLocales();
-
-		Assert.assertEquals(
-			availableLocales.toString(), 2, availableLocales.size());
-		Assert.assertTrue(
-			availableLocales.toString(),
-			availableLocales.contains(LocaleUtil.US));
-		Assert.assertTrue(
-			availableLocales.toString(),
-			availableLocales.contains(LocaleUtil.BRAZIL));
-	}
-
-	protected void testBooleanDDMFormFieldValueValues(
+	private void _testBooleanDDMFormFieldValueValues(
 		DDMFormFieldValue ddmFormFieldValue) {
 
 		Assert.assertEquals("maky", ddmFormFieldValue.getInstanceId());
@@ -404,11 +408,7 @@ public class DDMFormValuesJSONDeserializerTest extends BaseDDMTestCase {
 		Assert.assertEquals("true", value.getString(LocaleUtil.BRAZIL));
 	}
 
-	protected void testDefaultLocale(DDMFormValues ddmFormValues) {
-		Assert.assertEquals(LocaleUtil.US, ddmFormValues.getDefaultLocale());
-	}
-
-	protected void testDocumentLibraryDDMFormFieldValueValues(
+	private void _testDocumentLibraryDDMFormFieldValueValues(
 			DDMFormFieldValue ddmFormFieldValue)
 		throws Exception {
 
@@ -432,7 +432,7 @@ public class DDMFormValuesJSONDeserializerTest extends BaseDDMTestCase {
 			false);
 	}
 
-	protected void testGeolocationDDMFormFieldValueValues(
+	private void _testGeolocationDDMFormFieldValueValues(
 			DDMFormFieldValue ddmFormFieldValue)
 		throws Exception {
 
@@ -457,7 +457,7 @@ public class DDMFormValuesJSONDeserializerTest extends BaseDDMTestCase {
 			value.getString(LocaleUtil.BRAZIL), false);
 	}
 
-	protected void testHTMLDDMFormFieldValueValues(
+	private void _testHTMLDDMFormFieldValueValues(
 		DDMFormFieldValue ddmFormFieldValue) {
 
 		Assert.assertEquals("lamn", ddmFormFieldValue.getInstanceId());
@@ -470,7 +470,7 @@ public class DDMFormValuesJSONDeserializerTest extends BaseDDMTestCase {
 			"<p>Isto e um teste.</p>", value.getString(LocaleUtil.BRAZIL));
 	}
 
-	protected void testImageDDMFormFieldValueValues(
+	private void _testImageDDMFormFieldValueValues(
 			DDMFormFieldValue ddmFormFieldValue)
 		throws Exception {
 
@@ -495,7 +495,7 @@ public class DDMFormValuesJSONDeserializerTest extends BaseDDMTestCase {
 			value.getString(LocaleUtil.BRAZIL), false);
 	}
 
-	protected void testLinkToPageDDMFormFieldValueValues(
+	private void _testLinkToPageDDMFormFieldValueValues(
 			DDMFormFieldValue ddmFormFieldValue)
 		throws Exception {
 
@@ -524,7 +524,7 @@ public class DDMFormValuesJSONDeserializerTest extends BaseDDMTestCase {
 			value.getString(LocaleUtil.BRAZIL), false);
 	}
 
-	protected void testSelectDDMFormFieldValueValues(
+	private void _testSelectDDMFormFieldValueValues(
 			DDMFormFieldValue ddmFormFieldValue)
 		throws Exception {
 
@@ -545,13 +545,13 @@ public class DDMFormValuesJSONDeserializerTest extends BaseDDMTestCase {
 			false);
 	}
 
-	protected void testSeparatorDDMFormFieldValueValue(
+	private void _testSeparatorDDMFormFieldValueValue(
 		DDMFormFieldValue ddmFormFieldValue) {
 
 		Assert.assertNull(ddmFormFieldValue.getValue());
 	}
 
-	protected void testTextDDMFormFieldValue(
+	private void _testTextDDMFormFieldValue(
 		DDMFormFieldValue ddmFormFieldValue, String expectedEnUS,
 		String expectedPtBR) {
 

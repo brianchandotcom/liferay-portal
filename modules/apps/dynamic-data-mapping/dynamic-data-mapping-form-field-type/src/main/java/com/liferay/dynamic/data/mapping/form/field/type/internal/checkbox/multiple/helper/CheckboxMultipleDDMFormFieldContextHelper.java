@@ -72,7 +72,7 @@ public class CheckboxMultipleDDMFormFieldContextHelper {
 		return options;
 	}
 
-	protected String[] toStringArray(String value) {
+	private String[] _toStringArray(String value) {
 		if (Validator.isNull(value)) {
 			return GetterUtil.DEFAULT_STRING_VALUES;
 		}

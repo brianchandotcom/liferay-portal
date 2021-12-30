@@ -56,26 +56,26 @@ public class DefaultDDMFormValuesFactory {
 			ddmFormValues.getDDMFormFieldValuesMap(false));
 	}
 
-	protected DDMFormFieldValue createDefaultDDMFormFieldValue(
+	private DDMFormFieldValue _createDefaultDDMFormFieldValue(
 		DDMFormField ddmFormField) {
 
 		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
 
 		ddmFormFieldValue.setFieldReference(ddmFormField.getFieldReference());
 		ddmFormFieldValue.setName(ddmFormField.getName());
-		ddmFormFieldValue.setValue(createDefaultValue(ddmFormField));
+		ddmFormFieldValue.setValue(_createDefaultValue(ddmFormField));
 
 		for (DDMFormField nestedDDMFormField :
 				ddmFormField.getNestedDDMFormFields()) {
 
 			ddmFormFieldValue.addNestedDDMFormFieldValue(
-				createDefaultDDMFormFieldValue(nestedDDMFormField));
+				_createDefaultDDMFormFieldValue(nestedDDMFormField));
 		}
 
 		return ddmFormFieldValue;
 	}
 
-	protected LocalizedValue createDefaultLocalizedValue(
+	private LocalizedValue _createDefaultLocalizedValue(
 		String defaultValueString) {
 
 		LocalizedValue value = new LocalizedValue(_ddmForm.getDefaultLocale());
@@ -85,7 +85,7 @@ public class DefaultDDMFormValuesFactory {
 		return value;
 	}
 
-	protected Value createDefaultValue(DDMFormField ddmFormField) {
+	private Value _createDefaultValue(DDMFormField ddmFormField) {
 		LocalizedValue defaultValue = ddmFormField.getPredefinedValue();
 
 		if ((defaultValue == null) ||
@@ -94,7 +94,7 @@ public class DefaultDDMFormValuesFactory {
 			defaultValue = Optional.ofNullable(
 				(LocalizedValue)ddmFormField.getProperty("initialValue")
 			).orElse(
-				createDefaultLocalizedValue(StringPool.BLANK)
+				_createDefaultLocalizedValue(StringPool.BLANK)
 			);
 		}
 
@@ -130,7 +130,7 @@ public class DefaultDDMFormValuesFactory {
 				}
 				else {
 					consumer.accept(
-						createDefaultDDMFormFieldValue(ddmFormField));
+						_createDefaultDDMFormFieldValue(ddmFormField));
 				}
 			});
 	}

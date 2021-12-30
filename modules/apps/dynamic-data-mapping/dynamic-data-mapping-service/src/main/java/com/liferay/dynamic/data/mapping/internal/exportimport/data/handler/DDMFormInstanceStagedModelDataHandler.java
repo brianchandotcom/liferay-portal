@@ -95,7 +95,7 @@ public class DDMFormInstanceStagedModelDataHandler
 				PortletDataContext.REFERENCE_TYPE_STRONG);
 		}
 
-		exportFormInstanceSettings(
+		_exportFormInstanceSettings(
 			portletDataContext, formInstance, formInstanceElement);
 
 		portletDataContext.addClassedModel(
@@ -166,7 +166,7 @@ public class DDMFormInstanceStagedModelDataHandler
 		Element formInstanceElement = portletDataContext.getImportDataElement(
 			formInstance);
 
-		DDMFormValues settingsDDMFormValues = getImportFormInstanceSettings(
+		DDMFormValues settingsDDMFormValues = _getImportFormInstanceSettings(
 			portletDataContext, formInstanceElement);
 
 		_ddmFormInstanceLocalService.updateFormInstance(
@@ -178,35 +178,6 @@ public class DDMFormInstanceStagedModelDataHandler
 
 		portletDataContext.importClassedModel(
 			formInstance, importedFormInstance);
-	}
-
-	protected void exportFormInstanceSettings(
-		PortletDataContext portletDataContext, DDMFormInstance formInstance,
-		Element formInstanceElement) {
-
-		String settingsDDMFormValuesPath = ExportImportPathUtil.getModelPath(
-			formInstance, "settings-ddm-form-values.json");
-
-		formInstanceElement.addAttribute(
-			"settings-ddm-form-values-path", settingsDDMFormValuesPath);
-
-		portletDataContext.addZipEntry(
-			settingsDDMFormValuesPath, formInstance.getSettings());
-	}
-
-	protected DDMFormValues getImportFormInstanceSettings(
-			PortletDataContext portletDataContext, Element formInstanceElement)
-		throws Exception {
-
-		DDMForm ddmForm = DDMFormFactory.create(DDMFormInstanceSettings.class);
-
-		String settingsDDMFormValuesPath = formInstanceElement.attributeValue(
-			"settings-ddm-form-values-path");
-
-		String serializedSettingsDDMFormValues =
-			portletDataContext.getZipEntryAsString(settingsDDMFormValuesPath);
-
-		return deserialize(serializedSettingsDDMFormValues, ddmForm);
 	}
 
 	@Override
@@ -231,6 +202,35 @@ public class DDMFormInstanceStagedModelDataHandler
 		StagedModelRepository<DDMFormInstance> stagedModelRepository) {
 
 		_stagedModelRepository = stagedModelRepository;
+	}
+
+	private void _exportFormInstanceSettings(
+		PortletDataContext portletDataContext, DDMFormInstance formInstance,
+		Element formInstanceElement) {
+
+		String settingsDDMFormValuesPath = ExportImportPathUtil.getModelPath(
+			formInstance, "settings-ddm-form-values.json");
+
+		formInstanceElement.addAttribute(
+			"settings-ddm-form-values-path", settingsDDMFormValuesPath);
+
+		portletDataContext.addZipEntry(
+			settingsDDMFormValuesPath, formInstance.getSettings());
+	}
+
+	private DDMFormValues _getImportFormInstanceSettings(
+			PortletDataContext portletDataContext, Element formInstanceElement)
+		throws Exception {
+
+		DDMForm ddmForm = DDMFormFactory.create(DDMFormInstanceSettings.class);
+
+		String settingsDDMFormValuesPath = formInstanceElement.attributeValue(
+			"settings-ddm-form-values-path");
+
+		String serializedSettingsDDMFormValues =
+			portletDataContext.getZipEntryAsString(settingsDDMFormValuesPath);
+
+		return deserialize(serializedSettingsDDMFormValues, ddmForm);
 	}
 
 	private DDMFormInstanceLocalService _ddmFormInstanceLocalService;

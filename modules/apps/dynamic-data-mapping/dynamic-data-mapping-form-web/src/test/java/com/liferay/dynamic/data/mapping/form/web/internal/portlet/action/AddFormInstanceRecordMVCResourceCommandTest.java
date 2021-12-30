@@ -64,17 +64,17 @@ public class AddFormInstanceRecordMVCResourceCommandTest extends PowerMockito {
 
 	@Before
 	public void setUp() throws Exception {
-		setUpDDMFormContextToDDMFormValues();
+		_setUpDDMFormContextToDDMFormValues();
 
-		setUpAddFormInstanceRecordMVCResourceCommand();
-		setUpDDMFormInstance();
-		setUpPropsUtil();
+		_setUpAddFormInstanceRecordMVCResourceCommand();
+		_setUpDDMFormInstance();
+		_setUpPropsUtil();
 		setUpLanguageUtil();
 	}
 
 	@Test
 	public void testCreateDDMFormValues() throws Exception {
-		String serializedDDMFormValues = read("ddm-form-values.json");
+		String serializedDDMFormValues = _read("ddm-form-values.json");
 
 		when(
 			_resourceRequest.getParameter("serializedDDMFormValues")
@@ -141,7 +141,13 @@ public class AddFormInstanceRecordMVCResourceCommandTest extends PowerMockito {
 		Assert.assertTrue(Objects.equals(ddmFormValues1, ddmFormValues2));
 	}
 
-	protected String read(String fileName) throws IOException {
+	protected void setUpLanguageUtil() {
+		LanguageUtil languageUtil = new LanguageUtil();
+
+		languageUtil.setLanguage(_language);
+	}
+
+	private String _read(String fileName) throws IOException {
 		Class<?> clazz = getClass();
 
 		InputStream inputStream = clazz.getResourceAsStream(
@@ -150,7 +156,7 @@ public class AddFormInstanceRecordMVCResourceCommandTest extends PowerMockito {
 		return StringUtil.read(inputStream);
 	}
 
-	protected void setUpAddFormInstanceRecordMVCResourceCommand()
+	private void _setUpAddFormInstanceRecordMVCResourceCommand()
 		throws Exception {
 
 		_addFormInstanceRecordMVCResourceCommand =
@@ -165,7 +171,7 @@ public class AddFormInstanceRecordMVCResourceCommandTest extends PowerMockito {
 		);
 	}
 
-	protected void setUpDDMFormContextToDDMFormValues() throws Exception {
+	private void _setUpDDMFormContextToDDMFormValues() throws Exception {
 		_ddmFormContextToDDMFormValues = new DDMFormContextToDDMFormValues();
 
 		field(
@@ -175,7 +181,7 @@ public class AddFormInstanceRecordMVCResourceCommandTest extends PowerMockito {
 		);
 	}
 
-	protected void setUpDDMFormInstance() throws Exception {
+	private void _setUpDDMFormInstance() throws Exception {
 		when(
 			_ddmFormInstance.getStructure()
 		).thenReturn(
@@ -183,13 +189,7 @@ public class AddFormInstanceRecordMVCResourceCommandTest extends PowerMockito {
 		);
 	}
 
-	protected void setUpLanguageUtil() {
-		LanguageUtil languageUtil = new LanguageUtil();
-
-		languageUtil.setLanguage(_language);
-	}
-
-	protected void setUpPropsUtil() {
+	private void _setUpPropsUtil() {
 		PropsUtil.setProps(new PropsImpl());
 	}
 

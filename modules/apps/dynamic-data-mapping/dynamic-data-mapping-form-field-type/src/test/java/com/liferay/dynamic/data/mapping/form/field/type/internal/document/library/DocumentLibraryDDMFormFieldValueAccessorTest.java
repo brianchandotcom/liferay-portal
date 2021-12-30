@@ -43,8 +43,8 @@ public class DocumentLibraryDDMFormFieldValueAccessorTest extends PowerMockito {
 
 	@Before
 	public void setUp() throws Exception {
-		setUpDocumentLibraryDDMFormFieldValueAccessor();
-		setUpFileEntry();
+		_setUpDocumentLibraryDDMFormFieldValueAccessor();
+		_setUpFileEntry();
 	}
 
 	@Test
@@ -82,7 +82,7 @@ public class DocumentLibraryDDMFormFieldValueAccessorTest extends PowerMockito {
 				ddmFormFieldValue, LocaleUtil.US));
 	}
 
-	protected void setUpDocumentLibraryDDMFormFieldValueAccessor()
+	private void _setUpDocumentLibraryDDMFormFieldValueAccessor()
 		throws Exception {
 
 		_documentLibraryDDMFormFieldValueAccessor =
@@ -108,7 +108,7 @@ public class DocumentLibraryDDMFormFieldValueAccessorTest extends PowerMockito {
 		);
 	}
 
-	protected void setUpFileEntry() {
+	private void _setUpFileEntry() {
 		_fileEntry.setUuid(_FILE_ENTRY_UUID);
 		_fileEntry.setGroupId(_GROUP_ID);
 

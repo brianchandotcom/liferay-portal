@@ -70,7 +70,7 @@ public class DDMFormJSONDeserializerTest
 	public void setUp() throws Exception {
 		super.setUp();
 
-		setUpDDMFormJSONDeserializer();
+		_setUpDDMFormJSONDeserializer();
 		setUpPortalUtil();
 	}
 
@@ -175,25 +175,6 @@ public class DDMFormJSONDeserializerTest
 		return ".json";
 	}
 
-	protected void setUpDDMFormJSONDeserializer() throws Exception {
-
-		// DDM form field type services tracker
-
-		Field field = ReflectionUtil.getDeclaredField(
-			DDMFormJSONDeserializer.class, "_ddmFormFieldTypeServicesTracker");
-
-		field.set(
-			_ddmFormJSONDeserializer,
-			getMockedDDMFormFieldTypeServicesTracker());
-
-		// JSON factory
-
-		field = ReflectionUtil.getDeclaredField(
-			DDMFormJSONDeserializer.class, "_jsonFactory");
-
-		field.set(_ddmFormJSONDeserializer, new JSONFactoryImpl());
-	}
-
 	protected void setUpDefaultDDMFormFieldType() {
 		when(
 			_defaultDDMFormFieldType.getDDMFormFieldTypeSettings()
@@ -296,6 +277,25 @@ public class DDMFormJSONDeserializerTest
 		super.testDecimalDDMFormField(ddmFormField);
 
 		Assert.assertEquals("false", ddmFormField.getVisibilityExpression());
+	}
+
+	private void _setUpDDMFormJSONDeserializer() throws Exception {
+
+		// DDM form field type services tracker
+
+		Field field = ReflectionUtil.getDeclaredField(
+			DDMFormJSONDeserializer.class, "_ddmFormFieldTypeServicesTracker");
+
+		field.set(
+			_ddmFormJSONDeserializer,
+			getMockedDDMFormFieldTypeServicesTracker());
+
+		// JSON factory
+
+		field = ReflectionUtil.getDeclaredField(
+			DDMFormJSONDeserializer.class, "_jsonFactory");
+
+		field.set(_ddmFormJSONDeserializer, new JSONFactoryImpl());
 	}
 
 	private final DDMFormJSONDeserializer _ddmFormJSONDeserializer =

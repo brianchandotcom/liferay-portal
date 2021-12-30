@@ -99,7 +99,7 @@ public class DDLImpl implements DDL {
 			ddmStructure, ddmFormValues);
 
 		for (Field field : fields) {
-			Object[] fieldValues = getFieldValues(field, locale);
+			Object[] fieldValues = _getFieldValues(field, locale);
 
 			if (fieldValues.length == 0) {
 				continue;
@@ -112,7 +112,7 @@ public class DDLImpl implements DDL {
 
 			if (fieldType.equals(DDMFormFieldType.DOCUMENT_LIBRARY)) {
 				Stream<String> fieldValuesStringStream = fieldValuesStream.map(
-					fieldValue -> getDocumentLibraryFieldValue(fieldValue));
+					fieldValue -> _getDocumentLibraryFieldValue(fieldValue));
 
 				JSONObject fieldJSONObject = JSONUtil.put(
 					"title",
@@ -123,7 +123,7 @@ public class DDLImpl implements DDL {
 			}
 			else if (fieldType.equals(DDMFormFieldType.LINK_TO_PAGE)) {
 				Stream<String> fieldValuesStringStream = fieldValuesStream.map(
-					fieldValue -> getLinkToPageFieldValue(fieldValue, locale));
+					fieldValue -> _getLinkToPageFieldValue(fieldValue, locale));
 
 				JSONObject fieldJSONObject = JSONUtil.put(
 					"name",
@@ -137,7 +137,7 @@ public class DDLImpl implements DDL {
 
 				fieldValuesStream.forEach(
 					fieldValue -> {
-						JSONArray valueJSONArray = getJSONArrayValue(
+						JSONArray valueJSONArray = _getJSONArrayValue(
 							fieldValue);
 
 						for (Object object : valueJSONArray) {
@@ -298,117 +298,6 @@ public class DDLImpl implements DDL {
 		return record;
 	}
 
-	protected String getDocumentLibraryFieldValue(Object fieldValue) {
-		try {
-			JSONObject fieldValueJSONObject = JSONFactoryUtil.createJSONObject(
-				String.valueOf(fieldValue));
-
-			String uuid = fieldValueJSONObject.getString("uuid");
-			long groupId = fieldValueJSONObject.getLong("groupId");
-
-			return getFileEntryTitle(uuid, groupId);
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
-			}
-
-			return StringPool.BLANK;
-		}
-	}
-
-	protected Object[] getFieldValues(Field field, Locale locale) {
-		Object fieldValue = field.getValue(locale);
-
-		if (fieldValue == null) {
-			return new Object[0];
-		}
-
-		if (isArray(fieldValue)) {
-			return (Object[])fieldValue;
-		}
-
-		return new Object[] {fieldValue};
-	}
-
-	protected String getFileEntryTitle(String uuid, long groupId) {
-		try {
-			FileEntry fileEntry =
-				_dlAppLocalService.getFileEntryByUuidAndGroupId(uuid, groupId);
-
-			return fileEntry.getTitle();
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
-			}
-
-			return LanguageUtil.format(
-				LocaleUtil.getSiteDefault(), "is-temporarily-unavailable",
-				"content");
-		}
-	}
-
-	protected JSONArray getJSONArrayValue(Object fieldValue) {
-		try {
-			return JSONFactoryUtil.createJSONArray(String.valueOf(fieldValue));
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
-			}
-
-			return JSONFactoryUtil.createJSONArray();
-		}
-	}
-
-	protected String getLayoutName(
-		long groupId, boolean privateLayout, long layoutId, String languageId) {
-
-		try {
-			return _layoutService.getLayoutName(
-				groupId, privateLayout, layoutId, languageId);
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
-			}
-
-			return LanguageUtil.format(
-				LocaleUtil.getSiteDefault(), "is-temporarily-unavailable",
-				"content");
-		}
-	}
-
-	protected String getLinkToPageFieldValue(Object fieldValue, Locale locale) {
-		try {
-			JSONObject fieldValueJSONObject = JSONFactoryUtil.createJSONObject(
-				String.valueOf(fieldValue));
-
-			long groupId = fieldValueJSONObject.getLong("groupId");
-			boolean privateLayout = fieldValueJSONObject.getBoolean(
-				"privateLayout");
-			long layoutId = fieldValueJSONObject.getLong("layoutId");
-
-			return getLayoutName(
-				groupId, privateLayout, layoutId,
-				LanguageUtil.getLanguageId(locale));
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
-			}
-
-			return StringPool.BLANK;
-		}
-	}
-
-	protected boolean isArray(Object parameter) {
-		Class<?> clazz = parameter.getClass();
-
-		return clazz.isArray();
-	}
-
 	@Reference(unbind = "-")
 	protected void setDDLRecordLocalService(
 		DDLRecordLocalService ddlRecordLocalService) {
@@ -460,6 +349,117 @@ public class DDLImpl implements DDL {
 	@Reference(unbind = "-")
 	protected void setStorageEngine(StorageEngine storageEngine) {
 		_storageEngine = storageEngine;
+	}
+
+	private String _getDocumentLibraryFieldValue(Object fieldValue) {
+		try {
+			JSONObject fieldValueJSONObject = JSONFactoryUtil.createJSONObject(
+				String.valueOf(fieldValue));
+
+			String uuid = fieldValueJSONObject.getString("uuid");
+			long groupId = fieldValueJSONObject.getLong("groupId");
+
+			return _getFileEntryTitle(uuid, groupId);
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception, exception);
+			}
+
+			return StringPool.BLANK;
+		}
+	}
+
+	private Object[] _getFieldValues(Field field, Locale locale) {
+		Object fieldValue = field.getValue(locale);
+
+		if (fieldValue == null) {
+			return new Object[0];
+		}
+
+		if (_isArray(fieldValue)) {
+			return (Object[])fieldValue;
+		}
+
+		return new Object[] {fieldValue};
+	}
+
+	private String _getFileEntryTitle(String uuid, long groupId) {
+		try {
+			FileEntry fileEntry =
+				_dlAppLocalService.getFileEntryByUuidAndGroupId(uuid, groupId);
+
+			return fileEntry.getTitle();
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception, exception);
+			}
+
+			return LanguageUtil.format(
+				LocaleUtil.getSiteDefault(), "is-temporarily-unavailable",
+				"content");
+		}
+	}
+
+	private JSONArray _getJSONArrayValue(Object fieldValue) {
+		try {
+			return JSONFactoryUtil.createJSONArray(String.valueOf(fieldValue));
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception, exception);
+			}
+
+			return JSONFactoryUtil.createJSONArray();
+		}
+	}
+
+	private String _getLayoutName(
+		long groupId, boolean privateLayout, long layoutId, String languageId) {
+
+		try {
+			return _layoutService.getLayoutName(
+				groupId, privateLayout, layoutId, languageId);
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception, exception);
+			}
+
+			return LanguageUtil.format(
+				LocaleUtil.getSiteDefault(), "is-temporarily-unavailable",
+				"content");
+		}
+	}
+
+	private String _getLinkToPageFieldValue(Object fieldValue, Locale locale) {
+		try {
+			JSONObject fieldValueJSONObject = JSONFactoryUtil.createJSONObject(
+				String.valueOf(fieldValue));
+
+			long groupId = fieldValueJSONObject.getLong("groupId");
+			boolean privateLayout = fieldValueJSONObject.getBoolean(
+				"privateLayout");
+			long layoutId = fieldValueJSONObject.getLong("layoutId");
+
+			return _getLayoutName(
+				groupId, privateLayout, layoutId,
+				LanguageUtil.getLanguageId(locale));
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception, exception);
+			}
+
+			return StringPool.BLANK;
+		}
+	}
+
+	private boolean _isArray(Object parameter) {
+		Class<?> clazz = parameter.getClass();
+
+		return clazz.isArray();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(DDLImpl.class);

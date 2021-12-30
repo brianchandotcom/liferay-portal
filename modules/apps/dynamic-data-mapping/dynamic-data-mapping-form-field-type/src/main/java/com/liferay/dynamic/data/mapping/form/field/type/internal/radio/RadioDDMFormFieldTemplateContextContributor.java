@@ -59,7 +59,7 @@ public class RadioDDMFormFieldTemplateContextContributor
 		return HashMapBuilder.<String, Object>put(
 			"inline", GetterUtil.getBoolean(ddmFormField.getProperty("inline"))
 		).put(
-			"options", getOptions(ddmFormField, ddmFormFieldRenderingContext)
+			"options", _getOptions(ddmFormField, ddmFormFieldRenderingContext)
 		).put(
 			"predefinedValue",
 			getValue(
@@ -104,20 +104,6 @@ public class RadioDDMFormFieldTemplateContextContributor
 		return ddmFormFieldOptions;
 	}
 
-	protected List<Object> getOptions(
-		DDMFormField ddmFormField,
-		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
-
-		RadioDDMFormFieldContextHelper radioDDMFormFieldContextHelper =
-			new RadioDDMFormFieldContextHelper(
-				getDDMFormFieldOptions(
-					ddmFormField, ddmFormFieldRenderingContext),
-				ddmFormFieldRenderingContext.getLocale());
-
-		return radioDDMFormFieldContextHelper.getOptions(
-			ddmFormFieldRenderingContext);
-	}
-
 	protected String getValue(String valueString) {
 		try {
 			JSONArray jsonArray = jsonFactory.createJSONArray(valueString);
@@ -135,6 +121,20 @@ public class RadioDDMFormFieldTemplateContextContributor
 
 	@Reference
 	protected JSONFactory jsonFactory;
+
+	private List<Object> _getOptions(
+		DDMFormField ddmFormField,
+		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
+
+		RadioDDMFormFieldContextHelper radioDDMFormFieldContextHelper =
+			new RadioDDMFormFieldContextHelper(
+				getDDMFormFieldOptions(
+					ddmFormField, ddmFormFieldRenderingContext),
+				ddmFormFieldRenderingContext.getLocale());
+
+		return radioDDMFormFieldContextHelper.getOptions(
+			ddmFormFieldRenderingContext);
+	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		RadioDDMFormFieldTemplateContextContributor.class);

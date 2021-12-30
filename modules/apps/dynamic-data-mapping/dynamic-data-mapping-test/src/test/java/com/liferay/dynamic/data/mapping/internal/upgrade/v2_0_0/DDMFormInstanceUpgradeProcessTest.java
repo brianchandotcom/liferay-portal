@@ -40,14 +40,14 @@ public class DDMFormInstanceUpgradeProcessTest extends PowerMockito {
 
 	@Before
 	public void setUp() throws Exception {
-		setUpDDMFormInstanceUpgradeProcess();
+		_setUpDDMFormInstanceUpgradeProcess();
 	}
 
 	@Test
 	public void testGetNewActionIds1() throws Exception {
-		mockResourceActionLocalService(
-			"RecordSet", this::createRecorSetResourceActionList, "FormInstance",
-			this::createFormInstanceResourceActionList);
+		_mockResourceActionLocalService(
+			"RecordSet", this::_createRecorSetResourceActionList,
+			"FormInstance", this::_createFormInstanceResourceActionList);
 
 		// VIEW, ADD_RECORD
 
@@ -61,9 +61,9 @@ public class DDMFormInstanceUpgradeProcessTest extends PowerMockito {
 
 	@Test
 	public void testGetNewActionIds2() throws Exception {
-		mockResourceActionLocalService(
-			"RecordSet", this::createRecorSetResourceActionList, "FormInstance",
-			this::createFormInstanceResourceActionList);
+		_mockResourceActionLocalService(
+			"RecordSet", this::_createRecorSetResourceActionList,
+			"FormInstance", this::_createFormInstanceResourceActionList);
 
 		// VIEW, UPDATE, ADD_RECORD
 
@@ -75,23 +75,25 @@ public class DDMFormInstanceUpgradeProcessTest extends PowerMockito {
 				"RecordSet", "FormInstance", 0, currentNewActionIds));
 	}
 
-	protected List<ResourceAction> createFormInstanceResourceActionList() {
+	private List<ResourceAction> _createFormInstanceResourceActionList() {
 		return ListUtil.fromArray(
-			createResourceAction("VIEW", 1), createResourceAction("DELETE", 2),
-			createResourceAction("PERMISSIONS", 4),
-			createResourceAction("UPDATE", 8),
-			createResourceAction("ADD_FORM_INSTANCE_RECORD", 16));
+			_createResourceAction("VIEW", 1),
+			_createResourceAction("DELETE", 2),
+			_createResourceAction("PERMISSIONS", 4),
+			_createResourceAction("UPDATE", 8),
+			_createResourceAction("ADD_FORM_INSTANCE_RECORD", 16));
 	}
 
-	protected List<ResourceAction> createRecorSetResourceActionList() {
+	private List<ResourceAction> _createRecorSetResourceActionList() {
 		return ListUtil.fromArray(
-			createResourceAction("VIEW", 1), createResourceAction("DELETE", 2),
-			createResourceAction("PERMISSIONS", 4),
-			createResourceAction("ADD_RECORD", 8),
-			createResourceAction("UPDATE", 16));
+			_createResourceAction("VIEW", 1),
+			_createResourceAction("DELETE", 2),
+			_createResourceAction("PERMISSIONS", 4),
+			_createResourceAction("ADD_RECORD", 8),
+			_createResourceAction("UPDATE", 16));
 	}
 
-	protected ResourceAction createResourceAction(
+	private ResourceAction _createResourceAction(
 		String actionId, long bitwiseValue) {
 
 		ResourceAction resourceAction = new ResourceActionImpl();
@@ -102,7 +104,7 @@ public class DDMFormInstanceUpgradeProcessTest extends PowerMockito {
 		return resourceAction;
 	}
 
-	protected void mockResourceActionLocalService(
+	private void _mockResourceActionLocalService(
 			String oldName,
 			Supplier<List<ResourceAction>> oldResourceActionListSupplier,
 			String newName,
@@ -131,7 +133,7 @@ public class DDMFormInstanceUpgradeProcessTest extends PowerMockito {
 		);
 	}
 
-	protected void setUpDDMFormInstanceUpgradeProcess() throws Exception {
+	private void _setUpDDMFormInstanceUpgradeProcess() throws Exception {
 		_ddmFormInstanceUpgradeProcess = new DDMFormInstanceUpgradeProcess(
 			null, null, null, null, null);
 	}

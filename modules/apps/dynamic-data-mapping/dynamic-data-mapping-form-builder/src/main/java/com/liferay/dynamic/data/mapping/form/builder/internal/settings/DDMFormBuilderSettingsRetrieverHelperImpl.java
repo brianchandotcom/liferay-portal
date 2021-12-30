@@ -52,7 +52,7 @@ public class DDMFormBuilderSettingsRetrieverHelperImpl
 
 	@Override
 	public String getDDMDataProviderInstanceParameterSettingsURL() {
-		String servletContextPath = getServletContextPath(
+		String servletContextPath = _getServletContextPath(
 			_ddmDataProviderInstanceParameterSettingsServlet);
 
 		return servletContextPath.concat(
@@ -62,7 +62,7 @@ public class DDMFormBuilderSettingsRetrieverHelperImpl
 
 	@Override
 	public String getDDMDataProviderInstancesURL() {
-		String servletContextPath = getServletContextPath(
+		String servletContextPath = _getServletContextPath(
 			_ddmDataProviderInstancesServlet);
 
 		return servletContextPath.concat(
@@ -71,7 +71,7 @@ public class DDMFormBuilderSettingsRetrieverHelperImpl
 
 	@Override
 	public String getDDMFieldSetDefinitionURL() {
-		String servletContextPath = getServletContextPath(
+		String servletContextPath = _getServletContextPath(
 			_ddmFieldSetDefinitionServlet);
 
 		return servletContextPath.concat(
@@ -80,7 +80,7 @@ public class DDMFormBuilderSettingsRetrieverHelperImpl
 
 	@Override
 	public String getDDMFieldSettingsDDMFormContextURL() {
-		String servletContextPath = getServletContextPath(
+		String servletContextPath = _getServletContextPath(
 			_ddmFieldSettingsDDMFormContextServlet);
 
 		return servletContextPath.concat(
@@ -89,7 +89,7 @@ public class DDMFormBuilderSettingsRetrieverHelperImpl
 
 	@Override
 	public String getDDMFormContextProviderURL() {
-		String servletContextPath = getServletContextPath(
+		String servletContextPath = _getServletContextPath(
 			_ddmFormContextProviderServlet);
 
 		return servletContextPath.concat(
@@ -98,7 +98,7 @@ public class DDMFormBuilderSettingsRetrieverHelperImpl
 
 	@Override
 	public String getDDMFunctionsURL() {
-		String servletContextPath = getServletContextPath(
+		String servletContextPath = _getServletContextPath(
 			_ddmFormFunctionsServlet);
 
 		return servletContextPath.concat(
@@ -143,7 +143,7 @@ public class DDMFormBuilderSettingsRetrieverHelperImpl
 
 	@Override
 	public String getRolesURL() {
-		String servletContextPath = getServletContextPath(_rolesServlet);
+		String servletContextPath = _getServletContextPath(_rolesServlet);
 
 		return servletContextPath.concat(
 			"/dynamic-data-mapping-form-builder-roles/");
@@ -166,7 +166,7 @@ public class DDMFormBuilderSettingsRetrieverHelperImpl
 			_spiDDMFormRuleConverter.convert(ddmForm.getDDMFormRules()));
 	}
 
-	protected String getServletContextPath(Servlet servlet) {
+	private String _getServletContextPath(Servlet servlet) {
 		String proxyPath = _portal.getPathProxy();
 
 		ServletConfig servletConfig = servlet.getServletConfig();

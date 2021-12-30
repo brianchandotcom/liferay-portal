@@ -61,9 +61,9 @@ public class DDMFormEmailNotificationSenderTest {
 
 	@Test
 	public void testGetFieldProperties() {
-		DDMFormValues ddmFormValues = createDDMFormValues(
-			createDDMForm(new DDMFormField("TextField", "text")),
-			createDDMFormFieldValue(
+		DDMFormValues ddmFormValues = _createDDMFormValues(
+			_createDDMForm(new DDMFormField("TextField", "text")),
+			_createDDMFormFieldValue(
 				"a1hd", "TextField", new UnlocalizedValue("test")));
 
 		Map<String, Object> fieldProperties =
@@ -83,9 +83,9 @@ public class DDMFormEmailNotificationSenderTest {
 
 	@Test
 	public void testGetFieldPropertiesNullValue() {
-		DDMFormValues ddmFormValues = createDDMFormValues(
-			createDDMForm(new DDMFormField("TextField", "text")),
-			createDDMFormFieldValue("a1hd", "TextField", null));
+		DDMFormValues ddmFormValues = _createDDMFormValues(
+			_createDDMForm(new DDMFormField("TextField", "text")),
+			_createDDMFormFieldValue("a1hd", "TextField", null));
 
 		Map<String, Object> fieldProperties =
 			_ddmFormEmailNotificationSender.getFieldProperties(
@@ -109,19 +109,19 @@ public class DDMFormEmailNotificationSenderTest {
 		ddmFormField.addNestedDDMFormField(
 			new DDMFormField("NumericField", "numeric"));
 
-		DDMForm ddmForm = createDDMForm(ddmFormField);
+		DDMForm ddmForm = _createDDMForm(ddmFormField);
 
-		DDMFormFieldValue ddmFormFieldValue = createDDMFormFieldValue(
+		DDMFormFieldValue ddmFormFieldValue = _createDDMFormFieldValue(
 			"a1hd", "TextField",
 			DDMFormValuesTestUtil.createLocalizedValue("test", LocaleUtil.US));
 
 		ddmFormFieldValue.addNestedDDMFormFieldValue(
-			createDDMFormFieldValue(
+			_createDDMFormFieldValue(
 				"uxyj", "NumericField",
 				DDMFormValuesTestUtil.createLocalizedValue(
 					"1", LocaleUtil.US)));
 
-		DDMFormValues ddmFormValues = createDDMFormValues(
+		DDMFormValues ddmFormValues = _createDDMFormValues(
 			ddmForm, ddmFormFieldValue);
 
 		List<Object> fields = _ddmFormEmailNotificationSender.getFields(
@@ -143,7 +143,7 @@ public class DDMFormEmailNotificationSenderTest {
 		Assert.assertEquals("1", String.valueOf(fieldProperties.get("value")));
 	}
 
-	protected DDMForm createDDMForm(DDMFormField ddmFormField) {
+	private DDMForm _createDDMForm(DDMFormField ddmFormField) {
 		DDMForm ddmForm = new DDMForm();
 
 		ddmForm.addDDMFormField(ddmFormField);
@@ -151,7 +151,7 @@ public class DDMFormEmailNotificationSenderTest {
 		return ddmForm;
 	}
 
-	protected DDMFormFieldValue createDDMFormFieldValue(
+	private DDMFormFieldValue _createDDMFormFieldValue(
 		String instanceId, String name, Value value) {
 
 		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
@@ -163,7 +163,7 @@ public class DDMFormEmailNotificationSenderTest {
 		return ddmFormFieldValue;
 	}
 
-	protected DDMFormValues createDDMFormValues(
+	private DDMFormValues _createDDMFormValues(
 		DDMForm ddmForm, DDMFormFieldValue ddmFormFieldValue) {
 
 		DDMFormValues ddmFormValues = new DDMFormValues(ddmForm);

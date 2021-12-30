@@ -54,7 +54,7 @@ public class DDMFormLayoutValidatorImpl implements DDMFormLayoutValidator {
 		DDMFormRuleValidatorUtil.validateDDMFormRules(
 			_ddmExpressionFactory, ddmFormLayout.getDDMFormRules());
 
-		validateDDMFormLayoutDefaultLocale(ddmFormLayout);
+		_validateDDMFormLayoutDefaultLocale(ddmFormLayout);
 
 		_validateDDMFormFieldNames(ddmFormLayout);
 		_validateDDMFormLayoutPageTitles(ddmFormLayout);
@@ -66,17 +66,6 @@ public class DDMFormLayoutValidatorImpl implements DDMFormLayoutValidator {
 		DDMExpressionFactory ddmExpressionFactory) {
 
 		_ddmExpressionFactory = ddmExpressionFactory;
-	}
-
-	protected void validateDDMFormLayoutDefaultLocale(
-			DDMFormLayout ddmFormLayout)
-		throws DDMFormLayoutValidationException {
-
-		Locale defaultLocale = ddmFormLayout.getDefaultLocale();
-
-		if (defaultLocale == null) {
-			throw new MustSetDefaultLocale();
-		}
 	}
 
 	private Stream<String> _getDDMFormFieldNamesStream(
@@ -139,6 +128,17 @@ public class DDMFormLayoutValidatorImpl implements DDMFormLayoutValidator {
 
 		if (SetUtil.isNotEmpty(duplicatedFieldNames)) {
 			throw new MustNotDuplicateFieldName(duplicatedFieldNames);
+		}
+	}
+
+	private void _validateDDMFormLayoutDefaultLocale(
+			DDMFormLayout ddmFormLayout)
+		throws DDMFormLayoutValidationException {
+
+		Locale defaultLocale = ddmFormLayout.getDefaultLocale();
+
+		if (defaultLocale == null) {
+			throw new MustSetDefaultLocale();
 		}
 	}
 

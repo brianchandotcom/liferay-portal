@@ -71,9 +71,9 @@ public class DDMFormValidatorTest {
 
 	@Before
 	public void setUp() {
-		setUpBeanPropertiesUtil();
-		setUpDDMFormFieldTypeServicesTracker();
-		setUpDDMFormValidator();
+		_setUpBeanPropertiesUtil();
+		_setUpDDMFormFieldTypeServicesTracker();
+		_setUpDDMFormValidator();
 	}
 
 	@Test(expected = MustSetValidCharactersForFieldType.class)
@@ -555,13 +555,13 @@ public class DDMFormValidatorTest {
 		return DDMFormTestUtil.createAvailableLocales(locales);
 	}
 
-	protected void setUpBeanPropertiesUtil() {
+	private void _setUpBeanPropertiesUtil() {
 		BeanPropertiesUtil beanPropertiesUtil = new BeanPropertiesUtil();
 
 		beanPropertiesUtil.setBeanProperties(new BeanPropertiesImpl());
 	}
 
-	protected void setUpDDMFormFieldTypeServicesTracker() {
+	private void _setUpDDMFormFieldTypeServicesTracker() {
 		DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker =
 			Mockito.mock(DDMFormFieldTypeServicesTracker.class);
 
@@ -575,7 +575,7 @@ public class DDMFormValidatorTest {
 			ddmFormFieldTypeServicesTracker);
 	}
 
-	protected void setUpDDMFormValidator() {
+	private void _setUpDDMFormValidator() {
 		_ddmFormValidatorImpl.setDDMExpressionFactory(
 			new DDMExpressionFactoryImpl());
 	}

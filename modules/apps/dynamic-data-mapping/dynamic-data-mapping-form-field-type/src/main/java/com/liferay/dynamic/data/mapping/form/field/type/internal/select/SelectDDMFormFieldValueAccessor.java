@@ -63,14 +63,14 @@ public class SelectDDMFormFieldValueAccessor
 	public JSONArray getValue(
 		DDMFormFieldValue ddmFormFieldValue, Locale locale) {
 
-		return getOptionsValuesJSONArray(ddmFormFieldValue, locale);
+		return _getOptionsValuesJSONArray(ddmFormFieldValue, locale);
 	}
 
 	@Override
 	public JSONArray getValueForEvaluation(
 		DDMFormFieldValue ddmFormFieldValue, Locale locale) {
 
-		JSONArray optionsValuesJSONArray = getOptionsValuesJSONArray(
+		JSONArray optionsValuesJSONArray = _getOptionsValuesJSONArray(
 			ddmFormFieldValue, locale);
 
 		if (ddmFormFieldValue.getDDMFormValues() == null) {
@@ -156,7 +156,7 @@ public class SelectDDMFormFieldValueAccessor
 	protected String getOptionsLabels(
 		DDMFormFieldValue ddmFormFieldValue, Locale locale) {
 
-		JSONArray optionsValuesJSONArray = getOptionsValuesJSONArray(
+		JSONArray optionsValuesJSONArray = _getOptionsValuesJSONArray(
 			ddmFormFieldValue, locale);
 
 		if (optionsValuesJSONArray.length() == 0) {
@@ -172,7 +172,7 @@ public class SelectDDMFormFieldValueAccessor
 		for (int i = 0; i < optionsValuesJSONArray.length(); i++) {
 			String optionValue = optionsValuesJSONArray.getString(i);
 
-			if (isManualDataSourceType(ddmFormFieldValue.getDDMFormField())) {
+			if (_isManualDataSourceType(ddmFormFieldValue.getDDMFormField())) {
 				LocalizedValue optionLabel =
 					ddmFormFieldOptions.getOptionLabels(optionValue);
 
@@ -195,7 +195,10 @@ public class SelectDDMFormFieldValueAccessor
 		return sb.toString();
 	}
 
-	protected JSONArray getOptionsValuesJSONArray(
+	@Reference
+	protected JSONFactory jsonFactory;
+
+	private JSONArray _getOptionsValuesJSONArray(
 		DDMFormFieldValue ddmFormFieldValue, Locale locale) {
 
 		Value value = ddmFormFieldValue.getValue();
@@ -207,16 +210,13 @@ public class SelectDDMFormFieldValueAccessor
 		return createJSONArray(value.getString(locale));
 	}
 
-	protected boolean isManualDataSourceType(DDMFormField ddmFormField) {
+	private boolean _isManualDataSourceType(DDMFormField ddmFormField) {
 		if (Objects.equals(ddmFormField.getDataSourceType(), "manual")) {
 			return true;
 		}
 
 		return false;
 	}
-
-	@Reference
-	protected JSONFactory jsonFactory;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SelectDDMFormFieldValueAccessor.class);

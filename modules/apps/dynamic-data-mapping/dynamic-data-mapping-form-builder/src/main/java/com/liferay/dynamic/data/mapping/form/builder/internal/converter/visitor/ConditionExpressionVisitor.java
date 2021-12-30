@@ -59,7 +59,7 @@ public class ConditionExpressionVisitor extends ExpressionVisitor<Object> {
 	public Object visit(AndExpression andExpression) {
 		_andOperator = true;
 
-		return doVisitLogicalExpression(andExpression);
+		return _doVisitLogicalExpression(andExpression);
 	}
 
 	@Override
@@ -140,7 +140,7 @@ public class ConditionExpressionVisitor extends ExpressionVisitor<Object> {
 		}
 
 		_spiDDMFormRuleConditions.push(
-			createDDMFormRuleCondition(functionName, operands));
+			_createDDMFormRuleCondition(functionName, operands));
 
 		return _spiDDMFormRuleConditions;
 	}
@@ -169,7 +169,7 @@ public class ConditionExpressionVisitor extends ExpressionVisitor<Object> {
 	public Object visit(OrExpression orExpression) {
 		_andOperator = false;
 
-		return doVisitLogicalExpression(orExpression);
+		return _doVisitLogicalExpression(orExpression);
 	}
 
 	@Override
@@ -183,7 +183,11 @@ public class ConditionExpressionVisitor extends ExpressionVisitor<Object> {
 		return new SPIDDMFormRuleCondition.Operand("field", term.getValue());
 	}
 
-	protected SPIDDMFormRuleCondition createDDMFormRuleCondition(
+	protected <T> T doVisit(Expression expression) {
+		return (T)expression.accept(this);
+	}
+
+	private SPIDDMFormRuleCondition _createDDMFormRuleCondition(
 		String functionName, List<SPIDDMFormRuleCondition.Operand> operands) {
 
 		String functionNameOperator = _functionNameOperators.getOrDefault(
@@ -192,11 +196,7 @@ public class ConditionExpressionVisitor extends ExpressionVisitor<Object> {
 		return new SPIDDMFormRuleCondition(functionNameOperator, operands);
 	}
 
-	protected <T> T doVisit(Expression expression) {
-		return (T)expression.accept(this);
-	}
-
-	protected List<SPIDDMFormRuleCondition> doVisitLogicalExpression(
+	private List<SPIDDMFormRuleCondition> _doVisitLogicalExpression(
 		BinaryExpression binaryExpression) {
 
 		Object object1 = doVisit(binaryExpression.getLeftOperandExpression());

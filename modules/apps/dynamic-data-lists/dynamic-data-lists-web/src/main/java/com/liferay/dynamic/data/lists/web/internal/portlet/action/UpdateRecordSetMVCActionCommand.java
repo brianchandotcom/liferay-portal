@@ -52,14 +52,14 @@ public class UpdateRecordSetMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		DDLRecordSet recordSet = updateRecordSet(actionRequest);
+		DDLRecordSet recordSet = _updateRecordSet(actionRequest);
 
 		updateWorkflowDefinitionLink(actionRequest, recordSet);
 
 		updatePortletPreferences(actionRequest, recordSet);
 	}
 
-	protected DDLRecordSet updateRecordSet(ActionRequest actionRequest)
+	private DDLRecordSet _updateRecordSet(ActionRequest actionRequest)
 		throws PortalException {
 
 		long recordSetId = ParamUtil.getLong(actionRequest, "recordSetId");

@@ -307,18 +307,6 @@ public class DDMFormValuesExportImportContentProcessorTest {
 			newArticleResourcePrimKey, jsonObject.getLong("classPK"));
 	}
 
-	protected DDMFormInstance createFormInstanceWithDocLib(Group group)
-		throws Exception {
-
-		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
-
-		DDMFormTestUtil.addDocumentLibraryDDMFormField(
-			ddmForm, "DocumentsAndMedia9t17");
-
-		return DDMFormInstanceTestUtil.addDDMFormInstance(
-			ddmForm, group, TestPropsValues.getUserId());
-	}
-
 	private DDMForm _createDDMFormWithJournalField(
 			Group group, JournalArticle journalArticle)
 		throws Exception {
@@ -394,6 +382,18 @@ public class DDMFormValuesExportImportContentProcessorTest {
 		return journalDDMForm;
 	}
 
+	private DDMFormInstance _createFormInstanceWithDocLib(Group group)
+		throws Exception {
+
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
+
+		DDMFormTestUtil.addDocumentLibraryDDMFormField(
+			ddmForm, "DocumentsAndMedia9t17");
+
+		return DDMFormInstanceTestUtil.addDDMFormInstance(
+			ddmForm, group, TestPropsValues.getUserId());
+	}
+
 	private void _initDLReferences() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -411,7 +411,7 @@ public class DDMFormValuesExportImportContentProcessorTest {
 		_fileEntry = thumbnailCapability.setLargeImageId(
 			_fileEntry, _fileEntry.getFileEntryId());
 
-		_formInstance = createFormInstanceWithDocLib(_stagingGroup);
+		_formInstance = _createFormInstanceWithDocLib(_stagingGroup);
 
 		DDMStructure structure = _formInstance.getStructure();
 

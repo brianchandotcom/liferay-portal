@@ -76,7 +76,7 @@ public class DDMWebDAVImpl implements DDMWebDAV {
 			String definition = StringUtil.read(
 				httpServletRequest.getInputStream());
 
-			DDMForm ddmForm = getDDMForm(definition);
+			DDMForm ddmForm = _getDDMForm(definition);
 
 			DDMFormLayout ddmFormLayout = _ddm.getDefaultDDMFormLayout(ddmForm);
 
@@ -243,7 +243,7 @@ public class DDMWebDAVImpl implements DDMWebDAV {
 				String definition = StringUtil.read(
 					httpServletRequest.getInputStream());
 
-				DDMForm ddmForm = getDDMForm(definition);
+				DDMForm ddmForm = _getDDMForm(definition);
 
 				DDMFormLayout ddmFormLayout = _ddm.getDefaultDDMFormLayout(
 					ddmForm);
@@ -342,20 +342,6 @@ public class DDMWebDAVImpl implements DDMWebDAV {
 		return resource;
 	}
 
-	protected DDMForm getDDMForm(String definition) throws PortalException {
-		_ddmXML.validateXML(definition);
-
-		DDMFormDeserializerDeserializeRequest.Builder builder =
-			DDMFormDeserializerDeserializeRequest.Builder.newBuilder(
-				definition);
-
-		DDMFormDeserializerDeserializeResponse
-			ddmFormDeserializerDeserializeResponse =
-				_xsdDDMFormDeserializer.deserialize(builder.build());
-
-		return ddmFormDeserializerDeserializeResponse.getDDMForm();
-	}
-
 	@Reference(unbind = "-")
 	protected void setDDM(DDM ddm) {
 		_ddm = ddm;
@@ -392,6 +378,20 @@ public class DDMWebDAVImpl implements DDMWebDAV {
 	@Reference(unbind = "-")
 	protected void setDDMXML(DDMXML ddmXML) {
 		_ddmXML = ddmXML;
+	}
+
+	private DDMForm _getDDMForm(String definition) throws PortalException {
+		_ddmXML.validateXML(definition);
+
+		DDMFormDeserializerDeserializeRequest.Builder builder =
+			DDMFormDeserializerDeserializeRequest.Builder.newBuilder(
+				definition);
+
+		DDMFormDeserializerDeserializeResponse
+			ddmFormDeserializerDeserializeResponse =
+				_xsdDDMFormDeserializer.deserialize(builder.build());
+
+		return ddmFormDeserializerDeserializeResponse.getDDMForm();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(DDMWebDAVImpl.class);

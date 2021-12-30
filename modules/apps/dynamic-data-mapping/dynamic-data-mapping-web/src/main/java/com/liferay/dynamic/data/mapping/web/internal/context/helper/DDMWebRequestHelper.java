@@ -40,7 +40,7 @@ public class DDMWebRequestHelper extends BaseRequestHelper {
 	public DDMGroupServiceConfiguration getDDMGroupServiceConfiguration() {
 		try {
 			if (_ddmGroupServiceConfiguration == null) {
-				_ddmGroupServiceConfiguration = getConfiguration(
+				_ddmGroupServiceConfiguration = _getConfiguration(
 					DDMGroupServiceConfiguration.class);
 			}
 
@@ -54,7 +54,7 @@ public class DDMWebRequestHelper extends BaseRequestHelper {
 	public DDMWebConfiguration getDDMWebConfiguration() {
 		try {
 			if (_ddmWebConfiguration == null) {
-				_ddmWebConfiguration = getConfiguration(
+				_ddmWebConfiguration = _getConfiguration(
 					DDMWebConfiguration.class);
 			}
 
@@ -65,7 +65,7 @@ public class DDMWebRequestHelper extends BaseRequestHelper {
 		}
 	}
 
-	protected <T> T getConfiguration(Class<T> clazz)
+	private <T> T _getConfiguration(Class<T> clazz)
 		throws ConfigurationException {
 
 		if (Validator.isNotNull(getPortletResource())) {

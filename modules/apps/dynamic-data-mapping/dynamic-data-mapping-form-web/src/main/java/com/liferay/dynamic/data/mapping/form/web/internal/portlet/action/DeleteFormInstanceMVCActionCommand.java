@@ -43,12 +43,6 @@ import org.osgi.service.component.annotations.Reference;
 public class DeleteFormInstanceMVCActionCommand
 	extends BaseTransactionalMVCActionCommand {
 
-	protected void doDeleteFormInstance(long formInstanceId)
-		throws PortalException {
-
-		_ddmFormInstanceService.deleteFormInstance(formInstanceId);
-	}
-
 	@Override
 	protected void doTransactionalCommand(
 			ActionRequest actionRequest, ActionResponse actionResponse)
@@ -69,7 +63,7 @@ public class DeleteFormInstanceMVCActionCommand
 		}
 
 		for (long deleteFormInstanceId : deleteFormInstanceIds) {
-			doDeleteFormInstance(deleteFormInstanceId);
+			_doDeleteFormInstance(deleteFormInstanceId);
 		}
 	}
 
@@ -85,6 +79,12 @@ public class DeleteFormInstanceMVCActionCommand
 		DDMStructureService ddmStructureService) {
 
 		_ddmStructureService = ddmStructureService;
+	}
+
+	private void _doDeleteFormInstance(long formInstanceId)
+		throws PortalException {
+
+		_ddmFormInstanceService.deleteFormInstance(formInstanceId);
 	}
 
 	private DDMFormInstanceService _ddmFormInstanceService;

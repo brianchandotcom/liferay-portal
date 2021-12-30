@@ -57,43 +57,6 @@ public class DDLXMLExporter extends BaseDDLExporter {
 		return "xml";
 	}
 
-	protected void addFieldElement(
-		DDMFormFieldRenderedValue ddmFormFieldRenderedValue, Element element,
-		Map.Entry<String, DDMFormField> entry) {
-
-		LocalizedValue label = null;
-		String value = null;
-
-		if (ddmFormFieldRenderedValue == null) {
-			DDMFormField ddmFormField = entry.getValue();
-
-			label = ddmFormField.getLabel();
-
-			value = StringPool.BLANK;
-		}
-		else {
-			label = ddmFormFieldRenderedValue.getLabel();
-
-			value = ddmFormFieldRenderedValue.getValue();
-		}
-
-		addFieldElement(element, label.getString(getLocale()), value);
-	}
-
-	protected void addFieldElement(
-		Element fieldsElement, String label, Serializable value) {
-
-		Element fieldElement = fieldsElement.addElement("field");
-
-		Element labelElement = fieldElement.addElement("label");
-
-		labelElement.addText(label);
-
-		Element valueElement = fieldElement.addElement("value");
-
-		valueElement.addText(String.valueOf(value));
-	}
-
 	@Override
 	protected byte[] doExport(
 			long recordSetId, int status, int start, int end,
@@ -131,21 +94,21 @@ public class DDLXMLExporter extends BaseDDLExporter {
 				DDMFormFieldRenderedValue ddmFormFieldRenderedValue =
 					values.get(entry.getKey());
 
-				addFieldElement(
+				_addFieldElement(
 					ddmFormFieldRenderedValue, fieldsElement, entry);
 			}
 
 			Locale locale = getLocale();
 
-			addFieldElement(
+			_addFieldElement(
 				fieldsElement, LanguageUtil.get(locale, "status"),
 				getStatusMessage(recordVersion.getStatus()));
 
-			addFieldElement(
+			_addFieldElement(
 				fieldsElement, LanguageUtil.get(locale, "modified-date"),
 				formatDate(recordVersion.getStatusDate(), dateTimeFormatter));
 
-			addFieldElement(
+			_addFieldElement(
 				fieldsElement, LanguageUtil.get(locale, "author"),
 				recordVersion.getUserName());
 		}
@@ -212,6 +175,43 @@ public class DDLXMLExporter extends BaseDDLExporter {
 	@Reference(unbind = "-")
 	protected void setStorageEngine(StorageEngine storageEngine) {
 		_storageEngine = storageEngine;
+	}
+
+	private void _addFieldElement(
+		DDMFormFieldRenderedValue ddmFormFieldRenderedValue, Element element,
+		Map.Entry<String, DDMFormField> entry) {
+
+		LocalizedValue label = null;
+		String value = null;
+
+		if (ddmFormFieldRenderedValue == null) {
+			DDMFormField ddmFormField = entry.getValue();
+
+			label = ddmFormField.getLabel();
+
+			value = StringPool.BLANK;
+		}
+		else {
+			label = ddmFormFieldRenderedValue.getLabel();
+
+			value = ddmFormFieldRenderedValue.getValue();
+		}
+
+		_addFieldElement(element, label.getString(getLocale()), value);
+	}
+
+	private void _addFieldElement(
+		Element fieldsElement, String label, Serializable value) {
+
+		Element fieldElement = fieldsElement.addElement("field");
+
+		Element labelElement = fieldElement.addElement("label");
+
+		labelElement.addText(label);
+
+		Element valueElement = fieldElement.addElement("value");
+
+		valueElement.addText(String.valueOf(value));
 	}
 
 	private DDLRecordLocalService _ddlRecordLocalService;

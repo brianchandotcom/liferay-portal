@@ -90,7 +90,7 @@ public class DDMFormInstanceRecordStagedModelRepository
 				ddmFormInstanceRecord.getFormInstanceId(), ddmFormValues,
 				serviceContext);
 
-		updateVersions(
+		_updateVersions(
 			importedDDMFormInstanceRecord, ddmFormInstanceRecord.getVersion());
 
 		return importedDDMFormInstanceRecord;
@@ -159,7 +159,7 @@ public class DDMFormInstanceRecordStagedModelRepository
 					PropertyFactoryUtil.forName("formInstanceRecordId");
 
 				DynamicQuery formInstanceRecordVersionDynamicQuery =
-					getRecordVersionDynamicQuery();
+					_getRecordVersionDynamicQuery();
 
 				dynamicQuery.add(
 					formInstanceRecordIdProperty.in(
@@ -169,7 +169,7 @@ public class DDMFormInstanceRecordStagedModelRepository
 					"formInstanceId");
 
 				dynamicQuery.add(
-					formInstanceIdProperty.in(getFormInstanceDynamicQuery()));
+					formInstanceIdProperty.in(_getFormInstanceDynamicQuery()));
 			});
 
 		return exportActionableDynamicQuery;
@@ -220,13 +220,13 @@ public class DDMFormInstanceRecordStagedModelRepository
 				userId, ddmFormInstanceRecord.getFormInstanceRecordId(), false,
 				ddmFormValues, serviceContext);
 
-		updateVersions(
+		_updateVersions(
 			importedDDMFormInstanceRecord, ddmFormInstanceRecord.getVersion());
 
 		return importedDDMFormInstanceRecord;
 	}
 
-	protected DynamicQuery getFormInstanceDynamicQuery() {
+	private DynamicQuery _getFormInstanceDynamicQuery() {
 		StagedModelDataHandler<?> stagedModelDataHandler =
 			StagedModelDataHandlerRegistryUtil.getStagedModelDataHandler(
 				DDMFormInstanceRecord.class.getName());
@@ -247,7 +247,7 @@ public class DDMFormInstanceRecordStagedModelRepository
 		return formInstanceDynamicQuery;
 	}
 
-	protected DynamicQuery getRecordVersionDynamicQuery() {
+	private DynamicQuery _getRecordVersionDynamicQuery() {
 		StagedModelDataHandler<?> stagedModelDataHandler =
 			StagedModelDataHandlerRegistryUtil.getStagedModelDataHandler(
 				DDMFormInstanceRecord.class.getName());
@@ -278,7 +278,7 @@ public class DDMFormInstanceRecordStagedModelRepository
 		return formInstanceRecordVersionDynamicQuery;
 	}
 
-	protected void updateVersions(
+	private void _updateVersions(
 			DDMFormInstanceRecord importedDDMFormInstanceRecord, String version)
 		throws PortalException {
 

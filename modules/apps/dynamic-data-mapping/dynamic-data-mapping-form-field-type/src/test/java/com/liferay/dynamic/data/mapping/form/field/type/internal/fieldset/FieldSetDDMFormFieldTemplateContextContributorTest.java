@@ -52,7 +52,7 @@ public class FieldSetDDMFormFieldTemplateContextContributorTest
 
 	@Test
 	public void testGetRows() throws Exception {
-		String ddmFormLayoutDefinition = read("ddm-structure-layout.json");
+		String ddmFormLayoutDefinition = _read("ddm-structure-layout.json");
 
 		JSONArray rowsJSONArray =
 			_fieldSetDDMFormFieldTemplateContextContributor.getRowsJSONArray(
@@ -118,7 +118,7 @@ public class FieldSetDDMFormFieldTemplateContextContributorTest
 		Assert.assertEquals(12, firstColumnJSONObject.getInt("size"));
 	}
 
-	protected String read(String fileName) throws IOException {
+	private String _read(String fileName) throws IOException {
 		Class<?> clazz = getClass();
 
 		InputStream inputStream = clazz.getResourceAsStream(

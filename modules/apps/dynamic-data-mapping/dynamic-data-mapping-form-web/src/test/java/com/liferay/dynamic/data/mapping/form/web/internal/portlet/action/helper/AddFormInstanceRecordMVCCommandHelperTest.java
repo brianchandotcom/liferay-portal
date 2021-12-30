@@ -84,16 +84,16 @@ public class AddFormInstanceRecordMVCCommandHelperTest extends PowerMockito {
 
 	@Before
 	public void setUp() throws Exception {
-		setUpAddRecordMVCCommandHelper();
-		setUpLanguageUtil();
-		setUpResourceBundleUtil();
+		_setUpAddRecordMVCCommandHelper();
+		_setUpLanguageUtil();
+		_setUpResourceBundleUtil();
 
-		mockGetDDMFormLayout();
+		_mockGetDDMFormLayout();
 	}
 
 	@Test
 	public void testInvisibleAndLocalizableField() throws Exception {
-		mockDDMFormEvaluator(
+		_mockDDMFormEvaluator(
 			HashMapBuilder.<String, Object>put(
 				"visible", false
 			).build());
@@ -123,13 +123,13 @@ public class AddFormInstanceRecordMVCCommandHelperTest extends PowerMockito {
 		_addRecordMVCCommandHelper.updateRequiredFieldsAccordingToVisibility(
 			_actionRequest, _ddmForm, _ddmFormValues, LocaleUtil.US);
 
-		Value value = getFieldValue(_FIELD_NAME);
+		Value value = _getFieldValue(_FIELD_NAME);
 
 		Assert.assertEquals(
 			StringPool.BLANK, value.getString(LocaleUtil.BRAZIL));
 		Assert.assertEquals(StringPool.BLANK, value.getString(LocaleUtil.US));
 
-		value = getFieldValue(_NESTED_FIELD_NAME);
+		value = _getFieldValue(_NESTED_FIELD_NAME);
 
 		Assert.assertEquals(
 			StringPool.BLANK, value.getString(LocaleUtil.BRAZIL));
@@ -138,7 +138,7 @@ public class AddFormInstanceRecordMVCCommandHelperTest extends PowerMockito {
 
 	@Test
 	public void testInvisibleFieldWithNullValue() throws Exception {
-		mockDDMFormEvaluator(
+		_mockDDMFormEvaluator(
 			HashMapBuilder.<String, Object>put(
 				"visible", false
 			).build());
@@ -161,13 +161,13 @@ public class AddFormInstanceRecordMVCCommandHelperTest extends PowerMockito {
 		_addRecordMVCCommandHelper.updateRequiredFieldsAccordingToVisibility(
 			_actionRequest, _ddmForm, _ddmFormValues, LocaleUtil.US);
 
-		Assert.assertNull(getFieldValue(_FIELD_NAME));
-		Assert.assertNull(getFieldValue(_NESTED_FIELD_NAME));
+		Assert.assertNull(_getFieldValue(_FIELD_NAME));
+		Assert.assertNull(_getFieldValue(_NESTED_FIELD_NAME));
 	}
 
 	@Test
 	public void testNotRequiredAndInvisibleField() throws Exception {
-		mockDDMFormEvaluator(
+		_mockDDMFormEvaluator(
 			HashMapBuilder.<String, Object>put(
 				"visible", false
 			).build());
@@ -178,16 +178,17 @@ public class AddFormInstanceRecordMVCCommandHelperTest extends PowerMockito {
 			_actionRequest, _ddmForm, _ddmFormValues, LocaleUtil.US);
 
 		Assert.assertEquals(
-			new UnlocalizedValue(StringPool.BLANK), getFieldValue(_FIELD_NAME));
+			new UnlocalizedValue(StringPool.BLANK),
+			_getFieldValue(_FIELD_NAME));
 		Assert.assertEquals(
 			new UnlocalizedValue(StringPool.BLANK),
-			getFieldValue(_NESTED_FIELD_NAME));
+			_getFieldValue(_NESTED_FIELD_NAME));
 		Assert.assertFalse(_ddmFormField.isRequired());
 	}
 
 	@Test
 	public void testNotRequiredAndVisibleField() throws Exception {
-		mockDDMFormEvaluator(
+		_mockDDMFormEvaluator(
 			HashMapBuilder.<String, Object>put(
 				"visible", true
 			).build());
@@ -198,16 +199,16 @@ public class AddFormInstanceRecordMVCCommandHelperTest extends PowerMockito {
 			_actionRequest, _ddmForm, _ddmFormValues, LocaleUtil.US);
 
 		Assert.assertEquals(
-			new UnlocalizedValue(_STRING_VALUE), getFieldValue(_FIELD_NAME));
+			new UnlocalizedValue(_STRING_VALUE), _getFieldValue(_FIELD_NAME));
 		Assert.assertEquals(
 			new UnlocalizedValue(_STRING_VALUE),
-			getFieldValue(_NESTED_FIELD_NAME));
+			_getFieldValue(_NESTED_FIELD_NAME));
 		Assert.assertFalse(_ddmFormField.isRequired());
 	}
 
 	@Test
 	public void testRequiredAndInvisibleField() throws Exception {
-		mockDDMFormEvaluator(
+		_mockDDMFormEvaluator(
 			HashMapBuilder.<String, Object>put(
 				"visible", false
 			).build());
@@ -216,16 +217,17 @@ public class AddFormInstanceRecordMVCCommandHelperTest extends PowerMockito {
 			_actionRequest, _ddmForm, _ddmFormValues, LocaleUtil.US);
 
 		Assert.assertEquals(
-			new UnlocalizedValue(StringPool.BLANK), getFieldValue(_FIELD_NAME));
+			new UnlocalizedValue(StringPool.BLANK),
+			_getFieldValue(_FIELD_NAME));
 		Assert.assertEquals(
 			new UnlocalizedValue(StringPool.BLANK),
-			getFieldValue(_NESTED_FIELD_NAME));
+			_getFieldValue(_NESTED_FIELD_NAME));
 		Assert.assertFalse(_ddmFormField.isRequired());
 	}
 
 	@Test
 	public void testRequiredAndVisibleField() throws Exception {
-		mockDDMFormEvaluator(
+		_mockDDMFormEvaluator(
 			HashMapBuilder.<String, Object>put(
 				"visible", true
 			).build());
@@ -234,10 +236,10 @@ public class AddFormInstanceRecordMVCCommandHelperTest extends PowerMockito {
 			_actionRequest, _ddmForm, _ddmFormValues, LocaleUtil.US);
 
 		Assert.assertEquals(
-			new UnlocalizedValue(_STRING_VALUE), getFieldValue(_FIELD_NAME));
+			new UnlocalizedValue(_STRING_VALUE), _getFieldValue(_FIELD_NAME));
 		Assert.assertEquals(
 			new UnlocalizedValue(_STRING_VALUE),
-			getFieldValue(_NESTED_FIELD_NAME));
+			_getFieldValue(_NESTED_FIELD_NAME));
 		Assert.assertTrue(_ddmFormField.isRequired());
 	}
 
@@ -255,7 +257,7 @@ public class AddFormInstanceRecordMVCCommandHelperTest extends PowerMockito {
 			_mockDDMFormInstance(), _actionRequest);
 	}
 
-	protected Value getFieldValue(String fieldName) {
+	private Value _getFieldValue(String fieldName) {
 		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
 			_ddmFormValues.getDDMFormFieldValuesMap(true);
 
@@ -271,7 +273,7 @@ public class AddFormInstanceRecordMVCCommandHelperTest extends PowerMockito {
 		return ddmFormFieldValue.getValue();
 	}
 
-	protected void mockDDMFormEvaluator(
+	private void _mockDDMFormEvaluator(
 			Map<String, Object> fieldChangesProperties)
 		throws Exception {
 
@@ -337,7 +339,51 @@ public class AddFormInstanceRecordMVCCommandHelperTest extends PowerMockito {
 		);
 	}
 
-	protected void mockGetDDMFormLayout() throws Exception {
+	private DDMFormInstance _mockDDMFormInstance() throws Exception {
+		DDMFormInstance ddmFormInstance = mock(DDMFormInstance.class);
+
+		DDMFormInstanceSettings ddmFormInstanceSettings =
+			_mockDDMFormInstanceSettings();
+
+		when(
+			ddmFormInstance.getSettingsModel()
+		).thenReturn(
+			ddmFormInstanceSettings
+		);
+
+		return ddmFormInstance;
+	}
+
+	private DDMFormInstanceSettings _mockDDMFormInstanceSettings() {
+		DDMFormInstanceSettings ddmFormInstanceSettings = mock(
+			DDMFormInstanceSettings.class);
+
+		when(
+			ddmFormInstanceSettings.expirationDate()
+		).thenReturn(
+			"1987-09-22"
+		);
+
+		return ddmFormInstanceSettings;
+	}
+
+	private FFSubmissionsSettingsConfigurationActivator
+		_mockFFSubmissionsSettingsConfigurationActivator() {
+
+		FFSubmissionsSettingsConfigurationActivator
+			ffSubmissionsSettingsConfigurationActivator = mock(
+				FFSubmissionsSettingsConfigurationActivator.class);
+
+		when(
+			ffSubmissionsSettingsConfigurationActivator.expirationDateEnabled()
+		).thenReturn(
+			true
+		);
+
+		return ffSubmissionsSettingsConfigurationActivator;
+	}
+
+	private void _mockGetDDMFormLayout() throws Exception {
 		DDMFormInstance formInstance = mock(DDMFormInstance.class);
 
 		when(
@@ -361,7 +407,19 @@ public class AddFormInstanceRecordMVCCommandHelperTest extends PowerMockito {
 		);
 	}
 
-	protected void setUpAddRecordMVCCommandHelper() throws Exception {
+	private ThemeDisplay _mockThemeDisplay() {
+		ThemeDisplay themeDisplay = mock(ThemeDisplay.class);
+
+		when(
+			themeDisplay.getTimeZone()
+		).thenReturn(
+			TimeZone.getDefault()
+		);
+
+		return themeDisplay;
+	}
+
+	private void _setUpAddRecordMVCCommandHelper() throws Exception {
 		_addRecordMVCCommandHelper =
 			new AddFormInstanceRecordMVCCommandHelper();
 
@@ -410,13 +468,13 @@ public class AddFormInstanceRecordMVCCommandHelperTest extends PowerMockito {
 		);
 	}
 
-	protected void setUpLanguageUtil() {
+	private void _setUpLanguageUtil() {
 		LanguageUtil languageUtil = new LanguageUtil();
 
 		languageUtil.setLanguage(mock(Language.class));
 	}
 
-	protected void setUpResourceBundleUtil() {
+	private void _setUpResourceBundleUtil() {
 		mockStatic(ResourceBundleUtil.class);
 
 		when(
@@ -426,62 +484,6 @@ public class AddFormInstanceRecordMVCCommandHelperTest extends PowerMockito {
 		).thenReturn(
 			ResourceBundleUtil.EMPTY_RESOURCE_BUNDLE
 		);
-	}
-
-	private DDMFormInstance _mockDDMFormInstance() throws Exception {
-		DDMFormInstance ddmFormInstance = mock(DDMFormInstance.class);
-
-		DDMFormInstanceSettings ddmFormInstanceSettings =
-			_mockDDMFormInstanceSettings();
-
-		when(
-			ddmFormInstance.getSettingsModel()
-		).thenReturn(
-			ddmFormInstanceSettings
-		);
-
-		return ddmFormInstance;
-	}
-
-	private DDMFormInstanceSettings _mockDDMFormInstanceSettings() {
-		DDMFormInstanceSettings ddmFormInstanceSettings = mock(
-			DDMFormInstanceSettings.class);
-
-		when(
-			ddmFormInstanceSettings.expirationDate()
-		).thenReturn(
-			"1987-09-22"
-		);
-
-		return ddmFormInstanceSettings;
-	}
-
-	private FFSubmissionsSettingsConfigurationActivator
-		_mockFFSubmissionsSettingsConfigurationActivator() {
-
-		FFSubmissionsSettingsConfigurationActivator
-			ffSubmissionsSettingsConfigurationActivator = mock(
-				FFSubmissionsSettingsConfigurationActivator.class);
-
-		when(
-			ffSubmissionsSettingsConfigurationActivator.expirationDateEnabled()
-		).thenReturn(
-			true
-		);
-
-		return ffSubmissionsSettingsConfigurationActivator;
-	}
-
-	private ThemeDisplay _mockThemeDisplay() {
-		ThemeDisplay themeDisplay = mock(ThemeDisplay.class);
-
-		when(
-			themeDisplay.getTimeZone()
-		).thenReturn(
-			TimeZone.getDefault()
-		);
-
-		return themeDisplay;
 	}
 
 	private static final String _FIELD_NAME = "field0";

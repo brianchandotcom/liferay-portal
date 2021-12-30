@@ -59,7 +59,7 @@ public class CheckboxMultipleDDMFormFieldTemplateContextContributor
 		return HashMapBuilder.<String, Object>put(
 			"inline", GetterUtil.getBoolean(ddmFormField.getProperty("inline"))
 		).put(
-			"options", getOptions(ddmFormField, ddmFormFieldRenderingContext)
+			"options", _getOptions(ddmFormField, ddmFormFieldRenderingContext)
 		).put(
 			"predefinedValue",
 			getValue(
@@ -103,22 +103,6 @@ public class CheckboxMultipleDDMFormFieldTemplateContextContributor
 		return ddmFormFieldOptions;
 	}
 
-	protected List<Object> getOptions(
-		DDMFormField ddmFormField,
-		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
-
-		CheckboxMultipleDDMFormFieldContextHelper
-			checkboxMultipleDDMFormFieldContextHelper =
-				new CheckboxMultipleDDMFormFieldContextHelper(
-					jsonFactory,
-					getDDMFormFieldOptions(
-						ddmFormField, ddmFormFieldRenderingContext),
-					ddmFormFieldRenderingContext.getLocale());
-
-		return checkboxMultipleDDMFormFieldContextHelper.getOptions(
-			ddmFormFieldRenderingContext);
-	}
-
 	protected List<String> getValue(String valueString) {
 		JSONArray jsonArray = null;
 
@@ -144,6 +128,22 @@ public class CheckboxMultipleDDMFormFieldTemplateContextContributor
 
 	@Reference
 	protected JSONFactory jsonFactory;
+
+	private List<Object> _getOptions(
+		DDMFormField ddmFormField,
+		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
+
+		CheckboxMultipleDDMFormFieldContextHelper
+			checkboxMultipleDDMFormFieldContextHelper =
+				new CheckboxMultipleDDMFormFieldContextHelper(
+					jsonFactory,
+					getDDMFormFieldOptions(
+						ddmFormField, ddmFormFieldRenderingContext),
+					ddmFormFieldRenderingContext.getLocale());
+
+		return checkboxMultipleDDMFormFieldContextHelper.getOptions(
+			ddmFormFieldRenderingContext);
+	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CheckboxMultipleDDMFormFieldTemplateContextContributor.class);

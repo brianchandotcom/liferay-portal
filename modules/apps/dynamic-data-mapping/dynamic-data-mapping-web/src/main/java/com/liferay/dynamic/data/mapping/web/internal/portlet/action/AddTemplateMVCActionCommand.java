@@ -57,7 +57,45 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class AddTemplateMVCActionCommand extends BaseDDMMVCActionCommand {
 
-	protected DDMTemplate addTemplate(ActionRequest actionRequest)
+	@Override
+	protected void doProcessAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		DDMTemplate template = _addTemplate(actionRequest);
+
+		updatePortletPreferences(actionRequest, template);
+
+		addSuccessMessage(actionRequest, actionResponse);
+
+		setRedirectAttribute(actionRequest, template);
+	}
+
+	protected String getScript(UploadPortletRequest uploadPortletRequest)
+		throws Exception {
+
+		String fileScriptContent = _getFileScriptContent(uploadPortletRequest);
+
+		if (Validator.isNotNull(fileScriptContent)) {
+			return fileScriptContent;
+		}
+
+		return ParamUtil.getString(uploadPortletRequest, "scriptContent");
+	}
+
+	@Reference(unbind = "-")
+	protected void setDDMTemplateService(
+		DDMTemplateService ddmTemplateService) {
+
+		this.ddmTemplateService = ddmTemplateService;
+	}
+
+	protected DDMTemplateService ddmTemplateService;
+
+	@Reference
+	protected Portal portal;
+
+	private DDMTemplate _addTemplate(ActionRequest actionRequest)
 		throws Exception {
 
 		UploadPortletRequest uploadPortletRequest =
@@ -100,21 +138,7 @@ public class AddTemplateMVCActionCommand extends BaseDDMMVCActionCommand {
 			smallImage, smallImageURL, smallImageFile, serviceContext);
 	}
 
-	@Override
-	protected void doProcessAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		DDMTemplate template = addTemplate(actionRequest);
-
-		updatePortletPreferences(actionRequest, template);
-
-		addSuccessMessage(actionRequest, actionResponse);
-
-		setRedirectAttribute(actionRequest, template);
-	}
-
-	protected String getFileScriptContent(
+	private String _getFileScriptContent(
 			UploadPortletRequest uploadPortletRequest)
 		throws Exception {
 
@@ -129,7 +153,7 @@ public class AddTemplateMVCActionCommand extends BaseDDMMVCActionCommand {
 		String contentType = MimeTypesUtil.getContentType(file);
 
 		if (Validator.isNotNull(fileScriptContent) &&
-			!isValidContentType(contentType)) {
+			!_isValidContentType(contentType)) {
 
 			throw new TemplateScriptException(
 				"Invalid contentType " + contentType);
@@ -138,19 +162,7 @@ public class AddTemplateMVCActionCommand extends BaseDDMMVCActionCommand {
 		return fileScriptContent;
 	}
 
-	protected String getScript(UploadPortletRequest uploadPortletRequest)
-		throws Exception {
-
-		String fileScriptContent = getFileScriptContent(uploadPortletRequest);
-
-		if (Validator.isNotNull(fileScriptContent)) {
-			return fileScriptContent;
-		}
-
-		return ParamUtil.getString(uploadPortletRequest, "scriptContent");
-	}
-
-	protected boolean isValidContentType(String contentType) {
+	private boolean _isValidContentType(String contentType) {
 		if (contentType.equals(ContentTypes.APPLICATION_XSLT_XML) ||
 			contentType.startsWith(ContentTypes.TEXT)) {
 
@@ -159,17 +171,5 @@ public class AddTemplateMVCActionCommand extends BaseDDMMVCActionCommand {
 
 		return false;
 	}
-
-	@Reference(unbind = "-")
-	protected void setDDMTemplateService(
-		DDMTemplateService ddmTemplateService) {
-
-		this.ddmTemplateService = ddmTemplateService;
-	}
-
-	protected DDMTemplateService ddmTemplateService;
-
-	@Reference
-	protected Portal portal;
 
 }

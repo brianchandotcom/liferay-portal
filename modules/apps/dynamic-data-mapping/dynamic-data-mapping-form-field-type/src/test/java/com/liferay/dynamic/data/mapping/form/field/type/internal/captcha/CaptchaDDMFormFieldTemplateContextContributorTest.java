@@ -47,7 +47,7 @@ public class CaptchaDDMFormFieldTemplateContextContributorTest
 		sb.append("</label><input type=\"text\"></div></div>");
 
 		CaptchaDDMFormFieldTemplateContextContributor
-			captchaDDMFormFieldTemplateContextContributor = createSpy(
+			captchaDDMFormFieldTemplateContextContributor = _createSpy(
 				sb.toString());
 
 		Map<String, Object> parameters =
@@ -58,7 +58,7 @@ public class CaptchaDDMFormFieldTemplateContextContributorTest
 		Assert.assertEquals(sb.toString(), parameters.get("html"));
 	}
 
-	protected CaptchaDDMFormFieldTemplateContextContributor createSpy(
+	private CaptchaDDMFormFieldTemplateContextContributor _createSpy(
 			String html)
 		throws Exception {
 

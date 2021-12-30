@@ -73,13 +73,13 @@ public class PublishFormInstanceMVCActionCommand
 
 		boolean published = !_isFormInstancePublished(ddmFormInstance);
 
-		updateFormInstancePermission(
+		_updateFormInstancePermission(
 			actionRequest, ddmFormInstance.getFormInstanceId(), published);
 
 		DDMFormValues settingsDDMFormValues =
 			ddmFormInstance.getSettingsDDMFormValues();
 
-		updatePublishedDDMFormFieldValue(settingsDDMFormValues, published);
+		_updatePublishedDDMFormFieldValue(settingsDDMFormValues, published);
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DDMFormInstance.class.getName(), actionRequest);
@@ -142,7 +142,16 @@ public class PublishFormInstanceMVCActionCommand
 		_roleLocalService = roleLocalService;
 	}
 
-	protected void updateFormInstancePermission(
+	private boolean _isFormInstancePublished(DDMFormInstance formInstance)
+		throws Exception {
+
+		DDMFormInstanceSettings ddmFormInstanceSettings =
+			formInstance.getSettingsModel();
+
+		return ddmFormInstanceSettings.published();
+	}
+
+	private void _updateFormInstancePermission(
 			ActionRequest actionRequest, long formInstanceId, boolean published)
 		throws PortalException {
 
@@ -182,7 +191,7 @@ public class PublishFormInstanceMVCActionCommand
 			resourcePermission);
 	}
 
-	protected void updatePublishedDDMFormFieldValue(
+	private void _updatePublishedDDMFormFieldValue(
 			DDMFormValues ddmFormValues, boolean published)
 		throws PortalException {
 
@@ -196,15 +205,6 @@ public class PublishFormInstanceMVCActionCommand
 
 		value.addString(
 			ddmFormValues.getDefaultLocale(), Boolean.toString(published));
-	}
-
-	private boolean _isFormInstancePublished(DDMFormInstance formInstance)
-		throws Exception {
-
-		DDMFormInstanceSettings ddmFormInstanceSettings =
-			formInstance.getSettingsModel();
-
-		return ddmFormInstanceSettings.published();
 	}
 
 	private DDMFormInstanceService _ddmFormInstanceService;

@@ -60,25 +60,25 @@ public class KeyValueDDMFormFieldTemplateContextContributor
 			GetterUtil.getBoolean(ddmFormField.getProperty("autoFocus"))
 		).put(
 			"placeholder",
-			getValueString(
+			_getValueString(
 				(LocalizedValue)ddmFormField.getProperty("placeholder"), locale)
 		).put(
 			"strings",
 			HashMapBuilder.put(
 				"keyLabel",
 				LanguageUtil.get(
-					getDisplayLocale(
+					_getDisplayLocale(
 						ddmFormFieldRenderingContext.getHttpServletRequest()),
 					"field-name")
 			).build()
 		).put(
 			"tooltip",
-			getValueString(
+			_getValueString(
 				(LocalizedValue)ddmFormField.getProperty("tooltip"), locale)
 		).build();
 	}
 
-	protected Locale getDisplayLocale(HttpServletRequest httpServletRequest) {
+	private Locale _getDisplayLocale(HttpServletRequest httpServletRequest) {
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
@@ -86,7 +86,7 @@ public class KeyValueDDMFormFieldTemplateContextContributor
 		return themeDisplay.getLocale();
 	}
 
-	protected String getValueString(Value value, Locale locale) {
+	private String _getValueString(Value value, Locale locale) {
 		if (value != null) {
 			return value.getString(locale);
 		}

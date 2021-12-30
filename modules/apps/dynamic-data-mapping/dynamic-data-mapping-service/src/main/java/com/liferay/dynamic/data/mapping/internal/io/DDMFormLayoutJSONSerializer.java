@@ -61,8 +61,8 @@ public class DDMFormLayoutJSONSerializer implements DDMFormLayoutSerializer {
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 		addDefaultLanguageId(jsonObject, ddmFormLayout.getDefaultLocale());
-		addPages(jsonObject, ddmFormLayout.getDDMFormLayoutPages());
-		addPaginationMode(jsonObject, ddmFormLayout.getPaginationMode());
+		_addPages(jsonObject, ddmFormLayout.getDDMFormLayoutPages());
+		_addPaginationMode(jsonObject, ddmFormLayout.getPaginationMode());
 		addRules(jsonObject, ddmFormLayout.getDDMFormRules());
 
 		if (Validator.isNotNull(ddmFormLayout.getDefinitionSchemaVersion())) {
@@ -82,85 +82,11 @@ public class DDMFormLayoutJSONSerializer implements DDMFormLayoutSerializer {
 		return builder.build();
 	}
 
-	protected void addColumns(
-		JSONObject jsonObject, List<DDMFormLayoutColumn> ddmFormLayoutColumns) {
-
-		JSONArray jsonArray = _jsonFactory.createJSONArray();
-
-		for (DDMFormLayoutColumn ddmFormLayoutColumn : ddmFormLayoutColumns) {
-			jsonArray.put(toJSONObject(ddmFormLayoutColumn));
-		}
-
-		jsonObject.put("columns", jsonArray);
-	}
-
 	protected void addDefaultLanguageId(
 		JSONObject jsonObject, Locale defaultLocale) {
 
 		jsonObject.put(
 			"defaultLanguageId", LocaleUtil.toLanguageId(defaultLocale));
-	}
-
-	protected void addDescription(
-		JSONObject pageJSONObject, LocalizedValue description) {
-
-		Map<Locale, String> values = description.getValues();
-
-		if (values.isEmpty()) {
-			return;
-		}
-
-		JSONObject jsonObject = _jsonFactory.createJSONObject();
-
-		for (Locale availableLocale : description.getAvailableLocales()) {
-			jsonObject.put(
-				LocaleUtil.toLanguageId(availableLocale),
-				description.getString(availableLocale));
-		}
-
-		pageJSONObject.put("description", jsonObject);
-	}
-
-	protected void addFieldNames(
-		JSONObject jsonObject, List<String> ddmFormFieldNames) {
-
-		JSONArray jsonArray = _jsonFactory.createJSONArray();
-
-		for (String ddmFormFieldName : ddmFormFieldNames) {
-			jsonArray.put(ddmFormFieldName);
-		}
-
-		jsonObject.put("fieldNames", jsonArray);
-	}
-
-	protected void addPages(
-		JSONObject jsonObject, List<DDMFormLayoutPage> ddmFormLayoutPages) {
-
-		JSONArray jsonArray = _jsonFactory.createJSONArray();
-
-		for (DDMFormLayoutPage ddmFormLayoutPage : ddmFormLayoutPages) {
-			jsonArray.put(toJSONObject(ddmFormLayoutPage));
-		}
-
-		jsonObject.put("pages", jsonArray);
-	}
-
-	protected void addPaginationMode(
-		JSONObject jsonObject, String paginationMode) {
-
-		jsonObject.put("paginationMode", paginationMode);
-	}
-
-	protected void addRows(
-		JSONObject jsonObject, List<DDMFormLayoutRow> ddmFormLayoutRows) {
-
-		JSONArray jsonArray = _jsonFactory.createJSONArray();
-
-		for (DDMFormLayoutRow ddmFormLayoutRow : ddmFormLayoutRows) {
-			jsonArray.put(toJSONObject(ddmFormLayoutRow));
-		}
-
-		jsonObject.put("rows", jsonArray);
 	}
 
 	protected void addRules(
@@ -172,14 +98,6 @@ public class DDMFormLayoutJSONSerializer implements DDMFormLayoutSerializer {
 
 		jsonObject.put(
 			"rules", DDMFormRuleJSONSerializer.serialize(ddmFormRules));
-	}
-
-	protected void addTitle(JSONObject pageJSONObject, LocalizedValue title) {
-		if (MapUtil.isEmpty(title.getValues())) {
-			return;
-		}
-
-		pageJSONObject.put("title", LocalizedValueUtil.toJSONObject(title));
 	}
 
 	@Reference(unbind = "-")
@@ -199,7 +117,7 @@ public class DDMFormLayoutJSONSerializer implements DDMFormLayoutSerializer {
 
 		jsonObject.put("size", ddmFormLayoutColumn.getSize());
 
-		addFieldNames(jsonObject, ddmFormLayoutColumn.getDDMFormFieldNames());
+		_addFieldNames(jsonObject, ddmFormLayoutColumn.getDDMFormFieldNames());
 
 		return jsonObject;
 	}
@@ -207,9 +125,9 @@ public class DDMFormLayoutJSONSerializer implements DDMFormLayoutSerializer {
 	protected JSONObject toJSONObject(DDMFormLayoutPage ddmFormLayoutPage) {
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
-		addDescription(jsonObject, ddmFormLayoutPage.getDescription());
-		addRows(jsonObject, ddmFormLayoutPage.getDDMFormLayoutRows());
-		addTitle(jsonObject, ddmFormLayoutPage.getTitle());
+		_addDescription(jsonObject, ddmFormLayoutPage.getDescription());
+		_addRows(jsonObject, ddmFormLayoutPage.getDDMFormLayoutRows());
+		_addTitle(jsonObject, ddmFormLayoutPage.getTitle());
 
 		return jsonObject;
 	}
@@ -217,9 +135,91 @@ public class DDMFormLayoutJSONSerializer implements DDMFormLayoutSerializer {
 	protected JSONObject toJSONObject(DDMFormLayoutRow ddmFormLayoutRow) {
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
-		addColumns(jsonObject, ddmFormLayoutRow.getDDMFormLayoutColumns());
+		_addColumns(jsonObject, ddmFormLayoutRow.getDDMFormLayoutColumns());
 
 		return jsonObject;
+	}
+
+	private void _addColumns(
+		JSONObject jsonObject, List<DDMFormLayoutColumn> ddmFormLayoutColumns) {
+
+		JSONArray jsonArray = _jsonFactory.createJSONArray();
+
+		for (DDMFormLayoutColumn ddmFormLayoutColumn : ddmFormLayoutColumns) {
+			jsonArray.put(toJSONObject(ddmFormLayoutColumn));
+		}
+
+		jsonObject.put("columns", jsonArray);
+	}
+
+	private void _addDescription(
+		JSONObject pageJSONObject, LocalizedValue description) {
+
+		Map<Locale, String> values = description.getValues();
+
+		if (values.isEmpty()) {
+			return;
+		}
+
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
+
+		for (Locale availableLocale : description.getAvailableLocales()) {
+			jsonObject.put(
+				LocaleUtil.toLanguageId(availableLocale),
+				description.getString(availableLocale));
+		}
+
+		pageJSONObject.put("description", jsonObject);
+	}
+
+	private void _addFieldNames(
+		JSONObject jsonObject, List<String> ddmFormFieldNames) {
+
+		JSONArray jsonArray = _jsonFactory.createJSONArray();
+
+		for (String ddmFormFieldName : ddmFormFieldNames) {
+			jsonArray.put(ddmFormFieldName);
+		}
+
+		jsonObject.put("fieldNames", jsonArray);
+	}
+
+	private void _addPages(
+		JSONObject jsonObject, List<DDMFormLayoutPage> ddmFormLayoutPages) {
+
+		JSONArray jsonArray = _jsonFactory.createJSONArray();
+
+		for (DDMFormLayoutPage ddmFormLayoutPage : ddmFormLayoutPages) {
+			jsonArray.put(toJSONObject(ddmFormLayoutPage));
+		}
+
+		jsonObject.put("pages", jsonArray);
+	}
+
+	private void _addPaginationMode(
+		JSONObject jsonObject, String paginationMode) {
+
+		jsonObject.put("paginationMode", paginationMode);
+	}
+
+	private void _addRows(
+		JSONObject jsonObject, List<DDMFormLayoutRow> ddmFormLayoutRows) {
+
+		JSONArray jsonArray = _jsonFactory.createJSONArray();
+
+		for (DDMFormLayoutRow ddmFormLayoutRow : ddmFormLayoutRows) {
+			jsonArray.put(toJSONObject(ddmFormLayoutRow));
+		}
+
+		jsonObject.put("rows", jsonArray);
+	}
+
+	private void _addTitle(JSONObject pageJSONObject, LocalizedValue title) {
+		if (MapUtil.isEmpty(title.getValues())) {
+			return;
+		}
+
+		pageJSONObject.put("title", LocalizedValueUtil.toJSONObject(title));
 	}
 
 	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;

@@ -49,13 +49,16 @@ public class DateDDMFormFieldValueValidator
 		throws DDMFormFieldValueValidationException {
 
 		for (Locale availableLocale : value.getAvailableLocales()) {
-			validateDateValue(
+			_validateDateValue(
 				ddmFormField, availableLocale,
 				value.getString(availableLocale));
 		}
 	}
 
-	protected void validateDateValue(
+	@Reference
+	protected JSONFactory jsonFactory;
+
+	private void _validateDateValue(
 			DDMFormField ddmFormField, Locale locale, String valueString)
 		throws DDMFormFieldValueValidationException {
 
@@ -75,9 +78,6 @@ public class DateDDMFormFieldValueValidator
 			}
 		}
 	}
-
-	@Reference
-	protected JSONFactory jsonFactory;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DateDDMFormFieldValueValidator.class);

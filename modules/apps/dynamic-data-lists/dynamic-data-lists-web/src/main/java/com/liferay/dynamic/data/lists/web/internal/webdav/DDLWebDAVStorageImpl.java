@@ -76,16 +76,16 @@ public class DDLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 			String[] pathArray = webDAVRequest.getPathArray();
 
 			if (pathArray.length == 2) {
-				return getFolders(webDAVRequest);
+				return _getFolders(webDAVRequest);
 			}
 			else if (pathArray.length == 3) {
 				String type = pathArray[2];
 
 				if (type.equals(DDMWebDAV.TYPE_STRUCTURES)) {
-					return getStructures(webDAVRequest);
+					return _getStructures(webDAVRequest);
 				}
 				else if (type.equals(DDMWebDAV.TYPE_TEMPLATES)) {
-					return getTemplates(webDAVRequest);
+					return _getTemplates(webDAVRequest);
 				}
 			}
 
@@ -101,58 +101,6 @@ public class DDLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 		return _ddmWebDAV.putResource(
 			webDAVRequest, getRootPath(), getToken(),
 			_portal.getClassNameId(DDLRecordSet.class));
-	}
-
-	protected List<Resource> getFolders(WebDAVRequest webDAVRequest)
-		throws Exception {
-
-		return ListUtil.fromArray(
-			_ddmWebDAV.toResource(
-				webDAVRequest, DDMWebDAV.TYPE_STRUCTURES, getRootPath(), true),
-			_ddmWebDAV.toResource(
-				webDAVRequest, DDMWebDAV.TYPE_TEMPLATES, getRootPath(), true));
-	}
-
-	protected List<Resource> getStructures(WebDAVRequest webDAVRequest)
-		throws Exception {
-
-		List<Resource> resources = new ArrayList<>();
-
-		List<DDMStructure> ddmStructures =
-			_ddmStructureLocalService.getStructures(
-				webDAVRequest.getGroupId(),
-				_portal.getClassNameId(DDLRecordSet.class));
-
-		for (DDMStructure ddmStructure : ddmStructures) {
-			Resource resource = _ddmWebDAV.toResource(
-				webDAVRequest, ddmStructure, getRootPath(), true);
-
-			resources.add(resource);
-		}
-
-		return resources;
-	}
-
-	protected List<Resource> getTemplates(WebDAVRequest webDAVRequest)
-		throws Exception {
-
-		List<Resource> resources = new ArrayList<>();
-
-		List<DDMTemplate> ddmTemplates =
-			_ddmTemplateLocalService.getTemplatesByStructureClassNameId(
-				webDAVRequest.getGroupId(),
-				_portal.getClassNameId(DDLRecordSet.class),
-				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null);
-
-		for (DDMTemplate ddmTemplate : ddmTemplates) {
-			Resource resource = _ddmWebDAV.toResource(
-				webDAVRequest, ddmTemplate, getRootPath(), true);
-
-			resources.add(resource);
-		}
-
-		return resources;
 	}
 
 	@Reference(unbind = "-")
@@ -172,6 +120,58 @@ public class DDLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 	@Reference(unbind = "-")
 	protected void setDDMWebDav(DDMWebDAV ddmWebDAV) {
 		_ddmWebDAV = ddmWebDAV;
+	}
+
+	private List<Resource> _getFolders(WebDAVRequest webDAVRequest)
+		throws Exception {
+
+		return ListUtil.fromArray(
+			_ddmWebDAV.toResource(
+				webDAVRequest, DDMWebDAV.TYPE_STRUCTURES, getRootPath(), true),
+			_ddmWebDAV.toResource(
+				webDAVRequest, DDMWebDAV.TYPE_TEMPLATES, getRootPath(), true));
+	}
+
+	private List<Resource> _getStructures(WebDAVRequest webDAVRequest)
+		throws Exception {
+
+		List<Resource> resources = new ArrayList<>();
+
+		List<DDMStructure> ddmStructures =
+			_ddmStructureLocalService.getStructures(
+				webDAVRequest.getGroupId(),
+				_portal.getClassNameId(DDLRecordSet.class));
+
+		for (DDMStructure ddmStructure : ddmStructures) {
+			Resource resource = _ddmWebDAV.toResource(
+				webDAVRequest, ddmStructure, getRootPath(), true);
+
+			resources.add(resource);
+		}
+
+		return resources;
+	}
+
+	private List<Resource> _getTemplates(WebDAVRequest webDAVRequest)
+		throws Exception {
+
+		List<Resource> resources = new ArrayList<>();
+
+		List<DDMTemplate> ddmTemplates =
+			_ddmTemplateLocalService.getTemplatesByStructureClassNameId(
+				webDAVRequest.getGroupId(),
+				_portal.getClassNameId(DDLRecordSet.class),
+				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
+
+		for (DDMTemplate ddmTemplate : ddmTemplates) {
+			Resource resource = _ddmWebDAV.toResource(
+				webDAVRequest, ddmTemplate, getRootPath(), true);
+
+			resources.add(resource);
+		}
+
+		return resources;
 	}
 
 	private DDMStructureLocalService _ddmStructureLocalService;

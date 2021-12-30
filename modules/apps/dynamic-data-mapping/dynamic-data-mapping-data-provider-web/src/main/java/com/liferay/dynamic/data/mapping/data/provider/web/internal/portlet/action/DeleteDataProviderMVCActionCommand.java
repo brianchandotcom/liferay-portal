@@ -42,13 +42,6 @@ import org.osgi.service.component.annotations.Reference;
 public class DeleteDataProviderMVCActionCommand
 	extends BaseTransactionalMVCActionCommand {
 
-	protected void doDeleteDataProviderInstance(long dataProviderInstanceId)
-		throws PortalException {
-
-		_ddmDataProviderInstanceService.deleteDataProviderInstance(
-			dataProviderInstanceId);
-	}
-
 	@Override
 	protected void doTransactionalCommand(
 			ActionRequest actionRequest, ActionResponse actionResponse)
@@ -72,8 +65,15 @@ public class DeleteDataProviderMVCActionCommand
 		for (long deleteDataProviderInstanceId :
 				deleteDataProviderInstanceIds) {
 
-			doDeleteDataProviderInstance(deleteDataProviderInstanceId);
+			_doDeleteDataProviderInstance(deleteDataProviderInstanceId);
 		}
+	}
+
+	private void _doDeleteDataProviderInstance(long dataProviderInstanceId)
+		throws PortalException {
+
+		_ddmDataProviderInstanceService.deleteDataProviderInstance(
+			dataProviderInstanceId);
 	}
 
 	@Reference

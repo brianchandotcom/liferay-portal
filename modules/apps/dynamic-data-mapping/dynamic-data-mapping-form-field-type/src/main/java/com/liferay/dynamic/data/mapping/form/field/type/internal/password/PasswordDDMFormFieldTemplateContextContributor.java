@@ -49,35 +49,35 @@ public class PasswordDDMFormFieldTemplateContextContributor
 
 		return HashMapBuilder.<String, Object>put(
 			"placeholder",
-			getPlaceholder(ddmFormField, ddmFormFieldRenderingContext)
+			_getPlaceholder(ddmFormField, ddmFormFieldRenderingContext)
 		).put(
-			"tooltip", getTooltip(ddmFormField, ddmFormFieldRenderingContext)
+			"tooltip", _getTooltip(ddmFormField, ddmFormFieldRenderingContext)
 		).build();
 	}
 
-	protected String getPlaceholder(
+	private String _getPlaceholder(
 		DDMFormField ddmFormField,
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
 
 		LocalizedValue placeholder = (LocalizedValue)ddmFormField.getProperty(
 			"placeholder");
 
-		return getValueString(
+		return _getValueString(
 			placeholder, ddmFormFieldRenderingContext.getLocale());
 	}
 
-	protected String getTooltip(
+	private String _getTooltip(
 		DDMFormField ddmFormField,
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
 
 		LocalizedValue tooltip = (LocalizedValue)ddmFormField.getProperty(
 			"tooltip");
 
-		return getValueString(
+		return _getValueString(
 			tooltip, ddmFormFieldRenderingContext.getLocale());
 	}
 
-	protected String getValueString(Value value, Locale locale) {
+	private String _getValueString(Value value, Locale locale) {
 		if (value != null) {
 			return value.getString(locale);
 		}

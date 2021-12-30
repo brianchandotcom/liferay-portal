@@ -54,16 +54,16 @@ public class DDMFormEvaluatorRuleHelper {
 	protected void checkFieldAffectedByAction(
 		DDMFormRule ddmFormRule, DDMFormField ddmFormField) {
 
-		checkFieldAffectedByCalculateAction(ddmFormRule, ddmFormField);
-		checkFieldAffectedBySetReadOnlyAction(ddmFormRule, ddmFormField);
-		checkFieldAffectedBySetRequiredAction(ddmFormRule, ddmFormField);
-		checkFieldAffectedBySetVisibleAction(ddmFormRule, ddmFormField);
+		_checkFieldAffectedByCalculateAction(ddmFormRule, ddmFormField);
+		_checkFieldAffectedBySetReadOnlyAction(ddmFormRule, ddmFormField);
+		_checkFieldAffectedBySetRequiredAction(ddmFormRule, ddmFormField);
+		_checkFieldAffectedBySetVisibleAction(ddmFormRule, ddmFormField);
 	}
 
-	protected void checkFieldAffectedByCalculateAction(
+	private void _checkFieldAffectedByCalculateAction(
 		DDMFormRule ddmFormRule, DDMFormField ddmFormField) {
 
-		if (containsAction(
+		if (_containsAction(
 				ddmFormRule, "calculate", ddmFormField.getName(),
 				GetterUtil.getString(ddmFormField.getProperty("value")))) {
 
@@ -87,10 +87,10 @@ public class DDMFormEvaluatorRuleHelper {
 		}
 	}
 
-	protected void checkFieldAffectedBySetReadOnlyAction(
+	private void _checkFieldAffectedBySetReadOnlyAction(
 		DDMFormRule ddmFormRule, DDMFormField ddmFormField) {
 
-		if (containsAction(
+		if (_containsAction(
 				ddmFormRule, "setEnabled", ddmFormField.getName(),
 				!ddmFormField.isReadOnly())) {
 
@@ -104,10 +104,10 @@ public class DDMFormEvaluatorRuleHelper {
 		}
 	}
 
-	protected void checkFieldAffectedBySetRequiredAction(
+	private void _checkFieldAffectedBySetRequiredAction(
 		DDMFormRule ddmFormRule, DDMFormField ddmFormField) {
 
-		if (containsAction(
+		if (_containsAction(
 				ddmFormRule, "setRequired", ddmFormField.getName(),
 				ddmFormField.isRequired())) {
 
@@ -121,10 +121,10 @@ public class DDMFormEvaluatorRuleHelper {
 		}
 	}
 
-	protected void checkFieldAffectedBySetVisibleAction(
+	private void _checkFieldAffectedBySetVisibleAction(
 		DDMFormRule ddmFormRule, DDMFormField ddmFormField) {
 
-		if (containsAction(
+		if (_containsAction(
 				ddmFormRule, "setVisible", ddmFormField.getName(), true)) {
 
 			UpdateFieldPropertyRequest.Builder builder =
@@ -136,7 +136,7 @@ public class DDMFormEvaluatorRuleHelper {
 		}
 	}
 
-	protected boolean containsAction(
+	private boolean _containsAction(
 		DDMFormRule ddmFormRule, String functionName, String ddmFormFieldName,
 		Object defaultValue) {
 

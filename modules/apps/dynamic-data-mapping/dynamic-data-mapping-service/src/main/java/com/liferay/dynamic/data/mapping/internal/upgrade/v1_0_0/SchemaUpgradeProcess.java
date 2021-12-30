@@ -26,7 +26,14 @@ import com.liferay.portal.kernel.util.StringUtil;
  */
 public class SchemaUpgradeProcess extends UpgradeProcess {
 
-	protected void alterTables() throws Exception {
+	@Override
+	protected void doUpgrade() throws Exception {
+		_updateSQL();
+
+		_alterTables();
+	}
+
+	private void _alterTables() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			alter(
 				DDMContentTable.class,
@@ -41,14 +48,7 @@ public class SchemaUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
-	@Override
-	protected void doUpgrade() throws Exception {
-		updateSQL();
-
-		alterTables();
-	}
-
-	protected void updateSQL() throws Exception {
+	private void _updateSQL() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			String template = StringUtil.read(
 				SchemaUpgradeProcess.class.getResourceAsStream(

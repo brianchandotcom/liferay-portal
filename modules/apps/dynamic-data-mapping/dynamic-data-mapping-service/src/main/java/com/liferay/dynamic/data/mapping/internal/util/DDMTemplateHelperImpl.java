@@ -91,7 +91,7 @@ public class DDMTemplateHelperImpl implements DDMTemplateHelper {
 		JSONObject variablesJSONObject = _jsonFactory.createJSONObject();
 
 		for (TemplateVariableDefinition templateVariableDefinition :
-				getAutocompleteTemplateVariableDefinitions(
+				_getAutocompleteTemplateVariableDefinitions(
 					httpServletRequest, language)) {
 
 			Class<?> clazz = templateVariableDefinition.getClazz();
@@ -103,12 +103,13 @@ public class DDMTemplateHelperImpl implements DDMTemplateHelper {
 			else {
 				if (!typesJSONObject.has(clazz.getName())) {
 					typesJSONObject.put(
-						clazz.getName(), getAutocompleteClassJSONObject(clazz));
+						clazz.getName(),
+						_getAutocompleteClassJSONObject(clazz));
 				}
 
 				variablesJSONObject.put(
 					templateVariableDefinition.getName(),
-					getAutocompleteVariableJSONObject(clazz));
+					_getAutocompleteVariableJSONObject(clazz));
 			}
 		}
 
@@ -132,11 +133,30 @@ public class DDMTemplateHelperImpl implements DDMTemplateHelper {
 		return false;
 	}
 
-	protected JSONObject getAutocompleteClassJSONObject(Class<?> clazz) {
+	@Reference(unbind = "-")
+	protected void setDDMStructureLocalService(
+		DDMStructureLocalService ddmStructureLocalService) {
+
+		_ddmStructureLocalService = ddmStructureLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDDMStructureService(
+		DDMStructureService ddmStructureService) {
+
+		_ddmStructureService = ddmStructureService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setJSONFactory(JSONFactory jsonFactory) {
+		_jsonFactory = jsonFactory;
+	}
+
+	private JSONObject _getAutocompleteClassJSONObject(Class<?> clazz) {
 		JSONObject typeJSONObject = _jsonFactory.createJSONObject();
 
 		for (Field field : clazz.getFields()) {
-			JSONObject fieldJSONObject = getAutocompleteVariableJSONObject(
+			JSONObject fieldJSONObject = _getAutocompleteVariableJSONObject(
 				field.getType());
 
 			typeJSONObject.put(field.getName(), fieldJSONObject);
@@ -169,8 +189,8 @@ public class DDMTemplateHelperImpl implements DDMTemplateHelper {
 		return typeJSONObject;
 	}
 
-	protected List<TemplateVariableDefinition>
-			getAutocompleteTemplateVariableDefinitions(
+	private List<TemplateVariableDefinition>
+			_getAutocompleteTemplateVariableDefinitions(
 				HttpServletRequest httpServletRequest, String language)
 		throws Exception {
 
@@ -245,31 +265,12 @@ public class DDMTemplateHelperImpl implements DDMTemplateHelper {
 		return new ArrayList<>(templateVariableDefinitions);
 	}
 
-	protected JSONObject getAutocompleteVariableJSONObject(Class<?> clazz) {
+	private JSONObject _getAutocompleteVariableJSONObject(Class<?> clazz) {
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 		jsonObject.put("type", clazz.getName());
 
 		return jsonObject;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMStructureLocalService(
-		DDMStructureLocalService ddmStructureLocalService) {
-
-		_ddmStructureLocalService = ddmStructureLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMStructureService(
-		DDMStructureService ddmStructureService) {
-
-		_ddmStructureService = ddmStructureService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setJSONFactory(JSONFactory jsonFactory) {
-		_jsonFactory = jsonFactory;
 	}
 
 	private static final String _TEMPLATE_CONTENT = "# Placeholder";

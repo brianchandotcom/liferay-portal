@@ -68,13 +68,13 @@ public class DDMDataProviderInstanceParameterSettingsServletTest
 
 	@Before
 	public void setUp() throws Exception {
-		setUpDDMDataProvider();
-		setUpDDMFormValuesJSONDeserializer();
-		setUpGetDataProviderParametersSettingsMVCResourceCommand();
-		setUpJSONFactoryUtil();
-		setUpLanguageUtil();
-		setUpPortalUtil();
-		setUpResourceBundleUtil();
+		_setUpDDMDataProvider();
+		_setUpDDMFormValuesJSONDeserializer();
+		_setUpGetDataProviderParametersSettingsMVCResourceCommand();
+		_setUpJSONFactoryUtil();
+		_setUpLanguageUtil();
+		_setUpPortalUtil();
+		_setUpResourceBundleUtil();
 	}
 
 	@Test
@@ -86,7 +86,7 @@ public class DDMDataProviderInstanceParameterSettingsServletTest
 					getDataProviderFormValues(
 						"form-values-data-provider-settings-1.json"));
 
-		String expectedValue = read(
+		String expectedValue = _read(
 			"data-provider-input-output-parameters-1.json");
 
 		JSONAssert.assertEquals(
@@ -102,7 +102,7 @@ public class DDMDataProviderInstanceParameterSettingsServletTest
 					getDataProviderFormValues(
 						"form-values-data-provider-settings-2.json"));
 
-		String expectedValue = read(
+		String expectedValue = _read(
 			"data-provider-input-output-parameters-2.json");
 
 		JSONAssert.assertEquals(
@@ -130,12 +130,12 @@ public class DDMDataProviderInstanceParameterSettingsServletTest
 		com.liferay.dynamic.data.mapping.model.DDMForm ddmForm =
 			DDMFormFactory.create(DDMDataProviderSettings.class);
 
-		String serializedDDMFormValues = read(file);
+		String serializedDDMFormValues = _read(file);
 
 		return deserialize(serializedDDMFormValues, ddmForm);
 	}
 
-	protected String read(String fileName) throws IOException {
+	private String _read(String fileName) throws IOException {
 		Class<?> clazz = getClass();
 
 		InputStream inputStream = clazz.getResourceAsStream(
@@ -144,7 +144,7 @@ public class DDMDataProviderInstanceParameterSettingsServletTest
 		return StringUtil.read(inputStream);
 	}
 
-	protected void setUpDDMDataProvider() {
+	private void _setUpDDMDataProvider() {
 		_ddmDataProvider = PowerMockito.mock(DDMDataProvider.class);
 
 		PowerMockito.when(
@@ -163,7 +163,7 @@ public class DDMDataProviderInstanceParameterSettingsServletTest
 		);
 	}
 
-	protected void setUpDDMFormValuesJSONDeserializer() throws Exception {
+	private void _setUpDDMFormValuesJSONDeserializer() throws Exception {
 		PowerMockito.field(
 			DDMFormValuesJSONDeserializer.class, "_jsonFactory"
 		).set(
@@ -178,7 +178,7 @@ public class DDMDataProviderInstanceParameterSettingsServletTest
 		);
 	}
 
-	protected void setUpGetDataProviderParametersSettingsMVCResourceCommand()
+	private void _setUpGetDataProviderParametersSettingsMVCResourceCommand()
 		throws Exception {
 
 		_ddmDataProviderInstanceParameterSettingsServlet =
@@ -200,23 +200,23 @@ public class DDMDataProviderInstanceParameterSettingsServletTest
 		);
 	}
 
-	protected void setUpJSONFactoryUtil() {
+	private void _setUpJSONFactoryUtil() {
 		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
 
 		jsonFactoryUtil.setJSONFactory(_jsonFactory);
 	}
 
-	protected void setUpLanguageUtil() {
+	private void _setUpLanguageUtil() {
 		LanguageUtil languageUtil = new LanguageUtil();
 
 		languageUtil.setLanguage(PowerMockito.mock(Language.class));
 	}
 
-	protected void setUpPortalClassLoaderUtil() {
+	private void _setUpPortalClassLoaderUtil() {
 		PortalClassLoaderUtil.setClassLoader(PortalImpl.class.getClassLoader());
 	}
 
-	protected void setUpPortalUtil() {
+	private void _setUpPortalUtil() {
 		PortalUtil portalUtil = new PortalUtil();
 
 		Portal portal = mock(Portal.class);
@@ -232,7 +232,7 @@ public class DDMDataProviderInstanceParameterSettingsServletTest
 		portalUtil.setPortal(portal);
 	}
 
-	protected void setUpResourceBundleUtil() {
+	private void _setUpResourceBundleUtil() {
 		PowerMockito.mockStatic(ResourceBundleUtil.class);
 
 		PowerMockito.when(

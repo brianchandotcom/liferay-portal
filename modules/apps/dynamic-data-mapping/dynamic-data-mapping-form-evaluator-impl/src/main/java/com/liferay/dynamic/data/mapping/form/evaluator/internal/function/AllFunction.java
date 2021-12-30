@@ -59,7 +59,7 @@ public class AllFunction
 		return Stream.of(
 			values
 		).allMatch(
-			value -> accept(expression, value)
+			value -> _accept(expression, value)
 		);
 	}
 
@@ -68,7 +68,13 @@ public class AllFunction
 		return NAME;
 	}
 
-	protected boolean accept(String expression, Object value) {
+	protected boolean isArray(Object parameter) {
+		Class<?> clazz = parameter.getClass();
+
+		return clazz.isArray();
+	}
+
+	private boolean _accept(String expression, Object value) {
 		expression = StringUtil.replace(
 			expression, "#value#", String.valueOf(value));
 
@@ -90,12 +96,6 @@ public class AllFunction
 		}
 
 		return false;
-	}
-
-	protected boolean isArray(Object parameter) {
-		Class<?> clazz = parameter.getClass();
-
-		return clazz.isArray();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(AllFunction.class);

@@ -110,7 +110,7 @@ public class DDMFormInstanceStagedModelRepository
 			_ddmFormInstanceLocalService.deleteFormInstance(formInstance);
 		}
 
-		deleteDDMStructures(formInstanceDDMStructureIds);
+		_deleteDDMStructures(formInstanceDDMStructureIds);
 	}
 
 	@Override
@@ -191,7 +191,7 @@ public class DDMFormInstanceStagedModelRepository
 			ddmFormInstance.getSettingsDDMFormValues(), serviceContext);
 	}
 
-	protected void deleteDDMStructures(Set<Long> ddmStructureIds)
+	private void _deleteDDMStructures(Set<Long> ddmStructureIds)
 		throws PortalException {
 
 		for (Long ddmStructureId : ddmStructureIds) {

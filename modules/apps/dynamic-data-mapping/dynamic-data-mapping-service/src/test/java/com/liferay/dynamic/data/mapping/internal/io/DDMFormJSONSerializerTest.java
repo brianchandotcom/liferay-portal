@@ -68,7 +68,7 @@ public class DDMFormJSONSerializerTest extends BaseDDMFormSerializerTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 
-		setUpDDMFormJSONSerializer();
+		_setUpDDMFormJSONSerializer();
 		setUpPortalUtil();
 	}
 
@@ -78,9 +78,9 @@ public class DDMFormJSONSerializerTest extends BaseDDMFormSerializerTestCase {
 
 		DDMForm ddmForm = createDDMForm();
 
-		ddmForm.setDDMFormRules(createDDMFormRules());
+		ddmForm.setDDMFormRules(_createDDMFormRules());
 		ddmForm.setDDMFormSuccessPageSettings(
-			createDDMFormSuccessPageSettings());
+			_createDDMFormSuccessPageSettings());
 
 		String actualJSON = serialize(ddmForm);
 
@@ -99,38 +99,6 @@ public class DDMFormJSONSerializerTest extends BaseDDMFormSerializerTestCase {
 		String actualJSON = serialize(ddmForm);
 
 		JSONAssert.assertEquals(expectedJSON, actualJSON, false);
-	}
-
-	protected List<DDMFormRule> createDDMFormRules() {
-		List<DDMFormRule> ddmFormRules = new ArrayList<>();
-
-		DDMFormRule ddmFormRule1 = new DDMFormRule(
-			Arrays.asList("Action 1", "Action 2"), "Condition 1");
-
-		ddmFormRules.add(ddmFormRule1);
-
-		DDMFormRule ddmFormRule2 = new DDMFormRule(
-			Arrays.asList("Action 3"), "Condition 2");
-
-		ddmFormRule2.setEnabled(false);
-
-		ddmFormRules.add(ddmFormRule2);
-
-		return ddmFormRules;
-	}
-
-	protected DDMFormSuccessPageSettings createDDMFormSuccessPageSettings() {
-		LocalizedValue body = new LocalizedValue(LocaleUtil.US);
-
-		body.addString(LocaleUtil.US, "Body Text");
-		body.addString(LocaleUtil.BRAZIL, "Texto");
-
-		LocalizedValue title = new LocalizedValue(LocaleUtil.US);
-
-		title.addString(LocaleUtil.US, "Title Text");
-		title.addString(LocaleUtil.BRAZIL, "Título");
-
-		return new DDMFormSuccessPageSettings(body, title, true);
 	}
 
 	protected DDMFormFieldTypeServicesTracker
@@ -184,24 +152,6 @@ public class DDMFormJSONSerializerTest extends BaseDDMFormSerializerTestCase {
 		return ddmFormSerializerSerializeResponse.getContent();
 	}
 
-	protected void setUpDDMFormJSONSerializer() throws Exception {
-
-		// DDM form field type services tracker
-
-		Field field = ReflectionUtil.getDeclaredField(
-			DDMFormJSONSerializer.class, "_ddmFormFieldTypeServicesTracker");
-
-		field.set(
-			_ddmFormJSONSerializer, getMockedDDMFormFieldTypeServicesTracker());
-
-		// JSON factory
-
-		field = ReflectionUtil.getDeclaredField(
-			DDMFormJSONSerializer.class, "_jsonFactory");
-
-		field.set(_ddmFormJSONSerializer, new JSONFactoryImpl());
-	}
-
 	protected void setUpDefaultDDMFormFieldType() {
 		when(
 			_defaultDDMFormFieldType.getDDMFormFieldTypeSettings()
@@ -234,6 +184,56 @@ public class DDMFormJSONSerializerTest extends BaseDDMFormSerializerTestCase {
 		);
 
 		portalUtil.setPortal(portal);
+	}
+
+	private List<DDMFormRule> _createDDMFormRules() {
+		List<DDMFormRule> ddmFormRules = new ArrayList<>();
+
+		DDMFormRule ddmFormRule1 = new DDMFormRule(
+			Arrays.asList("Action 1", "Action 2"), "Condition 1");
+
+		ddmFormRules.add(ddmFormRule1);
+
+		DDMFormRule ddmFormRule2 = new DDMFormRule(
+			Arrays.asList("Action 3"), "Condition 2");
+
+		ddmFormRule2.setEnabled(false);
+
+		ddmFormRules.add(ddmFormRule2);
+
+		return ddmFormRules;
+	}
+
+	private DDMFormSuccessPageSettings _createDDMFormSuccessPageSettings() {
+		LocalizedValue body = new LocalizedValue(LocaleUtil.US);
+
+		body.addString(LocaleUtil.US, "Body Text");
+		body.addString(LocaleUtil.BRAZIL, "Texto");
+
+		LocalizedValue title = new LocalizedValue(LocaleUtil.US);
+
+		title.addString(LocaleUtil.US, "Title Text");
+		title.addString(LocaleUtil.BRAZIL, "Título");
+
+		return new DDMFormSuccessPageSettings(body, title, true);
+	}
+
+	private void _setUpDDMFormJSONSerializer() throws Exception {
+
+		// DDM form field type services tracker
+
+		Field field = ReflectionUtil.getDeclaredField(
+			DDMFormJSONSerializer.class, "_ddmFormFieldTypeServicesTracker");
+
+		field.set(
+			_ddmFormJSONSerializer, getMockedDDMFormFieldTypeServicesTracker());
+
+		// JSON factory
+
+		field = ReflectionUtil.getDeclaredField(
+			DDMFormJSONSerializer.class, "_jsonFactory");
+
+		field.set(_ddmFormJSONSerializer, new JSONFactoryImpl());
 	}
 
 	private final DDMFormJSONSerializer _ddmFormJSONSerializer =

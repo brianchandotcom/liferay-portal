@@ -68,7 +68,7 @@ public class DDMDataProviderInstancesServlet extends BaseDDMFormBuilderServlet {
 		throws IOException, ServletException {
 
 		JSONArray dataProviderInstancesJSONArray =
-			getDataProviderInstancesJSONArray(httpServletRequest);
+			_getDataProviderInstancesJSONArray(httpServletRequest);
 
 		if (dataProviderInstancesJSONArray == null) {
 			httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST);
@@ -83,7 +83,7 @@ public class DDMDataProviderInstancesServlet extends BaseDDMFormBuilderServlet {
 			httpServletResponse, dataProviderInstancesJSONArray.toJSONString());
 	}
 
-	protected JSONArray getDataProviderInstancesJSONArray(
+	private JSONArray _getDataProviderInstancesJSONArray(
 		HttpServletRequest httpServletRequest) {
 
 		try {

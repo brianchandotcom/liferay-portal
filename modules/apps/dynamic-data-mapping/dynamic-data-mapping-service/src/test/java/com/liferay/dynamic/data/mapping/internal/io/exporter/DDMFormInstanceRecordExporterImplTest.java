@@ -90,9 +90,9 @@ public class DDMFormInstanceRecordExporterImplTest extends PowerMockito {
 
 	@Before
 	public void setUp() throws Exception {
-		setUpFastDateFormatFactoryUtil();
-		setUpHtmlUtil();
-		setUpLanguageUtil();
+		_setUpFastDateFormatFactoryUtil();
+		_setUpHtmlUtil();
+		_setUpLanguageUtil();
 	}
 
 	@Test
@@ -760,7 +760,7 @@ public class DDMFormInstanceRecordExporterImplTest extends PowerMockito {
 		);
 	}
 
-	protected void setUpFastDateFormatFactoryUtil() {
+	private void _setUpFastDateFormatFactoryUtil() {
 		FastDateFormatFactoryUtil fastDateFormatFactoryUtil =
 			new FastDateFormatFactoryUtil();
 
@@ -768,13 +768,13 @@ public class DDMFormInstanceRecordExporterImplTest extends PowerMockito {
 			new FastDateFormatFactoryImpl());
 	}
 
-	protected void setUpHtmlUtil() {
+	private void _setUpHtmlUtil() {
 		HtmlUtil htmlUtil = new HtmlUtil();
 
 		htmlUtil.setHtml(_html);
 	}
 
-	protected void setUpLanguageUtil() {
+	private void _setUpLanguageUtil() {
 		LanguageUtil languageUtil = new LanguageUtil();
 
 		languageUtil.setLanguage(_language);

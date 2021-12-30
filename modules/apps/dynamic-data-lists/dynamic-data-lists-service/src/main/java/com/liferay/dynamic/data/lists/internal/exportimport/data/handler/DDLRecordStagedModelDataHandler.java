@@ -89,7 +89,7 @@ public class DDLRecordStagedModelDataHandler
 
 		Element recordElement = portletDataContext.getExportDataElement(record);
 
-		exportDDMFormValues(portletDataContext, record, recordElement);
+		_exportDDMFormValues(portletDataContext, record, recordElement);
 
 		portletDataContext.addClassedModel(
 			recordElement, ExportImportPathUtil.getModelPath(record), record);
@@ -128,7 +128,7 @@ public class DDLRecordStagedModelDataHandler
 
 		Element recordElement = portletDataContext.getImportDataElement(record);
 
-		DDMFormValues ddmFormValues = getImportDDMFormValues(
+		DDMFormValues ddmFormValues = _getImportDDMFormValues(
 			portletDataContext, recordElement, recordSetId);
 
 		DDLRecord importedRecord = (DDLRecord)record.clone();
@@ -157,67 +157,9 @@ public class DDLRecordStagedModelDataHandler
 		portletDataContext.importClassedModel(record, importedRecord);
 	}
 
-	protected void exportDDMFormValues(
-			PortletDataContext portletDataContext, DDLRecord record,
-			Element recordElement)
-		throws Exception {
-
-		String ddmFormValuesPath = ExportImportPathUtil.getModelPath(
-			record, "ddm-form-values.json");
-
-		recordElement.addAttribute("ddm-form-values-path", ddmFormValuesPath);
-
-		DDMFormValues ddmFormValues = _storageEngine.getDDMFormValues(
-			record.getDDMStorageId());
-
-		ddmFormValues =
-			_ddmFormValuesExportImportContentProcessor.
-				replaceExportContentReferences(
-					portletDataContext, record, ddmFormValues, true, false);
-
-		portletDataContext.addZipEntry(
-			ddmFormValuesPath, serialize(ddmFormValues));
-	}
-
-	protected DDMFormValues getImportDDMFormValues(
-			PortletDataContext portletDataContext, Element recordElement,
-			long recordSetId)
-		throws Exception {
-
-		DDLRecordSet recordSet = _ddlRecordSetLocalService.getRecordSet(
-			recordSetId);
-
-		DDMStructure ddmStructure = recordSet.getDDMStructure();
-
-		String ddmFormValuesPath = recordElement.attributeValue(
-			"ddm-form-values-path");
-
-		String serializedDDMFormValues = portletDataContext.getZipEntryAsString(
-			ddmFormValuesPath);
-
-		DDMFormValues ddmFormValues = deserialize(
-			serializedDDMFormValues, ddmStructure.getDDMForm());
-
-		return _ddmFormValuesExportImportContentProcessor.
-			replaceImportContentReferences(
-				portletDataContext, ddmStructure, ddmFormValues);
-	}
-
 	@Override
 	protected StagedModelRepository<DDLRecord> getStagedModelRepository() {
 		return _ddlRecordStagedModelRepository;
-	}
-
-	protected String serialize(DDMFormValues ddmFormValues) {
-		DDMFormValuesSerializerSerializeRequest.Builder builder =
-			DDMFormValuesSerializerSerializeRequest.Builder.newBuilder(
-				ddmFormValues);
-
-		DDMFormValuesSerializerSerializeResponse
-			ddmFormValuesSerializerSerializeResponse =
-				_jsonDDMFormValuesSerializer.serialize(builder.build());
-
-		return ddmFormValuesSerializerSerializeResponse.getContent();
 	}
 
 	@Reference(unbind = "-")
@@ -283,6 +225,64 @@ public class DDLRecordStagedModelDataHandler
 
 			throw portletDataException;
 		}
+	}
+
+	private void _exportDDMFormValues(
+			PortletDataContext portletDataContext, DDLRecord record,
+			Element recordElement)
+		throws Exception {
+
+		String ddmFormValuesPath = ExportImportPathUtil.getModelPath(
+			record, "ddm-form-values.json");
+
+		recordElement.addAttribute("ddm-form-values-path", ddmFormValuesPath);
+
+		DDMFormValues ddmFormValues = _storageEngine.getDDMFormValues(
+			record.getDDMStorageId());
+
+		ddmFormValues =
+			_ddmFormValuesExportImportContentProcessor.
+				replaceExportContentReferences(
+					portletDataContext, record, ddmFormValues, true, false);
+
+		portletDataContext.addZipEntry(
+			ddmFormValuesPath, _serialize(ddmFormValues));
+	}
+
+	private DDMFormValues _getImportDDMFormValues(
+			PortletDataContext portletDataContext, Element recordElement,
+			long recordSetId)
+		throws Exception {
+
+		DDLRecordSet recordSet = _ddlRecordSetLocalService.getRecordSet(
+			recordSetId);
+
+		DDMStructure ddmStructure = recordSet.getDDMStructure();
+
+		String ddmFormValuesPath = recordElement.attributeValue(
+			"ddm-form-values-path");
+
+		String serializedDDMFormValues = portletDataContext.getZipEntryAsString(
+			ddmFormValuesPath);
+
+		DDMFormValues ddmFormValues = deserialize(
+			serializedDDMFormValues, ddmStructure.getDDMForm());
+
+		return _ddmFormValuesExportImportContentProcessor.
+			replaceImportContentReferences(
+				portletDataContext, ddmStructure, ddmFormValues);
+	}
+
+	private String _serialize(DDMFormValues ddmFormValues) {
+		DDMFormValuesSerializerSerializeRequest.Builder builder =
+			DDMFormValuesSerializerSerializeRequest.Builder.newBuilder(
+				ddmFormValues);
+
+		DDMFormValuesSerializerSerializeResponse
+			ddmFormValuesSerializerSerializeResponse =
+				_jsonDDMFormValuesSerializer.serialize(builder.build());
+
+		return ddmFormValuesSerializerSerializeResponse.getContent();
 	}
 
 	private DDLRecordSetLocalService _ddlRecordSetLocalService;

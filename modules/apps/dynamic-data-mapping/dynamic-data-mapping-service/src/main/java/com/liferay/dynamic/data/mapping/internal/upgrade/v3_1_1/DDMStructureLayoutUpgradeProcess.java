@@ -30,12 +30,12 @@ public class DDMStructureLayoutUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		upgradeSchema();
+		_upgradeSchema();
 
-		populateFields();
+		_populateFields();
 	}
 
-	protected void populateFields() throws Exception {
+	private void _populateFields() throws Exception {
 		long classNameId = PortalUtil.getClassNameId(DDMStructure.class);
 
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
@@ -64,7 +64,7 @@ public class DDMStructureLayoutUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
-	protected void upgradeSchema() throws Exception {
+	private void _upgradeSchema() throws Exception {
 		if (!hasColumn("DDMStructureLayout", "classNameId") &&
 			!hasColumn("DDMStructureLayout", "structureLayoutKey")) {
 

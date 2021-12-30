@@ -45,7 +45,7 @@ public class GeolocationFieldRendererTest extends PowerMockito {
 
 	@Before
 	public void setUp() {
-		setUpLanguageUtil();
+		_setUpLanguageUtil();
 	}
 
 	@Test
@@ -56,12 +56,12 @@ public class GeolocationFieldRendererTest extends PowerMockito {
 		if (JavaDetector.isJDK8()) {
 			Assert.assertEquals(
 				"Latitud: 9,877, Longitud: 1,234",
-				fieldRenderer.render(createField(), LocaleUtil.SPAIN));
+				fieldRenderer.render(_createField(), LocaleUtil.SPAIN));
 		}
 		else {
 			Assert.assertEquals(
 				"Latitud: 9,876, Longitud: 1,234",
-				fieldRenderer.render(createField(), LocaleUtil.SPAIN));
+				fieldRenderer.render(_createField(), LocaleUtil.SPAIN));
 		}
 	}
 
@@ -73,31 +73,31 @@ public class GeolocationFieldRendererTest extends PowerMockito {
 		if (JavaDetector.isJDK8()) {
 			Assert.assertEquals(
 				"Latitude: 9.877, Longitude: 1.234",
-				fieldRenderer.render(createField(), LocaleUtil.US));
+				fieldRenderer.render(_createField(), LocaleUtil.US));
 		}
 		else {
 			Assert.assertEquals(
 				"Latitude: 9.876, Longitude: 1.234",
-				fieldRenderer.render(createField(), LocaleUtil.US));
+				fieldRenderer.render(_createField(), LocaleUtil.US));
 		}
 	}
 
-	protected Field createField() {
+	private Field _createField() {
 		return new Field("field", "{latitude: 9.8765, longitude: 1.2345}");
 	}
 
-	protected void setUpLanguageUtil() {
-		whenLanguageGet(LocaleUtil.SPAIN, "latitude", "Latitud");
-		whenLanguageGet(LocaleUtil.SPAIN, "longitude", "Longitud");
-		whenLanguageGet(LocaleUtil.US, "latitude", "Latitude");
-		whenLanguageGet(LocaleUtil.US, "longitude", "Longitude");
+	private void _setUpLanguageUtil() {
+		_whenLanguageGet(LocaleUtil.SPAIN, "latitude", "Latitud");
+		_whenLanguageGet(LocaleUtil.SPAIN, "longitude", "Longitud");
+		_whenLanguageGet(LocaleUtil.US, "latitude", "Latitude");
+		_whenLanguageGet(LocaleUtil.US, "longitude", "Longitude");
 
 		LanguageUtil languageUtil = new LanguageUtil();
 
 		languageUtil.setLanguage(_language);
 	}
 
-	protected void whenLanguageGet(
+	private void _whenLanguageGet(
 		Locale locale, String key, String returnValue) {
 
 		when(

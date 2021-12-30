@@ -59,11 +59,11 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 
 	@Before
 	public void setUp() throws Exception {
-		setUpJSONFactoryUtil();
-		setUpLanguageUtil();
-		setUpLocaleUtil();
-		setUpPortalClassLoaderUtil();
-		setUpResourceBundleUtil();
+		_setUpJSONFactoryUtil();
+		_setUpLanguageUtil();
+		_setUpLocaleUtil();
+		_setUpPortalClassLoaderUtil();
+		_setUpResourceBundleUtil();
 	}
 
 	protected DDMFormLayoutColumn createDDMFormLayoutColumn(
@@ -111,27 +111,30 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 		return StringUtil.read(inputStream);
 	}
 
-	protected void setUpJSONFactoryUtil() {
+	@Mock
+	protected Language language;
+
+	private void _setUpJSONFactoryUtil() {
 		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
 
 		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
 	}
 
-	protected void setUpLanguageUtil() {
+	private void _setUpLanguageUtil() {
 		Set<Locale> availableLocales = SetUtil.fromArray(
 			LocaleUtil.BRAZIL, LocaleUtil.US);
 
-		whenLanguageGetAvailableLocalesThen(availableLocales);
+		_whenLanguageGetAvailableLocalesThen(availableLocales);
 
-		whenLanguageIsAvailableLocale("en_US");
-		whenLanguageIsAvailableLocale("pt_BR");
+		_whenLanguageIsAvailableLocale("en_US");
+		_whenLanguageIsAvailableLocale("pt_BR");
 
 		LanguageUtil languageUtil = new LanguageUtil();
 
 		languageUtil.setLanguage(language);
 	}
 
-	protected void setUpLocaleUtil() {
+	private void _setUpLocaleUtil() {
 		mockStatic(LocaleUtil.class);
 
 		when(
@@ -202,7 +205,7 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 		);
 	}
 
-	protected void setUpPortalClassLoaderUtil() {
+	private void _setUpPortalClassLoaderUtil() {
 		mockStatic(PortalClassLoaderUtil.class);
 
 		when(
@@ -212,7 +215,7 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 		);
 	}
 
-	protected void setUpResourceBundleUtil() {
+	private void _setUpResourceBundleUtil() {
 		mockStatic(ResourceBundleUtil.class);
 
 		when(
@@ -230,7 +233,7 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 		);
 	}
 
-	protected void whenLanguageGetAvailableLocalesThen(
+	private void _whenLanguageGetAvailableLocalesThen(
 		Set<Locale> availableLocales) {
 
 		when(
@@ -240,16 +243,13 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 		);
 	}
 
-	protected void whenLanguageIsAvailableLocale(String languageId) {
+	private void _whenLanguageIsAvailableLocale(String languageId) {
 		when(
 			language.isAvailableLocale(Matchers.eq(languageId))
 		).thenReturn(
 			true
 		);
 	}
-
-	@Mock
-	protected Language language;
 
 	@Mock
 	private ClassLoader _classLoader;

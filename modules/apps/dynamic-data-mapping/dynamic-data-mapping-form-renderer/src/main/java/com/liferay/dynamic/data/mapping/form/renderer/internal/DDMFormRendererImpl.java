@@ -81,7 +81,7 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 		throws DDMFormRenderingException {
 
 		try {
-			return doRender(ddmForm, ddmFormLayout, ddmFormRenderingContext);
+			return _doRender(ddmForm, ddmFormLayout, ddmFormRenderingContext);
 		}
 		catch (DDMFormRenderingException ddmFormRenderingException) {
 			throw ddmFormRenderingException;
@@ -97,7 +97,7 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 		throws DDMFormRenderingException {
 
 		try {
-			return doRender(
+			return _doRender(
 				ddmForm, _ddm.getDefaultDDMFormLayout(ddmForm),
 				ddmFormRenderingContext);
 		}
@@ -109,7 +109,7 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 		}
 	}
 
-	protected String doRender(
+	private String _doRender(
 			DDMForm ddmForm, DDMFormLayout ddmFormLayout,
 			DDMFormRenderingContext ddmFormRenderingContext)
 		throws Exception {

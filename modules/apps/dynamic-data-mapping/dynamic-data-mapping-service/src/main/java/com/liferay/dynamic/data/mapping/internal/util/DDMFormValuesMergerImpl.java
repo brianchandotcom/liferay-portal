@@ -56,7 +56,7 @@ public class DDMFormValuesMergerImpl implements DDMFormValuesMerger {
 		}
 
 		List<DDMFormFieldValue> mergedDDMFormFieldValues =
-			mergeDDMFormFieldValues(
+			_mergeDDMFormFieldValues(
 				newDDMFormFieldValues,
 				existingDDMFormValues.getDDMFormFieldValues());
 
@@ -65,7 +65,7 @@ public class DDMFormValuesMergerImpl implements DDMFormValuesMerger {
 		return existingDDMFormValues;
 	}
 
-	protected DDMFormFieldValue getDDMFormFieldValueByName(
+	private DDMFormFieldValue _getDDMFormFieldValueByName(
 		List<DDMFormFieldValue> ddmFormFieldValues, String name) {
 
 		for (DDMFormFieldValue ddmFormFieldValue : ddmFormFieldValues) {
@@ -77,7 +77,7 @@ public class DDMFormValuesMergerImpl implements DDMFormValuesMerger {
 		return null;
 	}
 
-	protected List<DDMFormFieldValue> mergeDDMFormFieldValues(
+	private List<DDMFormFieldValue> _mergeDDMFormFieldValues(
 		List<DDMFormFieldValue> newDDMFormFieldValues,
 		List<DDMFormFieldValue> existingDDMFormFieldValues) {
 
@@ -89,7 +89,7 @@ public class DDMFormValuesMergerImpl implements DDMFormValuesMerger {
 				newDDMFormFieldValue.getDDMFormValues();
 
 			DDMFormFieldValue actualDDMFormFieldValue =
-				getDDMFormFieldValueByName(
+				_getDDMFormFieldValueByName(
 					existingDDMFormFieldValues, newDDMFormFieldValue.getName());
 
 			if (actualDDMFormFieldValue != null) {
@@ -113,12 +113,12 @@ public class DDMFormValuesMergerImpl implements DDMFormValuesMerger {
 					() -> null
 				);
 
-				mergeValue(
+				_mergeValue(
 					newDDMFormFieldValue.getValue(),
 					actualDDMFormFieldValue.getValue(), ddmFormField);
 
 				List<DDMFormFieldValue> mergedNestedDDMFormFieldValues =
-					mergeDDMFormFieldValues(
+					_mergeDDMFormFieldValues(
 						newDDMFormFieldValue.getNestedDDMFormFieldValues(),
 						actualDDMFormFieldValue.getNestedDDMFormFieldValues());
 
@@ -135,7 +135,7 @@ public class DDMFormValuesMergerImpl implements DDMFormValuesMerger {
 		return mergedDDMFormFieldValues;
 	}
 
-	protected void mergeValue(
+	private void _mergeValue(
 		Value newValue, Value existingValue, DDMFormField ddmFormField) {
 
 		if ((newValue == null) || (existingValue == null)) {

@@ -48,13 +48,13 @@ public class RadioDDMFormFieldValueRequestParameterRetriever
 			ddmFormFieldParameterName);
 
 		if (parameterValue == null) {
-			return getPredefinedValue(defaultDDMFormFieldParameterValue);
+			return _getPredefinedValue(defaultDDMFormFieldParameterValue);
 		}
 
 		return GetterUtil.getString(parameterValue);
 	}
 
-	protected String getPredefinedValue(String predefinedValue) {
+	private String _getPredefinedValue(String predefinedValue) {
 		try {
 			JSONArray predefinedValueJSONArray = _jsonFactory.createJSONArray(
 				predefinedValue);

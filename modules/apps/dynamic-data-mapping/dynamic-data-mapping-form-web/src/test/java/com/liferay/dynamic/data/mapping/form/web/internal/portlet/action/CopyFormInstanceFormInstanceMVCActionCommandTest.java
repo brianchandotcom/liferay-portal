@@ -58,10 +58,10 @@ public class CopyFormInstanceFormInstanceMVCActionCommandTest
 
 	@Before
 	public void setUp() {
-		setUpCopyFormInstanceMVCActionCommand();
+		_setUpCopyFormInstanceMVCActionCommand();
 		setUpLanguageUtil();
-		setUpPortalUtil();
-		setUpResourceBundleUtil();
+		_setUpPortalUtil();
+		_setUpResourceBundleUtil();
 	}
 
 	@Test
@@ -96,7 +96,7 @@ public class CopyFormInstanceFormInstanceMVCActionCommandTest
 
 		Assert.assertEquals(
 			formInstanceSettingsDDMFormFieldValuesCopy.toString(),
-			getDDMFormFieldsSize(formInstanceSettingsDDMForm),
+			_getDDMFormFieldsSize(formInstanceSettingsDDMForm),
 			formInstanceSettingsDDMFormFieldValuesCopy.size());
 
 		for (int i = 0; i < formInstanceSettingsDDMFormFieldValuesCopy.size();
@@ -154,7 +154,7 @@ public class CopyFormInstanceFormInstanceMVCActionCommandTest
 
 		for (DDMFormField ddmFormField : ddmFormFields) {
 			DDMFormFieldValue ddmFormFieldValue =
-				createLocalizedDDMFormFieldValue(
+				_createLocalizedDDMFormFieldValue(
 					ddmFormField.getName(), StringUtil.randomString());
 
 			ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
@@ -163,7 +163,13 @@ public class CopyFormInstanceFormInstanceMVCActionCommandTest
 		return ddmFormValues;
 	}
 
-	protected DDMFormFieldValue createLocalizedDDMFormFieldValue(
+	protected void setUpLanguageUtil() {
+		LanguageUtil languageUtil = new LanguageUtil();
+
+		languageUtil.setLanguage(mock(Language.class));
+	}
+
+	private DDMFormFieldValue _createLocalizedDDMFormFieldValue(
 		String name, String enValue) {
 
 		Value localizedValue = new LocalizedValue(LocaleUtil.US);
@@ -173,24 +179,18 @@ public class CopyFormInstanceFormInstanceMVCActionCommandTest
 		return createDDMFormFieldValue(name, localizedValue);
 	}
 
-	protected int getDDMFormFieldsSize(DDMForm ddmForm) {
+	private int _getDDMFormFieldsSize(DDMForm ddmForm) {
 		List<DDMFormField> ddmFormFields = ddmForm.getDDMFormFields();
 
 		return ddmFormFields.size();
 	}
 
-	protected void setUpCopyFormInstanceMVCActionCommand() {
+	private void _setUpCopyFormInstanceMVCActionCommand() {
 		_copyFormInstanceMVCActionCommand.saveFormInstanceMVCCommandHelper =
 			mock(SaveFormInstanceMVCCommandHelper.class);
 	}
 
-	protected void setUpLanguageUtil() {
-		LanguageUtil languageUtil = new LanguageUtil();
-
-		languageUtil.setLanguage(mock(Language.class));
-	}
-
-	protected void setUpPortalUtil() {
+	private void _setUpPortalUtil() {
 		PortalUtil portalUtil = new PortalUtil();
 
 		Portal portal = mock(Portal.class);
@@ -206,7 +206,7 @@ public class CopyFormInstanceFormInstanceMVCActionCommandTest
 		portalUtil.setPortal(portal);
 	}
 
-	protected void setUpResourceBundleUtil() {
+	private void _setUpResourceBundleUtil() {
 		mockStatic(ResourceBundleUtil.class);
 
 		when(

@@ -72,7 +72,7 @@ public class AutocompleteDDMTextFieldSettingUpgradeProcess
 				while (resultSet.next()) {
 					String definition = resultSet.getString(2);
 
-					String newDefinition = upgradeDDMFormInstanceStructure(
+					String newDefinition = _upgradeDDMFormInstanceStructure(
 						definition);
 
 					if (Objects.equals(definition, newDefinition)) {
@@ -95,7 +95,7 @@ public class AutocompleteDDMTextFieldSettingUpgradeProcess
 						while (resultSet2.next()) {
 							definition = resultSet2.getString("definition");
 
-							newDefinition = upgradeDDMFormInstanceStructure(
+							newDefinition = _upgradeDDMFormInstanceStructure(
 								definition);
 
 							if (Objects.equals(definition, newDefinition)) {
@@ -121,7 +121,7 @@ public class AutocompleteDDMTextFieldSettingUpgradeProcess
 		}
 	}
 
-	protected boolean isAutocompleteEnabled(Map<String, Object> properties) {
+	private boolean _isAutocompleteEnabled(Map<String, Object> properties) {
 		String dataSourceType = (String)properties.get("dataSourceType");
 
 		if (Validator.isNotNull(dataSourceType)) {
@@ -131,7 +131,7 @@ public class AutocompleteDDMTextFieldSettingUpgradeProcess
 		return false;
 	}
 
-	protected String upgradeDDMFormInstanceStructure(String definition)
+	private String _upgradeDDMFormInstanceStructure(String definition)
 		throws Exception {
 
 		DDMForm ddmForm = DDMFormDeserializeUtil.deserialize(
@@ -143,7 +143,7 @@ public class AutocompleteDDMTextFieldSettingUpgradeProcess
 
 				if (!properties.containsKey("autocomplete")) {
 					properties.put(
-						"autocomplete", isAutocompleteEnabled(properties));
+						"autocomplete", _isAutocompleteEnabled(properties));
 				}
 			}
 		}

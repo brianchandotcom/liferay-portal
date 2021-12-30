@@ -35,7 +35,7 @@ public class CheckboxDDMFormFieldValueRequestParameterRetrieverTest {
 
 	@Before
 	public void setUp() throws Exception {
-		setUpJSONFactoryUtil();
+		_setUpJSONFactoryUtil();
 	}
 
 	@Test
@@ -85,7 +85,7 @@ public class CheckboxDDMFormFieldValueRequestParameterRetrieverTest {
 		Assert.assertEquals(parameterValue, defaultParameterValue);
 	}
 
-	protected void setUpJSONFactoryUtil() {
+	private void _setUpJSONFactoryUtil() {
 		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
 
 		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());

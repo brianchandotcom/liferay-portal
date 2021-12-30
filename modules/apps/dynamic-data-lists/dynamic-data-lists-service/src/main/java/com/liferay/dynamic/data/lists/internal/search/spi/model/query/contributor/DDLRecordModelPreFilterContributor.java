@@ -74,7 +74,7 @@ public class DDLRecordModelPreFilterContributor
 
 		booleanFilter.addRequiredTerm("recordSetScope", recordSetScope);
 
-		addSearchClassTypeIds(booleanFilter, searchContext);
+		_addSearchClassTypeIds(booleanFilter, searchContext);
 
 		String ddmStructureFieldName = (String)searchContext.getAttribute(
 			"ddmStructureFieldName");
@@ -100,7 +100,10 @@ public class DDLRecordModelPreFilterContributor
 		}
 	}
 
-	protected Filter addSearchClassTypeIds(
+	@Reference
+	protected DDMIndexer ddmIndexer;
+
+	private Filter _addSearchClassTypeIds(
 		BooleanFilter contextBooleanFilter, SearchContext searchContext) {
 
 		long[] classTypeIds = searchContext.getClassTypeIds();
@@ -115,9 +118,6 @@ public class DDLRecordModelPreFilterContributor
 
 		return contextBooleanFilter.add(termsFilter, BooleanClauseOccur.MUST);
 	}
-
-	@Reference
-	protected DDMIndexer ddmIndexer;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDLRecordModelPreFilterContributor.class);

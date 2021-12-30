@@ -52,7 +52,7 @@ public class DDMFormContextToDDMFormTest {
 
 	@Before
 	public void setUp() throws Exception {
-		setUpDDMFormContextToDDMFormValues();
+		_setUpDDMFormContextToDDMFormValues();
 	}
 
 	@Test
@@ -179,7 +179,7 @@ public class DDMFormContextToDDMFormTest {
 		Assert.assertEquals("false", result);
 	}
 
-	protected void setUpDDMFormContextToDDMFormValues() throws Exception {
+	private void _setUpDDMFormContextToDDMFormValues() throws Exception {
 		_ddmFormContextToDDMForm = new DDMFormContextToDDMForm();
 
 		_ddmFormContextToDDMForm.jsonFactory = new JSONFactoryImpl();

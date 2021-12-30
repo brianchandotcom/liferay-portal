@@ -81,7 +81,7 @@ public class DDMFieldSetDefinitionServlet extends BaseDDMFormBuilderServlet {
 		LocaleThreadLocal.setThemeDisplayLocale(locale);
 
 		Optional<DDMStructure> ddmStructureOptional = Optional.ofNullable(
-			getDDMStructure(ddmStructureId));
+			_getDDMStructure(ddmStructureId));
 
 		DDMFormBuilderContextRequest ddmFormBuilderContextRequest =
 			DDMFormBuilderContextRequest.with(
@@ -107,7 +107,7 @@ public class DDMFieldSetDefinitionServlet extends BaseDDMFormBuilderServlet {
 			jsonSerializer.serializeDeep(fieldContext.getContext()));
 	}
 
-	protected DDMStructure getDDMStructure(long ddmStructureId) {
+	private DDMStructure _getDDMStructure(long ddmStructureId) {
 		try {
 			return _ddmStructureService.getStructure(ddmStructureId);
 		}

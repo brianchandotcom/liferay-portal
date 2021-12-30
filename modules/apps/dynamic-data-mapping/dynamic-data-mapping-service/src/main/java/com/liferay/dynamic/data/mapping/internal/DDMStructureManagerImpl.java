@@ -183,7 +183,7 @@ public class DDMStructureManagerImpl implements DDMStructureManager {
 		for (com.liferay.dynamic.data.mapping.model.DDMStructure ddmStructure :
 				_ddmStructureLocalService.getClassStructures(
 					companyId, classNameId,
-					getStructureOrderByComparator(structureComparator))) {
+					_getStructureOrderByComparator(structureComparator))) {
 
 			ddmStructures.add(new DDMStructureImpl(ddmStructure));
 		}
@@ -349,19 +349,6 @@ public class DDMStructureManagerImpl implements DDMStructureManager {
 		_ddmStructureLocalService.updateDDMStructure(ddmStructure);
 	}
 
-	protected OrderByComparator
-		<com.liferay.dynamic.data.mapping.model.DDMStructure>
-			getStructureOrderByComparator(int structureComparator) {
-
-		if (structureComparator ==
-				DDMStructureManager.STRUCTURE_COMPARATOR_STRUCTURE_KEY) {
-
-			return StructureStructureKeyComparator.INSTANCE_DESCENDING;
-		}
-
-		return new StructureIdComparator();
-	}
-
 	@Reference(unbind = "-")
 	protected void setDDM(DDM ddm) {
 		_ddm = ddm;
@@ -425,6 +412,19 @@ public class DDMStructureManagerImpl implements DDMStructureManager {
 		}
 
 		return portalException;
+	}
+
+	private OrderByComparator
+		<com.liferay.dynamic.data.mapping.model.DDMStructure>
+			_getStructureOrderByComparator(int structureComparator) {
+
+		if (structureComparator ==
+				DDMStructureManager.STRUCTURE_COMPARATOR_STRUCTURE_KEY) {
+
+			return StructureStructureKeyComparator.INSTANCE_DESCENDING;
+		}
+
+		return new StructureIdComparator();
 	}
 
 	private DDM _ddm;

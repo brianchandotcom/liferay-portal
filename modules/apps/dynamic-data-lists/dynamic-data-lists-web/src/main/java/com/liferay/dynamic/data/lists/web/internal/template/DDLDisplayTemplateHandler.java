@@ -112,9 +112,9 @@ public class DDLDisplayTemplateHandler extends BaseDDMTemplateHandler {
 
 		addTemplateVariableGroup(
 			templateVariableGroups,
-			getDDLUtilVariablesTemplateVariableGroups());
+			_getDDLUtilVariablesTemplateVariableGroups());
 		addTemplateVariableGroup(
-			templateVariableGroups, getDDLVariablesTemplateVariableGroups());
+			templateVariableGroups, _getDDLVariablesTemplateVariableGroups());
 		addTemplateVariableGroup(
 			templateVariableGroups, getGeneralVariablesTemplateVariableGroup());
 
@@ -149,9 +149,17 @@ public class DDLDisplayTemplateHandler extends BaseDDMTemplateHandler {
 		return templateVariableGroups;
 	}
 
-	protected TemplateVariableGroup
-		getDDLUtilVariablesTemplateVariableGroups() {
+	@Override
+	protected Class<?> getFieldVariableClass() {
+		return DDMFormFieldValue.class;
+	}
 
+	@Override
+	protected TemplateVariableCodeHandler getTemplateVariableCodeHandler() {
+		return _templateVariableCodeHandler;
+	}
+
+	private TemplateVariableGroup _getDDLUtilVariablesTemplateVariableGroups() {
 		TemplateVariableGroup ddlUtilTemplateVariableGroup =
 			new TemplateVariableGroup("data-list-util");
 
@@ -162,7 +170,7 @@ public class DDLDisplayTemplateHandler extends BaseDDMTemplateHandler {
 		return ddlUtilTemplateVariableGroup;
 	}
 
-	protected TemplateVariableGroup getDDLVariablesTemplateVariableGroups() {
+	private TemplateVariableGroup _getDDLVariablesTemplateVariableGroups() {
 		TemplateVariableGroup templateVariableGroup = new TemplateVariableGroup(
 			"data-list-variables");
 
@@ -183,16 +191,6 @@ public class DDLDisplayTemplateHandler extends BaseDDMTemplateHandler {
 			"template-id", null, DDLConstants.RESERVED_DDM_TEMPLATE_ID);
 
 		return templateVariableGroup;
-	}
-
-	@Override
-	protected Class<?> getFieldVariableClass() {
-		return DDMFormFieldValue.class;
-	}
-
-	@Override
-	protected TemplateVariableCodeHandler getTemplateVariableCodeHandler() {
-		return _templateVariableCodeHandler;
 	}
 
 	@Reference

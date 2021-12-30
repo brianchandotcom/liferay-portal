@@ -51,7 +51,7 @@ public class SelectDDMFormFieldValueValidator
 
 		if (Objects.equals(ddmFormField.getDataSourceType(), "manual")) {
 			try {
-				validateDDMFormFieldOptions(ddmFormField, value);
+				_validateDDMFormFieldOptions(ddmFormField, value);
 			}
 			catch (DDMFormFieldValueValidationException
 						ddmFormFieldValueValidationException) {
@@ -68,7 +68,10 @@ public class SelectDDMFormFieldValueValidator
 		}
 	}
 
-	protected void validateDDMFormFieldOptions(
+	@Reference
+	protected JSONFactory jsonFactory;
+
+	private void _validateDDMFormFieldOptions(
 			DDMFormField ddmFormField, Value value)
 		throws Exception {
 
@@ -92,11 +95,11 @@ public class SelectDDMFormFieldValueValidator
 		Map<Locale, String> selectedValues = value.getValues();
 
 		for (String selectedValue : selectedValues.values()) {
-			validateSelectedValue(ddmFormField, optionsValues, selectedValue);
+			_validateSelectedValue(ddmFormField, optionsValues, selectedValue);
 		}
 	}
 
-	protected void validateSelectedValue(
+	private void _validateSelectedValue(
 			DDMFormField ddmFormField, Set<String> optionValues,
 			String selectedValue)
 		throws Exception {
@@ -118,9 +121,6 @@ public class SelectDDMFormFieldValueValidator
 			}
 		}
 	}
-
-	@Reference
-	protected JSONFactory jsonFactory;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SelectDDMFormFieldValueValidator.class);

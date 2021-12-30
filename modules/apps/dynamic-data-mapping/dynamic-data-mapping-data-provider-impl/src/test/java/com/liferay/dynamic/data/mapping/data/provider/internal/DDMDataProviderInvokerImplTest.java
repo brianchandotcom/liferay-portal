@@ -71,9 +71,9 @@ public class DDMDataProviderInvokerImplTest extends PowerMockito {
 
 	@Before
 	public void setUp() {
-		setUpLanguageUtil();
-		setUpPortalUtil();
-		setUpResourceBundleUtil();
+		_setUpLanguageUtil();
+		_setUpPortalUtil();
+		_setUpResourceBundleUtil();
 	}
 
 	@Test
@@ -552,40 +552,6 @@ public class DDMDataProviderInvokerImplTest extends PowerMockito {
 			ddmDataProviderResponse.getStatus());
 	}
 
-	protected void setUpLanguageUtil() {
-		LanguageUtil languageUtil = new LanguageUtil();
-
-		languageUtil.setLanguage(PowerMockito.mock(Language.class));
-	}
-
-	protected void setUpPortalUtil() {
-		PortalUtil portalUtil = new PortalUtil();
-
-		Portal portal = PowerMockito.mock(Portal.class);
-
-		ResourceBundle resourceBundle = PowerMockito.mock(ResourceBundle.class);
-
-		PowerMockito.when(
-			portal.getResourceBundle(Matchers.any(Locale.class))
-		).thenReturn(
-			resourceBundle
-		);
-
-		portalUtil.setPortal(portal);
-	}
-
-	protected void setUpResourceBundleUtil() {
-		PowerMockito.mockStatic(ResourceBundleUtil.class);
-
-		PowerMockito.when(
-			ResourceBundleUtil.getBundle(
-				Matchers.anyString(), Matchers.any(Locale.class),
-				Matchers.any(ClassLoader.class))
-		).thenReturn(
-			ResourceBundleUtil.EMPTY_RESOURCE_BUNDLE
-		);
-	}
-
 	private DDMRESTDataProviderSettings
 		_createDDMRESTDataProviderSettingsWithTimeout(int timeout) {
 
@@ -613,6 +579,40 @@ public class DDMDataProviderInvokerImplTest extends PowerMockito {
 			hystrixCommandProperties.executionTimeoutInMilliseconds();
 
 		return hystrixProperty.get();
+	}
+
+	private void _setUpLanguageUtil() {
+		LanguageUtil languageUtil = new LanguageUtil();
+
+		languageUtil.setLanguage(PowerMockito.mock(Language.class));
+	}
+
+	private void _setUpPortalUtil() {
+		PortalUtil portalUtil = new PortalUtil();
+
+		Portal portal = PowerMockito.mock(Portal.class);
+
+		ResourceBundle resourceBundle = PowerMockito.mock(ResourceBundle.class);
+
+		PowerMockito.when(
+			portal.getResourceBundle(Matchers.any(Locale.class))
+		).thenReturn(
+			resourceBundle
+		);
+
+		portalUtil.setPortal(portal);
+	}
+
+	private void _setUpResourceBundleUtil() {
+		PowerMockito.mockStatic(ResourceBundleUtil.class);
+
+		PowerMockito.when(
+			ResourceBundleUtil.getBundle(
+				Matchers.anyString(), Matchers.any(Locale.class),
+				Matchers.any(ClassLoader.class))
+		).thenReturn(
+			ResourceBundleUtil.EMPTY_RESOURCE_BUNDLE
+		);
 	}
 
 }

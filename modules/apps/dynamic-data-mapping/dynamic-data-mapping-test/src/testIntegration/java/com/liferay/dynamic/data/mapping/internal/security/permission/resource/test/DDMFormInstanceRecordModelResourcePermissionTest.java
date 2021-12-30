@@ -73,8 +73,8 @@ public class DDMFormInstanceRecordModelResourcePermissionTest
 
 		_siteUser = UserTestUtil.addUser(group.getGroupId());
 
-		setUpPermissionThreadLocal();
-		setUpPrincipalThreadLocal();
+		_setUpPermissionThreadLocal();
+		_setUpPrincipalThreadLocal();
 	}
 
 	@After
@@ -88,7 +88,7 @@ public class DDMFormInstanceRecordModelResourcePermissionTest
 	public void testUpdateApprovedFormInstanceRecordByOwnerShouldBeFalse()
 		throws Exception {
 
-		DDMFormInstance formInstance = createFormInstance();
+		DDMFormInstance formInstance = _createFormInstance();
 
 		DDMStructure structure = formInstance.getStructure();
 
@@ -115,7 +115,7 @@ public class DDMFormInstanceRecordModelResourcePermissionTest
 	public void testUpdateDraftFormInstanceRecordByOwnerShouldBeTrue()
 		throws Exception {
 
-		DDMFormInstance formInstance = createFormInstance();
+		DDMFormInstance formInstance = _createFormInstance();
 
 		DDMStructure structure = formInstance.getStructure();
 
@@ -142,7 +142,7 @@ public class DDMFormInstanceRecordModelResourcePermissionTest
 				formInstanceRecord, ActionKeys.UPDATE));
 	}
 
-	protected DDMFormInstance createFormInstance() throws Exception {
+	private DDMFormInstance _createFormInstance() throws Exception {
 		DDMStructure structure = addStructure(_classNameId, "Test Structure");
 
 		ServiceContext serviceContext =
@@ -157,7 +157,7 @@ public class DDMFormInstanceRecordModelResourcePermissionTest
 			serviceContext);
 	}
 
-	protected void setUpPermissionThreadLocal() throws Exception {
+	private void _setUpPermissionThreadLocal() throws Exception {
 		_originalPermissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
@@ -165,7 +165,7 @@ public class DDMFormInstanceRecordModelResourcePermissionTest
 			PermissionCheckerFactoryUtil.create(_siteUser));
 	}
 
-	protected void setUpPrincipalThreadLocal() throws Exception {
+	private void _setUpPrincipalThreadLocal() throws Exception {
 		_originalName = PrincipalThreadLocal.getName();
 
 		PrincipalThreadLocal.setName(_siteUser.getUserId());

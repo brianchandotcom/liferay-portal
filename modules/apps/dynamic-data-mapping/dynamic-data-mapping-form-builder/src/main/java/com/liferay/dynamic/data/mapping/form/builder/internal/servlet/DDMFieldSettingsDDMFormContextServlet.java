@@ -68,7 +68,33 @@ import org.osgi.service.component.annotations.Reference;
 public class DDMFieldSettingsDDMFormContextServlet
 	extends BaseDDMFormBuilderServlet {
 
-	protected Map<String, Object> createFieldSettingsFormContext(
+	@Override
+	protected void doGet(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
+		throws IOException, ServletException {
+
+		Map<String, Object> fieldSettingsFormContext =
+			_createFieldSettingsFormContext(
+				httpServletRequest, httpServletResponse);
+
+		if (fieldSettingsFormContext == null) {
+			httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST);
+
+			return;
+		}
+
+		httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);
+		httpServletResponse.setStatus(HttpServletResponse.SC_OK);
+
+		JSONSerializer jsonSerializer = _jsonFactory.createJSONSerializer();
+
+		ServletResponseUtil.write(
+			httpServletResponse,
+			jsonSerializer.serializeDeep(fieldSettingsFormContext));
+	}
+
+	private Map<String, Object> _createFieldSettingsFormContext(
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
 
@@ -83,7 +109,7 @@ public class DDMFieldSettingsDDMFormContextServlet
 
 			LocaleThreadLocal.setThemeDisplayLocale(locale);
 
-			Class<?> ddmFormFieldTypeSettings = getDDMFormFieldTypeSettings(
+			Class<?> ddmFormFieldTypeSettings = _getDDMFormFieldTypeSettings(
 				type);
 
 			DDMForm ddmFormFieldTypeSettingsDDMForm = DDMFormFactory.create(
@@ -98,7 +124,7 @@ public class DDMFieldSettingsDDMFormContextServlet
 			DDMFormValues ddmFormValues = _ddmFormValuesFactory.create(
 				httpServletRequest, ddmFormFieldTypeSettingsDDMForm);
 
-			setTypeDDMFormFieldValue(ddmFormValues, type);
+			_setTypeDDMFormFieldValue(ddmFormValues, type);
 
 			ddmFormRenderingContext.setDDMFormValues(ddmFormValues);
 
@@ -122,40 +148,14 @@ public class DDMFieldSettingsDDMFormContextServlet
 		return null;
 	}
 
-	@Override
-	protected void doGet(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws IOException, ServletException {
-
-		Map<String, Object> fieldSettingsFormContext =
-			createFieldSettingsFormContext(
-				httpServletRequest, httpServletResponse);
-
-		if (fieldSettingsFormContext == null) {
-			httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST);
-
-			return;
-		}
-
-		httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);
-		httpServletResponse.setStatus(HttpServletResponse.SC_OK);
-
-		JSONSerializer jsonSerializer = _jsonFactory.createJSONSerializer();
-
-		ServletResponseUtil.write(
-			httpServletResponse,
-			jsonSerializer.serializeDeep(fieldSettingsFormContext));
-	}
-
-	protected Class<?> getDDMFormFieldTypeSettings(String type) {
+	private Class<?> _getDDMFormFieldTypeSettings(String type) {
 		DDMFormFieldType ddmFormFieldType =
 			_ddmFormFieldTypeServicesTracker.getDDMFormFieldType(type);
 
 		return ddmFormFieldType.getDDMFormFieldTypeSettings();
 	}
 
-	protected void setTypeDDMFormFieldValue(
+	private void _setTypeDDMFormFieldValue(
 		DDMFormValues ddmFormValues, String type) {
 
 		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =

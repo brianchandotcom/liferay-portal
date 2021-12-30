@@ -83,7 +83,7 @@ public class DDLRecordSetStagedModelDataHandler
 
 		DDMStructure ddmStructure = recordSet.getDDMStructure();
 
-		exportReferencedStagedModel(
+		_exportReferencedStagedModel(
 			ddmStructure, portletDataContext, recordSet);
 
 		List<DDMTemplate> ddmTemplates = ddmStructure.getTemplates();
@@ -98,7 +98,7 @@ public class DDLRecordSetStagedModelDataHandler
 		}
 
 		if (recordSet.getScope() == DDLRecordSetConstants.SCOPE_FORMS) {
-			exportRecordSetSettings(
+			_exportRecordSetSettings(
 				portletDataContext, recordSet, recordSetElement);
 		}
 
@@ -168,7 +168,7 @@ public class DDLRecordSetStagedModelDataHandler
 			Element recordSetElement = portletDataContext.getImportDataElement(
 				recordSet);
 
-			DDMFormValues settingsDDMFormValues = getImportRecordSetSettings(
+			DDMFormValues settingsDDMFormValues = _getImportRecordSetSettings(
 				portletDataContext, recordSetElement);
 
 			_ddlRecordSetLocalService.updateRecordSet(
@@ -178,7 +178,29 @@ public class DDLRecordSetStagedModelDataHandler
 		portletDataContext.importClassedModel(recordSet, importedRecordSet);
 	}
 
-	protected void exportRecordSetSettings(
+	@Override
+	protected StagedModelRepository<DDLRecordSet> getStagedModelRepository() {
+		return _stagedModelRepository;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDDLRecordSetLocalService(
+		DDLRecordSetLocalService ddlRecordSetLocalService) {
+
+		_ddlRecordSetLocalService = ddlRecordSetLocalService;
+	}
+
+	@Reference(
+		target = "(model.class.name=com.liferay.dynamic.data.lists.model.DDLRecordSet)",
+		unbind = "-"
+	)
+	protected void setStagedModelRepository(
+		StagedModelRepository<DDLRecordSet> stagedModelRepository) {
+
+		_stagedModelRepository = stagedModelRepository;
+	}
+
+	private void _exportRecordSetSettings(
 		PortletDataContext portletDataContext, DDLRecordSet recordSet,
 		Element recordSetElement) {
 
@@ -192,7 +214,7 @@ public class DDLRecordSetStagedModelDataHandler
 			settingsDDMFormValuesPath, recordSet.getSettings());
 	}
 
-	protected void exportReferencedStagedModel(
+	private void _exportReferencedStagedModel(
 			DDMStructure ddmStructure, PortletDataContext portletDataContext,
 			DDLRecordSet recordSet)
 		throws PortletDataException {
@@ -225,7 +247,7 @@ public class DDLRecordSetStagedModelDataHandler
 			ddmStructure, PortletDataContext.REFERENCE_TYPE_STRONG, false);
 	}
 
-	protected DDMFormValues getImportRecordSetSettings(
+	private DDMFormValues _getImportRecordSetSettings(
 			PortletDataContext portletDataContext, Element recordSetElement)
 		throws Exception {
 
@@ -238,28 +260,6 @@ public class DDLRecordSetStagedModelDataHandler
 			portletDataContext.getZipEntryAsString(settingsDDMFormValuesPath);
 
 		return deserialize(serializedSettingsDDMFormValues, ddmForm);
-	}
-
-	@Override
-	protected StagedModelRepository<DDLRecordSet> getStagedModelRepository() {
-		return _stagedModelRepository;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDLRecordSetLocalService(
-		DDLRecordSetLocalService ddlRecordSetLocalService) {
-
-		_ddlRecordSetLocalService = ddlRecordSetLocalService;
-	}
-
-	@Reference(
-		target = "(model.class.name=com.liferay.dynamic.data.lists.model.DDLRecordSet)",
-		unbind = "-"
-	)
-	protected void setStagedModelRepository(
-		StagedModelRepository<DDLRecordSet> stagedModelRepository) {
-
-		_stagedModelRepository = stagedModelRepository;
 	}
 
 	private DDLRecordSetLocalService _ddlRecordSetLocalService;

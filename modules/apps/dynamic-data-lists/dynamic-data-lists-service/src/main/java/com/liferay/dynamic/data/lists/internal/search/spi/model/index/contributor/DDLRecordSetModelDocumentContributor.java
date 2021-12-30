@@ -44,7 +44,7 @@ public class DDLRecordSetModelDocumentContributor
 
 		String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
 
-		String[] descriptionLanguageIds = getLanguageIds(
+		String[] descriptionLanguageIds = _getLanguageIds(
 			defaultLanguageId, ddlRecordSet.getDescription());
 
 		for (String descriptionLanguageId : descriptionLanguageIds) {
@@ -54,7 +54,7 @@ public class DDLRecordSetModelDocumentContributor
 				ddlRecordSet.getDescription(descriptionLanguageId));
 		}
 
-		String[] nameLanguageIds = getLanguageIds(
+		String[] nameLanguageIds = _getLanguageIds(
 			defaultLanguageId, ddlRecordSet.getName());
 
 		for (String nameLanguageId : nameLanguageIds) {
@@ -68,9 +68,10 @@ public class DDLRecordSetModelDocumentContributor
 		document.addKeyword("scope", ddlRecordSet.getScope());
 	}
 
-	protected String[] getLanguageIds(
-		String defaultLanguageId, String content) {
+	@Reference
+	protected ClassNameLocalService classNameLocalService;
 
+	private String[] _getLanguageIds(String defaultLanguageId, String content) {
 		String[] languageIds = LocalizationUtil.getAvailableLanguageIds(
 			content);
 
@@ -80,8 +81,5 @@ public class DDLRecordSetModelDocumentContributor
 
 		return languageIds;
 	}
-
-	@Reference
-	protected ClassNameLocalService classNameLocalService;
 
 }

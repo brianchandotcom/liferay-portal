@@ -83,7 +83,7 @@ public class DDMFormInstanceIndexer extends BaseIndexer<DDMFormInstance> {
 			getSearchEngineId(), ddmFormInstance.getCompanyId(),
 			getDocument(ddmFormInstance), isCommitImmediately());
 
-		reindexRecords(ddmFormInstance);
+		_reindexRecords(ddmFormInstance);
 	}
 
 	@Override
@@ -98,10 +98,14 @@ public class DDMFormInstanceIndexer extends BaseIndexer<DDMFormInstance> {
 	protected void doReindex(String[] ids) throws Exception {
 		long companyId = GetterUtil.getLong(ids[0]);
 
-		reindexFormInstances(companyId);
+		_reindexFormInstances(companyId);
 	}
 
-	protected void reindexFormInstances(long companyId) throws Exception {
+	protected DDMFormInstanceLocalService ddmFormInstanceLocalService;
+	protected IndexerRegistry indexerRegistry;
+	protected IndexWriterHelper indexWriterHelper;
+
+	private void _reindexFormInstances(long companyId) throws Exception {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
 			ddmFormInstanceLocalService.getIndexableActionableDynamicQuery();
 
@@ -129,7 +133,7 @@ public class DDMFormInstanceIndexer extends BaseIndexer<DDMFormInstance> {
 		indexableActionableDynamicQuery.performActions();
 	}
 
-	protected void reindexRecords(DDMFormInstance ddmFormInstance)
+	private void _reindexRecords(DDMFormInstance ddmFormInstance)
 		throws Exception {
 
 		Indexer<DDMFormInstanceRecord> indexer =
@@ -137,10 +141,6 @@ public class DDMFormInstanceIndexer extends BaseIndexer<DDMFormInstance> {
 
 		indexer.reindex(ddmFormInstance.getFormInstanceRecords());
 	}
-
-	protected DDMFormInstanceLocalService ddmFormInstanceLocalService;
-	protected IndexerRegistry indexerRegistry;
-	protected IndexWriterHelper indexWriterHelper;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMFormInstanceIndexer.class);

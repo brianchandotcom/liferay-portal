@@ -100,22 +100,22 @@ public class DDMServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
-		DDMFormSerializer ddmFormSerializer = getDDMFormSerializer();
+		DDMFormSerializer ddmFormSerializer = _getDDMFormSerializer();
 
 		DDMFormLayoutSerializer ddmFormLayoutSerializer =
-			getDDMFormLayoutSerializer();
+			_getDDMFormLayoutSerializer();
 
 		DDMFormDeserializer ddmFormJSONDeserializer =
-			getDDMFormJSONDeserializer();
+			_getDDMFormJSONDeserializer();
 
 		DDMFormDeserializer ddmFormXSDDeserializer =
-			getDDMFormXSDDeserializer();
+			_getDDMFormXSDDeserializer();
 
 		DDMFormValuesSerializer ddmFormValuesSerializer =
-			getDDMFormValuesSerializer();
+			_getDDMFormValuesSerializer();
 
 		DDMFormValuesDeserializer ddmFormValuesDeserializer =
-			getDDMFormValuesDeserializer();
+			_getDDMFormValuesDeserializer();
 
 		registry.register("0.0.1", "0.0.2", new SchemaUpgradeProcess());
 
@@ -496,27 +496,27 @@ public class DDMServiceUpgrade implements UpgradeStepRegistrator {
 		_ddmDataProviderSettingsProviderServiceTracker.close();
 	}
 
-	protected DDMFormDeserializer getDDMFormJSONDeserializer() {
+	private DDMFormDeserializer _getDDMFormJSONDeserializer() {
 		return _jsonDDMFormDeserializer;
 	}
 
-	protected DDMFormLayoutSerializer getDDMFormLayoutSerializer() {
+	private DDMFormLayoutSerializer _getDDMFormLayoutSerializer() {
 		return _jsonDDMFormLayoutSerializer;
 	}
 
-	protected DDMFormSerializer getDDMFormSerializer() {
+	private DDMFormSerializer _getDDMFormSerializer() {
 		return _jsonDDMFormSerializer;
 	}
 
-	protected DDMFormValuesDeserializer getDDMFormValuesDeserializer() {
+	private DDMFormValuesDeserializer _getDDMFormValuesDeserializer() {
 		return _jsonDDMFormValuesDeserializer;
 	}
 
-	protected DDMFormValuesSerializer getDDMFormValuesSerializer() {
+	private DDMFormValuesSerializer _getDDMFormValuesSerializer() {
 		return _jsonDDMFormValuesSerializer;
 	}
 
-	protected DDMFormDeserializer getDDMFormXSDDeserializer() {
+	private DDMFormDeserializer _getDDMFormXSDDeserializer() {
 		return _xsdDDMFormDeserializer;
 	}
 

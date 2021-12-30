@@ -78,7 +78,7 @@ public class ImageDDMFormFieldTemplateContextContributor
 
 		return HashMapBuilder.<String, Object>put(
 			"itemSelectorURL",
-			getItemSelectorURL(
+			_getItemSelectorURL(
 				ddmFormFieldRenderingContext.getHttpServletRequest(),
 				ddmFormFieldRenderingContext)
 		).put(
@@ -104,48 +104,6 @@ public class ImageDDMFormFieldTemplateContextContributor
 				DDMFormFieldTypeUtil.getPropertyValue(
 					ddmFormFieldRenderingContext, "value"))
 		).build();
-	}
-
-	protected String getItemSelectorURL(
-		HttpServletRequest httpServletRequest,
-		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
-
-		if (_itemSelector == null) {
-			return null;
-		}
-
-		List<ItemSelectorCriterion> itemSelectorCriteria = new ArrayList<>();
-
-		ImageItemSelectorCriterion imageItemSelectorCriterion =
-			new ImageItemSelectorCriterion();
-
-		imageItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-			new DownloadFileEntryItemSelectorReturnType());
-
-		itemSelectorCriteria.add(imageItemSelectorCriterion);
-
-		for (ImageDDMFormFieldItemSelectorCriterionContributor
-				imageDDMFormFieldItemSelectorCriterionContributor :
-					_imageDDMFormFieldItemSelectorCriterionContributors) {
-
-			if (!imageDDMFormFieldItemSelectorCriterionContributor.isVisible(
-					ddmFormFieldRenderingContext)) {
-
-				continue;
-			}
-
-			itemSelectorCriteria.add(
-				imageDDMFormFieldItemSelectorCriterionContributor.
-					getItemSelectorCriterion(ddmFormFieldRenderingContext));
-		}
-
-		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
-			RequestBackedPortletURLFactoryUtil.create(httpServletRequest),
-			ddmFormFieldRenderingContext.getPortletNamespace() +
-				"selectDocumentLibrary",
-			itemSelectorCriteria.toArray(new ItemSelectorCriterion[0]));
-
-		return itemSelectorURL.toString();
 	}
 
 	protected String getValue(String value) {
@@ -215,6 +173,48 @@ public class ImageDDMFormFieldTemplateContextContributor
 
 			return null;
 		}
+	}
+
+	private String _getItemSelectorURL(
+		HttpServletRequest httpServletRequest,
+		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
+
+		if (_itemSelector == null) {
+			return null;
+		}
+
+		List<ItemSelectorCriterion> itemSelectorCriteria = new ArrayList<>();
+
+		ImageItemSelectorCriterion imageItemSelectorCriterion =
+			new ImageItemSelectorCriterion();
+
+		imageItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			new DownloadFileEntryItemSelectorReturnType());
+
+		itemSelectorCriteria.add(imageItemSelectorCriterion);
+
+		for (ImageDDMFormFieldItemSelectorCriterionContributor
+				imageDDMFormFieldItemSelectorCriterionContributor :
+					_imageDDMFormFieldItemSelectorCriterionContributors) {
+
+			if (!imageDDMFormFieldItemSelectorCriterionContributor.isVisible(
+					ddmFormFieldRenderingContext)) {
+
+				continue;
+			}
+
+			itemSelectorCriteria.add(
+				imageDDMFormFieldItemSelectorCriterionContributor.
+					getItemSelectorCriterion(ddmFormFieldRenderingContext));
+		}
+
+		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
+			RequestBackedPortletURLFactoryUtil.create(httpServletRequest),
+			ddmFormFieldRenderingContext.getPortletNamespace() +
+				"selectDocumentLibrary",
+			itemSelectorCriteria.toArray(new ItemSelectorCriterion[0]));
+
+		return itemSelectorURL.toString();
 	}
 
 	private String _getMessage(Locale defaultLocale, String value) {

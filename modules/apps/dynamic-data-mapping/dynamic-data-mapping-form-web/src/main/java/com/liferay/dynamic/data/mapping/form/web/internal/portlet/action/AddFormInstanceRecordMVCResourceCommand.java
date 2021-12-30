@@ -92,20 +92,6 @@ public class AddFormInstanceRecordMVCResourceCommand
 			ddmFormContextDeserializerRequest);
 	}
 
-	protected ServiceContext createServiceContext(
-			ResourceRequest resourceRequest)
-		throws PortalException {
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			DDMFormInstanceRecord.class.getName(), resourceRequest);
-
-		serviceContext.setAttribute("status", WorkflowConstants.STATUS_DRAFT);
-		serviceContext.setAttribute("validateDDMFormValues", Boolean.FALSE);
-		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
-
-		return serviceContext;
-	}
-
 	@Override
 	protected void doServeResource(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
@@ -155,7 +141,7 @@ public class AddFormInstanceRecordMVCResourceCommand
 					ddmFormInstance.getVersion(),
 					WorkflowConstants.STATUS_DRAFT);
 
-		ServiceContext serviceContext = createServiceContext(resourceRequest);
+		ServiceContext serviceContext = _createServiceContext(resourceRequest);
 
 		if (ddmFormInstanceRecordVersion == null) {
 			_ddmFormInstanceRecordService.addFormInstanceRecord(
@@ -175,6 +161,20 @@ public class AddFormInstanceRecordMVCResourceCommand
 		DDMStructure ddmStructure = ddmFormInstance.getStructure();
 
 		return ddmStructure.getDDMForm();
+	}
+
+	private ServiceContext _createServiceContext(
+			ResourceRequest resourceRequest)
+		throws PortalException {
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			DDMFormInstanceRecord.class.getName(), resourceRequest);
+
+		serviceContext.setAttribute("status", WorkflowConstants.STATUS_DRAFT);
+		serviceContext.setAttribute("validateDDMFormValues", Boolean.FALSE);
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
+
+		return serviceContext;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

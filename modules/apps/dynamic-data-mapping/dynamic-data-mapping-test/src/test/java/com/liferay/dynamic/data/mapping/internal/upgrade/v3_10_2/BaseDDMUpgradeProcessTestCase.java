@@ -62,13 +62,13 @@ public abstract class BaseDDMUpgradeProcessTestCase extends PowerMockito {
 
 	@Before
 	public void setUp() throws Exception {
-		setUpDDMFormFieldTypeServicesTracker();
-		setUpJSONFactory();
-		setUpJSONFactoryUtil();
-		setUpLanguageUtil();
-		setUpLocaleUtil();
-		setUpPortalUtil();
-		setUpResourceBundleUtil();
+		_setUpDDMFormFieldTypeServicesTracker();
+		_setUpJSONFactory();
+		_setUpJSONFactoryUtil();
+		_setUpLanguageUtil();
+		_setUpLocaleUtil();
+		_setUpPortalUtil();
+		_setUpResourceBundleUtil();
 	}
 
 	protected String read(String fileName) throws IOException {
@@ -80,7 +80,24 @@ public abstract class BaseDDMUpgradeProcessTestCase extends PowerMockito {
 		return StringUtil.read(inputStream);
 	}
 
-	protected void setUpDDMFormFieldTypeServicesTracker() throws Exception {
+	@Mock
+	protected DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker;
+
+	protected final DDMFormJSONDeserializer ddmFormJSONDeserializer =
+		new DDMFormJSONDeserializer();
+	protected final DDMFormJSONSerializer ddmFormJSONSerializer =
+		new DDMFormJSONSerializer();
+	protected final DDMFormLayoutJSONDeserializer
+		ddmFormLayoutJSONDeserializer = new DDMFormLayoutJSONDeserializer();
+	protected final DDMFormLayoutJSONSerializer ddmFormLayoutJSONSerializer =
+		new DDMFormLayoutJSONSerializer();
+	protected final DDMFormValuesJSONDeserializer
+		ddmFormValuesJSONDeserializer = new DDMFormValuesJSONDeserializer();
+	protected final DDMFormValuesJSONSerializer ddmFormValuesJSONSerializer =
+		new DDMFormValuesJSONSerializer();
+	protected final JSONFactory jsonFactory = new JSONFactoryImpl();
+
+	private void _setUpDDMFormFieldTypeServicesTracker() throws Exception {
 		MemberMatcher.field(
 			DDMFormJSONDeserializer.class, "_ddmFormFieldTypeServicesTracker"
 		).set(
@@ -118,7 +135,7 @@ public abstract class BaseDDMUpgradeProcessTestCase extends PowerMockito {
 		);
 	}
 
-	protected void setUpJSONFactory() throws Exception {
+	private void _setUpJSONFactory() throws Exception {
 		MemberMatcher.field(
 			DDMFormJSONDeserializer.class, "_jsonFactory"
 		).set(
@@ -156,13 +173,13 @@ public abstract class BaseDDMUpgradeProcessTestCase extends PowerMockito {
 		);
 	}
 
-	protected void setUpJSONFactoryUtil() {
+	private void _setUpJSONFactoryUtil() {
 		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
 
 		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
 	}
 
-	protected void setUpLanguageUtil() {
+	private void _setUpLanguageUtil() {
 		LanguageUtil languageUtil = new LanguageUtil();
 
 		Language language = mock(Language.class);
@@ -176,7 +193,7 @@ public abstract class BaseDDMUpgradeProcessTestCase extends PowerMockito {
 		languageUtil.setLanguage(language);
 	}
 
-	protected void setUpLocaleUtil() {
+	private void _setUpLocaleUtil() {
 		mockStatic(LocaleUtil.class);
 
 		when(
@@ -198,7 +215,7 @@ public abstract class BaseDDMUpgradeProcessTestCase extends PowerMockito {
 		);
 	}
 
-	protected void setUpPortalUtil() {
+	private void _setUpPortalUtil() {
 		PortalUtil portalUtil = new PortalUtil();
 
 		Portal portal = mock(Portal.class);
@@ -214,7 +231,7 @@ public abstract class BaseDDMUpgradeProcessTestCase extends PowerMockito {
 		portalUtil.setPortal(portal);
 	}
 
-	protected void setUpResourceBundleUtil() {
+	private void _setUpResourceBundleUtil() {
 		mockStatic(ResourceBundleUtil.class);
 
 		when(
@@ -225,22 +242,5 @@ public abstract class BaseDDMUpgradeProcessTestCase extends PowerMockito {
 			ResourceBundleUtil.EMPTY_RESOURCE_BUNDLE
 		);
 	}
-
-	@Mock
-	protected DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker;
-
-	protected final DDMFormJSONDeserializer ddmFormJSONDeserializer =
-		new DDMFormJSONDeserializer();
-	protected final DDMFormJSONSerializer ddmFormJSONSerializer =
-		new DDMFormJSONSerializer();
-	protected final DDMFormLayoutJSONDeserializer
-		ddmFormLayoutJSONDeserializer = new DDMFormLayoutJSONDeserializer();
-	protected final DDMFormLayoutJSONSerializer ddmFormLayoutJSONSerializer =
-		new DDMFormLayoutJSONSerializer();
-	protected final DDMFormValuesJSONDeserializer
-		ddmFormValuesJSONDeserializer = new DDMFormValuesJSONDeserializer();
-	protected final DDMFormValuesJSONSerializer ddmFormValuesJSONSerializer =
-		new DDMFormValuesJSONSerializer();
-	protected final JSONFactory jsonFactory = new JSONFactoryImpl();
 
 }

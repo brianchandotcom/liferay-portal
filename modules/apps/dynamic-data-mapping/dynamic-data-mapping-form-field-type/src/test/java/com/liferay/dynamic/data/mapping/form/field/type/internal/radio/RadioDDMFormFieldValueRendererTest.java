@@ -67,7 +67,7 @@ public class RadioDDMFormFieldValueRendererTest {
 		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
 
 		RadioDDMFormFieldValueRenderer radioDDMFormFieldValueRenderer =
-			createRadioDDMFormFieldValueRenderer();
+			_createRadioDDMFormFieldValueRenderer();
 
 		Assert.assertEquals(
 			"option 1",
@@ -75,8 +75,8 @@ public class RadioDDMFormFieldValueRendererTest {
 				ddmFormFieldValue, LocaleUtil.US));
 	}
 
-	protected RadioDDMFormFieldValueRenderer
-			createRadioDDMFormFieldValueRenderer()
+	private RadioDDMFormFieldValueRenderer
+			_createRadioDDMFormFieldValueRenderer()
 		throws Exception {
 
 		RadioDDMFormFieldValueRenderer radioDDMFormFieldValueRenderer =

@@ -46,7 +46,7 @@ public class CalculateDDMFormRuleActionSerializerTest extends PowerMockito {
 
 	@Before
 	public void setUp() {
-		setUpServiceContextThreadLocal();
+		_setUpServiceContextThreadLocal();
 	}
 
 	@Test
@@ -223,7 +223,7 @@ public class CalculateDDMFormRuleActionSerializerTest extends PowerMockito {
 		Assert.assertNull(result);
 	}
 
-	protected void setUpServiceContextThreadLocal() {
+	private void _setUpServiceContextThreadLocal() {
 		mockStatic(ServiceContextThreadLocal.class);
 
 		when(

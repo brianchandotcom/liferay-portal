@@ -53,7 +53,7 @@ public class SaveFormInstanceMVCResourceCommand
 		throws IOException {
 
 		try {
-			DDMFormInstance formInstance = saveFormInstanceInTransaction(
+			DDMFormInstance formInstance = _saveFormInstanceInTransaction(
 				resourceRequest, resourceResponse);
 
 			writeResponse(resourceRequest, resourceResponse, formInstance);
@@ -65,7 +65,10 @@ public class SaveFormInstanceMVCResourceCommand
 		}
 	}
 
-	protected DDMFormInstance saveFormInstanceInTransaction(
+	@Reference
+	protected SaveFormInstanceMVCCommandHelper saveFormInstanceMVCCommandHelper;
+
+	private DDMFormInstance _saveFormInstanceInTransaction(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Throwable {
 
@@ -74,9 +77,6 @@ public class SaveFormInstanceMVCResourceCommand
 			() -> saveFormInstanceMVCCommandHelper.saveFormInstance(
 				resourceRequest, resourceResponse));
 	}
-
-	@Reference
-	protected SaveFormInstanceMVCCommandHelper saveFormInstanceMVCCommandHelper;
 
 	private static final TransactionConfig _transactionConfig;
 

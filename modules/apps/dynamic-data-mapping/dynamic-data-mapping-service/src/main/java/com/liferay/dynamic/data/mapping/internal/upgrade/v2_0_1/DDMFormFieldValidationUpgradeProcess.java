@@ -65,7 +65,7 @@ public class DDMFormFieldValidationUpgradeProcess extends UpgradeProcess {
 					String definition = resultSet.getString("definition");
 
 					preparedStatement2.setString(
-						1, updateValidation(definition));
+						1, _updateValidation(definition));
 
 					long structureId = resultSet.getLong("structureId");
 
@@ -82,7 +82,7 @@ public class DDMFormFieldValidationUpgradeProcess extends UpgradeProcess {
 							definition = resultSet2.getString("definition");
 
 							preparedStatement4.setString(
-								1, updateValidation(definition));
+								1, _updateValidation(definition));
 
 							long structureVersionId = resultSet2.getLong(
 								"structureVersionId");
@@ -101,9 +101,51 @@ public class DDMFormFieldValidationUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
-	protected String updateValidation(String definition)
-		throws PortalException {
+	private void _addParameterValue(
+		String value, JSONObject validationJSONObject,
+		String defaultLanguageId) {
 
+		JSONObject parameterJSONObject = validationJSONObject.getJSONObject(
+			"parameter");
+
+		if (!parameterJSONObject.has(defaultLanguageId)) {
+			parameterJSONObject.put(defaultLanguageId, value);
+		}
+	}
+
+	private String _getExpressionName(String expressionValue) {
+		String name = "";
+
+		if (expressionValue.startsWith("contains")) {
+			name = "contains";
+		}
+		else if (expressionValue.startsWith("NOT(contains")) {
+			name = "notContains";
+		}
+		else if (expressionValue.startsWith("isEmailAddress")) {
+			name = "email";
+		}
+		else if (expressionValue.startsWith("match")) {
+			name = "regularExpression";
+		}
+		else if (expressionValue.startsWith("isURL")) {
+			name = "url";
+		}
+
+		return name;
+	}
+
+	private String _getParameterValueFromExpression(String expressionValue) {
+		String[] parts = expressionValue.split("\"");
+
+		if (parts.length > 1) {
+			return parts[1];
+		}
+
+		return "";
+	}
+
+	private String _updateValidation(String definition) throws PortalException {
 		JSONObject definitionJSONObject = _jsonFactory.createJSONObject(
 			definition);
 
@@ -159,50 +201,6 @@ public class DDMFormFieldValidationUpgradeProcess extends UpgradeProcess {
 		}
 
 		return definitionJSONObject.toJSONString();
-	}
-
-	private void _addParameterValue(
-		String value, JSONObject validationJSONObject,
-		String defaultLanguageId) {
-
-		JSONObject parameterJSONObject = validationJSONObject.getJSONObject(
-			"parameter");
-
-		if (!parameterJSONObject.has(defaultLanguageId)) {
-			parameterJSONObject.put(defaultLanguageId, value);
-		}
-	}
-
-	private String _getExpressionName(String expressionValue) {
-		String name = "";
-
-		if (expressionValue.startsWith("contains")) {
-			name = "contains";
-		}
-		else if (expressionValue.startsWith("NOT(contains")) {
-			name = "notContains";
-		}
-		else if (expressionValue.startsWith("isEmailAddress")) {
-			name = "email";
-		}
-		else if (expressionValue.startsWith("match")) {
-			name = "regularExpression";
-		}
-		else if (expressionValue.startsWith("isURL")) {
-			name = "url";
-		}
-
-		return name;
-	}
-
-	private String _getParameterValueFromExpression(String expressionValue) {
-		String[] parts = expressionValue.split("\"");
-
-		if (parts.length > 1) {
-			return parts[1];
-		}
-
-		return "";
 	}
 
 	private final JSONFactory _jsonFactory;

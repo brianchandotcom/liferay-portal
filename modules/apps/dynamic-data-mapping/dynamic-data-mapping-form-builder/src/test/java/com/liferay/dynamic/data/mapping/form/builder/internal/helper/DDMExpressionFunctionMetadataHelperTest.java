@@ -62,7 +62,7 @@ public class DDMExpressionFunctionMetadataHelperTest {
 	public void testPopulateCustomDDMExpressionFunctionsMetadata()
 		throws Exception {
 
-		mockDDMExpressionFunctionTracker();
+		_mockDDMExpressionFunctionTracker();
 
 		Map<String, List<DDMExpressionFunctionMetadata>>
 			ddmExpressionFunctionMetadatasMap = new HashMap<>();
@@ -142,7 +142,7 @@ public class DDMExpressionFunctionMetadataHelperTest {
 			ddmExpressionFunctionMetadatas.size());
 	}
 
-	protected void mockDDMExpressionFunctionTracker() throws Exception {
+	private void _mockDDMExpressionFunctionTracker() throws Exception {
 		DDMExpressionFunctionTracker ddmExpressionFunctionTracker =
 			Mockito.mock(DDMExpressionFunctionTracker.class);
 

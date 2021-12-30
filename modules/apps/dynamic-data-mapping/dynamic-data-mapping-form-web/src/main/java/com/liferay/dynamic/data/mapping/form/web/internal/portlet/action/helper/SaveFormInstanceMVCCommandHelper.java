@@ -90,14 +90,14 @@ public class SaveFormInstanceMVCCommandHelper {
 
 		Locale defaultLocale = ddmForm.getDefaultLocale();
 
-		Map<Locale, String> nameMap = getLocalizedMap(
+		Map<Locale, String> nameMap = _getLocalizedMap(
 			name, ddmForm.getAvailableLocales(), defaultLocale);
 
 		if (nameMap.isEmpty() || Validator.isNull(nameMap.get(defaultLocale))) {
 			nameMap.put(
 				defaultLocale,
 				LanguageUtil.get(
-					getResourceBundle(defaultLocale), defaultName));
+					_getResourceBundle(defaultLocale), defaultName));
 		}
 
 		return nameMap;
@@ -119,71 +119,12 @@ public class SaveFormInstanceMVCCommandHelper {
 			portletRequest, "formInstanceId");
 
 		if (formInstanceId == 0) {
-			return addFormInstance(
+			return _addFormInstance(
 				portletRequest, validateDDMFormFieldSettings);
 		}
 
-		return updateFormInstance(
+		return _updateFormInstance(
 			portletRequest, formInstanceId, validateDDMFormFieldSettings);
-	}
-
-	protected DDMFormInstance addFormInstance(
-			PortletRequest portletRequest, boolean validateFormFieldsSettings)
-		throws Exception {
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			DDMFormInstance.class.getName(), portletRequest);
-
-		long groupId = ParamUtil.getLong(portletRequest, "groupId");
-		String name = ParamUtil.getString(portletRequest, "name");
-		String description = ParamUtil.getString(portletRequest, "description");
-		DDMForm ddmForm = getDDMForm(portletRequest, serviceContext);
-		DDMFormLayout ddmFormLayout = getDDMFormLayout(portletRequest);
-
-		Map<Locale, String> nameMap = getNameMap(
-			ddmForm, name, "untitled-form");
-		Map<Locale, String> descriptionMap = getLocalizedMap(
-			description, ddmForm.getAvailableLocales(),
-			ddmForm.getDefaultLocale());
-
-		if (ParamUtil.getBoolean(portletRequest, "saveAsDraft")) {
-			serviceContext.setAttribute(
-				"status", WorkflowConstants.STATUS_DRAFT);
-		}
-
-		if (validateFormFieldsSettings) {
-			formInstanceFieldSettingsValidator.validate(
-				portletRequest, ddmForm);
-		}
-
-		DDMFormValues settingsDDMFormValues = getSettingsDDMFormValues(
-			portletRequest);
-
-		_validateSettingsDDMFormValues(
-			settingsDDMFormValues,
-			_portal.getHttpServletRequest(portletRequest),
-			ddmForm.getDefaultLocale());
-
-		return formInstanceService.addFormInstance(
-			groupId, nameMap, descriptionMap, ddmForm, ddmFormLayout,
-			settingsDDMFormValues, serviceContext);
-	}
-
-	protected DDMForm getDDMForm(
-			PortletRequest portletRequest, ServiceContext serviceContext)
-		throws PortalException {
-
-		try {
-			String serializedFormBuilderContext = ParamUtil.getString(
-				portletRequest, "serializedFormBuilderContext");
-
-			return ddmFormBuilderContextToDDMForm.deserialize(
-				DDMFormContextDeserializerRequest.with(
-					serializedFormBuilderContext));
-		}
-		catch (PortalException portalException) {
-			throw new StructureDefinitionException(portalException);
-		}
 	}
 
 	protected DDMFormLayout getDDMFormLayout(PortletRequest portletRequest)
@@ -200,89 +141,6 @@ public class SaveFormInstanceMVCCommandHelper {
 		catch (PortalException portalException) {
 			throw new StructureLayoutException(portalException);
 		}
-	}
-
-	protected Map<Locale, String> getLocalizedMap(
-			String value, Set<Locale> availableLocales, Locale defaultLocale)
-		throws PortalException {
-
-		Map<Locale, String> localizedMap = new HashMap<>();
-
-		JSONObject jsonObject = jsonFactory.createJSONObject(value);
-
-		String defaultValueString = jsonObject.getString(
-			LocaleUtil.toLanguageId(defaultLocale));
-
-		for (Locale availableLocale : availableLocales) {
-			String valueString = jsonObject.getString(
-				LocaleUtil.toLanguageId(availableLocale), defaultValueString);
-
-			localizedMap.put(availableLocale, valueString);
-		}
-
-		return localizedMap;
-	}
-
-	protected ResourceBundle getResourceBundle(Locale locale) {
-		Class<?> clazz = getClass();
-
-		return ResourceBundleUtil.getBundle(
-			"content.Language", locale, clazz.getClassLoader());
-	}
-
-	protected DDMFormValues getSettingsDDMFormValues(
-			PortletRequest portletRequest)
-		throws PortalException {
-
-		String settingsContext = ParamUtil.getString(
-			portletRequest, "serializedSettingsContext");
-
-		return ddmFormTemplateContextToDDMFormValues.deserialize(
-			DDMFormContextDeserializerRequest.with(
-				DDMFormFactory.create(DDMFormInstanceSettings.class),
-				settingsContext));
-	}
-
-	protected DDMFormInstance updateFormInstance(
-			PortletRequest portletRequest, long formInstanceId,
-			boolean validateFormFieldsSettings)
-		throws Exception {
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			DDMFormInstance.class.getName(), portletRequest);
-
-		String name = ParamUtil.getString(portletRequest, "name");
-		String description = ParamUtil.getString(portletRequest, "description");
-		DDMForm ddmForm = getDDMForm(portletRequest, serviceContext);
-		DDMFormLayout ddmFormLayout = getDDMFormLayout(portletRequest);
-
-		Map<Locale, String> nameMap = getNameMap(
-			ddmForm, name, "untitled-form");
-		Map<Locale, String> descriptionMap = getLocalizedMap(
-			description, ddmForm.getAvailableLocales(),
-			ddmForm.getDefaultLocale());
-
-		if (ParamUtil.getBoolean(portletRequest, "saveAsDraft")) {
-			serviceContext.setAttribute(
-				"status", WorkflowConstants.ACTION_SAVE_DRAFT);
-		}
-
-		if (validateFormFieldsSettings) {
-			formInstanceFieldSettingsValidator.validate(
-				portletRequest, ddmForm);
-		}
-
-		DDMFormValues settingsDDMFormValues = getSettingsDDMFormValues(
-			portletRequest);
-
-		_validateSettingsDDMFormValues(
-			settingsDDMFormValues,
-			_portal.getHttpServletRequest(portletRequest),
-			ddmForm.getDefaultLocale());
-
-		return formInstanceService.updateFormInstance(
-			formInstanceId, nameMap, descriptionMap, ddmForm, ddmFormLayout,
-			settingsDDMFormValues, serviceContext);
 	}
 
 	@Reference(
@@ -312,6 +170,86 @@ public class SaveFormInstanceMVCCommandHelper {
 
 	@Reference
 	protected JSONFactory jsonFactory;
+
+	private DDMFormInstance _addFormInstance(
+			PortletRequest portletRequest, boolean validateFormFieldsSettings)
+		throws Exception {
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			DDMFormInstance.class.getName(), portletRequest);
+
+		long groupId = ParamUtil.getLong(portletRequest, "groupId");
+		String name = ParamUtil.getString(portletRequest, "name");
+		String description = ParamUtil.getString(portletRequest, "description");
+		DDMForm ddmForm = _getDDMForm(portletRequest, serviceContext);
+		DDMFormLayout ddmFormLayout = getDDMFormLayout(portletRequest);
+
+		Map<Locale, String> nameMap = getNameMap(
+			ddmForm, name, "untitled-form");
+		Map<Locale, String> descriptionMap = _getLocalizedMap(
+			description, ddmForm.getAvailableLocales(),
+			ddmForm.getDefaultLocale());
+
+		if (ParamUtil.getBoolean(portletRequest, "saveAsDraft")) {
+			serviceContext.setAttribute(
+				"status", WorkflowConstants.STATUS_DRAFT);
+		}
+
+		if (validateFormFieldsSettings) {
+			formInstanceFieldSettingsValidator.validate(
+				portletRequest, ddmForm);
+		}
+
+		DDMFormValues settingsDDMFormValues = _getSettingsDDMFormValues(
+			portletRequest);
+
+		_validateSettingsDDMFormValues(
+			settingsDDMFormValues,
+			_portal.getHttpServletRequest(portletRequest),
+			ddmForm.getDefaultLocale());
+
+		return formInstanceService.addFormInstance(
+			groupId, nameMap, descriptionMap, ddmForm, ddmFormLayout,
+			settingsDDMFormValues, serviceContext);
+	}
+
+	private DDMForm _getDDMForm(
+			PortletRequest portletRequest, ServiceContext serviceContext)
+		throws PortalException {
+
+		try {
+			String serializedFormBuilderContext = ParamUtil.getString(
+				portletRequest, "serializedFormBuilderContext");
+
+			return ddmFormBuilderContextToDDMForm.deserialize(
+				DDMFormContextDeserializerRequest.with(
+					serializedFormBuilderContext));
+		}
+		catch (PortalException portalException) {
+			throw new StructureDefinitionException(portalException);
+		}
+	}
+
+	private Map<Locale, String> _getLocalizedMap(
+			String value, Set<Locale> availableLocales, Locale defaultLocale)
+		throws PortalException {
+
+		Map<Locale, String> localizedMap = new HashMap<>();
+
+		JSONObject jsonObject = jsonFactory.createJSONObject(value);
+
+		String defaultValueString = jsonObject.getString(
+			LocaleUtil.toLanguageId(defaultLocale));
+
+		for (Locale availableLocale : availableLocales) {
+			String valueString = jsonObject.getString(
+				LocaleUtil.toLanguageId(availableLocale), defaultValueString);
+
+			localizedMap.put(availableLocale, valueString);
+		}
+
+		return localizedMap;
+	}
 
 	private String _getPropertyValue(
 		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap,
@@ -358,6 +296,26 @@ public class SaveFormInstanceMVCCommandHelper {
 			});
 	}
 
+	private ResourceBundle _getResourceBundle(Locale locale) {
+		Class<?> clazz = getClass();
+
+		return ResourceBundleUtil.getBundle(
+			"content.Language", locale, clazz.getClassLoader());
+	}
+
+	private DDMFormValues _getSettingsDDMFormValues(
+			PortletRequest portletRequest)
+		throws PortalException {
+
+		String settingsContext = ParamUtil.getString(
+			portletRequest, "serializedSettingsContext");
+
+		return ddmFormTemplateContextToDDMFormValues.deserialize(
+			DDMFormContextDeserializerRequest.with(
+				DDMFormFactory.create(DDMFormInstanceSettings.class),
+				settingsContext));
+	}
+
 	private URI _getURI(String uriString) {
 		try {
 			return new URI(uriString.trim());
@@ -369,6 +327,48 @@ public class SaveFormInstanceMVCCommandHelper {
 
 			return null;
 		}
+	}
+
+	private DDMFormInstance _updateFormInstance(
+			PortletRequest portletRequest, long formInstanceId,
+			boolean validateFormFieldsSettings)
+		throws Exception {
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			DDMFormInstance.class.getName(), portletRequest);
+
+		String name = ParamUtil.getString(portletRequest, "name");
+		String description = ParamUtil.getString(portletRequest, "description");
+		DDMForm ddmForm = _getDDMForm(portletRequest, serviceContext);
+		DDMFormLayout ddmFormLayout = getDDMFormLayout(portletRequest);
+
+		Map<Locale, String> nameMap = getNameMap(
+			ddmForm, name, "untitled-form");
+		Map<Locale, String> descriptionMap = _getLocalizedMap(
+			description, ddmForm.getAvailableLocales(),
+			ddmForm.getDefaultLocale());
+
+		if (ParamUtil.getBoolean(portletRequest, "saveAsDraft")) {
+			serviceContext.setAttribute(
+				"status", WorkflowConstants.ACTION_SAVE_DRAFT);
+		}
+
+		if (validateFormFieldsSettings) {
+			formInstanceFieldSettingsValidator.validate(
+				portletRequest, ddmForm);
+		}
+
+		DDMFormValues settingsDDMFormValues = _getSettingsDDMFormValues(
+			portletRequest);
+
+		_validateSettingsDDMFormValues(
+			settingsDDMFormValues,
+			_portal.getHttpServletRequest(portletRequest),
+			ddmForm.getDefaultLocale());
+
+		return formInstanceService.updateFormInstance(
+			formInstanceId, nameMap, descriptionMap, ddmForm, ddmFormLayout,
+			settingsDDMFormValues, serviceContext);
 	}
 
 	private void _validateExpirationDate(DDMFormValues ddmFormValues)

@@ -88,7 +88,7 @@ public class OptionsDDMFormFieldContextHelper {
 			while (iterator.hasNext()) {
 				String languageId = iterator.next();
 
-				List<Object> options = createOptions(
+				List<Object> options = _createOptions(
 					jsonObject.getJSONArray(languageId));
 
 				localizedValues.put(languageId, options);
@@ -104,17 +104,17 @@ public class OptionsDDMFormFieldContextHelper {
 	}
 
 	protected List<Object> createDefaultOptions() {
-		String defaultOptionLabel = getDefaultOptionLabel();
+		String defaultOptionLabel = _getDefaultOptionLabel();
 
 		String defaultOptionValue = DDMFormFieldUtil.getDDMFormFieldName(
 			defaultOptionLabel);
 
 		return ListUtil.fromArray(
-			createOption(
+			_createOption(
 				defaultOptionLabel, defaultOptionValue, defaultOptionValue));
 	}
 
-	protected Map<String, String> createOption(
+	private Map<String, String> _createOption(
 		String label, String reference, String value) {
 
 		return HashMapBuilder.put(
@@ -126,13 +126,13 @@ public class OptionsDDMFormFieldContextHelper {
 		).build();
 	}
 
-	protected List<Object> createOptions(JSONArray jsonArray) {
+	private List<Object> _createOptions(JSONArray jsonArray) {
 		List<Object> options = new ArrayList<>();
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-			Map<String, String> option = createOption(
+			Map<String, String> option = _createOption(
 				jsonObject.getString("label"),
 				jsonObject.getString("reference"),
 				jsonObject.getString("value"));
@@ -143,18 +143,11 @@ public class OptionsDDMFormFieldContextHelper {
 		return options;
 	}
 
-	protected String getDefaultOptionLabel() {
-		ResourceBundle resourceBundle = getResourceBundle(
+	private String _getDefaultOptionLabel() {
+		ResourceBundle resourceBundle = _getResourceBundle(
 			_ddmForm.getDefaultLocale());
 
 		return LanguageUtil.get(resourceBundle, "option");
-	}
-
-	protected ResourceBundle getResourceBundle(Locale locale) {
-		Class<?> clazz = getClass();
-
-		return ResourceBundleUtil.getBundle(
-			"content.Language", locale, clazz.getClassLoader());
 	}
 
 	private String _getLanguageId() {
@@ -165,6 +158,13 @@ public class OptionsDDMFormFieldContextHelper {
 		}
 
 		return LocaleUtil.toLanguageId(locale);
+	}
+
+	private ResourceBundle _getResourceBundle(Locale locale) {
+		Class<?> clazz = getClass();
+
+		return ResourceBundleUtil.getBundle(
+			"content.Language", locale, clazz.getClassLoader());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

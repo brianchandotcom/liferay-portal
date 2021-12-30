@@ -66,7 +66,7 @@ public class CopyFormInstanceMVCActionCommand
 		DDMFormValues settingsDDMFormValuesCopy =
 			formInstance.getSettingsDDMFormValues();
 
-		setDefaultPublishedDDMFormFieldValue(settingsDDMFormValuesCopy);
+		_setDefaultPublishedDDMFormFieldValue(settingsDDMFormValuesCopy);
 
 		return settingsDDMFormValuesCopy;
 	}
@@ -124,18 +124,6 @@ public class CopyFormInstanceMVCActionCommand
 			moduleResourceBundle, portalResourceBundle);
 	}
 
-	protected void setDefaultPublishedDDMFormFieldValue(
-		DDMFormValues ddmFormValues) {
-
-		for (DDMFormFieldValue ddmFormFieldValue :
-				ddmFormValues.getDDMFormFieldValues()) {
-
-			if (Objects.equals(ddmFormFieldValue.getName(), "published")) {
-				ddmFormFieldValue.setValue(new UnlocalizedValue("false"));
-			}
-		}
-	}
-
 	@Reference
 	protected DDMFormInstanceService ddmFormInstanceService;
 
@@ -147,5 +135,17 @@ public class CopyFormInstanceMVCActionCommand
 
 	@Reference
 	protected SaveFormInstanceMVCCommandHelper saveFormInstanceMVCCommandHelper;
+
+	private void _setDefaultPublishedDDMFormFieldValue(
+		DDMFormValues ddmFormValues) {
+
+		for (DDMFormFieldValue ddmFormFieldValue :
+				ddmFormValues.getDDMFormFieldValues()) {
+
+			if (Objects.equals(ddmFormFieldValue.getName(), "published")) {
+				ddmFormFieldValue.setValue(new UnlocalizedValue("false"));
+			}
+		}
+	}
 
 }

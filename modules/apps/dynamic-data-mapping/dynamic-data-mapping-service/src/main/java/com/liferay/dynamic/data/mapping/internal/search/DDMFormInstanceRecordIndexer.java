@@ -150,32 +150,7 @@ public class DDMFormInstanceRecordIndexer
 
 		addSearchTerm(searchQuery, searchContext, Field.USER_NAME, false);
 
-		addContentSearchTerm(searchQuery, searchContext);
-	}
-
-	protected void addContent(
-			DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion,
-			DDMFormValues ddmFormValues, Document document)
-		throws Exception {
-
-		Set<Locale> locales = ddmFormValues.getAvailableLocales();
-
-		for (Locale locale : locales) {
-			document.addText(
-				"ddmContent_" + LocaleUtil.toLanguageId(locale),
-				extractContent(ddmFormInstanceRecordVersion, locale));
-		}
-	}
-
-	protected void addContentSearchTerm(
-			BooleanQuery searchQuery, SearchContext searchContext)
-		throws Exception {
-
-		Locale locale = searchContext.getLocale();
-
-		addSearchTerm(
-			searchQuery, searchContext,
-			"ddmContent_ " + LocaleUtil.toLanguageId(locale), false);
+		_addContentSearchTerm(searchQuery, searchContext);
 	}
 
 	@Override
@@ -224,7 +199,7 @@ public class DDMFormInstanceRecordIndexer
 		DDMFormValues ddmFormValues =
 			ddmFormInstanceRecordVersion.getDDMFormValues();
 
-		addContent(ddmFormInstanceRecordVersion, ddmFormValues, document);
+		_addContent(ddmFormInstanceRecordVersion, ddmFormValues, document);
 
 		ddmIndexer.addAttributes(document, ddmStructure, ddmFormValues);
 
@@ -239,7 +214,7 @@ public class DDMFormInstanceRecordIndexer
 		long formInstanceId = GetterUtil.getLong(
 			document.get("formInstanceId"));
 
-		String title = getTitle(formInstanceId, locale);
+		String title = _getTitle(formInstanceId, locale);
 
 		Summary summary = createSummary(
 			document, Field.TITLE, Field.DESCRIPTION);
@@ -271,10 +246,45 @@ public class DDMFormInstanceRecordIndexer
 	protected void doReindex(String[] ids) throws Exception {
 		long companyId = GetterUtil.getLong(ids[0]);
 
-		reindexFormInstanceRecords(companyId);
+		_reindexFormInstanceRecords(companyId);
 	}
 
-	protected String extractContent(
+	protected ClassNameLocalService classNameLocalService;
+	protected DDMFormInstanceLocalService ddmFormInstanceLocalService;
+	protected DDMFormInstanceRecordLocalService
+		ddmFormInstanceRecordLocalService;
+	protected DDMFormInstanceRecordVersionLocalService
+		ddmFormInstanceRecordVersionLocalService;
+	protected DDMIndexer ddmIndexer;
+	protected IndexWriterHelper indexWriterHelper;
+	protected SearchPermissionChecker searchPermissionChecker;
+
+	private void _addContent(
+			DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion,
+			DDMFormValues ddmFormValues, Document document)
+		throws Exception {
+
+		Set<Locale> locales = ddmFormValues.getAvailableLocales();
+
+		for (Locale locale : locales) {
+			document.addText(
+				"ddmContent_" + LocaleUtil.toLanguageId(locale),
+				_extractContent(ddmFormInstanceRecordVersion, locale));
+		}
+	}
+
+	private void _addContentSearchTerm(
+			BooleanQuery searchQuery, SearchContext searchContext)
+		throws Exception {
+
+		Locale locale = searchContext.getLocale();
+
+		addSearchTerm(
+			searchQuery, searchContext,
+			"ddmContent_ " + LocaleUtil.toLanguageId(locale), false);
+	}
+
+	private String _extractContent(
 			DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion,
 			Locale locale)
 		throws Exception {
@@ -293,11 +303,11 @@ public class DDMFormInstanceRecordIndexer
 			ddmFormInstance.getStructure(), ddmFormValues, locale);
 	}
 
-	protected ResourceBundle getResourceBundle(Locale defaultLocale) {
+	private ResourceBundle _getResourceBundle(Locale defaultLocale) {
 		return PortalUtil.getResourceBundle(defaultLocale);
 	}
 
-	protected String getTitle(long formInstanceId, Locale locale) {
+	private String _getTitle(long formInstanceId, Locale locale) {
 		try {
 			DDMFormInstance ddmFormInstance =
 				ddmFormInstanceLocalService.getFormInstance(formInstanceId);
@@ -305,7 +315,7 @@ public class DDMFormInstanceRecordIndexer
 			String ddmFormInstanceName = ddmFormInstance.getName(locale);
 
 			return LanguageUtil.format(
-				getResourceBundle(locale), "form-record-for-form-x",
+				_getResourceBundle(locale), "form-record-for-form-x",
 				ddmFormInstanceName, false);
 		}
 		catch (Exception exception) {
@@ -315,7 +325,7 @@ public class DDMFormInstanceRecordIndexer
 		return StringPool.BLANK;
 	}
 
-	protected void reindexFormInstanceRecords(long companyId) throws Exception {
+	private void _reindexFormInstanceRecords(long companyId) throws Exception {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
 			ddmFormInstanceRecordLocalService.
 				getIndexableActionableDynamicQuery();
@@ -370,16 +380,6 @@ public class DDMFormInstanceRecordIndexer
 
 		indexableActionableDynamicQuery.performActions();
 	}
-
-	protected ClassNameLocalService classNameLocalService;
-	protected DDMFormInstanceLocalService ddmFormInstanceLocalService;
-	protected DDMFormInstanceRecordLocalService
-		ddmFormInstanceRecordLocalService;
-	protected DDMFormInstanceRecordVersionLocalService
-		ddmFormInstanceRecordVersionLocalService;
-	protected DDMIndexer ddmIndexer;
-	protected IndexWriterHelper indexWriterHelper;
-	protected SearchPermissionChecker searchPermissionChecker;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMFormInstanceRecordIndexer.class);

@@ -38,7 +38,7 @@ public class SaveFormInstanceMVCResourceCommandTest {
 
 	@Before
 	public void setUp() throws Exception {
-		setUpSaveFormInstanceMVCResourceCommand();
+		_setUpSaveFormInstanceMVCResourceCommand();
 	}
 
 	@Test
@@ -65,7 +65,7 @@ public class SaveFormInstanceMVCResourceCommandTest {
 				date, LocaleUtil.US, "America/Sao_Paulo"));
 	}
 
-	protected void setUpSaveFormInstanceMVCResourceCommand() throws Exception {
+	private void _setUpSaveFormInstanceMVCResourceCommand() throws Exception {
 		_saveFormInstanceMVCResourceCommand =
 			new SaveFormInstanceMVCResourceCommand();
 	}

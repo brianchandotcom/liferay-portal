@@ -59,7 +59,7 @@ public class TextDDMFormFieldTemplateContextContributor
 
 		if (ddmFormFieldRenderingContext.isReturnFullContext()) {
 			parameters = HashMapBuilder.<String, Object>put(
-				"autocompleteEnabled", isAutocompleteEnabled(ddmFormField)
+				"autocompleteEnabled", _isAutocompleteEnabled(ddmFormField)
 			).put(
 				"confirmationErrorMessage",
 				DDMFormFieldTypeUtil.getPropertyValue(
@@ -71,7 +71,7 @@ public class TextDDMFormFieldTemplateContextContributor
 			).put(
 				"direction", ddmFormField.getProperty("direction")
 			).put(
-				"displayStyle", getDisplayStyle(ddmFormField)
+				"displayStyle", _getDisplayStyle(ddmFormField)
 			).put(
 				"hideField",
 				GetterUtil.getBoolean(ddmFormField.getProperty("hideField"))
@@ -97,7 +97,7 @@ public class TextDDMFormFieldTemplateContextContributor
 			"normalizeField",
 			GetterUtil.getBoolean(ddmFormField.getProperty("normalizeField"))
 		).put(
-			"options", getOptions(ddmFormField, ddmFormFieldRenderingContext)
+			"options", _getOptions(ddmFormField, ddmFormFieldRenderingContext)
 		).put(
 			"predefinedValue",
 			DDMFormFieldTypeUtil.getPropertyValue(
@@ -108,12 +108,15 @@ public class TextDDMFormFieldTemplateContextContributor
 		).build();
 	}
 
-	protected String getDisplayStyle(DDMFormField ddmFormField) {
+	@Reference
+	protected DDMFormFieldOptionsFactory ddmFormFieldOptionsFactory;
+
+	private String _getDisplayStyle(DDMFormField ddmFormField) {
 		return GetterUtil.getString(
 			ddmFormField.getProperty("displayStyle"), "singleline");
 	}
 
-	protected List<Object> getOptions(
+	private List<Object> _getOptions(
 		DDMFormField ddmFormField,
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
 
@@ -149,11 +152,8 @@ public class TextDDMFormFieldTemplateContextContributor
 		return options;
 	}
 
-	protected boolean isAutocompleteEnabled(DDMFormField ddmFormField) {
+	private boolean _isAutocompleteEnabled(DDMFormField ddmFormField) {
 		return GetterUtil.getBoolean(ddmFormField.getProperty("autocomplete"));
 	}
-
-	@Reference
-	protected DDMFormFieldOptionsFactory ddmFormFieldOptionsFactory;
 
 }

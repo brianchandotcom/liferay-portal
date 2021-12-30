@@ -45,8 +45,8 @@ public class DDMFormTaglibUtilTest {
 
 	@Before
 	public void setUp() throws Exception {
-		setUpDDMStructureLocalService();
-		setUpDDMStructureVersionLocalService();
+		_setUpDDMStructureLocalService();
+		_setUpDDMStructureVersionLocalService();
 	}
 
 	@Test
@@ -85,7 +85,7 @@ public class DDMFormTaglibUtilTest {
 		Assert.assertEquals(new DDMForm(), _ddmFormTaglibUtil.getDDMForm(0, 0));
 	}
 
-	protected DDMStructure createDDMStructure(DDMForm ddmForm) {
+	private DDMStructure _createDDMStructure(DDMForm ddmForm) {
 		DDMStructure ddmStructure = new DDMStructureImpl();
 
 		ddmStructure.setDDMForm(ddmForm);
@@ -95,7 +95,7 @@ public class DDMFormTaglibUtilTest {
 		return ddmStructure;
 	}
 
-	protected DDMStructureVersion createDDMStructureVersion(DDMForm ddmForm) {
+	private DDMStructureVersion _createDDMStructureVersion(DDMForm ddmForm) {
 		DDMStructureVersion ddmStructureVersion = new DDMStructureVersionImpl();
 
 		ddmStructureVersion.setDDMForm(ddmForm);
@@ -105,8 +105,8 @@ public class DDMFormTaglibUtilTest {
 		return ddmStructureVersion;
 	}
 
-	protected void setUpDDMStructureLocalService() throws Exception {
-		_ddmStructure = createDDMStructure(
+	private void _setUpDDMStructureLocalService() throws Exception {
+		_ddmStructure = _createDDMStructure(
 			DDMFormTestUtil.createDDMForm("Text"));
 
 		Field field = ReflectionUtil.getDeclaredField(
@@ -121,8 +121,8 @@ public class DDMFormTaglibUtilTest {
 		field.set(_ddmFormTaglibUtil, _ddmStructureLocalService);
 	}
 
-	protected void setUpDDMStructureVersionLocalService() throws Exception {
-		_ddmStructureVersion = createDDMStructureVersion(
+	private void _setUpDDMStructureVersionLocalService() throws Exception {
+		_ddmStructureVersion = _createDDMStructureVersion(
 			DDMFormTestUtil.createDDMForm("Text1", "Text2"));
 
 		Field field = ReflectionUtil.getDeclaredField(

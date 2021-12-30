@@ -243,32 +243,6 @@ public class DynamicDataMappingUpgradeProcess extends UpgradeProcess {
 				fieldName, newFieldName));
 	}
 
-	protected void deleteExpandoData(Set<Long> expandoRowIds)
-		throws PortalException {
-
-		Set<Long> expandoTableIds = new HashSet<>();
-
-		for (long expandoRowId : expandoRowIds) {
-			ExpandoRow expandoRow = _expandoRowLocalService.fetchExpandoRow(
-				expandoRowId);
-
-			if (expandoRow != null) {
-				expandoTableIds.add(expandoRow.getTableId());
-			}
-		}
-
-		for (long expandoTableId : expandoTableIds) {
-			try {
-				_expandoTableLocalService.deleteTable(expandoTableId);
-			}
-			catch (PortalException portalException) {
-				_log.error("Unable delete expando table", portalException);
-
-				throw portalException;
-			}
-		}
-	}
-
 	protected DDMForm deserialize(String content, String type)
 		throws Exception {
 
@@ -286,116 +260,18 @@ public class DynamicDataMappingUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		setUpClassNameIds();
+		_setUpClassNameIds();
 
-		upgradeExpandoStorageAdapter();
+		_upgradeExpandoStorageAdapter();
 
-		upgradeStructuresAndAddStructureVersionsAndLayouts();
-		upgradeTemplatesAndAddTemplateVersions();
-		upgradeXMLStorageAdapter();
+		_upgradeStructuresAndAddStructureVersionsAndLayouts();
+		_upgradeTemplatesAndAddTemplateVersions();
+		_upgradeXMLStorageAdapter();
 
-		upgradeFieldTypeReferences();
+		_upgradeFieldTypeReferences();
 
-		upgradeStructuresPermissions();
-		upgradeTemplatesPermissions();
-	}
-
-	protected List<String> getDDMDateFieldNames(DDMForm ddmForm)
-		throws Exception {
-
-		List<String> ddmDateFieldNames = new ArrayList<>();
-
-		for (DDMFormField ddmFormField : ddmForm.getDDMFormFields()) {
-			String dataType = ddmFormField.getType();
-
-			if (dataType.equals("ddm-date")) {
-				ddmDateFieldNames.add(ddmFormField.getName());
-			}
-		}
-
-		return ddmDateFieldNames;
-	}
-
-	protected DDMForm getDDMForm(long structureId) throws Exception {
-		DDMForm ddmForm = _ddmForms.get(structureId);
-
-		if (ddmForm != null) {
-			return ddmForm;
-		}
-
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"select parentStructureId, definition, storageType from " +
-					"DDMStructure where structureId = ?")) {
-
-			preparedStatement.setLong(1, structureId);
-
-			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				if (resultSet.next()) {
-					String definition = resultSet.getString("definition");
-					String storageType = resultSet.getString("storageType");
-
-					if (storageType.equals("expando") ||
-						storageType.equals("xml")) {
-
-						ddmForm = deserialize(definition, "xsd");
-					}
-					else {
-						ddmForm = deserialize(definition, "json");
-					}
-
-					try {
-						validateDDMFormFieldNames(ddmForm);
-					}
-					catch (MustNotDuplicateFieldName mndfn) {
-						throw new UpgradeException(
-							String.format(
-								"The field name '%s' from structure ID %d is " +
-									"defined more than once",
-								mndfn.getFieldName(), structureId));
-					}
-
-					long parentStructureId = resultSet.getLong(
-						"parentStructureId");
-
-					if (parentStructureId > 0) {
-						DDMForm parentDDMForm = getDDMForm(parentStructureId);
-
-						Set<String> commonDDMFormFieldNames = SetUtil.intersect(
-							getDDMFormFieldsNames(parentDDMForm),
-							getDDMFormFieldsNames(ddmForm));
-
-						if (!commonDDMFormFieldNames.isEmpty()) {
-							throw new UpgradeException(
-								"Duplicate DDM form field names: " +
-									StringUtil.merge(commonDDMFormFieldNames));
-						}
-					}
-
-					DDMForm updatedDDMForm = updateDDMFormFields(ddmForm);
-
-					_ddmForms.put(structureId, updatedDDMForm);
-
-					return updatedDDMForm;
-				}
-			}
-
-			throw new UpgradeException(
-				"Unable to find dynamic data mapping structure with ID " +
-					structureId);
-		}
-	}
-
-	protected Set<String> getDDMFormFieldsNames(DDMForm ddmForm) {
-		Map<String, DDMFormField> ddmFormFieldsMap =
-			ddmForm.getDDMFormFieldsMap(true);
-
-		Set<String> ddmFormFieldsNames = new HashSet<>();
-
-		for (String ddmFormFieldName : ddmFormFieldsMap.keySet()) {
-			ddmFormFieldsNames.add(StringUtil.toLowerCase(ddmFormFieldName));
-		}
-
-		return ddmFormFieldsNames;
+		_upgradeStructuresPermissions();
+		_upgradeTemplatesPermissions();
 	}
 
 	protected DDMFormValues getDDMFormValues(
@@ -406,194 +282,6 @@ public class DynamicDataMappingUpgradeProcess extends UpgradeProcess {
 			new DDMFormValuesXSDDeserializer(companyId);
 
 		return ddmFormValuesXSDDeserializer.deserialize(ddmForm, xml);
-	}
-
-	protected Map<String, String> getDDMTemplateScriptMap(long structureId)
-		throws Exception {
-
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"select * from DDMTemplate where classPK = ? and type_ = ?")) {
-
-			preparedStatement.setLong(1, structureId);
-			preparedStatement.setString(
-				2, DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY);
-
-			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				Map<String, String> ddmTemplateScriptMap = new HashMap<>();
-
-				while (resultSet.next()) {
-					long templateId = resultSet.getLong("templateId");
-					String language = resultSet.getString("language");
-					String script = resultSet.getString("script");
-
-					String key = templateId + StringPool.DOLLAR + language;
-
-					ddmTemplateScriptMap.put(key, script);
-				}
-
-				return ddmTemplateScriptMap;
-			}
-		}
-	}
-
-	protected String getDefaultDDMFormLayoutDefinition(DDMForm ddmForm) {
-		DDMFormLayout ddmFormLayout = _ddm.getDefaultDDMFormLayout(ddmForm);
-
-		DDMFormLayoutSerializerSerializeRequest.Builder builder =
-			DDMFormLayoutSerializerSerializeRequest.Builder.newBuilder(
-				ddmFormLayout);
-
-		DDMFormLayoutSerializerSerializeResponse
-			ddmFormLayoutSerializerSerializeResponse =
-				_ddmFormLayoutSerializer.serialize(builder.build());
-
-		return ddmFormLayoutSerializerSerializeResponse.getContent();
-	}
-
-	protected Map<String, String> getExpandoValuesMap(long expandoRowId)
-		throws PortalException {
-
-		Map<String, String> fieldsMap = new HashMap<>();
-
-		List<ExpandoValue> expandoValues =
-			_expandoValueLocalService.getRowValues(expandoRowId);
-
-		for (ExpandoValue expandoValue : expandoValues) {
-			ExpandoColumn expandoColumn = expandoValue.getColumn();
-
-			fieldsMap.put(expandoColumn.getName(), expandoValue.getData());
-		}
-
-		return fieldsMap;
-	}
-
-	protected DDMForm getFullHierarchyDDMForm(long structureId)
-		throws Exception {
-
-		DDMForm fullHierarchyDDMForm = _fullHierarchyDDMForms.get(structureId);
-
-		if (fullHierarchyDDMForm != null) {
-			return fullHierarchyDDMForm;
-		}
-
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"select parentStructureId from DDMStructure where " +
-					"structureId = ?")) {
-
-			preparedStatement.setLong(1, structureId);
-
-			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				if (resultSet.next()) {
-					long parentStructureId = resultSet.getLong(
-						"parentStructureId");
-
-					fullHierarchyDDMForm = getDDMForm(structureId);
-
-					if (parentStructureId > 0) {
-						DDMForm parentDDMForm = getFullHierarchyDDMForm(
-							parentStructureId);
-
-						List<DDMFormField> ddmFormFields =
-							fullHierarchyDDMForm.getDDMFormFields();
-
-						ddmFormFields.addAll(parentDDMForm.getDDMFormFields());
-					}
-
-					_fullHierarchyDDMForms.put(
-						structureId, fullHierarchyDDMForm);
-
-					return fullHierarchyDDMForm;
-				}
-			}
-
-			throw new UpgradeException(
-				"Unable to find dynamic data mapping structure with ID " +
-					structureId);
-		}
-	}
-
-	protected String getStructureModelResourceName(long classNameId)
-		throws UpgradeException {
-
-		String className = PortalUtil.getClassName(classNameId);
-
-		String structureModelResourceName = _structureModelResourceNames.get(
-			className);
-
-		if (structureModelResourceName == null) {
-			throw new UpgradeException(
-				StringBundler.concat(
-					"Model ", className, " does not support DDM structure ",
-					"permission checking"));
-		}
-
-		return structureModelResourceName;
-	}
-
-	protected String getTemplateModelResourceName(long classNameId)
-		throws UpgradeException {
-
-		String className = PortalUtil.getClassName(classNameId);
-
-		String templateModelResourceName = _templateModelResourceNames.get(
-			className);
-
-		if (templateModelResourceName == null) {
-			throw new UpgradeException(
-				StringBundler.concat(
-					"Model ", className, " does not support DDM template ",
-					"permission checking"));
-		}
-
-		return templateModelResourceName;
-	}
-
-	protected Long getTemplateResourceClassNameId(
-		long classNameId, long classPK) {
-
-		if (classNameId != PortalUtil.getClassNameId(DDMStructure.class)) {
-			return PortalUtil.getClassNameId(
-				"com.liferay.portlet.display.template.PortletDisplayTemplate");
-		}
-
-		if (classPK == 0) {
-			return PortalUtil.getClassNameId(
-				"com.liferay.journal.model.JournalArticle");
-		}
-
-		return _structureClassNameIds.get(classPK);
-	}
-
-	protected boolean hasStructureVersion(long structureId, String version)
-		throws Exception {
-
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"select * from DDMStructureVersion where structureId = ? and " +
-					"version = ?")) {
-
-			preparedStatement.setLong(1, structureId);
-			preparedStatement.setString(2, version);
-
-			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				return resultSet.next();
-			}
-		}
-	}
-
-	protected boolean hasTemplateVersion(long templateId, String version)
-		throws Exception {
-
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"select * from DDMTemplateVersion where templateId = ? and " +
-					"version = ?")) {
-
-			preparedStatement.setLong(1, templateId);
-			preparedStatement.setString(2, version);
-
-			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				return resultSet.next();
-			}
-		}
 	}
 
 	protected boolean isInvalidFieldName(String fieldName) {
@@ -647,17 +335,6 @@ public class DynamicDataMappingUpgradeProcess extends UpgradeProcess {
 		return StringUtil.replace(string, oldSub, newSub);
 	}
 
-	protected void setUpClassNameIds() {
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			_ddmContentClassNameId = PortalUtil.getClassNameId(
-				DDMContent.class);
-
-			_expandoStorageAdapterClassNameId = PortalUtil.getClassNameId(
-				"com.liferay.portlet.dynamicdatamapping.storage." +
-					"ExpandoStorageAdapter");
-		}
-	}
-
 	protected String toJSON(DDMFormValues ddmFormValues) {
 		DDMFormValuesSerializerSerializeRequest.Builder builder =
 			DDMFormValuesSerializerSerializeRequest.Builder.newBuilder(
@@ -693,892 +370,315 @@ public class DynamicDataMappingUpgradeProcess extends UpgradeProcess {
 		return document.asXML();
 	}
 
-	protected void transformFieldTypeDDMFormFields(
-			long groupId, long companyId, long userId, String userName,
-			Timestamp createDate, long entryId, String entryVersion,
-			String entryModelName, DDMFormValues ddmFormValues)
-		throws Exception {
+	private void _deleteExpandoData(Set<Long> expandoRowIds)
+		throws PortalException {
 
-		DDMFormValuesTransformer ddmFormValuesTransformer =
-			new DDMFormValuesTransformer(ddmFormValues);
+		Set<Long> expandoTableIds = new HashSet<>();
 
-		ddmFormValuesTransformer.addTransformer(
-			new FileUploadDDMFormFieldValueTransformer(
-				groupId, companyId, userId, userName, createDate, entryId,
-				entryVersion, entryModelName));
+		for (long expandoRowId : expandoRowIds) {
+			ExpandoRow expandoRow = _expandoRowLocalService.fetchExpandoRow(
+				expandoRowId);
 
-		ddmFormValuesTransformer.addTransformer(
-			new DateDDMFormFieldValueTransformer());
-
-		ddmFormValuesTransformer.transform();
-	}
-
-	protected DDMForm updateDDMFormFields(DDMForm ddmForm) throws Exception {
-		DDMForm copyDDMForm = new DDMForm(ddmForm);
-
-		Map<String, DDMFormField> ddmFormFieldsMap =
-			copyDDMForm.getDDMFormFieldsMap(true);
-
-		for (DDMFormField ddmFormField : ddmFormFieldsMap.values()) {
-			String fieldName = ddmFormField.getName();
-
-			if (isInvalidFieldName(fieldName)) {
-				String newFieldName = createNewDDMFormFieldName(
-					fieldName, ddmFormFieldsMap.keySet());
-
-				ddmFormField.setName(newFieldName);
-
-				ddmFormField.setProperty("oldName", fieldName);
-			}
-
-			String dataType = ddmFormField.getDataType();
-
-			if (Objects.equals(dataType, "file-upload")) {
-				ddmFormField.setDataType("document-library");
-				ddmFormField.setType("ddm-documentlibrary");
-			}
-			else if (Objects.equals(dataType, "image")) {
-				ddmFormField.setFieldNamespace("ddm");
-				ddmFormField.setType("ddm-image");
+			if (expandoRow != null) {
+				expandoTableIds.add(expandoRow.getTableId());
 			}
 		}
 
-		return copyDDMForm;
+		for (long expandoTableId : expandoTableIds) {
+			try {
+				_expandoTableLocalService.deleteTable(expandoTableId);
+			}
+			catch (PortalException portalException) {
+				_log.error("Unable delete expando table", portalException);
+
+				throw portalException;
+			}
+		}
 	}
 
-	protected void updateDDMStructureStorageType() throws Exception {
-		runSQL(
-			"update DDMStructure set storageType = 'xml' where storageType = " +
-				"'expando'");
-	}
-
-	protected void updateStructureStorageType() throws Exception {
-		runSQL(
-			"update DDMStructure set storageType='json' where storageType = " +
-				"'xml'");
-	}
-
-	protected void updateStructureVersionStorageType() throws Exception {
-		runSQL(
-			"update DDMStructureVersion set storageType='json' where " +
-				"storageType = 'xml'");
-	}
-
-	protected void updateTemplateScript(long templateId, String script)
+	private List<String> _getDDMDateFieldNames(DDMForm ddmForm)
 		throws Exception {
+
+		List<String> ddmDateFieldNames = new ArrayList<>();
+
+		for (DDMFormField ddmFormField : ddmForm.getDDMFormFields()) {
+			String dataType = ddmFormField.getType();
+
+			if (dataType.equals("ddm-date")) {
+				ddmDateFieldNames.add(ddmFormField.getName());
+			}
+		}
+
+		return ddmDateFieldNames;
+	}
+
+	private DDMForm _getDDMForm(long structureId) throws Exception {
+		DDMForm ddmForm = _ddmForms.get(structureId);
+
+		if (ddmForm != null) {
+			return ddmForm;
+		}
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"update DDMTemplate set script = ? where templateId = ?")) {
-
-			preparedStatement.setString(1, script);
-			preparedStatement.setLong(2, templateId);
-
-			preparedStatement.executeUpdate();
-		}
-		catch (Exception exception) {
-			_log.error(
-				"Unable to update dynamic data mapping template with " +
-					"template ID " + templateId);
-
-			throw exception;
-		}
-	}
-
-	protected String updateTemplateScriptDateAssignStatement(
-		String dateFieldName, String language, String script) {
-
-		StringBundler oldTemplateScriptSB = new StringBundler(7);
-		StringBundler newTemplateScriptSB = new StringBundler(5);
-
-		if (language.equals("ftl")) {
-			oldTemplateScriptSB.append("<#assign\\s+");
-			oldTemplateScriptSB.append(dateFieldName);
-			oldTemplateScriptSB.append("_Data\\s*=\\s*getterUtil\\s*.");
-			oldTemplateScriptSB.append("\\s*getLong\\s*\\(\\s*");
-			oldTemplateScriptSB.append(dateFieldName);
-			oldTemplateScriptSB.append(".\\s*getData\\s*\\(\\s*\\)");
-			oldTemplateScriptSB.append("\\s*\\)\\s*/?>");
-
-			newTemplateScriptSB.append("<#assign ");
-			newTemplateScriptSB.append(dateFieldName);
-			newTemplateScriptSB.append("_Data = getterUtil.getString(");
-			newTemplateScriptSB.append(dateFieldName);
-			newTemplateScriptSB.append(".getData()) />");
-		}
-		else if (language.equals("vm")) {
-			dateFieldName =
-				StringPool.BACK_SLASH + StringPool.DOLLAR + dateFieldName;
-
-			oldTemplateScriptSB.append("#set\\s+\\(\\s*");
-			oldTemplateScriptSB.append(dateFieldName);
-			oldTemplateScriptSB.append("_Data\\s*=\\s*\\$getterUtil.");
-			oldTemplateScriptSB.append("getLong\\(\\s*");
-			oldTemplateScriptSB.append(dateFieldName);
-			oldTemplateScriptSB.append(".getData\\(\\)\\s*\\)\\s*\\)");
-
-			newTemplateScriptSB.append("#set (");
-			newTemplateScriptSB.append(dateFieldName);
-			newTemplateScriptSB.append("_Data = \\$getterUtil.getString(");
-			newTemplateScriptSB.append(dateFieldName);
-			newTemplateScriptSB.append(".getData()))");
-		}
-
-		return script.replaceAll(
-			oldTemplateScriptSB.toString(), newTemplateScriptSB.toString());
-	}
-
-	protected void updateTemplateScriptDateFields(
-			long structureId, DDMForm ddmForm)
-		throws Exception {
-
-		List<String> ddmDateFieldNames = getDDMDateFieldNames(ddmForm);
-
-		if (ddmDateFieldNames.isEmpty()) {
-			return;
-		}
-
-		Map<String, String> ddmTemplateScriptMap = getDDMTemplateScriptMap(
-			structureId);
-
-		for (Map.Entry<String, String> entrySet :
-				ddmTemplateScriptMap.entrySet()) {
-
-			String[] templateIdAndLanguage = StringUtil.split(
-				entrySet.getKey(), StringPool.DOLLAR);
-
-			long ddmTemplateId = GetterUtil.getLong(templateIdAndLanguage[0]);
-			String language = templateIdAndLanguage[1];
-
-			String script = entrySet.getValue();
-
-			for (String ddmDateFieldName : ddmDateFieldNames) {
-				script = updateTemplateScriptDateAssignStatement(
-					ddmDateFieldName, language, script);
-
-				script = updateTemplateScriptDateIfStatement(
-					ddmDateFieldName, language, script);
-
-				script = updateTemplateScriptDateParseStatement(
-					ddmDateFieldName, language, script);
-
-				script = updateTemplateScriptDateGetDateStatement(
-					language, script);
-			}
-
-			updateTemplateScript(ddmTemplateId, script);
-		}
-	}
-
-	protected String updateTemplateScriptDateGetDateStatement(
-		String language, String script) {
-
-		StringBundler oldTemplateScriptSB = new StringBundler(3);
-		String newTemplateScript = null;
-
-		if (language.equals("ftl")) {
-			oldTemplateScriptSB.append("dateUtil.getDate\\((.*)");
-			oldTemplateScriptSB.append("locale[,\\s]*timeZoneUtil.");
-			oldTemplateScriptSB.append("getTimeZone\\(\"UTC\"\\)\\s*\\)");
-
-			newTemplateScript = "dateUtil.getDate($1locale)";
-		}
-		else if (language.equals("vm")) {
-			oldTemplateScriptSB.append("dateUtil.getDate\\((.*)");
-			oldTemplateScriptSB.append("\\$locale[,\\s]*\\$timeZoneUtil.");
-			oldTemplateScriptSB.append("getTimeZone\\(\"UTC\"\\)\\s*\\)");
-
-			newTemplateScript = "dateUtil.getDate($1\\$locale)";
-		}
-
-		return script.replaceAll(
-			oldTemplateScriptSB.toString(), newTemplateScript);
-	}
-
-	protected String updateTemplateScriptDateIfStatement(
-		String dateFieldName, String language, String script) {
-
-		String oldTemplateScript = StringPool.BLANK;
-		String newTemplateScript = StringPool.BLANK;
-
-		if (language.equals("ftl")) {
-			oldTemplateScript = StringBundler.concat(
-				"<#if\\s*\\(?\\s*", dateFieldName, "_Data\\s*>\\s*0\\s*\\)?",
-				"\\s*>");
-
-			newTemplateScript =
-				"<#if validator.isNotNull(" + dateFieldName + "_Data)>";
-		}
-		else if (language.equals("vm")) {
-			dateFieldName =
-				StringPool.BACK_SLASH + StringPool.DOLLAR + dateFieldName;
-
-			oldTemplateScript =
-				"#if\\s*\\(\\s*" + dateFieldName + "_Data\\s*>\\s*0\\s*\\)";
-
-			newTemplateScript =
-				"#if (\\$validator.isNotNull(" + dateFieldName + "_Data))";
-		}
-
-		return script.replaceAll(oldTemplateScript, newTemplateScript);
-	}
-
-	protected String updateTemplateScriptDateParseStatement(
-		String dateFieldName, String language, String script) {
-
-		StringBundler oldTemplateScriptSB = new StringBundler(6);
-		StringBundler newTemplateScriptSB = new StringBundler(5);
-
-		if (language.equals("ftl")) {
-			oldTemplateScriptSB.append("<#assign\\s+");
-			oldTemplateScriptSB.append(dateFieldName);
-			oldTemplateScriptSB.append("_DateObj\\s*=\\s*dateUtil\\s*.");
-			oldTemplateScriptSB.append("\\s*newDate\\(\\s*");
-			oldTemplateScriptSB.append(dateFieldName);
-			oldTemplateScriptSB.append("_Data\\s*\\)\\s*/?>");
-
-			newTemplateScriptSB.append("<#assign ");
-			newTemplateScriptSB.append(dateFieldName);
-			newTemplateScriptSB.append(
-				"_DateObj = dateUtil.parseDate(\"yyyy-MM-dd\", ");
-			newTemplateScriptSB.append(dateFieldName);
-			newTemplateScriptSB.append("_Data, locale) />");
-		}
-		else if (language.equals("vm")) {
-			dateFieldName =
-				StringPool.BACK_SLASH + StringPool.DOLLAR + dateFieldName;
-
-			oldTemplateScriptSB.append("#set\\s*\\(");
-			oldTemplateScriptSB.append(dateFieldName);
-			oldTemplateScriptSB.append("_DateObj\\s*=\\s*\\$dateUtil.");
-			oldTemplateScriptSB.append("newDate\\(\\s*");
-			oldTemplateScriptSB.append(dateFieldName);
-			oldTemplateScriptSB.append("_Data\\s*\\)\\s*\\)");
-
-			newTemplateScriptSB.append("#set (");
-			newTemplateScriptSB.append(dateFieldName);
-			newTemplateScriptSB.append(
-				"_DateObj = \\$dateUtil.parseDate(\"yyyy-MM-dd\", ");
-			newTemplateScriptSB.append(dateFieldName);
-			newTemplateScriptSB.append("_Data, \\$locale))");
-		}
-
-		return script.replaceAll(
-			oldTemplateScriptSB.toString(), newTemplateScriptSB.toString());
-	}
-
-	protected void upgradeDDLFieldTypeReferences() throws Exception {
-		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
-				StringBundler.concat(
-					"select DDLRecordVersion.*, DDMContent.data_, ",
-					"DDMStructure.structureId from DDLRecordVersion inner ",
-					"join DDLRecordSet on DDLRecordVersion.recordSetId = ",
-					"DDLRecordSet.recordSetId inner join DDMContent on  ",
-					"DDLRecordVersion.DDMStorageId = DDMContent.contentId ",
-					"inner join DDMStructure on DDLRecordSet.DDMStructureId = ",
-					"DDMStructure.structureId"));
-			PreparedStatement preparedStatement2 =
-				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
-					connection,
-					"update DDMContent set data_= ? where contentId = ?");
-			ResultSet resultSet = preparedStatement1.executeQuery()) {
-
-			while (resultSet.next()) {
-				long groupId = resultSet.getLong("groupId");
-				long companyId = resultSet.getLong("companyId");
-				long userId = resultSet.getLong("userId");
-				String userName = resultSet.getString("userName");
-				Timestamp createDate = resultSet.getTimestamp("createDate");
-				long entryId = resultSet.getLong("recordId");
-				String entryVersion = resultSet.getString("version");
-				long contentId = resultSet.getLong("ddmStorageId");
-				String data_ = resultSet.getString("data_");
-
-				long ddmStructureId = resultSet.getLong("structureId");
-
-				DDMForm ddmForm = getFullHierarchyDDMForm(ddmStructureId);
-
-				DDMFormValues ddmFormValues =
-					DDMFormValuesDeserializeUtil.deserialize(
-						data_, ddmForm, _ddmFormValuesDeserializer);
-
-				transformFieldTypeDDMFormFields(
-					groupId, companyId, userId, userName, createDate, entryId,
-					entryVersion, "DDLRecord", ddmFormValues);
-
-				preparedStatement2.setString(1, toJSON(ddmFormValues));
-
-				preparedStatement2.setLong(2, contentId);
-
-				preparedStatement2.addBatch();
-			}
-
-			preparedStatement2.executeBatch();
-		}
-	}
-
-	protected void upgradeDLFieldTypeReferences() throws Exception {
-		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
-				StringBundler.concat(
-					"select DLFileVersion.*, DDMContent.contentId, ",
-					"DDMContent.data_, DDMStructure.structureId from ",
-					"DLFileEntryMetadata inner join DDMContent on ",
-					"DLFileEntryMetadata.DDMStorageId = DDMContent.contentId ",
-					"inner join DDMStructure on ",
-					"DLFileEntryMetadata.DDMStructureId = DDMStructure.",
-					"structureId inner join DLFileVersion on ",
-					"DLFileEntryMetadata.fileVersionId = DLFileVersion.",
-					"fileVersionId and DLFileEntryMetadata.fileEntryId = ",
-					"DLFileVersion.fileEntryId"));
-			PreparedStatement preparedStatement2 =
-				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
-					connection,
-					"update DDMContent set data_= ? where contentId = ?");
-			ResultSet resultSet = preparedStatement1.executeQuery()) {
-
-			while (resultSet.next()) {
-				long groupId = resultSet.getLong("groupId");
-				long companyId = resultSet.getLong("companyId");
-				long userId = resultSet.getLong("userId");
-				String userName = resultSet.getString("userName");
-				Timestamp createDate = resultSet.getTimestamp("createDate");
-				long entryId = resultSet.getLong("fileEntryId");
-				String entryVersion = resultSet.getString("version");
-				long contentId = resultSet.getLong("contentId");
-				String data_ = resultSet.getString("data_");
-
-				long ddmStructureId = resultSet.getLong("structureId");
-
-				DDMForm ddmForm = getFullHierarchyDDMForm(ddmStructureId);
-
-				DDMFormValues ddmFormValues =
-					DDMFormValuesDeserializeUtil.deserialize(
-						data_, ddmForm, _ddmFormValuesDeserializer);
-
-				transformFieldTypeDDMFormFields(
-					groupId, companyId, userId, userName, createDate, entryId,
-					entryVersion, "DLFileEntry", ddmFormValues);
-
-				preparedStatement2.setString(1, toJSON(ddmFormValues));
-
-				preparedStatement2.setLong(2, contentId);
-
-				preparedStatement2.addBatch();
-			}
-
-			preparedStatement2.executeBatch();
-		}
-	}
-
-	protected void upgradeExpandoStorageAdapter() throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			try (PreparedStatement preparedStatement1 =
-					connection.prepareStatement(
-						StringBundler.concat(
-							"select DDMStructure.*, DDMStorageLink.* from ",
-							"DDMStorageLink inner join DDMStructure on ",
-							"DDMStorageLink.structureId = ",
-							"DDMStructure.structureId where ",
-							"DDMStructure.storageType = 'expando'"));
-				PreparedStatement preparedStatement2 =
-					AutoBatchPreparedStatementUtil.concurrentAutoBatch(
-						connection,
-						StringBundler.concat(
-							"insert into DDMContent (uuid_, contentId, ",
-							"groupId, companyId, userId, userName, ",
-							"createDate, modifiedDate, name, description, ",
-							"data_) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"));
-				PreparedStatement preparedStatement3 =
-					AutoBatchPreparedStatementUtil.concurrentAutoBatch(
-						connection,
-						"update DDMStorageLink set classNameId = ? where " +
-							"classNameId = ? and classPK = ?");
-				ResultSet resultSet = preparedStatement1.executeQuery()) {
-
-				Set<Long> expandoRowIds = new HashSet<>();
-
-				while (resultSet.next()) {
-					long groupId = resultSet.getLong("groupId");
-					long companyId = resultSet.getLong("companyId");
-					long userId = resultSet.getLong("userId");
-					String userName = resultSet.getString("userName");
-					Timestamp createDate = resultSet.getTimestamp("createDate");
-
-					long expandoRowId = resultSet.getLong("classPK");
-
-					String xml = toXML(getExpandoValuesMap(expandoRowId));
-
-					preparedStatement2.setString(1, PortalUUIDUtil.generate());
-					preparedStatement2.setLong(2, expandoRowId);
-					preparedStatement2.setLong(3, groupId);
-					preparedStatement2.setLong(4, companyId);
-					preparedStatement2.setLong(5, userId);
-					preparedStatement2.setString(6, userName);
-					preparedStatement2.setTimestamp(7, createDate);
-					preparedStatement2.setTimestamp(8, createDate);
-					preparedStatement2.setString(
-						9, DDMStorageLink.class.getName());
-					preparedStatement2.setString(10, null);
-					preparedStatement2.setString(11, xml);
-
-					preparedStatement2.addBatch();
-
-					preparedStatement3.setLong(1, _ddmContentClassNameId);
-					preparedStatement3.setLong(
-						2, _expandoStorageAdapterClassNameId);
-					preparedStatement3.setLong(3, expandoRowId);
-
-					preparedStatement3.addBatch();
-
-					expandoRowIds.add(expandoRowId);
-				}
-
-				if (expandoRowIds.isEmpty()) {
-					return;
-				}
-
-				preparedStatement2.executeBatch();
-
-				preparedStatement3.executeBatch();
-
-				updateDDMStructureStorageType();
-
-				deleteExpandoData(expandoRowIds);
-			}
-		}
-	}
-
-	protected void upgradeFieldTypeReferences() throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			upgradeDDLFieldTypeReferences();
-			upgradeDLFieldTypeReferences();
-		}
-	}
-
-	protected void upgradeStructurePermissions(long companyId, long structureId)
-		throws Exception {
-
-		List<ResourcePermission> resourcePermissions =
-			_resourcePermissionLocalService.getResourcePermissions(
-				companyId, DDMStructure.class.getName(),
-				ResourceConstants.SCOPE_INDIVIDUAL,
-				String.valueOf(structureId));
-
-		for (ResourcePermission resourcePermission : resourcePermissions) {
-			Long classNameId = _structureClassNameIds.get(
-				Long.valueOf(resourcePermission.getPrimKey()));
-
-			if (classNameId == null) {
-				continue;
-			}
-
-			String resourceName = getStructureModelResourceName(classNameId);
-
-			resourcePermission.setName(resourceName);
-
-			_resourcePermissionLocalService.updateResourcePermission(
-				resourcePermission);
-		}
-	}
-
-	protected void upgradeStructuresAndAddStructureVersionsAndLayouts()
-		throws Exception {
-
-		try (LoggingTimer loggingTimer = new LoggingTimer();
-			PreparedStatement preparedStatement1 = connection.prepareStatement(
-				"select * from DDMStructure");
-			PreparedStatement preparedStatement2 =
-				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
-					connection,
-					"update DDMStructure set definition = ? where " +
-						"structureId = ?");
-			PreparedStatement preparedStatement3 =
-				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
-					connection,
-					StringBundler.concat(
-						"insert into DDMStructureVersion (structureVersionId, ",
-						"groupId, companyId, userId, userName, createDate, ",
-						"structureId, version, parentStructureId, name, ",
-						"description, definition, storageType, type_, status, ",
-						"statusByUserId, statusByUserName, statusDate) values ",
-						"(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ",
-						"?)"));
-			PreparedStatement preparedStatement4 =
-				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
-					connection,
-					StringBundler.concat(
-						"insert into DDMStructureLayout (uuid_, ",
-						"structureLayoutId, groupId, companyId, userId, ",
-						"userName, createDate, modifiedDate, ",
-						"structureVersionId, definition) values (?, ?, ?, ?, ",
-						"?, ?, ?, ?, ?, ?)"));
-			ResultSet resultSet = preparedStatement1.executeQuery()) {
-
-			while (resultSet.next()) {
-				long structureId = resultSet.getLong("structureId");
-				long classNameId = resultSet.getLong("classNameId");
-				String version = resultSet.getString("version");
-
-				_structureClassNameIds.put(structureId, classNameId);
-
-				// Structure content
-
-				DDMForm ddmForm = getDDMForm(structureId);
-
-				populateStructureInvalidDDMFormFieldNamesMap(
-					structureId, ddmForm);
-
-				String definition = DDMFormSerializeUtil.serialize(
-					ddmForm, _ddmFormSerializer);
-
-				preparedStatement2.setString(1, definition);
-
-				preparedStatement2.setLong(2, structureId);
-
-				preparedStatement2.addBatch();
-
-				updateTemplateScriptDateFields(structureId, ddmForm);
-
-				// Structure version
-
-				if (hasStructureVersion(structureId, version)) {
-					continue;
-				}
-
-				long groupId = resultSet.getLong("groupId");
-				long companyId = resultSet.getLong("companyId");
-				long userId = resultSet.getLong("userId");
-				String userName = resultSet.getString("userName");
-				Timestamp modifiedDate = resultSet.getTimestamp("modifiedDate");
-				long parentStructureId = resultSet.getLong("parentStructureId");
-				String name = resultSet.getString("name");
-				String description = resultSet.getString("description");
-				String storageType = resultSet.getString("storageType");
-				int type = resultSet.getInt("type_");
-
-				long structureVersionId = increment();
-
-				preparedStatement3.setLong(1, structureVersionId);
-
-				preparedStatement3.setLong(2, groupId);
-				preparedStatement3.setLong(3, companyId);
-				preparedStatement3.setLong(4, userId);
-				preparedStatement3.setString(5, userName);
-				preparedStatement3.setTimestamp(6, modifiedDate);
-				preparedStatement3.setLong(7, structureId);
-				preparedStatement3.setString(
-					8, DDMStructureConstants.VERSION_DEFAULT);
-				preparedStatement3.setLong(9, parentStructureId);
-				preparedStatement3.setString(10, name);
-				preparedStatement3.setString(11, description);
-				preparedStatement3.setString(12, definition);
-				preparedStatement3.setString(13, storageType);
-				preparedStatement3.setInt(14, type);
-				preparedStatement3.setInt(
-					15, WorkflowConstants.STATUS_APPROVED);
-				preparedStatement3.setLong(16, userId);
-				preparedStatement3.setString(17, userName);
-				preparedStatement3.setTimestamp(18, modifiedDate);
-
-				preparedStatement3.addBatch();
-
-				// Structure layout
-
-				String ddmFormLayoutDefinition =
-					getDefaultDDMFormLayoutDefinition(ddmForm);
-
-				preparedStatement4.setString(1, PortalUUIDUtil.generate());
-				preparedStatement4.setLong(2, increment());
-				preparedStatement4.setLong(3, groupId);
-				preparedStatement4.setLong(4, companyId);
-				preparedStatement4.setLong(5, userId);
-				preparedStatement4.setString(6, userName);
-				preparedStatement4.setTimestamp(7, modifiedDate);
-				preparedStatement4.setTimestamp(8, modifiedDate);
-				preparedStatement4.setLong(9, structureVersionId);
-				preparedStatement4.setString(10, ddmFormLayoutDefinition);
-
-				preparedStatement4.addBatch();
-			}
-
-			preparedStatement2.executeBatch();
-
-			preparedStatement3.executeBatch();
-
-			preparedStatement4.executeBatch();
-		}
-	}
-
-	protected void upgradeStructuresPermissions() throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer();
-			PreparedStatement preparedStatement = connection.prepareStatement(
-				"select * from DDMStructure");
-			ResultSet resultSet = preparedStatement.executeQuery()) {
-
-			while (resultSet.next()) {
-				long companyId = resultSet.getLong("companyId");
-				long structureId = resultSet.getLong("structureId");
-
-				upgradeStructurePermissions(companyId, structureId);
-			}
-		}
-	}
-
-	protected void upgradeTemplatePermissions(long companyId, long templateId)
-		throws Exception {
-
-		List<ResourcePermission> resourcePermissions =
-			_resourcePermissionLocalService.getResourcePermissions(
-				companyId, DDMTemplate.class.getName(),
-				ResourceConstants.SCOPE_INDIVIDUAL, String.valueOf(templateId));
-
-		for (ResourcePermission resourcePermission : resourcePermissions) {
-			Long classNameId = _templateResourceClassNameIds.get(
-				Long.valueOf(resourcePermission.getPrimKey()));
-
-			if (classNameId == null) {
-				continue;
-			}
-
-			String resourceName = getTemplateModelResourceName(classNameId);
-
-			resourcePermission.setName(resourceName);
-
-			_resourcePermissionLocalService.updateResourcePermission(
-				resourcePermission);
-		}
-	}
-
-	protected void upgradeTemplatesAndAddTemplateVersions() throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer();
-			PreparedStatement preparedStatement1 = connection.prepareStatement(
-				"select * from DDMTemplate");
-			PreparedStatement preparedStatement2 =
-				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
-					connection,
-					"update DDMTemplate set resourceClassNameId = ? where " +
-						"templateId = ?");
-			PreparedStatement preparedStatement3 =
-				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
-					connection,
-					"update DDMTemplate set language = ?, script = ? where " +
-						"templateId = ?");
-			PreparedStatement preparedStatement4 =
-				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
-					connection,
-					StringBundler.concat(
-						"insert into DDMTemplateVersion (templateVersionId, ",
-						"groupId, companyId, userId, userName, createDate, ",
-						"classNameId, classPK, templateId, version, name, ",
-						"description, language, script, status, ",
-						"statusByUserId, statusByUserName, statusDate) values ",
-						"(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ",
-						"?)"));
-			ResultSet resultSet = preparedStatement1.executeQuery()) {
-
-			while (resultSet.next()) {
-				long classNameId = resultSet.getLong("classNameId");
-				long classPK = resultSet.getLong("classPK");
-				long templateId = resultSet.getLong("templateId");
-
-				// Template resource class name ID
-
-				Long resourceClassNameId = getTemplateResourceClassNameId(
-					classNameId, classPK);
-
-				if ((resourceClassNameId == null) && _log.isWarnEnabled()) {
-					_log.warn("Orphaned DDM template " + templateId);
-
-					continue;
-				}
-
-				String version = resultSet.getString("version");
-				String language = resultSet.getString("language");
-				String script = resultSet.getString("script");
-
-				preparedStatement2.setLong(1, resourceClassNameId);
-
-				preparedStatement2.setLong(2, templateId);
-
-				preparedStatement2.addBatch();
-
-				_templateResourceClassNameIds.put(
-					templateId, resourceClassNameId);
-
-				// Template content
-
-				String updatedScript = renameInvalidDDMFormFieldNames(
-					classPK, script);
-
-				if (language.equals("xsd")) {
-					DDMForm ddmForm = deserialize(updatedScript, "xsd");
-
-					ddmForm = updateDDMFormFields(ddmForm);
-
-					updatedScript = DDMFormSerializeUtil.serialize(
-						ddmForm, _ddmFormSerializer);
-
-					language = "json";
-				}
-
-				if (!script.equals(updatedScript)) {
-					preparedStatement3.setString(1, language);
-					preparedStatement3.setString(2, updatedScript);
-					preparedStatement3.setLong(3, templateId);
-
-					preparedStatement3.addBatch();
-				}
-
-				// Template version
-
-				if (hasTemplateVersion(templateId, version)) {
-					continue;
-				}
-
-				long userId = resultSet.getLong("userId");
-				String userName = resultSet.getString("userName");
-				Timestamp modifiedDate = resultSet.getTimestamp("modifiedDate");
-
-				preparedStatement4.setLong(1, increment());
-				preparedStatement4.setLong(2, resultSet.getLong("groupId"));
-				preparedStatement4.setLong(3, resultSet.getLong("companyId"));
-				preparedStatement4.setLong(4, userId);
-				preparedStatement4.setString(5, userName);
-				preparedStatement4.setTimestamp(6, modifiedDate);
-				preparedStatement4.setLong(7, classNameId);
-				preparedStatement4.setLong(8, classPK);
-				preparedStatement4.setLong(9, templateId);
-				preparedStatement4.setString(
-					10, DDMStructureConstants.VERSION_DEFAULT);
-				preparedStatement4.setString(11, resultSet.getString("name"));
-				preparedStatement4.setString(
-					12, resultSet.getString("description"));
-				preparedStatement4.setString(13, language);
-				preparedStatement4.setString(14, updatedScript);
-				preparedStatement4.setInt(
-					15, WorkflowConstants.STATUS_APPROVED);
-				preparedStatement4.setLong(16, userId);
-				preparedStatement4.setString(17, userName);
-				preparedStatement4.setTimestamp(18, modifiedDate);
-
-				preparedStatement4.addBatch();
-			}
-
-			preparedStatement2.executeBatch();
-
-			preparedStatement3.executeBatch();
-
-			preparedStatement4.executeBatch();
-		}
-	}
-
-	protected void upgradeTemplatesPermissions() throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer();
-			PreparedStatement preparedStatement = connection.prepareStatement(
-				"select * from DDMTemplate");
-			ResultSet resultSet = preparedStatement.executeQuery()) {
-
-			while (resultSet.next()) {
-				long companyId = resultSet.getLong("companyId");
-				long templateId = resultSet.getLong("templateId");
-
-				upgradeTemplatePermissions(companyId, templateId);
-			}
-		}
-	}
-
-	protected void upgradeXMLStorageAdapter() throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			try (PreparedStatement preparedStatement1 =
-					connection.prepareStatement(
-						StringBundler.concat(
-							"select DDMStorageLink.classPK, DDMStorageLink.",
-							"structureId from DDMStorageLink inner join ",
-							"DDMStructure on (DDMStorageLink.structureId = ",
-							"DDMStructure.structureId) where DDMStorageLink.",
-							"classNameId = ? and DDMStructure.storageType = ",
-							"?"));
-				PreparedStatement preparedStatement2 =
-					connection.prepareStatement(
-						"select companyId, data_ from DDMContent where " +
-							"contentId = ? and data_ like '<%'");
-				PreparedStatement preparedStatement3 =
-					AutoBatchPreparedStatementUtil.concurrentAutoBatch(
-						connection,
-						"update DDMContent set data_= ? where contentId = ?")) {
-
-				preparedStatement1.setLong(1, _ddmContentClassNameId);
-				preparedStatement1.setString(2, "xml");
-
-				try (ResultSet resultSet = preparedStatement1.executeQuery()) {
-					while (resultSet.next()) {
-						long structureId = resultSet.getLong("structureId");
-						long classPK = resultSet.getLong("classPK");
-
-						DDMForm ddmForm = getFullHierarchyDDMForm(structureId);
-
-						preparedStatement2.setLong(1, classPK);
-
-						try (ResultSet resultSet2 =
-								preparedStatement2.executeQuery()) {
-
-							if (resultSet2.next()) {
-								long companyId = resultSet2.getLong(
-									"companyId");
-
-								String xml = renameInvalidDDMFormFieldNames(
-									structureId, resultSet2.getString("data_"));
-
-								DDMFormValues ddmFormValues = getDDMFormValues(
-									companyId, ddmForm, xml);
-
-								String content = toJSON(ddmFormValues);
-
-								preparedStatement3.setString(1, content);
-
-								preparedStatement3.setLong(2, classPK);
-
-								preparedStatement3.addBatch();
-							}
+				"select parentStructureId, definition, storageType from " +
+					"DDMStructure where structureId = ?")) {
+
+			preparedStatement.setLong(1, structureId);
+
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				if (resultSet.next()) {
+					String definition = resultSet.getString("definition");
+					String storageType = resultSet.getString("storageType");
+
+					if (storageType.equals("expando") ||
+						storageType.equals("xml")) {
+
+						ddmForm = deserialize(definition, "xsd");
+					}
+					else {
+						ddmForm = deserialize(definition, "json");
+					}
+
+					try {
+						_validateDDMFormFieldNames(ddmForm);
+					}
+					catch (MustNotDuplicateFieldName mndfn) {
+						throw new UpgradeException(
+							String.format(
+								"The field name '%s' from structure ID %d is " +
+									"defined more than once",
+								mndfn.getFieldName(), structureId));
+					}
+
+					long parentStructureId = resultSet.getLong(
+						"parentStructureId");
+
+					if (parentStructureId > 0) {
+						DDMForm parentDDMForm = _getDDMForm(parentStructureId);
+
+						Set<String> commonDDMFormFieldNames = SetUtil.intersect(
+							_getDDMFormFieldsNames(parentDDMForm),
+							_getDDMFormFieldsNames(ddmForm));
+
+						if (!commonDDMFormFieldNames.isEmpty()) {
+							throw new UpgradeException(
+								"Duplicate DDM form field names: " +
+									StringUtil.merge(commonDDMFormFieldNames));
 						}
 					}
 
-					preparedStatement3.executeBatch();
+					DDMForm updatedDDMForm = _updateDDMFormFields(ddmForm);
+
+					_ddmForms.put(structureId, updatedDDMForm);
+
+					return updatedDDMForm;
 				}
 			}
 
-			updateStructureStorageType();
-			updateStructureVersionStorageType();
+			throw new UpgradeException(
+				"Unable to find dynamic data mapping structure with ID " +
+					structureId);
 		}
 	}
 
-	protected void validateDDMFormFieldName(
-			DDMFormField ddmFormField, Set<String> ddmFormFieldNames)
-		throws MustNotDuplicateFieldName {
+	private Set<String> _getDDMFormFieldsNames(DDMForm ddmForm) {
+		Map<String, DDMFormField> ddmFormFieldsMap =
+			ddmForm.getDDMFormFieldsMap(true);
 
-		if (ddmFormFieldNames.contains(
-				StringUtil.toLowerCase(ddmFormField.getName()))) {
+		Set<String> ddmFormFieldsNames = new HashSet<>();
 
-			throw new MustNotDuplicateFieldName(ddmFormField.getName());
+		for (String ddmFormFieldName : ddmFormFieldsMap.keySet()) {
+			ddmFormFieldsNames.add(StringUtil.toLowerCase(ddmFormFieldName));
 		}
 
-		ddmFormFieldNames.add(StringUtil.toLowerCase(ddmFormField.getName()));
+		return ddmFormFieldsNames;
+	}
 
-		for (DDMFormField nestedDDMFormField :
-				ddmFormField.getNestedDDMFormFields()) {
+	private Map<String, String> _getDDMTemplateScriptMap(long structureId)
+		throws Exception {
 
-			validateDDMFormFieldName(nestedDDMFormField, ddmFormFieldNames);
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"select * from DDMTemplate where classPK = ? and type_ = ?")) {
+
+			preparedStatement.setLong(1, structureId);
+			preparedStatement.setString(
+				2, DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY);
+
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				Map<String, String> ddmTemplateScriptMap = new HashMap<>();
+
+				while (resultSet.next()) {
+					long templateId = resultSet.getLong("templateId");
+					String language = resultSet.getString("language");
+					String script = resultSet.getString("script");
+
+					String key = templateId + StringPool.DOLLAR + language;
+
+					ddmTemplateScriptMap.put(key, script);
+				}
+
+				return ddmTemplateScriptMap;
+			}
 		}
 	}
 
-	protected void validateDDMFormFieldNames(DDMForm ddmForm)
-		throws MustNotDuplicateFieldName {
+	private String _getDefaultDDMFormLayoutDefinition(DDMForm ddmForm) {
+		DDMFormLayout ddmFormLayout = _ddm.getDefaultDDMFormLayout(ddmForm);
 
-		List<DDMFormField> ddmFormFields = ddmForm.getDDMFormFields();
+		DDMFormLayoutSerializerSerializeRequest.Builder builder =
+			DDMFormLayoutSerializerSerializeRequest.Builder.newBuilder(
+				ddmFormLayout);
 
-		Set<String> ddmFormFieldNames = new HashSet<>();
+		DDMFormLayoutSerializerSerializeResponse
+			ddmFormLayoutSerializerSerializeResponse =
+				_ddmFormLayoutSerializer.serialize(builder.build());
 
-		for (DDMFormField ddmFormField : ddmFormFields) {
-			validateDDMFormFieldName(ddmFormField, ddmFormFieldNames);
+		return ddmFormLayoutSerializerSerializeResponse.getContent();
+	}
+
+	private Map<String, String> _getExpandoValuesMap(long expandoRowId)
+		throws PortalException {
+
+		Map<String, String> fieldsMap = new HashMap<>();
+
+		List<ExpandoValue> expandoValues =
+			_expandoValueLocalService.getRowValues(expandoRowId);
+
+		for (ExpandoValue expandoValue : expandoValues) {
+			ExpandoColumn expandoColumn = expandoValue.getColumn();
+
+			fieldsMap.put(expandoColumn.getName(), expandoValue.getData());
+		}
+
+		return fieldsMap;
+	}
+
+	private DDMForm _getFullHierarchyDDMForm(long structureId)
+		throws Exception {
+
+		DDMForm fullHierarchyDDMForm = _fullHierarchyDDMForms.get(structureId);
+
+		if (fullHierarchyDDMForm != null) {
+			return fullHierarchyDDMForm;
+		}
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"select parentStructureId from DDMStructure where " +
+					"structureId = ?")) {
+
+			preparedStatement.setLong(1, structureId);
+
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				if (resultSet.next()) {
+					long parentStructureId = resultSet.getLong(
+						"parentStructureId");
+
+					fullHierarchyDDMForm = _getDDMForm(structureId);
+
+					if (parentStructureId > 0) {
+						DDMForm parentDDMForm = _getFullHierarchyDDMForm(
+							parentStructureId);
+
+						List<DDMFormField> ddmFormFields =
+							fullHierarchyDDMForm.getDDMFormFields();
+
+						ddmFormFields.addAll(parentDDMForm.getDDMFormFields());
+					}
+
+					_fullHierarchyDDMForms.put(
+						structureId, fullHierarchyDDMForm);
+
+					return fullHierarchyDDMForm;
+				}
+			}
+
+			throw new UpgradeException(
+				"Unable to find dynamic data mapping structure with ID " +
+					structureId);
+		}
+	}
+
+	private String _getStructureModelResourceName(long classNameId)
+		throws UpgradeException {
+
+		String className = PortalUtil.getClassName(classNameId);
+
+		String structureModelResourceName = _structureModelResourceNames.get(
+			className);
+
+		if (structureModelResourceName == null) {
+			throw new UpgradeException(
+				StringBundler.concat(
+					"Model ", className, " does not support DDM structure ",
+					"permission checking"));
+		}
+
+		return structureModelResourceName;
+	}
+
+	private String _getTemplateModelResourceName(long classNameId)
+		throws UpgradeException {
+
+		String className = PortalUtil.getClassName(classNameId);
+
+		String templateModelResourceName = _templateModelResourceNames.get(
+			className);
+
+		if (templateModelResourceName == null) {
+			throw new UpgradeException(
+				StringBundler.concat(
+					"Model ", className, " does not support DDM template ",
+					"permission checking"));
+		}
+
+		return templateModelResourceName;
+	}
+
+	private Long _getTemplateResourceClassNameId(
+		long classNameId, long classPK) {
+
+		if (classNameId != PortalUtil.getClassNameId(DDMStructure.class)) {
+			return PortalUtil.getClassNameId(
+				"com.liferay.portlet.display.template.PortletDisplayTemplate");
+		}
+
+		if (classPK == 0) {
+			return PortalUtil.getClassNameId(
+				"com.liferay.journal.model.JournalArticle");
+		}
+
+		return _structureClassNameIds.get(classPK);
+	}
+
+	private boolean _hasStructureVersion(long structureId, String version)
+		throws Exception {
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"select * from DDMStructureVersion where structureId = ? and " +
+					"version = ?")) {
+
+			preparedStatement.setLong(1, structureId);
+			preparedStatement.setString(2, version);
+
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				return resultSet.next();
+			}
+		}
+	}
+
+	private boolean _hasTemplateVersion(long templateId, String version)
+		throws Exception {
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"select * from DDMTemplateVersion where templateId = ? and " +
+					"version = ?")) {
+
+			preparedStatement.setLong(1, templateId);
+			preparedStatement.setString(2, version);
+
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				return resultSet.next();
+			}
 		}
 	}
 
@@ -1632,6 +732,906 @@ public class DynamicDataMappingUpgradeProcess extends UpgradeProcess {
 				"com.liferay.dynamic.data.lists.model.DDLRecordSet",
 				_CLASS_NAME_DDM_TEMPLATE)
 		).build();
+	}
+
+	private void _setUpClassNameIds() {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			_ddmContentClassNameId = PortalUtil.getClassNameId(
+				DDMContent.class);
+
+			_expandoStorageAdapterClassNameId = PortalUtil.getClassNameId(
+				"com.liferay.portlet.dynamicdatamapping.storage." +
+					"ExpandoStorageAdapter");
+		}
+	}
+
+	private void _transformFieldTypeDDMFormFields(
+			long groupId, long companyId, long userId, String userName,
+			Timestamp createDate, long entryId, String entryVersion,
+			String entryModelName, DDMFormValues ddmFormValues)
+		throws Exception {
+
+		DDMFormValuesTransformer ddmFormValuesTransformer =
+			new DDMFormValuesTransformer(ddmFormValues);
+
+		ddmFormValuesTransformer.addTransformer(
+			new FileUploadDDMFormFieldValueTransformer(
+				groupId, companyId, userId, userName, createDate, entryId,
+				entryVersion, entryModelName));
+
+		ddmFormValuesTransformer.addTransformer(
+			new DateDDMFormFieldValueTransformer());
+
+		ddmFormValuesTransformer.transform();
+	}
+
+	private DDMForm _updateDDMFormFields(DDMForm ddmForm) throws Exception {
+		DDMForm copyDDMForm = new DDMForm(ddmForm);
+
+		Map<String, DDMFormField> ddmFormFieldsMap =
+			copyDDMForm.getDDMFormFieldsMap(true);
+
+		for (DDMFormField ddmFormField : ddmFormFieldsMap.values()) {
+			String fieldName = ddmFormField.getName();
+
+			if (isInvalidFieldName(fieldName)) {
+				String newFieldName = createNewDDMFormFieldName(
+					fieldName, ddmFormFieldsMap.keySet());
+
+				ddmFormField.setName(newFieldName);
+
+				ddmFormField.setProperty("oldName", fieldName);
+			}
+
+			String dataType = ddmFormField.getDataType();
+
+			if (Objects.equals(dataType, "file-upload")) {
+				ddmFormField.setDataType("document-library");
+				ddmFormField.setType("ddm-documentlibrary");
+			}
+			else if (Objects.equals(dataType, "image")) {
+				ddmFormField.setFieldNamespace("ddm");
+				ddmFormField.setType("ddm-image");
+			}
+		}
+
+		return copyDDMForm;
+	}
+
+	private void _updateDDMStructureStorageType() throws Exception {
+		runSQL(
+			"update DDMStructure set storageType = 'xml' where storageType = " +
+				"'expando'");
+	}
+
+	private void _updateStructureStorageType() throws Exception {
+		runSQL(
+			"update DDMStructure set storageType='json' where storageType = " +
+				"'xml'");
+	}
+
+	private void _updateStructureVersionStorageType() throws Exception {
+		runSQL(
+			"update DDMStructureVersion set storageType='json' where " +
+				"storageType = 'xml'");
+	}
+
+	private void _updateTemplateScript(long templateId, String script)
+		throws Exception {
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"update DDMTemplate set script = ? where templateId = ?")) {
+
+			preparedStatement.setString(1, script);
+			preparedStatement.setLong(2, templateId);
+
+			preparedStatement.executeUpdate();
+		}
+		catch (Exception exception) {
+			_log.error(
+				"Unable to update dynamic data mapping template with " +
+					"template ID " + templateId);
+
+			throw exception;
+		}
+	}
+
+	private String _updateTemplateScriptDateAssignStatement(
+		String dateFieldName, String language, String script) {
+
+		StringBundler oldTemplateScriptSB = new StringBundler(7);
+		StringBundler newTemplateScriptSB = new StringBundler(5);
+
+		if (language.equals("ftl")) {
+			oldTemplateScriptSB.append("<#assign\\s+");
+			oldTemplateScriptSB.append(dateFieldName);
+			oldTemplateScriptSB.append("_Data\\s*=\\s*getterUtil\\s*.");
+			oldTemplateScriptSB.append("\\s*getLong\\s*\\(\\s*");
+			oldTemplateScriptSB.append(dateFieldName);
+			oldTemplateScriptSB.append(".\\s*getData\\s*\\(\\s*\\)");
+			oldTemplateScriptSB.append("\\s*\\)\\s*/?>");
+
+			newTemplateScriptSB.append("<#assign ");
+			newTemplateScriptSB.append(dateFieldName);
+			newTemplateScriptSB.append("_Data = getterUtil.getString(");
+			newTemplateScriptSB.append(dateFieldName);
+			newTemplateScriptSB.append(".getData()) />");
+		}
+		else if (language.equals("vm")) {
+			dateFieldName =
+				StringPool.BACK_SLASH + StringPool.DOLLAR + dateFieldName;
+
+			oldTemplateScriptSB.append("#set\\s+\\(\\s*");
+			oldTemplateScriptSB.append(dateFieldName);
+			oldTemplateScriptSB.append("_Data\\s*=\\s*\\$getterUtil.");
+			oldTemplateScriptSB.append("getLong\\(\\s*");
+			oldTemplateScriptSB.append(dateFieldName);
+			oldTemplateScriptSB.append(".getData\\(\\)\\s*\\)\\s*\\)");
+
+			newTemplateScriptSB.append("#set (");
+			newTemplateScriptSB.append(dateFieldName);
+			newTemplateScriptSB.append("_Data = \\$getterUtil.getString(");
+			newTemplateScriptSB.append(dateFieldName);
+			newTemplateScriptSB.append(".getData()))");
+		}
+
+		return script.replaceAll(
+			oldTemplateScriptSB.toString(), newTemplateScriptSB.toString());
+	}
+
+	private void _updateTemplateScriptDateFields(
+			long structureId, DDMForm ddmForm)
+		throws Exception {
+
+		List<String> ddmDateFieldNames = _getDDMDateFieldNames(ddmForm);
+
+		if (ddmDateFieldNames.isEmpty()) {
+			return;
+		}
+
+		Map<String, String> ddmTemplateScriptMap = _getDDMTemplateScriptMap(
+			structureId);
+
+		for (Map.Entry<String, String> entrySet :
+				ddmTemplateScriptMap.entrySet()) {
+
+			String[] templateIdAndLanguage = StringUtil.split(
+				entrySet.getKey(), StringPool.DOLLAR);
+
+			long ddmTemplateId = GetterUtil.getLong(templateIdAndLanguage[0]);
+			String language = templateIdAndLanguage[1];
+
+			String script = entrySet.getValue();
+
+			for (String ddmDateFieldName : ddmDateFieldNames) {
+				script = _updateTemplateScriptDateAssignStatement(
+					ddmDateFieldName, language, script);
+
+				script = _updateTemplateScriptDateIfStatement(
+					ddmDateFieldName, language, script);
+
+				script = _updateTemplateScriptDateParseStatement(
+					ddmDateFieldName, language, script);
+
+				script = _updateTemplateScriptDateGetDateStatement(
+					language, script);
+			}
+
+			_updateTemplateScript(ddmTemplateId, script);
+		}
+	}
+
+	private String _updateTemplateScriptDateGetDateStatement(
+		String language, String script) {
+
+		StringBundler oldTemplateScriptSB = new StringBundler(3);
+		String newTemplateScript = null;
+
+		if (language.equals("ftl")) {
+			oldTemplateScriptSB.append("dateUtil.getDate\\((.*)");
+			oldTemplateScriptSB.append("locale[,\\s]*timeZoneUtil.");
+			oldTemplateScriptSB.append("getTimeZone\\(\"UTC\"\\)\\s*\\)");
+
+			newTemplateScript = "dateUtil.getDate($1locale)";
+		}
+		else if (language.equals("vm")) {
+			oldTemplateScriptSB.append("dateUtil.getDate\\((.*)");
+			oldTemplateScriptSB.append("\\$locale[,\\s]*\\$timeZoneUtil.");
+			oldTemplateScriptSB.append("getTimeZone\\(\"UTC\"\\)\\s*\\)");
+
+			newTemplateScript = "dateUtil.getDate($1\\$locale)";
+		}
+
+		return script.replaceAll(
+			oldTemplateScriptSB.toString(), newTemplateScript);
+	}
+
+	private String _updateTemplateScriptDateIfStatement(
+		String dateFieldName, String language, String script) {
+
+		String oldTemplateScript = StringPool.BLANK;
+		String newTemplateScript = StringPool.BLANK;
+
+		if (language.equals("ftl")) {
+			oldTemplateScript = StringBundler.concat(
+				"<#if\\s*\\(?\\s*", dateFieldName, "_Data\\s*>\\s*0\\s*\\)?",
+				"\\s*>");
+
+			newTemplateScript =
+				"<#if validator.isNotNull(" + dateFieldName + "_Data)>";
+		}
+		else if (language.equals("vm")) {
+			dateFieldName =
+				StringPool.BACK_SLASH + StringPool.DOLLAR + dateFieldName;
+
+			oldTemplateScript =
+				"#if\\s*\\(\\s*" + dateFieldName + "_Data\\s*>\\s*0\\s*\\)";
+
+			newTemplateScript =
+				"#if (\\$validator.isNotNull(" + dateFieldName + "_Data))";
+		}
+
+		return script.replaceAll(oldTemplateScript, newTemplateScript);
+	}
+
+	private String _updateTemplateScriptDateParseStatement(
+		String dateFieldName, String language, String script) {
+
+		StringBundler oldTemplateScriptSB = new StringBundler(6);
+		StringBundler newTemplateScriptSB = new StringBundler(5);
+
+		if (language.equals("ftl")) {
+			oldTemplateScriptSB.append("<#assign\\s+");
+			oldTemplateScriptSB.append(dateFieldName);
+			oldTemplateScriptSB.append("_DateObj\\s*=\\s*dateUtil\\s*.");
+			oldTemplateScriptSB.append("\\s*newDate\\(\\s*");
+			oldTemplateScriptSB.append(dateFieldName);
+			oldTemplateScriptSB.append("_Data\\s*\\)\\s*/?>");
+
+			newTemplateScriptSB.append("<#assign ");
+			newTemplateScriptSB.append(dateFieldName);
+			newTemplateScriptSB.append(
+				"_DateObj = dateUtil.parseDate(\"yyyy-MM-dd\", ");
+			newTemplateScriptSB.append(dateFieldName);
+			newTemplateScriptSB.append("_Data, locale) />");
+		}
+		else if (language.equals("vm")) {
+			dateFieldName =
+				StringPool.BACK_SLASH + StringPool.DOLLAR + dateFieldName;
+
+			oldTemplateScriptSB.append("#set\\s*\\(");
+			oldTemplateScriptSB.append(dateFieldName);
+			oldTemplateScriptSB.append("_DateObj\\s*=\\s*\\$dateUtil.");
+			oldTemplateScriptSB.append("newDate\\(\\s*");
+			oldTemplateScriptSB.append(dateFieldName);
+			oldTemplateScriptSB.append("_Data\\s*\\)\\s*\\)");
+
+			newTemplateScriptSB.append("#set (");
+			newTemplateScriptSB.append(dateFieldName);
+			newTemplateScriptSB.append(
+				"_DateObj = \\$dateUtil.parseDate(\"yyyy-MM-dd\", ");
+			newTemplateScriptSB.append(dateFieldName);
+			newTemplateScriptSB.append("_Data, \\$locale))");
+		}
+
+		return script.replaceAll(
+			oldTemplateScriptSB.toString(), newTemplateScriptSB.toString());
+	}
+
+	private void _upgradeDDLFieldTypeReferences() throws Exception {
+		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
+				StringBundler.concat(
+					"select DDLRecordVersion.*, DDMContent.data_, ",
+					"DDMStructure.structureId from DDLRecordVersion inner ",
+					"join DDLRecordSet on DDLRecordVersion.recordSetId = ",
+					"DDLRecordSet.recordSetId inner join DDMContent on  ",
+					"DDLRecordVersion.DDMStorageId = DDMContent.contentId ",
+					"inner join DDMStructure on DDLRecordSet.DDMStructureId = ",
+					"DDMStructure.structureId"));
+			PreparedStatement preparedStatement2 =
+				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+					connection,
+					"update DDMContent set data_= ? where contentId = ?");
+			ResultSet resultSet = preparedStatement1.executeQuery()) {
+
+			while (resultSet.next()) {
+				long groupId = resultSet.getLong("groupId");
+				long companyId = resultSet.getLong("companyId");
+				long userId = resultSet.getLong("userId");
+				String userName = resultSet.getString("userName");
+				Timestamp createDate = resultSet.getTimestamp("createDate");
+				long entryId = resultSet.getLong("recordId");
+				String entryVersion = resultSet.getString("version");
+				long contentId = resultSet.getLong("ddmStorageId");
+				String data_ = resultSet.getString("data_");
+
+				long ddmStructureId = resultSet.getLong("structureId");
+
+				DDMForm ddmForm = _getFullHierarchyDDMForm(ddmStructureId);
+
+				DDMFormValues ddmFormValues =
+					DDMFormValuesDeserializeUtil.deserialize(
+						data_, ddmForm, _ddmFormValuesDeserializer);
+
+				_transformFieldTypeDDMFormFields(
+					groupId, companyId, userId, userName, createDate, entryId,
+					entryVersion, "DDLRecord", ddmFormValues);
+
+				preparedStatement2.setString(1, toJSON(ddmFormValues));
+
+				preparedStatement2.setLong(2, contentId);
+
+				preparedStatement2.addBatch();
+			}
+
+			preparedStatement2.executeBatch();
+		}
+	}
+
+	private void _upgradeDLFieldTypeReferences() throws Exception {
+		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
+				StringBundler.concat(
+					"select DLFileVersion.*, DDMContent.contentId, ",
+					"DDMContent.data_, DDMStructure.structureId from ",
+					"DLFileEntryMetadata inner join DDMContent on ",
+					"DLFileEntryMetadata.DDMStorageId = DDMContent.contentId ",
+					"inner join DDMStructure on ",
+					"DLFileEntryMetadata.DDMStructureId = DDMStructure.",
+					"structureId inner join DLFileVersion on ",
+					"DLFileEntryMetadata.fileVersionId = DLFileVersion.",
+					"fileVersionId and DLFileEntryMetadata.fileEntryId = ",
+					"DLFileVersion.fileEntryId"));
+			PreparedStatement preparedStatement2 =
+				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+					connection,
+					"update DDMContent set data_= ? where contentId = ?");
+			ResultSet resultSet = preparedStatement1.executeQuery()) {
+
+			while (resultSet.next()) {
+				long groupId = resultSet.getLong("groupId");
+				long companyId = resultSet.getLong("companyId");
+				long userId = resultSet.getLong("userId");
+				String userName = resultSet.getString("userName");
+				Timestamp createDate = resultSet.getTimestamp("createDate");
+				long entryId = resultSet.getLong("fileEntryId");
+				String entryVersion = resultSet.getString("version");
+				long contentId = resultSet.getLong("contentId");
+				String data_ = resultSet.getString("data_");
+
+				long ddmStructureId = resultSet.getLong("structureId");
+
+				DDMForm ddmForm = _getFullHierarchyDDMForm(ddmStructureId);
+
+				DDMFormValues ddmFormValues =
+					DDMFormValuesDeserializeUtil.deserialize(
+						data_, ddmForm, _ddmFormValuesDeserializer);
+
+				_transformFieldTypeDDMFormFields(
+					groupId, companyId, userId, userName, createDate, entryId,
+					entryVersion, "DLFileEntry", ddmFormValues);
+
+				preparedStatement2.setString(1, toJSON(ddmFormValues));
+
+				preparedStatement2.setLong(2, contentId);
+
+				preparedStatement2.addBatch();
+			}
+
+			preparedStatement2.executeBatch();
+		}
+	}
+
+	private void _upgradeExpandoStorageAdapter() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			try (PreparedStatement preparedStatement1 =
+					connection.prepareStatement(
+						StringBundler.concat(
+							"select DDMStructure.*, DDMStorageLink.* from ",
+							"DDMStorageLink inner join DDMStructure on ",
+							"DDMStorageLink.structureId = ",
+							"DDMStructure.structureId where ",
+							"DDMStructure.storageType = 'expando'"));
+				PreparedStatement preparedStatement2 =
+					AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+						connection,
+						StringBundler.concat(
+							"insert into DDMContent (uuid_, contentId, ",
+							"groupId, companyId, userId, userName, ",
+							"createDate, modifiedDate, name, description, ",
+							"data_) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"));
+				PreparedStatement preparedStatement3 =
+					AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+						connection,
+						"update DDMStorageLink set classNameId = ? where " +
+							"classNameId = ? and classPK = ?");
+				ResultSet resultSet = preparedStatement1.executeQuery()) {
+
+				Set<Long> expandoRowIds = new HashSet<>();
+
+				while (resultSet.next()) {
+					long groupId = resultSet.getLong("groupId");
+					long companyId = resultSet.getLong("companyId");
+					long userId = resultSet.getLong("userId");
+					String userName = resultSet.getString("userName");
+					Timestamp createDate = resultSet.getTimestamp("createDate");
+
+					long expandoRowId = resultSet.getLong("classPK");
+
+					String xml = toXML(_getExpandoValuesMap(expandoRowId));
+
+					preparedStatement2.setString(1, PortalUUIDUtil.generate());
+					preparedStatement2.setLong(2, expandoRowId);
+					preparedStatement2.setLong(3, groupId);
+					preparedStatement2.setLong(4, companyId);
+					preparedStatement2.setLong(5, userId);
+					preparedStatement2.setString(6, userName);
+					preparedStatement2.setTimestamp(7, createDate);
+					preparedStatement2.setTimestamp(8, createDate);
+					preparedStatement2.setString(
+						9, DDMStorageLink.class.getName());
+					preparedStatement2.setString(10, null);
+					preparedStatement2.setString(11, xml);
+
+					preparedStatement2.addBatch();
+
+					preparedStatement3.setLong(1, _ddmContentClassNameId);
+					preparedStatement3.setLong(
+						2, _expandoStorageAdapterClassNameId);
+					preparedStatement3.setLong(3, expandoRowId);
+
+					preparedStatement3.addBatch();
+
+					expandoRowIds.add(expandoRowId);
+				}
+
+				if (expandoRowIds.isEmpty()) {
+					return;
+				}
+
+				preparedStatement2.executeBatch();
+
+				preparedStatement3.executeBatch();
+
+				_updateDDMStructureStorageType();
+
+				_deleteExpandoData(expandoRowIds);
+			}
+		}
+	}
+
+	private void _upgradeFieldTypeReferences() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			_upgradeDDLFieldTypeReferences();
+			_upgradeDLFieldTypeReferences();
+		}
+	}
+
+	private void _upgradeStructurePermissions(long companyId, long structureId)
+		throws Exception {
+
+		List<ResourcePermission> resourcePermissions =
+			_resourcePermissionLocalService.getResourcePermissions(
+				companyId, DDMStructure.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(structureId));
+
+		for (ResourcePermission resourcePermission : resourcePermissions) {
+			Long classNameId = _structureClassNameIds.get(
+				Long.valueOf(resourcePermission.getPrimKey()));
+
+			if (classNameId == null) {
+				continue;
+			}
+
+			String resourceName = _getStructureModelResourceName(classNameId);
+
+			resourcePermission.setName(resourceName);
+
+			_resourcePermissionLocalService.updateResourcePermission(
+				resourcePermission);
+		}
+	}
+
+	private void _upgradeStructuresAndAddStructureVersionsAndLayouts()
+		throws Exception {
+
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement preparedStatement1 = connection.prepareStatement(
+				"select * from DDMStructure");
+			PreparedStatement preparedStatement2 =
+				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+					connection,
+					"update DDMStructure set definition = ? where " +
+						"structureId = ?");
+			PreparedStatement preparedStatement3 =
+				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+					connection,
+					StringBundler.concat(
+						"insert into DDMStructureVersion (structureVersionId, ",
+						"groupId, companyId, userId, userName, createDate, ",
+						"structureId, version, parentStructureId, name, ",
+						"description, definition, storageType, type_, status, ",
+						"statusByUserId, statusByUserName, statusDate) values ",
+						"(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ",
+						"?)"));
+			PreparedStatement preparedStatement4 =
+				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+					connection,
+					StringBundler.concat(
+						"insert into DDMStructureLayout (uuid_, ",
+						"structureLayoutId, groupId, companyId, userId, ",
+						"userName, createDate, modifiedDate, ",
+						"structureVersionId, definition) values (?, ?, ?, ?, ",
+						"?, ?, ?, ?, ?, ?)"));
+			ResultSet resultSet = preparedStatement1.executeQuery()) {
+
+			while (resultSet.next()) {
+				long structureId = resultSet.getLong("structureId");
+				long classNameId = resultSet.getLong("classNameId");
+				String version = resultSet.getString("version");
+
+				_structureClassNameIds.put(structureId, classNameId);
+
+				// Structure content
+
+				DDMForm ddmForm = _getDDMForm(structureId);
+
+				populateStructureInvalidDDMFormFieldNamesMap(
+					structureId, ddmForm);
+
+				String definition = DDMFormSerializeUtil.serialize(
+					ddmForm, _ddmFormSerializer);
+
+				preparedStatement2.setString(1, definition);
+
+				preparedStatement2.setLong(2, structureId);
+
+				preparedStatement2.addBatch();
+
+				_updateTemplateScriptDateFields(structureId, ddmForm);
+
+				// Structure version
+
+				if (_hasStructureVersion(structureId, version)) {
+					continue;
+				}
+
+				long groupId = resultSet.getLong("groupId");
+				long companyId = resultSet.getLong("companyId");
+				long userId = resultSet.getLong("userId");
+				String userName = resultSet.getString("userName");
+				Timestamp modifiedDate = resultSet.getTimestamp("modifiedDate");
+				long parentStructureId = resultSet.getLong("parentStructureId");
+				String name = resultSet.getString("name");
+				String description = resultSet.getString("description");
+				String storageType = resultSet.getString("storageType");
+				int type = resultSet.getInt("type_");
+
+				long structureVersionId = increment();
+
+				preparedStatement3.setLong(1, structureVersionId);
+
+				preparedStatement3.setLong(2, groupId);
+				preparedStatement3.setLong(3, companyId);
+				preparedStatement3.setLong(4, userId);
+				preparedStatement3.setString(5, userName);
+				preparedStatement3.setTimestamp(6, modifiedDate);
+				preparedStatement3.setLong(7, structureId);
+				preparedStatement3.setString(
+					8, DDMStructureConstants.VERSION_DEFAULT);
+				preparedStatement3.setLong(9, parentStructureId);
+				preparedStatement3.setString(10, name);
+				preparedStatement3.setString(11, description);
+				preparedStatement3.setString(12, definition);
+				preparedStatement3.setString(13, storageType);
+				preparedStatement3.setInt(14, type);
+				preparedStatement3.setInt(
+					15, WorkflowConstants.STATUS_APPROVED);
+				preparedStatement3.setLong(16, userId);
+				preparedStatement3.setString(17, userName);
+				preparedStatement3.setTimestamp(18, modifiedDate);
+
+				preparedStatement3.addBatch();
+
+				// Structure layout
+
+				String ddmFormLayoutDefinition =
+					_getDefaultDDMFormLayoutDefinition(ddmForm);
+
+				preparedStatement4.setString(1, PortalUUIDUtil.generate());
+				preparedStatement4.setLong(2, increment());
+				preparedStatement4.setLong(3, groupId);
+				preparedStatement4.setLong(4, companyId);
+				preparedStatement4.setLong(5, userId);
+				preparedStatement4.setString(6, userName);
+				preparedStatement4.setTimestamp(7, modifiedDate);
+				preparedStatement4.setTimestamp(8, modifiedDate);
+				preparedStatement4.setLong(9, structureVersionId);
+				preparedStatement4.setString(10, ddmFormLayoutDefinition);
+
+				preparedStatement4.addBatch();
+			}
+
+			preparedStatement2.executeBatch();
+
+			preparedStatement3.executeBatch();
+
+			preparedStatement4.executeBatch();
+		}
+	}
+
+	private void _upgradeStructuresPermissions() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement preparedStatement = connection.prepareStatement(
+				"select * from DDMStructure");
+			ResultSet resultSet = preparedStatement.executeQuery()) {
+
+			while (resultSet.next()) {
+				long companyId = resultSet.getLong("companyId");
+				long structureId = resultSet.getLong("structureId");
+
+				_upgradeStructurePermissions(companyId, structureId);
+			}
+		}
+	}
+
+	private void _upgradeTemplatePermissions(long companyId, long templateId)
+		throws Exception {
+
+		List<ResourcePermission> resourcePermissions =
+			_resourcePermissionLocalService.getResourcePermissions(
+				companyId, DDMTemplate.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL, String.valueOf(templateId));
+
+		for (ResourcePermission resourcePermission : resourcePermissions) {
+			Long classNameId = _templateResourceClassNameIds.get(
+				Long.valueOf(resourcePermission.getPrimKey()));
+
+			if (classNameId == null) {
+				continue;
+			}
+
+			String resourceName = _getTemplateModelResourceName(classNameId);
+
+			resourcePermission.setName(resourceName);
+
+			_resourcePermissionLocalService.updateResourcePermission(
+				resourcePermission);
+		}
+	}
+
+	private void _upgradeTemplatesAndAddTemplateVersions() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement preparedStatement1 = connection.prepareStatement(
+				"select * from DDMTemplate");
+			PreparedStatement preparedStatement2 =
+				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+					connection,
+					"update DDMTemplate set resourceClassNameId = ? where " +
+						"templateId = ?");
+			PreparedStatement preparedStatement3 =
+				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+					connection,
+					"update DDMTemplate set language = ?, script = ? where " +
+						"templateId = ?");
+			PreparedStatement preparedStatement4 =
+				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+					connection,
+					StringBundler.concat(
+						"insert into DDMTemplateVersion (templateVersionId, ",
+						"groupId, companyId, userId, userName, createDate, ",
+						"classNameId, classPK, templateId, version, name, ",
+						"description, language, script, status, ",
+						"statusByUserId, statusByUserName, statusDate) values ",
+						"(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ",
+						"?)"));
+			ResultSet resultSet = preparedStatement1.executeQuery()) {
+
+			while (resultSet.next()) {
+				long classNameId = resultSet.getLong("classNameId");
+				long classPK = resultSet.getLong("classPK");
+				long templateId = resultSet.getLong("templateId");
+
+				// Template resource class name ID
+
+				Long resourceClassNameId = _getTemplateResourceClassNameId(
+					classNameId, classPK);
+
+				if ((resourceClassNameId == null) && _log.isWarnEnabled()) {
+					_log.warn("Orphaned DDM template " + templateId);
+
+					continue;
+				}
+
+				String version = resultSet.getString("version");
+				String language = resultSet.getString("language");
+				String script = resultSet.getString("script");
+
+				preparedStatement2.setLong(1, resourceClassNameId);
+
+				preparedStatement2.setLong(2, templateId);
+
+				preparedStatement2.addBatch();
+
+				_templateResourceClassNameIds.put(
+					templateId, resourceClassNameId);
+
+				// Template content
+
+				String updatedScript = renameInvalidDDMFormFieldNames(
+					classPK, script);
+
+				if (language.equals("xsd")) {
+					DDMForm ddmForm = deserialize(updatedScript, "xsd");
+
+					ddmForm = _updateDDMFormFields(ddmForm);
+
+					updatedScript = DDMFormSerializeUtil.serialize(
+						ddmForm, _ddmFormSerializer);
+
+					language = "json";
+				}
+
+				if (!script.equals(updatedScript)) {
+					preparedStatement3.setString(1, language);
+					preparedStatement3.setString(2, updatedScript);
+					preparedStatement3.setLong(3, templateId);
+
+					preparedStatement3.addBatch();
+				}
+
+				// Template version
+
+				if (_hasTemplateVersion(templateId, version)) {
+					continue;
+				}
+
+				long userId = resultSet.getLong("userId");
+				String userName = resultSet.getString("userName");
+				Timestamp modifiedDate = resultSet.getTimestamp("modifiedDate");
+
+				preparedStatement4.setLong(1, increment());
+				preparedStatement4.setLong(2, resultSet.getLong("groupId"));
+				preparedStatement4.setLong(3, resultSet.getLong("companyId"));
+				preparedStatement4.setLong(4, userId);
+				preparedStatement4.setString(5, userName);
+				preparedStatement4.setTimestamp(6, modifiedDate);
+				preparedStatement4.setLong(7, classNameId);
+				preparedStatement4.setLong(8, classPK);
+				preparedStatement4.setLong(9, templateId);
+				preparedStatement4.setString(
+					10, DDMStructureConstants.VERSION_DEFAULT);
+				preparedStatement4.setString(11, resultSet.getString("name"));
+				preparedStatement4.setString(
+					12, resultSet.getString("description"));
+				preparedStatement4.setString(13, language);
+				preparedStatement4.setString(14, updatedScript);
+				preparedStatement4.setInt(
+					15, WorkflowConstants.STATUS_APPROVED);
+				preparedStatement4.setLong(16, userId);
+				preparedStatement4.setString(17, userName);
+				preparedStatement4.setTimestamp(18, modifiedDate);
+
+				preparedStatement4.addBatch();
+			}
+
+			preparedStatement2.executeBatch();
+
+			preparedStatement3.executeBatch();
+
+			preparedStatement4.executeBatch();
+		}
+	}
+
+	private void _upgradeTemplatesPermissions() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement preparedStatement = connection.prepareStatement(
+				"select * from DDMTemplate");
+			ResultSet resultSet = preparedStatement.executeQuery()) {
+
+			while (resultSet.next()) {
+				long companyId = resultSet.getLong("companyId");
+				long templateId = resultSet.getLong("templateId");
+
+				_upgradeTemplatePermissions(companyId, templateId);
+			}
+		}
+	}
+
+	private void _upgradeXMLStorageAdapter() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			try (PreparedStatement preparedStatement1 =
+					connection.prepareStatement(
+						StringBundler.concat(
+							"select DDMStorageLink.classPK, DDMStorageLink.",
+							"structureId from DDMStorageLink inner join ",
+							"DDMStructure on (DDMStorageLink.structureId = ",
+							"DDMStructure.structureId) where DDMStorageLink.",
+							"classNameId = ? and DDMStructure.storageType = ",
+							"?"));
+				PreparedStatement preparedStatement2 =
+					connection.prepareStatement(
+						"select companyId, data_ from DDMContent where " +
+							"contentId = ? and data_ like '<%'");
+				PreparedStatement preparedStatement3 =
+					AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+						connection,
+						"update DDMContent set data_= ? where contentId = ?")) {
+
+				preparedStatement1.setLong(1, _ddmContentClassNameId);
+				preparedStatement1.setString(2, "xml");
+
+				try (ResultSet resultSet = preparedStatement1.executeQuery()) {
+					while (resultSet.next()) {
+						long structureId = resultSet.getLong("structureId");
+						long classPK = resultSet.getLong("classPK");
+
+						DDMForm ddmForm = _getFullHierarchyDDMForm(structureId);
+
+						preparedStatement2.setLong(1, classPK);
+
+						try (ResultSet resultSet2 =
+								preparedStatement2.executeQuery()) {
+
+							if (resultSet2.next()) {
+								long companyId = resultSet2.getLong(
+									"companyId");
+
+								String xml = renameInvalidDDMFormFieldNames(
+									structureId, resultSet2.getString("data_"));
+
+								DDMFormValues ddmFormValues = getDDMFormValues(
+									companyId, ddmForm, xml);
+
+								String content = toJSON(ddmFormValues);
+
+								preparedStatement3.setString(1, content);
+
+								preparedStatement3.setLong(2, classPK);
+
+								preparedStatement3.addBatch();
+							}
+						}
+					}
+
+					preparedStatement3.executeBatch();
+				}
+			}
+
+			_updateStructureStorageType();
+			_updateStructureVersionStorageType();
+		}
+	}
+
+	private void _validateDDMFormFieldName(
+			DDMFormField ddmFormField, Set<String> ddmFormFieldNames)
+		throws MustNotDuplicateFieldName {
+
+		if (ddmFormFieldNames.contains(
+				StringUtil.toLowerCase(ddmFormField.getName()))) {
+
+			throw new MustNotDuplicateFieldName(ddmFormField.getName());
+		}
+
+		ddmFormFieldNames.add(StringUtil.toLowerCase(ddmFormField.getName()));
+
+		for (DDMFormField nestedDDMFormField :
+				ddmFormField.getNestedDDMFormFields()) {
+
+			_validateDDMFormFieldName(nestedDDMFormField, ddmFormFieldNames);
+		}
+	}
+
+	private void _validateDDMFormFieldNames(DDMForm ddmForm)
+		throws MustNotDuplicateFieldName {
+
+		List<DDMFormField> ddmFormFields = ddmForm.getDDMFormFields();
+
+		Set<String> ddmFormFieldNames = new HashSet<>();
+
+		for (DDMFormField ddmFormField : ddmFormFields) {
+			_validateDDMFormFieldName(ddmFormField, ddmFormFieldNames);
+		}
 	}
 
 	private static final String _CLASS_NAME_DDM_STRUCTURE =

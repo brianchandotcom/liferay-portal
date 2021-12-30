@@ -44,7 +44,7 @@ public class DateDDMFormFieldValueValidatorTest extends PowerMockito {
 
 	@Before
 	public void setUp() throws Exception {
-		setUpDateDDMFormFieldValueValidator();
+		_setUpDateDDMFormFieldValueValidator();
 		setUpDateFormatFactoryUtil();
 		setUpFastDateFormatFactoryUtil();
 	}
@@ -125,16 +125,6 @@ public class DateDDMFormFieldValueValidatorTest extends PowerMockito {
 			ddmFormField, ddmFormFieldValue.getValue());
 	}
 
-	protected void setUpDateDDMFormFieldValueValidator() throws Exception {
-		_dateDDMFormFieldValueValidator = new DateDDMFormFieldValueValidator();
-
-		field(
-			DateDDMFormFieldValueValidator.class, "jsonFactory"
-		).set(
-			_dateDDMFormFieldValueValidator, _jsonFactory
-		);
-	}
-
 	protected void setUpDateFormatFactoryUtil() {
 		DateFormatFactoryUtil dateFormatFactoryUtil =
 			new DateFormatFactoryUtil();
@@ -148,6 +138,16 @@ public class DateDDMFormFieldValueValidatorTest extends PowerMockito {
 
 		fastDateFormatFactoryUtil.setFastDateFormatFactory(
 			new FastDateFormatFactoryImpl());
+	}
+
+	private void _setUpDateDDMFormFieldValueValidator() throws Exception {
+		_dateDDMFormFieldValueValidator = new DateDDMFormFieldValueValidator();
+
+		field(
+			DateDDMFormFieldValueValidator.class, "jsonFactory"
+		).set(
+			_dateDDMFormFieldValueValidator, _jsonFactory
+		);
 	}
 
 	private DateDDMFormFieldValueValidator _dateDDMFormFieldValueValidator;

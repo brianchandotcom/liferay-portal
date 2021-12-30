@@ -92,7 +92,7 @@ public class DDMFormAssetRendererFactory
 			}
 		}
 
-		return createAssetRenderer(
+		return _createAssetRenderer(
 			formInstanceRecord, formInstanceRecordVersion, type);
 	}
 
@@ -134,7 +134,7 @@ public class DDMFormAssetRendererFactory
 		_servletContext = servletContext;
 	}
 
-	protected AssetRenderer<DDMFormInstanceRecord> createAssetRenderer(
+	private AssetRenderer<DDMFormInstanceRecord> _createAssetRenderer(
 		DDMFormInstanceRecord formInstanceRecord,
 		DDMFormInstanceRecordVersion formInstanceRecordVersion, int type) {
 

@@ -77,7 +77,7 @@ public class CallFunctionTest extends PowerMockito {
 
 		jsonArray.put("test");
 
-		mockDDMExpressionFieldAccessor(jsonArray);
+		_mockDDMExpressionFieldAccessor(jsonArray);
 
 		Assert.assertEquals(
 			"test", _callFunction.getDDMFormFieldValue("field0"));
@@ -85,7 +85,7 @@ public class CallFunctionTest extends PowerMockito {
 
 	@Test
 	public void testGetFieldValueFromString() {
-		mockDDMExpressionFieldAccessor("test");
+		_mockDDMExpressionFieldAccessor("test");
 
 		Assert.assertEquals(
 			"test", _callFunction.getDDMFormFieldValue("field0"));
@@ -103,7 +103,7 @@ public class CallFunctionTest extends PowerMockito {
 				"1", "field0", new UnlocalizedValue("a")));
 
 		MockDDMExpressionObserver mockDDMExpressionObserver =
-			mockDDMExpressionObserver(ddmFormValues);
+			_mockDDMExpressionObserver(ddmFormValues);
 
 		List<KeyValuePair> keyValuePairs = new ArrayList<>();
 
@@ -132,7 +132,7 @@ public class CallFunctionTest extends PowerMockito {
 				"2", "field0", new UnlocalizedValue("b")));
 
 		MockDDMExpressionObserver mockDDMExpressionObserver =
-			mockDDMExpressionObserver(ddmFormValues);
+			_mockDDMExpressionObserver(ddmFormValues);
 
 		List<KeyValuePair> keyValuePairs = new ArrayList<>();
 
@@ -163,7 +163,7 @@ public class CallFunctionTest extends PowerMockito {
 				"1", "fieldName0", new UnlocalizedValue("10")));
 
 		MockDDMExpressionObserver mockDDMExpressionObserver =
-			mockDDMExpressionObserver(ddmFormValues);
+			_mockDDMExpressionObserver(ddmFormValues);
 
 		DDMDataProviderResponse.Builder builder =
 			DDMDataProviderResponse.Builder.newBuilder();
@@ -215,7 +215,7 @@ public class CallFunctionTest extends PowerMockito {
 
 	}
 
-	protected void mockDDMExpressionFieldAccessor(Object... values) {
+	private void _mockDDMExpressionFieldAccessor(Object... values) {
 		DDMFormEvaluatorExpressionFieldAccessor
 			ddmFormEvaluatorExpressionFieldAccessor = mock(
 				DDMFormEvaluatorExpressionFieldAccessor.class);
@@ -244,7 +244,7 @@ public class CallFunctionTest extends PowerMockito {
 			ddmFormEvaluatorExpressionFieldAccessor);
 	}
 
-	protected MockDDMExpressionObserver mockDDMExpressionObserver(
+	private MockDDMExpressionObserver _mockDDMExpressionObserver(
 		DDMFormValues ddmFormValues) {
 
 		MockDDMExpressionObserver mockDDMExpressionObserver =

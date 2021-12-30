@@ -24,7 +24,12 @@ import com.liferay.portal.kernel.util.LoggingTimer;
  */
 public class SchemaUpgradeProcess extends UpgradeProcess {
 
-	protected void alterTables() throws Exception {
+	@Override
+	protected void doUpgrade() throws Exception {
+		_alterTables();
+	}
+
+	private void _alterTables() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			if (!hasColumnType(
 					DDMFormInstanceTable.TABLE_NAME, "description",
@@ -44,11 +49,6 @@ public class SchemaUpgradeProcess extends UpgradeProcess {
 					new AlterColumnType("description", "TEXT null"));
 			}
 		}
-	}
-
-	@Override
-	protected void doUpgrade() throws Exception {
-		alterTables();
 	}
 
 }

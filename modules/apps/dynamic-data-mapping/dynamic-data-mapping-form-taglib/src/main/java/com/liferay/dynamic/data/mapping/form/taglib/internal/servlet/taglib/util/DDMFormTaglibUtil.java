@@ -108,7 +108,7 @@ public class DDMFormTaglibUtil {
 		DDMFormBuilderSettingsRequest ddmFormBuilderSettingsRequest) {
 
 		DDMFormBuilderSettingsRetriever ddmFormBuilderSettingsRetriever =
-			getDDMFormBuilderSettingsRetriever();
+			_getDDMFormBuilderSettingsRetriever();
 
 		return ddmFormBuilderSettingsRetriever.getSettings(
 			ddmFormBuilderSettingsRequest);
@@ -247,16 +247,6 @@ public class DDMFormTaglibUtil {
 			ddmForm, ddmFormLayout, ddmFormRenderingContext);
 	}
 
-	protected static DDMFormBuilderSettingsRetriever
-		getDDMFormBuilderSettingsRetriever() {
-
-		if (_ddmFormBuilderSettingsRetriever == null) {
-			throw new IllegalStateException();
-		}
-
-		return _ddmFormBuilderSettingsRetriever;
-	}
-
 	@Reference(unbind = "-")
 	protected void setDDMFormBuilderContextFactory(
 		DDMFormBuilderContextFactory ddmFormBuilderContextFactory) {
@@ -372,6 +362,16 @@ public class DDMFormTaglibUtil {
 
 		_workflowDefinitionLinkLocalService =
 			workflowDefinitionLinkLocalService;
+	}
+
+	private static DDMFormBuilderSettingsRetriever
+		_getDDMFormBuilderSettingsRetriever() {
+
+		if (_ddmFormBuilderSettingsRetriever == null) {
+			throw new IllegalStateException();
+		}
+
+		return _ddmFormBuilderSettingsRetriever;
 	}
 
 	private static DDMFormBuilderContextFactory _ddmFormBuilderContextFactory;

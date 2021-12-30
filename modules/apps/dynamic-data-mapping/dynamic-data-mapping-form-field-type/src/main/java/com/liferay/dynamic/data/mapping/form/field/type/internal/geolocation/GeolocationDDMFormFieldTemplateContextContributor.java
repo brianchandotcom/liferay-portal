@@ -65,7 +65,7 @@ public class GeolocationDDMFormFieldTemplateContextContributor
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		Group group = getGroup(httpServletRequest, themeDisplay);
+		Group group = _getGroup(httpServletRequest, themeDisplay);
 
 		String mapProviderKey = GetterUtil.getString(
 			MapProviderHelperUtil.getMapProviderKey(
@@ -74,7 +74,7 @@ public class GeolocationDDMFormFieldTemplateContextContributor
 			"OpenStreetMap");
 
 		return HashMapBuilder.<String, Object>put(
-			"googleMapsAPIKey", getGoogleMapsAPIKey(group, themeDisplay)
+			"googleMapsAPIKey", _getGoogleMapsAPIKey(group, themeDisplay)
 		).put(
 			"mapProviderKey", mapProviderKey
 		).put(
@@ -94,7 +94,17 @@ public class GeolocationDDMFormFieldTemplateContextContributor
 		).build();
 	}
 
-	protected String getGoogleMapsAPIKey(
+	protected String getModuleName(String mapProviderKey) {
+		if (StringUtil.equals(mapProviderKey, "GoogleMaps")) {
+			return _npmResolver.resolveModuleName(
+				"@liferay/map-google-maps/js/MapGoogleMaps.es");
+		}
+
+		return _npmResolver.resolveModuleName(
+			"@liferay/map-openstreetmap/js/MapOpenStreetMap.es");
+	}
+
+	private String _getGoogleMapsAPIKey(
 		Group group, ThemeDisplay themeDisplay) {
 
 		PortletPreferences companyPortletPreferences =
@@ -109,7 +119,7 @@ public class GeolocationDDMFormFieldTemplateContextContributor
 			companyPortletPreferences.getValue("googleMapsAPIKey", null));
 	}
 
-	protected Group getGroup(
+	private Group _getGroup(
 		HttpServletRequest httpServletRequest, ThemeDisplay themeDisplay) {
 
 		Group group = (Group)httpServletRequest.getAttribute("site.liveGroup");
@@ -125,16 +135,6 @@ public class GeolocationDDMFormFieldTemplateContextContributor
 		}
 
 		return null;
-	}
-
-	protected String getModuleName(String mapProviderKey) {
-		if (StringUtil.equals(mapProviderKey, "GoogleMaps")) {
-			return _npmResolver.resolveModuleName(
-				"@liferay/map-google-maps/js/MapGoogleMaps.es");
-		}
-
-		return _npmResolver.resolveModuleName(
-			"@liferay/map-openstreetmap/js/MapOpenStreetMap.es");
 	}
 
 	@Reference

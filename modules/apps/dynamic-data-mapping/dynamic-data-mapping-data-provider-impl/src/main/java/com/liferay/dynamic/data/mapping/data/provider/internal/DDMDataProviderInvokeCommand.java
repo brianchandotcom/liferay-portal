@@ -51,7 +51,7 @@ public class DDMDataProviderInvokeCommand
 			).andCommandPropertiesDefaults(
 				HystrixCommandProperties.Setter().
 					withExecutionTimeoutInMilliseconds(
-						getTimeout(ddmRESTDataProviderSettings))
+						_getTimeout(ddmRESTDataProviderSettings))
 			));
 
 		_ddmDataProvider = ddmDataProvider;
@@ -60,7 +60,14 @@ public class DDMDataProviderInvokeCommand
 		_permissionChecker = PermissionThreadLocal.getPermissionChecker();
 	}
 
-	protected static int getTimeout(
+	@Override
+	protected DDMDataProviderResponse run() throws Exception {
+		PermissionThreadLocal.setPermissionChecker(_permissionChecker);
+
+		return _ddmDataProvider.getData(_ddmDataProviderRequest);
+	}
+
+	private static int _getTimeout(
 		DDMRESTDataProviderSettings ddmRESTDataProviderSettings) {
 
 		int timeout = GetterUtil.getInteger(
@@ -71,13 +78,6 @@ public class DDMDataProviderInvokeCommand
 		}
 
 		return _TIMEOUT_MIN;
-	}
-
-	@Override
-	protected DDMDataProviderResponse run() throws Exception {
-		PermissionThreadLocal.setPermissionChecker(_permissionChecker);
-
-		return _ddmDataProvider.getData(_ddmDataProviderRequest);
 	}
 
 	private static final int _TIMEOUT_MAX = 30000;

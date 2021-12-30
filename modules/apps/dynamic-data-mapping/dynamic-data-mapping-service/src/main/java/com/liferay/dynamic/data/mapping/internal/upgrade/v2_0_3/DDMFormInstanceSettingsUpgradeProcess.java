@@ -37,48 +37,6 @@ public class DDMFormInstanceSettingsUpgradeProcess extends UpgradeProcess {
 		_jsonFactory = jsonFactory;
 	}
 
-	protected String addNewSetting(
-		JSONObject settingsJSONObject, String propertyName, String value) {
-
-		JSONArray fieldValuesJSONArray = settingsJSONObject.getJSONArray(
-			"fieldValues");
-
-		JSONObject settingJSONObject = createSettingJSONObject(
-			propertyName, value);
-
-		fieldValuesJSONArray.put(settingJSONObject);
-
-		settingsJSONObject.put("fieldValues", fieldValuesJSONArray);
-
-		return settingsJSONObject.toJSONString();
-	}
-
-	protected void convertToJSONArrayValue(
-		JSONObject fieldJSONObject, String defaultValue) {
-
-		JSONArray valueJSONArray = _jsonFactory.createJSONArray();
-
-		valueJSONArray.put(fieldJSONObject.getString("value", defaultValue));
-
-		fieldJSONObject.put("value", valueJSONArray);
-	}
-
-	protected JSONObject createSettingJSONObject(
-		String propertyName, String value) {
-
-		JSONObject settingJSONObject = _jsonFactory.createJSONObject();
-
-		settingJSONObject.put(
-			"instanceId", StringUtil.randomString()
-		).put(
-			"name", propertyName
-		).put(
-			"value", value
-		);
-
-		return settingJSONObject;
-	}
-
 	@Override
 	protected void doUpgrade() throws Exception {
 		String sql = "select formInstanceId, settings_ from DDMFormInstance";
@@ -99,12 +57,12 @@ public class DDMFormInstanceSettingsUpgradeProcess extends UpgradeProcess {
 					JSONObject settingsJSONObject =
 						_jsonFactory.createJSONObject(settings);
 
-					addNewSetting(
+					_addNewSetting(
 						settingsJSONObject, "autosaveEnabled", "true");
-					addNewSetting(
+					_addNewSetting(
 						settingsJSONObject, "requireAuthentication", "false");
 
-					updateSettings(settingsJSONObject);
+					_updateSettings(settingsJSONObject);
 
 					preparedStatement2.setString(
 						1, settingsJSONObject.toJSONString());
@@ -120,7 +78,49 @@ public class DDMFormInstanceSettingsUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
-	protected JSONObject getFieldValueJSONObject(
+	private String _addNewSetting(
+		JSONObject settingsJSONObject, String propertyName, String value) {
+
+		JSONArray fieldValuesJSONArray = settingsJSONObject.getJSONArray(
+			"fieldValues");
+
+		JSONObject settingJSONObject = _createSettingJSONObject(
+			propertyName, value);
+
+		fieldValuesJSONArray.put(settingJSONObject);
+
+		settingsJSONObject.put("fieldValues", fieldValuesJSONArray);
+
+		return settingsJSONObject.toJSONString();
+	}
+
+	private void _convertToJSONArrayValue(
+		JSONObject fieldJSONObject, String defaultValue) {
+
+		JSONArray valueJSONArray = _jsonFactory.createJSONArray();
+
+		valueJSONArray.put(fieldJSONObject.getString("value", defaultValue));
+
+		fieldJSONObject.put("value", valueJSONArray);
+	}
+
+	private JSONObject _createSettingJSONObject(
+		String propertyName, String value) {
+
+		JSONObject settingJSONObject = _jsonFactory.createJSONObject();
+
+		settingJSONObject.put(
+			"instanceId", StringUtil.randomString()
+		).put(
+			"name", propertyName
+		).put(
+			"value", value
+		);
+
+		return settingJSONObject;
+	}
+
+	private JSONObject _getFieldValueJSONObject(
 		String fieldName, JSONArray fieldValuesJSONArray) {
 
 		for (int i = 0; i < fieldValuesJSONArray.length(); i++) {
@@ -134,15 +134,16 @@ public class DDMFormInstanceSettingsUpgradeProcess extends UpgradeProcess {
 		return _jsonFactory.createJSONObject();
 	}
 
-	protected void updateSettings(JSONObject settingsJSONObject) {
+	private void _updateSettings(JSONObject settingsJSONObject) {
 		JSONArray fieldValuesJSONArray = settingsJSONObject.getJSONArray(
 			"fieldValues");
 
-		convertToJSONArrayValue(
-			getFieldValueJSONObject("storageType", fieldValuesJSONArray),
+		_convertToJSONArrayValue(
+			_getFieldValueJSONObject("storageType", fieldValuesJSONArray),
 			"json");
-		convertToJSONArrayValue(
-			getFieldValueJSONObject("workflowDefinition", fieldValuesJSONArray),
+		_convertToJSONArrayValue(
+			_getFieldValueJSONObject(
+				"workflowDefinition", fieldValuesJSONArray),
 			"no-workflow");
 	}
 

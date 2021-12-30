@@ -63,14 +63,14 @@ public class CheckboxMultipleDDMFormFieldValueAccessor
 	public JSONArray getValue(
 		DDMFormFieldValue ddmFormFieldValue, Locale locale) {
 
-		return getOptionsValuesJSONArray(ddmFormFieldValue, locale);
+		return _getOptionsValuesJSONArray(ddmFormFieldValue, locale);
 	}
 
 	@Override
 	public JSONArray getValueForEvaluation(
 		DDMFormFieldValue ddmFormFieldValue, Locale locale) {
 
-		JSONArray optionsValuesJSONArray = getOptionsValuesJSONArray(
+		JSONArray optionsValuesJSONArray = _getOptionsValuesJSONArray(
 			ddmFormFieldValue, locale);
 
 		if (ddmFormFieldValue.getDDMFormValues() == null) {
@@ -158,7 +158,7 @@ public class CheckboxMultipleDDMFormFieldValueAccessor
 	protected String getOptionsLabels(
 		DDMFormFieldValue ddmFormFieldValue, Locale locale) {
 
-		JSONArray optionsValuesJSONArray = getOptionsValuesJSONArray(
+		JSONArray optionsValuesJSONArray = _getOptionsValuesJSONArray(
 			ddmFormFieldValue, locale);
 
 		if (optionsValuesJSONArray.length() == 0) {
@@ -194,7 +194,10 @@ public class CheckboxMultipleDDMFormFieldValueAccessor
 		return sb.toString();
 	}
 
-	protected JSONArray getOptionsValuesJSONArray(
+	@Reference
+	protected JSONFactory jsonFactory;
+
+	private JSONArray _getOptionsValuesJSONArray(
 		DDMFormFieldValue ddmFormFieldValue, Locale locale) {
 
 		Value value = ddmFormFieldValue.getValue();
@@ -205,9 +208,6 @@ public class CheckboxMultipleDDMFormFieldValueAccessor
 
 		return createJSONArray(value.getString(locale));
 	}
-
-	@Reference
-	protected JSONFactory jsonFactory;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CheckboxMultipleDDMFormFieldValueAccessor.class);

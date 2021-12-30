@@ -132,7 +132,7 @@ public class DDLRecordSetStagedModelRepository
 			_ddlRecordSetLocalService.deleteRecordSet(recordSet);
 		}
 
-		deleteDDMStructures(recordSetDDMStructureIds);
+		_deleteDDMStructures(recordSetDDMStructureIds);
 	}
 
 	@Override
@@ -236,7 +236,7 @@ public class DDLRecordSetStagedModelRepository
 			ddlRecordSet.getMinDisplayRows(), serviceContext);
 	}
 
-	protected void deleteDDMStructures(Set<Long> ddmStructureIds)
+	private void _deleteDDMStructures(Set<Long> ddmStructureIds)
 		throws PortalException {
 
 		for (Long ddmStructureId : ddmStructureIds) {

@@ -45,7 +45,7 @@ public class DDMFormUploadValidatorTest {
 
 	@Before
 	public void setUp() throws Exception {
-		setUpDDMFormWebConfigurationActivator();
+		_setUpDDMFormWebConfigurationActivator();
 	}
 
 	@Test(expected = InvalidFileException.class)
@@ -60,7 +60,7 @@ public class DDMFormUploadValidatorTest {
 
 	@Test(expected = FileSizeException.class)
 	public void testInvalidFileSize() throws Exception {
-		_ddmFormUploadValidator.validateFileSize(mockFile(26), "test.jpg");
+		_ddmFormUploadValidator.validateFileSize(_mockFile(26), "test.jpg");
 	}
 
 	@Test
@@ -70,10 +70,10 @@ public class DDMFormUploadValidatorTest {
 
 	@Test
 	public void testValidFileSize() throws Exception {
-		_ddmFormUploadValidator.validateFileSize(mockFile(24), "test.jpg");
+		_ddmFormUploadValidator.validateFileSize(_mockFile(24), "test.jpg");
 	}
 
-	protected File mockFile(long length) {
+	private File _mockFile(long length) {
 		File file = Mockito.mock(File.class);
 
 		PowerMockito.when(
@@ -85,7 +85,7 @@ public class DDMFormUploadValidatorTest {
 		return file;
 	}
 
-	protected void setUpDDMFormWebConfigurationActivator() throws Exception {
+	private void _setUpDDMFormWebConfigurationActivator() throws Exception {
 		DDMFormWebConfigurationActivator ddmFormWebConfigurationActivator =
 			Mockito.mock(DDMFormWebConfigurationActivator.class);
 

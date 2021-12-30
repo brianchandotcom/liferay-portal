@@ -54,7 +54,7 @@ public class DataProviderInstanceUpgradeProcess extends UpgradeProcess {
 					long dataProviderInstanceId = resultSet.getLong(2);
 
 					String newDefinition =
-						upgradeDataProviderInstanceDefinition(definition);
+						_upgradeDataProviderInstanceDefinition(definition);
 
 					preparedStatement2.setString(1, newDefinition);
 
@@ -68,7 +68,7 @@ public class DataProviderInstanceUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
-	protected String upgradeDataProviderInstanceDefinition(String definition)
+	private String _upgradeDataProviderInstanceDefinition(String definition)
 		throws JSONException {
 
 		JSONObject definitionJSONObject = _jsonFactory.createJSONObject(
@@ -77,12 +77,12 @@ public class DataProviderInstanceUpgradeProcess extends UpgradeProcess {
 		JSONArray fieldValuesJSONArray = definitionJSONObject.getJSONArray(
 			"fieldValues");
 
-		upgradeDataProviderInstanceFieldValues(fieldValuesJSONArray);
+		_upgradeDataProviderInstanceFieldValues(fieldValuesJSONArray);
 
 		return definitionJSONObject.toString();
 	}
 
-	protected void upgradeDataProviderInstanceFieldValues(
+	private void _upgradeDataProviderInstanceFieldValues(
 		JSONArray fieldValuesJSONArray) {
 
 		JSONObject fieldValueJSONObject = _jsonFactory.createJSONObject();

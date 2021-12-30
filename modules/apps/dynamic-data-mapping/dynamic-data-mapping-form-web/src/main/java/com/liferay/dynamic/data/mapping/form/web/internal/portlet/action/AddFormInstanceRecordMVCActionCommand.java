@@ -103,7 +103,7 @@ public class AddFormInstanceRecordMVCActionCommand
 
 		_validatePublishStatus(actionRequest, ddmFormInstance);
 
-		validateCaptcha(actionRequest, ddmFormInstance);
+		_validateCaptcha(actionRequest, ddmFormInstance);
 
 		DDMForm ddmForm = getDDMForm(ddmFormInstance);
 
@@ -191,18 +191,6 @@ public class AddFormInstanceRecordMVCActionCommand
 		_ddmFormValuesFactory = ddmFormValuesFactory;
 	}
 
-	protected void validateCaptcha(
-			ActionRequest actionRequest, DDMFormInstance ddmFormInstance)
-		throws Exception {
-
-		DDMFormInstanceSettings formInstanceSettings =
-			ddmFormInstance.getSettingsModel();
-
-		if (formInstanceSettings.requireCaptcha()) {
-			CaptchaUtil.check(actionRequest);
-		}
-	}
-
 	private void _updateFormInstanceRecord(
 			ActionRequest actionRequest, DDMFormInstance ddmFormInstance,
 			DDMFormValues ddmFormValues, long groupId,
@@ -234,6 +222,18 @@ public class AddFormInstanceRecordMVCActionCommand
 					ddmFormInstanceRecordVersion.getFormInstanceRecordId(),
 					false, ddmFormValues, serviceContext);
 			}
+		}
+	}
+
+	private void _validateCaptcha(
+			ActionRequest actionRequest, DDMFormInstance ddmFormInstance)
+		throws Exception {
+
+		DDMFormInstanceSettings formInstanceSettings =
+			ddmFormInstance.getSettingsModel();
+
+		if (formInstanceSettings.requireCaptcha()) {
+			CaptchaUtil.check(actionRequest);
 		}
 	}
 

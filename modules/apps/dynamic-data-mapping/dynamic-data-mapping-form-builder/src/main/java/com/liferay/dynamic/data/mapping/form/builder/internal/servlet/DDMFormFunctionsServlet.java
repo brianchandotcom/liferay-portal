@@ -64,9 +64,9 @@ public class DDMFormFunctionsServlet extends BaseDDMFormBuilderServlet {
 
 		Map<String, DDMExpressionFunctionFactory>
 			ddmExpressionFunctionFactories =
-				getDDMExpressionFunctionFactories();
+				_getDDMExpressionFunctionFactories();
 
-		JSONArray jsonArray = toJSONArray(
+		JSONArray jsonArray = _toJSONArray(
 			ddmExpressionFunctionFactories.entrySet(),
 			LocaleUtil.fromLanguageId(
 				ParamUtil.getString(httpServletRequest, "languageId")));
@@ -76,33 +76,6 @@ public class DDMFormFunctionsServlet extends BaseDDMFormBuilderServlet {
 
 		ServletResponseUtil.write(
 			httpServletResponse, jsonArray.toJSONString());
-	}
-
-	protected Map<String, DDMExpressionFunctionFactory>
-		getDDMExpressionFunctionFactories() {
-
-		Set<String> functionNames = new HashSet<>();
-
-		functionNames.add("sum");
-
-		return _ddmExpressionFunctionTracker.getDDMExpressionFunctionFactories(
-			functionNames);
-	}
-
-	protected JSONArray toJSONArray(
-		Set<Map.Entry<String, DDMExpressionFunctionFactory>> entries,
-		Locale locale) {
-
-		JSONArray jsonArray = _jsonFactory.createJSONArray();
-
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, getClass());
-
-		for (Map.Entry<String, DDMExpressionFunctionFactory> entry : entries) {
-			jsonArray.put(toJSONObject(entry, resourceBundle));
-		}
-
-		return jsonArray;
 	}
 
 	protected JSONObject toJSONObject(
@@ -127,6 +100,33 @@ public class DDMFormFunctionsServlet extends BaseDDMFormBuilderServlet {
 			"tooltip", LanguageUtil.get(resourceBundle, tooltipLanguageKey));
 
 		return jsonObject;
+	}
+
+	private Map<String, DDMExpressionFunctionFactory>
+		_getDDMExpressionFunctionFactories() {
+
+		Set<String> functionNames = new HashSet<>();
+
+		functionNames.add("sum");
+
+		return _ddmExpressionFunctionTracker.getDDMExpressionFunctionFactories(
+			functionNames);
+	}
+
+	private JSONArray _toJSONArray(
+		Set<Map.Entry<String, DDMExpressionFunctionFactory>> entries,
+		Locale locale) {
+
+		JSONArray jsonArray = _jsonFactory.createJSONArray();
+
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", locale, getClass());
+
+		for (Map.Entry<String, DDMExpressionFunctionFactory> entry : entries) {
+			jsonArray.put(toJSONObject(entry, resourceBundle));
+		}
+
+		return jsonArray;
 	}
 
 	private static final long serialVersionUID = 1L;

@@ -220,7 +220,7 @@ public class DDMFormDisplayContext {
 				ddmFormInstance, _getHttpServletRequest(),
 				_ddmFormWebConfiguration.guestUploadMaximumSubmissions());
 
-		boolean requireCaptcha = isCaptchaRequired(ddmFormInstance);
+		boolean requireCaptcha = _isCaptchaRequired(ddmFormInstance);
 
 		DDMForm ddmForm = getDDMForm(ddmFormInstance, requireCaptcha);
 
@@ -274,7 +274,7 @@ public class DDMFormDisplayContext {
 			ddmFormInstanceRecordVersion =
 				_ddmFormInstanceRecordVersionLocalService.
 					fetchLatestFormInstanceRecordVersion(
-						getUserId(), getFormInstanceId(),
+						_getUserId(), getFormInstanceId(),
 						getFormInstanceVersion(),
 						WorkflowConstants.STATUS_DRAFT);
 		}
@@ -370,7 +370,7 @@ public class DDMFormDisplayContext {
 			_renderRequest.getPreferences(), _renderRequest, "formInstanceId");
 
 		if (_ddmFormInstanceId == 0) {
-			_ddmFormInstanceId = getFormInstanceIdFromSession();
+			_ddmFormInstanceId = _getFormInstanceIdFromSession();
 		}
 
 		return _ddmFormInstanceId;
@@ -437,10 +437,10 @@ public class DDMFormDisplayContext {
 			return submitLabel;
 		}
 
-		ResourceBundle resourceBundle = getResourceBundle(
+		ResourceBundle resourceBundle = _getResourceBundle(
 			getLocale(_getHttpServletRequest(), getDDMForm()));
 
-		if (hasWorkflowEnabled(getFormInstance(), getThemeDisplay())) {
+		if (_hasWorkflowEnabled(getFormInstance(), getThemeDisplay())) {
 			DDMFormInstanceRecord ddmFormInstanceRecord =
 				getFormInstanceRecord();
 
@@ -515,7 +515,8 @@ public class DDMFormDisplayContext {
 
 		List<DDMFormInstanceRecordVersion> ddmFormInstanceRecordVersions =
 			_ddmFormInstanceRecordVersionLocalService.
-				getFormInstanceRecordVersions(getUserId(), getFormInstanceId());
+				getFormInstanceRecordVersions(
+					_getUserId(), getFormInstanceId());
 
 		Stream<DDMFormInstanceRecordVersion> stream =
 			ddmFormInstanceRecordVersions.stream();
@@ -808,23 +809,6 @@ public class DDMFormDisplayContext {
 		return ddmFormSuccessPageSettings.isEnabled();
 	}
 
-	protected String createCaptchaResourceURL() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		String captchaResourceURL =
-			themeDisplay.getPathMain() + "/portal/captcha/get_image";
-
-		String portletId = PortalUtil.getPortletId(_renderRequest);
-
-		if (Validator.isNotNull(portletId)) {
-			captchaResourceURL = captchaResourceURL.concat(
-				"?portletId=" + portletId);
-		}
-
-		return captchaResourceURL;
-	}
-
 	protected DDMFormRenderingContext createDDMFormRenderingContext(
 			DDMForm ddmForm)
 		throws PortalException {
@@ -873,19 +857,6 @@ public class DDMFormDisplayContext {
 		return ddmFormRenderingContext;
 	}
 
-	protected DDMFormLayoutRow createFullColumnDDMFormLayoutRow(
-		String ddmFormFieldName) {
-
-		DDMFormLayoutRow ddmFormLayoutRow = new DDMFormLayoutRow();
-
-		DDMFormLayoutColumn ddmFormLayoutColumn = new DDMFormLayoutColumn(
-			DDMFormLayoutColumn.FULL, ddmFormFieldName);
-
-		ddmFormLayoutRow.addDDMFormLayoutColumn(ddmFormLayoutColumn);
-
-		return ddmFormLayoutRow;
-	}
-
 	protected DDMForm getDDMForm() throws PortalException {
 		DDMFormInstance ddmFormInstance = getFormInstance();
 
@@ -923,7 +894,7 @@ public class DDMFormDisplayContext {
 				_DDM_FORM_FIELD_NAME_CAPTCHA, "captcha");
 
 			captchaDDMFormField.setDataType("string");
-			captchaDDMFormField.setProperty("url", createCaptchaResourceURL());
+			captchaDDMFormField.setProperty("url", _createCaptchaResourceURL());
 
 			ddmForm.addDDMFormField(captchaDDMFormField);
 		}
@@ -956,23 +927,16 @@ public class DDMFormDisplayContext {
 		}
 
 		if (requireCaptcha) {
-			DDMFormLayoutPage lastDDMFormLayoutPage = getLastDDMFormLayoutPage(
+			DDMFormLayoutPage lastDDMFormLayoutPage = _getLastDDMFormLayoutPage(
 				ddmFormLayout);
 
 			DDMFormLayoutRow ddmFormLayoutRow =
-				createFullColumnDDMFormLayoutRow(_DDM_FORM_FIELD_NAME_CAPTCHA);
+				_createFullColumnDDMFormLayoutRow(_DDM_FORM_FIELD_NAME_CAPTCHA);
 
 			lastDDMFormLayoutPage.addDDMFormLayoutRow(ddmFormLayoutRow);
 		}
 
 		return ddmFormLayout;
-	}
-
-	protected long getFormInstanceIdFromSession() {
-		PortletSession portletSession = _renderRequest.getPortletSession();
-
-		return GetterUtil.getLong(
-			portletSession.getAttribute("ddmFormInstanceId"));
 	}
 
 	protected String getFormInstanceVersion() {
@@ -983,15 +947,6 @@ public class DDMFormDisplayContext {
 		}
 
 		return ddmFormInstance.getVersion();
-	}
-
-	protected DDMFormLayoutPage getLastDDMFormLayoutPage(
-		DDMFormLayout ddmFormLayout) {
-
-		List<DDMFormLayoutPage> ddmFormLayoutPages =
-			ddmFormLayout.getDDMFormLayoutPages();
-
-		return ddmFormLayoutPages.get(ddmFormLayoutPages.size() - 1);
 	}
 
 	protected Locale getLocale(
@@ -1032,16 +987,6 @@ public class DDMFormDisplayContext {
 		return portletDisplay.getPortletResource();
 	}
 
-	protected ResourceBundle getResourceBundle(Locale locale) {
-		ResourceBundle portalResourceBundle = _portal.getResourceBundle(locale);
-
-		ResourceBundle moduleResourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, getClass());
-
-		return new AggregateResourceBundle(
-			moduleResourceBundle, portalResourceBundle);
-	}
-
 	protected ThemeDisplay getThemeDisplay() {
 		return (ThemeDisplay)_renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
 	}
@@ -1050,30 +995,6 @@ public class DDMFormDisplayContext {
 		ThemeDisplay themeDisplay = getThemeDisplay();
 
 		return themeDisplay.getUser();
-	}
-
-	protected long getUserId() {
-		ThemeDisplay themeDisplay = getThemeDisplay();
-
-		return themeDisplay.getUserId();
-	}
-
-	protected boolean hasWorkflowEnabled(
-		DDMFormInstance ddmFormInstance, ThemeDisplay themeDisplay) {
-
-		return _workflowDefinitionLinkLocalService.hasWorkflowDefinitionLink(
-			themeDisplay.getCompanyId(), ddmFormInstance.getGroupId(),
-			DDMFormInstance.class.getName(),
-			ddmFormInstance.getFormInstanceId());
-	}
-
-	protected boolean isCaptchaRequired(DDMFormInstance ddmFormInstance)
-		throws PortalException {
-
-		DDMFormInstanceSettings ddmFormInstanceSettings =
-			ddmFormInstance.getSettingsModel();
-
-		return ddmFormInstanceSettings.requireCaptcha();
 	}
 
 	protected boolean isDefaultUser() {
@@ -1095,8 +1016,54 @@ public class DDMFormDisplayContext {
 		return ddmFormInstanceSettings.published();
 	}
 
+	private String _createCaptchaResourceURL() {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String captchaResourceURL =
+			themeDisplay.getPathMain() + "/portal/captcha/get_image";
+
+		String portletId = PortalUtil.getPortletId(_renderRequest);
+
+		if (Validator.isNotNull(portletId)) {
+			captchaResourceURL = captchaResourceURL.concat(
+				"?portletId=" + portletId);
+		}
+
+		return captchaResourceURL;
+	}
+
+	private DDMFormLayoutRow _createFullColumnDDMFormLayoutRow(
+		String ddmFormFieldName) {
+
+		DDMFormLayoutRow ddmFormLayoutRow = new DDMFormLayoutRow();
+
+		DDMFormLayoutColumn ddmFormLayoutColumn = new DDMFormLayoutColumn(
+			DDMFormLayoutColumn.FULL, ddmFormFieldName);
+
+		ddmFormLayoutRow.addDDMFormLayoutColumn(ddmFormLayoutColumn);
+
+		return ddmFormLayoutRow;
+	}
+
+	private long _getFormInstanceIdFromSession() {
+		PortletSession portletSession = _renderRequest.getPortletSession();
+
+		return GetterUtil.getLong(
+			portletSession.getAttribute("ddmFormInstanceId"));
+	}
+
 	private HttpServletRequest _getHttpServletRequest() {
 		return PortalUtil.getHttpServletRequest(_renderRequest);
+	}
+
+	private DDMFormLayoutPage _getLastDDMFormLayoutPage(
+		DDMFormLayout ddmFormLayout) {
+
+		List<DDMFormLayoutPage> ddmFormLayoutPages =
+			ddmFormLayout.getDDMFormLayoutPages();
+
+		return ddmFormLayoutPages.get(ddmFormLayoutPages.size() - 1);
 	}
 
 	private DDMFormInstanceVersion _getLatestApprovedDDMFormInstanceVersion()
@@ -1147,6 +1114,40 @@ public class DDMFormDisplayContext {
 
 			return StringPool.BLANK;
 		}
+	}
+
+	private ResourceBundle _getResourceBundle(Locale locale) {
+		ResourceBundle portalResourceBundle = _portal.getResourceBundle(locale);
+
+		ResourceBundle moduleResourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", locale, getClass());
+
+		return new AggregateResourceBundle(
+			moduleResourceBundle, portalResourceBundle);
+	}
+
+	private long _getUserId() {
+		ThemeDisplay themeDisplay = getThemeDisplay();
+
+		return themeDisplay.getUserId();
+	}
+
+	private boolean _hasWorkflowEnabled(
+		DDMFormInstance ddmFormInstance, ThemeDisplay themeDisplay) {
+
+		return _workflowDefinitionLinkLocalService.hasWorkflowDefinitionLink(
+			themeDisplay.getCompanyId(), ddmFormInstance.getGroupId(),
+			DDMFormInstance.class.getName(),
+			ddmFormInstance.getFormInstanceId());
+	}
+
+	private boolean _isCaptchaRequired(DDMFormInstance ddmFormInstance)
+		throws PortalException {
+
+		DDMFormInstanceSettings ddmFormInstanceSettings =
+			ddmFormInstance.getSettingsModel();
+
+		return ddmFormInstanceSettings.requireCaptcha();
 	}
 
 	private static final String _DDM_FORM_FIELD_NAME_CAPTCHA = "_CAPTCHA_";

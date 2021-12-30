@@ -39,7 +39,7 @@ public class DDMFormValuesFilterImpl implements DDMFormValuesFilter {
 		List<DDMFormFieldValue> ddmFormFieldValues) {
 
 		if (_greedy) {
-			addNestedDDMFormFieldValues(ddmFormFieldValues);
+			_addNestedDDMFormFieldValues(ddmFormFieldValues);
 		}
 
 		return ListUtil.filter(
@@ -65,7 +65,7 @@ public class DDMFormValuesFilterImpl implements DDMFormValuesFilter {
 		_greedy = greedy;
 	}
 
-	protected void addNestedDDMFormFieldValues(
+	private void _addNestedDDMFormFieldValues(
 		List<DDMFormFieldValue> ddmFormFieldValues) {
 
 		for (int i = 0; i < ddmFormFieldValues.size(); i++) {
@@ -76,7 +76,7 @@ public class DDMFormValuesFilterImpl implements DDMFormValuesFilter {
 		}
 	}
 
-	protected List<DDMFormFieldValue> getDDMFormFieldValues(
+	private List<DDMFormFieldValue> _getDDMFormFieldValues(
 		DDMFormFieldValue ddmFormFieldValue) {
 
 		List<DDMFormFieldValue> ddmFormFieldValues = new ArrayList<>();
@@ -85,20 +85,21 @@ public class DDMFormValuesFilterImpl implements DDMFormValuesFilter {
 
 		if (_greedy) {
 			ddmFormFieldValues.addAll(
-				getDDMFormFieldValues(
+				_getDDMFormFieldValues(
 					ddmFormFieldValue.getNestedDDMFormFieldValues()));
 		}
 
 		return ddmFormFieldValues;
 	}
 
-	protected List<DDMFormFieldValue> getDDMFormFieldValues(
+	private List<DDMFormFieldValue> _getDDMFormFieldValues(
 		List<DDMFormFieldValue> baseDDMFormFieldValues) {
 
 		List<DDMFormFieldValue> ddmFormFieldValues = new ArrayList<>();
 
 		for (DDMFormFieldValue ddmFormFieldValue : baseDDMFormFieldValues) {
-			ddmFormFieldValues.addAll(getDDMFormFieldValues(ddmFormFieldValue));
+			ddmFormFieldValues.addAll(
+				_getDDMFormFieldValues(ddmFormFieldValue));
 		}
 
 		return ddmFormFieldValues;

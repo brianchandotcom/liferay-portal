@@ -181,11 +181,12 @@ public class DDMPortlet extends MVCPortlet {
 		throws IOException, PortletException {
 
 		try {
-			setDDMDisplayContextRequestAttribute(renderRequest, renderResponse);
+			_setDDMDisplayContextRequestAttribute(
+				renderRequest, renderResponse);
 
-			setDDMTemplateRequestAttribute(renderRequest);
+			_setDDMTemplateRequestAttribute(renderRequest);
 
-			setDDMStructureRequestAttribute(renderRequest);
+			_setDDMStructureRequestAttribute(renderRequest);
 		}
 		catch (NoSuchStructureException | NoSuchTemplateException exception) {
 
@@ -224,20 +225,6 @@ public class DDMPortlet extends MVCPortlet {
 			DDMWebConfiguration.class, properties);
 	}
 
-	protected void setDDMDisplayContextRequestAttribute(
-			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws PortalException {
-
-		DDMDisplayContext ddmDisplayContext = new DDMDisplayContext(
-			renderRequest, renderResponse, _ddmDisplayRegistry,
-			ddmStructureLinkLocalService, ddmStructureService,
-			_ddmTemplateHelper, ddmTemplateService, ddmWebConfiguration,
-			_storageAdapterRegistry);
-
-		renderRequest.setAttribute(
-			WebKeys.PORTLET_DISPLAY_CONTEXT, ddmDisplayContext);
-	}
-
 	@Reference(unbind = "-")
 	protected void setDDMDisplayRegistry(
 		DDMDisplayRegistry ddmDisplayRegistry) {
@@ -259,27 +246,6 @@ public class DDMPortlet extends MVCPortlet {
 		this.ddmStructureLocalService = ddmStructureLocalService;
 	}
 
-	protected void setDDMStructureRequestAttribute(RenderRequest renderRequest)
-		throws PortalException {
-
-		long classNameId = ParamUtil.getLong(renderRequest, "classNameId");
-		long classPK = ParamUtil.getLong(renderRequest, "classPK");
-
-		if ((classNameId > 0) && (classPK > 0)) {
-			DDMStructure structure = null;
-
-			long structureClassNameId = portal.getClassNameId(
-				DDMStructure.class);
-
-			if ((structureClassNameId == classNameId) && (classPK > 0)) {
-				structure = ddmStructureLocalService.getStructure(classPK);
-			}
-
-			renderRequest.setAttribute(
-				DDMWebKeys.DYNAMIC_DATA_MAPPING_STRUCTURE, structure);
-		}
-	}
-
 	@Reference(unbind = "-")
 	protected void setDDMStructureService(
 		DDMStructureService ddmStructureService) {
@@ -297,20 +263,6 @@ public class DDMPortlet extends MVCPortlet {
 		DDMTemplateLocalService ddmTemplateLocalService) {
 
 		this.ddmTemplateLocalService = ddmTemplateLocalService;
-	}
-
-	protected void setDDMTemplateRequestAttribute(RenderRequest renderRequest)
-		throws PortalException {
-
-		long templateId = ParamUtil.getLong(renderRequest, "templateId");
-
-		if (templateId > 0) {
-			DDMTemplate template = ddmTemplateLocalService.getDDMTemplate(
-				templateId);
-
-			renderRequest.setAttribute(
-				DDMWebKeys.DYNAMIC_DATA_MAPPING_TEMPLATE, template);
-		}
 	}
 
 	@Reference(unbind = "-")
@@ -344,6 +296,55 @@ public class DDMPortlet extends MVCPortlet {
 
 	@Reference
 	protected Portal portal;
+
+	private void _setDDMDisplayContextRequestAttribute(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws PortalException {
+
+		DDMDisplayContext ddmDisplayContext = new DDMDisplayContext(
+			renderRequest, renderResponse, _ddmDisplayRegistry,
+			ddmStructureLinkLocalService, ddmStructureService,
+			_ddmTemplateHelper, ddmTemplateService, ddmWebConfiguration,
+			_storageAdapterRegistry);
+
+		renderRequest.setAttribute(
+			WebKeys.PORTLET_DISPLAY_CONTEXT, ddmDisplayContext);
+	}
+
+	private void _setDDMStructureRequestAttribute(RenderRequest renderRequest)
+		throws PortalException {
+
+		long classNameId = ParamUtil.getLong(renderRequest, "classNameId");
+		long classPK = ParamUtil.getLong(renderRequest, "classPK");
+
+		if ((classNameId > 0) && (classPK > 0)) {
+			DDMStructure structure = null;
+
+			long structureClassNameId = portal.getClassNameId(
+				DDMStructure.class);
+
+			if ((structureClassNameId == classNameId) && (classPK > 0)) {
+				structure = ddmStructureLocalService.getStructure(classPK);
+			}
+
+			renderRequest.setAttribute(
+				DDMWebKeys.DYNAMIC_DATA_MAPPING_STRUCTURE, structure);
+		}
+	}
+
+	private void _setDDMTemplateRequestAttribute(RenderRequest renderRequest)
+		throws PortalException {
+
+		long templateId = ParamUtil.getLong(renderRequest, "templateId");
+
+		if (templateId > 0) {
+			DDMTemplate template = ddmTemplateLocalService.getDDMTemplate(
+				templateId);
+
+			renderRequest.setAttribute(
+				DDMWebKeys.DYNAMIC_DATA_MAPPING_TEMPLATE, template);
+		}
+	}
 
 	private static final Log _log = LogFactoryUtil.getLog(DDMPortlet.class);
 

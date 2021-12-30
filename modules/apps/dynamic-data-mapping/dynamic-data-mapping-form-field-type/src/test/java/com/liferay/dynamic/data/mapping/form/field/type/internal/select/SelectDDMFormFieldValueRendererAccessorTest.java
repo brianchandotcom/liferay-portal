@@ -64,7 +64,7 @@ public class SelectDDMFormFieldValueRendererAccessorTest {
 		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
 			ddmForm);
 
-		JSONArray optionsValuesJSONArray = createOptionsValuesJSONArray(
+		JSONArray optionsValuesJSONArray = _createOptionsValuesJSONArray(
 			numberOfOptions);
 
 		DDMFormFieldValue ddmFormFieldValue =
@@ -75,7 +75,7 @@ public class SelectDDMFormFieldValueRendererAccessorTest {
 		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
 
 		SelectDDMFormFieldValueRenderer selectDDMFormFieldValueRenderer =
-			createSelectDDMFormFieldValueRenderer();
+			_createSelectDDMFormFieldValueRenderer();
 
 		Assert.assertEquals(
 			"option 1, option 2",
@@ -104,7 +104,7 @@ public class SelectDDMFormFieldValueRendererAccessorTest {
 		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
 			ddmForm);
 
-		JSONArray optionsValuesJSONArray = createOptionsValuesJSONArray(
+		JSONArray optionsValuesJSONArray = _createOptionsValuesJSONArray(
 			numberOfOptions);
 
 		DDMFormFieldValue ddmFormFieldValue =
@@ -115,7 +115,7 @@ public class SelectDDMFormFieldValueRendererAccessorTest {
 		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
 
 		SelectDDMFormFieldValueRenderer selectDDMFormFieldValueRenderer =
-			createSelectDDMFormFieldValueRenderer();
+			_createSelectDDMFormFieldValueRenderer();
 
 		Assert.assertEquals(
 			"option 1",
@@ -136,7 +136,7 @@ public class SelectDDMFormFieldValueRendererAccessorTest {
 		return ddmFormFieldOptions;
 	}
 
-	protected JSONArray createOptionsValuesJSONArray(int numberOfOptions) {
+	private JSONArray _createOptionsValuesJSONArray(int numberOfOptions) {
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
 		for (int i = 1; i <= numberOfOptions; i++) {
@@ -146,8 +146,8 @@ public class SelectDDMFormFieldValueRendererAccessorTest {
 		return jsonArray;
 	}
 
-	protected SelectDDMFormFieldValueAccessor
-		createSelectDDMFormFieldValueAccessor() {
+	private SelectDDMFormFieldValueAccessor
+		_createSelectDDMFormFieldValueAccessor() {
 
 		SelectDDMFormFieldValueAccessor selectDDMFormFieldValueAccessor =
 			new SelectDDMFormFieldValueAccessor();
@@ -157,15 +157,15 @@ public class SelectDDMFormFieldValueRendererAccessorTest {
 		return selectDDMFormFieldValueAccessor;
 	}
 
-	protected SelectDDMFormFieldValueRenderer
-			createSelectDDMFormFieldValueRenderer()
+	private SelectDDMFormFieldValueRenderer
+			_createSelectDDMFormFieldValueRenderer()
 		throws Exception {
 
 		SelectDDMFormFieldValueRenderer selectDDMFormFieldValueRenderer =
 			new SelectDDMFormFieldValueRenderer();
 
 		selectDDMFormFieldValueRenderer.selectDDMFormFieldValueAccessor =
-			createSelectDDMFormFieldValueAccessor();
+			_createSelectDDMFormFieldValueAccessor();
 
 		return selectDDMFormFieldValueRenderer;
 	}

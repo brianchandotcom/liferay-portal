@@ -63,7 +63,7 @@ public class DDMFormParagraphFieldsUpgradeProcess extends UpgradeProcess {
 					String definition = resultSet.getString("definition");
 
 					preparedStatement2.setString(
-						1, makeFieldsLocalizable(definition));
+						1, _makeFieldsLocalizable(definition));
 
 					long structureId = resultSet.getLong("structureId");
 
@@ -80,7 +80,7 @@ public class DDMFormParagraphFieldsUpgradeProcess extends UpgradeProcess {
 							definition = resultSet2.getString("definition");
 
 							preparedStatement4.setString(
-								1, makeFieldsLocalizable(definition));
+								1, _makeFieldsLocalizable(definition));
 
 							long structureVersionId = resultSet2.getLong(
 								"structureVersionId");
@@ -104,7 +104,25 @@ public class DDMFormParagraphFieldsUpgradeProcess extends UpgradeProcess {
 			"com.liferay.dynamic.data.lists.model.DDLRecordSet");
 	}
 
-	protected void makeFieldsLocalizable(
+	private boolean _isValueLocalizable(
+		JSONObject fieldJSONObject, JSONArray availableLanguageIdsJSONArray) {
+
+		JSONObject jsonObject = fieldJSONObject.getJSONObject("text");
+
+		if (jsonObject == null) {
+			return false;
+		}
+
+		for (int i = 0; i < availableLanguageIdsJSONArray.length(); i++) {
+			if (!jsonObject.has(availableLanguageIdsJSONArray.getString(i))) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	private void _makeFieldsLocalizable(
 		JSONArray fieldsJSONArray, JSONArray availableLanguageIdsJSONArray) {
 
 		for (int i = 0; i < fieldsJSONArray.length(); i++) {
@@ -134,14 +152,14 @@ public class DDMFormParagraphFieldsUpgradeProcess extends UpgradeProcess {
 					"nestedFields");
 
 				if (nestedFieldsJSONArray != null) {
-					makeFieldsLocalizable(
+					_makeFieldsLocalizable(
 						nestedFieldsJSONArray, availableLanguageIdsJSONArray);
 				}
 			}
 		}
 	}
 
-	protected String makeFieldsLocalizable(String definition)
+	private String _makeFieldsLocalizable(String definition)
 		throws PortalException {
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject(definition);
@@ -151,27 +169,9 @@ public class DDMFormParagraphFieldsUpgradeProcess extends UpgradeProcess {
 
 		JSONArray fieldsJSONArray = jsonObject.getJSONArray("fields");
 
-		makeFieldsLocalizable(fieldsJSONArray, availableLanguageIdsJSONArray);
+		_makeFieldsLocalizable(fieldsJSONArray, availableLanguageIdsJSONArray);
 
 		return jsonObject.toJSONString();
-	}
-
-	private boolean _isValueLocalizable(
-		JSONObject fieldJSONObject, JSONArray availableLanguageIdsJSONArray) {
-
-		JSONObject jsonObject = fieldJSONObject.getJSONObject("text");
-
-		if (jsonObject == null) {
-			return false;
-		}
-
-		for (int i = 0; i < availableLanguageIdsJSONArray.length(); i++) {
-			if (!jsonObject.has(availableLanguageIdsJSONArray.getString(i))) {
-				return false;
-			}
-		}
-
-		return true;
 	}
 
 	private final JSONFactory _jsonFactory;

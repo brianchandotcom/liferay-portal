@@ -50,7 +50,7 @@ public class NumericDDMFormFieldValueValidator
 			String valueString = value.getString(availableLocale);
 
 			if (Validator.isNotNull(valueString) &&
-				!isNumber(valueString, availableLocale)) {
+				!_isNumber(valueString, availableLocale)) {
 
 				throw new DDMFormFieldValueValidationException(
 					String.format(
@@ -60,7 +60,7 @@ public class NumericDDMFormFieldValueValidator
 		}
 	}
 
-	protected boolean isNumber(String valueString, Locale locale) {
+	private boolean _isNumber(String valueString, Locale locale) {
 		try {
 			DecimalFormat decimalFormat =
 				NumericDDMFormFieldUtil.getDecimalFormat(locale);

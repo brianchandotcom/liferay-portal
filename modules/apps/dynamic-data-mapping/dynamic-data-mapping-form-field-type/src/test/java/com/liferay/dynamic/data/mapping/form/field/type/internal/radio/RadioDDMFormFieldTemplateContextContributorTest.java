@@ -54,7 +54,7 @@ public class RadioDDMFormFieldTemplateContextContributorTest
 		_radioDDMFormFieldTemplateContextContributor =
 			new RadioDDMFormFieldTemplateContextContributor();
 
-		setUpJSONFactory();
+		_setUpJSONFactory();
 	}
 
 	@Test
@@ -86,7 +86,7 @@ public class RadioDDMFormFieldTemplateContextContributorTest
 		ddmFormFieldRenderingContext.setLocale(LocaleUtil.US);
 
 		ddmFormFieldRenderingContext.setProperty(
-			"options", createDDMFormOptions());
+			"options", _createDDMFormOptions());
 
 		Map<String, Object> parameters =
 			_radioDDMFormFieldTemplateContextContributor.getParameters(
@@ -108,7 +108,7 @@ public class RadioDDMFormFieldTemplateContextContributorTest
 		ddmFormFieldRenderingContext.setLocale(LocaleUtil.US);
 
 		ddmFormFieldRenderingContext.setProperty(
-			"options", createDDMFormOptions());
+			"options", _createDDMFormOptions());
 
 		Map<String, Object> parameters =
 			_radioDDMFormFieldTemplateContextContributor.getParameters(
@@ -143,7 +143,7 @@ public class RadioDDMFormFieldTemplateContextContributorTest
 		ddmFormFieldRenderingContext.setLocale(LocaleUtil.US);
 
 		ddmFormFieldRenderingContext.setProperty(
-			"options", createDDMFormOptions());
+			"options", _createDDMFormOptions());
 
 		LocalizedValue predefinedValue = new LocalizedValue(LocaleUtil.US);
 
@@ -198,7 +198,7 @@ public class RadioDDMFormFieldTemplateContextContributorTest
 		ddmFormFieldRenderingContext.setLocale(LocaleUtil.US);
 
 		ddmFormFieldRenderingContext.setProperty(
-			"options", createDDMFormOptions());
+			"options", _createDDMFormOptions());
 
 		ddmFormFieldRenderingContext.setValue("value");
 
@@ -221,7 +221,7 @@ public class RadioDDMFormFieldTemplateContextContributorTest
 		ddmFormFieldRenderingContext.setLocale(LocaleUtil.US);
 
 		ddmFormFieldRenderingContext.setProperty(
-			"options", createDDMFormOptions());
+			"options", _createDDMFormOptions());
 
 		ddmFormFieldRenderingContext.setValue("[\"value\"]");
 
@@ -237,7 +237,7 @@ public class RadioDDMFormFieldTemplateContextContributorTest
 			"name", false, false, false);
 	}
 
-	protected List<Map<String, String>> createDDMFormOptions() {
+	private List<Map<String, String>> _createDDMFormOptions() {
 		return Arrays.asList(
 			HashMapBuilder.put(
 				"label", "Label 0"
@@ -251,7 +251,7 @@ public class RadioDDMFormFieldTemplateContextContributorTest
 			).build());
 	}
 
-	protected void setUpJSONFactory() throws Exception {
+	private void _setUpJSONFactory() throws Exception {
 		field(
 			RadioDDMFormFieldTemplateContextContributor.class, "jsonFactory"
 		).set(

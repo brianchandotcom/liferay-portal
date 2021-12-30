@@ -76,27 +76,27 @@ public class AddFormInstanceRecordMVCCommandHelper {
 		DDMFormEvaluatorEvaluateResponse ddmFormEvaluatorEvaluateResponse =
 			evaluate(actionRequest, ddmForm, ddmFormValues, locale);
 
-		Set<String> invisibleFields = getInvisibleFields(
+		Set<String> invisibleFields = _getInvisibleFields(
 			ddmFormEvaluatorEvaluateResponse);
 
-		Set<String> fieldsFromDisabledPages = getFieldNamesFromDisabledPages(
+		Set<String> fieldsFromDisabledPages = _getFieldNamesFromDisabledPages(
 			ddmFormEvaluatorEvaluateResponse, getDDMFormLayout(actionRequest));
 
 		invisibleFields.addAll(fieldsFromDisabledPages);
 
-		removeValue(
+		_removeValue(
 			ddmFormValues.getDDMFormFieldValuesMap(true), invisibleFields);
 
-		removeDDMValidationExpression(
+		_removeDDMValidationExpression(
 			ddmForm.getDDMFormFields(), invisibleFields);
 
-		List<DDMFormField> requiredFields = getRequiredFields(ddmForm);
+		List<DDMFormField> requiredFields = _getRequiredFields(ddmForm);
 
 		if (requiredFields.isEmpty() || invisibleFields.isEmpty()) {
 			return;
 		}
 
-		removeRequiredProperty(invisibleFields, requiredFields);
+		_removeRequiredProperty(invisibleFields, requiredFields);
 	}
 
 	public void validateExpirationStatus(
@@ -159,7 +159,7 @@ public class AddFormInstanceRecordMVCCommandHelper {
 		return ddmStructure.getDDMFormLayout();
 	}
 
-	protected Set<String> getFieldNamesFromDisabledPages(
+	private Set<String> _getFieldNamesFromDisabledPages(
 		DDMFormEvaluatorEvaluateResponse ddmFormEvaluatorEvaluateResponse,
 		DDMFormLayout ddmFormLayout) {
 
@@ -170,7 +170,7 @@ public class AddFormInstanceRecordMVCCommandHelper {
 			disabledPagesIndexes.stream();
 
 		return disabledPagesIndexesStream.map(
-			index -> getFieldNamesFromPage(index, ddmFormLayout)
+			index -> _getFieldNamesFromPage(index, ddmFormLayout)
 		).flatMap(
 			field -> field.stream()
 		).collect(
@@ -178,7 +178,7 @@ public class AddFormInstanceRecordMVCCommandHelper {
 		);
 	}
 
-	protected Set<String> getFieldNamesFromPage(
+	private Set<String> _getFieldNamesFromPage(
 		int index, DDMFormLayout ddmFormLayout) {
 
 		DDMFormLayoutPage ddmFormLayoutPage =
@@ -200,7 +200,7 @@ public class AddFormInstanceRecordMVCCommandHelper {
 		return fieldNames;
 	}
 
-	protected Set<String> getInvisibleFields(
+	private Set<String> _getInvisibleFields(
 		DDMFormEvaluatorEvaluateResponse ddmFormEvaluatorEvaluateResponse) {
 
 		Map<DDMFormEvaluatorFieldContextKey, Map<String, Object>>
@@ -228,7 +228,7 @@ public class AddFormInstanceRecordMVCCommandHelper {
 		);
 	}
 
-	protected List<DDMFormField> getRequiredFields(DDMForm ddmForm) {
+	private List<DDMFormField> _getRequiredFields(DDMForm ddmForm) {
 		Map<String, DDMFormField> ddmFormFieldsMap =
 			ddmForm.getDDMFormFieldsMap(true);
 
@@ -243,11 +243,24 @@ public class AddFormInstanceRecordMVCCommandHelper {
 		);
 	}
 
-	protected void removeDDMValidationExpression(DDMFormField ddmFormField) {
+	private String _getTimeZoneId(ActionRequest actionRequest) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if (themeDisplay == null) {
+			return StringPool.BLANK;
+		}
+
+		User user = themeDisplay.getUser();
+
+		return user.getTimeZoneId();
+	}
+
+	private void _removeDDMValidationExpression(DDMFormField ddmFormField) {
 		ddmFormField.setDDMFormFieldValidation(null);
 	}
 
-	protected void removeDDMValidationExpression(
+	private void _removeDDMValidationExpression(
 		List<DDMFormField> ddmFormFields, Set<String> invisibleFields) {
 
 		Stream<DDMFormField> stream = ddmFormFields.stream();
@@ -255,15 +268,15 @@ public class AddFormInstanceRecordMVCCommandHelper {
 		stream.filter(
 			ddmFormField -> invisibleFields.contains(ddmFormField.getName())
 		).forEach(
-			this::removeDDMValidationExpression
+			this::_removeDDMValidationExpression
 		);
 	}
 
-	protected void removeRequiredProperty(DDMFormField ddmFormField) {
+	private void _removeRequiredProperty(DDMFormField ddmFormField) {
 		ddmFormField.setRequired(false);
 	}
 
-	protected void removeRequiredProperty(
+	private void _removeRequiredProperty(
 		Set<String> invisibleFields, List<DDMFormField> requiredFields) {
 
 		Stream<DDMFormField> stream = requiredFields.stream();
@@ -271,11 +284,11 @@ public class AddFormInstanceRecordMVCCommandHelper {
 		stream.filter(
 			field -> invisibleFields.contains(field.getName())
 		).forEach(
-			this::removeRequiredProperty
+			this::_removeRequiredProperty
 		);
 	}
 
-	protected void removeValue(DDMFormFieldValue ddmFormFieldValue) {
+	private void _removeValue(DDMFormFieldValue ddmFormFieldValue) {
 		DDMFormField ddmFormField = ddmFormFieldValue.getDDMFormField();
 
 		if (ddmFormField.isLocalizable()) {
@@ -295,7 +308,7 @@ public class AddFormInstanceRecordMVCCommandHelper {
 		}
 	}
 
-	protected void removeValue(
+	private void _removeValue(
 		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap,
 		Set<String> invisibleFields) {
 
@@ -308,21 +321,8 @@ public class AddFormInstanceRecordMVCCommandHelper {
 		).filter(
 			ddmFormFieldValue -> ddmFormFieldValue.getValue() != null
 		).forEach(
-			this::removeValue
+			this::_removeValue
 		);
-	}
-
-	private String _getTimeZoneId(ActionRequest actionRequest) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		if (themeDisplay == null) {
-			return StringPool.BLANK;
-		}
-
-		User user = themeDisplay.getUser();
-
-		return user.getTimeZoneId();
 	}
 
 	@Reference

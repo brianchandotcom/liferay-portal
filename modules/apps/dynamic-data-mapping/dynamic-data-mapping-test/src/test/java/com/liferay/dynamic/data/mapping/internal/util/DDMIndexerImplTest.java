@@ -86,10 +86,10 @@ public class DDMIndexerImplTest {
 	public void setUp() throws Exception {
 		ddmFixture.setUp();
 		documentFixture.setUp();
-		setUpPortalUtil();
-		setUpPropsUtil();
+		_setUpPortalUtil();
+		_setUpPropsUtil();
 
-		ddmIndexer = createDDMIndexer();
+		ddmIndexer = _createDDMIndexer();
 	}
 
 	@After
@@ -112,7 +112,7 @@ public class DDMIndexerImplTest {
 		String fieldName = "text1";
 		String indexType = "text";
 
-		ddmForm.addDDMFormField(createDDMFormField(fieldName, indexType));
+		ddmForm.addDDMFormField(_createDDMFormField(fieldName, indexType));
 
 		String fieldValue = "新規作成";
 
@@ -121,7 +121,7 @@ public class DDMIndexerImplTest {
 
 		Document document = createDocument();
 
-		DDMStructure ddmStructure = createDDMStructure(ddmForm);
+		DDMStructure ddmStructure = _createDDMStructure(ddmForm);
 
 		DDMFormValues ddmFormValues = createDDMFormValues(
 			ddmForm, ddmFormFieldValue);
@@ -150,7 +150,7 @@ public class DDMIndexerImplTest {
 		String fieldName = "text1";
 		String indexType = "text";
 
-		ddmForm.addDDMFormField(createDDMFormField(fieldName, indexType));
+		ddmForm.addDDMFormField(_createDDMFormField(fieldName, indexType));
 
 		String fieldValue = "新規作成";
 
@@ -159,7 +159,7 @@ public class DDMIndexerImplTest {
 
 		Document document = createDocument();
 
-		DDMStructure ddmStructure = createDDMStructure(ddmForm);
+		DDMStructure ddmStructure = _createDDMStructure(ddmForm);
 
 		DDMFormValues ddmFormValues = createDDMFormValues(
 			ddmForm, ddmFormFieldValue);
@@ -188,7 +188,7 @@ public class DDMIndexerImplTest {
 		String fieldName = "text1";
 		String indexType = "text";
 
-		DDMFormField ddmFormField = createDDMFormField(fieldName, indexType);
+		DDMFormField ddmFormField = _createDDMFormField(fieldName, indexType);
 
 		ddmForm.addDDMFormField(ddmFormField);
 
@@ -203,7 +203,7 @@ public class DDMIndexerImplTest {
 
 		Document document = createDocument();
 
-		DDMStructure ddmStructure = createDDMStructure(ddmForm);
+		DDMStructure ddmStructure = _createDDMStructure(ddmForm);
 
 		DDMFormValues ddmFormValues = createDDMFormValues(
 			ddmForm, ddmFormFieldValueJP, ddmFormFieldValueUS);
@@ -221,17 +221,6 @@ public class DDMIndexerImplTest {
 			map, "ddmFieldArray.ddmFieldValueText", document, fieldValueJP);
 	}
 
-	protected DDMFormField createDDMFormField(
-		String fieldName, String indexType) {
-
-		DDMFormField ddmFormField = DDMFormTestUtil.createTextDDMFormField(
-			fieldName, true, false, true);
-
-		ddmFormField.setIndexType(indexType);
-
-		return ddmFormField;
-	}
-
 	protected DDMFormFieldValue createDDMFormFieldValue(
 		String name, Locale locale, String valueString, Locale defaultLocale) {
 
@@ -241,17 +230,6 @@ public class DDMIndexerImplTest {
 
 		return DDMFormValuesTestUtil.createDDMFormFieldValue(
 			name, localizedValue);
-	}
-
-	protected DDMFormJSONSerializer createDDMFormJSONSerializer() {
-		return new DDMFormJSONSerializer() {
-			{
-				setDDMFormFieldTypeServicesTracker(
-					Mockito.mock(DDMFormFieldTypeServicesTracker.class));
-
-				setJSONFactory(new JSONFactoryImpl());
-			}
-		};
 	}
 
 	protected DDMFormValues createDDMFormValues(
@@ -267,7 +245,51 @@ public class DDMIndexerImplTest {
 		return ddmFormValues;
 	}
 
-	protected DDMIndexer createDDMIndexer() {
+	protected Document createDocument() {
+		return DocumentFixture.newDocument(
+			RandomTestUtil.randomLong(), RandomTestUtil.randomLong(),
+			DDMForm.class.getName());
+	}
+
+	protected String serialize(DDMForm ddmForm) {
+		DDMFormSerializerSerializeRequest.Builder builder =
+			DDMFormSerializerSerializeRequest.Builder.newBuilder(ddmForm);
+
+		DDMFormSerializerSerializeResponse ddmFormSerializerSerializeResponse =
+			ddmFormJSONSerializer.serialize(builder.build());
+
+		return ddmFormSerializerSerializeResponse.getContent();
+	}
+
+	protected final DDMFixture ddmFixture = new DDMFixture();
+	protected final DDMFormJSONSerializer ddmFormJSONSerializer =
+		_createDDMFormJSONSerializer();
+	protected DDMIndexer ddmIndexer;
+	protected final DocumentFixture documentFixture = new DocumentFixture();
+
+	private DDMFormField _createDDMFormField(
+		String fieldName, String indexType) {
+
+		DDMFormField ddmFormField = DDMFormTestUtil.createTextDDMFormField(
+			fieldName, true, false, true);
+
+		ddmFormField.setIndexType(indexType);
+
+		return ddmFormField;
+	}
+
+	private DDMFormJSONSerializer _createDDMFormJSONSerializer() {
+		return new DDMFormJSONSerializer() {
+			{
+				setDDMFormFieldTypeServicesTracker(
+					Mockito.mock(DDMFormFieldTypeServicesTracker.class));
+
+				setJSONFactory(new JSONFactoryImpl());
+			}
+		};
+	}
+
+	private DDMIndexer _createDDMIndexer() {
 		return new DDMIndexerImpl() {
 			{
 				DDMIndexerConfiguration ddmIndexerConfiguration =
@@ -288,7 +310,7 @@ public class DDMIndexerImplTest {
 		};
 	}
 
-	protected DDMStructure createDDMStructure(DDMForm ddmForm) {
+	private DDMStructure _createDDMStructure(DDMForm ddmForm) {
 		DDMStructure ddmStructure = new DDMStructureImpl();
 
 		ddmStructure.setDefinition(serialize(ddmForm));
@@ -303,23 +325,7 @@ public class DDMIndexerImplTest {
 		return ddmStructure;
 	}
 
-	protected Document createDocument() {
-		return DocumentFixture.newDocument(
-			RandomTestUtil.randomLong(), RandomTestUtil.randomLong(),
-			DDMForm.class.getName());
-	}
-
-	protected String serialize(DDMForm ddmForm) {
-		DDMFormSerializerSerializeRequest.Builder builder =
-			DDMFormSerializerSerializeRequest.Builder.newBuilder(ddmForm);
-
-		DDMFormSerializerSerializeResponse ddmFormSerializerSerializeResponse =
-			ddmFormJSONSerializer.serialize(builder.build());
-
-		return ddmFormSerializerSerializeResponse.getContent();
-	}
-
-	protected void setUpPortalUtil() {
+	private void _setUpPortalUtil() {
 		PortalUtil portalUtil = new PortalUtil();
 
 		Portal portal = PowerMockito.mock(Portal.class);
@@ -335,16 +341,10 @@ public class DDMIndexerImplTest {
 		portalUtil.setPortal(portal);
 	}
 
-	protected void setUpPropsUtil() {
+	private void _setUpPropsUtil() {
 		PropsTestUtil.setProps(
 			PropsKeys.INDEX_SORTABLE_TEXT_FIELDS_TRUNCATED_LENGTH, "255");
 	}
-
-	protected final DDMFixture ddmFixture = new DDMFixture();
-	protected final DDMFormJSONSerializer ddmFormJSONSerializer =
-		createDDMFormJSONSerializer();
-	protected DDMIndexer ddmIndexer;
-	protected final DocumentFixture documentFixture = new DocumentFixture();
 
 	private Map<String, String> _withSortableValues(Map<String, String> map) {
 		Set<Map.Entry<String, String>> entrySet = map.entrySet();

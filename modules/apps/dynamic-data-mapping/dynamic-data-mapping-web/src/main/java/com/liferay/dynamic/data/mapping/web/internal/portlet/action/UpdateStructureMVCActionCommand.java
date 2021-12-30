@@ -54,7 +54,7 @@ public class UpdateStructureMVCActionCommand extends BaseDDMMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		DDMStructure structure = updateStructure(actionRequest);
+		DDMStructure structure = _updateStructure(actionRequest);
 
 		addSuccessMessage(actionRequest, actionResponse);
 
@@ -73,7 +73,7 @@ public class UpdateStructureMVCActionCommand extends BaseDDMMVCActionCommand {
 		_ddmStructureService = ddmStructureService;
 	}
 
-	protected DDMStructure updateStructure(ActionRequest actionRequest)
+	private DDMStructure _updateStructure(ActionRequest actionRequest)
 		throws Exception {
 
 		long classPK = ParamUtil.getLong(actionRequest, "classPK");

@@ -36,7 +36,7 @@ public class SelectDDMFormFieldValueValidatorTest
 
 	@Before
 	public void setUp() {
-		setUpDDMFormFieldValueValidator();
+		_setUpDDMFormFieldValueValidator();
 	}
 
 	@Override
@@ -44,7 +44,7 @@ public class SelectDDMFormFieldValueValidatorTest
 		return _selectDDMFormFieldValueValidator;
 	}
 
-	protected void setUpDDMFormFieldValueValidator() {
+	private void _setUpDDMFormFieldValueValidator() {
 		_selectDDMFormFieldValueValidator.jsonFactory = new JSONFactoryImpl();
 	}
 

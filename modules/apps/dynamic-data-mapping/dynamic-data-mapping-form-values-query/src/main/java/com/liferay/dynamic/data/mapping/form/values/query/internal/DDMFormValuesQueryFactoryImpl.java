@@ -42,7 +42,7 @@ public class DDMFormValuesQueryFactoryImpl
 
 		try {
 			DDMFormValuesQueryParser.PathContext pathContext =
-				createPathContext(query);
+				_createPathContext(query);
 
 			DDMFormValuesQueryListener ddmFormValuesQueryListener =
 				new DDMFormValuesQueryListener();
@@ -60,7 +60,7 @@ public class DDMFormValuesQueryFactoryImpl
 		}
 	}
 
-	protected DDMFormValuesQueryParser.PathContext createPathContext(
+	private DDMFormValuesQueryParser.PathContext _createPathContext(
 		String query) {
 
 		CharStream charStream = new ANTLRInputStream(query);

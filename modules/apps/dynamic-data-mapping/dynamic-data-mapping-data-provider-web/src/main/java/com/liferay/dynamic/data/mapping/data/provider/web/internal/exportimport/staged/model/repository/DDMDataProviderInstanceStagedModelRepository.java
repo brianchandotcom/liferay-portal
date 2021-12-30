@@ -65,10 +65,10 @@ public class DDMDataProviderInstanceStagedModelRepository
 			serviceContext.setUuid(dataProviderInstance.getUuid());
 		}
 
-		DDMForm ddmForm = getDataProviderSettingsDDMForm(
+		DDMForm ddmForm = _getDataProviderSettingsDDMForm(
 			dataProviderInstance.getType());
 
-		DDMFormValues ddmFormValues = deserialize(
+		DDMFormValues ddmFormValues = _deserialize(
 			dataProviderInstance.getDefinition(), ddmForm);
 
 		return _ddmDataProviderInstanceLocalService.addDataProviderInstance(
@@ -172,10 +172,10 @@ public class DDMDataProviderInstanceStagedModelRepository
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			dataProviderInstance);
 
-		DDMForm ddmForm = getDataProviderSettingsDDMForm(
+		DDMForm ddmForm = _getDataProviderSettingsDDMForm(
 			dataProviderInstance.getType());
 
-		DDMFormValues ddmFormValues = deserialize(
+		DDMFormValues ddmFormValues = _deserialize(
 			dataProviderInstance.getDefinition(), ddmForm);
 
 		return _ddmDataProviderInstanceLocalService.updateDataProviderInstance(
@@ -185,7 +185,7 @@ public class DDMDataProviderInstanceStagedModelRepository
 			serviceContext);
 	}
 
-	protected DDMFormValues deserialize(String content, DDMForm ddmForm) {
+	private DDMFormValues _deserialize(String content, DDMForm ddmForm) {
 		DDMFormValuesDeserializerDeserializeRequest.Builder builder =
 			DDMFormValuesDeserializerDeserializeRequest.Builder.newBuilder(
 				content, ddmForm);
@@ -197,7 +197,7 @@ public class DDMDataProviderInstanceStagedModelRepository
 		return ddmFormValuesDeserializerDeserializeResponse.getDDMFormValues();
 	}
 
-	protected DDMForm getDataProviderSettingsDDMForm(String type) {
+	private DDMForm _getDataProviderSettingsDDMForm(String type) {
 		DDMDataProvider ddmDataProvider =
 			_ddmDataProviderTracker.getDDMDataProvider(type);
 

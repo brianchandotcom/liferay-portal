@@ -46,11 +46,11 @@ public class ParagraphDDMFormFieldTemplateContextContributor
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
 
 		return HashMapBuilder.<String, Object>put(
-			"text", getText(ddmFormField, ddmFormFieldRenderingContext)
+			"text", _getText(ddmFormField, ddmFormFieldRenderingContext)
 		).build();
 	}
 
-	protected String getText(
+	private String _getText(
 		DDMFormField ddmFormField,
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
 

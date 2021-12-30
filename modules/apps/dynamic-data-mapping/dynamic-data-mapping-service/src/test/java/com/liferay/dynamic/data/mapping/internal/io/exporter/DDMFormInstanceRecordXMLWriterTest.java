@@ -49,8 +49,8 @@ public class DDMFormInstanceRecordXMLWriterTest extends PowerMockito {
 
 	@Before
 	public void setUp() throws Exception {
-		setUpPropsUtil();
-		setUpSAXReaderUtil();
+		_setUpPropsUtil();
+		_setUpSAXReaderUtil();
 	}
 
 	@Test
@@ -295,12 +295,12 @@ public class DDMFormInstanceRecordXMLWriterTest extends PowerMockito {
 		).asXML();
 	}
 
-	protected void setUpPropsUtil() {
+	private void _setUpPropsUtil() {
 		PropsTestUtil.setProps(
 			PropsKeys.XML_SECURITY_ENABLED, Boolean.TRUE.toString());
 	}
 
-	protected void setUpSAXReaderUtil() {
+	private void _setUpSAXReaderUtil() {
 		SAXReaderUtil saxReaderUtil = new SAXReaderUtil();
 
 		saxReaderUtil.setSAXReader(_saxReader);

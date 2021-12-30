@@ -114,7 +114,7 @@ public class DDMFormPortlet extends MVCPortlet {
 		catch (Exception exception) {
 			_portal.copyRequestParameters(actionRequest, actionResponse);
 
-			Throwable throwable = getRootCauseThrowable(exception);
+			Throwable throwable = _getRootCauseThrowable(exception);
 
 			hideDefaultErrorMessage(actionRequest);
 
@@ -143,7 +143,7 @@ public class DDMFormPortlet extends MVCPortlet {
 			if (_addDefaultSharedFormLayoutPortalInstanceLifecycleListener.
 					isSharedLayout(themeDisplay)) {
 
-				saveParametersInSession(actionRequest);
+				_saveParametersInSession(actionRequest);
 			}
 		}
 	}
@@ -161,7 +161,7 @@ public class DDMFormPortlet extends MVCPortlet {
 					WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 			if (ddmFormDisplayContext.isFormShared()) {
-				saveRefererGroupIdInRequest(
+				_saveRefererGroupIdInRequest(
 					renderRequest, ddmFormDisplayContext);
 			}
 
@@ -200,42 +200,9 @@ public class DDMFormPortlet extends MVCPortlet {
 		super.render(renderRequest, renderResponse);
 	}
 
-	protected Throwable getRootCauseThrowable(Throwable throwable) {
-		while (throwable.getCause() != null) {
-			throwable = throwable.getCause();
-		}
-
-		return throwable;
-	}
-
 	@Override
 	protected boolean isSessionErrorException(Throwable throwable) {
 		return false;
-	}
-
-	protected void saveParametersInSession(ActionRequest actionRequest) {
-		long formInstanceId = ParamUtil.getLong(
-			actionRequest, "formInstanceId");
-
-		if (formInstanceId > 0) {
-			PortletSession portletSession = actionRequest.getPortletSession();
-
-			portletSession.setAttribute("formInstanceId", formInstanceId);
-			portletSession.setAttribute("shared", Boolean.TRUE);
-		}
-	}
-
-	protected void saveRefererGroupIdInRequest(
-		RenderRequest renderRequest,
-		DDMFormDisplayContext ddmFormDisplayContext) {
-
-		DDMFormInstance ddmFormInstance =
-			ddmFormDisplayContext.getFormInstance();
-
-		if (ddmFormInstance != null) {
-			renderRequest.setAttribute(
-				DDMFormWebKeys.REFERER_GROUP_ID, ddmFormInstance.getGroupId());
-		}
 	}
 
 	@Reference(
@@ -265,6 +232,39 @@ public class DDMFormPortlet extends MVCPortlet {
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, ddmFormDisplayContext);
+	}
+
+	private Throwable _getRootCauseThrowable(Throwable throwable) {
+		while (throwable.getCause() != null) {
+			throwable = throwable.getCause();
+		}
+
+		return throwable;
+	}
+
+	private void _saveParametersInSession(ActionRequest actionRequest) {
+		long formInstanceId = ParamUtil.getLong(
+			actionRequest, "formInstanceId");
+
+		if (formInstanceId > 0) {
+			PortletSession portletSession = actionRequest.getPortletSession();
+
+			portletSession.setAttribute("formInstanceId", formInstanceId);
+			portletSession.setAttribute("shared", Boolean.TRUE);
+		}
+	}
+
+	private void _saveRefererGroupIdInRequest(
+		RenderRequest renderRequest,
+		DDMFormDisplayContext ddmFormDisplayContext) {
+
+		DDMFormInstance ddmFormInstance =
+			ddmFormDisplayContext.getFormInstance();
+
+		if (ddmFormInstance != null) {
+			renderRequest.setAttribute(
+				DDMFormWebKeys.REFERER_GROUP_ID, ddmFormInstance.getGroupId());
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(DDMFormPortlet.class);

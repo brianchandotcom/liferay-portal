@@ -43,7 +43,7 @@ public class StorageEngineImpl implements StorageEngine {
 			ServiceContext serviceContext)
 		throws StorageException {
 
-		StorageAdapter storageAdapter = getStructureStorageAdapter(
+		StorageAdapter storageAdapter = _getStructureStorageAdapter(
 			ddmStructureId);
 
 		return storageAdapter.create(
@@ -52,7 +52,7 @@ public class StorageEngineImpl implements StorageEngine {
 
 	@Override
 	public void deleteByClass(long classPK) throws StorageException {
-		StorageAdapter storageAdapter = getClassStorageAdapter(classPK);
+		StorageAdapter storageAdapter = _getClassStorageAdapter(classPK);
 
 		if (storageAdapter != null) {
 			storageAdapter.deleteByClass(classPK);
@@ -63,7 +63,7 @@ public class StorageEngineImpl implements StorageEngine {
 	public void deleteByDDMStructure(long ddmStructureId)
 		throws StorageException {
 
-		StorageAdapter storageAdapter = getStructureStorageAdapter(
+		StorageAdapter storageAdapter = _getStructureStorageAdapter(
 			ddmStructureId);
 
 		storageAdapter.deleteByDDMStructure(ddmStructureId);
@@ -73,7 +73,7 @@ public class StorageEngineImpl implements StorageEngine {
 	public DDMFormValues getDDMFormValues(long classPK)
 		throws StorageException {
 
-		StorageAdapter storageAdapter = getClassStorageAdapter(classPK);
+		StorageAdapter storageAdapter = _getClassStorageAdapter(classPK);
 
 		if (storageAdapter == null) {
 			return null;
@@ -93,14 +93,46 @@ public class StorageEngineImpl implements StorageEngine {
 			ServiceContext serviceContext)
 		throws StorageException {
 
-		StorageAdapter storageAdapter = getClassStorageAdapter(classPK);
+		StorageAdapter storageAdapter = _getClassStorageAdapter(classPK);
 
 		if (storageAdapter != null) {
 			storageAdapter.update(classPK, ddmFormValues, serviceContext);
 		}
 	}
 
-	protected StorageAdapter getClassStorageAdapter(long classPK)
+	protected StorageAdapter getStorageAdapter(String storageType) {
+		StorageAdapter storageAdapter =
+			_storageAdapterRegistry.getStorageAdapter(storageType);
+
+		if (storageAdapter != null) {
+			return storageAdapter;
+		}
+
+		return _storageAdapterRegistry.getDefaultStorageAdapter();
+	}
+
+	@Reference(unbind = "-")
+	protected void setDDMStorageLinkLocalService(
+		DDMStorageLinkLocalService ddmStorageLinkLocalService) {
+
+		_ddmStorageLinkLocalService = ddmStorageLinkLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDDMStructureLocalService(
+		DDMStructureLocalService ddmStructureLocalService) {
+
+		_ddmStructureLocalService = ddmStructureLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setStorageAdapterRegistry(
+		StorageAdapterRegistry storageAdapterRegistry) {
+
+		_storageAdapterRegistry = storageAdapterRegistry;
+	}
+
+	private StorageAdapter _getClassStorageAdapter(long classPK)
 		throws StorageException {
 
 		try {
@@ -128,18 +160,7 @@ public class StorageEngineImpl implements StorageEngine {
 		}
 	}
 
-	protected StorageAdapter getStorageAdapter(String storageType) {
-		StorageAdapter storageAdapter =
-			_storageAdapterRegistry.getStorageAdapter(storageType);
-
-		if (storageAdapter != null) {
-			return storageAdapter;
-		}
-
-		return _storageAdapterRegistry.getDefaultStorageAdapter();
-	}
-
-	protected StorageAdapter getStructureStorageAdapter(long ddmStructureId)
+	private StorageAdapter _getStructureStorageAdapter(long ddmStructureId)
 		throws StorageException {
 
 		try {
@@ -161,27 +182,6 @@ public class StorageEngineImpl implements StorageEngine {
 		catch (Exception exception) {
 			throw new StorageException(exception);
 		}
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMStorageLinkLocalService(
-		DDMStorageLinkLocalService ddmStorageLinkLocalService) {
-
-		_ddmStorageLinkLocalService = ddmStorageLinkLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMStructureLocalService(
-		DDMStructureLocalService ddmStructureLocalService) {
-
-		_ddmStructureLocalService = ddmStructureLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setStorageAdapterRegistry(
-		StorageAdapterRegistry storageAdapterRegistry) {
-
-		_storageAdapterRegistry = storageAdapterRegistry;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

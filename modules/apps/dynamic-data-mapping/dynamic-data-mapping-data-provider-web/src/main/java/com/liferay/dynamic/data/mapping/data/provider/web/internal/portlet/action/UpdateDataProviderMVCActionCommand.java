@@ -64,18 +64,6 @@ import org.osgi.service.component.annotations.Reference;
 public class UpdateDataProviderMVCActionCommand
 	extends AddDataProviderMVCActionCommand {
 
-	protected DDMFormValues deserialize(String content, DDMForm ddmForm) {
-		DDMFormValuesDeserializerDeserializeRequest.Builder builder =
-			DDMFormValuesDeserializerDeserializeRequest.Builder.newBuilder(
-				content, ddmForm);
-
-		DDMFormValuesDeserializerDeserializeResponse
-			ddmFormValuesDeserializerDeserializeResponse =
-				jsonDDMFormValuesDeserializer.deserialize(builder.build());
-
-		return ddmFormValuesDeserializerDeserializeResponse.getDDMFormValues();
-	}
-
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
@@ -90,7 +78,7 @@ public class UpdateDataProviderMVCActionCommand
 		DDMFormValues ddmFormValues = getDDMFormValues(
 			actionRequest, actionResponse);
 
-		restorePasswordDDMFormFieldValues(
+		_restorePasswordDDMFormFieldValues(
 			dataProviderInstanceId, ddmFormValues);
 
 		String name = ParamUtil.getString(actionRequest, "name");
@@ -106,12 +94,27 @@ public class UpdateDataProviderMVCActionCommand
 			ddmFormValues, serviceContext);
 	}
 
-	protected Optional<DDMFormFieldValue> findStoredDDMFormFieldValue(
+	@Reference(target = "(ddm.form.values.deserializer.type=json)")
+	protected DDMFormValuesDeserializer jsonDDMFormValuesDeserializer;
+
+	private DDMFormValues _deserialize(String content, DDMForm ddmForm) {
+		DDMFormValuesDeserializerDeserializeRequest.Builder builder =
+			DDMFormValuesDeserializerDeserializeRequest.Builder.newBuilder(
+				content, ddmForm);
+
+		DDMFormValuesDeserializerDeserializeResponse
+			ddmFormValuesDeserializerDeserializeResponse =
+				jsonDDMFormValuesDeserializer.deserialize(builder.build());
+
+		return ddmFormValuesDeserializerDeserializeResponse.getDDMFormValues();
+	}
+
+	private Optional<DDMFormFieldValue> _findStoredDDMFormFieldValue(
 		String name, String instanceId, DDMFormValues storedDDMFormValues) {
 
 		Set<DDMFormFieldValue> storedDDMFormFieldValues = new HashSet<>();
 
-		flattenDDMFormFieldValues(
+		_flattenDDMFormFieldValues(
 			storedDDMFormValues.getDDMFormFieldValues(),
 			storedDDMFormFieldValues);
 
@@ -127,7 +130,7 @@ public class UpdateDataProviderMVCActionCommand
 		).findFirst();
 	}
 
-	protected void flattenDDMFormFieldValues(
+	private void _flattenDDMFormFieldValues(
 		List<DDMFormFieldValue> storedDDMFormFieldValues,
 		Set<DDMFormFieldValue> collectedDDMFormFieldValues) {
 
@@ -136,13 +139,13 @@ public class UpdateDataProviderMVCActionCommand
 
 			collectedDDMFormFieldValues.add(storedDDMFormFieldValue);
 
-			flattenDDMFormFieldValues(
+			_flattenDDMFormFieldValues(
 				storedDDMFormFieldValue.getNestedDDMFormFieldValues(),
 				collectedDDMFormFieldValues);
 		}
 	}
 
-	protected DDMForm getDataProviderInstanceSettingsDDMForm(
+	private DDMForm _getDataProviderInstanceSettingsDDMForm(
 		DDMDataProviderInstance dataProviderInstance) {
 
 		DDMDataProvider ddmDataProvider =
@@ -154,16 +157,16 @@ public class UpdateDataProviderMVCActionCommand
 		return DDMFormFactory.create(clazz);
 	}
 
-	protected DDMFormValues getStoredDDMFormValues(
+	private DDMFormValues _getStoredDDMFormValues(
 		DDMForm dataProviderInstanceSettingsDDMForm,
 		String dataProviderInstanceDefinition) {
 
-		return deserialize(
+		return _deserialize(
 			dataProviderInstanceDefinition,
 			dataProviderInstanceSettingsDDMForm);
 	}
 
-	protected void restoreDDMFormFieldValue(
+	private void _restoreDDMFormFieldValue(
 		DDMFormFieldValue ddmFormFieldValue,
 		DDMFormFieldValue storedDDMFormFieldValue) {
 
@@ -182,21 +185,21 @@ public class UpdateDataProviderMVCActionCommand
 		}
 	}
 
-	protected void restoreDDMFormFieldValue(
+	private void _restoreDDMFormFieldValue(
 		DDMFormFieldValue ddmFormFieldValue,
 		DDMFormValues storedDDMFormValues) {
 
 		Optional<DDMFormFieldValue> storedFormFieldValueOptional =
-			findStoredDDMFormFieldValue(
+			_findStoredDDMFormFieldValue(
 				ddmFormFieldValue.getName(), ddmFormFieldValue.getInstanceId(),
 				storedDDMFormValues);
 
 		storedFormFieldValueOptional.ifPresent(
-			storedDDMFormFieldValue -> restoreDDMFormFieldValue(
+			storedDDMFormFieldValue -> _restoreDDMFormFieldValue(
 				ddmFormFieldValue, storedDDMFormFieldValue));
 	}
 
-	protected void restoreDDMFormFieldValues(
+	private void _restoreDDMFormFieldValues(
 		Set<String> ddmFormFieldNamesToBeRestored,
 		List<DDMFormFieldValue> ddmFormFieldValues,
 		DDMFormValues storedDDMFormValues) {
@@ -205,18 +208,18 @@ public class UpdateDataProviderMVCActionCommand
 			if (ddmFormFieldNamesToBeRestored.contains(
 					ddmFormFieldValue.getName())) {
 
-				restoreDDMFormFieldValue(
+				_restoreDDMFormFieldValue(
 					ddmFormFieldValue, storedDDMFormValues);
 			}
 
-			restoreDDMFormFieldValues(
+			_restoreDDMFormFieldValues(
 				ddmFormFieldNamesToBeRestored,
 				ddmFormFieldValue.getNestedDDMFormFieldValues(),
 				storedDDMFormValues);
 		}
 	}
 
-	protected void restorePasswordDDMFormFieldValues(
+	private void _restorePasswordDDMFormFieldValues(
 			long dataProviderInstanceId, DDMFormValues ddmFormValues)
 		throws PortalException {
 
@@ -225,22 +228,19 @@ public class UpdateDataProviderMVCActionCommand
 				dataProviderInstanceId);
 
 		DDMForm dataProviderInstanceSettingsDDMForm =
-			getDataProviderInstanceSettingsDDMForm(dataProviderInstance);
+			_getDataProviderInstanceSettingsDDMForm(dataProviderInstance);
 
 		Set<String> passwordDDMFormFieldNames =
 			DDMDataProviderPortletUtil.getDDMFormFieldNamesByType(
 				dataProviderInstanceSettingsDDMForm, "password");
 
-		DDMFormValues storedDDMFormValues = getStoredDDMFormValues(
+		DDMFormValues storedDDMFormValues = _getStoredDDMFormValues(
 			dataProviderInstanceSettingsDDMForm,
 			dataProviderInstance.getDefinition());
 
-		restoreDDMFormFieldValues(
+		_restoreDDMFormFieldValues(
 			passwordDDMFormFieldNames, ddmFormValues.getDDMFormFieldValues(),
 			storedDDMFormValues);
 	}
-
-	@Reference(target = "(ddm.form.values.deserializer.type=json)")
-	protected DDMFormValuesDeserializer jsonDDMFormValuesDeserializer;
 
 }

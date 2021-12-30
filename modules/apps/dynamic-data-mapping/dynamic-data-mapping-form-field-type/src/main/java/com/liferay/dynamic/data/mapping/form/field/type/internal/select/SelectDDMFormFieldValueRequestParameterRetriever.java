@@ -49,15 +49,18 @@ public class SelectDDMFormFieldValueRequestParameterRetriever
 		HttpServletRequest httpServletRequest, String ddmFormFieldParameterName,
 		String defaultDDMFormFieldParameterValue) {
 
-		String[] parameterValues = getParameterValues(
+		String[] parameterValues = _getParameterValues(
 			httpServletRequest, ddmFormFieldParameterName,
-			getDefaultDDMFormFieldParameterValues(
+			_getDefaultDDMFormFieldParameterValues(
 				defaultDDMFormFieldParameterValue));
 
 		return jsonFactory.serialize(parameterValues);
 	}
 
-	protected String[] getDefaultDDMFormFieldParameterValues(
+	@Reference
+	protected JSONFactory jsonFactory;
+
+	private String[] _getDefaultDDMFormFieldParameterValues(
 		String defaultDDMFormFieldParameterValue) {
 
 		if (Validator.isNull(defaultDDMFormFieldParameterValue) ||
@@ -79,7 +82,7 @@ public class SelectDDMFormFieldValueRequestParameterRetriever
 		}
 	}
 
-	protected String[] getParameterValues(
+	private String[] _getParameterValues(
 		HttpServletRequest httpServletRequest, String ddmFormFieldParameterName,
 		String[] defaultDDMFormFieldParameterValues) {
 
@@ -96,9 +99,6 @@ public class SelectDDMFormFieldValueRequestParameterRetriever
 			httpServletRequest, ddmFormFieldParameterName,
 			defaultDDMFormFieldParameterValues);
 	}
-
-	@Reference
-	protected JSONFactory jsonFactory;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SelectDDMFormFieldValueRequestParameterRetriever.class);

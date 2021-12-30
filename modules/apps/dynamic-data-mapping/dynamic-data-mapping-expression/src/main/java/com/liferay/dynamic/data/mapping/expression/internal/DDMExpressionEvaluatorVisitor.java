@@ -260,8 +260,8 @@ public class DDMExpressionEvaluatorVisitor
 	public Object visitGreaterThanExpression(
 		@NotNull GreaterThanExpressionContext context) {
 
-		BigDecimal bigDecimal1 = getBigDecimal(visitChild(context, 0));
-		BigDecimal bigDecimal2 = getBigDecimal(visitChild(context, 2));
+		BigDecimal bigDecimal1 = _getBigDecimal(visitChild(context, 0));
+		BigDecimal bigDecimal2 = _getBigDecimal(visitChild(context, 2));
 
 		return bigDecimal1.compareTo(bigDecimal2) == 1;
 	}
@@ -270,8 +270,8 @@ public class DDMExpressionEvaluatorVisitor
 	public Object visitGreaterThanOrEqualsExpression(
 		@NotNull GreaterThanOrEqualsExpressionContext context) {
 
-		BigDecimal bigDecimal1 = getBigDecimal(visitChild(context, 0));
-		BigDecimal bigDecimal2 = getBigDecimal(visitChild(context, 2));
+		BigDecimal bigDecimal1 = _getBigDecimal(visitChild(context, 0));
+		BigDecimal bigDecimal2 = _getBigDecimal(visitChild(context, 2));
 
 		return bigDecimal1.compareTo(bigDecimal2) >= 0;
 	}
@@ -287,8 +287,8 @@ public class DDMExpressionEvaluatorVisitor
 	public Object visitLessThanExpression(
 		@NotNull LessThanExpressionContext context) {
 
-		BigDecimal bigDecimal1 = getBigDecimal(visitChild(context, 0));
-		BigDecimal bigDecimal2 = getBigDecimal(visitChild(context, 2));
+		BigDecimal bigDecimal1 = _getBigDecimal(visitChild(context, 0));
+		BigDecimal bigDecimal2 = _getBigDecimal(visitChild(context, 2));
 
 		return bigDecimal1.compareTo(bigDecimal2) == -1;
 	}
@@ -297,8 +297,8 @@ public class DDMExpressionEvaluatorVisitor
 	public Object visitLessThanOrEqualsExpression(
 		@NotNull LessThanOrEqualsExpressionContext context) {
 
-		BigDecimal bigDecimal1 = getBigDecimal(visitChild(context, 0));
-		BigDecimal bigDecimal2 = getBigDecimal(visitChild(context, 2));
+		BigDecimal bigDecimal1 = _getBigDecimal(visitChild(context, 0));
+		BigDecimal bigDecimal2 = _getBigDecimal(visitChild(context, 2));
 
 		return bigDecimal1.compareTo(bigDecimal2) <= 0;
 	}
@@ -353,7 +353,7 @@ public class DDMExpressionEvaluatorVisitor
 	public Object visitMinusExpression(
 		@NotNull MinusExpressionContext context) {
 
-		BigDecimal bigDecimal1 = getBigDecimal(visitChild(context, 1));
+		BigDecimal bigDecimal1 = _getBigDecimal(visitChild(context, 1));
 
 		return bigDecimal1.multiply(new BigDecimal(-1));
 	}
@@ -362,8 +362,8 @@ public class DDMExpressionEvaluatorVisitor
 	public Object visitMultiplicationExpression(
 		@NotNull MultiplicationExpressionContext context) {
 
-		BigDecimal bigDecimal1 = getBigDecimal(visitChild(context, 0));
-		BigDecimal bigDecimal2 = getBigDecimal(visitChild(context, 2));
+		BigDecimal bigDecimal1 = _getBigDecimal(visitChild(context, 0));
+		BigDecimal bigDecimal2 = _getBigDecimal(visitChild(context, 2));
 
 		return bigDecimal1.multiply(bigDecimal2);
 	}
@@ -455,8 +455,8 @@ public class DDMExpressionEvaluatorVisitor
 	public Object visitSubtractionExpression(
 		@NotNull SubtractionExpressionContext context) {
 
-		BigDecimal bigDecimal1 = getBigDecimal(visitChild(context, 0));
-		BigDecimal bigDecimal2 = getBigDecimal(visitChild(context, 2));
+		BigDecimal bigDecimal1 = _getBigDecimal(visitChild(context, 0));
+		BigDecimal bigDecimal2 = _getBigDecimal(visitChild(context, 2));
 
 		return bigDecimal1.subtract(bigDecimal2);
 	}
@@ -526,18 +526,6 @@ public class DDMExpressionEvaluatorVisitor
 		_ddmExpressionParameterAccessor = ddmExpressionParameterAccessor;
 	}
 
-	protected BigDecimal getBigDecimal(Comparable<?> comparable) {
-		if (comparable == null) {
-			return BigDecimal.ZERO;
-		}
-
-		if (comparable instanceof BigDecimal) {
-			return (BigDecimal)comparable;
-		}
-
-		return new BigDecimal(comparable.toString());
-	}
-
 	protected String getFunctionName(Token functionNameToken) {
 		return functionNameToken.getText();
 	}
@@ -588,6 +576,18 @@ public class DDMExpressionEvaluatorVisitor
 		}
 
 		return ddmExpressionFunctionClass.getMethod("apply", Object[].class);
+	}
+
+	private BigDecimal _getBigDecimal(Comparable<?> comparable) {
+		if (comparable == null) {
+			return BigDecimal.ZERO;
+		}
+
+		if (comparable instanceof BigDecimal) {
+			return (BigDecimal)comparable;
+		}
+
+		return new BigDecimal(comparable.toString());
 	}
 
 	private Class<?>[] _getInterfaces(Class<?> clazz) {

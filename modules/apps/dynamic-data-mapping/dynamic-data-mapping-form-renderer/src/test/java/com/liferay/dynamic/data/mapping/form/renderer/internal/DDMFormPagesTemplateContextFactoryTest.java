@@ -109,19 +109,19 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 
 	@Before
 	public void setUp() throws Exception {
-		setUpCalendarFactoryUtil();
-		setUpDDMFormFieldTypeServicesTracker();
-		setUpFastDateFormatFactoryUtil();
-		setUpGooglePlacesUtil();
-		setUpHtmlUtil();
-		setUpHttpServletRequest();
-		setUpLanguageResources();
+		_setUpCalendarFactoryUtil();
+		_setUpDDMFormFieldTypeServicesTracker();
+		_setUpFastDateFormatFactoryUtil();
+		_setUpGooglePlacesUtil();
+		_setUpHtmlUtil();
+		_setUpHttpServletRequest();
+		_setUpLanguageResources();
 		setUpLanguageUtil();
-		setUpLocaleThreadLocal();
-		setUpPortalUtil();
-		setUpResourceBundle();
-		setUpResourceBundleLoaderUtil();
-		setUpResourceBundleUtil();
+		_setUpLocaleThreadLocal();
+		_setUpPortalUtil();
+		_setUpResourceBundle();
+		_setUpResourceBundleLoaderUtil();
+		_setUpResourceBundleUtil();
 	}
 
 	@Test
@@ -148,7 +148,7 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 		// Template context
 
 		DDMFormPagesTemplateContextFactory ddmFormPagesTemplateContextFactory =
-			createDDMFormPagesTemplateContextFactory(
+			_createDDMFormPagesTemplateContextFactory(
 				ddmForm,
 				DDMFormLayoutTestUtil.createDDMFormLayout(
 					"Page 1 Description", "Page 1", new String[] {"Field1"}),
@@ -156,7 +156,7 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 
 		List<Object> pages = ddmFormPagesTemplateContextFactory.create();
 
-		Map<String, Object> fieldTemplateContext = getFieldTemplateContext(
+		Map<String, Object> fieldTemplateContext = _getFieldTemplateContext(
 			pages);
 
 		Assert.assertEquals(formFieldLabel, fieldTemplateContext.get("label"));
@@ -194,7 +194,7 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 		// Template context
 
 		DDMFormPagesTemplateContextFactory ddmFormPagesTemplateContextFactory =
-			createDDMFormPagesTemplateContextFactory(
+			_createDDMFormPagesTemplateContextFactory(
 				ddmForm,
 				DDMFormLayoutTestUtil.createDDMFormLayout(
 					"Page 1 Description", "Page 1", new String[] {"Field1"}),
@@ -202,7 +202,7 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 
 		List<Object> pages = ddmFormPagesTemplateContextFactory.create();
 
-		Map<String, Object> fieldTemplateContext = getFieldTemplateContext(
+		Map<String, Object> fieldTemplateContext = _getFieldTemplateContext(
 			pages);
 
 		Assert.assertEquals(formFieldLabel, fieldTemplateContext.get("label"));
@@ -251,7 +251,7 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 		// Template context
 
 		DDMFormPagesTemplateContextFactory ddmFormPagesTemplateContextFactory =
-			createDDMFormPagesTemplateContextFactory(
+			_createDDMFormPagesTemplateContextFactory(
 				ddmForm,
 				DDMFormLayoutTestUtil.createDDMFormLayout(
 					DDMFormLayoutTestUtil.createDDMFormLayoutPage(
@@ -323,7 +323,7 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 				"Field1", new UnlocalizedValue("{}")));
 
 		DDMFormPagesTemplateContextFactory ddmFormPagesTemplateContextFactory =
-			createDDMFormPagesTemplateContextFactory(
+			_createDDMFormPagesTemplateContextFactory(
 				ddmForm,
 				DDMFormLayoutTestUtil.createDDMFormLayout(
 					"Page 1 Description", "Page 1", new String[] {"Field1"}),
@@ -331,7 +331,7 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 
 		List<Object> pages = ddmFormPagesTemplateContextFactory.create();
 
-		Map<String, Object> fieldTemplateContext = getFieldTemplateContext(
+		Map<String, Object> fieldTemplateContext = _getFieldTemplateContext(
 			pages);
 
 		Assert.assertEquals(formFieldLabel, fieldTemplateContext.get("label"));
@@ -364,13 +364,13 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 				"TRUE"));
 
 		DDMFormPagesTemplateContextFactory ddmFormPagesTemplateContextFactory =
-			createDDMFormPagesTemplateContextFactory(
+			_createDDMFormPagesTemplateContextFactory(
 				ddmForm,
 				DDMFormLayoutTestUtil.createDDMFormLayout(
 					"Page 1 Description", "Page 1", new String[] {"Field1"}),
 				null, false, true, true);
 
-		Map<String, Object> fieldTemplateContext = getFieldTemplateContext(
+		Map<String, Object> fieldTemplateContext = _getFieldTemplateContext(
 			ddmFormPagesTemplateContextFactory.create());
 
 		Assert.assertFalse(
@@ -403,7 +403,7 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 		// Template context
 
 		DDMFormPagesTemplateContextFactory ddmFormPagesTemplateContextFactory =
-			createDDMFormPagesTemplateContextFactory(
+			_createDDMFormPagesTemplateContextFactory(
 				ddmForm,
 				DDMFormLayoutTestUtil.createDDMFormLayout(
 					"Page 1 Description", "Page 1", new String[] {"Field1"}),
@@ -411,7 +411,7 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 
 		List<Object> pages = ddmFormPagesTemplateContextFactory.create();
 
-		Map<String, Object> fieldTemplateContext = getFieldTemplateContext(
+		Map<String, Object> fieldTemplateContext = _getFieldTemplateContext(
 			pages);
 
 		Assert.assertEquals(formFieldLabel, fieldTemplateContext.get("label"));
@@ -433,7 +433,7 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 		// Template context
 
 		DDMFormPagesTemplateContextFactory ddmFormPagesTemplateContextFactory =
-			createDDMFormPagesTemplateContextFactory(
+			_createDDMFormPagesTemplateContextFactory(
 				ddmForm,
 				DDMFormLayoutTestUtil.createDDMFormLayout(
 					DDMFormLayoutTestUtil.createDDMFormLayoutPage(
@@ -465,8 +465,8 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 
 		Assert.assertEquals(columnsRow1.toString(), 2, columnsRow1.size());
 
-		assertColumnSize(6, (Map<String, Object>)columnsRow1.get(0));
-		assertColumnSize(6, (Map<String, Object>)columnsRow1.get(1));
+		_assertColumnSize(6, (Map<String, Object>)columnsRow1.get(0));
+		_assertColumnSize(6, (Map<String, Object>)columnsRow1.get(1));
 
 		Map<String, Object> row2 = (Map<String, Object>)rows.get(1);
 
@@ -474,7 +474,7 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 
 		Assert.assertEquals(columnsRow2.toString(), 1, columnsRow2.size());
 
-		assertColumnSize(12, (Map<String, Object>)columnsRow2.get(0));
+		_assertColumnSize(12, (Map<String, Object>)columnsRow2.get(0));
 
 		Map<String, Object> row3 = (Map<String, Object>)rows.get(2);
 
@@ -482,7 +482,7 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 
 		Assert.assertEquals(columnsRow3.toString(), 1, columnsRow3.size());
 
-		assertColumnSize(12, (Map<String, Object>)columnsRow3.get(0));
+		_assertColumnSize(12, (Map<String, Object>)columnsRow3.get(0));
 	}
 
 	@Test
@@ -498,7 +498,7 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 		// Template context
 
 		DDMFormPagesTemplateContextFactory ddmFormPagesTemplateContextFactory =
-			createDDMFormPagesTemplateContextFactory(
+			_createDDMFormPagesTemplateContextFactory(
 				ddmForm,
 				DDMFormLayoutTestUtil.createDDMFormLayout(
 					descriptionPage, "titlePage", null),
@@ -525,7 +525,7 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 		// Template context
 
 		DDMFormPagesTemplateContextFactory ddmFormPagesTemplateContextFactory =
-			createDDMFormPagesTemplateContextFactory(
+			_createDDMFormPagesTemplateContextFactory(
 				ddmForm,
 				DDMFormLayoutTestUtil.createDDMFormLayout(
 					"descriptionPage", pageTitle, null),
@@ -567,7 +567,7 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 		// Template context
 
 		DDMFormPagesTemplateContextFactory ddmFormPagesTemplateContextFactory =
-			createDDMFormPagesTemplateContextFactory(
+			_createDDMFormPagesTemplateContextFactory(
 				ddmForm,
 				DDMFormLayoutTestUtil.createDDMFormLayout(
 					"Page 1 Description", "Page 1", new String[] {"Field1"}),
@@ -575,7 +575,7 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 
 		List<Object> pages = ddmFormPagesTemplateContextFactory.create();
 
-		Map<String, Object> fieldTemplateContext = getFieldTemplateContext(
+		Map<String, Object> fieldTemplateContext = _getFieldTemplateContext(
 			pages);
 
 		List<Map<String, String>> options =
@@ -617,7 +617,7 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 		// Template context
 
 		DDMFormPagesTemplateContextFactory ddmFormPagesTemplateContextFactory =
-			createDDMFormPagesTemplateContextFactory(
+			_createDDMFormPagesTemplateContextFactory(
 				ddmForm,
 				DDMFormLayoutTestUtil.createDDMFormLayout(
 					DDMFormLayoutTestUtil.createDDMFormLayoutPage(
@@ -672,7 +672,7 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 		// Template context
 
 		DDMFormPagesTemplateContextFactory ddmFormPagesTemplateContextFactory =
-			createDDMFormPagesTemplateContextFactory(
+			_createDDMFormPagesTemplateContextFactory(
 				ddmForm,
 				DDMFormLayoutTestUtil.createDDMFormLayout(
 					DDMFormLayoutTestUtil.createDDMFormLayoutPage(
@@ -729,7 +729,7 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 		// Template context
 
 		DDMFormPagesTemplateContextFactory ddmFormPagesTemplateContextFactory =
-			createDDMFormPagesTemplateContextFactory(
+			_createDDMFormPagesTemplateContextFactory(
 				ddmForm,
 				DDMFormLayoutTestUtil.createDDMFormLayout(
 					"Page 1 Description", "Page 1", new String[] {"Field1"}),
@@ -737,7 +737,7 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 
 		List<Object> pages = ddmFormPagesTemplateContextFactory.create();
 
-		Map<String, Object> fieldTemplateContext = getFieldTemplateContext(
+		Map<String, Object> fieldTemplateContext = _getFieldTemplateContext(
 			pages);
 
 		Assert.assertEquals(formFieldLabel, fieldTemplateContext.get("label"));
@@ -782,7 +782,7 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 		// Template context
 
 		DDMFormPagesTemplateContextFactory ddmFormPagesTemplateContextFactory =
-			createDDMFormPagesTemplateContextFactory(
+			_createDDMFormPagesTemplateContextFactory(
 				ddmForm,
 				DDMFormLayoutTestUtil.createDDMFormLayout(
 					"Page 1 Description", "Page 1", new String[] {"Field1"}),
@@ -790,7 +790,7 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 
 		List<Object> pages = ddmFormPagesTemplateContextFactory.create();
 
-		Map<String, Object> fieldTemplateContext = getFieldTemplateContext(
+		Map<String, Object> fieldTemplateContext = _getFieldTemplateContext(
 			pages);
 
 		Assert.assertEquals(formFieldLabel, fieldTemplateContext.get("label"));
@@ -812,15 +812,50 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 			formFieldTooltip, fieldTemplateContext.get("tooltip"));
 	}
 
-	protected void assertColumnSize(
+	protected void mockDDMFormFieldTypeServicesTracker(
+		String type,
+		DDMFormFieldTemplateContextContributor
+			ddmFormFieldTemplateContextContributor) {
+
+		when(
+			_ddmFormFieldTypeServicesTracker.
+				getDDMFormFieldTemplateContextContributor(Matchers.eq(type))
+		).thenReturn(
+			ddmFormFieldTemplateContextContributor
+		);
+	}
+
+	protected void setUpLanguageUtil() {
+		Language language = mock(Language.class);
+
+		whenLanguageGet(
+			language, LocaleUtil.US, "this-field-is-required",
+			"This field is required.");
+
+		LanguageUtil languageUtil = new LanguageUtil();
+
+		languageUtil.setLanguage(language);
+	}
+
+	protected void whenLanguageGet(
+		Language language, Locale locale, String key, String returnValue) {
+
+		when(
+			language.get(Matchers.any(ResourceBundle.class), Matchers.eq(key))
+		).thenReturn(
+			returnValue
+		);
+	}
+
+	private void _assertColumnSize(
 		int expectedSize, Map<String, Object> columnTemplateContex) {
 
 		Assert.assertEquals(
 			expectedSize, MapUtil.getInteger(columnTemplateContex, "size"));
 	}
 
-	protected DDMFormPagesTemplateContextFactory
-			createDDMFormPagesTemplateContextFactory(
+	private DDMFormPagesTemplateContextFactory
+			_createDDMFormPagesTemplateContextFactory(
 				DDMForm ddmForm, DDMFormLayout ddmFormLayout,
 				DDMFormValues ddmFormValues, boolean ddmFormReadOnly,
 				boolean showRequiredFieldsWarning, boolean viewMode)
@@ -846,14 +881,14 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 				_groupLocalService, new JSONFactoryImpl());
 
 		ddmFormPagesTemplateContextFactory.setDDMFormEvaluator(
-			getDDMFormEvaluator());
+			_getDDMFormEvaluator());
 		ddmFormPagesTemplateContextFactory.setDDMFormFieldTypeServicesTracker(
 			_ddmFormFieldTypeServicesTracker);
 
 		return ddmFormPagesTemplateContextFactory;
 	}
 
-	protected DDMFormEvaluator getDDMFormEvaluator() throws Exception {
+	private DDMFormEvaluator _getDDMFormEvaluator() throws Exception {
 		DDMExpressionFactoryImpl ddmExpressionFactoryImpl =
 			new DDMExpressionFactoryImpl();
 
@@ -901,7 +936,7 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 		return ddmFormEvaluator;
 	}
 
-	protected Map<String, Object> getFieldTemplateContext(List<Object> pages) {
+	private Map<String, Object> _getFieldTemplateContext(List<Object> pages) {
 		Map<String, Object> page1 = (Map<String, Object>)pages.get(0);
 
 		List<Object> rows = (List<Object>)page1.get("rows");
@@ -919,26 +954,13 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 		return (Map<String, Object>)fieldsColumn1Row1.get(0);
 	}
 
-	protected void mockDDMFormFieldTypeServicesTracker(
-		String type,
-		DDMFormFieldTemplateContextContributor
-			ddmFormFieldTemplateContextContributor) {
-
-		when(
-			_ddmFormFieldTypeServicesTracker.
-				getDDMFormFieldTemplateContextContributor(Matchers.eq(type))
-		).thenReturn(
-			ddmFormFieldTemplateContextContributor
-		);
-	}
-
-	protected void setUpCalendarFactoryUtil() {
+	private void _setUpCalendarFactoryUtil() {
 		CalendarFactoryUtil calendarFactoryUtil = new CalendarFactoryUtil();
 
 		calendarFactoryUtil.setCalendarFactory(new CalendarFactoryImpl());
 	}
 
-	protected void setUpDDMFormFieldTypeServicesTracker() {
+	private void _setUpDDMFormFieldTypeServicesTracker() {
 		DDMFormFieldValueAccessor<?> ddmFormFieldValueAccessor =
 			new DefaultDDMFormFieldValueAccessor();
 
@@ -950,7 +972,7 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 		);
 	}
 
-	protected void setUpFastDateFormatFactoryUtil() {
+	private void _setUpFastDateFormatFactoryUtil() {
 		FastDateFormatFactoryUtil fastDateFormatFactoryUtil =
 			new FastDateFormatFactoryUtil();
 
@@ -958,7 +980,7 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 			new FastDateFormatFactoryImpl());
 	}
 
-	protected void setUpGooglePlacesUtil() {
+	private void _setUpGooglePlacesUtil() {
 		mockStatic(GooglePlacesUtil.class);
 
 		when(
@@ -970,13 +992,13 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 		);
 	}
 
-	protected void setUpHtmlUtil() {
+	private void _setUpHtmlUtil() {
 		HtmlUtil htmlUtil = new HtmlUtil();
 
 		htmlUtil.setHtml(new HtmlImpl());
 	}
 
-	protected void setUpHttpServletRequest() throws Exception {
+	private void _setUpHttpServletRequest() throws Exception {
 		_httpServletRequest = Mockito.mock(HttpServletRequest.class);
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
@@ -992,25 +1014,13 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 		);
 	}
 
-	protected void setUpLanguageResources() {
+	private void _setUpLanguageResources() {
 		LanguageResources languageResources = new LanguageResources();
 
 		languageResources.setConfig(StringPool.BLANK);
 	}
 
-	protected void setUpLanguageUtil() {
-		Language language = mock(Language.class);
-
-		whenLanguageGet(
-			language, LocaleUtil.US, "this-field-is-required",
-			"This field is required.");
-
-		LanguageUtil languageUtil = new LanguageUtil();
-
-		languageUtil.setLanguage(language);
-	}
-
-	protected void setUpLocaleThreadLocal() {
+	private void _setUpLocaleThreadLocal() {
 		mockStatic(LocaleThreadLocal.class);
 
 		when(
@@ -1020,7 +1030,7 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 		);
 	}
 
-	protected void setUpPortalUtil() {
+	private void _setUpPortalUtil() {
 		PortalUtil portalUtil = new PortalUtil();
 
 		Portal portal = mock(Portal.class);
@@ -1048,7 +1058,7 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 		portalUtil.setPortal(portal);
 	}
 
-	protected void setUpResourceBundle() {
+	private void _setUpResourceBundle() {
 		Portal portal = mock(Portal.class);
 
 		ResourceBundle resourceBundle = mock(ResourceBundle.class);
@@ -1060,7 +1070,7 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 		);
 	}
 
-	protected void setUpResourceBundleLoaderUtil() {
+	private void _setUpResourceBundleLoaderUtil() {
 		mockStatic(ResourceBundleLoaderUtil.class);
 
 		ResourceBundleLoader portalResourceBundleLoader = mock(
@@ -1073,7 +1083,7 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 		);
 	}
 
-	protected void setUpResourceBundleUtil() {
+	private void _setUpResourceBundleUtil() {
 		PowerMockito.mockStatic(ResourceBundleUtil.class);
 
 		PowerMockito.when(
@@ -1082,16 +1092,6 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 				Matchers.any(ClassLoader.class))
 		).thenReturn(
 			ResourceBundleUtil.EMPTY_RESOURCE_BUNDLE
-		);
-	}
-
-	protected void whenLanguageGet(
-		Language language, Locale locale, String key, String returnValue) {
-
-		when(
-			language.get(Matchers.any(ResourceBundle.class), Matchers.eq(key))
-		).thenReturn(
-			returnValue
 		);
 	}
 

@@ -77,95 +77,28 @@ public class AddDefaultSharedFormLayoutPortalInstanceLifecycleListener
 			company.getCompanyId(), "/forms");
 
 		if (group == null) {
-			group = addFormsGroup(company.getCompanyId());
+			group = _addFormsGroup(company.getCompanyId());
 		}
 
 		Layout sharedLayout = _layoutLocalService.fetchLayoutByFriendlyURL(
 			group.getGroupId(), false, "/shared");
 
 		if (sharedLayout == null) {
-			sharedLayout = addPublicLayout(
+			sharedLayout = _addPublicLayout(
 				company.getCompanyId(), group.getGroupId());
 		}
 
-		verifyLayout(sharedLayout);
+		_verifyLayout(sharedLayout);
 
 		Layout privateLayout = _layoutLocalService.fetchLayoutByFriendlyURL(
 			group.getGroupId(), true, "/shared");
 
 		if (privateLayout == null) {
-			privateLayout = addPrivateLayout(
+			privateLayout = _addPrivateLayout(
 				company.getCompanyId(), group.getGroupId());
 		}
 
-		verifyLayout(privateLayout);
-	}
-
-	protected Group addFormsGroup(long companyId) throws PortalException {
-		return _groupLocalService.addGroup(
-			_userLocalService.getDefaultUserId(companyId),
-			GroupConstants.DEFAULT_PARENT_GROUP_ID, null, 0,
-			GroupConstants.DEFAULT_LIVE_GROUP_ID,
-			HashMapBuilder.put(
-				LocaleUtil.getDefault(), GroupConstants.FORMS
-			).build(),
-			null, GroupConstants.TYPE_SITE_PRIVATE, true,
-			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION,
-			GroupConstants.FORMS_FRIENDLY_URL, false, false, true, null);
-	}
-
-	protected Layout addPrivateLayout(long companyId, long groupId)
-		throws PortalException {
-
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
-		serviceContext.setAttribute(
-			"layout.instanceable.allowed", Boolean.TRUE);
-		serviceContext.setAttribute("layoutUpdateable", Boolean.FALSE);
-
-		serviceContext.setScopeGroupId(groupId);
-
-		long defaultUserId = _userLocalService.getDefaultUserId(companyId);
-
-		serviceContext.setUserId(defaultUserId);
-
-		Layout layout = _layoutLocalService.addLayout(
-			defaultUserId, groupId, true,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, "Shared",
-			StringPool.BLANK, StringPool.BLANK,
-			DDMFormPortletLayoutTypeConstants.LAYOUT_TYPE, true, "/shared",
-			serviceContext);
-
-		updateUserLayoutViewPermissionPermission(companyId, layout);
-
-		return layout;
-	}
-
-	protected Layout addPublicLayout(long companyId, long groupId)
-		throws PortalException {
-
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
-		serviceContext.setAttribute(
-			"layout.instanceable.allowed", Boolean.TRUE);
-		serviceContext.setAttribute("layoutUpdateable", Boolean.FALSE);
-
-		serviceContext.setScopeGroupId(groupId);
-
-		long defaultUserId = _userLocalService.getDefaultUserId(companyId);
-
-		serviceContext.setUserId(defaultUserId);
-
-		return _layoutLocalService.addLayout(
-			defaultUserId, groupId, false,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, "Shared",
-			StringPool.BLANK, StringPool.BLANK,
-			DDMFormPortletLayoutTypeConstants.LAYOUT_TYPE, true, "/shared",
-			serviceContext);
+		_verifyLayout(privateLayout);
 	}
 
 	@Reference(unbind = "-")
@@ -202,7 +135,74 @@ public class AddDefaultSharedFormLayoutPortalInstanceLifecycleListener
 		_userLocalService = userLocalService;
 	}
 
-	protected void updateUserLayoutViewPermissionPermission(
+	private Group _addFormsGroup(long companyId) throws PortalException {
+		return _groupLocalService.addGroup(
+			_userLocalService.getDefaultUserId(companyId),
+			GroupConstants.DEFAULT_PARENT_GROUP_ID, null, 0,
+			GroupConstants.DEFAULT_LIVE_GROUP_ID,
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), GroupConstants.FORMS
+			).build(),
+			null, GroupConstants.TYPE_SITE_PRIVATE, true,
+			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION,
+			GroupConstants.FORMS_FRIENDLY_URL, false, false, true, null);
+	}
+
+	private Layout _addPrivateLayout(long companyId, long groupId)
+		throws PortalException {
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+		serviceContext.setAttribute(
+			"layout.instanceable.allowed", Boolean.TRUE);
+		serviceContext.setAttribute("layoutUpdateable", Boolean.FALSE);
+
+		serviceContext.setScopeGroupId(groupId);
+
+		long defaultUserId = _userLocalService.getDefaultUserId(companyId);
+
+		serviceContext.setUserId(defaultUserId);
+
+		Layout layout = _layoutLocalService.addLayout(
+			defaultUserId, groupId, true,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, "Shared",
+			StringPool.BLANK, StringPool.BLANK,
+			DDMFormPortletLayoutTypeConstants.LAYOUT_TYPE, true, "/shared",
+			serviceContext);
+
+		_updateUserLayoutViewPermissionPermission(companyId, layout);
+
+		return layout;
+	}
+
+	private Layout _addPublicLayout(long companyId, long groupId)
+		throws PortalException {
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+		serviceContext.setAttribute(
+			"layout.instanceable.allowed", Boolean.TRUE);
+		serviceContext.setAttribute("layoutUpdateable", Boolean.FALSE);
+
+		serviceContext.setScopeGroupId(groupId);
+
+		long defaultUserId = _userLocalService.getDefaultUserId(companyId);
+
+		serviceContext.setUserId(defaultUserId);
+
+		return _layoutLocalService.addLayout(
+			defaultUserId, groupId, false,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, "Shared",
+			StringPool.BLANK, StringPool.BLANK,
+			DDMFormPortletLayoutTypeConstants.LAYOUT_TYPE, true, "/shared",
+			serviceContext);
+	}
+
+	private void _updateUserLayoutViewPermissionPermission(
 			long companyId, Layout layout)
 		throws PortalException {
 
@@ -214,7 +214,7 @@ public class AddDefaultSharedFormLayoutPortalInstanceLifecycleListener
 			role.getRoleId(), ActionKeys.VIEW);
 	}
 
-	protected void verifyLayout(Layout layout) throws PortalException {
+	private void _verifyLayout(Layout layout) throws PortalException {
 		if (StringUtil.equals(
 				layout.getType(),
 				DDMFormPortletLayoutTypeConstants.LAYOUT_TYPE)) {

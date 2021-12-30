@@ -41,7 +41,7 @@ public class DDMFormInstanceRecordWriterTrackerImplTest {
 			ddmFormInstanceRecordWriterTrackerImpl =
 				new DDMFormInstanceRecordWriterTrackerImpl();
 
-		addDDMFormInstanceRecordCSVWriter(
+		_addDDMFormInstanceRecordCSVWriter(
 			ddmFormInstanceRecordWriterTrackerImpl);
 
 		ddmFormInstanceRecordWriterTrackerImpl.deactivate();
@@ -59,7 +59,7 @@ public class DDMFormInstanceRecordWriterTrackerImplTest {
 			ddmFormInstanceRecordWriterTrackerImpl =
 				new DDMFormInstanceRecordWriterTrackerImpl();
 
-		addDDMFormInstanceRecordCSVWriter(
+		_addDDMFormInstanceRecordCSVWriter(
 			ddmFormInstanceRecordWriterTrackerImpl);
 
 		DDMFormInstanceRecordWriter ddmFormInstanceRecordWriter =
@@ -77,7 +77,7 @@ public class DDMFormInstanceRecordWriterTrackerImplTest {
 			ddmFormInstanceRecordWriterTrackerImpl =
 				new DDMFormInstanceRecordWriterTrackerImpl();
 
-		addDDMFormInstanceRecordXMLWriter(
+		_addDDMFormInstanceRecordXMLWriter(
 			ddmFormInstanceRecordWriterTrackerImpl);
 
 		Map<String, String> ddmFormInstanceRecordWriterExtensions =
@@ -94,9 +94,9 @@ public class DDMFormInstanceRecordWriterTrackerImplTest {
 			ddmFormInstanceRecordWriterTrackerImpl =
 				new DDMFormInstanceRecordWriterTrackerImpl();
 
-		addDDMFormInstanceRecordCSVWriter(
+		_addDDMFormInstanceRecordCSVWriter(
 			ddmFormInstanceRecordWriterTrackerImpl);
-		addDDMFormInstanceRecordJSONWriter(
+		_addDDMFormInstanceRecordJSONWriter(
 			ddmFormInstanceRecordWriterTrackerImpl);
 
 		Map<String, String> ddmFormInstanceRecordWriterExtensions =
@@ -115,9 +115,9 @@ public class DDMFormInstanceRecordWriterTrackerImplTest {
 			ddmFormInstanceRecordWriterTrackerImpl =
 				new DDMFormInstanceRecordWriterTrackerImpl();
 
-		addDDMFormInstanceRecordCSVWriter(
+		_addDDMFormInstanceRecordCSVWriter(
 			ddmFormInstanceRecordWriterTrackerImpl);
-		addDDMFormInstanceRecordJSONWriter(
+		_addDDMFormInstanceRecordJSONWriter(
 			ddmFormInstanceRecordWriterTrackerImpl);
 
 		DDMFormInstanceRecordWriter ddmFormInstanceRecordWriter =
@@ -139,7 +139,7 @@ public class DDMFormInstanceRecordWriterTrackerImplTest {
 		Assert.assertNull(ddmFormInstanceRecordWriter);
 	}
 
-	protected void addDDMFormInstanceRecordCSVWriter(
+	private void _addDDMFormInstanceRecordCSVWriter(
 		DDMFormInstanceRecordWriterTrackerImpl
 			ddmFormInstanceRecordWriterTrackerImpl) {
 
@@ -152,7 +152,7 @@ public class DDMFormInstanceRecordWriterTrackerImplTest {
 			).build());
 	}
 
-	protected void addDDMFormInstanceRecordJSONWriter(
+	private void _addDDMFormInstanceRecordJSONWriter(
 		DDMFormInstanceRecordWriterTrackerImpl
 			ddmFormInstanceRecordWriterTrackerImpl) {
 
@@ -165,7 +165,7 @@ public class DDMFormInstanceRecordWriterTrackerImplTest {
 			).build());
 	}
 
-	protected void addDDMFormInstanceRecordXMLWriter(
+	private void _addDDMFormInstanceRecordXMLWriter(
 		DDMFormInstanceRecordWriterTrackerImpl
 			ddmFormInstanceRecordWriterTrackerImpl) {
 

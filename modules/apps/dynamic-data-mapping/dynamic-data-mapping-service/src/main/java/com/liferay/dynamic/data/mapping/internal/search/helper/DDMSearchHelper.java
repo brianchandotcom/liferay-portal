@@ -68,7 +68,7 @@ public class DDMSearchHelper {
 		searchContext.setGroupIds(groupIds);
 
 		if (orderByComparator != null) {
-			searchContext.setSorts(getSortsFromComparator(orderByComparator));
+			searchContext.setSorts(_getSortsFromComparator(orderByComparator));
 		}
 
 		searchContext.setStart(start);
@@ -114,7 +114,7 @@ public class DDMSearchHelper {
 		}
 
 		if (orderByComparator != null) {
-			searchContext.setSorts(getSortsFromComparator(orderByComparator));
+			searchContext.setSorts(_getSortsFromComparator(orderByComparator));
 		}
 
 		return searchContext;
@@ -196,7 +196,7 @@ public class DDMSearchHelper {
 		}
 
 		if (orderByComparator != null) {
-			searchContext.setSorts(getSortsFromComparator(orderByComparator));
+			searchContext.setSorts(_getSortsFromComparator(orderByComparator));
 		}
 
 		return searchContext;
@@ -265,7 +265,7 @@ public class DDMSearchHelper {
 		return 0;
 	}
 
-	protected Sort[] getSortsFromComparator(
+	private Sort[] _getSortsFromComparator(
 		OrderByComparator<? extends BaseModel<?>> orderByComparator) {
 
 		Stream<String> stream = Arrays.stream(

@@ -57,7 +57,7 @@ public class DDMFormJSONSerializer implements DDMFormSerializer {
 		addAvailableLanguageIds(jsonObject, ddmForm.getAvailableLocales());
 		addDefaultLanguageId(jsonObject, ddmForm.getDefaultLocale());
 		addRules(jsonObject, ddmForm.getDDMFormRules());
-		addSuccessPageSettings(
+		_addSuccessPageSettings(
 			jsonObject, ddmForm.getDDMFormSuccessPageSettings());
 
 		if (Validator.isNotNull(ddmForm.getDefinitionSchemaVersion())) {
@@ -105,13 +105,6 @@ public class DDMFormJSONSerializer implements DDMFormSerializer {
 
 		jsonObject.put(
 			"rules", DDMFormRuleJSONSerializer.serialize(ddmFormRules));
-	}
-
-	protected void addSuccessPageSettings(
-		JSONObject jsonObject,
-		DDMFormSuccessPageSettings ddmFormSuccessPageSettings) {
-
-		jsonObject.put("successPage", toJSONObject(ddmFormSuccessPageSettings));
 	}
 
 	@Reference(unbind = "-")
@@ -162,6 +155,13 @@ public class DDMFormJSONSerializer implements DDMFormSerializer {
 		}
 
 		return jsonObject;
+	}
+
+	private void _addSuccessPageSettings(
+		JSONObject jsonObject,
+		DDMFormSuccessPageSettings ddmFormSuccessPageSettings) {
+
+		jsonObject.put("successPage", toJSONObject(ddmFormSuccessPageSettings));
 	}
 
 	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;

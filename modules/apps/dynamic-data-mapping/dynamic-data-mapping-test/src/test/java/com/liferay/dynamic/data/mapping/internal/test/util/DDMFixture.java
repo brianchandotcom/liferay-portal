@@ -42,20 +42,20 @@ public class DDMFixture {
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
 
-		setUpBeanPropertiesUtil();
-		setUpDDMStructureLocalServiceUtil();
-		setUpLanguageUtil();
+		_setUpBeanPropertiesUtil();
+		_setUpDDMStructureLocalServiceUtil();
+		_setUpLanguageUtil();
 
 		ClassLoader classLoader = Mockito.mock(ClassLoader.class);
 
-		setUpPortalClassLoaderUtil(classLoader);
-		setUpResourceBundleUtil(classLoader);
+		_setUpPortalClassLoaderUtil(classLoader);
+		_setUpResourceBundleUtil(classLoader);
 	}
 
 	public void tearDown() {
-		tearDownBeanPropertiesUtil();
-		tearDownLanguage();
-		tearDownPortalClassLoaderUtil();
+		_tearDownBeanPropertiesUtil();
+		_tearDownLanguage();
+		_tearDownPortalClassLoaderUtil();
 	}
 
 	public void whenDDMStructureLocalServiceFetchStructure(
@@ -70,7 +70,7 @@ public class DDMFixture {
 		);
 	}
 
-	protected void setUpBeanPropertiesUtil() {
+	private void _setUpBeanPropertiesUtil() {
 		_beanProperties = BeanPropertiesUtil.getBeanProperties();
 
 		BeanPropertiesUtil beanPropertiesUtil = new BeanPropertiesUtil();
@@ -78,7 +78,7 @@ public class DDMFixture {
 		beanPropertiesUtil.setBeanProperties(new BeanPropertiesImpl());
 	}
 
-	protected void setUpDDMStructureLocalServiceUtil() throws Exception {
+	private void _setUpDDMStructureLocalServiceUtil() throws Exception {
 		PowerMockito.spy(DDMStructureLocalServiceUtil.class);
 
 		PowerMockito.doReturn(
@@ -88,7 +88,7 @@ public class DDMFixture {
 		);
 	}
 
-	protected void setUpLanguageUtil() {
+	private void _setUpLanguageUtil() {
 		_language = LanguageUtil.getLanguage();
 
 		LanguageUtil languageUtil = new LanguageUtil();
@@ -96,13 +96,13 @@ public class DDMFixture {
 		languageUtil.setLanguage(Mockito.mock(Language.class));
 	}
 
-	protected void setUpPortalClassLoaderUtil(ClassLoader classLoader) {
+	private void _setUpPortalClassLoaderUtil(ClassLoader classLoader) {
 		_classLoader = PortalClassLoaderUtil.getClassLoader();
 
 		PortalClassLoaderUtil.setClassLoader(classLoader);
 	}
 
-	protected void setUpResourceBundleUtil(ClassLoader classLoader) {
+	private void _setUpResourceBundleUtil(ClassLoader classLoader) {
 		PowerMockito.mockStatic(ResourceBundleUtil.class);
 
 		ResourceBundle resourceBundle = Mockito.mock(ResourceBundle.class);
@@ -122,19 +122,19 @@ public class DDMFixture {
 		);
 	}
 
-	protected void tearDownBeanPropertiesUtil() {
+	private void _tearDownBeanPropertiesUtil() {
 		BeanPropertiesUtil beanPropertiesUtil = new BeanPropertiesUtil();
 
 		beanPropertiesUtil.setBeanProperties(_beanProperties);
 	}
 
-	protected void tearDownLanguage() {
+	private void _tearDownLanguage() {
 		LanguageUtil languageUtil = new LanguageUtil();
 
 		languageUtil.setLanguage(_language);
 	}
 
-	protected void tearDownPortalClassLoaderUtil() {
+	private void _tearDownPortalClassLoaderUtil() {
 		PortalClassLoaderUtil.setClassLoader(_classLoader);
 	}
 

@@ -80,7 +80,7 @@ public class DDMFormFieldTemplateContextFactoryTest extends PowerMockito {
 
 	@Before
 	public void setUp() {
-		setUpDDMFormTemplateContextFactoryUtil();
+		_setUpDDMFormTemplateContextFactoryUtil();
 		setUpLanguageUtil();
 	}
 
@@ -130,10 +130,10 @@ public class DDMFormFieldTemplateContextFactoryTest extends PowerMockito {
 		ddmFormFieldValues.add(ddmFormFieldValue);
 
 		DDMFormFieldTemplateContextFactory ddmFormFieldTemplateContextFactory =
-			createDDMFormFieldTemplateContextFactory(
+			_createDDMFormFieldTemplateContextFactory(
 				ddmForm, ddmFormField.getName(), ddmFormFieldsPropertyChanges,
-				ddmFormFieldValues, true, getTextDDMFormFieldRenderer(),
-				getTextDDMFormFieldTemplateContextContributor());
+				ddmFormFieldValues, true, _getTextDDMFormFieldRenderer(),
+				_getTextDDMFormFieldTemplateContextContributor());
 
 		List<Object> fields = ddmFormFieldTemplateContextFactory.create();
 
@@ -191,10 +191,10 @@ public class DDMFormFieldTemplateContextFactoryTest extends PowerMockito {
 		ddmFormFieldValues.add(ddmFormFieldValue);
 
 		DDMFormFieldTemplateContextFactory ddmFormFieldTemplateContextFactory =
-			createDDMFormFieldTemplateContextFactory(
+			_createDDMFormFieldTemplateContextFactory(
 				ddmForm, ddmFormField.getName(), ddmFormFieldsPropertyChanges,
-				ddmFormFieldValues, false, getTextDDMFormFieldRenderer(),
-				getTextDDMFormFieldTemplateContextContributor());
+				ddmFormFieldValues, false, _getTextDDMFormFieldRenderer(),
+				_getTextDDMFormFieldTemplateContextContributor());
 
 		List<Object> fields = ddmFormFieldTemplateContextFactory.create();
 
@@ -264,10 +264,10 @@ public class DDMFormFieldTemplateContextFactoryTest extends PowerMockito {
 		ddmFormFieldValues.add(ddmFormFieldValue);
 
 		DDMFormFieldTemplateContextFactory ddmFormFieldTemplateContextFactory =
-			createDDMFormFieldTemplateContextFactory(
+			_createDDMFormFieldTemplateContextFactory(
 				ddmForm, ddmFormField.getName(), ddmFormFieldsPropertyChanges,
-				ddmFormFieldValues, false, getTextDDMFormFieldRenderer(),
-				getTextDDMFormFieldTemplateContextContributor());
+				ddmFormFieldValues, false, _getTextDDMFormFieldRenderer(),
+				_getTextDDMFormFieldTemplateContextContributor());
 
 		List<Object> fields = ddmFormFieldTemplateContextFactory.create();
 
@@ -306,8 +306,55 @@ public class DDMFormFieldTemplateContextFactoryTest extends PowerMockito {
 			expectedName, MapUtil.getString(fieldTemplateContext, "name"));
 	}
 
-	protected DDMFormFieldTemplateContextFactory
-		createDDMFormFieldTemplateContextFactory(
+	protected DDMFormFieldTypeServicesTracker
+		mockDDMFormFieldTypeServicesTracker(
+			DDMFormFieldRenderer ddmFormFieldRenderer,
+			DDMFormFieldTemplateContextContributor
+				ddmFormFieldTemplateContextContributor) {
+
+		DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker =
+			Mockito.mock(DDMFormFieldTypeServicesTracker.class);
+
+		Mockito.when(
+			ddmFormFieldTypeServicesTracker.getDDMFormFieldRenderer(
+				Matchers.anyString())
+		).thenReturn(
+			ddmFormFieldRenderer
+		);
+
+		Mockito.when(
+			ddmFormFieldTypeServicesTracker.
+				getDDMFormFieldTemplateContextContributor(Matchers.anyString())
+		).thenReturn(
+			ddmFormFieldTemplateContextContributor
+		);
+
+		return ddmFormFieldTypeServicesTracker;
+	}
+
+	protected void setUpLanguageUtil() {
+		Language language = Mockito.mock(Language.class);
+
+		whenLanguageGet(
+			language, LocaleUtil.US, LanguageConstants.KEY_DIR, "ltr");
+
+		LanguageUtil languageUtil = new LanguageUtil();
+
+		languageUtil.setLanguage(language);
+	}
+
+	protected void whenLanguageGet(
+		Language language, Locale locale, String key, String returnValue) {
+
+		Mockito.when(
+			language.get(Matchers.eq(locale), Matchers.eq(key))
+		).thenReturn(
+			returnValue
+		);
+	}
+
+	private DDMFormFieldTemplateContextFactory
+		_createDDMFormFieldTemplateContextFactory(
 			DDMForm ddmForm, String ddmFormFieldName,
 			Map<DDMFormEvaluatorFieldContextKey, Map<String, Object>>
 				ddmFormFieldsPropertyChanges,
@@ -343,7 +390,7 @@ public class DDMFormFieldTemplateContextFactoryTest extends PowerMockito {
 		return ddmFormFieldTemplateContextFactory;
 	}
 
-	protected DDMFormFieldRenderer getTextDDMFormFieldRenderer() {
+	private DDMFormFieldRenderer _getTextDDMFormFieldRenderer() {
 		return new BaseDDMFormFieldRenderer() {
 
 			public String getTemplateLanguage() {
@@ -361,8 +408,8 @@ public class DDMFormFieldTemplateContextFactoryTest extends PowerMockito {
 		};
 	}
 
-	protected DDMFormFieldTemplateContextContributor
-		getTextDDMFormFieldTemplateContextContributor() {
+	private DDMFormFieldTemplateContextContributor
+		_getTextDDMFormFieldTemplateContextContributor() {
 
 		return new DDMFormFieldTemplateContextContributor() {
 
@@ -381,33 +428,7 @@ public class DDMFormFieldTemplateContextFactoryTest extends PowerMockito {
 		};
 	}
 
-	protected DDMFormFieldTypeServicesTracker
-		mockDDMFormFieldTypeServicesTracker(
-			DDMFormFieldRenderer ddmFormFieldRenderer,
-			DDMFormFieldTemplateContextContributor
-				ddmFormFieldTemplateContextContributor) {
-
-		DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker =
-			Mockito.mock(DDMFormFieldTypeServicesTracker.class);
-
-		Mockito.when(
-			ddmFormFieldTypeServicesTracker.getDDMFormFieldRenderer(
-				Matchers.anyString())
-		).thenReturn(
-			ddmFormFieldRenderer
-		);
-
-		Mockito.when(
-			ddmFormFieldTypeServicesTracker.
-				getDDMFormFieldTemplateContextContributor(Matchers.anyString())
-		).thenReturn(
-			ddmFormFieldTemplateContextContributor
-		);
-
-		return ddmFormFieldTypeServicesTracker;
-	}
-
-	protected void setUpDDMFormTemplateContextFactoryUtil() {
+	private void _setUpDDMFormTemplateContextFactoryUtil() {
 		_httpServletRequest = Mockito.mock(HttpServletRequest.class);
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
@@ -419,27 +440,6 @@ public class DDMFormFieldTemplateContextFactoryTest extends PowerMockito {
 				WebKeys.THEME_DISPLAY)
 		).thenReturn(
 			themeDisplay
-		);
-	}
-
-	protected void setUpLanguageUtil() {
-		Language language = Mockito.mock(Language.class);
-
-		whenLanguageGet(
-			language, LocaleUtil.US, LanguageConstants.KEY_DIR, "ltr");
-
-		LanguageUtil languageUtil = new LanguageUtil();
-
-		languageUtil.setLanguage(language);
-	}
-
-	protected void whenLanguageGet(
-		Language language, Locale locale, String key, String returnValue) {
-
-		Mockito.when(
-			language.get(Matchers.eq(locale), Matchers.eq(key))
-		).thenReturn(
-			returnValue
 		);
 	}
 

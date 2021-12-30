@@ -71,7 +71,7 @@ public class DDMFormValuesValidatorTest {
 
 	@Before
 	public void setUp() throws Exception {
-		setUpDDMFormValuesValidator();
+		_setUpDDMFormValuesValidator();
 	}
 
 	@Test
@@ -903,7 +903,7 @@ public class DDMFormValuesValidatorTest {
 		_ddmFormValuesValidatorImpl.validate(ddmFormValues);
 	}
 
-	protected void setUpDDMFormValuesValidator() throws Exception {
+	private void _setUpDDMFormValuesValidator() throws Exception {
 		DDMExpressionFactoryImpl ddmExpressionFactoryImpl =
 			new DDMExpressionFactoryImpl();
 

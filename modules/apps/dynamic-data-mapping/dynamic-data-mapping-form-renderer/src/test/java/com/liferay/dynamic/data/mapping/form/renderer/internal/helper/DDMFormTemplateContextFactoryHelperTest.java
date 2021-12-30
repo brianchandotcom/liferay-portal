@@ -47,7 +47,7 @@ public class DDMFormTemplateContextFactoryHelperTest extends PowerMockito {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		setUpDDMFormTemplateContextFactoryHelper();
+		_setUpDDMFormTemplateContextFactoryHelper();
 	}
 
 	@Test
@@ -106,7 +106,7 @@ public class DDMFormTemplateContextFactoryHelperTest extends PowerMockito {
 			expectedEvaluableFieldNames, actualEvaluableFieldNames);
 	}
 
-	protected static void setUpDDMFormTemplateContextFactoryHelper()
+	private static void _setUpDDMFormTemplateContextFactoryHelper()
 		throws Exception {
 
 		DDMDataProviderInstance ddmDataProviderInstance = mock(
@@ -132,7 +132,7 @@ public class DDMFormTemplateContextFactoryHelperTest extends PowerMockito {
 			new DDMFormTemplateContextFactoryHelper();
 	}
 
-	protected DDMFormRule createAutoFillDDMFormRule() {
+	private DDMFormRule _createAutoFillDDMFormRule() {
 		return new DDMFormRule(
 			Arrays.asList(
 				StringBundler.concat(

@@ -49,7 +49,7 @@ public class DDMStructureModelListener extends BaseModelListener<DDMStructure> {
 
 		try {
 			ActionableDynamicQuery actionableDynamicQuery =
-				getActionableDynamicQuery(ddmStructure);
+				_getActionableDynamicQuery(ddmStructure);
 
 			actionableDynamicQuery.performActions();
 		}
@@ -58,7 +58,7 @@ public class DDMStructureModelListener extends BaseModelListener<DDMStructure> {
 		}
 	}
 
-	protected ActionableDynamicQuery getActionableDynamicQuery(
+	private ActionableDynamicQuery _getActionableDynamicQuery(
 		DDMStructure ddmStructure) {
 
 		ActionableDynamicQuery actionableDynamicQuery =

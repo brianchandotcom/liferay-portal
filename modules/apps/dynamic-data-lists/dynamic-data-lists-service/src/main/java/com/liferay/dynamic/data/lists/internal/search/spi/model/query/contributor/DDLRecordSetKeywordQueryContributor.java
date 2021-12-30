@@ -42,13 +42,16 @@ public class DDLRecordSetKeywordQueryContributor
 		String keywords, BooleanQuery booleanQuery,
 		KeywordQueryContributorHelper keywordQueryContributorHelper) {
 
-		addSearchLocalizedTerm(
+		_addSearchLocalizedTerm(
 			booleanQuery, keywordQueryContributorHelper, Field.DESCRIPTION);
-		addSearchLocalizedTerm(
+		_addSearchLocalizedTerm(
 			booleanQuery, keywordQueryContributorHelper, Field.NAME);
 	}
 
-	protected void addSearchLocalizedTerm(
+	@Reference
+	protected QueryHelper queryHelper;
+
+	private void _addSearchLocalizedTerm(
 		BooleanQuery booleanQuery,
 		KeywordQueryContributorHelper keywordQueryContributorHelper,
 		String fieldName) {
@@ -69,8 +72,5 @@ public class DDLRecordSetKeywordQueryContributor
 			booleanQuery, keywordQueryContributorHelper.getSearchContext(),
 			fieldName, false);
 	}
-
-	@Reference
-	protected QueryHelper queryHelper;
 
 }

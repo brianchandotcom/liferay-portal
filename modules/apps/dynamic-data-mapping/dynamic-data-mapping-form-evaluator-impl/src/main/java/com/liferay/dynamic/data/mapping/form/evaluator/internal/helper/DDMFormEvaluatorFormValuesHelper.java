@@ -30,7 +30,7 @@ import java.util.Set;
 public class DDMFormEvaluatorFormValuesHelper {
 
 	public DDMFormEvaluatorFormValuesHelper(DDMFormValues ddmFormValues) {
-		createDDMFormFieldValuesMap(ddmFormValues);
+		_createDDMFormFieldValuesMap(ddmFormValues);
 	}
 
 	public Set<DDMFormEvaluatorFieldContextKey> getDDMFormFieldContextKeys(
@@ -53,16 +53,16 @@ public class DDMFormEvaluatorFormValuesHelper {
 		return map.get(fieldContextKey);
 	}
 
-	protected void createDDMFormFieldValuesMap(DDMFormValues ddmFormValues) {
+	private void _createDDMFormFieldValuesMap(DDMFormValues ddmFormValues) {
 		List<DDMFormFieldValue> ddmFormFieldValues =
 			ddmFormValues.getDDMFormFieldValues();
 
 		for (DDMFormFieldValue ddmFormFieldValue : ddmFormFieldValues) {
-			populateDDMFormFieldValues(ddmFormFieldValue);
+			_populateDDMFormFieldValues(ddmFormFieldValue);
 		}
 	}
 
-	protected void populateDDMFormFieldValues(
+	private void _populateDDMFormFieldValues(
 		DDMFormFieldValue ddmFormFieldValue) {
 
 		Map<DDMFormEvaluatorFieldContextKey, DDMFormFieldValue>
@@ -84,7 +84,7 @@ public class DDMFormEvaluatorFormValuesHelper {
 		for (DDMFormFieldValue nestedDDMFormFieldValue :
 				ddmFormFieldValue.getNestedDDMFormFieldValues()) {
 
-			populateDDMFormFieldValues(nestedDDMFormFieldValue);
+			_populateDDMFormFieldValues(nestedDDMFormFieldValue);
 		}
 	}
 

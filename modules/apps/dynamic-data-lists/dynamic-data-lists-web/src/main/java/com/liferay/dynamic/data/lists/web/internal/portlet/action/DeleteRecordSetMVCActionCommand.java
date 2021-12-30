@@ -45,14 +45,21 @@ public class DeleteRecordSetMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long[] recordSetIds = getRecordSetIds(actionRequest);
+		long[] recordSetIds = _getRecordSetIds(actionRequest);
 
 		for (long recordSetId : recordSetIds) {
 			_ddlRecordSetService.deleteRecordSet(recordSetId);
 		}
 	}
 
-	protected long[] getRecordSetIds(ActionRequest actionRequest) {
+	@Reference(unbind = "-")
+	protected void setDDLRecordSetService(
+		DDLRecordSetService ddlRecordSetService) {
+
+		_ddlRecordSetService = ddlRecordSetService;
+	}
+
+	private long[] _getRecordSetIds(ActionRequest actionRequest) {
 		long recordSetId = ParamUtil.getLong(actionRequest, "recordSetId");
 
 		if (recordSetId > 0) {
@@ -61,13 +68,6 @@ public class DeleteRecordSetMVCActionCommand extends BaseMVCActionCommand {
 
 		return StringUtil.split(
 			ParamUtil.getString(actionRequest, "recordSetIds"), 0L);
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDLRecordSetService(
-		DDLRecordSetService ddlRecordSetService) {
-
-		_ddlRecordSetService = ddlRecordSetService;
 	}
 
 	private DDLRecordSetService _ddlRecordSetService;

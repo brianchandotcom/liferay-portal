@@ -63,7 +63,7 @@ public class DDMFormTemplateContextFactoryTest {
 	public void setUp() throws Exception {
 		_httpServletRequest = new MockHttpServletRequest();
 
-		setUpThemeDisplay();
+		_setUpThemeDisplay();
 
 		_originalSiteDefaultLocale = LocaleThreadLocal.getSiteDefaultLocale();
 		_originalThemeDisplayDefaultLocale =
@@ -442,16 +442,6 @@ public class DDMFormTemplateContextFactoryTest {
 		Assert.assertTrue((boolean)ddmFormTemplateContext.get("viewMode"));
 	}
 
-	protected void setUpThemeDisplay() throws Exception {
-		ThemeDisplay themeDisplay = new ThemeDisplay();
-
-		themeDisplay.setPathContext("/my/path/context/");
-		themeDisplay.setPathThemeImages("/my/theme/images/");
-		themeDisplay.setUser(TestPropsValues.getUser());
-
-		_httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
-	}
-
 	private void _assertValidations(
 		HashMap<String, Object> actualValidationsMap, String dataType,
 		HashMap<String, String> expectedValidationsMap) {
@@ -484,6 +474,16 @@ public class DDMFormTemplateContextFactoryTest {
 		Assert.assertEquals(
 			expectedValidationsMap.toString(), 0,
 			expectedValidationsMap.size());
+	}
+
+	private void _setUpThemeDisplay() throws Exception {
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		themeDisplay.setPathContext("/my/path/context/");
+		themeDisplay.setPathThemeImages("/my/theme/images/");
+		themeDisplay.setUser(TestPropsValues.getUser());
+
+		_httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
 	}
 
 	@Inject

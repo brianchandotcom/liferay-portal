@@ -244,13 +244,13 @@ public class DDMStructureStagedModelDataHandlerTest
 			LocaleUtil.getSiteDefault(),
 			ServiceContextTestUtil.getServiceContext());
 
-		exportStructure(parentGroup, parentStructure);
+		_exportStructure(parentGroup, parentStructure);
 
 		Group newParentGroup = GroupTestUtil.addGroup();
 
-		importStructure(parentGroup, newParentGroup, parentStructure);
+		_importStructure(parentGroup, newParentGroup, parentStructure);
 
-		exportStructure(childGroup, childStructure);
+		_exportStructure(childGroup, childStructure);
 
 		childGroup = GroupTestUtil.deleteGroup(childGroup);
 
@@ -259,7 +259,7 @@ public class DDMStructureStagedModelDataHandlerTest
 		Group newChildGroup = GroupTestUtil.addGroup(
 			newParentGroup.getGroupId());
 
-		importStructure(childGroup, newChildGroup, childStructure);
+		_importStructure(childGroup, newChildGroup, childStructure);
 
 		DDMStructure importedParentStructure =
 			DDMStructureLocalServiceUtil.fetchDDMStructureByUuidAndGroupId(
@@ -300,7 +300,7 @@ public class DDMStructureStagedModelDataHandlerTest
 			LocaleUtil.getSiteDefault(), "Data provider"
 		).build();
 
-		DDMFormValues ddmFormValues = getDDMDataProviderInstanceFormValues();
+		DDMFormValues ddmFormValues = _getDDMDataProviderInstanceFormValues();
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -362,67 +362,6 @@ public class DDMStructureStagedModelDataHandlerTest
 			ddmForm, LocaleUtil.getSiteDefault(), serviceContext);
 	}
 
-	protected void exportStructure(Group exportGroup, DDMStructure structure)
-		throws Exception {
-
-		initExport(exportGroup);
-
-		StagedModelDataHandlerUtil.exportStagedModel(
-			portletDataContext, structure);
-	}
-
-	protected DDMFormValues getDDMDataProviderInstanceFormValues() {
-		Class<?> ddmDataProviderSettings = _ddmDataProvider.getSettings();
-
-		DDMForm ddmForm = DDMFormFactory.create(ddmDataProviderSettings);
-
-		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
-			ddmForm);
-
-		ddmFormValues.addDDMFormFieldValue(
-			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
-				"cacheable", Boolean.FALSE.toString()));
-		ddmFormValues.addDDMFormFieldValue(
-			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
-				"key", "countryId"));
-		ddmFormValues.addDDMFormFieldValue(
-			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
-				"password", "test"));
-		ddmFormValues.addDDMFormFieldValue(
-			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
-				"url",
-				"http://localhost:8080/api/jsonws/country/get-countries"));
-		ddmFormValues.addDDMFormFieldValue(
-			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
-				"username", "test@liferay.com"));
-		ddmFormValues.addDDMFormFieldValue(
-			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
-				"timeout", "1000"));
-		ddmFormValues.addDDMFormFieldValue(
-			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
-				"value", "nameCurrentValue"));
-
-		return ddmFormValues;
-	}
-
-	protected DDMFormValues getDDMDataProviderInstanceFormValues(
-		DDMDataProviderInstance ddmDataProviderInstance) {
-
-		Class<?> ddmDataProviderSettings = _ddmDataProvider.getSettings();
-
-		DDMForm ddmForm = DDMFormFactory.create(ddmDataProviderSettings);
-
-		DDMFormValuesDeserializerDeserializeRequest.Builder builder =
-			DDMFormValuesDeserializerDeserializeRequest.Builder.newBuilder(
-				ddmDataProviderInstance.getDefinition(), ddmForm);
-
-		DDMFormValuesDeserializerDeserializeResponse
-			ddmFormValuesDeserializerDeserializeResponse =
-				_jsonDDMFormValuesDeserializer.deserialize(builder.build());
-
-		return ddmFormValuesDeserializerDeserializeResponse.getDDMFormValues();
-	}
-
 	@Override
 	protected StagedModel getStagedModel(String uuid, Group group)
 		throws PortalException {
@@ -434,21 +373,6 @@ public class DDMStructureStagedModelDataHandlerTest
 	@Override
 	protected Class<? extends StagedModel> getStagedModelClass() {
 		return DDMStructure.class;
-	}
-
-	protected void importStructure(
-			Group exportGroup, Group importGroup, DDMStructure structure)
-		throws Exception {
-
-		initImport(exportGroup, importGroup);
-
-		if (Objects.nonNull(structure)) {
-			DDMStructure exportedStructure =
-				(DDMStructure)readExportedStagedModel(structure);
-
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, exportedStructure);
-		}
 	}
 
 	@Override
@@ -553,8 +477,85 @@ public class DDMStructureStagedModelDataHandlerTest
 				importedDataProviderInstanceId);
 
 		Assert.assertEquals(
-			getDDMDataProviderInstanceFormValues(dataProviderInstance),
-			getDDMDataProviderInstanceFormValues(importedDataProviderInstance));
+			_getDDMDataProviderInstanceFormValues(dataProviderInstance),
+			_getDDMDataProviderInstanceFormValues(
+				importedDataProviderInstance));
+	}
+
+	private void _exportStructure(Group exportGroup, DDMStructure structure)
+		throws Exception {
+
+		initExport(exportGroup);
+
+		StagedModelDataHandlerUtil.exportStagedModel(
+			portletDataContext, structure);
+	}
+
+	private DDMFormValues _getDDMDataProviderInstanceFormValues() {
+		Class<?> ddmDataProviderSettings = _ddmDataProvider.getSettings();
+
+		DDMForm ddmForm = DDMFormFactory.create(ddmDataProviderSettings);
+
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmForm);
+
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
+				"cacheable", Boolean.FALSE.toString()));
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
+				"key", "countryId"));
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
+				"password", "test"));
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
+				"url",
+				"http://localhost:8080/api/jsonws/country/get-countries"));
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
+				"username", "test@liferay.com"));
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
+				"timeout", "1000"));
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
+				"value", "nameCurrentValue"));
+
+		return ddmFormValues;
+	}
+
+	private DDMFormValues _getDDMDataProviderInstanceFormValues(
+		DDMDataProviderInstance ddmDataProviderInstance) {
+
+		Class<?> ddmDataProviderSettings = _ddmDataProvider.getSettings();
+
+		DDMForm ddmForm = DDMFormFactory.create(ddmDataProviderSettings);
+
+		DDMFormValuesDeserializerDeserializeRequest.Builder builder =
+			DDMFormValuesDeserializerDeserializeRequest.Builder.newBuilder(
+				ddmDataProviderInstance.getDefinition(), ddmForm);
+
+		DDMFormValuesDeserializerDeserializeResponse
+			ddmFormValuesDeserializerDeserializeResponse =
+				_jsonDDMFormValuesDeserializer.deserialize(builder.build());
+
+		return ddmFormValuesDeserializerDeserializeResponse.getDDMFormValues();
+	}
+
+	private void _importStructure(
+			Group exportGroup, Group importGroup, DDMStructure structure)
+		throws Exception {
+
+		initImport(exportGroup, importGroup);
+
+		if (Objects.nonNull(structure)) {
+			DDMStructure exportedStructure =
+				(DDMStructure)readExportedStagedModel(structure);
+
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, exportedStructure);
+		}
 	}
 
 	private static final String _CLASS_NAME =

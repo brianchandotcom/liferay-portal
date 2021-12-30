@@ -84,7 +84,7 @@ public class DDLRecordStagedModelRepository
 			userId, ddlRecord.getGroupId(), ddlRecord.getRecordSetId(),
 			ddlRecord.getDisplayIndex(), ddmFormValues, serviceContext);
 
-		updateVersions(importedRecord, ddlRecord.getVersion());
+		_updateVersions(importedRecord, ddlRecord.getVersion());
 
 		return importedRecord;
 	}
@@ -160,13 +160,13 @@ public class DDLRecordStagedModelRepository
 					"recordId");
 
 				dynamicQuery.add(
-					recordIdProperty.in(getRecordVersionDynamicQuery()));
+					recordIdProperty.in(_getRecordVersionDynamicQuery()));
 
 				Property recordSetIdProperty = PropertyFactoryUtil.forName(
 					"recordSetId");
 
 				dynamicQuery.add(
-					recordSetIdProperty.in(getRecordSetDynamicQuery(scope)));
+					recordSetIdProperty.in(_getRecordSetDynamicQuery(scope)));
 			});
 
 		return exportActionableDynamicQuery;
@@ -206,12 +206,12 @@ public class DDLRecordStagedModelRepository
 			userId, ddlRecord.getRecordId(), false, ddlRecord.getDisplayIndex(),
 			ddmFormValues, serviceContext);
 
-		updateVersions(importedRecord, ddlRecord.getVersion());
+		_updateVersions(importedRecord, ddlRecord.getVersion());
 
 		return importedRecord;
 	}
 
-	protected DynamicQuery getRecordSetDynamicQuery(int scope) {
+	private DynamicQuery _getRecordSetDynamicQuery(int scope) {
 		StagedModelDataHandler<?> stagedModelDataHandler =
 			StagedModelDataHandlerRegistryUtil.getStagedModelDataHandler(
 				DDLRecord.class.getName());
@@ -235,7 +235,7 @@ public class DDLRecordStagedModelRepository
 		return recordSetDynamicQuery;
 	}
 
-	protected DynamicQuery getRecordVersionDynamicQuery() {
+	private DynamicQuery _getRecordVersionDynamicQuery() {
 		StagedModelDataHandler<?> stagedModelDataHandler =
 			StagedModelDataHandlerRegistryUtil.getStagedModelDataHandler(
 				DDLRecord.class.getName());
@@ -265,7 +265,7 @@ public class DDLRecordStagedModelRepository
 		return recordVersionDynamicQuery;
 	}
 
-	protected void updateVersions(DDLRecord importedRecord, String version)
+	private void _updateVersions(DDLRecord importedRecord, String version)
 		throws PortalException {
 
 		if (Objects.equals(importedRecord.getVersion(), version)) {

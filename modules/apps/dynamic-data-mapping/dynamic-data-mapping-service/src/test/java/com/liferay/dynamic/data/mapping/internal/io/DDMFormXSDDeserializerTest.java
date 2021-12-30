@@ -50,10 +50,10 @@ public class DDMFormXSDDeserializerTest
 	public void setUp() throws Exception {
 		super.setUp();
 
-		setUpHtmlUtil();
-		setUpPropsValues();
-		setUpSAXReaderUtil();
-		setUpDDMFormXSDDeserializer();
+		_setUpHtmlUtil();
+		_setUpPropsValues();
+		_setUpSAXReaderUtil();
+		_setUpDDMFormXSDDeserializer();
 	}
 
 	@Override
@@ -79,7 +79,7 @@ public class DDMFormXSDDeserializerTest
 		return ".xml";
 	}
 
-	protected void setUpDDMFormXSDDeserializer() throws Exception {
+	private void _setUpDDMFormXSDDeserializer() throws Exception {
 		field(
 			DDMFormXSDDeserializer.class, "_saxReader"
 		).set(
@@ -87,17 +87,17 @@ public class DDMFormXSDDeserializerTest
 		);
 	}
 
-	protected void setUpHtmlUtil() {
+	private void _setUpHtmlUtil() {
 		HtmlUtil htmlUtil = new HtmlUtil();
 
 		htmlUtil.setHtml(new HtmlImpl());
 	}
 
-	protected void setUpPropsValues() {
+	private void _setUpPropsValues() {
 		mockStatic(PropsValues.class);
 	}
 
-	protected void setUpSAXReaderUtil() {
+	private void _setUpSAXReaderUtil() {
 		SAXReaderUtil saxReaderUtil = new SAXReaderUtil();
 
 		SAXReaderImpl secureSAXReaderImpl = new SAXReaderImpl();

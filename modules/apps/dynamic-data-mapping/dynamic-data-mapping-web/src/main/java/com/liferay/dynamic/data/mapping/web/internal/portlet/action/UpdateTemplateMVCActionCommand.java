@@ -55,7 +55,7 @@ public class UpdateTemplateMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		DDMTemplate template = updateTemplate(actionRequest);
+		DDMTemplate template = _updateTemplate(actionRequest);
 
 		updatePortletPreferences(actionRequest, template);
 
@@ -64,7 +64,7 @@ public class UpdateTemplateMVCActionCommand
 		setRedirectAttribute(actionRequest, template);
 	}
 
-	protected DDMTemplate updateTemplate(ActionRequest actionRequest)
+	private DDMTemplate _updateTemplate(ActionRequest actionRequest)
 		throws Exception {
 
 		UploadPortletRequest uploadPortletRequest =

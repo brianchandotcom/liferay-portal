@@ -23,20 +23,20 @@ import com.liferay.portal.kernel.util.LoggingTimer;
 public class UpgradeLastPublishDate
 	extends com.liferay.portal.upgrade.v7_0_0.UpgradeLastPublishDate {
 
-	protected void addLastPublishDateColumns() throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			addLastPublishDateColumn("DDLRecord");
-			addLastPublishDateColumn("DDLRecordSet");
-		}
-	}
-
 	@Override
 	protected void doUpgrade() throws Exception {
-		addLastPublishDateColumns();
+		_addLastPublishDateColumns();
 
 		updateLastPublishDates(DDLPortletKeys.DYNAMIC_DATA_LISTS, "DDLRecord");
 		updateLastPublishDates(
 			DDLPortletKeys.DYNAMIC_DATA_LISTS, "DDLRecordSet");
+	}
+
+	private void _addLastPublishDateColumns() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			addLastPublishDateColumn("DDLRecord");
+			addLastPublishDateColumn("DDLRecordSet");
+		}
 	}
 
 }

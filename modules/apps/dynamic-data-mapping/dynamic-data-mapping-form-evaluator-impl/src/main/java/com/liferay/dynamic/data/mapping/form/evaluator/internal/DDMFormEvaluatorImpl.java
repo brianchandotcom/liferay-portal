@@ -49,8 +49,17 @@ public class DDMFormEvaluatorImpl implements DDMFormEvaluator {
 		return formEvaluatorHelper.evaluate();
 	}
 
-	protected Map<String, DDMFormFieldEvaluationResult>
-		createDDMFormFieldEvaluationResultsMap(
+	@Reference
+	protected DDMExpressionFactory ddmExpressionFactory;
+
+	@Reference
+	protected DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker;
+
+	@Reference
+	protected DDMFormPageChangeTracker ddmFormPageChangeTracker;
+
+	private Map<String, DDMFormFieldEvaluationResult>
+		_createDDMFormFieldEvaluationResultsMap(
 			Map<DDMFormEvaluatorFieldContextKey, Map<String, Object>>
 				ddmFormFieldsPropertyChange) {
 
@@ -83,14 +92,5 @@ public class DDMFormEvaluatorImpl implements DDMFormEvaluator {
 
 		return map;
 	}
-
-	@Reference
-	protected DDMExpressionFactory ddmExpressionFactory;
-
-	@Reference
-	protected DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker;
-
-	@Reference
-	protected DDMFormPageChangeTracker ddmFormPageChangeTracker;
 
 }

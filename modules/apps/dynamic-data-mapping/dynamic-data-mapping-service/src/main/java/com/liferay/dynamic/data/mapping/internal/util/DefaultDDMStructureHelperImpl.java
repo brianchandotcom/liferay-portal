@@ -75,7 +75,7 @@ public class DefaultDDMStructureHelperImpl
 
 		Locale locale = _portal.getSiteDefaultLocale(groupId);
 
-		List<Element> structureElements = getDDMStructures(
+		List<Element> structureElements = _getDDMStructures(
 			classLoader, fileName, locale);
 
 		for (Element structureElement : structureElements) {
@@ -118,7 +118,7 @@ public class DefaultDDMStructureHelperImpl
 
 			DDMForm ddmForm = getDDMForm(groupId, locale, structureElement);
 
-			DDMFormLayout ddmFormLayout = getDDMFormLayout(
+			DDMFormLayout ddmFormLayout = _getDDMFormLayout(
 				structureElement, ddmForm);
 
 			serviceContext.setAttribute(
@@ -163,7 +163,7 @@ public class DefaultDDMStructureHelperImpl
 			String dynamicDDMStructureName, Locale locale)
 		throws Exception {
 
-		List<Element> structureElements = getDDMStructures(
+		List<Element> structureElements = _getDDMStructures(
 			classLoader, fileName, locale);
 
 		for (Element structureElement : structureElements) {
@@ -226,7 +226,26 @@ public class DefaultDDMStructureHelperImpl
 			ddmForm, locale, _language.getAvailableLocales(groupId));
 	}
 
-	protected DDMFormLayout getDDMFormLayout(
+	@Reference(unbind = "-")
+	protected void setDDM(DDM ddm) {
+		_ddm = ddm;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDDMStructureLocalService(
+		DDMStructureLocalService ddmStructureLocalService) {
+
+		_ddmStructureLocalService = ddmStructureLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDDMTemplateLocalService(
+		DDMTemplateLocalService ddmTemplateLocalService) {
+
+		_ddmTemplateLocalService = ddmTemplateLocalService;
+	}
+
+	private DDMFormLayout _getDDMFormLayout(
 		Element structureElement, DDMForm ddmForm) {
 
 		Element structureElementLayoutElement = structureElement.element(
@@ -248,7 +267,7 @@ public class DefaultDDMStructureHelperImpl
 		return _ddm.getDefaultDDMFormLayout(ddmForm);
 	}
 
-	protected List<Element> getDDMStructures(
+	private List<Element> _getDDMStructures(
 			ClassLoader classLoader, String fileName, Locale locale)
 		throws Exception {
 
@@ -261,25 +280,6 @@ public class DefaultDDMStructureHelperImpl
 		Element rootElement = document.getRootElement();
 
 		return rootElement.elements("structure");
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDM(DDM ddm) {
-		_ddm = ddm;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMStructureLocalService(
-		DDMStructureLocalService ddmStructureLocalService) {
-
-		_ddmStructureLocalService = ddmStructureLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMTemplateLocalService(
-		DDMTemplateLocalService ddmTemplateLocalService) {
-
-		_ddmTemplateLocalService = ddmTemplateLocalService;
 	}
 
 	private DDMForm _getPopulateDDMForm(

@@ -79,7 +79,7 @@ public class GridDDMFormFieldValueRendererTest {
 		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
 
 		GridDDMFormFieldValueRenderer gridDDMFormFieldValueRenderer =
-			createGridDDMFormFieldValueRenderer();
+			_createGridDDMFormFieldValueRenderer();
 
 		Assert.assertEquals(
 			"rowLabel 1: columnLabel 1",
@@ -128,7 +128,7 @@ public class GridDDMFormFieldValueRendererTest {
 		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
 
 		GridDDMFormFieldValueRenderer gridDDMFormFieldValueRenderer =
-			createGridDDMFormFieldValueRenderer();
+			_createGridDDMFormFieldValueRenderer();
 
 		Assert.assertEquals(
 			"rowLabel 1: columnLabel 1, rowLabel 2: columnLabel 2",
@@ -136,8 +136,8 @@ public class GridDDMFormFieldValueRendererTest {
 				ddmFormFieldValue, LocaleUtil.US));
 	}
 
-	protected GridDDMFormFieldValueAccessor
-		createGridDDMFormFieldValueAccessor() {
+	private GridDDMFormFieldValueAccessor
+		_createGridDDMFormFieldValueAccessor() {
 
 		GridDDMFormFieldValueAccessor gridDDMFormFieldValueAccessor =
 			new GridDDMFormFieldValueAccessor();
@@ -147,15 +147,14 @@ public class GridDDMFormFieldValueRendererTest {
 		return gridDDMFormFieldValueAccessor;
 	}
 
-	protected GridDDMFormFieldValueRenderer
-			createGridDDMFormFieldValueRenderer()
+	private GridDDMFormFieldValueRenderer _createGridDDMFormFieldValueRenderer()
 		throws Exception {
 
 		GridDDMFormFieldValueRenderer gridDDMFormFieldValueRenderer =
 			new GridDDMFormFieldValueRenderer();
 
 		gridDDMFormFieldValueRenderer.gridDDMFormFieldValueAccessor =
-			createGridDDMFormFieldValueAccessor();
+			_createGridDDMFormFieldValueAccessor();
 
 		return gridDDMFormFieldValueRenderer;
 	}

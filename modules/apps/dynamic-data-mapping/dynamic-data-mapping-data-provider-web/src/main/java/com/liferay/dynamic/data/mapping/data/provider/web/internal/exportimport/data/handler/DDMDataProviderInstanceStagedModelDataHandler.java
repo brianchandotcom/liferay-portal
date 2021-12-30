@@ -107,18 +107,6 @@ public class DDMDataProviderInstanceStagedModelDataHandler
 		return dataProviderInstance.getNameCurrentValue();
 	}
 
-	protected DDMFormValues deserialize(String content, DDMForm ddmForm) {
-		DDMFormValuesDeserializerDeserializeRequest.Builder builder =
-			DDMFormValuesDeserializerDeserializeRequest.Builder.newBuilder(
-				content, ddmForm);
-
-		DDMFormValuesDeserializerDeserializeResponse
-			ddmFormValuesDeserializerDeserializeResponse =
-				_jsonDDMFormValuesDeserializer.deserialize(builder.build());
-
-		return ddmFormValuesDeserializerDeserializeResponse.getDDMFormValues();
-	}
-
 	@Override
 	protected void doExportStagedModel(
 			PortletDataContext portletDataContext,
@@ -205,7 +193,7 @@ public class DDMDataProviderInstanceStagedModelDataHandler
 
 		DDMForm ddmForm = DDMFormFactory.create(ddmDataProvider.getSettings());
 
-		DDMFormValues ddmFormValues = deserialize(
+		DDMFormValues ddmFormValues = _deserialize(
 			dataProviderInstance.getDefinition(), ddmForm);
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
@@ -236,6 +224,18 @@ public class DDMDataProviderInstanceStagedModelDataHandler
 		StagedModelRepository<DDMDataProviderInstance> stagedModelRepository) {
 
 		_stagedModelRepository = stagedModelRepository;
+	}
+
+	private DDMFormValues _deserialize(String content, DDMForm ddmForm) {
+		DDMFormValuesDeserializerDeserializeRequest.Builder builder =
+			DDMFormValuesDeserializerDeserializeRequest.Builder.newBuilder(
+				content, ddmForm);
+
+		DDMFormValuesDeserializerDeserializeResponse
+			ddmFormValuesDeserializerDeserializeResponse =
+				_jsonDDMFormValuesDeserializer.deserialize(builder.build());
+
+		return ddmFormValuesDeserializerDeserializeResponse.getDDMFormValues();
 	}
 
 	@Reference

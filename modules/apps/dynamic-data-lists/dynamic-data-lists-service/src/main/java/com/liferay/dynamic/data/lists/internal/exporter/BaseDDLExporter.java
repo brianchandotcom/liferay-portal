@@ -127,7 +127,85 @@ public abstract class BaseDDLExporter implements DDLExporter {
 	protected abstract DDLRecordSetVersionService
 		getDDLRecordSetVersionService();
 
-	protected DDMFormFieldRenderedValue getDDMFormFieldRenderedValue(
+	protected abstract DDMFormFieldTypeServicesTracker
+		getDDMFormFieldTypeServicesTracker();
+
+	protected abstract DDMFormFieldValueRendererRegistry
+		getDDMFormFieldValueRendererRegistry();
+
+	protected Map<String, DDMFormField> getDistinctFields(long recordSetId)
+		throws Exception {
+
+		List<DDMStructureVersion> ddmStructureVersions = _getStructureVersions(
+			recordSetId);
+
+		Map<String, DDMFormField> ddmFormFields = new LinkedHashMap<>();
+
+		for (DDMStructureVersion ddmStructureVersion : ddmStructureVersions) {
+			DDMForm ddmForm = ddmStructureVersion.getDDMForm();
+
+			ddmFormFields.putAll(ddmForm.getDDMFormFieldsMap(true));
+		}
+
+		return ddmFormFields;
+	}
+
+	protected Map<String, DDMFormFieldRenderedValue> getRenderedValues(
+			int scope, Collection<DDMFormField> ddmFormFields,
+			DDMFormValues ddmFormValues)
+		throws Exception {
+
+		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
+			ddmFormValues.getDDMFormFieldValuesMap();
+
+		Stream<DDMFormField> ddmFormFieldsStream = ddmFormFields.stream();
+
+		return ddmFormFieldsStream.filter(
+			ddmFormField -> ddmFormFieldValuesMap.containsKey(
+				ddmFormField.getName())
+		).map(
+			ddmFormField -> _getDDMFormFieldRenderedValue(
+				scope, ddmFormField, ddmFormFieldValuesMap)
+		).collect(
+			Collectors.toMap(
+				DDMFormFieldRenderedValue::getFieldName, value -> value)
+		);
+	}
+
+	protected String getStatusMessage(int status) {
+		return LanguageUtil.get(
+			_locale, WorkflowConstants.getStatusLabel(status));
+	}
+
+	protected static class DDMFormFieldRenderedValue {
+
+		protected DDMFormFieldRenderedValue(
+			String fieldName, LocalizedValue label, String value) {
+
+			_fieldName = fieldName;
+			_label = label;
+			_value = value;
+		}
+
+		protected String getFieldName() {
+			return _fieldName;
+		}
+
+		protected LocalizedValue getLabel() {
+			return _label;
+		}
+
+		protected String getValue() {
+			return _value;
+		}
+
+		private final String _fieldName;
+		private final LocalizedValue _label;
+		private final String _value;
+
+	}
+
+	private DDMFormFieldRenderedValue _getDDMFormFieldRenderedValue(
 		int scope, DDMFormField ddmFormField,
 		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap) {
 
@@ -176,57 +254,7 @@ public abstract class BaseDDLExporter implements DDLExporter {
 			ddmFormField.getName(), ddmFormField.getLabel(), valueString);
 	}
 
-	protected abstract DDMFormFieldTypeServicesTracker
-		getDDMFormFieldTypeServicesTracker();
-
-	protected abstract DDMFormFieldValueRendererRegistry
-		getDDMFormFieldValueRendererRegistry();
-
-	protected Map<String, DDMFormField> getDistinctFields(long recordSetId)
-		throws Exception {
-
-		List<DDMStructureVersion> ddmStructureVersions = getStructureVersions(
-			recordSetId);
-
-		Map<String, DDMFormField> ddmFormFields = new LinkedHashMap<>();
-
-		for (DDMStructureVersion ddmStructureVersion : ddmStructureVersions) {
-			DDMForm ddmForm = ddmStructureVersion.getDDMForm();
-
-			ddmFormFields.putAll(ddmForm.getDDMFormFieldsMap(true));
-		}
-
-		return ddmFormFields;
-	}
-
-	protected Map<String, DDMFormFieldRenderedValue> getRenderedValues(
-			int scope, Collection<DDMFormField> ddmFormFields,
-			DDMFormValues ddmFormValues)
-		throws Exception {
-
-		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
-			ddmFormValues.getDDMFormFieldValuesMap();
-
-		Stream<DDMFormField> ddmFormFieldsStream = ddmFormFields.stream();
-
-		return ddmFormFieldsStream.filter(
-			ddmFormField -> ddmFormFieldValuesMap.containsKey(
-				ddmFormField.getName())
-		).map(
-			ddmFormField -> getDDMFormFieldRenderedValue(
-				scope, ddmFormField, ddmFormFieldValuesMap)
-		).collect(
-			Collectors.toMap(
-				DDMFormFieldRenderedValue::getFieldName, value -> value)
-		);
-	}
-
-	protected String getStatusMessage(int status) {
-		return LanguageUtil.get(
-			_locale, WorkflowConstants.getStatusLabel(status));
-	}
-
-	protected List<DDMStructureVersion> getStructureVersions(long recordSetId)
+	private List<DDMStructureVersion> _getStructureVersions(long recordSetId)
 		throws Exception {
 
 		DDLRecordSetVersionService ddlRecordSetVersionService =
@@ -243,34 +271,6 @@ public abstract class BaseDDLExporter implements DDLExporter {
 		}
 
 		return ddmStructureVersions;
-	}
-
-	protected static class DDMFormFieldRenderedValue {
-
-		protected DDMFormFieldRenderedValue(
-			String fieldName, LocalizedValue label, String value) {
-
-			_fieldName = fieldName;
-			_label = label;
-			_value = value;
-		}
-
-		protected String getFieldName() {
-			return _fieldName;
-		}
-
-		protected LocalizedValue getLabel() {
-			return _label;
-		}
-
-		protected String getValue() {
-			return _value;
-		}
-
-		private final String _fieldName;
-		private final LocalizedValue _label;
-		private final String _value;
-
 	}
 
 	private Locale _locale;

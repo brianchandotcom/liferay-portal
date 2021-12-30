@@ -82,7 +82,7 @@ public class DDMDataProviderInstanceOutputParametersDataProvider
 		try {
 			DDMDataProviderOutputParametersSettings[]
 				ddmDataProviderOutputParametersSettings =
-					getDDMDataProviderOutputParametersSettings(
+					_getDDMDataProviderOutputParametersSettings(
 						dataProviderInstanceId);
 
 			for (DDMDataProviderOutputParametersSettings
@@ -128,7 +128,16 @@ public class DDMDataProviderInstanceOutputParametersDataProvider
 		return ddmFormValuesDeserializerDeserializeResponse.getDDMFormValues();
 	}
 
-	protected DDMFormValues getDataProviderInstanceFormValues(
+	@Reference
+	protected DDMDataProviderInstanceService ddmDataProviderInstanceService;
+
+	@Reference
+	protected DDMDataProviderTracker ddmDataProviderTracker;
+
+	@Reference(target = "(ddm.form.values.deserializer.type=json)")
+	protected DDMFormValuesDeserializer jsonDDMFormValuesDeserializer;
+
+	private DDMFormValues _getDataProviderInstanceFormValues(
 		DDMDataProvider ddmDataProvider,
 		DDMDataProviderInstance ddmDataProviderInstance) {
 
@@ -137,8 +146,8 @@ public class DDMDataProviderInstanceOutputParametersDataProvider
 		return deserialize(ddmDataProviderInstance.getDefinition(), ddmForm);
 	}
 
-	protected DDMDataProviderOutputParametersSettings[]
-			getDDMDataProviderOutputParametersSettings(
+	private DDMDataProviderOutputParametersSettings[]
+			_getDDMDataProviderOutputParametersSettings(
 				long dataProviderInstanceId)
 		throws Exception {
 
@@ -158,7 +167,7 @@ public class DDMDataProviderInstanceOutputParametersDataProvider
 		}
 
 		DDMFormValues dataProviderFormValues =
-			getDataProviderInstanceFormValues(
+			_getDataProviderInstanceFormValues(
 				ddmDataProvider, ddmDataProviderInstance);
 
 		DDMDataProviderParameterSettings ddmDataProviderParameterSetting =
@@ -167,15 +176,6 @@ public class DDMDataProviderInstanceOutputParametersDataProvider
 
 		return ddmDataProviderParameterSetting.outputParameters();
 	}
-
-	@Reference
-	protected DDMDataProviderInstanceService ddmDataProviderInstanceService;
-
-	@Reference
-	protected DDMDataProviderTracker ddmDataProviderTracker;
-
-	@Reference(target = "(ddm.form.values.deserializer.type=json)")
-	protected DDMFormValuesDeserializer jsonDDMFormValuesDeserializer;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMDataProviderInstanceOutputParametersDataProvider.class);

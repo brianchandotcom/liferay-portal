@@ -42,7 +42,7 @@ public class GridDDMFormFieldValueAccessorTest extends PowerMockito {
 
 	@Before
 	public void setUp() throws Exception {
-		setUpGridDDMFormFieldValueAccessor();
+		_setUpGridDDMFormFieldValueAccessor();
 	}
 
 	@Test
@@ -120,7 +120,7 @@ public class GridDDMFormFieldValueAccessorTest extends PowerMockito {
 				ddmFormFieldValue, LocaleUtil.US));
 	}
 
-	protected void setUpGridDDMFormFieldValueAccessor() throws Exception {
+	private void _setUpGridDDMFormFieldValueAccessor() throws Exception {
 		_gridDDMFormFieldValueAccessor = new GridDDMFormFieldValueAccessor();
 
 		field(

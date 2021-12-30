@@ -65,6 +65,16 @@ public class PortalInstanceSerDes {
 			sb.append(portalInstance.getActive());
 		}
 
+		if (portalInstance.getAdmin() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"admin\": ");
+
+			sb.append(String.valueOf(portalInstance.getAdmin()));
+		}
+
 		if (portalInstance.getCompanyId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -157,6 +167,13 @@ public class PortalInstanceSerDes {
 			map.put("active", String.valueOf(portalInstance.getActive()));
 		}
 
+		if (portalInstance.getAdmin() == null) {
+			map.put("admin", null);
+		}
+		else {
+			map.put("admin", String.valueOf(portalInstance.getAdmin()));
+		}
+
 		if (portalInstance.getCompanyId() == null) {
 			map.put("companyId", null);
 		}
@@ -221,6 +238,12 @@ public class PortalInstanceSerDes {
 			if (Objects.equals(jsonParserFieldName, "active")) {
 				if (jsonParserFieldValue != null) {
 					portalInstance.setActive((Boolean)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "admin")) {
+				if (jsonParserFieldValue != null) {
+					portalInstance.setAdmin(
+						AdminSerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "companyId")) {

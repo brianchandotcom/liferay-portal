@@ -55,6 +55,25 @@ public class PortalInstance implements Cloneable, Serializable {
 
 	protected Boolean active;
 
+	public Admin getAdmin() {
+		return admin;
+	}
+
+	public void setAdmin(Admin admin) {
+		this.admin = admin;
+	}
+
+	public void setAdmin(UnsafeSupplier<Admin, Exception> adminUnsafeSupplier) {
+		try {
+			admin = adminUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Admin admin;
+
 	public Long getCompanyId() {
 		return companyId;
 	}

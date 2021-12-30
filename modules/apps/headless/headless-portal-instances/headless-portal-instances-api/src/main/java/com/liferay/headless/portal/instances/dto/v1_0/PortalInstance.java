@@ -36,6 +36,8 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
+import javax.validation.Valid;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -83,6 +85,37 @@ public class PortalInstance implements Serializable {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean active;
+
+	@Schema(
+		description = "The portal instance's administrator. This field is optional and is only used in the portal instance creation."
+	)
+	@Valid
+	public Admin getAdmin() {
+		return admin;
+	}
+
+	public void setAdmin(Admin admin) {
+		this.admin = admin;
+	}
+
+	@JsonIgnore
+	public void setAdmin(UnsafeSupplier<Admin, Exception> adminUnsafeSupplier) {
+		try {
+			admin = adminUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(
+		description = "The portal instance's administrator. This field is optional and is only used in the portal instance creation."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Admin admin;
 
 	@Schema(description = "internal unique key.")
 	public Long getCompanyId() {
@@ -263,6 +296,16 @@ public class PortalInstance implements Serializable {
 			sb.append("\"active\": ");
 
 			sb.append(active);
+		}
+
+		if (admin != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"admin\": ");
+
+			sb.append(String.valueOf(admin));
 		}
 
 		if (companyId != null) {

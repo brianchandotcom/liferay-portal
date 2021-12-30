@@ -197,6 +197,10 @@ public abstract class BaseBuild implements Build {
 
 		Build topLevelBuild = getTopLevelBuild();
 
+		if (this == topLevelBuild) {
+			return _archiveName;
+		}
+
 		return topLevelBuild.getArchiveName();
 	}
 

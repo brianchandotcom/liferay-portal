@@ -194,7 +194,7 @@ public abstract class BaseCPOptionsDisplayContext<T> {
 	protected SearchContainer<T> searchContainer;
 
 	private String _defaultOrderByCol;
-	private String _defaultOrderByType;
+	private final String _defaultOrderByType;
 	private String _displayStyle;
 	private String _keywords;
 	private String _orderByCol;

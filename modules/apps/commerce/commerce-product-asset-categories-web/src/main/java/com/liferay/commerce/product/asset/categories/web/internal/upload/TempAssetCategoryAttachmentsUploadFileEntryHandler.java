@@ -79,8 +79,7 @@ public class TempAssetCategoryAttachmentsUploadFileEntryHandler
 				_PARAMETER_NAME)) {
 
 			return _addFileEntry(
-				assetCategory.getCategoryId(), fileName, contentType,
-				inputStream, themeDisplay);
+				fileName, contentType, inputStream, themeDisplay);
 		}
 	}
 
@@ -94,8 +93,8 @@ public class TempAssetCategoryAttachmentsUploadFileEntryHandler
 	protected AssetCategoryService assetCategoryService;
 
 	private FileEntry _addFileEntry(
-			long categoryId, String fileName, String contentType,
-			InputStream inputStream, ThemeDisplay themeDisplay)
+			String fileName, String contentType, InputStream inputStream,
+			ThemeDisplay themeDisplay)
 		throws PortalException {
 
 		String uniqueFileName = _uniqueFileNameProvider.provide(

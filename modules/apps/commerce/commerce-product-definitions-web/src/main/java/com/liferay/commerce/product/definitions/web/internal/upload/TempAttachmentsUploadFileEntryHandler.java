@@ -80,8 +80,7 @@ public class TempAttachmentsUploadFileEntryHandler
 				_PARAMETER_NAME)) {
 
 			return _addFileEntry(
-				cpDefinition.getCPDefinitionId(), fileName, contentType,
-				inputStream, themeDisplay);
+				fileName, contentType, inputStream, themeDisplay);
 		}
 	}
 
@@ -95,8 +94,8 @@ public class TempAttachmentsUploadFileEntryHandler
 	protected CPDefinitionService cpDefinitionService;
 
 	private FileEntry _addFileEntry(
-			long cpDefinitionId, String fileName, String contentType,
-			InputStream inputStream, ThemeDisplay themeDisplay)
+			String fileName, String contentType, InputStream inputStream,
+			ThemeDisplay themeDisplay)
 		throws PortalException {
 
 		String uniqueFileName = _uniqueFileNameProvider.provide(

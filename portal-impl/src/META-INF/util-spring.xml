@@ -106,9 +106,7 @@
 		<property name="language" ref="com.liferay.portal.language.LanguageImpl" />
 	</bean>
 	<bean class="com.liferay.portal.kernel.language.UnicodeLanguageUtil" id="com.liferay.portal.kernel.language.UnicodeLanguageUtil">
-		<property name="unicodeLanguage">
-			<bean class="com.liferay.portal.language.UnicodeLanguageImpl" />
-		</property>
+		<property name="unicodeLanguage" ref="com.liferay.portal.language.UnicodeLanguageImpl" />
 	</bean>
 	<bean class="com.liferay.portal.layoutconfiguration.util.RuntimePageImpl" id="com.liferay.portal.kernel.layoutconfiguration.util.RuntimePage" />
 	<bean class="com.liferay.portal.kernel.layoutconfiguration.util.RuntimePageUtil" id="com.liferay.portal.kernel.layoutconfiguration.util.RuntimePageUtil">
@@ -348,6 +346,7 @@
 	</bean>
 	<bean class="com.liferay.portal.language.LanguageImpl" id="com.liferay.portal.language.LanguageImpl" />
 	<bean class="com.liferay.portal.language.LanguageResources" id="com.liferay.portal.language.LanguageResources" />
+	<bean class="com.liferay.portal.language.UnicodeLanguageImpl" id="com.liferay.portal.language.UnicodeLanguageImpl" />
 	<bean class="com.liferay.portal.model.adapter.builder.ServiceTrackerMapModelAdapterBuilderLocator" id="com.liferay.portal.model.adapter.builder.ServiceTrackerMapModelAdapterBuilderLocator" />
 	<bean class="com.liferay.portal.service.permission.GroupPermissionImpl" id="com.liferay.portal.service.permission.GroupPermissionImpl" />
 	<bean class="com.liferay.portal.service.permission.UserPermissionImpl" id="com.liferay.portal.service.permission.UserPermissionImpl" />

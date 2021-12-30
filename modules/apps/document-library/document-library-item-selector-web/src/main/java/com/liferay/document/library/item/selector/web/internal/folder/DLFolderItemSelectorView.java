@@ -53,6 +53,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -133,7 +134,8 @@ public class DLFolderItemSelectorView
 		requestDispatcher.include(servletRequest, servletResponse);
 	}
 
-	private void _activate(Map<String, Object> properties) {
+	@Activate
+	protected void activate(Map<String, Object> properties) {
 		_ffFolderItemSelectorGroupSelectorConfiguration =
 			ConfigurableUtil.createConfigurable(
 				FFFolderItemSelectorGroupSelectorConfiguration.class,

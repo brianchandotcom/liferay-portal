@@ -40,6 +40,8 @@ public interface Build {
 
 	public String getAppServer();
 
+	public String getArchiveName();
+
 	public String getArchivePath();
 
 	public File getArchiveRootDir();

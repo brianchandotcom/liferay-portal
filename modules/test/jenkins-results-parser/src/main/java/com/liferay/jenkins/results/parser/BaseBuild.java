@@ -190,7 +190,20 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
+	public String getArchiveName() {
+		if (getParentBuild() == null) {
+			return _archiveName;
+		}
+
+		Build topLevelBuild = getTopLevelBuild();
+
+		return topLevelBuild.getArchiveName();
+	}
+
+	@Override
 	public String getArchivePath() {
+		String archiveName = getArchiveName();
+
 		StringBuilder sb = new StringBuilder(archiveName);
 
 		if (!archiveName.endsWith("/")) {
@@ -1003,7 +1016,7 @@ public abstract class BaseBuild implements Build {
 
 		if (fromArchive) {
 			return JenkinsResultsParserUtil.combine(
-				Build.DEPENDENCIES_URL_TOKEN, "/", archiveName, "/",
+				Build.DEPENDENCIES_URL_TOKEN, "/", getArchiveName(), "/",
 				_jenkinsMaster.getName(), "/", jobName);
 		}
 

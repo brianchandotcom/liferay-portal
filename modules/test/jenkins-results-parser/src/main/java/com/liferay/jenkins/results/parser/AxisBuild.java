@@ -77,6 +77,8 @@ public class AxisBuild extends BaseBuild {
 
 	@Override
 	public String getArchivePath() {
+		String archiveName = getArchiveName();
+
 		if (archiveName == null) {
 			System.out.println(
 				"Build URL " + getBuildURL() + " has a null archive name");

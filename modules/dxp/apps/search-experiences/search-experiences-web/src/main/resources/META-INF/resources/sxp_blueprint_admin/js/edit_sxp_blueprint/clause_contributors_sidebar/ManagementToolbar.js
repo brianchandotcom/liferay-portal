@@ -33,7 +33,7 @@ function ManagementToolbar({
 	onClearCategory,
 	onClearStatus,
 	onReverseSort,
-	onUpdateEnabled,
+	onUpdateSelected,
 	selected,
 	setKeyword,
 	setSelected,
@@ -124,7 +124,7 @@ function ManagementToolbar({
 								<ClayButtonGroup spaced>
 									<ClayButton
 										displayType="secondary"
-										onClick={() => onUpdateEnabled(true)}
+										onClick={onUpdateSelected(true)}
 										small
 									>
 										{Liferay.Language.get('turn-on')}
@@ -132,7 +132,7 @@ function ManagementToolbar({
 
 									<ClayButton
 										displayType="secondary"
-										onClick={() => onUpdateEnabled(false)}
+										onClick={onUpdateSelected(false)}
 										small
 									>
 										{Liferay.Language.get('turn-off')}

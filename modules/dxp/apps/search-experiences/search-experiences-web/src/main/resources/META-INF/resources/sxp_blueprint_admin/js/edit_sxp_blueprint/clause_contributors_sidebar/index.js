@@ -24,12 +24,8 @@ import {
 	DESCENDING,
 	INACTIVE,
 } from '../../utils/constants';
-import {BASELINE_CLAUSE_CONTRIBUTORS_CONFIGURATION} from '../../utils/data';
 import {fetchData} from '../../utils/fetch';
-import {
-	getClauseContributorsConfig,
-	getClauseContributorsState,
-} from '../../utils/utils';
+import {removeDuplicates} from '../../utils/utils';
 import ManagementToolbar from './ManagementToolbar';
 
 /**
@@ -60,9 +56,6 @@ function ClauseContributorsSidebar({
 	const [category, setCategory] = useState(ALL);
 	const [contributors, setContributors] = useState(
 		initialClauseContributorsList
-	);
-	const [enabled, setEnabled] = useState(
-		getClauseContributorsState(frameworkConfig)
 	);
 	const [keyword, setKeyword] = useState('');
 	const [selected, setSelected] = useState([]);
@@ -125,17 +118,21 @@ function ClauseContributorsSidebar({
 			}
 		};
 
-		const _isStatusVisible = (item, status, enabled) => {
+		const _isStatusVisible = (item, status) => {
 			if (status === ALL) {
 				return true;
 			}
 
 			if (status === ACTIVE) {
-				return enabled[item];
+				return frameworkConfig.clauseContributorsIncludes.includes(
+					item
+				);
 			}
 
 			if (status === INACTIVE) {
-				return !enabled[item];
+				return !frameworkConfig.clauseContributorsIncludes.includes(
+					item
+				);
 			}
 		};
 
@@ -148,7 +145,7 @@ function ClauseContributorsSidebar({
 						.filter(
 							(item) =>
 								_isSearchVisible(item, keyword) &&
-								_isStatusVisible(item, status, enabled)
+								_isStatusVisible(item, status)
 						)
 						.sort((a, b) =>
 							sortDirection === DESCENDING
@@ -158,7 +155,7 @@ function ClauseContributorsSidebar({
 				}))
 		);
 	}, [
-		enabled,
+		frameworkConfig,
 		category,
 		keyword,
 		sortDirection,
@@ -177,33 +174,46 @@ function ClauseContributorsSidebar({
 		);
 	};
 
-	const _handleToggle = (className) => () => {
-		const newEnabled = {
-			...enabled,
-			[className]: !enabled[className],
-		};
-
-		onFrameworkConfigChange(getClauseContributorsConfig(newEnabled));
-
-		setEnabled(newEnabled);
+	const _handleDisableClauseContributors = (classNames) => {
+		onFrameworkConfigChange({
+			clauseContributorsExcludes: removeDuplicates([
+				...frameworkConfig.clauseContributorsExcludes,
+				...classNames,
+			]),
+			clauseContributorsIncludes: frameworkConfig.clauseContributorsIncludes.filter(
+				(clause) => !classNames.includes(clause)
+			),
+		});
 	};
 
-	const _handleUpdateEnabled = (value) => {
-		const newEnabled = {};
-
-		selected.forEach((item) => {
-			newEnabled[item] = value;
+	const _handleEnableClauseContributors = (classNames) => {
+		onFrameworkConfigChange({
+			clauseContributorsExcludes: frameworkConfig.clauseContributorsExcludes.filter(
+				(clause) => !classNames.includes(clause)
+			),
+			clauseContributorsIncludes: removeDuplicates([
+				...frameworkConfig.clauseContributorsIncludes,
+				...classNames,
+			]),
 		});
+	};
 
-		onFrameworkConfigChange(
-			getClauseContributorsConfig({
-				...enabled,
-				...newEnabled,
-			})
-		);
+	const _handleToggleClauseContributor = (className) => () => {
+		if (frameworkConfig.clauseContributorsIncludes.includes(className)) {
+			_handleDisableClauseContributors([className]);
+		}
+		else {
+			_handleEnableClauseContributors([className]);
+		}
+	};
 
-		setEnabled({...enabled, ...newEnabled});
-		setSelected([]);
+	const _handleUpdateSelected = (value) => () => {
+		if (value) {
+			_handleEnableClauseContributors(selected);
+		}
+		else {
+			_handleDisableClauseContributors(selected);
+		}
 	};
 
 	return (
@@ -256,7 +266,7 @@ function ClauseContributorsSidebar({
 							sortDirection === ASCENDING ? DESCENDING : ASCENDING
 						)
 					}
-					onUpdateEnabled={_handleUpdateEnabled}
+					onUpdateSelected={_handleUpdateSelected}
 					selected={selected}
 					setKeyword={setKeyword}
 					setSelected={setSelected}
@@ -304,16 +314,20 @@ function ClauseContributorsSidebar({
 									<ClayList.ItemField>
 										<ClayToggle
 											label={
-												enabled[className]
+												frameworkConfig.clauseContributorsIncludes.includes(
+													className
+												)
 													? Liferay.Language.get('on')
 													: Liferay.Language.get(
 															'off'
 													  )
 											}
-											onToggle={_handleToggle(className)}
-											toggled={
-												enabled[className] || false
-											}
+											onToggle={_handleToggleClauseContributor(
+												className
+											)}
+											toggled={frameworkConfig.clauseContributorsIncludes.includes(
+												className
+											)}
 										/>
 									</ClayList.ItemField>
 								</ClayList.Item>

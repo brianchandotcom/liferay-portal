@@ -84,6 +84,18 @@ export function parseAndPrettifyJSON(json) {
 }
 
 /**
+ * Function to remove duplicates in an array.
+ *
+ * @param {Array} items Array of items with repeated values
+ * @return {Array}
+ */
+export function removeDuplicates(items) {
+	return items.filter(
+		(item, position, self) => self.indexOf(item) === position
+	);
+}
+
+/**
  * Function to replace all instances of a string.
  *
  * Example:
@@ -538,92 +550,6 @@ export function getUIConfigurationValues(sxpElement = {}) {
 	}
 
 	return {sxpElement: JSON.stringify(sxpElement, null, '\t')};
-}
-
-/**
- * Function for transforming the framework configuration's `clause_contributor`
- * object to an object of clause contributors with `enabled` state.
- *
- * Example:
- * getClauseContributorsState({
- * 		clauseContributorsExcludes: [
- * 			'com.liferay.account.internal.search.spi.model.query.contributor.AccountGroupKeywordQueryContributor',
- * 		],
- * 		clauseContributorsIncludes: [
- * 			'com.liferay.account.internal.search.spi.model.query.contributor.AccountEntryKeywordQueryContributor',
- * 			'com.liferay.address.internal.search.spi.model.query.contributor.AddressKeywordQueryContributor'
- * 		]
- * 	});
- * => {com.liferay.account.internal.search.spi.model.query.contributor.AccountEntryKeywordQueryContributor: true,
- *		com.liferay.account.internal.search.spi.model.query.contributor.AccountGroupKeywordQueryContributor: false,
- *		com.liferay.address.internal.search.spi.model.query.contributor.AddressKeywordQueryContributor: true}
- *
- * @param {object} { clauseContributorsExcludes, clauseContributorsIncludes } The framework configuration's
- * clause contributors object
- * @return {object} An object of enabled state for each contributor
- */
-export function getClauseContributorsState({
-	clauseContributorsExcludes,
-	clauseContributorsIncludes,
-}) {
-	const clauseContributorsState = {};
-
-	if (Array.isArray(clauseContributorsExcludes)) {
-		clauseContributorsExcludes.forEach((exclude) => {
-			clauseContributorsState[exclude] = false;
-		});
-	}
-
-	if (Array.isArray(clauseContributorsIncludes)) {
-		clauseContributorsIncludes.forEach((include) => {
-			clauseContributorsState[include] = true;
-		});
-	}
-
-	return clauseContributorsState;
-}
-
-/**
- * Function for transforming the `enabled` state object to the framework
- * configuration's clause contributors object.
- *
- * Example:
- * getClauseContributorsConfig(
- *		{
- *			'com.liferay.account.internal.search.spi.model.query.contributor.AccountEntryKeywordQueryContributor': true,
- *			'com.liferay.account.internal.search.spi.model.query.contributor.AccountGroupKeywordQueryContributor': false,
- *			'com.liferay.address.internal.search.spi.model.query.contributor.AddressKeywordQueryContributor': true
- *		}
- *	);
- * => {
- * 		clauseContributorsExcludes: [
- * 			'com.liferay.account.internal.search.spi.model.query.contributor.AccountGroupKeywordQueryContributor',
- * 		],
- * 		clauseContributorsIncludes: [
- * 			'com.liferay.account.internal.search.spi.model.query.contributor.AccountEntryKeywordQueryContributor',
- * 			'com.liferay.address.internal.search.spi.model.query.contributor.AddressKeywordQueryContributor'
- * 		]
- * 	}
- *
- * @param {object} clauseContributorsEnabledState State object that tracks whether clause is enabled/disabled
- * @return {object} The framework configuration's clause contributors object
- */
-export function getClauseContributorsConfig(
-	clauseContributorsEnabledState = {}
-) {
-	const clauseContributorsExcludes = [];
-	const clauseContributorsIncludes = [];
-
-	Object.keys(clauseContributorsEnabledState).forEach((key) => {
-		if (clauseContributorsEnabledState[key]) {
-			clauseContributorsIncludes.push(key);
-		}
-		else {
-			clauseContributorsExcludes.push(key);
-		}
-	});
-
-	return {clauseContributorsExcludes, clauseContributorsIncludes};
 }
 
 /**

@@ -46,6 +46,9 @@ function SaveTemplate({
 			if (schema && !useTemplateMappingRef.current) {
 				setDisable(false);
 			}
+			else if (!schema) {
+				setDisable(true);
+			}
 		}
 
 		function handleTemplateSelection({template}) {

@@ -130,7 +130,7 @@ public class JournalManagementToolbarDisplayContext
 							dropdownItem.setQuickAction(true);
 						}
 					).add(
-						_ffBulkTranslationConfiguration::enabled,
+						_ffBulkTranslationConfiguration::bulkTranslationEnabled,
 						dropdownItem -> {
 							dropdownItem.putData("action", "exportTranslation");
 							dropdownItem.setIcon("import-export");

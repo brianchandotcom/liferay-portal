@@ -95,7 +95,10 @@ definition {
 		property test.name.skip.portal.instance = "RemoteApps#CustomElementCanBeDisplayedByInstance";
 
 		task ("Create virtual instance") {
-			SAML.addVirtualInstances(virtualHosts = "www.able.com");
+			HeadlessPortalInstanceAPI.addPortalInstance(
+				domain = "www.able.com",
+				portalInstanceId = "www.able.com",
+				virtualHost = "www.able.com");
 		}
 
 		task ("Navigate to virtual instance") {
@@ -114,7 +117,7 @@ definition {
 		}
 
 		task ("Navigate back to default instance") {
-			User.firstLoginPG();
+			Navigator.openURL();
 		}
 	}
 

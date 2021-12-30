@@ -127,6 +127,12 @@ public class AssetCategoryLayoutDisplayPageMultiSelectionProvider
 				if (parentCategoryIdInfoItemReferences.containsKey(
 						parentCategoryId)) {
 
+					List<InfoItemReference> children =
+						parentCategoryIdInfoItemReferences.get(
+							parentCategoryId);
+
+					children.add(infoItemReference);
+
 					continue;
 				}
 

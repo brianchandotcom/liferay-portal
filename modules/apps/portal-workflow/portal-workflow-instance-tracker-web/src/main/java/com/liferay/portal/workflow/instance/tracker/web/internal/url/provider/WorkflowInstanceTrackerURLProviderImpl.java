@@ -18,7 +18,7 @@ import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.BeanProperties;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.UnicodeLanguageUtil;
+import com.liferay.portal.kernel.language.UnicodeLanguage;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.WorkflowInstanceLink;
@@ -83,7 +83,7 @@ public class WorkflowInstanceTrackerURLProviderImpl
 			return StringBundler.concat(
 				"javascript:",
 				"Liferay.Util.openModal({iframeBodyCssClass: '', title: '",
-				UnicodeLanguageUtil.get(httpServletRequest, "track-workflow"),
+				_unicodeLanguage.get(httpServletRequest, "track-workflow"),
 				"', url: '", portletURL, "'});;");
 		}
 
@@ -98,6 +98,9 @@ public class WorkflowInstanceTrackerURLProviderImpl
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private UnicodeLanguage _unicodeLanguage;
 
 	@Reference
 	private WorkflowInstanceLinkLocalService _workflowInstanceLinkLocalService;

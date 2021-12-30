@@ -3521,19 +3521,9 @@ definition {
 	macro viewTag {
 		DMDocument.expandInfo();
 
-		if (isSet(tagNameList)) {
-			for (var tagName : list "${tagNameList}") {
-				var tagName = StringUtil.lowerCase("${tagName}");
-				var key_tagName = "${tagName}";
-
-				AssertTextEquals(
-					locator1 = "DocumentsAndMedia#TAG",
-					value1 = "${tagName}");
-			}
-		}
-		else {
+		for (var tagName : list "${tagName}") {
+			var tagName = StringUtil.lowerCase("${tagName}");
 			var key_tagName = "${tagName}";
-			var tagName = StringUtil.upperCase("${tagName}");
 
 			AssertTextEquals(
 				locator1 = "DocumentsAndMedia#TAG",

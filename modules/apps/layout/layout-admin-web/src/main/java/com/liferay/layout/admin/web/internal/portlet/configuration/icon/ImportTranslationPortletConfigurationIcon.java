@@ -94,7 +94,7 @@ public class ImportTranslationPortletConfigurationIcon
 
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
-		return _ffBulkTranslationConfiguration.enabled();
+		return _ffBulkTranslationConfiguration.bulkTranslationEnabled();
 	}
 
 	@Activate

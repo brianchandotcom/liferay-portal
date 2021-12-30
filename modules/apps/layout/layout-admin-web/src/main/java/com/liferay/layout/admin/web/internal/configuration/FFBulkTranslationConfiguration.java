@@ -28,6 +28,6 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface FFBulkTranslationConfiguration {
 
 	@Meta.AD(deflt = "false", required = false)
-	public boolean enabled();
+	public boolean bulkTranslationEnabled();
 
 }

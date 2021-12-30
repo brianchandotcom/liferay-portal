@@ -61,7 +61,7 @@ const AppContextProvider = ({assetsPath, children}) => {
 				payload: {
 					...projects.c.koroneikiAccounts.items[0],
 					id: accountBrief.id,
-					name: accountBrief.name 
+					name: accountBrief.name,
 				},
 				type: actionTypes.UPDATE_PROJECT,
 			});
@@ -78,9 +78,13 @@ const AppContextProvider = ({assetsPath, children}) => {
 			const projectExternalReferenceCode = SearchParams.get(
 				PARAMS_KEYS.PROJECT_APPLICATION_EXTERNAL_REFERENCE_CODE
 			);
-	
+
 			if (projectExternalReferenceCode) {
-				const accountBrief = data.userAccount.accountBriefs.find((accountBrief) => accountBrief.externalReferenceCode === projectExternalReferenceCode);
+				const accountBrief = data.userAccount.accountBriefs.find(
+					(accountBrief) =>
+						accountBrief.externalReferenceCode ===
+						projectExternalReferenceCode
+				);
 
 				if (accountBrief) {
 					getProject(projectExternalReferenceCode, accountBrief);

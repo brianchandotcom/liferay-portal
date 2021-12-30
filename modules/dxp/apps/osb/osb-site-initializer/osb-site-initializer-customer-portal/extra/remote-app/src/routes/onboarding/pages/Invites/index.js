@@ -69,7 +69,8 @@ const Invites = () => {
 				payload: steps.dxpCloud,
 				type: actionTypes.CHANGE_STEP,
 			});
-		} else {
+		}
+		else {
 			window.location.href = `${API_BASE_URL}${LiferayTheme.getLiferaySiteName()}/overview?${
 				PARAMS_KEYS.PROJECT_APPLICATION_EXTERNAL_REFERENCE_CODE
 			}=${project.accountKey}`;
@@ -148,20 +149,33 @@ const Invites = () => {
 			const isPartner = project.partner;
 
 			if (
-				!SLA_CURRENT.includes(SLA.gold) &&
-				!SLA_CURRENT.includes(SLA.platinum)
+				SLA_CURRENT.includes(SLA.gold) ||
+				SLA_CURRENT.includes(SLA.platinum)
 			) {
-				filterRoles = filterRoles.filter(
-					(label) => label !== roles.REQUESTOR.key
+				const requestorIndex = filterRoles.findIndex(
+					(label) => label === roles.REQUESTOR.key
 				);
+
+				if (requestorIndex === -1) {
+					filterRoles = [...filterRoles, roles.REQUESTOR.key];
+				}
 			}
 
-			if (!isPartner) {
-				filterRoles = filterRoles.filter(
-					(label) =>
-						label !== roles.PARTNER_MANAGER.key &&
-						label !== roles.PARTNER_MEMBER.key
+			if (isPartner) {
+				const partnerManagerIndex = filterRoles.findIndex(
+					(label) => label === roles.PARTNER_MANAGER.key
 				);
+				const partnerMemberIndex = filterRoles.findIndex(
+					(label) => label === roles.PARTNER_MEMBER.key
+				);
+
+				if (partnerManagerIndex === -1) {
+					filterRoles = [...filterRoles, roles.PARTNER_MANAGER.key];
+				}
+
+				if (partnerMemberIndex === -1) {
+					filterRoles = [...filterRoles, roles.PARTNER_MEMBER.key];
+				}
 			}
 
 			setFieldValue(
@@ -173,7 +187,7 @@ const Invites = () => {
 					  ) || roles.ADMIN.key
 			);
 
-			const mapRolesName = filterRoles.map((role) => {
+			const mapRolesName = filterRoles.sort().map((role) => {
 				const roleProperty = Object.values(roles).find(
 					({key}) => key === role
 				);

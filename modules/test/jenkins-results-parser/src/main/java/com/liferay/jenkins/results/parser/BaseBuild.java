@@ -126,6 +126,19 @@ public abstract class BaseBuild implements Build {
 			archiveDir.delete();
 		}
 
+		try {
+			writeArchiveFile(
+				String.valueOf(JenkinsResultsParserUtil.getCurrentTimeMillis()),
+				getArchivePath() + "/archive-marker");
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(
+				"Unable to to write archive-marker file", ioException);
+		}
+
+		archiveConsoleLog();
+		archiveJSON();
+
 		if (downstreamBuilds != null) {
 			List<Callable<Object>> callables = new ArrayList<>(
 				downstreamBuilds.size());
@@ -150,19 +163,6 @@ public abstract class BaseBuild implements Build {
 
 			parallelExecutor.execute();
 		}
-
-		try {
-			writeArchiveFile(
-				String.valueOf(JenkinsResultsParserUtil.getCurrentTimeMillis()),
-				getArchivePath() + "/archive-marker");
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(
-				"Unable to to write archive-marker file", ioException);
-		}
-
-		archiveConsoleLog();
-		archiveJSON();
 	}
 
 	@Override

@@ -477,4 +477,109 @@ definition {
 		}
 	}
 
+	@description = "Feature ID: LRAC-4265 | Automation ID: LRAC-10008 | Test Summary: Sample javascript copy"
+	@priority = "5"
+	test CanCopySampleJavascript {
+		var layoutName = "Custom 2";
+
+		var globalAttributesList = "canonicalUrl,pageTitle,referrer,url";
+
+		var disableAttributesList = "${globalAttributesList},birthdate";
+
+		var attributesList = "category,like";
+
+		task ("Fill fields and create custom event") {
+			var customEventName1 = ACCustomEvents.generateCustomEventName();
+
+			ACCustomEvents.createCustomEvent(
+				customEventName = "${customEventName1}",
+				attributesName = "category,like,birthdate",
+				attributesValue = "wetsuit,true,2021-11-25T14:36:30.685Z",
+				timeToSendCustomEvent = "1");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch the property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+		}
+
+		task ("Navigation to custom events tab") {
+			ACNavigation.goToSettings();
+
+			ACSettings.goToDefinitions();
+
+			ACSettings.goToEvents();
+
+			ACNavigation.openItem(itemName = "Custom Events");
+		}
+
+		task ("Access the custom event") {
+			ACNavigation.openItem(itemName = "${customEventName1}");
+		}
+
+		task ("Copy the sample JS and replace an existing attribute with a new one") {
+			var customEventName2 = ACCustomEvents.generateCustomEventName();
+
+			ACCustomEvents.copySampleJavascript(
+				oldCustomEventName = "${customEventName1}",
+				newCustomEventName = "${customEventName2}",
+				disableAttributesList = "${disableAttributesList}",
+				attributesList = "${attributesList}",
+				oldAttributeList = "category",
+				oldValueList = "wetsuit",
+				newAttributeList = "device",
+				newValueList = "linux");
+		}
+
+		task ("Launch DXP and create a new page") {
+			ACUtils.launchDXP();
+
+			ACUtils.addPage(layoutName = "${layoutName}");
+		}
+
+		task ("Create a web content with the sample JS and put it on the page") {
+			ACUtils.createWCAndAddToPage(
+				layoutName = "${layoutName}",
+				webContentContent = '''<div><button class="mybutton-shop" onclick="buySurfwear()">Buy</button></div> <script> function buySurfwear() { ${sampleJavascript} } </script>''',
+				webContentTitle = "Custom Event AC Title 2");
+		}
+
+		task ("Click on the button to send the event") {
+			ACCustomEvents.createNCustomEvents();
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch the property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+		}
+
+		task ("Navigation to custom events tab") {
+			ACNavigation.goToSettings();
+
+			ACSettings.goToDefinitions();
+
+			ACSettings.goToEvents();
+
+			ACNavigation.openItem(itemName = "Custom Events");
+		}
+
+		task ("Access the custom event") {
+			ACNavigation.openItem(itemName = "${customEventName2}");
+		}
+
+		task ("Check the attributes that the custom event has") {
+			ACUtils.viewNameList(nameList = "${globalAttributesList},device,like");
+		}
+	}
+
 }

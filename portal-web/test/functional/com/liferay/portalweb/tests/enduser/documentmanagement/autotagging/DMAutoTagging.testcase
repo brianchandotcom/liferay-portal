@@ -161,7 +161,7 @@ definition {
 
 		DMDocument.viewTagInfo(tagName = "manualtag");
 
-		AutoTagging.assertNoAutoTag(tagName = "carton");
+		DMDocument.viewNoTagInfo(tagName = "carton");
 	}
 
 	@description = "This test asserts that auto-tags can be deleted."
@@ -195,7 +195,7 @@ definition {
 
 		DMDocument.viewCP(dmDocumentTitle = "Auto Tagged Image");
 
-		AutoTagging.assertNoAutoTag(tagName = "carton");
+		DMDocument.viewNoTagInfo(tagName = "carton");
 	}
 
 	@description = "This test covers LPS-94209. It asserts that OpenNLP auto-tags can be deleted."
@@ -236,7 +236,7 @@ definition {
 		DMDocument.viewCP(dmDocumentTitle = "DM Document DOCX");
 
 		for (var tagName : list "alice,adventures") {
-			AutoTagging.assertNoAutoTag(tagName = "${tagName}");
+			DMDocument.viewNoTagInfo(tagName = "${tagName}");
 		}
 	}
 

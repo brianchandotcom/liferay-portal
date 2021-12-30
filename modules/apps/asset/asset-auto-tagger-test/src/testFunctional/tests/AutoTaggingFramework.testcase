@@ -195,7 +195,7 @@ definition {
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document JPG");
 
-		AutoTagging.assertNoAutoTag(tagName = "carton");
+		DMDocument.viewNoTagInfo(tagName = "carton");
 
 		GogoShell.openGogoShellAdmin();
 

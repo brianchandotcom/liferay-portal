@@ -174,7 +174,7 @@ definition {
 
 		DMDocument.viewTagInfo(tagName = "manualtag");
 
-		AutoTagging.assertNoAutoTag(tagName = "computers");
+		DMDocument.viewNoTagInfo(tagName = "computers");
 	}
 
 	@description = "This test ensures that an image with a tag added by manual can not be auto-tagged after publishing."
@@ -200,7 +200,7 @@ definition {
 
 		DMDocument.viewTagInfo(tagName = "manualtag");
 
-		AutoTagging.assertNoAutoTag(tagName = "t-shirt");
+		DMDocument.viewNoTagInfo(tagName = "t-shirt");
 	}
 
 	@description = "This test ensures that a WC article with a tag added by manual can not be auto-tagged after publishing."
@@ -315,9 +315,7 @@ definition {
 
 		DMDocument.viewCP(dmDocumentTitle = "Document_1");
 
-		for (var tagName : list "computers,electronics") {
-			AutoTagging.assertNoAutoTag(tagName = "${tagName}");
-		}
+		DMDocument.viewNoTagInfo(tagName = "computers,electronics");
 	}
 
 	@description = "This test ensures that a tag added in an image through GCVI can be removed."
@@ -355,9 +353,7 @@ definition {
 
 		DMDocument.viewCP(dmDocumentTitle = "Commerce_Black");
 
-		for (var tagName : list "pattern,carmine") {
-			AutoTagging.assertNoAutoTag(tagName = "${tagName}");
-		}
+		DMDocument.viewNoTagInfo(tagName = "pattern,carmine");
 	}
 
 	@description = "This test ensures that a tag added in a WC article through GCNL can be removed."

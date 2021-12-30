@@ -181,7 +181,7 @@ definition {
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document JPG");
 
-		AutoTagging.assertNoAutoTag(tagName = "carton");
+		DMDocument.viewNoTagInfo(tagName = "carton");
 	}
 
 	@description = "This test asserts that no auto-tag is generated when a text document is uploaded to a depot that has auto-tagging disabled."
@@ -211,7 +211,7 @@ definition {
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document PDF");
 
-		AutoTagging.assertNoAutoTag(tagName = "alice");
+		DMDocument.viewNoTagInfo(tagName = "alice");
 	}
 
 	@description = "This test asserts that no auto-tag is generated when a web content article is uploaded to a depot that has auto-tagging disabled."
@@ -240,7 +240,7 @@ definition {
 
 		Panel.expandPanel(panel = "Categorization");
 
-		AutoTagging.assertNoAutoTag(tagName = "dxp");
+		DMDocument.viewNoTagInfo(tagName = "dxp");
 	}
 
 	@description = "This test asserts that an image is auto-tagged in a depot."

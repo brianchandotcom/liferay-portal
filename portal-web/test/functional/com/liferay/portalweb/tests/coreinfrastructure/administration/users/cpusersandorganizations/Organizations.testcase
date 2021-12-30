@@ -1410,9 +1410,9 @@ definition {
 
 		Organization.addSiteCP(orgName = "Organization Site Bravo");
 
-		PortalSettings.editConfigurationUsersDefaultUserAssociationsSitesCP(siteName = "Site Name Alpha");
+		PortalSettings.editConfigurationUsersDefaultUserAssociationsCP(siteName = "Site Name Alpha");
 
-		PortalSettings.editConfigurationUsersDefaultUserAssociationsOrganizationSitesCP(orgName = "Organization Site Bravo");
+		PortalSettings.editConfigurationUsersDefaultUserAssociationsCP(orgName = "Organization Site Bravo");
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",

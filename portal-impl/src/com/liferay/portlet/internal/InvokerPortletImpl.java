@@ -533,7 +533,8 @@ public class InvokerPortletImpl
 				INIT_INVOKER_PORTLET_NAME);
 
 			if (invokerPortletName == null) {
-				invokerPortletName = _liferayPortletConfig.getPortletName();
+				invokerPortletName = PortalUtil.getJsSafePortletId(
+					_liferayPortletConfig.getPortletName());
 			}
 
 			String path = StringPool.SLASH + invokerPortletName + "/invoke";

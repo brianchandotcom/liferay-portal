@@ -16,6 +16,7 @@ package com.liferay.commerce.product.internal.util;
 
 import com.liferay.adaptive.media.image.html.AMImageHTMLTagFactory;
 import com.liferay.commerce.account.util.CommerceAccountHelper;
+import com.liferay.commerce.inventory.CPDefinitionInventoryEngine;
 import com.liferay.commerce.media.CommerceMediaProvider;
 import com.liferay.commerce.media.CommerceMediaResolver;
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
@@ -39,6 +40,7 @@ import com.liferay.commerce.product.service.CPDefinitionOptionValueRelLocalServi
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CPInstanceOptionValueRelLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
+import com.liferay.commerce.product.util.CPAvailabilityChecker;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.product.util.DDMFormValuesHelper;
 import com.liferay.commerce.product.util.JsonHelper;
@@ -96,6 +98,25 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 
 		return _fetchCPInstanceBySKUContributors(
 			cpDefinitionId, serializedDDMFormValues);
+	}
+
+	@Override
+	public CPInstance fetchFirstAvailableReplacementCPInstance(
+			long commerceChannelGroupId, long cpInstanceId)
+		throws PortalException {
+
+		CPInstance cpInstance = _cpInstanceLocalService.fetchCPInstance(
+			cpInstanceId);
+
+		if ((cpInstance == null) || !cpInstance.isDiscontinued()) {
+			return null;
+		}
+
+		return _fetchFirstAvailableReplacementCPInstance(
+			commerceChannelGroupId,
+			_cpInstanceLocalService.fetchCProductInstance(
+				cpInstance.getReplacementCProductId(),
+				cpInstance.getReplacementCPInstanceUuid()));
 	}
 
 	@Override
@@ -682,6 +703,29 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 		return _cpInstanceLocalService.getCPInstance(cpInstanceId);
 	}
 
+	private CPInstance _fetchFirstAvailableReplacementCPInstance(
+			long commerceChannelGroupId, CPInstance cpInstance)
+		throws PortalException {
+
+		if (cpInstance == null) {
+			return null;
+		}
+
+		if (cpInstance.isDiscontinued() &&
+			_cpAvailabilityChecker.check(
+				commerceChannelGroupId, cpInstance,
+				_cpDefinitionInventoryEngine.getMinOrderQuantity(cpInstance))) {
+
+			return cpInstance;
+		}
+
+		return _fetchFirstAvailableReplacementCPInstance(
+			commerceChannelGroupId,
+			_cpInstanceLocalService.fetchCProductInstance(
+				cpInstance.getReplacementCProductId(),
+				cpInstance.getReplacementCPInstanceUuid()));
+	}
+
 	private long _getTopId(Map<Long, Integer> idIdHits) {
 		long topId = 0;
 		int topIdHits = 0;
@@ -738,6 +782,12 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 	@Reference
 	private CPAttachmentFileEntryLocalService
 		_cpAttachmentFileEntryLocalService;
+
+	@Reference
+	private CPAvailabilityChecker _cpAvailabilityChecker;
+
+	@Reference
+	private CPDefinitionInventoryEngine _cpDefinitionInventoryEngine;
 
 	@Reference
 	private CPDefinitionLocalService _cpDefinitionLocalService;

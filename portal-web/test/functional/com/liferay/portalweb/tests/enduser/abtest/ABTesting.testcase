@@ -541,6 +541,10 @@ definition {
 				groupName = "Test Site Name 2",
 				layoutName = "Content Page 2",
 				type = "content");
+
+			JSONLayout.publishLayout(
+				groupName = "Test Site Name 2",
+				layoutName = "Content Page 2");
 		}
 
 		task ("Go to the content page created") {

@@ -113,7 +113,10 @@ export const QUERY_SXP_ELEMENTS = [textMatchOverMultipleFields];
 export const INITIAL_CONFIGURATION = {
 	advancedConfiguration: DEFAULT_ADVANCED_CONFIGURATION,
 	aggregationConfiguration: {},
-	generalConfiguration: {},
+	generalConfiguration: {
+		clauseContributorsExcludes: [],
+		clauseContributorsIncludes: [],
+	},
 	highlightConfiguration: DEFAULT_HIGHLIGHT_CONFIGURATION,
 	parameterConfiguration: DEFAULT_PARAMETER_CONFIGURATION,
 	queryConfiguration: {

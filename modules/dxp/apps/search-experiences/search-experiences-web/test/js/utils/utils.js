@@ -12,8 +12,6 @@
 import {INPUT_TYPES} from '../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/utils/inputTypes';
 import {
 	cleanUIConfiguration,
-	getClauseContributorsConfig,
-	getClauseContributorsState,
 	getConfigurationEntry,
 	getDefaultValue,
 	getUIConfigurationValues,
@@ -1257,46 +1255,6 @@ describe('utils', () => {
 			).toEqual({
 				clauses: [],
 				conditions: {},
-			});
-		});
-	});
-
-	describe('getClauseContributorsState', () => {
-		it('returns an object for the contributors enabled state', () => {
-			expect(
-				getClauseContributorsState({
-					clauseContributorsExcludes: [
-						'com.liferay.account.internal.search.spi.model.query.contributor.AccountGroupKeywordQueryContributor',
-					],
-					clauseContributorsIncludes: [
-						'com.liferay.account.internal.search.spi.model.query.contributor.AccountEntryKeywordQueryContributor',
-						'com.liferay.address.internal.search.spi.model.query.contributor.AddressKeywordQueryContributor',
-					],
-				})
-			).toEqual({
-				'com.liferay.account.internal.search.spi.model.query.contributor.AccountEntryKeywordQueryContributor': true,
-				'com.liferay.account.internal.search.spi.model.query.contributor.AccountGroupKeywordQueryContributor': false,
-				'com.liferay.address.internal.search.spi.model.query.contributor.AddressKeywordQueryContributor': true,
-			});
-		});
-	});
-
-	describe('getClauseContributorsConfig', () => {
-		it('returns the clause contributors in an includes and excludes array for the framework_configuration', () => {
-			expect(
-				getClauseContributorsConfig({
-					'com.liferay.account.internal.search.spi.model.query.contributor.AccountEntryKeywordQueryContributor': true,
-					'com.liferay.account.internal.search.spi.model.query.contributor.AccountGroupKeywordQueryContributor': false,
-					'com.liferay.address.internal.search.spi.model.query.contributor.AddressKeywordQueryContributor': true,
-				})
-			).toEqual({
-				clauseContributorsExcludes: [
-					'com.liferay.account.internal.search.spi.model.query.contributor.AccountGroupKeywordQueryContributor',
-				],
-				clauseContributorsIncludes: [
-					'com.liferay.account.internal.search.spi.model.query.contributor.AccountEntryKeywordQueryContributor',
-					'com.liferay.address.internal.search.spi.model.query.contributor.AddressKeywordQueryContributor',
-				],
 			});
 		});
 	});

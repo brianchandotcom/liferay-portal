@@ -366,7 +366,10 @@ function EditSXPBlueprintForm({
 					id: index,
 				})
 			),
-			frameworkConfig: initialConfiguration.generalConfiguration || {},
+			frameworkConfig: initialConfiguration.generalConfiguration || {
+				clauseContributorsExcludes: [],
+				clauseContributorsIncludes: [],
+			},
 			highlightConfig: JSON.stringify(
 				initialConfiguration.highlightConfiguration,
 				null,

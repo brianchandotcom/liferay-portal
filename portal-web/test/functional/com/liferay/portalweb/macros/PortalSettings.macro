@@ -914,50 +914,6 @@ definition {
 		AssertElementPresent(locator1 = "PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_TEST_OPEN_SSO_CONFIGURATION_BUTTON");
 	}
 
-	macro viewConfigurationUsersDefaultUserAssociationsOrganizationSitesCP {
-		PortalSettings.gotoConfiguration(
-			configurationCategory = "Users",
-			configurationName = "Default User Associations",
-			configurationScope = "Virtual Instance Scope");
-
-		AssertTextEquals(
-			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ORGANIZATION_SITES_FIELD",
-			value1 = "${orgName}");
-	}
-
-	macro viewConfigurationUsersDefaultUserAssociationsRolesCP {
-		PortalSettings.gotoConfiguration(
-			configurationCategory = "Users",
-			configurationName = "Default User Associations",
-			configurationScope = "Virtual Instance Scope");
-
-		Type.clickAtType(
-			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ROLES_FIELD",
-			value1 = "${roleTitle}");
-	}
-
-	macro viewConfigurationUsersDefaultUserAssociationsSitesCP {
-		PortalSettings.gotoConfiguration(
-			configurationCategory = "Users",
-			configurationName = "Default User Associations",
-			configurationScope = "Virtual Instance Scope");
-
-		AssertTextEquals(
-			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_SITES_FIELD",
-			value1 = "${siteName}");
-	}
-
-	macro viewConfigurationUsersDefaultUserAssociationsUserGroupsCP {
-		PortalSettings.gotoConfiguration(
-			configurationCategory = "Users",
-			configurationName = "Default User Associations",
-			configurationScope = "Virtual Instance Scope");
-
-		AssertTextEquals(
-			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_USER_GROUPS_FIELD",
-			value1 = "${userGroupName}");
-	}
-
 	macro viewCurrentDefaultPortalLanguageCP {
 		var configuration = "Localization";
 

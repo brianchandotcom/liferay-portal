@@ -42,14 +42,14 @@ public class PaginationContextProvider
 		int page = ParamUtil.getInteger(httpServletRequest, "page", 1);
 		int pageSize = ParamUtil.getInteger(httpServletRequest, "pageSize", 20);
 
-		return new FDSPaginationImpl(pageSize, page);
+		return new FDSPaginationImpl(page, pageSize);
 	}
 
-	private static class FDSPaginationImpl implements FDSPagination {
+	private class FDSPaginationImpl implements FDSPagination {
 
-		public FDSPaginationImpl(int pageSize, int page) {
-			_pageSize = pageSize;
+		public FDSPaginationImpl(int page, int pageSize) {
 			_page = page;
+			_pageSize = pageSize;
 		}
 
 		@Override

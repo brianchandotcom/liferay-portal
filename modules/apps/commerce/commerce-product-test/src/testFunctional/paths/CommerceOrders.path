@@ -81,6 +81,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PENDING_ORDERS_ORDER_TYPE</td>
+	<td>//dt[contains(text(),'Order Type')]/..//dd[contains(text(),'${key_OrderType}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ORDER_PRICES_SEPARETED</td>
 	<td>//dt[contains(text(), '${key_priceName}')]//../following-sibling::dd[1]</td>
 	<td></td>

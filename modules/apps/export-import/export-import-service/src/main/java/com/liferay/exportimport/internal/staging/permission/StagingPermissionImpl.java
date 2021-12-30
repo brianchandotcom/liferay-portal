@@ -39,9 +39,7 @@ public class StagingPermissionImpl implements StagingPermission {
 		long classPK, String portletId, String actionId) {
 
 		try {
-			return _doHasPermission(
-				permissionChecker, group, className, classPK, portletId,
-				actionId);
+			return _doHasPermission(group, portletId, actionId);
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
@@ -57,8 +55,7 @@ public class StagingPermissionImpl implements StagingPermission {
 
 		try {
 			return _doHasPermission(
-				permissionChecker, _groupLocalService.getGroup(groupId),
-				className, classPK, portletId, actionId);
+				_groupLocalService.getGroup(groupId), portletId, actionId);
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
@@ -73,8 +70,7 @@ public class StagingPermissionImpl implements StagingPermission {
 	}
 
 	private Boolean _doHasPermission(
-			PermissionChecker permissionChecker, Group group, String className,
-			long classPK, String portletId, String actionId)
+			Group group, String portletId, String actionId)
 		throws Exception {
 
 		if (!PropsValues.STAGING_LIVE_GROUP_LOCKING_ENABLED) {

@@ -78,7 +78,7 @@ public class EditDispatchTriggerMVCActionCommand extends BaseMVCActionCommand {
 			if (Objects.equals(cmd, Constants.ADD) ||
 				Objects.equals(cmd, Constants.UPDATE)) {
 
-				_updateDispatchTrigger(actionRequest, actionResponse);
+				_updateDispatchTrigger(actionRequest);
 			}
 			else if (Objects.equals(cmd, Constants.DELETE)) {
 				_deleteDispatchTrigger(actionRequest);
@@ -234,8 +234,7 @@ public class EditDispatchTriggerMVCActionCommand extends BaseMVCActionCommand {
 		_destination.send(message);
 	}
 
-	private DispatchTrigger _updateDispatchTrigger(
-			ActionRequest actionRequest, ActionResponse actionResponse)
+	private DispatchTrigger _updateDispatchTrigger(ActionRequest actionRequest)
 		throws Exception {
 
 		long dispatchTriggerId = ParamUtil.getLong(

@@ -272,7 +272,7 @@ public class ConfigurationModelToDDMFormConverter {
 		_setDDMFormFieldOptions(ddmFormField, ddmFormFieldOptions);
 		_setDDMFormFieldPredefinedValue(attributeDefinition, ddmFormField);
 		_setDDMFormFieldReadOnly(attributeDefinition, ddmFormField);
-		_setDDMFormFieldRequired(attributeDefinition, ddmFormField, required);
+		_setDDMFormFieldRequired(ddmFormField, required);
 		_setDDMFormFieldTip(attributeDefinition, ddmFormField);
 		_setDDMFormFieldVisibilityExpression(attributeDefinition, ddmFormField);
 
@@ -396,8 +396,7 @@ public class ConfigurationModelToDDMFormConverter {
 	}
 
 	private void _setDDMFormFieldRequired(
-		AttributeDefinition attributeDefinition, DDMFormField ddmFormField,
-		boolean required) {
+		DDMFormField ddmFormField, boolean required) {
 
 		if (DDMFormFieldType.CHECKBOX.equals(ddmFormField.getType())) {
 			return;

@@ -367,7 +367,7 @@ public class ContactsCenterPortlet extends MVCPortlet {
 				writeJSON(actionRequest, actionResponse, jsonObject);
 			}
 			else if (actionName.equals("deleteEntry")) {
-				_deleteEntry(actionRequest, actionResponse);
+				_deleteEntry(actionRequest);
 			}
 			else if (actionName.equals("updateEntry")) {
 				updateEntry(actionRequest, actionResponse);
@@ -776,10 +776,7 @@ public class ContactsCenterPortlet extends MVCPortlet {
 	@Reference
 	protected UserService userService;
 
-	private void _deleteEntry(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
+	private void _deleteEntry(ActionRequest actionRequest) throws Exception {
 		long entryId = ParamUtil.getLong(actionRequest, "entryId");
 
 		if (entryId > 0) {

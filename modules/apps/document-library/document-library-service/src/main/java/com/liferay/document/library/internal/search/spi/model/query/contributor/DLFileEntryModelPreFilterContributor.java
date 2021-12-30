@@ -54,8 +54,7 @@ public class DLFileEntryModelPreFilterContributor
 		SearchContext searchContext) {
 
 		_addAttachmentFilter(booleanFilter, searchContext);
-		_addClassTypeIdsFilter(
-			booleanFilter, modelSearchSettings, searchContext);
+		_addClassTypeIdsFilter(booleanFilter, searchContext);
 		_addDDMFieldFilter(booleanFilter, searchContext);
 		addWorkflowStatusFilter(
 			booleanFilter, modelSearchSettings, searchContext);
@@ -113,8 +112,7 @@ public class DLFileEntryModelPreFilterContributor
 	}
 
 	private void _addClassTypeIdsFilter(
-		BooleanFilter booleanFilter, ModelSearchSettings modelSearchSettings,
-		SearchContext searchContext) {
+		BooleanFilter booleanFilter, SearchContext searchContext) {
 
 		long[] classTypeIds = searchContext.getClassTypeIds();
 

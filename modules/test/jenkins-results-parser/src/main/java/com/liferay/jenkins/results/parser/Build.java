@@ -230,6 +230,8 @@ public interface Build {
 
 	public String replaceBuildURL(String text);
 
+	public void setArchiveName(String archiveName);
+
 	public void setArchiveRootDir(File archiveRootDir);
 
 	public void setCompareToUpstream(boolean compareToUpstream);

@@ -114,6 +114,8 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public void archive(final String archiveName) {
+		setArchiveName(archiveName);
+
 		if (!_status.equals("completed")) {
 			throw new RuntimeException("Invalid build status: " + _status);
 		}
@@ -1832,6 +1834,11 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
+	public void setArchiveName(String archiveName) {
+		_archiveName = archiveName;
+	}
+
+	@Override
 	public void setArchiveRootDir(File archiveRootDir) {
 		if (archiveRootDir == null) {
 			archiveRootDir = new File(
@@ -3329,7 +3336,7 @@ public abstract class BaseBuild implements Build {
 					"Invalid build URL " + buildURL);
 			}
 
-			archiveName = matcher.group("archiveName");
+			setArchiveName(matcher.group("archiveName"));
 		}
 
 		extractBuildURLComponents(matcher);
@@ -3497,7 +3504,6 @@ public abstract class BaseBuild implements Build {
 	protected static final SimpleDateFormat stopWatchTimestampSimpleDateFormat =
 		new SimpleDateFormat("MM-dd-yyyy HH:mm:ss:SSS z");
 
-	protected String archiveName;
 	protected List<Integer> badBuildNumbers = new ArrayList<>();
 	protected String branchName;
 	protected int consoleReadCursor;
@@ -3901,6 +3907,7 @@ public abstract class BaseBuild implements Build {
 			"jenkins.report.time.zone");
 	}
 
+	private String _archiveName;
 	private File _archiveRootDir = new File(
 		JenkinsResultsParserUtil.URL_DEPENDENCIES_FILE.substring(
 			"file:".length()));

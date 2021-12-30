@@ -22,50 +22,46 @@ import SelectTypes from './SelectTypes';
 
 function QuerySettings({
 	applyIndexerClauses,
+	clauseContributorsList = [],
 	onApplyIndexerClausesChange,
 	frameworkConfig,
-	keywordQueryContributors,
-	modelPrefilterContributors,
-	queryPrefilterContributors,
 	onFrameworkConfigChange,
 	onChangeClauseContributorsVisibility,
 	searchableTypes = [],
 }) {
-	const allContributors = [
-		...keywordQueryContributors,
-		...modelPrefilterContributors,
-		...queryPrefilterContributors,
-	];
-
 	const [selectAllTypes, setSelectAllTypes] = useState(
 		searchableTypes.length === frameworkConfig.searchableAssetTypes?.length
 	);
-	const [selectAllContributors, setSelectAllContributors] = useState(
+	const [enableAllContributors, setEnableAllContributors] = useState(
 		frameworkConfig.clauseContributorsIncludes?.length ===
-			allContributors.length
+			clauseContributorsList.length
 	);
-
-	const _handleSelectAllContributorsChange = (selectedAll) => {
-		setSelectAllContributors(selectedAll);
-
-		onFrameworkConfigChange({
-			clauseContributorsExcludes: selectedAll ? [] : allContributors,
-			clauseContributorsIncludes: selectedAll ? allContributors : [],
-		});
-	};
-
-	const _handleSelectAllTypesChange = (selectedAll) => {
-		setSelectAllTypes(selectedAll);
-
-		onFrameworkConfigChange({
-			searchableAssetTypes: selectedAll
-				? searchableTypes.map(({className}) => className)
-				: [],
-		});
-	};
 
 	const _handleApplyIndexerClausesChange = () => {
 		onApplyIndexerClausesChange(!applyIndexerClauses);
+	};
+
+	const _handleEnableAllContributorsChange = (enable) => {
+		setEnableAllContributors(enable);
+
+		if (enable) {
+			onFrameworkConfigChange({
+				clauseContributorsExcludes: [],
+				clauseContributorsIncludes: clauseContributorsList,
+			});
+
+			onChangeClauseContributorsVisibility(false);
+		}
+	};
+
+	const _handleSelectAllTypesChange = (selectAll) => {
+		setSelectAllTypes(selectAll);
+
+		onFrameworkConfigChange({
+			searchableAssetTypes: selectAll
+				? searchableTypes.map(({className}) => className)
+				: [],
+		});
 	};
 
 	return (
@@ -213,9 +209,9 @@ function QuerySettings({
 						<ClayPanel.Body>
 							<ClayRadioGroup
 								onSelectedValueChange={
-									_handleSelectAllContributorsChange
+									_handleEnableAllContributorsChange
 								}
-								selectedValue={selectAllContributors}
+								selectedValue={enableAllContributors}
 							>
 								<ClayRadio
 									label={Liferay.Language.get('enable-all')}
@@ -230,7 +226,7 @@ function QuerySettings({
 								/>
 							</ClayRadioGroup>
 
-							{!selectAllContributors && (
+							{!enableAllContributors && (
 								<>
 									<div className="has-warning">
 										<ClayForm.FeedbackItem>

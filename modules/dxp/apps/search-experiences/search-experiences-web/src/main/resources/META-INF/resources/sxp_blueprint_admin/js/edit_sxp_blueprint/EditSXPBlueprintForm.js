@@ -415,6 +415,9 @@ function EditSXPBlueprintForm({
 		});
 	};
 
+	const _handleApplyIndexerClausesChange = (value) =>
+		formik.setFieldValue('applyIndexerClauses', value);
+
 	const _handleChangeAddSXPElementVisibility = (
 		show = !showAddSXPElement
 	) => {
@@ -590,9 +593,6 @@ function EditSXPBlueprintForm({
 			}),
 		[formik]
 	);
-
-	const _handleApplyIndexerClausesChange = (value) =>
-		formik.setFieldValue('applyIndexerClauses', value);
 
 	const _handleSubmit = (event) => {
 		event.preventDefault();

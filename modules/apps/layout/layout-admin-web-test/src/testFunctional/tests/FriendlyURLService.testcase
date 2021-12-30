@@ -47,6 +47,136 @@ definition {
 		AssertTextNotPresent(value1 = "The requested resource could not be found.");
 	}
 
+	@description = "This ensures that a user can add friendlyURL with escape character in a web content."
+	@priority = "3"
+	test CanAddFriendlyURLWithEscapeCharacter {
+		var portalURL = PropsUtil.get("portal.url");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Source Page",
+			widgetName = "Asset Publisher");
+
+		Navigator.openSitePage(
+			pageName = "Test Source Page",
+			siteName = "Test Site Name");
+
+		AssetPublisherPortlet.configureDisplaySettings(displaySettings = "Set as the Default Asset Publisher for This Page");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addWithFriendlyURL(
+			friendlyUrl = '''link&''',
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+
+		WebContent.editDisplayPage(
+			pageName = "Test Source Page",
+			pageType = "Public Pages");
+
+		PortletEntry.publish();
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/-/link-");
+
+		AssetPublisherPortlet.viewAssetPG(assetTitle = "WC WebContent Title");
+	}
+
+	@description = "This ensures that the friendlyURL of web content can be reset to default."
+	@priority = "4"
+	test CanResetFriendlyURLToDefault {
+		var portalURL = PropsUtil.get("portal.url");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Source Page",
+			widgetName = "Asset Publisher");
+
+		Navigator.openSitePage(
+			pageName = "Test Source Page",
+			siteName = "Test Site Name");
+
+		AssetPublisherPortlet.configureDisplaySettings(displaySettings = "Set as the Default Asset Publisher for This Page");
+
+		JSONWebcontent.addWebContent(
+			content = "Web Content Content",
+			groupName = "Test Site Name",
+			title = "Web Content Article");
+
+		WebContentNavigator.openToEditWCInSite(
+			groupName = "Test Site Name",
+			siteURLKey = "test-site-name",
+			version = "1.1",
+			webContentTitle = "Web Content Article");
+
+		WebContent.editDisplayPage(
+			pageName = "Test Source Page",
+			pageType = "Public Pages");
+
+		WebContent.editFriendlyURL(webContentFriendlyURL = "friendlyUrl");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Article");
+
+		WebContent.editFriendlyURL(webContentFriendlyURL = "web-content-article");
+
+		PortletEntry.publish();
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/-/web-content-article");
+
+		AssetPublisherPortlet.viewAssetPG(assetTitle = "Web Content Article");
+	}
+
+	@description = "This ensures that a previous friendlyURL of web content can be deleted when updating."
+	@priority = "4"
+	test CanViewWCWithLatestFriendlyURL {
+		var portalURL = PropsUtil.get("portal.url");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Source Page",
+			widgetName = "Asset Publisher");
+
+		Navigator.openSitePage(
+			pageName = "Test Source Page",
+			siteName = "Test Site Name");
+
+		AssetPublisherPortlet.configureDisplaySettings(displaySettings = "Set as the Default Asset Publisher for This Page");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addWithFriendlyURL(
+			friendlyUrl = "friendlyUrl",
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+
+		WebContent.editFriendlyURL(webContentFriendlyURL = "editedfriendlyUrl");
+
+		WebContent.editDisplayPage(
+			pageName = "Test Source Page",
+			pageType = "Public Pages");
+
+		PortletEntry.publish();
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/-/friendlyUrl");
+
+		AssertTextEquals(
+			locator1 = "Home#ERROR_MESSAGE_ALERT_ERROR",
+			value1 = "Not Found");
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/-/editedfriendlyUrl");
+
+		AssetPublisherPortlet.viewAssetPG(assetTitle = "WC WebContent Title");
+	}
+
 	@description = "This ensures that a user is redirected to the updated friendlyURL when he accesses the former friendlyURL."
 	@priority = "5"
 	test RedirectToUpdatedFriendlyURL {

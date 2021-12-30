@@ -247,7 +247,7 @@ definition {
 			value1 = "Test Test");
 
 		if (isSet(disableAutoExpire)) {
-			var unbanDate = DateUtil.getFormattedCurrentDate("MM/d/yy");
+			var unbanDate = DateUtil.getFormattedCurrentDate("M/d/yy");
 
 			echo("## * unbanDate: ${unbanDate}");
 

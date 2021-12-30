@@ -117,7 +117,7 @@ public abstract class BaseBuild implements Build {
 		setArchiveName(archiveName);
 
 		if (!_status.equals("completed")) {
-			throw new RuntimeException("Invalid build status: " + _status);
+			return;
 		}
 
 		File archiveDir = new File(getArchiveRootDir(), getArchivePath());

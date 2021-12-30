@@ -1,0 +1,44 @@
+@component-name = "portal-upgrades"
+definition {
+
+	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Remote Apps";
+	property testray.main.component.name = "Upgrades Remote Apps";
+
+	setUp {
+		SignIn.signIn();
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		AssertLocation.assertPartialLocation(value1 = "${portalURL}/web/guest");
+
+		SearchAdministration.executeReindex();
+	}
+
+	@description = "Upgrade to 7.3.10.1 and assert remote app fields were saved properly"
+	@priority = "5"
+	test CanViewRemoteAppFieldsAfterUpgrade73101 {
+		property portal.acceptance = "true";
+		property data.archive.type = "data-archive-remote-app";
+		property portal.version = "7.3.10.1";
+
+		var remoteAppName = "Test Remote App";
+		var remoteAppType = "IFrame";
+		var remoteAppURL = "http://www.liferay.com";
+
+		task ("Assert remote app is present after upgrade") {
+			RemoteAppsUpgrade.assertRemoteAppEntry(
+				upgradeName = "${remoteAppName}",
+				upgradeType = "${remoteAppType}");
+		}
+
+		task ("Assert remote app fields are saved after upgrade") {
+			RemoteAppsUpgrade.assertRemoteAppEntryFields(
+				upgradeName = "${remoteAppName}",
+				upgradeURL = "${remoteAppURL}");
+		}
+	}
+
+}

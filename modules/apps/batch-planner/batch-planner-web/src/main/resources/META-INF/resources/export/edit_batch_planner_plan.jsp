@@ -71,6 +71,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "export"));
 						<clay:row>
 							<clay:col>
 								<clay:select
+									id='<%= liferayPortletResponse.getNamespace() + "externalType" %>'
 									label="export-file-format"
 									name="externalType"
 									options="<%=
@@ -187,6 +188,8 @@ renderResponse.setTitle(LanguageUtil.get(request, "export"));
 <liferay-frontend:component
 	context='<%=
 		HashMapBuilder.<String, Object>put(
+			"initialExternalType", editBatchPlannerPlanDisplayContext.getSelectedExternalType()
+		).put(
 			"initialTemplateClassName", editBatchPlannerPlanDisplayContext.getSelectedInternalClassName()
 		).put(
 			"initialTemplateHeadlessEndpoint", editBatchPlannerPlanDisplayContext.getSelectedHeadlessEndpoint()

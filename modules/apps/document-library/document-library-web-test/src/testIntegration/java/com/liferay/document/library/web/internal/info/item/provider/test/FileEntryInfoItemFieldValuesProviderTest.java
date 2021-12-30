@@ -87,9 +87,9 @@ public class FileEntryInfoItemFieldValuesProviderTest {
 			_infoItemFieldValuesProvider.getInfoItemFieldValues(fileEntry);
 
 		InfoFieldValue<Object> testInfoFieldValue =
-			infoItemFieldValues.getInfoFieldValue("Test");
+			infoItemFieldValues.getInfoFieldValue("FieldName");
 
-		Assert.assertEquals("Test", testInfoFieldValue.getValue());
+		Assert.assertEquals("FieldValue", testInfoFieldValue.getValue());
 	}
 
 	@Test
@@ -160,15 +160,15 @@ public class FileEntryInfoItemFieldValuesProviderTest {
 			).infoFieldType(
 				TextInfoFieldType.INSTANCE
 			).name(
-				"Test"
+				"FieldName"
 			).labelInfoLocalizedValue(
-				InfoLocalizedValue.localize(getClass(), "Test")
+				InfoLocalizedValue.localize(getClass(), "LocalizedLabel")
 			).build();
 		}
 
 		@Override
 		public Object getValue(FileEntry model) {
-			return "Test";
+			return "FieldValue";
 		}
 
 	}

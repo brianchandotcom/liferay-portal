@@ -64,11 +64,11 @@ public class DeleteDataProviderMVCActionCommand
 		for (long deleteDataProviderInstanceId :
 				deleteDataProviderInstanceIds) {
 
-			_doDeleteDataProviderInstance(deleteDataProviderInstanceId);
+			_deleteDataProviderInstance(deleteDataProviderInstanceId);
 		}
 	}
 
-	private void _doDeleteDataProviderInstance(long dataProviderInstanceId)
+	private void _deleteDataProviderInstance(long dataProviderInstanceId)
 		throws Exception {
 
 		_ddmDataProviderInstanceService.deleteDataProviderInstance(

@@ -139,7 +139,7 @@ public class DDMFormTemplateContextFactoryImpl
 			}
 		}
 
-		return _doCreate(ddmForm, ddmFormLayout, ddmFormRenderingContext);
+		return _create(ddmForm, ddmFormLayout, ddmFormRenderingContext);
 	}
 
 	@Override
@@ -147,7 +147,7 @@ public class DDMFormTemplateContextFactoryImpl
 			DDMForm ddmForm, DDMFormRenderingContext ddmFormRenderingContext)
 		throws PortalException {
 
-		return _doCreate(
+		return _create(
 			ddmForm, _ddm.getDefaultDDMFormLayout(ddmForm),
 			ddmFormRenderingContext);
 	}
@@ -221,7 +221,7 @@ public class DDMFormTemplateContextFactoryImpl
 		}
 	}
 
-	private Map<String, Object> _doCreate(
+	private Map<String, Object> _create(
 			DDMForm ddmForm, DDMFormLayout ddmFormLayout,
 			DDMFormRenderingContext ddmFormRenderingContext)
 		throws PortalException {

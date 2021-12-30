@@ -62,7 +62,7 @@ public class DeleteFormInstanceMVCActionCommand
 		}
 
 		for (long deleteFormInstanceId : deleteFormInstanceIds) {
-			_doDeleteFormInstance(deleteFormInstanceId);
+			_deleteFormInstance(deleteFormInstanceId);
 		}
 	}
 
@@ -80,7 +80,7 @@ public class DeleteFormInstanceMVCActionCommand
 		_ddmStructureService = ddmStructureService;
 	}
 
-	private void _doDeleteFormInstance(long formInstanceId) throws Exception {
+	private void _deleteFormInstance(long formInstanceId) throws Exception {
 		_ddmFormInstanceService.deleteFormInstance(formInstanceId);
 	}
 

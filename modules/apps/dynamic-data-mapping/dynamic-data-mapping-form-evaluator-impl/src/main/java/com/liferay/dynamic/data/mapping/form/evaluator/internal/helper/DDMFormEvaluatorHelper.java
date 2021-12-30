@@ -411,26 +411,25 @@ public class DDMFormEvaluatorHelper {
 	private boolean _filterVisibleFieldsMarkedAsRequired(
 		DDMFormEvaluatorFieldContextKey ddmFormFieldContextKey) {
 
-		if (!_getBooleanPropertyValue(
+		if (!_isBooleanPropertyValue(
 				ddmFormFieldContextKey, "required", false)) {
 
 			return false;
 		}
 
-		return _getBooleanPropertyValue(
-			ddmFormFieldContextKey, "visible", true);
+		return _isBooleanPropertyValue(ddmFormFieldContextKey, "visible", true);
 	}
 
 	private boolean _filterVisibleFieldsWithInputMask(
 		DDMFormEvaluatorFieldContextKey ddmFormEvaluatorFieldContextKey) {
 
-		if (!_getBooleanPropertyValue(
+		if (!_isBooleanPropertyValue(
 				ddmFormEvaluatorFieldContextKey, "inputMask", false)) {
 
 			return false;
 		}
 
-		return _getBooleanPropertyValue(
+		return _isBooleanPropertyValue(
 			ddmFormEvaluatorFieldContextKey, "visible", true);
 	}
 
@@ -442,25 +441,6 @@ public class DDMFormEvaluatorHelper {
 		Stream<Map.Entry<K, V>> stream = set.stream();
 
 		stream.forEach(entryConsumer);
-	}
-
-	private boolean _getBooleanPropertyValue(
-		DDMFormEvaluatorFieldContextKey ddmFormFieldContextKey,
-		String booleanPropertyName, boolean defaultValue) {
-
-		Map<String, Object> changedProperties =
-			_ddmFormFieldsPropertyChanges.getOrDefault(
-				ddmFormFieldContextKey, Collections.emptyMap());
-
-		if (changedProperties.containsKey(booleanPropertyName)) {
-			return MapUtil.getBoolean(changedProperties, booleanPropertyName);
-		}
-
-		DDMFormField ddmFormField = _ddmFormFieldsMap.get(
-			ddmFormFieldContextKey.getName());
-
-		return GetterUtil.getBoolean(
-			ddmFormField.getProperty(booleanPropertyName), defaultValue);
 	}
 
 	private Stream<DDMFormEvaluatorFieldContextKey>
@@ -498,6 +478,25 @@ public class DDMFormEvaluatorHelper {
 				builder.build());
 
 		return getFieldPropertyResponse.getValue();
+	}
+
+	private boolean _isBooleanPropertyValue(
+		DDMFormEvaluatorFieldContextKey ddmFormFieldContextKey,
+		String booleanPropertyName, boolean defaultValue) {
+
+		Map<String, Object> changedProperties =
+			_ddmFormFieldsPropertyChanges.getOrDefault(
+				ddmFormFieldContextKey, Collections.emptyMap());
+
+		if (changedProperties.containsKey(booleanPropertyName)) {
+			return MapUtil.getBoolean(changedProperties, booleanPropertyName);
+		}
+
+		DDMFormField ddmFormField = _ddmFormFieldsMap.get(
+			ddmFormFieldContextKey.getName());
+
+		return GetterUtil.getBoolean(
+			ddmFormField.getProperty(booleanPropertyName), defaultValue);
 	}
 
 	private boolean _isConfirmationValueInvalid(
@@ -571,14 +570,14 @@ public class DDMFormEvaluatorHelper {
 	private boolean _isFieldNative(
 		DDMFormEvaluatorFieldContextKey ddmFormFieldContextKey) {
 
-		return _getBooleanPropertyValue(
+		return _isBooleanPropertyValue(
 			ddmFormFieldContextKey, "nativeField", true);
 	}
 
 	private boolean _isFieldReadOnly(
 		DDMFormEvaluatorFieldContextKey ddmFormEvaluatorFieldContextKey) {
 
-		return _getBooleanPropertyValue(
+		return _isBooleanPropertyValue(
 			ddmFormEvaluatorFieldContextKey, "readOnly", false);
 	}
 
@@ -598,21 +597,21 @@ public class DDMFormEvaluatorHelper {
 	private boolean _isFieldWithConfirmationFieldAndVisible(
 		DDMFormEvaluatorFieldContextKey ddmFormEvaluatorFieldContextKey) {
 
-		if (!_getBooleanPropertyValue(
+		if (!_isBooleanPropertyValue(
 				ddmFormEvaluatorFieldContextKey, "requireConfirmation",
 				false)) {
 
 			return false;
 		}
 
-		return _getBooleanPropertyValue(
+		return _isBooleanPropertyValue(
 			ddmFormEvaluatorFieldContextKey, "visible", true);
 	}
 
 	private boolean _isHideField(
 		DDMFormEvaluatorFieldContextKey ddmFormEvaluatorFieldContextKey) {
 
-		return _getBooleanPropertyValue(
+		return _isBooleanPropertyValue(
 			ddmFormEvaluatorFieldContextKey, "hideField", false);
 	}
 
@@ -633,7 +632,7 @@ public class DDMFormEvaluatorHelper {
 	private boolean _isObjectRelationshipFieldInvalid(
 		DDMFormEvaluatorFieldContextKey ddmFormEvaluatorFieldContextKey) {
 
-		if (!_getBooleanPropertyValue(
+		if (!_isBooleanPropertyValue(
 				ddmFormEvaluatorFieldContextKey, "visible", true)) {
 
 			return false;

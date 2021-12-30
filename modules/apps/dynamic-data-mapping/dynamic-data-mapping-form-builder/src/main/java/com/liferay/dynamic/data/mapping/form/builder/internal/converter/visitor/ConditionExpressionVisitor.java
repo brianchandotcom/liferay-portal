@@ -59,7 +59,7 @@ public class ConditionExpressionVisitor extends ExpressionVisitor<Object> {
 	public Object visit(AndExpression andExpression) {
 		_andOperator = true;
 
-		return _doVisitLogicalExpression(andExpression);
+		return _visitLogicalExpression(andExpression);
 	}
 
 	@Override
@@ -169,7 +169,7 @@ public class ConditionExpressionVisitor extends ExpressionVisitor<Object> {
 	public Object visit(OrExpression orExpression) {
 		_andOperator = false;
 
-		return _doVisitLogicalExpression(orExpression);
+		return _visitLogicalExpression(orExpression);
 	}
 
 	@Override
@@ -196,7 +196,7 @@ public class ConditionExpressionVisitor extends ExpressionVisitor<Object> {
 		return new SPIDDMFormRuleCondition(functionNameOperator, operands);
 	}
 
-	private List<SPIDDMFormRuleCondition> _doVisitLogicalExpression(
+	private List<SPIDDMFormRuleCondition> _visitLogicalExpression(
 		BinaryExpression binaryExpression) {
 
 		Object object1 = doVisit(binaryExpression.getLeftOperandExpression());

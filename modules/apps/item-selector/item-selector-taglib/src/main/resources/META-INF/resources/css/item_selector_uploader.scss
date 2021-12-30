@@ -41,11 +41,32 @@
 		animation: dropzone-error-in-out 1s;
 	}
 
+	&-drag-file-icon-wrapper {
+		align-items: center;
+		display: inline-flex;
+		justify-content: center;
+		margin-right: 2rem;
+		vertical-align: middle;
+	}
+
 	&-wrapper {
 		margin-top: 1rem;
 
-		&-search-container-empty #{$component} {
-			height: 25rem;
+		&-search-container-empty {
+			#{$component} {
+				height: 25rem;
+			}
+
+			#{$component}-drag-file-icon-wrapper {
+				display: flex;
+				margin-bottom: 3rem;
+				margin-right: 0;
+			}
+
+			#{$component}-drag-file-icon {
+				height: 140px;
+				width: 188px;
+			}
 		}
 	}
 

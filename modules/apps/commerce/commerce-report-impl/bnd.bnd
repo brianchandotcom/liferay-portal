@@ -60,6 +60,7 @@ Import-Package:\
 	!org.apache.xerces.impl.xpath.regex.*,\
 	!org.apache.xml.resolver.*,\
 	!org.apache.xmlbeans.*,\
+	!org.apache.xpath.*,\
 	\
 	!org.dom4j.*,\
 	\
@@ -70,8 +71,6 @@ Import-Package:\
 	!org.fusesource.*,\
 	\
 	!org.hibernate.*,\
-	\
-	!org.jaxen.*,\
 	\
 	!org.junit.*,\
 	\

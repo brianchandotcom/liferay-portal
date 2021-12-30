@@ -18,14 +18,11 @@ import com.liferay.commerce.price.list.exception.CommercePriceListCurrencyExcept
 import com.liferay.commerce.price.list.exception.CommercePriceListParentPriceListGroupIdException;
 import com.liferay.commerce.price.list.exception.NoSuchPriceListException;
 import com.liferay.commerce.price.list.model.CommercePriceList;
-import com.liferay.commerce.price.list.model.CommercePriceListAccountRel;
-import com.liferay.commerce.price.list.model.CommercePriceListCommerceAccountGroupRel;
 import com.liferay.commerce.price.list.service.CommercePriceListAccountRelService;
 import com.liferay.commerce.price.list.service.CommercePriceListCommerceAccountGroupRelService;
 import com.liferay.commerce.price.list.service.CommercePriceListService;
 import com.liferay.commerce.pricing.constants.CommercePricingPortletKeys;
 import com.liferay.commerce.product.exception.NoSuchCatalogException;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -268,106 +265,6 @@ public class EditCommercePriceListMVCActionCommand
 		}
 
 		return commercePriceList;
-	}
-
-	private void _updateCommercePriceListAccountRels(
-			ActionRequest actionRequest, CommercePriceList commercePriceList)
-		throws PortalException {
-
-		long[] deleteCommercePriceListAccountRelIds = ParamUtil.getLongValues(
-			actionRequest, "deleteCommercePriceListAccountRelIds");
-
-		if (deleteCommercePriceListAccountRelIds.length > 0) {
-			for (long deleteCommercePriceListAccountRelId :
-					deleteCommercePriceListAccountRelIds) {
-
-				_commercePriceListAccountRelService.
-					deleteCommercePriceListAccountRel(
-						deleteCommercePriceListAccountRelId);
-			}
-		}
-
-		long[] addCommerceAccountIds = ParamUtil.getLongValues(
-			actionRequest, "addCommerceAccountIds");
-
-		if (addCommerceAccountIds.length > 0) {
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				CommercePriceListAccountRel.class.getName(), actionRequest);
-
-			for (long addCommerceAccountId : addCommerceAccountIds) {
-				CommercePriceListAccountRel commercePriceListAccountRel =
-					_commercePriceListAccountRelService.
-						fetchCommercePriceListAccountRel(
-							commercePriceList.getCommercePriceListId(),
-							addCommerceAccountId);
-
-				if (commercePriceListAccountRel == null) {
-					_commercePriceListAccountRelService.
-						addCommercePriceListAccountRel(
-							commercePriceList.getCommercePriceListId(),
-							addCommerceAccountId, 0, serviceContext);
-				}
-			}
-		}
-	}
-
-	private void _updateCommercePriceListCommerceAccountGroupRels(
-			ActionRequest actionRequest, CommercePriceList commercePriceList)
-		throws PortalException {
-
-		long[] addCommerceAccountGroupIds = ParamUtil.getLongValues(
-			actionRequest, "addCommerceAccountGroupIds");
-
-		long[] deleteCommercePriceListCommerceAccountGroupRelIds =
-			ParamUtil.getLongValues(
-				actionRequest,
-				"deleteCommercePriceListCommerceAccountGroupRelIds");
-
-		if (deleteCommercePriceListCommerceAccountGroupRelIds.length > 0) {
-			for (long deleteCommercePriceListCommerceAccountGroupRelId :
-					deleteCommercePriceListCommerceAccountGroupRelIds) {
-
-				_commercePriceListCommerceAccountGroupRelService.
-					deleteCommercePriceListCommerceAccountGroupRel(
-						deleteCommercePriceListCommerceAccountGroupRelId);
-			}
-		}
-
-		if (addCommerceAccountGroupIds.length > 0) {
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				CommercePriceListCommerceAccountGroupRel.class.getName(),
-				actionRequest);
-
-			for (long addCommerceAccountGroupId : addCommerceAccountGroupIds) {
-				CommercePriceListCommerceAccountGroupRel
-					commercePriceListAccountGroupEntryRel =
-						_commercePriceListCommerceAccountGroupRelService.
-							fetchCommercePriceListCommerceAccountGroupRel(
-								commercePriceList.getCommercePriceListId(),
-								addCommerceAccountGroupId);
-
-				if (commercePriceListAccountGroupEntryRel == null) {
-					_commercePriceListCommerceAccountGroupRelService.
-						addCommercePriceListCommerceAccountGroupRel(
-							commercePriceList.getCommercePriceListId(),
-							addCommerceAccountGroupId, 0, serviceContext);
-				}
-			}
-		}
-	}
-
-	private void _updateQualifiers(ActionRequest actionRequest)
-		throws PortalException {
-
-		long commercePriceListId = ParamUtil.getLong(
-			actionRequest, "commercePriceListId");
-
-		CommercePriceList commercePriceList =
-			_commercePriceListService.getCommercePriceList(commercePriceListId);
-
-		_updateCommercePriceListAccountRels(actionRequest, commercePriceList);
-		_updateCommercePriceListCommerceAccountGroupRels(
-			actionRequest, commercePriceList);
 	}
 
 	@Reference

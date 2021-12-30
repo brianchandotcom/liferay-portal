@@ -14,7 +14,6 @@
 
 package com.liferay.commerce.frontend.internal.order;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -43,9 +42,6 @@ import java.util.List;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
-
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -143,29 +139,6 @@ public class CommerceOrderResource {
 
 		return (int)_commerceOrderService.getUserPendingCommerceOrdersCount(
 			companyId, groupId, keywords);
-	}
-
-	private Response _getResponse(Object object) {
-		if (object == null) {
-			return Response.status(
-				Response.Status.NOT_FOUND
-			).build();
-		}
-
-		try {
-			String json = _OBJECT_MAPPER.writeValueAsString(object);
-
-			return Response.ok(
-				json, MediaType.APPLICATION_JSON
-			).build();
-		}
-		catch (JsonProcessingException jsonProcessingException) {
-			_log.error(jsonProcessingException, jsonProcessingException);
-		}
-
-		return Response.status(
-			Response.Status.NOT_FOUND
-		).build();
 	}
 
 	private static final ObjectMapper _OBJECT_MAPPER = new ObjectMapper() {

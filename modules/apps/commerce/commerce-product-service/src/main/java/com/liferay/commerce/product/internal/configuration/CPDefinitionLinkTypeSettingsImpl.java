@@ -66,20 +66,6 @@ public class CPDefinitionLinkTypeSettingsImpl
 			cpDefinitionLinkTypeConfigurationWrapper.getType());
 	}
 
-	private CPDefinitionLinkTypeConfigurationWrapper
-		_getCPDefinitionLinkTypeConfigurationWrapper(String type) {
-
-		CPDefinitionLinkTypeConfigurationWrapper
-			cpDefinitionLinkTypeConfigurationWrapper =
-				_cpDefinitionLinkTypeConfigurationWrappers.get(type);
-
-		if (cpDefinitionLinkTypeConfigurationWrapper == null) {
-			_log.error("Unable to get cpDefinitionLink type: " + type);
-		}
-
-		return cpDefinitionLinkTypeConfigurationWrapper;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		CPDefinitionLinkTypeSettingsImpl.class);
 

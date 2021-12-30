@@ -175,11 +175,6 @@ public class CPDefinitionItemSelectorViewDisplayContext
 			httpServletRequest, "checkedCPDefinitionIds");
 	}
 
-	private long[] _getDisabledCPDefinitionIds() {
-		return ParamUtil.getLongValues(
-			httpServletRequest, "disabledCPDefinitionIds");
-	}
-
 	private final CPDefinitionService _cpDefinitionService;
 	private final CPTypeServicesTracker _cpTypeServicesTracker;
 

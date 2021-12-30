@@ -193,18 +193,6 @@ public abstract class BaseCPOptionsDisplayContext<T> {
 	protected final PortalPreferences portalPreferences;
 	protected SearchContainer<T> searchContainer;
 
-	private long _getScopeGroupId() {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		return themeDisplay.getScopeGroupId();
-	}
-
-	private void _setDefaultOrderByType(String defaultOrderByType) {
-		_defaultOrderByType = defaultOrderByType;
-	}
-
 	private String _defaultOrderByCol;
 	private String _defaultOrderByType;
 	private String _displayStyle;

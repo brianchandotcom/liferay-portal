@@ -21,7 +21,6 @@ import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelService
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelService;
-import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -32,7 +31,6 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
 
@@ -41,7 +39,6 @@ import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -115,44 +112,6 @@ public class EditCommercePaymentMethodGroupRelMVCActionCommand
 		_commercePaymentMethodGroupRelService.
 			deleteCommercePaymentMethodGroupRel(
 				commercePaymentMethodGroupRelId);
-	}
-
-	private String _getRedirectURL(
-		ActionRequest actionRequest, long commercePaymentMethodGroupRelId,
-		String mvcRenderCommandName) {
-
-		return PortletURLBuilder.create(
-			_portal.getControlPanelPortletURL(
-				actionRequest, CPPortletKeys.COMMERCE_CHANNELS,
-				PortletRequest.RENDER_PHASE)
-		).setMVCRenderCommandName(
-			mvcRenderCommandName
-		).setRedirect(
-			() -> {
-				String redirect = ParamUtil.getString(
-					actionRequest, "redirect");
-
-				if (Validator.isNotNull(redirect)) {
-					return redirect;
-				}
-
-				return null;
-			}
-		).setParameter(
-			"commercePaymentMethodGroupRelId", commercePaymentMethodGroupRelId
-		).setParameter(
-			"engineKey",
-			() -> {
-				String engineKey = ParamUtil.getString(
-					actionRequest, "engineKey");
-
-				if (Validator.isNotNull(engineKey)) {
-					return engineKey;
-				}
-
-				return null;
-			}
-		).buildString();
 	}
 
 	private CommercePaymentMethodGroupRel _updateCommercePaymentMethodGroupRel(

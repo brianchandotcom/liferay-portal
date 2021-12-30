@@ -157,16 +157,6 @@ public class CommerceAccountGroupAccountItemSelectorViewDisplayContext {
 		return null;
 	}
 
-	private long _getCommerceAccountGroupId() throws PortalException {
-		CommerceAccountGroup commerceAccountGroup = _getCommerceAccountGroup();
-
-		if (commerceAccountGroup == null) {
-			return 0;
-		}
-
-		return commerceAccountGroup.getCommerceAccountGroupId();
-	}
-
 	private final CommerceAccountGroupCommerceAccountRelLocalService
 		_commerceAccountGroupCommerceAccountRelLocalService;
 	private final CommerceAccountGroupService _commerceAccountGroupService;

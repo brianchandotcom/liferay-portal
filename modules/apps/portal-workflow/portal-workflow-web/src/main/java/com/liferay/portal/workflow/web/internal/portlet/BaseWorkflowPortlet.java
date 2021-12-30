@@ -132,10 +132,6 @@ public abstract class BaseWorkflowPortlet extends MVCPortlet {
 			workflowPortletTabName);
 	}
 
-	private WorkflowPortletTab _getWorkflowPortletTab(String name) {
-		return _workflowPortletTabServiceTrackerMap.getService(name);
-	}
-
 	private ServiceTrackerMap<String, WorkflowPortletTab>
 		_workflowPortletTabServiceTrackerMap;
 

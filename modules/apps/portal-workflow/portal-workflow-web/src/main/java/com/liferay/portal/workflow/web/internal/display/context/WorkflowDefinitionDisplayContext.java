@@ -591,11 +591,6 @@ public class WorkflowDefinitionDisplayContext {
 			});
 	}
 
-	private String _getConfigureAssignementLink() {
-		return _buildErrorLink(
-			"configure-assignments", _getWorkflowDefinitionLinkPortletURL());
-	}
-
 	private String _getCurrentNavigation(
 		HttpServletRequest httpServletRequest) {
 
@@ -676,18 +671,6 @@ public class WorkflowDefinitionDisplayContext {
 		}
 
 		return portletURL;
-	}
-
-	private PortletURL _getWorkflowDefinitionLinkPortletURL() {
-		return PortletURLBuilder.createLiferayPortletURL(
-			_workflowDefinitionRequestHelper.getLiferayPortletResponse(),
-			WorkflowPortletKeys.CONTROL_PANEL_WORKFLOW,
-			PortletRequest.RENDER_PHASE
-		).setMVCPath(
-			"/view.jsp"
-		).setParameter(
-			"tab", WorkflowWebKeys.WORKFLOW_TAB_DEFINITION_LINK
-		).buildPortletURL();
 	}
 
 	private OrderByComparator<WorkflowDefinition>

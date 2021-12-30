@@ -84,7 +84,6 @@ import java.io.Serializable;
 import java.text.Format;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -780,36 +779,6 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 		return latestIndexableArticle;
 	}
 
-	private Collection<Document> _getArticleVersions(JournalArticle article)
-		throws PortalException {
-
-		Collection<Document> documents = new ArrayList<>();
-
-		List<JournalArticle> articles = null;
-
-		if (isIndexAllArticleVersions()) {
-			articles = _journalArticleLocalService.getArticlesByResourcePrimKey(
-				article.getResourcePrimKey());
-		}
-		else {
-			articles = new ArrayList<>();
-
-			JournalArticle latestIndexableArticle =
-				_fetchLatestIndexableArticleVersion(
-					article.getResourcePrimKey());
-
-			if (latestIndexableArticle != null) {
-				articles.add(latestIndexableArticle);
-			}
-		}
-
-		for (JournalArticle curArticle : articles) {
-			documents.add(getDocument(curArticle));
-		}
-
-		return documents;
-	}
-
 	private String _getDDMContentSummary(
 		Document document, Locale snippetLocale, PortletRequest portletRequest,
 		PortletResponse portletResponse) {
@@ -929,14 +898,6 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 		indexableActionableDynamicQuery.setSearchEngineId(getSearchEngineId());
 
 		indexableActionableDynamicQuery.performActions();
-	}
-
-	private void _reindexArticleVersions(JournalArticle article)
-		throws PortalException {
-
-		_indexWriterHelper.updateDocuments(
-			getSearchEngineId(), article.getCompanyId(),
-			_getArticleVersions(article), isCommitImmediately());
 	}
 
 	private void _reindexEveryVersionOfResourcePrimKey(long resourcePrimKey)

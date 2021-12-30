@@ -584,12 +584,6 @@ public class JournalTransformer {
 		return templateNode;
 	}
 
-	private ClassLoader _getClassLoader() {
-		Class<?> clazz = getClass();
-
-		return clazz.getClassLoader();
-	}
-
 	private Company _getCompany(ThemeDisplay themeDisplay, long companyId)
 		throws Exception {
 

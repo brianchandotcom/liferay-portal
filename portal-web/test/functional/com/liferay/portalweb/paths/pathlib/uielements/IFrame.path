@@ -106,6 +106,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>IFRAME_SRC</td>
+	<td>//iframe[contains(@src,'${key_src}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>IFRAME_TITLE</td>
 	<td>//div[contains(@class,'modal-header')]/h3[@class='modal-title' and contains(.,'${key_iframeTitle}')]</td>
 	<td></td>
@@ -132,7 +137,7 @@
 </tr>
 <tr>
 	<td>MODAL_BODY</td>
-	<td>//div[contains(@class,'modal-body')]/iframe</td>
+	<td>//div[contains(@class,'modal-body')]/*[@title]</td>
 	<td></td>
 </tr>
 <tr>

@@ -977,7 +977,7 @@ public class SpeedwellSiteInitializer implements SiteInitializer {
 	}
 
 	private void _updateUserRole(ServiceContext serviceContext)
-		throws PortalException {
+		throws Exception {
 
 		Role role = _roleLocalService.fetchRole(
 			serviceContext.getCompanyId(), "User");

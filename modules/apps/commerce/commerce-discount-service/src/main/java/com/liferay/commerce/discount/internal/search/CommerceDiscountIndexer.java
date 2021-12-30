@@ -514,9 +514,7 @@ public class CommerceDiscountIndexer extends BaseIndexer<CommerceDiscount> {
 		_commerceDiscountProductTargets.remove(commerceDiscountProductTarget);
 	}
 
-	private void _reindexCommerceDiscounts(long companyId)
-		throws PortalException {
-
+	private void _reindexCommerceDiscounts(long companyId) throws Exception {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
 			_commerceDiscountLocalService.getIndexableActionableDynamicQuery();
 

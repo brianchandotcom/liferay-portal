@@ -28,8 +28,6 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 
-import java.io.IOException;
-
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
@@ -103,7 +101,7 @@ public class FixCommerceHealthStatusIssueMVCActionCommand
 	}
 
 	private void _writeJSON(ActionResponse actionResponse, Object object)
-		throws IOException {
+		throws Exception {
 
 		HttpServletResponse httpServletResponse =
 			_portal.getHttpServletResponse(actionResponse);

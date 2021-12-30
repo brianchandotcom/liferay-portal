@@ -184,9 +184,7 @@ public class EditCommerceCountryMVCActionCommand extends BaseMVCActionCommand {
 		return portletURL.toString();
 	}
 
-	private void _updateChannels(ActionRequest actionRequest)
-		throws PortalException {
-
+	private void _updateChannels(ActionRequest actionRequest) throws Exception {
 		long countryId = ParamUtil.getLong(actionRequest, "countryId");
 
 		long[] commerceChannelIds = StringUtil.split(

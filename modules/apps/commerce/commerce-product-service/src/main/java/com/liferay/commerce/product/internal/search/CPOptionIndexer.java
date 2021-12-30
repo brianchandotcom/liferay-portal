@@ -178,7 +178,7 @@ public class CPOptionIndexer extends BaseIndexer<CPOption> {
 		_reindexCPOptions(companyId);
 	}
 
-	private void _reindexCPOptions(long companyId) throws PortalException {
+	private void _reindexCPOptions(long companyId) throws Exception {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
 			_cpOptionLocalService.getIndexableActionableDynamicQuery();
 

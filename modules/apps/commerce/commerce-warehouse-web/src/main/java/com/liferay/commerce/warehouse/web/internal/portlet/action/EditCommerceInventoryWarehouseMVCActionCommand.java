@@ -206,9 +206,7 @@ public class EditCommerceInventoryWarehouseMVCActionCommand
 			commerceInventoryWarehouseId, active);
 	}
 
-	private void _updateChannels(ActionRequest actionRequest)
-		throws PortalException {
-
+	private void _updateChannels(ActionRequest actionRequest) throws Exception {
 		long commerceInventoryWarehouseId = ParamUtil.getLong(
 			actionRequest, "commerceInventoryWarehouseId");
 
@@ -239,7 +237,7 @@ public class EditCommerceInventoryWarehouseMVCActionCommand
 
 	private CommerceInventoryWarehouse _updateCommerceInventoryWarehouse(
 			ActionRequest actionRequest)
-		throws PortalException {
+		throws Exception {
 
 		long commerceInventoryWarehouseId = ParamUtil.getLong(
 			actionRequest, "commerceInventoryWarehouseId");

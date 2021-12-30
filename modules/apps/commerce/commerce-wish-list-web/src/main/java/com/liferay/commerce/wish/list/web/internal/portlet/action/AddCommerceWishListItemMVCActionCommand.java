@@ -40,8 +40,6 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 
-import java.io.IOException;
-
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
@@ -145,7 +143,7 @@ public class AddCommerceWishListItemMVCActionCommand
 
 	private void _writeJSON(
 			HttpServletResponse httpServletResponse, JSONObject jsonObject)
-		throws IOException {
+		throws Exception {
 
 		httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);
 

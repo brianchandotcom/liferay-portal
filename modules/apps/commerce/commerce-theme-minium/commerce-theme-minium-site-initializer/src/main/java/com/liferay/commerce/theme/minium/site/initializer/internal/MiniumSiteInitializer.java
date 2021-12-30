@@ -964,7 +964,7 @@ public class MiniumSiteInitializer implements SiteInitializer {
 
 	private void _updateOperationManagerRole(
 			ServiceContext serviceContext, long commerceChannelId)
-		throws PortalException {
+		throws Exception {
 
 		ModelPermissions modelPermissions = ModelPermissionsFactory.create(
 			HashMapBuilder.put(
@@ -997,7 +997,7 @@ public class MiniumSiteInitializer implements SiteInitializer {
 	}
 
 	private void _updateUserRole(ServiceContext serviceContext)
-		throws PortalException {
+		throws Exception {
 
 		Role role = _roleLocalService.fetchRole(
 			serviceContext.getCompanyId(), "User");

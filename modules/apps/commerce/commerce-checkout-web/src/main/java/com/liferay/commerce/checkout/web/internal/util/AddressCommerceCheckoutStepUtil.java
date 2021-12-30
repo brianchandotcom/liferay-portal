@@ -27,7 +27,6 @@ import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.commerce.service.CommerceOrderService;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
@@ -180,7 +179,7 @@ public class AddressCommerceCheckoutStepUtil {
 
 	private CommerceAddress _addCommerceAddress(
 			CommerceOrder commerceOrder, ActionRequest actionRequest)
-		throws PortalException {
+		throws Exception {
 
 		String name = ParamUtil.getString(actionRequest, "name");
 		String description = ParamUtil.getString(actionRequest, "description");

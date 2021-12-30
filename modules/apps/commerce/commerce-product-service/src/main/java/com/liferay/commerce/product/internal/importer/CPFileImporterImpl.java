@@ -101,7 +101,6 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
 
 import org.osgi.service.component.annotations.Component;
@@ -559,7 +558,7 @@ public class CPFileImporterImpl implements CPFileImporter {
 			long classNameId, long classPK, long resourceClassNameId,
 			String name, String type, String mode, String language,
 			String script, boolean cacheable, ServiceContext serviceContext)
-		throws PortalException {
+		throws Exception {
 
 		Map<Locale, String> nameMap = HashMapBuilder.put(
 			LocaleUtil.getSiteDefault(), name
@@ -624,7 +623,7 @@ public class CPFileImporterImpl implements CPFileImporter {
 
 	private long _getAssetEntryId(
 			String articleId, ServiceContext serviceContext)
-		throws PortalException {
+		throws Exception {
 
 		if (Validator.isNull(articleId)) {
 			return 0;
@@ -763,7 +762,7 @@ public class CPFileImporterImpl implements CPFileImporter {
 			PortletPreferences portletPreferences,
 			ResourceBundleLoader resourceBundleLoader, long groupId, String key,
 			String value)
-		throws PortletException {
+		throws Exception {
 
 		for (Locale locale : LanguageUtil.getAvailableLocales(groupId)) {
 			ResourceBundle resourceBundle =
@@ -974,7 +973,7 @@ public class CPFileImporterImpl implements CPFileImporter {
 
 	private void _updatePermissions(
 			long companyId, String name, String primKey, JSONArray jsonArray)
-		throws PortalException {
+		throws Exception {
 
 		if (jsonArray == null) {
 			jsonArray = JSONFactoryUtil.createJSONArray(

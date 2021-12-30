@@ -41,8 +41,6 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 
-import java.io.IOException;
-
 import java.util.List;
 
 import javax.portlet.ActionRequest;
@@ -185,7 +183,7 @@ public class AddCommerceOrderItemMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private void _writeJSON(ActionResponse actionResponse, Object object)
-		throws IOException {
+		throws Exception {
 
 		HttpServletResponse httpServletResponse =
 			_portal.getHttpServletResponse(actionResponse);

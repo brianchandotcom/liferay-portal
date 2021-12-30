@@ -182,7 +182,7 @@ public class EditCommerceOrderItemMVCActionCommand
 	}
 
 	private void _updateCommerceOrderItem(ActionRequest actionRequest)
-		throws PortalException {
+		throws Exception {
 
 		long commerceOrderItemId = ParamUtil.getLong(
 			actionRequest, "commerceOrderItemId");

@@ -353,9 +353,7 @@ public class CommercePriceListIndexer extends BaseIndexer<CommercePriceList> {
 		return commerceCatalog.getCommerceCatalogId();
 	}
 
-	private void _reindexCommercePriceLists(long companyId)
-		throws PortalException {
-
+	private void _reindexCommercePriceLists(long companyId) throws Exception {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
 			_commercePriceListLocalService.getIndexableActionableDynamicQuery();
 

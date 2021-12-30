@@ -39,7 +39,6 @@ import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.util.CommerceUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -112,7 +111,7 @@ public class CommerceCartResourceUtil {
 
 	private String[] _getErrorMessages(
 			Locale locale, CommerceOrderItem commerceOrderItem)
-		throws PortalException {
+		throws Exception {
 
 		String[] errorMessages = new String[0];
 
@@ -250,7 +249,7 @@ public class CommerceCartResourceUtil {
 	private Summary _getSummary(
 			CommerceOrder commerceOrder, Locale locale,
 			CommerceContext commerceContext)
-		throws PortalException {
+		throws Exception {
 
 		CommerceOrderPrice commerceOrderPrice =
 			_commerceOrderPriceCalculation.getCommerceOrderPrice(

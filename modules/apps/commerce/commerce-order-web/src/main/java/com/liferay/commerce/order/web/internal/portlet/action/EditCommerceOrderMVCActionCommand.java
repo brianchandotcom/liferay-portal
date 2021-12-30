@@ -189,7 +189,7 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 
 	private CommerceShipment _addShipment(
 			ActionRequest actionRequest, long commerceOrderId)
-		throws PortalException {
+		throws Exception {
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			CommerceShipment.class.getName(), actionRequest);
@@ -322,7 +322,7 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 	private void _executeWorkflowTransition(
 			ActionRequest actionRequest, long commerceOrderId,
 			String transitionName, long workflowTaskId)
-		throws PortalException {
+		throws Exception {
 
 		String comment = ParamUtil.getString(actionRequest, "comment");
 

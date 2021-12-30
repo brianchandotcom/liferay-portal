@@ -306,7 +306,7 @@ public class CPInstanceIndexer extends BaseIndexer<CPInstance> {
 		return new WildcardQueryImpl(field, value + StringPool.STAR);
 	}
 
-	private void _reindexCPInstances(long companyId) throws PortalException {
+	private void _reindexCPInstances(long companyId) throws Exception {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
 			_cpInstanceLocalService.getIndexableActionableDynamicQuery();
 

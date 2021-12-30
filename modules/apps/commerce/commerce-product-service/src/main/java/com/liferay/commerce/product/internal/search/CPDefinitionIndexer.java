@@ -905,7 +905,7 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 		).toArray();
 	}
 
-	private void _reindexCPDefinitions(long companyId) throws PortalException {
+	private void _reindexCPDefinitions(long companyId) throws Exception {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
 			_cpDefinitionLocalService.getIndexableActionableDynamicQuery();
 

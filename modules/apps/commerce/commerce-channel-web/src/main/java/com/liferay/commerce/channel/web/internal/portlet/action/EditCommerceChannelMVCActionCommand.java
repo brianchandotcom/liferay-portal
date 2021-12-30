@@ -25,7 +25,6 @@ import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.permission.CommerceChannelPermission;
 import com.liferay.commerce.product.service.CommerceChannelService;
 import com.liferay.commerce.util.AccountEntryAllowedTypesUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -291,7 +290,7 @@ public class EditCommerceChannelMVCActionCommand extends BaseMVCActionCommand {
 
 	private void _updateWorkflowDefinitionLinks(
 			CommerceChannel commerceChannel, ActionRequest actionRequest)
-		throws PortalException {
+		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);

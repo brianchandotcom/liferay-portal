@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -277,7 +276,7 @@ public class CommerceOrderItemIndexerTest {
 	}
 
 	private Hits _search(String keywords, long commerceOrderId)
-		throws SearchException {
+		throws Exception {
 
 		SearchContext searchContext = _getSearchContext(commerceOrderId);
 

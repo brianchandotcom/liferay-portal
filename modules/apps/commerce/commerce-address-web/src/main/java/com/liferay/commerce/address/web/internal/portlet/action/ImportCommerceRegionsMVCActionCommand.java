@@ -30,8 +30,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.io.IOException;
-
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
@@ -103,7 +101,7 @@ public class ImportCommerceRegionsMVCActionCommand
 	}
 
 	private void _writeJSON(ActionResponse actionResponse, Object object)
-		throws IOException {
+		throws Exception {
 
 		HttpServletResponse httpServletResponse =
 			_portal.getHttpServletResponse(actionResponse);

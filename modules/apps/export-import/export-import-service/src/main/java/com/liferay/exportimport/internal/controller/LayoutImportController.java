@@ -218,7 +218,7 @@ public class LayoutImportController implements ImportController {
 			long userId = MapUtil.getLong(
 				exportImportConfiguration.getSettingsMap(), "userId");
 
-			_doImportFile(portletDataContext, userId);
+			_importFile(portletDataContext, userId);
 
 			ExportImportThreadLocal.setLayoutImportInProcess(false);
 
@@ -681,8 +681,43 @@ public class LayoutImportController implements ImportController {
 		_validateLayoutPrototypes(companyId, headerElement, layoutsElement);
 	}
 
-	private void _doImportFile(
-			PortletDataContext portletDataContext, long userId)
+	private List<Element> _fetchPortletElements(Element rootElement) {
+		List<Element> portletElements = new ArrayList<>();
+
+		// Site portlets
+
+		Element sitePortletsElement = rootElement.element("site-portlets");
+
+		// LAR compatibility
+
+		if (sitePortletsElement == null) {
+			sitePortletsElement = rootElement.element("portlets");
+		}
+
+		portletElements.addAll(sitePortletsElement.elements("portlet"));
+
+		// Layout portlets
+
+		XPath xPath = SAXReaderUtil.createXPath(
+			"staged-model/portlets/portlet");
+
+		Element layoutsElement = rootElement.element(
+			Layout.class.getSimpleName());
+
+		List<Node> nodes = xPath.selectNodes(layoutsElement);
+
+		Stream<Node> nodesStream = nodes.stream();
+
+		nodesStream.map(
+			node -> (Element)node
+		).forEach(
+			portletElements::add
+		);
+
+		return portletElements;
+	}
+
+	private void _importFile(PortletDataContext portletDataContext, long userId)
 		throws Exception {
 
 		Map<String, String[]> parameterMap =
@@ -944,42 +979,6 @@ public class LayoutImportController implements ImportController {
 		ZipReader zipReader = portletDataContext.getZipReader();
 
 		zipReader.close();
-	}
-
-	private List<Element> _fetchPortletElements(Element rootElement) {
-		List<Element> portletElements = new ArrayList<>();
-
-		// Site portlets
-
-		Element sitePortletsElement = rootElement.element("site-portlets");
-
-		// LAR compatibility
-
-		if (sitePortletsElement == null) {
-			sitePortletsElement = rootElement.element("portlets");
-		}
-
-		portletElements.addAll(sitePortletsElement.elements("portlet"));
-
-		// Layout portlets
-
-		XPath xPath = SAXReaderUtil.createXPath(
-			"staged-model/portlets/portlet");
-
-		Element layoutsElement = rootElement.element(
-			Layout.class.getSimpleName());
-
-		List<Node> nodes = xPath.selectNodes(layoutsElement);
-
-		Stream<Node> nodesStream = nodes.stream();
-
-		nodesStream.map(
-			node -> (Element)node
-		).forEach(
-			portletElements::add
-		);
-
-		return portletElements;
 	}
 
 	private void _importLayoutsFromLegacyLar(

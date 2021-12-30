@@ -73,7 +73,7 @@ public class DeletionSystemEventImporter {
 
 				@Override
 				public void processElement(Element element) {
-					_doImportDeletionSystemEvents(portletDataContext, element);
+					_importDeletionSystemEvents(portletDataContext, element);
 				}
 
 			},
@@ -87,7 +87,7 @@ public class DeletionSystemEventImporter {
 	private DeletionSystemEventImporter() {
 	}
 
-	private void _doImportDeletionSystemEvents(
+	private void _importDeletionSystemEvents(
 		PortletDataContext portletDataContext, Element element) {
 
 		StagedModelType stagedModelType = new StagedModelType(

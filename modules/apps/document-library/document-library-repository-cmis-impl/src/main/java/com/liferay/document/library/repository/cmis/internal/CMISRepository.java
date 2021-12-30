@@ -1227,7 +1227,7 @@ public class CMISRepository extends BaseCmisRepository {
 
 			queryConfig.setScoreEnabled(false);
 
-			return _doSearch(searchContext, query);
+			return _search(searchContext, query);
 		}
 		catch (Exception exception) {
 			throw new SearchException(exception);
@@ -1861,158 +1861,6 @@ public class CMISRepository extends BaseCmisRepository {
 		}
 	}
 
-	private Hits _doSearch(SearchContext searchContext, Query query)
-		throws Exception {
-
-		long startTime = System.currentTimeMillis();
-
-		Session session = getSession();
-
-		RepositoryInfo repositoryInfo = session.getRepositoryInfo();
-
-		RepositoryCapabilities repositoryCapabilities =
-			repositoryInfo.getCapabilities();
-
-		QueryConfig queryConfig = searchContext.getQueryConfig();
-
-		CapabilityQuery capabilityQuery =
-			repositoryCapabilities.getQueryCapability();
-
-		queryConfig.setAttribute("capabilityQuery", capabilityQuery.value());
-
-		queryConfig.setAttribute(
-			"repositoryProductName", repositoryInfo.getProductName());
-		queryConfig.setAttribute(
-			"repositoryProductVersion", repositoryInfo.getProductVersion());
-
-		String queryString = _cmisSearchQueryBuilder.buildQuery(
-			searchContext, query);
-
-		if (_cmisRepositoryDetector.isNuxeo5_4()) {
-			queryString +=
-				" AND (" + PropertyIds.IS_LATEST_VERSION + " = true)";
-		}
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("CMIS search query: " + queryString);
-		}
-
-		boolean searchAllVersions =
-			_cmisRepositoryDetector.isNuxeo5_5OrHigher();
-
-		ItemIterable<QueryResult> queryResults = session.query(
-			queryString, searchAllVersions);
-
-		int start = searchContext.getStart();
-		int end = searchContext.getEnd();
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS)) {
-			start = 0;
-		}
-
-		int total = 0;
-
-		List<com.liferay.portal.kernel.search.Document> documents =
-			new ArrayList<>();
-		List<String> snippets = new ArrayList<>();
-		List<Float> scores = new ArrayList<>();
-
-		for (QueryResult queryResult : queryResults) {
-			total++;
-
-			if ((total <= start) ||
-				((total > end) && (end != QueryUtil.ALL_POS))) {
-
-				continue;
-			}
-
-			String objectId = queryResult.getPropertyValueByQueryName(
-				PropertyIds.OBJECT_ID);
-
-			if (_log.isDebugEnabled()) {
-				_log.debug("Search result object ID " + objectId);
-			}
-
-			FileEntry fileEntry = null;
-
-			try {
-				fileEntry = toFileEntry(objectId, true);
-			}
-			catch (Exception exception) {
-				if (_log.isDebugEnabled()) {
-					Throwable throwable = exception.getCause();
-
-					if (throwable != null) {
-						throwable = throwable.getCause();
-					}
-
-					if (throwable instanceof CmisObjectNotFoundException) {
-						_log.debug(
-							"Search result ignored for CMIS document which " +
-								"has a version with an invalid object ID " +
-									throwable.getMessage());
-					}
-					else {
-						_log.debug(
-							"Search result ignored for invalid object ID",
-							exception);
-					}
-				}
-
-				total--;
-
-				continue;
-			}
-
-			com.liferay.portal.kernel.search.Document document =
-				new DocumentImpl();
-
-			DocumentHelper documentHelper = new DocumentHelper(document);
-
-			documentHelper.setEntryKey(
-				fileEntry.getModelClassName(), fileEntry.getFileEntryId());
-
-			document.addKeyword(Field.TITLE, fileEntry.getTitle());
-
-			documents.add(document);
-
-			if (queryConfig.isScoreEnabled()) {
-				Object scoreObject = queryResult.getPropertyValueByQueryName(
-					"HITS");
-
-				if (scoreObject != null) {
-					scores.add(Float.valueOf(scoreObject.toString()));
-				}
-				else {
-					scores.add(1.0F);
-				}
-			}
-			else {
-				scores.add(1.0F);
-			}
-
-			snippets.add(StringPool.BLANK);
-		}
-
-		float searchTime =
-			(float)(System.currentTimeMillis() - startTime) / Time.SECOND;
-
-		Hits hits = new HitsImpl();
-
-		hits.setDocs(
-			documents.toArray(
-				new com.liferay.portal.kernel.search.Document[0]));
-		hits.setLength(total);
-		hits.setQuery(query);
-		hits.setQueryTerms(new String[0]);
-		hits.setScores(ArrayUtil.toFloatArray(scores));
-		hits.setSearchTime(searchTime);
-		hits.setSnippets(snippets.toArray(new String[0]));
-		hits.setStart(startTime);
-
-		return hits;
-	}
-
 	private DLFolder _fetchDLFolder(long folderId) {
 		if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			return dlFolderLocalService.fetchFolder(folderId);
@@ -2256,6 +2104,158 @@ public class CMISRepository extends BaseCmisRepository {
 
 			throw new PrincipalException.MustBeAuthenticated(login);
 		}
+	}
+
+	private Hits _search(SearchContext searchContext, Query query)
+		throws Exception {
+
+		long startTime = System.currentTimeMillis();
+
+		Session session = getSession();
+
+		RepositoryInfo repositoryInfo = session.getRepositoryInfo();
+
+		RepositoryCapabilities repositoryCapabilities =
+			repositoryInfo.getCapabilities();
+
+		QueryConfig queryConfig = searchContext.getQueryConfig();
+
+		CapabilityQuery capabilityQuery =
+			repositoryCapabilities.getQueryCapability();
+
+		queryConfig.setAttribute("capabilityQuery", capabilityQuery.value());
+
+		queryConfig.setAttribute(
+			"repositoryProductName", repositoryInfo.getProductName());
+		queryConfig.setAttribute(
+			"repositoryProductVersion", repositoryInfo.getProductVersion());
+
+		String queryString = _cmisSearchQueryBuilder.buildQuery(
+			searchContext, query);
+
+		if (_cmisRepositoryDetector.isNuxeo5_4()) {
+			queryString +=
+				" AND (" + PropertyIds.IS_LATEST_VERSION + " = true)";
+		}
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("CMIS search query: " + queryString);
+		}
+
+		boolean searchAllVersions =
+			_cmisRepositoryDetector.isNuxeo5_5OrHigher();
+
+		ItemIterable<QueryResult> queryResults = session.query(
+			queryString, searchAllVersions);
+
+		int start = searchContext.getStart();
+		int end = searchContext.getEnd();
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS)) {
+			start = 0;
+		}
+
+		int total = 0;
+
+		List<com.liferay.portal.kernel.search.Document> documents =
+			new ArrayList<>();
+		List<String> snippets = new ArrayList<>();
+		List<Float> scores = new ArrayList<>();
+
+		for (QueryResult queryResult : queryResults) {
+			total++;
+
+			if ((total <= start) ||
+				((total > end) && (end != QueryUtil.ALL_POS))) {
+
+				continue;
+			}
+
+			String objectId = queryResult.getPropertyValueByQueryName(
+				PropertyIds.OBJECT_ID);
+
+			if (_log.isDebugEnabled()) {
+				_log.debug("Search result object ID " + objectId);
+			}
+
+			FileEntry fileEntry = null;
+
+			try {
+				fileEntry = toFileEntry(objectId, true);
+			}
+			catch (Exception exception) {
+				if (_log.isDebugEnabled()) {
+					Throwable throwable = exception.getCause();
+
+					if (throwable != null) {
+						throwable = throwable.getCause();
+					}
+
+					if (throwable instanceof CmisObjectNotFoundException) {
+						_log.debug(
+							"Search result ignored for CMIS document which " +
+								"has a version with an invalid object ID " +
+									throwable.getMessage());
+					}
+					else {
+						_log.debug(
+							"Search result ignored for invalid object ID",
+							exception);
+					}
+				}
+
+				total--;
+
+				continue;
+			}
+
+			com.liferay.portal.kernel.search.Document document =
+				new DocumentImpl();
+
+			DocumentHelper documentHelper = new DocumentHelper(document);
+
+			documentHelper.setEntryKey(
+				fileEntry.getModelClassName(), fileEntry.getFileEntryId());
+
+			document.addKeyword(Field.TITLE, fileEntry.getTitle());
+
+			documents.add(document);
+
+			if (queryConfig.isScoreEnabled()) {
+				Object scoreObject = queryResult.getPropertyValueByQueryName(
+					"HITS");
+
+				if (scoreObject != null) {
+					scores.add(Float.valueOf(scoreObject.toString()));
+				}
+				else {
+					scores.add(1.0F);
+				}
+			}
+			else {
+				scores.add(1.0F);
+			}
+
+			snippets.add(StringPool.BLANK);
+		}
+
+		float searchTime =
+			(float)(System.currentTimeMillis() - startTime) / Time.SECOND;
+
+		Hits hits = new HitsImpl();
+
+		hits.setDocs(
+			documents.toArray(
+				new com.liferay.portal.kernel.search.Document[0]));
+		hits.setLength(total);
+		hits.setQuery(query);
+		hits.setQueryTerms(new String[0]);
+		hits.setScores(ArrayUtil.toFloatArray(scores));
+		hits.setSearchTime(searchTime);
+		hits.setSnippets(snippets.toArray(new String[0]));
+		hits.setStart(startTime);
+
+		return hits;
 	}
 
 	private <E> List<E> _subList(

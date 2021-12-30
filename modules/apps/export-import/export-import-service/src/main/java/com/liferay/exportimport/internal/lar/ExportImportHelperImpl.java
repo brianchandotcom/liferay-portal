@@ -263,7 +263,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 		return HashMapBuilder.put(
 			PortletDataHandlerKeys.PORTLET_DATA,
-			_getImportPortletData(
+			_isImportPortletData(
 				companyId, portletId, parameterMap, portletDataElement)
 		).putAll(
 			_getImportPortletSetupControlsMap(
@@ -1313,45 +1313,6 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		return exportPortletSetupControlsMap;
 	}
 
-	private boolean _getImportPortletData(
-			long companyId, String portletId,
-			Map<String, String[]> parameterMap, Element portletDataElement)
-		throws Exception {
-
-		boolean importPortletData = MapUtil.getBoolean(
-			parameterMap, PortletDataHandlerKeys.PORTLET_DATA);
-		boolean importPortletDataAll = MapUtil.getBoolean(
-			parameterMap, PortletDataHandlerKeys.PORTLET_DATA_ALL);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Import portlet data " + importPortletData);
-			_log.debug("Import all portlet data " + importPortletDataAll);
-		}
-
-		if (!importPortletData) {
-			return false;
-		}
-
-		PortletDataHandler portletDataHandler =
-			_portletDataHandlerProvider.provide(companyId, portletId);
-
-		if ((portletDataHandler == null) ||
-			((portletDataElement == null) &&
-			 !portletDataHandler.isDisplayPortlet())) {
-
-			return false;
-		}
-
-		if (importPortletDataAll || !portletDataHandler.isDataSiteLevel()) {
-			return true;
-		}
-
-		return MapUtil.getBoolean(
-			parameterMap,
-			PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE +
-				PortletIdCodec.decodePortletName(portletId));
-	}
-
 	private Map<String, Boolean> _getImportPortletSetupControlsMap(
 			long companyId, String portletId,
 			Map<String, String[]> parameterMap, ManifestSummary manifestSummary)
@@ -1401,6 +1362,45 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	private String _getZipWriterFileName(String id) {
 		return StringBundler.concat(
 			id, StringPool.DASH, Time.getTimestamp(), ".lar");
+	}
+
+	private boolean _isImportPortletData(
+			long companyId, String portletId,
+			Map<String, String[]> parameterMap, Element portletDataElement)
+		throws Exception {
+
+		boolean importPortletData = MapUtil.getBoolean(
+			parameterMap, PortletDataHandlerKeys.PORTLET_DATA);
+		boolean importPortletDataAll = MapUtil.getBoolean(
+			parameterMap, PortletDataHandlerKeys.PORTLET_DATA_ALL);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Import portlet data " + importPortletData);
+			_log.debug("Import all portlet data " + importPortletDataAll);
+		}
+
+		if (!importPortletData) {
+			return false;
+		}
+
+		PortletDataHandler portletDataHandler =
+			_portletDataHandlerProvider.provide(companyId, portletId);
+
+		if ((portletDataHandler == null) ||
+			((portletDataElement == null) &&
+			 !portletDataHandler.isDisplayPortlet())) {
+
+			return false;
+		}
+
+		if (importPortletDataAll || !portletDataHandler.isDataSiteLevel()) {
+			return true;
+		}
+
+		return MapUtil.getBoolean(
+			parameterMap,
+			PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE +
+				PortletIdCodec.decodePortletName(portletId));
 	}
 
 	private boolean _populateLayoutsJSON(

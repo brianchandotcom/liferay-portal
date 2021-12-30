@@ -292,7 +292,7 @@ public class StagingImpl implements Staging {
 
 		long sourceGroupId = stagingGroup.getLiveGroupId();
 
-		boolean privateLayout = _getPrivateLayout(portletRequest);
+		boolean privateLayout = _isPrivateLayout(portletRequest);
 		long[] layoutIds = _exportImportHelper.getLayoutIds(
 			portletRequest, targetGroupId);
 
@@ -374,7 +374,7 @@ public class StagingImpl implements Staging {
 		boolean remotePrivateLayout = MapUtil.getBoolean(
 			settingsMap, "remotePrivateLayout");
 
-		return _doCopyRemoteLayouts(
+		return _copyRemoteLayouts(
 			exportImportConfiguration, remoteAddress, remotePort,
 			remotePathContext, secureConnection, remotePrivateLayout);
 	}
@@ -446,7 +446,7 @@ public class StagingImpl implements Staging {
 						publishLayoutRemoteSettingsMap);
 		}
 
-		return _doCopyRemoteLayouts(
+		return _copyRemoteLayouts(
 			exportImportConfiguration, remoteAddress, remotePort,
 			remotePathContext, secureConnection, remotePrivateLayout);
 	}
@@ -2606,7 +2606,7 @@ public class StagingImpl implements Staging {
 			long sourceGroupId = sourceGroup.getGroupId();
 
 			long targetGroupId = targetGroup.getGroupId();
-			boolean privateLayout = _getPrivateLayout(portletRequest);
+			boolean privateLayout = _isPrivateLayout(portletRequest);
 
 			long[] layoutIds = _exportImportHelper.getLayoutIds(
 				portletRequest, targetGroupId);
@@ -2767,7 +2767,7 @@ public class StagingImpl implements Staging {
 				_exportImportConfigurationSettingsMapFactory.
 					buildPublishLayoutRemoteSettingsMap(
 						user.getUserId(), groupId,
-						_getPrivateLayout(portletRequest),
+						_isPrivateLayout(portletRequest),
 						_exportImportHelper.getLayoutIdMap(portletRequest),
 						parameterMap, remoteAddress, remotePort,
 						remotePathContext, secureConnection, remoteGroupId,
@@ -2802,7 +2802,7 @@ public class StagingImpl implements Staging {
 						publishLayoutRemoteSettingsMap);
 		}
 
-		return _doCopyRemoteLayouts(
+		return _copyRemoteLayouts(
 			exportImportConfiguration, remoteAddress, remotePort,
 			remotePathContext, secureConnection, remotePrivateLayout);
 	}
@@ -2865,7 +2865,7 @@ public class StagingImpl implements Staging {
 		String name = ParamUtil.getString(portletRequest, "name");
 
 		_layoutService.schedulePublishToLive(
-			sourceGroupId, targetGroupId, _getPrivateLayout(portletRequest),
+			sourceGroupId, targetGroupId, _isPrivateLayout(portletRequest),
 			layoutIds, parameterMap, scheduleInformation.getGroupName(),
 			scheduleInformation.getCronText(),
 			scheduleInformation.getStartDate(),
@@ -2913,7 +2913,7 @@ public class StagingImpl implements Staging {
 		}
 
 		if (parameterMap == null) {
-			privateLayout = _getPrivateLayout(portletRequest);
+			privateLayout = _isPrivateLayout(portletRequest);
 			layoutIds = _exportImportHelper.getLayoutIds(
 				portletRequest, targetGroupId);
 			parameterMap =
@@ -2998,7 +2998,7 @@ public class StagingImpl implements Staging {
 		}
 
 		if (parameterMap == null) {
-			privateLayout = _getPrivateLayout(portletRequest);
+			privateLayout = _isPrivateLayout(portletRequest);
 			layoutIdMap = _exportImportHelper.getLayoutIdMap(portletRequest);
 			parameterMap =
 				_exportImportConfigurationParameterMapFactory.buildParameterMap(
@@ -3806,7 +3806,7 @@ public class StagingImpl implements Staging {
 			exportImportConfiguration.getGroupId(), ActionKeys.PUBLISH_STAGING);
 	}
 
-	private long _doCopyRemoteLayouts(
+	private long _copyRemoteLayouts(
 			ExportImportConfiguration exportImportConfiguration,
 			String remoteAddress, int remotePort, String remotePathContext,
 			boolean secureConnection, boolean remotePrivateLayout)
@@ -3851,20 +3851,6 @@ public class StagingImpl implements Staging {
 				new ServiceContext());
 
 		return backgroundTask.getBackgroundTaskId();
-	}
-
-	private boolean _getPrivateLayout(PortletRequest portletRequest) {
-		String tabs1 = ParamUtil.getString(portletRequest, "tabs1");
-
-		if (Validator.isNotNull(tabs1)) {
-			if (tabs1.equals("public-pages")) {
-				return false;
-			}
-
-			return true;
-		}
-
-		return ParamUtil.getBoolean(portletRequest, "privateLayout", true);
 	}
 
 	private long _getRecentLayoutBranchId(
@@ -3986,6 +3972,20 @@ public class StagingImpl implements Staging {
 		}
 
 		return false;
+	}
+
+	private boolean _isPrivateLayout(PortletRequest portletRequest) {
+		String tabs1 = ParamUtil.getString(portletRequest, "tabs1");
+
+		if (Validator.isNotNull(tabs1)) {
+			if (tabs1.equals("public-pages")) {
+				return false;
+			}
+
+			return true;
+		}
+
+		return ParamUtil.getBoolean(portletRequest, "privateLayout", true);
 	}
 
 	private boolean _isStagingUseVirtualHostForRemoteSite() {

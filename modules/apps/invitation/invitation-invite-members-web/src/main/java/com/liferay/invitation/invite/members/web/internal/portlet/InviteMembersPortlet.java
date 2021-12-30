@@ -141,7 +141,7 @@ public class InviteMembersPortlet extends MVCPortlet {
 		throws Exception {
 
 		try {
-			_doSendInvite(actionRequest);
+			_sendInvite(actionRequest);
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
@@ -207,50 +207,6 @@ public class InviteMembersPortlet extends MVCPortlet {
 	protected void setRelease(Release release) {
 	}
 
-	private void _doSendInvite(ActionRequest actionRequest) throws Exception {
-		long groupId = ParamUtil.getLong(actionRequest, "groupId");
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		if (!_userLocalService.hasGroupUser(
-				groupId, themeDisplay.getUserId())) {
-
-			return;
-		}
-
-		long invitedTeamId = ParamUtil.getLong(actionRequest, "invitedTeamId");
-		long[] receiverUserIds = _getLongArray(
-			actionRequest, "receiverUserIds");
-		long invitedRoleId = ParamUtil.getLong(actionRequest, "invitedRoleId");
-		String[] receiverEmailAddresses = _getStringArray(
-			actionRequest, "receiverEmailAddresses");
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			actionRequest);
-
-		PortletURL portletURL = PortletProviderUtil.getPortletURL(
-			actionRequest, _groupLocalService.getGroup(groupId),
-			UserNotificationEvent.class.getName(), PortletProvider.Action.VIEW);
-
-		serviceContext.setAttribute("redirectURL", portletURL.toString());
-
-		String createAccountURL = _portal.getCreateAccountURL(
-			_portal.getHttpServletRequest(actionRequest), themeDisplay);
-
-		serviceContext.setAttribute("createAccountURL", createAccountURL);
-
-		serviceContext.setAttribute("loginURL", themeDisplay.getURLSignIn());
-
-		_memberRequestLocalService.addMemberRequests(
-			themeDisplay.getUserId(), groupId, receiverUserIds, invitedRoleId,
-			invitedTeamId, serviceContext);
-
-		_memberRequestLocalService.addMemberRequests(
-			themeDisplay.getUserId(), groupId, receiverEmailAddresses,
-			invitedRoleId, invitedTeamId, serviceContext);
-	}
-
 	private List<User> _getAvailableUsers(
 			long companyId, long groupId, String keywords, int start, int end)
 		throws Exception {
@@ -306,6 +262,50 @@ public class InviteMembersPortlet extends MVCPortlet {
 		}
 
 		return StringUtil.split(GetterUtil.getString(value));
+	}
+
+	private void _sendInvite(ActionRequest actionRequest) throws Exception {
+		long groupId = ParamUtil.getLong(actionRequest, "groupId");
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if (!_userLocalService.hasGroupUser(
+				groupId, themeDisplay.getUserId())) {
+
+			return;
+		}
+
+		long invitedTeamId = ParamUtil.getLong(actionRequest, "invitedTeamId");
+		long[] receiverUserIds = _getLongArray(
+			actionRequest, "receiverUserIds");
+		long invitedRoleId = ParamUtil.getLong(actionRequest, "invitedRoleId");
+		String[] receiverEmailAddresses = _getStringArray(
+			actionRequest, "receiverEmailAddresses");
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			actionRequest);
+
+		PortletURL portletURL = PortletProviderUtil.getPortletURL(
+			actionRequest, _groupLocalService.getGroup(groupId),
+			UserNotificationEvent.class.getName(), PortletProvider.Action.VIEW);
+
+		serviceContext.setAttribute("redirectURL", portletURL.toString());
+
+		String createAccountURL = _portal.getCreateAccountURL(
+			_portal.getHttpServletRequest(actionRequest), themeDisplay);
+
+		serviceContext.setAttribute("createAccountURL", createAccountURL);
+
+		serviceContext.setAttribute("loginURL", themeDisplay.getURLSignIn());
+
+		_memberRequestLocalService.addMemberRequests(
+			themeDisplay.getUserId(), groupId, receiverUserIds, invitedRoleId,
+			invitedTeamId, serviceContext);
+
+		_memberRequestLocalService.addMemberRequests(
+			themeDisplay.getUserId(), groupId, receiverEmailAddresses,
+			invitedRoleId, invitedTeamId, serviceContext);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

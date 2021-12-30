@@ -301,7 +301,7 @@ public class PortletImportControllerImpl implements PortletImportController {
 			long userId = MapUtil.getLong(
 				exportImportConfiguration.getSettingsMap(), "userId");
 
-			_doImportPortletInfo(portletDataContext, userId);
+			_importPortletInfo(portletDataContext, userId);
 
 			ExportImportThreadLocal.setPortletImportInProcess(false);
 
@@ -1266,7 +1266,7 @@ public class PortletImportControllerImpl implements PortletImportController {
 		}
 	}
 
-	private void _doImportPortletInfo(
+	private void _importPortletInfo(
 			PortletDataContext portletDataContext, long userId)
 		throws Exception {
 

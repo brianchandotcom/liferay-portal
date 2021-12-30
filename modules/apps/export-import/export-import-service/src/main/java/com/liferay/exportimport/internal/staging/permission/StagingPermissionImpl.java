@@ -39,7 +39,7 @@ public class StagingPermissionImpl implements StagingPermission {
 		long classPK, String portletId, String actionId) {
 
 		try {
-			return _doHasPermission(group, portletId, actionId);
+			return _hasPermission(group, portletId, actionId);
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
@@ -54,7 +54,7 @@ public class StagingPermissionImpl implements StagingPermission {
 		long classPK, String portletId, String actionId) {
 
 		try {
-			return _doHasPermission(
+			return _hasPermission(
 				_groupLocalService.getGroup(groupId), portletId, actionId);
 		}
 		catch (Exception exception) {
@@ -69,7 +69,7 @@ public class StagingPermissionImpl implements StagingPermission {
 		_groupLocalService = groupLocalService;
 	}
 
-	private Boolean _doHasPermission(
+	private Boolean _hasPermission(
 			Group group, String portletId, String actionId)
 		throws Exception {
 

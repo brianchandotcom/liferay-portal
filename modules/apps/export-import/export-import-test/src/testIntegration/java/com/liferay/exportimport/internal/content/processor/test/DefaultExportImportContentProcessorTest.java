@@ -530,19 +530,19 @@ public class DefaultExportImportContentProcessorTest {
 
 	@Test
 	public void testImportDLReferences1() throws Exception {
-		_doTestImportDLReferences(false);
+		_testImportDLReferences(false);
 	}
 
 	@Test
 	public void testImportDLReferences2() throws Exception {
-		_doTestImportDLReferences(true);
+		_testImportDLReferences(true);
 	}
 
 	@Test
 	public void testImportDLReferencesFileEntryDeleted() throws Exception {
 		DLAppHelperLocalServiceUtil.deleteFileEntry(_fileEntry);
 
-		_doTestImportDLReferences(false);
+		_testImportDLReferences(false);
 	}
 
 	@Test
@@ -550,7 +550,7 @@ public class DefaultExportImportContentProcessorTest {
 		DLAppHelperLocalServiceUtil.moveFileEntryToTrash(
 			TestPropsValues.getUserId(), _fileEntry);
 
-		_doTestImportDLReferences(false);
+		_testImportDLReferences(false);
 	}
 
 	@Test
@@ -558,12 +558,12 @@ public class DefaultExportImportContentProcessorTest {
 		DLAppHelperLocalServiceUtil.moveFileEntryToTrash(
 			TestPropsValues.getUserId(), _fileEntry);
 
-		_doTestImportDLReferences(true);
+		_testImportDLReferences(true);
 	}
 
 	@Test
 	public void testImportLayoutReferences() throws Exception {
-		_doTestImportLayoutReferences();
+		_testImportLayoutReferences();
 	}
 
 	@Test
@@ -621,7 +621,7 @@ public class DefaultExportImportContentProcessorTest {
 		_portletDataContextImport.setGroupId(_stagingGroup.getGroupId());
 		_portletDataContextImport.setScopeGroupId(_stagingGroup.getGroupId());
 
-		_doTestImportLayoutReferences();
+		_testImportLayoutReferences();
 	}
 
 	@Test
@@ -886,67 +886,6 @@ public class DefaultExportImportContentProcessorTest {
 		sb.append(StringPool.CLOSE_BRACKET);
 
 		Assert.assertTrue(content, content.contains(sb.toString()));
-	}
-
-	private void _doTestImportDLReferences(boolean deleteFileEntryBeforeImport)
-		throws Exception {
-
-		Element referrerStagedModelElement =
-			_portletDataContextExport.getExportDataElement(
-				_referrerStagedModel);
-
-		String referrerStagedModelPath = ExportImportPathUtil.getModelPath(
-			_referrerStagedModel);
-
-		referrerStagedModelElement.addAttribute(
-			"path", referrerStagedModelPath);
-
-		String content = _replaceParameters(
-			_getContent("dl_references.txt"), _fileEntry);
-
-		content = _exportImportContentProcessor.replaceExportContentReferences(
-			_portletDataContextExport, _referrerStagedModel, content, true,
-			true);
-
-		_portletDataContextImport.setScopeGroupId(_fileEntry.getGroupId());
-
-		if (deleteFileEntryBeforeImport) {
-			DLAppLocalServiceUtil.deleteFileEntry(_fileEntry.getFileEntryId());
-		}
-
-		content = _exportImportContentProcessor.replaceImportContentReferences(
-			_portletDataContextImport, _referrerStagedModel, content);
-
-		Assert.assertFalse(content, content.contains("[$dl-reference="));
-	}
-
-	private void _doTestImportLayoutReferences() throws Exception {
-		String content = _replaceParameters(
-			_getContent("layout_references.txt"), _fileEntry);
-
-		_exportImportContentProcessor.validateContentReferences(
-			_stagingGroup.getGroupId(), content);
-
-		content = _exportImportContentProcessor.replaceExportContentReferences(
-			_portletDataContextExport, _referrerStagedModel, content, true,
-			false);
-		content = _exportImportContentProcessor.replaceImportContentReferences(
-			_portletDataContextImport, _referrerStagedModel, content);
-
-		Assert.assertFalse(
-			content, content.contains("data_handler_group_friendly_url"));
-		Assert.assertFalse(
-			content, content.contains("data_handler_path_context"));
-		Assert.assertFalse(
-			content,
-			content.contains("data_handler_private_group_servlet_mapping"));
-		Assert.assertFalse(
-			content,
-			content.contains("data_handler_private_user_servlet_mapping"));
-		Assert.assertFalse(
-			content, content.contains("data_handler_public_servlet_mapping"));
-		Assert.assertFalse(
-			content, content.contains("data_handler_site_admin_url"));
 	}
 
 	private String _duplicateLinesWithParamNames(
@@ -1227,6 +1166,67 @@ public class DefaultExportImportContentProcessorTest {
 		modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
 
 		field.set(null, newValue);
+	}
+
+	private void _testImportDLReferences(boolean deleteFileEntryBeforeImport)
+		throws Exception {
+
+		Element referrerStagedModelElement =
+			_portletDataContextExport.getExportDataElement(
+				_referrerStagedModel);
+
+		String referrerStagedModelPath = ExportImportPathUtil.getModelPath(
+			_referrerStagedModel);
+
+		referrerStagedModelElement.addAttribute(
+			"path", referrerStagedModelPath);
+
+		String content = _replaceParameters(
+			_getContent("dl_references.txt"), _fileEntry);
+
+		content = _exportImportContentProcessor.replaceExportContentReferences(
+			_portletDataContextExport, _referrerStagedModel, content, true,
+			true);
+
+		_portletDataContextImport.setScopeGroupId(_fileEntry.getGroupId());
+
+		if (deleteFileEntryBeforeImport) {
+			DLAppLocalServiceUtil.deleteFileEntry(_fileEntry.getFileEntryId());
+		}
+
+		content = _exportImportContentProcessor.replaceImportContentReferences(
+			_portletDataContextImport, _referrerStagedModel, content);
+
+		Assert.assertFalse(content, content.contains("[$dl-reference="));
+	}
+
+	private void _testImportLayoutReferences() throws Exception {
+		String content = _replaceParameters(
+			_getContent("layout_references.txt"), _fileEntry);
+
+		_exportImportContentProcessor.validateContentReferences(
+			_stagingGroup.getGroupId(), content);
+
+		content = _exportImportContentProcessor.replaceExportContentReferences(
+			_portletDataContextExport, _referrerStagedModel, content, true,
+			false);
+		content = _exportImportContentProcessor.replaceImportContentReferences(
+			_portletDataContextImport, _referrerStagedModel, content);
+
+		Assert.assertFalse(
+			content, content.contains("data_handler_group_friendly_url"));
+		Assert.assertFalse(
+			content, content.contains("data_handler_path_context"));
+		Assert.assertFalse(
+			content,
+			content.contains("data_handler_private_group_servlet_mapping"));
+		Assert.assertFalse(
+			content,
+			content.contains("data_handler_private_user_servlet_mapping"));
+		Assert.assertFalse(
+			content, content.contains("data_handler_public_servlet_mapping"));
+		Assert.assertFalse(
+			content, content.contains("data_handler_site_admin_url"));
 	}
 
 	private static final String[] _EXTERNAL_GROUP_FRIENDLY_URL_VARIABLES = {

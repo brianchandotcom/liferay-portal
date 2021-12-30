@@ -412,7 +412,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 		ClassedModel classedModel, String className, String binPath,
 		String referenceType, boolean missing) {
 
-		Element referenceElement = _doAddReferenceElement(
+		Element referenceElement = _addReferenceElement(
 			referrerClassedModel, element, classedModel, className, binPath,
 			referenceType, false);
 
@@ -428,7 +428,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 			if (!_missingReferences.contains(referenceKey)) {
 				_missingReferences.add(referenceKey);
 
-				_doAddReferenceElement(
+				_addReferenceElement(
 					referrerClassedModel, null, classedModel, className,
 					binPath, referenceType, true);
 			}
@@ -2207,64 +2207,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 		}
 	}
 
-	private void _addWorkflowDefinitionLink(ClassedModel classedModel)
-		throws PortletDataException {
-
-		if (classedModel instanceof StagedGroupedModel ||
-			classedModel instanceof WorkflowedModel) {
-
-			StagedGroupedModel stagedGroupedModel =
-				(StagedGroupedModel)classedModel;
-
-			List<WorkflowDefinitionLink> workflowDefinitionLinks =
-				WorkflowDefinitionLinkLocalServiceUtil.
-					fetchWorkflowDefinitionLinks(
-						stagedGroupedModel.getCompanyId(),
-						stagedGroupedModel.getGroupId(),
-						ExportImportClassedModelUtil.getClassName(
-							stagedGroupedModel),
-						ExportImportClassedModelUtil.getClassPK(
-							stagedGroupedModel));
-
-			for (WorkflowDefinitionLink workflowDefinitionLink :
-					workflowDefinitionLinks) {
-
-				StagedGroupedWorkflowDefinitionLink
-					stagedGroupedWorkflowDefinitionLink =
-						ModelAdapterUtil.adapt(
-							workflowDefinitionLink,
-							WorkflowDefinitionLink.class,
-							StagedGroupedWorkflowDefinitionLink.class);
-
-				StagedModelDataHandlerUtil.exportStagedModel(
-					this, stagedGroupedWorkflowDefinitionLink);
-			}
-		}
-	}
-
-	private Element _deepSearchForFirstChildElement(
-		Element parentElement, String childElementName) {
-
-		Queue<Element> queue = new LinkedList<>();
-
-		queue.add(parentElement);
-
-		Element currentElement = null;
-
-		while ((currentElement = queue.poll()) != null) {
-			for (Element childElement : currentElement.elements()) {
-				if (childElementName.equals(childElement.getName())) {
-					return childElement;
-				}
-
-				queue.add(childElement);
-			}
-		}
-
-		return null;
-	}
-
-	private Element _doAddReferenceElement(
+	private Element _addReferenceElement(
 		ClassedModel referrerClassedModel, Element element,
 		ClassedModel classedModel, String className, String binPath,
 		String referenceType, boolean missing) {
@@ -2422,6 +2365,63 @@ public class PortletDataContextImpl implements PortletDataContext {
 		}
 
 		return referenceElement;
+	}
+
+	private void _addWorkflowDefinitionLink(ClassedModel classedModel)
+		throws PortletDataException {
+
+		if (classedModel instanceof StagedGroupedModel ||
+			classedModel instanceof WorkflowedModel) {
+
+			StagedGroupedModel stagedGroupedModel =
+				(StagedGroupedModel)classedModel;
+
+			List<WorkflowDefinitionLink> workflowDefinitionLinks =
+				WorkflowDefinitionLinkLocalServiceUtil.
+					fetchWorkflowDefinitionLinks(
+						stagedGroupedModel.getCompanyId(),
+						stagedGroupedModel.getGroupId(),
+						ExportImportClassedModelUtil.getClassName(
+							stagedGroupedModel),
+						ExportImportClassedModelUtil.getClassPK(
+							stagedGroupedModel));
+
+			for (WorkflowDefinitionLink workflowDefinitionLink :
+					workflowDefinitionLinks) {
+
+				StagedGroupedWorkflowDefinitionLink
+					stagedGroupedWorkflowDefinitionLink =
+						ModelAdapterUtil.adapt(
+							workflowDefinitionLink,
+							WorkflowDefinitionLink.class,
+							StagedGroupedWorkflowDefinitionLink.class);
+
+				StagedModelDataHandlerUtil.exportStagedModel(
+					this, stagedGroupedWorkflowDefinitionLink);
+			}
+		}
+	}
+
+	private Element _deepSearchForFirstChildElement(
+		Element parentElement, String childElementName) {
+
+		Queue<Element> queue = new LinkedList<>();
+
+		queue.add(parentElement);
+
+		Element currentElement = null;
+
+		while ((currentElement = queue.poll()) != null) {
+			for (Element childElement : currentElement.elements()) {
+				if (childElementName.equals(childElement.getName())) {
+					return childElement;
+				}
+
+				queue.add(childElement);
+			}
+		}
+
+		return null;
 	}
 
 	private Element _getDataElement(

@@ -15,8 +15,6 @@
 package com.liferay.commerce.product.internal.configuration;
 
 import com.liferay.commerce.product.configuration.CPDefinitionLinkTypeSettings;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 
 import java.util.Map;
@@ -65,9 +63,6 @@ public class CPDefinitionLinkTypeSettingsImpl
 		_cpDefinitionLinkTypeConfigurationWrappers.remove(
 			cpDefinitionLinkTypeConfigurationWrapper.getType());
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		CPDefinitionLinkTypeSettingsImpl.class);
 
 	private final Map<String, CPDefinitionLinkTypeConfigurationWrapper>
 		_cpDefinitionLinkTypeConfigurationWrappers = new ConcurrentHashMap<>();

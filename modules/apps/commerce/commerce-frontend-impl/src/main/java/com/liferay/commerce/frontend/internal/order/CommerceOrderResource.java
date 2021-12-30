@@ -14,10 +14,6 @@
 
 package com.liferay.commerce.frontend.internal.order;
 
-import com.fasterxml.jackson.databind.MapperFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.frontend.internal.account.model.Order;
 import com.liferay.commerce.frontend.internal.account.model.OrderList;
@@ -28,8 +24,6 @@ import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -140,16 +134,6 @@ public class CommerceOrderResource {
 		return (int)_commerceOrderService.getUserPendingCommerceOrdersCount(
 			companyId, groupId, keywords);
 	}
-
-	private static final ObjectMapper _OBJECT_MAPPER = new ObjectMapper() {
-		{
-			configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-			disable(SerializationFeature.INDENT_OUTPUT);
-		}
-	};
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		CommerceOrderResource.class);
 
 	@Reference
 	private CommerceChannelLocalService _commerceChannelLocalService;

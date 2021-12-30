@@ -17,7 +17,6 @@ package com.liferay.commerce.product.definitions.web.internal.upload;
 import com.liferay.commerce.product.configuration.AttachmentsConfiguration;
 import com.liferay.commerce.product.exception.CPAttachmentFileEntryNameException;
 import com.liferay.commerce.product.exception.CPAttachmentFileEntrySizeException;
-import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -28,7 +27,6 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.upload.UniqueFileNameProvider;
@@ -62,12 +60,6 @@ public class TempAttachmentsUploadFileEntryHandler
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)uploadPortletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
-
-		long cpDefinitionId = ParamUtil.getLong(
-			uploadPortletRequest, "cpDefinitionId");
-
-		CPDefinition cpDefinition = cpDefinitionService.getCPDefinition(
-			cpDefinitionId);
 
 		String fileName = uploadPortletRequest.getFileName(_PARAMETER_NAME);
 

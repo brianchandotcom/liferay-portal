@@ -233,7 +233,7 @@ public class DDMDataProviderDisplayContext {
 
 	public String getDisplayStyle() {
 		if (_displayStyle == null) {
-			_displayStyle = getDisplayStyle(_renderRequest, _getDisplayViews());
+			_displayStyle = getDisplayStyle(_renderRequest, _DISPLAY_VIEWS);
 		}
 
 		return _displayStyle;
@@ -520,9 +520,7 @@ public class DDMDataProviderDisplayContext {
 	public List<ViewTypeItem> getViewTypesItems() {
 		return new ViewTypeItemList(getPortletURL(), getDisplayStyle()) {
 			{
-				String[] viewTypes = _getDisplayViews();
-
-				for (String viewType : viewTypes) {
+				for (String viewType : _DISPLAY_VIEWS) {
 					if (viewType.equals("descriptive")) {
 						addListViewTypeItem();
 					}
@@ -667,10 +665,6 @@ public class DDMDataProviderDisplayContext {
 
 	private Set<String> _getDDMDataProviderTypes() {
 		return _ddmDataProviderTracker.getDDMDataProviderTypes();
-	}
-
-	private String[] _getDisplayViews() {
-		return _DISPLAY_VIEWS;
 	}
 
 	private List<DropdownItem> _getFilterNavigationDropdownItems() {

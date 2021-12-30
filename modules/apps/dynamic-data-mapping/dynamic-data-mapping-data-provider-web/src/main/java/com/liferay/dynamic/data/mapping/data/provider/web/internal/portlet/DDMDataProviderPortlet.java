@@ -74,7 +74,7 @@ public class DDMDataProviderPortlet extends MVCPortlet {
 			new DDMDataProviderDisplayContext(
 				renderRequest, renderResponse, _ddmDataProviderDisplayTracker,
 				_ddmDataProviderInstanceService, _ddmDataProviderTracker,
-				_ddmFormRenderer, _getDDMFormValuesDeserializer(),
+				_ddmFormRenderer, _jsonDDMFormValuesDeserializer,
 				_userLocalService);
 
 		renderRequest.setAttribute(
@@ -112,10 +112,6 @@ public class DDMDataProviderPortlet extends MVCPortlet {
 	@Reference(unbind = "-")
 	protected void setUserLocalService(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
-	}
-
-	private DDMFormValuesDeserializer _getDDMFormValuesDeserializer() {
-		return _jsonDDMFormValuesDeserializer;
 	}
 
 	private DDMDataProviderDisplayTracker _ddmDataProviderDisplayTracker;

@@ -100,22 +100,20 @@ public class DDMServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
-		DDMFormSerializer ddmFormSerializer = _getDDMFormSerializer();
+		DDMFormSerializer ddmFormSerializer = _jsonDDMFormSerializer;
 
 		DDMFormLayoutSerializer ddmFormLayoutSerializer =
-			_getDDMFormLayoutSerializer();
+			_jsonDDMFormLayoutSerializer;
 
-		DDMFormDeserializer ddmFormJSONDeserializer =
-			_getDDMFormJSONDeserializer();
+		DDMFormDeserializer ddmFormJSONDeserializer = _jsonDDMFormDeserializer;
 
-		DDMFormDeserializer ddmFormXSDDeserializer =
-			_getDDMFormXSDDeserializer();
+		DDMFormDeserializer ddmFormXSDDeserializer = _xsdDDMFormDeserializer;
 
 		DDMFormValuesSerializer ddmFormValuesSerializer =
-			_getDDMFormValuesSerializer();
+			_jsonDDMFormValuesSerializer;
 
 		DDMFormValuesDeserializer ddmFormValuesDeserializer =
-			_getDDMFormValuesDeserializer();
+			_jsonDDMFormValuesDeserializer;
 
 		registry.register("0.0.1", "0.0.2", new SchemaUpgradeProcess());
 
@@ -494,30 +492,6 @@ public class DDMServiceUpgrade implements UpgradeStepRegistrator {
 	@Deactivate
 	protected void deactivate() {
 		_ddmDataProviderSettingsProviderServiceTracker.close();
-	}
-
-	private DDMFormDeserializer _getDDMFormJSONDeserializer() {
-		return _jsonDDMFormDeserializer;
-	}
-
-	private DDMFormLayoutSerializer _getDDMFormLayoutSerializer() {
-		return _jsonDDMFormLayoutSerializer;
-	}
-
-	private DDMFormSerializer _getDDMFormSerializer() {
-		return _jsonDDMFormSerializer;
-	}
-
-	private DDMFormValuesDeserializer _getDDMFormValuesDeserializer() {
-		return _jsonDDMFormValuesDeserializer;
-	}
-
-	private DDMFormValuesSerializer _getDDMFormValuesSerializer() {
-		return _jsonDDMFormValuesSerializer;
-	}
-
-	private DDMFormDeserializer _getDDMFormXSDDeserializer() {
-		return _xsdDDMFormDeserializer;
 	}
 
 	@Reference

@@ -138,7 +138,7 @@ const SXPElementList = ({category, expand, onAddSXPElement, sxpElements}) => {
 function SXPElementSidebar({
 	emptyMessage = Liferay.Language.get('no-query-elements-found'),
 	onAddSXPElement,
-	onToggle,
+	onClose,
 	querySXPElements,
 	visible,
 }) {
@@ -245,7 +245,7 @@ function SXPElementSidebar({
 				<ClayButton
 					aria-label={Liferay.Language.get('close')}
 					displayType="unstyled"
-					onClick={() => onToggle(false)}
+					onClick={onClose}
 					small
 				>
 					<ClayIcon symbol="times" />
@@ -330,7 +330,7 @@ function AddSXPElementSidebar(props) {
 AddSXPElementSidebar.propTypes = {
 	emptyMessage: PropTypes.string,
 	onAddSXPElement: PropTypes.func,
-	onToggle: PropTypes.func,
+	onClose: PropTypes.func,
 	visible: PropTypes.bool,
 };
 

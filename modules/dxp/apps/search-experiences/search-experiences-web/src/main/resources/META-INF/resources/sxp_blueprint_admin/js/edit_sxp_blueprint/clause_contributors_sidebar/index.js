@@ -47,7 +47,7 @@ const getClassDisplayName = (className) => {
 };
 
 function ClauseContributorsSidebar({
-	onToggle,
+	onClose,
 	visible,
 	frameworkConfig,
 	initialClauseContributorsList = [],
@@ -242,7 +242,7 @@ function ClauseContributorsSidebar({
 						borderless
 						displayType="secondary"
 						monospaced
-						onClick={() => onToggle(false)}
+						onClick={onClose}
 						small
 					>
 						<ClayIcon symbol="times" />
@@ -342,8 +342,8 @@ function ClauseContributorsSidebar({
 
 export default function ({
 	frameworkConfig,
+	onClose,
 	onFrameworkConfigChange,
-	onToggle,
 	visible,
 }) {
 	const [keywordQueryContributors, setKeywordQueryContributors] = useState(
@@ -411,8 +411,8 @@ export default function ({
 				modelPrefilterContributors,
 				queryPrefilterContributors,
 			]}
+			onClose={onClose}
 			onFrameworkConfigChange={onFrameworkConfigChange}
-			onToggle={onToggle}
 			visible={visible}
 		/>
 	);

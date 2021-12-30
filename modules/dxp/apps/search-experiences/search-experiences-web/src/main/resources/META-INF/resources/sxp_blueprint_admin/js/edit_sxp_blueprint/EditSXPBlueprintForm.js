@@ -20,7 +20,7 @@ import React, {useCallback, useContext, useRef, useState} from 'react';
 import PageToolbar from '../shared/PageToolbar';
 import SubmitWarningModal from '../shared/SubmitWarningModal';
 import ThemeContext from '../shared/ThemeContext';
-import {DEFAULT_ERROR} from '../utils/constants';
+import {DEFAULT_ERROR, SIDEBARS} from '../utils/constants';
 import {addParams} from '../utils/fetch';
 import {INPUT_TYPES} from '../utils/inputTypes';
 import {openErrorToast, openSuccessToast} from '../utils/toasts';
@@ -67,9 +67,7 @@ function EditSXPBlueprintForm({
 		loading: false,
 		results: {},
 	}));
-	const [showAddSXPElement, setShowAddSXPElement] = useState(true);
-	const [showPreview, setShowPreview] = useState(false);
-	const [showClauseContributors, setShowClauseContributors] = useState(false);
+	const [openSidebar, setOpenSidebar] = useState(SIDEBARS.ADD_SXP_ELEMENT);
 	const [showSubmitWarningModal, setShowSubmitWarningModal] = useState(false);
 	const [tab, setTab] = useState('query-builder');
 
@@ -418,20 +416,19 @@ function EditSXPBlueprintForm({
 	const _handleApplyIndexerClausesChange = (value) =>
 		formik.setFieldValue('applyIndexerClauses', value);
 
-	const _handleChangeAddSXPElementVisibility = (
-		show = !showAddSXPElement
-	) => {
-		setShowPreview(false);
-		setShowClauseContributors(false);
-		setShowAddSXPElement(show);
+	const _handleChangeTab = (tab) => {
+		if (
+			tab !== 'query-builder' &&
+			openSidebar === SIDEBARS.CLAUSE_CONTRIBUTORS
+		) {
+			setOpenSidebar('');
+		}
+
+		setTab(tab);
 	};
 
-	const _handleChangeClauseContributorsVisibility = (
-		show = !showClauseContributors
-	) => {
-		setShowPreview(false);
-		setShowAddSXPElement(false);
-		setShowClauseContributors(show);
+	const _handleCloseSidebar = () => {
+		setOpenSidebar('');
 	};
 
 	const _handleDeleteSXPElement = (id) => {
@@ -608,6 +605,10 @@ function EditSXPBlueprintForm({
 		}
 	};
 
+	const _handleToggleSidebar = (type) => () => {
+		setOpenSidebar(openSidebar === type ? '' : type);
+	};
+
 	const _renderTabContent = () => {
 		switch (tab) {
 			case 'configuration':
@@ -629,23 +630,28 @@ function EditSXPBlueprintForm({
 					<>
 						<AddSXPElementSidebar
 							onAddSXPElement={_handleAddSXPElement}
-							onToggle={setShowAddSXPElement}
-							visible={showAddSXPElement}
+							onClose={_handleCloseSidebar}
+							visible={openSidebar === SIDEBARS.ADD_SXP_ELEMENT}
 						/>
 
 						<ClauseContributorsSidebar
 							frameworkConfig={formik.values.frameworkConfig}
+							onClose={_handleCloseSidebar}
 							onFrameworkConfigChange={
 								_handleFrameworkConfigChange
 							}
-							onToggle={setShowClauseContributors}
-							visible={showClauseContributors}
+							visible={
+								openSidebar === SIDEBARS.CLAUSE_CONTRIBUTORS
+							}
 						/>
 
 						<div
 							className={getCN({
-								'open-add-sxp-element': showAddSXPElement,
-								'open-clause-contributors': showClauseContributors,
+								'open-add-sxp-element':
+									openSidebar === SIDEBARS.ADD_SXP_ELEMENT,
+								'open-clause-contributors':
+									openSidebar ===
+									SIDEBARS.CLAUSE_CONTRIBUTORS,
 							})}
 						>
 							<QueryBuilderTab
@@ -666,18 +672,14 @@ function EditSXPBlueprintForm({
 								}
 								onBlur={formik.handleBlur}
 								onChange={formik.handleChange}
-								onChangeAddSXPElementVisibility={
-									_handleChangeAddSXPElementVisibility
-								}
-								onChangeClauseContributorsVisibility={
-									_handleChangeClauseContributorsVisibility
-								}
 								onDeleteSXPElement={_handleDeleteSXPElement}
 								onFrameworkConfigChange={
 									_handleFrameworkConfigChange
 								}
+								openSidebar={openSidebar}
 								setFieldTouched={formik.setFieldTouched}
 								setFieldValue={formik.setFieldValue}
+								setOpenSidebar={setOpenSidebar}
 								touched={formik.touched.elementInstances}
 							/>
 						</div>
@@ -704,13 +706,7 @@ function EditSXPBlueprintForm({
 				initialTitle={initialTitle}
 				isSubmitting={formik.isSubmitting}
 				onCancel={redirectURL}
-				onChangeTab={(tab) => {
-					if (tab === 'configuration') {
-						setShowClauseContributors(false);
-					}
-
-					setTab(tab);
-				}}
+				onChangeTab={_handleChangeTab}
 				onSubmit={_handleSubmit}
 				tab={tab}
 				tabs={TABS}
@@ -719,14 +715,10 @@ function EditSXPBlueprintForm({
 					<ClayButton
 						borderless
 						className={getCN({
-							active: showPreview,
+							active: openSidebar === SIDEBARS.PREVIEW,
 						})}
 						displayType="secondary"
-						onClick={() => {
-							setShowAddSXPElement(false);
-							setShowClauseContributors(false);
-							setShowPreview(!showPreview);
-						}}
+						onClick={_handleToggleSidebar(SIDEBARS.PREVIEW)}
 						small
 					>
 						{Liferay.Language.get('preview')}
@@ -737,18 +729,18 @@ function EditSXPBlueprintForm({
 			<PreviewSidebar
 				errors={previewInfo.results.errors}
 				loading={previewInfo.loading}
+				onClose={_handleCloseSidebar}
 				onFetchResults={_handleFetchPreviewSearch}
 				onFocusSXPElement={_handleFocusSXPElement}
-				onToggle={setShowPreview}
 				responseString={previewInfo.results.responseString}
 				totalHits={previewInfo.results.totalHits}
-				visible={showPreview}
+				visible={openSidebar === SIDEBARS.PREVIEW}
 				warnings={previewInfo.results.warnings}
 			/>
 
 			<div
 				className={getCN({
-					'open-preview': showPreview,
+					'open-preview': openSidebar === SIDEBARS.PREVIEW,
 				})}
 			>
 				{_renderTabContent()}

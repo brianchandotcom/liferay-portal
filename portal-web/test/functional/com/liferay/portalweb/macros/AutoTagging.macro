@@ -1,17 +1,5 @@
 definition {
 
-	macro assertAutoTagPresent {
-		var key_tagName = "${tagName}";
-
-		AssertElementPresent(locator1 = "DocumentsAndMedia#TAG");
-	}
-
-	macro assertNoAutoTag {
-		var key_tagName = "${tagName}";
-
-		AssertElementNotPresent(locator1 = "DocumentsAndMedia#TAG");
-	}
-
 	macro disableAutoTagging {
 		if ("${disableAutoTaggingFor}" == "System Settings") {
 			ApplicationsMenu.gotoPortlet(

@@ -25,4 +25,90 @@ definition {
 		CommerceConfiguration.commerceInitializersTearDown();
 	}
 
+	@description = "Verify users can select order type when creating a new order via pending orders if there are multiple order types."
+	@priority = "3"
+	test SelectOrderTypeWhenCreatingNewOrderViaPendingOrders {
+		property portal.acceptance = "false";
+
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "User Authentication",
+			configurationName = "General",
+			configurationScope = "Virtual Instance Scope");
+
+		PortalSettings.uncheckStrangersVerifyEmailCheckbox();
+
+		task ("Given a Minium Site") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And given an account with a buyer user") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Test Account",
+				accountEntryType = "Business");
+
+			ApplicationsMenu.gotoSite(site = "Minium");
+
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+			LexiconEntry.gotoEntry(rowEntry = "Test Account");
+
+			CommerceAcceleratorsInitializer.inviteNewMemberWithRoleToAccount(
+				accountName = "Test Account",
+				emailAddress = "buyer@liferay.com",
+				role = "Buyer",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userScreenName = "buyeruser");
+
+			User.openUsersAdmin();
+
+			CommerceLogin.editPasswordCP(
+				newPassword = "ttest",
+				requirePasswordReset = "true",
+				userScreenName = "buyeruser");
+		}
+
+		task ("And given two new order types") {
+			CommerceJSONOrdersAPI._addOrderType(
+				active = "true",
+				orderTypeDescription = "Test Order Type Descripiton",
+				orderTypeName = "Test Order Type");
+
+			CommerceJSONOrdersAPI._addOrderType(
+				active = "true",
+				orderTypeDescription = "Test Order Type Descripiton 2",
+				orderTypeName = "Test Order Type 2");
+		}
+
+		task ("When I log in as the buyer user and create a new order in the Minium site via pending orders") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "ttest",
+				resetPassword = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Pending Orders");
+
+			Button.click(button = "Add Order");
+		}
+
+		task ("Then I should be able to select the order type for my new order") {
+			SelectFrame.selectFrameNoLoading(
+				key_src = "mode",
+				locator1 = "IFrame#IFRAME_SRC");
+
+			Select(
+				locator1 = "Select#TYPE",
+				value1 = "Test Order Type 2");
+
+			Button.click(button = "Add Order");
+
+			AssertElementPresent(
+				key_OrderType = "Test Order Type 2",
+				locator1 = "CommerceOrders#PENDING_ORDERS_ORDER_TYPE");
+		}
+	}
+
 }

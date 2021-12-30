@@ -27,7 +27,6 @@ import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
@@ -153,7 +152,7 @@ public class PublishFormInstanceMVCActionCommand
 
 	private void _updateFormInstancePermission(
 			ActionRequest actionRequest, long formInstanceId, boolean published)
-		throws PortalException {
+		throws Exception {
 
 		Role role = _roleLocalService.getRole(
 			_portal.getCompanyId(actionRequest), RoleConstants.GUEST);
@@ -193,7 +192,7 @@ public class PublishFormInstanceMVCActionCommand
 
 	private void _updatePublishedDDMFormFieldValue(
 			DDMFormValues ddmFormValues, boolean published)
-		throws PortalException {
+		throws Exception {
 
 		DDMFormValuesQuery ddmFormValuesQuery =
 			_ddmFormValuesQueryFactory.create(ddmFormValues, "/published");

@@ -16,7 +16,6 @@ package com.liferay.dynamic.data.mapping.data.provider.web.internal.portlet.acti
 
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceService;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -70,7 +69,7 @@ public class DeleteDataProviderMVCActionCommand
 	}
 
 	private void _doDeleteDataProviderInstance(long dataProviderInstanceId)
-		throws PortalException {
+		throws Exception {
 
 		_ddmDataProviderInstanceService.deleteDataProviderInstance(
 			dataProviderInstanceId);

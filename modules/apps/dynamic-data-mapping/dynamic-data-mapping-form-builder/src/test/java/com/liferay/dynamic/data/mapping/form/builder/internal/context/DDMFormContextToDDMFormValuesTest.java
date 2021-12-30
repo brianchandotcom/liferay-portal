@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
-import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.ArrayList;
@@ -182,7 +181,7 @@ public class DDMFormContextToDDMFormValuesTest extends PowerMockito {
 		return localizedValue;
 	}
 
-	private String _read(String fileName) throws IOException {
+	private String _read(String fileName) throws Exception {
 		Class<?> clazz = getClass();
 
 		InputStream inputStream = clazz.getResourceAsStream(

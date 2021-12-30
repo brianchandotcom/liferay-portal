@@ -599,7 +599,7 @@ public class DynamicDataMappingUpgradeProcess extends UpgradeProcess {
 	}
 
 	private String _getStructureModelResourceName(long classNameId)
-		throws UpgradeException {
+		throws Exception {
 
 		String className = PortalUtil.getClassName(classNameId);
 
@@ -617,7 +617,7 @@ public class DynamicDataMappingUpgradeProcess extends UpgradeProcess {
 	}
 
 	private String _getTemplateModelResourceName(long classNameId)
-		throws UpgradeException {
+		throws Exception {
 
 		String className = PortalUtil.getClassName(classNameId);
 

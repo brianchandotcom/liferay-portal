@@ -165,7 +165,7 @@ public class AddFormInstanceRecordMVCResourceCommand
 
 	private ServiceContext _createServiceContext(
 			ResourceRequest resourceRequest)
-		throws PortalException {
+		throws Exception {
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DDMFormInstanceRecord.class.getName(), resourceRequest);

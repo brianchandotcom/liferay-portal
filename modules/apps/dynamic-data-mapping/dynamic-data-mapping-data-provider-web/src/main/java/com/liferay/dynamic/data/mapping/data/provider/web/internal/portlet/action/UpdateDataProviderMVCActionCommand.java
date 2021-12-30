@@ -26,7 +26,6 @@ import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
@@ -221,7 +220,7 @@ public class UpdateDataProviderMVCActionCommand
 
 	private void _restorePasswordDDMFormFieldValues(
 			long dataProviderInstanceId, DDMFormValues ddmFormValues)
-		throws PortalException {
+		throws Exception {
 
 		DDMDataProviderInstance dataProviderInstance =
 			ddmDataProviderInstanceService.getDataProviderInstance(

@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PortalImpl;
 
-import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.Locale;
@@ -135,7 +134,7 @@ public class DDMDataProviderInstanceParameterSettingsServletTest
 		return deserialize(serializedDDMFormValues, ddmForm);
 	}
 
-	private String _read(String fileName) throws IOException {
+	private String _read(String fileName) throws Exception {
 		Class<?> clazz = getClass();
 
 		InputStream inputStream = clazz.getResourceAsStream(

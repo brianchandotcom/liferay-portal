@@ -17,7 +17,6 @@ package com.liferay.dynamic.data.mapping.web.internal.portlet.action;
 import com.liferay.dynamic.data.mapping.constants.DDMTemplateConstants;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.PortletPreferencesException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
@@ -206,7 +205,7 @@ public abstract class BaseDDMMVCActionCommand extends BaseMVCActionCommand {
 
 	private PortletPreferences _getStrictPortletSetup(
 			ActionRequest actionRequest)
-		throws PortalException {
+		throws Exception {
 
 		String portletResource = ParamUtil.getString(
 			actionRequest, "portletResource");
@@ -220,7 +219,7 @@ public abstract class BaseDDMMVCActionCommand extends BaseMVCActionCommand {
 
 	private PortletPreferences _getStrictPortletSetup(
 			Layout layout, String portletId)
-		throws PortalException {
+		throws Exception {
 
 		if (Validator.isNull(portletId)) {
 			return null;

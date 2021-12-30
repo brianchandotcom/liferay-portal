@@ -45,7 +45,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
-import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.URLTemplateResource;
@@ -221,7 +220,7 @@ public class DDMFormEmailNotificationSender {
 	private Template _createTemplate(
 			ServiceContext serviceContext, DDMFormInstance ddmFormInstance,
 			DDMFormInstanceRecord ddmFormInstanceRecord)
-		throws PortalException {
+		throws Exception {
 
 		Template template = TemplateManagerUtil.getTemplate(
 			TemplateConstants.LANG_TYPE_FTL,
@@ -234,7 +233,7 @@ public class DDMFormEmailNotificationSender {
 	}
 
 	private DDMForm _getDDMForm(DDMFormInstance ddmFormInstance)
-		throws PortalException {
+		throws Exception {
 
 		DDMStructure ddmStructure = ddmFormInstance.getStructure();
 
@@ -250,7 +249,7 @@ public class DDMFormEmailNotificationSender {
 	}
 
 	private DDMFormLayout _getDDMFormLayout(DDMFormInstance ddmFormInstance)
-		throws PortalException {
+		throws Exception {
 
 		DDMStructure ddmStructure = ddmFormInstance.getStructure();
 
@@ -260,7 +259,7 @@ public class DDMFormEmailNotificationSender {
 	private String _getEmailBody(
 			ServiceContext serviceContext, DDMFormInstance ddmFormInstance,
 			DDMFormInstanceRecord ddmFormInstanceRecord)
-		throws PortalException {
+		throws Exception {
 
 		Template template = _createTemplate(
 			serviceContext, ddmFormInstance, ddmFormInstanceRecord);
@@ -269,7 +268,7 @@ public class DDMFormEmailNotificationSender {
 	}
 
 	private String _getEmailFromAddress(DDMFormInstance ddmFormInstance)
-		throws PortalException {
+		throws Exception {
 
 		DDMFormInstanceSettings formInstancetings =
 			ddmFormInstance.getSettingsModel();
@@ -282,7 +281,7 @@ public class DDMFormEmailNotificationSender {
 	}
 
 	private String _getEmailFromName(DDMFormInstance ddmFormInstance)
-		throws PortalException {
+		throws Exception {
 
 		DDMFormInstanceSettings formInstancetings =
 			ddmFormInstance.getSettingsModel();
@@ -295,7 +294,7 @@ public class DDMFormEmailNotificationSender {
 	}
 
 	private String _getEmailSubject(DDMFormInstance ddmFormInstance)
-		throws PortalException {
+		throws Exception {
 
 		DDMFormInstanceSettings formInstancetings =
 			ddmFormInstance.getSettingsModel();
@@ -318,7 +317,7 @@ public class DDMFormEmailNotificationSender {
 	}
 
 	private String _getEmailToAddress(DDMFormInstance ddmFormInstance)
-		throws PortalException {
+		throws Exception {
 
 		String defaultEmailToAddress = StringPool.BLANK;
 
@@ -362,7 +361,7 @@ public class DDMFormEmailNotificationSender {
 	}
 
 	private Locale _getLocale(DDMFormInstance ddmFormInstance)
-		throws PortalException {
+		throws Exception {
 
 		DDMForm ddmForm = _getDDMForm(ddmFormInstance);
 
@@ -412,7 +411,7 @@ public class DDMFormEmailNotificationSender {
 	private List<Object> _getPages(
 			DDMFormInstance ddmFormInstance,
 			DDMFormInstanceRecord ddmFormInstanceRecord)
-		throws PortalException {
+		throws Exception {
 
 		List<Object> pages = new ArrayList<>();
 
@@ -447,9 +446,7 @@ public class DDMFormEmailNotificationSender {
 			"content.Language", locale, getClass());
 	}
 
-	private String _getSiteName(long groupId, Locale locale)
-		throws PortalException {
-
+	private String _getSiteName(long groupId, Locale locale) throws Exception {
 		Group siteGroup = _groupLocalService.fetchGroup(groupId);
 
 		if (siteGroup != null) {
@@ -490,7 +487,7 @@ public class DDMFormEmailNotificationSender {
 
 	private String _getViewFormEntriesURL(
 			ServiceContext serviceContext, DDMFormInstance ddmFormInstance)
-		throws PortalException {
+		throws Exception {
 
 		String portletNamespace = _portal.getPortletNamespace(
 			DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN);
@@ -513,7 +510,7 @@ public class DDMFormEmailNotificationSender {
 	private String _getViewFormURL(
 			ServiceContext serviceContext, DDMFormInstance ddmFormInstance,
 			DDMFormInstanceRecord ddmFormInstanceRecord)
-		throws PortalException {
+		throws Exception {
 
 		String portletNamespace = _portal.getPortletNamespace(
 			DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN);
@@ -543,7 +540,7 @@ public class DDMFormEmailNotificationSender {
 			Template template, ServiceContext serviceContext,
 			DDMFormInstance ddmFormInstance,
 			DDMFormInstanceRecord ddmFormInstanceRecord)
-		throws PortalException {
+		throws Exception {
 
 		Locale locale = _getLocale(ddmFormInstance);
 
@@ -564,7 +561,7 @@ public class DDMFormEmailNotificationSender {
 				serviceContext, ddmFormInstance, ddmFormInstanceRecord));
 	}
 
-	private String _render(Template template) throws TemplateException {
+	private String _render(Template template) throws Exception {
 		Writer writer = new UnsyncStringWriter();
 
 		template.processTemplate(writer);

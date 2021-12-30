@@ -215,7 +215,7 @@ public class SaveFormInstanceMVCCommandHelper {
 
 	private DDMForm _getDDMForm(
 			PortletRequest portletRequest, ServiceContext serviceContext)
-		throws PortalException {
+		throws Exception {
 
 		try {
 			String serializedFormBuilderContext = ParamUtil.getString(
@@ -305,7 +305,7 @@ public class SaveFormInstanceMVCCommandHelper {
 
 	private DDMFormValues _getSettingsDDMFormValues(
 			PortletRequest portletRequest)
-		throws PortalException {
+		throws Exception {
 
 		String settingsContext = ParamUtil.getString(
 			portletRequest, "serializedSettingsContext");

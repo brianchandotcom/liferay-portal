@@ -128,7 +128,7 @@ public class AddRecordSetMVCActionCommand extends BaseMVCActionCommand {
 		workflowDefinitionLinkLocalService;
 
 	private DDLRecordSet _addRecordSet(ActionRequest actionRequest)
-		throws PortalException {
+		throws Exception {
 
 		long groupId = ParamUtil.getLong(actionRequest, "groupId");
 		long ddmStructureId = ParamUtil.getLong(
@@ -149,7 +149,7 @@ public class AddRecordSetMVCActionCommand extends BaseMVCActionCommand {
 
 	private PortletPreferences _getStrictPortletSetup(
 			ActionRequest actionRequest)
-		throws PortalException {
+		throws Exception {
 
 		String portletResource = ParamUtil.getString(
 			actionRequest, "portletResource");
@@ -163,7 +163,7 @@ public class AddRecordSetMVCActionCommand extends BaseMVCActionCommand {
 
 	private PortletPreferences _getStrictPortletSetup(
 			Layout layout, String portletId)
-		throws PortalException {
+		throws Exception {
 
 		if (Validator.isNull(portletId)) {
 			return null;

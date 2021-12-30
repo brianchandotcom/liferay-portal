@@ -179,7 +179,7 @@ public class SaveStructureMVCActionCommand extends BaseMVCActionCommand {
 
 	private Map<Locale, String> _getLocalizedMap(
 			String value, Set<Locale> availableLocales, Locale defaultLocale)
-		throws PortalException {
+		throws Exception {
 
 		Map<Locale, String> localizedMap = new HashMap<>();
 

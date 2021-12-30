@@ -31,7 +31,6 @@ import com.liferay.exportimport.kernel.lar.ExportImportClassedModelUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportHelper;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
-import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
@@ -217,7 +216,7 @@ public class DDLRecordSetStagedModelDataHandler
 	private void _exportReferencedStagedModel(
 			DDMStructure ddmStructure, PortletDataContext portletDataContext,
 			DDLRecordSet recordSet)
-		throws PortletDataException {
+		throws Exception {
 
 		if (!_exportImportHelper.isAlwaysIncludeReference(
 				portletDataContext, ddmStructure)) {

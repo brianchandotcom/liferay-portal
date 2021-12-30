@@ -634,7 +634,7 @@ public class DDMExpressionImplTest extends PowerMockito {
 	}
 
 	private <T> DDMExpressionImpl<T> _createDDMExpression(String expression)
-		throws DDMExpressionException {
+		throws Exception {
 
 		DDMExpressionImpl<T> ddmExpressionImpl = new DDMExpressionImpl<>(
 			expression);

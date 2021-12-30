@@ -500,7 +500,7 @@ public class DDMStructureStagedModelDataHandler
 	private void _exportDDMDataProviderInstances(
 			PortletDataContext portletDataContext, DDMStructure structure,
 			Element structureElement)
-		throws PortalException {
+		throws Exception {
 
 		Set<Long> ddmDataProviderInstanceIdsSet = new HashSet<>();
 
@@ -550,7 +550,7 @@ public class DDMStructureStagedModelDataHandler
 	private void _exportDDMFormLayout(
 			PortletDataContext portletDataContext, DDMStructure structure,
 			Element structureElement)
-		throws PortalException {
+		throws Exception {
 
 		DDMStructureVersion structureVersion = structure.getStructureVersion();
 
@@ -622,7 +622,7 @@ public class DDMStructureStagedModelDataHandler
 
 	private DDMForm _getImportDDMForm(
 			PortletDataContext portletDataContext, Element structureElement)
-		throws PortalException {
+		throws Exception {
 
 		String ddmFormPath = structureElement.attributeValue("ddm-form-path");
 
@@ -668,7 +668,7 @@ public class DDMStructureStagedModelDataHandler
 	private void _importDDMDataProviderInstances(
 			PortletDataContext portletDataContext, Element structureElement,
 			DDMForm ddmForm)
-		throws PortletDataException {
+		throws Exception {
 
 		String[] ddmDataProviderInstanceIds = StringUtil.split(
 			structureElement.attributeValue(_DDM_DATA_PROVIDER_INSTANCE_IDS));
@@ -719,7 +719,7 @@ public class DDMStructureStagedModelDataHandler
 	private void _importDEDataDefinitionFieldLinks(
 			DDMStructure importedStructure,
 			PortletDataContext portletDataContext, DDMStructure structure)
-		throws PortalException {
+		throws Exception {
 
 		List<Element> elements = portletDataContext.getReferenceDataElements(
 			structure, DEDataDefinitionFieldLink.class);

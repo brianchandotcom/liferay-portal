@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.util.PropsImpl;
 
-import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.Objects;
@@ -147,7 +146,7 @@ public class AddFormInstanceRecordMVCResourceCommandTest extends PowerMockito {
 		languageUtil.setLanguage(_language);
 	}
 
-	private String _read(String fileName) throws IOException {
+	private String _read(String fileName) throws Exception {
 		Class<?> clazz = getClass();
 
 		InputStream inputStream = clazz.getResourceAsStream(

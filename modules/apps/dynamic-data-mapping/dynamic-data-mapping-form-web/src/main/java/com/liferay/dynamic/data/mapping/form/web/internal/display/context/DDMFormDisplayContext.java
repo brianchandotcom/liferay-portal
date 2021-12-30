@@ -1142,7 +1142,7 @@ public class DDMFormDisplayContext {
 	}
 
 	private boolean _isCaptchaRequired(DDMFormInstance ddmFormInstance)
-		throws PortalException {
+		throws Exception {
 
 		DDMFormInstanceSettings ddmFormInstanceSettings =
 			ddmFormInstance.getSettingsModel();

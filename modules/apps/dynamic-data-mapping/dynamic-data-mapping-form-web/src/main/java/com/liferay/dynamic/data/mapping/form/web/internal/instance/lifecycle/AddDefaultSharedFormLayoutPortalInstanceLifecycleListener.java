@@ -19,7 +19,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -135,7 +134,7 @@ public class AddDefaultSharedFormLayoutPortalInstanceLifecycleListener
 		_userLocalService = userLocalService;
 	}
 
-	private Group _addFormsGroup(long companyId) throws PortalException {
+	private Group _addFormsGroup(long companyId) throws Exception {
 		return _groupLocalService.addGroup(
 			_userLocalService.getDefaultUserId(companyId),
 			GroupConstants.DEFAULT_PARENT_GROUP_ID, null, 0,
@@ -149,7 +148,7 @@ public class AddDefaultSharedFormLayoutPortalInstanceLifecycleListener
 	}
 
 	private Layout _addPrivateLayout(long companyId, long groupId)
-		throws PortalException {
+		throws Exception {
 
 		ServiceContext serviceContext = new ServiceContext();
 
@@ -178,7 +177,7 @@ public class AddDefaultSharedFormLayoutPortalInstanceLifecycleListener
 	}
 
 	private Layout _addPublicLayout(long companyId, long groupId)
-		throws PortalException {
+		throws Exception {
 
 		ServiceContext serviceContext = new ServiceContext();
 
@@ -204,7 +203,7 @@ public class AddDefaultSharedFormLayoutPortalInstanceLifecycleListener
 
 	private void _updateUserLayoutViewPermissionPermission(
 			long companyId, Layout layout)
-		throws PortalException {
+		throws Exception {
 
 		Role role = _roleLocalService.getRole(companyId, RoleConstants.USER);
 
@@ -214,7 +213,7 @@ public class AddDefaultSharedFormLayoutPortalInstanceLifecycleListener
 			role.getRoleId(), ActionKeys.VIEW);
 	}
 
-	private void _verifyLayout(Layout layout) throws PortalException {
+	private void _verifyLayout(Layout layout) throws Exception {
 		if (StringUtil.equals(
 				layout.getType(),
 				DDMFormPortletLayoutTypeConstants.LAYOUT_TYPE)) {

@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
-import java.io.IOException;
 import java.io.InputStream;
 
 import org.junit.Assert;
@@ -118,7 +117,7 @@ public class FieldSetDDMFormFieldTemplateContextContributorTest
 		Assert.assertEquals(12, firstColumnJSONObject.getInt("size"));
 	}
 
-	private String _read(String fileName) throws IOException {
+	private String _read(String fileName) throws Exception {
 		Class<?> clazz = getClass();
 
 		InputStream inputStream = clazz.getResourceAsStream(

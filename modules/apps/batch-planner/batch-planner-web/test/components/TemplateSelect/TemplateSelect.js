@@ -24,11 +24,11 @@ import {
 } from '../../../src/main/resources/META-INF/resources/js/constants';
 
 const BASE_PROPS = {
-	portletNamespace: 'test',
-	templatesOptions: [
+	initialTemplateOptions: [
 		{label: 'ProviamoTemplate', selected: false, value: 106902},
 		{label: 'Hello', selected: true, value: '42147'},
 	],
+	portletNamespace: 'test',
 };
 const headlessEndpoint = '/o/headless-commerce-admin-channel/v1.0/openapi.json';
 const internalClassName =
@@ -42,6 +42,7 @@ const mockedMapping = {
 };
 
 const initialTemplate = {
+	externalType: 'JSONL',
 	headlessEndpoint,
 	internalClassName,
 	mapping: mockedMapping,

@@ -53,6 +53,7 @@ function getOptionElement(label, schemaName, selected, value) {
 }
 
 export default function ({
+	initialExternalType,
 	initialTemplateClassName,
 	initialTemplateHeadlessEndpoint,
 	initialTemplateMapping,
@@ -68,10 +69,21 @@ export default function ({
 	const taskItemDelegateNameInput = document.querySelector(
 		`#${namespace}taskItemDelegateName`
 	);
+	const externalTypeSelect = document.querySelector(
+		`#${namespace}externalType`
+	);
 
 	const handleTemplateSelectedEvent = async (event) => {
 		const {template} = event;
 		if (template) {
+			if (externalTypeSelect) {
+				const externalTypeOption = externalTypeSelect.querySelector(
+					`option[value='${template.externalType}']`
+				);
+
+				externalTypeOption.selected = true;
+			}
+
 			const headlessTemplateOption = headlessEnpointSelect.querySelector(
 				`option[value='${template.headlessEndpoint}']`
 			);
@@ -241,6 +253,7 @@ export default function ({
 		initialTemplateMapping
 	) {
 		initialTemplate = {
+			externalType: initialExternalType,
 			headlessEndpoint: initialTemplateHeadlessEndpoint,
 			internalClassName: initialTemplateClassName,
 			mapping: initialTemplateMapping,

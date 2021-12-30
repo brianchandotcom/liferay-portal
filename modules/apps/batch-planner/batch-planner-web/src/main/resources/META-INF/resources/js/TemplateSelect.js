@@ -150,6 +150,7 @@ async function fireTemplateSelectionEvent(templateId) {
 
 		Liferay.fire(TEMPLATE_SELECTED_EVENT, {
 			template: {
+				externalType: templateRequest.externalType,
 				headlessEndpoint: headlessEndpoint?.value,
 				internalClassName: templateRequest.internalClassName,
 				mapping: getMappingFromTemplate(templateRequest),

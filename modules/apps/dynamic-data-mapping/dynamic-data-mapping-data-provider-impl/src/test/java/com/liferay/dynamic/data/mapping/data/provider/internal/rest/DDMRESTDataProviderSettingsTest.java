@@ -360,21 +360,6 @@ public class DDMRESTDataProviderSettingsTest {
 		Assert.assertEquals("text", ddmFormField.getType());
 	}
 
-	private void _assertValue(DDMFormField ddmFormField) {
-		Assert.assertNotNull(ddmFormField);
-
-		Assert.assertTrue(ddmFormField.isRequired());
-
-		Assert.assertEquals("string", ddmFormField.getDataType());
-
-		Map<String, Object> properties = ddmFormField.getProperties();
-
-		Assert.assertTrue(properties.containsKey("placeholder"));
-		Assert.assertTrue(properties.containsKey("tooltip"));
-
-		Assert.assertEquals("text", ddmFormField.getType());
-	}
-
 	private void _setUpLanguageUtil() {
 		LanguageUtil languageUtil = new LanguageUtil();
 

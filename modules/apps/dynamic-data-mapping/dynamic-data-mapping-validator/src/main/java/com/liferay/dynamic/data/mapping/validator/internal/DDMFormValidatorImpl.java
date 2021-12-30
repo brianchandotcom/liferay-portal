@@ -39,7 +39,6 @@ import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.Mus
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetValidCharactersForFieldName;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetValidCharactersForFieldType;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetValidDefaultLocaleForProperty;
-import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetValidFormRuleExpression;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetValidIndexType;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetValidType;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetValidValidationExpression;
@@ -164,26 +163,6 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 			throw new MustSetValidValidationExpression(
 				ddmFormField.getName(),
 				ddmFormFieldValidationExpression.getValue());
-		}
-	}
-
-	private void _validateDDMExpression(
-			String expressionType, String ddmExpressionString)
-		throws DDMFormValidationException {
-
-		if (Validator.isNull(ddmExpressionString)) {
-			return;
-		}
-
-		try {
-			_ddmExpressionFactory.createExpression(
-				CreateExpressionRequest.Builder.newBuilder(
-					ddmExpressionString
-				).build());
-		}
-		catch (DDMExpressionException ddmExpressionException) {
-			throw new MustSetValidFormRuleExpression(
-				expressionType, ddmExpressionString, ddmExpressionException);
 		}
 	}
 

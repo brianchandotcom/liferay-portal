@@ -48,7 +48,6 @@ import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.URLTemplateResource;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -58,7 +57,6 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PrefsPropsUtil;
 
 import java.io.Writer;
@@ -74,8 +72,6 @@ import java.util.ResourceBundle;
 import java.util.function.Function;
 
 import javax.mail.internet.InternetAddress;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -464,13 +460,6 @@ public class DDMFormEmailNotificationSender {
 		URL templateURL = classLoader.getResource(templatePath);
 
 		return new URLTemplateResource(templateURL.getPath(), templateURL);
-	}
-
-	private ThemeDisplay _getThemeDisplay(
-		HttpServletRequest httpServletRequest) {
-
-		return (ThemeDisplay)httpServletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
 	}
 
 	private String _getUserName(

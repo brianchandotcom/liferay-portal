@@ -31,12 +31,10 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.util.PortalImpl;
 
 import java.io.InputStream;
 
@@ -209,10 +207,6 @@ public class DDMDataProviderInstanceParameterSettingsServletTest
 		LanguageUtil languageUtil = new LanguageUtil();
 
 		languageUtil.setLanguage(PowerMockito.mock(Language.class));
-	}
-
-	private void _setUpPortalClassLoaderUtil() {
-		PortalClassLoaderUtil.setClassLoader(PortalImpl.class.getClassLoader());
 	}
 
 	private void _setUpPortalUtil() {

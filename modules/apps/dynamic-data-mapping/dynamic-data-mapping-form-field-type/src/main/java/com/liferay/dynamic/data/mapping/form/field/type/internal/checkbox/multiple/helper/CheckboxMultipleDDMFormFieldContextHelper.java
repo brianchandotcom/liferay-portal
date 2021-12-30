@@ -17,16 +17,10 @@ package com.liferay.dynamic.data.mapping.form.field.type.internal.checkbox.multi
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,28 +64,6 @@ public class CheckboxMultipleDDMFormFieldContextHelper {
 		}
 
 		return options;
-	}
-
-	private String[] _toStringArray(String value) {
-		if (Validator.isNull(value)) {
-			return GetterUtil.DEFAULT_STRING_VALUES;
-		}
-
-		try {
-			JSONArray jsonArray = _jsonFactory.createJSONArray(value);
-
-			return ArrayUtil.toStringArray(jsonArray);
-		}
-		catch (JSONException jsonException) {
-
-			// LPS-52675
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(jsonException, jsonException);
-			}
-
-			return StringUtil.split(value);
-		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

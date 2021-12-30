@@ -7,7 +7,7 @@ task patch(type: PatchTask)
 dependencies {
 	compile group: "org.outerj.daisy", name: "daisydiff", version: "1.2.0-atlassian-hosted"
 
-	compileOnly group: "xalan", name: "xalan", version: "2.7.2"
+	compileOnly group: "xerces", name: "xercesImpl", version: "2.12.1"
 }
 
 patch {

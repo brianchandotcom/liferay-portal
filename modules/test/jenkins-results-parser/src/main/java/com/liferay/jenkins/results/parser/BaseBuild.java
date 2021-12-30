@@ -120,9 +120,7 @@ public abstract class BaseBuild implements Build {
 			throw new RuntimeException("Invalid build status: " + _status);
 		}
 
-		this.archiveName = archiveName;
-
-		File archiveDir = new File(getArchivePath());
+		File archiveDir = new File(getArchiveRootDir(), getArchivePath());
 
 		if (archiveDir.exists()) {
 			archiveDir.delete();

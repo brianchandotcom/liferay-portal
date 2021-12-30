@@ -20,7 +20,7 @@ import {useIsMounted} from '@liferay/frontend-js-react-web';
 import {fetch, openToast} from 'frontend-js-web';
 import React, {useState} from 'react';
 
-import {HEADERS} from './constants';
+import {HEADERS, TEMPLATE_CREATED} from './constants';
 
 async function saveTemplate(formDataQuerySelector, updateData, url) {
 	const mainFormData = document.querySelector(formDataQuerySelector);
@@ -69,6 +69,7 @@ const SaveTemplateModal = ({
 					setErrorMessage(saveTemplateResponse.error);
 				}
 				else {
+					Liferay.fire(TEMPLATE_CREATED, saveTemplateResponse);
 					openToast({
 						message: Liferay.Language.get('template-was-created'),
 						type: 'success',

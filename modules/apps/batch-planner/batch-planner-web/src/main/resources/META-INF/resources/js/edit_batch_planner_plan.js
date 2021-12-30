@@ -251,8 +251,8 @@ export default function ({
 		TemplateSelect,
 		{
 			initialTemplate,
+			initialTemplateOptions: templatesOptions,
 			portletNamespace: namespace,
-			templatesOptions,
 		},
 		document.getElementById(`${namespace}templateSelect`)
 	);

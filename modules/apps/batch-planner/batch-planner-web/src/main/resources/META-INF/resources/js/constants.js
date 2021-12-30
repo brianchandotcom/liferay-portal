@@ -33,6 +33,7 @@ export const PROCESS_COMPLETED = 'COMPLETED';
 export const PROCESS_FAILED = 'FAILED';
 export const PROCESS_STARTED = 'STARTED';
 export const SCHEMA_SELECTED_EVENT = 'schema-selected';
+export const TEMPLATE_CREATED = 'TEMPLATE_CREATED';
 export const TEMPLATE_SELECTED_EVENT = 'template-selected';
 export const TEMPLATE_SOILED = 'template-soiled';
 

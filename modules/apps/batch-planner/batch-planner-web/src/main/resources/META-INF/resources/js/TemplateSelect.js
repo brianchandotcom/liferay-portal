@@ -21,18 +21,37 @@ import {
 	HEADLESS_BATCH_PLANNER_URL,
 	HEADLESS_ENDPOINT_POLICY_NAME,
 	NULL_TEMPLATE_VALUE,
+	TEMPLATE_CREATED,
 	TEMPLATE_SELECTED_EVENT,
 	TEMPLATE_SOILED,
 } from './constants';
 
 const TemplateSelect = ({
 	initialTemplate,
+	initialTemplateOptions = [],
 	portletNamespace,
-	templatesOptions,
 }) => {
-	const [selectedTemplateId, setTemplate] = useState(
-		templatesOptions.find((option) => option.selected)?.value
+	const [templateOptions, setTemplateOptions] = useState(
+		initialTemplateOptions
 	);
+	const [selectedTemplateId, setTemplate] = useState(
+		initialTemplateOptions.find((option) => option.selected)?.value
+	);
+
+	useEffect(() => {
+		function handleTemplateCreated({batchPlannerPlanId, name}) {
+			setTemplate(batchPlannerPlanId);
+			setTemplateOptions((options) => [
+				{label: name, value: batchPlannerPlanId},
+				...options,
+			]);
+			fireTemplateSelectionEvent(batchPlannerPlanId);
+		}
+
+		Liferay.on(TEMPLATE_CREATED, handleTemplateCreated);
+
+		return () => Liferay.detach(TEMPLATE_CREATED);
+	}, []);
 
 	useEffect(() => {
 		if (initialTemplate) {
@@ -74,7 +93,7 @@ const TemplateSelect = ({
 			>
 				<ClaySelect.Option key={0} value={NULL_TEMPLATE_VALUE} />
 
-				{templatesOptions.map((option) => (
+				{templateOptions.map((option) => (
 					<ClaySelect.Option
 						key={option.value}
 						label={option.label}

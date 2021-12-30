@@ -196,13 +196,12 @@ function QueryBuilderTab({
 								VERTICAL_NAV_KEYS.QUERY_SETTINGS && (
 								<QuerySettings
 									applyIndexerClauses={applyIndexerClauses}
+									clauseContributorsList={[
+										...keywordQueryContributors,
+										...modelPrefilterContributors,
+										...queryPrefilterContributors,
+									]}
 									frameworkConfig={frameworkConfig}
-									keywordQueryContributors={
-										keywordQueryContributors
-									}
-									modelPrefilterContributors={
-										modelPrefilterContributors
-									}
 									onApplyIndexerClausesChange={
 										onApplyIndexerClausesChange
 									}
@@ -211,9 +210,6 @@ function QueryBuilderTab({
 									}
 									onFrameworkConfigChange={
 										onFrameworkConfigChange
-									}
-									queryPrefilterContributors={
-										queryPrefilterContributors
 									}
 									searchableTypes={searchableTypes}
 								/>

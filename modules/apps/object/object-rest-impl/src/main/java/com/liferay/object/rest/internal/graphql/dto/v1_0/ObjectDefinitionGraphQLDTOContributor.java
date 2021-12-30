@@ -59,6 +59,7 @@ public class ObjectDefinitionGraphQLDTOContributor
 		ObjectScopeProvider objectScopeProvider) {
 
 		List<GraphQLDTOProperty> graphQLDTOProperties = new ArrayList<>();
+		List<GraphQLDTOProperty> graphQLDTORelationships = new ArrayList<>();
 
 		graphQLDTOProperties.add(
 			GraphQLDTOProperty.of(
@@ -86,8 +87,8 @@ public class ObjectDefinitionGraphQLDTOContributor
 				String relationshipName = StringUtil.replaceLast(
 					relationshipIdName, "Id", "");
 
-				graphQLDTOProperties.add(
-					GraphQLDTOProperty.of(relationshipName, Object.class));
+				graphQLDTORelationships.add(
+					GraphQLDTOProperty.of(relationshipName, Map.class));
 			}
 			else {
 				graphQLDTOProperties.add(
@@ -101,6 +102,7 @@ public class ObjectDefinitionGraphQLDTOContributor
 		return new ObjectDefinitionGraphQLDTOContributor(
 			objectDefinition.getCompanyId(),
 			new ObjectEntryEntityModel(objectFields), graphQLDTOProperties,
+			graphQLDTORelationships,
 			StringUtil.removeSubstring(
 				objectDefinition.getPKObjectFieldName(), "c_"),
 			objectDefinition, objectEntryManager, objectScopeProvider,
@@ -177,8 +179,42 @@ public class ObjectDefinitionGraphQLDTOContributor
 	}
 
 	@Override
+	public List<GraphQLDTOProperty> getGraphQLDTORelationships() {
+		return _graphQLDTORelationships;
+	}
+
+	@Override
 	public String getIdName() {
 		return _idName;
+	}
+
+	@Override
+	public <T> T getRelationshipValue(
+			DTOConverterContext dtoConverterContext, long id,
+			String relationshipName, Class<T> relationshipClass)
+		throws Exception {
+
+		if (!Objects.equals(relationshipClass, Map.class)) {
+			return null;
+		}
+
+		ObjectEntry objectEntry = _objectEntryManager.getObjectEntry(
+			dtoConverterContext, _objectDefinition, id);
+
+		Map<String, Object> properties = objectEntry.getProperties();
+
+		String relationshipNameId = relationshipName + "Id";
+
+		Object relationshipId = properties.get(relationshipNameId);
+
+		if (!(relationshipId instanceof Long)) {
+			return null;
+		}
+
+		return (T)_toMap(
+			_objectEntryManager.getObjectEntry(
+				dtoConverterContext, null, (long)relationshipId),
+			relationshipNameId);
 	}
 
 	@Override
@@ -210,7 +246,8 @@ public class ObjectDefinitionGraphQLDTOContributor
 
 	private ObjectDefinitionGraphQLDTOContributor(
 		long companyId, EntityModel entityModel,
-		List<GraphQLDTOProperty> graphQLDTOProperties, String idName,
+		List<GraphQLDTOProperty> graphQLDTOProperties,
+		List<GraphQLDTOProperty> graphQLDTORelationships, String idName,
 		ObjectDefinition objectDefinition,
 		ObjectEntryManager objectEntryManager,
 		ObjectScopeProvider objectScopeProvider, String resourceName,
@@ -219,6 +256,7 @@ public class ObjectDefinitionGraphQLDTOContributor
 		_companyId = companyId;
 		_entityModel = entityModel;
 		_graphQLDTOProperties = graphQLDTOProperties;
+		_graphQLDTORelationships = graphQLDTORelationships;
 		_idName = idName;
 		_objectDefinition = objectDefinition;
 		_objectEntryManager = objectEntryManager;
@@ -228,9 +266,15 @@ public class ObjectDefinitionGraphQLDTOContributor
 	}
 
 	private Map<String, Object> _toMap(ObjectEntry objectEntry) {
+		return _toMap(objectEntry, getIdName());
+	}
+
+	private Map<String, Object> _toMap(
+		ObjectEntry objectEntry, String objectEntryIdName) {
+
 		Map<String, Object> properties = objectEntry.getProperties();
 
-		properties.put(getIdName(), objectEntry.getId());
+		properties.put(objectEntryIdName, objectEntry.getId());
 
 		return properties;
 	}
@@ -275,6 +319,7 @@ public class ObjectDefinitionGraphQLDTOContributor
 	private final long _companyId;
 	private final EntityModel _entityModel;
 	private final List<GraphQLDTOProperty> _graphQLDTOProperties;
+	private final List<GraphQLDTOProperty> _graphQLDTORelationships;
 	private final String _idName;
 	private final ObjectDefinition _objectDefinition;
 	private final ObjectEntryManager _objectEntryManager;

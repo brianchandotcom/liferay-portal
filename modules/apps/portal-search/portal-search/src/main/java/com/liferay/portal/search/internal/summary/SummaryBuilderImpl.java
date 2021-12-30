@@ -103,15 +103,11 @@ public class SummaryBuilderImpl implements SummaryBuilder {
 			return _buildTitleHighlighted();
 		}
 
-		return _buildTitlePlain();
+		return _title;
 	}
 
 	private String _buildTitleHighlighted() {
 		return _escapeAndHighlight(_title);
-	}
-
-	private String _buildTitlePlain() {
-		return _title;
 	}
 
 	private String _escapeAndHighlight(String text) {

@@ -17,6 +17,7 @@ import {addParams, navigate, openSelectionModal} from 'frontend-js-web';
 export default function propsTransformer({
 	additionalProps: {
 		addArticleURL,
+		exportTranslationURL,
 		moveArticlesAndFoldersURL,
 		openViewMoreStructuresURL,
 		selectEntityURL,
@@ -69,6 +70,28 @@ export default function propsTransformer({
 		});
 	};
 
+	const exportTranslation = () => {
+		const url = new URL(exportTranslationURL);
+
+		const urlSearchParams = new URLSearchParams(url.search);
+
+		const paramName = `_${urlSearchParams.get('p_p_id')}_key`;
+
+		const searchContainer = Liferay.SearchContainer.get(
+			`${portletNamespace}articles`
+		);
+
+		const keys = searchContainer.select
+			.getAllSelectedElements()
+			.get('value');
+
+		for (const key of keys) {
+			url.searchParams.append(paramName, key);
+		}
+
+		navigate(url.toString());
+	};
+
 	const moveEntries = () => {
 		let entrySelectorNodes = document.querySelectorAll('.entry-selector');
 
@@ -100,6 +123,9 @@ export default function propsTransformer({
 			}
 			else if (action === 'expireEntries') {
 				expireEntries();
+			}
+			else if (action === 'exportTranslation') {
+				exportTranslation();
 			}
 			else if (action === 'moveEntries') {
 				moveEntries();

@@ -71,14 +71,6 @@
 		border-bottom: 1px solid #dddee7;
 	}
 
-	.rtl & {
-		transform: translateX(-100%);
-
-		&.is-visible {
-			transform: translateX(0);
-		}
-	}
-
 	.side-menu {
 		border-bottom-width: 0;
 		bottom: 0;

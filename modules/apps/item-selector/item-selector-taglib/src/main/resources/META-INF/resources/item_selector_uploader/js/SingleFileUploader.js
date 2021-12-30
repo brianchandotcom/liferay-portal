@@ -22,6 +22,7 @@ import React, {useEffect, useMemo, useState} from 'react';
 import {ErrorCode, useDropzone} from 'react-dropzone';
 
 import ItemSelectorPreview from '../../item_selector_preview/js/ItemSelectorPreview.es';
+import DragFileIcon from './DragFileIcon';
 import getPreviewProps from './getPreviewProps';
 import {getUploadErrorMessage, sendFile} from './utils';
 
@@ -171,11 +172,15 @@ function SingleFileUploader({
 							</ClayLayout.ContentCol>
 						</ClayLayout.ContentRow>
 					) : (
-						<span>
+						<div>
+							<div className="dropzone-drag-file-icon-wrapper">
+								<DragFileIcon />
+							</div>
+
 							{Liferay.Language.get(
 								'drag-and-drop-or-click-to-upload'
 							)}
-						</span>
+						</div>
 					)}
 				</div>
 

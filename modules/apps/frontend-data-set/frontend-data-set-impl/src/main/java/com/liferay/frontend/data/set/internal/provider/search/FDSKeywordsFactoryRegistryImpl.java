@@ -64,7 +64,8 @@ public class FDSKeywordsFactoryRegistryImpl
 		if (filterFactoryServiceWrapper == null) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"No filter factory registered for " + fdsDataProviderKey);
+					"No filter factory is associated with " +
+						fdsDataProviderKey);
 			}
 
 			return new FDSKeywordsFactoryImpl();

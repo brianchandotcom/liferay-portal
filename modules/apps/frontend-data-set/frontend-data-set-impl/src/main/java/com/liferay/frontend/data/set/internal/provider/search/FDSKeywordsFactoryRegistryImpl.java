@@ -58,20 +58,20 @@ public class FDSKeywordsFactoryRegistryImpl
 
 	@Override
 	public FDSKeywordsFactory getFDSKeywordsFactory(String fdsDataProviderKey) {
-		ServiceWrapper<FDSKeywordsFactory> filterFactoryServiceWrapper =
+		ServiceWrapper<FDSKeywordsFactory> fdsKeywordsFactory =
 			_serviceTrackerMap.getService(fdsDataProviderKey);
 
-		if (filterFactoryServiceWrapper == null) {
+		if (fdsKeywordsFactory == null) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"No filter factory is associated with " +
-						fdsDataProviderKey);
+					"No frontend data set keywords factory is associated " +
+						"with " + fdsDataProviderKey);
 			}
 
 			return new FDSKeywordsFactoryImpl();
 		}
 
-		return filterFactoryServiceWrapper.getService();
+		return fdsKeywordsFactory.getService();
 	}
 
 	@Activate

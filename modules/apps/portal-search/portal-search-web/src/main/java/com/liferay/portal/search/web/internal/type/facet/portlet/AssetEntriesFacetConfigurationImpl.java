@@ -14,8 +14,6 @@
 
 package com.liferay.portal.search.web.internal.type.facet.portlet;
 
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 
@@ -39,16 +37,6 @@ public class AssetEntriesFacetConfigurationImpl
 	@Override
 	public void setFrequencyThreshold(int frequencyThreshold) {
 		_jsonObject.put("frequencyThreshold", frequencyThreshold);
-	}
-
-	private JSONArray _toJSONArray(String... values) {
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-
-		for (String value : values) {
-			jsonArray.put(value);
-		}
-
-		return jsonArray;
 	}
 
 	private final JSONObject _jsonObject;

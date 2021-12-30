@@ -78,12 +78,6 @@ public class UnicastSettingsContributor extends BaseSettingsContributor {
 		return hosts;
 	}
 
-	private void _setClusterSettingsContext(
-		ClusterSettingsContext clusterSettingsContext) {
-
-		_clusterSettingsContext = clusterSettingsContext;
-	}
-
 	@Reference
 	private ClusterSettingsContext _clusterSettingsContext;
 

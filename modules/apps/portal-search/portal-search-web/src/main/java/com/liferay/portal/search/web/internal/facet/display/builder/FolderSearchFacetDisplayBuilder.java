@@ -310,16 +310,6 @@ public class FolderSearchFacetDisplayBuilder {
 			Collectors.toList());
 	}
 
-	private Long _getFolderId(String fieldParam) {
-		long folderId = GetterUtil.getLong(fieldParam);
-
-		if (folderId == 0) {
-			return null;
-		}
-
-		return folderId;
-	}
-
 	private Facet _facet;
 	private final FolderFacetPortletInstanceConfiguration
 		_folderFacetPortletInstanceConfiguration;

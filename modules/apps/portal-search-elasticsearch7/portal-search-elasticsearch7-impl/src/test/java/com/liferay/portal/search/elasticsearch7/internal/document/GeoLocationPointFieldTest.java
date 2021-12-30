@@ -15,9 +15,7 @@
 package com.liferay.portal.search.elasticsearch7.internal.document;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.search.elasticsearch7.internal.ElasticsearchIndexingFixture;
 import com.liferay.portal.search.elasticsearch7.internal.LiferayElasticsearchIndexingFixtureFactory;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchClientResolver;
@@ -30,8 +28,6 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.io.IOException;
 
-import java.util.Arrays;
-
 import org.elasticsearch.action.admin.indices.create.CreateIndexRequest;
 import org.elasticsearch.client.IndicesClient;
 import org.elasticsearch.client.RequestOptions;
@@ -40,7 +36,6 @@ import org.elasticsearch.client.indices.PutMappingRequest;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.xcontent.XContentType;
 
-import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -103,16 +98,6 @@ public class GeoLocationPointFieldTest extends BaseIndexingTestCase {
 						searchResponse.getDocumentsStream(), fieldName,
 						"[" + expected + "]"));
 			});
-	}
-
-	private Document _searchOneDocument() throws Exception {
-		Hits hits = search(createSearchContext());
-
-		Document[] documents = hits.getDocs();
-
-		Assert.assertEquals(Arrays.toString(documents), 1, documents.length);
-
-		return documents[0];
 	}
 
 	private static final String _CUSTOM_FIELD = "customField";

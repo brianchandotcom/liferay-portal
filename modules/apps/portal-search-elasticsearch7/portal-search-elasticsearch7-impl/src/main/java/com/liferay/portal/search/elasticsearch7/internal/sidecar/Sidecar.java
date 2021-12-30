@@ -315,10 +315,6 @@ public class Sidecar {
 		return _elasticsearchConfigurationWrapper.clusterName();
 	}
 
-	private Path _getDataHomePath() {
-		return _dataHomePath;
-	}
-
 	private Distribution _getElasticsearchDistribution() {
 		String versionNumber = ResourceUtil.getResourceAsString(
 			getClass(), SidecarVersionConstants.SIDECAR_VERSION_FILE_NAME);

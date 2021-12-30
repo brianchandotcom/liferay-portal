@@ -39,8 +39,6 @@ import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRe
 
 import java.io.IOException;
 
-import java.util.Optional;
-
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -223,13 +221,6 @@ public class ModifiedFacetPortlet extends MVCPortlet {
 		SearchRequest searchRequest = searchResponse.getRequest();
 
 		return searchRequest.getPaginationStartParameterName();
-	}
-
-	private ModifiedFacetPortletPreferencesImpl _getPortletPreferences(
-		RenderRequest renderRequest) {
-
-		return new ModifiedFacetPortletPreferencesImpl(
-			Optional.ofNullable(renderRequest.getPreferences()));
 	}
 
 	private ThemeDisplay _getThemeDisplay(RenderRequest renderRequest) {

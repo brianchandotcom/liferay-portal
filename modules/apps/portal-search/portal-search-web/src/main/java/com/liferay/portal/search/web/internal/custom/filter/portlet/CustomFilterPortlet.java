@@ -164,10 +164,6 @@ public class CustomFilterPortlet extends MVCPortlet {
 		}
 	}
 
-	private String _getPortletId(RenderRequest renderRequest) {
-		return portal.getPortletId(renderRequest);
-	}
-
 	private SearchResponse _getSearchResponse(
 		PortletSharedSearchResponse portletSharedSearchResponse,
 		CustomFilterPortletPreferences customFilterPortletPreferences) {

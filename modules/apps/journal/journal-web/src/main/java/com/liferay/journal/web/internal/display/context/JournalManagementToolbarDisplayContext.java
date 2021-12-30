@@ -27,6 +27,7 @@ import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
+import com.liferay.journal.web.internal.configuration.FFBulkTranslationConfiguration;
 import com.liferay.journal.web.internal.configuration.JournalWebConfiguration;
 import com.liferay.journal.web.internal.security.permission.resource.JournalFolderPermission;
 import com.liferay.petra.function.UnsafeConsumer;
@@ -88,6 +89,9 @@ public class JournalManagementToolbarDisplayContext
 		_journalDisplayContext = journalDisplayContext;
 		_trashHelper = trashHelper;
 
+		_ffBulkTranslationConfiguration =
+			(FFBulkTranslationConfiguration)httpServletRequest.getAttribute(
+				FFBulkTranslationConfiguration.class.getName());
 		_journalWebConfiguration =
 			(JournalWebConfiguration)httpServletRequest.getAttribute(
 				JournalWebConfiguration.class.getName());
@@ -126,6 +130,7 @@ public class JournalManagementToolbarDisplayContext
 							dropdownItem.setQuickAction(true);
 						}
 					).add(
+						_ffBulkTranslationConfiguration::enabled,
 						dropdownItem -> {
 							dropdownItem.putData("action", "exportTranslation");
 							dropdownItem.setIcon("import-export");
@@ -719,6 +724,8 @@ public class JournalManagementToolbarDisplayContext
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalManagementToolbarDisplayContext.class);
 
+	private final FFBulkTranslationConfiguration
+		_ffBulkTranslationConfiguration;
 	private final JournalDisplayContext _journalDisplayContext;
 	private final JournalWebConfiguration _journalWebConfiguration;
 	private final ThemeDisplay _themeDisplay;

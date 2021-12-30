@@ -1840,7 +1840,7 @@ public abstract class BaseBuild implements Build {
 	public void setArchiveRootDir(File archiveRootDir) {
 		if (archiveRootDir == null) {
 			archiveRootDir = new File(
-				JenkinsResultsParserUtil.URL_DEPENDENCIES_FILE.substring(
+				JenkinsResultsParserUtil.urlDependenciesFile.substring(
 					"file:".length()));
 		}
 
@@ -3907,7 +3907,7 @@ public abstract class BaseBuild implements Build {
 
 	private String _archiveName;
 	private File _archiveRootDir = new File(
-		JenkinsResultsParserUtil.URL_DEPENDENCIES_FILE.substring(
+		JenkinsResultsParserUtil.urlDependenciesFile.substring(
 			"file:".length()));
 	private final Map<String, BranchInformation> _branchInformationMap =
 		new HashMap<>();

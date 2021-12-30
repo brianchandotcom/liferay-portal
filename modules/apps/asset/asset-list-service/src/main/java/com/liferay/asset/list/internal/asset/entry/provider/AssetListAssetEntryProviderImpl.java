@@ -282,7 +282,7 @@ public class AssetListAssetEntryProviderImpl
 		).build();
 
 		_setCategoriesAndTagsAndKeywords(
-			assetListEntry, assetEntryQuery, unicodeProperties,
+			assetEntryQuery, unicodeProperties,
 			_getAssetCategoryIds(unicodeProperties),
 			_getAssetTagNames(unicodeProperties),
 			_getKeywords(unicodeProperties));
@@ -1079,9 +1079,9 @@ public class AssetListAssetEntryProviderImpl
 	}
 
 	private void _setCategoriesAndTagsAndKeywords(
-		AssetListEntry assetListEntry, AssetEntryQuery assetEntryQuery,
-		UnicodeProperties unicodeProperties, long[] overrideAllAssetCategoryIds,
-		String[] overrideAllAssetTagNames, String[] overrideAllKeywords) {
+		AssetEntryQuery assetEntryQuery, UnicodeProperties unicodeProperties,
+		long[] overrideAllAssetCategoryIds, String[] overrideAllAssetTagNames,
+		String[] overrideAllKeywords) {
 
 		long[] allAssetCategoryIds = new long[0];
 		long[] anyAssetCategoryIds = new long[0];
@@ -1179,11 +1179,12 @@ public class AssetListAssetEntryProviderImpl
 			allAssetTagNames = overrideAllAssetTagNames;
 		}
 
-		long siteGroupId = _portal.getSiteGroupId(assetListEntry.getGroupId());
+		long[] groupIds = GetterUtil.getLongValues(
+			StringUtil.split(unicodeProperties.getProperty("groupIds", null)));
 
 		for (String assetTagName : allAssetTagNames) {
 			long[] allAssetTagIds = _assetTagLocalService.getTagIds(
-				new long[] {siteGroupId}, assetTagName);
+				groupIds, assetTagName);
 
 			assetEntryQuery.addAllTagIdsArray(allAssetTagIds);
 		}
@@ -1195,7 +1196,7 @@ public class AssetListAssetEntryProviderImpl
 		assetEntryQuery.setAnyKeywords(anyKeywords);
 
 		long[] anyAssetTagIds = _assetTagLocalService.getTagIds(
-			siteGroupId, anyAssetTagNames);
+			groupIds, anyAssetTagNames);
 
 		assetEntryQuery.setAnyTagIds(anyAssetTagIds);
 
@@ -1204,7 +1205,7 @@ public class AssetListAssetEntryProviderImpl
 
 		for (String assetTagName : notAllAssetTagNames) {
 			long[] notAllAssetTagIds = _assetTagLocalService.getTagIds(
-				new long[] {siteGroupId}, assetTagName);
+				groupIds, assetTagName);
 
 			assetEntryQuery.addNotAllTagIdsArray(notAllAssetTagIds);
 		}
@@ -1213,7 +1214,7 @@ public class AssetListAssetEntryProviderImpl
 		assetEntryQuery.setNotAnyKeywords(notAnyKeywords);
 
 		long[] notAnyAssetTagIds = _assetTagLocalService.getTagIds(
-			siteGroupId, notAnyAssetTagNames);
+			groupIds, notAnyAssetTagNames);
 
 		assetEntryQuery.setNotAnyTagIds(notAnyAssetTagIds);
 	}

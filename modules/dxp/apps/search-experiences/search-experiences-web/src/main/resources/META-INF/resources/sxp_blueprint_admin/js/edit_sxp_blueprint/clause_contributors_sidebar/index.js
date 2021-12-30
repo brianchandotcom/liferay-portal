@@ -56,7 +56,6 @@ function ClauseContributorsSidebar({
 	frameworkConfig,
 	initialClauseContributorsList = [],
 	onFrameworkConfigChange,
-	onApplyIndexerClausesChange,
 }) {
 	const [category, setCategory] = useState(ALL);
 	const [contributors, setContributors] = useState(
@@ -167,20 +166,6 @@ function ClauseContributorsSidebar({
 		initialClauseContributorsList,
 	]);
 
-	const _handleApplyBaseline = () => {
-		const baselineEnabledState = getClauseContributorsState(
-			BASELINE_CLAUSE_CONTRIBUTORS_CONFIGURATION
-		);
-
-		onFrameworkConfigChange(
-			getClauseContributorsConfig(baselineEnabledState)
-		);
-
-		onApplyIndexerClausesChange(true);
-
-		setEnabled(baselineEnabledState);
-	};
-
 	const _handleSelectChange = (className) => () => {
 		setSelected(
 			selected.includes(className)
@@ -264,7 +249,6 @@ function ClauseContributorsSidebar({
 					category={category}
 					filterItems={filterItems}
 					keyword={keyword}
-					onApplyBaseline={_handleApplyBaseline}
 					onClearCategory={() => setCategory(ALL)}
 					onClearStatus={() => setStatus(ALL)}
 					onReverseSort={() =>
@@ -343,9 +327,7 @@ function ClauseContributorsSidebar({
 }
 
 export default function ({
-	applyIndexerClauses,
 	frameworkConfig,
-	onApplyIndexerClausesChange,
 	onFrameworkConfigChange,
 	onToggle,
 	visible,
@@ -409,14 +391,12 @@ export default function ({
 
 	return (
 		<ClauseContributorsSidebar
-			applyIndexerClauses={applyIndexerClauses}
 			frameworkConfig={frameworkConfig}
 			initialClauseContributorsList={[
 				keywordQueryContributors,
 				modelPrefilterContributors,
 				queryPrefilterContributors,
 			]}
-			onApplyIndexerClausesChange={onApplyIndexerClausesChange}
 			onFrameworkConfigChange={onFrameworkConfigChange}
 			onToggle={onToggle}
 			visible={visible}

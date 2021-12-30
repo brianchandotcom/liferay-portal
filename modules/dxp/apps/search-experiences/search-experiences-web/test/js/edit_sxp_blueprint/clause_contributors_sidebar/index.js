@@ -44,12 +44,10 @@ afterAll(() => {
 function renderClause(props) {
 	return render(
 		<ClauseContributorsSidebar
-			applyIndexerClauses={false}
 			frameworkConfig={{
 				clauseContributorsExcludes: [],
 				clauseContributorsIncludes: [],
 			}}
-			onApplyIndexerClausesChange={jest.fn()}
 			onFrameworkConfigChange={jest.fn()}
 			onToggle={jest.fn()}
 			visible={false}

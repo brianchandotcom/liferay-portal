@@ -43,15 +43,7 @@ definition {
 	test AssertContentNotBePublishedByDefault {
 		property test.name.skip.portal.instance = "RemoteStagingWithVersioning#AssertContentNotBePublishedByDefault";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "System Settings");
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Assets",
-			configurationName = "Asset Publisher",
-			configurationScope = "System Scope");
+		APNavigator.openToConfigInSystemSettings(portlet = "Asset Publisher");
 
 		AssertNotChecked.assertNotCheckedNotVisible(
 			key_settingFieldName = "Enable Dynamic Export",

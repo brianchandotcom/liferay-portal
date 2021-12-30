@@ -219,12 +219,7 @@ definition {
 	test AssertContentNotBePublishedByDefault {
 		property test.name.skip.portal.instance = "StagingUsecase#AssertContentNotBePublishedByDefault";
 
-		SystemSettings.openSystemSettingsAdmin();
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Assets",
-			configurationName = "Asset Publisher",
-			configurationScope = "System Scope");
+		APNavigator.openToConfigInSystemSettings(portlet = "Asset Publisher");
 
 		AssertNotChecked.assertNotCheckedNotVisible(
 			key_settingFieldName = "Enable Dynamic Export",

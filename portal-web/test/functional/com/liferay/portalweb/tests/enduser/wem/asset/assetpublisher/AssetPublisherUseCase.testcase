@@ -1666,18 +1666,8 @@ definition {
 		property test.name.skip.portal.instance = "AssetPublisherUseCase#ViewNotificationEmailWhenSetDynamicSubscriptionLimitToZero";
 		property test.smtp.server.enabled = "true";
 
-		task ("Go to System Settings") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "System Settings");
-		}
-
 		task ("Set the Dynamic Subscription Limit to 0 in Asset Publisher") {
-			SystemSettings.gotoConfiguration(
-				configurationCategory = "Assets",
-				configurationName = "Asset Publisher",
-				configurationScope = "System Scope");
+			APNavigator.openToConfigInSystemSettings(portlet = "Asset Publisher");
 
 			SystemSettings.editTextSetting(
 				settingName = "Dynamic Subscription Limit",

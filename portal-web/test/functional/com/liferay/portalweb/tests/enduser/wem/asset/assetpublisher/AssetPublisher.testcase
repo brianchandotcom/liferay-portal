@@ -1003,15 +1003,7 @@ definition {
 		property test.name.skip.portal.instance = "AssetPublisher#WebContentArticleStructuresCanAppearAfterUncheckingSearchWithIndexConfiguration";
 
 		task ("Uncheck Search with Index Configuration") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "System Settings");
-
-			SystemSettings.gotoConfiguration(
-				configurationCategory = "Assets",
-				configurationName = "Asset Publisher",
-				configurationScope = "System Scope");
+			APNavigator.openToConfigInSystemSettings(portlet = "Asset Publisher");
 
 			FormFields.disableCheckbox(fieldName = "searchWithIndex");
 

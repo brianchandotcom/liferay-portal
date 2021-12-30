@@ -1803,7 +1803,7 @@ public abstract class BaseBuild implements Build {
 		}
 
 		if (downstreamBuilds != null) {
-			for (Build downstreamBuild : downstreamBuilds) {
+			for (Build downstreamBuild : getDownstreamBuilds("complete")) {
 				Build downstreamBaseBuild = downstreamBuild;
 
 				text = downstreamBaseBuild.replaceBuildURL(text);

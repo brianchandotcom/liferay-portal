@@ -21,7 +21,6 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lifecycle.EventAwareExportImportLifecycleListener;
 import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleListener;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.util.MapUtil;
 
@@ -216,7 +215,7 @@ public class CascadeFileEntryTypesExportImportLifecycleListener
 	}
 
 	private DLFolder _getProcessableRootFolder(DLFolder dlFolder)
-		throws PortalException {
+		throws Exception {
 
 		long dlFolderId = dlFolder.getFolderId();
 
@@ -238,7 +237,7 @@ public class CascadeFileEntryTypesExportImportLifecycleListener
 	}
 
 	private void _processFolderIds(Collection<Long> folderIds)
-		throws PortalException {
+		throws Exception {
 
 		for (Long folderId : folderIds) {
 			DLFolder dlFolder = _dlFolderLocalService.fetchDLFolder(folderId);

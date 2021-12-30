@@ -427,7 +427,7 @@ public class ImportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private void _checkExceededSizeLimit(HttpServletRequest httpServletRequest)
-		throws PortalException {
+		throws Exception {
 
 		UploadException uploadException =
 			(UploadException)httpServletRequest.getAttribute(

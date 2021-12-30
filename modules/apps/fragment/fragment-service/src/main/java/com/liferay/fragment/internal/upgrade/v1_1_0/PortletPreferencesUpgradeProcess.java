@@ -16,7 +16,6 @@ package com.liferay.fragment.internal.upgrade.v1_1_0;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -81,7 +80,7 @@ public class PortletPreferencesUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
-	private void _deleteGroupControlPanelLayouts() throws PortalException {
+	private void _deleteGroupControlPanelLayouts() throws Exception {
 		for (Long groupControlPanelLayoutPlid :
 				_groupControlPanelPlids.values()) {
 

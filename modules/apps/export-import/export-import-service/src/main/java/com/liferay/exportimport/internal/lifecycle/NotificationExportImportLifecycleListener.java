@@ -22,7 +22,6 @@ import com.liferay.portal.background.task.model.BackgroundTask;
 import com.liferay.portal.background.task.service.BackgroundTaskLocalService;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
 import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
@@ -86,7 +85,7 @@ public class NotificationExportImportLifecycleListener
 		return jsonObject;
 	}
 
-	private void _sendNotification(int status) throws PortalException {
+	private void _sendNotification(int status) throws Exception {
 		long backgroundTaskId = BackgroundTaskThreadLocal.getBackgroundTaskId();
 
 		BackgroundTask backgroundTask =

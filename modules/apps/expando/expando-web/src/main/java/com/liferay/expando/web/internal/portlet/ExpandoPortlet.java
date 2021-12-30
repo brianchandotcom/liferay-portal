@@ -25,7 +25,6 @@ import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.expando.kernel.service.ExpandoColumnService;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -300,7 +299,7 @@ public class ExpandoPortlet extends MVCPortlet {
 
 	private Serializable _getValue(
 			PortletRequest portletRequest, String name, int type)
-		throws PortalException {
+		throws Exception {
 
 		String delimiter = StringPool.COMMA;
 

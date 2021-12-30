@@ -195,7 +195,7 @@ public class DeletionSystemEventExporter {
 	private List<Long> _doExportDeletionSystemEvents(
 			PortletDataContext portletDataContext, Element rootElement,
 			Set<StagedModelType> deletionSystemEventStagedModelTypes)
-		throws PortalException {
+		throws Exception {
 
 		List<Long> systemEventIds = new ArrayList<>();
 

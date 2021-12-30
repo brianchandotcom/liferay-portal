@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.SystemEventLocalService;
@@ -44,7 +43,7 @@ public class SystemEventVerifyProcess extends VerifyProcess {
 		_deleteInvalidSystemEvents();
 	}
 
-	private void _deleteInvalidSystemEvents() throws PortalException {
+	private void _deleteInvalidSystemEvents() throws Exception {
 		ActionableDynamicQuery actionableDynamicQuery =
 			_groupLocalService.getActionableDynamicQuery();
 

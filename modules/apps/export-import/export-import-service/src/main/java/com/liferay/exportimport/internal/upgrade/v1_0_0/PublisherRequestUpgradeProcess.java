@@ -133,9 +133,7 @@ public class PublisherRequestUpgradeProcess extends UpgradeProcess {
 			exportImportConfiguration.getExportImportConfigurationId(), 0);
 	}
 
-	private void _updateScheduledPublications(Group group)
-		throws PortalException {
-
+	private void _updateScheduledPublications(Group group) throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer(
 				String.valueOf(group.getGroupId()))) {
 

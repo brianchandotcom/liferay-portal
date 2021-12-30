@@ -441,7 +441,7 @@ public class FolderStagedModelDataHandler
 	private void _importFolderFileEntryTypes(
 			PortletDataContext portletDataContext, Element folderElement,
 			Folder folder, Folder importedFolder, ServiceContext serviceContext)
-		throws PortalException {
+		throws Exception {
 
 		if (!folder.isDefaultRepository()) {
 			return;

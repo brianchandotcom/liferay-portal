@@ -15,7 +15,6 @@
 package com.liferay.depot.web.internal.display.context;
 
 import com.liferay.item.selector.ItemSelector;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -271,7 +270,7 @@ public class DepotAdminMembershipsDisplayContextTest {
 
 	private PermissionChecker
 			_getPermissionCheckerWithNoCompanyAdminAndAssignMember()
-		throws PortalException {
+		throws Exception {
 
 		PermissionChecker permissionChecker = Mockito.mock(
 			PermissionChecker.class);
@@ -295,7 +294,7 @@ public class DepotAdminMembershipsDisplayContextTest {
 
 	private PermissionChecker
 			_getPermissionCheckerWithNoCompanyAdminAndNoAssignMember()
-		throws PortalException {
+		throws Exception {
 
 		PermissionChecker permissionChecker = Mockito.mock(
 			PermissionChecker.class);

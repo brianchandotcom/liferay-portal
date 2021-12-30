@@ -55,7 +55,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.service.http.LayoutServiceHttp;
 
-import java.io.IOException;
 import java.io.Serializable;
 
 import java.util.Map;
@@ -295,7 +294,7 @@ public class ExportImportChangesetMVCActionCommandImpl
 	private void _sendRedirect(
 			ActionRequest actionRequest, ActionResponse actionResponse,
 			long backgroundTaskId)
-		throws IOException {
+		throws Exception {
 
 		actionRequest.setAttribute(
 			WebKeys.REDIRECT,

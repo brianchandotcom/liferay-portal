@@ -216,7 +216,7 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 	}
 
 	private Set<User> _getRecipients(long companyId, long groupId)
-		throws PortalException {
+		throws Exception {
 
 		Set<User> recipients = new LinkedHashSet<>();
 

@@ -124,20 +124,20 @@ public class AssetCategoryLayoutDisplayPageMultiSelectionProvider
 				long parentCategoryId = _getNearestAncestorCategoryId(
 					assetCategory, categoryIds);
 
-				if (parentCategoryIdInfoItemReferences.containsKey(
+				if (!parentCategoryIdInfoItemReferences.containsKey(
 						parentCategoryId)) {
 
-					List<InfoItemReference> children =
-						parentCategoryIdInfoItemReferences.get(
-							parentCategoryId);
-
-					children.add(infoItemReference);
+					parentCategoryIdInfoItemReferences.put(
+						parentCategoryId,
+						ListUtil.fromArray(infoItemReference));
 
 					continue;
 				}
 
-				parentCategoryIdInfoItemReferences.put(
-					parentCategoryId, ListUtil.fromArray(infoItemReference));
+				List<InfoItemReference> children =
+					parentCategoryIdInfoItemReferences.get(parentCategoryId);
+
+				children.add(infoItemReference);
 			}
 
 			hierarchicalInfoItemReferences.addAll(

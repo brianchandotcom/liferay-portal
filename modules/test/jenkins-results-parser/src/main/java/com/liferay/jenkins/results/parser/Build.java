@@ -14,6 +14,7 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.io.File;
 import java.io.IOException;
 
 import java.net.URL;
@@ -31,13 +32,19 @@ import org.json.JSONObject;
  */
 public interface Build {
 
+	public static final String DEPENDENCIES_URL_TOKEN = "${dependencies.url}";
+
 	public void addDownstreamBuilds(String... urls);
 
 	public void archive(String archiveName);
 
 	public String getAppServer();
 
+	public String getArchiveName();
+
 	public String getArchivePath();
+
+	public File getArchiveRootDir();
 
 	public URL getArtifactsBaseURL();
 
@@ -224,6 +231,10 @@ public interface Build {
 	public void removeDownstreamBuild(Build build);
 
 	public String replaceBuildURL(String text);
+
+	public void setArchiveName(String archiveName);
+
+	public void setArchiveRootDir(File archiveRootDir);
 
 	public void setCompareToUpstream(boolean compareToUpstream);
 

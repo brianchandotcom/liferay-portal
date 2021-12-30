@@ -14,6 +14,7 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
 
@@ -176,25 +177,47 @@ public class BuildFactory {
 		return new DefaultTopLevelBuild(url, (TopLevelBuild)parentBuild);
 	}
 
-	public static Build newBuildFromArchive(String archiveName) {
-		String url = JenkinsResultsParserUtil.combine(
-			"${dependencies.url}/", archiveName, "/", "archive.properties");
+	public static synchronized Build newBuildFromArchive(
+		File archiveRootDir, String archiveName) {
 
-		Properties archiveProperties = new Properties();
+		String originalUrlDependenciesFile =
+			JenkinsResultsParserUtil.urlDependenciesFile;
 
 		try {
-			archiveProperties.load(
-				new StringReader(
-					JenkinsResultsParserUtil.toString(
-						JenkinsResultsParserUtil.getLocalURL(url))));
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(
-				"Unable to find archive " + archiveName, ioException);
-		}
+			if (archiveRootDir != null) {
+				JenkinsResultsParserUtil.urlDependenciesFile =
+					JenkinsResultsParserUtil.combine(
+						"file:", archiveRootDir.getPath(), "/");
+			}
 
-		return newBuild(
-			archiveProperties.getProperty("top.level.build.url"), null);
+			String url = JenkinsResultsParserUtil.combine(
+				Build.DEPENDENCIES_URL_TOKEN, "/", archiveName, "/",
+				"archive.properties");
+
+			Properties archiveProperties = new Properties();
+
+			try {
+				archiveProperties.load(
+					new StringReader(
+						JenkinsResultsParserUtil.toString(
+							JenkinsResultsParserUtil.getLocalURL(url))));
+			}
+			catch (IOException ioException) {
+				throw new RuntimeException(
+					"Unable to find archive " + archiveName, ioException);
+			}
+
+			return newBuild(
+				archiveProperties.getProperty("top.level.build.url"), null);
+		}
+		finally {
+			JenkinsResultsParserUtil.urlDependenciesFile =
+				originalUrlDependenciesFile;
+		}
+	}
+
+	public static Build newBuildFromArchive(String archiveName) {
+		return newBuildFromArchive(null, archiveName);
 	}
 
 	private static final String _BUILD_URL_SUFFIX_REGEX =

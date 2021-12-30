@@ -87,10 +87,12 @@ public abstract class BaseBuild implements Build {
 							return BuildFactory.newBuild(buildURL, thisBuild);
 						}
 						catch (RuntimeException runtimeException) {
-							NotificationUtil.sendSlackNotification(
-								runtimeException.getMessage() +
-									"\nBuild URL: " + buildURL,
-								"ci-notifications", "Build Object Failure");
+							if (!isFromArchive()) {
+								NotificationUtil.sendSlackNotification(
+									runtimeException.getMessage() +
+										"\nBuild URL: " + buildURL,
+									"ci-notifications", "Build Object Failure");
+							}
 
 							return null;
 						}
@@ -112,17 +114,30 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public void archive(final String archiveName) {
+		setArchiveName(archiveName);
+
 		if (!_status.equals("completed")) {
-			throw new RuntimeException("Invalid build status: " + _status);
+			return;
 		}
 
-		this.archiveName = archiveName;
-
-		File archiveDir = new File(getArchivePath());
+		File archiveDir = new File(getArchiveRootDir(), getArchivePath());
 
 		if (archiveDir.exists()) {
 			archiveDir.delete();
 		}
+
+		try {
+			writeArchiveFile(
+				String.valueOf(JenkinsResultsParserUtil.getCurrentTimeMillis()),
+				getArchivePath() + "/archive-marker");
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(
+				"Unable to to write archive-marker file", ioException);
+		}
+
+		archiveConsoleLog();
+		archiveJSON();
 
 		if (downstreamBuilds != null) {
 			List<Callable<Object>> callables = new ArrayList<>(
@@ -148,19 +163,6 @@ public abstract class BaseBuild implements Build {
 
 			parallelExecutor.execute();
 		}
-
-		try {
-			writeArchiveFile(
-				String.valueOf(JenkinsResultsParserUtil.getCurrentTimeMillis()),
-				getArchivePath() + "/archive-marker");
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(
-				"Unable to to write archive-marker file", ioException);
-		}
-
-		archiveConsoleLog();
-		archiveJSON();
 	}
 
 	@Override
@@ -188,7 +190,24 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
+	public String getArchiveName() {
+		if (getParentBuild() == null) {
+			return _archiveName;
+		}
+
+		Build topLevelBuild = getTopLevelBuild();
+
+		if (this == topLevelBuild) {
+			return _archiveName;
+		}
+
+		return topLevelBuild.getArchiveName();
+	}
+
+	@Override
 	public String getArchivePath() {
+		String archiveName = getArchiveName();
+
 		StringBuilder sb = new StringBuilder(archiveName);
 
 		if (!archiveName.endsWith("/")) {
@@ -202,6 +221,17 @@ public abstract class BaseBuild implements Build {
 		sb.append(getBuildNumber());
 
 		return sb.toString();
+	}
+
+	@Override
+	public File getArchiveRootDir() {
+		Build parentBuild = getParentBuild();
+
+		if (parentBuild == null) {
+			return _archiveRootDir;
+		}
+
+		return parentBuild.getArchiveRootDir();
 	}
 
 	@Override
@@ -990,7 +1020,7 @@ public abstract class BaseBuild implements Build {
 
 		if (fromArchive) {
 			return JenkinsResultsParserUtil.combine(
-				"${dependencies.url}/", archiveName, "/",
+				Build.DEPENDENCIES_URL_TOKEN, "/", getArchiveName(), "/",
 				_jenkinsMaster.getName(), "/", jobName);
 		}
 
@@ -1790,7 +1820,7 @@ public abstract class BaseBuild implements Build {
 		}
 
 		if (downstreamBuilds != null) {
-			for (Build downstreamBuild : downstreamBuilds) {
+			for (Build downstreamBuild : getDownstreamBuilds("complete")) {
 				Build downstreamBaseBuild = downstreamBuild;
 
 				text = downstreamBaseBuild.replaceBuildURL(text);
@@ -1800,7 +1830,8 @@ public abstract class BaseBuild implements Build {
 		text = text.replaceAll(
 			getBuildURLRegex(),
 			Matcher.quoteReplacement(
-				"${dependencies.url}/" + getArchivePath()));
+				JenkinsResultsParserUtil.combine(
+					Build.DEPENDENCIES_URL_TOKEN, "/", getArchivePath())));
 
 		Build parentBuild = getParentBuild();
 
@@ -1808,12 +1839,34 @@ public abstract class BaseBuild implements Build {
 			text = text.replaceAll(
 				parentBuild.getBuildURLRegex(),
 				Matcher.quoteReplacement(
-					"${dependencies.url}/" + parentBuild.getArchivePath()));
+					Build.DEPENDENCIES_URL_TOKEN +
+						parentBuild.getArchivePath()));
 
 			parentBuild = parentBuild.getParentBuild();
 		}
 
 		return text;
+	}
+
+	@Override
+	public void setArchiveName(String archiveName) {
+		_archiveName = archiveName;
+	}
+
+	@Override
+	public void setArchiveRootDir(File archiveRootDir) {
+		if (archiveRootDir == null) {
+			archiveRootDir = new File(
+				JenkinsResultsParserUtil.urlDependenciesFile.substring(
+					"file:".length()));
+		}
+
+		if (!archiveRootDir.exists()) {
+			throw new IllegalArgumentException(
+				archiveRootDir.getPath() + " does not exist");
+		}
+
+		_archiveRootDir = archiveRootDir;
 	}
 
 	@Override
@@ -2358,7 +2411,14 @@ public abstract class BaseBuild implements Build {
 	}
 
 	protected Pattern getArchiveBuildURLPattern() {
-		return _archiveBuildURLPattern;
+		return Pattern.compile(
+			JenkinsResultsParserUtil.combine(
+				"(", Pattern.quote(Build.DEPENDENCIES_URL_TOKEN), "|",
+				Pattern.quote(JenkinsResultsParserUtil.urlDependenciesFile),
+				"|",
+				Pattern.quote(JenkinsResultsParserUtil.urlDependenciesHttp),
+				")/*(?<archiveName>.*)/(?<master>[^/]+)/+(?<jobName>[^/]+)",
+				".*/(?<buildNumber>\\d+)/?"));
 	}
 
 	protected String getBaseGitRepositoryType() {
@@ -3298,7 +3358,7 @@ public abstract class BaseBuild implements Build {
 					"Invalid build URL " + buildURL);
 			}
 
-			archiveName = matcher.group("archiveName");
+			setArchiveName(matcher.group("archiveName"));
 		}
 
 		extractBuildURLComponents(matcher);
@@ -3433,10 +3493,7 @@ public abstract class BaseBuild implements Build {
 		throws IOException {
 
 		JenkinsResultsParserUtil.write(
-			JenkinsResultsParserUtil.combine(
-				JenkinsResultsParserUtil.URL_DEPENDENCIES_FILE.substring(
-					"file:".length()),
-				"/", path),
+			new File(getArchiveRootDir(), path),
 			JenkinsResultsParserUtil.redact(replaceBuildURL(content)));
 	}
 
@@ -3469,7 +3526,6 @@ public abstract class BaseBuild implements Build {
 	protected static final SimpleDateFormat stopWatchTimestampSimpleDateFormat =
 		new SimpleDateFormat("MM-dd-yyyy HH:mm:ss:SSS z");
 
-	protected String archiveName;
 	protected List<Integer> badBuildNumbers = new ArrayList<>();
 	protected String branchName;
 	protected int consoleReadCursor;
@@ -3846,13 +3902,6 @@ public abstract class BaseBuild implements Build {
 		"compileJSP", "SourceFormatter.format", "Unable to compile JSPs"
 	};
 
-	private static final Pattern _archiveBuildURLPattern = Pattern.compile(
-		JenkinsResultsParserUtil.combine(
-			"(", Pattern.quote("${dependencies.url}"), "|",
-			Pattern.quote(JenkinsResultsParserUtil.URL_DEPENDENCIES_FILE), "|",
-			Pattern.quote(JenkinsResultsParserUtil.URL_DEPENDENCIES_HTTP),
-			")/*(?<archiveName>.*)/(?<master>[^/]+)/+(?<jobName>[^/]+)",
-			".*/(?<buildNumber>\\d+)/?"));
 	private static final MultiPattern _buildURLMultiPattern = new MultiPattern(
 		JenkinsResultsParserUtil.combine(
 			"\\w+://(?<master>[^/]+)/+job/+(?<jobName>[^/]+).*/(?<buildNumber>",
@@ -3873,6 +3922,10 @@ public abstract class BaseBuild implements Build {
 			"jenkins.report.time.zone");
 	}
 
+	private String _archiveName;
+	private File _archiveRootDir = new File(
+		JenkinsResultsParserUtil.urlDependenciesFile.substring(
+			"file:".length()));
 	private final Map<String, BranchInformation> _branchInformationMap =
 		new HashMap<>();
 	private String _buildDescription;

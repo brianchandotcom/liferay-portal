@@ -57,7 +57,42 @@ import org.osgi.service.component.annotations.Reference;
 public class EditCommercePriceModifierMVCActionCommand
 	extends BaseMVCActionCommand {
 
-	protected void deleteCommercePriceModifiers(
+	@Override
+	protected void doProcessAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
+
+		long commercePriceModifierId = ParamUtil.getLong(
+			actionRequest, "commercePriceModifierId");
+
+		try {
+			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
+				_updateCommercePriceModifier(
+					commercePriceModifierId, actionRequest);
+			}
+			else if (cmd.equals(Constants.DELETE)) {
+				_deleteCommercePriceModifiers(
+					commercePriceModifierId, actionRequest);
+			}
+		}
+		catch (Exception exception) {
+			if (exception instanceof NoSuchPriceListException ||
+				exception instanceof NoSuchPriceModifierException ||
+				exception instanceof PrincipalException) {
+
+				SessionErrors.add(actionRequest, exception.getClass());
+
+				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
+			}
+			else {
+				throw exception;
+			}
+		}
+	}
+
+	private void _deleteCommercePriceModifiers(
 			long commercePriceModifierId, ActionRequest actionRequest)
 		throws Exception {
 
@@ -83,42 +118,7 @@ public class EditCommercePriceModifierMVCActionCommand
 		}
 	}
 
-	@Override
-	protected void doProcessAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
-
-		long commercePriceModifierId = ParamUtil.getLong(
-			actionRequest, "commercePriceModifierId");
-
-		try {
-			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
-				updateCommercePriceModifier(
-					commercePriceModifierId, actionRequest);
-			}
-			else if (cmd.equals(Constants.DELETE)) {
-				deleteCommercePriceModifiers(
-					commercePriceModifierId, actionRequest);
-			}
-		}
-		catch (Exception exception) {
-			if (exception instanceof NoSuchPriceListException ||
-				exception instanceof NoSuchPriceModifierException ||
-				exception instanceof PrincipalException) {
-
-				SessionErrors.add(actionRequest, exception.getClass());
-
-				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
-			}
-			else {
-				throw exception;
-			}
-		}
-	}
-
-	protected CommercePriceModifier updateCommercePriceModifier(
+	private CommercePriceModifier _updateCommercePriceModifier(
 			long commercePriceModifierId, ActionRequest actionRequest)
 		throws Exception {
 

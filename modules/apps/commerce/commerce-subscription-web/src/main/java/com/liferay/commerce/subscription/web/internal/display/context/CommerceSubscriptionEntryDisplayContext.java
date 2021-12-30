@@ -371,7 +371,7 @@ public class CommerceSubscriptionEntryDisplayContext {
 			portletURL.setParameter("keywords", keywords);
 		}
 
-		portletURL.setParameter("navigation", getNavigation());
+		portletURL.setParameter("navigation", _getNavigation());
 
 		return portletURL;
 	}
@@ -418,7 +418,7 @@ public class CommerceSubscriptionEntryDisplayContext {
 		return false;
 	}
 
-	protected String getNavigation() {
+	private String _getNavigation() {
 		return ParamUtil.getString(_httpServletRequest, "navigation", "all");
 	}
 

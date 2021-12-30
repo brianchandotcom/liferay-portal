@@ -68,14 +68,37 @@ public class CommerceOrderResource {
 			_commerceChannelLocalService.getCommerceChannelGroupIdBySiteGroupId(
 				groupId);
 
-		List<Order> orders = getOrders(
+		List<Order> orders = _getOrders(
 			companyId, groupId, keywords, page, pageSize, httpServletRequest);
 
 		return new OrderList(
-			orders, getOrdersCount(companyId, groupId, keywords));
+			orders, _getOrdersCount(companyId, groupId, keywords));
 	}
 
-	protected List<Order> getOrders(
+	private String _getOrderLinkURL(
+			long commerceOrderId, HttpServletRequest httpServletRequest)
+		throws PortalException {
+
+		PortletURL editURL = PortletURLBuilder.create(
+			PortletProviderUtil.getPortletURL(
+				httpServletRequest, CommerceOrder.class.getName(),
+				PortletProvider.Action.EDIT)
+		).setActionName(
+			"/commerce_open_order_content/edit_commerce_order"
+		).setCMD(
+			"setCurrent"
+		).setParameter(
+			"commerceOrderId", commerceOrderId
+		).buildPortletURL();
+
+		String redirect = _portal.getCurrentURL(httpServletRequest);
+
+		editURL.setParameter("redirect", redirect);
+
+		return editURL.toString();
+	}
+
+	private List<Order> _getOrders(
 			long companyId, long groupId, String keywords, int page,
 			int pageSize, HttpServletRequest httpServletRequest)
 		throws PortalException {
@@ -115,14 +138,14 @@ public class CommerceOrderResource {
 		return orders;
 	}
 
-	protected int getOrdersCount(long companyId, long groupId, String keywords)
+	private int _getOrdersCount(long companyId, long groupId, String keywords)
 		throws PortalException {
 
 		return (int)_commerceOrderService.getUserPendingCommerceOrdersCount(
 			companyId, groupId, keywords);
 	}
 
-	protected Response getResponse(Object object) {
+	private Response _getResponse(Object object) {
 		if (object == null) {
 			return Response.status(
 				Response.Status.NOT_FOUND
@@ -143,29 +166,6 @@ public class CommerceOrderResource {
 		return Response.status(
 			Response.Status.NOT_FOUND
 		).build();
-	}
-
-	private String _getOrderLinkURL(
-			long commerceOrderId, HttpServletRequest httpServletRequest)
-		throws PortalException {
-
-		PortletURL editURL = PortletURLBuilder.create(
-			PortletProviderUtil.getPortletURL(
-				httpServletRequest, CommerceOrder.class.getName(),
-				PortletProvider.Action.EDIT)
-		).setActionName(
-			"/commerce_open_order_content/edit_commerce_order"
-		).setCMD(
-			"setCurrent"
-		).setParameter(
-			"commerceOrderId", commerceOrderId
-		).buildPortletURL();
-
-		String redirect = _portal.getCurrentURL(httpServletRequest);
-
-		editURL.setParameter("redirect", redirect);
-
-		return editURL.toString();
 	}
 
 	private static final ObjectMapper _OBJECT_MAPPER = new ObjectMapper() {

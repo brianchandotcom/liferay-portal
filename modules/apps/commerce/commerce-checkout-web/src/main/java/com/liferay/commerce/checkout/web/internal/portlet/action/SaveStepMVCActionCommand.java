@@ -59,7 +59,7 @@ public class SaveStepMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		if (!SessionErrors.isEmpty(actionRequest)) {
-			return getPortletURL(
+			return _getPortletURL(
 				actionRequest, actionResponse, checkoutStepName);
 		}
 
@@ -72,7 +72,7 @@ public class SaveStepMVCActionCommand extends BaseMVCActionCommand {
 			return ParamUtil.getString(actionRequest, "redirect");
 		}
 
-		return getPortletURL(
+		return _getPortletURL(
 			actionRequest, actionResponse, commerceCheckoutStep.getName());
 	}
 
@@ -98,7 +98,7 @@ public class SaveStepMVCActionCommand extends BaseMVCActionCommand {
 		sendRedirect(actionRequest, actionResponse, redirect);
 	}
 
-	protected String getPortletURL(
+	private String _getPortletURL(
 		ActionRequest actionRequest, ActionResponse actionResponse,
 		String checkoutStepName) {
 

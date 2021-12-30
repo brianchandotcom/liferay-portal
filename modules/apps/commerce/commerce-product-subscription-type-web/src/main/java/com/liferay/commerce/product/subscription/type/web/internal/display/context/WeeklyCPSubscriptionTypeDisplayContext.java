@@ -48,7 +48,7 @@ public class WeeklyCPSubscriptionTypeDisplayContext {
 		List<Integer> calendarWeekDays = new ArrayList<>();
 
 		Map<String, Integer> calendarWeekDaysDisplayNames =
-			getCalendarWeekDaysDisplayNames();
+			_getCalendarWeekDaysDisplayNames();
 
 		for (Map.Entry<String, Integer> entry :
 				calendarWeekDaysDisplayNames.entrySet()) {
@@ -84,7 +84,7 @@ public class WeeklyCPSubscriptionTypeDisplayContext {
 
 	public String getWeekDayDisplayName(int weekDay) {
 		Map<String, Integer> calendarWeekDaysDisplayNames =
-			getCalendarWeekDaysDisplayNames();
+			_getCalendarWeekDaysDisplayNames();
 
 		for (Map.Entry<String, Integer> entry :
 				calendarWeekDaysDisplayNames.entrySet()) {
@@ -101,7 +101,7 @@ public class WeeklyCPSubscriptionTypeDisplayContext {
 		return _payment;
 	}
 
-	protected Map<String, Integer> getCalendarWeekDaysDisplayNames() {
+	private Map<String, Integer> _getCalendarWeekDaysDisplayNames() {
 		Calendar calendar = CalendarFactoryUtil.getCalendar(
 			_cpSubscriptionTypeRequestHelper.getLocale());
 

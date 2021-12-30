@@ -92,7 +92,7 @@ public class CommerceAccountGroupItemSelectorViewDisplayContext {
 
 		RowChecker rowChecker = new CommerceAccountGroupItemSelectorChecker(
 			_commerceAccountItemSelectorRequestHelper.getRenderResponse(),
-			getCheckedCommerceAccountGroupIds());
+			_getCheckedCommerceAccountGroupIds());
 
 		_searchContainer.setRowChecker(rowChecker);
 
@@ -113,12 +113,6 @@ public class CommerceAccountGroupItemSelectorViewDisplayContext {
 		return _searchContainer;
 	}
 
-	protected long[] getCheckedCommerceAccountGroupIds() {
-		return ParamUtil.getLongValues(
-			_commerceAccountItemSelectorRequestHelper.getRenderRequest(),
-			"checkedCommerceAccountGroupIds");
-	}
-
 	protected String getKeywords() {
 		if (_keywords != null) {
 			return _keywords;
@@ -129,6 +123,12 @@ public class CommerceAccountGroupItemSelectorViewDisplayContext {
 			"keywords");
 
 		return _keywords;
+	}
+
+	private long[] _getCheckedCommerceAccountGroupIds() {
+		return ParamUtil.getLongValues(
+			_commerceAccountItemSelectorRequestHelper.getRenderRequest(),
+			"checkedCommerceAccountGroupIds");
 	}
 
 	private final CommerceAccountGroupLocalService

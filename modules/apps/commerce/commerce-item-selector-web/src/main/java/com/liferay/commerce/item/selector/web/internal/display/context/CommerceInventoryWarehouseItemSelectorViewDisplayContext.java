@@ -150,8 +150,8 @@ public class CommerceInventoryWarehouseItemSelectorViewDisplayContext
 		searchContainer.setRowChecker(
 			new CommerceInventoryWarehouseChecker(
 				cpRequestHelper.getRenderResponse(),
-				getCheckedCommerceInventoryWarehouseIds(),
-				getDisabledCommerceInventoryWarehouseIds()));
+				_getCheckedCommerceInventoryWarehouseIds(),
+				_getDisabledCommerceInventoryWarehouseIds()));
 		searchContainer.setSearch(_search);
 
 		int total = 0;
@@ -191,18 +191,6 @@ public class CommerceInventoryWarehouseItemSelectorViewDisplayContext
 		return searchContainer;
 	}
 
-	protected long[] getCheckedCommerceInventoryWarehouseIds() {
-		return ParamUtil.getLongValues(
-			cpRequestHelper.getRenderRequest(),
-			"checkedCommerceInventoryWarehouseIds");
-	}
-
-	protected long[] getDisabledCommerceInventoryWarehouseIds() {
-		return ParamUtil.getLongValues(
-			cpRequestHelper.getRenderRequest(),
-			"disabledCommerceInventoryWarehouseIds");
-	}
-
 	protected ManagementBarFilterItem getManagementBarFilterItem(
 			long countryId, String label)
 		throws PortletException {
@@ -221,6 +209,18 @@ public class CommerceInventoryWarehouseItemSelectorViewDisplayContext
 			).setParameter(
 				"countryId", countryId
 			).buildString());
+	}
+
+	private long[] _getCheckedCommerceInventoryWarehouseIds() {
+		return ParamUtil.getLongValues(
+			cpRequestHelper.getRenderRequest(),
+			"checkedCommerceInventoryWarehouseIds");
+	}
+
+	private long[] _getDisabledCommerceInventoryWarehouseIds() {
+		return ParamUtil.getLongValues(
+			cpRequestHelper.getRenderRequest(),
+			"disabledCommerceInventoryWarehouseIds");
 	}
 
 	private final CommerceCountryManager _commerceCountryManager;

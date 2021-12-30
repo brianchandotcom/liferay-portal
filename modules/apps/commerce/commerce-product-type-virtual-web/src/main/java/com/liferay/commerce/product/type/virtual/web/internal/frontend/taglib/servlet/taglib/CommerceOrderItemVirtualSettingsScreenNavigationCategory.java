@@ -123,7 +123,7 @@ public class CommerceOrderItemVirtualSettingsScreenNavigationCategory
 				commerceVirtualOrderItemEditDisplayContext =
 					new CommerceVirtualOrderItemEditDisplayContext(
 						_commerceOrderService, _commerceOrderItemService,
-						getCommerceVirtualOrderItem(httpServletRequest),
+						_getCommerceVirtualOrderItem(httpServletRequest),
 						_dlAppService, _itemSelector, renderRequest);
 
 			httpServletRequest.setAttribute(
@@ -139,7 +139,7 @@ public class CommerceOrderItemVirtualSettingsScreenNavigationCategory
 			"/commerce_order_item/virtual_settings.jsp");
 	}
 
-	protected CommerceVirtualOrderItem getCommerceVirtualOrderItem(
+	private CommerceVirtualOrderItem _getCommerceVirtualOrderItem(
 		HttpServletRequest httpServletRequest) {
 
 		CommerceVirtualOrderItem commerceVirtualOrderItem = null;

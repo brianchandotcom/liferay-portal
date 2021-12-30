@@ -142,11 +142,11 @@ public class CommerceCountriesDisplayContext
 		int total;
 		List<Country> results;
 
-		if (isSearch()) {
+		if (_isSearch()) {
 			BaseModelSearchResult<Country> baseModelSearchResult =
 				_countryService.searchCountries(
 					_commerceCountryRequestHelper.getCompanyId(), active,
-					getKeywords(), searchContainer.getStart(),
+					_getKeywords(), searchContainer.getStart(),
 					searchContainer.getEnd(), orderByComparator);
 
 			total = baseModelSearchResult.getLength();
@@ -186,7 +186,7 @@ public class CommerceCountriesDisplayContext
 		return !regions.isEmpty();
 	}
 
-	protected String getKeywords() {
+	private String _getKeywords() {
 		if (Validator.isNotNull(_keywords)) {
 			return _keywords;
 		}
@@ -196,8 +196,8 @@ public class CommerceCountriesDisplayContext
 		return _keywords;
 	}
 
-	protected boolean isSearch() {
-		if (Validator.isNotNull(getKeywords())) {
+	private boolean _isSearch() {
+		if (Validator.isNotNull(_getKeywords())) {
 			return true;
 		}
 

@@ -73,8 +73,8 @@ public class CommerceChannelItemSelectorViewDisplayContext
 
 	@Override
 	public PortletURL getPortletURL() {
-		_portletURL.setParameter("className", getClassName());
-		_portletURL.setParameter("classPK", String.valueOf(getClassPK()));
+		_portletURL.setParameter("className", _getClassName());
+		_portletURL.setParameter("classPK", String.valueOf(_getClassPK()));
 
 		return _portletURL;
 	}
@@ -98,7 +98,7 @@ public class CommerceChannelItemSelectorViewDisplayContext
 
 		RowChecker rowChecker = new CommerceChannelItemSelectorChecker(
 			cpRequestHelper.getRenderResponse(),
-			getCheckedCommerceChannelIds());
+			_getCheckedCommerceChannelIds());
 
 		_searchContainer.setRowChecker(rowChecker);
 
@@ -115,17 +115,17 @@ public class CommerceChannelItemSelectorViewDisplayContext
 		return _searchContainer;
 	}
 
-	protected long[] getCheckedCommerceChannelIds() {
+	private long[] _getCheckedCommerceChannelIds() {
 		return ParamUtil.getLongValues(
 			cpRequestHelper.getRenderRequest(), "checkedCommerceChannelIds");
 	}
 
-	protected String getClassName() {
+	private String _getClassName() {
 		return ParamUtil.getString(
 			cpRequestHelper.getRenderRequest(), "className");
 	}
 
-	protected long getClassPK() {
+	private long _getClassPK() {
 		return ParamUtil.getLong(cpRequestHelper.getRenderRequest(), "classPK");
 	}
 

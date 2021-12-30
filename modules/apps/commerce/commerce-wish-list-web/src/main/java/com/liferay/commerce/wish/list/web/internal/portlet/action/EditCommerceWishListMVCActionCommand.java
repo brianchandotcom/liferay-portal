@@ -55,29 +55,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class EditCommerceWishListMVCActionCommand extends BaseMVCActionCommand {
 
-	protected void deleteCommerceWishLists(ActionRequest actionRequest)
-		throws PortalException {
-
-		long[] deleteCommerceWishListIds = null;
-
-		long commerceWishListId = ParamUtil.getLong(
-			actionRequest, "commerceWishListId");
-
-		if (commerceWishListId > 0) {
-			deleteCommerceWishListIds = new long[] {commerceWishListId};
-		}
-		else {
-			deleteCommerceWishListIds = StringUtil.split(
-				ParamUtil.getString(actionRequest, "deleteCommerceWishListIds"),
-				0L);
-		}
-
-		for (long deleteCommerceWishListId : deleteCommerceWishListIds) {
-			_commerceWishListService.deleteCommerceWishList(
-				deleteCommerceWishListId);
-		}
-	}
-
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
@@ -87,13 +64,13 @@ public class EditCommerceWishListMVCActionCommand extends BaseMVCActionCommand {
 
 		try {
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
-				updateCommerceWishList(actionRequest);
+				_updateCommerceWishList(actionRequest);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
-				deleteCommerceWishLists(actionRequest);
+				_deleteCommerceWishLists(actionRequest);
 			}
 			else if (cmd.equals(Constants.SAVE)) {
-				saveCommerceWishList(actionRequest, actionResponse);
+				_saveCommerceWishList(actionRequest, actionResponse);
 
 				hideDefaultSuccessMessage(actionRequest);
 			}
@@ -120,7 +97,30 @@ public class EditCommerceWishListMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	protected void saveCommerceWishList(
+	private void _deleteCommerceWishLists(ActionRequest actionRequest)
+		throws PortalException {
+
+		long[] deleteCommerceWishListIds = null;
+
+		long commerceWishListId = ParamUtil.getLong(
+			actionRequest, "commerceWishListId");
+
+		if (commerceWishListId > 0) {
+			deleteCommerceWishListIds = new long[] {commerceWishListId};
+		}
+		else {
+			deleteCommerceWishListIds = StringUtil.split(
+				ParamUtil.getString(actionRequest, "deleteCommerceWishListIds"),
+				0L);
+		}
+
+		for (long deleteCommerceWishListId : deleteCommerceWishListIds) {
+			_commerceWishListService.deleteCommerceWishList(
+				deleteCommerceWishListId);
+		}
+	}
+
+	private void _saveCommerceWishList(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws PortalException {
 
@@ -141,7 +141,7 @@ public class EditCommerceWishListMVCActionCommand extends BaseMVCActionCommand {
 			String.valueOf(commerceWishList.getCommerceWishListId()));
 	}
 
-	protected void updateCommerceWishList(ActionRequest actionRequest)
+	private void _updateCommerceWishList(ActionRequest actionRequest)
 		throws PortalException {
 
 		long commerceWishListId = ParamUtil.getLong(

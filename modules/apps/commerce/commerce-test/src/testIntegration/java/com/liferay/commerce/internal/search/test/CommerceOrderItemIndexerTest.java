@@ -147,16 +147,6 @@ public class CommerceOrderItemIndexerTest {
 	@Rule
 	public FrutillaRule frutillaRule = new FrutillaRule();
 
-	protected Hits search(String keywords, long commerceOrderId)
-		throws SearchException {
-
-		SearchContext searchContext = _getSearchContext(commerceOrderId);
-
-		searchContext.setKeywords(keywords);
-
-		return _indexer.search(searchContext);
-	}
-
 	private CommerceOrderItem[] _addCommerceOrderItems(int count)
 		throws Exception {
 
@@ -228,7 +218,7 @@ public class CommerceOrderItemIndexerTest {
 			CommerceOrderItem... expectedCommerceOrderItems)
 		throws Exception {
 
-		Hits hits = search(keywords, commerceOrderId);
+		Hits hits = _search(keywords, commerceOrderId);
 
 		_assertSearch(hits, expectedCommerceOrderItems);
 	}
@@ -284,6 +274,16 @@ public class CommerceOrderItemIndexerTest {
 		searchContext.setSorts(SortFactoryUtil.getDefaultSorts());
 
 		return searchContext;
+	}
+
+	private Hits _search(String keywords, long commerceOrderId)
+		throws SearchException {
+
+		SearchContext searchContext = _getSearchContext(commerceOrderId);
+
+		searchContext.setKeywords(keywords);
+
+		return _indexer.search(searchContext);
 	}
 
 	@Inject

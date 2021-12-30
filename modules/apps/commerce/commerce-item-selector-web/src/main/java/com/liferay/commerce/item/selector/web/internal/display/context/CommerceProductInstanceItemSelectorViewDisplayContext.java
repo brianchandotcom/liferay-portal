@@ -95,7 +95,7 @@ public class CommerceProductInstanceItemSelectorViewDisplayContext
 		).setParameter(
 			"commerceCatalogGroupId", getGroupId()
 		).setParameter(
-			"commercePriceListId", getCommercePriceListId()
+			"commercePriceListId", _getCommercePriceListId()
 		).buildPortletURL();
 	}
 
@@ -113,12 +113,12 @@ public class CommerceProductInstanceItemSelectorViewDisplayContext
 		searchContainer.setEmptyResultsMessage("no-skus-were-found");
 
 		OrderByComparator<CPInstance> orderByComparator =
-			getCPInstanceOrderByComparator(getOrderByCol(), getOrderByType());
+			_getCPInstanceOrderByComparator(getOrderByCol(), getOrderByType());
 
 		RowChecker rowChecker = new CommerceProductInstanceItemSelectorChecker(
 			cpRequestHelper.getRenderResponse(),
 			_commercePriceListService.fetchCommercePriceList(
-				getCommercePriceListId()),
+				_getCommercePriceListId()),
 			_commercePriceEntryLocalService);
 
 		searchContainer.setOrderByCol(getOrderByCol());
@@ -155,11 +155,15 @@ public class CommerceProductInstanceItemSelectorViewDisplayContext
 		return searchContainer;
 	}
 
-	protected long getCommercePriceListId() {
+	protected long getGroupId() {
+		return ParamUtil.getLong(httpServletRequest, "commerceCatalogGroupId");
+	}
+
+	private long _getCommercePriceListId() {
 		return ParamUtil.getLong(httpServletRequest, "commercePriceListId");
 	}
 
-	protected OrderByComparator<CPInstance> getCPInstanceOrderByComparator(
+	private OrderByComparator<CPInstance> _getCPInstanceOrderByComparator(
 		String orderByCol, String orderByType) {
 
 		boolean orderByAsc = false;
@@ -181,10 +185,6 @@ public class CommerceProductInstanceItemSelectorViewDisplayContext
 		}
 
 		return orderByComparator;
-	}
-
-	protected long getGroupId() {
-		return ParamUtil.getLong(httpServletRequest, "commerceCatalogGroupId");
 	}
 
 	private final CommercePriceEntryLocalService

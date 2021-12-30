@@ -52,7 +52,7 @@ public class EditCPSpecificationOptionMVCRenderCommand
 		throws PortletException {
 
 		try {
-			setCPSpecificationOptionRequestAttribute(renderRequest);
+			_setCPSpecificationOptionRequestAttribute(renderRequest);
 		}
 		catch (Exception exception) {
 			if (exception instanceof NoSuchCPSpecificationOptionException ||
@@ -69,7 +69,7 @@ public class EditCPSpecificationOptionMVCRenderCommand
 		return "/edit_cp_specification_option.jsp";
 	}
 
-	protected void setCPSpecificationOptionRequestAttribute(
+	private void _setCPSpecificationOptionRequestAttribute(
 			RenderRequest renderRequest)
 		throws PortalException {
 

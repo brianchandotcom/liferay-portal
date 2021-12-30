@@ -62,55 +62,6 @@ import org.osgi.service.component.annotations.Reference;
 public class EditCommerceOrderItemMVCActionCommand
 	extends BaseMVCActionCommand {
 
-	protected void addCommerceOrderItems(ActionRequest actionRequest)
-		throws Exception {
-
-		long commerceOrderId = ParamUtil.getLong(
-			actionRequest, "commerceOrderId");
-
-		CommerceContext commerceContext =
-			(CommerceContext)actionRequest.getAttribute(
-				CommerceWebKeys.COMMERCE_CONTEXT);
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			CommerceOrderItem.class.getName(), actionRequest);
-
-		long[] cpInstanceIds = ParamUtil.getLongValues(
-			actionRequest, "cpInstanceIds");
-
-		for (long cpInstanceId : cpInstanceIds) {
-			_commerceOrderItemService.addCommerceOrderItem(
-				commerceOrderId, cpInstanceId, null, 1, 0, commerceContext,
-				serviceContext);
-		}
-	}
-
-	protected void deleteCommerceOrderItems(ActionRequest actionRequest)
-		throws Exception {
-
-		CommerceContext commerceContext =
-			(CommerceContext)actionRequest.getAttribute(
-				CommerceWebKeys.COMMERCE_CONTEXT);
-
-		long[] deleteCommerceOrderItemIds = null;
-
-		long commerceOrderItemId = ParamUtil.getLong(
-			actionRequest, "commerceOrderItemId");
-
-		if (commerceOrderItemId > 0) {
-			deleteCommerceOrderItemIds = new long[] {commerceOrderItemId};
-		}
-		else {
-			deleteCommerceOrderItemIds = ParamUtil.getLongValues(
-				actionRequest, "deleteCommerceOrderItemIds");
-		}
-
-		for (long deleteCommerceOrderItemId : deleteCommerceOrderItemIds) {
-			_commerceOrderItemService.deleteCommerceOrderItem(
-				deleteCommerceOrderItemId, commerceContext);
-		}
-	}
-
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
@@ -120,7 +71,7 @@ public class EditCommerceOrderItemMVCActionCommand
 
 		try {
 			if (cmd.equals(Constants.ADD)) {
-				addCommerceOrderItems(actionRequest);
+				_addCommerceOrderItems(actionRequest);
 			}
 			else if (cmd.equals(Constants.UPDATE)) {
 				Callable<Object> commerceOrderItemCallable =
@@ -130,7 +81,7 @@ public class EditCommerceOrderItemMVCActionCommand
 					_transactionConfig, commerceOrderItemCallable);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
-				deleteCommerceOrderItems(actionRequest);
+				_deleteCommerceOrderItems(actionRequest);
 			}
 			else if (cmd.equals("customFields")) {
 				updateCustomFields(actionRequest);
@@ -168,7 +119,69 @@ public class EditCommerceOrderItemMVCActionCommand
 		}
 	}
 
-	protected void updateCommerceOrderItem(ActionRequest actionRequest)
+	protected void updateCustomFields(ActionRequest actionRequest)
+		throws PortalException {
+
+		long commerceOrderItemId = ParamUtil.getLong(
+			actionRequest, "commerceOrderItemId");
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			CommerceOrderItem.class.getName(), actionRequest);
+
+		_commerceOrderItemService.updateCustomFields(
+			commerceOrderItemId, serviceContext);
+	}
+
+	private void _addCommerceOrderItems(ActionRequest actionRequest)
+		throws Exception {
+
+		long commerceOrderId = ParamUtil.getLong(
+			actionRequest, "commerceOrderId");
+
+		CommerceContext commerceContext =
+			(CommerceContext)actionRequest.getAttribute(
+				CommerceWebKeys.COMMERCE_CONTEXT);
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			CommerceOrderItem.class.getName(), actionRequest);
+
+		long[] cpInstanceIds = ParamUtil.getLongValues(
+			actionRequest, "cpInstanceIds");
+
+		for (long cpInstanceId : cpInstanceIds) {
+			_commerceOrderItemService.addCommerceOrderItem(
+				commerceOrderId, cpInstanceId, null, 1, 0, commerceContext,
+				serviceContext);
+		}
+	}
+
+	private void _deleteCommerceOrderItems(ActionRequest actionRequest)
+		throws Exception {
+
+		CommerceContext commerceContext =
+			(CommerceContext)actionRequest.getAttribute(
+				CommerceWebKeys.COMMERCE_CONTEXT);
+
+		long[] deleteCommerceOrderItemIds = null;
+
+		long commerceOrderItemId = ParamUtil.getLong(
+			actionRequest, "commerceOrderItemId");
+
+		if (commerceOrderItemId > 0) {
+			deleteCommerceOrderItemIds = new long[] {commerceOrderItemId};
+		}
+		else {
+			deleteCommerceOrderItemIds = ParamUtil.getLongValues(
+				actionRequest, "deleteCommerceOrderItemIds");
+		}
+
+		for (long deleteCommerceOrderItemId : deleteCommerceOrderItemIds) {
+			_commerceOrderItemService.deleteCommerceOrderItem(
+				deleteCommerceOrderItemId, commerceContext);
+		}
+	}
+
+	private void _updateCommerceOrderItem(ActionRequest actionRequest)
 		throws PortalException {
 
 		long commerceOrderItemId = ParamUtil.getLong(
@@ -233,19 +246,6 @@ public class EditCommerceOrderItemMVCActionCommand
 			requestedDeliveryDateDay, requestedDeliveryDateYear);
 	}
 
-	protected void updateCustomFields(ActionRequest actionRequest)
-		throws PortalException {
-
-		long commerceOrderItemId = ParamUtil.getLong(
-			actionRequest, "commerceOrderItemId");
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			CommerceOrderItem.class.getName(), actionRequest);
-
-		_commerceOrderItemService.updateCustomFields(
-			commerceOrderItemId, serviceContext);
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		EditCommerceOrderItemMVCActionCommand.class);
 
@@ -263,7 +263,7 @@ public class EditCommerceOrderItemMVCActionCommand
 
 		@Override
 		public Object call() throws Exception {
-			updateCommerceOrderItem(_actionRequest);
+			_updateCommerceOrderItem(_actionRequest);
 
 			return null;
 		}

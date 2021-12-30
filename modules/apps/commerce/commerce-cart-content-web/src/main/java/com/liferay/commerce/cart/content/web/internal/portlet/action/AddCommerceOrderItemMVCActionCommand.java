@@ -181,10 +181,10 @@ public class AddCommerceOrderItemMVCActionCommand extends BaseMVCActionCommand {
 
 		httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);
 
-		writeJSON(actionResponse, jsonObject);
+		_writeJSON(actionResponse, jsonObject);
 	}
 
-	protected void writeJSON(ActionResponse actionResponse, Object object)
+	private void _writeJSON(ActionResponse actionResponse, Object object)
 		throws IOException {
 
 		HttpServletResponse httpServletResponse =

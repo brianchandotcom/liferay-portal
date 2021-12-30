@@ -52,7 +52,43 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class EditCPDefinitionLinkMVCActionCommand extends BaseMVCActionCommand {
 
-	protected void addCPDefinitionLinks(ActionRequest actionRequest)
+	@Override
+	protected void doProcessAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
+
+		try {
+			if (cmd.equals(Constants.ADD)) {
+				_addCPDefinitionLinks(actionRequest);
+			}
+			else if (cmd.equals(Constants.DELETE)) {
+				_deleteCPDefinitionLinks(actionRequest);
+			}
+			else if (cmd.equals(Constants.UPDATE)) {
+				_updateCPDefinitionLink(actionRequest);
+			}
+
+			String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+			sendRedirect(actionRequest, actionResponse, redirect);
+		}
+		catch (Exception exception) {
+			if (exception instanceof NoSuchCPDefinitionLinkException ||
+				exception instanceof PrincipalException) {
+
+				SessionErrors.add(actionRequest, exception.getClass());
+
+				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
+			}
+			else {
+				throw exception;
+			}
+		}
+	}
+
+	private void _addCPDefinitionLinks(ActionRequest actionRequest)
 		throws Exception {
 
 		long[] cpDefinitionIds2 = null;
@@ -100,7 +136,7 @@ public class EditCPDefinitionLinkMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	protected void deleteCPDefinitionLinks(ActionRequest actionRequest)
+	private void _deleteCPDefinitionLinks(ActionRequest actionRequest)
 		throws Exception {
 
 		long[] deleteCPDefinitionLinkIds = null;
@@ -123,43 +159,7 @@ public class EditCPDefinitionLinkMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	@Override
-	protected void doProcessAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
-
-		try {
-			if (cmd.equals(Constants.ADD)) {
-				addCPDefinitionLinks(actionRequest);
-			}
-			else if (cmd.equals(Constants.DELETE)) {
-				deleteCPDefinitionLinks(actionRequest);
-			}
-			else if (cmd.equals(Constants.UPDATE)) {
-				updateCPDefinitionLink(actionRequest);
-			}
-
-			String redirect = ParamUtil.getString(actionRequest, "redirect");
-
-			sendRedirect(actionRequest, actionResponse, redirect);
-		}
-		catch (Exception exception) {
-			if (exception instanceof NoSuchCPDefinitionLinkException ||
-				exception instanceof PrincipalException) {
-
-				SessionErrors.add(actionRequest, exception.getClass());
-
-				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
-			}
-			else {
-				throw exception;
-			}
-		}
-	}
-
-	protected CPDefinitionLink updateCPDefinitionLink(
+	private CPDefinitionLink _updateCPDefinitionLink(
 			ActionRequest actionRequest)
 		throws Exception {
 

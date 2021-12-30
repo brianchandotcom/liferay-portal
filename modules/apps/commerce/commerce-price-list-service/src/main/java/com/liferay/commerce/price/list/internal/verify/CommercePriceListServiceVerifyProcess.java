@@ -38,10 +38,10 @@ public class CommercePriceListServiceVerifyProcess extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
-		verifyBasePriceLists();
+		_verifyBasePriceLists();
 	}
 
-	protected void verifyBasePriceLists() throws Exception {
+	private void _verifyBasePriceLists() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			_companyLocalService.forEachCompanyId(
 				companyId -> {

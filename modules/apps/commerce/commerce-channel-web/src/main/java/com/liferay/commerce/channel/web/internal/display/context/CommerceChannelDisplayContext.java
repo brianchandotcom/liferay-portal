@@ -118,7 +118,7 @@ public class CommerceChannelDisplayContext
 
 	public int getAccountCartMaxAllowed() throws PortalException {
 		CommerceOrderFieldsConfiguration commerceOrderFieldsConfiguration =
-			getCommerceOrderFieldsConfiguration();
+			_getCommerceOrderFieldsConfiguration();
 
 		int maxAllowed =
 			commerceOrderFieldsConfiguration.accountCartMaxAllowed();
@@ -243,7 +243,7 @@ public class CommerceChannelDisplayContext
 	public int getCommerceSiteType() throws PortalException {
 		CommerceAccountGroupServiceConfiguration
 			commerceAccountGroupServiceConfiguration =
-				getCommerceAccountGroupServiceConfiguration();
+				_getCommerceAccountGroupServiceConfiguration();
 
 		return commerceAccountGroupServiceConfiguration.commerceSiteType();
 	}
@@ -424,8 +424,8 @@ public class CommerceChannelDisplayContext
 		return commerceOrderFieldsConfiguration.showPurchaseOrderNumber();
 	}
 
-	protected CommerceAccountGroupServiceConfiguration
-			getCommerceAccountGroupServiceConfiguration()
+	private CommerceAccountGroupServiceConfiguration
+			_getCommerceAccountGroupServiceConfiguration()
 		throws PortalException {
 
 		if (_commerceAccountGroupServiceConfiguration != null) {
@@ -444,8 +444,8 @@ public class CommerceChannelDisplayContext
 		return _commerceAccountGroupServiceConfiguration;
 	}
 
-	protected CommerceOrderFieldsConfiguration
-			getCommerceOrderFieldsConfiguration()
+	private CommerceOrderFieldsConfiguration
+			_getCommerceOrderFieldsConfiguration()
 		throws PortalException {
 
 		if (_commerceOrderFieldsConfiguration != null) {

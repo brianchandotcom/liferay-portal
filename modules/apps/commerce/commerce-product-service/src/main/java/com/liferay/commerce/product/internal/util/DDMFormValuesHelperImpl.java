@@ -68,7 +68,7 @@ public class DDMFormValuesHelperImpl implements DDMFormValuesHelper {
 		JSONArray jsonArray = _jsonFactory.createJSONArray(json);
 
 		for (int i = 0; i < jsonArray.length(); i++) {
-			DDMFormFieldValue ddmFormFieldValue = getDDMFormFieldValue(
+			DDMFormFieldValue ddmFormFieldValue = _getDDMFormFieldValue(
 				jsonArray.getJSONObject(i));
 
 			if ((ddmFormFieldValue != null) &&
@@ -122,7 +122,7 @@ public class DDMFormValuesHelperImpl implements DDMFormValuesHelper {
 		return jsonArray.toString();
 	}
 
-	protected DDMFormFieldValue getDDMFormFieldValue(JSONObject jsonObject) {
+	private DDMFormFieldValue _getDDMFormFieldValue(JSONObject jsonObject) {
 		String key = jsonObject.getString("key");
 
 		if (Validator.isNull(key)) {

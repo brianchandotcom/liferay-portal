@@ -82,13 +82,56 @@ public class CommerceNotificationHelperImpl
 		for (CommerceNotificationTemplate commerceNotificationTemplate :
 				commerceNotificationTemplates) {
 
-			sendNotification(
+			_sendNotification(
 				userId, commerceNotificationTemplate, commerceNotificationType,
 				object);
 		}
 	}
 
-	protected String formatString(
+	private void _addNotificationQueueEntry(
+			long groupId, CommerceNotificationType commerceNotificationType,
+			CommerceNotificationTemplate commerceNotificationTemplate,
+			String fromName, String toEmailAddress, String toFullName,
+			String subject, String body, Object object)
+		throws PortalException {
+
+		User user = _userLocalService.getDefaultUser(
+			CompanyThreadLocal.getCompanyId());
+
+		_commerceNotificationQueueEntryLocalService.
+			addCommerceNotificationQueueEntry(
+				user.getUserId(), groupId,
+				commerceNotificationType.getClassName(object),
+				commerceNotificationType.getClassPK(object),
+				commerceNotificationTemplate.
+					getCommerceNotificationTemplateId(),
+				commerceNotificationTemplate.getFrom(), fromName,
+				toEmailAddress, toFullName,
+				commerceNotificationTemplate.getCc(),
+				commerceNotificationTemplate.getBcc(), subject, body, 0);
+	}
+
+	private void _addNotificationQueueEntry(
+			long groupId, CommerceNotificationType commerceNotificationType,
+			CommerceNotificationTemplate commerceNotificationTemplate,
+			String fromName, User toUser, String subject, String body,
+			Object object)
+		throws PortalException {
+
+		_commerceNotificationQueueEntryLocalService.
+			addCommerceNotificationQueueEntry(
+				toUser.getUserId(), groupId,
+				commerceNotificationType.getClassName(object),
+				commerceNotificationType.getClassPK(object),
+				commerceNotificationTemplate.
+					getCommerceNotificationTemplateId(),
+				commerceNotificationTemplate.getFrom(), fromName,
+				toUser.getEmailAddress(), toUser.getFullName(),
+				commerceNotificationTemplate.getCc(),
+				commerceNotificationTemplate.getBcc(), subject, body, 0);
+	}
+
+	private String _formatString(
 			CommerceNotificationType commerceNotificationType, int fieldType,
 			String content, Object object, Locale locale)
 		throws PortalException {
@@ -135,7 +178,7 @@ public class CommerceNotificationHelperImpl
 		return content;
 	}
 
-	protected void sendNotification(
+	private void _sendNotification(
 			long userId,
 			CommerceNotificationTemplate commerceNotificationTemplate,
 			CommerceNotificationType commerceNotificationType, Object object)
@@ -151,11 +194,11 @@ public class CommerceNotificationHelperImpl
 		String fromName = commerceNotificationTemplate.getFromName(
 			user.getLanguageId());
 
-		String subject = formatString(
+		String subject = _formatString(
 			commerceNotificationType, _SUBJECTFIELD,
 			commerceNotificationTemplate.getSubject(userLocale), object,
 			userLocale);
-		String body = formatString(
+		String body = _formatString(
 			commerceNotificationType, _BODYFIELD,
 			commerceNotificationTemplate.getBody(userLocale), object,
 			userLocale);
@@ -166,20 +209,20 @@ public class CommerceNotificationHelperImpl
 		}
 
 		if (Validator.isNull(subject)) {
-			subject = formatString(
+			subject = _formatString(
 				commerceNotificationType, _SUBJECTFIELD,
 				commerceNotificationTemplate.getSubject(siteDefaultLocale),
 				object, siteDefaultLocale);
 		}
 
 		if (Validator.isNull(body)) {
-			formatString(
+			_formatString(
 				commerceNotificationType, _BODYFIELD,
 				commerceNotificationTemplate.getBody(siteDefaultLocale), object,
 				siteDefaultLocale);
 		}
 
-		String to = formatString(
+		String to = _formatString(
 			commerceNotificationType, _TOFIELD,
 			commerceNotificationTemplate.getTo(), object, userLocale);
 
@@ -223,49 +266,6 @@ public class CommerceNotificationHelperImpl
 					body, object);
 			}
 		}
-	}
-
-	private void _addNotificationQueueEntry(
-			long groupId, CommerceNotificationType commerceNotificationType,
-			CommerceNotificationTemplate commerceNotificationTemplate,
-			String fromName, String toEmailAddress, String toFullName,
-			String subject, String body, Object object)
-		throws PortalException {
-
-		User user = _userLocalService.getDefaultUser(
-			CompanyThreadLocal.getCompanyId());
-
-		_commerceNotificationQueueEntryLocalService.
-			addCommerceNotificationQueueEntry(
-				user.getUserId(), groupId,
-				commerceNotificationType.getClassName(object),
-				commerceNotificationType.getClassPK(object),
-				commerceNotificationTemplate.
-					getCommerceNotificationTemplateId(),
-				commerceNotificationTemplate.getFrom(), fromName,
-				toEmailAddress, toFullName,
-				commerceNotificationTemplate.getCc(),
-				commerceNotificationTemplate.getBcc(), subject, body, 0);
-	}
-
-	private void _addNotificationQueueEntry(
-			long groupId, CommerceNotificationType commerceNotificationType,
-			CommerceNotificationTemplate commerceNotificationTemplate,
-			String fromName, User toUser, String subject, String body,
-			Object object)
-		throws PortalException {
-
-		_commerceNotificationQueueEntryLocalService.
-			addCommerceNotificationQueueEntry(
-				toUser.getUserId(), groupId,
-				commerceNotificationType.getClassName(object),
-				commerceNotificationType.getClassPK(object),
-				commerceNotificationTemplate.
-					getCommerceNotificationTemplateId(),
-				commerceNotificationTemplate.getFrom(), fromName,
-				toUser.getEmailAddress(), toUser.getFullName(),
-				commerceNotificationTemplate.getCc(),
-				commerceNotificationTemplate.getBcc(), subject, body, 0);
 	}
 
 	private static final int _BODYFIELD = 2;

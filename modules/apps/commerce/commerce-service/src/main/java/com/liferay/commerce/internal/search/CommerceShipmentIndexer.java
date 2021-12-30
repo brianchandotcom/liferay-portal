@@ -225,7 +225,7 @@ public class CommerceShipmentIndexer extends BaseIndexer<CommerceShipment> {
 	protected void doReindex(String[] ids) throws Exception {
 		long companyId = GetterUtil.getLong(ids[0]);
 
-		reindexCommerceShipments(companyId);
+		_reindexCommerceShipments(companyId);
 	}
 
 	@Override
@@ -243,7 +243,7 @@ public class CommerceShipmentIndexer extends BaseIndexer<CommerceShipment> {
 		return super.isUseSearchResultPermissionFilter(searchContext);
 	}
 
-	protected void reindexCommerceShipments(long companyId) throws Exception {
+	private void _reindexCommerceShipments(long companyId) throws Exception {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
 			_commerceShipmentLocalService.getIndexableActionableDynamicQuery();
 

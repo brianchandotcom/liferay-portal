@@ -134,7 +134,7 @@ public class CommerceWishListDisplayContext {
 
 		long commerceWishListId = ParamUtil.getLong(
 			httpServletRequest, "commerceWishListId",
-			getDefaultCommerceWishListId());
+			_getDefaultCommerceWishListId());
 
 		if (commerceWishListId > 0) {
 			try {
@@ -148,7 +148,7 @@ public class CommerceWishListDisplayContext {
 				}
 			}
 		}
-		else if (isContentPortlet()) {
+		else if (_isContentPortlet()) {
 			_commerceWishList =
 				_commerceWishListHttpHelper.getCurrentCommerceWishList(
 					httpServletRequest,
@@ -228,7 +228,7 @@ public class CommerceWishListDisplayContext {
 			_commerceWishListRequestHelper.getLiferayPortletRequest(),
 			getPortletURL(), null, "the-wish-list-is-empty");
 
-		setOrderByColAndType(
+		_setOrderByColAndType(
 			CommerceWishListItem.class, _commerceWishListItemsSearchContainer,
 			"create-date", "desc");
 
@@ -307,7 +307,7 @@ public class CommerceWishListDisplayContext {
 			_commerceWishListRequestHelper.getLiferayPortletRequest(),
 			getPortletURL(), null, "no-wish-lists-were-found");
 
-		setOrderByColAndType(
+		_setOrderByColAndType(
 			CommerceWishList.class, _searchContainer, "name", "asc");
 
 		OrderByComparator<CommerceWishList> orderByComparator =
@@ -341,7 +341,7 @@ public class CommerceWishListDisplayContext {
 			CommerceWishListActionKeys.MANAGE_COMMERCE_WISH_LISTS);
 	}
 
-	protected long getDefaultCommerceWishListId() throws PortalException {
+	private long _getDefaultCommerceWishListId() throws PortalException {
 		long defaultCommerceWishListId = 0;
 
 		CommerceWishList commerceWishList =
@@ -358,7 +358,7 @@ public class CommerceWishListDisplayContext {
 		return defaultCommerceWishListId;
 	}
 
-	protected boolean isContentPortlet() {
+	private boolean _isContentPortlet() {
 		if (CommerceWishListPortletKeys.COMMERCE_WISH_LIST_CONTENT.equals(
 				_commerceWishListRequestHelper.getPortletId())) {
 
@@ -368,7 +368,7 @@ public class CommerceWishListDisplayContext {
 		return false;
 	}
 
-	protected <T> void setOrderByColAndType(
+	private <T> void _setOrderByColAndType(
 		Class<T> clazz, SearchContainer<T> searchContainer,
 		String defaultOrderByCol, String defaultOrderByType) {
 

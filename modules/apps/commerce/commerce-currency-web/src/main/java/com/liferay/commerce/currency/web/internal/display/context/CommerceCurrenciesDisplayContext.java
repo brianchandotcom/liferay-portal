@@ -116,21 +116,21 @@ public class CommerceCurrenciesDisplayContext {
 
 	public int getDefaultMaxFractionDigits() throws ConfigurationException {
 		RoundingTypeConfiguration roundingTypeConfiguration =
-			getRoundingTypeConfiguration();
+			_getRoundingTypeConfiguration();
 
 		return roundingTypeConfiguration.maximumFractionDigits();
 	}
 
 	public int getDefaultMinFractionDigits() throws ConfigurationException {
 		RoundingTypeConfiguration roundingTypeConfiguration =
-			getRoundingTypeConfiguration();
+			_getRoundingTypeConfiguration();
 
 		return roundingTypeConfiguration.minimumFractionDigits();
 	}
 
 	public String getDefaultRoundingMode() throws ConfigurationException {
 		RoundingTypeConfiguration roundingTypeConfiguration =
-			getRoundingTypeConfiguration();
+			_getRoundingTypeConfiguration();
 
 		RoundingMode roundingMode = roundingTypeConfiguration.roundingMode();
 
@@ -156,7 +156,7 @@ public class CommerceCurrenciesDisplayContext {
 		return PortletURLBuilder.createRenderURL(
 			_renderResponse
 		).setNavigation(
-			getNavigation()
+			_getNavigation()
 		).setParameter(
 			"orderByCol", getOrderByCol()
 		).setParameter(
@@ -199,7 +199,7 @@ public class CommerceCurrenciesDisplayContext {
 		Boolean active = null;
 		String emptyResultsMessage = "there-are-no-currencies";
 
-		String navigation = getNavigation();
+		String navigation = _getNavigation();
 
 		if (navigation.equals("active")) {
 			active = Boolean.TRUE;
@@ -223,7 +223,7 @@ public class CommerceCurrenciesDisplayContext {
 		_searchContainer.setOrderByCol(orderByCol);
 		_searchContainer.setOrderByComparator(orderByComparator);
 		_searchContainer.setOrderByType(orderByType);
-		_searchContainer.setRowChecker(getRowChecker());
+		_searchContainer.setRowChecker(_getRowChecker());
 
 		int total;
 		List<CommerceCurrency> results;
@@ -259,11 +259,11 @@ public class CommerceCurrenciesDisplayContext {
 			CommerceCurrencyActionKeys.MANAGE_COMMERCE_CURRENCIES);
 	}
 
-	protected String getNavigation() {
+	private String _getNavigation() {
 		return ParamUtil.getString(_renderRequest, "navigation");
 	}
 
-	protected RoundingTypeConfiguration getRoundingTypeConfiguration()
+	private RoundingTypeConfiguration _getRoundingTypeConfiguration()
 		throws ConfigurationException {
 
 		return _configurationProvider.getConfiguration(
@@ -271,7 +271,7 @@ public class CommerceCurrenciesDisplayContext {
 			new SystemSettingsLocator(RoundingTypeConstants.SERVICE_NAME));
 	}
 
-	protected RowChecker getRowChecker() {
+	private RowChecker _getRowChecker() {
 		if (_rowChecker == null) {
 			_rowChecker = new EmptyOnClickRowChecker(_renderResponse);
 		}

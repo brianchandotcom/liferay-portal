@@ -205,7 +205,7 @@ public class AssetCategoryAssetDisplayPageFriendlyURLResolver
 				requestContext);
 		}
 
-		Layout layout = getAssetCategoryLayout(
+		Layout layout = _getAssetCategoryLayout(
 			groupId, privateLayout, assetCategory.getCategoryId());
 
 		return new LayoutFriendlyURLComposite(
@@ -219,7 +219,7 @@ public class AssetCategoryAssetDisplayPageFriendlyURLResolver
 			CompanyThreadLocal.getCompanyId());
 	}
 
-	protected Layout getAssetCategoryLayout(
+	private Layout _getAssetCategoryLayout(
 			long groupId, boolean privateLayout, long categoryId)
 		throws PortalException {
 
@@ -276,7 +276,7 @@ public class AssetCategoryAssetDisplayPageFriendlyURLResolver
 			AssetCategory assetCategory)
 		throws PortalException {
 
-		Layout layout = getAssetCategoryLayout(
+		Layout layout = _getAssetCategoryLayout(
 			groupId, privateLayout, assetCategory.getCategoryId());
 
 		String layoutActualURL = _portal.getLayoutActualURL(layout, mainPath);

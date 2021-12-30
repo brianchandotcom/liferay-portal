@@ -99,7 +99,7 @@ public class CPSpecificationOptionDisplayContext
 		return PortletURLBuilder.create(
 			super.getPortletURL()
 		).setNavigation(
-			getNavigation()
+			_getNavigation()
 		).buildPortletURL();
 	}
 
@@ -131,7 +131,7 @@ public class CPSpecificationOptionDisplayContext
 
 		Boolean facetable = null;
 
-		String navigation = getNavigation();
+		String navigation = _getNavigation();
 
 		if (navigation.equals("no")) {
 			facetable = false;
@@ -154,7 +154,7 @@ public class CPSpecificationOptionDisplayContext
 		return searchContainer;
 	}
 
-	protected String getNavigation() {
+	private String _getNavigation() {
 		return ParamUtil.getString(httpServletRequest, "navigation");
 	}
 

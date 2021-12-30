@@ -139,7 +139,7 @@ public class CPInstanceCommercePriceEntryDisplayContext
 				commercePriceListItemSelectorCriterion)
 		).setParameter(
 			"checkedCommercePriceListIds",
-			StringUtil.merge(getCheckedCommercePriceListIds())
+			StringUtil.merge(_getCheckedCommercePriceListIds())
 		).buildString();
 	}
 
@@ -163,11 +163,11 @@ public class CPInstanceCommercePriceEntryDisplayContext
 		return "price-lists";
 	}
 
-	protected long[] getCheckedCommercePriceListIds() throws PortalException {
+	private long[] _getCheckedCommercePriceListIds() throws PortalException {
 		List<Long> commercePriceListIds = new ArrayList<>();
 
 		List<CommercePriceEntry> commercePriceEntries =
-			getCommercePriceEntries();
+			_getCommercePriceEntries();
 
 		for (CommercePriceEntry commercePriceEntry : commercePriceEntries) {
 			commercePriceListIds.add(
@@ -181,7 +181,7 @@ public class CPInstanceCommercePriceEntryDisplayContext
 		return new long[0];
 	}
 
-	protected List<CommercePriceEntry> getCommercePriceEntries()
+	private List<CommercePriceEntry> _getCommercePriceEntries()
 		throws PortalException {
 
 		return _commercePriceEntryService.getInstanceCommercePriceEntries(

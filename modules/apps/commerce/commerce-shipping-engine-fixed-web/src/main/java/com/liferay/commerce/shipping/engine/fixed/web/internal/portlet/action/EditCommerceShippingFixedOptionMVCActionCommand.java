@@ -61,7 +61,40 @@ import org.osgi.service.component.annotations.Reference;
 public class EditCommerceShippingFixedOptionMVCActionCommand
 	extends BaseMVCActionCommand {
 
-	protected void deleteCommerceShippingFixedOptions(
+	@Override
+	protected void doProcessAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
+
+		try {
+			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
+				CommerceShippingFixedOption commerceShippingFixedOption =
+					_updateCommerceShippingFixedOption(actionRequest);
+
+				String redirect = _getSaveAndContinueRedirect(
+					actionRequest, commerceShippingFixedOption);
+
+				sendRedirect(actionRequest, actionResponse, redirect);
+			}
+			else if (cmd.equals(Constants.DELETE)) {
+				_deleteCommerceShippingFixedOptions(actionRequest);
+			}
+		}
+		catch (Exception exception) {
+			if (exception instanceof NoSuchShippingFixedOptionException ||
+				exception instanceof PrincipalException) {
+
+				SessionErrors.add(actionRequest, exception.getClass());
+			}
+			else {
+				throw exception;
+			}
+		}
+	}
+
+	private void _deleteCommerceShippingFixedOptions(
 			ActionRequest actionRequest)
 		throws PortalException {
 
@@ -91,40 +124,7 @@ public class EditCommerceShippingFixedOptionMVCActionCommand
 		}
 	}
 
-	@Override
-	protected void doProcessAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
-
-		try {
-			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
-				CommerceShippingFixedOption commerceShippingFixedOption =
-					updateCommerceShippingFixedOption(actionRequest);
-
-				String redirect = getSaveAndContinueRedirect(
-					actionRequest, commerceShippingFixedOption);
-
-				sendRedirect(actionRequest, actionResponse, redirect);
-			}
-			else if (cmd.equals(Constants.DELETE)) {
-				deleteCommerceShippingFixedOptions(actionRequest);
-			}
-		}
-		catch (Exception exception) {
-			if (exception instanceof NoSuchShippingFixedOptionException ||
-				exception instanceof PrincipalException) {
-
-				SessionErrors.add(actionRequest, exception.getClass());
-			}
-			else {
-				throw exception;
-			}
-		}
-	}
-
-	protected String getSaveAndContinueRedirect(
+	private String _getSaveAndContinueRedirect(
 			ActionRequest actionRequest,
 			CommerceShippingFixedOption commerceShippingFixedOption)
 		throws Exception {
@@ -150,7 +150,7 @@ public class EditCommerceShippingFixedOptionMVCActionCommand
 		return portletURL.toString();
 	}
 
-	protected CommerceShippingFixedOption updateCommerceShippingFixedOption(
+	private CommerceShippingFixedOption _updateCommerceShippingFixedOption(
 			ActionRequest actionRequest)
 		throws PortalException {
 

@@ -82,38 +82,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 
-	protected void buildCPInstances(ActionRequest actionRequest)
-		throws Exception {
-
-		long cpDefinitionId = ParamUtil.getLong(
-			actionRequest, "cpDefinitionId");
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			CPInstance.class.getName(), actionRequest);
-
-		_cpInstanceService.buildCPInstances(cpDefinitionId, serviceContext);
-	}
-
-	protected void deleteCPInstances(ActionRequest actionRequest)
-		throws Exception {
-
-		long[] deleteCPInstanceIds = null;
-
-		long cpInstanceId = ParamUtil.getLong(actionRequest, "cpInstanceId");
-
-		if (cpInstanceId > 0) {
-			deleteCPInstanceIds = new long[] {cpInstanceId};
-		}
-		else {
-			deleteCPInstanceIds = StringUtil.split(
-				ParamUtil.getString(actionRequest, "deleteCPInstanceIds"), 0L);
-		}
-
-		for (long deleteCPInstanceId : deleteCPInstanceIds) {
-			_cpInstanceService.deleteCPInstance(deleteCPInstanceId);
-		}
-	}
-
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
@@ -135,10 +103,10 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 				sendRedirect(actionRequest, actionResponse, redirect);
 			}
 			else if (cmd.equals(Constants.ADD_MULTIPLE)) {
-				buildCPInstances(actionRequest);
+				_buildCPInstances(actionRequest);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
-				deleteCPInstances(actionRequest);
+				_deleteCPInstances(actionRequest);
 			}
 			else if (cmd.equals("updateSubscriptionInfo")) {
 				updateSubscriptionInfo(actionRequest);
@@ -193,7 +161,134 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 		).buildString();
 	}
 
-	protected CPInstance updateCPInstance(ActionRequest actionRequest)
+	protected void updateSubscriptionInfo(ActionRequest actionRequest)
+		throws PortalException {
+
+		long cpInstanceId = ParamUtil.getLong(actionRequest, "cpInstanceId");
+
+		boolean overrideSubscriptionInfo = ParamUtil.getBoolean(
+			actionRequest, "overrideSubscriptionInfo");
+		boolean subscriptionEnabled = ParamUtil.getBoolean(
+			actionRequest, "subscriptionEnabled");
+		int subscriptionLength = ParamUtil.getInteger(
+			actionRequest, "subscriptionLength");
+		String subscriptionType = ParamUtil.getString(
+			actionRequest, "subscriptionType");
+		UnicodeProperties subscriptionTypeSettingsUnicodeProperties =
+			PropertiesParamUtil.getProperties(
+				actionRequest, "subscriptionTypeSettings--");
+		long maxSubscriptionCycles = ParamUtil.getLong(
+			actionRequest, "maxSubscriptionCycles");
+		boolean deliverySubscriptionEnabled = ParamUtil.getBoolean(
+			actionRequest, "deliverySubscriptionEnabled");
+		int deliverySubscriptionLength = ParamUtil.getInteger(
+			actionRequest, "deliverySubscriptionLength");
+		String deliverySubscriptionType = ParamUtil.getString(
+			actionRequest, "deliverySubscriptionType");
+		UnicodeProperties deliverySubscriptionTypeSettingsUnicodeProperties =
+			PropertiesParamUtil.getProperties(
+				actionRequest, "deliverySubscriptionTypeSettings--");
+		long deliveryMaxSubscriptionCycles = ParamUtil.getLong(
+			actionRequest, "deliveryMaxSubscriptionCycles");
+
+		_cpInstanceService.updateSubscriptionInfo(
+			cpInstanceId, overrideSubscriptionInfo, subscriptionEnabled,
+			subscriptionLength, subscriptionType,
+			subscriptionTypeSettingsUnicodeProperties, maxSubscriptionCycles,
+			deliverySubscriptionEnabled, deliverySubscriptionLength,
+			deliverySubscriptionType,
+			deliverySubscriptionTypeSettingsUnicodeProperties,
+			deliveryMaxSubscriptionCycles);
+	}
+
+	private void _buildCPInstances(ActionRequest actionRequest)
+		throws Exception {
+
+		long cpDefinitionId = ParamUtil.getLong(
+			actionRequest, "cpDefinitionId");
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			CPInstance.class.getName(), actionRequest);
+
+		_cpInstanceService.buildCPInstances(cpDefinitionId, serviceContext);
+	}
+
+	private void _deleteCPInstances(ActionRequest actionRequest)
+		throws Exception {
+
+		long[] deleteCPInstanceIds = null;
+
+		long cpInstanceId = ParamUtil.getLong(actionRequest, "cpInstanceId");
+
+		if (cpInstanceId > 0) {
+			deleteCPInstanceIds = new long[] {cpInstanceId};
+		}
+		else {
+			deleteCPInstanceIds = StringUtil.split(
+				ParamUtil.getString(actionRequest, "deleteCPInstanceIds"), 0L);
+		}
+
+		for (long deleteCPInstanceId : deleteCPInstanceIds) {
+			_cpInstanceService.deleteCPInstance(deleteCPInstanceId);
+		}
+	}
+
+	private String _getCommercePricingConfigurationKey() throws Exception {
+		CommercePricingConfiguration commercePricingConfiguration =
+			_configurationProvider.getConfiguration(
+				CommercePricingConfiguration.class,
+				new SystemSettingsLocator(
+					CommercePricingConstants.SERVICE_NAME));
+
+		return commercePricingConfiguration.commercePricingCalculationKey();
+	}
+
+	private void _updateCommercePriceEntries(
+			CPInstance cpInstance, BigDecimal price, BigDecimal promoPrice,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		_updateCommercePriceEntry(
+			cpInstance, CommercePriceListConstants.TYPE_PRICE_LIST, price,
+			promoPrice, serviceContext);
+		_updateCommercePriceEntry(
+			cpInstance, CommercePriceListConstants.TYPE_PROMOTION, price,
+			promoPrice, serviceContext);
+	}
+
+	private void _updateCommercePriceEntry(
+			CPInstance cpInstance, String type, BigDecimal price,
+			BigDecimal promoPrice, ServiceContext serviceContext)
+		throws Exception {
+
+		CommercePriceList commercePriceList =
+			_commercePriceListLocalService.
+				getCatalogBaseCommercePriceListByType(
+					cpInstance.getGroupId(), type);
+
+		CommercePriceEntry commercePriceEntry =
+			_commercePriceEntryLocalService.fetchCommercePriceEntry(
+				commercePriceList.getCommercePriceListId(),
+				cpInstance.getCPInstanceUuid());
+
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
+
+		if (commercePriceEntry == null) {
+			CPDefinition cpDefinition = cpInstance.getCPDefinition();
+
+			_commercePriceEntryLocalService.addCommercePriceEntry(
+				cpDefinition.getCProductId(), cpInstance.getCPInstanceUuid(),
+				commercePriceList.getCommercePriceListId(), price, promoPrice,
+				serviceContext);
+		}
+		else {
+			_commercePriceEntryLocalService.updateCommercePriceEntry(
+				commercePriceEntry.getCommercePriceEntryId(), price, promoPrice,
+				serviceContext);
+		}
+	}
+
+	private CPInstance _updateCPInstance(ActionRequest actionRequest)
 		throws Exception {
 
 		long cpInstanceId = ParamUtil.getLong(actionRequest, "cpInstanceId");
@@ -347,101 +442,6 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 			serviceContext);
 	}
 
-	protected void updateSubscriptionInfo(ActionRequest actionRequest)
-		throws PortalException {
-
-		long cpInstanceId = ParamUtil.getLong(actionRequest, "cpInstanceId");
-
-		boolean overrideSubscriptionInfo = ParamUtil.getBoolean(
-			actionRequest, "overrideSubscriptionInfo");
-		boolean subscriptionEnabled = ParamUtil.getBoolean(
-			actionRequest, "subscriptionEnabled");
-		int subscriptionLength = ParamUtil.getInteger(
-			actionRequest, "subscriptionLength");
-		String subscriptionType = ParamUtil.getString(
-			actionRequest, "subscriptionType");
-		UnicodeProperties subscriptionTypeSettingsUnicodeProperties =
-			PropertiesParamUtil.getProperties(
-				actionRequest, "subscriptionTypeSettings--");
-		long maxSubscriptionCycles = ParamUtil.getLong(
-			actionRequest, "maxSubscriptionCycles");
-		boolean deliverySubscriptionEnabled = ParamUtil.getBoolean(
-			actionRequest, "deliverySubscriptionEnabled");
-		int deliverySubscriptionLength = ParamUtil.getInteger(
-			actionRequest, "deliverySubscriptionLength");
-		String deliverySubscriptionType = ParamUtil.getString(
-			actionRequest, "deliverySubscriptionType");
-		UnicodeProperties deliverySubscriptionTypeSettingsUnicodeProperties =
-			PropertiesParamUtil.getProperties(
-				actionRequest, "deliverySubscriptionTypeSettings--");
-		long deliveryMaxSubscriptionCycles = ParamUtil.getLong(
-			actionRequest, "deliveryMaxSubscriptionCycles");
-
-		_cpInstanceService.updateSubscriptionInfo(
-			cpInstanceId, overrideSubscriptionInfo, subscriptionEnabled,
-			subscriptionLength, subscriptionType,
-			subscriptionTypeSettingsUnicodeProperties, maxSubscriptionCycles,
-			deliverySubscriptionEnabled, deliverySubscriptionLength,
-			deliverySubscriptionType,
-			deliverySubscriptionTypeSettingsUnicodeProperties,
-			deliveryMaxSubscriptionCycles);
-	}
-
-	private String _getCommercePricingConfigurationKey() throws Exception {
-		CommercePricingConfiguration commercePricingConfiguration =
-			_configurationProvider.getConfiguration(
-				CommercePricingConfiguration.class,
-				new SystemSettingsLocator(
-					CommercePricingConstants.SERVICE_NAME));
-
-		return commercePricingConfiguration.commercePricingCalculationKey();
-	}
-
-	private void _updateCommercePriceEntries(
-			CPInstance cpInstance, BigDecimal price, BigDecimal promoPrice,
-			ServiceContext serviceContext)
-		throws Exception {
-
-		_updateCommercePriceEntry(
-			cpInstance, CommercePriceListConstants.TYPE_PRICE_LIST, price,
-			promoPrice, serviceContext);
-		_updateCommercePriceEntry(
-			cpInstance, CommercePriceListConstants.TYPE_PROMOTION, price,
-			promoPrice, serviceContext);
-	}
-
-	private void _updateCommercePriceEntry(
-			CPInstance cpInstance, String type, BigDecimal price,
-			BigDecimal promoPrice, ServiceContext serviceContext)
-		throws Exception {
-
-		CommercePriceList commercePriceList =
-			_commercePriceListLocalService.
-				getCatalogBaseCommercePriceListByType(
-					cpInstance.getGroupId(), type);
-
-		CommercePriceEntry commercePriceEntry =
-			_commercePriceEntryLocalService.fetchCommercePriceEntry(
-				commercePriceList.getCommercePriceListId(),
-				cpInstance.getCPInstanceUuid());
-
-		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
-
-		if (commercePriceEntry == null) {
-			CPDefinition cpDefinition = cpInstance.getCPDefinition();
-
-			_commercePriceEntryLocalService.addCommercePriceEntry(
-				cpDefinition.getCProductId(), cpInstance.getCPInstanceUuid(),
-				commercePriceList.getCommercePriceListId(), price, promoPrice,
-				serviceContext);
-		}
-		else {
-			_commercePriceEntryLocalService.updateCommercePriceEntry(
-				commercePriceEntry.getCommercePriceEntryId(), price, promoPrice,
-				serviceContext);
-		}
-	}
-
 	private static final TransactionConfig _transactionConfig =
 		TransactionConfig.Factory.create(
 			Propagation.REQUIRED, new Class<?>[] {Exception.class});
@@ -469,7 +469,7 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 
 		@Override
 		public CPInstance call() throws Exception {
-			return updateCPInstance(_actionRequest);
+			return _updateCPInstance(_actionRequest);
 		}
 
 		private CPInstanceCallable(ActionRequest actionRequest) {

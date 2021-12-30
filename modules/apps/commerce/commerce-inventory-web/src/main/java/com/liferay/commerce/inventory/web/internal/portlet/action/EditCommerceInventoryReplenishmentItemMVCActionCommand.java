@@ -49,7 +49,40 @@ import org.osgi.service.component.annotations.Reference;
 public class EditCommerceInventoryReplenishmentItemMVCActionCommand
 	extends BaseMVCActionCommand {
 
-	protected void addCommerceInventoryReplenishmentItem(
+	@Override
+	protected void doProcessAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
+
+		try {
+			if (cmd.equals(Constants.ADD)) {
+				_addCommerceInventoryReplenishmentItem(actionRequest);
+			}
+			else if (cmd.equals(Constants.DELETE)) {
+				_deleteCommerceInventoryReplenishmentItem(actionRequest);
+			}
+			else if (cmd.equals(Constants.UPDATE)) {
+				_updateCommerceInventoryReplenishmentItem(actionRequest);
+			}
+		}
+		catch (Exception exception) {
+			if (exception instanceof MVCCException) {
+				SessionErrors.add(actionRequest, exception.getClass());
+
+				hideDefaultErrorMessage(actionRequest);
+				hideDefaultSuccessMessage(actionRequest);
+
+				sendRedirect(actionRequest, actionResponse);
+			}
+			else {
+				_log.error(exception, exception);
+			}
+		}
+	}
+
+	private void _addCommerceInventoryReplenishmentItem(
 			ActionRequest actionRequest)
 		throws PortalException {
 
@@ -74,7 +107,7 @@ public class EditCommerceInventoryReplenishmentItemMVCActionCommand
 				quantity);
 	}
 
-	protected void deleteCommerceInventoryReplenishmentItem(
+	private void _deleteCommerceInventoryReplenishmentItem(
 			ActionRequest actionRequest)
 		throws PortalException {
 
@@ -86,40 +119,7 @@ public class EditCommerceInventoryReplenishmentItemMVCActionCommand
 				commerceInventoryReplenishmentItemId);
 	}
 
-	@Override
-	protected void doProcessAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
-
-		try {
-			if (cmd.equals(Constants.ADD)) {
-				addCommerceInventoryReplenishmentItem(actionRequest);
-			}
-			else if (cmd.equals(Constants.DELETE)) {
-				deleteCommerceInventoryReplenishmentItem(actionRequest);
-			}
-			else if (cmd.equals(Constants.UPDATE)) {
-				updateCommerceInventoryReplenishmentItem(actionRequest);
-			}
-		}
-		catch (Exception exception) {
-			if (exception instanceof MVCCException) {
-				SessionErrors.add(actionRequest, exception.getClass());
-
-				hideDefaultErrorMessage(actionRequest);
-				hideDefaultSuccessMessage(actionRequest);
-
-				sendRedirect(actionRequest, actionResponse);
-			}
-			else {
-				_log.error(exception, exception);
-			}
-		}
-	}
-
-	protected void updateCommerceInventoryReplenishmentItem(
+	private void _updateCommerceInventoryReplenishmentItem(
 			ActionRequest actionRequest)
 		throws PortalException {
 

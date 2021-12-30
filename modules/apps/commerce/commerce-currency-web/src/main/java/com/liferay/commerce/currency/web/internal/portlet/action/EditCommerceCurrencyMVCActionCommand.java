@@ -62,29 +62,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class EditCommerceCurrencyMVCActionCommand extends BaseMVCActionCommand {
 
-	protected void deleteCommerceCurrencies(ActionRequest actionRequest)
-		throws PortalException {
-
-		long[] deleteCommerceCurrencyIds = null;
-
-		long commerceCurrencyId = ParamUtil.getLong(
-			actionRequest, "commerceCurrencyId");
-
-		if (commerceCurrencyId > 0) {
-			deleteCommerceCurrencyIds = new long[] {commerceCurrencyId};
-		}
-		else {
-			deleteCommerceCurrencyIds = StringUtil.split(
-				ParamUtil.getString(actionRequest, "deleteCommerceCurrencyIds"),
-				0L);
-		}
-
-		for (long deleteCommerceCurrencyId : deleteCommerceCurrencyIds) {
-			_commerceCurrencyService.deleteCommerceCurrency(
-				deleteCommerceCurrencyId);
-		}
-	}
-
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
@@ -94,18 +71,18 @@ public class EditCommerceCurrencyMVCActionCommand extends BaseMVCActionCommand {
 
 		try {
 			if (cmd.equals(Constants.DELETE)) {
-				deleteCommerceCurrencies(actionRequest);
+				_deleteCommerceCurrencies(actionRequest);
 			}
 			else if (cmd.equals(Constants.ADD) ||
 					 cmd.equals(Constants.UPDATE)) {
 
-				updateCommerceCurrency(actionRequest);
+				_updateCommerceCurrency(actionRequest);
 			}
 			else if (cmd.equals("setActive")) {
-				setActive(actionRequest);
+				_setActive(actionRequest);
 			}
 			else if (cmd.equals("setPrimary")) {
-				setPrimary(actionRequest);
+				_setPrimary(actionRequest);
 			}
 			else if (cmd.equals("updateExchangeRates")) {
 				updateExchangeRates(actionRequest);
@@ -139,7 +116,71 @@ public class EditCommerceCurrencyMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	protected void setActive(ActionRequest actionRequest)
+	protected void updateExchangeRates(ActionRequest actionRequest)
+		throws Exception {
+
+		long[] updateCommerceCurrencyExchangeRateIds = null;
+
+		long commerceCurrencyId = ParamUtil.getLong(
+			actionRequest, "commerceCurrencyId");
+
+		if (commerceCurrencyId > 0) {
+			updateCommerceCurrencyExchangeRateIds = new long[] {
+				commerceCurrencyId
+			};
+		}
+		else {
+			updateCommerceCurrencyExchangeRateIds = StringUtil.split(
+				ParamUtil.getString(
+					actionRequest, "updateCommerceCurrencyExchangeRateIds"),
+				0L);
+		}
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			CommerceCurrency.class.getName(), actionRequest);
+
+		CommerceCurrencyConfiguration commerceCurrencyConfiguration =
+			_configurationProvider.getConfiguration(
+				CommerceCurrencyConfiguration.class,
+				new CompanyServiceSettingsLocator(
+					serviceContext.getCompanyId(),
+					CommerceCurrencyExchangeRateConstants.SERVICE_NAME));
+
+		String exchangeRateProviderKey =
+			commerceCurrencyConfiguration.defaultExchangeRateProviderKey();
+
+		for (long updateCommerceCurrencyExchangeRateId :
+				updateCommerceCurrencyExchangeRateIds) {
+
+			_commerceCurrencyService.updateExchangeRate(
+				updateCommerceCurrencyExchangeRateId, exchangeRateProviderKey);
+		}
+	}
+
+	private void _deleteCommerceCurrencies(ActionRequest actionRequest)
+		throws PortalException {
+
+		long[] deleteCommerceCurrencyIds = null;
+
+		long commerceCurrencyId = ParamUtil.getLong(
+			actionRequest, "commerceCurrencyId");
+
+		if (commerceCurrencyId > 0) {
+			deleteCommerceCurrencyIds = new long[] {commerceCurrencyId};
+		}
+		else {
+			deleteCommerceCurrencyIds = StringUtil.split(
+				ParamUtil.getString(actionRequest, "deleteCommerceCurrencyIds"),
+				0L);
+		}
+
+		for (long deleteCommerceCurrencyId : deleteCommerceCurrencyIds) {
+			_commerceCurrencyService.deleteCommerceCurrency(
+				deleteCommerceCurrencyId);
+		}
+	}
+
+	private void _setActive(ActionRequest actionRequest)
 		throws PortalException {
 
 		long commerceCurrencyId = ParamUtil.getLong(
@@ -150,7 +191,7 @@ public class EditCommerceCurrencyMVCActionCommand extends BaseMVCActionCommand {
 		_commerceCurrencyService.setActive(commerceCurrencyId, active);
 	}
 
-	protected void setPrimary(ActionRequest actionRequest)
+	private void _setPrimary(ActionRequest actionRequest)
 		throws PortalException {
 
 		long commerceCurrencyId = ParamUtil.getLong(
@@ -161,7 +202,7 @@ public class EditCommerceCurrencyMVCActionCommand extends BaseMVCActionCommand {
 		_commerceCurrencyService.setPrimary(commerceCurrencyId, primary);
 	}
 
-	protected CommerceCurrency updateCommerceCurrency(
+	private CommerceCurrency _updateCommerceCurrency(
 			ActionRequest actionRequest)
 		throws PortalException {
 
@@ -212,47 +253,6 @@ public class EditCommerceCurrencyMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		return commerceCurrency;
-	}
-
-	protected void updateExchangeRates(ActionRequest actionRequest)
-		throws Exception {
-
-		long[] updateCommerceCurrencyExchangeRateIds = null;
-
-		long commerceCurrencyId = ParamUtil.getLong(
-			actionRequest, "commerceCurrencyId");
-
-		if (commerceCurrencyId > 0) {
-			updateCommerceCurrencyExchangeRateIds = new long[] {
-				commerceCurrencyId
-			};
-		}
-		else {
-			updateCommerceCurrencyExchangeRateIds = StringUtil.split(
-				ParamUtil.getString(
-					actionRequest, "updateCommerceCurrencyExchangeRateIds"),
-				0L);
-		}
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			CommerceCurrency.class.getName(), actionRequest);
-
-		CommerceCurrencyConfiguration commerceCurrencyConfiguration =
-			_configurationProvider.getConfiguration(
-				CommerceCurrencyConfiguration.class,
-				new CompanyServiceSettingsLocator(
-					serviceContext.getCompanyId(),
-					CommerceCurrencyExchangeRateConstants.SERVICE_NAME));
-
-		String exchangeRateProviderKey =
-			commerceCurrencyConfiguration.defaultExchangeRateProviderKey();
-
-		for (long updateCommerceCurrencyExchangeRateId :
-				updateCommerceCurrencyExchangeRateIds) {
-
-			_commerceCurrencyService.updateExchangeRate(
-				updateCommerceCurrencyExchangeRateId, exchangeRateProviderKey);
-		}
 	}
 
 	@Reference

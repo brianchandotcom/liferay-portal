@@ -110,10 +110,10 @@ public class CPDefinitionGroupedEntriesDisplayContext
 				"cpDefinitionId", String.valueOf(cpDefinitionId));
 
 			String checkedCPDefinitionIds = StringUtil.merge(
-				getCheckedCPDefinitionIds(cpDefinitionId));
+				_getCheckedCPDefinitionIds(cpDefinitionId));
 
 			String disabledCPDefinitionIds = StringUtil.merge(
-				getDisabledCPDefinitionIds(cpDefinitionId));
+				_getDisabledCPDefinitionIds(cpDefinitionId));
 
 			itemSelectorURL.setParameter(
 				"checkedCPDefinitionIds", checkedCPDefinitionIds);
@@ -195,13 +195,13 @@ public class CPDefinitionGroupedEntriesDisplayContext
 		return searchContainer;
 	}
 
-	protected long[] getCheckedCPDefinitionIds(long cpDefinitionId)
+	private long[] _getCheckedCPDefinitionIds(long cpDefinitionId)
 		throws PortalException {
 
 		List<Long> cpDefinitionIdsList = new ArrayList<>();
 
 		List<CPDefinitionGroupedEntry> cpDefinitionGroupedEntries =
-			getCPDefinitionGroupedEntries(cpDefinitionId);
+			_getCPDefinitionGroupedEntries(cpDefinitionId);
 
 		for (CPDefinitionGroupedEntry cpDefinitionGroupedEntry :
 				cpDefinitionGroupedEntries) {
@@ -217,7 +217,7 @@ public class CPDefinitionGroupedEntriesDisplayContext
 		return new long[0];
 	}
 
-	protected List<CPDefinitionGroupedEntry> getCPDefinitionGroupedEntries(
+	private List<CPDefinitionGroupedEntry> _getCPDefinitionGroupedEntries(
 			long cpDefinitionId)
 		throws PortalException {
 
@@ -229,13 +229,13 @@ public class CPDefinitionGroupedEntriesDisplayContext
 			cpDefinitionId, 0, total, null);
 	}
 
-	protected long[] getDisabledCPDefinitionIds(long cpDefinitionId)
+	private long[] _getDisabledCPDefinitionIds(long cpDefinitionId)
 		throws PortalException {
 
 		List<Long> cpDefinitionIdsList = new ArrayList<>();
 
 		List<CPDefinitionGroupedEntry> cpDefinitionGroupedEntries =
-			getCPDefinitionGroupedEntries(cpDefinitionId);
+			_getCPDefinitionGroupedEntries(cpDefinitionId);
 
 		for (CPDefinitionGroupedEntry cpDefinitionGroupedEntry :
 				cpDefinitionGroupedEntries) {

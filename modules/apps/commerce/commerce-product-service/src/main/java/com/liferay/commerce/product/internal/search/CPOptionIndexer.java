@@ -175,10 +175,10 @@ public class CPOptionIndexer extends BaseIndexer<CPOption> {
 	protected void doReindex(String[] ids) throws Exception {
 		long companyId = GetterUtil.getLong(ids[0]);
 
-		reindexCPOptions(companyId);
+		_reindexCPOptions(companyId);
 	}
 
-	protected void reindexCPOptions(long companyId) throws PortalException {
+	private void _reindexCPOptions(long companyId) throws PortalException {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
 			_cpOptionLocalService.getIndexableActionableDynamicQuery();
 

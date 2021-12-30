@@ -106,7 +106,7 @@ public class CommerceAccountGroupAccountItemSelectorViewDisplayContext {
 		RowChecker rowChecker =
 			new CommerceAccountGroupAccountItemSelectorChecker(
 				_commerceAccountItemSelectorRequestHelper.getRenderResponse(),
-				getCommerceAccountGroup(),
+				_getCommerceAccountGroup(),
 				_commerceAccountGroupCommerceAccountRelLocalService);
 
 		_searchContainer.setRowChecker(rowChecker);
@@ -130,7 +130,19 @@ public class CommerceAccountGroupAccountItemSelectorViewDisplayContext {
 		return _searchContainer;
 	}
 
-	protected CommerceAccountGroup getCommerceAccountGroup()
+	protected String getKeywords() {
+		if (_keywords != null) {
+			return _keywords;
+		}
+
+		_keywords = ParamUtil.getString(
+			_commerceAccountItemSelectorRequestHelper.getRenderRequest(),
+			"keywords");
+
+		return _keywords;
+	}
+
+	private CommerceAccountGroup _getCommerceAccountGroup()
 		throws PortalException {
 
 		long commerceAccountGroupId = ParamUtil.getLong(
@@ -145,26 +157,14 @@ public class CommerceAccountGroupAccountItemSelectorViewDisplayContext {
 		return null;
 	}
 
-	protected long getCommerceAccountGroupId() throws PortalException {
-		CommerceAccountGroup commerceAccountGroup = getCommerceAccountGroup();
+	private long _getCommerceAccountGroupId() throws PortalException {
+		CommerceAccountGroup commerceAccountGroup = _getCommerceAccountGroup();
 
 		if (commerceAccountGroup == null) {
 			return 0;
 		}
 
 		return commerceAccountGroup.getCommerceAccountGroupId();
-	}
-
-	protected String getKeywords() {
-		if (_keywords != null) {
-			return _keywords;
-		}
-
-		_keywords = ParamUtil.getString(
-			_commerceAccountItemSelectorRequestHelper.getRenderRequest(),
-			"keywords");
-
-		return _keywords;
 	}
 
 	private final CommerceAccountGroupCommerceAccountRelLocalService

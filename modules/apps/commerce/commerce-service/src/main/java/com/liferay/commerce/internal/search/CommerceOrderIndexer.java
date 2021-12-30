@@ -205,7 +205,7 @@ public class CommerceOrderIndexer extends BaseIndexer<CommerceOrder> {
 			"commerceAccountId", commerceOrder.getCommerceAccountId());
 		document.addKeyword(
 			"commerceChannelId", commerceChannel.getCommerceChannelId());
-		document.addNumber("itemsQuantity", getItemsQuantity(commerceOrder));
+		document.addNumber("itemsQuantity", _getItemsQuantity(commerceOrder));
 		document.addKeyword("orderStatus", commerceOrder.getOrderStatus());
 		document.addKeyword(
 			"purchaseOrderNumber", commerceOrder.getPurchaseOrderNumber());
@@ -247,19 +247,7 @@ public class CommerceOrderIndexer extends BaseIndexer<CommerceOrder> {
 	protected void doReindex(String[] ids) throws Exception {
 		long companyId = GetterUtil.getLong(ids[0]);
 
-		reindexCommerceOrders(companyId);
-	}
-
-	protected int getItemsQuantity(CommerceOrder commerceOrder) {
-		int count = 0;
-
-		for (CommerceOrderItem commerceOrderItem :
-				commerceOrder.getCommerceOrderItems()) {
-
-			count += commerceOrderItem.getQuantity();
-		}
-
-		return count;
+		_reindexCommerceOrders(companyId);
 	}
 
 	@Override
@@ -277,7 +265,25 @@ public class CommerceOrderIndexer extends BaseIndexer<CommerceOrder> {
 		return super.isUseSearchResultPermissionFilter(searchContext);
 	}
 
-	protected void reindexCommerceOrders(long companyId) throws Exception {
+	private int _getItemsQuantity(CommerceOrder commerceOrder) {
+		int count = 0;
+
+		for (CommerceOrderItem commerceOrderItem :
+				commerceOrder.getCommerceOrderItems()) {
+
+			count += commerceOrderItem.getQuantity();
+		}
+
+		return count;
+	}
+
+	private WildcardQuery _getTrailingWildcardQuery(
+		String field, String value) {
+
+		return new WildcardQueryImpl(field, value + StringPool.STAR);
+	}
+
+	private void _reindexCommerceOrders(long companyId) throws Exception {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
 			_commerceOrderLocalService.getIndexableActionableDynamicQuery();
 
@@ -300,12 +306,6 @@ public class CommerceOrderIndexer extends BaseIndexer<CommerceOrder> {
 		indexableActionableDynamicQuery.setSearchEngineId(getSearchEngineId());
 
 		indexableActionableDynamicQuery.performActions();
-	}
-
-	private WildcardQuery _getTrailingWildcardQuery(
-		String field, String value) {
-
-		return new WildcardQueryImpl(field, value + StringPool.STAR);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

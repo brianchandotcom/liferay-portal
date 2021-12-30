@@ -181,20 +181,8 @@ public abstract class BaseCPOptionsDisplayContext<T> {
 		return _rowChecker;
 	}
 
-	protected long getScopeGroupId() {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		return themeDisplay.getScopeGroupId();
-	}
-
 	protected void setDefaultOrderByCol(String defaultOrderByCol) {
 		_defaultOrderByCol = defaultOrderByCol;
-	}
-
-	protected void setDefaultOrderByType(String defaultOrderByType) {
-		_defaultOrderByType = defaultOrderByType;
 	}
 
 	protected final ActionHelper actionHelper;
@@ -204,6 +192,18 @@ public abstract class BaseCPOptionsDisplayContext<T> {
 	protected final LiferayPortletResponse liferayPortletResponse;
 	protected final PortalPreferences portalPreferences;
 	protected SearchContainer<T> searchContainer;
+
+	private long _getScopeGroupId() {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		return themeDisplay.getScopeGroupId();
+	}
+
+	private void _setDefaultOrderByType(String defaultOrderByType) {
+		_defaultOrderByType = defaultOrderByType;
+	}
 
 	private String _defaultOrderByCol;
 	private String _defaultOrderByType;

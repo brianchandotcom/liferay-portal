@@ -49,7 +49,7 @@ public class YearlyCPSubscriptionTypeDisplayContext {
 		List<Integer> calendarMonths = new ArrayList<>();
 
 		Map<String, Integer> calendarMonthsDisplayNames =
-			getCalendarMonthsDisplayNames();
+			_getCalendarMonthsDisplayNames();
 
 		for (Map.Entry<String, Integer> entry :
 				calendarMonthsDisplayNames.entrySet()) {
@@ -85,7 +85,7 @@ public class YearlyCPSubscriptionTypeDisplayContext {
 
 	public String getMonthDisplayName(int month) {
 		Map<String, Integer> calendarMonthsDisplayNames =
-			getCalendarMonthsDisplayNames();
+			_getCalendarMonthsDisplayNames();
 
 		for (Map.Entry<String, Integer> entry :
 				calendarMonthsDisplayNames.entrySet()) {
@@ -139,7 +139,7 @@ public class YearlyCPSubscriptionTypeDisplayContext {
 		return _payment;
 	}
 
-	protected Map<String, Integer> getCalendarMonthsDisplayNames() {
+	private Map<String, Integer> _getCalendarMonthsDisplayNames() {
 		Calendar calendar = CalendarFactoryUtil.getCalendar(
 			_cpSubscriptionTypeRequestHelper.getLocale());
 

@@ -65,29 +65,6 @@ import org.osgi.service.component.annotations.Reference;
 public class EditAssetCategoryCPDisplayLayoutMVCActionCommand
 	extends BaseMVCActionCommand {
 
-	protected void deleteCPDisplayLayouts(ActionRequest actionRequest)
-		throws Exception {
-
-		long[] deleteCPDisplayLayoutIds = null;
-
-		long cpDisplayLayoutId = ParamUtil.getLong(
-			actionRequest, "cpDisplayLayoutId");
-
-		if (cpDisplayLayoutId > 0) {
-			deleteCPDisplayLayoutIds = new long[] {cpDisplayLayoutId};
-		}
-		else {
-			deleteCPDisplayLayoutIds = StringUtil.split(
-				ParamUtil.getString(actionRequest, "deleteCPDisplayLayoutIds"),
-				0L);
-		}
-
-		for (long deleteCPDisplayLayoutId : deleteCPDisplayLayoutIds) {
-			_cpDisplayLayoutService.deleteCPDisplayLayout(
-				deleteCPDisplayLayoutId);
-		}
-	}
-
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
@@ -97,13 +74,13 @@ public class EditAssetCategoryCPDisplayLayoutMVCActionCommand
 
 		try {
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
-				updateCPDisplayLayout(actionRequest);
+				_updateCPDisplayLayout(actionRequest);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
-				deleteCPDisplayLayouts(actionRequest);
+				_deleteCPDisplayLayouts(actionRequest);
 			}
 			else if (cmd.equals("setDefaultLayout")) {
-				setDefaultLayout(actionRequest);
+				_setDefaultLayout(actionRequest);
 			}
 		}
 		catch (Exception exception) {
@@ -127,7 +104,30 @@ public class EditAssetCategoryCPDisplayLayoutMVCActionCommand
 		}
 	}
 
-	protected void setDefaultLayout(ActionRequest actionRequest)
+	private void _deleteCPDisplayLayouts(ActionRequest actionRequest)
+		throws Exception {
+
+		long[] deleteCPDisplayLayoutIds = null;
+
+		long cpDisplayLayoutId = ParamUtil.getLong(
+			actionRequest, "cpDisplayLayoutId");
+
+		if (cpDisplayLayoutId > 0) {
+			deleteCPDisplayLayoutIds = new long[] {cpDisplayLayoutId};
+		}
+		else {
+			deleteCPDisplayLayoutIds = StringUtil.split(
+				ParamUtil.getString(actionRequest, "deleteCPDisplayLayoutIds"),
+				0L);
+		}
+
+		for (long deleteCPDisplayLayoutId : deleteCPDisplayLayoutIds) {
+			_cpDisplayLayoutService.deleteCPDisplayLayout(
+				deleteCPDisplayLayoutId);
+		}
+	}
+
+	private void _setDefaultLayout(ActionRequest actionRequest)
 		throws Exception {
 
 		long commerceChannelId = ParamUtil.getLong(
@@ -151,7 +151,7 @@ public class EditAssetCategoryCPDisplayLayoutMVCActionCommand
 		modifiableSettings.store();
 	}
 
-	protected void updateCPDisplayLayout(ActionRequest actionRequest)
+	private void _updateCPDisplayLayout(ActionRequest actionRequest)
 		throws PortalException {
 
 		long cpDisplayLayoutId = ParamUtil.getLong(

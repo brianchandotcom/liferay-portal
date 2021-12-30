@@ -297,10 +297,16 @@ public class CPInstanceIndexer extends BaseIndexer<CPInstance> {
 	protected void doReindex(String[] ids) throws Exception {
 		long companyId = GetterUtil.getLong(ids[0]);
 
-		reindexCPInstances(companyId);
+		_reindexCPInstances(companyId);
 	}
 
-	protected void reindexCPInstances(long companyId) throws PortalException {
+	private WildcardQuery _getTrailingWildcardQuery(
+		String field, String value) {
+
+		return new WildcardQueryImpl(field, value + StringPool.STAR);
+	}
+
+	private void _reindexCPInstances(long companyId) throws PortalException {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
 			_cpInstanceLocalService.getIndexableActionableDynamicQuery();
 
@@ -323,12 +329,6 @@ public class CPInstanceIndexer extends BaseIndexer<CPInstance> {
 		indexableActionableDynamicQuery.setSearchEngineId(getSearchEngineId());
 
 		indexableActionableDynamicQuery.performActions();
-	}
-
-	private WildcardQuery _getTrailingWildcardQuery(
-		String field, String value) {
-
-		return new WildcardQueryImpl(field, value + StringPool.STAR);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -71,7 +71,7 @@ public class CommercePricingClassItemSelectorViewDisplayContext
 		searchContainer.setOrderByCol(getOrderByCol());
 
 		OrderByComparator<CommercePricingClass> orderByComparator =
-			getCommercePricingClassOrderByComparator(
+			_getCommercePricingClassOrderByComparator(
 				getOrderByCol(), getOrderByType());
 
 		searchContainer.setOrderByComparator(orderByComparator);
@@ -80,7 +80,7 @@ public class CommercePricingClassItemSelectorViewDisplayContext
 
 		RowChecker rowChecker = new CommercePricingClassItemSelectorChecker(
 			cpRequestHelper.getRenderResponse(),
-			getCheckedCommercePricingClassIds());
+			_getCheckedCommercePricingClassIds());
 
 		searchContainer.setRowChecker(rowChecker);
 
@@ -100,8 +100,14 @@ public class CommercePricingClassItemSelectorViewDisplayContext
 		return searchContainer;
 	}
 
-	protected static OrderByComparator<CommercePricingClass>
-		getCommercePricingClassOrderByComparator(
+	private long[] _getCheckedCommercePricingClassIds() {
+		return ParamUtil.getLongValues(
+			cpRequestHelper.getRenderRequest(),
+			"checkedCommercePricingClassIds");
+	}
+
+	private OrderByComparator<CommercePricingClass>
+		_getCommercePricingClassOrderByComparator(
 			String orderByCol, String orderByType) {
 
 		boolean orderByAsc = false;
@@ -115,12 +121,6 @@ public class CommercePricingClassItemSelectorViewDisplayContext
 		}
 
 		return null;
-	}
-
-	protected long[] getCheckedCommercePricingClassIds() {
-		return ParamUtil.getLongValues(
-			cpRequestHelper.getRenderRequest(),
-			"checkedCommercePricingClassIds");
 	}
 
 	private final CommercePricingClassService _commercePricingClassService;

@@ -70,7 +70,7 @@ public class EditCPDefinitionVirtualSettingMVCActionCommand
 
 		try {
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
-				updateCPDefinitionVirtualSetting(actionRequest);
+				_updateCPDefinitionVirtualSetting(actionRequest);
 			}
 		}
 		catch (Exception exception) {
@@ -110,7 +110,7 @@ public class EditCPDefinitionVirtualSettingMVCActionCommand
 		}
 	}
 
-	protected CPDefinitionVirtualSetting updateCPDefinitionVirtualSetting(
+	private CPDefinitionVirtualSetting _updateCPDefinitionVirtualSetting(
 			ActionRequest actionRequest)
 		throws Exception {
 

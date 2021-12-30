@@ -54,30 +54,6 @@ import org.osgi.service.component.annotations.Reference;
 public class EditCPMeasurementUnitMVCActionCommand
 	extends BaseMVCActionCommand {
 
-	protected void deleteCPMeasurementUnits(ActionRequest actionRequest)
-		throws PortalException {
-
-		long[] deleteCPMeasurementUnitIds = null;
-
-		long cpMeasurementUnitId = ParamUtil.getLong(
-			actionRequest, "cpMeasurementUnitId");
-
-		if (cpMeasurementUnitId > 0) {
-			deleteCPMeasurementUnitIds = new long[] {cpMeasurementUnitId};
-		}
-		else {
-			deleteCPMeasurementUnitIds = StringUtil.split(
-				ParamUtil.getString(
-					actionRequest, "deleteCPMeasurementUnitIds"),
-				0L);
-		}
-
-		for (long deleteCPMeasurementUnitId : deleteCPMeasurementUnitIds) {
-			_cpMeasurementUnitService.deleteCPMeasurementUnit(
-				deleteCPMeasurementUnitId);
-		}
-	}
-
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
@@ -87,13 +63,13 @@ public class EditCPMeasurementUnitMVCActionCommand
 
 		try {
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
-				updateCPMeasurementUnit(actionRequest);
+				_updateCPMeasurementUnit(actionRequest);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
-				deleteCPMeasurementUnits(actionRequest);
+				_deleteCPMeasurementUnits(actionRequest);
 			}
 			else if (cmd.equals("setPrimary")) {
-				setPrimary(actionRequest);
+				_setPrimary(actionRequest);
 			}
 		}
 		catch (Exception exception) {
@@ -120,7 +96,31 @@ public class EditCPMeasurementUnitMVCActionCommand
 		}
 	}
 
-	protected void setPrimary(ActionRequest actionRequest)
+	private void _deleteCPMeasurementUnits(ActionRequest actionRequest)
+		throws PortalException {
+
+		long[] deleteCPMeasurementUnitIds = null;
+
+		long cpMeasurementUnitId = ParamUtil.getLong(
+			actionRequest, "cpMeasurementUnitId");
+
+		if (cpMeasurementUnitId > 0) {
+			deleteCPMeasurementUnitIds = new long[] {cpMeasurementUnitId};
+		}
+		else {
+			deleteCPMeasurementUnitIds = StringUtil.split(
+				ParamUtil.getString(
+					actionRequest, "deleteCPMeasurementUnitIds"),
+				0L);
+		}
+
+		for (long deleteCPMeasurementUnitId : deleteCPMeasurementUnitIds) {
+			_cpMeasurementUnitService.deleteCPMeasurementUnit(
+				deleteCPMeasurementUnitId);
+		}
+	}
+
+	private void _setPrimary(ActionRequest actionRequest)
 		throws PortalException {
 
 		long cpMeasurementUnitId = ParamUtil.getLong(
@@ -131,7 +131,7 @@ public class EditCPMeasurementUnitMVCActionCommand
 		_cpMeasurementUnitService.setPrimary(cpMeasurementUnitId, primary);
 	}
 
-	protected CPMeasurementUnit updateCPMeasurementUnit(
+	private CPMeasurementUnit _updateCPMeasurementUnit(
 			ActionRequest actionRequest)
 		throws PortalException {
 

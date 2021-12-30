@@ -67,7 +67,7 @@ public class EditCommerceAddressMVCRenderCommand implements MVCRenderCommand {
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT, commerceAddressDisplayContext);
 
-			setCommerceAddressRequestAttribute(renderRequest);
+			_setCommerceAddressRequestAttribute(renderRequest);
 		}
 		catch (Exception exception) {
 			if (exception instanceof NoSuchAddressException ||
@@ -84,7 +84,7 @@ public class EditCommerceAddressMVCRenderCommand implements MVCRenderCommand {
 		return "/edit_commerce_address.jsp";
 	}
 
-	protected void setCommerceAddressRequestAttribute(
+	private void _setCommerceAddressRequestAttribute(
 			RenderRequest renderRequest)
 		throws PortalException {
 

@@ -97,12 +97,12 @@ public class ImportCommerceRegionsMVCActionCommand
 
 		httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);
 
-		writeJSON(actionResponse, jsonObject);
+		_writeJSON(actionResponse, jsonObject);
 
 		hideDefaultSuccessMessage(actionRequest);
 	}
 
-	protected void writeJSON(ActionResponse actionResponse, Object object)
+	private void _writeJSON(ActionResponse actionResponse, Object object)
 		throws IOException {
 
 		HttpServletResponse httpServletResponse =

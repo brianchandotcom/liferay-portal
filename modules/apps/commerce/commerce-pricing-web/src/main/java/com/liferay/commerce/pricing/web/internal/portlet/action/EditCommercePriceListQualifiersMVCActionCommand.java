@@ -56,44 +56,13 @@ public class EditCommercePriceListQualifiersMVCActionCommand
 
 		try {
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
-				updateCommercePriceListQualifiers(actionRequest);
+				_updateCommercePriceListQualifiers(actionRequest);
 			}
 		}
 		catch (Exception exception) {
 			SessionErrors.add(actionRequest, exception.getClass());
 
 			actionResponse.setRenderParameter("mvcPath", "/error.jsp");
-		}
-	}
-
-	protected void updateCommercePriceListQualifiers(
-			ActionRequest actionRequest)
-		throws Exception {
-
-		long commercePriceListId = ParamUtil.getLong(
-			actionRequest, "commercePriceListId");
-
-		String accountQualifiers = ParamUtil.getString(
-			actionRequest, "accountQualifiers");
-
-		String channelQualifiers = ParamUtil.getString(
-			actionRequest, "channelQualifiers");
-
-		if (Objects.equals(accountQualifiers, "all")) {
-			_deleteCommercePriceListAccountRels(commercePriceListId);
-			_deleteCommercePriceListAccountGroupRels(commercePriceListId);
-		}
-		else if (Objects.equals(accountQualifiers, "accounts")) {
-			_deleteCommercePriceListAccountGroupRels(commercePriceListId);
-		}
-		else {
-			_deleteCommercePriceListAccountRels(commercePriceListId);
-		}
-
-		if (Objects.equals(channelQualifiers, "all")) {
-			_commercePriceListChannelRelService.
-				deleteCommercePriceListChannelRelsByCommercePriceListId(
-					commercePriceListId);
 		}
 	}
 
@@ -129,6 +98,36 @@ public class EditCommercePriceListQualifiersMVCActionCommand
 		_commercePriceListAccountRelService.
 			deleteCommercePriceListAccountRelsByCommercePriceListId(
 				commercePriceListId);
+	}
+
+	private void _updateCommercePriceListQualifiers(ActionRequest actionRequest)
+		throws Exception {
+
+		long commercePriceListId = ParamUtil.getLong(
+			actionRequest, "commercePriceListId");
+
+		String accountQualifiers = ParamUtil.getString(
+			actionRequest, "accountQualifiers");
+
+		String channelQualifiers = ParamUtil.getString(
+			actionRequest, "channelQualifiers");
+
+		if (Objects.equals(accountQualifiers, "all")) {
+			_deleteCommercePriceListAccountRels(commercePriceListId);
+			_deleteCommercePriceListAccountGroupRels(commercePriceListId);
+		}
+		else if (Objects.equals(accountQualifiers, "accounts")) {
+			_deleteCommercePriceListAccountGroupRels(commercePriceListId);
+		}
+		else {
+			_deleteCommercePriceListAccountRels(commercePriceListId);
+		}
+
+		if (Objects.equals(channelQualifiers, "all")) {
+			_commercePriceListChannelRelService.
+				deleteCommercePriceListChannelRelsByCommercePriceListId(
+					commercePriceListId);
+		}
 	}
 
 	@Reference

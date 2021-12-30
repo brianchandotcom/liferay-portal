@@ -52,7 +52,7 @@ public class EditCPOptionExternalReferenceCodeMVCActionCommand
 		throws Exception {
 
 		try {
-			updateCPOptionExternalReferenceCode(actionRequest);
+			_updateCPOptionExternalReferenceCode(actionRequest);
 		}
 		catch (Exception exception) {
 			if (exception instanceof NoSuchCPOptionException ||
@@ -73,7 +73,7 @@ public class EditCPOptionExternalReferenceCodeMVCActionCommand
 		}
 	}
 
-	protected void updateCPOptionExternalReferenceCode(
+	private void _updateCPOptionExternalReferenceCode(
 			ActionRequest actionRequest)
 		throws Exception {
 

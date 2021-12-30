@@ -133,10 +133,10 @@ public class CPDefinitionLinkDisplayContext
 				"cpDefinitionId", String.valueOf(cpDefinitionId));
 
 			String checkedCPDefinitionIds = StringUtil.merge(
-				getCheckedCPDefinitionIds(cpDefinitionId, type));
+				_getCheckedCPDefinitionIds(cpDefinitionId, type));
 
 			String disabledCPDefinitionIds = StringUtil.merge(
-				getDisabledCPDefinitionIds(cpDefinitionId, type));
+				_getDisabledCPDefinitionIds(cpDefinitionId, type));
 
 			itemSelectorURL.setParameter(
 				"checkedCPDefinitionIds", checkedCPDefinitionIds);
@@ -176,12 +176,12 @@ public class CPDefinitionLinkDisplayContext
 			getCPDefinitionLinkId(), null);
 	}
 
-	protected long[] getCheckedCPDefinitionIds(long cpDefinitionId, String type)
+	private long[] _getCheckedCPDefinitionIds(long cpDefinitionId, String type)
 		throws PortalException {
 
 		List<Long> cpDefinitionIdsList = new ArrayList<>();
 
-		List<CPDefinitionLink> cpDefinitionLinks = getCPDefinitionLinks(
+		List<CPDefinitionLink> cpDefinitionLinks = _getCPDefinitionLinks(
 			cpDefinitionId, type);
 
 		for (CPDefinitionLink cpDefinitionLink : cpDefinitionLinks) {
@@ -197,7 +197,7 @@ public class CPDefinitionLinkDisplayContext
 		return new long[0];
 	}
 
-	protected List<CPDefinitionLink> getCPDefinitionLinks(
+	private List<CPDefinitionLink> _getCPDefinitionLinks(
 			long cpDefinitionId, String type)
 		throws PortalException {
 
@@ -205,13 +205,12 @@ public class CPDefinitionLinkDisplayContext
 			cpDefinitionId, type);
 	}
 
-	protected long[] getDisabledCPDefinitionIds(
-			long cpDefinitionId, String type)
+	private long[] _getDisabledCPDefinitionIds(long cpDefinitionId, String type)
 		throws PortalException {
 
 		List<Long> cpDefinitionIdsList = new ArrayList<>();
 
-		List<CPDefinitionLink> cpDefinitionLinks = getCPDefinitionLinks(
+		List<CPDefinitionLink> cpDefinitionLinks = _getCPDefinitionLinks(
 			cpDefinitionId, type);
 
 		for (CPDefinitionLink cpDefinitionLink : cpDefinitionLinks) {

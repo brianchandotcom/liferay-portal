@@ -58,21 +58,6 @@ import org.osgi.service.component.annotations.Reference;
 public class EditCPDefinitionOptionValueRelMVCActionCommand
 	extends BaseMVCActionCommand {
 
-	protected CPDefinitionOptionValueRel deleteCPDefinitionOptionValueRels(
-			ActionRequest actionRequest)
-		throws Exception {
-
-		long cpDefinitionOptionValueRelId = ParamUtil.getLong(
-			actionRequest, "cpDefinitionOptionValueRelId");
-
-		if (cpDefinitionOptionValueRelId > 0) {
-			return _cpDefinitionOptionValueRelService.
-				deleteCPDefinitionOptionValueRel(cpDefinitionOptionValueRelId);
-		}
-
-		return null;
-	}
-
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
@@ -82,16 +67,16 @@ public class EditCPDefinitionOptionValueRelMVCActionCommand
 
 		try {
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
-				updateCPDefinitionOptionValueRel(actionRequest);
+				_updateCPDefinitionOptionValueRel(actionRequest);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
-				deleteCPDefinitionOptionValueRels(actionRequest);
+				_deleteCPDefinitionOptionValueRels(actionRequest);
 			}
 			else if (cmd.equals("deleteSku")) {
-				resetCPInstanceAndQuantity(actionRequest);
+				_resetCPInstanceAndQuantity(actionRequest);
 			}
 			else if (cmd.equals("updatePreselected")) {
-				updatePreselected(actionRequest);
+				_updatePreselected(actionRequest);
 			}
 		}
 		catch (Exception exception) {
@@ -116,7 +101,22 @@ public class EditCPDefinitionOptionValueRelMVCActionCommand
 		}
 	}
 
-	protected CPDefinitionOptionValueRel resetCPInstanceAndQuantity(
+	private CPDefinitionOptionValueRel _deleteCPDefinitionOptionValueRels(
+			ActionRequest actionRequest)
+		throws Exception {
+
+		long cpDefinitionOptionValueRelId = ParamUtil.getLong(
+			actionRequest, "cpDefinitionOptionValueRelId");
+
+		if (cpDefinitionOptionValueRelId > 0) {
+			return _cpDefinitionOptionValueRelService.
+				deleteCPDefinitionOptionValueRel(cpDefinitionOptionValueRelId);
+		}
+
+		return null;
+	}
+
+	private CPDefinitionOptionValueRel _resetCPInstanceAndQuantity(
 			ActionRequest actionRequest)
 		throws PortalException {
 
@@ -128,7 +128,7 @@ public class EditCPDefinitionOptionValueRelMVCActionCommand
 				cpDefinitionOptionValueRelId);
 	}
 
-	protected CPDefinitionOptionValueRel updateCPDefinitionOptionValueRel(
+	private CPDefinitionOptionValueRel _updateCPDefinitionOptionValueRel(
 			ActionRequest actionRequest)
 		throws Exception {
 
@@ -171,7 +171,7 @@ public class EditCPDefinitionOptionValueRelMVCActionCommand
 				cpInstanceId, quantity, preselected, price, serviceContext);
 	}
 
-	protected CPDefinitionOptionValueRel updatePreselected(
+	private CPDefinitionOptionValueRel _updatePreselected(
 			ActionRequest actionRequest)
 		throws PortalException {
 

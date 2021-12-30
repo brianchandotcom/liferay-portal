@@ -57,73 +57,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class EditCommerceShipmentMVCActionCommand extends BaseMVCActionCommand {
 
-	protected CommerceShipment addCommerceShipment(ActionRequest actionRequest)
-		throws PortalException {
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			CommerceShipment.class.getName(), actionRequest);
-
-		long groupId = ParamUtil.getLong(
-			actionRequest, "commerceChannelGroupId");
-		long commerceAccountId = ParamUtil.getLong(
-			actionRequest, "commerceAccountId");
-		long commerceAddressId = ParamUtil.getLong(
-			actionRequest, "commerceAddressId");
-		long commerceShippingMethodId = ParamUtil.getLong(
-			actionRequest, "commerceShippingMethodId");
-		String commerceShippingOptionName = ParamUtil.getString(
-			actionRequest, "commerceShippingOptionName");
-
-		return _commerceShipmentService.addCommerceShipment(
-			groupId, commerceAccountId, commerceAddressId,
-			commerceShippingMethodId, commerceShippingOptionName,
-			serviceContext);
-	}
-
-	protected void addCommerceShipmentItems(ActionRequest actionRequest)
-		throws PortalException {
-
-		long commerceShipmentId = ParamUtil.getLong(
-			actionRequest, "commerceShipmentId");
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			CommerceShipmentItem.class.getName(), actionRequest);
-
-		long[] commerceOrderItemIds = ParamUtil.getLongValues(
-			actionRequest, "orderItemId");
-
-		for (long commerceOrderItemId : commerceOrderItemIds) {
-			_commerceShipmentItemService.addCommerceShipmentItem(
-				commerceShipmentId, commerceOrderItemId, 0, 0, serviceContext);
-		}
-	}
-
-	protected void deleteCommerceShipments(ActionRequest actionRequest)
-		throws PortalException {
-
-		long[] deleteCommerceShipmentIds = null;
-
-		long commerceShipmentId = ParamUtil.getLong(
-			actionRequest, "commerceShipmentId");
-
-		if (commerceShipmentId > 0) {
-			deleteCommerceShipmentIds = new long[] {commerceShipmentId};
-		}
-		else {
-			deleteCommerceShipmentIds = StringUtil.split(
-				ParamUtil.getString(actionRequest, "deleteCommerceShipmentIds"),
-				0L);
-		}
-
-		boolean restoreStockQuantity = ParamUtil.getBoolean(
-			actionRequest, "restoreStockQuantity");
-
-		for (long deleteCommerceShipmentId : deleteCommerceShipmentIds) {
-			_commerceShipmentService.deleteCommerceShipment(
-				deleteCommerceShipmentId, restoreStockQuantity);
-		}
-	}
-
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
@@ -133,31 +66,31 @@ public class EditCommerceShipmentMVCActionCommand extends BaseMVCActionCommand {
 
 		try {
 			if (cmd.equals(Constants.ADD)) {
-				addCommerceShipment(actionRequest);
+				_addCommerceShipment(actionRequest);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
-				deleteCommerceShipments(actionRequest);
+				_deleteCommerceShipments(actionRequest);
 			}
 			else if (cmd.equals(Constants.UPDATE)) {
-				updateCommerceShipment(actionRequest);
+				_updateCommerceShipment(actionRequest);
 			}
 			else if (cmd.equals("address")) {
-				updateAddress(actionRequest);
+				_updateAddress(actionRequest);
 			}
 			else if (cmd.equals("addShipmentItems")) {
-				addCommerceShipmentItems(actionRequest);
+				_addCommerceShipmentItems(actionRequest);
 			}
 			else if (cmd.equals("carrierDetails")) {
-				updateCarrierDetails(actionRequest);
+				_updateCarrierDetails(actionRequest);
 			}
 			else if (cmd.equals("expectedDate")) {
-				updateExpectedDate(actionRequest);
+				_updateExpectedDate(actionRequest);
 			}
 			else if (cmd.equals("shippingDate")) {
-				updateShippingDate(actionRequest);
+				_updateShippingDate(actionRequest);
 			}
 			else if (cmd.equals("transition")) {
-				updateStatus(actionRequest);
+				_updateStatus(actionRequest);
 			}
 		}
 		catch (Exception exception) {
@@ -183,7 +116,74 @@ public class EditCommerceShipmentMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	protected CommerceShipment updateAddress(ActionRequest actionRequest)
+	private CommerceShipment _addCommerceShipment(ActionRequest actionRequest)
+		throws PortalException {
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			CommerceShipment.class.getName(), actionRequest);
+
+		long groupId = ParamUtil.getLong(
+			actionRequest, "commerceChannelGroupId");
+		long commerceAccountId = ParamUtil.getLong(
+			actionRequest, "commerceAccountId");
+		long commerceAddressId = ParamUtil.getLong(
+			actionRequest, "commerceAddressId");
+		long commerceShippingMethodId = ParamUtil.getLong(
+			actionRequest, "commerceShippingMethodId");
+		String commerceShippingOptionName = ParamUtil.getString(
+			actionRequest, "commerceShippingOptionName");
+
+		return _commerceShipmentService.addCommerceShipment(
+			groupId, commerceAccountId, commerceAddressId,
+			commerceShippingMethodId, commerceShippingOptionName,
+			serviceContext);
+	}
+
+	private void _addCommerceShipmentItems(ActionRequest actionRequest)
+		throws PortalException {
+
+		long commerceShipmentId = ParamUtil.getLong(
+			actionRequest, "commerceShipmentId");
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			CommerceShipmentItem.class.getName(), actionRequest);
+
+		long[] commerceOrderItemIds = ParamUtil.getLongValues(
+			actionRequest, "orderItemId");
+
+		for (long commerceOrderItemId : commerceOrderItemIds) {
+			_commerceShipmentItemService.addCommerceShipmentItem(
+				commerceShipmentId, commerceOrderItemId, 0, 0, serviceContext);
+		}
+	}
+
+	private void _deleteCommerceShipments(ActionRequest actionRequest)
+		throws PortalException {
+
+		long[] deleteCommerceShipmentIds = null;
+
+		long commerceShipmentId = ParamUtil.getLong(
+			actionRequest, "commerceShipmentId");
+
+		if (commerceShipmentId > 0) {
+			deleteCommerceShipmentIds = new long[] {commerceShipmentId};
+		}
+		else {
+			deleteCommerceShipmentIds = StringUtil.split(
+				ParamUtil.getString(actionRequest, "deleteCommerceShipmentIds"),
+				0L);
+		}
+
+		boolean restoreStockQuantity = ParamUtil.getBoolean(
+			actionRequest, "restoreStockQuantity");
+
+		for (long deleteCommerceShipmentId : deleteCommerceShipmentIds) {
+			_commerceShipmentService.deleteCommerceShipment(
+				deleteCommerceShipmentId, restoreStockQuantity);
+		}
+	}
+
+	private CommerceShipment _updateAddress(ActionRequest actionRequest)
 		throws PortalException {
 
 		long commerceShipmentId = ParamUtil.getLong(
@@ -205,7 +205,7 @@ public class EditCommerceShipmentMVCActionCommand extends BaseMVCActionCommand {
 			city, zip, regionId, countryId, phoneNumber, null);
 	}
 
-	protected CommerceShipment updateCarrierDetails(ActionRequest actionRequest)
+	private CommerceShipment _updateCarrierDetails(ActionRequest actionRequest)
 		throws PortalException {
 
 		long commerceShipmentId = ParamUtil.getLong(
@@ -219,7 +219,7 @@ public class EditCommerceShipmentMVCActionCommand extends BaseMVCActionCommand {
 			commerceShipmentId, carrier, trackingNumber);
 	}
 
-	protected CommerceShipment updateCommerceShipment(
+	private CommerceShipment _updateCommerceShipment(
 			ActionRequest actionRequest)
 		throws Exception {
 
@@ -305,7 +305,7 @@ public class EditCommerceShipmentMVCActionCommand extends BaseMVCActionCommand {
 		return commerceShipment;
 	}
 
-	protected CommerceShipment updateExpectedDate(ActionRequest actionRequest)
+	private CommerceShipment _updateExpectedDate(ActionRequest actionRequest)
 		throws PortalException {
 
 		long commerceShipmentId = ParamUtil.getLong(
@@ -333,7 +333,7 @@ public class EditCommerceShipmentMVCActionCommand extends BaseMVCActionCommand {
 			expectedDateYear, expectedDateHour, expectedDateMinute);
 	}
 
-	protected CommerceShipment updateShippingDate(ActionRequest actionRequest)
+	private CommerceShipment _updateShippingDate(ActionRequest actionRequest)
 		throws PortalException {
 
 		long commerceShipmentId = ParamUtil.getLong(
@@ -361,7 +361,7 @@ public class EditCommerceShipmentMVCActionCommand extends BaseMVCActionCommand {
 			shippingDateYear, shippingDateHour, shippingDateMinute);
 	}
 
-	protected CommerceShipment updateStatus(ActionRequest actionRequest)
+	private CommerceShipment _updateStatus(ActionRequest actionRequest)
 		throws PortalException {
 
 		long commerceShipmentId = ParamUtil.getLong(

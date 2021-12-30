@@ -67,30 +67,6 @@ import org.osgi.service.component.annotations.Reference;
 public class EditCommercePriceListMVCActionCommand
 	extends BaseMVCActionCommand {
 
-	protected void deleteCommercePriceLists(ActionRequest actionRequest)
-		throws Exception {
-
-		long[] deleteCommercePriceListIds = null;
-
-		long commercePriceListId = ParamUtil.getLong(
-			actionRequest, "commercePriceListId");
-
-		if (commercePriceListId > 0) {
-			deleteCommercePriceListIds = new long[] {commercePriceListId};
-		}
-		else {
-			deleteCommercePriceListIds = StringUtil.split(
-				ParamUtil.getString(
-					actionRequest, "deleteCommercePriceListIds"),
-				0L);
-		}
-
-		for (long deleteCommercePriceListId : deleteCommercePriceListIds) {
-			_commercePriceListService.deleteCommercePriceList(
-				deleteCommercePriceListId);
-		}
-	}
-
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
@@ -100,7 +76,7 @@ public class EditCommercePriceListMVCActionCommand
 
 		try {
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
-				CommercePriceList commercePriceList = updateCommercePriceList(
+				CommercePriceList commercePriceList = _updateCommercePriceList(
 					actionRequest);
 
 				String redirect = getSaveAndContinueRedirect(
@@ -109,7 +85,7 @@ public class EditCommercePriceListMVCActionCommand
 				sendRedirect(actionRequest, actionResponse, redirect);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
-				deleteCommercePriceLists(actionRequest);
+				_deleteCommercePriceLists(actionRequest);
 			}
 		}
 		catch (Exception exception) {
@@ -179,7 +155,31 @@ public class EditCommercePriceListMVCActionCommand
 		return portletURL.toString();
 	}
 
-	protected CommercePriceList updateCommercePriceList(
+	private void _deleteCommercePriceLists(ActionRequest actionRequest)
+		throws Exception {
+
+		long[] deleteCommercePriceListIds = null;
+
+		long commercePriceListId = ParamUtil.getLong(
+			actionRequest, "commercePriceListId");
+
+		if (commercePriceListId > 0) {
+			deleteCommercePriceListIds = new long[] {commercePriceListId};
+		}
+		else {
+			deleteCommercePriceListIds = StringUtil.split(
+				ParamUtil.getString(
+					actionRequest, "deleteCommercePriceListIds"),
+				0L);
+		}
+
+		for (long deleteCommercePriceListId : deleteCommercePriceListIds) {
+			_commercePriceListService.deleteCommercePriceList(
+				deleteCommercePriceListId);
+		}
+	}
+
+	private CommercePriceList _updateCommercePriceList(
 			ActionRequest actionRequest)
 		throws Exception {
 
@@ -270,7 +270,7 @@ public class EditCommercePriceListMVCActionCommand
 		return commercePriceList;
 	}
 
-	protected void updateCommercePriceListAccountRels(
+	private void _updateCommercePriceListAccountRels(
 			ActionRequest actionRequest, CommercePriceList commercePriceList)
 		throws PortalException {
 
@@ -311,7 +311,7 @@ public class EditCommercePriceListMVCActionCommand
 		}
 	}
 
-	protected void updateCommercePriceListCommerceAccountGroupRels(
+	private void _updateCommercePriceListCommerceAccountGroupRels(
 			ActionRequest actionRequest, CommercePriceList commercePriceList)
 		throws PortalException {
 
@@ -356,7 +356,7 @@ public class EditCommercePriceListMVCActionCommand
 		}
 	}
 
-	protected void updateQualifiers(ActionRequest actionRequest)
+	private void _updateQualifiers(ActionRequest actionRequest)
 		throws PortalException {
 
 		long commercePriceListId = ParamUtil.getLong(
@@ -365,8 +365,8 @@ public class EditCommercePriceListMVCActionCommand
 		CommercePriceList commercePriceList =
 			_commercePriceListService.getCommercePriceList(commercePriceListId);
 
-		updateCommercePriceListAccountRels(actionRequest, commercePriceList);
-		updateCommercePriceListCommerceAccountGroupRels(
+		_updateCommercePriceListAccountRels(actionRequest, commercePriceList);
+		_updateCommercePriceListCommerceAccountGroupRels(
 			actionRequest, commercePriceList);
 	}
 

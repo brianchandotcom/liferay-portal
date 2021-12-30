@@ -69,7 +69,32 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class EditCommerceChannelMVCActionCommand extends BaseMVCActionCommand {
 
-	protected void deleteCommerceChannel(ActionRequest actionRequest)
+	@Override
+	protected void doProcessAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
+
+		try {
+			if (cmd.equals(Constants.DELETE)) {
+				_deleteCommerceChannel(actionRequest);
+			}
+			else if (cmd.equals(Constants.UPDATE)) {
+				_updateCommerceChannel(actionRequest);
+			}
+			else if (cmd.equals("selectSite")) {
+				_selectSite(actionRequest);
+			}
+		}
+		catch (PrincipalException principalException) {
+			SessionErrors.add(actionRequest, principalException.getClass());
+
+			actionResponse.setRenderParameter("mvcPath", "/error.jsp");
+		}
+	}
+
+	private void _deleteCommerceChannel(ActionRequest actionRequest)
 		throws Exception {
 
 		long[] commerceChannelIds = null;
@@ -91,32 +116,22 @@ public class EditCommerceChannelMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	@Override
-	protected void doProcessAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
+	private String[] _getAllowedTypes(long commerceChannelGroupId)
 		throws Exception {
 
-		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
+		CommerceAccountGroupServiceConfiguration
+			commerceAccountGroupServiceConfiguration =
+				_configurationProvider.getConfiguration(
+					CommerceAccountGroupServiceConfiguration.class,
+					new GroupServiceSettingsLocator(
+						commerceChannelGroupId,
+						CommerceAccountConstants.SERVICE_NAME));
 
-		try {
-			if (cmd.equals(Constants.DELETE)) {
-				deleteCommerceChannel(actionRequest);
-			}
-			else if (cmd.equals(Constants.UPDATE)) {
-				updateCommerceChannel(actionRequest);
-			}
-			else if (cmd.equals("selectSite")) {
-				selectSite(actionRequest);
-			}
-		}
-		catch (PrincipalException principalException) {
-			SessionErrors.add(actionRequest, principalException.getClass());
-
-			actionResponse.setRenderParameter("mvcPath", "/error.jsp");
-		}
+		return AccountEntryAllowedTypesUtil.getAllowedTypes(
+			commerceAccountGroupServiceConfiguration.commerceSiteType());
 	}
 
-	protected ObjectValuePair<Long, String> getWorkflowDefinitionOVP(
+	private ObjectValuePair<Long, String> _getWorkflowDefinitionOVP(
 		ActionRequest actionRequest, long typePK, String typePrefix) {
 
 		String workflowDefinition = ParamUtil.getString(
@@ -125,7 +140,7 @@ public class EditCommerceChannelMVCActionCommand extends BaseMVCActionCommand {
 		return new ObjectValuePair<>(typePK, workflowDefinition);
 	}
 
-	protected CommerceChannel selectSite(ActionRequest actionRequest)
+	private CommerceChannel _selectSite(ActionRequest actionRequest)
 		throws Exception {
 
 		long commerceChannelId = ParamUtil.getLong(
@@ -149,7 +164,29 @@ public class EditCommerceChannelMVCActionCommand extends BaseMVCActionCommand {
 		return commerceChannel;
 	}
 
-	protected CommerceChannel updateCommerceChannel(ActionRequest actionRequest)
+	private void _updateAccountCartMaxAllowed(
+			CommerceChannel commerceChannel, ActionRequest actionRequest)
+		throws Exception {
+
+		Settings settings = _settingsFactory.getSettings(
+			new GroupServiceSettingsLocator(
+				commerceChannel.getGroupId(),
+				CommerceConstants.SERVICE_NAME_COMMERCE_ORDER_FIELDS));
+
+		ModifiableSettings modifiableSettings =
+			settings.getModifiableSettings();
+
+		Map<String, String> parameterMap = PropertiesParamUtil.getProperties(
+			actionRequest, "orderSettings--");
+
+		for (Map.Entry<String, String> entry : parameterMap.entrySet()) {
+			modifiableSettings.setValue(entry.getKey(), entry.getValue());
+		}
+
+		modifiableSettings.store();
+	}
+
+	private CommerceChannel _updateCommerceChannel(ActionRequest actionRequest)
 		throws Exception {
 
 		long commerceChannelId = ParamUtil.getLong(
@@ -173,79 +210,13 @@ public class EditCommerceChannelMVCActionCommand extends BaseMVCActionCommand {
 		_updatePurchaseOrderNumber(commerceChannel, actionRequest);
 		_updateShippingTaxCategory(commerceChannel, actionRequest);
 		_updateSiteType(commerceChannel, actionRequest);
-		updateWorkflowDefinitionLinks(commerceChannel, actionRequest);
+		_updateWorkflowDefinitionLinks(commerceChannel, actionRequest);
 
 		return _commerceChannelService.updateCommerceChannel(
 			commerceChannelId, commerceChannel.getSiteGroupId(), name,
 			commerceChannel.getType(),
 			commerceChannel.getTypeSettingsProperties(), commerceCurrencyCode,
 			priceDisplayType, discountsTargetNetPrice);
-	}
-
-	protected void updateWorkflowDefinitionLinks(
-			CommerceChannel commerceChannel, ActionRequest actionRequest)
-		throws PortalException {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		_commerceChannelPermission.check(
-			themeDisplay.getPermissionChecker(), commerceChannel,
-			ActionKeys.UPDATE);
-
-		List<ObjectValuePair<Long, String>> workflowDefinitionOVPs =
-			new ArrayList<>(2);
-
-		workflowDefinitionOVPs.add(
-			getWorkflowDefinitionOVP(
-				actionRequest, CommerceOrderConstants.TYPE_PK_APPROVAL,
-				"buyer-order-approval"));
-		workflowDefinitionOVPs.add(
-			getWorkflowDefinitionOVP(
-				actionRequest, CommerceOrderConstants.TYPE_PK_FULFILLMENT,
-				"seller-order-acceptance"));
-
-		_workflowDefinitionLinkLocalService.updateWorkflowDefinitionLinks(
-			_portal.getUserId(actionRequest), commerceChannel.getCompanyId(),
-			commerceChannel.getGroupId(), CommerceOrder.class.getName(), 0,
-			workflowDefinitionOVPs);
-	}
-
-	private String[] _getAllowedTypes(long commerceChannelGroupId)
-		throws Exception {
-
-		CommerceAccountGroupServiceConfiguration
-			commerceAccountGroupServiceConfiguration =
-				_configurationProvider.getConfiguration(
-					CommerceAccountGroupServiceConfiguration.class,
-					new GroupServiceSettingsLocator(
-						commerceChannelGroupId,
-						CommerceAccountConstants.SERVICE_NAME));
-
-		return AccountEntryAllowedTypesUtil.getAllowedTypes(
-			commerceAccountGroupServiceConfiguration.commerceSiteType());
-	}
-
-	private void _updateAccountCartMaxAllowed(
-			CommerceChannel commerceChannel, ActionRequest actionRequest)
-		throws Exception {
-
-		Settings settings = _settingsFactory.getSettings(
-			new GroupServiceSettingsLocator(
-				commerceChannel.getGroupId(),
-				CommerceConstants.SERVICE_NAME_COMMERCE_ORDER_FIELDS));
-
-		ModifiableSettings modifiableSettings =
-			settings.getModifiableSettings();
-
-		Map<String, String> parameterMap = PropertiesParamUtil.getProperties(
-			actionRequest, "orderSettings--");
-
-		for (Map.Entry<String, String> entry : parameterMap.entrySet()) {
-			modifiableSettings.setValue(entry.getKey(), entry.getValue());
-		}
-
-		modifiableSettings.store();
 	}
 
 	private void _updatePurchaseOrderNumber(
@@ -316,6 +287,35 @@ public class EditCommerceChannelMVCActionCommand extends BaseMVCActionCommand {
 		_accountEntryGroupSettings.setAllowedTypes(
 			commerceChannel.getSiteGroupId(),
 			_getAllowedTypes(commerceChannel.getGroupId()));
+	}
+
+	private void _updateWorkflowDefinitionLinks(
+			CommerceChannel commerceChannel, ActionRequest actionRequest)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		_commerceChannelPermission.check(
+			themeDisplay.getPermissionChecker(), commerceChannel,
+			ActionKeys.UPDATE);
+
+		List<ObjectValuePair<Long, String>> workflowDefinitionOVPs =
+			new ArrayList<>(2);
+
+		workflowDefinitionOVPs.add(
+			_getWorkflowDefinitionOVP(
+				actionRequest, CommerceOrderConstants.TYPE_PK_APPROVAL,
+				"buyer-order-approval"));
+		workflowDefinitionOVPs.add(
+			_getWorkflowDefinitionOVP(
+				actionRequest, CommerceOrderConstants.TYPE_PK_FULFILLMENT,
+				"seller-order-acceptance"));
+
+		_workflowDefinitionLinkLocalService.updateWorkflowDefinitionLinks(
+			_portal.getUserId(actionRequest), commerceChannel.getCompanyId(),
+			commerceChannel.getGroupId(), CommerceOrder.class.getName(), 0,
+			workflowDefinitionOVPs);
 	}
 
 	@Reference

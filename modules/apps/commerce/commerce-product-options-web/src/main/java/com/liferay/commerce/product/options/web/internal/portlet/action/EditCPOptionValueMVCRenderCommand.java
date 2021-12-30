@@ -51,7 +51,7 @@ public class EditCPOptionValueMVCRenderCommand implements MVCRenderCommand {
 		throws PortletException {
 
 		try {
-			setCPOptionValueRequestAttribute(renderRequest);
+			_setCPOptionValueRequestAttribute(renderRequest);
 		}
 		catch (Exception exception) {
 			if (exception instanceof NoSuchCPOptionValueException ||
@@ -68,7 +68,7 @@ public class EditCPOptionValueMVCRenderCommand implements MVCRenderCommand {
 		return "/edit_cp_option_value.jsp";
 	}
 
-	protected void setCPOptionValueRequestAttribute(RenderRequest renderRequest)
+	private void _setCPOptionValueRequestAttribute(RenderRequest renderRequest)
 		throws PortalException {
 
 		long cpOptionValueId = ParamUtil.getLong(

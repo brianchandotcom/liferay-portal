@@ -191,10 +191,16 @@ public class CommerceOrderItemIndexer extends BaseIndexer<CommerceOrderItem> {
 	protected void doReindex(String[] ids) throws Exception {
 		long companyId = GetterUtil.getLong(ids[0]);
 
-		reindexCommerceOrderItems(companyId);
+		_reindexCommerceOrderItems(companyId);
 	}
 
-	protected void reindexCommerceOrderItems(long companyId) throws Exception {
+	private WildcardQuery _getTrailingWildcardQuery(
+		String field, String value) {
+
+		return new WildcardQueryImpl(field, value + StringPool.STAR);
+	}
+
+	private void _reindexCommerceOrderItems(long companyId) throws Exception {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
 			_commerceOrderItemLocalService.getIndexableActionableDynamicQuery();
 
@@ -217,12 +223,6 @@ public class CommerceOrderItemIndexer extends BaseIndexer<CommerceOrderItem> {
 		indexableActionableDynamicQuery.setSearchEngineId(getSearchEngineId());
 
 		indexableActionableDynamicQuery.performActions();
-	}
-
-	private WildcardQuery _getTrailingWildcardQuery(
-		String field, String value) {
-
-		return new WildcardQueryImpl(field, value + StringPool.STAR);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

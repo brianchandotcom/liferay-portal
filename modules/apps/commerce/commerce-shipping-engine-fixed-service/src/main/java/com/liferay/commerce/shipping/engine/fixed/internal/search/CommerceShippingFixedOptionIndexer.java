@@ -163,7 +163,7 @@ public class CommerceShippingFixedOptionIndexer
 	protected void doReindex(String[] ids) throws Exception {
 		long companyId = GetterUtil.getLong(ids[0]);
 
-		reindexCommerceShippingFixedOptions(companyId);
+		_reindexCommerceShippingFixedOptions(companyId);
 	}
 
 	@Override
@@ -181,7 +181,7 @@ public class CommerceShippingFixedOptionIndexer
 		return super.isUseSearchResultPermissionFilter(searchContext);
 	}
 
-	protected void reindexCommerceShippingFixedOptions(long companyId)
+	private void _reindexCommerceShippingFixedOptions(long companyId)
 		throws Exception {
 
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery =

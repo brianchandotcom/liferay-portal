@@ -115,7 +115,7 @@ public class CPDefinitionItemSelectorViewDisplayContext
 		if (!isSingleSelection()) {
 			RowChecker rowChecker = new CPDefinitionItemSelectorChecker(
 				cpRequestHelper.getRenderResponse(),
-				getCheckedCPDefinitionIds(), getCPDefinitionId());
+				_getCheckedCPDefinitionIds(), getCPDefinitionId());
 
 			searchContainer.setRowChecker(rowChecker);
 		}
@@ -170,12 +170,12 @@ public class CPDefinitionItemSelectorViewDisplayContext
 		return ParamUtil.getBoolean(httpServletRequest, "singleSelection");
 	}
 
-	protected long[] getCheckedCPDefinitionIds() {
+	private long[] _getCheckedCPDefinitionIds() {
 		return ParamUtil.getLongValues(
 			httpServletRequest, "checkedCPDefinitionIds");
 	}
 
-	protected long[] getDisabledCPDefinitionIds() {
+	private long[] _getDisabledCPDefinitionIds() {
 		return ParamUtil.getLongValues(
 			httpServletRequest, "disabledCPDefinitionIds");
 	}

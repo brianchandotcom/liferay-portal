@@ -258,7 +258,7 @@ public class CPDefinitionVirtualSettingDisplayContext
 		).setParameter(
 			"groupId", getScopeGroupId()
 		).setParameter(
-			"selectedGroupIds", StringUtil.merge(getSelectedGroupIds())
+			"selectedGroupIds", StringUtil.merge(_getSelectedGroupIds())
 		).setParameter(
 			"showNonindexable", Boolean.TRUE
 		).setParameter(
@@ -272,7 +272,7 @@ public class CPDefinitionVirtualSettingDisplayContext
 		).buildString();
 	}
 
-	protected long[] getSelectedGroupIds() {
+	private long[] _getSelectedGroupIds() {
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);

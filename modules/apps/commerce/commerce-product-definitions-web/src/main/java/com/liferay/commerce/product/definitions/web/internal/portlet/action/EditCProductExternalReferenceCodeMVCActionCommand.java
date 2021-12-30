@@ -52,7 +52,7 @@ public class EditCProductExternalReferenceCodeMVCActionCommand
 		throws Exception {
 
 		try {
-			updateCProductExternalReferenceCode(actionRequest);
+			_updateCProductExternalReferenceCode(actionRequest);
 		}
 		catch (Exception exception) {
 			if (exception instanceof NoSuchCProductException ||
@@ -73,7 +73,7 @@ public class EditCProductExternalReferenceCodeMVCActionCommand
 		}
 	}
 
-	protected void updateCProductExternalReferenceCode(
+	private void _updateCProductExternalReferenceCode(
 			ActionRequest actionRequest)
 		throws Exception {
 

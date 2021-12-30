@@ -140,10 +140,10 @@ public class AddCommerceWishListItemMVCActionCommand
 
 		hideDefaultSuccessMessage(actionRequest);
 
-		writeJSON(httpServletResponse, jsonObject);
+		_writeJSON(httpServletResponse, jsonObject);
 	}
 
-	protected void writeJSON(
+	private void _writeJSON(
 			HttpServletResponse httpServletResponse, JSONObject jsonObject)
 		throws IOException {
 

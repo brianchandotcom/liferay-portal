@@ -716,7 +716,7 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 				continue;
 			}
 
-			String[] linkedProductIds = getReverseCPDefinitionIds(
+			String[] linkedProductIds = _getReverseCPDefinitionIds(
 				cProduct.getCProductId(), type);
 
 			document.addKeyword(type, linkedProductIds);
@@ -857,10 +857,20 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 	protected void doReindex(String[] ids) throws Exception {
 		long companyId = GetterUtil.getLong(ids[0]);
 
-		reindexCPDefinitions(companyId);
+		_reindexCPDefinitions(companyId);
 	}
 
-	protected String[] getReverseCPDefinitionIds(long cProductId, String type) {
+	private void _addCommerceCatalogIdFilters(
+		BooleanFilter contextBooleanFilter, long[] commerceCatalogIds) {
+
+		TermsFilter termsFilter = new TermsFilter("commerceCatalogId");
+
+		termsFilter.addValues(ArrayUtil.toStringArray(commerceCatalogIds));
+
+		contextBooleanFilter.add(termsFilter, BooleanClauseOccur.MUST);
+	}
+
+	private String[] _getReverseCPDefinitionIds(long cProductId, String type) {
 		List<CPDefinitionLink> cpDefinitionLinks =
 			_cpDefinitionLinkLocalService.getReverseCPDefinitionLinks(
 				cProductId, type);
@@ -878,7 +888,24 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 		return reverseCPDefinitionIds.toArray(reverseCPDefinitionIdsArray);
 	}
 
-	protected void reindexCPDefinitions(long companyId) throws PortalException {
+	private long[] _getUserCommerceCatalogIds(SearchContext searchContext) {
+		List<CommerceCatalog> commerceCatalogs =
+			_commerceCatalogService.getCommerceCatalogs(
+				searchContext.getCompanyId(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
+
+		if (commerceCatalogs.isEmpty()) {
+			return new long[0];
+		}
+
+		Stream<CommerceCatalog> stream = commerceCatalogs.stream();
+
+		return stream.mapToLong(
+			commerceCatalog -> commerceCatalog.getCommerceCatalogId()
+		).toArray();
+	}
+
+	private void _reindexCPDefinitions(long companyId) throws PortalException {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
 			_cpDefinitionLocalService.getIndexableActionableDynamicQuery();
 
@@ -901,33 +928,6 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 		indexableActionableDynamicQuery.setSearchEngineId(getSearchEngineId());
 
 		indexableActionableDynamicQuery.performActions();
-	}
-
-	private void _addCommerceCatalogIdFilters(
-		BooleanFilter contextBooleanFilter, long[] commerceCatalogIds) {
-
-		TermsFilter termsFilter = new TermsFilter("commerceCatalogId");
-
-		termsFilter.addValues(ArrayUtil.toStringArray(commerceCatalogIds));
-
-		contextBooleanFilter.add(termsFilter, BooleanClauseOccur.MUST);
-	}
-
-	private long[] _getUserCommerceCatalogIds(SearchContext searchContext) {
-		List<CommerceCatalog> commerceCatalogs =
-			_commerceCatalogService.getCommerceCatalogs(
-				searchContext.getCompanyId(), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
-
-		if (commerceCatalogs.isEmpty()) {
-			return new long[0];
-		}
-
-		Stream<CommerceCatalog> stream = commerceCatalogs.stream();
-
-		return stream.mapToLong(
-			commerceCatalog -> commerceCatalog.getCommerceCatalogId()
-		).toArray();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

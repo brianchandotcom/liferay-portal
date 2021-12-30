@@ -81,13 +81,13 @@ public class CPMeasurementUnitsDisplayContext {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String viewDimensionProductMeasurementUnitsURL = getNavigationItemURL(
+		String viewDimensionProductMeasurementUnitsURL = _getNavigationItemURL(
 			"view-all-dimension-product-measurement-units",
 			CPMeasurementUnitConstants.TYPE_DIMENSION);
-		String viewUnitProductMeasurementUnitsURL = getNavigationItemURL(
+		String viewUnitProductMeasurementUnitsURL = _getNavigationItemURL(
 			"view-all-piece-product-measurement-units",
 			CPMeasurementUnitConstants.TYPE_UNIT);
-		String viewWeightProductMeasurementUnitsURL = getNavigationItemURL(
+		String viewWeightProductMeasurementUnitsURL = _getNavigationItemURL(
 			"view-all-weight-product-measurement-units",
 			CPMeasurementUnitConstants.TYPE_WEIGHT);
 
@@ -99,19 +99,20 @@ public class CPMeasurementUnitsDisplayContext {
 			"content.Language", themeDisplay.getLocale(), getClass());
 
 		NavigationItem dimensionCPMeasurementUnitsNavigationItem =
-			getNavigationItem(
+			_getNavigationItem(
 				toolbarItem.equals(
 					"view-all-dimension-product-measurement-units"),
 				viewDimensionProductMeasurementUnitsURL,
 				LanguageUtil.get(resourceBundle, "dimensions"));
 
-		NavigationItem unitCPMeasurementUnitsNavigationItem = getNavigationItem(
-			toolbarItem.equals("view-all-unit-product-measurement-units"),
-			viewUnitProductMeasurementUnitsURL,
-			LanguageUtil.get(resourceBundle, "unit"));
+		NavigationItem unitCPMeasurementUnitsNavigationItem =
+			_getNavigationItem(
+				toolbarItem.equals("view-all-unit-product-measurement-units"),
+				viewUnitProductMeasurementUnitsURL,
+				LanguageUtil.get(resourceBundle, "unit"));
 
 		NavigationItem weightCPMeasurementUnitsNavigationItem =
-			getNavigationItem(
+			_getNavigationItem(
 				toolbarItem.equals("view-all-weight-product-measurement-units"),
 				viewWeightProductMeasurementUnitsURL,
 				LanguageUtil.get(resourceBundle, "weight"));
@@ -200,7 +201,7 @@ public class CPMeasurementUnitsDisplayContext {
 		_searchContainer.setOrderByCol(orderByCol);
 		_searchContainer.setOrderByComparator(orderByComparator);
 		_searchContainer.setOrderByType(orderByType);
-		_searchContainer.setRowChecker(getRowChecker());
+		_searchContainer.setRowChecker(_getRowChecker());
 
 		int total = _cpMeasurementUnitService.getCPMeasurementUnitsCount(
 			themeDisplay.getCompanyId(), getType());
@@ -233,7 +234,7 @@ public class CPMeasurementUnitsDisplayContext {
 			CPActionKeys.MANAGE_COMMERCE_PRODUCT_MEASUREMENT_UNITS);
 	}
 
-	protected NavigationItem getNavigationItem(
+	private NavigationItem _getNavigationItem(
 		boolean active, String href, String label) {
 
 		return NavigationItemBuilder.setActive(
@@ -245,7 +246,7 @@ public class CPMeasurementUnitsDisplayContext {
 		).build();
 	}
 
-	protected String getNavigationItemURL(String toolbarItem, int type) {
+	private String _getNavigationItemURL(String toolbarItem, int type) {
 		return PortletURLBuilder.createRenderURL(
 			_renderResponse
 		).setMVCPath(
@@ -257,7 +258,7 @@ public class CPMeasurementUnitsDisplayContext {
 		).buildString();
 	}
 
-	protected RowChecker getRowChecker() {
+	private RowChecker _getRowChecker() {
 		if (_rowChecker == null) {
 			_rowChecker = new EmptyOnClickRowChecker(_renderResponse);
 		}

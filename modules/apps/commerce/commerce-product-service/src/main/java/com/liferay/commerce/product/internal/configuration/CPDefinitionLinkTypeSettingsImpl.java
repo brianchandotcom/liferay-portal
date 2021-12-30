@@ -58,8 +58,16 @@ public class CPDefinitionLinkTypeSettingsImpl
 			cpDefinitionLinkTypeConfigurationWrapper);
 	}
 
-	protected CPDefinitionLinkTypeConfigurationWrapper
-		getCPDefinitionLinkTypeConfigurationWrapper(String type) {
+	protected void removeCPDefinitionLinkTypeConfigurationWrapper(
+		CPDefinitionLinkTypeConfigurationWrapper
+			cpDefinitionLinkTypeConfigurationWrapper) {
+
+		_cpDefinitionLinkTypeConfigurationWrappers.remove(
+			cpDefinitionLinkTypeConfigurationWrapper.getType());
+	}
+
+	private CPDefinitionLinkTypeConfigurationWrapper
+		_getCPDefinitionLinkTypeConfigurationWrapper(String type) {
 
 		CPDefinitionLinkTypeConfigurationWrapper
 			cpDefinitionLinkTypeConfigurationWrapper =
@@ -70,14 +78,6 @@ public class CPDefinitionLinkTypeSettingsImpl
 		}
 
 		return cpDefinitionLinkTypeConfigurationWrapper;
-	}
-
-	protected void removeCPDefinitionLinkTypeConfigurationWrapper(
-		CPDefinitionLinkTypeConfigurationWrapper
-			cpDefinitionLinkTypeConfigurationWrapper) {
-
-		_cpDefinitionLinkTypeConfigurationWrappers.remove(
-			cpDefinitionLinkTypeConfigurationWrapper.getType());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

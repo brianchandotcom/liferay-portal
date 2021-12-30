@@ -66,7 +66,7 @@ public class CommerceOrderItemQuantityFormatterImpl
 				cpMeasurementUnit.getName(locale));
 		}
 
-		DecimalFormat decimalFormat = getDecimalFormat(locale);
+		DecimalFormat decimalFormat = _getDecimalFormat(locale);
 
 		if (cpMeasurementUnit == null) {
 			return decimalFormat.format(decimalQuantity);
@@ -91,7 +91,7 @@ public class CommerceOrderItemQuantityFormatterImpl
 		_commerceOrderItemDecimalQuantityConfiguration = null;
 	}
 
-	protected DecimalFormat getDecimalFormat(Locale locale) {
+	private DecimalFormat _getDecimalFormat(Locale locale) {
 		DecimalFormat decimalFormat = new DecimalFormat(
 			CommerceOrderConstants.DECIMAL_FORMAT_PATTERN,
 			DecimalFormatSymbols.getInstance(locale));

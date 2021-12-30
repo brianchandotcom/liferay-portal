@@ -62,34 +62,6 @@ import org.osgi.service.component.annotations.Reference;
 public class EditCPAttachmentFileEntryMVCActionCommand
 	extends BaseMVCActionCommand {
 
-	protected void deleteCPAttachmentFileEntry(ActionRequest actionRequest)
-		throws Exception {
-
-		long[] deleteCPAttachmentFileEntryIds = null;
-
-		long cpAttachmentFileEntryId = ParamUtil.getLong(
-			actionRequest, "cpAttachmentFileEntryId");
-
-		if (cpAttachmentFileEntryId > 0) {
-			deleteCPAttachmentFileEntryIds = new long[] {
-				cpAttachmentFileEntryId
-			};
-		}
-		else {
-			deleteCPAttachmentFileEntryIds = StringUtil.split(
-				ParamUtil.getString(
-					actionRequest, "deleteCPAttachmentFileEntryIds"),
-				0L);
-		}
-
-		for (long deleteCPAttachmentFileEntryId :
-				deleteCPAttachmentFileEntryIds) {
-
-			_cpAttachmentFileEntryService.deleteCPAttachmentFileEntry(
-				deleteCPAttachmentFileEntryId);
-		}
-	}
-
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
@@ -101,10 +73,10 @@ public class EditCPAttachmentFileEntryMVCActionCommand
 
 		try {
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
-				updateCPAttachmentFileEntry(actionRequest);
+				_updateCPAttachmentFileEntry(actionRequest);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
-				deleteCPAttachmentFileEntry(actionRequest);
+				_deleteCPAttachmentFileEntry(actionRequest);
 			}
 
 			sendRedirect(actionRequest, actionResponse, redirect);
@@ -136,7 +108,35 @@ public class EditCPAttachmentFileEntryMVCActionCommand
 		}
 	}
 
-	protected void updateCPAttachmentFileEntry(ActionRequest actionRequest)
+	private void _deleteCPAttachmentFileEntry(ActionRequest actionRequest)
+		throws Exception {
+
+		long[] deleteCPAttachmentFileEntryIds = null;
+
+		long cpAttachmentFileEntryId = ParamUtil.getLong(
+			actionRequest, "cpAttachmentFileEntryId");
+
+		if (cpAttachmentFileEntryId > 0) {
+			deleteCPAttachmentFileEntryIds = new long[] {
+				cpAttachmentFileEntryId
+			};
+		}
+		else {
+			deleteCPAttachmentFileEntryIds = StringUtil.split(
+				ParamUtil.getString(
+					actionRequest, "deleteCPAttachmentFileEntryIds"),
+				0L);
+		}
+
+		for (long deleteCPAttachmentFileEntryId :
+				deleteCPAttachmentFileEntryIds) {
+
+			_cpAttachmentFileEntryService.deleteCPAttachmentFileEntry(
+				deleteCPAttachmentFileEntryId);
+		}
+	}
+
+	private void _updateCPAttachmentFileEntry(ActionRequest actionRequest)
 		throws Exception {
 
 		long cpAttachmentFileEntryId = ParamUtil.getLong(

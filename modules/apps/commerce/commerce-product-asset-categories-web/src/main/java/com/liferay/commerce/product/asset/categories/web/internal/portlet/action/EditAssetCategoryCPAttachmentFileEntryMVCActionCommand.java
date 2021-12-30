@@ -55,18 +55,6 @@ import org.osgi.service.component.annotations.Reference;
 public class EditAssetCategoryCPAttachmentFileEntryMVCActionCommand
 	extends BaseMVCActionCommand {
 
-	protected void deleteCPAttachmentFileEntry(ActionRequest actionRequest)
-		throws Exception {
-
-		long cpAttachmentFileEntryId = ParamUtil.getLong(
-			actionRequest, "cpAttachmentFileEntryId");
-
-		if (cpAttachmentFileEntryId > 0) {
-			_cpAttachmentFileEntryService.deleteCPAttachmentFileEntry(
-				cpAttachmentFileEntryId);
-		}
-	}
-
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
@@ -76,10 +64,10 @@ public class EditAssetCategoryCPAttachmentFileEntryMVCActionCommand
 
 		try {
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
-				updateCPAttachmentFileEntry(actionRequest);
+				_updateCPAttachmentFileEntry(actionRequest);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
-				deleteCPAttachmentFileEntry(actionRequest);
+				_deleteCPAttachmentFileEntry(actionRequest);
 			}
 		}
 		catch (Exception exception) {
@@ -97,7 +85,19 @@ public class EditAssetCategoryCPAttachmentFileEntryMVCActionCommand
 		}
 	}
 
-	protected void updateCPAttachmentFileEntry(ActionRequest actionRequest)
+	private void _deleteCPAttachmentFileEntry(ActionRequest actionRequest)
+		throws Exception {
+
+		long cpAttachmentFileEntryId = ParamUtil.getLong(
+			actionRequest, "cpAttachmentFileEntryId");
+
+		if (cpAttachmentFileEntryId > 0) {
+			_cpAttachmentFileEntryService.deleteCPAttachmentFileEntry(
+				cpAttachmentFileEntryId);
+		}
+	}
+
+	private void _updateCPAttachmentFileEntry(ActionRequest actionRequest)
 		throws Exception {
 
 		long cpAttachmentFileEntryId = ParamUtil.getLong(

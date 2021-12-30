@@ -28,12 +28,12 @@ public class CommerceAccountGroupSystemUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		renameColumn(
+		_renameColumn(
 			CommerceAccountGroupTable.class,
 			CommerceAccountGroupTable.TABLE_NAME, "system", "system_ BOOLEAN");
 	}
 
-	protected void renameColumn(
+	private void _renameColumn(
 			Class<?> tableClass, String tableName, String oldColumnName,
 			String newColumnName)
 		throws Exception {

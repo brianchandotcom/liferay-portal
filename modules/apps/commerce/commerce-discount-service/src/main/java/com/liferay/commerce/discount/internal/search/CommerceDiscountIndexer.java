@@ -475,7 +475,7 @@ public class CommerceDiscountIndexer extends BaseIndexer<CommerceDiscount> {
 	protected void doReindex(String[] ids) throws Exception {
 		long companyId = GetterUtil.getLong(ids[0]);
 
-		reindexCommerceDiscounts(companyId);
+		_reindexCommerceDiscounts(companyId);
 	}
 
 	@Reference(
@@ -502,7 +502,19 @@ public class CommerceDiscountIndexer extends BaseIndexer<CommerceDiscount> {
 		_commerceDiscountProductTargets.add(commerceDiscountProductTarget);
 	}
 
-	protected void reindexCommerceDiscounts(long companyId)
+	protected void unregisterCommerceDiscountOrderTarget(
+		CommerceDiscountOrderTarget commerceDiscountOrderTarget) {
+
+		_commerceDiscountOrderTargets.remove(commerceDiscountOrderTarget);
+	}
+
+	protected void unregisterCommerceDiscountProductTarget(
+		CommerceDiscountProductTarget commerceDiscountProductTarget) {
+
+		_commerceDiscountProductTargets.remove(commerceDiscountProductTarget);
+	}
+
+	private void _reindexCommerceDiscounts(long companyId)
 		throws PortalException {
 
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
@@ -527,18 +539,6 @@ public class CommerceDiscountIndexer extends BaseIndexer<CommerceDiscount> {
 		indexableActionableDynamicQuery.setSearchEngineId(getSearchEngineId());
 
 		indexableActionableDynamicQuery.performActions();
-	}
-
-	protected void unregisterCommerceDiscountOrderTarget(
-		CommerceDiscountOrderTarget commerceDiscountOrderTarget) {
-
-		_commerceDiscountOrderTargets.remove(commerceDiscountOrderTarget);
-	}
-
-	protected void unregisterCommerceDiscountProductTarget(
-		CommerceDiscountProductTarget commerceDiscountProductTarget) {
-
-		_commerceDiscountProductTargets.remove(commerceDiscountProductTarget);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

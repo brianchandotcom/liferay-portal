@@ -57,7 +57,7 @@ public class EditCommerceInventoryWarehouseItemMVCActionCommand
 
 		try {
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
-				updateCommerceInventoryWarehouseItem(actionRequest);
+				_updateCommerceInventoryWarehouseItem(actionRequest);
 			}
 		}
 		catch (Exception exception) {
@@ -74,8 +74,8 @@ public class EditCommerceInventoryWarehouseItemMVCActionCommand
 		}
 	}
 
-	protected CommerceInventoryWarehouseItem
-			updateCommerceInventoryWarehouseItem(ActionRequest actionRequest)
+	private CommerceInventoryWarehouseItem
+			_updateCommerceInventoryWarehouseItem(ActionRequest actionRequest)
 		throws PortalException {
 
 		long commerceInventoryWarehouseItemId = ParamUtil.getLong(

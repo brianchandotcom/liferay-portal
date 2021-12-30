@@ -44,33 +44,8 @@ public class CommerceAccountServiceVerifyProcess extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
-		verifyAccountRoles();
-		verifyAccountGroup();
-	}
-
-	protected void verifyAccountGroup() throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			_companyLocalService.forEachCompanyId(
-				companyId ->
-					_commerceAccountGroupLocalService.
-						checkGuestCommerceAccountGroup(companyId));
-		}
-	}
-
-	protected void verifyAccountRoles() throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			_companyLocalService.forEachCompanyId(
-				companyId -> {
-					ServiceContext serviceContext = new ServiceContext();
-
-					serviceContext.setCompanyId(companyId);
-					serviceContext.setUserId(_getAdminUserId(companyId));
-					serviceContext.setUuid(PortalUUIDUtil.generate());
-
-					_commerceAccountRoleHelper.checkCommerceAccountRoles(
-						serviceContext);
-				});
-		}
+		_verifyAccountRoles();
+		_verifyAccountGroup();
 	}
 
 	private long _getAdminUserId(long companyId) throws PortalException {
@@ -87,6 +62,31 @@ public class CommerceAccountServiceVerifyProcess extends VerifyProcess {
 		}
 
 		return userIds[0];
+	}
+
+	private void _verifyAccountGroup() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			_companyLocalService.forEachCompanyId(
+				companyId ->
+					_commerceAccountGroupLocalService.
+						checkGuestCommerceAccountGroup(companyId));
+		}
+	}
+
+	private void _verifyAccountRoles() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			_companyLocalService.forEachCompanyId(
+				companyId -> {
+					ServiceContext serviceContext = new ServiceContext();
+
+					serviceContext.setCompanyId(companyId);
+					serviceContext.setUserId(_getAdminUserId(companyId));
+					serviceContext.setUuid(PortalUUIDUtil.generate());
+
+					_commerceAccountRoleHelper.checkCommerceAccountRoles(
+						serviceContext);
+				});
+		}
 	}
 
 	@Reference

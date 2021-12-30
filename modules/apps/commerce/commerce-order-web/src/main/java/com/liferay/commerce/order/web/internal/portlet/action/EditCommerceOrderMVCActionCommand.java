@@ -69,7 +69,89 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 
-	protected void addBillingAddress(ActionRequest actionRequest)
+	@Override
+	protected void doProcessAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
+
+		try {
+			if (cmd.equals(Constants.DELETE)) {
+				_deleteCommerceOrders(actionRequest);
+			}
+			else if (cmd.equals("addBillingAddress")) {
+				_addBillingAddress(actionRequest);
+			}
+			else if (cmd.equals("addShippingAddress")) {
+				_addShippingAddress(actionRequest);
+			}
+			else if (cmd.equals("customFields")) {
+				updateCustomFields(actionRequest);
+			}
+			else if (cmd.equals("orderSummary")) {
+				_updateOrderSummary(actionRequest);
+			}
+			else if (cmd.equals("paymentMethod")) {
+				_updatePaymentMethod(actionRequest);
+			}
+			else if (cmd.equals("paymentStatus")) {
+				_updatePaymentStatus(actionRequest);
+			}
+			else if (cmd.equals("printedNote")) {
+				_updatePrintedNote(actionRequest);
+			}
+			else if (cmd.equals("purchaseOrderNumber")) {
+				_updatePurchaseOrderNumber(actionRequest);
+			}
+			else if (cmd.equals("requestedDeliveryDate")) {
+				_updateRequestedDeliveryDate(actionRequest);
+			}
+			else if (cmd.equals("selectBillingAddress")) {
+				_selectBillingAddress(actionRequest);
+			}
+			else if (cmd.equals("selectShippingAddress")) {
+				_selectShippingAddress(actionRequest);
+			}
+			else if (cmd.equals("totals")) {
+				_updateTotals(actionRequest);
+			}
+			else if (cmd.equals("transition")) {
+				_executeTransition(actionRequest, actionResponse);
+			}
+			else if (cmd.equals("updateBillingAddress")) {
+				_updateBillingAddress(actionRequest);
+			}
+			else if (cmd.equals("updateShippingAddress")) {
+				_updateShippingAddress(actionRequest);
+			}
+		}
+		catch (Exception exception) {
+			hideDefaultErrorMessage(actionRequest);
+			hideDefaultSuccessMessage(actionRequest);
+
+			SessionErrors.add(actionRequest, exception.getClass());
+
+			String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+			sendRedirect(actionRequest, actionResponse, redirect);
+		}
+	}
+
+	protected void updateCustomFields(ActionRequest actionRequest)
+		throws PortalException {
+
+		long commerceOrderId = ParamUtil.getLong(
+			actionRequest, "commerceOrderId");
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			CommerceOrder.class.getName(), actionRequest);
+
+		_commerceOrderService.updateCustomFields(
+			commerceOrderId, serviceContext);
+	}
+
+	private void _addBillingAddress(ActionRequest actionRequest)
 		throws PortalException {
 
 		long commerceOrderId = ParamUtil.getLong(
@@ -105,7 +187,7 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 			commerceAddress.getCommerceAddressId());
 	}
 
-	protected CommerceShipment addShipment(
+	private CommerceShipment _addShipment(
 			ActionRequest actionRequest, long commerceOrderId)
 		throws PortalException {
 
@@ -116,7 +198,7 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 			commerceOrderId, serviceContext);
 	}
 
-	protected void addShippingAddress(ActionRequest actionRequest)
+	private void _addShippingAddress(ActionRequest actionRequest)
 		throws PortalException {
 
 		long commerceOrderId = ParamUtil.getLong(
@@ -152,7 +234,7 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 			commerceAddress.getCommerceAddressId());
 	}
 
-	protected void deleteCommerceOrders(ActionRequest actionRequest)
+	private void _deleteCommerceOrders(ActionRequest actionRequest)
 		throws PortalException {
 
 		long[] deleteCommerceOrderIds = null;
@@ -173,76 +255,7 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	@Override
-	protected void doProcessAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
-
-		try {
-			if (cmd.equals(Constants.DELETE)) {
-				deleteCommerceOrders(actionRequest);
-			}
-			else if (cmd.equals("addBillingAddress")) {
-				addBillingAddress(actionRequest);
-			}
-			else if (cmd.equals("addShippingAddress")) {
-				addShippingAddress(actionRequest);
-			}
-			else if (cmd.equals("customFields")) {
-				updateCustomFields(actionRequest);
-			}
-			else if (cmd.equals("orderSummary")) {
-				updateOrderSummary(actionRequest);
-			}
-			else if (cmd.equals("paymentMethod")) {
-				updatePaymentMethod(actionRequest);
-			}
-			else if (cmd.equals("paymentStatus")) {
-				updatePaymentStatus(actionRequest);
-			}
-			else if (cmd.equals("printedNote")) {
-				updatePrintedNote(actionRequest);
-			}
-			else if (cmd.equals("purchaseOrderNumber")) {
-				updatePurchaseOrderNumber(actionRequest);
-			}
-			else if (cmd.equals("requestedDeliveryDate")) {
-				updateRequestedDeliveryDate(actionRequest);
-			}
-			else if (cmd.equals("selectBillingAddress")) {
-				selectBillingAddress(actionRequest);
-			}
-			else if (cmd.equals("selectShippingAddress")) {
-				selectShippingAddress(actionRequest);
-			}
-			else if (cmd.equals("totals")) {
-				updateTotals(actionRequest);
-			}
-			else if (cmd.equals("transition")) {
-				executeTransition(actionRequest, actionResponse);
-			}
-			else if (cmd.equals("updateBillingAddress")) {
-				updateBillingAddress(actionRequest);
-			}
-			else if (cmd.equals("updateShippingAddress")) {
-				updateShippingAddress(actionRequest);
-			}
-		}
-		catch (Exception exception) {
-			hideDefaultErrorMessage(actionRequest);
-			hideDefaultSuccessMessage(actionRequest);
-
-			SessionErrors.add(actionRequest, exception.getClass());
-
-			String redirect = ParamUtil.getString(actionRequest, "redirect");
-
-			sendRedirect(actionRequest, actionResponse, redirect);
-		}
-	}
-
-	protected void executeTransition(
+	private void _executeTransition(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
@@ -255,7 +268,7 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "transitionName");
 
 		if (workflowTaskId > 0) {
-			executeWorkflowTransition(
+			_executeWorkflowTransition(
 				actionRequest, commerceOrderId, transitionName, workflowTaskId);
 		}
 		else {
@@ -291,10 +304,10 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 				(commerceOrder.getOrderStatus() !=
 					CommerceOrderConstants.ORDER_STATUS_ON_HOLD)) {
 
-				CommerceShipment commerceShipment = addShipment(
+				CommerceShipment commerceShipment = _addShipment(
 					actionRequest, commerceOrderId);
 
-				redirectToShipments(
+				_redirectToShipments(
 					commerceShipment.getCommerceShipmentId(), actionRequest,
 					actionResponse);
 			}
@@ -306,7 +319,7 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	protected void executeWorkflowTransition(
+	private void _executeWorkflowTransition(
 			ActionRequest actionRequest, long commerceOrderId,
 			String transitionName, long workflowTaskId)
 		throws PortalException {
@@ -317,7 +330,7 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 			commerceOrderId, workflowTaskId, transitionName, comment);
 	}
 
-	protected void redirectToShipments(
+	private void _redirectToShipments(
 			long commerceShipmentId, ActionRequest actionRequest,
 			ActionResponse actionResponse)
 		throws Exception {
@@ -337,7 +350,7 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 			).buildString());
 	}
 
-	protected void selectBillingAddress(ActionRequest actionRequest)
+	private void _selectBillingAddress(ActionRequest actionRequest)
 		throws PortalException {
 
 		long commerceOrderId = ParamUtil.getLong(
@@ -348,7 +361,7 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 		_commerceOrderService.updateBillingAddress(commerceOrderId, addressId);
 	}
 
-	protected void selectShippingAddress(ActionRequest actionRequest)
+	private void _selectShippingAddress(ActionRequest actionRequest)
 		throws PortalException {
 
 		long commerceOrderId = ParamUtil.getLong(
@@ -359,7 +372,7 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 		_commerceOrderService.updateShippingAddress(commerceOrderId, addressId);
 	}
 
-	protected void updateBillingAddress(ActionRequest actionRequest)
+	private void _updateBillingAddress(ActionRequest actionRequest)
 		throws PortalException {
 
 		long commerceOrderId = ParamUtil.getLong(
@@ -384,20 +397,7 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 			zip, regionId, countryId, phoneNumber, serviceContext);
 	}
 
-	protected void updateCustomFields(ActionRequest actionRequest)
-		throws PortalException {
-
-		long commerceOrderId = ParamUtil.getLong(
-			actionRequest, "commerceOrderId");
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			CommerceOrder.class.getName(), actionRequest);
-
-		_commerceOrderService.updateCustomFields(
-			commerceOrderId, serviceContext);
-	}
-
-	protected void updateOrderSummary(ActionRequest actionRequest)
+	private void _updateOrderSummary(ActionRequest actionRequest)
 		throws PortalException {
 
 		long commerceOrderId = ParamUtil.getLong(
@@ -439,7 +439,7 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 			commerceOrder.getTotalDiscountPercentageLevel4());
 	}
 
-	protected void updatePaymentMethod(ActionRequest actionRequest)
+	private void _updatePaymentMethod(ActionRequest actionRequest)
 		throws PortalException {
 
 		long commerceOrderId = ParamUtil.getLong(
@@ -452,7 +452,7 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 			commerceOrderId, paymentMethodKey);
 	}
 
-	protected void updatePaymentStatus(ActionRequest actionRequest)
+	private void _updatePaymentStatus(ActionRequest actionRequest)
 		throws PortalException {
 
 		long commerceOrderId = ParamUtil.getLong(
@@ -469,7 +469,7 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 			StringPool.BLANK);
 	}
 
-	protected void updatePrintedNote(ActionRequest actionRequest)
+	private void _updatePrintedNote(ActionRequest actionRequest)
 		throws PortalException {
 
 		long commerceOrderId = ParamUtil.getLong(
@@ -479,7 +479,7 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 		_commerceOrderService.updatePrintedNote(commerceOrderId, printedNote);
 	}
 
-	protected void updatePurchaseOrderNumber(ActionRequest actionRequest)
+	private void _updatePurchaseOrderNumber(ActionRequest actionRequest)
 		throws PortalException {
 
 		long commerceOrderId = ParamUtil.getLong(
@@ -491,7 +491,7 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 			commerceOrderId, purchaseOrderNumber);
 	}
 
-	protected void updateRequestedDeliveryDate(ActionRequest actionRequest)
+	private void _updateRequestedDeliveryDate(ActionRequest actionRequest)
 		throws PortalException {
 
 		long commerceOrderId = ParamUtil.getLong(
@@ -527,7 +527,7 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 			requestedDeliveryDateMinute, serviceContext);
 	}
 
-	protected void updateShippingAddress(ActionRequest actionRequest)
+	private void _updateShippingAddress(ActionRequest actionRequest)
 		throws PortalException {
 
 		long commerceOrderId = ParamUtil.getLong(
@@ -552,7 +552,7 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 			zip, regionId, countryId, phoneNumber, serviceContext);
 	}
 
-	protected void updateTotals(ActionRequest actionRequest)
+	private void _updateTotals(ActionRequest actionRequest)
 		throws PortalException {
 
 		long commerceOrderId = ParamUtil.getLong(

@@ -60,7 +60,7 @@ public class CSVUploadFileEntryHandler implements UploadFileEntryHandler {
 		try (InputStream inputStream = uploadPortletRequest.getFileAsStream(
 				_PARAMETER_NAME)) {
 
-			return addFileEntry(
+			return _addFileEntry(
 				fileName, uploadPortletRequest.getContentType(_PARAMETER_NAME),
 				inputStream,
 				(ThemeDisplay)uploadPortletRequest.getAttribute(
@@ -68,7 +68,7 @@ public class CSVUploadFileEntryHandler implements UploadFileEntryHandler {
 		}
 	}
 
-	protected FileEntry addFileEntry(
+	private FileEntry _addFileEntry(
 			String fileName, String contentType, InputStream inputStream,
 			ThemeDisplay themeDisplay)
 		throws PortalException {

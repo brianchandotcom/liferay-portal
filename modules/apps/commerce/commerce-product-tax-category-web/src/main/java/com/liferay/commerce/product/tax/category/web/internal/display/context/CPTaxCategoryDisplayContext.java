@@ -138,12 +138,12 @@ public class CPTaxCategoryDisplayContext {
 		String orderByType = getOrderByType();
 
 		OrderByComparator<CPTaxCategory> orderByComparator =
-			getCPTaxCategoryOrderByComparator(orderByCol, orderByType);
+			_getCPTaxCategoryOrderByComparator(orderByCol, orderByType);
 
 		_searchContainer.setOrderByCol(orderByCol);
 		_searchContainer.setOrderByComparator(orderByComparator);
 		_searchContainer.setOrderByType(orderByType);
-		_searchContainer.setRowChecker(getRowChecker());
+		_searchContainer.setRowChecker(_getRowChecker());
 
 		int total = _cpTaxCategoryService.getCPTaxCategoriesCount(
 			themeDisplay.getCompanyId());
@@ -167,9 +167,8 @@ public class CPTaxCategoryDisplayContext {
 			CPActionKeys.MANAGE_COMMERCE_PRODUCT_TAX_CATEGORIES);
 	}
 
-	protected OrderByComparator<CPTaxCategory>
-		getCPTaxCategoryOrderByComparator(
-			String orderByCol, String orderByType) {
+	private OrderByComparator<CPTaxCategory> _getCPTaxCategoryOrderByComparator(
+		String orderByCol, String orderByType) {
 
 		boolean orderByAsc = false;
 
@@ -187,7 +186,7 @@ public class CPTaxCategoryDisplayContext {
 		return orderByComparator;
 	}
 
-	protected RowChecker getRowChecker() {
+	private RowChecker _getRowChecker() {
 		if (_rowChecker == null) {
 			_rowChecker = new EmptyOnClickRowChecker(_renderResponse);
 		}

@@ -51,7 +51,7 @@ public class EditCommerceOrderExternalReferenceCodeMVCActionCommand
 		throws Exception {
 
 		try {
-			updateCommerceOrderExternalReferenceCode(actionRequest);
+			_updateCommerceOrderExternalReferenceCode(actionRequest);
 		}
 		catch (Exception exception) {
 			if (exception instanceof NoSuchOrderException ||
@@ -70,7 +70,7 @@ public class EditCommerceOrderExternalReferenceCodeMVCActionCommand
 		}
 	}
 
-	protected void updateCommerceOrderExternalReferenceCode(
+	private void _updateCommerceOrderExternalReferenceCode(
 			ActionRequest actionRequest)
 		throws Exception {
 

@@ -91,7 +91,7 @@ public class PaymentMethodCommerceCheckoutStep
 		throws Exception {
 
 		try {
-			updateCommerceOrderPaymentMethod(actionRequest);
+			_updateCommerceOrderPaymentMethod(actionRequest);
 		}
 		catch (Exception exception) {
 			if (exception instanceof CommerceOrderPaymentMethodException) {
@@ -134,7 +134,7 @@ public class PaymentMethodCommerceCheckoutStep
 		_commerceOrderModelResourcePermission = modelResourcePermission;
 	}
 
-	protected void updateCommerceOrderPaymentMethod(ActionRequest actionRequest)
+	private void _updateCommerceOrderPaymentMethod(ActionRequest actionRequest)
 		throws Exception {
 
 		String commercePaymentMethodKey = ParamUtil.getString(

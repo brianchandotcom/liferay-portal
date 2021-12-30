@@ -145,7 +145,7 @@ public class CPSearchResultsDisplayContext {
 	}
 
 	public CPDataSourceResult getCPDataSourceResult() {
-		List<CPCatalogEntry> cpCatalogEntries = getCPCatalogEntries(
+		List<CPCatalogEntry> cpCatalogEntries = _getCPCatalogEntries(
 			_portletSharedSearchResponse.getDocuments());
 
 		return new CPDataSourceResult(
@@ -232,7 +232,7 @@ public class CPSearchResultsDisplayContext {
 			return _searchContainer;
 		}
 
-		_searchContainer = buildSearchContainer(
+		_searchContainer = _buildSearchContainer(
 			getCPDataSourceResult(),
 			_portletSharedSearchResponse.getPaginationStart(), "start",
 			_portletSharedSearchResponse.getPaginationDelta(), "delta");
@@ -282,7 +282,7 @@ public class CPSearchResultsDisplayContext {
 		return false;
 	}
 
-	protected SearchContainer<CPCatalogEntry> buildSearchContainer(
+	private SearchContainer<CPCatalogEntry> _buildSearchContainer(
 		CPDataSourceResult cpDataSourceResult, int paginationStart,
 		String paginationStartParameterName, int paginationDelta,
 		String paginationDeltaParameterName) {
@@ -300,7 +300,7 @@ public class CPSearchResultsDisplayContext {
 
 		SearchContainer<CPCatalogEntry> searchContainer = new SearchContainer<>(
 			portletRequest, displayTerms, searchTerms, curParam, cur, delta,
-			getPortletURL(), headerNames, emptyResultsMessage, cssClass);
+			_getPortletURL(), headerNames, emptyResultsMessage, cssClass);
 
 		searchContainer.setDeltaParam(paginationDeltaParameterName);
 		searchContainer.setResults(cpDataSourceResult.getCPCatalogEntries());
@@ -309,7 +309,7 @@ public class CPSearchResultsDisplayContext {
 		return searchContainer;
 	}
 
-	protected List<CPCatalogEntry> getCPCatalogEntries(
+	private List<CPCatalogEntry> _getCPCatalogEntries(
 		List<Document> documents) {
 
 		List<CPCatalogEntry> cpCatalogEntries = new ArrayList<>();
@@ -323,8 +323,8 @@ public class CPSearchResultsDisplayContext {
 		return cpCatalogEntries;
 	}
 
-	protected PortletURL getPortletURL() {
-		final String urlString = getURLString();
+	private PortletURL _getPortletURL() {
+		final String urlString = _getURLString();
 
 		return new NullPortletURL() {
 
@@ -336,7 +336,7 @@ public class CPSearchResultsDisplayContext {
 		};
 	}
 
-	protected String getURLString() {
+	private String _getURLString() {
 		return HttpUtil.removeParameter(
 			PortalUtil.getCurrentURL(_cpRequestHelper.getRequest()), "start");
 	}

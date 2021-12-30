@@ -49,7 +49,7 @@ public class EditCommerceChannelExternalReferenceCodeMVCActionCommand
 		throws Exception {
 
 		try {
-			updateCommerceOrderExternalReferenceCode(actionRequest);
+			_updateCommerceOrderExternalReferenceCode(actionRequest);
 		}
 		catch (Exception exception) {
 			if (exception instanceof NoSuchChannelException ||
@@ -65,7 +65,7 @@ public class EditCommerceChannelExternalReferenceCodeMVCActionCommand
 		}
 	}
 
-	protected void updateCommerceOrderExternalReferenceCode(
+	private void _updateCommerceOrderExternalReferenceCode(
 			ActionRequest actionRequest)
 		throws Exception {
 

@@ -79,7 +79,7 @@ public class TempAttachmentsUploadFileEntryHandler
 		try (InputStream inputStream = uploadPortletRequest.getFileAsStream(
 				_PARAMETER_NAME)) {
 
-			return addFileEntry(
+			return _addFileEntry(
 				cpDefinition.getCPDefinitionId(), fileName, contentType,
 				inputStream, themeDisplay);
 		}
@@ -91,7 +91,10 @@ public class TempAttachmentsUploadFileEntryHandler
 			AttachmentsConfiguration.class, properties);
 	}
 
-	protected FileEntry addFileEntry(
+	@Reference
+	protected CPDefinitionService cpDefinitionService;
+
+	private FileEntry _addFileEntry(
 			long cpDefinitionId, String fileName, String contentType,
 			InputStream inputStream, ThemeDisplay themeDisplay)
 		throws PortalException {
@@ -103,9 +106,6 @@ public class TempAttachmentsUploadFileEntryHandler
 			themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
 			_TEMP_FOLDER_NAME, uniqueFileName, inputStream, contentType);
 	}
-
-	@Reference
-	protected CPDefinitionService cpDefinitionService;
 
 	private boolean _exists(ThemeDisplay themeDisplay, String curFileName) {
 		try {

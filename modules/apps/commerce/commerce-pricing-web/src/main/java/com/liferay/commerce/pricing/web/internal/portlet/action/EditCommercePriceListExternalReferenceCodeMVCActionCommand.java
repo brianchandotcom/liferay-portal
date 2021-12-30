@@ -54,7 +54,7 @@ public class EditCommercePriceListExternalReferenceCodeMVCActionCommand
 		throws Exception {
 
 		try {
-			updateCommercePriceListExternalReferenceCode(actionRequest);
+			_updateCommercePriceListExternalReferenceCode(actionRequest);
 		}
 		catch (Exception exception) {
 			if (exception instanceof NoSuchPriceListException ||
@@ -75,7 +75,7 @@ public class EditCommercePriceListExternalReferenceCodeMVCActionCommand
 		}
 	}
 
-	protected void updateCommercePriceListExternalReferenceCode(
+	private void _updateCommercePriceListExternalReferenceCode(
 			ActionRequest actionRequest)
 		throws Exception {
 

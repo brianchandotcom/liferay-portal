@@ -60,9 +60,9 @@ public class CommerceAddressUpgradeProcess
 				"update CommerceAccount set defaultBillingAddressId = ? " +
 					"where commerceAccountId = ?");
 
-			updateCommerceAccountAndSetType(
+			_updateCommerceAccountAndSetType(
 				preparedStatement,
-				getCommerceAddressResultSet("defaultBilling"));
+				_getCommerceAddressResultSet("defaultBilling"));
 		}
 
 		if (hasColumn(CommerceAddressModelImpl.TABLE_NAME, "defaultShipping")) {
@@ -70,13 +70,13 @@ public class CommerceAddressUpgradeProcess
 				"update CommerceAccount set defaultShippingAddressId = ? " +
 					"where commerceAccountId = ?");
 
-			updateCommerceAccountAndSetType(
+			_updateCommerceAccountAndSetType(
 				preparedStatement,
-				getCommerceAddressResultSet("defaultShipping"));
+				_getCommerceAddressResultSet("defaultShipping"));
 		}
 	}
 
-	protected ResultSet getCommerceAddressResultSet(String type)
+	private ResultSet _getCommerceAddressResultSet(String type)
 		throws Exception {
 
 		long commerceAccountClassNameId = _classNameLocalService.getClassNameId(
@@ -104,7 +104,7 @@ public class CommerceAddressUpgradeProcess
 		return preparedStatement.executeQuery();
 	}
 
-	protected void setType(
+	private void _setType(
 			boolean defaultBilling, boolean defaultShipping,
 			long commerceAddressId)
 		throws Exception {
@@ -127,7 +127,7 @@ public class CommerceAddressUpgradeProcess
 		preparedStatement.addBatch();
 	}
 
-	protected void updateCommerceAccountAndSetType(
+	private void _updateCommerceAccountAndSetType(
 			PreparedStatement preparedStatement, ResultSet resultSet)
 		throws Exception {
 
@@ -138,7 +138,7 @@ public class CommerceAddressUpgradeProcess
 
 			preparedStatement.setLong(2, resultSet.getLong("classPK"));
 
-			setType(
+			_setType(
 				resultSet.getBoolean("defaultBilling"),
 				resultSet.getBoolean("defaultShipping"), commerceAddressId);
 

@@ -51,17 +51,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class EditCommerceAddressMVCActionCommand extends BaseMVCActionCommand {
 
-	protected void deleteCommerceAddress(ActionRequest actionRequest)
-		throws Exception {
-
-		long commerceAddressId = ParamUtil.getLong(
-			actionRequest, "commerceAddressId");
-
-		if (commerceAddressId > 0) {
-			_commerceAddressService.deleteCommerceAddress(commerceAddressId);
-		}
-	}
-
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
@@ -71,12 +60,12 @@ public class EditCommerceAddressMVCActionCommand extends BaseMVCActionCommand {
 
 		try {
 			if (cmd.equals(Constants.DELETE)) {
-				deleteCommerceAddress(actionRequest);
+				_deleteCommerceAddress(actionRequest);
 			}
 			else if (cmd.equals(Constants.ADD) ||
 					 cmd.equals(Constants.UPDATE)) {
 
-				updateCommerceAddress(actionRequest);
+				_updateCommerceAddress(actionRequest);
 			}
 		}
 		catch (Exception exception) {
@@ -107,7 +96,18 @@ public class EditCommerceAddressMVCActionCommand extends BaseMVCActionCommand {
 		hideDefaultSuccessMessage(actionRequest);
 	}
 
-	protected void updateCommerceAddress(ActionRequest actionRequest)
+	private void _deleteCommerceAddress(ActionRequest actionRequest)
+		throws Exception {
+
+		long commerceAddressId = ParamUtil.getLong(
+			actionRequest, "commerceAddressId");
+
+		if (commerceAddressId > 0) {
+			_commerceAddressService.deleteCommerceAddress(commerceAddressId);
+		}
+	}
+
+	private void _updateCommerceAddress(ActionRequest actionRequest)
 		throws Exception {
 
 		long commerceAddressId = ParamUtil.getLong(

@@ -143,7 +143,7 @@ public class BaseCommerceShippingFixedOptionDisplayContext {
 			}
 		).setParameter(
 			"screenNavigationCategoryKey",
-			getSelectedScreenNavigationCategoryKey()
+			_getSelectedScreenNavigationCategoryKey()
 		).buildPortletURL();
 	}
 
@@ -152,7 +152,7 @@ public class BaseCommerceShippingFixedOptionDisplayContext {
 	}
 
 	public BigDecimal round(BigDecimal value) throws PortalException {
-		CommerceCurrency commerceCurrency = getCommerceCurrency();
+		CommerceCurrency commerceCurrency = _getCommerceCurrency();
 
 		if (commerceCurrency == null) {
 			return value;
@@ -161,7 +161,13 @@ public class BaseCommerceShippingFixedOptionDisplayContext {
 		return commerceCurrency.round(value);
 	}
 
-	protected CommerceCurrency getCommerceCurrency() throws PortalException {
+	protected final CommerceChannelLocalService commerceChannelLocalService;
+	protected final CommerceCurrencyLocalService commerceCurrencyLocalService;
+	protected final CommerceShippingMethodService commerceShippingMethodService;
+	protected final RenderRequest renderRequest;
+	protected final RenderResponse renderResponse;
+
+	private CommerceCurrency _getCommerceCurrency() throws PortalException {
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -176,17 +182,11 @@ public class BaseCommerceShippingFixedOptionDisplayContext {
 			themeDisplay.getCompanyId(), commerceCurrencyCode);
 	}
 
-	protected String getSelectedScreenNavigationCategoryKey() {
+	private String _getSelectedScreenNavigationCategoryKey() {
 		return ParamUtil.getString(
 			renderRequest, "screenNavigationCategoryKey",
 			getScreenNavigationCategoryKey());
 	}
-
-	protected final CommerceChannelLocalService commerceChannelLocalService;
-	protected final CommerceCurrencyLocalService commerceCurrencyLocalService;
-	protected final CommerceShippingMethodService commerceShippingMethodService;
-	protected final RenderRequest renderRequest;
-	protected final RenderResponse renderResponse;
 
 	private CommerceShippingMethod _commerceShippingMethod;
 

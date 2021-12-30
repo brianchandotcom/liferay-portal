@@ -78,7 +78,7 @@ public class CommercePriceListItemSelectorViewDisplayContext
 		searchContainer.setOrderByCol(getOrderByCol());
 
 		OrderByComparator<CommercePriceList> orderByComparator =
-			getCommercePriceListOrderByComparator(
+			_getCommercePriceListOrderByComparator(
 				getOrderByCol(), getOrderByType());
 
 		searchContainer.setOrderByComparator(orderByComparator);
@@ -87,12 +87,12 @@ public class CommercePriceListItemSelectorViewDisplayContext
 
 		RowChecker rowChecker = new CommercePriceListItemSelectorChecker(
 			cpRequestHelper.getRenderResponse(),
-			getCheckedCommercePriceListIds());
+			_getCheckedCommercePriceListIds());
 
 		searchContainer.setRowChecker(rowChecker);
 
 		if (searchContainer.isSearch()) {
-			Sort sort = getCommercePriceListSort(
+			Sort sort = _getCommercePriceListSort(
 				getOrderByCol(), getOrderByType());
 
 			BaseModelSearchResult<CommercePriceList>
@@ -127,8 +127,13 @@ public class CommercePriceListItemSelectorViewDisplayContext
 		return searchContainer;
 	}
 
-	protected static OrderByComparator<CommercePriceList>
-		getCommercePriceListOrderByComparator(
+	private long[] _getCheckedCommercePriceListIds() {
+		return ParamUtil.getLongValues(
+			cpRequestHelper.getRenderRequest(), "checkedCommercePriceListIds");
+	}
+
+	private OrderByComparator<CommercePriceList>
+		_getCommercePriceListOrderByComparator(
 			String orderByCol, String orderByType) {
 
 		boolean orderByAsc = false;
@@ -150,7 +155,7 @@ public class CommercePriceListItemSelectorViewDisplayContext
 		return null;
 	}
 
-	protected static Sort getCommercePriceListSort(
+	private Sort _getCommercePriceListSort(
 		String orderByCol, String orderByType) {
 
 		boolean reverse = true;
@@ -170,11 +175,6 @@ public class CommercePriceListItemSelectorViewDisplayContext
 		}
 
 		return null;
-	}
-
-	protected long[] getCheckedCommercePriceListIds() {
-		return ParamUtil.getLongValues(
-			cpRequestHelper.getRenderRequest(), "checkedCommercePriceListIds");
 	}
 
 	private final CommercePriceListService _commercePriceListService;

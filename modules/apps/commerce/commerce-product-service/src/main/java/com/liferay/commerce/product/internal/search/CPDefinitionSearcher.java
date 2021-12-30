@@ -61,14 +61,73 @@ public class CPDefinitionSearcher extends BaseSearcher {
 		return new String[] {CPDefinition.class.getName()};
 	}
 
-	protected void addImpossibleTerm(
+	@Override
+	protected void addSearchAssetCategoryIds(
+			BooleanFilter queryBooleanFilter, SearchContext searchContext)
+		throws Exception {
+
+		_addSearchAllCategories(queryBooleanFilter);
+		_addSearchAnyCategories(queryBooleanFilter);
+		_addSearchNotAnyCategories(queryBooleanFilter);
+		_addSearchNotAllCategories(queryBooleanFilter);
+	}
+
+	@Override
+	protected void addSearchAssetTagNames(
+			BooleanFilter queryBooleanFilter, SearchContext searchContext)
+		throws Exception {
+
+		_addSearchAllTags(queryBooleanFilter);
+		_addSearchAnyTags(queryBooleanFilter);
+		_addSearchNotAllTags(queryBooleanFilter);
+		_addSearchNotAnyTags(queryBooleanFilter);
+	}
+
+	@Override
+	protected Map<String, Query> addSearchKeywords(
+			BooleanQuery searchQuery, SearchContext searchContext)
+		throws Exception {
+
+		String keywords = searchContext.getKeywords();
+
+		if (Validator.isNull(keywords)) {
+			return Collections.emptyMap();
+		}
+
+		Map<String, Query> queries = super.addSearchKeywords(
+			searchQuery, searchContext);
+
+		String field = Field.getLocalizedName(
+			searchContext.getLocale(), "localized_title");
+
+		Query query = searchQuery.addTerm(field, keywords, true);
+
+		queries.put(field, query);
+
+		return queries;
+	}
+
+	@Override
+	protected void addSearchLayout(
+			BooleanFilter queryBooleanFilter, SearchContext searchContext)
+		throws Exception {
+
+		String layoutUuid = (String)searchContext.getAttribute(
+			Field.LAYOUT_UUID);
+
+		if (Validator.isNotNull(layoutUuid)) {
+			queryBooleanFilter.addRequiredTerm(Field.LAYOUT_UUID, layoutUuid);
+		}
+	}
+
+	private void _addImpossibleTerm(
 			BooleanFilter queryBooleanFilter, String field)
 		throws Exception {
 
 		queryBooleanFilter.addTerm(field, "-1", BooleanClauseOccur.MUST);
 	}
 
-	protected void addSearchAllCategories(BooleanFilter queryBooleanFilter)
+	private void _addSearchAllCategories(BooleanFilter queryBooleanFilter)
 		throws Exception {
 
 		long[] allCategoryIds = _cpQuery.getAllCategoryIds();
@@ -81,7 +140,7 @@ public class CPDefinitionSearcher extends BaseSearcher {
 			PermissionThreadLocal.getPermissionChecker(), allCategoryIds);
 
 		if (allCategoryIds.length != filteredAllCategoryIds.length) {
-			addImpossibleTerm(queryBooleanFilter, Field.ASSET_CATEGORY_IDS);
+			_addImpossibleTerm(queryBooleanFilter, Field.ASSET_CATEGORY_IDS);
 
 			return;
 		}
@@ -122,7 +181,7 @@ public class CPDefinitionSearcher extends BaseSearcher {
 			categoryIdsBooleanFilter, BooleanClauseOccur.MUST);
 	}
 
-	protected void addSearchAllTags(BooleanFilter queryBooleanFilter)
+	private void _addSearchAllTags(BooleanFilter queryBooleanFilter)
 		throws Exception {
 
 		long[][] allTagIdsArray = _cpQuery.getAllTagIdsArray();
@@ -151,7 +210,7 @@ public class CPDefinitionSearcher extends BaseSearcher {
 			tagIdsArrayBooleanFilter, BooleanClauseOccur.MUST);
 	}
 
-	protected void addSearchAnyCategories(BooleanFilter queryBooleanFilter)
+	private void _addSearchAnyCategories(BooleanFilter queryBooleanFilter)
 		throws Exception {
 
 		long[] anyCategoryIds = _cpQuery.getAnyCategoryIds();
@@ -164,7 +223,7 @@ public class CPDefinitionSearcher extends BaseSearcher {
 			PermissionThreadLocal.getPermissionChecker(), anyCategoryIds);
 
 		if (filteredAnyCategoryIds.length == 0) {
-			addImpossibleTerm(queryBooleanFilter, Field.ASSET_CATEGORY_IDS);
+			_addImpossibleTerm(queryBooleanFilter, Field.ASSET_CATEGORY_IDS);
 
 			return;
 		}
@@ -199,7 +258,7 @@ public class CPDefinitionSearcher extends BaseSearcher {
 		queryBooleanFilter.add(categoryIdsTermsFilter, BooleanClauseOccur.MUST);
 	}
 
-	protected void addSearchAnyTags(BooleanFilter queryBooleanFilter)
+	private void _addSearchAnyTags(BooleanFilter queryBooleanFilter)
 		throws Exception {
 
 		long[] anyTagIds = _cpQuery.getAnyTagIds();
@@ -215,66 +274,7 @@ public class CPDefinitionSearcher extends BaseSearcher {
 		queryBooleanFilter.add(tagIdsTermsFilter, BooleanClauseOccur.MUST);
 	}
 
-	@Override
-	protected void addSearchAssetCategoryIds(
-			BooleanFilter queryBooleanFilter, SearchContext searchContext)
-		throws Exception {
-
-		addSearchAllCategories(queryBooleanFilter);
-		addSearchAnyCategories(queryBooleanFilter);
-		addSearchNotAnyCategories(queryBooleanFilter);
-		addSearchNotAllCategories(queryBooleanFilter);
-	}
-
-	@Override
-	protected void addSearchAssetTagNames(
-			BooleanFilter queryBooleanFilter, SearchContext searchContext)
-		throws Exception {
-
-		addSearchAllTags(queryBooleanFilter);
-		addSearchAnyTags(queryBooleanFilter);
-		addSearchNotAllTags(queryBooleanFilter);
-		addSearchNotAnyTags(queryBooleanFilter);
-	}
-
-	@Override
-	protected Map<String, Query> addSearchKeywords(
-			BooleanQuery searchQuery, SearchContext searchContext)
-		throws Exception {
-
-		String keywords = searchContext.getKeywords();
-
-		if (Validator.isNull(keywords)) {
-			return Collections.emptyMap();
-		}
-
-		Map<String, Query> queries = super.addSearchKeywords(
-			searchQuery, searchContext);
-
-		String field = Field.getLocalizedName(
-			searchContext.getLocale(), "localized_title");
-
-		Query query = searchQuery.addTerm(field, keywords, true);
-
-		queries.put(field, query);
-
-		return queries;
-	}
-
-	@Override
-	protected void addSearchLayout(
-			BooleanFilter queryBooleanFilter, SearchContext searchContext)
-		throws Exception {
-
-		String layoutUuid = (String)searchContext.getAttribute(
-			Field.LAYOUT_UUID);
-
-		if (Validator.isNotNull(layoutUuid)) {
-			queryBooleanFilter.addRequiredTerm(Field.LAYOUT_UUID, layoutUuid);
-		}
-	}
-
-	protected void addSearchNotAllCategories(BooleanFilter queryBooleanFilter)
+	private void _addSearchNotAllCategories(BooleanFilter queryBooleanFilter)
 		throws Exception {
 
 		long[] notAllCategoryIds = _cpQuery.getNotAllCategoryIds();
@@ -320,7 +320,7 @@ public class CPDefinitionSearcher extends BaseSearcher {
 			categoryIdsBooleanFilter, BooleanClauseOccur.MUST_NOT);
 	}
 
-	protected void addSearchNotAllTags(BooleanFilter queryBooleanFilter)
+	private void _addSearchNotAllTags(BooleanFilter queryBooleanFilter)
 		throws Exception {
 
 		long[][] notAllTagIdsArray = _cpQuery.getNotAllTagIdsArray();
@@ -349,7 +349,7 @@ public class CPDefinitionSearcher extends BaseSearcher {
 			tagIdsArrayBooleanFilter, BooleanClauseOccur.MUST_NOT);
 	}
 
-	protected void addSearchNotAnyCategories(BooleanFilter queryBooleanFilter)
+	private void _addSearchNotAnyCategories(BooleanFilter queryBooleanFilter)
 		throws Exception {
 
 		long[] notAnyCategoryIds = _cpQuery.getNotAnyCategoryIds();
@@ -390,7 +390,7 @@ public class CPDefinitionSearcher extends BaseSearcher {
 			categoryIdsTermsFilter, BooleanClauseOccur.MUST_NOT);
 	}
 
-	protected void addSearchNotAnyTags(BooleanFilter queryBooleanFilter)
+	private void _addSearchNotAnyTags(BooleanFilter queryBooleanFilter)
 		throws Exception {
 
 		long[] notAnyTagIds = _cpQuery.getNotAnyTagIds();

@@ -50,11 +50,11 @@ public class TransferQuantitiesMVCActionCommand extends BaseMVCActionCommand {
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		if (cmd.equals(Constants.MOVE)) {
-			moveQuantities(actionRequest);
+			_moveQuantities(actionRequest);
 		}
 	}
 
-	protected void moveQuantities(ActionRequest actionRequest)
+	private void _moveQuantities(ActionRequest actionRequest)
 		throws PortalException {
 
 		String sku = ParamUtil.getString(actionRequest, "sku");

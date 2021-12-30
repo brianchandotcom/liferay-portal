@@ -53,7 +53,38 @@ import org.osgi.service.component.annotations.Reference;
 public class EditCommerceAvailabilityEstimateMVCActionCommand
 	extends BaseMVCActionCommand {
 
-	protected void deleteCommerceAvailabilityEstimates(
+	@Override
+	protected void doProcessAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
+
+		try {
+			if (cmd.equals(Constants.DELETE)) {
+				_deleteCommerceAvailabilityEstimates(actionRequest);
+			}
+			else if (cmd.equals(Constants.ADD) ||
+					 cmd.equals(Constants.UPDATE)) {
+
+				_updateCommerceAvailabilityEstimate(actionRequest);
+			}
+		}
+		catch (Exception exception) {
+			if (exception instanceof NoSuchAvailabilityEstimateException ||
+				exception instanceof PrincipalException) {
+
+				SessionErrors.add(actionRequest, exception.getClass());
+
+				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
+			}
+			else {
+				throw exception;
+			}
+		}
+	}
+
+	private void _deleteCommerceAvailabilityEstimates(
 			ActionRequest actionRequest)
 		throws PortalException {
 
@@ -83,38 +114,7 @@ public class EditCommerceAvailabilityEstimateMVCActionCommand
 		}
 	}
 
-	@Override
-	protected void doProcessAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
-
-		try {
-			if (cmd.equals(Constants.DELETE)) {
-				deleteCommerceAvailabilityEstimates(actionRequest);
-			}
-			else if (cmd.equals(Constants.ADD) ||
-					 cmd.equals(Constants.UPDATE)) {
-
-				updateCommerceAvailabilityEstimate(actionRequest);
-			}
-		}
-		catch (Exception exception) {
-			if (exception instanceof NoSuchAvailabilityEstimateException ||
-				exception instanceof PrincipalException) {
-
-				SessionErrors.add(actionRequest, exception.getClass());
-
-				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
-			}
-			else {
-				throw exception;
-			}
-		}
-	}
-
-	protected void updateCommerceAvailabilityEstimate(
+	private void _updateCommerceAvailabilityEstimate(
 			ActionRequest actionRequest)
 		throws PortalException {
 

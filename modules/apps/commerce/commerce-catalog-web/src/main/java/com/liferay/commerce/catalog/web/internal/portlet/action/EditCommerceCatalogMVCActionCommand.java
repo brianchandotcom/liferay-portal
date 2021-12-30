@@ -69,28 +69,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class EditCommerceCatalogMVCActionCommand extends BaseMVCActionCommand {
 
-	protected void deleteCommerceCatalog(ActionRequest actionRequest)
-		throws Exception {
-
-		long[] commerceCatalogIds = null;
-
-		long commerceCatalogId = ParamUtil.getLong(
-			actionRequest, "commerceCatalogId");
-
-		if (commerceCatalogId > 0) {
-			commerceCatalogIds = new long[] {commerceCatalogId};
-		}
-		else {
-			commerceCatalogIds = ParamUtil.getLongValues(
-				actionRequest, "commerceCatalogIds");
-		}
-
-		for (long deleteCommerceCatalogId : commerceCatalogIds) {
-			_commerceCatalogService.deleteCommerceCatalog(
-				deleteCommerceCatalogId);
-		}
-	}
-
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
@@ -100,7 +78,7 @@ public class EditCommerceCatalogMVCActionCommand extends BaseMVCActionCommand {
 
 		try {
 			if (cmd.equals(Constants.DELETE)) {
-				deleteCommerceCatalog(actionRequest);
+				_deleteCommerceCatalog(actionRequest);
 			}
 			else if (cmd.equals(Constants.ADD) ||
 					 cmd.equals(Constants.UPDATE)) {
@@ -139,7 +117,65 @@ public class EditCommerceCatalogMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	protected CommerceCatalog updateCommerceCatalog(ActionRequest actionRequest)
+	private void _deleteCommerceCatalog(ActionRequest actionRequest)
+		throws Exception {
+
+		long[] commerceCatalogIds = null;
+
+		long commerceCatalogId = ParamUtil.getLong(
+			actionRequest, "commerceCatalogId");
+
+		if (commerceCatalogId > 0) {
+			commerceCatalogIds = new long[] {commerceCatalogId};
+		}
+		else {
+			commerceCatalogIds = ParamUtil.getLongValues(
+				actionRequest, "commerceCatalogIds");
+		}
+
+		for (long deleteCommerceCatalogId : commerceCatalogIds) {
+			_commerceCatalogService.deleteCommerceCatalog(
+				deleteCommerceCatalogId);
+		}
+	}
+
+	private void _updateBasePriceListAndPromotion(
+			ActionRequest actionRequest, CommerceCatalog commerceCatalog)
+		throws Exception {
+
+		CommercePricingConfiguration commercePricingConfiguration =
+			_configurationProvider.getConfiguration(
+				CommercePricingConfiguration.class,
+				new SystemSettingsLocator(
+					CommercePricingConstants.SERVICE_NAME));
+
+		if (!Objects.equals(
+				commercePricingConfiguration.commercePricingCalculationKey(),
+				CommercePricingConstants.VERSION_2_0)) {
+
+			return;
+		}
+
+		// Base price list
+
+		long baseCommercePriceListId = ParamUtil.getLong(
+			actionRequest, "baseCommercePriceListId");
+
+		_commercePriceListService.setCatalogBasePriceList(
+			commerceCatalog.getGroupId(), baseCommercePriceListId,
+			CommercePriceListConstants.TYPE_PRICE_LIST);
+
+		// Base promotion
+
+		long basePromotionCommercePriceListId = ParamUtil.getLong(
+			actionRequest, "basePromotionCommercePriceListId");
+
+		_commercePriceListService.setCatalogBasePriceList(
+			commerceCatalog.getGroupId(), basePromotionCommercePriceListId,
+			CommercePriceListConstants.TYPE_PROMOTION);
+	}
+
+	private CommerceCatalog _updateCommerceCatalog(ActionRequest actionRequest)
 		throws Exception {
 
 		long commerceCatalogId = ParamUtil.getLong(
@@ -191,42 +227,6 @@ public class EditCommerceCatalogMVCActionCommand extends BaseMVCActionCommand {
 		return commerceCatalog;
 	}
 
-	private void _updateBasePriceListAndPromotion(
-			ActionRequest actionRequest, CommerceCatalog commerceCatalog)
-		throws Exception {
-
-		CommercePricingConfiguration commercePricingConfiguration =
-			_configurationProvider.getConfiguration(
-				CommercePricingConfiguration.class,
-				new SystemSettingsLocator(
-					CommercePricingConstants.SERVICE_NAME));
-
-		if (!Objects.equals(
-				commercePricingConfiguration.commercePricingCalculationKey(),
-				CommercePricingConstants.VERSION_2_0)) {
-
-			return;
-		}
-
-		// Base price list
-
-		long baseCommercePriceListId = ParamUtil.getLong(
-			actionRequest, "baseCommercePriceListId");
-
-		_commercePriceListService.setCatalogBasePriceList(
-			commerceCatalog.getGroupId(), baseCommercePriceListId,
-			CommercePriceListConstants.TYPE_PRICE_LIST);
-
-		// Base promotion
-
-		long basePromotionCommercePriceListId = ParamUtil.getLong(
-			actionRequest, "basePromotionCommercePriceListId");
-
-		_commercePriceListService.setCatalogBasePriceList(
-			commerceCatalog.getGroupId(), basePromotionCommercePriceListId,
-			CommercePriceListConstants.TYPE_PROMOTION);
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		EditCommerceCatalogMVCActionCommand.class);
 
@@ -253,7 +253,7 @@ public class EditCommerceCatalogMVCActionCommand extends BaseMVCActionCommand {
 
 		@Override
 		public Object call() throws Exception {
-			updateCommerceCatalog(_actionRequest);
+			_updateCommerceCatalog(_actionRequest);
 
 			return null;
 		}

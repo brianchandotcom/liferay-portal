@@ -59,9 +59,9 @@ public class CPInstanceItemSelectorViewDisplayContext
 		return PortletURLBuilder.create(
 			super.getPortletURL()
 		).setParameter(
-			"checkedCPInstanceIds", getCheckedCPInstanceIds()
+			"checkedCPInstanceIds", _getCheckedCPInstanceIds()
 		).setParameter(
-			"commerceCatalogGroupId", getGroupId()
+			"commerceCatalogGroupId", _getGroupId()
 		).buildPortletURL();
 	}
 
@@ -83,7 +83,7 @@ public class CPInstanceItemSelectorViewDisplayContext
 				getOrderByCol(), getOrderByType());
 
 		RowChecker rowChecker = new CPInstanceItemSelectorChecker(
-			cpRequestHelper.getRenderResponse(), getCheckedCPInstanceIds());
+			cpRequestHelper.getRenderResponse(), _getCheckedCPInstanceIds());
 
 		searchContainer.setOrderByCol(getOrderByCol());
 		searchContainer.setOrderByComparator(orderByComparator);
@@ -95,11 +95,11 @@ public class CPInstanceItemSelectorViewDisplayContext
 
 		BaseModelSearchResult<CPInstance> cpInstanceBaseModelSearchResult;
 
-		if (getGroupId() > 0) {
+		if (_getGroupId() > 0) {
 			cpInstanceBaseModelSearchResult =
 				_cpInstanceService.searchCPInstances(
-					cpRequestHelper.getCompanyId(), getGroupId(), getKeywords(),
-					WorkflowConstants.STATUS_APPROVED,
+					cpRequestHelper.getCompanyId(), _getGroupId(),
+					getKeywords(), WorkflowConstants.STATUS_APPROVED,
 					searchContainer.getStart(), searchContainer.getEnd(), sort);
 		}
 		else {
@@ -120,12 +120,12 @@ public class CPInstanceItemSelectorViewDisplayContext
 		return searchContainer;
 	}
 
-	protected long[] getCheckedCPInstanceIds() {
+	private long[] _getCheckedCPInstanceIds() {
 		return ParamUtil.getLongValues(
 			httpServletRequest, "checkedCPInstanceIds");
 	}
 
-	protected long getGroupId() {
+	private long _getGroupId() {
 		return ParamUtil.getLong(httpServletRequest, "commerceCatalogGroupId");
 	}
 

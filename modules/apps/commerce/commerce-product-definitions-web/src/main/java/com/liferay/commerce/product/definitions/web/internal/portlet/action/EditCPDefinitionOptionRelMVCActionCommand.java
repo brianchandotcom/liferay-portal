@@ -50,7 +50,43 @@ import org.osgi.service.component.annotations.Reference;
 public class EditCPDefinitionOptionRelMVCActionCommand
 	extends BaseMVCActionCommand {
 
-	protected void addCPDefinitionOptionRels(ActionRequest actionRequest)
+	@Override
+	protected void doProcessAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
+
+		long cpDefinitionOptionRelId = ParamUtil.getLong(
+			actionRequest, "cpDefinitionOptionRelId");
+
+		try {
+			if (cmd.equals(Constants.ADD) ||
+				cmd.equals(Constants.ADD_MULTIPLE)) {
+
+				_addCPDefinitionOptionRels(actionRequest);
+			}
+			else if (cmd.equals(Constants.DELETE)) {
+				_deleteCPDefinitionOptionRels(
+					cpDefinitionOptionRelId, actionRequest);
+			}
+			else if (cmd.equals(Constants.UPDATE)) {
+				_updateCPDefinitionOptionRel(
+					cpDefinitionOptionRelId, actionRequest);
+			}
+		}
+		catch (Exception exception) {
+			hideDefaultErrorMessage(actionRequest);
+
+			SessionErrors.add(actionRequest, exception.getClass(), exception);
+
+			String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+			sendRedirect(actionRequest, actionResponse, redirect);
+		}
+	}
+
+	private void _addCPDefinitionOptionRels(ActionRequest actionRequest)
 		throws Exception {
 
 		long[] addCPOptionIds = null;
@@ -77,7 +113,7 @@ public class EditCPDefinitionOptionRelMVCActionCommand
 		}
 	}
 
-	protected void deleteCPDefinitionOptionRels(
+	private void _deleteCPDefinitionOptionRels(
 			long cpDefinitionOptionRelId, ActionRequest actionRequest)
 		throws Exception {
 
@@ -103,43 +139,7 @@ public class EditCPDefinitionOptionRelMVCActionCommand
 		}
 	}
 
-	@Override
-	protected void doProcessAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
-
-		long cpDefinitionOptionRelId = ParamUtil.getLong(
-			actionRequest, "cpDefinitionOptionRelId");
-
-		try {
-			if (cmd.equals(Constants.ADD) ||
-				cmd.equals(Constants.ADD_MULTIPLE)) {
-
-				addCPDefinitionOptionRels(actionRequest);
-			}
-			else if (cmd.equals(Constants.DELETE)) {
-				deleteCPDefinitionOptionRels(
-					cpDefinitionOptionRelId, actionRequest);
-			}
-			else if (cmd.equals(Constants.UPDATE)) {
-				updateCPDefinitionOptionRel(
-					cpDefinitionOptionRelId, actionRequest);
-			}
-		}
-		catch (Exception exception) {
-			hideDefaultErrorMessage(actionRequest);
-
-			SessionErrors.add(actionRequest, exception.getClass(), exception);
-
-			String redirect = ParamUtil.getString(actionRequest, "redirect");
-
-			sendRedirect(actionRequest, actionResponse, redirect);
-		}
-	}
-
-	protected CPDefinitionOptionRel updateCPDefinitionOptionRel(
+	private CPDefinitionOptionRel _updateCPDefinitionOptionRel(
 			long cpDefinitionOptionRelId, ActionRequest actionRequest)
 		throws Exception {
 

@@ -154,7 +154,7 @@ public class CommerceInventoryWarehouseIndexer
 			FIELD_STREET_1, commerceInventoryWarehouse.getStreet1());
 		document.addKeyword(FIELD_ZIP, commerceInventoryWarehouse.getZip());
 		document.addNumber(
-			"itemsQuantity", getItemsQuantity(commerceInventoryWarehouse));
+			"itemsQuantity", _getItemsQuantity(commerceInventoryWarehouse));
 		document.addNumber(
 			"latitude", commerceInventoryWarehouse.getLatitude());
 		document.addNumber(
@@ -203,22 +203,7 @@ public class CommerceInventoryWarehouseIndexer
 	protected void doReindex(String[] ids) throws Exception {
 		long companyId = GetterUtil.getLong(ids[0]);
 
-		reindexCommerceInventoryWarehouses(companyId);
-	}
-
-	protected int getItemsQuantity(
-		CommerceInventoryWarehouse commerceInventoryWarehouse) {
-
-		int count = 0;
-
-		for (CommerceInventoryWarehouseItem commerceInventoryWarehouseItem :
-				commerceInventoryWarehouse.
-					getCommerceInventoryWarehouseItems()) {
-
-			count += commerceInventoryWarehouseItem.getQuantity();
-		}
-
-		return count;
+		_reindexCommerceInventoryWarehouses(companyId);
 	}
 
 	@Override
@@ -236,7 +221,22 @@ public class CommerceInventoryWarehouseIndexer
 		return super.isUseSearchResultPermissionFilter(searchContext);
 	}
 
-	protected void reindexCommerceInventoryWarehouses(long companyId)
+	private int _getItemsQuantity(
+		CommerceInventoryWarehouse commerceInventoryWarehouse) {
+
+		int count = 0;
+
+		for (CommerceInventoryWarehouseItem commerceInventoryWarehouseItem :
+				commerceInventoryWarehouse.
+					getCommerceInventoryWarehouseItems()) {
+
+			count += commerceInventoryWarehouseItem.getQuantity();
+		}
+
+		return count;
+	}
+
+	private void _reindexCommerceInventoryWarehouses(long companyId)
 		throws Exception {
 
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery =

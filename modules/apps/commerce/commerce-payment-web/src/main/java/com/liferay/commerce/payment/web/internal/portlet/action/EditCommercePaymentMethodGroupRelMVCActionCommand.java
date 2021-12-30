@@ -61,18 +61,6 @@ import org.osgi.service.component.annotations.Reference;
 public class EditCommercePaymentMethodGroupRelMVCActionCommand
 	extends BaseMVCActionCommand {
 
-	protected void deleteCommercePaymentMethodGroupRel(
-			ActionRequest actionRequest)
-		throws PortalException {
-
-		long commercePaymentMethodGroupRelId = ParamUtil.getLong(
-			actionRequest, "commercePaymentMethodGroupRelId");
-
-		_commercePaymentMethodGroupRelService.
-			deleteCommercePaymentMethodGroupRel(
-				commercePaymentMethodGroupRelId);
-	}
-
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
@@ -82,12 +70,12 @@ public class EditCommercePaymentMethodGroupRelMVCActionCommand
 
 		try {
 			if (cmd.equals(Constants.DELETE)) {
-				deleteCommercePaymentMethodGroupRel(actionRequest);
+				_deleteCommercePaymentMethodGroupRel(actionRequest);
 			}
 			else if (cmd.equals(Constants.ADD) ||
 					 cmd.equals(Constants.UPDATE)) {
 
-				updateCommercePaymentMethodGroupRel(actionRequest);
+				_updateCommercePaymentMethodGroupRel(actionRequest);
 			}
 		}
 		catch (Exception exception) {
@@ -117,7 +105,19 @@ public class EditCommercePaymentMethodGroupRelMVCActionCommand
 		}
 	}
 
-	protected String getRedirectURL(
+	private void _deleteCommercePaymentMethodGroupRel(
+			ActionRequest actionRequest)
+		throws PortalException {
+
+		long commercePaymentMethodGroupRelId = ParamUtil.getLong(
+			actionRequest, "commercePaymentMethodGroupRelId");
+
+		_commercePaymentMethodGroupRelService.
+			deleteCommercePaymentMethodGroupRel(
+				commercePaymentMethodGroupRelId);
+	}
+
+	private String _getRedirectURL(
 		ActionRequest actionRequest, long commercePaymentMethodGroupRelId,
 		String mvcRenderCommandName) {
 
@@ -155,7 +155,7 @@ public class EditCommercePaymentMethodGroupRelMVCActionCommand
 		).buildString();
 	}
 
-	protected CommercePaymentMethodGroupRel updateCommercePaymentMethodGroupRel(
+	private CommercePaymentMethodGroupRel _updateCommercePaymentMethodGroupRel(
 			ActionRequest actionRequest)
 		throws PortalException {
 

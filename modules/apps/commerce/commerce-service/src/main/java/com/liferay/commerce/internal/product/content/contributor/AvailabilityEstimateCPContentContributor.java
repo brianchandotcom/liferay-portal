@@ -105,7 +105,7 @@ public class AvailabilityEstimateCPContentContributor
 
 			jsonObject.put(
 				CPContentContributorConstants.AVAILABILITY_ESTIMATE_NAME,
-				getAvailabilityEstimateLabel(
+				_getAvailabilityEstimateLabel(
 					themeDisplay.getLocale(),
 					cpDefinitionInventoryEngine.getAvailabilityEstimate(
 						cpInstance, themeDisplay.getLocale())));
@@ -114,7 +114,7 @@ public class AvailabilityEstimateCPContentContributor
 		return jsonObject;
 	}
 
-	protected String getAvailabilityEstimateLabel(
+	private String _getAvailabilityEstimateLabel(
 		Locale locale, String availabilityEstimate) {
 
 		if (Validator.isNull(availabilityEstimate)) {

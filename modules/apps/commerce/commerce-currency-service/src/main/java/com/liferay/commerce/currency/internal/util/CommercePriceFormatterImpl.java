@@ -52,7 +52,7 @@ public class CommercePriceFormatterImpl implements CommercePriceFormatter {
 	public String format(BigDecimal price, Locale locale)
 		throws PortalException {
 
-		DecimalFormat decimalFormat = getDecimalFormat(null, locale);
+		DecimalFormat decimalFormat = _getDecimalFormat(null, locale);
 
 		return decimalFormat.format(price);
 	}
@@ -62,7 +62,7 @@ public class CommercePriceFormatterImpl implements CommercePriceFormatter {
 			CommerceCurrency commerceCurrency, BigDecimal price, Locale locale)
 		throws PortalException {
 
-		DecimalFormat decimalFormat = getDecimalFormat(
+		DecimalFormat decimalFormat = _getDecimalFormat(
 			commerceCurrency, locale);
 
 		return decimalFormat.format(price);
@@ -77,7 +77,7 @@ public class CommercePriceFormatterImpl implements CommercePriceFormatter {
 			return StringPool.BLANK;
 		}
 
-		DecimalFormat decimalFormat = getDecimalFormat(
+		DecimalFormat decimalFormat = _getDecimalFormat(
 			commerceCurrency, locale);
 
 		if (relativePrice.signum() == -1) {
@@ -102,7 +102,7 @@ public class CommercePriceFormatterImpl implements CommercePriceFormatter {
 		_roundingTypeConfiguration = null;
 	}
 
-	protected DecimalFormat getDecimalFormat(
+	private DecimalFormat _getDecimalFormat(
 		CommerceCurrency commerceCurrency, Locale locale) {
 
 		String formatPattern = CommerceCurrencyConstants.DECIMAL_FORMAT_PATTERN;

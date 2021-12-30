@@ -159,10 +159,10 @@ public class CommerceChannelIndexer extends BaseIndexer<CommerceChannel> {
 	protected void doReindex(String[] ids) throws Exception {
 		long companyId = GetterUtil.getLong(ids[0]);
 
-		reindexCommerceChannels(companyId);
+		_reindexCommerceChannels(companyId);
 	}
 
-	protected void reindexCommerceChannels(long companyId)
+	private void _reindexCommerceChannels(long companyId)
 		throws PortalException {
 
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery =

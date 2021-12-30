@@ -109,13 +109,13 @@ public class CommerceSearchResource {
 			List<SearchItemModel> searchItemModels = new ArrayList<>();
 
 			searchItemModels.addAll(
-				searchProducts(
+				_searchProducts(
 					themeDisplay.getCompanyId(), layout.getGroupId(),
 					queryString, themeDisplay));
 
 			if (themeDisplay.isSignedIn()) {
 				searchItemModels.addAll(
-					searchAccounts(queryString, themeDisplay));
+					_searchAccounts(queryString, themeDisplay));
 
 				CommerceAccount commerceAccount =
 					_commerceAccountHelper.getCurrentCommerceAccount(
@@ -125,7 +125,7 @@ public class CommerceSearchResource {
 						httpServletRequest);
 
 				searchItemModels.addAll(
-					searchOrders(queryString, themeDisplay, commerceAccount));
+					_searchOrders(queryString, themeDisplay, commerceAccount));
 			}
 
 			String url = _commerceSearchUtil.getSearchFriendlyURL(themeDisplay);
@@ -157,7 +157,56 @@ public class CommerceSearchResource {
 		).build();
 	}
 
-	protected List<SearchItemModel> searchAccounts(
+	private String _getAccountManagementPortletEditURL(
+			long accountId, ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		PortletURL editURL = PortletProviderUtil.getPortletURL(
+			themeDisplay.getRequest(), CommerceAccount.class.getName(),
+			PortletProvider.Action.VIEW);
+
+		if (editURL == null) {
+			return StringPool.BLANK;
+		}
+
+		editURL.setParameter("commerceAccountId", String.valueOf(accountId));
+
+		return editURL.toString();
+	}
+
+	private SearchItemModel _getSearchItemModel(
+			CPCatalogEntry cpCatalogEntry, ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		SearchItemModel searchItemModel = new SearchItemModel(
+			"item", HtmlUtil.escape(cpCatalogEntry.getName()));
+
+		HttpServletRequest httpServletRequest = themeDisplay.getRequest();
+
+		searchItemModel.setImage(
+			_cpDefinitionHelper.getDefaultImageFileURL(
+				CommerceUtil.getCommerceAccountId(
+					(CommerceContext)httpServletRequest.getAttribute(
+						CommerceWebKeys.COMMERCE_CONTEXT)),
+				cpCatalogEntry.getCPDefinitionId()));
+
+		String subtitle = cpCatalogEntry.getShortDescription();
+
+		if (Validator.isNull(subtitle)) {
+			subtitle = HtmlUtil.extractText(cpCatalogEntry.getDescription());
+		}
+
+		searchItemModel.setSubtitle(subtitle);
+
+		String url = _cpDefinitionHelper.getFriendlyURL(
+			cpCatalogEntry.getCPDefinitionId(), themeDisplay);
+
+		searchItemModel.setUrl(url);
+
+		return searchItemModel;
+	}
+
+	private List<SearchItemModel> _searchAccounts(
 			String queryString, ThemeDisplay themeDisplay)
 		throws PortalException {
 
@@ -212,7 +261,7 @@ public class CommerceSearchResource {
 		return searchItemModels;
 	}
 
-	protected List<SearchItemModel> searchOrders(
+	private List<SearchItemModel> _searchOrders(
 			String queryString, ThemeDisplay themeDisplay,
 			CommerceAccount commerceAccount)
 		throws PortalException {
@@ -266,7 +315,7 @@ public class CommerceSearchResource {
 		return searchItemModels;
 	}
 
-	protected List<SearchItemModel> searchProducts(
+	private List<SearchItemModel> _searchProducts(
 			long companyId, long groupId, String queryString,
 			ThemeDisplay themeDisplay)
 		throws PortalException {
@@ -350,55 +399,6 @@ public class CommerceSearchResource {
 		}
 
 		return searchItemModels;
-	}
-
-	private String _getAccountManagementPortletEditURL(
-			long accountId, ThemeDisplay themeDisplay)
-		throws PortalException {
-
-		PortletURL editURL = PortletProviderUtil.getPortletURL(
-			themeDisplay.getRequest(), CommerceAccount.class.getName(),
-			PortletProvider.Action.VIEW);
-
-		if (editURL == null) {
-			return StringPool.BLANK;
-		}
-
-		editURL.setParameter("commerceAccountId", String.valueOf(accountId));
-
-		return editURL.toString();
-	}
-
-	private SearchItemModel _getSearchItemModel(
-			CPCatalogEntry cpCatalogEntry, ThemeDisplay themeDisplay)
-		throws PortalException {
-
-		SearchItemModel searchItemModel = new SearchItemModel(
-			"item", HtmlUtil.escape(cpCatalogEntry.getName()));
-
-		HttpServletRequest httpServletRequest = themeDisplay.getRequest();
-
-		searchItemModel.setImage(
-			_cpDefinitionHelper.getDefaultImageFileURL(
-				CommerceUtil.getCommerceAccountId(
-					(CommerceContext)httpServletRequest.getAttribute(
-						CommerceWebKeys.COMMERCE_CONTEXT)),
-				cpCatalogEntry.getCPDefinitionId()));
-
-		String subtitle = cpCatalogEntry.getShortDescription();
-
-		if (Validator.isNull(subtitle)) {
-			subtitle = HtmlUtil.extractText(cpCatalogEntry.getDescription());
-		}
-
-		searchItemModel.setSubtitle(subtitle);
-
-		String url = _cpDefinitionHelper.getFriendlyURL(
-			cpCatalogEntry.getCPDefinitionId(), themeDisplay);
-
-		searchItemModel.setUrl(url);
-
-		return searchItemModel;
 	}
 
 	private static final ObjectMapper _OBJECT_MAPPER = new ObjectMapper() {

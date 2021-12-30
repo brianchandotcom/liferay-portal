@@ -46,7 +46,31 @@ import org.osgi.service.component.annotations.Reference;
 public class EditCommerceWishListItemMVCActionCommand
 	extends BaseMVCActionCommand {
 
-	protected void deleteCommerceWishListItems(ActionRequest actionRequest)
+	@Override
+	protected void doProcessAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
+
+		try {
+			if (cmd.equals(Constants.DELETE)) {
+				_deleteCommerceWishListItems(actionRequest);
+			}
+		}
+		catch (Exception exception) {
+			if (exception instanceof NoSuchWishListItemException ||
+				exception instanceof PrincipalException) {
+
+				SessionErrors.add(actionRequest, exception.getClass());
+			}
+			else {
+				throw exception;
+			}
+		}
+	}
+
+	private void _deleteCommerceWishListItems(ActionRequest actionRequest)
 		throws PortalException {
 
 		long[] deleteCommerceWishListItemIds = null;
@@ -69,30 +93,6 @@ public class EditCommerceWishListItemMVCActionCommand
 
 			_commerceWishListItemService.deleteCommerceWishListItem(
 				deleteCommerceWishListItemId);
-		}
-	}
-
-	@Override
-	protected void doProcessAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
-
-		try {
-			if (cmd.equals(Constants.DELETE)) {
-				deleteCommerceWishListItems(actionRequest);
-			}
-		}
-		catch (Exception exception) {
-			if (exception instanceof NoSuchWishListItemException ||
-				exception instanceof PrincipalException) {
-
-				SessionErrors.add(actionRequest, exception.getClass());
-			}
-			else {
-				throw exception;
-			}
 		}
 	}
 

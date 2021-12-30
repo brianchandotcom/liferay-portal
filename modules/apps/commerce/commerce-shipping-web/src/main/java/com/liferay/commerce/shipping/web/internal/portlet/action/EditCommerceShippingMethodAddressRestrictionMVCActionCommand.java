@@ -90,8 +90,7 @@ public class EditCommerceShippingMethodAddressRestrictionMVCActionCommand
 		}
 	}
 
-	protected void updateCommerceAddressRestrictions(
-			ActionRequest actionRequest)
+	private void _updateCommerceAddressRestrictions(ActionRequest actionRequest)
 		throws Exception {
 
 		long commerceChannelId = ParamUtil.getLong(
@@ -160,7 +159,7 @@ public class EditCommerceShippingMethodAddressRestrictionMVCActionCommand
 
 		@Override
 		public Object call() throws Exception {
-			updateCommerceAddressRestrictions(_actionRequest);
+			_updateCommerceAddressRestrictions(_actionRequest);
 
 			return null;
 		}

@@ -141,7 +141,7 @@ public class CPFileImporterImpl implements CPFileImporter {
 			JSONObject journalArticleJSONObject =
 				journalArticleJSONArray.getJSONObject(i);
 
-			createJournalArticle(
+			_createJournalArticle(
 				journalArticleJSONObject, classLoader, dependenciesFilePath,
 				serviceContext);
 		}
@@ -169,16 +169,16 @@ public class CPFileImporterImpl implements CPFileImporter {
 			int scope = jsonObject.getInt("scope");
 			int type = jsonObject.getInt("type");
 
-			Role role = getRole(name, type, serviceContext);
+			Role role = _getRole(name, type, serviceContext);
 
 			if (actionsJSONObject != null) {
-				updateActions(role, actionsJSONObject, scope, serviceContext);
+				_updateActions(role, actionsJSONObject, scope, serviceContext);
 			}
 			else {
 				JSONArray actionsJSONArray = jsonObject.getJSONArray("actions");
 
 				for (int j = 0; j < actionsJSONArray.length(); j++) {
-					updateActions(
+					_updateActions(
 						role, actionsJSONArray.getJSONObject(j), scope,
 						serviceContext);
 				}
@@ -195,7 +195,7 @@ public class CPFileImporterImpl implements CPFileImporter {
 
 		if (file == null) {
 			return _ddmTemplateLocalService.fetchTemplate(
-				serviceContext.getScopeGroupId(), classNameId, getKey(name));
+				serviceContext.getScopeGroupId(), classNameId, _getKey(name));
 		}
 
 		FileInputStream fileInputStream = new FileInputStream(file);
@@ -205,7 +205,7 @@ public class CPFileImporterImpl implements CPFileImporter {
 
 		String script = StringUtil.read(bufferedInputStream);
 
-		return fetchOrAddDDMTemplate(
+		return _fetchOrAddDDMTemplate(
 			classNameId, classPK, resourceClassNameId, name, type, mode,
 			language, script, true, serviceContext);
 	}
@@ -243,14 +243,26 @@ public class CPFileImporterImpl implements CPFileImporter {
 		UnicodeProperties typeSettingUnicodeProperties =
 			layoutSet.getSettingsProperties();
 
-		setThemeSettingProperties(theme, typeSettingUnicodeProperties);
+		_setThemeSettingProperties(theme, typeSettingUnicodeProperties);
 
 		_layoutSetLocalService.updateLookAndFeel(
 			serviceContext.getScopeGroupId(), privateLayout, themeId,
 			StringPool.BLANK, StringPool.BLANK);
 	}
 
-	protected void addLayoutPortlets(
+	protected void createLayouts(
+			JSONArray jsonArray, Layout parentLayout, ClassLoader classLoader,
+			String dependenciesFilePath, ServiceContext serviceContext)
+		throws Exception {
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			_createLayout(
+				jsonArray.getJSONObject(i), parentLayout, classLoader,
+				dependenciesFilePath, serviceContext);
+		}
+	}
+
+	private void _addLayoutPortlets(
 			JSONArray jsonArray, Layout layout, String layoutTemplateId,
 			ClassLoader classLoader, ServiceContext serviceContext)
 		throws Exception {
@@ -264,20 +276,20 @@ public class CPFileImporterImpl implements CPFileImporter {
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject portletJSONObject = jsonArray.getJSONObject(i);
 
-			String portletId = addPortletId(
+			String portletId = _addPortletId(
 				portletJSONObject, layoutTypePortlet, serviceContext);
 
-			setPortletPreferences(
+			_setPortletPreferences(
 				portletJSONObject.getJSONObject("portletPreferences"), layout,
 				portletId, serviceContext);
 
-			setPortletLookAndFeel(
+			_setPortletLookAndFeel(
 				portletJSONObject.getJSONObject("lookAndFeel"), layout,
 				portletId, classLoader);
 		}
 	}
 
-	protected String addPortletId(
+	private String _addPortletId(
 			JSONObject jsonObject, LayoutTypePortlet layoutTypePortlet,
 			ServiceContext serviceContext)
 		throws Exception {
@@ -291,7 +303,7 @@ public class CPFileImporterImpl implements CPFileImporter {
 			layoutColumnPos, false);
 	}
 
-	protected JournalArticle createJournalArticle(
+	private JournalArticle _createJournalArticle(
 			JSONObject jsonObject, ClassLoader classLoader,
 			String dependenciesFilePath, ServiceContext serviceContext)
 		throws Exception {
@@ -311,7 +323,7 @@ public class CPFileImporterImpl implements CPFileImporter {
 		String ddmStructureKey = jsonObject.getString("ddmStructureKey");
 		String ddmTemplateKey = jsonObject.getString("ddmTemplateKey");
 
-		DDMStructure ddmStructure = fetchOrAddDDMStructure(
+		DDMStructure ddmStructure = _fetchOrAddDDMStructure(
 			ddmStructureKey, classLoader, dependenciesFilePath,
 			ddmStructureKey + ".json", serviceContext);
 
@@ -319,7 +331,7 @@ public class CPFileImporterImpl implements CPFileImporter {
 			dependenciesFilePath + ddmTemplateKey + ".ftl");
 
 		if (inputStream != null) {
-			fetchOrAddDDMTemplate(
+			_fetchOrAddDDMTemplate(
 				_portal.getClassNameId(DDMStructure.class),
 				ddmStructure.getStructureId(),
 				_portal.getClassNameId(JournalArticle.class), ddmTemplateKey,
@@ -341,7 +353,7 @@ public class CPFileImporterImpl implements CPFileImporter {
 		String content = StringUtil.read(
 			classLoader, dependenciesFilePath + articleId + ".xml");
 
-		content = getNormalizedContent(
+		content = _getNormalizedContent(
 			content, classLoader, dependenciesFilePath, serviceContext);
 
 		Calendar displayCalendar = CalendarFactoryUtil.getCalendar(
@@ -372,7 +384,7 @@ public class CPFileImporterImpl implements CPFileImporter {
 		if ((permissionsJSONArray != null) &&
 			(permissionsJSONArray.length() > 0)) {
 
-			updatePermissions(
+			_updatePermissions(
 				journalArticle.getCompanyId(),
 				journalArticle.getModelClassName(),
 				String.valueOf(journalArticle.getResourcePrimKey()),
@@ -382,7 +394,7 @@ public class CPFileImporterImpl implements CPFileImporter {
 
 			// Give site members view permissions
 
-			updatePermissions(
+			_updatePermissions(
 				journalArticle.getCompanyId(),
 				journalArticle.getModelClassName(),
 				String.valueOf(journalArticle.getResourcePrimKey()), null);
@@ -391,7 +403,7 @@ public class CPFileImporterImpl implements CPFileImporter {
 		return journalArticle;
 	}
 
-	protected void createLayout(
+	private void _createLayout(
 			JSONObject jsonObject, Layout parentLayout, ClassLoader classLoader,
 			String dependenciesFilePath, ServiceContext serviceContext)
 		throws Exception {
@@ -437,7 +449,7 @@ public class CPFileImporterImpl implements CPFileImporter {
 			"lookAndFeel");
 
 		if (lookAndFeelJSONObject != null) {
-			layout = updateLayoutLookAndFeel(lookAndFeelJSONObject, layout);
+			layout = _updateLayoutLookAndFeel(lookAndFeelJSONObject, layout);
 		}
 
 		JSONArray portletsJSONArray = jsonObject.getJSONArray("portlets");
@@ -445,7 +457,7 @@ public class CPFileImporterImpl implements CPFileImporter {
 		if ((portletsJSONArray != null) && (portletsJSONArray.length() > 0)) {
 			String layoutTemplateId = jsonObject.getString("layoutTemplateId");
 
-			addLayoutPortlets(
+			_addLayoutPortlets(
 				portletsJSONArray, layout, layoutTemplateId, classLoader,
 				serviceContext);
 		}
@@ -459,7 +471,7 @@ public class CPFileImporterImpl implements CPFileImporter {
 		if ((permissionsJSONArray != null) &&
 			(permissionsJSONArray.length() > 0)) {
 
-			updatePermissions(
+			_updatePermissions(
 				layout.getCompanyId(), layout.getModelClassName(),
 				String.valueOf(layout.getPlid()), permissionsJSONArray);
 		}
@@ -475,19 +487,7 @@ public class CPFileImporterImpl implements CPFileImporter {
 		}
 	}
 
-	protected void createLayouts(
-			JSONArray jsonArray, Layout parentLayout, ClassLoader classLoader,
-			String dependenciesFilePath, ServiceContext serviceContext)
-		throws Exception {
-
-		for (int i = 0; i < jsonArray.length(); i++) {
-			createLayout(
-				jsonArray.getJSONObject(i), parentLayout, classLoader,
-				dependenciesFilePath, serviceContext);
-		}
-	}
-
-	protected void deleteThemeSettingsProperties(
+	private void _deleteThemeSettingsProperties(
 		UnicodeProperties typeSettingsUnicodeProperties, String device) {
 
 		String keyPrefix = ThemeSettingImpl.namespaceProperty(device);
@@ -505,7 +505,7 @@ public class CPFileImporterImpl implements CPFileImporter {
 		}
 	}
 
-	protected DDMStructure fetchOrAddDDMStructure(
+	private DDMStructure _fetchOrAddDDMStructure(
 			String ddmStructureKey, ClassLoader classLoader,
 			String dependencyFilePath, String ddmStructureFileName,
 			ServiceContext serviceContext)
@@ -528,7 +528,7 @@ public class CPFileImporterImpl implements CPFileImporter {
 		String json = StringUtil.read(
 			classLoader, dependencyFilePath + ddmStructureFileName);
 
-		json = getNormalizedContent(
+		json = _getNormalizedContent(
 			json, classLoader, dependencyFilePath, serviceContext);
 
 		DDMFormDeserializerDeserializeRequest
@@ -555,7 +555,7 @@ public class CPFileImporterImpl implements CPFileImporter {
 			"json", DDMStructureConstants.TYPE_DEFAULT, serviceContext);
 	}
 
-	protected DDMTemplate fetchOrAddDDMTemplate(
+	private DDMTemplate _fetchOrAddDDMTemplate(
 			long classNameId, long classPK, long resourceClassNameId,
 			String name, String type, String mode, String language,
 			String script, boolean cacheable, ServiceContext serviceContext)
@@ -566,12 +566,12 @@ public class CPFileImporterImpl implements CPFileImporter {
 		).build();
 
 		DDMTemplate ddmTemplate = _ddmTemplateLocalService.fetchTemplate(
-			serviceContext.getScopeGroupId(), classNameId, getKey(name));
+			serviceContext.getScopeGroupId(), classNameId, _getKey(name));
 
 		if (ddmTemplate == null) {
 			ddmTemplate = _ddmTemplateLocalService.addTemplate(
 				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
-				classNameId, classPK, resourceClassNameId, getKey(name),
+				classNameId, classPK, resourceClassNameId, _getKey(name),
 				nameMap, null, type, mode, language, script, cacheable, false,
 				StringPool.BLANK, null, serviceContext);
 		}
@@ -585,7 +585,7 @@ public class CPFileImporterImpl implements CPFileImporter {
 		return ddmTemplate;
 	}
 
-	protected FileEntry fetchOrAddFileEntry(
+	private FileEntry _fetchOrAddFileEntry(
 			ClassLoader classLoader, String dependenciesFilePath,
 			String fileName, ServiceContext serviceContext)
 		throws Exception {
@@ -622,7 +622,7 @@ public class CPFileImporterImpl implements CPFileImporter {
 			serviceContext);
 	}
 
-	protected long getAssetEntryId(
+	private long _getAssetEntryId(
 			String articleId, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -649,7 +649,7 @@ public class CPFileImporterImpl implements CPFileImporter {
 		return assetEntry.getEntryId();
 	}
 
-	protected String getKey(String name) {
+	private String _getKey(String name) {
 		name = StringUtil.replace(name, CharPool.SPACE, CharPool.DASH);
 
 		name = StringUtil.toUpperCase(name);
@@ -657,7 +657,7 @@ public class CPFileImporterImpl implements CPFileImporter {
 		return name;
 	}
 
-	protected String getNormalizedContent(
+	private String _getNormalizedContent(
 			String content, ClassLoader classLoader,
 			String dependenciesFilePath, ServiceContext serviceContext)
 		throws Exception {
@@ -714,7 +714,7 @@ public class CPFileImporterImpl implements CPFileImporter {
 		return content;
 	}
 
-	protected Role getRole(String name, int type, ServiceContext serviceContext)
+	private Role _getRole(String name, int type, ServiceContext serviceContext)
 		throws PortalException {
 
 		Role role = _roleLocalService.fetchRole(
@@ -732,7 +732,34 @@ public class CPFileImporterImpl implements CPFileImporter {
 		return role;
 	}
 
-	protected void setLocalizedValues(
+	private String _replaceJournalArticleImages(
+			String content, Pattern pattern,
+			UnsafeFunction<FileEntry, String, Exception> replacementFunction,
+			ClassLoader classLoader, String dependenciesFilePath,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		StringBuffer sb = new StringBuffer();
+
+		Matcher matcher = pattern.matcher(content);
+
+		while (matcher.find()) {
+			String fileName = matcher.group(1);
+
+			FileEntry fileEntry = _fetchOrAddFileEntry(
+				classLoader, dependenciesFilePath, fileName, serviceContext);
+
+			String replacement = replacementFunction.apply(fileEntry);
+
+			matcher.appendReplacement(sb, replacement);
+		}
+
+		matcher.appendTail(sb);
+
+		return sb.toString();
+	}
+
+	private void _setLocalizedValues(
 			PortletPreferences portletPreferences,
 			ResourceBundleLoader resourceBundleLoader, long groupId, String key,
 			String value)
@@ -748,7 +775,7 @@ public class CPFileImporterImpl implements CPFileImporter {
 		}
 	}
 
-	protected void setPortletLookAndFeel(
+	private void _setPortletLookAndFeel(
 			JSONObject jsonObject, Layout layout, String portletId,
 			ClassLoader classLoader)
 		throws Exception {
@@ -781,7 +808,7 @@ public class CPFileImporterImpl implements CPFileImporter {
 			String value = jsonObject.getString(key);
 
 			if (key.equals("portletSetupTitle")) {
-				setLocalizedValues(
+				_setLocalizedValues(
 					portletPreferences, resourceBundleLoader,
 					layout.getGroupId(), key, value);
 			}
@@ -793,7 +820,7 @@ public class CPFileImporterImpl implements CPFileImporter {
 		portletPreferences.store();
 	}
 
-	protected void setPortletPreferences(
+	private void _setPortletPreferences(
 			JSONObject jsonObject, Layout layout, String portletId,
 			ServiceContext serviceContext)
 		throws Exception {
@@ -821,7 +848,7 @@ public class CPFileImporterImpl implements CPFileImporter {
 				String articleId = jsonObject.getString("articleId");
 
 				value = String.valueOf(
-					getAssetEntryId(articleId, serviceContext));
+					_getAssetEntryId(articleId, serviceContext));
 			}
 			else if (key.equals("groupId")) {
 				value = String.valueOf(serviceContext.getScopeGroupId());
@@ -833,12 +860,12 @@ public class CPFileImporterImpl implements CPFileImporter {
 		portletPreferences.store();
 	}
 
-	protected void setThemeSettingProperties(
+	private void _setThemeSettingProperties(
 		Theme theme, UnicodeProperties typeSettingUnicodeProperties) {
 
 		String device = "regular";
 
-		deleteThemeSettingsProperties(typeSettingUnicodeProperties, device);
+		_deleteThemeSettingsProperties(typeSettingUnicodeProperties, device);
 
 		Map<String, ThemeSetting> themeSettings =
 			theme.getConfigurableSettings();
@@ -856,7 +883,7 @@ public class CPFileImporterImpl implements CPFileImporter {
 		}
 	}
 
-	protected void updateAction(
+	private void _updateAction(
 			Role role, String resource, String actionId, int scope,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -887,7 +914,7 @@ public class CPFileImporterImpl implements CPFileImporter {
 		}
 	}
 
-	protected void updateActions(
+	private void _updateActions(
 			Role role, JSONObject jsonObject, int scope,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -898,11 +925,25 @@ public class CPFileImporterImpl implements CPFileImporter {
 		for (int i = 0; i < actionIdsJSONArray.length(); i++) {
 			String actionId = actionIdsJSONArray.getString(i);
 
-			updateAction(role, resource, actionId, scope, serviceContext);
+			_updateAction(role, resource, actionId, scope, serviceContext);
 		}
 	}
 
-	protected Layout updateLayoutLookAndFeel(
+	private DDMForm _updateDDMFormAvailableLocales(
+		DDMForm ddmForm, Locale locale) {
+
+		Set<Locale> availableLocales = ddmForm.getAvailableLocales();
+
+		availableLocales.add(locale);
+
+		ddmForm.setAvailableLocales(availableLocales);
+
+		ddmForm.setDefaultLocale(locale);
+
+		return ddmForm;
+	}
+
+	private Layout _updateLayoutLookAndFeel(
 		JSONObject jsonObject, Layout layout) {
 
 		UnicodeProperties typeSettingsUnicodeProperties =
@@ -931,7 +972,7 @@ public class CPFileImporterImpl implements CPFileImporter {
 		return layout;
 	}
 
-	protected void updatePermissions(
+	private void _updatePermissions(
 			long companyId, String name, String primKey, JSONArray jsonArray)
 		throws PortalException {
 
@@ -964,47 +1005,6 @@ public class CPFileImporterImpl implements CPFileImporter {
 			_resourcePermissionLocalService.setResourcePermissions(
 				companyId, name, scope, primKey, role.getRoleId(), actionIds);
 		}
-	}
-
-	private String _replaceJournalArticleImages(
-			String content, Pattern pattern,
-			UnsafeFunction<FileEntry, String, Exception> replacementFunction,
-			ClassLoader classLoader, String dependenciesFilePath,
-			ServiceContext serviceContext)
-		throws Exception {
-
-		StringBuffer sb = new StringBuffer();
-
-		Matcher matcher = pattern.matcher(content);
-
-		while (matcher.find()) {
-			String fileName = matcher.group(1);
-
-			FileEntry fileEntry = fetchOrAddFileEntry(
-				classLoader, dependenciesFilePath, fileName, serviceContext);
-
-			String replacement = replacementFunction.apply(fileEntry);
-
-			matcher.appendReplacement(sb, replacement);
-		}
-
-		matcher.appendTail(sb);
-
-		return sb.toString();
-	}
-
-	private DDMForm _updateDDMFormAvailableLocales(
-		DDMForm ddmForm, Locale locale) {
-
-		Set<Locale> availableLocales = ddmForm.getAvailableLocales();
-
-		availableLocales.add(locale);
-
-		ddmForm.setAvailableLocales(availableLocales);
-
-		ddmForm.setDefaultLocale(locale);
-
-		return ddmForm;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

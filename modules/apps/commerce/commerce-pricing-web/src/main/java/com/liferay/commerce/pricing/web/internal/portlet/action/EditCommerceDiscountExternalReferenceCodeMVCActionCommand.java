@@ -52,7 +52,7 @@ public class EditCommerceDiscountExternalReferenceCodeMVCActionCommand
 		throws Exception {
 
 		try {
-			updateCommerceDiscountExternalReferenceCode(actionRequest);
+			_updateCommerceDiscountExternalReferenceCode(actionRequest);
 		}
 		catch (Exception exception) {
 			if (exception instanceof NoSuchDiscountException ||
@@ -73,7 +73,7 @@ public class EditCommerceDiscountExternalReferenceCodeMVCActionCommand
 		}
 	}
 
-	protected void updateCommerceDiscountExternalReferenceCode(
+	private void _updateCommerceDiscountExternalReferenceCode(
 			ActionRequest actionRequest)
 		throws Exception {
 

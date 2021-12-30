@@ -82,55 +82,6 @@ public class CPSearchResultsPortletSharedSearchContributor
 		}
 	}
 
-	protected void paginate(
-		CPSearchResultsPortletInstanceConfiguration
-			cpSearchResultsPortletInstanceConfiguration,
-		PortletSharedSearchSettings portletSharedSearchSettings) {
-
-		String paginationStartParameterName = "start";
-
-		portletSharedSearchSettings.setPaginationStartParameterName(
-			paginationStartParameterName);
-
-		Optional<String> paginationStartParameterValueOptional =
-			portletSharedSearchSettings.getParameter71(
-				paginationStartParameterName);
-
-		Optional<Integer> paginationStartOptional =
-			paginationStartParameterValueOptional.map(Integer::valueOf);
-
-		paginationStartOptional.ifPresent(
-			portletSharedSearchSettings::setPaginationStart);
-
-		String paginationDeltaParameterName = "delta";
-
-		Optional<String> paginationDeltaParameterValueOptional =
-			portletSharedSearchSettings.getParameter71(
-				paginationDeltaParameterName);
-
-		Optional<Integer> paginationDeltaOptional =
-			paginationDeltaParameterValueOptional.map(Integer::valueOf);
-
-		int configurationPaginationDelta =
-			cpSearchResultsPortletInstanceConfiguration.paginationDelta();
-
-		Optional<PortletPreferences> portletPreferencesOptional =
-			portletSharedSearchSettings.getPortletPreferences71();
-
-		if (portletPreferencesOptional.isPresent()) {
-			PortletPreferences portletPreferences =
-				portletPreferencesOptional.get();
-
-			configurationPaginationDelta = GetterUtil.getInteger(
-				portletPreferences.getValue("paginationDelta", null));
-		}
-
-		int paginationDelta = paginationDeltaOptional.orElse(
-			configurationPaginationDelta);
-
-		portletSharedSearchSettings.setPaginationDelta(paginationDelta);
-	}
-
 	private void _contribute(
 			PortletSharedSearchSettings portletSharedSearchSettings)
 		throws PortalException {
@@ -209,9 +160,58 @@ public class CPSearchResultsPortletSharedSearchContributor
 				portletDisplay.getPortletInstanceConfiguration(
 					CPSearchResultsPortletInstanceConfiguration.class);
 
-		paginate(
+		_paginate(
 			cpSearchResultsPortletInstanceConfiguration,
 			portletSharedSearchSettings);
+	}
+
+	private void _paginate(
+		CPSearchResultsPortletInstanceConfiguration
+			cpSearchResultsPortletInstanceConfiguration,
+		PortletSharedSearchSettings portletSharedSearchSettings) {
+
+		String paginationStartParameterName = "start";
+
+		portletSharedSearchSettings.setPaginationStartParameterName(
+			paginationStartParameterName);
+
+		Optional<String> paginationStartParameterValueOptional =
+			portletSharedSearchSettings.getParameter71(
+				paginationStartParameterName);
+
+		Optional<Integer> paginationStartOptional =
+			paginationStartParameterValueOptional.map(Integer::valueOf);
+
+		paginationStartOptional.ifPresent(
+			portletSharedSearchSettings::setPaginationStart);
+
+		String paginationDeltaParameterName = "delta";
+
+		Optional<String> paginationDeltaParameterValueOptional =
+			portletSharedSearchSettings.getParameter71(
+				paginationDeltaParameterName);
+
+		Optional<Integer> paginationDeltaOptional =
+			paginationDeltaParameterValueOptional.map(Integer::valueOf);
+
+		int configurationPaginationDelta =
+			cpSearchResultsPortletInstanceConfiguration.paginationDelta();
+
+		Optional<PortletPreferences> portletPreferencesOptional =
+			portletSharedSearchSettings.getPortletPreferences71();
+
+		if (portletPreferencesOptional.isPresent()) {
+			PortletPreferences portletPreferences =
+				portletPreferencesOptional.get();
+
+			configurationPaginationDelta = GetterUtil.getInteger(
+				portletPreferences.getValue("paginationDelta", null));
+		}
+
+		int paginationDelta = paginationDeltaOptional.orElse(
+			configurationPaginationDelta);
+
+		portletSharedSearchSettings.setPaginationDelta(paginationDelta);
 	}
 
 	@Reference

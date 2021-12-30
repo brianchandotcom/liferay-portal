@@ -65,7 +65,31 @@ import org.osgi.service.component.annotations.Reference;
 public class EditCommerceShipmentItemMVCActionCommand
 	extends BaseMVCActionCommand {
 
-	protected void deleteCommerceShipmentItems(ActionRequest actionRequest)
+	@Override
+	protected void doProcessAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
+
+		try {
+			if (cmd.equals(Constants.DELETE)) {
+				_deleteCommerceShipmentItems(actionRequest);
+			}
+			else if (cmd.equals(Constants.UPDATE)) {
+				_updateCommerceShipmentItem(actionRequest);
+			}
+		}
+		catch (Exception exception) {
+			SessionErrors.add(actionRequest, exception.getClass());
+
+			String redirect = _getSaveAndContinueRedirect(actionRequest);
+
+			sendRedirect(actionRequest, actionResponse, redirect);
+		}
+	}
+
+	private void _deleteCommerceShipmentItems(ActionRequest actionRequest)
 		throws PortalException {
 
 		long[] deleteCommerceShipmentItemIds = null;
@@ -94,31 +118,7 @@ public class EditCommerceShipmentItemMVCActionCommand
 		}
 	}
 
-	@Override
-	protected void doProcessAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
-
-		try {
-			if (cmd.equals(Constants.DELETE)) {
-				deleteCommerceShipmentItems(actionRequest);
-			}
-			else if (cmd.equals(Constants.UPDATE)) {
-				updateCommerceShipmentItem(actionRequest);
-			}
-		}
-		catch (Exception exception) {
-			SessionErrors.add(actionRequest, exception.getClass());
-
-			String redirect = getSaveAndContinueRedirect(actionRequest);
-
-			sendRedirect(actionRequest, actionResponse, redirect);
-		}
-	}
-
-	protected String getSaveAndContinueRedirect(ActionRequest actionRequest)
+	private String _getSaveAndContinueRedirect(ActionRequest actionRequest)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -178,7 +178,7 @@ public class EditCommerceShipmentItemMVCActionCommand
 		return portletURL.toString();
 	}
 
-	protected CommerceShipmentItem updateCommerceShipmentItem(
+	private CommerceShipmentItem _updateCommerceShipmentItem(
 			ActionRequest actionRequest)
 		throws PortalException {
 

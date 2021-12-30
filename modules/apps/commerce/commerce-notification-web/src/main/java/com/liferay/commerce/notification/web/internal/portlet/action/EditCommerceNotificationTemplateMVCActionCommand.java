@@ -60,36 +60,6 @@ import org.osgi.service.component.annotations.Reference;
 public class EditCommerceNotificationTemplateMVCActionCommand
 	extends BaseMVCActionCommand {
 
-	protected void deleteCommerceNotificationTemplates(
-			ActionRequest actionRequest)
-		throws PortalException {
-
-		long[] deleteCommerceNotificationTemplateIds = null;
-
-		long commerceNotificationTemplateId = ParamUtil.getLong(
-			actionRequest, "commerceNotificationTemplateId");
-
-		if (commerceNotificationTemplateId > 0) {
-			deleteCommerceNotificationTemplateIds = new long[] {
-				commerceNotificationTemplateId
-			};
-		}
-		else {
-			deleteCommerceNotificationTemplateIds = StringUtil.split(
-				ParamUtil.getString(
-					actionRequest, "deleteCommerceNotificationTemplateIds"),
-				0L);
-		}
-
-		for (long deleteCommerceNotificationTemplateId :
-				deleteCommerceNotificationTemplateIds) {
-
-			_commerceNotificationTemplateService.
-				deleteCommerceNotificationTemplate(
-					deleteCommerceNotificationTemplateId);
-		}
-	}
-
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
@@ -99,12 +69,12 @@ public class EditCommerceNotificationTemplateMVCActionCommand
 
 		try {
 			if (cmd.equals(Constants.DELETE)) {
-				deleteCommerceNotificationTemplates(actionRequest);
+				_deleteCommerceNotificationTemplates(actionRequest);
 			}
 			else if (cmd.equals(Constants.ADD) ||
 					 cmd.equals(Constants.UPDATE)) {
 
-				updateCommerceNotificationTemplate(actionRequest);
+				_updateCommerceNotificationTemplate(actionRequest);
 			}
 		}
 		catch (Exception exception) {
@@ -137,7 +107,37 @@ public class EditCommerceNotificationTemplateMVCActionCommand
 		}
 	}
 
-	protected CommerceNotificationTemplate updateCommerceNotificationTemplate(
+	private void _deleteCommerceNotificationTemplates(
+			ActionRequest actionRequest)
+		throws PortalException {
+
+		long[] deleteCommerceNotificationTemplateIds = null;
+
+		long commerceNotificationTemplateId = ParamUtil.getLong(
+			actionRequest, "commerceNotificationTemplateId");
+
+		if (commerceNotificationTemplateId > 0) {
+			deleteCommerceNotificationTemplateIds = new long[] {
+				commerceNotificationTemplateId
+			};
+		}
+		else {
+			deleteCommerceNotificationTemplateIds = StringUtil.split(
+				ParamUtil.getString(
+					actionRequest, "deleteCommerceNotificationTemplateIds"),
+				0L);
+		}
+
+		for (long deleteCommerceNotificationTemplateId :
+				deleteCommerceNotificationTemplateIds) {
+
+			_commerceNotificationTemplateService.
+				deleteCommerceNotificationTemplate(
+					deleteCommerceNotificationTemplateId);
+		}
+	}
+
+	private CommerceNotificationTemplate _updateCommerceNotificationTemplate(
 			ActionRequest actionRequest)
 		throws PortalException {
 

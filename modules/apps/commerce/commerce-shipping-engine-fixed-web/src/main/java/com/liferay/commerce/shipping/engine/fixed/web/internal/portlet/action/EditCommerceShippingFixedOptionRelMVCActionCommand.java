@@ -51,7 +51,34 @@ import org.osgi.service.component.annotations.Reference;
 public class EditCommerceShippingFixedOptionRelMVCActionCommand
 	extends BaseMVCActionCommand {
 
-	protected void deleteCommerceShippingFixedOptionRels(
+	@Override
+	protected void doProcessAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
+
+		try {
+			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
+				_updateCommerceShippingFixedOptionRel(actionRequest);
+			}
+			else if (cmd.equals(Constants.DELETE)) {
+				_deleteCommerceShippingFixedOptionRels(actionRequest);
+			}
+		}
+		catch (Exception exception) {
+			if (exception instanceof NoSuchShippingFixedOptionRelException ||
+				exception instanceof PrincipalException) {
+
+				SessionErrors.add(actionRequest, exception.getClass());
+			}
+			else {
+				throw exception;
+			}
+		}
+	}
+
+	private void _deleteCommerceShippingFixedOptionRels(
 			ActionRequest actionRequest)
 		throws PortalException {
 
@@ -81,34 +108,7 @@ public class EditCommerceShippingFixedOptionRelMVCActionCommand
 		}
 	}
 
-	@Override
-	protected void doProcessAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
-
-		try {
-			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
-				updateCommerceShippingFixedOptionRel(actionRequest);
-			}
-			else if (cmd.equals(Constants.DELETE)) {
-				deleteCommerceShippingFixedOptionRels(actionRequest);
-			}
-		}
-		catch (Exception exception) {
-			if (exception instanceof NoSuchShippingFixedOptionRelException ||
-				exception instanceof PrincipalException) {
-
-				SessionErrors.add(actionRequest, exception.getClass());
-			}
-			else {
-				throw exception;
-			}
-		}
-	}
-
-	protected void updateCommerceShippingFixedOptionRel(
+	private void _updateCommerceShippingFixedOptionRel(
 			ActionRequest actionRequest)
 		throws PortalException {
 

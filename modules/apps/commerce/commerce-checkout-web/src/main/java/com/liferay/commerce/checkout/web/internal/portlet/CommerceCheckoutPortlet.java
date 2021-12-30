@@ -95,7 +95,7 @@ public class CommerceCheckoutPortlet extends MVCPortlet {
 		try {
 			actionRequest.setAttribute(
 				CommerceCheckoutWebKeys.COMMERCE_ORDER,
-				getCommerceOrder(actionRequest));
+				_getCommerceOrder(actionRequest));
 		}
 		catch (Exception exception) {
 			throw new PortletException(exception);
@@ -110,7 +110,7 @@ public class CommerceCheckoutPortlet extends MVCPortlet {
 		throws IOException, PortletException {
 
 		try {
-			CommerceOrder commerceOrder = getCommerceOrder(renderRequest);
+			CommerceOrder commerceOrder = _getCommerceOrder(renderRequest);
 
 			if (commerceOrder != null) {
 				HttpServletRequest httpServletRequest =
@@ -128,15 +128,15 @@ public class CommerceCheckoutPortlet extends MVCPortlet {
 					!continueAsGuest) {
 
 					httpServletResponse.sendRedirect(
-						getCheckoutURL(renderRequest));
+						_getCheckoutURL(renderRequest));
 				}
 				else if ((commerceOrder.isOpen() &&
-						  !isOrderApproved(commerceOrder)) ||
+						  !_isOrderApproved(commerceOrder)) ||
 						 !_commerceOrderValidatorRegistry.isValid(
 							 LocaleUtil.getSiteDefault(), commerceOrder)) {
 
 					httpServletResponse.sendRedirect(
-						getOrderDetailsURL(renderRequest));
+						_getOrderDetailsURL(renderRequest));
 				}
 				else if (!commerceOrder.isOpen() &&
 						 (continueAsGuest || commerceOrder.isGuestOrder())) {
@@ -173,7 +173,7 @@ public class CommerceCheckoutPortlet extends MVCPortlet {
 		}
 	}
 
-	protected String getCheckoutURL(PortletRequest portletRequest)
+	private String _getCheckoutURL(PortletRequest portletRequest)
 		throws PortalException {
 
 		PortletURL portletURL =
@@ -187,7 +187,7 @@ public class CommerceCheckoutPortlet extends MVCPortlet {
 		return portletURL.toString();
 	}
 
-	protected CommerceOrder getCommerceOrder(PortletRequest portletRequest)
+	private CommerceOrder _getCommerceOrder(PortletRequest portletRequest)
 		throws PortalException {
 
 		String commerceOrderUuid = ParamUtil.getString(
@@ -207,13 +207,13 @@ public class CommerceCheckoutPortlet extends MVCPortlet {
 			_portal.getHttpServletRequest(portletRequest));
 	}
 
-	protected String getOrderDetailsURL(PortletRequest portletRequest)
+	private String _getOrderDetailsURL(PortletRequest portletRequest)
 		throws PortalException {
 
 		PortletURL portletURL =
 			_commerceOrderHttpHelper.getCommerceCartPortletURL(
 				_portal.getHttpServletRequest(portletRequest),
-				getCommerceOrder(portletRequest));
+				_getCommerceOrder(portletRequest));
 
 		if (portletURL == null) {
 			return StringPool.BLANK;
@@ -222,7 +222,7 @@ public class CommerceCheckoutPortlet extends MVCPortlet {
 		return portletURL.toString();
 	}
 
-	protected boolean isOrderApproved(CommerceOrder commerceOrder)
+	private boolean _isOrderApproved(CommerceOrder commerceOrder)
 		throws PortalException {
 
 		WorkflowInstanceLink workflowInstanceLink =

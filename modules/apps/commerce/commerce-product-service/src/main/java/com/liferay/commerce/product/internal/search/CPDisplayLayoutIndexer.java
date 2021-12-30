@@ -202,10 +202,10 @@ public class CPDisplayLayoutIndexer extends BaseIndexer<CPDisplayLayout> {
 	protected void doReindex(String[] ids) throws Exception {
 		long companyId = GetterUtil.getLong(ids[0]);
 
-		reindexCPDisplayLayouts(companyId);
+		_reindexCPDisplayLayouts(companyId);
 	}
 
-	protected void reindexCPDisplayLayouts(long companyId)
+	private void _reindexCPDisplayLayouts(long companyId)
 		throws PortalException {
 
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery =

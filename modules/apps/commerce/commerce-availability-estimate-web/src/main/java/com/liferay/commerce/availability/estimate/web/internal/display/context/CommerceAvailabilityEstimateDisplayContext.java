@@ -119,7 +119,7 @@ public class CommerceAvailabilityEstimateDisplayContext {
 		_searchContainer.setOrderByCol(orderByCol);
 		_searchContainer.setOrderByComparator(orderByComparator);
 		_searchContainer.setOrderByType(orderByType);
-		_searchContainer.setRowChecker(getRowChecker());
+		_searchContainer.setRowChecker(_getRowChecker());
 
 		int total =
 			_commerceAvailabilityEstimateService.
@@ -147,7 +147,7 @@ public class CommerceAvailabilityEstimateDisplayContext {
 			CommerceActionKeys.MANAGE_COMMERCE_AVAILABILITY_ESTIMATES);
 	}
 
-	protected RowChecker getRowChecker() {
+	private RowChecker _getRowChecker() {
 		if (_rowChecker == null) {
 			_rowChecker = new EmptyOnClickRowChecker(_renderResponse);
 		}

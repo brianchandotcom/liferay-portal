@@ -169,7 +169,7 @@ public class CPOptionDisplayContext {
 			getOptionClayDataSetActionDropdownItems()
 		throws PortalException {
 
-		return getClayDataSetActionDropdownItems(
+		return _getClayDataSetActionDropdownItems(
 			PortletURLBuilder.createRenderURL(
 				cpRequestHelper.getRenderResponse()
 			).setMVCRenderCommandName(
@@ -209,7 +209,7 @@ public class CPOptionDisplayContext {
 			throw new PortalException(windowStateException);
 		}
 
-		return getClayDataSetActionDropdownItems(portletURL.toString(), true);
+		return _getClayDataSetActionDropdownItems(portletURL.toString(), true);
 	}
 
 	public CreationMenu getOptionValueCreationMenu(long cpOptionId)
@@ -256,8 +256,10 @@ public class CPOptionDisplayContext {
 		return false;
 	}
 
-	protected List<ClayDataSetActionDropdownItem>
-		getClayDataSetActionDropdownItems(
+	protected final CPRequestHelper cpRequestHelper;
+
+	private List<ClayDataSetActionDropdownItem>
+		_getClayDataSetActionDropdownItems(
 			String portletURL, boolean sidePanel) {
 
 		List<ClayDataSetActionDropdownItem> clayDataSetActionDropdownItems =
@@ -283,8 +285,6 @@ public class CPOptionDisplayContext {
 
 		return clayDataSetActionDropdownItems;
 	}
-
-	protected final CPRequestHelper cpRequestHelper;
 
 	private boolean _hasDDMFormFieldTypeProperties(
 		String ddmFormFieldTypeName) {

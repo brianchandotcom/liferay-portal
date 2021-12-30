@@ -114,7 +114,7 @@ public class ShippingMethodCommerceCheckoutStep
 		throws Exception {
 
 		try {
-			updateCommerceOrderShippingMethod(actionRequest);
+			_updateCommerceOrderShippingMethod(actionRequest);
 		}
 		catch (Exception exception) {
 			if (exception instanceof CommerceOrderShippingMethodException) {
@@ -227,8 +227,7 @@ public class ShippingMethodCommerceCheckoutStep
 		_commerceOrderModelResourcePermission = modelResourcePermission;
 	}
 
-	protected void updateCommerceOrderShippingMethod(
-			ActionRequest actionRequest)
+	private void _updateCommerceOrderShippingMethod(ActionRequest actionRequest)
 		throws Exception {
 
 		String commerceShippingOptionKey = ParamUtil.getString(

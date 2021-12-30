@@ -53,14 +53,14 @@ public class CPDefinitionGroupedEntryInfoPanelMVCResourceCommand
 
 		resourceRequest.setAttribute(
 			GroupedCPTypeWebKeys.CP_DEFINITION_GROUPED_ENTRIES,
-			getCPDefinitionGroupedEntries(resourceRequest));
+			_getCPDefinitionGroupedEntries(resourceRequest));
 
 		include(
 			resourceRequest, resourceResponse,
 			"/cp_definition_grouped_entry_info_panel.jsp");
 	}
 
-	protected List<CPDefinitionGroupedEntry> getCPDefinitionGroupedEntries(
+	private List<CPDefinitionGroupedEntry> _getCPDefinitionGroupedEntries(
 			ResourceRequest resourceRequest)
 		throws PortalException {
 

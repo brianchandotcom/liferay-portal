@@ -139,7 +139,7 @@ public class CPCompareContentHelperImpl implements CPCompareContentHelper {
 				cpDataSourceResult.getCPCatalogEntries()) {
 
 			List<CPDefinitionOptionRel> cpDefinitionOptionRels =
-				getMultiValueCPDefinitionOptionRels(cpCatalogEntry);
+				_getMultiValueCPDefinitionOptionRels(cpCatalogEntry);
 
 			for (CPDefinitionOptionRel cpDefinitionOptionRel :
 					cpDefinitionOptionRels) {
@@ -369,7 +369,7 @@ public class CPCompareContentHelperImpl implements CPCompareContentHelper {
 		return cpSpecificationOptions;
 	}
 
-	protected List<CPDefinitionOptionRel> getMultiValueCPDefinitionOptionRels(
+	private List<CPDefinitionOptionRel> _getMultiValueCPDefinitionOptionRels(
 			CPCatalogEntry cpCatalogEntry)
 		throws PortalException {
 

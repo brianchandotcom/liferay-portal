@@ -164,10 +164,10 @@ public class CPOptionCategoryIndexer extends BaseIndexer<CPOptionCategory> {
 	protected void doReindex(String[] ids) throws Exception {
 		long companyId = GetterUtil.getLong(ids[0]);
 
-		reindexCPOptionCategorys(companyId);
+		_reindexCPOptionCategorys(companyId);
 	}
 
-	protected void reindexCPOptionCategorys(long companyId)
+	private void _reindexCPOptionCategorys(long companyId)
 		throws PortalException {
 
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery =

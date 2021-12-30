@@ -46,7 +46,36 @@ import org.osgi.service.component.annotations.Reference;
 public class EditCommerceNotificationQueueEntryMVCActionCommand
 	extends BaseMVCActionCommand {
 
-	protected void deleteCommerceNotificationQueues(ActionRequest actionRequest)
+	@Override
+	protected void doProcessAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
+
+		try {
+			if (cmd.equals(Constants.DELETE)) {
+				_deleteCommerceNotificationQueues(actionRequest);
+			}
+			else if (cmd.equals("resend")) {
+				_resendCommerceNotificationQueueEntry(actionRequest);
+			}
+		}
+		catch (Exception exception) {
+			if (exception instanceof NoSuchNotificationQueueEntryException ||
+				exception instanceof PrincipalException) {
+
+				SessionErrors.add(actionRequest, exception.getClass());
+
+				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
+			}
+			else {
+				throw exception;
+			}
+		}
+	}
+
+	private void _deleteCommerceNotificationQueues(ActionRequest actionRequest)
 		throws PortalException {
 
 		long[] deleteCommerceNotificationQueueEntryIds = null;
@@ -75,36 +104,7 @@ public class EditCommerceNotificationQueueEntryMVCActionCommand
 		}
 	}
 
-	@Override
-	protected void doProcessAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
-
-		try {
-			if (cmd.equals(Constants.DELETE)) {
-				deleteCommerceNotificationQueues(actionRequest);
-			}
-			else if (cmd.equals("resend")) {
-				resendCommerceNotificationQueueEntry(actionRequest);
-			}
-		}
-		catch (Exception exception) {
-			if (exception instanceof NoSuchNotificationQueueEntryException ||
-				exception instanceof PrincipalException) {
-
-				SessionErrors.add(actionRequest, exception.getClass());
-
-				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
-			}
-			else {
-				throw exception;
-			}
-		}
-	}
-
-	protected void resendCommerceNotificationQueueEntry(
+	private void _resendCommerceNotificationQueueEntry(
 			ActionRequest actionRequest)
 		throws PortalException {
 

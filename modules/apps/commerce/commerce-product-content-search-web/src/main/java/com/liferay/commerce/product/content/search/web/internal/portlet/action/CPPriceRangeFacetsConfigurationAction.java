@@ -59,7 +59,7 @@ public class CPPriceRangeFacetsConfigurationAction
 				new CPPriceRangeFacetsDisplayContext(
 					_commercePriceFormatter, cpRequestHelper.getRenderRequest(),
 					null,
-					getPaginationStartParameterName(
+					_getPaginationStartParameterName(
 						portletSharedSearchResponse),
 					portletSharedSearchResponse);
 
@@ -83,7 +83,7 @@ public class CPPriceRangeFacetsConfigurationAction
 		super.setServletContext(servletContext);
 	}
 
-	protected String getPaginationStartParameterName(
+	private String _getPaginationStartParameterName(
 		PortletSharedSearchResponse portletSharedSearchResponse) {
 
 		SearchResponse searchResponse =

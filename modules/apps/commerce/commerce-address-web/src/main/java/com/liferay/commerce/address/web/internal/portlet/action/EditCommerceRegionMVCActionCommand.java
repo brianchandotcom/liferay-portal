@@ -49,24 +49,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class EditCommerceRegionMVCActionCommand extends BaseMVCActionCommand {
 
-	protected void deleteRegions(ActionRequest actionRequest) throws Exception {
-		long[] deleteRegionIds = null;
-
-		long regionId = ParamUtil.getLong(actionRequest, "regionId");
-
-		if (regionId > 0) {
-			deleteRegionIds = new long[] {regionId};
-		}
-		else {
-			deleteRegionIds = StringUtil.split(
-				ParamUtil.getString(actionRequest, "deleteRegionIds"), 0L);
-		}
-
-		for (long deleteRegionId : deleteRegionIds) {
-			_regionService.deleteRegion(deleteRegionId);
-		}
-	}
-
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
@@ -76,10 +58,10 @@ public class EditCommerceRegionMVCActionCommand extends BaseMVCActionCommand {
 
 		try {
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
-				updateCommerceRegion(actionRequest);
+				_updateCommerceRegion(actionRequest);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
-				deleteRegions(actionRequest);
+				_deleteRegions(actionRequest);
 			}
 			else if (cmd.equals("setActive")) {
 				setActive(actionRequest);
@@ -119,7 +101,25 @@ public class EditCommerceRegionMVCActionCommand extends BaseMVCActionCommand {
 		_regionService.updateActive(regionId, active);
 	}
 
-	protected Region updateCommerceRegion(ActionRequest actionRequest)
+	private void _deleteRegions(ActionRequest actionRequest) throws Exception {
+		long[] deleteRegionIds = null;
+
+		long regionId = ParamUtil.getLong(actionRequest, "regionId");
+
+		if (regionId > 0) {
+			deleteRegionIds = new long[] {regionId};
+		}
+		else {
+			deleteRegionIds = StringUtil.split(
+				ParamUtil.getString(actionRequest, "deleteRegionIds"), 0L);
+		}
+
+		for (long deleteRegionId : deleteRegionIds) {
+			_regionService.deleteRegion(deleteRegionId);
+		}
+	}
+
+	private Region _updateCommerceRegion(ActionRequest actionRequest)
 		throws Exception {
 
 		long regionId = ParamUtil.getLong(actionRequest, "regionId");

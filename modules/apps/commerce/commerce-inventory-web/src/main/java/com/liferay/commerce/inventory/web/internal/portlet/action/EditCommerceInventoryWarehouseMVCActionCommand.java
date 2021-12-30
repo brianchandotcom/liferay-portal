@@ -49,31 +49,6 @@ import org.osgi.service.component.annotations.Reference;
 public class EditCommerceInventoryWarehouseMVCActionCommand
 	extends BaseMVCActionCommand {
 
-	protected void addCommerceInventoryWarehouse(ActionRequest actionRequest)
-		throws PortalException {
-
-		long commerceInventoryWarehouseId = ParamUtil.getLong(
-			actionRequest, "commerceInventoryWarehouseId");
-
-		String sku = ParamUtil.getString(actionRequest, "sku");
-
-		int quantity = ParamUtil.getInteger(actionRequest, "quantity");
-
-		_commerceInventoryWarehouseItemService.
-			addCommerceInventoryWarehouseItem(
-				commerceInventoryWarehouseId, sku, quantity);
-	}
-
-	protected void deleteCommerceInventoryWarehouse(ActionRequest actionRequest)
-		throws PortalException {
-
-		String sku = ParamUtil.getString(actionRequest, "sku");
-
-		_commerceInventoryWarehouseItemService.
-			deleteCommerceInventoryWarehouseItems(
-				_portal.getCompanyId(actionRequest), sku);
-	}
-
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
@@ -83,13 +58,13 @@ public class EditCommerceInventoryWarehouseMVCActionCommand
 
 		try {
 			if (cmd.equals(Constants.ADD)) {
-				addCommerceInventoryWarehouse(actionRequest);
+				_addCommerceInventoryWarehouse(actionRequest);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
-				deleteCommerceInventoryWarehouse(actionRequest);
+				_deleteCommerceInventoryWarehouse(actionRequest);
 			}
 			else if (cmd.equals(Constants.UPDATE)) {
-				updateCommerceInventoryWarehouse(actionRequest);
+				_updateCommerceInventoryWarehouse(actionRequest);
 			}
 		}
 		catch (Exception exception) {
@@ -110,7 +85,32 @@ public class EditCommerceInventoryWarehouseMVCActionCommand
 		}
 	}
 
-	protected void updateCommerceInventoryWarehouse(ActionRequest actionRequest)
+	private void _addCommerceInventoryWarehouse(ActionRequest actionRequest)
+		throws PortalException {
+
+		long commerceInventoryWarehouseId = ParamUtil.getLong(
+			actionRequest, "commerceInventoryWarehouseId");
+
+		String sku = ParamUtil.getString(actionRequest, "sku");
+
+		int quantity = ParamUtil.getInteger(actionRequest, "quantity");
+
+		_commerceInventoryWarehouseItemService.
+			addCommerceInventoryWarehouseItem(
+				commerceInventoryWarehouseId, sku, quantity);
+	}
+
+	private void _deleteCommerceInventoryWarehouse(ActionRequest actionRequest)
+		throws PortalException {
+
+		String sku = ParamUtil.getString(actionRequest, "sku");
+
+		_commerceInventoryWarehouseItemService.
+			deleteCommerceInventoryWarehouseItems(
+				_portal.getCompanyId(actionRequest), sku);
+	}
+
+	private void _updateCommerceInventoryWarehouse(ActionRequest actionRequest)
 		throws PortalException {
 
 		long commerceInventoryWarehouseId = ParamUtil.getLong(

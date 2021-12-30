@@ -78,7 +78,7 @@ public class TempAssetCategoryAttachmentsUploadFileEntryHandler
 		try (InputStream inputStream = uploadPortletRequest.getFileAsStream(
 				_PARAMETER_NAME)) {
 
-			return addFileEntry(
+			return _addFileEntry(
 				assetCategory.getCategoryId(), fileName, contentType,
 				inputStream, themeDisplay);
 		}
@@ -90,7 +90,10 @@ public class TempAssetCategoryAttachmentsUploadFileEntryHandler
 			AttachmentsConfiguration.class, properties);
 	}
 
-	protected FileEntry addFileEntry(
+	@Reference
+	protected AssetCategoryService assetCategoryService;
+
+	private FileEntry _addFileEntry(
 			long categoryId, String fileName, String contentType,
 			InputStream inputStream, ThemeDisplay themeDisplay)
 		throws PortalException {
@@ -102,9 +105,6 @@ public class TempAssetCategoryAttachmentsUploadFileEntryHandler
 			themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
 			_TEMP_FOLDER_NAME, uniqueFileName, inputStream, contentType);
 	}
-
-	@Reference
-	protected AssetCategoryService assetCategoryService;
 
 	private boolean _exists(ThemeDisplay themeDisplay, String curFileName) {
 		try {

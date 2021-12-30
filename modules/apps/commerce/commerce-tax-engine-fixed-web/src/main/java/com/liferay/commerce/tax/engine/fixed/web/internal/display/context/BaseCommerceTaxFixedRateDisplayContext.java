@@ -220,7 +220,7 @@ public class BaseCommerceTaxFixedRateDisplayContext {
 			}
 		).setParameter(
 			"screenNavigationCategoryKey",
-			getSelectedScreenNavigationCategoryKey()
+			_getSelectedScreenNavigationCategoryKey()
 		).buildPortletURL();
 	}
 
@@ -239,12 +239,6 @@ public class BaseCommerceTaxFixedRateDisplayContext {
 			commerceChannel, ActionKeys.UPDATE);
 	}
 
-	protected String getSelectedScreenNavigationCategoryKey() {
-		return ParamUtil.getString(
-			commerceTaxFixedRateRequestHelper.getRequest(),
-			"screenNavigationCategoryKey", getScreenNavigationCategoryKey());
-	}
-
 	protected final CommerceChannelLocalService commerceChannelLocalService;
 	protected final CommerceCurrencyLocalService commerceCurrencyLocalService;
 	protected final CommerceTaxFixedRateRequestHelper
@@ -254,6 +248,12 @@ public class BaseCommerceTaxFixedRateDisplayContext {
 	protected final ModelResourcePermission<CommerceChannel>
 		modelResourcePermission;
 	protected final PercentageFormatter percentageFormatter;
+
+	private String _getSelectedScreenNavigationCategoryKey() {
+		return ParamUtil.getString(
+			commerceTaxFixedRateRequestHelper.getRequest(),
+			"screenNavigationCategoryKey", getScreenNavigationCategoryKey());
+	}
 
 	private CommerceTaxMethod _commerceTaxMethod;
 

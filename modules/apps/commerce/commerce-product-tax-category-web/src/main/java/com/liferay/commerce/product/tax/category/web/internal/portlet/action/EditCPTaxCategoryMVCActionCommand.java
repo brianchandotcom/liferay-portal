@@ -53,28 +53,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class EditCPTaxCategoryMVCActionCommand extends BaseMVCActionCommand {
 
-	protected void deleteCPTaxCategories(ActionRequest actionRequest)
-		throws PortalException {
-
-		long[] deleteCPTaxCategoryIds = null;
-
-		long cpTaxCategoryId = ParamUtil.getLong(
-			actionRequest, "cpTaxCategoryId");
-
-		if (cpTaxCategoryId > 0) {
-			deleteCPTaxCategoryIds = new long[] {cpTaxCategoryId};
-		}
-		else {
-			deleteCPTaxCategoryIds = StringUtil.split(
-				ParamUtil.getString(actionRequest, "deleteCPTaxCategoryIds"),
-				0L);
-		}
-
-		for (long deleteCPTaxCategoryId : deleteCPTaxCategoryIds) {
-			_cpTaxCategoryService.deleteCPTaxCategory(deleteCPTaxCategoryId);
-		}
-	}
-
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
@@ -84,12 +62,12 @@ public class EditCPTaxCategoryMVCActionCommand extends BaseMVCActionCommand {
 
 		try {
 			if (cmd.equals(Constants.DELETE)) {
-				deleteCPTaxCategories(actionRequest);
+				_deleteCPTaxCategories(actionRequest);
 			}
 			else if (cmd.equals(Constants.ADD) ||
 					 cmd.equals(Constants.UPDATE)) {
 
-				updateCPTaxCategory(actionRequest);
+				_updateCPTaxCategory(actionRequest);
 			}
 		}
 		catch (Exception exception) {
@@ -116,7 +94,29 @@ public class EditCPTaxCategoryMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	protected void updateCPTaxCategory(ActionRequest actionRequest)
+	private void _deleteCPTaxCategories(ActionRequest actionRequest)
+		throws PortalException {
+
+		long[] deleteCPTaxCategoryIds = null;
+
+		long cpTaxCategoryId = ParamUtil.getLong(
+			actionRequest, "cpTaxCategoryId");
+
+		if (cpTaxCategoryId > 0) {
+			deleteCPTaxCategoryIds = new long[] {cpTaxCategoryId};
+		}
+		else {
+			deleteCPTaxCategoryIds = StringUtil.split(
+				ParamUtil.getString(actionRequest, "deleteCPTaxCategoryIds"),
+				0L);
+		}
+
+		for (long deleteCPTaxCategoryId : deleteCPTaxCategoryIds) {
+			_cpTaxCategoryService.deleteCPTaxCategory(deleteCPTaxCategoryId);
+		}
+	}
+
+	private void _updateCPTaxCategory(ActionRequest actionRequest)
 		throws PortalException {
 
 		long cpTaxCategoryId = ParamUtil.getLong(

@@ -48,15 +48,6 @@ import org.osgi.service.component.annotations.Reference;
 public class EditCommerceOrderNoteMVCActionCommand
 	extends BaseMVCActionCommand {
 
-	protected void deleteCommerceOrderNote(ActionRequest actionRequest)
-		throws Exception {
-
-		long commerceOrderNoteId = ParamUtil.getLong(
-			actionRequest, "commerceOrderNoteId");
-
-		_commerceOrderNoteService.deleteCommerceOrderNote(commerceOrderNoteId);
-	}
-
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
@@ -66,12 +57,12 @@ public class EditCommerceOrderNoteMVCActionCommand
 
 		try {
 			if (cmd.equals(Constants.DELETE)) {
-				deleteCommerceOrderNote(actionRequest);
+				_deleteCommerceOrderNote(actionRequest);
 			}
 			else if (cmd.equals(Constants.ADD) ||
 					 cmd.equals(Constants.UPDATE)) {
 
-				updateCommerceOrderNote(actionRequest);
+				_updateCommerceOrderNote(actionRequest);
 			}
 		}
 		catch (Exception exception) {
@@ -91,7 +82,16 @@ public class EditCommerceOrderNoteMVCActionCommand
 		}
 	}
 
-	protected void updateCommerceOrderNote(ActionRequest actionRequest)
+	private void _deleteCommerceOrderNote(ActionRequest actionRequest)
+		throws Exception {
+
+		long commerceOrderNoteId = ParamUtil.getLong(
+			actionRequest, "commerceOrderNoteId");
+
+		_commerceOrderNoteService.deleteCommerceOrderNote(commerceOrderNoteId);
+	}
+
+	private void _updateCommerceOrderNote(ActionRequest actionRequest)
 		throws Exception {
 
 		String content = ParamUtil.getString(actionRequest, "content");

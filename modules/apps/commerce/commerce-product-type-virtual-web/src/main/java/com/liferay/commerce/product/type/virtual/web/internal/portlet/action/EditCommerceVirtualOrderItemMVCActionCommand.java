@@ -57,7 +57,7 @@ public class EditCommerceVirtualOrderItemMVCActionCommand
 
 		try {
 			if (cmd.equals(Constants.UPDATE)) {
-				updateCommerceVirtualOrderItem(actionRequest);
+				_updateCommerceVirtualOrderItem(actionRequest);
 			}
 		}
 		catch (Exception exception) {
@@ -88,7 +88,7 @@ public class EditCommerceVirtualOrderItemMVCActionCommand
 		}
 	}
 
-	protected void updateCommerceVirtualOrderItem(ActionRequest actionRequest)
+	private void _updateCommerceVirtualOrderItem(ActionRequest actionRequest)
 		throws Exception {
 
 		long commerceVirtualOrderItemId = ParamUtil.getLong(

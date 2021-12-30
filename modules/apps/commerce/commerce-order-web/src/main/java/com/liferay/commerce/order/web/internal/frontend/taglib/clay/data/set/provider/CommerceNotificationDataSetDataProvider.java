@@ -102,18 +102,18 @@ public class CommerceNotificationDataSetDataProvider
 					commerceNotificationQueueEntry.
 						getCommerceNotificationQueueEntryId(),
 					new AuthorField(
-						getUserPortraitSrc(user, httpServletRequest),
+						_getUserPortraitSrc(user, httpServletRequest),
 						user.getEmailAddress(), user.getFullName()),
-					getSentDate(
+					_getSentDate(
 						commerceNotificationQueueEntry, httpServletRequest),
 					new LabelField(
 						"success",
-						getCommerceNotificationTemplateType(
+						_getCommerceNotificationTemplateType(
 							commerceNotificationQueueEntry)),
 					commerceNotificationQueueEntry.getSubject(),
 					HtmlUtil.extractText(
 						commerceNotificationQueueEntry.getBody()),
-					getNotificationPanelURL(
+					_getNotificationPanelURL(
 						commerceNotificationQueueEntry.
 							getCommerceNotificationQueueEntryId(),
 						httpServletRequest)));
@@ -139,7 +139,7 @@ public class CommerceNotificationDataSetDataProvider
 				commerceOrder.getCommerceOrderId(), true);
 	}
 
-	protected String getCommerceNotificationTemplateType(
+	private String _getCommerceNotificationTemplateType(
 			CommerceNotificationQueueEntry commerceNotificationQueueEntry)
 		throws PortalException {
 
@@ -152,7 +152,7 @@ public class CommerceNotificationDataSetDataProvider
 		return commerceNotificationTemplate.getType();
 	}
 
-	protected String getNotificationPanelURL(
+	private String _getNotificationPanelURL(
 			long commerceNotificationQueueEntryId,
 			HttpServletRequest httpServletRequest)
 		throws PortalException {
@@ -187,7 +187,7 @@ public class CommerceNotificationDataSetDataProvider
 		return portletURL.toString();
 	}
 
-	protected String getSentDate(
+	private String _getSentDate(
 		CommerceNotificationQueueEntry commerceNotificationQueueEntry,
 		HttpServletRequest httpServletRequest) {
 
@@ -204,7 +204,7 @@ public class CommerceNotificationDataSetDataProvider
 		return sentDateDescription;
 	}
 
-	protected String getUserPortraitSrc(
+	private String _getUserPortraitSrc(
 		User user, HttpServletRequest httpServletRequest) {
 
 		StringBundler sb = new StringBundler(5);

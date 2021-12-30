@@ -154,10 +154,10 @@ public class CommerceWishListResource {
 			_log.error(exception, exception);
 		}
 
-		return getResponse(wishListItemUpdated);
+		return _getResponse(wishListItemUpdated);
 	}
 
-	protected Response getResponse(Object object) {
+	private Response _getResponse(Object object) {
 		if (object == null) {
 			return Response.status(
 				Response.Status.NOT_FOUND

@@ -44,26 +44,7 @@ public class CommerceProductServiceVerifyProcess extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
-		verifyCPMeasurementUnits();
-	}
-
-	protected void verifyCPMeasurementUnits() throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			_companyLocalService.forEachCompanyId(
-				companyId -> {
-					ServiceContext serviceContext = new ServiceContext();
-
-					serviceContext.setCompanyId(companyId);
-					serviceContext.setLanguageId(
-						UpgradeProcessUtil.getDefaultLanguageId(companyId));
-					serviceContext.setScopeGroupId(0);
-					serviceContext.setUserId(_getAdminUserId(companyId));
-					serviceContext.setUuid(PortalUUIDUtil.generate());
-
-					_cpMeasurementUnitLocalService.importDefaultValues(
-						serviceContext);
-				});
-		}
+		_verifyCPMeasurementUnits();
 	}
 
 	private long _getAdminUserId(long companyId) throws PortalException {
@@ -80,6 +61,25 @@ public class CommerceProductServiceVerifyProcess extends VerifyProcess {
 		}
 
 		return userIds[0];
+	}
+
+	private void _verifyCPMeasurementUnits() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			_companyLocalService.forEachCompanyId(
+				companyId -> {
+					ServiceContext serviceContext = new ServiceContext();
+
+					serviceContext.setCompanyId(companyId);
+					serviceContext.setLanguageId(
+						UpgradeProcessUtil.getDefaultLanguageId(companyId));
+					serviceContext.setScopeGroupId(0);
+					serviceContext.setUserId(_getAdminUserId(companyId));
+					serviceContext.setUuid(PortalUUIDUtil.generate());
+
+					_cpMeasurementUnitLocalService.importDefaultValues(
+						serviceContext);
+				});
+		}
 	}
 
 	@Reference

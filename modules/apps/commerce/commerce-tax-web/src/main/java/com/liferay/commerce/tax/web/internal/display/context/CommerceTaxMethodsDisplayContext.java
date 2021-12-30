@@ -133,7 +133,7 @@ public class CommerceTaxMethodsDisplayContext {
 			portletURL.setParameter("delta", delta);
 		}
 
-		portletURL.setParameter("navigation", getNavigation());
+		portletURL.setParameter("navigation", _getNavigation());
 
 		String screenNavigationEntryKey = getScreenNavigationEntryKey();
 
@@ -162,7 +162,7 @@ public class CommerceTaxMethodsDisplayContext {
 		Boolean active = null;
 		String emptyResultsMessage = "there-are-no-tax-methods";
 
-		String navigation = getNavigation();
+		String navigation = _getNavigation();
 
 		if (navigation.equals("active")) {
 			active = Boolean.TRUE;
@@ -188,7 +188,7 @@ public class CommerceTaxMethodsDisplayContext {
 		}
 
 		if ((active == null) || !active) {
-			results = addDefaultCommerceTaxMethods(results);
+			results = _addDefaultCommerceTaxMethods(results);
 		}
 
 		results.sort(
@@ -213,7 +213,7 @@ public class CommerceTaxMethodsDisplayContext {
 			ActionKeys.UPDATE);
 	}
 
-	protected List<CommerceTaxMethod> addDefaultCommerceTaxMethods(
+	private List<CommerceTaxMethod> _addDefaultCommerceTaxMethods(
 			List<CommerceTaxMethod> commerceTaxMethods)
 		throws PortalException {
 
@@ -230,7 +230,7 @@ public class CommerceTaxMethodsDisplayContext {
 		}
 
 		for (String name : commerceEngineKeys) {
-			CommerceTaxMethod commerceTaxMethod = getDefaultCommerceTaxMethod(
+			CommerceTaxMethod commerceTaxMethod = _getDefaultCommerceTaxMethod(
 				name);
 
 			commerceTaxMethods.add(commerceTaxMethod);
@@ -239,7 +239,7 @@ public class CommerceTaxMethodsDisplayContext {
 		return commerceTaxMethods;
 	}
 
-	protected CommerceTaxMethod getDefaultCommerceTaxMethod(String engineKey)
+	private CommerceTaxMethod _getDefaultCommerceTaxMethod(String engineKey)
 		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
@@ -263,7 +263,7 @@ public class CommerceTaxMethodsDisplayContext {
 		return commerceTaxMethod;
 	}
 
-	protected String getNavigation() {
+	private String _getNavigation() {
 		return ParamUtil.getString(_renderRequest, "navigation");
 	}
 

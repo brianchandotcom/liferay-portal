@@ -125,7 +125,7 @@ public class CommerceOpenOrderContentPortlet extends MVCPortlet {
 						_itemSelector, _modelResourcePermission,
 						_percentageFormatter, _portletResourcePermission);
 
-			CommerceOrder commerceOrder = getCommerceOrder(renderRequest);
+			CommerceOrder commerceOrder = _getCommerceOrder(renderRequest);
 
 			if (commerceOrder != null) {
 				List<String> errorMessages = new ArrayList<>();
@@ -158,7 +158,7 @@ public class CommerceOpenOrderContentPortlet extends MVCPortlet {
 		super.render(renderRequest, renderResponse);
 	}
 
-	protected CommerceOrder getCommerceOrder(PortletRequest portletRequest)
+	private CommerceOrder _getCommerceOrder(PortletRequest portletRequest)
 		throws PortalException {
 
 		String commerceOrderUuid = ParamUtil.getString(

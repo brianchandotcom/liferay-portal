@@ -106,7 +106,7 @@ public class CommerceCartResource {
 				StringUtil.split(exception.getLocalizedMessage()));
 		}
 
-		return getResponse(coupon);
+		return _getResponse(coupon);
 	}
 
 	@Path("/order/{orderId}/coupon-code")
@@ -144,7 +144,7 @@ public class CommerceCartResource {
 				StringUtil.split(exception.getLocalizedMessage()));
 		}
 
-		return getResponse(coupon);
+		return _getResponse(coupon);
 	}
 
 	@Path("/cart-item")
@@ -221,30 +221,7 @@ public class CommerceCartResource {
 			}
 		}
 
-		return getResponse(cart);
-	}
-
-	protected Response getResponse(Object object) {
-		if (object == null) {
-			return Response.status(
-				Response.Status.NOT_FOUND
-			).build();
-		}
-
-		try {
-			String json = _OBJECT_MAPPER.writeValueAsString(object);
-
-			return Response.ok(
-				json, MediaType.APPLICATION_JSON
-			).build();
-		}
-		catch (JsonProcessingException jsonProcessingException) {
-			_log.error(jsonProcessingException, jsonProcessingException);
-		}
-
-		return Response.status(
-			Response.Status.NOT_FOUND
-		).build();
+		return _getResponse(cart);
 	}
 
 	private String[] _getCommerceOrderValidatorResultsMessages(
@@ -282,6 +259,29 @@ public class CommerceCartResource {
 		}
 
 		return _portal.getHomeURL(httpServletRequest);
+	}
+
+	private Response _getResponse(Object object) {
+		if (object == null) {
+			return Response.status(
+				Response.Status.NOT_FOUND
+			).build();
+		}
+
+		try {
+			String json = _OBJECT_MAPPER.writeValueAsString(object);
+
+			return Response.ok(
+				json, MediaType.APPLICATION_JSON
+			).build();
+		}
+		catch (JsonProcessingException jsonProcessingException) {
+			_log.error(jsonProcessingException, jsonProcessingException);
+		}
+
+		return Response.status(
+			Response.Status.NOT_FOUND
+		).build();
 	}
 
 	private static final ObjectMapper _OBJECT_MAPPER = new ObjectMapper() {

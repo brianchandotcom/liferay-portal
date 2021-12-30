@@ -39,7 +39,7 @@ function PreviewSidebar({
 	loading,
 	onFetchResults,
 	onFocusSXPElement,
-	onToggle,
+	onClose,
 	responseString = '',
 	totalHits,
 	visible,
@@ -221,7 +221,7 @@ function PreviewSidebar({
 						borderless
 						displayType="secondary"
 						monospaced
-						onClick={() => onToggle(false)}
+						onClick={onClose}
 						small
 					>
 						<ClayIcon symbol="times" />
@@ -285,9 +285,9 @@ function PreviewSidebar({
 PreviewSidebar.propTypes = {
 	errors: PropTypes.arrayOf(PropTypes.object),
 	loading: PropTypes.bool,
+	onClose: PropTypes.func,
 	onFetchResults: PropTypes.func,
 	onFocusSXPElement: PropTypes.func,
-	onToggle: PropTypes.func,
 	responseString: PropTypes.string,
 	totalHits: PropTypes.number,
 	visible: PropTypes.bool,

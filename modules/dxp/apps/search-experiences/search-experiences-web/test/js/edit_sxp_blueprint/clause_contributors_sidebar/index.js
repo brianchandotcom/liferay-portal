@@ -49,7 +49,6 @@ function renderClause(props) {
 				clauseContributorsIncludes: [],
 			}}
 			onFrameworkConfigChange={jest.fn()}
-			onToggle={jest.fn()}
 			visible={false}
 			{...props}
 		/>

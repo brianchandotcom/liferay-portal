@@ -22,6 +22,12 @@ export const DEFAULT_ERROR = Liferay.Language.get(
 	'an-unexpected-error-occurred'
 );
 
+export const SIDEBARS = {
+	ADD_SXP_ELEMENT: 'addSXPElement',
+	CLAUSE_CONTRIBUTORS: 'clauseContributors',
+	PREVIEW: 'preview',
+};
+
 export const SXP_ELEMENT_PREFIX = {
 	QUERY: 'querySXPElement',
 };

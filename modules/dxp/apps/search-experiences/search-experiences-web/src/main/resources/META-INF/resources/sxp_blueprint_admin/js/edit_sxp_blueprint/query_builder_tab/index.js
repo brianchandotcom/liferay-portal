@@ -15,6 +15,7 @@ import {PropTypes} from 'prop-types';
 import React, {useContext, useEffect, useState} from 'react';
 
 import ThemeContext from '../../shared/ThemeContext';
+import {SIDEBARS} from '../../utils/constants';
 import {fetchData} from '../../utils/fetch';
 import QuerySXPElements from './QuerySXPElements';
 import QuerySettings from './QuerySettings';
@@ -34,12 +35,12 @@ function QueryBuilderTab({
 	onApplyIndexerClausesChange,
 	onBlur,
 	onChange,
-	onChangeAddSXPElementVisibility,
-	onChangeClauseContributorsVisibility,
 	onDeleteSXPElement,
 	onFrameworkConfigChange,
 	setFieldTouched,
 	setFieldValue,
+	openSidebar,
+	setOpenSidebar,
 	touched = [],
 }) {
 	const {locale} = useContext(ThemeContext);
@@ -119,17 +120,32 @@ function QueryBuilderTab({
 	}
 
 	/**
-	 * Handles navigating to a different vertical nav tab.
+	 * Handles sidebar visibility. If 'visible' is not provided, sidebar
+	 * will toggle between open or closed.
+	 * @param {string} type A `SIDEBARS` value.
+	 * @param {visible} boolean Defaults to false if sidebar is open.
+	 */
+	const _handleChangeSidebarVisibility = (type) => (
+		visible = openSidebar !== type
+	) => {
+		setOpenSidebar(visible ? type : '');
+	};
+
+	/**
+	 * Handles navigating to a different vertical nav tab. Certain sidebars
+	 * will close depending on which tab it navigates to.
 	 * @param {string} key A `VERTICAL_NAV_KEYS` value.
 	 */
 	const _handleClickVerticalNav = (verticalNavKey) => () => {
 		setActiveVerticalNavKey(verticalNavKey);
 
-		if (verticalNavKey === VERTICAL_NAV_KEYS.QUERY_SXP_ELEMENTS) {
-			onChangeAddSXPElementVisibility(true);
-		}
-		else {
-			onChangeClauseContributorsVisibility(false);
+		if (
+			(verticalNavKey === VERTICAL_NAV_KEYS.QUERY_SXP_ELEMENTS &&
+				openSidebar === SIDEBARS.CLAUSE_CONTRIBUTORS) ||
+			(verticalNavKey === VERTICAL_NAV_KEYS.QUERY_SETTINGS &&
+				openSidebar === SIDEBARS.ADD_SXP_ELEMENT)
+		) {
+			setOpenSidebar('');
 		}
 	};
 
@@ -181,9 +197,9 @@ function QueryBuilderTab({
 									isSubmitting={isSubmitting}
 									onBlur={onBlur}
 									onChange={onChange}
-									onChangeAddSXPElementVisibility={
-										onChangeAddSXPElementVisibility
-									}
+									onChangeAddSXPElementVisibility={_handleChangeSidebarVisibility(
+										SIDEBARS.ADD_SXP_ELEMENT
+									)}
 									onDeleteSXPElement={onDeleteSXPElement}
 									searchableTypes={searchableTypes}
 									setFieldTouched={setFieldTouched}
@@ -205,9 +221,9 @@ function QueryBuilderTab({
 									onApplyIndexerClausesChange={
 										onApplyIndexerClausesChange
 									}
-									onChangeClauseContributorsVisibility={
-										onChangeClauseContributorsVisibility
-									}
+									onChangeClauseContributorsVisibility={_handleChangeSidebarVisibility(
+										SIDEBARS.CLAUSE_CONTRIBUTORS
+									)}
 									onFrameworkConfigChange={
 										onFrameworkConfigChange
 									}
@@ -232,13 +248,12 @@ QueryBuilderTab.propTypes = {
 	onApplyIndexerClausesChange: PropTypes.func,
 	onBlur: PropTypes.func,
 	onChange: PropTypes.func,
-	onChangeAddSXPElementVisibility: PropTypes.func,
-	onChangeClauseContributorsVisibility: PropTypes.func,
-	onCloseQuerySidebars: PropTypes.func,
 	onDeleteSXPElement: PropTypes.func,
 	onFrameworkConfigChange: PropTypes.func,
+	openSidebar: PropTypes.string,
 	setFieldTouched: PropTypes.func,
 	setFieldValue: PropTypes.func,
+	setOpenSidebar: PropTypes.func,
 	touched: PropTypes.arrayOf(PropTypes.object),
 };
 

@@ -89,7 +89,7 @@ public class ElasticsearchIndexSearcherTest {
 		Assert.assertEquals("testValue", searchSearchRequest.getPreference());
 	}
 
-	private static ElasticsearchIndexSearcher _createElasticsearchIndexSearcher(
+	private ElasticsearchIndexSearcher _createElasticsearchIndexSearcher(
 		SearchRequestBuilderFactory searchRequestBuilderFactory) {
 
 		return new ElasticsearchIndexSearcher() {

@@ -164,7 +164,7 @@ public class ElasticsearchBulkableDocumentRequestTranslatorTest {
 			null, true, WriteRequest.RefreshPolicy.IMMEDIATE);
 	}
 
-	private static ElasticsearchBulkableDocumentRequestTranslator
+	private ElasticsearchBulkableDocumentRequestTranslator
 		_createElasticsearchBulkableDocumentRequestTranslator(
 			ElasticsearchDocumentFactory elasticsearchDocumentFactory) {
 
@@ -175,9 +175,7 @@ public class ElasticsearchBulkableDocumentRequestTranslatorTest {
 		};
 	}
 
-	private static ElasticsearchDocumentFactory
-		_createElasticsearchDocumentFactory() {
-
+	private ElasticsearchDocumentFactory _createElasticsearchDocumentFactory() {
 		return new DefaultElasticsearchDocumentFactory();
 	}
 

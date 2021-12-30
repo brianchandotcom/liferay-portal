@@ -91,7 +91,7 @@ public class IndexSearcherHelperImpl implements IndexSearcherHelper {
 		}
 	}
 
-	private static RuntimeException _uncheck(SearchException searchException) {
+	private RuntimeException _uncheck(SearchException searchException) {
 		if (searchException.getCause() instanceof RuntimeException) {
 			return (RuntimeException)searchException.getCause();
 		}

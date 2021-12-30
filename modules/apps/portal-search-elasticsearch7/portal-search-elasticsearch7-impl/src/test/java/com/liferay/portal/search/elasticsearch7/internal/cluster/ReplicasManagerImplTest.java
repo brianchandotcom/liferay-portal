@@ -176,7 +176,7 @@ public class ReplicasManagerImplTest {
 		);
 	}
 
-	private static void _assert2PrimaryShards1ReplicaAnd2Nodes(
+	private void _assert2PrimaryShards1ReplicaAnd2Nodes(
 		ElasticsearchClientResolver elasticsearchClientResolver) {
 
 		ClusterAssert.assertHealth(
@@ -193,7 +193,7 @@ public class ReplicasManagerImplTest {
 			});
 	}
 
-	private static void _assert2PrimaryShards1ReplicaAnd3Nodes(
+	private void _assert2PrimaryShards1ReplicaAnd3Nodes(
 		ElasticsearchClientResolver elasticsearchClientResolver) {
 
 		ClusterAssert.assertHealth(
@@ -210,7 +210,7 @@ public class ReplicasManagerImplTest {
 			});
 	}
 
-	private static void _assert2PrimaryShardsAnd2Nodes(
+	private void _assert2PrimaryShardsAnd2Nodes(
 		ElasticsearchClientResolver elasticsearchClientResolver) {
 
 		ClusterAssert.assertHealth(

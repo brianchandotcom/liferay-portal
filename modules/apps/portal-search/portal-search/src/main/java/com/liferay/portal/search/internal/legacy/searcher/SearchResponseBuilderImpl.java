@@ -171,7 +171,7 @@ public class SearchResponseBuilderImpl implements SearchResponseBuilder {
 		return value;
 	}
 
-	private static SearchResponseImpl _getSearchResponseImpl(
+	private SearchResponseImpl _getSearchResponseImpl(
 		SearchContext searchContext) {
 
 		return Optional.ofNullable(

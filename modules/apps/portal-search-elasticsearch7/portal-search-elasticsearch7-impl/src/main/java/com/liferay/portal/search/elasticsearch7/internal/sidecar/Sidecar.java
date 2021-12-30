@@ -168,7 +168,7 @@ public class Sidecar {
 		PathUtil.deleteDir(_sidecarTempDirPath);
 	}
 
-	private static void _addFutureListener(
+	private void _addFutureListener(
 		ProcessChannel<Serializable> processChannel,
 		FutureListener<Serializable> futureListener) {
 
@@ -176,31 +176,6 @@ public class Sidecar {
 			processChannel.getProcessNoticeableFuture();
 
 		noticeableFuture.addFutureListener(futureListener);
-	}
-
-	private static boolean _fileNameContains(Path path, String s) {
-		String name = String.valueOf(path.getFileName());
-
-		if (name.contains(s)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	private static String _waitForPublishedAddress(
-			NoticeableFuture<String> noticeableFuture)
-		throws Exception {
-
-		try {
-			return noticeableFuture.get();
-		}
-		catch (ExecutionException executionException) {
-			throw (Exception)executionException.getCause();
-		}
-		catch (InterruptedException interruptedException) {
-			throw new RuntimeException(interruptedException);
-		}
 	}
 
 	private void _consumeProcessLog(ProcessLog processLog) {
@@ -295,6 +270,16 @@ public class Sidecar {
 				"Unable to start sidecar Elasticsearch process",
 				processException);
 		}
+	}
+
+	private boolean _fileNameContains(Path path, String s) {
+		String name = String.valueOf(path.getFileName());
+
+		if (name.contains(s)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private String _getBootstrapClassPath() {
@@ -595,6 +580,21 @@ public class Sidecar {
 			}
 
 			throw new RuntimeException(exception);
+		}
+	}
+
+	private String _waitForPublishedAddress(
+			NoticeableFuture<String> noticeableFuture)
+		throws Exception {
+
+		try {
+			return noticeableFuture.get();
+		}
+		catch (ExecutionException executionException) {
+			throw (Exception)executionException.getCause();
+		}
+		catch (InterruptedException interruptedException) {
+			throw new RuntimeException(interruptedException);
 		}
 	}
 

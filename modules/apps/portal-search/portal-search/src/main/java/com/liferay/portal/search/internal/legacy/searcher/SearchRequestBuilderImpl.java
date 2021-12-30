@@ -550,19 +550,6 @@ public class SearchRequestBuilderImpl implements SearchRequestBuilder {
 		return value;
 	}
 
-	private static SearchRequestImpl _getSearchRequestImpl(
-		SearchContext searchContext) {
-
-		return Optional.ofNullable(
-			(SearchRequestImpl)searchContext.getAttribute(
-				_SEARCH_CONTEXT_KEY_SEARCH_REQUEST)
-		).orElseGet(
-			() -> setAttribute(
-				searchContext, _SEARCH_CONTEXT_KEY_SEARCH_REQUEST,
-				new SearchRequestImpl(searchContext))
-		);
-	}
-
 	private void _addFederatedSearchRequests(
 		List<SearchRequest> searchRequests) {
 
@@ -585,6 +572,19 @@ public class SearchRequestBuilderImpl implements SearchRequestBuilder {
 		}
 
 		return searchRequests;
+	}
+
+	private SearchRequestImpl _getSearchRequestImpl(
+		SearchContext searchContext) {
+
+		return Optional.ofNullable(
+			(SearchRequestImpl)searchContext.getAttribute(
+				_SEARCH_CONTEXT_KEY_SEARCH_REQUEST)
+		).orElseGet(
+			() -> setAttribute(
+				searchContext, _SEARCH_CONTEXT_KEY_SEARCH_REQUEST,
+				new SearchRequestImpl(searchContext))
+		);
 	}
 
 	private SearchRequestBuilder _newFederatedSearchRequestBuilder(

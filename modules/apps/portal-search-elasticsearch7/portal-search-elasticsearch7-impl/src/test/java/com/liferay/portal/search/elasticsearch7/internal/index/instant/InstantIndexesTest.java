@@ -162,7 +162,20 @@ public class InstantIndexesTest {
 			TasksIndexDefinition.INDEX_NAME_WORKFLOW_TASKS);
 	}
 
-	private static CreateIndexRequestExecutor _createCreateIndexRequestExecutor(
+	private void _assertIndexesExist(String... expectedIndices) {
+		GetIndexRequest getIndexRequest = new GetIndexRequest();
+
+		getIndexRequest.indices(expectedIndices);
+
+		GetIndexResponse getIndexResponse = _getIndexResponse(getIndexRequest);
+
+		String[] actualIndices = getIndexResponse.getIndices();
+
+		Assert.assertEquals(
+			Arrays.asList(expectedIndices), Arrays.asList(actualIndices));
+	}
+
+	private CreateIndexRequestExecutor _createCreateIndexRequestExecutor(
 		ElasticsearchClientResolver elasticsearchClientResolver) {
 
 		return new CreateIndexRequestExecutorImpl() {
@@ -172,7 +185,7 @@ public class InstantIndexesTest {
 		};
 	}
 
-	private static IndexSynchronizationPortalInitializedListener
+	private IndexSynchronizationPortalInitializedListener
 		_createIndexSynchronizationPortalInitializedListener(
 			IndexSynchronizer indexSynchronizer) {
 
@@ -183,7 +196,7 @@ public class InstantIndexesTest {
 		};
 	}
 
-	private static IndexSynchronizerImpl _createIndexSynchronizer(
+	private IndexSynchronizerImpl _createIndexSynchronizer(
 		ElasticsearchFixture elasticsearchFixture,
 		IndexDefinitionsHolderImpl indexDefinitionsHolderImpl) {
 
@@ -194,19 +207,6 @@ public class InstantIndexesTest {
 				setIndexDefinitionsHolder(indexDefinitionsHolderImpl);
 			}
 		};
-	}
-
-	private void _assertIndexesExist(String... expectedIndices) {
-		GetIndexRequest getIndexRequest = new GetIndexRequest();
-
-		getIndexRequest.indices(expectedIndices);
-
-		GetIndexResponse _getIndexResponse = _getIndexResponse(getIndexRequest);
-
-		String[] actualIndices = _getIndexResponse.getIndices();
-
-		Assert.assertEquals(
-			Arrays.asList(expectedIndices), Arrays.asList(actualIndices));
 	}
 
 	private void _deployComponents(Object... components) {

@@ -90,9 +90,8 @@ public class IndexRequestExecutorFixture {
 		_elasticsearchClientResolver = elasticsearchClientResolver;
 	}
 
-	private static AnalyzeIndexRequestExecutor
-		_createAnalyzeIndexRequestExecutor(
-			ElasticsearchClientResolver elasticsearchClientResolver) {
+	private AnalyzeIndexRequestExecutor _createAnalyzeIndexRequestExecutor(
+		ElasticsearchClientResolver elasticsearchClientResolver) {
 
 		return new AnalyzeIndexRequestExecutorImpl() {
 			{
@@ -101,7 +100,7 @@ public class IndexRequestExecutorFixture {
 		};
 	}
 
-	private static CloseIndexRequestExecutor _createCloseIndexRequestExecutor(
+	private CloseIndexRequestExecutor _createCloseIndexRequestExecutor(
 		IndicesOptionsTranslator indicesOptionsTranslator,
 		ElasticsearchClientResolver elasticsearchClientResolver) {
 
@@ -113,7 +112,7 @@ public class IndexRequestExecutorFixture {
 		};
 	}
 
-	private static CreateIndexRequestExecutor _createCreateIndexRequestExecutor(
+	private CreateIndexRequestExecutor _createCreateIndexRequestExecutor(
 		ElasticsearchClientResolver elasticsearchClientResolver) {
 
 		return new CreateIndexRequestExecutorImpl() {
@@ -123,7 +122,7 @@ public class IndexRequestExecutorFixture {
 		};
 	}
 
-	private static DeleteIndexRequestExecutor _createDeleteIndexRequestExecutor(
+	private DeleteIndexRequestExecutor _createDeleteIndexRequestExecutor(
 		IndicesOptionsTranslator indicesOptionsTranslator,
 		ElasticsearchClientResolver elasticsearchClientResolver) {
 
@@ -135,7 +134,7 @@ public class IndexRequestExecutorFixture {
 		};
 	}
 
-	private static FlushIndexRequestExecutor _createFlushIndexRequestExecutor(
+	private FlushIndexRequestExecutor _createFlushIndexRequestExecutor(
 		IndexRequestShardFailureTranslator indexRequestShardFailureTranslator,
 		ElasticsearchClientResolver elasticsearchClientResolver) {
 
@@ -148,7 +147,7 @@ public class IndexRequestExecutorFixture {
 		};
 	}
 
-	private static GetFieldMappingIndexRequestExecutor
+	private GetFieldMappingIndexRequestExecutor
 		_createGetFieldMappingIndexRequestExecutor(
 			ElasticsearchClientResolver elasticsearchClientResolver) {
 
@@ -159,9 +158,8 @@ public class IndexRequestExecutorFixture {
 		};
 	}
 
-	private static GetIndexIndexRequestExecutor
-		_createGetIndexIndexRequestExecutor(
-			ElasticsearchClientResolver elasticsearchClientResolver) {
+	private GetIndexIndexRequestExecutor _createGetIndexIndexRequestExecutor(
+		ElasticsearchClientResolver elasticsearchClientResolver) {
 
 		return new GetIndexIndexRequestExecutorImpl() {
 			{
@@ -170,7 +168,7 @@ public class IndexRequestExecutorFixture {
 		};
 	}
 
-	private static GetMappingIndexRequestExecutor
+	private GetMappingIndexRequestExecutor
 		_createGetMappingIndexRequestExecutor(
 			ElasticsearchClientResolver elasticsearchClientResolver) {
 
@@ -181,7 +179,7 @@ public class IndexRequestExecutorFixture {
 		};
 	}
 
-	private static IndicesExistsIndexRequestExecutor
+	private IndicesExistsIndexRequestExecutor
 		_createIndexExistsIndexRequestExecutor(
 			ElasticsearchClientResolver elasticsearchClientResolver) {
 
@@ -192,7 +190,7 @@ public class IndexRequestExecutorFixture {
 		};
 	}
 
-	private static OpenIndexRequestExecutor _createOpenIndexRequestExecutor(
+	private OpenIndexRequestExecutor _createOpenIndexRequestExecutor(
 		IndicesOptionsTranslator indicesOptionsTranslator,
 		ElasticsearchClientResolver elasticsearchClientResolver) {
 
@@ -204,7 +202,7 @@ public class IndexRequestExecutorFixture {
 		};
 	}
 
-	private static PutMappingIndexRequestExecutor
+	private PutMappingIndexRequestExecutor
 		_createPutMappingIndexRequestExecutor(
 			ElasticsearchClientResolver elasticsearchClientResolver) {
 
@@ -215,11 +213,9 @@ public class IndexRequestExecutorFixture {
 		};
 	}
 
-	private static RefreshIndexRequestExecutor
-		_createRefreshIndexRequestExecutor(
-			IndexRequestShardFailureTranslator
-				indexRequestShardFailureTranslator,
-			ElasticsearchClientResolver elasticsearchClientResolver) {
+	private RefreshIndexRequestExecutor _createRefreshIndexRequestExecutor(
+		IndexRequestShardFailureTranslator indexRequestShardFailureTranslator,
+		ElasticsearchClientResolver elasticsearchClientResolver) {
 
 		return new RefreshIndexRequestExecutorImpl() {
 			{
@@ -230,7 +226,7 @@ public class IndexRequestExecutorFixture {
 		};
 	}
 
-	private static UpdateIndexSettingsIndexRequestExecutor
+	private UpdateIndexSettingsIndexRequestExecutor
 		_createUpdateIndexSettingsIndexRequestExecutor(
 			IndicesOptionsTranslator indicesOptionsTranslator,
 			ElasticsearchClientResolver elasticsearchClientResolver) {

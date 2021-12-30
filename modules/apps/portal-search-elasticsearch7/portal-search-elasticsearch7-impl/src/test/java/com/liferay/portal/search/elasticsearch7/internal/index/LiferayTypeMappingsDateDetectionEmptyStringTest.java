@@ -146,7 +146,7 @@ public class LiferayTypeMappingsDateDetectionEmptyStringTest {
 		_liferayIndexFixture.index(map);
 	}
 
-	private static String _randomField() {
+	private String _randomField() {
 		return "randomField__" + RandomTestUtil.randomString();
 	}
 

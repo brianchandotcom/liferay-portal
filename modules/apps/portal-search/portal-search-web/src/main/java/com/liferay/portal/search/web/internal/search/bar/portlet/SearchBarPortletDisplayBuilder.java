@@ -315,14 +315,6 @@ public class SearchBarPortletDisplayBuilder {
 		return true;
 	}
 
-	private static String _slashify(String s) {
-		if (s.charAt(0) == CharPool.SLASH) {
-			return s;
-		}
-
-		return StringPool.SLASH.concat(s);
-	}
-
 	private String _getDestinationURL(String friendlyURL) {
 		Layout layout = fetchLayoutByFriendlyURL(
 			_themeDisplay.getScopeGroupId(), _slashify(friendlyURL));
@@ -352,6 +344,14 @@ public class SearchBarPortletDisplayBuilder {
 			searchBarPortletDisplayContext.setSelectedCurrentSiteSearchScope(
 				true);
 		}
+	}
+
+	private String _slashify(String s) {
+		if (s.charAt(0) == CharPool.SLASH) {
+			return s;
+		}
+
+		return StringPool.SLASH.concat(s);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

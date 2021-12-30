@@ -101,7 +101,7 @@ public class ElasticsearchSearchEngineFixture implements SearchEngineFixture {
 		};
 	}
 
-	private static CompanyIndexFactory _createCompanyIndexFactory(
+	private CompanyIndexFactory _createCompanyIndexFactory(
 		IndexNameBuilder indexNameBuilder, Map<String, Object> properites) {
 
 		return new CompanyIndexFactory() {
@@ -114,7 +114,7 @@ public class ElasticsearchSearchEngineFixture implements SearchEngineFixture {
 		};
 	}
 
-	private static ElasticsearchConnectionManager
+	private ElasticsearchConnectionManager
 		_createElasticsearchConnectionManager(
 			ElasticsearchConnectionFixture elasticsearchConnectionFixture) {
 
@@ -135,7 +135,7 @@ public class ElasticsearchSearchEngineFixture implements SearchEngineFixture {
 		};
 	}
 
-	private static ElasticsearchSearchEngine _createElasticsearchSearchEngine(
+	private ElasticsearchSearchEngine _createElasticsearchSearchEngine(
 		ElasticsearchClientResolver elasticsearchClientResolver,
 		ElasticsearchConnectionManager elasticsearchConnectionManager,
 		IndexNameBuilder indexNameBuilder, Map<String, Object> properites) {
@@ -153,7 +153,7 @@ public class ElasticsearchSearchEngineFixture implements SearchEngineFixture {
 		};
 	}
 
-	private static CompanyIdIndexNameBuilder _createIndexNameBuilder() {
+	private CompanyIdIndexNameBuilder _createIndexNameBuilder() {
 		return new CompanyIdIndexNameBuilder() {
 			{
 				setIndexNamePrefix(null);
@@ -161,7 +161,7 @@ public class ElasticsearchSearchEngineFixture implements SearchEngineFixture {
 		};
 	}
 
-	private static OperationModeResolver _createOperationModeResolver(
+	private OperationModeResolver _createOperationModeResolver(
 		ElasticsearchConfigurationWrapper elasticsearchConfigurationWrapper1) {
 
 		return new OperationModeResolver() {
@@ -172,7 +172,7 @@ public class ElasticsearchSearchEngineFixture implements SearchEngineFixture {
 		};
 	}
 
-	private static SearchEngineAdapter _createSearchEngineAdapter(
+	private SearchEngineAdapter _createSearchEngineAdapter(
 		ElasticsearchClientResolver elasticsearchClientResolver) {
 
 		ElasticsearchEngineAdapterFixture elasticsearchEngineAdapterFixture =

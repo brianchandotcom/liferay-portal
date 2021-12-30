@@ -165,7 +165,7 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 		_liferayMappingsAddedToIndex = liferayMappingsAddedToIndex;
 	}
 
-	private static ElasticsearchEngineAdapterFixture
+	private ElasticsearchEngineAdapterFixture
 		_createElasticsearchEngineAdapterFixture(
 			ElasticsearchClientResolver elasticsearchClientResolver,
 			FacetProcessor<SearchRequestBuilder> facetProcessor) {
@@ -178,7 +178,7 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 		};
 	}
 
-	private static QuerySuggester _createElasticsearchQuerySuggester(
+	private QuerySuggester _createElasticsearchQuerySuggester(
 		SearchEngineAdapter searchEngineAdapter,
 		IndexNameBuilder indexNameBuilder, Localization localization) {
 
@@ -191,7 +191,7 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 		};
 	}
 
-	private static ElasticsearchSpellCheckIndexWriter
+	private ElasticsearchSpellCheckIndexWriter
 		_createElasticsearchSpellCheckIndexWriter(
 			SearchEngineAdapter searchEngineAdapter,
 			IndexNameBuilder indexNameBuilder, Localization localization) {
@@ -207,7 +207,20 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 		};
 	}
 
-	private static ElasticsearchIndexSearcher _createIndexSearcher(
+	private void _createIndex(IndexNameBuilder indexNameBuilder) {
+		IndexCreator indexCreator = new IndexCreator() {
+			{
+				setElasticsearchClientResolver(_elasticsearchFixture);
+				setIndexCreationHelper(_indexCreationHelper);
+				setLiferayMappingsAddedToIndex(_liferayMappingsAddedToIndex);
+			}
+		};
+
+		indexCreator.createIndex(
+			new IndexName(indexNameBuilder.getIndexName(_companyId)));
+	}
+
+	private ElasticsearchIndexSearcher _createIndexSearcher(
 		ElasticsearchFixture elasticsearchFixture,
 		SearchEngineAdapter searchEngineAdapter,
 		IndexNameBuilder indexNameBuilder, Localization localization) {
@@ -232,7 +245,7 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 		};
 	}
 
-	private static IndexWriter _createIndexWriter(
+	private IndexWriter _createIndexWriter(
 		ElasticsearchFixture elasticsearchFixture,
 		SearchEngineAdapter searchEngineAdapter,
 		IndexNameBuilder indexNameBuilder, Localization localization) {
@@ -252,7 +265,7 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 		};
 	}
 
-	private static Props _createProps() {
+	private Props _createProps() {
 		Props props = Mockito.mock(Props.class);
 
 		Mockito.doReturn(
@@ -264,19 +277,6 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 		);
 
 		return props;
-	}
-
-	private void _createIndex(IndexNameBuilder indexNameBuilder) {
-		IndexCreator indexCreator = new IndexCreator() {
-			{
-				setElasticsearchClientResolver(_elasticsearchFixture);
-				setIndexCreationHelper(_indexCreationHelper);
-				setLiferayMappingsAddedToIndex(_liferayMappingsAddedToIndex);
-			}
-		};
-
-		indexCreator.createIndex(
-			new IndexName(indexNameBuilder.getIndexName(_companyId)));
 	}
 
 	private FacetProcessor<SearchRequestBuilder> _getFacetProcessor() {

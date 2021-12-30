@@ -116,12 +116,6 @@ public class SuggestionsPortlet extends MVCPortlet {
 	@Reference
 	protected PortletSharedSearchRequest portletSharedSearchRequest;
 
-	private static <T> void _copy(Supplier<Optional<T>> from, Consumer<T> to) {
-		Optional<T> optional = from.get();
-
-		optional.ifPresent(to);
-	}
-
 	private SuggestionsPortletDisplayContext _buildDisplayContext(
 		SuggestionsPortletPreferences suggestionsPortletPreferences,
 		PortletSharedSearchResponse portletSharedSearchResponse,
@@ -156,6 +150,12 @@ public class SuggestionsPortlet extends MVCPortlet {
 			suggestionsPortletPreferences.isSpellCheckSuggestionEnabled());
 
 		return suggestionsPortletDisplayBuilder.build();
+	}
+
+	private <T> void _copy(Supplier<Optional<T>> from, Consumer<T> to) {
+		Optional<T> optional = from.get();
+
+		optional.ifPresent(to);
 	}
 
 }

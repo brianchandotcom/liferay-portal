@@ -114,29 +114,6 @@ public class SearcherImpl implements Searcher {
 	@Reference
 	protected SearchResponseBuilderFactory searchResponseBuilderFactory;
 
-	private static <T> T _transform(T t, Stream<Function<T, T>> stream) {
-		return stream.reduce(
-			(beforeFunction, afterFunction) -> beforeFunction.andThen(
-				afterFunction)
-		).orElse(
-			Function.identity()
-		).apply(
-			t
-		);
-	}
-
-	private static RuntimeException _uncheck(SearchException searchException) {
-		if (searchException.getCause() instanceof RuntimeException) {
-			return (RuntimeException)searchException.getCause();
-		}
-
-		if (searchException.getCause() != null) {
-			return new RuntimeException(searchException.getCause());
-		}
-
-		return new RuntimeException(searchException);
-	}
-
 	private void _federatedSearches(
 		SearchRequest searchRequest,
 		SearchResponseBuilder searchResponseBuilder) {
@@ -281,8 +258,31 @@ public class SearcherImpl implements Searcher {
 		}
 	}
 
+	private <T> T _transform(T t, Stream<Function<T, T>> stream) {
+		return stream.reduce(
+			(beforeFunction, afterFunction) -> beforeFunction.andThen(
+				afterFunction)
+		).orElse(
+			Function.identity()
+		).apply(
+			t
+		);
+	}
+
 	private SearchRequest _transformSearchRequest(SearchRequest searchRequest) {
 		return _transform(searchRequest, _getContributors(searchRequest));
+	}
+
+	private RuntimeException _uncheck(SearchException searchException) {
+		if (searchException.getCause() instanceof RuntimeException) {
+			return (RuntimeException)searchException.getCause();
+		}
+
+		if (searchException.getCause() != null) {
+			return new RuntimeException(searchException.getCause());
+		}
+
+		return new RuntimeException(searchException);
 	}
 
 }

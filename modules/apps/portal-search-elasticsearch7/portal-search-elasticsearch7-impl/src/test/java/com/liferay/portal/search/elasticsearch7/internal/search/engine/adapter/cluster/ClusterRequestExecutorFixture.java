@@ -53,10 +53,9 @@ public class ClusterRequestExecutorFixture {
 		_elasticsearchClientResolver = elasticsearchClientResolver;
 	}
 
-	private static HealthClusterRequestExecutor
-		_createHealthClusterRequestExecutor(
-			ClusterHealthStatusTranslator clusterHealthStatusTranslator,
-			ElasticsearchClientResolver elasticsearchClientResolver) {
+	private HealthClusterRequestExecutor _createHealthClusterRequestExecutor(
+		ClusterHealthStatusTranslator clusterHealthStatusTranslator,
+		ElasticsearchClientResolver elasticsearchClientResolver) {
 
 		return new HealthClusterRequestExecutorImpl() {
 			{
@@ -66,9 +65,8 @@ public class ClusterRequestExecutorFixture {
 		};
 	}
 
-	private static StateClusterRequestExecutor
-		_createStateClusterRequestExecutor(
-			ElasticsearchClientResolver elasticsearchClientResolver) {
+	private StateClusterRequestExecutor _createStateClusterRequestExecutor(
+		ElasticsearchClientResolver elasticsearchClientResolver) {
 
 		return new StateClusterRequestExecutorImpl() {
 			{
@@ -77,10 +75,9 @@ public class ClusterRequestExecutorFixture {
 		};
 	}
 
-	private static StatsClusterRequestExecutor
-		_createStatsClusterRequestExecutor(
-			ClusterHealthStatusTranslator clusterHealthStatusTranslator,
-			ElasticsearchClientResolver elasticsearchClientResolver) {
+	private StatsClusterRequestExecutor _createStatsClusterRequestExecutor(
+		ClusterHealthStatusTranslator clusterHealthStatusTranslator,
+		ElasticsearchClientResolver elasticsearchClientResolver) {
 
 		return new StatsClusterRequestExecutorImpl() {
 			{

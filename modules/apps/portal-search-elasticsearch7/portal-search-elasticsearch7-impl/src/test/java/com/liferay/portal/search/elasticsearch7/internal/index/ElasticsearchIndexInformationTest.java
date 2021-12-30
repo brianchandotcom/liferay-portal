@@ -106,19 +106,6 @@ public class ElasticsearchIndexInformationTest {
 	@Rule
 	public TestName testName = new TestName();
 
-	private static ElasticsearchIndexInformation
-		_createElasticsearchIndexInformation(
-			ElasticsearchClientResolver elasticsearchClientResolver) {
-
-		return new ElasticsearchIndexInformation() {
-			{
-				setElasticsearchClientResolver(elasticsearchClientResolver);
-				setIndexNameBuilder(
-					ElasticsearchIndexInformationTest::_getIndexNameBuilder);
-			}
-		};
-	}
-
 	private static String _getIndexNameBuilder(long companyId) {
 		return "test-" + companyId;
 	}
@@ -128,6 +115,18 @@ public class ElasticsearchIndexInformationTest {
 
 		return new CompanyIndexFactoryFixture(
 			elasticsearchClientResolver, testName.getMethodName());
+	}
+
+	private ElasticsearchIndexInformation _createElasticsearchIndexInformation(
+		ElasticsearchClientResolver elasticsearchClientResolver) {
+
+		return new ElasticsearchIndexInformation() {
+			{
+				setElasticsearchClientResolver(elasticsearchClientResolver);
+				setIndexNameBuilder(
+					ElasticsearchIndexInformationTest::_getIndexNameBuilder);
+			}
+		};
 	}
 
 	private JSONObject _loadJSONObject(String suffix) throws Exception {

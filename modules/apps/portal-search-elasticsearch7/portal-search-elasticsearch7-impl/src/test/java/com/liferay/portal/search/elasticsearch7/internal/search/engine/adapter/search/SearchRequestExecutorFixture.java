@@ -183,26 +183,6 @@ public class SearchRequestExecutorFixture {
 		_facetProcessor = facetProcessor;
 	}
 
-	private static CountSearchRequestExecutor _createCountSearchRequestExecutor(
-		ElasticsearchClientResolver elasticsearchClientResolver,
-		CommonSearchSourceBuilderAssembler commonSearchSourceBuilderAssembler,
-		StatsTranslator statsTranslator) {
-
-		return new CountSearchRequestExecutorImpl() {
-			{
-				setCommonSearchResponseAssembler(
-					new CommonSearchResponseAssemblerImpl() {
-						{
-							setStatsTranslator(statsTranslator);
-						}
-					});
-				setCommonSearchSourceBuilderAssembler(
-					commonSearchSourceBuilderAssembler);
-				setElasticsearchClientResolver(elasticsearchClientResolver);
-			}
-		};
-	}
-
 	private static FacetTranslator _createFacetTranslator(
 		FacetProcessor<?> facetProcessor,
 		QueryTranslator<QueryBuilder> queryTranslator) {
@@ -224,7 +204,27 @@ public class SearchRequestExecutorFixture {
 		};
 	}
 
-	private static MultisearchSearchRequestExecutor
+	private CountSearchRequestExecutor _createCountSearchRequestExecutor(
+		ElasticsearchClientResolver elasticsearchClientResolver,
+		CommonSearchSourceBuilderAssembler commonSearchSourceBuilderAssembler,
+		StatsTranslator statsTranslator) {
+
+		return new CountSearchRequestExecutorImpl() {
+			{
+				setCommonSearchResponseAssembler(
+					new CommonSearchResponseAssemblerImpl() {
+						{
+							setStatsTranslator(statsTranslator);
+						}
+					});
+				setCommonSearchSourceBuilderAssembler(
+					commonSearchSourceBuilderAssembler);
+				setElasticsearchClientResolver(elasticsearchClientResolver);
+			}
+		};
+	}
+
+	private MultisearchSearchRequestExecutor
 		_createMultisearchSearchRequestExecutor(
 			ElasticsearchClientResolver elasticsearchClientResolver,
 			SearchSearchRequestAssembler searchSearchRequestAssembler,
@@ -239,7 +239,7 @@ public class SearchRequestExecutorFixture {
 		};
 	}
 
-	private static SearchRequestExecutor _createSearchRequestExecutor(
+	private SearchRequestExecutor _createSearchRequestExecutor(
 		ElasticsearchClientResolver elasticsearchClientResolver,
 		ElasticsearchQueryTranslator elasticsearchQueryTranslator,
 		ElasticsearchSortFieldTranslator elasticsearchSortFieldTranslator,
@@ -285,14 +285,12 @@ public class SearchRequestExecutorFixture {
 		};
 	}
 
-	private static SearchSearchRequestAssembler
-		_createSearchSearchRequestAssembler(
-			ElasticsearchQueryTranslator elasticsearchQueryTranslator,
-			ElasticsearchSortFieldTranslator elasticsearchSortFieldTranslator,
-			CommonSearchSourceBuilderAssembler
-				commonSearchSourceBuilderAssembler,
-			StatsRequestBuilderFactory statsRequestBuilderFactory,
-			StatsTranslator statsTranslator) {
+	private SearchSearchRequestAssembler _createSearchSearchRequestAssembler(
+		ElasticsearchQueryTranslator elasticsearchQueryTranslator,
+		ElasticsearchSortFieldTranslator elasticsearchSortFieldTranslator,
+		CommonSearchSourceBuilderAssembler commonSearchSourceBuilderAssembler,
+		StatsRequestBuilderFactory statsRequestBuilderFactory,
+		StatsTranslator statsTranslator) {
 
 		return new SearchSearchRequestAssemblerImpl() {
 			{
@@ -310,11 +308,10 @@ public class SearchRequestExecutorFixture {
 		};
 	}
 
-	private static SearchSearchRequestExecutor
-		_createSearchSearchRequestExecutor(
-			ElasticsearchClientResolver elasticsearchClientResolver,
-			SearchSearchRequestAssembler searchSearchRequestAssembler,
-			SearchSearchResponseAssembler searchSearchResponseAssembler) {
+	private SearchSearchRequestExecutor _createSearchSearchRequestExecutor(
+		ElasticsearchClientResolver elasticsearchClientResolver,
+		SearchSearchRequestAssembler searchSearchRequestAssembler,
+		SearchSearchResponseAssembler searchSearchResponseAssembler) {
 
 		return new SearchSearchRequestExecutorImpl() {
 			{
@@ -325,10 +322,9 @@ public class SearchRequestExecutorFixture {
 		};
 	}
 
-	private static SearchSearchResponseAssembler
-		_createSearchSearchResponseAssembler(
-			StatsRequestBuilderFactory statsRequestBuilderFactory,
-			StatsTranslator statsTranslator) {
+	private SearchSearchResponseAssembler _createSearchSearchResponseAssembler(
+		StatsRequestBuilderFactory statsRequestBuilderFactory,
+		StatsTranslator statsTranslator) {
 
 		return new SearchSearchResponseAssemblerImpl() {
 			{
@@ -363,9 +359,8 @@ public class SearchRequestExecutorFixture {
 		};
 	}
 
-	private static SuggestSearchRequestExecutor
-		_createSuggestSearchRequestExecutor(
-			ElasticsearchClientResolver elasticsearchClientResolver) {
+	private SuggestSearchRequestExecutor _createSuggestSearchRequestExecutor(
+		ElasticsearchClientResolver elasticsearchClientResolver) {
 
 		return new SuggestSearchRequestExecutorImpl() {
 			{

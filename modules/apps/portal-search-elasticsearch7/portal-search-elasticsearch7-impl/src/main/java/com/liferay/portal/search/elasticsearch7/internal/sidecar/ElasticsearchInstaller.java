@@ -133,30 +133,10 @@ public class ElasticsearchInstaller {
 		}
 	}
 
-	private static Path _getExtractedElasticsearchDirectoryPath(
-			Path extractedRootDirectoryPath)
-		throws IOException {
-
-		try (Stream<Path> stream = Files.list(extractedRootDirectoryPath)) {
-			return stream.filter(
-				Files::isDirectory
-			).findAny(
-			).get();
-		}
-	}
-
 	private static Path _getTemporaryDirectoryPath() {
 		Path path = Paths.get(SystemProperties.get(SystemProperties.TMP_DIR));
 
 		return path.resolve(ElasticsearchInstaller.class.getSimpleName());
-	}
-
-	private static void _guardChecksum(Path filePath, String checksum)
-		throws IOException {
-
-		if (!checksum.equals(getChecksum(filePath))) {
-			throw new RuntimeException("Checksum mismatch");
-		}
 	}
 
 	private void _createDestinationDirectory() {
@@ -230,12 +210,32 @@ public class ElasticsearchInstaller {
 		}
 	}
 
+	private Path _getExtractedElasticsearchDirectoryPath(
+			Path extractedRootDirectoryPath)
+		throws IOException {
+
+		try (Stream<Path> stream = Files.list(extractedRootDirectoryPath)) {
+			return stream.filter(
+				Files::isDirectory
+			).findAny(
+			).get();
+		}
+	}
+
 	private Path _getFilePath(Distributable distributable) throws IOException {
 		Path filePath = _locateOrDownload(distributable);
 
 		_guardChecksum(filePath, distributable.getChecksum());
 
 		return filePath;
+	}
+
+	private void _guardChecksum(Path filePath, String checksum)
+		throws IOException {
+
+		if (!checksum.equals(getChecksum(filePath))) {
+			throw new RuntimeException("Checksum mismatch");
+		}
 	}
 
 	private boolean _isAlreadyInstalled() {

@@ -75,19 +75,19 @@ public class SearchResponseImplTest {
 		return actual -> Assert.assertSame(expected, actual);
 	}
 
-	private static <T> void _assertIs(T actual, Consumer<T> consumer) {
+	private <T> void _assertIs(T actual, Consumer<T> consumer) {
 		consumer.accept(actual);
 	}
 
-	private static Consumer<String> _blank() {
+	private Consumer<String> _blank() {
 		return string -> Assert.assertEquals(StringPool.BLANK, string);
 	}
 
-	private static Consumer<Map<String, ?>> _emptyMap() {
+	private Consumer<Map<String, ?>> _emptyMap() {
 		return map -> Assert.assertEquals("{}", String.valueOf(map));
 	}
 
-	private static Consumer<Stream<?>> _emptyStream() {
+	private Consumer<Stream<?>> _emptyStream() {
 		return stream -> Assert.assertEquals(
 			"[]",
 			String.valueOf(
@@ -98,19 +98,19 @@ public class SearchResponseImplTest {
 				)));
 	}
 
-	private static Consumer<Object> _instanceOf(Class<?> clazz) {
+	private Consumer<Object> _instanceOf(Class<?> clazz) {
 		return object -> Assert.assertTrue(clazz.isInstance(object));
 	}
 
-	private static Consumer<Object> _nullValue() {
+	private Consumer<Object> _nullValue() {
 		return object -> Assert.assertNull(object);
 	}
 
-	private static Consumer<Integer> _zeroInt() {
+	private Consumer<Integer> _zeroInt() {
 		return value -> Assert.assertEquals(0, value.intValue());
 	}
 
-	private static Consumer<Long> _zeroLong() {
+	private Consumer<Long> _zeroLong() {
 		return value -> Assert.assertEquals(0, value.longValue());
 	}
 

@@ -49,7 +49,7 @@ public class DocumentRequestExecutorFixture {
 		_elasticsearchDocumentFactory = elasticsearchDocumentFactory;
 	}
 
-	private static ElasticsearchBulkableDocumentRequestTranslator
+	private ElasticsearchBulkableDocumentRequestTranslator
 		_createBulkableDocumentRequestTranslator(
 			ElasticsearchDocumentFactory elasticsearchDocumentFactory) {
 
@@ -60,11 +60,10 @@ public class DocumentRequestExecutorFixture {
 		};
 	}
 
-	private static BulkDocumentRequestExecutor
-		_createBulkDocumentRequestExecutor(
-			ElasticsearchClientResolver elasticsearchClientResolver,
-			ElasticsearchBulkableDocumentRequestTranslator
-				elasticsearchBulkableDocumentRequestTranslator) {
+	private BulkDocumentRequestExecutor _createBulkDocumentRequestExecutor(
+		ElasticsearchClientResolver elasticsearchClientResolver,
+		ElasticsearchBulkableDocumentRequestTranslator
+			elasticsearchBulkableDocumentRequestTranslator) {
 
 		return new BulkDocumentRequestExecutorImpl() {
 			{
@@ -75,7 +74,7 @@ public class DocumentRequestExecutorFixture {
 		};
 	}
 
-	private static DeleteByQueryDocumentRequestExecutor
+	private DeleteByQueryDocumentRequestExecutor
 		_createDeleteByQueryDocumentRequestExecutor(
 			ElasticsearchClientResolver elasticsearchClientResolver) {
 
@@ -104,11 +103,10 @@ public class DocumentRequestExecutorFixture {
 		};
 	}
 
-	private static DeleteDocumentRequestExecutor
-		_createDeleteDocumentRequestExecutor(
-			ElasticsearchClientResolver elasticsearchClientResolver,
-			ElasticsearchBulkableDocumentRequestTranslator
-				elasticsearchBulkableDocumentRequestTranslator) {
+	private DeleteDocumentRequestExecutor _createDeleteDocumentRequestExecutor(
+		ElasticsearchClientResolver elasticsearchClientResolver,
+		ElasticsearchBulkableDocumentRequestTranslator
+			elasticsearchBulkableDocumentRequestTranslator) {
 
 		return new DeleteDocumentRequestExecutorImpl() {
 			{
@@ -119,7 +117,7 @@ public class DocumentRequestExecutorFixture {
 		};
 	}
 
-	private static DocumentRequestExecutor _createDocumentRequestExecutor(
+	private DocumentRequestExecutor _createDocumentRequestExecutor(
 		ElasticsearchClientResolver elasticsearchClientResolver,
 		ElasticsearchDocumentFactory elasticsearchDocumentFactory) {
 
@@ -160,7 +158,7 @@ public class DocumentRequestExecutorFixture {
 		};
 	}
 
-	private static GetDocumentRequestExecutor _createGetDocumentRequestExecutor(
+	private GetDocumentRequestExecutor _createGetDocumentRequestExecutor(
 		ElasticsearchClientResolver elasticsearchClientResolver,
 		ElasticsearchBulkableDocumentRequestTranslator
 			elasticsearchBulkableDocumentRequestTranslator) {
@@ -176,11 +174,10 @@ public class DocumentRequestExecutorFixture {
 		};
 	}
 
-	private static IndexDocumentRequestExecutor
-		_createIndexDocumentRequestExecutor(
-			ElasticsearchClientResolver elasticsearchClientResolver,
-			ElasticsearchBulkableDocumentRequestTranslator
-				elasticsearchBulkableDocumentRequestTranslator) {
+	private IndexDocumentRequestExecutor _createIndexDocumentRequestExecutor(
+		ElasticsearchClientResolver elasticsearchClientResolver,
+		ElasticsearchBulkableDocumentRequestTranslator
+			elasticsearchBulkableDocumentRequestTranslator) {
 
 		return new IndexDocumentRequestExecutorImpl() {
 			{
@@ -191,7 +188,7 @@ public class DocumentRequestExecutorFixture {
 		};
 	}
 
-	private static UpdateByQueryDocumentRequestExecutor
+	private UpdateByQueryDocumentRequestExecutor
 		_createUpdateByQueryDocumentRequestExecutor(
 			ElasticsearchClientResolver elasticsearchClientResolver) {
 
@@ -222,11 +219,10 @@ public class DocumentRequestExecutorFixture {
 		};
 	}
 
-	private static UpdateDocumentRequestExecutor
-		_createUpdateDocumentRequestExecutor(
-			ElasticsearchClientResolver elasticsearchClientResolver,
-			ElasticsearchBulkableDocumentRequestTranslator
-				elasticsearchBulkableDocumentRequestTranslator) {
+	private UpdateDocumentRequestExecutor _createUpdateDocumentRequestExecutor(
+		ElasticsearchClientResolver elasticsearchClientResolver,
+		ElasticsearchBulkableDocumentRequestTranslator
+			elasticsearchBulkableDocumentRequestTranslator) {
 
 		return new UpdateDocumentRequestExecutorImpl() {
 			{

@@ -99,14 +99,14 @@ public class ElasticsearchAggregationVisitorFixture {
 		return _elasticsearchAggregationVisitor;
 	}
 
-	private static void _injectGeoAggregationTranslators(
+	private void _injectGeoAggregationTranslators(
 		ElasticsearchAggregationVisitor elasticsearchAggregationVisitor) {
 
 		elasticsearchAggregationVisitor.setGeoDistanceAggregationTranslator(
 			new GeoDistanceAggregationTranslatorImpl());
 	}
 
-	private static void _injectQueryAggregationTranslators(
+	private void _injectQueryAggregationTranslators(
 		ElasticsearchAggregationVisitor elasticsearchAggregationVisitor,
 		ElasticsearchQueryTranslatorFixture
 			elasticsearchQueryTranslatorFixture) {
@@ -146,7 +146,7 @@ public class ElasticsearchAggregationVisitorFixture {
 			});
 	}
 
-	private static void _injectScriptAggregationTranslators(
+	private void _injectScriptAggregationTranslators(
 		ElasticsearchAggregationVisitor elasticsearchAggregationVisitor) {
 
 		elasticsearchAggregationVisitor.setScriptedMetricAggregationTranslator(
@@ -155,7 +155,7 @@ public class ElasticsearchAggregationVisitorFixture {
 			new WeightedAvgAggregationTranslatorImpl());
 	}
 
-	private static void _injectTopHitsAggregationTranslators(
+	private void _injectTopHitsAggregationTranslators(
 		ElasticsearchAggregationVisitor elasticsearchAggregationVisitor,
 		ElasticsearchQueryTranslatorFixture
 			elasticsearchQueryTranslatorFixture) {

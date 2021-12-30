@@ -95,19 +95,6 @@ public class SearchRequestImpl {
 		return searchResponseImpl;
 	}
 
-	private static void _populateSearchContainer(
-		SearchContainer<Document> searchContainer,
-		SearchResponse searchResponse) {
-
-		searchContainer.setSearch(true);
-
-		searchResponse.withHits(
-			hits -> {
-				searchContainer.setResults(hits.toList());
-				searchContainer.setTotal(hits.getLength());
-			});
-	}
-
 	private SearchContainer<Document> _buildSearchContainer(
 		SearchSettingsImpl searchSettingsImpl) {
 
@@ -135,6 +122,19 @@ public class SearchRequestImpl {
 				searchSettingsImpl));
 
 		return searchSettingsImpl;
+	}
+
+	private void _populateSearchContainer(
+		SearchContainer<Document> searchContainer,
+		SearchResponse searchResponse) {
+
+		searchContainer.setSearch(true);
+
+		searchResponse.withHits(
+			hits -> {
+				searchContainer.setResults(hits.toList());
+				searchContainer.setTotal(hits.getLength());
+			});
 	}
 
 	private final SearchContainerBuilder _searchContainerBuilder;

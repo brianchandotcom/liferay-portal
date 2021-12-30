@@ -134,7 +134,22 @@ public class MicrocontainerImpl implements Microcontainer {
 		activator.activate();
 	}
 
-	private static Optional<MethodNode> _findMethodPortalInitialized(
+	private Map<String, Collection<Object>> _createComponentsMap() {
+		return LinkedHashMapBuilder.<String, Collection<Object>>put(
+			StringPool.BLANK, new HashSet<>()
+		).put(
+			ModuleServiceLifecycle.PORTAL_INITIALIZED, new HashSet<>()
+		).build();
+	}
+
+	private void _deployComponent(Object component) {
+		Collection<Object> lifecycleComponents = _componentsMap.get(
+			_getLifecycle(component));
+
+		lifecycleComponents.add(component);
+	}
+
+	private Optional<MethodNode> _findMethodPortalInitialized(
 		ClassNode classNode) {
 
 		Stream<MethodNode> stream = classNode.methods.stream();
@@ -145,7 +160,7 @@ public class MicrocontainerImpl implements Microcontainer {
 		).findAny();
 	}
 
-	private static String _getLifecycle(Object component) {
+	private String _getLifecycle(Object component) {
 		if (_hasMethodPortalInitialized(component)) {
 			return ModuleServiceLifecycle.PORTAL_INITIALIZED;
 		}
@@ -153,7 +168,7 @@ public class MicrocontainerImpl implements Microcontainer {
 		return StringPool.BLANK;
 	}
 
-	private static boolean _hasMethodPortalInitialized(Object component) {
+	private boolean _hasMethodPortalInitialized(Object component) {
 		Class<?> clazz = component.getClass();
 
 		ClassNode classNode1 = ASMUtil.getClassNode(clazz);
@@ -177,7 +192,7 @@ public class MicrocontainerImpl implements Microcontainer {
 		return optional2.isPresent();
 	}
 
-	private static boolean _hasReferenceWithTarget(
+	private boolean _hasReferenceWithTarget(
 		MethodNode methodNode, String lifecycle) {
 
 		List<AnnotationNode> annotationNodes = methodNode.invisibleAnnotations;
@@ -194,9 +209,7 @@ public class MicrocontainerImpl implements Microcontainer {
 		).isPresent();
 	}
 
-	private static boolean _hasTarget(
-		AnnotationNode annotationNode, String target) {
-
+	private boolean _hasTarget(AnnotationNode annotationNode, String target) {
 		if (!annotationNode.desc.contains(Reference.class.getSimpleName())) {
 			return false;
 		}
@@ -214,21 +227,6 @@ public class MicrocontainerImpl implements Microcontainer {
 		}
 
 		return false;
-	}
-
-	private Map<String, Collection<Object>> _createComponentsMap() {
-		return LinkedHashMapBuilder.<String, Collection<Object>>put(
-			StringPool.BLANK, new HashSet<>()
-		).put(
-			ModuleServiceLifecycle.PORTAL_INITIALIZED, new HashSet<>()
-		).build();
-	}
-
-	private void _deployComponent(Object component) {
-		Collection<Object> lifecycleComponents = _componentsMap.get(
-			_getLifecycle(component));
-
-		lifecycleComponents.add(component);
 	}
 
 	private void _injectComponent(Object component) {

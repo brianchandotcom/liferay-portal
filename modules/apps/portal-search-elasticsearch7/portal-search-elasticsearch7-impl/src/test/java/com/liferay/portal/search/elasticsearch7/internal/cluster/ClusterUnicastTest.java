@@ -157,7 +157,7 @@ public class ClusterUnicastTest {
 			numberOfReplicas, index.getName());
 	}
 
-	private static void _assert1PrimaryAnd1UnassignedShard(
+	private void _assert1PrimaryAnd1UnassignedShard(
 			ElasticsearchClientResolver elasticsearchClientResolver)
 		throws Exception {
 
@@ -175,7 +175,7 @@ public class ClusterUnicastTest {
 			});
 	}
 
-	private static void _assert1PrimaryShardOnly(
+	private void _assert1PrimaryShardOnly(
 			ElasticsearchClientResolver elasticsearchClientResolver)
 		throws Exception {
 
@@ -193,7 +193,7 @@ public class ClusterUnicastTest {
 			});
 	}
 
-	private static void _assert1ReplicaAnd1UnassignedShard(
+	private void _assert1ReplicaAnd1UnassignedShard(
 			ElasticsearchClientResolver elasticsearchClientResolver)
 		throws Exception {
 

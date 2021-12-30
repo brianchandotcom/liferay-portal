@@ -136,7 +136,7 @@ public class DocumentBuilderTest {
 
 	protected DocumentBuilder documentBuilder = new DocumentBuilderImpl();
 
-	private static void _assertDocument(
+	private void _assertDocument(
 		String expected, DocumentBuilder documentBuilder) {
 
 		Assert.assertEquals(expected, String.valueOf(documentBuilder.build()));

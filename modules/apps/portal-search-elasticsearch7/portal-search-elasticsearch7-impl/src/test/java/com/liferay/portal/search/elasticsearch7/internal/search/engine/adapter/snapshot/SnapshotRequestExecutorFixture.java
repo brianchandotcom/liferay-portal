@@ -57,7 +57,7 @@ public class SnapshotRequestExecutorFixture {
 		_elasticsearchClientResolver = elasticsearchClientResolver;
 	}
 
-	private static CreateSnapshotRepositoryRequestExecutor
+	private CreateSnapshotRepositoryRequestExecutor
 		_createCreateSnapshotRepositoryRequestExecutor(
 			ElasticsearchClientResolver elasticsearchClientResolver) {
 
@@ -68,9 +68,8 @@ public class SnapshotRequestExecutorFixture {
 		};
 	}
 
-	private static CreateSnapshotRequestExecutor
-		_createCreateSnapshotRequestExecutor(
-			ElasticsearchClientResolver elasticsearchClientResolver) {
+	private CreateSnapshotRequestExecutor _createCreateSnapshotRequestExecutor(
+		ElasticsearchClientResolver elasticsearchClientResolver) {
 
 		return new CreateSnapshotRequestExecutorImpl() {
 			{
@@ -79,9 +78,8 @@ public class SnapshotRequestExecutorFixture {
 		};
 	}
 
-	private static DeleteSnapshotRequestExecutor
-		_createDeleteSnapshotRequestExecutor(
-			ElasticsearchClientResolver elasticsearchClientResolver) {
+	private DeleteSnapshotRequestExecutor _createDeleteSnapshotRequestExecutor(
+		ElasticsearchClientResolver elasticsearchClientResolver) {
 
 		return new DeleteSnapshotRequestExecutorImpl() {
 			{
@@ -90,7 +88,7 @@ public class SnapshotRequestExecutorFixture {
 		};
 	}
 
-	private static GetSnapshotRepositoriesRequestExecutor
+	private GetSnapshotRepositoriesRequestExecutor
 		_createGetSnapshotRepositoriesRequestExecutor(
 			ElasticsearchClientResolver elasticsearchClientResolver) {
 
@@ -101,9 +99,8 @@ public class SnapshotRequestExecutorFixture {
 		};
 	}
 
-	private static GetSnapshotsRequestExecutor
-		_createGetSnapshotsRequestExecutor(
-			ElasticsearchClientResolver elasticsearchClientResolver) {
+	private GetSnapshotsRequestExecutor _createGetSnapshotsRequestExecutor(
+		ElasticsearchClientResolver elasticsearchClientResolver) {
 
 		return new GetSnapshotsRequestExecutorImpl() {
 			{
@@ -112,7 +109,7 @@ public class SnapshotRequestExecutorFixture {
 		};
 	}
 
-	private static RestoreSnapshotRequestExecutor
+	private RestoreSnapshotRequestExecutor
 		_createRestoreSnapshotRequestExecutor(
 			ElasticsearchClientResolver elasticsearchClientResolver) {
 

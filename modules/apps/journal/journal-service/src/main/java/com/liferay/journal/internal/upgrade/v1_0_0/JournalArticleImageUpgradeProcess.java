@@ -30,7 +30,16 @@ import java.sql.ResultSet;
  */
 public class JournalArticleImageUpgradeProcess extends UpgradeProcess {
 
-	protected void deleteOrphanJournalArticleImages() throws Exception {
+	@Override
+	protected void doUpgrade() throws Exception {
+		_deleteOrphanJournalArticleImages();
+
+		_updateJournalArticleImagesInstanceId();
+
+		_updateJournalArticleImagesName();
+	}
+
+	private void _deleteOrphanJournalArticleImages() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
@@ -42,16 +51,7 @@ public class JournalArticleImageUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
-	@Override
-	protected void doUpgrade() throws Exception {
-		deleteOrphanJournalArticleImages();
-
-		updateJournalArticleImagesInstanceId();
-
-		updateJournalArticleImagesName();
-	}
-
-	protected void updateJournalArticleImagesInstanceId() throws Exception {
+	private void _updateJournalArticleImagesInstanceId() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			PreparedStatement preparedStatement1 = connection.prepareStatement(
 				"select articleId, elName from JournalArticleImage where " +
@@ -81,7 +81,7 @@ public class JournalArticleImageUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
-	protected void updateJournalArticleImagesName() throws Exception {
+	private void _updateJournalArticleImagesName() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			PreparedStatement preparedStatement1 = connection.prepareStatement(
 				"select articleImageId, elName from JournalArticleImage");

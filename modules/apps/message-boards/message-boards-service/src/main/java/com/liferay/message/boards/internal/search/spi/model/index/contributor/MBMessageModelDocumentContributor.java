@@ -66,7 +66,7 @@ public class MBMessageModelDocumentContributor
 
 			document.addText(
 				LocalizationUtil.getLocalizedName(Field.CONTENT, languageId),
-				processContent(mbMessage));
+				_processContent(mbMessage));
 			document.addText(
 				LocalizationUtil.getLocalizedName(Field.TITLE, languageId),
 				mbMessage.getSubject());
@@ -137,7 +137,16 @@ public class MBMessageModelDocumentContributor
 		}
 	}
 
-	protected String processContent(MBMessage message) {
+	@Reference
+	protected CommentManager commentManager;
+
+	@Reference
+	protected MBDiscussionLocalService mbDiscussionLocalService;
+
+	@Reference
+	protected MBThreadLocalService mbThreadLocalService;
+
+	private String _processContent(MBMessage message) {
 		String content = message.getBody();
 
 		try {
@@ -155,15 +164,6 @@ public class MBMessageModelDocumentContributor
 
 		return HtmlUtil.extractText(content);
 	}
-
-	@Reference
-	protected CommentManager commentManager;
-
-	@Reference
-	protected MBDiscussionLocalService mbDiscussionLocalService;
-
-	@Reference
-	protected MBThreadLocalService mbThreadLocalService;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		MBMessageModelDocumentContributor.class);

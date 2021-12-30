@@ -52,11 +52,11 @@ public class NotificationHelperImpl implements NotificationHelper {
 				kaleoClassName, kaleoClassPK, executionType.getValue());
 
 		for (KaleoNotification kaleoNotification : kaleoNotifications) {
-			sendKaleoNotification(kaleoNotification, executionContext);
+			_sendKaleoNotification(kaleoNotification, executionContext);
 		}
 	}
 
-	protected void sendKaleoNotification(
+	private void _sendKaleoNotification(
 			KaleoNotification kaleoNotification,
 			ExecutionContext executionContext)
 		throws PortalException {

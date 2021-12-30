@@ -46,10 +46,15 @@ public class MBMessageSocialActivityManager
 
 	@Override
 	public void deleteActivities(MBMessage message) throws PortalException {
-		deleteDiscussionSocialActivities(message.getClassName(), message);
+		_deleteDiscussionSocialActivities(message.getClassName(), message);
 	}
 
-	protected void deleteDiscussionSocialActivities(
+	@Override
+	protected SocialActivityLocalService getSocialActivityLocalService() {
+		return _socialActivityLocalService;
+	}
+
+	private void _deleteDiscussionSocialActivities(
 			String className, MBMessage message)
 		throws PortalException {
 
@@ -82,11 +87,6 @@ public class MBMessageSocialActivityManager
 					socialActivity.getActivityId());
 			}
 		}
-	}
-
-	@Override
-	protected SocialActivityLocalService getSocialActivityLocalService() {
-		return _socialActivityLocalService;
 	}
 
 	@Reference

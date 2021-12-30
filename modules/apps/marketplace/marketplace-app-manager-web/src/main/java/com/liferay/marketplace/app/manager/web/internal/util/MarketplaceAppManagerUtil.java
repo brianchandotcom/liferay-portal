@@ -90,8 +90,8 @@ public class MarketplaceAppManagerUtil {
 	public static String[] getCategories(List<App> apps, List<Bundle> bundles) {
 		List<String> categories = new ArrayList<>();
 
-		categories.addAll(getAppCategories(apps));
-		categories.addAll(getBundleCategories(bundles));
+		categories.addAll(_getAppCategories(apps));
+		categories.addAll(_getBundleCategories(bundles));
 
 		ListUtil.distinct(categories);
 		ListUtil.sort(categories);
@@ -115,7 +115,7 @@ public class MarketplaceAppManagerUtil {
 		return string;
 	}
 
-	protected static List<String> getAppCategories(List<App> apps) {
+	private static List<String> _getAppCategories(List<App> apps) {
 		List<String> categories = new ArrayList<>(apps.size());
 
 		for (App app : apps) {
@@ -127,7 +127,7 @@ public class MarketplaceAppManagerUtil {
 		return categories;
 	}
 
-	protected static List<String> getBundleCategories(List<Bundle> bundles) {
+	private static List<String> _getBundleCategories(List<Bundle> bundles) {
 		List<String> categories = new ArrayList<>();
 
 		for (Bundle bundle : bundles) {

@@ -137,7 +137,7 @@ public class OAuthManager {
 		_companyLocalService.forEachCompanyId(
 			companyId -> {
 				try {
-					setupExpando(companyId);
+					_setupExpando(companyId);
 				}
 				catch (Exception exception) {
 					if (_log.isWarnEnabled()) {
@@ -183,7 +183,7 @@ public class OAuthManager {
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
-	protected void setupExpando(long companyId) throws Exception {
+	private void _setupExpando(long companyId) throws Exception {
 		ExpandoTable table = null;
 
 		try {

@@ -95,7 +95,7 @@ public class JournalFolderTrashHandler extends BaseJournalTrashHandler {
 	public ContainerModel getParentContainerModel(long classPK)
 		throws PortalException {
 
-		JournalFolder folder = getJournalFolder(classPK);
+		JournalFolder folder = _getJournalFolder(classPK);
 
 		long parentFolderId = folder.getParentFolderId();
 
@@ -182,7 +182,7 @@ public class JournalFolderTrashHandler extends BaseJournalTrashHandler {
 
 	@Override
 	public boolean isMovable(long classPK) throws PortalException {
-		JournalFolder folder = getJournalFolder(classPK);
+		JournalFolder folder = _getJournalFolder(classPK);
 
 		if (folder.getParentFolderId() > 0) {
 			JournalFolder parentFolder = _journalFolderLocalService.fetchFolder(
@@ -198,7 +198,7 @@ public class JournalFolderTrashHandler extends BaseJournalTrashHandler {
 
 	@Override
 	public boolean isRestorable(long classPK) throws PortalException {
-		JournalFolder folder = getJournalFolder(classPK);
+		JournalFolder folder = _getJournalFolder(classPK);
 
 		if (folder.getParentFolderId() > 0) {
 			JournalFolder parentFolder = _journalFolderLocalService.fetchFolder(
@@ -318,12 +318,6 @@ public class JournalFolderTrashHandler extends BaseJournalTrashHandler {
 		return folder.getGroupId();
 	}
 
-	protected JournalFolder getJournalFolder(long classPK)
-		throws PortalException {
-
-		return _journalFolderLocalService.getFolder(classPK);
-	}
-
 	@Override
 	protected boolean hasPermission(
 			PermissionChecker permissionChecker, long classPK, String actionId)
@@ -338,6 +332,12 @@ public class JournalFolderTrashHandler extends BaseJournalTrashHandler {
 		JournalFolderLocalService journalFolderLocalService) {
 
 		_journalFolderLocalService = journalFolderLocalService;
+	}
+
+	private JournalFolder _getJournalFolder(long classPK)
+		throws PortalException {
+
+		return _journalFolderLocalService.getFolder(classPK);
 	}
 
 	private JournalFolderLocalService _journalFolderLocalService;

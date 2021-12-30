@@ -78,7 +78,7 @@ public class DuplicateDefinitionPortletConfigurationIcon
 
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
-		if (!checkPermissions()) {
+		if (!_checkPermissions()) {
 			return false;
 		}
 
@@ -104,7 +104,7 @@ public class DuplicateDefinitionPortletConfigurationIcon
 			workflowDefinitionConfiguration.companyAdministratorCanPublish();
 	}
 
-	protected boolean checkPermissions() {
+	private boolean _checkPermissions() {
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 

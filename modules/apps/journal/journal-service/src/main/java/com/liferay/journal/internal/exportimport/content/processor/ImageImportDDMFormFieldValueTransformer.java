@@ -93,7 +93,7 @@ public class ImageImportDDMFormFieldValueTransformer
 				continue;
 			}
 
-			FileEntry importedFileEntry = fetchImportedFileEntry(
+			FileEntry importedFileEntry = _fetchImportedFileEntry(
 				_portletDataContext, jsonObject.getLong("fileEntryId"),
 				jsonObject.getString("uuid"));
 
@@ -101,7 +101,7 @@ public class ImageImportDDMFormFieldValueTransformer
 				continue;
 			}
 
-			String fileEntryJSON = toJSON(
+			String fileEntryJSON = _toJSON(
 				importedFileEntry, jsonObject.getString("type"),
 				jsonObject.getString("alt"));
 
@@ -125,7 +125,7 @@ public class ImageImportDDMFormFieldValueTransformer
 		}
 	}
 
-	protected FileEntry fetchImportedFileEntry(
+	private FileEntry _fetchImportedFileEntry(
 			PortletDataContext portletDataContext, long oldClassPK, String uuid)
 		throws PortalException {
 
@@ -156,7 +156,18 @@ public class ImageImportDDMFormFieldValueTransformer
 		return null;
 	}
 
-	protected String toJSON(FileEntry fileEntry, String type, String alt) {
+	private void _setContent(String content) {
+		try {
+			_document = SAXReaderUtil.read(content);
+		}
+		catch (DocumentException documentException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Invalid content:\n" + content, documentException);
+			}
+		}
+	}
+
+	private String _toJSON(FileEntry fileEntry, String type, String alt) {
 		return JSONUtil.put(
 			"alt", alt
 		).put(
@@ -179,17 +190,6 @@ public class ImageImportDDMFormFieldValueTransformer
 		).put(
 			"uuid", fileEntry.getUuid()
 		).toString();
-	}
-
-	private void _setContent(String content) {
-		try {
-			_document = SAXReaderUtil.read(content);
-		}
-		catch (DocumentException documentException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Invalid content:\n" + content, documentException);
-			}
-		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

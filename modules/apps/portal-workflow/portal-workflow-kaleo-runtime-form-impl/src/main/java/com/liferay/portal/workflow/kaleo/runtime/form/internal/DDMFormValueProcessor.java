@@ -52,7 +52,7 @@ public class DDMFormValueProcessor implements FormValueProcessor {
 
 		DDMStructure ddmStructure = ddlRecordSet.getDDMStructure();
 
-		DDMFormValues ddmFormValues = deserialize(
+		DDMFormValues ddmFormValues = _deserialize(
 			formValues, ddmStructure.getDDMForm());
 
 		DDLRecord ddlRecord = _ddlRecordLocalService.addRecord(
@@ -68,7 +68,7 @@ public class DDMFormValueProcessor implements FormValueProcessor {
 		return kaleoTaskFormInstance;
 	}
 
-	protected DDMFormValues deserialize(String content, DDMForm ddmForm) {
+	private DDMFormValues _deserialize(String content, DDMForm ddmForm) {
 		DDMFormValuesDeserializerDeserializeRequest.Builder builder =
 			DDMFormValuesDeserializerDeserializeRequest.Builder.newBuilder(
 				content, ddmForm);

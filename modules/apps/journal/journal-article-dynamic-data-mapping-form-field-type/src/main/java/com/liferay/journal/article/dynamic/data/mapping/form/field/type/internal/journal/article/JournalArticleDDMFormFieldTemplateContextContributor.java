@@ -68,7 +68,7 @@ public class JournalArticleDDMFormFieldTemplateContextContributor
 
 		return HashMapBuilder.<String, Object>put(
 			"itemSelectorURL",
-			getItemSelectorURL(
+			_getItemSelectorURL(
 				ddmFormFieldRenderingContext,
 				ddmFormFieldRenderingContext.getHttpServletRequest())
 		).put(
@@ -103,7 +103,7 @@ public class JournalArticleDDMFormFieldTemplateContextContributor
 		).build();
 	}
 
-	protected String getItemSelectorURL(
+	private String _getItemSelectorURL(
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext,
 		HttpServletRequest httpServletRequest) {
 

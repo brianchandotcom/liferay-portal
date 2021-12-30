@@ -32,53 +32,19 @@ import java.sql.Timestamp;
  */
 public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 
-	protected void alterTable() throws Exception {
+	@Override
+	protected void doUpgrade() throws Exception {
+		_upgradeSchema();
+
+		_upgradeLayoutPageTemplatesStructures();
+
+		_alterTable();
+	}
+
+	private void _alterTable() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			runSQL("alter table LayoutPageTemplateStructure drop column data_");
 		}
-	}
-
-	@Override
-	protected void doUpgrade() throws Exception {
-		upgradeSchema();
-
-		upgradeLayoutPageTemplatesStructures();
-
-		alterTable();
-	}
-
-	protected void upgradeLayoutPageTemplatesStructures() throws Exception {
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				StringBundler.concat(
-					"select layoutPageTemplateStructureId, groupId, ",
-					"companyId, userId, userName, createDate, data_ from ",
-					"LayoutPageTemplateStructure"))) {
-
-			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				while (resultSet.next()) {
-					long layoutPageTemplateStructureId = resultSet.getLong(
-						"layoutPageTemplateStructureId");
-					long groupId = resultSet.getLong("groupId");
-					long companyId = resultSet.getLong("companyId");
-					long userId = resultSet.getLong("userId");
-					String userName = resultSet.getString("userName");
-					Timestamp createDate = resultSet.getTimestamp("createDate");
-					String data = resultSet.getString("data_");
-
-					_updateLayoutPageTemplateStructureRels(
-						groupId, companyId, userId, userName, createDate,
-						layoutPageTemplateStructureId, data);
-				}
-			}
-		}
-	}
-
-	protected void upgradeSchema() throws Exception {
-		String template = StringUtil.read(
-			LayoutPageTemplateStructureUpgradeProcess.class.getResourceAsStream(
-				"dependencies/update.sql"));
-
-		runSQLTemplateString(template, false);
 	}
 
 	private void _updateLayoutPageTemplateStructureRels(
@@ -115,6 +81,40 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 				_log.debug(exception, exception);
 			}
 		}
+	}
+
+	private void _upgradeLayoutPageTemplatesStructures() throws Exception {
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				StringBundler.concat(
+					"select layoutPageTemplateStructureId, groupId, ",
+					"companyId, userId, userName, createDate, data_ from ",
+					"LayoutPageTemplateStructure"))) {
+
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				while (resultSet.next()) {
+					long layoutPageTemplateStructureId = resultSet.getLong(
+						"layoutPageTemplateStructureId");
+					long groupId = resultSet.getLong("groupId");
+					long companyId = resultSet.getLong("companyId");
+					long userId = resultSet.getLong("userId");
+					String userName = resultSet.getString("userName");
+					Timestamp createDate = resultSet.getTimestamp("createDate");
+					String data = resultSet.getString("data_");
+
+					_updateLayoutPageTemplateStructureRels(
+						groupId, companyId, userId, userName, createDate,
+						layoutPageTemplateStructureId, data);
+				}
+			}
+		}
+	}
+
+	private void _upgradeSchema() throws Exception {
+		String template = StringUtil.read(
+			LayoutPageTemplateStructureUpgradeProcess.class.getResourceAsStream(
+				"dependencies/update.sql"));
+
+		runSQLTemplateString(template, false);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

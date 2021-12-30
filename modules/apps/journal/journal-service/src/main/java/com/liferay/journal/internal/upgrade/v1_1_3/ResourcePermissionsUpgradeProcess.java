@@ -39,17 +39,17 @@ public class ResourcePermissionsUpgradeProcess extends UpgradeProcess {
 		String modelResource = _resourceActions.getCompositeModelName(
 			DDMStructure.class.getName(), JournalArticle.class.getName());
 
-		updateResourcePermissions(
+		_updateResourcePermissions(
 			"com.liferay.journal.model.JournalStructure", modelResource);
 
 		modelResource = _resourceActions.getCompositeModelName(
 			DDMTemplate.class.getName(), JournalArticle.class.getName());
 
-		updateResourcePermissions(
+		_updateResourcePermissions(
 			"com.liferay.journal.model.JournalTemplate", modelResource);
 	}
 
-	protected void updateResourcePermissions(
+	private void _updateResourcePermissions(
 		String oldClassName, String newClassName) {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(

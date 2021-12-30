@@ -45,15 +45,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class BanUserMVCActionCommand extends BaseMVCActionCommand {
 
-	protected void banUser(ActionRequest actionRequest) throws Exception {
-		long banUserId = ParamUtil.getLong(actionRequest, "banUserId");
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			MBBan.class.getName(), actionRequest);
-
-		_mbBanService.addBan(banUserId, serviceContext);
-	}
-
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
@@ -63,10 +54,10 @@ public class BanUserMVCActionCommand extends BaseMVCActionCommand {
 
 		try {
 			if (cmd.equals("ban")) {
-				banUser(actionRequest);
+				_banUser(actionRequest);
 			}
 			else if (cmd.equals("unban")) {
-				unbanUser(actionRequest);
+				_unbanUser(actionRequest);
 			}
 		}
 		catch (PrincipalException principalException) {
@@ -77,7 +68,16 @@ public class BanUserMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	protected void unbanUser(ActionRequest actionRequest) throws Exception {
+	private void _banUser(ActionRequest actionRequest) throws Exception {
+		long banUserId = ParamUtil.getLong(actionRequest, "banUserId");
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			MBBan.class.getName(), actionRequest);
+
+		_mbBanService.addBan(banUserId, serviceContext);
+	}
+
+	private void _unbanUser(ActionRequest actionRequest) throws Exception {
 		long[] banUserIds = null;
 
 		long banUserId = ParamUtil.getLong(actionRequest, "banUserId");

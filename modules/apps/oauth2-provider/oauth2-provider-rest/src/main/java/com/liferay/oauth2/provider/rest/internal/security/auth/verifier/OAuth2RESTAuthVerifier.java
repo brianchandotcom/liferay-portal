@@ -74,7 +74,7 @@ public class OAuth2RESTAuthVerifier implements AuthVerifier {
 		AuthVerifierResult authVerifierResult = new AuthVerifierResult();
 
 		try {
-			BearerTokenProvider.AccessToken accessToken = getAccessToken(
+			BearerTokenProvider.AccessToken accessToken = _getAccessToken(
 				accessControlContext);
 
 			if (accessToken == null) {
@@ -116,7 +116,7 @@ public class OAuth2RESTAuthVerifier implements AuthVerifier {
 		}
 	}
 
-	protected BearerTokenProvider.AccessToken getAccessToken(
+	private BearerTokenProvider.AccessToken _getAccessToken(
 			AccessControlContext accessControlContext)
 		throws PortalException {
 

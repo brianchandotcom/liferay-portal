@@ -109,7 +109,7 @@ public class RoleNotificationRecipientBuilder
 			ExecutionContext executionContext)
 		throws Exception {
 
-		List<User> users = getRoleUsers(role, executionContext);
+		List<User> users = _getRoleUsers(role, executionContext);
 
 		for (User user : users) {
 			if (user.isActive()) {
@@ -121,13 +121,19 @@ public class RoleNotificationRecipientBuilder
 		}
 	}
 
-	protected List<Long> getAncestorGroupIds(Group group, Role role)
+	protected void removeGroupAwareRoleValidator(
+		GroupAwareRoleValidator groupAwareRoleValidator) {
+
+		_groupAwareRoleValidators.remove(groupAwareRoleValidator);
+	}
+
+	private List<Long> _getAncestorGroupIds(Group group, Role role)
 		throws PortalException {
 
 		List<Long> groupIds = new ArrayList<>();
 
 		for (Group ancestorGroup : group.getAncestors()) {
-			if (isValidGroup(group, role)) {
+			if (_isValidGroup(group, role)) {
 				groupIds.add(ancestorGroup.getGroupId());
 			}
 		}
@@ -135,7 +141,7 @@ public class RoleNotificationRecipientBuilder
 		return groupIds;
 	}
 
-	protected List<Long> getAncestorOrganizationGroupIds(Group group, Role role)
+	private List<Long> _getAncestorOrganizationGroupIds(Group group, Role role)
 		throws PortalException {
 
 		List<Long> groupIds = new ArrayList<>();
@@ -144,7 +150,7 @@ public class RoleNotificationRecipientBuilder
 			group.getOrganizationId());
 
 		for (Organization ancestorOrganization : organization.getAncestors()) {
-			if (isValidGroup(group, role)) {
+			if (_isValidGroup(group, role)) {
 				groupIds.add(ancestorOrganization.getGroupId());
 			}
 		}
@@ -152,7 +158,7 @@ public class RoleNotificationRecipientBuilder
 		return groupIds;
 	}
 
-	protected List<Long> getGroupIds(long groupId, Role role)
+	private List<Long> _getGroupIds(long groupId, Role role)
 		throws PortalException {
 
 		List<Long> groupIds = new ArrayList<>();
@@ -161,14 +167,14 @@ public class RoleNotificationRecipientBuilder
 			Group group = _groupLocalService.getGroup(groupId);
 
 			if (group.isOrganization()) {
-				groupIds.addAll(getAncestorOrganizationGroupIds(group, role));
+				groupIds.addAll(_getAncestorOrganizationGroupIds(group, role));
 			}
 
 			if (group.isSite()) {
-				groupIds.addAll(getAncestorGroupIds(group, role));
+				groupIds.addAll(_getAncestorGroupIds(group, role));
 			}
 
-			if (isValidGroup(group, role)) {
+			if (_isValidGroup(group, role)) {
 				groupIds.add(groupId);
 			}
 		}
@@ -176,7 +182,7 @@ public class RoleNotificationRecipientBuilder
 		return groupIds;
 	}
 
-	protected List<User> getRoleUsers(
+	private List<User> _getRoleUsers(
 			Role role, ExecutionContext executionContext)
 		throws Exception {
 
@@ -190,7 +196,7 @@ public class RoleNotificationRecipientBuilder
 		KaleoInstanceToken kaleoInstanceToken =
 			executionContext.getKaleoInstanceToken();
 
-		List<Long> groupIds = getGroupIds(
+		List<Long> groupIds = _getGroupIds(
 			kaleoInstanceToken.getGroupId(), role);
 
 		List<User> users = new ArrayList<>();
@@ -218,7 +224,7 @@ public class RoleNotificationRecipientBuilder
 		return users;
 	}
 
-	protected boolean isValidGroup(Group group, Role role)
+	private boolean _isValidGroup(Group group, Role role)
 		throws PortalException {
 
 		if ((group != null) && group.isDepot() &&
@@ -246,12 +252,6 @@ public class RoleNotificationRecipientBuilder
 		}
 
 		return false;
-	}
-
-	protected void removeGroupAwareRoleValidator(
-		GroupAwareRoleValidator groupAwareRoleValidator) {
-
-		_groupAwareRoleValidators.remove(groupAwareRoleValidator);
 	}
 
 	private final List<GroupAwareRoleValidator> _groupAwareRoleValidators =

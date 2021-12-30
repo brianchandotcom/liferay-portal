@@ -47,7 +47,7 @@ public class AssigneeNotificationRecipientBuilder
 			ExecutionContext executionContext)
 		throws Exception {
 
-		addAssignedRecipients(
+		_addAssignedRecipients(
 			notificationRecipients, notificationReceptionType,
 			executionContext);
 	}
@@ -60,12 +60,12 @@ public class AssigneeNotificationRecipientBuilder
 			ExecutionContext executionContext)
 		throws Exception {
 
-		addAssignedRecipients(
+		_addAssignedRecipients(
 			notificationRecipients, notificationReceptionType,
 			executionContext);
 	}
 
-	protected void addAssignedRecipients(
+	private void _addAssignedRecipients(
 			Set<NotificationRecipient> notificationRecipients,
 			NotificationReceptionType notificationReceptionType,
 			ExecutionContext executionContext)

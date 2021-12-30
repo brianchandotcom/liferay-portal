@@ -61,7 +61,7 @@ public class LayoutGeneralScreenNavigationEntry
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(getResourceBundle(locale), getEntryKey());
+		return LanguageUtil.get(_getResourceBundle(locale), getEntryKey());
 	}
 
 	@Override
@@ -97,7 +97,7 @@ public class LayoutGeneralScreenNavigationEntry
 			"/layout/screen/navigation/entries/general.jsp");
 	}
 
-	protected ResourceBundle getResourceBundle(Locale locale) {
+	private ResourceBundle _getResourceBundle(Locale locale) {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 

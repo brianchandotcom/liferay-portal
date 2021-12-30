@@ -45,11 +45,11 @@ public class MBThreadSocialActivityManager
 		throws PortalException {
 
 		if (type == SocialActivityConstants.TYPE_SUBSCRIBE) {
-			addSubscribeSocialActivity(
+			_addSubscribeSocialActivity(
 				userId, thread.getGroupId(), thread, extraData);
 		}
 		else if (type == SocialActivityConstants.TYPE_VIEW) {
-			addViewSocialActivity(
+			_addViewSocialActivity(
 				userId, thread, type, extraData, receiverUserId);
 		}
 		else {
@@ -57,7 +57,12 @@ public class MBThreadSocialActivityManager
 		}
 	}
 
-	protected void addSubscribeSocialActivity(
+	@Override
+	protected SocialActivityLocalService getSocialActivityLocalService() {
+		return _socialActivityLocalService;
+	}
+
+	private void _addSubscribeSocialActivity(
 			long userId, long groupId, MBThread thread, String extraData)
 		throws PortalException {
 
@@ -72,7 +77,7 @@ public class MBThreadSocialActivityManager
 			extraDataJSONObject.toString(), 0);
 	}
 
-	protected void addViewSocialActivity(
+	private void _addViewSocialActivity(
 			long userId, MBThread thread, int type, String extraData,
 			long receiverUserId)
 		throws PortalException {
@@ -87,11 +92,6 @@ public class MBThreadSocialActivityManager
 		_socialActivityLocalService.addActivity(
 			userId, rootMessage.getGroupId(), MBMessage.class.getName(),
 			rootMessage.getMessageId(), type, extraData, receiverUserId);
-	}
-
-	@Override
-	protected SocialActivityLocalService getSocialActivityLocalService() {
-		return _socialActivityLocalService;
 	}
 
 	@Reference

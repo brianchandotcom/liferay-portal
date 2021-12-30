@@ -87,7 +87,7 @@ public class ViewAuthorizationRequestMVCRenderCommand
 			_portal.getOriginalServletRequest(
 				_portal.getHttpServletRequest(renderRequest));
 
-		Map<String, String> oAuth2Parameters = getOAuth2Parameters(
+		Map<String, String> oAuth2Parameters = _getOAuth2Parameters(
 			httpServletRequest);
 
 		String error = oAuth2Parameters.get("error");
@@ -140,7 +140,7 @@ public class ViewAuthorizationRequestMVCRenderCommand
 				String[] requestedScopeAliases = StringUtil.split(
 					oAuth2Parameters.get("scope"), StringPool.SPACE);
 
-				populateAssignableScopes(
+				_populateAssignableScopes(
 					assignableScopes, oAuth2ApplicationScopeAliases,
 					requestedScopeAliases);
 			}
@@ -181,7 +181,7 @@ public class ViewAuthorizationRequestMVCRenderCommand
 		return "/authorize/authorize.jsp";
 	}
 
-	protected Map<String, String> getOAuth2Parameters(
+	private Map<String, String> _getOAuth2Parameters(
 		HttpServletRequest httpServletRequest) {
 
 		Map<String, String> oAuth2Parameters = new HashMap<>();
@@ -202,7 +202,7 @@ public class ViewAuthorizationRequestMVCRenderCommand
 		return oAuth2Parameters;
 	}
 
-	protected void populateAssignableScopes(
+	private void _populateAssignableScopes(
 		AssignableScopes assignableScopes,
 		OAuth2ApplicationScopeAliases oAuth2ApplicationScopeAliases,
 		String[] requestedScopeAliases) {

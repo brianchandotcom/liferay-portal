@@ -60,57 +60,6 @@ public class PushNotificationMessageSender
 		_fromName = (String)properties.get("fromName");
 	}
 
-	protected Message createMessage(
-		List<NotificationRecipient> notificationRecipients,
-		String notificationMessage, ExecutionContext executionContext) {
-
-		Message message = new Message();
-
-		JSONObject payloadJSONObject = createPayloadJSONObject(
-			notificationRecipients, notificationMessage, executionContext);
-
-		message.setPayload(payloadJSONObject);
-
-		return message;
-	}
-
-	protected JSONObject createPayloadJSONObject(
-		List<NotificationRecipient> notificationRecipients,
-		String notificationMessage, ExecutionContext executionContext) {
-
-		JSONObject jsonObject =
-			notificationMessageHelper.createMessageJSONObject(
-				notificationMessage, executionContext);
-
-		jsonObject.put(
-			PushNotificationsConstants.KEY_BODY, notificationMessage
-		).put(
-			PushNotificationsConstants.KEY_FROM, _fromName
-		).put(
-			PushNotificationsConstants.KEY_TO_USER_IDS,
-			createUserIdsRecipientsJSONArray(notificationRecipients)
-		);
-
-		return jsonObject;
-	}
-
-	protected JSONArray createUserIdsRecipientsJSONArray(
-		List<NotificationRecipient> notificationRecipients) {
-
-		JSONArray jsonArray = jsonFactory.createJSONArray();
-
-		Stream<NotificationRecipient> stream = notificationRecipients.stream();
-
-		stream.filter(
-			notificationRecipient -> notificationRecipient.getUserId() > 0
-		).forEach(
-			notificationRecipient -> jsonArray.put(
-				notificationRecipient.getUserId())
-		);
-
-		return jsonArray;
-	}
-
 	@Override
 	protected void doSendNotification(
 			Map<NotificationReceptionType, Set<NotificationRecipient>>
@@ -130,7 +79,7 @@ public class PushNotificationMessageSender
 			getDeliverableNotificationRecipients(
 				iterator.next(), UserNotificationDeliveryConstants.TYPE_PUSH));
 
-		Message message = createMessage(
+		Message message = _createMessage(
 			notificationRecipients, notificationMessage, executionContext);
 
 		messageBus.sendMessage(
@@ -145,6 +94,57 @@ public class PushNotificationMessageSender
 
 	@Reference
 	protected NotificationMessageHelper notificationMessageHelper;
+
+	private Message _createMessage(
+		List<NotificationRecipient> notificationRecipients,
+		String notificationMessage, ExecutionContext executionContext) {
+
+		Message message = new Message();
+
+		JSONObject payloadJSONObject = _createPayloadJSONObject(
+			notificationRecipients, notificationMessage, executionContext);
+
+		message.setPayload(payloadJSONObject);
+
+		return message;
+	}
+
+	private JSONObject _createPayloadJSONObject(
+		List<NotificationRecipient> notificationRecipients,
+		String notificationMessage, ExecutionContext executionContext) {
+
+		JSONObject jsonObject =
+			notificationMessageHelper.createMessageJSONObject(
+				notificationMessage, executionContext);
+
+		jsonObject.put(
+			PushNotificationsConstants.KEY_BODY, notificationMessage
+		).put(
+			PushNotificationsConstants.KEY_FROM, _fromName
+		).put(
+			PushNotificationsConstants.KEY_TO_USER_IDS,
+			_createUserIdsRecipientsJSONArray(notificationRecipients)
+		);
+
+		return jsonObject;
+	}
+
+	private JSONArray _createUserIdsRecipientsJSONArray(
+		List<NotificationRecipient> notificationRecipients) {
+
+		JSONArray jsonArray = jsonFactory.createJSONArray();
+
+		Stream<NotificationRecipient> stream = notificationRecipients.stream();
+
+		stream.filter(
+			notificationRecipient -> notificationRecipient.getUserId() > 0
+		).forEach(
+			notificationRecipient -> jsonArray.put(
+				notificationRecipient.getUserId())
+		);
+
+		return jsonArray;
+	}
 
 	private String _fromName;
 

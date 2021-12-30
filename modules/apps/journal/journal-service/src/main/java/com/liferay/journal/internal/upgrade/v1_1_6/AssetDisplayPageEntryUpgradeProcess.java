@@ -57,12 +57,71 @@ public class AssetDisplayPageEntryUpgradeProcess extends UpgradeProcess {
 			company -> {
 				_init(company.getCompanyId());
 
-				updateAssetDisplayPageEntry(company, true);
-				updateAssetDisplayPageEntry(company, false);
+				_updateAssetDisplayPageEntry(company, true);
+				_updateAssetDisplayPageEntry(company, false);
 			});
 	}
 
-	protected void updateAssetDisplayPageEntry(
+	private String _generateLocalStagingAwareUUID(
+		long groupId, String journalArticleUuid) {
+
+		if (!_stagedGroupIds.contains(groupId)) {
+			return PortalUUIDUtil.generate();
+		}
+
+		long liveGroupId = groupId;
+
+		if (_liveGroupIdsMap.containsKey(groupId)) {
+			liveGroupId = _liveGroupIdsMap.get(groupId);
+		}
+
+		if (!_uuidsMaps.containsKey(liveGroupId)) {
+			_uuidsMaps.put(liveGroupId, new HashMap<>());
+		}
+
+		Map<String, String> uuids = _uuidsMaps.get(liveGroupId);
+
+		if (uuids.containsKey(journalArticleUuid)) {
+			return uuids.get(journalArticleUuid);
+		}
+
+		String newUuid = PortalUUIDUtil.generate();
+
+		uuids.put(journalArticleUuid, newUuid);
+
+		return newUuid;
+	}
+
+	private void _init(long companyId) throws Exception {
+		_liveGroupIdsMap.clear();
+		_stagedGroupIds.clear();
+		_uuidsMaps.clear();
+
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement preparedStatement = connection.prepareStatement(
+				SQLTransformer.transform(
+					StringBundler.concat(
+						"select groupId, liveGroupId from Group_ where ",
+						"companyId = ? and liveGroupId is not null and ",
+						"liveGroupId != 0 and remoteStagingGroupCount = 0")))) {
+
+			preparedStatement.setLong(1, companyId);
+
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				while (resultSet.next()) {
+					long groupId = resultSet.getLong("groupId");
+					long liveGroupId = resultSet.getLong("liveGroupId");
+
+					_liveGroupIdsMap.put(groupId, liveGroupId);
+
+					_stagedGroupIds.add(groupId);
+					_stagedGroupIds.add(liveGroupId);
+				}
+			}
+		}
+	}
+
+	private void _updateAssetDisplayPageEntry(
 			Company company, boolean stagingGroups)
 		throws Exception {
 
@@ -129,65 +188,6 @@ public class AssetDisplayPageEntryUpgradeProcess extends UpgradeProcess {
 					}
 				},
 				"Unable to add asset display pages for the journal articles");
-		}
-	}
-
-	private String _generateLocalStagingAwareUUID(
-		long groupId, String journalArticleUuid) {
-
-		if (!_stagedGroupIds.contains(groupId)) {
-			return PortalUUIDUtil.generate();
-		}
-
-		long liveGroupId = groupId;
-
-		if (_liveGroupIdsMap.containsKey(groupId)) {
-			liveGroupId = _liveGroupIdsMap.get(groupId);
-		}
-
-		if (!_uuidsMaps.containsKey(liveGroupId)) {
-			_uuidsMaps.put(liveGroupId, new HashMap<>());
-		}
-
-		Map<String, String> uuids = _uuidsMaps.get(liveGroupId);
-
-		if (uuids.containsKey(journalArticleUuid)) {
-			return uuids.get(journalArticleUuid);
-		}
-
-		String newUuid = PortalUUIDUtil.generate();
-
-		uuids.put(journalArticleUuid, newUuid);
-
-		return newUuid;
-	}
-
-	private void _init(long companyId) throws Exception {
-		_liveGroupIdsMap.clear();
-		_stagedGroupIds.clear();
-		_uuidsMaps.clear();
-
-		try (LoggingTimer loggingTimer = new LoggingTimer();
-			PreparedStatement preparedStatement = connection.prepareStatement(
-				SQLTransformer.transform(
-					StringBundler.concat(
-						"select groupId, liveGroupId from Group_ where ",
-						"companyId = ? and liveGroupId is not null and ",
-						"liveGroupId != 0 and remoteStagingGroupCount = 0")))) {
-
-			preparedStatement.setLong(1, companyId);
-
-			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				while (resultSet.next()) {
-					long groupId = resultSet.getLong("groupId");
-					long liveGroupId = resultSet.getLong("liveGroupId");
-
-					_liveGroupIdsMap.put(groupId, liveGroupId);
-
-					_stagedGroupIds.add(groupId);
-					_stagedGroupIds.add(liveGroupId);
-				}
-			}
 		}
 	}
 

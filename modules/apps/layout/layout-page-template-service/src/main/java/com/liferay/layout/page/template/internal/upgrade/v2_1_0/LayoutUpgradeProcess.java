@@ -60,11 +60,58 @@ public class LayoutUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		upgradeSchema();
-		upgradeLayout();
+		_upgradeSchema();
+		_upgradeLayout();
 	}
 
-	protected void upgradeLayout() throws Exception {
+	private long _getPlid(
+			long companyId, long userId, long groupId, String name, int type,
+			long layoutPrototypeId, ServiceContext serviceContext)
+		throws Exception {
+
+		if ((type == LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE) &&
+			(layoutPrototypeId > 0)) {
+
+			LayoutPrototype layoutPrototype =
+				_layoutPrototypeLocalService.getLayoutPrototype(
+					layoutPrototypeId);
+
+			Layout layout = layoutPrototype.getLayout();
+
+			return layout.getPlid();
+		}
+
+		boolean privateLayout = false;
+		String layoutType = LayoutConstants.TYPE_ASSET_DISPLAY;
+
+		if (type == LayoutPageTemplateEntryTypeConstants.TYPE_BASIC) {
+			layoutType = LayoutConstants.TYPE_CONTENT;
+			privateLayout = true;
+		}
+
+		Map<Locale, String> titleMap = Collections.singletonMap(
+			LocaleUtil.getSiteDefault(), name);
+
+		serviceContext.setAttribute(
+			"layout.instanceable.allowed", Boolean.TRUE);
+
+		Layout layout = _layoutLocalService.addLayout(
+			PortalUtil.getValidUserId(companyId, userId), groupId,
+			privateLayout, 0, titleMap, titleMap, null, null, null, layoutType,
+			StringPool.BLANK, true, true, new HashMap<>(), serviceContext);
+
+		_layoutLocalService.addLayout(
+			layout.getUserId(), layout.getGroupId(), privateLayout,
+			layout.getParentLayoutId(), PortalUtil.getClassNameId(Layout.class),
+			layout.getPlid(), layout.getNameMap(), layout.getTitleMap(),
+			layout.getDescriptionMap(), layout.getKeywordsMap(),
+			layout.getRobotsMap(), layout.getType(), StringPool.BLANK, true,
+			true, Collections.emptyMap(), 0, serviceContext);
+
+		return layout.getPlid();
+	}
+
+	private void _upgradeLayout() throws Exception {
 		ServiceContext serviceContext = new ServiceContext();
 
 		try (LoggingTimer loggingTimer = new LoggingTimer();
@@ -134,59 +181,12 @@ public class LayoutUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
-	protected void upgradeSchema() throws Exception {
+	private void _upgradeSchema() throws Exception {
 		if (!hasColumn(LayoutPageTemplateEntryTable.TABLE_NAME, "plid")) {
 			alter(
 				LayoutPageTemplateEntryTable.class,
 				new AlterTableAddColumn("plid", "LONG"));
 		}
-	}
-
-	private long _getPlid(
-			long companyId, long userId, long groupId, String name, int type,
-			long layoutPrototypeId, ServiceContext serviceContext)
-		throws Exception {
-
-		if ((type == LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE) &&
-			(layoutPrototypeId > 0)) {
-
-			LayoutPrototype layoutPrototype =
-				_layoutPrototypeLocalService.getLayoutPrototype(
-					layoutPrototypeId);
-
-			Layout layout = layoutPrototype.getLayout();
-
-			return layout.getPlid();
-		}
-
-		boolean privateLayout = false;
-		String layoutType = LayoutConstants.TYPE_ASSET_DISPLAY;
-
-		if (type == LayoutPageTemplateEntryTypeConstants.TYPE_BASIC) {
-			layoutType = LayoutConstants.TYPE_CONTENT;
-			privateLayout = true;
-		}
-
-		Map<Locale, String> titleMap = Collections.singletonMap(
-			LocaleUtil.getSiteDefault(), name);
-
-		serviceContext.setAttribute(
-			"layout.instanceable.allowed", Boolean.TRUE);
-
-		Layout layout = _layoutLocalService.addLayout(
-			PortalUtil.getValidUserId(companyId, userId), groupId,
-			privateLayout, 0, titleMap, titleMap, null, null, null, layoutType,
-			StringPool.BLANK, true, true, new HashMap<>(), serviceContext);
-
-		_layoutLocalService.addLayout(
-			layout.getUserId(), layout.getGroupId(), privateLayout,
-			layout.getParentLayoutId(), PortalUtil.getClassNameId(Layout.class),
-			layout.getPlid(), layout.getNameMap(), layout.getTitleMap(),
-			layout.getDescriptionMap(), layout.getKeywordsMap(),
-			layout.getRobotsMap(), layout.getType(), StringPool.BLANK, true,
-			true, Collections.emptyMap(), 0, serviceContext);
-
-		return layout.getPlid();
 	}
 
 	private final FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;

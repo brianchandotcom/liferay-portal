@@ -78,7 +78,7 @@ public class DefaultTaskManagerImpl
 		throws WorkflowException {
 
 		try {
-			return assignWorkflowTask(
+			return _assignWorkflowTask(
 				workflowTaskId, Role.class.getName(), roleId, comment, dueDate,
 				workflowContext, serviceContext);
 		}
@@ -98,7 +98,7 @@ public class DefaultTaskManagerImpl
 		throws WorkflowException {
 
 		try {
-			return assignWorkflowTask(
+			return _assignWorkflowTask(
 				workflowTaskId, User.class.getName(), assigneeUserId, comment,
 				dueDate, workflowContext, serviceContext);
 		}
@@ -167,7 +167,7 @@ public class DefaultTaskManagerImpl
 				}
 			}
 
-			return doCompleteWorkflowTask(
+			return _doCompleteWorkflowTask(
 				workflowTaskId, transitionName, null, workflowContext,
 				serviceContext);
 		}
@@ -187,7 +187,7 @@ public class DefaultTaskManagerImpl
 		throws WorkflowException {
 
 		try {
-			return doCompleteWorkflowTask(
+			return _doCompleteWorkflowTask(
 				workflowTaskId, transitionName, comment, workflowContext,
 				serviceContext);
 		}
@@ -221,7 +221,7 @@ public class DefaultTaskManagerImpl
 
 				if (Validator.isNull(kaleoFormDefinition)) {
 					FormDefinitionRetriever formDefinitionRetriever =
-						getFormDefinitionRetriever();
+						_getFormDefinitionRetriever();
 
 					if (formDefinitionRetriever != null) {
 						kaleoFormDefinition =
@@ -298,7 +298,7 @@ public class DefaultTaskManagerImpl
 		}
 	}
 
-	protected WorkflowTask assignWorkflowTask(
+	private WorkflowTask _assignWorkflowTask(
 			long workflowTaskId, String assigneeClassName, long assigneeClassPK,
 			String comment, Date dueDate,
 			Map<String, Serializable> workflowContext,
@@ -312,7 +312,7 @@ public class DefaultTaskManagerImpl
 		List<KaleoTaskAssignmentInstance> previousTaskAssignmentInstances =
 			kaleoTaskInstanceToken.getKaleoTaskAssignmentInstances();
 
-		workflowContext = updateWorkflowContext(
+		workflowContext = _updateWorkflowContext(
 			workflowContext, kaleoTaskInstanceToken);
 
 		if (kaleoTaskInstanceToken.isCompleted()) {
@@ -366,7 +366,7 @@ public class DefaultTaskManagerImpl
 			kaleoTaskInstanceToken, workflowContext);
 	}
 
-	protected WorkflowTask doCompleteWorkflowTask(
+	private WorkflowTask _doCompleteWorkflowTask(
 			long workflowTaskId, String transitionName, String comment,
 			Map<String, Serializable> workflowContext,
 			ServiceContext serviceContext)
@@ -388,7 +388,7 @@ public class DefaultTaskManagerImpl
 			currentKaleoNode.getKaleoTransition(transitionName);
 		}
 
-		workflowContext = updateWorkflowContext(
+		workflowContext = _updateWorkflowContext(
 			workflowContext, kaleoTaskInstanceToken);
 
 		if (kaleoTaskInstanceToken.isCompleted()) {
@@ -412,11 +412,11 @@ public class DefaultTaskManagerImpl
 			kaleoTaskInstanceToken, workflowContext);
 	}
 
-	protected FormDefinitionRetriever getFormDefinitionRetriever() {
+	private FormDefinitionRetriever _getFormDefinitionRetriever() {
 		return _serviceTracker.getService();
 	}
 
-	protected Map<String, Serializable> updateWorkflowContext(
+	private Map<String, Serializable> _updateWorkflowContext(
 			Map<String, Serializable> workflowContext,
 			KaleoTaskInstanceToken kaleoTaskInstanceToken)
 		throws PortalException {

@@ -364,54 +364,55 @@ public class ContentPageEditorDisplayContext {
 				}
 			).put(
 				"getAvailableImageConfigurationsURL",
-				getResourceURL(
+				_getResourceURL(
 					"/layout_content_page_editor" +
 						"/get_available_image_configurations")
 			).put(
 				"getAvailableListItemRenderersURL",
-				getResourceURL(
+				_getResourceURL(
 					"/layout_content_page_editor" +
 						"/get_available_list_item_renderers")
 			).put(
 				"getAvailableListRenderersURL",
-				getResourceURL(
+				_getResourceURL(
 					"/layout_content_page_editor/get_available_list_renderers")
 			).put(
 				"getAvailableTemplatesURL",
-				getResourceURL(
+				_getResourceURL(
 					"/layout_content_page_editor/get_available_templates")
 			).put(
 				"getCollectionConfigurationURL",
-				getResourceURL(
+				_getResourceURL(
 					"/layout_content_page_editor/get_collection_configuration")
 			).put(
 				"getCollectionFieldURL",
-				getResourceURL(
+				_getResourceURL(
 					"/layout_content_page_editor/get_collection_field")
 			).put(
 				"getCollectionFiltersURL",
-				getResourceURL(
+				_getResourceURL(
 					"/layout_content_page_editor/get_collection_filters")
 			).put(
 				"getCollectionItemCountURL",
-				getResourceURL(
+				_getResourceURL(
 					"/layout_content_page_editor/get_collection_item_count")
 			).put(
 				"getCollectionMappingFieldsURL",
-				getResourceURL(
+				_getResourceURL(
 					"/layout_content_page_editor/get_collection_mapping_fields")
 			).put(
 				"getCollectionSupportedFiltersURL",
-				getResourceURL(
+				_getResourceURL(
 					"/layout_content_page_editor" +
 						"/get_collection_supported_filters")
 			).put(
 				"getExperienceUsedPortletsURL",
-				getResourceURL(
+				_getResourceURL(
 					"/layout_content_page_editor/get_experience_used_portlets")
 			).put(
 				"getFileEntryURL",
-				getResourceURL("/layout_content_page_editor/get_file_entry_url")
+				_getResourceURL(
+					"/layout_content_page_editor/get_file_entry_url")
 			).put(
 				"getIframeContentCssURL",
 				PortalUtil.getStaticResourceURL(
@@ -430,27 +431,27 @@ public class ContentPageEditorDisplayContext {
 				}
 			).put(
 				"getInfoItemFieldValueURL",
-				getResourceURL(
+				_getResourceURL(
 					"/layout_content_page_editor/get_info_item_field_value")
 			).put(
 				"getInfoItemMappingFieldsURL",
-				getResourceURL(
+				_getResourceURL(
 					"/layout_content_page_editor/get_info_item_mapping_fields")
 			).put(
 				"getLayoutFriendlyURL",
-				getResourceURL(
+				_getResourceURL(
 					"/layout_content_page_editor/get_layout_friendly_url")
 			).put(
 				"getLayoutPageTemplateCollectionsURL",
-				getResourceURL(
+				_getResourceURL(
 					"/layout_content_page_editor" +
 						"/get_layout_page_template_collections")
 			).put(
 				"getPageContentsURL",
-				getResourceURL("/layout_content_page_editor/get_page_content")
+				_getResourceURL("/layout_content_page_editor/get_page_content")
 			).put(
 				"getWidgetsURL",
-				getResourceURL("/layout_content_page_editor/get_widgets")
+				_getResourceURL("/layout_content_page_editor/get_widgets")
 			).put(
 				"imageSelectorURL", _getItemSelectorURL()
 			).put(
@@ -476,7 +477,8 @@ public class ContentPageEditorDisplayContext {
 				"lookAndFeelURL", _getLookAndFeelURL()
 			).put(
 				"mappingFieldsURL",
-				getResourceURL("/layout_content_page_editor/get_mapping_fields")
+				_getResourceURL(
+					"/layout_content_page_editor/get_mapping_fields")
 			).put(
 				"markItemForDeletionURL",
 				getFragmentEntryActionURL(
@@ -528,16 +530,16 @@ public class ContentPageEditorDisplayContext {
 				"portletNamespace", getPortletNamespace()
 			).put(
 				"previewPageURL",
-				getResourceURL(
+				_getResourceURL(
 					"/layout_content_page_editor/get_page_preview",
-					isPreviewPageAsGuestUser())
+					_isPreviewPageAsGuestUser())
 			).put(
 				"publishURL", getPublishURL()
 			).put(
 				"redirectURL", _getRedirect()
 			).put(
 				"renderFragmentEntryURL",
-				getResourceURL(
+				_getResourceURL(
 					"/layout_content_page_editor/get_fragment_entry_link")
 			).put(
 				"restoreCollectionDisplayConfigURL",
@@ -766,37 +768,6 @@ public class ContentPageEditorDisplayContext {
 		return _groupId;
 	}
 
-	protected String getResourceURL(String resourceID) {
-		ResourceURL resourceURL = _renderResponse.createResourceURL();
-
-		resourceURL.setResourceID(resourceID);
-
-		return HttpUtil.addParameter(
-			resourceURL.toString(), "p_l_mode", Constants.EDIT);
-	}
-
-	protected String getResourceURL(String resourceID, boolean doAsGuest)
-		throws Exception {
-
-		LiferayPortletResponse liferayPortletResponse =
-			PortalUtil.getLiferayPortletResponse(_renderResponse);
-
-		LiferayPortletURL resourceURL =
-			liferayPortletResponse.createResourceURL(
-				ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET);
-
-		if (doAsGuest) {
-			User defaultUser = UserLocalServiceUtil.getDefaultUser(
-				themeDisplay.getCompanyId());
-
-			resourceURL.setDoAsUserId(defaultUser.getUserId());
-		}
-
-		resourceURL.setResourceID(resourceID);
-
-		return resourceURL.toString();
-	}
-
 	protected long getSegmentsExperienceId() {
 		if (_segmentsExperienceId != null) {
 			return _segmentsExperienceId;
@@ -886,20 +857,6 @@ public class ContentPageEditorDisplayContext {
 		_sidebarPanels = sidebarPanels;
 
 		return _sidebarPanels;
-	}
-
-	protected boolean isPreviewPageAsGuestUser() {
-		if (stagingGroupHelper.isLocalStagingGroup(
-				themeDisplay.getScopeGroupId()) ||
-			stagingGroupHelper.isRemoteStagingGroup(
-				themeDisplay.getScopeGroupId())) {
-
-			return false;
-		}
-
-		Layout publishedLayout = _getPublishedLayout();
-
-		return !publishedLayout.isPrivateLayout();
 	}
 
 	protected final HttpServletRequest httpServletRequest;
@@ -2070,6 +2027,37 @@ public class ContentPageEditorDisplayContext {
 		return _redirect;
 	}
 
+	private String _getResourceURL(String resourceID) {
+		ResourceURL resourceURL = _renderResponse.createResourceURL();
+
+		resourceURL.setResourceID(resourceID);
+
+		return HttpUtil.addParameter(
+			resourceURL.toString(), "p_l_mode", Constants.EDIT);
+	}
+
+	private String _getResourceURL(String resourceID, boolean doAsGuest)
+		throws Exception {
+
+		LiferayPortletResponse liferayPortletResponse =
+			PortalUtil.getLiferayPortletResponse(_renderResponse);
+
+		LiferayPortletURL resourceURL =
+			liferayPortletResponse.createResourceURL(
+				ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET);
+
+		if (doAsGuest) {
+			User defaultUser = UserLocalServiceUtil.getDefaultUser(
+				themeDisplay.getCompanyId());
+
+			resourceURL.setDoAsUserId(defaultUser.getUserId());
+		}
+
+		resourceURL.setResourceID(resourceID);
+
+		return resourceURL.toString();
+	}
+
 	private String _getSiteNavigationMenuItemSelectorURL() {
 		ItemSelectorCriterion itemSelectorCriterion =
 			new SiteNavigationMenuItemSelectorCriterion();
@@ -2261,6 +2249,20 @@ public class ContentPageEditorDisplayContext {
 		}
 
 		return false;
+	}
+
+	private boolean _isPreviewPageAsGuestUser() {
+		if (stagingGroupHelper.isLocalStagingGroup(
+				themeDisplay.getScopeGroupId()) ||
+			stagingGroupHelper.isRemoteStagingGroup(
+				themeDisplay.getScopeGroupId())) {
+
+			return false;
+		}
+
+		Layout publishedLayout = _getPublishedLayout();
+
+		return !publishedLayout.isPrivateLayout();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

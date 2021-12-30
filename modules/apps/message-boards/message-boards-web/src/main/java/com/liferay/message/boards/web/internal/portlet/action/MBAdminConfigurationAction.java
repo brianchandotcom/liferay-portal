@@ -67,7 +67,15 @@ public class MBAdminConfigurationAction
 		super.processAction(portletConfig, actionRequest, actionResponse);
 	}
 
-	protected boolean isValidUserRank(String rank) {
+	@Override
+	protected void updateMultiValuedKeys(ActionRequest actionRequest) {
+		super.updateMultiValuedKeys(actionRequest);
+
+		_updateThreadPriorities(actionRequest);
+		_updateUserRanks(actionRequest);
+	}
+
+	private boolean _isValidUserRank(String rank) {
 		if ((StringUtil.count(rank, CharPool.EQUAL) != 1) ||
 			rank.startsWith(StringPool.EQUAL) ||
 			rank.endsWith(StringPool.EQUAL)) {
@@ -78,15 +86,7 @@ public class MBAdminConfigurationAction
 		return true;
 	}
 
-	@Override
-	protected void updateMultiValuedKeys(ActionRequest actionRequest) {
-		super.updateMultiValuedKeys(actionRequest);
-
-		updateThreadPriorities(actionRequest);
-		updateUserRanks(actionRequest);
-	}
-
-	protected void updateThreadPriorities(ActionRequest actionRequest) {
+	private void _updateThreadPriorities(ActionRequest actionRequest) {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -128,7 +128,7 @@ public class MBAdminConfigurationAction
 		}
 	}
 
-	protected void updateUserRanks(ActionRequest actionRequest) {
+	private void _updateUserRanks(ActionRequest actionRequest) {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -145,7 +145,7 @@ public class MBAdminConfigurationAction
 				new NaturalOrderStringComparator());
 
 			for (String rank : ranks) {
-				if (!isValidUserRank(rank)) {
+				if (!_isValidUserRank(rank)) {
 					SessionErrors.add(actionRequest, "userRank");
 
 					return;

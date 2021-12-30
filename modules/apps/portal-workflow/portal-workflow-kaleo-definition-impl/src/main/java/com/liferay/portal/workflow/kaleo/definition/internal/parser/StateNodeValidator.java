@@ -38,7 +38,7 @@ public class StateNodeValidator extends BaseNodeValidator<State> {
 		throws KaleoDefinitionValidationException {
 
 		if (state.isInitial()) {
-			validateInitialState(definition, state);
+			_validateInitialState(definition, state);
 		}
 		else if (state.getIncomingTransitionsCount() == 0) {
 			throw new KaleoDefinitionValidationException.
@@ -46,7 +46,7 @@ public class StateNodeValidator extends BaseNodeValidator<State> {
 		}
 	}
 
-	protected void validateInitialState(Definition definition, State state)
+	private void _validateInitialState(Definition definition, State state)
 		throws KaleoDefinitionValidationException {
 
 		State initialState = definition.getInitialState();

@@ -182,7 +182,7 @@ public class KBNavigationDisplayContext {
 				_rootResourcePrimKey = KBUtil.getRootResourcePrimKey(
 					_portletRequest,
 					PortalUtil.getScopeGroupId(_portletRequest),
-					getResourceClassNameId(), getResourcePrimKey());
+					_getResourceClassNameId(), getResourcePrimKey());
 			}
 		}
 
@@ -210,7 +210,7 @@ public class KBNavigationDisplayContext {
 		long kbFolderClassNameId = PortalUtil.getClassNameId(
 			KBFolderConstants.getClassName());
 
-		if (kbFolderClassNameId == getResourceClassNameId()) {
+		if (kbFolderClassNameId == _getResourceClassNameId()) {
 			return true;
 		}
 
@@ -236,7 +236,7 @@ public class KBNavigationDisplayContext {
 
 	public boolean isLeftNavigationVisible() throws PortalException {
 		if (_leftNavigationVisible == null) {
-			_leftNavigationVisible = hasMultipleDescendantKBArticles();
+			_leftNavigationVisible = _hasMultipleDescendantKBArticles();
 		}
 
 		return _leftNavigationVisible;
@@ -263,7 +263,16 @@ public class KBNavigationDisplayContext {
 		return false;
 	}
 
-	protected long getResourceClassNameId() {
+	protected long getResourcePrimKey() {
+		if (_resourcePrimKey == null) {
+			_resourcePrimKey = GetterUtil.getLong(
+				_kbDisplayPortletInstanceConfiguration.resourcePrimKey());
+		}
+
+		return _resourcePrimKey;
+	}
+
+	private long _getResourceClassNameId() {
 		if (_resourceClassNameId == null) {
 			if (_kbDisplayPortletInstanceConfiguration.resourceClassNameId() !=
 					0) {
@@ -281,16 +290,7 @@ public class KBNavigationDisplayContext {
 		return _resourceClassNameId;
 	}
 
-	protected long getResourcePrimKey() {
-		if (_resourcePrimKey == null) {
-			_resourcePrimKey = GetterUtil.getLong(
-				_kbDisplayPortletInstanceConfiguration.resourcePrimKey());
-		}
-
-		return _resourcePrimKey;
-	}
-
-	protected boolean hasMultipleDescendantKBArticles() throws PortalException {
+	private boolean _hasMultipleDescendantKBArticles() throws PortalException {
 		long scopeGroupId = PortalUtil.getScopeGroupId(_portletRequest);
 
 		if (isFolderResource()) {

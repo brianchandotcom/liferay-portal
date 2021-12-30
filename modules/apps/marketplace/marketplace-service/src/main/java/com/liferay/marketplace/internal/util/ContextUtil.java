@@ -36,7 +36,7 @@ public class ContextUtil {
 			contextName = contextName.substring(0, contextName.length() - 1);
 		}
 
-		int index = getPluginTypeIndex(contextName);
+		int index = _getPluginTypeIndex(contextName);
 
 		if (index >= 0) {
 			contextName = contextName.substring(0, index);
@@ -45,7 +45,7 @@ public class ContextUtil {
 		return contextName;
 	}
 
-	protected static int getPluginTypeIndex(String contextName) {
+	private static int _getPluginTypeIndex(String contextName) {
 		for (String pluginType : _PLUGIN_TYPES) {
 			int index = contextName.lastIndexOf(pluginType);
 

@@ -215,7 +215,7 @@ public class LayoutSetPrototypeDisplayContext {
 				searchContainer.getOrderByComparator()));
 		searchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(_renderResponse));
-		searchContainer.setTotal(getTotal());
+		searchContainer.setTotal(_getTotal());
 
 		return searchContainer;
 	}
@@ -267,7 +267,7 @@ public class LayoutSetPrototypeDisplayContext {
 	}
 
 	public boolean isDisabledManagementBar() {
-		if ((getTotal() > 0) || !Objects.equals(getNavigation(), "all")) {
+		if ((_getTotal() > 0) || !Objects.equals(_getNavigation(), "all")) {
 			return false;
 		}
 
@@ -303,25 +303,6 @@ public class LayoutSetPrototypeDisplayContext {
 		}
 
 		return false;
-	}
-
-	protected String getNavigation() {
-		if (Validator.isNotNull(_navigation)) {
-			return _navigation;
-		}
-
-		_navigation = ParamUtil.getString(_httpServletRequest, "navigation");
-
-		return _navigation;
-	}
-
-	protected int getTotal() {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		return LayoutSetPrototypeLocalServiceUtil.searchCount(
-			themeDisplay.getCompanyId(), getActive());
 	}
 
 	private List<DropdownItem> _getFilterNavigationDropdownItems() {
@@ -360,6 +341,16 @@ public class LayoutSetPrototypeDisplayContext {
 		return _keywords;
 	}
 
+	private String _getNavigation() {
+		if (Validator.isNotNull(_navigation)) {
+			return _navigation;
+		}
+
+		_navigation = ParamUtil.getString(_httpServletRequest, "navigation");
+
+		return _navigation;
+	}
+
 	private List<DropdownItem> _getOrderByDropdownItems() {
 		return DropdownItemListBuilder.add(
 			dropdownItem -> {
@@ -370,6 +361,15 @@ public class LayoutSetPrototypeDisplayContext {
 					LanguageUtil.get(_httpServletRequest, "create-date"));
 			}
 		).build();
+	}
+
+	private int _getTotal() {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		return LayoutSetPrototypeLocalServiceUtil.searchCount(
+			themeDisplay.getCompanyId(), getActive());
 	}
 
 	private String _displayStyle;

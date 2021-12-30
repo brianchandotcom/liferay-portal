@@ -199,7 +199,7 @@ public class WorkflowInstanceViewDisplayContext
 	public Date getLastActivityDate(WorkflowInstance workflowInstance)
 		throws PortalException {
 
-		WorkflowLog workflowLog = getLatestWorkflowLog(workflowInstance);
+		WorkflowLog workflowLog = _getLatestWorkflowLog(workflowInstance);
 
 		if (workflowLog == null) {
 			return null;
@@ -437,23 +437,6 @@ public class WorkflowInstanceViewDisplayContext
 		return Boolean.FALSE;
 	}
 
-	protected WorkflowLog getLatestWorkflowLog(
-			WorkflowInstance workflowInstance)
-		throws PortalException {
-
-		List<WorkflowLog> workflowLogs =
-			WorkflowLogManagerUtil.getWorkflowLogsByWorkflowInstance(
-				workflowInstanceRequestHelper.getCompanyId(),
-				workflowInstance.getWorkflowInstanceId(), null, 0, 1,
-				WorkflowComparatorFactoryUtil.getLogCreateDateComparator());
-
-		if (workflowLogs.isEmpty()) {
-			return null;
-		}
-
-		return workflowLogs.get(0);
-	}
-
 	protected WorkflowHandler<?> getWorkflowHandler(
 		WorkflowInstance workflowInstance) {
 
@@ -520,6 +503,22 @@ public class WorkflowInstanceViewDisplayContext
 			dropdownItem.setLabel(
 				LanguageUtil.get(httpServletRequest, navigation));
 		};
+	}
+
+	private WorkflowLog _getLatestWorkflowLog(WorkflowInstance workflowInstance)
+		throws PortalException {
+
+		List<WorkflowLog> workflowLogs =
+			WorkflowLogManagerUtil.getWorkflowLogsByWorkflowInstance(
+				workflowInstanceRequestHelper.getCompanyId(),
+				workflowInstance.getWorkflowInstanceId(), null, 0, 1,
+				WorkflowComparatorFactoryUtil.getLogCreateDateComparator());
+
+		if (workflowLogs.isEmpty()) {
+			return null;
+		}
+
+		return workflowLogs.get(0);
 	}
 
 	private UnsafeConsumer<DropdownItem, Exception> _getOrderByDropdownItem(

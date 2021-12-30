@@ -56,7 +56,7 @@ public class JournalArticleDescriptionEditorConfigContributor
 		).put(
 			"resize_enabled", true
 		).put(
-			"toolbar", getToolbarJSONArray()
+			"toolbar", _getToolbarJSONArray()
 		);
 
 		String removePlugins = jsonObject.getString("removePlugins");
@@ -71,7 +71,7 @@ public class JournalArticleDescriptionEditorConfigContributor
 		jsonObject.put("removePlugins", removePlugins);
 	}
 
-	protected JSONArray getToolbarJSONArray() {
+	private JSONArray _getToolbarJSONArray() {
 		return JSONUtil.putAll(
 			toJSONArray("['Bold', 'Italic', 'Underline']"),
 			toJSONArray("['NumberedList', 'BulletedList']"),

@@ -35,9 +35,12 @@ import java.util.List;
  */
 public class ImageTypeContentAttributesUpgradeProcess extends UpgradeProcess {
 
-	protected String addImageContentAttributes(String content)
-		throws Exception {
+	@Override
+	protected void doUpgrade() throws Exception {
+		_updateContentImages();
+	}
 
+	private String _addImageContentAttributes(String content) throws Exception {
 		Document document = SAXReaderUtil.read(content);
 
 		document = document.clone();
@@ -66,21 +69,14 @@ public class ImageTypeContentAttributesUpgradeProcess extends UpgradeProcess {
 
 			if (Validator.isNotNull(id)) {
 				imageElement.addAttribute(
-					"instance-id", getImageInstanceId(id));
+					"instance-id", _getImageInstanceId(id));
 			}
 		}
 
 		return document.formattedString();
 	}
 
-	@Override
-	protected void doUpgrade() throws Exception {
-		updateContentImages();
-	}
-
-	protected String getImageInstanceId(String articleImageId)
-		throws Exception {
-
+	private String _getImageInstanceId(String articleImageId) throws Exception {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select elInstanceId from JournalArticleImage where " +
 					"articleImageId = ?")) {
@@ -97,7 +93,7 @@ public class ImageTypeContentAttributesUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
-	protected void updateContentImages() throws Exception {
+	private void _updateContentImages() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			PreparedStatement preparedStatement1 = connection.prepareStatement(
 				"select content, id_ from JournalArticle where content like " +
@@ -111,7 +107,7 @@ public class ImageTypeContentAttributesUpgradeProcess extends UpgradeProcess {
 				String content = resultSet.getString(1);
 				long id = resultSet.getLong(2);
 
-				String newContent = addImageContentAttributes(content);
+				String newContent = _addImageContentAttributes(content);
 
 				try (PreparedStatement preparedStatement =
 						AutoBatchPreparedStatementUtil.concurrentAutoBatch(

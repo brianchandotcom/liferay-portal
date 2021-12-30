@@ -45,17 +45,17 @@ public class ArticleAssetsUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		updateDefaultDraftArticleAssets();
+		_updateDefaultDraftArticleAssets();
 	}
 
-	protected void updateDefaultDraftArticleAssets() throws Exception {
+	private void _updateDefaultDraftArticleAssets() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			_companyLocalService.forEachCompanyId(
-				companyId -> updateDefaultDraftArticleAssets(companyId));
+				companyId -> _updateDefaultDraftArticleAssets(companyId));
 		}
 	}
 
-	protected void updateDefaultDraftArticleAssets(long companyId)
+	private void _updateDefaultDraftArticleAssets(long companyId)
 		throws Exception {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(

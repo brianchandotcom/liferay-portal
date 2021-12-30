@@ -66,7 +66,7 @@ public class JournalPortletUtil {
 		String key =
 			"journal-add-menu-fav-items-" + themeDisplay.getScopeGroupId();
 
-		folderId = getAddMenuFavItemFolderId(folderId);
+		folderId = _getAddMenuFavItemFolderId(folderId);
 
 		if (folderId <= 0) {
 			return key;
@@ -171,7 +171,7 @@ public class JournalPortletUtil {
 		return breadcrumbEntries;
 	}
 
-	protected static long getAddMenuFavItemFolderId(long folderId)
+	private static long _getAddMenuFavItemFolderId(long folderId)
 		throws PortalException {
 
 		if (folderId <= 0) {

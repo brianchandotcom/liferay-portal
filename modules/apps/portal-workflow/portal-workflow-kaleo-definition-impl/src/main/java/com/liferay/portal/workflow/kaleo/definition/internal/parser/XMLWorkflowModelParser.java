@@ -82,7 +82,7 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 		try {
 			Document document = SAXReaderUtil.read(inputStream, _validate);
 
-			return doParse(document);
+			return _doParse(document);
 		}
 		catch (Exception exception) {
 			throw new WorkflowDefinitionFileException(
@@ -95,7 +95,7 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 		try {
 			Document document = SAXReaderUtil.read(content, _validate);
 
-			return doParse(document);
+			return _doParse(document);
 		}
 		catch (Exception exception) {
 			throw new WorkflowDefinitionFileException(
@@ -113,7 +113,7 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 		_validate = GetterUtil.getBoolean(properties.get("validating"), true);
 	}
 
-	protected Definition doParse(Document document) throws Exception {
+	private Definition _doParse(Document document) throws Exception {
 		Element rootElement = document.getRootElement();
 
 		String name = rootElement.elementTextTrim("name");
@@ -127,7 +127,7 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 		List<Element> conditionElements = rootElement.elements("condition");
 
 		for (Element conditionElement : conditionElements) {
-			Condition condition = parseCondition(conditionElement);
+			Condition condition = _parseCondition(conditionElement);
 
 			definition.addNode(condition);
 		}
@@ -135,7 +135,7 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 		List<Element> forkElements = rootElement.elements("fork");
 
 		for (Element forkElement : forkElements) {
-			Fork fork = parseFork(forkElement);
+			Fork fork = _parseFork(forkElement);
 
 			definition.addNode(fork);
 		}
@@ -143,7 +143,7 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 		List<Element> joinElements = rootElement.elements("join");
 
 		for (Element joinElement : joinElements) {
-			Join join = parseJoin(joinElement);
+			Join join = _parseJoin(joinElement);
 
 			definition.addNode(join);
 		}
@@ -151,7 +151,7 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 		List<Element> joinXorElements = rootElement.elements("join-xor");
 
 		for (Element joinXorElement : joinXorElements) {
-			JoinXor joinXor = parseJoinXor(joinXorElement);
+			JoinXor joinXor = _parseJoinXor(joinXorElement);
 
 			definition.addNode(joinXor);
 		}
@@ -159,7 +159,7 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 		List<Element> stateElements = rootElement.elements("state");
 
 		for (Element stateElement : stateElements) {
-			State state = parseState(stateElement);
+			State state = _parseState(stateElement);
 
 			definition.addNode(state);
 		}
@@ -167,19 +167,19 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 		List<Element> taskElements = rootElement.elements("task");
 
 		for (Element taskElement : taskElements) {
-			Task task = parseTask(taskElement);
+			Task task = _parseTask(taskElement);
 
 			definition.addNode(task);
 		}
 
-		parseTransitions(
+		_parseTransitions(
 			definition, conditionElements, forkElements, joinElements,
 			joinXorElements, stateElements, taskElements);
 
 		return definition;
 	}
 
-	protected void parseActionElements(
+	private void _parseActionElements(
 			List<Element> actionElements, ActionAware actionAware)
 		throws KaleoDefinitionValidationException {
 
@@ -212,7 +212,7 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 		actionAware.setActions(actions);
 	}
 
-	protected void parseActionsElement(Element actionsElement, Node node)
+	private void _parseActionsElement(Element actionsElement, Node node)
 		throws KaleoDefinitionValidationException {
 
 		if (actionsElement == null) {
@@ -221,15 +221,15 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 
 		List<Element> actionElements = actionsElement.elements("action");
 
-		parseActionElements(actionElements, node);
+		_parseActionElements(actionElements, node);
 
 		List<Element> notificationElements = actionsElement.elements(
 			"notification");
 
-		parseNotificationElements(notificationElements, node);
+		_parseNotificationElements(notificationElements, node);
 	}
 
-	protected Set<Assignment> parseAssignments(Element assignmentsElement)
+	private Set<Assignment> _parseAssignments(Element assignmentsElement)
 		throws KaleoDefinitionValidationException {
 
 		if (assignmentsElement == null) {
@@ -327,7 +327,7 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 		return assignments;
 	}
 
-	protected Condition parseCondition(Element conditionElement)
+	private Condition _parseCondition(Element conditionElement)
 		throws KaleoDefinitionValidationException {
 
 		String name = conditionElement.elementTextTrim("name");
@@ -345,18 +345,18 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 
 		Element actionsElement = conditionElement.element("actions");
 
-		parseActionsElement(actionsElement, condition);
+		_parseActionsElement(actionsElement, condition);
 
-		condition.setLabelMap(parseLabels(conditionElement.element("labels")));
+		condition.setLabelMap(_parseLabels(conditionElement.element("labels")));
 
 		Element timersElement = conditionElement.element("timers");
 
-		parseTimerElements(timersElement, condition);
+		_parseTimerElements(timersElement, condition);
 
 		return condition;
 	}
 
-	protected DelayDuration parseDelay(Element delayElement)
+	private DelayDuration _parseDelay(Element delayElement)
 		throws KaleoDefinitionValidationException {
 
 		if (delayElement == null) {
@@ -371,7 +371,7 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 		return new DelayDuration(duration, durationScale);
 	}
 
-	protected Fork parseFork(Element forkElement)
+	private Fork _parseFork(Element forkElement)
 		throws KaleoDefinitionValidationException {
 
 		String name = forkElement.elementTextTrim("name");
@@ -383,18 +383,18 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 
 		Element actionsElement = forkElement.element("actions");
 
-		parseActionsElement(actionsElement, fork);
+		_parseActionsElement(actionsElement, fork);
 
-		fork.setLabelMap(parseLabels(forkElement.element("labels")));
+		fork.setLabelMap(_parseLabels(forkElement.element("labels")));
 
 		Element timersElement = forkElement.element("timers");
 
-		parseTimerElements(timersElement, fork);
+		_parseTimerElements(timersElement, fork);
 
 		return fork;
 	}
 
-	protected Join parseJoin(Element joinElement)
+	private Join _parseJoin(Element joinElement)
 		throws KaleoDefinitionValidationException {
 
 		String name = joinElement.elementTextTrim("name");
@@ -406,18 +406,18 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 
 		Element actionsElement = joinElement.element("actions");
 
-		parseActionsElement(actionsElement, join);
+		_parseActionsElement(actionsElement, join);
 
-		join.setLabelMap(parseLabels(joinElement.element("labels")));
+		join.setLabelMap(_parseLabels(joinElement.element("labels")));
 
 		Element timersElement = joinElement.element("timers");
 
-		parseTimerElements(timersElement, join);
+		_parseTimerElements(timersElement, join);
 
 		return join;
 	}
 
-	protected JoinXor parseJoinXor(Element joinXorElement)
+	private JoinXor _parseJoinXor(Element joinXorElement)
 		throws KaleoDefinitionValidationException {
 
 		String name = joinXorElement.elementTextTrim("name");
@@ -429,18 +429,18 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 
 		Element actionsElement = joinXorElement.element("actions");
 
-		parseActionsElement(actionsElement, joinXor);
+		_parseActionsElement(actionsElement, joinXor);
 
-		joinXor.setLabelMap(parseLabels(joinXorElement.element("labels")));
+		joinXor.setLabelMap(_parseLabels(joinXorElement.element("labels")));
 
 		Element timersElement = joinXorElement.element("timers");
 
-		parseTimerElements(timersElement, joinXor);
+		_parseTimerElements(timersElement, joinXor);
 
 		return joinXor;
 	}
 
-	protected Map<Locale, String> parseLabels(Element labelsElement) {
+	private Map<Locale, String> _parseLabels(Element labelsElement) {
 		if (labelsElement == null) {
 			return Collections.emptyMap();
 		}
@@ -457,7 +457,7 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 		return labelMap;
 	}
 
-	protected void parseNotificationElements(
+	private void _parseNotificationElements(
 			List<Element> notificationElements,
 			NotificationAware notificationAware)
 		throws KaleoDefinitionValidationException {
@@ -493,7 +493,7 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 				"recipients");
 
 			for (Element recipientsElement : recipientsElements) {
-				parseRecipients(
+				_parseRecipients(
 					recipientsElement, notification,
 					NotificationReceptionType.parse(
 						recipientsElement.attributeValue("receptionType")));
@@ -505,7 +505,7 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 		notificationAware.setNotifications(notifications);
 	}
 
-	protected void parseRecipients(
+	private void _parseRecipients(
 			Element recipientsElement, Notification notification,
 			NotificationReceptionType notificationReceptionType)
 		throws KaleoDefinitionValidationException {
@@ -617,7 +617,7 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 		}
 	}
 
-	protected State parseState(Element stateElement)
+	private State _parseState(Element stateElement)
 		throws KaleoDefinitionValidationException {
 
 		String name = stateElement.elementTextTrim("name");
@@ -631,18 +631,18 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 
 		Element actionsElement = stateElement.element("actions");
 
-		parseActionsElement(actionsElement, state);
+		_parseActionsElement(actionsElement, state);
 
-		state.setLabelMap(parseLabels(stateElement.element("labels")));
+		state.setLabelMap(_parseLabels(stateElement.element("labels")));
 
 		Element timersElement = stateElement.element("timers");
 
-		parseTimerElements(timersElement, state);
+		_parseTimerElements(timersElement, state);
 
 		return state;
 	}
 
-	protected Task parseTask(Element taskElement)
+	private Task _parseTask(Element taskElement)
 		throws KaleoDefinitionValidationException {
 
 		String name = taskElement.elementTextTrim("name");
@@ -654,28 +654,28 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 
 		Element actionsElement = taskElement.element("actions");
 
-		parseActionsElement(actionsElement, task);
+		_parseActionsElement(actionsElement, task);
 
 		Element assignmentsElement = taskElement.element("assignments");
 
 		if (assignmentsElement != null) {
-			task.setAssignments(parseAssignments(assignmentsElement));
+			task.setAssignments(_parseAssignments(assignmentsElement));
 		}
 
-		task.setLabelMap(parseLabels(taskElement.element("labels")));
+		task.setLabelMap(_parseLabels(taskElement.element("labels")));
 
 		Element formsElement = taskElement.element("task-forms");
 
-		parseTaskFormsElements(formsElement, task);
+		_parseTaskFormsElements(formsElement, task);
 
 		Element timersElement = taskElement.element("task-timers");
 
-		parseTaskTimerElements(timersElement, task);
+		_parseTaskTimerElements(timersElement, task);
 
 		return task;
 	}
 
-	protected void parseTaskFormsElements(Element taskFormsElement, Task task) {
+	private void _parseTaskFormsElements(Element taskFormsElement, Task task) {
 		if (taskFormsElement == null) {
 			return;
 		}
@@ -745,7 +745,7 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 		}
 	}
 
-	protected void parseTaskTimerElements(Element taskTimersElement, Node node)
+	private void _parseTaskTimerElements(Element taskTimersElement, Node node)
 		throws KaleoDefinitionValidationException {
 
 		if (taskTimersElement == null) {
@@ -762,7 +762,7 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 		Set<Timer> timers = new HashSet<>();
 
 		for (Element timerElement : taskTimerElements) {
-			Timer timer = parseTimerElement(timerElement, true);
+			Timer timer = _parseTimerElement(timerElement, true);
 
 			timers.add(timer);
 		}
@@ -770,7 +770,7 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 		node.setTimers(timers);
 	}
 
-	protected void parseTimerActions(Element timersElement, Timer timer)
+	private void _parseTimerActions(Element timersElement, Timer timer)
 		throws KaleoDefinitionValidationException {
 
 		if (timersElement == null) {
@@ -780,24 +780,24 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 		List<Element> timerActionElements = timersElement.elements(
 			"timer-action");
 
-		parseActionElements(timerActionElements, timer);
+		_parseActionElements(timerActionElements, timer);
 
 		List<Element> timerNotificationElements = timersElement.elements(
 			"timer-notification");
 
-		parseNotificationElements(timerNotificationElements, timer);
+		_parseNotificationElements(timerNotificationElements, timer);
 
 		Element reassignmentsElement = timersElement.element("reassignments");
 
 		if (reassignmentsElement != null) {
-			Set<Assignment> assignments = parseAssignments(
+			Set<Assignment> assignments = _parseAssignments(
 				reassignmentsElement);
 
 			timer.setReassignments(assignments);
 		}
 	}
 
-	protected Timer parseTimerElement(Element timerElement, boolean taskTimer)
+	private Timer _parseTimerElement(Element timerElement, boolean taskTimer)
 		throws KaleoDefinitionValidationException {
 
 		String name = timerElement.elementTextTrim("name");
@@ -809,22 +809,22 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 
 		Element delayElement = timerElement.element("delay");
 
-		timer.setDelayDuration(parseDelay(delayElement));
+		timer.setDelayDuration(_parseDelay(delayElement));
 
 		if (!blocking) {
 			Element recurrenceElement = timerElement.element("recurrence");
 
-			timer.setRecurrence(parseDelay(recurrenceElement));
+			timer.setRecurrence(_parseDelay(recurrenceElement));
 		}
 
 		Element timerActions = timerElement.element("timer-actions");
 
-		parseTimerActions(timerActions, timer);
+		_parseTimerActions(timerActions, timer);
 
 		return timer;
 	}
 
-	protected void parseTimerElements(Element timersElement, Node node)
+	private void _parseTimerElements(Element timersElement, Node node)
 		throws KaleoDefinitionValidationException {
 
 		if (timersElement == null) {
@@ -840,7 +840,7 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 		Set<Timer> timers = new HashSet<>();
 
 		for (Element timerElement : timerElements) {
-			Timer timer = parseTimerElement(timerElement, false);
+			Timer timer = _parseTimerElement(timerElement, false);
 
 			timers.add(timer);
 		}
@@ -848,7 +848,7 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 		node.setTimers(timers);
 	}
 
-	protected void parseTransition(Definition definition, Element nodeElement)
+	private void _parseTransition(Definition definition, Element nodeElement)
 		throws KaleoDefinitionValidationException {
 
 		String sourceName = nodeElement.elementTextTrim("name");
@@ -875,13 +875,13 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 				transitionElement.elementTextTrim("default"), true);
 
 			Transition transition = new Transition(
-				defaultValue, parseLabels(transitionElement.element("labels")),
+				defaultValue, _parseLabels(transitionElement.element("labels")),
 				transitionName, sourceNode, targetNode);
 
 			Element timerElement = transitionElement.element("timer");
 
 			if (timerElement != null) {
-				Timer timer = parseTimerElement(timerElement, false);
+				Timer timer = _parseTimerElement(timerElement, false);
 
 				transition.setTimers(timer);
 			}
@@ -894,7 +894,7 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 		}
 	}
 
-	protected void parseTransitions(
+	private void _parseTransitions(
 			Definition definition, List<Element> conditionElements,
 			List<Element> forkElements, List<Element> joinElements,
 			List<Element> joinXorElements, List<Element> stateElements,
@@ -902,27 +902,27 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 		throws KaleoDefinitionValidationException {
 
 		for (Element conditionElement : conditionElements) {
-			parseTransition(definition, conditionElement);
+			_parseTransition(definition, conditionElement);
 		}
 
 		for (Element forkElement : forkElements) {
-			parseTransition(definition, forkElement);
+			_parseTransition(definition, forkElement);
 		}
 
 		for (Element joinElement : joinElements) {
-			parseTransition(definition, joinElement);
+			_parseTransition(definition, joinElement);
 		}
 
 		for (Element joinXorElement : joinXorElements) {
-			parseTransition(definition, joinXorElement);
+			_parseTransition(definition, joinXorElement);
 		}
 
 		for (Element stateElement : stateElements) {
-			parseTransition(definition, stateElement);
+			_parseTransition(definition, stateElement);
 		}
 
 		for (Element taskElement : taskElements) {
-			parseTransition(definition, taskElement);
+			_parseTransition(definition, taskElement);
 		}
 	}
 

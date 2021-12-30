@@ -39,10 +39,10 @@ public class LayoutSetTypeSettingsUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		updateRobots();
+		_updateRobots();
 	}
 
-	protected void updateLayoutSetTypeSettings(
+	private void _updateLayoutSetTypeSettings(
 			String key, String property, long groupId, boolean privateLayout)
 		throws Exception {
 
@@ -58,7 +58,7 @@ public class LayoutSetTypeSettingsUpgradeProcess extends UpgradeProcess {
 			groupId, privateLayout, typeSettingsUnicodeProperties.toString());
 	}
 
-	protected void updateRobots() throws Exception {
+	private void _updateRobots() throws Exception {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select groupId, typeSettings from Group_ where typeSettings " +
 					"like '%robots.txt%'")) {
@@ -79,7 +79,7 @@ public class LayoutSetTypeSettingsUpgradeProcess extends UpgradeProcess {
 							"true-robots.txt");
 
 					if (privateRobots != null) {
-						updateLayoutSetTypeSettings(
+						_updateLayoutSetTypeSettings(
 							"true-robots.txt", privateRobots, groupId, true);
 
 						typeSettingsUnicodeProperties.remove("true-robots.txt");
@@ -90,7 +90,7 @@ public class LayoutSetTypeSettingsUpgradeProcess extends UpgradeProcess {
 							"false-robots.txt");
 
 					if (publicRobots != null) {
-						updateLayoutSetTypeSettings(
+						_updateLayoutSetTypeSettings(
 							"false-robots.txt", publicRobots, groupId, false);
 
 						typeSettingsUnicodeProperties.remove(

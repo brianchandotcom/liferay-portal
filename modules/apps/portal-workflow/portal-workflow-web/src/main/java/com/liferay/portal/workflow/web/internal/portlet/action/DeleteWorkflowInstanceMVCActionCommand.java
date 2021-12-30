@@ -63,40 +63,23 @@ import org.osgi.service.component.annotations.Reference;
 public class DeleteWorkflowInstanceMVCActionCommand
 	extends BaseMVCActionCommand {
 
-	protected void deleteWorkflowInstance(
-			Map<String, Serializable> workflowContext)
-		throws PortalException {
-
-		long companyId = GetterUtil.getLong(
-			workflowContext.get(WorkflowConstants.CONTEXT_COMPANY_ID));
-		long groupId = GetterUtil.getLong(
-			workflowContext.get(WorkflowConstants.CONTEXT_GROUP_ID));
-		String className = GetterUtil.getString(
-			workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_CLASS_NAME));
-		long classPK = GetterUtil.getLong(
-			workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
-
-		_workflowInstanceLinkLocalService.deleteWorkflowInstanceLink(
-			companyId, groupId, className, classPK);
-	}
-
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		try {
-			WorkflowInstance workflowInstance = getWorkflowInstance(
+			WorkflowInstance workflowInstance = _getWorkflowInstance(
 				actionRequest);
 
 			Map<String, Serializable> workflowContext =
 				workflowInstance.getWorkflowContext();
 
-			validateUser(workflowContext);
+			_validateUser(workflowContext);
 
-			updateEntryStatus(workflowContext);
+			_updateEntryStatus(workflowContext);
 
-			deleteWorkflowInstance(workflowContext);
+			_deleteWorkflowInstance(workflowContext);
 		}
 		catch (Exception exception) {
 			if (exception instanceof PrincipalException ||
@@ -121,7 +104,24 @@ public class DeleteWorkflowInstanceMVCActionCommand
 		}
 	}
 
-	protected WorkflowInstance getWorkflowInstance(ActionRequest actionRequest)
+	private void _deleteWorkflowInstance(
+			Map<String, Serializable> workflowContext)
+		throws PortalException {
+
+		long companyId = GetterUtil.getLong(
+			workflowContext.get(WorkflowConstants.CONTEXT_COMPANY_ID));
+		long groupId = GetterUtil.getLong(
+			workflowContext.get(WorkflowConstants.CONTEXT_GROUP_ID));
+		String className = GetterUtil.getString(
+			workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_CLASS_NAME));
+		long classPK = GetterUtil.getLong(
+			workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
+
+		_workflowInstanceLinkLocalService.deleteWorkflowInstanceLink(
+			companyId, groupId, className, classPK);
+	}
+
+	private WorkflowInstance _getWorkflowInstance(ActionRequest actionRequest)
 		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -134,7 +134,7 @@ public class DeleteWorkflowInstanceMVCActionCommand
 			themeDisplay.getCompanyId(), workflowInstanceId);
 	}
 
-	protected void updateEntryStatus(Map<String, Serializable> workflowContext)
+	private void _updateEntryStatus(Map<String, Serializable> workflowContext)
 		throws PortalException {
 
 		String className = GetterUtil.getString(
@@ -147,7 +147,7 @@ public class DeleteWorkflowInstanceMVCActionCommand
 			WorkflowConstants.STATUS_DRAFT, workflowContext);
 	}
 
-	protected void validateUser(Map<String, Serializable> workflowContext)
+	private void _validateUser(Map<String, Serializable> workflowContext)
 		throws PortalException {
 
 		long companyId = GetterUtil.getLong(

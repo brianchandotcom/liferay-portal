@@ -49,7 +49,7 @@ public class MoveCategoryMVCActionCommand extends BaseMVCActionCommand {
 		throws Exception {
 
 		try {
-			moveCategory(actionRequest, actionResponse);
+			_moveCategory(actionRequest, actionResponse);
 
 			String redirect = _portal.escapeRedirect(
 				ParamUtil.getString(actionRequest, "redirect"));
@@ -63,7 +63,7 @@ public class MoveCategoryMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	protected void moveCategory(
+	private void _moveCategory(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 

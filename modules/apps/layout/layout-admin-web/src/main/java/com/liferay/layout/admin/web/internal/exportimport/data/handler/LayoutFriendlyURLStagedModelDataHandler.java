@@ -121,10 +121,10 @@ public class LayoutFriendlyURLStagedModelDataHandler
 		LayoutFriendlyURL importedLayoutFriendlyURL = null;
 
 		LayoutFriendlyURL existingLayoutFriendlyURL =
-			fetchExistingLayoutFriendlyURL(
+			_fetchExistingLayoutFriendlyURL(
 				portletDataContext, layoutFriendlyURL, plid);
 
-		layoutFriendlyURL = getUniqueLayoutFriendlyURL(
+		layoutFriendlyURL = _getUniqueLayoutFriendlyURL(
 			portletDataContext, layoutFriendlyURL, existingLayoutFriendlyURL);
 
 		if (existingLayoutFriendlyURL == null) {
@@ -152,7 +152,21 @@ public class LayoutFriendlyURLStagedModelDataHandler
 			layoutFriendlyURL, importedLayoutFriendlyURL);
 	}
 
-	protected LayoutFriendlyURL fetchExistingLayoutFriendlyURL(
+	@Reference(unbind = "-")
+	protected void setLayoutFriendlyURLLocalService(
+		LayoutFriendlyURLLocalService layoutFriendlyURLLocalService) {
+
+		_layoutFriendlyURLLocalService = layoutFriendlyURLLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setLayoutLocalService(
+		LayoutLocalService layoutLocalService) {
+
+		_layoutLocalService = layoutLocalService;
+	}
+
+	private LayoutFriendlyURL _fetchExistingLayoutFriendlyURL(
 		PortletDataContext portletDataContext,
 		LayoutFriendlyURL layoutFriendlyURL, long plid) {
 
@@ -170,7 +184,7 @@ public class LayoutFriendlyURLStagedModelDataHandler
 		return existingLayoutFriendlyURL;
 	}
 
-	protected LayoutFriendlyURL getUniqueLayoutFriendlyURL(
+	private LayoutFriendlyURL _getUniqueLayoutFriendlyURL(
 			PortletDataContext portletDataContext,
 			LayoutFriendlyURL layoutFriendlyURL,
 			LayoutFriendlyURL existingLayoutFriendlyURL)
@@ -203,20 +217,6 @@ public class LayoutFriendlyURLStagedModelDataHandler
 		}
 
 		return layoutFriendlyURL;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLayoutFriendlyURLLocalService(
-		LayoutFriendlyURLLocalService layoutFriendlyURLLocalService) {
-
-		_layoutFriendlyURLLocalService = layoutFriendlyURLLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLayoutLocalService(
-		LayoutLocalService layoutLocalService) {
-
-		_layoutLocalService = layoutLocalService;
 	}
 
 	private LayoutFriendlyURLLocalService _layoutFriendlyURLLocalService;

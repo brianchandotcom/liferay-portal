@@ -191,10 +191,10 @@ public class MarketplaceAppManagerPortlet extends MVCPortlet {
 			String host = urlObj.getHost();
 
 			if (host.endsWith("sf.net") || host.endsWith("sourceforge.net")) {
-				doInstallSourceForgeApp(urlObj.getPath(), actionRequest);
+				_doInstallSourceForgeApp(urlObj.getPath(), actionRequest);
 			}
 			else {
-				doInstallRemoteApp(url, actionRequest, true);
+				_doInstallRemoteApp(url, actionRequest, true);
 			}
 		}
 		catch (MalformedURLException malformedURLException) {
@@ -208,7 +208,7 @@ public class MarketplaceAppManagerPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws IOException, PortletException {
 
-		checkOmniAdmin();
+		_checkOmniAdmin();
 
 		super.processAction(actionRequest, actionResponse);
 	}
@@ -218,7 +218,7 @@ public class MarketplaceAppManagerPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		checkOmniAdmin();
+		_checkOmniAdmin();
 
 		super.render(renderRequest, renderResponse);
 	}
@@ -228,7 +228,7 @@ public class MarketplaceAppManagerPortlet extends MVCPortlet {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws IOException, PortletException {
 
-		checkOmniAdmin();
+		_checkOmniAdmin();
 
 		super.serveResource(resourceRequest, resourceResponse);
 	}
@@ -368,19 +368,6 @@ public class MarketplaceAppManagerPortlet extends MVCPortlet {
 		}
 	}
 
-	protected void checkOmniAdmin() throws PortletException {
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		if (!permissionChecker.isOmniadmin()) {
-			PrincipalException principalException =
-				new PrincipalException.MustBeCompanyAdmin(
-					permissionChecker.getUserId());
-
-			throw new PortletException(principalException);
-		}
-	}
-
 	@Override
 	protected void doDispatch(
 			RenderRequest renderRequest, RenderResponse renderResponse)
@@ -402,7 +389,56 @@ public class MarketplaceAppManagerPortlet extends MVCPortlet {
 		super.doDispatch(renderRequest, renderResponse);
 	}
 
-	protected int doInstallRemoteApp(
+	@Reference(unbind = "-")
+	protected void setAppService(AppService appService) {
+		_appService = appService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setPanelAppRegistry(PanelAppRegistry panelAppRegistry) {
+		_panelAppRegistry = panelAppRegistry;
+	}
+
+	@Reference(unbind = "-")
+	protected void setPanelCategoryRegistry(
+		PanelCategoryRegistry panelCategoryRegistry) {
+
+		_panelCategoryRegistry = panelCategoryRegistry;
+	}
+
+	@Reference(unbind = "-")
+	protected void setPluginSettingLocalService(
+		PluginSettingLocalService pluginSettingLocalService) {
+
+		_pluginSettingLocalService = pluginSettingLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setPluginSettingService(
+		PluginSettingService pluginSettingService) {
+
+		_pluginSettingService = pluginSettingService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setPortletService(PortletService portletService) {
+		_portletService = portletService;
+	}
+
+	private void _checkOmniAdmin() throws PortletException {
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		if (!permissionChecker.isOmniadmin()) {
+			PrincipalException principalException =
+				new PrincipalException.MustBeCompanyAdmin(
+					permissionChecker.getUserId());
+
+			throw new PortletException(principalException);
+		}
+	}
+
+	private int _doInstallRemoteApp(
 			String url, ActionRequest actionRequest, boolean failOnError)
 		throws Exception {
 
@@ -458,7 +494,7 @@ public class MarketplaceAppManagerPortlet extends MVCPortlet {
 		return responseCode;
 	}
 
-	protected void doInstallSourceForgeApp(
+	private void _doInstallSourceForgeApp(
 			String path, ActionRequest actionRequest)
 		throws Exception {
 
@@ -475,7 +511,7 @@ public class MarketplaceAppManagerPortlet extends MVCPortlet {
 					failOnError = true;
 				}
 
-				int responseCode = doInstallRemoteApp(
+				int responseCode = _doInstallRemoteApp(
 					url, actionRequest, failOnError);
 
 				if (responseCode == HttpServletResponse.SC_OK) {
@@ -487,42 +523,6 @@ public class MarketplaceAppManagerPortlet extends MVCPortlet {
 					actionRequest, "invalidUrl", malformedURLException);
 			}
 		}
-	}
-
-	@Reference(unbind = "-")
-	protected void setAppService(AppService appService) {
-		_appService = appService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPanelAppRegistry(PanelAppRegistry panelAppRegistry) {
-		_panelAppRegistry = panelAppRegistry;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPanelCategoryRegistry(
-		PanelCategoryRegistry panelCategoryRegistry) {
-
-		_panelCategoryRegistry = panelCategoryRegistry;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPluginSettingLocalService(
-		PluginSettingLocalService pluginSettingLocalService) {
-
-		_pluginSettingLocalService = pluginSettingLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPluginSettingService(
-		PluginSettingService pluginSettingService) {
-
-		_pluginSettingService = pluginSettingService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPortletService(PortletService portletService) {
-		_portletService = portletService;
 	}
 
 	private AppService _appService;

@@ -51,7 +51,7 @@ public class SectionConfigurationAction extends DefaultConfigurationAction {
 			ActionResponse actionResponse)
 		throws Exception {
 
-		updateKBArticlesSections(actionRequest);
+		_updateKBArticlesSections(actionRequest);
 
 		super.processAction(portletConfig, actionRequest, actionResponse);
 	}
@@ -65,7 +65,7 @@ public class SectionConfigurationAction extends DefaultConfigurationAction {
 		super.setServletContext(servletContext);
 	}
 
-	protected void updateKBArticlesSections(ActionRequest actionRequest) {
+	private void _updateKBArticlesSections(ActionRequest actionRequest) {
 		String[] kbArticlesSections = actionRequest.getParameterValues(
 			"kbArticlesSections");
 

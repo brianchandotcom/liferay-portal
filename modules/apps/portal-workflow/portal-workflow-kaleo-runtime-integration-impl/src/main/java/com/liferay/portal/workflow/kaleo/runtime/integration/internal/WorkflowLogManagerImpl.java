@@ -81,7 +81,7 @@ public class WorkflowLogManagerImpl implements WorkflowLogManager {
 					KaleoLogOrderByComparator.getOrderByComparator(
 						orderByComparator, _kaleoWorkflowModelConverter));
 
-			return toWorkflowLogs(kaleoLogs);
+			return _toWorkflowLogs(kaleoLogs);
 		}
 		catch (Exception exception) {
 			throw new WorkflowException(exception);
@@ -102,14 +102,14 @@ public class WorkflowLogManagerImpl implements WorkflowLogManager {
 					KaleoLogOrderByComparator.getOrderByComparator(
 						orderByComparator, _kaleoWorkflowModelConverter));
 
-			return toWorkflowLogs(kaleoLogs);
+			return _toWorkflowLogs(kaleoLogs);
 		}
 		catch (Exception exception) {
 			throw new WorkflowException(exception);
 		}
 	}
 
-	protected List<WorkflowLog> toWorkflowLogs(List<KaleoLog> kaleoLogs) {
+	private List<WorkflowLog> _toWorkflowLogs(List<KaleoLog> kaleoLogs) {
 		List<WorkflowLog> workflowLogs = new ArrayList<>(kaleoLogs.size());
 
 		for (KaleoLog kaleoLog : kaleoLogs) {

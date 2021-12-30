@@ -94,7 +94,7 @@ public class CustomizationSettingsProductNavigationControlMenuEntry
 		super.setServletContext(servletContext);
 	}
 
-	protected boolean isCustomizableLayout(ThemeDisplay themeDisplay)
+	private boolean _isCustomizableLayout(ThemeDisplay themeDisplay)
 		throws PortalException {
 
 		Layout layout = themeDisplay.getLayout();
@@ -141,7 +141,7 @@ public class CustomizationSettingsProductNavigationControlMenuEntry
 		Layout layout = themeDisplay.getLayout();
 
 		if (layout.isTypeControlPanel() || layout.isTypeContent() ||
-			!isCustomizableLayout(themeDisplay)) {
+			!_isCustomizableLayout(themeDisplay)) {
 
 			return false;
 		}

@@ -77,7 +77,7 @@ public class LayoutPageTemplateEntryStagedModelDataHandlerTest
 
 		User defaultUser = company.getDefaultUser();
 
-		_layoutPrototype = addLayoutPrototype(
+		_layoutPrototype = _addLayoutPrototype(
 			company.getCompanyId(), companyGroup.getGroupId(),
 			"Test Layout Prototype", defaultUser.getUserId());
 
@@ -90,7 +90,7 @@ public class LayoutPageTemplateEntryStagedModelDataHandlerTest
 
 		User targetDefaultUser = _targetCompany.getDefaultUser();
 
-		addLayoutPrototype(
+		_addLayoutPrototype(
 			_targetCompany.getCompanyId(), _targetCompany.getGroupId(),
 			"Test Layout Prototype", targetDefaultUser.getUserId());
 
@@ -125,20 +125,6 @@ public class LayoutPageTemplateEntryStagedModelDataHandlerTest
 		finally {
 			ExportImportThreadLocal.setPortletImportInProcess(false);
 		}
-	}
-
-	protected LayoutPrototype addLayoutPrototype(
-			long companyId, long groupId, String name, long userId)
-		throws Exception {
-
-		return LayoutPrototypeLocalServiceUtil.addLayoutPrototype(
-			userId, companyId,
-			HashMapBuilder.put(
-				LocaleUtil.getDefault(), name
-			).build(),
-			(Map<Locale, String>)null, true,
-			ServiceContextTestUtil.getServiceContext(
-				companyId, groupId, userId));
 	}
 
 	@Override
@@ -200,6 +186,20 @@ public class LayoutPageTemplateEntryStagedModelDataHandlerTest
 		Assert.assertEquals(
 			layoutPageTemplateEntry.getType(),
 			importLayoutPageTemplateEntry.getType());
+	}
+
+	private LayoutPrototype _addLayoutPrototype(
+			long companyId, long groupId, String name, long userId)
+		throws Exception {
+
+		return LayoutPrototypeLocalServiceUtil.addLayoutPrototype(
+			userId, companyId,
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), name
+			).build(),
+			(Map<Locale, String>)null, true,
+			ServiceContextTestUtil.getServiceContext(
+				companyId, groupId, userId));
 	}
 
 	@Inject

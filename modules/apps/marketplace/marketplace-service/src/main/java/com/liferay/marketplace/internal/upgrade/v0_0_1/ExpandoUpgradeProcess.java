@@ -52,10 +52,10 @@ public class ExpandoUpgradeProcess extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		_companyLocalService.forEachCompanyId(
-			companyId -> updateMPExpandoColumns(companyId));
+			companyId -> _updateMPExpandoColumns(companyId));
 	}
 
-	protected void updateMPExpandoColumns(long companyId) throws Exception {
+	private void _updateMPExpandoColumns(long companyId) throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer(
 				String.valueOf(companyId))) {
 

@@ -55,7 +55,37 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class AddItemMVCActionCommand extends BaseMVCActionCommand {
 
-	protected JSONObject addItemToLayoutData(ActionRequest actionRequest)
+	@Override
+	protected void doProcessAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		try {
+			jsonObject = _addItemToLayoutData(actionRequest);
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception, exception);
+			}
+
+			String errorMessage = "an-unexpected-error-occurred";
+
+			jsonObject.put(
+				"error",
+				LanguageUtil.get(
+					_portal.getHttpServletRequest(actionRequest),
+					errorMessage));
+		}
+
+		hideDefaultSuccessMessage(actionRequest);
+
+		JSONPortletResponseUtil.writeJSON(
+			actionRequest, actionResponse, jsonObject);
+	}
+
+	private JSONObject _addItemToLayoutData(ActionRequest actionRequest)
 		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -134,36 +164,6 @@ public class AddItemMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		return jsonObject.put("layoutData", layoutDataJSONObject);
-	}
-
-	@Override
-	protected void doProcessAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		try {
-			jsonObject = addItemToLayoutData(actionRequest);
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
-			}
-
-			String errorMessage = "an-unexpected-error-occurred";
-
-			jsonObject.put(
-				"error",
-				LanguageUtil.get(
-					_portal.getHttpServletRequest(actionRequest),
-					errorMessage));
-		}
-
-		hideDefaultSuccessMessage(actionRequest);
-
-		JSONPortletResponseUtil.writeJSON(
-			actionRequest, actionResponse, jsonObject);
 	}
 
 	private static final int _DEFAULT_ROW_COLUMNS = 3;

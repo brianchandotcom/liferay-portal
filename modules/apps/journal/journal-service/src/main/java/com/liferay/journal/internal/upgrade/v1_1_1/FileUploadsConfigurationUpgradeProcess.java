@@ -34,10 +34,10 @@ public class FileUploadsConfigurationUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		upgradeFileUploadsConfiguration();
+		_upgradeFileUploadsConfiguration();
 	}
 
-	protected void upgradeFileUploadsConfiguration() throws Exception {
+	private void _upgradeFileUploadsConfiguration() throws Exception {
 		_prefsPropsToConfigurationUpgradeHelper.mapConfigurations(
 			JournalFileUploadsConfiguration.class,
 			new KeyValuePair(

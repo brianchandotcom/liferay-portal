@@ -75,7 +75,7 @@ public class NotificationMessageHelper {
 
 		jsonObject.put(
 			WorkflowConstants.CONTEXT_USER_ID,
-			String.valueOf(getUserId(executionContext, kaleoInstanceToken))
+			String.valueOf(_getUserId(executionContext, kaleoInstanceToken))
 		).put(
 			"notificationMessage", notificationMessage
 		).put(
@@ -98,7 +98,10 @@ public class NotificationMessageHelper {
 		return jsonObject;
 	}
 
-	protected long getUserId(
+	@Reference
+	protected JSONFactory jsonFactory;
+
+	private long _getUserId(
 		ExecutionContext executionContext,
 		KaleoInstanceToken kaleoInstanceToken) {
 
@@ -119,9 +122,6 @@ public class NotificationMessageHelper {
 			return kaleoInstanceToken.getUserId();
 		}
 	}
-
-	@Reference
-	protected JSONFactory jsonFactory;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		NotificationMessageHelper.class);

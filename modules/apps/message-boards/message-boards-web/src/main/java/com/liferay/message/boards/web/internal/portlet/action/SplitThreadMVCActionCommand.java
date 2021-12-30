@@ -71,7 +71,7 @@ public class SplitThreadMVCActionCommand extends BaseMVCActionCommand {
 		throws Exception {
 
 		try {
-			splitThread(actionRequest, actionResponse);
+			_splitThread(actionRequest, actionResponse);
 		}
 		catch (PrincipalException | RequiredMessageException exception) {
 			SessionErrors.add(actionRequest, exception.getClass());
@@ -86,7 +86,7 @@ public class SplitThreadMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	protected void splitThread(
+	private void _splitThread(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 

@@ -48,14 +48,14 @@ public class MBMessageModelSummaryContributor
 		String content = LocalizationUtil.getLocalizedName(
 			Field.CONTENT, languageId);
 
-		Summary summary = createSummary(document, title, content);
+		Summary summary = _createSummary(document, title, content);
 
 		summary.setMaxContentLength(200);
 
 		return summary;
 	}
 
-	protected Summary createSummary(
+	private Summary _createSummary(
 		Document document, String titleField, String contentField) {
 
 		String prefix = Field.SNIPPET + StringPool.UNDERLINE;

@@ -246,7 +246,7 @@ public class MBCommentManagerImpl implements CommentManager {
 				mbMessage.getClassPK(), WorkflowConstants.STATUS_ANY,
 				new MessageThreadComparator());
 
-		return getDiscussionComment(userId, messageDisplay);
+		return _getDiscussionComment(userId, messageDisplay);
 	}
 
 	@Override
@@ -289,7 +289,7 @@ public class MBCommentManagerImpl implements CommentManager {
 				userId, groupId, className, classPK,
 				WorkflowConstants.STATUS_ANY, new MessageThreadComparator());
 
-		DiscussionComment rootDiscussionComment = getDiscussionComment(
+		DiscussionComment rootDiscussionComment = _getDiscussionComment(
 			userId, messageDisplay);
 
 		MBTreeWalker treeWalker = messageDisplay.getTreeWalker();
@@ -409,49 +409,6 @@ public class MBCommentManagerImpl implements CommentManager {
 		return message.getMessageId();
 	}
 
-	protected DiscussionComment getDiscussionComment(
-		long userId, MBMessageDisplay messageDisplay) {
-
-		MBTreeWalker treeWalker = messageDisplay.getTreeWalker();
-
-		List<MBMessage> messages = treeWalker.getMessages();
-
-		List<Long> classPKs = new ArrayList<>();
-
-		if (messages.size() > 1) {
-			for (MBMessage curMessage : messages) {
-				if (!curMessage.isRoot()) {
-					classPKs.add(curMessage.getMessageId());
-				}
-			}
-		}
-
-		if (classPKs.isEmpty()) {
-			return new MBDiscussionCommentImpl(
-				treeWalker.getRoot(), treeWalker, Collections.emptyMap(),
-				Collections.emptyMap());
-		}
-
-		long[] classPKsArray = ArrayUtil.toLongArray(classPKs);
-
-		Map<Long, RatingsEntry> ratingsEntries = null;
-		Map<Long, RatingsStats> ratingsStats =
-			_ratingsStatsLocalService.getStats(
-				CommentConstants.getDiscussionClassName(), classPKsArray);
-
-		if (ratingsStats.isEmpty()) {
-			ratingsEntries = Collections.emptyMap();
-		}
-		else {
-			ratingsEntries = _ratingsEntryLocalService.getEntries(
-				userId, CommentConstants.getDiscussionClassName(),
-				classPKsArray);
-		}
-
-		return new MBDiscussionCommentImpl(
-			treeWalker.getRoot(), treeWalker, ratingsEntries, ratingsStats);
-	}
-
 	private MBMessage _copyRootMessage(
 			long userId, long groupId, String className, long classPK,
 			long newClassPK,
@@ -513,6 +470,49 @@ public class MBCommentManagerImpl implements CommentManager {
 		newMBMessage.setStatus(mbMessage.getStatus());
 
 		_mbMessageLocalService.updateMBMessage(newMBMessage);
+	}
+
+	private DiscussionComment _getDiscussionComment(
+		long userId, MBMessageDisplay messageDisplay) {
+
+		MBTreeWalker treeWalker = messageDisplay.getTreeWalker();
+
+		List<MBMessage> messages = treeWalker.getMessages();
+
+		List<Long> classPKs = new ArrayList<>();
+
+		if (messages.size() > 1) {
+			for (MBMessage curMessage : messages) {
+				if (!curMessage.isRoot()) {
+					classPKs.add(curMessage.getMessageId());
+				}
+			}
+		}
+
+		if (classPKs.isEmpty()) {
+			return new MBDiscussionCommentImpl(
+				treeWalker.getRoot(), treeWalker, Collections.emptyMap(),
+				Collections.emptyMap());
+		}
+
+		long[] classPKsArray = ArrayUtil.toLongArray(classPKs);
+
+		Map<Long, RatingsEntry> ratingsEntries = null;
+		Map<Long, RatingsStats> ratingsStats =
+			_ratingsStatsLocalService.getStats(
+				CommentConstants.getDiscussionClassName(), classPKsArray);
+
+		if (ratingsStats.isEmpty()) {
+			ratingsEntries = Collections.emptyMap();
+		}
+		else {
+			ratingsEntries = _ratingsEntryLocalService.getEntries(
+				userId, CommentConstants.getDiscussionClassName(),
+				classPKsArray);
+		}
+
+		return new MBDiscussionCommentImpl(
+			treeWalker.getRoot(), treeWalker, ratingsEntries, ratingsStats);
 	}
 
 	@Reference

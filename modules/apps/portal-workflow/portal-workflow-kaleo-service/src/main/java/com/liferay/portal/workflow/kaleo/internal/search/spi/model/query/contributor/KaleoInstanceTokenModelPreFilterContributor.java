@@ -68,8 +68,8 @@ public class KaleoInstanceTokenModelPreFilterContributor
 		appendCompletedTerm(booleanFilter, kaleoInstanceTokenQuery);
 		appendCompletionDateRangeTerm(booleanFilter, kaleoInstanceTokenQuery);
 		appendKaleoInstanceIdTerm(booleanFilter, kaleoInstanceTokenQuery);
-		appendKaleoInstanceTokenIdTerm(booleanFilter, kaleoInstanceTokenQuery);
-		appendParentKaleoInstanceTokenIdTerm(
+		_appendKaleoInstanceTokenIdTerm(booleanFilter, kaleoInstanceTokenQuery);
+		_appendParentKaleoInstanceTokenIdTerm(
 			booleanFilter, kaleoInstanceTokenQuery);
 		appendUserIdTerm(booleanFilter, kaleoInstanceTokenQuery);
 	}
@@ -167,38 +167,6 @@ public class KaleoInstanceTokenModelPreFilterContributor
 			KaleoInstanceTokenField.KALEO_INSTANCE_ID, kaleoInstanceId);
 	}
 
-	protected void appendKaleoInstanceTokenIdTerm(
-		BooleanFilter booleanFilter,
-		KaleoInstanceTokenQuery kaleoInstanceTokenQuery) {
-
-		Long kaleoInstanceTokenId =
-			kaleoInstanceTokenQuery.getKaleoInstanceTokenId();
-
-		if (kaleoInstanceTokenId == null) {
-			return;
-		}
-
-		booleanFilter.addRequiredTerm(
-			KaleoInstanceTokenField.KALEO_INSTANCE_TOKEN_ID,
-			kaleoInstanceTokenId);
-	}
-
-	protected void appendParentKaleoInstanceTokenIdTerm(
-		BooleanFilter booleanFilter,
-		KaleoInstanceTokenQuery kaleoInstanceTokenQuery) {
-
-		Long parentKaleoInstanceTokenId =
-			kaleoInstanceTokenQuery.getParentKaleoInstanceTokenId();
-
-		if (parentKaleoInstanceTokenId == null) {
-			return;
-		}
-
-		booleanFilter.addRequiredTerm(
-			KaleoInstanceTokenField.PARENT_KALEO_INSTANCE_TOKEN_ID,
-			parentKaleoInstanceTokenId);
-	}
-
 	protected void appendUserIdTerm(
 		BooleanFilter booleanFilter,
 		KaleoInstanceTokenQuery kaleoInstanceTokenQuery) {
@@ -217,5 +185,37 @@ public class KaleoInstanceTokenModelPreFilterContributor
 
 	@Reference
 	protected Portal portal;
+
+	private void _appendKaleoInstanceTokenIdTerm(
+		BooleanFilter booleanFilter,
+		KaleoInstanceTokenQuery kaleoInstanceTokenQuery) {
+
+		Long kaleoInstanceTokenId =
+			kaleoInstanceTokenQuery.getKaleoInstanceTokenId();
+
+		if (kaleoInstanceTokenId == null) {
+			return;
+		}
+
+		booleanFilter.addRequiredTerm(
+			KaleoInstanceTokenField.KALEO_INSTANCE_TOKEN_ID,
+			kaleoInstanceTokenId);
+	}
+
+	private void _appendParentKaleoInstanceTokenIdTerm(
+		BooleanFilter booleanFilter,
+		KaleoInstanceTokenQuery kaleoInstanceTokenQuery) {
+
+		Long parentKaleoInstanceTokenId =
+			kaleoInstanceTokenQuery.getParentKaleoInstanceTokenId();
+
+		if (parentKaleoInstanceTokenId == null) {
+			return;
+		}
+
+		booleanFilter.addRequiredTerm(
+			KaleoInstanceTokenField.PARENT_KALEO_INSTANCE_TOKEN_ID,
+			parentKaleoInstanceTokenId);
+	}
 
 }

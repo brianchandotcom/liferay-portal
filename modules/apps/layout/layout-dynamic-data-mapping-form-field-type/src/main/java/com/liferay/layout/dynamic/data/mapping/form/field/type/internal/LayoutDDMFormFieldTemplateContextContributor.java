@@ -66,7 +66,7 @@ public class LayoutDDMFormFieldTemplateContextContributor
 
 		return HashMapBuilder.<String, Object>put(
 			"itemSelectorURL",
-			getItemSelectorURL(
+			_getItemSelectorURL(
 				ddmFormFieldRenderingContext,
 				ddmFormFieldRenderingContext.getHttpServletRequest())
 		).put(
@@ -102,7 +102,7 @@ public class LayoutDDMFormFieldTemplateContextContributor
 		).build();
 	}
 
-	protected String getItemSelectorURL(
+	private String _getItemSelectorURL(
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext,
 		HttpServletRequest httpServletRequest) {
 

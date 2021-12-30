@@ -72,7 +72,7 @@ public class CompositeKaleoTaskAssignmentSelector
 		KaleoTaskAssignmentSelector kaleoTaskAssignmentSelector,
 		Map<String, Object> properties) {
 
-		String[] assigneeClassNames = getAssigneeClassNames(
+		String[] assigneeClassNames = _getAssigneeClassNames(
 			kaleoTaskAssignmentSelector, properties);
 
 		for (String assigneeClassName : assigneeClassNames) {
@@ -81,7 +81,19 @@ public class CompositeKaleoTaskAssignmentSelector
 		}
 	}
 
-	protected String[] getAssigneeClassNames(
+	protected void removeKaleoTaskAssignmentSelector(
+		KaleoTaskAssignmentSelector kaleoTaskAssignmentSelector,
+		Map<String, Object> properties) {
+
+		String[] assigneeClassNames = _getAssigneeClassNames(
+			kaleoTaskAssignmentSelector, properties);
+
+		for (String assigneeClassName : assigneeClassNames) {
+			_kaleoTaskAssignmentSelectors.remove(assigneeClassName);
+		}
+	}
+
+	private String[] _getAssigneeClassNames(
 		KaleoTaskAssignmentSelector kaleoTaskAssignmentSelector,
 		Map<String, Object> properties) {
 
@@ -97,18 +109,6 @@ public class CompositeKaleoTaskAssignmentSelector
 		}
 
 		return assigneeClassNames;
-	}
-
-	protected void removeKaleoTaskAssignmentSelector(
-		KaleoTaskAssignmentSelector kaleoTaskAssignmentSelector,
-		Map<String, Object> properties) {
-
-		String[] assigneeClassNames = getAssigneeClassNames(
-			kaleoTaskAssignmentSelector, properties);
-
-		for (String assigneeClassName : assigneeClassNames) {
-			_kaleoTaskAssignmentSelectors.remove(assigneeClassName);
-		}
 	}
 
 	private final Map<String, KaleoTaskAssignmentSelector>

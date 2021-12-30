@@ -39,10 +39,10 @@ public class CheckIntervalConfigurationUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		upgradeCheckIntervalConfiguration();
+		_upgradeCheckIntervalConfiguration();
 	}
 
-	protected void upgradeCheckIntervalConfiguration() throws Exception {
+	private void _upgradeCheckIntervalConfiguration() throws Exception {
 		String filterString = StringBundler.concat(
 			"(", Constants.SERVICE_PID, "=",
 			JournalServiceConfiguration.class.getName(), ")");

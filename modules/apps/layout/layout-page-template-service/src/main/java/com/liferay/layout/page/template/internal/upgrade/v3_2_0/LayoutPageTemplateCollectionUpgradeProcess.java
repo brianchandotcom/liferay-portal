@@ -33,12 +33,23 @@ public class LayoutPageTemplateCollectionUpgradeProcess extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		upgradeSchema();
-		upgradeLayoutPageTemplateCollectionKey();
+		_upgradeLayoutPageTemplateCollectionKey();
 	}
 
-	protected void upgradeLayoutPageTemplateCollectionKey()
-		throws SQLException {
+	protected void upgradeSchema() throws Exception {
+		alter(
+			LayoutPageTemplateCollectionTable.class,
+			new AlterTableAddColumn("lptCollectionKey", "VARCHAR(75)"));
+	}
 
+	private String _generateLayoutPageTemplateCollectionKey(String name) {
+		return StringUtil.replace(
+			StringUtil.toLowerCase(name.trim()),
+			new char[] {CharPool.FORWARD_SLASH, CharPool.SPACE},
+			new char[] {CharPool.DASH, CharPool.DASH});
+	}
+
+	private void _upgradeLayoutPageTemplateCollectionKey() throws SQLException {
 		try (Statement s = connection.createStatement();
 			ResultSet resultSet = s.executeQuery(
 				"select layoutPageTemplateCollectionId, name from " +
@@ -66,19 +77,6 @@ public class LayoutPageTemplateCollectionUpgradeProcess extends UpgradeProcess {
 
 			preparedStatement.executeBatch();
 		}
-	}
-
-	protected void upgradeSchema() throws Exception {
-		alter(
-			LayoutPageTemplateCollectionTable.class,
-			new AlterTableAddColumn("lptCollectionKey", "VARCHAR(75)"));
-	}
-
-	private String _generateLayoutPageTemplateCollectionKey(String name) {
-		return StringUtil.replace(
-			StringUtil.toLowerCase(name.trim()),
-			new char[] {CharPool.FORWARD_SLASH, CharPool.SPACE},
-			new char[] {CharPool.DASH, CharPool.DASH});
 	}
 
 }

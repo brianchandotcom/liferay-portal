@@ -103,11 +103,11 @@ public class KBAttachmentEditorConfigContributor
 
 		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
 			requestBackedPortletURLFactory, namespace + name + "selectItem",
-			getKBAttachmentItemSelectorCriterion(
+			_getKBAttachmentItemSelectorCriterion(
 				resourcePrimKey, desiredItemSelectorReturnTypes),
-			getImageItemSelectorCriterion(desiredItemSelectorReturnTypes),
-			getURLItemSelectorCriterion(),
-			getUploadItemSelectorCriterion(
+			_getImageItemSelectorCriterion(desiredItemSelectorReturnTypes),
+			_getURLItemSelectorCriterion(),
+			_getUploadItemSelectorCriterion(
 				resourcePrimKey, themeDisplay, requestBackedPortletURLFactory));
 
 		jsonObject.put(
@@ -122,7 +122,7 @@ public class KBAttachmentEditorConfigContributor
 		_itemSelector = itemSelector;
 	}
 
-	protected ItemSelectorCriterion getImageItemSelectorCriterion(
+	private ItemSelectorCriterion _getImageItemSelectorCriterion(
 		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes) {
 
 		ItemSelectorCriterion itemSelectorCriterion =
@@ -134,7 +134,7 @@ public class KBAttachmentEditorConfigContributor
 		return itemSelectorCriterion;
 	}
 
-	protected ItemSelectorCriterion getKBAttachmentItemSelectorCriterion(
+	private ItemSelectorCriterion _getKBAttachmentItemSelectorCriterion(
 		long resourcePrimKey,
 		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes) {
 
@@ -147,7 +147,7 @@ public class KBAttachmentEditorConfigContributor
 		return itemSelectorCriterion;
 	}
 
-	protected ItemSelectorCriterion getUploadItemSelectorCriterion(
+	private ItemSelectorCriterion _getUploadItemSelectorCriterion(
 		long resourcePrimKey, ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
@@ -171,7 +171,7 @@ public class KBAttachmentEditorConfigContributor
 		return itemSelectorCriterion;
 	}
 
-	protected ItemSelectorCriterion getURLItemSelectorCriterion() {
+	private ItemSelectorCriterion _getURLItemSelectorCriterion() {
 		ItemSelectorCriterion itemSelectorCriterion =
 			new URLItemSelectorCriterion();
 

@@ -296,49 +296,6 @@ public class LayoutStagedModelDataHandler
 			LayoutExportImportConfiguration.class, properties);
 	}
 
-	protected String[] appendPortletIds(
-		String[] portletIds, String[] newPortletIds, String portletsMergeMode) {
-
-		for (String portletId : newPortletIds) {
-			if (ArrayUtil.contains(portletIds, portletId)) {
-				continue;
-			}
-
-			if (portletsMergeMode.equals(
-					PortletDataHandlerKeys.PORTLETS_MERGE_MODE_ADD_TO_BOTTOM)) {
-
-				portletIds = ArrayUtil.append(portletIds, portletId);
-			}
-			else {
-				portletIds = ArrayUtil.append(
-					new String[] {portletId}, portletIds);
-			}
-		}
-
-		return portletIds;
-	}
-
-	protected void deleteMissingLayoutFriendlyURLs(
-		PortletDataContext portletDataContext, Layout layout) {
-
-		Map<Long, Long> layoutFriendlyURLIds =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				LayoutFriendlyURL.class);
-
-		List<LayoutFriendlyURL> layoutFriendlyURLs =
-			_layoutFriendlyURLLocalService.getLayoutFriendlyURLs(
-				layout.getPlid());
-
-		for (LayoutFriendlyURL layoutFriendlyURL : layoutFriendlyURLs) {
-			if (!layoutFriendlyURLIds.containsValue(
-					layoutFriendlyURL.getLayoutFriendlyURLId())) {
-
-				_layoutFriendlyURLLocalService.deleteLayoutFriendlyURL(
-					layoutFriendlyURL);
-			}
-		}
-	}
-
 	@Override
 	protected void doExportStagedModel(
 			PortletDataContext portletDataContext, Layout layout)
@@ -346,7 +303,7 @@ public class LayoutStagedModelDataHandler
 
 		Element layoutElement = portletDataContext.getExportDataElement(layout);
 
-		populateElementLayoutMetadata(layoutElement, layout);
+		_populateElementLayoutMetadata(layoutElement, layout);
 
 		layoutElement.addAttribute(Constants.ACTION, Constants.ADD);
 
@@ -435,7 +392,7 @@ public class LayoutStagedModelDataHandler
 		}
 
 		if (layout.isIconImage()) {
-			exportLayoutIconImage(portletDataContext, layout, layoutElement);
+			_exportLayoutIconImage(portletDataContext, layout, layoutElement);
 		}
 
 		_exportLayoutPageTemplateStructure(portletDataContext, layout);
@@ -443,21 +400,21 @@ public class LayoutStagedModelDataHandler
 		if (Objects.equals(
 				layout.getType(), LayoutConstants.TYPE_LINK_TO_LAYOUT)) {
 
-			exportLinkedLayout(portletDataContext, layout, layoutElement);
+			_exportLinkedLayout(portletDataContext, layout, layoutElement);
 		}
 		else if (Objects.equals(
 					layout.getType(), LayoutConstants.TYPE_PORTLET) ||
 				 layout.isTypeAssetDisplay() || layout.isTypeContent()) {
 
-			exportLayoutPortlets(portletDataContext, layout, layoutElement);
+			_exportLayoutPortlets(portletDataContext, layout, layoutElement);
 		}
 		else if (Objects.equals(layout.getType(), LayoutConstants.TYPE_URL)) {
-			exportLinkedURL(portletDataContext, layout, layoutElement);
+			_exportLinkedURL(portletDataContext, layout, layoutElement);
 		}
 
-		fixExportTypeSettings(layout);
+		_fixExportTypeSettings(layout);
 
-		exportTheme(portletDataContext, layout);
+		_exportTheme(portletDataContext, layout);
 
 		List<LayoutClassedModelUsage> layoutClassedModelUsages =
 			_layoutClassedModelUsageLocalService.
@@ -728,7 +685,7 @@ public class LayoutStagedModelDataHandler
 			importedLayout.setPrivateLayout(privateLayout);
 			importedLayout.setLayoutId(layoutId);
 
-			initNewLayoutPermissions(
+			_initNewLayoutPermissions(
 				portletDataContext.getCompanyId(), groupId, userId, layout,
 				importedLayout, privateLayout);
 
@@ -914,25 +871,25 @@ public class LayoutStagedModelDataHandler
 			!portletsMergeMode.equals(
 				PortletDataHandlerKeys.PORTLETS_MERGE_MODE_REPLACE)) {
 
-			mergePortlets(
+			_mergePortlets(
 				importedLayout, layout.getTypeSettings(), portletsMergeMode);
 		}
 		else if (Objects.equals(
 					layout.getType(), LayoutConstants.TYPE_LINK_TO_LAYOUT)) {
 
-			importLinkedLayout(
+			_importLinkedLayout(
 				portletDataContext, layout, importedLayout, layoutElement);
 
-			updateTypeSettings(importedLayout, layout);
+			_updateTypeSettings(importedLayout, layout);
 		}
 		else if (Objects.equals(layout.getType(), LayoutConstants.TYPE_URL)) {
-			importLinkedURL(
+			_importLinkedURL(
 				portletDataContext, layout, importedLayout, layoutElement);
 
-			updateTypeSettings(importedLayout, layout);
+			_updateTypeSettings(importedLayout, layout);
 		}
 		else {
-			updateTypeSettings(importedLayout, layout);
+			_updateTypeSettings(importedLayout, layout);
 		}
 
 		if (layoutsImportMode.equals(
@@ -940,17 +897,17 @@ public class LayoutStagedModelDataHandler
 					LAYOUTS_IMPORT_MODE_MERGE_BY_LAYOUT_UUID) &&
 			(layout.getLayoutPrototypeUuid() != null)) {
 
-			resetLastMergeTime(importedLayout, layout);
+			_resetLastMergeTime(importedLayout, layout);
 		}
 
 		importedLayout.setHidden(layout.isHidden());
 		importedLayout.setSystem(layout.isSystem());
 		importedLayout.setFriendlyURL(
-			getUniqueFriendlyURL(
+			_getUniqueFriendlyURL(
 				portletDataContext, importedLayout, friendlyURL));
 
 		if (layout.getIconImageId() > 0) {
-			importLayoutIconImage(
+			_importLayoutIconImage(
 				portletDataContext, importedLayout, layoutElement);
 		}
 		else if (importedLayout.getIconImageId() > 0) {
@@ -1001,30 +958,30 @@ public class LayoutStagedModelDataHandler
 		_staging.updateLastImportSettings(
 			layoutElement, importedLayout, portletDataContext);
 
-		fixImportTypeSettings(importedLayout);
+		_fixImportTypeSettings(importedLayout);
 
 		importedLayout = _layoutLocalService.updateLayout(importedLayout);
 
-		importTheme(portletDataContext, layout, importedLayout);
+		_importTheme(portletDataContext, layout, importedLayout);
 
 		if ((Objects.equals(layout.getType(), LayoutConstants.TYPE_PORTLET) &&
 			 Validator.isNotNull(layout.getTypeSettings())) ||
 			layout.isTypeAssetDisplay() || layout.isTypeContent()) {
 
-			importLayoutPortlets(
+			_importLayoutPortlets(
 				portletDataContext, importedLayout, layoutElement);
 		}
 
-		importAssets(portletDataContext, layout, importedLayout);
+		_importAssets(portletDataContext, layout, importedLayout);
 
-		importLayoutFriendlyURLs(portletDataContext, layout, importedLayout);
+		_importLayoutFriendlyURLs(portletDataContext, layout, importedLayout);
 
-		importLayoutPageTemplateStructures(
+		_importLayoutPageTemplateStructures(
 			portletDataContext, layout, importedLayout);
 
-		importLayoutSEOEntries(portletDataContext, layout);
+		_importLayoutSEOEntries(portletDataContext, layout);
 
-		importLayoutClassedModelUsages(portletDataContext, layout);
+		_importLayoutClassedModelUsages(portletDataContext, layout);
 
 		importedLayout = _layoutLocalService.getLayout(
 			importedLayout.getPlid());
@@ -1054,7 +1011,365 @@ public class LayoutStagedModelDataHandler
 		}
 	}
 
-	protected void exportLayoutIconImage(
+	protected Layout fetchMissingReference(
+		String uuid, long groupId, boolean privateLayout) {
+
+		// Try to fetch the existing layout from the importing group
+
+		Layout layout = _layoutLocalService.fetchLayoutByUuidAndGroupId(
+			uuid, groupId, privateLayout);
+
+		if (layout != null) {
+			return layout;
+		}
+
+		try {
+
+			// Try to fetch the existing layout from the parent sites
+
+			Group originalGroup = _groupLocalService.getGroup(groupId);
+
+			Group group = originalGroup.getParentGroup();
+
+			while (group != null) {
+				layout = _layoutLocalService.fetchLayoutByUuidAndGroupId(
+					uuid, group.getGroupId(), privateLayout);
+
+				if (layout != null) {
+					break;
+				}
+
+				group = group.getParentGroup();
+			}
+
+			if (layout == null) {
+				List<Layout> layouts = fetchStagedModelsByUuidAndCompanyId(
+					uuid, originalGroup.getCompanyId());
+
+				if (ListUtil.isEmpty(layouts)) {
+					return null;
+				}
+
+				layout = layouts.get(0);
+			}
+
+			return layout;
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception, exception);
+			}
+			else if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to fetch missing reference layout from group " +
+						groupId);
+			}
+
+			return null;
+		}
+	}
+
+	@Override
+	protected boolean isSkipImportReferenceStagedModels() {
+		return true;
+	}
+
+	@Reference(unbind = "-")
+	protected void setConfigurationProvider(
+		ConfigurationProvider configurationProvider) {
+
+		_configurationProvider = configurationProvider;
+	}
+
+	@Reference(unbind = "-")
+	protected void setCounterLocalService(
+		CounterLocalService counterLocalService) {
+
+		_counterLocalService = counterLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setExportImportLifecycleManager(
+		ExportImportLifecycleManager exportImportLifecycleManager) {
+
+		_exportImportLifecycleManager = exportImportLifecycleManager;
+	}
+
+	@Reference(unbind = "-")
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setImageLocalService(ImageLocalService imageLocalService) {
+		_imageLocalService = imageLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setLayoutBranchLocalService(
+		LayoutBranchLocalService layoutBranchLocalService) {
+
+		_layoutBranchLocalService = layoutBranchLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setLayoutFriendlyURLLocalService(
+		LayoutFriendlyURLLocalService layoutFriendlyURLLocalService) {
+
+		_layoutFriendlyURLLocalService = layoutFriendlyURLLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setLayoutLocalService(
+		LayoutLocalService layoutLocalService) {
+
+		_layoutLocalService = layoutLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setLayoutLocalServiceHelper(
+		LayoutLocalServiceHelper layoutLocalServiceHelper) {
+
+		_layoutLocalServiceHelper = layoutLocalServiceHelper;
+	}
+
+	@Reference(unbind = "-")
+	protected void setLayoutPrototypeLocalService(
+		LayoutPrototypeLocalService layoutPrototypeLocalService) {
+
+		_layoutPrototypeLocalService = layoutPrototypeLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setLayoutRevisionLocalService(
+		LayoutRevisionLocalService layoutRevisionLocalService) {
+
+		_layoutRevisionLocalService = layoutRevisionLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setLayoutSetBranchLocalService(
+		LayoutSetBranchLocalService layoutSetBranchLocalService) {
+
+		_layoutSetBranchLocalService = layoutSetBranchLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setLayoutSetLocalService(
+		LayoutSetLocalService layoutSetLocalService) {
+
+		_layoutSetLocalService = layoutSetLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setLayoutTemplateLocalService(
+		LayoutTemplateLocalService layoutTemplateLocalService) {
+
+		_layoutTemplateLocalService = layoutTemplateLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setPortletExportController(
+		PortletExportController portletExportController) {
+
+		_portletExportController = portletExportController;
+	}
+
+	@Reference(unbind = "-")
+	protected void setPortletImportController(
+		PortletImportController portletImportController) {
+
+		_portletImportController = portletImportController;
+	}
+
+	@Reference(unbind = "-")
+	protected void setPortletLocalService(
+		PortletLocalService portletLocalService) {
+
+		_portletLocalService = portletLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setResourceLocalService(
+		ResourceLocalService resourceLocalService) {
+
+		_resourceLocalService = resourceLocalService;
+	}
+
+	@Override
+	protected void validateExport(
+			PortletDataContext portletDataContext, Layout layout)
+		throws PortletDataException {
+
+		if (!layout.isPending()) {
+			super.validateExport(portletDataContext, layout);
+		}
+	}
+
+	private void _addMasterLayoutRevision(Layout layout) throws Exception {
+		if (ExportImportThreadLocal.isStagingInProcess() ||
+			!LayoutStagingUtil.isBranchingLayout(layout)) {
+
+			return;
+		}
+
+		LayoutSetBranch masterLayoutSetBranch =
+			_layoutSetBranchLocalService.getMasterLayoutSetBranch(
+				layout.getGroupId(), layout.isPrivateLayout());
+
+		LayoutBranch masterLayoutBranch =
+			_layoutBranchLocalService.getMasterLayoutBranch(
+				masterLayoutSetBranch.getLayoutSetBranchId(), layout.getPlid(),
+				ServiceContextThreadLocal.getServiceContext());
+
+		LayoutRevision latestMasterLayoutRevision =
+			_layoutRevisionLocalService.fetchLatestLayoutRevision(
+				masterLayoutSetBranch.getLayoutSetBranchId(),
+				masterLayoutBranch.getLayoutBranchId(), layout.getPlid());
+
+		long parentLayoutRevisionId =
+			LayoutRevisionConstants.DEFAULT_PARENT_LAYOUT_REVISION_ID;
+		long portletPreferencesPlid = layout.getPlid();
+
+		if (latestMasterLayoutRevision != null) {
+			parentLayoutRevisionId =
+				latestMasterLayoutRevision.getLayoutRevisionId();
+			portletPreferencesPlid =
+				latestMasterLayoutRevision.getLayoutRevisionId();
+		}
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		int workflowAction = serviceContext.getWorkflowAction();
+
+		try {
+			serviceContext.setWorkflowAction(
+				WorkflowConstants.ACTION_SAVE_DRAFT);
+
+			_layoutRevisionLocalService.addLayoutRevision(
+				layout.getUserId(),
+				masterLayoutSetBranch.getLayoutSetBranchId(),
+				masterLayoutBranch.getLayoutBranchId(), parentLayoutRevisionId,
+				false, layout.getPlid(), portletPreferencesPlid,
+				layout.isPrivateLayout(), layout.getName(), layout.getTitle(),
+				layout.getDescription(), layout.getKeywords(),
+				layout.getRobots(), layout.getTypeSettings(),
+				layout.isIconImage(), layout.getIconImageId(),
+				layout.getThemeId(), layout.getColorSchemeId(), layout.getCss(),
+				serviceContext);
+		}
+		finally {
+			serviceContext.setWorkflowAction(workflowAction);
+		}
+	}
+
+	private String[] _appendPortletIds(
+		String[] portletIds, String[] newPortletIds, String portletsMergeMode) {
+
+		for (String portletId : newPortletIds) {
+			if (ArrayUtil.contains(portletIds, portletId)) {
+				continue;
+			}
+
+			if (portletsMergeMode.equals(
+					PortletDataHandlerKeys.PORTLETS_MERGE_MODE_ADD_TO_BOTTOM)) {
+
+				portletIds = ArrayUtil.append(portletIds, portletId);
+			}
+			else {
+				portletIds = ArrayUtil.append(
+					new String[] {portletId}, portletIds);
+			}
+		}
+
+		return portletIds;
+	}
+
+	private void _deleteMissingLayoutFriendlyURLs(
+		PortletDataContext portletDataContext, Layout layout) {
+
+		Map<Long, Long> layoutFriendlyURLIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				LayoutFriendlyURL.class);
+
+		List<LayoutFriendlyURL> layoutFriendlyURLs =
+			_layoutFriendlyURLLocalService.getLayoutFriendlyURLs(
+				layout.getPlid());
+
+		for (LayoutFriendlyURL layoutFriendlyURL : layoutFriendlyURLs) {
+			if (!layoutFriendlyURLIds.containsValue(
+					layoutFriendlyURL.getLayoutFriendlyURLId())) {
+
+				_layoutFriendlyURLLocalService.deleteLayoutFriendlyURL(
+					layoutFriendlyURL);
+			}
+		}
+	}
+
+	private void _exportCollectionLayoutCollection(
+		PortletDataContext portletDataContext, Layout layout) {
+
+		if (!Objects.equals(
+				layout.getType(), LayoutConstants.TYPE_COLLECTION)) {
+
+			return;
+		}
+
+		UnicodeProperties typeSettingsUnicodeProperties =
+			layout.getTypeSettingsProperties();
+
+		String collectionType = typeSettingsUnicodeProperties.getProperty(
+			"collectionType", StringPool.BLANK);
+
+		if (!Objects.equals(
+				collectionType,
+				InfoListItemSelectorReturnType.class.getName())) {
+
+			return;
+		}
+
+		long collectionPK = GetterUtil.getLong(
+			typeSettingsUnicodeProperties.getProperty(
+				"collectionPK", StringPool.BLANK));
+
+		if (collectionPK <= 0) {
+			return;
+		}
+
+		try {
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, layout,
+				_assetListEntryLocalService.getAssetListEntry(collectionPK),
+				PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException, portalException);
+			}
+		}
+	}
+
+	private void _exportDraftLayout(
+			PortletDataContext portletDataContext, Layout layout,
+			Element layoutElement)
+		throws Exception {
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		if (draftLayout != null) {
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, layout, draftLayout,
+				PortletDataContext.REFERENCE_TYPE_PARENT);
+
+			layoutElement.addAttribute(
+				"draft-layout-uuid", draftLayout.getUuid());
+			layoutElement.addAttribute(
+				"draft-layout-id", String.valueOf(draftLayout.getLayoutId()));
+		}
+	}
+
+	private void _exportLayoutIconImage(
 			PortletDataContext portletDataContext, Layout layout,
 			Element layoutElement)
 		throws Exception {
@@ -1082,7 +1397,42 @@ public class LayoutStagedModelDataHandler
 		}
 	}
 
-	protected void exportLayoutPortlets(
+	private void _exportLayoutPageTemplateStructure(
+			PortletDataContext portletDataContext, Layout layout)
+		throws Exception {
+
+		if (!layout.isTypeAssetDisplay() && !layout.isTypeContent()) {
+			return;
+		}
+
+		List<FragmentEntryLink> fragmentEntryLinks =
+			_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
+				layout.getGroupId(), layout.getPlid());
+
+		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, layout, fragmentEntryLink,
+				PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
+		}
+
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			_layoutPageTemplateStructureLocalService.
+				fetchLayoutPageTemplateStructure(
+					layout.getGroupId(), layout.getPlid());
+
+		if (layoutPageTemplateStructure == null) {
+			layoutPageTemplateStructure =
+				_layoutPageTemplateStructureLocalService.
+					rebuildLayoutPageTemplateStructure(
+						layout.getGroupId(), layout.getPlid());
+		}
+
+		StagedModelDataHandlerUtil.exportReferenceStagedModel(
+			portletDataContext, layout, layoutPageTemplateStructure,
+			PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
+	}
+
+	private void _exportLayoutPortlets(
 			PortletDataContext portletDataContext, Layout layout,
 			Element layoutElement)
 		throws Exception {
@@ -1097,7 +1447,7 @@ public class LayoutStagedModelDataHandler
 
 		long previousScopeGroupId = portletDataContext.getScopeGroupId();
 
-		Map<String, Object[]> portletIds = getPortletIds(
+		Map<String, Object[]> portletIds = _getPortletIds(
 			portletDataContext, layout);
 
 		for (Map.Entry<String, Object[]> portletIdsEntry :
@@ -1163,7 +1513,7 @@ public class LayoutStagedModelDataHandler
 		portletDataContext.setScopeGroupId(previousScopeGroupId);
 	}
 
-	protected void exportLinkedLayout(
+	private void _exportLinkedLayout(
 			PortletDataContext portletDataContext, Layout layout,
 			Element layoutElement)
 		throws Exception {
@@ -1199,7 +1549,7 @@ public class LayoutStagedModelDataHandler
 		}
 	}
 
-	protected void exportLinkedURL(
+	private void _exportLinkedURL(
 			PortletDataContext portletDataContext, Layout layout,
 			Element layoutElement)
 		throws Exception {
@@ -1219,7 +1569,56 @@ public class LayoutStagedModelDataHandler
 		}
 	}
 
-	protected void exportTheme(
+	private void _exportMasterLayout(
+			PortletDataContext portletDataContext, Layout layout,
+			Element layoutElement)
+		throws Exception {
+
+		if (layout.getMasterLayoutPlid() <= 0) {
+			return;
+		}
+
+		Layout masterLayout = _layoutLocalService.fetchLayout(
+			layout.getMasterLayoutPlid());
+
+		if ((masterLayout == null) ||
+			Validator.isNotNull(
+				layoutElement.attributeValue("master-layout-uuid"))) {
+
+			return;
+		}
+
+		StagedModelDataHandlerUtil.exportReferenceStagedModel(
+			portletDataContext, layout, masterLayout,
+			PortletDataContext.REFERENCE_TYPE_PARENT);
+
+		layoutElement.addAttribute(
+			"master-layout-uuid", masterLayout.getUuid());
+		layoutElement.addAttribute(
+			"master-layout-plid", String.valueOf(masterLayout.getPlid()));
+
+		if (MergeLayoutPrototypesThreadLocal.isInProgress()) {
+			LayoutPageTemplateEntry layoutPageTemplateEntry =
+				_layoutPageTemplateEntryLocalService.
+					fetchLayoutPageTemplateEntryByPlid(masterLayout.getPlid());
+
+			if ((layoutPageTemplateEntry != null) &&
+				Validator.isNull(
+					layoutElement.attributeValue(
+						"master-layout-layout-page-template-entry-uuid"))) {
+
+				layoutElement.addAttribute(
+					"master-layout-layout-page-template-entry-uuid",
+					layoutPageTemplateEntry.getUuid());
+
+				StagedModelDataHandlerUtil.exportReferenceStagedModel(
+					portletDataContext, layout, layoutPageTemplateEntry,
+					PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
+			}
+		}
+	}
+
+	private void _exportTheme(
 			PortletDataContext portletDataContext, Layout layout)
 		throws Exception {
 
@@ -1274,7 +1673,7 @@ public class LayoutStagedModelDataHandler
 		}
 	}
 
-	protected Object[] extractFriendlyURLInfo(Layout layout) {
+	private Object[] _extractFriendlyURLInfo(Layout layout) {
 		if (!Objects.equals(layout.getType(), LayoutConstants.TYPE_URL)) {
 			return null;
 		}
@@ -1314,66 +1713,8 @@ public class LayoutStagedModelDataHandler
 		return new Object[] {url.substring(x, y), url, x, y};
 	}
 
-	protected Layout fetchMissingReference(
-		String uuid, long groupId, boolean privateLayout) {
-
-		// Try to fetch the existing layout from the importing group
-
-		Layout layout = _layoutLocalService.fetchLayoutByUuidAndGroupId(
-			uuid, groupId, privateLayout);
-
-		if (layout != null) {
-			return layout;
-		}
-
-		try {
-
-			// Try to fetch the existing layout from the parent sites
-
-			Group originalGroup = _groupLocalService.getGroup(groupId);
-
-			Group group = originalGroup.getParentGroup();
-
-			while (group != null) {
-				layout = _layoutLocalService.fetchLayoutByUuidAndGroupId(
-					uuid, group.getGroupId(), privateLayout);
-
-				if (layout != null) {
-					break;
-				}
-
-				group = group.getParentGroup();
-			}
-
-			if (layout == null) {
-				List<Layout> layouts = fetchStagedModelsByUuidAndCompanyId(
-					uuid, originalGroup.getCompanyId());
-
-				if (ListUtil.isEmpty(layouts)) {
-					return null;
-				}
-
-				layout = layouts.get(0);
-			}
-
-			return layout;
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
-			}
-			else if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to fetch missing reference layout from group " +
-						groupId);
-			}
-
-			return null;
-		}
-	}
-
-	protected void fixExportTypeSettings(Layout layout) throws Exception {
-		Object[] friendlyURLInfo = extractFriendlyURLInfo(layout);
+	private void _fixExportTypeSettings(Layout layout) throws Exception {
+		Object[] friendlyURLInfo = _extractFriendlyURLInfo(layout);
 
 		if (friendlyURLInfo == null) {
 			return;
@@ -1402,8 +1743,8 @@ public class LayoutStagedModelDataHandler
 			url.substring(0, x) + _SAME_GROUP_FRIENDLY_URL + url.substring(y));
 	}
 
-	protected void fixImportTypeSettings(Layout layout) throws Exception {
-		Object[] friendlyURLInfo = extractFriendlyURLInfo(layout);
+	private void _fixImportTypeSettings(Layout layout) throws Exception {
+		Object[] friendlyURLInfo = _extractFriendlyURLInfo(layout);
 
 		if (friendlyURLInfo == null) {
 			return;
@@ -1430,7 +1771,39 @@ public class LayoutStagedModelDataHandler
 			url.substring(0, x) + group.getFriendlyURL() + url.substring(y));
 	}
 
-	protected Map<String, Object[]> getPortletIds(
+	private List<FriendlyURLEntry> _getFriendlyURLEntries(
+		LayoutFriendlyURL layoutFriendlyURL) {
+
+		return _friendlyURLEntryLocalService.getFriendlyURLEntries(
+			layoutFriendlyURL.getGroupId(),
+			_layoutFriendlyURLEntryHelper.getClassNameId(
+				layoutFriendlyURL.isPrivateLayout()),
+			layoutFriendlyURL.getPlid());
+	}
+
+	private String _getLayoutPrototypeUuid(
+		long companyId, Layout layout, Element layoutElement) {
+
+		boolean preloaded = GetterUtil.getBoolean(
+			layoutElement.attributeValue("preloaded"));
+
+		if (preloaded) {
+			String layoutPrototypeName = GetterUtil.getString(
+				layoutElement.attributeValue("layout-prototype-name"));
+
+			LayoutPrototype layoutPrototype =
+				_layoutPrototypeLocalService.fetchLayoutProtoype(
+					companyId, layoutPrototypeName);
+
+			if (layoutPrototype != null) {
+				return layoutPrototype.getUuid();
+			}
+		}
+
+		return layout.getLayoutPrototypeUuid();
+	}
+
+	private Map<String, Object[]> _getPortletIds(
 			PortletDataContext portletDataContext, Layout layout)
 		throws Exception {
 
@@ -1538,7 +1911,7 @@ public class LayoutStagedModelDataHandler
 		return portletIds;
 	}
 
-	protected String getUniqueFriendlyURL(
+	private String _getUniqueFriendlyURL(
 		PortletDataContext portletDataContext, Layout existingLayout,
 		String friendlyURL) {
 
@@ -1561,7 +1934,7 @@ public class LayoutStagedModelDataHandler
 		return friendlyURL;
 	}
 
-	protected void importAssets(
+	private void _importAssets(
 			PortletDataContext portletDataContext, Layout layout,
 			Layout importedLayout)
 		throws Exception {
@@ -1577,7 +1950,7 @@ public class LayoutStagedModelDataHandler
 			userId, importedLayout, assetCategoryIds, assetTagNames);
 	}
 
-	protected void importFragmentEntryLinks(
+	private void _importFragmentEntryLinks(
 			PortletDataContext portletDataContext, Layout layout,
 			Layout importedLayout)
 		throws Exception {
@@ -1608,7 +1981,7 @@ public class LayoutStagedModelDataHandler
 		}
 	}
 
-	protected void importFriendlyURLEntries(
+	private void _importFriendlyURLEntries(
 			PortletDataContext portletDataContext, Layout layout,
 			Layout importedLayout)
 		throws PortalException {
@@ -1631,7 +2004,7 @@ public class LayoutStagedModelDataHandler
 		}
 	}
 
-	protected void importLayoutClassedModelUsages(
+	private void _importLayoutClassedModelUsages(
 			PortletDataContext portletDataContext, Layout layout)
 		throws PortletDataException {
 
@@ -1647,7 +2020,7 @@ public class LayoutStagedModelDataHandler
 		}
 	}
 
-	protected void importLayoutFriendlyURLs(
+	private void _importLayoutFriendlyURLs(
 			PortletDataContext portletDataContext, Layout layout,
 			Layout importedLayout)
 		throws Exception {
@@ -1668,12 +2041,12 @@ public class LayoutStagedModelDataHandler
 				portletDataContext, layoutFriendlyURL);
 		}
 
-		importFriendlyURLEntries(portletDataContext, layout, importedLayout);
+		_importFriendlyURLEntries(portletDataContext, layout, importedLayout);
 
-		deleteMissingLayoutFriendlyURLs(portletDataContext, importedLayout);
+		_deleteMissingLayoutFriendlyURLs(portletDataContext, importedLayout);
 	}
 
-	protected void importLayoutIconImage(
+	private void _importLayoutIconImage(
 			PortletDataContext portletDataContext, Layout importedLayout,
 			Element layoutElement)
 		throws Exception {
@@ -1694,7 +2067,7 @@ public class LayoutStagedModelDataHandler
 		}
 	}
 
-	protected void importLayoutPageTemplateStructures(
+	private void _importLayoutPageTemplateStructures(
 			PortletDataContext portletDataContext, Layout layout,
 			Layout importedLayout)
 		throws Exception {
@@ -1708,7 +2081,7 @@ public class LayoutStagedModelDataHandler
 			_portal.getClassNameId(Layout.class.getName()),
 			importedLayout.getPlid());
 
-		importFragmentEntryLinks(portletDataContext, layout, importedLayout);
+		_importFragmentEntryLinks(portletDataContext, layout, importedLayout);
 
 		List<Element> layoutPageTemplateStructureElements =
 			portletDataContext.getReferenceDataElements(
@@ -1726,7 +2099,7 @@ public class LayoutStagedModelDataHandler
 		}
 	}
 
-	protected void importLayoutPortlets(
+	private void _importLayoutPortlets(
 			PortletDataContext portletDataContext, Layout layout,
 			Element layoutElement)
 		throws Exception {
@@ -1916,7 +2289,7 @@ public class LayoutStagedModelDataHandler
 		portletDataContext.setPortletId(originalPortletId);
 	}
 
-	protected void importLayoutSEOEntries(
+	private void _importLayoutSEOEntries(
 			PortletDataContext portletDataContext, Layout layout)
 		throws PortletDataException {
 
@@ -1950,7 +2323,7 @@ public class LayoutStagedModelDataHandler
 		}
 	}
 
-	protected void importLinkedLayout(
+	private void _importLinkedLayout(
 			PortletDataContext portletDataContext, Layout layout,
 			Layout importedLayout, Element layoutElement)
 		throws Exception {
@@ -1987,7 +2360,7 @@ public class LayoutStagedModelDataHandler
 				linkedToLayoutUuid));
 	}
 
-	protected void importLinkedURL(
+	private void _importLinkedURL(
 			PortletDataContext portletDataContext, Layout layout,
 			Layout importedLayout, Element layoutElement)
 		throws Exception {
@@ -2010,7 +2383,7 @@ public class LayoutStagedModelDataHandler
 						portletDataContext, layout, linkedToURL)));
 	}
 
-	protected void importTheme(
+	private void _importTheme(
 			PortletDataContext portletDataContext, Layout layout,
 			Layout importedLayout)
 		throws Exception {
@@ -2065,7 +2438,7 @@ public class LayoutStagedModelDataHandler
 		}
 	}
 
-	protected void initNewLayoutPermissions(
+	private void _initNewLayoutPermissions(
 			long companyId, long groupId, long userId, Layout layout,
 			Layout importedLayout, boolean privateLayout)
 		throws Exception {
@@ -2094,12 +2467,51 @@ public class LayoutStagedModelDataHandler
 			addGuestPermissions);
 	}
 
-	@Override
-	protected boolean isSkipImportReferenceStagedModels() {
+	private boolean _isExportParentLayout(
+		long[] layoutIds, long parentLayoutId) {
+
+		if (ArrayUtil.contains(layoutIds, parentLayoutId) ||
+			!ExportImportThreadLocal.isLayoutStagingInProcess()) {
+
+			return true;
+		}
+
+		try {
+			StagingConfiguration stagingConfiguration =
+				_configurationProvider.getCompanyConfiguration(
+					StagingConfiguration.class,
+					CompanyThreadLocal.getCompanyId());
+
+			return stagingConfiguration.publishParentLayoutsByDefault();
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+		}
+
 		return true;
 	}
 
-	protected void mergePortlets(
+	private boolean _isLayoutOutdated(Layout existingLayout, Layout layout) {
+		if ((existingLayout == null) || (layout == null)) {
+			return true;
+		}
+
+		Date existingLayoutModifiedDate = existingLayout.getModifiedDate();
+		long lastMergeTime = GetterUtil.getLong(
+			existingLayout.getTypeSettingsProperty(Sites.LAST_MERGE_TIME));
+		Date layoutModifiedDate = layout.getModifiedDate();
+
+		if ((existingLayoutModifiedDate == null) ||
+			(layoutModifiedDate == null) ||
+			(layoutModifiedDate.getTime() > lastMergeTime)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private void _mergePortlets(
 		Layout layout, String newTypeSettings, String portletsMergeMode) {
 
 		UnicodeProperties previousTypeSettingsUnicodeProperties =
@@ -2165,7 +2577,7 @@ public class LayoutStagedModelDataHandler
 					previousTypeSettingsUnicodeProperties.getProperty(
 						columnId));
 
-				portletIds = appendPortletIds(
+				portletIds = _appendPortletIds(
 					previousPortletIds, portletIds, portletsMergeMode);
 
 				previousTypeSettingsUnicodeProperties.setProperty(
@@ -2180,7 +2592,7 @@ public class LayoutStagedModelDataHandler
 		String[] portletIds = StringUtil.split(
 			previousTypeSettingsUnicodeProperties.getProperty(columnId));
 
-		appendPortletIds(portletIds, newPortletIds, portletsMergeMode);
+		_appendPortletIds(portletIds, newPortletIds, portletsMergeMode);
 
 		previousTypeSettingsUnicodeProperties.setProperty(
 			columnId, StringUtil.merge(portletIds));
@@ -2189,7 +2601,7 @@ public class LayoutStagedModelDataHandler
 			previousTypeSettingsUnicodeProperties.toString());
 	}
 
-	protected void populateElementLayoutMetadata(
+	private void _populateElementLayoutMetadata(
 			Element layoutElement, Layout layout)
 		throws Exception {
 
@@ -2261,7 +2673,7 @@ public class LayoutStagedModelDataHandler
 			"layout-prototype-global", String.valueOf(layoutPrototypeGlobal));
 	}
 
-	protected void resetLastMergeTime(Layout importedLayout, Layout layout)
+	private void _resetLastMergeTime(Layout importedLayout, Layout layout)
 		throws PortalException {
 
 		UnicodeProperties typeSettingsUnicodeProperties =
@@ -2277,472 +2689,6 @@ public class LayoutStagedModelDataHandler
 
 			typeSettingsUnicodeProperties.remove(Sites.LAST_MERGE_TIME);
 		}
-	}
-
-	@Reference(unbind = "-")
-	protected void setConfigurationProvider(
-		ConfigurationProvider configurationProvider) {
-
-		_configurationProvider = configurationProvider;
-	}
-
-	@Reference(unbind = "-")
-	protected void setCounterLocalService(
-		CounterLocalService counterLocalService) {
-
-		_counterLocalService = counterLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setExportImportLifecycleManager(
-		ExportImportLifecycleManager exportImportLifecycleManager) {
-
-		_exportImportLifecycleManager = exportImportLifecycleManager;
-	}
-
-	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setImageLocalService(ImageLocalService imageLocalService) {
-		_imageLocalService = imageLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLayoutBranchLocalService(
-		LayoutBranchLocalService layoutBranchLocalService) {
-
-		_layoutBranchLocalService = layoutBranchLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLayoutFriendlyURLLocalService(
-		LayoutFriendlyURLLocalService layoutFriendlyURLLocalService) {
-
-		_layoutFriendlyURLLocalService = layoutFriendlyURLLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLayoutLocalService(
-		LayoutLocalService layoutLocalService) {
-
-		_layoutLocalService = layoutLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLayoutLocalServiceHelper(
-		LayoutLocalServiceHelper layoutLocalServiceHelper) {
-
-		_layoutLocalServiceHelper = layoutLocalServiceHelper;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLayoutPrototypeLocalService(
-		LayoutPrototypeLocalService layoutPrototypeLocalService) {
-
-		_layoutPrototypeLocalService = layoutPrototypeLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLayoutRevisionLocalService(
-		LayoutRevisionLocalService layoutRevisionLocalService) {
-
-		_layoutRevisionLocalService = layoutRevisionLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLayoutSetBranchLocalService(
-		LayoutSetBranchLocalService layoutSetBranchLocalService) {
-
-		_layoutSetBranchLocalService = layoutSetBranchLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLayoutSetLocalService(
-		LayoutSetLocalService layoutSetLocalService) {
-
-		_layoutSetLocalService = layoutSetLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLayoutTemplateLocalService(
-		LayoutTemplateLocalService layoutTemplateLocalService) {
-
-		_layoutTemplateLocalService = layoutTemplateLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPortletExportController(
-		PortletExportController portletExportController) {
-
-		_portletExportController = portletExportController;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPortletImportController(
-		PortletImportController portletImportController) {
-
-		_portletImportController = portletImportController;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPortletLocalService(
-		PortletLocalService portletLocalService) {
-
-		_portletLocalService = portletLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setResourceLocalService(
-		ResourceLocalService resourceLocalService) {
-
-		_resourceLocalService = resourceLocalService;
-	}
-
-	protected void updateTypeSettings(Layout importedLayout, Layout layout)
-		throws PortalException {
-
-		long groupId = layout.getGroupId();
-
-		try {
-			LayoutTypePortlet importedLayoutType =
-				(LayoutTypePortlet)importedLayout.getLayoutType();
-
-			List<String> importedPortletIds =
-				importedLayoutType.getPortletIds();
-
-			layout.setGroupId(importedLayout.getGroupId());
-
-			LayoutTypePortlet layoutTypePortlet =
-				(LayoutTypePortlet)layout.getLayoutType();
-
-			importedPortletIds.removeAll(layoutTypePortlet.getPortletIds());
-
-			if (!importedPortletIds.isEmpty()) {
-				_portletLocalService.deletePortlets(
-					importedLayout.getCompanyId(),
-					importedPortletIds.toArray(new String[0]),
-					importedLayout.getPlid());
-			}
-
-			UnicodeProperties prototypeTypeSettingsUnicodeProperties =
-				layoutTypePortlet.getTypeSettingsProperties();
-
-			UnicodeProperties newTypeSettingsUnicodeProperties =
-				UnicodePropertiesBuilder.fastLoad(
-					prototypeTypeSettingsUnicodeProperties.toString()
-				).build();
-
-			if (newTypeSettingsUnicodeProperties.containsKey(
-					Sites.LAST_MERGE_TIME)) {
-
-				newTypeSettingsUnicodeProperties.remove(Sites.LAST_MERGE_TIME);
-			}
-
-			if (newTypeSettingsUnicodeProperties.containsKey(
-					Sites.MERGE_FAIL_COUNT)) {
-
-				newTypeSettingsUnicodeProperties.remove(Sites.MERGE_FAIL_COUNT);
-			}
-
-			importedLayout.setTypeSettingsProperties(
-				newTypeSettingsUnicodeProperties);
-		}
-		finally {
-			layout.setGroupId(groupId);
-		}
-	}
-
-	@Override
-	protected void validateExport(
-			PortletDataContext portletDataContext, Layout layout)
-		throws PortletDataException {
-
-		if (!layout.isPending()) {
-			super.validateExport(portletDataContext, layout);
-		}
-	}
-
-	private void _addMasterLayoutRevision(Layout layout) throws Exception {
-		if (ExportImportThreadLocal.isStagingInProcess() ||
-			!LayoutStagingUtil.isBranchingLayout(layout)) {
-
-			return;
-		}
-
-		LayoutSetBranch masterLayoutSetBranch =
-			_layoutSetBranchLocalService.getMasterLayoutSetBranch(
-				layout.getGroupId(), layout.isPrivateLayout());
-
-		LayoutBranch masterLayoutBranch =
-			_layoutBranchLocalService.getMasterLayoutBranch(
-				masterLayoutSetBranch.getLayoutSetBranchId(), layout.getPlid(),
-				ServiceContextThreadLocal.getServiceContext());
-
-		LayoutRevision latestMasterLayoutRevision =
-			_layoutRevisionLocalService.fetchLatestLayoutRevision(
-				masterLayoutSetBranch.getLayoutSetBranchId(),
-				masterLayoutBranch.getLayoutBranchId(), layout.getPlid());
-
-		long parentLayoutRevisionId =
-			LayoutRevisionConstants.DEFAULT_PARENT_LAYOUT_REVISION_ID;
-		long portletPreferencesPlid = layout.getPlid();
-
-		if (latestMasterLayoutRevision != null) {
-			parentLayoutRevisionId =
-				latestMasterLayoutRevision.getLayoutRevisionId();
-			portletPreferencesPlid =
-				latestMasterLayoutRevision.getLayoutRevisionId();
-		}
-
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		int workflowAction = serviceContext.getWorkflowAction();
-
-		try {
-			serviceContext.setWorkflowAction(
-				WorkflowConstants.ACTION_SAVE_DRAFT);
-
-			_layoutRevisionLocalService.addLayoutRevision(
-				layout.getUserId(),
-				masterLayoutSetBranch.getLayoutSetBranchId(),
-				masterLayoutBranch.getLayoutBranchId(), parentLayoutRevisionId,
-				false, layout.getPlid(), portletPreferencesPlid,
-				layout.isPrivateLayout(), layout.getName(), layout.getTitle(),
-				layout.getDescription(), layout.getKeywords(),
-				layout.getRobots(), layout.getTypeSettings(),
-				layout.isIconImage(), layout.getIconImageId(),
-				layout.getThemeId(), layout.getColorSchemeId(), layout.getCss(),
-				serviceContext);
-		}
-		finally {
-			serviceContext.setWorkflowAction(workflowAction);
-		}
-	}
-
-	private void _exportCollectionLayoutCollection(
-		PortletDataContext portletDataContext, Layout layout) {
-
-		if (!Objects.equals(
-				layout.getType(), LayoutConstants.TYPE_COLLECTION)) {
-
-			return;
-		}
-
-		UnicodeProperties typeSettingsUnicodeProperties =
-			layout.getTypeSettingsProperties();
-
-		String collectionType = typeSettingsUnicodeProperties.getProperty(
-			"collectionType", StringPool.BLANK);
-
-		if (!Objects.equals(
-				collectionType,
-				InfoListItemSelectorReturnType.class.getName())) {
-
-			return;
-		}
-
-		long collectionPK = GetterUtil.getLong(
-			typeSettingsUnicodeProperties.getProperty(
-				"collectionPK", StringPool.BLANK));
-
-		if (collectionPK <= 0) {
-			return;
-		}
-
-		try {
-			StagedModelDataHandlerUtil.exportReferenceStagedModel(
-				portletDataContext, layout,
-				_assetListEntryLocalService.getAssetListEntry(collectionPK),
-				PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException, portalException);
-			}
-		}
-	}
-
-	private void _exportDraftLayout(
-			PortletDataContext portletDataContext, Layout layout,
-			Element layoutElement)
-		throws Exception {
-
-		Layout draftLayout = layout.fetchDraftLayout();
-
-		if (draftLayout != null) {
-			StagedModelDataHandlerUtil.exportReferenceStagedModel(
-				portletDataContext, layout, draftLayout,
-				PortletDataContext.REFERENCE_TYPE_PARENT);
-
-			layoutElement.addAttribute(
-				"draft-layout-uuid", draftLayout.getUuid());
-			layoutElement.addAttribute(
-				"draft-layout-id", String.valueOf(draftLayout.getLayoutId()));
-		}
-	}
-
-	private void _exportLayoutPageTemplateStructure(
-			PortletDataContext portletDataContext, Layout layout)
-		throws Exception {
-
-		if (!layout.isTypeAssetDisplay() && !layout.isTypeContent()) {
-			return;
-		}
-
-		List<FragmentEntryLink> fragmentEntryLinks =
-			_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
-				layout.getGroupId(), layout.getPlid());
-
-		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
-			StagedModelDataHandlerUtil.exportReferenceStagedModel(
-				portletDataContext, layout, fragmentEntryLink,
-				PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
-		}
-
-		LayoutPageTemplateStructure layoutPageTemplateStructure =
-			_layoutPageTemplateStructureLocalService.
-				fetchLayoutPageTemplateStructure(
-					layout.getGroupId(), layout.getPlid());
-
-		if (layoutPageTemplateStructure == null) {
-			layoutPageTemplateStructure =
-				_layoutPageTemplateStructureLocalService.
-					rebuildLayoutPageTemplateStructure(
-						layout.getGroupId(), layout.getPlid());
-		}
-
-		StagedModelDataHandlerUtil.exportReferenceStagedModel(
-			portletDataContext, layout, layoutPageTemplateStructure,
-			PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
-	}
-
-	private void _exportMasterLayout(
-			PortletDataContext portletDataContext, Layout layout,
-			Element layoutElement)
-		throws Exception {
-
-		if (layout.getMasterLayoutPlid() <= 0) {
-			return;
-		}
-
-		Layout masterLayout = _layoutLocalService.fetchLayout(
-			layout.getMasterLayoutPlid());
-
-		if ((masterLayout == null) ||
-			Validator.isNotNull(
-				layoutElement.attributeValue("master-layout-uuid"))) {
-
-			return;
-		}
-
-		StagedModelDataHandlerUtil.exportReferenceStagedModel(
-			portletDataContext, layout, masterLayout,
-			PortletDataContext.REFERENCE_TYPE_PARENT);
-
-		layoutElement.addAttribute(
-			"master-layout-uuid", masterLayout.getUuid());
-		layoutElement.addAttribute(
-			"master-layout-plid", String.valueOf(masterLayout.getPlid()));
-
-		if (MergeLayoutPrototypesThreadLocal.isInProgress()) {
-			LayoutPageTemplateEntry layoutPageTemplateEntry =
-				_layoutPageTemplateEntryLocalService.
-					fetchLayoutPageTemplateEntryByPlid(masterLayout.getPlid());
-
-			if ((layoutPageTemplateEntry != null) &&
-				Validator.isNull(
-					layoutElement.attributeValue(
-						"master-layout-layout-page-template-entry-uuid"))) {
-
-				layoutElement.addAttribute(
-					"master-layout-layout-page-template-entry-uuid",
-					layoutPageTemplateEntry.getUuid());
-
-				StagedModelDataHandlerUtil.exportReferenceStagedModel(
-					portletDataContext, layout, layoutPageTemplateEntry,
-					PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
-			}
-		}
-	}
-
-	private List<FriendlyURLEntry> _getFriendlyURLEntries(
-		LayoutFriendlyURL layoutFriendlyURL) {
-
-		return _friendlyURLEntryLocalService.getFriendlyURLEntries(
-			layoutFriendlyURL.getGroupId(),
-			_layoutFriendlyURLEntryHelper.getClassNameId(
-				layoutFriendlyURL.isPrivateLayout()),
-			layoutFriendlyURL.getPlid());
-	}
-
-	private String _getLayoutPrototypeUuid(
-		long companyId, Layout layout, Element layoutElement) {
-
-		boolean preloaded = GetterUtil.getBoolean(
-			layoutElement.attributeValue("preloaded"));
-
-		if (preloaded) {
-			String layoutPrototypeName = GetterUtil.getString(
-				layoutElement.attributeValue("layout-prototype-name"));
-
-			LayoutPrototype layoutPrototype =
-				_layoutPrototypeLocalService.fetchLayoutProtoype(
-					companyId, layoutPrototypeName);
-
-			if (layoutPrototype != null) {
-				return layoutPrototype.getUuid();
-			}
-		}
-
-		return layout.getLayoutPrototypeUuid();
-	}
-
-	private boolean _isExportParentLayout(
-		long[] layoutIds, long parentLayoutId) {
-
-		if (ArrayUtil.contains(layoutIds, parentLayoutId) ||
-			!ExportImportThreadLocal.isLayoutStagingInProcess()) {
-
-			return true;
-		}
-
-		try {
-			StagingConfiguration stagingConfiguration =
-				_configurationProvider.getCompanyConfiguration(
-					StagingConfiguration.class,
-					CompanyThreadLocal.getCompanyId());
-
-			return stagingConfiguration.publishParentLayoutsByDefault();
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
-		}
-
-		return true;
-	}
-
-	private boolean _isLayoutOutdated(Layout existingLayout, Layout layout) {
-		if ((existingLayout == null) || (layout == null)) {
-			return true;
-		}
-
-		Date existingLayoutModifiedDate = existingLayout.getModifiedDate();
-		long lastMergeTime = GetterUtil.getLong(
-			existingLayout.getTypeSettingsProperty(Sites.LAST_MERGE_TIME));
-		Date layoutModifiedDate = layout.getModifiedDate();
-
-		if ((existingLayoutModifiedDate == null) ||
-			(layoutModifiedDate == null) ||
-			(layoutModifiedDate.getTime() > lastMergeTime)) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	private Layout _updateCollectionLayoutTypeSettings(
@@ -2805,6 +2751,60 @@ public class LayoutStagedModelDataHandler
 		}
 
 		return importedLayout;
+	}
+
+	private void _updateTypeSettings(Layout importedLayout, Layout layout)
+		throws PortalException {
+
+		long groupId = layout.getGroupId();
+
+		try {
+			LayoutTypePortlet importedLayoutType =
+				(LayoutTypePortlet)importedLayout.getLayoutType();
+
+			List<String> importedPortletIds =
+				importedLayoutType.getPortletIds();
+
+			layout.setGroupId(importedLayout.getGroupId());
+
+			LayoutTypePortlet layoutTypePortlet =
+				(LayoutTypePortlet)layout.getLayoutType();
+
+			importedPortletIds.removeAll(layoutTypePortlet.getPortletIds());
+
+			if (!importedPortletIds.isEmpty()) {
+				_portletLocalService.deletePortlets(
+					importedLayout.getCompanyId(),
+					importedPortletIds.toArray(new String[0]),
+					importedLayout.getPlid());
+			}
+
+			UnicodeProperties prototypeTypeSettingsUnicodeProperties =
+				layoutTypePortlet.getTypeSettingsProperties();
+
+			UnicodeProperties newTypeSettingsUnicodeProperties =
+				UnicodePropertiesBuilder.fastLoad(
+					prototypeTypeSettingsUnicodeProperties.toString()
+				).build();
+
+			if (newTypeSettingsUnicodeProperties.containsKey(
+					Sites.LAST_MERGE_TIME)) {
+
+				newTypeSettingsUnicodeProperties.remove(Sites.LAST_MERGE_TIME);
+			}
+
+			if (newTypeSettingsUnicodeProperties.containsKey(
+					Sites.MERGE_FAIL_COUNT)) {
+
+				newTypeSettingsUnicodeProperties.remove(Sites.MERGE_FAIL_COUNT);
+			}
+
+			importedLayout.setTypeSettingsProperties(
+				newTypeSettingsUnicodeProperties);
+		}
+		finally {
+			layout.setGroupId(groupId);
+		}
 	}
 
 	private static final String _SAME_GROUP_FRIENDLY_URL =

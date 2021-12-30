@@ -53,7 +53,17 @@ import org.osgi.service.component.annotations.Reference;
 public class DeleteSegmentsExperienceMVCActionCommand
 	extends BaseContentPageEditorTransactionalMVCActionCommand {
 
-	protected void deleteSegmentsExperience(ActionRequest actionRequest)
+	@Override
+	protected JSONObject doTransactionalCommand(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		_deleteSegmentsExperience(actionRequest);
+
+		return JSONFactoryUtil.createJSONObject();
+	}
+
+	private void _deleteSegmentsExperience(ActionRequest actionRequest)
 		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -98,16 +108,6 @@ public class DeleteSegmentsExperienceMVCActionCommand
 			_fragmentEntryLinkLocalService.deleteFragmentEntryLink(
 				fragmentEntryLink);
 		}
-	}
-
-	@Override
-	protected JSONObject doTransactionalCommand(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		deleteSegmentsExperience(actionRequest);
-
-		return JSONFactoryUtil.createJSONObject();
 	}
 
 	@Reference

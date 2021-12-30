@@ -115,13 +115,13 @@ public class BundleManagerImpl implements BundleManager {
 	}
 
 	public void installLPKG(File file) throws Exception {
-		File installFile = new File(getInstallDirName(), file.getName());
+		File installFile = new File(_getInstallDirName(), file.getName());
 
 		Files.move(
 			file.toPath(), installFile.toPath(),
 			StandardCopyOption.REPLACE_EXISTING);
 
-		if (isRestartRequired(installFile)) {
+		if (_isRestartRequired(installFile)) {
 			ShutdownUtil.shutdown(0);
 		}
 	}
@@ -168,7 +168,7 @@ public class BundleManagerImpl implements BundleManager {
 		_bundleContext = bundleContext;
 	}
 
-	protected String getInstallDirName() throws Exception {
+	private String _getInstallDirName() throws Exception {
 		String[] autoDeployDirNames = PropsUtil.getArray(
 			PropsKeys.MODULE_FRAMEWORK_AUTO_DEPLOY_DIRS);
 
@@ -192,7 +192,7 @@ public class BundleManagerImpl implements BundleManager {
 		return autoDeployDirName;
 	}
 
-	protected boolean isRestartRequired(File file) {
+	private boolean _isRestartRequired(File file) {
 		try (ZipFile zipFile = new ZipFile(file)) {
 			ZipEntry zipEntry = zipFile.getEntry(
 				"liferay-marketplace.properties");

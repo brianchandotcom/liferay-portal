@@ -110,7 +110,7 @@ public class LiferayToHtmlSerializer extends ToHtmlSerializer {
 	}
 
 	public void visit(PicWithCaptionNode picWithCaptionNode) {
-		print(picWithCaptionNode);
+		_print(picWithCaptionNode);
 	}
 
 	@Override
@@ -143,7 +143,7 @@ public class LiferayToHtmlSerializer extends ToHtmlSerializer {
 		}
 	}
 
-	protected void print(PicWithCaptionNode picWithCaptionNode) {
+	private void _print(PicWithCaptionNode picWithCaptionNode) {
 		printer.print("<p><img src=\"");
 		printer.print(picWithCaptionNode.getSrc());
 		printer.print("\" alt=\"");

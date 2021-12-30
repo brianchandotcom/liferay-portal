@@ -95,7 +95,7 @@ public class WorkflowDefinitionPortletTab extends BaseWorkflowPortletTab {
 				Objects.equals(
 					path, "/definition/view_workflow_definition.jsp")) {
 
-				setWorkflowDefinitionRenderRequestAttribute(renderRequest);
+				_setWorkflowDefinitionRenderRequestAttribute(renderRequest);
 			}
 		}
 		catch (Exception exception) {
@@ -136,7 +136,13 @@ public class WorkflowDefinitionPortletTab extends BaseWorkflowPortletTab {
 		super.setServletContext(servletContext);
 	}
 
-	protected void setWorkflowDefinitionRenderRequestAttribute(
+	@Reference
+	protected UserLocalService userLocalService;
+
+	@Reference
+	protected WorkflowPreprocessorHelper workflowPreprocessorHelper;
+
+	private void _setWorkflowDefinitionRenderRequestAttribute(
 			RenderRequest renderRequest)
 		throws PortalException {
 
@@ -158,12 +164,6 @@ public class WorkflowDefinitionPortletTab extends BaseWorkflowPortletTab {
 		renderRequest.setAttribute(
 			WebKeys.WORKFLOW_DEFINITION, workflowDefinition);
 	}
-
-	@Reference
-	protected UserLocalService userLocalService;
-
-	@Reference
-	protected WorkflowPreprocessorHelper workflowPreprocessorHelper;
 
 	private volatile boolean _companyAdministratorCanPublish;
 

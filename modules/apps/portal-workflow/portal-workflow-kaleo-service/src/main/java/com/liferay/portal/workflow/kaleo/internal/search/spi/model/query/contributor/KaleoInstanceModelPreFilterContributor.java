@@ -76,7 +76,7 @@ public class KaleoInstanceModelPreFilterContributor
 			innerBooleanFilter, kaleoInstanceQuery, searchContext);
 		appendAssetDescriptionTerm(
 			innerBooleanFilter, kaleoInstanceQuery, searchContext);
-		appendClassName(innerBooleanFilter, kaleoInstanceQuery);
+		_appendClassName(innerBooleanFilter, kaleoInstanceQuery);
 		appendCurrentKaleoNodeNameTerm(innerBooleanFilter, kaleoInstanceQuery);
 		appendKaleoDefinitionNameTerm(innerBooleanFilter, kaleoInstanceQuery);
 
@@ -84,28 +84,16 @@ public class KaleoInstanceModelPreFilterContributor
 			booleanFilter.add(innerBooleanFilter, BooleanClauseOccur.MUST);
 		}
 
-		appendActiveTerm(booleanFilter, kaleoInstanceQuery);
+		_appendActiveTerm(booleanFilter, kaleoInstanceQuery);
 		appendClassNameIdsTerm(booleanFilter, kaleoInstanceQuery);
-		appendClassPKTerm(booleanFilter, kaleoInstanceQuery);
+		_appendClassPKTerm(booleanFilter, kaleoInstanceQuery);
 		appendCompletedTerm(booleanFilter, kaleoInstanceQuery);
 		appendCompletionDateRangeTerm(booleanFilter, kaleoInstanceQuery);
-		appendKaleoDefinitionVersionIdTerm(booleanFilter, kaleoInstanceQuery);
-		appendKaleoDefinitionVersionTerm(booleanFilter, kaleoInstanceQuery);
+		_appendKaleoDefinitionVersionIdTerm(booleanFilter, kaleoInstanceQuery);
+		_appendKaleoDefinitionVersionTerm(booleanFilter, kaleoInstanceQuery);
 		appendKaleoInstanceIdTerm(booleanFilter, kaleoInstanceQuery);
-		appendRootKaleoInstanceTokenIdTerm(booleanFilter, kaleoInstanceQuery);
+		_appendRootKaleoInstanceTokenIdTerm(booleanFilter, kaleoInstanceQuery);
 		appendUserIdTerm(booleanFilter, kaleoInstanceQuery);
-	}
-
-	protected void appendActiveTerm(
-		BooleanFilter booleanFilter, KaleoInstanceQuery kaleoInstanceQuery) {
-
-		Boolean active = kaleoInstanceQuery.isActive();
-
-		if (active == null) {
-			return;
-		}
-
-		booleanFilter.addRequiredTerm("active", active);
 	}
 
 	protected void appendAssetDescriptionTerm(
@@ -158,29 +146,6 @@ public class KaleoInstanceModelPreFilterContributor
 		booleanFilter.add(new QueryFilter(booleanQuery));
 	}
 
-	protected void appendClassName(
-		BooleanFilter booleanFilter, KaleoInstanceQuery kaleoInstanceQuery) {
-
-		String[] classNames = kaleoInstanceQuery.getClassNames();
-
-		if (ListUtil.isNull(ListUtil.fromArray(classNames))) {
-			return;
-		}
-
-		BooleanQuery booleanQuery = new BooleanQueryImpl();
-
-		for (String className : classNames) {
-			try {
-				booleanQuery.addTerm("className", className);
-			}
-			catch (ParseException parseException) {
-				throw new RuntimeException(parseException);
-			}
-		}
-
-		booleanFilter.add(new QueryFilter(booleanQuery));
-	}
-
 	protected void appendClassNameIdsTerm(
 		BooleanFilter booleanFilter, KaleoInstanceQuery kaleoInstanceQuery) {
 
@@ -206,18 +171,6 @@ public class KaleoInstanceModelPreFilterContributor
 			));
 
 		booleanFilter.add(classNameIdsTermsFilter, BooleanClauseOccur.MUST);
-	}
-
-	protected void appendClassPKTerm(
-		BooleanFilter booleanFilter, KaleoInstanceQuery kaleoInstanceQuery) {
-
-		Long classPK = kaleoInstanceQuery.getClassPK();
-
-		if (classPK == null) {
-			return;
-		}
-
-		booleanFilter.addRequiredTerm("classPK", classPK);
 	}
 
 	protected void appendCompletedTerm(
@@ -311,34 +264,6 @@ public class KaleoInstanceModelPreFilterContributor
 		booleanFilter.add(new QueryFilter(booleanQuery));
 	}
 
-	protected void appendKaleoDefinitionVersionIdTerm(
-		BooleanFilter booleanFilter, KaleoInstanceQuery kaleoInstanceQuery) {
-
-		Long kaleoDefinitionVersionId =
-			kaleoInstanceQuery.getKaleoDefinitionVersionId();
-
-		if (kaleoDefinitionVersionId == null) {
-			return;
-		}
-
-		booleanFilter.addRequiredTerm(
-			"kaleoDefinitionVersionId", kaleoDefinitionVersionId);
-	}
-
-	protected void appendKaleoDefinitionVersionTerm(
-		BooleanFilter booleanFilter, KaleoInstanceQuery kaleoInstanceQuery) {
-
-		Integer kaleoDefinitionVersion =
-			kaleoInstanceQuery.getKaleoDefinitionVersion();
-
-		if (kaleoDefinitionVersion == null) {
-			return;
-		}
-
-		booleanFilter.addRequiredTerm(
-			"kaleoDefinitionVersion", kaleoDefinitionVersion);
-	}
-
 	protected void appendKaleoInstanceIdTerm(
 		BooleanFilter booleanFilter, KaleoInstanceQuery kaleoInstanceQuery) {
 
@@ -349,20 +274,6 @@ public class KaleoInstanceModelPreFilterContributor
 		}
 
 		booleanFilter.addRequiredTerm("kaleoInstanceId", kaleoInstanceId);
-	}
-
-	protected void appendRootKaleoInstanceTokenIdTerm(
-		BooleanFilter booleanFilter, KaleoInstanceQuery kaleoInstanceQuery) {
-
-		Long rootKaleoInstanceTokenId =
-			kaleoInstanceQuery.getRootKaleoInstanceTokenId();
-
-		if (rootKaleoInstanceTokenId == null) {
-			return;
-		}
-
-		booleanFilter.addRequiredTerm(
-			"rootKaleoInstanceTokenId", rootKaleoInstanceTokenId);
 	}
 
 	protected void appendUserIdTerm(
@@ -382,5 +293,94 @@ public class KaleoInstanceModelPreFilterContributor
 
 	@Reference
 	protected Portal portal;
+
+	private void _appendActiveTerm(
+		BooleanFilter booleanFilter, KaleoInstanceQuery kaleoInstanceQuery) {
+
+		Boolean active = kaleoInstanceQuery.isActive();
+
+		if (active == null) {
+			return;
+		}
+
+		booleanFilter.addRequiredTerm("active", active);
+	}
+
+	private void _appendClassName(
+		BooleanFilter booleanFilter, KaleoInstanceQuery kaleoInstanceQuery) {
+
+		String[] classNames = kaleoInstanceQuery.getClassNames();
+
+		if (ListUtil.isNull(ListUtil.fromArray(classNames))) {
+			return;
+		}
+
+		BooleanQuery booleanQuery = new BooleanQueryImpl();
+
+		for (String className : classNames) {
+			try {
+				booleanQuery.addTerm("className", className);
+			}
+			catch (ParseException parseException) {
+				throw new RuntimeException(parseException);
+			}
+		}
+
+		booleanFilter.add(new QueryFilter(booleanQuery));
+	}
+
+	private void _appendClassPKTerm(
+		BooleanFilter booleanFilter, KaleoInstanceQuery kaleoInstanceQuery) {
+
+		Long classPK = kaleoInstanceQuery.getClassPK();
+
+		if (classPK == null) {
+			return;
+		}
+
+		booleanFilter.addRequiredTerm("classPK", classPK);
+	}
+
+	private void _appendKaleoDefinitionVersionIdTerm(
+		BooleanFilter booleanFilter, KaleoInstanceQuery kaleoInstanceQuery) {
+
+		Long kaleoDefinitionVersionId =
+			kaleoInstanceQuery.getKaleoDefinitionVersionId();
+
+		if (kaleoDefinitionVersionId == null) {
+			return;
+		}
+
+		booleanFilter.addRequiredTerm(
+			"kaleoDefinitionVersionId", kaleoDefinitionVersionId);
+	}
+
+	private void _appendKaleoDefinitionVersionTerm(
+		BooleanFilter booleanFilter, KaleoInstanceQuery kaleoInstanceQuery) {
+
+		Integer kaleoDefinitionVersion =
+			kaleoInstanceQuery.getKaleoDefinitionVersion();
+
+		if (kaleoDefinitionVersion == null) {
+			return;
+		}
+
+		booleanFilter.addRequiredTerm(
+			"kaleoDefinitionVersion", kaleoDefinitionVersion);
+	}
+
+	private void _appendRootKaleoInstanceTokenIdTerm(
+		BooleanFilter booleanFilter, KaleoInstanceQuery kaleoInstanceQuery) {
+
+		Long rootKaleoInstanceTokenId =
+			kaleoInstanceQuery.getRootKaleoInstanceTokenId();
+
+		if (rootKaleoInstanceTokenId == null) {
+			return;
+		}
+
+		booleanFilter.addRequiredTerm(
+			"rootKaleoInstanceTokenId", rootKaleoInstanceTokenId);
+	}
 
 }

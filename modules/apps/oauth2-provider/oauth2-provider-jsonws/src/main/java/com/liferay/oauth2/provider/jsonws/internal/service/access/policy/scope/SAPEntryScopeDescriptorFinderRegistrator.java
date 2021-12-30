@@ -65,7 +65,7 @@ public class SAPEntryScopeDescriptorFinderRegistrator {
 
 	public void register(long companyId) {
 		try {
-			List<SAPEntryScope> sapEntryScopes = loadSAPEntryScopes(companyId);
+			List<SAPEntryScope> sapEntryScopes = _loadSAPEntryScopes(companyId);
 
 			SAPEntryScopeDescriptorFinder sapEntryScopeDescriptorFinder =
 				new SAPEntryScopeDescriptorFinder(
@@ -190,26 +190,6 @@ public class SAPEntryScopeDescriptorFinderRegistrator {
 		_scopeDescriptorServiceRegistrations.clear();
 	}
 
-	protected boolean isOAuth2ExportedSAPEntry(SAPEntry sapEntry) {
-		return StringUtil.startsWith(sapEntry.getName(), _sapEntryOAuth2Prefix);
-	}
-
-	protected List<SAPEntryScope> loadSAPEntryScopes(long companyId) {
-		List<SAPEntryScope> sapEntryScopes = new ArrayList<>();
-
-		for (SAPEntry sapEntry :
-				_sapEntryLocalService.getCompanySAPEntries(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
-
-			if (isOAuth2ExportedSAPEntry(sapEntry)) {
-				sapEntryScopes.add(
-					new SAPEntryScope(sapEntry, _parseScope(sapEntry)));
-			}
-		}
-
-		return sapEntryScopes;
-	}
-
 	protected void removeJaxRsApplicationName(
 		ServiceReference<ScopeFinder> serviceReference) {
 
@@ -246,6 +226,26 @@ public class SAPEntryScopeDescriptorFinderRegistrator {
 		).put(
 			"osgi.jaxrs.name", _jaxRsApplicationNames.toArray(new String[0])
 		).build();
+	}
+
+	private boolean _isOAuth2ExportedSAPEntry(SAPEntry sapEntry) {
+		return StringUtil.startsWith(sapEntry.getName(), _sapEntryOAuth2Prefix);
+	}
+
+	private List<SAPEntryScope> _loadSAPEntryScopes(long companyId) {
+		List<SAPEntryScope> sapEntryScopes = new ArrayList<>();
+
+		for (SAPEntry sapEntry :
+				_sapEntryLocalService.getCompanySAPEntries(
+					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
+
+			if (_isOAuth2ExportedSAPEntry(sapEntry)) {
+				sapEntryScopes.add(
+					new SAPEntryScope(sapEntry, _parseScope(sapEntry)));
+			}
+		}
+
+		return sapEntryScopes;
 	}
 
 	private String _parseScope(SAPEntry sapEntry) {

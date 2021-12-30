@@ -49,7 +49,7 @@ public class TimerMessageListener extends BaseMessageListener {
 
 		try {
 			KaleoTimerInstanceToken kaleoTimerInstanceToken =
-				getKaleoTimerInstanceToken(message);
+				_getKaleoTimerInstanceToken(message);
 
 			Map<String, Serializable> workflowContext =
 				WorkflowContextUtil.convert(
@@ -75,8 +75,7 @@ public class TimerMessageListener extends BaseMessageListener {
 		}
 	}
 
-	protected KaleoTimerInstanceToken getKaleoTimerInstanceToken(
-			Message message)
+	private KaleoTimerInstanceToken _getKaleoTimerInstanceToken(Message message)
 		throws PortalException {
 
 		long kaleoTimerInstanceTokenId = message.getLong(

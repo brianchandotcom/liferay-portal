@@ -97,9 +97,9 @@ public class WorkflowTaskPermissionChecker {
 		for (WorkflowTaskAssignee workflowTaskAssignee :
 				workflowTask.getWorkflowTaskAssignees()) {
 
-			if (isWorkflowTaskAssignableToRoles(
+			if (_isWorkflowTaskAssignableToRoles(
 					workflowTaskAssignee, roleIds) ||
-				isWorkflowTaskAssignableToUser(
+				_isWorkflowTaskAssignableToUser(
 					workflowTaskAssignee, permissionChecker.getUserId())) {
 
 				return true;
@@ -116,34 +116,6 @@ public class WorkflowTaskPermissionChecker {
 		return false;
 	}
 
-	protected List<Group> getAncestorGroups(Group group)
-		throws PortalException {
-
-		List<Group> groups = new ArrayList<>();
-
-		for (Group ancestorGroup : group.getAncestors()) {
-			groups.add(ancestorGroup);
-		}
-
-		return groups;
-	}
-
-	protected List<Group> getAncestorOrganizationGroups(Group group)
-		throws PortalException {
-
-		List<Group> groups = new ArrayList<>();
-
-		Organization organization =
-			OrganizationLocalServiceUtil.getOrganization(
-				group.getOrganizationId());
-
-		for (Organization ancestorOrganization : organization.getAncestors()) {
-			groups.add(ancestorOrganization.getGroup());
-		}
-
-		return groups;
-	}
-
 	protected long[] getRoleIds(
 		long groupId, PermissionChecker permissionChecker) {
 
@@ -157,11 +129,11 @@ public class WorkflowTaskPermissionChecker {
 				Group group = GroupLocalServiceUtil.getGroup(groupId);
 
 				if (group.isOrganization()) {
-					groups.addAll(getAncestorOrganizationGroups(group));
+					groups.addAll(_getAncestorOrganizationGroups(group));
 				}
 
 				if (group.isSite()) {
-					groups.addAll(getAncestorGroups(group));
+					groups.addAll(_getAncestorGroups(group));
 				}
 			}
 
@@ -215,7 +187,33 @@ public class WorkflowTaskPermissionChecker {
 		return false;
 	}
 
-	protected boolean isWorkflowTaskAssignableToRoles(
+	private List<Group> _getAncestorGroups(Group group) throws PortalException {
+		List<Group> groups = new ArrayList<>();
+
+		for (Group ancestorGroup : group.getAncestors()) {
+			groups.add(ancestorGroup);
+		}
+
+		return groups;
+	}
+
+	private List<Group> _getAncestorOrganizationGroups(Group group)
+		throws PortalException {
+
+		List<Group> groups = new ArrayList<>();
+
+		Organization organization =
+			OrganizationLocalServiceUtil.getOrganization(
+				group.getOrganizationId());
+
+		for (Organization ancestorOrganization : organization.getAncestors()) {
+			groups.add(ancestorOrganization.getGroup());
+		}
+
+		return groups;
+	}
+
+	private boolean _isWorkflowTaskAssignableToRoles(
 		WorkflowTaskAssignee workflowTaskAssignee, long[] roleIds) {
 
 		String assigneeClassName = workflowTaskAssignee.getAssigneeClassName();
@@ -233,7 +231,7 @@ public class WorkflowTaskPermissionChecker {
 		return false;
 	}
 
-	protected boolean isWorkflowTaskAssignableToUser(
+	private boolean _isWorkflowTaskAssignableToUser(
 		WorkflowTaskAssignee workflowTaskAssignee, long userId) {
 
 		String assigneeClassName = workflowTaskAssignee.getAssigneeClassName();

@@ -151,14 +151,14 @@ public class ActionUtil {
 			return typeSettingsUnicodeProperties;
 		}
 
-		setThemeSettingProperties(
+		_setThemeSettingProperties(
 			actionRequest, typeSettingsUnicodeProperties, themeSettings, device,
 			layout);
 
 		return typeSettingsUnicodeProperties;
 	}
 
-	protected static void setThemeSettingProperties(
+	private static void _setThemeSettingProperties(
 			ActionRequest actionRequest,
 			UnicodeProperties typeSettingsUnicodeProperties,
 			Map<String, ThemeSetting> themeSettings, String device,

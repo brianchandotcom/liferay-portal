@@ -71,44 +71,17 @@ public class EditLayoutSetMVCActionCommand extends BaseMVCActionCommand {
 
 		LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(layoutSetId);
 
-		updateLogo(actionRequest, liveGroupId, stagingGroupId, privateLayout);
+		_updateLogo(actionRequest, liveGroupId, stagingGroupId, privateLayout);
 
 		updateLookAndFeel(
 			actionRequest, themeDisplay.getCompanyId(), liveGroupId,
 			stagingGroupId, privateLayout, layoutSet.getSettingsProperties());
 
-		updateMergePages(actionRequest, liveGroupId);
+		_updateMergePages(actionRequest, liveGroupId);
 
-		updateSettings(
+		_updateSettings(
 			actionRequest, liveGroupId, stagingGroupId, privateLayout,
 			layoutSet.getSettingsProperties());
-	}
-
-	protected void updateLogo(
-			ActionRequest actionRequest, long liveGroupId, long stagingGroupId,
-			boolean privateLayout)
-		throws Exception {
-
-		boolean deleteLogo = ParamUtil.getBoolean(actionRequest, "deleteLogo");
-
-		byte[] logoBytes = null;
-
-		long fileEntryId = ParamUtil.getLong(actionRequest, "fileEntryId");
-
-		if (fileEntryId > 0) {
-			FileEntry fileEntry = _dlAppLocalService.getFileEntry(fileEntryId);
-
-			logoBytes = FileUtil.getBytes(fileEntry.getContentStream());
-		}
-
-		long groupId = liveGroupId;
-
-		if (stagingGroupId > 0) {
-			groupId = stagingGroupId;
-		}
-
-		_layoutSetService.updateLogo(
-			groupId, privateLayout, !deleteLogo, logoBytes);
 	}
 
 	protected void updateLookAndFeel(
@@ -149,7 +122,34 @@ public class EditLayoutSetMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	protected void updateMergePages(
+	private void _updateLogo(
+			ActionRequest actionRequest, long liveGroupId, long stagingGroupId,
+			boolean privateLayout)
+		throws Exception {
+
+		boolean deleteLogo = ParamUtil.getBoolean(actionRequest, "deleteLogo");
+
+		byte[] logoBytes = null;
+
+		long fileEntryId = ParamUtil.getLong(actionRequest, "fileEntryId");
+
+		if (fileEntryId > 0) {
+			FileEntry fileEntry = _dlAppLocalService.getFileEntry(fileEntryId);
+
+			logoBytes = FileUtil.getBytes(fileEntry.getContentStream());
+		}
+
+		long groupId = liveGroupId;
+
+		if (stagingGroupId > 0) {
+			groupId = stagingGroupId;
+		}
+
+		_layoutSetService.updateLogo(
+			groupId, privateLayout, !deleteLogo, logoBytes);
+	}
+
+	private void _updateMergePages(
 			ActionRequest actionRequest, long liveGroupId)
 		throws Exception {
 
@@ -167,7 +167,7 @@ public class EditLayoutSetMVCActionCommand extends BaseMVCActionCommand {
 		_groupService.updateGroup(liveGroupId, liveGroup.getTypeSettings());
 	}
 
-	protected void updateSettings(
+	private void _updateSettings(
 			ActionRequest actionRequest, long liveGroupId, long stagingGroupId,
 			boolean privateLayout, UnicodeProperties settingsUnicodeProperties)
 		throws Exception {

@@ -106,7 +106,7 @@ public class ConfigurableScopeCheckerFeature implements Feature {
 				).collect(
 					Collectors.toSet()
 				)),
-			buildProperties(configuration));
+			_buildProperties(configuration));
 
 		return true;
 	}
@@ -161,7 +161,14 @@ public class ConfigurableScopeCheckerFeature implements Feature {
 		}
 	}
 
-	protected Dictionary<String, Object> buildProperties(
+	@Deactivate
+	protected void deactivate() {
+		if (_serviceRegistration != null) {
+			_serviceRegistration.unregister();
+		}
+	}
+
+	private Dictionary<String, Object> _buildProperties(
 		Configuration configuration) {
 
 		return HashMapDictionaryBuilder.<String, Object>putAll(
@@ -170,13 +177,6 @@ public class ConfigurableScopeCheckerFeature implements Feature {
 		).put(
 			Constants.SERVICE_RANKING, Integer.MIN_VALUE
 		).build();
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		if (_serviceRegistration != null) {
-			_serviceRegistration.unregister();
-		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

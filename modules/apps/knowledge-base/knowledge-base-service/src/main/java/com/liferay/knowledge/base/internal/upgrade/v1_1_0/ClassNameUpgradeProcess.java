@@ -27,18 +27,18 @@ public class ClassNameUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		updateClassName(
+		_updateClassName(
 			"com.liferay.knowledgebase.model.Article",
 			"com.liferay.knowledgebase.model.KBArticle");
-		updateClassName(
+		_updateClassName(
 			"com.liferay.knowledgebase.model.Comment",
 			"com.liferay.knowledgebase.model.KBComment");
-		updateClassName(
+		_updateClassName(
 			"com.liferay.knowledgebase.model.Template",
 			"com.liferay.knowledgebase.model.KBTemplate");
 	}
 
-	protected long getClassNameId(String className) throws Exception {
+	private long _getClassNameId(String className) throws Exception {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select classNameId from ClassName_ where value = ?")) {
 
@@ -54,13 +54,13 @@ public class ClassNameUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
-	protected void updateClassName(String oldClassName, String newClassName)
+	private void _updateClassName(String oldClassName, String newClassName)
 		throws Exception {
 
-		long oldClassNameId = getClassNameId(oldClassName);
+		long oldClassNameId = _getClassNameId(oldClassName);
 
 		if (oldClassNameId != 0) {
-			long newClassNameId = getClassNameId(newClassName);
+			long newClassNameId = _getClassNameId(newClassName);
 
 			runSQL(
 				"delete from ClassName_ where classNameId = " + newClassNameId);

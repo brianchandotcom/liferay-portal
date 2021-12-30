@@ -62,7 +62,7 @@ public class NotificationMessageGeneratorFactory {
 		NotificationMessageGenerator notificationMessageGenerator,
 		Map<String, Object> properties) {
 
-		String[] templateLanguages = getTemplateLanguages(
+		String[] templateLanguages = _getTemplateLanguages(
 			notificationMessageGenerator, properties);
 
 		for (String templateLanguage : templateLanguages) {
@@ -71,7 +71,19 @@ public class NotificationMessageGeneratorFactory {
 		}
 	}
 
-	protected String[] getTemplateLanguages(
+	protected void removeNotificationMessageGenerator(
+		NotificationMessageGenerator notificationMessageGenerator,
+		Map<String, Object> properties) {
+
+		String[] templateLanguages = _getTemplateLanguages(
+			notificationMessageGenerator, properties);
+
+		for (String templateLanguage : templateLanguages) {
+			_notificationMessageGenerators.remove(templateLanguage);
+		}
+	}
+
+	private String[] _getTemplateLanguages(
 		NotificationMessageGenerator notificationMessageGenerator,
 		Map<String, Object> properties) {
 
@@ -87,18 +99,6 @@ public class NotificationMessageGeneratorFactory {
 		}
 
 		return templateLanguages;
-	}
-
-	protected void removeNotificationMessageGenerator(
-		NotificationMessageGenerator notificationMessageGenerator,
-		Map<String, Object> properties) {
-
-		String[] templateLanguages = getTemplateLanguages(
-			notificationMessageGenerator, properties);
-
-		for (String templateLanguage : templateLanguages) {
-			_notificationMessageGenerators.remove(templateLanguage);
-		}
 	}
 
 	private final Map<String, NotificationMessageGenerator>

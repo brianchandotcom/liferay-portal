@@ -39,8 +39,8 @@ public class BundleComparator implements Comparator<Bundle> {
 
 	@Override
 	public int compare(Bundle bundle1, Bundle bundle2) {
-		String bundleName1 = getBundleName(bundle1);
-		String bundleName2 = getBundleName(bundle2);
+		String bundleName1 = _getBundleName(bundle1);
+		String bundleName2 = _getBundleName(bundle2);
 
 		int value = bundleName1.compareTo(bundleName2);
 
@@ -51,7 +51,7 @@ public class BundleComparator implements Comparator<Bundle> {
 		return -value;
 	}
 
-	protected String getBundleName(Bundle bundle) {
+	private String _getBundleName(Bundle bundle) {
 		Dictionary<String, String> headers = bundle.getHeaders(
 			StringPool.BLANK);
 

@@ -55,8 +55,8 @@ public class WorkflowDefinitionActiveComparator
 		WorkflowDefinition workflowDefinition1,
 		WorkflowDefinition workflowDefinition2) {
 
-		String activeLabel1 = getActiveLabel(workflowDefinition1.isActive());
-		String activeLabel2 = getActiveLabel(workflowDefinition2.isActive());
+		String activeLabel1 = _getActiveLabel(workflowDefinition1.isActive());
+		String activeLabel2 = _getActiveLabel(workflowDefinition2.isActive());
 
 		int value = _collator.compare(activeLabel1, activeLabel2);
 
@@ -86,7 +86,7 @@ public class WorkflowDefinitionActiveComparator
 		return _ascending;
 	}
 
-	protected String getActiveLabel(boolean active) {
+	private String _getActiveLabel(boolean active) {
 		if (active) {
 			return LanguageUtil.get(_locale, "yes");
 		}

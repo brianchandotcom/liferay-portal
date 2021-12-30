@@ -27,7 +27,7 @@ public class RatingsStatsUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		updateRatingsStats();
+		_updateRatingsStats();
 	}
 
 	protected long getClassNameId(String className) throws Exception {
@@ -46,7 +46,7 @@ public class RatingsStatsUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
-	protected void updateRatingsStats() throws Exception {
+	private void _updateRatingsStats() throws Exception {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select statsId, totalScore, averageScore from RatingsStats " +
 					"where classNameId = " +

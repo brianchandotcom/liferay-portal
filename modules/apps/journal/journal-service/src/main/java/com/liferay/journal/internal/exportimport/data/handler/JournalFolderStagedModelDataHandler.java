@@ -140,7 +140,7 @@ public class JournalFolderStagedModelDataHandler
 
 		Element folderElement = portletDataContext.getExportDataElement(folder);
 
-		exportFolderDDMStructures(portletDataContext, folder);
+		_exportFolderDDMStructures(portletDataContext, folder);
 
 		portletDataContext.addClassedModel(
 			folderElement, ExportImportPathUtil.getModelPath(folder), folder);
@@ -225,7 +225,7 @@ public class JournalFolderStagedModelDataHandler
 		importedFolder = _journalFolderLocalService.updateJournalFolder(
 			importedFolder);
 
-		importFolderDDMStructures(portletDataContext, folder, importedFolder);
+		_importFolderDDMStructures(portletDataContext, folder, importedFolder);
 
 		portletDataContext.importClassedModel(folder, importedFolder);
 	}
@@ -251,7 +251,21 @@ public class JournalFolderStagedModelDataHandler
 		}
 	}
 
-	protected void exportFolderDDMStructures(
+	@Reference(unbind = "-")
+	protected void setDDMStructureLocalService(
+		DDMStructureLocalService ddmStructureLocalService) {
+
+		_ddmStructureLocalService = ddmStructureLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setJournalFolderLocalService(
+		JournalFolderLocalService journalFolderLocalService) {
+
+		_journalFolderLocalService = journalFolderLocalService;
+	}
+
+	private void _exportFolderDDMStructures(
 			PortletDataContext portletDataContext, JournalFolder folder)
 		throws Exception {
 
@@ -272,7 +286,7 @@ public class JournalFolderStagedModelDataHandler
 		}
 	}
 
-	protected void importFolderDDMStructures(
+	private void _importFolderDDMStructures(
 			PortletDataContext portletDataContext, JournalFolder folder,
 			JournalFolder importedFolder)
 		throws Exception {
@@ -316,20 +330,6 @@ public class JournalFolderStagedModelDataHandler
 				importedFolder,
 				ArrayUtil.toLongArray(currentFolderDDMStructureIds));
 		}
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMStructureLocalService(
-		DDMStructureLocalService ddmStructureLocalService) {
-
-		_ddmStructureLocalService = ddmStructureLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setJournalFolderLocalService(
-		JournalFolderLocalService journalFolderLocalService) {
-
-		_journalFolderLocalService = journalFolderLocalService;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -50,7 +50,12 @@ public class ContentImagesUpgradeProcess extends UpgradeProcess {
 		_journalArticleImageUpgradeHelper = journalArticleImageUpgradeHelper;
 	}
 
-	protected String convertTypeImageElements(
+	@Override
+	protected void doUpgrade() throws Exception {
+		_updateContentImages();
+	}
+
+	private String _convertTypeImageElements(
 			long userId, long groupId, long companyId, String content,
 			long resourcePrimKey)
 		throws Exception {
@@ -148,48 +153,6 @@ public class ContentImagesUpgradeProcess extends UpgradeProcess {
 		return contentDocument.formattedString();
 	}
 
-	@Override
-	protected void doUpgrade() throws Exception {
-		updateContentImages();
-	}
-
-	protected void updateContentImages() throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer();
-			PreparedStatement preparedStatement1 = connection.prepareStatement(
-				"select id_, resourcePrimKey, groupId, companyId, userId, " +
-					"content from JournalArticle where content like ?")) {
-
-			preparedStatement1.setString(1, "%type=\"image\"%");
-
-			ResultSet resultSet1 = preparedStatement1.executeQuery();
-
-			while (resultSet1.next()) {
-				long id = resultSet1.getLong(1);
-
-				long resourcePrimKey = resultSet1.getLong(2);
-				long groupId = resultSet1.getLong(3);
-				long companyId = resultSet1.getLong(4);
-				long userId = resultSet1.getLong(5);
-				String content = resultSet1.getString(6);
-
-				String newContent = convertTypeImageElements(
-					userId, groupId, companyId, content, resourcePrimKey);
-
-				try (PreparedStatement preparedStatement2 =
-						AutoBatchPreparedStatementUtil.concurrentAutoBatch(
-							connection,
-							"update JournalArticle set content = ? where id_ " +
-								"= ?")) {
-
-					preparedStatement2.setString(1, newContent);
-					preparedStatement2.setLong(2, id);
-
-					preparedStatement2.executeUpdate();
-				}
-			}
-		}
-	}
-
 	private FileEntry _getFileEntryByFileEntryId(long fileEntryId) {
 		FileEntry fileEntry = null;
 
@@ -242,6 +205,43 @@ public class ContentImagesUpgradeProcess extends UpgradeProcess {
 		}
 
 		return fileEntry;
+	}
+
+	private void _updateContentImages() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement preparedStatement1 = connection.prepareStatement(
+				"select id_, resourcePrimKey, groupId, companyId, userId, " +
+					"content from JournalArticle where content like ?")) {
+
+			preparedStatement1.setString(1, "%type=\"image\"%");
+
+			ResultSet resultSet1 = preparedStatement1.executeQuery();
+
+			while (resultSet1.next()) {
+				long id = resultSet1.getLong(1);
+
+				long resourcePrimKey = resultSet1.getLong(2);
+				long groupId = resultSet1.getLong(3);
+				long companyId = resultSet1.getLong(4);
+				long userId = resultSet1.getLong(5);
+				String content = resultSet1.getString(6);
+
+				String newContent = _convertTypeImageElements(
+					userId, groupId, companyId, content, resourcePrimKey);
+
+				try (PreparedStatement preparedStatement2 =
+						AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+							connection,
+							"update JournalArticle set content = ? where id_ " +
+								"= ?")) {
+
+					preparedStatement2.setString(1, newContent);
+					preparedStatement2.setLong(2, id);
+
+					preparedStatement2.executeUpdate();
+				}
+			}
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

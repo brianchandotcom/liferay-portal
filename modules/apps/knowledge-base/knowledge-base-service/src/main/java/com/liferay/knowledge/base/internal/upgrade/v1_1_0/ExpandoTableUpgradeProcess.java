@@ -30,10 +30,10 @@ public class ExpandoTableUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		updateExpandoTable(PortalUtil.getDefaultCompanyId());
+		_updateExpandoTable(PortalUtil.getDefaultCompanyId());
 	}
 
-	protected void updateExpandoTable(long companyId) throws Exception {
+	private void _updateExpandoTable(long companyId) throws Exception {
 		ExpandoTable expandoTable = null;
 
 		try {

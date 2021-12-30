@@ -66,11 +66,11 @@ public class KBContentCKEditorConfigContributor
 		).put(
 			"toolbar", "kb"
 		).put(
-			"toolbar_kb", getToolbarKBJSONArray(inputEditorTaglibAttributes)
+			"toolbar_kb", _getToolbarKBJSONArray(inputEditorTaglibAttributes)
 		);
 	}
 
-	protected JSONArray getToolbarKBJSONArray(
+	private JSONArray _getToolbarKBJSONArray(
 		Map<String, Object> inputEditorTaglibAttributes) {
 
 		return JSONUtil.putAll(

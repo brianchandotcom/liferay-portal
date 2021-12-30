@@ -146,7 +146,7 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 				@Override
 				public void upgrade(DBProcessContext dbProcessContext) {
 					try {
-						deleteTempImages();
+						_deleteTempImages();
 					}
 					catch (Exception exception) {
 						exception.printStackTrace(
@@ -305,7 +305,15 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 			new JournalArticleExternalReferenceCodeUpgradeProcess());
 	}
 
-	protected void deleteTempImages() throws Exception {
+	@Reference(unbind = "-")
+	protected void setPortalCapabilityLocator(
+		PortalCapabilityLocator portalCapabilityLocator) {
+
+		// See LPS-82746
+
+	}
+
+	private void _deleteTempImages() throws Exception {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Delete temporary images");
 		}
@@ -317,14 +325,6 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 				"JournalArticleImage where tempImage = TRUE)");
 
 		db.runSQL("delete from JournalArticleImage where tempImage = TRUE");
-	}
-
-	@Reference(unbind = "-")
-	protected void setPortalCapabilityLocator(
-		PortalCapabilityLocator portalCapabilityLocator) {
-
-		// See LPS-82746
-
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

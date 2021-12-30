@@ -28,10 +28,10 @@ public class JournalContentSearchUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		upgradePortletId();
+		_upgradePortletId();
 	}
 
-	protected void upgradePortletId() throws Exception {
+	private void _upgradePortletId() throws Exception {
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				"select * from JournalContentSearch where portletId like " +
 					"'56%'");

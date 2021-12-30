@@ -33,9 +33,9 @@ public abstract class BaseKBArticleSiblingNavigationHelper {
 		KBArticle[] previousAndNextKBArticles = getPreviousAndNextKBArticles(
 			kbArticle);
 
-		KBArticle previousKBArticle = getPreviousKBArticle(
+		KBArticle previousKBArticle = _getPreviousKBArticle(
 			kbArticle, previousAndNextKBArticles[0]);
-		KBArticle nextKBArticle = getNextKBArticle(
+		KBArticle nextKBArticle = _getNextKBArticle(
 			kbArticle, previousAndNextKBArticles[2]);
 
 		return new KBArticle[] {previousKBArticle, kbArticle, nextKBArticle};
@@ -50,43 +50,6 @@ public abstract class BaseKBArticleSiblingNavigationHelper {
 
 	protected abstract KBArticle findKBArticle(long kbArticleId)
 		throws NoSuchArticleException;
-
-	protected KBArticle getNextAncestorKBArticle(
-			long kbArticleId, KBArticle nextKBArticle)
-		throws PortalException {
-
-		if (nextKBArticle != null) {
-			return nextKBArticle;
-		}
-
-		KBArticle kbArticle = findKBArticle(kbArticleId);
-
-		KBArticle parentKBArticle = kbArticle.getParentKBArticle();
-
-		if (parentKBArticle == null) {
-			return null;
-		}
-
-		KBArticle[] previousAndNextKBArticles = getPreviousAndNextKBArticles(
-			parentKBArticle);
-
-		return getNextAncestorKBArticle(
-			parentKBArticle.getKbArticleId(), previousAndNextKBArticles[2]);
-	}
-
-	protected KBArticle getNextKBArticle(
-			KBArticle kbArticle, KBArticle nextKBArticle)
-		throws PortalException {
-
-		KBArticle firstChildKBArticle = fetchFirstChildKBArticle(kbArticle);
-
-		if (firstChildKBArticle != null) {
-			return firstChildKBArticle;
-		}
-
-		return getNextAncestorKBArticle(
-			kbArticle.getKbArticleId(), nextKBArticle);
-	}
 
 	protected KBArticle[] getPreviousAndNextKBArticles(KBArticle kbArticle) {
 		List<KBArticle> kbArticles = findChildKBArticles(kbArticle);
@@ -106,7 +69,44 @@ public abstract class BaseKBArticleSiblingNavigationHelper {
 		return previousAndNextKBArticles;
 	}
 
-	protected KBArticle getPreviousKBArticle(
+	private KBArticle _getNextAncestorKBArticle(
+			long kbArticleId, KBArticle nextKBArticle)
+		throws PortalException {
+
+		if (nextKBArticle != null) {
+			return nextKBArticle;
+		}
+
+		KBArticle kbArticle = findKBArticle(kbArticleId);
+
+		KBArticle parentKBArticle = kbArticle.getParentKBArticle();
+
+		if (parentKBArticle == null) {
+			return null;
+		}
+
+		KBArticle[] previousAndNextKBArticles = getPreviousAndNextKBArticles(
+			parentKBArticle);
+
+		return _getNextAncestorKBArticle(
+			parentKBArticle.getKbArticleId(), previousAndNextKBArticles[2]);
+	}
+
+	private KBArticle _getNextKBArticle(
+			KBArticle kbArticle, KBArticle nextKBArticle)
+		throws PortalException {
+
+		KBArticle firstChildKBArticle = fetchFirstChildKBArticle(kbArticle);
+
+		if (firstChildKBArticle != null) {
+			return firstChildKBArticle;
+		}
+
+		return _getNextAncestorKBArticle(
+			kbArticle.getKbArticleId(), nextKBArticle);
+	}
+
+	private KBArticle _getPreviousKBArticle(
 			KBArticle kbArticle, KBArticle previousKBArticle)
 		throws PortalException {
 

@@ -48,7 +48,7 @@ public class XMLDefinitionExporter implements DefinitionExporter {
 
 	@Override
 	public String export(Definition definition) throws PortalException {
-		return doExport(definition);
+		return _doExport(definition);
 	}
 
 	@Override
@@ -56,7 +56,7 @@ public class XMLDefinitionExporter implements DefinitionExporter {
 		Definition definition = _definitionBuilder.buildDefinition(
 			kaleoDefinitionId);
 
-		return doExport(definition);
+		return _doExport(definition);
 	}
 
 	@Override
@@ -66,7 +66,7 @@ public class XMLDefinitionExporter implements DefinitionExporter {
 		Definition definition = _definitionBuilder.buildDefinition(
 			companyId, name, version);
 
-		return doExport(definition);
+		return _doExport(definition);
 	}
 
 	public void setVersion(String version) {
@@ -80,7 +80,7 @@ public class XMLDefinitionExporter implements DefinitionExporter {
 			_version, CharPool.PERIOD, CharPool.UNDERLINE);
 	}
 
-	protected String doExport(Definition definition)
+	private String _doExport(Definition definition)
 		throws KaleoDefinitionValidationException {
 
 		try {

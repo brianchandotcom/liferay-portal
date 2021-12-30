@@ -48,27 +48,13 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class CopyArticleMVCActionCommand extends BaseMVCActionCommand {
 
-	protected void copyArticle(ActionRequest actionRequest) throws Exception {
-		long groupId = ParamUtil.getLong(actionRequest, "groupId");
-		String oldArticleId = ParamUtil.getString(
-			actionRequest, "oldArticleId");
-		String newArticleId = ParamUtil.getString(
-			actionRequest, "newArticleId");
-		boolean autoArticleId = ParamUtil.getBoolean(
-			actionRequest, "autoArticleId");
-		double version = ParamUtil.getDouble(actionRequest, "version");
-
-		_journalArticleService.copyArticle(
-			groupId, oldArticleId, newArticleId, autoArticleId, version);
-	}
-
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		try {
-			copyArticle(actionRequest);
+			_copyArticle(actionRequest);
 		}
 		catch (Exception exception) {
 			if (exception instanceof NoSuchArticleException ||
@@ -103,6 +89,20 @@ public class CopyArticleMVCActionCommand extends BaseMVCActionCommand {
 		JournalArticleService journalArticleService) {
 
 		_journalArticleService = journalArticleService;
+	}
+
+	private void _copyArticle(ActionRequest actionRequest) throws Exception {
+		long groupId = ParamUtil.getLong(actionRequest, "groupId");
+		String oldArticleId = ParamUtil.getString(
+			actionRequest, "oldArticleId");
+		String newArticleId = ParamUtil.getString(
+			actionRequest, "newArticleId");
+		boolean autoArticleId = ParamUtil.getBoolean(
+			actionRequest, "autoArticleId");
+		double version = ParamUtil.getDouble(actionRequest, "version");
+
+		_journalArticleService.copyArticle(
+			groupId, oldArticleId, newArticleId, autoArticleId, version);
 	}
 
 	private JournalArticleService _journalArticleService;

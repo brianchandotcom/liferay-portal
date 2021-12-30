@@ -55,7 +55,7 @@ public class JournalPropertiesTransformerListener
 			_log.debug("onOutput");
 		}
 
-		return replace(output, languageId, tokens);
+		return _replace(output, languageId, tokens);
 	}
 
 	@Override
@@ -67,7 +67,7 @@ public class JournalPropertiesTransformerListener
 			_log.debug("onScript");
 		}
 
-		return replace(script, languageId, tokens);
+		return _replace(script, languageId, tokens);
 	}
 
 	/**
@@ -76,7 +76,7 @@ public class JournalPropertiesTransformerListener
 	 *
 	 * @return the processed string
 	 */
-	protected String replace(
+	private String _replace(
 		String s, String languageId, Map<String, String> tokens) {
 
 		String templateId = tokens.get("template_id");

@@ -42,10 +42,10 @@ public class MarketplaceAppManagerComparator implements Comparator<Object> {
 
 	@Override
 	public int compare(Object object1, Object object2) {
-		int value = compareClass(object1, object2);
+		int value = _compareClass(object1, object2);
 
 		if (value == 0) {
-			value = compareTitle(object1, object2);
+			value = _compareTitle(object1, object2);
 		}
 
 		if (_ascending) {
@@ -55,9 +55,9 @@ public class MarketplaceAppManagerComparator implements Comparator<Object> {
 		return -value;
 	}
 
-	protected int compareClass(Object object1, Object object2) {
-		int value1 = getClassValue(object1);
-		int value2 = getClassValue(object2);
+	private int _compareClass(Object object1, Object object2) {
+		int value1 = _getClassValue(object1);
+		int value2 = _getClassValue(object2);
 
 		if (value1 < value2) {
 			return -1;
@@ -70,14 +70,14 @@ public class MarketplaceAppManagerComparator implements Comparator<Object> {
 		return 0;
 	}
 
-	protected int compareTitle(Object object1, Object object2) {
-		String title1 = getTitle(object1);
-		String title2 = getTitle(object2);
+	private int _compareTitle(Object object1, Object object2) {
+		String title1 = _getTitle(object1);
+		String title2 = _getTitle(object2);
 
 		return title1.compareToIgnoreCase(title2);
 	}
 
-	protected int getClassValue(Object object) {
+	private int _getClassValue(Object object) {
 		if (object instanceof AppDisplay) {
 			return 2;
 		}
@@ -88,7 +88,7 @@ public class MarketplaceAppManagerComparator implements Comparator<Object> {
 		return 0;
 	}
 
-	protected String getTitle(Object object) {
+	private String _getTitle(Object object) {
 		if (object instanceof AppDisplay) {
 			AppDisplay appDisplay = (AppDisplay)object;
 

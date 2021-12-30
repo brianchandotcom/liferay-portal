@@ -45,12 +45,12 @@ public class WorkflowContextUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		updateTable("KaleoInstance", "kaleoInstanceId");
-		updateTable("KaleoLog", "kaleoLogId");
-		updateTable("KaleoTaskInstanceToken", "kaleoTaskInstanceTokenId");
+		_updateTable("KaleoInstance", "kaleoInstanceId");
+		_updateTable("KaleoLog", "kaleoLogId");
+		_updateTable("KaleoTaskInstanceToken", "kaleoTaskInstanceTokenId");
 	}
 
-	protected JSONSerializer getJSONSerializer() throws Exception {
+	private JSONSerializer _getJSONSerializer() throws Exception {
 		if (_jsonSerializer == null) {
 			_jsonSerializer = new JSONSerializer();
 
@@ -63,7 +63,7 @@ public class WorkflowContextUpgradeProcess extends UpgradeProcess {
 		return _jsonSerializer;
 	}
 
-	protected void updateTable(String tableName, String fieldName)
+	private void _updateTable(String tableName, String fieldName)
 		throws Exception {
 
 		try (LoggingTimer loggingTimer = new LoggingTimer(tableName);
@@ -74,7 +74,7 @@ public class WorkflowContextUpgradeProcess extends UpgradeProcess {
 					"not like '%serializable%'"));
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
-			JSONSerializer jsonSerializer = getJSONSerializer();
+			JSONSerializer jsonSerializer = _getJSONSerializer();
 
 			while (resultSet.next()) {
 				String workflowContextJSON = resultSet.getString(
@@ -98,14 +98,14 @@ public class WorkflowContextUpgradeProcess extends UpgradeProcess {
 					_workflowContextUpgradeHelper.renameEntryClassName(
 						workflowContext);
 
-				updateWorkflowContext(
+				_updateWorkflowContext(
 					tableName, fieldName, fieldValue,
 					WorkflowContextUtil.convert(workflowContext));
 			}
 		}
 	}
 
-	protected void updateWorkflowContext(
+	private void _updateWorkflowContext(
 			String tableName, String primaryKeyName, long primaryKeyValue,
 			String workflowContext)
 		throws Exception {

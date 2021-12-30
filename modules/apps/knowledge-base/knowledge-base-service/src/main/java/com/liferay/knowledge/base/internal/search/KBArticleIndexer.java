@@ -139,7 +139,7 @@ public class KBArticleIndexer extends BaseIndexer<KBArticle> {
 		document.addKeyword(
 			Field.TREE_PATH,
 			StringUtil.split(kbArticle.buildTreePath(), CharPool.SLASH));
-		document.addKeyword("folderNames", getKBFolderNames(kbArticle));
+		document.addKeyword("folderNames", _getKBFolderNames(kbArticle));
 		document.addKeyword(
 			"parentMessageId", kbArticle.getParentResourcePrimKey());
 		document.addKeyword("titleKeyword", kbArticle.getTitle(), true);
@@ -181,7 +181,7 @@ public class KBArticleIndexer extends BaseIndexer<KBArticle> {
 			getSearchEngineId(), kbArticle.getCompanyId(),
 			getDocument(kbArticle), isCommitImmediately());
 
-		reindexAttachments(kbArticle);
+		_reindexAttachments(kbArticle);
 	}
 
 	@Override
@@ -190,7 +190,7 @@ public class KBArticleIndexer extends BaseIndexer<KBArticle> {
 			classPK, WorkflowConstants.STATUS_ANY);
 
 		if (kbArticle != null) {
-			reindexKBArticles(kbArticle);
+			_reindexKBArticles(kbArticle);
 
 			return;
 		}
@@ -200,7 +200,7 @@ public class KBArticleIndexer extends BaseIndexer<KBArticle> {
 		kbArticle = kbArticleLocalService.fetchKBArticle(kbArticleId);
 
 		if (kbArticle != null) {
-			reindexKBArticles(kbArticle);
+			_reindexKBArticles(kbArticle);
 		}
 	}
 
@@ -208,10 +208,19 @@ public class KBArticleIndexer extends BaseIndexer<KBArticle> {
 	protected void doReindex(String[] ids) throws Exception {
 		long companyId = GetterUtil.getLong(ids[0]);
 
-		reindexKBArticles(companyId);
+		_reindexKBArticles(companyId);
 	}
 
-	protected String[] getKBFolderNames(KBArticle kbArticle)
+	@Reference
+	protected IndexWriterHelper indexWriterHelper;
+
+	@Reference
+	protected KBArticleLocalService kbArticleLocalService;
+
+	@Reference
+	protected KBFolderLocalService kbFolderLocalService;
+
+	private String[] _getKBFolderNames(KBArticle kbArticle)
 		throws PortalException {
 
 		long kbFolderId = kbArticle.getKbFolderId();
@@ -229,7 +238,7 @@ public class KBArticleIndexer extends BaseIndexer<KBArticle> {
 		return kbFolderNames.toArray(new String[0]);
 	}
 
-	protected void reindexAttachments(KBArticle kbArticle)
+	private void _reindexAttachments(KBArticle kbArticle)
 		throws PortalException {
 
 		Indexer<DLFileEntry> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
@@ -242,7 +251,7 @@ public class KBArticleIndexer extends BaseIndexer<KBArticle> {
 		}
 	}
 
-	protected void reindexKBArticles(KBArticle kbArticle) throws Exception {
+	private void _reindexKBArticles(KBArticle kbArticle) throws Exception {
 		List<KBArticle> kbArticles =
 			kbArticleLocalService.getKBArticleAndAllDescendantKBArticles(
 				kbArticle.getResourcePrimKey(),
@@ -259,7 +268,7 @@ public class KBArticleIndexer extends BaseIndexer<KBArticle> {
 			isCommitImmediately());
 	}
 
-	protected void reindexKBArticles(long companyId) throws Exception {
+	private void _reindexKBArticles(long companyId) throws Exception {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
 			kbArticleLocalService.getIndexableActionableDynamicQuery();
 
@@ -290,15 +299,6 @@ public class KBArticleIndexer extends BaseIndexer<KBArticle> {
 
 		indexableActionableDynamicQuery.performActions();
 	}
-
-	@Reference
-	protected IndexWriterHelper indexWriterHelper;
-
-	@Reference
-	protected KBArticleLocalService kbArticleLocalService;
-
-	@Reference
-	protected KBFolderLocalService kbFolderLocalService;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		KBArticleIndexer.class);

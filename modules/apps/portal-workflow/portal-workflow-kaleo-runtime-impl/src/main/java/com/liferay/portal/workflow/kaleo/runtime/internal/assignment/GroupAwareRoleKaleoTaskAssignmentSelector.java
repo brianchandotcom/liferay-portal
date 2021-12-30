@@ -63,7 +63,8 @@ public class GroupAwareRoleKaleoTaskAssignmentSelector
 		Role role = _roleLocalService.getRole(
 			kaleoTaskAssignment.getAssigneeClassPK());
 
-		return createKaleoTaskAssigments(kaleoInstanceToken.getGroupId(), role);
+		return _createKaleoTaskAssigments(
+			kaleoInstanceToken.getGroupId(), role);
 	}
 
 	@Reference(
@@ -77,7 +78,13 @@ public class GroupAwareRoleKaleoTaskAssignmentSelector
 		_groupAwareRoleValidators.add(groupAwareRoleValidator);
 	}
 
-	protected List<KaleoTaskAssignment> createKaleoTaskAssigments(
+	protected void removeGroupAwareRoleValidator(
+		GroupAwareRoleValidator groupAwareRoleValidator) {
+
+		_groupAwareRoleValidators.remove(groupAwareRoleValidator);
+	}
+
+	private List<KaleoTaskAssignment> _createKaleoTaskAssigments(
 			long groupId, Role role)
 		throws PortalException {
 
@@ -89,11 +96,11 @@ public class GroupAwareRoleKaleoTaskAssignmentSelector
 			group = _groupLocalService.getGroup(groupId);
 
 			if (group.isOrganization()) {
-				groupIds.addAll(getAncestorOrganizationGroupIds(group, role));
+				groupIds.addAll(_getAncestorOrganizationGroupIds(group, role));
 			}
 
 			if (group.isSite()) {
-				groupIds.addAll(getAncestorGroupIds(group, role));
+				groupIds.addAll(_getAncestorGroupIds(group, role));
 			}
 
 			if (group.isLayout()) {
@@ -101,27 +108,27 @@ public class GroupAwareRoleKaleoTaskAssignmentSelector
 			}
 		}
 
-		if (isValidAssignment(group, role)) {
+		if (_isValidAssignment(group, role)) {
 			groupIds.add(groupId);
 		}
 
-		return createKaleoTaskAssigments(role, groupIds);
+		return _createKaleoTaskAssigments(role, groupIds);
 	}
 
-	protected List<KaleoTaskAssignment> createKaleoTaskAssigments(
+	private List<KaleoTaskAssignment> _createKaleoTaskAssigments(
 			Role role, List<Long> groupIds)
 		throws PortalException {
 
 		List<KaleoTaskAssignment> kaleoTaskAssignments = new ArrayList<>();
 
 		for (Long groupId : groupIds) {
-			kaleoTaskAssignments.add(createKaleoTaskAssignment(role, groupId));
+			kaleoTaskAssignments.add(_createKaleoTaskAssignment(role, groupId));
 		}
 
 		return kaleoTaskAssignments;
 	}
 
-	protected KaleoTaskAssignment createKaleoTaskAssignment(
+	private KaleoTaskAssignment _createKaleoTaskAssignment(
 		Role role, long groupId) {
 
 		KaleoTaskAssignment kaleoTaskAssignment =
@@ -134,13 +141,13 @@ public class GroupAwareRoleKaleoTaskAssignmentSelector
 		return kaleoTaskAssignment;
 	}
 
-	protected List<Long> getAncestorGroupIds(Group group, Role role)
+	private List<Long> _getAncestorGroupIds(Group group, Role role)
 		throws PortalException {
 
 		List<Long> groupIds = new ArrayList<>();
 
 		for (Group ancestorGroup : group.getAncestors()) {
-			if (isValidAssignment(group, role)) {
+			if (_isValidAssignment(group, role)) {
 				groupIds.add(ancestorGroup.getGroupId());
 			}
 		}
@@ -148,7 +155,7 @@ public class GroupAwareRoleKaleoTaskAssignmentSelector
 		return groupIds;
 	}
 
-	protected List<Long> getAncestorOrganizationGroupIds(Group group, Role role)
+	private List<Long> _getAncestorOrganizationGroupIds(Group group, Role role)
 		throws PortalException {
 
 		List<Long> groupIds = new ArrayList<>();
@@ -157,7 +164,7 @@ public class GroupAwareRoleKaleoTaskAssignmentSelector
 			group.getOrganizationId());
 
 		for (Organization ancestorOrganization : organization.getAncestors()) {
-			if (isValidAssignment(group, role)) {
+			if (_isValidAssignment(group, role)) {
 				groupIds.add(ancestorOrganization.getGroupId());
 			}
 		}
@@ -165,7 +172,7 @@ public class GroupAwareRoleKaleoTaskAssignmentSelector
 		return groupIds;
 	}
 
-	protected boolean isValidAssignment(Group group, Role role)
+	private boolean _isValidAssignment(Group group, Role role)
 		throws PortalException {
 
 		if ((group != null) && group.isDepot() &&
@@ -196,12 +203,6 @@ public class GroupAwareRoleKaleoTaskAssignmentSelector
 		}
 
 		return false;
-	}
-
-	protected void removeGroupAwareRoleValidator(
-		GroupAwareRoleValidator groupAwareRoleValidator) {
-
-		_groupAwareRoleValidators.remove(groupAwareRoleValidator);
 	}
 
 	private final List<GroupAwareRoleValidator> _groupAwareRoleValidators =

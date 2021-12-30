@@ -45,21 +45,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class AssignTaskMVCResourceCommand extends BaseMVCResourceCommand {
 
-	protected void checkWorkflowTaskAssignmentPermission(
-			long workflowTaskId, ThemeDisplay themeDisplay)
-		throws Exception {
-
-		WorkflowTask workflowTask = workflowTaskManager.getWorkflowTask(
-			themeDisplay.getCompanyId(), workflowTaskId);
-
-		long groupId = MapUtil.getLong(
-			workflowTask.getOptionalAttributes(), "groupId",
-			themeDisplay.getSiteGroupId());
-
-		_workflowTaskPermissionChecker.check(
-			groupId, workflowTask, themeDisplay.getPermissionChecker());
-	}
-
 	@Override
 	protected void doServeResource(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
@@ -75,7 +60,7 @@ public class AssignTaskMVCResourceCommand extends BaseMVCResourceCommand {
 			resourceRequest, "assigneeUserId");
 		String comment = ParamUtil.getString(resourceRequest, "comment");
 
-		checkWorkflowTaskAssignmentPermission(workflowTaskId, themeDisplay);
+		_checkWorkflowTaskAssignmentPermission(workflowTaskId, themeDisplay);
 
 		workflowTaskManager.assignWorkflowTaskToUser(
 			themeDisplay.getCompanyId(), themeDisplay.getUserId(),
@@ -86,6 +71,21 @@ public class AssignTaskMVCResourceCommand extends BaseMVCResourceCommand {
 
 	@Reference
 	protected WorkflowTaskManager workflowTaskManager;
+
+	private void _checkWorkflowTaskAssignmentPermission(
+			long workflowTaskId, ThemeDisplay themeDisplay)
+		throws Exception {
+
+		WorkflowTask workflowTask = workflowTaskManager.getWorkflowTask(
+			themeDisplay.getCompanyId(), workflowTaskId);
+
+		long groupId = MapUtil.getLong(
+			workflowTask.getOptionalAttributes(), "groupId",
+			themeDisplay.getSiteGroupId());
+
+		_workflowTaskPermissionChecker.check(
+			groupId, workflowTask, themeDisplay.getPermissionChecker());
+	}
 
 	private final WorkflowTaskPermissionChecker _workflowTaskPermissionChecker =
 		new WorkflowTaskPermissionChecker();

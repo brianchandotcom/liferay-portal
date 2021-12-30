@@ -66,7 +66,7 @@ public class MoveThreadMVCActionCommand extends BaseMVCActionCommand {
 		throws Exception {
 
 		try {
-			moveThread(actionRequest, actionResponse);
+			_moveThread(actionRequest, actionResponse);
 		}
 		catch (LockedThreadException | PrincipalException |
 			   RequiredMessageException exception) {
@@ -83,7 +83,7 @@ public class MoveThreadMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	protected void moveThread(
+	private void _moveThread(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 

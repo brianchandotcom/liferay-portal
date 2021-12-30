@@ -64,9 +64,9 @@ public class MBCommentManagerImplTest extends Mockito {
 		ReflectionTestUtil.setFieldValue(
 			_mbCommentManagerImpl, "_portal", _portal);
 
-		setUpMBCommentManagerImpl();
-		setUpPortalUtil();
-		setUpServiceContext();
+		_setUpMBCommentManagerImpl();
+		_setUpPortalUtil();
+		_setUpServiceContext();
 	}
 
 	@Test
@@ -134,7 +134,7 @@ public class MBCommentManagerImplTest extends Mockito {
 
 	@Test(expected = DuplicateCommentException.class)
 	public void testAddDuplicateComment() throws Exception {
-		setUpExistingComment(_BODY);
+		_setUpExistingComment(_BODY);
 
 		_mbCommentManagerImpl.addComment(
 			_USER_ID, _GROUP_ID, _CLASS_NAME, _ENTRY_ID, _BODY,
@@ -143,7 +143,7 @@ public class MBCommentManagerImplTest extends Mockito {
 
 	@Test
 	public void testAddUniqueComment() throws Exception {
-		setUpExistingComment(_BODY + RandomTestUtil.randomString());
+		_setUpExistingComment(_BODY + RandomTestUtil.randomString());
 
 		_mbCommentManagerImpl.addComment(
 			_USER_ID, _GROUP_ID, _CLASS_NAME, _ENTRY_ID, _BODY,
@@ -219,7 +219,7 @@ public class MBCommentManagerImplTest extends Mockito {
 			_mbCommentManagerImpl.getCommentsCount(_CLASS_NAME, classPK));
 	}
 
-	protected void setUpExistingComment(String body) {
+	private void _setUpExistingComment(String body) {
 		when(
 			_mbMessage.getBody()
 		).thenReturn(
@@ -236,7 +236,7 @@ public class MBCommentManagerImplTest extends Mockito {
 		);
 	}
 
-	protected void setUpMBCommentManagerImpl() throws Exception {
+	private void _setUpMBCommentManagerImpl() throws Exception {
 		when(
 			_mbMessageDisplay.getThread()
 		).thenReturn(
@@ -274,13 +274,13 @@ public class MBCommentManagerImplTest extends Mockito {
 		);
 	}
 
-	protected void setUpPortalUtil() {
+	private void _setUpPortalUtil() {
 		PortalUtil portalUtil = new PortalUtil();
 
 		portalUtil.setPortal(_portal);
 	}
 
-	protected void setUpServiceContext() {
+	private void _setUpServiceContext() {
 		when(
 			_serviceContextFunction.apply(MBMessage.class.getName())
 		).thenReturn(

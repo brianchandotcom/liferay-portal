@@ -38,7 +38,15 @@ import java.util.List;
  */
 public class KaleoDefinitionVersionUpgradeProcess extends UpgradeProcess {
 
-	protected void addBatch(
+	@Override
+	protected void doUpgrade() throws Exception {
+		_upgradeKaleoDefinitionVersion();
+
+		_removeDuplicateKaleoDefinitions();
+		_removeStartKaleoNodeId();
+	}
+
+	private void _addBatch(
 			PreparedStatement preparedStatement, long kaleoDefinitionId,
 			long kaleoDefinitionVersionId)
 		throws SQLException {
@@ -49,19 +57,11 @@ public class KaleoDefinitionVersionUpgradeProcess extends UpgradeProcess {
 		preparedStatement.addBatch();
 	}
 
-	@Override
-	protected void doUpgrade() throws Exception {
-		upgradeKaleoDefinitionVersion();
-
-		removeDuplicateKaleoDefinitions();
-		removeStartKaleoNodeId();
-	}
-
-	protected String getVersion(int version) {
+	private String _getVersion(int version) {
 		return version + StringPool.PERIOD + 0;
 	}
 
-	protected void removeDuplicateKaleoDefinitions()
+	private void _removeDuplicateKaleoDefinitions()
 		throws IOException, SQLException {
 
 		try (LoggingTimer loggingTimer = new LoggingTimer();
@@ -91,7 +91,7 @@ public class KaleoDefinitionVersionUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
-	protected void removeStartKaleoNodeId() throws Exception {
+	private void _removeStartKaleoNodeId() throws Exception {
 		if (hasColumn("KaleoDefinition", "startKaleoNodeId")) {
 			alter(
 				KaleoDefinitionTable.class,
@@ -99,7 +99,7 @@ public class KaleoDefinitionVersionUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
-	protected void upgradeKaleoDefinitionVersion() throws Exception {
+	private void _upgradeKaleoDefinitionVersion() throws Exception {
 		List<PreparedStatement> preparedStatements = new ArrayList<>(17);
 
 		try (LoggingTimer loggingTimer = new LoggingTimer();
@@ -165,7 +165,7 @@ public class KaleoDefinitionVersionUpgradeProcess extends UpgradeProcess {
 				preparedStatement2.setString(12, title);
 				preparedStatement2.setString(13, description);
 				preparedStatement2.setString(14, content);
-				preparedStatement2.setString(15, getVersion(version));
+				preparedStatement2.setString(15, _getVersion(version));
 				preparedStatement2.setLong(16, startKaleoNodeId);
 				preparedStatement2.setInt(
 					17, WorkflowConstants.STATUS_APPROVED);
@@ -173,7 +173,7 @@ public class KaleoDefinitionVersionUpgradeProcess extends UpgradeProcess {
 				preparedStatement2.addBatch();
 
 				for (PreparedStatement preparedStatement : preparedStatements) {
-					addBatch(
+					_addBatch(
 						preparedStatement, kaleoDefinitionId,
 						kaleoDefinitionVersionId);
 				}

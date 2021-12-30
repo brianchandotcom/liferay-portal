@@ -84,7 +84,32 @@ import org.osgi.service.component.annotations.Reference;
 public class AddPortletMVCActionCommand
 	extends BaseContentPageEditorTransactionalMVCActionCommand {
 
-	protected JSONObject addFragmentEntryLinkToLayoutData(
+	@Override
+	protected JSONObject doTransactionalCommand(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		JSONObject jsonObject = _processAddPortlet(
+			actionRequest, actionResponse
+		).put(
+			"error",
+			() -> {
+				if (SessionErrors.contains(
+						actionRequest, "fragmentEntryContentInvalid")) {
+
+					return true;
+				}
+
+				return null;
+			}
+		);
+
+		SessionMessages.add(actionRequest, "fragmentEntryLinkAdded");
+
+		return jsonObject;
+	}
+
+	private JSONObject _addFragmentEntryLinkToLayoutData(
 			ActionRequest actionRequest, long fragmentEntryLinkId)
 		throws PortalException {
 
@@ -116,32 +141,33 @@ public class AddPortletMVCActionCommand
 		return jsonObject.put("layoutData", layoutDataJSONObject);
 	}
 
-	@Override
-	protected JSONObject doTransactionalCommand(
-			ActionRequest actionRequest, ActionResponse actionResponse)
+	private String _getPortletInstanceId(
+			String namespace, Layout layout, String portletId,
+			long segmentsExperienceId)
 		throws Exception {
 
-		JSONObject jsonObject = processAddPortlet(
-			actionRequest, actionResponse
-		).put(
-			"error",
-			() -> {
-				if (SessionErrors.contains(
-						actionRequest, "fragmentEntryContentInvalid")) {
+		Portlet portlet = _portletLocalService.getPortletById(portletId);
 
-					return true;
-				}
+		if (portlet.isInstanceable()) {
+			return namespace;
+		}
 
-				return null;
-			}
-		);
+		long count = _portletPreferencesLocalService.getPortletPreferencesCount(
+			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid(), portletId);
 
-		SessionMessages.add(actionRequest, "fragmentEntryLinkAdded");
+		if ((count > 0) &&
+			!LayoutStructureUtil.isPortletMarkedForDeletion(
+				layout.getGroupId(), layout.getPlid(), portletId,
+				segmentsExperienceId)) {
 
-		return jsonObject;
+			throw new PortletIdException(
+				"Unable to add uninstanceable portlet more than once");
+		}
+
+		return StringPool.BLANK;
 	}
 
-	protected JSONObject processAddPortlet(
+	private JSONObject _processAddPortlet(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
@@ -186,7 +212,7 @@ public class AddPortletMVCActionCommand
 				StringPool.BLANK, editableValueJSONObject.toString(), namespace,
 				0, null, serviceContext);
 
-		JSONObject jsonObject = addFragmentEntryLinkToLayoutData(
+		JSONObject jsonObject = _addFragmentEntryLinkToLayoutData(
 			actionRequest, fragmentEntryLink.getFragmentEntryLinkId());
 
 		long portletItemId = ParamUtil.getLong(actionRequest, "portletItemId");
@@ -244,32 +270,6 @@ public class AddPortletMVCActionCommand
 				_fragmentCollectionContributorTracker,
 				_fragmentRendererController, _fragmentRendererTracker,
 				_itemSelector, portletId));
-	}
-
-	private String _getPortletInstanceId(
-			String namespace, Layout layout, String portletId,
-			long segmentsExperienceId)
-		throws Exception {
-
-		Portlet portlet = _portletLocalService.getPortletById(portletId);
-
-		if (portlet.isInstanceable()) {
-			return namespace;
-		}
-
-		long count = _portletPreferencesLocalService.getPortletPreferencesCount(
-			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid(), portletId);
-
-		if ((count > 0) &&
-			!LayoutStructureUtil.isPortletMarkedForDeletion(
-				layout.getGroupId(), layout.getPlid(), portletId,
-				segmentsExperienceId)) {
-
-			throw new PortletIdException(
-				"Unable to add uninstanceable portlet more than once");
-		}
-
-		return StringPool.BLANK;
 	}
 
 	@Reference

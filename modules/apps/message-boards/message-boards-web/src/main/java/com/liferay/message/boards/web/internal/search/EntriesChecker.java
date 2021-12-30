@@ -131,7 +131,7 @@ public class EntriesChecker extends EmptyOnClickRowChecker {
 			return StringPool.BLANK;
 		}
 
-		String checkBoxRowIds = getEntryRowIds();
+		String checkBoxRowIds = _getEntryRowIds();
 
 		return getRowCheckBox(
 			httpServletRequest, checked, disabled,
@@ -140,7 +140,7 @@ public class EntriesChecker extends EmptyOnClickRowChecker {
 			StringPool.BLANK);
 	}
 
-	protected String getEntryRowIds() {
+	private String _getEntryRowIds() {
 		return StringBundler.concat(
 			"['", _liferayPortletResponse.getNamespace(), RowChecker.ROW_IDS,
 			MBCategory.class.getSimpleName(), "', '",

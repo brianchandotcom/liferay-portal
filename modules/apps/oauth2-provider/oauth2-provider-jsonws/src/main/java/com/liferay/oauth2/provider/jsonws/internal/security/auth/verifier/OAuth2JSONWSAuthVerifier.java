@@ -85,11 +85,11 @@ public class OAuth2JSONWSAuthVerifier implements AuthVerifier {
 
 		AuthVerifierResult authVerifierResult = new AuthVerifierResult();
 
-		OAuth2Authorization oAuth2Authorization = getOAuth2Authorization(
+		OAuth2Authorization oAuth2Authorization = _getOAuth2Authorization(
 			accessControlContext);
 
 		try {
-			BearerTokenProvider.AccessToken accessToken = getAccessToken(
+			BearerTokenProvider.AccessToken accessToken = _getAccessToken(
 				oAuth2Authorization);
 
 			if (accessToken == null) {
@@ -178,7 +178,15 @@ public class OAuth2JSONWSAuthVerifier implements AuthVerifier {
 				serviceReference.getProperty("osgi.jaxrs.name")));
 	}
 
-	protected BearerTokenProvider.AccessToken getAccessToken(
+	protected void removeJaxRsApplicationName(
+		ServiceReference<ScopeFinder> serviceReference) {
+
+		_jaxRsApplicationNames.remove(
+			GetterUtil.getString(
+				serviceReference.getProperty("osgi.jaxrs.name")));
+	}
+
+	private BearerTokenProvider.AccessToken _getAccessToken(
 			OAuth2Authorization oAuth2Authorization)
 		throws PortalException {
 
@@ -225,7 +233,7 @@ public class OAuth2JSONWSAuthVerifier implements AuthVerifier {
 			oAuth2Authorization.getUserName());
 	}
 
-	protected OAuth2Authorization getOAuth2Authorization(
+	private OAuth2Authorization _getOAuth2Authorization(
 		AccessControlContext accessControlContext) {
 
 		HttpServletRequest httpServletRequest =
@@ -254,14 +262,6 @@ public class OAuth2JSONWSAuthVerifier implements AuthVerifier {
 
 		return _oAuth2AuthorizationLocalService.
 			fetchOAuth2AuthorizationByAccessTokenContent(token);
-	}
-
-	protected void removeJaxRsApplicationName(
-		ServiceReference<ScopeFinder> serviceReference) {
-
-		_jaxRsApplicationNames.remove(
-			GetterUtil.getString(
-				serviceReference.getProperty("osgi.jaxrs.name")));
 	}
 
 	private static final String _TOKEN_KEY = "Bearer";

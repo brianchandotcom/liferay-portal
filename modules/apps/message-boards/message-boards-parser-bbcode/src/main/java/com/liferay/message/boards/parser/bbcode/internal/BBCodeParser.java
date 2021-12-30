@@ -124,7 +124,7 @@ public class BBCodeParser {
 				tag = bbCodeToken.getEndTag();
 			}
 
-			if (isValidTag(tag)) {
+			if (_isValidTag(tag)) {
 				length = bbCodeToken.getStart();
 			}
 		}
@@ -173,7 +173,7 @@ public class BBCodeParser {
 
 		String startTag = bbCodeToken.getStartTag();
 
-		if (!isValidTag(startTag)) {
+		if (!_isValidTag(startTag)) {
 			return;
 		}
 
@@ -209,7 +209,7 @@ public class BBCodeParser {
 		bbCodeItems.add(bbCodeItem);
 	}
 
-	protected boolean isValidTag(String tag) {
+	private boolean _isValidTag(String tag) {
 		if ((tag != null) && (tag.length() > 0)) {
 			Matcher matcher = _tagPattern.matcher(tag);
 

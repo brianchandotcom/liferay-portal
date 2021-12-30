@@ -58,7 +58,7 @@ public class NotificationSenderFactory {
 	protected void addNotificationSender(
 		NotificationSender notificationSender, Map<String, Object> properties) {
 
-		String[] notificationTypes = getNotificationTypes(
+		String[] notificationTypes = _getNotificationTypes(
 			notificationSender, properties);
 
 		for (String notificationType : notificationTypes) {
@@ -66,7 +66,18 @@ public class NotificationSenderFactory {
 		}
 	}
 
-	protected String[] getNotificationTypes(
+	protected void removeNotificationSender(
+		NotificationSender notificationSender, Map<String, Object> properties) {
+
+		String[] notificationTypes = _getNotificationTypes(
+			notificationSender, properties);
+
+		for (String notificationType : notificationTypes) {
+			_notificationSenders.remove(notificationType);
+		}
+	}
+
+	private String[] _getNotificationTypes(
 		NotificationSender notificationSender, Map<String, Object> properties) {
 
 		Object value = properties.get("notification.type");
@@ -81,17 +92,6 @@ public class NotificationSenderFactory {
 		}
 
 		return notificationTypes;
-	}
-
-	protected void removeNotificationSender(
-		NotificationSender notificationSender, Map<String, Object> properties) {
-
-		String[] notificationTypes = getNotificationTypes(
-			notificationSender, properties);
-
-		for (String notificationType : notificationTypes) {
-			_notificationSenders.remove(notificationType);
-		}
 	}
 
 	private final Map<String, NotificationSender> _notificationSenders =

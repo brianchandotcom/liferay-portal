@@ -87,7 +87,7 @@ public class TemplateNotificationMessageGenerator
 				new StringTemplateResource(templateId, notificationTemplate),
 				false);
 
-			populateContextVariables(template, executionContext);
+			_populateContextVariables(template, executionContext);
 
 			if (_log.isDebugEnabled()) {
 				template.forEach(
@@ -117,7 +117,7 @@ public class TemplateNotificationMessageGenerator
 		_templateManagerNames.put("velocity", TemplateConstants.LANG_TYPE_VM);
 	}
 
-	protected void populateContextVariables(
+	private void _populateContextVariables(
 			Template template, ExecutionContext executionContext)
 		throws Exception {
 

@@ -150,7 +150,7 @@ public class LiferayOAuth2OSGiFeature implements Feature {
 			},
 			Priorities.AUTHORIZATION - 9);
 
-		registerDescriptors(osgiJaxRsName);
+		_registerDescriptors(osgiJaxRsName);
 
 		return true;
 	}
@@ -187,7 +187,10 @@ public class LiferayOAuth2OSGiFeature implements Feature {
 		}
 	}
 
-	protected void registerDescriptors(String osgiJaxRsName) {
+	protected static final String OAUTH2_SERVICE_ACCESS_POLICY_NAME =
+		"oauth2.service.access.policy.name";
+
+	private void _registerDescriptors(String osgiJaxRsName) {
 		String bundleSymbolicName = _bundle.getSymbolicName();
 
 		ServiceTracker<ResourceBundleLoader, ResourceBundleLoader>
@@ -214,9 +217,6 @@ public class LiferayOAuth2OSGiFeature implements Feature {
 				new ApplicationDescriptorsImpl(serviceTracker, osgiJaxRsName),
 				properties));
 	}
-
-	protected static final String OAUTH2_SERVICE_ACCESS_POLICY_NAME =
-		"oauth2.service.access.policy.name";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LiferayOAuth2OSGiFeature.class);

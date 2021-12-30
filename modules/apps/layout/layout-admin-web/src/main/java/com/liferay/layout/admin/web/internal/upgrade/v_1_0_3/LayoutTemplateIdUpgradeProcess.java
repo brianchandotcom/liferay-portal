@@ -26,10 +26,10 @@ public class LayoutTemplateIdUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		updateLayoutTemplateId();
+		_updateLayoutTemplateId();
 	}
 
-	protected void updateLayoutTemplateId() throws Exception {
+	private void _updateLayoutTemplateId() throws Exception {
 		DBTypeToSQLMap dbTypeToSQLMap = new DBTypeToSQLMap(
 			StringBundler.concat(
 				"update Layout set typeSettings = REPLACE(typeSettings, ",

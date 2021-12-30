@@ -35,10 +35,10 @@ public class ArticleExpirationDateUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		updateArticleExpirationDate();
+		_updateArticleExpirationDate();
 	}
 
-	protected void updateArticleExpirationDate() throws Exception {
+	private void _updateArticleExpirationDate() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			JournalServiceConfiguration journalServiceConfiguration =
 				ConfigurationProviderUtil.getCompanyConfiguration(
@@ -79,14 +79,14 @@ public class ArticleExpirationDateUpgradeProcess extends UpgradeProcess {
 						"expirationDate");
 					int status = resultSet.getInt("status");
 
-					updateExpirationDate(
+					_updateExpirationDate(
 						groupId, articleId, expirationDate, status);
 				}
 			}
 		}
 	}
 
-	protected void updateExpirationDate(
+	private void _updateExpirationDate(
 			long groupId, String articleId, Timestamp expirationDate,
 			int status)
 		throws Exception {

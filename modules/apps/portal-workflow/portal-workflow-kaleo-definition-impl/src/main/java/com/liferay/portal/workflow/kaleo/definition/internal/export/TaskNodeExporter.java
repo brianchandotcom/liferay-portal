@@ -49,12 +49,12 @@ public class TaskNodeExporter extends BaseNodeExporter implements NodeExporter {
 		exportAssignmentsElement(
 			task.getAssignments(), nodeElement, "assignments");
 
-		exportTaskForms(task.getTaskForms(), nodeElement, "task-forms");
+		_exportTaskForms(task.getTaskForms(), nodeElement, "task-forms");
 
 		exportTimersElement(task, nodeElement, "task-timers", "task-timer");
 	}
 
-	protected void exportTaskForms(
+	private void _exportTaskForms(
 		Set<TaskForm> taskForms, Element parentElement,
 		String taskFormsElementName) {
 

@@ -102,7 +102,7 @@ public class LayoutPrototypeStagedModelDataHandler
 			LayoutPrototype layoutPrototype)
 		throws Exception {
 
-		exportLayouts(portletDataContext, layoutPrototype);
+		_exportLayouts(portletDataContext, layoutPrototype);
 
 		Element layoutPrototypeElement =
 			portletDataContext.getExportDataElement(layoutPrototype);
@@ -145,7 +145,7 @@ public class LayoutPrototypeStagedModelDataHandler
 				element.attributeValue("preloaded"));
 
 			LayoutPrototype existingLayoutPrototype =
-				fetchExistingLayoutPrototype(
+				_fetchExistingLayoutPrototype(
 					layoutPrototype.getUuid(),
 					portletDataContext.getCompanyId(),
 					layoutPrototype.getName(
@@ -180,7 +180,7 @@ public class LayoutPrototypeStagedModelDataHandler
 					layoutPrototype.isActive(), serviceContext);
 		}
 
-		importLayouts(
+		_importLayouts(
 			portletDataContext, layoutPrototype,
 			importedLayoutPrototype.getGroupId());
 
@@ -188,7 +188,36 @@ public class LayoutPrototypeStagedModelDataHandler
 			layoutPrototype, importedLayoutPrototype);
 	}
 
-	protected void exportLayouts(
+	@Override
+	protected boolean isSkipImportReferenceStagedModels() {
+		return true;
+	}
+
+	@Reference(unbind = "-")
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setLayoutLocalService(
+		LayoutLocalService layoutLocalService) {
+
+		_layoutLocalService = layoutLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setLayoutPrototypeLocalService(
+		LayoutPrototypeLocalService layoutPrototypeLocalService) {
+
+		_layoutPrototypeLocalService = layoutPrototypeLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
+	private void _exportLayouts(
 			PortletDataContext portletDataContext,
 			LayoutPrototype layoutPrototype)
 		throws Exception {
@@ -221,7 +250,7 @@ public class LayoutPrototypeStagedModelDataHandler
 		}
 	}
 
-	protected LayoutPrototype fetchExistingLayoutPrototype(
+	private LayoutPrototype _fetchExistingLayoutPrototype(
 		String uuid, long companyId, String name, String languageId,
 		boolean preloaded) {
 
@@ -234,7 +263,7 @@ public class LayoutPrototypeStagedModelDataHandler
 			fetchLayoutPrototypeByUuidAndCompanyId(uuid, companyId);
 	}
 
-	protected void importLayouts(
+	private void _importLayouts(
 			PortletDataContext portletDataContext,
 			LayoutPrototype layoutPrototype, long importedGroupId)
 		throws PortalException {
@@ -285,35 +314,6 @@ public class LayoutPrototypeStagedModelDataHandler
 					new String[] {layoutsImportMode});
 			}
 		}
-	}
-
-	@Override
-	protected boolean isSkipImportReferenceStagedModels() {
-		return true;
-	}
-
-	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLayoutLocalService(
-		LayoutLocalService layoutLocalService) {
-
-		_layoutLocalService = layoutLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLayoutPrototypeLocalService(
-		LayoutPrototypeLocalService layoutPrototypeLocalService) {
-
-		_layoutPrototypeLocalService = layoutPrototypeLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserLocalService(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
 	}
 
 	private GroupLocalService _groupLocalService;

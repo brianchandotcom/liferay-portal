@@ -59,17 +59,17 @@ public class JournalArticleLocalizedValuesUpgradeProcess
 				"JournalArticle must have title and description columns");
 		}
 
-		upgradeSchema();
+		_upgradeSchema();
 
-		updateJournalArticleDefaultLanguageId();
+		_updateJournalArticleDefaultLanguageId();
 
-		updateJournalArticleLocalizedFields();
+		_updateJournalArticleLocalizedFields();
 
-		dropTitleColumn();
-		dropDescriptionColumn();
+		_dropTitleColumn();
+		_dropDescriptionColumn();
 	}
 
-	protected void dropDescriptionColumn() throws Exception {
+	private void _dropDescriptionColumn() throws Exception {
 		try {
 			runSQL("alter table JournalArticle drop column description");
 		}
@@ -80,7 +80,7 @@ public class JournalArticleLocalizedValuesUpgradeProcess
 		}
 	}
 
-	protected void dropTitleColumn() throws Exception {
+	private void _dropTitleColumn() throws Exception {
 		try {
 			runSQL("alter table JournalArticle drop column title");
 		}
@@ -89,125 +89,6 @@ public class JournalArticleLocalizedValuesUpgradeProcess
 				_log.debug(sqlException, sqlException);
 			}
 		}
-	}
-
-	protected void updateJournalArticleDefaultLanguageId() throws Exception {
-		if (!hasColumn("JournalArticle", "defaultLanguageId")) {
-			runSQL(
-				"alter table JournalArticle add defaultLanguageId " +
-					"VARCHAR(75) null");
-		}
-
-		_updateDefaultLanguage("title", false);
-		_updateDefaultLanguage("content", true);
-	}
-
-	protected void updateJournalArticleLocalizedFields() throws Exception {
-		String sql =
-			"insert into JournalArticleLocalization(articleLocalizationId, " +
-				"companyId, articlePK, title, description, languageId) " +
-					"values(?, ?, ?, ?, ?, ?)";
-
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			processConcurrently(
-				"select id_, companyId, title, description, " +
-					"defaultLanguageId from JournalArticle",
-				resultSet -> new Object[] {
-					resultSet.getLong(1), resultSet.getLong(2),
-					resultSet.getString(3), resultSet.getString(4),
-					resultSet.getString(5)
-				},
-				values -> {
-					long id = (Long)values[0];
-					long companyId = (Long)values[1];
-
-					String title = (String)values[2];
-					String description = (String)values[3];
-					String defaultLanguageId = (String)values[4];
-
-					Map<Locale, String> titleMap = _getLocalizationMap(
-						title, defaultLanguageId);
-					Map<Locale, String> descriptionMap = _getLocalizationMap(
-						description, defaultLanguageId);
-
-					Set<Locale> locales = new HashSet<>();
-
-					locales.addAll(titleMap.keySet());
-					locales.addAll(descriptionMap.keySet());
-
-					try (PreparedStatement updatePreparedStatement =
-							AutoBatchPreparedStatementUtil.concurrentAutoBatch(
-								connection, sql)) {
-
-						for (Locale locale : locales) {
-							String localizedTitle = titleMap.get(locale);
-							String localizedDescription = descriptionMap.get(
-								locale);
-
-							if ((localizedTitle != null) &&
-								(localizedTitle.length() > _MAX_LENGTH_TITLE)) {
-
-								localizedTitle = StringUtil.shorten(
-									localizedTitle, _MAX_LENGTH_TITLE);
-
-								_log(id, "title");
-							}
-
-							if (localizedDescription != null) {
-								String safeLocalizedDescription = _truncate(
-									localizedDescription,
-									_MAX_LENGTH_DESCRIPTION);
-
-								if (localizedDescription !=
-										safeLocalizedDescription) {
-
-									_log(id, "description");
-								}
-
-								localizedDescription = safeLocalizedDescription;
-							}
-
-							updatePreparedStatement.setLong(
-								1, _counterLocalService.increment());
-							updatePreparedStatement.setLong(2, companyId);
-							updatePreparedStatement.setLong(3, id);
-							updatePreparedStatement.setString(
-								4, localizedTitle);
-							updatePreparedStatement.setString(
-								5, localizedDescription);
-							updatePreparedStatement.setString(
-								6, LocaleUtil.toLanguageId(locale));
-
-							updatePreparedStatement.addBatch();
-						}
-
-						try {
-							updatePreparedStatement.executeBatch();
-						}
-						catch (Exception exception) {
-							_log.error(
-								"Unable to update localized fields for " +
-									"article " + id,
-								exception);
-
-							throw exception;
-						}
-					}
-				},
-				"Unable to update journal article localized fields");
-		}
-	}
-
-	protected void upgradeSchema() throws Exception {
-		if (hasTable("JournalArticleLocalization")) {
-			runSQL("drop table JournalArticleLocalization");
-		}
-
-		String template = StringUtil.read(
-			JournalArticleLocalizedValuesUpgradeProcess.class.
-				getResourceAsStream("dependencies/update.sql"));
-
-		runSQLTemplateString(template, false);
 	}
 
 	private Map<Locale, String> _getLocalizationMap(
@@ -306,6 +187,125 @@ public class JournalArticleLocalizedValuesUpgradeProcess
 				},
 				"Unable to update journal article default language IDs");
 		}
+	}
+
+	private void _updateJournalArticleDefaultLanguageId() throws Exception {
+		if (!hasColumn("JournalArticle", "defaultLanguageId")) {
+			runSQL(
+				"alter table JournalArticle add defaultLanguageId " +
+					"VARCHAR(75) null");
+		}
+
+		_updateDefaultLanguage("title", false);
+		_updateDefaultLanguage("content", true);
+	}
+
+	private void _updateJournalArticleLocalizedFields() throws Exception {
+		String sql =
+			"insert into JournalArticleLocalization(articleLocalizationId, " +
+				"companyId, articlePK, title, description, languageId) " +
+					"values(?, ?, ?, ?, ?, ?)";
+
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			processConcurrently(
+				"select id_, companyId, title, description, " +
+					"defaultLanguageId from JournalArticle",
+				resultSet -> new Object[] {
+					resultSet.getLong(1), resultSet.getLong(2),
+					resultSet.getString(3), resultSet.getString(4),
+					resultSet.getString(5)
+				},
+				values -> {
+					long id = (Long)values[0];
+					long companyId = (Long)values[1];
+
+					String title = (String)values[2];
+					String description = (String)values[3];
+					String defaultLanguageId = (String)values[4];
+
+					Map<Locale, String> titleMap = _getLocalizationMap(
+						title, defaultLanguageId);
+					Map<Locale, String> descriptionMap = _getLocalizationMap(
+						description, defaultLanguageId);
+
+					Set<Locale> locales = new HashSet<>();
+
+					locales.addAll(titleMap.keySet());
+					locales.addAll(descriptionMap.keySet());
+
+					try (PreparedStatement updatePreparedStatement =
+							AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+								connection, sql)) {
+
+						for (Locale locale : locales) {
+							String localizedTitle = titleMap.get(locale);
+							String localizedDescription = descriptionMap.get(
+								locale);
+
+							if ((localizedTitle != null) &&
+								(localizedTitle.length() > _MAX_LENGTH_TITLE)) {
+
+								localizedTitle = StringUtil.shorten(
+									localizedTitle, _MAX_LENGTH_TITLE);
+
+								_log(id, "title");
+							}
+
+							if (localizedDescription != null) {
+								String safeLocalizedDescription = _truncate(
+									localizedDescription,
+									_MAX_LENGTH_DESCRIPTION);
+
+								if (localizedDescription !=
+										safeLocalizedDescription) {
+
+									_log(id, "description");
+								}
+
+								localizedDescription = safeLocalizedDescription;
+							}
+
+							updatePreparedStatement.setLong(
+								1, _counterLocalService.increment());
+							updatePreparedStatement.setLong(2, companyId);
+							updatePreparedStatement.setLong(3, id);
+							updatePreparedStatement.setString(
+								4, localizedTitle);
+							updatePreparedStatement.setString(
+								5, localizedDescription);
+							updatePreparedStatement.setString(
+								6, LocaleUtil.toLanguageId(locale));
+
+							updatePreparedStatement.addBatch();
+						}
+
+						try {
+							updatePreparedStatement.executeBatch();
+						}
+						catch (Exception exception) {
+							_log.error(
+								"Unable to update localized fields for " +
+									"article " + id,
+								exception);
+
+							throw exception;
+						}
+					}
+				},
+				"Unable to update journal article localized fields");
+		}
+	}
+
+	private void _upgradeSchema() throws Exception {
+		if (hasTable("JournalArticleLocalization")) {
+			runSQL("drop table JournalArticleLocalization");
+		}
+
+		String template = StringUtil.read(
+			JournalArticleLocalizedValuesUpgradeProcess.class.
+				getResourceAsStream("dependencies/update.sql"));
+
+		runSQLTemplateString(template, false);
 	}
 
 	private static final int _MAX_LENGTH_DESCRIPTION = 4000;

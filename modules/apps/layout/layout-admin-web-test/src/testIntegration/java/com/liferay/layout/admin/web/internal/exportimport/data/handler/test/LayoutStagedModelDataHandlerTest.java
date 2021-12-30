@@ -89,8 +89,8 @@ public class LayoutStagedModelDataHandlerTest
 		addDependentStagedModel(
 			dependentStagedModelsMap, Layout.class, linkedLayout);
 
-		addDependentFriendlyURLEntries(dependentStagedModelsMap, linkedLayout);
-		addDependentLayoutFriendlyURLs(dependentStagedModelsMap, linkedLayout);
+		_addDependentFriendlyURLEntries(dependentStagedModelsMap, linkedLayout);
+		_addDependentLayoutFriendlyURLs(dependentStagedModelsMap, linkedLayout);
 
 		Layout layout = LayoutTestUtil.addTypeLinkToLayoutLayout(
 			stagingGroup.getGroupId(), linkedLayout.getLayoutId());
@@ -99,8 +99,8 @@ public class LayoutStagedModelDataHandlerTest
 			LayoutFriendlyURLLocalServiceUtil.getLayoutFriendlyURLs(
 				layout.getPlid());
 
-		addDependentFriendlyURLEntries(dependentStagedModelsMap, layout);
-		addDependentLayoutFriendlyURLs(dependentStagedModelsMap, layout);
+		_addDependentFriendlyURLEntries(dependentStagedModelsMap, layout);
+		_addDependentLayoutFriendlyURLs(dependentStagedModelsMap, layout);
 
 		StagedModelDataHandlerUtil.exportStagedModel(
 			portletDataContext, layout);
@@ -241,35 +241,6 @@ public class LayoutStagedModelDataHandlerTest
 			HttpUtil.removeParameter(liveLinkedURL, "t"));
 	}
 
-	protected void addDependentFriendlyURLEntries(
-		Map<String, List<StagedModel>> dependentStagedModelsMap,
-		Layout layout) {
-
-		for (FriendlyURLEntry friendlyURLEntry :
-				_getFriendlyURLEntries(layout)) {
-
-			addDependentStagedModel(
-				dependentStagedModelsMap, FriendlyURLEntry.class,
-				friendlyURLEntry);
-		}
-	}
-
-	protected void addDependentLayoutFriendlyURLs(
-			Map<String, List<StagedModel>> dependentStagedModelsMap,
-			Layout layout)
-		throws Exception {
-
-		List<LayoutFriendlyURL> layoutFriendlyURLs =
-			LayoutFriendlyURLLocalServiceUtil.getLayoutFriendlyURLs(
-				layout.getPlid());
-
-		for (LayoutFriendlyURL layoutFriendlyURL : layoutFriendlyURLs) {
-			addDependentStagedModel(
-				dependentStagedModelsMap, LayoutFriendlyURL.class,
-				layoutFriendlyURL);
-		}
-	}
-
 	@Override
 	protected Map<String, List<StagedModel>> addDependentStagedModelsMap(
 			Group group)
@@ -283,8 +254,8 @@ public class LayoutStagedModelDataHandlerTest
 		addDependentStagedModel(
 			dependentStagedModelsMap, Layout.class, parentLayout);
 
-		addDependentFriendlyURLEntries(dependentStagedModelsMap, parentLayout);
-		addDependentLayoutFriendlyURLs(dependentStagedModelsMap, parentLayout);
+		_addDependentFriendlyURLEntries(dependentStagedModelsMap, parentLayout);
+		_addDependentLayoutFriendlyURLs(dependentStagedModelsMap, parentLayout);
 
 		return dependentStagedModelsMap;
 	}
@@ -302,8 +273,8 @@ public class LayoutStagedModelDataHandlerTest
 
 		Layout layout = LayoutTestUtil.addLayout(group, parentLayout.getPlid());
 
-		addDependentFriendlyURLEntries(dependentStagedModelsMap, layout);
-		addDependentLayoutFriendlyURLs(dependentStagedModelsMap, layout);
+		_addDependentFriendlyURLEntries(dependentStagedModelsMap, layout);
+		_addDependentLayoutFriendlyURLs(dependentStagedModelsMap, layout);
 
 		return layout;
 	}
@@ -427,6 +398,35 @@ public class LayoutStagedModelDataHandlerTest
 		Assert.assertEquals(
 			layout.getFriendlyURL(), importedLayout.getFriendlyURL());
 		Assert.assertEquals(layout.getCss(), importedLayout.getCss());
+	}
+
+	private void _addDependentFriendlyURLEntries(
+		Map<String, List<StagedModel>> dependentStagedModelsMap,
+		Layout layout) {
+
+		for (FriendlyURLEntry friendlyURLEntry :
+				_getFriendlyURLEntries(layout)) {
+
+			addDependentStagedModel(
+				dependentStagedModelsMap, FriendlyURLEntry.class,
+				friendlyURLEntry);
+		}
+	}
+
+	private void _addDependentLayoutFriendlyURLs(
+			Map<String, List<StagedModel>> dependentStagedModelsMap,
+			Layout layout)
+		throws Exception {
+
+		List<LayoutFriendlyURL> layoutFriendlyURLs =
+			LayoutFriendlyURLLocalServiceUtil.getLayoutFriendlyURLs(
+				layout.getPlid());
+
+		for (LayoutFriendlyURL layoutFriendlyURL : layoutFriendlyURLs) {
+			addDependentStagedModel(
+				dependentStagedModelsMap, LayoutFriendlyURL.class,
+				layoutFriendlyURL);
+		}
 	}
 
 	private List<FriendlyURLEntry> _getFriendlyURLEntries(Layout layout) {

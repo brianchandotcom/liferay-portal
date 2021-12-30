@@ -81,7 +81,7 @@ public class UserWorkflowPortlet extends BaseWorkflowPortlet {
 		throws IOException, PortletException {
 
 		try {
-			checkWorkflowInstanceViewPermission(renderRequest);
+			_checkWorkflowInstanceViewPermission(renderRequest);
 		}
 		catch (PortalException portalException) {
 			if (portalException instanceof PrincipalException ||
@@ -111,7 +111,24 @@ public class UserWorkflowPortlet extends BaseWorkflowPortlet {
 			workflowNavigationDisplayContext);
 	}
 
-	protected void checkWorkflowInstanceViewPermission(
+	@Override
+	protected void doDispatch(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		if (SessionErrors.contains(
+				renderRequest, PrincipalException.getNestedClasses()) ||
+			SessionErrors.contains(
+				renderRequest, WorkflowException.class.getName())) {
+
+			include("/instance/error.jsp", renderRequest, renderResponse);
+		}
+		else {
+			super.doDispatch(renderRequest, renderResponse);
+		}
+	}
+
+	private void _checkWorkflowInstanceViewPermission(
 			RenderRequest renderRequest)
 		throws PortalException {
 
@@ -132,23 +149,6 @@ public class UserWorkflowPortlet extends BaseWorkflowPortlet {
 					permissionChecker, WorkflowInstance.class.getName(),
 					workflowInstanceId, ActionKeys.VIEW);
 			}
-		}
-	}
-
-	@Override
-	protected void doDispatch(
-			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws IOException, PortletException {
-
-		if (SessionErrors.contains(
-				renderRequest, PrincipalException.getNestedClasses()) ||
-			SessionErrors.contains(
-				renderRequest, WorkflowException.class.getName())) {
-
-			include("/instance/error.jsp", renderRequest, renderResponse);
-		}
-		else {
-			super.doDispatch(renderRequest, renderResponse);
 		}
 	}
 

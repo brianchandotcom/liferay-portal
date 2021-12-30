@@ -42,7 +42,27 @@ import org.osgi.service.component.annotations.Reference;
 public class TaskNodeBuilder
 	extends BaseNodeBuilder<Task> implements NodeBuilder {
 
-	protected Set<TaskForm> buildTaskForms(String name, long kaleoTaskId)
+	@Override
+	protected Task createNode(KaleoNode kaleoNode) throws PortalException {
+		KaleoTask kaleoTask = _kaleoTaskLocalService.getKaleoNodeKaleoTask(
+			kaleoNode.getKaleoNodeId());
+
+		Task task = new Task(kaleoNode.getName(), kaleoNode.getDescription());
+
+		Set<Assignment> assignments = buildAssigments(
+			KaleoTask.class.getName(), kaleoTask.getKaleoTaskId());
+
+		task.setAssignments(assignments);
+
+		Set<TaskForm> taskForms = _buildTaskForms(
+			KaleoTask.class.getName(), kaleoTask.getKaleoTaskId());
+
+		task.addTaskForms(taskForms);
+
+		return task;
+	}
+
+	private Set<TaskForm> _buildTaskForms(String name, long kaleoTaskId)
 		throws PortalException {
 
 		List<KaleoTaskForm> kaleoTaskForms =
@@ -76,26 +96,6 @@ public class TaskNodeBuilder
 		}
 
 		return taskForms;
-	}
-
-	@Override
-	protected Task createNode(KaleoNode kaleoNode) throws PortalException {
-		KaleoTask kaleoTask = _kaleoTaskLocalService.getKaleoNodeKaleoTask(
-			kaleoNode.getKaleoNodeId());
-
-		Task task = new Task(kaleoNode.getName(), kaleoNode.getDescription());
-
-		Set<Assignment> assignments = buildAssigments(
-			KaleoTask.class.getName(), kaleoTask.getKaleoTaskId());
-
-		task.setAssignments(assignments);
-
-		Set<TaskForm> taskForms = buildTaskForms(
-			KaleoTask.class.getName(), kaleoTask.getKaleoTaskId());
-
-		task.addTaskForms(taskForms);
-
-		return task;
 	}
 
 	@Reference

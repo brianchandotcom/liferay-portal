@@ -88,7 +88,7 @@ public class JournalArticleAssetRendererFactory
 		throws PortalException {
 
 		JournalArticleAssetRenderer journalArticleAssetRenderer =
-			getJournalArticleAssetRenderer(journalArticle);
+			_getJournalArticleAssetRenderer(journalArticle);
 
 		journalArticleAssetRenderer.setAssetRendererType(type);
 
@@ -133,7 +133,7 @@ public class JournalArticleAssetRendererFactory
 		}
 
 		JournalArticleAssetRenderer journalArticleAssetRenderer =
-			getJournalArticleAssetRenderer(article);
+			_getJournalArticleAssetRenderer(article);
 
 		journalArticleAssetRenderer.setAssetRendererType(type);
 
@@ -148,7 +148,7 @@ public class JournalArticleAssetRendererFactory
 		JournalArticle article =
 			_journalArticleLocalService.getArticleByUrlTitle(groupId, urlTitle);
 
-		return getJournalArticleAssetRenderer(article);
+		return _getJournalArticleAssetRenderer(article);
 	}
 
 	@Override
@@ -272,7 +272,7 @@ public class JournalArticleAssetRendererFactory
 		_servletContext = servletContext;
 	}
 
-	protected JournalArticleAssetRenderer getJournalArticleAssetRenderer(
+	private JournalArticleAssetRenderer _getJournalArticleAssetRenderer(
 		JournalArticle article) {
 
 		JournalArticleAssetRenderer journalArticleAssetRenderer =

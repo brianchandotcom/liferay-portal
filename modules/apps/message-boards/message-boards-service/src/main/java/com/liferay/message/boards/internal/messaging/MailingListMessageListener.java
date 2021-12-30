@@ -82,15 +82,15 @@ public class MailingListMessageListener extends BaseMessageListener {
 		Message[] messages = null;
 
 		try {
-			store = getStore(mailingListRequest);
+			store = _getStore(mailingListRequest);
 
 			store.connect();
 
-			folder = getFolder(store);
+			folder = _getFolder(store);
 
 			messages = folder.getMessages();
 
-			processMessages(mailingListRequest, messages);
+			_processMessages(mailingListRequest, messages);
 		}
 		finally {
 			if ((folder != null) && folder.isOpen()) {
@@ -127,7 +127,7 @@ public class MailingListMessageListener extends BaseMessageListener {
 		}
 	}
 
-	protected Folder getFolder(Store store) throws Exception {
+	private Folder _getFolder(Store store) throws Exception {
 		Folder folder = store.getFolder("INBOX");
 
 		if (!folder.exists()) {
@@ -139,7 +139,7 @@ public class MailingListMessageListener extends BaseMessageListener {
 		return folder;
 	}
 
-	protected Store getStore(MailingListRequest mailingListRequest)
+	private Store _getStore(MailingListRequest mailingListRequest)
 		throws Exception {
 
 		String protocol = mailingListRequest.getInProtocol();
@@ -163,7 +163,7 @@ public class MailingListMessageListener extends BaseMessageListener {
 		return session.getStore(urlName);
 	}
 
-	protected void processMessage(
+	private void _processMessage(
 			MailingListRequest mailingListRequest, Message mailMessage)
 		throws Exception {
 
@@ -284,13 +284,13 @@ public class MailingListMessageListener extends BaseMessageListener {
 		}
 	}
 
-	protected void processMessages(
+	private void _processMessages(
 			MailingListRequest mailingListRequest, Message[] messages)
 		throws Exception {
 
 		for (Message message : messages) {
 			try {
-				processMessage(mailingListRequest, message);
+				_processMessage(mailingListRequest, message);
 			}
 			finally {
 				PermissionCheckerUtil.setThreadValues(null);

@@ -25,11 +25,11 @@ public class KBCommentUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		upgradeSchema();
-		upgradeKBComments();
+		_upgradeSchema();
+		_upgradeKBComments();
 	}
 
-	protected void upgradeKBComments() throws Exception {
+	private void _upgradeKBComments() throws Exception {
 		if (!hasColumn("KBComment", "helpful")) {
 			return;
 		}
@@ -46,7 +46,7 @@ public class KBCommentUpgradeProcess extends UpgradeProcess {
 		runSQL("alter table KBComment drop column helpful");
 	}
 
-	protected void upgradeSchema() throws Exception {
+	private void _upgradeSchema() throws Exception {
 		String template = StringUtil.read(
 			KBCommentUpgradeProcess.class.getResourceAsStream(
 				"dependencies/update.sql"));

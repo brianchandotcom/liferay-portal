@@ -47,21 +47,21 @@ public class KBAttachmentsUpgradeProcess extends UpgradeProcess {
 		_store = store;
 	}
 
-	protected void deleteEmptyDirectories() throws Exception {
+	@Override
+	protected void doUpgrade() throws Exception {
+		_updateAttachments();
+
+		_deleteEmptyDirectories();
+	}
+
+	private void _deleteEmptyDirectories() throws Exception {
 		_companyLocalService.forEachCompanyId(
 			companyId -> _store.deleteDirectory(
 				companyId, CompanyConstants.SYSTEM,
 				"knowledgebase/kbarticles"));
 	}
 
-	@Override
-	protected void doUpgrade() throws Exception {
-		updateAttachments();
-
-		deleteEmptyDirectories();
-	}
-
-	protected String[] getAttachments(long companyId, long resourcePrimKey)
+	private String[] _getAttachments(long companyId, long resourcePrimKey)
 		throws Exception {
 
 		String dirName = "knowledgebase/kbarticles/" + resourcePrimKey;
@@ -70,9 +70,9 @@ public class KBAttachmentsUpgradeProcess extends UpgradeProcess {
 	}
 
 	/**
-	 * @see KBArticleAttachmentsUtil#getFolderId(long, long, long)
+	 * @see KBArticleAttachmentsUtil#_getFolderId(long, long, long)
 	 */
-	protected long getFolderId(long groupId, long userId, long resourcePrimKey)
+	private long _getFolderId(long groupId, long userId, long resourcePrimKey)
 		throws PortalException {
 
 		ServiceContext serviceContext = new ServiceContext();
@@ -91,7 +91,7 @@ public class KBAttachmentsUpgradeProcess extends UpgradeProcess {
 		return folder.getFolderId();
 	}
 
-	protected void updateAttachments() throws Exception {
+	private void _updateAttachments() throws Exception {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select kbArticleId, resourcePrimKey, groupId, companyId, " +
 					"userId, status from KBArticle");
@@ -111,16 +111,16 @@ public class KBAttachmentsUpgradeProcess extends UpgradeProcess {
 
 				long userId = resultSet.getLong("userId");
 
-				updateAttachments(companyId, groupId, classPK, userId);
+				_updateAttachments(companyId, groupId, classPK, userId);
 			}
 		}
 	}
 
-	protected void updateAttachments(
+	private void _updateAttachments(
 			long companyId, long groupId, long resourcePrimKey, long userId)
 		throws Exception {
 
-		for (String attachment : getAttachments(companyId, resourcePrimKey)) {
+		for (String attachment : _getAttachments(companyId, resourcePrimKey)) {
 			try {
 				if (!_store.hasFile(
 						companyId, CompanyConstants.SYSTEM, attachment,
@@ -129,7 +129,7 @@ public class KBAttachmentsUpgradeProcess extends UpgradeProcess {
 					continue;
 				}
 
-				long folderId = getFolderId(groupId, userId, resourcePrimKey);
+				long folderId = _getFolderId(groupId, userId, resourcePrimKey);
 
 				byte[] bytes = StreamUtil.toByteArray(
 					_store.getFileAsStream(

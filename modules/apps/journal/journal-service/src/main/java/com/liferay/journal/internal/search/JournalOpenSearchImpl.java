@@ -75,40 +75,6 @@ public class JournalOpenSearchImpl extends HitsOpenSearchImpl {
 		return TITLE + keywords;
 	}
 
-	protected String getLayoutURL(ThemeDisplay themeDisplay, String articleId)
-		throws Exception {
-
-		PermissionChecker permissionChecker =
-			themeDisplay.getPermissionChecker();
-
-		List<JournalContentSearch> contentSearches =
-			_journalContentSearchLocalService.getArticleContentSearches(
-				articleId);
-
-		for (JournalContentSearch contentSearch : contentSearches) {
-			if (LayoutPermissionUtil.contains(
-					permissionChecker, contentSearch.getGroupId(),
-					contentSearch.isPrivateLayout(),
-					contentSearch.getLayoutId(), ActionKeys.VIEW)) {
-
-				if (contentSearch.isPrivateLayout() &&
-					!_groupLocalService.hasUserGroup(
-						themeDisplay.getUserId(), contentSearch.getGroupId())) {
-
-					continue;
-				}
-
-				Layout hitLayout = _layoutLocalService.getLayout(
-					contentSearch.getGroupId(), contentSearch.isPrivateLayout(),
-					contentSearch.getLayoutId());
-
-				return _portal.getLayoutURL(hitLayout, themeDisplay);
-			}
-		}
-
-		return null;
-	}
-
 	@Override
 	protected String getURL(
 			ThemeDisplay themeDisplay, long groupId, Document result,
@@ -151,7 +117,7 @@ public class JournalOpenSearchImpl extends HitsOpenSearchImpl {
 			}
 		}
 
-		String layoutURL = getLayoutURL(themeDisplay, articleId);
+		String layoutURL = _getLayoutURL(themeDisplay, articleId);
 
 		if (layoutURL != null) {
 			return layoutURL;
@@ -210,6 +176,40 @@ public class JournalOpenSearchImpl extends HitsOpenSearchImpl {
 		LayoutSetLocalService layoutSetLocalService) {
 
 		_layoutSetLocalService = layoutSetLocalService;
+	}
+
+	private String _getLayoutURL(ThemeDisplay themeDisplay, String articleId)
+		throws Exception {
+
+		PermissionChecker permissionChecker =
+			themeDisplay.getPermissionChecker();
+
+		List<JournalContentSearch> contentSearches =
+			_journalContentSearchLocalService.getArticleContentSearches(
+				articleId);
+
+		for (JournalContentSearch contentSearch : contentSearches) {
+			if (LayoutPermissionUtil.contains(
+					permissionChecker, contentSearch.getGroupId(),
+					contentSearch.isPrivateLayout(),
+					contentSearch.getLayoutId(), ActionKeys.VIEW)) {
+
+				if (contentSearch.isPrivateLayout() &&
+					!_groupLocalService.hasUserGroup(
+						themeDisplay.getUserId(), contentSearch.getGroupId())) {
+
+					continue;
+				}
+
+				Layout hitLayout = _layoutLocalService.getLayout(
+					contentSearch.getGroupId(), contentSearch.isPrivateLayout(),
+					contentSearch.getLayoutId());
+
+				return _portal.getLayoutURL(hitLayout, themeDisplay);
+			}
+		}
+
+		return null;
 	}
 
 	private AssetEntryLocalService _assetEntryLocalService;

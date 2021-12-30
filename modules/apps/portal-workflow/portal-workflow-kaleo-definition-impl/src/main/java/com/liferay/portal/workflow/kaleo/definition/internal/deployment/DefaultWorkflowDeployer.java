@@ -69,7 +69,7 @@ public class DefaultWorkflowDeployer implements WorkflowDeployer {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		checkPermissions(serviceContext);
+		_checkPermissions(serviceContext);
 
 		KaleoDefinition kaleoDefinition = _addOrUpdateKaleoDefinition(
 			title, name, scope, definition, serviceContext);
@@ -189,7 +189,32 @@ public class DefaultWorkflowDeployer implements WorkflowDeployer {
 			workflowDefinitionConfiguration.companyAdministratorCanPublish();
 	}
 
-	protected void checkPermissions(ServiceContext serviceContext)
+	private KaleoDefinition _addOrUpdateKaleoDefinition(
+			String title, String name, String scope, Definition definition,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		KaleoDefinition kaleoDefinition =
+			_kaleoDefinitionLocalService.fetchKaleoDefinition(
+				name, serviceContext);
+
+		if (kaleoDefinition == null) {
+			kaleoDefinition = _kaleoDefinitionLocalService.addKaleoDefinition(
+				name, title, definition.getDescription(),
+				definition.getContent(), scope, 1, serviceContext);
+		}
+		else {
+			kaleoDefinition =
+				_kaleoDefinitionLocalService.updatedKaleoDefinition(
+					kaleoDefinition.getKaleoDefinitionId(), title,
+					definition.getDescription(), definition.getContent(),
+					serviceContext);
+		}
+
+		return kaleoDefinition;
+	}
+
+	private void _checkPermissions(ServiceContext serviceContext)
 		throws PrincipalException {
 
 		PermissionChecker permissionChecker =
@@ -215,31 +240,6 @@ public class DefaultWorkflowDeployer implements WorkflowDeployer {
 			throw new PrincipalException.MustBeOmniadmin(
 				permissionChecker.getUserId());
 		}
-	}
-
-	private KaleoDefinition _addOrUpdateKaleoDefinition(
-			String title, String name, String scope, Definition definition,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		KaleoDefinition kaleoDefinition =
-			_kaleoDefinitionLocalService.fetchKaleoDefinition(
-				name, serviceContext);
-
-		if (kaleoDefinition == null) {
-			kaleoDefinition = _kaleoDefinitionLocalService.addKaleoDefinition(
-				name, title, definition.getDescription(),
-				definition.getContent(), scope, 1, serviceContext);
-		}
-		else {
-			kaleoDefinition =
-				_kaleoDefinitionLocalService.updatedKaleoDefinition(
-					kaleoDefinition.getKaleoDefinitionId(), title,
-					definition.getDescription(), definition.getContent(),
-					serviceContext);
-		}
-
-		return kaleoDefinition;
 	}
 
 	private volatile boolean _companyAdministratorCanPublish;

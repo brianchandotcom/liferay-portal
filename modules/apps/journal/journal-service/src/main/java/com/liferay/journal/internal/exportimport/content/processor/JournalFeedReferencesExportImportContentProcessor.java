@@ -70,7 +70,7 @@ public class JournalFeedReferencesExportImportContentProcessor
 			boolean escapeContent)
 		throws Exception {
 
-		return replaceExportJournalFeedReferences(
+		return _replaceExportJournalFeedReferences(
 			portletDataContext, stagedModel, content, exportReferencedContent);
 	}
 
@@ -80,7 +80,7 @@ public class JournalFeedReferencesExportImportContentProcessor
 			String content)
 		throws Exception {
 
-		return replaceImportJournalFeedReferences(
+		return _replaceImportJournalFeedReferences(
 			portletDataContext, stagedModel, content);
 	}
 
@@ -88,12 +88,19 @@ public class JournalFeedReferencesExportImportContentProcessor
 	public void validateContentReferences(long groupId, String content)
 		throws PortalException {
 
-		if (isValidateJournalFeedReferences()) {
-			validateJournalFeedReferences(groupId, content);
+		if (_isValidateJournalFeedReferences()) {
+			_validateJournalFeedReferences(groupId, content);
 		}
 	}
 
-	protected JournalFeed getJournalFeed(Map<String, String> map) {
+	@Reference(unbind = "-")
+	protected void setConfigurationProvider(
+		ConfigurationProvider configurationProvider) {
+
+		_configurationProvider = configurationProvider;
+	}
+
+	private JournalFeed _getJournalFeed(Map<String, String> map) {
 		if (MapUtil.isEmpty(map)) {
 			return null;
 		}
@@ -121,7 +128,7 @@ public class JournalFeedReferencesExportImportContentProcessor
 		return journalFeed;
 	}
 
-	protected Map<String, String> getJournalFeedReferenceParameters(
+	private Map<String, String> _getJournalFeedReferenceParameters(
 		long groupId, String content, int beginPos, int endPos) {
 
 		endPos = StringUtil.indexOfAny(
@@ -158,7 +165,7 @@ public class JournalFeedReferencesExportImportContentProcessor
 		).build();
 	}
 
-	protected boolean isValidateJournalFeedReferences() {
+	private boolean _isValidateJournalFeedReferences() {
 		try {
 			ExportImportServiceConfiguration configuration =
 				_configurationProvider.getCompanyConfiguration(
@@ -174,7 +181,7 @@ public class JournalFeedReferencesExportImportContentProcessor
 		return true;
 	}
 
-	protected String replaceExportJournalFeedReferences(
+	private String _replaceExportJournalFeedReferences(
 			PortletDataContext portletDataContext, StagedModel stagedModel,
 			String content, boolean exportReferencedContent)
 		throws Exception {
@@ -207,11 +214,11 @@ public class JournalFeedReferencesExportImportContentProcessor
 			}
 
 			Map<String, String> journalFeedReferenceParameters =
-				getJournalFeedReferenceParameters(
+				_getJournalFeedReferenceParameters(
 					portletDataContext.getScopeGroupId(), content, beginPos,
 					endPos);
 
-			JournalFeed journalFeed = getJournalFeed(
+			JournalFeed journalFeed = _getJournalFeed(
 				journalFeedReferenceParameters);
 
 			if (journalFeed == null) {
@@ -280,7 +287,7 @@ public class JournalFeedReferencesExportImportContentProcessor
 		return sb.toString();
 	}
 
-	protected String replaceImportJournalFeedReferences(
+	private String _replaceImportJournalFeedReferences(
 			PortletDataContext portletDataContext, StagedModel stagedModel,
 			String content)
 		throws Exception {
@@ -385,14 +392,7 @@ public class JournalFeedReferencesExportImportContentProcessor
 		return content;
 	}
 
-	@Reference(unbind = "-")
-	protected void setConfigurationProvider(
-		ConfigurationProvider configurationProvider) {
-
-		_configurationProvider = configurationProvider;
-	}
-
-	protected void validateJournalFeedReferences(long groupId, String content)
+	private void _validateJournalFeedReferences(long groupId, String content)
 		throws PortalException {
 
 		String[] patterns = {_JOURNAL_FEED_FRIENDLY_URL};
@@ -408,10 +408,10 @@ public class JournalFeedReferencesExportImportContentProcessor
 			}
 
 			Map<String, String> journalFeedReferenceParameters =
-				getJournalFeedReferenceParameters(
+				_getJournalFeedReferenceParameters(
 					groupId, content, beginPos, endPos);
 
-			JournalFeed journalFeed = getJournalFeed(
+			JournalFeed journalFeed = _getJournalFeed(
 				journalFeedReferenceParameters);
 
 			if (journalFeed == null) {

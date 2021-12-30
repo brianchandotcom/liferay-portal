@@ -120,7 +120,7 @@ public class RemoteMVCPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws IOException, PortletException {
 
-		checkOmniAdmin();
+		_checkOmniAdmin();
 
 		try {
 			String actionName = ParamUtil.getString(
@@ -139,7 +139,7 @@ public class RemoteMVCPortlet extends MVCPortlet {
 		}
 
 		try {
-			remoteProcessAction(actionRequest, actionResponse);
+			_remoteProcessAction(actionRequest, actionResponse);
 		}
 		catch (IOException ioException) {
 			throw ioException;
@@ -154,7 +154,7 @@ public class RemoteMVCPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		checkOmniAdmin();
+		_checkOmniAdmin();
 
 		try {
 			HttpServletRequest httpServletRequest =
@@ -167,13 +167,13 @@ public class RemoteMVCPortlet extends MVCPortlet {
 				OAuthConstants.VERIFIER);
 
 			if (oAuthVerifier != null) {
-				updateAccessToken(renderRequest, oAuthVerifier);
+				_updateAccessToken(renderRequest, oAuthVerifier);
 			}
 
 			String remoteMVCPath = renderRequest.getParameter("remoteMVCPath");
 
 			if (remoteMVCPath != null) {
-				remoteRender(renderRequest, renderResponse);
+				_remoteRender(renderRequest, renderResponse);
 
 				return;
 			}
@@ -193,10 +193,10 @@ public class RemoteMVCPortlet extends MVCPortlet {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws IOException, PortletException {
 
-		checkOmniAdmin();
+		_checkOmniAdmin();
 
 		try {
-			remoteServeResource(resourceRequest, resourceResponse);
+			_remoteServeResource(resourceRequest, resourceResponse);
 		}
 		catch (IOException ioException) {
 			throw ioException;
@@ -217,32 +217,8 @@ public class RemoteMVCPortlet extends MVCPortlet {
 		}
 	}
 
-	protected void checkOmniAdmin() throws PortletException {
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		if (!permissionChecker.isOmniadmin()) {
-			PrincipalException principalException =
-				new PrincipalException.MustBeCompanyAdmin(
-					permissionChecker.getUserId());
-
-			throw new PortletException(principalException);
-		}
-	}
-
 	protected String getClientPortletId() {
 		return StringPool.BLANK;
-	}
-
-	protected String getFileName(String contentDisposition) {
-		int pos = contentDisposition.indexOf("filename=\"");
-
-		if (pos == -1) {
-			return StringPool.BLANK;
-		}
-
-		return contentDisposition.substring(
-			pos + 10, contentDisposition.length() - 1);
 	}
 
 	protected Response getResponse(User user, OAuthRequest oAuthRequest)
@@ -278,7 +254,56 @@ public class RemoteMVCPortlet extends MVCPortlet {
 		Map<String, String[]> parameterMap) {
 	}
 
-	protected void remoteProcessAction(
+	protected void setBaseRequestParameters(
+		PortletRequest portletRequest, PortletResponse portletResponse,
+		OAuthRequest oAuthRequest) {
+
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(portletRequest);
+
+		String clientAuthToken = AuthTokenUtil.getToken(httpServletRequest);
+
+		addOAuthParameter(oAuthRequest, "clientAuthToken", clientAuthToken);
+
+		addOAuthParameter(
+			oAuthRequest, "clientPortletId", getClientPortletId());
+		addOAuthParameter(
+			oAuthRequest, "clientURL",
+			PortalUtil.getCurrentCompleteURL(httpServletRequest));
+		addOAuthParameter(oAuthRequest, "p_p_id", getServerPortletId());
+	}
+
+	protected void setOAuthManager(OAuthManager oAuthManager) {
+		this.oAuthManager = oAuthManager;
+	}
+
+	protected OAuthManager oAuthManager;
+
+	private void _checkOmniAdmin() throws PortletException {
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		if (!permissionChecker.isOmniadmin()) {
+			PrincipalException principalException =
+				new PrincipalException.MustBeCompanyAdmin(
+					permissionChecker.getUserId());
+
+			throw new PortletException(principalException);
+		}
+	}
+
+	private String _getFileName(String contentDisposition) {
+		int pos = contentDisposition.indexOf("filename=\"");
+
+		if (pos == -1) {
+			return StringPool.BLANK;
+		}
+
+		return contentDisposition.substring(
+			pos + 10, contentDisposition.length() - 1);
+	}
+
+	private void _remoteProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
@@ -288,7 +313,7 @@ public class RemoteMVCPortlet extends MVCPortlet {
 		OAuthRequest oAuthRequest = new OAuthRequest(
 			Verb.POST, getServerPortletURL());
 
-		setRequestParameters(actionRequest, actionResponse, oAuthRequest);
+		_setRequestParameters(actionRequest, actionResponse, oAuthRequest);
 
 		addOAuthParameter(oAuthRequest, "p_p_lifecycle", "1");
 		addOAuthParameter(
@@ -313,7 +338,7 @@ public class RemoteMVCPortlet extends MVCPortlet {
 		}
 	}
 
-	protected void remoteRender(
+	private void _remoteRender(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws Exception {
 
@@ -323,7 +348,7 @@ public class RemoteMVCPortlet extends MVCPortlet {
 		OAuthRequest oAuthRequest = new OAuthRequest(
 			Verb.GET, getServerPortletURL());
 
-		setRequestParameters(renderRequest, renderResponse, oAuthRequest);
+		_setRequestParameters(renderRequest, renderResponse, oAuthRequest);
 
 		Response response = getResponse(themeDisplay.getUser(), oAuthRequest);
 
@@ -334,7 +359,7 @@ public class RemoteMVCPortlet extends MVCPortlet {
 		printWriter.write(response.getBody());
 	}
 
-	protected void remoteServeResource(
+	private void _remoteServeResource(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
@@ -344,7 +369,7 @@ public class RemoteMVCPortlet extends MVCPortlet {
 		OAuthRequest oAuthRequest = new OAuthRequest(
 			Verb.GET, getServerPortletURL());
 
-		setRequestParameters(resourceRequest, resourceResponse, oAuthRequest);
+		_setRequestParameters(resourceRequest, resourceResponse, oAuthRequest);
 
 		addOAuthParameter(oAuthRequest, "p_p_lifecycle", "2");
 		addOAuthParameter(
@@ -362,7 +387,7 @@ public class RemoteMVCPortlet extends MVCPortlet {
 
 			PortletResponseUtil.sendFile(
 				resourceRequest, resourceResponse,
-				getFileName(contentDisposition), response.getStream(),
+				_getFileName(contentDisposition), response.getStream(),
 				contentLength, contentType,
 				HttpHeaders.CONTENT_DISPOSITION_ATTACHMENT);
 		}
@@ -373,30 +398,7 @@ public class RemoteMVCPortlet extends MVCPortlet {
 		}
 	}
 
-	protected void setBaseRequestParameters(
-		PortletRequest portletRequest, PortletResponse portletResponse,
-		OAuthRequest oAuthRequest) {
-
-		HttpServletRequest httpServletRequest =
-			PortalUtil.getHttpServletRequest(portletRequest);
-
-		String clientAuthToken = AuthTokenUtil.getToken(httpServletRequest);
-
-		addOAuthParameter(oAuthRequest, "clientAuthToken", clientAuthToken);
-
-		addOAuthParameter(
-			oAuthRequest, "clientPortletId", getClientPortletId());
-		addOAuthParameter(
-			oAuthRequest, "clientURL",
-			PortalUtil.getCurrentCompleteURL(httpServletRequest));
-		addOAuthParameter(oAuthRequest, "p_p_id", getServerPortletId());
-	}
-
-	protected void setOAuthManager(OAuthManager oAuthManager) {
-		this.oAuthManager = oAuthManager;
-	}
-
-	protected void setRequestParameters(
+	private void _setRequestParameters(
 		PortletRequest portletRequest, PortletResponse portletResponse,
 		OAuthRequest oAuthRequest) {
 
@@ -430,7 +432,7 @@ public class RemoteMVCPortlet extends MVCPortlet {
 		}
 	}
 
-	protected void updateAccessToken(
+	private void _updateAccessToken(
 			RenderRequest renderRequest, String oAuthVerifier)
 		throws Exception {
 
@@ -449,8 +451,6 @@ public class RemoteMVCPortlet extends MVCPortlet {
 
 		oAuthManager.deleteRequestToken(themeDisplay.getUser());
 	}
-
-	protected OAuthManager oAuthManager;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		RemoteMVCPortlet.class);

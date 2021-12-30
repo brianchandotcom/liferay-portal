@@ -31,22 +31,6 @@ import javax.portlet.PortletPreferences;
 public class UpgradePortletPreferences
 	extends CamelCaseUpgradePortletPreferences {
 
-	protected Map<String, String> getDefaultPreferencesMap(
-		String rootPortletId) {
-
-		if (rootPortletId.equals("1_WAR_knowledgebaseportlet")) {
-			return _adminDefaultPreferencesMap;
-		}
-		else if (rootPortletId.equals("2_WAR_knowledgebaseportlet")) {
-			return _displayDefaultPreferencesMap;
-		}
-		else if (rootPortletId.equals("3_WAR_knowledgebaseportlet")) {
-			return _articleDefaultPreferencesMap;
-		}
-
-		return Collections.emptyMap();
-	}
-
 	protected String getName(String rootPortletId, String oldName) {
 		if (rootPortletId.equals("1_WAR_knowledgebaseportlet")) {
 			return _oldAdminPreferenceNamesMap.get(oldName);
@@ -66,7 +50,36 @@ public class UpgradePortletPreferences
 		return _PORTLET_IDS;
 	}
 
-	protected String updatePreferences(
+	@Override
+	protected String upgradePreferences(
+			long companyId, long ownerId, int ownerType, long plid,
+			String portletId, String xml)
+		throws Exception {
+
+		String preferences = super.upgradePreferences(
+			companyId, ownerId, ownerType, plid, portletId, xml);
+
+		return _updatePreferences(
+			companyId, ownerId, ownerType, plid, portletId, preferences);
+	}
+
+	private Map<String, String> _getDefaultPreferencesMap(
+		String rootPortletId) {
+
+		if (rootPortletId.equals("1_WAR_knowledgebaseportlet")) {
+			return _adminDefaultPreferencesMap;
+		}
+		else if (rootPortletId.equals("2_WAR_knowledgebaseportlet")) {
+			return _displayDefaultPreferencesMap;
+		}
+		else if (rootPortletId.equals("3_WAR_knowledgebaseportlet")) {
+			return _articleDefaultPreferencesMap;
+		}
+
+		return Collections.emptyMap();
+	}
+
+	private String _updatePreferences(
 			long companyId, long ownerId, int ownerType, long plid,
 			String portletId, String xml)
 		throws Exception {
@@ -90,7 +103,7 @@ public class UpgradePortletPreferences
 			}
 		}
 
-		Map<String, String> defaultPreferencesMap = getDefaultPreferencesMap(
+		Map<String, String> defaultPreferencesMap = _getDefaultPreferencesMap(
 			rootPortletId);
 
 		for (Map.Entry<String, String> entry :
@@ -104,19 +117,6 @@ public class UpgradePortletPreferences
 		}
 
 		return PortletPreferencesFactoryUtil.toXML(preferences);
-	}
-
-	@Override
-	protected String upgradePreferences(
-			long companyId, long ownerId, int ownerType, long plid,
-			String portletId, String xml)
-		throws Exception {
-
-		String preferences = super.upgradePreferences(
-			companyId, ownerId, ownerType, plid, portletId, xml);
-
-		return updatePreferences(
-			companyId, ownerId, ownerType, plid, portletId, preferences);
 	}
 
 	private static final String[] _PORTLET_IDS = {

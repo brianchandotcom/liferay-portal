@@ -161,14 +161,14 @@ public class ScopeLocatorImpl implements ScopeLocator {
 		ScopeMapper scopeMapper =
 			_scopeMappersScopedServiceTrackerMap.getService(
 				companyId, applicationName);
-		ScopeMatcherFactory scopeMatcherFactory = getScopeMatcherFactory(
+		ScopeMatcherFactory scopeMatcherFactory = _getScopeMatcherFactory(
 			companyId);
 
 		for (String scope : scopes) {
 			for (String mappedScope : scopeMapper.map(scope)) {
 				boolean matched = matchCache.computeIfAbsent(
 					mappedScope,
-					key -> scopeMatchesScopesAlias(
+					key -> _scopeMatchesScopesAlias(
 						key, scopeMatcherFactory, prefixHandler, scopesAlias));
 
 				if (matched) {
@@ -389,41 +389,6 @@ public class ScopeLocatorImpl implements ScopeLocator {
 		return bundle;
 	}
 
-	protected ScopeMatcherFactory getScopeMatcherFactory(long companyId) {
-		ScopeMatcherFactory scopeMatcherFactory =
-			_scopeMatcherFactoriesServiceTrackerMap.getService(
-				String.valueOf(companyId));
-
-		if (scopeMatcherFactory == null) {
-			return _defaultScopeMatcherFactory;
-		}
-
-		return scopeMatcherFactory;
-	}
-
-	protected boolean scopeMatchesScopesAlias(
-		String scope, ScopeMatcherFactory scopeMatcherFactory,
-		PrefixHandler prefixHandler, String scopesAlias) {
-
-		String prefixedScope = prefixHandler.addPrefix(scope);
-
-		if (scope.length() > prefixedScope.length()) {
-			return false;
-		}
-
-		String prefix = prefixedScope.substring(
-			0, prefixedScope.length() - scope.length());
-
-		if (!scopesAlias.startsWith(prefix)) {
-			return false;
-		}
-
-		ScopeMatcher scopeMatcher = scopeMatcherFactory.create(
-			scopesAlias.substring(prefix.length()));
-
-		return scopeMatcher.match(scope);
-	}
-
 	@Reference(name = "default", unbind = "-")
 	protected void setDefaultScopeMatcherFactory(
 		ScopeMatcherFactory defaultScopeMatcherFactory) {
@@ -484,6 +449,41 @@ public class ScopeLocatorImpl implements ScopeLocator {
 
 		_scopeMatcherFactoriesServiceTrackerMap =
 			scopeMatcherFactoriesServiceTrackerMap;
+	}
+
+	private ScopeMatcherFactory _getScopeMatcherFactory(long companyId) {
+		ScopeMatcherFactory scopeMatcherFactory =
+			_scopeMatcherFactoriesServiceTrackerMap.getService(
+				String.valueOf(companyId));
+
+		if (scopeMatcherFactory == null) {
+			return _defaultScopeMatcherFactory;
+		}
+
+		return scopeMatcherFactory;
+	}
+
+	private boolean _scopeMatchesScopesAlias(
+		String scope, ScopeMatcherFactory scopeMatcherFactory,
+		PrefixHandler prefixHandler, String scopesAlias) {
+
+		String prefixedScope = prefixHandler.addPrefix(scope);
+
+		if (scope.length() > prefixedScope.length()) {
+			return false;
+		}
+
+		String prefix = prefixedScope.substring(
+			0, prefixedScope.length() - scope.length());
+
+		if (!scopesAlias.startsWith(prefix)) {
+			return false;
+		}
+
+		ScopeMatcher scopeMatcher = scopeMatcherFactory.create(
+			scopesAlias.substring(prefix.length()));
+
+		return scopeMatcher.match(scope);
 	}
 
 	private BundleContext _bundleContext;

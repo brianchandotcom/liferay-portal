@@ -66,7 +66,7 @@ public class MultiLanguageKaleoTaskAssignmentSelector
 		}
 		else {
 			String kaleoTaskAssignmentSelectorKey =
-				getKaleoTaskAssignmentSelectKey(
+				_getKaleoTaskAssignmentSelectKey(
 					kaleoTaskAssignment.getAssigneeScriptLanguage(),
 					StringUtil.trim(kaleoTaskAssignment.getAssigneeScript()));
 
@@ -106,12 +106,12 @@ public class MultiLanguageKaleoTaskAssignmentSelector
 			Map<String, Object> properties)
 		throws KaleoDefinitionValidationException {
 
-		String[] scriptingLanguages = getScriptingLanguages(
+		String[] scriptingLanguages = _getScriptingLanguages(
 			kaleoTaskAssignmentSelector, properties);
 
 		for (String scriptingLanguage : scriptingLanguages) {
 			String kaleoTaskAssignmentSelectKey =
-				getKaleoTaskAssignmentSelectKey(
+				_getKaleoTaskAssignmentSelectKey(
 					scriptingLanguage,
 					ClassUtil.getClassName(kaleoTaskAssignmentSelector));
 
@@ -120,7 +120,25 @@ public class MultiLanguageKaleoTaskAssignmentSelector
 		}
 	}
 
-	protected String getKaleoTaskAssignmentSelectKey(
+	protected void removeKaleoTaskAssignmentSelector(
+			KaleoTaskAssignmentSelector kaleoTaskAssignmentSelector,
+			Map<String, Object> properties)
+		throws KaleoDefinitionValidationException {
+
+		String[] scriptingLanguages = _getScriptingLanguages(
+			kaleoTaskAssignmentSelector, properties);
+
+		for (String scriptingLanguage : scriptingLanguages) {
+			String kaleoTaskAssignmentSelectKey =
+				_getKaleoTaskAssignmentSelectKey(
+					scriptingLanguage,
+					ClassUtil.getClassName(kaleoTaskAssignmentSelector));
+
+			_kaleoTaskAssignmentSelectors.remove(kaleoTaskAssignmentSelectKey);
+		}
+	}
+
+	private String _getKaleoTaskAssignmentSelectKey(
 			String language, String kaleoTaskAssignmentSelectorClassName)
 		throws KaleoDefinitionValidationException {
 
@@ -134,7 +152,7 @@ public class MultiLanguageKaleoTaskAssignmentSelector
 		return language;
 	}
 
-	protected String[] getScriptingLanguages(
+	private String[] _getScriptingLanguages(
 		KaleoTaskAssignmentSelector kaleoTaskAssignmentSelector,
 		Map<String, Object> properties) {
 
@@ -150,24 +168,6 @@ public class MultiLanguageKaleoTaskAssignmentSelector
 		}
 
 		return scriptingLanguages;
-	}
-
-	protected void removeKaleoTaskAssignmentSelector(
-			KaleoTaskAssignmentSelector kaleoTaskAssignmentSelector,
-			Map<String, Object> properties)
-		throws KaleoDefinitionValidationException {
-
-		String[] scriptingLanguages = getScriptingLanguages(
-			kaleoTaskAssignmentSelector, properties);
-
-		for (String scriptingLanguage : scriptingLanguages) {
-			String kaleoTaskAssignmentSelectKey =
-				getKaleoTaskAssignmentSelectKey(
-					scriptingLanguage,
-					ClassUtil.getClassName(kaleoTaskAssignmentSelector));
-
-			_kaleoTaskAssignmentSelectors.remove(kaleoTaskAssignmentSelectKey);
-		}
 	}
 
 	@Reference

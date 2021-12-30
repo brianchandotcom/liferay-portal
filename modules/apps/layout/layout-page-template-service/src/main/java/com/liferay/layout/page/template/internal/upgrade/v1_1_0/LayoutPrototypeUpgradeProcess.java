@@ -56,12 +56,44 @@ public class LayoutPrototypeUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		upgradeSchema();
+		_upgradeSchema();
 
-		upgradeLayoutPrototype();
+		_upgradeLayoutPrototype();
 	}
 
-	protected void upgradeLayoutPrototype() throws Exception {
+	private String _generateNewName(String name, Set<String> existingNames) {
+		int i = 1;
+
+		while (true) {
+			String suffix = StringPool.DASH + i;
+
+			String newName = name + suffix;
+
+			if (newName.length() > _MAX_NAME_LENGTH) {
+				String prefix = name.substring(
+					0, _MAX_NAME_LENGTH - suffix.length());
+
+				newName = prefix + suffix;
+			}
+
+			if (existingNames.contains(newName)) {
+				i++;
+
+				continue;
+			}
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					StringBundler.concat(
+						"Renaming duplicate layout prototype name \"", name,
+						"\" to \"", newName, "\""));
+			}
+
+			return newName;
+		}
+	}
+
+	private void _upgradeLayoutPrototype() throws Exception {
 		Date date = new Date(System.currentTimeMillis());
 
 		try (LoggingTimer loggingTimer = new LoggingTimer();
@@ -149,44 +181,12 @@ public class LayoutPrototypeUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
-	protected void upgradeSchema() throws Exception {
+	private void _upgradeSchema() throws Exception {
 		String template = StringUtil.read(
 			LayoutPrototypeUpgradeProcess.class.getResourceAsStream(
 				"dependencies/update.sql"));
 
 		runSQLTemplateString(template, false);
-	}
-
-	private String _generateNewName(String name, Set<String> existingNames) {
-		int i = 1;
-
-		while (true) {
-			String suffix = StringPool.DASH + i;
-
-			String newName = name + suffix;
-
-			if (newName.length() > _MAX_NAME_LENGTH) {
-				String prefix = name.substring(
-					0, _MAX_NAME_LENGTH - suffix.length());
-
-				newName = prefix + suffix;
-			}
-
-			if (existingNames.contains(newName)) {
-				i++;
-
-				continue;
-			}
-
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					StringBundler.concat(
-						"Renaming duplicate layout prototype name \"", name,
-						"\" to \"", newName, "\""));
-			}
-
-			return newName;
-		}
 	}
 
 	private static final int _MAX_NAME_LENGTH = 75;

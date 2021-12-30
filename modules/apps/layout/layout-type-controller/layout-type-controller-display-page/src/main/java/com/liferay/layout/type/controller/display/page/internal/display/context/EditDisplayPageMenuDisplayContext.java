@@ -59,7 +59,7 @@ public class EditDisplayPageMenuDisplayContext {
 	public List<DropdownItem> getDropdownItems() {
 		UnsafeConsumer<DropdownItem, Exception>
 			editURLDropdownItemUnsafeConsumer =
-				getEditURLDropdownItemUnsafeConsumer(_infoEditURLProvider);
+				_getEditURLDropdownItemUnsafeConsumer(_infoEditURLProvider);
 
 		return DropdownItemListBuilder.add(
 			() -> editURLDropdownItemUnsafeConsumer != null,
@@ -94,8 +94,8 @@ public class EditDisplayPageMenuDisplayContext {
 		).build();
 	}
 
-	protected UnsafeConsumer<DropdownItem, Exception>
-		getEditURLDropdownItemUnsafeConsumer(
+	private UnsafeConsumer<DropdownItem, Exception>
+		_getEditURLDropdownItemUnsafeConsumer(
 			InfoEditURLProvider<Object> infoEditURLProvider) {
 
 		if (infoEditURLProvider == null) {

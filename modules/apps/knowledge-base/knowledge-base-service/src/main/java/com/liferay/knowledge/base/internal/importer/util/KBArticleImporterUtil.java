@@ -71,7 +71,7 @@ public class KBArticleImporterUtil {
 		}
 
 		try {
-			String zipReaderFileName = getZipReaderFileName(
+			String zipReaderFileName = _getZipReaderFileName(
 				kbGroupServiceConfiguration.markdownImporterImageFolder(),
 				imageFileName);
 
@@ -188,7 +188,7 @@ public class KBArticleImporterUtil {
 		return fileEntry;
 	}
 
-	protected static String getZipReaderFileName(
+	private static String _getZipReaderFileName(
 		String dirName, String fileName) {
 
 		if (dirName.endsWith(StringPool.SLASH)) {

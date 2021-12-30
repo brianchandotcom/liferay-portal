@@ -41,12 +41,12 @@ public class KaleoActionUpgradeProcess extends UpgradeProcess {
 					script, "WorkflowConstants.toStatus(",
 					"WorkflowConstants.getLabelStatus(");
 
-				updateScript(kaleoActionId, script);
+				_updateScript(kaleoActionId, script);
 			}
 		}
 	}
 
-	protected void updateScript(long kaleoActionId, String script)
+	private void _updateScript(long kaleoActionId, String script)
 		throws Exception {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(

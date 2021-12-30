@@ -70,7 +70,7 @@ public abstract class BaseMessageBodyWriter<T> implements MessageBodyWriter<T> {
 		String authorizeScreenURL = null;
 
 		try {
-			authorizeScreenURL = getAuthorizeScreenURL(
+			authorizeScreenURL = _getAuthorizeScreenURL(
 				portal.getCompanyId(httpServletRequest));
 		}
 		catch (ConfigurationException configurationException) {
@@ -105,18 +105,6 @@ public abstract class BaseMessageBodyWriter<T> implements MessageBodyWriter<T> {
 		}
 	}
 
-	protected String getAuthorizeScreenURL(long companyId)
-		throws ConfigurationException {
-
-		AuthorizeScreenConfiguration authorizeScreenConfiguration =
-			configurationProvider.getConfiguration(
-				AuthorizeScreenConfiguration.class,
-				new CompanyServiceSettingsLocator(
-					companyId, AuthorizeScreenConfiguration.class.getName()));
-
-		return authorizeScreenConfiguration.authorizeScreenURL();
-	}
-
 	protected String removeParameter(String url, String name) {
 		return http.removeParameter(url, "oauth2_" + name);
 	}
@@ -142,6 +130,18 @@ public abstract class BaseMessageBodyWriter<T> implements MessageBodyWriter<T> {
 
 	@Reference
 	protected Portal portal;
+
+	private String _getAuthorizeScreenURL(long companyId)
+		throws ConfigurationException {
+
+		AuthorizeScreenConfiguration authorizeScreenConfiguration =
+			configurationProvider.getConfiguration(
+				AuthorizeScreenConfiguration.class,
+				new CompanyServiceSettingsLocator(
+					companyId, AuthorizeScreenConfiguration.class.getName()));
+
+		return authorizeScreenConfiguration.authorizeScreenURL();
+	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseMessageBodyWriter.class);

@@ -64,14 +64,14 @@ public abstract class BaseWorkflowDefinitionMVCActionCommand
 
 			addSuccessMessage(actionRequest, actionResponse);
 
-			setCloseRedirect(actionRequest);
+			_setCloseRedirect(actionRequest);
 
 			sendRedirect(actionRequest, actionResponse);
 
 			return SessionErrors.isEmpty(actionRequest);
 		}
 		catch (WorkflowException workflowException) {
-			Throwable rootThrowable = getRootThrowable(workflowException);
+			Throwable rootThrowable = _getRootThrowable(workflowException);
 
 			if (_log.isWarnEnabled()) {
 				_log.warn(workflowException, workflowException);
@@ -113,20 +113,6 @@ public abstract class BaseWorkflowDefinitionMVCActionCommand
 			themeDisplay.getLocale(), getClass());
 	}
 
-	protected Throwable getRootThrowable(WorkflowException workflowException) {
-		if (workflowException.getCause() instanceof IllegalArgumentException ||
-			workflowException.getCause() instanceof NoSuchRoleException ||
-			workflowException.getCause() instanceof
-				PrincipalException.MustBeCompanyAdmin ||
-			workflowException.getCause() instanceof
-				PrincipalException.MustBeOmniadmin) {
-
-			return workflowException.getCause();
-		}
-
-		return workflowException;
-	}
-
 	protected String getSuccessMessage(ActionRequest actionRequest) {
 		return LanguageUtil.get(
 			getResourceBundle(actionRequest), "workflow-updated-successfully");
@@ -156,21 +142,6 @@ public abstract class BaseWorkflowDefinitionMVCActionCommand
 		}
 
 		return value;
-	}
-
-	protected void setCloseRedirect(ActionRequest actionRequest) {
-		String closeRedirect = ParamUtil.getString(
-			actionRequest, "closeRedirect");
-
-		if (Validator.isNull(closeRedirect)) {
-			return;
-		}
-
-		SessionMessages.add(
-			actionRequest,
-			portal.getPortletId(actionRequest) +
-				SessionMessages.KEY_SUFFIX_CLOSE_REDIRECT,
-			closeRedirect);
 	}
 
 	protected void setRedirectAttribute(
@@ -208,6 +179,35 @@ public abstract class BaseWorkflowDefinitionMVCActionCommand
 
 	@Reference
 	protected WorkflowDefinitionManager workflowDefinitionManager;
+
+	private Throwable _getRootThrowable(WorkflowException workflowException) {
+		if (workflowException.getCause() instanceof IllegalArgumentException ||
+			workflowException.getCause() instanceof NoSuchRoleException ||
+			workflowException.getCause() instanceof
+				PrincipalException.MustBeCompanyAdmin ||
+			workflowException.getCause() instanceof
+				PrincipalException.MustBeOmniadmin) {
+
+			return workflowException.getCause();
+		}
+
+		return workflowException;
+	}
+
+	private void _setCloseRedirect(ActionRequest actionRequest) {
+		String closeRedirect = ParamUtil.getString(
+			actionRequest, "closeRedirect");
+
+		if (Validator.isNull(closeRedirect)) {
+			return;
+		}
+
+		SessionMessages.add(
+			actionRequest,
+			portal.getPortletId(actionRequest) +
+				SessionMessages.KEY_SUFFIX_CLOSE_REDIRECT,
+			closeRedirect);
+	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseWorkflowDefinitionMVCActionCommand.class);

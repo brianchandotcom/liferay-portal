@@ -113,24 +113,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 
-	protected void addAnswer(ActionRequest actionRequest) throws Exception {
-		long messageId = ParamUtil.getLong(actionRequest, "messageId");
-
-		_mbMessageService.updateAnswer(messageId, true, false);
-	}
-
-	protected void deleteAnswer(ActionRequest actionRequest) throws Exception {
-		long messageId = ParamUtil.getLong(actionRequest, "messageId");
-
-		_mbMessageService.updateAnswer(messageId, false, false);
-	}
-
-	protected void deleteMessage(ActionRequest actionRequest) throws Exception {
-		long messageId = ParamUtil.getLong(actionRequest, "messageId");
-
-		_mbMessageService.deleteMessage(messageId);
-	}
-
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
@@ -167,35 +149,35 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 
 				message = TransactionInvokerUtil.invoke(
 					_transactionConfig,
-					() -> updateMessage(actionRequest, actionResponse));
+					() -> _updateMessage(actionRequest, actionResponse));
 			}
 			else if (cmd.equals(Constants.ADD_ANSWER)) {
-				addAnswer(actionRequest);
+				_addAnswer(actionRequest);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
-				deleteMessage(actionRequest);
+				_deleteMessage(actionRequest);
 			}
 			else if (cmd.equals(Constants.DELETE_ANSWER)) {
-				deleteAnswer(actionRequest);
+				_deleteAnswer(actionRequest);
 			}
 			else if (cmd.equals(Constants.LOCK)) {
 				lockThreads(actionRequest);
 			}
 			else if (cmd.equals(Constants.SUBSCRIBE)) {
-				subscribeMessage(actionRequest);
+				_subscribeMessage(actionRequest);
 			}
 			else if (cmd.equals(Constants.UNLOCK)) {
 				unlockThreads(actionRequest);
 			}
 			else if (cmd.equals(Constants.UNSUBSCRIBE)) {
-				unsubscribeMessage(actionRequest);
+				_unsubscribeMessage(actionRequest);
 			}
 
 			if (Validator.isNotNull(cmd)) {
 				WindowState windowState = actionRequest.getWindowState();
 
 				if (!windowState.equals(LiferayWindowState.POP_UP)) {
-					String redirect = getRedirect(
+					String redirect = _getRedirect(
 						actionRequest, actionResponse, message);
 
 					sendRedirect(actionRequest, actionResponse, redirect);
@@ -268,7 +250,85 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	protected String getRedirect(
+	protected void lockThreads(ActionRequest actionRequest) throws Exception {
+		long threadId = ParamUtil.getLong(actionRequest, "threadId");
+
+		if (threadId > 0) {
+			_mbThreadService.lockThread(threadId);
+		}
+		else {
+			long[] threadIds = StringUtil.split(
+				ParamUtil.getString(actionRequest, "threadIds"), 0L);
+
+			for (long curThreadId : threadIds) {
+				_mbThreadService.lockThread(curThreadId);
+			}
+		}
+	}
+
+	protected void unlockThreads(ActionRequest actionRequest) throws Exception {
+		long threadId = ParamUtil.getLong(actionRequest, "threadId");
+
+		if (threadId > 0) {
+			_mbThreadService.unlockThread(threadId);
+		}
+		else {
+			long[] threadIds = StringUtil.split(
+				ParamUtil.getString(actionRequest, "threadIds"), 0L);
+
+			for (long curThreadId : threadIds) {
+				_mbThreadService.unlockThread(curThreadId);
+			}
+		}
+	}
+
+	private void _addAnswer(ActionRequest actionRequest) throws Exception {
+		long messageId = ParamUtil.getLong(actionRequest, "messageId");
+
+		_mbMessageService.updateAnswer(messageId, true, false);
+	}
+
+	private String _addBodyAttachmentTempFiles(
+			List<FileEntry> tempMBAttachmentFileEntries,
+			ThemeDisplay themeDisplay, String body, MBMessage message,
+			MBMessageFormatUploadHandler formatHandler)
+		throws PortalException {
+
+		Folder folder = message.addAttachmentsFolder();
+
+		List<MBAttachmentFileEntryReference> mbAttachmentFileEntryReferences =
+			MBAttachmentFileEntryUtil.addMBAttachmentFileEntries(
+				message.getGroupId(), themeDisplay.getUserId(),
+				message.getMessageId(), folder.getFolderId(),
+				tempMBAttachmentFileEntries,
+				fileName -> _uniqueFileNameProvider.provide(
+					fileName,
+					curFileName -> _hasFileEntry(
+						message.getGroupId(), folder.getFolderId(),
+						curFileName)));
+
+		for (FileEntry tempMBAttachment : tempMBAttachmentFileEntries) {
+			PortletFileRepositoryUtil.deletePortletFileEntry(
+				tempMBAttachment.getFileEntryId());
+		}
+
+		return formatHandler.replaceImageReferences(
+			body, mbAttachmentFileEntryReferences);
+	}
+
+	private void _deleteAnswer(ActionRequest actionRequest) throws Exception {
+		long messageId = ParamUtil.getLong(actionRequest, "messageId");
+
+		_mbMessageService.updateAnswer(messageId, false, false);
+	}
+
+	private void _deleteMessage(ActionRequest actionRequest) throws Exception {
+		long messageId = ParamUtil.getLong(actionRequest, "messageId");
+
+		_mbMessageService.deleteMessage(messageId);
+	}
+
+	private String _getRedirect(
 		ActionRequest actionRequest, ActionResponse actionResponse,
 		MBMessage message) {
 
@@ -280,7 +340,7 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "workflowAction", WorkflowConstants.ACTION_PUBLISH);
 
 		if (workflowAction == WorkflowConstants.ACTION_SAVE_DRAFT) {
-			return getSaveAndContinueRedirect(
+			return _getSaveAndContinueRedirect(
 				actionRequest, actionResponse, message);
 		}
 
@@ -303,7 +363,7 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 		).buildString();
 	}
 
-	protected String getSaveAndContinueRedirect(
+	private String _getSaveAndContinueRedirect(
 		ActionRequest actionRequest, ActionResponse actionResponse,
 		MBMessage message) {
 
@@ -325,23 +385,65 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 		).buildString();
 	}
 
-	protected void lockThreads(ActionRequest actionRequest) throws Exception {
-		long threadId = ParamUtil.getLong(actionRequest, "threadId");
+	private boolean _hasFileEntry(
+		long groupId, long folderId, String fileName) {
 
-		if (threadId > 0) {
-			_mbThreadService.lockThread(threadId);
-		}
-		else {
-			long[] threadIds = StringUtil.split(
-				ParamUtil.getString(actionRequest, "threadIds"), 0L);
+		FileEntry fileEntry = _portletFileRepository.fetchPortletFileEntry(
+			groupId, folderId, fileName);
 
-			for (long curThreadId : threadIds) {
-				_mbThreadService.lockThread(curThreadId);
-			}
+		if (fileEntry == null) {
+			return false;
 		}
+
+		return true;
 	}
 
-	protected void subscribeMessage(ActionRequest actionRequest)
+	private List<FileEntry> _populateInputStreamOVPs(
+			ActionRequest actionRequest, long messageId,
+			List<ObjectValuePair<String, InputStream>> inputStreamOVPs)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String[] selectedFileNames = ParamUtil.getParameterValues(
+			actionRequest, "selectedFileName");
+
+		List<FileEntry> tempFileEntries = new ArrayList<>(
+			selectedFileNames.length);
+
+		for (String selectedFileName : selectedFileNames) {
+			FileEntry tempFileEntry = TempFileEntryUtil.getTempFileEntry(
+				themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
+				MBMessageConstants.TEMP_FOLDER_NAME, selectedFileName);
+
+			tempFileEntries.add(tempFileEntry);
+
+			String originalSelectedFileName =
+				TempFileEntryUtil.getOriginalTempFileName(
+					tempFileEntry.getFileName());
+
+			String uniqueFileName = originalSelectedFileName;
+
+			if (messageId > 0) {
+				MBMessage message = _mbMessageService.getMessage(messageId);
+
+				uniqueFileName = DLUtil.getUniqueFileName(
+					tempFileEntry.getGroupId(),
+					message.getAttachmentsFolderId(), originalSelectedFileName);
+			}
+
+			ObjectValuePair<String, InputStream> inputStreamOVP =
+				new ObjectValuePair<>(
+					uniqueFileName, tempFileEntry.getContentStream());
+
+			inputStreamOVPs.add(inputStreamOVP);
+		}
+
+		return tempFileEntries;
+	}
+
+	private void _subscribeMessage(ActionRequest actionRequest)
 		throws Exception {
 
 		long messageId = ParamUtil.getLong(actionRequest, "messageId");
@@ -349,23 +451,7 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 		_mbMessageService.subscribeMessage(messageId);
 	}
 
-	protected void unlockThreads(ActionRequest actionRequest) throws Exception {
-		long threadId = ParamUtil.getLong(actionRequest, "threadId");
-
-		if (threadId > 0) {
-			_mbThreadService.unlockThread(threadId);
-		}
-		else {
-			long[] threadIds = StringUtil.split(
-				ParamUtil.getString(actionRequest, "threadIds"), 0L);
-
-			for (long curThreadId : threadIds) {
-				_mbThreadService.unlockThread(curThreadId);
-			}
-		}
-	}
-
-	protected void unsubscribeMessage(ActionRequest actionRequest)
+	private void _unsubscribeMessage(ActionRequest actionRequest)
 		throws Exception {
 
 		long messageId = ParamUtil.getLong(actionRequest, "messageId");
@@ -373,7 +459,7 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 		_mbMessageService.unsubscribeMessage(messageId);
 	}
 
-	protected MBMessage updateMessage(
+	private MBMessage _updateMessage(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
@@ -545,92 +631,6 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 				}
 			}
 		}
-	}
-
-	private String _addBodyAttachmentTempFiles(
-			List<FileEntry> tempMBAttachmentFileEntries,
-			ThemeDisplay themeDisplay, String body, MBMessage message,
-			MBMessageFormatUploadHandler formatHandler)
-		throws PortalException {
-
-		Folder folder = message.addAttachmentsFolder();
-
-		List<MBAttachmentFileEntryReference> mbAttachmentFileEntryReferences =
-			MBAttachmentFileEntryUtil.addMBAttachmentFileEntries(
-				message.getGroupId(), themeDisplay.getUserId(),
-				message.getMessageId(), folder.getFolderId(),
-				tempMBAttachmentFileEntries,
-				fileName -> _uniqueFileNameProvider.provide(
-					fileName,
-					curFileName -> _hasFileEntry(
-						message.getGroupId(), folder.getFolderId(),
-						curFileName)));
-
-		for (FileEntry tempMBAttachment : tempMBAttachmentFileEntries) {
-			PortletFileRepositoryUtil.deletePortletFileEntry(
-				tempMBAttachment.getFileEntryId());
-		}
-
-		return formatHandler.replaceImageReferences(
-			body, mbAttachmentFileEntryReferences);
-	}
-
-	private boolean _hasFileEntry(
-		long groupId, long folderId, String fileName) {
-
-		FileEntry fileEntry = _portletFileRepository.fetchPortletFileEntry(
-			groupId, folderId, fileName);
-
-		if (fileEntry == null) {
-			return false;
-		}
-
-		return true;
-	}
-
-	private List<FileEntry> _populateInputStreamOVPs(
-			ActionRequest actionRequest, long messageId,
-			List<ObjectValuePair<String, InputStream>> inputStreamOVPs)
-		throws PortalException {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		String[] selectedFileNames = ParamUtil.getParameterValues(
-			actionRequest, "selectedFileName");
-
-		List<FileEntry> tempFileEntries = new ArrayList<>(
-			selectedFileNames.length);
-
-		for (String selectedFileName : selectedFileNames) {
-			FileEntry tempFileEntry = TempFileEntryUtil.getTempFileEntry(
-				themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
-				MBMessageConstants.TEMP_FOLDER_NAME, selectedFileName);
-
-			tempFileEntries.add(tempFileEntry);
-
-			String originalSelectedFileName =
-				TempFileEntryUtil.getOriginalTempFileName(
-					tempFileEntry.getFileName());
-
-			String uniqueFileName = originalSelectedFileName;
-
-			if (messageId > 0) {
-				MBMessage message = _mbMessageService.getMessage(messageId);
-
-				uniqueFileName = DLUtil.getUniqueFileName(
-					tempFileEntry.getGroupId(),
-					message.getAttachmentsFolderId(), originalSelectedFileName);
-			}
-
-			ObjectValuePair<String, InputStream> inputStreamOVP =
-				new ObjectValuePair<>(
-					uniqueFileName, tempFileEntry.getContentStream());
-
-			inputStreamOVPs.add(inputStreamOVP);
-		}
-
-		return tempFileEntries;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

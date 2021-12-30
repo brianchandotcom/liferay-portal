@@ -38,15 +38,15 @@ public abstract class BaseNodeValidator<T extends Node>
 
 		doValidate(definition, node);
 
-		validateName(node);
-		validateNotifications(node);
-		validateTransitions(node.getOutgoingTransitions());
+		_validateName(node);
+		_validateNotifications(node);
+		_validateTransitions(node.getOutgoingTransitions());
 	}
 
 	protected abstract void doValidate(Definition definition, T node)
 		throws KaleoDefinitionValidationException;
 
-	protected void validateName(T node)
+	private void _validateName(T node)
 		throws KaleoDefinitionValidationException {
 
 		String name = node.getName();
@@ -57,7 +57,7 @@ public abstract class BaseNodeValidator<T extends Node>
 		}
 	}
 
-	protected void validateNotifications(T node)
+	private void _validateNotifications(T node)
 		throws KaleoDefinitionValidationException {
 
 		Set<Notification> notifications = node.getNotifications();
@@ -72,7 +72,7 @@ public abstract class BaseNodeValidator<T extends Node>
 		}
 	}
 
-	protected void validateTransition(Transition transition)
+	private void _validateTransition(Transition transition)
 		throws KaleoDefinitionValidationException {
 
 		if (transition.getTargetNode() == null) {
@@ -81,11 +81,11 @@ public abstract class BaseNodeValidator<T extends Node>
 		}
 	}
 
-	protected void validateTransitions(Map<String, Transition> transitions)
+	private void _validateTransitions(Map<String, Transition> transitions)
 		throws KaleoDefinitionValidationException {
 
 		for (Transition transition : transitions.values()) {
-			validateTransition(transition);
+			_validateTransition(transition);
 		}
 	}
 

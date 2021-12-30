@@ -48,7 +48,13 @@ public abstract class BaseContextContainerRequestFilter
 		return PortalUtil.getCompanyId(httpServletRequest);
 	}
 
-	protected String getApplicationName() {
+	@Context
+	protected Application application;
+
+	@Context
+	protected HttpServletRequest httpServletRequest;
+
+	private String _getApplicationName() {
 		Bundle bundle = getBundle();
 
 		if (bundle == null) {
@@ -87,11 +93,5 @@ public abstract class BaseContextContainerRequestFilter
 
 		return applicationClassName;
 	}
-
-	@Context
-	protected Application application;
-
-	@Context
-	protected HttpServletRequest httpServletRequest;
 
 }

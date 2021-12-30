@@ -103,9 +103,9 @@ public class WorkflowInstancePortletTab extends BaseWorkflowPortletTab {
 		throws PortletException {
 
 		try {
-			setWorkflowInstanceDisplayContextRenderRequestAttribute(
+			_setWorkflowInstanceDisplayContextRenderRequestAttribute(
 				renderRequest, renderResponse);
-			setWorkflowInstanceRenderRequestAttribute(renderRequest);
+			_setWorkflowInstanceRenderRequestAttribute(renderRequest);
 		}
 		catch (Exception exception) {
 			if (workflowPreprocessorHelper.isSessionErrorException(exception)) {
@@ -145,7 +145,16 @@ public class WorkflowInstancePortletTab extends BaseWorkflowPortletTab {
 		super.setServletContext(servletContext);
 	}
 
-	protected void setWorkflowInstanceDisplayContextRenderRequestAttribute(
+	@Reference
+	protected Portal portal;
+
+	protected volatile WorkflowInstanceWebConfiguration
+		workflowInstanceWebConfiguration;
+
+	@Reference
+	protected WorkflowPreprocessorHelper workflowPreprocessorHelper;
+
+	private void _setWorkflowInstanceDisplayContextRenderRequestAttribute(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortalException {
 
@@ -173,7 +182,7 @@ public class WorkflowInstancePortletTab extends BaseWorkflowPortletTab {
 		}
 	}
 
-	protected void setWorkflowInstanceRenderRequestAttribute(
+	private void _setWorkflowInstanceRenderRequestAttribute(
 			RenderRequest renderRequest)
 		throws PortalException {
 
@@ -192,15 +201,6 @@ public class WorkflowInstancePortletTab extends BaseWorkflowPortletTab {
 
 		renderRequest.setAttribute(WebKeys.WORKFLOW_INSTANCE, workflowInstance);
 	}
-
-	@Reference
-	protected Portal portal;
-
-	protected volatile WorkflowInstanceWebConfiguration
-		workflowInstanceWebConfiguration;
-
-	@Reference
-	protected WorkflowPreprocessorHelper workflowPreprocessorHelper;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		WorkflowInstancePortletTab.class);

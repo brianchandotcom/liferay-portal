@@ -82,7 +82,7 @@ public class UpdateWorkflowDefinitionLinkMVCActionCommand
 		throws Exception {
 
 		String[] classNameAndWorkflowDefinition =
-			getClassNameAndWorkflowDefinition(actionRequest);
+			_getClassNameAndWorkflowDefinition(actionRequest);
 
 		String className = classNameAndWorkflowDefinition[0];
 		String workflowDefinition = classNameAndWorkflowDefinition[1];
@@ -114,7 +114,15 @@ public class UpdateWorkflowDefinitionLinkMVCActionCommand
 		sendRedirect(actionRequest, actionResponse);
 	}
 
-	protected String[] getClassNameAndWorkflowDefinition(
+	@Reference(unbind = "-")
+	protected void setWorkflowDefinitionLinkLocalService(
+		WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService) {
+
+		_workflowDefinitionLinkLocalService =
+			workflowDefinitionLinkLocalService;
+	}
+
+	private String[] _getClassNameAndWorkflowDefinition(
 		ActionRequest actionRequest) {
 
 		String className = StringPool.BLANK;
@@ -136,14 +144,6 @@ public class UpdateWorkflowDefinitionLinkMVCActionCommand
 		}
 
 		return new String[] {className, workflowDefinition};
-	}
-
-	@Reference(unbind = "-")
-	protected void setWorkflowDefinitionLinkLocalService(
-		WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService) {
-
-		_workflowDefinitionLinkLocalService =
-			workflowDefinitionLinkLocalService;
 	}
 
 	private static final String _PREFIX = "workflowDefinitionName@";

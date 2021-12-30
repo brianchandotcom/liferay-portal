@@ -153,7 +153,7 @@ public class KBArticleStagedModelDataHandler
 			}
 		}
 
-		exportKBArticleAttachments(portletDataContext, kbArticle);
+		_exportKBArticleAttachments(portletDataContext, kbArticle);
 
 		String content =
 			_kbArticleExportImportContentProcessor.
@@ -263,7 +263,7 @@ public class KBArticleStagedModelDataHandler
 			}
 		}
 
-		importKBArticleAttachments(
+		_importKBArticleAttachments(
 			portletDataContext, kbArticle, importedKBArticle);
 
 		portletDataContext.importClassedModel(kbArticle, importedKBArticle);
@@ -272,74 +272,6 @@ public class KBArticleStagedModelDataHandler
 			kbArticleResourcePrimKeys.put(
 				kbArticle.getResourcePrimKey(),
 				importedKBArticle.getResourcePrimKey());
-		}
-	}
-
-	protected void exportKBArticleAttachments(
-			PortletDataContext portletDataContext, KBArticle kbArticle)
-		throws Exception {
-
-		for (FileEntry fileEntry : kbArticle.getAttachmentsFileEntries()) {
-			StagedModelDataHandlerUtil.exportReferenceStagedModel(
-				portletDataContext, kbArticle, fileEntry,
-				PortletDataContext.REFERENCE_TYPE_WEAK);
-		}
-	}
-
-	protected void importKBArticleAttachments(
-			PortletDataContext portletDataContext, KBArticle kbArticle,
-			KBArticle importedKBArticle)
-		throws Exception {
-
-		List<Element> dlFileEntryElements =
-			portletDataContext.getReferenceDataElements(
-				kbArticle, DLFileEntry.class);
-
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setCompanyId(portletDataContext.getCompanyId());
-		serviceContext.setScopeGroupId(portletDataContext.getScopeGroupId());
-
-		for (Element dlFileEntryElement : dlFileEntryElements) {
-			String path = dlFileEntryElement.attributeValue("path");
-
-			FileEntry fileEntry =
-				(FileEntry)portletDataContext.getZipEntryAsObject(path);
-
-			String binPath = dlFileEntryElement.attributeValue("bin-path");
-
-			try (InputStream inputStream = _getKBArticalAttachmentInputStream(
-					binPath, portletDataContext, fileEntry)) {
-
-				if (inputStream == null) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							"Unable to import attachment for file entry " +
-								fileEntry.getFileEntryId());
-					}
-
-					continue;
-				}
-
-				_portletFileRepository.addPortletFileEntry(
-					portletDataContext.getScopeGroupId(),
-					portletDataContext.getUserId(
-						importedKBArticle.getUserUuid()),
-					KBArticle.class.getName(), importedKBArticle.getClassPK(),
-					KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
-					importedKBArticle.getAttachmentsFolderId(), inputStream,
-					fileEntry.getFileName(), fileEntry.getMimeType(), true);
-			}
-			catch (DuplicateFileEntryException duplicateFileEntryException) {
-
-				// LPS-52675
-
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						duplicateFileEntryException,
-						duplicateFileEntryException);
-				}
-			}
 		}
 	}
 
@@ -415,6 +347,17 @@ public class KBArticleStagedModelDataHandler
 		return importedKBArticle;
 	}
 
+	private void _exportKBArticleAttachments(
+			PortletDataContext portletDataContext, KBArticle kbArticle)
+		throws Exception {
+
+		for (FileEntry fileEntry : kbArticle.getAttachmentsFileEntries()) {
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, kbArticle, fileEntry,
+				PortletDataContext.REFERENCE_TYPE_WEAK);
+		}
+	}
+
 	private KBArticle _findExistingKBArticle(
 		PortletDataContext portletDataContext, long resourcePrimaryKey,
 		KBArticle kbArticle, ServiceContext serviceContext) {
@@ -479,6 +422,63 @@ public class KBArticleStagedModelDataHandler
 		}
 
 		return portletDataContext.getZipEntryAsInputStream(binPath);
+	}
+
+	private void _importKBArticleAttachments(
+			PortletDataContext portletDataContext, KBArticle kbArticle,
+			KBArticle importedKBArticle)
+		throws Exception {
+
+		List<Element> dlFileEntryElements =
+			portletDataContext.getReferenceDataElements(
+				kbArticle, DLFileEntry.class);
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setCompanyId(portletDataContext.getCompanyId());
+		serviceContext.setScopeGroupId(portletDataContext.getScopeGroupId());
+
+		for (Element dlFileEntryElement : dlFileEntryElements) {
+			String path = dlFileEntryElement.attributeValue("path");
+
+			FileEntry fileEntry =
+				(FileEntry)portletDataContext.getZipEntryAsObject(path);
+
+			String binPath = dlFileEntryElement.attributeValue("bin-path");
+
+			try (InputStream inputStream = _getKBArticalAttachmentInputStream(
+					binPath, portletDataContext, fileEntry)) {
+
+				if (inputStream == null) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Unable to import attachment for file entry " +
+								fileEntry.getFileEntryId());
+					}
+
+					continue;
+				}
+
+				_portletFileRepository.addPortletFileEntry(
+					portletDataContext.getScopeGroupId(),
+					portletDataContext.getUserId(
+						importedKBArticle.getUserUuid()),
+					KBArticle.class.getName(), importedKBArticle.getClassPK(),
+					KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
+					importedKBArticle.getAttachmentsFolderId(), inputStream,
+					fileEntry.getFileName(), fileEntry.getMimeType(), true);
+			}
+			catch (DuplicateFileEntryException duplicateFileEntryException) {
+
+				// LPS-52675
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						duplicateFileEntryException,
+						duplicateFileEntryException);
+				}
+			}
+		}
 	}
 
 	private KBArticle _updateKBArticle(

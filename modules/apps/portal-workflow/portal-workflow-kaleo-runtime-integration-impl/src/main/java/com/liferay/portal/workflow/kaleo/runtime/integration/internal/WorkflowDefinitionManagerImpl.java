@@ -113,7 +113,7 @@ public class WorkflowDefinitionManagerImpl
 
 			int size = kaleoDefinitions.size();
 
-			return toWorkflowDefinitions(
+			return _toWorkflowDefinitions(
 				kaleoDefinitions.toArray(new KaleoDefinition[size]),
 				orderByComparator);
 		}
@@ -145,7 +145,7 @@ public class WorkflowDefinitionManagerImpl
 
 			int size = kaleoDefinitions.size();
 
-			return toWorkflowDefinitions(
+			return _toWorkflowDefinitions(
 				kaleoDefinitions.toArray(new KaleoDefinition[size]),
 				orderByComparator);
 		}
@@ -232,7 +232,7 @@ public class WorkflowDefinitionManagerImpl
 
 			int size = kaleoDefinitions.size();
 
-			return toWorkflowDefinitions(
+			return _toWorkflowDefinitions(
 				kaleoDefinitions.toArray(new KaleoDefinition[size]),
 				orderByComparator);
 		}
@@ -298,7 +298,7 @@ public class WorkflowDefinitionManagerImpl
 
 			int size = kaleoDefinitionVersions.size();
 
-			return toWorkflowDefinitions(
+			return _toWorkflowDefinitions(
 				kaleoDefinitionVersions.toArray(
 					new KaleoDefinitionVersion[size]),
 				orderByComparator);
@@ -437,17 +437,20 @@ public class WorkflowDefinitionManagerImpl
 			new UnsyncByteArrayInputStream(bytes));
 	}
 
-	protected String getNextVersion(String version) {
+	protected String getVersion(int version) {
+		return version + StringPool.PERIOD + 0;
+	}
+
+	@Reference
+	protected PortalUUID portalUUID;
+
+	private String _getNextVersion(String version) {
 		int[] versionParts = StringUtil.split(version, StringPool.PERIOD, 0);
 
 		return String.valueOf(++versionParts[0]);
 	}
 
-	protected String getVersion(int version) {
-		return version + StringPool.PERIOD + 0;
-	}
-
-	protected List<WorkflowDefinition> toWorkflowDefinitions(
+	private List<WorkflowDefinition> _toWorkflowDefinitions(
 		KaleoDefinition[] kaleoDefinitions,
 		OrderByComparator<WorkflowDefinition> orderByComparator) {
 
@@ -469,7 +472,7 @@ public class WorkflowDefinitionManagerImpl
 		return workflowDefinitions;
 	}
 
-	protected List<WorkflowDefinition> toWorkflowDefinitions(
+	private List<WorkflowDefinition> _toWorkflowDefinitions(
 			KaleoDefinitionVersion[] kaleoDefinitionVersions,
 			OrderByComparator<WorkflowDefinition> orderByComparator)
 		throws PortalException {
@@ -493,9 +496,6 @@ public class WorkflowDefinitionManagerImpl
 
 		return workflowDefinitions;
 	}
-
-	@Reference
-	protected PortalUUID portalUUID;
 
 	@Reference
 	private KaleoDefinitionLocalService _kaleoDefinitionLocalService;

@@ -95,7 +95,7 @@ public class AssignScopesMVCRenderCommand implements MVCRenderCommand {
 						_oAuth2ApplicationService, _oAuth2ProviderConfiguration,
 						_oAuth2ScopeGrantLocalService, renderRequest,
 						_scopeDescriptorLocator, _scopeLocator,
-						getScopeMatcherFactory(themeDisplay.getCompanyId()),
+						_getScopeMatcherFactory(themeDisplay.getCompanyId()),
 						themeDisplay));
 			}
 		}
@@ -124,7 +124,11 @@ public class AssignScopesMVCRenderCommand implements MVCRenderCommand {
 		_scopeMatcherFactoryServiceTrackerMap.close();
 	}
 
-	protected ScopeMatcherFactory getScopeMatcherFactory(long companyId) {
+	protected ThemeDisplay getThemeDisplay(PortletRequest portletRequest) {
+		return (ThemeDisplay)portletRequest.getAttribute(WebKeys.THEME_DISPLAY);
+	}
+
+	private ScopeMatcherFactory _getScopeMatcherFactory(long companyId) {
 		ScopeMatcherFactory scopeMatcherFactory =
 			_scopeMatcherFactoryServiceTrackerMap.getService(
 				String.valueOf(companyId));
@@ -134,10 +138,6 @@ public class AssignScopesMVCRenderCommand implements MVCRenderCommand {
 		}
 
 		return scopeMatcherFactory;
-	}
-
-	protected ThemeDisplay getThemeDisplay(PortletRequest portletRequest) {
-		return (ThemeDisplay)portletRequest.getAttribute(WebKeys.THEME_DISPLAY);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -25,10 +25,10 @@ public class SchemaUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		updateSQL();
+		_updateSQL();
 	}
 
-	protected void updateSQL() throws Exception {
+	private void _updateSQL() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			String template = StringUtil.read(
 				SchemaUpgradeProcess.class.getResourceAsStream(

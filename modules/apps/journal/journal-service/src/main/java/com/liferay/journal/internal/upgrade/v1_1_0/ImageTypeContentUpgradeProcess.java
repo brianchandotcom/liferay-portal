@@ -45,7 +45,13 @@ public class ImageTypeContentUpgradeProcess extends UpgradeProcess {
 		_portletFileRepository = portletFileRepository;
 	}
 
-	protected void copyJournalArticleImagesToJournalRepository()
+	@Override
+	protected void doUpgrade() throws Exception {
+		_copyJournalArticleImagesToJournalRepository();
+		_dropJournalArticleImageTable();
+	}
+
+	private void _copyJournalArticleImagesToJournalRepository()
 		throws Exception {
 
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
@@ -120,13 +126,7 @@ public class ImageTypeContentUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
-	@Override
-	protected void doUpgrade() throws Exception {
-		copyJournalArticleImagesToJournalRepository();
-		dropJournalArticleImageTable();
-	}
-
-	protected void dropJournalArticleImageTable() throws Exception {
+	private void _dropJournalArticleImageTable() throws Exception {
 		runSQL(connection, "drop table JournalArticleImage");
 
 		if (_log.isInfoEnabled()) {

@@ -133,7 +133,7 @@ public class JournalContentPortletLayoutListener
 				layout.getGroupId(), layout.isPrivateLayout(),
 				layout.getLayoutId(), portletId, article.getArticleId());
 
-			String[] runtimePortletIds = getRuntimePortletIds(
+			String[] runtimePortletIds = _getRuntimePortletIds(
 				layout.getCompanyId(), layout.getGroupId(),
 				article.getArticleId());
 
@@ -189,93 +189,6 @@ public class JournalContentPortletLayoutListener
 		throws PortletLayoutListenerException {
 	}
 
-	protected String getRuntimePortletId(String xml) throws Exception {
-		Document document = SAXReaderUtil.read(xml);
-
-		Element rootElement = document.getRootElement();
-
-		String portletName = rootElement.attributeValue("name");
-		String instanceId = rootElement.attributeValue("instance");
-
-		return PortletIdCodec.encode(portletName, 0, instanceId);
-	}
-
-	protected String[] getRuntimePortletIds(
-			long companyId, long scopeGroupId, String articleId)
-		throws Exception {
-
-		JournalArticle article =
-			_journalArticleLocalService.fetchDisplayArticle(
-				scopeGroupId, articleId);
-
-		if (article == null) {
-			Group group = _groupLocalService.fetchGroup(companyId);
-
-			if (group == null) {
-				return new String[0];
-			}
-
-			article = _journalArticleLocalService.fetchDisplayArticle(
-				group.getGroupId(), articleId);
-
-			if (article == null) {
-				return new String[0];
-			}
-		}
-
-		Set<String> portletIds = getRuntimePortletIds(article.getContent());
-
-		if (Validator.isNotNull(article.getDDMTemplateKey())) {
-			DDMTemplate ddmTemplate = _ddmTemplateLocalService.fetchTemplate(
-				scopeGroupId, _portal.getClassNameId(DDMStructure.class),
-				article.getDDMTemplateKey(), true);
-
-			if (ddmTemplate != null) {
-				portletIds.addAll(
-					getRuntimePortletIds(ddmTemplate.getScript()));
-			}
-		}
-
-		return portletIds.toArray(new String[0]);
-	}
-
-	protected Set<String> getRuntimePortletIds(String content)
-		throws Exception {
-
-		Set<String> portletIds = new LinkedHashSet<>();
-
-		for (int index = 0;;) {
-			index = content.indexOf(PortletLogic.OPEN_TAG, index);
-
-			if (index == -1) {
-				break;
-			}
-
-			int close1 = content.indexOf(PortletLogic.CLOSE_1_TAG, index);
-			int close2 = content.indexOf(PortletLogic.CLOSE_2_TAG, index);
-
-			int closeIndex = -1;
-
-			if ((close2 == -1) || ((close1 != -1) && (close1 < close2))) {
-				closeIndex = close1 + PortletLogic.CLOSE_1_TAG.length();
-			}
-			else {
-				closeIndex = close2 + PortletLogic.CLOSE_2_TAG.length();
-			}
-
-			if (closeIndex == -1) {
-				break;
-			}
-
-			portletIds.add(
-				getRuntimePortletId(content.substring(index, closeIndex)));
-
-			index = closeIndex;
-		}
-
-		return portletIds;
-	}
-
 	private void _addLayoutClassedModelUsage(
 		Layout layout, String portletId, JournalArticle article) {
 
@@ -320,6 +233,91 @@ public class JournalContentPortletLayoutListener
 		String articleId = portletPreferences.getValue("articleId", null);
 
 		return _journalArticleLocalService.fetchArticle(groupId, articleId);
+	}
+
+	private String _getRuntimePortletId(String xml) throws Exception {
+		Document document = SAXReaderUtil.read(xml);
+
+		Element rootElement = document.getRootElement();
+
+		String portletName = rootElement.attributeValue("name");
+		String instanceId = rootElement.attributeValue("instance");
+
+		return PortletIdCodec.encode(portletName, 0, instanceId);
+	}
+
+	private String[] _getRuntimePortletIds(
+			long companyId, long scopeGroupId, String articleId)
+		throws Exception {
+
+		JournalArticle article =
+			_journalArticleLocalService.fetchDisplayArticle(
+				scopeGroupId, articleId);
+
+		if (article == null) {
+			Group group = _groupLocalService.fetchGroup(companyId);
+
+			if (group == null) {
+				return new String[0];
+			}
+
+			article = _journalArticleLocalService.fetchDisplayArticle(
+				group.getGroupId(), articleId);
+
+			if (article == null) {
+				return new String[0];
+			}
+		}
+
+		Set<String> portletIds = _getRuntimePortletIds(article.getContent());
+
+		if (Validator.isNotNull(article.getDDMTemplateKey())) {
+			DDMTemplate ddmTemplate = _ddmTemplateLocalService.fetchTemplate(
+				scopeGroupId, _portal.getClassNameId(DDMStructure.class),
+				article.getDDMTemplateKey(), true);
+
+			if (ddmTemplate != null) {
+				portletIds.addAll(
+					_getRuntimePortletIds(ddmTemplate.getScript()));
+			}
+		}
+
+		return portletIds.toArray(new String[0]);
+	}
+
+	private Set<String> _getRuntimePortletIds(String content) throws Exception {
+		Set<String> portletIds = new LinkedHashSet<>();
+
+		for (int index = 0;;) {
+			index = content.indexOf(PortletLogic.OPEN_TAG, index);
+
+			if (index == -1) {
+				break;
+			}
+
+			int close1 = content.indexOf(PortletLogic.CLOSE_1_TAG, index);
+			int close2 = content.indexOf(PortletLogic.CLOSE_2_TAG, index);
+
+			int closeIndex = -1;
+
+			if ((close2 == -1) || ((close1 != -1) && (close1 < close2))) {
+				closeIndex = close1 + PortletLogic.CLOSE_1_TAG.length();
+			}
+			else {
+				closeIndex = close2 + PortletLogic.CLOSE_2_TAG.length();
+			}
+
+			if (closeIndex == -1) {
+				break;
+			}
+
+			portletIds.add(
+				_getRuntimePortletId(content.substring(index, closeIndex)));
+
+			index = closeIndex;
+		}
+
+		return portletIds;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

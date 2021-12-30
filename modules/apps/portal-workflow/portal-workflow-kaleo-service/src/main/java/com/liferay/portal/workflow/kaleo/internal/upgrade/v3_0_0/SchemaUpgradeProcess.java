@@ -50,7 +50,14 @@ import java.util.List;
  */
 public class SchemaUpgradeProcess extends UpgradeProcess {
 
-	protected void addBatch(
+	@Override
+	protected void doUpgrade() throws Exception {
+		_addKaleoDefinitionId();
+
+		_upgradeKaleoDefinitionId();
+	}
+
+	private void _addBatch(
 			PreparedStatement preparedStatement, long kaleoDefinitionId,
 			long kaleoDefinitionVersionId)
 		throws SQLException {
@@ -61,7 +68,7 @@ public class SchemaUpgradeProcess extends UpgradeProcess {
 		preparedStatement.addBatch();
 	}
 
-	protected void addKaleoDefinitionId() throws Exception {
+	private void _addKaleoDefinitionId() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			if (!hasColumn("KaleoAction", "kaleoDefinitionId")) {
 				alter(
@@ -175,14 +182,7 @@ public class SchemaUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
-	@Override
-	protected void doUpgrade() throws Exception {
-		addKaleoDefinitionId();
-
-		upgradeKaleoDefinitionId();
-	}
-
-	protected void upgradeKaleoDefinitionId() throws Exception {
+	private void _upgradeKaleoDefinitionId() throws Exception {
 		List<PreparedStatement> preparedStatements = new ArrayList<>(18);
 
 		try (LoggingTimer loggingTimer = new LoggingTimer();
@@ -214,7 +214,7 @@ public class SchemaUpgradeProcess extends UpgradeProcess {
 				for (PreparedStatement curPreparedStatement :
 						preparedStatements) {
 
-					addBatch(
+					_addBatch(
 						curPreparedStatement, kaleoDefinitionId,
 						kaleoDefinitionVersionId);
 				}

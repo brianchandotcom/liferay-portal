@@ -41,7 +41,7 @@ public abstract class BaseWorkflowTaskMVCActionCommand
 		try {
 			doProcessAction(actionRequest, actionResponse);
 
-			setRedirectAttribute(actionRequest);
+			_setRedirectAttribute(actionRequest);
 
 			return SessionErrors.isEmpty(actionRequest);
 		}
@@ -57,7 +57,7 @@ public abstract class BaseWorkflowTaskMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception;
 
-	protected void setRedirectAttribute(ActionRequest actionRequest) {
+	private void _setRedirectAttribute(ActionRequest actionRequest) {
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
 
 		String closeRedirect = ParamUtil.getString(

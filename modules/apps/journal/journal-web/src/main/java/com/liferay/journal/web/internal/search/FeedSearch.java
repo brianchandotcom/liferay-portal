@@ -70,11 +70,11 @@ public class FeedSearch extends SearchContainer<JournalFeed> {
 			"feed-search-order-by-type", "asc");
 
 		setOrderByComparator(
-			getOrganizationOrderByComparator(orderByCol, orderByType));
+			_getOrganizationOrderByComparator(orderByCol, orderByType));
 		setOrderByType(orderByType);
 	}
 
-	protected OrderByComparator<JournalFeed> getOrganizationOrderByComparator(
+	private OrderByComparator<JournalFeed> _getOrganizationOrderByComparator(
 		String orderByCol, String orderByType) {
 
 		boolean orderByAsc = false;

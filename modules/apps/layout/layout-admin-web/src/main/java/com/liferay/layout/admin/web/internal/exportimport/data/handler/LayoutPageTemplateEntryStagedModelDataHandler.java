@@ -186,7 +186,7 @@ public class LayoutPageTemplateEntryStagedModelDataHandler
 				uuid, groupId);
 		}
 		else {
-			existingLayoutPageTemplateEntry = fetchExistingTemplate(
+			existingLayoutPageTemplateEntry = _fetchExistingTemplate(
 				uuid, groupId, name, type, 0L, preloaded);
 		}
 
@@ -318,7 +318,7 @@ public class LayoutPageTemplateEntryStagedModelDataHandler
 				element.attributeValue("preloaded"));
 
 			LayoutPageTemplateEntry existingLayoutPageTemplateEntry =
-				fetchExistingTemplate(
+				_fetchExistingTemplate(
 					layoutPageTemplateEntry.getUuid(),
 					portletDataContext.getScopeGroupId(),
 					layoutPageTemplateEntry.getName(),
@@ -368,32 +368,6 @@ public class LayoutPageTemplateEntryStagedModelDataHandler
 
 		portletDataContext.importClassedModel(
 			layoutPageTemplateEntry, importedLayoutPageTemplateEntry);
-	}
-
-	protected LayoutPageTemplateEntry fetchExistingTemplate(
-		String uuid, long groupId, String name, int type, long plid,
-		boolean preloaded) {
-
-		LayoutPageTemplateEntry existingTemplate = null;
-
-		if (!preloaded) {
-			existingTemplate =
-				_stagedModelRepository.fetchStagedModelByUuidAndGroupId(
-					uuid, groupId);
-		}
-		else if (plid > 0) {
-			existingTemplate =
-				_layoutPageTemplateEntryLocalService.
-					fetchLayoutPageTemplateEntryByPlid(plid);
-		}
-
-		if ((existingTemplate == null) && preloaded) {
-			existingTemplate =
-				_layoutPageTemplateEntryLocalService.
-					fetchLayoutPageTemplateEntry(groupId, name, type);
-		}
-
-		return existingTemplate;
 	}
 
 	@Override
@@ -465,6 +439,32 @@ public class LayoutPageTemplateEntryStagedModelDataHandler
 		StagedModelDataHandlerUtil.exportReferenceStagedModel(
 			portletDataContext, layoutPageTemplateEntry, layout,
 			PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
+	}
+
+	private LayoutPageTemplateEntry _fetchExistingTemplate(
+		String uuid, long groupId, String name, int type, long plid,
+		boolean preloaded) {
+
+		LayoutPageTemplateEntry existingTemplate = null;
+
+		if (!preloaded) {
+			existingTemplate =
+				_stagedModelRepository.fetchStagedModelByUuidAndGroupId(
+					uuid, groupId);
+		}
+		else if (plid > 0) {
+			existingTemplate =
+				_layoutPageTemplateEntryLocalService.
+					fetchLayoutPageTemplateEntryByPlid(plid);
+		}
+
+		if ((existingTemplate == null) && preloaded) {
+			existingTemplate =
+				_layoutPageTemplateEntryLocalService.
+					fetchLayoutPageTemplateEntry(groupId, name, type);
+		}
+
+		return existingTemplate;
 	}
 
 	private void _validateLayoutPrototype(

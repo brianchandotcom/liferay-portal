@@ -68,7 +68,64 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class EditCategoryMVCActionCommand extends BaseMVCActionCommand {
 
-	protected void deleteCategories(
+	@Override
+	protected void doProcessAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
+
+		try {
+			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
+				_updateCategory(actionRequest);
+			}
+			else if (cmd.equals(Constants.DELETE)) {
+				_deleteCategories(actionRequest, false);
+			}
+			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
+				_deleteCategories(actionRequest, true);
+			}
+			else if (cmd.equals(Constants.RESTORE)) {
+				_restoreTrashEntries(actionRequest);
+			}
+			else if (cmd.equals(Constants.SUBSCRIBE)) {
+				_subscribeCategory(actionRequest);
+			}
+			else if (cmd.equals(Constants.UNSUBSCRIBE)) {
+				_unsubscribeCategory(actionRequest);
+			}
+		}
+		catch (NoSuchCategoryException | PrincipalException exception) {
+			SessionErrors.add(actionRequest, exception.getClass());
+
+			actionResponse.setRenderParameter(
+				"mvcPath", "/message_boards/error.jsp");
+		}
+		catch (CaptchaException | CategoryNameException |
+			   MailingListEmailAddressException |
+			   MailingListInServerNameException |
+			   MailingListInUserNameException |
+			   MailingListOutEmailAddressException |
+			   MailingListOutServerNameException |
+			   MailingListOutUserNameException exception) {
+
+			SessionErrors.add(actionRequest, exception.getClass());
+		}
+	}
+
+	protected CaptchaConfiguration getCaptchaConfiguration()
+		throws CaptchaConfigurationException {
+
+		try {
+			return _configurationProvider.getSystemConfiguration(
+				CaptchaConfiguration.class);
+		}
+		catch (Exception exception) {
+			throw new CaptchaConfigurationException(exception);
+		}
+	}
+
+	private void _deleteCategories(
 			ActionRequest actionRequest, boolean moveToTrash)
 		throws Exception {
 
@@ -111,64 +168,7 @@ public class EditCategoryMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	@Override
-	protected void doProcessAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
-
-		try {
-			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
-				updateCategory(actionRequest);
-			}
-			else if (cmd.equals(Constants.DELETE)) {
-				deleteCategories(actionRequest, false);
-			}
-			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
-				deleteCategories(actionRequest, true);
-			}
-			else if (cmd.equals(Constants.RESTORE)) {
-				restoreTrashEntries(actionRequest);
-			}
-			else if (cmd.equals(Constants.SUBSCRIBE)) {
-				subscribeCategory(actionRequest);
-			}
-			else if (cmd.equals(Constants.UNSUBSCRIBE)) {
-				unsubscribeCategory(actionRequest);
-			}
-		}
-		catch (NoSuchCategoryException | PrincipalException exception) {
-			SessionErrors.add(actionRequest, exception.getClass());
-
-			actionResponse.setRenderParameter(
-				"mvcPath", "/message_boards/error.jsp");
-		}
-		catch (CaptchaException | CategoryNameException |
-			   MailingListEmailAddressException |
-			   MailingListInServerNameException |
-			   MailingListInUserNameException |
-			   MailingListOutEmailAddressException |
-			   MailingListOutServerNameException |
-			   MailingListOutUserNameException exception) {
-
-			SessionErrors.add(actionRequest, exception.getClass());
-		}
-	}
-
-	protected CaptchaConfiguration getCaptchaConfiguration()
-		throws CaptchaConfigurationException {
-
-		try {
-			return _configurationProvider.getSystemConfiguration(
-				CaptchaConfiguration.class);
-		}
-		catch (Exception exception) {
-			throw new CaptchaConfigurationException(exception);
-		}
-	}
-
-	protected void restoreTrashEntries(ActionRequest actionRequest)
+	private void _restoreTrashEntries(ActionRequest actionRequest)
 		throws Exception {
 
 		long[] restoreTrashEntryIds = StringUtil.split(
@@ -179,7 +179,7 @@ public class EditCategoryMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	protected void subscribeCategory(ActionRequest actionRequest)
+	private void _subscribeCategory(ActionRequest actionRequest)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -191,7 +191,7 @@ public class EditCategoryMVCActionCommand extends BaseMVCActionCommand {
 			themeDisplay.getScopeGroupId(), categoryId);
 	}
 
-	protected void unsubscribeCategory(ActionRequest actionRequest)
+	private void _unsubscribeCategory(ActionRequest actionRequest)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -203,9 +203,7 @@ public class EditCategoryMVCActionCommand extends BaseMVCActionCommand {
 			themeDisplay.getScopeGroupId(), categoryId);
 	}
 
-	protected void updateCategory(ActionRequest actionRequest)
-		throws Exception {
-
+	private void _updateCategory(ActionRequest actionRequest) throws Exception {
 		long categoryId = ParamUtil.getLong(actionRequest, "mbCategoryId");
 
 		long parentCategoryId = ParamUtil.getLong(

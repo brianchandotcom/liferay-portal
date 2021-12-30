@@ -56,10 +56,10 @@ public class ForkNodeValidator extends BaseNodeValidator<Fork> {
 				MustSetMultipleOutgoingTransition(fork.getName());
 		}
 
-		traverse(fork);
+		_traverse(fork);
 	}
 
-	protected List<Node> getUnvisitedNodes(
+	private List<Node> _getUnvisitedNodes(
 		List<Node> nodes, Collection<Transition> transitions, boolean target) {
 
 		List<Node> unvisitedNodes = new ArrayList<>();
@@ -79,7 +79,7 @@ public class ForkNodeValidator extends BaseNodeValidator<Fork> {
 		return unvisitedNodes;
 	}
 
-	protected void reverseTraverse(
+	private void _reverseTraverse(
 			Fork fork, Join join, List<Node> targetNodes,
 			Map<Join, Fork> joinForkMap)
 		throws KaleoDefinitionValidationException {
@@ -110,7 +110,7 @@ public class ForkNodeValidator extends BaseNodeValidator<Fork> {
 				sourceNodes.set(i, sourceNode);
 			}
 
-			List<Node> unvisitedSourceNodes = getUnvisitedNodes(
+			List<Node> unvisitedSourceNodes = _getUnvisitedNodes(
 				sourceNodes, sourceNode.getIncomingTransitions(), false);
 
 			sourceNodes.addAll(unvisitedSourceNodes);
@@ -124,7 +124,7 @@ public class ForkNodeValidator extends BaseNodeValidator<Fork> {
 		}
 	}
 
-	protected Join traverse(Fork fork)
+	private Join _traverse(Fork fork)
 		throws KaleoDefinitionValidationException {
 
 		Join join = null;
@@ -145,11 +145,11 @@ public class ForkNodeValidator extends BaseNodeValidator<Fork> {
 			NodeType nodeType = targetNode.getNodeType();
 
 			if (nodeType.equals(NodeType.FORK)) {
-				Join localJoin = traverse((Fork)targetNode);
+				Join localJoin = _traverse((Fork)targetNode);
 
 				joinForkMap.put(localJoin, (Fork)targetNode);
 
-				List<Node> unvisitedTargetNodes = getUnvisitedNodes(
+				List<Node> unvisitedTargetNodes = _getUnvisitedNodes(
 					targetNodes, localJoin.getOutgoingTransitionsList(), true);
 
 				targetNodes.addAll(unvisitedTargetNodes);
@@ -167,7 +167,7 @@ public class ForkNodeValidator extends BaseNodeValidator<Fork> {
 				}
 			}
 			else {
-				List<Node> unvisitedTargetNodes = getUnvisitedNodes(
+				List<Node> unvisitedTargetNodes = _getUnvisitedNodes(
 					targetNodes, targetNode.getOutgoingTransitionsList(), true);
 
 				targetNodes.addAll(unvisitedTargetNodes);
@@ -179,7 +179,7 @@ public class ForkNodeValidator extends BaseNodeValidator<Fork> {
 				fork.getName());
 		}
 
-		reverseTraverse(fork, join, targetNodes, joinForkMap);
+		_reverseTraverse(fork, join, targetNodes, joinForkMap);
 
 		return join;
 	}

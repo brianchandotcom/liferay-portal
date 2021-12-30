@@ -224,7 +224,7 @@ public class WorkflowDefinitionDisplayContext {
 
 	public String getManageSubmissionsLink() {
 		return _buildErrorLink(
-			"configure-submissions", getWorkflowInstancesPortletURL());
+			"configure-submissions", _getWorkflowInstancesPortletURL());
 	}
 
 	public Object[] getMessageArguments(
@@ -256,7 +256,7 @@ public class WorkflowDefinitionDisplayContext {
 				workflowDefinitionLinks.get(0);
 
 			return new Object[] {
-				getLocalizedAssetName(workflowDefinitionLink.getClassName())
+				_getLocalizedAssetName(workflowDefinitionLink.getClassName())
 			};
 		}
 		else if (workflowDefinitionLinks.size() == 2) {
@@ -266,8 +266,8 @@ public class WorkflowDefinitionDisplayContext {
 				workflowDefinitionLinks.get(1);
 
 			return new Object[] {
-				getLocalizedAssetName(workflowDefinitionLink1.getClassName()),
-				getLocalizedAssetName(workflowDefinitionLink2.getClassName())
+				_getLocalizedAssetName(workflowDefinitionLink1.getClassName()),
+				_getLocalizedAssetName(workflowDefinitionLink2.getClassName())
 			};
 		}
 		else {
@@ -277,8 +277,8 @@ public class WorkflowDefinitionDisplayContext {
 				workflowDefinitionLinks.get(1);
 
 			return new Object[] {
-				getLocalizedAssetName(workflowDefinitionLink1.getClassName()),
-				getLocalizedAssetName(workflowDefinitionLink2.getClassName()),
+				_getLocalizedAssetName(workflowDefinitionLink1.getClassName()),
+				_getLocalizedAssetName(workflowDefinitionLink2.getClassName()),
 				workflowDefinitionLinks.size() - 2
 			};
 		}
@@ -370,7 +370,7 @@ public class WorkflowDefinitionDisplayContext {
 			WorkflowDefinitionManagerUtil.getLatestWorkflowDefinitions(
 				_workflowDefinitionRequestHelper.getCompanyId(),
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				getWorkflowDefinitionOrderByComparator());
+				_getWorkflowDefinitionOrderByComparator());
 
 		WorkflowDefinitionSearchTerms searchTerms =
 			new WorkflowDefinitionSearchTerms(renderRequest);
@@ -455,11 +455,11 @@ public class WorkflowDefinitionDisplayContext {
 
 	public String getTitle(WorkflowDefinition workflowDefinition) {
 		if (workflowDefinition == null) {
-			return getLanguage("new-workflow");
+			return _getLanguage("new-workflow");
 		}
 
 		if (Validator.isNull(workflowDefinition.getTitle())) {
-			return getLanguage("untitled-workflow");
+			return _getLanguage("untitled-workflow");
 		}
 
 		ThemeDisplay themeDisplay =
@@ -577,56 +577,9 @@ public class WorkflowDefinitionDisplayContext {
 			createPredicate(description, title, status, andOperator));
 	}
 
-	protected String getConfigureAssignementLink() {
-		return _buildErrorLink(
-			"configure-assignments", getWorkflowDefinitionLinkPortletURL());
-	}
-
-	protected String getLanguage(String key) {
-		return LanguageUtil.get(getResourceBundle(), key);
-	}
-
-	protected String getLocalizedAssetName(String className) {
-		return ResourceActionsUtil.getModelResource(
-			_workflowDefinitionRequestHelper.getLocale(), className);
-	}
-
 	protected ResourceBundle getResourceBundle() {
 		return _resourceBundleLoader.loadResourceBundle(
 			_workflowDefinitionRequestHelper.getLocale());
-	}
-
-	protected PortletURL getWorkflowDefinitionLinkPortletURL() {
-		return PortletURLBuilder.createLiferayPortletURL(
-			_workflowDefinitionRequestHelper.getLiferayPortletResponse(),
-			WorkflowPortletKeys.CONTROL_PANEL_WORKFLOW,
-			PortletRequest.RENDER_PHASE
-		).setMVCPath(
-			"/view.jsp"
-		).setParameter(
-			"tab", WorkflowWebKeys.WORKFLOW_TAB_DEFINITION_LINK
-		).buildPortletURL();
-	}
-
-	protected OrderByComparator<WorkflowDefinition>
-		getWorkflowDefinitionOrderByComparator() {
-
-		return WorkflowDefinitionPortletUtil.
-			getWorkflowDefitionOrderByComparator(
-				ParamUtil.getString(
-					_workflowDefinitionRequestHelper.getRequest(), "orderByCol",
-					"name"),
-				getOrderByType(), _workflowDefinitionRequestHelper.getLocale());
-	}
-
-	protected PortletURL getWorkflowInstancesPortletURL() {
-		return PortletURLBuilder.createLiferayPortletURL(
-			_workflowDefinitionRequestHelper.getLiferayPortletResponse(),
-			WorkflowPortletKeys.CONTROL_PANEL_WORKFLOW_INSTANCE,
-			PortletRequest.RENDER_PHASE
-		).setMVCPath(
-			"/view.jsp"
-		).buildPortletURL();
 	}
 
 	private String _buildErrorLink(String messageKey, PortletURL portletURL) {
@@ -636,6 +589,11 @@ public class WorkflowDefinitionDisplayContext {
 				portletURL.toString(),
 				LanguageUtil.get(getResourceBundle(), messageKey)
 			});
+	}
+
+	private String _getConfigureAssignementLink() {
+		return _buildErrorLink(
+			"configure-assignments", _getWorkflowDefinitionLinkPortletURL());
 	}
 
 	private String _getCurrentNavigation(
@@ -663,6 +621,15 @@ public class WorkflowDefinitionDisplayContext {
 				LanguageUtil.get(
 					_workflowDefinitionRequestHelper.getRequest(), navigation));
 		};
+	}
+
+	private String _getLanguage(String key) {
+		return LanguageUtil.get(getResourceBundle(), key);
+	}
+
+	private String _getLocalizedAssetName(String className) {
+		return ResourceActionsUtil.getModelResource(
+			_workflowDefinitionRequestHelper.getLocale(), className);
 	}
 
 	private UnsafeConsumer<DropdownItem, Exception> _getOrderByDropdownItem(
@@ -709,6 +676,39 @@ public class WorkflowDefinitionDisplayContext {
 		}
 
 		return portletURL;
+	}
+
+	private PortletURL _getWorkflowDefinitionLinkPortletURL() {
+		return PortletURLBuilder.createLiferayPortletURL(
+			_workflowDefinitionRequestHelper.getLiferayPortletResponse(),
+			WorkflowPortletKeys.CONTROL_PANEL_WORKFLOW,
+			PortletRequest.RENDER_PHASE
+		).setMVCPath(
+			"/view.jsp"
+		).setParameter(
+			"tab", WorkflowWebKeys.WORKFLOW_TAB_DEFINITION_LINK
+		).buildPortletURL();
+	}
+
+	private OrderByComparator<WorkflowDefinition>
+		_getWorkflowDefinitionOrderByComparator() {
+
+		return WorkflowDefinitionPortletUtil.
+			getWorkflowDefitionOrderByComparator(
+				ParamUtil.getString(
+					_workflowDefinitionRequestHelper.getRequest(), "orderByCol",
+					"name"),
+				getOrderByType(), _workflowDefinitionRequestHelper.getLocale());
+	}
+
+	private PortletURL _getWorkflowInstancesPortletURL() {
+		return PortletURLBuilder.createLiferayPortletURL(
+			_workflowDefinitionRequestHelper.getLiferayPortletResponse(),
+			WorkflowPortletKeys.CONTROL_PANEL_WORKFLOW_INSTANCE,
+			PortletRequest.RENDER_PHASE
+		).setMVCPath(
+			"/view.jsp"
+		).buildPortletURL();
 	}
 
 	private static final String _HTML =

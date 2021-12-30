@@ -48,7 +48,7 @@ public class LayoutPrototypeDisplayContext {
 	}
 
 	public Boolean getActive() {
-		String navigation = getNavigation();
+		String navigation = _getNavigation();
 
 		Boolean active = null;
 
@@ -91,7 +91,7 @@ public class LayoutPrototypeDisplayContext {
 	public PortletURL getPortletURL() {
 		PortletURL portletURL = _renderResponse.createRenderURL();
 
-		String navigation = getNavigation();
+		String navigation = _getNavigation();
 
 		if (Validator.isNotNull(navigation)) {
 			portletURL.setParameter("navigation", navigation);
@@ -147,7 +147,7 @@ public class LayoutPrototypeDisplayContext {
 		return searchContainer;
 	}
 
-	protected String getNavigation() {
+	private String _getNavigation() {
 		if (Validator.isNotNull(_navigation)) {
 			return _navigation;
 		}

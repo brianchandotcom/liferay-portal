@@ -41,8 +41,8 @@ public class WorkflowDefinitionResultRowSplitterTest {
 
 	@Test
 	public void testSplitDefinitions() {
-		addWorkflowDefinition(true);
-		addWorkflowDefinition(false);
+		_addWorkflowDefinition(true);
+		_addWorkflowDefinition(false);
 
 		List<ResultRowSplitterEntry> resultRowSplitterEntryList =
 			_resultRowSplitter.split(_resultRows);
@@ -81,7 +81,7 @@ public class WorkflowDefinitionResultRowSplitterTest {
 
 	@Test
 	public void testSplitNotPublishedDefinitions() {
-		addWorkflowDefinition(false);
+		_addWorkflowDefinition(false);
 
 		List<ResultRowSplitterEntry> resultRowSplitterEntryList =
 			_resultRowSplitter.split(_resultRows);
@@ -102,7 +102,7 @@ public class WorkflowDefinitionResultRowSplitterTest {
 
 	@Test
 	public void testSplitPublishedDefinitions() {
-		addWorkflowDefinition(true);
+		_addWorkflowDefinition(true);
 
 		List<ResultRowSplitterEntry> resultRowSplitterEntryList =
 			_resultRowSplitter.split(_resultRows);
@@ -121,7 +121,7 @@ public class WorkflowDefinitionResultRowSplitterTest {
 		Assert.assertEquals(resultRows.toString(), 1, resultRows.size());
 	}
 
-	protected void addWorkflowDefinition(boolean active) {
+	private void _addWorkflowDefinition(boolean active) {
 		DefaultWorkflowDefinition defaultWorkflowDefinition =
 			new DefaultWorkflowDefinition();
 

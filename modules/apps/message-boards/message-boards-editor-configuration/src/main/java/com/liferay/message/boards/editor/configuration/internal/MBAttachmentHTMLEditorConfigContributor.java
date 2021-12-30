@@ -66,7 +66,7 @@ public class MBAttachmentHTMLEditorConfigContributor
 
 		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
 			requestBackedPortletURLFactory, namespace + name + "selectItem",
-			getImageItemSelectorCriterion(), getURLItemSelectorCriterion());
+			_getImageItemSelectorCriterion(), _getURLItemSelectorCriterion());
 
 		jsonObject.put(
 			"filebrowserImageBrowseLinkUrl", itemSelectorURL.toString()
@@ -75,11 +75,16 @@ public class MBAttachmentHTMLEditorConfigContributor
 		).put(
 			"toolbar", "mb"
 		).put(
-			"toolbar_mb", getToolbarMBJSONArray(inputEditorTaglibAttributes)
+			"toolbar_mb", _getToolbarMBJSONArray(inputEditorTaglibAttributes)
 		);
 	}
 
-	protected ItemSelectorCriterion getImageItemSelectorCriterion() {
+	@Reference(unbind = "-")
+	protected void setItemSelector(ItemSelector itemSelector) {
+		_itemSelector = itemSelector;
+	}
+
+	private ItemSelectorCriterion _getImageItemSelectorCriterion() {
 		ItemSelectorCriterion itemSelectorCriterion =
 			new ImageItemSelectorCriterion();
 
@@ -90,7 +95,7 @@ public class MBAttachmentHTMLEditorConfigContributor
 		return itemSelectorCriterion;
 	}
 
-	protected JSONArray getToolbarMBJSONArray(
+	private JSONArray _getToolbarMBJSONArray(
 		Map<String, Object> inputEditorTaglibAttributes) {
 
 		return JSONUtil.putAll(
@@ -112,7 +117,7 @@ public class MBAttachmentHTMLEditorConfigContributor
 		);
 	}
 
-	protected ItemSelectorCriterion getURLItemSelectorCriterion() {
+	private ItemSelectorCriterion _getURLItemSelectorCriterion() {
 		ItemSelectorCriterion itemSelectorCriterion =
 			new URLItemSelectorCriterion();
 
@@ -120,11 +125,6 @@ public class MBAttachmentHTMLEditorConfigContributor
 			new URLItemSelectorReturnType());
 
 		return itemSelectorCriterion;
-	}
-
-	@Reference(unbind = "-")
-	protected void setItemSelector(ItemSelector itemSelector) {
-		_itemSelector = itemSelector;
 	}
 
 	private boolean _isShowSource(

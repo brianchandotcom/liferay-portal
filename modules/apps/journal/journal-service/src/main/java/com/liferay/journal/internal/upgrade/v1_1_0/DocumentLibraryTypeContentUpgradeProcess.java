@@ -40,7 +40,12 @@ public class DocumentLibraryTypeContentUpgradeProcess extends UpgradeProcess {
 		_journalArticleImageUpgradeHelper = journalArticleImageUpgradeHelper;
 	}
 
-	protected String convertContent(String content) throws Exception {
+	@Override
+	protected void doUpgrade() throws Exception {
+		_updateContent();
+	}
+
+	private String _convertContent(String content) throws Exception {
 		Document contentDocument = SAXReaderUtil.read(content);
 
 		contentDocument = contentDocument.clone();
@@ -70,12 +75,7 @@ public class DocumentLibraryTypeContentUpgradeProcess extends UpgradeProcess {
 		return contentDocument.formattedString();
 	}
 
-	@Override
-	protected void doUpgrade() throws Exception {
-		updateContent();
-	}
-
-	protected void updateContent() throws Exception {
+	private void _updateContent() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			PreparedStatement preparedStatement1 = connection.prepareStatement(
 				"select content, id_ from JournalArticle where content like " +
@@ -95,7 +95,7 @@ public class DocumentLibraryTypeContentUpgradeProcess extends UpgradeProcess {
 							"update JournalArticle set content = ? where id_ " +
 								"= ?")) {
 
-					preparedStatement2.setString(1, convertContent(content));
+					preparedStatement2.setString(1, _convertContent(content));
 					preparedStatement2.setLong(2, id);
 
 					preparedStatement2.executeUpdate();

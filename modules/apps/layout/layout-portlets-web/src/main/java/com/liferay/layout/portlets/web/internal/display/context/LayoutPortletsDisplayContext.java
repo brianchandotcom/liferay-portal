@@ -63,7 +63,7 @@ public class LayoutPortletsDisplayContext {
 			(ThemeDisplay)_httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		initPortlets(themeDisplay.getCompanyId());
+		_initPortlets(themeDisplay.getCompanyId());
 	}
 
 	public String getDisplayStyle() {
@@ -140,7 +140,7 @@ public class LayoutPortletsDisplayContext {
 		return searchContainer;
 	}
 
-	protected void initPortlets(long companyId) {
+	private void _initPortlets(long companyId) {
 		PortletCategory portletCategory = (PortletCategory)WebAppPool.get(
 			companyId, WebKeys.PORTLET_CATEGORY);
 

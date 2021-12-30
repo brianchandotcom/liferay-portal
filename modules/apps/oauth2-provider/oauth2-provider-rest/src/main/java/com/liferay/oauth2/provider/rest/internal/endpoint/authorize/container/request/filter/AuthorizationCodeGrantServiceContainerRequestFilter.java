@@ -98,7 +98,7 @@ public class AuthorizationCodeGrantServiceContainerRequestFilter
 					_httpServletRequest, "client_id");
 
 				if (!Validator.isBlank(clientId)) {
-					guestAuthorized = containsOAuth2ApplicationViewPermission(
+					guestAuthorized = _containsOAuth2ApplicationViewPermission(
 						clientId, user);
 				}
 			}
@@ -139,7 +139,7 @@ public class AuthorizationCodeGrantServiceContainerRequestFilter
 		String loginURL = null;
 
 		try {
-			loginURL = getLoginURL();
+			loginURL = _getLoginURL();
 		}
 		catch (ConfigurationException configurationException) {
 			_log.error(
@@ -178,7 +178,7 @@ public class AuthorizationCodeGrantServiceContainerRequestFilter
 			).build());
 	}
 
-	protected boolean containsOAuth2ApplicationViewPermission(
+	private boolean _containsOAuth2ApplicationViewPermission(
 			String clientId, User user)
 		throws Exception {
 
@@ -200,7 +200,7 @@ public class AuthorizationCodeGrantServiceContainerRequestFilter
 		return false;
 	}
 
-	protected String getLoginURL() throws ConfigurationException {
+	private String _getLoginURL() throws ConfigurationException {
 		AuthorizeScreenConfiguration authorizeScreenConfiguration =
 			_configurationProvider.getConfiguration(
 				AuthorizeScreenConfiguration.class,

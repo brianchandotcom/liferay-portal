@@ -158,7 +158,7 @@ public class AdminPortletDataHandler extends BasePortletDataHandler {
 
 		if (portletDataContext.getBooleanParameter(NAMESPACE, "kb-articles")) {
 			ActionableDynamicQuery kbArticleActionableDynamicQuery =
-				getKBArticleActionableDynamicQuery(portletDataContext);
+				_getKBArticleActionableDynamicQuery(portletDataContext);
 
 			kbArticleActionableDynamicQuery.performActions();
 		}
@@ -173,7 +173,7 @@ public class AdminPortletDataHandler extends BasePortletDataHandler {
 
 		if (portletDataContext.getBooleanParameter(NAMESPACE, "kb-comments")) {
 			ActionableDynamicQuery kbCommentActionableDynamicQuery =
-				getKBCommentActionableDynamicQuery(portletDataContext);
+				_getKBCommentActionableDynamicQuery(portletDataContext);
 
 			kbCommentActionableDynamicQuery.performActions();
 		}
@@ -281,55 +281,9 @@ public class AdminPortletDataHandler extends BasePortletDataHandler {
 		kbTemplateActionableDynamicQuery.performCount();
 
 		ActionableDynamicQuery kbCommentActionableDynamicQuery =
-			getKBCommentActionableDynamicQuery(portletDataContext);
+			_getKBCommentActionableDynamicQuery(portletDataContext);
 
 		kbCommentActionableDynamicQuery.performCount();
-	}
-
-	protected ActionableDynamicQuery getKBArticleActionableDynamicQuery(
-			PortletDataContext portletDataContext)
-		throws Exception {
-
-		ExportActionableDynamicQuery exportActionableDynamicQuery =
-			_kbArticleLocalService.getExportActionableDynamicQuery(
-				portletDataContext);
-
-		final ActionableDynamicQuery.AddOrderCriteriaMethod
-			addOrderCriteriaMethod =
-				exportActionableDynamicQuery.getAddOrderCriteriaMethod();
-
-		exportActionableDynamicQuery.setAddOrderCriteriaMethod(
-			new ActionableDynamicQuery.AddOrderCriteriaMethod() {
-
-				@Override
-				public void addOrderCriteria(DynamicQuery dynamicQuery) {
-					if (addOrderCriteriaMethod != null) {
-						addOrderCriteriaMethod.addOrderCriteria(dynamicQuery);
-					}
-
-					OrderFactoryUtil.addOrderByComparator(
-						dynamicQuery, new KBArticleVersionComparator(true));
-				}
-
-			});
-
-		return exportActionableDynamicQuery;
-	}
-
-	protected ActionableDynamicQuery getKBCommentActionableDynamicQuery(
-			PortletDataContext portletDataContext)
-		throws Exception {
-
-		ExportActionableDynamicQuery exportActionableDynamicQuery =
-			_kbCommentLocalService.getExportActionableDynamicQuery(
-				portletDataContext);
-
-		exportActionableDynamicQuery.setStagedModelType(
-			new StagedModelType(
-				_portal.getClassNameId(KBComment.class),
-				StagedModelType.REFERRER_CLASS_NAME_ID_ALL));
-
-		return exportActionableDynamicQuery;
 	}
 
 	@Reference(unbind = "-")
@@ -363,6 +317,52 @@ public class AdminPortletDataHandler extends BasePortletDataHandler {
 	@Reference(unbind = "-")
 	protected void setPortal(Portal portal) {
 		_portal = portal;
+	}
+
+	private ActionableDynamicQuery _getKBArticleActionableDynamicQuery(
+			PortletDataContext portletDataContext)
+		throws Exception {
+
+		ExportActionableDynamicQuery exportActionableDynamicQuery =
+			_kbArticleLocalService.getExportActionableDynamicQuery(
+				portletDataContext);
+
+		final ActionableDynamicQuery.AddOrderCriteriaMethod
+			addOrderCriteriaMethod =
+				exportActionableDynamicQuery.getAddOrderCriteriaMethod();
+
+		exportActionableDynamicQuery.setAddOrderCriteriaMethod(
+			new ActionableDynamicQuery.AddOrderCriteriaMethod() {
+
+				@Override
+				public void addOrderCriteria(DynamicQuery dynamicQuery) {
+					if (addOrderCriteriaMethod != null) {
+						addOrderCriteriaMethod.addOrderCriteria(dynamicQuery);
+					}
+
+					OrderFactoryUtil.addOrderByComparator(
+						dynamicQuery, new KBArticleVersionComparator(true));
+				}
+
+			});
+
+		return exportActionableDynamicQuery;
+	}
+
+	private ActionableDynamicQuery _getKBCommentActionableDynamicQuery(
+			PortletDataContext portletDataContext)
+		throws Exception {
+
+		ExportActionableDynamicQuery exportActionableDynamicQuery =
+			_kbCommentLocalService.getExportActionableDynamicQuery(
+				portletDataContext);
+
+		exportActionableDynamicQuery.setStagedModelType(
+			new StagedModelType(
+				_portal.getClassNameId(KBComment.class),
+				StagedModelType.REFERRER_CLASS_NAME_ID_ALL));
+
+		return exportActionableDynamicQuery;
 	}
 
 	private KBArticleLocalService _kbArticleLocalService;

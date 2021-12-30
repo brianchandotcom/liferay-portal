@@ -71,7 +71,35 @@ import org.osgi.service.component.annotations.Reference;
 public class JournalContentPortletToolbarContributor
 	extends BasePortletToolbarContributor {
 
-	protected void addPortletTitleAddJournalArticleMenuItems(
+	@Override
+	protected List<MenuItem> getPortletTitleMenuItems(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Layout layout = themeDisplay.getLayout();
+
+		if (!_hasAddArticlePermission(themeDisplay) ||
+			layout.isLayoutPrototypeLinkActive()) {
+
+			return Collections.emptyList();
+		}
+
+		List<MenuItem> menuItems = new ArrayList<>();
+
+		try {
+			_addPortletTitleAddJournalArticleMenuItems(
+				menuItems, themeDisplay, portletRequest);
+		}
+		catch (Exception exception) {
+			_log.error("Unable to add folder menu item", exception);
+		}
+
+		return menuItems;
+	}
+
+	private void _addPortletTitleAddJournalArticleMenuItems(
 			List<MenuItem> menuItems, ThemeDisplay themeDisplay,
 			PortletRequest portletRequest)
 		throws Exception {
@@ -153,34 +181,6 @@ public class JournalContentPortletToolbarContributor
 
 			menuItems.add(urlMenuItem);
 		}
-	}
-
-	@Override
-	protected List<MenuItem> getPortletTitleMenuItems(
-		PortletRequest portletRequest, PortletResponse portletResponse) {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		Layout layout = themeDisplay.getLayout();
-
-		if (!_hasAddArticlePermission(themeDisplay) ||
-			layout.isLayoutPrototypeLinkActive()) {
-
-			return Collections.emptyList();
-		}
-
-		List<MenuItem> menuItems = new ArrayList<>();
-
-		try {
-			addPortletTitleAddJournalArticleMenuItems(
-				menuItems, themeDisplay, portletRequest);
-		}
-		catch (Exception exception) {
-			_log.error("Unable to add folder menu item", exception);
-		}
-
-		return menuItems;
 	}
 
 	private boolean _hasAddArticlePermission(ThemeDisplay themeDisplay) {

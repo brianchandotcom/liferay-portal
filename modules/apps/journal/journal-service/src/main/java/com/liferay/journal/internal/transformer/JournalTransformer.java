@@ -178,10 +178,10 @@ public class JournalTransformer {
 
 		String templateId = tokens.get("ddm_template_id");
 
-		templateId = getTemplateId(
+		templateId = _getTemplateId(
 			templateId, companyId, companyGroupId, articleGroupId);
 
-		Template template = getTemplate(templateId, script);
+		Template template = _getTemplate(templateId, script);
 
 		PortletRequest originalPortletRequest = null;
 		PortletResponse originalPortletResponse = null;
@@ -233,7 +233,7 @@ public class JournalTransformer {
 
 				DDMForm ddmForm = ddmStructure.getDDMForm();
 
-				List<TemplateNode> templateNodes = getTemplateNodes(
+				List<TemplateNode> templateNodes = _getTemplateNodes(
 					themeDisplay, rootElement,
 					ddmForm.getDDMFormFieldsMap(true), locale);
 
@@ -252,16 +252,16 @@ public class JournalTransformer {
 					Element requestElement = rootElement.element("request");
 
 					template.put(
-						"requestMap", insertRequestVariables(requestElement));
+						"requestMap", _insertRequestVariables(requestElement));
 				}
 			}
 
 			template.put("articleGroupId", articleGroupId);
 			template.put("articleLocale", locale);
-			template.put("company", getCompany(themeDisplay, companyId));
+			template.put("company", _getCompany(themeDisplay, companyId));
 			template.put("companyId", companyId);
-			template.put("device", getDevice(themeDisplay));
-			template.put("locale", getLocale(themeDisplay, locale));
+			template.put("device", _getDevice(themeDisplay));
+			template.put("locale", _getLocale(themeDisplay, locale));
 			template.put(
 				"permissionChecker",
 				PermissionThreadLocal.getPermissionChecker());
@@ -271,7 +271,7 @@ public class JournalTransformer {
 			template.put("scopeGroupId", scopeGroupId);
 			template.put("siteGroupId", siteGroupId);
 
-			String templatesPath = getTemplatesPath(
+			String templatesPath = _getTemplatesPath(
 				companyId, articleGroupId, classNameId);
 
 			template.put("templatesPath", templatesPath);
@@ -295,7 +295,7 @@ public class JournalTransformer {
 			}
 			else {
 				template.processTemplate(
-					unsyncStringWriter, this::getErrorTemplateResource);
+					unsyncStringWriter, this::_getErrorTemplateResource);
 			}
 		}
 		catch (Exception exception) {
@@ -349,166 +349,6 @@ public class JournalTransformer {
 		}
 
 		return output;
-	}
-
-	protected ClassLoader getClassLoader() {
-		Class<?> clazz = getClass();
-
-		return clazz.getClassLoader();
-	}
-
-	protected Company getCompany(ThemeDisplay themeDisplay, long companyId)
-		throws Exception {
-
-		if (themeDisplay != null) {
-			return themeDisplay.getCompany();
-		}
-
-		return CompanyLocalServiceUtil.getCompany(companyId);
-	}
-
-	protected Device getDevice(ThemeDisplay themeDisplay) {
-		if (themeDisplay != null) {
-			return themeDisplay.getDevice();
-		}
-
-		return UnknownDevice.getInstance();
-	}
-
-	protected TemplateResource getErrorTemplateResource() {
-		try {
-			JournalServiceConfiguration journalServiceConfiguration =
-				ConfigurationProviderUtil.getCompanyConfiguration(
-					JournalServiceConfiguration.class,
-					CompanyThreadLocal.getCompanyId());
-
-			return new StringTemplateResource(
-				TemplateConstants.LANG_TYPE_FTL,
-				journalServiceConfiguration.errorTemplateFTL());
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
-			}
-		}
-
-		return null;
-	}
-
-	protected Locale getLocale(ThemeDisplay themeDisplay, Locale locale)
-		throws Exception {
-
-		if (themeDisplay != null) {
-			return themeDisplay.getLocale();
-		}
-
-		return locale;
-	}
-
-	protected Template getTemplate(String templateId, String script)
-		throws Exception {
-
-		TemplateResource templateResource = new StringTemplateResource(
-			templateId, script);
-
-		return TemplateManagerUtil.getTemplate(
-			TemplateConstants.LANG_TYPE_FTL, templateResource, true);
-	}
-
-	protected String getTemplateId(
-		String templateId, long companyId, long companyGroupId, long groupId) {
-
-		StringBundler sb = new StringBundler(5);
-
-		sb.append(companyId);
-		sb.append(StringPool.POUND);
-
-		if (companyGroupId > 0) {
-			sb.append(companyGroupId);
-		}
-		else {
-			sb.append(groupId);
-		}
-
-		sb.append(StringPool.POUND);
-		sb.append(templateId);
-
-		return sb.toString();
-	}
-
-	protected List<TemplateNode> getTemplateNodes(
-			ThemeDisplay themeDisplay, Element element,
-			Map<String, DDMFormField> ddmFormFieldsMap, Locale locale)
-		throws Exception {
-
-		List<TemplateNode> templateNodes = new ArrayList<>();
-
-		Map<String, TemplateNode> prototypeTemplateNodes = new HashMap<>();
-
-		List<Element> dynamicElementElements = element.elements(
-			"dynamic-element");
-
-		for (Element dynamicElementElement : dynamicElementElements) {
-			String name = dynamicElementElement.attributeValue("name");
-
-			if (Validator.isNull(name)) {
-				throw new TransformException(
-					"Element missing \"name\" attribute");
-			}
-
-			DDMFormField ddmFormField = ddmFormFieldsMap.get(name);
-
-			if (ddmFormField == null) {
-				String data = StringPool.BLANK;
-
-				Element dynamicContentElement = dynamicElementElement.element(
-					"dynamic-content");
-
-				if (dynamicContentElement != null) {
-					data = dynamicContentElement.getText();
-				}
-
-				templateNodes.add(
-					new TemplateNode(
-						themeDisplay, name, StringUtil.stripCDATA(data),
-						StringPool.BLANK, new HashMap<>()));
-
-				continue;
-			}
-
-			TemplateNode templateNode = _createTemplateNode(
-				ddmFormField, dynamicElementElement, locale, themeDisplay);
-
-			if (dynamicElementElement.element("dynamic-element") != null) {
-				templateNode.appendChildren(
-					getTemplateNodes(
-						themeDisplay, dynamicElementElement, ddmFormFieldsMap,
-						locale));
-			}
-
-			TemplateNode prototypeTemplateNode = prototypeTemplateNodes.get(
-				name);
-
-			if (prototypeTemplateNode == null) {
-				prototypeTemplateNode = templateNode;
-
-				prototypeTemplateNodes.put(name, prototypeTemplateNode);
-
-				templateNodes.add(templateNode);
-			}
-
-			prototypeTemplateNode.appendSibling(templateNode);
-		}
-
-		return templateNodes;
-	}
-
-	protected String getTemplatesPath(
-		long companyId, long groupId, long classNameId) {
-
-		return StringBundler.concat(
-			TemplateConstants.TEMPLATE_SEPARATOR, StringPool.SLASH, companyId,
-			StringPool.SLASH, groupId, StringPool.SLASH, classNameId);
 	}
 
 	protected List<TemplateNode> includeBackwardsCompatibilityTemplateNodes(
@@ -577,57 +417,6 @@ public class JournalTransformer {
 		}
 
 		return backwardsCompatibilityTemplateNodes;
-	}
-
-	protected Map<String, Object> insertRequestVariables(Element element) {
-		Map<String, Object> map = new HashMap<>();
-
-		if (element == null) {
-			return map;
-		}
-
-		for (Element childElement : element.elements()) {
-			String name = childElement.getName();
-
-			if (name.equals("attribute")) {
-				Element nameElement = childElement.element("name");
-				Element valueElement = childElement.element("value");
-
-				map.put(nameElement.getText(), valueElement.getText());
-			}
-			else if (name.equals("parameter")) {
-				Element nameElement = childElement.element("name");
-
-				List<Element> valueElements = childElement.elements("value");
-
-				if (valueElements.size() == 1) {
-					Element valueElement = valueElements.get(0);
-
-					map.put(nameElement.getText(), valueElement.getText());
-				}
-				else {
-					List<String> values = new ArrayList<>();
-
-					for (Element valueElement : valueElements) {
-						values.add(valueElement.getText());
-					}
-
-					map.put(nameElement.getText(), values);
-				}
-			}
-			else {
-				List<Element> elements = childElement.elements();
-
-				if (!elements.isEmpty()) {
-					map.put(name, insertRequestVariables(childElement));
-				}
-				else {
-					map.put(name, childElement.getText());
-				}
-			}
-		}
-
-		return map;
 	}
 
 	private String _convertToReferenceIfNeeded(
@@ -793,6 +582,217 @@ public class JournalTransformer {
 		}
 
 		return templateNode;
+	}
+
+	private ClassLoader _getClassLoader() {
+		Class<?> clazz = getClass();
+
+		return clazz.getClassLoader();
+	}
+
+	private Company _getCompany(ThemeDisplay themeDisplay, long companyId)
+		throws Exception {
+
+		if (themeDisplay != null) {
+			return themeDisplay.getCompany();
+		}
+
+		return CompanyLocalServiceUtil.getCompany(companyId);
+	}
+
+	private Device _getDevice(ThemeDisplay themeDisplay) {
+		if (themeDisplay != null) {
+			return themeDisplay.getDevice();
+		}
+
+		return UnknownDevice.getInstance();
+	}
+
+	private TemplateResource _getErrorTemplateResource() {
+		try {
+			JournalServiceConfiguration journalServiceConfiguration =
+				ConfigurationProviderUtil.getCompanyConfiguration(
+					JournalServiceConfiguration.class,
+					CompanyThreadLocal.getCompanyId());
+
+			return new StringTemplateResource(
+				TemplateConstants.LANG_TYPE_FTL,
+				journalServiceConfiguration.errorTemplateFTL());
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception, exception);
+			}
+		}
+
+		return null;
+	}
+
+	private Locale _getLocale(ThemeDisplay themeDisplay, Locale locale)
+		throws Exception {
+
+		if (themeDisplay != null) {
+			return themeDisplay.getLocale();
+		}
+
+		return locale;
+	}
+
+	private Template _getTemplate(String templateId, String script)
+		throws Exception {
+
+		TemplateResource templateResource = new StringTemplateResource(
+			templateId, script);
+
+		return TemplateManagerUtil.getTemplate(
+			TemplateConstants.LANG_TYPE_FTL, templateResource, true);
+	}
+
+	private String _getTemplateId(
+		String templateId, long companyId, long companyGroupId, long groupId) {
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append(companyId);
+		sb.append(StringPool.POUND);
+
+		if (companyGroupId > 0) {
+			sb.append(companyGroupId);
+		}
+		else {
+			sb.append(groupId);
+		}
+
+		sb.append(StringPool.POUND);
+		sb.append(templateId);
+
+		return sb.toString();
+	}
+
+	private List<TemplateNode> _getTemplateNodes(
+			ThemeDisplay themeDisplay, Element element,
+			Map<String, DDMFormField> ddmFormFieldsMap, Locale locale)
+		throws Exception {
+
+		List<TemplateNode> templateNodes = new ArrayList<>();
+
+		Map<String, TemplateNode> prototypeTemplateNodes = new HashMap<>();
+
+		List<Element> dynamicElementElements = element.elements(
+			"dynamic-element");
+
+		for (Element dynamicElementElement : dynamicElementElements) {
+			String name = dynamicElementElement.attributeValue("name");
+
+			if (Validator.isNull(name)) {
+				throw new TransformException(
+					"Element missing \"name\" attribute");
+			}
+
+			DDMFormField ddmFormField = ddmFormFieldsMap.get(name);
+
+			if (ddmFormField == null) {
+				String data = StringPool.BLANK;
+
+				Element dynamicContentElement = dynamicElementElement.element(
+					"dynamic-content");
+
+				if (dynamicContentElement != null) {
+					data = dynamicContentElement.getText();
+				}
+
+				templateNodes.add(
+					new TemplateNode(
+						themeDisplay, name, StringUtil.stripCDATA(data),
+						StringPool.BLANK, new HashMap<>()));
+
+				continue;
+			}
+
+			TemplateNode templateNode = _createTemplateNode(
+				ddmFormField, dynamicElementElement, locale, themeDisplay);
+
+			if (dynamicElementElement.element("dynamic-element") != null) {
+				templateNode.appendChildren(
+					_getTemplateNodes(
+						themeDisplay, dynamicElementElement, ddmFormFieldsMap,
+						locale));
+			}
+
+			TemplateNode prototypeTemplateNode = prototypeTemplateNodes.get(
+				name);
+
+			if (prototypeTemplateNode == null) {
+				prototypeTemplateNode = templateNode;
+
+				prototypeTemplateNodes.put(name, prototypeTemplateNode);
+
+				templateNodes.add(templateNode);
+			}
+
+			prototypeTemplateNode.appendSibling(templateNode);
+		}
+
+		return templateNodes;
+	}
+
+	private String _getTemplatesPath(
+		long companyId, long groupId, long classNameId) {
+
+		return StringBundler.concat(
+			TemplateConstants.TEMPLATE_SEPARATOR, StringPool.SLASH, companyId,
+			StringPool.SLASH, groupId, StringPool.SLASH, classNameId);
+	}
+
+	private Map<String, Object> _insertRequestVariables(Element element) {
+		Map<String, Object> map = new HashMap<>();
+
+		if (element == null) {
+			return map;
+		}
+
+		for (Element childElement : element.elements()) {
+			String name = childElement.getName();
+
+			if (name.equals("attribute")) {
+				Element nameElement = childElement.element("name");
+				Element valueElement = childElement.element("value");
+
+				map.put(nameElement.getText(), valueElement.getText());
+			}
+			else if (name.equals("parameter")) {
+				Element nameElement = childElement.element("name");
+
+				List<Element> valueElements = childElement.elements("value");
+
+				if (valueElements.size() == 1) {
+					Element valueElement = valueElements.get(0);
+
+					map.put(nameElement.getText(), valueElement.getText());
+				}
+				else {
+					List<String> values = new ArrayList<>();
+
+					for (Element valueElement : valueElements) {
+						values.add(valueElement.getText());
+					}
+
+					map.put(nameElement.getText(), values);
+				}
+			}
+			else {
+				List<Element> elements = childElement.elements();
+
+				if (!elements.isEmpty()) {
+					map.put(name, _insertRequestVariables(childElement));
+				}
+				else {
+					map.put(name, childElement.getText());
+				}
+			}
+		}
+
+		return map;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

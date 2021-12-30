@@ -48,7 +48,7 @@ public class UserNotificationRecipientBuilder
 			ExecutionContext executionContext)
 		throws Exception {
 
-		addUserNotificationRecipient(
+		_addUserNotificationRecipient(
 			notificationRecipients,
 			kaleoNotificationRecipient.getRecipientClassPK(),
 			notificationReceptionType, executionContext);
@@ -62,13 +62,13 @@ public class UserNotificationRecipientBuilder
 			ExecutionContext executionContext)
 		throws Exception {
 
-		addUserNotificationRecipient(
+		_addUserNotificationRecipient(
 			notificationRecipients,
 			kaleoTaskAssignmentInstance.getAssigneeClassPK(),
 			notificationReceptionType, executionContext);
 	}
 
-	protected void addUserNotificationRecipient(
+	private void _addUserNotificationRecipient(
 			Set<NotificationRecipient> notificationRecipients, long userId,
 			NotificationReceptionType notificationReceptionType,
 			ExecutionContext executionContext)

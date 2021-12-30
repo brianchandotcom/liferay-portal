@@ -137,7 +137,7 @@ public class ActionUtil {
 			sourceVersion = tempVersion;
 		}
 
-		String languageId = getLanguageId(
+		String languageId = _getLanguageId(
 			renderRequest, groupId, articleId, sourceVersion, targetVersion);
 
 		String diffHtmlResults = null;
@@ -490,7 +490,31 @@ public class ActionUtil {
 		return true;
 	}
 
-	protected static String getLanguageId(
+	private static String _getFileScriptContent(
+			UploadPortletRequest uploadPortletRequest)
+		throws Exception {
+
+		File file = uploadPortletRequest.getFile("script");
+
+		if (file == null) {
+			return null;
+		}
+
+		String fileScriptContent = FileUtil.read(file);
+
+		String contentType = MimeTypesUtil.getContentType(file);
+
+		if (Validator.isNotNull(fileScriptContent) &&
+			!_isValidContentType(contentType)) {
+
+			throw new TemplateScriptException(
+				"Invalid contentType " + contentType);
+		}
+
+		return fileScriptContent;
+	}
+
+	private static String _getLanguageId(
 			RenderRequest renderRequest, long groupId, String articleId,
 			double sourceVersion, double targetVersion)
 		throws Exception {
@@ -526,30 +550,6 @@ public class ActionUtil {
 		renderRequest.setAttribute(WebKeys.LANGUAGE_ID, languageId);
 
 		return languageId;
-	}
-
-	private static String _getFileScriptContent(
-			UploadPortletRequest uploadPortletRequest)
-		throws Exception {
-
-		File file = uploadPortletRequest.getFile("script");
-
-		if (file == null) {
-			return null;
-		}
-
-		String fileScriptContent = FileUtil.read(file);
-
-		String contentType = MimeTypesUtil.getContentType(file);
-
-		if (Validator.isNotNull(fileScriptContent) &&
-			!_isValidContentType(contentType)) {
-
-			throw new TemplateScriptException(
-				"Invalid contentType " + contentType);
-		}
-
-		return fileScriptContent;
 	}
 
 	private static boolean _isValidContentType(String contentType) {

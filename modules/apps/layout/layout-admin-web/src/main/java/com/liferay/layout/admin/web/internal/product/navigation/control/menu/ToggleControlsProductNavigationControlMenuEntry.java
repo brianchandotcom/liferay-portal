@@ -128,8 +128,8 @@ public class ToggleControlsProductNavigationControlMenuEntry
 		}
 
 		if (!(hasUpdateLayoutPermission(themeDisplay) ||
-			  hasCustomizePermission(themeDisplay) ||
-			  hasPortletConfigurationPermission(themeDisplay))) {
+			  _hasCustomizePermission(themeDisplay) ||
+			  _hasPortletConfigurationPermission(themeDisplay))) {
 
 			return false;
 		}
@@ -137,7 +137,15 @@ public class ToggleControlsProductNavigationControlMenuEntry
 		return super.isShow(httpServletRequest);
 	}
 
-	protected boolean hasCustomizePermission(ThemeDisplay themeDisplay)
+	protected boolean hasUpdateLayoutPermission(ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		return LayoutPermissionUtil.contains(
+			themeDisplay.getPermissionChecker(), themeDisplay.getLayout(),
+			ActionKeys.UPDATE);
+	}
+
+	private boolean _hasCustomizePermission(ThemeDisplay themeDisplay)
 		throws PortalException {
 
 		Layout layout = themeDisplay.getLayout();
@@ -161,21 +169,13 @@ public class ToggleControlsProductNavigationControlMenuEntry
 		return false;
 	}
 
-	protected boolean hasPortletConfigurationPermission(
+	private boolean _hasPortletConfigurationPermission(
 			ThemeDisplay themeDisplay)
 		throws PortalException {
 
 		return PortletPermissionUtil.hasConfigurationPermission(
 			themeDisplay.getPermissionChecker(), themeDisplay.getSiteGroupId(),
 			themeDisplay.getLayout(), ActionKeys.CONFIGURATION);
-	}
-
-	protected boolean hasUpdateLayoutPermission(ThemeDisplay themeDisplay)
-		throws PortalException {
-
-		return LayoutPermissionUtil.contains(
-			themeDisplay.getPermissionChecker(), themeDisplay.getLayout(),
-			ActionKeys.UPDATE);
 	}
 
 	private static final Map<String, Object> _data =

@@ -119,7 +119,16 @@ public class CustomizationSettingsControlMenuJSPDynamicInclude
 		return _log;
 	}
 
-	protected boolean isCustomizableLayout(ThemeDisplay themeDisplay)
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.layout.admin.web)",
+		unbind = "-"
+	)
+	protected void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
+	}
+
+	private boolean _isCustomizableLayout(ThemeDisplay themeDisplay)
 		throws PortalException {
 
 		Layout layout = themeDisplay.getLayout();
@@ -156,15 +165,6 @@ public class CustomizationSettingsControlMenuJSPDynamicInclude
 		return true;
 	}
 
-	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.layout.admin.web)",
-		unbind = "-"
-	)
-	protected void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
-	}
-
 	private boolean _isShow(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
@@ -175,7 +175,7 @@ public class CustomizationSettingsControlMenuJSPDynamicInclude
 		Layout layout = themeDisplay.getLayout();
 
 		if (layout.isTypeControlPanel() || layout.isTypeContent() ||
-			!isCustomizableLayout(themeDisplay)) {
+			!_isCustomizableLayout(themeDisplay)) {
 
 			return false;
 		}

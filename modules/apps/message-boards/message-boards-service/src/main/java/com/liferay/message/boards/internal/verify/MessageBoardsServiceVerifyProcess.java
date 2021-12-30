@@ -39,7 +39,7 @@ public class MessageBoardsServiceVerifyProcess extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
-		verifyGroupedModels();
+		_verifyGroupedModels();
 	}
 
 	@Reference(
@@ -49,7 +49,7 @@ public class MessageBoardsServiceVerifyProcess extends VerifyProcess {
 	protected void setRelease(Release release) {
 	}
 
-	protected void verifyGroupedModels() throws Exception {
+	private void _verifyGroupedModels() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			_verifyGroupedModel.verify(
 				new MBDiscussionVerifiableModel(),

@@ -2407,7 +2407,14 @@ public abstract class BaseBuild implements Build {
 	}
 
 	protected Pattern getArchiveBuildURLPattern() {
-		return _archiveBuildURLPattern;
+		return Pattern.compile(
+			JenkinsResultsParserUtil.combine(
+				"(", Pattern.quote(Build.DEPENDENCIES_URL_TOKEN), "|",
+				Pattern.quote(JenkinsResultsParserUtil.urlDependenciesFile),
+				"|",
+				Pattern.quote(JenkinsResultsParserUtil.urlDependenciesHttp),
+				")/*(?<archiveName>.*)/(?<master>[^/]+)/+(?<jobName>[^/]+)",
+				".*/(?<buildNumber>\\d+)/?"));
 	}
 
 	protected String getBaseGitRepositoryType() {
@@ -3891,13 +3898,6 @@ public abstract class BaseBuild implements Build {
 		"compileJSP", "SourceFormatter.format", "Unable to compile JSPs"
 	};
 
-	private static final Pattern _archiveBuildURLPattern = Pattern.compile(
-		JenkinsResultsParserUtil.combine(
-			"(", Pattern.quote(Build.DEPENDENCIES_URL_TOKEN), "|",
-			Pattern.quote(JenkinsResultsParserUtil.URL_DEPENDENCIES_FILE), "|",
-			Pattern.quote(JenkinsResultsParserUtil.URL_DEPENDENCIES_HTTP),
-			")/*(?<archiveName>.*)/(?<master>[^/]+)/+(?<jobName>[^/]+)",
-			".*/(?<buildNumber>\\d+)/?"));
 	private static final MultiPattern _buildURLMultiPattern = new MultiPattern(
 		JenkinsResultsParserUtil.combine(
 			"\\w+://(?<master>[^/]+)/+job/+(?<jobName>[^/]+).*/(?<buildNumber>",

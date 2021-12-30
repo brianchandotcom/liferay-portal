@@ -63,8 +63,6 @@ processExtraApps {
 			into new File(projectDir, "src/main/zippableResources/fragments/fragments")
 			rename("index.build.js", "index.js")
 		}
-
-		delete new File(projectDir, "extra/react-fragments/src/select-project/index.build.js")
 	}
 }
 

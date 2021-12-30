@@ -72,7 +72,6 @@ import com.liferay.portal.vulcan.internal.jaxrs.context.provider.FilterContextPr
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.SortContextProvider;
 import com.liferay.portal.vulcan.internal.jaxrs.validation.ValidationUtil;
 import com.liferay.portal.vulcan.internal.multipart.MultipartUtil;
-import com.liferay.portal.vulcan.list.type.ListEntry;
 import com.liferay.portal.vulcan.multipart.BinaryFile;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -1149,7 +1148,7 @@ public class GraphQLServletExtender {
 			GraphQLSchema.Builder graphQLSchemaBuilder =
 				GraphQLSchema.newSchema();
 
-			_registerCommonTypes(processingElementsContainer);
+			_registerCustomTypes(processingElementsContainer);
 			_registerGraphQLDTOContributors(
 				companyId, graphQLSchemaBuilder, processingElementsContainer,
 				mutationGraphQLObjectTypeBuilder,
@@ -1592,18 +1591,9 @@ public class GraphQLServletExtender {
 		for (GraphQLDTOProperty graphQLDTOProperty :
 				graphQLDTOContributor.getGraphQLDTOProperties()) {
 
-			GraphQLInputType graphQLInputType = null;
-
-			if (Objects.equals(
-					ListEntry.class, graphQLDTOProperty.getTypeClass())) {
-
-				graphQLInputType = (GraphQLInputType)graphQLTypes.get(
-					"InputListEntry");
-			}
-			else {
-				graphQLInputType = _toGraphQLScalarType(
-					graphQLDTOProperty.getTypeClass());
-			}
+			GraphQLInputType graphQLInputType =
+				(GraphQLInputType)_toGraphQLType(
+					graphQLDTOProperty.getTypeClass(), graphQLTypes, true);
 
 			graphQLInputObjectTypeBuilder.field(
 				_addInputField(graphQLInputType, graphQLDTOProperty.getName()));
@@ -1613,7 +1603,9 @@ public class GraphQLServletExtender {
 	}
 
 	private GraphQLObjectType _getGraphQLObjectType(
+		GraphQLCodeRegistry.Builder graphQLCodeRegistryBuilder,
 		GraphQLDTOContributor<?, ?> graphQLDTOContributor,
+		GraphQLSchema.Builder graphQLSchemaBuilder,
 		Map<String, GraphQLType> graphQLTypes) {
 
 		GraphQLObjectType.Builder graphQLObjectTypeBuilder =
@@ -1626,21 +1618,47 @@ public class GraphQLServletExtender {
 		for (GraphQLDTOProperty graphQLDTOProperty :
 				graphQLDTOContributor.getGraphQLDTOProperties()) {
 
-			GraphQLOutputType graphQLOutputType = null;
-
-			if (Objects.equals(
-					ListEntry.class, graphQLDTOProperty.getTypeClass())) {
-
-				graphQLOutputType = (GraphQLOutputType)graphQLTypes.get(
-					ListEntry.class.getSimpleName());
-			}
-			else {
-				graphQLOutputType = _toGraphQLScalarType(
-					graphQLDTOProperty.getTypeClass());
-			}
+			GraphQLOutputType graphQLOutputType =
+				(GraphQLOutputType)_toGraphQLType(
+					graphQLDTOProperty.getTypeClass(), graphQLTypes, false);
 
 			graphQLObjectTypeBuilder.field(
 				_addField(graphQLOutputType, graphQLDTOProperty.getName()));
+		}
+
+		for (GraphQLDTOProperty graphQLDTORelationship :
+				graphQLDTOContributor.getGraphQLDTORelationships()) {
+
+			graphQLObjectTypeBuilder.field(
+				_addField(
+					(GraphQLOutputType)_toGraphQLType(
+						graphQLDTORelationship.getTypeClass(), graphQLTypes,
+						false),
+					graphQLDTORelationship.getName()));
+
+			graphQLSchemaBuilder.codeRegistry(
+				graphQLCodeRegistryBuilder.dataFetcher(
+					FieldCoordinates.coordinates(
+						graphQLDTOContributor.getTypeName(),
+						graphQLDTORelationship.getName()),
+					(DataFetcher<Object>)dataFetchingEnvironment -> {
+						Map<String, Object> source =
+							dataFetchingEnvironment.getSource();
+
+						Object id = source.get(
+							graphQLDTOContributor.getIdName());
+
+						if (!(id instanceof Long)) {
+							return null;
+						}
+
+						return graphQLDTOContributor.getRelationshipValue(
+							_getDTOConverterContext(
+								dataFetchingEnvironment, null),
+							(long)id, graphQLDTORelationship.getName(),
+							graphQLDTORelationship.getTypeClass());
+					}
+				).build());
 		}
 
 		return graphQLObjectTypeBuilder.build();
@@ -1761,7 +1779,7 @@ public class GraphQLServletExtender {
 		return Boolean.TRUE.equals(_getGraphQLFieldValue(method));
 	}
 
-	private void _registerCommonTypes(
+	private void _registerCustomTypes(
 		ProcessingElementsContainer processingElementsContainer) {
 
 		Map<String, GraphQLType> graphQLTypes =
@@ -1808,11 +1826,15 @@ public class GraphQLServletExtender {
 
 		// Create
 
+		GraphQLCodeRegistry.Builder graphQLCodeRegistryBuilder =
+			processingElementsContainer.getCodeRegistryBuilder();
+
 		Map<String, GraphQLType> graphQLTypes =
 			processingElementsContainer.getTypeRegistry();
 
 		GraphQLObjectType graphQLObjectType = _getGraphQLObjectType(
-			graphQLDTOContributor, graphQLTypes);
+			graphQLCodeRegistryBuilder, graphQLDTOContributor,
+			graphQLSchemaBuilder, graphQLTypes);
 
 		String resourceName = graphQLDTOContributor.getResourceName();
 
@@ -1835,9 +1857,6 @@ public class GraphQLServletExtender {
 			_addField(
 				graphQLObjectType, createName,
 				graphQLArguments.toArray(new GraphQLArgument[0])));
-
-		GraphQLCodeRegistry.Builder graphQLCodeRegistryBuilder =
-			processingElementsContainer.getCodeRegistryBuilder();
 
 		graphQLSchemaBuilder.codeRegistry(
 			graphQLCodeRegistryBuilder.dataFetcher(
@@ -2261,21 +2280,32 @@ public class GraphQLServletExtender {
 			graphQLObjectType, Collections.singletonList(graphQLInterfaceType));
 	}
 
-	private GraphQLScalarType _toGraphQLScalarType(Class<?> type) {
-		if (String.class.equals(type)) {
-			return Scalars.GraphQLString;
-		}
-		else if (Long.class.equals(type)) {
-			return Scalars.GraphQLLong;
-		}
-		else if (Boolean.class.equals(type)) {
+	private GraphQLType _toGraphQLType(
+		Class<?> type, Map<String, GraphQLType> graphQLTypes, boolean input) {
+
+		if (Boolean.class.equals(type)) {
 			return Scalars.GraphQLBoolean;
 		}
 		else if (Integer.class.equals(type)) {
 			return Scalars.GraphQLInt;
 		}
+		else if (Long.class.equals(type)) {
+			return Scalars.GraphQLLong;
+		}
+		else if (Map.class.equals(type)) {
+			return _mapGraphQLScalarType;
+		}
+		else if (String.class.equals(type)) {
+			return Scalars.GraphQLString;
+		}
 
-		return Scalars.GraphQLString;
+		String customType = (input ? "Input" : "") + type.getSimpleName();
+
+		if (graphQLTypes.containsKey(customType)) {
+			return graphQLTypes.get(customType);
+		}
+
+		return _mapGraphQLScalarType;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

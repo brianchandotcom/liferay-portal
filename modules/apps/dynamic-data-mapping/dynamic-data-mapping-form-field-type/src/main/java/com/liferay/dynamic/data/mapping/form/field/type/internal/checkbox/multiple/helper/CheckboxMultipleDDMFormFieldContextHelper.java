@@ -18,8 +18,6 @@ import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.util.ArrayList;
@@ -65,9 +63,6 @@ public class CheckboxMultipleDDMFormFieldContextHelper {
 
 		return options;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		CheckboxMultipleDDMFormFieldContextHelper.class);
 
 	private final DDMFormFieldOptions _ddmFormFieldOptions;
 	private final JSONFactory _jsonFactory;

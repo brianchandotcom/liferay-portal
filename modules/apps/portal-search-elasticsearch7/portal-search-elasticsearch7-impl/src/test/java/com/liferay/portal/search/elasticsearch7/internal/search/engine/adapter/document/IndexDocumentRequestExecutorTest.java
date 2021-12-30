@@ -72,12 +72,12 @@ public class IndexDocumentRequestExecutorTest {
 
 	@Test
 	public void testIndexDocumentWithNoRefresh() {
-		_doIndexDocument(false);
+		_indexDocument(false);
 	}
 
 	@Test
 	public void testIndexDocumentWithRefresh() {
-		_doIndexDocument(true);
+		_indexDocument(true);
 	}
 
 	protected Document buildDocument(String fieldName, String fieldValue) {
@@ -96,7 +96,7 @@ public class IndexDocumentRequestExecutorTest {
 			actualDocument.getString(fieldName));
 	}
 
-	private void _doIndexDocument(boolean refresh) {
+	private void _indexDocument(boolean refresh) {
 		Document document = buildDocument(_FIELD_NAME, "example test");
 
 		IndexDocumentRequest indexDocumentRequest = new IndexDocumentRequest(

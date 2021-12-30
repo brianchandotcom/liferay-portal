@@ -51,7 +51,7 @@ public class FieldMappingAssert {
 
 		IdempotentRetryAssert.retryAssert(
 			10, TimeUnit.SECONDS,
-			() -> _doAssertFieldMappingMetadata(
+			() -> _assertFieldMappingMetadata(
 				expectedValue, key, field, index, indicesClient));
 	}
 
@@ -64,7 +64,7 @@ public class FieldMappingAssert {
 			expectedValue, "type", field, type, index, indicesClient);
 	}
 
-	private static void _doAssertFieldMappingMetadata(
+	private static void _assertFieldMappingMetadata(
 		String expectedValue, String key, String field, String index,
 		IndicesClient indicesClient) {
 

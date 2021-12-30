@@ -46,7 +46,7 @@ public class SortFieldBuilderImpl implements SortFieldBuilder {
 
 	@Override
 	public String getSortField(String entityClassName, String orderByCol) {
-		String sortField = _doGetSortField(entityClassName, orderByCol);
+		String sortField = _getSortField(entityClassName, orderByCol);
 
 		if (_defaultSortableTextFields.contains(sortField)) {
 			return Field.getSortableFieldName(sortField);
@@ -113,7 +113,7 @@ public class SortFieldBuilderImpl implements SortFieldBuilder {
 	@Reference
 	protected Props props;
 
-	private String _doGetSortField(String entityClassName, String orderByCol) {
+	private String _getSortField(String entityClassName, String orderByCol) {
 		SortFieldNameTranslator sortFieldNameTranslator =
 			_sortFieldNameTranslators.get(entityClassName);
 

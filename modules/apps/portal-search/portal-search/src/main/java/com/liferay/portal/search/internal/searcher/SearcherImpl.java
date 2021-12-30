@@ -59,9 +59,9 @@ public class SearcherImpl implements Searcher {
 			searchResponseBuilderFactory.builder(
 				searchRequestImpl.getSearchContext());
 
-		_doSmartSearch(searchRequestImpl, searchResponseBuilder);
+		_smartSearch(searchRequestImpl, searchResponseBuilder);
 
-		_doFederatedSearches(searchRequestImpl, searchResponseBuilder);
+		_federatedSearches(searchRequestImpl, searchResponseBuilder);
 
 		SearchContext searchContext = searchRequestImpl.getSearchContext();
 
@@ -137,7 +137,7 @@ public class SearcherImpl implements Searcher {
 		return new RuntimeException(searchException);
 	}
 
-	private void _doFederatedSearches(
+	private void _federatedSearches(
 		SearchRequest searchRequest,
 		SearchResponseBuilder searchResponseBuilder) {
 
@@ -149,92 +149,6 @@ public class SearcherImpl implements Searcher {
 		).forEach(
 			searchResponseBuilder::addFederatedSearchResponse
 		);
-	}
-
-	private void _doIndexerSearch(
-		SearchRequestImpl searchRequestImpl,
-		SearchResponseBuilder searchResponseBuilder) {
-
-		String singleIndexerClassName = _getSingleIndexerClassName(
-			searchRequestImpl);
-
-		if (singleIndexerClassName != null) {
-			_doSingleIndexerSearch(
-				singleIndexerClassName, searchRequestImpl,
-				searchResponseBuilder);
-		}
-		else {
-			_doMultiIndexerSearch(searchRequestImpl, searchResponseBuilder);
-		}
-	}
-
-	private void _doLowLevelSearch(
-		SearchRequestImpl searchRequestImpl,
-		SearchResponseBuilder searchResponseBuilder) {
-
-		SearchContext searchContext = searchRequestImpl.getSearchContext();
-
-		if (_isCount(searchRequestImpl)) {
-			indexSearcherHelper.searchCount(searchContext, null);
-
-			return;
-		}
-
-		Hits hits = indexSearcherHelper.search(searchContext, null);
-
-		searchResponseBuilder.hits(hits);
-	}
-
-	private void _doMultiIndexerSearch(
-		SearchRequestImpl searchRequestImpl,
-		SearchResponseBuilder searchResponseBuilder) {
-
-		FacetedSearcher facetedSearcher =
-			facetedSearcherManager.createFacetedSearcher();
-
-		Hits hits = search(
-			facetedSearcher, searchRequestImpl.getSearchContext());
-
-		if (_isCount(searchRequestImpl)) {
-			searchResponseBuilder.count(hits.getLength());
-
-			return;
-		}
-
-		searchResponseBuilder.hits(hits);
-	}
-
-	private void _doSingleIndexerSearch(
-		String singleIndexerClassName, SearchRequestImpl searchRequestImpl,
-		SearchResponseBuilder searchResponseBuilder) {
-
-		Indexer<?> indexer = indexerRegistry.getIndexer(singleIndexerClassName);
-
-		SearchContext searchContext = searchRequestImpl.getSearchContext();
-
-		if (_isCount(searchRequestImpl)) {
-			searchResponseBuilder.count(_searchCount(indexer, searchContext));
-
-			return;
-		}
-
-		Hits hits = search(indexer, searchContext);
-
-		searchResponseBuilder.hits(hits);
-	}
-
-	private void _doSmartSearch(
-		SearchRequestImpl searchRequestImpl,
-		SearchResponseBuilder searchResponseBuilder) {
-
-		List<String> indexes = searchRequestImpl.getIndexes();
-
-		if (indexes.isEmpty()) {
-			_doIndexerSearch(searchRequestImpl, searchResponseBuilder);
-		}
-		else {
-			_doLowLevelSearch(searchRequestImpl, searchResponseBuilder);
-		}
 	}
 
 	private Stream<Function<SearchRequest, SearchRequest>> _getContributors(
@@ -262,6 +176,23 @@ public class SearcherImpl implements Searcher {
 		return null;
 	}
 
+	private void _indexerSearch(
+		SearchRequestImpl searchRequestImpl,
+		SearchResponseBuilder searchResponseBuilder) {
+
+		String singleIndexerClassName = _getSingleIndexerClassName(
+			searchRequestImpl);
+
+		if (singleIndexerClassName != null) {
+			_singleIndexerSearch(
+				singleIndexerClassName, searchRequestImpl,
+				searchResponseBuilder);
+		}
+		else {
+			_multiIndexerSearch(searchRequestImpl, searchResponseBuilder);
+		}
+	}
+
 	private boolean _isCount(SearchRequestImpl searchRequestImpl) {
 		if ((searchRequestImpl.getSize() != null) &&
 			(searchRequestImpl.getSize() == 0)) {
@@ -272,12 +203,81 @@ public class SearcherImpl implements Searcher {
 		return false;
 	}
 
+	private void _lowLevelSearch(
+		SearchRequestImpl searchRequestImpl,
+		SearchResponseBuilder searchResponseBuilder) {
+
+		SearchContext searchContext = searchRequestImpl.getSearchContext();
+
+		if (_isCount(searchRequestImpl)) {
+			indexSearcherHelper.searchCount(searchContext, null);
+
+			return;
+		}
+
+		Hits hits = indexSearcherHelper.search(searchContext, null);
+
+		searchResponseBuilder.hits(hits);
+	}
+
+	private void _multiIndexerSearch(
+		SearchRequestImpl searchRequestImpl,
+		SearchResponseBuilder searchResponseBuilder) {
+
+		FacetedSearcher facetedSearcher =
+			facetedSearcherManager.createFacetedSearcher();
+
+		Hits hits = search(
+			facetedSearcher, searchRequestImpl.getSearchContext());
+
+		if (_isCount(searchRequestImpl)) {
+			searchResponseBuilder.count(hits.getLength());
+
+			return;
+		}
+
+		searchResponseBuilder.hits(hits);
+	}
+
 	private long _searchCount(Indexer<?> indexer, SearchContext searchContext) {
 		try {
 			return indexer.searchCount(searchContext);
 		}
 		catch (SearchException searchException) {
 			throw _uncheck(searchException);
+		}
+	}
+
+	private void _singleIndexerSearch(
+		String singleIndexerClassName, SearchRequestImpl searchRequestImpl,
+		SearchResponseBuilder searchResponseBuilder) {
+
+		Indexer<?> indexer = indexerRegistry.getIndexer(singleIndexerClassName);
+
+		SearchContext searchContext = searchRequestImpl.getSearchContext();
+
+		if (_isCount(searchRequestImpl)) {
+			searchResponseBuilder.count(_searchCount(indexer, searchContext));
+
+			return;
+		}
+
+		Hits hits = search(indexer, searchContext);
+
+		searchResponseBuilder.hits(hits);
+	}
+
+	private void _smartSearch(
+		SearchRequestImpl searchRequestImpl,
+		SearchResponseBuilder searchResponseBuilder) {
+
+		List<String> indexes = searchRequestImpl.getIndexes();
+
+		if (indexes.isEmpty()) {
+			_indexerSearch(searchRequestImpl, searchResponseBuilder);
+		}
+		else {
+			_lowLevelSearch(searchRequestImpl, searchResponseBuilder);
 		}
 	}
 

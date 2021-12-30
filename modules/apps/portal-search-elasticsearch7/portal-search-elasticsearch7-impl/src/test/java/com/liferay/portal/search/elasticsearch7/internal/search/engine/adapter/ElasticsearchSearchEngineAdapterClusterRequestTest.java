@@ -125,12 +125,12 @@ public class ElasticsearchSearchEngineAdapterClusterRequestTest {
 
 	@Test
 	public void testExecuteStatsClusterRequest() {
-		_doTestExecuteStatsClusterRequest(null);
+		_testExecuteStatsClusterRequest(null);
 	}
 
 	@Test
 	public void testExecuteStatsClusterRequestWithNodeId() {
-		_doTestExecuteStatsClusterRequest(new String[] {"liferay"});
+		_testExecuteStatsClusterRequest(new String[] {"liferay"});
 	}
 
 	protected static SearchEngineAdapter createSearchEngineAdapter(
@@ -219,7 +219,7 @@ public class ElasticsearchSearchEngineAdapterClusterRequestTest {
 		}
 	}
 
-	private void _doTestExecuteStatsClusterRequest(String[] nodeIds) {
+	private void _testExecuteStatsClusterRequest(String[] nodeIds) {
 		StatsClusterRequest statsClusterRequest = new StatsClusterRequest(
 			nodeIds);
 

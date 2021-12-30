@@ -71,7 +71,7 @@ public class SearchEngineInitializer implements Runnable {
 	}
 
 	public void reindex(int delay) {
-		_doReIndex(delay);
+		_reIndex(delay);
 	}
 
 	@Override
@@ -103,7 +103,7 @@ public class SearchEngineInitializer implements Runnable {
 		}
 	}
 
-	private void _doReIndex(int delay) {
+	private void _reIndex(int delay) {
 		if (IndexWriterHelperUtil.isIndexReadOnly()) {
 			return;
 		}

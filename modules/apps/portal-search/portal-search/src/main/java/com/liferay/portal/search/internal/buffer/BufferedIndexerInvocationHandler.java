@@ -173,7 +173,7 @@ public class BufferedIndexerInvocationHandler implements InvocationHandler {
 		IndexerRequest indexerRequest = new IndexerRequest(
 			methodKey.getMethod(), classedModel, _indexer);
 
-		_doBufferRequest(indexerRequest, indexerRequestBuffer);
+		_bufferRequest(indexerRequest, indexerRequestBuffer);
 	}
 
 	protected void bufferRequest(
@@ -194,10 +194,10 @@ public class BufferedIndexerInvocationHandler implements InvocationHandler {
 		IndexerRequest indexerRequest = new IndexerRequest(
 			methodKey.getMethod(), _indexer, className, classPK);
 
-		_doBufferRequest(indexerRequest, indexerRequestBuffer);
+		_bufferRequest(indexerRequest, indexerRequestBuffer);
 	}
 
-	private void _doBufferRequest(
+	private void _bufferRequest(
 			IndexerRequest indexerRequest,
 			IndexerRequestBuffer indexerRequestBuffer)
 		throws Exception {

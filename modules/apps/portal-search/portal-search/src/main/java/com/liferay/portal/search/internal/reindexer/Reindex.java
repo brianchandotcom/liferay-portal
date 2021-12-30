@@ -47,7 +47,7 @@ public class Reindex {
 
 	public void reindex(String className, long... classPKs) {
 		if (_synchronousExecution) {
-			_doReindex(className, ListUtil.fromArray(classPKs));
+			_reindex(className, ListUtil.fromArray(classPKs));
 
 			return;
 		}
@@ -63,7 +63,7 @@ public class Reindex {
 						className);
 
 					if (!classPKs.isEmpty()) {
-						_doReindex(className, classPKs);
+						_reindex(className, classPKs);
 
 						_executorService.submit(this);
 					}
@@ -150,7 +150,7 @@ public class Reindex {
 		bulkReindexer.reindex(_companyId, classPKs);
 	}
 
-	private void _doReindex(String className, Collection<Long> classPKs) {
+	private void _reindex(String className, Collection<Long> classPKs) {
 		if (_nonbulkIndexing || (classPKs.size() < 2)) {
 			for (long classPK : classPKs) {
 				_reindex(className, classPK);

@@ -73,7 +73,7 @@ public class PortletSharedSearchRequestImpl
 	@Override
 	public PortletSharedSearchResponse search(RenderRequest renderRequest) {
 		return portletSharedTaskExecutor.executeOnlyOnce(
-			() -> _doSearch(renderRequest),
+			() -> _search(renderRequest),
 			PortletSharedSearchResponse.class.getSimpleName(), renderRequest);
 	}
 
@@ -186,23 +186,6 @@ public class PortletSharedSearchRequestImpl
 			searchRequestBuilderFactory);
 	}
 
-	private PortletSharedSearchResponse _doSearch(RenderRequest renderRequest) {
-		ThemeDisplay themeDisplay = getThemeDisplay(renderRequest);
-
-		Stream<SearchSettingsContributor> stream =
-			_getSearchSettingsContributorsStream(themeDisplay, renderRequest);
-
-		SearchRequestImpl searchRequestImpl = _createSearchRequestImpl(
-			themeDisplay, renderRequest);
-
-		stream.forEach(searchRequestImpl::addSearchSettingsContributor);
-
-		SearchResponseImpl searchResponseImpl = searchRequestImpl.search();
-
-		return new PortletSharedSearchResponseImpl(
-			searchResponseImpl, portletSharedRequestHelper);
-	}
-
 	private Stream<Portlet> _getInstantiatedPortletsStream(
 		Layout layout, long companyId) {
 
@@ -285,6 +268,23 @@ public class PortletSharedSearchRequestImpl
 		).map(
 			Optional::get
 		);
+	}
+
+	private PortletSharedSearchResponse _search(RenderRequest renderRequest) {
+		ThemeDisplay themeDisplay = getThemeDisplay(renderRequest);
+
+		Stream<SearchSettingsContributor> stream =
+			_getSearchSettingsContributorsStream(themeDisplay, renderRequest);
+
+		SearchRequestImpl searchRequestImpl = _createSearchRequestImpl(
+			themeDisplay, renderRequest);
+
+		stream.forEach(searchRequestImpl::addSearchSettingsContributor);
+
+		SearchResponseImpl searchResponseImpl = searchRequestImpl.search();
+
+		return new PortletSharedSearchResponseImpl(
+			searchResponseImpl, portletSharedRequestHelper);
 	}
 
 	private ServiceTrackerMap<String, PortletSharedSearchContributor>

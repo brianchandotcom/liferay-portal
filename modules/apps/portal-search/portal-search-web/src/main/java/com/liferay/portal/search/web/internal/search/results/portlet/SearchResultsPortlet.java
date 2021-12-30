@@ -362,66 +362,7 @@ public class SearchResultsPortlet extends MVCPortlet {
 		}
 	}
 
-	private SearchResultsPortletDisplayContext
-		_createSearchResultsPortletDisplayContext(RenderRequest renderRequest) {
-
-		try {
-			return new SearchResultsPortletDisplayContext(
-				getHttpServletRequest(renderRequest));
-		}
-		catch (ConfigurationException configurationException) {
-			throw new RuntimeException(configurationException);
-		}
-	}
-
-	private SearchResultsSummariesHolder _doBuildSummaries(
-			PortletSharedSearchResponse portletSharedSearchResponse,
-			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws Exception {
-
-		SearchResultsPortletPreferences searchResultsPortletPreferences =
-			new SearchResultsPortletPreferencesImpl(
-				portletSharedSearchResponse.getPortletPreferences(
-					renderRequest));
-
-		ThemeDisplay themeDisplay = portletSharedSearchResponse.getThemeDisplay(
-			renderRequest);
-
-		DocumentFormPermissionChecker documentFormPermissionChecker =
-			new DocumentFormPermissionCheckerImpl(themeDisplay);
-
-		SearchResponse searchResponse = _getSearchResponse(
-			portletSharedSearchResponse, searchResultsPortletPreferences);
-
-		List<Document> documents = searchResponse.getDocuments71();
-
-		SearchResultsSummariesHolder searchResultsSummariesHolder =
-			new SearchResultsSummariesHolder(documents.size());
-
-		PortletURLFactory portletURLFactory = getPortletURLFactory(
-			renderRequest, renderResponse);
-
-		SearchResultPreferences searchResultPreferences =
-			new SearchResultPreferencesImpl(
-				searchResultsPortletPreferences, documentFormPermissionChecker);
-
-		for (Document document : documents) {
-			SearchResultSummaryDisplayContext
-				searchResultSummaryDisplayContext = _doBuildSummary(
-					document, renderRequest, renderResponse, themeDisplay,
-					portletURLFactory, searchResultsPortletPreferences,
-					searchResultPreferences);
-
-			if (searchResultSummaryDisplayContext != null) {
-				searchResultsSummariesHolder.put(
-					document, searchResultSummaryDisplayContext);
-			}
-		}
-
-		return searchResultsSummariesHolder;
-	}
-
-	private SearchResultSummaryDisplayContext _doBuildSummary(
+	private SearchResultSummaryDisplayContext _buildSummary(
 			Document document, RenderRequest renderRequest,
 			RenderResponse renderResponse, ThemeDisplay themeDisplay,
 			PortletURLFactory portletURLFactory,
@@ -481,6 +422,65 @@ public class SearchResultsPortlet extends MVCPortlet {
 		);
 
 		return searchResultSummaryDisplayBuilder.build();
+	}
+
+	private SearchResultsPortletDisplayContext
+		_createSearchResultsPortletDisplayContext(RenderRequest renderRequest) {
+
+		try {
+			return new SearchResultsPortletDisplayContext(
+				getHttpServletRequest(renderRequest));
+		}
+		catch (ConfigurationException configurationException) {
+			throw new RuntimeException(configurationException);
+		}
+	}
+
+	private SearchResultsSummariesHolder _doBuildSummaries(
+			PortletSharedSearchResponse portletSharedSearchResponse,
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws Exception {
+
+		SearchResultsPortletPreferences searchResultsPortletPreferences =
+			new SearchResultsPortletPreferencesImpl(
+				portletSharedSearchResponse.getPortletPreferences(
+					renderRequest));
+
+		ThemeDisplay themeDisplay = portletSharedSearchResponse.getThemeDisplay(
+			renderRequest);
+
+		DocumentFormPermissionChecker documentFormPermissionChecker =
+			new DocumentFormPermissionCheckerImpl(themeDisplay);
+
+		SearchResponse searchResponse = _getSearchResponse(
+			portletSharedSearchResponse, searchResultsPortletPreferences);
+
+		List<Document> documents = searchResponse.getDocuments71();
+
+		SearchResultsSummariesHolder searchResultsSummariesHolder =
+			new SearchResultsSummariesHolder(documents.size());
+
+		PortletURLFactory portletURLFactory = getPortletURLFactory(
+			renderRequest, renderResponse);
+
+		SearchResultPreferences searchResultPreferences =
+			new SearchResultPreferencesImpl(
+				searchResultsPortletPreferences, documentFormPermissionChecker);
+
+		for (Document document : documents) {
+			SearchResultSummaryDisplayContext
+				searchResultSummaryDisplayContext = _buildSummary(
+					document, renderRequest, renderResponse, themeDisplay,
+					portletURLFactory, searchResultsPortletPreferences,
+					searchResultPreferences);
+
+			if (searchResultSummaryDisplayContext != null) {
+				searchResultsSummariesHolder.put(
+					document, searchResultSummaryDisplayContext);
+			}
+		}
+
+		return searchResultsSummariesHolder;
 	}
 
 	private SearchResponse _getSearchResponse(

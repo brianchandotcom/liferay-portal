@@ -52,7 +52,7 @@ public class ReindexTest {
 		_reindex.setNonbulkIndexing(false);
 		_reindex.setSynchronousExecution(false);
 
-		_doTestMustRepeatModelChangedOutsideAfterIndexedInside();
+		_testMustRepeatModelChangedOutsideAfterIndexedInside();
 	}
 
 	@Test
@@ -60,7 +60,7 @@ public class ReindexTest {
 		_reindex.setNonbulkIndexing(true);
 		_reindex.setSynchronousExecution(false);
 
-		_doTestMustRepeatModelChangedOutsideAfterIndexedInside();
+		_testMustRepeatModelChangedOutsideAfterIndexedInside();
 	}
 
 	@Test
@@ -68,7 +68,7 @@ public class ReindexTest {
 		_reindex.setNonbulkIndexing(false);
 		_reindex.setSynchronousExecution(true);
 
-		_doTestSynchronousIndexingForIntegrationTests();
+		_testSynchronousIndexingForIntegrationTests();
 	}
 
 	@Test
@@ -76,7 +76,7 @@ public class ReindexTest {
 		_reindex.setNonbulkIndexing(true);
 		_reindex.setSynchronousExecution(true);
 
-		_doTestSynchronousIndexingForIntegrationTests();
+		_testSynchronousIndexingForIntegrationTests();
 	}
 
 	protected void addReindexEndListener(
@@ -112,7 +112,21 @@ public class ReindexTest {
 		Assert.assertEquals(list, _indexedValues);
 	}
 
-	private void _doTestMustRepeatModelChangedOutsideAfterIndexedInside() {
+	private void _reindex(long classPK) {
+		_transferAccumulatedToIndexed();
+	}
+
+	private void _reindexAddingValue(int group) {
+		_addedValues.add(group);
+
+		_reindex.reindex(_CLASS_NAME, _CLASS_PK);
+	}
+
+	private void _reindexBulk(Collection<Long> classPKs) {
+		_transferAccumulatedToIndexed();
+	}
+
+	private void _testMustRepeatModelChangedOutsideAfterIndexedInside() {
 		Semaphore semaphore1 = new Semaphore(0);
 
 		Semaphore semaphore2 = new Semaphore(0);
@@ -150,7 +164,7 @@ public class ReindexTest {
 		_assertIndexedValues(Arrays.asList(101, 202, 303, 404, 505));
 	}
 
-	private void _doTestSynchronousIndexingForIntegrationTests() {
+	private void _testSynchronousIndexingForIntegrationTests() {
 		_reindexAddingValue(101);
 
 		_assertIndexedValues(Arrays.asList(101));
@@ -161,20 +175,6 @@ public class ReindexTest {
 		_reindexAddingValue(505);
 
 		_assertIndexedValues(Arrays.asList(101, 202, 303, 404, 505));
-	}
-
-	private void _reindex(long classPK) {
-		_transferAccumulatedToIndexed();
-	}
-
-	private void _reindexAddingValue(int group) {
-		_addedValues.add(group);
-
-		_reindex.reindex(_CLASS_NAME, _CLASS_PK);
-	}
-
-	private void _reindexBulk(Collection<Long> classPKs) {
-		_transferAccumulatedToIndexed();
 	}
 
 	private void _transferAccumulatedToIndexed() {

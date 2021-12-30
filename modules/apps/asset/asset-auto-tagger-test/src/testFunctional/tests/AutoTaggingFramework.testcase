@@ -39,7 +39,7 @@ definition {
 		property app.server.bundles.size = "1";
 		property cluster.enabled = "true";
 		property minimum.slave.ram = "24";
-		property test.name.skip.portal.instance = "DMAutoTagging#AutoTagImagesOnSeparateNodes";
+		property test.name.skip.portal.instance = "AutoTaggingFramework#AutoTagImagesOnSeparateNodes";
 
 		Clustering.viewClusterStatusInConsole();
 
@@ -162,7 +162,7 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanAddAndRemoveImageAutoTagViaGogoShell {
-		property test.name.skip.portal.instance = "DMAutoTagging#CanAddAndRemoveImageAutoTagViaGogoShell";
+		property test.name.skip.portal.instance = "AutoTaggingFramework#CanAddAndRemoveImageAutoTagViaGogoShell";
 
 		var companyId = JSONCompany.getCompanyId();
 
@@ -219,7 +219,7 @@ definition {
 	test CanAddAutoTagAfterEnablingOpenNLP {
 		property environment.acceptance = "true";
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "DMAutoTagging#CanAddAutoTagAfterEnablingOpenNLP";
+		property test.name.skip.portal.instance = "AutoTaggingFramework#CanAddAutoTagAfterEnablingOpenNLP";
 		property websphere.ssl.truststore.enabled = "true";
 
 		AutoTagging.enableOpenNLP(
@@ -249,7 +249,7 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanCheckMaxNumberOfTagsBetweenInstanceLevelAndPortalLevel {
-		property test.name.skip.portal.instance = "DMAutoTagging#CanCheckMaxNumberOfTagsBetweenInstanceLevelAndPortalLevel";
+		property test.name.skip.portal.instance = "AutoTaggingFramework#CanCheckMaxNumberOfTagsBetweenInstanceLevelAndPortalLevel";
 
 		AutoTagging.enableAutoTagging(
 			enableAutoTaggingFor = "System Settings",
@@ -265,7 +265,7 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanConfigureImageAutoTaggingPerSite {
-		property test.name.skip.portal.instance = "DMAutoTagging#CanConfigureImageAutoTaggingPerSite";
+		property test.name.skip.portal.instance = "AutoTaggingFramework#CanConfigureImageAutoTaggingPerSite";
 
 		JSONGroup.addGroup(groupName = "Site Name AutoTag Enabled");
 
@@ -313,7 +313,7 @@ definition {
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document JPG");
 
-		AutoTagging.assertNoAutoTag(tagName = "carton");
+		AssetCategorization.viewNoTag(tagName = "carton");
 	}
 
 }

@@ -326,7 +326,7 @@ public class JournalConverterImpl implements JournalConverter {
 	}
 
 	private String[] _getDDMFieldsDisplayValues(Field ddmFieldsDisplayField)
-		throws PortalException {
+		throws Exception {
 
 		try {
 			DDMStructure ddmStructure = ddmFieldsDisplayField.getDDMStructure();

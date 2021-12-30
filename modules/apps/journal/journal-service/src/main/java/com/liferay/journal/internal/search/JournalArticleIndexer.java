@@ -46,7 +46,6 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
-import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -683,7 +682,7 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 	private Map<String, Query> _addLocalizedFields(
 			BooleanQuery searchQuery, String field, String value, boolean like,
 			SearchContext searchContext)
-		throws ParseException {
+		throws Exception {
 
 		String[] localizedFieldNames =
 			_searchLocalizationHelper.getLocalizedFieldNames(
@@ -703,7 +702,7 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 	private void _addLocalizedQuery(
 			BooleanQuery searchQuery, BooleanQuery localizedQuery,
 			SearchContext searchContext)
-		throws ParseException {
+		throws Exception {
 
 		BooleanClauseOccur booleanClauseOccur = BooleanClauseOccur.SHOULD;
 
@@ -856,7 +855,7 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 		return LocalizationUtil.getLocalization();
 	}
 
-	private void _reindexArticles(long companyId) throws PortalException {
+	private void _reindexArticles(long companyId) throws Exception {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery;
 
 		if (isIndexAllArticleVersions()) {

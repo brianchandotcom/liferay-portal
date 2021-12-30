@@ -15,7 +15,6 @@
 package com.liferay.portal.workflow.kaleo.runtime.internal.notification.recipient;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Role;
@@ -128,7 +127,7 @@ public class RoleNotificationRecipientBuilder
 	}
 
 	private List<Long> _getAncestorGroupIds(Group group, Role role)
-		throws PortalException {
+		throws Exception {
 
 		List<Long> groupIds = new ArrayList<>();
 
@@ -142,7 +141,7 @@ public class RoleNotificationRecipientBuilder
 	}
 
 	private List<Long> _getAncestorOrganizationGroupIds(Group group, Role role)
-		throws PortalException {
+		throws Exception {
 
 		List<Long> groupIds = new ArrayList<>();
 
@@ -158,9 +157,7 @@ public class RoleNotificationRecipientBuilder
 		return groupIds;
 	}
 
-	private List<Long> _getGroupIds(long groupId, Role role)
-		throws PortalException {
-
+	private List<Long> _getGroupIds(long groupId, Role role) throws Exception {
 		List<Long> groupIds = new ArrayList<>();
 
 		if (groupId != WorkflowConstants.DEFAULT_GROUP_ID) {
@@ -224,9 +221,7 @@ public class RoleNotificationRecipientBuilder
 		return users;
 	}
 
-	private boolean _isValidGroup(Group group, Role role)
-		throws PortalException {
-
+	private boolean _isValidGroup(Group group, Role role) throws Exception {
 		if ((group != null) && group.isDepot() &&
 			(role.getType() == RoleConstants.TYPE_DEPOT)) {
 

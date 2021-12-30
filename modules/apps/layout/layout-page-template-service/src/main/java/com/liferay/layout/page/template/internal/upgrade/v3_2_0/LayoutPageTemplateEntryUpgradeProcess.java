@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 
 /**
@@ -50,7 +49,7 @@ public class LayoutPageTemplateEntryUpgradeProcess extends UpgradeProcess {
 			layoutPageTemplateEntryKey, CharPool.SPACE, CharPool.DASH);
 	}
 
-	private void _upgradeLayoutPageTemplateEntryKey() throws SQLException {
+	private void _upgradeLayoutPageTemplateEntryKey() throws Exception {
 		try (Statement s = connection.createStatement();
 			ResultSet resultSet = s.executeQuery(
 				"select layoutPageTemplateEntryId, name from " +

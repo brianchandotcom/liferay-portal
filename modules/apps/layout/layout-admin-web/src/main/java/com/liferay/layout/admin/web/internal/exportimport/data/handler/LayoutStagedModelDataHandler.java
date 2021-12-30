@@ -1984,7 +1984,7 @@ public class LayoutStagedModelDataHandler
 	private void _importFriendlyURLEntries(
 			PortletDataContext portletDataContext, Layout layout,
 			Layout importedLayout)
-		throws PortalException {
+		throws Exception {
 
 		List<Element> friendlyURLEntryElements =
 			portletDataContext.getReferenceDataElements(
@@ -2006,7 +2006,7 @@ public class LayoutStagedModelDataHandler
 
 	private void _importLayoutClassedModelUsages(
 			PortletDataContext portletDataContext, Layout layout)
-		throws PortletDataException {
+		throws Exception {
 
 		List<Element> layoutClassedModelUsageElements =
 			portletDataContext.getReferenceDataElements(
@@ -2291,7 +2291,7 @@ public class LayoutStagedModelDataHandler
 
 	private void _importLayoutSEOEntries(
 			PortletDataContext portletDataContext, Layout layout)
-		throws PortletDataException {
+		throws Exception {
 
 		List<Element> layoutSEOSiteElements =
 			portletDataContext.getReferenceDataElements(
@@ -2674,7 +2674,7 @@ public class LayoutStagedModelDataHandler
 	}
 
 	private void _resetLastMergeTime(Layout importedLayout, Layout layout)
-		throws PortalException {
+		throws Exception {
 
 		UnicodeProperties typeSettingsUnicodeProperties =
 			importedLayout.getTypeSettingsProperties();
@@ -2754,7 +2754,7 @@ public class LayoutStagedModelDataHandler
 	}
 
 	private void _updateTypeSettings(Layout importedLayout, Layout layout)
-		throws PortalException {
+		throws Exception {
 
 		long groupId = layout.getGroupId();
 

@@ -266,7 +266,7 @@ public class LayoutPrototypeStagedModelDataHandler
 	private void _importLayouts(
 			PortletDataContext portletDataContext,
 			LayoutPrototype layoutPrototype, long importedGroupId)
-		throws PortalException {
+		throws Exception {
 
 		long groupId = portletDataContext.getGroupId();
 		boolean privateLayout = portletDataContext.isPrivateLayout();

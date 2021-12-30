@@ -23,7 +23,6 @@ import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.service.KBArticleLocalService;
 import com.liferay.knowledge.base.web.internal.constants.KBWebKeys;
 import com.liferay.portal.kernel.exception.NoSuchSubscriptionException;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -216,7 +215,7 @@ public class ArticlePortlet extends BaseKBPortlet {
 	}
 
 	private long _getResourcePrimKeyFromUrlTitle(RenderRequest renderRequest)
-		throws PortalException {
+		throws Exception {
 
 		String urlTitle = ParamUtil.getString(renderRequest, "urlTitle");
 

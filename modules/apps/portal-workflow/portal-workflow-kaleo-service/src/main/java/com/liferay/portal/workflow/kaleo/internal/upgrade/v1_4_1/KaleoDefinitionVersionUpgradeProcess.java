@@ -23,8 +23,6 @@ import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.workflow.kaleo.internal.upgrade.v1_4_1.util.KaleoDefinitionTable;
 
-import java.io.IOException;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -61,9 +59,7 @@ public class KaleoDefinitionVersionUpgradeProcess extends UpgradeProcess {
 		return version + StringPool.PERIOD + 0;
 	}
 
-	private void _removeDuplicateKaleoDefinitions()
-		throws IOException, SQLException {
-
+	private void _removeDuplicateKaleoDefinitions() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			PreparedStatement preparedStatement1 = connection.prepareStatement(
 				"select companyId, name, MAX(version) as version from " +

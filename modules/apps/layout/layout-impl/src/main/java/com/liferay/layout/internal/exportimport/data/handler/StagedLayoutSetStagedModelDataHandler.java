@@ -264,7 +264,7 @@ public class StagedLayoutSetStagedModelDataHandler
 
 	private void _checkLayoutSetPrototypeLayouts(
 			PortletDataContext portletDataContext, Set<Layout> modifiedLayouts)
-		throws PortalException {
+		throws Exception {
 
 		boolean layoutSetPrototypeLinkEnabled = MapUtil.getBoolean(
 			portletDataContext.getParameterMap(),
@@ -690,7 +690,7 @@ public class StagedLayoutSetStagedModelDataHandler
 
 	private void _updateLastMergeTime(
 			PortletDataContext portletDataContext, Set<Layout> modifiedLayouts)
-		throws PortalException {
+		throws Exception {
 
 		String layoutsImportMode = MapUtil.getString(
 			portletDataContext.getParameterMap(),
@@ -755,7 +755,7 @@ public class StagedLayoutSetStagedModelDataHandler
 	private void _updateLayoutPriorities(
 			PortletDataContext portletDataContext, List<Element> layoutElements,
 			boolean privateLayout)
-		throws PortalException {
+		throws Exception {
 
 		if (ExportImportThreadLocal.isInitialLayoutStagingInProcess()) {
 			return;
@@ -889,7 +889,7 @@ public class StagedLayoutSetStagedModelDataHandler
 	private void _updateLayoutSetSettingsProperties(
 			PortletDataContext portletDataContext,
 			StagedLayoutSet importedLayoutSet)
-		throws PortalException {
+		throws Exception {
 
 		LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
 			portletDataContext.getGroupId(),

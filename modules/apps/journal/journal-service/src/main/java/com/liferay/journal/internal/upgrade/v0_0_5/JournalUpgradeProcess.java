@@ -47,7 +47,6 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
-import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 
@@ -411,9 +410,7 @@ public class JournalUpgradeProcess extends UpgradeProcess {
 			id, ddmStructureIds.get(0), ddmStructureIds.get(1));
 	}
 
-	private List<Element> _getDDMStructures(Locale locale)
-		throws DocumentException {
-
+	private List<Element> _getDDMStructures(Locale locale) throws Exception {
 		String xml = StringUtil.replace(
 			_BASIC_WEB_CONTENT_STRUCTURE, "[$LOCALE_DEFAULT$]",
 			locale.toString());

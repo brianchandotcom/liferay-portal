@@ -195,7 +195,7 @@ public class JournalContentConfigurationAction
 	}
 
 	private String _getArticleId(PortletRequest portletRequest)
-		throws PortalException {
+		throws Exception {
 
 		long assetEntryId = GetterUtil.getLong(
 			getParameter(portletRequest, "assetEntryId"));
@@ -221,7 +221,7 @@ public class JournalContentConfigurationAction
 	}
 
 	private long _getDDMTemplateId(PortletRequest portletRequest)
-		throws PortalException {
+		throws Exception {
 
 		String ddmTemplateKey = getParameter(portletRequest, "ddmTemplateKey");
 

@@ -28,14 +28,12 @@ import com.liferay.portal.workflow.kaleo.runtime.notification.NotificationRecipi
 import com.liferay.portal.workflow.kaleo.runtime.notification.NotificationSender;
 
 import java.io.Serializable;
-import java.io.UnsupportedEncodingException;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 
 import org.osgi.service.component.annotations.Component;
@@ -133,7 +131,7 @@ public class EmailNotificationSender
 
 	private InternetAddress[] _getInternetAddresses(
 			Set<NotificationRecipient> notificationRecipients)
-		throws AddressException, UnsupportedEncodingException {
+		throws Exception {
 
 		if (notificationRecipients == null) {
 			return new InternetAddress[0];

@@ -22,7 +22,6 @@ import com.liferay.layout.page.template.util.LayoutPageTemplateStructureHelperUt
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -141,7 +140,7 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
-	private void _upgradeLayouts() throws PortalException {
+	private void _upgradeLayouts() throws Exception {
 		long classNameId = PortalUtil.getClassNameId(Layout.class.getName());
 
 		ActionableDynamicQuery actionableDynamicQuery =

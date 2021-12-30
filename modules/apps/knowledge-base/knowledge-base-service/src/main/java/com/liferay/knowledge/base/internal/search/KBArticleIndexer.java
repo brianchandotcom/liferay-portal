@@ -220,9 +220,7 @@ public class KBArticleIndexer extends BaseIndexer<KBArticle> {
 	@Reference
 	protected KBFolderLocalService kbFolderLocalService;
 
-	private String[] _getKBFolderNames(KBArticle kbArticle)
-		throws PortalException {
-
+	private String[] _getKBFolderNames(KBArticle kbArticle) throws Exception {
 		long kbFolderId = kbArticle.getKbFolderId();
 
 		Collection<String> kbFolderNames = new ArrayList<>();
@@ -238,9 +236,7 @@ public class KBArticleIndexer extends BaseIndexer<KBArticle> {
 		return kbFolderNames.toArray(new String[0]);
 	}
 
-	private void _reindexAttachments(KBArticle kbArticle)
-		throws PortalException {
-
+	private void _reindexAttachments(KBArticle kbArticle) throws Exception {
 		Indexer<DLFileEntry> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			DLFileEntry.class);
 

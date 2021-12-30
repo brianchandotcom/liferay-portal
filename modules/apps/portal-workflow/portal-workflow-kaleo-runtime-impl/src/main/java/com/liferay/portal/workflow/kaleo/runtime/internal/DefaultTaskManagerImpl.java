@@ -419,7 +419,7 @@ public class DefaultTaskManagerImpl
 	private Map<String, Serializable> _updateWorkflowContext(
 			Map<String, Serializable> workflowContext,
 			KaleoTaskInstanceToken kaleoTaskInstanceToken)
-		throws PortalException {
+		throws Exception {
 
 		KaleoInstance kaleoInstance =
 			kaleoInstanceLocalService.getKaleoInstance(

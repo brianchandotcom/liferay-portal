@@ -24,7 +24,6 @@ import com.liferay.knowledge.base.service.KBFolderLocalService;
 import com.liferay.knowledge.base.util.AdminHelper;
 import com.liferay.knowledge.base.web.internal.security.permission.resource.KBArticlePermission;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -465,7 +464,7 @@ public class FindKBArticleStrutsAction implements StrutsAction {
 	}
 
 	private boolean _isParentFolder(long resourcePrimKey, long kbFolderId)
-		throws PortalException {
+		throws Exception {
 
 		if (resourcePrimKey == kbFolderId) {
 			return true;

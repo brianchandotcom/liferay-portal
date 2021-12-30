@@ -48,7 +48,24 @@ public class TranslationURLProviderImpl implements TranslationURLProvider {
 			"classPK", classPK
 		).setParameter(
 			"groupId", groupId
-		).build();
+		).buildPortletURL();
+	}
+
+	@Override
+	public PortletURL getExportTranslationURL(
+		long groupId, long classNameId,
+		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
+
+		return PortletURLBuilder.create(
+			requestBackedPortletURLFactory.createRenderURL(
+				TranslationPortletKeys.TRANSLATION)
+		).setMVCRenderCommandName(
+			"/translation/export_translation"
+		).setParameter(
+			"classNameId", classNameId
+		).setParameter(
+			"groupId", groupId
+		).buildPortletURL();
 	}
 
 	@Override

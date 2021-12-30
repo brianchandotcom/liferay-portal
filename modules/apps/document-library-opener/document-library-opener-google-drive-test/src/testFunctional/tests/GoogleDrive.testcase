@@ -235,9 +235,7 @@ definition {
 
 		DMDocument.viewPG(dmDocumentTitle = "Untitled");
 
-		AutoTagging.assertAutoTagPresent(tagName = "adventures");
-
-		AutoTagging.assertAutoTagPresent(tagName = "alice");
+		DMDocument.viewTagInfo(tagName = "adventures,alice");
 	}
 
 	@description = "This test ensures no document is generated if a user cancels creating a Google Doc."

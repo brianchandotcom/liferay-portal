@@ -115,7 +115,7 @@ definition {
 
 		DMDocument.viewCP(dmDocumentTitle = "${dmDocumentTitle}");
 
-		AutoTagging.assertAutoTagPresent(tagName = "${tagName}");
+		DMDocument.viewTagInfo(tagName = "${tagName}");
 	}
 
 	macro addAutoTaggedWebContent {
@@ -190,7 +190,7 @@ definition {
 		DMDocument.viewCP(dmDocumentTitle = "${dmDocumentTitle}");
 
 		for (var tagName : list "${dmTagName}") {
-			AutoTagging.assertAutoTagPresent(tagName = "${tagName}");
+			DMDocument.viewTagInfo(tagName = "${tagName}");
 		}
 
 		if (isSet(depotName)) {
@@ -1458,7 +1458,7 @@ definition {
 
 		DMDocument.viewCP(dmDocumentTitle = "${dmDocumentTitle}");
 
-		AutoTagging.assertAutoTagPresent(tagName = "${tagName}");
+		DMDocument.viewTagInfo(tagName = "${tagName}");
 
 		if (isSet(depotName)) {
 			DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
@@ -1486,7 +1486,7 @@ definition {
 
 		DMDocument.viewCP(dmDocumentTitle = "${dmDocumentTitle}");
 
-		AutoTagging.assertAutoTagPresent(tagName = "new tag");
+		DMDocument.viewTagInfo(tagName = "new tag");
 
 		if (isSet(depotName)) {
 			DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");

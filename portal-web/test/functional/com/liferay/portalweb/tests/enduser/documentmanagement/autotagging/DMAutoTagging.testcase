@@ -53,7 +53,7 @@ definition {
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document JPG");
 
-		AutoTagging.assertAutoTagPresent(tagName = "carton");
+		DMDocument.viewTagInfo(tagName = "carton");
 	}
 
 	@description = "This test asserts that auto-tags added to an image uploaded on a staged site gets published to Live."
@@ -93,7 +93,7 @@ definition {
 
 		DMDocument.viewCP(dmDocumentTitle = "Document Title");
 
-		AutoTagging.assertAutoTagPresent(tagName = "carton");
+		DMDocument.viewTagInfo(tagName = "carton");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/site-name-staging/documents-and-media-page");
 
@@ -107,7 +107,7 @@ definition {
 			dmDocumentDescription = "Document Description",
 			dmDocumentTitle = "Document Title");
 
-		AutoTagging.assertAutoTagPresent(tagName = "carton");
+		DMDocument.viewTagInfo(tagName = "carton");
 	}
 
 	@description = "This test covers LPS-101885. It asserts that an auto-tagged document can be deleted when OpenNLP Auto-Tagging is enabled."
@@ -159,7 +159,7 @@ definition {
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document JPG");
 
-		AutoTagging.assertAutoTagPresent(tagName = "manualtag");
+		DMDocument.viewTagInfo(tagName = "manualtag");
 
 		AutoTagging.assertNoAutoTag(tagName = "carton");
 	}

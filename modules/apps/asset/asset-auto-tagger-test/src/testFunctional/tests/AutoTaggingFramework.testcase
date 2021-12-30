@@ -91,7 +91,7 @@ definition {
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document JPG Node2");
 
-		AutoTagging.assertAutoTagPresent(tagName = "carton");
+		DMDocument.viewTagInfo(tagName = "carton");
 
 		User.logoutPG(
 			nodePort = "9080",
@@ -109,7 +109,7 @@ definition {
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document JPG Node2");
 
-		AutoTagging.assertAutoTagPresent(tagName = "carton");
+		DMDocument.viewTagInfo(tagName = "carton");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -127,7 +127,7 @@ definition {
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document JPG Node1");
 
-		AutoTagging.assertAutoTagPresent(tagName = "jersey");
+		DMDocument.viewTagInfo(tagName = "jersey");
 
 		User.logoutPG(
 			password = "test",
@@ -146,7 +146,7 @@ definition {
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document JPG Node1");
 
-		AutoTagging.assertAutoTagPresent(tagName = "jersey");
+		DMDocument.viewTagInfo(tagName = "jersey");
 
 		User.logoutPG(
 			nodePort = "9080",
@@ -180,7 +180,7 @@ definition {
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document JPG");
 
-		AutoTagging.assertAutoTagPresent(tagName = "carton");
+		DMDocument.viewTagInfo(tagName = "carton");
 
 		GogoShell.openGogoShellAdmin();
 
@@ -210,7 +210,7 @@ definition {
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document JPG");
 
-		AutoTagging.assertAutoTagPresent(tagName = "carton");
+		DMDocument.viewTagInfo(tagName = "carton");
 	}
 
 	@description = "This test covers LPS-94208. It asserts that a document is auto tagged when OpenNLP Auto-Tagging is enabled."
@@ -241,7 +241,7 @@ definition {
 		DMDocument.viewCP(dmDocumentTitle = "DM Document DOCX");
 
 		for (var tagName : list "alice,adventures") {
-			AutoTagging.assertAutoTagPresent(tagName = "${tagName}");
+			DMDocument.viewTagInfo(tagName = "${tagName}");
 		}
 	}
 
@@ -297,7 +297,7 @@ definition {
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document JPG");
 
-		AutoTagging.assertAutoTagPresent(tagName = "carton");
+		DMDocument.viewTagInfo(tagName = "carton");
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",

@@ -59,7 +59,7 @@ definition {
 
 		DMDocument.expandInfo();
 
-		AutoTagging.assertAutoTagPresent(tagName = "computers");
+		DMDocument.viewTagInfo(tagName = "computers");
 	}
 
 	@description = "This test ensures that an Image in a depot can be auto-tagged after enabling GCV."
@@ -85,7 +85,7 @@ definition {
 
 		DMDocument.expandInfo();
 
-		AutoTagging.assertAutoTagPresent(tagName = "t-shirt");
+		DMDocument.viewTagInfo(tagName = "t-shirt");
 	}
 
 	@description = "This test ensures that a web content article with text in a depot can be auto-tagged after enabling GCNL."
@@ -178,7 +178,7 @@ definition {
 
 		DMDocument.expandInfo();
 
-		AutoTagging.assertAutoTagPresent(tagName = "manualtag");
+		DMDocument.viewTagInfo(tagName = "manualtag");
 
 		AutoTagging.assertNoAutoTag(tagName = "computers");
 	}
@@ -206,7 +206,7 @@ definition {
 
 		DMDocument.expandInfo();
 
-		AutoTagging.assertAutoTagPresent(tagName = "manualtag");
+		DMDocument.viewTagInfo(tagName = "manualtag");
 
 		AutoTagging.assertNoAutoTag(tagName = "t-shirt");
 	}
@@ -484,7 +484,7 @@ definition {
 
 		DMDocument.expandInfo();
 
-		AutoTagging.assertAutoTagPresent(tagName = "computers");
+		DMDocument.viewTagInfo(tagName = "computers");
 	}
 
 	@description = "This test ensures that auto tags can be published to live with the Image."
@@ -520,7 +520,7 @@ definition {
 		DMDocument.expandInfo();
 
 		for (var tagName : list "sleeve,t-shirt,pattern") {
-			AutoTagging.assertAutoTagPresent(tagName = "${tagName}");
+			DMDocument.viewTagInfo(tagName = "${tagName}");
 		}
 	}
 

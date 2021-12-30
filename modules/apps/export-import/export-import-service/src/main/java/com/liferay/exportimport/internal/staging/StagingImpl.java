@@ -3957,26 +3957,6 @@ public class StagingImpl implements Staging {
 		return scheduleInformation;
 	}
 
-	private int _getStagingType(
-		PortletRequest portletRequest, Group liveGroup) {
-
-		String stagingType = portletRequest.getParameter("stagingType");
-
-		if (stagingType != null) {
-			return GetterUtil.getInteger(stagingType);
-		}
-
-		if (liveGroup.isStagedRemotely()) {
-			return StagingConstants.TYPE_REMOTE_STAGING;
-		}
-
-		if (liveGroup.hasStagingGroup()) {
-			return StagingConstants.TYPE_LOCAL_STAGING;
-		}
-
-		return StagingConstants.TYPE_NOT_STAGED;
-	}
-
 	private boolean _isLayoutRevisionIncomplete(
 		long plid, LayoutRevision layoutRevision, long layoutSetBranchId) {
 

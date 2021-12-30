@@ -133,10 +133,6 @@ public class JSBundleConfigTopHeadDynamicInclude extends BaseDynamicInclude {
 		_jsBundleConfigTracker = jsBundleConfigTracker;
 	}
 
-	private JSBundleConfigTracker _getJSBundleConfigTracker() {
-		return _jsBundleConfigTracker;
-	}
-
 	private String _getModuleMain(JSBundleConfigTracker.JSConfig jsConfig) {
 		try {
 			ServletContext servletContext = jsConfig.getServletContext();

@@ -20,7 +20,6 @@ import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
@@ -36,7 +35,6 @@ import com.liferay.portal.kernel.util.LoggingTimer;
 
 import java.io.Serializable;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -66,23 +64,6 @@ public class PublisherRequestUpgradeProcess extends UpgradeProcess {
 		for (Group group : groups) {
 			_updateScheduledPublications(group);
 		}
-	}
-
-	private List<Group> _getGroups() {
-		List<Group> groups = _groupLocalService.getGroups(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		List<Group> filteredGroups = new ArrayList<>(groups.size());
-
-		for (Group group : groups) {
-			if (!group.isStaged() && !group.hasLocalOrRemoteStagingGroup()) {
-				continue;
-			}
-
-			filteredGroups.add(group);
-		}
-
-		return filteredGroups;
 	}
 
 	private String _getSchedulerGroupName(long groupId, boolean localStaging)

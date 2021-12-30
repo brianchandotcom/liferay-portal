@@ -1125,11 +1125,6 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 		return serviceContext;
 	}
 
-	private String _getTitle(String[] pathArray) {
-		return DLWebDAVUtil.unescapeRawTitle(
-			WebDAVUtil.getResourceName(pathArray));
-	}
-
 	private boolean _hasLock(FileEntry fileEntry, String lockUuid)
 		throws Exception {
 

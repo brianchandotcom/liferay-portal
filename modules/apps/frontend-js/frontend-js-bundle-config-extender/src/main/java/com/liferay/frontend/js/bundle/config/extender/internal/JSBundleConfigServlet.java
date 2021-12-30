@@ -135,10 +135,6 @@ public class JSBundleConfigServlet extends HttpServlet {
 		_jsBundleConfigTracker = jsBundleConfigTracker;
 	}
 
-	private JSBundleConfigTracker _getJSBundleConfigTracker() {
-		return _jsBundleConfigTracker;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		JSBundleConfigServlet.class);
 

@@ -309,12 +309,6 @@ public class TopHeadDynamicInclude implements DynamicInclude {
 		printWriter.println("\" type=\"text/javascript\"></script>");
 	}
 
-	private void _updatedTopHeadResources(
-		ServiceReference<TopHeadResources> topHeadResourcesServiceReference) {
-
-		_rebuild();
-	}
-
 	@Reference
 	private AbsolutePortalURLBuilderFactory _absolutePortalURLBuilderFactory;
 

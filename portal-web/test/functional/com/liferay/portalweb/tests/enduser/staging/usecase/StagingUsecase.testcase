@@ -1229,7 +1229,7 @@ definition {
 
 		DMNavigator.gotoDocumentPG(dmDocumentTitle = "DM Document Title");
 
-		DMDocument.viewTag(tagName = "stagingtag");
+		DMDocument.viewTagInfo(tagName = "stagingtag");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",

@@ -55,7 +55,7 @@ definition {
 
 		DMNavigator.gotoDocumentPG(dmDocumentTitle = "Document_1");
 
-		DMDocument.viewTag(tagName = "newtag");
+		DMDocument.viewTagInfo(tagName = "newtag");
 
 		SearchPortlets.searchEmbedded(searchTerm = "newtag");
 
@@ -160,7 +160,7 @@ definition {
 		for (var key_dmDocumentTitle : list "Document_2,Document_4") {
 			DMNavigator.gotoDocumentPG(dmDocumentTitle = "${key_dmDocumentTitle}");
 
-			DMDocument.viewTag(tagName = "tagone");
+			DMDocument.viewTagInfo(tagName = "tagone");
 
 			Navigator.gotoPage(pageName = "Documents and Media Page");
 		}
@@ -177,7 +177,7 @@ definition {
 		for (var key_dmDocumentTitle : list "Document_2,Document_4") {
 			DMNavigator.gotoDocumentPG(dmDocumentTitle = "${key_dmDocumentTitle}");
 
-			DMDocument.viewTag(tagName = "tagone,tagtwo");
+			DMDocument.viewTagInfo(tagName = "tagone,tagtwo");
 
 			Navigator.gotoPage(pageName = "Documents and Media Page");
 		}
@@ -235,7 +235,7 @@ definition {
 		for (var key_dmDocumentTitle : list "Document_1,Document_3") {
 			DMNavigator.gotoDocumentPG(dmDocumentTitle = "${key_dmDocumentTitle}");
 
-			DMDocument.viewTag(tagName = "four");
+			DMDocument.viewTagInfo(tagName = "four");
 
 			Navigator.gotoPage(pageName = "Documents and Media Page");
 		}
@@ -386,7 +386,7 @@ definition {
 		for (var key_dmDocumentTitle : list "Document_1,Document_2,Document_3,Document_4") {
 			DMNavigator.gotoDocumentPG(dmDocumentTitle = "${key_dmDocumentTitle}");
 
-			DMDocument.viewTag(tagName = "tagone");
+			DMDocument.viewTagInfo(tagName = "tagone");
 
 			Navigator.gotoPage(pageName = "Documents and Media Page");
 		}

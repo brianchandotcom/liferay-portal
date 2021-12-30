@@ -66,7 +66,7 @@ definition {
 
 			DMNavigator.gotoDocumentPG(dmDocumentTitle = "Document_1");
 
-			DMDocument.viewTag(tagName = "${tagName}");
+			DMDocument.viewTagInfo(tagName = "${tagName}");
 
 			Navigator.gotoPage(pageName = "Test Content Page Name");
 		}
@@ -106,7 +106,7 @@ definition {
 
 		DMNavigator.gotoDocumentPG(dmDocumentTitle = "Document_2");
 
-		DMDocument.viewTag(tagName = "tagtwo");
+		DMDocument.viewTagInfo(tagName = "tagtwo");
 	}
 
 	@description = "This test ensures that user can edit document in folder via a content page."

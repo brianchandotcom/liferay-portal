@@ -1043,7 +1043,7 @@ definition {
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
 
-		DMDocument.viewTag(tagName = "tag name");
+		DMDocument.viewTagInfo(tagName = "tag name");
 	}
 
 	@description = "This test ensures that only the last two versions of a file are kept when the max version limit is set."

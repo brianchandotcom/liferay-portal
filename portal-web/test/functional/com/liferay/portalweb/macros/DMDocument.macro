@@ -3518,7 +3518,7 @@ definition {
 		}
 	}
 
-	macro viewTag {
+	macro viewTagInfo {
 		DMDocument.expandInfo();
 
 		for (var tagName : list "${tagName}") {

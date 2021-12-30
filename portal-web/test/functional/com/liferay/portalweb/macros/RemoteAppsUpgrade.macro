@@ -1,0 +1,29 @@
+definition {
+
+	macro assertRemoteAppEntry {
+		RemoteApps.goToRemoteAppsPortlet();
+
+		RemoteApps.viewTableEntries(
+			entryName = "${upgradeName}",
+			entryType = "${upgradeType}");
+	}
+
+	macro assertRemoteAppEntryFields {
+		Click(
+			key_tableEntryName = "${upgradeName}",
+			locator1 = "RemoteApps#TABLE_ENTRY_NAME_REMOTE_TABLE");
+
+		AssertTextEquals(
+			custom_entryName = "${upgradeName}",
+			key_text = "Name",
+			locator1 = "TextInput#ANY",
+			value1 = "${upgradeName}");
+
+		AssertTextEquals(
+			custom_entryURL = "${upgradeURL}",
+			key_id = "iFrameURL",
+			locator1 = "RemoteAppsEntry#URL",
+			value1 = "${upgradeURL}");
+	}
+
+}

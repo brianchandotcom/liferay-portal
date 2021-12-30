@@ -236,18 +236,10 @@ public class ImporterFactory {
 		importer.afterPropertiesSet();
 	}
 
-	private DDMFormDeserializer _getDDMFormJSONDeserializer() {
-		return _jsonDDMFormDeserializer;
-	}
-
-	private DDMFormDeserializer _getDDMFormXSDDeserializer() {
-		return _xsdDDMFormDeserializer;
-	}
-
 	private FileSystemImporter _getFileSystemImporter() {
 		return new FileSystemImporter(
-			_assetTagLocalService, _getDDMFormJSONDeserializer(),
-			_getDDMFormXSDDeserializer(), _ddmStructureLocalService,
+			_assetTagLocalService, _jsonDDMFormDeserializer,
+			_xsdDDMFormDeserializer, _ddmStructureLocalService,
 			_ddmTemplateLocalService, _ddmxml, _dlAppLocalService,
 			_dlFileEntryLocalService, _dlFolderLocalService,
 			_indexStatusManager, _indexerRegistry, _journalArticleLocalService,
@@ -266,8 +258,8 @@ public class ImporterFactory {
 
 	private ResourceImporter _getResourceImporter() {
 		return new ResourceImporter(
-			_assetTagLocalService, _getDDMFormJSONDeserializer(),
-			_getDDMFormXSDDeserializer(), _ddmStructureLocalService,
+			_assetTagLocalService, _jsonDDMFormDeserializer,
+			_xsdDDMFormDeserializer, _ddmStructureLocalService,
 			_ddmTemplateLocalService, _ddmxml, _dlAppLocalService,
 			_dlFileEntryLocalService, _dlFolderLocalService,
 			_indexStatusManager, _indexerRegistry, _journalArticleLocalService,

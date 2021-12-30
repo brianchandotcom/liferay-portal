@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -35,6 +36,7 @@ import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.sort.Sorts;
+import com.liferay.portal.search.tuning.rankings.web.internal.constants.ResultRankingsPortletKeys;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.DocumentToRankingTranslator;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.Ranking;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.RankingFields;
@@ -199,7 +201,15 @@ public class RankingPortletDisplayBuilder {
 	}
 
 	protected String getOrderByType() {
-		return ParamUtil.getString(_httpServletRequest, "orderByType", "asc");
+		if (Validator.isNotNull(_orderByType)) {
+			return _orderByType;
+		}
+
+		_orderByType = SearchOrderByUtil.getOrderByType(
+			_httpServletRequest, ResultRankingsPortletKeys.RESULT_RANKINGS,
+			"asc");
+
+		return _orderByType;
 	}
 
 	protected List<RankingEntryDisplayContext> getRankingEntryDisplayContexts(
@@ -277,7 +287,15 @@ public class RankingPortletDisplayBuilder {
 	}
 
 	private String _getOrderByCol() {
-		return ParamUtil.getString(_renderRequest, "orderByCol", _ORDER_BY_COL);
+		if (Validator.isNotNull(_orderByCol)) {
+			return _orderByCol;
+		}
+
+		_orderByCol = SearchOrderByUtil.getOrderByCol(
+			_httpServletRequest, ResultRankingsPortletKeys.RESULT_RANKINGS,
+			_ORDER_BY_COL);
+
+		return _orderByCol;
 	}
 
 	private List<DropdownItem> _getOrderByDropdownItems(String keywords) {
@@ -371,6 +389,8 @@ public class RankingPortletDisplayBuilder {
 	private final DocumentToRankingTranslator _documentToRankingTranslator;
 	private final HttpServletRequest _httpServletRequest;
 	private final Language _language;
+	private String _orderByCol;
+	private String _orderByType;
 	private final Portal _portal;
 	private final Queries _queries;
 	private final RankingIndexNameBuilder _rankingIndexNameBuilder;

@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.BooleanClauseFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
@@ -49,8 +50,10 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.translation.constants.TranslationPortletKeys;
 import com.liferay.translation.model.TranslationEntry;
 import com.liferay.translation.service.TranslationEntryLocalService;
 
@@ -150,6 +153,28 @@ public class ViewDisplayContext {
 			CharPool.DASH);
 	}
 
+	public String getOrderByCol() {
+		if (Validator.isNotNull(_orderByCol)) {
+			return _orderByCol;
+		}
+
+		_orderByCol = SearchOrderByUtil.getOrderByCol(
+			_httpServletRequest, TranslationPortletKeys.TRANSLATION, "title");
+
+		return _orderByCol;
+	}
+
+	public String getOrderByType() {
+		if (Validator.isNotNull(_orderByType)) {
+			return _orderByType;
+		}
+
+		_orderByType = SearchOrderByUtil.getOrderByType(
+			_httpServletRequest, TranslationPortletKeys.TRANSLATION, "asc");
+
+		return _orderByType;
+	}
+
 	public SearchContainer<TranslationEntry> getSearchContainer()
 		throws PortalException {
 
@@ -161,15 +186,9 @@ public class ViewDisplayContext {
 			_liferayPortletRequest, _liferayPortletResponse.createRenderURL(),
 			null, "no-entries-were-found");
 
-		String orderByCol = ParamUtil.getString(
-			_httpServletRequest, "orderByCol", "title");
+		_searchContainer.setOrderByCol(getOrderByCol());
 
-		_searchContainer.setOrderByCol(orderByCol);
-
-		String orderByType = ParamUtil.getString(
-			_httpServletRequest, "orderByType", "asc");
-
-		_searchContainer.setOrderByType(orderByType);
+		_searchContainer.setOrderByType(getOrderByType());
 
 		_searchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(_liferayPortletResponse));
@@ -318,6 +337,8 @@ public class ViewDisplayContext {
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final ModelResourcePermission<TranslationEntry>
 		_modelResourcePermission;
+	private String _orderByCol;
+	private String _orderByType;
 	private SearchContainer<TranslationEntry> _searchContainer;
 	private final ThemeDisplay _themeDisplay;
 	private final TranslationEntryLocalService _translationEntryLocalService;

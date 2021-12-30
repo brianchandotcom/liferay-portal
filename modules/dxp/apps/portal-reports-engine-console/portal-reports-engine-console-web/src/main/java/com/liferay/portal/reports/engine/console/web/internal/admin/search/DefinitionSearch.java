@@ -15,11 +15,8 @@
 package com.liferay.portal.reports.engine.console.web.internal.admin.search;
 
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.portlet.PortalPreferences;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.reports.engine.console.constants.ReportsEngineConsolePortletKeys;
 import com.liferay.portal.reports.engine.console.model.Definition;
 import com.liferay.portal.reports.engine.console.util.comparator.DefinitionCreateDateComparator;
@@ -70,40 +67,17 @@ public class DefinitionSearch extends SearchContainer<Definition> {
 			DefinitionDisplayTerms.SOURCE_ID,
 			String.valueOf(definitionDisplayTerms.getSourceId()));
 
-		PortalPreferences preferences =
-			PortletPreferencesFactoryUtil.getPortalPreferences(portletRequest);
+		String orderByCol = SearchOrderByUtil.getOrderByCol(
+			portletRequest, ReportsEngineConsolePortletKeys.REPORTS_ADMIN,
+			"create-date");
 
-		String orderByCol = ParamUtil.getString(portletRequest, "orderByCol");
-
-		if (Validator.isNotNull(orderByCol)) {
-			preferences.setValue(
-				ReportsEngineConsolePortletKeys.REPORTS_ADMIN, "order-by-col",
-				orderByCol);
-		}
-		else {
-			orderByCol = preferences.getValue(
-				ReportsEngineConsolePortletKeys.REPORTS_ADMIN, "order-by-col",
-				"create-date");
-		}
-
-		String orderByType = ParamUtil.getString(portletRequest, "orderByType");
-
-		if (Validator.isNotNull(orderByType)) {
-			preferences.setValue(
-				ReportsEngineConsolePortletKeys.REPORTS_ADMIN, "order-by-type",
-				orderByType);
-		}
-		else {
-			orderByType = preferences.getValue(
-				ReportsEngineConsolePortletKeys.REPORTS_ADMIN, "order-by-type",
-				"asc");
-		}
+		String orderByType = SearchOrderByUtil.getOrderByType(
+			portletRequest, ReportsEngineConsolePortletKeys.REPORTS_ADMIN,
+			"asc");
 
 		setOrderByCol(orderByCol);
-
 		setOrderByComparator(
 			getDefinitionOrderByComparator(orderByCol, orderByType));
-
 		setOrderByType(orderByType);
 	}
 

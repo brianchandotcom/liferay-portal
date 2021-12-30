@@ -19,10 +19,10 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
@@ -127,9 +127,16 @@ public class AnonymizeNonreviewableUADDataMVCRenderCommand
 		searchContainer.setId("uadApplicationSummaryDisplays");
 
 		searchContainer.setOrderByCol(
-			ParamUtil.getString(renderRequest, "orderByCol", "name"));
+			SearchOrderByUtil.getOrderByCol(
+				portletRequest,
+				UserAssociatedDataPortletKeys.USER_ASSOCIATED_DATA,
+				"anonymize-order-by-col", "name"));
+
 		searchContainer.setOrderByType(
-			ParamUtil.getString(renderRequest, "orderByType", "asc"));
+			SearchOrderByUtil.getOrderByType(
+				portletRequest,
+				UserAssociatedDataPortletKeys.USER_ASSOCIATED_DATA,
+				"anonymize-order-by-type", "asc"));
 
 		List<UADApplicationSummaryDisplay> uadApplicationSummaryDisplays =
 			_getUADApplicationSummaryDisplays(userId);

@@ -103,18 +103,18 @@ public class FDSApplication extends Application {
 					groupId, tableName,
 					fdsDataProvider.getItems(
 						() -> {
-							FDSKeywords filter = fdsKeywordsFactory.create(
+							FDSKeywords fdsKeywords = fdsKeywordsFactory.create(
 								httpServletRequest);
 
-							return filter.getKeywords();
+							return fdsKeywords.getKeywords();
 						},
 						fdsPagination, httpServletRequest, sort),
 					fdsDataProvider.getItemsCount(
 						() -> {
-							FDSKeywords filter = fdsKeywordsFactory.create(
+							FDSKeywords fdsKeywords = fdsKeywordsFactory.create(
 								httpServletRequest);
 
-							return filter.getKeywords();
+							return fdsKeywords.getKeywords();
 						},
 						httpServletRequest),
 					httpServletRequest),

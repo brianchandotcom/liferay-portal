@@ -2945,7 +2945,7 @@ definition {
 
 		AdaptiveMedia.selectAdaptiveMediaImage(imageName = "Thumbnail 300x300");
 
-		AdaptiveMedia.viewNumberOfAdaptedImages(numberOfAdaptedImages = "2/2");
+		AdaptiveMedia.viewNumberOfAdaptedImages(numberOfAdaptedImages = "1/1");
 
 		AdaptiveMedia.openToAddImageResolution();
 

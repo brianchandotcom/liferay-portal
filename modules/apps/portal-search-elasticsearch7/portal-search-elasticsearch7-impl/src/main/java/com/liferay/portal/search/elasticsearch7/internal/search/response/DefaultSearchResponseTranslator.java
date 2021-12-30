@@ -86,7 +86,6 @@ public class DefaultSearchResponseTranslator
 		_updateGroupedHits(
 			searchSearchResponse, searchResponse, searchSearchRequest, hits,
 			searchSearchRequest.getAlternateUidFieldName(),
-			searchSearchRequest.getHighlightFieldNames(),
 			searchSearchRequest.getLocale());
 
 		_updateStatsResults(
@@ -99,7 +98,6 @@ public class DefaultSearchResponseTranslator
 
 		_processSearchHits(
 			searchHits, hits, searchSearchRequest.getAlternateUidFieldName(),
-			searchSearchRequest.getHighlightFieldNames(),
 			searchSearchRequest.getLocale());
 
 		searchSearchResponse.setHits(hits);
@@ -177,10 +175,7 @@ public class DefaultSearchResponseTranslator
 				StringUtil.merge(array, StringPool.TRIPLE_PERIOD)));
 	}
 
-	private void _addSnippets(
-		SearchHit hit, Document document, String[] highlightFieldNames,
-		Locale locale) {
-
+	private void _addSnippets(SearchHit hit, Document document, Locale locale) {
 		Map<String, HighlightField> highlightFields = hit.getHighlightFields();
 
 		if (MapUtil.isEmpty(highlightFields)) {
@@ -230,7 +225,7 @@ public class DefaultSearchResponseTranslator
 
 	private Hits _processSearchHits(
 		SearchHits searchHits, Hits hits, String alternateUidFieldName,
-		String[] highlightFieldNames, Locale locale) {
+		Locale locale) {
 
 		List<Document> documents = new ArrayList<>();
 		List<Float> scores = new ArrayList<>();
@@ -248,7 +243,7 @@ public class DefaultSearchResponseTranslator
 
 				scores.add(searchHit.getScore());
 
-				_addSnippets(searchHit, document, highlightFieldNames, locale);
+				_addSnippets(searchHit, document, locale);
 			}
 		}
 
@@ -289,8 +284,7 @@ public class DefaultSearchResponseTranslator
 	private void _updateGroupedHits(
 		SearchSearchResponse searchSearchResponse,
 		SearchResponse searchResponse, SearchSearchRequest searchSearchRequest,
-		Hits hits, String alternateUidFieldName, String[] highlightFieldNames,
-		Locale locale) {
+		Hits hits, String alternateUidFieldName, Locale locale) {
 
 		List<GroupByRequest> groupByRequests =
 			searchSearchRequest.getGroupByRequests();
@@ -300,7 +294,7 @@ public class DefaultSearchResponseTranslator
 				_updateGroupedHits(
 					searchSearchResponse, searchResponse,
 					groupByRequest.getField(), hits, alternateUidFieldName,
-					highlightFieldNames, locale);
+					locale);
 			}
 		}
 
@@ -309,15 +303,14 @@ public class DefaultSearchResponseTranslator
 		if (groupBy != null) {
 			_updateGroupedHits(
 				searchSearchResponse, searchResponse, groupBy.getField(), hits,
-				alternateUidFieldName, highlightFieldNames, locale);
+				alternateUidFieldName, locale);
 		}
 	}
 
 	private void _updateGroupedHits(
 		SearchSearchResponse searchSearchResponse,
 		SearchResponse searchResponse, String field, Hits hits,
-		String alternateUidFieldName, String[] highlightFieldNames,
-		Locale locale) {
+		String alternateUidFieldName, Locale locale) {
 
 		Aggregations aggregations = searchResponse.getAggregations();
 
@@ -344,8 +337,7 @@ public class DefaultSearchResponseTranslator
 			Hits groupedHits = new HitsImpl();
 
 			_processSearchHits(
-				groupedSearchHits, groupedHits, alternateUidFieldName,
-				highlightFieldNames, locale);
+				groupedSearchHits, groupedHits, alternateUidFieldName, locale);
 
 			TotalHits totalHits = groupedSearchHits.getTotalHits();
 

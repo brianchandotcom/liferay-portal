@@ -66,8 +66,7 @@ public class CommonSearchResponseAssemblerImpl
 
 		_setExecutionProfile(searchResponse, baseSearchResponse);
 		_setExecutionTime(searchResponse, baseSearchResponse);
-		_setSearchRequestString(
-			searchSourceBuilder, baseSearchRequest, baseSearchResponse);
+		_setSearchRequestString(searchSourceBuilder, baseSearchResponse);
 		setSearchResponseString(
 			searchResponse, baseSearchRequest, baseSearchResponse);
 		_setTerminatedEarly(searchResponse, baseSearchResponse);
@@ -204,7 +203,6 @@ public class CommonSearchResponseAssemblerImpl
 
 	private void _setSearchRequestString(
 		SearchSourceBuilder searchSourceBuilder,
-		BaseSearchRequest baseSearchRequest,
 		BaseSearchResponse baseSearchResponse) {
 
 		baseSearchResponse.setSearchRequestString(

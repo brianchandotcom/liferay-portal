@@ -234,10 +234,7 @@ public class SearchDisplayContextTest {
 		return jsonObject;
 	}
 
-	private Portal _createPortal(
-			ThemeDisplay themeDisplay, RenderRequest renderRequest)
-		throws Exception {
-
+	private Portal _createPortal(RenderRequest renderRequest) throws Exception {
 		Portal portal = Mockito.mock(Portal.class);
 
 		Mockito.doReturn(
@@ -264,8 +261,7 @@ public class SearchDisplayContextTest {
 		jsonFactoryUtil.setJSONFactory(_createJSONFactory());
 
 		return new SearchDisplayContext(
-			renderRequest, portletPreferences,
-			_createPortal(themeDisplay, renderRequest),
+			renderRequest, portletPreferences, _createPortal(renderRequest),
 			Mockito.mock(Html.class), Mockito.mock(Language.class), searcher,
 			Mockito.mock(IndexSearchPropsValues.class), portletURLFactory,
 			Mockito.mock(SummaryBuilderFactory.class), searchContextFactory,

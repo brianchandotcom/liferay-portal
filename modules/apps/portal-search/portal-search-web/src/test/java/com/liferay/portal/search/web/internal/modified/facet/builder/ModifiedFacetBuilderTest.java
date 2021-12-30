@@ -219,8 +219,8 @@ public class ModifiedFacetBuilderTest {
 	}
 
 	private ModifiedFacetBuilder _createModifiedFacetBuilder() {
-		ModifiedFacetFactory modifiedFacetFactory = _createModifiedFacetFactory(
-			searchContext);
+		ModifiedFacetFactory modifiedFacetFactory =
+			_createModifiedFacetFactory();
 
 		ModifiedFacetBuilder modifiedFacetBuilder = new ModifiedFacetBuilder(
 			modifiedFacetFactory, calendarFactory, dateFormatFactory,
@@ -231,9 +231,7 @@ public class ModifiedFacetBuilderTest {
 		return modifiedFacetBuilder;
 	}
 
-	private ModifiedFacetFactory _createModifiedFacetFactory(
-		SearchContext searchContext) {
-
+	private ModifiedFacetFactory _createModifiedFacetFactory() {
 		FilterBuilders filterBuilders1 = filterBuilders;
 
 		return new ModifiedFacetFactoryImpl() {

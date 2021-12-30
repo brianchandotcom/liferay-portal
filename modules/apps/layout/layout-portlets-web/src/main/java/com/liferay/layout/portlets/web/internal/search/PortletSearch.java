@@ -69,7 +69,7 @@ public class PortletSearch extends SearchContainer<Portlet> {
 		setOrderByType(orderByType);
 	}
 
-	private static OrderByComparator<Portlet> _getOrderByComparator(
+	private OrderByComparator<Portlet> _getOrderByComparator(
 		String orderByCol, String orderByType) {
 
 		boolean orderByAsc = false;

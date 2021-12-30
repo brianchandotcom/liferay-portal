@@ -72,7 +72,7 @@ public class CustomizationSettingsUtil {
 				currentThread.setContextClassLoader(pluginClassLoader);
 			}
 
-			_doProcessCustomizationSettings(
+			_processCustomizationSettings(
 				httpServletRequest, httpServletResponse, templateResource,
 				langType);
 		}
@@ -85,7 +85,7 @@ public class CustomizationSettingsUtil {
 		}
 	}
 
-	private static void _doProcessCustomizationSettings(
+	private static void _processCustomizationSettings(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse,
 			TemplateResource templateResource, String langType)

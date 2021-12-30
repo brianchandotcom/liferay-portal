@@ -81,7 +81,7 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 		try {
 			Document document = SAXReaderUtil.read(inputStream, _validate);
 
-			return _doParse(document);
+			return _parse(document);
 		}
 		catch (Exception exception) {
 			throw new WorkflowDefinitionFileException(
@@ -94,7 +94,7 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 		try {
 			Document document = SAXReaderUtil.read(content, _validate);
 
-			return _doParse(document);
+			return _parse(document);
 		}
 		catch (Exception exception) {
 			throw new WorkflowDefinitionFileException(
@@ -112,7 +112,7 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 		_validate = GetterUtil.getBoolean(properties.get("validating"), true);
 	}
 
-	private Definition _doParse(Document document) throws Exception {
+	private Definition _parse(Document document) throws Exception {
 		Element rootElement = document.getRootElement();
 
 		String name = rootElement.elementTextTrim("name");

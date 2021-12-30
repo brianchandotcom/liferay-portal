@@ -191,10 +191,10 @@ public class MarketplaceAppManagerPortlet extends MVCPortlet {
 			String host = urlObj.getHost();
 
 			if (host.endsWith("sf.net") || host.endsWith("sourceforge.net")) {
-				_doInstallSourceForgeApp(urlObj.getPath(), actionRequest);
+				_installSourceForgeApp(urlObj.getPath(), actionRequest);
 			}
 			else {
-				_doInstallRemoteApp(url, actionRequest, true);
+				_installRemoteApp(url, actionRequest, true);
 			}
 		}
 		catch (MalformedURLException malformedURLException) {
@@ -438,7 +438,7 @@ public class MarketplaceAppManagerPortlet extends MVCPortlet {
 		}
 	}
 
-	private int _doInstallRemoteApp(
+	private int _installRemoteApp(
 			String url, ActionRequest actionRequest, boolean failOnError)
 		throws Exception {
 
@@ -494,7 +494,7 @@ public class MarketplaceAppManagerPortlet extends MVCPortlet {
 		return responseCode;
 	}
 
-	private void _doInstallSourceForgeApp(
+	private void _installSourceForgeApp(
 			String path, ActionRequest actionRequest)
 		throws Exception {
 
@@ -511,7 +511,7 @@ public class MarketplaceAppManagerPortlet extends MVCPortlet {
 					failOnError = true;
 				}
 
-				int responseCode = _doInstallRemoteApp(
+				int responseCode = _installRemoteApp(
 					url, actionRequest, failOnError);
 
 				if (responseCode == HttpServletResponse.SC_OK) {

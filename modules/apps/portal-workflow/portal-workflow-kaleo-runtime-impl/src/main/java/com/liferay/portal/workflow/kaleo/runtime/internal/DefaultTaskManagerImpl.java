@@ -167,7 +167,7 @@ public class DefaultTaskManagerImpl
 				}
 			}
 
-			return _doCompleteWorkflowTask(
+			return _completeWorkflowTask(
 				workflowTaskId, transitionName, null, workflowContext,
 				serviceContext);
 		}
@@ -187,7 +187,7 @@ public class DefaultTaskManagerImpl
 		throws WorkflowException {
 
 		try {
-			return _doCompleteWorkflowTask(
+			return _completeWorkflowTask(
 				workflowTaskId, transitionName, comment, workflowContext,
 				serviceContext);
 		}
@@ -366,7 +366,7 @@ public class DefaultTaskManagerImpl
 			kaleoTaskInstanceToken, workflowContext);
 	}
 
-	private WorkflowTask _doCompleteWorkflowTask(
+	private WorkflowTask _completeWorkflowTask(
 			long workflowTaskId, String transitionName, String comment,
 			Map<String, Serializable> workflowContext,
 			ServiceContext serviceContext)

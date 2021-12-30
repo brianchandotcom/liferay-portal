@@ -50,7 +50,7 @@ public class DefaultDefinitionBuilder implements DefinitionBuilder {
 		KaleoDefinition kaleoDefinition =
 			_kaleoDefinitionLocalService.getKaleoDefinition(kaleoDefinitionId);
 
-		return _doBuildDefinition(
+		return _buildDefinition(
 			_kaleoDefinitionVersionLocalService.getKaleoDefinitionVersion(
 				kaleoDefinition.getCompanyId(), kaleoDefinition.getName(),
 				StringBundler.concat(
@@ -61,13 +61,13 @@ public class DefaultDefinitionBuilder implements DefinitionBuilder {
 	public Definition buildDefinition(long companyId, String name, int version)
 		throws PortalException {
 
-		return _doBuildDefinition(
+		return _buildDefinition(
 			_kaleoDefinitionVersionLocalService.getKaleoDefinitionVersion(
 				companyId, name,
 				StringBundler.concat(version, CharPool.PERIOD, 0)));
 	}
 
-	private Definition _doBuildDefinition(
+	private Definition _buildDefinition(
 			KaleoDefinitionVersion kaleoDefinitionVersion)
 		throws PortalException {
 

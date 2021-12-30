@@ -540,7 +540,7 @@ public class DefaultWorkflowEngineImpl
 		throws WorkflowException {
 
 		try {
-			KaleoInstance kaleoInstance = _doUpdateContext(
+			KaleoInstance kaleoInstance = _updateContext(
 				workflowInstanceId, workflowContext, serviceContext);
 
 			KaleoInstanceToken kaleoInstanceToken =
@@ -702,7 +702,7 @@ public class DefaultWorkflowEngineImpl
 		throws WorkflowException {
 
 		try {
-			KaleoInstance kaleoInstance = _doUpdateContext(
+			KaleoInstance kaleoInstance = _updateContext(
 				workflowInstanceId, workflowContext, serviceContext);
 
 			return _kaleoWorkflowModelConverter.toWorkflowInstance(
@@ -790,15 +790,6 @@ public class DefaultWorkflowEngineImpl
 
 	@Reference
 	protected PortalUUID portalUUID;
-
-	private KaleoInstance _doUpdateContext(
-			long workflowInstanceId, Map<String, Serializable> workflowContext,
-			ServiceContext serviceContext)
-		throws Exception {
-
-		return kaleoInstanceLocalService.updateKaleoInstance(
-			workflowInstanceId, workflowContext, serviceContext);
-	}
 
 	private Definition _getDefinition(byte[] bytes) throws WorkflowException {
 		try {
@@ -892,6 +883,15 @@ public class DefaultWorkflowEngineImpl
 		}
 
 		return workflowInstances;
+	}
+
+	private KaleoInstance _updateContext(
+			long workflowInstanceId, Map<String, Serializable> workflowContext,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		return kaleoInstanceLocalService.updateKaleoInstance(
+			workflowInstanceId, workflowContext, serviceContext);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

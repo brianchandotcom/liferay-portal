@@ -181,7 +181,7 @@ public class SaveFormInstanceMVCCommandHelper {
 		long groupId = ParamUtil.getLong(portletRequest, "groupId");
 		String name = ParamUtil.getString(portletRequest, "name");
 		String description = ParamUtil.getString(portletRequest, "description");
-		DDMForm ddmForm = _getDDMForm(portletRequest, serviceContext);
+		DDMForm ddmForm = _getDDMForm(portletRequest);
 		DDMFormLayout ddmFormLayout = getDDMFormLayout(portletRequest);
 
 		Map<Locale, String> nameMap = getNameMap(
@@ -213,8 +213,7 @@ public class SaveFormInstanceMVCCommandHelper {
 			settingsDDMFormValues, serviceContext);
 	}
 
-	private DDMForm _getDDMForm(
-			PortletRequest portletRequest, ServiceContext serviceContext)
+	private DDMForm _getDDMForm(PortletRequest portletRequest)
 		throws Exception {
 
 		try {
@@ -339,7 +338,7 @@ public class SaveFormInstanceMVCCommandHelper {
 
 		String name = ParamUtil.getString(portletRequest, "name");
 		String description = ParamUtil.getString(portletRequest, "description");
-		DDMForm ddmForm = _getDDMForm(portletRequest, serviceContext);
+		DDMForm ddmForm = _getDDMForm(portletRequest);
 		DDMFormLayout ddmFormLayout = getDDMFormLayout(portletRequest);
 
 		Map<Locale, String> nameMap = getNameMap(

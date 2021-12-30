@@ -174,8 +174,8 @@ public class DDMFormValuesFactoryImpl implements DDMFormValuesFactory {
 	}
 
 	private DDMFormFieldValue _createDDMFormFieldValue(
-		HttpServletRequest httpServletRequest, DDMForm ddmForm,
-		DDMFormValues ddmFormValues, String ddmFormFieldParameterName,
+		HttpServletRequest httpServletRequest, DDMFormValues ddmFormValues,
+		String ddmFormFieldParameterName,
 		Map<String, DDMFormField> ddmFormFieldsMap) {
 
 		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
@@ -233,8 +233,8 @@ public class DDMFormValuesFactoryImpl implements DDMFormValuesFactory {
 
 		for (String ddmFormFieldParameterName : ddmFormFieldParameterNames) {
 			DDMFormFieldValue ddmFormFieldValue = _createDDMFormFieldValue(
-				httpServletRequest, ddmForm, ddmFormValues,
-				ddmFormFieldParameterName, ddmFormFieldsMap);
+				httpServletRequest, ddmFormValues, ddmFormFieldParameterName,
+				ddmFormFieldsMap);
 
 			ddmFormFieldValuesMap.put(
 				ddmFormFieldParameterName, ddmFormFieldValue);

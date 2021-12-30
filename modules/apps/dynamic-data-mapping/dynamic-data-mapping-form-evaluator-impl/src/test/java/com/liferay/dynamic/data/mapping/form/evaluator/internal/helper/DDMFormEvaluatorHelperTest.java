@@ -1805,7 +1805,7 @@ public class DDMFormEvaluatorHelperTest extends PowerMockito {
 				_mockDDMFormFieldTypeServicesTracker(),
 				_mockDDMFormPageChangeTracker());
 
-		_mockDDMExpressionFunctionTracker(ddmFormEvaluatorHelper);
+		_mockDDMExpressionFunctionTracker();
 
 		return ddmFormEvaluatorHelper.evaluate();
 	}
@@ -2025,10 +2025,7 @@ public class DDMFormEvaluatorHelperTest extends PowerMockito {
 			ddmFormEvaluatorFieldContextKey);
 	}
 
-	private void _mockDDMExpressionFunctionTracker(
-			DDMFormEvaluatorHelper ddmFormEvaluatorHelper)
-		throws Exception {
-
+	private void _mockDDMExpressionFunctionTracker() throws Exception {
 		DDMExpressionFunctionTracker ddmExpressionFunctionTracker = mock(
 			DDMExpressionFunctionTracker.class);
 

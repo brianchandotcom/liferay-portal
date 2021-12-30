@@ -14,7 +14,6 @@
 
 package com.liferay.portal.search.web.internal.custom.facet.display.context;
 
-import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
@@ -191,7 +190,7 @@ public class CustomFacetDisplayContextTest {
 	private CustomFacetDisplayContext _createDisplayContext(
 			String customDisplayCaption, String fieldToAggregate,
 			String parameterValue)
-		throws ConfigurationException {
+		throws Exception {
 
 		CustomFacetDisplayBuilder customFacetDisplayBuilder =
 			new CustomFacetDisplayBuilder(_getHttpServletRequest());

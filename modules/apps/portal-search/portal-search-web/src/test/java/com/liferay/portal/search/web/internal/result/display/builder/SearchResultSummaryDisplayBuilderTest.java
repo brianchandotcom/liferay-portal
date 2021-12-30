@@ -19,7 +19,6 @@ import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.util.AssetRendererFactoryLookup;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
@@ -574,7 +573,7 @@ public class SearchResultSummaryDisplayBuilderTest {
 		PropsTestUtil.setProps(Collections.emptyMap());
 	}
 
-	private void _setUpUser() throws PortalException {
+	private void _setUpUser() throws Exception {
 		Mockito.doReturn(
 			RandomTestUtil.randomString()
 		).when(
@@ -651,7 +650,7 @@ public class SearchResultSummaryDisplayBuilderTest {
 	}
 
 	private void _whenGroupLocalServiceGetGroup(boolean stagingGroup)
-		throws PortalException {
+		throws Exception {
 
 		Mockito.doReturn(
 			stagingGroup

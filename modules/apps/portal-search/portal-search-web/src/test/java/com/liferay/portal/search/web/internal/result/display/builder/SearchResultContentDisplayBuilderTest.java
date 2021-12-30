@@ -259,7 +259,7 @@ public class SearchResultContentDisplayBuilderTest {
 		).isVisible();
 	}
 
-	private void _setUpAssetRendererFactory() throws PortalException {
+	private void _setUpAssetRendererFactory() throws Exception {
 		Mockito.doReturn(
 			_assetEntry
 		).when(

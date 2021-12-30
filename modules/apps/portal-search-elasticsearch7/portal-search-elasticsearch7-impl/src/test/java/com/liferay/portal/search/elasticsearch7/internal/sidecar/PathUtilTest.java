@@ -18,7 +18,6 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.io.IOException;
 
-import java.net.URISyntaxException;
 import java.net.URL;
 
 import java.nio.file.Files;
@@ -77,7 +76,7 @@ public class PathUtilTest {
 		Assert.assertTrue(Files.exists(fullPath));
 	}
 
-	private Path _getResourcePath(String name) throws URISyntaxException {
+	private Path _getResourcePath(String name) throws Exception {
 		Class<? extends PathUtilTest> clazz = getClass();
 
 		URL url = clazz.getResource(name);

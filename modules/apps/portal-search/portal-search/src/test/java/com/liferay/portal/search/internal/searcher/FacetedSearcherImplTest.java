@@ -18,7 +18,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcher;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.asset.SearchableAssetClassNamesProvider;
@@ -149,7 +148,7 @@ public class FacetedSearcherImplTest {
 		searchableAssetClassNamesProvider;
 
 	private void _assertSearchSkipped(SearchContext searchContext)
-		throws SearchException {
+		throws Exception {
 
 		Hits hits = facetedSearcher.search(searchContext);
 

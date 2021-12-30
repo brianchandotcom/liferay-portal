@@ -327,7 +327,7 @@ public class JournalArticleStagedModelDataHandler
 		}
 
 		JournalArticle existingArticle = _fetchExistingArticleWithParentGroups(
-			uuid, articleResourceUuid, groupId, articleArticleId, null, 0.0,
+			articleResourceUuid, groupId, articleArticleId, null, 0.0,
 			preloaded);
 
 		if (existingArticle == null) {
@@ -558,7 +558,7 @@ public class JournalArticleStagedModelDataHandler
 		}
 		else {
 			existingArticle = _fetchExistingArticleWithParentGroups(
-				uuid, articleResourceUuid, groupId, articleArticleId, null, 0.0,
+				articleResourceUuid, groupId, articleArticleId, null, 0.0,
 				preloaded);
 		}
 
@@ -1127,9 +1127,9 @@ public class JournalArticleStagedModelDataHandler
 			articleElement.attributeValue("preloaded"));
 
 		JournalArticle existingArticle = _fetchExistingArticle(
-			article.getUuid(), articleResourceUuid,
-			portletDataContext.getScopeGroupId(), article.getArticleId(),
-			article.getArticleId(), article.getVersion(), preloaded);
+			articleResourceUuid, portletDataContext.getScopeGroupId(),
+			article.getArticleId(), article.getArticleId(),
+			article.getVersion(), preloaded);
 
 		if ((existingArticle == null) || !existingArticle.isInTrash()) {
 			return;
@@ -1308,9 +1308,8 @@ public class JournalArticleStagedModelDataHandler
 	}
 
 	private JournalArticle _fetchExistingArticle(
-		String articleUuid, String articleResourceUuid, long groupId,
-		String articleId, String newArticleId, double version,
-		boolean preloaded) {
+		String articleResourceUuid, long groupId, String articleId,
+		String newArticleId, double version, boolean preloaded) {
 
 		JournalArticle article = _fetchExistingArticle(
 			articleResourceUuid, groupId, articleId, newArticleId, preloaded);
@@ -1342,9 +1341,8 @@ public class JournalArticleStagedModelDataHandler
 	}
 
 	private JournalArticle _fetchExistingArticleWithParentGroups(
-		String articleUuid, String articleResourceUuid, long groupId,
-		String articleId, String newArticleId, double version,
-		boolean preloaded) {
+		String articleResourceUuid, long groupId, String articleId,
+		String newArticleId, double version, boolean preloaded) {
 
 		Group group = _groupLocalService.fetchGroup(groupId);
 
@@ -1356,7 +1354,7 @@ public class JournalArticleStagedModelDataHandler
 
 		while (group != null) {
 			JournalArticle article = _fetchExistingArticle(
-				articleUuid, articleResourceUuid, group.getGroupId(), articleId,
+				articleResourceUuid, group.getGroupId(), articleId,
 				newArticleId, version, preloaded);
 
 			if (article != null) {
@@ -1373,8 +1371,8 @@ public class JournalArticleStagedModelDataHandler
 		}
 
 		return _fetchExistingArticle(
-			articleUuid, articleResourceUuid, companyGroup.getGroupId(),
-			articleId, newArticleId, version, preloaded);
+			articleResourceUuid, companyGroup.getGroupId(), articleId,
+			newArticleId, version, preloaded);
 	}
 
 	private long _getClassPK(JournalArticle article) {

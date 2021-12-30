@@ -195,7 +195,7 @@ public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 
 		String value = HtmlUtil.escape(bbCodeItem.getValue());
 
-		value = _handleNewLine(bbCodeItems, tags, marker, value);
+		value = _handleNewLine(bbCodeItems, marker, value);
 
 		for (String[] emoticon : _EMOTICONS) {
 			value = StringUtil.replace(value, emoticon[1], emoticon[0]);
@@ -589,8 +589,7 @@ public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 	}
 
 	private String _handleNewLine(
-		List<BBCodeItem> bbCodeItems, Stack<String> tags, IntegerWrapper marker,
-		String data) {
+		List<BBCodeItem> bbCodeItems, IntegerWrapper marker, String data) {
 
 		if ((marker.getValue() + 1) < bbCodeItems.size()) {
 			BBCodeItem bbCodeItem = null;

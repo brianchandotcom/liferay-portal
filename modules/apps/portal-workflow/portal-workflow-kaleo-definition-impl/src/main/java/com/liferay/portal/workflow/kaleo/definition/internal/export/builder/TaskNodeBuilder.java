@@ -54,15 +54,14 @@ public class TaskNodeBuilder
 
 		task.setAssignments(assignments);
 
-		Set<TaskForm> taskForms = _buildTaskForms(
-			KaleoTask.class.getName(), kaleoTask.getKaleoTaskId());
+		Set<TaskForm> taskForms = _buildTaskForms(kaleoTask.getKaleoTaskId());
 
 		task.addTaskForms(taskForms);
 
 		return task;
 	}
 
-	private Set<TaskForm> _buildTaskForms(String name, long kaleoTaskId)
+	private Set<TaskForm> _buildTaskForms(long kaleoTaskId)
 		throws PortalException {
 
 		List<KaleoTaskForm> kaleoTaskForms =

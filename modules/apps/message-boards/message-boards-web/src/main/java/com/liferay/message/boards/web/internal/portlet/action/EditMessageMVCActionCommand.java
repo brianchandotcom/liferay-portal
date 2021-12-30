@@ -148,8 +148,7 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 					 cmd.equals(Constants.UPDATE)) {
 
 				message = TransactionInvokerUtil.invoke(
-					_transactionConfig,
-					() -> _updateMessage(actionRequest, actionResponse));
+					_transactionConfig, () -> _updateMessage(actionRequest));
 			}
 			else if (cmd.equals(Constants.ADD_ANSWER)) {
 				_addAnswer(actionRequest);
@@ -459,8 +458,7 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 		_mbMessageService.unsubscribeMessage(messageId);
 	}
 
-	private MBMessage _updateMessage(
-			ActionRequest actionRequest, ActionResponse actionResponse)
+	private MBMessage _updateMessage(ActionRequest actionRequest)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(

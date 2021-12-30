@@ -486,7 +486,7 @@ public class JournalArticleAssetRenderer
 
 		httpServletRequest.setAttribute(
 			WebKeys.JOURNAL_ARTICLE_DISPLAY,
-			_getArticleDisplay(httpServletRequest, httpServletResponse));
+			_getArticleDisplay(httpServletRequest));
 
 		return super.include(httpServletRequest, httpServletResponse, template);
 	}
@@ -548,8 +548,7 @@ public class JournalArticleAssetRenderer
 	}
 
 	private JournalArticleDisplay _getArticleDisplay(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
+			HttpServletRequest httpServletRequest)
 		throws Exception {
 
 		boolean workflowAssetPreview = GetterUtil.getBoolean(
@@ -584,7 +583,7 @@ public class JournalArticleAssetRenderer
 
 		int articlePage = ParamUtil.getInteger(httpServletRequest, "page", 1);
 		PortletRequestModel portletRequestModel = _getPortletRequestModel(
-			httpServletRequest, httpServletResponse);
+			httpServletRequest);
 
 		if (!workflowAssetPreview && _article.isApproved()) {
 			return _journalContent.getDisplay(
@@ -626,8 +625,7 @@ public class JournalArticleAssetRenderer
 	}
 
 	private PortletRequestModel _getPortletRequestModel(
-		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse) {
+		HttpServletRequest httpServletRequest) {
 
 		PortletRequest portletRequest =
 			(PortletRequest)httpServletRequest.getAttribute(

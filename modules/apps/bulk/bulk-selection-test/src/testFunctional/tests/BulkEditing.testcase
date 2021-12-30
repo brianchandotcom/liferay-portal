@@ -271,7 +271,7 @@ definition {
 		for (var key_dmDocumentTitle : list "Document_1,Document_2") {
 			DMNavigator.gotoDocumentPG(dmDocumentTitle = "${key_dmDocumentTitle}");
 
-			DMDocument.viewNoTag();
+			DMDocument.viewNoTagInfo();
 
 			Navigator.gotoPage(pageName = "Documents and Media Page");
 		}

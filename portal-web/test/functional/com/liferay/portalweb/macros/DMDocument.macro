@@ -3036,15 +3036,8 @@ definition {
 		}
 	}
 
-	macro viewNoTag {
-		if (isSet(tagNameList)) {
-			for (var tagName : list "${tagNameList}") {
-				AssertElementNotPresent(
-					key_tagName = StringUtil.lowerCase("${tagName}"),
-					locator1 = "DocumentsAndMedia#TAG");
-			}
-		}
-		else {
+	macro viewNoTagInfo {
+		for (var tagName : list "${tagName}") {
 			AssertElementNotPresent(
 				key_tagName = StringUtil.lowerCase("${tagName}"),
 				locator1 = "DocumentsAndMedia#TAG");

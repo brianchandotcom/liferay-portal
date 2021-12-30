@@ -1263,7 +1263,7 @@ definition {
 
 		DMNavigator.gotoDocumentPG(dmDocumentTitle = "DM Document Title");
 
-		DMDocument.viewNoTag(tagName = "stagingtag");
+		DMDocument.viewNoTagInfo(tagName = "stagingtag");
 	}
 
 	@priority = "4"

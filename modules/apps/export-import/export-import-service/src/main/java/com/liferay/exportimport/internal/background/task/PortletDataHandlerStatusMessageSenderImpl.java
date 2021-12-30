@@ -47,7 +47,7 @@ public class PortletDataHandlerStatusMessageSenderImpl
 
 		Message message = new Message();
 
-		init(message, messageType, manifestSummary);
+		_init(message, messageType, manifestSummary);
 
 		message.put("portletId", portletId);
 
@@ -83,7 +83,7 @@ public class PortletDataHandlerStatusMessageSenderImpl
 
 		Message message = new Message();
 
-		init(message, messageType, manifestSummary);
+		_init(message, messageType, manifestSummary);
 
 		message.put("portletIds", portletIds);
 
@@ -97,7 +97,7 @@ public class PortletDataHandlerStatusMessageSenderImpl
 
 		Message message = new Message();
 
-		init(message, messageType, manifestSummary);
+		_init(message, messageType, manifestSummary);
 
 		StagedModelDataHandler<T> stagedModelDataHandler =
 			(StagedModelDataHandler<T>)
@@ -117,7 +117,7 @@ public class PortletDataHandlerStatusMessageSenderImpl
 			message);
 	}
 
-	protected void init(
+	private void _init(
 		Message message, String messageType, ManifestSummary manifestSummary) {
 
 		message.put(

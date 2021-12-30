@@ -89,12 +89,17 @@ public abstract class BaseAlloyEditorConfigContributor
 
 		jsonObject.put("srcNode", name);
 
-		populateFileBrowserURL(
+		_populateFileBrowserURL(
 			jsonObject, requestBackedPortletURLFactory,
 			name + "selectDocument");
 	}
 
-	protected void populateFileBrowserURL(
+	@Reference(unbind = "-")
+	protected void setItemSelector(ItemSelector itemSelector) {
+		_itemSelector = itemSelector;
+	}
+
+	private void _populateFileBrowserURL(
 		JSONObject jsonObject,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory,
 		String eventName) {
@@ -117,11 +122,6 @@ public abstract class BaseAlloyEditorConfigContributor
 			fileItemSelectorCriterion, layoutItemSelectorCriterion);
 
 		jsonObject.put("documentBrowseLinkUrl", itemSelectorURL.toString());
-	}
-
-	@Reference(unbind = "-")
-	protected void setItemSelector(ItemSelector itemSelector) {
-		_itemSelector = itemSelector;
 	}
 
 	private ItemSelector _itemSelector;

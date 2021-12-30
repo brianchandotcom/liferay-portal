@@ -81,7 +81,24 @@ public class TempFileEntriesMessageListener extends BaseMessageListener {
 		_schedulerEngineHelper.unregister(this);
 	}
 
-	protected void deleteExpiredTemporaryFileEntries(Repository repository) {
+	@Override
+	protected void doReceive(Message message) throws Exception {
+		ActionableDynamicQuery actionableDynamicQuery =
+			_repositoryLocalService.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setPerformActionMethod(
+			(Repository repository) -> _deleteExpiredTemporaryFileEntries(
+				repository));
+
+		actionableDynamicQuery.performActions();
+	}
+
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
+	protected void setModuleServiceLifecycle(
+		ModuleServiceLifecycle moduleServiceLifecycle) {
+	}
+
+	private void _deleteExpiredTemporaryFileEntries(Repository repository) {
 		LocalRepository localRepository = null;
 
 		try {
@@ -121,23 +138,6 @@ public class TempFileEntriesMessageListener extends BaseMessageListener {
 					exception);
 			}
 		}
-	}
-
-	@Override
-	protected void doReceive(Message message) throws Exception {
-		ActionableDynamicQuery actionableDynamicQuery =
-			_repositoryLocalService.getActionableDynamicQuery();
-
-		actionableDynamicQuery.setPerformActionMethod(
-			(Repository repository) -> deleteExpiredTemporaryFileEntries(
-				repository));
-
-		actionableDynamicQuery.performActions();
-	}
-
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

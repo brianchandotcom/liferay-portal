@@ -133,7 +133,7 @@ public class DLFolderItemSelectorView
 		requestDispatcher.include(servletRequest, servletResponse);
 	}
 
-	protected void activate(Map<String, Object> properties) {
+	private void _activate(Map<String, Object> properties) {
 		_ffFolderItemSelectorGroupSelectorConfiguration =
 			ConfigurableUtil.createConfigurable(
 				FFFolderItemSelectorGroupSelectorConfiguration.class,

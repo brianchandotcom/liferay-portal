@@ -80,7 +80,7 @@ public class AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener
 			return;
 		}
 
-		addDLRawMetadataStructures(company.getCompanyId());
+		_addDLRawMetadataStructures(company.getCompanyId());
 	}
 
 	@Activate
@@ -96,7 +96,39 @@ public class AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener
 				clazz.getName());
 	}
 
-	protected void addDLRawMetadataStructures(long companyId) throws Exception {
+	@Deactivate
+	protected void deactivate() {
+		_singleVMPool.removePortalCache(_portalCache.getPortalCacheName());
+	}
+
+	@Reference(unbind = "-")
+	protected void setDDM(DDM ddm) {
+		_ddm = ddm;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDDMStructureLocalService(
+		DDMStructureLocalService ddmStructureLocalService) {
+
+		_ddmStructureLocalService = ddmStructureLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
+	}
+
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
+	protected void setModuleServiceLifecycle(
+		ModuleServiceLifecycle moduleServiceLifecycle) {
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
+	private void _addDLRawMetadataStructures(long companyId) throws Exception {
 		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setAddGroupPermissions(true);
@@ -154,38 +186,6 @@ public class AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener
 					DDMStructureConstants.TYPE_DEFAULT, serviceContext);
 			}
 		}
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_singleVMPool.removePortalCache(_portalCache.getPortalCacheName());
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDM(DDM ddm) {
-		_ddm = ddm;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMStructureLocalService(
-		DDMStructureLocalService ddmStructureLocalService) {
-
-		_ddmStructureLocalService = ddmStructureLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserLocalService(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
 	}
 
 	private DDMForm _buildDDMForm(Field[] fields, Locale locale) {

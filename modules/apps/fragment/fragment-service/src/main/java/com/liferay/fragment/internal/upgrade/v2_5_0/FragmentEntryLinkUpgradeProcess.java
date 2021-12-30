@@ -33,11 +33,11 @@ public class FragmentEntryLinkUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		upgradeRendererKey();
-		upgratePlid();
+		_upgradeRendererKey();
+		_upgratePlid();
 	}
 
-	protected void upgradeRendererKey() throws Exception {
+	private void _upgradeRendererKey() throws Exception {
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				"select fragmentEntryLinkId, rendererKey from " +
 					"FragmentEntryLink where rendererKey like " +
@@ -69,7 +69,7 @@ public class FragmentEntryLinkUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
-	protected void upgratePlid() throws Exception {
+	private void _upgratePlid() throws Exception {
 		if (!hasColumn("FragmentEntryLink", "plid")) {
 			alter(
 				FragmentEntryLinkTable.class,

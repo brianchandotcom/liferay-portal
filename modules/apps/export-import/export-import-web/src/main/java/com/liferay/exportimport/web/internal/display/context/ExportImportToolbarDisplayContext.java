@@ -242,7 +242,7 @@ public class ExportImportToolbarDisplayContext {
 	}
 
 	public List<ViewTypeItem> getViewTypeItems() {
-		return new ViewTypeItemList(getRenderURL(), getDisplayStyle()) {
+		return new ViewTypeItemList(getRenderURL(), _getDisplayStyle()) {
 			{
 				addListViewTypeItem();
 				addTableViewTypeItem();
@@ -250,7 +250,11 @@ public class ExportImportToolbarDisplayContext {
 		};
 	}
 
-	protected String getDisplayStyle() {
+	protected PortletURL getRenderURL() {
+		return _liferayPortletResponse.createRenderURL();
+	}
+
+	private String _getDisplayStyle() {
 		PortalPreferences portalPreferences =
 			PortletPreferencesFactoryUtil.getPortalPreferences(
 				_httpServletRequest);
@@ -273,10 +277,6 @@ public class ExportImportToolbarDisplayContext {
 		}
 
 		return displayStyle;
-	}
-
-	protected PortletURL getRenderURL() {
-		return _liferayPortletResponse.createRenderURL();
 	}
 
 	private List<DropdownItem> _getFilterNavigatioDropdownItems() {

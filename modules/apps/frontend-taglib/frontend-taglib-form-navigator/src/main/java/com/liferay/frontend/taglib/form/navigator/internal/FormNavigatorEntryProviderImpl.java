@@ -81,7 +81,7 @@ public class FormNavigatorEntryProviderImpl
 			return Collections.emptyList();
 		}
 
-		return filterVisibleFormNavigatorEntries(
+		return _filterVisibleFormNavigatorEntries(
 			formNavigatorEntries, user, formModelBean);
 	}
 
@@ -104,7 +104,7 @@ public class FormNavigatorEntryProviderImpl
 			}
 		}
 
-		return filterVisibleFormNavigatorEntries(
+		return _filterVisibleFormNavigatorEntries(
 			formNavigatorEntries, user, formModelBean);
 	}
 
@@ -152,23 +152,6 @@ public class FormNavigatorEntryProviderImpl
 		return labels.toArray(new String[0]);
 	}
 
-	protected static <T> List<FormNavigatorEntry<T>>
-		filterVisibleFormNavigatorEntries(
-			List<FormNavigatorEntry<T>> formNavigatorEntries, User user,
-			T formModelBean) {
-
-		List<FormNavigatorEntry<T>> filteredFormNavigatorEntries =
-			new ArrayList<>();
-
-		for (FormNavigatorEntry<T> formNavigatorEntry : formNavigatorEntries) {
-			if (formNavigatorEntry.isVisible(user, formModelBean)) {
-				filteredFormNavigatorEntries.add(formNavigatorEntry);
-			}
-		}
-
-		return filteredFormNavigatorEntries;
-	}
-
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_formNavigatorContextProviderMap =
@@ -204,6 +187,22 @@ public class FormNavigatorEntryProviderImpl
 		_serviceTracker.close();
 
 		_formNavigatorContextProviderMap.close();
+	}
+
+	private <T> List<FormNavigatorEntry<T>> _filterVisibleFormNavigatorEntries(
+		List<FormNavigatorEntry<T>> formNavigatorEntries, User user,
+		T formModelBean) {
+
+		List<FormNavigatorEntry<T>> filteredFormNavigatorEntries =
+			new ArrayList<>();
+
+		for (FormNavigatorEntry<T> formNavigatorEntry : formNavigatorEntries) {
+			if (formNavigatorEntry.isVisible(user, formModelBean)) {
+				filteredFormNavigatorEntries.add(formNavigatorEntry);
+			}
+		}
+
+		return filteredFormNavigatorEntries;
 	}
 
 	private <T> Optional<List<FormNavigatorEntry<T>>>

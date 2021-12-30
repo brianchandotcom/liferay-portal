@@ -77,10 +77,6 @@ public class JSBundleConfigServlet extends HttpServlet {
 		_componentContext = componentContext;
 	}
 
-	protected JSBundleConfigTracker getJSBundleConfigTracker() {
-		return _jsBundleConfigTracker;
-	}
-
 	@Override
 	protected void service(
 			HttpServletRequest httpServletRequest,
@@ -137,6 +133,10 @@ public class JSBundleConfigServlet extends HttpServlet {
 		JSBundleConfigTracker jsBundleConfigTracker) {
 
 		_jsBundleConfigTracker = jsBundleConfigTracker;
+	}
+
+	private JSBundleConfigTracker _getJSBundleConfigTracker() {
+		return _jsBundleConfigTracker;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

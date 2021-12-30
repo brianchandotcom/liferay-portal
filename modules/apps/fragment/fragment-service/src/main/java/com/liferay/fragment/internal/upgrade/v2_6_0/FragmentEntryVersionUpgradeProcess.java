@@ -31,12 +31,12 @@ public class FragmentEntryVersionUpgradeProcess extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		runSQL(FragmentEntryVersionTable.TABLE_SQL_CREATE);
 
-		insertIntoFragmentEntryVersion();
+		_insertIntoFragmentEntryVersion();
 
-		upgradeFragmentEntryVersionCounter();
+		_upgradeFragmentEntryVersionCounter();
 	}
 
-	protected void insertIntoFragmentEntryVersion() throws Exception {
+	private void _insertIntoFragmentEntryVersion() throws Exception {
 		try (Statement s = connection.createStatement()) {
 			s.execute(
 				StringBundler.concat(
@@ -59,7 +59,7 @@ public class FragmentEntryVersionUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
-	protected void upgradeFragmentEntryVersionCounter() throws Exception {
+	private void _upgradeFragmentEntryVersionCounter() throws Exception {
 		runSQL(
 			StringBundler.concat(
 				"insert into Counter (name, currentId) select '",

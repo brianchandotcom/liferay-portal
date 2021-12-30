@@ -136,7 +136,7 @@ public class ExportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 				_exportImportConfigurationSettingsMapFactory.
 					buildExportLayoutSettingsMap(
 						themeDisplay.getUserId(), groupId, privateLayout,
-						getLayoutIds(actionRequest),
+						_getLayoutIds(actionRequest),
 						actionRequest.getParameterMap(),
 						themeDisplay.getLocale(), themeDisplay.getTimeZone());
 		}
@@ -166,12 +166,6 @@ public class ExportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 				themeDisplay.getUserId(), taskName,
 				ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
 				exportLayoutSettingsMap);
-	}
-
-	protected long[] getLayoutIds(PortletRequest portletRequest)
-		throws Exception {
-
-		return _exportImportHelper.getLayoutIds(portletRequest);
 	}
 
 	@Reference(unbind = "-")
@@ -214,6 +208,12 @@ public class ExportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 		LayoutLocalService layoutLocalService) {
 
 		_layoutLocalService = layoutLocalService;
+	}
+
+	private long[] _getLayoutIds(PortletRequest portletRequest)
+		throws Exception {
+
+		return _exportImportHelper.getLayoutIds(portletRequest);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

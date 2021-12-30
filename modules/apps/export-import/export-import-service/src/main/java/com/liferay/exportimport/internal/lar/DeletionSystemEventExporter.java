@@ -88,7 +88,7 @@ public class DeletionSystemEventExporter {
 					new StagedModelType(Layout.class));
 			}
 
-			exportedSystemEventIds = doExportDeletionSystemEvents(
+			exportedSystemEventIds = _doExportDeletionSystemEvents(
 				portletDataContext, rootElement,
 				deletionSystemEventStagedModelTypes);
 		}
@@ -189,7 +189,10 @@ public class DeletionSystemEventExporter {
 		}
 	}
 
-	protected List<Long> doExportDeletionSystemEvents(
+	private DeletionSystemEventExporter() {
+	}
+
+	private List<Long> _doExportDeletionSystemEvents(
 			PortletDataContext portletDataContext, Element rootElement,
 			Set<StagedModelType> deletionSystemEventStagedModelTypes)
 		throws PortalException {
@@ -206,7 +209,7 @@ public class DeletionSystemEventExporter {
 		actionableDynamicQuery.setCompanyId(portletDataContext.getCompanyId());
 		actionableDynamicQuery.setPerformActionMethod(
 			(SystemEvent systemEvent) -> {
-				exportDeletionSystemEvent(
+				_exportDeletionSystemEvent(
 					portletDataContext, systemEvent, rootElement);
 
 				systemEventIds.add(systemEvent.getSystemEventId());
@@ -217,7 +220,7 @@ public class DeletionSystemEventExporter {
 		return systemEventIds;
 	}
 
-	protected void exportDeletionSystemEvent(
+	private void _exportDeletionSystemEvent(
 		PortletDataContext portletDataContext, SystemEvent systemEvent,
 		Element deletionSystemEventsElement) {
 
@@ -288,9 +291,6 @@ public class DeletionSystemEventExporter {
 			new StagedModelType(
 				systemEvent.getClassNameId(),
 				systemEvent.getReferrerClassNameId()));
-	}
-
-	private DeletionSystemEventExporter() {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

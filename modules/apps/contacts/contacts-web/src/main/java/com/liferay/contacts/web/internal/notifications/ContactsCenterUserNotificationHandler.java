@@ -82,7 +82,7 @@ public class ContactsCenterUserNotificationHandler
 			return null;
 		}
 
-		String creatorUserName = getUserNameLink(
+		String creatorUserName = _getUserNameLink(
 			socialRequest.getUserId(), serviceContext);
 
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
@@ -172,7 +172,7 @@ public class ContactsCenterUserNotificationHandler
 		return StringPool.BLANK;
 	}
 
-	protected String getUserNameLink(
+	private String _getUserNameLink(
 		long userId, ServiceContext serviceContext) {
 
 		try {

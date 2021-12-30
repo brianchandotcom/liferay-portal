@@ -126,9 +126,9 @@ public class PortletDataContextFactoryImpl
 			Date startDate, Date endDate, ZipWriter zipWriter)
 		throws PortletDataException {
 
-		validateDateRange(startDate, endDate);
+		_validateDateRange(startDate, endDate);
 
-		PortletDataContext portletDataContext = createPortletDataContext(
+		PortletDataContext portletDataContext = _createPortletDataContext(
 			companyId, groupId);
 
 		portletDataContext.setEndDate(endDate);
@@ -145,7 +145,7 @@ public class PortletDataContextFactoryImpl
 			UserIdStrategy userIdStrategy, ZipReader zipReader)
 		throws PortletDataException {
 
-		PortletDataContext portletDataContext = createPortletDataContext(
+		PortletDataContext portletDataContext = _createPortletDataContext(
 			companyId, groupId);
 
 		String dataStrategy = MapUtil.getString(
@@ -159,7 +159,7 @@ public class PortletDataContextFactoryImpl
 		portletDataContext.setUserIdStrategy(userIdStrategy);
 		portletDataContext.setZipReader(zipReader);
 
-		readXML(portletDataContext);
+		_readXML(portletDataContext);
 
 		Map<Long, Long> groupIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
@@ -187,9 +187,9 @@ public class PortletDataContextFactoryImpl
 			Date endDate)
 		throws PortletDataException {
 
-		validateDateRange(startDate, endDate);
+		_validateDateRange(startDate, endDate);
 
-		PortletDataContext portletDataContext = createPortletDataContext(
+		PortletDataContext portletDataContext = _createPortletDataContext(
 			companyId, groupId);
 
 		portletDataContext.setEndDate(endDate);
@@ -218,7 +218,17 @@ public class PortletDataContextFactoryImpl
 			startDate, endDate);
 	}
 
-	protected PortletDataContext createPortletDataContext(
+	@Reference(unbind = "-")
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setLockManager(LockManager lockManager) {
+		_lockManager = lockManager;
+	}
+
+	private PortletDataContext _createPortletDataContext(
 		long companyId, long groupId) {
 
 		PortletDataContext portletDataContext = new PortletDataContextImpl(
@@ -272,7 +282,7 @@ public class PortletDataContextFactoryImpl
 		return portletDataContext;
 	}
 
-	protected void readXML(PortletDataContext portletDataContext)
+	private void _readXML(PortletDataContext portletDataContext)
 		throws PortletDataException {
 
 		String xml = portletDataContext.getZipEntryAsString("/manifest.xml");
@@ -325,17 +335,7 @@ public class PortletDataContextFactoryImpl
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLockManager(LockManager lockManager) {
-		_lockManager = lockManager;
-	}
-
-	protected void validateDateRange(Date startDate, Date endDate)
+	private void _validateDateRange(Date startDate, Date endDate)
 		throws PortletDataException {
 
 		if ((startDate == null) && (endDate != null)) {

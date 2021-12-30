@@ -90,7 +90,7 @@ public class ImportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 		UploadPortletRequest uploadPortletRequest =
 			_portal.getUploadPortletRequest(actionRequest);
 
-		checkExceededSizeLimit(uploadPortletRequest);
+		_checkExceededSizeLimit(uploadPortletRequest);
 
 		long groupId = ParamUtil.getLong(actionRequest, "groupId");
 
@@ -130,26 +130,6 @@ public class ImportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 			else {
 				throw exception;
 			}
-		}
-	}
-
-	protected void checkExceededSizeLimit(HttpServletRequest httpServletRequest)
-		throws PortalException {
-
-		UploadException uploadException =
-			(UploadException)httpServletRequest.getAttribute(
-				WebKeys.UPLOAD_EXCEPTION);
-
-		if (uploadException != null) {
-			Throwable throwable = uploadException.getCause();
-
-			if (uploadException.isExceededFileSizeLimit() ||
-				uploadException.isExceededUploadRequestSizeLimit()) {
-
-				throw new LARFileSizeException(throwable);
-			}
-
-			throw new PortalException(throwable);
 		}
 	}
 
@@ -444,6 +424,26 @@ public class ImportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 
 		return _exportImportService.validateImportLayoutsFile(
 			exportImportConfiguration, inputStream);
+	}
+
+	private void _checkExceededSizeLimit(HttpServletRequest httpServletRequest)
+		throws PortalException {
+
+		UploadException uploadException =
+			(UploadException)httpServletRequest.getAttribute(
+				WebKeys.UPLOAD_EXCEPTION);
+
+		if (uploadException != null) {
+			Throwable throwable = uploadException.getCause();
+
+			if (uploadException.isExceededFileSizeLimit() ||
+				uploadException.isExceededUploadRequestSizeLimit()) {
+
+				throw new LARFileSizeException(throwable);
+			}
+
+			throw new PortalException(throwable);
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

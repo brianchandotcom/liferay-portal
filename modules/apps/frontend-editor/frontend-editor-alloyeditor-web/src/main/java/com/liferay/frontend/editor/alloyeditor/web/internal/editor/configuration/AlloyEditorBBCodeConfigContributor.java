@@ -67,7 +67,7 @@ public class AlloyEditorBBCodeConfigContributor
 		).put(
 			"format_tags", "p;pre"
 		).put(
-			"lang", getLangJSONObject(inputEditorTaglibAttributes)
+			"lang", _getLangJSONObject(inputEditorTaglibAttributes)
 		).put(
 			"newThreadURL", MBThreadConstants.NEW_THREAD_URL
 		);
@@ -94,15 +94,6 @@ public class AlloyEditorBBCodeConfigContributor
 		).put(
 			"toolbars", getToolbarsJSONObject(themeDisplay.getLocale())
 		);
-	}
-
-	protected JSONObject getLangJSONObject(
-		Map<String, Object> inputEditorTaglibAttributes) {
-
-		return JSONUtil.put(
-			"code",
-			LanguageUtil.get(
-				getContentsLocale(inputEditorTaglibAttributes), "code"));
 	}
 
 	protected JSONObject getStyleFormatJSONObject(
@@ -208,6 +199,15 @@ public class AlloyEditorBBCodeConfigContributor
 		).put(
 			"test", "AlloyEditor.SelectionTest.text"
 		);
+	}
+
+	private JSONObject _getLangJSONObject(
+		Map<String, Object> inputEditorTaglibAttributes) {
+
+		return JSONUtil.put(
+			"code",
+			LanguageUtil.get(
+				getContentsLocale(inputEditorTaglibAttributes), "code"));
 	}
 
 	private static final int _CKEDITOR_STYLE_BLOCK = 1;

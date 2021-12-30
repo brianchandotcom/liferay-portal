@@ -41,10 +41,10 @@ public class ExportImportConfigurationModelSummaryContributor
 	public Summary getSummary(
 		Document document, Locale locale, String snippet) {
 
-		return createSummary(document, Field.TITLE, Field.DESCRIPTION);
+		return _createSummary(document, Field.TITLE, Field.DESCRIPTION);
 	}
 
-	protected Summary createSummary(
+	private Summary _createSummary(
 		Document document, String titleField, String contentField) {
 
 		String prefix = Field.SNIPPET + StringPool.UNDERLINE;

@@ -47,7 +47,7 @@ public class ExportImportConfigurationModelPreFilterContributor
 		BooleanFilter booleanFilter, ModelSearchSettings modelSearchSettings,
 		SearchContext searchContext) {
 
-		addStatus(booleanFilter, searchContext);
+		_addStatus(booleanFilter, searchContext);
 
 		booleanFilter.addRequiredTerm(
 			Field.COMPANY_ID, searchContext.getCompanyId());
@@ -63,7 +63,7 @@ public class ExportImportConfigurationModelPreFilterContributor
 		}
 	}
 
-	protected void addStatus(
+	private void _addStatus(
 		BooleanFilter contextBooleanFilter, SearchContext searchContext) {
 
 		int[] statuses = GetterUtil.getIntegerValues(

@@ -179,12 +179,12 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 
 		// Recipients
 
-		Set<User> recipients = getRecipients(
+		Set<User> recipients = _getRecipients(
 			companyId, serviceContext.getScopeGroupId());
 
 		for (User recipient : recipients) {
 			try {
-				notify(
+				_notify(
 					reporterUser.getUserId(), company, group,
 					reporterEmailAddress, reporterUserName,
 					reportedEmailAddress, reportedUserName, reportedURL,
@@ -201,7 +201,21 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 		}
 	}
 
-	protected Set<User> getRecipients(long companyId, long groupId)
+	private String _getGroupDescriptiveName(Group group, Locale locale) {
+		try {
+			return group.getDescriptiveName(locale);
+		}
+		catch (PortalException portalException) {
+			_log.error(
+				"Unable to get descriptive name for group " +
+					group.getGroupId(),
+				portalException);
+		}
+
+		return StringPool.BLANK;
+	}
+
+	private Set<User> _getRecipients(long companyId, long groupId)
 		throws PortalException {
 
 		Set<User> recipients = new LinkedHashSet<>();
@@ -256,7 +270,7 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 		return recipients;
 	}
 
-	protected void notify(
+	private void _notify(
 			long reporterUserId, Company company, Group group,
 			String reporterEmailAddress, String reporterUserName,
 			String reportedEmailAddress, String reportedUserName,
@@ -294,20 +308,6 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 		subscriptionSender.addRuntimeSubscribers(toAddress, toName);
 
 		subscriptionSender.flushNotificationsAsync();
-	}
-
-	private String _getGroupDescriptiveName(Group group, Locale locale) {
-		try {
-			return group.getDescriptiveName(locale);
-		}
-		catch (PortalException portalException) {
-			_log.error(
-				"Unable to get descriptive name for group " +
-					group.getGroupId(),
-				portalException);
-		}
-
-		return StringPool.BLANK;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

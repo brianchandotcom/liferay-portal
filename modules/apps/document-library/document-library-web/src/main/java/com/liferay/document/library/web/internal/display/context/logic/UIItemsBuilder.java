@@ -168,7 +168,7 @@ public class UIItemsBuilder {
 			new JavaScriptToolbarItem(), toolbarItems,
 			DLUIItemKeys.CANCEL_CHECKOUT,
 			LanguageUtil.get(_resourceBundle, "cancel-checkout[document]"),
-			getSubmitFormJavaScript(Constants.CANCEL_CHECKOUT, null));
+			_getSubmitFormJavaScript(Constants.CANCEL_CHECKOUT, null));
 	}
 
 	public void addCheckinMenuItem(List<MenuItem> menuItems)
@@ -194,7 +194,7 @@ public class UIItemsBuilder {
 			new JavaScriptToolbarItem(), toolbarItems, DLUIItemKeys.CHECKIN,
 			LanguageUtil.get(_resourceBundle, "checkin"),
 			StringBundler.concat(
-				getNamespace(), "showVersionDetailsDialog('",
+				_getNamespace(), "showVersionDetailsDialog('",
 				HtmlUtil.escapeJS(
 					PortletURLBuilder.create(
 						_getActionURL(
@@ -217,7 +217,7 @@ public class UIItemsBuilder {
 		Template template = TemplateManagerUtil.getTemplate(
 			TemplateConstants.LANG_TYPE_FTL, urlTemplateResource, false);
 
-		template.put("namespace", getNamespace());
+		template.put("namespace", _getNamespace());
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
@@ -259,7 +259,7 @@ public class UIItemsBuilder {
 		_addJavaScriptUIItem(
 			new JavaScriptToolbarItem(), toolbarItems, DLUIItemKeys.CHECKOUT,
 			LanguageUtil.get(_resourceBundle, "checkout[document]"),
-			getSubmitFormJavaScript(Constants.CHECKOUT, null));
+			_getSubmitFormJavaScript(Constants.CHECKOUT, null));
 	}
 
 	public void addCollectDigitalSignatureMenuItem(List<MenuItem> menuItems) {
@@ -332,7 +332,7 @@ public class UIItemsBuilder {
 			"uri", selectFileVersionURL
 		).build();
 
-		String jsNamespace = getNamespace() + _fileVersion.getFileVersionId();
+		String jsNamespace = _getNamespace() + _fileVersion.getFileVersionId();
 
 		JavaScriptMenuItem javaScriptMenuItem = _addJavaScriptUIItem(
 			new JavaScriptMenuItem(), menuItems, DLUIItemKeys.COMPARE_TO,
@@ -366,7 +366,7 @@ public class UIItemsBuilder {
 			"dialogTitle",
 			UnicodeLanguageUtil.get(_httpServletRequest, "compare-versions"));
 		template.put("jsNamespace", jsNamespace);
-		template.put("namespace", getNamespace());
+		template.put("namespace", _getNamespace());
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
@@ -380,10 +380,10 @@ public class UIItemsBuilder {
 
 		String cmd = null;
 
-		if (isDeleteActionAvailable()) {
+		if (_isDeleteActionAvailable()) {
 			cmd = Constants.DELETE;
 		}
-		else if (isMoveToTheRecycleBinActionAvailable()) {
+		else if (_isMoveToTheRecycleBinActionAvailable()) {
 			cmd = Constants.MOVE_TO_TRASH;
 		}
 		else {
@@ -424,7 +424,7 @@ public class UIItemsBuilder {
 	public void addDeleteToolbarItem(List<ToolbarItem> toolbarItems)
 		throws PortalException {
 
-		if (!isDeleteActionAvailable()) {
+		if (!_isDeleteActionAvailable()) {
 			return;
 		}
 
@@ -455,7 +455,7 @@ public class UIItemsBuilder {
 		portletURL.setParameter("folderId", String.valueOf(folderId));
 
 		sb.append(
-			getSubmitFormJavaScript(Constants.DELETE, portletURL.toString()));
+			_getSubmitFormJavaScript(Constants.DELETE, portletURL.toString()));
 
 		sb.append("}");
 
@@ -668,7 +668,7 @@ public class UIItemsBuilder {
 			List<ToolbarItem> toolbarItems)
 		throws PortalException {
 
-		if (!isMoveToTheRecycleBinActionAvailable()) {
+		if (!_isMoveToTheRecycleBinActionAvailable()) {
 			return;
 		}
 
@@ -696,7 +696,7 @@ public class UIItemsBuilder {
 			new JavaScriptToolbarItem(), toolbarItems,
 			DLUIItemKeys.MOVE_TO_THE_RECYCLE_BIN,
 			LanguageUtil.get(_resourceBundle, "move-to-recycle-bin"),
-			getSubmitFormJavaScript(
+			_getSubmitFormJavaScript(
 				Constants.MOVE_TO_TRASH, portletURL.toString()));
 	}
 
@@ -937,7 +937,7 @@ public class UIItemsBuilder {
 		javaScriptMenuItem.setLabel("checkin");
 		javaScriptMenuItem.setOnClick(
 			StringBundler.concat(
-				getNamespace(), "showVersionDetailsDialog('",
+				_getNamespace(), "showVersionDetailsDialog('",
 				HtmlUtil.escapeJS(portletURL.toString()), "');"));
 
 		String javaScript =
@@ -952,7 +952,7 @@ public class UIItemsBuilder {
 		Template template = TemplateManagerUtil.getTemplate(
 			TemplateConstants.LANG_TYPE_FTL, urlTemplateResource, false);
 
-		template.put("namespace", getNamespace());
+		template.put("namespace", _getNamespace());
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
@@ -961,71 +961,6 @@ public class UIItemsBuilder {
 		javaScriptMenuItem.setJavaScript(unsyncStringWriter.toString());
 
 		return javaScriptMenuItem;
-	}
-
-	protected String getNamespace() {
-		LiferayPortletResponse liferayPortletResponse =
-			_getLiferayPortletResponse();
-
-		return liferayPortletResponse.getNamespace();
-	}
-
-	protected String getSubmitFormJavaScript(String cmd, String redirect) {
-		StringBundler sb = new StringBundler(18);
-
-		sb.append("document.");
-		sb.append(getNamespace());
-		sb.append("fm.");
-		sb.append(getNamespace());
-		sb.append(Constants.CMD);
-		sb.append(".value = '");
-		sb.append(cmd);
-		sb.append("';");
-
-		if (redirect != null) {
-			sb.append("document.");
-			sb.append(getNamespace());
-			sb.append("fm.");
-			sb.append(getNamespace());
-			sb.append("redirect.value = '");
-			sb.append(HtmlUtil.escapeJS(redirect));
-			sb.append("';");
-		}
-
-		sb.append("submitForm(document.");
-		sb.append(getNamespace());
-		sb.append("fm);");
-
-		return sb.toString();
-	}
-
-	protected boolean isDeleteActionAvailable() throws PortalException {
-		if (((_fileShortcut != null) &&
-			 _fileShortcutDisplayContextHelper.isFileShortcutDeletable() &&
-			 !_isFileShortcutTrashable()) ||
-			((_fileShortcut == null) &&
-			 _fileEntryDisplayContextHelper.isFileEntryDeletable() &&
-			 !_isFileEntryTrashable())) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	protected boolean isMoveToTheRecycleBinActionAvailable()
-		throws PortalException {
-
-		if (!isDeleteActionAvailable() &&
-			(((_fileShortcut != null) &&
-			  _fileShortcutDisplayContextHelper.isFileShortcutDeletable()) ||
-			 ((_fileShortcut == null) &&
-			  _fileEntryDisplayContextHelper.isFileEntryDeletable()))) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	private UIItemsBuilder(
@@ -1211,7 +1146,7 @@ public class UIItemsBuilder {
 
 	private String _getEditImageOnClickJavaScript() {
 		return StringBundler.concat(
-			getNamespace(), "editWithImageEditor({fileEntryId: '",
+			_getNamespace(), "editWithImageEditor({fileEntryId: '",
 			_fileEntry.getFileEntryId(), "', imageURL: '",
 			HtmlUtil.escapeJS(
 				_dlURLHelper.getPreviewURL(
@@ -1238,7 +1173,7 @@ public class UIItemsBuilder {
 	private String _getMoveEntryOnClickJavaScript() {
 		StringBundler sb = new StringBundler(5);
 
-		sb.append(getNamespace());
+		sb.append(_getNamespace());
 		sb.append("move(1, ");
 
 		if (_fileShortcut != null) {
@@ -1253,6 +1188,13 @@ public class UIItemsBuilder {
 		sb.append(");");
 
 		return sb.toString();
+	}
+
+	private String _getNamespace() {
+		LiferayPortletResponse liferayPortletResponse =
+			_getLiferayPortletResponse();
+
+		return liferayPortletResponse.getNamespace();
 	}
 
 	private String _getRedirect() {
@@ -1295,6 +1237,49 @@ public class UIItemsBuilder {
 		}
 
 		return portletURL;
+	}
+
+	private String _getSubmitFormJavaScript(String cmd, String redirect) {
+		StringBundler sb = new StringBundler(18);
+
+		sb.append("document.");
+		sb.append(_getNamespace());
+		sb.append("fm.");
+		sb.append(_getNamespace());
+		sb.append(Constants.CMD);
+		sb.append(".value = '");
+		sb.append(cmd);
+		sb.append("';");
+
+		if (redirect != null) {
+			sb.append("document.");
+			sb.append(_getNamespace());
+			sb.append("fm.");
+			sb.append(_getNamespace());
+			sb.append("redirect.value = '");
+			sb.append(HtmlUtil.escapeJS(redirect));
+			sb.append("';");
+		}
+
+		sb.append("submitForm(document.");
+		sb.append(_getNamespace());
+		sb.append("fm);");
+
+		return sb.toString();
+	}
+
+	private boolean _isDeleteActionAvailable() throws PortalException {
+		if (((_fileShortcut != null) &&
+			 _fileShortcutDisplayContextHelper.isFileShortcutDeletable() &&
+			 !_isFileShortcutTrashable()) ||
+			((_fileShortcut == null) &&
+			 _fileEntryDisplayContextHelper.isFileEntryDeletable() &&
+			 !_isFileEntryTrashable())) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private boolean _isFileEntryTrashable() throws PortalException {
@@ -1354,6 +1339,21 @@ public class UIItemsBuilder {
 
 			return false;
 		}
+	}
+
+	private boolean _isMoveToTheRecycleBinActionAvailable()
+		throws PortalException {
+
+		if (!_isDeleteActionAvailable() &&
+			(((_fileShortcut != null) &&
+			  _fileShortcutDisplayContextHelper.isFileShortcutDeletable()) ||
+			 ((_fileShortcut == null) &&
+			  _fileEntryDisplayContextHelper.isFileEntryDeletable()))) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private boolean _isTrashEnabled() throws PortalException {

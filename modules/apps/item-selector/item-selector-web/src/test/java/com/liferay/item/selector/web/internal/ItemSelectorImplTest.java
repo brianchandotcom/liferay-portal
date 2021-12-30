@@ -112,7 +112,7 @@ public class ItemSelectorImplTest extends PowerMockito {
 			"testItemSelectedEventName", _mediaItemSelectorCriterion,
 			_flickrItemSelectorCriterion);
 
-		setUpItemSelectionCriterionHandlers();
+		_setUpItemSelectionCriterionHandlers();
 
 		Assert.assertEquals(
 			"testItemSelectedEventName",
@@ -125,7 +125,7 @@ public class ItemSelectorImplTest extends PowerMockito {
 			StringUtil.randomString(), _mediaItemSelectorCriterion,
 			_flickrItemSelectorCriterion);
 
-		setUpItemSelectionCriterionHandlers();
+		_setUpItemSelectionCriterionHandlers();
 
 		List<ItemSelectorCriterion> itemSelectorCriteria =
 			_itemSelectorImpl.getItemSelectorCriteria(itemSelectorURL);
@@ -189,7 +189,7 @@ public class ItemSelectorImplTest extends PowerMockito {
 
 	@Test
 	public void testGetItemSelectorRendering() {
-		setUpItemSelectionCriterionHandlers();
+		_setUpItemSelectionCriterionHandlers();
 
 		ItemSelectorRendering itemSelectorRendering =
 			getItemSelectorRendering();
@@ -309,7 +309,7 @@ public class ItemSelectorImplTest extends PowerMockito {
 		return itemSelectorURL;
 	}
 
-	protected void setUpItemSelectionCriterionHandlers() {
+	private void _setUpItemSelectionCriterionHandlers() {
 		_itemSelectorImpl.setItemSelectionCriterionHandler(
 			new FlickrItemSelectorCriterionHandler());
 		_itemSelectorImpl.setItemSelectionCriterionHandler(

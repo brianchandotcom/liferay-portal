@@ -59,7 +59,7 @@ public class ItemSelectorReturnTypeResolverHandlerImpl
 			ItemSelectorView<?> itemSelectorView, Class<?> modelClass) {
 
 		ItemSelectorReturnType itemSelectorReturnType =
-			getFirstAvailableItemSelectorReturnType(
+			_getFirstAvailableItemSelectorReturnType(
 				itemSelectorCriterion.getDesiredItemSelectorReturnTypes(),
 				_itemSelectorViewReturnTypeProviderHandler.
 					getSupportedItemSelectorReturnTypes(itemSelectorView));
@@ -97,7 +97,7 @@ public class ItemSelectorReturnTypeResolverHandlerImpl
 				bundleContext));
 	}
 
-	protected ItemSelectorReturnType getFirstAvailableItemSelectorReturnType(
+	private ItemSelectorReturnType _getFirstAvailableItemSelectorReturnType(
 		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes,
 		List<ItemSelectorReturnType> supportedItemSelectorReturnTypes) {
 

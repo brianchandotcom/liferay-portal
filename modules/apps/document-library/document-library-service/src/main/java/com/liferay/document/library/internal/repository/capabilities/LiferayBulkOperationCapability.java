@@ -53,8 +53,8 @@ public class LiferayBulkOperationCapability implements BulkOperationCapability {
 			Filter<?> filter, RepositoryModelOperation repositoryModelOperation)
 		throws PortalException {
 
-		executeOnAllFileEntries(filter, repositoryModelOperation);
-		executeOnAllFolders(filter, repositoryModelOperation);
+		_executeOnAllFileEntries(filter, repositoryModelOperation);
+		_executeOnAllFolders(filter, repositoryModelOperation);
 	}
 
 	@Override
@@ -64,7 +64,7 @@ public class LiferayBulkOperationCapability implements BulkOperationCapability {
 		execute(null, repositoryModelOperation);
 	}
 
-	protected void executeOnAllFileEntries(
+	private void _executeOnAllFileEntries(
 			Filter<?> filter, RepositoryModelOperation repositoryModelOperation)
 		throws PortalException {
 
@@ -79,7 +79,7 @@ public class LiferayBulkOperationCapability implements BulkOperationCapability {
 		actionableDynamicQuery.performActions();
 	}
 
-	protected void executeOnAllFolders(
+	private void _executeOnAllFolders(
 			Filter<?> filter, RepositoryModelOperation repositoryModelOperation)
 		throws PortalException {
 

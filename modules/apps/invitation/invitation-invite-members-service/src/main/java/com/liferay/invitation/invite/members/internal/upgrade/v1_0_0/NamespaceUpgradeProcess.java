@@ -31,14 +31,23 @@ public class NamespaceUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		renameTable(
+		_renameTable(
 			_getOldTableName(), MemberRequestTable.TABLE_NAME,
 			MemberRequestTable.TABLE_COLUMNS,
 			MemberRequestTable.TABLE_SQL_CREATE,
 			MemberRequestTable.TABLE_SQL_DROP);
 	}
 
-	protected void renameTable(
+	private String _getOldTableName() {
+		if (MemberRequestTable.TABLE_NAME.startsWith(_NEW_NAMESPACE)) {
+			return StringUtil.replaceFirst(
+				MemberRequestTable.TABLE_NAME, _NEW_NAMESPACE, _OLD_NAMESPACE);
+		}
+
+		return _OLD_NAMESPACE + MemberRequestTable.TABLE_NAME;
+	}
+
+	private void _renameTable(
 			String oldTableName, String newTableName, Object[][] tableColumns,
 			String tableSqlCreate, String tableSqlDrop)
 		throws Exception {
@@ -76,15 +85,6 @@ public class NamespaceUpgradeProcess extends UpgradeProcess {
 
 			upgradeTable.updateTable();
 		}
-	}
-
-	private String _getOldTableName() {
-		if (MemberRequestTable.TABLE_NAME.startsWith(_NEW_NAMESPACE)) {
-			return StringUtil.replaceFirst(
-				MemberRequestTable.TABLE_NAME, _NEW_NAMESPACE, _OLD_NAMESPACE);
-		}
-
-		return _OLD_NAMESPACE + MemberRequestTable.TABLE_NAME;
 	}
 
 	private static final String _NEW_NAMESPACE = "IM_";

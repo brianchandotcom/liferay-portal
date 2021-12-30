@@ -108,14 +108,35 @@ public class SubscriptionDLAppHelperLocalServiceWrapper
 
 			// Subscriptions
 
-			notifySubscribers(
+			_notifySubscribers(
 				userId, latestFileVersion,
 				(String)workflowContext.get(WorkflowConstants.CONTEXT_URL),
 				serviceContext);
 		}
 	}
 
-	protected void notifySubscribers(
+	private boolean _isEnabled(FileEntry fileEntry) {
+		if (!DLAppHelperThreadLocal.isEnabled() ||
+			RepositoryUtil.isExternalRepository(fileEntry.getRepositoryId())) {
+
+			return false;
+		}
+
+		return true;
+	}
+
+	private boolean _isEnabled(Folder folder) {
+		if (!DLAppHelperThreadLocal.isEnabled() ||
+			(!folder.isMountPoint() &&
+			 RepositoryUtil.isExternalRepository(folder.getRepositoryId()))) {
+
+			return false;
+		}
+
+		return true;
+	}
+
+	private void _notifySubscribers(
 			long userId, FileVersion fileVersion, String entryURL,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -273,27 +294,6 @@ public class SubscriptionDLAppHelperLocalServiceWrapper
 			DLFileEntry.class.getName(), fileEntry.getFileEntryId());
 
 		subscriptionSender.flushNotificationsAsync();
-	}
-
-	private boolean _isEnabled(FileEntry fileEntry) {
-		if (!DLAppHelperThreadLocal.isEnabled() ||
-			RepositoryUtil.isExternalRepository(fileEntry.getRepositoryId())) {
-
-			return false;
-		}
-
-		return true;
-	}
-
-	private boolean _isEnabled(Folder folder) {
-		if (!DLAppHelperThreadLocal.isEnabled() ||
-			(!folder.isMountPoint() &&
-			 RepositoryUtil.isExternalRepository(folder.getRepositoryId()))) {
-
-			return false;
-		}
-
-		return true;
 	}
 
 	@Reference

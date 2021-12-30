@@ -48,7 +48,7 @@ public class CadminTopHeadDynamicInclude extends BaseDynamicInclude {
 			HttpServletResponse httpServletResponse, String key)
 		throws IOException {
 
-		if (!isSignedIn()) {
+		if (!_isSignedIn()) {
 			return;
 		}
 
@@ -84,7 +84,7 @@ public class CadminTopHeadDynamicInclude extends BaseDynamicInclude {
 		_bundleContext = bundleContext;
 	}
 
-	protected boolean isSignedIn() {
+	private boolean _isSignedIn() {
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 

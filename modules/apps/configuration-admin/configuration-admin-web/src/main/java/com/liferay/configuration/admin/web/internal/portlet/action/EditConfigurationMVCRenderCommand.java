@@ -196,7 +196,7 @@ public class EditConfigurationMVCRenderCommand implements MVCRenderCommand {
 				"configuration.pid");
 	}
 
-	protected void deactivate() {
+	private void _deactivate() {
 		_configurationMenuItemsServiceTrackerMap.close();
 	}
 

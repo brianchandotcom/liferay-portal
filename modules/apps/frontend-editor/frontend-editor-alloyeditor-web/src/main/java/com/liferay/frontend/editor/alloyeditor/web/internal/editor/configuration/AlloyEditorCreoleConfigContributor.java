@@ -192,21 +192,9 @@ public class AlloyEditorCreoleConfigContributor
 		);
 	}
 
-	protected JSONObject getToolbarsStylesSelectionsHeadingTextJSONObject(
-		Locale locale) {
-
-		return JSONUtil.put(
-			"buttons", JSONUtil.put(getStyleFormatsJSONObject(locale))
-		).put(
-			"name", "headertext"
-		).put(
-			"test", "AlloyEditor.SelectionTest.headingtext"
-		);
-	}
-
 	protected JSONArray getToolbarsStylesSelectionsJSONArray(Locale locale) {
 		return JSONUtil.putAll(
-			getToolbarsStylesSelectionsHeadingTextJSONObject(locale),
+			_getToolbarsStylesSelectionsHeadingTextJSONObject(locale),
 			getToolbarsStylesSelectionsLinkJSONObject(),
 			getToolbarsStylesSelectionsTextJSONObject(locale),
 			getToolbarsStylesSelectionsTableJSONObject());
@@ -263,6 +251,18 @@ public class AlloyEditorCreoleConfigContributor
 			"name", "text"
 		).put(
 			"test", "AlloyEditor.SelectionTest.text"
+		);
+	}
+
+	private JSONObject _getToolbarsStylesSelectionsHeadingTextJSONObject(
+		Locale locale) {
+
+		return JSONUtil.put(
+			"buttons", JSONUtil.put(getStyleFormatsJSONObject(locale))
+		).put(
+			"name", "headertext"
+		).put(
+			"test", "AlloyEditor.SelectionTest.headingtext"
 		);
 	}
 

@@ -150,11 +150,11 @@ public class BindConfigurationMVCActionCommand implements MVCActionCommand {
 
 		Dictionary<String, Object> properties = null;
 
-		Map<String, Object> requestParameters = getRequestParameters(
+		Map<String, Object> requestParameters = _getRequestParameters(
 			actionRequest, pid);
 
 		if (requestParameters != null) {
-			properties = toDictionary(requestParameters);
+			properties = _toDictionary(requestParameters);
 		}
 		else {
 			ResourceBundleLoader resourceBundleLoader =
@@ -165,7 +165,7 @@ public class BindConfigurationMVCActionCommand implements MVCActionCommand {
 				resourceBundleLoader.loadResourceBundle(
 					themeDisplay.getLocale());
 
-			properties = getDDMRequestParameters(
+			properties = _getDDMRequestParameters(
 				actionRequest, configurationModel, resourceBundle);
 		}
 
@@ -176,7 +176,7 @@ public class BindConfigurationMVCActionCommand implements MVCActionCommand {
 		}
 
 		try {
-			configureTargetService(
+			_configureTargetService(
 				configurationModel, properties,
 				configurationScopeDisplayContext.getScope(),
 				configurationScopeDisplayContext.getScopePK());
@@ -205,7 +205,7 @@ public class BindConfigurationMVCActionCommand implements MVCActionCommand {
 		return true;
 	}
 
-	protected void configureTargetService(
+	private void _configureTargetService(
 			ConfigurationModel configurationModel,
 			Dictionary<String, Object> properties,
 			ExtendedObjectClassDefinition.Scope scope, Serializable scopePK)
@@ -299,13 +299,24 @@ public class BindConfigurationMVCActionCommand implements MVCActionCommand {
 		}
 	}
 
-	protected DDMFormValues getDDMFormValues(
+	private ConfigurationModel _getConfigurationModel(
+		Configuration configuration, ConfigurationModel configurationModel) {
+
+		return new ConfigurationModel(
+			configurationModel.getBundleLocation(),
+			configurationModel.getBundleSymbolicName(),
+			configurationModel.getClassLoader(), configuration,
+			configurationModel.getExtendedObjectClassDefinition(),
+			configurationModel.isFactory());
+	}
+
+	private DDMFormValues _getDDMFormValues(
 		ActionRequest actionRequest, DDMForm ddmForm) {
 
 		return _ddmFormValuesFactory.create(actionRequest, ddmForm);
 	}
 
-	protected Dictionary<String, Object> getDDMRequestParameters(
+	private Dictionary<String, Object> _getDDMRequestParameters(
 		ActionRequest actionRequest, ConfigurationModel configurationModel,
 		ResourceBundle resourceBundle) {
 
@@ -318,7 +329,7 @@ public class BindConfigurationMVCActionCommand implements MVCActionCommand {
 					configurationModel, themeDisplay.getLocale(),
 					resourceBundle);
 
-		DDMFormValues ddmFormValues = getDDMFormValues(
+		DDMFormValues ddmFormValues = _getDDMFormValues(
 			actionRequest, configurationModelToDDMFormConverter.getDDMForm());
 
 		LocationVariableResolver locationVariableResolver =
@@ -335,7 +346,7 @@ public class BindConfigurationMVCActionCommand implements MVCActionCommand {
 		return ddmFormValuesToPropertiesConverter.getProperties();
 	}
 
-	protected Map<String, Object> getRequestParameters(
+	private Map<String, Object> _getRequestParameters(
 		ActionRequest actionRequest, String pid) {
 
 		ConfigurationFormRenderer configurationFormRenderer =
@@ -346,7 +357,7 @@ public class BindConfigurationMVCActionCommand implements MVCActionCommand {
 			_portal.getHttpServletRequest(actionRequest));
 	}
 
-	protected Dictionary<String, Object> toDictionary(
+	private Dictionary<String, Object> _toDictionary(
 		Map<String, Object> requestParameters) {
 
 		Dictionary<String, Object> properties = new Hashtable<>();
@@ -356,17 +367,6 @@ public class BindConfigurationMVCActionCommand implements MVCActionCommand {
 		}
 
 		return properties;
-	}
-
-	private ConfigurationModel _getConfigurationModel(
-		Configuration configuration, ConfigurationModel configurationModel) {
-
-		return new ConfigurationModel(
-			configurationModel.getBundleLocation(),
-			configurationModel.getBundleSymbolicName(),
-			configurationModel.getClassLoader(), configuration,
-			configurationModel.getExtendedObjectClassDefinition(),
-			configurationModel.isFactory());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

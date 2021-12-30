@@ -92,9 +92,9 @@ public abstract class BaseCMISRepositoryFactory<T extends CMISRepositoryHandler>
 
 		baseRepository.setCmisRepository(cmisRepository);
 
-		setupRepository(repositoryId, repository, cmisRepository);
+		_setupRepository(repositoryId, repository, cmisRepository);
 
-		setupRepository(repositoryId, repository, baseRepository);
+		_setupRepository(repositoryId, repository, baseRepository);
 
 		if (!ExportImportThreadLocal.isImportInProcess()) {
 			baseRepository.initRepository();
@@ -153,7 +153,11 @@ public abstract class BaseCMISRepositoryFactory<T extends CMISRepositoryHandler>
 		_repositoryLocalService = repositoryLocalService;
 	}
 
-	protected void setupRepository(
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
+	private void _setupRepository(
 		long repositoryId,
 		com.liferay.portal.kernel.model.Repository repository,
 		BaseRepository baseRepository) {
@@ -170,10 +174,6 @@ public abstract class BaseCMISRepositoryFactory<T extends CMISRepositoryHandler>
 		baseRepository.setTypeSettingsProperties(
 			repository.getTypeSettingsProperties());
 		baseRepository.setUserLocalService(_userLocalService);
-	}
-
-	protected void setUserLocalService(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
 	}
 
 	private AssetEntryLocalService _assetEntryLocalService;

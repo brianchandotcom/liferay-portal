@@ -87,7 +87,13 @@ public class LayoutCache {
 		return role;
 	}
 
-	protected List<Role> getGroupRoles(long groupId, String resourceName)
+	protected Map<Long, List<Role>> groupRolesMap = new HashMap<>();
+	protected Map<Long, List<User>> groupUsersMap = new HashMap<>();
+	protected Map<String, Role> nameRolesMap = new HashMap<>();
+	protected Map<Long, List<Role>> userRolesMap = new HashMap<>();
+	protected Map<String, Role> uuidRolesMap = new HashMap<>();
+
+	private List<Role> _getGroupRoles(long groupId, String resourceName)
 		throws PortalException {
 
 		List<Role> roles = groupRolesMap.get(groupId);
@@ -121,7 +127,7 @@ public class LayoutCache {
 		return roles;
 	}
 
-	protected List<User> getGroupUsers(long groupId) {
+	private List<User> _getGroupUsers(long groupId) {
 		List<User> users = groupUsersMap.get(groupId);
 
 		if (users == null) {
@@ -133,7 +139,7 @@ public class LayoutCache {
 		return users;
 	}
 
-	protected List<Role> getUserRoles(long userId) {
+	private List<Role> _getUserRoles(long userId) {
 		List<Role> userRoles = userRolesMap.get(userId);
 
 		if (userRoles == null) {
@@ -144,12 +150,6 @@ public class LayoutCache {
 
 		return userRoles;
 	}
-
-	protected Map<Long, List<Role>> groupRolesMap = new HashMap<>();
-	protected Map<Long, List<User>> groupUsersMap = new HashMap<>();
-	protected Map<String, Role> nameRolesMap = new HashMap<>();
-	protected Map<Long, List<Role>> userRolesMap = new HashMap<>();
-	protected Map<String, Role> uuidRolesMap = new HashMap<>();
 
 	private static final Log _log = LogFactoryUtil.getLog(LayoutCache.class);
 

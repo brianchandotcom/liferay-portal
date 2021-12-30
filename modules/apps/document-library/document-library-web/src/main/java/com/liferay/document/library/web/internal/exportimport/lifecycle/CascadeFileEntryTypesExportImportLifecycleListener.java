@@ -78,7 +78,7 @@ public class CascadeFileEntryTypesExportImportLifecycleListener
 
 		_processedFolderIds = new HashSet<>();
 
-		processFolderIds(_importedFolderIds.values());
+		_processFolderIds(_importedFolderIds.values());
 	}
 
 	@Override
@@ -155,7 +155,7 @@ public class CascadeFileEntryTypesExportImportLifecycleListener
 
 		_processedFolderIds = new HashSet<>();
 
-		processFolderIds(_importedFolderIds.values());
+		_processFolderIds(_importedFolderIds.values());
 	}
 
 	@Override
@@ -215,7 +215,7 @@ public class CascadeFileEntryTypesExportImportLifecycleListener
 		PortletDataContext portletDataContext, StagedModel stagedModel) {
 	}
 
-	protected DLFolder getProcessableRootFolder(DLFolder dlFolder)
+	private DLFolder _getProcessableRootFolder(DLFolder dlFolder)
 		throws PortalException {
 
 		long dlFolderId = dlFolder.getFolderId();
@@ -234,16 +234,16 @@ public class CascadeFileEntryTypesExportImportLifecycleListener
 			return dlFolder;
 		}
 
-		return getProcessableRootFolder(parentFolder);
+		return _getProcessableRootFolder(parentFolder);
 	}
 
-	protected void processFolderIds(Collection<Long> folderIds)
+	private void _processFolderIds(Collection<Long> folderIds)
 		throws PortalException {
 
 		for (Long folderId : folderIds) {
 			DLFolder dlFolder = _dlFolderLocalService.fetchDLFolder(folderId);
 
-			DLFolder rootFolder = getProcessableRootFolder(dlFolder);
+			DLFolder rootFolder = _getProcessableRootFolder(dlFolder);
 
 			if (rootFolder != null) {
 				_dlFileEntryTypeLocalService.cascadeFileEntryTypes(

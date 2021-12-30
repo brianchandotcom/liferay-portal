@@ -62,7 +62,7 @@ public class CacheExportImportLifecycleListener
 	public void onLayoutImportProcessFinished(
 		PortletDataContext portletDataContext) {
 
-		clearCache();
+		_clearCache();
 	}
 
 	@Override
@@ -139,7 +139,7 @@ public class CacheExportImportLifecycleListener
 	public void onPortletImportProcessFinished(
 		PortletDataContext portletDataContext) {
 
-		clearCache();
+		_clearCache();
 	}
 
 	@Override
@@ -209,7 +209,7 @@ public class CacheExportImportLifecycleListener
 		throws Exception {
 	}
 
-	protected void clearCache() {
+	private void _clearCache() {
 		CacheUtil.clearCache();
 		PermissionCacheUtil.clearCache();
 	}

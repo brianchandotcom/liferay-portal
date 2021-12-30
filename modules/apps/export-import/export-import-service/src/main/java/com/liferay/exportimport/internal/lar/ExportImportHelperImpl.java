@@ -247,9 +247,9 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 		return HashMapBuilder.put(
 			PortletDataHandlerKeys.PORTLET_DATA,
-			getExportPortletData(companyId, portletId, parameterMap)
+			_getExportPortletData(companyId, portletId, parameterMap)
 		).putAll(
-			getExportPortletSetupControlsMap(
+			_getExportPortletSetupControlsMap(
 				companyId, portletId, parameterMap, type)
 		).build();
 	}
@@ -263,10 +263,10 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 		return HashMapBuilder.put(
 			PortletDataHandlerKeys.PORTLET_DATA,
-			getImportPortletData(
+			_getImportPortletData(
 				companyId, portletId, parameterMap, portletDataElement)
 		).putAll(
-			getImportPortletSetupControlsMap(
+			_getImportPortletSetupControlsMap(
 				companyId, portletId, parameterMap, manifestSummary)
 		).build();
 	}
@@ -602,7 +602,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		long[] selectedPlids = StringUtil.split(selectedNodes, 0L);
 
 		for (Layout layout : layouts) {
-			populateLayoutsJSON(jsonArray, layout, selectedPlids);
+			_populateLayoutsJSON(jsonArray, layout, selectedPlids);
 		}
 
 		if (ArrayUtil.contains(selectedPlids, 0)) {
@@ -957,7 +957,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 				@Override
 				public void processElement(Element element) {
 					MissingReference missingReference =
-						validateMissingReference(portletDataContext, element);
+						_validateMissingReference(portletDataContext, element);
 
 					if (missingReference != null) {
 						missingReferences.add(missingReference);
@@ -1082,163 +1082,6 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		addCreateDateProperty(portletDataContext, dynamicQuery);
 	}
 
-	protected boolean getExportPortletData(
-			long companyId, String portletId,
-			Map<String, String[]> parameterMap)
-		throws Exception {
-
-		boolean exportPortletData = MapUtil.getBoolean(
-			parameterMap, PortletDataHandlerKeys.PORTLET_DATA);
-		boolean exportPortletDataAll = MapUtil.getBoolean(
-			parameterMap, PortletDataHandlerKeys.PORTLET_DATA_ALL);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Export portlet data " + exportPortletData);
-			_log.debug("Export all portlet data " + exportPortletDataAll);
-		}
-
-		if (!exportPortletData) {
-			return false;
-		}
-
-		PortletDataHandler portletDataHandler =
-			_portletDataHandlerProvider.provide(companyId, portletId);
-
-		if (portletDataHandler == null) {
-			return false;
-		}
-
-		if (exportPortletDataAll || !portletDataHandler.isDataSiteLevel()) {
-			return true;
-		}
-
-		return MapUtil.getBoolean(
-			parameterMap,
-			PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE +
-				PortletIdCodec.decodePortletName(portletId));
-	}
-
-	protected Map<String, Boolean> getExportPortletSetupControlsMap(
-			long companyId, String portletId,
-			Map<String, String[]> parameterMap, String type)
-		throws Exception {
-
-		boolean exportPortletConfiguration = MapUtil.getBoolean(
-			parameterMap, PortletDataHandlerKeys.PORTLET_CONFIGURATION);
-		boolean exportPortletConfigurationAll = MapUtil.getBoolean(
-			parameterMap, PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Export portlet configuration " + exportPortletConfiguration);
-		}
-
-		String rootPortletId = getExportableRootPortletId(companyId, portletId);
-
-		Map<String, Boolean> exportPortletSetupControlsMap =
-			_createPortletSetupControlsMap(
-				exportPortletConfiguration, exportPortletConfiguration,
-				exportPortletConfiguration, exportPortletConfiguration);
-
-		if (exportPortletConfigurationAll ||
-			(exportPortletConfiguration && type.equals("layout-prototype"))) {
-
-			exportPortletSetupControlsMap = _createAllPortletSetupControlsMap(
-				parameterMap, true);
-		}
-		else if (rootPortletId != null) {
-			exportPortletSetupControlsMap = _createRootPortletSetupControlsMap(
-				parameterMap, exportPortletConfiguration, rootPortletId);
-		}
-
-		return exportPortletSetupControlsMap;
-	}
-
-	protected boolean getImportPortletData(
-			long companyId, String portletId,
-			Map<String, String[]> parameterMap, Element portletDataElement)
-		throws Exception {
-
-		boolean importPortletData = MapUtil.getBoolean(
-			parameterMap, PortletDataHandlerKeys.PORTLET_DATA);
-		boolean importPortletDataAll = MapUtil.getBoolean(
-			parameterMap, PortletDataHandlerKeys.PORTLET_DATA_ALL);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Import portlet data " + importPortletData);
-			_log.debug("Import all portlet data " + importPortletDataAll);
-		}
-
-		if (!importPortletData) {
-			return false;
-		}
-
-		PortletDataHandler portletDataHandler =
-			_portletDataHandlerProvider.provide(companyId, portletId);
-
-		if ((portletDataHandler == null) ||
-			((portletDataElement == null) &&
-			 !portletDataHandler.isDisplayPortlet())) {
-
-			return false;
-		}
-
-		if (importPortletDataAll || !portletDataHandler.isDataSiteLevel()) {
-			return true;
-		}
-
-		return MapUtil.getBoolean(
-			parameterMap,
-			PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE +
-				PortletIdCodec.decodePortletName(portletId));
-	}
-
-	protected Map<String, Boolean> getImportPortletSetupControlsMap(
-			long companyId, String portletId,
-			Map<String, String[]> parameterMap, ManifestSummary manifestSummary)
-		throws Exception {
-
-		boolean importPortletConfiguration = MapUtil.getBoolean(
-			parameterMap, PortletDataHandlerKeys.PORTLET_CONFIGURATION);
-		boolean importPortletConfigurationAll = MapUtil.getBoolean(
-			parameterMap, PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Import portlet configuration " + importPortletConfiguration);
-		}
-
-		String rootPortletId = getExportableRootPortletId(companyId, portletId);
-
-		Map<String, Boolean> importPortletSetupControlsMap =
-			_createPortletSetupControlsMap(
-				importPortletConfiguration, importPortletConfiguration,
-				importPortletConfiguration, importPortletConfiguration);
-
-		if (importPortletConfigurationAll) {
-			boolean importCurPortletConfiguration = true;
-
-			if (manifestSummary != null) {
-				String[] configurationPortletOptions =
-					manifestSummary.getConfigurationPortletOptions(
-						rootPortletId);
-
-				if (configurationPortletOptions == null) {
-					importCurPortletConfiguration = false;
-				}
-			}
-
-			importPortletSetupControlsMap = _createAllPortletSetupControlsMap(
-				parameterMap, importCurPortletConfiguration);
-		}
-		else if (rootPortletId != null) {
-			importPortletSetupControlsMap = _createRootPortletSetupControlsMap(
-				parameterMap, importPortletConfiguration, rootPortletId);
-		}
-
-		return importPortletSetupControlsMap;
-	}
-
 	protected ZipWriter getZipWriter(String fileName) {
 		long companyId = CompanyThreadLocal.getCompanyId();
 
@@ -1264,54 +1107,6 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			new File(
 				SystemProperties.get(SystemProperties.TMP_DIR) +
 					StringPool.SLASH + fileName));
-	}
-
-	protected boolean populateLayoutsJSON(
-		JSONArray layoutsJSONArray, Layout layout, long[] selectedLayoutIds) {
-
-		List<Layout> childLayouts = layout.getChildren();
-		JSONArray childLayoutsJSONArray = null;
-		boolean includeChildren = true;
-
-		if (ListUtil.isNotEmpty(childLayouts)) {
-			childLayoutsJSONArray = JSONFactoryUtil.createJSONArray();
-
-			for (Layout childLayout : childLayouts) {
-				if (!populateLayoutsJSON(
-						childLayoutsJSONArray, childLayout,
-						selectedLayoutIds)) {
-
-					includeChildren = false;
-				}
-			}
-		}
-
-		boolean checked = ArrayUtil.contains(
-			selectedLayoutIds, layout.getLayoutId());
-
-		if (checked) {
-			layoutsJSONArray.put(
-				JSONUtil.put(
-					"includeChildren", includeChildren
-				).put(
-					"plid", layout.getPlid()
-				));
-		}
-
-		if (checked && includeChildren) {
-			return true;
-		}
-
-		if (childLayoutsJSONArray != null) {
-
-			// We want a 1 level array and not an array of arrays
-
-			for (int i = 0; i < childLayoutsJSONArray.length(); i++) {
-				layoutsJSONArray.put(childLayoutsJSONArray.getJSONObject(i));
-			}
-		}
-
-		return false;
 	}
 
 	@Reference(unbind = "-")
@@ -1362,42 +1157,6 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	@Reference(unbind = "-")
 	protected void setUserLocalService(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
-	}
-
-	protected MissingReference validateMissingReference(
-		PortletDataContext portletDataContext, Element element) {
-
-		// Missing reference is exported after added as missing
-
-		if (Validator.isNotNull(element.attributeValue("element-path"))) {
-			return null;
-		}
-
-		String className = element.attributeValue("class-name");
-
-		StagedModelDataHandler<?> stagedModelDataHandler =
-			StagedModelDataHandlerRegistryUtil.getStagedModelDataHandler(
-				className);
-
-		if (!stagedModelDataHandler.validateReference(
-				portletDataContext, element)) {
-
-			MissingReference missingReference = new MissingReference(element);
-
-			Map<Long, Long> groupIds =
-				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-					Group.class);
-
-			long groupId = MapUtil.getLong(
-				groupIds,
-				GetterUtil.getLong(element.attributeValue("group-id")));
-
-			missingReference.setGroupId(groupId);
-
-			return missingReference;
-		}
-
-		return null;
 	}
 
 	private Map<String, Boolean> _createAllPortletSetupControlsMap(
@@ -1482,9 +1241,250 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			portletSetupKey, portletUserPreferencesKey);
 	}
 
+	private boolean _getExportPortletData(
+			long companyId, String portletId,
+			Map<String, String[]> parameterMap)
+		throws Exception {
+
+		boolean exportPortletData = MapUtil.getBoolean(
+			parameterMap, PortletDataHandlerKeys.PORTLET_DATA);
+		boolean exportPortletDataAll = MapUtil.getBoolean(
+			parameterMap, PortletDataHandlerKeys.PORTLET_DATA_ALL);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Export portlet data " + exportPortletData);
+			_log.debug("Export all portlet data " + exportPortletDataAll);
+		}
+
+		if (!exportPortletData) {
+			return false;
+		}
+
+		PortletDataHandler portletDataHandler =
+			_portletDataHandlerProvider.provide(companyId, portletId);
+
+		if (portletDataHandler == null) {
+			return false;
+		}
+
+		if (exportPortletDataAll || !portletDataHandler.isDataSiteLevel()) {
+			return true;
+		}
+
+		return MapUtil.getBoolean(
+			parameterMap,
+			PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE +
+				PortletIdCodec.decodePortletName(portletId));
+	}
+
+	private Map<String, Boolean> _getExportPortletSetupControlsMap(
+			long companyId, String portletId,
+			Map<String, String[]> parameterMap, String type)
+		throws Exception {
+
+		boolean exportPortletConfiguration = MapUtil.getBoolean(
+			parameterMap, PortletDataHandlerKeys.PORTLET_CONFIGURATION);
+		boolean exportPortletConfigurationAll = MapUtil.getBoolean(
+			parameterMap, PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Export portlet configuration " + exportPortletConfiguration);
+		}
+
+		String rootPortletId = getExportableRootPortletId(companyId, portletId);
+
+		Map<String, Boolean> exportPortletSetupControlsMap =
+			_createPortletSetupControlsMap(
+				exportPortletConfiguration, exportPortletConfiguration,
+				exportPortletConfiguration, exportPortletConfiguration);
+
+		if (exportPortletConfigurationAll ||
+			(exportPortletConfiguration && type.equals("layout-prototype"))) {
+
+			exportPortletSetupControlsMap = _createAllPortletSetupControlsMap(
+				parameterMap, true);
+		}
+		else if (rootPortletId != null) {
+			exportPortletSetupControlsMap = _createRootPortletSetupControlsMap(
+				parameterMap, exportPortletConfiguration, rootPortletId);
+		}
+
+		return exportPortletSetupControlsMap;
+	}
+
+	private boolean _getImportPortletData(
+			long companyId, String portletId,
+			Map<String, String[]> parameterMap, Element portletDataElement)
+		throws Exception {
+
+		boolean importPortletData = MapUtil.getBoolean(
+			parameterMap, PortletDataHandlerKeys.PORTLET_DATA);
+		boolean importPortletDataAll = MapUtil.getBoolean(
+			parameterMap, PortletDataHandlerKeys.PORTLET_DATA_ALL);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Import portlet data " + importPortletData);
+			_log.debug("Import all portlet data " + importPortletDataAll);
+		}
+
+		if (!importPortletData) {
+			return false;
+		}
+
+		PortletDataHandler portletDataHandler =
+			_portletDataHandlerProvider.provide(companyId, portletId);
+
+		if ((portletDataHandler == null) ||
+			((portletDataElement == null) &&
+			 !portletDataHandler.isDisplayPortlet())) {
+
+			return false;
+		}
+
+		if (importPortletDataAll || !portletDataHandler.isDataSiteLevel()) {
+			return true;
+		}
+
+		return MapUtil.getBoolean(
+			parameterMap,
+			PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE +
+				PortletIdCodec.decodePortletName(portletId));
+	}
+
+	private Map<String, Boolean> _getImportPortletSetupControlsMap(
+			long companyId, String portletId,
+			Map<String, String[]> parameterMap, ManifestSummary manifestSummary)
+		throws Exception {
+
+		boolean importPortletConfiguration = MapUtil.getBoolean(
+			parameterMap, PortletDataHandlerKeys.PORTLET_CONFIGURATION);
+		boolean importPortletConfigurationAll = MapUtil.getBoolean(
+			parameterMap, PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Import portlet configuration " + importPortletConfiguration);
+		}
+
+		String rootPortletId = getExportableRootPortletId(companyId, portletId);
+
+		Map<String, Boolean> importPortletSetupControlsMap =
+			_createPortletSetupControlsMap(
+				importPortletConfiguration, importPortletConfiguration,
+				importPortletConfiguration, importPortletConfiguration);
+
+		if (importPortletConfigurationAll) {
+			boolean importCurPortletConfiguration = true;
+
+			if (manifestSummary != null) {
+				String[] configurationPortletOptions =
+					manifestSummary.getConfigurationPortletOptions(
+						rootPortletId);
+
+				if (configurationPortletOptions == null) {
+					importCurPortletConfiguration = false;
+				}
+			}
+
+			importPortletSetupControlsMap = _createAllPortletSetupControlsMap(
+				parameterMap, importCurPortletConfiguration);
+		}
+		else if (rootPortletId != null) {
+			importPortletSetupControlsMap = _createRootPortletSetupControlsMap(
+				parameterMap, importPortletConfiguration, rootPortletId);
+		}
+
+		return importPortletSetupControlsMap;
+	}
+
 	private String _getZipWriterFileName(String id) {
 		return StringBundler.concat(
 			id, StringPool.DASH, Time.getTimestamp(), ".lar");
+	}
+
+	private boolean _populateLayoutsJSON(
+		JSONArray layoutsJSONArray, Layout layout, long[] selectedLayoutIds) {
+
+		List<Layout> childLayouts = layout.getChildren();
+		JSONArray childLayoutsJSONArray = null;
+		boolean includeChildren = true;
+
+		if (ListUtil.isNotEmpty(childLayouts)) {
+			childLayoutsJSONArray = JSONFactoryUtil.createJSONArray();
+
+			for (Layout childLayout : childLayouts) {
+				if (!_populateLayoutsJSON(
+						childLayoutsJSONArray, childLayout,
+						selectedLayoutIds)) {
+
+					includeChildren = false;
+				}
+			}
+		}
+
+		boolean checked = ArrayUtil.contains(
+			selectedLayoutIds, layout.getLayoutId());
+
+		if (checked) {
+			layoutsJSONArray.put(
+				JSONUtil.put(
+					"includeChildren", includeChildren
+				).put(
+					"plid", layout.getPlid()
+				));
+		}
+
+		if (checked && includeChildren) {
+			return true;
+		}
+
+		if (childLayoutsJSONArray != null) {
+
+			// We want a 1 level array and not an array of arrays
+
+			for (int i = 0; i < childLayoutsJSONArray.length(); i++) {
+				layoutsJSONArray.put(childLayoutsJSONArray.getJSONObject(i));
+			}
+		}
+
+		return false;
+	}
+
+	private MissingReference _validateMissingReference(
+		PortletDataContext portletDataContext, Element element) {
+
+		// Missing reference is exported after added as missing
+
+		if (Validator.isNotNull(element.attributeValue("element-path"))) {
+			return null;
+		}
+
+		String className = element.attributeValue("class-name");
+
+		StagedModelDataHandler<?> stagedModelDataHandler =
+			StagedModelDataHandlerRegistryUtil.getStagedModelDataHandler(
+				className);
+
+		if (!stagedModelDataHandler.validateReference(
+				portletDataContext, element)) {
+
+			MissingReference missingReference = new MissingReference(element);
+
+			Map<Long, Long> groupIds =
+				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+					Group.class);
+
+			long groupId = MapUtil.getLong(
+				groupIds,
+				GetterUtil.getLong(element.attributeValue("group-id")));
+
+			missingReference.setGroupId(groupId);
+
+			return missingReference;
+		}
+
+		return null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

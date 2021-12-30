@@ -355,7 +355,18 @@ public class SearchResultUtilDLFileEntryTest
 		}
 	}
 
-	protected SearchResultContributor createSearchResultContributor() {
+	@Override
+	protected SearchResultTranslator createSearchResultTranslator() {
+		SearchResultTranslatorImpl searchResultTranslatorImpl =
+			new SearchResultTranslatorImpl();
+
+		searchResultTranslatorImpl.setSearchResultManager(
+			_createSearchResultManager());
+
+		return searchResultTranslatorImpl;
+	}
+
+	private SearchResultContributor _createSearchResultContributor() {
 		DLFileEntrySearchResultContributor dlFileEntrySearchResultContributor =
 			new DLFileEntrySearchResultContributor();
 
@@ -364,35 +375,24 @@ public class SearchResultUtilDLFileEntryTest
 		dlFileEntrySearchResultContributor.setDLAppLocalService(
 			_dlAppLocalService);
 		dlFileEntrySearchResultContributor.setSummaryFactory(
-			createSummaryFactory());
+			_createSummaryFactory());
 
 		return dlFileEntrySearchResultContributor;
 	}
 
-	protected SearchResultManager createSearchResultManager() {
+	private SearchResultManager _createSearchResultManager() {
 		SearchResultManagerImpl searchResultManagerImpl =
 			new SearchResultManagerImpl();
 
 		searchResultManagerImpl.addSearchResultContributor(
-			createSearchResultContributor());
+			_createSearchResultContributor());
 		searchResultManagerImpl.setClassNameLocalService(classNameLocalService);
-		searchResultManagerImpl.setSummaryFactory(createSummaryFactory());
+		searchResultManagerImpl.setSummaryFactory(_createSummaryFactory());
 
 		return searchResultManagerImpl;
 	}
 
-	@Override
-	protected SearchResultTranslator createSearchResultTranslator() {
-		SearchResultTranslatorImpl searchResultTranslatorImpl =
-			new SearchResultTranslatorImpl();
-
-		searchResultTranslatorImpl.setSearchResultManager(
-			createSearchResultManager());
-
-		return searchResultTranslatorImpl;
-	}
-
-	protected SummaryFactory createSummaryFactory() {
+	private SummaryFactory _createSummaryFactory() {
 		SummaryFactoryImpl summaryFactoryImpl = new SummaryFactoryImpl();
 
 		summaryFactoryImpl.setIndexerRegistry(_indexerRegistry);

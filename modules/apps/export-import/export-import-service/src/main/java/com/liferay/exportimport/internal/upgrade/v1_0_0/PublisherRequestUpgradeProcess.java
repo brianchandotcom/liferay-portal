@@ -64,11 +64,11 @@ public class PublisherRequestUpgradeProcess extends UpgradeProcess {
 		List<Group> groups = _groupLocalService.getStagedSites();
 
 		for (Group group : groups) {
-			updateScheduledPublications(group);
+			_updateScheduledPublications(group);
 		}
 	}
 
-	protected List<Group> getGroups() {
+	private List<Group> _getGroups() {
 		List<Group> groups = _groupLocalService.getGroups(
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
@@ -85,7 +85,7 @@ public class PublisherRequestUpgradeProcess extends UpgradeProcess {
 		return filteredGroups;
 	}
 
-	protected String getSchedulerGroupName(long groupId, boolean localStaging)
+	private String _getSchedulerGroupName(long groupId, boolean localStaging)
 		throws PortalException {
 
 		String destinationName = DestinationNames.LAYOUTS_LOCAL_PUBLISHER;
@@ -97,7 +97,7 @@ public class PublisherRequestUpgradeProcess extends UpgradeProcess {
 		return StagingUtil.getSchedulerGroupName(destinationName, groupId);
 	}
 
-	protected void updateScheduledLocalPublication(
+	private void _updateScheduledLocalPublication(
 			SchedulerResponse schedulerResponse)
 		throws PortalException {
 
@@ -133,7 +133,7 @@ public class PublisherRequestUpgradeProcess extends UpgradeProcess {
 			exportImportConfiguration.getExportImportConfigurationId(), 0);
 	}
 
-	protected void updateScheduledPublications(Group group)
+	private void _updateScheduledPublications(Group group)
 		throws PortalException {
 
 		try (LoggingTimer loggingTimer = new LoggingTimer(
@@ -147,21 +147,21 @@ public class PublisherRequestUpgradeProcess extends UpgradeProcess {
 
 			List<SchedulerResponse> scheduledJobs =
 				_schedulerEngineHelper.getScheduledJobs(
-					getSchedulerGroupName(group.getGroupId(), localStaging),
+					_getSchedulerGroupName(group.getGroupId(), localStaging),
 					StorageType.PERSISTED);
 
 			for (SchedulerResponse schedulerResponse : scheduledJobs) {
 				if (localStaging) {
-					updateScheduledLocalPublication(schedulerResponse);
+					_updateScheduledLocalPublication(schedulerResponse);
 				}
 				else {
-					updateScheduleRemotePublication(schedulerResponse);
+					_updateScheduleRemotePublication(schedulerResponse);
 				}
 			}
 		}
 	}
 
-	protected void updateScheduleRemotePublication(
+	private void _updateScheduleRemotePublication(
 			SchedulerResponse schedulerResponse)
 		throws PortalException {
 

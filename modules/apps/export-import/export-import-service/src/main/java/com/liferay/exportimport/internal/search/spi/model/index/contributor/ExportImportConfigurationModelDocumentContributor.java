@@ -66,19 +66,19 @@ public class ExportImportConfigurationModelDocumentContributor
 		Map<String, Serializable> settingsMap =
 			exportImportConfiguration.getSettingsMap();
 
-		populateDates(document, settingsMap);
-		populateLayoutIds(document, settingsMap);
-		populateLocale(document, settingsMap);
-		populateParameterMap(document, settingsMap);
-		populateSiteInformation(document, settingsMap);
-		populateTimeZone(document, settingsMap);
+		_populateDates(document, settingsMap);
+		_populateLayoutIds(document, settingsMap);
+		_populateLocale(document, settingsMap);
+		_populateParameterMap(document, settingsMap);
+		_populateSiteInformation(document, settingsMap);
+		_populateTimeZone(document, settingsMap);
 
 		document.addKeyword(
 			_PREFIX_SETTING + Field.USER_ID,
 			MapUtil.getLong(settingsMap, "userId"));
 	}
 
-	protected void populateDates(
+	private void _populateDates(
 		Document document, Map<String, Serializable> settingsMap) {
 
 		if (settingsMap.containsKey("endDate")) {
@@ -94,7 +94,7 @@ public class ExportImportConfigurationModelDocumentContributor
 		}
 	}
 
-	protected void populateLayoutIds(
+	private void _populateLayoutIds(
 		Document document, Map<String, Serializable> settingsMap) {
 
 		if (!settingsMap.containsKey("layoutIdMap") &&
@@ -126,7 +126,7 @@ public class ExportImportConfigurationModelDocumentContributor
 		document.addKeyword("layoutIds", layoutIds);
 	}
 
-	protected void populateLocale(
+	private void _populateLocale(
 		Document document, Map<String, Serializable> settingsMap) {
 
 		Locale locale = (Locale)settingsMap.get("locale");
@@ -134,7 +134,7 @@ public class ExportImportConfigurationModelDocumentContributor
 		document.addText(_PREFIX_SETTING + "locale", locale.toString());
 	}
 
-	protected void populateParameterMap(
+	private void _populateParameterMap(
 		Document document, Map<String, Serializable> settingsMap) {
 
 		if (!settingsMap.containsKey("parameterMap")) {
@@ -174,7 +174,7 @@ public class ExportImportConfigurationModelDocumentContributor
 		}
 	}
 
-	protected void populateSiteInformation(
+	private void _populateSiteInformation(
 		Document document, Map<String, Serializable> settingsMap) {
 
 		document.addKeyword(
@@ -188,7 +188,7 @@ public class ExportImportConfigurationModelDocumentContributor
 			MapUtil.getLong(settingsMap, "targetGroupId"));
 	}
 
-	protected void populateTimeZone(
+	private void _populateTimeZone(
 		Document document, Map<String, Serializable> settingsMap) {
 
 		TimeZone timeZone = (TimeZone)settingsMap.get("timeZone");

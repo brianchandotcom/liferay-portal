@@ -82,13 +82,13 @@ public class ExportConfigurationMVCResourceCommand
 
 		try {
 			if (Validator.isNotNull(pid)) {
-				exportPid(resourceRequest, resourceResponse);
+				_exportPid(resourceRequest, resourceResponse);
 			}
 			else if (Validator.isNotNull(factoryPid)) {
-				exportFactoryPid(resourceRequest, resourceResponse);
+				_exportFactoryPid(resourceRequest, resourceResponse);
 			}
 			else {
-				exportAll(resourceRequest, resourceResponse);
+				_exportAll(resourceRequest, resourceResponse);
 			}
 		}
 		catch (Exception exception) {
@@ -96,177 +96,6 @@ public class ExportConfigurationMVCResourceCommand
 		}
 
 		return false;
-	}
-
-	protected void exportAll(
-			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		String languageId = themeDisplay.getLanguageId();
-
-		ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
-
-		ConfigurationScopeDisplayContext configurationScopeDisplayContext =
-			ConfigurationScopeDisplayContextFactory.create(resourceRequest);
-
-		Map<String, ConfigurationModel> configurationModels =
-			_configurationModelRetriever.getConfigurationModels(
-				themeDisplay.getLanguageId(),
-				configurationScopeDisplayContext.getScope(),
-				configurationScopeDisplayContext.getScopePK());
-
-		for (ConfigurationModel configurationModel :
-				configurationModels.values()) {
-
-			if (configurationModel.isFactory()) {
-				String curFactoryPid = configurationModel.getFactoryPid();
-
-				List<ConfigurationModel> factoryInstances =
-					_configurationModelRetriever.getFactoryInstances(
-						configurationModel,
-						configurationScopeDisplayContext.getScope(),
-						configurationScopeDisplayContext.getScopePK());
-
-				for (ConfigurationModel factoryInstance : factoryInstances) {
-					String curPid = factoryInstance.getID();
-
-					String curFileName = getFileName(curFactoryPid, curPid);
-
-					zipWriter.addEntry(
-						curFileName,
-						ConfigurationExporter.getPropertiesAsBytes(
-							getProperties(
-								languageId, curFactoryPid, curPid,
-								configurationScopeDisplayContext.getScope(),
-								configurationScopeDisplayContext.
-									getScopePK())));
-				}
-			}
-			else if (configurationModel.hasConfiguration()) {
-				String curPid = configurationModel.getID();
-
-				String curFileName = getFileName(null, curPid);
-
-				zipWriter.addEntry(
-					curFileName,
-					ConfigurationExporter.getPropertiesAsBytes(
-						getProperties(
-							languageId, curPid, curPid,
-							configurationScopeDisplayContext.getScope(),
-							configurationScopeDisplayContext.getScopePK())));
-			}
-		}
-
-		String fileName = "liferay-system-settings.zip";
-
-		PortletResponseUtil.sendFile(
-			resourceRequest, resourceResponse, fileName,
-			new FileInputStream(zipWriter.getFile()),
-			ContentTypes.APPLICATION_ZIP);
-	}
-
-	protected void exportFactoryPid(
-			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		String languageId = themeDisplay.getLanguageId();
-
-		ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
-
-		String factoryPid = ParamUtil.getString(resourceRequest, "factoryPid");
-
-		ConfigurationScopeDisplayContext configurationScopeDisplayContext =
-			ConfigurationScopeDisplayContextFactory.create(resourceRequest);
-
-		Map<String, ConfigurationModel> configurationModels =
-			_configurationModelRetriever.getConfigurationModels(
-				themeDisplay.getLanguageId(),
-				configurationScopeDisplayContext.getScope(),
-				configurationScopeDisplayContext.getScopePK());
-
-		ConfigurationModel factoryConfigurationModel = configurationModels.get(
-			factoryPid);
-
-		List<ConfigurationModel> factoryInstances =
-			_configurationModelRetriever.getFactoryInstances(
-				factoryConfigurationModel,
-				configurationScopeDisplayContext.getScope(),
-				configurationScopeDisplayContext.getScopePK());
-
-		for (ConfigurationModel factoryInstance : factoryInstances) {
-			String curPid = factoryInstance.getID();
-
-			String curFileName = getFileName(factoryPid, curPid);
-
-			zipWriter.addEntry(
-				curFileName,
-				ConfigurationExporter.getPropertiesAsBytes(
-					getProperties(
-						languageId, factoryPid, curPid,
-						configurationScopeDisplayContext.getScope(),
-						configurationScopeDisplayContext.getScopePK())));
-		}
-
-		String fileName =
-			"liferay-system-settings-" +
-				factoryConfigurationModel.getFactoryPid() + ".zip";
-
-		PortletResponseUtil.sendFile(
-			resourceRequest, resourceResponse, fileName,
-			new FileInputStream(zipWriter.getFile()),
-			ContentTypes.APPLICATION_ZIP);
-	}
-
-	protected void exportPid(
-			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
-		throws Exception {
-
-		String factoryPid = ParamUtil.getString(resourceRequest, "factoryPid");
-		String pid = ParamUtil.getString(resourceRequest, "pid");
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		String languageId = themeDisplay.getLanguageId();
-
-		String fileName = getFileName(factoryPid, pid);
-
-		ConfigurationScopeDisplayContext configurationScopeDisplayContext =
-			ConfigurationScopeDisplayContextFactory.create(resourceRequest);
-
-		PortletResponseUtil.sendFile(
-			resourceRequest, resourceResponse, fileName,
-			ConfigurationExporter.getPropertiesAsBytes(
-				getProperties(
-					languageId, factoryPid, pid,
-					configurationScopeDisplayContext.getScope(),
-					configurationScopeDisplayContext.getScopePK())),
-			ContentTypes.TEXT_XML_UTF8);
-	}
-
-	protected String getFileName(String factoryPid, String pid) {
-		String fileName = pid;
-
-		if (Validator.isNotNull(factoryPid) && !factoryPid.equals(pid)) {
-			String factoryInstanceId = pid.substring(factoryPid.length() + 1);
-
-			if (factoryInstanceId.startsWith("scoped")) {
-				factoryPid = factoryPid + ".scoped";
-
-				factoryInstanceId = StringUtil.removeSubstring(
-					factoryInstanceId, "scoped.");
-			}
-
-			fileName = factoryPid + StringPool.TILDE + factoryInstanceId;
-		}
-
-		return fileName + ".config";
 	}
 
 	protected Properties getProperties(
@@ -330,6 +159,177 @@ public class ExportConfigurationMVCResourceCommand
 		}
 
 		return properties;
+	}
+
+	private void _exportAll(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String languageId = themeDisplay.getLanguageId();
+
+		ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
+
+		ConfigurationScopeDisplayContext configurationScopeDisplayContext =
+			ConfigurationScopeDisplayContextFactory.create(resourceRequest);
+
+		Map<String, ConfigurationModel> configurationModels =
+			_configurationModelRetriever.getConfigurationModels(
+				themeDisplay.getLanguageId(),
+				configurationScopeDisplayContext.getScope(),
+				configurationScopeDisplayContext.getScopePK());
+
+		for (ConfigurationModel configurationModel :
+				configurationModels.values()) {
+
+			if (configurationModel.isFactory()) {
+				String curFactoryPid = configurationModel.getFactoryPid();
+
+				List<ConfigurationModel> factoryInstances =
+					_configurationModelRetriever.getFactoryInstances(
+						configurationModel,
+						configurationScopeDisplayContext.getScope(),
+						configurationScopeDisplayContext.getScopePK());
+
+				for (ConfigurationModel factoryInstance : factoryInstances) {
+					String curPid = factoryInstance.getID();
+
+					String curFileName = _getFileName(curFactoryPid, curPid);
+
+					zipWriter.addEntry(
+						curFileName,
+						ConfigurationExporter.getPropertiesAsBytes(
+							getProperties(
+								languageId, curFactoryPid, curPid,
+								configurationScopeDisplayContext.getScope(),
+								configurationScopeDisplayContext.
+									getScopePK())));
+				}
+			}
+			else if (configurationModel.hasConfiguration()) {
+				String curPid = configurationModel.getID();
+
+				String curFileName = _getFileName(null, curPid);
+
+				zipWriter.addEntry(
+					curFileName,
+					ConfigurationExporter.getPropertiesAsBytes(
+						getProperties(
+							languageId, curPid, curPid,
+							configurationScopeDisplayContext.getScope(),
+							configurationScopeDisplayContext.getScopePK())));
+			}
+		}
+
+		String fileName = "liferay-system-settings.zip";
+
+		PortletResponseUtil.sendFile(
+			resourceRequest, resourceResponse, fileName,
+			new FileInputStream(zipWriter.getFile()),
+			ContentTypes.APPLICATION_ZIP);
+	}
+
+	private void _exportFactoryPid(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String languageId = themeDisplay.getLanguageId();
+
+		ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
+
+		String factoryPid = ParamUtil.getString(resourceRequest, "factoryPid");
+
+		ConfigurationScopeDisplayContext configurationScopeDisplayContext =
+			ConfigurationScopeDisplayContextFactory.create(resourceRequest);
+
+		Map<String, ConfigurationModel> configurationModels =
+			_configurationModelRetriever.getConfigurationModels(
+				themeDisplay.getLanguageId(),
+				configurationScopeDisplayContext.getScope(),
+				configurationScopeDisplayContext.getScopePK());
+
+		ConfigurationModel factoryConfigurationModel = configurationModels.get(
+			factoryPid);
+
+		List<ConfigurationModel> factoryInstances =
+			_configurationModelRetriever.getFactoryInstances(
+				factoryConfigurationModel,
+				configurationScopeDisplayContext.getScope(),
+				configurationScopeDisplayContext.getScopePK());
+
+		for (ConfigurationModel factoryInstance : factoryInstances) {
+			String curPid = factoryInstance.getID();
+
+			String curFileName = _getFileName(factoryPid, curPid);
+
+			zipWriter.addEntry(
+				curFileName,
+				ConfigurationExporter.getPropertiesAsBytes(
+					getProperties(
+						languageId, factoryPid, curPid,
+						configurationScopeDisplayContext.getScope(),
+						configurationScopeDisplayContext.getScopePK())));
+		}
+
+		String fileName =
+			"liferay-system-settings-" +
+				factoryConfigurationModel.getFactoryPid() + ".zip";
+
+		PortletResponseUtil.sendFile(
+			resourceRequest, resourceResponse, fileName,
+			new FileInputStream(zipWriter.getFile()),
+			ContentTypes.APPLICATION_ZIP);
+	}
+
+	private void _exportPid(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+		throws Exception {
+
+		String factoryPid = ParamUtil.getString(resourceRequest, "factoryPid");
+		String pid = ParamUtil.getString(resourceRequest, "pid");
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String languageId = themeDisplay.getLanguageId();
+
+		String fileName = _getFileName(factoryPid, pid);
+
+		ConfigurationScopeDisplayContext configurationScopeDisplayContext =
+			ConfigurationScopeDisplayContextFactory.create(resourceRequest);
+
+		PortletResponseUtil.sendFile(
+			resourceRequest, resourceResponse, fileName,
+			ConfigurationExporter.getPropertiesAsBytes(
+				getProperties(
+					languageId, factoryPid, pid,
+					configurationScopeDisplayContext.getScope(),
+					configurationScopeDisplayContext.getScopePK())),
+			ContentTypes.TEXT_XML_UTF8);
+	}
+
+	private String _getFileName(String factoryPid, String pid) {
+		String fileName = pid;
+
+		if (Validator.isNotNull(factoryPid) && !factoryPid.equals(pid)) {
+			String factoryInstanceId = pid.substring(factoryPid.length() + 1);
+
+			if (factoryInstanceId.startsWith("scoped")) {
+				factoryPid = factoryPid + ".scoped";
+
+				factoryInstanceId = StringUtil.removeSubstring(
+					factoryInstanceId, "scoped.");
+			}
+
+			fileName = factoryPid + StringPool.TILDE + factoryInstanceId;
+		}
+
+		return fileName + ".config";
 	}
 
 	@Reference(target = "(filter.visibility=*)")

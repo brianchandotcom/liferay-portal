@@ -165,36 +165,11 @@ public class AlloyEditorConfigContributor
 		);
 	}
 
-	protected JSONObject getToolbarsStylesSelectionsEmbedURLJSONObject() {
-		return JSONUtil.put(
-			"buttons", toJSONArray("['imageLeft', 'imageCenter', 'imageRight']")
-		).put(
-			"name", "embedurl"
-		).put(
-			"test", "AlloyEditor.SelectionTest.embedUrl"
-		);
-	}
-
-	protected JSONObject getToolbarsStylesSelectionsImageJSONObject() {
-		return JSONUtil.put(
-			"buttons",
-			toJSONArray(
-				"['imageLeft', 'imageCenter', 'imageRight', 'linkBrowse', " +
-					"'imageAlt']")
-		).put(
-			"name", "image"
-		).put(
-			"setPosition", "AlloyEditor.SelectionSetPosition.image"
-		).put(
-			"test", "AlloyEditor.SelectionTest.image"
-		);
-	}
-
 	protected JSONArray getToolbarsStylesSelectionsJSONArray(Locale locale) {
 		return JSONUtil.putAll(
-			getToolbarsStylesSelectionsEmbedURLJSONObject(),
+			_getToolbarsStylesSelectionsEmbedURLJSONObject(),
 			getToolbarsStylesSelectionsLinkJSONObject(),
-			getToolbarsStylesSelectionsImageJSONObject(),
+			_getToolbarsStylesSelectionsImageJSONObject(),
 			getToolbarsStylesSelectionsTextJSONObject(locale),
 			getToolbarsStylesSelectionsTableJSONObject());
 	}
@@ -239,6 +214,31 @@ public class AlloyEditorConfigContributor
 			"name", "text"
 		).put(
 			"test", "AlloyEditor.SelectionTest.text"
+		);
+	}
+
+	private JSONObject _getToolbarsStylesSelectionsEmbedURLJSONObject() {
+		return JSONUtil.put(
+			"buttons", toJSONArray("['imageLeft', 'imageCenter', 'imageRight']")
+		).put(
+			"name", "embedurl"
+		).put(
+			"test", "AlloyEditor.SelectionTest.embedUrl"
+		);
+	}
+
+	private JSONObject _getToolbarsStylesSelectionsImageJSONObject() {
+		return JSONUtil.put(
+			"buttons",
+			toJSONArray(
+				"['imageLeft', 'imageCenter', 'imageRight', 'linkBrowse', " +
+					"'imageAlt']")
+		).put(
+			"name", "image"
+		).put(
+			"setPosition", "AlloyEditor.SelectionSetPosition.image"
+		).put(
+			"test", "AlloyEditor.SelectionTest.image"
 		);
 	}
 

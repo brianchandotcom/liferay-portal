@@ -119,7 +119,7 @@ public class EditPublishConfigurationMVCActionCommand
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
 				setLayoutIdMap(actionRequest);
 
-				updatePublishConfiguration(actionRequest);
+				_updatePublishConfiguration(actionRequest);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
 				deleteExportImportConfiguration(actionRequest, false);
@@ -128,7 +128,7 @@ public class EditPublishConfigurationMVCActionCommand
 				deleteExportImportConfiguration(actionRequest, true);
 			}
 			else if (cmd.equals(Constants.PUBLISH_TO_LIVE)) {
-				setBackgroundTaskName(
+				_setBackgroundTaskName(
 					actionRequest, exportImportConfigurationId);
 
 				setRedirect(
@@ -137,7 +137,7 @@ public class EditPublishConfigurationMVCActionCommand
 						themeDisplay.getUserId(), exportImportConfigurationId));
 			}
 			else if (cmd.equals(Constants.PUBLISH_TO_REMOTE)) {
-				setBackgroundTaskName(
+				_setBackgroundTaskName(
 					actionRequest, exportImportConfigurationId);
 
 				setRedirect(
@@ -145,7 +145,7 @@ public class EditPublishConfigurationMVCActionCommand
 					StagingUtil.copyRemoteLayouts(exportImportConfigurationId));
 			}
 			else if (cmd.equals(Constants.RELAUNCH)) {
-				relaunchPublishLayoutConfiguration(
+				_relaunchPublishLayoutConfiguration(
 					themeDisplay.getUserId(), actionRequest);
 			}
 			else if (Validator.isNull(cmd)) {
@@ -161,7 +161,22 @@ public class EditPublishConfigurationMVCActionCommand
 		}
 	}
 
-	protected void relaunchPublishLayoutConfiguration(
+	protected void setRedirect(
+		ActionRequest actionRequest, ActionResponse actionResponse,
+		long backgroundTaskId) {
+
+		actionRequest.setAttribute(
+			WebKeys.REDIRECT,
+			PortletURLBuilder.createRenderURL(
+				portal.getLiferayPortletResponse(actionResponse)
+			).setMVCPath(
+				"/view_export_import.jsp"
+			).setParameter(
+				"backgroundTaskId", backgroundTaskId
+			).buildString());
+	}
+
+	private void _relaunchPublishLayoutConfiguration(
 			long userId, ActionRequest actionRequest)
 		throws PortalException {
 
@@ -190,7 +205,7 @@ public class EditPublishConfigurationMVCActionCommand
 		}
 	}
 
-	protected void setBackgroundTaskName(
+	private void _setBackgroundTaskName(
 			ActionRequest actionRequest, long exportImportConfigurationId)
 		throws PortalException {
 
@@ -219,22 +234,7 @@ public class EditPublishConfigurationMVCActionCommand
 			exportImportConfiguration);
 	}
 
-	protected void setRedirect(
-		ActionRequest actionRequest, ActionResponse actionResponse,
-		long backgroundTaskId) {
-
-		actionRequest.setAttribute(
-			WebKeys.REDIRECT,
-			PortletURLBuilder.createRenderURL(
-				portal.getLiferayPortletResponse(actionResponse)
-			).setMVCPath(
-				"/view_export_import.jsp"
-			).setParameter(
-				"backgroundTaskId", backgroundTaskId
-			).buildString());
-	}
-
-	protected ExportImportConfiguration updatePublishConfiguration(
+	private ExportImportConfiguration _updatePublishConfiguration(
 			ActionRequest actionRequest)
 		throws Exception {
 

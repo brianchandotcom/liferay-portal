@@ -67,7 +67,7 @@ public class CKEditorBBCodeConfigContributor
 			HtmlUtil.escape(themeDisplay.getPathThemeImages()) +
 				"/message_boards/"
 		).put(
-			"lang", getLangJSONObject(inputEditorTaglibAttributes)
+			"lang", _getLangJSONObject(inputEditorTaglibAttributes)
 		).put(
 			"newThreadURL", MBThreadConstants.NEW_THREAD_URL
 		).put(
@@ -90,7 +90,7 @@ public class CKEditorBBCodeConfigContributor
 		);
 	}
 
-	protected JSONObject getLangJSONObject(
+	private JSONObject _getLangJSONObject(
 		Map<String, Object> inputEditorTaglibAttributes) {
 
 		return JSONUtil.put(

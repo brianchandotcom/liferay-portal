@@ -184,7 +184,7 @@ public class FolderStagedModelDataHandler
 				PortletDataContext.REFERENCE_TYPE_PARENT);
 		}
 
-		exportFolderFileEntryTypes(portletDataContext, folderElement, folder);
+		_exportFolderFileEntryTypes(portletDataContext, folderElement, folder);
 
 		portletDataContext.addClassedModel(
 			folderElement, folderPath, folder, DLFolder.class);
@@ -299,7 +299,7 @@ public class FolderStagedModelDataHandler
 			}
 		}
 
-		importFolderFileEntryTypes(
+		_importFolderFileEntryTypes(
 			portletDataContext, folderElement, folder, importedFolder,
 			serviceContext);
 
@@ -343,7 +343,52 @@ public class FolderStagedModelDataHandler
 		}
 	}
 
-	protected void exportFolderFileEntryTypes(
+	@Override
+	protected void validateExport(
+			PortletDataContext portletDataContext, Folder folder)
+		throws PortletDataException {
+
+		if ((folder.getGroupId() != portletDataContext.getGroupId()) &&
+			(folder.getGroupId() != portletDataContext.getScopeGroupId()) &&
+			!ExportImportGroupedModelUtil.
+				isReferenceInLayoutGroupWithinExportScope(
+					portletDataContext, folder)) {
+
+			PortletDataException portletDataException =
+				new PortletDataException(PortletDataException.INVALID_GROUP);
+
+			portletDataException.setStagedModelDisplayName(folder.getName());
+			portletDataException.setStagedModelClassName(
+				folder.getModelClassName());
+			portletDataException.setStagedModelClassPK(
+				GetterUtil.getString(folder.getFolderId()));
+
+			throw portletDataException;
+		}
+
+		if (folder instanceof LiferayFolder) {
+			LiferayFolder liferayFolder = (LiferayFolder)folder;
+
+			DLFolder dlFolder = (DLFolder)liferayFolder.getModel();
+
+			if (dlFolder.isInTrash() || dlFolder.isInTrashContainer()) {
+				PortletDataException portletDataException =
+					new PortletDataException(
+						PortletDataException.STATUS_IN_TRASH);
+
+				portletDataException.setStagedModelDisplayName(
+					folder.getName());
+				portletDataException.setStagedModelClassName(
+					folder.getModelClassName());
+				portletDataException.setStagedModelClassPK(
+					GetterUtil.getString(folder.getFolderId()));
+
+				throw portletDataException;
+			}
+		}
+	}
+
+	private void _exportFolderFileEntryTypes(
 			PortletDataContext portletDataContext, Element folderElement,
 			Folder folder)
 		throws Exception {
@@ -393,7 +438,7 @@ public class FolderStagedModelDataHandler
 			"defaultFileEntryTypeUuid", defaultFileEntryTypeUuid);
 	}
 
-	protected void importFolderFileEntryTypes(
+	private void _importFolderFileEntryTypes(
 			PortletDataContext portletDataContext, Element folderElement,
 			Folder folder, Folder importedFolder, ServiceContext serviceContext)
 		throws PortalException {
@@ -465,51 +510,6 @@ public class FolderStagedModelDataHandler
 			_dlFileEntryTypeLocalService.updateFolderFileEntryTypes(
 				dlFolder, currentFolderFileEntryTypeIds, defaultFileEntryTypeId,
 				serviceContext);
-		}
-	}
-
-	@Override
-	protected void validateExport(
-			PortletDataContext portletDataContext, Folder folder)
-		throws PortletDataException {
-
-		if ((folder.getGroupId() != portletDataContext.getGroupId()) &&
-			(folder.getGroupId() != portletDataContext.getScopeGroupId()) &&
-			!ExportImportGroupedModelUtil.
-				isReferenceInLayoutGroupWithinExportScope(
-					portletDataContext, folder)) {
-
-			PortletDataException portletDataException =
-				new PortletDataException(PortletDataException.INVALID_GROUP);
-
-			portletDataException.setStagedModelDisplayName(folder.getName());
-			portletDataException.setStagedModelClassName(
-				folder.getModelClassName());
-			portletDataException.setStagedModelClassPK(
-				GetterUtil.getString(folder.getFolderId()));
-
-			throw portletDataException;
-		}
-
-		if (folder instanceof LiferayFolder) {
-			LiferayFolder liferayFolder = (LiferayFolder)folder;
-
-			DLFolder dlFolder = (DLFolder)liferayFolder.getModel();
-
-			if (dlFolder.isInTrash() || dlFolder.isInTrashContainer()) {
-				PortletDataException portletDataException =
-					new PortletDataException(
-						PortletDataException.STATUS_IN_TRASH);
-
-				portletDataException.setStagedModelDisplayName(
-					folder.getName());
-				portletDataException.setStagedModelClassName(
-					folder.getModelClassName());
-				portletDataException.setStagedModelClassPK(
-					GetterUtil.getString(folder.getFolderId()));
-
-				throw portletDataException;
-			}
 		}
 	}
 

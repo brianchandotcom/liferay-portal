@@ -39,7 +39,12 @@ import org.osgi.service.component.annotations.Reference;
 @Deprecated
 public class SystemEventVerifyProcess extends VerifyProcess {
 
-	protected void deleteInvalidSystemEvents() throws PortalException {
+	@Override
+	protected void doVerify() throws Exception {
+		_deleteInvalidSystemEvents();
+	}
+
+	private void _deleteInvalidSystemEvents() throws PortalException {
 		ActionableDynamicQuery actionableDynamicQuery =
 			_groupLocalService.getActionableDynamicQuery();
 
@@ -69,11 +74,6 @@ public class SystemEventVerifyProcess extends VerifyProcess {
 			});
 
 		actionableDynamicQuery.performActions();
-	}
-
-	@Override
-	protected void doVerify() throws Exception {
-		deleteInvalidSystemEvents();
 	}
 
 	@Reference

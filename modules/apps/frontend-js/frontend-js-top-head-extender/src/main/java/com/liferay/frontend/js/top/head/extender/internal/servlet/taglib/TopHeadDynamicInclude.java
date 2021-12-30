@@ -166,12 +166,6 @@ public class TopHeadDynamicInclude implements DynamicInclude {
 		_rebuild();
 	}
 
-	protected void updatedTopHeadResources(
-		ServiceReference<TopHeadResources> topHeadResourcesServiceReference) {
-
-		_rebuild();
-	}
-
 	private void _addPortalBundles(List<String> urls, String propsKey) {
 		String[] fileNames = JavaScriptBundleUtil.getFileNames(propsKey);
 
@@ -313,6 +307,12 @@ public class TopHeadDynamicInclude implements DynamicInclude {
 		printWriter.print("<script data-senna-track=\"permanent\" src=\"");
 		printWriter.print(url);
 		printWriter.println("\" type=\"text/javascript\"></script>");
+	}
+
+	private void _updatedTopHeadResources(
+		ServiceReference<TopHeadResources> topHeadResourcesServiceReference) {
+
+		_rebuild();
 	}
 
 	@Reference

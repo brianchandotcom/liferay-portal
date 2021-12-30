@@ -63,11 +63,11 @@ public class DDMFormRendererHelper {
 
 	public String getDDMFormHTML() throws PortletException {
 		try {
-			DDMForm ddmForm = getDDMForm();
+			DDMForm ddmForm = _getDDMForm();
 
 			return _ddmFormRenderer.render(
-				ddmForm, getDDMFormLayout(ddmForm),
-				createDDMFormRenderingContext(ddmForm));
+				ddmForm, _getDDMFormLayout(ddmForm),
+				_createDDMFormRenderingContext(ddmForm));
 		}
 		catch (DDMFormRenderingException ddmFormRenderingException) {
 			_log.error("Unable to render DDM Form ", ddmFormRenderingException);
@@ -76,18 +76,18 @@ public class DDMFormRendererHelper {
 		}
 	}
 
-	protected DDMFormRenderingContext createDDMFormRenderingContext(
+	private DDMFormRenderingContext _createDDMFormRenderingContext(
 		DDMForm ddmForm) {
 
 		DDMFormRenderingContext ddmFormRenderingContext =
 			new DDMFormRenderingContext();
 
-		ddmFormRenderingContext.setDDMFormValues(getDDMFormValues(ddmForm));
+		ddmFormRenderingContext.setDDMFormValues(_getDDMFormValues(ddmForm));
 		ddmFormRenderingContext.setHttpServletRequest(
 			PortalUtil.getHttpServletRequest(_portletRequest));
 		ddmFormRenderingContext.setHttpServletResponse(
 			PortalUtil.getHttpServletResponse(_portletResponse));
-		ddmFormRenderingContext.setLocale(getLocale());
+		ddmFormRenderingContext.setLocale(_getLocale());
 		ddmFormRenderingContext.setPortletNamespace(
 			_portletResponse.getNamespace());
 		ddmFormRenderingContext.setShowSubmitButton(false);
@@ -95,12 +95,12 @@ public class DDMFormRendererHelper {
 		return ddmFormRenderingContext;
 	}
 
-	protected DDMForm getDDMForm() {
+	private DDMForm _getDDMForm() {
 		ResourceBundleLoader resourceBundleLoader =
 			_resourceBundleLoaderProvider.getResourceBundleLoader(
 				_configurationModel.getBundleSymbolicName());
 
-		Locale locale = getLocale();
+		Locale locale = _getLocale();
 
 		ResourceBundle resourceBundle = resourceBundleLoader.loadResourceBundle(
 			locale);
@@ -113,7 +113,7 @@ public class DDMFormRendererHelper {
 		return configurationModelToDDMFormConverter.getDDMForm();
 	}
 
-	protected DDMFormLayout getDDMFormLayout(DDMForm ddmForm) {
+	private DDMFormLayout _getDDMFormLayout(DDMForm ddmForm) {
 		Class<?> formClass =
 			ConfigurationDDMFormDeclarationUtil.getConfigurationDDMFormClass(
 				_configurationModel);
@@ -133,17 +133,17 @@ public class DDMFormRendererHelper {
 		return DDMUtil.getDefaultDDMFormLayout(ddmForm);
 	}
 
-	protected DDMFormValues getDDMFormValues(DDMForm ddmForm) {
+	private DDMFormValues _getDDMFormValues(DDMForm ddmForm) {
 		ConfigurationModelToDDMFormValuesConverter
 			configurationModelToDDMFormValuesConverter =
 				new ConfigurationModelToDDMFormValuesConverter(
-					_configurationModel, ddmForm, getLocale(),
+					_configurationModel, ddmForm, _getLocale(),
 					_locationVariableResolver);
 
 		return configurationModelToDDMFormValuesConverter.getDDMFormValues();
 	}
 
-	protected Locale getLocale() {
+	private Locale _getLocale() {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 

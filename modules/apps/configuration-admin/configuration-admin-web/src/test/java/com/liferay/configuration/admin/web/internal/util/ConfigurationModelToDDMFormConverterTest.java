@@ -85,7 +85,7 @@ public class ConfigurationModelToDDMFormConverterTest extends Mockito {
 			ExtendedObjectClassDefinition.REQUIRED);
 		whenGetCardinality(extendedAttributeDefinition, 0);
 		whenGetID(extendedAttributeDefinition, "Boolean");
-		whenGetType(
+		_whenGetType(
 			extendedAttributeDefinition, ExtendedAttributeDefinition.BOOLEAN);
 
 		ConfigurationModel configurationModel = new ConfigurationModel(
@@ -96,7 +96,8 @@ public class ConfigurationModelToDDMFormConverterTest extends Mockito {
 				new ConfigurationModelToDDMFormConverter(
 					configurationModel, _enLocale, new EmptyResourceBundle()));
 
-		whenGetConfigurationDDMForm(configurationModelToDDMFormConverter, null);
+		_whenGetConfigurationDDMForm(
+			configurationModelToDDMFormConverter, null);
 
 		DDMForm ddmForm = configurationModelToDDMFormConverter.getDDMForm();
 
@@ -138,7 +139,7 @@ public class ConfigurationModelToDDMFormConverterTest extends Mockito {
 			ExtendedObjectClassDefinition.REQUIRED);
 		whenGetCardinality(extendedAttributeDefinition, 0);
 		whenGetID(extendedAttributeDefinition, "Integer");
-		whenGetType(
+		_whenGetType(
 			extendedAttributeDefinition, ExtendedAttributeDefinition.INTEGER);
 
 		ConfigurationModel configurationModel = new ConfigurationModel(
@@ -149,7 +150,8 @@ public class ConfigurationModelToDDMFormConverterTest extends Mockito {
 				new ConfigurationModelToDDMFormConverter(
 					configurationModel, _enLocale, new EmptyResourceBundle()));
 
-		whenGetConfigurationDDMForm(configurationModelToDDMFormConverter, null);
+		_whenGetConfigurationDDMForm(
+			configurationModelToDDMFormConverter, null);
 
 		DDMForm ddmForm = configurationModelToDDMFormConverter.getDDMForm();
 
@@ -192,8 +194,8 @@ public class ConfigurationModelToDDMFormConverterTest extends Mockito {
 			ExtendedObjectClassDefinition.REQUIRED);
 		whenGetCardinality(extendedAttributeDefinition, 0);
 		whenGetID(extendedAttributeDefinition, "LocalizableText");
-		whenGetRequiredInput(extendedAttributeDefinition, true);
-		whenGetType(
+		_whenGetRequiredInput(extendedAttributeDefinition, true);
+		_whenGetType(
 			extendedAttributeDefinition,
 			ExtendedAttributeDefinition.LOCALIZED_VALUES_MAP);
 
@@ -205,7 +207,8 @@ public class ConfigurationModelToDDMFormConverterTest extends Mockito {
 				new ConfigurationModelToDDMFormConverter(
 					configurationModel, _enLocale, new EmptyResourceBundle()));
 
-		whenGetConfigurationDDMForm(configurationModelToDDMFormConverter, null);
+		_whenGetConfigurationDDMForm(
+			configurationModelToDDMFormConverter, null);
 
 		DDMForm ddmForm = configurationModelToDDMFormConverter.getDDMForm();
 
@@ -244,7 +247,7 @@ public class ConfigurationModelToDDMFormConverterTest extends Mockito {
 			ExtendedObjectClassDefinition.REQUIRED);
 		whenGetCardinality(extendedAttributeDefinition, 0);
 		whenGetID(extendedAttributeDefinition, "Long");
-		whenGetType(
+		_whenGetType(
 			extendedAttributeDefinition, ExtendedAttributeDefinition.LONG);
 
 		ConfigurationModel configurationModel = new ConfigurationModel(
@@ -255,7 +258,8 @@ public class ConfigurationModelToDDMFormConverterTest extends Mockito {
 				new ConfigurationModelToDDMFormConverter(
 					configurationModel, _enLocale, new EmptyResourceBundle()));
 
-		whenGetConfigurationDDMForm(configurationModelToDDMFormConverter, null);
+		_whenGetConfigurationDDMForm(
+			configurationModelToDDMFormConverter, null);
 
 		DDMForm ddmForm = configurationModelToDDMFormConverter.getDDMForm();
 
@@ -298,7 +302,7 @@ public class ConfigurationModelToDDMFormConverterTest extends Mockito {
 			ExtendedObjectClassDefinition.REQUIRED);
 		whenGetCardinality(extendedAttributeDefinition, 0);
 		whenGetID(extendedAttributeDefinition, "Password");
-		whenGetType(
+		_whenGetType(
 			extendedAttributeDefinition, ExtendedAttributeDefinition.PASSWORD);
 
 		ConfigurationModel configurationModel = new ConfigurationModel(
@@ -309,7 +313,8 @@ public class ConfigurationModelToDDMFormConverterTest extends Mockito {
 				new ConfigurationModelToDDMFormConverter(
 					configurationModel, _enLocale, new EmptyResourceBundle()));
 
-		whenGetConfigurationDDMForm(configurationModelToDDMFormConverter, null);
+		_whenGetConfigurationDDMForm(
+			configurationModelToDDMFormConverter, null);
 
 		DDMForm ddmForm = configurationModelToDDMFormConverter.getDDMForm();
 
@@ -347,7 +352,7 @@ public class ConfigurationModelToDDMFormConverterTest extends Mockito {
 			ExtendedObjectClassDefinition.REQUIRED);
 		whenGetCardinality(extendedAttributeDefinition, 0);
 		whenGetID(extendedAttributeDefinition, "Select");
-		whenGetType(
+		_whenGetType(
 			extendedAttributeDefinition, ExtendedAttributeDefinition.STRING);
 		whenGetOptionLabels(
 			extendedAttributeDefinition, new String[] {"Label 1", "Label 2"});
@@ -362,7 +367,8 @@ public class ConfigurationModelToDDMFormConverterTest extends Mockito {
 				new ConfigurationModelToDDMFormConverter(
 					configurationModel, _enLocale, new EmptyResourceBundle()));
 
-		whenGetConfigurationDDMForm(configurationModelToDDMFormConverter, null);
+		_whenGetConfigurationDDMForm(
+			configurationModelToDDMFormConverter, null);
 
 		DDMForm ddmForm = configurationModelToDDMFormConverter.getDDMForm();
 
@@ -424,7 +430,7 @@ public class ConfigurationModelToDDMFormConverterTest extends Mockito {
 			ExtendedObjectClassDefinition.REQUIRED);
 		whenGetCardinality(extendedAttributeDefinition, 0);
 		whenGetID(extendedAttributeDefinition, "Text");
-		whenGetType(
+		_whenGetType(
 			extendedAttributeDefinition, ExtendedAttributeDefinition.STRING);
 
 		ConfigurationModel configurationModel = new ConfigurationModel(
@@ -435,7 +441,8 @@ public class ConfigurationModelToDDMFormConverterTest extends Mockito {
 				new ConfigurationModelToDDMFormConverter(
 					configurationModel, _enLocale, new EmptyResourceBundle()));
 
-		whenGetConfigurationDDMForm(configurationModelToDDMFormConverter, null);
+		_whenGetConfigurationDDMForm(
+			configurationModelToDDMFormConverter, null);
 
 		DDMForm ddmForm = configurationModelToDDMFormConverter.getDDMForm();
 
@@ -473,8 +480,8 @@ public class ConfigurationModelToDDMFormConverterTest extends Mockito {
 			ExtendedObjectClassDefinition.REQUIRED);
 		whenGetCardinality(extendedAttributeDefinition, 0);
 		whenGetID(extendedAttributeDefinition, "Text");
-		whenGetRequiredInput(extendedAttributeDefinition, true);
-		whenGetType(
+		_whenGetRequiredInput(extendedAttributeDefinition, true);
+		_whenGetType(
 			extendedAttributeDefinition, ExtendedAttributeDefinition.STRING);
 
 		ConfigurationModel configurationModel = new ConfigurationModel(
@@ -485,7 +492,8 @@ public class ConfigurationModelToDDMFormConverterTest extends Mockito {
 				new ConfigurationModelToDDMFormConverter(
 					configurationModel, _enLocale, new EmptyResourceBundle()));
 
-		whenGetConfigurationDDMForm(configurationModelToDDMFormConverter, null);
+		_whenGetConfigurationDDMForm(
+			configurationModelToDDMFormConverter, null);
 
 		DDMForm ddmForm = configurationModelToDDMFormConverter.getDDMForm();
 
@@ -525,18 +533,6 @@ public class ConfigurationModelToDDMFormConverterTest extends Mockito {
 		);
 	}
 
-	protected void whenGetConfigurationDDMForm(
-		ConfigurationModelToDDMFormConverter
-			configurationModelToDDMFormConverter,
-		DDMForm ddmForm) {
-
-		Mockito.doReturn(
-			ddmForm
-		).when(
-			configurationModelToDDMFormConverter
-		).getConfigurationDDMForm();
-	}
-
 	protected void whenGetID(
 		ExtendedAttributeDefinition extendedAttributeDefinition, String id) {
 
@@ -569,7 +565,19 @@ public class ConfigurationModelToDDMFormConverterTest extends Mockito {
 		);
 	}
 
-	protected void whenGetRequiredInput(
+	private void _whenGetConfigurationDDMForm(
+		ConfigurationModelToDDMFormConverter
+			configurationModelToDDMFormConverter,
+		DDMForm ddmForm) {
+
+		Mockito.doReturn(
+			ddmForm
+		).when(
+			configurationModelToDDMFormConverter
+		).getConfigurationDDMForm();
+	}
+
+	private void _whenGetRequiredInput(
 		ExtendedAttributeDefinition extendedAttributeDefinition,
 		boolean requiredInput) {
 
@@ -582,7 +590,7 @@ public class ConfigurationModelToDDMFormConverterTest extends Mockito {
 		);
 	}
 
-	protected void whenGetType(
+	private void _whenGetType(
 		ExtendedAttributeDefinition extendedAttributeDefinition, int type) {
 
 		when(

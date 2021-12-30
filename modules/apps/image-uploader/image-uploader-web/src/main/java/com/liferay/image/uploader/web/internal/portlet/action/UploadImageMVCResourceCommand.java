@@ -62,7 +62,7 @@ public class UploadImageMVCResourceCommand extends BaseMVCResourceCommand {
 				FileEntry tempFileEntry = UploadImageUtil.getTempImageFileEntry(
 					resourceRequest);
 
-				serveTempImageFile(
+				_serveTempImageFile(
 					resourceResponse, tempFileEntry.getContentStream());
 			}
 		}
@@ -79,7 +79,7 @@ public class UploadImageMVCResourceCommand extends BaseMVCResourceCommand {
 		}
 	}
 
-	protected void serveTempImageFile(
+	private void _serveTempImageFile(
 			MimeResponse mimeResponse, InputStream tempImageInputStream)
 		throws Exception {
 

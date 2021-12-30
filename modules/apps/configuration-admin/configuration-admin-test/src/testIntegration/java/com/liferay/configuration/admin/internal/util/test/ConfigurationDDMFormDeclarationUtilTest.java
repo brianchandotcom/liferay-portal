@@ -58,7 +58,7 @@ public class ConfigurationDDMFormDeclarationUtilTest {
 		ConfigurationDDMFormDeclaration configurationDDMFormDeclaration =
 			() -> TestConfigurationForm.class;
 
-		_serviceRegistration = registerConfigurationDDMFormDeclaration(
+		_serviceRegistration = _registerConfigurationDDMFormDeclaration(
 			configurationDDMFormDeclaration, _configuration.getPid());
 
 		Bundle bundle = null;
@@ -101,8 +101,8 @@ public class ConfigurationDDMFormDeclarationUtilTest {
 			_method.invoke(null, _configuration.getPid()));
 	}
 
-	protected ServiceRegistration<ConfigurationDDMFormDeclaration>
-		registerConfigurationDDMFormDeclaration(
+	private ServiceRegistration<ConfigurationDDMFormDeclaration>
+		_registerConfigurationDDMFormDeclaration(
 			ConfigurationDDMFormDeclaration configurationDDMFormDeclaration,
 			String configurationPid) {
 

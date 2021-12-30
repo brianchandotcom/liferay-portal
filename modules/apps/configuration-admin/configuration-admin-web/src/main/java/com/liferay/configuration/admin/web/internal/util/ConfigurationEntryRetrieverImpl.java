@@ -142,7 +142,7 @@ public class ConfigurationEntryRetrieverImpl
 		ExtendedObjectClassDefinition.Scope scope, Serializable scopePK) {
 
 		Set<ConfigurationEntry> configurationEntries = new TreeSet<>(
-			getConfigurationEntryComparator());
+			_getConfigurationEntryComparator());
 
 		Locale locale = LocaleUtil.fromLanguageId(languageId);
 
@@ -239,7 +239,7 @@ public class ConfigurationEntryRetrieverImpl
 				configurationCategoryServiceRegistration.unregister());
 	}
 
-	protected Comparator<ConfigurationEntry> getConfigurationEntryComparator() {
+	private Comparator<ConfigurationEntry> _getConfigurationEntryComparator() {
 		return new ConfigurationEntryComparator();
 	}
 

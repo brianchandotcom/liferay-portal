@@ -38,28 +38,13 @@ public class DLFileEntryModelVisibilityContributor
 
 	@Override
 	public boolean isVisible(long classPK, int status) {
-		FileVersion fileVersion = getFileVersion(classPK);
+		FileVersion fileVersion = _getFileVersion(classPK);
 
 		if (fileVersion == null) {
 			return false;
 		}
 
 		return isVisible(fileVersion.getStatus(), status);
-	}
-
-	protected FileVersion getFileVersion(long classPK) {
-		try {
-			FileEntry fileEntry = dlAppLocalService.getFileEntry(classPK);
-
-			return fileEntry.getFileVersion();
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException, portalException);
-			}
-
-			return null;
-		}
 	}
 
 	protected boolean isVisible(int entryStatus, int queryStatus) {
@@ -75,6 +60,21 @@ public class DLFileEntryModelVisibilityContributor
 
 	@Reference
 	protected DLAppLocalService dlAppLocalService;
+
+	private FileVersion _getFileVersion(long classPK) {
+		try {
+			FileEntry fileEntry = dlAppLocalService.getFileEntry(classPK);
+
+			return fileEntry.getFileVersion();
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException, portalException);
+			}
+
+			return null;
+		}
+	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLFileEntryModelVisibilityContributor.class);

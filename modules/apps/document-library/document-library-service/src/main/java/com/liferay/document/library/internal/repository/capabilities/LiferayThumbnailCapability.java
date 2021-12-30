@@ -86,7 +86,7 @@ public class LiferayThumbnailCapability implements ThumbnailCapability {
 
 		dlFileEntry.setCustom1ImageId(imageId);
 
-		return updateDLFileEntry(dlFileEntry);
+		return _updateDLFileEntry(dlFileEntry);
 	}
 
 	@Override
@@ -97,7 +97,7 @@ public class LiferayThumbnailCapability implements ThumbnailCapability {
 
 		dlFileEntry.setCustom2ImageId(imageId);
 
-		return updateDLFileEntry(dlFileEntry);
+		return _updateDLFileEntry(dlFileEntry);
 	}
 
 	@Override
@@ -108,7 +108,7 @@ public class LiferayThumbnailCapability implements ThumbnailCapability {
 
 		dlFileEntry.setLargeImageId(imageId);
 
-		return updateDLFileEntry(dlFileEntry);
+		return _updateDLFileEntry(dlFileEntry);
 	}
 
 	@Override
@@ -119,7 +119,7 @@ public class LiferayThumbnailCapability implements ThumbnailCapability {
 
 		dlFileEntry.setSmallImageId(imageId);
 
-		return updateDLFileEntry(dlFileEntry);
+		return _updateDLFileEntry(dlFileEntry);
 	}
 
 	protected DLFileEntry getDLFileEntry(FileEntry fileEntry) {
@@ -139,7 +139,7 @@ public class LiferayThumbnailCapability implements ThumbnailCapability {
 		return dlFileEntry;
 	}
 
-	protected FileEntry updateDLFileEntry(DLFileEntry dlFileEntry) {
+	private FileEntry _updateDLFileEntry(DLFileEntry dlFileEntry) {
 		return new LiferayFileEntry(
 			DLFileEntryLocalServiceUtil.updateDLFileEntry(dlFileEntry));
 	}

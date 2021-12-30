@@ -65,7 +65,7 @@ public class ImageDLPreviewRendererProvider
 		}
 
 		return (request, response) -> {
-			checkForPreviewGenerationExceptions(fileVersion);
+			_checkForPreviewGenerationExceptions(fileVersion);
 
 			RequestDispatcher requestDispatcher =
 				_servletContext.getRequestDispatcher("/preview/view.jsp");
@@ -84,7 +84,7 @@ public class ImageDLPreviewRendererProvider
 		return null;
 	}
 
-	protected void checkForPreviewGenerationExceptions(FileVersion fileVersion)
+	private void _checkForPreviewGenerationExceptions(FileVersion fileVersion)
 		throws PortalException {
 
 		if (_dlFileVersionPreviewLocalService.hasDLFileVersionPreview(

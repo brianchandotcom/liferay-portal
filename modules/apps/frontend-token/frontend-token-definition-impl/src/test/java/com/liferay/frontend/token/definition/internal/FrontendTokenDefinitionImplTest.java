@@ -87,27 +87,27 @@ public class FrontendTokenDefinitionImplTest {
 
 		FrontendToken frontendToken = frontendTokenIterator.next();
 
-		assertCollectionEquals(
+		_assertCollectionEquals(
 			frontendTokenDefinition.getFrontendTokenSets(),
 			frontendTokenCategory.getFrontendTokenSets());
 
-		assertCollectionEquals(
+		_assertCollectionEquals(
 			frontendTokenDefinition.getFrontendTokens(),
 			frontendTokenCategory.getFrontendTokens());
 
-		assertCollectionEquals(
+		_assertCollectionEquals(
 			frontendTokenDefinition.getFrontendTokens(),
 			frontendTokenSet.getFrontendTokens());
 
-		assertCollectionEquals(
+		_assertCollectionEquals(
 			frontendTokenDefinition.getFrontendTokenMappings(),
 			frontendTokenCategory.getFrontendTokenMappings());
 
-		assertCollectionEquals(
+		_assertCollectionEquals(
 			frontendTokenDefinition.getFrontendTokenMappings(),
 			frontendTokenSet.getFrontendTokenMappings());
 
-		assertCollectionEquals(
+		_assertCollectionEquals(
 			frontendTokenDefinition.getFrontendTokenMappings(),
 			frontendToken.getFrontendTokenMappings());
 	}
@@ -262,7 +262,7 @@ public class FrontendTokenDefinitionImplTest {
 			frontendTokenDefinitionImpl.getJSON(LocaleUtil.ENGLISH));
 	}
 
-	protected void assertCollectionEquals(
+	private void _assertCollectionEquals(
 		Collection<?> expected, Collection<?> actual) {
 
 		Assert.assertArrayEquals(expected.toArray(), actual.toArray());

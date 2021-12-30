@@ -86,61 +86,6 @@ public abstract class BaseStyledLayoutStructureItemMapper
 		return fragmentViewports.toArray(new FragmentViewport[0]);
 	}
 
-	protected Function<Object, String> getImageURLTransformerFunction() {
-		return object -> {
-			if (object instanceof JSONObject) {
-				JSONObject jsonObject = (JSONObject)object;
-
-				return jsonObject.getString("url");
-			}
-
-			if (object instanceof String) {
-				return (String)object;
-			}
-
-			return StringPool.BLANK;
-		};
-	}
-
-	protected FragmentImage toBackgroundFragmentImage(
-		JSONObject jsonObject, boolean saveMappingConfiguration) {
-
-		if (jsonObject == null) {
-			return null;
-		}
-
-		String urlValue = jsonObject.getString("url");
-
-		return new FragmentImage() {
-			{
-				title = toTitleFragmentInlineValue(jsonObject, urlValue);
-
-				setUrl(
-					() -> {
-						if (FragmentMappedValueUtil.isSaveFragmentMappedValue(
-								jsonObject, saveMappingConfiguration)) {
-
-							return toFragmentMappedValue(
-								toDefaultMappingValue(
-									jsonObject,
-									getImageURLTransformerFunction()),
-								jsonObject);
-						}
-
-						if (Validator.isNull(urlValue)) {
-							return null;
-						}
-
-						return new FragmentInlineValue() {
-							{
-								value = urlValue;
-							}
-						};
-					});
-			}
-		};
-	}
-
 	protected FragmentInlineValue toDefaultMappingValue(
 		JSONObject jsonObject, Function<Object, String> transformerFunction) {
 
@@ -292,7 +237,7 @@ public abstract class BaseStyledLayoutStructureItemMapper
 						JSONObject backgroundImageJSONObject =
 							(JSONObject)backgroundImage;
 
-						return toBackgroundFragmentImage(
+						return _toBackgroundFragmentImage(
 							backgroundImageJSONObject,
 							saveMappingConfiguration);
 					});
@@ -317,27 +262,66 @@ public abstract class BaseStyledLayoutStructureItemMapper
 		};
 	}
 
-	protected FragmentInlineValue toTitleFragmentInlineValue(
-		JSONObject jsonObject, String urlValue) {
-
-		String title = jsonObject.getString("title");
-
-		if (Validator.isNull(title) || title.equals(urlValue)) {
-			return null;
-		}
-
-		return new FragmentInlineValue() {
-			{
-				value = title;
-			}
-		};
-	}
-
 	@Reference
 	protected InfoItemServiceTracker infoItemServiceTracker;
 
 	@Reference
 	protected Portal portal;
+
+	private Function<Object, String> _getImageURLTransformerFunction() {
+		return object -> {
+			if (object instanceof JSONObject) {
+				JSONObject jsonObject = (JSONObject)object;
+
+				return jsonObject.getString("url");
+			}
+
+			if (object instanceof String) {
+				return (String)object;
+			}
+
+			return StringPool.BLANK;
+		};
+	}
+
+	private FragmentImage _toBackgroundFragmentImage(
+		JSONObject jsonObject, boolean saveMappingConfiguration) {
+
+		if (jsonObject == null) {
+			return null;
+		}
+
+		String urlValue = jsonObject.getString("url");
+
+		return new FragmentImage() {
+			{
+				title = _toTitleFragmentInlineValue(jsonObject, urlValue);
+
+				setUrl(
+					() -> {
+						if (FragmentMappedValueUtil.isSaveFragmentMappedValue(
+								jsonObject, saveMappingConfiguration)) {
+
+							return toFragmentMappedValue(
+								toDefaultMappingValue(
+									jsonObject,
+									_getImageURLTransformerFunction()),
+								jsonObject);
+						}
+
+						if (Validator.isNull(urlValue)) {
+							return null;
+						}
+
+						return new FragmentInlineValue() {
+							{
+								value = urlValue;
+							}
+						};
+					});
+			}
+		};
+	}
 
 	private FragmentViewport _toFragmentViewportStyle(
 		JSONObject jsonObject, ViewportSize viewportSize) {
@@ -404,6 +388,22 @@ public abstract class BaseStyledLayoutStructureItemMapper
 								});
 						}
 					});
+			}
+		};
+	}
+
+	private FragmentInlineValue _toTitleFragmentInlineValue(
+		JSONObject jsonObject, String urlValue) {
+
+		String title = jsonObject.getString("title");
+
+		if (Validator.isNull(title) || title.equals(urlValue)) {
+			return null;
+		}
+
+		return new FragmentInlineValue() {
+			{
+				value = title;
 			}
 		};
 	}

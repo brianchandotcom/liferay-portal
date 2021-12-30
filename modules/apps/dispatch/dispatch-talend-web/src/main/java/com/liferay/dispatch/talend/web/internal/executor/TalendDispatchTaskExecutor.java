@@ -67,7 +67,7 @@ public class TalendDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 			DispatchTaskExecutorOutput dispatchTaskExecutorOutput)
 		throws PortalException {
 
-		TalendArchive talendArchive = fetchTalendArchive(
+		TalendArchive talendArchive = _fetchTalendArchive(
 			dispatchTrigger.getDispatchTriggerId());
 
 		if (talendArchive == null) {
@@ -116,21 +116,6 @@ public class TalendDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 		return null;
 	}
 
-	protected TalendArchive fetchTalendArchive(long dispatchTriggerId)
-		throws PortalException {
-
-		FileEntry fileEntry = _dispatchFileRepository.fetchFileEntry(
-			dispatchTriggerId);
-
-		if (fileEntry == null) {
-			throw new DispatchRepositoryException(
-				"Unable to get file entry for dispatch trigger ID " +
-					dispatchTriggerId);
-		}
-
-		return TalendArchiveParserUtil.parse(fileEntry.getContentStream());
-	}
-
 	private void _checkTalendProcessOutput(
 			TalendProcessOutput talendProcessOutput,
 			DispatchTaskExecutorOutput dispatchTaskExecutorOutput)
@@ -144,6 +129,21 @@ public class TalendDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 				"Subprocess terminated with exit code " +
 					talendProcessOutput.getExitCode());
 		}
+	}
+
+	private TalendArchive _fetchTalendArchive(long dispatchTriggerId)
+		throws PortalException {
+
+		FileEntry fileEntry = _dispatchFileRepository.fetchFileEntry(
+			dispatchTriggerId);
+
+		if (fileEntry == null) {
+			throw new DispatchRepositoryException(
+				"Unable to get file entry for dispatch trigger ID " +
+					dispatchTriggerId);
+		}
+
+		return TalendArchiveParserUtil.parse(fileEntry.getContentStream());
 	}
 
 	private TalendProcess _getTalendProcess(

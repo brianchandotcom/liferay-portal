@@ -188,7 +188,7 @@ public class DLURLHelperImpl implements DLURLHelper {
 			}
 		}
 
-		return getImageSrc(
+		return _getImageSrc(
 			fileEntry, fileVersion, themeDisplay, previewQueryString,
 			appendVersion, absoluteURL);
 	}
@@ -298,7 +298,7 @@ public class DLURLHelperImpl implements DLURLHelper {
 			}
 		}
 
-		return getImageSrc(
+		return _getImageSrc(
 			fileEntry, fileVersion, themeDisplay, thumbnailQueryString);
 	}
 
@@ -423,29 +423,6 @@ public class DLURLHelperImpl implements DLURLHelper {
 		_dlFileVersionURLProviders.close();
 	}
 
-	protected String getImageSrc(
-		FileEntry fileEntry, FileVersion fileVersion, ThemeDisplay themeDisplay,
-		String queryString) {
-
-		return getImageSrc(
-			fileEntry, fileVersion, themeDisplay, queryString, true, true);
-	}
-
-	protected String getImageSrc(
-		FileEntry fileEntry, FileVersion fileVersion, ThemeDisplay themeDisplay,
-		String queryString, boolean appendVersion, boolean absoluteURL) {
-
-		String thumbnailSrc = StringPool.BLANK;
-
-		if (Validator.isNotNull(queryString)) {
-			thumbnailSrc = getPreviewURL(
-				fileEntry, fileVersion, themeDisplay, queryString,
-				appendVersion, absoluteURL);
-		}
-
-		return thumbnailSrc;
-	}
-
 	private String _getDLFileVersionURLProviderURL(
 		FileVersion fileVersion, ThemeDisplay themeDisplay,
 		DLFileVersionURLProvider.Type type) {
@@ -463,6 +440,29 @@ public class DLURLHelperImpl implements DLURLHelper {
 		}
 
 		return null;
+	}
+
+	private String _getImageSrc(
+		FileEntry fileEntry, FileVersion fileVersion, ThemeDisplay themeDisplay,
+		String queryString) {
+
+		return _getImageSrc(
+			fileEntry, fileVersion, themeDisplay, queryString, true, true);
+	}
+
+	private String _getImageSrc(
+		FileEntry fileEntry, FileVersion fileVersion, ThemeDisplay themeDisplay,
+		String queryString, boolean appendVersion, boolean absoluteURL) {
+
+		String thumbnailSrc = StringPool.BLANK;
+
+		if (Validator.isNotNull(queryString)) {
+			thumbnailSrc = getPreviewURL(
+				fileEntry, fileVersion, themeDisplay, queryString,
+				appendVersion, absoluteURL);
+		}
+
+		return thumbnailSrc;
 	}
 
 	@Reference

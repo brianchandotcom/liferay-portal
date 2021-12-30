@@ -89,17 +89,17 @@ public class CKEditorCreoleConfigContributor
 				"stylescombo,templates,video")
 		).put(
 			"toolbar_creole",
-			getToolbarsCreoleJSONArray(inputEditorTaglibAttributes)
+			_getToolbarsCreoleJSONArray(inputEditorTaglibAttributes)
 		).put(
 			"toolbar_phone",
-			getToolbarsPhoneJSONArray(inputEditorTaglibAttributes)
+			_getToolbarsPhoneJSONArray(inputEditorTaglibAttributes)
 		).put(
 			"toolbar_tablet",
-			getToolbarsTabletJSONArray(inputEditorTaglibAttributes)
+			_getToolbarsTabletJSONArray(inputEditorTaglibAttributes)
 		);
 	}
 
-	protected JSONArray getToolbarsCreoleJSONArray(
+	private JSONArray _getToolbarsCreoleJSONArray(
 		Map<String, Object> inputEditorTaglibAttributes) {
 
 		return JSONUtil.putAll(
@@ -120,7 +120,7 @@ public class CKEditorCreoleConfigContributor
 		);
 	}
 
-	protected JSONArray getToolbarsPhoneJSONArray(
+	private JSONArray _getToolbarsPhoneJSONArray(
 		Map<String, Object> inputEditorTaglibAttributes) {
 
 		return JSONUtil.putAll(
@@ -138,7 +138,7 @@ public class CKEditorCreoleConfigContributor
 		);
 	}
 
-	protected JSONArray getToolbarsTabletJSONArray(
+	private JSONArray _getToolbarsTabletJSONArray(
 		Map<String, Object> inputEditorTaglibAttributes) {
 
 		return JSONUtil.putAll(

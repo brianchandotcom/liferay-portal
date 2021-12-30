@@ -165,7 +165,7 @@ public class EditExportConfigurationMVCActionCommand
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
 				setLayoutIdMap(actionRequest);
 
-				updateExportConfiguration(actionRequest);
+				_updateExportConfiguration(actionRequest);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
 				deleteExportImportConfiguration(actionRequest, false);
@@ -174,10 +174,10 @@ public class EditExportConfigurationMVCActionCommand
 				deleteExportImportConfiguration(actionRequest, true);
 			}
 			else if (cmd.equals(Constants.RESTORE)) {
-				restoreTrashEntries(actionRequest);
+				_restoreTrashEntries(actionRequest);
 			}
 			else if (cmd.equals(Constants.RELAUNCH)) {
-				relaunchExportLayoutConfiguration(actionRequest);
+				_relaunchExportLayoutConfiguration(actionRequest);
 			}
 			else if (Validator.isNull(cmd)) {
 				addSessionMessages(actionRequest);
@@ -191,41 +191,6 @@ public class EditExportConfigurationMVCActionCommand
 			_log.error(exception, exception);
 
 			SessionErrors.add(actionRequest, exception.getClass());
-		}
-	}
-
-	protected void relaunchExportLayoutConfiguration(
-			ActionRequest actionRequest)
-		throws Exception {
-
-		long backgroundTaskId = ParamUtil.getLong(
-			actionRequest, BackgroundTaskConstants.BACKGROUND_TASK_ID);
-
-		BackgroundTask backgroundTask = backgroundTaskManager.getBackgroundTask(
-			backgroundTaskId);
-
-		ExportImportConfiguration exportImportConfiguration =
-			exportImportConfigurationLocalService.getExportImportConfiguration(
-				MapUtil.getLong(
-					backgroundTask.getTaskContextMap(),
-					"exportImportConfigurationId"));
-
-		exportImportConfiguration =
-			ExportImportConfigurationFactory.cloneExportImportConfiguration(
-				exportImportConfiguration);
-
-		_exportImportService.exportLayoutsAsFileInBackground(
-			exportImportConfiguration);
-	}
-
-	protected void restoreTrashEntries(ActionRequest actionRequest)
-		throws Exception {
-
-		long[] restoreTrashEntryIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "restoreTrashEntryIds"), 0L);
-
-		for (long restoreTrashEntryId : restoreTrashEntryIds) {
-			_trashEntryService.restoreEntry(restoreTrashEntryId);
 		}
 	}
 
@@ -276,22 +241,6 @@ public class EditExportConfigurationMVCActionCommand
 		_trashEntryService = trashEntryService;
 	}
 
-	protected ExportImportConfiguration updateExportConfiguration(
-			ActionRequest actionRequest)
-		throws Exception {
-
-		long exportImportConfigurationId = ParamUtil.getLong(
-			actionRequest, "exportImportConfigurationId");
-
-		if (exportImportConfigurationId > 0) {
-			return ExportImportConfigurationUtil.
-				updateExportLayoutExportImportConfiguration(actionRequest);
-		}
-
-		return ExportImportConfigurationUtil.
-			addExportLayoutExportImportConfiguration(actionRequest);
-	}
-
 	@Reference
 	protected BackgroundTaskManager backgroundTaskManager;
 
@@ -307,6 +256,56 @@ public class EditExportConfigurationMVCActionCommand
 
 	@Reference
 	protected Portal portal;
+
+	private void _relaunchExportLayoutConfiguration(ActionRequest actionRequest)
+		throws Exception {
+
+		long backgroundTaskId = ParamUtil.getLong(
+			actionRequest, BackgroundTaskConstants.BACKGROUND_TASK_ID);
+
+		BackgroundTask backgroundTask = backgroundTaskManager.getBackgroundTask(
+			backgroundTaskId);
+
+		ExportImportConfiguration exportImportConfiguration =
+			exportImportConfigurationLocalService.getExportImportConfiguration(
+				MapUtil.getLong(
+					backgroundTask.getTaskContextMap(),
+					"exportImportConfigurationId"));
+
+		exportImportConfiguration =
+			ExportImportConfigurationFactory.cloneExportImportConfiguration(
+				exportImportConfiguration);
+
+		_exportImportService.exportLayoutsAsFileInBackground(
+			exportImportConfiguration);
+	}
+
+	private void _restoreTrashEntries(ActionRequest actionRequest)
+		throws Exception {
+
+		long[] restoreTrashEntryIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "restoreTrashEntryIds"), 0L);
+
+		for (long restoreTrashEntryId : restoreTrashEntryIds) {
+			_trashEntryService.restoreEntry(restoreTrashEntryId);
+		}
+	}
+
+	private ExportImportConfiguration _updateExportConfiguration(
+			ActionRequest actionRequest)
+		throws Exception {
+
+		long exportImportConfigurationId = ParamUtil.getLong(
+			actionRequest, "exportImportConfigurationId");
+
+		if (exportImportConfigurationId > 0) {
+			return ExportImportConfigurationUtil.
+				updateExportLayoutExportImportConfiguration(actionRequest);
+		}
+
+		return ExportImportConfigurationUtil.
+			addExportLayoutExportImportConfiguration(actionRequest);
+	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		EditExportConfigurationMVCActionCommand.class);

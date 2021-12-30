@@ -73,7 +73,7 @@ public class DeletionSystemEventImporter {
 
 				@Override
 				public void processElement(Element element) {
-					doImportDeletionSystemEvents(portletDataContext, element);
+					_doImportDeletionSystemEvents(portletDataContext, element);
 				}
 
 			},
@@ -84,7 +84,10 @@ public class DeletionSystemEventImporter {
 		xmlReader.parse(new InputSource(new StringReader(xml)));
 	}
 
-	protected void doImportDeletionSystemEvents(
+	private DeletionSystemEventImporter() {
+	}
+
+	private void _doImportDeletionSystemEvents(
 		PortletDataContext portletDataContext, Element element) {
 
 		StagedModelType stagedModelType = new StagedModelType(
@@ -110,9 +113,6 @@ public class DeletionSystemEventImporter {
 					exception);
 			}
 		}
-	}
-
-	private DeletionSystemEventImporter() {
 	}
 
 	private boolean _shouldImportDeletionSystemEvent(

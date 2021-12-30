@@ -109,7 +109,7 @@ public class EntriesChecker extends EmptyOnClickRowChecker {
 			name = _SIMPLE_NAME_FOLDER;
 		}
 
-		String checkBoxRowIds = getEntryRowIds();
+		String checkBoxRowIds = _getEntryRowIds();
 		String checkBoxAllRowIds = "'#" + getAllRowIds() + "'";
 		String checkBoxPostOnClick =
 			_liferayPortletResponse.getNamespace() + "toggleActionsButton();";
@@ -141,7 +141,7 @@ public class EntriesChecker extends EmptyOnClickRowChecker {
 			return StringPool.BLANK;
 		}
 
-		String checkBoxRowIds = getEntryRowIds();
+		String checkBoxRowIds = _getEntryRowIds();
 		String checkBoxAllRowIds = "'#" + getAllRowIds() + "'";
 		String checkBoxPostOnClick =
 			_liferayPortletResponse.getNamespace() + "toggleActionsButton();";
@@ -153,7 +153,7 @@ public class EntriesChecker extends EmptyOnClickRowChecker {
 			checkBoxPostOnClick);
 	}
 
-	protected String getEntryRowIds() {
+	private String _getEntryRowIds() {
 		return StringBundler.concat(
 			"['", _liferayPortletResponse.getNamespace(), RowChecker.ROW_IDS,
 			_SIMPLE_NAME_FOLDER, "', '", _liferayPortletResponse.getNamespace(),

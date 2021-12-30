@@ -34,32 +34,32 @@ public class BackgroundTaskExecutorConfigurator {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		registerBackgroundTaskExecutor(
+		_registerBackgroundTaskExecutor(
 			bundleContext, new LayoutExportBackgroundTaskExecutor());
 
-		registerBackgroundTaskExecutor(
+		_registerBackgroundTaskExecutor(
 			bundleContext, new LayoutImportBackgroundTaskExecutor());
 
-		registerBackgroundTaskExecutor(
+		_registerBackgroundTaskExecutor(
 			bundleContext, new LayoutRemoteStagingBackgroundTaskExecutor());
 
-		registerBackgroundTaskExecutor(
+		_registerBackgroundTaskExecutor(
 			bundleContext,
 			new LayoutSetPrototypeImportBackgroundTaskExecutor());
 
-		registerBackgroundTaskExecutor(
+		_registerBackgroundTaskExecutor(
 			bundleContext, new LayoutStagingBackgroundTaskExecutor());
 
-		registerBackgroundTaskExecutor(
+		_registerBackgroundTaskExecutor(
 			bundleContext, new PortletExportBackgroundTaskExecutor());
 
-		registerBackgroundTaskExecutor(
+		_registerBackgroundTaskExecutor(
 			bundleContext, new PortletImportBackgroundTaskExecutor());
 
-		registerBackgroundTaskExecutor(
+		_registerBackgroundTaskExecutor(
 			bundleContext, new PortletRemoteStagingBackgroundTaskExecutor());
 
-		registerBackgroundTaskExecutor(
+		_registerBackgroundTaskExecutor(
 			bundleContext, new PortletStagingBackgroundTaskExecutor());
 	}
 
@@ -72,7 +72,7 @@ public class BackgroundTaskExecutorConfigurator {
 		}
 	}
 
-	protected void registerBackgroundTaskExecutor(
+	private void _registerBackgroundTaskExecutor(
 		BundleContext bundleContext,
 		BackgroundTaskExecutor backgroundTaskExecutor) {
 

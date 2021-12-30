@@ -126,15 +126,15 @@ public class JSBundleConfigTopHeadDynamicInclude extends BaseDynamicInclude {
 			"/html/common/themes/top_js.jspf#resources");
 	}
 
-	protected JSBundleConfigTracker getJSBundleConfigTracker() {
-		return _jsBundleConfigTracker;
-	}
-
 	@Reference(unbind = "-")
 	protected void setJSBundleConfigTracker(
 		JSBundleConfigTracker jsBundleConfigTracker) {
 
 		_jsBundleConfigTracker = jsBundleConfigTracker;
+	}
+
+	private JSBundleConfigTracker _getJSBundleConfigTracker() {
+		return _jsBundleConfigTracker;
 	}
 
 	private String _getModuleMain(JSBundleConfigTracker.JSConfig jsConfig) {

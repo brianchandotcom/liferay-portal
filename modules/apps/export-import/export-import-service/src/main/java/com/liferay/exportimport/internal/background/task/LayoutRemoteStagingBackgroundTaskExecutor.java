@@ -255,7 +255,7 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 					continue;
 				}
 
-				List<Layout> parentLayouts = getMissingRemoteParentLayouts(
+				List<Layout> parentLayouts = _getMissingRemoteParentLayouts(
 					httpPrincipal, layout, remoteGroupId);
 
 				for (Layout parentLayout : parentLayouts) {
@@ -293,7 +293,7 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 	 * @see com.liferay.portal.lar.ExportImportHelperImpl#getMissingParentLayouts(
 	 *      Layout, long)
 	 */
-	protected List<Layout> getMissingRemoteParentLayouts(
+	private List<Layout> _getMissingRemoteParentLayouts(
 			HttpPrincipal httpPrincipal, Layout layout, long remoteGroupId)
 		throws PortalException {
 

@@ -57,57 +57,57 @@ public class DepotAssetRendererFactoryWrapper<T>
 
 	@Override
 	public AssetEntry getAssetEntry(long assetEntryId) throws PortalException {
-		return getAssetRendererFactory().getAssetEntry(assetEntryId);
+		return _getAssetRendererFactory().getAssetEntry(assetEntryId);
 	}
 
 	@Override
 	public AssetEntry getAssetEntry(String classNameId, long classPK)
 		throws PortalException {
 
-		return getAssetRendererFactory().getAssetEntry(classNameId, classPK);
+		return _getAssetRendererFactory().getAssetEntry(classNameId, classPK);
 	}
 
 	@Override
 	public AssetRenderer<T> getAssetRenderer(long classPK)
 		throws PortalException {
 
-		return getAssetRendererFactory().getAssetRenderer(classPK);
+		return _getAssetRendererFactory().getAssetRenderer(classPK);
 	}
 
 	@Override
 	public AssetRenderer<T> getAssetRenderer(long classPK, int type)
 		throws PortalException {
 
-		return getAssetRendererFactory().getAssetRenderer(classPK, type);
+		return _getAssetRendererFactory().getAssetRenderer(classPK, type);
 	}
 
 	@Override
 	public AssetRenderer<T> getAssetRenderer(long groupId, String urlTitle)
 		throws PortalException {
 
-		return getAssetRendererFactory().getAssetRenderer(groupId, urlTitle);
+		return _getAssetRendererFactory().getAssetRenderer(groupId, urlTitle);
 	}
 
 	@Override
 	public AssetRenderer<T> getAssetRenderer(T entry, int type)
 		throws PortalException {
 
-		return getAssetRendererFactory().getAssetRenderer(entry, type);
+		return _getAssetRendererFactory().getAssetRenderer(entry, type);
 	}
 
 	@Override
 	public String getClassName() {
-		return getAssetRendererFactory().getClassName();
+		return _getAssetRendererFactory().getClassName();
 	}
 
 	@Override
 	public long getClassNameId() {
-		return getAssetRendererFactory().getClassNameId();
+		return _getAssetRendererFactory().getClassNameId();
 	}
 
 	@Override
 	public String getClassSimpleName() {
-		return getAssetRendererFactory().getClassSimpleName();
+		return _getAssetRendererFactory().getClassSimpleName();
 	}
 
 	@Override
@@ -118,37 +118,37 @@ public class DepotAssetRendererFactoryWrapper<T>
 				_depotEntryLocalService);
 		}
 
-		return getAssetRendererFactory().getClassTypeReader();
+		return _getAssetRendererFactory().getClassTypeReader();
 	}
 
 	@Override
 	public String getIconCssClass() {
-		return getAssetRendererFactory().getIconCssClass();
+		return _getAssetRendererFactory().getIconCssClass();
 	}
 
 	@Override
 	public String getPortletId() {
-		return getAssetRendererFactory().getPortletId();
+		return _getAssetRendererFactory().getPortletId();
 	}
 
 	@Override
 	public String getSubtypeTitle(Locale locale) {
-		return getAssetRendererFactory().getSubtypeTitle(locale);
+		return _getAssetRendererFactory().getSubtypeTitle(locale);
 	}
 
 	@Override
 	public String getType() {
-		return getAssetRendererFactory().getType();
+		return _getAssetRendererFactory().getType();
 	}
 
 	@Override
 	public String getTypeName(Locale locale) {
-		return getAssetRendererFactory().getTypeName(locale);
+		return _getAssetRendererFactory().getTypeName(locale);
 	}
 
 	@Override
 	public String getTypeName(Locale locale, long subtypeId) {
-		return getAssetRendererFactory().getTypeName(locale, subtypeId);
+		return _getAssetRendererFactory().getTypeName(locale, subtypeId);
 	}
 
 	@Override
@@ -157,7 +157,7 @@ public class DepotAssetRendererFactoryWrapper<T>
 			LiferayPortletResponse liferayPortletResponse, long classTypeId)
 		throws PortalException {
 
-		return getAssetRendererFactory().getURLAdd(
+		return _getAssetRendererFactory().getURLAdd(
 			liferayPortletRequest, liferayPortletResponse, classTypeId);
 	}
 
@@ -167,13 +167,13 @@ public class DepotAssetRendererFactoryWrapper<T>
 			WindowState windowState)
 		throws PortalException {
 
-		return getAssetRendererFactory().getURLView(
+		return _getAssetRendererFactory().getURLView(
 			liferayPortletResponse, windowState);
 	}
 
 	@Override
 	public Class<? extends AssetRendererFactory> getWrappedClass() {
-		return getAssetRendererFactory().getClass();
+		return _getAssetRendererFactory().getClass();
 	}
 
 	@Override
@@ -181,7 +181,7 @@ public class DepotAssetRendererFactoryWrapper<T>
 			PermissionChecker permissionChecker, long groupId, long classTypeId)
 		throws Exception {
 
-		return getAssetRendererFactory().hasAddPermission(
+		return _getAssetRendererFactory().hasAddPermission(
 			permissionChecker, groupId, classTypeId);
 	}
 
@@ -191,28 +191,28 @@ public class DepotAssetRendererFactoryWrapper<T>
 			String actionId)
 		throws Exception {
 
-		return getAssetRendererFactory().hasPermission(
+		return _getAssetRendererFactory().hasPermission(
 			permissionChecker, entryClassPK, actionId);
 	}
 
 	@Override
 	public boolean isActive(long companyId) {
-		return getAssetRendererFactory().isActive(companyId);
+		return _getAssetRendererFactory().isActive(companyId);
 	}
 
 	@Override
 	public boolean isCategorizable() {
-		return getAssetRendererFactory().isCategorizable();
+		return _getAssetRendererFactory().isCategorizable();
 	}
 
 	@Override
 	public boolean isLinkable() {
-		return getAssetRendererFactory().isLinkable();
+		return _getAssetRendererFactory().isLinkable();
 	}
 
 	@Override
 	public boolean isSearchable() {
-		return getAssetRendererFactory().isSearchable();
+		return _getAssetRendererFactory().isSearchable();
 	}
 
 	@Override
@@ -226,25 +226,25 @@ public class DepotAssetRendererFactoryWrapper<T>
 			return false;
 		}
 
-		return getAssetRendererFactory().isSelectable();
+		return _getAssetRendererFactory().isSelectable();
 	}
 
 	@Override
 	public boolean isSupportsClassTypes() {
-		return getAssetRendererFactory().isSupportsClassTypes();
+		return _getAssetRendererFactory().isSupportsClassTypes();
 	}
 
 	@Override
 	public void setClassName(String className) {
-		getAssetRendererFactory().setClassName(className);
+		_getAssetRendererFactory().setClassName(className);
 	}
 
 	@Override
 	public void setPortletId(String portletId) {
-		getAssetRendererFactory().setPortletId(portletId);
+		_getAssetRendererFactory().setPortletId(portletId);
 	}
 
-	protected AssetRendererFactory<T> getAssetRendererFactory() {
+	private AssetRendererFactory<T> _getAssetRendererFactory() {
 		return _assetRendererFactory;
 	}
 

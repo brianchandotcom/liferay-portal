@@ -95,13 +95,13 @@ public class DDMFormValuesToPropertiesConverter {
 				_ddmFormFieldValuesMap.get(attributeDefinition.getID());
 
 			if (attributeDefinition.getCardinality() == 0) {
-				value = toSimpleValue(ddmFormFieldValues.get(0));
+				value = _toSimpleValue(ddmFormFieldValues.get(0));
 			}
 			else if (attributeDefinition.getCardinality() > 0) {
-				value = toArrayValue(ddmFormFieldValues);
+				value = _toArrayValue(ddmFormFieldValues);
 			}
 			else if (attributeDefinition.getCardinality() < 0) {
-				value = toVectorValue(ddmFormFieldValues);
+				value = _toVectorValue(ddmFormFieldValues);
 			}
 
 			String[] defaultValues = attributeDefinition.getDefaultValue();
@@ -119,7 +119,19 @@ public class DDMFormValuesToPropertiesConverter {
 		return properties;
 	}
 
-	protected String getDataTypeDefaultValue(String dataType) {
+	protected String getDDMFormFieldDataType(String fieldName) {
+		DDMFormField ddmFormField = _ddmFormFieldsMap.get(fieldName);
+
+		return ddmFormField.getDataType();
+	}
+
+	protected String getDDMFormFieldType(String fieldName) {
+		DDMFormField ddmFormField = _ddmFormFieldsMap.get(fieldName);
+
+		return ddmFormField.getType();
+	}
+
+	private String _getDataTypeDefaultValue(String dataType) {
 		if (dataType.equals(FieldConstants.BOOLEAN)) {
 			return "false";
 		}
@@ -138,19 +150,7 @@ public class DDMFormValuesToPropertiesConverter {
 		return StringPool.BLANK;
 	}
 
-	protected String getDDMFormFieldDataType(String fieldName) {
-		DDMFormField ddmFormField = _ddmFormFieldsMap.get(fieldName);
-
-		return ddmFormField.getDataType();
-	}
-
-	protected String getDDMFormFieldType(String fieldName) {
-		DDMFormField ddmFormField = _ddmFormFieldsMap.get(fieldName);
-
-		return ddmFormField.getType();
-	}
-
-	protected String getDDMFormFieldValueString(
+	private String _getDDMFormFieldValueString(
 		DDMFormFieldValue ddmFormFieldValue) {
 
 		Value value = ddmFormFieldValue.getValue();
@@ -179,42 +179,10 @@ public class DDMFormValuesToPropertiesConverter {
 			String dataType = getDDMFormFieldDataType(
 				ddmFormFieldValue.getName());
 
-			valueString = getDataTypeDefaultValue(dataType);
+			valueString = _getDataTypeDefaultValue(dataType);
 		}
 
 		return valueString;
-	}
-
-	protected Serializable toArrayValue(
-		List<DDMFormFieldValue> ddmFormFieldValues) {
-
-		DDMFormFieldValue ddmFormFieldValue = ddmFormFieldValues.get(0);
-
-		String dataType = getDDMFormFieldDataType(ddmFormFieldValue.getName());
-
-		Vector<Serializable> values = toVectorValue(ddmFormFieldValues);
-
-		return FieldConstants.getSerializable(dataType, values);
-	}
-
-	protected Serializable toSimpleValue(DDMFormFieldValue ddmFormFieldValue) {
-		String dataType = getDDMFormFieldDataType(ddmFormFieldValue.getName());
-
-		String valueString = getDDMFormFieldValueString(ddmFormFieldValue);
-
-		return FieldConstants.getSerializable(dataType, valueString);
-	}
-
-	protected Vector<Serializable> toVectorValue(
-		List<DDMFormFieldValue> ddmFormFieldValues) {
-
-		Vector<Serializable> values = new Vector<>();
-
-		for (DDMFormFieldValue ddmFormFieldValue : ddmFormFieldValues) {
-			values.add(toSimpleValue(ddmFormFieldValue));
-		}
-
-		return values;
 	}
 
 	private boolean _isDefaultResourceValue(
@@ -257,6 +225,38 @@ public class DDMFormValuesToPropertiesConverter {
 		}
 
 		return false;
+	}
+
+	private Serializable _toArrayValue(
+		List<DDMFormFieldValue> ddmFormFieldValues) {
+
+		DDMFormFieldValue ddmFormFieldValue = ddmFormFieldValues.get(0);
+
+		String dataType = getDDMFormFieldDataType(ddmFormFieldValue.getName());
+
+		Vector<Serializable> values = _toVectorValue(ddmFormFieldValues);
+
+		return FieldConstants.getSerializable(dataType, values);
+	}
+
+	private Serializable _toSimpleValue(DDMFormFieldValue ddmFormFieldValue) {
+		String dataType = getDDMFormFieldDataType(ddmFormFieldValue.getName());
+
+		String valueString = _getDDMFormFieldValueString(ddmFormFieldValue);
+
+		return FieldConstants.getSerializable(dataType, valueString);
+	}
+
+	private Vector<Serializable> _toVectorValue(
+		List<DDMFormFieldValue> ddmFormFieldValues) {
+
+		Vector<Serializable> values = new Vector<>();
+
+		for (DDMFormFieldValue ddmFormFieldValue : ddmFormFieldValues) {
+			values.add(_toSimpleValue(ddmFormFieldValue));
+		}
+
+		return values;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

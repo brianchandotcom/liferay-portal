@@ -141,7 +141,7 @@ public class ActionUtil {
 		PortletPreferences portletSetup = getLayoutPortletSetup(
 			renderRequest, portlet);
 
-		portletSetup = getPortletSetup(
+		portletSetup = _getPortletSetup(
 			httpServletRequest, renderRequest.getPreferences(), portletSetup);
 
 		String title = PortletConfigurationUtil.getPortletTitle(
@@ -162,7 +162,7 @@ public class ActionUtil {
 			ActionRequest actionRequest, PortletPreferences portletPreferences)
 		throws PortalException {
 
-		portletPreferences = getPortletPreferences(
+		portletPreferences = _getPortletPreferences(
 			PortalUtil.getHttpServletRequest(actionRequest),
 			actionRequest.getPreferences(), portletPreferences);
 
@@ -177,7 +177,7 @@ public class ActionUtil {
 		HttpServletRequest httpServletRequest =
 			PortalUtil.getHttpServletRequest(renderRequest);
 
-		portletPreferences = getPortletPreferences(
+		portletPreferences = _getPortletPreferences(
 			httpServletRequest, renderRequest.getPreferences(),
 			portletPreferences);
 
@@ -195,7 +195,7 @@ public class ActionUtil {
 			PortletPreferences portletPreferences)
 		throws PortalException {
 
-		portletPreferences = getPortletPreferences(
+		portletPreferences = _getPortletPreferences(
 			PortalUtil.getHttpServletRequest(resourceRequest),
 			resourceRequest.getPreferences(), portletPreferences);
 
@@ -203,7 +203,7 @@ public class ActionUtil {
 			resourceRequest, portletPreferences);
 	}
 
-	protected static PortletPreferences getPortletPreferences(
+	private static PortletPreferences _getPortletPreferences(
 			HttpServletRequest httpServletRequest,
 			PortletPreferences portletConfigPortletPreferences,
 			PortletPreferences portletPreferences)
@@ -224,7 +224,7 @@ public class ActionUtil {
 			httpServletRequest, portletResource);
 	}
 
-	protected static PortletPreferences getPortletSetup(
+	private static PortletPreferences _getPortletSetup(
 			HttpServletRequest httpServletRequest,
 			PortletPreferences portletConfigPortletSetup,
 			PortletPreferences portletSetup)

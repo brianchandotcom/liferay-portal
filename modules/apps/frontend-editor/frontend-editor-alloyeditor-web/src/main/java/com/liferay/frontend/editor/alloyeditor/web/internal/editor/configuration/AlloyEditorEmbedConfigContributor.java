@@ -53,7 +53,7 @@ public class AlloyEditorEmbedConfigContributor
 		ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
-		jsonObject.put("embedProviders", getEditorEmbedProvidersJSONArray());
+		jsonObject.put("embedProviders", _getEditorEmbedProvidersJSONArray());
 	}
 
 	@Activate
@@ -76,7 +76,7 @@ public class AlloyEditorEmbedConfigContributor
 		_serviceTrackerMap.close();
 	}
 
-	protected JSONObject getEditorEmbedProviderJSONObject(
+	private JSONObject _getEditorEmbedProviderJSONObject(
 		String editorEmbedProviderType,
 		EditorEmbedProvider editorEmbedProvider) {
 
@@ -103,7 +103,7 @@ public class AlloyEditorEmbedConfigContributor
 		);
 	}
 
-	protected JSONArray getEditorEmbedProvidersJSONArray() {
+	private JSONArray _getEditorEmbedProvidersJSONArray() {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		Set<String> editorEmbedProviderTypes = _serviceTrackerMap.keySet();
@@ -115,7 +115,7 @@ public class AlloyEditorEmbedConfigContributor
 
 				editorEmbedProviders.forEach(
 					editorEmbedProvider -> jsonArray.put(
-						getEditorEmbedProviderJSONObject(
+						_getEditorEmbedProviderJSONObject(
 							editorEmbedProviderType, editorEmbedProvider)));
 			});
 

@@ -74,7 +74,7 @@ public class FileEntryInfoItemFormVariationsProvider
 
 		List<InfoItemFormVariation> infoItemFormVariations = new ArrayList<>();
 
-		infoItemFormVariations.add(getBasicDocumentInfoItemFormVariation());
+		infoItemFormVariations.add(_getBasicDocumentInfoItemFormVariation());
 
 		try {
 			return getInfoItemFormVariations(
@@ -92,7 +92,7 @@ public class FileEntryInfoItemFormVariationsProvider
 
 		List<InfoItemFormVariation> infoItemFormVariations = new ArrayList<>();
 
-		infoItemFormVariations.add(getBasicDocumentInfoItemFormVariation());
+		infoItemFormVariations.add(_getBasicDocumentInfoItemFormVariation());
 
 		List<DLFileEntryType> dlFileEntryTypes =
 			_dlFileEntryTypeLocalService.getFileEntryTypes(groupIds);
@@ -111,7 +111,7 @@ public class FileEntryInfoItemFormVariationsProvider
 		return infoItemFormVariations;
 	}
 
-	protected InfoItemFormVariation getBasicDocumentInfoItemFormVariation() {
+	private InfoItemFormVariation _getBasicDocumentInfoItemFormVariation() {
 		DLFileEntryType basicDocumentDLFileEntryType =
 			_dlFileEntryTypeLocalService.fetchDLFileEntryType(
 				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT);

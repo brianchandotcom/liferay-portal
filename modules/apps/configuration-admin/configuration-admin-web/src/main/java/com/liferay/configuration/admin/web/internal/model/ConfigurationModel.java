@@ -201,7 +201,7 @@ public class ConfigurationModel implements ExtendedObjectClassDefinition {
 	}
 
 	public String getLabel() {
-		String value = getLabelAttributeValue();
+		String value = _getLabelAttributeValue();
 
 		if (value == null) {
 			return getName();
@@ -329,7 +329,7 @@ public class ConfigurationModel implements ExtendedObjectClassDefinition {
 	}
 
 	public boolean isCompanyScope() {
-		return isScope(Scope.COMPANY);
+		return _isScope(Scope.COMPANY);
 	}
 
 	public boolean isFactory() {
@@ -347,11 +347,11 @@ public class ConfigurationModel implements ExtendedObjectClassDefinition {
 	}
 
 	public boolean isGroupScope() {
-		return isScope(Scope.GROUP);
+		return _isScope(Scope.GROUP);
 	}
 
 	public boolean isPortletInstanceScope() {
-		return isScope(Scope.PORTLET_INSTANCE);
+		return _isScope(Scope.PORTLET_INSTANCE);
 	}
 
 	public boolean isStrictScope() {
@@ -364,10 +364,10 @@ public class ConfigurationModel implements ExtendedObjectClassDefinition {
 	}
 
 	public boolean isSystemScope() {
-		return isScope(Scope.SYSTEM);
+		return _isScope(Scope.SYSTEM);
 	}
 
-	protected String getLabelAttributeValue() {
+	private String _getLabelAttributeValue() {
 		String factoryInstanceLabelAttribute = getLabelAttribute();
 
 		String value = null;
@@ -390,7 +390,7 @@ public class ConfigurationModel implements ExtendedObjectClassDefinition {
 		return value;
 	}
 
-	protected boolean isScope(Scope scope) {
+	private boolean _isScope(Scope scope) {
 		return scope.equals(getScope());
 	}
 

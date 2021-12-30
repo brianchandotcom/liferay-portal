@@ -122,12 +122,15 @@ public class PermissionExporter {
 
 		Element permissionsElement = portletElement.addElement("permissions");
 
-		exportPermissions(
+		_exportPermissions(
 			portletDataContext, resourceName, resourcePrimKey,
 			permissionsElement);
 	}
 
-	protected void exportPermissions(
+	private PermissionExporter() {
+	}
+
+	private void _exportPermissions(
 			PortletDataContext portletDataContext, String resourceName,
 			String resourcePrimKey, Element permissionsElement)
 		throws Exception {
@@ -179,9 +182,6 @@ public class PermissionExporter {
 				actionKeyElement.addText(actionId);
 			}
 		}
-	}
-
-	private PermissionExporter() {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

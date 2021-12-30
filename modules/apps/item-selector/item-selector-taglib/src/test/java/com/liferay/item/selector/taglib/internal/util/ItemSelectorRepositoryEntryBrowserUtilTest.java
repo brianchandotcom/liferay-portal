@@ -76,7 +76,7 @@ public class ItemSelectorRepositoryEntryBrowserUtilTest extends PowerMockito {
 
 	@Test
 	public void testGetValueWithoutResolver() throws Exception {
-		initMocks();
+		_initMocks();
 
 		FileEntry fileEntry = mock(FileEntry.class);
 		ThemeDisplay themeDisplay = mock(ThemeDisplay.class);
@@ -91,7 +91,7 @@ public class ItemSelectorRepositoryEntryBrowserUtilTest extends PowerMockito {
 
 	@Test
 	public void testGetValueWithResolver() throws Exception {
-		initMocks();
+		_initMocks();
 
 		FileEntry fileEntry = mock(FileEntry.class);
 		ThemeDisplay themeDisplay = mock(ThemeDisplay.class);
@@ -104,7 +104,7 @@ public class ItemSelectorRepositoryEntryBrowserUtilTest extends PowerMockito {
 			"TestFileEntryItemSelectorReturnTypeResolverValue", value);
 	}
 
-	protected void initMocks() throws Exception {
+	private void _initMocks() throws Exception {
 		mockStatic(ItemSelectorRepositoryEntryBrowserReturnTypeUtil.class);
 
 		when(

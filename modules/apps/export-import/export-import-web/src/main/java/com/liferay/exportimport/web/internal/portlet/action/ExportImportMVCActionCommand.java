@@ -135,7 +135,7 @@ public class ExportImportMVCActionCommand extends BaseMVCActionCommand {
 			else if (cmd.equals(Constants.EXPORT)) {
 				hideDefaultSuccessMessage(actionRequest);
 
-				exportData(actionRequest, portlet);
+				_exportData(actionRequest, portlet);
 
 				sendRedirect(actionRequest, actionResponse);
 			}
@@ -184,49 +184,6 @@ public class ExportImportMVCActionCommand extends BaseMVCActionCommand {
 						ExportImportMVCActionCommand.class.getName());
 				}
 			}
-		}
-	}
-
-	protected void exportData(ActionRequest actionRequest, Portlet portlet)
-		throws Exception {
-
-		try {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
-
-			long plid = ParamUtil.getLong(actionRequest, "plid");
-			long groupId = ParamUtil.getLong(actionRequest, "groupId");
-			String fileName = ParamUtil.getString(
-				actionRequest, "exportFileName");
-
-			Map<String, Serializable> exportPortletSettingsMap =
-				_exportImportConfigurationSettingsMapFactory.
-					buildExportPortletSettingsMap(
-						themeDisplay.getUserId(), plid, groupId,
-						portlet.getPortletId(), actionRequest.getParameterMap(),
-						themeDisplay.getLocale(), themeDisplay.getTimeZone(),
-						fileName);
-
-			ExportImportConfiguration exportImportConfiguration =
-				_exportImportConfigurationLocalService.
-					addDraftExportImportConfiguration(
-						themeDisplay.getUserId(),
-						ExportImportConfigurationConstants.TYPE_EXPORT_PORTLET,
-						exportPortletSettingsMap);
-
-			_exportImportService.exportPortletInfoAsFileInBackground(
-				exportImportConfiguration);
-		}
-		catch (Exception exception) {
-			if (exception instanceof LARFileNameException) {
-				throw exception;
-			}
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
-			}
-
-			SessionErrors.add(actionRequest, exception.getClass(), exception);
 		}
 	}
 
@@ -395,6 +352,49 @@ public class ExportImportMVCActionCommand extends BaseMVCActionCommand {
 
 		return _exportImportService.validateImportPortletInfo(
 			exportImportConfiguration, inputStream);
+	}
+
+	private void _exportData(ActionRequest actionRequest, Portlet portlet)
+		throws Exception {
+
+		try {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
+			long plid = ParamUtil.getLong(actionRequest, "plid");
+			long groupId = ParamUtil.getLong(actionRequest, "groupId");
+			String fileName = ParamUtil.getString(
+				actionRequest, "exportFileName");
+
+			Map<String, Serializable> exportPortletSettingsMap =
+				_exportImportConfigurationSettingsMapFactory.
+					buildExportPortletSettingsMap(
+						themeDisplay.getUserId(), plid, groupId,
+						portlet.getPortletId(), actionRequest.getParameterMap(),
+						themeDisplay.getLocale(), themeDisplay.getTimeZone(),
+						fileName);
+
+			ExportImportConfiguration exportImportConfiguration =
+				_exportImportConfigurationLocalService.
+					addDraftExportImportConfiguration(
+						themeDisplay.getUserId(),
+						ExportImportConfigurationConstants.TYPE_EXPORT_PORTLET,
+						exportPortletSettingsMap);
+
+			_exportImportService.exportPortletInfoAsFileInBackground(
+				exportImportConfiguration);
+		}
+		catch (Exception exception) {
+			if (exception instanceof LARFileNameException) {
+				throw exception;
+			}
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception, exception);
+			}
+
+			SessionErrors.add(actionRequest, exception.getClass(), exception);
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -90,7 +90,7 @@ public class DLFileEntryActivityInterpreter
 
 		sb.append(StringPool.SPACE);
 
-		String folderLink = getFolderLink(fileEntry, serviceContext);
+		String folderLink = _getFolderLink(fileEntry, serviceContext);
 
 		folderLink = addNoSuchEntryRedirect(
 			folderLink, DLFolder.class.getName(), fileEntry.getFolderId(),
@@ -99,15 +99,6 @@ public class DLFileEntryActivityInterpreter
 		sb.append(wrapLink(folderLink, "go-to-folder", serviceContext));
 
 		return sb.toString();
-	}
-
-	protected String getFolderLink(
-		FileEntry fileEntry, ServiceContext serviceContext) {
-
-		return StringBundler.concat(
-			serviceContext.getPortalURL(), serviceContext.getPathMain(),
-			"/document_library/find_folder?groupId=",
-			fileEntry.getRepositoryId(), "&folderId=", fileEntry.getFolderId());
 	}
 
 	@Override
@@ -208,6 +199,15 @@ public class DLFileEntryActivityInterpreter
 	@Reference(unbind = "-")
 	protected void setDLAppLocalService(DLAppLocalService dlAppLocalService) {
 		_dlAppLocalService = dlAppLocalService;
+	}
+
+	private String _getFolderLink(
+		FileEntry fileEntry, ServiceContext serviceContext) {
+
+		return StringBundler.concat(
+			serviceContext.getPortalURL(), serviceContext.getPathMain(),
+			"/document_library/find_folder?groupId=",
+			fileEntry.getRepositoryId(), "&folderId=", fileEntry.getFolderId());
 	}
 
 	private static final String[] _CLASS_NAMES = {DLFileEntry.class.getName()};

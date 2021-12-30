@@ -102,11 +102,11 @@ public class UploadGoogleDriveDocumentBackgroundTaskExecutor
 			taskContextMap.get(GoogleDriveBackgroundTaskConstants.USER_ID));
 
 		if (cmd.equals(GoogleDriveBackgroundTaskConstants.CHECKOUT)) {
-			uploadGoogleDriveDocument(
+			_uploadGoogleDriveDocument(
 				backgroundTask.getCompanyId(), fileEntryId, userId, true);
 		}
 		else {
-			uploadGoogleDriveDocument(
+			_uploadGoogleDriveDocument(
 				backgroundTask.getCompanyId(), fileEntryId, userId, false);
 		}
 
@@ -148,7 +148,46 @@ public class UploadGoogleDriveDocumentBackgroundTaskExecutor
 		return StringPool.BLANK;
 	}
 
-	protected void uploadGoogleDriveDocument(
+	private Credential _getCredential(long companyId, long userId)
+		throws Exception {
+
+		Credential credential = _oAuth2Manager.getCredential(companyId, userId);
+
+		if (credential == null) {
+			throw new PrincipalException(
+				StringBundler.concat(
+					"User ", userId,
+					" does not have a valid Google credential"));
+		}
+
+		return credential;
+	}
+
+	private File _getFileEntryFile(FileVersion fileVersion) throws Exception {
+		try (InputStream inputStream = fileVersion.getContentStream(false)) {
+			return FileUtil.createTempFile(inputStream);
+		}
+	}
+
+	private void _sendStatusMessage(
+		String phase, long companyId, long fileEntryId) {
+
+		Message message = new Message();
+
+		message.put(
+			BackgroundTaskConstants.BACKGROUND_TASK_ID,
+			BackgroundTaskThreadLocal.getBackgroundTaskId());
+		message.put(GoogleDriveBackgroundTaskConstants.COMPANY_ID, companyId);
+		message.put(
+			GoogleDriveBackgroundTaskConstants.FILE_ENTRY_ID, fileEntryId);
+		message.put(GoogleDriveBackgroundTaskConstants.PHASE, phase);
+		message.put("status", BackgroundTaskConstants.STATUS_IN_PROGRESS);
+
+		_backgroundTaskStatusMessageSender.sendBackgroundTaskStatusMessage(
+			message);
+	}
+
+	private void _uploadGoogleDriveDocument(
 			long companyId, long fileEntryId, long userId, boolean add)
 		throws Exception {
 
@@ -216,45 +255,6 @@ public class UploadGoogleDriveDocumentBackgroundTaskExecutor
 				uploadedFile.getId(),
 				DLOpenerGoogleDriveConstants.GOOGLE_DRIVE_REFERENCE_TYPE,
 				fileEntry);
-	}
-
-	private Credential _getCredential(long companyId, long userId)
-		throws Exception {
-
-		Credential credential = _oAuth2Manager.getCredential(companyId, userId);
-
-		if (credential == null) {
-			throw new PrincipalException(
-				StringBundler.concat(
-					"User ", userId,
-					" does not have a valid Google credential"));
-		}
-
-		return credential;
-	}
-
-	private File _getFileEntryFile(FileVersion fileVersion) throws Exception {
-		try (InputStream inputStream = fileVersion.getContentStream(false)) {
-			return FileUtil.createTempFile(inputStream);
-		}
-	}
-
-	private void _sendStatusMessage(
-		String phase, long companyId, long fileEntryId) {
-
-		Message message = new Message();
-
-		message.put(
-			BackgroundTaskConstants.BACKGROUND_TASK_ID,
-			BackgroundTaskThreadLocal.getBackgroundTaskId());
-		message.put(GoogleDriveBackgroundTaskConstants.COMPANY_ID, companyId);
-		message.put(
-			GoogleDriveBackgroundTaskConstants.FILE_ENTRY_ID, fileEntryId);
-		message.put(GoogleDriveBackgroundTaskConstants.PHASE, phase);
-		message.put("status", BackgroundTaskConstants.STATUS_IN_PROGRESS);
-
-		_backgroundTaskStatusMessageSender.sendBackgroundTaskStatusMessage(
-			message);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

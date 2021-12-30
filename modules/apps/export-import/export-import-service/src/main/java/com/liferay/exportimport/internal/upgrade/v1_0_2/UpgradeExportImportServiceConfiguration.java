@@ -41,10 +41,10 @@ public class UpgradeExportImportServiceConfiguration extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		upgradeExportImportServiceConfiguration();
+		_upgradeExportImportServiceConfiguration();
 	}
 
-	protected void upgradeExportImportServiceConfiguration() throws Exception {
+	private void _upgradeExportImportServiceConfiguration() throws Exception {
 		Configuration[] exportImportServiceConfigurations =
 			_configurationAdmin.listConfigurations(
 				"(service.pid=" +

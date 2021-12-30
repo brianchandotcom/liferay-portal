@@ -225,7 +225,7 @@ public class FriendlyURLServlet extends HttpServlet {
 						layoutFriendlyURLSeparatorCompositeFriendlyURL, layout,
 						locale)) {
 
-					Locale originalLocale = setAlternativeLayoutFriendlyURL(
+					Locale originalLocale = _setAlternativeLayoutFriendlyURL(
 						httpServletRequest, layout,
 						layoutFriendlyURLSeparatorCompositeFriendlyURL,
 						alternativeSiteFriendlyURL);
@@ -392,7 +392,7 @@ public class FriendlyURLServlet extends HttpServlet {
 
 		// Do not set the entire full main path. See LEP-456.
 
-		String pathInfo = getPathInfo(httpServletRequest);
+		String pathInfo = _getPathInfo(httpServletRequest);
 
 		Redirect redirect = null;
 
@@ -403,7 +403,7 @@ public class FriendlyURLServlet extends HttpServlet {
 			if (httpServletRequest.getAttribute(WebKeys.LAST_PATH) == null) {
 				httpServletRequest.setAttribute(
 					WebKeys.LAST_PATH,
-					getLastPath(httpServletRequest, pathInfo));
+					_getLastPath(httpServletRequest, pathInfo));
 			}
 		}
 		catch (PortalException portalException) {
@@ -567,78 +567,6 @@ public class FriendlyURLServlet extends HttpServlet {
 
 	}
 
-	protected LastPath getLastPath(
-		HttpServletRequest httpServletRequest, String pathInfo) {
-
-		String lifecycle = ParamUtil.getString(
-			httpServletRequest, "p_p_lifecycle");
-
-		if (lifecycle.equals("1")) {
-			return new LastPath(_friendlyURLPathPrefix, pathInfo);
-		}
-
-		return new LastPath(
-			_friendlyURLPathPrefix, pathInfo,
-			HttpUtil.parameterMapToString(
-				httpServletRequest.getParameterMap()));
-	}
-
-	protected String getPathInfo(HttpServletRequest httpServletRequest) {
-		String requestURI = httpServletRequest.getRequestURI();
-
-		int pos = requestURI.indexOf(Portal.JSESSIONID);
-
-		if (pos == -1) {
-			return requestURI.substring(_pathInfoOffset);
-		}
-
-		return requestURI.substring(_pathInfoOffset, pos);
-	}
-
-	protected Locale setAlternativeLayoutFriendlyURL(
-		HttpServletRequest httpServletRequest, Layout layout,
-		String friendlyURL, SiteFriendlyURL siteFriendlyURL) {
-
-		List<LayoutFriendlyURL> layoutFriendlyURLs =
-			layoutFriendlyURLLocalService.getLayoutFriendlyURLs(
-				layout.getPlid(), friendlyURL, 0, 1);
-
-		if (layoutFriendlyURLs.isEmpty()) {
-			return null;
-		}
-
-		LayoutFriendlyURL layoutFriendlyURL = layoutFriendlyURLs.get(0);
-
-		Locale locale = LocaleUtil.fromLanguageId(
-			layoutFriendlyURL.getLanguageId());
-
-		if (!LanguageUtil.isAvailableLocale(layout.getGroupId(), locale)) {
-			return LocaleUtil.fromLanguageId(
-				(String)httpServletRequest.getAttribute(
-					WebKeys.I18N_LANGUAGE_ID));
-		}
-
-		Locale groupLocale = locale;
-
-		if (siteFriendlyURL != null) {
-			groupLocale = LocaleUtil.fromLanguageId(
-				siteFriendlyURL.getLanguageId());
-		}
-
-		String alternativeLayoutFriendlyURL = portal.getLocalizedFriendlyURL(
-			httpServletRequest, layout, groupLocale, locale);
-
-		SessionMessages.add(
-			httpServletRequest, "alternativeLayoutFriendlyURL",
-			alternativeLayoutFriendlyURL);
-
-		PortalMessages.add(
-			httpServletRequest, PortalMessages.KEY_JSP_PATH,
-			"/html/common/themes/layout_friendly_url_redirect.jsp");
-
-		return groupLocale;
-	}
-
 	@Reference
 	protected GroupLocalService groupLocalService;
 
@@ -756,6 +684,34 @@ public class FriendlyURLServlet extends HttpServlet {
 		return group;
 	}
 
+	private LastPath _getLastPath(
+		HttpServletRequest httpServletRequest, String pathInfo) {
+
+		String lifecycle = ParamUtil.getString(
+			httpServletRequest, "p_p_lifecycle");
+
+		if (lifecycle.equals("1")) {
+			return new LastPath(_friendlyURLPathPrefix, pathInfo);
+		}
+
+		return new LastPath(
+			_friendlyURLPathPrefix, pathInfo,
+			HttpUtil.parameterMapToString(
+				httpServletRequest.getParameterMap()));
+	}
+
+	private String _getPathInfo(HttpServletRequest httpServletRequest) {
+		String requestURI = httpServletRequest.getRequestURI();
+
+		int pos = requestURI.indexOf(Portal.JSESSIONID);
+
+		if (pos == -1) {
+			return requestURI.substring(_pathInfoOffset);
+		}
+
+		return requestURI.substring(_pathInfoOffset, pos);
+	}
+
 	private boolean _isImpersonated(
 		HttpServletRequest httpServletRequest, long userId) {
 
@@ -778,6 +734,50 @@ public class FriendlyURLServlet extends HttpServlet {
 		}
 
 		return friendlyURL;
+	}
+
+	private Locale _setAlternativeLayoutFriendlyURL(
+		HttpServletRequest httpServletRequest, Layout layout,
+		String friendlyURL, SiteFriendlyURL siteFriendlyURL) {
+
+		List<LayoutFriendlyURL> layoutFriendlyURLs =
+			layoutFriendlyURLLocalService.getLayoutFriendlyURLs(
+				layout.getPlid(), friendlyURL, 0, 1);
+
+		if (layoutFriendlyURLs.isEmpty()) {
+			return null;
+		}
+
+		LayoutFriendlyURL layoutFriendlyURL = layoutFriendlyURLs.get(0);
+
+		Locale locale = LocaleUtil.fromLanguageId(
+			layoutFriendlyURL.getLanguageId());
+
+		if (!LanguageUtil.isAvailableLocale(layout.getGroupId(), locale)) {
+			return LocaleUtil.fromLanguageId(
+				(String)httpServletRequest.getAttribute(
+					WebKeys.I18N_LANGUAGE_ID));
+		}
+
+		Locale groupLocale = locale;
+
+		if (siteFriendlyURL != null) {
+			groupLocale = LocaleUtil.fromLanguageId(
+				siteFriendlyURL.getLanguageId());
+		}
+
+		String alternativeLayoutFriendlyURL = portal.getLocalizedFriendlyURL(
+			httpServletRequest, layout, groupLocale, locale);
+
+		SessionMessages.add(
+			httpServletRequest, "alternativeLayoutFriendlyURL",
+			alternativeLayoutFriendlyURL);
+
+		PortalMessages.add(
+			httpServletRequest, PortalMessages.KEY_JSP_PATH,
+			"/html/common/themes/layout_friendly_url_redirect.jsp");
+
+		return groupLocale;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

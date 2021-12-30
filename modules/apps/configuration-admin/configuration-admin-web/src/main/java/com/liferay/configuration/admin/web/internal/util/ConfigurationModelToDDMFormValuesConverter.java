@@ -67,7 +67,7 @@ public class ConfigurationModelToDDMFormValuesConverter {
 		ddmFormValues.addAvailableLocale(_locale);
 		ddmFormValues.setDefaultLocale(_locale);
 
-		addDDMFormFieldValues(
+		_addDDMFormFieldValues(
 			_configurationModel.getAttributeDefinitions(ConfigurationModel.ALL),
 			ddmFormValues);
 
@@ -79,56 +79,9 @@ public class ConfigurationModelToDDMFormValuesConverter {
 
 		DDMFormFieldValue ddmFormFieldValue = createDDMFormFieldValue(name);
 
-		setDDMFormFieldValueLocalizedValue(value, ddmFormFieldValue);
+		_setDDMFormFieldValueLocalizedValue(value, ddmFormFieldValue);
 
 		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
-	}
-
-	protected void addDDMFormFieldValues(
-		AttributeDefinition attributeDefinition, DDMFormValues ddmFormValues) {
-
-		String[] values = null;
-
-		if (attributeDefinition.getType() == AttributeDefinition.PASSWORD) {
-			values = _PASSWORD_TYPE_VALUES;
-		}
-		else {
-			Configuration configuration =
-				_configurationModel.getConfiguration();
-
-			if (hasConfigurationAttribute(configuration, attributeDefinition)) {
-				values = AttributeDefinitionUtil.getPropertyStringArray(
-					attributeDefinition, configuration);
-			}
-			else {
-				values = AttributeDefinitionUtil.getDefaultValue(
-					attributeDefinition);
-			}
-		}
-
-		addDDMFormFieldValues(
-			attributeDefinition.getID(), values, ddmFormValues);
-	}
-
-	protected void addDDMFormFieldValues(
-		AttributeDefinition[] attributeDefinitions,
-		DDMFormValues ddmFormValues) {
-
-		if (attributeDefinitions == null) {
-			return;
-		}
-
-		for (AttributeDefinition attributeDefinition : attributeDefinitions) {
-			addDDMFormFieldValues(attributeDefinition, ddmFormValues);
-		}
-	}
-
-	protected void addDDMFormFieldValues(
-		String name, String[] values, DDMFormValues ddmFormValues) {
-
-		for (String value : values) {
-			addDDMFormFieldValue(name, value, ddmFormValues);
-		}
 	}
 
 	protected DDMFormFieldValue createDDMFormFieldValue(String name) {
@@ -146,7 +99,56 @@ public class ConfigurationModelToDDMFormValuesConverter {
 		return ddmFormField.getType();
 	}
 
-	protected boolean hasConfigurationAttribute(
+	private void _addDDMFormFieldValues(
+		AttributeDefinition attributeDefinition, DDMFormValues ddmFormValues) {
+
+		String[] values = null;
+
+		if (attributeDefinition.getType() == AttributeDefinition.PASSWORD) {
+			values = _PASSWORD_TYPE_VALUES;
+		}
+		else {
+			Configuration configuration =
+				_configurationModel.getConfiguration();
+
+			if (_hasConfigurationAttribute(
+					configuration, attributeDefinition)) {
+
+				values = AttributeDefinitionUtil.getPropertyStringArray(
+					attributeDefinition, configuration);
+			}
+			else {
+				values = AttributeDefinitionUtil.getDefaultValue(
+					attributeDefinition);
+			}
+		}
+
+		_addDDMFormFieldValues(
+			attributeDefinition.getID(), values, ddmFormValues);
+	}
+
+	private void _addDDMFormFieldValues(
+		AttributeDefinition[] attributeDefinitions,
+		DDMFormValues ddmFormValues) {
+
+		if (attributeDefinitions == null) {
+			return;
+		}
+
+		for (AttributeDefinition attributeDefinition : attributeDefinitions) {
+			_addDDMFormFieldValues(attributeDefinition, ddmFormValues);
+		}
+	}
+
+	private void _addDDMFormFieldValues(
+		String name, String[] values, DDMFormValues ddmFormValues) {
+
+		for (String value : values) {
+			addDDMFormFieldValue(name, value, ddmFormValues);
+		}
+	}
+
+	private boolean _hasConfigurationAttribute(
 		Configuration configuration, AttributeDefinition attributeDefinition) {
 
 		if (configuration == null) {
@@ -168,7 +170,7 @@ public class ConfigurationModelToDDMFormValuesConverter {
 		return false;
 	}
 
-	protected void setDDMFormFieldValueLocalizedValue(
+	private void _setDDMFormFieldValueLocalizedValue(
 		String value, DDMFormFieldValue ddmFormFieldValue) {
 
 		try {

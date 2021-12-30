@@ -84,23 +84,6 @@ public class DraftExportImportConfigurationMessageListener
 			this, schedulerEntry, DestinationNames.SCHEDULER_DISPATCH);
 	}
 
-	protected void addCommonCriterions(DynamicQuery dynamicQuery) {
-		Property typeProperty = PropertyFactoryUtil.forName("type");
-
-		dynamicQuery.add(
-			typeProperty.ne(
-				ExportImportConfigurationConstants.
-					TYPE_SCHEDULED_PUBLISH_LAYOUT_LOCAL));
-		dynamicQuery.add(
-			typeProperty.ne(
-				ExportImportConfigurationConstants.
-					TYPE_SCHEDULED_PUBLISH_LAYOUT_REMOTE));
-
-		Property statusProperty = PropertyFactoryUtil.forName("status");
-
-		dynamicQuery.add(statusProperty.eq(WorkflowConstants.STATUS_DRAFT));
-	}
-
 	@Deactivate
 	protected void deactivate() {
 		_schedulerEngineHelper.unregister(this);
@@ -125,7 +108,7 @@ public class DraftExportImportConfigurationMessageListener
 			DynamicQuery dynamicQuery =
 				_exportImportConfigurationLocalService.dynamicQuery();
 
-			addCommonCriterions(dynamicQuery);
+			_addCommonCriterions(dynamicQuery);
 
 			Order order = OrderFactoryUtil.desc("createDate");
 
@@ -157,15 +140,15 @@ public class DraftExportImportConfigurationMessageListener
 
 		actionableDynamicQuery.setAddCriteriaMethod(
 			dynamicQuery -> {
-				addCommonCriterions(dynamicQuery);
+				_addCommonCriterions(dynamicQuery);
 
 				dynamicQuery.add(createDate.lt(lastCreateDate));
 			});
 
 		actionableDynamicQuery.setPerformActionMethod(
 			(ExportImportConfiguration exportImportConfiguration) -> {
-				List<BackgroundTask> backgroundTasks = getParentBackgroundTasks(
-					exportImportConfiguration);
+				List<BackgroundTask> backgroundTasks =
+					_getParentBackgroundTasks(exportImportConfiguration);
 
 				if (ListUtil.isEmpty(backgroundTasks)) {
 					_exportImportConfigurationLocalService.
@@ -179,7 +162,7 @@ public class DraftExportImportConfigurationMessageListener
 				// configuration automatically
 
 				for (BackgroundTask backgroundTask : backgroundTasks) {
-					if (isLiveGroup(backgroundTask.getGroupId())) {
+					if (_isLiveGroup(backgroundTask.getGroupId())) {
 						continue;
 					}
 
@@ -189,43 +172,6 @@ public class DraftExportImportConfigurationMessageListener
 			});
 
 		actionableDynamicQuery.performActions();
-	}
-
-	protected List<BackgroundTask> getParentBackgroundTasks(
-			ExportImportConfiguration exportImportConfiguration)
-		throws PortalException {
-
-		DynamicQuery dynamicQuery = _backgroundTaskLocalService.dynamicQuery();
-
-		Property completedProperty = PropertyFactoryUtil.forName("completed");
-
-		dynamicQuery.add(completedProperty.eq(Boolean.TRUE));
-
-		Property taskContextMapProperty = PropertyFactoryUtil.forName(
-			"taskContextMap");
-
-		dynamicQuery.add(
-			taskContextMapProperty.like(
-				StringBundler.concat(
-					"%\"exportImportConfigurationId\":",
-					exportImportConfiguration.getExportImportConfigurationId(),
-					StringPool.PERCENT)));
-
-		return _backgroundTaskLocalService.dynamicQuery(dynamicQuery);
-	}
-
-	protected boolean isLiveGroup(long groupId) {
-		Group group = _groupLocalService.fetchGroup(groupId);
-
-		if (group == null) {
-			return false;
-		}
-
-		if (group.hasStagingGroup()) {
-			return true;
-		}
-
-		return false;
 	}
 
 	@Reference(unbind = "-")
@@ -259,6 +205,60 @@ public class DraftExportImportConfigurationMessageListener
 		SchedulerEngineHelper schedulerEngineHelper) {
 
 		_schedulerEngineHelper = schedulerEngineHelper;
+	}
+
+	private void _addCommonCriterions(DynamicQuery dynamicQuery) {
+		Property typeProperty = PropertyFactoryUtil.forName("type");
+
+		dynamicQuery.add(
+			typeProperty.ne(
+				ExportImportConfigurationConstants.
+					TYPE_SCHEDULED_PUBLISH_LAYOUT_LOCAL));
+		dynamicQuery.add(
+			typeProperty.ne(
+				ExportImportConfigurationConstants.
+					TYPE_SCHEDULED_PUBLISH_LAYOUT_REMOTE));
+
+		Property statusProperty = PropertyFactoryUtil.forName("status");
+
+		dynamicQuery.add(statusProperty.eq(WorkflowConstants.STATUS_DRAFT));
+	}
+
+	private List<BackgroundTask> _getParentBackgroundTasks(
+			ExportImportConfiguration exportImportConfiguration)
+		throws PortalException {
+
+		DynamicQuery dynamicQuery = _backgroundTaskLocalService.dynamicQuery();
+
+		Property completedProperty = PropertyFactoryUtil.forName("completed");
+
+		dynamicQuery.add(completedProperty.eq(Boolean.TRUE));
+
+		Property taskContextMapProperty = PropertyFactoryUtil.forName(
+			"taskContextMap");
+
+		dynamicQuery.add(
+			taskContextMapProperty.like(
+				StringBundler.concat(
+					"%\"exportImportConfigurationId\":",
+					exportImportConfiguration.getExportImportConfigurationId(),
+					StringPool.PERCENT)));
+
+		return _backgroundTaskLocalService.dynamicQuery(dynamicQuery);
+	}
+
+	private boolean _isLiveGroup(long groupId) {
+		Group group = _groupLocalService.fetchGroup(groupId);
+
+		if (group == null) {
+			return false;
+		}
+
+		if (group.hasStagingGroup()) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private BackgroundTaskLocalService _backgroundTaskLocalService;

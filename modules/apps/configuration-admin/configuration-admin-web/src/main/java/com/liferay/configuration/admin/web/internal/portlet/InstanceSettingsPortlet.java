@@ -60,7 +60,7 @@ public class InstanceSettingsPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws IOException, PortletException {
 
-		checkCompanyAdmin();
+		_checkCompanyAdmin();
 
 		super.processAction(actionRequest, actionResponse);
 	}
@@ -70,7 +70,7 @@ public class InstanceSettingsPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		checkCompanyAdmin();
+		_checkCompanyAdmin();
 
 		super.render(renderRequest, renderResponse);
 	}
@@ -80,12 +80,12 @@ public class InstanceSettingsPortlet extends MVCPortlet {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws IOException, PortletException {
 
-		checkCompanyAdmin();
+		_checkCompanyAdmin();
 
 		super.serveResource(resourceRequest, resourceResponse);
 	}
 
-	protected void checkCompanyAdmin() throws PortletException {
+	private void _checkCompanyAdmin() throws PortletException {
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 

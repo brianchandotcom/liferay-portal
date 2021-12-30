@@ -71,7 +71,7 @@ public class DepotAdminMembershipsDisplayContextTest {
 
 	@Test
 	public void testGetDepotGroupsWithDepotAndCompanyAdmin() throws Exception {
-		Group group = getDepotGroup();
+		Group group = _getDepotGroup();
 
 		Mockito.when(
 			_user.getGroups()
@@ -85,7 +85,7 @@ public class DepotAdminMembershipsDisplayContextTest {
 					Mockito.mock(ItemSelector.class),
 					_getLiferayPortletRequest(
 						new ThemeDisplayBuilder().withPermissionChecker(
-							getPermissionCheckerWithCompanyAdmin()
+							_getPermissionCheckerWithCompanyAdmin()
 						).build()),
 					null);
 
@@ -99,7 +99,7 @@ public class DepotAdminMembershipsDisplayContextTest {
 	public void testGetDepotGroupsWithDepotAndNoCompanyAdminAndAssignMember()
 		throws Exception {
 
-		Group group = getDepotGroup();
+		Group group = _getDepotGroup();
 
 		Mockito.when(
 			_user.getGroups()
@@ -113,7 +113,7 @@ public class DepotAdminMembershipsDisplayContextTest {
 					Mockito.mock(ItemSelector.class),
 					_getLiferayPortletRequest(
 						new ThemeDisplayBuilder().withPermissionChecker(
-							getPermissionCheckerWithNoCompanyAdminAndAssignMember()
+							_getPermissionCheckerWithNoCompanyAdminAndAssignMember()
 						).build()),
 					null);
 
@@ -127,7 +127,7 @@ public class DepotAdminMembershipsDisplayContextTest {
 	public void testGetDepotGroupsWithDepotAndNoCompanyAdminAndNoAssignMember()
 		throws Exception {
 
-		Group group = getDepotGroup();
+		Group group = _getDepotGroup();
 
 		Mockito.when(
 			_user.getGroups()
@@ -141,7 +141,7 @@ public class DepotAdminMembershipsDisplayContextTest {
 					Mockito.mock(ItemSelector.class),
 					_getLiferayPortletRequest(
 						new ThemeDisplayBuilder().withPermissionChecker(
-							getPermissionCheckerWithNoCompanyAdminAndNoAssignMember()
+							_getPermissionCheckerWithNoCompanyAdminAndNoAssignMember()
 						).build()),
 					null);
 
@@ -153,7 +153,7 @@ public class DepotAdminMembershipsDisplayContextTest {
 
 	@Test
 	public void testGetDepotGroupsWithSite() throws Exception {
-		Group group = getSiteGroup();
+		Group group = _getSiteGroup();
 
 		Mockito.when(
 			_user.getGroups()
@@ -179,7 +179,7 @@ public class DepotAdminMembershipsDisplayContextTest {
 	public void testGetDepotsGroupCountWithDepotAndCompanyAdmin()
 		throws Exception {
 
-		Group group = getDepotGroup();
+		Group group = _getDepotGroup();
 
 		Mockito.when(
 			_user.getGroups()
@@ -193,7 +193,7 @@ public class DepotAdminMembershipsDisplayContextTest {
 					Mockito.mock(ItemSelector.class),
 					_getLiferayPortletRequest(
 						new ThemeDisplayBuilder().withPermissionChecker(
-							getPermissionCheckerWithCompanyAdmin()
+							_getPermissionCheckerWithCompanyAdmin()
 						).build()),
 					null);
 
@@ -215,7 +215,7 @@ public class DepotAdminMembershipsDisplayContextTest {
 					Mockito.mock(ItemSelector.class),
 					_getLiferayPortletRequest(
 						new ThemeDisplayBuilder().withPermissionChecker(
-							getPermissionCheckerWithCompanyAdmin()
+							_getPermissionCheckerWithCompanyAdmin()
 						).build()),
 					null);
 
@@ -223,7 +223,7 @@ public class DepotAdminMembershipsDisplayContextTest {
 			0, depotAdminMembershipsDisplayContext.getDepotGroupsCount());
 	}
 
-	protected Group getDepotGroup() {
+	private Group _getDepotGroup() {
 		Group group = Mockito.mock(Group.class);
 
 		Mockito.when(
@@ -234,79 +234,6 @@ public class DepotAdminMembershipsDisplayContextTest {
 
 		Mockito.when(
 			group.isDepot()
-		).thenReturn(
-			true
-		);
-
-		return group;
-	}
-
-	protected PermissionChecker getPermissionCheckerWithCompanyAdmin() {
-		PermissionChecker permissionChecker = Mockito.mock(
-			PermissionChecker.class);
-
-		Mockito.when(
-			permissionChecker.isCompanyAdmin()
-		).thenReturn(
-			true
-		);
-
-		return permissionChecker;
-	}
-
-	protected PermissionChecker
-			getPermissionCheckerWithNoCompanyAdminAndAssignMember()
-		throws PortalException {
-
-		PermissionChecker permissionChecker = Mockito.mock(
-			PermissionChecker.class);
-
-		Mockito.when(
-			permissionChecker.isCompanyAdmin()
-		).thenReturn(
-			false
-		);
-
-		Mockito.when(
-			GroupPermissionUtil.contains(
-				Mockito.any(PermissionChecker.class), Mockito.any(Group.class),
-				Mockito.anyString())
-		).thenReturn(
-			true
-		);
-
-		return permissionChecker;
-	}
-
-	protected PermissionChecker
-			getPermissionCheckerWithNoCompanyAdminAndNoAssignMember()
-		throws PortalException {
-
-		PermissionChecker permissionChecker = Mockito.mock(
-			PermissionChecker.class);
-
-		Mockito.when(
-			permissionChecker.isCompanyAdmin()
-		).thenReturn(
-			false
-		);
-
-		Mockito.when(
-			GroupPermissionUtil.contains(
-				Mockito.any(PermissionChecker.class), Mockito.any(Group.class),
-				Mockito.anyString())
-		).thenReturn(
-			false
-		);
-
-		return permissionChecker;
-	}
-
-	protected Group getSiteGroup() {
-		Group group = Mockito.mock(Group.class);
-
-		Mockito.when(
-			group.isSite()
 		).thenReturn(
 			true
 		);
@@ -327,6 +254,79 @@ public class DepotAdminMembershipsDisplayContextTest {
 		);
 
 		return liferayPortletRequest;
+	}
+
+	private PermissionChecker _getPermissionCheckerWithCompanyAdmin() {
+		PermissionChecker permissionChecker = Mockito.mock(
+			PermissionChecker.class);
+
+		Mockito.when(
+			permissionChecker.isCompanyAdmin()
+		).thenReturn(
+			true
+		);
+
+		return permissionChecker;
+	}
+
+	private PermissionChecker
+			_getPermissionCheckerWithNoCompanyAdminAndAssignMember()
+		throws PortalException {
+
+		PermissionChecker permissionChecker = Mockito.mock(
+			PermissionChecker.class);
+
+		Mockito.when(
+			permissionChecker.isCompanyAdmin()
+		).thenReturn(
+			false
+		);
+
+		Mockito.when(
+			GroupPermissionUtil.contains(
+				Mockito.any(PermissionChecker.class), Mockito.any(Group.class),
+				Mockito.anyString())
+		).thenReturn(
+			true
+		);
+
+		return permissionChecker;
+	}
+
+	private PermissionChecker
+			_getPermissionCheckerWithNoCompanyAdminAndNoAssignMember()
+		throws PortalException {
+
+		PermissionChecker permissionChecker = Mockito.mock(
+			PermissionChecker.class);
+
+		Mockito.when(
+			permissionChecker.isCompanyAdmin()
+		).thenReturn(
+			false
+		);
+
+		Mockito.when(
+			GroupPermissionUtil.contains(
+				Mockito.any(PermissionChecker.class), Mockito.any(Group.class),
+				Mockito.anyString())
+		).thenReturn(
+			false
+		);
+
+		return permissionChecker;
+	}
+
+	private Group _getSiteGroup() {
+		Group group = Mockito.mock(Group.class);
+
+		Mockito.when(
+			group.isSite()
+		).thenReturn(
+			true
+		);
+
+		return group;
 	}
 
 	private static User _user;

@@ -101,7 +101,7 @@ public class LiferaySyncCapability
 			_workflowUpdateFileEntryEventListener);
 	}
 
-	protected boolean isStagingGroup(long groupId) {
+	private boolean _isStagingGroup(long groupId) {
 		try {
 			Group group = _groupServiceAdapter.getGroup(groupId);
 
@@ -116,11 +116,11 @@ public class LiferaySyncCapability
 		}
 	}
 
-	protected void registerDLSyncEventCallback(
+	private void _registerDLSyncEventCallback(
 		String event, FileEntry fileEntry) {
 
 		if (!CTCollectionThreadLocal.isProductionMode() ||
-			isStagingGroup(fileEntry.getGroupId()) ||
+			_isStagingGroup(fileEntry.getGroupId()) ||
 			!(fileEntry instanceof LiferayFileEntry)) {
 
 			return;
@@ -137,23 +137,23 @@ public class LiferaySyncCapability
 			_log.error(exception, exception);
 		}
 
-		registerDLSyncEventCallback(
+		_registerDLSyncEventCallback(
 			event, DLSyncConstants.TYPE_FILE, fileEntry.getFileEntryId());
 	}
 
-	protected void registerDLSyncEventCallback(String event, Folder folder) {
+	private void _registerDLSyncEventCallback(String event, Folder folder) {
 		if (!CTCollectionThreadLocal.isProductionMode() ||
-			isStagingGroup(folder.getGroupId()) ||
+			_isStagingGroup(folder.getGroupId()) ||
 			!(folder instanceof LiferayFolder)) {
 
 			return;
 		}
 
-		registerDLSyncEventCallback(
+		_registerDLSyncEventCallback(
 			event, DLSyncConstants.TYPE_FOLDER, folder.getFolderId());
 	}
 
-	protected void registerDLSyncEventCallback(
+	private void _registerDLSyncEventCallback(
 		String event, String type, long typePK) {
 
 		DLSyncEvent dlSyncEvent = _dlSyncEventLocalService.addDLSyncEvent(
@@ -254,7 +254,7 @@ public class LiferaySyncCapability
 
 		@Override
 		public void execute(FileEntry fileEntry) {
-			registerDLSyncEventCallback(_syncEvent, fileEntry);
+			_registerDLSyncEventCallback(_syncEvent, fileEntry);
 		}
 
 		private final String _syncEvent;
@@ -271,7 +271,7 @@ public class LiferaySyncCapability
 
 		@Override
 		public void execute(Folder folder) {
-			registerDLSyncEventCallback(_syncEvent, folder);
+			_registerDLSyncEventCallback(_syncEvent, folder);
 		}
 
 		private final String _syncEvent;

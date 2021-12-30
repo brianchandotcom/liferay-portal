@@ -69,7 +69,7 @@ public class TemporaryFileEntriesCapabilityImpl
 			String fileName, String mimeType, InputStream inputStream)
 		throws PortalException {
 
-		Folder folder = addTempFolder(temporaryFileEntriesScope);
+		Folder folder = _addTempFolder(temporaryFileEntriesScope);
 
 		File file = null;
 
@@ -157,7 +157,7 @@ public class TemporaryFileEntriesCapabilityImpl
 		throws PortalException {
 
 		try {
-			Folder folder = addTempFolder(temporaryFileEntriesScope);
+			Folder folder = _addTempFolder(temporaryFileEntriesScope);
 
 			return _documentRepository.getRepositoryFileEntries(
 				temporaryFileEntriesScope.getUserId(), folder.getFolderId(),
@@ -197,7 +197,7 @@ public class TemporaryFileEntriesCapabilityImpl
 			String fileName)
 		throws PortalException {
 
-		Folder folder = getTempFolder(temporaryFileEntriesScope);
+		Folder folder = _getTempFolder(temporaryFileEntriesScope);
 
 		return _documentRepository.getFileEntry(folder.getFolderId(), fileName);
 	}
@@ -214,7 +214,7 @@ public class TemporaryFileEntriesCapabilityImpl
 			String.valueOf(temporaryFileEntriesTimeout));
 	}
 
-	protected Folder addFolder(
+	private Folder _addFolder(
 			long userId, long parentFolderId, String folderName,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -236,7 +236,7 @@ public class TemporaryFileEntriesCapabilityImpl
 		}
 	}
 
-	protected Folder addFolders(
+	private Folder _addFolders(
 			long userId, long folderId, String folderPath,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -246,7 +246,7 @@ public class TemporaryFileEntriesCapabilityImpl
 		String[] folderNames = StringUtil.split(folderPath, StringPool.SLASH);
 
 		for (String folderName : folderNames) {
-			folder = addFolder(userId, folderId, folderName, serviceContext);
+			folder = _addFolder(userId, folderId, folderName, serviceContext);
 
 			folderId = folder.getFolderId();
 		}
@@ -254,7 +254,7 @@ public class TemporaryFileEntriesCapabilityImpl
 		return folder;
 	}
 
-	protected Folder addTempFolder(
+	private Folder _addTempFolder(
 			TemporaryFileEntriesScope temporaryFileEntriesScope)
 		throws PortalException {
 
@@ -263,13 +263,13 @@ public class TemporaryFileEntriesCapabilityImpl
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
 
-		return addFolders(
+		return _addFolders(
 			temporaryFileEntriesScope.getUserId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			_getFolderPath(temporaryFileEntriesScope), serviceContext);
 	}
 
-	protected Folder getDeepestFolder(long parentFolderId, String folderPath)
+	private Folder _getDeepestFolder(long parentFolderId, String folderPath)
 		throws PortalException {
 
 		Folder folder = null;
@@ -285,20 +285,6 @@ public class TemporaryFileEntriesCapabilityImpl
 		return folder;
 	}
 
-	protected Folder getTempFolder(
-			TemporaryFileEntriesScope temporaryFileEntriesScope)
-		throws PortalException {
-
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
-
-		return getDeepestFolder(
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			_getFolderPath(temporaryFileEntriesScope));
-	}
-
 	private String _getFolderPath(
 		TemporaryFileEntriesScope temporaryFileEntriesScope) {
 
@@ -307,6 +293,20 @@ public class TemporaryFileEntriesCapabilityImpl
 			temporaryFileEntriesScope.getCallerUuid(), StringPool.SLASH,
 			temporaryFileEntriesScope.getUserId(), StringPool.SLASH,
 			temporaryFileEntriesScope.getFolderPath());
+	}
+
+	private Folder _getTempFolder(
+			TemporaryFileEntriesScope temporaryFileEntriesScope)
+		throws PortalException {
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+
+		return _getDeepestFolder(
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			_getFolderPath(temporaryFileEntriesScope));
 	}
 
 	private void _runWithoutSystemEvents(

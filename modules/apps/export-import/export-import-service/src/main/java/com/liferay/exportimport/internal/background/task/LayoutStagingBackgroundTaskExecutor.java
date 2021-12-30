@@ -223,7 +223,7 @@ public class LayoutStagingBackgroundTaskExecutor
 		return new LayoutStagingBackgroundTaskDisplay(backgroundTask);
 	}
 
-	protected void initLayoutSetBranches(
+	private void _initLayoutSetBranches(
 			long userId, long sourceGroupId, long targetGroupId)
 		throws PortalException {
 
@@ -285,7 +285,7 @@ public class LayoutStagingBackgroundTaskExecutor
 			ExportImportLocalServiceUtil.importLayouts(
 				_exportImportConfiguration, _file);
 
-			initLayoutSetBranches(_userId, _sourceGroupId, _targetGroupId);
+			_initLayoutSetBranches(_userId, _sourceGroupId, _targetGroupId);
 
 			return missingReferences;
 		}

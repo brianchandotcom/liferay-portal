@@ -47,27 +47,7 @@ public class StagingConfigurationClassNamesUpgradeProcess
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		updateStagingConfiguration();
-	}
-
-	protected void updateStagingConfiguration() throws Exception {
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				SQLTransformer.transform(
-					"select groupId, companyId, typeSettings from Group_ " +
-						"where liveGroupId = 0 and site = [$TRUE$] and " +
-							"typeSettings like '%staged=true%'"))) {
-
-			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				while (resultSet.next()) {
-					long groupId = resultSet.getLong("groupId");
-					long companyId = resultSet.getLong("companyId");
-					String typeSettings = resultSet.getString("typeSettings");
-
-					_updateStagingConfiguration(
-						groupId, companyId, typeSettings);
-				}
-			}
-		}
+		_updateStagingConfiguration();
 	}
 
 	private Map<String, String> _createAdminPortletIdsMap(long companyId)
@@ -107,6 +87,26 @@ public class StagingConfigurationClassNamesUpgradeProcess
 		}
 
 		return adminPortletIdsMap;
+	}
+
+	private void _updateStagingConfiguration() throws Exception {
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				SQLTransformer.transform(
+					"select groupId, companyId, typeSettings from Group_ " +
+						"where liveGroupId = 0 and site = [$TRUE$] and " +
+							"typeSettings like '%staged=true%'"))) {
+
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				while (resultSet.next()) {
+					long groupId = resultSet.getLong("groupId");
+					long companyId = resultSet.getLong("companyId");
+					String typeSettings = resultSet.getString("typeSettings");
+
+					_updateStagingConfiguration(
+						groupId, companyId, typeSettings);
+				}
+			}
+		}
 	}
 
 	private void _updateStagingConfiguration(

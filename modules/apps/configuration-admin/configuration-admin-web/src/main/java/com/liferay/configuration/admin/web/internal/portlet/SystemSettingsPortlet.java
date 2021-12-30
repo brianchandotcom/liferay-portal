@@ -61,7 +61,7 @@ public class SystemSettingsPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws IOException, PortletException {
 
-		checkOmniAdmin();
+		_checkOmniAdmin();
 
 		super.processAction(actionRequest, actionResponse);
 	}
@@ -71,7 +71,7 @@ public class SystemSettingsPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		checkOmniAdmin();
+		_checkOmniAdmin();
 
 		super.render(renderRequest, renderResponse);
 	}
@@ -81,12 +81,12 @@ public class SystemSettingsPortlet extends MVCPortlet {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws IOException, PortletException {
 
-		checkOmniAdmin();
+		_checkOmniAdmin();
 
 		super.serveResource(resourceRequest, resourceResponse);
 	}
 
-	protected void checkOmniAdmin() throws PortletException {
+	private void _checkOmniAdmin() throws PortletException {
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 

@@ -42,17 +42,6 @@ public class LayoutStagingBackgroundTaskStatusMessageTranslator
 			currentModelAdditionCountersTotal;
 	}
 
-	protected long getAllPortletAdditionCounter(
-		BackgroundTaskStatus backgroundTaskStatus) {
-
-		long allPortletAdditionCounter = GetterUtil.getLong(
-			backgroundTaskStatus.getAttribute("allPortletAdditionCounter"));
-		long currentPortletAdditionCounter = GetterUtil.getLong(
-			backgroundTaskStatus.getAttribute("currentPortletAdditionCounter"));
-
-		return allPortletAdditionCounter + currentPortletAdditionCounter;
-	}
-
 	@Override
 	protected synchronized void translateLayoutMessage(
 		BackgroundTaskStatus backgroundTaskStatus, Message message) {
@@ -79,7 +68,7 @@ public class LayoutStagingBackgroundTaskStatusMessageTranslator
 				getAllModelAdditionCountersTotal(backgroundTaskStatus));
 			backgroundTaskStatus.setAttribute(
 				"allPortletAdditionCounter",
-				getAllPortletAdditionCounter(backgroundTaskStatus));
+				_getAllPortletAdditionCounter(backgroundTaskStatus));
 			backgroundTaskStatus.setAttribute(
 				"allPortletModelAdditionCounters",
 				new HashMap<String, LongWrapper>());
@@ -87,6 +76,17 @@ public class LayoutStagingBackgroundTaskStatusMessageTranslator
 				"currentPortletModelAdditionCounters",
 				new HashMap<String, LongWrapper>());
 		}
+	}
+
+	private long _getAllPortletAdditionCounter(
+		BackgroundTaskStatus backgroundTaskStatus) {
+
+		long allPortletAdditionCounter = GetterUtil.getLong(
+			backgroundTaskStatus.getAttribute("allPortletAdditionCounter"));
+		long currentPortletAdditionCounter = GetterUtil.getLong(
+			backgroundTaskStatus.getAttribute("currentPortletAdditionCounter"));
+
+		return allPortletAdditionCounter + currentPortletAdditionCounter;
 	}
 
 }

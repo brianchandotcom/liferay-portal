@@ -38,7 +38,7 @@ public class DEDataListViewModelDocumentContributor
 		document.addKeyword(
 			"ddmStructureId", deDataListView.getDdmStructureId());
 
-		String[] languageIds = getLanguageIds(
+		String[] languageIds = _getLanguageIds(
 			deDataListView.getDefaultLanguageId(), deDataListView.getName());
 
 		for (String languageId : languageIds) {
@@ -56,9 +56,7 @@ public class DEDataListViewModelDocumentContributor
 			true, true);
 	}
 
-	protected String[] getLanguageIds(
-		String defaultLanguageId, String content) {
-
+	private String[] _getLanguageIds(String defaultLanguageId, String content) {
 		String[] languageIds = LocalizationUtil.getAvailableLanguageIds(
 			content);
 

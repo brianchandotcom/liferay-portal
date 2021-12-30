@@ -102,8 +102,9 @@ public class InviteMembersUserNotificationHandler
 
 		String title = ResourceBundleUtil.getString(
 			resourceBundle, "x-invited-you-to-join-x",
-			getUserNameLink(memberRequest.getUserId(), serviceContext),
-			getSiteDescriptiveName(memberRequest.getGroupId(), serviceContext));
+			_getUserNameLink(memberRequest.getUserId(), serviceContext),
+			_getSiteDescriptiveName(
+				memberRequest.getGroupId(), serviceContext));
 
 		LiferayPortletResponse liferayPortletResponse =
 			serviceContext.getLiferayPortletResponse();
@@ -160,7 +161,31 @@ public class InviteMembersUserNotificationHandler
 		return StringPool.BLANK;
 	}
 
-	protected String getSiteDescriptiveName(
+	@Reference(unbind = "-")
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setMemberRequestLocalService(
+		MemberRequestLocalService memberRequestLocalService) {
+
+		_memberRequestLocalService = memberRequestLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserNotificationEventLocalService(
+		UserNotificationEventLocalService userNotificationEventLocalService) {
+
+		_userNotificationEventLocalService = userNotificationEventLocalService;
+	}
+
+	private String _getSiteDescriptiveName(
 			long groupId, ServiceContext serviceContext)
 		throws Exception {
 
@@ -193,7 +218,7 @@ public class InviteMembersUserNotificationHandler
 		return sb.toString();
 	}
 
-	protected String getUserNameLink(
+	private String _getUserNameLink(
 		long userId, ServiceContext serviceContext) {
 
 		try {
@@ -219,30 +244,6 @@ public class InviteMembersUserNotificationHandler
 
 			return StringPool.BLANK;
 		}
-	}
-
-	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setMemberRequestLocalService(
-		MemberRequestLocalService memberRequestLocalService) {
-
-		_memberRequestLocalService = memberRequestLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserLocalService(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserNotificationEventLocalService(
-		UserNotificationEventLocalService userNotificationEventLocalService) {
-
-		_userNotificationEventLocalService = userNotificationEventLocalService;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

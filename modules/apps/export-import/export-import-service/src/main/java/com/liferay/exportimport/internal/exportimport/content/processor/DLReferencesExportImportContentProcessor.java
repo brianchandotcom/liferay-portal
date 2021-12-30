@@ -84,7 +84,7 @@ public class DLReferencesExportImportContentProcessor
 			boolean escapeContent)
 		throws Exception {
 
-		return replaceExportDLReferences(
+		return _replaceExportDLReferences(
 			portletDataContext, stagedModel, content, exportReferencedContent);
 	}
 
@@ -94,7 +94,7 @@ public class DLReferencesExportImportContentProcessor
 			String content)
 		throws Exception {
 
-		return replaceImportDLReferences(
+		return _replaceImportDLReferences(
 			portletDataContext, stagedModel, content);
 	}
 
@@ -102,18 +102,25 @@ public class DLReferencesExportImportContentProcessor
 	public void validateContentReferences(long groupId, String content)
 		throws PortalException {
 
-		if (isValidateDLReferences()) {
-			validateDLReferences(groupId, content);
+		if (_isValidateDLReferences()) {
+			_validateDLReferences(groupId, content);
 		}
 	}
 
-	protected ObjectValuePair<String, Integer>
-		getDLReferenceEndPosObjectValuePair(
+	@Reference(unbind = "-")
+	protected void setConfigurationProvider(
+		ConfigurationProvider configurationProvider) {
+
+		_configurationProvider = configurationProvider;
+	}
+
+	private ObjectValuePair<String, Integer>
+		_getDLReferenceEndPosObjectValuePair(
 			String content, int beginPos, int endPos) {
 
 		String[] stopStrings = _DL_REFERENCE_LEGACY_STOP_STRINGS;
 
-		if (!isLegacyURL(content, beginPos)) {
+		if (!_isLegacyURL(content, beginPos)) {
 			stopStrings = _DL_REFERENCE_STOP_STRINGS;
 		}
 
@@ -132,17 +139,17 @@ public class DLReferencesExportImportContentProcessor
 			content.substring(beginPos, urlPatternPos), urlPatternPos);
 	}
 
-	protected Map<String, String[]> getDLReferenceParameters(
+	private Map<String, String[]> _getDLReferenceParameters(
 		long groupId, String content, int beginPos, int endPos) {
 
 		ObjectValuePair<String, Integer> dlReferenceEndPosObjectValuePair =
-			getDLReferenceEndPosObjectValuePair(content, beginPos, endPos);
+			_getDLReferenceEndPosObjectValuePair(content, beginPos, endPos);
 
 		if (dlReferenceEndPosObjectValuePair == null) {
 			return null;
 		}
 
-		boolean legacyURL = isLegacyURL(content, beginPos);
+		boolean legacyURL = _isLegacyURL(content, beginPos);
 
 		Map<String, String[]> map = new HashMap<>();
 
@@ -227,7 +234,7 @@ public class DLReferencesExportImportContentProcessor
 		return map;
 	}
 
-	protected FileEntry getFileEntry(Map<String, String[]> map) {
+	private FileEntry _getFileEntry(Map<String, String[]> map) {
 		if (MapUtil.isEmpty(map)) {
 			return null;
 		}
@@ -302,7 +309,19 @@ public class DLReferencesExportImportContentProcessor
 		return fileEntry;
 	}
 
-	protected boolean isLegacyURL(String content, int beginPos) {
+	private String _getUuid(String s) {
+		Matcher matcher = _uuidPattern.matcher(s);
+
+		String uuid = StringPool.BLANK;
+
+		while (matcher.find()) {
+			uuid = matcher.group(0);
+		}
+
+		return uuid;
+	}
+
+	private boolean _isLegacyURL(String content, int beginPos) {
 		if (content.startsWith("/documents/", beginPos)) {
 			return false;
 		}
@@ -310,7 +329,7 @@ public class DLReferencesExportImportContentProcessor
 		return true;
 	}
 
-	protected boolean isValidateDLReferences() {
+	private boolean _isValidateDLReferences() {
 		try {
 			ExportImportServiceConfiguration configuration =
 				_configurationProvider.getCompanyConfiguration(
@@ -326,7 +345,7 @@ public class DLReferencesExportImportContentProcessor
 		return true;
 	}
 
-	protected String replaceExportDLReferences(
+	private String _replaceExportDLReferences(
 			PortletDataContext portletDataContext, StagedModel stagedModel,
 			String content, boolean exportReferencedContent)
 		throws Exception {
@@ -366,11 +385,11 @@ public class DLReferencesExportImportContentProcessor
 			}
 
 			Map<String, String[]> dlReferenceParameters =
-				getDLReferenceParameters(
+				_getDLReferenceParameters(
 					portletDataContext.getScopeGroupId(), content,
 					beginPos + contextPath.length(), endPos);
 
-			FileEntry fileEntry = getFileEntry(dlReferenceParameters);
+			FileEntry fileEntry = _getFileEntry(dlReferenceParameters);
 
 			if (fileEntry == null) {
 				endPos = beginPos - 1;
@@ -459,7 +478,7 @@ public class DLReferencesExportImportContentProcessor
 		return sb.toString();
 	}
 
-	protected String replaceImportDLReferences(
+	private String _replaceImportDLReferences(
 			PortletDataContext portletDataContext, StagedModel stagedModel,
 			String content)
 		throws Exception {
@@ -611,14 +630,7 @@ public class DLReferencesExportImportContentProcessor
 		return content;
 	}
 
-	@Reference(unbind = "-")
-	protected void setConfigurationProvider(
-		ConfigurationProvider configurationProvider) {
-
-		_configurationProvider = configurationProvider;
-	}
-
-	protected void validateDLReferences(long groupId, String content)
+	private void _validateDLReferences(long groupId, String content)
 		throws PortalException {
 
 		String pathContext = _portal.getPathContext();
@@ -640,7 +652,7 @@ public class DLReferencesExportImportContentProcessor
 			}
 
 			Map<String, String[]> dlReferenceParameters =
-				getDLReferenceParameters(
+				_getDLReferenceParameters(
 					groupId, content, beginPos + pathContext.length(), endPos);
 
 			if (dlReferenceParameters == null) {
@@ -649,7 +661,7 @@ public class DLReferencesExportImportContentProcessor
 				continue;
 			}
 
-			FileEntry fileEntry = getFileEntry(dlReferenceParameters);
+			FileEntry fileEntry = _getFileEntry(dlReferenceParameters);
 
 			if (fileEntry == null) {
 				boolean absolutePortalURL = false;
@@ -728,7 +740,7 @@ public class DLReferencesExportImportContentProcessor
 
 					ObjectValuePair<String, Integer>
 						dlReferenceEndPosObjectValuePair =
-							getDLReferenceEndPosObjectValuePair(
+							_getDLReferenceEndPosObjectValuePair(
 								content, beginPos, endPos);
 
 					exportImportContentValidationException.setDlReference(
@@ -744,18 +756,6 @@ public class DLReferencesExportImportContentProcessor
 
 			endPos = beginPos - 1;
 		}
-	}
-
-	private String _getUuid(String s) {
-		Matcher matcher = _uuidPattern.matcher(s);
-
-		String uuid = StringPool.BLANK;
-
-		while (matcher.find()) {
-			uuid = matcher.group(0);
-		}
-
-		return uuid;
 	}
 
 	private static final String[] _DL_REFERENCE_LEGACY_STOP_STRINGS = {

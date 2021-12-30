@@ -210,7 +210,7 @@ public class DataEngineExpandoBridgeImpl implements ExpandoBridge {
 			dataDefinition.setDataDefinitionFields(
 				ArrayUtil.append(
 					dataDefinitionFields,
-					createDataDefinitionField(defaultValue, fieldType, name)));
+					_createDataDefinitionField(defaultValue, fieldType, name)));
 
 			_dataDefinitionResource.putDataDefinition(
 				dataDefinition.getId(), dataDefinition);
@@ -560,7 +560,7 @@ public class DataEngineExpandoBridgeImpl implements ExpandoBridge {
 	public void setIndexEnabled(boolean indexEnabled) {
 	}
 
-	protected DataDefinitionField createDataDefinitionField(
+	private DataDefinitionField _createDataDefinitionField(
 		Serializable defaultValue, String fieldType, String name) {
 
 		DataDefinitionField dataDefinitionField = new DataDefinitionField();

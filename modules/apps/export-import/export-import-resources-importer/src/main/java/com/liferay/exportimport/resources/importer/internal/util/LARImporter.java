@@ -71,7 +71,7 @@ public class LARImporter extends BaseImporter {
 			ExportImportConfigurationSettingsMapFactoryUtil.
 				buildImportLayoutSettingsMap(
 					userId, groupId, privateLayout, layoutIds,
-					getParameterMap(), user.getLocale(), user.getTimeZone());
+					_getParameterMap(), user.getLocale(), user.getTimeZone());
 
 		ExportImportConfiguration exportImportConfiguration =
 			ExportImportConfigurationLocalServiceUtil.
@@ -112,7 +112,7 @@ public class LARImporter extends BaseImporter {
 		_publicLARInputStream = publicLARInputStream;
 	}
 
-	protected Map<String, String[]> getParameterMap() {
+	private Map<String, String[]> _getParameterMap() {
 		return HashMapBuilder.put(
 			PortletDataHandlerKeys.DELETE_MISSING_LAYOUTS,
 			new String[] {Boolean.TRUE.toString()}

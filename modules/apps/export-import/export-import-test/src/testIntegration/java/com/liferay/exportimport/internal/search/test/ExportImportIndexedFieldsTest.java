@@ -69,7 +69,7 @@ public class ExportImportIndexedFieldsTest {
 
 		setUpExportImportIndexerFixture();
 
-		setUpIndexedFieldsFixture();
+		_setUpIndexedFieldsFixture();
 	}
 
 	@Test
@@ -102,11 +102,6 @@ public class ExportImportIndexedFieldsTest {
 	protected void setUpExportImportIndexerFixture() {
 		exportImportIndexerFixture = new IndexerFixture<>(
 			ExportImportConfiguration.class);
-	}
-
-	protected void setUpIndexedFieldsFixture() {
-		indexedFieldsFixture = new IndexedFieldsFixture(
-			resourcePermissionLocalService);
 	}
 
 	protected void setUpUserSearchFixture() throws Exception {
@@ -217,6 +212,11 @@ public class ExportImportIndexedFieldsTest {
 		indexedFieldsFixture.populateDate(
 			Field.MODIFIED_DATE, exportImportConfiguration.getModifiedDate(),
 			map);
+	}
+
+	private void _setUpIndexedFieldsFixture() {
+		indexedFieldsFixture = new IndexedFieldsFixture(
+			resourcePermissionLocalService);
 	}
 
 	@DeleteAfterTestRun

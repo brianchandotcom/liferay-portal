@@ -130,29 +130,6 @@ public class ExportImportChangesetMVCActionCommandImpl
 		}
 	}
 
-	protected void sendRedirect(
-			ActionRequest actionRequest, ActionResponse actionResponse,
-			long backgroundTaskId)
-		throws IOException {
-
-		actionRequest.setAttribute(
-			WebKeys.REDIRECT,
-			PortletURLBuilder.createRenderURL(
-				_portal.getLiferayPortletResponse(actionResponse),
-				ExportImportPortletKeys.EXPORT_IMPORT
-			).setMVCPath(
-				"/view_export_import.jsp"
-			).setBackURL(
-				actionRequest.getParameter("backURL")
-			).setParameter(
-				"backgroundTaskId", backgroundTaskId
-			).buildString());
-
-		hideDefaultSuccessMessage(actionRequest);
-
-		sendRedirect(actionRequest, actionResponse);
-	}
-
 	private void _processExportAndPublishAction(
 			ActionRequest actionRequest, ActionResponse actionResponse,
 			String cmd, String changesetUuid)
@@ -312,7 +289,30 @@ public class ExportImportChangesetMVCActionCommandImpl
 				themeDisplay.getUserId(), exportImportConfiguration);
 		}
 
-		sendRedirect(actionRequest, actionResponse, backgroundTaskId);
+		_sendRedirect(actionRequest, actionResponse, backgroundTaskId);
+	}
+
+	private void _sendRedirect(
+			ActionRequest actionRequest, ActionResponse actionResponse,
+			long backgroundTaskId)
+		throws IOException {
+
+		actionRequest.setAttribute(
+			WebKeys.REDIRECT,
+			PortletURLBuilder.createRenderURL(
+				_portal.getLiferayPortletResponse(actionResponse),
+				ExportImportPortletKeys.EXPORT_IMPORT
+			).setMVCPath(
+				"/view_export_import.jsp"
+			).setBackURL(
+				actionRequest.getParameter("backURL")
+			).setParameter(
+				"backgroundTaskId", backgroundTaskId
+			).buildString());
+
+		hideDefaultSuccessMessage(actionRequest);
+
+		sendRedirect(actionRequest, actionResponse);
 	}
 
 	@Reference

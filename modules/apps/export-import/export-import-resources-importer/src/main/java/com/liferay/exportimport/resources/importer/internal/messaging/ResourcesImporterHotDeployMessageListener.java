@@ -124,46 +124,9 @@ public class ResourcesImporterHotDeployMessageListener
 		_bundleContext = null;
 	}
 
-	protected void initialize(Message message) throws Exception {
-		String servletContextName = message.getString("servletContextName");
-
-		ServletContext servletContext = _serviceTrackerMap.getService(
-			servletContextName);
-
-		if (servletContext == null) {
-			return;
-		}
-
-		PluginPackageProperties pluginPackageProperties =
-			new PluginPackageProperties(servletContext);
-
-		if ((servletContext.getResource(ImporterFactory.RESOURCES_DIR) ==
-				null) &&
-			(servletContext.getResource(ImporterFactory.TEMPLATES_DIR) ==
-				null) &&
-			Validator.isNull(pluginPackageProperties.getResourcesDir())) {
-
-			return;
-		}
-
-		try {
-			ExportImportThreadLocal.setLayoutImportInProcess(true);
-			ExportImportThreadLocal.setPortletImportInProcess(true);
-
-			_companyLocalService.forEachCompany(
-				company -> _importResources(
-					company, servletContext, pluginPackageProperties,
-					message.getResponseId()));
-		}
-		finally {
-			ExportImportThreadLocal.setLayoutImportInProcess(false);
-			ExportImportThreadLocal.setPortletImportInProcess(false);
-		}
-	}
-
 	@Override
 	protected void onDeploy(Message message) throws Exception {
-		initialize(message);
+		_initialize(message);
 	}
 
 	@Reference(
@@ -273,6 +236,43 @@ public class ResourcesImporterHotDeployMessageListener
 		}
 		finally {
 			CompanyThreadLocal.setCompanyId(companyId);
+		}
+	}
+
+	private void _initialize(Message message) throws Exception {
+		String servletContextName = message.getString("servletContextName");
+
+		ServletContext servletContext = _serviceTrackerMap.getService(
+			servletContextName);
+
+		if (servletContext == null) {
+			return;
+		}
+
+		PluginPackageProperties pluginPackageProperties =
+			new PluginPackageProperties(servletContext);
+
+		if ((servletContext.getResource(ImporterFactory.RESOURCES_DIR) ==
+				null) &&
+			(servletContext.getResource(ImporterFactory.TEMPLATES_DIR) ==
+				null) &&
+			Validator.isNull(pluginPackageProperties.getResourcesDir())) {
+
+			return;
+		}
+
+		try {
+			ExportImportThreadLocal.setLayoutImportInProcess(true);
+			ExportImportThreadLocal.setPortletImportInProcess(true);
+
+			_companyLocalService.forEachCompany(
+				company -> _importResources(
+					company, servletContext, pluginPackageProperties,
+					message.getResponseId()));
+		}
+		finally {
+			ExportImportThreadLocal.setLayoutImportInProcess(false);
+			ExportImportThreadLocal.setPortletImportInProcess(false);
 		}
 	}
 

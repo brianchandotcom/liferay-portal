@@ -85,7 +85,7 @@ public class LuceneRepositorySearchQueryTermBuilder
 				query = queryParser.parse(KeywordsUtil.escape(value));
 			}
 
-			translateQuery(
+			_translateQuery(
 				booleanQuery, searchContext, query, BooleanClause.Occur.SHOULD);
 		}
 		catch (Exception exception) {
@@ -124,7 +124,7 @@ public class LuceneRepositorySearchQueryTermBuilder
 		return BooleanClause.Occur.SHOULD;
 	}
 
-	protected void translateQuery(
+	private void _translateQuery(
 			BooleanQuery booleanQuery, SearchContext searchContext, Query query,
 			BooleanClause.Occur occur)
 		throws Exception {
@@ -164,7 +164,7 @@ public class LuceneRepositorySearchQueryTermBuilder
 					subbooleanQuery = conjunctionQuery;
 				}
 
-				translateQuery(
+				_translateQuery(
 					subbooleanQuery, searchContext, booleanClause.getQuery(),
 					booleanClause.getOccur());
 			}

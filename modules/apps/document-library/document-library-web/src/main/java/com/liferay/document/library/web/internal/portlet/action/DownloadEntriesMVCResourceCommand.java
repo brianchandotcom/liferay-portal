@@ -111,11 +111,6 @@ public class DownloadEntriesMVCResourceCommand implements MVCResourceCommand {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws IOException, PortalException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		long folderId = ParamUtil.getLong(resourceRequest, "folderId");
-
 		List<FileEntry> fileEntries = ActionUtil.getFileEntries(
 			resourceRequest);
 
@@ -154,6 +149,12 @@ public class DownloadEntriesMVCResourceCommand implements MVCResourceCommand {
 				HttpHeaders.CONTENT_DISPOSITION_ATTACHMENT);
 		}
 		else {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)resourceRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			long folderId = ParamUtil.getLong(resourceRequest, "folderId");
+
 			String zipFileName = _getZipFileName(folderId, themeDisplay);
 
 			ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();

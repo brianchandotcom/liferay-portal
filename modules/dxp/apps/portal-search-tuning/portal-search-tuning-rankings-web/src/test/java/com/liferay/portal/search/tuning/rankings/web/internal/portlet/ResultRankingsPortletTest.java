@@ -57,6 +57,8 @@ public class ResultRankingsPortletTest extends BaseRankingsWebTestCase {
 
 		_setUpMVCCommanCache();
 
+		setUpPortletPreferencesFactoryUtil();
+
 		ReflectionTestUtil.setFieldValue(
 			_resultRankingsPortlet, "documentToRankingTranslator",
 			_documentToRankingTranslator);

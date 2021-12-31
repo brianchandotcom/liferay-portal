@@ -55,6 +55,8 @@ public class SynonymsDisplayBuilderTest extends BaseSynonymsWebTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 
+		setUpPortletPreferencesFactoryUtil();
+
 		_synonymsDisplayBuilder = new SynonymsDisplayBuilder(
 			_documentToSynonymSetTranslatorImpl, _httpServletRequest, _language,
 			portal, _queries, _renderRequest, _renderResponse,

@@ -53,6 +53,8 @@ public class SearchRankingRequestTest extends BaseRankingsWebTestCase {
 
 		_setUpQuery();
 
+		setUpPortletPreferencesFactoryUtil();
+
 		setUpPropsUtil();
 
 		HttpServletRequest httpServletRequest =

@@ -17,6 +17,9 @@ package com.liferay.portal.search.tuning.synonyms.web.internal;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.PortalPreferences;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Portal;
@@ -52,6 +55,7 @@ import javax.portlet.RenderURL;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.mockito.AdditionalAnswers;
 import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -203,6 +207,34 @@ public abstract class BaseSynonymsWebTestCase {
 		PortalUtil portalUtil = new PortalUtil();
 
 		portalUtil.setPortal(portal);
+	}
+
+	protected void setUpPortletPreferencesFactoryUtil() throws Exception {
+		PortletPreferencesFactoryUtil portletPreferencesFactoryUtil =
+			new PortletPreferencesFactoryUtil();
+
+		PortletPreferencesFactory portletPreferencesFactory = Mockito.mock(
+			PortletPreferencesFactory.class);
+
+		portletPreferencesFactoryUtil.setPortletPreferencesFactory(
+			portletPreferencesFactory);
+
+		PortalPreferences portalPreferences = Mockito.mock(
+			PortalPreferences.class);
+
+		Mockito.when(
+			portletPreferencesFactory.getPortalPreferences(
+				Mockito.any(HttpServletRequest.class))
+		).thenReturn(
+			portalPreferences
+		);
+
+		Mockito.when(
+			portalPreferences.getValue(
+				Mockito.anyString(), Mockito.anyString(), Mockito.anyString())
+		).then(
+			AdditionalAnswers.returnsLastArg()
+		);
 	}
 
 	protected void setUpPortletRequest(PortletRequest portletRequest) {

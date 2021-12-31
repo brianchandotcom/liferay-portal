@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.dao.search;
 
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
@@ -32,7 +33,6 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Supplier;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -488,7 +488,7 @@ public class SearchContainer<R> {
 
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *             #setResultsAndTotal(Supplier, int)}
+	 *             #setResultsAndTotal(UnsafeSupplier, int)}
 	 */
 	@Deprecated
 	public void setResults(List<R> results) {
@@ -503,8 +503,9 @@ public class SearchContainer<R> {
 			baseModelSearchResult.getLength());
 	}
 
-	public void setResultsAndTotal(
-		Supplier<List<R>> setResultsSupplier, int total) {
+	public <E extends Throwable> void setResultsAndTotal(
+			UnsafeSupplier<List<R>, E> setResultsSupplier, int total)
+		throws E {
 
 		_setTotal(total);
 
@@ -529,7 +530,7 @@ public class SearchContainer<R> {
 
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *             #setResultsAndTotal(Supplier, int)}
+	 *             #setResultsAndTotal(UnsafeSupplier, int)}
 	 */
 	@Deprecated
 	public void setTotal(int total) {

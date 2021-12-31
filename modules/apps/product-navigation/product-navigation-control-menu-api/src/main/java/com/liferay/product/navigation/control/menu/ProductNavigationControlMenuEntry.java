@@ -170,6 +170,10 @@ public interface ProductNavigationControlMenuEntry {
 			HttpServletResponse httpServletResponse)
 		throws IOException;
 
+	public default boolean isRelevant() {
+		return true;
+	}
+
 	/**
 	 * Returns <code>true</code> if the Control Menu entry should be displayed
 	 * in the request's context.

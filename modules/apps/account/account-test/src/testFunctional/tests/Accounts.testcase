@@ -1660,6 +1660,8 @@ definition {
 			menuItem = "Delete",
 			rowEntry = "Liferay Dalian Software Co., Ltd.");
 
+		AssertConsoleTextNotPresent(value1 = "javax.servlet.ServletException");
+
 		Accounts.openAccountsAdmin();
 
 		LexiconEntry.gotoEntry(rowEntry = "Account Delete Address");

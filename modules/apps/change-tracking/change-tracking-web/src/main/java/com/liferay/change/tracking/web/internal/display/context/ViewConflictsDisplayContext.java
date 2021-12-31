@@ -106,6 +106,14 @@ public class ViewConflictsDisplayContext {
 		}
 
 		return HashMapBuilder.<String, Object>put(
+			"learnLink",
+			JSONUtil.put(
+				"message", "Learn More"
+			).put(
+				"url",
+				"https://learn.liferay.com/dxp/latest/en/site-building/publishing-tools/publications/resolving-conflicts.html#manually-resolving-conflicts"
+			)
+		).put(
 			"publishURL",
 			() -> PortletURLBuilder.createActionURL(
 				_renderResponse

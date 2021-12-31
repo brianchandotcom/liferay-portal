@@ -32,6 +32,7 @@ class ChangeTrackingConflictsView extends ChangeTrackingBaseScheduleView {
 		super(props);
 
 		const {
+			learnLink,
 			publishURL,
 			redirect,
 			resolvedConflicts,
@@ -42,6 +43,7 @@ class ChangeTrackingConflictsView extends ChangeTrackingBaseScheduleView {
 			unresolvedConflicts,
 		} = props;
 
+		this.learnLink = learnLink;
 		this.publishURL = publishURL;
 		this.redirect = redirect;
 		this.resolvedConflicts = resolvedConflicts;
@@ -93,8 +95,8 @@ class ChangeTrackingConflictsView extends ChangeTrackingBaseScheduleView {
 								) + ' '}
 							</span>
 
-							<a href="https://learn.liferay.com/dxp/latest/en/site-building/publishing-tools/publications/resolving-conflicts.html#manually-resolving-conflicts">
-								{Liferay.Language.get('learn-more')}
+							<a href={this.learnLink.url}>
+								{this.learnLink.message}
 							</a>
 						</ClayAlert>
 					)}

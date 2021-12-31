@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
@@ -119,22 +120,15 @@ public class BlogEntriesDisplayContext {
 	}
 
 	public String getDisplayStyle() {
-		String displayStyle = ParamUtil.getString(
-			_httpServletRequest, "displayStyle");
-
-		if (Validator.isNull(displayStyle)) {
-			return _portalPreferences.getValue(
-				BlogsPortletKeys.BLOGS_ADMIN, "entries-display-style", "icon");
+		if (Validator.isNotNull(_displayStyle)) {
+			return _displayStyle;
 		}
 
-		_portalPreferences.setValue(
-			BlogsPortletKeys.BLOGS_ADMIN, "entries-display-style",
-			displayStyle);
+		_displayStyle = SearchDisplayStyleUtil.getDisplayStyle(
+			_httpServletRequest, BlogsPortletKeys.BLOGS_ADMIN,
+			"entries-display-style", "icon", true);
 
-		_httpServletRequest.setAttribute(
-			WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE, Boolean.TRUE);
-
-		return displayStyle;
+		return _displayStyle;
 	}
 
 	public String getOrderByCol() {
@@ -358,6 +352,7 @@ public class BlogEntriesDisplayContext {
 	private static final Log _log = LogFactoryUtil.getLog(
 		BlogEntriesDisplayContext.class);
 
+	private String _displayStyle;
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;

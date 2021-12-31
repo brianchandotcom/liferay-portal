@@ -26,10 +26,10 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -98,26 +98,18 @@ public class MBBannedUsersManagementToolbarDisplayContext {
 	}
 
 	public String getDisplayStyle() {
-		String displayStyle = ParamUtil.getString(
-			_httpServletRequest, "displayStyle");
-
-		if (Validator.isNull(displayStyle)) {
-			displayStyle = _portalPreferences.getValue(
-				MBPortletKeys.MESSAGE_BOARDS, "banned-users-display-style",
-				"descriptive");
-		}
-		else {
-			_portalPreferences.setValue(
-				MBPortletKeys.MESSAGE_BOARDS, "banned-users-display-style",
-				displayStyle);
-
-			_httpServletRequest.setAttribute(
-				WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE, Boolean.TRUE);
+		if (Validator.isNotNull(_displayStyle)) {
+			return _displayStyle;
 		}
 
-		return displayStyle;
+		_displayStyle = SearchDisplayStyleUtil.getDisplayStyle(
+			_httpServletRequest, MBPortletKeys.MESSAGE_BOARDS,
+			"banned-users-display-style", "descriptive", true);
+
+		return _displayStyle;
 	}
 
+	private String _displayStyle;
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;

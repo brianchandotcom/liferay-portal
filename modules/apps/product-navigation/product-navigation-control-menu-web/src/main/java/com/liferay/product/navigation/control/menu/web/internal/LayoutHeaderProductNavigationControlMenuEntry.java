@@ -118,6 +118,11 @@ public class LayoutHeaderProductNavigationControlMenuEntry
 	}
 
 	@Override
+	public boolean isRelevant() {
+		return false;
+	}
+
+	@Override
 	public boolean isShow(HttpServletRequest httpServletRequest)
 		throws PortalException {
 

@@ -79,17 +79,14 @@ public class EntrySearch extends SearchContainer<Entry> {
 			portletRequest, ReportsEngineConsolePortletKeys.REPORTS_ADMIN,
 			"create-date");
 
+		setOrderByCol(orderByCol);
+
 		String orderByType = SearchOrderByUtil.getOrderByType(
 			portletRequest, ReportsEngineConsolePortletKeys.REPORTS_ADMIN,
 			"asc");
 
-		setOrderByCol(orderByCol);
-
-		OrderByComparator<Entry> orderByComparator = getEntryOrderByComparator(
-			orderByCol, orderByType);
-
-		setOrderByComparator(orderByComparator);
-
+		setOrderByComparator(
+			getEntryOrderByComparator(orderByCol, orderByType));
 		setOrderByType(orderByType);
 	}
 

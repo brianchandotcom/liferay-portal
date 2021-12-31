@@ -19,7 +19,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -186,20 +185,14 @@ public class SiteBrowserDisplayContext {
 						start = groupSearch.getStart() - additionalSitesCount;
 					}
 
-					try {
-						results.addAll(
-							_filterLayoutGroups(
-								GroupLocalServiceUtil.getGroups(
-									company.getCompanyId(),
-									Layout.class.getName(), _getGroupId(),
-									start,
-									groupSearch.getResultEnd() -
-										additionalSitesCount),
-								_isPrivateLayout()));
-					}
-					catch (Exception exception) {
-						throw new SystemException(exception);
-					}
+					results.addAll(
+						_filterLayoutGroups(
+							GroupLocalServiceUtil.getGroups(
+								company.getCompanyId(), Layout.class.getName(),
+								_getGroupId(), start,
+								groupSearch.getResultEnd() -
+									additionalSitesCount),
+							_isPrivateLayout()));
 
 					return results;
 				},

@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
-import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
@@ -244,22 +243,10 @@ public class TrashDisplayContext {
 
 		entrySearch.setOrderByComparator(
 			new EntryCreateDateComparator(orderByAsc));
-
 		entrySearch.setOrderByType(getOrderByType());
-
-		EmptyOnClickRowChecker emptyOnClickRowChecker =
-			new EmptyOnClickRowChecker(_liferayPortletResponse);
-
-		emptyOnClickRowChecker.setRememberCheckBoxStateURLRegex(
-			"^(?!.*" + _liferayPortletResponse.getNamespace() +
-				"redirect).*^(?!.*/entry/)");
-
-		entrySearch.setRowChecker(emptyOnClickRowChecker);
 
 		EntrySearchTerms searchTerms =
 			(EntrySearchTerms)entrySearch.getSearchTerms();
-
-		List<TrashEntry> trashEntries = null;
 
 		if (isSearch()) {
 			Sort sort = new Sort();
@@ -276,15 +263,11 @@ public class TrashDisplayContext {
 				!StringUtil.equalsIgnoreCase(
 					entrySearch.getOrderByType(), "asc"));
 
-			BaseModelSearchResult<TrashEntry> baseModelSearchResult =
+			entrySearch.setResultsAndTotal(
 				TrashEntryLocalServiceUtil.searchTrashEntries(
 					themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
 					themeDisplay.getUserId(), searchTerms.getKeywords(),
-					entrySearch.getStart(), entrySearch.getEnd(), sort);
-
-			entrySearch.setTotal(baseModelSearchResult.getLength());
-
-			trashEntries = baseModelSearchResult.getBaseModels();
+					entrySearch.getStart(), entrySearch.getEnd(), sort));
 		}
 		else {
 			TrashEntryList trashEntryList = null;
@@ -301,14 +284,12 @@ public class TrashDisplayContext {
 					entrySearch.getOrderByComparator());
 			}
 
-			entrySearch.setTotal(trashEntryList.getCount());
-
-			trashEntries = trashEntryList.getOriginalTrashEntries();
+			entrySearch.setResultsAndTotal(
+				trashEntryList::getOriginalTrashEntries,
+				trashEntryList.getCount());
 
 			_approximate = trashEntryList.isApproximate();
 		}
-
-		entrySearch.setResults(trashEntries);
 
 		if ((entrySearch.getTotal() == 0) &&
 			Validator.isNotNull(searchTerms.getKeywords())) {
@@ -321,6 +302,15 @@ public class TrashDisplayContext {
 						"</strong>",
 					false));
 		}
+
+		EmptyOnClickRowChecker emptyOnClickRowChecker =
+			new EmptyOnClickRowChecker(_liferayPortletResponse);
+
+		emptyOnClickRowChecker.setRememberCheckBoxStateURLRegex(
+			"^(?!.*" + _liferayPortletResponse.getNamespace() +
+				"redirect).*^(?!.*/entry/)");
+
+		entrySearch.setRowChecker(emptyOnClickRowChecker);
 
 		_entrySearch = entrySearch;
 
@@ -439,12 +429,6 @@ public class TrashDisplayContext {
 			(ThemeDisplay)_httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		String emptyResultsMessage = LanguageUtil.format(
-			_httpServletRequest, "this-x-does-not-contain-an-entry",
-			ResourceActionsUtil.getModelResource(
-				themeDisplay.getLocale(), getClassName()),
-			false);
-
 		PortletURL iteratorURL = PortletURLBuilder.createRenderURL(
 			_liferayPortletResponse
 		).setMVCPath(
@@ -456,19 +440,22 @@ public class TrashDisplayContext {
 		).buildPortletURL();
 
 		SearchContainer<TrashedModel> searchContainer = new SearchContainer(
-			_liferayPortletRequest, iteratorURL, null, emptyResultsMessage);
+			_liferayPortletRequest, iteratorURL, null,
+			LanguageUtil.format(
+				_httpServletRequest, "this-x-does-not-contain-an-entry",
+				ResourceActionsUtil.getModelResource(
+					themeDisplay.getLocale(), getClassName()),
+				false));
 
 		searchContainer.setDeltaConfigurable(false);
 
 		TrashHandler trashHandler = getTrashHandler();
 
-		List<TrashedModel> results = trashHandler.getTrashModelTrashedModels(
-			getClassPK(), searchContainer.getStart(), searchContainer.getEnd(),
-			searchContainer.getOrderByComparator());
-
-		searchContainer.setResults(results);
-
-		searchContainer.setTotal(
+		searchContainer.setResultsAndTotal(
+			() -> trashHandler.getTrashModelTrashedModels(
+				getClassPK(), searchContainer.getStart(),
+				searchContainer.getEnd(),
+				searchContainer.getOrderByComparator()),
 			trashHandler.getTrashModelsCount(getClassPK()));
 
 		_trashContainerSearchContainer = searchContainer;

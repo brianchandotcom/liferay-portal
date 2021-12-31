@@ -48,7 +48,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -295,11 +294,11 @@ public class ViewTreeManagementToolbarDisplayContext {
 
 				labelItem.setCloseable(true);
 
-				String label = String.format(
-					"%s: %s", LanguageUtil.get(_httpServletRequest, "status"),
-					LanguageUtil.get(_httpServletRequest, navigation));
-
-				labelItem.setLabel(label);
+				labelItem.setLabel(
+					String.format(
+						"%s: %s",
+						LanguageUtil.get(_httpServletRequest, "status"),
+						LanguageUtil.get(_httpServletRequest, navigation)));
 			}
 		).build();
 	}
@@ -400,17 +399,15 @@ public class ViewTreeManagementToolbarDisplayContext {
 
 		searchContainer.setOrderByCol(getOrderByCol());
 
-		String orderByType = getOrderByType();
+		boolean orderByAsc = false;
 
-		searchContainer.setOrderByType(orderByType);
+		if (Objects.equals(getOrderByType(), "asc")) {
+			orderByAsc = true;
+		}
 
-		OrderByComparator<Object> orderByComparator =
-			new OrganizationUserNameComparator(orderByType.equals("asc"));
-
-		searchContainer.setOrderByComparator(orderByComparator);
-
-		searchContainer.setRowChecker(
-			new OrganizationUserChecker(_renderResponse));
+		searchContainer.setOrderByComparator(
+			new OrganizationUserNameComparator(orderByAsc));
+		searchContainer.setOrderByType(getOrderByType());
 
 		int status = WorkflowConstants.STATUS_ANY;
 
@@ -421,64 +418,78 @@ public class ViewTreeManagementToolbarDisplayContext {
 			status = WorkflowConstants.STATUS_INACTIVE;
 		}
 
-		int total = 0;
-		List<Object> results = null;
-
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)_httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
+		int navigationStatus = status;
+
 		if (Validator.isNotNull(getKeywords())) {
-			total =
+			searchContainer.setResultsAndTotal(
+				() -> {
+					Hits hits =
+						OrganizationLocalServiceUtil.
+							searchOrganizationsAndUsers(
+								themeDisplay.getCompanyId(),
+								_organization.getOrganizationId(),
+								getKeywords(), navigationStatus, null,
+								searchContainer.getStart(),
+								searchContainer.getEnd(),
+								new Sort[] {
+									new Sort(
+										"name",
+										Objects.equals(
+											searchContainer.getOrderByType(),
+											"desc")),
+									new Sort(
+										"lastName",
+										Objects.equals(
+											searchContainer.getOrderByType(),
+											"desc"))
+								});
+
+					List<Object> results = new ArrayList<>(hits.getLength());
+
+					List<SearchResult> searchResults =
+						SearchResultUtil.getSearchResults(
+							hits, themeDisplay.getLocale());
+
+					for (SearchResult searchResult : searchResults) {
+						String className = searchResult.getClassName();
+
+						if (className.equals(Organization.class.getName())) {
+							results.add(
+								OrganizationLocalServiceUtil.fetchOrganization(
+									searchResult.getClassPK()));
+						}
+						else if (className.equals(User.class.getName())) {
+							results.add(
+								UserLocalServiceUtil.fetchUser(
+									searchResult.getClassPK()));
+						}
+					}
+
+					return results;
+				},
 				OrganizationLocalServiceUtil.searchOrganizationsAndUsersCount(
 					themeDisplay.getCompanyId(),
-					_organization.getOrganizationId(), getKeywords(), status,
-					null);
-
-			Hits hits =
-				OrganizationLocalServiceUtil.searchOrganizationsAndUsers(
-					themeDisplay.getCompanyId(),
-					_organization.getOrganizationId(), getKeywords(), status,
-					null, searchContainer.getStart(), searchContainer.getEnd(),
-					new Sort[] {
-						new Sort("name", orderByType.equals("desc")),
-						new Sort("lastName", orderByType.equals("desc"))
-					});
-
-			results = new ArrayList<>(hits.getLength());
-
-			List<SearchResult> searchResults =
-				SearchResultUtil.getSearchResults(
-					hits, themeDisplay.getLocale());
-
-			for (SearchResult searchResult : searchResults) {
-				String className = searchResult.getClassName();
-
-				if (className.equals(Organization.class.getName())) {
-					results.add(
-						OrganizationLocalServiceUtil.fetchOrganization(
-							searchResult.getClassPK()));
-				}
-				else if (className.equals(User.class.getName())) {
-					results.add(
-						UserLocalServiceUtil.fetchUser(
-							searchResult.getClassPK()));
-				}
-			}
+					_organization.getOrganizationId(), getKeywords(),
+					navigationStatus, null));
 		}
 		else {
-			total = OrganizationLocalServiceUtil.getOrganizationsAndUsersCount(
-				themeDisplay.getCompanyId(), _organization.getOrganizationId(),
-				status);
-
-			results = OrganizationLocalServiceUtil.getOrganizationsAndUsers(
-				themeDisplay.getCompanyId(), _organization.getOrganizationId(),
-				status, searchContainer.getStart(), searchContainer.getEnd(),
-				searchContainer.getOrderByComparator());
+			searchContainer.setResultsAndTotal(
+				() -> OrganizationLocalServiceUtil.getOrganizationsAndUsers(
+					themeDisplay.getCompanyId(),
+					_organization.getOrganizationId(), navigationStatus,
+					searchContainer.getStart(), searchContainer.getEnd(),
+					searchContainer.getOrderByComparator()),
+				OrganizationLocalServiceUtil.getOrganizationsAndUsersCount(
+					themeDisplay.getCompanyId(),
+					_organization.getOrganizationId(), navigationStatus));
 		}
 
-		searchContainer.setTotal(total);
-		searchContainer.setResults(results);
+		searchContainer.setRowChecker(
+			new OrganizationUserChecker(_renderResponse));
 
 		_searchContainer = searchContainer;
 

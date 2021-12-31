@@ -187,11 +187,7 @@ public class ViewDisplayContext {
 			null, "no-entries-were-found");
 
 		_searchContainer.setOrderByCol(getOrderByCol());
-
 		_searchContainer.setOrderByType(getOrderByType());
-
-		_searchContainer.setRowChecker(
-			new EmptyOnClickRowChecker(_liferayPortletResponse));
 
 		SearchContext searchContext = SearchContextFactory.getInstance(
 			_httpServletRequest);
@@ -226,9 +222,9 @@ public class ViewDisplayContext {
 			}
 		}
 
-		_searchContainer.setResults(results);
-
-		_searchContainer.setTotal(hits.getLength());
+		_searchContainer.setResultsAndTotal(() -> results, hits.getLength());
+		_searchContainer.setRowChecker(
+			new EmptyOnClickRowChecker(_liferayPortletResponse));
 
 		return _searchContainer;
 	}

@@ -32,7 +32,6 @@ import com.liferay.style.book.util.comparator.StyleBookEntryCreateDateComparator
 import com.liferay.style.book.util.comparator.StyleBookEntryNameComparator;
 import com.liferay.style.book.web.internal.security.permissions.resource.StyleBookPermission;
 
-import java.util.List;
 import java.util.Objects;
 
 import javax.portlet.PortletURL;
@@ -95,13 +94,30 @@ public class StyleBookDisplayContext {
 				"there-are-no-style-books");
 
 		styleBookEntriesSearchContainer.setOrderByCol(_getOrderByCol());
-
-		OrderByComparator<StyleBookEntry> orderByComparator =
-			_getStyleBookEntryOrderByComparator();
-
-		styleBookEntriesSearchContainer.setOrderByComparator(orderByComparator);
-
+		styleBookEntriesSearchContainer.setOrderByComparator(
+			_getStyleBookEntryOrderByComparator());
 		styleBookEntriesSearchContainer.setOrderByType(_getOrderByType());
+
+		if (_isSearch()) {
+			styleBookEntriesSearchContainer.setResultsAndTotal(
+				() -> StyleBookEntryLocalServiceUtil.getStyleBookEntries(
+					themeDisplay.getScopeGroupId(), _getKeywords(),
+					styleBookEntriesSearchContainer.getStart(),
+					styleBookEntriesSearchContainer.getEnd(),
+					styleBookEntriesSearchContainer.getOrderByComparator()),
+				StyleBookEntryLocalServiceUtil.getStyleBookEntriesCount(
+					themeDisplay.getScopeGroupId(), _getKeywords()));
+		}
+		else {
+			styleBookEntriesSearchContainer.setResultsAndTotal(
+				() -> StyleBookEntryLocalServiceUtil.getStyleBookEntries(
+					themeDisplay.getScopeGroupId(),
+					styleBookEntriesSearchContainer.getStart(),
+					styleBookEntriesSearchContainer.getEnd(),
+					styleBookEntriesSearchContainer.getOrderByComparator()),
+				StyleBookEntryLocalServiceUtil.getStyleBookEntriesCount(
+					themeDisplay.getScopeGroupId()));
+		}
 
 		if (StyleBookPermission.contains(
 				themeDisplay.getPermissionChecker(),
@@ -111,37 +127,6 @@ public class StyleBookDisplayContext {
 			styleBookEntriesSearchContainer.setRowChecker(
 				new EmptyOnClickRowChecker(_liferayPortletResponse));
 		}
-
-		List<StyleBookEntry> styleBookEntries = null;
-		int styleBookEntriesCount = 0;
-
-		if (_isSearch()) {
-			styleBookEntries =
-				StyleBookEntryLocalServiceUtil.getStyleBookEntries(
-					themeDisplay.getScopeGroupId(), _getKeywords(),
-					styleBookEntriesSearchContainer.getStart(),
-					styleBookEntriesSearchContainer.getEnd(),
-					orderByComparator);
-
-			styleBookEntriesCount =
-				StyleBookEntryLocalServiceUtil.getStyleBookEntriesCount(
-					themeDisplay.getScopeGroupId(), _getKeywords());
-		}
-		else {
-			styleBookEntries =
-				StyleBookEntryLocalServiceUtil.getStyleBookEntries(
-					themeDisplay.getScopeGroupId(),
-					styleBookEntriesSearchContainer.getStart(),
-					styleBookEntriesSearchContainer.getEnd(),
-					orderByComparator);
-
-			styleBookEntriesCount =
-				StyleBookEntryLocalServiceUtil.getStyleBookEntriesCount(
-					themeDisplay.getScopeGroupId());
-		}
-
-		styleBookEntriesSearchContainer.setResults(styleBookEntries);
-		styleBookEntriesSearchContainer.setTotal(styleBookEntriesCount);
 
 		_styleBookEntriesSearchContainer = styleBookEntriesSearchContainer;
 

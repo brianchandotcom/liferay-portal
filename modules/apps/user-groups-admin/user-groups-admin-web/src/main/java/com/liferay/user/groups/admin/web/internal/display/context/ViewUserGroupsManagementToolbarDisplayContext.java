@@ -207,8 +207,6 @@ public class ViewUserGroupsManagementToolbarDisplayContext {
 		UserGroupSearch userGroupSearch = new UserGroupSearch(
 			_renderRequest, getPortletURL());
 
-		userGroupSearch.setRowChecker(new UserGroupChecker(_renderResponse));
-
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)_httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
@@ -224,16 +222,14 @@ public class ViewUserGroupsManagementToolbarDisplayContext {
 			userGroupParams.put("expandoAttributes", keywords);
 		}
 
-		List<UserGroup> results = UserGroupLocalServiceUtil.search(
-			themeDisplay.getCompanyId(), keywords, userGroupParams,
-			userGroupSearch.getStart(), userGroupSearch.getEnd(),
-			userGroupSearch.getOrderByComparator());
-
-		int total = UserGroupLocalServiceUtil.searchCount(
-			themeDisplay.getCompanyId(), keywords, userGroupParams);
-
-		userGroupSearch.setResults(results);
-		userGroupSearch.setTotal(total);
+		userGroupSearch.setResultsAndTotal(
+			() -> UserGroupLocalServiceUtil.search(
+				themeDisplay.getCompanyId(), keywords, userGroupParams,
+				userGroupSearch.getStart(), userGroupSearch.getEnd(),
+				userGroupSearch.getOrderByComparator()),
+			UserGroupLocalServiceUtil.searchCount(
+				themeDisplay.getCompanyId(), keywords, userGroupParams));
+		userGroupSearch.setRowChecker(new UserGroupChecker(_renderResponse));
 
 		_userGroupSearch = userGroupSearch;
 

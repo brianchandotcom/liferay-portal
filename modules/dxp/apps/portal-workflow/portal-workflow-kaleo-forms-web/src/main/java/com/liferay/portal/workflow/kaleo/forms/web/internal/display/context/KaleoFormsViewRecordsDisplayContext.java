@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
-import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchContextFactory;
@@ -384,15 +383,13 @@ public class KaleoFormsViewRecordsDisplayContext {
 						_kaleoFormsAdminRequestHelper.getLocale())),
 				false));
 
-		String orderByCol = getOrderByCol();
-		String orderByType = getOrderByType();
-
-		OrderByComparator<DDLRecord> orderByComparator =
-			getDDLRecordOrderByComparator(orderByCol, orderByType);
-
-		_searchContainer.setOrderByCol(orderByCol);
-		_searchContainer.setOrderByComparator(orderByComparator);
-		_searchContainer.setOrderByType(orderByType);
+		_searchContainer.setOrderByCol(getOrderByCol());
+		_searchContainer.setOrderByComparator(
+			getDDLRecordOrderByComparator(getOrderByCol(), getOrderByType()));
+		_searchContainer.setOrderByType(getOrderByType());
+		_searchContainer.setResultsAndTotal(
+			_ddlRecordLocalService.searchDDLRecords(
+				getSearchContext(_searchContainer)));
 
 		User user = _kaleoFormsAdminRequestHelper.getUser();
 
@@ -400,13 +397,6 @@ public class KaleoFormsViewRecordsDisplayContext {
 			_searchContainer.setRowChecker(
 				new EmptyOnClickRowChecker(_renderResponse));
 		}
-
-		BaseModelSearchResult<DDLRecord> baseModelSearchResult =
-			_ddlRecordLocalService.searchDDLRecords(
-				getSearchContext(_searchContainer));
-
-		_searchContainer.setResults(baseModelSearchResult.getBaseModels());
-		_searchContainer.setTotal(baseModelSearchResult.getLength());
 
 		return _searchContainer;
 	}

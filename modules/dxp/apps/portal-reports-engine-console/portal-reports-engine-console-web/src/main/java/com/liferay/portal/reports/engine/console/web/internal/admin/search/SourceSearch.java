@@ -60,15 +60,14 @@ public class SourceSearch extends SearchContainer<Source> {
 			portletRequest, ReportsEngineConsolePortletKeys.REPORTS_ADMIN,
 			"create-date");
 
+		setOrderByCol(orderByCol);
+
 		String orderByType = SearchOrderByUtil.getOrderByType(
 			portletRequest, ReportsEngineConsolePortletKeys.REPORTS_ADMIN,
 			"asc");
 
-		setOrderByCol(orderByCol);
-
 		setOrderByComparator(
 			getSourceOrderByComparator(orderByCol, orderByType));
-
 		setOrderByType(orderByType);
 	}
 

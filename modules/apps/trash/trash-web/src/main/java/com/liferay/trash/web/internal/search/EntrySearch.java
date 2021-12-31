@@ -77,20 +77,20 @@ public class EntrySearch extends SearchContainer<TrashEntry> {
 			String portletId = PortletProviderUtil.getPortletId(
 				User.class.getName(), PortletProvider.Action.VIEW);
 
+			setOrderableHeaders(orderableHeaders);
+
 			String orderByCol = SearchOrderByUtil.getOrderByCol(
 				portletRequest, portletId, "entries-order-by-col",
 				"removed-date");
 
+			setOrderByCol(orderByCol);
+
 			String orderByType = SearchOrderByUtil.getOrderByType(
 				portletRequest, portletId, "entries-order-by-type", "asc");
 
-			OrderByComparator<TrashEntry> orderByComparator =
-				_getEntryOrderByComparator(orderByCol, orderByType);
-
-			setOrderableHeaders(orderableHeaders);
-			setOrderByCol(orderByCol);
+			setOrderByComparator(
+				_getEntryOrderByComparator(orderByCol, orderByType));
 			setOrderByType(orderByType);
-			setOrderByComparator(orderByComparator);
 		}
 		catch (Exception exception) {
 			_log.error("Unable to initialize entry search", exception);

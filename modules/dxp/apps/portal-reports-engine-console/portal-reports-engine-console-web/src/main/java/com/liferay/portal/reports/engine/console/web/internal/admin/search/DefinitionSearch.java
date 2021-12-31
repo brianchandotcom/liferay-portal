@@ -71,11 +71,12 @@ public class DefinitionSearch extends SearchContainer<Definition> {
 			portletRequest, ReportsEngineConsolePortletKeys.REPORTS_ADMIN,
 			"create-date");
 
+		setOrderByCol(orderByCol);
+
 		String orderByType = SearchOrderByUtil.getOrderByType(
 			portletRequest, ReportsEngineConsolePortletKeys.REPORTS_ADMIN,
 			"asc");
 
-		setOrderByCol(orderByCol);
 		setOrderByComparator(
 			getDefinitionOrderByComparator(orderByCol, orderByType));
 		setOrderByType(orderByType);

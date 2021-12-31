@@ -198,46 +198,63 @@ public class UADExportProcessDisplayContext {
 
 		User selectedUser = PortalUtil.getSelectedUser(_httpServletRequest);
 
-		List<BackgroundTask> results = null;
-
 		if (navigation.equals("failed") || navigation.equals("in-progress") ||
 			navigation.equals("successful")) {
 
 			int status = getBackgroundTaskStatus(navigation);
 
-			searchContainer.setTotal(
+			searchContainer.setResultsAndTotal(
+				() -> {
+					List<BackgroundTask> results =
+						UADExportBackgroundTaskManagerUtil.getBackgroundTasks(
+							themeDisplay.getScopeGroupId(),
+							selectedUser.getUserId(), status);
+
+					Stream<BackgroundTask> backgroundTaskStream =
+						results.stream();
+
+					return backgroundTaskStream.sorted(
+						getComparator(
+							searchContainer.getOrderByCol(),
+							searchContainer.getOrderByType())
+					).skip(
+						searchContainer.getStart()
+					).limit(
+						searchContainer.getDelta()
+					).collect(
+						Collectors.toList()
+					);
+				},
 				UADExportBackgroundTaskManagerUtil.getBackgroundTasksCount(
 					themeDisplay.getScopeGroupId(), selectedUser.getUserId(),
 					status));
-
-			results = UADExportBackgroundTaskManagerUtil.getBackgroundTasks(
-				themeDisplay.getScopeGroupId(), selectedUser.getUserId(),
-				status);
 		}
 		else {
-			searchContainer.setTotal(
+			searchContainer.setResultsAndTotal(
+				() -> {
+					List<BackgroundTask> results =
+						UADExportBackgroundTaskManagerUtil.getBackgroundTasks(
+							themeDisplay.getScopeGroupId(),
+							selectedUser.getUserId());
+
+					Stream<BackgroundTask> backgroundTaskStream =
+						results.stream();
+
+					return backgroundTaskStream.sorted(
+						getComparator(
+							searchContainer.getOrderByCol(),
+							searchContainer.getOrderByType())
+					).skip(
+						searchContainer.getStart()
+					).limit(
+						searchContainer.getDelta()
+					).collect(
+						Collectors.toList()
+					);
+				},
 				UADExportBackgroundTaskManagerUtil.getBackgroundTasksCount(
 					themeDisplay.getScopeGroupId(), selectedUser.getUserId()));
-
-			results = UADExportBackgroundTaskManagerUtil.getBackgroundTasks(
-				themeDisplay.getScopeGroupId(), selectedUser.getUserId());
 		}
-
-		Stream<BackgroundTask> backgroundTaskStream = results.stream();
-
-		results = backgroundTaskStream.sorted(
-			getComparator(
-				searchContainer.getOrderByCol(),
-				searchContainer.getOrderByType())
-		).skip(
-			searchContainer.getStart()
-		).limit(
-			searchContainer.getDelta()
-		).collect(
-			Collectors.toList()
-		);
-
-		searchContainer.setResults(results);
 
 		_searchContainer = searchContainer;
 

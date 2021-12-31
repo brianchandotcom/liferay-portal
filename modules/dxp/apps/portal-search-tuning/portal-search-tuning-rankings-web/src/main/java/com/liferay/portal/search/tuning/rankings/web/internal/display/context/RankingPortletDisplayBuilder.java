@@ -38,7 +38,6 @@ import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.sort.Sorts;
 import com.liferay.portal.search.tuning.rankings.web.internal.constants.ResultRankingsPortletKeys;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.DocumentToRankingTranslator;
-import com.liferay.portal.search.tuning.rankings.web.internal.index.Ranking;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.RankingFields;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.name.RankingIndexName;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.name.RankingIndexNameBuilder;
@@ -107,11 +106,10 @@ public class RankingPortletDisplayBuilder {
 	protected RankingEntryDisplayContext buildDisplayContext(
 		SearchHit searchHit) {
 
-		Ranking ranking = _documentToRankingTranslator.translate(
-			searchHit.getDocument(), searchHit.getId());
-
 		RankingEntryDisplayContextBuilder rankingEntryDisplayContextBuilder =
-			new RankingEntryDisplayContextBuilder(ranking);
+			new RankingEntryDisplayContextBuilder(
+				_documentToRankingTranslator.translate(
+					searchHit.getDocument(), searchHit.getId()));
 
 		return rankingEntryDisplayContextBuilder.build();
 	}
@@ -374,11 +372,11 @@ public class RankingPortletDisplayBuilder {
 
 		SearchHits searchHits = searchRankingResponse.getSearchHits();
 
-		searchContainer.setResults(
-			getRankingEntryDisplayContexts(searchHits.getSearchHits()));
+		searchContainer.setResultsAndTotal(
+			() -> getRankingEntryDisplayContexts(searchHits.getSearchHits()),
+			searchRankingResponse.getTotalHits());
 
 		searchContainer.setSearch(true);
-		searchContainer.setTotal(searchRankingResponse.getTotalHits());
 
 		return searchContainer;
 	}

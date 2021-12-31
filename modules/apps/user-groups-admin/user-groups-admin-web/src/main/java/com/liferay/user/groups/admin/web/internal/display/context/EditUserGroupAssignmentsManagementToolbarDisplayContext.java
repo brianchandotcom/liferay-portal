@@ -73,9 +73,8 @@ public class EditUserGroupAssignmentsManagementToolbarDisplayContext {
 		_displayStyle = displayStyle;
 		_mvcPath = mvcPath;
 
-		long userGroupId = ParamUtil.getLong(httpServletRequest, "userGroupId");
-
-		_userGroup = UserGroupServiceUtil.fetchUserGroup(userGroupId);
+		_userGroup = UserGroupServiceUtil.fetchUserGroup(
+			ParamUtil.getLong(httpServletRequest, "userGroupId"));
 	}
 
 	public List<DropdownItem> getActionDropdownItems() {
@@ -113,12 +112,7 @@ public class EditUserGroupAssignmentsManagementToolbarDisplayContext {
 				LiferayWindowState.POP_UP
 			).buildString()
 		).put(
-			"userGroupName",
-			() -> {
-				String userGroupName = _userGroup.getName();
-
-				return HtmlUtil.escape(userGroupName);
-			}
+			"userGroupName", () -> HtmlUtil.escape(_userGroup.getName())
 		).build();
 	}
 
@@ -245,6 +239,22 @@ public class EditUserGroupAssignmentsManagementToolbarDisplayContext {
 
 		UserSearch userSearch = new UserSearch(_renderRequest, getPortletURL());
 
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		UserSearchTerms searchTerms =
+			(UserSearchTerms)userSearch.getSearchTerms();
+
+		userSearch.setResultsAndTotal(
+			() -> UserLocalServiceUtil.search(
+				themeDisplay.getCompanyId(), searchTerms.getKeywords(),
+				searchTerms.getStatus(), userParams, userSearch.getStart(),
+				userSearch.getEnd(), userSearch.getOrderByComparator()),
+			UserLocalServiceUtil.searchCount(
+				themeDisplay.getCompanyId(), searchTerms.getKeywords(),
+				searchTerms.getStatus(), userParams));
+
 		if (_mvcPath.equals("/edit_user_group_assignments.jsp")) {
 			userSearch.setRowChecker(
 				new UnsetUserUserGroupChecker(_renderResponse, _userGroup));
@@ -253,25 +263,6 @@ public class EditUserGroupAssignmentsManagementToolbarDisplayContext {
 			userSearch.setRowChecker(
 				new SetUserUserGroupChecker(_renderResponse, _userGroup));
 		}
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		UserSearchTerms searchTerms =
-			(UserSearchTerms)userSearch.getSearchTerms();
-
-		List<User> results = UserLocalServiceUtil.search(
-			themeDisplay.getCompanyId(), searchTerms.getKeywords(),
-			searchTerms.getStatus(), userParams, userSearch.getStart(),
-			userSearch.getEnd(), userSearch.getOrderByComparator());
-
-		int total = UserLocalServiceUtil.searchCount(
-			themeDisplay.getCompanyId(), searchTerms.getKeywords(),
-			searchTerms.getStatus(), userParams);
-
-		userSearch.setResults(results);
-		userSearch.setTotal(total);
 
 		_userSearch = userSearch;
 

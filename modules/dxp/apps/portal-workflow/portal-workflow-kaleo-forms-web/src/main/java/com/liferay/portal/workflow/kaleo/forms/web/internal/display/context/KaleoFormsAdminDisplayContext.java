@@ -241,18 +241,20 @@ public class KaleoFormsAdminDisplayContext {
 		KaleoProcessSearch kaleoProcessSearch = new KaleoProcessSearch(
 			_renderRequest, getPortletURL());
 
-		String orderByCol = getOrderByCol();
-		String orderByType = getOrderByType();
+		kaleoProcessSearch.setOrderByCol(getOrderByCol());
+		kaleoProcessSearch.setOrderByComparator(
+			getKaleoProcessOrderByComparator(
+				getOrderByCol(), getOrderByType()));
+		kaleoProcessSearch.setOrderByType(getOrderByType());
 
-		OrderByComparator<KaleoProcess> orderByComparator =
-			getKaleoProcessOrderByComparator(orderByCol, orderByType);
-
-		kaleoProcessSearch.setOrderByCol(orderByCol);
-		kaleoProcessSearch.setOrderByComparator(orderByComparator);
-		kaleoProcessSearch.setOrderByType(orderByType);
-
-		setKaleoProcessSearchResults(kaleoProcessSearch);
-		setKaleoProcessSearchTotal(kaleoProcessSearch);
+		kaleoProcessSearch.setResultsAndTotal(
+			() -> KaleoProcessServiceUtil.search(
+				_kaleoFormsAdminRequestHelper.getScopeGroupId(), getKeywords(),
+				kaleoProcessSearch.getStart(), kaleoProcessSearch.getEnd(),
+				kaleoProcessSearch.getOrderByComparator()),
+			KaleoProcessServiceUtil.searchCount(
+				_kaleoFormsAdminRequestHelper.getScopeGroupId(),
+				getKeywords()));
 
 		return kaleoProcessSearch;
 	}
@@ -378,22 +380,28 @@ public class KaleoFormsAdminDisplayContext {
 			kaleoDefinitionVersions,
 			new KaleoDefinitionVersionActivePredicate(status));
 
-		kaleoDefinitionVersions = ListUtil.filter(
-			kaleoDefinitionVersions,
-			new KaleoDefinitionVersionScopePredicate(
-				WorkflowDefinitionConstants.SCOPE_ALL));
+		List<KaleoDefinitionVersion> filteredKaleoDefinitionVersions =
+			ListUtil.filter(
+				kaleoDefinitionVersions,
+				new KaleoDefinitionVersionScopePredicate(
+					WorkflowDefinitionConstants.SCOPE_ALL));
 
-		searchContainer.setTotal(kaleoDefinitionVersions.size());
+		searchContainer.setResultsAndTotal(
+			() -> {
+				if (filteredKaleoDefinitionVersions.size() >
+						(searchContainer.getEnd() -
+							searchContainer.getStart())) {
 
-		if (kaleoDefinitionVersions.size() >
-				(searchContainer.getEnd() - searchContainer.getStart())) {
+					return ListUtil.subList(
+						filteredKaleoDefinitionVersions,
+						searchContainer.getStart(), searchContainer.getEnd());
+				}
 
-			kaleoDefinitionVersions = ListUtil.subList(
-				kaleoDefinitionVersions, searchContainer.getStart(),
-				searchContainer.getEnd());
-		}
+				return filteredKaleoDefinitionVersions;
+			},
+			filteredKaleoDefinitionVersions.size());
 
-		return kaleoDefinitionVersions;
+		return searchContainer.getResults();
 	}
 
 	public String getSortingURL() throws Exception {
@@ -477,26 +485,6 @@ public class KaleoFormsAdminDisplayContext {
 		}
 
 		return false;
-	}
-
-	protected void setKaleoProcessSearchResults(
-		KaleoProcessSearch kaleoProcessSearch) {
-
-		List<KaleoProcess> kaleoProcesses = KaleoProcessServiceUtil.search(
-			_kaleoFormsAdminRequestHelper.getScopeGroupId(), getKeywords(),
-			kaleoProcessSearch.getStart(), kaleoProcessSearch.getEnd(),
-			kaleoProcessSearch.getOrderByComparator());
-
-		kaleoProcessSearch.setResults(kaleoProcesses);
-	}
-
-	protected void setKaleoProcessSearchTotal(
-		KaleoProcessSearch kaleoProcessSearch) {
-
-		int total = KaleoProcessServiceUtil.searchCount(
-			_kaleoFormsAdminRequestHelper.getScopeGroupId(), getKeywords());
-
-		kaleoProcessSearch.setTotal(total);
 	}
 
 	private static final String[] _DISPLAY_VIEWS = {"list"};

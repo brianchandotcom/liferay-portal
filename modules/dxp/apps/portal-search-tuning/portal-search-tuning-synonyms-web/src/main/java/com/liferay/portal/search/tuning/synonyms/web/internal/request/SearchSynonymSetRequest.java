@@ -119,16 +119,13 @@ public class SearchSynonymSetRequest {
 	}
 
 	private Collection<Sort> _getSorts() {
-		String orderByCol = _getOrderByCol();
-		String orderByType = _getOrderByType();
-
 		SortOrder sortOrder = SortOrder.ASC;
 
-		if (Objects.equals(orderByType, "desc")) {
+		if (Objects.equals(_getOrderByType(), "desc")) {
 			sortOrder = SortOrder.DESC;
 		}
 
-		return Arrays.asList(_sorts.field(orderByCol, sortOrder));
+		return Arrays.asList(_sorts.field(_getOrderByCol(), sortOrder));
 	}
 
 	private final HttpServletRequest _httpServletRequest;

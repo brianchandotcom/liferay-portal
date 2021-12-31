@@ -787,10 +787,18 @@ definition {
 	}
 
 	macro publishCustomPublication {
-		Staging.addCustomPublication(headerTitle = "${headerTitle}");
+		Staging.addCustomPublication(
+			headerTitle = "${headerTitle}",
+			publishTemplateName = "${publishTemplateName}");
 
 		if (isSet(scheduleProcess)) {
 			Staging.configureScheduleTime();
+		}
+
+		if (isSet(editPublishTemplateName)) {
+			Type(
+				locator1 = "TextInput#NAME",
+				value1 = "${editPublishTemplateName}");
 		}
 
 		if ("${rangeAll}" == "true") {

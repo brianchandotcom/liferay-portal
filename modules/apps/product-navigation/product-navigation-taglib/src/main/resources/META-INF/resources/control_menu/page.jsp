@@ -35,7 +35,13 @@ for (ProductNavigationControlMenuCategory productNavigationControlMenuCategory :
 	productNavigationControlMenuEntriesMap.put(productNavigationControlMenuCategory, productNavigationControlMenuEntries);
 
 	if (!productNavigationControlMenuEntries.isEmpty()) {
-		hasControlMenuEntries = true;
+		for (ProductNavigationControlMenuEntry productNavigationControlMenuEntry : productNavigationControlMenuEntries) {
+			if (productNavigationControlMenuEntry.isRelevant()) {
+				hasControlMenuEntries = true;
+
+				break;
+			}
+		}
 	}
 }
 %>

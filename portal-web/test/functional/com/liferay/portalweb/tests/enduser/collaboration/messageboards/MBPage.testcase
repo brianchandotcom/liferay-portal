@@ -421,16 +421,28 @@ definition {
 			groupName = "Guest",
 			title = "Vocabulary Name");
 
-		var categoryId = JSONCategory.addCategory(
+		JSONCategory.addCategory(
 			groupName = "Guest",
 			title = "Category Name",
 			vocabularyName = "Vocabulary Name");
 
 		JSONMBMessage.addMessage(
-			assetCategoryIds = "${categoryId}",
 			groupName = "Guest",
 			threadBody = "MB Thread Message Body",
 			threadSubject = "MB Thread Message Subject");
+
+		MessageboardsThread.openToEditThread(
+			groupName = "Guest",
+			siteURLKey = "guest",
+			threadSubject = "MB Thread Message Subject");
+
+		Panel.expandPanel(panel = "Categorization");
+
+		AssetCategorization.addCategory(
+			categoryName = "Category Name",
+			vocabularyName = "Vocabulary Name");
+
+		PortletEntry.publish();
 
 		Navigator.openURL();
 

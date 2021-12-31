@@ -1153,9 +1153,9 @@ information.
 			</condition>
 
 			<if>
-				<isset property="junit.java.unit.gc[@{junit.jvm.override.version}]" />
+				<isset property="junit.java.unit.gc[${junit.jvm.override.version}]" />
 				<then>
-					<propertycopy from="junit.java.unit.gc[@{junit.jvm.override.version}]" name="junit.java.unit.gc" override="true" />
+					<propertycopy from="junit.java.unit.gc[${junit.jvm.override.version}]" name="junit.java.unit.gc" override="true" />
 				</then>
 			</if>
 
@@ -1170,9 +1170,9 @@ information.
 			</if>
 
 			<if>
-				<isset property="junit.java.add.opens[@{junit.jvm.override.version}]" />
+				<isset property="junit.java.add.opens[${junit.jvm.override.version}]" />
 				<then>
-					<propertycopy from="junit.java.add.opens[@{junit.jvm.override.version}]" name="junit.java.add.opens" override="true" />
+					<propertycopy from="junit.java.add.opens[${junit.jvm.override.version}]" name="junit.java.add.opens" override="true" />
 				</then>
 			</if>
 

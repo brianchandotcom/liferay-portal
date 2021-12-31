@@ -80,8 +80,8 @@ public class OrphanPortletsDisplayContext {
 		}
 
 		_displayStyle = SearchDisplayStyleUtil.getDisplayStyle(
-			PortalUtil.getHttpServletRequest(_liferayPortletRequest),
-			LayoutAdminPortletKeys.GROUP_PAGES, "orphan-display-style", "list");
+			_liferayPortletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
+			"orphan-display-style", "list");
 
 		return _displayStyle;
 	}
@@ -178,10 +178,11 @@ public class OrphanPortletsDisplayContext {
 
 		List<Portlet> portlets = getOrphanPortlets();
 
-		orphanPortletsSearchContainer.setResults(
-			ListUtil.subList(
+		orphanPortletsSearchContainer.setResultsAndTotal(
+			() -> ListUtil.subList(
 				portlets, orphanPortletsSearchContainer.getStart(),
-				orphanPortletsSearchContainer.getEnd()));
+				orphanPortletsSearchContainer.getEnd()),
+			portlets.size());
 
 		Layout selLayout = getSelLayout();
 
@@ -189,8 +190,6 @@ public class OrphanPortletsDisplayContext {
 			orphanPortletsSearchContainer.setRowChecker(
 				new EmptyOnClickRowChecker(_liferayPortletResponse));
 		}
-
-		orphanPortletsSearchContainer.setTotal(portlets.size());
 
 		_orphanPortletsSearchContainer = orphanPortletsSearchContainer;
 

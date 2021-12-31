@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.portlet.PortletURL;
 
@@ -130,7 +131,6 @@ public class OAuth2ApplicationsManagementToolbarDisplayContext
 
 	public OrderByComparator<OAuth2Application> getOrderByComparator() {
 		String orderByCol = getOrderByCol();
-		String orderByType = getOrderByType();
 
 		String columnName = "name";
 
@@ -142,7 +142,8 @@ public class OAuth2ApplicationsManagementToolbarDisplayContext
 		}
 
 		return OrderByComparatorFactoryUtil.create(
-			"OAuth2Application", columnName, orderByType.equals("asc"));
+			"OAuth2Application", columnName,
+			Objects.equals(getOrderByType(), "asc"));
 	}
 
 	public ViewTypeItemList getViewTypes() {

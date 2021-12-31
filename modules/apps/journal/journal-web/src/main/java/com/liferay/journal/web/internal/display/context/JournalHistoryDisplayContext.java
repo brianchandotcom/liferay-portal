@@ -68,17 +68,16 @@ public class JournalHistoryDisplayContext {
 			JournalPortletUtil.getArticleOrderByComparator(
 				getOrderByCol(), getOrderByType()));
 		articleSearchContainer.setOrderByType(getOrderByType());
-		articleSearchContainer.setResults(
-			JournalArticleServiceUtil.getArticlesByArticleId(
+		articleSearchContainer.setResultsAndTotal(
+			() -> JournalArticleServiceUtil.getArticlesByArticleId(
 				_article.getGroupId(), _article.getArticleId(),
 				articleSearchContainer.getStart(),
 				articleSearchContainer.getEnd(),
-				articleSearchContainer.getOrderByComparator()));
-		articleSearchContainer.setRowChecker(
-			new EmptyOnClickRowChecker(_renderResponse));
-		articleSearchContainer.setTotal(
+				articleSearchContainer.getOrderByComparator()),
 			JournalArticleServiceUtil.getArticlesCountByArticleId(
 				_article.getGroupId(), _article.getArticleId()));
+		articleSearchContainer.setRowChecker(
+			new EmptyOnClickRowChecker(_renderResponse));
 
 		return articleSearchContainer;
 	}
@@ -99,8 +98,8 @@ public class JournalHistoryDisplayContext {
 		}
 
 		_displayStyle = SearchDisplayStyleUtil.getDisplayStyle(
-			PortalUtil.getHttpServletRequest(_renderRequest),
-			JournalPortletKeys.JOURNAL, "history-display-style", "list");
+			_renderRequest, JournalPortletKeys.JOURNAL, "history-display-style",
+			"list");
 
 		return _displayStyle;
 	}

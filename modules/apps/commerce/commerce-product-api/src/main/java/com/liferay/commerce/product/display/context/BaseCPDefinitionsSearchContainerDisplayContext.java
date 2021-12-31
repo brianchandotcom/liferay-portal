@@ -181,14 +181,10 @@ public abstract class BaseCPDefinitionsSearchContainerDisplayContext<T>
 	}
 
 	public boolean isSearch() {
-		if (Validator.isNotNull(getKeywords())) {
-			return true;
-		}
+		if (Validator.isNotNull(getKeywords()) ||
+			Validator.isNotNull(
+				ParamUtil.getString(httpServletRequest, "filterFields"))) {
 
-		String filterFields = ParamUtil.getString(
-			httpServletRequest, "filterFields");
-
-		if (Validator.isNotNull(filterFields)) {
 			return true;
 		}
 

@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Objects;
@@ -71,15 +70,14 @@ public class MDRActionDisplayContext {
 		ruleActionSearchContainer.setOrderByComparator(
 			new ActionCreateDateComparator(orderByAsc));
 		ruleActionSearchContainer.setOrderByType(getOrderByType());
-		ruleActionSearchContainer.setResults(
-			MDRActionLocalServiceUtil.getActions(
+		ruleActionSearchContainer.setResultsAndTotal(
+			() -> MDRActionLocalServiceUtil.getActions(
 				ruleGroupInstanceId, ruleActionSearchContainer.getStart(),
 				ruleActionSearchContainer.getEnd(),
-				ruleActionSearchContainer.getOrderByComparator()));
+				ruleActionSearchContainer.getOrderByComparator()),
+			MDRActionLocalServiceUtil.getActionsCount(ruleGroupInstanceId));
 		ruleActionSearchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(_renderResponse));
-		ruleActionSearchContainer.setTotal(
-			MDRActionLocalServiceUtil.getActionsCount(ruleGroupInstanceId));
 
 		_ruleActionSearchContainer = ruleActionSearchContainer;
 
@@ -92,8 +90,7 @@ public class MDRActionDisplayContext {
 		}
 
 		_displayStyle = SearchDisplayStyleUtil.getDisplayStyle(
-			PortalUtil.getHttpServletRequest(_renderRequest),
-			MDRPortletKeys.MOBILE_DEVICE_RULES, "list");
+			_renderRequest, MDRPortletKeys.MOBILE_DEVICE_RULES, "list");
 
 		return _displayStyle;
 	}

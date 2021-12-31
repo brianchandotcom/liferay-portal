@@ -128,8 +128,7 @@ public class SegmentsDisplayContext {
 		}
 
 		_displayStyle = SearchDisplayStyleUtil.getDisplayStyle(
-			PortalUtil.getHttpServletRequest(_renderRequest),
-			SegmentsPortletKeys.SEGMENTS, "list");
+			_renderRequest, SegmentsPortletKeys.SEGMENTS, "list");
 
 		return _displayStyle;
 	}
@@ -407,11 +406,9 @@ public class SegmentsDisplayContext {
 			orderByAsc = true;
 		}
 
-		String orderByCol = _getOrderByCol();
-
 		Sort sort = null;
 
-		if (orderByCol.equals("name")) {
+		if (Objects.equals(_getOrderByCol(), "name")) {
 			sort = new Sort(
 				Field.getSortableFieldName(
 					"localized_name_".concat(_themeDisplay.getLanguageId())),

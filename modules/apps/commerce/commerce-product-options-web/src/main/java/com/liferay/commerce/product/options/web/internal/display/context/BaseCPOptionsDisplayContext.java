@@ -64,10 +64,12 @@ public abstract class BaseCPOptionsDisplayContext<T> {
 	}
 
 	public String getDisplayStyle() {
-		if (_displayStyle == null) {
-			_displayStyle = getDisplayStyle(
-				httpServletRequest, portalPreferences);
+		if (Validator.isNotNull(_displayStyle)) {
+			return _displayStyle;
 		}
+
+		_displayStyle = SearchDisplayStyleUtil.getDisplayStyle(
+			httpServletRequest, _portalPreferenceNamespace, "list", true);
 
 		return _displayStyle;
 	}
@@ -159,14 +161,6 @@ public abstract class BaseCPOptionsDisplayContext<T> {
 
 	public boolean isShowInfoPanel() {
 		return true;
-	}
-
-	protected String getDisplayStyle(
-		HttpServletRequest httpServletRequest,
-		PortalPreferences portalPreferences) {
-
-		return SearchDisplayStyleUtil.getDisplayStyle(
-			httpServletRequest, _portalPreferenceNamespace, "list", true);
 	}
 
 	protected String getKeywords() {

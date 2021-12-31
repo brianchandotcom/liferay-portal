@@ -26,11 +26,8 @@ import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-
-import java.util.List;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -54,8 +51,8 @@ public class JournalFeedsDisplayContext {
 		}
 
 		_displayStyle = SearchDisplayStyleUtil.getDisplayStyle(
-			PortalUtil.getHttpServletRequest(_renderRequest),
-			JournalPortletKeys.JOURNAL, "feeds-display-style", "list");
+			_renderRequest, JournalPortletKeys.JOURNAL, "feeds-display-style",
+			"list");
 
 		return _displayStyle;
 	}
@@ -70,23 +67,19 @@ public class JournalFeedsDisplayContext {
 
 		_feedSearch = new FeedSearch(_renderRequest, getPortletURL());
 
-		_feedSearch.setRowChecker(new EmptyOnClickRowChecker(_renderResponse));
-
 		FeedSearchTerms searchTerms =
 			(FeedSearchTerms)_feedSearch.getSearchTerms();
 
-		int feedsCount = JournalFeedLocalServiceUtil.searchCount(
-			themeDisplay.getCompanyId(), searchTerms.getGroupId(),
-			searchTerms.getKeywords());
+		_feedSearch.setResultsAndTotal(
+			() -> JournalFeedLocalServiceUtil.search(
+				themeDisplay.getCompanyId(), searchTerms.getGroupId(),
+				searchTerms.getKeywords(), _feedSearch.getStart(),
+				_feedSearch.getEnd(), _feedSearch.getOrderByComparator()),
+			JournalFeedLocalServiceUtil.searchCount(
+				themeDisplay.getCompanyId(), searchTerms.getGroupId(),
+				searchTerms.getKeywords()));
 
-		_feedSearch.setTotal(feedsCount);
-
-		List<JournalFeed> feeds = JournalFeedLocalServiceUtil.search(
-			themeDisplay.getCompanyId(), searchTerms.getGroupId(),
-			searchTerms.getKeywords(), _feedSearch.getStart(),
-			_feedSearch.getEnd(), _feedSearch.getOrderByComparator());
-
-		_feedSearch.setResults(feeds);
+		_feedSearch.setRowChecker(new EmptyOnClickRowChecker(_renderResponse));
 
 		return _feedSearch;
 	}

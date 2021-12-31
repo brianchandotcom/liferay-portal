@@ -21,8 +21,6 @@ import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 
 import javax.portlet.PortletRequest;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * @author Drew Brokke
  */
@@ -34,12 +32,9 @@ public class DisplayStyleUtil {
 		LiferayPortletRequest liferayPortletRequest =
 			PortalUtil.getLiferayPortletRequest(portletRequest);
 
-		HttpServletRequest httpServletRequest =
-			liferayPortletRequest.getOriginalHttpServletRequest();
-
 		return SearchDisplayStyleUtil.getDisplayStyle(
-			httpServletRequest, UsersAdminPortletKeys.USERS_ADMIN,
-			defaultDisplayStyle, true);
+			liferayPortletRequest.getOriginalHttpServletRequest(),
+			UsersAdminPortletKeys.USERS_ADMIN, defaultDisplayStyle, true);
 	}
 
 }

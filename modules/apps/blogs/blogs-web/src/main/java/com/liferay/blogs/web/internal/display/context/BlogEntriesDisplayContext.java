@@ -177,7 +177,6 @@ public class BlogEntriesDisplayContext {
 		entriesSearchContainer.setOrderByComparator(
 			BlogsUtil.getOrderByComparator(getOrderByCol(), getOrderByType()));
 		entriesSearchContainer.setOrderByType(getOrderByType());
-
 		entriesSearchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(_liferayPortletResponse));
 
@@ -204,61 +203,55 @@ public class BlogEntriesDisplayContext {
 			(ThemeDisplay)_httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		List<BlogsEntry> entriesResults = null;
-
-		long assetCategoryId = ParamUtil.getLong(
-			_httpServletRequest, "categoryId");
-		String assetTagName = ParamUtil.getString(_httpServletRequest, "tag");
-
 		String keywords = ParamUtil.getString(_httpServletRequest, "keywords");
 
-		if ((assetCategoryId != 0) || Validator.isNotNull(assetTagName)) {
+		if ((ParamUtil.getLong(_httpServletRequest, "categoryId") != 0) ||
+			Validator.isNotNull(
+				ParamUtil.getString(_httpServletRequest, "tag"))) {
+
 			SearchContainerResults<AssetEntry> searchContainerResults =
 				BlogsUtil.getSearchContainerResults(searchContainer);
 
-			searchContainer.setTotal(searchContainerResults.getTotal());
-
 			List<AssetEntry> assetEntries = searchContainerResults.getResults();
 
-			entriesResults = new ArrayList<>(assetEntries.size());
+			List<BlogsEntry> entriesResults = new ArrayList<>(
+				assetEntries.size());
 
 			for (AssetEntry assetEntry : assetEntries) {
 				entriesResults.add(
 					BlogsEntryLocalServiceUtil.getEntry(
 						assetEntry.getClassPK()));
 			}
+
+			searchContainer.setResultsAndTotal(
+				() -> entriesResults, searchContainerResults.getTotal());
 		}
 		else if (Validator.isNull(keywords)) {
 			String entriesNavigation = ParamUtil.getString(
 				_httpServletRequest, "entriesNavigation");
 
 			if (entriesNavigation.equals("mine")) {
-				searchContainer.setTotal(
+				searchContainer.setResultsAndTotal(
+					() -> BlogsEntryServiceUtil.getGroupUserEntries(
+						themeDisplay.getScopeGroupId(),
+						themeDisplay.getUserId(), WorkflowConstants.STATUS_ANY,
+						searchContainer.getStart(), searchContainer.getEnd(),
+						searchContainer.getOrderByComparator()),
 					BlogsEntryServiceUtil.getGroupUserEntriesCount(
 						themeDisplay.getScopeGroupId(),
 						themeDisplay.getUserId(),
 						WorkflowConstants.STATUS_ANY));
 			}
 			else {
-				searchContainer.setTotal(
+				searchContainer.setResultsAndTotal(
+					() -> BlogsEntryServiceUtil.getGroupEntries(
+						themeDisplay.getScopeGroupId(),
+						WorkflowConstants.STATUS_ANY,
+						searchContainer.getStart(), searchContainer.getEnd(),
+						searchContainer.getOrderByComparator()),
 					BlogsEntryServiceUtil.getGroupEntriesCount(
 						themeDisplay.getScopeGroupId(),
 						WorkflowConstants.STATUS_ANY));
-			}
-
-			if (entriesNavigation.equals("mine")) {
-				entriesResults = BlogsEntryServiceUtil.getGroupUserEntries(
-					themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
-					WorkflowConstants.STATUS_ANY, searchContainer.getStart(),
-					searchContainer.getEnd(),
-					searchContainer.getOrderByComparator());
-			}
-			else {
-				entriesResults = BlogsEntryServiceUtil.getGroupEntries(
-					themeDisplay.getScopeGroupId(),
-					WorkflowConstants.STATUS_ANY, searchContainer.getStart(),
-					searchContainer.getEnd(),
-					searchContainer.getOrderByComparator());
 			}
 		}
 		else {
@@ -308,26 +301,26 @@ public class BlogEntriesDisplayContext {
 
 			Hits hits = indexer.search(searchContext);
 
-			searchContainer.setTotal(hits.getLength());
+			searchContainer.setResultsAndTotal(
+				() -> {
+					List<SearchResult> searchResults =
+						SearchResultUtil.getSearchResults(
+							hits, LocaleUtil.getDefault());
 
-			List<SearchResult> searchResults =
-				SearchResultUtil.getSearchResults(
-					hits, LocaleUtil.getDefault());
+					Stream<SearchResult> stream = searchResults.stream();
 
-			Stream<SearchResult> stream = searchResults.stream();
-
-			entriesResults = stream.map(
-				this::_toBlogsEntryOptional
-			).filter(
-				Optional::isPresent
-			).map(
-				Optional::get
-			).collect(
-				Collectors.toList()
-			);
+					return stream.map(
+						this::_toBlogsEntryOptional
+					).filter(
+						Optional::isPresent
+					).map(
+						Optional::get
+					).collect(
+						Collectors.toList()
+					);
+				},
+				hits.getLength());
 		}
-
-		searchContainer.setResults(entriesResults);
 	}
 
 	private Optional<BlogsEntry> _toBlogsEntryOptional(

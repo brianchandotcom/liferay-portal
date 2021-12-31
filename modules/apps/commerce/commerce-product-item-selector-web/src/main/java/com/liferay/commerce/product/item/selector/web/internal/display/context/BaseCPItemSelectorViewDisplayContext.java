@@ -59,10 +59,12 @@ public abstract class BaseCPItemSelectorViewDisplayContext<T> {
 	}
 
 	public String getDisplayStyle() {
-		if (_displayStyle == null) {
-			_displayStyle = getDisplayStyle(
-				httpServletRequest, portalPreferences);
+		if (Validator.isNotNull(_displayStyle)) {
+			return _displayStyle;
 		}
+
+		_displayStyle = SearchDisplayStyleUtil.getDisplayStyle(
+			httpServletRequest, _portalPreferenceNamespace, "list", true);
 
 		return _displayStyle;
 	}
@@ -137,14 +139,6 @@ public abstract class BaseCPItemSelectorViewDisplayContext<T> {
 
 	public void setDefaultOrderByType(String defaultOrderByType) {
 		_defaultOrderByType = defaultOrderByType;
-	}
-
-	protected String getDisplayStyle(
-		HttpServletRequest httpServletRequest,
-		PortalPreferences portalPreferences) {
-
-		return SearchDisplayStyleUtil.getDisplayStyle(
-			httpServletRequest, _portalPreferenceNamespace, "list", true);
 	}
 
 	protected RowChecker getRowChecker() {

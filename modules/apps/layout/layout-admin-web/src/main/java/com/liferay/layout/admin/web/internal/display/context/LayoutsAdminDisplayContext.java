@@ -417,8 +417,8 @@ public class LayoutsAdminDisplayContext {
 		}
 
 		_displayStyle = SearchDisplayStyleUtil.getDisplayStyle(
-			PortalUtil.getHttpServletRequest(_liferayPortletRequest),
-			LayoutAdminPortletKeys.GROUP_PAGES, "miller-columns");
+			_liferayPortletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
+			"miller-columns");
 
 		return _displayStyle;
 	}
@@ -637,8 +637,10 @@ public class LayoutsAdminDisplayContext {
 			statuses = new int[] {WorkflowConstants.STATUS_ANY};
 		}
 
-		layoutsSearchContainer.setResults(
-			LayoutServiceUtil.getLayouts(
+		int[] layoutStatuses = statuses;
+
+		layoutsSearchContainer.setResultsAndTotal(
+			() -> LayoutServiceUtil.getLayouts(
 				getSelGroupId(), isPrivateLayout(), keywords,
 				new String[] {
 					LayoutConstants.TYPE_COLLECTION,
@@ -648,12 +650,9 @@ public class LayoutsAdminDisplayContext {
 					LayoutConstants.TYPE_PANEL, LayoutConstants.TYPE_PORTLET,
 					LayoutConstants.TYPE_URL
 				},
-				statuses, layoutsSearchContainer.getStart(),
+				layoutStatuses, layoutsSearchContainer.getStart(),
 				layoutsSearchContainer.getEnd(),
-				layoutsSearchContainer.getOrderByComparator()));
-		layoutsSearchContainer.setRowChecker(
-			new EmptyOnClickRowChecker(_liferayPortletResponse));
-		layoutsSearchContainer.setTotal(
+				layoutsSearchContainer.getOrderByComparator()),
 			LayoutServiceUtil.getLayoutsCount(
 				getSelGroupId(), isPrivateLayout(), keywords,
 				new String[] {
@@ -664,7 +663,10 @@ public class LayoutsAdminDisplayContext {
 					LayoutConstants.TYPE_PANEL, LayoutConstants.TYPE_PORTLET,
 					LayoutConstants.TYPE_URL
 				},
-				statuses));
+				layoutStatuses));
+
+		layoutsSearchContainer.setRowChecker(
+			new EmptyOnClickRowChecker(_liferayPortletResponse));
 
 		_layoutsSearchContainer = layoutsSearchContainer;
 
@@ -1854,11 +1856,9 @@ public class LayoutsAdminDisplayContext {
 				WorkflowConstants.STATUS_APPROVED, serviceContext);
 		}
 
-		String layoutFullURL = PortalUtil.getLayoutFullURL(
-			draftLayout, themeDisplay);
-
-		layoutFullURL = HttpUtil.setParameter(
-			layoutFullURL, "p_l_back_url", _getBackURL());
+		String layoutFullURL = HttpUtil.setParameter(
+			PortalUtil.getLayoutFullURL(draftLayout, themeDisplay),
+			"p_l_back_url", _getBackURL());
 
 		return HttpUtil.setParameter(layoutFullURL, "p_l_mode", Constants.EDIT);
 	}

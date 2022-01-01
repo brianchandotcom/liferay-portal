@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.project.templates.mvc.portlet;
+package com.liferay.project.templates.mvc.portlet.notification;
 
 import com.liferay.maven.executor.MavenExecutor;
 import com.liferay.project.templates.BaseProjectTemplatesTestCase;
@@ -37,10 +37,10 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
 /**
- * @author Lawrence Lee
+ * @author Simon Jiang
  */
 @RunWith(Parameterized.class)
-public class ProjectTemplatesMVCPortletCustomPackageTest
+public class ProjectTemplatesMVCPortletNotificationTest
 	implements BaseProjectTemplatesTestCase {
 
 	@ClassRule
@@ -50,7 +50,7 @@ public class ProjectTemplatesMVCPortletCustomPackageTest
 	public static Iterable<Object[]> data() {
 		return Arrays.asList(
 			new Object[][] {
-				{"7.0.6-2"}, {"7.1.3-1"}, {"7.2.1-1"}, {"7.3.7"}, {"7.4.1-1"}
+				{"7.0.6-2"}, {"7.1.3-1"}, {"7.2.1-1"}, {"7.3.7"}, {"7.4.3.4"}
 			});
 	}
 
@@ -70,15 +70,18 @@ public class ProjectTemplatesMVCPortletCustomPackageTest
 		_gradleDistribution = URI.create(gradleDistribution);
 	}
 
-	public ProjectTemplatesMVCPortletCustomPackageTest(String liferayVersion) {
+	public ProjectTemplatesMVCPortletNotificationTest(String liferayVersion) {
 		_liferayVersion = liferayVersion;
 	}
 
 	@Test
 	public void testBuildTemplateMVCPortlet() throws Exception {
 		File gradleProjectDir = testBuildTemplatePortlet(
-			temporaryFolder, "mvc-portlet", "foo", "com.liferay.test",
+			temporaryFolder, "mvc-portlet-notification", "foo", "foo",
 			_liferayVersion, mavenExecutor, _gradleDistribution);
+
+		testContains(
+			gradleProjectDir, "bnd.bnd", "Export-Package: foo.constants");
 
 		if (VersionUtil.getMinorVersion(_liferayVersion) < 3) {
 			testContains(
@@ -87,10 +90,17 @@ public class ProjectTemplatesMVCPortletCustomPackageTest
 		}
 
 		testContains(
-			gradleProjectDir,
-			"src/main/java/com/liferay/test/portlet/FooPortlet.java",
+			gradleProjectDir, "src/main/java/foo/constants/FooPortletKeys.java",
+			"public class FooPortletKeys", "public static final String FOO");
+		testContains(
+			gradleProjectDir, "src/main/java/foo/portlet/FooPortlet.java",
+			"javax.portlet.display-name=Foo",
 			"javax.portlet.name=\" + FooPortletKeys.FOO",
 			"public class FooPortlet extends MVCPortlet {");
+		testContains(
+			gradleProjectDir, "src/main/resources/content/Language.properties",
+			"javax.portlet.title.foo_FooPortlet=Foo",
+			"foo.caption=Hello from Foo!");
 	}
 
 	@Rule

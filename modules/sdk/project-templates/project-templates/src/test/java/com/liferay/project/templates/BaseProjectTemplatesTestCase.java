@@ -1218,7 +1218,9 @@ public interface BaseProjectTemplatesTestCase {
 				gradleProjectDir, "src/main/resources/templates/view.ftl",
 				FREEMARKER_PORTLET_VIEW_FTL_PREFIX);
 		}
-		else if (template.equals("mvc-portlet")) {
+		else if (template.equals("mvc-portlet") ||
+				 template.equals("mvc-portlet-notification")) {
+
 			resourceFileNames = new String[] {
 				"resources/META-INF/resources/init.jsp",
 				"resources/META-INF/resources/view.jsp",

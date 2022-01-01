@@ -1,4 +1,4 @@
-package ${package}.notifications.action;
+package ${package}.action;
 
 import ${package}.constants.${className}PortletKeys;
 import ${package}.notifications.${className}NotificationSubscriptionSender;
@@ -12,7 +12,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.SubscriptionLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -30,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + ${className}NotificationPortletKeys.${className.toUpperCase()},
+		"javax.portlet.name=" + ${className}PortletKeys.${className.toUpperCase()},
 		"mvc.command.name=/send_notification"
 	},
 	service = MVCActionCommand.class
@@ -88,7 +87,7 @@ public class NotifyMVCActionCommand extends BaseMVCActionCommand {
 		subscriptionSender.setHtmlFormat(true);
 		subscriptionSender.setMailId("${className} Notification", 0);
 		subscriptionSender.setNotificationType(${className}NotificationType.NOTIFICATION_TYPE_${className.toUpperCase()});
-		subscriptionSender.setPortletId(${className}NotificationPortletKeys.${className.toUpperCase()});
+		subscriptionSender.setPortletId(${className}PortletKeys.${className.toUpperCase()});
 		subscriptionSender.setReplyToAddress(fromAddress);
 		subscriptionSender.setServiceContext(serviceContext);
 		subscriptionSender.setSubject("${className} Notification Subject");

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.project.templates.mvc.portlet;
+package com.liferay.project.templates.mvc.portlet.notification;
 
 import com.liferay.maven.executor.MavenExecutor;
 import com.liferay.project.templates.BaseProjectTemplatesTestCase;
@@ -37,10 +37,10 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
 /**
- * @author Lawrence Lee
+ * @author Simon Jiang
  */
 @RunWith(Parameterized.class)
-public class ProjectTemplatesMVCPortletNameTest
+public class ProjectTemplatesMVCPortletNotificationSuffixTest
 	implements BaseProjectTemplatesTestCase {
 
 	@ClassRule
@@ -50,7 +50,7 @@ public class ProjectTemplatesMVCPortletNameTest
 	public static Iterable<Object[]> data() {
 		return Arrays.asList(
 			new Object[][] {
-				{"7.0.6-2"}, {"7.1.3-1"}, {"7.2.1-1"}, {"7.3.7"}, {"7.4.1-1"}
+				{"7.0.6-2"}, {"7.1.3-1"}, {"7.2.1-1"}, {"7.3.7"}, {"7.4.3.4"}
 			});
 	}
 
@@ -70,15 +70,17 @@ public class ProjectTemplatesMVCPortletNameTest
 		_gradleDistribution = URI.create(gradleDistribution);
 	}
 
-	public ProjectTemplatesMVCPortletNameTest(String liferayVersion) {
+	public ProjectTemplatesMVCPortletNotificationSuffixTest(
+		String liferayVersion) {
+
 		_liferayVersion = liferayVersion;
 	}
 
 	@Test
 	public void testBuildTemplateMVCPortlet() throws Exception {
 		File gradleProjectDir = testBuildTemplatePortlet(
-			temporaryFolder, "mvc-portlet", "portlet", "portlet",
-			_liferayVersion, mavenExecutor, _gradleDistribution);
+			temporaryFolder, "mvc-portlet-notification", "portlet-portlet",
+			"portlet", _liferayVersion, mavenExecutor, _gradleDistribution);
 
 		if (VersionUtil.getMinorVersion(_liferayVersion) < 3) {
 			testContains(
@@ -88,13 +90,13 @@ public class ProjectTemplatesMVCPortletNameTest
 
 		testContains(
 			gradleProjectDir,
-			"src/main/java/portlet/constants/PortletPortletKeys.java",
+			"src/main/java/portlet/portlet/constants/PortletPortletKeys.java",
 			"public class PortletPortletKeys",
-			"public static final String PORTLET",
-			"\"portlet_PortletPortlet\";");
+			"public static final String NOTIFY",
+			"public static final String SENDER");
 		testContains(
 			gradleProjectDir,
-			"src/main/java/portlet/portlet/PortletPortlet.java",
+			"src/main/java/portlet/portlet/portlet/PortletPortlet.java",
 			"javax.portlet.name=\" + PortletPortletKeys.PORTLET",
 			"public class PortletPortlet extends MVCPortlet {");
 	}

@@ -1,7 +1,7 @@
 package ${package}.notifications;
 
 import ${package}.constants.${className}PortletKeys;
-import ${package}.portlet.${className};
+import ${package}.portlet.${className}Portlet;
 
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -45,7 +45,7 @@ public class ${className}NotificationSubscriptionSender extends SubscriptionSend
 	public void flushNotifications() throws Exception {
 		List<Subscription> subscriptions =
 			SubscriptionLocalServiceUtil.getSubscriptions(
-				companyId, ${className}.class.getName(), 0);
+				companyId, ${className}Portlet.class.getName(), 0);
 
 		for (Subscription subscription : subscriptions) {
 			try {

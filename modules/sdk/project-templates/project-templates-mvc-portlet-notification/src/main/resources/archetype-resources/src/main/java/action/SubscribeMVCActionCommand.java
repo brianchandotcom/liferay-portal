@@ -1,4 +1,4 @@
-package ${package}.notifications.action;
+package ${package}.action;
 
 import ${package}.constants.${className}PortletKeys;
 import ${package}.portlet.${className}Portlet;

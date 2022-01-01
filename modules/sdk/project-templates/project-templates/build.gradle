@@ -71,6 +71,7 @@ dependencies {
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.layout.template", version: "1.0.151"
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.modules.ext", version: "1.0.138"
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.mvc.portlet", version: "1.0.152"
+	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.mvc.portlet.notification", version: "1.0.0"
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.npm.angular.portlet", version: "1.0.149"
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.npm.react.portlet", version: "1.0.149"
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.npm.vuejs.portlet", version: "1.0.149"
@@ -154,7 +155,7 @@ repositories {
 
 		dir = dir.getParentFile();
 	}
-
+	mavenLocal()
 	if (project.hasProperty("releaseApiJarRepoUsername")) {
 		maven {
 			credentials {

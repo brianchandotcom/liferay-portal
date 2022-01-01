@@ -192,10 +192,11 @@ public class PingbackMethodImplTest {
 
 	@Test
 	public void testBuildServiceContext() throws Exception {
-		PingbackMethodImpl pingbackMethodImpl = _getPingbackMethodImpl();
-
-		ServiceContext serviceContext = pingbackMethodImpl.buildServiceContext(
-			_COMPANY_ID, _GROUP_ID, _URL_TITLE);
+		ServiceContext serviceContext =
+			(ServiceContext)ReflectionTestUtil.invoke(
+				_getPingbackMethodImpl(), "_buildServiceContext",
+				new Class<?>[] {long.class, long.class, String.class},
+				_COMPANY_ID, _GROUP_ID, _URL_TITLE);
 
 		Assert.assertEquals(
 			_PINGBACK_USER_NAME,

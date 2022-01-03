@@ -24,11 +24,14 @@ import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.info.item.InfoItemClassDetails;
 import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.layout.display.page.LayoutDisplayPageMultiSelectionProvider;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.info.item.capability.DisplayPageInfoItemCapability;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -42,6 +45,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -58,6 +62,7 @@ import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
 
 import java.util.Dictionary;
+import java.util.Locale;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -65,6 +70,11 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 import org.springframework.mock.web.MockHttpServletRequest;
 
@@ -97,6 +107,53 @@ public class SiteNavigationMenuItemDisplayPageTest {
 			TestPropsValues.getUserId(), _group.getGroupId(),
 			RandomTestUtil.randomString(), assetVocabulary.getVocabularyId(),
 			_serviceContext);
+	}
+
+	@Test
+	public void testDisplayPageTypeMultiSelection() throws Exception {
+		Dictionary<String, Object> dictionary =
+			HashMapDictionaryBuilder.<String, Object>put(
+				"multipleSelectionEnabled", true
+			).build();
+
+		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
+				new ConfigurationTemporarySwapper(
+					"com.liferay.site.navigation.menu.item.display.page." +
+						"internal.configuration." +
+							"FFDisplayPageSiteNavigationMenuItemConfiguration",
+					dictionary)) {
+
+			SiteNavigationMenuItemType siteNavigationMenuItemType =
+				_siteNavigationMenuItemTypeRegistry.
+					getSiteNavigationMenuItemType(
+						JournalArticle.class.getName());
+
+			Assert.assertFalse(siteNavigationMenuItemType.isMultiSelection());
+
+			Bundle bundle = FrameworkUtil.getBundle(
+				LayoutDisplayPageMultiSelectionProvider.class);
+
+			BundleContext bundleContext = bundle.getBundleContext();
+
+			_serviceRegistration = bundleContext.registerService(
+				LayoutDisplayPageMultiSelectionProvider.class,
+				new LayoutDisplayPageMultiSelectionProvider() {
+
+					@Override
+					public String getClassName() {
+						return JournalArticle.class.getName();
+					}
+
+					@Override
+					public String getPluralLabel(Locale locale) {
+						return LanguageUtil.get(locale, "articles");
+					}
+
+				},
+				new HashMapDictionary<String, String>());
+
+			Assert.assertTrue(siteNavigationMenuItemType.isMultiSelection());
+		}
 	}
 
 	@Test
@@ -327,6 +384,8 @@ public class SiteNavigationMenuItemDisplayPageTest {
 	private Portal _portal;
 
 	private ServiceContext _serviceContext;
+	private ServiceRegistration<LayoutDisplayPageMultiSelectionProvider>
+		_serviceRegistration;
 
 	@Inject
 	private SiteNavigationMenuItemLocalService

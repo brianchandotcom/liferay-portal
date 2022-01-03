@@ -20,6 +20,11 @@
 	<td>//h6[contains(text(),'building at Address?')]</td>
 	<td></td>
 </tr>
+<tr>
+    <td>PROPERTY_PAGE</td>
+    <td>//h2[contains(text(), 'More about')]</td>
+    <td></td>
+</tr>
 </tbody>
 </table>
 </body>

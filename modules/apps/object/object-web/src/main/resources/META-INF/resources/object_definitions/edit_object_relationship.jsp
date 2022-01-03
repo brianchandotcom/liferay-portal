@@ -47,7 +47,12 @@ ObjectRelationship objectRelationship = (ObjectRelationship)request.getAttribute
 					<aui:input disabled="<%= true %>" name="name" required="<%= true %>" value="<%= objectRelationship.getName() %>" />
 
 					<aui:select disabled="<%= true %>" name="type" required="<%= true %>">
-						<aui:option label="one-to-one" selected="<%= Objects.equals(objectRelationship.getType(), ObjectRelationshipConstants.TYPE_ONE_TO_ONE) %>" value="<%= ObjectRelationshipConstants.TYPE_ONE_TO_ONE %>" />
+						<c:choose>
+							<c:when test="<%= objectDefinitionsRelationshipsDisplayContext.isFFOneToOneRelationshipConfigurationEnabled() %>">
+								<aui:option label="one-to-one" selected="<%= Objects.equals(objectRelationship.getType(), ObjectRelationshipConstants.TYPE_ONE_TO_ONE) %>" value="<%= ObjectRelationshipConstants.TYPE_ONE_TO_ONE %>" />
+							</c:when>
+						</c:choose>
+
 						<aui:option label="one-to-many" selected="<%= Objects.equals(objectRelationship.getType(), ObjectRelationshipConstants.TYPE_ONE_TO_MANY) %>" value="<%= ObjectRelationshipConstants.TYPE_ONE_TO_MANY %>" />
 						<aui:option label="many-to-many" selected="<%= Objects.equals(objectRelationship.getType(), ObjectRelationshipConstants.TYPE_MANY_TO_MANY) %>" value="<%= ObjectRelationshipConstants.TYPE_MANY_TO_MANY %>" />
 					</aui:select>

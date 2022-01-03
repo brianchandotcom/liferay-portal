@@ -17,6 +17,7 @@ package com.liferay.object.web.internal.object.definitions.frontend.taglib.servl
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.web.internal.configuration.activator.FFOneToOneRelationshipConfigurationActivator;
 import com.liferay.object.web.internal.object.definitions.constants.ObjectDefinitionsScreenNavigationEntryConstants;
 import com.liferay.object.web.internal.object.definitions.display.context.ObjectDefinitionsRelationshipsDisplayContext;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -84,10 +85,15 @@ public class ObjectDefinitionsRelationshipsScreenNavigationCategory
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
 			new ObjectDefinitionsRelationshipsDisplayContext(
+				_ffOneToOneRelationshipConfigurationActivator,
 				httpServletRequest, _objectDefinitionModelResourcePermission));
 
 		super.render(httpServletRequest, httpServletResponse);
 	}
+
+	@Reference
+	private FFOneToOneRelationshipConfigurationActivator
+		_ffOneToOneRelationshipConfigurationActivator;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.object.model.ObjectDefinition)"

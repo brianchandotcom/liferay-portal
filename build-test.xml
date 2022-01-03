@@ -9677,7 +9677,8 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 
 		<echo append="true" file="${test.ext.properties.file}">
 			analytics.cloud.asah.backend.url=${analytics.cloud.asah.backend.url}
-			analytics.cloud.asah.curator.url=${analytics.cloud.asah.curator.url}
+			analytics.cloud.asah.curator.batch.url=${analytics.cloud.asah.curator.batch.url}
+			analytics.cloud.asah.curator.stream.url=${analytics.cloud.asah.curator.stream.url}
 			analytics.cloud.asah.publisher.url=${analytics.cloud.asah.publisher.url}
 			analytics.cloud.faro.frontend.url=${analytics.cloud.faro.frontend.url}
 		</echo>

@@ -51,10 +51,6 @@ public class DisplayPageTypeContext {
 	}
 
 	public InfoItemClassDetails getInfoItemClassDetails() {
-		if (_infoItemClassDetails != null) {
-			return _infoItemClassDetails;
-		}
-
 		InfoItemDetailsProvider<?> infoItemDetailsProvider =
 			_infoItemServiceTracker.getFirstInfoItemService(
 				InfoItemDetailsProvider.class, _className);
@@ -63,24 +59,14 @@ public class DisplayPageTypeContext {
 			return null;
 		}
 
-		_infoItemClassDetails =
-			infoItemDetailsProvider.getInfoItemClassDetails();
-
-		return _infoItemClassDetails;
+		return infoItemDetailsProvider.getInfoItemClassDetails();
 	}
 
 	public InfoItemFormVariationsProvider<?>
 		getInfoItemFormVariationsProvider() {
 
-		if (_infoItemFormVariationsProvider != null) {
-			return _infoItemFormVariationsProvider;
-		}
-
-		_infoItemFormVariationsProvider =
-			_infoItemServiceTracker.getFirstInfoItemService(
-				InfoItemFormVariationsProvider.class, _className);
-
-		return _infoItemFormVariationsProvider;
+		return _infoItemServiceTracker.getFirstInfoItemService(
+			InfoItemFormVariationsProvider.class, _className);
 	}
 
 	public String getLabel(Locale locale) {
@@ -96,13 +82,9 @@ public class DisplayPageTypeContext {
 	public Optional<LayoutDisplayPageMultiSelectionProvider<?>>
 		getLayoutDisplayPageMultiSelectionProviderOptional() {
 
-		if (_layoutDisplayPageMultiSelectionProvider == null) {
-			_layoutDisplayPageMultiSelectionProvider =
-				_layoutDisplayPageMultiSelectionProviderTracker.
-					getLayoutDisplayPageMultiSelectionProvider(_className);
-		}
-
-		return Optional.ofNullable(_layoutDisplayPageMultiSelectionProvider);
+		return Optional.ofNullable(
+			_layoutDisplayPageMultiSelectionProviderTracker.
+				getLayoutDisplayPageMultiSelectionProvider(_className));
 	}
 
 	public LayoutDisplayPageObjectProvider<?>
@@ -120,26 +102,14 @@ public class DisplayPageTypeContext {
 	}
 
 	public LayoutDisplayPageProvider<?> getLayoutDisplayPageProvider() {
-		if (_layoutDisplayPageProvider != null) {
-			return _layoutDisplayPageProvider;
-		}
-
-		_layoutDisplayPageProvider =
-			_layoutDisplayPageProviderTracker.
-				getLayoutDisplayPageProviderByClassName(_className);
-
-		return _layoutDisplayPageProvider;
+		return _layoutDisplayPageProviderTracker.
+			getLayoutDisplayPageProviderByClassName(_className);
 	}
 
 	private final String _className;
-	private InfoItemClassDetails _infoItemClassDetails;
-	private InfoItemFormVariationsProvider<?> _infoItemFormVariationsProvider;
 	private final InfoItemServiceTracker _infoItemServiceTracker;
-	private LayoutDisplayPageMultiSelectionProvider<?>
-		_layoutDisplayPageMultiSelectionProvider;
 	private final LayoutDisplayPageMultiSelectionProviderTracker
 		_layoutDisplayPageMultiSelectionProviderTracker;
-	private LayoutDisplayPageProvider<?> _layoutDisplayPageProvider;
 	private final LayoutDisplayPageProviderTracker
 		_layoutDisplayPageProviderTracker;
 

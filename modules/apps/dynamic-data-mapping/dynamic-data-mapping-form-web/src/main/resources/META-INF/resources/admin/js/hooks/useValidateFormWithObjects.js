@@ -13,10 +13,10 @@
  */
 
 import {
+	PagesVisitor,
 	getFields,
 	getObjectFieldName,
 	getSelectedValue,
-	useConfig,
 	useFormState,
 } from 'data-engine-js-components-web';
 import {useCallback} from 'react';
@@ -50,29 +50,32 @@ const getUnmappedRequiredObjectFields = (formFields, objectFields) => {
  * storage type object is selected in the Forms settings
  */
 export function useValidateFormWithObjects() {
-	const {portletNamespace} = useConfig();
-	const {objectFields, pages} = useFormState();
+	const {formSettingsContext, objectFields, pages} = useFormState();
 
 	return useCallback(
-		async (callbackFn) => {
-
-			// Checks if managementToolbar exists because in some screens such as (elementSet)
-			// it does not exist and therefore saving is allowed
-
-			const managementToolbar = document.querySelector(
-				`#${portletNamespace}managementToolbar`
-			);
-
-			if (!managementToolbar) {
+		(callbackFn) => {
+			if (!formSettingsContext) {
 				return true;
 			}
 
-			const settingsDDMForm = await Liferay.componentReady(
-				'formSettingsAPI'
-			);
-			const objectDefinitionId = settingsDDMForm.reactComponentRef.current.getObjectDefinitionId();
+			let hasObjectDefinitionId = false;
+			let isStorageTypeObject = false;
 
-			if (objectDefinitionId) {
+			const visitor = new PagesVisitor(formSettingsContext.pages);
+
+			visitor.visitFields(({fieldName, value}) => {
+				if (fieldName === 'objectDefinitionId') {
+					hasObjectDefinitionId = !!value[0];
+				}
+				else if (
+					fieldName === 'storageType' &&
+					value[0] === 'object'
+				) {
+					isStorageTypeObject = true;
+				}
+			});
+
+			if (hasObjectDefinitionId && isStorageTypeObject) {
 				const formFields = getFields(pages);
 				const unmappedFormFields = getUnmappedFormFields(formFields);
 				const unmappedRequiredObjectFields = getUnmappedRequiredObjectFields(
@@ -101,6 +104,6 @@ export function useValidateFormWithObjects() {
 				return true;
 			}
 		},
-		[objectFields, pages, portletNamespace]
+		[formSettingsContext, objectFields, pages]
 	);
 }

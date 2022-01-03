@@ -2,7 +2,10 @@ dependencies {
 	testIntegrationCompile group: "javax.portlet", name: "portlet-api", version: "3.0.1"
 	testIntegrationCompile project(":apps:asset:asset-display-page-api")
 	testIntegrationCompile project(":apps:info:info-api")
+	testIntegrationCompile project(":apps:journal:journal-api")
+	testIntegrationCompile project(":apps:layout:layout-display-page-api")
 	testIntegrationCompile project(":apps:layout:layout-page-template-api")
+	testIntegrationCompile project(":apps:portal-configuration:portal-configuration-test-util")
 	testIntegrationCompile project(":apps:site-navigation:site-navigation-api")
 	testIntegrationCompile project(":apps:site-navigation:site-navigation-menu-item-api")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")

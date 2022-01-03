@@ -1,0 +1,17 @@
+definition {
+
+	macro openLastIdCreated {
+		var idCreated = selenium.getText("RaylifeRetrieveEmail#ID_CREATED");
+
+		Click(
+			locator1 = "RaylifeRetrieveEmail#ID_CREATED",
+			value1 = "${idCreated}");
+
+		WaitForElementPresent(locator1 = "RaylifeRetrieveEmail#QUOTE_RETRIEVE_LINK");
+
+		var openURL = selenium.getAttribute("RaylifeRetrieveEmail#SITE_LINK");
+
+		Navigator.openSpecificURL(url = "${openURL}");
+	}
+
+}

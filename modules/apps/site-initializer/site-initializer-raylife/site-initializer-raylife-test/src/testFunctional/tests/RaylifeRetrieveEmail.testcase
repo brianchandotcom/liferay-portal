@@ -81,7 +81,7 @@ definition {
 
 		Refresh();
 
-		RaylifeRetrieveEmailApplication.openLastIdCreated();
+		RaylifeRetrieveEmail.openLastIdCreated();
 
 		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 

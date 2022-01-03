@@ -74,12 +74,12 @@ public class LanguageFilter extends BasePortalFilter {
 
 		String content = bufferCacheServletResponse.getString();
 
-		content = translateResponse(languageId, content);
+		content = _translateResponse(languageId, content);
 
 		ServletResponseUtil.write(httpServletResponse, content);
 	}
 
-	protected String translateResponse(String languageId, String content) {
+	private String _translateResponse(String languageId, String content) {
 		Locale locale = LocaleUtil.fromLanguageId(languageId);
 
 		return LanguageUtil.process(

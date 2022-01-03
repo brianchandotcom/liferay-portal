@@ -175,8 +175,14 @@ public class OpenIdConnectProviderRegistryImpl
 			CompanyConstants.SYSTEM, Collections.emptyMap());
 	}
 
-	protected OpenIdConnectProvider<OIDCClientMetadata, OIDCProviderMetadata>
-			createOpenIdConnectProvider(
+	private <U, V> void _addDefaults(Map<U, V> map, Map<U, V> defaultsMap) {
+		if (defaultsMap != null) {
+			defaultsMap.forEach(map::putIfAbsent);
+		}
+	}
+
+	private OpenIdConnectProvider<OIDCClientMetadata, OIDCProviderMetadata>
+			_createOpenIdConnectProvider(
 				String configurationPid,
 				OpenIdConnectProviderConfiguration
 					openIdConnectProviderConfiguration)
@@ -188,7 +194,7 @@ public class OpenIdConnectProviderRegistryImpl
 				openIdConnectProviderConfiguration.openIdConnectClientId(),
 				openIdConnectProviderConfiguration.openIdConnectClientSecret(),
 				configurationPid, openIdConnectProviderConfiguration.scopes(),
-				getOpenIdConnectMetadataFactory(
+				_getOpenIdConnectMetadataFactory(
 					openIdConnectProviderConfiguration),
 				openIdConnectProviderConfiguration.tokenConnectionTimeout());
 		}
@@ -203,7 +209,7 @@ public class OpenIdConnectProviderRegistryImpl
 		}
 	}
 
-	protected OpenIdConnectMetadataFactory getOpenIdConnectMetadataFactory(
+	private OpenIdConnectMetadataFactory _getOpenIdConnectMetadataFactory(
 			OpenIdConnectProviderConfiguration
 				openIdConnectProviderConfiguration)
 		throws MalformedURLException,
@@ -231,12 +237,6 @@ public class OpenIdConnectProviderRegistryImpl
 			openIdConnectProviderConfiguration.authorizationEndPoint(),
 			openIdConnectProviderConfiguration.tokenEndPoint(),
 			openIdConnectProviderConfiguration.userInfoEndPoint());
-	}
-
-	private <U, V> void _addDefaults(Map<U, V> map, Map<U, V> defaultsMap) {
-		if (defaultsMap != null) {
-			defaultsMap.forEach(map::putIfAbsent);
-		}
 	}
 
 	private void _rebuild() {
@@ -269,11 +269,13 @@ public class OpenIdConnectProviderRegistryImpl
 				try {
 					OpenIdConnectProvider
 						<OIDCClientMetadata, OIDCProviderMetadata>
-							openIdConnectProvider = createOpenIdConnectProvider(
-								configurationPid,
-								ConfigurableUtil.createConfigurable(
-									OpenIdConnectProviderConfiguration.class,
-									properties));
+							openIdConnectProvider =
+								_createOpenIdConnectProvider(
+									configurationPid,
+									ConfigurableUtil.createConfigurable(
+										OpenIdConnectProviderConfiguration.
+											class,
+										properties));
 
 					if (openIdConnectProviderMap.containsKey(
 							openIdConnectProvider.getName())) {

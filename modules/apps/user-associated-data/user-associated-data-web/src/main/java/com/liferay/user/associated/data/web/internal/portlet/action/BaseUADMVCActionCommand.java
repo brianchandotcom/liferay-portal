@@ -200,21 +200,14 @@ public abstract class BaseUADMVCActionCommand extends BaseMVCActionCommand {
 		ActionRequest actionRequest, String entityType) {
 
 		return uadRegistry.getUADAnonymizer(
-			getUADRegistryKey(actionRequest, entityType));
+			_getUADRegistryKey(actionRequest, entityType));
 	}
 
 	protected UADDisplay<?> getUADDisplay(
 		ActionRequest actionRequest, String entityType) {
 
 		return uadRegistry.getUADDisplay(
-			getUADRegistryKey(actionRequest, entityType));
-	}
-
-	protected String getUADRegistryKey(
-		ActionRequest actionRequest, String entityType) {
-
-		return ParamUtil.getString(
-			actionRequest, "uadRegistryKey__" + entityType);
+			_getUADRegistryKey(actionRequest, entityType));
 	}
 
 	@Reference
@@ -225,5 +218,12 @@ public abstract class BaseUADMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	protected UADRegistry uadRegistry;
+
+	private String _getUADRegistryKey(
+		ActionRequest actionRequest, String entityType) {
+
+		return ParamUtil.getString(
+			actionRequest, "uadRegistryKey__" + entityType);
+	}
 
 }

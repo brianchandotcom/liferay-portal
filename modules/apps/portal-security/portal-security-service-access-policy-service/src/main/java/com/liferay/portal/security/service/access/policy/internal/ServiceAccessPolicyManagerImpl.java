@@ -42,7 +42,7 @@ public class ServiceAccessPolicyManagerImpl
 
 	@Override
 	public String getDefaultApplicationServiceAccessPolicyName(long companyId) {
-		SAPConfiguration sapConfiguration = getSAPConfiguration(companyId);
+		SAPConfiguration sapConfiguration = _getSAPConfiguration(companyId);
 
 		if (sapConfiguration != null) {
 			return sapConfiguration.systemDefaultSAPEntryName();
@@ -53,7 +53,7 @@ public class ServiceAccessPolicyManagerImpl
 
 	@Override
 	public String getDefaultUserServiceAccessPolicyName(long companyId) {
-		SAPConfiguration sapConfiguration = getSAPConfiguration(companyId);
+		SAPConfiguration sapConfiguration = _getSAPConfiguration(companyId);
 
 		if (sapConfiguration != null) {
 			return sapConfiguration.systemUserPasswordSAPEntryName();
@@ -66,7 +66,7 @@ public class ServiceAccessPolicyManagerImpl
 	public List<ServiceAccessPolicy> getServiceAccessPolicies(
 		long companyId, int start, int end) {
 
-		return toServiceAccessPolicies(
+		return _toServiceAccessPolicies(
 			_sapEntryService.getCompanySAPEntries(companyId, start, end));
 	}
 
@@ -80,7 +80,7 @@ public class ServiceAccessPolicyManagerImpl
 		long companyId, String name) {
 
 		try {
-			return toServiceAccessPolicy(
+			return _toServiceAccessPolicy(
 				_sapEntryService.getSAPEntry(companyId, name));
 		}
 		catch (PortalException portalException) {
@@ -89,23 +89,6 @@ public class ServiceAccessPolicyManagerImpl
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(portalException, portalException);
-			}
-
-			return null;
-		}
-	}
-
-	protected SAPConfiguration getSAPConfiguration(long companyId) {
-		try {
-			return _configurationProvider.getConfiguration(
-				SAPConfiguration.class,
-				new CompanyServiceSettingsLocator(
-					companyId, SAPConstants.SERVICE_NAME));
-		}
-		catch (ConfigurationException configurationException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to get SAP configuration", configurationException);
 			}
 
 			return null;
@@ -124,7 +107,24 @@ public class ServiceAccessPolicyManagerImpl
 		_sapEntryService = sapEntryService;
 	}
 
-	protected List<ServiceAccessPolicy> toServiceAccessPolicies(
+	private SAPConfiguration _getSAPConfiguration(long companyId) {
+		try {
+			return _configurationProvider.getConfiguration(
+				SAPConfiguration.class,
+				new CompanyServiceSettingsLocator(
+					companyId, SAPConstants.SERVICE_NAME));
+		}
+		catch (ConfigurationException configurationException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to get SAP configuration", configurationException);
+			}
+
+			return null;
+		}
+	}
+
+	private List<ServiceAccessPolicy> _toServiceAccessPolicies(
 		List<SAPEntry> sapEntries) {
 
 		if (sapEntries == null) {
@@ -135,7 +135,7 @@ public class ServiceAccessPolicyManagerImpl
 			sapEntries.size());
 
 		for (SAPEntry sapEntry : sapEntries) {
-			ServiceAccessPolicy serviceAccessPolicy = toServiceAccessPolicy(
+			ServiceAccessPolicy serviceAccessPolicy = _toServiceAccessPolicy(
 				sapEntry);
 
 			serviceAccessPolicies.add(serviceAccessPolicy);
@@ -144,7 +144,7 @@ public class ServiceAccessPolicyManagerImpl
 		return serviceAccessPolicies;
 	}
 
-	protected ServiceAccessPolicy toServiceAccessPolicy(SAPEntry sapEntry) {
+	private ServiceAccessPolicy _toServiceAccessPolicy(SAPEntry sapEntry) {
 		if (sapEntry != null) {
 			return new ServiceAccessPolicyImpl(sapEntry);
 		}

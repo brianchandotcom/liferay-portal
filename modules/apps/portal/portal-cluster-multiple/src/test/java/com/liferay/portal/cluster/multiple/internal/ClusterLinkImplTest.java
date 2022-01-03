@@ -56,7 +56,7 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 
 	@Test
 	public void testDeactivate() {
-		ClusterLinkImpl clusterLinkImpl = getClusterLinkImpl(1);
+		ClusterLinkImpl clusterLinkImpl = _getClusterLinkImpl(1);
 
 		List<TestClusterChannel> clusterChannels =
 			TestClusterChannel.getClusterChannels();
@@ -79,7 +79,7 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 
 	@Test
 	public void testGetChannel() {
-		ClusterLinkImpl clusterLinkImpl = getClusterLinkImpl(2);
+		ClusterLinkImpl clusterLinkImpl = _getClusterLinkImpl(2);
 
 		ClusterChannel clusterChannel1 = clusterLinkImpl.getChannel(
 			Priority.LEVEL1);
@@ -130,7 +130,7 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 			List<LogEntry> logEntries = logCapture.getLogEntries();
 
 			try {
-				getClusterLinkImpl(ClusterLinkImpl.MAX_CHANNEL_COUNT + 1);
+				_getClusterLinkImpl(ClusterLinkImpl.MAX_CHANNEL_COUNT + 1);
 
 				Assert.fail();
 			}
@@ -148,7 +148,7 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 			logEntries = logCapture.resetPriority(String.valueOf(Level.SEVERE));
 
 			try {
-				getClusterLinkImpl(0);
+				_getClusterLinkImpl(0);
 
 				Assert.fail();
 			}
@@ -171,7 +171,7 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 
 	@Test
 	public void testInitialize() {
-		ClusterLinkImpl clusterLinkImpl = getClusterLinkImpl(2);
+		ClusterLinkImpl clusterLinkImpl = _getClusterLinkImpl(2);
 
 		Assert.assertNotNull(clusterLinkImpl.getExecutorService());
 
@@ -193,7 +193,7 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 
 	@Test
 	public void testSendMulticastMessage() {
-		ClusterLinkImpl clusterLinkImpl = getClusterLinkImpl(1);
+		ClusterLinkImpl clusterLinkImpl = _getClusterLinkImpl(1);
 
 		List<Serializable> multicastMessages =
 			TestClusterChannel.getMulticastMessages();
@@ -219,7 +219,7 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 
 	@Test
 	public void testSendUnicastMessage() {
-		ClusterLinkImpl clusterLinkImpl = getClusterLinkImpl(1);
+		ClusterLinkImpl clusterLinkImpl = _getClusterLinkImpl(1);
 
 		List<Serializable> multicastMessages =
 			TestClusterChannel.getMulticastMessages();
@@ -248,7 +248,7 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 		Assert.assertSame(address, unicastMessage.getValue());
 	}
 
-	protected ClusterLinkImpl getClusterLinkImpl(int channels) {
+	private ClusterLinkImpl _getClusterLinkImpl(int channels) {
 		ClusterLinkImpl clusterLinkImpl = new ClusterLinkImpl();
 
 		Properties channelNameProperties = new Properties();

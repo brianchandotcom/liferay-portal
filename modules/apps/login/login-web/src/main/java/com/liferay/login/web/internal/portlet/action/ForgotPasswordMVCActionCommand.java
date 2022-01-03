@@ -75,66 +75,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class ForgotPasswordMVCActionCommand extends BaseMVCActionCommand {
 
-	protected void checkCaptcha(ActionRequest actionRequest)
-		throws CaptchaConfigurationException, CaptchaException {
-
-		CaptchaConfiguration captchaConfiguration = getCaptchaConfiguration();
-
-		if (captchaConfiguration.sendPasswordCaptchaEnabled()) {
-			CaptchaUtil.check(actionRequest);
-		}
-	}
-
-	protected void checkReminderQueries(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		PortletSession portletSession = actionRequest.getPortletSession();
-
-		int step = ParamUtil.getInteger(actionRequest, "step");
-
-		String login = (String)portletSession.getAttribute(
-			WebKeys.FORGOT_PASSWORD_REMINDER_USER_EMAIL_ADDRESS);
-
-		if (login == null) {
-			step = 1;
-		}
-
-		if (step == 1) {
-			checkCaptcha(actionRequest);
-
-			portletSession.removeAttribute(
-				WebKeys.FORGOT_PASSWORD_REMINDER_ATTEMPTS);
-
-			login = ParamUtil.getString(actionRequest, "login");
-
-			portletSession.setAttribute(
-				WebKeys.FORGOT_PASSWORD_REMINDER_USER_EMAIL_ADDRESS, login);
-		}
-
-		actionRequest.setAttribute(
-			WebKeys.FORGOT_PASSWORD_REMINDER_USER, getUser(actionRequest));
-
-		if (step == 2) {
-			Integer reminderAttempts = (Integer)portletSession.getAttribute(
-				WebKeys.FORGOT_PASSWORD_REMINDER_ATTEMPTS);
-
-			if (reminderAttempts == null) {
-				reminderAttempts = 0;
-			}
-			else if (reminderAttempts > 2) {
-				checkCaptcha(actionRequest);
-			}
-
-			reminderAttempts++;
-
-			portletSession.setAttribute(
-				WebKeys.FORGOT_PASSWORD_REMINDER_ATTEMPTS, reminderAttempts);
-
-			sendPassword(actionRequest, actionResponse);
-		}
-	}
-
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
@@ -153,12 +93,12 @@ public class ForgotPasswordMVCActionCommand extends BaseMVCActionCommand {
 
 		try {
 			if (PropsValues.USERS_REMINDER_QUERIES_ENABLED) {
-				checkReminderQueries(actionRequest, actionResponse);
+				_checkReminderQueries(actionRequest, actionResponse);
 			}
 			else {
-				checkCaptcha(actionRequest);
+				_checkCaptcha(actionRequest);
 
-				sendPassword(actionRequest, actionResponse);
+				_sendPassword(actionRequest, actionResponse);
 			}
 		}
 		catch (Exception exception) {
@@ -210,9 +150,125 @@ public class ForgotPasswordMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	protected User getUser(ActionRequest actionRequest) throws Exception {
+	@Reference(unbind = "-")
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
+	private void _checkCaptcha(ActionRequest actionRequest)
+		throws CaptchaConfigurationException, CaptchaException {
+
+		CaptchaConfiguration captchaConfiguration = getCaptchaConfiguration();
+
+		if (captchaConfiguration.sendPasswordCaptchaEnabled()) {
+			CaptchaUtil.check(actionRequest);
+		}
+	}
+
+	private void _checkReminderQueries(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		PortletSession portletSession = actionRequest.getPortletSession();
+
+		int step = ParamUtil.getInteger(actionRequest, "step");
+
+		String login = (String)portletSession.getAttribute(
+			WebKeys.FORGOT_PASSWORD_REMINDER_USER_EMAIL_ADDRESS);
+
+		if (login == null) {
+			step = 1;
+		}
+
+		if (step == 1) {
+			_checkCaptcha(actionRequest);
+
+			portletSession.removeAttribute(
+				WebKeys.FORGOT_PASSWORD_REMINDER_ATTEMPTS);
+
+			login = ParamUtil.getString(actionRequest, "login");
+
+			portletSession.setAttribute(
+				WebKeys.FORGOT_PASSWORD_REMINDER_USER_EMAIL_ADDRESS, login);
+		}
+
+		actionRequest.setAttribute(
+			WebKeys.FORGOT_PASSWORD_REMINDER_USER, _getUser(actionRequest));
+
+		if (step == 2) {
+			Integer reminderAttempts = (Integer)portletSession.getAttribute(
+				WebKeys.FORGOT_PASSWORD_REMINDER_ATTEMPTS);
+
+			if (reminderAttempts == null) {
+				reminderAttempts = 0;
+			}
+			else if (reminderAttempts > 2) {
+				_checkCaptcha(actionRequest);
+			}
+
+			reminderAttempts++;
+
+			portletSession.setAttribute(
+				WebKeys.FORGOT_PASSWORD_REMINDER_ATTEMPTS, reminderAttempts);
+
+			_sendPassword(actionRequest, actionResponse);
+		}
+	}
+
+	private User _getUser(ActionRequest actionRequest) throws Exception {
 		try {
-			return _getUser(actionRequest);
+			User user = null;
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
+			String authType = null;
+
+			PortletPreferences portletPreferences =
+				actionRequest.getPreferences();
+
+			if (portletPreferences != null) {
+				authType = portletPreferences.getValue("authType", null);
+			}
+
+			if (Validator.isNull(authType)) {
+				Company company = themeDisplay.getCompany();
+
+				authType = company.getAuthType();
+			}
+
+			PortletSession portletSession = actionRequest.getPortletSession();
+
+			String login = (String)portletSession.getAttribute(
+				WebKeys.FORGOT_PASSWORD_REMINDER_USER_EMAIL_ADDRESS);
+
+			if (Validator.isNull(login)) {
+				login = ParamUtil.getString(actionRequest, "login");
+			}
+
+			if (authType.equals(CompanyConstants.AUTH_TYPE_EA)) {
+				user = _userLocalService.getUserByEmailAddress(
+					themeDisplay.getCompanyId(), login);
+			}
+			else if (authType.equals(CompanyConstants.AUTH_TYPE_SN)) {
+				user = _userLocalService.getUserByScreenName(
+					themeDisplay.getCompanyId(), login);
+			}
+			else if (authType.equals(CompanyConstants.AUTH_TYPE_ID)) {
+				user = _userLocalService.getUserById(GetterUtil.getLong(login));
+			}
+			else {
+				throw new NoSuchUserException("User does not exist");
+			}
+
+			if (!user.isActive()) {
+				throw new UserActiveException(
+					"Inactive user " + user.getUuid());
+			}
+
+			_userLocalService.checkLockout(user);
+
+			return user;
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -250,11 +306,11 @@ public class ForgotPasswordMVCActionCommand extends BaseMVCActionCommand {
 		return defaultUser;
 	}
 
-	protected void sendPassword(
+	private void _sendPassword(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		User user = getUser(actionRequest);
+		User user = _getUser(actionRequest);
 
 		if (PropsValues.USERS_REMINDER_QUERIES_ENABLED) {
 			if (user.isDefaultUser()) {
@@ -322,64 +378,6 @@ public class ForgotPasswordMVCActionCommand extends BaseMVCActionCommand {
 			_portal.getHttpServletRequest(actionRequest), "forgotPasswordSent");
 
 		sendRedirect(actionRequest, actionResponse, null);
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserLocalService(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
-	}
-
-	private User _getUser(ActionRequest actionRequest) throws Exception {
-		User user = null;
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		String authType = null;
-
-		PortletPreferences portletPreferences = actionRequest.getPreferences();
-
-		if (portletPreferences != null) {
-			authType = portletPreferences.getValue("authType", null);
-		}
-
-		if (Validator.isNull(authType)) {
-			Company company = themeDisplay.getCompany();
-
-			authType = company.getAuthType();
-		}
-
-		PortletSession portletSession = actionRequest.getPortletSession();
-
-		String login = (String)portletSession.getAttribute(
-			WebKeys.FORGOT_PASSWORD_REMINDER_USER_EMAIL_ADDRESS);
-
-		if (Validator.isNull(login)) {
-			login = ParamUtil.getString(actionRequest, "login");
-		}
-
-		if (authType.equals(CompanyConstants.AUTH_TYPE_EA)) {
-			user = _userLocalService.getUserByEmailAddress(
-				themeDisplay.getCompanyId(), login);
-		}
-		else if (authType.equals(CompanyConstants.AUTH_TYPE_SN)) {
-			user = _userLocalService.getUserByScreenName(
-				themeDisplay.getCompanyId(), login);
-		}
-		else if (authType.equals(CompanyConstants.AUTH_TYPE_ID)) {
-			user = _userLocalService.getUserById(GetterUtil.getLong(login));
-		}
-		else {
-			throw new NoSuchUserException("User does not exist");
-		}
-
-		if (!user.isActive()) {
-			throw new UserActiveException("Inactive user " + user.getUuid());
-		}
-
-		_userLocalService.checkLockout(user);
-
-		return user;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

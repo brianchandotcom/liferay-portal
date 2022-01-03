@@ -235,100 +235,11 @@ public class JspCompiler extends Jsr199JavaCompiler {
 
 		jspCompilationContext.setClassLoader(jspBundleClassloader);
 
-		initClassPath(servletContext);
+		_initClassPath(servletContext);
 		initTLDMappings(
 			servletContext, jspCompilationContext.getTagFileJarUrls());
 
 		super.init(jspCompilationContext, errorDispatcher, suppressLogging);
-	}
-
-	protected void addDependenciesToClassPath() {
-		ClassLoader frameworkClassLoader = Bundle.class.getClassLoader();
-
-		for (String className : _JSP_COMPILER_DEPENDENCIES) {
-			try {
-				Class<?> clazz = Class.forName(
-					className, true, frameworkClassLoader);
-
-				addDependencyToClassPath(clazz);
-			}
-			catch (ClassNotFoundException classNotFoundException) {
-				_log.error(
-					"Unable to add depedency " + className +
-						" to the classpath",
-					classNotFoundException);
-			}
-		}
-	}
-
-	protected void addDependencyToClassPath(Class<?> clazz) {
-		ProtectionDomain protectionDomain = clazz.getProtectionDomain();
-
-		if (protectionDomain == null) {
-			return;
-		}
-
-		CodeSource codeSource = protectionDomain.getCodeSource();
-
-		URL url = codeSource.getLocation();
-
-		try {
-			File file = ClassPathUtil.getFile(url);
-
-			if ((file == null) && _log.isDebugEnabled()) {
-				_log.debug(
-					StringBundler.concat(
-						"Ignoring URL ", url, " because of unknown protocol ",
-						url.getProtocol()));
-			}
-
-			if (file.exists() && file.canRead()) {
-				_classPath.remove(file);
-
-				_classPath.add(0, file);
-			}
-		}
-		catch (Exception exception) {
-			_log.error(exception.getMessage(), exception);
-		}
-	}
-
-	protected void collectTLDMappings(
-			Map<String, String[]> tldMappings, Map<String, URL> tagFileJarUrls,
-			Bundle bundle)
-		throws IOException {
-
-		BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
-
-		List<String> resourcePaths = new ArrayList<>(
-			bundleWiring.listResources(
-				"/META-INF/", "*.tld", BundleWiring.LISTRESOURCES_RECURSE));
-
-		resourcePaths.addAll(
-			bundleWiring.listResources(
-				"/WEB-INF/", "*.tld", BundleWiring.LISTRESOURCES_RECURSE));
-
-		for (String resourcePath : resourcePaths) {
-			URL url = bundle.getResource(resourcePath);
-
-			String uri = TldURIUtil.getTldURI(url);
-
-			if (uri != null) {
-				String absoluteResourcePath = StringPool.SLASH.concat(
-					resourcePath);
-
-				tldMappings.put(
-					uri.trim(), new String[] {absoluteResourcePath, null});
-
-				String urlString = url.toExternalForm();
-
-				tagFileJarUrls.put(
-					absoluteResourcePath,
-					new URL(
-						urlString.substring(
-							0, urlString.length() - resourcePath.length())));
-			}
-		}
 	}
 
 	@Override
@@ -380,25 +291,6 @@ public class JspCompiler extends Jsr199JavaCompiler {
 		return javaFileObject;
 	}
 
-	protected void initClassPath(ServletContext servletContext) {
-		if (System.getSecurityManager() != null) {
-			AccessController.doPrivileged(
-				new PrivilegedAction<Void>() {
-
-					@Override
-					public Void run() {
-						addDependenciesToClassPath();
-
-						return null;
-					}
-
-				});
-		}
-		else {
-			addDependenciesToClassPath();
-		}
-	}
-
 	@SuppressWarnings("unchecked")
 	protected void initTLDMappings(
 		ServletContext servletContext, Map<String, URL> tagFileJarUrls) {
@@ -415,7 +307,7 @@ public class JspCompiler extends Jsr199JavaCompiler {
 
 		try {
 			for (Bundle bundle : _allParticipatingBundles) {
-				collectTLDMappings(tldMappings, tagFileJarUrls, bundle);
+				_collectTLDMappings(tldMappings, tagFileJarUrls, bundle);
 			}
 		}
 		catch (Exception exception) {
@@ -464,6 +356,114 @@ public class JspCompiler extends Jsr199JavaCompiler {
 		_bundleWiringPackageNamesCache.put(bundleWiring, packageNames);
 
 		return packageNames;
+	}
+
+	private void _addDependenciesToClassPath() {
+		ClassLoader frameworkClassLoader = Bundle.class.getClassLoader();
+
+		for (String className : _JSP_COMPILER_DEPENDENCIES) {
+			try {
+				Class<?> clazz = Class.forName(
+					className, true, frameworkClassLoader);
+
+				_addDependencyToClassPath(clazz);
+			}
+			catch (ClassNotFoundException classNotFoundException) {
+				_log.error(
+					"Unable to add depedency " + className +
+						" to the classpath",
+					classNotFoundException);
+			}
+		}
+	}
+
+	private void _addDependencyToClassPath(Class<?> clazz) {
+		ProtectionDomain protectionDomain = clazz.getProtectionDomain();
+
+		if (protectionDomain == null) {
+			return;
+		}
+
+		CodeSource codeSource = protectionDomain.getCodeSource();
+
+		URL url = codeSource.getLocation();
+
+		try {
+			File file = ClassPathUtil.getFile(url);
+
+			if ((file == null) && _log.isDebugEnabled()) {
+				_log.debug(
+					StringBundler.concat(
+						"Ignoring URL ", url, " because of unknown protocol ",
+						url.getProtocol()));
+			}
+
+			if (file.exists() && file.canRead()) {
+				_classPath.remove(file);
+
+				_classPath.add(0, file);
+			}
+		}
+		catch (Exception exception) {
+			_log.error(exception.getMessage(), exception);
+		}
+	}
+
+	private void _collectTLDMappings(
+			Map<String, String[]> tldMappings, Map<String, URL> tagFileJarUrls,
+			Bundle bundle)
+		throws IOException {
+
+		BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
+
+		List<String> resourcePaths = new ArrayList<>(
+			bundleWiring.listResources(
+				"/META-INF/", "*.tld", BundleWiring.LISTRESOURCES_RECURSE));
+
+		resourcePaths.addAll(
+			bundleWiring.listResources(
+				"/WEB-INF/", "*.tld", BundleWiring.LISTRESOURCES_RECURSE));
+
+		for (String resourcePath : resourcePaths) {
+			URL url = bundle.getResource(resourcePath);
+
+			String uri = TldURIUtil.getTldURI(url);
+
+			if (uri != null) {
+				String absoluteResourcePath = StringPool.SLASH.concat(
+					resourcePath);
+
+				tldMappings.put(
+					uri.trim(), new String[] {absoluteResourcePath, null});
+
+				String urlString = url.toExternalForm();
+
+				tagFileJarUrls.put(
+					absoluteResourcePath,
+					new URL(
+						urlString.substring(
+							0, urlString.length() - resourcePath.length())));
+			}
+		}
+	}
+
+	private void _initClassPath(ServletContext servletContext) {
+		if (System.getSecurityManager() != null) {
+			AccessController.doPrivileged(
+				new PrivilegedAction<Void>() {
+
+					@Override
+					public Void run() {
+						_addDependenciesToClassPath();
+
+						return null;
+					}
+
+				});
+		}
+		else {
+			_addDependenciesToClassPath();
+		}
 	}
 
 	private static final String[] _JSP_COMPILER_DEPENDENCIES = {

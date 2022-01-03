@@ -78,7 +78,7 @@ public class PortletOptionsProductNavigationControlMenuEntry
 
 		List<PortletConfigurationIcon> portletConfigurationIcons =
 			PortletConfigurationIconTracker.getPortletConfigurationIcons(
-				getPortletId(httpServletRequest), portletRequest,
+				_getPortletId(httpServletRequest), portletRequest,
 				PortletConfigurationIconComparator.INSTANCE);
 
 		if (ListUtil.isEmpty(portletConfigurationIcons)) {
@@ -97,7 +97,7 @@ public class PortletOptionsProductNavigationControlMenuEntry
 		super.setServletContext(servletContext);
 	}
 
-	protected String getPortletId(HttpServletRequest httpServletRequest) {
+	private String _getPortletId(HttpServletRequest httpServletRequest) {
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);

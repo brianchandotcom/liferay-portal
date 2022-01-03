@@ -206,7 +206,7 @@ public class SiteInitializerRegistrar {
 				"site.initializer.key", _bundle.getSymbolicName()));
 	}
 
-	protected void stop() {
+	private void _stop() {
 		_serviceRegistration.unregister();
 	}
 

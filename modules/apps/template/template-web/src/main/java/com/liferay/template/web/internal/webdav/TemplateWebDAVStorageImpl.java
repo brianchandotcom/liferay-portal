@@ -71,10 +71,10 @@ public class TemplateWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 			String[] pathArray = webDAVRequest.getPathArray();
 
 			if (pathArray.length == 2) {
-				return getFolders(webDAVRequest);
+				return _getFolders(webDAVRequest);
 			}
 			else if (pathArray.length == 3) {
-				return getTemplates(webDAVRequest);
+				return _getTemplates(webDAVRequest);
 			}
 
 			return new ArrayList<>();
@@ -90,13 +90,13 @@ public class TemplateWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 			webDAVRequest, getRootPath(), getToken(), 0);
 	}
 
-	protected List<Resource> getFolders(WebDAVRequest webDAVRequest) {
+	private List<Resource> _getFolders(WebDAVRequest webDAVRequest) {
 		return ListUtil.fromArray(
 			_ddmWebDAV.toResource(
 				webDAVRequest, DDMWebDAV.TYPE_TEMPLATES, getRootPath(), true));
 	}
 
-	protected List<Resource> getTemplates(WebDAVRequest webDAVRequest) {
+	private List<Resource> _getTemplates(WebDAVRequest webDAVRequest) {
 		return TransformUtil.transform(
 			ListUtil.concat(
 				_ddmTemplateLocalService.getTemplates(

@@ -33,7 +33,8 @@ public class BackgroundTaskLockHelper {
 
 	public boolean isLockedBackgroundTask(BackgroundTask backgroundTask) {
 		return _lockManager.isLocked(
-			BackgroundTaskExecutor.class.getName(), getLockKey(backgroundTask));
+			BackgroundTaskExecutor.class.getName(),
+			_getLockKey(backgroundTask));
 	}
 
 	public Lock lockBackgroundTask(BackgroundTask backgroundTask) {
@@ -42,7 +43,7 @@ public class BackgroundTaskLockHelper {
 				backgroundTask.getBackgroundTaskId();
 
 		return _lockManager.lock(
-			BackgroundTaskExecutor.class.getName(), getLockKey(backgroundTask),
+			BackgroundTaskExecutor.class.getName(), _getLockKey(backgroundTask),
 			owner);
 	}
 
@@ -52,11 +53,11 @@ public class BackgroundTaskLockHelper {
 				backgroundTask.getBackgroundTaskId();
 
 		_lockManager.unlock(
-			BackgroundTaskExecutor.class.getName(), getLockKey(backgroundTask),
+			BackgroundTaskExecutor.class.getName(), _getLockKey(backgroundTask),
 			owner);
 	}
 
-	protected static String getLockKey(BackgroundTask backgroundTask) {
+	private static String _getLockKey(BackgroundTask backgroundTask) {
 		BackgroundTaskExecutor backgroundTaskExecutor =
 			BackgroundTaskExecutorRegistryUtil.getBackgroundTaskExecutor(
 				backgroundTask.getTaskExecutorClassName());

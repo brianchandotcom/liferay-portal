@@ -23,7 +23,13 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
  */
 public class PortletPreferencesUpgradeProcess extends UpgradeProcess {
 
-	protected void deletePortletPreferences(String portletId) throws Exception {
+	@Override
+	protected void doUpgrade() throws Exception {
+		_deletePortletPreferences("145");
+		_deletePortletPreferences("160");
+	}
+
+	private void _deletePortletPreferences(String portletId) throws Exception {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Delete portlet preferences for portlet " + portletId);
 		}
@@ -31,12 +37,6 @@ public class PortletPreferencesUpgradeProcess extends UpgradeProcess {
 		runSQL(
 			"delete from PortletPreferences where portletId = '" + portletId +
 				"'");
-	}
-
-	@Override
-	protected void doUpgrade() throws Exception {
-		deletePortletPreferences("145");
-		deletePortletPreferences("160");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

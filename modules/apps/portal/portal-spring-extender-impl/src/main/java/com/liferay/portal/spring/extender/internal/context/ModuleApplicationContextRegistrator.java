@@ -122,7 +122,19 @@ public class ModuleApplicationContextRegistrator {
 		}
 	}
 
-	protected void stop() {
+	private void _registerDataSource() {
+		if (_dataSourceServiceRegistration == null) {
+			BundleContext bundleContext = _extendeeBundle.getBundleContext();
+
+			_dataSourceServiceRegistration = bundleContext.registerService(
+				DataSource.class, _moduleApplicationContext.getDataSource(),
+				MapUtil.singletonDictionary(
+					"origin.bundle.symbolic.name",
+					_extendeeBundle.getSymbolicName()));
+		}
+	}
+
+	private void _stop() {
 		ApplicationContextServicePublisherUtil.unregisterContext(
 			_serviceRegistrations);
 
@@ -134,18 +146,6 @@ public class ModuleApplicationContextRegistrator {
 		_dataSourceServiceRegistration = null;
 
 		_moduleApplicationContext.close();
-	}
-
-	private void _registerDataSource() {
-		if (_dataSourceServiceRegistration == null) {
-			BundleContext bundleContext = _extendeeBundle.getBundleContext();
-
-			_dataSourceServiceRegistration = bundleContext.registerService(
-				DataSource.class, _moduleApplicationContext.getDataSource(),
-				MapUtil.singletonDictionary(
-					"origin.bundle.symbolic.name",
-					_extendeeBundle.getSymbolicName()));
-		}
 	}
 
 	private final ClassLoader _classLoader;

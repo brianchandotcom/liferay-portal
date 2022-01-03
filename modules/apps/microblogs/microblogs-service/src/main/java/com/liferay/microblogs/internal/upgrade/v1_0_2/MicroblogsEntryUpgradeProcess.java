@@ -25,11 +25,11 @@ public class MicroblogsEntryUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		removeReceiverUserId();
-		renameReceiverMicroblogsEntryId();
+		_removeReceiverUserId();
+		_renameReceiverMicroblogsEntryId();
 	}
 
-	protected void removeReceiverUserId() throws Exception {
+	private void _removeReceiverUserId() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			if (!hasColumn("MicroblogsEntry", "receiverUserId")) {
 				return;
@@ -41,7 +41,7 @@ public class MicroblogsEntryUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
-	protected void renameReceiverMicroblogsEntryId() throws Exception {
+	private void _renameReceiverMicroblogsEntryId() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			if (!hasColumn("MicroblogsEntry", "receiverMicroblogsEntryId")) {
 				return;

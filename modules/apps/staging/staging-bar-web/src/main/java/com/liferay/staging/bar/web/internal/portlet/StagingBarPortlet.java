@@ -132,7 +132,7 @@ public class StagingBarPortlet extends MVCPortlet {
 				layoutRevision.getParentLayoutRevisionId());
 		}
 
-		addLayoutRevisionSessionMessages(actionRequest, actionResponse);
+		_addLayoutRevisionSessionMessages(actionRequest, actionResponse);
 	}
 
 	@Override
@@ -388,7 +388,7 @@ public class StagingBarPortlet extends MVCPortlet {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
-		updateParentLayoutsRevisions(layoutRevision, serviceContext);
+		_updateParentLayoutsRevisions(layoutRevision, serviceContext);
 
 		LayoutRevision enableLayoutRevision =
 			_layoutRevisionLocalService.updateLayoutRevision(
@@ -406,7 +406,7 @@ public class StagingBarPortlet extends MVCPortlet {
 				themeDisplay.getUser(), layoutRevision.getLayoutSetBranchId(),
 				layoutRevision.getPlid(), layoutRevision.getLayoutRevisionId());
 
-			addLayoutRevisionSessionMessages(actionRequest, actionResponse);
+			_addLayoutRevisionSessionMessages(actionRequest, actionResponse);
 
 			return;
 		}
@@ -443,18 +443,7 @@ public class StagingBarPortlet extends MVCPortlet {
 				newLayoutRevision.getLayoutRevisionId());
 		}
 
-		addLayoutRevisionSessionMessages(actionRequest, actionResponse);
-	}
-
-	protected void addLayoutRevisionSessionMessages(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws IOException {
-
-		MultiSessionMessages.add(
-			actionRequest,
-			_portal.getPortletId(actionRequest) + "requestProcessed");
-
-		sendRedirect(actionRequest, actionResponse);
+		_addLayoutRevisionSessionMessages(actionRequest, actionResponse);
 	}
 
 	@Override
@@ -560,60 +549,15 @@ public class StagingBarPortlet extends MVCPortlet {
 		_layoutSetLocalService = null;
 	}
 
-	protected void updateParentLayoutsRevisions(
-			LayoutRevision layoutRevision, ServiceContext serviceContext)
-		throws Exception {
+	private void _addLayoutRevisionSessionMessages(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws IOException {
 
-		Layout layout = _layoutLocalService.fetchLayout(
-			layoutRevision.getPlid());
+		MultiSessionMessages.add(
+			actionRequest,
+			_portal.getPortletId(actionRequest) + "requestProcessed");
 
-		if (layout == null) {
-			return;
-		}
-
-		long parentPlid = layout.getParentPlid();
-
-		Layout parentLayout = null;
-
-		while (true) {
-			parentLayout = _layoutLocalService.fetchLayout(parentPlid);
-
-			if (parentLayout == null) {
-				break;
-			}
-
-			List<LayoutRevision> parentHeadLayoutRevisions =
-				_layoutRevisionLocalService.getLayoutRevisions(
-					layoutRevision.getLayoutSetBranchId(),
-					parentLayout.getPlid(), true);
-
-			if (parentHeadLayoutRevisions.isEmpty()) {
-				LayoutRevision parentLayoutRevision =
-					_layoutRevisionLocalService.fetchLatestLayoutRevision(
-						layoutRevision.getLayoutSetBranchId(),
-						parentLayout.getPlid());
-
-				if (parentLayoutRevision != null) {
-					_layoutRevisionLocalService.updateLayoutRevision(
-						serviceContext.getUserId(),
-						parentLayoutRevision.getLayoutRevisionId(),
-						parentLayoutRevision.getLayoutBranchId(),
-						parentLayoutRevision.getName(),
-						parentLayoutRevision.getTitle(),
-						parentLayoutRevision.getDescription(),
-						parentLayoutRevision.getKeywords(),
-						parentLayoutRevision.getRobots(),
-						parentLayoutRevision.getTypeSettings(),
-						parentLayoutRevision.getIconImage(),
-						parentLayoutRevision.getIconImageId(),
-						parentLayoutRevision.getThemeId(),
-						parentLayoutRevision.getColorSchemeId(),
-						parentLayoutRevision.getCss(), serviceContext);
-				}
-			}
-
-			parentPlid = parentLayout.getParentPlid();
-		}
+		sendRedirect(actionRequest, actionResponse);
 	}
 
 	private void _deleteUnusedLayoutIconImage(LayoutRevision layoutRevision)
@@ -676,6 +620,62 @@ public class StagingBarPortlet extends MVCPortlet {
 
 			httpServletRequest.setAttribute(
 				WebKeys.LAYOUT_ASSET_ENTRY, scopedAssetEntry);
+		}
+	}
+
+	private void _updateParentLayoutsRevisions(
+			LayoutRevision layoutRevision, ServiceContext serviceContext)
+		throws Exception {
+
+		Layout layout = _layoutLocalService.fetchLayout(
+			layoutRevision.getPlid());
+
+		if (layout == null) {
+			return;
+		}
+
+		long parentPlid = layout.getParentPlid();
+
+		Layout parentLayout = null;
+
+		while (true) {
+			parentLayout = _layoutLocalService.fetchLayout(parentPlid);
+
+			if (parentLayout == null) {
+				break;
+			}
+
+			List<LayoutRevision> parentHeadLayoutRevisions =
+				_layoutRevisionLocalService.getLayoutRevisions(
+					layoutRevision.getLayoutSetBranchId(),
+					parentLayout.getPlid(), true);
+
+			if (parentHeadLayoutRevisions.isEmpty()) {
+				LayoutRevision parentLayoutRevision =
+					_layoutRevisionLocalService.fetchLatestLayoutRevision(
+						layoutRevision.getLayoutSetBranchId(),
+						parentLayout.getPlid());
+
+				if (parentLayoutRevision != null) {
+					_layoutRevisionLocalService.updateLayoutRevision(
+						serviceContext.getUserId(),
+						parentLayoutRevision.getLayoutRevisionId(),
+						parentLayoutRevision.getLayoutBranchId(),
+						parentLayoutRevision.getName(),
+						parentLayoutRevision.getTitle(),
+						parentLayoutRevision.getDescription(),
+						parentLayoutRevision.getKeywords(),
+						parentLayoutRevision.getRobots(),
+						parentLayoutRevision.getTypeSettings(),
+						parentLayoutRevision.getIconImage(),
+						parentLayoutRevision.getIconImageId(),
+						parentLayoutRevision.getThemeId(),
+						parentLayoutRevision.getColorSchemeId(),
+						parentLayoutRevision.getCss(), serviceContext);
+				}
+			}
+
+			parentPlid = parentLayout.getParentPlid();
 		}
 	}
 

@@ -55,16 +55,6 @@ public class SerializableEhcachePortalCache<K extends Serializable, V>
 		return keys;
 	}
 
-	protected Element createElement(K key, V value) {
-		Object objectValue = value;
-
-		if (value instanceof Serializable) {
-			objectValue = new SerializableObjectWrapper((Serializable)value);
-		}
-
-		return new Element(new SerializableObjectWrapper(key), objectValue);
-	}
-
 	@Override
 	protected V doGet(K key) {
 		Element element = ehcache.get(new SerializableObjectWrapper(key));
@@ -78,7 +68,7 @@ public class SerializableEhcachePortalCache<K extends Serializable, V>
 
 	@Override
 	protected void doPut(K key, V value, int timeToLive) {
-		Element element = createElement(key, value);
+		Element element = _createElement(key, value);
 
 		if (timeToLive != DEFAULT_TIME_TO_LIVE) {
 			element.setTimeToLive(timeToLive);
@@ -89,7 +79,7 @@ public class SerializableEhcachePortalCache<K extends Serializable, V>
 
 	@Override
 	protected V doPutIfAbsent(K key, V value, int timeToLive) {
-		Element element = createElement(key, value);
+		Element element = _createElement(key, value);
 
 		if (timeToLive != DEFAULT_TIME_TO_LIVE) {
 			element.setTimeToLive(timeToLive);
@@ -111,12 +101,12 @@ public class SerializableEhcachePortalCache<K extends Serializable, V>
 
 	@Override
 	protected boolean doRemove(K key, V value) {
-		return ehcache.removeElement(createElement(key, value));
+		return ehcache.removeElement(_createElement(key, value));
 	}
 
 	@Override
 	protected V doReplace(K key, V value, int timeToLive) {
-		Element element = createElement(key, value);
+		Element element = _createElement(key, value);
 
 		if (timeToLive != DEFAULT_TIME_TO_LIVE) {
 			element.setTimeToLive(timeToLive);
@@ -133,13 +123,23 @@ public class SerializableEhcachePortalCache<K extends Serializable, V>
 
 	@Override
 	protected boolean doReplace(K key, V oldValue, V newValue, int timeToLive) {
-		Element newElement = createElement(key, newValue);
+		Element newElement = _createElement(key, newValue);
 
 		if (timeToLive != DEFAULT_TIME_TO_LIVE) {
 			newElement.setTimeToLive(timeToLive);
 		}
 
-		return ehcache.replace(createElement(key, oldValue), newElement);
+		return ehcache.replace(_createElement(key, oldValue), newElement);
+	}
+
+	private Element _createElement(K key, V value) {
+		Object objectValue = value;
+
+		if (value instanceof Serializable) {
+			objectValue = new SerializableObjectWrapper((Serializable)value);
+		}
+
+		return new Element(new SerializableObjectWrapper(key), objectValue);
 	}
 
 }

@@ -57,7 +57,7 @@ public class UserModelListener extends BaseLDAPExportModelListener<User> {
 				Long userId = (Long)classPK;
 				Long groupId = (Long)associationClassPK;
 
-				updateMembershipRequestStatus(
+				_updateMembershipRequestStatus(
 					userId.longValue(), groupId.longValue());
 			}
 		}
@@ -104,7 +104,7 @@ public class UserModelListener extends BaseLDAPExportModelListener<User> {
 		exportToLDAP(user, _userExporter, _ldapSettings);
 	}
 
-	protected void updateMembershipRequestStatus(long userId, long groupId)
+	private void _updateMembershipRequestStatus(long userId, long groupId)
 		throws Exception {
 
 		long principalUserId = GetterUtil.getLong(

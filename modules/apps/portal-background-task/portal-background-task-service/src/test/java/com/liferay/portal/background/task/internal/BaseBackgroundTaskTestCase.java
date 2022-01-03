@@ -101,7 +101,7 @@ public abstract class BaseBackgroundTaskTestCase {
 
 	@After
 	public void tearDown() throws Exception {
-		resetThreadLocals();
+		_resetThreadLocals();
 	}
 
 	protected void assertThreadLocalValues() {
@@ -170,14 +170,14 @@ public abstract class BaseBackgroundTaskTestCase {
 		).build();
 	}
 
-	protected void resetThreadLocals() {
+	protected BackgroundTaskThreadLocalManagerImpl
+		backgroundTaskThreadLocalManagerImpl;
+
+	private void _resetThreadLocals() {
 		ThreadLocalCacheManager.clearAll(Lifecycle.REQUEST);
 
 		CentralizedThreadLocal.clearShortLivedThreadLocals();
 	}
-
-	protected BackgroundTaskThreadLocalManagerImpl
-		backgroundTaskThreadLocalManagerImpl;
 
 	private static final boolean _CLUSTER_INVOKE_ENABLED = true;
 

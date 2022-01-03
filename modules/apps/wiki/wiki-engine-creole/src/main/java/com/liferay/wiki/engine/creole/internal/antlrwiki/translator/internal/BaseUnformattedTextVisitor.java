@@ -36,7 +36,7 @@ public abstract class BaseUnformattedTextVisitor extends BaseASTVisitor {
 	@Override
 	public void visit(BoldTextNode boldTextNode) {
 		if (boldTextNode.getContent() != null) {
-			write(boldTextNode.getContent());
+			_write(boldTextNode.getContent());
 		}
 		else {
 			super.visit(boldTextNode);
@@ -46,7 +46,7 @@ public abstract class BaseUnformattedTextVisitor extends BaseASTVisitor {
 	@Override
 	public void visit(FormattedTextNode formattedTextNode) {
 		if (formattedTextNode.getContent() != null) {
-			write(formattedTextNode.getContent());
+			_write(formattedTextNode.getContent());
 		}
 		else {
 			super.visit(formattedTextNode);
@@ -56,7 +56,7 @@ public abstract class BaseUnformattedTextVisitor extends BaseASTVisitor {
 	@Override
 	public void visit(ItalicTextNode italicTextNode) {
 		if (italicTextNode.getContent() != null) {
-			write(italicTextNode.getContent());
+			_write(italicTextNode.getContent());
 		}
 		else {
 			super.visit(italicTextNode);
@@ -68,7 +68,7 @@ public abstract class BaseUnformattedTextVisitor extends BaseASTVisitor {
 		String link = linkNode.getLink();
 
 		if (link != null) {
-			write(link);
+			_write(link);
 		}
 
 		super.visit(linkNode);
@@ -76,25 +76,25 @@ public abstract class BaseUnformattedTextVisitor extends BaseASTVisitor {
 
 	@Override
 	public void visit(NoWikiInlineNode noWikiInlineNode) {
-		write(noWikiInlineNode.getContent());
+		_write(noWikiInlineNode.getContent());
 	}
 
 	@Override
 	public void visit(NoWikiSectionNode noWikiSectionNode) {
-		write(noWikiSectionNode.getContent());
+		_write(noWikiSectionNode.getContent());
 	}
 
 	@Override
 	public void visit(UnformattedTextNode unformattedTextNode) {
 		if (unformattedTextNode.hasContent()) {
-			write(unformattedTextNode.getContent());
+			_write(unformattedTextNode.getContent());
 		}
 		else {
 			super.visit(unformattedTextNode);
 		}
 	}
 
-	protected void write(String text) {
+	private void _write(String text) {
 		_sb.append(text);
 	}
 

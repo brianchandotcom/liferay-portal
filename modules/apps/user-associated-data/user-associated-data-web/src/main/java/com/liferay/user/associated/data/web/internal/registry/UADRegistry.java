@@ -155,22 +155,22 @@ public class UADRegistry {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_bundleUADAnonymizerServiceTrackerMap = getMultiValueServiceTrackerMap(
+		_bundleUADAnonymizerServiceTrackerMap = _getMultiValueServiceTrackerMap(
 			bundleContext,
 			(Class<UADAnonymizer<?>>)(Class<?>)UADAnonymizer.class);
-		_bundleUADDisplayServiceTrackerMap = getMultiValueServiceTrackerMap(
+		_bundleUADDisplayServiceTrackerMap = _getMultiValueServiceTrackerMap(
 			bundleContext, (Class<UADDisplay<?>>)(Class<?>)UADDisplay.class);
-		_bundleUADExporterServiceTrackerMap = getMultiValueServiceTrackerMap(
+		_bundleUADExporterServiceTrackerMap = _getMultiValueServiceTrackerMap(
 			bundleContext, (Class<UADExporter<?>>)(Class<?>)UADExporter.class);
 		_bundleUADHierarchyDeclarationServiceTrackerMap =
-			getUADHierachyDeclarationServiceTrackerMap(
+			_getUADHierachyDeclarationServiceTrackerMap(
 				bundleContext, UADHierarchyDeclaration.class);
-		_uadAnonymizerServiceTrackerMap = getSingleValueServiceTrackerMap(
+		_uadAnonymizerServiceTrackerMap = _getSingleValueServiceTrackerMap(
 			bundleContext,
 			(Class<UADAnonymizer<?>>)(Class<?>)UADAnonymizer.class);
-		_uadDisplayServiceTrackerMap = getSingleValueServiceTrackerMap(
+		_uadDisplayServiceTrackerMap = _getSingleValueServiceTrackerMap(
 			bundleContext, (Class<UADDisplay<?>>)(Class<?>)UADDisplay.class);
-		_uadExporterServiceTrackerMap = getSingleValueServiceTrackerMap(
+		_uadExporterServiceTrackerMap = _getSingleValueServiceTrackerMap(
 			bundleContext, (Class<UADExporter<?>>)(Class<?>)UADExporter.class);
 	}
 
@@ -185,8 +185,8 @@ public class UADRegistry {
 		_uadExporterServiceTrackerMap.close();
 	}
 
-	protected <T extends UADComponent> ServiceTrackerMap<String, List<T>>
-		getMultiValueServiceTrackerMap(
+	private <T extends UADComponent> ServiceTrackerMap<String, List<T>>
+		_getMultiValueServiceTrackerMap(
 			BundleContext bundleContext, Class<T> clazz) {
 
 		return ServiceTrackerMapFactory.openMultiValueMap(
@@ -196,37 +196,6 @@ public class UADRegistry {
 				(uadDisplay, emitter) -> {
 					Bundle bundle = FrameworkUtil.getBundle(
 						uadDisplay.getClass());
-
-					emitter.emit(bundle.getSymbolicName());
-				}));
-	}
-
-	protected <T extends UADComponent> ServiceTrackerMap<String, T>
-		getSingleValueServiceTrackerMap(
-			BundleContext bundleContext, Class<T> clazz) {
-
-		return ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, clazz, null,
-			ServiceReferenceMapperFactory.create(
-				bundleContext,
-				(uadComponent, emitter) -> {
-					Class<?> uadClass = uadComponent.getTypeClass();
-
-					emitter.emit(uadClass.getName());
-				}));
-	}
-
-	protected <T> ServiceTrackerMap<String, T>
-		getUADHierachyDeclarationServiceTrackerMap(
-			BundleContext bundleContext, Class<T> clazz) {
-
-		return ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, clazz, null,
-			ServiceReferenceMapperFactory.create(
-				bundleContext,
-				(uadHierachyDeclaration, emitter) -> {
-					Bundle bundle = FrameworkUtil.getBundle(
-						uadHierachyDeclaration.getClass());
 
 					emitter.emit(bundle.getSymbolicName());
 				}));
@@ -252,6 +221,37 @@ public class UADRegistry {
 		}
 
 		return nonreviewableUADAnonymizers;
+	}
+
+	private <T extends UADComponent> ServiceTrackerMap<String, T>
+		_getSingleValueServiceTrackerMap(
+			BundleContext bundleContext, Class<T> clazz) {
+
+		return ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, clazz, null,
+			ServiceReferenceMapperFactory.create(
+				bundleContext,
+				(uadComponent, emitter) -> {
+					Class<?> uadClass = uadComponent.getTypeClass();
+
+					emitter.emit(uadClass.getName());
+				}));
+	}
+
+	private <T> ServiceTrackerMap<String, T>
+		_getUADHierachyDeclarationServiceTrackerMap(
+			BundleContext bundleContext, Class<T> clazz) {
+
+		return ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, clazz, null,
+			ServiceReferenceMapperFactory.create(
+				bundleContext,
+				(uadHierachyDeclaration, emitter) -> {
+					Bundle bundle = FrameworkUtil.getBundle(
+						uadHierachyDeclaration.getClass());
+
+					emitter.emit(bundle.getSymbolicName());
+				}));
 	}
 
 	private UADHierarchyDeclaration _getUADHierarchyDeclaration(

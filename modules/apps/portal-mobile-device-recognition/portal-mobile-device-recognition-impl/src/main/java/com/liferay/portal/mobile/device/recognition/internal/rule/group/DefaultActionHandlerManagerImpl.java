@@ -49,7 +49,7 @@ public class DefaultActionHandlerManagerImpl implements ActionHandlerManager {
 		throws PortalException {
 
 		for (MDRAction mdrAction : mdrActions) {
-			applyAction(mdrAction, httpServletRequest, httpServletResponse);
+			_applyAction(mdrAction, httpServletRequest, httpServletResponse);
 		}
 	}
 
@@ -95,7 +95,11 @@ public class DefaultActionHandlerManagerImpl implements ActionHandlerManager {
 		}
 	}
 
-	protected void applyAction(
+	protected void removeActionHandler(ActionHandler actionHandler) {
+		_deviceActionHandlers.remove(actionHandler.getType());
+	}
+
+	private void _applyAction(
 			MDRAction mdrAction, HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
 		throws PortalException {
@@ -111,10 +115,6 @@ public class DefaultActionHandlerManagerImpl implements ActionHandlerManager {
 			_log.warn(
 				"No action handler registered for type " + mdrAction.getType());
 		}
-	}
-
-	protected void removeActionHandler(ActionHandler actionHandler) {
-		_deviceActionHandlers.remove(actionHandler.getType());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

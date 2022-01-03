@@ -57,7 +57,7 @@ public class OpenIdConnectUserInfoProcessorImpl
 			return user.getUserId();
 		}
 
-		checkAddUser(companyId, emailAddress);
+		_checkAddUser(companyId, emailAddress);
 
 		String firstName = userInfo.getGivenName();
 		String lastName = userInfo.getFamilyName();
@@ -114,7 +114,7 @@ public class OpenIdConnectUserInfoProcessorImpl
 		return user.getUserId();
 	}
 
-	protected void checkAddUser(long companyId, String emailAddress)
+	private void _checkAddUser(long companyId, String emailAddress)
 		throws PortalException {
 
 		Company company = _companyLocalService.getCompany(companyId);

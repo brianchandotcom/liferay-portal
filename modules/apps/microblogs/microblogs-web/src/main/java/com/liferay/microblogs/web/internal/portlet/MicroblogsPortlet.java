@@ -88,7 +88,7 @@ public class MicroblogsPortlet extends MVCPortlet {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			MicroblogsEntry.class.getName(), actionRequest);
 
-		serviceContext.setAssetTagNames(getAssetTagNames(content));
+		serviceContext.setAssetTagNames(_getAssetTagNames(content));
 
 		if (microblogsEntryId > 0) {
 			microblogsEntryService.updateMicroblogsEntry(
@@ -127,16 +127,6 @@ public class MicroblogsPortlet extends MVCPortlet {
 			microblogsEntryId, 1);
 	}
 
-	protected String[] getAssetTagNames(String content) {
-		List<String> assetTagNames = new ArrayList<>();
-
-		assetTagNames.addAll(MicroblogsWebUtil.getHashtags(content));
-
-		assetTagNames.addAll(MicroblogsWebUtil.getScreenNames(content));
-
-		return assetTagNames.toArray(new String[0]);
-	}
-
 	@Reference(unbind = "-")
 	protected void setAssetEntryLocalService(
 		AssetEntryLocalService assetEntryLocalService) {
@@ -168,5 +158,15 @@ public class MicroblogsPortlet extends MVCPortlet {
 	protected AssetEntryLocalService assetEntryLocalService;
 	protected MicroblogsEntryLocalService microblogsEntryLocalService;
 	protected MicroblogsEntryService microblogsEntryService;
+
+	private String[] _getAssetTagNames(String content) {
+		List<String> assetTagNames = new ArrayList<>();
+
+		assetTagNames.addAll(MicroblogsWebUtil.getHashtags(content));
+
+		assetTagNames.addAll(MicroblogsWebUtil.getScreenNames(content));
+
+		return assetTagNames.toArray(new String[0]);
+	}
 
 }

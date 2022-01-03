@@ -72,7 +72,7 @@ public class DefaultWikiPageInfoPanelDisplayContext
 
 	@Override
 	public int getSelectedPagesCount() {
-		List<?> items = getSelectedPages();
+		List<?> items = _getSelectedPages();
 
 		return items.size();
 	}
@@ -84,7 +84,7 @@ public class DefaultWikiPageInfoPanelDisplayContext
 
 	@Override
 	public boolean isMultiplePageSelection() {
-		List<?> items = getSelectedPages();
+		List<?> items = _getSelectedPages();
 
 		if (items.size() > 1) {
 			return true;
@@ -115,7 +115,7 @@ public class DefaultWikiPageInfoPanelDisplayContext
 		return false;
 	}
 
-	protected List<WikiPage> getSelectedPages() {
+	private List<WikiPage> _getSelectedPages() {
 		return _wikiPageInfoPanelRequestHelper.getPages();
 	}
 

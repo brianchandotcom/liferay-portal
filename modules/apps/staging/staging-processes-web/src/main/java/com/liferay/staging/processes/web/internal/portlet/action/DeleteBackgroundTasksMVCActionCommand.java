@@ -45,29 +45,13 @@ import org.osgi.service.component.annotations.Reference;
 public class DeleteBackgroundTasksMVCActionCommand
 	extends BaseMVCActionCommand {
 
-	protected void deleteBackgroundTask(ActionRequest actionRequest)
-		throws PortalException {
-
-		long[] backgroundTaskIds = ParamUtil.getLongValues(
-			actionRequest, "deleteBackgroundTaskIds");
-
-		for (long backgroundTaskId : backgroundTaskIds) {
-			BackgroundTask backgroundTask =
-				_backgroundTaskManager.getBackgroundTask(backgroundTaskId);
-
-			if (!backgroundTask.isInProgress()) {
-				_backgroundTaskManager.deleteBackgroundTask(backgroundTaskId);
-			}
-		}
-	}
-
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		try {
-			deleteBackgroundTask(actionRequest);
+			_deleteBackgroundTask(actionRequest);
 		}
 		catch (Exception exception) {
 			if (exception instanceof NoSuchBackgroundTaskException ||
@@ -80,6 +64,22 @@ public class DeleteBackgroundTasksMVCActionCommand
 			}
 			else {
 				throw exception;
+			}
+		}
+	}
+
+	private void _deleteBackgroundTask(ActionRequest actionRequest)
+		throws PortalException {
+
+		long[] backgroundTaskIds = ParamUtil.getLongValues(
+			actionRequest, "deleteBackgroundTaskIds");
+
+		for (long backgroundTaskId : backgroundTaskIds) {
+			BackgroundTask backgroundTask =
+				_backgroundTaskManager.getBackgroundTask(backgroundTaskId);
+
+			if (!backgroundTask.isInProgress()) {
+				_backgroundTaskManager.deleteBackgroundTask(backgroundTaskId);
 			}
 		}
 	}

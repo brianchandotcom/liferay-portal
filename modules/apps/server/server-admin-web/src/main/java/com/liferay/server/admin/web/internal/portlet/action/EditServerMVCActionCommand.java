@@ -161,90 +161,90 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
 
 		if (cmd.equals("addLogLevel")) {
-			addLogLevel(actionRequest);
+			_addLogLevel(actionRequest);
 		}
 		else if (cmd.equals("cacheDb")) {
-			cacheDb();
+			_cacheDb();
 		}
 		else if (cmd.equals("cacheMulti")) {
-			cacheMulti();
+			_cacheMulti();
 		}
 		else if (cmd.equals("cacheServlet")) {
-			cacheServlet();
+			_cacheServlet();
 		}
 		else if (cmd.equals("cacheSingle")) {
-			cacheSingle();
+			_cacheSingle();
 		}
 		else if (cmd.equals("cleanUpAddToPagePermissions")) {
-			cleanUpAddToPagePermissions(actionRequest);
+			_cleanUpAddToPagePermissions(actionRequest);
 		}
 		else if (cmd.equals("cleanUpLayoutRevisionPortletPreferences")) {
-			cleanUpLayoutRevisionPortletPreferences();
+			_cleanUpLayoutRevisionPortletPreferences();
 		}
 		else if (cmd.equals("cleanUpOrphanedPortletPreferences")) {
-			cleanUpOrphanedPortletPreferences();
+			_cleanUpOrphanedPortletPreferences();
 		}
 		else if (cmd.startsWith("convertProcess.")) {
-			redirect = convertProcess(actionRequest, actionResponse, cmd);
+			redirect = _convertProcess(actionRequest, actionResponse, cmd);
 		}
 		else if (cmd.equals("dlPreviews")) {
 			DLPreviewableProcessor.deleteFiles();
 		}
 		else if (cmd.equals("gc")) {
-			gc();
+			_gc();
 		}
 		else if (cmd.equals("runScript")) {
-			runScript(actionRequest, actionResponse);
+			_runScript(actionRequest, actionResponse);
 		}
 		else if (cmd.equals("shutdown")) {
-			shutdown(actionRequest);
+			_shutdown(actionRequest);
 		}
 		else if (cmd.equals("threadDump")) {
-			threadDump();
+			_threadDump();
 		}
 		else if (cmd.equals("updateExternalServices")) {
-			updateExternalServices(actionRequest, portletPreferences);
+			_updateExternalServices(actionRequest, portletPreferences);
 		}
 		else if (cmd.equals("updateLogLevels")) {
-			updateLogLevels(actionRequest);
+			_updateLogLevels(actionRequest);
 		}
 		else if (cmd.equals("updateMail")) {
-			updateMail(actionRequest, portletPreferences);
+			_updateMail(actionRequest, portletPreferences);
 		}
 		else if (cmd.equals("verifyMembershipPolicies")) {
-			verifyMembershipPolicies();
+			_verifyMembershipPolicies();
 		}
 		else if (cmd.equals("verifyPluginTables")) {
-			verifyPluginTables();
+			_verifyPluginTables();
 		}
 
 		sendRedirect(actionRequest, actionResponse, redirect);
 	}
 
-	protected void addLogLevel(ActionRequest actionRequest) throws Exception {
+	private void _addLogLevel(ActionRequest actionRequest) throws Exception {
 		String loggerName = ParamUtil.getString(actionRequest, "loggerName");
 		String priority = ParamUtil.getString(actionRequest, "priority");
 
 		Log4JUtil.setLevel(loggerName, priority, true);
 	}
 
-	protected void cacheDb() throws Exception {
+	private void _cacheDb() throws Exception {
 		CacheRegistryUtil.clear();
 	}
 
-	protected void cacheMulti() throws Exception {
+	private void _cacheMulti() throws Exception {
 		_multiVMPool.clear();
 	}
 
-	protected void cacheServlet() throws Exception {
+	private void _cacheServlet() throws Exception {
 		_directServletRegistry.clearServlets();
 	}
 
-	protected void cacheSingle() throws Exception {
+	private void _cacheSingle() throws Exception {
 		_singleVMPool.clear();
 	}
 
-	protected void cleanUpAddToPagePermissions(ActionRequest actionRequest)
+	private void _cleanUpAddToPagePermissions(ActionRequest actionRequest)
 		throws Exception {
 
 		long companyId = _portal.getCompanyId(actionRequest);
@@ -262,7 +262,40 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 		_cleanUpAddToPagePermissions(companyId, role.getRoleId(), false);
 	}
 
-	protected void cleanUpLayoutRevisionPortletPreferences() throws Exception {
+	private void _cleanUpAddToPagePermissions(
+			long companyId, long roleId, boolean limitScope)
+		throws Exception {
+
+		Group userPersonalSite = _groupLocalService.getGroup(
+			companyId, GroupConstants.USER_PERSONAL_SITE);
+
+		String groupIdString = String.valueOf(userPersonalSite.getGroupId());
+
+		for (ResourcePermission resourcePermission :
+				_resourcePermissionLocalService.getRoleResourcePermissions(
+					roleId)) {
+
+			if (!resourcePermission.hasActionId(ActionKeys.ADD_TO_PAGE)) {
+				continue;
+			}
+
+			_resourcePermissionLocalService.removeResourcePermission(
+				companyId, resourcePermission.getName(),
+				resourcePermission.getScope(), resourcePermission.getPrimKey(),
+				roleId, ActionKeys.ADD_TO_PAGE);
+
+			if (!limitScope) {
+				continue;
+			}
+
+			_resourcePermissionLocalService.addResourcePermission(
+				companyId, resourcePermission.getName(),
+				ResourceConstants.SCOPE_GROUP, groupIdString, roleId,
+				ActionKeys.ADD_TO_PAGE);
+		}
+	}
+
+	private void _cleanUpLayoutRevisionPortletPreferences() throws Exception {
 		boolean active = CacheRegistryUtil.isActive();
 
 		CacheRegistryUtil.setActive(true);
@@ -337,7 +370,7 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	protected void cleanUpOrphanedPortletPreferences() throws PortalException {
+	private void _cleanUpOrphanedPortletPreferences() throws PortalException {
 		boolean active = CacheRegistryUtil.isActive();
 
 		CacheRegistryUtil.setActive(true);
@@ -395,7 +428,17 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	protected String convertProcess(
+	private boolean _containsPortlet(Layout layout, String portletId) {
+		LayoutTypePortlet layoutTypePortlet =
+			(LayoutTypePortlet)layout.getLayoutType();
+
+		List<String> portletIds = ListUtil.toList(
+			layoutTypePortlet.getAllPortlets(), Portlet.PORTLET_ID_ACCESSOR);
+
+		return portletIds.contains(portletId);
+	}
+
+	private String _convertProcess(
 			ActionRequest actionRequest, ActionResponse actionResponse,
 			String cmd)
 		throws Exception {
@@ -467,13 +510,13 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 		return null;
 	}
 
-	protected void gc() throws Exception {
+	private void _gc() throws Exception {
 		Runtime runtime = Runtime.getRuntime();
 
 		runtime.gc();
 	}
 
-	protected void runScript(
+	private void _runScript(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
@@ -520,7 +563,7 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	protected void shutdown(ActionRequest actionRequest) throws Exception {
+	private void _shutdown(ActionRequest actionRequest) throws Exception {
 		if (ShutdownUtil.isInProcess()) {
 			ShutdownUtil.cancel();
 		}
@@ -539,7 +582,7 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	protected void threadDump() throws Exception {
+	private void _threadDump() throws Exception {
 		if (_log.isInfoEnabled()) {
 			Log log = SanitizerLogWrapper.allowCRLF(_log);
 
@@ -554,7 +597,7 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	protected void updateExternalServices(
+	private void _updateExternalServices(
 			ActionRequest actionRequest, PortletPreferences portletPreferences)
 		throws Exception {
 
@@ -588,7 +631,7 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 		ImageMagickUtil.reset();
 	}
 
-	protected void updateLogLevels(ActionRequest actionRequest)
+	private void _updateLogLevels(ActionRequest actionRequest)
 		throws Exception {
 
 		Enumeration<String> enumeration = actionRequest.getParameterNames();
@@ -607,7 +650,7 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	protected void updateMail(
+	private void _updateMail(
 			ActionRequest actionRequest, PortletPreferences portletPreferences)
 		throws Exception {
 
@@ -681,7 +724,7 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 		_mailService.clearSession();
 	}
 
-	protected void verifyMembershipPolicies() throws Exception {
+	private void _verifyMembershipPolicies() throws Exception {
 		OrganizationMembershipPolicy organizationMembershipPolicy =
 			_organizationMembershipPolicyFactory.
 				getOrganizationMembershipPolicy();
@@ -704,51 +747,8 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 		userGroupMembershipPolicy.verifyPolicy();
 	}
 
-	protected void verifyPluginTables() throws Exception {
+	private void _verifyPluginTables() throws Exception {
 		_serviceComponentLocalService.verifyDB();
-	}
-
-	private void _cleanUpAddToPagePermissions(
-			long companyId, long roleId, boolean limitScope)
-		throws Exception {
-
-		Group userPersonalSite = _groupLocalService.getGroup(
-			companyId, GroupConstants.USER_PERSONAL_SITE);
-
-		String groupIdString = String.valueOf(userPersonalSite.getGroupId());
-
-		for (ResourcePermission resourcePermission :
-				_resourcePermissionLocalService.getRoleResourcePermissions(
-					roleId)) {
-
-			if (!resourcePermission.hasActionId(ActionKeys.ADD_TO_PAGE)) {
-				continue;
-			}
-
-			_resourcePermissionLocalService.removeResourcePermission(
-				companyId, resourcePermission.getName(),
-				resourcePermission.getScope(), resourcePermission.getPrimKey(),
-				roleId, ActionKeys.ADD_TO_PAGE);
-
-			if (!limitScope) {
-				continue;
-			}
-
-			_resourcePermissionLocalService.addResourcePermission(
-				companyId, resourcePermission.getName(),
-				ResourceConstants.SCOPE_GROUP, groupIdString, roleId,
-				ActionKeys.ADD_TO_PAGE);
-		}
-	}
-
-	private boolean _containsPortlet(Layout layout, String portletId) {
-		LayoutTypePortlet layoutTypePortlet =
-			(LayoutTypePortlet)layout.getLayoutType();
-
-		List<String> portletIds = ListUtil.toList(
-			layoutTypePortlet.getAllPortlets(), Portlet.PORTLET_ID_ACCESSOR);
-
-		return portletIds.contains(portletId);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -369,7 +369,7 @@ public class CustomSQLImpl implements CustomSQL {
 				if (i > pos) {
 					String keyword = keywords.substring(pos, i);
 
-					keywordsList.add(insertWildcard(keyword, wildcardMode));
+					keywordsList.add(_insertWildcard(keyword, wildcardMode));
 				}
 			}
 			else {
@@ -393,7 +393,7 @@ public class CustomSQLImpl implements CustomSQL {
 
 				String keyword = keywords.substring(pos, i);
 
-				keywordsList.add(insertWildcard(keyword, wildcardMode));
+				keywordsList.add(_insertWildcard(keyword, wildcardMode));
 			}
 		}
 
@@ -815,57 +815,6 @@ public class CustomSQLImpl implements CustomSQL {
 		_bundleContext.removeBundleListener(_synchronousBundleListener);
 	}
 
-	protected String insertWildcard(String keyword, WildcardMode wildcardMode) {
-		if (wildcardMode == WildcardMode.LEADING) {
-			return StringPool.PERCENT.concat(keyword);
-		}
-		else if (wildcardMode == WildcardMode.SURROUND) {
-			return StringUtil.quote(keyword, StringPool.PERCENT);
-		}
-		else if (wildcardMode == WildcardMode.TRAILING) {
-			return keyword.concat(StringPool.PERCENT);
-		}
-		else {
-			throw new IllegalArgumentException(
-				"Invalid wildcard mode " + wildcardMode);
-		}
-	}
-
-	protected String transform(String sql) {
-		sql = _portal.transformCustomSQL(sql);
-
-		StringBundler sb = new StringBundler();
-
-		try (UnsyncBufferedReader unsyncBufferedReader =
-				new UnsyncBufferedReader(new UnsyncStringReader(sql))) {
-
-			String line = null;
-
-			while ((line = unsyncBufferedReader.readLine()) != null) {
-				line = line.trim();
-
-				if (line.startsWith(StringPool.CLOSE_PARENTHESIS)) {
-					sb.setIndex(sb.index() - 1);
-				}
-
-				sb.append(line);
-
-				if (!line.endsWith(StringPool.OPEN_PARENTHESIS)) {
-					sb.append(StringPool.SPACE);
-				}
-			}
-		}
-		catch (IOException ioException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(ioException, ioException);
-			}
-
-			return sql;
-		}
-
-		return sb.toString();
-	}
-
 	private String _escapeWildCards(String keywords) {
 		if (!isVendorMySQL() && !isVendorOracle()) {
 			return keywords;
@@ -907,6 +856,22 @@ public class CustomSQLImpl implements CustomSQL {
 		return new CustomSQLContainer(classLoader, sourceURL);
 	}
 
+	private String _insertWildcard(String keyword, WildcardMode wildcardMode) {
+		if (wildcardMode == WildcardMode.LEADING) {
+			return StringPool.PERCENT.concat(keyword);
+		}
+		else if (wildcardMode == WildcardMode.SURROUND) {
+			return StringUtil.quote(keyword, StringPool.PERCENT);
+		}
+		else if (wildcardMode == WildcardMode.TRAILING) {
+			return keyword.concat(StringPool.PERCENT);
+		}
+		else {
+			throw new IllegalArgumentException(
+				"Invalid wildcard mode " + wildcardMode);
+		}
+	}
+
 	private void _read(
 			ClassLoader classLoader, URL sourceURL, Map<String, String> sqls)
 		throws Exception {
@@ -931,7 +896,7 @@ public class CustomSQLImpl implements CustomSQL {
 				else {
 					String id = sqlElement.attributeValue("id");
 
-					String content = transform(sqlElement.getText());
+					String content = _transform(sqlElement.getText());
 
 					content = replaceIsNull(content);
 
@@ -939,6 +904,41 @@ public class CustomSQLImpl implements CustomSQL {
 				}
 			}
 		}
+	}
+
+	private String _transform(String sql) {
+		sql = _portal.transformCustomSQL(sql);
+
+		StringBundler sb = new StringBundler();
+
+		try (UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(new UnsyncStringReader(sql))) {
+
+			String line = null;
+
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				line = line.trim();
+
+				if (line.startsWith(StringPool.CLOSE_PARENTHESIS)) {
+					sb.setIndex(sb.index() - 1);
+				}
+
+				sb.append(line);
+
+				if (!line.endsWith(StringPool.OPEN_PARENTHESIS)) {
+					sb.append(StringPool.SPACE);
+				}
+			}
+		}
+		catch (IOException ioException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(ioException, ioException);
+			}
+
+			return sql;
+		}
+
+		return sb.toString();
 	}
 
 	private static final boolean _CUSTOM_SQL_AUTO_ESCAPE_WILDCARDS_ENABLED =

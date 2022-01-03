@@ -58,7 +58,7 @@ public class LDAPPropertiesVerifyProcess extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
-		verifyLDAPProperties();
+		_verifyLDAPProperties();
 	}
 
 	@Reference(unbind = "-")
@@ -138,7 +138,7 @@ public class LDAPPropertiesVerifyProcess extends VerifyProcess {
 		_systemLDAPConfigurationProvider = systemLDAPConfigurationProvider;
 	}
 
-	protected void verifyLDAPAuthProperties(long companyId) {
+	private void _verifyLDAPAuthProperties(long companyId) {
 		Dictionary<String, Object> dictionary =
 			HashMapDictionaryBuilder.<String, Object>put(
 				LDAPConstants.AUTH_ENABLED,
@@ -175,7 +175,7 @@ public class LDAPPropertiesVerifyProcess extends VerifyProcess {
 		_ldapAuthConfigurationProvider.updateProperties(companyId, dictionary);
 	}
 
-	protected void verifyLDAPExportProperties(long companyId) {
+	private void _verifyLDAPExportProperties(long companyId) {
 		Dictionary<String, Object> dictionary =
 			HashMapDictionaryBuilder.<String, Object>put(
 				LDAPConstants.EXPORT_ENABLED,
@@ -199,7 +199,7 @@ public class LDAPPropertiesVerifyProcess extends VerifyProcess {
 			companyId, dictionary);
 	}
 
-	protected void verifyLDAPImportProperties(long companyId) {
+	private void _verifyLDAPImportProperties(long companyId) {
 		Dictionary<String, Object> dictionary =
 			HashMapDictionaryBuilder.<String, Object>put(
 				LDAPConstants.IMPORT_CREATE_ROLE_PER_GROUP,
@@ -271,7 +271,7 @@ public class LDAPPropertiesVerifyProcess extends VerifyProcess {
 			companyId, dictionary);
 	}
 
-	protected void verifyLDAPProperties() throws Exception {
+	private void _verifyLDAPProperties() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			_companyLocalService.forEachCompanyId(
 				companyId -> {
@@ -283,10 +283,10 @@ public class LDAPPropertiesVerifyProcess extends VerifyProcess {
 						return;
 					}
 
-					verifyLDAPAuthProperties(companyId);
-					verifyLDAPExportProperties(companyId);
-					verifyLDAPImportProperties(companyId);
-					verifySystemLDAPConfiguration(companyId);
+					_verifyLDAPAuthProperties(companyId);
+					_verifyLDAPExportProperties(companyId);
+					_verifyLDAPImportProperties(companyId);
+					_verifySystemLDAPConfiguration(companyId);
 
 					Set<String> keys = new HashSet<>();
 
@@ -297,7 +297,7 @@ public class LDAPPropertiesVerifyProcess extends VerifyProcess {
 						String postfix = _ldapSettings.getPropertyPostfix(
 							ldapServerId);
 
-						verifyLDAPServerConfiguration(
+						_verifyLDAPServerConfiguration(
 							companyId, ldapServerId, postfix);
 
 						for (int i = 0;
@@ -337,7 +337,7 @@ public class LDAPPropertiesVerifyProcess extends VerifyProcess {
 		}
 	}
 
-	protected void verifyLDAPServerConfiguration(
+	private void _verifyLDAPServerConfiguration(
 		long companyId, long ldapServerId, String postfix) {
 
 		Dictionary<String, Object> dictionary =
@@ -468,7 +468,7 @@ public class LDAPPropertiesVerifyProcess extends VerifyProcess {
 			companyId, ldapServerId, dictionary);
 	}
 
-	protected void verifySystemLDAPConfiguration(long companyId) {
+	private void _verifySystemLDAPConfiguration(long companyId) {
 		Dictionary<String, Object> dictionary =
 			HashMapDictionaryBuilder.<String, Object>put(
 				LDAPConstants.ERROR_PASSWORD_AGE_KEYWORDS,

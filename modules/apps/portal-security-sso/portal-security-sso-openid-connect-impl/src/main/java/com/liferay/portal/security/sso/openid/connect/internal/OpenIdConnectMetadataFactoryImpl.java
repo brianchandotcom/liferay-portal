@@ -94,7 +94,7 @@ public class OpenIdConnectMetadataFactoryImpl
 
 			_initOpenIdConnectClientMetadata(registeredIdTokenSigningAlg);
 
-			refreshClientMetadata(_oidcProviderMetadata);
+			_refreshClientMetadata(_oidcProviderMetadata);
 		}
 		catch (ParseException parseException) {
 			throw new OpenIdConnectServiceException.ProviderException(
@@ -141,14 +141,37 @@ public class OpenIdConnectMetadataFactoryImpl
 
 		long currentTime = System.currentTimeMillis();
 
-		if (needsRefresh(currentTime)) {
-			refresh(currentTime);
+		if (_needsRefresh(currentTime)) {
+			_refresh(currentTime);
 		}
 
 		return _oidcProviderMetadata;
 	}
 
-	protected boolean needsRefresh(long time) {
+	private void _initOpenIdConnectClientMetadata(
+		String registeredIdTokenSigningAlg) {
+
+		_oidcClientMetadata = new OIDCClientMetadata();
+
+		_oidcClientMetadata.applyDefaults();
+
+		if (!Validator.isBlank(registeredIdTokenSigningAlg)) {
+			_oidcClientMetadata.setIDTokenJWSAlg(
+				JWSAlgorithm.parse(registeredIdTokenSigningAlg));
+		}
+		else {
+			if (_log.isWarnEnabled()) {
+				JWSAlgorithm jwsAlgorithm =
+					_oidcClientMetadata.getIDTokenJWSAlg();
+
+				_log.warn(
+					"Using the default ID token signing algorithm " +
+						jwsAlgorithm.getName());
+			}
+		}
+	}
+
+	private boolean _needsRefresh(long time) {
 		if (_oidcProviderMetadata == null) {
 			if (_log.isInfoEnabled()) {
 				_log.info(
@@ -176,10 +199,10 @@ public class OpenIdConnectMetadataFactoryImpl
 		return false;
 	}
 
-	protected synchronized void refresh(long time)
+	private synchronized void _refresh(long time)
 		throws OpenIdConnectServiceException.ProviderException {
 
-		if (!needsRefresh(time)) {
+		if (!_needsRefresh(time)) {
 			return;
 		}
 
@@ -197,7 +220,7 @@ public class OpenIdConnectMetadataFactoryImpl
 
 			_oidcProviderMetadata = OIDCProviderMetadata.parse(jsonObject);
 
-			refreshClientMetadata(_oidcProviderMetadata);
+			_refreshClientMetadata(_oidcProviderMetadata);
 
 			_lastRefreshTimestamp = time;
 		}
@@ -227,7 +250,7 @@ public class OpenIdConnectMetadataFactoryImpl
 	 * minimize potential breaking changes, we will leave this behavior even
 	 * though it is goes beyond the specification.
 	 */
-	protected synchronized void refreshClientMetadata(
+	private synchronized void _refreshClientMetadata(
 		OIDCProviderMetadata oidcProviderMetadata) {
 
 		List<JWEAlgorithm> jweAlgorithms =
@@ -238,29 +261,6 @@ public class OpenIdConnectMetadataFactoryImpl
 		}
 
 		_oidcClientMetadata.setJWKSetURI(oidcProviderMetadata.getJWKSetURI());
-	}
-
-	private void _initOpenIdConnectClientMetadata(
-		String registeredIdTokenSigningAlg) {
-
-		_oidcClientMetadata = new OIDCClientMetadata();
-
-		_oidcClientMetadata.applyDefaults();
-
-		if (!Validator.isBlank(registeredIdTokenSigningAlg)) {
-			_oidcClientMetadata.setIDTokenJWSAlg(
-				JWSAlgorithm.parse(registeredIdTokenSigningAlg));
-		}
-		else {
-			if (_log.isWarnEnabled()) {
-				JWSAlgorithm jwsAlgorithm =
-					_oidcClientMetadata.getIDTokenJWSAlg();
-
-				_log.warn(
-					"Using the default ID token signing algorithm " +
-						jwsAlgorithm.getName());
-			}
-		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

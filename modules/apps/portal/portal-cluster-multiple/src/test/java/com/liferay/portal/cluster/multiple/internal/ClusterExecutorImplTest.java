@@ -71,7 +71,7 @@ public class ClusterExecutorImplTest extends BaseClusterTestCase {
 
 		// Test 1, add cluster event listener
 
-		ClusterExecutorImpl clusterExecutorImpl = getClusterExecutorImpl();
+		ClusterExecutorImpl clusterExecutorImpl = _getClusterExecutorImpl();
 
 		List<ClusterEventListener> clusterEventListeners =
 			clusterExecutorImpl.getClusterEventListeners();
@@ -119,7 +119,7 @@ public class ClusterExecutorImplTest extends BaseClusterTestCase {
 
 	@Test
 	public void testDeactivate() {
-		ClusterExecutorImpl clusterExecutorImpl = getClusterExecutorImpl();
+		ClusterExecutorImpl clusterExecutorImpl = _getClusterExecutorImpl();
 
 		List<TestClusterChannel> clusterChannels =
 			TestClusterChannel.getClusterChannels();
@@ -144,7 +144,7 @@ public class ClusterExecutorImplTest extends BaseClusterTestCase {
 
 	@Test
 	public void testDebugClusterEventListener() {
-		ClusterExecutorImpl clusterExecutorImpl = getClusterExecutorImpl();
+		ClusterExecutorImpl clusterExecutorImpl = _getClusterExecutorImpl();
 
 		clusterExecutorImpl.clusterExecutorConfiguration =
 			new ClusterExecutorConfiguration() {
@@ -192,7 +192,7 @@ public class ClusterExecutorImplTest extends BaseClusterTestCase {
 
 		// Test 1, execute multicast request and not skip local
 
-		ClusterExecutorImpl clusterExecutorImpl = getClusterExecutorImpl();
+		ClusterExecutorImpl clusterExecutorImpl = _getClusterExecutorImpl();
 
 		TestClusterChannel.clearAllMessages();
 
@@ -286,7 +286,7 @@ public class ClusterExecutorImplTest extends BaseClusterTestCase {
 		Assert.assertTrue(
 			unicastMessages.toString(), unicastMessages.isEmpty());
 
-		ClusterExecutorImpl newClusterExecutorImpl = getClusterExecutorImpl();
+		ClusterExecutorImpl newClusterExecutorImpl = _getClusterExecutorImpl();
 
 		Assert.assertEquals(
 			multicastMessages.toString(), 1, multicastMessages.size());
@@ -321,7 +321,7 @@ public class ClusterExecutorImplTest extends BaseClusterTestCase {
 
 	@Test
 	public void testExecuteClusterRequest() throws Exception {
-		ClusterExecutorImpl clusterExecutorImpl = getClusterExecutorImpl();
+		ClusterExecutorImpl clusterExecutorImpl = _getClusterExecutorImpl();
 
 		// Test 1, payload is not method handler
 
@@ -382,7 +382,7 @@ public class ClusterExecutorImplTest extends BaseClusterTestCase {
 		Assert.assertTrue(ClusterInvokeThreadLocal.isEnabled());
 	}
 
-	protected ClusterExecutorImpl getClusterExecutorImpl() {
+	private ClusterExecutorImpl _getClusterExecutorImpl() {
 		ClusterExecutorImpl clusterExecutorImpl = new ClusterExecutorImpl();
 
 		clusterExecutorImpl.setProps(

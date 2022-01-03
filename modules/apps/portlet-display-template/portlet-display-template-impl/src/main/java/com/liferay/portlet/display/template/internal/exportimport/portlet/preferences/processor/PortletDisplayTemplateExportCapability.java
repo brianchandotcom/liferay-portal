@@ -52,14 +52,29 @@ public class PortletDisplayTemplateExportCapability implements Capability {
 			PortletPreferences portletPreferences)
 		throws PortletDataException {
 
-		exportDisplayStyle(
+		_exportDisplayStyle(
 			portletDataContext, portletDataContext.getPortletId(),
 			portletPreferences);
 
 		return portletPreferences;
 	}
 
-	protected void exportDisplayStyle(
+	protected long getClassNameId(
+		PortletDataContext portletDataContext, String portletId) {
+
+		Portlet portlet = _portletLocalService.getPortletById(
+			portletDataContext.getCompanyId(), portletId);
+
+		TemplateHandler templateHandler = portlet.getTemplateHandlerInstance();
+
+		if (templateHandler == null) {
+			return 0;
+		}
+
+		return _portal.getClassNameId(templateHandler.getClassName());
+	}
+
+	private void _exportDisplayStyle(
 			PortletDataContext portletDataContext, String portletId,
 			PortletPreferences portletPreferences)
 		throws PortletDataException {
@@ -99,21 +114,6 @@ public class PortletDisplayTemplateExportCapability implements Capability {
 		}
 
 		portletDataContext.setScopeGroupId(previousScopeGroupId);
-	}
-
-	protected long getClassNameId(
-		PortletDataContext portletDataContext, String portletId) {
-
-		Portlet portlet = _portletLocalService.getPortletById(
-			portletDataContext.getCompanyId(), portletId);
-
-		TemplateHandler templateHandler = portlet.getTemplateHandlerInstance();
-
-		if (templateHandler == null) {
-			return 0;
-		}
-
-		return _portal.getClassNameId(templateHandler.getClassName());
 	}
 
 	private final Portal _portal;

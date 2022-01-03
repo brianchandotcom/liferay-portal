@@ -173,7 +173,7 @@ public class TrashPortlet extends MVCPortlet {
 		long trashEntryId = ParamUtil.getLong(actionRequest, "trashEntryId");
 
 		if (trashEntryId > 0) {
-			checkEntry(actionRequest, actionResponse);
+			_checkEntry(actionRequest, actionResponse);
 
 			TrashEntry entry = _trashEntryService.restoreEntry(trashEntryId);
 
@@ -223,7 +223,7 @@ public class TrashPortlet extends MVCPortlet {
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		if (cmd.equals(Constants.RENAME)) {
-			checkEntry(actionRequest, actionResponse);
+			_checkEntry(actionRequest, actionResponse);
 
 			restoreRename(actionRequest, actionResponse);
 		}
@@ -280,7 +280,39 @@ public class TrashPortlet extends MVCPortlet {
 		sendRedirect(actionRequest, actionResponse);
 	}
 
-	protected void checkEntry(
+	@Override
+	protected boolean isSessionErrorException(Throwable throwable) {
+		if (throwable instanceof
+				com.liferay.trash.exception.RestoreEntryException ||
+			throwable instanceof RestoreEntryException ||
+			throwable instanceof TrashPermissionException) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.trash.web)(&(release.schema.version>=1.0.0)(!(release.schema.version>=2.0.0))))",
+		unbind = "-"
+	)
+	protected void setRelease(Release release) {
+	}
+
+	@Reference(unbind = "-")
+	protected void setTrashEntryLocalService(
+		TrashEntryLocalService trashEntryLocalService) {
+
+		_trashEntryLocalService = trashEntryLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setTrashEntryService(TrashEntryService trashEntryService) {
+		_trashEntryService = trashEntryService;
+	}
+
+	private void _checkEntry(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
@@ -328,38 +360,6 @@ public class TrashPortlet extends MVCPortlet {
 				restoreEntryException.getType(),
 				restoreEntryException.getCause());
 		}
-	}
-
-	@Override
-	protected boolean isSessionErrorException(Throwable throwable) {
-		if (throwable instanceof
-				com.liferay.trash.exception.RestoreEntryException ||
-			throwable instanceof RestoreEntryException ||
-			throwable instanceof TrashPermissionException) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	@Reference(
-		target = "(&(release.bundle.symbolic.name=com.liferay.trash.web)(&(release.schema.version>=1.0.0)(!(release.schema.version>=2.0.0))))",
-		unbind = "-"
-	)
-	protected void setRelease(Release release) {
-	}
-
-	@Reference(unbind = "-")
-	protected void setTrashEntryLocalService(
-		TrashEntryLocalService trashEntryLocalService) {
-
-		_trashEntryLocalService = trashEntryLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setTrashEntryService(TrashEntryService trashEntryService) {
-		_trashEntryService = trashEntryService;
 	}
 
 	@Reference

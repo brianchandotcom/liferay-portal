@@ -134,7 +134,7 @@ public class OrganizationItemSelectorViewDisplayContext {
 				getOrderByCol(), getOrderByType());
 
 		RowChecker rowChecker = new OrganizationItemSelectorChecker(
-			_renderResponse, getCheckedOrganizationIds());
+			_renderResponse, _getCheckedOrganizationIds());
 
 		_searchContainer.setOrderByCol(getOrderByCol());
 		_searchContainer.setOrderByComparator(orderByComparator);
@@ -162,7 +162,7 @@ public class OrganizationItemSelectorViewDisplayContext {
 		return _searchContainer;
 	}
 
-	protected long[] getCheckedOrganizationIds() {
+	private long[] _getCheckedOrganizationIds() {
 		return ParamUtil.getLongValues(
 			_renderRequest, "checkedOrganizationIds");
 	}

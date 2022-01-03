@@ -151,33 +151,10 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 				return;
 			}
 
-			postProcessAuthFailure(actionRequest, actionResponse);
+			_postProcessAuthFailure(actionRequest, actionResponse);
 
 			hideDefaultErrorMessage(actionRequest);
 		}
-	}
-
-	protected String getCompleteRedirectURL(
-		HttpServletRequest httpServletRequest, String redirect) {
-
-		HttpSession httpSession = httpServletRequest.getSession();
-
-		Boolean httpsInitial = (Boolean)httpSession.getAttribute(
-			WebKeys.HTTPS_INITIAL);
-
-		String portalURL = null;
-
-		if (PropsValues.COMPANY_SECURITY_AUTH_REQUIRES_HTTPS &&
-			!PropsValues.SESSION_ENABLE_PHISHING_PROTECTION &&
-			(httpsInitial != null) && !httpsInitial.booleanValue()) {
-
-			portalURL = _portal.getPortalURL(httpServletRequest, false);
-		}
-		else {
-			portalURL = _portal.getPortalURL(httpServletRequest);
-		}
-
-		return portalURL.concat(redirect);
 	}
 
 	protected void login(
@@ -248,7 +225,8 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 			if (Validator.isNotNull(redirect) &&
 				!redirect.startsWith(Http.HTTP)) {
 
-				redirect = getCompleteRedirectURL(httpServletRequest, redirect);
+				redirect = _getCompleteRedirectURL(
+					httpServletRequest, redirect);
 			}
 		}
 
@@ -267,7 +245,30 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	protected void postProcessAuthFailure(
+	private String _getCompleteRedirectURL(
+		HttpServletRequest httpServletRequest, String redirect) {
+
+		HttpSession httpSession = httpServletRequest.getSession();
+
+		Boolean httpsInitial = (Boolean)httpSession.getAttribute(
+			WebKeys.HTTPS_INITIAL);
+
+		String portalURL = null;
+
+		if (PropsValues.COMPANY_SECURITY_AUTH_REQUIRES_HTTPS &&
+			!PropsValues.SESSION_ENABLE_PHISHING_PROTECTION &&
+			(httpsInitial != null) && !httpsInitial.booleanValue()) {
+
+			portalURL = _portal.getPortalURL(httpServletRequest, false);
+		}
+		else {
+			portalURL = _portal.getPortalURL(httpServletRequest);
+		}
+
+		return portalURL.concat(redirect);
+	}
+
+	private void _postProcessAuthFailure(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 

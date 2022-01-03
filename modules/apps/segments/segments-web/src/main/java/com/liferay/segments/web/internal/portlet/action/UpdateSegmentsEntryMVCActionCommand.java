@@ -98,7 +98,7 @@ public class UpdateSegmentsEntryMVCActionCommand extends BaseMVCActionCommand {
 			boolean dynamic = ParamUtil.getBoolean(
 				actionRequest, "dynamic", true);
 
-			validateCriteria(criteria, dynamic);
+			_validateCriteria(criteria, dynamic);
 
 			if (segmentsEntryId <= 0) {
 				long groupId = ParamUtil.getLong(actionRequest, "groupId");
@@ -131,7 +131,7 @@ public class UpdateSegmentsEntryMVCActionCommand extends BaseMVCActionCommand {
 				actionRequest, "saveAndContinue", false);
 
 			if (saveAndContinue) {
-				redirect = getSaveAndContinueRedirect(
+				redirect = _getSaveAndContinueRedirect(
 					actionRequest, segmentsEntry, redirect);
 			}
 
@@ -161,7 +161,7 @@ public class UpdateSegmentsEntryMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	protected String getSaveAndContinueRedirect(
+	private String _getSaveAndContinueRedirect(
 			ActionRequest actionRequest, SegmentsEntry segmentsEntry,
 			String redirect)
 		throws Exception {
@@ -187,7 +187,7 @@ public class UpdateSegmentsEntryMVCActionCommand extends BaseMVCActionCommand {
 		return portletURL.toString();
 	}
 
-	protected void validateCriteria(Criteria criteria, boolean dynamic)
+	private void _validateCriteria(Criteria criteria, boolean dynamic)
 		throws SegmentsEntryCriteriaException {
 
 		if (dynamic && MapUtil.isEmpty(criteria.getCriteria())) {

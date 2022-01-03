@@ -84,9 +84,9 @@ public class MicroblogsWebUtil {
 			String content, ServiceContext serviceContext)
 		throws PortalException {
 
-		content = replaceHashtags(content, serviceContext);
+		content = _replaceHashtags(content, serviceContext);
 
-		content = replaceUserTags(content, serviceContext);
+		content = _replaceUserTags(content, serviceContext);
 
 		return content;
 	}
@@ -143,7 +143,7 @@ public class MicroblogsWebUtil {
 		return screenNames;
 	}
 
-	protected static String replaceHashtags(
+	private static String _replaceHashtags(
 			String content, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -223,7 +223,7 @@ public class MicroblogsWebUtil {
 		return escapedContent;
 	}
 
-	protected static String replaceUserTags(
+	private static String _replaceUserTags(
 			String content, ServiceContext serviceContext)
 		throws PortalException {
 

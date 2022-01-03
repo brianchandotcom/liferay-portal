@@ -63,104 +63,6 @@ public class SoapExtender {
 		_enableComponent();
 	}
 
-	protected void addBusDependencies(org.apache.felix.dm.Component component) {
-		SoapExtenderConfiguration soapExtenderConfiguration =
-			getSoapExtenderConfiguration();
-
-		String[] contextPaths = soapExtenderConfiguration.contextPaths();
-
-		if (contextPaths == null) {
-			return;
-		}
-
-		for (String contextPath : contextPaths) {
-			addTCCLServiceDependency(
-				component, true, Bus.class,
-				StringBundler.concat(
-					"(", HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_PATH,
-					"=", contextPath, ")"),
-				"addBus", "removeBus");
-		}
-	}
-
-	protected void addJaxWsHandlerServiceDependencies(
-		org.apache.felix.dm.Component component) {
-
-		SoapExtenderConfiguration soapExtenderConfiguration =
-			getSoapExtenderConfiguration();
-
-		String[] jaxWsHandlerFilterStrings =
-			soapExtenderConfiguration.jaxWsHandlerFilterStrings();
-
-		if (jaxWsHandlerFilterStrings == null) {
-			return;
-		}
-
-		for (String jaxWsHandlerFilterString : jaxWsHandlerFilterStrings) {
-			addTCCLServiceDependency(
-				component, false, Handler.class, jaxWsHandlerFilterString,
-				"addHandler", "removeHandler");
-		}
-	}
-
-	protected void addJaxWsServiceDependencies(
-		org.apache.felix.dm.Component component) {
-
-		SoapExtenderConfiguration soapExtenderConfiguration =
-			getSoapExtenderConfiguration();
-
-		String[] jaxWsServiceFilterStrings =
-			soapExtenderConfiguration.jaxWsServiceFilterStrings();
-
-		if (jaxWsServiceFilterStrings == null) {
-			return;
-		}
-
-		for (String jaxWsServiceFilterString : jaxWsServiceFilterStrings) {
-			addTCCLServiceDependency(
-				component, false, null, jaxWsServiceFilterString, "addService",
-				"removeService");
-		}
-	}
-
-	protected void addSoapDescriptorBuilderServiceDependency(
-		org.apache.felix.dm.Component component) {
-
-		ServiceDependency serviceDependency =
-			_dependencyManager.createServiceDependency();
-
-		serviceDependency.setCallbacks("setSoapDescriptorBuilder", null);
-		serviceDependency.setRequired(false);
-		serviceDependency.setService(
-			SoapDescriptorBuilder.class,
-			_soapExtenderConfiguration.soapDescriptorBuilderFilter());
-
-		component.add(serviceDependency);
-	}
-
-	protected ServiceDependency addTCCLServiceDependency(
-		org.apache.felix.dm.Component component, boolean required,
-		Class<?> clazz, String filterString, String addName,
-		String removeName) {
-
-		ServiceDependency serviceDependency =
-			_dependencyManager.createServiceDependency();
-
-		serviceDependency.setCallbacks(addName, removeName);
-		serviceDependency.setRequired(required);
-
-		if (clazz == null) {
-			serviceDependency.setService(filterString);
-		}
-		else {
-			serviceDependency.setService(clazz, filterString);
-		}
-
-		component.add(serviceDependency);
-
-		return serviceDependency;
-	}
-
 	@Deactivate
 	protected void deactivate() {
 		_dependencyManager.clear();
@@ -195,6 +97,104 @@ public class SoapExtender {
 		SoapDescriptorBuilder soapDescriptorBuilder) {
 	}
 
+	private void _addBusDependencies(org.apache.felix.dm.Component component) {
+		SoapExtenderConfiguration soapExtenderConfiguration =
+			getSoapExtenderConfiguration();
+
+		String[] contextPaths = soapExtenderConfiguration.contextPaths();
+
+		if (contextPaths == null) {
+			return;
+		}
+
+		for (String contextPath : contextPaths) {
+			_addTCCLServiceDependency(
+				component, true, Bus.class,
+				StringBundler.concat(
+					"(", HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_PATH,
+					"=", contextPath, ")"),
+				"addBus", "removeBus");
+		}
+	}
+
+	private void _addJaxWsHandlerServiceDependencies(
+		org.apache.felix.dm.Component component) {
+
+		SoapExtenderConfiguration soapExtenderConfiguration =
+			getSoapExtenderConfiguration();
+
+		String[] jaxWsHandlerFilterStrings =
+			soapExtenderConfiguration.jaxWsHandlerFilterStrings();
+
+		if (jaxWsHandlerFilterStrings == null) {
+			return;
+		}
+
+		for (String jaxWsHandlerFilterString : jaxWsHandlerFilterStrings) {
+			_addTCCLServiceDependency(
+				component, false, Handler.class, jaxWsHandlerFilterString,
+				"addHandler", "removeHandler");
+		}
+	}
+
+	private void _addJaxWsServiceDependencies(
+		org.apache.felix.dm.Component component) {
+
+		SoapExtenderConfiguration soapExtenderConfiguration =
+			getSoapExtenderConfiguration();
+
+		String[] jaxWsServiceFilterStrings =
+			soapExtenderConfiguration.jaxWsServiceFilterStrings();
+
+		if (jaxWsServiceFilterStrings == null) {
+			return;
+		}
+
+		for (String jaxWsServiceFilterString : jaxWsServiceFilterStrings) {
+			_addTCCLServiceDependency(
+				component, false, null, jaxWsServiceFilterString, "addService",
+				"removeService");
+		}
+	}
+
+	private void _addSoapDescriptorBuilderServiceDependency(
+		org.apache.felix.dm.Component component) {
+
+		ServiceDependency serviceDependency =
+			_dependencyManager.createServiceDependency();
+
+		serviceDependency.setCallbacks("setSoapDescriptorBuilder", null);
+		serviceDependency.setRequired(false);
+		serviceDependency.setService(
+			SoapDescriptorBuilder.class,
+			_soapExtenderConfiguration.soapDescriptorBuilderFilter());
+
+		component.add(serviceDependency);
+	}
+
+	private ServiceDependency _addTCCLServiceDependency(
+		org.apache.felix.dm.Component component, boolean required,
+		Class<?> clazz, String filterString, String addName,
+		String removeName) {
+
+		ServiceDependency serviceDependency =
+			_dependencyManager.createServiceDependency();
+
+		serviceDependency.setCallbacks(addName, removeName);
+		serviceDependency.setRequired(required);
+
+		if (clazz == null) {
+			serviceDependency.setService(filterString);
+		}
+		else {
+			serviceDependency.setService(clazz, filterString);
+		}
+
+		component.add(serviceDependency);
+
+		return serviceDependency;
+	}
+
 	private void _enableComponent() {
 		org.apache.felix.dm.Component component =
 			_dependencyManager.createComponent();
@@ -207,10 +207,10 @@ public class SoapExtender {
 
 		component.setImplementation(cxfJaxWsServiceRegistrator);
 
-		addBusDependencies(component);
-		addJaxWsHandlerServiceDependencies(component);
-		addJaxWsServiceDependencies(component);
-		addSoapDescriptorBuilderServiceDependency(component);
+		_addBusDependencies(component);
+		_addJaxWsHandlerServiceDependencies(component);
+		_addJaxWsServiceDependencies(component);
+		_addSoapDescriptorBuilderServiceDependency(component);
 
 		_dependencyManager.add(component);
 	}

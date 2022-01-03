@@ -42,7 +42,7 @@ public class BackgroundTaskStatusRegistryImpl
 	@Override
 	public BackgroundTaskStatus getBackgroundTaskStatus(long backgroundTaskId) {
 		if (!_clusterMasterExecutor.isMaster()) {
-			return getMasterBackgroundTaskStatus(backgroundTaskId);
+			return _getMasterBackgroundTaskStatus(backgroundTaskId);
 		}
 
 		Lock lock = _readWriteLock.readLock();
@@ -99,7 +99,14 @@ public class BackgroundTaskStatusRegistryImpl
 		}
 	}
 
-	protected BackgroundTaskStatus getMasterBackgroundTaskStatus(
+	@Reference(unbind = "-")
+	protected void setClusterMasterExecutor(
+		ClusterMasterExecutor clusterMasterExecutor) {
+
+		_clusterMasterExecutor = clusterMasterExecutor;
+	}
+
+	private BackgroundTaskStatus _getMasterBackgroundTaskStatus(
 		long backgroundTaskId) {
 
 		try {
@@ -118,13 +125,6 @@ public class BackgroundTaskStatusRegistryImpl
 		}
 
 		return null;
-	}
-
-	@Reference(unbind = "-")
-	protected void setClusterMasterExecutor(
-		ClusterMasterExecutor clusterMasterExecutor) {
-
-		_clusterMasterExecutor = clusterMasterExecutor;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

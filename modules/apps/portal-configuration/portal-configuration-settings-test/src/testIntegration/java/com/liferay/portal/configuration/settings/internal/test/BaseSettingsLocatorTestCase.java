@@ -94,52 +94,12 @@ public abstract class BaseSettingsLocatorTestCase {
 			Serializable propertyValue)
 		throws Exception {
 
-		Configuration configuration = getFactoryConfiguration(
+		Configuration configuration = _getFactoryConfiguration(
 			factoryPid, scope, scopePK, propertyKey, propertyValue);
 
 		if (configuration != null) {
 			ConfigurationTestUtil.deleteConfiguration(configuration);
 		}
-	}
-
-	protected Configuration getFactoryConfiguration(
-			String factoryPid, ExtendedObjectClassDefinition.Scope scope,
-			Serializable scopePK, String propertyKey,
-			Serializable propertyValue)
-		throws ConfigurationException {
-
-		try {
-			String filterString = StringBundler.concat(
-				"(&",
-				getPropertyFilterString(
-					"service.factoryPid", factoryPid + ".scoped"),
-				getPropertyFilterString(scope.getPropertyKey(), scopePK),
-				getPropertyFilterString(propertyKey, propertyValue), ")");
-
-			Configuration[] configurations =
-				_configurationAdmin.listConfigurations(filterString);
-
-			if (configurations != null) {
-				return configurations[0];
-			}
-
-			return null;
-		}
-		catch (InvalidSyntaxException | IOException exception) {
-			throw new ConfigurationException(
-				"Unable to retrieve factory configuration " + factoryPid,
-				exception);
-		}
-	}
-
-	protected String getPropertyFilterString(String key, Serializable value) {
-		if (Validator.isNull(key) || Validator.isNull(value)) {
-			return StringPool.BLANK;
-		}
-
-		return StringBundler.concat(
-			StringPool.OPEN_PARENTHESIS, key, StringPool.EQUAL, value,
-			StringPool.CLOSE_PARENTHESIS);
 	}
 
 	protected String getSettingsValue() throws Exception {
@@ -250,6 +210,46 @@ public abstract class BaseSettingsLocatorTestCase {
 
 	protected final String portletId = RandomTestUtil.randomString();
 	protected SettingsLocator settingsLocator;
+
+	private Configuration _getFactoryConfiguration(
+			String factoryPid, ExtendedObjectClassDefinition.Scope scope,
+			Serializable scopePK, String propertyKey,
+			Serializable propertyValue)
+		throws ConfigurationException {
+
+		try {
+			String filterString = StringBundler.concat(
+				"(&",
+				_getPropertyFilterString(
+					"service.factoryPid", factoryPid + ".scoped"),
+				_getPropertyFilterString(scope.getPropertyKey(), scopePK),
+				_getPropertyFilterString(propertyKey, propertyValue), ")");
+
+			Configuration[] configurations =
+				_configurationAdmin.listConfigurations(filterString);
+
+			if (configurations != null) {
+				return configurations[0];
+			}
+
+			return null;
+		}
+		catch (InvalidSyntaxException | IOException exception) {
+			throw new ConfigurationException(
+				"Unable to retrieve factory configuration " + factoryPid,
+				exception);
+		}
+	}
+
+	private String _getPropertyFilterString(String key, Serializable value) {
+		if (Validator.isNull(key) || Validator.isNull(value)) {
+			return StringPool.BLANK;
+		}
+
+		return StringBundler.concat(
+			StringPool.OPEN_PARENTHESIS, key, StringPool.EQUAL, value,
+			StringPool.CLOSE_PARENTHESIS);
+	}
 
 	private static final Set<String> _configurationPids = new HashSet<>();
 	private static final Set<String> _factoryConfigurationPids =

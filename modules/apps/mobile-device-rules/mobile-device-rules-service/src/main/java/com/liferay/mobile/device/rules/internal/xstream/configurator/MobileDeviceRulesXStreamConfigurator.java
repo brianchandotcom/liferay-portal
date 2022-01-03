@@ -50,7 +50,7 @@ public class MobileDeviceRulesXStreamConfigurator
 		return null;
 	}
 
-	protected void activate() {
+	private void _activate() {
 		_xStreamAliases = new XStreamAlias[] {
 			new XStreamAlias(MDRActionImpl.class, "MDRAction"),
 			new XStreamAlias(MDRRuleImpl.class, "MDRRule"),

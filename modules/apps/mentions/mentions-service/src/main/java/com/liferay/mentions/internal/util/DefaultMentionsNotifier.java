@@ -66,7 +66,7 @@ public class DefaultMentionsNotifier implements MentionsNotifier {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		String[] mentionedUsersScreenNames = getMentionedUsersScreenNames(
+		String[] mentionedUsersScreenNames = _getMentionedUsersScreenNames(
 			userId, className, content);
 
 		if (ArrayUtil.isEmpty(mentionedUsersScreenNames)) {
@@ -103,7 +103,7 @@ public class DefaultMentionsNotifier implements MentionsNotifier {
 		subscriptionSender.setHtmlFormat(true);
 		subscriptionSender.setLocalizedContextAttributeWithFunction(
 			"[$ASSET_ENTRY_NAME$]",
-			locale -> getAssetEntryName(className, locale));
+			locale -> _getAssetEntryName(className, locale));
 		subscriptionSender.setMailId("mb_discussion", classPK);
 		subscriptionSender.setNotificationType(
 			MentionsConstants.NOTIFICATION_TYPE_MENTION);
@@ -148,7 +148,26 @@ public class DefaultMentionsNotifier implements MentionsNotifier {
 		subscriptionSender.flushNotificationsAsync();
 	}
 
-	protected String getAssetEntryName(String className, Locale locale) {
+	@Reference(unbind = "-")
+	protected void setMentionsMatcherRegistry(
+		MentionsMatcherRegistry mentionsMatcherRegistry) {
+
+		_mentionsMatcherRegistry = mentionsMatcherRegistry;
+	}
+
+	@Reference(unbind = "-")
+	protected void setMentionsUserFinder(
+		MentionsUserFinder mentionsUserFinder) {
+
+		_mentionsUserFinder = mentionsUserFinder;
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
+	private String _getAssetEntryName(String className, Locale locale) {
 		AssetRendererFactory<?> assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
 				className);
@@ -160,7 +179,7 @@ public class DefaultMentionsNotifier implements MentionsNotifier {
 		return StringPool.BLANK;
 	}
 
-	protected String[] getMentionedUsersScreenNames(
+	private String[] _getMentionedUsersScreenNames(
 			long userId, String className, String content)
 		throws PortalException {
 
@@ -191,25 +210,6 @@ public class DefaultMentionsNotifier implements MentionsNotifier {
 		}
 
 		return mentionedUsersScreenNames.toArray(new String[0]);
-	}
-
-	@Reference(unbind = "-")
-	protected void setMentionsMatcherRegistry(
-		MentionsMatcherRegistry mentionsMatcherRegistry) {
-
-		_mentionsMatcherRegistry = mentionsMatcherRegistry;
-	}
-
-	@Reference(unbind = "-")
-	protected void setMentionsUserFinder(
-		MentionsUserFinder mentionsUserFinder) {
-
-		_mentionsUserFinder = mentionsUserFinder;
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserLocalService(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
 	}
 
 	@Reference

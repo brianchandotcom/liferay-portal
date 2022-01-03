@@ -130,20 +130,6 @@ public class DefaultAuditRouter implements AuditRouter {
 		}
 	}
 
-	protected String[] getEventTypes(
-		AuditMessageProcessor auditMessageProcessor,
-		Map<String, Object> properties) {
-
-		String eventTypes = (String)properties.get(AuditConstants.EVENT_TYPES);
-
-		if (Validator.isNull(eventTypes)) {
-			throw new IllegalArgumentException(
-				"The property \"" + AuditConstants.EVENT_TYPES + "\" is null");
-		}
-
-		return StringUtil.split(eventTypes);
-	}
-
 	@Modified
 	protected void modified(Map<String, Object> properties) {
 		AuditConfiguration auditConfiguration =
@@ -162,7 +148,7 @@ public class DefaultAuditRouter implements AuditRouter {
 		AuditMessageProcessor auditMessageProcessor,
 		Map<String, Object> properties) {
 
-		String[] eventTypes = getEventTypes(auditMessageProcessor, properties);
+		String[] eventTypes = _getEventTypes(auditMessageProcessor, properties);
 
 		if ((eventTypes.length == 1) && eventTypes[0].equals(StringPool.STAR)) {
 			_globalAuditMessageProcessors.add(auditMessageProcessor);
@@ -189,7 +175,7 @@ public class DefaultAuditRouter implements AuditRouter {
 		AuditMessageProcessor auditMessageProcessor,
 		Map<String, Object> properties) {
 
-		String[] eventTypes = getEventTypes(auditMessageProcessor, properties);
+		String[] eventTypes = _getEventTypes(auditMessageProcessor, properties);
 
 		if ((eventTypes.length == 1) && eventTypes[0].equals(StringPool.STAR)) {
 			_globalAuditMessageProcessors.remove(auditMessageProcessor);
@@ -207,6 +193,20 @@ public class DefaultAuditRouter implements AuditRouter {
 
 			auditMessageProcessorsSet.remove(auditMessageProcessor);
 		}
+	}
+
+	private String[] _getEventTypes(
+		AuditMessageProcessor auditMessageProcessor,
+		Map<String, Object> properties) {
+
+		String eventTypes = (String)properties.get(AuditConstants.EVENT_TYPES);
+
+		if (Validator.isNull(eventTypes)) {
+			throw new IllegalArgumentException(
+				"The property \"" + AuditConstants.EVENT_TYPES + "\" is null");
+		}
+
+		return StringUtil.split(eventTypes);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

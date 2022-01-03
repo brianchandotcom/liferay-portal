@@ -161,7 +161,7 @@ public class MDRActionStagedModelDataHandler
 		Element element = portletDataContext.getImportDataStagedModelElement(
 			action);
 
-		validateLayout(element, action);
+		_validateLayout(element, action);
 
 		MDRAction importedAction = null;
 
@@ -215,7 +215,7 @@ public class MDRActionStagedModelDataHandler
 		_mdrRuleGroupInstanceLocalService = mdrRuleGroupInstanceLocalService;
 	}
 
-	protected void validateLayout(Element actionElement, MDRAction action) {
+	private void _validateLayout(Element actionElement, MDRAction action) {
 		String type = action.getType();
 
 		if (!type.equals(SiteRedirectActionHandler.class.getName())) {

@@ -70,13 +70,16 @@ public class UserGroupKeywordQueryContributor
 			String expandoAttributes = (String)params.get("expandoAttributes");
 
 			if (Validator.isNotNull(expandoAttributes)) {
-				addSearchExpando(
+				_addSearchExpando(
 					booleanQuery, searchContext, expandoAttributes);
 			}
 		}
 	}
 
-	protected Map<String, Query> addSearchExpando(
+	@Reference
+	protected QueryHelper queryHelper;
+
+	private Map<String, Query> _addSearchExpando(
 		BooleanQuery searchQuery, SearchContext searchContext,
 		String keywords) {
 
@@ -86,9 +89,6 @@ public class UserGroupKeywordQueryContributor
 
 		return new HashMap<>();
 	}
-
-	@Reference
-	protected QueryHelper queryHelper;
 
 	@Reference
 	private ExpandoQueryContributor _expandoQueryContributor;

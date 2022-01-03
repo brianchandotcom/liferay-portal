@@ -149,27 +149,6 @@ public abstract class BaseUserDemoDataCreator implements UserDemoDataCreator {
 		}
 	}
 
-	protected String[] getFullNameArray(String emailAddress) {
-		String emailAccountName = emailAddress.substring(
-			0, emailAddress.indexOf(StringPool.AT));
-
-		String[] fullNameArray = StringUtil.split(
-			emailAccountName, StringPool.PERIOD);
-
-		String firstName = StringUtil.randomString();
-		String lastName = StringUtil.randomString();
-
-		if (fullNameArray.length > 0) {
-			firstName = StringUtil.upperCaseFirstLetter(fullNameArray[0]);
-		}
-
-		if (fullNameArray.length > 1) {
-			lastName = StringUtil.upperCaseFirstLetter(fullNameArray[1]);
-		}
-
-		return new String[] {firstName, lastName};
-	}
-
 	@Reference(unbind = "-")
 	protected void setUserLocalService(UserLocalService userLocalService) {
 		this.userLocalService = userLocalService;
@@ -191,7 +170,7 @@ public abstract class BaseUserDemoDataCreator implements UserDemoDataCreator {
 			String firstName, String lastName, boolean male, Date birthDate)
 		throws PortalException {
 
-		String[] fullNameArray = getFullNameArray(emailAddress);
+		String[] fullNameArray = _getFullNameArray(emailAddress);
 
 		if (Validator.isNull(firstName)) {
 			firstName = fullNameArray[0];
@@ -281,6 +260,27 @@ public abstract class BaseUserDemoDataCreator implements UserDemoDataCreator {
 		}
 
 		return emailAddress;
+	}
+
+	private String[] _getFullNameArray(String emailAddress) {
+		String emailAccountName = emailAddress.substring(
+			0, emailAddress.indexOf(StringPool.AT));
+
+		String[] fullNameArray = StringUtil.split(
+			emailAccountName, StringPool.PERIOD);
+
+		String firstName = StringUtil.randomString();
+		String lastName = StringUtil.randomString();
+
+		if (fullNameArray.length > 0) {
+			firstName = StringUtil.upperCaseFirstLetter(fullNameArray[0]);
+		}
+
+		if (fullNameArray.length > 1) {
+			lastName = StringUtil.upperCaseFirstLetter(fullNameArray[1]);
+		}
+
+		return new String[] {firstName, lastName};
 	}
 
 	private String _getRandomElement(List<String> list) {

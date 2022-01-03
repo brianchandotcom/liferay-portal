@@ -81,7 +81,7 @@ public class DeliveryPortletConfigurationIcon
 		sb.append(LanguageUtil.get(themeDisplay.getLocale(), "configuration"));
 		sb.append("', url: '");
 		sb.append(
-			HtmlUtil.escapeJS(String.valueOf(getDeliveryURL(portletRequest))));
+			HtmlUtil.escapeJS(String.valueOf(_getDeliveryURL(portletRequest))));
 		sb.append("'}); return false;");
 
 		return sb.toString();
@@ -91,7 +91,7 @@ public class DeliveryPortletConfigurationIcon
 	public String getURL(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		return String.valueOf(getDeliveryURL(portletRequest));
+		return String.valueOf(_getDeliveryURL(portletRequest));
 	}
 
 	@Override
@@ -109,7 +109,7 @@ public class DeliveryPortletConfigurationIcon
 		return false;
 	}
 
-	protected PortletURL getDeliveryURL(PortletRequest portletRequest) {
+	private PortletURL _getDeliveryURL(PortletRequest portletRequest) {
 		PortletURL portletURL = PortletURLBuilder.create(
 			PortletURLFactoryUtil.create(
 				portletRequest, NotificationsPortletKeys.NOTIFICATIONS,

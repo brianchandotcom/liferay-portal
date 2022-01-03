@@ -186,7 +186,7 @@ public class JspServlet extends HttpServlet {
 
 		bundles.add(_utilTaglibBundle);
 
-		collectTaglibProviderBundles(bundles);
+		_collectTaglibProviderBundles(bundles);
 
 		_allParticipatingBundles = bundles.toArray(new Bundle[0]);
 
@@ -389,7 +389,7 @@ public class JspServlet extends HttpServlet {
 		return _jspServlet.toString();
 	}
 
-	protected void collectTaglibProviderBundles(List<Bundle> bundles) {
+	private void _collectTaglibProviderBundles(List<Bundle> bundles) {
 		BundleWiring bundleWiring = _bundle.adapt(BundleWiring.class);
 
 		for (BundleWire bundleWire :
@@ -413,7 +413,7 @@ public class JspServlet extends HttpServlet {
 		}
 	}
 
-	protected String[] getListenerClassNames(Class<?> clazz) {
+	private String[] _getListenerClassNames(Class<?> clazz) {
 		List<String> classNames = new ArrayList<>();
 
 		if (ServletContextListener.class.isAssignableFrom(clazz)) {

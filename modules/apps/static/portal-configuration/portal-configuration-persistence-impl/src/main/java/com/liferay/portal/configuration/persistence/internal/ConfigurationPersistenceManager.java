@@ -88,7 +88,7 @@ public class ConfigurationPersistenceManager
 		String pidKey = null;
 
 		if (!pid.endsWith("factory")) {
-			Dictionary<?, ?> dictionary = getDictionary(pid);
+			Dictionary<?, ?> dictionary = _getDictionary(pid);
 
 			if (dictionary != null) {
 				pidKey = (String)dictionary.get(
@@ -117,7 +117,7 @@ public class ConfigurationPersistenceManager
 			Dictionary<?, ?> dictionary = _dictionaries.remove(pid);
 
 			if (dictionary != null) {
-				deleteFromDatabase(pid);
+				_deleteFromDatabase(pid);
 			}
 		}
 		finally {
@@ -180,7 +180,7 @@ public class ConfigurationPersistenceManager
 
 		try {
 			Dictionary<Object, Object> dictionary = _overrideDictionary(
-				pid, getDictionary(pid));
+				pid, _getDictionary(pid));
 
 			if (dictionary == null) {
 				_dictionaries.remove(pid);
@@ -196,10 +196,10 @@ public class ConfigurationPersistenceManager
 
 	public void start() {
 		try {
-			populateDictionaries();
+			_populateDictionaries();
 		}
 		catch (IOException | SQLException exception) {
-			createConfigurationTable();
+			_createConfigurationTable();
 
 			for (Bundle bundle : _bundleContext.getBundles()) {
 				if (Objects.equals(
@@ -272,7 +272,7 @@ public class ConfigurationPersistenceManager
 		lock.lock();
 
 		try {
-			storeInDatabase(pid, newDictionary);
+			_storeInDatabase(pid, newDictionary);
 
 			if (fileName != null) {
 				newDictionary.put(_FELIX_FILE_INSTALL_FILENAME, fileName);
@@ -290,7 +290,58 @@ public class ConfigurationPersistenceManager
 				configurationModelListener.onAfterSave(pid, dictionary));
 	}
 
-	protected void createConfigurationTable() {
+	protected void store(ResultSet resultSet, Dictionary<?, ?> dictionary)
+		throws IOException, SQLException {
+
+		OutputStream outputStream = new UnsyncByteArrayOutputStream();
+
+		ConfigurationHandler.write(outputStream, dictionary);
+
+		resultSet.updateString(2, outputStream.toString());
+	}
+
+	@SuppressWarnings("unchecked")
+	protected Dictionary<Object, Object> toDictionary(String dictionaryString)
+		throws IOException {
+
+		if (dictionaryString == null) {
+			return new HashMapDictionary<>();
+		}
+
+		Dictionary<Object, Object> dictionary = ConfigurationHandler.read(
+			new UnsyncByteArrayInputStream(
+				dictionaryString.getBytes(StringPool.UTF8)));
+
+		String fileName = (String)dictionary.get(_FELIX_FILE_INSTALL_FILENAME);
+
+		if (fileName != null) {
+			File file = _getCanonicalConfigFile(fileName);
+
+			URI uri = file.toURI();
+
+			dictionary.put(_FELIX_FILE_INSTALL_FILENAME, uri.toString());
+		}
+
+		return dictionary;
+	}
+
+	private Dictionary<Object, Object> _copyDictionary(
+		Dictionary<?, ?> dictionary) {
+
+		Dictionary<Object, Object> newDictionary = new HashMapDictionary<>();
+
+		Enumeration<?> enumeration = dictionary.keys();
+
+		while (enumeration.hasMoreElements()) {
+			Object key = enumeration.nextElement();
+
+			newDictionary.put(key, dictionary.get(key));
+		}
+
+		return newDictionary;
+	}
+
+	private void _createConfigurationTable() {
 		try (Connection connection = _dataSource.getConnection();
 			Statement statement = connection.createStatement()) {
 
@@ -311,7 +362,7 @@ public class ConfigurationPersistenceManager
 				key, new HashMapDictionary<>((Map)value)));
 	}
 
-	protected void deleteFromDatabase(String pid) throws IOException {
+	private void _deleteFromDatabase(String pid) throws IOException {
 		try (Connection connection = _dataSource.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				_db.buildSQL(
@@ -326,7 +377,14 @@ public class ConfigurationPersistenceManager
 		}
 	}
 
-	protected Dictionary<Object, Object> getDictionary(String pid)
+	private File _getCanonicalConfigFile(String fileName) throws IOException {
+		File configFile = new File(
+			PropsValues.MODULE_FRAMEWORK_CONFIGS_DIR, fileName);
+
+		return configFile.getCanonicalFile();
+	}
+
+	private Dictionary<Object, Object> _getDictionary(String pid)
 		throws IOException {
 
 		try (Connection connection = _dataSource.getConnection();
@@ -350,7 +408,28 @@ public class ConfigurationPersistenceManager
 		}
 	}
 
-	protected void populateDictionaries() throws IOException, SQLException {
+	private Dictionary<Object, Object> _overrideDictionary(
+		String pid, Dictionary<Object, Object> dictionary) {
+
+		Map<String, Object> overrideProperties =
+			ConfigurationOverridePropertiesUtil.getOverrideProperties(pid);
+
+		if (overrideProperties != null) {
+			if (dictionary == null) {
+				dictionary = new HashMapDictionary<>();
+			}
+
+			for (Map.Entry<String, Object> entry :
+					overrideProperties.entrySet()) {
+
+				dictionary.put(entry.getKey(), entry.getValue());
+			}
+		}
+
+		return dictionary;
+	}
+
+	private void _populateDictionaries() throws IOException, SQLException {
 		Map<String, Map<String, Object>> overridePropertiesMap = new HashMap<>(
 			ConfigurationOverridePropertiesUtil.getOverridePropertiesMap());
 
@@ -381,17 +460,7 @@ public class ConfigurationPersistenceManager
 				key, new HashMapDictionary<>((Map)value)));
 	}
 
-	protected void store(ResultSet resultSet, Dictionary<?, ?> dictionary)
-		throws IOException, SQLException {
-
-		OutputStream outputStream = new UnsyncByteArrayOutputStream();
-
-		ConfigurationHandler.write(outputStream, dictionary);
-
-		resultSet.updateString(2, outputStream.toString());
-	}
-
-	protected void storeInDatabase(String pid, Dictionary<?, ?> dictionary)
+	private void _storeInDatabase(String pid, Dictionary<?, ?> dictionary)
 		throws IOException {
 
 		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
@@ -436,75 +505,6 @@ public class ConfigurationPersistenceManager
 		}
 	}
 
-	@SuppressWarnings("unchecked")
-	protected Dictionary<Object, Object> toDictionary(String dictionaryString)
-		throws IOException {
-
-		if (dictionaryString == null) {
-			return new HashMapDictionary<>();
-		}
-
-		Dictionary<Object, Object> dictionary = ConfigurationHandler.read(
-			new UnsyncByteArrayInputStream(
-				dictionaryString.getBytes(StringPool.UTF8)));
-
-		String fileName = (String)dictionary.get(_FELIX_FILE_INSTALL_FILENAME);
-
-		if (fileName != null) {
-			File file = _getCanonicalConfigFile(fileName);
-
-			URI uri = file.toURI();
-
-			dictionary.put(_FELIX_FILE_INSTALL_FILENAME, uri.toString());
-		}
-
-		return dictionary;
-	}
-
-	private Dictionary<Object, Object> _copyDictionary(
-		Dictionary<?, ?> dictionary) {
-
-		Dictionary<Object, Object> newDictionary = new HashMapDictionary<>();
-
-		Enumeration<?> enumeration = dictionary.keys();
-
-		while (enumeration.hasMoreElements()) {
-			Object key = enumeration.nextElement();
-
-			newDictionary.put(key, dictionary.get(key));
-		}
-
-		return newDictionary;
-	}
-
-	private File _getCanonicalConfigFile(String fileName) throws IOException {
-		File configFile = new File(
-			PropsValues.MODULE_FRAMEWORK_CONFIGS_DIR, fileName);
-
-		return configFile.getCanonicalFile();
-	}
-
-	private Dictionary<Object, Object> _overrideDictionary(
-		String pid, Dictionary<Object, Object> dictionary) {
-
-		Map<String, Object> overrideProperties =
-			ConfigurationOverridePropertiesUtil.getOverrideProperties(pid);
-
-		if (overrideProperties != null) {
-			if (dictionary == null) {
-				dictionary = new HashMapDictionary<>();
-			}
-
-			for (Map.Entry<String, Object> entry :
-					overrideProperties.entrySet()) {
-
-				dictionary.put(entry.getKey(), entry.getValue());
-			}
-		}
-
-		return dictionary;
-	}
-
 	private Dictionary<Object, Object> _verifyDictionary(
 			String pid, String dictionaryString)
 		throws IOException {
@@ -544,7 +544,7 @@ public class ConfigurationPersistenceManager
 
 			dictionary.put(_FELIX_FILE_INSTALL_FILENAME, configFile.getName());
 
-			storeInDatabase(pid, dictionary);
+			_storeInDatabase(pid, dictionary);
 
 			dictionary.put(
 				_FELIX_FILE_INSTALL_FILENAME, felixFileInstallFileName);
@@ -560,13 +560,13 @@ public class ConfigurationPersistenceManager
 		}
 
 		if (needSave) {
-			storeInDatabase(pid, dictionary);
+			_storeInDatabase(pid, dictionary);
 		}
 
 		String ignore = (String)dictionary.get("configuration.cleaner.ignore");
 
 		if (!Boolean.valueOf(ignore) && !configFile.exists()) {
-			deleteFromDatabase(pid);
+			_deleteFromDatabase(pid);
 
 			return null;
 		}

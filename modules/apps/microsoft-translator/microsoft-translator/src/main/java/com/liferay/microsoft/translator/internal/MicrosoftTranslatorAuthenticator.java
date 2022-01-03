@@ -47,12 +47,12 @@ public class MicrosoftTranslatorAuthenticator {
 	}
 
 	public void init(boolean manual) {
-		if (manual || isStale()) {
-			doInit();
+		if (manual || _isStale()) {
+			_doInit();
 		}
 	}
 
-	protected void doInit() {
+	private void _doInit() {
 		_accessToken = null;
 		_error = null;
 
@@ -100,7 +100,7 @@ public class MicrosoftTranslatorAuthenticator {
 		}
 	}
 
-	protected boolean isStale() {
+	private boolean _isStale() {
 		if ((_initTime + _EXPIRE_TIME) > System.currentTimeMillis()) {
 			return false;
 		}

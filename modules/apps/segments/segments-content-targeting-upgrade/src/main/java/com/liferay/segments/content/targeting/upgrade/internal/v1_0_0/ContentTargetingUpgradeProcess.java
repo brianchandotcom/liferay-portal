@@ -54,11 +54,11 @@ public class ContentTargetingUpgradeProcess extends UpgradeProcess {
 			return;
 		}
 
-		upgradeContentTargetingUserSegments();
-		deleteContentTargetingData();
+		_upgradeContentTargetingUserSegments();
+		_deleteContentTargetingData();
 	}
 
-	protected void deleteContentTargetingData() throws Exception {
+	private void _deleteContentTargetingData() throws Exception {
 		runSQL(
 			"delete from ClassName_ where value like '" + _CT_PACKAGE_NAME +
 				"%'");
@@ -99,7 +99,13 @@ public class ContentTargetingUpgradeProcess extends UpgradeProcess {
 		_dropTable("CT_Visited_PageVisited");
 	}
 
-	protected String getCriteria(long userSegmentId) throws Exception {
+	private void _dropTable(String tableName) throws Exception {
+		if (hasTable(tableName)) {
+			runSQL("drop table " + tableName);
+		}
+	}
+
+	private String _getCriteria(long userSegmentId) throws Exception {
 		Criteria criteria = new Criteria();
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
@@ -136,7 +142,7 @@ public class ContentTargetingUpgradeProcess extends UpgradeProcess {
 		return CriteriaSerializer.serialize(criteria);
 	}
 
-	protected void upgradeContentTargetingUserSegments() throws Exception {
+	private void _upgradeContentTargetingUserSegments() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			PreparedStatement preparedStatement1 = connection.prepareStatement(
 				"select * from CT_UserSegment");
@@ -168,16 +174,10 @@ public class ContentTargetingUpgradeProcess extends UpgradeProcess {
 
 				_segmentsEntryLocalService.addSegmentsEntry(
 					"ct_" + userSegmentId, nameMap, descriptionMap, true,
-					getCriteria(userSegmentId),
+					_getCriteria(userSegmentId),
 					SegmentsEntryConstants.SOURCE_DEFAULT, User.class.getName(),
 					serviceContext);
 			}
-		}
-	}
-
-	private void _dropTable(String tableName) throws Exception {
-		if (hasTable(tableName)) {
-			runSQL("drop table " + tableName);
 		}
 	}
 

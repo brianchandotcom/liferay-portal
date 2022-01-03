@@ -103,10 +103,10 @@ public class BackgroundTaskMessageListener extends BaseMessageListener {
 			String statusMessage = null;
 
 			try {
-				ClassLoader classLoader = getBackgroundTaskExecutorClassLoader(
+				ClassLoader classLoader = _getBackgroundTaskExecutorClassLoader(
 					backgroundTask);
 
-				backgroundTaskExecutor = wrapBackgroundTaskExecutor(
+				backgroundTaskExecutor = _wrapBackgroundTaskExecutor(
 					backgroundTask, classLoader);
 
 				_backgroundTaskStatusRegistry.registerBackgroundTaskStatus(
@@ -219,7 +219,35 @@ public class BackgroundTaskMessageListener extends BaseMessageListener {
 		}
 	}
 
-	protected BackgroundTaskExecutor getBackgroundTaskExecutor(
+	private ClassLoader _getAggregatePluginsClassLoader(
+		String servletContextNamesString) {
+
+		String[] servletContextNames = StringUtil.split(
+			servletContextNamesString);
+
+		List<ClassLoader> classLoaders = new ArrayList<>(
+			servletContextNames.length);
+
+		for (String servletContextName : servletContextNames) {
+			ClassLoader classLoader =
+				ServletContextClassLoaderPool.getClassLoader(
+					servletContextName);
+
+			if (classLoader == null) {
+				_log.error(
+					"Unable to find class loader for servlet context " +
+						servletContextName);
+			}
+			else {
+				classLoaders.add(classLoader);
+			}
+		}
+
+		return AggregateClassLoader.getAggregateClassLoader(
+			classLoaders.toArray(new ClassLoader[0]));
+	}
+
+	private BackgroundTaskExecutor _getBackgroundTaskExecutor(
 		BackgroundTask backgroundTask) {
 
 		BackgroundTaskExecutor backgroundTaskExecutor = null;
@@ -263,7 +291,7 @@ public class BackgroundTaskMessageListener extends BaseMessageListener {
 		return backgroundTaskExecutor;
 	}
 
-	protected ClassLoader getBackgroundTaskExecutorClassLoader(
+	private ClassLoader _getBackgroundTaskExecutorClassLoader(
 		BackgroundTask backgroundTask) {
 
 		if (Validator.isNull(backgroundTask.getServletContextNames())) {
@@ -281,11 +309,11 @@ public class BackgroundTaskMessageListener extends BaseMessageListener {
 		return classLoader;
 	}
 
-	protected BackgroundTaskExecutor wrapBackgroundTaskExecutor(
+	private BackgroundTaskExecutor _wrapBackgroundTaskExecutor(
 		BackgroundTask backgroundTask, ClassLoader classLoader) {
 
 		BackgroundTaskExecutor backgroundTaskExecutor =
-			getBackgroundTaskExecutor(backgroundTask);
+			_getBackgroundTaskExecutor(backgroundTask);
 
 		if (classLoader != null) {
 			backgroundTaskExecutor = new ClassLoaderAwareBackgroundTaskExecutor(
@@ -299,34 +327,6 @@ public class BackgroundTaskMessageListener extends BaseMessageListener {
 
 		return new ThreadLocalAwareBackgroundTaskExecutor(
 			backgroundTaskExecutor, _backgroundTaskThreadLocalManager);
-	}
-
-	private ClassLoader _getAggregatePluginsClassLoader(
-		String servletContextNamesString) {
-
-		String[] servletContextNames = StringUtil.split(
-			servletContextNamesString);
-
-		List<ClassLoader> classLoaders = new ArrayList<>(
-			servletContextNames.length);
-
-		for (String servletContextName : servletContextNames) {
-			ClassLoader classLoader =
-				ServletContextClassLoaderPool.getClassLoader(
-					servletContextName);
-
-			if (classLoader == null) {
-				_log.error(
-					"Unable to find class loader for servlet context " +
-						servletContextName);
-			}
-			else {
-				classLoaders.add(classLoader);
-			}
-		}
-
-		return AggregateClassLoader.getAggregateClassLoader(
-			classLoaders.toArray(new ClassLoader[0]));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

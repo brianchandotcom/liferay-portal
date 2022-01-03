@@ -70,11 +70,11 @@ public class RuleGroupSearch extends SearchContainer<MDRRuleGroup> {
 			"rule-group-search-order-by-type", "asc");
 
 		setOrderByComparator(
-			getOrganizationOrderByComparator(orderByCol, orderByType));
+			_getOrganizationOrderByComparator(orderByCol, orderByType));
 		setOrderByType(orderByType);
 	}
 
-	protected OrderByComparator<MDRRuleGroup> getOrganizationOrderByComparator(
+	private OrderByComparator<MDRRuleGroup> _getOrganizationOrderByComparator(
 		String orderByCol, String orderByType) {
 
 		boolean orderByAsc = false;

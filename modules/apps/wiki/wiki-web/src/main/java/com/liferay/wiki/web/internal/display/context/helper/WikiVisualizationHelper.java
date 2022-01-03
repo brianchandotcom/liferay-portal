@@ -88,22 +88,22 @@ public class WikiVisualizationHelper {
 	}
 
 	public boolean isViewAllPagesNavItemSelected() {
-		return isNavItemSelected("/wiki/view_pages");
+		return _isNavItemSelected("/wiki/view_pages");
 	}
 
 	public boolean isViewDraftPagesNavItemSelected() {
-		return isNavItemSelected("/wiki/view_draft_pages");
+		return _isNavItemSelected("/wiki/view_draft_pages");
 	}
 
 	public boolean isViewOrphanPagesNavItemSelected() {
-		return isNavItemSelected("/wiki/view_orphan_pages");
+		return _isNavItemSelected("/wiki/view_orphan_pages");
 	}
 
 	public boolean isViewRecentChangesNavItemSelected() {
-		return isNavItemSelected("/wiki/view_recent_changes");
+		return _isNavItemSelected("/wiki/view_recent_changes");
 	}
 
-	protected boolean isNavItemSelected(String navItemMVCRenderCommandName) {
+	private boolean _isNavItemSelected(String navItemMVCRenderCommandName) {
 		String mvcRenderCommandName =
 			_wikiRequestHelper.getMVCRenderCommandName();
 

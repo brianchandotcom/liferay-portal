@@ -72,7 +72,7 @@ public class SavePortalSettingsFormMVCActionCommand
 				return;
 			}
 
-			storeSettings(actionRequest, themeDisplay);
+			_storeSettings(actionRequest, themeDisplay);
 		}
 		catch (PortalException portalException) {
 			SessionErrors.add(
@@ -92,16 +92,16 @@ public class SavePortalSettingsFormMVCActionCommand
 		throws Exception {
 	}
 
-	protected String getParameterNamespace() {
+	protected String getString(ActionRequest actionRequest, String name) {
+		return ParamUtil.getString(
+			actionRequest, _getParameterNamespace() + name);
+	}
+
+	private String _getParameterNamespace() {
 		return portalSettingsFormContributor.getParameterNamespace();
 	}
 
-	protected String getString(ActionRequest actionRequest, String name) {
-		return ParamUtil.getString(
-			actionRequest, getParameterNamespace() + name);
-	}
-
-	protected String[] getStrings(ActionRequest actionRequest, String name) {
+	private String[] _getStrings(ActionRequest actionRequest, String name) {
 		String value = getString(actionRequest, name + "Indexes");
 
 		if (Validator.isNull(value)) {
@@ -119,7 +119,7 @@ public class SavePortalSettingsFormMVCActionCommand
 		);
 	}
 
-	protected void storeSettings(
+	private void _storeSettings(
 			ActionRequest actionRequest, ThemeDisplay themeDisplay)
 		throws IOException, SettingsException, ValidatorException {
 
@@ -139,7 +139,7 @@ public class SavePortalSettingsFormMVCActionCommand
 		for (String name : settingsDescriptor.getAllKeys()) {
 			if (multiValuedKeys.remove(name)) {
 				modifiableSettings.setValues(
-					name, getStrings(actionRequest, name));
+					name, _getStrings(actionRequest, name));
 
 				continue;
 			}

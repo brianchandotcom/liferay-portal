@@ -45,7 +45,7 @@ public class OnDemandAdminAutoLogin extends BaseAutoLogin {
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		Ticket ticket = getTicket(httpServletRequest);
+		Ticket ticket = _getTicket(httpServletRequest);
 
 		if (ticket == null) {
 			return null;
@@ -71,7 +71,7 @@ public class OnDemandAdminAutoLogin extends BaseAutoLogin {
 		}
 	}
 
-	protected Ticket getTicket(HttpServletRequest httpServletRequest) {
+	private Ticket _getTicket(HttpServletRequest httpServletRequest) {
 		String ticketKey = ParamUtil.getString(httpServletRequest, "ticketKey");
 
 		if (Validator.isNull(ticketKey)) {

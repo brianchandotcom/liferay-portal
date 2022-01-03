@@ -41,96 +41,96 @@ public class QuartzTriggerFactoryTest {
 
 	@Test
 	public void testDailyEveryTwoDaysTrigger() {
-		Date startDate = dateOf(2017, 0, 1, 6, 0);
+		Date startDate = _dateOf(2017, 0, 1, 6, 0);
 
-		Trigger trigger = triggerOf(startDate, null, "0 0 7 1/2 * ? *");
+		Trigger trigger = _triggerOf(startDate, null, "0 0 7 1/2 * ? *");
 
-		assertFireDates(
-			trigger, startDate, dateOf(2017, 0, 1, 7, 0),
-			dateOf(2017, 0, 3, 7, 0), dateOf(2017, 0, 5, 7, 0));
+		_assertFireDates(
+			trigger, startDate, _dateOf(2017, 0, 1, 7, 0),
+			_dateOf(2017, 0, 3, 7, 0), _dateOf(2017, 0, 5, 7, 0));
 	}
 
 	@Test
 	public void testDailyEveryWeekdayTrigger() {
-		Date startDate = dateOf(2017, 0, 1, 6, 0);
+		Date startDate = _dateOf(2017, 0, 1, 6, 0);
 
-		Trigger trigger = triggerOf(startDate, null, "0 0 7 ? * MON-FRI *");
+		Trigger trigger = _triggerOf(startDate, null, "0 0 7 ? * MON-FRI *");
 
-		assertFireDates(
-			trigger, startDate, dateOf(2017, 0, 2, 7, 0),
-			dateOf(2017, 0, 3, 7, 0), dateOf(2017, 0, 4, 7, 0),
-			dateOf(2017, 0, 5, 7, 0), dateOf(2017, 0, 6, 7, 0),
-			dateOf(2017, 0, 9, 7, 0));
+		_assertFireDates(
+			trigger, startDate, _dateOf(2017, 0, 2, 7, 0),
+			_dateOf(2017, 0, 3, 7, 0), _dateOf(2017, 0, 4, 7, 0),
+			_dateOf(2017, 0, 5, 7, 0), _dateOf(2017, 0, 6, 7, 0),
+			_dateOf(2017, 0, 9, 7, 0));
 	}
 
 	@Test
 	public void testMonthlyDay12OfEveryTwoMonthsTrigger() {
-		Date startDate = dateOf(2017, 0, 1, 6, 0);
+		Date startDate = _dateOf(2017, 0, 1, 6, 0);
 
-		Trigger trigger = triggerOf(startDate, null, "0 0 13 12 1/2 ? *");
+		Trigger trigger = _triggerOf(startDate, null, "0 0 13 12 1/2 ? *");
 
-		assertFireDates(
-			trigger, startDate, dateOf(2017, 0, 12, 13, 0),
-			dateOf(2017, 2, 12, 13, 0), dateOf(2017, 4, 12, 13, 0));
+		_assertFireDates(
+			trigger, startDate, _dateOf(2017, 0, 12, 13, 0),
+			_dateOf(2017, 2, 12, 13, 0), _dateOf(2017, 4, 12, 13, 0));
 	}
 
 	@Test
 	public void testMonthlyThirdTuesdayOfEveryThreeMonthsTrigger() {
-		Date startDate = dateOf(2017, 0, 1, 6, 0);
+		Date startDate = _dateOf(2017, 0, 1, 6, 0);
 
-		Trigger trigger = triggerOf(startDate, null, "0 0 14 ? 1/3 TUE#3 *");
+		Trigger trigger = _triggerOf(startDate, null, "0 0 14 ? 1/3 TUE#3 *");
 
-		assertFireDates(
-			trigger, startDate, dateOf(2017, 0, 17, 14, 0),
-			dateOf(2017, 3, 18, 14, 0), dateOf(2017, 6, 18, 14, 0));
+		_assertFireDates(
+			trigger, startDate, _dateOf(2017, 0, 17, 14, 0),
+			_dateOf(2017, 3, 18, 14, 0), _dateOf(2017, 6, 18, 14, 0));
 	}
 
 	@Test
 	public void testWeeklyEverySundayTrigger() {
-		Date startDate = dateOf(2017, 0, 1, 6, 0);
+		Date startDate = _dateOf(2017, 0, 1, 6, 0);
 
-		Trigger trigger = triggerOf(startDate, null, "0 0 15 ? * SUN/1 *");
+		Trigger trigger = _triggerOf(startDate, null, "0 0 15 ? * SUN/1 *");
 
-		assertFireDates(
-			trigger, startDate, dateOf(2017, 0, 1, 15, 0),
-			dateOf(2017, 0, 8, 15, 0), dateOf(2017, 0, 15, 15, 0));
+		_assertFireDates(
+			trigger, startDate, _dateOf(2017, 0, 1, 15, 0),
+			_dateOf(2017, 0, 8, 15, 0), _dateOf(2017, 0, 15, 15, 0));
 	}
 
 	@Test
 	public void testWeeklyMondayAndWednesdayTrigger() {
-		Date startDate = dateOf(2017, 0, 1, 6, 0);
+		Date startDate = _dateOf(2017, 0, 1, 6, 0);
 
-		Trigger trigger = triggerOf(startDate, null, "0 0 12 ? * MON,WED/1 *");
+		Trigger trigger = _triggerOf(startDate, null, "0 0 12 ? * MON,WED/1 *");
 
-		assertFireDates(
-			trigger, startDate, dateOf(2017, 0, 2, 12, 0),
-			dateOf(2017, 0, 4, 12, 0), dateOf(2017, 0, 9, 12, 0),
-			dateOf(2017, 0, 11, 12, 0));
+		_assertFireDates(
+			trigger, startDate, _dateOf(2017, 0, 2, 12, 0),
+			_dateOf(2017, 0, 4, 12, 0), _dateOf(2017, 0, 9, 12, 0),
+			_dateOf(2017, 0, 11, 12, 0));
 	}
 
 	@Test
 	public void testYearlyEveryTwoYearsJanuary12Trigger() {
-		Date startDate = dateOf(2017, 0, 1, 6, 0);
+		Date startDate = _dateOf(2017, 0, 1, 6, 0);
 
-		Trigger trigger = triggerOf(startDate, null, "0 0 12 12 1 ? 2017/2");
+		Trigger trigger = _triggerOf(startDate, null, "0 0 12 12 1 ? 2017/2");
 
-		assertFireDates(
-			trigger, startDate, dateOf(2017, 0, 12, 12, 0),
-			dateOf(2019, 0, 12, 12, 0), dateOf(2021, 0, 12, 12, 0));
+		_assertFireDates(
+			trigger, startDate, _dateOf(2017, 0, 12, 12, 0),
+			_dateOf(2019, 0, 12, 12, 0), _dateOf(2021, 0, 12, 12, 0));
 	}
 
 	@Test
 	public void testYearlyEveryTwoYearsThirdSundayOfMarchTrigger() {
-		Date startDate = dateOf(2017, 0, 1, 6, 0);
+		Date startDate = _dateOf(2017, 0, 1, 6, 0);
 
-		Trigger trigger = triggerOf(startDate, null, "0 0 12 ? 3 1#3 2017/2");
+		Trigger trigger = _triggerOf(startDate, null, "0 0 12 ? 3 1#3 2017/2");
 
-		assertFireDates(
-			trigger, startDate, dateOf(2017, 2, 19, 12, 0),
-			dateOf(2019, 2, 17, 12, 0), dateOf(2021, 2, 21, 12, 0));
+		_assertFireDates(
+			trigger, startDate, _dateOf(2017, 2, 19, 12, 0),
+			_dateOf(2019, 2, 17, 12, 0), _dateOf(2021, 2, 21, 12, 0));
 	}
 
-	protected void assertFireDates(
+	private void _assertFireDates(
 		Trigger trigger, Date startDate, Date... expectedFireDates) {
 
 		Date fireDate = startDate;
@@ -142,7 +142,7 @@ public class QuartzTriggerFactoryTest {
 		}
 	}
 
-	protected Date dateOf(int year, int month, int date, int hour, int minute) {
+	private Date _dateOf(int year, int month, int date, int hour, int minute) {
 		Calendar calendar = new GregorianCalendar(
 			TimeZoneUtil.getDefault(), LocaleUtil.getDefault());
 
@@ -157,7 +157,7 @@ public class QuartzTriggerFactoryTest {
 		return calendar.getTime();
 	}
 
-	protected Trigger triggerOf(
+	private Trigger _triggerOf(
 		Date startDate, Date endDate, String cronExpression) {
 
 		return _quartzTriggerFactory.createTrigger(

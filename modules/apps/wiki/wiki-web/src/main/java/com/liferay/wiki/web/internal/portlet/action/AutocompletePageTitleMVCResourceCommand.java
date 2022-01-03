@@ -67,7 +67,7 @@ public class AutocompletePageTitleMVCResourceCommand
 		throws PortletException {
 
 		try {
-			JSONArray jsonArray = getJSONArray(
+			JSONArray jsonArray = _getJSONArray(
 				resourceRequest, resourceResponse);
 
 			HttpServletResponse httpServletResponse =
@@ -83,7 +83,7 @@ public class AutocompletePageTitleMVCResourceCommand
 		}
 	}
 
-	protected JSONArray getJSONArray(
+	private JSONArray _getJSONArray(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws PortalException {
 

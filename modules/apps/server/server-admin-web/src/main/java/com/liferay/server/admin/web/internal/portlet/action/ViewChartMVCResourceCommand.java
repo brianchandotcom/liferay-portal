@@ -102,8 +102,8 @@ public class ViewChartMVCResourceCommand extends BaseMVCResourceCommand {
 				ResourceBundleUtil.getString(resourceBundle, "maximum-memory"));
 		}
 
-		JFreeChart jFreeChart = getJFreeChart(
-			sb.toString(), getMeterPlot(themeDisplay, valueDataset));
+		JFreeChart jFreeChart = _getJFreeChart(
+			sb.toString(), _getMeterPlot(themeDisplay, valueDataset));
 
 		resourceResponse.setContentType(ContentTypes.IMAGE_PNG);
 
@@ -111,7 +111,7 @@ public class ViewChartMVCResourceCommand extends BaseMVCResourceCommand {
 			resourceResponse.getPortletOutputStream(), jFreeChart, 280, 180);
 	}
 
-	protected JFreeChart getJFreeChart(String title, MeterPlot meterPlot) {
+	private JFreeChart _getJFreeChart(String title, MeterPlot meterPlot) {
 		JFreeChart jFreeChart = new JFreeChart(
 			title, new Font(null, Font.PLAIN, 13), meterPlot, true);
 
@@ -121,7 +121,7 @@ public class ViewChartMVCResourceCommand extends BaseMVCResourceCommand {
 		return jFreeChart;
 	}
 
-	protected MeterPlot getMeterPlot(
+	private MeterPlot _getMeterPlot(
 		ThemeDisplay themeDisplay, ValueDataset valueDataset) {
 
 		MeterPlot meterPlot = new MeterPlot(valueDataset);

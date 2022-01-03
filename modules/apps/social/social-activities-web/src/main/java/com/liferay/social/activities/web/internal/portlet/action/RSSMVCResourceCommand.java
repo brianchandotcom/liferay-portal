@@ -71,7 +71,81 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class RSSMVCResourceCommand extends BaseRSSMVCResourceCommand {
 
-	protected String exportToRSS(
+	@Override
+	protected byte[] getRSS(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String tabs1 = ParamUtil.getString(resourceRequest, "tabs1", "all");
+
+		String feedTitle = ParamUtil.getString(resourceRequest, "feedTitle");
+		String format = ParamUtil.getString(
+			resourceRequest, "type", RSSUtil.FORMAT_DEFAULT);
+		double version = ParamUtil.getDouble(
+			resourceRequest, "version", RSSUtil.VERSION_DEFAULT);
+		String displayStyle = ParamUtil.getString(
+			resourceRequest, "displayStyle", RSSUtil.DISPLAY_STYLE_DEFAULT);
+		int max = ParamUtil.getInteger(
+			resourceRequest, "max", SearchContainer.DEFAULT_DELTA);
+
+		Group group = _groupLocalService.getGroup(
+			themeDisplay.getScopeGroupId());
+
+		SocialActivitiesQueryHelper.Scope scope =
+			SocialActivitiesQueryHelper.Scope.fromValue(tabs1);
+
+		List<SocialActivitySet> socialActivitySets =
+			_socialActivitiesQueryHelper.getSocialActivitySets(
+				group, themeDisplay.getLayout(), scope, 0, max);
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			resourceRequest);
+
+		String rss = _exportToRSS(
+			resourceRequest, resourceResponse, feedTitle, null, format, version,
+			displayStyle, socialActivitySets, serviceContext);
+
+		return rss.getBytes(StringPool.UTF8);
+	}
+
+	@Override
+	protected boolean isRSSFeedsEnabled(ResourceRequest resourceRequest) {
+		if (!super.isRSSFeedsEnabled(resourceRequest)) {
+			return false;
+		}
+
+		PortletPreferences portletPreferences =
+			resourceRequest.getPreferences();
+
+		return GetterUtil.getBoolean(
+			portletPreferences.getValue("enableRss", null), true);
+	}
+
+	@Reference(unbind = "-")
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setSocialActivitiesQueryHelper(
+		SocialActivitiesQueryHelper socialActivitiesQueryHelper) {
+
+		_socialActivitiesQueryHelper = socialActivitiesQueryHelper;
+	}
+
+	@Reference(unbind = "-")
+	protected void setSocialActivityInterpreterLocalService(
+		SocialActivityInterpreterLocalService
+			socialActivityInterpreterLocalService) {
+
+		_socialActivityInterpreterLocalService =
+			socialActivityInterpreterLocalService;
+	}
+
+	private String _exportToRSS(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse,
 			String title, String description, String format, double version,
 			String displayStyle, List<SocialActivitySet> socialActivitySets,
@@ -164,80 +238,6 @@ public class RSSMVCResourceCommand extends BaseRSSMVCResourceCommand {
 		syndFeed.setUri(rssURL.toString());
 
 		return _rssExporter.export(syndFeed);
-	}
-
-	@Override
-	protected byte[] getRSS(
-			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		String tabs1 = ParamUtil.getString(resourceRequest, "tabs1", "all");
-
-		String feedTitle = ParamUtil.getString(resourceRequest, "feedTitle");
-		String format = ParamUtil.getString(
-			resourceRequest, "type", RSSUtil.FORMAT_DEFAULT);
-		double version = ParamUtil.getDouble(
-			resourceRequest, "version", RSSUtil.VERSION_DEFAULT);
-		String displayStyle = ParamUtil.getString(
-			resourceRequest, "displayStyle", RSSUtil.DISPLAY_STYLE_DEFAULT);
-		int max = ParamUtil.getInteger(
-			resourceRequest, "max", SearchContainer.DEFAULT_DELTA);
-
-		Group group = _groupLocalService.getGroup(
-			themeDisplay.getScopeGroupId());
-
-		SocialActivitiesQueryHelper.Scope scope =
-			SocialActivitiesQueryHelper.Scope.fromValue(tabs1);
-
-		List<SocialActivitySet> socialActivitySets =
-			_socialActivitiesQueryHelper.getSocialActivitySets(
-				group, themeDisplay.getLayout(), scope, 0, max);
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			resourceRequest);
-
-		String rss = exportToRSS(
-			resourceRequest, resourceResponse, feedTitle, null, format, version,
-			displayStyle, socialActivitySets, serviceContext);
-
-		return rss.getBytes(StringPool.UTF8);
-	}
-
-	@Override
-	protected boolean isRSSFeedsEnabled(ResourceRequest resourceRequest) {
-		if (!super.isRSSFeedsEnabled(resourceRequest)) {
-			return false;
-		}
-
-		PortletPreferences portletPreferences =
-			resourceRequest.getPreferences();
-
-		return GetterUtil.getBoolean(
-			portletPreferences.getValue("enableRss", null), true);
-	}
-
-	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSocialActivitiesQueryHelper(
-		SocialActivitiesQueryHelper socialActivitiesQueryHelper) {
-
-		_socialActivitiesQueryHelper = socialActivitiesQueryHelper;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSocialActivityInterpreterLocalService(
-		SocialActivityInterpreterLocalService
-			socialActivityInterpreterLocalService) {
-
-		_socialActivityInterpreterLocalService =
-			socialActivityInterpreterLocalService;
 	}
 
 	private GroupLocalService _groupLocalService;

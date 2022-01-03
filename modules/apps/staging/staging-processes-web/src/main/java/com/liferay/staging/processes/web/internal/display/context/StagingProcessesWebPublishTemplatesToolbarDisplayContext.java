@@ -71,7 +71,7 @@ public class StagingProcessesWebPublishTemplatesToolbarDisplayContext
 	@Override
 	public String getClearResultsURL() {
 		return PortletURLBuilder.create(
-			getRenderURL()
+			_getRenderURL()
 		).setMVCPath(
 			"/publish_templates/view_publish_configurations.jsp"
 		).buildString();
@@ -82,7 +82,7 @@ public class StagingProcessesWebPublishTemplatesToolbarDisplayContext
 		return CreationMenuBuilder.addPrimaryDropdownItem(
 			dropdownItem -> {
 				dropdownItem.setHref(
-					getRenderURL(), "mvcRenderCommandName",
+					_getRenderURL(), "mvcRenderCommandName",
 					"/staging_processes/edit_publish_configuration", "groupId",
 					String.valueOf(_stagingGroupId), "layoutSetBranchId",
 					ParamUtil.getString(
@@ -106,7 +106,7 @@ public class StagingProcessesWebPublishTemplatesToolbarDisplayContext
 	@Override
 	public String getSearchActionURL() {
 		return PortletURLBuilder.create(
-			getRenderURL()
+			_getRenderURL()
 		).setMVCRenderCommandName(
 			"/staging_processes/view_publish_configurations"
 		).buildString();
@@ -114,10 +114,6 @@ public class StagingProcessesWebPublishTemplatesToolbarDisplayContext
 
 	public SearchContainer<ExportImportConfiguration> getSearchContainer() {
 		return _searchContainer;
-	}
-
-	protected PortletURL getRenderURL() {
-		return liferayPortletResponse.createRenderURL();
 	}
 
 	private SearchContainer<ExportImportConfiguration> _createSearchContainer(
@@ -167,6 +163,10 @@ public class StagingProcessesWebPublishTemplatesToolbarDisplayContext
 		searchContainer.setTotal(total);
 
 		return searchContainer;
+	}
+
+	private PortletURL _getRenderURL() {
+		return liferayPortletResponse.createRenderURL();
 	}
 
 	private final SearchContainer<ExportImportConfiguration> _searchContainer;

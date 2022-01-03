@@ -101,9 +101,9 @@ public class EditSegmentsEntryDisplayContext {
 		}
 
 		_data = HashMapBuilder.<String, Object>put(
-			"context", getContext()
+			"context", _getContext()
 		).put(
-			"props", getProps()
+			"props", _getProps()
 		).build();
 
 		return _data;
@@ -195,50 +195,6 @@ public class EditSegmentsEntryDisplayContext {
 			_httpServletRequest, "type", User.class.getName());
 	}
 
-	protected Map<String, Object> getContext() {
-		return HashMapBuilder.<String, Object>put(
-			"imagesPath", PortalUtil.getPathContext(_renderRequest) + "/images"
-		).put(
-			"namespace", _renderResponse.getNamespace()
-		).put(
-			"requestFieldValueNameURL", _getSegmentsFieldValueNameURL()
-		).build();
-	}
-
-	protected Map<String, Object> getProps() throws Exception {
-		return HashMapBuilder.<String, Object>put(
-			"availableLocales", _getAvailableLocales()
-		).put(
-			"contributors", _getContributorsJSONArray()
-		).put(
-			"defaultLanguageId", _getDefaultLanguageId()
-		).put(
-			"formId", _renderResponse.getNamespace() + "editSegmentFm"
-		).put(
-			"hasUpdatePermission", _hasUpdatePermission()
-		).put(
-			"initialMembersCount", _getSegmentsEntryClassPKsCount()
-		).put(
-			"initialSegmentActive", _isInitialSegmentActive()
-		).put(
-			"initialSegmentName", _getInitialSegmentsNameJSONObject()
-		).put(
-			"locale", _locale.toString()
-		).put(
-			"portletNamespace", _renderResponse.getNamespace()
-		).put(
-			"previewMembersURL", _getPreviewMembersURL()
-		).put(
-			"propertyGroups", _getPropertyGroupsJSONArray()
-		).put(
-			"redirect", getRedirect()
-		).put(
-			"requestMembersCountURL", _getSegmentsEntryClassPKsCountURL()
-		).put(
-			"showInEditMode", _isShowInEditMode()
-		).build();
-	}
-
 	private Map<String, String> _getAvailableLocales() throws Exception {
 		Map<String, String> availableLocales = new HashMap<>();
 
@@ -253,6 +209,16 @@ public class EditSegmentsEntryDisplayContext {
 		}
 
 		return availableLocales;
+	}
+
+	private Map<String, Object> _getContext() {
+		return HashMapBuilder.<String, Object>put(
+			"imagesPath", PortalUtil.getPathContext(_renderRequest) + "/images"
+		).put(
+			"namespace", _renderResponse.getNamespace()
+		).put(
+			"requestFieldValueNameURL", _getSegmentsFieldValueNameURL()
+		).build();
 	}
 
 	private JSONArray _getContributorsJSONArray() throws Exception {
@@ -395,6 +361,40 @@ public class EditSegmentsEntryDisplayContext {
 		}
 
 		return jsonContributorsJSONArray;
+	}
+
+	private Map<String, Object> _getProps() throws Exception {
+		return HashMapBuilder.<String, Object>put(
+			"availableLocales", _getAvailableLocales()
+		).put(
+			"contributors", _getContributorsJSONArray()
+		).put(
+			"defaultLanguageId", _getDefaultLanguageId()
+		).put(
+			"formId", _renderResponse.getNamespace() + "editSegmentFm"
+		).put(
+			"hasUpdatePermission", _hasUpdatePermission()
+		).put(
+			"initialMembersCount", _getSegmentsEntryClassPKsCount()
+		).put(
+			"initialSegmentActive", _isInitialSegmentActive()
+		).put(
+			"initialSegmentName", _getInitialSegmentsNameJSONObject()
+		).put(
+			"locale", _locale.toString()
+		).put(
+			"portletNamespace", _renderResponse.getNamespace()
+		).put(
+			"previewMembersURL", _getPreviewMembersURL()
+		).put(
+			"propertyGroups", _getPropertyGroupsJSONArray()
+		).put(
+			"redirect", getRedirect()
+		).put(
+			"requestMembersCountURL", _getSegmentsEntryClassPKsCountURL()
+		).put(
+			"showInEditMode", _isShowInEditMode()
+		).build();
 	}
 
 	private List<SegmentsCriteriaContributor> _getSegmentsCriteriaContributors()

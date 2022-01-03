@@ -113,7 +113,7 @@ public class WebBundleDeployer {
 		try {
 			wabBundleProcessor.destroy();
 
-			handleCollidedWABs(bundle);
+			_handleCollidedWABs(bundle);
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -132,7 +132,7 @@ public class WebBundleDeployer {
 		return true;
 	}
 
-	protected void handleCollidedWABs(Bundle bundle) {
+	private void _handleCollidedWABs(Bundle bundle) {
 		String contextPath = WabUtil.getWebContextPath(bundle);
 
 		for (Bundle curBundle : _bundleContext.getBundles()) {

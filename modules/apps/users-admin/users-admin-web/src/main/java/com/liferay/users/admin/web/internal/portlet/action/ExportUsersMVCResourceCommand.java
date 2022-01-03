@@ -88,7 +88,7 @@ public class ExportUsersMVCResourceCommand extends BaseMVCResourceCommand {
 				_portal.getPortletId(resourceRequest) +
 					SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_ERROR_MESSAGE);
 
-			String csv = getUsersCSV(resourceRequest, resourceResponse);
+			String csv = _getUsersCSV(resourceRequest, resourceResponse);
 
 			PortletResponseUtil.sendFile(
 				resourceRequest, resourceResponse, "users.csv", csv.getBytes(),
@@ -101,7 +101,12 @@ public class ExportUsersMVCResourceCommand extends BaseMVCResourceCommand {
 		}
 	}
 
-	protected String getUserCSV(User user) {
+	@Reference(unbind = "-")
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
+	private String _getUserCSV(User user) {
 		StringBundler sb = new StringBundler(
 			PropsValues.USERS_EXPORT_CSV_FIELDS.length * 2);
 
@@ -150,7 +155,7 @@ public class ExportUsersMVCResourceCommand extends BaseMVCResourceCommand {
 		return sb.toString();
 	}
 
-	protected List<User> getUsers(
+	private List<User> _getUsers(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
@@ -228,11 +233,11 @@ public class ExportUsersMVCResourceCommand extends BaseMVCResourceCommand {
 			QueryUtil.ALL_POS, (OrderByComparator<User>)null);
 	}
 
-	protected String getUsersCSV(
+	private String _getUsersCSV(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		List<User> users = getUsers(resourceRequest, resourceResponse);
+		List<User> users = _getUsers(resourceRequest, resourceResponse);
 
 		if (users.isEmpty()) {
 			return StringPool.BLANK;
@@ -255,7 +260,7 @@ public class ExportUsersMVCResourceCommand extends BaseMVCResourceCommand {
 		for (int i = 0; i < users.size(); i++) {
 			User user = users.get(i);
 
-			sb.append(getUserCSV(user));
+			sb.append(_getUserCSV(user));
 
 			percentage = Math.min(10 + ((i * 90) / total), 99);
 
@@ -265,11 +270,6 @@ public class ExportUsersMVCResourceCommand extends BaseMVCResourceCommand {
 		progressTracker.finish(resourceRequest);
 
 		return sb.toString();
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserLocalService(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

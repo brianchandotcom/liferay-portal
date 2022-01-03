@@ -62,7 +62,7 @@ public class CreoleWikiEngine extends BaseWikiEngine {
 
 		return xhtmlTranslator.translate(
 			page, viewPageURL, editPageURL, attachmentURLPrefix,
-			parse(page.getContent()));
+			_parse(page.getContent()));
 	}
 
 	@Override
@@ -90,7 +90,7 @@ public class CreoleWikiEngine extends BaseWikiEngine {
 			new LinkNodeCollectorVisitor();
 
 		List<ASTNode> astNodes = linkNodeCollectorVisitor.collect(
-			parse(page.getContent()));
+			_parse(page.getContent()));
 
 		try {
 			for (ASTNode astNode : astNodes) {
@@ -121,17 +121,6 @@ public class CreoleWikiEngine extends BaseWikiEngine {
 		return outgoingLinks;
 	}
 
-	protected Creole10Parser build(String creoleCode) {
-		ANTLRStringStream antlrStringStream = new ANTLRStringStream(creoleCode);
-
-		Creole10Lexer creole10Lexer = new Creole10Lexer(antlrStringStream);
-
-		CommonTokenStream commonTokenStream = new CommonTokenStream(
-			creole10Lexer);
-
-		return new Creole10Parser(commonTokenStream);
-	}
-
 	@Override
 	protected ServletContext getEditPageServletContext() {
 		return _wikiEngineInputEditorServletContext;
@@ -142,8 +131,19 @@ public class CreoleWikiEngine extends BaseWikiEngine {
 		return _servletContext;
 	}
 
-	protected WikiPageNode parse(String creoleCode) {
-		Creole10Parser creole10Parser = build(creoleCode);
+	private Creole10Parser _build(String creoleCode) {
+		ANTLRStringStream antlrStringStream = new ANTLRStringStream(creoleCode);
+
+		Creole10Lexer creole10Lexer = new Creole10Lexer(antlrStringStream);
+
+		CommonTokenStream commonTokenStream = new CommonTokenStream(
+			creole10Lexer);
+
+		return new Creole10Parser(commonTokenStream);
+	}
+
+	private WikiPageNode _parse(String creoleCode) {
+		Creole10Parser creole10Parser = _build(creoleCode);
 
 		try {
 			creole10Parser.wikipage();

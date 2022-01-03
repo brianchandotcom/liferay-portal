@@ -83,19 +83,20 @@ public class SimpleRuleHandler implements RuleHandler {
 			return false;
 		}
 
-		if (!isValidMultiValue(mdrRule, PROPERTY_OS, device.getOS()) ||
-			!isValidBooleanValue(mdrRule, PROPERTY_TABLET, device.isTablet())) {
+		if (!_isValidMultiValue(mdrRule, PROPERTY_OS, device.getOS()) ||
+			!_isValidBooleanValue(
+				mdrRule, PROPERTY_TABLET, device.isTablet())) {
 
 			return false;
 		}
 
 		Dimensions screenPhysicalSize = device.getScreenPhysicalSize();
 
-		if (!isValidRangeValue(
+		if (!_isValidRangeValue(
 				mdrRule, PROPERTY_SCREEN_PHYSICAL_HEIGHT_MAX,
 				PROPERTY_SCREEN_PHYSICAL_HEIGHT_MIN,
 				screenPhysicalSize.getHeight()) ||
-			!isValidRangeValue(
+			!_isValidRangeValue(
 				mdrRule, PROPERTY_SCREEN_PHYSICAL_WIDTH_MAX,
 				PROPERTY_SCREEN_PHYSICAL_WIDTH_MIN,
 				screenPhysicalSize.getWidth())) {
@@ -105,11 +106,11 @@ public class SimpleRuleHandler implements RuleHandler {
 
 		Dimensions screenResolution = device.getScreenResolution();
 
-		if (!isValidRangeValue(
+		if (!_isValidRangeValue(
 				mdrRule, PROPERTY_SCREEN_RESOLUTION_HEIGHT_MAX,
 				PROPERTY_SCREEN_RESOLUTION_HEIGHT_MIN,
 				screenResolution.getHeight()) ||
-			!isValidRangeValue(
+			!_isValidRangeValue(
 				mdrRule, PROPERTY_SCREEN_RESOLUTION_WIDTH_MAX,
 				PROPERTY_SCREEN_RESOLUTION_WIDTH_MIN,
 				screenResolution.getWidth())) {
@@ -135,7 +136,7 @@ public class SimpleRuleHandler implements RuleHandler {
 		return SimpleRuleHandler.class.getName();
 	}
 
-	protected StringBundler getLogStringBundler(
+	private StringBundler _getLogStringBundler(
 		MDRRule mdrRule, String value, boolean valid) {
 
 		StringBundler sb = new StringBundler(6);
@@ -153,7 +154,7 @@ public class SimpleRuleHandler implements RuleHandler {
 		return sb;
 	}
 
-	protected boolean isValidBooleanValue(
+	private boolean _isValidBooleanValue(
 		MDRRule mdrRule, String property, boolean value) {
 
 		UnicodeProperties typeSettingsUnicodeProperties =
@@ -168,17 +169,17 @@ public class SimpleRuleHandler implements RuleHandler {
 		boolean ruleValue = GetterUtil.getBoolean(validValueString);
 
 		if (ruleValue != value) {
-			logBooleanValue(mdrRule, property, value, false);
+			_logBooleanValue(mdrRule, property, value, false);
 
 			return false;
 		}
 
-		logBooleanValue(mdrRule, property, value, true);
+		_logBooleanValue(mdrRule, property, value, true);
 
 		return true;
 	}
 
-	protected boolean isValidMultiValue(
+	private boolean _isValidMultiValue(
 		MDRRule mdrRule, String property, String value) {
 
 		UnicodeProperties typeSettingsUnicodeProperties =
@@ -193,17 +194,17 @@ public class SimpleRuleHandler implements RuleHandler {
 		String[] validValues = StringUtil.split(validValueString);
 
 		if (!ArrayUtil.contains(validValues, value)) {
-			logMultiValue(mdrRule, property, value, validValues, false);
+			_logMultiValue(mdrRule, property, value, validValues, false);
 
 			return false;
 		}
 
-		logMultiValue(mdrRule, property, value, validValues, true);
+		_logMultiValue(mdrRule, property, value, validValues, true);
 
 		return true;
 	}
 
-	protected boolean isValidRangeValue(
+	private boolean _isValidRangeValue(
 		MDRRule mdrRule, String maxProperty, String minProperty, float value) {
 
 		UnicodeProperties typeSettingsUnicodeProperties =
@@ -213,7 +214,7 @@ public class SimpleRuleHandler implements RuleHandler {
 		String min = typeSettingsUnicodeProperties.get(minProperty);
 
 		if (Validator.isNull(max) && Validator.isNull(min)) {
-			logRangeValue(
+			_logRangeValue(
 				mdrRule, maxProperty, minProperty, value, max, min, true);
 
 			return true;
@@ -223,13 +224,13 @@ public class SimpleRuleHandler implements RuleHandler {
 			float maxFloat = GetterUtil.getFloat(max);
 
 			if (value > maxFloat) {
-				logRangeValue(
+				_logRangeValue(
 					mdrRule, maxProperty, minProperty, value, max, min, false);
 
 				return false;
 			}
 
-			logRangeValue(
+			_logRangeValue(
 				mdrRule, maxProperty, minProperty, value, max, min, true);
 		}
 
@@ -237,27 +238,27 @@ public class SimpleRuleHandler implements RuleHandler {
 			float minFloat = GetterUtil.getFloat(min);
 
 			if (value < minFloat) {
-				logRangeValue(
+				_logRangeValue(
 					mdrRule, maxProperty, minProperty, value, max, min, false);
 
 				return false;
 			}
 
-			logRangeValue(
+			_logRangeValue(
 				mdrRule, maxProperty, minProperty, value, max, min, true);
 		}
 
 		return true;
 	}
 
-	protected void logBooleanValue(
+	private void _logBooleanValue(
 		MDRRule mdrRule, String property, boolean value, boolean valid) {
 
 		if (!_log.isDebugEnabled()) {
 			return;
 		}
 
-		StringBundler sb = getLogStringBundler(
+		StringBundler sb = _getLogStringBundler(
 			mdrRule, String.valueOf(value), valid);
 
 		sb.append("the value configured for the property ");
@@ -266,7 +267,7 @@ public class SimpleRuleHandler implements RuleHandler {
 		_log.debug(sb.toString());
 	}
 
-	protected void logMultiValue(
+	private void _logMultiValue(
 		MDRRule mdrRule, String property, String value, String[] validValues,
 		boolean valid) {
 
@@ -274,7 +275,7 @@ public class SimpleRuleHandler implements RuleHandler {
 			return;
 		}
 
-		StringBundler sb = getLogStringBundler(mdrRule, value, valid);
+		StringBundler sb = _getLogStringBundler(mdrRule, value, valid);
 
 		sb.append("among the allowed values of ");
 		sb.append(StringUtil.merge(validValues));
@@ -285,7 +286,7 @@ public class SimpleRuleHandler implements RuleHandler {
 		_log.debug(sb.toString());
 	}
 
-	protected void logRangeValue(
+	private void _logRangeValue(
 		MDRRule mdrRule, String maxProperty, String minProperty, float value,
 		String max, String min, boolean valid) {
 
@@ -293,7 +294,7 @@ public class SimpleRuleHandler implements RuleHandler {
 			return;
 		}
 
-		StringBundler sb = getLogStringBundler(
+		StringBundler sb = _getLogStringBundler(
 			mdrRule, String.valueOf(value), valid);
 
 		sb.append("within the allowed range");

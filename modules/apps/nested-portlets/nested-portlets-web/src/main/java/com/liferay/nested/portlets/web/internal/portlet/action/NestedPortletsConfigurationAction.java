@@ -81,7 +81,7 @@ public class NestedPortletsConfigurationAction
 			String portletResource = ParamUtil.getString(
 				actionRequest, "portletResource");
 
-			reorganizeNestedColumns(
+			_reorganizeNestedColumns(
 				actionRequest, portletResource, layoutTemplateId,
 				oldLayoutTemplateId);
 		}
@@ -98,7 +98,21 @@ public class NestedPortletsConfigurationAction
 		super.setServletContext(servletContext);
 	}
 
-	protected List<String> getColumnNames(String content, String portletId) {
+	@Reference(unbind = "-")
+	protected void setLayoutLocalService(
+		LayoutLocalService layoutLocalService) {
+
+		_layoutLocalService = layoutLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setLayoutTemplateLocalService(
+		LayoutTemplateLocalService layoutTemplateLocalService) {
+
+		_layoutTemplateLocalService = layoutTemplateLocalService;
+	}
+
+	private List<String> _getColumnNames(String content, String portletId) {
 		Matcher matcher = _pattern.matcher(content);
 
 		Set<String> columnIds = new HashSet<>();
@@ -122,7 +136,7 @@ public class NestedPortletsConfigurationAction
 		return new ArrayList<>(columnNames);
 	}
 
-	protected void reorganizeNestedColumns(
+	private void _reorganizeNestedColumns(
 			ActionRequest actionRequest, String portletResource,
 			String newLayoutTemplateId, String oldLayoutTemplateId)
 		throws PortalException {
@@ -145,10 +159,10 @@ public class NestedPortletsConfigurationAction
 				_layoutTemplateLocalService.getLayoutTemplate(
 					newLayoutTemplateId, false, theme.getThemeId());
 
-			List<String> newColumns = getColumnNames(
+			List<String> newColumns = _getColumnNames(
 				newLayoutTemplate.getContent(), portletResource);
 
-			List<String> oldColumns = getColumnNames(
+			List<String> oldColumns = _getColumnNames(
 				oldLayoutTemplate.getContent(), portletResource);
 
 			layoutTypePortlet.reorganizePortlets(newColumns, oldColumns);
@@ -159,20 +173,6 @@ public class NestedPortletsConfigurationAction
 		_layoutLocalService.updateLayout(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
 			layout.getTypeSettings());
-	}
-
-	@Reference(unbind = "-")
-	protected void setLayoutLocalService(
-		LayoutLocalService layoutLocalService) {
-
-		_layoutLocalService = layoutLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLayoutTemplateLocalService(
-		LayoutTemplateLocalService layoutTemplateLocalService) {
-
-		_layoutTemplateLocalService = layoutTemplateLocalService;
 	}
 
 	private static final Pattern _pattern = Pattern.compile(

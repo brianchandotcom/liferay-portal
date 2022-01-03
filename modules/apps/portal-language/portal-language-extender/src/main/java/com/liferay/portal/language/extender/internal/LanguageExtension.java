@@ -107,7 +107,7 @@ public class LanguageExtension {
 					excludePortalResources = StringPool.FALSE;
 				}
 
-				resourceBundleLoader = processBaseName(
+				resourceBundleLoader = _processBaseName(
 					bundleWiring.getClassLoader(), (String)baseName,
 					GetterUtil.getBoolean(excludePortalResources));
 			}
@@ -148,7 +148,7 @@ public class LanguageExtension {
 		}
 	}
 
-	protected ResourceBundleLoader processBaseName(
+	private ResourceBundleLoader _processBaseName(
 		ClassLoader classLoader, String baseName,
 		boolean excludePortalResource) {
 

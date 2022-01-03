@@ -170,13 +170,13 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 		String settingsScope = ParamUtil.getString(
 			actionRequest, "settingsScope");
 
-		PortletPreferences portletPreferences = getPortletPreferences(
+		PortletPreferences portletPreferences = _getPortletPreferences(
 			themeDisplay, portlet.getPortletId(), settingsScope);
 
 		actionRequest = ActionUtil.getWrappedActionRequest(
 			actionRequest, portletPreferences);
 
-		ConfigurationAction configurationAction = getConfigurationAction(
+		ConfigurationAction configurationAction = _getConfigurationAction(
 			portlet);
 
 		if (configurationAction == null) {
@@ -212,7 +212,7 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 		String settingsScope = ParamUtil.getString(
 			actionRequest, "settingsScope");
 
-		PortletPreferences portletPreferences = getPortletPreferences(
+		PortletPreferences portletPreferences = _getPortletPreferences(
 			themeDisplay, portlet.getPortletId(), settingsScope);
 
 		if (portletPreferences == null) {
@@ -285,7 +285,7 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 		actionRequest = ActionUtil.getWrappedActionRequest(
 			actionRequest, portletPreferences);
 
-		updateScope(actionRequest, portlet);
+		_updateScope(actionRequest, portlet);
 
 		if (!SessionErrors.isEmpty(actionRequest)) {
 			return;
@@ -318,10 +318,10 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 			actionRequest, portletPreferences);
 
 		updateAnyWebsite(actionRequest, portletPreferences);
-		updateFacebook(actionRequest, portletPreferences);
-		updateFriends(actionRequest, portletPreferences);
-		updateGoogleGadget(actionRequest, portletPreferences);
-		updateNetvibes(actionRequest, portletPreferences);
+		_updateFacebook(actionRequest, portletPreferences);
+		_updateFriends(actionRequest, portletPreferences);
+		_updateGoogleGadget(actionRequest, portletPreferences);
+		_updateNetvibes(actionRequest, portletPreferences);
 
 		portletPreferences.store();
 
@@ -549,7 +549,7 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 
 		for (long roleId : roleIds) {
 			roleIdsToActionIds.put(
-				roleId, getActionIds(actionRequest, roleId, false));
+				roleId, _getActionIds(actionRequest, roleId, false));
 		}
 
 		_resourcePermissionService.setIndividualResourcePermissions(
@@ -581,36 +581,6 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 		}
 	}
 
-	protected void checkEditPermissionsJSP(PortletRequest request)
-		throws PortalException {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		String modelResource = ParamUtil.getString(request, "modelResource");
-
-		long resourceGroupId = ParamUtil.getLong(
-			request, "resourceGroupId", themeDisplay.getScopeGroupId());
-
-		if (Validator.isNotNull(modelResource)) {
-			String resourcePrimKey = ParamUtil.getString(
-				request, "resourcePrimKey");
-
-			_permissionService.checkPermission(
-				resourceGroupId, modelResource, resourcePrimKey);
-
-			return;
-		}
-
-		String portletResource = ParamUtil.getString(
-			request, "portletResource");
-
-		_portletPermission.check(
-			themeDisplay.getPermissionChecker(), resourceGroupId,
-			PortletConfigurationLayoutUtil.getLayout(themeDisplay),
-			portletResource, ActionKeys.PERMISSIONS);
-	}
-
 	@Override
 	protected void doDispatch(
 			RenderRequest renderRequest, RenderResponse renderResponse)
@@ -620,7 +590,7 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 			String mvcPath = renderRequest.getParameter("mvcPath");
 
 			if (mvcPath.equals("/edit_permissions.jsp")) {
-				checkEditPermissionsJSP(renderRequest);
+				_checkEditPermissionsJSP(renderRequest);
 
 				renderRequest.setAttribute(
 					RolesAdminWebKeys.ROLE_TYPE_CONTRIBUTOR_PROVIDER,
@@ -643,17 +613,17 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 				String settingsScope = renderRequest.getParameter(
 					"settingsScope");
 
-				PortletPreferences portletPreferences = getPortletPreferences(
+				PortletPreferences portletPreferences = _getPortletPreferences(
 					themeDisplay, portlet.getPortletId(), settingsScope);
 
 				renderRequest = ActionUtil.getWrappedRenderRequest(
 					renderRequest, portletPreferences);
 
 				if (mvcPath.endsWith("edit_configuration.jsp")) {
-					renderEditConfiguration(renderRequest, portlet);
+					_renderEditConfiguration(renderRequest, portlet);
 				}
 				else {
-					renderEditPublicParameters(renderRequest, portlet);
+					_renderEditPublicParameters(renderRequest, portlet);
 				}
 			}
 			else {
@@ -689,231 +659,6 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 
 			_handleException(renderRequest, renderResponse, exception);
 		}
-	}
-
-	protected String[] getActionIds(
-		ActionRequest actionRequest, long roleId, boolean includePreselected) {
-
-		List<String> actionIds = getActionIdsList(
-			actionRequest, roleId, includePreselected);
-
-		return actionIds.toArray(new String[0]);
-	}
-
-	protected List<String> getActionIdsList(
-		ActionRequest actionRequest, long roleId, boolean includePreselected) {
-
-		List<String> actionIds = new ArrayList<>();
-
-		Enumeration<String> enumeration = actionRequest.getParameterNames();
-
-		while (enumeration.hasMoreElements()) {
-			String name = enumeration.nextElement();
-
-			if (name.startsWith(roleId + ActionUtil.ACTION)) {
-				int pos = name.indexOf(ActionUtil.ACTION);
-
-				String actionId = name.substring(
-					pos + ActionUtil.ACTION.length());
-
-				actionIds.add(actionId);
-			}
-			else if (includePreselected &&
-					 name.startsWith(roleId + ActionUtil.PRESELECTED)) {
-
-				int pos = name.indexOf(ActionUtil.PRESELECTED);
-
-				String actionId = name.substring(
-					pos + ActionUtil.PRESELECTED.length());
-
-				actionIds.add(actionId);
-			}
-		}
-
-		return actionIds;
-	}
-
-	protected ConfigurationAction getConfigurationAction(Portlet portlet)
-		throws Exception {
-
-		if (portlet == null) {
-			return null;
-		}
-
-		ConfigurationAction configurationAction =
-			portlet.getConfigurationActionInstance();
-
-		if (configurationAction == null) {
-			_log.error(
-				"Configuration action for portlet " + portlet.getPortletId() +
-					" is null");
-		}
-
-		return configurationAction;
-	}
-
-	protected Tuple getNewScope(ActionRequest actionRequest) throws Exception {
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		Layout layout = themeDisplay.getLayout();
-
-		String[] scopes = StringUtil.split(
-			ParamUtil.getString(actionRequest, "scope"));
-
-		String scopeType = scopes[0];
-
-		long scopeGroupId = 0;
-		String scopeName = null;
-
-		if (Validator.isNull(scopeType)) {
-			scopeGroupId = layout.getGroupId();
-		}
-		else if (scopeType.equals("company")) {
-			scopeGroupId = themeDisplay.getCompanyGroupId();
-			scopeName = themeDisplay.translate("global");
-		}
-		else if (scopeType.equals("layout")) {
-			String scopeLayoutUuid = scopes[1];
-
-			Layout scopeLayout = _layoutLocalService.getLayoutByUuidAndGroupId(
-				scopeLayoutUuid, layout.getGroupId(), layout.isPrivateLayout());
-
-			if (!scopeLayout.hasScopeGroup()) {
-				_groupLocalService.addGroup(
-					themeDisplay.getUserId(),
-					GroupConstants.DEFAULT_PARENT_GROUP_ID,
-					Layout.class.getName(), scopeLayout.getPlid(),
-					GroupConstants.DEFAULT_LIVE_GROUP_ID,
-					HashMapBuilder.put(
-						LocaleUtil.getDefault(),
-						String.valueOf(scopeLayout.getPlid())
-					).build(),
-					null, 0, true,
-					GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, null, false,
-					true, null);
-			}
-
-			scopeGroupId = scopeLayout.getGroupId();
-			scopeName = scopeLayout.getName(themeDisplay.getLocale());
-		}
-		else {
-			throw new IllegalArgumentException(
-				"Scope type " + scopeType + " is invalid");
-		}
-
-		return new Tuple(scopeGroupId, scopeName);
-	}
-
-	protected String getOldScopeName(
-			ActionRequest actionRequest, Portlet portlet)
-		throws Exception {
-
-		PortletPreferences portletPreferences = actionRequest.getPreferences();
-
-		String scopeType = GetterUtil.getString(
-			portletPreferences.getValue("lfrScopeType", null));
-
-		if (Validator.isNull(scopeType)) {
-			return null;
-		}
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		String scopeName = null;
-
-		if (scopeType.equals("company")) {
-			scopeName = themeDisplay.translate("global");
-		}
-		else if (scopeType.equals("layout")) {
-			String scopeLayoutUuid = GetterUtil.getString(
-				portletPreferences.getValue("lfrScopeLayoutUuid", null));
-
-			Layout layout = themeDisplay.getLayout();
-
-			Layout scopeLayout =
-				_layoutLocalService.fetchLayoutByUuidAndGroupId(
-					scopeLayoutUuid, layout.getGroupId(),
-					layout.isPrivateLayout());
-
-			if (scopeLayout != null) {
-				scopeName = scopeLayout.getName(themeDisplay.getLocale());
-			}
-		}
-		else {
-			throw new IllegalArgumentException(
-				"Scope type " + scopeType + " is invalid");
-		}
-
-		return scopeName;
-	}
-
-	protected PortletPreferences getPortletPreferences(
-			ThemeDisplay themeDisplay, String portletId, String settingsScope)
-		throws PortalException {
-
-		Layout layout = themeDisplay.getLayout();
-
-		if (!layout.isSupportsEmbeddedPortlets() ||
-			!themeDisplay.isPortletEmbedded(portletId)) {
-
-			return null;
-		}
-
-		PortletPreferencesIds portletPreferencesIds =
-			PortletPreferencesFactoryUtil.getPortletPreferencesIds(
-				themeDisplay.getRequest(), layout, portletId);
-
-		return _portletPreferencesLocalService.getPreferences(
-			portletPreferencesIds);
-	}
-
-	protected String getPortletTitle(
-		PortletRequest portletRequest, Portlet portlet,
-		PortletPreferences portletPreferences) {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		String portletTitle = PortletConfigurationUtil.getPortletTitle(
-			portletPreferences, themeDisplay.getLanguageId());
-
-		if (Validator.isNull(portletTitle)) {
-			ServletContext servletContext =
-				(ServletContext)portletRequest.getAttribute(WebKeys.CTX);
-
-			portletTitle = _portal.getPortletTitle(
-				portlet, servletContext, themeDisplay.getLocale());
-		}
-
-		return portletTitle;
-	}
-
-	protected void renderEditConfiguration(
-			RenderRequest renderRequest, Portlet portlet)
-		throws Exception {
-
-		ConfigurationAction configurationAction = getConfigurationAction(
-			portlet);
-
-		if (configurationAction != null) {
-			renderRequest.setAttribute(
-				WebKeys.CONFIGURATION_ACTION, configurationAction);
-		}
-		else if (_log.isDebugEnabled()) {
-			_log.debug("Configuration action is null");
-		}
-	}
-
-	protected void renderEditPublicParameters(
-			RenderRequest renderRequest, Portlet portlet)
-		throws Exception {
-
-		ActionUtil.getLayoutPublicRenderParameters(renderRequest);
-
-		ActionUtil.getPublicRenderParameterConfigurationList(
-			renderRequest, portlet);
 	}
 
 	@Reference(unbind = "-")
@@ -966,7 +711,272 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 		_resourcePermissionService = resourcePermissionService;
 	}
 
-	protected void updateFacebook(
+	private void _checkEditPermissionsJSP(PortletRequest request)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String modelResource = ParamUtil.getString(request, "modelResource");
+
+		long resourceGroupId = ParamUtil.getLong(
+			request, "resourceGroupId", themeDisplay.getScopeGroupId());
+
+		if (Validator.isNotNull(modelResource)) {
+			String resourcePrimKey = ParamUtil.getString(
+				request, "resourcePrimKey");
+
+			_permissionService.checkPermission(
+				resourceGroupId, modelResource, resourcePrimKey);
+
+			return;
+		}
+
+		String portletResource = ParamUtil.getString(
+			request, "portletResource");
+
+		_portletPermission.check(
+			themeDisplay.getPermissionChecker(), resourceGroupId,
+			PortletConfigurationLayoutUtil.getLayout(themeDisplay),
+			portletResource, ActionKeys.PERMISSIONS);
+	}
+
+	private String[] _getActionIds(
+		ActionRequest actionRequest, long roleId, boolean includePreselected) {
+
+		List<String> actionIds = _getActionIdsList(
+			actionRequest, roleId, includePreselected);
+
+		return actionIds.toArray(new String[0]);
+	}
+
+	private List<String> _getActionIdsList(
+		ActionRequest actionRequest, long roleId, boolean includePreselected) {
+
+		List<String> actionIds = new ArrayList<>();
+
+		Enumeration<String> enumeration = actionRequest.getParameterNames();
+
+		while (enumeration.hasMoreElements()) {
+			String name = enumeration.nextElement();
+
+			if (name.startsWith(roleId + ActionUtil.ACTION)) {
+				int pos = name.indexOf(ActionUtil.ACTION);
+
+				String actionId = name.substring(
+					pos + ActionUtil.ACTION.length());
+
+				actionIds.add(actionId);
+			}
+			else if (includePreselected &&
+					 name.startsWith(roleId + ActionUtil.PRESELECTED)) {
+
+				int pos = name.indexOf(ActionUtil.PRESELECTED);
+
+				String actionId = name.substring(
+					pos + ActionUtil.PRESELECTED.length());
+
+				actionIds.add(actionId);
+			}
+		}
+
+		return actionIds;
+	}
+
+	private ConfigurationAction _getConfigurationAction(Portlet portlet)
+		throws Exception {
+
+		if (portlet == null) {
+			return null;
+		}
+
+		ConfigurationAction configurationAction =
+			portlet.getConfigurationActionInstance();
+
+		if (configurationAction == null) {
+			_log.error(
+				"Configuration action for portlet " + portlet.getPortletId() +
+					" is null");
+		}
+
+		return configurationAction;
+	}
+
+	private Tuple _getNewScope(ActionRequest actionRequest) throws Exception {
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Layout layout = themeDisplay.getLayout();
+
+		String[] scopes = StringUtil.split(
+			ParamUtil.getString(actionRequest, "scope"));
+
+		String scopeType = scopes[0];
+
+		long scopeGroupId = 0;
+		String scopeName = null;
+
+		if (Validator.isNull(scopeType)) {
+			scopeGroupId = layout.getGroupId();
+		}
+		else if (scopeType.equals("company")) {
+			scopeGroupId = themeDisplay.getCompanyGroupId();
+			scopeName = themeDisplay.translate("global");
+		}
+		else if (scopeType.equals("layout")) {
+			String scopeLayoutUuid = scopes[1];
+
+			Layout scopeLayout = _layoutLocalService.getLayoutByUuidAndGroupId(
+				scopeLayoutUuid, layout.getGroupId(), layout.isPrivateLayout());
+
+			if (!scopeLayout.hasScopeGroup()) {
+				_groupLocalService.addGroup(
+					themeDisplay.getUserId(),
+					GroupConstants.DEFAULT_PARENT_GROUP_ID,
+					Layout.class.getName(), scopeLayout.getPlid(),
+					GroupConstants.DEFAULT_LIVE_GROUP_ID,
+					HashMapBuilder.put(
+						LocaleUtil.getDefault(),
+						String.valueOf(scopeLayout.getPlid())
+					).build(),
+					null, 0, true,
+					GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, null, false,
+					true, null);
+			}
+
+			scopeGroupId = scopeLayout.getGroupId();
+			scopeName = scopeLayout.getName(themeDisplay.getLocale());
+		}
+		else {
+			throw new IllegalArgumentException(
+				"Scope type " + scopeType + " is invalid");
+		}
+
+		return new Tuple(scopeGroupId, scopeName);
+	}
+
+	private String _getOldScopeName(
+			ActionRequest actionRequest, Portlet portlet)
+		throws Exception {
+
+		PortletPreferences portletPreferences = actionRequest.getPreferences();
+
+		String scopeType = GetterUtil.getString(
+			portletPreferences.getValue("lfrScopeType", null));
+
+		if (Validator.isNull(scopeType)) {
+			return null;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String scopeName = null;
+
+		if (scopeType.equals("company")) {
+			scopeName = themeDisplay.translate("global");
+		}
+		else if (scopeType.equals("layout")) {
+			String scopeLayoutUuid = GetterUtil.getString(
+				portletPreferences.getValue("lfrScopeLayoutUuid", null));
+
+			Layout layout = themeDisplay.getLayout();
+
+			Layout scopeLayout =
+				_layoutLocalService.fetchLayoutByUuidAndGroupId(
+					scopeLayoutUuid, layout.getGroupId(),
+					layout.isPrivateLayout());
+
+			if (scopeLayout != null) {
+				scopeName = scopeLayout.getName(themeDisplay.getLocale());
+			}
+		}
+		else {
+			throw new IllegalArgumentException(
+				"Scope type " + scopeType + " is invalid");
+		}
+
+		return scopeName;
+	}
+
+	private PortletPreferences _getPortletPreferences(
+			ThemeDisplay themeDisplay, String portletId, String settingsScope)
+		throws PortalException {
+
+		Layout layout = themeDisplay.getLayout();
+
+		if (!layout.isSupportsEmbeddedPortlets() ||
+			!themeDisplay.isPortletEmbedded(portletId)) {
+
+			return null;
+		}
+
+		PortletPreferencesIds portletPreferencesIds =
+			PortletPreferencesFactoryUtil.getPortletPreferencesIds(
+				themeDisplay.getRequest(), layout, portletId);
+
+		return _portletPreferencesLocalService.getPreferences(
+			portletPreferencesIds);
+	}
+
+	private String _getPortletTitle(
+		PortletRequest portletRequest, Portlet portlet,
+		PortletPreferences portletPreferences) {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String portletTitle = PortletConfigurationUtil.getPortletTitle(
+			portletPreferences, themeDisplay.getLanguageId());
+
+		if (Validator.isNull(portletTitle)) {
+			ServletContext servletContext =
+				(ServletContext)portletRequest.getAttribute(WebKeys.CTX);
+
+			portletTitle = _portal.getPortletTitle(
+				portlet, servletContext, themeDisplay.getLocale());
+		}
+
+		return portletTitle;
+	}
+
+	private void _handleException(
+			RenderRequest renderRequest, RenderResponse renderResponse,
+			Exception exception)
+		throws IOException, PortletException {
+
+		SessionErrors.add(renderRequest, exception.getClass());
+
+		include("/error.jsp", renderRequest, renderResponse);
+	}
+
+	private void _renderEditConfiguration(
+			RenderRequest renderRequest, Portlet portlet)
+		throws Exception {
+
+		ConfigurationAction configurationAction = _getConfigurationAction(
+			portlet);
+
+		if (configurationAction != null) {
+			renderRequest.setAttribute(
+				WebKeys.CONFIGURATION_ACTION, configurationAction);
+		}
+		else if (_log.isDebugEnabled()) {
+			_log.debug("Configuration action is null");
+		}
+	}
+
+	private void _renderEditPublicParameters(
+			RenderRequest renderRequest, Portlet portlet)
+		throws Exception {
+
+		ActionUtil.getLayoutPublicRenderParameters(renderRequest);
+
+		ActionUtil.getPublicRenderParameterConfigurationList(
+			renderRequest, portlet);
+	}
+
+	private void _updateFacebook(
 			ActionRequest actionRequest, PortletPreferences portletPreferences)
 		throws Exception {
 
@@ -985,7 +995,7 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 			String.valueOf(facebookShowAddAppLink));
 	}
 
-	protected void updateFriends(
+	private void _updateFriends(
 			ActionRequest actionRequest, PortletPreferences portletPreferences)
 		throws Exception {
 
@@ -997,7 +1007,7 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 			String.valueOf(appShowShareWithFriendsLink));
 	}
 
-	protected void updateGoogleGadget(
+	private void _updateGoogleGadget(
 			ActionRequest actionRequest, PortletPreferences portletPreferences)
 		throws Exception {
 
@@ -1008,7 +1018,7 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 			"lfrIgoogleShowAddAppLink", String.valueOf(iGoogleShowAddAppLink));
 	}
 
-	protected void updateNetvibes(
+	private void _updateNetvibes(
 			ActionRequest actionRequest, PortletPreferences portletPreferences)
 		throws Exception {
 
@@ -1020,10 +1030,10 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 			String.valueOf(netvibesShowAddAppLink));
 	}
 
-	protected void updateScope(ActionRequest actionRequest, Portlet portlet)
+	private void _updateScope(ActionRequest actionRequest, Portlet portlet)
 		throws Exception {
 
-		String oldScopeName = getOldScopeName(actionRequest, portlet);
+		String oldScopeName = _getOldScopeName(actionRequest, portlet);
 
 		PortletPreferences portletPreferences = actionRequest.getPreferences();
 
@@ -1042,10 +1052,10 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 
 		portletPreferences.setValue("lfrScopeLayoutUuid", scopeLayoutUuid);
 
-		String portletTitle = getPortletTitle(
+		String portletTitle = _getPortletTitle(
 			actionRequest, portlet, portletPreferences);
 
-		Tuple newScopeTuple = getNewScope(actionRequest);
+		Tuple newScopeTuple = _getNewScope(actionRequest);
 
 		String newScopeName = (String)newScopeTuple.getObject(1);
 
@@ -1065,16 +1075,6 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 		}
 
 		portletPreferences.store();
-	}
-
-	private void _handleException(
-			RenderRequest renderRequest, RenderResponse renderResponse,
-			Exception exception)
-		throws IOException, PortletException {
-
-		SessionErrors.add(renderRequest, exception.getClass());
-
-		include("/error.jsp", renderRequest, renderResponse);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

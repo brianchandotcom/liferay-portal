@@ -135,7 +135,7 @@ public class WikiNodeStagedModelDataHandler
 		if (portletDataContext.isDataStrategyMirror()) {
 			if (existingNode == null) {
 				if (nodeWithSameName != null) {
-					nodeName = getNodeName(
+					nodeName = _getNodeName(
 						portletDataContext, node, nodeName, 2);
 				}
 
@@ -151,7 +151,7 @@ public class WikiNodeStagedModelDataHandler
 				if ((nodeWithSameName != null) &&
 					!uuid.equals(nodeWithSameName.getUuid())) {
 
-					nodeName = getNodeName(
+					nodeName = _getNodeName(
 						portletDataContext, node, nodeName, 2);
 				}
 
@@ -174,7 +174,7 @@ public class WikiNodeStagedModelDataHandler
 			else {
 				importedNode = _wikiNodeLocalService.addNode(
 					node.getExternalReferenceCode(), userId,
-					getNodeName(portletDataContext, node, nodeName, 2),
+					_getNodeName(portletDataContext, node, nodeName, 2),
 					node.getDescription(), serviceContext);
 			}
 		}
@@ -204,7 +204,14 @@ public class WikiNodeStagedModelDataHandler
 		}
 	}
 
-	protected String getNodeName(
+	@Reference(unbind = "-")
+	protected void setWikiNodeLocalService(
+		WikiNodeLocalService wikiNodeLocalService) {
+
+		_wikiNodeLocalService = wikiNodeLocalService;
+	}
+
+	private String _getNodeName(
 			PortletDataContext portletDataContext, WikiNode node, String name,
 			int count)
 		throws Exception {
@@ -218,16 +225,9 @@ public class WikiNodeStagedModelDataHandler
 
 		String nodeName = node.getName();
 
-		return getNodeName(
+		return _getNodeName(
 			portletDataContext, node,
 			StringBundler.concat(nodeName, StringPool.SPACE, count), ++count);
-	}
-
-	@Reference(unbind = "-")
-	protected void setWikiNodeLocalService(
-		WikiNodeLocalService wikiNodeLocalService) {
-
-		_wikiNodeLocalService = wikiNodeLocalService;
 	}
 
 	@Reference

@@ -43,7 +43,22 @@ public class UpgradePortletPreferences
 		};
 	}
 
-	protected void upgradeDisplayStyle(PortletPreferences portletPreferences)
+	@Override
+	protected String upgradePreferences(
+			long companyId, long ownerId, int ownerType, long plid,
+			String portletId, String xml)
+		throws Exception {
+
+		PortletPreferences portletPreferences =
+			PortletPreferencesFactoryUtil.fromXML(
+				companyId, ownerId, ownerType, plid, portletId, xml);
+
+		_upgradeDisplayStyle(portletPreferences);
+
+		return PortletPreferencesFactoryUtil.toXML(portletPreferences);
+	}
+
+	private void _upgradeDisplayStyle(PortletPreferences portletPreferences)
 		throws ReadOnlyException {
 
 		String displayStyle = GetterUtil.getString(
@@ -77,21 +92,6 @@ public class UpgradePortletPreferences
 						"of widget templates");
 			}
 		}
-	}
-
-	@Override
-	protected String upgradePreferences(
-			long companyId, long ownerId, int ownerType, long plid,
-			String portletId, String xml)
-		throws Exception {
-
-		PortletPreferences portletPreferences =
-			PortletPreferencesFactoryUtil.fromXML(
-				companyId, ownerId, ownerType, plid, portletId, xml);
-
-		upgradeDisplayStyle(portletPreferences);
-
-		return PortletPreferencesFactoryUtil.toXML(portletPreferences);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

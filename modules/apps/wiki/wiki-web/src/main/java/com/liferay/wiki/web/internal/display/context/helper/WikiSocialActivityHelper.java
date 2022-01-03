@@ -131,9 +131,9 @@ public class WikiSocialActivityHelper {
 
 			long fileEntryId = extraDataJSONObject.getLong("fileEntryId");
 
-			String url = getDownloadURL(fileEntryId);
+			String url = _getDownloadURL(fileEntryId);
 
-			String titleLink = getLink(title, url);
+			String titleLink = _getLink(title, url);
 
 			return LanguageUtil.format(
 				resourceBundle, label, new Object[] {userName, titleLink},
@@ -148,7 +148,7 @@ public class WikiSocialActivityHelper {
 				new Object[] {
 					userName,
 					StringBundler.concat(
-						getPageURL(page), "#",
+						_getPageURL(page), "#",
 						liferayPortletResponse.getNamespace(),
 						"wikiCommentsPanel")
 				},
@@ -162,10 +162,10 @@ public class WikiSocialActivityHelper {
 			String pageURL = null;
 
 			if (version == 0) {
-				pageURL = getPageURL(socialActivityWikiPage);
+				pageURL = _getPageURL(socialActivityWikiPage);
 			}
 			else {
-				pageURL = getPageURL(socialActivityWikiPage, version);
+				pageURL = _getPageURL(socialActivityWikiPage, version);
 			}
 
 			if (type == SocialActivityConstants.TYPE_MOVE_TO_TRASH) {
@@ -175,7 +175,7 @@ public class WikiSocialActivityHelper {
 					false);
 			}
 			else if (type == SocialActivityConstants.TYPE_RESTORE_FROM_TRASH) {
-				String titleLink = getLink(page.getTitle(), pageURL);
+				String titleLink = _getLink(page.getTitle(), pageURL);
 
 				return LanguageUtil.format(
 					resourceBundle, "activity-wiki-page-restore-from-trash",
@@ -183,7 +183,7 @@ public class WikiSocialActivityHelper {
 					false);
 			}
 			else if (type == WikiActivityKeys.ADD_PAGE) {
-				String titleLink = getLink(page.getTitle(), pageURL);
+				String titleLink = _getLink(page.getTitle(), pageURL);
 
 				return LanguageUtil.format(
 					resourceBundle, "x-added-the-page-x",
@@ -201,7 +201,7 @@ public class WikiSocialActivityHelper {
 						LanguageUtil.get(resourceBundle, "minor-edit"));
 				}
 
-				String titleURL = getLink(title, url);
+				String titleURL = _getLink(title, url);
 
 				return LanguageUtil.format(
 					resourceBundle, "x-updated-the-page-to-version-x",
@@ -266,7 +266,23 @@ public class WikiSocialActivityHelper {
 		return false;
 	}
 
-	protected String getDownloadURL(long fileEntryId) throws PortalException {
+	private FileEntry _fetchFileEntry(long fileEntryId) throws PortalException {
+		try {
+			return PortletFileRepositoryUtil.getPortletFileEntry(fileEntryId);
+		}
+		catch (NoSuchFileEntryException noSuchFileEntryException) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(noSuchFileEntryException, noSuchFileEntryException);
+			}
+		}
+
+		return null;
+	}
+
+	private String _getDownloadURL(long fileEntryId) throws PortalException {
 		FileEntry fileEntry = _fetchFileEntry(fileEntryId);
 
 		if (fileEntry != null) {
@@ -278,7 +294,7 @@ public class WikiSocialActivityHelper {
 		return StringPool.BLANK;
 	}
 
-	protected String getLink(String title, String url) {
+	private String _getLink(String title, String url) {
 		if (Validator.isNull(url)) {
 			return title;
 		}
@@ -286,7 +302,7 @@ public class WikiSocialActivityHelper {
 		return StringBundler.concat("<a href='", url, "'>", title, "</a>");
 	}
 
-	protected String getPageURL(WikiPage page) {
+	private String _getPageURL(WikiPage page) {
 		if (page == null) {
 			return StringPool.BLANK;
 		}
@@ -307,7 +323,7 @@ public class WikiSocialActivityHelper {
 		).buildString();
 	}
 
-	protected String getPageURL(WikiPage page, double version) {
+	private String _getPageURL(WikiPage page, double version) {
 		if (page == null) {
 			return null;
 		}
@@ -328,22 +344,6 @@ public class WikiSocialActivityHelper {
 		).setParameter(
 			"version", version
 		).buildString();
-	}
-
-	private FileEntry _fetchFileEntry(long fileEntryId) throws PortalException {
-		try {
-			return PortletFileRepositoryUtil.getPortletFileEntry(fileEntryId);
-		}
-		catch (NoSuchFileEntryException noSuchFileEntryException) {
-
-			// LPS-52675
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchFileEntryException, noSuchFileEntryException);
-			}
-		}
-
-		return null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

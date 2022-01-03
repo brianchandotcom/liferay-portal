@@ -119,7 +119,7 @@ public class EditDDMTemplateDisplayContext {
 			).setParameter(
 				"classNameId", getClassNameId()
 			).setParameter(
-				"classPK", getClassPK()
+				"classPK", _getClassPK()
 			).setParameter(
 				"ddmTemplateId", getDDMTemplateId()
 			).setParameter(
@@ -238,16 +238,6 @@ public class EditDDMTemplateDisplayContext {
 		return _ddmGroupServiceConfiguration.smallImageMaxSize();
 	}
 
-	protected long getClassPK() {
-		DDMTemplate ddmTemplate = getDDMTemplate();
-
-		if (ddmTemplate != null) {
-			return ddmTemplate.getClassPK();
-		}
-
-		return 0;
-	}
-
 	protected long getDDMTemplateId() {
 		if (_ddmTemplateId != null) {
 			return _ddmTemplateId;
@@ -272,7 +262,7 @@ public class EditDDMTemplateDisplayContext {
 
 		Map<String, TemplateVariableGroup> templateVariableGroups =
 			TemplateContextHelper.getTemplateVariableGroups(
-				getTemplateHandlerClassNameId(), getClassPK(),
+				getTemplateHandlerClassNameId(), _getClassPK(),
 				TemplateConstants.LANG_TYPE_FTL, _themeDisplay.getLocale());
 
 		return templateVariableGroups.values();
@@ -280,6 +270,16 @@ public class EditDDMTemplateDisplayContext {
 
 	protected final HttpServletRequest httpServletRequest;
 	protected final LiferayPortletResponse liferayPortletResponse;
+
+	private long _getClassPK() {
+		DDMTemplate ddmTemplate = getDDMTemplate();
+
+		if (ddmTemplate != null) {
+			return ddmTemplate.getClassPK();
+		}
+
+		return 0;
+	}
 
 	private String _getScript() {
 		if (_script != null) {

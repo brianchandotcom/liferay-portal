@@ -62,7 +62,7 @@ public class GoogleMapsDisplayContext {
 			return _googleMapsAPIKey;
 		}
 
-		Group group = getGroup();
+		Group group = _getGroup();
 
 		if (group == null) {
 			_googleMapsAPIKey = getCompanyGoogleMapsAPIKey();
@@ -77,7 +77,7 @@ public class GoogleMapsDisplayContext {
 		return _googleMapsAPIKey;
 	}
 
-	protected Group getGroup() {
+	private Group _getGroup() {
 		Group group = (Group)_httpServletRequest.getAttribute("site.liveGroup");
 
 		if (group != null) {

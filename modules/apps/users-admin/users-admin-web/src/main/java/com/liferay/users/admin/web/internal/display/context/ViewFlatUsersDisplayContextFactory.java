@@ -74,11 +74,11 @@ public class ViewFlatUsersDisplayContextFactory {
 		ManagementToolbarDisplayContext managementToolbarDisplayContext =
 			new ViewFlatUsersManagementToolbarDisplayContext(
 				liferayPortletRequest, liferayPortletResponse, searchContainer,
-				isShowDeleteButton(userSearchTerms),
-				isShowRestoreButton(userSearchTerms));
+				_isShowDeleteButton(userSearchTerms),
+				_isShowRestoreButton(userSearchTerms));
 
 		Optional<FilterContributor[]> filterContributorsOptional =
-			getFilterContributorsOptional(httpServletRequest);
+			_getFilterContributorsOptional(httpServletRequest);
 
 		if (filterContributorsOptional.isPresent()) {
 			managementToolbarDisplayContext =
@@ -104,39 +104,6 @@ public class ViewFlatUsersDisplayContextFactory {
 				httpServletRequest.getAttribute("view.jsp-viewUsersRedirect")));
 
 		return viewFlatUsersDisplayContext;
-	}
-
-	protected static Optional<FilterContributor[]>
-		getFilterContributorsOptional(HttpServletRequest httpServletRequest) {
-
-		return Optional.ofNullable(
-			(FilterContributor[])httpServletRequest.getAttribute(
-				UsersAdminWebKeys.MANAGEMENT_TOOLBAR_FILTER_CONTRIBUTORS));
-	}
-
-	protected static boolean isShowDeleteButton(
-		UserSearchTerms userSearchTerms) {
-
-		if ((userSearchTerms.getStatus() != WorkflowConstants.STATUS_ANY) &&
-			(userSearchTerms.isActive() ||
-			 (!userSearchTerms.isActive() && PropsValues.USERS_DELETE))) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	protected static boolean isShowRestoreButton(
-		UserSearchTerms userSearchTerms) {
-
-		if ((userSearchTerms.getStatus() != WorkflowConstants.STATUS_ANY) &&
-			!userSearchTerms.isActive()) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	private static UserSearch _createSearchContainer(
@@ -181,7 +148,7 @@ public class ViewFlatUsersDisplayContextFactory {
 		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
 
 		Optional<FilterContributor[]> filterContributorsOptional =
-			getFilterContributorsOptional(httpServletRequest);
+			_getFilterContributorsOptional(httpServletRequest);
 
 		if (filterContributorsOptional.isPresent()) {
 			for (FilterContributor filterContributor :
@@ -210,8 +177,8 @@ public class ViewFlatUsersDisplayContextFactory {
 		userSearch.setResults(results);
 
 		if (!results.isEmpty() &&
-			(isShowDeleteButton(searchTerms) ||
-			 isShowRestoreButton(searchTerms))) {
+			(_isShowDeleteButton(searchTerms) ||
+			 _isShowRestoreButton(searchTerms))) {
 
 			RowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
 
@@ -221,6 +188,39 @@ public class ViewFlatUsersDisplayContextFactory {
 		}
 
 		return userSearch;
+	}
+
+	private static Optional<FilterContributor[]> _getFilterContributorsOptional(
+		HttpServletRequest httpServletRequest) {
+
+		return Optional.ofNullable(
+			(FilterContributor[])httpServletRequest.getAttribute(
+				UsersAdminWebKeys.MANAGEMENT_TOOLBAR_FILTER_CONTRIBUTORS));
+	}
+
+	private static boolean _isShowDeleteButton(
+		UserSearchTerms userSearchTerms) {
+
+		if ((userSearchTerms.getStatus() != WorkflowConstants.STATUS_ANY) &&
+			(userSearchTerms.isActive() ||
+			 (!userSearchTerms.isActive() && PropsValues.USERS_DELETE))) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private static boolean _isShowRestoreButton(
+		UserSearchTerms userSearchTerms) {
+
+		if ((userSearchTerms.getStatus() != WorkflowConstants.STATUS_ANY) &&
+			!userSearchTerms.isActive()) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 }

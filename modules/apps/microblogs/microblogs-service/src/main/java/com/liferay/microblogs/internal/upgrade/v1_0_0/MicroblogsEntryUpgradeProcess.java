@@ -26,10 +26,10 @@ public class MicroblogsEntryUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		updateMicroBlogsEntry();
+		_updateMicroBlogsEntry();
 	}
 
-	protected void updateMicroBlogsEntry() throws Exception {
+	private void _updateMicroBlogsEntry() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			if (hasColumn("MicroblogsEntry", "creatorClassNameId") ||
 				hasColumn("MicroblogsEntry", "creatorClassPK")) {

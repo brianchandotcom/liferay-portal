@@ -73,9 +73,9 @@ public class XhtmlTranslator extends XhtmlTranslationVisitor {
 		append("<h");
 		append(headingNode.getLevel());
 
-		String unformattedText = getUnformattedHeadingText(headingNode);
+		String unformattedText = _getUnformattedHeadingText(headingNode);
 
-		String markup = getHeadingMarkup(
+		String markup = _getHeadingMarkup(
 			_page.getTitle(), unformattedText, _headingCounts);
 
 		append(" id=\"");
@@ -134,7 +134,7 @@ public class XhtmlTranslator extends XhtmlTranslationVisitor {
 
 		append("<a href=\"");
 
-		appendHref(linkNode, title, wikiPage);
+		_appendHref(linkNode, title, wikiPage);
 
 		append(StringPool.QUOTE);
 
@@ -196,18 +196,18 @@ public class XhtmlTranslator extends XhtmlTranslationVisitor {
 		append("<a class=\"toc-trigger\" href=\"javascript:;\">[-]</a></h4>");
 		append("<div class=\"toc-index\">");
 
-		appendTableOfContents(tableOfContents, 1);
+		_appendTableOfContents(tableOfContents, 1);
 
 		append("</div>");
 		append("</div>");
 		append("</div>");
 	}
 
-	protected void appendAbsoluteHref(LinkNode linkNode) {
+	private void _appendAbsoluteHref(LinkNode linkNode) {
 		append(HtmlUtil.escape(linkNode.getLink()));
 	}
 
-	protected void appendHref(
+	private void _appendHref(
 		LinkNode linkNode, String title, WikiPage wikiPage) {
 
 		if (linkNode.getLink() == null) {
@@ -219,14 +219,14 @@ public class XhtmlTranslator extends XhtmlTranslationVisitor {
 		}
 
 		if (linkNode.isAbsoluteLink()) {
-			appendAbsoluteHref(linkNode);
+			_appendAbsoluteHref(linkNode);
 		}
 		else {
-			appendWikiHref(linkNode, wikiPage, title);
+			_appendWikiHref(linkNode, wikiPage, title);
 		}
 	}
 
-	protected void appendTableOfContents(
+	private void _appendTableOfContents(
 		TreeNode<HeadingNode> tableOfContents, int depth) {
 
 		List<TreeNode<HeadingNode>> treeNodes = tableOfContents.getChildNodes();
@@ -244,7 +244,7 @@ public class XhtmlTranslator extends XhtmlTranslationVisitor {
 
 			HeadingNode headingNode = treeNode.getValue();
 
-			String content = getUnformattedHeadingText(headingNode);
+			String content = _getUnformattedHeadingText(headingNode);
 
 			append("<a class=\"wikipage\" href=\"");
 
@@ -262,7 +262,7 @@ public class XhtmlTranslator extends XhtmlTranslationVisitor {
 
 			append(StringPool.POUND);
 			append(
-				getHeadingMarkup(
+				_getHeadingMarkup(
 					_page.getTitle(), content, _tableOfContentsHeadingCounts));
 			append("\">");
 			append(content);
@@ -272,7 +272,7 @@ public class XhtmlTranslator extends XhtmlTranslationVisitor {
 
 			_tableOfContentsHeadingCounts.put(content, count + 1);
 
-			appendTableOfContents(treeNode, depth + 1);
+			_appendTableOfContents(treeNode, depth + 1);
 
 			append("</li>");
 		}
@@ -280,10 +280,10 @@ public class XhtmlTranslator extends XhtmlTranslationVisitor {
 		append("</ol>");
 	}
 
-	protected void appendWikiHref(
+	private void _appendWikiHref(
 		LinkNode linkNode, WikiPage wikiPage, String title) {
 
-		String attachmentLink = searchLinkInAttachments(linkNode);
+		String attachmentLink = _searchLinkInAttachments(linkNode);
 
 		if (attachmentLink != null) {
 
@@ -310,7 +310,7 @@ public class XhtmlTranslator extends XhtmlTranslationVisitor {
 		}
 	}
 
-	protected String getHeadingMarkup(
+	private String _getHeadingMarkup(
 		String prefix, String text, Map<String, Integer> textCounts) {
 
 		String postfix = StringPool.BLANK;
@@ -324,32 +324,6 @@ public class XhtmlTranslator extends XhtmlTranslationVisitor {
 				_HEADING_ANCHOR_PREFIX, prefix, StringPool.DASH, text.trim(),
 				postfix),
 			CharPool.SPACE, CharPool.PLUS);
-	}
-
-	protected String getUnformattedHeadingText(HeadingNode headingNode) {
-		UnformattedHeadingTextVisitor unformattedHeadingTextVisitor =
-			new UnformattedHeadingTextVisitor();
-
-		return unformattedHeadingTextVisitor.getUnformattedText(headingNode);
-	}
-
-	protected String searchLinkInAttachments(LinkNode linkNode) {
-		try {
-			for (FileEntry fileEntry : _page.getAttachmentsFileEntries()) {
-				String title = fileEntry.getTitle();
-
-				if (title.equals(linkNode.getLink())) {
-					return title;
-				}
-			}
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
-			}
-		}
-
-		return null;
 	}
 
 	private ResourceBundle _getResourceBundle(Locale locale) {
@@ -368,6 +342,32 @@ public class XhtmlTranslator extends XhtmlTranslationVisitor {
 
 		return LanguageUtil.get(
 			_getResourceBundle(locale), "table-of-contents");
+	}
+
+	private String _getUnformattedHeadingText(HeadingNode headingNode) {
+		UnformattedHeadingTextVisitor unformattedHeadingTextVisitor =
+			new UnformattedHeadingTextVisitor();
+
+		return unformattedHeadingTextVisitor.getUnformattedText(headingNode);
+	}
+
+	private String _searchLinkInAttachments(LinkNode linkNode) {
+		try {
+			for (FileEntry fileEntry : _page.getAttachmentsFileEntries()) {
+				String title = fileEntry.getTitle();
+
+				if (title.equals(linkNode.getLink())) {
+					return title;
+				}
+			}
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception, exception);
+			}
+		}
+
+		return null;
 	}
 
 	private static final String _HEADING_ANCHOR_PREFIX = "section-";

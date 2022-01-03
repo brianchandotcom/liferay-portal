@@ -100,7 +100,7 @@ public class PageRatingsPortletDataHandler extends BasePortletDataHandler {
 		}
 
 		ActionableDynamicQuery actionableDynamicQuery =
-			getRatingsEntryActionableDynamicQuery(portletDataContext);
+			_getRatingsEntryActionableDynamicQuery(portletDataContext);
 
 		actionableDynamicQuery.performActions();
 
@@ -131,14 +131,19 @@ public class PageRatingsPortletDataHandler extends BasePortletDataHandler {
 		throws Exception {
 
 		ActionableDynamicQuery actionableDynamicQuery =
-			getRatingsEntryCountActionableDynamicQuery(portletDataContext);
+			_getRatingsEntryCountActionableDynamicQuery(portletDataContext);
 
 		actionableDynamicQuery.performCount();
 	}
 
-	protected long getGroupId(RatingsEntry ratingsEntry)
-		throws PortalException {
+	@Reference(unbind = "-")
+	protected void setRatingsEntryLocalService(
+		RatingsEntryLocalService ratingsEntryLocalService) {
 
+		_ratingsEntryLocalService = ratingsEntryLocalService;
+	}
+
+	private long _getGroupId(RatingsEntry ratingsEntry) throws PortalException {
 		PersistedModelLocalService persistedModelLocalService =
 			PersistedModelLocalServiceRegistryUtil.
 				getPersistedModelLocalService(ratingsEntry.getClassName());
@@ -171,7 +176,7 @@ public class PageRatingsPortletDataHandler extends BasePortletDataHandler {
 		return groupedModel.getGroupId();
 	}
 
-	protected ActionableDynamicQuery getRatingsEntryActionableDynamicQuery(
+	private ActionableDynamicQuery _getRatingsEntryActionableDynamicQuery(
 		PortletDataContext portletDataContext) {
 
 		ActionableDynamicQuery actionableDynamicQuery =
@@ -180,7 +185,7 @@ public class PageRatingsPortletDataHandler extends BasePortletDataHandler {
 
 		actionableDynamicQuery.setPerformActionMethod(
 			(RatingsEntry ratingsEntry) -> {
-				long groupId = getGroupId(ratingsEntry);
+				long groupId = _getGroupId(ratingsEntry);
 
 				if (groupId != portletDataContext.getScopeGroupId()) {
 					return;
@@ -193,7 +198,7 @@ public class PageRatingsPortletDataHandler extends BasePortletDataHandler {
 		return actionableDynamicQuery;
 	}
 
-	protected ActionableDynamicQuery getRatingsEntryCountActionableDynamicQuery(
+	private ActionableDynamicQuery _getRatingsEntryCountActionableDynamicQuery(
 			final PortletDataContext portletDataContext)
 		throws PortalException {
 
@@ -203,7 +208,7 @@ public class PageRatingsPortletDataHandler extends BasePortletDataHandler {
 
 		exportActionableDynamicQuery.setPerformActionMethod(
 			(RatingsEntry ratingsEntry) -> {
-				long groupId = getGroupId(ratingsEntry);
+				long groupId = _getGroupId(ratingsEntry);
 
 				if (groupId != portletDataContext.getScopeGroupId()) {
 					return;
@@ -244,13 +249,6 @@ public class PageRatingsPortletDataHandler extends BasePortletDataHandler {
 			});
 
 		return exportActionableDynamicQuery;
-	}
-
-	@Reference(unbind = "-")
-	protected void setRatingsEntryLocalService(
-		RatingsEntryLocalService ratingsEntryLocalService) {
-
-		_ratingsEntryLocalService = ratingsEntryLocalService;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

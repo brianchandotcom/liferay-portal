@@ -60,10 +60,48 @@ public class AddLayoutPrototypePortalInstanceLifecycleListener
 				company.getCompanyId(), null, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, null);
 
-		addWikiPage(company.getCompanyId(), defaultUserId, layoutPrototypes);
+		_addWikiPage(company.getCompanyId(), defaultUserId, layoutPrototypes);
 	}
 
-	protected void addWikiPage(
+	@Reference(
+		target = "(javax.portlet.name=" + AssetCategoriesNavigationPortletKeys.ASSET_CATEGORIES_NAVIGATION + ")",
+		unbind = "-"
+	)
+	protected void setAssetCategoriesNavigationPortlet(Portlet portlet) {
+	}
+
+	@Reference(
+		target = "(javax.portlet.name=" + AssetTagsNavigationPortletKeys.ASSET_TAGS_NAVIGATION + ")",
+		unbind = "-"
+	)
+	protected void setAssetTagsNavigationPortlet(Portlet portlet) {
+	}
+
+	@Reference(unbind = "-")
+	protected void setLayoutPrototypeLocalService(
+		LayoutPrototypeLocalService layoutPrototypeLocalService) {
+
+		_layoutPrototypeLocalService = layoutPrototypeLocalService;
+	}
+
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
+	protected void setModuleServiceLifecycle(
+		ModuleServiceLifecycle moduleServiceLifecycle) {
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
+	@Reference(
+		target = "(javax.portlet.name=" + WikiPortletKeys.WIKI + ")",
+		unbind = "-"
+	)
+	protected void setWikiPortlet(Portlet portlet) {
+	}
+
+	private void _addWikiPage(
 			long companyId, long defaultUserId,
 			List<LayoutPrototype> layoutPrototypes)
 		throws Exception {
@@ -104,44 +142,6 @@ public class AddLayoutPrototypePortalInstanceLifecycleListener
 			).put(
 				"showAssetCount", Boolean.TRUE.toString()
 			).build());
-	}
-
-	@Reference(
-		target = "(javax.portlet.name=" + AssetCategoriesNavigationPortletKeys.ASSET_CATEGORIES_NAVIGATION + ")",
-		unbind = "-"
-	)
-	protected void setAssetCategoriesNavigationPortlet(Portlet portlet) {
-	}
-
-	@Reference(
-		target = "(javax.portlet.name=" + AssetTagsNavigationPortletKeys.ASSET_TAGS_NAVIGATION + ")",
-		unbind = "-"
-	)
-	protected void setAssetTagsNavigationPortlet(Portlet portlet) {
-	}
-
-	@Reference(unbind = "-")
-	protected void setLayoutPrototypeLocalService(
-		LayoutPrototypeLocalService layoutPrototypeLocalService) {
-
-		_layoutPrototypeLocalService = layoutPrototypeLocalService;
-	}
-
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserLocalService(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
-	}
-
-	@Reference(
-		target = "(javax.portlet.name=" + WikiPortletKeys.WIKI + ")",
-		unbind = "-"
-	)
-	protected void setWikiPortlet(Portlet portlet) {
 	}
 
 	private LayoutPrototypeLocalService _layoutPrototypeLocalService;

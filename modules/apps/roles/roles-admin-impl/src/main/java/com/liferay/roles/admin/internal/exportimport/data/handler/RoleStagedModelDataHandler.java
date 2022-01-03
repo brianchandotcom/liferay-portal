@@ -98,44 +98,6 @@ public class RoleStagedModelDataHandler
 		return role.getName();
 	}
 
-	protected void deleteRolePermissions(
-		PortletDataContext portletDataContext, Role importedRole) {
-
-		List<ResourcePermission> resourcePermissions =
-			_resourcePermissionLocalService.getRoleResourcePermissions(
-				importedRole.getRoleId(),
-				new int[] {
-					ResourceConstants.SCOPE_COMPANY,
-					ResourceConstants.SCOPE_GROUP_TEMPLATE
-				},
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		for (ResourcePermission resourcePermission : resourcePermissions) {
-			_resourcePermissionLocalService.deleteResourcePermission(
-				resourcePermission);
-		}
-
-		List<ResourcePermission> groupResourcePermissions =
-			_resourcePermissionLocalService.getRoleResourcePermissions(
-				importedRole.getRoleId(),
-				new int[] {ResourceConstants.SCOPE_GROUP}, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
-
-		for (ResourcePermission groupResourcePermission :
-				groupResourcePermissions) {
-
-			long groupId = GetterUtil.getLong(
-				groupResourcePermission.getPrimKey());
-
-			if ((groupId == portletDataContext.getCompanyGroupId()) ||
-				(groupId == portletDataContext.getUserPersonalSiteGroupId())) {
-
-				_resourcePermissionLocalService.deleteResourcePermission(
-					groupResourcePermission);
-			}
-		}
-	}
-
 	@Override
 	protected void doExportStagedModel(
 			PortletDataContext portletDataContext, Role role)
@@ -198,7 +160,7 @@ public class RoleStagedModelDataHandler
 				existingRole.getRoleId(), role.getName(), role.getTitleMap(),
 				role.getDescriptionMap(), role.getSubtype(), serviceContext);
 
-			deleteRolePermissions(portletDataContext, importedRole);
+			_deleteRolePermissions(portletDataContext, importedRole);
 		}
 
 		String permissionsPath = ExportImportPathUtil.getModelPath(
@@ -210,7 +172,7 @@ public class RoleStagedModelDataHandler
 
 		for (Permission permission : permissions) {
 			try {
-				importResourcePermissions(
+				_importResourcePermissions(
 					portletDataContext, importedRole, permission);
 			}
 			catch (NoSuchResourceActionException
@@ -244,7 +206,69 @@ public class RoleStagedModelDataHandler
 		portletDataContext.importClassedModel(role, importedRole);
 	}
 
-	protected void importResourcePermissions(
+	@Reference(unbind = "-")
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setResourcePermissionLocalService(
+		ResourcePermissionLocalService resourcePermissionLocalService) {
+
+		_resourcePermissionLocalService = resourcePermissionLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setResourcePermissionService(
+		ResourcePermissionService resourcePermissionService) {
+
+		_resourcePermissionService = resourcePermissionService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setRoleLocalService(RoleLocalService roleLocalService) {
+		_roleLocalService = roleLocalService;
+	}
+
+	private void _deleteRolePermissions(
+		PortletDataContext portletDataContext, Role importedRole) {
+
+		List<ResourcePermission> resourcePermissions =
+			_resourcePermissionLocalService.getRoleResourcePermissions(
+				importedRole.getRoleId(),
+				new int[] {
+					ResourceConstants.SCOPE_COMPANY,
+					ResourceConstants.SCOPE_GROUP_TEMPLATE
+				},
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		for (ResourcePermission resourcePermission : resourcePermissions) {
+			_resourcePermissionLocalService.deleteResourcePermission(
+				resourcePermission);
+		}
+
+		List<ResourcePermission> groupResourcePermissions =
+			_resourcePermissionLocalService.getRoleResourcePermissions(
+				importedRole.getRoleId(),
+				new int[] {ResourceConstants.SCOPE_GROUP}, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
+
+		for (ResourcePermission groupResourcePermission :
+				groupResourcePermissions) {
+
+			long groupId = GetterUtil.getLong(
+				groupResourcePermission.getPrimKey());
+
+			if ((groupId == portletDataContext.getCompanyGroupId()) ||
+				(groupId == portletDataContext.getUserPersonalSiteGroupId())) {
+
+				_resourcePermissionLocalService.deleteResourcePermission(
+					groupResourcePermission);
+			}
+		}
+	}
+
+	private void _importResourcePermissions(
 			PortletDataContext portletDataContext, Role importedRole,
 			Permission permission)
 		throws PortalException {
@@ -297,30 +321,6 @@ public class RoleStagedModelDataHandler
 				_log.debug("Individually scoped permissions are not imported");
 			}
 		}
-	}
-
-	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setResourcePermissionLocalService(
-		ResourcePermissionLocalService resourcePermissionLocalService) {
-
-		_resourcePermissionLocalService = resourcePermissionLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setResourcePermissionService(
-		ResourcePermissionService resourcePermissionService) {
-
-		_resourcePermissionService = resourcePermissionService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setRoleLocalService(RoleLocalService roleLocalService) {
-		_roleLocalService = roleLocalService;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

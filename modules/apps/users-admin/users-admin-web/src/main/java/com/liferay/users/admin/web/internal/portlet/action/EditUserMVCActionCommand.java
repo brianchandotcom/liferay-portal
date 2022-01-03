@@ -111,58 +111,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 
-	protected User addUser(ActionRequest actionRequest) throws Exception {
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		boolean autoScreenName = ParamUtil.getBoolean(
-			actionRequest, "autoScreenName");
-		String screenName = ParamUtil.getString(actionRequest, "screenName");
-		String emailAddress = ParamUtil.getString(
-			actionRequest, "emailAddress");
-		String languageId = ParamUtil.getString(actionRequest, "languageId");
-		String firstName = ParamUtil.getString(actionRequest, "firstName");
-		String middleName = ParamUtil.getString(actionRequest, "middleName");
-		String lastName = ParamUtil.getString(actionRequest, "lastName");
-		long prefixId = ParamUtil.getInteger(actionRequest, "prefixId");
-		long suffixId = ParamUtil.getInteger(actionRequest, "suffixId");
-		boolean male = ParamUtil.getBoolean(actionRequest, "male", true);
-		int birthdayMonth = ParamUtil.getInteger(
-			actionRequest, "birthdayMonth");
-		int birthdayDay = ParamUtil.getInteger(actionRequest, "birthdayDay");
-		int birthdayYear = ParamUtil.getInteger(actionRequest, "birthdayYear");
-		String comments = ParamUtil.getString(actionRequest, "comments");
-		String jobTitle = ParamUtil.getString(actionRequest, "jobTitle");
-		long[] organizationIds = UsersAdminUtil.getOrganizationIds(
-			actionRequest);
-		boolean sendEmail = true;
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			User.class.getName(), actionRequest);
-
-		User user = _userService.addUser(
-			themeDisplay.getCompanyId(), true, null, null, autoScreenName,
-			screenName, emailAddress, LocaleUtil.fromLanguageId(languageId),
-			firstName, middleName, lastName, prefixId, suffixId, male,
-			birthdayMonth, birthdayDay, birthdayYear, jobTitle, null,
-			organizationIds, null, null, new ArrayList<Address>(),
-			new ArrayList<EmailAddress>(), new ArrayList<Phone>(),
-			new ArrayList<Website>(), new ArrayList<AnnouncementsDelivery>(),
-			sendEmail, serviceContext);
-
-		user.setComments(comments);
-
-		return userLocalService.updateUser(user);
-	}
-
-	protected void deleteRole(ActionRequest actionRequest) throws Exception {
-		User user = portal.getSelectedUser(actionRequest);
-
-		long roleId = ParamUtil.getLong(actionRequest, "roleId");
-
-		_userService.deleteRoleUser(roleId, user.getUserId());
-	}
-
 	protected void deleteUsers(ActionRequest actionRequest) throws Exception {
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
@@ -219,7 +167,7 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 			boolean updateLanguageId = false;
 
 			if (cmd.equals(Constants.ADD)) {
-				user = addUser(actionRequest);
+				user = _addUser(actionRequest);
 
 				SessionMessages.add(actionRequest, "userAdded");
 
@@ -232,7 +180,7 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 				deleteUsers(actionRequest);
 			}
 			else if (cmd.equals("deleteRole")) {
-				deleteRole(actionRequest);
+				_deleteRole(actionRequest);
 			}
 			else if (cmd.equals(Constants.UPDATE)) {
 				Object[] returnValue = updateUser(
@@ -243,7 +191,7 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 				updateLanguageId = (Boolean)returnValue[2];
 			}
 			else if (cmd.equals("unlock")) {
-				user = updateLockout(actionRequest);
+				user = _updateLockout(actionRequest);
 			}
 
 			ThemeDisplay themeDisplay =
@@ -375,19 +323,6 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	protected long getListTypeId(
-			PortletRequest portletRequest, String parameterName, String type)
-		throws Exception {
-
-		String parameterValue = ParamUtil.getString(
-			portletRequest, parameterName);
-
-		ListType listType = _listTypeLocalService.addListType(
-			parameterValue, type);
-
-		return listType.getListTypeId();
-	}
-
 	@Reference(unbind = "-")
 	protected void setDLAppLocalService(DLAppLocalService dlAppLocalService) {
 		_dlAppLocalService = dlAppLocalService;
@@ -408,14 +343,6 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 	@Reference(unbind = "-")
 	protected void setUserService(UserService userService) {
 		_userService = userService;
-	}
-
-	protected User updateLockout(ActionRequest actionRequest) throws Exception {
-		User user = portal.getSelectedUser(actionRequest);
-
-		_userService.updateLockoutById(user.getUserId(), false);
-
-		return user;
 	}
 
 	protected Object[] updateUser(
@@ -549,18 +476,91 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 
 	protected UserLocalService userLocalService;
 
+	private User _addUser(ActionRequest actionRequest) throws Exception {
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		boolean autoScreenName = ParamUtil.getBoolean(
+			actionRequest, "autoScreenName");
+		String screenName = ParamUtil.getString(actionRequest, "screenName");
+		String emailAddress = ParamUtil.getString(
+			actionRequest, "emailAddress");
+		String languageId = ParamUtil.getString(actionRequest, "languageId");
+		String firstName = ParamUtil.getString(actionRequest, "firstName");
+		String middleName = ParamUtil.getString(actionRequest, "middleName");
+		String lastName = ParamUtil.getString(actionRequest, "lastName");
+		long prefixId = ParamUtil.getInteger(actionRequest, "prefixId");
+		long suffixId = ParamUtil.getInteger(actionRequest, "suffixId");
+		boolean male = ParamUtil.getBoolean(actionRequest, "male", true);
+		int birthdayMonth = ParamUtil.getInteger(
+			actionRequest, "birthdayMonth");
+		int birthdayDay = ParamUtil.getInteger(actionRequest, "birthdayDay");
+		int birthdayYear = ParamUtil.getInteger(actionRequest, "birthdayYear");
+		String comments = ParamUtil.getString(actionRequest, "comments");
+		String jobTitle = ParamUtil.getString(actionRequest, "jobTitle");
+		long[] organizationIds = UsersAdminUtil.getOrganizationIds(
+			actionRequest);
+		boolean sendEmail = true;
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			User.class.getName(), actionRequest);
+
+		User user = _userService.addUser(
+			themeDisplay.getCompanyId(), true, null, null, autoScreenName,
+			screenName, emailAddress, LocaleUtil.fromLanguageId(languageId),
+			firstName, middleName, lastName, prefixId, suffixId, male,
+			birthdayMonth, birthdayDay, birthdayYear, jobTitle, null,
+			organizationIds, null, null, new ArrayList<Address>(),
+			new ArrayList<EmailAddress>(), new ArrayList<Phone>(),
+			new ArrayList<Website>(), new ArrayList<AnnouncementsDelivery>(),
+			sendEmail, serviceContext);
+
+		user.setComments(comments);
+
+		return userLocalService.updateUser(user);
+	}
+
+	private void _deleteRole(ActionRequest actionRequest) throws Exception {
+		User user = portal.getSelectedUser(actionRequest);
+
+		long roleId = ParamUtil.getLong(actionRequest, "roleId");
+
+		_userService.deleteRoleUser(roleId, user.getUserId());
+	}
+
+	private long _getListTypeId(
+			PortletRequest portletRequest, String parameterName, String type)
+		throws Exception {
+
+		String parameterValue = ParamUtil.getString(
+			portletRequest, parameterName);
+
+		ListType listType = _listTypeLocalService.addListType(
+			parameterValue, type);
+
+		return listType.getListTypeId();
+	}
+
+	private User _updateLockout(ActionRequest actionRequest) throws Exception {
+		User user = portal.getSelectedUser(actionRequest);
+
+		_userService.updateLockoutById(user.getUserId(), false);
+
+		return user;
+	}
+
 	private ActionRequest _wrapActionRequest(ActionRequest actionRequest)
 		throws Exception {
 
 		DynamicActionRequest dynamicActionRequest = new DynamicActionRequest(
 			actionRequest);
 
-		long prefixId = getListTypeId(
+		long prefixId = _getListTypeId(
 			actionRequest, "prefixValue", ListTypeConstants.CONTACT_PREFIX);
 
 		dynamicActionRequest.setParameter("prefixId", String.valueOf(prefixId));
 
-		long suffixId = getListTypeId(
+		long suffixId = _getListTypeId(
 			actionRequest, "suffixValue", ListTypeConstants.CONTACT_SUFFIX);
 
 		dynamicActionRequest.setParameter("suffixId", String.valueOf(suffixId));

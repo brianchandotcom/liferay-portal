@@ -33,7 +33,7 @@ public abstract class BaseTranslator {
 	public String translate(String content) {
 		_protectedMap.clear();
 
-		content = preProcess(content);
+		content = _preProcess(content);
 		content = runRegexps(content);
 		content = postProcess(content);
 
@@ -41,40 +41,7 @@ public abstract class BaseTranslator {
 	}
 
 	protected String postProcess(String content) {
-		return unprotectNowikiText(content);
-	}
-
-	protected String preProcess(String content) {
-		content = _normalizeLineBreaks(content);
-
-		for (String regexp : nowikiRegexps) {
-			content = protectText(content, regexp);
-		}
-
-		return content;
-	}
-
-	protected String protectText(String content, String markupRegex) {
-		Pattern pattern = Pattern.compile(
-			markupRegex, Pattern.MULTILINE | Pattern.DOTALL);
-
-		Matcher matcher = pattern.matcher(content);
-
-		StringBuffer sb = new StringBuffer();
-
-		while (matcher.find()) {
-			String protectedText = matcher.group();
-
-			String hash = DigesterUtil.digest(protectedText);
-
-			matcher.appendReplacement(sb, "$1" + hash + "$3");
-
-			_protectedMap.put(hash, matcher.group(2));
-		}
-
-		matcher.appendTail(sb);
-
-		return sb.toString();
+		return _unprotectNowikiText(content);
 	}
 
 	protected String runRegexp(
@@ -106,17 +73,6 @@ public abstract class BaseTranslator {
 		return content;
 	}
 
-	protected String unprotectNowikiText(String content) {
-		for (Map.Entry<String, String> entry : _protectedMap.entrySet()) {
-			String hash = entry.getKey();
-			String protectedMarkup = entry.getValue();
-
-			content = StringUtil.replace(content, hash, protectedMarkup);
-		}
-
-		return content;
-	}
-
 	protected List<String> nowikiRegexps = new LinkedList<>();
 	protected Map<String, String> regexps = new LinkedHashMap<>();
 
@@ -125,6 +81,50 @@ public abstract class BaseTranslator {
 			content,
 			new String[] {StringPool.RETURN_NEW_LINE, StringPool.RETURN},
 			new String[] {StringPool.NEW_LINE, StringPool.NEW_LINE});
+	}
+
+	private String _preProcess(String content) {
+		content = _normalizeLineBreaks(content);
+
+		for (String regexp : nowikiRegexps) {
+			content = _protectText(content, regexp);
+		}
+
+		return content;
+	}
+
+	private String _protectText(String content, String markupRegex) {
+		Pattern pattern = Pattern.compile(
+			markupRegex, Pattern.MULTILINE | Pattern.DOTALL);
+
+		Matcher matcher = pattern.matcher(content);
+
+		StringBuffer sb = new StringBuffer();
+
+		while (matcher.find()) {
+			String protectedText = matcher.group();
+
+			String hash = DigesterUtil.digest(protectedText);
+
+			matcher.appendReplacement(sb, "$1" + hash + "$3");
+
+			_protectedMap.put(hash, matcher.group(2));
+		}
+
+		matcher.appendTail(sb);
+
+		return sb.toString();
+	}
+
+	private String _unprotectNowikiText(String content) {
+		for (Map.Entry<String, String> entry : _protectedMap.entrySet()) {
+			String hash = entry.getKey();
+			String protectedMarkup = entry.getValue();
+
+			content = StringUtil.replace(content, hash, protectedMarkup);
+		}
+
+		return content;
 	}
 
 	private final Map<String, String> _protectedMap = new LinkedHashMap<>();

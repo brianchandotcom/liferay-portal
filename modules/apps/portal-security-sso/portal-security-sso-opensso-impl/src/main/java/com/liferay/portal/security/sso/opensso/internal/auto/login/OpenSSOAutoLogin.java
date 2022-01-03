@@ -86,55 +86,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class OpenSSOAutoLogin extends BaseAutoLogin {
 
-	protected User addUser(
-			long companyId, String firstName, String lastName,
-			String emailAddress, String screenName, Locale locale)
-		throws PortalException {
-
-		long creatorUserId = 0;
-		boolean autoPassword = true;
-		String password1 = null;
-		String password2 = null;
-		boolean autoScreenName = false;
-		String middleName = StringPool.BLANK;
-		long prefixId = 0;
-		long suffixId = 0;
-		boolean male = true;
-		int birthdayMonth = Calendar.JANUARY;
-		int birthdayDay = 1;
-		int birthdayYear = 1970;
-		String jobTitle = StringPool.BLANK;
-		long[] groupIds = null;
-		long[] organizationIds = null;
-		long[] roleIds = null;
-		long[] userGroupIds = null;
-		boolean sendEmail = false;
-
-		return _userLocalService.addUser(
-			creatorUserId, companyId, autoPassword, password1, password2,
-			autoScreenName, screenName, emailAddress, locale, firstName,
-			middleName, lastName, prefixId, suffixId, male, birthdayMonth,
-			birthdayDay, birthdayYear, jobTitle, groupIds, organizationIds,
-			roleIds, userGroupIds, sendEmail, new ServiceContext());
-	}
-
-	protected void checkAddUser(long companyId, String emailAddress)
-		throws PortalException {
-
-		Company company = _companyLocalService.getCompany(companyId);
-
-		if (!company.isStrangers()) {
-			throw new StrangersNotAllowedException(companyId);
-		}
-
-		if (!company.isStrangersWithMx() &&
-			company.hasCompanyMx(emailAddress)) {
-
-			throw new UserEmailAddressException.MustNotUseCompanyMx(
-				emailAddress);
-		}
-	}
-
 	@Override
 	protected String[] doLogin(
 			HttpServletRequest httpServletRequest,
@@ -143,7 +94,7 @@ public class OpenSSOAutoLogin extends BaseAutoLogin {
 
 		long companyId = _portal.getCompanyId(httpServletRequest);
 
-		OpenSSOConfiguration openSSOConfiguration = getOpenSSOConfiguration(
+		OpenSSOConfiguration openSSOConfiguration = _getOpenSSOConfiguration(
 			companyId);
 
 		if (!openSSOConfiguration.enabled() ||
@@ -240,13 +191,13 @@ public class OpenSSOAutoLogin extends BaseAutoLogin {
 			}
 
 			try {
-				checkAddUser(companyId, emailAddress);
+				_checkAddUser(companyId, emailAddress);
 
 				if (_log.isDebugEnabled()) {
 					_log.debug("Adding user " + screenName);
 				}
 
-				user = addUser(
+				user = _addUser(
 					companyId, firstName, lastName, emailAddress, screenName,
 					locale);
 			}
@@ -306,7 +257,56 @@ public class OpenSSOAutoLogin extends BaseAutoLogin {
 		return credentials;
 	}
 
-	protected OpenSSOConfiguration getOpenSSOConfiguration(long companyId)
+	private User _addUser(
+			long companyId, String firstName, String lastName,
+			String emailAddress, String screenName, Locale locale)
+		throws PortalException {
+
+		long creatorUserId = 0;
+		boolean autoPassword = true;
+		String password1 = null;
+		String password2 = null;
+		boolean autoScreenName = false;
+		String middleName = StringPool.BLANK;
+		long prefixId = 0;
+		long suffixId = 0;
+		boolean male = true;
+		int birthdayMonth = Calendar.JANUARY;
+		int birthdayDay = 1;
+		int birthdayYear = 1970;
+		String jobTitle = StringPool.BLANK;
+		long[] groupIds = null;
+		long[] organizationIds = null;
+		long[] roleIds = null;
+		long[] userGroupIds = null;
+		boolean sendEmail = false;
+
+		return _userLocalService.addUser(
+			creatorUserId, companyId, autoPassword, password1, password2,
+			autoScreenName, screenName, emailAddress, locale, firstName,
+			middleName, lastName, prefixId, suffixId, male, birthdayMonth,
+			birthdayDay, birthdayYear, jobTitle, groupIds, organizationIds,
+			roleIds, userGroupIds, sendEmail, new ServiceContext());
+	}
+
+	private void _checkAddUser(long companyId, String emailAddress)
+		throws PortalException {
+
+		Company company = _companyLocalService.getCompany(companyId);
+
+		if (!company.isStrangers()) {
+			throw new StrangersNotAllowedException(companyId);
+		}
+
+		if (!company.isStrangersWithMx() &&
+			company.hasCompanyMx(emailAddress)) {
+
+			throw new UserEmailAddressException.MustNotUseCompanyMx(
+				emailAddress);
+		}
+	}
+
+	private OpenSSOConfiguration _getOpenSSOConfiguration(long companyId)
 		throws Exception {
 
 		return _configurationProvider.getConfiguration(

@@ -36,17 +36,17 @@ public class ModuleResourceLoader implements ServiceComponentConfiguration {
 
 	@Override
 	public InputStream getHibernateInputStream() {
-		return getInputStream("/META-INF/module-hbm.xml");
+		return _getInputStream("/META-INF/module-hbm.xml");
 	}
 
 	@Override
 	public InputStream getModelHintsExtInputStream() {
-		return getInputStream("/META-INF/portlet-model-hints-ext.xml");
+		return _getInputStream("/META-INF/portlet-model-hints-ext.xml");
 	}
 
 	@Override
 	public InputStream getModelHintsInputStream() {
-		return getInputStream("/META-INF/portlet-model-hints.xml");
+		return _getInputStream("/META-INF/portlet-model-hints.xml");
 	}
 
 	@Override
@@ -56,20 +56,20 @@ public class ModuleResourceLoader implements ServiceComponentConfiguration {
 
 	@Override
 	public InputStream getSQLIndexesInputStream() {
-		return getInputStream("/META-INF/sql/indexes.sql");
+		return _getInputStream("/META-INF/sql/indexes.sql");
 	}
 
 	@Override
 	public InputStream getSQLSequencesInputStream() {
-		return getInputStream("/META-INF/sql/sequences.sql");
+		return _getInputStream("/META-INF/sql/sequences.sql");
 	}
 
 	@Override
 	public InputStream getSQLTablesInputStream() {
-		return getInputStream("/META-INF/sql/tables.sql");
+		return _getInputStream("/META-INF/sql/tables.sql");
 	}
 
-	protected InputStream getInputStream(String location) {
+	private InputStream _getInputStream(String location) {
 		URL url = _bundle.getResource(location);
 
 		if (url == null) {

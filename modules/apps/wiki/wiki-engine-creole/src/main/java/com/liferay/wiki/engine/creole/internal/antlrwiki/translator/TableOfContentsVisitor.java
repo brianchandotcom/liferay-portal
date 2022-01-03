@@ -37,13 +37,13 @@ public class TableOfContentsVisitor extends BaseASTVisitor {
 
 	@Override
 	public void visit(HeadingNode headingNode) {
-		addHeadingNode(_headingNode, headingNode);
+		_addHeadingNode(_headingNode, headingNode);
 	}
 
-	protected boolean addHeadingNode(
+	private boolean _addHeadingNode(
 		TreeNode<HeadingNode> treeNode, HeadingNode headingNode) {
 
-		if (!isLastHeadingNode(treeNode, headingNode)) {
+		if (!_isLastHeadingNode(treeNode, headingNode)) {
 			HeadingNode treeNodeHeadingNode = treeNode.getValue();
 
 			if (headingNode.getLevel() <= treeNodeHeadingNode.getLevel()) {
@@ -61,13 +61,13 @@ public class TableOfContentsVisitor extends BaseASTVisitor {
 		List<TreeNode<HeadingNode>> treeNodes = treeNode.getChildNodes();
 
 		for (int i = treeNodes.size() - 1; i >= 0; --i) {
-			return addHeadingNode(treeNodes.get(i), headingNode);
+			return _addHeadingNode(treeNodes.get(i), headingNode);
 		}
 
 		return true;
 	}
 
-	protected boolean isLastHeadingNode(
+	private boolean _isLastHeadingNode(
 		TreeNode<HeadingNode> treeNode, HeadingNode headingNode) {
 
 		HeadingNode treeNodeHeadingNode = treeNode.getValue();

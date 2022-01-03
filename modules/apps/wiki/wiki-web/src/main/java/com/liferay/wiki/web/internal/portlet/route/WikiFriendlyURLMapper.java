@@ -47,8 +47,8 @@ public class WikiFriendlyURLMapper extends DefaultFriendlyURLMapper {
 
 		buildRouteParameters(liferayPortletURL, routeParameters);
 
-		addParameter(routeParameters, "nodeName", true);
-		addParameter(routeParameters, "title", true);
+		_addParameter(routeParameters, "nodeName", true);
+		_addParameter(routeParameters, "title", true);
 
 		String friendlyURLPath = router.parametersToUrl(routeParameters);
 
@@ -67,7 +67,18 @@ public class WikiFriendlyURLMapper extends DefaultFriendlyURLMapper {
 		return _MAPPING;
 	}
 
-	protected void addParameter(
+	@Override
+	protected void populateParams(
+		Map<String, String[]> parameterMap, String namespace,
+		Map<String, String> routeParameters) {
+
+		_addParameter(routeParameters, "nodeName", false);
+		_addParameter(routeParameters, "title", false);
+
+		super.populateParams(parameterMap, namespace, routeParameters);
+	}
+
+	private void _addParameter(
 		Map<String, String> routeParameters, String name, boolean escape) {
 
 		if (!routeParameters.containsKey(name)) {
@@ -84,17 +95,6 @@ public class WikiFriendlyURLMapper extends DefaultFriendlyURLMapper {
 		}
 
 		routeParameters.put(name, value);
-	}
-
-	@Override
-	protected void populateParams(
-		Map<String, String[]> parameterMap, String namespace,
-		Map<String, String> routeParameters) {
-
-		addParameter(routeParameters, "nodeName", false);
-		addParameter(routeParameters, "title", false);
-
-		super.populateParams(parameterMap, namespace, routeParameters);
 	}
 
 	private static final String _MAPPING = "wiki";

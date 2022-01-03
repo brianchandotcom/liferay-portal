@@ -112,9 +112,9 @@ public class POPNotificationsMessageListener extends BaseMessageListener {
 		Store store = null;
 
 		try {
-			store = getStore();
+			store = _getStore();
 
-			Folder inboxFolder = getInboxFolder(store);
+			Folder inboxFolder = _getInboxFolder(store);
 
 			if (inboxFolder == null) {
 				return;
@@ -134,7 +134,7 @@ public class POPNotificationsMessageListener extends BaseMessageListener {
 				inboxFolder.setFlags(
 					messages, new Flags(Flags.Flag.DELETED), true);
 
-				notifyMessageListeners(messages);
+				_notifyMessageListeners(messages);
 			}
 			finally {
 				inboxFolder.close(true);
@@ -147,7 +147,23 @@ public class POPNotificationsMessageListener extends BaseMessageListener {
 		}
 	}
 
-	protected String getEmailAddress(Address[] addresses) {
+	protected void removeMessageListener(MessageListener messageListener) {
+		_messageListenerWrappers.remove(messageListener);
+	}
+
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
+	protected void setModuleServiceLifecycle(
+		ModuleServiceLifecycle moduleServiceLifecycle) {
+	}
+
+	@Reference(unbind = "-")
+	protected void setSchedulerEngineHelper(
+		SchedulerEngineHelper schedulerEngineHelper) {
+
+		_schedulerEngineHelper = schedulerEngineHelper;
+	}
+
+	private String _getEmailAddress(Address[] addresses) {
 		if (ArrayUtil.isEmpty(addresses)) {
 			return StringPool.BLANK;
 		}
@@ -157,7 +173,7 @@ public class POPNotificationsMessageListener extends BaseMessageListener {
 		return internetAddress.getAddress();
 	}
 
-	protected List<String> getEmailAddresses(Address[] addresses) {
+	private List<String> _getEmailAddresses(Address[] addresses) {
 		if (ArrayUtil.isEmpty(addresses)) {
 			return new ArrayList<>();
 		}
@@ -173,7 +189,7 @@ public class POPNotificationsMessageListener extends BaseMessageListener {
 		return emailAddresses;
 	}
 
-	protected Folder getInboxFolder(Store store) throws MessagingException {
+	private Folder _getInboxFolder(Store store) throws MessagingException {
 		Folder defaultFolder = store.getDefaultFolder();
 
 		Folder[] folders = defaultFolder.list();
@@ -189,7 +205,7 @@ public class POPNotificationsMessageListener extends BaseMessageListener {
 		return inboxFolder;
 	}
 
-	protected Store getStore() throws MessagingException {
+	private Store _getStore() throws MessagingException {
 		Session session = MailEngine.getSession();
 
 		String storeProtocol = GetterUtil.getString(
@@ -222,7 +238,7 @@ public class POPNotificationsMessageListener extends BaseMessageListener {
 		return store;
 	}
 
-	protected void notifyMessageListeners(Message[] messages)
+	private void _notifyMessageListeners(Message[] messages)
 		throws MessagingException {
 
 		if (_log.isDebugEnabled()) {
@@ -234,9 +250,9 @@ public class POPNotificationsMessageListener extends BaseMessageListener {
 				_log.debug("Message " + message);
 			}
 
-			String from = getEmailAddress(message.getFrom());
+			String from = _getEmailAddress(message.getFrom());
 
-			List<String> recipients = getEmailAddresses(
+			List<String> recipients = _getEmailAddresses(
 				message.getRecipients(Message.RecipientType.TO));
 
 			if (_log.isDebugEnabled()) {
@@ -258,22 +274,6 @@ public class POPNotificationsMessageListener extends BaseMessageListener {
 				}
 			}
 		}
-	}
-
-	protected void removeMessageListener(MessageListener messageListener) {
-		_messageListenerWrappers.remove(messageListener);
-	}
-
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
-	}
-
-	@Reference(unbind = "-")
-	protected void setSchedulerEngineHelper(
-		SchedulerEngineHelper schedulerEngineHelper) {
-
-		_schedulerEngineHelper = schedulerEngineHelper;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

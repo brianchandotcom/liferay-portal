@@ -69,7 +69,7 @@ public class AccessControlledContainerRequestResponseFilterExceptionMapper
 	public void filter(ContainerRequestContext containerRequestContext)
 		throws IOException {
 
-		incrementServiceDepth();
+		_incrementServiceDepth();
 
 		Method method = _resourceInfo.getResourceMethod();
 
@@ -89,7 +89,7 @@ public class AccessControlledContainerRequestResponseFilterExceptionMapper
 			ContainerResponseContext containerResponseContext)
 		throws IOException {
 
-		decrementServiceDepth();
+		_decrementServiceDepth();
 	}
 
 	@Override
@@ -123,7 +123,7 @@ public class AccessControlledContainerRequestResponseFilterExceptionMapper
 		).build();
 	}
 
-	protected void decrementServiceDepth() {
+	private void _decrementServiceDepth() {
 		AccessControlContext accessControlContext =
 			AccessControlUtil.getAccessControlContext();
 
@@ -147,7 +147,7 @@ public class AccessControlledContainerRequestResponseFilterExceptionMapper
 			serviceDepth);
 	}
 
-	protected void incrementServiceDepth() {
+	private void _incrementServiceDepth() {
 		AccessControlContext accessControlContext =
 			AccessControlUtil.getAccessControlContext();
 

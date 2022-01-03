@@ -23,19 +23,19 @@ import com.liferay.wiki.constants.WikiPortletKeys;
 public class UpgradeLastPublishDate
 	extends com.liferay.portal.upgrade.v7_0_0.UpgradeLastPublishDate {
 
-	protected void addLastPublishDateColumns() throws Exception {
+	@Override
+	protected void doUpgrade() throws Exception {
+		_addLastPublishDateColumns();
+
+		updateLastPublishDates(WikiPortletKeys.WIKI, "WikiNode");
+		updateLastPublishDates(WikiPortletKeys.WIKI, "WikiPage");
+	}
+
+	private void _addLastPublishDateColumns() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			addLastPublishDateColumn("WikiNode");
 			addLastPublishDateColumn("WikiPage");
 		}
-	}
-
-	@Override
-	protected void doUpgrade() throws Exception {
-		addLastPublishDateColumns();
-
-		updateLastPublishDates(WikiPortletKeys.WIKI, "WikiNode");
-		updateLastPublishDates(WikiPortletKeys.WIKI, "WikiPage");
 	}
 
 }

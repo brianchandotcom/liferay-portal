@@ -59,7 +59,7 @@ public class AntiSamySanitizerImpl implements Sanitizer {
 				blacklistItem = blacklistItem.trim();
 
 				if (!blacklistItem.isEmpty()) {
-					blacklistItem = stripTrailingStar(blacklistItem);
+					blacklistItem = _stripTrailingStar(blacklistItem);
 
 					_blacklist.add(blacklistItem);
 				}
@@ -71,7 +71,7 @@ public class AntiSamySanitizerImpl implements Sanitizer {
 				whitelistItem = whitelistItem.trim();
 
 				if (!whitelistItem.isEmpty()) {
-					whitelistItem = stripTrailingStar(whitelistItem);
+					whitelistItem = _stripTrailingStar(whitelistItem);
 
 					_whitelist.add(whitelistItem);
 				}
@@ -109,7 +109,7 @@ public class AntiSamySanitizerImpl implements Sanitizer {
 
 		if (Validator.isNull(content) || Validator.isNull(contentType) ||
 			!contentType.equals(ContentTypes.TEXT_HTML) ||
-			isWhitelisted(className, classPK)) {
+			_isWhitelisted(className, classPK)) {
 
 			return content;
 		}
@@ -124,7 +124,7 @@ public class AntiSamySanitizerImpl implements Sanitizer {
 		try {
 			AntiSamy antiSamy = new AntiSamy();
 
-			if (isConfigured(className, classPK)) {
+			if (_isConfigured(className, classPK)) {
 				Policy policy = _policies.get(className);
 
 				CleanResults cleanResults = antiSamy.scan(
@@ -147,7 +147,7 @@ public class AntiSamySanitizerImpl implements Sanitizer {
 		}
 	}
 
-	protected boolean isConfigured(String className, long classPK) {
+	private boolean _isConfigured(String className, long classPK) {
 		String classNameAndClassPK = className + StringPool.POUND + classPK;
 
 		for (String policyClassName : _policies.keySet()) {
@@ -159,7 +159,7 @@ public class AntiSamySanitizerImpl implements Sanitizer {
 		return false;
 	}
 
-	protected boolean isWhitelisted(String className, long classPK) {
+	private boolean _isWhitelisted(String className, long classPK) {
 		String classNameAndClassPK = className + StringPool.POUND + classPK;
 
 		for (String blacklistItem : _blacklist) {
@@ -181,7 +181,7 @@ public class AntiSamySanitizerImpl implements Sanitizer {
 		return false;
 	}
 
-	protected String stripTrailingStar(String item) {
+	private String _stripTrailingStar(String item) {
 		if (item.equals(StringPool.STAR)) {
 			return item;
 		}

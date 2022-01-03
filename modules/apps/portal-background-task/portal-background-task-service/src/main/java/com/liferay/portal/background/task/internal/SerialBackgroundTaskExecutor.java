@@ -54,7 +54,7 @@ public class SerialBackgroundTaskExecutor
 
 		try {
 			if (isSerial()) {
-				lock = acquireLock(backgroundTask);
+				lock = _acquireLock(backgroundTask);
 			}
 
 			BackgroundTaskExecutor backgroundTaskExecutor =
@@ -69,7 +69,7 @@ public class SerialBackgroundTaskExecutor
 		}
 	}
 
-	protected Lock acquireLock(BackgroundTask backgroundTask)
+	private Lock _acquireLock(BackgroundTask backgroundTask)
 		throws DuplicateLockException {
 
 		Lock lock = _backgroundTaskLockHelper.lockBackgroundTask(

@@ -74,7 +74,7 @@ public class SampleDroolsConfigurationAction
 
 		PortletPreferences preferences = actionRequest.getPreferences();
 
-		updatePreferences(actionRequest, preferences);
+		_updatePreferences(actionRequest, preferences);
 
 		if (SessionErrors.isEmpty(actionRequest)) {
 			preferences.store();
@@ -95,7 +95,7 @@ public class SampleDroolsConfigurationAction
 		super.setServletContext(servletContext);
 	}
 
-	protected void updatePreferences(
+	private void _updatePreferences(
 			ActionRequest actionRequest, PortletPreferences preferences)
 		throws Exception {
 

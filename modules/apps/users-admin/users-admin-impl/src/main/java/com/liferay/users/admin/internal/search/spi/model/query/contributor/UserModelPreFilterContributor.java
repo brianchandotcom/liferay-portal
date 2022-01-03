@@ -89,12 +89,12 @@ public class UserModelPreFilterContributor
 				}
 			}
 
-			addContextQueryParams(
+			_addContextQueryParams(
 				contextBooleanFilter, searchContext, entry.getKey(), value);
 		}
 	}
 
-	protected void addContextQueryParams(
+	private void _addContextQueryParams(
 		BooleanFilter contextFilter, SearchContext searchContext, String key,
 		Object value) {
 

@@ -54,7 +54,7 @@ public class EditInstanceMVCRenderCommand implements MVCRenderCommand {
 		throws PortletException {
 
 		try {
-			getInstance(renderRequest);
+			_getInstance(renderRequest);
 		}
 		catch (Exception exception) {
 			if (exception instanceof NoSuchCompanyException ||
@@ -71,7 +71,7 @@ public class EditInstanceMVCRenderCommand implements MVCRenderCommand {
 		return "/edit_instance.jsp";
 	}
 
-	protected void getInstance(PortletRequest portletRequest) throws Exception {
+	private void _getInstance(PortletRequest portletRequest) throws Exception {
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			portletRequest);
 

@@ -47,7 +47,7 @@ public abstract class BaseUserScreenNavigationEntry
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(getResourceBundle(locale), getEntryKey());
+		return LanguageUtil.get(_getResourceBundle(locale), getEntryKey());
 	}
 
 	@Override
@@ -100,18 +100,18 @@ public abstract class BaseUserScreenNavigationEntry
 			"/edit_user_navigation.jsp");
 	}
 
-	protected ResourceBundle getResourceBundle(Locale locale) {
+	@Reference
+	protected JSPRenderer jspRenderer;
+
+	@Reference
+	protected Portal portal;
+
+	private ResourceBundle _getResourceBundle(Locale locale) {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
 		return new AggregateResourceBundle(
 			resourceBundle, PortalUtil.getResourceBundle(locale));
 	}
-
-	@Reference
-	protected JSPRenderer jspRenderer;
-
-	@Reference
-	protected Portal portal;
 
 }

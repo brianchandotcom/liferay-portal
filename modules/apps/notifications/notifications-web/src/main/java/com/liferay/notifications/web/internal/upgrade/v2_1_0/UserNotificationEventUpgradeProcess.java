@@ -40,15 +40,13 @@ public class UserNotificationEventUpgradeProcess extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		if (hasTable("Notifications_UserNotificationEvent")) {
-			updateUserNotificationEventActionRequired();
+			_updateUserNotificationEventActionRequired();
 		}
 
-		updateUserNotificationEvents();
+		_updateUserNotificationEvents();
 	}
 
-	protected void updateUserNotificationEventActionRequired()
-		throws Exception {
-
+	private void _updateUserNotificationEventActionRequired() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			runSQL(
 				StringBundler.concat(
@@ -64,7 +62,7 @@ public class UserNotificationEventUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
-	protected void updateUserNotificationEvents() throws Exception {
+	private void _updateUserNotificationEvents() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			PreparedStatement preparedStatement1 = connection.prepareStatement(
 				"select userNotificationEventId, payload, actionRequired " +

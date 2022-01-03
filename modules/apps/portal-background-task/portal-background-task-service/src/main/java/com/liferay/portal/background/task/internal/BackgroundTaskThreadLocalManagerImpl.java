@@ -108,7 +108,7 @@ public class BackgroundTaskThreadLocalManagerImpl
 		long companyId = GetterUtil.getLong(threadLocalValues.get("companyId"));
 
 		if (companyId > 0) {
-			CompanyThreadLocal.setCompanyId(requireCompany(companyId));
+			CompanyThreadLocal.setCompanyId(_requireCompany(companyId));
 		}
 
 		Boolean clusterInvoke = (Boolean)threadLocalValues.get("clusterInvoke");
@@ -157,17 +157,6 @@ public class BackgroundTaskThreadLocalManagerImpl
 		}
 	}
 
-	protected long requireCompany(long companyId) {
-		Company company = companyLocalService.fetchCompany(companyId);
-
-		if (company != null) {
-			return companyId;
-		}
-
-		throw new StaleBackgroundTaskException(
-			"Unable to find company " + companyId);
-	}
-
 	@Reference(unbind = "-")
 	protected void setPermissionCheckerFactory(
 		PermissionCheckerFactory permissionCheckerFactory) {
@@ -184,6 +173,17 @@ public class BackgroundTaskThreadLocalManagerImpl
 
 	@Reference
 	protected CompanyLocalService companyLocalService;
+
+	private long _requireCompany(long companyId) {
+		Company company = companyLocalService.fetchCompany(companyId);
+
+		if (company != null) {
+			return companyId;
+		}
+
+		throw new StaleBackgroundTaskException(
+			"Unable to find company " + companyId);
+	}
 
 	private PermissionCheckerFactory _permissionCheckerFactory;
 	private UserLocalService _userLocalService;

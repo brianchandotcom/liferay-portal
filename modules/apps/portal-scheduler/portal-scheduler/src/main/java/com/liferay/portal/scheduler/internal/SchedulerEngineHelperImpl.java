@@ -217,13 +217,13 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 
 			List<DayAndPosition> dayPos = new ArrayList<>();
 
-			addWeeklyDayPos(portletRequest, dayPos, Calendar.SUNDAY);
-			addWeeklyDayPos(portletRequest, dayPos, Calendar.MONDAY);
-			addWeeklyDayPos(portletRequest, dayPos, Calendar.TUESDAY);
-			addWeeklyDayPos(portletRequest, dayPos, Calendar.WEDNESDAY);
-			addWeeklyDayPos(portletRequest, dayPos, Calendar.THURSDAY);
-			addWeeklyDayPos(portletRequest, dayPos, Calendar.FRIDAY);
-			addWeeklyDayPos(portletRequest, dayPos, Calendar.SATURDAY);
+			_addWeeklyDayPos(portletRequest, dayPos, Calendar.SUNDAY);
+			_addWeeklyDayPos(portletRequest, dayPos, Calendar.MONDAY);
+			_addWeeklyDayPos(portletRequest, dayPos, Calendar.TUESDAY);
+			_addWeeklyDayPos(portletRequest, dayPos, Calendar.WEDNESDAY);
+			_addWeeklyDayPos(portletRequest, dayPos, Calendar.THURSDAY);
+			_addWeeklyDayPos(portletRequest, dayPos, Calendar.FRIDAY);
+			_addWeeklyDayPos(portletRequest, dayPos, Calendar.SATURDAY);
 
 			if (dayPos.isEmpty()) {
 				dayPos.add(new DayAndPosition(Calendar.MONDAY, 0));
@@ -760,11 +760,11 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 
 		_bundleContext = componentContext.getBundleContext();
 
-		registerDestination(
+		_registerDestination(
 			_bundleContext, DestinationConfiguration.DESTINATION_TYPE_PARALLEL,
 			DestinationNames.SCHEDULER_DISPATCH);
 
-		Destination scriptingDestination = registerDestination(
+		Destination scriptingDestination = _registerDestination(
 			_bundleContext, DestinationConfiguration.DESTINATION_TYPE_PARALLEL,
 			DestinationNames.SCHEDULER_SCRIPTING);
 
@@ -789,14 +789,6 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 
 				return null;
 			});
-	}
-
-	protected void addWeeklyDayPos(
-		PortletRequest portletRequest, List<DayAndPosition> list, int day) {
-
-		if (ParamUtil.getBoolean(portletRequest, "weeklyDayPos" + day)) {
-			list.add(new DayAndPosition(day, 0));
-		}
 	}
 
 	@Deactivate
@@ -838,39 +830,11 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 		_bundleContext = null;
 	}
 
-	protected SchedulerEngine getSchedulerEngine() {
-		return _schedulerEngine;
-	}
-
 	@Modified
 	protected void modified(Map<String, Object> properties) throws Exception {
 		_schedulerEngineHelperConfiguration =
 			ConfigurableUtil.createConfigurable(
 				SchedulerEngineHelperConfiguration.class, properties);
-	}
-
-	protected Destination registerDestination(
-		BundleContext bundleContext, String destinationType,
-		String destinationName) {
-
-		DestinationConfiguration destinationConfiguration =
-			new DestinationConfiguration(destinationType, destinationName);
-
-		Destination destination = _destinationFactory.createDestination(
-			destinationConfiguration);
-
-		Dictionary<String, Object> dictionary =
-			HashMapDictionaryBuilder.<String, Object>put(
-				"destination.name", destination.getName()
-			).build();
-
-		ServiceRegistration<Destination> serviceRegistration =
-			bundleContext.registerService(
-				Destination.class, destination, dictionary);
-
-		_destinationServiceRegistrations.add(serviceRegistration);
-
-		return destination;
 	}
 
 	@Reference(unbind = "-")
@@ -895,6 +859,42 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 	@Reference(target = "(scheduler.engine.proxy=true)", unbind = "-")
 	protected void setSchedulerEngine(SchedulerEngine schedulerEngine) {
 		_schedulerEngine = schedulerEngine;
+	}
+
+	private void _addWeeklyDayPos(
+		PortletRequest portletRequest, List<DayAndPosition> list, int day) {
+
+		if (ParamUtil.getBoolean(portletRequest, "weeklyDayPos" + day)) {
+			list.add(new DayAndPosition(day, 0));
+		}
+	}
+
+	private SchedulerEngine _getSchedulerEngine() {
+		return _schedulerEngine;
+	}
+
+	private Destination _registerDestination(
+		BundleContext bundleContext, String destinationType,
+		String destinationName) {
+
+		DestinationConfiguration destinationConfiguration =
+			new DestinationConfiguration(destinationType, destinationName);
+
+		Destination destination = _destinationFactory.createDestination(
+			destinationConfiguration);
+
+		Dictionary<String, Object> dictionary =
+			HashMapDictionaryBuilder.<String, Object>put(
+				"destination.name", destination.getName()
+			).build();
+
+		ServiceRegistration<Destination> serviceRegistration =
+			bundleContext.registerService(
+				Destination.class, destination, dictionary);
+
+		_destinationServiceRegistrations.add(serviceRegistration);
+
+		return destination;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

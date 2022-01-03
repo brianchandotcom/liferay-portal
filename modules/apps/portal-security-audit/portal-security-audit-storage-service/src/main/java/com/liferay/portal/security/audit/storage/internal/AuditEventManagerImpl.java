@@ -39,7 +39,7 @@ public class AuditEventManagerImpl implements AuditEventManager {
 		com.liferay.portal.security.audit.storage.model.AuditEvent auditEvent =
 			_auditEventLocalService.addAuditEvent(auditMessage);
 
-		return createAuditEvent(auditEvent);
+		return _createAuditEvent(auditEvent);
 	}
 
 	@Override
@@ -47,7 +47,7 @@ public class AuditEventManagerImpl implements AuditEventManager {
 		com.liferay.portal.security.audit.storage.model.AuditEvent auditEvent =
 			_auditEventLocalService.fetchAuditEvent(auditEventId);
 
-		return createAuditEvent(auditEvent);
+		return _createAuditEvent(auditEvent);
 	}
 
 	@Override
@@ -61,7 +61,7 @@ public class AuditEventManagerImpl implements AuditEventManager {
 			auditEvents = _auditEventLocalService.getAuditEvents(
 				companyId, start, end, orderByComparator);
 
-		return translate(auditEvents);
+		return _translate(auditEvents);
 	}
 
 	@Override
@@ -81,7 +81,7 @@ public class AuditEventManagerImpl implements AuditEventManager {
 				serverPort, sessionID, andSearch, start, end,
 				orderByComparator);
 
-		return translate(auditEvents);
+		return _translate(auditEvents);
 	}
 
 	@Override
@@ -102,14 +102,14 @@ public class AuditEventManagerImpl implements AuditEventManager {
 			sessionID, andSearch);
 	}
 
-	protected AuditEvent createAuditEvent(
+	private AuditEvent _createAuditEvent(
 		com.liferay.portal.security.audit.storage.model.AuditEvent
 			auditEventModel) {
 
 		return AuditEventAutoEscapeBeanHandler.createProxy(auditEventModel);
 	}
 
-	protected List<AuditEvent> translate(
+	private List<AuditEvent> _translate(
 		List<com.liferay.portal.security.audit.storage.model.AuditEvent>
 			auditEventModels) {
 
@@ -122,7 +122,7 @@ public class AuditEventManagerImpl implements AuditEventManager {
 		for (com.liferay.portal.security.audit.storage.model.AuditEvent
 				auditEventModel : auditEventModels) {
 
-			auditEvents.add(createAuditEvent(auditEventModel));
+			auditEvents.add(_createAuditEvent(auditEventModel));
 		}
 
 		return auditEvents;

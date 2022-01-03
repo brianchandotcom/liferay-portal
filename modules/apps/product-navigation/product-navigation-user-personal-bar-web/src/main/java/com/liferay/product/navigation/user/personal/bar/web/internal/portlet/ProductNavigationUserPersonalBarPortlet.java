@@ -76,7 +76,7 @@ public class ProductNavigationUserPersonalBarPortlet extends MVCPortlet {
 		if (!user.isDefaultUser()) {
 			renderRequest.setAttribute(
 				ProductNavigationUserPersonalBarWebKeys.NOTIFICATIONS_COUNT,
-				getNotificationsCount(themeDisplay));
+				_getNotificationsCount(themeDisplay));
 		}
 
 		_recentGroupManager.addRecentGroup(
@@ -84,17 +84,6 @@ public class ProductNavigationUserPersonalBarPortlet extends MVCPortlet {
 			themeDisplay.getScopeGroupId());
 
 		super.doDispatch(renderRequest, renderResponse);
-	}
-
-	protected int getNotificationsCount(ThemeDisplay themeDisplay) {
-		if (_userNotificationEventLocalService == null) {
-			return 0;
-		}
-
-		return _userNotificationEventLocalService.
-			getUserNotificationEventsCount(
-				themeDisplay.getUserId(),
-				UserNotificationDeliveryConstants.TYPE_WEBSITE, true, false);
 	}
 
 	@Reference(unbind = "-")
@@ -107,6 +96,17 @@ public class ProductNavigationUserPersonalBarPortlet extends MVCPortlet {
 		PanelCategoryRegistry panelCategoryRegistry) {
 
 		_panelCategoryRegistry = panelCategoryRegistry;
+	}
+
+	private int _getNotificationsCount(ThemeDisplay themeDisplay) {
+		if (_userNotificationEventLocalService == null) {
+			return 0;
+		}
+
+		return _userNotificationEventLocalService.
+			getUserNotificationEventsCount(
+				themeDisplay.getUserId(),
+				UserNotificationDeliveryConstants.TYPE_WEBSITE, true, false);
 	}
 
 	private PanelAppRegistry _panelAppRegistry;

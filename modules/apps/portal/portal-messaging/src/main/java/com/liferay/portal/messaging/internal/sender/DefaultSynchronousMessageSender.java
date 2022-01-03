@@ -97,7 +97,7 @@ public class DefaultSynchronousMessageSender
 				DestinationNames.MESSAGE_BUS_DEFAULT_RESPONSE);
 		}
 
-		message.setResponseId(generateUUID());
+		message.setResponseId(_generateUUID());
 
 		SynchronousMessageListener synchronousMessageListener =
 			new SynchronousMessageListener(
@@ -111,7 +111,7 @@ public class DefaultSynchronousMessageSender
 		_timeout = GetterUtil.getLong(properties.get("timeout"), 10000);
 	}
 
-	protected String generateUUID() {
+	private String _generateUUID() {
 		UUID uuid = new UUID(
 			SecureRandomUtil.nextLong(), SecureRandomUtil.nextLong());
 

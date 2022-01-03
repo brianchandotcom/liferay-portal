@@ -67,7 +67,34 @@ public class OAuthJSONWebServiceClientImpl extends JSONWebServiceClientImpl {
 		super.activate(properties);
 	}
 
-	protected String buildURL(
+	@Override
+	protected void signRequest(HttpRequestBase httpRequestBase)
+		throws JSONWebServiceTransportException.SigningFailure {
+
+		if ((_oAuthAccessToken == null) && (_oAuthAccessSecret == null)) {
+			throw new JSONWebServiceTransportException.SigningFailure(
+				"OAuth credentials are not set", -1);
+		}
+
+		OAuthConsumer oAuthConsumer = _getOAuthConsumer(
+			_oAuthAccessToken, _oAuthAccessSecret);
+
+		String requestURL = _buildURL(
+			getHostName(), getHostPort(), getProtocol(),
+			String.valueOf(httpRequestBase.getURI()));
+
+		httpRequestBase.setURI(URI.create(requestURL));
+
+		try {
+			oAuthConsumer.sign(httpRequestBase);
+		}
+		catch (OAuthException oAuthException) {
+			throw new JSONWebServiceTransportException.SigningFailure(
+				"Unable to sign HTTP request", oAuthException);
+		}
+	}
+
+	private String _buildURL(
 		String hostName, int port, String protocol, String uri) {
 
 		StringBuilder sb = new StringBuilder();
@@ -89,7 +116,7 @@ public class OAuthJSONWebServiceClientImpl extends JSONWebServiceClientImpl {
 		return sb.toString();
 	}
 
-	protected OAuthConsumer getOAuthConsumer(
+	private OAuthConsumer _getOAuthConsumer(
 		String accessToken, String accessSecret) {
 
 		OAuthConsumer oAuthConsumer = new CommonsHttpOAuthConsumer(
@@ -98,33 +125,6 @@ public class OAuthJSONWebServiceClientImpl extends JSONWebServiceClientImpl {
 		oAuthConsumer.setTokenWithSecret(accessToken, accessSecret);
 
 		return oAuthConsumer;
-	}
-
-	@Override
-	protected void signRequest(HttpRequestBase httpRequestBase)
-		throws JSONWebServiceTransportException.SigningFailure {
-
-		if ((_oAuthAccessToken == null) && (_oAuthAccessSecret == null)) {
-			throw new JSONWebServiceTransportException.SigningFailure(
-				"OAuth credentials are not set", -1);
-		}
-
-		OAuthConsumer oAuthConsumer = getOAuthConsumer(
-			_oAuthAccessToken, _oAuthAccessSecret);
-
-		String requestURL = buildURL(
-			getHostName(), getHostPort(), getProtocol(),
-			String.valueOf(httpRequestBase.getURI()));
-
-		httpRequestBase.setURI(URI.create(requestURL));
-
-		try {
-			oAuthConsumer.sign(httpRequestBase);
-		}
-		catch (OAuthException oAuthException) {
-			throw new JSONWebServiceTransportException.SigningFailure(
-				"Unable to sign HTTP request", oAuthException);
-		}
 	}
 
 	private String _oAuthAccessSecret;

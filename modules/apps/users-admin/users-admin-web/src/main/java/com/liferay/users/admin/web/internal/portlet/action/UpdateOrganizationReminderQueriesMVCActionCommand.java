@@ -58,7 +58,7 @@ public class UpdateOrganizationReminderQueriesMVCActionCommand
 		throws Exception {
 
 		try {
-			updateReminderQueries(actionRequest);
+			_updateReminderQueries(actionRequest);
 		}
 		catch (Exception exception) {
 			String mvcPath = "/edit_organization.jsp";
@@ -75,7 +75,7 @@ public class UpdateOrganizationReminderQueriesMVCActionCommand
 		}
 	}
 
-	protected void updateReminderQueries(PortletRequest portletRequest)
+	private void _updateReminderQueries(PortletRequest portletRequest)
 		throws Exception {
 
 		long organizationId = ParamUtil.getLong(

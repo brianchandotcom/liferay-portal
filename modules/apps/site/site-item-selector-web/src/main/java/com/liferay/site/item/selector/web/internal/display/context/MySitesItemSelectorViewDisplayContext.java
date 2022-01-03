@@ -59,14 +59,14 @@ public class MySitesItemSelectorViewDisplayContext
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		addBreadcrumbEntries();
+		_addBreadcrumbEntries();
 	}
 
 	@Override
 	public GroupSearch getGroupSearch() throws Exception {
 		PortletURL portletURL = getPortletURL();
 
-		Group group = getGroup();
+		Group group = _getGroup();
 
 		if (group != null) {
 			portletURL.setParameter(
@@ -109,8 +109,8 @@ public class MySitesItemSelectorViewDisplayContext
 		return true;
 	}
 
-	protected void addBreadcrumbEntries() {
-		Group group = getGroup();
+	private void _addBreadcrumbEntries() {
+		Group group = _getGroup();
 
 		if (group == null) {
 			return;
@@ -134,7 +134,7 @@ public class MySitesItemSelectorViewDisplayContext
 		}
 	}
 
-	protected Group getGroup() {
+	private Group _getGroup() {
 		long groupId = ParamUtil.getLong(
 			httpServletRequest, "groupId",
 			GroupConstants.DEFAULT_PARENT_GROUP_ID);

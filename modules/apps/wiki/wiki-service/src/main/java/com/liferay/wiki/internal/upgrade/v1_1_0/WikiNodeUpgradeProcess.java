@@ -29,10 +29,10 @@ public class WikiNodeUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		updateWikiNodeName();
+		_updateWikiNodeName();
 	}
 
-	protected void updateWikiNodeName() throws Exception {
+	private void _updateWikiNodeName() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				"select nodeId, name from WikiNode");

@@ -67,7 +67,7 @@ public class UpdateOrganizationAddressesMVCActionCommand
 		throws Exception {
 
 		try {
-			updateAddresses(actionRequest);
+			_updateAddresses(actionRequest);
 		}
 		catch (Exception exception) {
 			if (exception instanceof NoSuchOrganizationException ||
@@ -96,7 +96,7 @@ public class UpdateOrganizationAddressesMVCActionCommand
 		}
 	}
 
-	protected void updateAddresses(ActionRequest actionRequest)
+	private void _updateAddresses(ActionRequest actionRequest)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(

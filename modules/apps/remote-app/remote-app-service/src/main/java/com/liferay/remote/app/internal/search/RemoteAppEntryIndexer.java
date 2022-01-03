@@ -81,7 +81,7 @@ public class RemoteAppEntryIndexer extends BaseIndexer<RemoteAppEntry> {
 
 		Document document = getBaseModelDocument(CLASS_NAME, remoteAppEntry);
 
-		Localization localization = getLocalization();
+		Localization localization = _getLocalization();
 
 		String[] nameAvailableLanguageIds =
 			localization.getAvailableLanguageIds(remoteAppEntry.getName());
@@ -137,10 +137,10 @@ public class RemoteAppEntryIndexer extends BaseIndexer<RemoteAppEntry> {
 	protected void doReindex(String[] ids) throws Exception {
 		long companyId = GetterUtil.getLong(ids[0]);
 
-		reindexRemoteAppEntries(companyId);
+		_reindexRemoteAppEntries(companyId);
 	}
 
-	protected Localization getLocalization() {
+	private Localization _getLocalization() {
 
 		// See LPS-72507
 
@@ -151,7 +151,7 @@ public class RemoteAppEntryIndexer extends BaseIndexer<RemoteAppEntry> {
 		return LocalizationUtil.getLocalization();
 	}
 
-	protected void reindexRemoteAppEntries(long companyId)
+	private void _reindexRemoteAppEntries(long companyId)
 		throws PortalException {
 
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery =

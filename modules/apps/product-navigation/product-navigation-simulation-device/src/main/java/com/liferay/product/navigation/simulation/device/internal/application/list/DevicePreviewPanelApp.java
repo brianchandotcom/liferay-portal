@@ -72,7 +72,7 @@ public class DevicePreviewPanelApp extends BaseJSPPanelApp {
 		throws PortalException {
 
 		if (group.isControlPanel() ||
-			!hasPreviewInDevicePermission(permissionChecker, group)) {
+			!_hasPreviewInDevicePermission(permissionChecker, group)) {
 
 			return false;
 		}
@@ -98,7 +98,7 @@ public class DevicePreviewPanelApp extends BaseJSPPanelApp {
 		super.setServletContext(servletContext);
 	}
 
-	protected boolean hasPreviewInDevicePermission(
+	private boolean _hasPreviewInDevicePermission(
 			PermissionChecker permissionChecker, Group group)
 		throws PortalException {
 

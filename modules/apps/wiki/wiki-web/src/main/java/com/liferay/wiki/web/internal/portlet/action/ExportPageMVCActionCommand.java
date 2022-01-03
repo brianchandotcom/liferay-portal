@@ -124,7 +124,7 @@ public class ExportPageMVCActionCommand extends BaseMVCActionCommand {
 				WindowState.MAXIMIZED
 			).buildPortletURL();
 
-			getFile(
+			_getFile(
 				nodeId, title, version, targetExtension, viewPageURL,
 				editPageURL, themeDisplay,
 				_portal.getHttpServletRequest(actionRequest),
@@ -139,7 +139,7 @@ public class ExportPageMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	protected void getFile(
+	private void _getFile(
 			long nodeId, String title, double version, String targetExtension,
 			PortletURL viewPageURL, PortletURL editPageURL,
 			ThemeDisplay themeDisplay, HttpServletRequest httpServletRequest,

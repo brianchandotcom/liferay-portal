@@ -58,58 +58,6 @@ public class WikiActivityInterpreter extends BaseSocialActivityInterpreter {
 		return _CLASS_NAMES;
 	}
 
-	protected String getAttachmentTitle(
-			SocialActivity activity, WikiPageResource pageResource,
-			ServiceContext serviceContext)
-		throws Exception {
-
-		int activityType = activity.getType();
-
-		if ((activityType == SocialActivityConstants.TYPE_ADD_ATTACHMENT) ||
-			(activityType ==
-				SocialActivityConstants.TYPE_MOVE_ATTACHMENT_TO_TRASH) ||
-			(activityType ==
-				SocialActivityConstants.TYPE_RESTORE_ATTACHMENT_FROM_TRASH)) {
-
-			String link = null;
-
-			FileEntry fileEntry = null;
-
-			try {
-				long fileEntryId = GetterUtil.getLong(
-					activity.getExtraDataValue("fileEntryId"));
-
-				fileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
-					fileEntryId);
-			}
-			catch (NoSuchModelException noSuchModelException) {
-
-				// LPS-52675
-
-				if (_log.isDebugEnabled()) {
-					_log.debug(noSuchModelException, noSuchModelException);
-				}
-			}
-
-			String fileEntryTitle = activity.getExtraDataValue(
-				"fileEntryTitle");
-
-			if ((fileEntry != null) && !fileEntry.isInTrash()) {
-				link = StringBundler.concat(
-					serviceContext.getPathMain(),
-					"/wiki/get_page_attachment?p_l_id=",
-					serviceContext.getPlid(), "&nodeId=",
-					pageResource.getNodeId(), "&title=",
-					URLCodec.encodeURL(pageResource.getTitle()), "&fileName=",
-					fileEntryTitle);
-			}
-
-			return wrapLink(link, fileEntryTitle);
-		}
-
-		return StringPool.BLANK;
-	}
-
 	@Override
 	protected String getPath(
 		SocialActivity activity, ServiceContext serviceContext) {
@@ -138,7 +86,7 @@ public class WikiActivityInterpreter extends BaseSocialActivityInterpreter {
 
 		return new Object[] {
 			groupName, creatorUserName, title,
-			getAttachmentTitle(activity, pageResource, serviceContext)
+			_getAttachmentTitle(activity, pageResource, serviceContext)
 		};
 	}
 
@@ -252,6 +200,58 @@ public class WikiActivityInterpreter extends BaseSocialActivityInterpreter {
 		}
 
 		return true;
+	}
+
+	private String _getAttachmentTitle(
+			SocialActivity activity, WikiPageResource pageResource,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		int activityType = activity.getType();
+
+		if ((activityType == SocialActivityConstants.TYPE_ADD_ATTACHMENT) ||
+			(activityType ==
+				SocialActivityConstants.TYPE_MOVE_ATTACHMENT_TO_TRASH) ||
+			(activityType ==
+				SocialActivityConstants.TYPE_RESTORE_ATTACHMENT_FROM_TRASH)) {
+
+			String link = null;
+
+			FileEntry fileEntry = null;
+
+			try {
+				long fileEntryId = GetterUtil.getLong(
+					activity.getExtraDataValue("fileEntryId"));
+
+				fileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
+					fileEntryId);
+			}
+			catch (NoSuchModelException noSuchModelException) {
+
+				// LPS-52675
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(noSuchModelException, noSuchModelException);
+				}
+			}
+
+			String fileEntryTitle = activity.getExtraDataValue(
+				"fileEntryTitle");
+
+			if ((fileEntry != null) && !fileEntry.isInTrash()) {
+				link = StringBundler.concat(
+					serviceContext.getPathMain(),
+					"/wiki/get_page_attachment?p_l_id=",
+					serviceContext.getPlid(), "&nodeId=",
+					pageResource.getNodeId(), "&title=",
+					URLCodec.encodeURL(pageResource.getTitle()), "&fileName=",
+					fileEntryTitle);
+			}
+
+			return wrapLink(link, fileEntryTitle);
+		}
+
+		return StringPool.BLANK;
 	}
 
 	private static final String[] _CLASS_NAMES = {WikiPage.class.getName()};

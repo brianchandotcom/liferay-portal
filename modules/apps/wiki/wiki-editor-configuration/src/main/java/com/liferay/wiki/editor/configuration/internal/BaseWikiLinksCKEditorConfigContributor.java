@@ -79,7 +79,7 @@ public abstract class BaseWikiLinksCKEditorConfigContributor
 
 		if (nodeId != 0) {
 			itemSelectorCriteria.add(
-				0, getWikiPageItemSelectorCriterion(nodeId));
+				0, _getWikiPageItemSelectorCriterion(nodeId));
 		}
 
 		PortletURL itemSelectorURL = itemSelector.getItemSelectorURL(
@@ -103,7 +103,16 @@ public abstract class BaseWikiLinksCKEditorConfigContributor
 		return itemSelectorCriterion;
 	}
 
-	protected ItemSelectorCriterion getWikiPageItemSelectorCriterion(
+	@Reference
+	protected ItemSelector itemSelector;
+
+	@Reference(
+		target = "(item.selector.view.key=" + WikiItemSelectorViewConstants.ITEM_SELECTOR_VIEW_KEY + ")"
+	)
+	protected ItemSelectorViewReturnTypeProvider
+		itemSelectorViewReturnTypeProvider;
+
+	private ItemSelectorCriterion _getWikiPageItemSelectorCriterion(
 		long nodeId) {
 
 		ItemSelectorCriterion itemSelectorCriterion =
@@ -115,14 +124,5 @@ public abstract class BaseWikiLinksCKEditorConfigContributor
 
 		return itemSelectorCriterion;
 	}
-
-	@Reference
-	protected ItemSelector itemSelector;
-
-	@Reference(
-		target = "(item.selector.view.key=" + WikiItemSelectorViewConstants.ITEM_SELECTOR_VIEW_KEY + ")"
-	)
-	protected ItemSelectorViewReturnTypeProvider
-		itemSelectorViewReturnTypeProvider;
 
 }

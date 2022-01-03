@@ -46,11 +46,11 @@ public abstract class BasePortletToolbarContributorLocator
 			portletRequest, getParameterName(), "-");
 
 		List<PortletToolbarContributor> portletToolbarContributors =
-			_serviceTrackerMap.getService(getKey(portletId, value));
+			_serviceTrackerMap.getService(_getKey(portletId, value));
 
 		if (ListUtil.isEmpty(portletToolbarContributors)) {
 			portletToolbarContributors = _serviceTrackerMap.getService(
-				getKey(portletId, StringPool.STAR));
+				_getKey(portletId, StringPool.STAR));
 		}
 
 		return portletToolbarContributors;
@@ -75,7 +75,7 @@ public abstract class BasePortletToolbarContributorLocator
 
 					for (String portletName : portletNames) {
 						for (String value : values) {
-							emitter.emit(getKey(portletName, value));
+							emitter.emit(_getKey(portletName, value));
 						}
 					}
 				}
@@ -87,15 +87,15 @@ public abstract class BasePortletToolbarContributorLocator
 		_serviceTrackerMap.close();
 	}
 
-	protected String getKey(String portletId, String value) {
+	protected abstract String getParameterName();
+
+	protected abstract String getPropertyName();
+
+	private String _getKey(String portletId, String value) {
 		return StringBundler.concat(
 			portletId, StringPool.PERIOD, getPropertyName(), StringPool.PERIOD,
 			value);
 	}
-
-	protected abstract String getParameterName();
-
-	protected abstract String getPropertyName();
 
 	private ServiceTrackerMap<String, List<PortletToolbarContributor>>
 		_serviceTrackerMap;

@@ -114,7 +114,7 @@ public class EditCompanyMVCActionCommand extends BaseFormMVCActionCommand {
 				String redirect = ParamUtil.getString(
 					actionRequest, "redirect");
 
-				updateCompany(actionRequest);
+				_updateCompany(actionRequest);
 
 				sendRedirect(actionRequest, actionResponse, redirect);
 			}
@@ -189,7 +189,7 @@ public class EditCompanyMVCActionCommand extends BaseFormMVCActionCommand {
 		_dlAppLocalService = dlAppLocalService;
 	}
 
-	protected void updateCompany(ActionRequest actionRequest) throws Exception {
+	private void _updateCompany(ActionRequest actionRequest) throws Exception {
 		long companyId = _portal.getCompanyId(actionRequest);
 
 		Company company = _companyService.getCompanyById(companyId);

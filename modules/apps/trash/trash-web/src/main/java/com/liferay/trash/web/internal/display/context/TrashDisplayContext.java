@@ -104,7 +104,7 @@ public class TrashDisplayContext {
 		breadcrumbEntries.add(breadcrumbEntry);
 
 		breadcrumbEntries.addAll(
-			getBreadcrumbEntries(
+			_getBreadcrumbEntries(
 				getClassName(), getClassPK(), "classPK",
 				PortletURLBuilder.createRenderURL(
 					_liferayPortletResponse
@@ -203,7 +203,7 @@ public class TrashDisplayContext {
 		breadcrumbEntries.add(breadcrumbEntry);
 
 		breadcrumbEntries.addAll(
-			getBreadcrumbEntries(
+			_getBreadcrumbEntries(
 				className, classPK, "containerModelId", containerModelURL,
 				false));
 
@@ -629,7 +629,7 @@ public class TrashDisplayContext {
 		return false;
 	}
 
-	protected List<BreadcrumbEntry> getBreadcrumbEntries(
+	private List<BreadcrumbEntry> _getBreadcrumbEntries(
 			String className, long classPK, String paramName,
 			PortletURL containerModelURL, boolean checkInTrashContainers)
 		throws Exception {

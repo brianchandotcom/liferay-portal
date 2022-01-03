@@ -67,7 +67,7 @@ public class UpdateSiteNavigationMenuMVCActionCommand
 				siteNavigationMenuId, name, serviceContext);
 
 			JSONObject jsonObject = JSONUtil.put(
-				"redirectURL", getRedirectURL(actionResponse));
+				"redirectURL", _getRedirectURL(actionResponse));
 
 			JSONPortletResponseUtil.writeJSON(
 				actionRequest, actionResponse, jsonObject);
@@ -80,7 +80,7 @@ public class UpdateSiteNavigationMenuMVCActionCommand
 		}
 	}
 
-	protected String getRedirectURL(ActionResponse actionResponse) {
+	private String _getRedirectURL(ActionResponse actionResponse) {
 		return PortletURLBuilder.createRenderURL(
 			_portal.getLiferayPortletResponse(actionResponse)
 		).setMVCPath(

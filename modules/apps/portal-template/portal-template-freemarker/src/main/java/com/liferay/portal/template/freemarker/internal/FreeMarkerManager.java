@@ -194,7 +194,7 @@ public class FreeMarkerManager extends BaseTemplateManager {
 
 		contextObjects.put(
 			applicationName,
-			getServletContextHashModel(
+			_getServletContextHashModel(
 				servletContext, _configuration.getObjectWrapper()));
 	}
 
@@ -260,7 +260,7 @@ public class FreeMarkerManager extends BaseTemplateManager {
 
 		_templateModels.clear();
 
-		if (isEnableDebuggerService()) {
+		if (_isEnableDebuggerService()) {
 			//DebuggerService.shutdown();
 		}
 	}
@@ -334,7 +334,7 @@ public class FreeMarkerManager extends BaseTemplateManager {
 			_freeMarkerEngineConfiguration.restrictedClasses(),
 			_freeMarkerEngineConfiguration.restrictedMethods());
 
-		if (isEnableDebuggerService()) {
+		if (_isEnableDebuggerService()) {
 			DebuggerService.getBreakpoints("*");
 		}
 
@@ -404,7 +404,7 @@ public class FreeMarkerManager extends BaseTemplateManager {
 
 		contextObjects.put(
 			"Application",
-			getServletContextHashModel(servletContext, objectWrapper));
+			_getServletContextHashModel(servletContext, objectWrapper));
 
 		contextObjects.put(
 			"Request",
@@ -463,33 +463,6 @@ public class FreeMarkerManager extends BaseTemplateManager {
 			templateResource, helperUtilities, _configuration,
 			templateContextHelper, _freeMarkerTemplateResourceCache, restricted,
 			beansWrapper, this);
-	}
-
-	protected ServletContextHashModel getServletContextHashModel(
-		ServletContext servletContext, ObjectWrapper objectWrapper) {
-
-		GenericServlet genericServlet = new JSPSupportServlet(servletContext);
-
-		return new ServletContextHashModel(genericServlet, objectWrapper);
-	}
-
-	protected ServletContext getServletContextWrapper(
-		ServletContext servletContext,
-		FreeMarkerBundleClassloader freeMarkerBundleClassloader) {
-
-		return _servletContextProxyProviderFunction.apply(
-			new ServletContextInvocationHandler(
-				servletContext, freeMarkerBundleClassloader));
-	}
-
-	protected boolean isEnableDebuggerService() {
-		if ((System.getProperty("freemarker.debug.password") != null) &&
-			(System.getProperty("freemarker.debug.port") != null)) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	@Modified
@@ -632,6 +605,23 @@ public class FreeMarkerManager extends BaseTemplateManager {
 		return sb.toString();
 	}
 
+	private ServletContextHashModel _getServletContextHashModel(
+		ServletContext servletContext, ObjectWrapper objectWrapper) {
+
+		GenericServlet genericServlet = new JSPSupportServlet(servletContext);
+
+		return new ServletContextHashModel(genericServlet, objectWrapper);
+	}
+
+	private ServletContext _getServletContextWrapper(
+		ServletContext servletContext,
+		FreeMarkerBundleClassloader freeMarkerBundleClassloader) {
+
+		return _servletContextProxyProviderFunction.apply(
+			new ServletContextInvocationHandler(
+				servletContext, freeMarkerBundleClassloader));
+	}
+
 	private boolean _hasLibrary(String library) {
 		int index = library.indexOf(CharPool.SPACE);
 
@@ -668,6 +658,16 @@ public class FreeMarkerManager extends BaseTemplateManager {
 				new ThreadPoolHandlerAdapter()),
 			null);
 		_timeoutTemplateCounters = new ConcurrentHashMap<>();
+	}
+
+	private boolean _isEnableDebuggerService() {
+		if ((System.getProperty("freemarker.debug.password") != null) &&
+			(System.getProperty("freemarker.debug.port") != null)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -994,7 +994,7 @@ public class FreeMarkerManager extends BaseTemplateManager {
 			ServletContext servletContext, ObjectWrapper objectWrapper) {
 
 			_taglibFactory = new TaglibFactory(
-				getServletContextWrapper(
+				_getServletContextWrapper(
 					servletContext, _freeMarkerBundleClassloader));
 
 			_taglibFactory.setObjectWrapper(objectWrapper);

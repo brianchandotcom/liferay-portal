@@ -316,7 +316,7 @@ public class DefaultMessageBus implements ManagedServiceFactory, MessageBus {
 		Destination destination = _destinations.get(
 			destinationWorkerConfiguration.destinationName());
 
-		updateDestination(destination, destinationWorkerConfiguration);
+		_updateDestination(destination, destinationWorkerConfiguration);
 	}
 
 	@Activate
@@ -441,7 +441,7 @@ public class DefaultMessageBus implements ManagedServiceFactory, MessageBus {
 		DestinationWorkerConfiguration destinationWorkerConfiguration =
 			_destinationWorkerConfigurations.get(destinationName);
 
-		updateDestination(destination, destinationWorkerConfiguration);
+		_updateDestination(destination, destinationWorkerConfiguration);
 	}
 
 	@Reference(
@@ -517,26 +517,6 @@ public class DefaultMessageBus implements ManagedServiceFactory, MessageBus {
 		removeMessageBusEventListener(messageBusEventListener);
 	}
 
-	protected void updateDestination(
-		Destination destination,
-		DestinationWorkerConfiguration destinationWorkerConfiguration) {
-
-		if ((destination == null) || (destinationWorkerConfiguration == null)) {
-			return;
-		}
-
-		if (destination instanceof BaseAsyncDestination) {
-			BaseAsyncDestination baseAsyncDestination =
-				(BaseAsyncDestination)destination;
-
-			baseAsyncDestination.setMaximumQueueSize(
-				destinationWorkerConfiguration.maxQueueSize());
-			baseAsyncDestination.setWorkersSize(
-				destinationWorkerConfiguration.workerCoreSize(),
-				destinationWorkerConfiguration.workerMaxSize());
-		}
-	}
-
 	private void _addDestination(Destination destination) {
 		Destination oldDestination = _destinations.get(destination.getName());
 
@@ -600,6 +580,26 @@ public class DefaultMessageBus implements ManagedServiceFactory, MessageBus {
 		}
 
 		return destination;
+	}
+
+	private void _updateDestination(
+		Destination destination,
+		DestinationWorkerConfiguration destinationWorkerConfiguration) {
+
+		if ((destination == null) || (destinationWorkerConfiguration == null)) {
+			return;
+		}
+
+		if (destination instanceof BaseAsyncDestination) {
+			BaseAsyncDestination baseAsyncDestination =
+				(BaseAsyncDestination)destination;
+
+			baseAsyncDestination.setMaximumQueueSize(
+				destinationWorkerConfiguration.maxQueueSize());
+			baseAsyncDestination.setWorkersSize(
+				destinationWorkerConfiguration.workerCoreSize(),
+				destinationWorkerConfiguration.workerMaxSize());
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

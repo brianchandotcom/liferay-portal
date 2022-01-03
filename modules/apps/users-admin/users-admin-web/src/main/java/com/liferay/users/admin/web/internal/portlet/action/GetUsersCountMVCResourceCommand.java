@@ -57,7 +57,7 @@ public class GetUsersCountMVCResourceCommand implements MVCResourceCommand {
 		try {
 			PrintWriter printWriter = resourceResponse.getWriter();
 
-			printWriter.write(getText(resourceRequest, resourceResponse));
+			printWriter.write(_getText(resourceRequest, resourceResponse));
 
 			return false;
 		}
@@ -66,7 +66,12 @@ public class GetUsersCountMVCResourceCommand implements MVCResourceCommand {
 		}
 	}
 
-	protected int getOrganizationUsersCount(
+	@Reference(unbind = "-")
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
+	private int _getOrganizationUsersCount(
 			long companyId, long[] organizationIds, int status)
 		throws Exception {
 
@@ -83,7 +88,7 @@ public class GetUsersCountMVCResourceCommand implements MVCResourceCommand {
 		return count;
 	}
 
-	protected String getText(
+	private String _getText(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
@@ -101,16 +106,16 @@ public class GetUsersCountMVCResourceCommand implements MVCResourceCommand {
 		int count = 0;
 
 		if (className.equals(Organization.class.getName())) {
-			count = getOrganizationUsersCount(companyId, ids, status);
+			count = _getOrganizationUsersCount(companyId, ids, status);
 		}
 		else if (className.equals(UserGroup.class.getName())) {
-			count = getUserGroupUsersCount(companyId, ids, status);
+			count = _getUserGroupUsersCount(companyId, ids, status);
 		}
 
 		return String.valueOf(count);
 	}
 
-	protected int getUserGroupUsersCount(
+	private int _getUserGroupUsersCount(
 			long companyId, long[] userGroupIds, int status)
 		throws Exception {
 
@@ -125,11 +130,6 @@ public class GetUsersCountMVCResourceCommand implements MVCResourceCommand {
 		}
 
 		return count;
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserLocalService(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
 	}
 
 	@Reference

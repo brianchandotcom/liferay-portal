@@ -67,7 +67,7 @@ public class WebXMLDefinitionLoaderTest {
 		absoluteOrderingNames.add("fragment1");
 		absoluteOrderingNames.add(Order.OTHERS);
 
-		testWebXMLDefinition(
+		_testWebXMLDefinition(
 			webXMLDefinition, 1, 1, 1, null, null, absoluteOrderingNames);
 	}
 
@@ -86,7 +86,7 @@ public class WebXMLDefinitionLoaderTest {
 		WebXMLDefinition webXMLDefinition = loadWebXMLDefinition(
 			"dependencies/custom-web-fragment-1.xml");
 
-		testWebXMLDefinition(
+		_testWebXMLDefinition(
 			webXMLDefinition, 1, 1, 0, "fragment1", null, null);
 	}
 
@@ -101,7 +101,7 @@ public class WebXMLDefinitionLoaderTest {
 
 		routes.put(Order.Path.AFTER, new String[] {"fragment1"});
 
-		testWebXMLDefinition(
+		_testWebXMLDefinition(
 			webXMLDefinition, 0, 0, 0, "fragment2", order, null);
 	}
 
@@ -116,7 +116,7 @@ public class WebXMLDefinitionLoaderTest {
 
 		routes.put(Order.Path.BEFORE, new String[] {Order.OTHERS});
 
-		testWebXMLDefinition(
+		_testWebXMLDefinition(
 			webXMLDefinition, 0, 0, 0, "fragment4", order, null);
 	}
 
@@ -125,7 +125,7 @@ public class WebXMLDefinitionLoaderTest {
 		WebXMLDefinition webXMLDefinition = loadWebXMLDefinition(
 			"dependencies/custom-web.xml");
 
-		testWebXMLDefinition(webXMLDefinition, 1, 1, 1);
+		_testWebXMLDefinition(webXMLDefinition, 1, 1, 1);
 	}
 
 	@Test
@@ -149,7 +149,7 @@ public class WebXMLDefinitionLoaderTest {
 			webXMLDefinitionLoader.loadWebXMLDefinition(
 				bundle.getEntry("WEB-INF/web.xml"));
 
-		testWebXMLDefinition(webXMLDefinition, 0, 0, 0);
+		_testWebXMLDefinition(webXMLDefinition, 0, 0, 0);
 	}
 
 	@Test
@@ -411,17 +411,17 @@ public class WebXMLDefinitionLoaderTest {
 		return webXMLDefinitionLoader.loadWebXMLDefinition(testBundle.getURL());
 	}
 
-	protected void testWebXMLDefinition(
+	private void _testWebXMLDefinition(
 			WebXMLDefinition webXMLDefinition, int listenerDefinitionsCount,
 			int filterDefinitionsCount, int servletDefinitionsCount)
 		throws Exception {
 
-		testWebXMLDefinition(
+		_testWebXMLDefinition(
 			webXMLDefinition, listenerDefinitionsCount, filterDefinitionsCount,
 			servletDefinitionsCount, null, null, null);
 	}
 
-	protected void testWebXMLDefinition(
+	private void _testWebXMLDefinition(
 			WebXMLDefinition webXMLDefinition, int listenerDefinitionsCount,
 			int filterDefinitionsCount, int servletDefinitionsCount,
 			String fragmentName, Order order,

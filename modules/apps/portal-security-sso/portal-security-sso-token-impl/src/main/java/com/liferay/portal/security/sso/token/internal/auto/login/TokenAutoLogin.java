@@ -121,7 +121,7 @@ public class TokenAutoLogin extends BaseAutoLogin {
 			return null;
 		}
 
-		User user = getUser(companyId, login, tokenCompanyServiceSettings);
+		User user = _getUser(companyId, login, tokenCompanyServiceSettings);
 
 		addRedirect(httpServletRequest);
 
@@ -134,7 +134,24 @@ public class TokenAutoLogin extends BaseAutoLogin {
 		return credentials;
 	}
 
-	protected User getUser(
+	@Reference(unbind = "-")
+	protected void setConfigurationProvider(
+		ConfigurationProvider configurationProvider) {
+
+		_configurationProvider = configurationProvider;
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserImporter(UserImporter userImporter) {
+		_userImporter = userImporter;
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
+	private User _getUser(
 			long companyId, String login,
 			TokenConfiguration tokenCompanyServiceSettings)
 		throws PortalException {
@@ -197,23 +214,6 @@ public class TokenAutoLogin extends BaseAutoLogin {
 		}
 
 		return user;
-	}
-
-	@Reference(unbind = "-")
-	protected void setConfigurationProvider(
-		ConfigurationProvider configurationProvider) {
-
-		_configurationProvider = configurationProvider;
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserImporter(UserImporter userImporter) {
-		_userImporter = userImporter;
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserLocalService(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(TokenAutoLogin.class);

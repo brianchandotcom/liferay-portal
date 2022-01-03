@@ -59,7 +59,7 @@ public class ImportPagesMVCActionCommand extends BaseMVCActionCommand {
 		throws Exception {
 
 		try {
-			importPages(actionRequest, actionResponse);
+			_importPages(actionRequest, actionResponse);
 		}
 		catch (Exception exception) {
 			if (exception instanceof NoSuchNodeException ||
@@ -76,7 +76,7 @@ public class ImportPagesMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	protected void importPages(
+	private void _importPages(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 

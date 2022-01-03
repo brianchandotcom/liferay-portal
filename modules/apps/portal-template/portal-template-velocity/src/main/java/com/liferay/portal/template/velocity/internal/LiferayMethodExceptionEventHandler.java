@@ -42,14 +42,14 @@ public class LiferayMethodExceptionEventHandler
 		_log.error(
 			StringBundler.concat(
 				"Unable to execute method ", method, " {exception=", exception,
-				StringPool.COMMA_AND_SPACE, getKeyValuePair(clazz),
+				StringPool.COMMA_AND_SPACE, _getKeyValuePair(clazz),
 				StringPool.CLOSE_CURLY_BRACE),
 			exception);
 
 		return null;
 	}
 
-	protected String getKeyValuePair(Class<?> clazz) {
+	private String _getKeyValuePair(Class<?> clazz) {
 		if (clazz == null) {
 			return "class=null";
 		}

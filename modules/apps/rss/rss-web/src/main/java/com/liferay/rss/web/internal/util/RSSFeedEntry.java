@@ -92,7 +92,7 @@ public class RSSFeedEntry {
 		String baseURL = _rssFeed.getBaseURL();
 		SyndFeed syndFeed = _rssFeed.getSyndFeed();
 
-		List<SyndContent> syndContents = getSyndContents();
+		List<SyndContent> syndContents = _getSyndContents();
 
 		StringBundler sb = new StringBundler(syndContents.size());
 
@@ -150,7 +150,7 @@ public class RSSFeedEntry {
 		return _syndEntryLink;
 	}
 
-	protected List<SyndContent> getSyndContents() {
+	private List<SyndContent> _getSyndContents() {
 		SyndContent syndContent = _syndEntry.getDescription();
 
 		if (syndContent == null) {

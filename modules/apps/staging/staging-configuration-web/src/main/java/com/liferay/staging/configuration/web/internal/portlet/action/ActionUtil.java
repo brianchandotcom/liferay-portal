@@ -92,7 +92,7 @@ public class ActionUtil {
 		PortletPreferences portletSetup = getLayoutPortletSetup(
 			renderRequest, portlet);
 
-		portletSetup = getPortletSetup(
+		portletSetup = _getPortletSetup(
 			httpServletRequest, renderRequest.getPreferences(), portletSetup);
 
 		String title = PortletConfigurationUtil.getPortletTitle(
@@ -116,7 +116,7 @@ public class ActionUtil {
 		HttpServletRequest httpServletRequest =
 			PortalUtil.getHttpServletRequest(renderRequest);
 
-		portletPreferences = getPortletPreferences(
+		portletPreferences = _getPortletPreferences(
 			httpServletRequest, renderRequest.getPreferences(),
 			portletPreferences);
 
@@ -129,7 +129,7 @@ public class ActionUtil {
 		return renderRequest;
 	}
 
-	protected static PortletPreferences getPortletPreferences(
+	private static PortletPreferences _getPortletPreferences(
 			HttpServletRequest httpServletRequest,
 			PortletPreferences portletConfigPortletPreferences,
 			PortletPreferences portletPreferences)
@@ -150,7 +150,7 @@ public class ActionUtil {
 			httpServletRequest, portletResource);
 	}
 
-	protected static PortletPreferences getPortletSetup(
+	private static PortletPreferences _getPortletSetup(
 			HttpServletRequest httpServletRequest,
 			PortletPreferences portletConfigPortletSetup,
 			PortletPreferences portletSetup)

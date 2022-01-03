@@ -80,7 +80,7 @@ public class AuditFilter extends BaseFilter implements TryFilter {
 		auditRequestThreadLocal.setClientHost(
 			httpServletRequest.getRemoteHost());
 
-		String remoteAddr = getRemoteAddr(httpServletRequest);
+		String remoteAddr = _getRemoteAddr(httpServletRequest);
 
 		auditRequestThreadLocal.setClientIP(remoteAddr);
 
@@ -115,7 +115,7 @@ public class AuditFilter extends BaseFilter implements TryFilter {
 			xRequestId = httpServletRequest.getHeader(HttpHeaders.X_REQUEST_ID);
 		}
 
-		if (!isValidXRequestId(xRequestId)) {
+		if (!_isValidXRequestId(xRequestId)) {
 			xRequestId = PortalUUIDUtil.generate();
 		}
 
@@ -154,7 +154,7 @@ public class AuditFilter extends BaseFilter implements TryFilter {
 		return _log;
 	}
 
-	protected String getRemoteAddr(HttpServletRequest httpServletRequest) {
+	private String _getRemoteAddr(HttpServletRequest httpServletRequest) {
 		String remoteAddr = httpServletRequest.getHeader(
 			HttpHeaders.X_FORWARDED_FOR);
 
@@ -165,7 +165,7 @@ public class AuditFilter extends BaseFilter implements TryFilter {
 		return httpServletRequest.getRemoteAddr();
 	}
 
-	protected boolean isValidXRequestId(String xRequestId) {
+	private boolean _isValidXRequestId(String xRequestId) {
 		if (Validator.isBlank(xRequestId)) {
 			if (_log.isDebugEnabled()) {
 				_log.debug("Incoming X-Request-Id is empty");

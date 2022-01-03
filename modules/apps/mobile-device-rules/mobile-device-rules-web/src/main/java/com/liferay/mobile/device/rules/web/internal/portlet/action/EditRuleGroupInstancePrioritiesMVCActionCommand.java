@@ -50,16 +50,6 @@ import org.osgi.service.component.annotations.Reference;
 public class EditRuleGroupInstancePrioritiesMVCActionCommand
 	extends BaseMVCActionCommand {
 
-	protected void deleteRuleGroupInstance(ActionRequest actionRequest)
-		throws PortalException {
-
-		long ruleGroupInstanceId = ParamUtil.getLong(
-			actionRequest, "ruleGroupInstanceId");
-
-		_mdrRuleGroupInstanceService.deleteRuleGroupInstance(
-			ruleGroupInstanceId);
-	}
-
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
@@ -69,10 +59,10 @@ public class EditRuleGroupInstancePrioritiesMVCActionCommand
 
 		try {
 			if (cmd.equals(Constants.DELETE)) {
-				deleteRuleGroupInstance(actionRequest);
+				_deleteRuleGroupInstance(actionRequest);
 			}
 			else if (cmd.equals(Constants.UPDATE)) {
-				updateRuleGroupInstancesPriorities(actionRequest);
+				_updateRuleGroupInstancesPriorities(actionRequest);
 			}
 
 			sendRedirect(actionRequest, actionResponse);
@@ -98,7 +88,17 @@ public class EditRuleGroupInstancePrioritiesMVCActionCommand
 		_mdrRuleGroupInstanceService = mdrRuleGroupInstanceService;
 	}
 
-	protected void updateRuleGroupInstancesPriorities(
+	private void _deleteRuleGroupInstance(ActionRequest actionRequest)
+		throws PortalException {
+
+		long ruleGroupInstanceId = ParamUtil.getLong(
+			actionRequest, "ruleGroupInstanceId");
+
+		_mdrRuleGroupInstanceService.deleteRuleGroupInstance(
+			ruleGroupInstanceId);
+	}
+
+	private void _updateRuleGroupInstancesPriorities(
 			ActionRequest actionRequest)
 		throws PortalException {
 

@@ -37,10 +37,10 @@ public class UserNotificationEventUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		updateUserNotificationEvents();
+		_updateUserNotificationEvents();
 	}
 
-	protected void updateUserNotificationEvents() throws Exception {
+	private void _updateUserNotificationEvents() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			List<UserNotificationEvent> userNotificationEvents =
 				_userNotificationEventLocalService.getTypeNotificationEvents(

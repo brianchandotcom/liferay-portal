@@ -51,7 +51,7 @@ public class DefaultRuleGroupProcessorImpl implements RuleGroupProcessor {
 	public MDRRuleGroupInstance evaluateRuleGroups(ThemeDisplay themeDisplay) {
 		Layout layout = themeDisplay.getLayout();
 
-		MDRRuleGroupInstance mdrRuleGroupInstance = evaluateRuleGroupInstances(
+		MDRRuleGroupInstance mdrRuleGroupInstance = _evaluateRuleGroupInstances(
 			Layout.class.getName(), layout.getPlid(), themeDisplay);
 
 		if (mdrRuleGroupInstance != null) {
@@ -60,7 +60,7 @@ public class DefaultRuleGroupProcessorImpl implements RuleGroupProcessor {
 
 		LayoutSet layoutSet = themeDisplay.getLayoutSet();
 
-		return evaluateRuleGroupInstances(
+		return _evaluateRuleGroupInstances(
 			LayoutSet.class.getName(), layoutSet.getLayoutSetId(),
 			themeDisplay);
 	}
@@ -106,7 +106,25 @@ public class DefaultRuleGroupProcessorImpl implements RuleGroupProcessor {
 		}
 	}
 
-	protected boolean evaluateRule(MDRRule rule, ThemeDisplay themeDisplay) {
+	protected void removeRuleHandler(RuleHandler ruleHandler) {
+		_ruleHandlers.remove(ruleHandler.getType());
+	}
+
+	@Reference(unbind = "-")
+	protected void setMdrRuleGroupInstanceLocalService(
+		MDRRuleGroupInstanceLocalService mdrRuleGroupInstanceLocalService) {
+
+		_mdrRuleGroupInstanceLocalService = mdrRuleGroupInstanceLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setMdrRuleGroupLocalService(
+		MDRRuleGroupLocalService mdrRuleGroupLocalService) {
+
+		_mdrRuleGroupLocalService = mdrRuleGroupLocalService;
+	}
+
+	private boolean _evaluateRule(MDRRule rule, ThemeDisplay themeDisplay) {
 		RuleHandler ruleHandler = _ruleHandlers.get(rule.getType());
 
 		if (ruleHandler != null) {
@@ -119,7 +137,7 @@ public class DefaultRuleGroupProcessorImpl implements RuleGroupProcessor {
 		return false;
 	}
 
-	protected MDRRuleGroupInstance evaluateRuleGroupInstances(
+	private MDRRuleGroupInstance _evaluateRuleGroupInstances(
 		String className, long classPK, ThemeDisplay themeDisplay) {
 
 		List<MDRRuleGroupInstance> mdrRuleGroupInstances =
@@ -148,31 +166,13 @@ public class DefaultRuleGroupProcessorImpl implements RuleGroupProcessor {
 			Collection<MDRRule> mdrRules = mdrRuleGroup.getRules();
 
 			for (MDRRule mdrRule : mdrRules) {
-				if (evaluateRule(mdrRule, themeDisplay)) {
+				if (_evaluateRule(mdrRule, themeDisplay)) {
 					return mdrRuleGroupInstance;
 				}
 			}
 		}
 
 		return null;
-	}
-
-	protected void removeRuleHandler(RuleHandler ruleHandler) {
-		_ruleHandlers.remove(ruleHandler.getType());
-	}
-
-	@Reference(unbind = "-")
-	protected void setMdrRuleGroupInstanceLocalService(
-		MDRRuleGroupInstanceLocalService mdrRuleGroupInstanceLocalService) {
-
-		_mdrRuleGroupInstanceLocalService = mdrRuleGroupInstanceLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setMdrRuleGroupLocalService(
-		MDRRuleGroupLocalService mdrRuleGroupLocalService) {
-
-		_mdrRuleGroupLocalService = mdrRuleGroupLocalService;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -55,23 +55,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class EditActionMVCActionCommand extends BaseMVCActionCommand {
 
-	protected void deleteActions(ActionRequest actionRequest) throws Exception {
-		long[] deleteActionIds = null;
-
-		long actionId = ParamUtil.getLong(actionRequest, "actionId");
-
-		if (actionId > 0) {
-			deleteActionIds = new long[] {actionId};
-		}
-		else {
-			deleteActionIds = ParamUtil.getLongValues(actionRequest, "rowIds");
-		}
-
-		for (long deleteActionId : deleteActionIds) {
-			_mdrActionService.deleteAction(deleteActionId);
-		}
-	}
-
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
@@ -81,10 +64,10 @@ public class EditActionMVCActionCommand extends BaseMVCActionCommand {
 
 		try {
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
-				updateAction(actionRequest);
+				_updateAction(actionRequest);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
-				deleteActions(actionRequest);
+				_deleteActions(actionRequest);
 			}
 		}
 		catch (Exception exception) {
@@ -110,7 +93,24 @@ public class EditActionMVCActionCommand extends BaseMVCActionCommand {
 		_mdrActionService = mdrActionService;
 	}
 
-	protected void updateAction(ActionRequest actionRequest) throws Exception {
+	private void _deleteActions(ActionRequest actionRequest) throws Exception {
+		long[] deleteActionIds = null;
+
+		long actionId = ParamUtil.getLong(actionRequest, "actionId");
+
+		if (actionId > 0) {
+			deleteActionIds = new long[] {actionId};
+		}
+		else {
+			deleteActionIds = ParamUtil.getLongValues(actionRequest, "rowIds");
+		}
+
+		for (long deleteActionId : deleteActionIds) {
+			_mdrActionService.deleteAction(deleteActionId);
+		}
+	}
+
+	private void _updateAction(ActionRequest actionRequest) throws Exception {
 		String type = ParamUtil.getString(actionRequest, "type");
 
 		ActionHandler actionHandler = ActionHandlerManagerUtil.getActionHandler(

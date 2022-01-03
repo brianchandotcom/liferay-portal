@@ -50,7 +50,7 @@ public class MessageSenderJob implements Job {
 	@Override
 	public void execute(JobExecutionContext jobExecutionContext) {
 		try {
-			doExecute(jobExecutionContext);
+			_doExecute(jobExecutionContext);
 		}
 		catch (Exception exception) {
 			_log.error("Unable to execute job", exception);
@@ -73,7 +73,7 @@ public class MessageSenderJob implements Job {
 		_props = props;
 	}
 
-	protected void doExecute(JobExecutionContext jobExecutionContext)
+	private void _doExecute(JobExecutionContext jobExecutionContext)
 		throws Exception {
 
 		JobDetail jobDetail = jobExecutionContext.getJobDetail();
@@ -111,7 +111,7 @@ public class MessageSenderJob implements Job {
 					_props.get(PropsKeys.CLUSTER_LINK_ENABLED)) &&
 				(storageType == StorageType.MEMORY_CLUSTERED)) {
 
-				notifyClusterMember(jobKey, storageType);
+				_notifyClusterMember(jobKey, storageType);
 			}
 
 			if (storageType == StorageType.PERSISTED) {
@@ -127,7 +127,7 @@ public class MessageSenderJob implements Job {
 		_messageBus.sendMessage(destinationName, message);
 	}
 
-	protected void notifyClusterMember(JobKey jobKey, StorageType storageType)
+	private void _notifyClusterMember(JobKey jobKey, StorageType storageType)
 		throws Exception {
 
 		MethodHandler methodHandler = new MethodHandler(

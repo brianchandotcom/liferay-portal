@@ -39,7 +39,7 @@ public class SAPServiceVerifyProcess extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
-		verifyDefaultSAPEntry();
+		_verifyDefaultSAPEntry();
 	}
 
 	@Reference(unbind = "-")
@@ -56,7 +56,7 @@ public class SAPServiceVerifyProcess extends VerifyProcess {
 		_sapEntryLocalService = sapEntryLocalService;
 	}
 
-	protected void verifyDefaultSAPEntry() {
+	private void _verifyDefaultSAPEntry() {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			_companyLocalService.forEachCompanyId(
 				companyId -> {

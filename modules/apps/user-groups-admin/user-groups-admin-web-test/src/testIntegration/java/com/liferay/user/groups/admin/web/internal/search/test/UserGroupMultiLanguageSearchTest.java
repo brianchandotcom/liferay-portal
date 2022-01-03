@@ -108,12 +108,6 @@ public class UserGroupMultiLanguageSearchTest {
 		FieldValuesAssert.assertFieldValues(map, prefix, document, searchTerm);
 	}
 
-	protected void setLocale(Locale locale) throws Exception {
-		userGroupFixture.updateDisplaySettings(locale);
-
-		LocaleThreadLocal.setDefaultLocale(locale);
-	}
-
 	protected void setUpUserGroupFixture() {
 		userGroupFixture = new UserGroupFixture(_group, userGroupLocalService);
 
@@ -150,10 +144,16 @@ public class UserGroupMultiLanguageSearchTest {
 		).build();
 	}
 
+	private void _setLocale(Locale locale) throws Exception {
+		userGroupFixture.updateDisplaySettings(locale);
+
+		LocaleThreadLocal.setDefaultLocale(locale);
+	}
+
 	private void _testLocaleKeywords(Locale locale, String keywords)
 		throws Exception {
 
-		setLocale(locale);
+		_setLocale(locale);
 
 		userGroupFixture.createUserGroup(keywords);
 

@@ -53,21 +53,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class MovePageMVCActionCommand extends BaseMVCActionCommand {
 
-	protected void changeParentPage(ActionRequest actionRequest)
-		throws Exception {
-
-		long nodeId = ParamUtil.getLong(actionRequest, "nodeId");
-		String title = ParamUtil.getString(actionRequest, "title");
-		String newParentTitle = ParamUtil.getString(
-			actionRequest, "newParentTitle");
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			WikiPage.class.getName(), actionRequest);
-
-		_wikiPageService.changeParent(
-			nodeId, title, newParentTitle, serviceContext);
-	}
-
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
@@ -77,10 +62,10 @@ public class MovePageMVCActionCommand extends BaseMVCActionCommand {
 
 		try {
 			if (cmd.equals(Constants.CHANGE_PARENT)) {
-				changeParentPage(actionRequest);
+				_changeParentPage(actionRequest);
 			}
 			else if (cmd.equals(Constants.RENAME)) {
-				renamePage(actionRequest);
+				_renamePage(actionRequest);
 			}
 
 			if (Validator.isNotNull(cmd)) {
@@ -106,7 +91,22 @@ public class MovePageMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	protected void renamePage(ActionRequest actionRequest) throws Exception {
+	private void _changeParentPage(ActionRequest actionRequest)
+		throws Exception {
+
+		long nodeId = ParamUtil.getLong(actionRequest, "nodeId");
+		String title = ParamUtil.getString(actionRequest, "title");
+		String newParentTitle = ParamUtil.getString(
+			actionRequest, "newParentTitle");
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			WikiPage.class.getName(), actionRequest);
+
+		_wikiPageService.changeParent(
+			nodeId, title, newParentTitle, serviceContext);
+	}
+
+	private void _renamePage(ActionRequest actionRequest) throws Exception {
 		long nodeId = ParamUtil.getLong(actionRequest, "nodeId");
 		String title = ParamUtil.getString(actionRequest, "title");
 		String newTitle = ParamUtil.getString(actionRequest, "newTitle");

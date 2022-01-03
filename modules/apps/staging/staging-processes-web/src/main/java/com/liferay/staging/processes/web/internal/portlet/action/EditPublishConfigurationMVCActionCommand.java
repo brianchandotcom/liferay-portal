@@ -74,56 +74,6 @@ import org.osgi.service.component.annotations.Reference;
 public class EditPublishConfigurationMVCActionCommand
 	extends BaseMVCActionCommand {
 
-	protected void deleteExportImportConfiguration(
-			ActionRequest actionRequest, boolean moveToTrash)
-		throws PortalException {
-
-		long[] deleteExportImportConfigurationIds = null;
-
-		long exportImportConfigurationId = ParamUtil.getLong(
-			actionRequest, "exportImportConfigurationId");
-
-		if (exportImportConfigurationId > 0) {
-			deleteExportImportConfigurationIds = new long[] {
-				exportImportConfigurationId
-			};
-		}
-		else {
-			deleteExportImportConfigurationIds = StringUtil.split(
-				ParamUtil.getString(
-					actionRequest, "deleteExportImportConfigurationIds"),
-				0L);
-		}
-
-		List<TrashedModel> trashedModels = new ArrayList<>();
-
-		for (long deleteExportImportConfigurationId :
-				deleteExportImportConfigurationIds) {
-
-			if (moveToTrash) {
-				ExportImportConfiguration exportImportConfiguration =
-					_exportImportConfigurationService.
-						moveExportImportConfigurationToTrash(
-							deleteExportImportConfigurationId);
-
-				trashedModels.add(exportImportConfiguration);
-			}
-			else {
-				_exportImportConfigurationService.
-					deleteExportImportConfiguration(
-						deleteExportImportConfigurationId);
-			}
-		}
-
-		if (moveToTrash && !trashedModels.isEmpty()) {
-			addDeleteSuccessData(
-				actionRequest,
-				HashMapBuilder.<String, Object>put(
-					"trashedModels", trashedModels
-				).build());
-		}
-	}
-
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
@@ -140,20 +90,20 @@ public class EditPublishConfigurationMVCActionCommand
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
 				setLayoutIdMap(actionRequest);
 
-				updatePublishConfiguration(actionRequest);
+				_updatePublishConfiguration(actionRequest);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
-				deleteExportImportConfiguration(actionRequest, false);
+				_deleteExportImportConfiguration(actionRequest, false);
 			}
 			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
-				deleteExportImportConfiguration(actionRequest, true);
+				_deleteExportImportConfiguration(actionRequest, true);
 			}
 			else if (cmd.equals(Constants.RELAUNCH)) {
-				relaunchPublishLayoutConfiguration(
+				_relaunchPublishLayoutConfiguration(
 					themeDisplay.getUserId(), actionRequest);
 			}
 			else if (cmd.equals(Constants.RESTORE)) {
-				restoreTrashEntries(actionRequest);
+				_restoreTrashEntries(actionRequest);
 			}
 
 			String redirect = ParamUtil.getString(actionRequest, "redirect");
@@ -177,50 +127,6 @@ public class EditPublishConfigurationMVCActionCommand
 			}
 
 			SessionErrors.add(actionRequest, exception.getClass(), exception);
-		}
-	}
-
-	protected void relaunchPublishLayoutConfiguration(
-			long userId, ActionRequest actionRequest)
-		throws PortalException {
-
-		long backgroundTaskId = ParamUtil.getLong(
-			actionRequest, BackgroundTaskConstants.BACKGROUND_TASK_ID);
-
-		BackgroundTask backgroundTask =
-			_backgroundTaskManager.getBackgroundTask(backgroundTaskId);
-
-		ExportImportConfiguration exportImportConfiguration =
-			_exportImportConfigurationLocalService.getExportImportConfiguration(
-				MapUtil.getLong(
-					backgroundTask.getTaskContextMap(),
-					"exportImportConfigurationId"));
-
-		exportImportConfiguration =
-			ExportImportConfigurationFactory.cloneExportImportConfiguration(
-				exportImportConfiguration);
-
-		if (exportImportConfiguration.getType() ==
-				ExportImportConfigurationConstants.TYPE_PUBLISH_LAYOUT_LOCAL) {
-
-			_staging.publishLayouts(userId, exportImportConfiguration);
-		}
-		else if (exportImportConfiguration.getType() ==
-					ExportImportConfigurationConstants.
-						TYPE_PUBLISH_LAYOUT_REMOTE) {
-
-			_staging.copyRemoteLayouts(exportImportConfiguration);
-		}
-	}
-
-	protected void restoreTrashEntries(ActionRequest actionRequest)
-		throws Exception {
-
-		long[] restoreTrashEntryIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "restoreTrashEntryIds"), 0L);
-
-		for (long restoreTrashEntryId : restoreTrashEntryIds) {
-			_trashEntryService.restoreEntry(restoreTrashEntryId);
 		}
 	}
 
@@ -276,7 +182,101 @@ public class EditPublishConfigurationMVCActionCommand
 		_exportImportConfigurationLocalService = null;
 	}
 
-	protected ExportImportConfiguration updatePublishConfiguration(
+	private void _deleteExportImportConfiguration(
+			ActionRequest actionRequest, boolean moveToTrash)
+		throws PortalException {
+
+		long[] deleteExportImportConfigurationIds = null;
+
+		long exportImportConfigurationId = ParamUtil.getLong(
+			actionRequest, "exportImportConfigurationId");
+
+		if (exportImportConfigurationId > 0) {
+			deleteExportImportConfigurationIds = new long[] {
+				exportImportConfigurationId
+			};
+		}
+		else {
+			deleteExportImportConfigurationIds = StringUtil.split(
+				ParamUtil.getString(
+					actionRequest, "deleteExportImportConfigurationIds"),
+				0L);
+		}
+
+		List<TrashedModel> trashedModels = new ArrayList<>();
+
+		for (long deleteExportImportConfigurationId :
+				deleteExportImportConfigurationIds) {
+
+			if (moveToTrash) {
+				ExportImportConfiguration exportImportConfiguration =
+					_exportImportConfigurationService.
+						moveExportImportConfigurationToTrash(
+							deleteExportImportConfigurationId);
+
+				trashedModels.add(exportImportConfiguration);
+			}
+			else {
+				_exportImportConfigurationService.
+					deleteExportImportConfiguration(
+						deleteExportImportConfigurationId);
+			}
+		}
+
+		if (moveToTrash && !trashedModels.isEmpty()) {
+			addDeleteSuccessData(
+				actionRequest,
+				HashMapBuilder.<String, Object>put(
+					"trashedModels", trashedModels
+				).build());
+		}
+	}
+
+	private void _relaunchPublishLayoutConfiguration(
+			long userId, ActionRequest actionRequest)
+		throws PortalException {
+
+		long backgroundTaskId = ParamUtil.getLong(
+			actionRequest, BackgroundTaskConstants.BACKGROUND_TASK_ID);
+
+		BackgroundTask backgroundTask =
+			_backgroundTaskManager.getBackgroundTask(backgroundTaskId);
+
+		ExportImportConfiguration exportImportConfiguration =
+			_exportImportConfigurationLocalService.getExportImportConfiguration(
+				MapUtil.getLong(
+					backgroundTask.getTaskContextMap(),
+					"exportImportConfigurationId"));
+
+		exportImportConfiguration =
+			ExportImportConfigurationFactory.cloneExportImportConfiguration(
+				exportImportConfiguration);
+
+		if (exportImportConfiguration.getType() ==
+				ExportImportConfigurationConstants.TYPE_PUBLISH_LAYOUT_LOCAL) {
+
+			_staging.publishLayouts(userId, exportImportConfiguration);
+		}
+		else if (exportImportConfiguration.getType() ==
+					ExportImportConfigurationConstants.
+						TYPE_PUBLISH_LAYOUT_REMOTE) {
+
+			_staging.copyRemoteLayouts(exportImportConfiguration);
+		}
+	}
+
+	private void _restoreTrashEntries(ActionRequest actionRequest)
+		throws Exception {
+
+		long[] restoreTrashEntryIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "restoreTrashEntryIds"), 0L);
+
+		for (long restoreTrashEntryId : restoreTrashEntryIds) {
+			_trashEntryService.restoreEntry(restoreTrashEntryId);
+		}
+	}
+
+	private ExportImportConfiguration _updatePublishConfiguration(
 			ActionRequest actionRequest)
 		throws Exception {
 

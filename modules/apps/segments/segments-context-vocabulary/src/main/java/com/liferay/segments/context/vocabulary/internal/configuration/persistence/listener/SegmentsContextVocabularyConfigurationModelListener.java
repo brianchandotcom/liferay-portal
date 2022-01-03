@@ -54,7 +54,7 @@ public class SegmentsContextVocabularyConfigurationModelListener
 		if (Validator.isNull(entityField)) {
 			throw new ConfigurationModelListenerException(
 				ResourceBundleUtil.getString(
-					getResourceBundle(),
+					_getResourceBundle(),
 					"please-enter-a-valid-session-property-name"),
 				SegmentsContextVocabularyConfiguration.class, getClass(),
 				properties);
@@ -63,14 +63,14 @@ public class SegmentsContextVocabularyConfigurationModelListener
 		if (_isDefined(pid, entityField)) {
 			throw new DuplicatedSegmentsContextVocabularyConfigurationModelListenerException(
 				ResourceBundleUtil.getString(
-					getResourceBundle(),
+					_getResourceBundle(),
 					"this-field-is-already-linked-to-one-vocabulary"),
 				SegmentsContextVocabularyConfiguration.class, getClass(),
 				properties);
 		}
 	}
 
-	protected ResourceBundle getResourceBundle() {
+	private ResourceBundle _getResourceBundle() {
 		if (_resourceBundle == null) {
 			Locale locale = LocaleThreadLocal.getThemeDisplayLocale();
 

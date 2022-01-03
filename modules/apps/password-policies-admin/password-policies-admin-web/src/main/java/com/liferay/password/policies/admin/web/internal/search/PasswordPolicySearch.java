@@ -81,7 +81,8 @@ public class PasswordPolicySearch extends SearchContainer<PasswordPolicy> {
 				PasswordPoliciesAdminPortletKeys.PASSWORD_POLICIES_ADMIN,
 				"password-policies-order-by-type", "asc");
 
-			setOrderByComparator(getOrderByComparator(orderByCol, orderByType));
+			setOrderByComparator(
+				_getOrderByComparator(orderByCol, orderByType));
 			setOrderByType(orderByType);
 		}
 		catch (Exception exception) {
@@ -90,7 +91,7 @@ public class PasswordPolicySearch extends SearchContainer<PasswordPolicy> {
 		}
 	}
 
-	protected OrderByComparator<PasswordPolicy> getOrderByComparator(
+	private OrderByComparator<PasswordPolicy> _getOrderByComparator(
 		String orderByCol, String orderByType) {
 
 		boolean orderByAsc = false;

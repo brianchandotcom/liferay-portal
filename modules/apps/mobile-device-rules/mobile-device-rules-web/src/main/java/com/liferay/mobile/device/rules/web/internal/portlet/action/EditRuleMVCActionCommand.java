@@ -55,12 +55,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class EditRuleMVCActionCommand extends BaseMVCActionCommand {
 
-	protected void deleteRule(ActionRequest request) throws Exception {
-		long ruleId = ParamUtil.getLong(request, "ruleId");
-
-		_mdrRuleService.deleteRule(ruleId);
-	}
-
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
@@ -70,10 +64,10 @@ public class EditRuleMVCActionCommand extends BaseMVCActionCommand {
 
 		try {
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
-				updateRule(actionRequest);
+				_updateRule(actionRequest);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
-				deleteRule(actionRequest);
+				_deleteRule(actionRequest);
 			}
 		}
 		catch (Exception exception) {
@@ -97,7 +91,13 @@ public class EditRuleMVCActionCommand extends BaseMVCActionCommand {
 		_mdrRuleService = mdrRuleService;
 	}
 
-	protected void updateRule(ActionRequest actionRequest) throws Exception {
+	private void _deleteRule(ActionRequest request) throws Exception {
+		long ruleId = ParamUtil.getLong(request, "ruleId");
+
+		_mdrRuleService.deleteRule(ruleId);
+	}
+
+	private void _updateRule(ActionRequest actionRequest) throws Exception {
 		String type = ParamUtil.getString(actionRequest, "type");
 
 		RuleHandler ruleHandler = RuleGroupProcessorUtil.getRuleHandler(type);

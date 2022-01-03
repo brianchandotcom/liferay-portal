@@ -28,10 +28,10 @@ public class WikiPageResourceUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		updateWikiPageResources();
+		_updateWikiPageResources();
 	}
 
-	protected long getGroupId(long resourcePrimKey) throws Exception {
+	private long _getGroupId(long resourcePrimKey) throws Exception {
 		long groupId = 0;
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
@@ -49,7 +49,7 @@ public class WikiPageResourceUpgradeProcess extends UpgradeProcess {
 		return groupId;
 	}
 
-	protected void updateWikiPageResources() throws Exception {
+	private void _updateWikiPageResources() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				"select resourcePrimKey from WikiPageResource");
@@ -61,7 +61,7 @@ public class WikiPageResourceUpgradeProcess extends UpgradeProcess {
 				runSQL(
 					StringBundler.concat(
 						"update WikiPageResource set groupId = ",
-						getGroupId(resourcePrimKey),
+						_getGroupId(resourcePrimKey),
 						" where resourcePrimKey = ", resourcePrimKey));
 			}
 		}

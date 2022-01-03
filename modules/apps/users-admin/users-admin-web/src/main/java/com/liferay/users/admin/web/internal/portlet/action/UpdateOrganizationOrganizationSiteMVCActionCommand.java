@@ -67,7 +67,7 @@ public class UpdateOrganizationOrganizationSiteMVCActionCommand
 		throws Exception {
 
 		try {
-			updateOrganizationSite(actionRequest);
+			_updateOrganizationSite(actionRequest);
 		}
 		catch (Exception exception) {
 			if (exception instanceof NoSuchOrganizationException ||
@@ -83,7 +83,7 @@ public class UpdateOrganizationOrganizationSiteMVCActionCommand
 		}
 	}
 
-	protected void updateOrganizationSite(ActionRequest actionRequest)
+	private void _updateOrganizationSite(ActionRequest actionRequest)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(

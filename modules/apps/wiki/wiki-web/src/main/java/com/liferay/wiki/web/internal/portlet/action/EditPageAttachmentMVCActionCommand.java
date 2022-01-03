@@ -117,7 +117,77 @@ public class EditPageAttachmentMVCActionCommand extends BaseMVCActionCommand {
 			DLConfiguration.class, properties);
 	}
 
-	protected void addTempAttachment(
+	@Override
+	protected void doProcessAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
+
+		PortletConfig portletConfig = getPortletConfig(actionRequest);
+
+		try {
+			UploadException uploadException =
+				(UploadException)actionRequest.getAttribute(
+					WebKeys.UPLOAD_EXCEPTION);
+
+			if (uploadException != null) {
+				Throwable throwable = uploadException.getCause();
+
+				if (uploadException.isExceededFileSizeLimit()) {
+					throw new FileSizeException(throwable);
+				}
+
+				if (uploadException.isExceededLiferayFileItemSizeLimit()) {
+					throw new LiferayFileItemException(throwable);
+				}
+
+				if (uploadException.isExceededUploadRequestSizeLimit()) {
+					throw new UploadRequestSizeException(throwable);
+				}
+
+				throw new PortalException(throwable);
+			}
+			else if (cmd.equals(Constants.ADD_TEMP)) {
+				_addTempAttachment(actionRequest, actionResponse);
+			}
+			else if (cmd.equals(Constants.DELETE)) {
+				_deleteAttachment(actionRequest, false);
+			}
+			else if (cmd.equals(Constants.DELETE_TEMP)) {
+				_deleteTempAttachment(actionRequest, actionResponse);
+			}
+			else if (cmd.equals(Constants.EMPTY_TRASH)) {
+				_wikiAttachmentsHelper.emptyTrash(actionRequest);
+			}
+			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
+				_deleteAttachment(actionRequest, true);
+			}
+			else if (cmd.equals(Constants.RESTORE)) {
+				_wikiAttachmentsHelper.restoreEntries(actionRequest);
+
+				String redirect = ParamUtil.getString(
+					actionRequest, "redirect");
+
+				if (Validator.isNotNull(redirect)) {
+					actionResponse.sendRedirect(redirect);
+				}
+			}
+		}
+		catch (NoSuchNodeException | NoSuchPageException | PrincipalException
+					exception) {
+
+			SessionErrors.add(actionRequest, exception.getClass());
+
+			actionResponse.setRenderParameter("mvcPath", "/wiki/error.jsp");
+		}
+		catch (Exception exception) {
+			_handleUploadException(
+				portletConfig, actionRequest, actionResponse, cmd, exception);
+		}
+	}
+
+	private void _addTempAttachment(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
@@ -126,7 +196,7 @@ public class EditPageAttachmentMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, actionResponse);
 	}
 
-	protected void deleteAttachment(
+	private void _deleteAttachment(
 			ActionRequest actionRequest, boolean moveToTrash)
 		throws Exception {
 
@@ -144,7 +214,7 @@ public class EditPageAttachmentMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	protected void deleteTempAttachment(
+	private void _deleteTempAttachment(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
@@ -182,81 +252,11 @@ public class EditPageAttachmentMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, actionResponse, jsonObject);
 	}
 
-	@Override
-	protected void doProcessAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
-
-		PortletConfig portletConfig = getPortletConfig(actionRequest);
-
-		try {
-			UploadException uploadException =
-				(UploadException)actionRequest.getAttribute(
-					WebKeys.UPLOAD_EXCEPTION);
-
-			if (uploadException != null) {
-				Throwable throwable = uploadException.getCause();
-
-				if (uploadException.isExceededFileSizeLimit()) {
-					throw new FileSizeException(throwable);
-				}
-
-				if (uploadException.isExceededLiferayFileItemSizeLimit()) {
-					throw new LiferayFileItemException(throwable);
-				}
-
-				if (uploadException.isExceededUploadRequestSizeLimit()) {
-					throw new UploadRequestSizeException(throwable);
-				}
-
-				throw new PortalException(throwable);
-			}
-			else if (cmd.equals(Constants.ADD_TEMP)) {
-				addTempAttachment(actionRequest, actionResponse);
-			}
-			else if (cmd.equals(Constants.DELETE)) {
-				deleteAttachment(actionRequest, false);
-			}
-			else if (cmd.equals(Constants.DELETE_TEMP)) {
-				deleteTempAttachment(actionRequest, actionResponse);
-			}
-			else if (cmd.equals(Constants.EMPTY_TRASH)) {
-				_wikiAttachmentsHelper.emptyTrash(actionRequest);
-			}
-			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
-				deleteAttachment(actionRequest, true);
-			}
-			else if (cmd.equals(Constants.RESTORE)) {
-				_wikiAttachmentsHelper.restoreEntries(actionRequest);
-
-				String redirect = ParamUtil.getString(
-					actionRequest, "redirect");
-
-				if (Validator.isNotNull(redirect)) {
-					actionResponse.sendRedirect(redirect);
-				}
-			}
-		}
-		catch (NoSuchNodeException | NoSuchPageException | PrincipalException
-					exception) {
-
-			SessionErrors.add(actionRequest, exception.getClass());
-
-			actionResponse.setRenderParameter("mvcPath", "/wiki/error.jsp");
-		}
-		catch (Exception exception) {
-			handleUploadException(
-				portletConfig, actionRequest, actionResponse, cmd, exception);
-		}
-	}
-
 	/**
 	 * TODO: Remove. This should extend from EditFileEntryAction once it is
 	 * modularized.
 	 */
-	protected String[] getAllowedFileExtensions(
+	private String[] _getAllowedFileExtensions(
 			PortletConfig portletConfig, PortletRequest portletRequest,
 			PortletResponse portletResponse)
 		throws PortalException {
@@ -268,7 +268,7 @@ public class EditPageAttachmentMVCActionCommand extends BaseMVCActionCommand {
 	 * TODO: Remove. This should extend from EditFileEntryAction once it is
 	 * modularized.
 	 */
-	protected void handleUploadException(
+	private void _handleUploadException(
 			PortletConfig portletConfig, ActionRequest actionRequest,
 			ActionResponse actionResponse, String cmd, Exception exception)
 		throws Exception {
@@ -350,7 +350,7 @@ public class EditPageAttachmentMVCActionCommand extends BaseMVCActionCommand {
 					errorMessage = themeDisplay.translate(
 						"please-enter-a-file-with-a-valid-extension-x",
 						StringUtil.merge(
-							getAllowedFileExtensions(
+							_getAllowedFileExtensions(
 								portletConfig, actionRequest, actionResponse)));
 					errorType =
 						ServletResponseConstants.SC_FILE_EXTENSION_EXCEPTION;

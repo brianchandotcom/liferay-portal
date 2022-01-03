@@ -65,59 +65,15 @@ public abstract class BaseEhcachePortalCacheManagerConfigurator {
 		configuration.setName(portalCacheManagerName);
 
 		PortalCacheManagerConfiguration portalCacheManagerConfiguration =
-			parseListenerConfigurations(
+			_parseListenerConfigurations(
 				configuration, classLoader, usingDefault);
 
-		clearListenerConfigrations(configuration);
+		_clearListenerConfigrations(configuration);
 
 		manageConfiguration(configuration, portalCacheManagerConfiguration);
 
 		return new ObjectValuePair<>(
 			configuration, portalCacheManagerConfiguration);
-	}
-
-	protected void clearListenerConfigrations(
-		CacheConfiguration cacheConfiguration) {
-
-		if (cacheConfiguration == null) {
-			return;
-		}
-
-		List<?> factoryConfigurations =
-			cacheConfiguration.getCacheEventListenerConfigurations();
-
-		factoryConfigurations.clear();
-	}
-
-	protected void clearListenerConfigrations(Configuration configuration) {
-		List<?> listenerFactoryConfigurations =
-			configuration.getCacheManagerPeerListenerFactoryConfigurations();
-
-		listenerFactoryConfigurations.clear();
-
-		List<?> providerFactoryConfigurations =
-			configuration.getCacheManagerPeerProviderFactoryConfiguration();
-
-		providerFactoryConfigurations.clear();
-
-		FactoryConfiguration<?> factoryConfiguration =
-			configuration.getCacheManagerEventListenerFactoryConfiguration();
-
-		if (factoryConfiguration != null) {
-			factoryConfiguration.setClass(null);
-		}
-
-		clearListenerConfigrations(
-			configuration.getDefaultCacheConfiguration());
-
-		Map<String, CacheConfiguration> cacheConfigurations =
-			configuration.getCacheConfigurations();
-
-		for (CacheConfiguration cacheConfiguration :
-				cacheConfigurations.values()) {
-
-			clearListenerConfigrations(cacheConfiguration);
-		}
 	}
 
 	@SuppressWarnings("deprecation")
@@ -151,7 +107,95 @@ public abstract class BaseEhcachePortalCacheManagerConfigurator {
 		PortalCacheManagerConfiguration portalCacheManagerConfiguration) {
 	}
 
-	protected Set<Properties> parseCacheEventListenerConfigurations(
+	protected PortalCacheConfiguration parseCacheListenerConfigurations(
+		CacheConfiguration cacheConfiguration, ClassLoader classLoader,
+		boolean usingDefault) {
+
+		Set<Properties> portalCacheListenerPropertiesSet =
+			_parseCacheEventListenerConfigurations(
+				(List<CacheEventListenerFactoryConfiguration>)
+					cacheConfiguration.getCacheEventListenerConfigurations(),
+				classLoader, usingDefault);
+
+		boolean requireSerialization = isRequireSerialization(
+			cacheConfiguration);
+
+		return new EhcachePortalCacheConfiguration(
+			cacheConfiguration.getName(), portalCacheListenerPropertiesSet,
+			requireSerialization);
+	}
+
+	protected Properties parseProperties(
+		String propertiesString, String propertySeparator) {
+
+		Properties properties = new Properties();
+
+		if (propertiesString == null) {
+			return properties;
+		}
+
+		String propertyLines = propertiesString.trim();
+
+		propertyLines = StringUtil.replace(
+			propertyLines, propertySeparator, StringPool.NEW_LINE);
+
+		try {
+			properties.load(new UnsyncStringReader(propertyLines));
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+
+		return properties;
+	}
+
+	protected Props props;
+
+	private void _clearListenerConfigrations(
+		CacheConfiguration cacheConfiguration) {
+
+		if (cacheConfiguration == null) {
+			return;
+		}
+
+		List<?> factoryConfigurations =
+			cacheConfiguration.getCacheEventListenerConfigurations();
+
+		factoryConfigurations.clear();
+	}
+
+	private void _clearListenerConfigrations(Configuration configuration) {
+		List<?> listenerFactoryConfigurations =
+			configuration.getCacheManagerPeerListenerFactoryConfigurations();
+
+		listenerFactoryConfigurations.clear();
+
+		List<?> providerFactoryConfigurations =
+			configuration.getCacheManagerPeerProviderFactoryConfiguration();
+
+		providerFactoryConfigurations.clear();
+
+		FactoryConfiguration<?> factoryConfiguration =
+			configuration.getCacheManagerEventListenerFactoryConfiguration();
+
+		if (factoryConfiguration != null) {
+			factoryConfiguration.setClass(null);
+		}
+
+		_clearListenerConfigrations(
+			configuration.getDefaultCacheConfiguration());
+
+		Map<String, CacheConfiguration> cacheConfigurations =
+			configuration.getCacheConfigurations();
+
+		for (CacheConfiguration cacheConfiguration :
+				cacheConfigurations.values()) {
+
+			_clearListenerConfigrations(cacheConfiguration);
+		}
+	}
+
+	private Set<Properties> _parseCacheEventListenerConfigurations(
 		List<CacheEventListenerFactoryConfiguration>
 			cacheEventListenerConfigurations,
 		ClassLoader classLoader, boolean usingDefault) {
@@ -198,25 +242,7 @@ public abstract class BaseEhcachePortalCacheManagerConfigurator {
 		return portalCacheListenerPropertiesSet;
 	}
 
-	protected PortalCacheConfiguration parseCacheListenerConfigurations(
-		CacheConfiguration cacheConfiguration, ClassLoader classLoader,
-		boolean usingDefault) {
-
-		Set<Properties> portalCacheListenerPropertiesSet =
-			parseCacheEventListenerConfigurations(
-				(List<CacheEventListenerFactoryConfiguration>)
-					cacheConfiguration.getCacheEventListenerConfigurations(),
-				classLoader, usingDefault);
-
-		boolean requireSerialization = isRequireSerialization(
-			cacheConfiguration);
-
-		return new EhcachePortalCacheConfiguration(
-			cacheConfiguration.getName(), portalCacheListenerPropertiesSet,
-			requireSerialization);
-	}
-
-	protected Set<Properties> parseCacheManagerEventListenerConfigurations(
+	private Set<Properties> _parseCacheManagerEventListenerConfigurations(
 		FactoryConfiguration<?> factoryConfiguration, ClassLoader classLoader) {
 
 		if (factoryConfiguration == null) {
@@ -239,12 +265,12 @@ public abstract class BaseEhcachePortalCacheManagerConfigurator {
 		return Collections.singleton(properties);
 	}
 
-	protected PortalCacheManagerConfiguration parseListenerConfigurations(
+	private PortalCacheManagerConfiguration _parseListenerConfigurations(
 		Configuration configuration, ClassLoader classLoader,
 		boolean usingDefault) {
 
 		Set<Properties> cacheManagerListenerPropertiesSet =
-			parseCacheManagerEventListenerConfigurations(
+			_parseCacheManagerEventListenerConfigurations(
 				configuration.
 					getCacheManagerEventListenerFactoryConfiguration(),
 				classLoader);
@@ -281,32 +307,6 @@ public abstract class BaseEhcachePortalCacheManagerConfigurator {
 			cacheManagerListenerPropertiesSet, defaultPortalCacheConfiguration,
 			portalCacheConfigurations);
 	}
-
-	protected Properties parseProperties(
-		String propertiesString, String propertySeparator) {
-
-		Properties properties = new Properties();
-
-		if (propertiesString == null) {
-			return properties;
-		}
-
-		String propertyLines = propertiesString.trim();
-
-		propertyLines = StringUtil.replace(
-			propertyLines, propertySeparator, StringPool.NEW_LINE);
-
-		try {
-			properties.load(new UnsyncStringReader(propertyLines));
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
-
-		return properties;
-	}
-
-	protected Props props;
 
 	private static final Map<NotificationScope, PortalCacheListenerScope>
 		_portalCacheListenerScopes =

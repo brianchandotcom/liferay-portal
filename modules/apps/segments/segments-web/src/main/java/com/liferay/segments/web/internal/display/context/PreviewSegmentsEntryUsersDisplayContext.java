@@ -75,7 +75,7 @@ public class PreviewSegmentsEntryUsersDisplayContext {
 		}
 
 		SearchContainer<User> userSearchContainer = new SearchContainer(
-			_renderRequest, getPortletURL(), null,
+			_renderRequest, _getPortletURL(), null,
 			"no-users-have-been-assigned-to-this-segment");
 
 		userSearchContainer.setId("segmentsEntryUsers");
@@ -88,7 +88,7 @@ public class PreviewSegmentsEntryUsersDisplayContext {
 		List<User> users = null;
 
 		try {
-			Criteria criteria = getCriteriaFromSession();
+			Criteria criteria = _getCriteriaFromSession();
 
 			SegmentsEntry segmentsEntry = getSegmentsEntry();
 
@@ -146,32 +146,6 @@ public class PreviewSegmentsEntryUsersDisplayContext {
 		return _userSearchContainer;
 	}
 
-	protected Criteria getCriteriaFromSession() {
-		PortletSession portletSession = _renderRequest.getPortletSession();
-
-		return (Criteria)portletSession.getAttribute(
-			SegmentsWebKeys.PREVIEW_SEGMENTS_ENTRY_CRITERIA);
-	}
-
-	protected PortletURL getPortletURL() {
-		return PortletURLBuilder.createRenderURL(
-			_renderResponse
-		).setMVCRenderCommandName(
-			"/segments/preview_segments_entry_users"
-		).setParameter(
-			"segmentsEntryId",
-			() -> {
-				SegmentsEntry segmentsEntry = getSegmentsEntry();
-
-				if (segmentsEntry != null) {
-					return segmentsEntry.getSegmentsEntryId();
-				}
-
-				return null;
-			}
-		).buildPortletURL();
-	}
-
 	protected SegmentsEntry getSegmentsEntry() {
 		if (_segmentsEntry != null) {
 			return _segmentsEntry;
@@ -195,6 +169,32 @@ public class PreviewSegmentsEntryUsersDisplayContext {
 		}
 
 		return _segmentsEntry;
+	}
+
+	private Criteria _getCriteriaFromSession() {
+		PortletSession portletSession = _renderRequest.getPortletSession();
+
+		return (Criteria)portletSession.getAttribute(
+			SegmentsWebKeys.PREVIEW_SEGMENTS_ENTRY_CRITERIA);
+	}
+
+	private PortletURL _getPortletURL() {
+		return PortletURLBuilder.createRenderURL(
+			_renderResponse
+		).setMVCRenderCommandName(
+			"/segments/preview_segments_entry_users"
+		).setParameter(
+			"segmentsEntryId",
+			() -> {
+				SegmentsEntry segmentsEntry = getSegmentsEntry();
+
+				if (segmentsEntry != null) {
+					return segmentsEntry.getSegmentsEntryId();
+				}
+
+				return null;
+			}
+		).buildPortletURL();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -58,7 +58,7 @@ public abstract class BaseContactInfoManager<T>
 			return;
 		}
 
-		if (!hasPrimary(contactInfos)) {
+		if (!_hasPrimary(contactInfos)) {
 			long size = contactInfos.size();
 
 			for (T tempContactInfo : contactInfos) {
@@ -94,16 +94,6 @@ public abstract class BaseContactInfoManager<T>
 
 	protected abstract long getPrimaryKey(T contactInfo);
 
-	protected boolean hasPrimary(List<T> contactInfos) {
-		for (T contacInfo : contactInfos) {
-			if (isPrimary(contacInfo)) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
 	protected abstract boolean isPrimary(T contactInfo);
 
 	protected void makePrimary(T contactInfo) throws Exception {
@@ -113,5 +103,15 @@ public abstract class BaseContactInfoManager<T>
 	}
 
 	protected abstract void setPrimary(T contactInfo, boolean primary);
+
+	private boolean _hasPrimary(List<T> contactInfos) {
+		for (T contacInfo : contactInfos) {
+			if (isPrimary(contacInfo)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
 
 }

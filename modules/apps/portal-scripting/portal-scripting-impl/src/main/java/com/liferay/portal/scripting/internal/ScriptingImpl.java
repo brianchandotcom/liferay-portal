@@ -89,7 +89,7 @@ public class ScriptingImpl implements Scripting {
 		}
 		catch (Exception exception) {
 			throw new ScriptingException(
-				getErrorMessage(script, exception), exception);
+				_getErrorMessage(script, exception), exception);
 		}
 		finally {
 			if (_log.isDebugEnabled()) {
@@ -113,7 +113,23 @@ public class ScriptingImpl implements Scripting {
 		return _scriptingExecutors.keySet();
 	}
 
-	protected String getErrorMessage(String script, Exception exception) {
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	protected void setScriptingExecutors(ScriptingExecutor scriptingExecutor) {
+		_scriptingExecutors.put(
+			scriptingExecutor.getLanguage(), scriptingExecutor);
+	}
+
+	protected void unsetScriptingExecutors(
+		ScriptingExecutor scriptingExecutor) {
+
+		_scriptingExecutors.remove(scriptingExecutor.getLanguage());
+	}
+
+	private String _getErrorMessage(String script, Exception exception) {
 		StringBundler sb = new StringBundler();
 
 		sb.append(exception.getMessage());
@@ -150,22 +166,6 @@ public class ScriptingImpl implements Scripting {
 		}
 
 		return sb.toString();
-	}
-
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected void setScriptingExecutors(ScriptingExecutor scriptingExecutor) {
-		_scriptingExecutors.put(
-			scriptingExecutor.getLanguage(), scriptingExecutor);
-	}
-
-	protected void unsetScriptingExecutors(
-		ScriptingExecutor scriptingExecutor) {
-
-		_scriptingExecutors.remove(scriptingExecutor.getLanguage());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(ScriptingImpl.class);

@@ -64,7 +64,7 @@ public class FacebookConnectCompanySettingsVerifyProcess
 		if (oauthRedirectURL != null) {
 			dictionary.put(
 				FacebookConnectConfigurationKeys.OAUTH_REDIRECT_URL,
-				upgradeLegacyRedirectURI(oauthRedirectURL));
+				_upgradeLegacyRedirectURI(oauthRedirectURL));
 		}
 
 		return dictionary;
@@ -131,7 +131,7 @@ public class FacebookConnectCompanySettingsVerifyProcess
 		_settingsFactory = settingsFactory;
 	}
 
-	protected String upgradeLegacyRedirectURI(String legacyRedirectURI) {
+	private String _upgradeLegacyRedirectURI(String legacyRedirectURI) {
 		if (Validator.isNull(legacyRedirectURI)) {
 			return legacyRedirectURI;
 		}

@@ -75,16 +75,16 @@ public class SharingEntrySearchPermissionCheckerTest {
 		PermissionThreadLocal.setPermissionChecker(
 			PermissionCheckerFactoryUtil.create(_user));
 
-		assertFieldValue(
+		_assertFieldValue(
 			new long[] {_group.getGroupId()}, "sharedToUserId",
 			String.valueOf(_user.getUserId()), true);
 	}
 
-	protected void assertFieldValue(
+	private void _assertFieldValue(
 			long[] groupIds, String field, String value, boolean expected)
 		throws Exception {
 
-		BooleanFilter booleanFilter = getBooleanFilter(groupIds);
+		BooleanFilter booleanFilter = _getBooleanFilter(groupIds);
 
 		TestFilterVisitor testFilterVisitor = new TestFilterVisitor(
 			expected, field, value);
@@ -94,7 +94,7 @@ public class SharingEntrySearchPermissionCheckerTest {
 		testFilterVisitor.assertField();
 	}
 
-	protected BooleanFilter getBooleanFilter(long[] groupIds) throws Exception {
+	private BooleanFilter _getBooleanFilter(long[] groupIds) throws Exception {
 		return _searchPermissionChecker.getPermissionBooleanFilter(
 			TestPropsValues.getCompanyId(), groupIds, _user.getUserId(),
 			DLFileEntry.class.getName(), new BooleanFilter(),

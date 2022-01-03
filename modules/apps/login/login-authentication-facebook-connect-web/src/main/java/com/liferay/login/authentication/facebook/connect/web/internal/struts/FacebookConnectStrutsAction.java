@@ -173,14 +173,14 @@ public class FacebookConnectStrutsAction implements StrutsAction {
 				httpServletRequest);
 
 			try {
-				User user = setFacebookCredentials(
+				User user = _setFacebookCredentials(
 					httpSession, themeDisplay.getCompanyId(), token,
 					serviceContext);
 
 				if ((user != null) &&
 					(user.getStatus() == WorkflowConstants.STATUS_INCOMPLETE)) {
 
-					redirectUpdateAccount(
+					_redirectUpdateAccount(
 						httpServletRequest, httpServletResponse, user);
 
 					return null;
@@ -193,7 +193,7 @@ public class FacebookConnectStrutsAction implements StrutsAction {
 
 				Class<?> clazz = portalException.getClass();
 
-				sendError(
+				_sendError(
 					clazz.getSimpleName(), httpServletRequest,
 					httpServletResponse);
 
@@ -214,7 +214,17 @@ public class FacebookConnectStrutsAction implements StrutsAction {
 		_forward = GetterUtil.getString(properties, "/common/referer_jsp.jsp");
 	}
 
-	protected User addUser(
+	@Reference(unbind = "-")
+	protected void setFacebookConnect(FacebookConnect facebookConnect) {
+		_facebookConnect = facebookConnect;
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
+	private User _addUser(
 			HttpSession httpSession, long companyId, JSONObject jsonObject,
 			ServiceContext serviceContext)
 		throws Exception {
@@ -266,7 +276,26 @@ public class FacebookConnectStrutsAction implements StrutsAction {
 		return user;
 	}
 
-	protected void redirectUpdateAccount(
+	private void _checkAllowUserCreation(long companyId, JSONObject jsonObject)
+		throws Exception {
+
+		Company company = _companyLocalService.getCompany(companyId);
+
+		if (!company.isStrangers()) {
+			throw new StrangersNotAllowedException(companyId);
+		}
+
+		String emailAddress = jsonObject.getString("email");
+
+		if (company.hasCompanyMx(emailAddress) &&
+			!company.isStrangersWithMx()) {
+
+			throw new UserEmailAddressException.MustNotUseCompanyMx(
+				emailAddress);
+		}
+	}
+
+	private void _redirectUpdateAccount(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, User user)
 		throws Exception {
@@ -297,7 +326,7 @@ public class FacebookConnectStrutsAction implements StrutsAction {
 			).buildString());
 	}
 
-	protected void sendError(
+	private void _sendError(
 			String error, HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
 		throws Exception {
@@ -315,12 +344,7 @@ public class FacebookConnectStrutsAction implements StrutsAction {
 		httpServletResponse.sendRedirect(portletURL.toString());
 	}
 
-	@Reference(unbind = "-")
-	protected void setFacebookConnect(FacebookConnect facebookConnect) {
-		_facebookConnect = facebookConnect;
-	}
-
-	protected User setFacebookCredentials(
+	private User _setFacebookCredentials(
 			HttpSession httpSession, long companyId, String token,
 			ServiceContext serviceContext)
 		throws Exception {
@@ -395,23 +419,18 @@ public class FacebookConnectStrutsAction implements StrutsAction {
 				return user;
 			}
 
-			user = updateUser(user, jsonObject, serviceContext);
+			user = _updateUser(user, jsonObject, serviceContext);
 		}
 		else {
 			_checkAllowUserCreation(companyId, jsonObject);
 
-			user = addUser(httpSession, companyId, jsonObject, serviceContext);
+			user = _addUser(httpSession, companyId, jsonObject, serviceContext);
 		}
 
 		return user;
 	}
 
-	@Reference(unbind = "-")
-	protected void setUserLocalService(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
-	}
-
-	protected User updateUser(
+	private User _updateUser(
 			User user, JSONObject jsonObject, ServiceContext serviceContext)
 		throws Exception {
 
@@ -466,25 +485,6 @@ public class FacebookConnectStrutsAction implements StrutsAction {
 			contact.getJabberSn(), contact.getSkypeSn(), contact.getTwitterSn(),
 			contact.getJobTitle(), groupIds, organizationIds, roleIds,
 			userGroupRoles, userGroupIds, serviceContext);
-	}
-
-	private void _checkAllowUserCreation(long companyId, JSONObject jsonObject)
-		throws Exception {
-
-		Company company = _companyLocalService.getCompany(companyId);
-
-		if (!company.isStrangers()) {
-			throw new StrangersNotAllowedException(companyId);
-		}
-
-		String emailAddress = jsonObject.getString("email");
-
-		if (company.hasCompanyMx(emailAddress) &&
-			!company.isStrangersWithMx()) {
-
-			throw new UserEmailAddressException.MustNotUseCompanyMx(
-				emailAddress);
-		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

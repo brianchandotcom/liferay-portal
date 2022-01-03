@@ -50,7 +50,7 @@ public class UserKeywordQueryContributor implements KeywordQueryContributor {
 		SearchContext searchContext =
 			keywordQueryContributorHelper.getSearchContext();
 
-		addHighlightFieldNames(searchContext);
+		_addHighlightFieldNames(searchContext);
 
 		queryHelper.addSearchTerm(booleanQuery, searchContext, "city", false);
 		queryHelper.addSearchTerm(
@@ -91,7 +91,10 @@ public class UserKeywordQueryContributor implements KeywordQueryContributor {
 		}
 	}
 
-	protected void addHighlightFieldNames(SearchContext searchContext) {
+	@Reference
+	protected QueryHelper queryHelper;
+
+	private void _addHighlightFieldNames(SearchContext searchContext) {
 		QueryConfig queryConfig = searchContext.getQueryConfig();
 
 		if (!queryConfig.isHighlightEnabled()) {
@@ -100,9 +103,6 @@ public class UserKeywordQueryContributor implements KeywordQueryContributor {
 
 		queryConfig.addHighlightFieldNames("fullName");
 	}
-
-	@Reference
-	protected QueryHelper queryHelper;
 
 	private WildcardQuery _getTrailingWildcardQuery(
 		String field, String value) {

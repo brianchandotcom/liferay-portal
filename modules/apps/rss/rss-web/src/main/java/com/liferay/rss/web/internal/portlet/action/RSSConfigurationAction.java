@@ -58,7 +58,7 @@ public class RSSConfigurationAction extends DefaultConfigurationAction {
 			ActionResponse actionResponse)
 		throws Exception {
 
-		updateSubscriptions(actionRequest);
+		_updateSubscriptions(actionRequest);
 
 		super.processAction(portletConfig, actionRequest, actionResponse);
 	}
@@ -71,7 +71,7 @@ public class RSSConfigurationAction extends DefaultConfigurationAction {
 		super.setServletContext(servletContext);
 	}
 
-	protected void updateSubscriptions(ActionRequest actionRequest)
+	private void _updateSubscriptions(ActionRequest actionRequest)
 		throws Exception {
 
 		UnicodeProperties unicodeProperties = PropertiesParamUtil.getProperties(

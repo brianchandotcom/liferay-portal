@@ -63,7 +63,7 @@ public class EditGroupAssignmentsMVCActionCommand extends BaseMVCActionCommand {
 		long[] removeUserIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "removeUserIds"), 0L);
 
-		removeUserIds = filterRemoveUserIds(groupId, removeUserIds);
+		removeUserIds = _filterRemoveUserIds(groupId, removeUserIds);
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
@@ -74,7 +74,7 @@ public class EditGroupAssignmentsMVCActionCommand extends BaseMVCActionCommand {
 			themeDisplay.getCompanyId(), groupId, removeUserIds);
 	}
 
-	protected long[] filterRemoveUserIds(long groupId, long[] userIds) {
+	private long[] _filterRemoveUserIds(long groupId, long[] userIds) {
 		Set<Long> filteredUserIds = new HashSet<>();
 
 		for (long userId : userIds) {

@@ -121,7 +121,7 @@ public class TeamStagedModelDataHandler
 			PortletDataContext portletDataContext, Team team)
 		throws Exception {
 
-		Team existingTeam = fetchExistingTeam(
+		Team existingTeam = _fetchExistingTeam(
 			team.getUuid(), portletDataContext.getScopeGroupId(),
 			team.getName());
 
@@ -192,16 +192,6 @@ public class TeamStagedModelDataHandler
 		portletDataContext.importClassedModel(team, importedTeam);
 	}
 
-	protected Team fetchExistingTeam(String uuid, long groupId, String name) {
-		Team team = fetchStagedModelByUuidAndGroupId(uuid, groupId);
-
-		if (team != null) {
-			return team;
-		}
-
-		return _teamLocalService.fetchTeam(groupId, name);
-	}
-
 	@Override
 	protected boolean isSkipImportReferenceStagedModels() {
 		return true;
@@ -222,6 +212,16 @@ public class TeamStagedModelDataHandler
 	@Reference(unbind = "-")
 	protected void setUserLocalService(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
+	}
+
+	private Team _fetchExistingTeam(String uuid, long groupId, String name) {
+		Team team = fetchStagedModelByUuidAndGroupId(uuid, groupId);
+
+		if (team != null) {
+			return team;
+		}
+
+		return _teamLocalService.fetchTeam(groupId, name);
 	}
 
 	private TeamLocalService _teamLocalService;

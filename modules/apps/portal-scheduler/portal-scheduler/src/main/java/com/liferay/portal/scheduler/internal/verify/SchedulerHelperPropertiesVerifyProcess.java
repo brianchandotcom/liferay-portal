@@ -40,10 +40,22 @@ public class SchedulerHelperPropertiesVerifyProcess extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
-		upgradeConfiguration();
+		_upgradeConfiguration();
 	}
 
-	protected void upgradeConfiguration() throws Exception {
+	protected static final String AUDIT_SCHEDULER_JOB_ENABLED =
+		"auditSchedulerJobEnabled";
+
+	protected static final String LEGACY_AUDIT_MESSAGE_SCHEDULER_JOB =
+		"audit.message.scheduler.job";
+
+	@Reference
+	protected ConfigurationAdmin configurationAdmin;
+
+	@Reference
+	protected Props props;
+
+	private void _upgradeConfiguration() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			String audiMessageScheduleJobString = props.get(
 				LEGACY_AUDIT_MESSAGE_SCHEDULER_JOB);
@@ -63,17 +75,5 @@ public class SchedulerHelperPropertiesVerifyProcess extends VerifyProcess {
 				).build());
 		}
 	}
-
-	protected static final String AUDIT_SCHEDULER_JOB_ENABLED =
-		"auditSchedulerJobEnabled";
-
-	protected static final String LEGACY_AUDIT_MESSAGE_SCHEDULER_JOB =
-		"audit.message.scheduler.job";
-
-	@Reference
-	protected ConfigurationAdmin configurationAdmin;
-
-	@Reference
-	protected Props props;
 
 }

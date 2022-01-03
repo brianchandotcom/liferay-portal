@@ -31,10 +31,10 @@ public class UserNotificationEventUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		upgradeNotifications();
+		_upgradeNotifications();
 	}
 
-	protected void updateNotification(
+	private void _updateNotification(
 			long userNotificationEventId, JSONObject jsonObject)
 		throws Exception {
 
@@ -49,7 +49,7 @@ public class UserNotificationEventUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
-	protected void upgradeNotifications() throws Exception {
+	private void _upgradeNotifications() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				"select userNotificationEventId, payload from " +
@@ -78,7 +78,7 @@ public class UserNotificationEventUpgradeProcess extends UpgradeProcess {
 						"notificationType",
 						MicroblogsEntryConstants.NOTIFICATION_TYPE_REPLY);
 
-					updateNotification(
+					_updateNotification(
 						userNotificationEventId, payloadJSONObject);
 				}
 			}

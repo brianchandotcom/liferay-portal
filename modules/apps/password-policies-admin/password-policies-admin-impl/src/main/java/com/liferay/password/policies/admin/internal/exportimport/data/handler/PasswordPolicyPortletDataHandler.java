@@ -103,7 +103,7 @@ public class PasswordPolicyPortletDataHandler extends BasePortletDataHandler {
 			"group-id", String.valueOf(portletDataContext.getScopeGroupId()));
 
 		ActionableDynamicQuery actionableDynamicQuery =
-			getPasswordPolicyActionableDynamicQuery(portletDataContext, true);
+			_getPasswordPolicyActionableDynamicQuery(portletDataContext, true);
 
 		actionableDynamicQuery.performActions();
 
@@ -139,12 +139,27 @@ public class PasswordPolicyPortletDataHandler extends BasePortletDataHandler {
 		throws Exception {
 
 		ActionableDynamicQuery actionableDynamicQuery =
-			getPasswordPolicyActionableDynamicQuery(portletDataContext, false);
+			_getPasswordPolicyActionableDynamicQuery(portletDataContext, false);
 
 		actionableDynamicQuery.performCount();
 	}
 
-	protected ActionableDynamicQuery getPasswordPolicyActionableDynamicQuery(
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
+	protected void setModuleServiceLifecycle(
+		ModuleServiceLifecycle moduleServiceLifecycle) {
+	}
+
+	@Reference(unbind = "-")
+	protected void setPasswordPolicyLocalService(
+		PasswordPolicyLocalService passwordPolicyLocalService) {
+
+		_passwordPolicyLocalService = passwordPolicyLocalService;
+	}
+
+	protected static final String RESOURCE_NAME =
+		"com.liferay.portlet.passwordpoliciesadmin";
+
+	private ActionableDynamicQuery _getPasswordPolicyActionableDynamicQuery(
 		PortletDataContext portletDataContext, boolean export) {
 
 		ActionableDynamicQuery actionableDynamicQuery =
@@ -163,21 +178,6 @@ public class PasswordPolicyPortletDataHandler extends BasePortletDataHandler {
 
 		return actionableDynamicQuery;
 	}
-
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
-	}
-
-	@Reference(unbind = "-")
-	protected void setPasswordPolicyLocalService(
-		PasswordPolicyLocalService passwordPolicyLocalService) {
-
-		_passwordPolicyLocalService = passwordPolicyLocalService;
-	}
-
-	protected static final String RESOURCE_NAME =
-		"com.liferay.portlet.passwordpoliciesadmin";
 
 	private PasswordPolicyLocalService _passwordPolicyLocalService;
 

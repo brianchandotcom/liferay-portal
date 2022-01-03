@@ -55,7 +55,7 @@ public class EditPluginMVCActionCommand extends BaseMVCActionCommand {
 		throws Exception {
 
 		try {
-			updatePluginSetting(actionRequest);
+			_updatePluginSetting(actionRequest);
 		}
 		catch (Exception exception) {
 			if (exception instanceof PrincipalException) {
@@ -81,7 +81,7 @@ public class EditPluginMVCActionCommand extends BaseMVCActionCommand {
 		_portletService = portletService;
 	}
 
-	protected void updatePluginSetting(ActionRequest actionRequest)
+	private void _updatePluginSetting(ActionRequest actionRequest)
 		throws Exception {
 
 		long companyId = _portal.getCompanyId(actionRequest);

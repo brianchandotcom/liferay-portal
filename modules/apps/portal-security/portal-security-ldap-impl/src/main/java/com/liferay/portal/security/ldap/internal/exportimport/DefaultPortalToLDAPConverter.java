@@ -168,10 +168,10 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 			contactMappings.put(ContactConverterKeys.SUFFIX, suffix);
 		}
 
-		Modifications modifications = getModifications(
+		Modifications modifications = _getModifications(
 			contact, contactMappings, _reservedContactFieldNames);
 
-		populateCustomAttributeModifications(
+		_populateCustomAttributeModifications(
 			contact, contact.getExpandoBridge(), contactExpandoAttributes,
 			contactExpandoMappings, modifications);
 
@@ -214,13 +214,13 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 
 		attributes.put(objectClassAttribute);
 
-		addAttributeMapping(
+		_addAttributeMapping(
 			groupMappings.getProperty(GroupConverterKeys.GROUP_NAME),
 			userGroup.getName(), attributes);
-		addAttributeMapping(
+		_addAttributeMapping(
 			groupMappings.getProperty(GroupConverterKeys.DESCRIPTION),
 			userGroup.getDescription(), attributes);
-		addAttributeMapping(
+		_addAttributeMapping(
 			groupMappings.getProperty(GroupConverterKeys.USER),
 			getUserDNName(ldapServerId, user, userMappings), attributes);
 
@@ -234,7 +234,7 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 			UserOperation userOperation)
 		throws Exception {
 
-		Modifications modifications = getModifications(
+		Modifications modifications = _getModifications(
 			userGroup, groupMappings, new HashMap<String, String>());
 
 		SafeLdapName userGroupSafeLdapName = getGroupSafeLdapName(
@@ -299,37 +299,37 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 
 		attributes.put(objectClassAttribute);
 
-		addAttributeMapping(
+		_addAttributeMapping(
 			userMappings.getProperty(UserConverterKeys.UUID), user.getUuid(),
 			attributes);
-		addAttributeMapping(
+		_addAttributeMapping(
 			userMappings.getProperty(UserConverterKeys.SCREEN_NAME),
 			user.getScreenName(), attributes);
-		addAttributeMapping(
+		_addAttributeMapping(
 			userMappings.getProperty(UserConverterKeys.PASSWORD),
-			getEncryptedPasswordForLDAP(user, userMappings), attributes);
-		addAttributeMapping(
+			_getEncryptedPasswordForLDAP(user, userMappings), attributes);
+		_addAttributeMapping(
 			userMappings.getProperty(UserConverterKeys.EMAIL_ADDRESS),
 			user.getEmailAddress(), attributes);
-		addAttributeMapping(
+		_addAttributeMapping(
 			userMappings.getProperty(UserConverterKeys.FULL_NAME),
 			user.getFullName(), attributes);
-		addAttributeMapping(
+		_addAttributeMapping(
 			userMappings.getProperty(UserConverterKeys.FIRST_NAME),
 			user.getFirstName(), attributes);
-		addAttributeMapping(
+		_addAttributeMapping(
 			userMappings.getProperty(UserConverterKeys.MIDDLE_NAME),
 			user.getMiddleName(), attributes);
-		addAttributeMapping(
+		_addAttributeMapping(
 			userMappings.getProperty(UserConverterKeys.LAST_NAME),
 			user.getLastName(), attributes);
-		addAttributeMapping(
+		_addAttributeMapping(
 			userMappings.getProperty(UserConverterKeys.JOB_TITLE),
 			user.getJobTitle(), attributes);
-		addAttributeMapping(
+		_addAttributeMapping(
 			userMappings.getProperty(UserConverterKeys.PORTRAIT),
-			getUserPortrait(user), attributes);
-		addAttributeMapping(
+			_getUserPortrait(user), attributes);
+		_addAttributeMapping(
 			userMappings.getProperty(UserConverterKeys.STATUS),
 			String.valueOf(user.getStatus()), attributes);
 
@@ -382,32 +382,32 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 			Properties userMappings, Properties userExpandoMappings)
 		throws Exception {
 
-		Modifications modifications = getModifications(
+		Modifications modifications = _getModifications(
 			user, userMappings, _reservedUserFieldNames);
 
 		if (PasswordModificationThreadLocal.isPasswordModified() &&
 			Validator.isNotNull(
 				PasswordModificationThreadLocal.getPasswordUnencrypted())) {
 
-			String newPassword = getEncryptedPasswordForLDAP(
+			String newPassword = _getEncryptedPasswordForLDAP(
 				user, userMappings);
 
 			String passwordKey = userMappings.getProperty(
 				UserConverterKeys.PASSWORD);
 
-			addModificationItem(passwordKey, newPassword, modifications);
+			_addModificationItem(passwordKey, newPassword, modifications);
 		}
 
 		String portraitKey = userMappings.getProperty(
 			UserConverterKeys.PORTRAIT);
 
 		if (Validator.isNotNull(portraitKey)) {
-			addModificationItem(
-				new BasicAttribute(portraitKey, getUserPortrait(user)),
+			_addModificationItem(
+				new BasicAttribute(portraitKey, _getUserPortrait(user)),
 				modifications);
 		}
 
-		populateCustomAttributeModifications(
+		_populateCustomAttributeModifications(
 			user, user.getExpandoBridge(), userExpandoAttributes,
 			userExpandoMappings, modifications);
 
@@ -487,7 +487,44 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 		}
 	}
 
-	protected void addAttributeMapping(
+	@Reference(unbind = "-")
+	protected void setImageLocalService(ImageLocalService imageLocalService) {
+		_imageLocalService = imageLocalService;
+	}
+
+	@Reference(
+		target = "(factoryPid=com.liferay.portal.security.ldap.authenticator.configuration.LDAPAuthConfiguration)",
+		unbind = "-"
+	)
+	protected void setLDAPAuthConfigurationProvider(
+		ConfigurationProvider<LDAPAuthConfiguration>
+			ldapAuthConfigurationProvider) {
+
+		_ldapAuthConfigurationProvider = ldapAuthConfigurationProvider;
+	}
+
+	@Reference(
+		target = "(factoryPid=com.liferay.portal.security.ldap.configuration.LDAPServerConfiguration)",
+		unbind = "-"
+	)
+	protected void setLDAPServerConfigurationProvider(
+		ConfigurationProvider<LDAPServerConfiguration>
+			ldapServerConfigurationProvider) {
+
+		_ldapServerConfigurationProvider = ldapServerConfigurationProvider;
+	}
+
+	@Reference(unbind = "-")
+	protected void setLdapSettings(LDAPSettings ldapSettings) {
+		_ldapSettings = ldapSettings;
+	}
+
+	@Reference(unbind = "-")
+	protected void setPasswordEncryptor(PasswordEncryptor passwordEncryptor) {
+		_passwordEncryptor = passwordEncryptor;
+	}
+
+	private void _addAttributeMapping(
 		String attributeName, Object attributeValue, Attributes attributes) {
 
 		if (Validator.isNotNull(attributeName) && (attributeValue != null)) {
@@ -495,7 +532,7 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 		}
 	}
 
-	protected void addAttributeMapping(
+	private void _addAttributeMapping(
 		String attributeName, String attributeValue, Attributes attributes) {
 
 		if (Validator.isNotNull(attributeName) &&
@@ -505,7 +542,7 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 		}
 	}
 
-	protected void addModificationItem(
+	private void _addModificationItem(
 		BasicAttribute basicAttribute, Modifications modifications) {
 
 		if (basicAttribute != null) {
@@ -513,7 +550,7 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 		}
 	}
 
-	protected void addModificationItem(
+	private void _addModificationItem(
 		String attributeName, String attributeValue,
 		Modifications modifications) {
 
@@ -522,7 +559,34 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 		}
 	}
 
-	protected String getEncryptedPasswordForLDAP(
+	private Object _getAttributeValue(Object object, String fieldName)
+		throws PortalException {
+
+		boolean listTypeFieldName = false;
+
+		if (fieldName.equals(ContactConverterKeys.PREFIX)) {
+			fieldName = "prefixId";
+			listTypeFieldName = true;
+		}
+		else if (fieldName.equals(ContactConverterKeys.SUFFIX)) {
+			fieldName = "suffixId";
+			listTypeFieldName = true;
+		}
+
+		Object attributeValue = BeanPropertiesUtil.getObjectSilent(
+			object, fieldName);
+
+		if ((attributeValue != null) && listTypeFieldName) {
+			ListType listType = _listTypeService.getListType(
+				(Long)attributeValue);
+
+			attributeValue = listType.getName();
+		}
+
+		return attributeValue;
+	}
+
+	private String _getEncryptedPasswordForLDAP(
 		User user, Properties userMappings) {
 
 		String password =
@@ -570,7 +634,7 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 		return password;
 	}
 
-	protected Modifications getModifications(
+	private Modifications _getModifications(
 		Object object, Properties objectMappings,
 		Map<String, String> reservedFieldNames) {
 
@@ -589,7 +653,7 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 				Object attributeValue = _getAttributeValue(object, fieldName);
 
 				if (attributeValue != null) {
-					addModificationItem(
+					_addModificationItem(
 						ldapAttributeName, attributeValue.toString(),
 						modifications);
 				}
@@ -608,7 +672,7 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 		return modifications;
 	}
 
-	protected byte[] getUserPortrait(User user) {
+	private byte[] _getUserPortrait(User user) {
 		byte[] bytes = null;
 
 		if (user.getPortraitId() == 0) {
@@ -635,7 +699,7 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 		return bytes;
 	}
 
-	protected boolean hasLegacyPasswordEncryptionAlgorithm() {
+	private boolean _hasLegacyPasswordEncryptionAlgorithm() {
 		if (Validator.isNotNull(
 				GetterUtil.getString(
 					_props.get(
@@ -647,7 +711,7 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 		return false;
 	}
 
-	protected void populateCustomAttributeModifications(
+	private void _populateCustomAttributeModifications(
 		Object object, ExpandoBridge expandoBridge,
 		Map<String, Serializable> expandoAttributes, Properties expandoMappings,
 		Modifications modifications) {
@@ -673,7 +737,7 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 				String value = ExpandoConverterUtil.getStringFromAttribute(
 					type, fieldValue);
 
-				addModificationItem(ldapAttributeName, value, modifications);
+				_addModificationItem(ldapAttributeName, value, modifications);
 			}
 			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
@@ -685,70 +749,6 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 				}
 			}
 		}
-	}
-
-	@Reference(unbind = "-")
-	protected void setImageLocalService(ImageLocalService imageLocalService) {
-		_imageLocalService = imageLocalService;
-	}
-
-	@Reference(
-		target = "(factoryPid=com.liferay.portal.security.ldap.authenticator.configuration.LDAPAuthConfiguration)",
-		unbind = "-"
-	)
-	protected void setLDAPAuthConfigurationProvider(
-		ConfigurationProvider<LDAPAuthConfiguration>
-			ldapAuthConfigurationProvider) {
-
-		_ldapAuthConfigurationProvider = ldapAuthConfigurationProvider;
-	}
-
-	@Reference(
-		target = "(factoryPid=com.liferay.portal.security.ldap.configuration.LDAPServerConfiguration)",
-		unbind = "-"
-	)
-	protected void setLDAPServerConfigurationProvider(
-		ConfigurationProvider<LDAPServerConfiguration>
-			ldapServerConfigurationProvider) {
-
-		_ldapServerConfigurationProvider = ldapServerConfigurationProvider;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLdapSettings(LDAPSettings ldapSettings) {
-		_ldapSettings = ldapSettings;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPasswordEncryptor(PasswordEncryptor passwordEncryptor) {
-		_passwordEncryptor = passwordEncryptor;
-	}
-
-	private Object _getAttributeValue(Object object, String fieldName)
-		throws PortalException {
-
-		boolean listTypeFieldName = false;
-
-		if (fieldName.equals(ContactConverterKeys.PREFIX)) {
-			fieldName = "prefixId";
-			listTypeFieldName = true;
-		}
-		else if (fieldName.equals(ContactConverterKeys.SUFFIX)) {
-			fieldName = "suffixId";
-			listTypeFieldName = true;
-		}
-
-		Object attributeValue = BeanPropertiesUtil.getObjectSilent(
-			object, fieldName);
-
-		if ((attributeValue != null) && listTypeFieldName) {
-			ListType listType = _listTypeService.getListType(
-				(Long)attributeValue);
-
-			attributeValue = listType.getName();
-		}
-
-		return attributeValue;
 	}
 
 	private static final String _DEFAULT_DN = "cn";

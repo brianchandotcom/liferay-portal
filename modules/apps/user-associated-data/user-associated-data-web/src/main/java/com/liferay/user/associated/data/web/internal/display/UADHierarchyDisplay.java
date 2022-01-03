@@ -461,7 +461,7 @@ public class UADHierarchyDisplay {
 				_uadHierarchyDeclaration.getContainerUADDisplays()) {
 
 			searchResults.addAll(
-				getContainerDisplays(
+				_getContainerDisplays(
 					containerUADDisplay, parentContainerClass,
 					parentContainerId, allUserItems));
 		}
@@ -507,7 +507,20 @@ public class UADHierarchyDisplay {
 		return (T)object;
 	}
 
-	protected <T> Collection<ContainerDisplay<T>> getContainerDisplays(
+	private void _addEntities(
+		Map<Class<?>, List<Serializable>> entitiesMap,
+		List<Serializable> entities, Class<?> typeClass) {
+
+		if (!entitiesMap.containsKey(typeClass)) {
+			entitiesMap.put(typeClass, new ArrayList<>());
+		}
+
+		List<Serializable> entitiesList = entitiesMap.get(typeClass);
+
+		entitiesList.addAll(entities);
+	}
+
+	private <T> Collection<ContainerDisplay<T>> _getContainerDisplays(
 		UADDisplay<T> containerUADDisplay, Class<?> parentContainerClass,
 		Serializable parentContainerId, List<Object> allUserItems) {
 
@@ -556,19 +569,6 @@ public class UADHierarchyDisplay {
 		}
 
 		return topLevelCategories.values();
-	}
-
-	private void _addEntities(
-		Map<Class<?>, List<Serializable>> entitiesMap,
-		List<Serializable> entities, Class<?> typeClass) {
-
-		if (!entitiesMap.containsKey(typeClass)) {
-			entitiesMap.put(typeClass, new ArrayList<>());
-		}
-
-		List<Serializable> entitiesList = entitiesMap.get(typeClass);
-
-		entitiesList.addAll(entities);
 	}
 
 	private <T> List<Serializable> _getContainerItemPKs(

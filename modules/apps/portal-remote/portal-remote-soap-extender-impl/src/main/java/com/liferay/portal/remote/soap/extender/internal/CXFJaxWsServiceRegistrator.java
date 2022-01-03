@@ -121,19 +121,7 @@ public class CXFJaxWsServiceRegistrator {
 
 		Server server = jaxWsServerFactoryBean.create();
 
-		store(bus, server, service);
-	}
-
-	protected void store(Bus bus, Server server, Object service) {
-		Map<Object, Server> servers = _busServers.get(bus);
-
-		if (servers == null) {
-			servers = new HashMap<>();
-
-			_busServers.put(bus, servers);
-		}
-
-		servers.put(service, server);
+		_store(bus, server, service);
 	}
 
 	private void _addBus(Bus bus) {
@@ -218,6 +206,18 @@ public class CXFJaxWsServiceRegistrator {
 				server.destroy();
 			}
 		}
+	}
+
+	private void _store(Bus bus, Server server, Object service) {
+		Map<Object, Server> servers = _busServers.get(bus);
+
+		if (servers == null) {
+			servers = new HashMap<>();
+
+			_busServers.put(bus, servers);
+		}
+
+		servers.put(service, server);
 	}
 
 	private <T> void _swapClassLoader(T t, Consumer<T> consumer) {

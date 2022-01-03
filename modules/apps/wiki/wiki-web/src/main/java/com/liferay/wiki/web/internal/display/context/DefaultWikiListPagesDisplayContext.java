@@ -163,21 +163,21 @@ public class DefaultWikiListPagesDisplayContext
 
 		List<MenuItem> menuItems = new ArrayList<>();
 
-		addEditMenuItem(menuItems, wikiPage);
+		_addEditMenuItem(menuItems, wikiPage);
 
-		addPermissionsMenuItem(menuItems, wikiPage);
+		_addPermissionsMenuItem(menuItems, wikiPage);
 
-		addCopyMenuItem(menuItems, wikiPage);
+		_addCopyMenuItem(menuItems, wikiPage);
 
-		addMoveMenuItem(menuItems, wikiPage);
+		_addMoveMenuItem(menuItems, wikiPage);
 
-		addChildPageMenuItem(menuItems, wikiPage);
+		_addChildPageMenuItem(menuItems, wikiPage);
 
-		addSubscriptionMenuItem(menuItems, wikiPage);
+		_addSubscriptionMenuItem(menuItems, wikiPage);
 
-		addPrintPageMenuItem(menuItems, wikiPage);
+		_addPrintPageMenuItem(menuItems, wikiPage);
 
-		addDeleteMenuItem(menuItems, wikiPage);
+		_addDeleteMenuItem(menuItems, wikiPage);
 
 		menu.setMenuItems(menuItems);
 
@@ -430,7 +430,7 @@ public class DefaultWikiListPagesDisplayContext
 		searchContainer.setResults(results);
 	}
 
-	protected void addChildPageMenuItem(
+	private void _addChildPageMenuItem(
 			List<MenuItem> menuItems, WikiPage wikiPage)
 		throws PortalException {
 
@@ -467,10 +467,10 @@ public class DefaultWikiListPagesDisplayContext
 		menuItems.add(urlMenuItem);
 	}
 
-	protected void addCopyMenuItem(List<MenuItem> menuItems, WikiPage wikiPage)
+	private void _addCopyMenuItem(List<MenuItem> menuItems, WikiPage wikiPage)
 		throws PortalException {
 
-		if (!isCopyPasteEnabled(wikiPage)) {
+		if (!_isCopyPasteEnabled(wikiPage)) {
 			return;
 		}
 
@@ -501,8 +501,7 @@ public class DefaultWikiListPagesDisplayContext
 		menuItems.add(urlMenuItem);
 	}
 
-	protected void addDeleteMenuItem(
-			List<MenuItem> menuItems, WikiPage wikiPage)
+	private void _addDeleteMenuItem(List<MenuItem> menuItems, WikiPage wikiPage)
 		throws PortalException {
 
 		if (!wikiPage.isDraft() &&
@@ -576,7 +575,7 @@ public class DefaultWikiListPagesDisplayContext
 		}
 	}
 
-	protected void addEditMenuItem(List<MenuItem> menuItems, WikiPage wikiPage)
+	private void _addEditMenuItem(List<MenuItem> menuItems, WikiPage wikiPage)
 		throws PortalException {
 
 		if (!WikiPagePermission.contains(
@@ -605,10 +604,10 @@ public class DefaultWikiListPagesDisplayContext
 		menuItems.add(urlMenuItem);
 	}
 
-	protected void addMoveMenuItem(List<MenuItem> menuItems, WikiPage wikiPage)
+	private void _addMoveMenuItem(List<MenuItem> menuItems, WikiPage wikiPage)
 		throws PortalException {
 
-		if (!isCopyPasteEnabled(wikiPage)) {
+		if (!_isCopyPasteEnabled(wikiPage)) {
 			return;
 		}
 
@@ -633,7 +632,7 @@ public class DefaultWikiListPagesDisplayContext
 		menuItems.add(urlMenuItem);
 	}
 
-	protected void addPermissionsMenuItem(
+	private void _addPermissionsMenuItem(
 			List<MenuItem> menuItems, WikiPage wikiPage)
 		throws PortalException {
 
@@ -670,7 +669,7 @@ public class DefaultWikiListPagesDisplayContext
 		menuItems.add(urlMenuItem);
 	}
 
-	protected void addPrintPageMenuItem(
+	private void _addPrintPageMenuItem(
 		List<MenuItem> menuItems, WikiPage wikiPage) {
 
 		JavaScriptMenuItem javaScriptMenuItem = new JavaScriptMenuItem();
@@ -707,7 +706,7 @@ public class DefaultWikiListPagesDisplayContext
 		menuItems.add(javaScriptMenuItem);
 	}
 
-	protected void addSubscriptionMenuItem(
+	private void _addSubscriptionMenuItem(
 			List<MenuItem> menuItems, WikiPage wikiPage)
 		throws PortalException {
 
@@ -785,7 +784,7 @@ public class DefaultWikiListPagesDisplayContext
 		}
 	}
 
-	protected boolean isCopyPasteEnabled(WikiPage wikiPage)
+	private boolean _isCopyPasteEnabled(WikiPage wikiPage)
 		throws PortalException {
 
 		if (!WikiPagePermission.contains(

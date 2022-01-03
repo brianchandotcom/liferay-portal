@@ -137,7 +137,7 @@ public class MaximizePortletConfigurationIcon
 
 		if ((!themeDisplay.isSignedIn() ||
 			 (group.hasStagingGroup() && !group.isStagingGroup()) ||
-			 !hasUpdateLayoutPermission(themeDisplay)) &&
+			 !_hasUpdateLayoutPermission(themeDisplay)) &&
 			!PropsValues.LAYOUT_GUEST_SHOW_MAX_ICON) {
 
 			return false;
@@ -151,7 +151,7 @@ public class MaximizePortletConfigurationIcon
 		return false;
 	}
 
-	protected boolean hasUpdateLayoutPermission(ThemeDisplay themeDisplay) {
+	private boolean _hasUpdateLayoutPermission(ThemeDisplay themeDisplay) {
 		try {
 			return LayoutPermissionUtil.contains(
 				themeDisplay.getPermissionChecker(), themeDisplay.getLayout(),

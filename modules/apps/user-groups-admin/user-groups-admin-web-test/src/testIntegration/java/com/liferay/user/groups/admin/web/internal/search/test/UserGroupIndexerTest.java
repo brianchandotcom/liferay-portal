@@ -87,7 +87,7 @@ public class UserGroupIndexerTest {
 
 	@Test
 	public void testSearchUserGroups() throws Exception {
-		Role role = addRole();
+		Role role = _addRole();
 
 		long companyId = role.getCompanyId();
 
@@ -107,7 +107,7 @@ public class UserGroupIndexerTest {
 
 		groupLocalService.addRoleGroup(role.getRoleId(), _group.getGroupId());
 
-		SearchRequestBuilder searchRequestBuilder1 = getSearchRequestBuilder(
+		SearchRequestBuilder searchRequestBuilder1 = _getSearchRequestBuilder(
 			companyId);
 
 		SearchResponse searchResponse1 = searcher.search(
@@ -122,7 +122,7 @@ public class UserGroupIndexerTest {
 			searchResponse1.getDocumentsStream(), Field.NAME,
 			stream.map(UserGroup::getName));
 
-		SearchRequestBuilder searchRequestBuilder2 = getSearchRequestBuilder(
+		SearchRequestBuilder searchRequestBuilder2 = _getSearchRequestBuilder(
 			companyId);
 
 		SearchResponse searchResponse2 = searcher.search(
@@ -136,41 +136,9 @@ public class UserGroupIndexerTest {
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
 
-	protected Role addRole() throws Exception {
-		Role role = roleLocalService.addRole(
-			TestPropsValues.getUserId(), null, 0,
-			RandomTestUtil.randomString(
-				NumericStringRandomizerBumper.INSTANCE,
-				UniqueStringRandomizerBumper.INSTANCE),
-			null, null, RoleConstants.TYPE_REGULAR, null, null);
-
-		_roles.add(role);
-
-		return role;
-	}
-
 	protected UserGroup addUserGroup(String baseName) {
 		return _userGroupFixture.createUserGroup(
 			baseName + StringPool.SPACE + RandomTestUtil.randomString());
-	}
-
-	protected SearchContext getSearchContext(long companyId) {
-		SearchContext searchContext = new SearchContext();
-
-		searchContext.setCompanyId(companyId);
-
-		return searchContext;
-	}
-
-	protected SearchRequestBuilder getSearchRequestBuilder(long companyId) {
-		return searchRequestBuilderFactory.builder(
-		).companyId(
-			companyId
-		).fields(
-			StringPool.STAR
-		).modelIndexerClasses(
-			UserGroup.class
-		);
 	}
 
 	@Inject
@@ -195,6 +163,38 @@ public class UserGroupIndexerTest {
 
 	@Inject
 	protected UsersAdmin usersAdmin;
+
+	private Role _addRole() throws Exception {
+		Role role = roleLocalService.addRole(
+			TestPropsValues.getUserId(), null, 0,
+			RandomTestUtil.randomString(
+				NumericStringRandomizerBumper.INSTANCE,
+				UniqueStringRandomizerBumper.INSTANCE),
+			null, null, RoleConstants.TYPE_REGULAR, null, null);
+
+		_roles.add(role);
+
+		return role;
+	}
+
+	private SearchContext _getSearchContext(long companyId) {
+		SearchContext searchContext = new SearchContext();
+
+		searchContext.setCompanyId(companyId);
+
+		return searchContext;
+	}
+
+	private SearchRequestBuilder _getSearchRequestBuilder(long companyId) {
+		return searchRequestBuilderFactory.builder(
+		).companyId(
+			companyId
+		).fields(
+			StringPool.STAR
+		).modelIndexerClasses(
+			UserGroup.class
+		);
+	}
 
 	private Group _group;
 

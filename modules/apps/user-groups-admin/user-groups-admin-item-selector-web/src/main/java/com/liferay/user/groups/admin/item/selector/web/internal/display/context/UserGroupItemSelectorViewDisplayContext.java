@@ -90,7 +90,7 @@ public class UserGroupItemSelectorViewDisplayContext {
 				getOrderByCol(), getOrderByType());
 
 		RowChecker rowChecker = new UserGroupItemSelectorChecker(
-			_renderResponse, getCheckedUserGroupIds());
+			_renderResponse, _getCheckedUserGroupIds());
 
 		_searchContainer.setOrderByCol(getOrderByCol());
 		_searchContainer.setOrderByComparator(orderByComparator);
@@ -118,7 +118,7 @@ public class UserGroupItemSelectorViewDisplayContext {
 		return _searchContainer;
 	}
 
-	protected long[] getCheckedUserGroupIds() {
+	private long[] _getCheckedUserGroupIds() {
 		return ParamUtil.getLongValues(_renderRequest, "checkedUserGroupIds");
 	}
 

@@ -45,7 +45,7 @@ public class UserModelDocumentContributor
 	@Override
 	public void contribute(Document document, User user) {
 		try {
-			long[] segmentsEntryIds = getSegmentsEntryIds(user);
+			long[] segmentsEntryIds = _getSegmentsEntryIds(user);
 
 			if (ArrayUtil.isNotEmpty(segmentsEntryIds)) {
 				document.addKeyword("segmentsEntryIds", segmentsEntryIds);
@@ -59,7 +59,7 @@ public class UserModelDocumentContributor
 		}
 	}
 
-	protected long[] getSegmentsEntryIds(User user) throws Exception {
+	private long[] _getSegmentsEntryIds(User user) throws Exception {
 		List<SegmentsEntryRel> segmentsEntryRels =
 			_segmentsEntryRelLocalService.getSegmentsEntryRels(
 				_portal.getClassNameId(User.class), user.getUserId());

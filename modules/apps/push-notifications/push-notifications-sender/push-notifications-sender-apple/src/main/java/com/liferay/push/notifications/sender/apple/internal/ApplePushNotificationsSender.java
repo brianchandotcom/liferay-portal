@@ -158,16 +158,6 @@ public class ApplePushNotificationsSender implements PushNotificationsSender {
 		}
 	}
 
-	protected void sendResponse(AppleResponse appleResponse) {
-		Message message = new Message();
-
-		message.setPayload(appleResponse);
-
-		_messageBus.sendMessage(
-			PushNotificationsDestinationNames.PUSH_NOTIFICATION_RESPONSE,
-			message);
-	}
-
 	private String _buildPayload(JSONObject payloadJSONObject) {
 		SimpleApnsPayloadBuilder simpleApnsPayloadBuilder =
 			new SimpleApnsPayloadBuilder();
@@ -314,7 +304,7 @@ public class ApplePushNotificationsSender implements PushNotificationsSender {
 		completableFuture.whenComplete(
 			(simpleApnsPushNotification, throwable) -> {
 				if (simpleApnsPushNotification == null) {
-					sendResponse(new AppleResponse(null, throwable));
+					_sendResponse(new AppleResponse(null, throwable));
 
 					return;
 				}
@@ -338,11 +328,21 @@ public class ApplePushNotificationsSender implements PushNotificationsSender {
 							simpleApnsPushNotification.getRejectionReason()));
 				}
 
-				sendResponse(
+				_sendResponse(
 					new AppleResponse(
 						simpleApnsPushNotification.getPushNotification(),
 						false));
 			});
+	}
+
+	private void _sendResponse(AppleResponse appleResponse) {
+		Message message = new Message();
+
+		message.setPayload(appleResponse);
+
+		_messageBus.sendMessage(
+			PushNotificationsDestinationNames.PUSH_NOTIFICATION_RESPONSE,
+			message);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

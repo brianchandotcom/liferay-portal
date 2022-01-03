@@ -65,15 +65,20 @@ public class RESTExtender {
 
 		_component.setImplementation(cxfJaxRsServiceRegistrator);
 
-		addBusDependencies();
-		addJaxRsApplicationDependencies();
-		addJaxRsProviderServiceDependencies();
-		addJaxRsServiceDependencies();
+		_addBusDependencies();
+		_addJaxRsApplicationDependencies();
+		_addJaxRsProviderServiceDependencies();
+		_addJaxRsServiceDependencies();
 
 		_dependencyManager.add(_component);
 	}
 
-	protected void addBusDependencies() {
+	@Deactivate
+	protected void deactivate() {
+		_dependencyManager.clear();
+	}
+
+	private void _addBusDependencies() {
 		RestExtenderConfiguration restExtenderConfiguration =
 			getRestExtenderConfiguration();
 
@@ -88,7 +93,7 @@ public class RESTExtender {
 				continue;
 			}
 
-			addTCCLServiceDependency(
+			_addTCCLServiceDependency(
 				true, Bus.class,
 				StringBundler.concat(
 					"(", HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_PATH,
@@ -97,7 +102,7 @@ public class RESTExtender {
 		}
 	}
 
-	protected void addJaxRsApplicationDependencies() {
+	private void _addJaxRsApplicationDependencies() {
 		RestExtenderConfiguration restExtenderConfiguration =
 			getRestExtenderConfiguration();
 
@@ -105,7 +110,7 @@ public class RESTExtender {
 			restExtenderConfiguration.jaxRsApplicationFilterStrings();
 
 		if (jaxRsApplicationFilterStrings == null) {
-			addTCCLServiceDependency(
+			_addTCCLServiceDependency(
 				false, Application.class, null, "addApplication",
 				"removeApplication");
 
@@ -115,13 +120,13 @@ public class RESTExtender {
 		for (String jaxRsApplicationFilterString :
 				jaxRsApplicationFilterStrings) {
 
-			addTCCLServiceDependency(
+			_addTCCLServiceDependency(
 				false, Application.class, jaxRsApplicationFilterString,
 				"addApplication", "removeApplication");
 		}
 	}
 
-	protected void addJaxRsProviderServiceDependencies() {
+	private void _addJaxRsProviderServiceDependencies() {
 		RestExtenderConfiguration soapExtenderConfiguration =
 			getRestExtenderConfiguration();
 
@@ -137,13 +142,13 @@ public class RESTExtender {
 				continue;
 			}
 
-			addTCCLServiceDependency(
+			_addTCCLServiceDependency(
 				false, null, jaxRsProviderFilterString, "addProvider",
 				"removeProvider");
 		}
 	}
 
-	protected void addJaxRsServiceDependencies() {
+	private void _addJaxRsServiceDependencies() {
 		RestExtenderConfiguration soapExtenderConfiguration =
 			getRestExtenderConfiguration();
 
@@ -159,13 +164,13 @@ public class RESTExtender {
 				continue;
 			}
 
-			addTCCLServiceDependency(
+			_addTCCLServiceDependency(
 				false, null, jaxRsServiceFilterString, "addService",
 				"removeService");
 		}
 	}
 
-	protected ServiceDependency addTCCLServiceDependency(
+	private ServiceDependency _addTCCLServiceDependency(
 		boolean required, Class<?> clazz, String filter, String addName,
 		String removeName) {
 
@@ -190,11 +195,6 @@ public class RESTExtender {
 		_component.add(serviceDependency);
 
 		return serviceDependency;
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_dependencyManager.clear();
 	}
 
 	private org.apache.felix.dm.Component _component;

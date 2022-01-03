@@ -68,7 +68,7 @@ public class SettingsFactoryImpl implements SettingsFactory {
 
 		try {
 			return new ArchivedSettingsImpl(
-				getPortletItem(groupId, portletId, name));
+				_getPortletItem(groupId, portletId, name));
 		}
 		catch (PortalException portalException) {
 			throw new SettingsException(portalException);
@@ -98,7 +98,7 @@ public class SettingsFactoryImpl implements SettingsFactory {
 	public Settings getSettings(SettingsLocator settingsLocator)
 		throws SettingsException {
 
-		return applyFallbackKeys(
+		return _applyFallbackKeys(
 			settingsLocator.getSettingsId(), settingsLocator.getSettings());
 	}
 
@@ -125,22 +125,6 @@ public class SettingsFactoryImpl implements SettingsFactory {
 		}
 	}
 
-	protected Settings applyFallbackKeys(String settingsId, Settings settings) {
-		if (settings instanceof FallbackKeys) {
-			return settings;
-		}
-
-		settingsId = PortletIdCodec.decodePortletName(settingsId);
-
-		FallbackKeys fallbackKeys = _fallbackKeysMap.get(settingsId);
-
-		if (fallbackKeys != null) {
-			settings = new FallbackSettings(settings, fallbackKeys);
-		}
-
-		return settings;
-	}
-
 	protected long getCompanyId(long groupId) throws SettingsException {
 		try {
 			Group group = _groupLocalService.getGroup(groupId);
@@ -150,33 +134,6 @@ public class SettingsFactoryImpl implements SettingsFactory {
 		catch (PortalException portalException) {
 			throw new SettingsException(portalException);
 		}
-	}
-
-	protected PortletItem getPortletItem(
-			long groupId, String portletId, String name)
-		throws PortalException {
-
-		PortletItem portletItem = null;
-
-		try {
-			portletItem = _portletItemLocalService.getPortletItem(
-				groupId, name, portletId, PortletPreferences.class.getName());
-		}
-		catch (NoSuchPortletItemException noSuchPortletItemException) {
-
-			// LPS-52675
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					noSuchPortletItemException, noSuchPortletItemException);
-			}
-
-			portletItem = _portletItemLocalService.updatePortletItem(
-				PrincipalThreadLocal.getUserId(), groupId, name, portletId,
-				PortletPreferences.class.getName());
-		}
-
-		return portletItem;
 	}
 
 	protected void register(
@@ -259,6 +216,49 @@ public class SettingsFactoryImpl implements SettingsFactory {
 		ConfigurationPidMapping configurationPidMapping) {
 
 		unregister(configurationPidMapping.getConfigurationPid());
+	}
+
+	private Settings _applyFallbackKeys(String settingsId, Settings settings) {
+		if (settings instanceof FallbackKeys) {
+			return settings;
+		}
+
+		settingsId = PortletIdCodec.decodePortletName(settingsId);
+
+		FallbackKeys fallbackKeys = _fallbackKeysMap.get(settingsId);
+
+		if (fallbackKeys != null) {
+			settings = new FallbackSettings(settings, fallbackKeys);
+		}
+
+		return settings;
+	}
+
+	private PortletItem _getPortletItem(
+			long groupId, String portletId, String name)
+		throws PortalException {
+
+		PortletItem portletItem = null;
+
+		try {
+			portletItem = _portletItemLocalService.getPortletItem(
+				groupId, name, portletId, PortletPreferences.class.getName());
+		}
+		catch (NoSuchPortletItemException noSuchPortletItemException) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					noSuchPortletItemException, noSuchPortletItemException);
+			}
+
+			portletItem = _portletItemLocalService.updatePortletItem(
+				PrincipalThreadLocal.getUserId(), groupId, name, portletId,
+				PortletPreferences.class.getName());
+		}
+
+		return portletItem;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -84,10 +84,17 @@ public class ClusterLinkPortalCacheClusterListener extends BaseMessageListener {
 			return;
 		}
 
-		handlePortalCacheClusterEvent(portalCacheClusterEvent);
+		_handlePortalCacheClusterEvent(portalCacheClusterEvent);
 	}
 
-	protected void handlePortalCacheClusterEvent(
+	@Reference(
+		target = "(destination.name=" + PortalCacheDestinationNames.CACHE_REPLICATION + ")",
+		unbind = "-"
+	)
+	protected void setDestination(Destination destination) {
+	}
+
+	private void _handlePortalCacheClusterEvent(
 		PortalCacheClusterEvent portalCacheClusterEvent) {
 
 		PortalCacheManager<? extends Serializable, ?> portalCacheManager =
@@ -136,13 +143,6 @@ public class ClusterLinkPortalCacheClusterListener extends BaseMessageListener {
 			PortalCacheHelperUtil.removeWithoutReplicator(
 				portalCache, portalCacheClusterEvent.getElementKey());
 		}
-	}
-
-	@Reference(
-		target = "(destination.name=" + PortalCacheDestinationNames.CACHE_REPLICATION + ")",
-		unbind = "-"
-	)
-	protected void setDestination(Destination destination) {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

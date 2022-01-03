@@ -191,13 +191,13 @@ public class DefaultLDAPToPortalConverter implements LDAPToPortalConverter {
 			contactMappings.put(ContactConverterKeys.SUFFIX, suffix);
 		}
 
-		long prefixId = getListTypeId(
+		long prefixId = _getListTypeId(
 			attributes, contactMappings, ContactConverterKeys.PREFIX,
 			ListTypeConstants.CONTACT_PREFIX);
 
 		contact.setPrefixId(prefixId);
 
-		long suffixId = getListTypeId(
+		long suffixId = _getListTypeId(
 			attributes, contactMappings, ContactConverterKeys.SUFFIX,
 			ListTypeConstants.CONTACT_SUFFIX);
 
@@ -257,7 +257,7 @@ public class DefaultLDAPToPortalConverter implements LDAPToPortalConverter {
 
 		ldapUser.setContact(contact);
 
-		Map<String, String[]> contactExpandoAttributes = getExpandoAttributes(
+		Map<String, String[]> contactExpandoAttributes = _getExpandoAttributes(
 			attributes, contactExpandoMappings);
 
 		ldapUser.setContactExpandoAttributes(contactExpandoAttributes);
@@ -329,7 +329,7 @@ public class DefaultLDAPToPortalConverter implements LDAPToPortalConverter {
 
 		ldapUser.setUser(user);
 
-		Map<String, String[]> userExpandoAttributes = getExpandoAttributes(
+		Map<String, String[]> userExpandoAttributes = _getExpandoAttributes(
 			attributes, userExpandoMappings);
 
 		ldapUser.setUserExpandoAttributes(userExpandoAttributes);
@@ -340,7 +340,24 @@ public class DefaultLDAPToPortalConverter implements LDAPToPortalConverter {
 		return ldapUser;
 	}
 
-	protected Map<String, String[]> getExpandoAttributes(
+	@Reference(unbind = "-")
+	protected void setContactPersistence(
+		ContactPersistence contactPersistence) {
+
+		_contactPersistence = contactPersistence;
+	}
+
+	@Reference(unbind = "-")
+	protected void setListTypeService(ListTypeService listTypeService) {
+		_listTypeService = listTypeService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserPersistence(UserPersistence userPersistence) {
+		_userPersistence = userPersistence;
+	}
+
+	private Map<String, String[]> _getExpandoAttributes(
 			Attributes attributes, Properties expandoMappings)
 		throws NamingException {
 
@@ -360,7 +377,7 @@ public class DefaultLDAPToPortalConverter implements LDAPToPortalConverter {
 		return expandoAttributes;
 	}
 
-	protected long getListTypeId(
+	private long _getListTypeId(
 			Attributes attributes, Properties contactMappings,
 			String contactMappingsKey, String listTypeType)
 		throws Exception {
@@ -378,23 +395,6 @@ public class DefaultLDAPToPortalConverter implements LDAPToPortalConverter {
 		}
 
 		return 0;
-	}
-
-	@Reference(unbind = "-")
-	protected void setContactPersistence(
-		ContactPersistence contactPersistence) {
-
-		_contactPersistence = contactPersistence;
-	}
-
-	@Reference(unbind = "-")
-	protected void setListTypeService(ListTypeService listTypeService) {
-		_listTypeService = listTypeService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserPersistence(UserPersistence userPersistence) {
-		_userPersistence = userPersistence;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

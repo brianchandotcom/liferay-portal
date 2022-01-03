@@ -85,40 +85,19 @@ public class UserGroupIndexerReindexTest {
 
 		String searchTerm = userGroup.getName();
 
-		assertFieldValue(Field.NAME, searchTerm, searchTerm);
+		_assertFieldValue(Field.NAME, searchTerm, searchTerm);
 
-		deleteDocument(userGroup.getCompanyId(), uidFactory.getUID(userGroup));
+		_deleteDocument(userGroup.getCompanyId(), uidFactory.getUID(userGroup));
 
-		assertNoHits(searchTerm);
+		_assertNoHits(searchTerm);
 
-		reindexAllIndexerModels();
+		_reindexAllIndexerModels();
 
-		assertFieldValue(Field.NAME, searchTerm, searchTerm);
+		_assertFieldValue(Field.NAME, searchTerm, searchTerm);
 	}
 
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
-
-	protected void assertFieldValue(
-		String fieldName, String fieldValue, String searchTerm) {
-
-		FieldValuesAssert.assertFieldValue(
-			fieldName, fieldValue, search(searchTerm));
-	}
-
-	protected void assertNoHits(String searchTerm) {
-		FieldValuesAssert.assertFieldValues(
-			Collections.emptyMap(), search(searchTerm));
-	}
-
-	protected void deleteDocument(long companyId, String uid) throws Exception {
-		indexWriterHelper.deleteDocument(
-			indexer.getSearchEngineId(), companyId, uid, true);
-	}
-
-	protected void reindexAllIndexerModels() throws Exception {
-		indexer.reindex(new String[] {String.valueOf(_group.getCompanyId())});
-	}
 
 	protected SearchResponse search(String searchTerm) {
 		return searcher.search(
@@ -156,6 +135,27 @@ public class UserGroupIndexerReindexTest {
 
 	@Inject
 	protected UserGroupLocalService userGroupLocalService;
+
+	private void _assertFieldValue(
+		String fieldName, String fieldValue, String searchTerm) {
+
+		FieldValuesAssert.assertFieldValue(
+			fieldName, fieldValue, search(searchTerm));
+	}
+
+	private void _assertNoHits(String searchTerm) {
+		FieldValuesAssert.assertFieldValues(
+			Collections.emptyMap(), search(searchTerm));
+	}
+
+	private void _deleteDocument(long companyId, String uid) throws Exception {
+		indexWriterHelper.deleteDocument(
+			indexer.getSearchEngineId(), companyId, uid, true);
+	}
+
+	private void _reindexAllIndexerModels() throws Exception {
+		indexer.reindex(new String[] {String.valueOf(_group.getCompanyId())});
+	}
 
 	private Group _group;
 

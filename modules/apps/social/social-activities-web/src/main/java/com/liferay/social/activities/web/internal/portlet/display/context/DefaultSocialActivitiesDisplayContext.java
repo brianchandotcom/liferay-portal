@@ -87,7 +87,8 @@ public class DefaultSocialActivitiesDisplayContext
 				_socialActivitiesRequestHelper.getLocale()));
 
 		String feedTitle = LanguageUtil.format(
-			getResourceBundle(), "x's-activities", groupDescriptiveName, false);
+			_getResourceBundle(), "x's-activities", groupDescriptiveName,
+			false);
 
 		LiferayPortletResponse liferayPortletResponse =
 			_socialActivitiesRequestHelper.getLiferayPortletResponse();
@@ -142,7 +143,7 @@ public class DefaultSocialActivitiesDisplayContext
 
 	@Override
 	public String getTaglibFeedTitle() throws PortalException {
-		return LanguageUtil.get(getResourceBundle(), "rss");
+		return LanguageUtil.get(_getResourceBundle(), "rss");
 	}
 
 	@Override
@@ -179,7 +180,7 @@ public class DefaultSocialActivitiesDisplayContext
 		return false;
 	}
 
-	protected ResourceBundle getResourceBundle() {
+	private ResourceBundle _getResourceBundle() {
 		if (_resourceBundle != null) {
 			return _resourceBundle;
 		}

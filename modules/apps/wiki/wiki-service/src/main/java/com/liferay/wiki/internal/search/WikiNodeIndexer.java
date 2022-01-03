@@ -119,7 +119,7 @@ public class WikiNodeIndexer extends BaseIndexer<WikiNode> {
 	protected void doReindex(String[] ids) throws Exception {
 		long companyId = GetterUtil.getLong(ids[0]);
 
-		reindexEntries(companyId);
+		_reindexEntries(companyId);
 	}
 
 	@Override
@@ -137,7 +137,23 @@ public class WikiNodeIndexer extends BaseIndexer<WikiNode> {
 			isCommitImmediately());
 	}
 
-	protected void reindexEntries(long companyId) throws PortalException {
+	@Reference(unbind = "-")
+	protected void setWikiNodeLocalService(
+		WikiNodeLocalService wikiNodeLocalService) {
+
+		_wikiNodeLocalService = wikiNodeLocalService;
+	}
+
+	@Reference
+	protected UIDFactory uidFactory;
+
+	private void _deleteDocument(WikiNode wikiNode) throws Exception {
+		_indexWriterHelper.deleteDocument(
+			getSearchEngineId(), wikiNode.getCompanyId(),
+			uidFactory.getUID(wikiNode), isCommitImmediately());
+	}
+
+	private void _reindexEntries(long companyId) throws PortalException {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
 			_wikiNodeLocalService.getIndexableActionableDynamicQuery();
 
@@ -166,22 +182,6 @@ public class WikiNodeIndexer extends BaseIndexer<WikiNode> {
 		indexableActionableDynamicQuery.setSearchEngineId(getSearchEngineId());
 
 		indexableActionableDynamicQuery.performActions();
-	}
-
-	@Reference(unbind = "-")
-	protected void setWikiNodeLocalService(
-		WikiNodeLocalService wikiNodeLocalService) {
-
-		_wikiNodeLocalService = wikiNodeLocalService;
-	}
-
-	@Reference
-	protected UIDFactory uidFactory;
-
-	private void _deleteDocument(WikiNode wikiNode) throws Exception {
-		_indexWriterHelper.deleteDocument(
-			getSearchEngineId(), wikiNode.getCompanyId(),
-			uidFactory.getUID(wikiNode), isCommitImmediately());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

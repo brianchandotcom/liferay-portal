@@ -69,7 +69,36 @@ import org.osgi.service.component.annotations.Reference;
 public class WikiPortletToolbarContributor
 	extends BasePortletToolbarContributor {
 
-	protected void addPortletTitleMenuItem(
+	@Override
+	protected List<MenuItem> getPortletTitleMenuItems(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		List<MenuItem> menuItems = new ArrayList<>();
+
+		try {
+			WikiNode node = _getNode(themeDisplay, portletRequest);
+
+			if (node != null) {
+				_addPortletTitleMenuItem(
+					menuItems, node, themeDisplay, portletRequest);
+			}
+		}
+		catch (PortalException portalException) {
+			_log.error("Unable to add page menu item", portalException);
+		}
+
+		return menuItems;
+	}
+
+	@Reference(unbind = "-")
+	protected void setWikiNodeService(WikiNodeService wikiNodeService) {
+		_wikiNodeService = wikiNodeService;
+	}
+
+	private void _addPortletTitleMenuItem(
 			List<MenuItem> menuItems, WikiNode node, ThemeDisplay themeDisplay,
 			PortletRequest portletRequest)
 		throws PortalException {
@@ -108,35 +137,6 @@ public class WikiPortletToolbarContributor
 			).buildString());
 
 		menuItems.add(urlMenuItem);
-	}
-
-	@Override
-	protected List<MenuItem> getPortletTitleMenuItems(
-		PortletRequest portletRequest, PortletResponse portletResponse) {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		List<MenuItem> menuItems = new ArrayList<>();
-
-		try {
-			WikiNode node = _getNode(themeDisplay, portletRequest);
-
-			if (node != null) {
-				addPortletTitleMenuItem(
-					menuItems, node, themeDisplay, portletRequest);
-			}
-		}
-		catch (PortalException portalException) {
-			_log.error("Unable to add page menu item", portalException);
-		}
-
-		return menuItems;
-	}
-
-	@Reference(unbind = "-")
-	protected void setWikiNodeService(WikiNodeService wikiNodeService) {
-		_wikiNodeService = wikiNodeService;
 	}
 
 	private WikiNode _getNode(

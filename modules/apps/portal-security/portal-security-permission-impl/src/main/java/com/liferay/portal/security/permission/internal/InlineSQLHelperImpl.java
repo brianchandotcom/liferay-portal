@@ -325,36 +325,6 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		_permissionSQLContributors.close();
 	}
 
-	protected long[] getRoleIds(long groupId) {
-		long[] roleIds = PermissionChecker.DEFAULT_ROLE_IDS;
-
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		if (permissionChecker != null) {
-			roleIds = permissionChecker.getRoleIds(
-				permissionChecker.getUserId(), groupId);
-		}
-
-		return roleIds;
-	}
-
-	protected long[] getRoleIds(long[] groupIds) {
-		if (groupIds.length == 1) {
-			return getRoleIds(groupIds[0]);
-		}
-
-		Set<Long> roleIds = new HashSet<>();
-
-		for (long groupId : groupIds) {
-			for (long roleId : getRoleIds(groupId)) {
-				roleIds.add(roleId);
-			}
-		}
-
-		return ArrayUtil.toLongArray(roleIds);
-	}
-
 	@Modified
 	protected void modified(Map<String, Object> properties) {
 		_inlinePermissionConfiguration = ConfigurableUtil.createConfigurable(
@@ -519,7 +489,7 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 
 		Predicate roleIdsOrOwnerIdsPredicate = null;
 
-		long[] roleIds = getRoleIds(groupIds);
+		long[] roleIds = _getRoleIds(groupIds);
 
 		if (roleIds.length > 0) {
 			roleIdsOrOwnerIdsPredicate =
@@ -585,7 +555,7 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 
 		StringBundler sb = new StringBundler(8);
 
-		long[] roleIds = getRoleIds(groupIds);
+		long[] roleIds = _getRoleIds(groupIds);
 
 		if (roleIds.length > 0) {
 			sb.append("(ResourcePermission.roleId IN (");
@@ -633,6 +603,36 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 				className, String.valueOf(permissionChecker.getCompanyId()),
 				String.valueOf(scope), roleIdsOrOwnerIdSQL
 			});
+	}
+
+	private long[] _getRoleIds(long groupId) {
+		long[] roleIds = PermissionChecker.DEFAULT_ROLE_IDS;
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		if (permissionChecker != null) {
+			roleIds = permissionChecker.getRoleIds(
+				permissionChecker.getUserId(), groupId);
+		}
+
+		return roleIds;
+	}
+
+	private long[] _getRoleIds(long[] groupIds) {
+		if (groupIds.length == 1) {
+			return _getRoleIds(groupIds[0]);
+		}
+
+		Set<Long> roleIds = new HashSet<>();
+
+		for (long groupId : groupIds) {
+			for (long roleId : _getRoleIds(groupId)) {
+				roleIds.add(roleId);
+			}
+		}
+
+		return ArrayUtil.toLongArray(roleIds);
 	}
 
 	private DSLQuery _insertResourcePermissionQuery(
@@ -776,7 +776,7 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 			Group group = _groupLocalService.fetchGroup(groupId);
 
 			if (group != null) {
-				long[] roleIds = getRoleIds(groupId);
+				long[] roleIds = _getRoleIds(groupId);
 
 				try {
 					if (_resourcePermissionLocalService.hasResourcePermission(
@@ -819,7 +819,7 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		try {
 			if (_resourcePermissionLocalService.hasResourcePermission(
 					companyId, className, ResourceConstants.SCOPE_COMPANY,
-					String.valueOf(companyId), getRoleIds(0),
+					String.valueOf(companyId), _getRoleIds(0),
 					ActionKeys.VIEW)) {
 
 				return true;

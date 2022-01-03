@@ -79,11 +79,11 @@ public class ClusterLinkImpl implements ClusterLink {
 		_enabled = true;
 
 		initialize(
-			getChannelSettings(
+			_getChannelSettings(
 				PropsKeys.CLUSTER_LINK_CHANNEL_LOGIC_NAME_TRANSPORT),
-			getChannelSettings(
+			_getChannelSettings(
 				PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_TRANSPORT),
-			getChannelSettings(PropsKeys.CLUSTER_LINK_CHANNEL_NAME_TRANSPORT));
+			_getChannelSettings(PropsKeys.CLUSTER_LINK_CHANNEL_NAME_TRANSPORT));
 	}
 
 	@Deactivate
@@ -119,74 +119,12 @@ public class ClusterLinkImpl implements ClusterLink {
 		return _clusterChannels.get(channelIndex);
 	}
 
-	protected Map<String, String> getChannelSettings(String propertyPrefix) {
-		Map<String, String> channelSettings = new HashMap<>();
-
-		Properties channelProperties = _props.getProperties(
-			propertyPrefix, true);
-
-		for (Map.Entry<Object, Object> entry : channelProperties.entrySet()) {
-			channelSettings.put(
-				(String)entry.getKey(), (String)entry.getValue());
-		}
-
-		return channelSettings;
-	}
-
 	protected ExecutorService getExecutorService() {
 		return _executorService;
 	}
 
 	protected List<Address> getLocalAddresses() {
 		return _localAddresses;
-	}
-
-	protected void initChannels(
-			Map<String, String> channelLogicNames,
-			Map<String, String> channelPropertiesLocations,
-			Map<String, String> channelNames)
-		throws Exception {
-
-		_channelCount = channelPropertiesLocations.size();
-
-		if ((_channelCount <= 0) || (_channelCount > MAX_CHANNEL_COUNT)) {
-			throw new IllegalArgumentException(
-				"Channel count must be between 1 and " + MAX_CHANNEL_COUNT);
-		}
-
-		_localAddresses = new ArrayList<>(_channelCount);
-		_clusterChannels = new ArrayList<>(_channelCount);
-		_clusterReceivers = new ArrayList<>(_channelCount);
-
-		List<String> keys = new ArrayList<>(
-			channelPropertiesLocations.keySet());
-
-		Collections.sort(keys);
-
-		for (String key : keys) {
-			String channelPropertiesLocation = channelPropertiesLocations.get(
-				key);
-			String channelName = channelNames.get(key);
-
-			if (Validator.isNull(channelPropertiesLocation) ||
-				Validator.isNull(channelName)) {
-
-				continue;
-			}
-
-			String channelLogicName = channelLogicNames.get(key);
-			ClusterReceiver clusterReceiver = new ClusterForwardReceiver(this);
-
-			ClusterChannel clusterChannel =
-				_clusterChannelFactory.createClusterChannel(
-					_executorService, channelLogicName,
-					channelPropertiesLocation, channelName, clusterReceiver);
-
-			_clusterChannels.add(clusterChannel);
-
-			_clusterReceivers.add(clusterReceiver);
-			_localAddresses.add(clusterChannel.getLocalAddress());
-		}
 	}
 
 	protected void initialize(
@@ -198,7 +136,7 @@ public class ClusterLinkImpl implements ClusterLink {
 			ClusterLinkImpl.class.getName());
 
 		try {
-			initChannels(
+			_initChannels(
 				channelLogicNames, channelPropertiesLocations, channelNames);
 		}
 		catch (Exception exception) {
@@ -255,6 +193,68 @@ public class ClusterLinkImpl implements ClusterLink {
 	@Reference(unbind = "-")
 	protected void setProps(Props props) {
 		_props = props;
+	}
+
+	private Map<String, String> _getChannelSettings(String propertyPrefix) {
+		Map<String, String> channelSettings = new HashMap<>();
+
+		Properties channelProperties = _props.getProperties(
+			propertyPrefix, true);
+
+		for (Map.Entry<Object, Object> entry : channelProperties.entrySet()) {
+			channelSettings.put(
+				(String)entry.getKey(), (String)entry.getValue());
+		}
+
+		return channelSettings;
+	}
+
+	private void _initChannels(
+			Map<String, String> channelLogicNames,
+			Map<String, String> channelPropertiesLocations,
+			Map<String, String> channelNames)
+		throws Exception {
+
+		_channelCount = channelPropertiesLocations.size();
+
+		if ((_channelCount <= 0) || (_channelCount > MAX_CHANNEL_COUNT)) {
+			throw new IllegalArgumentException(
+				"Channel count must be between 1 and " + MAX_CHANNEL_COUNT);
+		}
+
+		_localAddresses = new ArrayList<>(_channelCount);
+		_clusterChannels = new ArrayList<>(_channelCount);
+		_clusterReceivers = new ArrayList<>(_channelCount);
+
+		List<String> keys = new ArrayList<>(
+			channelPropertiesLocations.keySet());
+
+		Collections.sort(keys);
+
+		for (String key : keys) {
+			String channelPropertiesLocation = channelPropertiesLocations.get(
+				key);
+			String channelName = channelNames.get(key);
+
+			if (Validator.isNull(channelPropertiesLocation) ||
+				Validator.isNull(channelName)) {
+
+				continue;
+			}
+
+			String channelLogicName = channelLogicNames.get(key);
+			ClusterReceiver clusterReceiver = new ClusterForwardReceiver(this);
+
+			ClusterChannel clusterChannel =
+				_clusterChannelFactory.createClusterChannel(
+					_executorService, channelLogicName,
+					channelPropertiesLocation, channelName, clusterReceiver);
+
+			_clusterChannels.add(clusterChannel);
+
+			_clusterReceivers.add(clusterReceiver);
+			_localAddresses.add(clusterChannel.getLocalAddress());
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -35,7 +35,7 @@ public class ExtensionManager {
 		_extensions.put(extensionClass, extension);
 	}
 
-	protected void removeExtension(Object extension) {
+	private void _removeExtension(Object extension) {
 	}
 
 	private final Map<Class<?>, Object> _extensions = new HashMap<>();

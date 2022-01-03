@@ -66,7 +66,7 @@ public class UserModelDocumentContributor
 		try {
 			long[] organizationIds = user.getOrganizationIds();
 
-			long[] activeTransitiveGroupIds = getActiveTransitiveGroupIds(
+			long[] activeTransitiveGroupIds = _getActiveTransitiveGroupIds(
 				user.getUserId());
 
 			document.addKeyword(Field.COMPANY_ID, user.getCompanyId());
@@ -78,7 +78,7 @@ public class UserModelDocumentContributor
 			document.addKeyword(Field.USER_NAME, user.getFullName(), true);
 			document.addKeyword(
 				"ancestorOrganizationIds",
-				getAncestorOrganizationIds(user.getOrganizationIds()));
+				_getAncestorOrganizationIds(user.getOrganizationIds()));
 			document.addDate("birthDate", user.getBirthday());
 			document.addKeyword("defaultUser", user.isDefaultUser());
 			document.addKeyword("emailAddress", user.getEmailAddress());
@@ -99,9 +99,9 @@ public class UserModelDocumentContributor
 			document.addKeyword("teamIds", user.getTeamIds());
 			document.addKeyword("userGroupIds", user.getUserGroupIds());
 			document.addKeyword(
-				"userGroupRoleIds", getUserGroupRoleIds(user.getUserId()));
+				"userGroupRoleIds", _getUserGroupRoleIds(user.getUserId()));
 
-			populateAddresses(document, user.getAddresses(), 0, 0);
+			_populateAddresses(document, user.getAddresses(), 0, 0);
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
@@ -111,13 +111,31 @@ public class UserModelDocumentContributor
 		}
 	}
 
-	protected long[] getActiveGroupIds(long userId) {
+	@Reference
+	protected CountryService countryService;
+
+	@Reference
+	protected GroupLocalService groupLocalService;
+
+	@Reference
+	protected IndexWriterHelper indexWriterHelper;
+
+	@Reference
+	protected OrganizationLocalService organizationLocalService;
+
+	@Reference
+	protected RegionService regionService;
+
+	@Reference
+	protected UserGroupRoleLocalService userGroupRoleLocalService;
+
+	private long[] _getActiveGroupIds(long userId) {
 		List<Long> groupIds = groupLocalService.getActiveGroupIds(userId);
 
 		return ArrayUtil.toArray(groupIds.toArray(new Long[0]));
 	}
 
-	protected long[] getActiveTransitiveGroupIds(long userId)
+	private long[] _getActiveTransitiveGroupIds(long userId)
 		throws PortalException {
 
 		List<Group> groups = groupLocalService.getUserGroups(userId, true);
@@ -133,7 +151,7 @@ public class UserModelDocumentContributor
 		).toArray();
 	}
 
-	protected long[] getAncestorOrganizationIds(long[] organizationIds)
+	private long[] _getAncestorOrganizationIds(long[] organizationIds)
 		throws Exception {
 
 		Set<Long> ancestorOrganizationIds = new HashSet<>();
@@ -152,7 +170,11 @@ public class UserModelDocumentContributor
 		return ArrayUtil.toLongArray(ancestorOrganizationIds);
 	}
 
-	protected Set<String> getLocalizedCountryNames(Country country) {
+	private String _getEmailAddressDomain(String emailAddress) {
+		return emailAddress.substring(emailAddress.indexOf(StringPool.AT) + 1);
+	}
+
+	private Set<String> _getLocalizedCountryNames(Country country) {
 		Set<String> countryNames = new HashSet<>();
 
 		for (Locale locale : LanguageUtil.getAvailableLocales()) {
@@ -166,7 +188,7 @@ public class UserModelDocumentContributor
 		return countryNames;
 	}
 
-	protected long[] getUserGroupRoleIds(long userId) {
+	private long[] _getUserGroupRoleIds(long userId) {
 		Set<Long> userGroupRoleIds = new HashSet<>();
 
 		for (UserGroupRole userGroupRole :
@@ -178,7 +200,7 @@ public class UserModelDocumentContributor
 		return ArrayUtil.toLongArray(userGroupRoleIds);
 	}
 
-	protected void populateAddresses(
+	private void _populateAddresses(
 			Document document, List<Address> addresses, long regionId,
 			long countryId)
 		throws PortalException {
@@ -190,7 +212,7 @@ public class UserModelDocumentContributor
 		if (countryId > 0) {
 			try {
 				countries.addAll(
-					getLocalizedCountryNames(
+					_getLocalizedCountryNames(
 						countryService.getCountry(countryId)));
 			}
 			catch (NoSuchCountryException noSuchCountryException) {
@@ -220,7 +242,7 @@ public class UserModelDocumentContributor
 
 		for (Address address : addresses) {
 			cities.add(StringUtil.toLowerCase(address.getCity()));
-			countries.addAll(getLocalizedCountryNames(address.getCountry()));
+			countries.addAll(_getLocalizedCountryNames(address.getCountry()));
 
 			Region region = address.getRegion();
 
@@ -238,28 +260,6 @@ public class UserModelDocumentContributor
 		document.addText("region", regions.toArray(new String[0]));
 		document.addText("street", streets.toArray(new String[0]));
 		document.addText("zip", zips.toArray(new String[0]));
-	}
-
-	@Reference
-	protected CountryService countryService;
-
-	@Reference
-	protected GroupLocalService groupLocalService;
-
-	@Reference
-	protected IndexWriterHelper indexWriterHelper;
-
-	@Reference
-	protected OrganizationLocalService organizationLocalService;
-
-	@Reference
-	protected RegionService regionService;
-
-	@Reference
-	protected UserGroupRoleLocalService userGroupRoleLocalService;
-
-	private String _getEmailAddressDomain(String emailAddress) {
-		return emailAddress.substring(emailAddress.indexOf(StringPool.AT) + 1);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

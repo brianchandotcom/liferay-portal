@@ -110,7 +110,7 @@ public class SiteNavigationMenuPortletDisplayTemplateHandler
 			NavItem.class, "navigationEntry", "getName()");
 
 		templateVariableGroups.put(
-			"navigation-util", getUtilTemplateVariableGroup());
+			"navigation-util", _getUtilTemplateVariableGroup());
 
 		return templateVariableGroups;
 	}
@@ -129,7 +129,7 @@ public class SiteNavigationMenuPortletDisplayTemplateHandler
 			"/dependencies/portlet-display-templates.xml";
 	}
 
-	protected TemplateVariableGroup getUtilTemplateVariableGroup() {
+	private TemplateVariableGroup _getUtilTemplateVariableGroup() {
 		TemplateVariableGroup templateVariableGroup = new TemplateVariableGroup(
 			"navigation-util");
 

@@ -63,26 +63,26 @@ public class BasicAuthHeaderAuthVerifier implements AuthVerifier {
 				authVerifierResult.setState(AuthVerifierResult.State.SUCCESS);
 				authVerifierResult.setUserId(Long.valueOf(credentials[0]));
 			}
-			else if (isBasicAuth(accessControlContext, properties)) {
-				return generateChallenge(accessControlContext);
+			else if (_isBasicAuth(accessControlContext, properties)) {
+				return _generateChallenge(accessControlContext);
 			}
 
 			return authVerifierResult;
 		}
 		catch (AutoLoginException autoLoginException) {
-			if (isBasicAuth(accessControlContext, properties)) {
+			if (_isBasicAuth(accessControlContext, properties)) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(autoLoginException, autoLoginException);
 				}
 
-				return generateChallenge(accessControlContext);
+				return _generateChallenge(accessControlContext);
 			}
 
 			throw new AuthException(autoLoginException);
 		}
 	}
 
-	protected AuthVerifierResult generateChallenge(
+	private AuthVerifierResult _generateChallenge(
 		AccessControlContext accessControlContext) {
 
 		HttpAuthorizationHeader httpAuthorizationHeader =
@@ -100,7 +100,7 @@ public class BasicAuthHeaderAuthVerifier implements AuthVerifier {
 		return authVerifierResult;
 	}
 
-	protected boolean isBasicAuth(
+	private boolean _isBasicAuth(
 		AccessControlContext accessControlContext, Properties properties) {
 
 		boolean basicAuth = MapUtil.getBoolean(

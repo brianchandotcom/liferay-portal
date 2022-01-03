@@ -62,7 +62,7 @@ public class SegmentsServicePreAction extends Action {
 		throws ActionException {
 
 		try {
-			doRun(httpServletRequest, httpServletResponse);
+			_doRun(httpServletRequest, httpServletResponse);
 		}
 		catch (Exception exception) {
 			throw new ActionException(exception);
@@ -92,7 +92,7 @@ public class SegmentsServicePreAction extends Action {
 		}
 	}
 
-	protected void doRun(
+	private void _doRun(
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
 

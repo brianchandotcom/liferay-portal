@@ -51,7 +51,7 @@ public class PushNotificationMessagingConfigurator {
 				DestinationConfiguration.DESTINATION_TYPE_SERIAL,
 				PushNotificationsDestinationNames.PUSH_NOTIFICATION);
 
-		Destination pushNotificationDestination = registerDestination(
+		Destination pushNotificationDestination = _registerDestination(
 			pushNotificationDestinationConfiguration);
 
 		MessageListener pushNotificationsMessageListener =
@@ -67,7 +67,7 @@ public class PushNotificationMessagingConfigurator {
 					PushNotificationsDestinationNames.
 						PUSH_NOTIFICATION_RESPONSE);
 
-		Destination pushNotificationResponseDestination = registerDestination(
+		Destination pushNotificationResponseDestination = _registerDestination(
 			pushNotificationResponseDestinationConfiguration);
 
 		MessageListener pushNotificationsResponseMessageListener =
@@ -97,7 +97,7 @@ public class PushNotificationMessagingConfigurator {
 		_bundleContext = null;
 	}
 
-	protected Destination registerDestination(
+	private Destination _registerDestination(
 		DestinationConfiguration destinationConfiguration) {
 
 		Destination destination = _destinationFactory.createDestination(

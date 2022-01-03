@@ -104,10 +104,10 @@ public class JGroupsClusterChannelFactory implements ClusterChannelFactory {
 		_clusterExecutorConfiguration = ConfigurableUtil.createConfigurable(
 			ClusterExecutorConfiguration.class, properties);
 
-		initSystemProperties(
+		_initSystemProperties(
 			_props.getArray(PropsKeys.CLUSTER_LINK_CHANNEL_SYSTEM_PROPERTIES));
 
-		initBindAddress(
+		_initBindAddress(
 			GetterUtil.getString(
 				_props.get(PropsKeys.CLUSTER_LINK_AUTODETECT_ADDRESS)));
 	}
@@ -117,7 +117,34 @@ public class JGroupsClusterChannelFactory implements ClusterChannelFactory {
 		_classLoaders.clear();
 	}
 
-	protected void initBindAddress(String autodetectAddress) {
+	@Reference(unbind = "-")
+	protected void setProps(Props props) {
+		_props = props;
+	}
+
+	private InputStream _getInputStream(String channelPropertiesLocation)
+		throws IOException {
+
+		InputStream inputStream = ConfiguratorFactory.getConfigStream(
+			channelPropertiesLocation);
+
+		if (inputStream == null) {
+			ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
+
+			inputStream = classLoader.getResourceAsStream(
+				channelPropertiesLocation);
+		}
+
+		if (inputStream == null) {
+			throw new FileNotFoundException(
+				"Unable to load channel properties from " +
+					channelPropertiesLocation);
+		}
+
+		return inputStream;
+	}
+
+	private void _initBindAddress(String autodetectAddress) {
 		if (Validator.isNull(autodetectAddress)) {
 			return;
 		}
@@ -179,7 +206,7 @@ public class JGroupsClusterChannelFactory implements ClusterChannelFactory {
 		}
 	}
 
-	protected void initSystemProperties(String[] channelSystemPropertiesArray) {
+	private void _initSystemProperties(String[] channelSystemPropertiesArray) {
 		for (String channelSystemProperty : channelSystemPropertiesArray) {
 			int index = channelSystemProperty.indexOf(CharPool.COLON);
 
@@ -199,33 +226,6 @@ public class JGroupsClusterChannelFactory implements ClusterChannelFactory {
 						"}"));
 			}
 		}
-	}
-
-	@Reference(unbind = "-")
-	protected void setProps(Props props) {
-		_props = props;
-	}
-
-	private InputStream _getInputStream(String channelPropertiesLocation)
-		throws IOException {
-
-		InputStream inputStream = ConfiguratorFactory.getConfigStream(
-			channelPropertiesLocation);
-
-		if (inputStream == null) {
-			ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
-
-			inputStream = classLoader.getResourceAsStream(
-				channelPropertiesLocation);
-		}
-
-		if (inputStream == null) {
-			throw new FileNotFoundException(
-				"Unable to load channel properties from " +
-					channelPropertiesLocation);
-		}
-
-		return inputStream;
 	}
 
 	private ProtocolStackConfigurator _parseChannelProperties(

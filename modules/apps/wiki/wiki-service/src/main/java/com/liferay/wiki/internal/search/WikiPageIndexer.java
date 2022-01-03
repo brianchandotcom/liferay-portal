@@ -328,7 +328,7 @@ public class WikiPageIndexer
 	protected void doReindex(String[] ids) throws Exception {
 		long companyId = GetterUtil.getLong(ids[0]);
 
-		reindexNodes(companyId);
+		_reindexNodes(companyId);
 	}
 
 	@Override
@@ -347,69 +347,7 @@ public class WikiPageIndexer
 			getSearchEngineId(), wikiPage.getCompanyId(), getDocument(wikiPage),
 			isCommitImmediately());
 
-		reindexAttachments(wikiPage);
-	}
-
-	protected void reindexAttachments(WikiPage wikiPage)
-		throws PortalException {
-
-		Indexer<DLFileEntry> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-			DLFileEntry.class);
-
-		for (FileEntry attachmentsFileEntry :
-				wikiPage.getAttachmentsFileEntries()) {
-
-			indexer.reindex((DLFileEntry)attachmentsFileEntry.getModel());
-		}
-	}
-
-	protected void reindexNodes(long companyId) throws PortalException {
-		ActionableDynamicQuery actionableDynamicQuery =
-			_wikiNodeLocalService.getActionableDynamicQuery();
-
-		actionableDynamicQuery.setCompanyId(companyId);
-		actionableDynamicQuery.setPerformActionMethod(
-			(WikiNode node) -> reindexPages(
-				companyId, node.getGroupId(), node.getNodeId()));
-
-		actionableDynamicQuery.performActions();
-	}
-
-	protected void reindexPages(long companyId, long groupId, long nodeId)
-		throws PortalException {
-
-		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
-			_wikiPageLocalService.getIndexableActionableDynamicQuery();
-
-		indexableActionableDynamicQuery.setAddCriteriaMethod(
-			dynamicQuery -> {
-				Property nodeIdProperty = PropertyFactoryUtil.forName("nodeId");
-
-				dynamicQuery.add(nodeIdProperty.eq(nodeId));
-
-				Property headProperty = PropertyFactoryUtil.forName("head");
-
-				dynamicQuery.add(headProperty.eq(true));
-			});
-		indexableActionableDynamicQuery.setCompanyId(companyId);
-		indexableActionableDynamicQuery.setGroupId(groupId);
-		indexableActionableDynamicQuery.setPerformActionMethod(
-			(WikiPage page) -> {
-				try {
-					indexableActionableDynamicQuery.addDocuments(
-						getDocument(page));
-				}
-				catch (PortalException portalException) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							"Unable to index wiki page " + page.getPageId(),
-							portalException);
-					}
-				}
-			});
-		indexableActionableDynamicQuery.setSearchEngineId(getSearchEngineId());
-
-		indexableActionableDynamicQuery.performActions();
+		_reindexAttachments(wikiPage);
 	}
 
 	@Reference(unbind = "-")
@@ -452,6 +390,17 @@ public class WikiPageIndexer
 		}
 	}
 
+	private void _reindexAttachments(WikiPage wikiPage) throws PortalException {
+		Indexer<DLFileEntry> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			DLFileEntry.class);
+
+		for (FileEntry attachmentsFileEntry :
+				wikiPage.getAttachmentsFileEntries()) {
+
+			indexer.reindex((DLFileEntry)attachmentsFileEntry.getModel());
+		}
+	}
+
 	private void _reindexEveryVersionOfResourcePrimKey(long resourcePrimKey)
 		throws Exception {
 
@@ -474,6 +423,55 @@ public class WikiPageIndexer
 				_deleteDocument(wikiPage);
 			}
 		}
+	}
+
+	private void _reindexNodes(long companyId) throws PortalException {
+		ActionableDynamicQuery actionableDynamicQuery =
+			_wikiNodeLocalService.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setCompanyId(companyId);
+		actionableDynamicQuery.setPerformActionMethod(
+			(WikiNode node) -> _reindexPages(
+				companyId, node.getGroupId(), node.getNodeId()));
+
+		actionableDynamicQuery.performActions();
+	}
+
+	private void _reindexPages(long companyId, long groupId, long nodeId)
+		throws PortalException {
+
+		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
+			_wikiPageLocalService.getIndexableActionableDynamicQuery();
+
+		indexableActionableDynamicQuery.setAddCriteriaMethod(
+			dynamicQuery -> {
+				Property nodeIdProperty = PropertyFactoryUtil.forName("nodeId");
+
+				dynamicQuery.add(nodeIdProperty.eq(nodeId));
+
+				Property headProperty = PropertyFactoryUtil.forName("head");
+
+				dynamicQuery.add(headProperty.eq(true));
+			});
+		indexableActionableDynamicQuery.setCompanyId(companyId);
+		indexableActionableDynamicQuery.setGroupId(groupId);
+		indexableActionableDynamicQuery.setPerformActionMethod(
+			(WikiPage page) -> {
+				try {
+					indexableActionableDynamicQuery.addDocuments(
+						getDocument(page));
+				}
+				catch (PortalException portalException) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Unable to index wiki page " + page.getPageId(),
+							portalException);
+					}
+				}
+			});
+		indexableActionableDynamicQuery.setSearchEngineId(getSearchEngineId());
+
+		indexableActionableDynamicQuery.performActions();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

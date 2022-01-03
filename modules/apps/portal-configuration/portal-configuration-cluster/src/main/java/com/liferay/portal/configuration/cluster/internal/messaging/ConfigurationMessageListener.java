@@ -51,12 +51,26 @@ public class ConfigurationMessageListener extends BaseMessageListener {
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		reloadConfiguration(
+		_reloadConfiguration(
 			message.getString(Constants.SERVICE_PID),
 			message.getInteger("configuration.event.type"));
 	}
 
-	protected void reloadConfiguration(String pid, int type) throws Exception {
+	@Reference(unbind = "-")
+	protected void setConfigurationAdmin(
+		ConfigurationAdmin configurationAdmin) {
+
+		_configurationAdmin = configurationAdmin;
+	}
+
+	@Reference(
+		target = "(destination.name=" + ConfigurationClusterDestinationNames.CONFIGURATION + ")",
+		unbind = "-"
+	)
+	protected void setDestination(Destination destination) {
+	}
+
+	private void _reloadConfiguration(String pid, int type) throws Exception {
 		_reloadablePersistenceManager.reload(pid);
 
 		Dictionary<String, ?> dictionary = _reloadablePersistenceManager.load(
@@ -91,20 +105,6 @@ public class ConfigurationMessageListener extends BaseMessageListener {
 		finally {
 			ConfigurationThreadLocal.setLocalUpdate(false);
 		}
-	}
-
-	@Reference(unbind = "-")
-	protected void setConfigurationAdmin(
-		ConfigurationAdmin configurationAdmin) {
-
-		_configurationAdmin = configurationAdmin;
-	}
-
-	@Reference(
-		target = "(destination.name=" + ConfigurationClusterDestinationNames.CONFIGURATION + ")",
-		unbind = "-"
-	)
-	protected void setDestination(Destination destination) {
 	}
 
 	private ConfigurationAdmin _configurationAdmin;

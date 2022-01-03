@@ -39,7 +39,7 @@ public class NotificationsPollerProcessor extends BasePollerProcessor {
 	protected PollerResponse doReceive(PollerRequest pollerRequest)
 		throws Exception {
 
-		return setUserNotificationsCount(pollerRequest);
+		return _setUserNotificationsCount(pollerRequest);
 	}
 
 	@Override
@@ -53,7 +53,7 @@ public class NotificationsPollerProcessor extends BasePollerProcessor {
 		_userNotificationEventLocalService = userNotificationEventLocalService;
 	}
 
-	protected PollerResponse setUserNotificationsCount(
+	private PollerResponse _setUserNotificationsCount(
 			PollerRequest pollerRequest)
 		throws Exception {
 

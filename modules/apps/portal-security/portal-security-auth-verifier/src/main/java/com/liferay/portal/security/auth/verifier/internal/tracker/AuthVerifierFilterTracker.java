@@ -80,11 +80,11 @@ public class AuthVerifierFilterTracker {
 
 		_bundleContext = bundleContext;
 
-		_defaultRegistrationProperties = toDictionary(
+		_defaultRegistrationProperties = _toDictionary(
 			StringPlus.asList(properties.get("default.registration.property")));
 		_defaultRemoteAccessFilterServiceRanking = MapUtil.getInteger(
 			properties, "default.remote.access.filter.service.ranking", -10);
-		_defaultWhiteboardProperties = toDictionary(
+		_defaultWhiteboardProperties = _toDictionary(
 			StringPlus.asList(properties.get("default.whiteboard.property")));
 
 		String servletContextHelperSelectFilterString = MapUtil.getString(
@@ -105,7 +105,7 @@ public class AuthVerifierFilterTracker {
 		_serviceTracker.close();
 	}
 
-	protected Dictionary<String, Object> toDictionary(
+	private Dictionary<String, Object> _toDictionary(
 		List<String> propertiesList) {
 
 		Dictionary<String, Object> dictionary = new HashMapDictionary<>();

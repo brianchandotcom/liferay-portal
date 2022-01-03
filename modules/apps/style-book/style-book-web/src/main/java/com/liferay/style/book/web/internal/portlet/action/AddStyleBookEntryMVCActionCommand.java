@@ -60,7 +60,7 @@ public class AddStyleBookEntryMVCActionCommand extends BaseMVCActionCommand {
 			StyleBookEntry styleBookEntry = _addStyleBookEntry(actionRequest);
 
 			JSONObject jsonObject = JSONUtil.put(
-				"redirectURL", getRedirectURL(actionResponse, styleBookEntry));
+				"redirectURL", _getRedirectURL(actionResponse, styleBookEntry));
 
 			if (SessionErrors.contains(
 					actionRequest, "styleBookEntryNameInvalid")) {
@@ -81,18 +81,6 @@ public class AddStyleBookEntryMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	protected String getRedirectURL(
-		ActionResponse actionResponse, StyleBookEntry styleBookEntry) {
-
-		return PortletURLBuilder.createRenderURL(
-			_portal.getLiferayPortletResponse(actionResponse)
-		).setMVCRenderCommandName(
-			"/style_book/edit_style_book_entry"
-		).setParameter(
-			"styleBookEntryId", styleBookEntry.getStyleBookEntryId()
-		).buildString();
-	}
-
 	private StyleBookEntry _addStyleBookEntry(ActionRequest actionRequest)
 		throws PortalException {
 
@@ -104,6 +92,18 @@ public class AddStyleBookEntryMVCActionCommand extends BaseMVCActionCommand {
 		return _styleBookEntryService.addStyleBookEntry(
 			serviceContext.getScopeGroupId(), name, StringPool.BLANK,
 			serviceContext);
+	}
+
+	private String _getRedirectURL(
+		ActionResponse actionResponse, StyleBookEntry styleBookEntry) {
+
+		return PortletURLBuilder.createRenderURL(
+			_portal.getLiferayPortletResponse(actionResponse)
+		).setMVCRenderCommandName(
+			"/style_book/edit_style_book_entry"
+		).setParameter(
+			"styleBookEntryId", styleBookEntry.getStyleBookEntryId()
+		).buildString();
 	}
 
 	@Reference

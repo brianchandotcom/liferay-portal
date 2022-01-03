@@ -48,7 +48,7 @@ public class EhcachePortalCacheListenerAdapter<K extends Serializable, V>
 			PortalCache<K, V> portalCache, K key, V value, int timeToLive)
 		throws PortalCacheException {
 
-		Element element = createElement(key, value);
+		Element element = _createElement(key, value);
 
 		if (timeToLive != PortalCache.DEFAULT_TIME_TO_LIVE) {
 			element.setTimeToLive(timeToLive);
@@ -63,7 +63,7 @@ public class EhcachePortalCacheListenerAdapter<K extends Serializable, V>
 			PortalCache<K, V> portalCache, K key, V value, int timeToLive)
 		throws PortalCacheException {
 
-		Element element = createElement(key, value);
+		Element element = _createElement(key, value);
 
 		if (timeToLive != PortalCache.DEFAULT_TIME_TO_LIVE) {
 			element.setTimeToLive(timeToLive);
@@ -78,7 +78,7 @@ public class EhcachePortalCacheListenerAdapter<K extends Serializable, V>
 			PortalCache<K, V> portalCache, K key, V value, int timeToLive)
 		throws PortalCacheException {
 
-		Element element = createElement(key, value);
+		Element element = _createElement(key, value);
 
 		if (timeToLive != PortalCache.DEFAULT_TIME_TO_LIVE) {
 			element.setTimeToLive(timeToLive);
@@ -93,7 +93,7 @@ public class EhcachePortalCacheListenerAdapter<K extends Serializable, V>
 			PortalCache<K, V> portalCache, K key, V value, int timeToLive)
 		throws PortalCacheException {
 
-		Element element = createElement(key, value);
+		Element element = _createElement(key, value);
 
 		if (timeToLive != PortalCache.DEFAULT_TIME_TO_LIVE) {
 			element.setTimeToLive(timeToLive);
@@ -108,7 +108,7 @@ public class EhcachePortalCacheListenerAdapter<K extends Serializable, V>
 			PortalCache<K, V> portalCache, K key, V value, int timeToLive)
 		throws PortalCacheException {
 
-		Element element = createElement(key, value);
+		Element element = _createElement(key, value);
 
 		if (timeToLive != PortalCache.DEFAULT_TIME_TO_LIVE) {
 			element.setTimeToLive(timeToLive);
@@ -126,7 +126,9 @@ public class EhcachePortalCacheListenerAdapter<K extends Serializable, V>
 			EhcacheUnwrapUtil.getEhcache(portalCache));
 	}
 
-	protected Element createElement(K key, V value) {
+	protected final CacheEventListener cacheEventListener;
+
+	private Element _createElement(K key, V value) {
 		Object objectValue = value;
 
 		if (value instanceof Serializable) {
@@ -135,7 +137,5 @@ public class EhcachePortalCacheListenerAdapter<K extends Serializable, V>
 
 		return new Element(new SerializableObjectWrapper(key), objectValue);
 	}
-
-	protected final CacheEventListener cacheEventListener;
 
 }

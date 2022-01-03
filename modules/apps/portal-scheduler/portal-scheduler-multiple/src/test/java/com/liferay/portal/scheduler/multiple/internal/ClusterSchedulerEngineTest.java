@@ -105,11 +105,11 @@ public class ClusterSchedulerEngineTest {
 
 	@Before
 	public void setUp() throws Exception {
-		setUpPropsUtil();
+		_setUpPropsUtil();
 
-		setUpSchedulerEngineHelperUtil();
-		setUpClusterSchedulerEngine();
-		setUpClusterInvokeAcceptor();
+		_setUpSchedulerEngineHelperUtil();
+		_setUpClusterSchedulerEngine();
+		_setUpClusterInvokeAcceptor();
 	}
 
 	@After
@@ -272,7 +272,7 @@ public class ClusterSchedulerEngineTest {
 		Assert.assertTrue(
 			schedulerResponses.toString(), schedulerResponses.isEmpty());
 
-		schedulerResponses = getMemoryClusteredJobs(_NOT_EXISTED_GROUP_NAME);
+		schedulerResponses = _getMemoryClusteredJobs(_NOT_EXISTED_GROUP_NAME);
 
 		Assert.assertTrue(
 			schedulerResponses.toString(), schedulerResponses.isEmpty());
@@ -286,7 +286,7 @@ public class ClusterSchedulerEngineTest {
 		Assert.assertTrue(
 			schedulerResponses.toString(), schedulerResponses.isEmpty());
 
-		schedulerResponses = getMemoryClusteredJobs(_NOT_EXISTED_GROUP_NAME);
+		schedulerResponses = _getMemoryClusteredJobs(_NOT_EXISTED_GROUP_NAME);
 
 		Assert.assertTrue(
 			schedulerResponses.toString(), schedulerResponses.isEmpty());
@@ -462,7 +462,7 @@ public class ClusterSchedulerEngineTest {
 				_TEST_JOB_NAME_0, _MEMORY_CLUSTER_TEST_GROUP_NAME,
 				StorageType.MEMORY_CLUSTERED);
 
-		assertTriggerState(schedulerResponse, TriggerState.NORMAL);
+		_assertTriggerState(schedulerResponse, TriggerState.NORMAL);
 
 		Assert.assertTrue(_memoryClusteredJobs.isEmpty());
 
@@ -474,7 +474,7 @@ public class ClusterSchedulerEngineTest {
 			_TEST_JOB_NAME_0, _MEMORY_CLUSTER_TEST_GROUP_NAME,
 			StorageType.MEMORY_CLUSTERED);
 
-		assertTriggerState(schedulerResponse, TriggerState.PAUSED);
+		_assertTriggerState(schedulerResponse, TriggerState.PAUSED);
 
 		Assert.assertTrue(_memoryClusteredJobs.isEmpty());
 
@@ -492,7 +492,7 @@ public class ClusterSchedulerEngineTest {
 			_TEST_JOB_NAME_0, _MEMORY_CLUSTER_TEST_GROUP_NAME,
 			StorageType.MEMORY_CLUSTERED);
 
-		assertTriggerState(schedulerResponse, TriggerState.NORMAL);
+		_assertTriggerState(schedulerResponse, TriggerState.NORMAL);
 
 		Assert.assertTrue(_memoryClusteredJobs.isEmpty());
 
@@ -509,7 +509,7 @@ public class ClusterSchedulerEngineTest {
 				_MEMORY_CLUSTER_TEST_GROUP_NAME, StorageType.MEMORY_CLUSTERED);
 
 		for (SchedulerResponse curSchedulerResponse : schedulerResponses) {
-			assertTriggerState(curSchedulerResponse, TriggerState.NORMAL);
+			_assertTriggerState(curSchedulerResponse, TriggerState.NORMAL);
 		}
 
 		Assert.assertTrue(_memoryClusteredJobs.isEmpty());
@@ -521,7 +521,7 @@ public class ClusterSchedulerEngineTest {
 			_MEMORY_CLUSTER_TEST_GROUP_NAME, StorageType.MEMORY_CLUSTERED);
 
 		for (SchedulerResponse curSchedulerResponse : schedulerResponses) {
-			assertTriggerState(curSchedulerResponse, TriggerState.PAUSED);
+			_assertTriggerState(curSchedulerResponse, TriggerState.PAUSED);
 		}
 
 		Assert.assertTrue(_memoryClusteredJobs.isEmpty());
@@ -539,7 +539,7 @@ public class ClusterSchedulerEngineTest {
 			_MEMORY_CLUSTER_TEST_GROUP_NAME, StorageType.MEMORY_CLUSTERED);
 
 		for (SchedulerResponse curSchedulerResponse : schedulerResponses) {
-			assertTriggerState(curSchedulerResponse, TriggerState.NORMAL);
+			_assertTriggerState(curSchedulerResponse, TriggerState.NORMAL);
 		}
 
 		Assert.assertTrue(_memoryClusteredJobs.isEmpty());
@@ -556,7 +556,7 @@ public class ClusterSchedulerEngineTest {
 			_TEST_JOB_NAME_0, _PERSISTENT_TEST_GROUP_NAME,
 			StorageType.PERSISTED);
 
-		assertTriggerState(schedulerResponse, TriggerState.NORMAL);
+		_assertTriggerState(schedulerResponse, TriggerState.NORMAL);
 
 		Assert.assertTrue(_memoryClusteredJobs.isEmpty());
 
@@ -568,7 +568,7 @@ public class ClusterSchedulerEngineTest {
 			_TEST_JOB_NAME_0, _PERSISTENT_TEST_GROUP_NAME,
 			StorageType.PERSISTED);
 
-		assertTriggerState(schedulerResponse, TriggerState.PAUSED);
+		_assertTriggerState(schedulerResponse, TriggerState.PAUSED);
 
 		Assert.assertTrue(_memoryClusteredJobs.isEmpty());
 
@@ -586,7 +586,7 @@ public class ClusterSchedulerEngineTest {
 			_TEST_JOB_NAME_0, _PERSISTENT_TEST_GROUP_NAME,
 			StorageType.PERSISTED);
 
-		assertTriggerState(schedulerResponse, TriggerState.NORMAL);
+		_assertTriggerState(schedulerResponse, TriggerState.NORMAL);
 
 		Assert.assertTrue(_memoryClusteredJobs.isEmpty());
 
@@ -602,7 +602,7 @@ public class ClusterSchedulerEngineTest {
 			_PERSISTENT_TEST_GROUP_NAME, StorageType.PERSISTED);
 
 		for (SchedulerResponse curSchedulerResponse : schedulerResponses) {
-			assertTriggerState(curSchedulerResponse, TriggerState.NORMAL);
+			_assertTriggerState(curSchedulerResponse, TriggerState.NORMAL);
 		}
 
 		Assert.assertTrue(_memoryClusteredJobs.isEmpty());
@@ -614,7 +614,7 @@ public class ClusterSchedulerEngineTest {
 			_PERSISTENT_TEST_GROUP_NAME, StorageType.PERSISTED);
 
 		for (SchedulerResponse curSchedulerResponse : schedulerResponses) {
-			assertTriggerState(curSchedulerResponse, TriggerState.PAUSED);
+			_assertTriggerState(curSchedulerResponse, TriggerState.PAUSED);
 		}
 
 		Assert.assertTrue(_memoryClusteredJobs.isEmpty());
@@ -632,7 +632,7 @@ public class ClusterSchedulerEngineTest {
 			_PERSISTENT_TEST_GROUP_NAME, StorageType.PERSISTED);
 
 		for (SchedulerResponse curSchedulerResponse : schedulerResponses) {
-			assertTriggerState(curSchedulerResponse, TriggerState.NORMAL);
+			_assertTriggerState(curSchedulerResponse, TriggerState.NORMAL);
 		}
 
 		Assert.assertTrue(_memoryClusteredJobs.isEmpty());
@@ -661,10 +661,10 @@ public class ClusterSchedulerEngineTest {
 				_TEST_JOB_NAME_0, _MEMORY_CLUSTER_TEST_GROUP_NAME,
 				StorageType.MEMORY_CLUSTERED));
 
-		SchedulerResponse schedulerResponse = getMemoryClusteredJob(
+		SchedulerResponse schedulerResponse = _getMemoryClusteredJob(
 			_TEST_JOB_NAME_0, _MEMORY_CLUSTER_TEST_GROUP_NAME);
 
-		assertTriggerState(schedulerResponse, TriggerState.NORMAL);
+		_assertTriggerState(schedulerResponse, TriggerState.NORMAL);
 
 		_clusterSchedulerEngine.pause(
 			_TEST_JOB_NAME_0, _MEMORY_CLUSTER_TEST_GROUP_NAME,
@@ -675,10 +675,10 @@ public class ClusterSchedulerEngineTest {
 				_TEST_JOB_NAME_0, _MEMORY_CLUSTER_TEST_GROUP_NAME,
 				StorageType.MEMORY_CLUSTERED));
 
-		schedulerResponse = getMemoryClusteredJob(
+		schedulerResponse = _getMemoryClusteredJob(
 			_TEST_JOB_NAME_0, _MEMORY_CLUSTER_TEST_GROUP_NAME);
 
-		assertTriggerState(schedulerResponse, TriggerState.PAUSED);
+		_assertTriggerState(schedulerResponse, TriggerState.PAUSED);
 
 		ClusterInvokeThreadLocal.setEnabled(false);
 
@@ -695,10 +695,10 @@ public class ClusterSchedulerEngineTest {
 				_TEST_JOB_NAME_0, _MEMORY_CLUSTER_TEST_GROUP_NAME,
 				StorageType.MEMORY_CLUSTERED));
 
-		schedulerResponse = getMemoryClusteredJob(
+		schedulerResponse = _getMemoryClusteredJob(
 			_TEST_JOB_NAME_0, _MEMORY_CLUSTER_TEST_GROUP_NAME);
 
-		assertTriggerState(schedulerResponse, TriggerState.NORMAL);
+		_assertTriggerState(schedulerResponse, TriggerState.NORMAL);
 
 		ClusterInvokeThreadLocal.setEnabled(false);
 
@@ -715,11 +715,11 @@ public class ClusterSchedulerEngineTest {
 		Assert.assertTrue(
 			schedulerResponses.toString(), schedulerResponses.isEmpty());
 
-		schedulerResponses = getMemoryClusteredJobs(
+		schedulerResponses = _getMemoryClusteredJobs(
 			_MEMORY_CLUSTER_TEST_GROUP_NAME);
 
 		for (SchedulerResponse curSchedulerResponse : schedulerResponses) {
-			assertTriggerState(curSchedulerResponse, TriggerState.NORMAL);
+			_assertTriggerState(curSchedulerResponse, TriggerState.NORMAL);
 		}
 
 		_clusterSchedulerEngine.pause(
@@ -731,11 +731,11 @@ public class ClusterSchedulerEngineTest {
 		Assert.assertTrue(
 			schedulerResponses.toString(), schedulerResponses.isEmpty());
 
-		schedulerResponses = getMemoryClusteredJobs(
+		schedulerResponses = _getMemoryClusteredJobs(
 			_MEMORY_CLUSTER_TEST_GROUP_NAME);
 
 		for (SchedulerResponse curSchedulerResponse : schedulerResponses) {
-			assertTriggerState(curSchedulerResponse, TriggerState.PAUSED);
+			_assertTriggerState(curSchedulerResponse, TriggerState.PAUSED);
 		}
 
 		ClusterInvokeThreadLocal.setEnabled(false);
@@ -753,11 +753,11 @@ public class ClusterSchedulerEngineTest {
 		Assert.assertTrue(
 			schedulerResponses.toString(), schedulerResponses.isEmpty());
 
-		schedulerResponses = getMemoryClusteredJobs(
+		schedulerResponses = _getMemoryClusteredJobs(
 			_MEMORY_CLUSTER_TEST_GROUP_NAME);
 
 		for (SchedulerResponse curSchedulerResponse : schedulerResponses) {
-			assertTriggerState(curSchedulerResponse, TriggerState.NORMAL);
+			_assertTriggerState(curSchedulerResponse, TriggerState.NORMAL);
 		}
 
 		ClusterInvokeThreadLocal.setEnabled(false);
@@ -773,7 +773,7 @@ public class ClusterSchedulerEngineTest {
 				_TEST_JOB_NAME_0, _NOT_EXISTED_GROUP_NAME,
 				StorageType.MEMORY_CLUSTERED));
 		Assert.assertNull(
-			getMemoryClusteredJob(_TEST_JOB_NAME_0, _NOT_EXISTED_GROUP_NAME));
+			_getMemoryClusteredJob(_TEST_JOB_NAME_0, _NOT_EXISTED_GROUP_NAME));
 
 		_clusterSchedulerEngine.pause(
 			_TEST_JOB_NAME_0, _NOT_EXISTED_GROUP_NAME,
@@ -784,7 +784,7 @@ public class ClusterSchedulerEngineTest {
 				_TEST_JOB_NAME_0, _NOT_EXISTED_GROUP_NAME,
 				StorageType.MEMORY_CLUSTERED));
 		Assert.assertNull(
-			getMemoryClusteredJob(_TEST_JOB_NAME_0, _NOT_EXISTED_GROUP_NAME));
+			_getMemoryClusteredJob(_TEST_JOB_NAME_0, _NOT_EXISTED_GROUP_NAME));
 
 		ClusterInvokeThreadLocal.setEnabled(false);
 
@@ -800,7 +800,7 @@ public class ClusterSchedulerEngineTest {
 		Assert.assertTrue(
 			schedulerResponses.toString(), schedulerResponses.isEmpty());
 
-		schedulerResponses = getMemoryClusteredJobs(_NOT_EXISTED_GROUP_NAME);
+		schedulerResponses = _getMemoryClusteredJobs(_NOT_EXISTED_GROUP_NAME);
 
 		Assert.assertTrue(
 			schedulerResponses.toString(), schedulerResponses.isEmpty());
@@ -814,7 +814,7 @@ public class ClusterSchedulerEngineTest {
 		Assert.assertTrue(
 			schedulerResponses.toString(), schedulerResponses.isEmpty());
 
-		schedulerResponses = getMemoryClusteredJobs(_NOT_EXISTED_GROUP_NAME);
+		schedulerResponses = _getMemoryClusteredJobs(_NOT_EXISTED_GROUP_NAME);
 
 		Assert.assertTrue(
 			schedulerResponses.toString(), schedulerResponses.isEmpty());
@@ -1041,7 +1041,7 @@ public class ClusterSchedulerEngineTest {
 					_TEST_JOB_NAME_0, _MEMORY_CLUSTER_TEST_GROUP_NAME,
 					StorageType.MEMORY_CLUSTERED);
 
-			assertTriggerState(schedulerResponse, TriggerState.PAUSED);
+			_assertTriggerState(schedulerResponse, TriggerState.PAUSED);
 
 			Assert.assertTrue(_memoryClusteredJobs.isEmpty());
 
@@ -1117,7 +1117,7 @@ public class ClusterSchedulerEngineTest {
 				_TEST_JOB_NAME_0, _MEMORY_CLUSTER_TEST_GROUP_NAME,
 				StorageType.MEMORY_CLUSTERED);
 
-		assertSuppressErrorValue(schedulerResponse, null);
+		_assertSuppressErrorValue(schedulerResponse, null);
 
 		Assert.assertTrue(_memoryClusteredJobs.isEmpty());
 
@@ -1129,7 +1129,7 @@ public class ClusterSchedulerEngineTest {
 			_TEST_JOB_NAME_0, _MEMORY_CLUSTER_TEST_GROUP_NAME,
 			StorageType.MEMORY_CLUSTERED);
 
-		assertSuppressErrorValue(schedulerResponse, Boolean.TRUE);
+		_assertSuppressErrorValue(schedulerResponse, Boolean.TRUE);
 
 		Assert.assertTrue(_memoryClusteredJobs.isEmpty());
 
@@ -1145,7 +1145,7 @@ public class ClusterSchedulerEngineTest {
 			_TEST_JOB_NAME_0, _PERSISTENT_TEST_GROUP_NAME,
 			StorageType.PERSISTED);
 
-		assertSuppressErrorValue(schedulerResponse, null);
+		_assertSuppressErrorValue(schedulerResponse, null);
 
 		Assert.assertTrue(_memoryClusteredJobs.isEmpty());
 
@@ -1157,7 +1157,7 @@ public class ClusterSchedulerEngineTest {
 			_TEST_JOB_NAME_0, _PERSISTENT_TEST_GROUP_NAME,
 			StorageType.PERSISTED);
 
-		assertSuppressErrorValue(schedulerResponse, Boolean.TRUE);
+		_assertSuppressErrorValue(schedulerResponse, Boolean.TRUE);
 
 		Assert.assertTrue(_memoryClusteredJobs.isEmpty());
 
@@ -1182,10 +1182,10 @@ public class ClusterSchedulerEngineTest {
 				_TEST_JOB_NAME_0, _MEMORY_CLUSTER_TEST_GROUP_NAME,
 				StorageType.MEMORY_CLUSTERED));
 
-		SchedulerResponse schedulerResponse = getMemoryClusteredJob(
+		SchedulerResponse schedulerResponse = _getMemoryClusteredJob(
 			_TEST_JOB_NAME_0, _MEMORY_CLUSTER_TEST_GROUP_NAME);
 
-		assertSuppressErrorValue(schedulerResponse, null);
+		_assertSuppressErrorValue(schedulerResponse, null);
 
 		_clusterSchedulerEngine.suppressError(
 			_TEST_JOB_NAME_0, _MEMORY_CLUSTER_TEST_GROUP_NAME,
@@ -1196,10 +1196,10 @@ public class ClusterSchedulerEngineTest {
 				_TEST_JOB_NAME_0, _MEMORY_CLUSTER_TEST_GROUP_NAME,
 				StorageType.MEMORY_CLUSTERED));
 
-		schedulerResponse = getMemoryClusteredJob(
+		schedulerResponse = _getMemoryClusteredJob(
 			_TEST_JOB_NAME_0, _MEMORY_CLUSTER_TEST_GROUP_NAME);
 
-		assertSuppressErrorValue(schedulerResponse, null);
+		_assertSuppressErrorValue(schedulerResponse, null);
 
 		ClusterInvokeThreadLocal.setEnabled(false);
 
@@ -1400,7 +1400,7 @@ public class ClusterSchedulerEngineTest {
 				_TEST_JOB_NAME_0, _MEMORY_CLUSTER_TEST_GROUP_NAME,
 				StorageType.MEMORY_CLUSTERED);
 
-		assertTriggerState(schedulerResponse, TriggerState.NORMAL);
+		_assertTriggerState(schedulerResponse, TriggerState.NORMAL);
 
 		Assert.assertTrue(_memoryClusteredJobs.isEmpty());
 
@@ -1412,7 +1412,7 @@ public class ClusterSchedulerEngineTest {
 			_TEST_JOB_NAME_0, _MEMORY_CLUSTER_TEST_GROUP_NAME,
 			StorageType.MEMORY_CLUSTERED);
 
-		assertTriggerState(schedulerResponse, TriggerState.UNSCHEDULED);
+		_assertTriggerState(schedulerResponse, TriggerState.UNSCHEDULED);
 
 		Assert.assertTrue(_memoryClusteredJobs.isEmpty());
 
@@ -1432,11 +1432,11 @@ public class ClusterSchedulerEngineTest {
 			if (Objects.equals(
 					curSchedulerResponse.getJobName(), _TEST_JOB_NAME_0)) {
 
-				assertTriggerState(
+				_assertTriggerState(
 					curSchedulerResponse, TriggerState.UNSCHEDULED);
 			}
 			else {
-				assertTriggerState(curSchedulerResponse, TriggerState.NORMAL);
+				_assertTriggerState(curSchedulerResponse, TriggerState.NORMAL);
 			}
 		}
 
@@ -1449,7 +1449,7 @@ public class ClusterSchedulerEngineTest {
 			_MEMORY_CLUSTER_TEST_GROUP_NAME, StorageType.MEMORY_CLUSTERED);
 
 		for (SchedulerResponse curSchedulerResponse : schedulerResponses) {
-			assertTriggerState(curSchedulerResponse, TriggerState.UNSCHEDULED);
+			_assertTriggerState(curSchedulerResponse, TriggerState.UNSCHEDULED);
 		}
 
 		Assert.assertTrue(_memoryClusteredJobs.isEmpty());
@@ -1466,7 +1466,7 @@ public class ClusterSchedulerEngineTest {
 			_TEST_JOB_NAME_0, _PERSISTENT_TEST_GROUP_NAME,
 			StorageType.PERSISTED);
 
-		assertTriggerState(schedulerResponse, TriggerState.NORMAL);
+		_assertTriggerState(schedulerResponse, TriggerState.NORMAL);
 
 		Assert.assertTrue(_memoryClusteredJobs.isEmpty());
 
@@ -1478,7 +1478,7 @@ public class ClusterSchedulerEngineTest {
 			_TEST_JOB_NAME_0, _PERSISTENT_TEST_GROUP_NAME,
 			StorageType.PERSISTED);
 
-		assertTriggerState(schedulerResponse, TriggerState.UNSCHEDULED);
+		_assertTriggerState(schedulerResponse, TriggerState.UNSCHEDULED);
 
 		Assert.assertTrue(_memoryClusteredJobs.isEmpty());
 
@@ -1497,11 +1497,11 @@ public class ClusterSchedulerEngineTest {
 			if (Objects.equals(
 					curSchedulerResponse.getJobName(), _TEST_JOB_NAME_0)) {
 
-				assertTriggerState(
+				_assertTriggerState(
 					curSchedulerResponse, TriggerState.UNSCHEDULED);
 			}
 			else {
-				assertTriggerState(curSchedulerResponse, TriggerState.NORMAL);
+				_assertTriggerState(curSchedulerResponse, TriggerState.NORMAL);
 			}
 		}
 
@@ -1514,7 +1514,7 @@ public class ClusterSchedulerEngineTest {
 			_PERSISTENT_TEST_GROUP_NAME, StorageType.PERSISTED);
 
 		for (SchedulerResponse curSchedulerResponse : schedulerResponses) {
-			assertTriggerState(curSchedulerResponse, TriggerState.UNSCHEDULED);
+			_assertTriggerState(curSchedulerResponse, TriggerState.UNSCHEDULED);
 		}
 
 		Assert.assertTrue(_memoryClusteredJobs.isEmpty());
@@ -1543,10 +1543,10 @@ public class ClusterSchedulerEngineTest {
 				_TEST_JOB_NAME_0, _MEMORY_CLUSTER_TEST_GROUP_NAME,
 				StorageType.MEMORY_CLUSTERED));
 
-		SchedulerResponse schedulerResponse = getMemoryClusteredJob(
+		SchedulerResponse schedulerResponse = _getMemoryClusteredJob(
 			_TEST_JOB_NAME_0, _MEMORY_CLUSTER_TEST_GROUP_NAME);
 
-		assertTriggerState(schedulerResponse, TriggerState.NORMAL);
+		_assertTriggerState(schedulerResponse, TriggerState.NORMAL);
 
 		_clusterSchedulerEngine.unschedule(
 			_TEST_JOB_NAME_0, _MEMORY_CLUSTER_TEST_GROUP_NAME,
@@ -1557,7 +1557,7 @@ public class ClusterSchedulerEngineTest {
 				_TEST_JOB_NAME_0, _MEMORY_CLUSTER_TEST_GROUP_NAME,
 				StorageType.MEMORY_CLUSTERED));
 		Assert.assertNull(
-			getMemoryClusteredJob(
+			_getMemoryClusteredJob(
 				_TEST_JOB_NAME_0, _MEMORY_CLUSTER_TEST_GROUP_NAME));
 
 		ClusterInvokeThreadLocal.setEnabled(false);
@@ -1575,11 +1575,11 @@ public class ClusterSchedulerEngineTest {
 		Assert.assertTrue(
 			schedulerResponses.toString(), schedulerResponses.isEmpty());
 
-		schedulerResponses = getMemoryClusteredJobs(
+		schedulerResponses = _getMemoryClusteredJobs(
 			_MEMORY_CLUSTER_TEST_GROUP_NAME);
 
 		for (SchedulerResponse curSchedulerResponse : schedulerResponses) {
-			assertTriggerState(curSchedulerResponse, TriggerState.NORMAL);
+			_assertTriggerState(curSchedulerResponse, TriggerState.NORMAL);
 		}
 
 		_clusterSchedulerEngine.unschedule(
@@ -1617,7 +1617,7 @@ public class ClusterSchedulerEngineTest {
 				_TEST_JOB_NAME_0, _MEMORY_CLUSTER_TEST_GROUP_NAME,
 				StorageType.MEMORY_CLUSTERED);
 
-		assertTriggerContent(schedulerResponse, _DEFAULT_INTERVAL);
+		_assertTriggerContent(schedulerResponse, _DEFAULT_INTERVAL);
 
 		Assert.assertTrue(_memoryClusteredJobs.isEmpty());
 
@@ -1631,7 +1631,7 @@ public class ClusterSchedulerEngineTest {
 			_TEST_JOB_NAME_0, _MEMORY_CLUSTER_TEST_GROUP_NAME,
 			StorageType.MEMORY_CLUSTERED);
 
-		assertTriggerContent(schedulerResponse, _DEFAULT_INTERVAL * 2);
+		_assertTriggerContent(schedulerResponse, _DEFAULT_INTERVAL * 2);
 
 		Assert.assertTrue(_memoryClusteredJobs.isEmpty());
 
@@ -1647,7 +1647,7 @@ public class ClusterSchedulerEngineTest {
 			_TEST_JOB_NAME_0, _PERSISTENT_TEST_GROUP_NAME,
 			StorageType.PERSISTED);
 
-		assertTriggerContent(schedulerResponse, _DEFAULT_INTERVAL);
+		_assertTriggerContent(schedulerResponse, _DEFAULT_INTERVAL);
 
 		Assert.assertTrue(_memoryClusteredJobs.isEmpty());
 
@@ -1661,7 +1661,7 @@ public class ClusterSchedulerEngineTest {
 			_TEST_JOB_NAME_0, _PERSISTENT_TEST_GROUP_NAME,
 			StorageType.PERSISTED);
 
-		assertTriggerContent(schedulerResponse, _DEFAULT_INTERVAL * 2);
+		_assertTriggerContent(schedulerResponse, _DEFAULT_INTERVAL * 2);
 
 		Assert.assertTrue(_memoryClusteredJobs.isEmpty());
 
@@ -1689,10 +1689,10 @@ public class ClusterSchedulerEngineTest {
 				_TEST_JOB_NAME_0, _MEMORY_CLUSTER_TEST_GROUP_NAME,
 				StorageType.MEMORY_CLUSTERED));
 
-		SchedulerResponse schedulerResponse = getMemoryClusteredJob(
+		SchedulerResponse schedulerResponse = _getMemoryClusteredJob(
 			_TEST_JOB_NAME_0, _MEMORY_CLUSTER_TEST_GROUP_NAME);
 
-		assertTriggerContent(schedulerResponse, _DEFAULT_INTERVAL);
+		_assertTriggerContent(schedulerResponse, _DEFAULT_INTERVAL);
 
 		Trigger trigger = getTrigger(
 			_TEST_JOB_NAME_0, _MEMORY_CLUSTER_TEST_GROUP_NAME,
@@ -1705,10 +1705,10 @@ public class ClusterSchedulerEngineTest {
 				_TEST_JOB_NAME_0, _MEMORY_CLUSTER_TEST_GROUP_NAME,
 				StorageType.MEMORY_CLUSTERED));
 
-		schedulerResponse = getMemoryClusteredJob(
+		schedulerResponse = _getMemoryClusteredJob(
 			_TEST_JOB_NAME_0, _MEMORY_CLUSTER_TEST_GROUP_NAME);
 
-		assertTriggerContent(schedulerResponse, _DEFAULT_INTERVAL * 2);
+		_assertTriggerContent(schedulerResponse, _DEFAULT_INTERVAL * 2);
 
 		// Test 2, with not existed group name
 
@@ -1780,7 +1780,7 @@ public class ClusterSchedulerEngineTest {
 			jobName, groupName, null, null, interval, TimeUnit.SECOND);
 	}
 
-	protected void assertSuppressErrorValue(
+	private void _assertSuppressErrorValue(
 		SchedulerResponse schedulerResponse, Object expectedValue) {
 
 		Message message = schedulerResponse.getMessage();
@@ -1788,7 +1788,7 @@ public class ClusterSchedulerEngineTest {
 		Assert.assertEquals(expectedValue, message.get(_SUPPRESS_ERROR));
 	}
 
-	protected void assertTriggerContent(
+	private void _assertTriggerContent(
 		SchedulerResponse schedulerResponse, int expectedInterval) {
 
 		MockTrigger mockTrigger = (MockTrigger)schedulerResponse.getTrigger();
@@ -1796,7 +1796,7 @@ public class ClusterSchedulerEngineTest {
 		Assert.assertEquals(expectedInterval, mockTrigger.getInterval());
 	}
 
-	protected void assertTriggerState(
+	private void _assertTriggerState(
 		SchedulerResponse schedulerResponse,
 		TriggerState expectedTriggerState) {
 
@@ -1807,7 +1807,7 @@ public class ClusterSchedulerEngineTest {
 		Assert.assertEquals(expectedTriggerState, jobState.getTriggerState());
 	}
 
-	protected SchedulerResponse getMemoryClusteredJob(
+	private SchedulerResponse _getMemoryClusteredJob(
 		String jobName, String groupName) {
 
 		ObjectValuePair<SchedulerResponse, TriggerState> objectValuePair =
@@ -1829,7 +1829,7 @@ public class ClusterSchedulerEngineTest {
 		return schedulerResponse;
 	}
 
-	protected List<SchedulerResponse> getMemoryClusteredJobs(String groupName) {
+	private List<SchedulerResponse> _getMemoryClusteredJobs(String groupName) {
 		List<SchedulerResponse> schedulerResponses = new ArrayList<>();
 
 		for (ObjectValuePair<SchedulerResponse, TriggerState> objectValuePair :
@@ -1839,7 +1839,7 @@ public class ClusterSchedulerEngineTest {
 
 			if (groupName.equals(schedulerResponse.getGroupName())) {
 				schedulerResponses.add(
-					getMemoryClusteredJob(
+					_getMemoryClusteredJob(
 						schedulerResponse.getJobName(), groupName));
 			}
 		}
@@ -1847,7 +1847,7 @@ public class ClusterSchedulerEngineTest {
 		return schedulerResponses;
 	}
 
-	protected void setUpClusterInvokeAcceptor() throws Exception {
+	private void _setUpClusterInvokeAcceptor() throws Exception {
 		Class<? extends ClusterInvokeAcceptor> clusterInvokeAcceptorClass =
 			(Class<? extends ClusterInvokeAcceptor>)Class.forName(
 				SchedulerClusterInvokeAcceptor.class.getName());
@@ -1860,7 +1860,7 @@ public class ClusterSchedulerEngineTest {
 		_clusterInvokeAcceptor = constructor.newInstance();
 	}
 
-	protected void setUpClusterSchedulerEngine() {
+	private void _setUpClusterSchedulerEngine() {
 		_mockSchedulerEngine = new MockSchedulerEngine();
 
 		_clusterSchedulerEngine = new ClusterSchedulerEngine(
@@ -1874,12 +1874,12 @@ public class ClusterSchedulerEngineTest {
 			_clusterSchedulerEngine, "_memoryClusteredJobs");
 	}
 
-	protected void setUpPropsUtil() {
+	private void _setUpPropsUtil() {
 		_props = PropsTestUtil.setProps(
 			PropsKeys.CLUSTERABLE_ADVICE_CALL_MASTER_TIMEOUT, "100");
 	}
 
-	protected void setUpSchedulerEngineHelperUtil() {
+	private void _setUpSchedulerEngineHelperUtil() {
 		SchedulerEngineHelper schedulerEngineHelper = Mockito.mock(
 			SchedulerEngineHelper.class);
 

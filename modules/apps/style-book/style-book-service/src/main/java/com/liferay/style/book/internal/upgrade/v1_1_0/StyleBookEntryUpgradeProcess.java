@@ -30,10 +30,10 @@ public class StyleBookEntryUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		upgradeSchema();
+		_upgradeSchema();
 	}
 
-	protected void upgradeSchema() throws Exception {
+	private void _upgradeSchema() throws Exception {
 		alter(
 			StyleBookEntryTable.class,
 			new AlterTableAddColumn("uuid_", "VARCHAR(75) null"),

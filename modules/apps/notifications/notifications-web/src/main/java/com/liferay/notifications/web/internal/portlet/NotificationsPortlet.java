@@ -139,7 +139,8 @@ public class NotificationsPortlet extends MVCPortlet {
 		long userNotificationEventId = ParamUtil.getLong(
 			actionRequest, "userNotificationEventId");
 
-		updateArchived(themeDisplay.getUserId(), userNotificationEventId, true);
+		_updateArchived(
+			themeDisplay.getUserId(), userNotificationEventId, true);
 
 		_addSuccessMessage(
 			actionRequest, "notification-was-marked-as-read-successfully");
@@ -157,7 +158,7 @@ public class NotificationsPortlet extends MVCPortlet {
 		long userNotificationEventId = ParamUtil.getLong(
 			actionRequest, "userNotificationEventId");
 
-		updateArchived(
+		_updateArchived(
 			themeDisplay.getUserId(), userNotificationEventId, false);
 
 		_addSuccessMessage(
@@ -177,7 +178,7 @@ public class NotificationsPortlet extends MVCPortlet {
 			actionRequest, "rowIds");
 
 		for (long userNotificationEventId : userNotificationEventIds) {
-			updateArchived(
+			_updateArchived(
 				themeDisplay.getUserId(), userNotificationEventId, true);
 		}
 
@@ -198,7 +199,7 @@ public class NotificationsPortlet extends MVCPortlet {
 			actionRequest, "rowIds");
 
 		for (long userNotificationEventId : userNotificationEventIds) {
-			updateArchived(
+			_updateArchived(
 				themeDisplay.getUserId(), userNotificationEventId, false);
 		}
 
@@ -278,7 +279,7 @@ public class NotificationsPortlet extends MVCPortlet {
 		if ((userNotificationEvent != null) &&
 			!userNotificationEvent.isArchived()) {
 
-			updateArchived(
+			_updateArchived(
 				themeDisplay.getUserId(), userNotificationEventId, true);
 		}
 
@@ -316,28 +317,6 @@ public class NotificationsPortlet extends MVCPortlet {
 		unbind = "-"
 	)
 	protected void setRelease(Release release) {
-	}
-
-	protected void updateArchived(
-			long userId, long userNotificationEventId, boolean archived)
-		throws PortalException {
-
-		UserNotificationEvent userNotificationEvent =
-			_userNotificationEventLocalService.fetchUserNotificationEvent(
-				userNotificationEventId);
-
-		if (userNotificationEvent == null) {
-			return;
-		}
-
-		if (userNotificationEvent.getUserId() != userId) {
-			throw new PrincipalException();
-		}
-
-		userNotificationEvent.setArchived(archived);
-
-		_userNotificationEventLocalService.updateUserNotificationEvent(
-			userNotificationEvent);
 	}
 
 	private void _addSuccessMessage(
@@ -397,6 +376,28 @@ public class NotificationsPortlet extends MVCPortlet {
 		if (Validator.isNotNull(redirect)) {
 			actionResponse.sendRedirect(_portal.escapeRedirect(redirect));
 		}
+	}
+
+	private void _updateArchived(
+			long userId, long userNotificationEventId, boolean archived)
+		throws PortalException {
+
+		UserNotificationEvent userNotificationEvent =
+			_userNotificationEventLocalService.fetchUserNotificationEvent(
+				userNotificationEventId);
+
+		if (userNotificationEvent == null) {
+			return;
+		}
+
+		if (userNotificationEvent.getUserId() != userId) {
+			throw new PrincipalException();
+		}
+
+		userNotificationEvent.setArchived(archived);
+
+		_userNotificationEventLocalService.updateUserNotificationEvent(
+			userNotificationEvent);
 	}
 
 	private void _updateUserNotificationDelivery(

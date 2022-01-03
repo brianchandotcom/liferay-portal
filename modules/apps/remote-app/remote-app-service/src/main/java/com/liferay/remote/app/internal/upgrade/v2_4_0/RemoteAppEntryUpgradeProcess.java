@@ -24,7 +24,14 @@ import com.liferay.remote.app.internal.upgrade.v2_4_0.util.RemoteAppEntryTable;
  */
 public class RemoteAppEntryUpgradeProcess extends UpgradeProcess {
 
-	protected void addExternalReferenceCodeColumn() throws Exception {
+	@Override
+	protected void doUpgrade() throws Exception {
+		_addExternalReferenceCodeColumn();
+
+		_updateExternalReferenceCode();
+	}
+
+	private void _addExternalReferenceCodeColumn() throws Exception {
 		if (!hasColumn(
 				RemoteAppEntryTable.TABLE_NAME, "externalReferenceCode")) {
 
@@ -35,14 +42,7 @@ public class RemoteAppEntryUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
-	@Override
-	protected void doUpgrade() throws Exception {
-		addExternalReferenceCodeColumn();
-
-		updateExternalReferenceCode();
-	}
-
-	protected void updateExternalReferenceCode() throws Exception {
+	private void _updateExternalReferenceCode() throws Exception {
 		StringBundler sb = new StringBundler(3);
 
 		sb.append("update RemoteAppEntry set externalReferenceCode = ");

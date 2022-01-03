@@ -208,7 +208,7 @@ public class LDAPUserExporterImpl implements UserExporter {
 
 		if (userGroupBinding == null) {
 			if (userOperation == UserOperation.ADD) {
-				addGroup(
+				_addGroup(
 					ldapServerId, safeLdapContext, userGroup, user,
 					groupMappings, userMappings);
 			}
@@ -395,25 +395,6 @@ public class LDAPUserExporterImpl implements UserExporter {
 		}
 	}
 
-	protected Binding addGroup(
-			long ldapServerId, LdapContext ldapContext, UserGroup userGroup,
-			User user, Properties groupMappings, Properties userMappings)
-		throws Exception {
-
-		SafeLdapName userGroupSafeLdapName =
-			_portalToLDAPConverter.getGroupSafeLdapName(
-				ldapServerId, userGroup, groupMappings);
-
-		Attributes attributes = _portalToLDAPConverter.getLDAPGroupAttributes(
-			ldapServerId, userGroup, user, groupMappings, userMappings);
-
-		ldapContext.bind(
-			userGroupSafeLdapName, new PortalLDAPContext(attributes));
-
-		return _safePortalLDAP.getGroup(
-			ldapServerId, userGroup.getCompanyId(), userGroup.getName());
-	}
-
 	protected Binding addUser(
 			long ldapServerId, LdapContext ldapContext, User user,
 			Properties userMappings)
@@ -459,6 +440,25 @@ public class LDAPUserExporterImpl implements UserExporter {
 	@Reference(unbind = "-")
 	protected void setUserLocalService(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
+	}
+
+	private Binding _addGroup(
+			long ldapServerId, LdapContext ldapContext, UserGroup userGroup,
+			User user, Properties groupMappings, Properties userMappings)
+		throws Exception {
+
+		SafeLdapName userGroupSafeLdapName =
+			_portalToLDAPConverter.getGroupSafeLdapName(
+				ldapServerId, userGroup, groupMappings);
+
+		Attributes attributes = _portalToLDAPConverter.getLDAPGroupAttributes(
+			ldapServerId, userGroup, user, groupMappings, userMappings);
+
+		ldapContext.bind(
+			userGroupSafeLdapName, new PortalLDAPContext(attributes));
+
+		return _safePortalLDAP.getGroup(
+			ldapServerId, userGroup.getCompanyId(), userGroup.getName());
 	}
 
 	private User _getAnonymousUser(long companyId) throws Exception {

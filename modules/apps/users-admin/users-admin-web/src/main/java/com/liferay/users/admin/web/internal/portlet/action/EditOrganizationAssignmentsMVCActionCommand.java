@@ -60,7 +60,7 @@ public class EditOrganizationAssignmentsMVCActionCommand
 		throws Exception {
 
 		try {
-			updateOrganizationUsers(actionRequest);
+			_updateOrganizationUsers(actionRequest);
 
 			String redirect = ParamUtil.getString(
 				actionRequest, "assignmentsRedirect");
@@ -90,7 +90,7 @@ public class EditOrganizationAssignmentsMVCActionCommand
 		_userService = userService;
 	}
 
-	protected void updateOrganizationUsers(ActionRequest actionRequest)
+	private void _updateOrganizationUsers(ActionRequest actionRequest)
 		throws Exception {
 
 		long organizationId = ParamUtil.getLong(

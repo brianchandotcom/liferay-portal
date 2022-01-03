@@ -31,10 +31,10 @@ public class SocialUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		upgradeMicroblogActivities();
+		_upgradeMicroblogActivities();
 	}
 
-	protected void updateSocialActivity(long activityId, JSONObject jsonObject)
+	private void _updateSocialActivity(long activityId, JSONObject jsonObject)
 		throws Exception {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
@@ -48,7 +48,7 @@ public class SocialUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
-	protected void upgradeMicroblogActivities() throws Exception {
+	private void _upgradeMicroblogActivities() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				"select activityId, extraData from SocialActivity where " +
@@ -74,7 +74,7 @@ public class SocialUpgradeProcess extends UpgradeProcess {
 
 					extraDataJSONObject.remove("receiverMicroblogsEntryId");
 
-					updateSocialActivity(activityId, extraDataJSONObject);
+					_updateSocialActivity(activityId, extraDataJSONObject);
 				}
 			}
 		}

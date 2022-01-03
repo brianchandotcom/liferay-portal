@@ -33,24 +33,11 @@ public class MediaWikiToCreoleTranslator extends BaseTranslator {
 
 	public MediaWikiToCreoleTranslator() {
 		initRegexps();
-		initNowikiRegexps();
+		_initNowikiRegexps();
 	}
 
 	public void setStrictImportMode(boolean strictImportMode) {
 		_strictImportMode = strictImportMode;
-	}
-
-	protected void initNowikiRegexps() {
-
-		// Preformat protected
-
-		nowikiRegexps.add("(<nowiki>)(.*?)(</nowiki>)");
-		nowikiRegexps.add("(<pre>)(.*?)(</pre>)");
-
-		// Escape protected
-
-		nowikiRegexps.add(
-			"~(\\*\\*|~|//|-|#|\\{\\{|}}|\\\\|~\\[~~[|]]|----|=|\\|)");
 	}
 
 	protected void initRegexps() {
@@ -298,6 +285,19 @@ public class MediaWikiToCreoleTranslator extends BaseTranslator {
 		}
 
 		return TABLE_OF_CONTENTS + super.postProcess(sb.toString());
+	}
+
+	private void _initNowikiRegexps() {
+
+		// Preformat protected
+
+		nowikiRegexps.add("(<nowiki>)(.*?)(</nowiki>)");
+		nowikiRegexps.add("(<pre>)(.*?)(</pre>)");
+
+		// Escape protected
+
+		nowikiRegexps.add(
+			"~(\\*\\*|~|//|-|#|\\{\\{|}}|\\\\|~\\[~~[|]]|----|=|\\|)");
 	}
 
 	private static final String[] _HTML_TAGS = {

@@ -61,7 +61,7 @@ public class FacebookConnectAutoLogin extends BaseAutoLogin {
 			return null;
 		}
 
-		User user = getUser(httpServletRequest, companyId);
+		User user = _getUser(httpServletRequest, companyId);
 
 		if (user == null) {
 			return null;
@@ -76,8 +76,17 @@ public class FacebookConnectAutoLogin extends BaseAutoLogin {
 		return credentials;
 	}
 
-	protected User getUser(
-			HttpServletRequest httpServletRequest, long companyId)
+	@Reference(unbind = "-")
+	protected void setFacebookConnect(FacebookConnect facebookConnect) {
+		_facebookConnect = facebookConnect;
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
+	private User _getUser(HttpServletRequest httpServletRequest, long companyId)
 		throws PortalException {
 
 		HttpSession httpSession = httpServletRequest.getSession();
@@ -101,16 +110,6 @@ public class FacebookConnectAutoLogin extends BaseAutoLogin {
 		}
 
 		return null;
-	}
-
-	@Reference(unbind = "-")
-	protected void setFacebookConnect(FacebookConnect facebookConnect) {
-		_facebookConnect = facebookConnect;
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserLocalService(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
 	}
 
 	private FacebookConnect _facebookConnect;

@@ -71,7 +71,7 @@ public class PortalSettingsContributorServiceTrackerCustomizer
 
 				mvcActionCommandServiceRegistrationHolder.
 					_deleteMVCActionCommandServiceReference =
-						registerMVCActionCommand(
+						_registerMVCActionCommand(
 							mvcActionName,
 							deletePortalSettingsFormMVCActionCommand);
 			});
@@ -88,7 +88,7 @@ public class PortalSettingsContributorServiceTrackerCustomizer
 
 				mvcActionCommandServiceRegistrationHolder.
 					_saveMVCActionCommandServiceReference =
-						registerMVCActionCommand(
+						_registerMVCActionCommand(
 							mvcActionName,
 							savePortalSettingsFormMVCActionCommand);
 			});
@@ -105,7 +105,7 @@ public class PortalSettingsContributorServiceTrackerCustomizer
 		ServiceReference<PortalSettingsFormContributor> serviceReference,
 		PortalSettingsFormContributor service) {
 
-		unregister(service);
+		_unregister(service);
 
 		addingService(serviceReference);
 	}
@@ -115,7 +115,7 @@ public class PortalSettingsContributorServiceTrackerCustomizer
 		ServiceReference<PortalSettingsFormContributor> serviceReference,
 		PortalSettingsFormContributor service) {
 
-		unregister(service);
+		_unregister(service);
 	}
 
 	@Activate
@@ -133,7 +133,7 @@ public class PortalSettingsContributorServiceTrackerCustomizer
 		_serviceTracker.close();
 	}
 
-	protected ServiceRegistration<MVCActionCommand> registerMVCActionCommand(
+	private ServiceRegistration<MVCActionCommand> _registerMVCActionCommand(
 		String mvcActionCommandName, MVCActionCommand mvcActionCommand) {
 
 		return _bundleContext.registerService(
@@ -146,7 +146,7 @@ public class PortalSettingsContributorServiceTrackerCustomizer
 			).build());
 	}
 
-	protected void unregister(
+	private void _unregister(
 		PortalSettingsFormContributor portalSettingsFormContributor) {
 
 		MVCActionCommandServiceRegistrationHolder

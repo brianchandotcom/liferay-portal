@@ -124,7 +124,7 @@ public class RolesAdminPortletDataHandler extends BasePortletDataHandler {
 			"group-id", String.valueOf(portletDataContext.getScopeGroupId()));
 
 		ActionableDynamicQuery actionableDynamicQuery =
-			getRoleActionableDynamicQuery(portletDataContext, true);
+			_getRoleActionableDynamicQuery(portletDataContext, true);
 
 		actionableDynamicQuery.performActions();
 
@@ -159,12 +159,25 @@ public class RolesAdminPortletDataHandler extends BasePortletDataHandler {
 		throws Exception {
 
 		ActionableDynamicQuery actionableDynamicQuery =
-			getRoleActionableDynamicQuery(portletDataContext, false);
+			_getRoleActionableDynamicQuery(portletDataContext, false);
 
 		actionableDynamicQuery.performCount();
 	}
 
-	protected ActionableDynamicQuery getRoleActionableDynamicQuery(
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
+	protected void setModuleServiceLifecycle(
+		ModuleServiceLifecycle moduleServiceLifecycle) {
+	}
+
+	@Reference(unbind = "-")
+	protected void setPortal(Portal portal) {
+		Collections.addAll(
+			_allSystemRoleNames, portal.getSystemOrganizationRoles());
+		Collections.addAll(_allSystemRoleNames, portal.getSystemRoles());
+		Collections.addAll(_allSystemRoleNames, portal.getSystemSiteRoles());
+	}
+
+	private ActionableDynamicQuery _getRoleActionableDynamicQuery(
 		PortletDataContext portletDataContext, boolean export) {
 
 		ActionableDynamicQuery actionableDynamicQuery =
@@ -214,19 +227,6 @@ public class RolesAdminPortletDataHandler extends BasePortletDataHandler {
 			performActionMethodWrapper);
 
 		return actionableDynamicQuery;
-	}
-
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
-	}
-
-	@Reference(unbind = "-")
-	protected void setPortal(Portal portal) {
-		Collections.addAll(
-			_allSystemRoleNames, portal.getSystemOrganizationRoles());
-		Collections.addAll(_allSystemRoleNames, portal.getSystemRoles());
-		Collections.addAll(_allSystemRoleNames, portal.getSystemSiteRoles());
 	}
 
 	private final Set<String> _allSystemRoleNames = new HashSet<>();

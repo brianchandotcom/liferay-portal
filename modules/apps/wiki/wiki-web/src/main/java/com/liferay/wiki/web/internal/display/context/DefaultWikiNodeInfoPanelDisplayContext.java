@@ -58,7 +58,7 @@ public class DefaultWikiNodeInfoPanelDisplayContext
 
 	@Override
 	public int getSelectedNodesCount() {
-		List<?> items = getSelectedNodes();
+		List<?> items = _getSelectedNodes();
 
 		return items.size();
 	}
@@ -70,7 +70,7 @@ public class DefaultWikiNodeInfoPanelDisplayContext
 
 	@Override
 	public boolean isMultipleNodeSelection() {
-		List<?> items = getSelectedNodes();
+		List<?> items = _getSelectedNodes();
 
 		if (items.size() > 1) {
 			return true;
@@ -90,7 +90,7 @@ public class DefaultWikiNodeInfoPanelDisplayContext
 		return false;
 	}
 
-	protected List<?> getSelectedNodes() {
+	private List<?> _getSelectedNodes() {
 		return _wikiNodeInfoPanelRequestHelper.getNodes();
 	}
 

@@ -50,12 +50,12 @@ public class DefaultMentionsMatcherTest {
 
 	@Test
 	public void testMatchBBCodeAtMention() {
-		assertEquals("user1", _mentionsMatcher.match("[span]@user1[span]"));
+		_assertEquals("user1", _mentionsMatcher.match("[span]@user1[span]"));
 	}
 
 	@Test
 	public void testMatchBBCodeSpecialCharacters() {
-		assertEquals(
+		_assertEquals(
 			_SCREEN_NAME_WITH_SPECIAL_CHARS,
 			_mentionsMatcher.match(
 				"[span]@" + _SCREEN_NAME_WITH_SPECIAL_CHARS + "[span]"));
@@ -63,17 +63,18 @@ public class DefaultMentionsMatcherTest {
 
 	@Test
 	public void testMatchBBCodeXMLEntityMention() {
-		assertEquals("user1", _mentionsMatcher.match("[span]&#64;user1[span]"));
+		_assertEquals(
+			"user1", _mentionsMatcher.match("[span]&#64;user1[span]"));
 	}
 
 	@Test
 	public void testMatchHTMLAtMention() {
-		assertEquals("user1", _mentionsMatcher.match("<span>@user1</span>"));
+		_assertEquals("user1", _mentionsMatcher.match("<span>@user1</span>"));
 	}
 
 	@Test
 	public void testMatchHTMLSpecialCharacters() {
-		assertEquals(
+		_assertEquals(
 			_SCREEN_NAME_WITH_SPECIAL_CHARS,
 			_mentionsMatcher.match(
 				"<span>@" + _SCREEN_NAME_WITH_SPECIAL_CHARS + "</span>"));
@@ -81,7 +82,7 @@ public class DefaultMentionsMatcherTest {
 
 	@Test
 	public void testMatchHTMLXMLEntityMention() {
-		assertEquals(
+		_assertEquals(
 			"user1", _mentionsMatcher.match("<span>&#64;user1</span>"));
 	}
 
@@ -92,36 +93,36 @@ public class DefaultMentionsMatcherTest {
 				"Sed non venenatis &#64;user2 justo. Morbi augue mauris, " +
 					"suscipit ]@user3 tempus@notthis @@neitherthis et,>@user4";
 
-		assertEquals(
+		_assertEquals(
 			Arrays.asList("user1", "user2", "user3", "user4"),
 			_mentionsMatcher.match(content));
 	}
 
 	@Test
 	public void testMatchSimpleAtMention() {
-		assertEquals("user1", _mentionsMatcher.match("@user1"));
+		_assertEquals("user1", _mentionsMatcher.match("@user1"));
 	}
 
 	@Test
 	public void testMatchSimpleAtMentions() {
-		assertEquals(
+		_assertEquals(
 			Arrays.asList("user1", "user2"),
 			_mentionsMatcher.match("@user1 @user2"));
 	}
 
 	@Test
 	public void testMatchSimpleXMLEntityMention() {
-		assertEquals("user1", _mentionsMatcher.match("&#64;user1"));
+		_assertEquals("user1", _mentionsMatcher.match("&#64;user1"));
 	}
 
 	@Test
 	public void testMatchSimpleXMLEntityMentions() {
-		assertEquals(
+		_assertEquals(
 			Arrays.asList("user1", "user2"),
 			_mentionsMatcher.match("&#64;user1 &#64;user2"));
 	}
 
-	protected <T> void assertEquals(
+	private <T> void _assertEquals(
 		Iterable<T> iterable1, Iterable<T> iterable2) {
 
 		Iterator<T> iterator1 = iterable1.iterator();
@@ -158,8 +159,8 @@ public class DefaultMentionsMatcherTest {
 		Assert.assertTrue(message, !iterator2.hasNext());
 	}
 
-	protected <T> void assertEquals(T value, Iterable<T> iterable) {
-		assertEquals(Collections.singletonList(value), iterable);
+	private <T> void _assertEquals(T value, Iterable<T> iterable) {
+		_assertEquals(Collections.singletonList(value), iterable);
 	}
 
 	private static final String _SCREEN_NAME_SPECIAL_CHARS = "-._";

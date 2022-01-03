@@ -40,7 +40,7 @@ public class OrganizationTypesSettingsImpl
 	public String[] getChildrenTypes(String type) {
 		OrganizationTypeConfigurationWrapper
 			organizationTypeConfigurationWrapper =
-				getOrganizationTypeConfigurationWrapper(type);
+				_getOrganizationTypeConfigurationWrapper(type);
 
 		if (organizationTypeConfigurationWrapper == null) {
 			return new String[0];
@@ -59,7 +59,7 @@ public class OrganizationTypesSettingsImpl
 	public boolean isCountryEnabled(String type) {
 		OrganizationTypeConfigurationWrapper
 			organizationTypeConfigurationWrapper =
-				getOrganizationTypeConfigurationWrapper(type);
+				_getOrganizationTypeConfigurationWrapper(type);
 
 		if (organizationTypeConfigurationWrapper == null) {
 			return false;
@@ -72,7 +72,7 @@ public class OrganizationTypesSettingsImpl
 	public boolean isCountryRequired(String type) {
 		OrganizationTypeConfigurationWrapper
 			organizationTypeConfigurationWrapper =
-				getOrganizationTypeConfigurationWrapper(type);
+				_getOrganizationTypeConfigurationWrapper(type);
 
 		if (organizationTypeConfigurationWrapper == null) {
 			return false;
@@ -85,7 +85,7 @@ public class OrganizationTypesSettingsImpl
 	public boolean isRootable(String type) {
 		OrganizationTypeConfigurationWrapper
 			organizationTypeConfigurationWrapper =
-				getOrganizationTypeConfigurationWrapper(type);
+				_getOrganizationTypeConfigurationWrapper(type);
 
 		if (organizationTypeConfigurationWrapper == null) {
 			return false;
@@ -108,8 +108,16 @@ public class OrganizationTypesSettingsImpl
 			organizationTypeConfigurationWrapper);
 	}
 
-	protected OrganizationTypeConfigurationWrapper
-		getOrganizationTypeConfigurationWrapper(String type) {
+	protected void removeOrganizationTypeConfigurationWrapper(
+		OrganizationTypeConfigurationWrapper
+			organizationTypeConfigurationWrapper) {
+
+		_organizationTypeConfigurationWrappers.remove(
+			organizationTypeConfigurationWrapper.getName());
+	}
+
+	private OrganizationTypeConfigurationWrapper
+		_getOrganizationTypeConfigurationWrapper(String type) {
 
 		OrganizationTypeConfigurationWrapper
 			organizationTypeConfigurationWrapper =
@@ -120,14 +128,6 @@ public class OrganizationTypesSettingsImpl
 		}
 
 		return organizationTypeConfigurationWrapper;
-	}
-
-	protected void removeOrganizationTypeConfigurationWrapper(
-		OrganizationTypeConfigurationWrapper
-			organizationTypeConfigurationWrapper) {
-
-		_organizationTypeConfigurationWrappers.remove(
-			organizationTypeConfigurationWrapper.getName());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

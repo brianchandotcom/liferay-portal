@@ -121,7 +121,7 @@ public class WikiDisplayExportImportPortletPreferencesProcessor
 			portletDataContext, portletId, node);
 
 		ActionableDynamicQuery actionableDynamicQuery =
-			getPageActionableDynamicQuery(
+			_getPageActionableDynamicQuery(
 				portletDataContext, node.getNodeId(), portletId);
 
 		try {
@@ -173,7 +173,14 @@ public class WikiDisplayExportImportPortletPreferencesProcessor
 		return portletPreferences;
 	}
 
-	protected ActionableDynamicQuery getPageActionableDynamicQuery(
+	@Reference(unbind = "-")
+	protected void setWikiPageLocalService(
+		WikiPageLocalService wikiPageLocalService) {
+
+		_wikiPageLocalService = wikiPageLocalService;
+	}
+
+	private ActionableDynamicQuery _getPageActionableDynamicQuery(
 		PortletDataContext portletDataContext, long nodeId, String portletId) {
 
 		ActionableDynamicQuery actionableDynamicQuery =
@@ -198,13 +205,6 @@ public class WikiDisplayExportImportPortletPreferencesProcessor
 					portletDataContext, portletId, page));
 
 		return actionableDynamicQuery;
-	}
-
-	@Reference(unbind = "-")
-	protected void setWikiPageLocalService(
-		WikiPageLocalService wikiPageLocalService) {
-
-		_wikiPageLocalService = wikiPageLocalService;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -69,10 +69,10 @@ public class ApplicationDisplayTemplateWebDAVStorageImpl
 			String[] pathArray = webDAVRequest.getPathArray();
 
 			if (pathArray.length == 2) {
-				return getFolders(webDAVRequest);
+				return _getFolders(webDAVRequest);
 			}
 			else if (pathArray.length == 3) {
-				return getTemplates(webDAVRequest);
+				return _getTemplates(webDAVRequest);
 			}
 
 			return new ArrayList<>();
@@ -88,7 +88,19 @@ public class ApplicationDisplayTemplateWebDAVStorageImpl
 			webDAVRequest, getRootPath(), getToken(), 0);
 	}
 
-	protected List<Resource> getFolders(WebDAVRequest webDAVRequest)
+	@Reference(unbind = "-")
+	protected void setDDMTemplateLocalService(
+		DDMTemplateLocalService ddmTemplateLocalService) {
+
+		_ddmTemplateLocalService = ddmTemplateLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDDMWebDAV(DDMWebDAV ddmWebDAV) {
+		_ddmWebDAV = ddmWebDAV;
+	}
+
+	private List<Resource> _getFolders(WebDAVRequest webDAVRequest)
 		throws Exception {
 
 		return ListUtil.fromArray(
@@ -96,7 +108,7 @@ public class ApplicationDisplayTemplateWebDAVStorageImpl
 				webDAVRequest, DDMWebDAV.TYPE_TEMPLATES, getRootPath(), true));
 	}
 
-	protected List<Resource> getTemplates(WebDAVRequest webDAVRequest)
+	private List<Resource> _getTemplates(WebDAVRequest webDAVRequest)
 		throws Exception {
 
 		List<Resource> resources = new ArrayList<>();
@@ -113,18 +125,6 @@ public class ApplicationDisplayTemplateWebDAVStorageImpl
 		}
 
 		return resources;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMTemplateLocalService(
-		DDMTemplateLocalService ddmTemplateLocalService) {
-
-		_ddmTemplateLocalService = ddmTemplateLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMWebDAV(DDMWebDAV ddmWebDAV) {
-		_ddmWebDAV = ddmWebDAV;
 	}
 
 	private DDMTemplateLocalService _ddmTemplateLocalService;

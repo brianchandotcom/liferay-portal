@@ -51,11 +51,18 @@ public class OrganizationTypesConfigurationUpgradeProcess
 				_props.getArray(
 					LegacyOrganizationTypesKeys.ORGANIZATIONS_TYPES)) {
 
-			upgradeOrganizationTypeConfiguration(organizationType);
+			_upgradeOrganizationTypeConfiguration(organizationType);
 		}
 	}
 
-	protected void upgradeOrganizationTypeConfiguration(String organizationType)
+	private String _getPropertyName(
+		String basePropertyName, String organizationType) {
+
+		return StringBundler.concat(
+			basePropertyName, "[", organizationType, "]");
+	}
+
+	private void _upgradeOrganizationTypeConfiguration(String organizationType)
 		throws Exception {
 
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
@@ -142,13 +149,6 @@ public class OrganizationTypesConfigurationUpgradeProcess
 				_FACTORY_PID, StringPool.QUESTION);
 
 		configuration.update(properties);
-	}
-
-	private String _getPropertyName(
-		String basePropertyName, String organizationType) {
-
-		return StringBundler.concat(
-			basePropertyName, "[", organizationType, "]");
 	}
 
 	private static final String _FACTORY_PID =

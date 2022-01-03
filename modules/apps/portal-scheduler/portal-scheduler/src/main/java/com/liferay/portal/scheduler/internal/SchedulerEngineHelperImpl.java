@@ -869,10 +869,6 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 		}
 	}
 
-	private SchedulerEngine _getSchedulerEngine() {
-		return _schedulerEngine;
-	}
-
 	private Destination _registerDestination(
 		BundleContext bundleContext, String destinationType,
 		String destinationName) {

@@ -14,7 +14,6 @@
 
 package com.liferay.portal.scheduler.quartz.internal;
 
-import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.cluster.ClusterExecutor;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -899,14 +898,6 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 		}
 
 		return _memoryScheduler;
-	}
-
-	private StorageType _getStorageType(String groupName) {
-		int pos = groupName.indexOf(CharPool.POUND);
-
-		String storageTypeString = groupName.substring(0, pos);
-
-		return StorageType.valueOf(storageTypeString);
 	}
 
 	private Scheduler _initializeScheduler(

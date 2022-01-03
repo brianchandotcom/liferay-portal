@@ -18,7 +18,6 @@ import com.liferay.mobile.device.rules.constants.MDRPortletKeys;
 import com.liferay.mobile.device.rules.exception.NoSuchRuleGroupException;
 import com.liferay.mobile.device.rules.model.MDRRuleGroup;
 import com.liferay.mobile.device.rules.service.MDRRuleGroupService;
-import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -126,21 +125,6 @@ public class EditRuleGroupMVCActionCommand extends BaseMVCActionCommand {
 		for (long deleteRuleGroupId : deleteRuleGroupIds) {
 			_mdrRuleGroupService.deleteRuleGroup(deleteRuleGroupId);
 		}
-	}
-
-	private String _getAddOrCopyRedirect(
-		ActionRequest actionRequest, ActionResponse actionResponse,
-		MDRRuleGroup ruleGroup) {
-
-		return PortletURLBuilder.createRenderURL(
-			_portal.getLiferayPortletResponse(actionResponse)
-		).setMVCRenderCommandName(
-			"/mobile_device_rules/edit_rule_group"
-		).setRedirect(
-			ParamUtil.getString(actionRequest, "redirect")
-		).setParameter(
-			"ruleGroupId", ruleGroup.getRuleGroupId()
-		).buildString();
 	}
 
 	private MDRRuleGroup _updateRuleGroup(ActionRequest actionRequest)

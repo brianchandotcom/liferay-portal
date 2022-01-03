@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.service.ImageLocalService;
 import com.liferay.portal.kernel.service.ListTypeService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Props;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.exportimport.UserOperation;
 import com.liferay.portal.security.ldap.ContactConverterKeys;
@@ -697,18 +696,6 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 		}
 
 		return bytes;
-	}
-
-	private boolean _hasLegacyPasswordEncryptionAlgorithm() {
-		if (Validator.isNotNull(
-				GetterUtil.getString(
-					_props.get(
-						PropsKeys.PASSWORDS_ENCRYPTION_ALGORITHM_LEGACY)))) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	private void _populateCustomAttributeModifications(

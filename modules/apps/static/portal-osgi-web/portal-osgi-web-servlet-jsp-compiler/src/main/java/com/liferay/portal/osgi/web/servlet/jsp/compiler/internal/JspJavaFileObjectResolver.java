@@ -47,7 +47,6 @@ import java.util.Set;
 import javax.tools.JavaFileObject;
 
 import org.osgi.framework.Bundle;
-import org.osgi.framework.wiring.BundleCapability;
 import org.osgi.framework.wiring.BundleWiring;
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -278,23 +277,6 @@ public class JspJavaFileObjectResolver implements JavaFileObjectResolver {
 		_javaFileObjects.put(path, javaFileObjects);
 
 		return javaFileObjects;
-	}
-
-	private boolean _isExportsPackage(
-		BundleWiring bundleWiring, String packageName) {
-
-		List<BundleCapability> bundleCapabilities =
-			bundleWiring.getCapabilities("osgi.wiring.package");
-
-		for (BundleCapability bundleCapability : bundleCapabilities) {
-			Map<String, Object> attributes = bundleCapability.getAttributes();
-
-			if (packageName.equals(attributes.get("osgi.wiring.package"))) {
-				return true;
-			}
-		}
-
-		return false;
 	}
 
 	private Collection<JavaFileObject> _toJavaFileObjects(

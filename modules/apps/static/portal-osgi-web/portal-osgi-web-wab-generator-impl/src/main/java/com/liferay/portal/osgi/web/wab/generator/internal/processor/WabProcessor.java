@@ -98,8 +98,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
-import java.util.jar.Attributes;
-import java.util.jar.Manifest;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
@@ -163,12 +161,6 @@ public class WabProcessor {
 		finally {
 			DependencyManagementThreadLocal.setEnabled(enabled);
 		}
-	}
-
-	private void _addElement(Element element, String name, String text) {
-		Element childElement = element.addElement(name);
-
-		childElement.addText(GetterUtil.getString(text));
 	}
 
 	private void _appendProperty(
@@ -1146,12 +1138,6 @@ public class WabProcessor {
 				_processClass(analyzer, value);
 			}
 		}
-	}
-
-	private void _processWebContextPath(Manifest manifest) {
-		Attributes attributes = manifest.getMainAttributes();
-
-		attributes.putValue("Web-ContextPath", _getWebContextPath());
 	}
 
 	private void _processWebXML(

@@ -51,13 +51,9 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.Servlet;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
-import javax.servlet.ServletContextAttributeListener;
-import javax.servlet.ServletContextListener;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
 import javax.servlet.ServletRequest;
-import javax.servlet.ServletRequestAttributeListener;
-import javax.servlet.ServletRequestListener;
 import javax.servlet.ServletResponse;
 import javax.servlet.SessionCookieConfig;
 import javax.servlet.SessionTrackingMode;
@@ -65,8 +61,6 @@ import javax.servlet.descriptor.JspConfigDescriptor;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSessionAttributeListener;
-import javax.servlet.http.HttpSessionListener;
 import javax.servlet.jsp.JspFactory;
 
 import org.apache.jasper.runtime.JspFactoryImpl;
@@ -411,42 +405,6 @@ public class JspServlet extends HttpServlet {
 				}
 			}
 		}
-	}
-
-	private String[] _getListenerClassNames(Class<?> clazz) {
-		List<String> classNames = new ArrayList<>();
-
-		if (ServletContextListener.class.isAssignableFrom(clazz)) {
-			classNames.add(ServletContextListener.class.getName());
-		}
-
-		if (ServletContextAttributeListener.class.isAssignableFrom(clazz)) {
-			classNames.add(ServletContextAttributeListener.class.getName());
-		}
-
-		if (ServletRequestListener.class.isAssignableFrom(clazz)) {
-			classNames.add(ServletRequestListener.class.getName());
-		}
-
-		if (ServletRequestAttributeListener.class.isAssignableFrom(clazz)) {
-			classNames.add(ServletRequestAttributeListener.class.getName());
-		}
-
-		if (HttpSessionListener.class.isAssignableFrom(clazz)) {
-			classNames.add(HttpSessionListener.class.getName());
-		}
-
-		if (HttpSessionAttributeListener.class.isAssignableFrom(clazz)) {
-			classNames.add(HttpSessionAttributeListener.class.getName());
-		}
-
-		if (classNames.isEmpty()) {
-			throw new IllegalArgumentException(
-				clazz.getName() + " does not implement one of the supported " +
-					"servlet listener interfaces");
-		}
-
-		return classNames.toArray(new String[0]);
 	}
 
 	private static final String _DIR_NAME_RESOURCES = "/META-INF/resources";

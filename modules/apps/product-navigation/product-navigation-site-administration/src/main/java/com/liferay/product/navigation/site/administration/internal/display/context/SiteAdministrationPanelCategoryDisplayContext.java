@@ -17,7 +17,6 @@ package com.liferay.product.navigation.site.administration.internal.display.cont
 import com.liferay.application.list.GroupProvider;
 import com.liferay.application.list.PanelCategory;
 import com.liferay.application.list.constants.ApplicationListWebKeys;
-import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
 import com.liferay.exportimport.kernel.exception.RemoteExportException;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
@@ -58,7 +57,6 @@ import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -472,29 +470,6 @@ public class SiteAdministrationPanelCategoryDisplayContext {
 
 		if ((layout != null) && !layout.isHidden()) {
 			return layout;
-		}
-
-		return null;
-	}
-
-	private String _getGroupAdministrationURL(Group group) {
-		if (_panelCategoryHelper == null) {
-			return null;
-		}
-
-		String portletId = _panelCategoryHelper.getFirstPortletId(
-			PanelCategoryKeys.SITE_ADMINISTRATION,
-			_themeDisplay.getPermissionChecker(), group);
-
-		if (Validator.isNotNull(portletId)) {
-			PortletURL groupAdministrationURL =
-				PortalUtil.getControlPanelPortletURL(
-					_portletRequest, group, portletId, 0, 0,
-					PortletRequest.RENDER_PHASE);
-
-			if (groupAdministrationURL != null) {
-				return groupAdministrationURL.toString();
-			}
 		}
 
 		return null;

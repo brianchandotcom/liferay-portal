@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
@@ -175,14 +174,6 @@ public class UserGroupIndexerTest {
 		_roles.add(role);
 
 		return role;
-	}
-
-	private SearchContext _getSearchContext(long companyId) {
-		SearchContext searchContext = new SearchContext();
-
-		searchContext.setCompanyId(companyId);
-
-		return searchContext;
 	}
 
 	private SearchRequestBuilder _getSearchRequestBuilder(long companyId) {

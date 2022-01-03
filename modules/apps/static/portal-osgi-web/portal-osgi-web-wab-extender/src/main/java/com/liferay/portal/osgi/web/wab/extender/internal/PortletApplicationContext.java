@@ -32,8 +32,6 @@ import java.net.URL;
 
 import java.util.List;
 
-import org.springframework.beans.factory.support.BeanDefinitionRegistry;
-import org.springframework.beans.factory.support.RootBeanDefinition;
 import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
 import org.springframework.web.context.support.XmlWebApplicationContext;
 
@@ -129,13 +127,6 @@ public class PortletApplicationContext extends XmlWebApplicationContext {
 		return ArrayUtil.append(
 			configLocations,
 			serviceBuilderPropertiesConfigLocations.toArray(new String[0]));
-	}
-
-	private void _injectExplicitBean(
-		Class<?> clazz, BeanDefinitionRegistry beanDefinitionRegistry) {
-
-		beanDefinitionRegistry.registerBeanDefinition(
-			clazz.getName(), new RootBeanDefinition(clazz));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

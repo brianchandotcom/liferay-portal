@@ -538,11 +538,6 @@ public class PortletTracker
 		portletModel.setAsyncSupported(asyncSupported);
 	}
 
-	private void _collectCacheScope(
-		ServiceReference<Portlet> serviceReference,
-		com.liferay.portal.kernel.model.Portlet portletModel) {
-	}
-
 	private void _collectContainerRuntimeOptions(
 		ServiceReference<Portlet> serviceReference,
 		com.liferay.portal.kernel.model.Portlet portletModel) {
@@ -676,7 +671,6 @@ public class PortletTracker
 
 		_collectApplicationTypes(serviceReference, portletModel);
 		_collectAsyncSupported(serviceReference, portletModel);
-		_collectCacheScope(serviceReference, portletModel);
 		_collectContainerRuntimeOptions(serviceReference, portletModel);
 		_collectEventDefinitions(serviceReference, portletModel);
 		_collectExpirationCache(serviceReference, portletModel);

@@ -129,12 +129,6 @@ public class UserModelDocumentContributor
 	@Reference
 	protected UserGroupRoleLocalService userGroupRoleLocalService;
 
-	private long[] _getActiveGroupIds(long userId) {
-		List<Long> groupIds = groupLocalService.getActiveGroupIds(userId);
-
-		return ArrayUtil.toArray(groupIds.toArray(new Long[0]));
-	}
-
 	private long[] _getActiveTransitiveGroupIds(long userId)
 		throws PortalException {
 

@@ -134,20 +134,6 @@ public class ModuleApplicationContextRegistrator {
 		}
 	}
 
-	private void _stop() {
-		ApplicationContextServicePublisherUtil.unregisterContext(
-			_serviceRegistrations);
-
-		PortletBeanLocatorUtil.setBeanLocator(
-			_extendeeBundle.getSymbolicName(), null);
-
-		_dataSourceServiceRegistration.unregister();
-
-		_dataSourceServiceRegistration = null;
-
-		_moduleApplicationContext.close();
-	}
-
 	private final ClassLoader _classLoader;
 	private final ConfigurableApplicationContextConfigurator
 		_configurableApplicationContextConfigurator;

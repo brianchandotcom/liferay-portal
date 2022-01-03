@@ -1,0 +1,21 @@
+<html>
+<head>
+<title>RaylifeSummarySection</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">RaylifeSummarySection</td></tr>
+</thead>
+
+<tbody>
+<tr>
+	<td>POLICY_ID_SELECTED_QUOTE</td>
+	<td>//div[contains(@class, 'text-uppercase') and contains(., 'Policy')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

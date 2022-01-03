@@ -1,0 +1,60 @@
+@component-name = "portal-solutions"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Raylife";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		Raylife.createRaylifeSite(siteName = "Raylife");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Raylife.tearDownCP();
+
+			User.logoutPG();
+		}
+	}
+
+	@description = "LPS-144587 - Verify if its possible to see the user application number."
+	@priority = "4"
+	test CanSeeUserApplicationNumber {
+        ApplicationsMenu.gotoSite(key_site = "Raylife");
+
+        RaylifeHomePage.startFlow();
+
+        RaylifeContactInfo.typeAllBasicsInfoFields();
+
+        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        RaylifeBusiness.typeAllBusinessInfoFields();
+
+        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        RaylifeEmployees.typeAllEmployeesInfoFields();
+
+        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        RaylifeProperty.typeAllPropertyInfoFields();
+
+        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        Click(
+            locator1 = "RaylifeCreateAccount#SELECT_QUOTE",
+            title = "standard");
+
+        AssertElementPresent(locator1 = "RaylifeSummarySection#POLICY_ID_SELECTED_QUOTE");
+
+    }
+
+}

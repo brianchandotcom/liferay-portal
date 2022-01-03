@@ -6,13 +6,15 @@
 					"fragment": {
 						"key": "home-header"
 					},
-					"fragmentConfig": {},
+					"fragmentConfig": {
+					},
 					"fragmentFields": [
 						{
 							"id": "headerIntro",
 							"value": {
 								"fragmentLink": {
-									"value_i18n": {}
+									"value_i18n": {
+									}
 								}
 							}
 						},
@@ -20,7 +22,8 @@
 							"id": "headerTitle",
 							"value": {
 								"fragmentLink": {
-									"value_i18n": {}
+									"value_i18n": {
+									}
 								}
 							}
 						}
@@ -78,11 +81,13 @@
 							"rowViewports": [
 								{
 									"id": "landscapeMobile",
-									"rowViewportDefinition": {}
+									"rowViewportDefinition": {
+									}
 								},
 								{
 									"id": "portraitMobile",
-									"rowViewportDefinition": {}
+									"rowViewportDefinition": {
+									}
 								},
 								{
 									"id": "tablet",
@@ -98,11 +103,13 @@
 								"definition": {
 									"columnViewports": [
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "landscapeMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "portraitMobile"
 										},
 										{
@@ -150,13 +157,15 @@
 													"fragment": {
 														"key": "text-block"
 													},
-													"fragmentConfig": {},
+													"fragmentConfig": {
+													},
 													"fragmentFields": [
 														{
 															"id": "element-text",
 															"value": {
 																"fragmentLink": {
-																	"value_i18n": {}
+																	"value_i18n": {
+																	}
 																},
 																"text": {
 																	"value_i18n": {
@@ -199,7 +208,8 @@
 																			}
 																		}
 																	},
-																	"value_i18n": {}
+																	"value_i18n": {
+																	}
 																},
 																"text": {
 																	"value_i18n": {
@@ -221,13 +231,15 @@
 													"fragment": {
 														"key": "text-block"
 													},
-													"fragmentConfig": {},
+													"fragmentConfig": {
+													},
 													"fragmentFields": [
 														{
 															"id": "element-text",
 															"value": {
 																"fragmentLink": {
-																	"value_i18n": {}
+																	"value_i18n": {
+																	}
 																},
 																"text": {
 																	"value_i18n": {
@@ -268,7 +280,8 @@
 																			}
 																		}
 																	},
-																	"value_i18n": {}
+																	"value_i18n": {
+																	}
 																},
 																"text": {
 																	"value_i18n": {
@@ -291,11 +304,13 @@
 								"definition": {
 									"columnViewports": [
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "landscapeMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "portraitMobile"
 										},
 										{
@@ -343,13 +358,15 @@
 													"fragment": {
 														"key": "text-block"
 													},
-													"fragmentConfig": {},
+													"fragmentConfig": {
+													},
 													"fragmentFields": [
 														{
 															"id": "element-text",
 															"value": {
 																"fragmentLink": {
-																	"value_i18n": {}
+																	"value_i18n": {
+																	}
 																},
 																"text": {
 																	"value_i18n": {
@@ -392,7 +409,8 @@
 																			}
 																		}
 																	},
-																	"value_i18n": {}
+																	"value_i18n": {
+																	}
 																},
 																"text": {
 																	"value_i18n": {
@@ -414,13 +432,15 @@
 													"fragment": {
 														"key": "text-block"
 													},
-													"fragmentConfig": {},
+													"fragmentConfig": {
+													},
 													"fragmentFields": [
 														{
 															"id": "element-text",
 															"value": {
 																"fragmentLink": {
-																	"value_i18n": {}
+																	"value_i18n": {
+																	}
 																},
 																"text": {
 																	"value_i18n": {
@@ -461,7 +481,8 @@
 																			}
 																		}
 																	},
-																	"value_i18n": {}
+																	"value_i18n": {
+																	}
 																},
 																"text": {
 																	"value_i18n": {
@@ -484,11 +505,13 @@
 								"definition": {
 									"columnViewports": [
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "landscapeMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "portraitMobile"
 										},
 										{
@@ -536,13 +559,15 @@
 													"fragment": {
 														"key": "text-block"
 													},
-													"fragmentConfig": {},
+													"fragmentConfig": {
+													},
 													"fragmentFields": [
 														{
 															"id": "element-text",
 															"value": {
 																"fragmentLink": {
-																	"value_i18n": {}
+																	"value_i18n": {
+																	}
 																},
 																"text": {
 																	"value_i18n": {
@@ -585,7 +610,8 @@
 																			}
 																		}
 																	},
-																	"value_i18n": {}
+																	"value_i18n": {
+																	}
 																},
 																"text": {
 																	"value_i18n": {
@@ -607,13 +633,15 @@
 													"fragment": {
 														"key": "text-block"
 													},
-													"fragmentConfig": {},
+													"fragmentConfig": {
+													},
 													"fragmentFields": [
 														{
 															"id": "element-text",
 															"value": {
 																"fragmentLink": {
-																	"value_i18n": {}
+																	"value_i18n": {
+																	}
 																},
 																"text": {
 																	"value_i18n": {
@@ -654,7 +682,8 @@
 																			}
 																		}
 																	},
-																	"value_i18n": {}
+																	"value_i18n": {
+																	}
 																},
 																"text": {
 																	"value_i18n": {
@@ -723,7 +752,8 @@
 								"videoHeight": "",
 								"videoWidth": ""
 							},
-							"fragmentFields": [],
+							"fragmentFields": [
+							],
 							"fragmentStyle": {
 								"borderColor": "",
 								"borderWidth": "",
@@ -786,11 +816,13 @@
 							"rowViewports": [
 								{
 									"id": "landscapeMobile",
-									"rowViewportDefinition": {}
+									"rowViewportDefinition": {
+									}
 								},
 								{
 									"id": "portraitMobile",
-									"rowViewportDefinition": {}
+									"rowViewportDefinition": {
+									}
 								},
 								{
 									"id": "tablet",
@@ -806,11 +838,13 @@
 								"definition": {
 									"columnViewports": [
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "landscapeMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "portraitMobile"
 										},
 										{
@@ -837,7 +871,8 @@
 													"id": "element-text",
 													"value": {
 														"fragmentLink": {
-															"value_i18n": {}
+															"value_i18n": {
+															}
 														},
 														"text": {
 															"value_i18n": {
@@ -860,13 +895,15 @@
 											"fragment": {
 												"key": "text-block"
 											},
-											"fragmentConfig": {},
+											"fragmentConfig": {
+											},
 											"fragmentFields": [
 												{
 													"id": "element-text",
 													"value": {
 														"fragmentLink": {
-															"value_i18n": {}
+															"value_i18n": {
+															}
 														},
 														"text": {
 															"value_i18n": {
@@ -900,11 +937,13 @@
 								"definition": {
 									"columnViewports": [
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "landscapeMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "portraitMobile"
 										},
 										{
@@ -930,7 +969,8 @@
 													"id": "link",
 													"value": {
 														"fragmentLink": {
-															"value_i18n": {}
+															"value_i18n": {
+															}
 														},
 														"text": {
 															"value_i18n": {
@@ -979,7 +1019,8 @@
 						"pageElements": [
 							{
 								"definition": {
-									"collectionItemConfig": {}
+									"collectionItemConfig": {
+									}
 								},
 								"pageElements": [
 									{
@@ -987,7 +1028,8 @@
 											"fragment": {
 												"key": "entry-card"
 											},
-											"fragmentConfig": {},
+											"fragmentConfig": {
+											},
 											"fragmentFields": [
 												{
 													"id": "image",
@@ -1013,7 +1055,8 @@
 																	}
 																}
 															},
-															"value_i18n": {}
+															"value_i18n": {
+															}
 														}
 													}
 												},
@@ -1021,7 +1064,8 @@
 													"id": "author",
 													"value": {
 														"fragmentLink": {
-															"value_i18n": {}
+															"value_i18n": {
+															}
 														},
 														"text": {
 															"mapping": {
@@ -1037,7 +1081,8 @@
 													"id": "category",
 													"value": {
 														"fragmentLink": {
-															"value_i18n": {}
+															"value_i18n": {
+															}
 														},
 														"text": {
 															"mapping": {
@@ -1063,7 +1108,8 @@
 																	}
 																}
 															},
-															"value_i18n": {}
+															"value_i18n": {
+															}
 														},
 														"text": {
 															"mapping": {
@@ -1159,13 +1205,15 @@
 									"fragment": {
 										"key": "text-block"
 									},
-									"fragmentConfig": {},
+									"fragmentConfig": {
+									},
 									"fragmentFields": [
 										{
 											"id": "element-text",
 											"value": {
 												"fragmentLink": {
-													"value_i18n": {}
+													"value_i18n": {
+													}
 												},
 												"text": {
 													"value_i18n": {
@@ -1198,7 +1246,8 @@
 											"id": "element-text",
 											"value": {
 												"fragmentLink": {
-													"value_i18n": {}
+													"value_i18n": {
+													}
 												},
 												"text": {
 													"value_i18n": {
@@ -1264,7 +1313,8 @@
 													}
 												},
 												"fragmentLink": {
-													"value_i18n": {}
+													"value_i18n": {
+													}
 												}
 											}
 										}
@@ -1287,8 +1337,10 @@
 					"fragment": {
 						"key": "parallax-container"
 					},
-					"fragmentConfig": {},
-					"fragmentFields": []
+					"fragmentConfig": {
+					},
+					"fragmentFields": [
+					]
 				},
 				"pageElements": [
 					{
@@ -1383,13 +1435,15 @@
 													"fragment": {
 														"key": "text-block"
 													},
-													"fragmentConfig": {},
+													"fragmentConfig": {
+													},
 													"fragmentFields": [
 														{
 															"id": "element-text",
 															"value": {
 																"fragmentLink": {
-																	"value_i18n": {}
+																	"value_i18n": {
+																	}
 																},
 																"text": {
 																	"value_i18n": {
@@ -1421,7 +1475,8 @@
 															"id": "element-text",
 															"value": {
 																"fragmentLink": {
-																	"value_i18n": {}
+																	"value_i18n": {
+																	}
 																},
 																"text": {
 																	"value_i18n": {
@@ -1444,13 +1499,15 @@
 													"fragment": {
 														"key": "text-block"
 													},
-													"fragmentConfig": {},
+													"fragmentConfig": {
+													},
 													"fragmentFields": [
 														{
 															"id": "element-text",
 															"value": {
 																"fragmentLink": {
-																	"value_i18n": {}
+																	"value_i18n": {
+																	}
 																},
 																"text": {
 																	"value_i18n": {
@@ -1555,11 +1612,13 @@
 									"rowViewports": [
 										{
 											"id": "landscapeMobile",
-											"rowViewportDefinition": {}
+											"rowViewportDefinition": {
+											}
 										},
 										{
 											"id": "portraitMobile",
-											"rowViewportDefinition": {}
+											"rowViewportDefinition": {
+											}
 										},
 										{
 											"id": "tablet",
@@ -1575,11 +1634,13 @@
 										"definition": {
 											"columnViewports": [
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
@@ -1606,7 +1667,8 @@
 															"id": "element-text",
 															"value": {
 																"fragmentLink": {
-																	"value_i18n": {}
+																	"value_i18n": {
+																	}
 																},
 																"text": {
 																	"value_i18n": {
@@ -1629,13 +1691,15 @@
 													"fragment": {
 														"key": "text-block"
 													},
-													"fragmentConfig": {},
+													"fragmentConfig": {
+													},
 													"fragmentFields": [
 														{
 															"id": "element-text",
 															"value": {
 																"fragmentLink": {
-																	"value_i18n": {}
+																	"value_i18n": {
+																	}
 																},
 																"text": {
 																	"value_i18n": {
@@ -1669,11 +1733,13 @@
 										"definition": {
 											"columnViewports": [
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
@@ -1699,7 +1765,8 @@
 															"id": "link",
 															"value": {
 																"fragmentLink": {
-																	"value_i18n": {}
+																	"value_i18n": {
+																	}
 																},
 																"text": {
 																	"value_i18n": {
@@ -1749,7 +1816,8 @@
 								"pageElements": [
 									{
 										"definition": {
-											"collectionItemConfig": {}
+											"collectionItemConfig": {
+											}
 										},
 										"pageElements": [
 											{
@@ -1757,7 +1825,8 @@
 													"fragment": {
 														"key": "job-card"
 													},
-													"fragmentConfig": {},
+													"fragmentConfig": {
+													},
 													"fragmentFields": [
 														{
 															"id": "date",
@@ -1773,7 +1842,8 @@
 																			}
 																		}
 																	},
-																	"value_i18n": {}
+																	"value_i18n": {
+																	}
 																},
 																"text": {
 																	"mapping": {
@@ -1794,7 +1864,8 @@
 																			"value": "https://twitter.com/"
 																		}
 																	},
-																	"value_i18n": {}
+																	"value_i18n": {
+																	}
 																}
 															}
 														},
@@ -1807,7 +1878,8 @@
 																			"value": "https://www.linkedin.com/"
 																		}
 																	},
-																	"value_i18n": {}
+																	"value_i18n": {
+																	}
 																}
 															}
 														},
@@ -1825,7 +1897,8 @@
 																			}
 																		}
 																	},
-																	"value_i18n": {}
+																	"value_i18n": {
+																	}
 																},
 																"text": {
 																	"mapping": {
@@ -1851,7 +1924,8 @@
 																			}
 																		}
 																	},
-																	"value_i18n": {}
+																	"value_i18n": {
+																	}
 																},
 																"text": {
 																	"mapping": {
@@ -1877,7 +1951,8 @@
 																			}
 																		}
 																	},
-																	"value_i18n": {}
+																	"value_i18n": {
+																	}
 																},
 																"text": {
 																	"mapping": {
@@ -1898,7 +1973,8 @@
 																			"value": "https://www.facebook.com/"
 																		}
 																	},
-																	"value_i18n": {}
+																	"value_i18n": {
+																	}
 																}
 															}
 														},
@@ -1911,7 +1987,8 @@
 																			"value": "https://www.instagram.com/"
 																		}
 																	},
-																	"value_i18n": {}
+																	"value_i18n": {
+																	}
 																}
 															}
 														}
@@ -1942,13 +2019,15 @@
 									"fragment": {
 										"key": "text-block"
 									},
-									"fragmentConfig": {},
+									"fragmentConfig": {
+									},
 									"fragmentFields": [
 										{
 											"id": "element-text",
 											"value": {
 												"fragmentLink": {
-													"value_i18n": {}
+													"value_i18n": {
+													}
 												},
 												"text": {
 													"value_i18n": {
@@ -2070,7 +2149,8 @@
 													"id": "element-text",
 													"value": {
 														"fragmentLink": {
-															"value_i18n": {}
+															"value_i18n": {
+															}
 														},
 														"text": {
 															"value_i18n": {
@@ -2093,13 +2173,15 @@
 											"fragment": {
 												"key": "text-block"
 											},
-											"fragmentConfig": {},
+											"fragmentConfig": {
+											},
 											"fragmentFields": [
 												{
 													"id": "element-text",
 													"value": {
 														"fragmentLink": {
-															"value_i18n": {}
+															"value_i18n": {
+															}
 														},
 														"text": {
 															"value_i18n": {
@@ -2132,7 +2214,8 @@
 													"id": "link",
 													"value": {
 														"fragmentLink": {
-															"value_i18n": {}
+															"value_i18n": {
+															}
 														},
 														"text": {
 															"value_i18n": {
@@ -2170,7 +2253,8 @@
 								"pageElements": [
 									{
 										"definition": {
-											"collectionItemConfig": {}
+											"collectionItemConfig": {
+											}
 										},
 										"pageElements": [
 											{
@@ -2178,7 +2262,8 @@
 													"fragment": {
 														"key": "member-card"
 													},
-													"fragmentConfig": {},
+													"fragmentConfig": {
+													},
 													"fragmentFields": [
 														{
 															"id": "image",
@@ -2204,7 +2289,8 @@
 																			}
 																		}
 																	},
-																	"value_i18n": {}
+																	"value_i18n": {
+																	}
 																}
 															}
 														},
@@ -2212,7 +2298,8 @@
 															"id": "role",
 															"value": {
 																"fragmentLink": {
-																	"value_i18n": {}
+																	"value_i18n": {
+																	}
 																},
 																"text": {
 																	"mapping": {
@@ -2233,7 +2320,8 @@
 																			"value": "#"
 																		}
 																	},
-																	"value_i18n": {}
+																	"value_i18n": {
+																	}
 																}
 															}
 														},
@@ -2241,7 +2329,8 @@
 															"id": "memberShortDescription",
 															"value": {
 																"fragmentLink": {
-																	"value_i18n": {}
+																	"value_i18n": {
+																	}
 																}
 															}
 														},
@@ -2250,11 +2339,13 @@
 															"value": {
 																"fragmentImage": {
 																	"url": {
-																		"value_i18n": {}
+																		"value_i18n": {
+																		}
 																	}
 																},
 																"fragmentLink": {
-																	"value_i18n": {}
+																	"value_i18n": {
+																	}
 																}
 															}
 														},
@@ -2262,7 +2353,8 @@
 															"id": "name",
 															"value": {
 																"fragmentLink": {
-																	"value_i18n": {}
+																	"value_i18n": {
+																	}
 																},
 																"text": {
 																	"mapping": {
@@ -2283,7 +2375,8 @@
 																			"value": "#"
 																		}
 																	},
-																	"value_i18n": {}
+																	"value_i18n": {
+																	}
 																}
 															}
 														},
@@ -2292,11 +2385,13 @@
 															"value": {
 																"fragmentImage": {
 																	"url": {
-																		"value_i18n": {}
+																		"value_i18n": {
+																		}
 																	}
 																},
 																"fragmentLink": {
-																	"value_i18n": {}
+																	"value_i18n": {
+																	}
 																}
 															}
 														},
@@ -2309,7 +2404,8 @@
 																			"value": "#"
 																		}
 																	},
-																	"value_i18n": {}
+																	"value_i18n": {
+																	}
 																}
 															}
 														},
@@ -2318,11 +2414,13 @@
 															"value": {
 																"fragmentImage": {
 																	"url": {
-																		"value_i18n": {}
+																		"value_i18n": {
+																		}
 																	}
 																},
 																"fragmentLink": {
-																	"value_i18n": {}
+																	"value_i18n": {
+																	}
 																}
 															}
 														}

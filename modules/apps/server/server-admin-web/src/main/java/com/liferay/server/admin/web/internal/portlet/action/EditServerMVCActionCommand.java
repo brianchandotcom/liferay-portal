@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.image.GhostscriptUtil;
 import com.liferay.portal.kernel.image.ImageMagickUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
@@ -370,7 +369,7 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private void _cleanUpOrphanedPortletPreferences() throws PortalException {
+	private void _cleanUpOrphanedPortletPreferences() throws Exception {
 		boolean active = CacheRegistryUtil.isActive();
 
 		CacheRegistryUtil.setActive(true);

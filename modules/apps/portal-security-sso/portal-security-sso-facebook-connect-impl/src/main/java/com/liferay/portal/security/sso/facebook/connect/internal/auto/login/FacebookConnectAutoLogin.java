@@ -14,7 +14,6 @@
 
 package com.liferay.portal.security.sso.facebook.connect.internal.auto.login;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.facebook.FacebookConnect;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auto.login.AutoLogin;
@@ -87,7 +86,7 @@ public class FacebookConnectAutoLogin extends BaseAutoLogin {
 	}
 
 	private User _getUser(HttpServletRequest httpServletRequest, long companyId)
-		throws PortalException {
+		throws Exception {
 
 		HttpSession httpSession = httpServletRequest.getSession();
 

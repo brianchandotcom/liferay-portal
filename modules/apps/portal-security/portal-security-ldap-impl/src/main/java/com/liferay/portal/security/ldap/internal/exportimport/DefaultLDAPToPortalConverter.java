@@ -60,7 +60,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
 
-import javax.naming.NamingException;
 import javax.naming.directory.Attributes;
 
 import org.osgi.service.component.annotations.Component;
@@ -359,7 +358,7 @@ public class DefaultLDAPToPortalConverter implements LDAPToPortalConverter {
 
 	private Map<String, String[]> _getExpandoAttributes(
 			Attributes attributes, Properties expandoMappings)
-		throws NamingException {
+		throws Exception {
 
 		Map<String, String[]> expandoAttributes = new HashMap<>();
 

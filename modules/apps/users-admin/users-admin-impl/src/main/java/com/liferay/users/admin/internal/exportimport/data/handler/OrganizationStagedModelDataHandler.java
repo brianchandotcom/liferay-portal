@@ -286,7 +286,7 @@ public class OrganizationStagedModelDataHandler
 
 	private void _exportAddresses(
 			PortletDataContext portletDataContext, Organization organization)
-		throws PortalException {
+		throws Exception {
 
 		List<Address> addresses = _addressLocalService.getAddresses(
 			organization.getCompanyId(), organization.getModelClassName(),
@@ -301,7 +301,7 @@ public class OrganizationStagedModelDataHandler
 
 	private void _exportEmailAddresses(
 			PortletDataContext portletDataContext, Organization organization)
-		throws PortalException {
+		throws Exception {
 
 		List<EmailAddress> emailAddresses =
 			_emailAddressLocalService.getEmailAddresses(
@@ -329,7 +329,7 @@ public class OrganizationStagedModelDataHandler
 
 	private void _exportPasswordPolicyRel(
 			PortletDataContext portletDataContext, Organization organization)
-		throws PortalException {
+		throws Exception {
 
 		PasswordPolicyRel passwordPolicyRel =
 			_passwordPolicyRelLocalService.fetchPasswordPolicyRel(
@@ -350,7 +350,7 @@ public class OrganizationStagedModelDataHandler
 
 	private void _exportPhones(
 			PortletDataContext portletDataContext, Organization organization)
-		throws PortalException {
+		throws Exception {
 
 		List<Phone> phones = _phoneLocalService.getPhones(
 			organization.getCompanyId(), organization.getModelClassName(),
@@ -365,7 +365,7 @@ public class OrganizationStagedModelDataHandler
 
 	private void _exportWebsites(
 			PortletDataContext portletDataContext, Organization organization)
-		throws PortalException {
+		throws Exception {
 
 		List<Website> websites = _websiteLocalService.getWebsites(
 			organization.getCompanyId(), organization.getModelClassName(),
@@ -381,7 +381,7 @@ public class OrganizationStagedModelDataHandler
 	private void _importAddresses(
 			PortletDataContext portletDataContext, Organization organization,
 			Organization importedOrganization)
-		throws PortalException {
+		throws Exception {
 
 		List<Element> addressElements =
 			portletDataContext.getReferenceDataElements(
@@ -417,7 +417,7 @@ public class OrganizationStagedModelDataHandler
 	private void _importEmailAddresses(
 			PortletDataContext portletDataContext, Organization organization,
 			Organization importedOrganization)
-		throws PortalException {
+		throws Exception {
 
 		List<Element> emailAddressElements =
 			portletDataContext.getReferenceDataElements(
@@ -459,7 +459,7 @@ public class OrganizationStagedModelDataHandler
 	private void _importOrgLabors(
 			PortletDataContext portletDataContext, Organization organization,
 			Organization importedOrganization)
-		throws PortalException {
+		throws Exception {
 
 		String path = ExportImportPathUtil.getModelPath(
 			organization, OrgLabor.class.getSimpleName());
@@ -478,7 +478,7 @@ public class OrganizationStagedModelDataHandler
 	private void _importPasswordPolicyRel(
 			PortletDataContext portletDataContext, Organization organization,
 			Organization importedOrganization)
-		throws PortalException {
+		throws Exception {
 
 		List<Element> passwordPolicyElements =
 			portletDataContext.getReferenceDataElements(
@@ -515,7 +515,7 @@ public class OrganizationStagedModelDataHandler
 	private void _importPhones(
 			PortletDataContext portletDataContext, Organization organization,
 			Organization importedOrganization)
-		throws PortalException {
+		throws Exception {
 
 		List<Element> phoneElements =
 			portletDataContext.getReferenceDataElements(
@@ -551,7 +551,7 @@ public class OrganizationStagedModelDataHandler
 	private void _importWebsites(
 			PortletDataContext portletDataContext, Organization organization,
 			Organization importedOrganization)
-		throws PortalException {
+		throws Exception {
 
 		List<Element> websiteElements =
 			portletDataContext.getReferenceDataElements(

@@ -153,7 +153,7 @@ public class WikiNodeIndexer extends BaseIndexer<WikiNode> {
 			uidFactory.getUID(wikiNode), isCommitImmediately());
 	}
 
-	private void _reindexEntries(long companyId) throws PortalException {
+	private void _reindexEntries(long companyId) throws Exception {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
 			_wikiNodeLocalService.getIndexableActionableDynamicQuery();
 

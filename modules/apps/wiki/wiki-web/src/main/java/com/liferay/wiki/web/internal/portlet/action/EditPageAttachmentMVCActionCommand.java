@@ -259,7 +259,7 @@ public class EditPageAttachmentMVCActionCommand extends BaseMVCActionCommand {
 	private String[] _getAllowedFileExtensions(
 			PortletConfig portletConfig, PortletRequest portletRequest,
 			PortletResponse portletResponse)
-		throws PortalException {
+		throws Exception {
 
 		return _dlConfiguration.fileExtensions();
 	}

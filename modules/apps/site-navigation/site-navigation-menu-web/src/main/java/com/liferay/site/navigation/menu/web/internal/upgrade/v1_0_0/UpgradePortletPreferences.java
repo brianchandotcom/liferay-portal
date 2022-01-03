@@ -27,7 +27,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.portlet.PortletPreferences;
-import javax.portlet.ReadOnlyException;
 
 /**
  * @author Eduardo García
@@ -59,7 +58,7 @@ public class UpgradePortletPreferences
 
 	private void _persistSupportedProperties(
 			PortletPreferences portletPreferences, String displayStyle)
-		throws ReadOnlyException {
+		throws Exception {
 
 		String includedLayouts = "auto";
 		String rootLayoutLevel = "1";
@@ -108,7 +107,7 @@ public class UpgradePortletPreferences
 
 	private void _removeUnsupportedPreferences(
 			PortletPreferences portletPreferences)
-		throws ReadOnlyException {
+		throws Exception {
 
 		portletPreferences.reset("bulletStyle");
 		portletPreferences.reset("headerType");
@@ -116,7 +115,7 @@ public class UpgradePortletPreferences
 	}
 
 	private void _upgradeDisplayStyle(PortletPreferences portletPreferences)
-		throws ReadOnlyException {
+		throws Exception {
 
 		String displayStyle = GetterUtil.getString(
 			portletPreferences.getValue("displayStyle", null));

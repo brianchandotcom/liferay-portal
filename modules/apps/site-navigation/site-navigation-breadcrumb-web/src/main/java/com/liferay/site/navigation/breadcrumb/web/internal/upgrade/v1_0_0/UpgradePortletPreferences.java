@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.site.navigation.breadcrumb.web.internal.constants.SiteNavigationBreadcrumbPortletKeys;
 
 import javax.portlet.PortletPreferences;
-import javax.portlet.ReadOnlyException;
 
 /**
  * @author Julio Camarero
@@ -59,7 +58,7 @@ public class UpgradePortletPreferences
 	}
 
 	private void _upgradeDisplayStyle(PortletPreferences portletPreferences)
-		throws ReadOnlyException {
+		throws Exception {
 
 		String displayStyle = GetterUtil.getString(
 			portletPreferences.getValue("displayStyle", null));

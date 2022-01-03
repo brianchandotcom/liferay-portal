@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.wiki.constants.WikiPortletKeys;
 
 import javax.portlet.PortletPreferences;
-import javax.portlet.ReadOnlyException;
 
 /**
  * @author Iván Zaera
@@ -64,7 +63,7 @@ public class UpgradePortletPreferences
 			PortletPreferences portletPreferences,
 			String emailMessageBodyPortletPreferencesKey,
 			String emailMessageSignaturePortletPreferencesKey)
-		throws ReadOnlyException {
+		throws Exception {
 
 		String emailMessageSignature = portletPreferences.getValue(
 			emailMessageSignaturePortletPreferencesKey, StringPool.BLANK);

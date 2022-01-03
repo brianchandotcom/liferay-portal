@@ -15,7 +15,6 @@
 package com.liferay.wiki.web.internal.portlet.action;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -175,7 +174,7 @@ public class EditNodeMVCActionCommand extends BaseMVCActionCommand {
 
 	private ModifiableSettings _getModifiableSettings(
 			ActionRequest actionRequest)
-		throws PortalException {
+		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);

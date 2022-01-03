@@ -15,7 +15,6 @@
 package com.liferay.notifications.web.internal.portlet;
 
 import com.liferay.notifications.web.internal.constants.NotificationsPortletKeys;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.model.UserNotificationDelivery;
@@ -380,7 +379,7 @@ public class NotificationsPortlet extends MVCPortlet {
 
 	private void _updateArchived(
 			long userId, long userNotificationEventId, boolean archived)
-		throws PortalException {
+		throws Exception {
 
 		UserNotificationEvent userNotificationEvent =
 			_userNotificationEventLocalService.fetchUserNotificationEvent(

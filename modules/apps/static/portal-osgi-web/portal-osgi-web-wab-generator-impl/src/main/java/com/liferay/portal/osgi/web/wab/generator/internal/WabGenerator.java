@@ -196,7 +196,7 @@ public class WabGenerator
 	}
 
 	private Set<String> _getRequiredForStartupContextPaths(Path path)
-		throws IOException {
+		throws Exception {
 
 		Set<String> contextPaths = new HashSet<>();
 

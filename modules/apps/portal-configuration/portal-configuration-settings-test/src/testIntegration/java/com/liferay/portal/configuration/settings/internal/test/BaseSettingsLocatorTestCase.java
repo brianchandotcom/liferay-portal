@@ -215,7 +215,7 @@ public abstract class BaseSettingsLocatorTestCase {
 			String factoryPid, ExtendedObjectClassDefinition.Scope scope,
 			Serializable scopePK, String propertyKey,
 			Serializable propertyValue)
-		throws ConfigurationException {
+		throws Exception {
 
 		try {
 			String filterString = StringBundler.concat(

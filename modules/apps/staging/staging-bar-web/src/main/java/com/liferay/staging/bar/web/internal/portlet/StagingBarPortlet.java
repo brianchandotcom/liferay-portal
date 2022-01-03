@@ -551,7 +551,7 @@ public class StagingBarPortlet extends MVCPortlet {
 
 	private void _addLayoutRevisionSessionMessages(
 			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws IOException {
+		throws Exception {
 
 		MultiSessionMessages.add(
 			actionRequest,

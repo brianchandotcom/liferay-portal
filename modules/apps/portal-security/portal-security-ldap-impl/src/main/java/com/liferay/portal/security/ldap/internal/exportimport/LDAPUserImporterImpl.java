@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.cache.SingleVMPool;
 import com.liferay.portal.kernel.exception.GroupFriendlyURLException;
 import com.liferay.portal.kernel.exception.NoSuchRoleException;
 import com.liferay.portal.kernel.exception.NoSuchUserGroupException;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lock.DuplicateLockException;
 import com.liferay.portal.kernel.lock.Lock;
@@ -1733,7 +1732,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 			User ldapUser, Contact ldapContact, User user,
 			Properties userMappings, Properties contactMappings,
 			Set<String> ldapUserIgnoreAttributes)
-		throws PortalException {
+		throws Exception {
 
 		Contact contact = user.getContact();
 
@@ -1967,7 +1966,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 			LDAPImportConfiguration ldapImportConfiguration, long userId,
 			String screenName, String password, boolean passwordReset,
 			Date modifiedDate)
-		throws PortalException {
+		throws Exception {
 
 		boolean passwordGenerated = false;
 

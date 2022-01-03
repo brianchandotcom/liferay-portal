@@ -200,7 +200,7 @@ public class PageRatingsPortletDataHandler extends BasePortletDataHandler {
 
 	private ActionableDynamicQuery _getRatingsEntryCountActionableDynamicQuery(
 			final PortletDataContext portletDataContext)
-		throws PortalException {
+		throws Exception {
 
 		final ExportActionableDynamicQuery exportActionableDynamicQuery =
 			_ratingsEntryLocalService.getExportActionableDynamicQuery(

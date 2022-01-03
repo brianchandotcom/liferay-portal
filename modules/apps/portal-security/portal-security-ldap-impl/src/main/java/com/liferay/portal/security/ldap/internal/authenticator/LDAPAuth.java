@@ -19,7 +19,6 @@ import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PasswordExpiredException;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.UserLockoutException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -739,7 +738,7 @@ public class LDAPAuth implements Authenticator {
 
 	private long _getPreferredLDAPServer(
 			long companyId, String emailAddress, String screenName, long userId)
-		throws PortalException {
+		throws Exception {
 
 		User user = null;
 

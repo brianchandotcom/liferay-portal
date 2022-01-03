@@ -390,7 +390,7 @@ public class WikiPageIndexer
 		}
 	}
 
-	private void _reindexAttachments(WikiPage wikiPage) throws PortalException {
+	private void _reindexAttachments(WikiPage wikiPage) throws Exception {
 		Indexer<DLFileEntry> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			DLFileEntry.class);
 
@@ -425,7 +425,7 @@ public class WikiPageIndexer
 		}
 	}
 
-	private void _reindexNodes(long companyId) throws PortalException {
+	private void _reindexNodes(long companyId) throws Exception {
 		ActionableDynamicQuery actionableDynamicQuery =
 			_wikiNodeLocalService.getActionableDynamicQuery();
 

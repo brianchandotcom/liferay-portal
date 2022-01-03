@@ -154,7 +154,7 @@ public class ActionUtil {
 			HttpServletRequest httpServletRequest,
 			PortletPreferences portletConfigPortletSetup,
 			PortletPreferences portletSetup)
-		throws PortalException {
+		throws Exception {
 
 		String portletResource = ParamUtil.getString(
 			httpServletRequest, "portletResource");

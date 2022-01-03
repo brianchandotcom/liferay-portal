@@ -16,7 +16,6 @@ package com.liferay.nested.portlets.web.internal.portlet.action;
 
 import com.liferay.nested.portlets.web.internal.constants.NestedPortletsPortletKeys;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTemplate;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
@@ -139,7 +138,7 @@ public class NestedPortletsConfigurationAction
 	private void _reorganizeNestedColumns(
 			ActionRequest actionRequest, String portletResource,
 			String newLayoutTemplateId, String oldLayoutTemplateId)
-		throws PortalException {
+		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);

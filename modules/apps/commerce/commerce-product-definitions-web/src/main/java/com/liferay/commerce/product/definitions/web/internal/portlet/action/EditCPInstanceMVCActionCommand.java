@@ -250,15 +250,15 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 
 		_updateCommercePriceEntry(
 			cpInstance, CommercePriceListConstants.TYPE_PRICE_LIST, price,
-			promoPrice, serviceContext);
+			serviceContext);
 		_updateCommercePriceEntry(
-			cpInstance, CommercePriceListConstants.TYPE_PROMOTION, price,
-			promoPrice, serviceContext);
+			cpInstance, CommercePriceListConstants.TYPE_PROMOTION, promoPrice,
+			serviceContext);
 	}
 
 	private void _updateCommercePriceEntry(
 			CPInstance cpInstance, String type, BigDecimal price,
-			BigDecimal promoPrice, ServiceContext serviceContext)
+			ServiceContext serviceContext)
 		throws Exception {
 
 		CommercePriceList commercePriceList =
@@ -278,12 +278,12 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 
 			_commercePriceEntryLocalService.addCommercePriceEntry(
 				cpDefinition.getCProductId(), cpInstance.getCPInstanceUuid(),
-				commercePriceList.getCommercePriceListId(), price, promoPrice,
+				commercePriceList.getCommercePriceListId(), price, null,
 				serviceContext);
 		}
 		else {
 			_commercePriceEntryLocalService.updateCommercePriceEntry(
-				commercePriceEntry.getCommercePriceEntryId(), price, promoPrice,
+				commercePriceEntry.getCommercePriceEntryId(), price, null,
 				serviceContext);
 		}
 	}

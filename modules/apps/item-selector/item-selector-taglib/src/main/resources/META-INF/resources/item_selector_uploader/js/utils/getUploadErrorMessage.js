@@ -12,58 +12,7 @@
  * details.
  */
 
-const noop = () => {};
-
-function parse(req) {
-	var result;
-	try {
-		result = JSON.parse(req.responseText);
-	}
-	catch (error) {
-		result = req.responseText;
-	}
-
-	return result;
-}
-
-function sendFile({
-	file,
-	fileFieldName = 'imageSelectorFileName',
-	onProgress = noop,
-	onSuccess = noop,
-	onError = noop,
-	url,
-}) {
-	const formData = new FormData();
-	const request = new XMLHttpRequest();
-
-	request.upload.addEventListener('progress', (event) => {
-		onProgress(Math.round((event.loaded * 100) / event.total));
-	});
-
-	request.addEventListener('readystatechange', () => {
-		if (request.readyState === 4) {
-			const response = parse(request);
-
-			onProgress(null);
-
-			if (request.status >= 200 && request.status < 300) {
-				onSuccess(response);
-			}
-			else {
-				onError(response);
-			}
-		}
-	});
-
-	formData.append(fileFieldName, file);
-	request.open('POST', url);
-	request.send(formData);
-
-	return request;
-}
-
-function getUploadErrorMessage(error, maxFileSize) {
+export default function getUploadErrorMessage(error, maxFileSize) {
 	let message = Liferay.Language.get(
 		'an-unexpected-error-occurred-while-uploading-your-file'
 	);
@@ -133,5 +82,3 @@ function getUploadErrorMessage(error, maxFileSize) {
 
 	return message;
 }
-
-export {parse, sendFile, getUploadErrorMessage};

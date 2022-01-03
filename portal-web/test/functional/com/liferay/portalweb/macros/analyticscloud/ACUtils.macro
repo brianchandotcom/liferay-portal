@@ -396,10 +396,10 @@ definition {
 	}
 
 	macro closeAllSessions {
-		var analyticsCloudAsahCuratorURL = PropsUtil.get("analytics.cloud.asah.curator.url");
+		var analyticsCloudAsahCuratorBatchURL = PropsUtil.get("analytics.cloud.asah.curator.batch.url");
 
 		var cleanCurl = '''
-			${analyticsCloudAsahCuratorURL}/admin/sessions/close \
+			${analyticsCloudAsahCuratorBatchURL}/admin/sessions/close \
 			-H 'Content-Type: application/json' \
 			-H 'osb-asah-project-id: osbasah'
 		''';

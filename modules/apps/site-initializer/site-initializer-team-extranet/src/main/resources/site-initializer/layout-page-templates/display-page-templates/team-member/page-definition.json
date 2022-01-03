@@ -6,8 +6,7 @@
 					"fragment": {
 						"key": "member-header"
 					},
-					"fragmentConfig": {
-					},
+					"fragmentConfig": {},
 					"fragmentFields": [
 						{
 							"id": "memberImage",
@@ -23,8 +22,7 @@
 									}
 								},
 								"fragmentLink": {
-									"value_i18n": {
-									}
+									"value_i18n": {}
 								}
 							}
 						}
@@ -90,8 +88,7 @@
 									"id": "element-text",
 									"value": {
 										"fragmentLink": {
-											"value_i18n": {
-											}
+											"value_i18n": {}
 										},
 										"text": {
 											"mapping": {
@@ -124,8 +121,7 @@
 									"id": "element-text",
 									"value": {
 										"fragmentLink": {
-											"value_i18n": {
-											}
+											"value_i18n": {}
 										},
 										"text": {
 											"mapping": {
@@ -187,15 +183,13 @@
 									"fragment": {
 										"key": "text-block"
 									},
-									"fragmentConfig": {
-									},
+									"fragmentConfig": {},
 									"fragmentFields": [
 										{
 											"id": "element-text",
 											"value": {
 												"fragmentLink": {
-													"value_i18n": {
-													}
+													"value_i18n": {}
 												},
 												"text": {
 													"value_i18n": {
@@ -213,15 +207,13 @@
 									"fragment": {
 										"key": "text-block"
 									},
-									"fragmentConfig": {
-									},
+									"fragmentConfig": {},
 									"fragmentFields": [
 										{
 											"id": "element-text",
 											"value": {
 												"fragmentLink": {
-													"value_i18n": {
-													}
+													"value_i18n": {}
 												},
 												"text": {
 													"mapping": {
@@ -249,15 +241,13 @@
 							"fragment": {
 								"key": "text-block"
 							},
-							"fragmentConfig": {
-							},
+							"fragmentConfig": {},
 							"fragmentFields": [
 								{
 									"id": "element-text",
 									"value": {
 										"fragmentLink": {
-											"value_i18n": {
-											}
+											"value_i18n": {}
 										},
 										"text": {
 											"mapping": {
@@ -374,8 +364,7 @@
 										},
 										{
 											"id": "portraitMobile",
-											"rowViewportDefinition": {
-											}
+											"rowViewportDefinition": {}
 										},
 										{
 											"id": "tablet",
@@ -397,8 +386,7 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {
-													},
+													"columnViewportDefinition": {},
 													"id": "portraitMobile"
 												},
 												{
@@ -453,8 +441,7 @@
 																	"id": "element-text",
 																	"value": {
 																		"fragmentLink": {
-																			"value_i18n": {
-																			}
+																			"value_i18n": {}
 																		},
 																		"text": {
 																			"value_i18n": {
@@ -492,8 +479,7 @@
 																	"id": "element-text",
 																	"value": {
 																		"fragmentLink": {
-																			"value_i18n": {
-																			}
+																			"value_i18n": {}
 																		},
 																		"text": {
 																			"mapping": {
@@ -536,8 +522,7 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {
-													},
+													"columnViewportDefinition": {},
 													"id": "portraitMobile"
 												},
 												{
@@ -563,8 +548,7 @@
 															"id": "link",
 															"value": {
 																"fragmentLink": {
-																	"value_i18n": {
-																	}
+																	"value_i18n": {}
 																},
 																"text": {
 																	"value_i18n": {
@@ -580,6 +564,7 @@
 													"fragmentViewports": [
 														{
 															"fragmentViewportStyle": {
+																"textAlign": "left"
 															},
 															"id": "tablet"
 														}
@@ -612,8 +597,7 @@
 								"pageElements": [
 									{
 										"definition": {
-											"collectionItemConfig": {
-											}
+											"collectionItemConfig": {}
 										},
 										"pageElements": [
 											{
@@ -621,8 +605,7 @@
 													"fragment": {
 														"key": "entry-card"
 													},
-													"fragmentConfig": {
-													},
+													"fragmentConfig": {},
 													"fragmentFields": [
 														{
 															"id": "image",
@@ -648,8 +631,7 @@
 																			}
 																		}
 																	},
-																	"value_i18n": {
-																	}
+																	"value_i18n": {}
 																}
 															}
 														},
@@ -657,8 +639,7 @@
 															"id": "author",
 															"value": {
 																"fragmentLink": {
-																	"value_i18n": {
-																	}
+																	"value_i18n": {}
 																},
 																"text": {
 																	"mapping": {
@@ -674,8 +655,7 @@
 															"id": "category",
 															"value": {
 																"fragmentLink": {
-																	"value_i18n": {
-																	}
+																	"value_i18n": {}
 																},
 																"text": {
 																	"mapping": {
@@ -701,8 +681,7 @@
 																			}
 																		}
 																	},
-																	"value_i18n": {
-																	}
+																	"value_i18n": {}
 																},
 																"text": {
 																	"mapping": {

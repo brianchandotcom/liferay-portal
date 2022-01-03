@@ -1,6 +1,12 @@
 [
 	{
 		"cpDefinitionExternalReferenceCode": "RAY004",
+		"cpInstanceSku": "INSTALLMENT",
+		"deliveryMaxSubscriptionCycles": 0,
+		"deliverySubscriptionEnabled": false,
+		"deliverySubscriptionLength": 1,
+		"deliverySubscriptionType": "daily",
+		"maxSubscriptionCycles": 2,
 		"optionName": "Raylife Option",
 		"overrideSubscriptionInfo": true,
 		"subscriptionEnabled": true,
@@ -9,11 +15,6 @@
 		"subscriptionTypeSettings": {
 			"monthDay": "1",
 			"monthlyMode": "0"
-		},
-		"maxSubscriptionCycles": 2,
-		"deliverySubscriptionEnabled": false,
-		"deliverySubscriptionLength": 1,
-		"deliverySubscriptionType": "daily",
-		"deliveryMaxSubscriptionCycles": 0
+		}
 	}
 ]

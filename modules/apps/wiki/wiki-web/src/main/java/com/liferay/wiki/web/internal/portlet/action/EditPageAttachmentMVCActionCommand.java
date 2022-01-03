@@ -76,8 +76,6 @@ import java.util.Map;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -183,7 +181,7 @@ public class EditPageAttachmentMVCActionCommand extends BaseMVCActionCommand {
 		}
 		catch (Exception exception) {
 			_handleUploadException(
-				portletConfig, actionRequest, actionResponse, cmd, exception);
+				actionRequest, actionResponse, cmd, exception);
 		}
 	}
 
@@ -256,11 +254,7 @@ public class EditPageAttachmentMVCActionCommand extends BaseMVCActionCommand {
 	 * TODO: Remove. This should extend from EditFileEntryAction once it is
 	 * modularized.
 	 */
-	private String[] _getAllowedFileExtensions(
-			PortletConfig portletConfig, PortletRequest portletRequest,
-			PortletResponse portletResponse)
-		throws Exception {
-
+	private String[] _getAllowedFileExtensions() throws Exception {
 		return _dlConfiguration.fileExtensions();
 	}
 
@@ -269,8 +263,8 @@ public class EditPageAttachmentMVCActionCommand extends BaseMVCActionCommand {
 	 * modularized.
 	 */
 	private void _handleUploadException(
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse, String cmd, Exception exception)
+			ActionRequest actionRequest, ActionResponse actionResponse,
+			String cmd, Exception exception)
 		throws Exception {
 
 		if (exception instanceof AssetCategoryException ||
@@ -349,9 +343,7 @@ public class EditPageAttachmentMVCActionCommand extends BaseMVCActionCommand {
 				else if (exception instanceof FileExtensionException) {
 					errorMessage = themeDisplay.translate(
 						"please-enter-a-file-with-a-valid-extension-x",
-						StringUtil.merge(
-							_getAllowedFileExtensions(
-								portletConfig, actionRequest, actionResponse)));
+						StringUtil.merge(_getAllowedFileExtensions()));
 					errorType =
 						ServletResponseConstants.SC_FILE_EXTENSION_EXCEPTION;
 				}

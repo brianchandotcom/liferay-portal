@@ -676,7 +676,7 @@ public class WabBundleProcessor {
 
 					if (Validator.isNotNull(fqcn)) {
 						_processServletContainerInitializerClass(
-							fqcn, bundle, bundleWiring, servletContext, classes,
+							fqcn, bundle, servletContext, classes,
 							annotatedClasses);
 					}
 				}
@@ -760,9 +760,8 @@ public class WabBundleProcessor {
 	}
 
 	private void _processServletContainerInitializerClass(
-		String fqcn, Bundle bundle, BundleWiring bundleWiring,
-		ServletContext servletContext, Set<Class<?>> classes,
-		Set<Class<?>> annotatedClasses) {
+		String fqcn, Bundle bundle, ServletContext servletContext,
+		Set<Class<?>> classes, Set<Class<?>> annotatedClasses) {
 
 		Class<? extends ServletContainerInitializer> initializerClass = null;
 

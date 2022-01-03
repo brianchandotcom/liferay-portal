@@ -235,7 +235,7 @@ public class JspCompiler extends Jsr199JavaCompiler {
 
 		jspCompilationContext.setClassLoader(jspBundleClassloader);
 
-		_initClassPath(servletContext);
+		_initClassPath();
 		initTLDMappings(
 			servletContext, jspCompilationContext.getTagFileJarUrls());
 
@@ -447,7 +447,7 @@ public class JspCompiler extends Jsr199JavaCompiler {
 		}
 	}
 
-	private void _initClassPath(ServletContext servletContext) {
+	private void _initClassPath() {
 		if (System.getSecurityManager() != null) {
 			AccessController.doPrivileged(
 				new PrivilegedAction<Void>() {

@@ -463,10 +463,7 @@ public class WabProcessor {
 			analyzer, Constants.REQUIRE_CAPABILITY, _CDI_REQUIREMENTS);
 	}
 
-	private void _processBundleClasspath(
-			Analyzer analyzer, Properties pluginPackageProperties)
-		throws IOException {
-
+	private void _processBundleClasspath(Analyzer analyzer) throws IOException {
 		_appendProperty(
 			analyzer, Constants.BUNDLE_CLASSPATH, "ext/WEB-INF/classes");
 
@@ -578,8 +575,8 @@ public class WabProcessor {
 
 		_processPropertiesDependencies(
 			analyzer, classes, ".properties", _KNOWN_PROPERTY_KEYS);
-		_processXMLDependencies(analyzer, classes, ".xml", _XPATHS_HBM);
-		_processXMLDependencies(analyzer, classes, ".xml", _XPATHS_SPRING);
+		_processXMLDependencies(analyzer, classes, ".xml");
+		_processXMLDependencies(analyzer, classes, ".xml");
 	}
 
 	private void _processDefaultServletPackages() {
@@ -1231,7 +1228,7 @@ public class WabProcessor {
 	}
 
 	private void _processXMLDependencies(
-			Analyzer analyzer, Path path, String suffix, String xPathExpression)
+			Analyzer analyzer, Path path, String suffix)
 		throws IOException {
 
 		File file = path.toFile();
@@ -1326,7 +1323,7 @@ public class WabProcessor {
 			}
 
 			_processBundleVersion(analyzer);
-			_processBundleClasspath(analyzer, pluginPackageProperties);
+			_processBundleClasspath(analyzer);
 			_processBundleSymbolicName(analyzer);
 			_processExtraHeaders(analyzer);
 			_processPluginPackagePropertiesExportImportPackages(

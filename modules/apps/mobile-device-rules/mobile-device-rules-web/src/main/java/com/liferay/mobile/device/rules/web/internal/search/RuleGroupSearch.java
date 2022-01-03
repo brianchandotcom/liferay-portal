@@ -69,13 +69,12 @@ public class RuleGroupSearch extends SearchContainer<MDRRuleGroup> {
 			portletRequest, MDRPortletKeys.MOBILE_DEVICE_RULES,
 			"rule-group-search-order-by-type", "asc");
 
-		setOrderByComparator(
-			_getOrganizationOrderByComparator(orderByCol, orderByType));
+		setOrderByComparator(_getOrganizationOrderByComparator(orderByType));
 		setOrderByType(orderByType);
 	}
 
 	private OrderByComparator<MDRRuleGroup> _getOrganizationOrderByComparator(
-		String orderByCol, String orderByType) {
+		String orderByType) {
 
 		boolean orderByAsc = false;
 

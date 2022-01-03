@@ -89,14 +89,12 @@ public class UserModelPreFilterContributor
 				}
 			}
 
-			_addContextQueryParams(
-				contextBooleanFilter, searchContext, entry.getKey(), value);
+			_addContextQueryParams(contextBooleanFilter, entry.getKey(), value);
 		}
 	}
 
 	private void _addContextQueryParams(
-		BooleanFilter contextFilter, SearchContext searchContext, String key,
-		Object value) {
+		BooleanFilter contextFilter, String key, Object value) {
 
 		if (key.equals("usersGroups")) {
 			if (value instanceof Long[]) {

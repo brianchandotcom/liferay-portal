@@ -53,9 +53,7 @@ public class UpgradePortletPreferences
 		return PortletPreferencesFactoryUtil.toXML(portletPreferences);
 	}
 
-	private String _getEmailSignatureSeparator(
-		PortletPreferences portletPreferences) {
-
+	private String _getEmailSignatureSeparator() {
 		return StringPool.NEW_LINE;
 	}
 
@@ -72,8 +70,7 @@ public class UpgradePortletPreferences
 			String emailMessageBody = portletPreferences.getValue(
 				emailMessageBodyPortletPreferencesKey, StringPool.BLANK);
 
-			String signatureSeparator = _getEmailSignatureSeparator(
-				portletPreferences);
+			String signatureSeparator = _getEmailSignatureSeparator();
 
 			emailMessageBody += signatureSeparator + emailMessageSignature;
 

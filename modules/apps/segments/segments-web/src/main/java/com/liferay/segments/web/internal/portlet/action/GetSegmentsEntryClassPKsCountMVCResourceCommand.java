@@ -68,7 +68,7 @@ public class GetSegmentsEntryClassPKsCountMVCResourceCommand
 		try {
 			PrintWriter printWriter = resourceResponse.getWriter();
 
-			printWriter.write(_getText(resourceRequest, resourceResponse));
+			printWriter.write(_getText(resourceRequest));
 
 			return false;
 		}
@@ -114,9 +114,7 @@ public class GetSegmentsEntryClassPKsCountMVCResourceCommand
 		}
 	}
 
-	private String _getText(
-		ResourceRequest resourceRequest, ResourceResponse resourceResponse) {
-
+	private String _getText(ResourceRequest resourceRequest) {
 		HttpServletRequest httpServletRequest =
 			_portal.getOriginalServletRequest(
 				_portal.getHttpServletRequest(resourceRequest));

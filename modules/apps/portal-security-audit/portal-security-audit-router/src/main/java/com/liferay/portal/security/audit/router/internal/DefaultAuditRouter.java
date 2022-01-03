@@ -148,7 +148,7 @@ public class DefaultAuditRouter implements AuditRouter {
 		AuditMessageProcessor auditMessageProcessor,
 		Map<String, Object> properties) {
 
-		String[] eventTypes = _getEventTypes(auditMessageProcessor, properties);
+		String[] eventTypes = _getEventTypes(properties);
 
 		if ((eventTypes.length == 1) && eventTypes[0].equals(StringPool.STAR)) {
 			_globalAuditMessageProcessors.add(auditMessageProcessor);
@@ -175,7 +175,7 @@ public class DefaultAuditRouter implements AuditRouter {
 		AuditMessageProcessor auditMessageProcessor,
 		Map<String, Object> properties) {
 
-		String[] eventTypes = _getEventTypes(auditMessageProcessor, properties);
+		String[] eventTypes = _getEventTypes(properties);
 
 		if ((eventTypes.length == 1) && eventTypes[0].equals(StringPool.STAR)) {
 			_globalAuditMessageProcessors.remove(auditMessageProcessor);
@@ -195,10 +195,7 @@ public class DefaultAuditRouter implements AuditRouter {
 		}
 	}
 
-	private String[] _getEventTypes(
-		AuditMessageProcessor auditMessageProcessor,
-		Map<String, Object> properties) {
-
+	private String[] _getEventTypes(Map<String, Object> properties) {
 		String eventTypes = (String)properties.get(AuditConstants.EVENT_TYPES);
 
 		if (Validator.isNull(eventTypes)) {

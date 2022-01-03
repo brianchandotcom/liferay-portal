@@ -171,7 +171,7 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 			actionRequest, "settingsScope");
 
 		PortletPreferences portletPreferences = _getPortletPreferences(
-			themeDisplay, portlet.getPortletId(), settingsScope);
+			themeDisplay, portlet.getPortletId());
 
 		actionRequest = ActionUtil.getWrappedActionRequest(
 			actionRequest, portletPreferences);
@@ -213,7 +213,7 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 			actionRequest, "settingsScope");
 
 		PortletPreferences portletPreferences = _getPortletPreferences(
-			themeDisplay, portlet.getPortletId(), settingsScope);
+			themeDisplay, portlet.getPortletId());
 
 		if (portletPreferences == null) {
 			portletPreferences = ActionUtil.getLayoutPortletSetup(
@@ -614,7 +614,7 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 					"settingsScope");
 
 				PortletPreferences portletPreferences = _getPortletPreferences(
-					themeDisplay, portlet.getPortletId(), settingsScope);
+					themeDisplay, portlet.getPortletId());
 
 				renderRequest = ActionUtil.getWrappedRenderRequest(
 					renderRequest, portletPreferences);
@@ -855,8 +855,7 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 		return new Tuple(scopeGroupId, scopeName);
 	}
 
-	private String _getOldScopeName(
-			ActionRequest actionRequest, Portlet portlet)
+	private String _getOldScopeName(ActionRequest actionRequest)
 		throws Exception {
 
 		PortletPreferences portletPreferences = actionRequest.getPreferences();
@@ -900,7 +899,7 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 	}
 
 	private PortletPreferences _getPortletPreferences(
-			ThemeDisplay themeDisplay, String portletId, String settingsScope)
+			ThemeDisplay themeDisplay, String portletId)
 		throws PortalException {
 
 		Layout layout = themeDisplay.getLayout();
@@ -1033,7 +1032,7 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 	private void _updateScope(ActionRequest actionRequest, Portlet portlet)
 		throws Exception {
 
-		String oldScopeName = _getOldScopeName(actionRequest, portlet);
+		String oldScopeName = _getOldScopeName(actionRequest);
 
 		PortletPreferences portletPreferences = actionRequest.getPreferences();
 

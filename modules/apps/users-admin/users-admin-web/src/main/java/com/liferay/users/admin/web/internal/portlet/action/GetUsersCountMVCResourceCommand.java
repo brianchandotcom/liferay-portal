@@ -57,7 +57,7 @@ public class GetUsersCountMVCResourceCommand implements MVCResourceCommand {
 		try {
 			PrintWriter printWriter = resourceResponse.getWriter();
 
-			printWriter.write(_getText(resourceRequest, resourceResponse));
+			printWriter.write(_getText(resourceRequest));
 
 			return false;
 		}
@@ -88,10 +88,7 @@ public class GetUsersCountMVCResourceCommand implements MVCResourceCommand {
 		return count;
 	}
 
-	private String _getText(
-			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
-		throws Exception {
-
+	private String _getText(ResourceRequest resourceRequest) throws Exception {
 		HttpServletRequest httpServletRequest =
 			_portal.getOriginalServletRequest(
 				_portal.getHttpServletRequest(resourceRequest));

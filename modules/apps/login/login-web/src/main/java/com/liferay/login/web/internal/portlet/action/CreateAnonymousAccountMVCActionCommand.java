@@ -139,7 +139,7 @@ public class CreateAnonymousAccountMVCActionCommand
 
 		try {
 			if (cmd.equals(Constants.ADD)) {
-				_addAnonymousUser(actionRequest, actionResponse);
+				_addAnonymousUser(actionRequest);
 
 				sendRedirect(
 					actionRequest, actionResponse, portletURL.toString());
@@ -271,8 +271,7 @@ public class CreateAnonymousAccountMVCActionCommand
 			});
 	}
 
-	private void _addAnonymousUser(
-			ActionRequest actionRequest, ActionResponse actionResponse)
+	private void _addAnonymousUser(ActionRequest actionRequest)
 		throws Exception {
 
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(

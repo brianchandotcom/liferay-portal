@@ -27,16 +27,19 @@
     <td>CARET_LEFT_ICON</td>
     <td>//div[contains(@class, 'calendar-portlet-column-toggler')]</td>
     <td></td>
+	<td>CARET_LEFT_ICON</td>
+	<td>//div[contains(@class, 'calendar-portlet-column-toggler')]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>LEFT_SIDE_BAR</td>
-    <td>//div[contains(@class, 'calendar-portlet-column-options')]</td>
-    <td></td>
+	<td>LEFT_SIDE_BAR</td>
+	<td>//div[contains(@class, 'calendar-portlet-column-options')]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>LEFT_SIDE_BAR_HIDE</td>
-    <td>//div[contains(@class, 'calendar-portlet-column-options hide')]</td>
-    <td></td>
+	<td>LEFT_SIDE_BAR_HIDE</td>
+	<td>//div[contains(@class, 'calendar-portlet-column-options hide')]</td>
+	<td></td>
 </tr>
 
 </tbody>

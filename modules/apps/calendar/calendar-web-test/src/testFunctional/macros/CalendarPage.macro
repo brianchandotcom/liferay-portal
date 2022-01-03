@@ -61,23 +61,17 @@ definition {
 		AssertElementPresent(locator1 = "Calendar#SCHEDULER_VIEW_WEEK_CURRENT_DAY");
 	}
 	var siteName = "Liferay";
-    
-    macro viewLeftSideBar {
-        
-        AssertElementPresent(locator1 = "CalendarPage#LEFT_SIDE_BAR");
 
-    }
+	macro clickCaretLeftIcon {
+		Click(locator1 = "CalendarPage#CARET_LEFT_ICON");
+	}
 
-    macro viewLeftSideBarHide {
-        
-        AssertElementPresent(locator1 = "CalendarPage#LEFT_SIDE_BAR_HIDE");
+	macro viewLeftSideBar {
+		AssertElementPresent(locator1 = "CalendarPage#LEFT_SIDE_BAR");
+	}
 
-    }
-
-    macro clickCaretLeftIcon {
-        
-        Click(locator1 = "CalendarPage#CARET_LEFT_ICON");
-
-    }
+	macro viewLeftSideBarHide {
+		AssertElementPresent(locator1 = "CalendarPage#LEFT_SIDE_BAR_HIDE");
+	}
 
 }

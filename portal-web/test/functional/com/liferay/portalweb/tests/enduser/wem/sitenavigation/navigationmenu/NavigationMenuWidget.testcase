@@ -201,9 +201,7 @@ definition {
 		}
 
 		task ("Rename the second page") {
-			Page.editName(pageNameEdit = "Test Page Name 2 Edit");
-
-			Alert.viewSuccessMessage();
+			PagesAdmin.editName(pageNameEdit = "Test Page Name 2 Edit");
 		}
 
 		task ("Add a Blogs widget to the second page") {

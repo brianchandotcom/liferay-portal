@@ -643,6 +643,14 @@ definition {
 		PortletEntry.save();
 	}
 
+	macro editName {
+		Navigator.gotoNavTab(navTab = "General");
+
+		PortletEntry.inputName(name = "${pageNameEdit}");
+
+		PortletEntry.save();
+	}
+
 	macro expandPageTree {
 		if (!(isSet(depth))) {
 			var depth = "1";

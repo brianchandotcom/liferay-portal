@@ -204,9 +204,7 @@ definition {
 		task ("Modify the page name") {
 			Navigator.gotoEditPageViaControlMenu(pageName = "Test Page Name");
 
-			Page.editName(pageNameEdit = "New Test Page Name");
-
-			Alert.viewSuccessMessage();
+			PagesAdmin.editName(pageNameEdit = "New Test Page Name");
 		}
 
 		task ("Assert the elements are still shown in view mode") {

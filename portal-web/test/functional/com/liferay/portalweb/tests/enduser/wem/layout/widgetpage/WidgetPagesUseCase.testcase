@@ -192,7 +192,7 @@ definition {
 
 			Navigator.gotoEditPageViaControlMenu(pageName = "Test Page Name");
 
-			Page.editName(pageNameEdit = "Test Page Name Edit");
+			PagesAdmin.editName(pageNameEdit = "Test Page Name Edit");
 		}
 
 		task ("View the edited name in pages admin") {

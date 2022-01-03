@@ -115,74 +115,7 @@ List<SiteNavigationMenu> autoSiteNavigationMenus = layoutsAdminDisplayContext.ge
 	</liferay-frontend:edit-form>
 </clay:container-fluid>
 
-<aui:script>
-	var addButton = document.getElementById('<portlet:namespace />addButton');
-
-	var form = document.<portlet:namespace />fm;
-
-	form.addEventListener('submit', (event) => {
-		event.preventDefault();
-		event.stopPropagation();
-
-		if (addButton.disabled) {
-			return;
-		}
-
-		addButton.disabled = true;
-
-		var formData = new FormData();
-
-		formData.append('p_auth', Liferay.authToken);
-
-		formActionURL = new URL(form.action);
-
-		formActionURL.searchParams.delete('p_auth');
-
-		form.action = formActionURL;
-
-		Array.prototype.slice
-			.call(form.querySelectorAll('input'))
-			.forEach((input) => {
-				if (input.type == 'checkbox' && !input.checked) {
-					return;
-				}
-
-				if (input.name && input.value) {
-					formData.append(input.name, input.value);
-				}
-			});
-
-		Liferay.Util.fetch(form.action, {
-			body: formData,
-			method: 'POST',
-		})
-			.then((response) => {
-				return response.json();
-			})
-			.then((response) => {
-				if (response.redirectURL) {
-					var redirectURL = new URL(
-						response.redirectURL,
-						window.location.origin
-					);
-
-					redirectURL.searchParams.set('p_p_state', 'normal');
-
-					var opener = Liferay.Util.getOpener();
-
-					opener.Liferay.fire('closeModal', {
-						id: '<portlet:namespace />addLayoutDialog',
-						redirect: redirectURL.toString(),
-					});
-				}
-				else {
-					Liferay.Util.openToast({
-						message: response.errorMessage,
-						type: 'danger',
-					});
-
-					addButton.disabled = false;
-				}
-			});
-	});
-</aui:script>
+<liferay-frontend:component
+	componentId='<%= liferayPortletResponse.getNamespace() + "addLayout" %>'
+	module="js/AddLayout"
+/>

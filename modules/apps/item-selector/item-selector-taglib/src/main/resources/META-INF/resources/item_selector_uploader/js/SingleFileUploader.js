@@ -18,6 +18,7 @@ import ClayLayout from '@clayui/layout';
 import ClayProgressBar from '@clayui/progress-bar';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
 import React, {useEffect, useMemo, useState} from 'react';
 import {ErrorCode, useDropzone} from 'react-dropzone';
 
@@ -31,10 +32,11 @@ function SingleFileUploader({
 	closeCaption,
 	editImageURL,
 	itemSelectedEventName,
-	maxFileSize: initialMaxFileSizeString,
+	maxFileSize: initialMaxFileSizeString = Liferay.PropsValues
+		.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE,
 	uploadItemReturnType,
 	uploadItemURL,
-	validExtensions,
+	validExtensions = '*',
 }) {
 	const [abort, setAbort] = useState(null);
 	const [errorAnimation, setErrorAnimation] = useState(false);
@@ -218,5 +220,15 @@ function SingleFileUploader({
 		</>
 	);
 }
+
+SingleFileUploader.propTypes = {
+	closeCaption: PropTypes.string.isRequired,
+	editImageURL: PropTypes.string,
+	itemSelectedEventName: PropTypes.string.isRequired,
+	maxFileSize: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+	uploadItemReturnType: PropTypes.string.isRequired,
+	uploadItemURL: PropTypes.string.isRequired,
+	validExtensions: PropTypes.string,
+};
 
 export default SingleFileUploader;

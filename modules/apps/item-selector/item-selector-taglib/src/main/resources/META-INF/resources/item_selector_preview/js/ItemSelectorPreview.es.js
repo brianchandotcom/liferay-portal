@@ -263,7 +263,7 @@ const ItemSelectorPreview = ({
 ItemSelectorPreview.propTypes = {
 	container: PropTypes.instanceOf(Element),
 	currentIndex: PropTypes.number,
-	editItemURL: PropTypes.string,
+	editImageURL: PropTypes.string,
 	handleSelectedItem: PropTypes.func.isRequired,
 	headerTitle: PropTypes.string.isRequired,
 	itemReturnType: PropTypes.string,

@@ -165,7 +165,7 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 			resourcePrimKeys = new ArrayList<>(resourcePrimKeys);
 
 			resourcePrimKeys.addAll(
-				_journalArticleLocalService.getDefaultDisplayPageClassPKs(
+				_journalArticleLocalService.getArticlesClassPKsWithDefaultDisplayPage(
 					layoutPageTemplateEntry.getGroupId(),
 					layoutPageTemplateEntry.getClassTypeId()));
 		}

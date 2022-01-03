@@ -15,6 +15,9 @@
 package com.liferay.portal.kernel.upgrade;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess.AlterColumnName;
+import com.liferay.portal.kernel.util.Props;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Arrays;
@@ -24,6 +27,10 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import org.mockito.Mockito;
+
+import org.powermock.api.mockito.PowerMockito;
+
 /**
  * @author Mariano Álvaro Sáiz
  */
@@ -31,6 +38,8 @@ public class UpgradeProcessTest {
 
 	@Before
 	public void setUp() {
+		_mockPropsUtil();
+
 		_upgradeProcess = new UpgradeProcess() {
 
 			@Override
@@ -111,6 +120,24 @@ public class UpgradeProcessTest {
 			alterColumnName.shouldDropIndex(_oldIndexColumnNames));
 	}
 
+	private void _mockPropsUtil() {
+		Props props = PowerMockito.mock(Props.class);
+
+		Mockito.when(
+			props.get(PropsKeys.UPGRADE_CONCURRENT_PROCESS_FUTURE_LIST_MAX_SIZE)
+		).thenReturn(
+			_UPGRADE_CONCURRENT_PROCESS_FUTURE_LIST_MAX_SIZE_DEFAULT_VALUE
+		);
+
+		Mockito.when(
+			props.get(PropsKeys.UPGRADE_JDBC_RESULT_SET_FETCH_SIZE)
+		).thenReturn(
+			_UPGRADE_JDBC_RESULT_SET_FETCH_SIZE_DEFAULT_VALUE
+		);
+
+		PropsUtil.setProps(props);
+	}
+
 	private static final String _NEW_COLUMN =
 		UpgradeProcessTest._NEW_COLUMN_NAME + " VARCHAR2(30) NOT NULL";
 
@@ -125,6 +152,12 @@ public class UpgradeProcessTest {
 		"oldNotIndexColumn";
 
 	private static final String _TABLE_NAME = "Table";
+
+	private static final String
+		_UPGRADE_CONCURRENT_PROCESS_FUTURE_LIST_MAX_SIZE_DEFAULT_VALUE = "1000";
+
+	private static final String
+		_UPGRADE_JDBC_RESULT_SET_FETCH_SIZE_DEFAULT_VALUE = "1000";
 
 	private static final List<String> _newIndexColumnNames = Arrays.asList(
 		"newColumn1", _NEW_COLUMN_NAME, "newColumn2");

@@ -11,6 +11,7 @@ definition {
 		User.firstLoginPG();
 
 		//Raylife.createRaylifeSite(siteName = "Raylife");
+
 	}
 
 	tearDown {
@@ -20,10 +21,45 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-		//	Raylife.tearDownCP();
+
+			//	Raylife.tearDownCP();
 
 			User.logoutPG();
 		}
+	}
+
+	@description = "LPS-144329 - Verify if clicking on the button to go back and edit information returns you to the property page"
+	@priority = "4"
+	test CanGoToPropertyPageByEditButton {
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
+
+		RaylifeHomePage.startFlow();
+
+		RaylifeContactInfo.typeAllBasicsInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeBusiness.typeAllBusinessInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeEmployees.typeAllEmployeesInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeProperty.typeAllPropertyInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		Click(locator1 = "Raylife#BTN_BACK_TO_EDIT_INFO_QUOTE_PAGE");
+
+		AssertElementPresent(locator1 = "RaylifeProperty#PROPERTY_PAGE");
+
+		Click(
+			locator1 = "RaylifeNavigation#SECTION_COMPLETED",
+			section = "Basics");
+
+		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 	}
 
 	@description = "LPS-142603 - Verify if Quote Profile Info panel is shown"
@@ -314,37 +350,4 @@ definition {
 		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 	}
 
-	@description = "LPS-144329 - Verify if clicking on the button to go back and edit information returns you to the property page"
-	@priority = "4"
-	test CanGoToPropertyPageByEditButton {
-		ApplicationsMenu.gotoSite(key_site = "Raylife");
-
-		RaylifeHomePage.startFlow();
-
-		RaylifeContactInfo.typeAllBasicsInfoFields();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
-
-		RaylifeBusiness.typeAllBusinessInfoFields();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
-
-		RaylifeEmployees.typeAllEmployeesInfoFields();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
-
-		RaylifeProperty.typeAllPropertyInfoFields();
-
-		Click(locator1 = "Raylife#BUTTON_CONTINUE");
-
-		Click(locator1 = "Raylife#BTN_BACK_TO_EDIT_INFO_QUOTE_PAGE");
-
-		AssertElementPresent(locator1 = "RaylifeProperty#PROPERTY_PAGE");
-
-		Click(
-			locator1 = "RaylifeNavigation#SECTION_COMPLETED",
-			section = "Basics");
-
-		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
-	}
 }

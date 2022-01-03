@@ -21,9 +21,9 @@
 	<td></td>
 </tr>
 <tr>
-    <td>PROPERTY_PAGE</td>
-    <td>//h2[contains(text(), 'More about')]</td>
-    <td></td>
+	<td>PROPERTY_PAGE</td>
+	<td>//h2[contains(text(), 'More about')]</td>
+	<td></td>
 </tr>
 </tbody>
 </table>

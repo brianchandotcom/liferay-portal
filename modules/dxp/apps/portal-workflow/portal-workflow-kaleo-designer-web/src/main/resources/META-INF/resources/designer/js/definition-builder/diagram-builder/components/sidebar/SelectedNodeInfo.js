@@ -21,9 +21,8 @@ import SidebarPanel from './SidebarPanel';
 import {isIdDuplicated} from './utils';
 
 export default function SelectedNodeInfo({errors, setErrors}) {
-	const {selectedLanguageId} = useContext(DefinitionBuilderContext);
+	const {elements, selectedLanguageId} = useContext(DefinitionBuilderContext);
 	const {
-		elements,
 		selectedItem,
 		selectedItemNewId,
 		setSelectedItem,

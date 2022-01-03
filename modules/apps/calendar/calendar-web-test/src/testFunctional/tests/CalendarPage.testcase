@@ -167,11 +167,14 @@ definition {
 	}
 
 	@description = "LRQA-72024 - Verify that the user can hide/show the sidebar"
-	@ignore = "Test Stub"
 	@priority = "2"
 	test CanHideShowSidebar {
 
-		// TODO LRQA-72035 CanHideShowSidebar pending implementation
+		CalendarPage.viewLeftSideBar();
+
+		CalendarPage.clickCaretLeftIcon();
+
+		CalendarPage.viewLeftSideBarHide();
 
 	}
 

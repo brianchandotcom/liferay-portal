@@ -1,0 +1,154 @@
+@component-name = "portal-solutions"
+definition {
+
+    property portal.release = "true";
+    property portal.upstream = "true";
+    property testray.main.component.name = "Raylife";
+
+    setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		Raylife.createRaylifeSite(siteName = "Raylife");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Raylife.tearDownCP();
+
+			User.logoutPG();
+		}
+	}
+
+    @description = "LPS-144321 = Verify Page Header's Title: <User’s First Name>, here’s your custom quote! shows the same First Name from the user input on Basics - Contact Info page"
+    @priority = "4"
+    test CanViewUserNameInTitle {
+	    ApplicationsMenu.gotoSite(key_site = "Raylife");
+
+	    RaylifeHomePage.startFlow();
+
+	    RaylifeContactInfo.typeAllBasicsInfoFields();
+
+	    Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+	    RaylifeBusiness.typeAllBusinessInfoFields();
+
+	    Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+	    RaylifeEmployees.typeAllEmployeesInfoFields();
+
+	    Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+	    RaylifeProperty.typeAllPropertyInfoFields();
+
+	    Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+	    AssertElementPresent(
+		    locator1 = "RaylifeQuoteComparison#QUOTE_COMPARISON_TITLE",
+		    userName = "FirstName");
+
+	    Click(locator1 = "Raylife#BTN_BACK_TO_EDIT_INFO_QUOTE_PAGE");
+
+	    Click(
+		locator1 = "RaylifeNavigation#SECTION_COMPLETED",
+		section = "Basics");
+
+	    Click(locator1 = "Raylife#BUTTON_PREVIOUS");
+    }
+
+    @description = "LPS-144323 - Verify if pressing the 'Purchase this policy' button in the 'Basic' quote redirects to another page"
+    @priority = "5"
+    test CanPurchaseBasicPolicy {
+	    ApplicationsMenu.gotoSite(key_site = "Raylife");
+
+	    RaylifeHomePage.startFlow();
+
+	    RaylifeContactInfo.typeAllBasicsInfoFields();
+
+	    Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+	    RaylifeBusiness.typeAllBusinessInfoFields();
+
+	    Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+	    RaylifeEmployees.typeAllEmployeesInfoFields();
+
+	    Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+	    RaylifeProperty.typeAllPropertyInfoFields();
+
+	    Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+	    Click(
+		    locator1 = "RaylifeQuoteComparison#BUTTON_PURCHASE_THIS_POLICY",
+		    policy = "basic");
+
+	    AssertElementPresent(locator1 = "RaylifeQuoteComparison#AWESOME_CHOICE_PAGE");
+    }
+
+    @description = "LPS-144324 - Verify if pressing the 'Purchase this policy' button in the 'Standard' quote redirects to another page"
+    @priority = "5"
+    test CanPurchaseStandardPolicy {
+	    ApplicationsMenu.gotoSite(key_site = "Raylife");
+
+	    RaylifeHomePage.startFlow();
+
+	    RaylifeContactInfo.typeAllBasicsInfoFields();
+
+	    Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+	    RaylifeBusiness.typeAllBusinessInfoFields();
+
+	    Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+	    RaylifeEmployees.typeAllEmployeesInfoFields();
+
+	    Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+	    RaylifeProperty.typeAllPropertyInfoFields();
+
+	    Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+	    Click(
+		    locator1 = "RaylifeQuoteComparison#BUTTON_PURCHASE_THIS_POLICY",
+		    policy = "standard");
+
+	    AssertElementPresent(locator1 = "RaylifeQuoteComparison#AWESOME_CHOICE_PAGE");
+    }
+
+    @description = "LPS-144325 - Verify if pressing the 'Purchase this policy' button in the 'Premium' quote redirects to another page"
+    @priority = "5"
+    test CanPurchasePremiumPolicy {
+	    ApplicationsMenu.gotoSite(key_site = "Raylife");
+
+	    RaylifeHomePage.startFlow();
+
+	    RaylifeContactInfo.typeAllBasicsInfoFields();
+
+	    Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+	    RaylifeBusiness.typeAllBusinessInfoFields();
+
+	    Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+	    RaylifeEmployees.typeAllEmployeesInfoFields();
+
+	    Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+	    RaylifeProperty.typeAllPropertyInfoFields();
+
+	    Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+	    Click(
+		    locator1 = "RaylifeQuoteComparison#BUTTON_PURCHASE_THIS_POLICY",
+		    policy = "premium");
+
+	    AssertElementPresent(locator1 = "RaylifeQuoteComparison#AWESOME_CHOICE_PAGE");
+    }
+}

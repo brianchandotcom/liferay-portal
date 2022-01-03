@@ -1,0 +1,31 @@
+<html>
+<head>
+<title>RaylifeQuoteComparison</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">RaylifeQuoteComparison</td></tr>
+</thead>
+
+<tbody>
+<tr>
+    <td>BUTTON_PURCHASE_THIS_POLICY</td>
+    <td>//h4[contains(text(),'${policy}')]//..//..//button[contains(text(),'PURCHASE THIS POLICY')]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>AWESOME_CHOICE_PAGE</td>
+    <td>//h1[contains(text(),'Awesome choice!')]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>QUOTE_COMPARISON_TITLE</td>
+    <td>//h1[contains(@class, 'text-center')]//span[contains(text(), '${userName}')]</td>
+    <td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

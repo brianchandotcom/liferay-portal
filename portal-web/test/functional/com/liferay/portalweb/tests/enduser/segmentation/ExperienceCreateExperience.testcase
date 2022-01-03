@@ -3633,17 +3633,96 @@ definition {
 	@ignore = "true"
 	@priority = "3"
 	test ChangingBackgroundColor {
+		task ("Go to Experience Content Page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Experience Content Page",
+				siteName = "Test Site Name");
 
-		// TODO LPS-86285 ChangingBackgroundColor pending implementation
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				fragmentName = "Container");
 
+			PageEditor.editLayoutContainer(
+				backgroundColor = "Danger",
+				panel = "Styles");
+
+			Button.clickPublish();
+
+			PageEditor.addExperience(
+				experienceName = "New Experience",
+				segmentName = "Anyone");
+
+			Button.clickPublish();
+		}
+
+		task ("Change the background color of the default experience") {
+			PageEditor.editLayoutContainer(
+				backgroundColor = "Success",
+				panel = "Styles");
+
+			Button.clickPublish();
+		}
+
+		task ("Check if any experience has its own container with its own background color") {
+			PageEditor.viewContainerStyle(
+				backgroundColor = "success",
+				position = "1");
+
+			PageEditor.changeExperience(newExperience = "New Experience");
+
+			PageEditor.viewContainerStyle(
+				backgroundColor = "danger",
+				position = "1");
+		}	
 	}
 
 	@description = "LPS-86285: Validate in the content page if, the user can change the background image of some section in the experiences that can be different from other experiences (already published)"
 	@ignore = "true"
 	@priority = "3"
 	test ChangingBackgroundImage {
+		task ("Go to Experience Content Page and create a new experience") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Experience Content Page",
+				siteName = "Test Site Name");
 
-		// TODO LPS-86285 ChangingBackgroundImage pending implementation
+			PageEditor.addExperience(
+				experienceName = "New Experience",
+				segmentName = "Anyone");
+		}
+
+		task ("Add a container with a background image") {			
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				fragmentName = "Container");
+
+			PageEditor.editLayoutContainer(
+				backgroundImage = "Direct",
+				panel = "Styles",
+				uploadFileName = "high_resolution_photo.jpg");
+
+			Button.clickPublish();
+		}
+
+		task ("Add a container with an another background image") {	
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				fragmentName = "Container");
+
+			PageEditor.editLayoutContainer(
+				backgroundImage = "Direct",
+				panel = "Styles",
+				uploadFileName = "Document_4.jpg");
+
+			Button.clickPublish();
+		}
+
+		task ("Check if any experience has his own background image") {
+			PageEditor.viewContainerStyle(backgroundImage = "Document_4.jpg");
+
+			PageEditor.changeExperience(newExperience = "New Experience");
+
+			PageEditor.viewContainerStyle(backgroundImage = "high_resolution_photo.jpg");	
+		}	
 
 	}
 
@@ -3764,8 +3843,67 @@ definition {
 	@ignore = "true"
 	@priority = "3"
 	test CreatingContentInDifferentExperiences {
+		task ("Create a Web Content"){
+			JSONWebcontent.addWebContent(
+				content = "WC Content",
+				groupName = "Test Site Name",
+				title = "WC Title 1");
+		}
 
-		// TODO LPS-86285 CreatingContentInDifferentExperiences pending implementation
+		task ("Create a Blog Entry") {
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				groupName = "Test Site Name");
+		}
+
+		task ("Go to edit Experience Content Page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Experience Content Page",
+				siteName = "Test Site Name");
+
+			PageEditor.addWidget(portletName = "Asset Publisher");
+		}
+		
+		task ("Create an experience and add the Content on it") {
+			PageEditor.addExperience(
+				experienceName = "New Experience",
+				segmentName = "Anyone");
+
+			Button.clickPublish();
+		}
+
+		AssetPublisherPortlet.configureManualAssetSelectionPG(
+			assetTitle = "WC Title 1",
+			assetType = "Basic Web Content");
+
+		Button.clickPublish();
+
+		PageEditor.changeExperience(newExperience = "New Experience");
+
+		AssetPublisherPortlet.configureManualAssetSelectionPG(
+			assetTitle = "Blogs Entry Title",
+			assetType = "Blogs Entry");
+
+		Button.clickPublish();
+
+		ContentPagesNavigator.openEditContentPage(
+				pageName = "Experience Content Page",
+				siteName = "Test Site Name");
+
+		task ("Check if the content is present only in the New Experience"){
+			AssertTextEquals(
+					key_assetTitle = "WC Title 1",
+					locator1 = "AP#ASSET_ABSTRACT_TITLE",
+					value1 = "WC Title 1");
+
+			PageEditor.changeExperience(newExperience = "New Experience");
+
+			AssertTextEquals(
+					key_assetTitle = "Blogs Entry Title",
+					locator1 = "AP#ASSET_ABSTRACT_TITLE",
+					value1 = "Blogs Entry Title");
+		}
 
 	}
 
@@ -3954,9 +4092,46 @@ definition {
 	@description = "LPS-86285: Validate in the content page if, the user can discard the section when he is editing the experiences (not published)	"
 	@ignore = "true"
 	@priority = "3"
-	test DiscardingASectionOfAnUnpublishedExperiment {
+	test DiscardingASectionOfAnUnpublishedExperience {
+		task ("Go to Experience Content Page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Experience Content Page",
+				siteName = "Test Site Name");
+		}
+		
+		task ("Create an experience, add a component and make changes without publish it") {
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				fragmentName = "Container");
 
-		// TODO LPS-86285 DiscardingASectionOfAnUnpublishedExperiment pending implementation
+			Button.clickPublish();	
+
+			PageEditor.addExperience(
+				experienceName = "New Experience",
+				segmentName = "Anyone");
+		}
+
+		task ("Go to the pages menu and discard changes") {
+			ProductMenu.gotoPortlet(
+				category = "Site Builder",
+				portlet = "Pages");
+
+			PageEditor.clickDiscardDraft(pageName = "Experience Content Page");
+		}
+		
+		task ("Go to Experience Content Page and check the Experience is not present") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Experience Content Page",
+				siteName = "Test Site Name");
+
+			PageEditor.viewFragment(fragmentName = "Container");	
+
+			Click(locator1 = "PageEditor#EXPERIENCE_LABEL");
+
+			AssertElementNotPresent(
+				key_experienceName = "New Experience",
+				locator1 = "PageEditor#EXPERIENCE_SELECT_ITEM");
+		}
 
 	}
 
@@ -3964,8 +4139,54 @@ definition {
 	@ignore = "true"
 	@priority = "3"
 	test DiscardingChangesFromUnpublishedExperiences {
+		task ("Go to Experience Content Page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Experience Content Page",
+				siteName = "Test Site Name");
+		}
+		
+		task ("Create a component and add a component without publishing them") {
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
 
-		// TODO LPS-86285 DiscardingChangesFromUnpublishedExperiences pending implementation
+			Button.clickPublish();
+
+			PageEditor.addExperience(
+				experienceName = "New Experience",
+				segmentName = "Anyone");
+
+			Click(locator1 = "PageEditor#EXPERIENCE_LABEL");
+		}
+
+		task ("Edit the the component without publishing the changes") {
+			PageEditor.editFragmentText(
+				fragmentName = "Heading",
+				id = "element-text",
+				text = "New editable fragment text");
+		}
+
+		task ("Go to the pages menu and discard changes") {
+			ProductMenu.gotoPortlet(
+				category = "Site Builder",
+				portlet = "Pages");
+
+			PageEditor.clickDiscardDraft(pageName = "Experience Content Page");
+		}
+		
+		task ("Go to Experience Content Page and the Experience is not present") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Experience Content Page",
+				siteName = "Test Site Name");
+
+			PageEditor.viewFragment(fragmentName = "Heading");
+
+			Click(locator1 = "PageEditor#EXPERIENCE_LABEL");
+
+			AssertElementNotPresent(
+				key_experienceName = "New Experience",
+				locator1 = "PageEditor#EXPERIENCE_SELECT_ITEM");
+		}
 
 	}
 
@@ -3973,18 +4194,103 @@ definition {
 	@ignore = "true"
 	@priority = "4"
 	test DiscardingChangesStillInTheEdition {
+		task ("Go to Experience Content Page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Experience Content Page",
+				siteName = "Test Site Name");
+		}
+		
+		task ("Create an experience with a component and publish it") {
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
 
-		// TODO LPS-86285 DiscardingChangesStillInTheEdition pending implementation
+			PageEditor.addExperience(
+				experienceName = "New Experience",
+				segmentName = "Anyone");
 
+			Button.clickPublish();
+		}
+
+		task ("Edit the fragment recently added without publishing the changes") {
+			PageEditor.changeExperience(newExperience = "New Experience");
+
+			PageEditor.editFragmentText(
+				fragmentName = "Heading",
+				id = "element-text",
+				text = "New editable fragment text");
+		}
+
+		task ("Go to the pages menu and discard changes") {
+			ProductMenu.gotoPortlet(
+				category = "Site Builder",
+				portlet = "Pages");
+
+			PageEditor.clickDiscardDraft(pageName = "Experience Content Page");
+		}
+		
+		task ("Go to Experience Content Page and check if the changes are discarded") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Experience Content Page",
+				siteName = "Test Site Name");
+
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "Heading Example");
+
+			PageEditor.changeExperience(newExperience = "New Experience");
+
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "Heading Example");
+		}
 	}
 
 	@description = "LPS-86285: Validate in the content page if, the user can discard the section when he is editing the experiences (already published)"
 	@ignore = "true"
 	@priority = "3"
 	test DiscardingSection {
+		task ("Go to Experience Content Page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Experience Content Page",
+				siteName = "Test Site Name");
+		}
+		
+		task ("Create an experience, add a component and make changes without publish it") {
+			PageEditor.addExperience(
+				experienceName = "New Experience",
+				segmentName = "Anyone");
 
-		// TODO LPS-86285 DiscardingSection pending implementation
+			Button.clickPublish();
 
+			PageEditor.changeExperience(newExperience = "New Experience");
+
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				fragmentName = "Container");
+		}
+
+		task ("Go to the pages menu and discard changes") {
+			ProductMenu.gotoPortlet(
+				category = "Site Builder",
+				portlet = "Pages");
+
+			PageEditor.clickDiscardDraft(pageName = "Experience Content Page");
+		}
+		
+		task ("Go to Experience Content Page and check the discarted changes") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Experience Content Page",
+				siteName = "Test Site Name");
+
+			PageEditor.viewFragmentNotPresent(fragmentName = "Container");
+
+			PageEditor.changeExperience(newExperience = "New Experience");
+
+			PageEditor.viewFragmentNotPresent(fragmentName = "Container");
+		}
 	}
 
 	@description = "When the user clicks on the Duplicate option of an experience, a new experience with [the same name] + Copy and the same audience (Segment) appears in the last position of the list, always below the default experience"
@@ -4459,18 +4765,74 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test PublishContentInDifferentExperiences {
+		task ("Create a Web Content and add it to the page"){
+			JSONWebcontent.addWebContent(
+				content = "WC Content",
+				groupName = "Test Site Name",
+				title = "WC Title 1");
+		}
 
-		// TODO LPS-86285 PublishContentInDifferentExperiences pending implementation
+		task ("Go to edit Experience Content Page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Experience Content Page",
+				siteName = "Test Site Name");
+		}
+		
+		task ("Create an experience and add the Content on it") {
+			PageEditor.addExperience(
+				experienceName = "New Experience",
+				segmentName = "Anyone");
 
+			PageEditor.addWidget(portletName = "Asset Publisher");
+
+			Button.clickPublish();
+
+		}
+
+		task ("Check if the content is present only in the New Experience"){
+			PageEditor.viewFragmentNotPresent(fragmentName = "Asset Publisher");
+
+			PageEditor.changeExperience(newExperience = "New Experience");
+
+			PageEditor.viewFragment(fragmentName = "Asset Publisher");
+		}
 	}
 
 	@description = "LPS-86285: Validate in the content page if, the user can remove a section in the experiences that can be different from others experiences (already published)"
 	@ignore = "true"
 	@priority = "5"
 	test RemoveDifferentSections {
+		task ("Go to Experience Content Page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Experience Content Page",
+				siteName = "Test Site Name");
+		}
 
-		// TODO LPS-86285 RemoveDifferentSections pending implementation
+		task ("Add an element to page, create an experience and publish it") {
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				fragmentName = "Grid");
 
+			PageEditor.addExperience(
+				experienceName = "New Experience",
+				segmentName = "Anyone");
+
+			Button.clickPublish();
+		}
+
+		task ("Remove the fragment from the Default Experience and check that is not present") {
+			PageEditor.removeFragment(fragmentName = "Grid");
+
+			Button.clickPublish();
+
+			PageEditor.viewFragmentNotPresent(fragmentName = "Grid");
+		}
+
+		task ("Check the fragment is present in the Default experience") {
+			PageEditor.changeExperience(newExperience = "New Experience");
+
+			PageEditor.viewFragment(fragmentName = "Grid");
+		}	
 	}
 
 	@description = "This is a test for LPS-132573. Assert no error occurs after switching back to default experience with fragment removed."
@@ -4527,26 +4889,110 @@ definition {
 	@ignore = "true"
 	@priority = "3"
 	test RemovingASectionOfDifferentAndUnpublishedExperiences {
+		task ("Go to Experience Content Page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Experience Content Page",
+				siteName = "Test Site Name");
+		}
+		
+		task ("Create an experience, add a component and make changes without publish it") {
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				fragmentName = "Container");
 
-		// TODO LPS-86285 RemovingASectionOfDifferentAndUnpublishedExperiences pending implementation
+			Button.clickPublish();
 
+			PageEditor.addExperience(
+				experienceName = "New Experience",
+				segmentName = "Anyone");
+
+			Click(locator1 = "PageEditor#EXPERIENCE_LABEL");
+		}
+
+		task ("Go to the pages menu and discard changes") {
+			PageEditor.removeFragment(fragmentName = "Container");
+		}
+		
+		task ("Go to Experience Content Page and the Experience is not present") {
+			PageEditor.viewFragmentNotPresent(fragmentName = "Container");
+
+			PageEditor.changeExperience(newExperience = "Default");
+
+			PageEditor.viewFragment(fragmentName = "Container");
+		}
 	}
 
 	@description = "LPS-86285: Validate in the content page if, the user can remove fragment in the experiences that can be different from others experiences (already published)"
 	@ignore = "true"
 	@priority = "4"
 	test RemovingFragmentInDifferentExperiences {
+		task ("Go to Experience Content Page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Experience Content Page",
+				siteName = "Test Site Name");
 
-		// TODO LPS-86285 RemovingFragmentInDifferentExperiences pending implementation
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+		}
+		
+		task ("Create an experience and add a fragment on both experiences") {
+			PageEditor.addExperience(
+				experienceName = "New Experience",
+				segmentName = "Anyone");
 
+			Button.clickPublish();
+		}
+
+		task ("Remove the fragment created from the default experience") {
+			PageEditor.removeFragment(fragmentName = "Heading");
+
+			Button.clickPublish();
+		}
+
+		task ("Check if the fragment is only present in the new experience") {
+			PageEditor.viewFragmentNotPresent(fragmentName = "Heading");
+
+			PageEditor.changeExperience(newExperience = "New Experience");
+
+			PageEditor.viewFragment(fragmentName = "Heading");
+		}
 	}
 
 	@description = "LPS-86285: Validate in the content page if, the user can remove fragment in the experiences that can be different from others experiences (not published)"
 	@ignore = "true"
 	@priority = "3"
 	test RemovingFragmentOfUnpublishedExperiences {
+		task ("Go to Experience Content Page, add an experience and a fragment without publishing them") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Experience Content Page",
+				siteName = "Test Site Name");
 
-		// TODO LPS-86285 RemovingFragmentOfUnpublishedExperiences pending implementation
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
+			Button.clickPublish();
+
+			PageEditor.addExperience(
+				experienceName = "New Experience",
+				segmentName = "Anyone");
+
+			Click(locator1 = "PageEditor#EXPERIENCE_LABEL");
+
+		}
+		
+		task ("Remove the fragment created from the experience") {
+			PageEditor.removeFragment(fragmentName = "Heading");
+		}
+
+		task ("Check if the fragment is present") {
+			PageEditor.viewFragmentNotPresent(fragmentName = "Heading");
+
+			PageEditor.changeExperience(newExperience = "Default");
+
+			PageEditor.viewFragment(fragmentName = "Heading");
+		}
 
 	}
 

@@ -18,6 +18,9 @@ import React, {useEffect, useRef, useState} from 'react';
 
 const MAX_VOCABULARIES_ON_GRAPH = 2;
 
+const getItemByvalue = (array, value) =>
+	array.find((item) => item.value === value);
+
 const VocabulariesSelectionBox = ({
 	leftBoxName,
 	leftList,
@@ -69,9 +72,11 @@ const VocabulariesSelectionBox = ({
 
 	const handleLeftSelectionChange = () => {
 		leftSelected.forEach((selectedVocabularyValue) => {
-			const vocabulary = leftElements.find(
-				(elem) => elem.value === selectedVocabularyValue
+			const vocabulary = getItemByvalue(
+				leftElements,
+				selectedVocabularyValue
 			);
+
 			if (!vocabulary.global) {
 				disableOptionsFromOtherSites(vocabulary);
 			}
@@ -90,17 +95,34 @@ const VocabulariesSelectionBox = ({
 			return false;
 		}
 
-		const currentSelectionTypesAreNotValid = leftSelected.every(
-			(itemSelectedId) => {
-				const currentItem = items
-					.flat()
-					.find((item) => item.value === itemSelectedId);
-
-				return !currentItem?.global;
-			}
+		const itemsAsFlattenedArray = items.flat();
+		const firstSelectedItemAsControlItem = getItemByvalue(
+			itemsAsFlattenedArray,
+			leftSelected[0]
 		);
 
-		return noRoomForCurrentSelection || currentSelectionTypesAreNotValid;
+		const allSitesAreNonGlobal = leftSelected.every((itemValue) => {
+			const currentItem = getItemByvalue(
+				itemsAsFlattenedArray,
+				itemValue
+			);
+
+			return !currentItem?.global;
+		});
+
+		const mixedNonGlobalSites = leftSelected.some((itemValue) => {
+			const currentItem = getItemByvalue(
+				itemsAsFlattenedArray,
+				itemValue
+			);
+
+			return currentItem.site !== firstSelectedItemAsControlItem.site;
+		});
+
+		return (
+			noRoomForCurrentSelection ||
+			(allSitesAreNonGlobal && mixedNonGlobalSites)
+		);
 	};
 
 	useEffect(() => {

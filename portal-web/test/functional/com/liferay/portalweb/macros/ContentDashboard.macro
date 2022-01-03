@@ -5,10 +5,10 @@ definition {
 	}
 
 	macro clickOnFirstBar {
-		Click(locator1 = "ContentDashboard#AUDIT_GRAPH_FIRST_BAR");
-	}
+		if(!(isSet(fillColor))) {
+			var fillColor = "4B9FFF";
+		}
 
-	macro clickOnFirstBarColor {
 		Click(
 			fillColor = "${fillColor}",
 			locator1 = "ContentDashboard#BAR_FROM_NO_VOCABULARY_SPECIFIED");

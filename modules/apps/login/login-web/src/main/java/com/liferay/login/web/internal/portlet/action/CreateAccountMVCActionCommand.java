@@ -123,7 +123,7 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 		boolean autoPassword = true;
 		String password1 = null;
 		String password2 = null;
-		boolean autoScreenName = _isAutoScreenName();
+		boolean autoScreenName = _AUTO_SCREEN_NAME;
 		String screenName = ParamUtil.getString(actionRequest, "screenName");
 		String emailAddress = ParamUtil.getString(
 			actionRequest, "emailAddress");
@@ -491,10 +491,6 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 			parameterValue, type);
 
 		return listType.getListTypeId();
-	}
-
-	private boolean _isAutoScreenName() {
-		return _AUTO_SCREEN_NAME;
 	}
 
 	private void _resetUser(

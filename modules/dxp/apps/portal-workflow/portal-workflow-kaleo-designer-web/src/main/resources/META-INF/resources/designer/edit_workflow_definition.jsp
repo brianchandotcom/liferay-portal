@@ -36,6 +36,8 @@ renderResponse.setTitle(title);
 	module="designer/js/definition-builder/DefinitionBuilder"
 	props='<%=
 		HashMapBuilder.<String, Object>put(
+			"definitionName", (kaleoDefinitionVersion == null) ? null : kaleoDefinitionVersion.getName()
+		).put(
 			"displayNames", LocaleUtil.toDisplayNames(LanguageUtil.getAvailableLocales(), locale)
 		).put(
 			"languageIds", LocaleUtil.toLanguageIds(LanguageUtil.getAvailableLocales())

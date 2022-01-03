@@ -36,21 +36,21 @@
 	<td></td>
 </tr>
 <tr>
-    <td>VALIDATION_UNCHECKED</td>
-    <td>//span[(@class='create-account__rule unchecked') and contains(., '${text}')]</td>
-    <td></td>
+	<td>VALIDATION_UNCHECKED</td>
+	<td>//span[(@class='create-account__rule unchecked') and contains(., '${text}')]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>VALIDATION_CHECKED</td>
-    <td>//span[(@class='create-account__rule checked') and contains(., '${text}')]</td>
-    <td></td>
+	<td>VALIDATION_CHECKED</td>
+	<td>//span[(@class='create-account__rule checked') and contains(., '${text}')]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>PANEL_SUCCESS</td>
-    <td>//div[contains(@class, 'bg-success')]</td>
-    <td></td>
+	<td>PANEL_SUCCESS</td>
+	<td>//div[contains(@class, 'bg-success')]</td>
+	<td></td>
 </tr>
 </tbody>
 </table>
 </body>
-</html>	
+</html>

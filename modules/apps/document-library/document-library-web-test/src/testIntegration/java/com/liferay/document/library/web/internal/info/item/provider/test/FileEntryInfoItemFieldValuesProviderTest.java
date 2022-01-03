@@ -40,6 +40,7 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import jodd.net.MimeTypes;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -68,6 +69,13 @@ public class FileEntryInfoItemFieldValuesProviderTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
+	}
+
+	@After
+	public void tearDown() {
+		if (_serviceRegistration != null) {
+			_serviceRegistration.unregister();
+		}
 	}
 
 	@Test

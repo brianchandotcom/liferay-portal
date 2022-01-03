@@ -39,7 +39,7 @@ activeLanguageIds.add("fr_FR");
 
 	<clay:row>
 		<react:component
-			module="js/TranslationManagerSampleReact"
+			module="js/TranslationManagerSamples"
 			props='<%=
 				HashMapBuilder.<String, Object>put(
 					"activeLanguageIds", activeLanguageIds

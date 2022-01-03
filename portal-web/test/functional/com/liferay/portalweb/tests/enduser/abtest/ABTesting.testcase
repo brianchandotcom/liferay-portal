@@ -1197,8 +1197,7 @@ definition {
 
 			Refresh();
 
-			AssertTextPresent(
-				value1 = "The page you are looking for does not exist.");
+			AssertTextPresent(value1 = "The page you are looking for does not exist.");
 		}
 	}
 

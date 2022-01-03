@@ -153,6 +153,10 @@ public class DateParameterUtil {
 	private static String _getDateFieldValue(
 		String dateFieldName, DDMFormValues ddmFormValues) {
 
+		if (ddmFormValues == null) {
+			return null;
+		}
+
 		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
 			ddmFormValues.getDDMFormFieldValuesMap(true);
 

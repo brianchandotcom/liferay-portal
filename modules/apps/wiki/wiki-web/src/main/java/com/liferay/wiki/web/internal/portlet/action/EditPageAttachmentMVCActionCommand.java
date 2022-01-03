@@ -75,7 +75,6 @@ import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletConfig;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -121,8 +120,6 @@ public class EditPageAttachmentMVCActionCommand extends BaseMVCActionCommand {
 		throws Exception {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
-
-		PortletConfig portletConfig = getPortletConfig(actionRequest);
 
 		try {
 			UploadException uploadException =

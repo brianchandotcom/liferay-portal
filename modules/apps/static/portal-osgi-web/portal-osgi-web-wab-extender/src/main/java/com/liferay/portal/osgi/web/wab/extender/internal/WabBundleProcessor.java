@@ -651,8 +651,6 @@ public class WabBundleProcessor {
 			return;
 		}
 
-		BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
-
 		while (enumeration.hasMoreElements()) {
 			URL url = enumeration.nextElement();
 

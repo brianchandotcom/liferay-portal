@@ -1446,13 +1446,6 @@ public class WabProcessor {
 		"jdbc.driverClassName"
 	};
 
-	private static final String _XPATHS_HBM = StringUtil.merge(
-		new String[] {
-			"//class/@name", "//id/@access", "//import/@class",
-			"//property/@type"
-		},
-		"|");
-
 	private static final String _XPATHS_HOOK = StringUtil.merge(
 		new String[] {
 			"//indexer-post-processor-impl", "//service-impl",

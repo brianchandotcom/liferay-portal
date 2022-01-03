@@ -167,9 +167,6 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String settingsScope = ParamUtil.getString(
-			actionRequest, "settingsScope");
-
 		PortletPreferences portletPreferences = _getPortletPreferences(
 			themeDisplay, portlet.getPortletId());
 
@@ -208,9 +205,6 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
-
-		String settingsScope = ParamUtil.getString(
-			actionRequest, "settingsScope");
 
 		PortletPreferences portletPreferences = _getPortletPreferences(
 			themeDisplay, portlet.getPortletId());
@@ -609,9 +603,6 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 				ThemeDisplay themeDisplay =
 					(ThemeDisplay)renderRequest.getAttribute(
 						WebKeys.THEME_DISPLAY);
-
-				String settingsScope = renderRequest.getParameter(
-					"settingsScope");
 
 				PortletPreferences portletPreferences = _getPortletPreferences(
 					themeDisplay, portlet.getPortletId());

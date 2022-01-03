@@ -1,29 +1,14 @@
 {
 	"dependencies": {
-#if (!(${liferayVersion.startsWith("7.3")} && ${reactTemplate.equals("true")}))
-#if (!(${liferayVersion.startsWith("7.0")} && ${liferayVersion.startsWith("7.1")}))
-		"clay-button": "2.18.0",
-		"clay-icon": "2.18.0",
-#end
+#if (${liferayVersion.startsWith("7.1")})
 		"metal-component": "2.16.8",
-		"metal-soy": "2.16.9"#if (!(${liferayVersion.startsWith("7.0")} && ${liferayVersion.startsWith("7.1")})),
-		"metal-state": "2.16.8"
-#end
+		"metal-soy": "2.16.9"
 #end
 	},
 	"devDependencies": {
 #if (!(${liferayVersion.startsWith("7.0")} || ${liferayVersion.startsWith("7.1")}))
 		"@babel/cli": "^7.2.3",
-		"@babel/core": "^7.6.0",
-		"@babel/plugin-proposal-class-properties": "^7.5.5",
-		"@babel/plugin-proposal-object-rest-spread": "^7.5.5",
-		"@babel/preset-env": "^7.4.2",
-		#if (${reactTemplate.equals("true")})
-		"@babel/preset-react": "^7.10.4",
-		#end
-		"babel-loader": "8.0.6",
-		"liferay-npm-bundler": "2.16.1",
-		"liferay-npm-bundler-preset-liferay-dev": "^2.0.0"#if (!(${liferayVersion.startsWith("7.3")} && ${reactTemplate.equals("true")})),
+		#if (!(${liferayVersion.startsWith("7.3")} && ${reactTemplate.equals("true")})),
 		"metal-tools-soy": "4.3.2"
 		#end
 #else

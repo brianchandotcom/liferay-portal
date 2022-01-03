@@ -4,15 +4,9 @@
 		"imports": {
 			"dynamic-data-mapping-form-field-type": {
 				"/": ">=4.0.25"
-			},
-			"frontend-taglib-clay": {
-				"clay-button": ">=2.9.0",
-				"clay-icon": ">=2.9.0"
 			}
 		}
 	},
-
-	"preset": "liferay-npm-bundler-preset-liferay-dev",
 #else
 	"preset": "liferay-npm-bundler-preset-standard",
 #end

@@ -98,12 +98,37 @@ definition {
 	}
 
 	@description = "LRQA-72024 - Verify that the user can change the color of the Calendar"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanChangeCalendarColor {
+		Navigator.gotoPage(pageName = "Calendar Page");
+    
+		Calendar.changeColor(
+			calendarType = "My Calendars",
+			user = "Test Test",
+			myCalendarColor = "668CD9");
 
-		// TODO LRQA-72030 CanChangeCalendarColor pending implementation
+		Navigator.gotoPage(pageName = "Calendar Page");
 
+		Calendar.viewColor(
+			calendarType = "My Calendars",
+			myCalendarColor = "668CD9");
+
+		CalendarNavigator.gotoAddEvent();
+
+		CalendarEvent.add(
+			eventTitle = "Calendar Event Regular Title",
+			eventType = "Regular",
+			pageName = "Calendar Page",
+			calendarName = "Test Test");
+		
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		CalendarScheduler.viewEventColor(
+			eventBackgroundColorRGB = "(208, 219, 240)",
+			eventFontColorRGB = "(104, 142, 217)",
+			eventTitle = "Calendar Event Regular Title");
+			
+		
 	}
 
 	@description = "LRQA-72024 - Verify that the user can go back and forward on Calendar"

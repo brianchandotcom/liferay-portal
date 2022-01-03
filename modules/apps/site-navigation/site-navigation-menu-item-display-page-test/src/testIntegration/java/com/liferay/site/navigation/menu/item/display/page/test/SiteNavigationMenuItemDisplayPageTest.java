@@ -28,6 +28,7 @@ import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeCon
 import com.liferay.layout.page.template.info.item.capability.DisplayPageInfoItemCapability;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -41,6 +42,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -54,6 +56,8 @@ import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService;
 import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
+
+import java.util.Dictionary;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -93,6 +97,56 @@ public class SiteNavigationMenuItemDisplayPageTest {
 			TestPropsValues.getUserId(), _group.getGroupId(),
 			RandomTestUtil.randomString(), assetVocabulary.getVocabularyId(),
 			_serviceContext);
+	}
+
+	@Test
+	public void testDisplayPageTypeMultiSelectionWhenFFDisabled()
+		throws Exception {
+
+		Dictionary<String, Object> dictionary =
+			HashMapDictionaryBuilder.<String, Object>put(
+				"multipleSelectionEnabled", false
+			).build();
+
+		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
+				new ConfigurationTemporarySwapper(
+					"com.liferay.site.navigation.menu.item.display.page." +
+						"internal.configuration." +
+							"FFDisplayPageSiteNavigationMenuItemConfiguration",
+					dictionary)) {
+
+			SiteNavigationMenuItemType siteNavigationMenuItemType =
+				_siteNavigationMenuItemTypeRegistry.
+					getSiteNavigationMenuItemType(
+						AssetCategory.class.getName());
+
+			Assert.assertFalse(siteNavigationMenuItemType.isMultiSelection());
+		}
+	}
+
+	@Test
+	public void testDisplayPageTypeMultiSelectionWhenFFEnabled()
+		throws Exception {
+
+		Dictionary<String, Object> dictionary =
+			HashMapDictionaryBuilder.<String, Object>put(
+				"multipleSelectionEnabled", true
+			).build();
+
+		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
+				new ConfigurationTemporarySwapper(
+					"com.liferay.site.navigation.menu.item.display.page." +
+						"internal.configuration." +
+							"FFDisplayPageSiteNavigationMenuItemConfiguration",
+					dictionary)) {
+
+			SiteNavigationMenuItemType siteNavigationMenuItemType =
+				_siteNavigationMenuItemTypeRegistry.
+					getSiteNavigationMenuItemType(
+						AssetCategory.class.getName());
+
+			Assert.assertTrue(siteNavigationMenuItemType.isMultiSelection());
+		}
 	}
 
 	@Test

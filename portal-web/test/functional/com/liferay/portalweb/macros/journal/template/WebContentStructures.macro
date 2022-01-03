@@ -108,9 +108,9 @@ definition {
 
 		WaitForElementPresent(locator1 = "Modal#BODY");
 
-		Click(locator1 = "Modal#PLUS");
-
 		for (var locale : list "${localeList}") {
+			Click(locator1 = "Modal#PLUS");
+
 			MenuItem.click(menuItem = "${locale}");
 
 			AssertElementPresent(

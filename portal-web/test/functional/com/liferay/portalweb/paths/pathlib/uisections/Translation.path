@@ -113,7 +113,7 @@
 </tr>
 <tr>
 	<td>TRANSLATION_MANAGE_OPTION</td>
-	<td>//div[contains(@class,'dropdown-menu dropdown-menu-indicator-start show')]//li//button[text()='${key_language}']</td>
+	<td>//div[contains(@class,'dropdown-menu-indicator-start')]//ul//li//button[text()='${key_language}']</td>
 	<td></td>
 </tr>
 <tr>

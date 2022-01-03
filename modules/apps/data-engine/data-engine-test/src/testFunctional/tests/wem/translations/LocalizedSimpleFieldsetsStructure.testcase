@@ -447,8 +447,6 @@ definition {
 				fieldsGroupLabelEdit = "${prefix} Fields Group");
 		}
 
-		Translations.addLanguageManageTranslations(key_language = "pt-BR");
-
 		PortletEntry.changeLocale(
 			locale = "pt-BR",
 			modal = "true");
@@ -492,8 +490,6 @@ definition {
 			fieldFieldLabelEdit = "Numérico",
 			fieldsetModal = "true");
 
-		Translations.addLanguageManageTranslations(key_language = "es-ES");
-
 		PortletEntry.changeLocale(
 			locale = "es-ES",
 			modal = "true");
@@ -536,8 +532,6 @@ definition {
 			fieldFieldLabel = "${numericField}",
 			fieldFieldLabelEdit = "Numérico",
 			fieldsetModal = "true");
-
-		Translations.addLanguageManageTranslations(key_language = "de-DE");
 
 		PortletEntry.changeLocale(
 			locale = "de-DE",
@@ -623,6 +617,8 @@ definition {
 				locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
 		}
 
+		Translations.addLanguageManageTranslations(key_language = "pt-BR");
+
 		PortletEntry.changeLocale(locale = "pt-BR");
 
 		AssertTextEquals(
@@ -662,6 +658,8 @@ definition {
 				locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
 		}
 
+		Translations.addLanguageManageTranslations(key_language = "es-ES");
+
 		PortletEntry.changeLocale(locale = "es-ES");
 
 		AssertTextEquals(
@@ -700,6 +698,8 @@ definition {
 				key_fieldsGroupLabel = "Grupo de campos de tercer nivel",
 				locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
 		}
+
+		Translations.addLanguageManageTranslations(key_language = "de-DE");
 
 		PortletEntry.changeLocale(locale = "de-DE");
 

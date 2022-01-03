@@ -29,32 +29,31 @@ definition {
 	@description = "LPS-144587 - Verify if its possible to see the user application number."
 	@priority = "4"
 	test CanSeeUserApplicationNumber {
-        ApplicationsMenu.gotoSite(key_site = "Raylife");
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
-        RaylifeHomePage.startFlow();
+		RaylifeHomePage.startFlow();
 
-        RaylifeContactInfo.typeAllBasicsInfoFields();
+		RaylifeContactInfo.typeAllBasicsInfoFields();
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        RaylifeBusiness.typeAllBusinessInfoFields();
+		RaylifeBusiness.typeAllBusinessInfoFields();
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        RaylifeEmployees.typeAllEmployeesInfoFields();
+		RaylifeEmployees.typeAllEmployeesInfoFields();
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        RaylifeProperty.typeAllPropertyInfoFields();
+		RaylifeProperty.typeAllPropertyInfoFields();
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        Click(
-            locator1 = "RaylifeCreateAccount#SELECT_QUOTE",
-            title = "standard");
+		Click(
+			locator1 = "RaylifeCreateAccount#SELECT_QUOTE",
+			title = "standard");
 
-        AssertElementPresent(locator1 = "RaylifeSummarySection#POLICY_ID_SELECTED_QUOTE");
-
-    }
+		AssertElementPresent(locator1 = "RaylifeSummarySection#POLICY_ID_SELECTED_QUOTE");
+	}
 
 }

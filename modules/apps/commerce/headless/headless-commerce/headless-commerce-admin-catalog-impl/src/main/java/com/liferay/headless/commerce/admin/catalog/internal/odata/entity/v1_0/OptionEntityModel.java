@@ -34,6 +34,8 @@ public class OptionEntityModel implements EntityModel {
 		_entityFieldsMap = Stream.of(
 			new StringEntityField("key", locale -> "key"),
 			new StringEntityField(
+ 				"name", locale -> Field.getSortableFieldName(Field.NAME)),
+			new StringEntityField(
 				"fieldType", locale -> CPField.DDM_FORM_FIELD_TYPE_NAME)
 		).collect(
 			Collectors.toMap(EntityField::getName, Function.identity())

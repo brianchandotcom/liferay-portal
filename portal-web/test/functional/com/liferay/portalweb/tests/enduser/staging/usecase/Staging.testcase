@@ -2179,7 +2179,7 @@ definition {
 			menuItem = "Configure",
 			pageName = "Staging Test Page");
 
-		Page.editName(pageNameEdit = "Staging Page Edit");
+		PagesAdmin.editName(pageNameEdit = "Staging Page Edit");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Page Edit",

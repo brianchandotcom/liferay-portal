@@ -294,9 +294,7 @@ definition {
 				item = "Configure",
 				pageName = "Test Page Name");
 
-			Page.editName(pageNameEdit = "New Test Page Name");
-
-			Alert.viewSuccessMessage();
+			PagesAdmin.editName(pageNameEdit = "New Test Page Name");
 		}
 
 		task ("View the renamed page is shown in Pages admin") {

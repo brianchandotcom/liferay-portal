@@ -131,7 +131,7 @@ definition {
 			menuItem = "Configure",
 			pageName = "Test Page Name");
 
-		Page.editName(pageNameEdit = "Test Page Edit");
+		PagesAdmin.editName(pageNameEdit = "Test Page Edit");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Test Page Edit",

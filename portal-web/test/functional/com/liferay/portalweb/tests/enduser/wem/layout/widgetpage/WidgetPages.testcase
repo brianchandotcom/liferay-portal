@@ -408,7 +408,7 @@ definition {
 				menuItem = "Configure",
 				pageName = "Test Page Name 1");
 
-			Page.editName(pageNameEdit = "Test Page Name 1 Edited");
+			PagesAdmin.editName(pageNameEdit = "Test Page Name 1 Edited");
 		}
 
 		task ("View the edited name is shown") {
@@ -433,7 +433,7 @@ definition {
 		}
 
 		task ("Edit the name of the second page") {
-			Page.editName(pageNameEdit = "Test Page Name 2 Edited");
+			PagesAdmin.editName(pageNameEdit = "Test Page Name 2 Edited");
 		}
 
 		task ("View the edited name is shown") {

@@ -132,11 +132,13 @@ public class AddFormInstanceRecordMVCActionCommand
 			return;
 		}
 
-		DDMFormInstanceSettings formInstanceSettings =
+		SessionMessages.add(actionRequest, "formInstanceRecordAdded");
+
+		DDMFormInstanceSettings ddmFormInstanceSettings =
 			ddmFormInstance.getSettingsModel();
 
 		String redirectURL = ParamUtil.getString(
-			actionRequest, "redirect", formInstanceSettings.redirectURL());
+			actionRequest, "redirect", ddmFormInstanceSettings.redirectURL());
 
 		if (Validator.isNotNull(redirectURL)) {
 			portletSession.setAttribute(

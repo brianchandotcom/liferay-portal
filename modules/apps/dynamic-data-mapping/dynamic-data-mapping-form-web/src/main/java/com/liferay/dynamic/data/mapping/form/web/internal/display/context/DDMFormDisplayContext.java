@@ -797,7 +797,8 @@ public class DDMFormDisplayContext {
 
 	public boolean isShowSuccessPage() throws PortalException {
 		if (!SessionErrors.isEmpty(_renderRequest) ||
-			SessionMessages.isEmpty(_renderRequest) ||
+			!SessionMessages.contains(
+				_renderRequest, "formInstanceRecordAdded") ||
 			Validator.isNotNull(getRedirectURL())) {
 
 			return false;

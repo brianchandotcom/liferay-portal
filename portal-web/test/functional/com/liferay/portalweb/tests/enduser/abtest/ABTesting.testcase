@@ -320,7 +320,7 @@ definition {
 	@description = "LPS-97194: Validate if the goal input test for the AB Test appears when the user tries to edit one AB Test"
 	@priority = "3"
 	test AssertGoalInputWhenEdit {
-		task ("Create AB test, create variant and run the test") {
+		task ("Create AB test and add variant") {
 			ABTest.createABTest(
 				goal = "Bounce Rate",
 				testTitle = "AB test title");
@@ -1069,48 +1069,155 @@ definition {
 	}
 
 	@description = "LPS-99421: The test is removed when the delete action is clicked"
-	@ignore = "true"
 	@priority = "3"
 	test DeleteABTest {
+		task ("Create AB test and a variant") {
+			ABTest.createABTest(
+				goal = "Bounce Rate",
+				testTitle = "AB test title");
 
-		// TODO LPS-144027 DeleteABTest pending implementation
+			ABTest.createVariant(variantName = "Variant name");
+		}
 
+		task ("Delete AB Test") {
+			ABTest.editOrDeleteABTest(value = "Delete");
+		}
+
+		task ("Assert that does not exist ab test") {
+			AssertElementPresent(locator1 = "ABTest#CREATE_TEST_BUTTON");
+		}
 	}
 
 	@description = "LPS-99421: The test is not removed when the delete action is canceled"
-	@ignore = "true"
 	@priority = "3"
 	test DeleteABTestCancel {
+		task ("Create AB test and a variant") {
+			ABTest.createABTest(
+				goal = "Bounce Rate",
+				testTitle = "AB test title");
 
-		// TODO LPS-144027 DeleteABTestCancel pending implementation
+			ABTest.createVariant(variantName = "Variant name");
+		}
 
+		task ("try to Delete AB Test and click cancel button") {
+			Click(locator1 = "ABTest#KEBAB_AB_TEST");
+
+			MenuItem.clickNoError(menuItem = "Delete");
+
+			Confirm.dismissAlert();
+		}
+
+		task ("Assert that the ABTest draft keeps appearing") {
+			AssertTextEquals(
+				key_title = "AB test title",
+				locator1 = "ABTest#AB_TEST_TITLE_DXP",
+				value1 = "AB test title");
+		}
 	}
 
 	@description = "LPS-99421: The test deletion in AC is reflected on DXP"
-	@ignore = "true"
 	@priority = "4"
 	test DeleteABTestInACViewInDXP {
+		property portal.acceptance = "true";
 
-		// TODO LPS-144027 DeleteABTestInACViewInDXP pending implementation
+		task ("Create AB test and create variant.") {
+			ABTest.createABTest(
+				goal = "Bounce Rate",
+				testTitle = "AB test title");
 
+			ABTest.createVariant(variantName = "Variant name");
+		}
+
+		task ("Check the info is correct in Analytics Cloud") {
+			ABTest.openABTestInAC();
+
+			ABTest.statusABTestInAC(status = "Test Is in Draft Mode");
+		}
+
+		task ("Delete AB Test at AC") {
+			Click(
+				key_text = "ellipsis-v",
+				locator1 = "Icon#ANY");
+
+			MenuItem.clickNoError(menuItem = "Delete Test");
+
+			Button.clickDelete();
+		}
+
+		task ("Go back to DXP") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page",
+				siteName = "Test Site Name");
+		}
+
+		task ("Assert that does not exist ab test") {
+			ABTest.openABTestPanel();
+
+			AssertElementPresent(locator1 = "ABTest#CREATE_TEST_BUTTON");
+		}
 	}
 
 	@description = "LPS-99421: The test deletion in DXP is reflected on AC"
-	@ignore = "true"
 	@priority = "4"
 	test DeleteABTestInDXPViewInAC {
+		property portal.acceptance = "true";
 
-		// TODO LPS-144027 DeleteABTestInDXPViewInAC pending implementation
+		task ("Create AB test and create variant.") {
+			ABTest.createABTest(
+				goal = "Bounce Rate",
+				testTitle = "AB test title");
 
+			ABTest.createVariant(variantName = "Variant name");
+		}
+
+		task ("Check the info is correct in Analytics Cloud") {
+			ABTest.openABTestInAC();
+
+			ABTest.statusABTestInAC(status = "Test Is in Draft Mode");
+		}
+
+		task ("Go back to DXP") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page",
+				siteName = "Test Site Name");
+		}
+
+		task ("Delete the AB test") {
+			ABTest.openABTestPanel();
+
+			ABTest.editOrDeleteABTest(value = "Delete");
+		}
+
+		task ("Go to AC page and assert the ERROR page is open") {
+			Navigator.selectSpecificWindow(windowTitle = "Tests - Analytics Cloud");
+
+			Refresh();
+
+			AssertTextPresent(
+				value1 = "The page you are looking for does not exist.");
+		}
 	}
 
 	@description = "LPS-99421: The delete action shows in the test action menu when the test status allows it"
-	@ignore = "true"
 	@priority = "3"
 	test DeleteButtonShows {
+		task ("Create AB test and a variant") {
+			ABTest.createABTest(
+				goal = "Bounce Rate",
+				testTitle = "AB test title");
+		}
 
-		// TODO LPS-144027 DeleteButtonShows pending implementation
+		task ("Assert that the Delete button is present") {
+			Click(locator1 = "ABTest#KEBAB_AB_TEST");
 
+			MenuItem.viewVisible(menuItem = "Delete");
+
+			Click(locator1 = "ABTest#KEBAB_AB_TEST");
+		}
+
+		task ("Delete AB Test") {
+			ABTest.editOrDeleteABTest(value = "Delete");
+		}
 	}
 
 	@description = "LPS-104203: Validate if in the AB Test, when the user delete the clickable element that was set, the warning alert appears"

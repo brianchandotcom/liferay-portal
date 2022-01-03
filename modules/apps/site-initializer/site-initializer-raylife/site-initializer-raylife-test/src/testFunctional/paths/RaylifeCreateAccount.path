@@ -47,7 +47,7 @@
 </tr>
 <tr>
 	<td>PANEL_SUCCESS</td>
-	<td>//div[contains(@class, 'bg-success')]</td>
+	<td>//div[contains(@class, 'panel-left') and contains(., '${title}')]</td>
 	<td></td>
 </tr>
 </tbody>

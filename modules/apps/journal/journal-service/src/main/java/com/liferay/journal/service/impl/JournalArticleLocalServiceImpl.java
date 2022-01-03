@@ -3135,7 +3135,7 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	@Override
-	public List<Long> getDefaultDisplayPageClassPKs(
+	public List<Long> getArticlesClassPKsWithDefaultDisplayPage(
 		long groupId, long classTypeId) {
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =

@@ -137,6 +137,8 @@ public class AssetEntriesCheckerHelper {
 		Stream<AssetEntry> stream = assetEntries.stream();
 
 		assetEntries = stream.distinct(
+		).filter(
+			AssetEntry::isVisible
 		).collect(
 			Collectors.toList()
 		);

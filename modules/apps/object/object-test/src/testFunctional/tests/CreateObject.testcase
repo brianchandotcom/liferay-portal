@@ -4867,7 +4867,7 @@ definition {
 	@description = "LPS-135401 - Verify if Prevent deletion type of Relationship One to Many won't allow the user to delete an entry with relation from the parent Object"
 	@priority = "5"
 	test PreventDeletionOneToManyWontAllowDelete {
-		property portal.acceptance = "true"; 		
+		property portal.acceptance = "true";
 
 		for (var nameObject : list "A,B") {
 			ObjectAdmin.addObjectViaAPI(

@@ -14,6 +14,7 @@
 
 package com.liferay.journal.internal.layout.admin.util;
 
+import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
 import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -214,6 +215,12 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 
 			return _layoutLocalService.fetchLayout(
 				layoutPageTemplateEntry.getPlid());
+		}
+
+		if (assetDisplayPageEntry.getType() ==
+				AssetDisplayPageConstants.TYPE_NONE) {
+
+			return null;
 		}
 
 		long assetDisplayPageEntryPlid = assetDisplayPageEntry.getPlid();

@@ -23,7 +23,6 @@ import SortableList from './SortableList';
 const VariationsNav = ({
 	assetListEntrySegmentsEntryRels,
 	assetListEntryValid,
-	createNewSegmentURL,
 	openSelectSegmentsEntryDialogMethod,
 	portletNamespace,
 	segmentsEntriesAvailables,
@@ -75,10 +74,6 @@ const VariationsNav = ({
 								'you-need-segments-to-create-a-personalized-variation'
 							)}{' '}
 						</span>
-
-						<ClayLink href={createNewSegmentURL}>
-							{Liferay.Language.get('create-your-first-segment')}
-						</ClayLink>
 					</p>
 				)}
 
@@ -94,7 +89,6 @@ const VariationsNav = ({
 VariationsNav.propTypes = {
 	assetListEntrySegmentsEntryRels: PropTypes.array.isRequired,
 	assetListEntryValid: PropTypes.bool.isRequired,
-	createNewSegmentURL: PropTypes.string.isRequired,
 	openSelectSegmentsEntryDialogMethod: PropTypes.string.isRequired,
 	segmentsEntriesAvailables: PropTypes.bool.isRequired,
 	updateVariationsPriorityURL: PropTypes.string.isRequired,

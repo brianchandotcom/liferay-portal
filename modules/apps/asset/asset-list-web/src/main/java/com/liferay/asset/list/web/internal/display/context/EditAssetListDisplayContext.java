@@ -61,7 +61,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
@@ -85,7 +84,6 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsEntryConstants;
-import com.liferay.segments.constants.SegmentsPortletKeys;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.service.SegmentsEntryLocalServiceUtil;
 import com.liferay.segments.service.SegmentsEntryServiceUtil;
@@ -607,18 +605,6 @@ public class EditAssetListDisplayContext {
 
 				return Validator.isNotNull(assetListEntry.getAssetEntryType());
 			}
-		).put(
-			"createNewSegmentURL",
-			() -> PortletURLBuilder.createRenderURL(
-				PortalUtil.getLiferayPortletResponse(_portletResponse),
-				SegmentsPortletKeys.SEGMENTS
-			).setMVCRenderCommandName(
-				"/segments/edit_segments_entry", false
-			).setRedirect(
-				_themeDisplay.getURLCurrent()
-			).setParameter(
-				"type", User.class.getName()
-			).buildString()
 		).put(
 			"openSelectSegmentsEntryDialogMethod",
 			() -> {

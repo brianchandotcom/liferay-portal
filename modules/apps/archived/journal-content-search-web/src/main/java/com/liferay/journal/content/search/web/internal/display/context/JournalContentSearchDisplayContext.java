@@ -153,8 +153,8 @@ public class JournalContentSearchDisplayContext {
 			hits, layout.getGroupId(), layout.isPrivateLayout(),
 			_searchContainer.getStart(), _searchContainer.getEnd());
 
-		_searchContainer.setTotal(hits.getLength());
-		_searchContainer.setResults(ListUtil.fromArray(hits.getDocs()));
+		_searchContainer.setResultsAndTotal(
+			() -> ListUtil.fromArray(hits.getDocs()), hits.getLength());
 
 		return _searchContainer;
 	}

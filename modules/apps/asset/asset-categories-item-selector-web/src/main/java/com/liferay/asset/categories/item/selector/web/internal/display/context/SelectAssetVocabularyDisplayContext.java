@@ -75,8 +75,8 @@ public class SelectAssetVocabularyDisplayContext {
 
 		List<AssetVocabulary> assetVocabularies = _getAssetVocabularies();
 
-		searchContainer.setResults(assetVocabularies);
-		searchContainer.setTotal(assetVocabularies.size());
+		searchContainer.setResultsAndTotal(
+			() -> assetVocabularies, assetVocabularies.size());
 
 		return searchContainer;
 	}

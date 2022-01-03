@@ -728,6 +728,56 @@ definition {
 		MenuItem.click(menuItem = "${menuItem}");
 	}
 
+	macro manageDeviceFamilyActions {
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Manage Actions",
+			rowEntry = "${deviceFamilyName}");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		Click(
+			key_text = "Add Action",
+			locator1 = "Button#ANY");
+
+		PortletEntry.inputName(name = "${actionName}");
+
+		Select(
+			key_selectFieldLabel = "Type",
+			locator1 = "Select#ANY",
+			value1 = "${actionType}");
+
+		if ("${actionType}" == "Redirect to Site") {
+			Select(
+				key_selectFieldLabel = "Site",
+				locator1 = "Select#ANY",
+				value1 = "${siteName}");
+
+			Select(
+				key_selectFieldLabel = "Page",
+				locator1 = "Select#ANY",
+				value1 = "${pageName}");
+		}
+		else if ("${actionType}" == "Layout Template Modification") {
+			Click(
+				key_card = "${columnName}",
+				locator1 = "Card#CARD");
+		}
+		else if ("${actionType}" == "Redirect to URL") {
+			Type(
+				locator1 = "TextInput#URL",
+				value1 = "${actionURL}");
+		}
+		else {
+			Check(
+				key_text = "${themeName}",
+				locator1 = "TextInput#ANY");
+		}
+
+		PortletEntry.save();
+
+		IFrame.closeFrame();
+	}
+
 	macro movePageItemUp {
 		var key_pageName = "${pageName}";
 		var key_pageNameTo = "${pageNameTo}";

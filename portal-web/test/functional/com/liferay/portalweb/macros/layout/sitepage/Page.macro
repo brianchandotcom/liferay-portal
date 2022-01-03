@@ -169,45 +169,6 @@ definition {
 			locator1 = "Home#PORTAL_LOCALIZATION_DEFAULT_LANGUAGE_MESSAGE");
 	}
 
-	macro manageDeviceFamilyActions {
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Manage Actions",
-			rowEntry = "${deviceFamilyName}");
-
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		Click(locator1 = "Button#ADD_ACTION");
-
-		PortletEntry.inputName(name = "${actionName}");
-
-		Select(
-			locator1 = "MobileDevice#ADD_ACTION_TYPE_SELECT",
-			value1 = "${actionType}");
-
-		if ("${actionType}" == "Redirect to URL") {
-			Type(
-				locator1 = "TextInput#URL",
-				value1 = "${actionURL}");
-		}
-		else if ("${actionType}" == "Redirect to Site") {
-			Select(
-				locator1 = "MobileDevice#ADD_ACTION_SITE_SELECT",
-				value1 = "${siteName}");
-
-			Select(
-				locator1 = "MobileDevice#ADD_ACTION_PAGE_SELECT",
-				value1 = "${pageName}");
-		}
-
-		PortletEntry.save();
-
-		SelectFrame(value1 = "relative=top");
-
-		var key_modalTitle = "Actions";
-
-		Click(locator1 = "Button#CLOSE_MODAL");
-	}
-
 	macro openURLLocale {
 		Navigator.openSpecificURL(url = "${localizationPageURL}");
 

@@ -100,7 +100,7 @@ public class JspJavaFileObjectResolver implements JavaFileObjectResolver {
 
 			if (packageNames.contains(packageName)) {
 				javaFileObjects.addAll(
-					_doResolveClasses(entry.getKey(), packagePath, options));
+					_resolveClasses(entry.getKey(), packagePath, options));
 			}
 		}
 
@@ -113,19 +113,6 @@ public class JspJavaFileObjectResolver implements JavaFileObjectResolver {
 
 		return StringUtil.replace(
 			classResourceName, CharPool.SLASH, CharPool.PERIOD);
-	}
-
-	private Collection<JavaFileObject> _doResolveClasses(
-		BundleWiring bundleWiring, String path, int options) {
-
-		Bundle bundle = bundleWiring.getBundle();
-
-		if (bundle.getBundleId() == 0) {
-			return _handleSystemBundle(bundleWiring, path);
-		}
-
-		return _toJavaFileObjects(
-			bundle, bundleWiring.listResources(path, "*.class", options));
 	}
 
 	private JavaFileObject _getJavaFileObject(
@@ -277,6 +264,19 @@ public class JspJavaFileObjectResolver implements JavaFileObjectResolver {
 		_javaFileObjects.put(path, javaFileObjects);
 
 		return javaFileObjects;
+	}
+
+	private Collection<JavaFileObject> _resolveClasses(
+		BundleWiring bundleWiring, String path, int options) {
+
+		Bundle bundle = bundleWiring.getBundle();
+
+		if (bundle.getBundleId() == 0) {
+			return _handleSystemBundle(bundleWiring, path);
+		}
+
+		return _toJavaFileObjects(
+			bundle, bundleWiring.listResources(path, "*.class", options));
 	}
 
 	private Collection<JavaFileObject> _toJavaFileObjects(

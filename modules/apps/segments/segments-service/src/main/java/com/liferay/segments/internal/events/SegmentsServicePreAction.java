@@ -62,7 +62,7 @@ public class SegmentsServicePreAction extends Action {
 		throws ActionException {
 
 		try {
-			_doRun(httpServletRequest, httpServletResponse);
+			_run(httpServletRequest, httpServletResponse);
 		}
 		catch (Exception exception) {
 			throw new ActionException(exception);
@@ -90,35 +90,6 @@ public class SegmentsServicePreAction extends Action {
 		if (_serviceRegistration != null) {
 			_serviceRegistration.unregister();
 		}
-	}
-
-	private void _doRun(
-		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse) {
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		if (!themeDisplay.isLifecycleRender()) {
-			return;
-		}
-
-		Layout layout = themeDisplay.getLayout();
-
-		if ((layout == null) || !layout.isTypeContent() ||
-			layout.isTypeControlPanel()) {
-
-			return;
-		}
-
-		httpServletRequest.setAttribute(
-			SegmentsWebKeys.SEGMENTS_EXPERIENCE_IDS,
-			_getSegmentsExperienceIds(
-				httpServletRequest, httpServletResponse, layout.getGroupId(),
-				themeDisplay.getUserId(),
-				_portal.getClassNameId(Layout.class.getName()),
-				layout.getPlid()));
 	}
 
 	private long[] _getSegmentsExperienceIds(
@@ -154,6 +125,35 @@ public class SegmentsServicePreAction extends Action {
 		}
 
 		return new long[] {SegmentsExperienceConstants.ID_DEFAULT};
+	}
+
+	private void _run(
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		if (!themeDisplay.isLifecycleRender()) {
+			return;
+		}
+
+		Layout layout = themeDisplay.getLayout();
+
+		if ((layout == null) || !layout.isTypeContent() ||
+			layout.isTypeControlPanel()) {
+
+			return;
+		}
+
+		httpServletRequest.setAttribute(
+			SegmentsWebKeys.SEGMENTS_EXPERIENCE_IDS,
+			_getSegmentsExperienceIds(
+				httpServletRequest, httpServletResponse, layout.getGroupId(),
+				themeDisplay.getUserId(),
+				_portal.getClassNameId(Layout.class.getName()),
+				layout.getPlid()));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

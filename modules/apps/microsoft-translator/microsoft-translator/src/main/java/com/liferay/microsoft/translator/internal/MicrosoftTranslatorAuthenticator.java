@@ -48,11 +48,11 @@ public class MicrosoftTranslatorAuthenticator {
 
 	public void init(boolean manual) {
 		if (manual || _isStale()) {
-			_doInit();
+			_init();
 		}
 	}
 
-	private void _doInit() {
+	private void _init() {
 		_accessToken = null;
 		_error = null;
 

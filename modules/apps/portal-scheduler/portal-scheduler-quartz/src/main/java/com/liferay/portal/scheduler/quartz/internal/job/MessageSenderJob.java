@@ -50,7 +50,7 @@ public class MessageSenderJob implements Job {
 	@Override
 	public void execute(JobExecutionContext jobExecutionContext) {
 		try {
-			_doExecute(jobExecutionContext);
+			_execute(jobExecutionContext);
 		}
 		catch (Exception exception) {
 			_log.error("Unable to execute job", exception);
@@ -73,7 +73,7 @@ public class MessageSenderJob implements Job {
 		_props = props;
 	}
 
-	private void _doExecute(JobExecutionContext jobExecutionContext)
+	private void _execute(JobExecutionContext jobExecutionContext)
 		throws Exception {
 
 		JobDetail jobDetail = jobExecutionContext.getJobDetail();

@@ -85,7 +85,7 @@ public class ConfigurationBeanManagedService implements ManagedService {
 				new UpdatePrivilegedAction(properties));
 		}
 		else {
-			_doUpdated(properties);
+			_updated(properties);
 		}
 	}
 
@@ -93,7 +93,7 @@ public class ConfigurationBeanManagedService implements ManagedService {
 
 		@Override
 		public Void run() {
-			_doUpdated(_properties);
+			_updated(_properties);
 
 			return null;
 		}
@@ -106,7 +106,7 @@ public class ConfigurationBeanManagedService implements ManagedService {
 
 	}
 
-	private void _doUpdated(Dictionary<String, ?> properties) {
+	private void _updated(Dictionary<String, ?> properties) {
 		if (properties == null) {
 			properties = new HashMapDictionary<>();
 		}

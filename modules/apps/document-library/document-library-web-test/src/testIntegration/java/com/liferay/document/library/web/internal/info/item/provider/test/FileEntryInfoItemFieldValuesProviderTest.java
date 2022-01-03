@@ -171,7 +171,7 @@ public class FileEntryInfoItemFieldValuesProviderTest {
 		}
 
 		@Override
-		public Object getValue(FileEntry model) {
+		public Object getValue(FileEntry fileEntry) {
 			return INFO_FIELD_VALUE;
 		}
 

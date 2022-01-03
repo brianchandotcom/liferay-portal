@@ -212,7 +212,7 @@ definition {
 
 			Navigator.gotoEditPageViaControlMenu(pageName = "Test Page Name Edit");
 
-			Page.editPageMetadata(
+			PagesAdmin.editSeoMetadata(
 				htmlTitle = "S.P.A.C.E.Home",
 				metaTagsDescription = "Welcome to S.P.A.C.E., a graduate-level school for those passionate about expanding their horizons through science, research, and space travel",
 				metaTagsKeywords = "space, education, space travel, graduateschool");
@@ -225,7 +225,7 @@ definition {
 
 			Navigator.gotoEditPageViaControlMenu(pageName = "Test Page Name Edit");
 
-			Page.viewPageMetadata(
+			PagesAdmin.viewSeoMetadata(
 				htmlTitle = "S.P.A.C.E.Home",
 				metaTagsDescription = "Welcome to S.P.A.C.E., a graduate-level school for those passionate about expanding their horizons through science, research, and space travel",
 				metaTagsKeywords = "space, education, space travel, graduateschool");

@@ -95,27 +95,6 @@ definition {
 		Uncheck.uncheckHiddenToggleSwitch(locator1 = "ToggleSwitch#INHERIT_MOBILE_DEVICE_RULES_FROM_PAGE");
 	}
 
-	macro editPageMetadata {
-		Navigator.gotoNavTab(navTab = "SEO");
-
-		Type.typeClickAt(
-			key_text = "Title",
-			locator1 = "TextInput#ANY",
-			value1 = "${htmlTitle}");
-
-		Type.typeClickAt(
-			key_text = "Description",
-			locator1 = "TextInput#ANY",
-			value1 = "${metaTagsDescription}");
-
-		Type.typeClickAt(
-			key_text = "keywords",
-			locator1 = "TextArea#ANY",
-			value1 = "${metaTagsKeywords}");
-
-		Button.clickSave();
-	}
-
 	macro getAuthTokenFromHtmlSource {
 		var javaScript = '''
 		var authToken = Liferay.authToken;
@@ -455,25 +434,6 @@ definition {
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#CUSTOMIZED_PAGE_INFO",
 			value1 = "This page is linked to a site template which does not allow modifications to it.");
-	}
-
-	macro viewPageMetadata {
-		Navigator.gotoNavTab(navTab = "SEO");
-
-		AssertTextEquals(
-			key_text = "Title",
-			locator1 = "TextInput#ANY",
-			value1 = "${htmlTitle}");
-
-		AssertTextEquals(
-			key_text = "Description",
-			locator1 = "TextInput#ANY",
-			value1 = "${metaTagsDescription}");
-
-		AssertTextEquals(
-			key_text = "keywords",
-			locator1 = "TextArea#ANY",
-			value1 = "${metaTagsKeywords}");
 	}
 
 	macro viewPageTemplateTypeNotPresent {

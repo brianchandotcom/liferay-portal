@@ -651,6 +651,27 @@ definition {
 		PortletEntry.save();
 	}
 
+	macro editSeoMetadata {
+		Navigator.gotoNavTab(navTab = "SEO");
+
+		Type.typeClickAt(
+			key_text = "Title",
+			locator1 = "TextInput#ANY",
+			value1 = "${htmlTitle}");
+
+		Type.typeClickAt(
+			key_text = "Description",
+			locator1 = "TextInput#ANY",
+			value1 = "${metaTagsDescription}");
+
+		Type.typeClickAt(
+			key_text = "keywords",
+			locator1 = "TextArea#ANY",
+			value1 = "${metaTagsKeywords}");
+
+		PortletEntry.save();
+	}
+
 	macro expandPageTree {
 		if (!(isSet(depth))) {
 			var depth = "1";
@@ -1094,6 +1115,25 @@ definition {
 		AssertChecked.assertCheckedNotVisible(
 			key_pageName = "${pageName}",
 			locator1 = "PagesAdmin#LIST_GROUP_ITEM_CHECKBOX");
+	}
+
+	macro viewSeoMetadata {
+		Navigator.gotoNavTab(navTab = "SEO");
+
+		AssertTextEquals(
+			key_text = "Title",
+			locator1 = "TextInput#ANY",
+			value1 = "${htmlTitle}");
+
+		AssertTextEquals(
+			key_text = "Description",
+			locator1 = "TextInput#ANY",
+			value1 = "${metaTagsDescription}");
+
+		AssertTextEquals(
+			key_text = "keywords",
+			locator1 = "TextArea#ANY",
+			value1 = "${metaTagsKeywords}");
 	}
 
 	macro viewWidgetPageCurrentTheme {

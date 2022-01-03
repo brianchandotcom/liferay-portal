@@ -22,12 +22,12 @@ import SidebarPanel from './SidebarPanel';
 import {isIdDuplicated} from './utils';
 
 export default function SelectedEdgeInfo({errors, setErrors}) {
-	const {selectedLanguageId} = useContext(DefinitionBuilderContext);
+	const {elements, selectedLanguageId, setElements} = useContext(
+		DefinitionBuilderContext
+	);
 	const {
-		elements,
 		selectedItem,
 		selectedItemNewId,
-		setElements,
 		setSelectedItem,
 		setSelectedItemNewId,
 	} = useContext(DiagramBuilderContext);

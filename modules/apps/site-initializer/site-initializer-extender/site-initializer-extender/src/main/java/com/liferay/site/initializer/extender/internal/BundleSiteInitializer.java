@@ -118,6 +118,7 @@ import com.liferay.portal.kernel.settings.ModifiableSettings;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.template.TemplateConstants;
+import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -630,11 +631,16 @@ public class BundleSiteInitializer implements SiteInitializer {
 				StringUtil.replaceLast(resourcePath, ".json", ".products.json"),
 				serviceContext);
 
-			_addSkuSubscriptions(
-				StringUtil.replaceLast(
-					resourcePath, ".json",
-					".products.subscriptions.properties.json"),
-				serviceContext);
+			TransactionCommitCallbackUtil.registerCallback(
+				() -> {
+					_addSkuSubscriptions(
+						StringUtil.replaceLast(
+							resourcePath, ".json",
+							".products.subscriptions.properties.json"),
+						serviceContext);
+
+					return null;
+				});
 		}
 	}
 
@@ -2424,7 +2430,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 				CPInstance cpInstance =
 					_commerceReferencesHolder.cpInstanceLocalService.
 						getCPInstance(
-							cpDefinition.getCPDefinitionId(), "INSTALLMENT");
+							cpDefinition.getCPDefinitionId(),
+							subscriptionPropertiesJSONObject.getString(
+								"cpInstanceSku"));
 
 				_commerceReferencesHolder.cpInstanceLocalService.
 					updateSubscriptionInfo(

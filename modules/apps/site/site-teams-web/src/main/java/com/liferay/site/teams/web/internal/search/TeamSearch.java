@@ -65,7 +65,7 @@ public class TeamSearch extends SearchContainer<Team> {
 		setOrderByType(orderByType);
 	}
 
-	private static OrderByComparator<Team> _getOrderByComparator(
+	private OrderByComparator<Team> _getOrderByComparator(
 		String orderByCol, String orderByType) {
 
 		OrderByComparator<Team> orderByComparator = null;

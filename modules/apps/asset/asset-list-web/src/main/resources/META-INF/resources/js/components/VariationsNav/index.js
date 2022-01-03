@@ -12,8 +12,8 @@
  * details.
  */
 
-import {ClayButtonWithIcon} from '@clayui/button';
-import ClayLink from '@clayui/link';
+import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
+import ClayEmptyState from '@clayui/empty-state';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -28,6 +28,25 @@ const VariationsNav = ({
 	segmentsEntriesAvailables,
 	updateVariationsPriorityURL,
 }) => {
+	const states = {
+		createTheFirstSegment:
+			segmentsEntriesAvailables &&
+			assetListEntrySegmentsEntryRels.length === 1,
+		default() {
+			return !this.emptyState && !this.createTheFirstSegment;
+		},
+		defaultWithHeaderButton() {
+			return (
+				!this.createTheFirstSegment &&
+				segmentsEntriesAvailables &&
+				assetListEntryValid
+			);
+		},
+		emptyState:
+			!segmentsEntriesAvailables &&
+			assetListEntrySegmentsEntryRels.length === 1,
+	};
+
 	const handleAddVariation = () => {
 		const callback = window[openSelectSegmentsEntryDialogMethod];
 
@@ -45,43 +64,56 @@ const VariationsNav = ({
 					{Liferay.Language.get('personalized-variations')}
 				</p>
 
-				<ClayTooltipProvider>
-					<ClayButtonWithIcon
-						data-tooltip-align="top"
-						disabled={
-							!segmentsEntriesAvailables || !assetListEntryValid
-						}
-						displayType="unstyled"
-						onClick={handleAddVariation}
-						small
-						symbol="plus"
-						title={Liferay.Language.get('create-variation')}
-					/>
-				</ClayTooltipProvider>
+				{states.defaultWithHeaderButton() && (
+					<ClayTooltipProvider>
+						<ClayButtonWithIcon
+							data-tooltip-align="top"
+							displayType="unstyled"
+							onClick={handleAddVariation}
+							small
+							symbol="plus"
+							title={Liferay.Language.get('create-variation')}
+						/>
+					</ClayTooltipProvider>
+				)}
 			</div>
 
-			<p className="mb-3 small text-secondary">
-				{Liferay.Language.get(
-					'create-personalized-variations-of-the-collections-for-different-segments'
-				)}
-			</p>
+			{(states.emptyState || states.createTheFirstSegment) && (
+				<ClayEmptyState
+					description={Liferay.Language.get(
+						'no-personalized-variations-were-found'
+					)}
+					title={Liferay.Language.get(
+						'no-personalized-variations-yet'
+					)}
+				>
+					{states.createTheFirstSegment && (
+						<ClayButton
+							displayType="primary"
+							onClick={handleAddVariation}
+							small
+						>
+							{Liferay.Language.get('add-personalized-variation')}
+						</ClayButton>
+					)}
+				</ClayEmptyState>
+			)}
 
-			{!segmentsEntriesAvailables &&
-				assetListEntrySegmentsEntryRels.length < 2 && (
+			{states.default() && (
+				<>
 					<p className="mb-3 small text-secondary">
-						<span>
-							{Liferay.Language.get(
-								'you-need-segments-to-create-a-personalized-variation'
-							)}{' '}
-						</span>
+						{Liferay.Language.get(
+							'create-personalized-variations-of-the-collections-for-different-segments'
+						)}
 					</p>
-				)}
 
-			<SortableList
-				items={assetListEntrySegmentsEntryRels}
-				namespace={portletNamespace}
-				savePriorityURL={updateVariationsPriorityURL}
-			/>
+					<SortableList
+						items={assetListEntrySegmentsEntryRels}
+						namespace={portletNamespace}
+						savePriorityURL={updateVariationsPriorityURL}
+					/>
+				</>
+			)}
 		</>
 	);
 };

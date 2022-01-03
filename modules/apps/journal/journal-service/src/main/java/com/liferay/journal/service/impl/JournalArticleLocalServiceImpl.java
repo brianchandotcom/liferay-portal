@@ -2920,6 +2920,78 @@ public class JournalArticleLocalServiceImpl
 			ddmStructureKey, locale, queryDefinition);
 	}
 
+	@Override
+	public List<Long> getArticlesClassPKsWithDefaultDisplayPage(
+		long groupId, long classTypeId) {
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.
+				fetchDefaultLayoutPageTemplateEntry(
+					groupId,
+					_portal.getClassNameId(JournalArticle.class.getName()),
+					classTypeId);
+
+		if (layoutPageTemplateEntry == null) {
+			return Collections.emptyList();
+		}
+
+		JournalArticleTable aliasJournalArticleTable =
+			JournalArticleTable.INSTANCE.as("aliasJournalArticleTable");
+
+		DDMStructure ddmStructure = _ddmStructureLocalService.fetchDDMStructure(
+			layoutPageTemplateEntry.getClassTypeId());
+
+		return journalArticlePersistence.dslQuery(
+			DSLQueryFactoryUtil.selectDistinct(
+				JournalArticleTable.INSTANCE.resourcePrimKey
+			).from(
+				JournalArticleTable.INSTANCE
+			).where(
+				JournalArticleTable.INSTANCE.groupId.eq(
+					groupId
+				).and(
+					JournalArticleTable.INSTANCE.DDMStructureKey.eq(
+						ddmStructure.getStructureKey())
+				).and(
+					JournalArticleTable.INSTANCE.layoutUuid.isNull()
+				).and(
+					JournalArticleTable.INSTANCE.status.eq(
+						WorkflowConstants.STATUS_APPROVED)
+				).and(
+					JournalArticleTable.INSTANCE.version.in(
+						DSLQueryFactoryUtil.select(
+							DSLFunctionFactoryUtil.max(
+								aliasJournalArticleTable.version)
+						).from(
+							aliasJournalArticleTable
+						).where(
+							aliasJournalArticleTable.resourcePrimKey.eq(
+								JournalArticleTable.INSTANCE.resourcePrimKey
+							).and(
+								aliasJournalArticleTable.status.eq(
+									WorkflowConstants.STATUS_APPROVED)
+							)
+						))
+				).and(
+					JournalArticleTable.INSTANCE.resourcePrimKey.notIn(
+						DSLQueryFactoryUtil.select(
+							AssetDisplayPageEntryTable.INSTANCE.classPK
+						).from(
+							AssetDisplayPageEntryTable.INSTANCE
+						).where(
+							AssetDisplayPageEntryTable.INSTANCE.groupId.eq(
+								groupId
+							).and(
+								AssetDisplayPageEntryTable.INSTANCE.classNameId.
+									eq(
+										_portal.getClassNameId(
+											JournalArticle.class.getName()))
+							)
+						))
+				)
+			));
+	}
+
 	/**
 	 * Returns the number of web content articles belonging to the group.
 	 *
@@ -3132,78 +3204,6 @@ public class JournalArticleLocalServiceImpl
 		}
 
 		return journalArticlePersistence.countByC_ST(companyId, status);
-	}
-
-	@Override
-	public List<Long> getArticlesClassPKsWithDefaultDisplayPage(
-		long groupId, long classTypeId) {
-
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_layoutPageTemplateEntryLocalService.
-				fetchDefaultLayoutPageTemplateEntry(
-					groupId,
-					_portal.getClassNameId(JournalArticle.class.getName()),
-					classTypeId);
-
-		if (layoutPageTemplateEntry == null) {
-			return Collections.emptyList();
-		}
-
-		JournalArticleTable aliasJournalArticleTable =
-			JournalArticleTable.INSTANCE.as("aliasJournalArticleTable");
-
-		DDMStructure ddmStructure = _ddmStructureLocalService.fetchDDMStructure(
-			layoutPageTemplateEntry.getClassTypeId());
-
-		return journalArticlePersistence.dslQuery(
-			DSLQueryFactoryUtil.selectDistinct(
-				JournalArticleTable.INSTANCE.resourcePrimKey
-			).from(
-				JournalArticleTable.INSTANCE
-			).where(
-				JournalArticleTable.INSTANCE.groupId.eq(
-					groupId
-				).and(
-					JournalArticleTable.INSTANCE.DDMStructureKey.eq(
-						ddmStructure.getStructureKey())
-				).and(
-					JournalArticleTable.INSTANCE.layoutUuid.isNull()
-				).and(
-					JournalArticleTable.INSTANCE.status.eq(
-						WorkflowConstants.STATUS_APPROVED)
-				).and(
-					JournalArticleTable.INSTANCE.version.in(
-						DSLQueryFactoryUtil.select(
-							DSLFunctionFactoryUtil.max(
-								aliasJournalArticleTable.version)
-						).from(
-							aliasJournalArticleTable
-						).where(
-							aliasJournalArticleTable.resourcePrimKey.eq(
-								JournalArticleTable.INSTANCE.resourcePrimKey
-							).and(
-								aliasJournalArticleTable.status.eq(
-									WorkflowConstants.STATUS_APPROVED)
-							)
-						))
-				).and(
-					JournalArticleTable.INSTANCE.resourcePrimKey.notIn(
-						DSLQueryFactoryUtil.select(
-							AssetDisplayPageEntryTable.INSTANCE.classPK
-						).from(
-							AssetDisplayPageEntryTable.INSTANCE
-						).where(
-							AssetDisplayPageEntryTable.INSTANCE.groupId.eq(
-								groupId
-							).and(
-								AssetDisplayPageEntryTable.INSTANCE.classNameId.
-									eq(
-										_portal.getClassNameId(
-											JournalArticle.class.getName()))
-							)
-						))
-				)
-			));
 	}
 
 	/**

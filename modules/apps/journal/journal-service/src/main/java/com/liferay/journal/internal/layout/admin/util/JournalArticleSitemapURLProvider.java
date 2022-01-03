@@ -19,9 +19,12 @@ import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
 import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.internal.util.JournalUtil;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.layout.admin.kernel.util.Sitemap;
 import com.liferay.layout.admin.kernel.util.SitemapURLProvider;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
@@ -150,6 +153,21 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 		List<Long> resourcePrimKeys =
 			_assetDisplayPageEntryLocalService.dynamicQuery(
 				assetDisplayPageEntryDynamicQuery);
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.
+				fetchLayoutPageTemplateEntryByPlid(layout.getPlid());
+
+		if ((layoutPageTemplateEntry != null) &&
+			layoutPageTemplateEntry.isDefaultTemplate()) {
+
+			resourcePrimKeys = new ArrayList<>(resourcePrimKeys);
+
+			resourcePrimKeys.addAll(
+				_journalArticleLocalService.getDefaultDisplayPageClassPKs(
+					layoutPageTemplateEntry.getGroupId(),
+					layoutPageTemplateEntry.getClassTypeId()));
+		}
 
 		for (Long resourcePrimKey : resourcePrimKeys) {
 			try {
@@ -288,10 +306,17 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 		_assetDisplayPageEntryLocalService;
 
 	@Reference
+	private JournalArticleLocalService _journalArticleLocalService;
+
+	@Reference
 	private JournalArticleService _journalArticleService;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
 
 	@Reference
 	private LayoutSetLocalService _layoutSetLocalService;

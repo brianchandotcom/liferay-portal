@@ -16,7 +16,7 @@ import ClayLayout from '@clayui/layout';
 import {TranslationAdminSelector} from 'frontend-js-components-web';
 import React from 'react';
 
-export default function TranslationManagerSampleReact({
+export default function TranslationManagerSamples({
 	activeLanguageIds,
 	availableLocalesJsp,
 	defaultLanguageId,

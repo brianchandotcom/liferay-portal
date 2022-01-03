@@ -22,9 +22,10 @@ import React, {useEffect, useMemo, useState} from 'react';
 import {ErrorCode, useDropzone} from 'react-dropzone';
 
 import ItemSelectorPreview from '../../item_selector_preview/js/ItemSelectorPreview.es';
-import DragFileIcon from './DragFileIcon';
-import getPreviewProps from './getPreviewProps';
-import {getUploadErrorMessage, sendFile} from './utils';
+import DragFileIcon from './components/DragFileIcon';
+import getPreviewProps from './utils/getPreviewProps';
+import getUploadErrorMessage from './utils/getUploadErrorMessage';
+import sendFile from './utils/sendFile';
 
 function SingleFileUploader({
 	closeCaption,
@@ -99,6 +100,7 @@ function SingleFileUploader({
 		if (file) {
 			const client = sendFile({
 				file,
+				fileFieldName: 'imageSelectorFileName',
 				onError: () => {
 					if (!isMounted()) {
 						return;

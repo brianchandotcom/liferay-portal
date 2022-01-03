@@ -745,6 +745,12 @@ definition {
 		CalendarScheduler.viewSpecificEventNotPresent(eventTitle = "${eventTitle}");
 	}
 
+	macro disableEventBySiteCalendarName {
+		Click(
+			key_calendarName = "${calendarName}",
+			locator1 = "Calendar#CURRENT_SITE_CALENDARS_CALENDAR_PRIMARY");
+	}
+
 	macro edit {
 		CalendarNavigator.gotoEditEvent(
 			eventTitle = "${eventTitle}",
@@ -2063,12 +2069,6 @@ definition {
 		}
 
 		CalendarScheduler.viewAgenda(eventTitle = "${eventTitle}");
-	}
-
-	macro disableEventBySiteCalendarName {
-		Click(
-			key_calendarName = "${calendarName}",
-			locator1 = "Calendar#CURRENT_SITE_CALENDARS_CALENDAR_PRIMARY");
 	}
 
 }

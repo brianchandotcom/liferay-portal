@@ -54,10 +54,10 @@ definition {
 		Click(locator1 = "Calendar#SCHEDULER_VIEW_${viewTypeUppercase}_CURRENT_DAY");
 	}
 
-	macro gotoAddEventViaMyCalendars {
+	macro gotoAddEventViaCurrentSite {
 		Click(
-			key_user = "${user}",
-			locator1 = "Calendar#MY_CALENDARS_CALENDAR_PRIMARY_MENULIST_ARROW");
+			key_site = "${site}",
+			locator1 = "Calendar#CURRENT_SITE_CALENDARS_CALENDAR_PRIMARY_MENULIST_ARROW");
 
 		AssertClick(
 			locator1 = "Calendar#OTHER_CALENDARS_CALENDAR_MENULIST_ADD_EVENT",
@@ -68,10 +68,10 @@ definition {
 		CalendarEvent._viewNewEventIframe();
 	}
 
-	macro gotoAddEventViaCurrentSite {
+	macro gotoAddEventViaMyCalendars {
 		Click(
-			key_site = "${site}",
-			locator1 = "Calendar#CURRENT_SITE_CALENDARS_CALENDAR_PRIMARY_MENULIST_ARROW");
+			key_user = "${user}",
+			locator1 = "Calendar#MY_CALENDARS_CALENDAR_PRIMARY_MENULIST_ARROW");
 
 		AssertClick(
 			locator1 = "Calendar#OTHER_CALENDARS_CALENDAR_MENULIST_ADD_EVENT",

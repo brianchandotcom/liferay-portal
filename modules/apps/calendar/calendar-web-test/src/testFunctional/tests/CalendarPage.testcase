@@ -164,8 +164,6 @@ definition {
 		CalendarEvent.disableEventBySiteCalendarName(calendarName = "Liferay DXP");
 
 		CalendarScheduler.viewSpecificEventNotPresent(eventTitle = "Calendar Event Title2");
-
-		
 	}
 
 	@description = "LRQA-72024 - Verify that the user can hide/show the sidebar"

@@ -46,21 +46,21 @@ DispatchLog dispatchLog = dispatchLogDisplayContext.getDispatchLog();
 					</clay:row>
 
 					<clay:row>
-
-						<%
-						DispatchTaskStatus dispatchTaskStatus = DispatchTaskStatus.valueOf(dispatchLog.getStatus());
-						%>
-
 						<clay:col
 							md="2"
 						>
 							<%= LanguageUtil.get(request, "status") %>
 						</clay:col>
 
+						<%
+						DispatchTaskStatus dispatchTaskStatus = DispatchTaskStatus.valueOf(dispatchLog.getStatus());
+						%>
+
 						<clay:col
+							cssClass='<%= String.format("background-task-status-row background-task-status-%s %s", dispatchTaskStatus.getLabel(), dispatchTaskStatus.getCssClass()) %>'
 							md="8"
 						>
-							<%= dispatchTaskStatus.valueOf(dispatchLog.getStatus()) %>
+							<h6><%= LanguageUtil.get(request, dispatchTaskStatus.getLabel()) %></h6>
 						</clay:col>
 					</clay:row>
 

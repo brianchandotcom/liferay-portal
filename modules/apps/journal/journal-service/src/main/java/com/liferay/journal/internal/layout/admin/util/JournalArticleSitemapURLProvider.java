@@ -81,12 +81,12 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 
 		if (layout.isTypeAssetDisplay()) {
 			visitArticles(
-				element, layoutSet, themeDisplay,
+				element, layout, layoutSet, themeDisplay,
 				getDisplayPageTemplateArticles(layout), false);
 		}
 		else {
 			visitArticles(
-				element, layoutSet, themeDisplay,
+				element, null, layoutSet, themeDisplay,
 				_getDisplayPageArticles(layoutSet.getGroupId(), layoutUuid),
 				true);
 		}
@@ -112,7 +112,8 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 			_journalArticleService.getLayoutArticles(
 				layoutSet.getGroupId(), start, end);
 
-		visitArticles(element, layoutSet, themeDisplay, journalArticles, true);
+		visitArticles(
+			element, null, layoutSet, themeDisplay, journalArticles, true);
 	}
 
 	protected List<JournalArticle> getDisplayPageTemplateArticles(
@@ -208,8 +209,9 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 	}
 
 	protected void visitArticles(
-			Element element, LayoutSet layoutSet, ThemeDisplay themeDisplay,
-			List<JournalArticle> journalArticles, boolean headCheck)
+			Element element, Layout layout, LayoutSet layoutSet,
+			ThemeDisplay themeDisplay, List<JournalArticle> journalArticles,
+			boolean headCheck)
 		throws PortalException {
 
 		if (journalArticles.isEmpty()) {
@@ -229,22 +231,22 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 				continue;
 			}
 
-			String journalArticleLayoutUuid = journalArticle.getLayoutUuid();
+			Layout articleLayout = layout;
 
-			Layout layout = null;
+			if ((articleLayout == null) &&
+				Validator.isNotNull(journalArticle.getLayoutUuid())) {
 
-			if (Validator.isNotNull(journalArticleLayoutUuid)) {
-				layout = _layoutLocalService.fetchLayoutByUuidAndGroupId(
-					journalArticleLayoutUuid, layoutSet.getGroupId(),
+				articleLayout = _layoutLocalService.fetchLayoutByUuidAndGroupId(
+					journalArticle.getLayoutUuid(), layoutSet.getGroupId(),
 					layoutSet.isPrivateLayout());
 			}
-			else {
-				layout = getDisplayPageTemplateLayout(
+			else if (articleLayout == null) {
+				articleLayout = getDisplayPageTemplateLayout(
 					layoutSet.getGroupId(),
 					journalArticle.getResourcePrimKey());
 			}
 
-			if (layout == null) {
+			if (articleLayout == null) {
 				continue;
 			}
 
@@ -264,10 +266,10 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 			sb.append(journalArticle.getUrlTitle());
 
 			String articleURL = _portal.getCanonicalURL(
-				sb.toString(), themeDisplay, layout);
+				sb.toString(), themeDisplay, articleLayout);
 
 			Map<Locale, String> alternateURLs = _sitemap.getAlternateURLs(
-				articleURL, themeDisplay, layout);
+				articleURL, themeDisplay, articleLayout);
 
 			for (String alternateURL : alternateURLs.values()) {
 				_sitemap.addURLElement(

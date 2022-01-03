@@ -139,12 +139,33 @@ definition {
 	}
 
 	@description = "LRQA-72024 - Verify that the user can hide Events from a specific Calendar"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanHideEvents {
+		CalendarNavigator.gotoAddEventViaMyCalendars(user = "Test Test");
 
-		// TODO LRQA-72034 CanHideEvents pending implementation
+		CalendarEvent.editTitle(eventTitle = "Calendar Event Title1");
 
+		CalendarEvent.publish();
+
+		IFrame.closeFrame();
+
+		CalendarNavigator.gotoAddEventViaCurrentSite(site = "Liferay DXP");
+
+		CalendarEvent.editTitle(eventTitle = "Calendar Event Title2");
+
+		CalendarEvent.publish();
+
+		IFrame.closeFrame();
+
+		CalendarScheduler.selectSpecificEvent(eventTitle = "Calendar Event Title1");
+
+		CalendarScheduler.selectSpecificEvent(eventTitle = "Calendar Event Title2");
+
+		CalendarEvent.disableEventBySiteCalendarName(calendarName = "Liferay DXP");
+
+		CalendarScheduler.viewSpecificEventNotPresent(eventTitle = "Calendar Event Title2");
+
+		
 	}
 
 	@description = "LRQA-72024 - Verify that the user can hide/show the sidebar"

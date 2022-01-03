@@ -153,11 +153,6 @@ public class FileEntryInfoItemFieldValuesProviderTest {
 		implements InfoItemFieldReader<FileEntry> {
 
 		@Override
-		public InfoField getField() {
-			return null;
-		}
-
-		@Override
 		public InfoField getInfoField() {
 			return InfoField.builder(
 			).infoFieldType(

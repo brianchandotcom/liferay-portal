@@ -33,16 +33,6 @@ import org.osgi.service.component.annotations.Reference;
 public class BlogsEntryReadingTimeInfoItemFieldReader
 	implements InfoItemFieldReader<BlogsEntry> {
 
-	/**
-	 *   @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *          #getInfoField()}
-	 */
-	@Deprecated
-	@Override
-	public InfoField getField() {
-		return getInfoField();
-	}
-
 	@Override
 	public InfoField getInfoField() {
 		return InfoField.builder(

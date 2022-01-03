@@ -53,6 +53,16 @@ public interface PortalInstanceResource {
 			PortalInstance portalInstance)
 		throws Exception;
 
+	public PortalInstance postPortalInstanceWithAdminInfo(
+			String adminEmailAddress, String adminFirstName,
+			String adminLastName, PortalInstance portalInstance)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse postPortalInstanceWithAdminInfoHttpResponse(
+			String adminEmailAddress, String adminFirstName,
+			String adminLastName, PortalInstance portalInstance)
+		throws Exception;
+
 	public void deletePortalInstance(String portalInstanceId) throws Exception;
 
 	public HttpInvoker.HttpResponse deletePortalInstanceHttpResponse(
@@ -318,6 +328,108 @@ public interface PortalInstanceResource {
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
 						"/o/headless-portal-instances/v1.0/portal-instances");
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public PortalInstance postPortalInstanceWithAdminInfo(
+				String adminEmailAddress, String adminFirstName,
+				String adminLastName, PortalInstance portalInstance)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				postPortalInstanceWithAdminInfoHttpResponse(
+					adminEmailAddress, adminFirstName, adminLastName,
+					portalInstance);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+
+			try {
+				return PortalInstanceSerDes.toDTO(content);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse
+				postPortalInstanceWithAdminInfoHttpResponse(
+					String adminEmailAddress, String adminFirstName,
+					String adminLastName, PortalInstance portalInstance)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(portalInstance.toString(), "application/json");
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+			if (adminEmailAddress != null) {
+				httpInvoker.parameter(
+					"adminEmailAddress", String.valueOf(adminEmailAddress));
+			}
+
+			if (adminFirstName != null) {
+				httpInvoker.parameter(
+					"adminFirstName", String.valueOf(adminFirstName));
+			}
+
+			if (adminLastName != null) {
+				httpInvoker.parameter(
+					"adminLastName", String.valueOf(adminLastName));
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/headless-portal-instances/v1.0/portal-instances/with-admin-info");
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

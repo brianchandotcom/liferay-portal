@@ -78,33 +78,37 @@ DispatchLog dispatchLog = dispatchLogDisplayContext.getDispatchLog();
 						</clay:col>
 					</clay:row>
 
-					<clay:row>
-						<clay:col
-							md="2"
-						>
-							<%= LanguageUtil.get(request, "error") %>
-						</clay:col>
+					<c:if test="<%= dispatchLog.getError() != null %>">
+						<clay:row>
+							<clay:col
+								md="2"
+							>
+								<%= LanguageUtil.get(request, "error") %>
+							</clay:col>
 
-						<clay:col
-							md="8"
-						>
-							<%= dispatchLog.getError() %>
-						</clay:col>
-					</clay:row>
+							<clay:col
+								md="8"
+							>
+								<pre><%= dispatchLog.getError() %></pre>
+							</clay:col>
+						</clay:row>
+					</c:if>
 
-					<clay:row>
-						<clay:col
-							md="2"
-						>
-							<%= LanguageUtil.get(request, "output") %>
-						</clay:col>
+					<c:if test="<%= dispatchLog.getOutput() != null %>">
+						<clay:row>
+							<clay:col
+								md="2"
+							>
+								<%= LanguageUtil.get(request, "output") %>
+							</clay:col>
 
-						<clay:col
-							md="8"
-						>
-							<%= dispatchLog.getOutput() %>
-						</clay:col>
-					</clay:row>
+							<clay:col
+								md="8"
+							>
+								<pre><%= dispatchLog.getOutput() %></pre>
+							</clay:col>
+						</clay:row>
+					</c:if>
 				</clay:content-col>
 			</clay:content-row>
 

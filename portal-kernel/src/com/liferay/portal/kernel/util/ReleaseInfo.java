@@ -145,6 +145,10 @@ public class ReleaseInfo {
 		return _VERSION;
 	}
 
+	public static String getVersionDisplayName() {
+		return _VERSION_DISPLAY_NAME;
+	}
+
 	private static final String _BUILD = "@release.info.build@";
 
 	private static final int _BUILD_NUMBER = GetterUtil.getInteger(_BUILD);

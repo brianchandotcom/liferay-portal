@@ -95,6 +95,10 @@ public class ProjectTemplatesFormFieldWorkspaceReactTest
 				"\"com.liferay.dynamic.data.mapping.form.field.type\"",
 			DEPENDENCY_PORTAL_KERNEL);
 		testContains(
+			gradleProjectDir, "package.json", "\"@babel/cli\": \"^7.2.3\"",
+			"\"@liferay/portal-" + _liferayVersion.substring(0, 3) +
+				"\": \"*\"");
+		testContains(
 			gradleProjectDir,
 			"src/main/java/foobar/form/field/FoobarDDMFormFieldType.java",
 			"com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;",

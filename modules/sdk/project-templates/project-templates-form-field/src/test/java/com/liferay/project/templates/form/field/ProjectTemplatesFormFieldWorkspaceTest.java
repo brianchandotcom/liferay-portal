@@ -94,6 +94,11 @@ public class ProjectTemplatesFormFieldWorkspaceTest
 			gradleProjectDir, "bnd.bnd", "Provide-Capability:", "soy;",
 			"type:String=\"LiferayFormField\"");
 		testContains(
+			gradleProjectDir, "package.json", "\"@babel/cli\": \"^7.2.3\"",
+			"\"@liferay/portal-" + _liferayVersion.substring(0, 3) +
+				"\": \"*\"",
+			"\"metal-tools-soy\": \"4.3.2\"");
+		testContains(
 			gradleProjectDir, "build.gradle",
 			"compileOnly group: \"com.liferay\", name: " +
 				"\"com.liferay.dynamic.data.mapping.api\"",

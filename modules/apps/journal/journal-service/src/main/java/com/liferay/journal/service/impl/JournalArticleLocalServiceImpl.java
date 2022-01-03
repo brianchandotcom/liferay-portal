@@ -15,6 +15,7 @@
 package com.liferay.journal.service.impl;
 
 import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
+import com.liferay.asset.display.page.model.AssetDisplayPageEntryTable;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
 import com.liferay.asset.display.page.util.AssetDisplayPageUtil;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
@@ -81,6 +82,7 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleDisplay;
 import com.liferay.journal.model.JournalArticleLocalization;
 import com.liferay.journal.model.JournalArticleResource;
+import com.liferay.journal.model.JournalArticleTable;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.model.impl.JournalArticleDisplayImpl;
 import com.liferay.journal.model.impl.JournalArticleImpl;
@@ -98,6 +100,10 @@ import com.liferay.journal.util.comparator.ArticleVersionComparator;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.xml.XMLUtil;
@@ -222,6 +228,7 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -3125,6 +3132,78 @@ public class JournalArticleLocalServiceImpl
 		}
 
 		return journalArticlePersistence.countByC_ST(companyId, status);
+	}
+
+	@Override
+	public List<Long> getDefaultDisplayPageClassPKs(
+		long groupId, long classTypeId) {
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.
+				fetchDefaultLayoutPageTemplateEntry(
+					groupId,
+					_portal.getClassNameId(JournalArticle.class.getName()),
+					classTypeId);
+
+		if (layoutPageTemplateEntry == null) {
+			return Collections.emptyList();
+		}
+
+		JournalArticleTable aliasJournalArticleTable =
+			JournalArticleTable.INSTANCE.as("aliasJournalArticleTable");
+
+		DDMStructure ddmStructure = _ddmStructureLocalService.fetchDDMStructure(
+			layoutPageTemplateEntry.getClassTypeId());
+
+		return journalArticlePersistence.dslQuery(
+			DSLQueryFactoryUtil.selectDistinct(
+				JournalArticleTable.INSTANCE.resourcePrimKey
+			).from(
+				JournalArticleTable.INSTANCE
+			).where(
+				JournalArticleTable.INSTANCE.groupId.eq(
+					groupId
+				).and(
+					JournalArticleTable.INSTANCE.DDMStructureKey.eq(
+						ddmStructure.getStructureKey())
+				).and(
+					JournalArticleTable.INSTANCE.layoutUuid.isNull()
+				).and(
+					JournalArticleTable.INSTANCE.status.eq(
+						WorkflowConstants.STATUS_APPROVED)
+				).and(
+					JournalArticleTable.INSTANCE.version.in(
+						DSLQueryFactoryUtil.select(
+							DSLFunctionFactoryUtil.max(
+								aliasJournalArticleTable.version)
+						).from(
+							aliasJournalArticleTable
+						).where(
+							aliasJournalArticleTable.resourcePrimKey.eq(
+								JournalArticleTable.INSTANCE.resourcePrimKey
+							).and(
+								aliasJournalArticleTable.status.eq(
+									WorkflowConstants.STATUS_APPROVED)
+							)
+						))
+				).and(
+					JournalArticleTable.INSTANCE.resourcePrimKey.notIn(
+						DSLQueryFactoryUtil.select(
+							AssetDisplayPageEntryTable.INSTANCE.classPK
+						).from(
+							AssetDisplayPageEntryTable.INSTANCE
+						).where(
+							AssetDisplayPageEntryTable.INSTANCE.groupId.eq(
+								groupId
+							).and(
+								AssetDisplayPageEntryTable.INSTANCE.classNameId.
+									eq(
+										_portal.getClassNameId(
+											JournalArticle.class.getName()))
+							)
+						))
+				)
+			));
 	}
 
 	/**
@@ -9250,6 +9329,10 @@ public class JournalArticleLocalServiceImpl
 
 	@Reference
 	private LayoutDisplayPageProviderTracker _layoutDisplayPageProviderTracker;
+
+	@Reference
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
 
 	@Reference
 	private Portal _portal;

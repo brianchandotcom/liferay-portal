@@ -1,0 +1,11 @@
+.lfr-ddm__custom-date {
+	column-gap: 8px;
+	display: inline-grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	justify-items: stretch;
+	margin-bottom: 24px;
+
+	&-select {
+		overflow: hidden;
+	}
+}

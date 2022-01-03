@@ -1991,6 +1991,14 @@ public class JournalArticleLocalServiceWrapper
 			companyId, status);
 	}
 
+	@Override
+	public java.util.List<Long> getDefaultDisplayPageClassPKs(
+		long groupId, long classTypeId) {
+
+		return _journalArticleLocalService.getDefaultDisplayPageClassPKs(
+			groupId, classTypeId);
+	}
+
 	/**
 	 * Returns the matching web content article currently displayed or next to
 	 * be displayed if no article is currently displayed.

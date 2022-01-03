@@ -1570,6 +1570,10 @@ public interface JournalArticleLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCompanyArticlesCount(long companyId, int status);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Long> getDefaultDisplayPageClassPKs(
+		long groupId, long classTypeId);
+
 	/**
 	 * Returns the matching web content article currently displayed or next to
 	 * be displayed if no article is currently displayed.

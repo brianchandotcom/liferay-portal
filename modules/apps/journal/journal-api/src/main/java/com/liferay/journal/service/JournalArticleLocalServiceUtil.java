@@ -1867,6 +1867,12 @@ public class JournalArticleLocalServiceUtil {
 		return getService().getCompanyArticlesCount(companyId, status);
 	}
 
+	public static List<Long> getDefaultDisplayPageClassPKs(
+		long groupId, long classTypeId) {
+
+		return getService().getDefaultDisplayPageClassPKs(groupId, classTypeId);
+	}
+
 	/**
 	 * Returns the matching web content article currently displayed or next to
 	 * be displayed if no article is currently displayed.

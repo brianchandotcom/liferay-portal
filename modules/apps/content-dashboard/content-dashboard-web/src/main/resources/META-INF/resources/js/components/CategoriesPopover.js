@@ -15,9 +15,17 @@
 import ClayLabel from '@clayui/label';
 import ClayPopover from '@clayui/popover';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useState} from 'react';
+
+import useOnClickOutside from '../hooks/useOnClickOutside';
 
 const CategoriesPopover = ({categories, vocabulary}) => {
+	const [openPopover, setOpenPopover] = useState(false);
+
+	useOnClickOutside(['.categories-popover', '.category-label-see-more'], () =>
+		setOpenPopover(false)
+	);
+
 	return (
 		<ClayPopover
 			alignPosition="top"
@@ -26,8 +34,17 @@ const CategoriesPopover = ({categories, vocabulary}) => {
 			header={`${categories.length} ${vocabulary} ${Liferay.Language.get(
 				'categories'
 			)}`}
+			onShowChange={setOpenPopover}
+			show={openPopover}
 			trigger={
-				<ClayLabel className="category-label-see-more" large={true}>
+				<ClayLabel
+					className="category-label-see-more"
+					large={true}
+					onClick={(event) => {
+						event.preventDefault();
+						setOpenPopover((open) => !open);
+					}}
+				>
 					{`+ ${categories.length}`}
 				</ClayLabel>
 			}

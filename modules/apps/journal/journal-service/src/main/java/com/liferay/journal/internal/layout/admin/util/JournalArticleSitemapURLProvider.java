@@ -16,6 +16,7 @@ package com.liferay.journal.internal.layout.admin.util;
 
 import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.internal.util.JournalUtil;
 import com.liferay.journal.model.JournalArticle;
@@ -191,7 +192,8 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 	}
 
 	protected Layout getDisplayPageTemplateLayout(
-		long groupId, long journalArticleResourcePrimKey) {
+		long groupId, long journalArticleResourcePrimKey,
+		DDMStructure ddmStructure) {
 
 		long classNameId = _portal.getClassNameId(
 			JournalArticle.class.getName());
@@ -201,7 +203,17 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 				groupId, classNameId, journalArticleResourcePrimKey);
 
 		if (assetDisplayPageEntry == null) {
-			return null;
+			LayoutPageTemplateEntry layoutPageTemplateEntry =
+				_layoutPageTemplateEntryLocalService.
+					fetchDefaultLayoutPageTemplateEntry(
+						groupId, classNameId, ddmStructure.getStructureId());
+
+			if (layoutPageTemplateEntry == null) {
+				return null;
+			}
+
+			return _layoutLocalService.fetchLayout(
+				layoutPageTemplateEntry.getPlid());
 		}
 
 		long assetDisplayPageEntryPlid = assetDisplayPageEntry.getPlid();
@@ -243,8 +255,8 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 			}
 			else if (articleLayout == null) {
 				articleLayout = getDisplayPageTemplateLayout(
-					layoutSet.getGroupId(),
-					journalArticle.getResourcePrimKey());
+					layoutSet.getGroupId(), journalArticle.getResourcePrimKey(),
+					journalArticle.getDDMStructure());
 			}
 
 			if (articleLayout == null) {

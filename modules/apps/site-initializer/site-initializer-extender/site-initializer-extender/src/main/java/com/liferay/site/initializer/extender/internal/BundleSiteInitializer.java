@@ -2359,7 +2359,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(json);
 
 		for (int i = 0; i < jsonArray.length(); i++) {
-			JSONObject jsonObject = jsonArray.getJSONObject(i);
+			JSONObject subscriptionPropertiesJSONObject =
+				jsonArray.getJSONObject(i);
 
 			Page<Option> optionsPage = optionResource.getOptionsPage(
 				null,
@@ -2367,7 +2368,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 					StringBundler.concat(
 						"name eq '",
 						StringUtil.toLowerCase(
-							jsonObject.getString("optionName")),
+							subscriptionPropertiesJSONObject.getString(
+								"optionName")),
 						"'")),
 				null, null);
 
@@ -2392,7 +2394,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				CPDefinition cpDefinition =
 					_commerceReferencesHolder.cpDefinitionLocalService.
 						fetchCPDefinitionByCProductExternalReferenceCode(
-							jsonObject.getString(
+							subscriptionPropertiesJSONObject.getString(
 								"cpDefinitionExternalReferenceCode"),
 							serviceContext.getCompanyId());
 
@@ -2404,10 +2406,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 						cpDefinition.getCPDefinitionId(), serviceContext);
 
 				JSONObject subscriptionTypeSettingsJSONObject =
-					jsonObject.getJSONObject("subscriptionTypeSettings");
+					subscriptionPropertiesJSONObject.getJSONObject(
+						"subscriptionTypeSettings");
 
-				UnicodeProperties unicodeProperties =
-					new UnicodeProperties();
+				UnicodeProperties unicodeProperties = new UnicodeProperties();
 
 				if (subscriptionTypeSettingsJSONObject != null) {
 					for (String key :
@@ -2427,17 +2429,26 @@ public class BundleSiteInitializer implements SiteInitializer {
 				_commerceReferencesHolder.cpInstanceLocalService.
 					updateSubscriptionInfo(
 						cpInstance.getCPInstanceId(),
-						jsonObject.getBoolean("overrideSubscriptionInfo"),
-						jsonObject.getBoolean("subscriptionEnabled"),
-						jsonObject.getInt("subscriptionLength"),
-						jsonObject.getString("subscriptionType"),
+						subscriptionPropertiesJSONObject.getBoolean(
+							"overrideSubscriptionInfo"),
+						subscriptionPropertiesJSONObject.getBoolean(
+							"subscriptionEnabled"),
+						subscriptionPropertiesJSONObject.getInt(
+							"subscriptionLength"),
+						subscriptionPropertiesJSONObject.getString(
+							"subscriptionType"),
 						unicodeProperties,
-						jsonObject.getLong("maxSubscriptionCycles"),
-						jsonObject.getBoolean("deliverySubscriptionEnabled"),
-						jsonObject.getInt("deliverySubscriptionLength"),
-						jsonObject.getString("deliverySubscriptionType"),
+						subscriptionPropertiesJSONObject.getLong(
+							"maxSubscriptionCycles"),
+						subscriptionPropertiesJSONObject.getBoolean(
+							"deliverySubscriptionEnabled"),
+						subscriptionPropertiesJSONObject.getInt(
+							"deliverySubscriptionLength"),
+						subscriptionPropertiesJSONObject.getString(
+							"deliverySubscriptionType"),
 						new UnicodeProperties(),
-						jsonObject.getLong("deliveryMaxSubscriptionCycles"));
+						subscriptionPropertiesJSONObject.getLong(
+							"deliveryMaxSubscriptionCycles"));
 			}
 		}
 	}

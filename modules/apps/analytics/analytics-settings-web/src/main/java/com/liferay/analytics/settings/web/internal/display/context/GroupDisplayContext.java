@@ -95,33 +95,33 @@ public class GroupDisplayContext {
 		groupSearch.setOrderByCol(_getOrderByCol());
 		groupSearch.setOrderByType(getOrderByType());
 
-		List<Group> groups = Collections.emptyList();
+		groupSearch.setResultsAndTotal(
+			() -> {
+				List<Group> groups = Collections.emptyList();
 
-		try {
-			groups = GroupServiceUtil.search(
+				try {
+					groups = GroupServiceUtil.search(
+						_getCompanyId(), _getClassNameIds(), _getKeywords(),
+						_getGroupParams(), groupSearch.getStart(),
+						groupSearch.getEnd(),
+						new GroupNameComparator(_isOrderByAscending()));
+				}
+				catch (PortalException portalException) {
+					_log.error(portalException, portalException);
+				}
+
+				_fetchChannelNames(groups);
+
+				return groups;
+			},
+			GroupServiceUtil.searchCount(
 				_getCompanyId(), _getClassNameIds(), _getKeywords(),
-				_getGroupParams(), groupSearch.getStart(), groupSearch.getEnd(),
-				new GroupNameComparator(_isOrderByAscending()));
-		}
-		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
-		}
-
-		groupSearch.setResults(groups);
-
-		_fetchChannelNames(groups);
-
+				_getGroupParams()));
 		groupSearch.setRowChecker(
 			new GroupChecker(
 				_renderResponse,
 				ParamUtil.getString(_renderRequest, "channelId"),
 				_getDisabledGroupIds(), _mvcRenderCommandName));
-
-		int total = GroupServiceUtil.searchCount(
-			_getCompanyId(), _getClassNameIds(), _getKeywords(),
-			_getGroupParams());
-
-		groupSearch.setTotal(total);
 
 		return groupSearch;
 	}

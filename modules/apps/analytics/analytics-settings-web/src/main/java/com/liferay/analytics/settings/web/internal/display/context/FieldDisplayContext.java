@@ -126,14 +126,15 @@ public class FieldDisplayContext {
 						"Default Field", entry.getValue(), entry.getKey()));
 			}
 
+			fieldSearch.setResultsAndTotal(
+				() -> fields,
+				_contactFieldNames.size() -
+					REQUIRED_CONTACT_FIELD_NAMES.length);
 			fieldSearch.setRowChecker(
 				new FieldChecker(
 					_mvcRenderCommandName, _renderResponse,
 					recommendedContactFieldNames, REQUIRED_CONTACT_FIELD_NAMES,
 					syncedContactFieldNames));
-			fieldSearch.setTotal(
-				_contactFieldNames.size() -
-					REQUIRED_CONTACT_FIELD_NAMES.length);
 		}
 		else if (StringUtil.equalsIgnoreCase(
 					_mvcRenderCommandName,
@@ -191,17 +192,16 @@ public class FieldDisplayContext {
 						"Custom Field", entry.getValue(), entry.getKey()));
 			}
 
+			fieldSearch.setResultsAndTotal(
+				() -> fields,
+				_userFieldNames.size() + userCustomFieldNames.size() -
+					REQUIRED_USER_FIELD_NAMES.length);
 			fieldSearch.setRowChecker(
 				new FieldChecker(
 					_mvcRenderCommandName, _renderResponse,
 					recommendedUserFieldNames, REQUIRED_USER_FIELD_NAMES,
 					syncedUserFieldNames));
-			fieldSearch.setTotal(
-				_userFieldNames.size() + userCustomFieldNames.size() -
-					REQUIRED_USER_FIELD_NAMES.length);
 		}
-
-		fieldSearch.setResults(fields);
 
 		return fieldSearch;
 	}

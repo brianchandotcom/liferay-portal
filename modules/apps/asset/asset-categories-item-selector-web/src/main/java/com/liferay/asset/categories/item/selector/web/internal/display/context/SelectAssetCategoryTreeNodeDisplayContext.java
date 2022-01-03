@@ -74,8 +74,8 @@ public class SelectAssetCategoryTreeNodeDisplayContext {
 
 		List<AssetCategory> assetCategories = _getAssetCategories();
 
-		searchContainer.setResults(assetCategories);
-		searchContainer.setTotal(assetCategories.size());
+		searchContainer.setResultsAndTotal(
+			() -> assetCategories, assetCategories.size());
 
 		return searchContainer;
 	}

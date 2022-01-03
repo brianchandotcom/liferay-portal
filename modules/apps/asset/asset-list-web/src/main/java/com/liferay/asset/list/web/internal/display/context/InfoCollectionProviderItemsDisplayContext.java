@@ -134,8 +134,8 @@ public class InfoCollectionProviderItemsDisplayContext {
 		InfoPage infoPage = infoCollectionProvider.getCollectionInfoPage(
 			collectionQuery);
 
-		searchContainer.setResults(infoPage.getPageItems());
-		searchContainer.setTotal(infoPage.getTotalCount());
+		searchContainer.setResultsAndTotal(
+			infoPage::getPageItems, infoPage.getTotalCount());
 
 		return searchContainer;
 	}

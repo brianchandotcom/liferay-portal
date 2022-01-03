@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
-import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
@@ -288,15 +287,11 @@ public class AssetTagsDisplayContext {
 					getOrderByType());
 			}
 
-			BaseModelSearchResult<AssetTag> baseModelSearchResult =
+			tagsSearchContainer.setResultsAndTotal(
 				AssetTagLocalServiceUtil.searchTags(
 					new long[] {_themeDisplay.getScopeGroupId()}, keywords,
 					tagsSearchContainer.getStart(),
-					tagsSearchContainer.getEnd(), sort);
-
-			tagsSearchContainer.setResults(
-				baseModelSearchResult.getBaseModels());
-			tagsSearchContainer.setTotal(baseModelSearchResult.getLength());
+					tagsSearchContainer.getEnd(), sort));
 		}
 		else {
 			String orderByCol = getOrderByCol();
@@ -327,17 +322,13 @@ public class AssetTagsDisplayContext {
 
 			long scopeGroupId = _themeDisplay.getScopeGroupId();
 
-			int tagsCount = AssetTagServiceUtil.getTagsCount(
-				scopeGroupId, keywords);
-
-			tagsSearchContainer.setTotal(tagsCount);
-
-			List<AssetTag> tags = AssetTagServiceUtil.getTags(
-				scopeGroupId, StringPool.BLANK, tagsSearchContainer.getStart(),
-				tagsSearchContainer.getEnd(),
-				tagsSearchContainer.getOrderByComparator());
-
-			tagsSearchContainer.setResults(tags);
+			tagsSearchContainer.setResultsAndTotal(
+				() -> AssetTagServiceUtil.getTags(
+					scopeGroupId, StringPool.BLANK,
+					tagsSearchContainer.getStart(),
+					tagsSearchContainer.getEnd(),
+					tagsSearchContainer.getOrderByComparator()),
+				AssetTagServiceUtil.getTagsCount(scopeGroupId, keywords));
 		}
 
 		_tagsSearchContainer = tagsSearchContainer;

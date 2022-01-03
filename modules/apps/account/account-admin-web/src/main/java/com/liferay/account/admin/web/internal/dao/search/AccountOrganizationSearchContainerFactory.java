@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
-import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -94,14 +93,11 @@ public class AccountOrganizationSearchContainerFactory {
 		String keywords = ParamUtil.getString(
 			liferayPortletRequest, "keywords", null);
 
-		BaseModelSearchResult<Organization> baseModelSearchResult =
+		searchContainer.setResultsAndTotal(
 			_accountOrganizationRetriever.searchAccountOrganizations(
 				accountEntryId, keywords, searchContainer.getStart(),
 				searchContainer.getDelta(), searchContainer.getOrderByCol(),
-				Objects.equals(searchContainer.getOrderByType(), "desc"));
-
-		searchContainer.setResults(baseModelSearchResult.getBaseModels());
-		searchContainer.setTotal(baseModelSearchResult.getLength());
+				Objects.equals(searchContainer.getOrderByType(), "desc")));
 
 		return searchContainer;
 	}

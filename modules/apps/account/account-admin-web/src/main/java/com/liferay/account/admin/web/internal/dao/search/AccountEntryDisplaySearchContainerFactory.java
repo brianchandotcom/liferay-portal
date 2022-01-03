@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Objects;
 
 /**
@@ -160,13 +159,9 @@ public class AccountEntryDisplaySearchContainerFactory {
 					_isReverseOrder(orderByType));
 		}
 
-		List<AccountEntryDisplay> accountEntryDisplays =
-			TransformUtil.transform(
-				baseModelSearchResult.getBaseModels(), AccountEntryDisplay::of);
-
-		accountEntryDisplaySearchContainer.setResults(accountEntryDisplays);
-
-		accountEntryDisplaySearchContainer.setTotal(
+		accountEntryDisplaySearchContainer.setResultsAndTotal(
+			() -> TransformUtil.transform(
+				baseModelSearchResult.getBaseModels(), AccountEntryDisplay::of),
 			baseModelSearchResult.getLength());
 
 		return accountEntryDisplaySearchContainer;

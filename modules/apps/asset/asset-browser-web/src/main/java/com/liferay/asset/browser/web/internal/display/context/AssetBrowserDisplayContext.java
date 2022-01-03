@@ -19,7 +19,6 @@ import com.liferay.asset.browser.web.internal.constants.AssetBrowserPortletKeys;
 import com.liferay.asset.browser.web.internal.search.AddAssetEntryChecker;
 import com.liferay.asset.browser.web.internal.search.AssetBrowserSearch;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
-import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.asset.util.AssetHelper;
@@ -108,29 +107,22 @@ public class AssetBrowserDisplayContext {
 		assetBrowserSearch.setOrderByType(getOrderByType());
 
 		if (AssetBrowserWebConfigurationValues.SEARCH_WITH_DATABASE) {
-			long[] subtypeSelectionIds = null;
+			long[] subtypeSelectionIds = ArrayUtil.filter(
+				new long[] {getSubtypeSelectionId()}, id -> id > 0);
 
-			if (getSubtypeSelectionId() > 0) {
-				subtypeSelectionIds = new long[] {getSubtypeSelectionId()};
-			}
-
-			int total = AssetEntryLocalServiceUtil.getEntriesCount(
-				_getFilterGroupIds(), _getClassNameIds(), subtypeSelectionIds,
-				_getKeywords(), _getKeywords(), _getKeywords(), _getKeywords(),
-				_getListable(), false, false);
-
-			assetBrowserSearch.setTotal(total);
-
-			List<AssetEntry> assetEntries =
-				AssetEntryLocalServiceUtil.getEntries(
+			assetBrowserSearch.setResultsAndTotal(
+				() -> AssetEntryLocalServiceUtil.getEntries(
 					_getFilterGroupIds(), _getClassNameIds(),
 					subtypeSelectionIds, _getKeywords(), _getKeywords(),
 					_getKeywords(), _getKeywords(), _getListable(), false,
 					false, assetBrowserSearch.getStart(),
 					assetBrowserSearch.getEnd(), "modifiedDate",
-					StringPool.BLANK, getOrderByType(), StringPool.BLANK);
-
-			assetBrowserSearch.setResults(assetEntries);
+					StringPool.BLANK, getOrderByType(), StringPool.BLANK),
+				AssetEntryLocalServiceUtil.getEntriesCount(
+					_getFilterGroupIds(), _getClassNameIds(),
+					subtypeSelectionIds, _getKeywords(), _getKeywords(),
+					_getKeywords(), _getKeywords(), _getListable(), false,
+					false));
 
 			return assetBrowserSearch;
 		}
@@ -167,9 +159,8 @@ public class AssetBrowserDisplayContext {
 			_getStatuses(), assetBrowserSearch.getStart(),
 			assetBrowserSearch.getEnd(), sort);
 
-		assetBrowserSearch.setResults(_assetHelper.getAssetEntries(hits));
-
-		assetBrowserSearch.setTotal(hits.getLength());
+		assetBrowserSearch.setResultsAndTotal(
+			() -> _assetHelper.getAssetEntries(hits), hits.getLength());
 
 		_assetBrowserSearch = assetBrowserSearch;
 

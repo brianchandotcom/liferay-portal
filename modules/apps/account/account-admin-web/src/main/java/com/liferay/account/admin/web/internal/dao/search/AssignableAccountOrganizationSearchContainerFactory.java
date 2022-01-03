@@ -23,8 +23,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
-import com.liferay.portal.kernel.search.BaseModelSearchResult;
-import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -67,19 +65,14 @@ public class AssignableAccountOrganizationSearchContainerFactory {
 			(ThemeDisplay)liferayPortletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		Sort sort = SortFactoryUtil.getSort(
-			Organization.class, searchContainer.getOrderByCol(),
-			searchContainer.getOrderByType());
-
-		BaseModelSearchResult<Organization> baseModelSearchResult =
+		searchContainer.setResultsAndTotal(
 			OrganizationLocalServiceUtil.searchOrganizations(
 				themeDisplay.getCompanyId(),
 				OrganizationConstants.ANY_PARENT_ORGANIZATION_ID, keywords,
 				null, searchContainer.getStart(), searchContainer.getEnd(),
-				sort);
-
-		searchContainer.setResults(baseModelSearchResult.getBaseModels());
-		searchContainer.setTotal(baseModelSearchResult.getLength());
+				SortFactoryUtil.getSort(
+					Organization.class, searchContainer.getOrderByCol(),
+					searchContainer.getOrderByType())));
 
 		return searchContainer;
 	}

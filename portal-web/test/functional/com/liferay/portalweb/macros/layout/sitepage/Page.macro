@@ -1,49 +1,5 @@
 definition {
 
-	macro _addPageTypeEmbedded {
-		Type(
-			locator1 = "TextInput#URL",
-			value1 = "${pageTypeURL}");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "PagesAdmin#PAGE_TYPE_DESCRIPTION",
-			value1 = "Show content from another website.");
-	}
-
-	macro _addPageTypeFullPageApplication {
-		Select(
-			key_fieldLabel = "Full Page Application",
-			locator1 = "Select#GENERIC_SELECT_FIELD",
-			value1 = "${portlet}");
-	}
-
-	macro _addPageTypePanel {
-		var key_componentOrPortletName = "${componentName}";
-
-		Click(locator1 = "PagesAdmin#PAGE_TYPE_PANEL_CHECKBOX");
-
-		var key_componentOrPortletName = StringUtil.lowerCase("${componentName}");
-
-		AssertElementPresent(locator1 = "PagesAdmin#PAGE_TYPE_PANEL_CHECKBOX_INPUT");
-	}
-
-	macro _configurePage {
-		if ("${sitePageType}" == "Embedded") {
-			Page._addPageTypeEmbedded(pageTypeURL = "${pageTypeURL}");
-		}
-		else if ("${sitePageType}" == "Panel") {
-			Page._addPageTypePanel(componentName = "${componentName}");
-		}
-		else if ("${sitePageType}" == "Widget Page") {
-			Click(
-				key_card = "${columnName}",
-				locator1 = "Card#CARD");
-		}
-		else if ("${sitePageType}" == "Full Page Application") {
-			Page._addPageTypeFullPageApplication(portlet = "${portlet}");
-		}
-	}
-
 	macro assertAlternateURL {
 		var HTML = '''<link data-senna-track="temporary" href="''';
 
@@ -137,14 +93,6 @@ definition {
 
 	macro disableMobileDeviceRulesAreInheritedFromPublicPages {
 		Uncheck.uncheckHiddenToggleSwitch(locator1 = "ToggleSwitch#INHERIT_MOBILE_DEVICE_RULES_FROM_PAGE");
-	}
-
-	macro editName {
-		Alert.closeMessage(messageType = "SUCCESS");
-
-		PortletEntry.inputName(name = "${pageNameEdit}");
-
-		Button.clickSave();
 	}
 
 	macro editPageMetadata {

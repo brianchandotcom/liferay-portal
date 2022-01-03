@@ -27,11 +27,11 @@ definition {
 		Alert.viewSuccessMessage();
 
 		if ("${sitePageType}" == "Embedded") {
-			Page._addPageTypeEmbedded(pageTypeURL = "${pageTypeURL}");
+			PagesAdmin._addPageTypeEmbedded(pageTypeURL = "${pageTypeURL}");
 		}
 		else if ("${sitePageType}" == "Full Page Application") {
 			if (isSet(portlet)) {
-				Page._addPageTypeFullPageApplication(portlet = "${portlet}");
+				PagesAdmin._addPageTypeFullPageApplication(portlet = "${portlet}");
 			}
 		}
 		else if ("${sitePageType}" == "Link to a Page of This Site") {
@@ -59,7 +59,7 @@ definition {
 		}
 		else if ("${sitePageType}" == "Panel") {
 			if (isSet(componentName)) {
-				Page._addPageTypePanel(componentName = "${componentName}");
+				PagesAdmin._addPageTypePanel(componentName = "${componentName}");
 			}
 		}
 
@@ -102,6 +102,33 @@ definition {
 		}
 	}
 
+	macro _addPageTypeEmbedded {
+		Type(
+			locator1 = "TextInput#URL",
+			value1 = "${pageTypeURL}");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "PagesAdmin#PAGE_TYPE_DESCRIPTION",
+			value1 = "Show content from another website.");
+	}
+
+	macro _addPageTypeFullPageApplication {
+		Select(
+			key_fieldLabel = "Full Page Application",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "${portlet}");
+	}
+
+	macro _addPageTypePanel {
+		var key_componentOrPortletName = "${componentName}";
+
+		Click(locator1 = "PagesAdmin#PAGE_TYPE_PANEL_CHECKBOX");
+
+		var key_componentOrPortletName = StringUtil.lowerCase("${componentName}");
+
+		AssertElementPresent(locator1 = "PagesAdmin#PAGE_TYPE_PANEL_CHECKBOX_INPUT");
+	}
+
 	@summary = "Configures openGraph for a site page. This should be moved outside of _addPage for stability."
 	macro _configureOpenGraph {
 		Navigator.gotoNavTab(navTab = "Open Graph");
@@ -126,6 +153,23 @@ definition {
 			key_text = "openGraphDescription",
 			locator1 = "TextArea#ANY",
 			value1 = "${customDescription}");
+	}
+
+	macro _configurePage {
+		if ("${sitePageType}" == "Embedded") {
+			PagesAdmin._addPageTypeEmbedded(pageTypeURL = "${pageTypeURL}");
+		}
+		else if ("${sitePageType}" == "Panel") {
+			PagesAdmin._addPageTypePanel(componentName = "${componentName}");
+		}
+		else if ("${sitePageType}" == "Widget Page") {
+			Click(
+				key_card = "${columnName}",
+				locator1 = "Card#CARD");
+		}
+		else if ("${sitePageType}" == "Full Page Application") {
+			PagesAdmin._addPageTypeFullPageApplication(portlet = "${portlet}");
+		}
 	}
 
 	macro _selectPageType {
@@ -477,7 +521,7 @@ definition {
 			pageName = "${pageName}",
 			parentPagesHierarchy = "${parentPagesHierarchy}");
 
-		Page._configurePage(
+		PagesAdmin._configurePage(
 			columnName = "${columnName}",
 			componentName = "${componentName}",
 			layoutPageTemplateName = "${layoutPageTemplateName}",
@@ -501,7 +545,7 @@ definition {
 			menuItem = "Configure",
 			pageName = "${pageName}");
 
-		Page._configurePage(
+		PagesAdmin._configurePage(
 			columnName = "${columnName}",
 			componentName = "${componentName}",
 			layoutPageTemplateName = "${layoutPageTemplateName}",

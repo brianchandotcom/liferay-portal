@@ -101,11 +101,11 @@ definition {
 	@priority = "3"
 	test CanChangeCalendarColor {
 		Navigator.gotoPage(pageName = "Calendar Page");
-    
+
 		Calendar.changeColor(
 			calendarType = "My Calendars",
-			user = "Test Test",
-			myCalendarColor = "668CD9");
+			myCalendarColor = "668CD9",
+			user = "Test Test");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
@@ -116,19 +116,17 @@ definition {
 		CalendarNavigator.gotoAddEvent();
 
 		CalendarEvent.add(
+			calendarName = "Test Test",
 			eventTitle = "Calendar Event Regular Title",
 			eventType = "Regular",
-			pageName = "Calendar Page",
-			calendarName = "Test Test");
-		
+			pageName = "Calendar Page");
+
 		Navigator.gotoPage(pageName = "Calendar Page");
 
 		CalendarScheduler.viewEventColor(
 			eventBackgroundColorRGB = "(208, 219, 240)",
 			eventFontColorRGB = "(104, 142, 217)",
 			eventTitle = "Calendar Event Regular Title");
-			
-		
 	}
 
 	@description = "LRQA-72024 - Verify that the user can go back and forward on Calendar"

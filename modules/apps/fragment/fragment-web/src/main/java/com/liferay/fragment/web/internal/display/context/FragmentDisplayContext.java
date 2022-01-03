@@ -706,7 +706,7 @@ public class FragmentDisplayContext {
 
 		_orderByCol = SearchOrderByUtil.getOrderByCol(
 			_httpServletRequest, FragmentPortletKeys.FRAGMENT,
-			"fragment-order-by-col", "create-date");
+			"fragment-order-by-col", "modified-date");
 
 		return _orderByCol;
 	}

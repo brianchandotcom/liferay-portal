@@ -1,3 +1,5 @@
+@import 'atlas-variables';
+
 .product-gallery {
 	.arrow {
 		background-image: linear-gradient(
@@ -54,10 +56,25 @@
 	}
 
 	.gallery-thumbnails {
-		display: grid;
-		grid-gap: 10px;
-		grid-template-columns: repeat(100, 75px);
+		display: flex;
+		height: 80px;
 		overflow-x: auto;
+
+		& > img,
+		& > div {
+			flex: 0 0 75px;
+			margin-right: $spacer;
+		}
+
+		& > img:last-child,
+		& > div:last-child {
+			margin-right: 0;
+		}
+
+		.product-img {
+			object-fit: cover;
+			object-position: center;
+		}
 	}
 
 	.loading-animation {
@@ -77,6 +94,16 @@
 
 	.main-image {
 		cursor: zoom-in;
+		height: 500px;
 		position: relative;
+
+		.product-img {
+			object-fit: contain;
+		}
+	}
+
+	.product-img {
+		height: 100%;
+		width: 100%;
 	}
 }

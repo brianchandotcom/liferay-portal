@@ -28,27 +28,22 @@ export default function Thumbnail({
 		'card',
 		'card-interactive',
 		'card-interactive-primary',
+		'overflow-hidden',
 		{active}
 	);
 
 	return (
 		<div className={cardClasses} onClick={onClick} style={{background}}>
-			<div className="aspect-ratio aspect-ratio-4-to-3">
-				{adaptiveMediaImageHTMLTag ? (
-					<div
-						className="aspect-ratio-item-center-middle aspect-ratio-item-fluid aspect-ratio-item-vertical-fluid"
-						dangerouslySetInnerHTML={{
-							__html: adaptiveMediaImageHTMLTag,
-						}}
-					/>
-				) : (
-					<img
-						alt={title}
-						className="aspect-ratio-item-center-middle aspect-ratio-item-fluid aspect-ratio-item-vertical-fluid"
-						src={src}
-					/>
-				)}
-			</div>
+			{adaptiveMediaImageHTMLTag ? (
+				<div
+					className="h-100 w-100"
+					dangerouslySetInnerHTML={{
+						__html: adaptiveMediaImageHTMLTag,
+					}}
+				/>
+			) : (
+				<img alt={title} className="product-img" src={src} />
+			)}
 		</div>
 	);
 }

@@ -189,9 +189,9 @@ Gallery.propTypes = {
 	background: PropTypes.string,
 	images: PropTypes.arrayOf(
 		PropTypes.shape({
-			thumbnailUrl: PropTypes.string.isRequired,
+			URL: PropTypes.string.isRequired,
+			thumbnailURL: PropTypes.string.isRequired,
 			title: PropTypes.string.isRequired,
-			url: PropTypes.string.isRequired,
 		})
 	),
 	namespace: PropTypes.string,

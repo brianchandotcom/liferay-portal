@@ -1704,6 +1704,13 @@ public class JournalArticleLocalServiceUtil {
 			orderByComparator);
 	}
 
+	public static List<Long> getArticlesClassPKsWithDefaultDisplayPage(
+		long groupId, long classTypeId) {
+
+		return getService().getArticlesClassPKsWithDefaultDisplayPage(
+			groupId, classTypeId);
+	}
+
 	/**
 	 * Returns the number of web content articles belonging to the group.
 	 *
@@ -1865,12 +1872,6 @@ public class JournalArticleLocalServiceUtil {
 	 */
 	public static int getCompanyArticlesCount(long companyId, int status) {
 		return getService().getCompanyArticlesCount(companyId, status);
-	}
-
-	public static List<Long> getDefaultDisplayPageClassPKs(
-		long groupId, long classTypeId) {
-
-		return getService().getDefaultDisplayPageClassPKs(groupId, classTypeId);
 	}
 
 	/**

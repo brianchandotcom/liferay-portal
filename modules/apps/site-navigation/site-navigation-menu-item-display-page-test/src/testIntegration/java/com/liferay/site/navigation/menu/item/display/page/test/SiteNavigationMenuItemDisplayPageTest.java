@@ -111,6 +111,9 @@ public class SiteNavigationMenuItemDisplayPageTest {
 
 	@Test
 	public void testDisplayPageTypeMultiSelection() throws Exception {
+		ServiceRegistration<LayoutDisplayPageMultiSelectionProvider>
+			serviceRegistration = null;
+
 		Dictionary<String, Object> dictionary =
 			HashMapDictionaryBuilder.<String, Object>put(
 				"multipleSelectionEnabled", true
@@ -135,7 +138,7 @@ public class SiteNavigationMenuItemDisplayPageTest {
 
 			BundleContext bundleContext = bundle.getBundleContext();
 
-			_serviceRegistration = bundleContext.registerService(
+			serviceRegistration = bundleContext.registerService(
 				LayoutDisplayPageMultiSelectionProvider.class,
 				new LayoutDisplayPageMultiSelectionProvider() {
 
@@ -153,6 +156,11 @@ public class SiteNavigationMenuItemDisplayPageTest {
 				new HashMapDictionary<String, String>());
 
 			Assert.assertTrue(siteNavigationMenuItemType.isMultiSelection());
+		}
+		finally {
+			if (serviceRegistration != null) {
+				serviceRegistration.unregister();
+			}
 		}
 	}
 
@@ -384,8 +392,6 @@ public class SiteNavigationMenuItemDisplayPageTest {
 	private Portal _portal;
 
 	private ServiceContext _serviceContext;
-	private ServiceRegistration<LayoutDisplayPageMultiSelectionProvider>
-		_serviceRegistration;
 
 	@Inject
 	private SiteNavigationMenuItemLocalService

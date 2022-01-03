@@ -8,6 +8,13 @@
 	"devDependencies": {
 #if (!(${liferayVersion.startsWith("7.0")} || ${liferayVersion.startsWith("7.1")}))
 		"@babel/cli": "^7.2.3",
+		#if (${liferayVersion.startsWith("7.2")})
+		"@liferay/portal-7.2": "*"
+		#elseif (${liferayVersion.startsWith("7.3")})
+		"@liferay/portal-7.3": "*"
+		#elseif (${liferayVersion.startsWith("7.4")})
+		"@liferay/portal-7.4": "*"
+		#end
 		#if (!(${liferayVersion.startsWith("7.3")} && ${reactTemplate.equals("true")})),
 		"metal-tools-soy": "4.3.2"
 		#end

@@ -24,8 +24,7 @@ import CustomSelect from './form/CustomSelect/CustomSelect';
 import Input from './form/Input';
 import Select from './form/Select';
 
-const objectRelationshipTypes = [
-
+let objectRelationshipTypes = [
 	{
 		description: Liferay.Language.get(
 			"one-object's-entry-interacts-only-with-one-other-object's-entry"
@@ -58,6 +57,7 @@ const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 const ModalAddObjectRelationship: React.FC<IProps> = ({
 	apiURL,
+	ffOneToOneRelationshipConfigurationEnabled,
 	observer,
 	onClose,
 }) => {
@@ -71,6 +71,12 @@ const ModalAddObjectRelationship: React.FC<IProps> = ({
 		objectDefinitionId2: 0,
 		type: {label: '', value: ''},
 	};
+
+	if (!ffOneToOneRelationshipConfigurationEnabled) {
+		objectRelationshipTypes = objectRelationshipTypes.filter(
+			(relationshipType) => relationshipType.value !== 'oneToOne'
+		);
+	}
 
 	const onSubmit = async ({
 		label,
@@ -261,6 +267,7 @@ const ModalAddObjectRelationship: React.FC<IProps> = ({
 
 interface IProps extends React.HTMLAttributes<HTMLElement> {
 	apiURL: string;
+	ffOneToOneRelationshipConfigurationEnabled: boolean;
 	observer: any;
 	onClose: () => void;
 }
@@ -281,7 +288,10 @@ type TInitialValues = {
 	};
 };
 
-const ModalWithProvider: React.FC<IProps> = ({apiURL}) => {
+const ModalWithProvider: React.FC<IProps> = ({
+	apiURL,
+	ffOneToOneRelationshipConfigurationEnabled,
+}) => {
 	const [visibleModal, setVisibleModal] = useState<boolean>(false);
 	const {observer, onClose} = useModal({
 		onClose: () => setVisibleModal(false),
@@ -300,6 +310,9 @@ const ModalWithProvider: React.FC<IProps> = ({apiURL}) => {
 			{visibleModal && (
 				<ModalAddObjectRelationship
 					apiURL={apiURL}
+					ffOneToOneRelationshipConfigurationEnabled={
+						ffOneToOneRelationshipConfigurationEnabled
+					}
 					observer={observer}
 					onClose={onClose}
 				/>

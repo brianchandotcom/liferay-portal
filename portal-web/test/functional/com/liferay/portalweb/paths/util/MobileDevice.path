@@ -41,22 +41,6 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--ADD_ACTION-->
-<tr>
-	<td>ADD_ACTION_TYPE_SELECT</td>
-	<td>//select[contains(@id,'_com_liferay_mobile_device_rules_web_portlet_MDRPortlet_type')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADD_ACTION_SITE_SELECT</td>
-	<td>//select[contains(@id,'_com_liferay_mobile_device_rules_web_portlet_MDRPortlet_groupId')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADD_ACTION_PAGE_SELECT</td>
-	<td>//select[contains(@id,'_com_liferay_mobile_device_rules_web_portlet_MDRPortlet_plid')]</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

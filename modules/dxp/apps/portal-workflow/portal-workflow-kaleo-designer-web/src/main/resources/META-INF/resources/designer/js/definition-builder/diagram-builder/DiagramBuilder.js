@@ -46,6 +46,7 @@ const deserializeUtil = new DeserializeUtil();
 export default function DiagramBuilder({version}) {
 	const {
 		currentEditor,
+		definitionId,
 		definitionTitle,
 		deserialize,
 		elements,
@@ -207,9 +208,9 @@ export default function DiagramBuilder({version}) {
 
 			deserializeUtil.updateXMLDefinition(xmlDefinition);
 
-			const nodes = deserializeUtil.getNodes();
+			const elements = deserializeUtil.getElements();
 
-			setElements(nodes);
+			setElements(elements);
 
 			setDeserialize(false);
 		}
@@ -224,13 +225,10 @@ export default function DiagramBuilder({version}) {
 
 	useEffect(() => {
 		if (version !== '0' && !deserialize) {
-			fetch(
-				`${baseURL}/workflow-definitions/by-name/${definitionTitle}`,
-				{
-					headers,
-					method: 'GET',
-				}
-			)
+			fetch(`${baseURL}/workflow-definitions/by-name/${definitionId}`, {
+				headers,
+				method: 'GET',
+			})
 				.then((response) => response.json())
 				.then(({active, content, name}) => {
 					setActive(active);
@@ -238,9 +236,9 @@ export default function DiagramBuilder({version}) {
 
 					deserializeUtil.updateXMLDefinition(content);
 
-					const nodes = deserializeUtil.getNodes();
+					const elements = deserializeUtil.getElements();
 
-					setElements(nodes);
+					setElements(elements);
 				});
 		}
 

@@ -83,6 +83,7 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanImportEntryWithComment {
+		property portal.acceptance = "true";
 		property testray.component.names = "Comment";
 
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");

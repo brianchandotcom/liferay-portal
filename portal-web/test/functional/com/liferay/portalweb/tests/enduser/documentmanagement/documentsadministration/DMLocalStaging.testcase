@@ -531,6 +531,7 @@ definition {
 	@priority = "3"
 	@refactorneeded
 	test CommentDMDocumentOnLiveSite {
+		property portal.acceptance = "true";
 		property testray.component.names = "Comment";
 
 		Navigator.gotoStagedSitePage(

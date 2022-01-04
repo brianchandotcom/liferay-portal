@@ -101,7 +101,7 @@ public class ImportTranslationMVCRenderCommand implements MVCRenderCommand {
 	private String _getTitle(String className, long[] classPKs, Locale locale)
 		throws PortalException {
 
-		if (classPKs.length != 1) {
+		if ((classPKs.length != 1) || (classPKs[0] == 0)) {
 			return StringPool.BLANK;
 		}
 

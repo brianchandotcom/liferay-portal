@@ -18,8 +18,6 @@ import com.liferay.document.library.kernel.exception.FileSizeException;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceTracker;
-import com.liferay.info.item.provider.InfoItemObjectProvider;
-import com.liferay.info.item.provider.InfoItemPermissionProvider;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -27,9 +25,6 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.servlet.MultiSessionMessages;
@@ -100,20 +95,6 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
-			String title = ParamUtil.getString(actionRequest, "title");
-
-			TranslationRequestHelper translationRequestHelper =
-				new TranslationRequestHelper(
-					_infoItemServiceTracker, actionRequest);
-
-			InfoItemObjectProvider<Object> infoItemObjectProvider =
-				_infoItemServiceTracker.getFirstInfoItemService(
-					InfoItemObjectProvider.class,
-					translationRequestHelper.getModelClassName());
-
-			Object object = infoItemObjectProvider.getInfoItem(
-				translationRequestHelper.getModelClassPK());
-
 			UploadPortletRequest uploadPortletRequest =
 				_portal.getUploadPortletRequest(actionRequest);
 
@@ -121,13 +102,12 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 
 			_checkContentType(uploadPortletRequest.getContentType("file"));
 
-			_checkPermission(
-				translationRequestHelper.getModelClassName(),
-				translationRequestHelper.getModelClassPK(), object,
-				themeDisplay.getPermissionChecker());
-
 			Map<String, String> failureMessages = new HashMap<>();
 			List<String> successMessages = new ArrayList<>();
+
+			TranslationRequestHelper translationRequestHelper =
+				new TranslationRequestHelper(
+					_infoItemServiceTracker, actionRequest);
 
 			String fileName = uploadPortletRequest.getFileName("file");
 
@@ -147,6 +127,8 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 				MultiSessionMessages.add(
 					actionRequest, portletResource + "requestProcessed");
 			}
+
+			String title = ParamUtil.getString(actionRequest, "title");
 
 			actionRequest.setAttribute(
 				WebKeys.REDIRECT,
@@ -258,23 +240,6 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 			}
 
 			throw new PortalException(throwable);
-		}
-	}
-
-	private void _checkPermission(
-			String className, long classPK, Object object,
-			PermissionChecker permissionChecker)
-		throws PortalException {
-
-		InfoItemPermissionProvider<Object> infoItemPermissionProvider =
-			_infoItemServiceTracker.getFirstInfoItemService(
-				InfoItemPermissionProvider.class, className);
-
-		if (!infoItemPermissionProvider.hasPermission(
-				permissionChecker, object, ActionKeys.UPDATE)) {
-
-			throw new PrincipalException.MustHavePermission(
-				permissionChecker, className, classPK, ActionKeys.UPDATE);
 		}
 	}
 

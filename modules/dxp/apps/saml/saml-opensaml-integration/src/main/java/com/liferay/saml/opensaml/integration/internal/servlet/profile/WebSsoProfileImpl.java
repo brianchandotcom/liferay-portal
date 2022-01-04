@@ -185,7 +185,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		throws PortalException {
 
 		try {
-			_doProcessAuthnRequest(httpServletRequest, httpServletResponse);
+			_processAuthnRequest(httpServletRequest, httpServletResponse);
 		}
 		catch (Exception exception) {
 			ExceptionHandlerUtil.handleException(exception);
@@ -205,7 +205,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 				httpServletRequest, httpServletResponse,
 				getSamlBinding(SAMLConstants.SAML2_POST_BINDING_URI));
 
-			_doProcessResponse(
+			_processResponse(
 				messageContext, httpServletRequest, httpServletResponse);
 		}
 		catch (Exception exception) {
@@ -1282,228 +1282,6 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		return messageContext;
 	}
 
-	private void _doProcessAuthnRequest(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws Exception {
-
-		SamlSsoRequestContext samlSsoRequestContext = decodeAuthnRequest(
-			httpServletRequest, httpServletResponse);
-
-		MessageContext<?> messageContext =
-			samlSsoRequestContext.getSAMLMessageContext();
-
-		InOutOperationContext<AuthnRequest, ?> inOutOperationContext =
-			messageContext.getSubcontext(InOutOperationContext.class, false);
-
-		AuthnRequest authnRequest = null;
-		User user = samlSsoRequestContext.getUser();
-
-		if (inOutOperationContext != null) {
-			MessageContext<AuthnRequest> inboundMessageContext =
-				inOutOperationContext.getInboundMessageContext();
-
-			authnRequest = inboundMessageContext.getMessage();
-
-			if ((authnRequest != null) && authnRequest.isPassive() &&
-				(user == null)) {
-
-				_sendFailureResponse(
-					samlSsoRequestContext, StatusCode.NO_PASSIVE,
-					httpServletResponse);
-
-				return;
-			}
-		}
-
-		boolean sessionExpired = false;
-
-		if (!samlSsoRequestContext.isNewSession()) {
-			String samlSsoSessionId =
-				samlSsoRequestContext.getSamlSsoSessionId();
-
-			SamlIdpSsoSession samlIdpSsoSession =
-				_samlIdpSsoSessionLocalService.fetchSamlIdpSso(
-					samlSsoSessionId);
-
-			if (samlIdpSsoSession != null) {
-				sessionExpired = samlIdpSsoSession.isExpired();
-			}
-			else {
-				samlSsoSessionId = null;
-
-				samlSsoRequestContext.setSamlSsoSessionId(null);
-			}
-
-			if (sessionExpired || Validator.isNull(samlSsoSessionId)) {
-				addCookie(
-					httpServletRequest, httpServletResponse,
-					SamlWebKeys.SAML_SSO_SESSION_ID, StringPool.BLANK, 0);
-
-				samlSsoRequestContext.setNewSession(true);
-				samlSsoRequestContext.setSamlSsoSessionId(
-					generateIdentifier(30));
-			}
-		}
-
-		if (sessionExpired || (user == null) ||
-			((authnRequest != null) && authnRequest.isForceAuthn() &&
-			 (user != null) &&
-			 (samlSsoRequestContext.getStage() ==
-				 SamlSsoRequestContext.STAGE_INITIAL))) {
-
-			boolean forceAuthn = false;
-
-			if ((authnRequest != null) && authnRequest.isForceAuthn()) {
-				forceAuthn = true;
-			}
-
-			_redirectToLogin(
-				httpServletRequest, httpServletResponse, samlSsoRequestContext,
-				forceAuthn);
-		}
-		else {
-			_sendSuccessResponse(
-				httpServletRequest, httpServletResponse, samlSsoRequestContext);
-
-			HttpSession httpSession = httpServletRequest.getSession(false);
-
-			if (httpSession != null) {
-				httpSession.removeAttribute(SamlWebKeys.FORCE_REAUTHENTICATION);
-			}
-		}
-	}
-
-	private void _doProcessResponse(
-			MessageContext<?> messageContext,
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws Exception {
-
-		InOutOperationContext<Response, ?> inOutOperationContext =
-			messageContext.getSubcontext(InOutOperationContext.class);
-
-		MessageContext<Response> inboundMessageContext =
-			inOutOperationContext.getInboundMessageContext();
-
-		Response samlResponse = inboundMessageContext.getMessage();
-
-		Status status = samlResponse.getStatus();
-
-		StatusCode statusCode = status.getStatusCode();
-
-		String statusCodeURI = statusCode.getValue();
-
-		if (!statusCodeURI.equals(StatusCode.SUCCESS)) {
-			StatusCode childStatusCode = statusCode.getStatusCode();
-
-			if ((childStatusCode != null) &&
-				Validator.isNotNull(childStatusCode.getValue())) {
-
-				throw new StatusException(childStatusCode.getValue());
-			}
-
-			throw new StatusException(statusCodeURI);
-		}
-
-		verifyInResponseTo(samlResponse);
-		verifyDestination(messageContext, samlResponse.getDestination());
-
-		Issuer issuer = samlResponse.getIssuer();
-
-		verifyIssuer(messageContext, issuer);
-
-		SAMLSubjectNameIdentifierContext samlSubjectNameIdentifierContext =
-			messageContext.getSubcontext(
-				SAMLSubjectNameIdentifierContext.class);
-
-		NameID nameID =
-			samlSubjectNameIdentifierContext.getSAML2SubjectNameID();
-
-		if (nameID == null) {
-			throw new SamlException("Name ID not present in subject");
-		}
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("SAML authenticated user " + nameID.getValue());
-		}
-
-		SAMLPeerEntityContext samlPeerEntityContext =
-			messageContext.getSubcontext(SAMLPeerEntityContext.class);
-
-		SamlSpIdpConnection samlSpIdpConnection =
-			_samlSpIdpConnectionLocalService.getSamlSpIdpConnection(
-				CompanyThreadLocal.getCompanyId(),
-				samlPeerEntityContext.getEntityId());
-
-		if (Validator.isNull(samlResponse.getInResponseTo()) &&
-			samlSpIdpConnection.isForceAuthn()) {
-
-			throw new AuthnAgeException();
-		}
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			httpServletRequest);
-
-		User user = _userResolver.resolveUser(
-			new UserResolverSAMLContextImpl(
-				(MessageContext<Response>)messageContext),
-			serviceContext);
-
-		if (user == null) {
-			throw new SubjectException(
-				"No user could not be matched or provisioned");
-		}
-
-		serviceContext.setUserId(user.getUserId());
-
-		SamlSpSession samlSpSession = getSamlSpSession(httpServletRequest);
-		HttpSession httpSession = httpServletRequest.getSession();
-
-		SubjectAssertionContext subjectAssertionContext =
-			inboundMessageContext.getSubcontext(SubjectAssertionContext.class);
-
-		Assertion assertion = subjectAssertionContext.getAssertion();
-
-		List<AuthnStatement> authnStatements = assertion.getAuthnStatements();
-
-		AuthnStatement authnStatement = authnStatements.get(0);
-
-		String sessionIndex = authnStatement.getSessionIndex();
-
-		if (samlSpSession != null) {
-			samlSpSessionLocalService.updateSamlSpSession(
-				samlSpSession.getSamlSpSessionId(),
-				OpenSamlUtil.marshall(assertion), httpSession.getId(),
-				nameID.getFormat(), nameID.getNameQualifier(),
-				nameID.getSPNameQualifier(), nameID.getValue(),
-				issuer.getValue(), samlSpSession.getSamlSpSessionKey(),
-				sessionIndex, serviceContext);
-		}
-		else {
-			String samlSpSessionKey = generateIdentifier(30);
-
-			samlSpSession = samlSpSessionLocalService.addSamlSpSession(
-				OpenSamlUtil.marshall(assertion), httpSession.getId(),
-				nameID.getFormat(), nameID.getNameQualifier(),
-				nameID.getSPNameQualifier(), nameID.getValue(),
-				issuer.getValue(), samlSpSessionKey, sessionIndex,
-				serviceContext);
-		}
-
-		httpSession.setAttribute(
-			SamlWebKeys.SAML_SP_SESSION_KEY,
-			samlSpSession.getSamlSpSessionKey());
-
-		addCookie(
-			httpServletRequest, httpServletResponse,
-			SamlWebKeys.SAML_SP_SESSION_KEY,
-			samlSpSession.getSamlSpSessionKey(), -1);
-
-		httpServletResponse.sendRedirect(
-			_getAuthRedirectURL(messageContext, httpServletRequest));
-	}
-
 	private String _getAuthRedirectURL(
 			MessageContext<?> messageContext,
 			HttpServletRequest httpServletRequest)
@@ -1747,6 +1525,228 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		response.setVersion(SAMLVersion.VERSION_20);
 
 		return response;
+	}
+
+	private void _processAuthnRequest(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
+		throws Exception {
+
+		SamlSsoRequestContext samlSsoRequestContext = decodeAuthnRequest(
+			httpServletRequest, httpServletResponse);
+
+		MessageContext<?> messageContext =
+			samlSsoRequestContext.getSAMLMessageContext();
+
+		InOutOperationContext<AuthnRequest, ?> inOutOperationContext =
+			messageContext.getSubcontext(InOutOperationContext.class, false);
+
+		AuthnRequest authnRequest = null;
+		User user = samlSsoRequestContext.getUser();
+
+		if (inOutOperationContext != null) {
+			MessageContext<AuthnRequest> inboundMessageContext =
+				inOutOperationContext.getInboundMessageContext();
+
+			authnRequest = inboundMessageContext.getMessage();
+
+			if ((authnRequest != null) && authnRequest.isPassive() &&
+				(user == null)) {
+
+				_sendFailureResponse(
+					samlSsoRequestContext, StatusCode.NO_PASSIVE,
+					httpServletResponse);
+
+				return;
+			}
+		}
+
+		boolean sessionExpired = false;
+
+		if (!samlSsoRequestContext.isNewSession()) {
+			String samlSsoSessionId =
+				samlSsoRequestContext.getSamlSsoSessionId();
+
+			SamlIdpSsoSession samlIdpSsoSession =
+				_samlIdpSsoSessionLocalService.fetchSamlIdpSso(
+					samlSsoSessionId);
+
+			if (samlIdpSsoSession != null) {
+				sessionExpired = samlIdpSsoSession.isExpired();
+			}
+			else {
+				samlSsoSessionId = null;
+
+				samlSsoRequestContext.setSamlSsoSessionId(null);
+			}
+
+			if (sessionExpired || Validator.isNull(samlSsoSessionId)) {
+				addCookie(
+					httpServletRequest, httpServletResponse,
+					SamlWebKeys.SAML_SSO_SESSION_ID, StringPool.BLANK, 0);
+
+				samlSsoRequestContext.setNewSession(true);
+				samlSsoRequestContext.setSamlSsoSessionId(
+					generateIdentifier(30));
+			}
+		}
+
+		if (sessionExpired || (user == null) ||
+			((authnRequest != null) && authnRequest.isForceAuthn() &&
+			 (user != null) &&
+			 (samlSsoRequestContext.getStage() ==
+				 SamlSsoRequestContext.STAGE_INITIAL))) {
+
+			boolean forceAuthn = false;
+
+			if ((authnRequest != null) && authnRequest.isForceAuthn()) {
+				forceAuthn = true;
+			}
+
+			_redirectToLogin(
+				httpServletRequest, httpServletResponse, samlSsoRequestContext,
+				forceAuthn);
+		}
+		else {
+			_sendSuccessResponse(
+				httpServletRequest, httpServletResponse, samlSsoRequestContext);
+
+			HttpSession httpSession = httpServletRequest.getSession(false);
+
+			if (httpSession != null) {
+				httpSession.removeAttribute(SamlWebKeys.FORCE_REAUTHENTICATION);
+			}
+		}
+	}
+
+	private void _processResponse(
+			MessageContext<?> messageContext,
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
+		throws Exception {
+
+		InOutOperationContext<Response, ?> inOutOperationContext =
+			messageContext.getSubcontext(InOutOperationContext.class);
+
+		MessageContext<Response> inboundMessageContext =
+			inOutOperationContext.getInboundMessageContext();
+
+		Response samlResponse = inboundMessageContext.getMessage();
+
+		Status status = samlResponse.getStatus();
+
+		StatusCode statusCode = status.getStatusCode();
+
+		String statusCodeURI = statusCode.getValue();
+
+		if (!statusCodeURI.equals(StatusCode.SUCCESS)) {
+			StatusCode childStatusCode = statusCode.getStatusCode();
+
+			if ((childStatusCode != null) &&
+				Validator.isNotNull(childStatusCode.getValue())) {
+
+				throw new StatusException(childStatusCode.getValue());
+			}
+
+			throw new StatusException(statusCodeURI);
+		}
+
+		verifyInResponseTo(samlResponse);
+		verifyDestination(messageContext, samlResponse.getDestination());
+
+		Issuer issuer = samlResponse.getIssuer();
+
+		verifyIssuer(messageContext, issuer);
+
+		SAMLSubjectNameIdentifierContext samlSubjectNameIdentifierContext =
+			messageContext.getSubcontext(
+				SAMLSubjectNameIdentifierContext.class);
+
+		NameID nameID =
+			samlSubjectNameIdentifierContext.getSAML2SubjectNameID();
+
+		if (nameID == null) {
+			throw new SamlException("Name ID not present in subject");
+		}
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("SAML authenticated user " + nameID.getValue());
+		}
+
+		SAMLPeerEntityContext samlPeerEntityContext =
+			messageContext.getSubcontext(SAMLPeerEntityContext.class);
+
+		SamlSpIdpConnection samlSpIdpConnection =
+			_samlSpIdpConnectionLocalService.getSamlSpIdpConnection(
+				CompanyThreadLocal.getCompanyId(),
+				samlPeerEntityContext.getEntityId());
+
+		if (Validator.isNull(samlResponse.getInResponseTo()) &&
+			samlSpIdpConnection.isForceAuthn()) {
+
+			throw new AuthnAgeException();
+		}
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			httpServletRequest);
+
+		User user = _userResolver.resolveUser(
+			new UserResolverSAMLContextImpl(
+				(MessageContext<Response>)messageContext),
+			serviceContext);
+
+		if (user == null) {
+			throw new SubjectException(
+				"No user could not be matched or provisioned");
+		}
+
+		serviceContext.setUserId(user.getUserId());
+
+		SamlSpSession samlSpSession = getSamlSpSession(httpServletRequest);
+		HttpSession httpSession = httpServletRequest.getSession();
+
+		SubjectAssertionContext subjectAssertionContext =
+			inboundMessageContext.getSubcontext(SubjectAssertionContext.class);
+
+		Assertion assertion = subjectAssertionContext.getAssertion();
+
+		List<AuthnStatement> authnStatements = assertion.getAuthnStatements();
+
+		AuthnStatement authnStatement = authnStatements.get(0);
+
+		String sessionIndex = authnStatement.getSessionIndex();
+
+		if (samlSpSession != null) {
+			samlSpSessionLocalService.updateSamlSpSession(
+				samlSpSession.getSamlSpSessionId(),
+				OpenSamlUtil.marshall(assertion), httpSession.getId(),
+				nameID.getFormat(), nameID.getNameQualifier(),
+				nameID.getSPNameQualifier(), nameID.getValue(),
+				issuer.getValue(), samlSpSession.getSamlSpSessionKey(),
+				sessionIndex, serviceContext);
+		}
+		else {
+			String samlSpSessionKey = generateIdentifier(30);
+
+			samlSpSession = samlSpSessionLocalService.addSamlSpSession(
+				OpenSamlUtil.marshall(assertion), httpSession.getId(),
+				nameID.getFormat(), nameID.getNameQualifier(),
+				nameID.getSPNameQualifier(), nameID.getValue(),
+				issuer.getValue(), samlSpSessionKey, sessionIndex,
+				serviceContext);
+		}
+
+		httpSession.setAttribute(
+			SamlWebKeys.SAML_SP_SESSION_KEY,
+			samlSpSession.getSamlSpSessionKey());
+
+		addCookie(
+			httpServletRequest, httpServletResponse,
+			SamlWebKeys.SAML_SP_SESSION_KEY,
+			samlSpSession.getSamlSpSessionKey(), -1);
+
+		httpServletResponse.sendRedirect(
+			_getAuthRedirectURL(messageContext, httpServletRequest));
 	}
 
 	private void _redirectToLogin(

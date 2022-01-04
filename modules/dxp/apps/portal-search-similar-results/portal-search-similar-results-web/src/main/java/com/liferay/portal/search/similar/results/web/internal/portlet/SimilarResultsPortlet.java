@@ -166,7 +166,7 @@ public class SimilarResultsPortlet extends MVCPortlet {
 
 		for (Document document : documents) {
 			SimilarResultsDocumentDisplayContext
-				similarResultsDocumentDisplayContext = _doBuildSummary(
+				similarResultsDocumentDisplayContext = _buildSummary(
 					document, similarResultsRoute, renderRequest,
 					renderResponse, themeDisplay);
 
@@ -181,19 +181,7 @@ public class SimilarResultsPortlet extends MVCPortlet {
 		return similarResultsDocumentDisplayContexts;
 	}
 
-	private SimilarResultsDisplayContext _createSimilarResultsDisplayContext(
-		RenderRequest renderRequest) {
-
-		try {
-			return new SimilarResultsDisplayContext(
-				_getHttpServletRequest(renderRequest));
-		}
-		catch (ConfigurationException configurationException) {
-			throw new RuntimeException(configurationException);
-		}
-	}
-
-	private SimilarResultsDocumentDisplayContext _doBuildSummary(
+	private SimilarResultsDocumentDisplayContext _buildSummary(
 		Document document, SimilarResultsRoute similarResultsRoute,
 		RenderRequest renderRequest, RenderResponse renderResponse,
 		ThemeDisplay themeDisplay) {
@@ -234,6 +222,18 @@ public class SimilarResultsPortlet extends MVCPortlet {
 		);
 
 		return similarResultsDocumentDisplayContextBuilder.build();
+	}
+
+	private SimilarResultsDisplayContext _createSimilarResultsDisplayContext(
+		RenderRequest renderRequest) {
+
+		try {
+			return new SimilarResultsDisplayContext(
+				_getHttpServletRequest(renderRequest));
+		}
+		catch (ConfigurationException configurationException) {
+			throw new RuntimeException(configurationException);
+		}
 	}
 
 	private List<Document> _excludingDocumentByUID(

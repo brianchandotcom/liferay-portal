@@ -34,9 +34,9 @@ import org.powermock.modules.junit4.PowerMockRunner;
 public abstract class BaseDirectoryBuilderTestCase extends BaseVLDAPTestCase {
 
 	protected void doTestBuildDirectories() throws Exception {
-		_doTestBuildDirectoriesWithDefaultFilterConstraints();
-		_doTestBuildDirectoriesWithInvalidFilterConstraints();
-		_doTestBuildDirectoriesWithNullFilterConstraints();
+		_testBuildDirectoriesWithDefaultFilterConstraints();
+		_testBuildDirectoriesWithInvalidFilterConstraints();
+		_testBuildDirectoriesWithNullFilterConstraints();
 	}
 
 	protected void doTestValidAttributes(String name, String... values) {
@@ -47,7 +47,7 @@ public abstract class BaseDirectoryBuilderTestCase extends BaseVLDAPTestCase {
 
 	protected DirectoryBuilder directoryBuilder;
 
-	private void _doTestBuildDirectoriesWithDefaultFilterConstraints()
+	private void _testBuildDirectoriesWithDefaultFilterConstraints()
 		throws Exception {
 
 		List<Directory> directories = directoryBuilder.buildDirectories(
@@ -58,7 +58,7 @@ public abstract class BaseDirectoryBuilderTestCase extends BaseVLDAPTestCase {
 		Assert.assertNotNull(directory);
 	}
 
-	private void _doTestBuildDirectoriesWithInvalidFilterConstraints()
+	private void _testBuildDirectoriesWithInvalidFilterConstraints()
 		throws Exception {
 
 		List<FilterConstraint> filterConstraints = new ArrayList<>();
@@ -75,7 +75,7 @@ public abstract class BaseDirectoryBuilderTestCase extends BaseVLDAPTestCase {
 		Assert.assertTrue(directories.isEmpty());
 	}
 
-	private void _doTestBuildDirectoriesWithNullFilterConstraints()
+	private void _testBuildDirectoriesWithNullFilterConstraints()
 		throws Exception {
 
 		List<Directory> directories = directoryBuilder.buildDirectories(

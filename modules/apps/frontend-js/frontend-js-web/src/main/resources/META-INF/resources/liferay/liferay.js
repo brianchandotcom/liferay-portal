@@ -196,7 +196,13 @@ Liferay = window.Liferay || {};
 			},
 			method: 'POST',
 		})
-			.then((response) => response.json())
+			.then((response) => {
+				if (!response.ok) {
+					ioConfig.error();
+				}
+
+				return response.json();
+			})
 			.then(ioConfig.complete)
 			.catch(ioConfig.error);
 	};

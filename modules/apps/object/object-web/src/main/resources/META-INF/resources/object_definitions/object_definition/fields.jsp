@@ -48,8 +48,6 @@ renderResponse.setTitle(objectDefinition.getLabel(locale, true));
 		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"apiURL", objectDefinitionsFieldsDisplayContext.getAPIURL()
-			).put(
-				"ffClobObjectFieldTypeConfigurationEnabled", objectDefinitionsFieldsDisplayContext.isFFClobObjectFieldTypeConfigurationEnabled()
 			).build()
 		%>'
 	/>

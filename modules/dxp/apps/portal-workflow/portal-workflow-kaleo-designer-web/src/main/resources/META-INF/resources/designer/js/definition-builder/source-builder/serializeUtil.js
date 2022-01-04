@@ -439,30 +439,36 @@ function appendXMLTaskTimers(buffer, taskTimers) {
 }
 
 function appendXMLTransitions(buffer, transitions) {
-	if (transitions && transitions.length > 0) {
-		const xmlTransition = XMLUtil.createObj('transition');
+	if (transitions.length) {
 		const xmlTransitions = XMLUtil.createObj('transitions');
 
 		buffer.push(xmlTransitions.open);
 
-		let pickDefault = transitions.some((item) => {
-			return item.connector.default === true;
-		});
+		const xmlTransition = XMLUtil.createObj('transition');
 
-		pickDefault = !pickDefault;
+		transitions.forEach((item) => {
+			buffer.push(xmlTransition.open);
 
-		transitions.forEach((item, index) => {
-			let defaultValue = item.connector.default;
+			buffer.push(XMLUtil.create('id', item.id));
 
-			if (pickDefault && index === 0) {
-				defaultValue = true;
-			}
+			const xmlLabels = XMLUtil.createObj('labels');
+
+			buffer.push(xmlLabels.open);
+
+			Object.entries(item.data.label).map(([key, value]) => {
+				const xmlLabel = XMLUtil.createObj('label', {
+					'language-id': `${key}`,
+				});
+				buffer.push(xmlLabel.open, value);
+
+				buffer.push(xmlLabel.close);
+			});
+
+			buffer.push(xmlLabels.close);
 
 			buffer.push(
-				xmlTransition.open,
-				XMLUtil.create('name', item.connector.name),
+				XMLUtil.create('default', `${item.data.defaultEdge}`),
 				XMLUtil.create('target', item.target),
-				XMLUtil.create('default', defaultValue),
 				xmlTransition.close
 			);
 		});
@@ -471,7 +477,7 @@ function appendXMLTransitions(buffer, transitions) {
 	}
 }
 
-function serializeDefinition(xmlNamespace, metadata, nodes) {
+function serializeDefinition(xmlNamespace, metadata, nodes, transitions) {
 	const description = metadata.description;
 	const name = metadata.name;
 	const version = parseInt(metadata.version, 10);
@@ -560,7 +566,12 @@ function serializeDefinition(xmlNamespace, metadata, nodes) {
 
 		appendXMLAssignments(buffer, item.data.assignments);
 		appendXMLTaskTimers(buffer, item.data.taskTimers);
-		appendXMLTransitions(buffer, item.data.transitions);
+
+		const nodeTransitions = transitions.filter(
+			(transition) => transition.source === id
+		);
+
+		appendXMLTransitions(buffer, nodeTransitions);
 
 		buffer.push(xmlNode.close);
 	});

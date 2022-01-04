@@ -24,44 +24,21 @@ export default function DeserializeUtil(content) {
 }
 
 DeserializeUtil.prototype = {
-	getConnectors() {
+	getElements() {
 		const instance = this;
 
-		const connectors = [];
-
-		instance.definition.forEachField((_, fieldData) => {
-			fieldData.results.forEach((item1) => {
-				item1.transitions.forEach((item2) => {
-					connectors.push({
-						connector: {
-							default: item2.default,
-							name: item2.name,
-						},
-						source: item1.name,
-						target: item2.target,
-					});
-				});
-			});
-		});
-
-		return connectors;
-	},
-
-	getNodes() {
-		const instance = this;
-
-		const nodes = [];
+		const elements = [];
 
 		instance.definition.forEachField((tagName, fieldData) => {
-			fieldData.results.forEach((item) => {
+			fieldData.results.forEach((node) => {
 				const position = {};
 				let type = tagName;
 
-				if (item.initial) {
+				if (node.initial) {
 					type = 'start';
 				}
 
-				const metadata = JSON.parse(item.metadata);
+				const metadata = JSON.parse(node.metadata);
 
 				if (metadata.terminal) {
 					type = 'end';
@@ -72,35 +49,35 @@ DeserializeUtil.prototype = {
 
 				let label = {};
 
-				if (Array.isArray(item.labels)) {
-					item.labels?.map((itemLabel) => {
+				if (Array.isArray(node.labels)) {
+					node.labels?.map((itemLabel) => {
 						Object.entries(itemLabel).map(([key, value]) => {
 							label[key] = replaceTabSpaces(removeNewLine(value));
 						});
 					});
 				}
 				else {
-					label = {[defaultLanguageId]: item.name};
+					label = {[defaultLanguageId]: node.name};
 				}
 
 				const data = {
-					description: item.description,
+					description: node.description,
 					label,
-					script: item.script,
+					script: node.script,
 				};
 
 				if (type === 'task') {
 					data.scriptLanguage =
-						item.scriptLanguage || DEFAULT_LANGUAGE;
+						node.scriptLanguage || DEFAULT_LANGUAGE;
 				}
 
-				let id;
+				let nodeId;
 
-				if (item.id) {
-					id = item.id;
+				if (node.id) {
+					nodeId = node.id;
 				}
-				else if (item.name) {
-					id = item.name;
+				else if (node.name) {
+					nodeId = node.name;
 				}
 				else {
 					return;
@@ -108,20 +85,70 @@ DeserializeUtil.prototype = {
 
 				// To be removed after next stories
 
-				if (type !== 'start' && type !== 'end' && type !== 'state') {
+				if (
+					type !== 'start' &&
+					type !== 'end' &&
+					type !== 'state' &&
+					type !== 'task'
+				) {
 					type = 'state';
 				}
 
-				nodes.push({
+				elements.push({
 					data,
-					id,
+					id: nodeId,
 					position,
 					type,
 				});
+
+				if (node.transitions) {
+					node.transitions.forEach((transition) => {
+						let label = {};
+
+						if (Array.isArray(transition.labels)) {
+							transition.labels?.map((itemLabel) => {
+								Object.entries(itemLabel).map(
+									([key, value]) => {
+										label[key] = replaceTabSpaces(
+											removeNewLine(value)
+										);
+									}
+								);
+							});
+						}
+						else {
+							label = {[defaultLanguageId]: transition.name};
+						}
+
+						let transitionId;
+
+						if (transition.id) {
+							transitionId = transition.id;
+						}
+						else if (transition.name) {
+							transitionId = transition.name;
+						}
+						else {
+							return;
+						}
+
+						elements.push({
+							arrowHeadType: 'arrowclosed',
+							data: {
+								defaultEdge: JSON.parse(transition.default),
+								label,
+							},
+							id: transitionId,
+							source: nodeId,
+							target: transition.target,
+							type: 'transition',
+						});
+					});
+				}
 			});
 		});
 
-		return nodes;
+		return elements;
 	},
 
 	updateXMLDefinition(content) {

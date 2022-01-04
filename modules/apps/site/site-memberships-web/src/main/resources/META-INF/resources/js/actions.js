@@ -29,21 +29,21 @@ export const ACTIONS = {
 					return;
 				}
 
-				const allItems = document.createElement('input');
+				const allInput = document.createElement('input');
 
-				allItems.name = `${portletNamespace}availableRowIds`;
-				allItems.value = items.map((item) => item.value);
+				allInput.name = `${portletNamespace}availableRowIds`;
+				allInput.value = items.map((item) => item.value);
 
-				editUserGroupRoleFm.appendChild(allItems);
+				editUserGroupRoleFm.appendChild(allInput);
 
-				const selectedItems = document.createElement('input');
+				const checkedInput = document.createElement('input');
 
-				selectedItems.name = `${portletNamespace}rowIds`;
-				selectedItems.value = items
+				checkedInput.name = `${portletNamespace}rowIds`;
+				checkedInput.value = items
 					.filter((item) => item.checked)
 					.map((item) => item.value);
 
-				editUserGroupRoleFm.appendChild(selectedItems);
+				editUserGroupRoleFm.appendChild(checkedInput);
 
 				submitForm(editUserGroupRoleFm, itemData.editUserGroupRoleURL);
 			},

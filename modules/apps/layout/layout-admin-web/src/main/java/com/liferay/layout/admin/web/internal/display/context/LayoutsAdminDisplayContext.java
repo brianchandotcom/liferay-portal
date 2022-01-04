@@ -1774,6 +1774,8 @@ public class LayoutsAdminDisplayContext {
 			availableActions.add("deleteSelectedPages");
 		}
 
+		availableActions.add("exportTranslation");
+
 		return availableActions;
 	}
 

@@ -74,7 +74,7 @@ public abstract class FragmentManagementToolbarDisplayContext
 
 	@Override
 	protected String[] getOrderByKeys() {
-		return new String[] {"name", "create-date", "modified-date"};
+		return new String[] {"name", "modified-date"};
 	}
 
 	protected final FragmentDisplayContext fragmentDisplayContext;

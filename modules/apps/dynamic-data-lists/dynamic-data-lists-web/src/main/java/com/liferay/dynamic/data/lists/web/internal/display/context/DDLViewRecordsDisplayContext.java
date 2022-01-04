@@ -194,13 +194,7 @@ public class DDLViewRecordsDisplayContext {
 				addDDMFormField(ddmFormFields, ddmFormField);
 			}
 
-			int totalColumns = _TOTAL_COLUMNS;
-
-			if (ddmFormFields.size() < totalColumns) {
-				totalColumns = ddmFormFields.size();
-			}
-
-			_ddmFormFields = ddmFormFields.subList(0, totalColumns);
+			_ddmFormFields = ddmFormFields;
 		}
 
 		return _ddmFormFields;
@@ -709,8 +703,6 @@ public class DDLViewRecordsDisplayContext {
 
 		recordSearch.setTotal(total);
 	}
-
-	private static final int _TOTAL_COLUMNS = 5;
 
 	private final DDLRecordSet _ddlRecordSet;
 	private final DDLRequestHelper _ddlRequestHelper;

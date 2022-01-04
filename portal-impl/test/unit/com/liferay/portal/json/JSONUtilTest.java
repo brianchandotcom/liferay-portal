@@ -779,6 +779,29 @@ public class JSONUtilTest {
 	}
 
 	@Test
+	public void testToStringMap() {
+		Map<String, String> expectedMapValues = HashMapBuilder.put(
+			"alpha", "1"
+		).put(
+			"beta", "2"
+		).put(
+			"gamma", "3"
+		).build();
+
+		Map<String, String> actualMapValues = JSONUtil.toStringMap(
+			JSONUtil.put(
+				"alpha", "1"
+			).put(
+				"beta", "2"
+			).put(
+				"gamma", "3"
+			));
+
+		Assert.assertEquals(
+			expectedMapValues.toString(), actualMapValues.toString());
+	}
+
+	@Test
 	public void testToStringSet() {
 		Assert.assertEquals(Collections.emptySet(), JSONUtil.toStringSet(null));
 		Assert.assertEquals(

@@ -49,6 +49,8 @@ public class UploadFileEntryMVCActionCommand extends BaseMVCActionCommand {
 		_uploadHandler.upload(
 			_ddmFormUploadFileEntryHandler, _ddmFormUploadResponseHandler,
 			actionRequest, actionResponse);
+
+		hideDefaultSuccessMessage(actionRequest);
 	}
 
 	@Reference

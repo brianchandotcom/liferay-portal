@@ -1,6 +1,8 @@
 .parallax-container {
 	background-attachment: fixed;
-	background-image: url([resources:parallax_2.png]);
+	background-blend-mode: screen;
+	background-color: var(--brand-color-1);
+	background-image: url([resources:table_top_bw.jpg]);
 	background-repeat: no-repeat;
 	background-size: cover;
 }

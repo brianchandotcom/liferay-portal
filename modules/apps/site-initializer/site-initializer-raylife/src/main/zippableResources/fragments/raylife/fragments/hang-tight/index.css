@@ -1,3 +1,15 @@
-.hang-tight-image {
+.hang-tight .hang-tight-image {
 	width: 718px;
+}
+
+@media screen and (max-width: 768px) {
+	.hang-tight .hang-tight-image {
+		width: 100%;
+	}
+}
+
+@media screen and (max-width: 576px) {
+	.hang-tight p {
+		font-size: 14px;
+	}
 }

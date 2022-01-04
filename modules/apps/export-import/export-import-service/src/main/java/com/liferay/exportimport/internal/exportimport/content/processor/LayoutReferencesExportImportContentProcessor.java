@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutFriendlyURL;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.StagedModel;
@@ -334,21 +333,11 @@ public class LayoutReferencesExportImportContentProcessor
 						localePath.substring(1), true, false);
 				}
 				else {
-					String urlWithoutSlash = url.substring(1);
+					localePath = url;
 
-					Locale localeFromUrl = LocaleUtil.fromLanguageId(
-						urlWithoutSlash, true, false);
-
-					if (localeFromUrl != null) {
-						Layout firstLayout =
-							_layoutLocalService.fetchFirstLayout(
-								group.getGroupId(), false,
-								LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
-								false);
-
-						if (firstLayout != null) {
-							url = firstLayout.getFriendlyURL();
-						}
+					if (localePath.length() > 1) {
+						locale = LocaleUtil.fromLanguageId(
+							localePath.substring(1), true, false);
 					}
 				}
 
@@ -1003,19 +992,11 @@ public class LayoutReferencesExportImportContentProcessor
 					localePath.substring(1), true, false);
 			}
 			else {
-				String urlWithoutSlash = url.substring(1);
+				localePath = url;
 
-				Locale localeFromUrl = LocaleUtil.fromLanguageId(
-					urlWithoutSlash, true, false);
-
-				if (localeFromUrl != null) {
-					Layout firstLayout = _layoutLocalService.fetchFirstLayout(
-						groupId, false,
-						LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, false);
-
-					if (firstLayout != null) {
-						url = firstLayout.getFriendlyURL();
-					}
+				if (localePath.length() > 1) {
+					locale = LocaleUtil.fromLanguageId(
+						localePath.substring(1), true, false);
 				}
 			}
 

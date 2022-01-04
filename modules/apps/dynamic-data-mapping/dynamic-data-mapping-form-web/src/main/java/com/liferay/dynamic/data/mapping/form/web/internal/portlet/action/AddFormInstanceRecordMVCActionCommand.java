@@ -132,6 +132,14 @@ public class AddFormInstanceRecordMVCActionCommand
 			return;
 		}
 
+		if (SessionMessages.contains(
+				actionRequest,
+				_portal.getPortletId(actionRequest) +
+					SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_SUCCESS_MESSAGE)) {
+
+			SessionMessages.clear(actionRequest);
+		}
+
 		SessionMessages.add(actionRequest, "formInstanceRecordAdded");
 
 		DDMFormInstanceSettings ddmFormInstanceSettings =
@@ -153,13 +161,7 @@ public class AddFormInstanceRecordMVCActionCommand
 				ddmForm.getDDMFormSuccessPageSettings();
 
 			if (ddmFormSuccessPageSettings.isEnabled()) {
-				String portletId = _portal.getPortletId(actionRequest);
-
-				SessionMessages.add(
-					actionRequest,
-					portletId.concat(
-						SessionMessages.
-							KEY_SUFFIX_HIDE_DEFAULT_SUCCESS_MESSAGE));
+				hideDefaultSuccessMessage(actionRequest);
 			}
 		}
 	}

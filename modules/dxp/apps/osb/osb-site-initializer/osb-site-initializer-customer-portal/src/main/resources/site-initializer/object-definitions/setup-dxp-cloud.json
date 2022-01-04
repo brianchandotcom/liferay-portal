@@ -45,7 +45,6 @@
 			"type": "String"
 		}
 	],
-	"panelCategoryKey": "control_panel.object",
 	"pluralLabel": {
 		"en_US": "Setups DXP Cloud"
 	},

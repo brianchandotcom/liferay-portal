@@ -29,7 +29,7 @@ definition {
 
 		FormFields.enableCheckbox(fieldName = "enabled");
 
-		PortletEntry.save();
+		PortletEntry.update();
 
 		Upgrade.viewAndAccessRedirects();
 

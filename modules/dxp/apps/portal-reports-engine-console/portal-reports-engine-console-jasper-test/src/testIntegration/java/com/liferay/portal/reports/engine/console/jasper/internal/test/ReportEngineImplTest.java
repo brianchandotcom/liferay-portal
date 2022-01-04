@@ -65,33 +65,33 @@ public class ReportEngineImplTest extends TestCase {
 
 	@Test
 	public void testCompileCsv() throws Exception {
-		compile(
+		_compile(
 			ReportDataSourceType.CSV, "CsvDataSource.txt",
 			"CsvDataSourceReport.jrxml", ReportFormat.CSV);
 	}
 
 	@Test
 	public void testCompileXls() throws Exception {
-		compile(
+		_compile(
 			ReportDataSourceType.XLS, "XlsDataSource.data.xls",
 			"XlsDataSourceReport.jrxml", ReportFormat.CSV);
 	}
 
 	@Test
 	public void testCompileXml() throws Exception {
-		compile(
+		_compile(
 			ReportDataSourceType.XML, "northwind.xml", "OrdersReport.jrxml",
 			ReportFormat.CSV);
 	}
 
 	@Test
 	public void testExportCsv() throws Exception {
-		export(ReportFormat.CSV);
+		_export(ReportFormat.CSV);
 	}
 
 	@Test
 	public void testExportPdf() throws Exception {
-		export(ReportFormat.PDF);
+		_export(ReportFormat.PDF);
 	}
 
 	@Test
@@ -110,31 +110,31 @@ public class ReportEngineImplTest extends TestCase {
 
 	@Test
 	public void testExportRtf() throws Exception {
-		export(ReportFormat.RTF);
+		_export(ReportFormat.RTF);
 	}
 
 	@Test
 	public void testExportTxt() throws Exception {
-		export(ReportFormat.TXT);
+		_export(ReportFormat.TXT);
 	}
 
 	@Test
 	public void testExportXls() throws Exception {
-		export(ReportFormat.XLS);
+		_export(ReportFormat.XLS);
 	}
 
 	@Test
 	public void testExportXml() throws Exception {
-		export(ReportFormat.XML);
+		_export(ReportFormat.XML);
 	}
 
-	protected ReportRequest compile(
+	private ReportRequest _compile(
 			ReportDataSourceType reportDataSourceType,
 			String dataSourceFileName, String dataSourceReportFileName,
 			ReportFormat reportFormat)
 		throws Exception {
 
-		ReportRequest reportRequest = getReportRequest(
+		ReportRequest reportRequest = _getReportRequest(
 			reportDataSourceType, dataSourceFileName, dataSourceReportFileName,
 			reportFormat);
 
@@ -143,8 +143,8 @@ public class ReportEngineImplTest extends TestCase {
 		return reportRequest;
 	}
 
-	protected void export(ReportFormat reportFormat) throws Exception {
-		ReportRequest reportRequest = compile(
+	private void _export(ReportFormat reportFormat) throws Exception {
+		ReportRequest reportRequest = _compile(
 			ReportDataSourceType.CSV, "CsvDataSource.txt",
 			"CsvDataSourceReport.jrxml", reportFormat);
 
@@ -157,7 +157,7 @@ public class ReportEngineImplTest extends TestCase {
 		Assert.assertNotNull(reportResultContainer.getResults());
 	}
 
-	protected ReportRequest getReportRequest(
+	private ReportRequest _getReportRequest(
 			ReportDataSourceType reportDataSourceType,
 			String dataSourceFileName, String dataSourceReportFileName,
 			ReportFormat reportFormat)
@@ -206,7 +206,7 @@ public class ReportEngineImplTest extends TestCase {
 			String dataSourceReportFileName, String expectedCharacters)
 		throws Exception {
 
-		ReportRequest reportRequest = compile(
+		ReportRequest reportRequest = _compile(
 			ReportDataSourceType.CSV, "CsvDataSource.txt",
 			dataSourceReportFileName, ReportFormat.PDF);
 

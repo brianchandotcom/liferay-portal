@@ -80,12 +80,74 @@ public class MonitoringProxyServlet extends ProxyServlet {
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		replaceConfiguration(properties);
+		_replaceConfiguration(properties);
 	}
 
-	protected ErrorDisplayContext buildErrorDisplayContext(
-		Exception exception) {
+	@Override
+	protected void copyRequestHeaders(
+		HttpServletRequest httpServletRequest, HttpRequest proxyHttpRequest) {
 
+		super.copyRequestHeaders(httpServletRequest, proxyHttpRequest);
+
+		proxyHttpRequest.addHeader(
+			HttpHeaders.AUTHORIZATION, _getShieldAuthorization());
+
+		proxyHttpRequest.removeHeaders(HttpHeaders.ACCEPT_ENCODING);
+	}
+
+	@Override
+	protected String getConfigParam(String key) {
+		if (key.equals(ProxyServlet.P_TARGET_URI)) {
+			return GetterUtil.getString(_monitoringConfiguration.kibanaURL());
+		}
+
+		if (key.equals(ProxyServlet.P_LOG)) {
+			return String.valueOf(
+				_monitoringConfiguration.proxyServletLogEnable());
+		}
+
+		return super.getConfigParam(key);
+	}
+
+	@Modified
+	protected void modified(Map<String, Object> properties) throws Exception {
+		_replaceConfiguration(properties);
+
+		try {
+			init();
+		}
+		catch (NullPointerException nullPointerException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to initialize monitoring proxy servlet",
+					nullPointerException);
+			}
+		}
+	}
+
+	@Override
+	protected void service(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
+		throws IOException, ServletException {
+
+		try {
+			_checkPermission(httpServletRequest);
+
+			super.service(httpServletRequest, httpServletResponse);
+		}
+		catch (Exception exception) {
+			_sendError(exception, httpServletRequest, httpServletResponse);
+		}
+	}
+
+	@Reference
+	protected PermissionCheckerFactory permissionCheckerFactory;
+
+	@Reference
+	protected Portal portal;
+
+	private ErrorDisplayContext _buildErrorDisplayContext(Exception exception) {
 		ErrorDisplayContext errorDisplayContext = new ErrorDisplayContext();
 
 		errorDisplayContext.setException(exception);
@@ -115,7 +177,7 @@ public class MonitoringProxyServlet extends ProxyServlet {
 		return errorDisplayContext;
 	}
 
-	protected void checkPermission(HttpServletRequest httpServletRequest)
+	private void _checkPermission(HttpServletRequest httpServletRequest)
 		throws Exception {
 
 		User user = portal.getUser(httpServletRequest);
@@ -138,33 +200,7 @@ public class MonitoringProxyServlet extends ProxyServlet {
 		}
 	}
 
-	@Override
-	protected void copyRequestHeaders(
-		HttpServletRequest httpServletRequest, HttpRequest proxyHttpRequest) {
-
-		super.copyRequestHeaders(httpServletRequest, proxyHttpRequest);
-
-		proxyHttpRequest.addHeader(
-			HttpHeaders.AUTHORIZATION, getShieldAuthorization());
-
-		proxyHttpRequest.removeHeaders(HttpHeaders.ACCEPT_ENCODING);
-	}
-
-	@Override
-	protected String getConfigParam(String key) {
-		if (key.equals(ProxyServlet.P_TARGET_URI)) {
-			return GetterUtil.getString(_monitoringConfiguration.kibanaURL());
-		}
-
-		if (key.equals(ProxyServlet.P_LOG)) {
-			return String.valueOf(
-				_monitoringConfiguration.proxyServletLogEnable());
-		}
-
-		return super.getConfigParam(key);
-	}
-
-	protected String getShieldAuthorization() {
+	private String _getShieldAuthorization() {
 		String userName = GetterUtil.getString(
 			_monitoringConfiguration.kibanaUserName());
 		String password = GetterUtil.getString(
@@ -175,35 +211,19 @@ public class MonitoringProxyServlet extends ProxyServlet {
 		return "Basic " + Base64.encode(authorization.getBytes());
 	}
 
-	@Modified
-	protected void modified(Map<String, Object> properties) throws Exception {
-		replaceConfiguration(properties);
-
-		try {
-			init();
-		}
-		catch (NullPointerException nullPointerException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to initialize monitoring proxy servlet",
-					nullPointerException);
-			}
-		}
-	}
-
-	protected void replaceConfiguration(Map<String, Object> properties) {
+	private void _replaceConfiguration(Map<String, Object> properties) {
 		_monitoringConfiguration = ConfigurableUtil.createConfigurable(
 			MonitoringConfiguration.class, properties);
 	}
 
-	protected void sendError(
+	private void _sendError(
 			Exception exception, HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
 		throws IOException, ServletException {
 
 		httpServletRequest.setAttribute(
 			MonitoringProxyServletWebKeys.ERROR_DISPLAY_CONTEXT,
-			buildErrorDisplayContext(exception));
+			_buildErrorDisplayContext(exception));
 
 		RequestDispatcher requestDispatcher =
 			httpServletRequest.getRequestDispatcher(
@@ -211,28 +231,6 @@ public class MonitoringProxyServlet extends ProxyServlet {
 
 		requestDispatcher.include(httpServletRequest, httpServletResponse);
 	}
-
-	@Override
-	protected void service(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws IOException, ServletException {
-
-		try {
-			checkPermission(httpServletRequest);
-
-			super.service(httpServletRequest, httpServletResponse);
-		}
-		catch (Exception exception) {
-			sendError(exception, httpServletRequest, httpServletResponse);
-		}
-	}
-
-	@Reference
-	protected PermissionCheckerFactory permissionCheckerFactory;
-
-	@Reference
-	protected Portal portal;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		MonitoringProxyServlet.class);

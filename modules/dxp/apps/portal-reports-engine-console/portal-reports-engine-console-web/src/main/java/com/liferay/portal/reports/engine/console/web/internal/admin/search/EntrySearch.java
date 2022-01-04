@@ -86,11 +86,11 @@ public class EntrySearch extends SearchContainer<Entry> {
 			"asc");
 
 		setOrderByComparator(
-			getEntryOrderByComparator(orderByCol, orderByType));
+			_getEntryOrderByComparator(orderByCol, orderByType));
 		setOrderByType(orderByType);
 	}
 
-	protected OrderByComparator<Entry> getEntryOrderByComparator(
+	private OrderByComparator<Entry> _getEntryOrderByComparator(
 		String orderByCol, String orderByType) {
 
 		boolean orderByAsc = false;

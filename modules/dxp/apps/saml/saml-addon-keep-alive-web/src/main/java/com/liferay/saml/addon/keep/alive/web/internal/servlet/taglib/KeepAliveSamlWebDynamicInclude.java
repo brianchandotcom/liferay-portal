@@ -54,16 +54,16 @@ public class KeepAliveSamlWebDynamicInclude extends BaseDynamicInclude {
 		String keepAliveURL = null;
 
 		if (_KEY_IDENTITY_PROVIDER.equals(key)) {
-			keepAliveURL = getSpIdpKeepAliveUrl(httpServletRequest);
+			keepAliveURL = _getSpIdpKeepAliveUrl(httpServletRequest);
 		}
 		else {
-			keepAliveURL = getIdpSpKeepAliveUrl(httpServletRequest);
+			keepAliveURL = _getIdpSpKeepAliveUrl(httpServletRequest);
 		}
 
 		httpServletRequest.setAttribute(
 			SamlWebKeys.SAML_KEEP_ALIVE_URL, keepAliveURL);
 
-		includeJSP(
+		_includeJSP(
 			httpServletRequest, httpServletResponse,
 			"/com.liferay.saml.web/keep_alive.jsp");
 	}
@@ -74,7 +74,7 @@ public class KeepAliveSamlWebDynamicInclude extends BaseDynamicInclude {
 		dynamicIncludeRegistry.register(_KEY_SERVICE_PROVIDER);
 	}
 
-	protected String getIdpSpKeepAliveUrl(
+	private String _getIdpSpKeepAliveUrl(
 		HttpServletRequest httpServletRequest) {
 
 		SamlIdpSpConnection samlIdpSpConnection =
@@ -94,7 +94,7 @@ public class KeepAliveSamlWebDynamicInclude extends BaseDynamicInclude {
 		return keepAliveURL;
 	}
 
-	protected String getSpIdpKeepAliveUrl(
+	private String _getSpIdpKeepAliveUrl(
 		HttpServletRequest httpServletRequest) {
 
 		SamlSpIdpConnection samlSpIdpConnection =
@@ -121,7 +121,7 @@ public class KeepAliveSamlWebDynamicInclude extends BaseDynamicInclude {
 		return keepAliveURL;
 	}
 
-	protected void includeJSP(
+	private void _includeJSP(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, String jspPath)
 		throws IOException {

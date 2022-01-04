@@ -39,12 +39,12 @@ public class IndexToFilterSynchronizerImpl
 		SynonymSetIndexName synonymSetIndexName, String companyIndexName,
 		boolean deletion) {
 
-		updateFilters(
-			companyIndexName, getSynonymFromIndex(synonymSetIndexName),
+		_updateFilters(
+			companyIndexName, _getSynonymFromIndex(synonymSetIndexName),
 			deletion);
 	}
 
-	protected String[] getSynonymFromIndex(
+	private String[] _getSynonymFromIndex(
 		SynonymSetIndexName synonymSetIndexName) {
 
 		List<SynonymSet> synonymSets = _synonymSetIndexReader.search(
@@ -59,7 +59,7 @@ public class IndexToFilterSynchronizerImpl
 		);
 	}
 
-	protected void updateFilters(
+	private void _updateFilters(
 		String companyIndexName, String[] synonyms, boolean deletion) {
 
 		for (String filterName : _synonymSetFilterNameHolder.getFilterNames()) {

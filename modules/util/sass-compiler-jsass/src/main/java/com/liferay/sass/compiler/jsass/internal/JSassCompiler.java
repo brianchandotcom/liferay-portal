@@ -99,7 +99,7 @@ public class JSassCompiler implements SassCompiler {
 					sourceMapFileName.equals("")) {
 
 					sourceMapFileName =
-						getOutputFileName(inputFileName) + ".map";
+						_getOutputFileName(inputFileName) + ".map";
 				}
 
 				File sourceMapFile = new File(sourceMapFileName);
@@ -121,7 +121,7 @@ public class JSassCompiler implements SassCompiler {
 
 			if (generateSourceMap) {
 				try {
-					write(new File(sourceMapFileName), output.getSourceMap());
+					_write(new File(sourceMapFileName), output.getSourceMap());
 				}
 				catch (Exception exception) {
 					System.out.println("Unable to create source map");
@@ -181,7 +181,7 @@ public class JSassCompiler implements SassCompiler {
 
 			String fileName = inputFileName.substring(index);
 
-			String outputFileName = getOutputFileName(fileName);
+			String outputFileName = _getOutputFileName(fileName);
 
 			if ((sourceMapFileName == null) || sourceMapFileName.equals("")) {
 				sourceMapFileName = dirName + outputFileName + ".map";
@@ -191,7 +191,7 @@ public class JSassCompiler implements SassCompiler {
 
 			tempFile.deleteOnExit();
 
-			write(tempFile, input);
+			_write(tempFile, input);
 
 			String output = compileFile(
 				tempFile.getCanonicalPath(), includeDirName, generateSourceMap,
@@ -208,7 +208,7 @@ public class JSassCompiler implements SassCompiler {
 				sourceMapContent = sourceMapContent.replaceAll(
 					"tmp\\.css", outputFileName);
 
-				write(sourceMapFile, sourceMapContent);
+				_write(sourceMapFile, sourceMapContent);
 			}
 
 			return output;
@@ -218,11 +218,11 @@ public class JSassCompiler implements SassCompiler {
 		}
 	}
 
-	protected String getOutputFileName(String fileName) {
+	private String _getOutputFileName(String fileName) {
 		return fileName.replaceAll("scss$", "css");
 	}
 
-	protected void write(File file, String string) throws IOException {
+	private void _write(File file, String string) throws IOException {
 		if (!file.exists()) {
 			File parentFile = file.getParentFile();
 

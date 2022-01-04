@@ -51,7 +51,7 @@ public class DocumentLibrarySimilarResultsContributorTest {
 
 		DocumentLibrarySimilarResultsContributor
 			documentLibrarySimilarResultsContributor =
-				createDocumentLibrarySimilarResultsContributor();
+				_createDocumentLibrarySimilarResultsContributor();
 
 		documentLibrarySimilarResultsContributor.detectRoute(
 			new RouteBuilderImpl(), () -> urlString);
@@ -78,8 +78,21 @@ public class DocumentLibrarySimilarResultsContributorTest {
 				destinationHelper));
 	}
 
-	protected DocumentLibrarySimilarResultsContributor
-		createDocumentLibrarySimilarResultsContributor() {
+	protected String writeDestination(
+		String urlString, SimilarResultsContributor similarResultsContributor,
+		DestinationHelper destinationHelper) {
+
+		DestinationBuilderImpl destinationBuilderImpl =
+			new DestinationBuilderImpl(urlString, _http);
+
+		similarResultsContributor.writeDestination(
+			destinationBuilderImpl, destinationHelper);
+
+		return destinationBuilderImpl.build();
+	}
+
+	private DocumentLibrarySimilarResultsContributor
+		_createDocumentLibrarySimilarResultsContributor() {
 
 		DocumentLibrarySimilarResultsContributor
 			documentLibrarySimilarResultsContributor =
@@ -93,19 +106,6 @@ public class DocumentLibrarySimilarResultsContributorTest {
 			});
 
 		return documentLibrarySimilarResultsContributor;
-	}
-
-	protected String writeDestination(
-		String urlString, SimilarResultsContributor similarResultsContributor,
-		DestinationHelper destinationHelper) {
-
-		DestinationBuilderImpl destinationBuilderImpl =
-			new DestinationBuilderImpl(urlString, _http);
-
-		similarResultsContributor.writeDestination(
-			destinationBuilderImpl, destinationHelper);
-
-		return destinationBuilderImpl.build();
 	}
 
 	private final Http _http = TestHttp.getInstance();

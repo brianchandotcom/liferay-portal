@@ -21,34 +21,34 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
  */
 public class PortletIdUpgradeProcess extends UpgradeProcess {
 
-	protected void deletePortletId() throws Exception {
+	@Override
+	protected void doUpgrade() throws Exception {
+		_deletePortletId();
+		_deletePortletPreferences();
+		_deleteResourceAction();
+		_deleteResourcePermission();
+	}
+
+	private void _deletePortletId() throws Exception {
 		runSQL(
 			"delete from Portlet where portletId like '%1_WAR_samlportlet%'");
 	}
 
-	protected void deletePortletPreferences() throws Exception {
+	private void _deletePortletPreferences() throws Exception {
 		runSQL(
 			"delete from PortletPreferences where portletId like " +
 				"'%1_WAR_samlportlet%'");
 	}
 
-	protected void deleteResourceAction() throws Exception {
+	private void _deleteResourceAction() throws Exception {
 		runSQL(
 			"delete from ResourceAction where name like '%1_WAR_samlportlet%'");
 	}
 
-	protected void deleteResourcePermission() throws Exception {
+	private void _deleteResourcePermission() throws Exception {
 		runSQL(
 			"delete from ResourcePermission where name like " +
 				"'%1_WAR_samlportlet%'");
-	}
-
-	@Override
-	protected void doUpgrade() throws Exception {
-		deletePortletId();
-		deletePortletPreferences();
-		deleteResourceAction();
-		deleteResourcePermission();
 	}
 
 }

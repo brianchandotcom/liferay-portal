@@ -67,20 +67,20 @@ public class UpgradeKaleoProcessTemplateLinkTest {
 		_group = GroupTestUtil.addGroup();
 		_timestamp = new Timestamp(System.currentTimeMillis());
 
-		setUpClassNameIds();
-		setUpPrimaryKeys();
-		setUpUpgradeKaleoProcessTemplateLink();
+		_setUpClassNameIds();
+		_setUpPrimaryKeys();
+		_setUpUpgradeKaleoProcessTemplateLink();
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		deleteKaleoProcess(_kaleoProcessId);
-		deleteKaleoProcessLink(_kaleoProcessLinkId);
+		_deleteKaleoProcess(_kaleoProcessId);
+		_deleteKaleoProcessLink(_kaleoProcessLinkId);
 	}
 
 	@Test
 	public void testCreateKaleoProcess() throws Exception {
-		addKaleoProcess(_kaleoProcessId);
+		_addKaleoProcess(_kaleoProcessId);
 
 		_kaleoProcessTemplateLinkUpgradeProcess.upgrade();
 
@@ -95,7 +95,7 @@ public class UpgradeKaleoProcessTemplateLinkTest {
 
 	@Test
 	public void testCreateKaleoProcessLink() throws Exception {
-		addKaleoProcessLink(_kaleoProcessLinkId);
+		_addKaleoProcessLink(_kaleoProcessLinkId);
 
 		_kaleoProcessTemplateLinkUpgradeProcess.upgrade();
 
@@ -108,7 +108,7 @@ public class UpgradeKaleoProcessTemplateLinkTest {
 		_ddmTemplateLinks.add(ddmTemplateLink);
 	}
 
-	protected void addKaleoProcess(long kaleoProcessId) throws Exception {
+	private void _addKaleoProcess(long kaleoProcessId) throws Exception {
 		try (Connection connection = DataAccess.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
@@ -135,7 +135,7 @@ public class UpgradeKaleoProcessTemplateLinkTest {
 		}
 	}
 
-	protected void addKaleoProcessLink(long kaleoProcessLinkId)
+	private void _addKaleoProcessLink(long kaleoProcessLinkId)
 		throws Exception {
 
 		String sql = StringBundler.concat(
@@ -156,7 +156,7 @@ public class UpgradeKaleoProcessTemplateLinkTest {
 		}
 	}
 
-	protected void deleteKaleoProcess(long kaleoProcessId) throws Exception {
+	private void _deleteKaleoProcess(long kaleoProcessId) throws Exception {
 		DB db = DBManagerUtil.getDB();
 
 		db.runSQL(
@@ -164,7 +164,7 @@ public class UpgradeKaleoProcessTemplateLinkTest {
 				kaleoProcessId);
 	}
 
-	protected void deleteKaleoProcessLink(long kaleoProcessLinkId)
+	private void _deleteKaleoProcessLink(long kaleoProcessLinkId)
 		throws Exception {
 
 		DB db = DBManagerUtil.getDB();
@@ -174,19 +174,19 @@ public class UpgradeKaleoProcessTemplateLinkTest {
 				kaleoProcessLinkId);
 	}
 
-	protected void setUpClassNameIds() {
+	private void _setUpClassNameIds() {
 		_kaleoProcessLinkClassNameId = PortalUtil.getClassNameId(
 			"com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink");
 		_kaleoProcessClassNameId = PortalUtil.getClassNameId(
 			"com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess");
 	}
 
-	protected void setUpPrimaryKeys() {
+	private void _setUpPrimaryKeys() {
 		_kaleoProcessId = RandomTestUtil.randomLong();
 		_kaleoProcessLinkId = RandomTestUtil.randomLong();
 	}
 
-	protected void setUpUpgradeKaleoProcessTemplateLink() {
+	private void _setUpUpgradeKaleoProcessTemplateLink() {
 		_upgradeStepRegistrator.register(
 			new UpgradeStepRegistrator.Registry() {
 

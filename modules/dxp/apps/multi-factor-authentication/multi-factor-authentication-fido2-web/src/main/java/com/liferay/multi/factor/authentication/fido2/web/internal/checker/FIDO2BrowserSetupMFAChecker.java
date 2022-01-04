@@ -180,7 +180,7 @@ public class FIDO2BrowserSetupMFAChecker
 		HttpServletRequest originalHttpServletRequest =
 			_portal.getOriginalServletRequest(httpServletRequest);
 
-		if (isVerified(originalHttpServletRequest.getSession(false), userId)) {
+		if (_isVerified(originalHttpServletRequest.getSession(false), userId)) {
 			return true;
 		}
 
@@ -403,39 +403,6 @@ public class FIDO2BrowserSetupMFAChecker
 		}
 	}
 
-	protected boolean isVerified(HttpSession httpSession, long userId) {
-		User user = _userLocalService.fetchUser(userId);
-
-		if (user == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Requested FIDO2 verification for nonexistent user " +
-						userId);
-			}
-
-			_routeAuditMessage(
-				_mfaFIDO2AuditMessageBuilder.
-					buildNonexistentUserVerificationFailureAuditMessage(
-						CompanyThreadLocal.getCompanyId(), userId,
-						_getClassName()));
-
-			return false;
-		}
-
-		if (httpSession == null) {
-			_routeAuditMessage(
-				_mfaFIDO2AuditMessageBuilder.buildNotVerifiedAuditMessage(
-					user, _getClassName(), "Empty session"));
-
-			return false;
-		}
-
-		return Objects.equals(
-			httpSession.getAttribute(
-				MFAFIDO2WebKeys.MFA_FIDO2_VALIDATED_USER_ID),
-			userId);
-	}
-
 	private AssertionRequest _getAssertionRequest(long userId)
 		throws Exception {
 
@@ -527,6 +494,39 @@ public class FIDO2BrowserSetupMFAChecker
 							 ClientRegistrationExtensionOutputs>>() {
 					})
 			).build());
+	}
+
+	private boolean _isVerified(HttpSession httpSession, long userId) {
+		User user = _userLocalService.fetchUser(userId);
+
+		if (user == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Requested FIDO2 verification for nonexistent user " +
+						userId);
+			}
+
+			_routeAuditMessage(
+				_mfaFIDO2AuditMessageBuilder.
+					buildNonexistentUserVerificationFailureAuditMessage(
+						CompanyThreadLocal.getCompanyId(), userId,
+						_getClassName()));
+
+			return false;
+		}
+
+		if (httpSession == null) {
+			_routeAuditMessage(
+				_mfaFIDO2AuditMessageBuilder.buildNotVerifiedAuditMessage(
+					user, _getClassName(), "Empty session"));
+
+			return false;
+		}
+
+		return Objects.equals(
+			httpSession.getAttribute(
+				MFAFIDO2WebKeys.MFA_FIDO2_VALIDATED_USER_ID),
+			userId);
 	}
 
 	private void _routeAuditMessage(AuditMessage auditMessage) {

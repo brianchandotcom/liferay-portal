@@ -69,7 +69,7 @@ public class KaleoFormsDDMDisplay extends BaseDDMDisplay {
 		if (ddmNavigationHelper.isNavigationStartsOnSelectTemplate(
 				liferayPortletRequest)) {
 
-			return getSelectTemplateURL(
+			return _getSelectTemplateURL(
 				liferayPortletRequest, liferayPortletResponse, classNameId,
 				classPK, resourceClassNameId);
 		}
@@ -164,7 +164,7 @@ public class KaleoFormsDDMDisplay extends BaseDDMDisplay {
 		return LanguageUtil.get(getResourceBundle(locale), "forms");
 	}
 
-	protected String getSelectTemplateURL(
+	private String _getSelectTemplateURL(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse, long classNameId,
 			long classPK, long resourceClassNameId)

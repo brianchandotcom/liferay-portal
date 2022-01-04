@@ -44,7 +44,7 @@ public abstract class BaseWorkflowMetricsIndex implements WorkflowMetricsIndex {
 		workflowMetricsPortalExecutor.execute(
 			() -> {
 				if ((searchEngineAdapter == null) ||
-					hasIndex(getIndexName(companyId))) {
+					_hasIndex(getIndexName(companyId))) {
 
 					return;
 				}
@@ -82,7 +82,7 @@ public abstract class BaseWorkflowMetricsIndex implements WorkflowMetricsIndex {
 		workflowMetricsPortalExecutor.execute(
 			() -> {
 				if ((searchEngineAdapter == null) ||
-					!hasIndex(getIndexName(companyId))) {
+					!_hasIndex(getIndexName(companyId))) {
 
 					return;
 				}
@@ -96,20 +96,6 @@ public abstract class BaseWorkflowMetricsIndex implements WorkflowMetricsIndex {
 	protected void activate() throws Exception {
 		companyLocalService.forEachCompanyId(
 			companyId -> createIndex(companyId));
-	}
-
-	protected boolean hasIndex(String indexName) {
-		if (searchEngineAdapter == null) {
-			return false;
-		}
-
-		IndicesExistsIndexRequest indicesExistsIndexRequest =
-			new IndicesExistsIndexRequest(indexName);
-
-		IndicesExistsIndexResponse indicesExistsIndexResponse =
-			searchEngineAdapter.execute(indicesExistsIndexRequest);
-
-		return indicesExistsIndexResponse.isExists();
 	}
 
 	@Reference(
@@ -132,5 +118,19 @@ public abstract class BaseWorkflowMetricsIndex implements WorkflowMetricsIndex {
 
 	@Reference
 	protected WorkflowMetricsPortalExecutor workflowMetricsPortalExecutor;
+
+	private boolean _hasIndex(String indexName) {
+		if (searchEngineAdapter == null) {
+			return false;
+		}
+
+		IndicesExistsIndexRequest indicesExistsIndexRequest =
+			new IndicesExistsIndexRequest(indexName);
+
+		IndicesExistsIndexResponse indicesExistsIndexResponse =
+			searchEngineAdapter.execute(indicesExistsIndexRequest);
+
+		return indicesExistsIndexResponse.isExists();
+	}
 
 }

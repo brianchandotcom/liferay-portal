@@ -40,7 +40,7 @@ public class DefaultNameIdResolver implements NameIdResolver {
 		boolean allowCreate,
 		NameIdResolverSAMLContext nameIdResolverSAMLContext) {
 
-		return getNameIdValue(user, entityId);
+		return _getNameIdValue(user, entityId);
 	}
 
 	@Reference(unbind = "-")
@@ -48,12 +48,12 @@ public class DefaultNameIdResolver implements NameIdResolver {
 		_metadataManager = metadataManager;
 	}
 
-	protected String getNameIdAttributeName(String entityId) {
+	private String _getNameIdAttributeName(String entityId) {
 		return _metadataManager.getNameIdAttribute(entityId);
 	}
 
-	protected String getNameIdValue(User user, String entityId) {
-		String nameIdAttributeName = getNameIdAttributeName(entityId);
+	private String _getNameIdValue(User user, String entityId) {
+		String nameIdAttributeName = _getNameIdAttributeName(entityId);
 
 		if (Validator.isNull(nameIdAttributeName)) {
 			return user.getEmailAddress();

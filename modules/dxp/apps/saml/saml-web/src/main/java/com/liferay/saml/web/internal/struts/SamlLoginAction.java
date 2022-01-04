@@ -134,7 +134,7 @@ public class SamlLoginAction extends BaseSamlStrutsAction {
 
 		httpServletRequest.setAttribute(
 			SamlWebKeys.SAML_SSO_LOGIN_CONTEXT,
-			toJSONObject(samlSpIdpConnections));
+			_toJSONObject(samlSpIdpConnections));
 
 		JspUtil.dispatch(
 			httpServletRequest, httpServletResponse,
@@ -156,7 +156,7 @@ public class SamlLoginAction extends BaseSamlStrutsAction {
 		return samlSpIdpConnection.isEnabled();
 	}
 
-	protected JSONObject toJSONObject(
+	private JSONObject _toJSONObject(
 		List<SamlSpIdpConnection> samlSpIdpConnections) {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();

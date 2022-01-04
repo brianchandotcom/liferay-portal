@@ -104,22 +104,6 @@ public class RankingPortletDisplayBuilder {
 		return rankingPortletDisplayContext;
 	}
 
-	protected RankingEntryDisplayContext buildDisplayContext(
-		SearchHit searchHit) {
-
-		RankingEntryDisplayContextBuilder rankingEntryDisplayContextBuilder =
-			new RankingEntryDisplayContextBuilder(
-				_documentToRankingTranslator.translate(
-					searchHit.getDocument(), searchHit.getId()));
-
-		return rankingEntryDisplayContextBuilder.build();
-	}
-
-	protected RankingIndexName buildRankingIndexName() {
-		return _rankingIndexNameBuilder.getRankingIndexName(
-			_portal.getCompanyId(_httpServletRequest));
-	}
-
 	protected List<DropdownItem> getActionDropdownItems() {
 		return DropdownItemListBuilder.add(
 			dropdownItem -> {
@@ -218,18 +202,6 @@ public class RankingPortletDisplayBuilder {
 		return _orderByType;
 	}
 
-	protected List<RankingEntryDisplayContext> getRankingEntryDisplayContexts(
-		List<SearchHit> searchHits) {
-
-		Stream<SearchHit> stream = searchHits.stream();
-
-		return stream.map(
-			this::buildDisplayContext
-		).collect(
-			Collectors.toList()
-		);
-	}
-
 	protected String getSearchActionURL() {
 		return String.valueOf(_getPortletURL(getKeywords()));
 	}
@@ -279,6 +251,22 @@ public class RankingPortletDisplayBuilder {
 
 	protected Boolean isShowCreationMenu() {
 		return true;
+	}
+
+	private RankingEntryDisplayContext _buildDisplayContext(
+		SearchHit searchHit) {
+
+		RankingEntryDisplayContextBuilder rankingEntryDisplayContextBuilder =
+			new RankingEntryDisplayContextBuilder(
+				_documentToRankingTranslator.translate(
+					searchHit.getDocument(), searchHit.getId()));
+
+		return rankingEntryDisplayContextBuilder.build();
+	}
+
+	private RankingIndexName _buildRankingIndexName() {
+		return _rankingIndexNameBuilder.getRankingIndexName(
+			_portal.getCompanyId(_httpServletRequest));
 	}
 
 	private List<DropdownItem> _getFilterNavigationDropdownItems() {
@@ -349,6 +337,18 @@ public class RankingPortletDisplayBuilder {
 		).buildPortletURL();
 	}
 
+	private List<RankingEntryDisplayContext> _getRankingEntryDisplayContexts(
+		List<SearchHit> searchHits) {
+
+		Stream<SearchHit> stream = searchHits.stream();
+
+		return stream.map(
+			this::_buildDisplayContext
+		).collect(
+			Collectors.toList()
+		);
+	}
+
 	private boolean _hasResults(
 		SearchContainer<RankingEntryDisplayContext> searchContainer) {
 
@@ -372,7 +372,7 @@ public class RankingPortletDisplayBuilder {
 			getSearchContainer(getKeywords());
 
 		SearchRankingRequest searchRankingRequest = new SearchRankingRequest(
-			_httpServletRequest, _queries, buildRankingIndexName(), _sorts,
+			_httpServletRequest, _queries, _buildRankingIndexName(), _sorts,
 			searchContainer, _searchEngineAdapter);
 
 		SearchRankingResponse searchRankingResponse =
@@ -381,7 +381,7 @@ public class RankingPortletDisplayBuilder {
 		SearchHits searchHits = searchRankingResponse.getSearchHits();
 
 		searchContainer.setResultsAndTotal(
-			() -> getRankingEntryDisplayContexts(searchHits.getSearchHits()),
+			() -> _getRankingEntryDisplayContexts(searchHits.getSearchHits()),
 			searchRankingResponse.getTotalHits());
 
 		searchContainer.setSearch(true);

@@ -64,7 +64,7 @@ public class SambaAuthTest extends BaseVLDAPTestCase {
 
 	@Test
 	public void testAuthenticateByEmailAddress() throws Exception {
-		setUpUser();
+		_setUpUser();
 
 		int authResult = _authenticator.authenticateByEmailAddress(
 			PRIMARY_KEY, "test@liferay.com", "password",
@@ -102,7 +102,7 @@ public class SambaAuthTest extends BaseVLDAPTestCase {
 
 	@Test
 	public void testAuthenticateByScreenName() throws Exception {
-		setUpUser();
+		_setUpUser();
 
 		int authResult = _authenticator.authenticateByScreenName(
 			PRIMARY_KEY, "test", "password", new HashMap<String, String[]>(),
@@ -140,7 +140,7 @@ public class SambaAuthTest extends BaseVLDAPTestCase {
 
 	@Test
 	public void testAuthenticateByUserId() throws Exception {
-		setUpUser();
+		_setUpUser();
 
 		int authResult = _authenticator.authenticateByUserId(
 			PRIMARY_KEY, PRIMARY_KEY, "password",
@@ -191,7 +191,7 @@ public class SambaAuthTest extends BaseVLDAPTestCase {
 		portalUtil.setPortal(portal);
 	}
 
-	protected void setUpUser() {
+	private void _setUpUser() {
 		User user = mock(User.class);
 
 		when(

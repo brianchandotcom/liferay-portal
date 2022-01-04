@@ -36,7 +36,7 @@ public class CredentialResolverTest extends BaseSamlTestCase {
 	@Test
 	public void testResolveIdpCredential() throws Exception {
 		prepareIdentityProvider(IDP_ENTITY_ID);
-		testResolveCredential(IDP_ENTITY_ID);
+		_testResolveCredential(IDP_ENTITY_ID);
 	}
 
 	@Test
@@ -55,10 +55,10 @@ public class CredentialResolverTest extends BaseSamlTestCase {
 	@Test
 	public void testResolveSpCredential() throws Exception {
 		prepareServiceProvider(SP_ENTITY_ID);
-		testResolveCredential(SP_ENTITY_ID);
+		_testResolveCredential(SP_ENTITY_ID);
 	}
 
-	protected void testResolveCredential(String spEntityId) throws Exception {
+	private void _testResolveCredential(String spEntityId) throws Exception {
 		EntityIdCriterion entityIDCriterion = new EntityIdCriterion(spEntityId);
 
 		CriteriaSet criteriaSet = new CriteriaSet();

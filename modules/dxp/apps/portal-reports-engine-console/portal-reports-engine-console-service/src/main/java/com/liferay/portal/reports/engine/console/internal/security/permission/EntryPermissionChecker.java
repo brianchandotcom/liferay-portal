@@ -77,9 +77,6 @@ public class EntryPermissionChecker implements BaseModelPermissionChecker {
 			permissionChecker, primaryKey, actionId);
 	}
 
-	protected void setEntryLocalService(EntryLocalService entryLocalService) {
-	}
-
 	@Reference(
 		target = "(model.class.name=com.liferay.portal.reports.engine.console.model.Entry)",
 		unbind = "-"
@@ -88,6 +85,9 @@ public class EntryPermissionChecker implements BaseModelPermissionChecker {
 		ModelResourcePermission<Entry> modelResourcePermission) {
 
 		_entryModelResourcePermission = modelResourcePermission;
+	}
+
+	private void _setEntryLocalService(EntryLocalService entryLocalService) {
 	}
 
 	private static ModelResourcePermission<Entry> _entryModelResourcePermission;

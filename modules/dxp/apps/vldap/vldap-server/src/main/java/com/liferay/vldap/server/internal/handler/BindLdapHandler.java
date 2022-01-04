@@ -83,20 +83,30 @@ public class BindLdapHandler extends BaseLdapHandler {
 		Response response = null;
 
 		if (saslMechanism.equals(DIGEST_MD5)) {
-			response = getSaslResponse(
+			response = _getSaslResponse(
 				bindRequest, ioSession, ldapHandlerContext);
 		}
 		else if (bindRequest.isSimple()) {
-			response = getSimpleResponse(bindRequest, ldapHandlerContext);
+			response = _getSimpleResponse(bindRequest, ldapHandlerContext);
 		}
 		else {
-			response = getUnsupportedResponse(bindRequest);
+			response = _getUnsupportedResponse(bindRequest);
 		}
 
 		return toList(response);
 	}
 
-	protected String getSaslHostName(IoSession ioSession) {
+	protected String getValue(Dn dn, String normType) {
+		for (Rdn rdn : dn) {
+			if (StringUtil.equalsIgnoreCase(rdn.getNormType(), normType)) {
+				return GetterUtil.getString(rdn.getValue());
+			}
+		}
+
+		return StringPool.BLANK;
+	}
+
+	private String _getSaslHostName(IoSession ioSession) {
 		String saslHostName = PortletPropsValues.BIND_SASL_HOSTNAME;
 
 		if (Validator.isNull(saslHostName)) {
@@ -113,7 +123,7 @@ public class BindLdapHandler extends BaseLdapHandler {
 		return saslHostName;
 	}
 
-	protected Response getSaslResponse(
+	private Response _getSaslResponse(
 			BindRequest bindRequest, IoSession ioSession,
 			LdapHandlerContext ldapHandlerContext)
 		throws PortalException {
@@ -137,8 +147,8 @@ public class BindLdapHandler extends BaseLdapHandler {
 							saslCallbackHandler);
 
 						saslServer = Sasl.createSaslServer(
-							DIGEST_MD5, _LDAP, getSaslHostName(ioSession), null,
-							saslCallbackHandler);
+							DIGEST_MD5, _LDAP, _getSaslHostName(ioSession),
+							null, saslCallbackHandler);
 
 						ldapHandlerContext.setSaslServer(saslServer);
 					}
@@ -172,8 +182,8 @@ public class BindLdapHandler extends BaseLdapHandler {
 
 			Dn name = saslCallbackHandler.getName();
 
-			setCompany(ldapHandlerContext, name);
-			setUser(ldapHandlerContext, name);
+			_setCompany(ldapHandlerContext, name);
+			_setUser(ldapHandlerContext, name);
 
 			return getResultResponse(bindRequest, ResultCodeEnum.SUCCESS);
 		}
@@ -182,7 +192,7 @@ public class BindLdapHandler extends BaseLdapHandler {
 			bindRequest, ResultCodeEnum.SASL_BIND_IN_PROGRESS);
 	}
 
-	protected Response getSimpleResponse(
+	private Response _getSimpleResponse(
 			BindRequest bindRequest, LdapHandlerContext ldapHandlerContext)
 		throws PortalException {
 
@@ -192,7 +202,7 @@ public class BindLdapHandler extends BaseLdapHandler {
 			return getResultResponse(bindRequest, ResultCodeEnum.SUCCESS);
 		}
 
-		Company company = setCompany(ldapHandlerContext, name);
+		Company company = _setCompany(ldapHandlerContext, name);
 
 		String screenName = getValue(name, "cn");
 
@@ -214,7 +224,7 @@ public class BindLdapHandler extends BaseLdapHandler {
 				parameterMap, resultsMap);
 		}
 		else if (Validator.isNotNull(emailAddress)) {
-			if (isEmailAddressWhitelisted(emailAddress)) {
+			if (_isEmailAddressWhitelisted(emailAddress)) {
 				authResult = Authenticator.SUCCESS;
 			}
 			else {
@@ -229,27 +239,17 @@ public class BindLdapHandler extends BaseLdapHandler {
 				bindRequest, ResultCodeEnum.INVALID_CREDENTIALS);
 		}
 
-		setUser(ldapHandlerContext, name);
+		_setUser(ldapHandlerContext, name);
 
 		return getResultResponse(bindRequest, ResultCodeEnum.SUCCESS);
 	}
 
-	protected Response getUnsupportedResponse(BindRequest bindRequest) {
+	private Response _getUnsupportedResponse(BindRequest bindRequest) {
 		return getResultResponse(
 			bindRequest, ResultCodeEnum.AUTH_METHOD_NOT_SUPPORTED);
 	}
 
-	protected String getValue(Dn dn, String normType) {
-		for (Rdn rdn : dn) {
-			if (StringUtil.equalsIgnoreCase(rdn.getNormType(), normType)) {
-				return GetterUtil.getString(rdn.getValue());
-			}
-		}
-
-		return StringPool.BLANK;
-	}
-
-	protected boolean isEmailAddressWhitelisted(String emailAddress) {
+	private boolean _isEmailAddressWhitelisted(String emailAddress) {
 		for (String allowedEmailAddress :
 				PortletPropsValues.EMAIL_ADDRESSES_WHITELIST) {
 
@@ -275,7 +275,7 @@ public class BindLdapHandler extends BaseLdapHandler {
 		return false;
 	}
 
-	protected Company setCompany(LdapHandlerContext ldapHandlerContext, Dn name)
+	private Company _setCompany(LdapHandlerContext ldapHandlerContext, Dn name)
 		throws PortalException {
 
 		String webId = getValue(name, "webId");
@@ -302,7 +302,7 @@ public class BindLdapHandler extends BaseLdapHandler {
 		return company;
 	}
 
-	protected void setUser(LdapHandlerContext ldapHandlerContext, Dn name)
+	private void _setUser(LdapHandlerContext ldapHandlerContext, Dn name)
 		throws PortalException {
 
 		User user = null;
@@ -322,7 +322,7 @@ public class BindLdapHandler extends BaseLdapHandler {
 				ldapHandlerContext.getCompanyId(), screenName);
 		}
 		else if (Validator.isNotNull(emailAddress)) {
-			if (isEmailAddressWhitelisted(emailAddress)) {
+			if (_isEmailAddressWhitelisted(emailAddress)) {
 				user = UserLocalServiceUtil.getDefaultUser(
 					ldapHandlerContext.getCompanyId());
 

@@ -34,26 +34,11 @@ import java.util.Set;
  */
 public class UpgradePortletId extends BasePortletIdUpgradeProcess {
 
-	protected void deletePortletReferences(String portletId) throws Exception {
-		runSQL("delete from Portlet where portletId = '" + portletId + "'");
-
-		runSQL(
-			"delete from PortletPreferences where portletId = '" + portletId +
-				"'");
-
-		runSQL("delete from ResourceAction where name = '" + portletId + "'");
-
-		runSQL(
-			"delete from ResourcePermission where name = '" + portletId + "'");
-
-		removePortletIdFromLayouts(portletId);
-	}
-
 	@Override
 	protected void doUpgrade() throws Exception {
 		super.doUpgrade();
 
-		deletePortletReferences("1_WAR_kaleoformsportlet");
+		_deletePortletReferences("1_WAR_kaleoformsportlet");
 	}
 
 	protected String getNewTypeSettings(
@@ -109,7 +94,22 @@ public class UpgradePortletId extends BasePortletIdUpgradeProcess {
 		};
 	}
 
-	protected void removePortletIdFromLayouts(String oldRootPortletId)
+	private void _deletePortletReferences(String portletId) throws Exception {
+		runSQL("delete from Portlet where portletId = '" + portletId + "'");
+
+		runSQL(
+			"delete from PortletPreferences where portletId = '" + portletId +
+				"'");
+
+		runSQL("delete from ResourceAction where name = '" + portletId + "'");
+
+		runSQL(
+			"delete from ResourcePermission where name = '" + portletId + "'");
+
+		_removePortletIdFromLayouts(portletId);
+	}
+
+	private void _removePortletIdFromLayouts(String oldRootPortletId)
 		throws Exception {
 
 		String sql =

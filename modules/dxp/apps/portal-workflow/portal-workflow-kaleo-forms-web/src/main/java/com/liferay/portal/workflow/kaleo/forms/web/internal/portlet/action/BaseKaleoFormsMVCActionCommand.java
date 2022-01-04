@@ -95,68 +95,6 @@ public abstract class BaseKaleoFormsMVCActionCommand
 			permissionChecker, kaleoProcessId, actionId);
 	}
 
-	protected DDMFormFieldValue getNameAndInstanceIdDDMFormFieldValue(
-		List<DDMFormFieldValue> ddmFormFieldValues, String name,
-		String instanceId) {
-
-		for (DDMFormFieldValue ddmFormFieldValue : ddmFormFieldValues) {
-			if (name.equals(ddmFormFieldValue.getName()) &&
-				instanceId.equals(ddmFormFieldValue.getInstanceId())) {
-
-				return ddmFormFieldValue;
-			}
-		}
-
-		return null;
-	}
-
-	protected List<DDMFormFieldValue> getRemovedByReviewerDDMFormFieldValues(
-		List<DDMFormFieldValue> reviewedDDMFormFieldValues,
-		List<DDMFormFieldValue> beforeReviewDDMFormFieldValues) {
-
-		List<DDMFormFieldValue> removedByReviewerDDMFormFieldValues =
-			new ArrayList<>();
-
-		for (DDMFormFieldValue beforeReviewDDMFormFieldValue :
-				beforeReviewDDMFormFieldValues) {
-
-			DDMFormFieldValue actualDDMFormFieldValue =
-				getNameAndInstanceIdDDMFormFieldValue(
-					reviewedDDMFormFieldValues,
-					beforeReviewDDMFormFieldValue.getName(),
-					beforeReviewDDMFormFieldValue.getInstanceId());
-
-			if (actualDDMFormFieldValue == null) {
-				DDMFormField ddmFormField =
-					beforeReviewDDMFormFieldValue.getDDMFormField();
-
-				if (!ddmFormField.isReadOnly()) {
-					removedByReviewerDDMFormFieldValues.add(
-						beforeReviewDDMFormFieldValue);
-				}
-			}
-			else {
-				List<DDMFormFieldValue>
-					nestedRemovedByReviewerDDMFormFieldValues =
-						getRemovedByReviewerDDMFormFieldValues(
-							actualDDMFormFieldValue.
-								getNestedDDMFormFieldValues(),
-							beforeReviewDDMFormFieldValue.
-								getNestedDDMFormFieldValues());
-
-				if (!nestedRemovedByReviewerDDMFormFieldValues.isEmpty()) {
-					beforeReviewDDMFormFieldValue.setNestedDDMFormFields(
-						nestedRemovedByReviewerDDMFormFieldValues);
-
-					removedByReviewerDDMFormFieldValues.add(
-						beforeReviewDDMFormFieldValue);
-				}
-			}
-		}
-
-		return removedByReviewerDDMFormFieldValues;
-	}
-
 	protected boolean isSessionErrorException(Throwable throwable) {
 		if (throwable instanceof DuplicateKaleoDefinitionNameException ||
 			throwable instanceof KaleoDefinitionContentException ||
@@ -175,82 +113,6 @@ public abstract class BaseKaleoFormsMVCActionCommand
 		}
 
 		return false;
-	}
-
-	protected void removeRemovedByReviewerDDMFormFieldValues(
-		List<DDMFormFieldValue> currentDDMFormFieldValues,
-		List<DDMFormFieldValue> removedByReviewerDDMFormFieldValues) {
-
-		List<DDMFormFieldValue> pendingRemovalDDMFormFieldValues =
-			new ArrayList<>();
-
-		for (DDMFormFieldValue currentDDMFormFieldValue :
-				currentDDMFormFieldValues) {
-
-			DDMFormFieldValue actualDDMFormFieldValue =
-				getNameAndInstanceIdDDMFormFieldValue(
-					removedByReviewerDDMFormFieldValues,
-					currentDDMFormFieldValue.getName(),
-					currentDDMFormFieldValue.getInstanceId());
-
-			if (actualDDMFormFieldValue != null) {
-				if (actualDDMFormFieldValue.equals(currentDDMFormFieldValue)) {
-					pendingRemovalDDMFormFieldValues.add(
-						currentDDMFormFieldValue);
-				}
-				else {
-					removeRemovedByReviewerDDMFormFieldValues(
-						currentDDMFormFieldValue.getNestedDDMFormFieldValues(),
-						actualDDMFormFieldValue.getNestedDDMFormFieldValues());
-				}
-			}
-		}
-
-		if (!pendingRemovalDDMFormFieldValues.isEmpty()) {
-			currentDDMFormFieldValues.removeAll(
-				pendingRemovalDDMFormFieldValues);
-		}
-	}
-
-	/**
-	 * Updates the Kaleo process's asset entry with new asset categories, tag
-	 * names, and link entries, removing and adding them as necessary.
-	 *
-	 * @param  userId the primary key of the user updating the record's asset
-	 *         entry
-	 * @param  ddlRecord the DDL record
-	 * @param  kaleoProcess the Kaleo process
-	 * @param  assetCategoryIds the primary keys of the new asset categories
-	 * @param  assetTagNames the new asset tag names
-	 * @param  locale the locale to apply to the asset
-	 * @param  priority the new priority
-	 * @throws PortalException if a portal exception occurred
-	 */
-	protected void updateAssetEntry(
-			long userId, DDLRecord ddlRecord, KaleoProcess kaleoProcess,
-			long[] assetCategoryIds, String[] assetTagNames, Locale locale,
-			Double priority)
-		throws PortalException {
-
-		DDLRecordSet ddlRecordSet = ddlRecord.getRecordSet();
-
-		DDMStructure ddmStructure = ddlRecordSet.getDDMStructure();
-
-		String ddmStructureName = ddmStructure.getName(locale);
-
-		String ddlRecordSetName = ddlRecordSet.getName(locale);
-
-		String title = LanguageUtil.format(
-			locale, "new-x-for-list-x",
-			new Object[] {ddmStructureName, ddlRecordSetName}, false);
-
-		assetEntryLocalService.updateEntry(
-			userId, kaleoProcess.getGroupId(), kaleoProcess.getCreateDate(),
-			kaleoProcess.getModifiedDate(), KaleoProcess.class.getName(),
-			ddlRecord.getRecordId(), kaleoProcess.getUuid(), 0,
-			assetCategoryIds, assetTagNames, true, true, null, null, null, null,
-			ContentTypes.TEXT_HTML, title, null, StringPool.BLANK, null, null,
-			0, 0, priority);
 	}
 
 	/**
@@ -313,11 +175,11 @@ public abstract class BaseKaleoFormsMVCActionCommand
 					ddmStructure, reviewFormFields);
 
 			List<DDMFormFieldValue> removedByReviewerDDMFormFieldValues =
-				getRemovedByReviewerDDMFormFieldValues(
+				_getRemovedByReviewerDDMFormFieldValues(
 					ddmFormValues.getDDMFormFieldValues(),
 					reviewFormDDMFormValues.getDDMFormFieldValues());
 
-			removeRemovedByReviewerDDMFormFieldValues(
+			_removeRemovedByReviewerDDMFormFieldValues(
 				ddlRecordDDMFormValues.getDDMFormFieldValues(),
 				removedByReviewerDDMFormFieldValues);
 
@@ -330,7 +192,7 @@ public abstract class BaseKaleoFormsMVCActionCommand
 				serviceContext);
 		}
 
-		updateAssetEntry(
+		_updateAssetEntry(
 			serviceContext.getUserId(), ddlRecord, kaleoProcess,
 			serviceContext.getAssetCategoryIds(),
 			serviceContext.getAssetTagNames(), serviceContext.getLocale(),
@@ -359,5 +221,143 @@ public abstract class BaseKaleoFormsMVCActionCommand
 
 	@Reference
 	protected Portal portal;
+
+	private DDMFormFieldValue _getNameAndInstanceIdDDMFormFieldValue(
+		List<DDMFormFieldValue> ddmFormFieldValues, String name,
+		String instanceId) {
+
+		for (DDMFormFieldValue ddmFormFieldValue : ddmFormFieldValues) {
+			if (name.equals(ddmFormFieldValue.getName()) &&
+				instanceId.equals(ddmFormFieldValue.getInstanceId())) {
+
+				return ddmFormFieldValue;
+			}
+		}
+
+		return null;
+	}
+
+	private List<DDMFormFieldValue> _getRemovedByReviewerDDMFormFieldValues(
+		List<DDMFormFieldValue> reviewedDDMFormFieldValues,
+		List<DDMFormFieldValue> beforeReviewDDMFormFieldValues) {
+
+		List<DDMFormFieldValue> removedByReviewerDDMFormFieldValues =
+			new ArrayList<>();
+
+		for (DDMFormFieldValue beforeReviewDDMFormFieldValue :
+				beforeReviewDDMFormFieldValues) {
+
+			DDMFormFieldValue actualDDMFormFieldValue =
+				_getNameAndInstanceIdDDMFormFieldValue(
+					reviewedDDMFormFieldValues,
+					beforeReviewDDMFormFieldValue.getName(),
+					beforeReviewDDMFormFieldValue.getInstanceId());
+
+			if (actualDDMFormFieldValue == null) {
+				DDMFormField ddmFormField =
+					beforeReviewDDMFormFieldValue.getDDMFormField();
+
+				if (!ddmFormField.isReadOnly()) {
+					removedByReviewerDDMFormFieldValues.add(
+						beforeReviewDDMFormFieldValue);
+				}
+			}
+			else {
+				List<DDMFormFieldValue>
+					nestedRemovedByReviewerDDMFormFieldValues =
+						_getRemovedByReviewerDDMFormFieldValues(
+							actualDDMFormFieldValue.
+								getNestedDDMFormFieldValues(),
+							beforeReviewDDMFormFieldValue.
+								getNestedDDMFormFieldValues());
+
+				if (!nestedRemovedByReviewerDDMFormFieldValues.isEmpty()) {
+					beforeReviewDDMFormFieldValue.setNestedDDMFormFields(
+						nestedRemovedByReviewerDDMFormFieldValues);
+
+					removedByReviewerDDMFormFieldValues.add(
+						beforeReviewDDMFormFieldValue);
+				}
+			}
+		}
+
+		return removedByReviewerDDMFormFieldValues;
+	}
+
+	private void _removeRemovedByReviewerDDMFormFieldValues(
+		List<DDMFormFieldValue> currentDDMFormFieldValues,
+		List<DDMFormFieldValue> removedByReviewerDDMFormFieldValues) {
+
+		List<DDMFormFieldValue> pendingRemovalDDMFormFieldValues =
+			new ArrayList<>();
+
+		for (DDMFormFieldValue currentDDMFormFieldValue :
+				currentDDMFormFieldValues) {
+
+			DDMFormFieldValue actualDDMFormFieldValue =
+				_getNameAndInstanceIdDDMFormFieldValue(
+					removedByReviewerDDMFormFieldValues,
+					currentDDMFormFieldValue.getName(),
+					currentDDMFormFieldValue.getInstanceId());
+
+			if (actualDDMFormFieldValue != null) {
+				if (actualDDMFormFieldValue.equals(currentDDMFormFieldValue)) {
+					pendingRemovalDDMFormFieldValues.add(
+						currentDDMFormFieldValue);
+				}
+				else {
+					_removeRemovedByReviewerDDMFormFieldValues(
+						currentDDMFormFieldValue.getNestedDDMFormFieldValues(),
+						actualDDMFormFieldValue.getNestedDDMFormFieldValues());
+				}
+			}
+		}
+
+		if (!pendingRemovalDDMFormFieldValues.isEmpty()) {
+			currentDDMFormFieldValues.removeAll(
+				pendingRemovalDDMFormFieldValues);
+		}
+	}
+
+	/**
+	 * Updates the Kaleo process's asset entry with new asset categories, tag
+	 * names, and link entries, removing and adding them as necessary.
+	 *
+	 * @param  userId the primary key of the user updating the record's asset
+	 *         entry
+	 * @param  ddlRecord the DDL record
+	 * @param  kaleoProcess the Kaleo process
+	 * @param  assetCategoryIds the primary keys of the new asset categories
+	 * @param  assetTagNames the new asset tag names
+	 * @param  locale the locale to apply to the asset
+	 * @param  priority the new priority
+	 * @throws PortalException if a portal exception occurred
+	 */
+	private void _updateAssetEntry(
+			long userId, DDLRecord ddlRecord, KaleoProcess kaleoProcess,
+			long[] assetCategoryIds, String[] assetTagNames, Locale locale,
+			Double priority)
+		throws PortalException {
+
+		DDLRecordSet ddlRecordSet = ddlRecord.getRecordSet();
+
+		DDMStructure ddmStructure = ddlRecordSet.getDDMStructure();
+
+		String ddmStructureName = ddmStructure.getName(locale);
+
+		String ddlRecordSetName = ddlRecordSet.getName(locale);
+
+		String title = LanguageUtil.format(
+			locale, "new-x-for-list-x",
+			new Object[] {ddmStructureName, ddlRecordSetName}, false);
+
+		assetEntryLocalService.updateEntry(
+			userId, kaleoProcess.getGroupId(), kaleoProcess.getCreateDate(),
+			kaleoProcess.getModifiedDate(), KaleoProcess.class.getName(),
+			ddlRecord.getRecordId(), kaleoProcess.getUuid(), 0,
+			assetCategoryIds, assetTagNames, true, true, null, null, null, null,
+			ContentTypes.TEXT_HTML, title, null, StringPool.BLANK, null, null,
+			0, 0, priority);
+	}
 
 }

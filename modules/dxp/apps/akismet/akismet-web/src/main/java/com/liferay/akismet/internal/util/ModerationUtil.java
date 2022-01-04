@@ -39,7 +39,7 @@ public class ModerationUtil {
 			long scopeGroupId, int start, int end)
 		throws PortalException {
 
-		DynamicQuery dynamicQuery = buildMBMessageDynamicQuery(
+		DynamicQuery dynamicQuery = _buildMBMessageDynamicQuery(
 			scopeGroupId, false);
 
 		return MBMessageLocalServiceUtil.dynamicQuery(dynamicQuery, start, end);
@@ -48,13 +48,13 @@ public class ModerationUtil {
 	public static int getMBMessagesCount(long scopeGroupId)
 		throws PortalException {
 
-		DynamicQuery dynamicQuery = buildMBMessageDynamicQuery(
+		DynamicQuery dynamicQuery = _buildMBMessageDynamicQuery(
 			scopeGroupId, false);
 
 		return (int)MBMessageLocalServiceUtil.dynamicQueryCount(dynamicQuery);
 	}
 
-	protected static DynamicQuery buildMBMessageDynamicQuery(
+	private static DynamicQuery _buildMBMessageDynamicQuery(
 			long scopeGroupId, boolean discussion)
 		throws PortalException {
 
@@ -71,7 +71,7 @@ public class ModerationUtil {
 		if (!group.isCompany()) {
 			Property groupIdProperty = PropertyFactoryUtil.forName("groupId");
 
-			Long[] scopeGroupIds = getChildScopeGroupIds(scopeGroupId);
+			Long[] scopeGroupIds = _getChildScopeGroupIds(scopeGroupId);
 
 			dynamicQuery.add(groupIdProperty.in(scopeGroupIds));
 		}
@@ -96,7 +96,7 @@ public class ModerationUtil {
 		return dynamicQuery;
 	}
 
-	protected static Long[] getChildScopeGroupIds(long parentGroupId) {
+	private static Long[] _getChildScopeGroupIds(long parentGroupId) {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
 			Group.class, PortalClassLoaderUtil.getClassLoader());
 

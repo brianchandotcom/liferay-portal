@@ -35,17 +35,7 @@ public class MonitoringConfigurationUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		upgradeMonitoringConfiguration();
-	}
-
-	protected void upgradeMonitoringConfiguration() throws Exception {
-		Configuration monitoringConfiguration = _getConfiguration(
-			MonitoringConfiguration.class.getName());
-
-		if (monitoringConfiguration != null) {
-			monitoringConfiguration.update(
-				monitoringConfiguration.getProperties());
-		}
+		_upgradeMonitoringConfiguration();
 	}
 
 	private Configuration _getConfiguration(String className) throws Exception {
@@ -60,6 +50,16 @@ public class MonitoringConfigurationUpgradeProcess extends UpgradeProcess {
 		}
 
 		return null;
+	}
+
+	private void _upgradeMonitoringConfiguration() throws Exception {
+		Configuration monitoringConfiguration = _getConfiguration(
+			MonitoringConfiguration.class.getName());
+
+		if (monitoringConfiguration != null) {
+			monitoringConfiguration.update(
+				monitoringConfiguration.getProperties());
+		}
 	}
 
 	private final ConfigurationAdmin _configurationAdmin;

@@ -77,14 +77,14 @@ public class AdminViewMVCRenderCommand implements MVCRenderCommand {
 			httpServletRequest, "tabs1", "general");
 
 		if (tabs1.equals("general")) {
-			renderGeneralTab(renderRequest, renderResponse);
+			_renderGeneralTab(renderRequest, renderResponse);
 		}
 		else if (tabs1.equals("identity-provider-connections")) {
-			renderViewIdentityProviderConnections(
+			_renderViewIdentityProviderConnections(
 				httpServletRequest, renderRequest, renderResponse);
 		}
 		else if (tabs1.equals("service-provider-connections")) {
-			renderViewServiceProviderConnections(
+			_renderViewServiceProviderConnections(
 				httpServletRequest, renderRequest, renderResponse);
 		}
 
@@ -97,7 +97,7 @@ public class AdminViewMVCRenderCommand implements MVCRenderCommand {
 			SamlConfiguration.class, properties);
 	}
 
-	protected void renderGeneralTab(
+	private void _renderGeneralTab(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		String entityId = _localEntityManager.getLocalEntityId();
@@ -123,7 +123,7 @@ public class AdminViewMVCRenderCommand implements MVCRenderCommand {
 			SamlWebKeys.SAML_CERTIFICATE_TOOL, _certificateTool);
 	}
 
-	protected void renderViewIdentityProviderConnections(
+	private void _renderViewIdentityProviderConnections(
 		HttpServletRequest httpServletRequest, RenderRequest renderRequest,
 		RenderResponse renderResponse) {
 
@@ -153,7 +153,7 @@ public class AdminViewMVCRenderCommand implements MVCRenderCommand {
 			samlSpIdpConnectionsCount);
 	}
 
-	protected void renderViewServiceProviderConnections(
+	private void _renderViewServiceProviderConnections(
 		HttpServletRequest httpServletRequest, RenderRequest renderRequest,
 		RenderResponse renderResponse) {
 

@@ -78,7 +78,7 @@ public class SynonymsDisplayBuilder {
 		synonymsDisplayContext.setCreationMenu(getCreationMenu());
 
 		SearchContainer<SynonymSetDisplayContext> searchContainer =
-			buildSearchContainer();
+			_buildSearchContainer();
 
 		List<SynonymSetDisplayContext> synonymSetDisplayContexts =
 			searchContainer.getResults();
@@ -95,123 +95,6 @@ public class SynonymsDisplayBuilder {
 
 	public String getDisplayedSynonymSet(String synonymSet) {
 		return StringUtil.replace(synonymSet, ',', ", ");
-	}
-
-	protected RenderURL buildEditRenderURL(SynonymSet synonymSet) {
-		return PortletURLBuilder.createRenderURL(
-			_renderResponse
-		).setMVCRenderCommandName(
-			"/synonyms/edit_synonym_sets"
-		).setRedirect(
-			_portal.getCurrentURL(_httpServletRequest)
-		).setParameter(
-			"synonymSetId", synonymSet.getSynonymSetDocumentId()
-		).buildRenderURL();
-	}
-
-	protected SearchContainer<SynonymSetDisplayContext> buildSearchContainer() {
-		SearchContainer<SynonymSetDisplayContext> searchContainer =
-			new SearchContainer<>(
-				_renderRequest, _getPortletURL(), null, "there-are-no-entries");
-
-		searchContainer.setId("synonymSetsEntries");
-		searchContainer.setRowChecker(
-			new EmptyOnClickRowChecker(_renderResponse));
-
-		SearchSynonymSetRequest searchSynonymSetRequest =
-			new SearchSynonymSetRequest(
-				buildSynonymSetIndexName(), _httpServletRequest, _queries,
-				_sorts, searchContainer, _searchEngineAdapter);
-
-		SearchSynonymSetResponse searchSynonymSetResponse =
-			searchSynonymSetRequest.search();
-
-		searchContainer.setResults(
-			buildSynonymSetDisplayContexts(
-				searchSynonymSetResponse.getSearchHits()));
-
-		searchContainer.setSearch(true);
-		searchContainer.setTotal(searchSynonymSetResponse.getTotalHits());
-
-		return searchContainer;
-	}
-
-	protected SynonymSetDisplayContext buildSynonymSetDisplayContext(
-		SynonymSet synonymSet) {
-
-		SynonymSetDisplayContext synonymSetDisplayContext =
-			new SynonymSetDisplayContext();
-
-		String synonyms = synonymSet.getSynonyms();
-
-		RenderURL editRenderURL = buildEditRenderURL(synonymSet);
-
-		synonymSetDisplayContext.setDropDownItems(
-			buildSynonymSetDropdownItemList(synonymSet, editRenderURL));
-		synonymSetDisplayContext.setEditRenderURL(editRenderURL.toString());
-
-		synonymSetDisplayContext.setDisplayedSynonymSet(
-			getDisplayedSynonymSet(synonyms));
-		synonymSetDisplayContext.setSynonymSetId(
-			synonymSet.getSynonymSetDocumentId());
-		synonymSetDisplayContext.setSynonyms(synonyms);
-
-		return synonymSetDisplayContext;
-	}
-
-	protected List<SynonymSetDisplayContext> buildSynonymSetDisplayContexts(
-		SearchHits searchHits) {
-
-		List<SynonymSet> synonymSets =
-			_documentToSynonymSetTranslator.translateAll(searchHits);
-
-		Stream<SynonymSet> stream = synonymSets.stream();
-
-		return stream.map(
-			this::buildSynonymSetDisplayContext
-		).collect(
-			Collectors.toList()
-		);
-	}
-
-	protected List<DropdownItem> buildSynonymSetDropdownItemList(
-		SynonymSet synonymSet, RenderURL editRenderURL) {
-
-		return DropdownItemListBuilder.add(
-			dropdownItem -> {
-				dropdownItem.setHref(editRenderURL);
-				dropdownItem.setLabel(
-					_language.get(_httpServletRequest, "edit"));
-				dropdownItem.setQuickAction(true);
-			}
-		).add(
-			dropdownItem -> {
-				dropdownItem.putData("action", "delete");
-				dropdownItem.putData(
-					"deleteURL",
-					PortletURLBuilder.createActionURL(
-						_renderResponse
-					).setActionName(
-						"/synonyms/delete_synonym_sets"
-					).setCMD(
-						Constants.DELETE
-					).setRedirect(
-						_portal.getCurrentURL(_httpServletRequest)
-					).setParameter(
-						"rowIds", synonymSet.getSynonymSetDocumentId()
-					).buildString());
-
-				dropdownItem.setIcon("times");
-				dropdownItem.setLabel(
-					_language.get(_httpServletRequest, "delete"));
-				dropdownItem.setQuickAction(true);
-			}
-		).build();
-	}
-
-	protected SynonymSetIndexName buildSynonymSetIndexName() {
-		return _synonymSetIndexNameBuilder.getSynonymSetIndexName(
-			_portal.getCompanyId(_renderRequest));
 	}
 
 	protected CreationMenu getCreationMenu() {
@@ -247,6 +130,123 @@ public class SynonymsDisplayBuilder {
 		}
 
 		return false;
+	}
+
+	private RenderURL _buildEditRenderURL(SynonymSet synonymSet) {
+		return PortletURLBuilder.createRenderURL(
+			_renderResponse
+		).setMVCRenderCommandName(
+			"/synonyms/edit_synonym_sets"
+		).setRedirect(
+			_portal.getCurrentURL(_httpServletRequest)
+		).setParameter(
+			"synonymSetId", synonymSet.getSynonymSetDocumentId()
+		).buildRenderURL();
+	}
+
+	private SearchContainer<SynonymSetDisplayContext> _buildSearchContainer() {
+		SearchContainer<SynonymSetDisplayContext> searchContainer =
+			new SearchContainer<>(
+				_renderRequest, _getPortletURL(), null, "there-are-no-entries");
+
+		searchContainer.setId("synonymSetsEntries");
+		searchContainer.setRowChecker(
+			new EmptyOnClickRowChecker(_renderResponse));
+
+		SearchSynonymSetRequest searchSynonymSetRequest =
+			new SearchSynonymSetRequest(
+				_buildSynonymSetIndexName(), _httpServletRequest, _queries,
+				_sorts, searchContainer, _searchEngineAdapter);
+
+		SearchSynonymSetResponse searchSynonymSetResponse =
+			searchSynonymSetRequest.search();
+
+		searchContainer.setResults(
+			_buildSynonymSetDisplayContexts(
+				searchSynonymSetResponse.getSearchHits()));
+
+		searchContainer.setSearch(true);
+		searchContainer.setTotal(searchSynonymSetResponse.getTotalHits());
+
+		return searchContainer;
+	}
+
+	private SynonymSetDisplayContext _buildSynonymSetDisplayContext(
+		SynonymSet synonymSet) {
+
+		SynonymSetDisplayContext synonymSetDisplayContext =
+			new SynonymSetDisplayContext();
+
+		String synonyms = synonymSet.getSynonyms();
+
+		RenderURL editRenderURL = _buildEditRenderURL(synonymSet);
+
+		synonymSetDisplayContext.setDropDownItems(
+			_buildSynonymSetDropdownItemList(synonymSet, editRenderURL));
+		synonymSetDisplayContext.setEditRenderURL(editRenderURL.toString());
+
+		synonymSetDisplayContext.setDisplayedSynonymSet(
+			getDisplayedSynonymSet(synonyms));
+		synonymSetDisplayContext.setSynonymSetId(
+			synonymSet.getSynonymSetDocumentId());
+		synonymSetDisplayContext.setSynonyms(synonyms);
+
+		return synonymSetDisplayContext;
+	}
+
+	private List<SynonymSetDisplayContext> _buildSynonymSetDisplayContexts(
+		SearchHits searchHits) {
+
+		List<SynonymSet> synonymSets =
+			_documentToSynonymSetTranslator.translateAll(searchHits);
+
+		Stream<SynonymSet> stream = synonymSets.stream();
+
+		return stream.map(
+			this::_buildSynonymSetDisplayContext
+		).collect(
+			Collectors.toList()
+		);
+	}
+
+	private List<DropdownItem> _buildSynonymSetDropdownItemList(
+		SynonymSet synonymSet, RenderURL editRenderURL) {
+
+		return DropdownItemListBuilder.add(
+			dropdownItem -> {
+				dropdownItem.setHref(editRenderURL);
+				dropdownItem.setLabel(
+					_language.get(_httpServletRequest, "edit"));
+				dropdownItem.setQuickAction(true);
+			}
+		).add(
+			dropdownItem -> {
+				dropdownItem.putData("action", "delete");
+				dropdownItem.putData(
+					"deleteURL",
+					PortletURLBuilder.createActionURL(
+						_renderResponse
+					).setActionName(
+						"/synonyms/delete_synonym_sets"
+					).setCMD(
+						Constants.DELETE
+					).setRedirect(
+						_portal.getCurrentURL(_httpServletRequest)
+					).setParameter(
+						"rowIds", synonymSet.getSynonymSetDocumentId()
+					).buildString());
+
+				dropdownItem.setIcon("times");
+				dropdownItem.setLabel(
+					_language.get(_httpServletRequest, "delete"));
+				dropdownItem.setQuickAction(true);
+			}
+		).build();
+	}
+
+	private SynonymSetIndexName _buildSynonymSetIndexName() {
+		return _synonymSetIndexNameBuilder.getSynonymSetIndexName(
+			_portal.getCompanyId(_renderRequest));
 	}
 
 	private PortletURL _getPortletURL() {

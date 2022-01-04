@@ -98,7 +98,7 @@ public class RulesEngineImpl implements RulesEngine {
 		KnowledgeBase knowledgeBase = _knowledgeBaseMap.get(domainName);
 
 		if (knowledgeBase == null) {
-			knowledgeBase = createKnowledgeBase(rulesResourceRetriever);
+			knowledgeBase = _createKnowledgeBase(rulesResourceRetriever);
 
 			_knowledgeBaseMap.put(domainName, knowledgeBase);
 		}
@@ -114,7 +114,7 @@ public class RulesEngineImpl implements RulesEngine {
 			RulesResourceRetriever rulesResourceRetriever, List<Fact<?>> facts)
 		throws RulesEngineException {
 
-		KnowledgeBase knowledgeBase = createKnowledgeBase(
+		KnowledgeBase knowledgeBase = _createKnowledgeBase(
 			rulesResourceRetriever);
 
 		execute(facts, knowledgeBase);
@@ -126,7 +126,7 @@ public class RulesEngineImpl implements RulesEngine {
 			Query query)
 		throws RulesEngineException {
 
-		KnowledgeBase knowledgeBase = createKnowledgeBase(
+		KnowledgeBase knowledgeBase = _createKnowledgeBase(
 			rulesResourceRetriever);
 
 		return execute(facts, knowledgeBase, query);
@@ -201,7 +201,7 @@ public class RulesEngineImpl implements RulesEngine {
 
 		setDefaultRulesLanguage(defaultRulesLanguage);
 
-		setRulesLanguageMapping(getRulesLanguageMap(properties));
+		setRulesLanguageMapping(_getRulesLanguageMap(properties));
 
 		ProxyMessageListener proxyMessageListener = new ProxyMessageListener();
 
@@ -218,72 +218,6 @@ public class RulesEngineImpl implements RulesEngine {
 		_serviceRegistration = bundleContext.registerService(
 			ProxyMessageListener.class, proxyMessageListener,
 			proxyMessageListenerProperties);
-	}
-
-	protected ResourceType convertRulesLanguage(String rulesLanguage) {
-		if (Validator.isNull(rulesLanguage)) {
-			return _defaultResourceType;
-		}
-
-		ResourceType resourceType = _resourceTypeMap.get(
-			RulesLanguage.valueOf(rulesLanguage));
-
-		if (resourceType == null) {
-			throw new IllegalArgumentException(
-				rulesLanguage + " not supported by the Drools");
-		}
-
-		return resourceType;
-	}
-
-	protected KnowledgeBase createKnowledgeBase(
-			RulesResourceRetriever retriever, ClassLoader... classloaders)
-		throws RulesEngineException {
-
-		try {
-			KnowledgeBuilderConfiguration knowledgeBuilderConfiguration =
-				KnowledgeBuilderFactory.newKnowledgeBuilderConfiguration();
-
-			KnowledgeBuilder knowledgeBuilder =
-				KnowledgeBuilderFactory.newKnowledgeBuilder(
-					knowledgeBuilderConfiguration);
-
-			ResourceType resourceType = convertRulesLanguage(
-				retriever.getRulesLanguage());
-
-			Set<ResourceRetriever> resourceRetrievers =
-				retriever.getResourceRetrievers();
-
-			for (ResourceRetriever resourceRetriever : resourceRetrievers) {
-				Resource resource = ResourceFactory.newInputStreamResource(
-					resourceRetriever.getInputStream());
-
-				knowledgeBuilder.add(resource, resourceType);
-			}
-
-			if (knowledgeBuilder.hasErrors()) {
-				KnowledgeBuilderErrors knowledgeBuilderErrors =
-					knowledgeBuilder.getErrors();
-
-				throw new RulesEngineException(
-					knowledgeBuilderErrors.toString());
-			}
-
-			KnowledgeBaseConfiguration knowledgeBaseConfiguration =
-				KnowledgeBaseFactory.newKnowledgeBaseConfiguration();
-
-			KnowledgeBase knowledgeBase = KnowledgeBaseFactory.newKnowledgeBase(
-				knowledgeBaseConfiguration);
-
-			knowledgeBase.addKnowledgePackages(
-				knowledgeBuilder.getKnowledgePackages());
-
-			return knowledgeBase;
-		}
-		catch (Exception exception) {
-			throw new RulesEngineException(
-				"Unable to create knowledge base", exception);
-		}
 	}
 
 	@Deactivate
@@ -348,10 +282,76 @@ public class RulesEngineImpl implements RulesEngine {
 		ExecutionResults executionResults = statelessKnowledgeSession.execute(
 			CommandFactory.newBatchExecution(commands));
 
-		return processQueryResults(query, identifiers, executionResults);
+		return _processQueryResults(query, identifiers, executionResults);
 	}
 
-	protected Map<String, String> getRulesLanguageMap(
+	private ResourceType _convertRulesLanguage(String rulesLanguage) {
+		if (Validator.isNull(rulesLanguage)) {
+			return _defaultResourceType;
+		}
+
+		ResourceType resourceType = _resourceTypeMap.get(
+			RulesLanguage.valueOf(rulesLanguage));
+
+		if (resourceType == null) {
+			throw new IllegalArgumentException(
+				rulesLanguage + " not supported by the Drools");
+		}
+
+		return resourceType;
+	}
+
+	private KnowledgeBase _createKnowledgeBase(
+			RulesResourceRetriever retriever, ClassLoader... classloaders)
+		throws RulesEngineException {
+
+		try {
+			KnowledgeBuilderConfiguration knowledgeBuilderConfiguration =
+				KnowledgeBuilderFactory.newKnowledgeBuilderConfiguration();
+
+			KnowledgeBuilder knowledgeBuilder =
+				KnowledgeBuilderFactory.newKnowledgeBuilder(
+					knowledgeBuilderConfiguration);
+
+			ResourceType resourceType = _convertRulesLanguage(
+				retriever.getRulesLanguage());
+
+			Set<ResourceRetriever> resourceRetrievers =
+				retriever.getResourceRetrievers();
+
+			for (ResourceRetriever resourceRetriever : resourceRetrievers) {
+				Resource resource = ResourceFactory.newInputStreamResource(
+					resourceRetriever.getInputStream());
+
+				knowledgeBuilder.add(resource, resourceType);
+			}
+
+			if (knowledgeBuilder.hasErrors()) {
+				KnowledgeBuilderErrors knowledgeBuilderErrors =
+					knowledgeBuilder.getErrors();
+
+				throw new RulesEngineException(
+					knowledgeBuilderErrors.toString());
+			}
+
+			KnowledgeBaseConfiguration knowledgeBaseConfiguration =
+				KnowledgeBaseFactory.newKnowledgeBaseConfiguration();
+
+			KnowledgeBase knowledgeBase = KnowledgeBaseFactory.newKnowledgeBase(
+				knowledgeBaseConfiguration);
+
+			knowledgeBase.addKnowledgePackages(
+				knowledgeBuilder.getKnowledgePackages());
+
+			return knowledgeBase;
+		}
+		catch (Exception exception) {
+			throw new RulesEngineException(
+				"Unable to create knowledge base", exception);
+		}
+	}
+
+	private Map<String, String> _getRulesLanguageMap(
 		Dictionary<String, Object> properties) {
 
 		Map<String, String> rulesLanguageMap = new HashMap<>();
@@ -375,7 +375,7 @@ public class RulesEngineImpl implements RulesEngine {
 		return rulesLanguageMap;
 	}
 
-	protected Map<String, ?> processQueryResults(
+	private Map<String, ?> _processQueryResults(
 		Query query, List<String> identifiers,
 		ExecutionResults executionResults) {
 

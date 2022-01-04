@@ -53,7 +53,7 @@ public class DeleteKaleoProcessMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long[] kaleoProcessIds = getKaleoProcessIds(actionRequest);
+		long[] kaleoProcessIds = _getKaleoProcessIds(actionRequest);
 
 		for (final long kaleoProcessId : kaleoProcessIds) {
 			kaleoProcessService.deleteKaleoProcess(kaleoProcessId);
@@ -67,7 +67,7 @@ public class DeleteKaleoProcessMVCActionCommand
 	 *         parameters
 	 * @return an array of the Kaleo process IDs
 	 */
-	protected long[] getKaleoProcessIds(ActionRequest actionRequest) {
+	private long[] _getKaleoProcessIds(ActionRequest actionRequest) {
 		long kaleoProcessId = ParamUtil.getLong(
 			actionRequest, "kaleoProcessId");
 

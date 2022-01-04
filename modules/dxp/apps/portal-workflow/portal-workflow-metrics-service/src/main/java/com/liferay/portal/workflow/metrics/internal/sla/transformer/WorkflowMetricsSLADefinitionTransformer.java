@@ -77,7 +77,25 @@ public class WorkflowMetricsSLADefinitionTransformer {
 		}
 	}
 
-	protected String getNodeId(
+	private BooleanQuery _createNodeBooleanQuery(
+		String currentProcessVersion, String latestProcessVersion,
+		WorkflowMetricsSLADefinition workflowMetricsSLADefinition) {
+
+		BooleanQuery booleanQuery = _queries.booleanQuery();
+
+		TermsQuery termsQuery = _queries.terms("version");
+
+		termsQuery.addValues(currentProcessVersion, latestProcessVersion);
+
+		return booleanQuery.addMustQueryClauses(
+			_queries.term(
+				"companyId", workflowMetricsSLADefinition.getCompanyId()),
+			_queries.term(
+				"processId", workflowMetricsSLADefinition.getProcessId()),
+			termsQuery);
+	}
+
+	private String _getNodeId(
 		String processVersion,
 		TermsAggregationResult versionTermsAggregationResult) {
 
@@ -102,24 +120,6 @@ public class WorkflowMetricsSLADefinitionTransformer {
 		).orElseGet(
 			() -> StringPool.BLANK
 		);
-	}
-
-	private BooleanQuery _createNodeBooleanQuery(
-		String currentProcessVersion, String latestProcessVersion,
-		WorkflowMetricsSLADefinition workflowMetricsSLADefinition) {
-
-		BooleanQuery booleanQuery = _queries.booleanQuery();
-
-		TermsQuery termsQuery = _queries.terms("version");
-
-		termsQuery.addValues(currentProcessVersion, latestProcessVersion);
-
-		return booleanQuery.addMustQueryClauses(
-			_queries.term(
-				"companyId", workflowMetricsSLADefinition.getCompanyId()),
-			_queries.term(
-				"processId", workflowMetricsSLADefinition.getProcessId()),
-			termsQuery);
 	}
 
 	private Map<String, String> _getNodeIdMap(
@@ -183,9 +183,9 @@ public class WorkflowMetricsSLADefinitionTransformer {
 			}
 		).collect(
 			Collectors.toMap(
-				versionTermsAggregationResult -> getNodeId(
+				versionTermsAggregationResult -> _getNodeId(
 					currentProcessVersion, versionTermsAggregationResult),
-				versionTermsAggregationResult -> getNodeId(
+				versionTermsAggregationResult -> _getNodeId(
 					latestProcessVersion, versionTermsAggregationResult))
 		);
 	}

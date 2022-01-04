@@ -186,7 +186,7 @@ public class KaleoFormsViewRecordsDisplayContext {
 		List<DDMFormField> ddmFormFields = new ArrayList<>();
 
 		for (DDMFormField ddmFormField : ddmForm.getDDMFormFields()) {
-			if (isDDMFormFieldTransient(ddmFormField)) {
+			if (_isDDMFormFieldTransient(ddmFormField)) {
 				continue;
 			}
 
@@ -261,7 +261,7 @@ public class KaleoFormsViewRecordsDisplayContext {
 			navigationItem -> {
 				navigationItem.setActive(true);
 
-				ThemeDisplay themeDisplay = getThemeDisplay();
+				ThemeDisplay themeDisplay = _getThemeDisplay();
 
 				navigationItem.setLabel(
 					HtmlUtil.extractText(
@@ -389,7 +389,7 @@ public class KaleoFormsViewRecordsDisplayContext {
 		_searchContainer.setOrderByType(getOrderByType());
 		_searchContainer.setResultsAndTotal(
 			_ddlRecordLocalService.searchDDLRecords(
-				getSearchContext(_searchContainer)));
+				_getSearchContext(_searchContainer)));
 
 		User user = _kaleoFormsAdminRequestHelper.getUser();
 
@@ -491,7 +491,23 @@ public class KaleoFormsViewRecordsDisplayContext {
 		).build();
 	}
 
-	protected SearchContext getSearchContext(
+	protected boolean hasResults() throws Exception {
+		if (getTotalItems() > 0) {
+			return true;
+		}
+
+		return false;
+	}
+
+	protected boolean isSearch() {
+		if (Validator.isNotNull(getKeywords())) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private SearchContext _getSearchContext(
 		SearchContainer<DDLRecord> searchContainer) {
 
 		SearchContext searchContext = SearchContextFactory.getInstance(
@@ -503,13 +519,13 @@ public class KaleoFormsViewRecordsDisplayContext {
 		searchContext.setAttribute("recordSetScope", _ddlRecordSet.getScope());
 		searchContext.setEnd(searchContainer.getEnd());
 		searchContext.setKeywords(getKeywords());
-		searchContext.setSorts(getSort());
+		searchContext.setSorts(_getSort());
 		searchContext.setStart(searchContainer.getStart());
 
 		return searchContext;
 	}
 
-	protected Sort getSort() {
+	private Sort _getSort() {
 		boolean ascending = false;
 
 		if (Objects.equals("asc", getOrderByType())) {
@@ -526,28 +542,12 @@ public class KaleoFormsViewRecordsDisplayContext {
 			Field.getSortableFieldName(fieldName), Sort.LONG_TYPE, !ascending);
 	}
 
-	protected ThemeDisplay getThemeDisplay() {
+	private ThemeDisplay _getThemeDisplay() {
 		return (ThemeDisplay)_renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
 	}
 
-	protected boolean hasResults() throws Exception {
-		if (getTotalItems() > 0) {
-			return true;
-		}
-
-		return false;
-	}
-
-	protected boolean isDDMFormFieldTransient(DDMFormField ddmFormField) {
+	private boolean _isDDMFormFieldTransient(DDMFormField ddmFormField) {
 		if (Validator.isNull(ddmFormField.getDataType())) {
-			return true;
-		}
-
-		return false;
-	}
-
-	protected boolean isSearch() {
-		if (Validator.isNotNull(getKeywords())) {
 			return true;
 		}
 

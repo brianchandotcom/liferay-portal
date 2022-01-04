@@ -51,7 +51,7 @@ public class OpenSamlBootstrap {
 
 		InitializationService.initialize();
 
-		initializeParserPool();
+		_initializeParserPool();
 
 		Method method = Signer.class.getDeclaredMethod("getSignerProvider");
 
@@ -71,9 +71,44 @@ public class OpenSamlBootstrap {
 		}
 	}
 
-	protected static void initializeParserPool()
-		throws InitializationException {
+	@Activate
+	protected synchronized void activate(BundleContext bundleContext)
+		throws IllegalAccessException, InitializationException,
+			   InvocationTargetException, NoSuchMethodException {
 
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader classLoader = currentThread.getContextClassLoader();
+
+		try {
+			Bundle bundle = bundleContext.getBundle();
+
+			BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
+
+			currentThread.setContextClassLoader(bundleWiring.getClassLoader());
+
+			bootstrap();
+
+			XMLObjectProviderRegistry xmlObjectProviderRegistry =
+				ConfigurationService.get(XMLObjectProviderRegistry.class);
+
+			_parserPoolServiceRegistration = bundleContext.registerService(
+				ParserPool.class, xmlObjectProviderRegistry.getParserPool(),
+				null);
+		}
+		finally {
+			currentThread.setContextClassLoader(classLoader);
+		}
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		if (_parserPoolServiceRegistration != null) {
+			_parserPoolServiceRegistration.unregister();
+		}
+	}
+
+	private static void _initializeParserPool() throws InitializationException {
 		BasicParserPool parserPool = new BasicParserPool();
 
 		parserPool.setBuilderFeatures(
@@ -113,43 +148,6 @@ public class OpenSamlBootstrap {
 			throw new InitializationException(
 				"Unable to initialize parser pool: " + exception.getMessage(),
 				exception);
-		}
-	}
-
-	@Activate
-	protected synchronized void activate(BundleContext bundleContext)
-		throws IllegalAccessException, InitializationException,
-			   InvocationTargetException, NoSuchMethodException {
-
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader classLoader = currentThread.getContextClassLoader();
-
-		try {
-			Bundle bundle = bundleContext.getBundle();
-
-			BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
-
-			currentThread.setContextClassLoader(bundleWiring.getClassLoader());
-
-			bootstrap();
-
-			XMLObjectProviderRegistry xmlObjectProviderRegistry =
-				ConfigurationService.get(XMLObjectProviderRegistry.class);
-
-			_parserPoolServiceRegistration = bundleContext.registerService(
-				ParserPool.class, xmlObjectProviderRegistry.getParserPool(),
-				null);
-		}
-		finally {
-			currentThread.setContextClassLoader(classLoader);
-		}
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		if (_parserPoolServiceRegistration != null) {
-			_parserPoolServiceRegistration.unregister();
 		}
 	}
 

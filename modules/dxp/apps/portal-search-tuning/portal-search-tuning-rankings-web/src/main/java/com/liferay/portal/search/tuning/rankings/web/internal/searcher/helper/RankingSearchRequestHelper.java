@@ -40,14 +40,20 @@ public class RankingSearchRequestHelper {
 		SearchRequestBuilder searchRequestBuilder, Ranking ranking) {
 
 		Stream.concat(
-			getPinnedDocumentIdsQueryParts(ranking),
-			Stream.of(getHiddenDocumentIdsQueryPart(ranking))
+			_getPinnedDocumentIdsQueryParts(ranking),
+			Stream.of(_getHiddenDocumentIdsQueryPart(ranking))
 		).forEach(
 			searchRequestBuilder::addComplexQueryPart
 		);
 	}
 
-	protected ComplexQueryPart getHiddenDocumentIdsQueryPart(Ranking ranking) {
+	@Reference
+	protected ComplexQueryPartBuilderFactory complexQueryPartBuilderFactory;
+
+	@Reference
+	protected Queries queries;
+
+	private ComplexQueryPart _getHiddenDocumentIdsQueryPart(Ranking ranking) {
 		List<String> ids = ranking.getHiddenDocumentIds();
 
 		if (ids.isEmpty()) {
@@ -64,47 +70,6 @@ public class RankingSearchRequestHelper {
 		).build();
 	}
 
-	protected IdsQuery getIdsQuery(Ranking.Pin pin, int size) {
-		IdsQuery idsQuery = queries.ids();
-
-		idsQuery.addIds(pin.getDocumentId());
-
-		idsQuery.setBoost((size - pin.getPosition()) * 10000F);
-
-		return idsQuery;
-	}
-
-	protected ComplexQueryPart getPinIdsQueryPart(Query query) {
-		return complexQueryPartBuilderFactory.builder(
-		).additive(
-			true
-		).query(
-			query
-		).occur(
-			"should"
-		).build();
-	}
-
-	protected Stream<ComplexQueryPart> getPinnedDocumentIdsQueryParts(
-		Ranking ranking) {
-
-		List<Ranking.Pin> pins = ranking.getPins();
-
-		Stream<Ranking.Pin> stream = pins.stream();
-
-		return stream.map(
-			pin -> getIdsQuery(pin, pins.size())
-		).map(
-			this::getPinIdsQueryPart
-		);
-	}
-
-	@Reference
-	protected ComplexQueryPartBuilderFactory complexQueryPartBuilderFactory;
-
-	@Reference
-	protected Queries queries;
-
 	private IdsQuery _getIdsQuery(Collection<String> ids) {
 		if (ids.isEmpty()) {
 			return null;
@@ -115,6 +80,41 @@ public class RankingSearchRequestHelper {
 		idsQuery.addIds(ArrayUtil.toStringArray(ids));
 
 		return idsQuery;
+	}
+
+	private IdsQuery _getIdsQuery(Ranking.Pin pin, int size) {
+		IdsQuery idsQuery = queries.ids();
+
+		idsQuery.addIds(pin.getDocumentId());
+
+		idsQuery.setBoost((size - pin.getPosition()) * 10000F);
+
+		return idsQuery;
+	}
+
+	private ComplexQueryPart _getPinIdsQueryPart(Query query) {
+		return complexQueryPartBuilderFactory.builder(
+		).additive(
+			true
+		).query(
+			query
+		).occur(
+			"should"
+		).build();
+	}
+
+	private Stream<ComplexQueryPart> _getPinnedDocumentIdsQueryParts(
+		Ranking ranking) {
+
+		List<Ranking.Pin> pins = ranking.getPins();
+
+		Stream<Ranking.Pin> stream = pins.stream();
+
+		return stream.map(
+			pin -> _getIdsQuery(pin, pins.size())
+		).map(
+			this::_getPinIdsQueryPart
+		);
 	}
 
 }

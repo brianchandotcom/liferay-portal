@@ -89,8 +89,7 @@ public class SourcePermissionChecker implements BaseModelPermissionChecker {
 		_sourceModelResourcePermission = modelResourcePermission;
 	}
 
-	protected void setSourceLocalService(
-		SourceLocalService sourceLocalService) {
+	private void _setSourceLocalService(SourceLocalService sourceLocalService) {
 	}
 
 	private static ModelResourcePermission<Source>

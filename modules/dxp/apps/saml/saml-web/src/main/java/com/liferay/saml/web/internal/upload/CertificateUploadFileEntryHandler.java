@@ -73,7 +73,7 @@ public class CertificateUploadFileEntryHandler
 		}
 
 		try {
-			validateFile(fileEntry);
+			_validateFile(fileEntry);
 
 			return fileEntry;
 		}
@@ -88,7 +88,7 @@ public class CertificateUploadFileEntryHandler
 		}
 	}
 
-	protected void validateFile(FileEntry fileEntry)
+	private void _validateFile(FileEntry fileEntry)
 		throws CertificateException, KeyStoreException {
 
 		try (InputStream inputStream = fileEntry.getContentStream()) {

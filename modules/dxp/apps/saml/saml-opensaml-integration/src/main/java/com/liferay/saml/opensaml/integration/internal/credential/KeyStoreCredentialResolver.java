@@ -72,7 +72,7 @@ public class KeyStoreCredentialResolver
 		KeyStore keyStore = _keyStoreManager.getKeyStore();
 
 		keyStore.deleteEntry(
-			getAlias(getLocalEntityId(), getUsageType(certificateUsage)));
+			_getAlias(getLocalEntityId(), _getUsageType(certificateUsage)));
 
 		try {
 			_keyStoreManager.saveKeyStore(keyStore);
@@ -107,7 +107,7 @@ public class KeyStoreCredentialResolver
 			CertificateUsage certificateUsage)
 		throws SamlException {
 
-		UsageType usageType = getUsageType(certificateUsage);
+		UsageType usageType = _getUsageType(certificateUsage);
 
 		if (usageType == null) {
 			return null;
@@ -140,7 +140,7 @@ public class KeyStoreCredentialResolver
 
 	@Override
 	public String getLocalEntityId() {
-		return getSamlProviderConfiguration().entityId();
+		return _getSamlProviderConfiguration().entityId();
 	}
 
 	@Override
@@ -161,7 +161,7 @@ public class KeyStoreCredentialResolver
 		throws SecurityException {
 
 		try {
-			checkCriteriaRequirements(criteriaSet);
+			_checkCriteriaRequirements(criteriaSet);
 
 			EntityIdCriterion entityIDCriterion = criteriaSet.get(
 				EntityIdCriterion.class);
@@ -205,13 +205,14 @@ public class KeyStoreCredentialResolver
 			KeyStore keyStore = _keyStoreManager.getKeyStore();
 
 			KeyStore.Entry entry = keyStore.getEntry(
-				getAlias(entityId, usageType), keyStorePasswordProtection);
+				_getAlias(entityId, usageType), keyStorePasswordProtection);
 
 			if (entry == null) {
 				return Collections.emptySet();
 			}
 
-			Credential credential = buildCredential(entry, entityId, usageType);
+			Credential credential = _buildCredential(
+				entry, entityId, usageType);
 
 			return Collections.singleton(credential);
 		}
@@ -246,7 +247,7 @@ public class KeyStoreCredentialResolver
 		KeyStore keyStore = _keyStoreManager.getKeyStore();
 
 		keyStore.setEntry(
-			getAlias(getLocalEntityId(), getUsageType(certificateUsage)),
+			_getAlias(getLocalEntityId(), _getUsageType(certificateUsage)),
 			new KeyStore.PrivateKeyEntry(
 				privateKey, new Certificate[] {x509Certificate}),
 			new KeyStore.PasswordProtection(
@@ -255,26 +256,26 @@ public class KeyStoreCredentialResolver
 		_keyStoreManager.saveKeyStore(keyStore);
 	}
 
-	protected Credential buildCredential(
+	private Credential _buildCredential(
 		KeyStore.Entry entry, String entityId, UsageType usage) {
 
 		if (entry instanceof KeyStore.PrivateKeyEntry) {
-			return processPrivateKeyEntry(
+			return _processPrivateKeyEntry(
 				(KeyStore.PrivateKeyEntry)entry, entityId, usage);
 		}
 		else if (entry instanceof KeyStore.SecretKeyEntry) {
-			return processSecretKeyEntry(
+			return _processSecretKeyEntry(
 				(KeyStore.SecretKeyEntry)entry, entityId, usage);
 		}
 		else if (entry instanceof KeyStore.TrustedCertificateEntry) {
-			return processTrustedCertificateEntry(
+			return _processTrustedCertificateEntry(
 				(KeyStore.TrustedCertificateEntry)entry, entityId, usage);
 		}
 
 		return null;
 	}
 
-	protected void checkCriteriaRequirements(CriteriaSet criteriaSet) {
+	private void _checkCriteriaRequirements(CriteriaSet criteriaSet) {
 		EntityIdCriterion entityIdCriterion = criteriaSet.get(
 			EntityIdCriterion.class);
 
@@ -284,7 +285,7 @@ public class KeyStoreCredentialResolver
 		}
 	}
 
-	protected String getAlias(String entityId, UsageType usageType) {
+	private String _getAlias(String entityId, UsageType usageType) {
 		if (usageType.equals(UsageType.SIGNING)) {
 			return entityId;
 		}
@@ -295,11 +296,11 @@ public class KeyStoreCredentialResolver
 		return entityId;
 	}
 
-	protected SamlProviderConfiguration getSamlProviderConfiguration() {
+	private SamlProviderConfiguration _getSamlProviderConfiguration() {
 		return _samlProviderConfigurationHelper.getSamlProviderConfiguration();
 	}
 
-	protected UsageType getUsageType(CertificateUsage certificateUsage) {
+	private UsageType _getUsageType(CertificateUsage certificateUsage) {
 		UsageType usageType = null;
 
 		if (certificateUsage == CertificateUsage.ENCRYPTION) {
@@ -312,7 +313,7 @@ public class KeyStoreCredentialResolver
 		return usageType;
 	}
 
-	protected Credential processPrivateKeyEntry(
+	private Credential _processPrivateKeyEntry(
 		KeyStore.PrivateKeyEntry privateKeyEntry, String entityId,
 		UsageType usageType) {
 
@@ -329,7 +330,7 @@ public class KeyStoreCredentialResolver
 		return basicX509Credential;
 	}
 
-	protected Credential processSecretKeyEntry(
+	private Credential _processSecretKeyEntry(
 		KeyStore.SecretKeyEntry secretKeyEntry, String entityId,
 		UsageType usageType) {
 
@@ -342,7 +343,7 @@ public class KeyStoreCredentialResolver
 		return basicCredential;
 	}
 
-	protected Credential processTrustedCertificateEntry(
+	private Credential _processTrustedCertificateEntry(
 		KeyStore.TrustedCertificateEntry trustedCertificateEntry,
 		String entityId, UsageType usageType) {
 

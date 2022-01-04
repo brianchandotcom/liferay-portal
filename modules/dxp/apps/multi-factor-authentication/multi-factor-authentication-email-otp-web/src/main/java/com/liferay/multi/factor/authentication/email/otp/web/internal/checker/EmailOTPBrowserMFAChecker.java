@@ -128,7 +128,7 @@ public class EmailOTPBrowserMFAChecker implements BrowserMFAChecker {
 
 		HttpSession httpSession = originalHttpServletRequest.getSession(false);
 
-		if (isVerified(httpSession, userId)) {
+		if (_isVerified(httpSession, userId)) {
 			return true;
 		}
 
@@ -271,7 +271,49 @@ public class EmailOTPBrowserMFAChecker implements BrowserMFAChecker {
 			sessionPhishingProtectedAttributes.toArray(new String[0]);
 	}
 
-	protected boolean isVerified(HttpSession httpSession, long userId) {
+	private String _getClassName() {
+		Class<?> clazz = getClass();
+
+		return clazz.getName();
+	}
+
+	private boolean _isMaximumAllowedAttemptsReached(long userId) {
+		try {
+			MFAEmailOTPEntry mfaEmailOTPEntry =
+				_mfaEmailOTPEntryLocalService.fetchMFAEmailOTPEntryByUserId(
+					userId);
+
+			if (mfaEmailOTPEntry == null) {
+				return false;
+			}
+
+			if ((_mfaEmailOTPConfiguration.failedAttemptsAllowed() >= 0) &&
+				(_mfaEmailOTPConfiguration.failedAttemptsAllowed() <=
+					mfaEmailOTPEntry.getFailedAttempts()) &&
+				(_mfaEmailOTPConfiguration.retryTimeout() >= 0)) {
+
+				Date lastFailDate = mfaEmailOTPEntry.getLastFailDate();
+
+				long time =
+					(_mfaEmailOTPConfiguration.retryTimeout() * Time.SECOND) +
+						lastFailDate.getTime();
+
+				if (time <= System.currentTimeMillis()) {
+					_mfaEmailOTPEntryLocalService.resetFailedAttempts(userId);
+				}
+				else {
+					return true;
+				}
+			}
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
+		}
+
+		return false;
+	}
+
+	private boolean _isVerified(HttpSession httpSession, long userId) {
 		User user = _userLocalService.fetchUser(userId);
 
 		if (user == null) {
@@ -318,48 +360,6 @@ public class EmailOTPBrowserMFAChecker implements BrowserMFAChecker {
 		}
 
 		return true;
-	}
-
-	private String _getClassName() {
-		Class<?> clazz = getClass();
-
-		return clazz.getName();
-	}
-
-	private boolean _isMaximumAllowedAttemptsReached(long userId) {
-		try {
-			MFAEmailOTPEntry mfaEmailOTPEntry =
-				_mfaEmailOTPEntryLocalService.fetchMFAEmailOTPEntryByUserId(
-					userId);
-
-			if (mfaEmailOTPEntry == null) {
-				return false;
-			}
-
-			if ((_mfaEmailOTPConfiguration.failedAttemptsAllowed() >= 0) &&
-				(_mfaEmailOTPConfiguration.failedAttemptsAllowed() <=
-					mfaEmailOTPEntry.getFailedAttempts()) &&
-				(_mfaEmailOTPConfiguration.retryTimeout() >= 0)) {
-
-				Date lastFailDate = mfaEmailOTPEntry.getLastFailDate();
-
-				long time =
-					(_mfaEmailOTPConfiguration.retryTimeout() * Time.SECOND) +
-						lastFailDate.getTime();
-
-				if (time <= System.currentTimeMillis()) {
-					_mfaEmailOTPEntryLocalService.resetFailedAttempts(userId);
-				}
-				else {
-					return true;
-				}
-			}
-		}
-		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
-		}
-
-		return false;
 	}
 
 	private void _routeAuditMessage(AuditMessage auditMessage) {

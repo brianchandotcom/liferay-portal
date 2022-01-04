@@ -71,8 +71,9 @@ public class CertificateToolImpl implements CertificateTool {
 			ASN1InputStream asn1InputStream = new ASN1InputStream(
 				byteArrayInputStream)) {
 
-			X500Name issuerX500Name = createX500Name(issuerCertificateEntityId);
-			X500Name subjectX500Name = createX500Name(
+			X500Name issuerX500Name = _createX500Name(
+				issuerCertificateEntityId);
+			X500Name subjectX500Name = _createX500Name(
 				subjectCertificateEntityId);
 
 			X509v1CertificateBuilder x509v1CertificateBuilder =
@@ -163,7 +164,7 @@ public class CertificateToolImpl implements CertificateTool {
 		return Optional.empty();
 	}
 
-	protected X500Name createX500Name(CertificateEntityId certificateEntityId) {
+	private X500Name _createX500Name(CertificateEntityId certificateEntityId) {
 		X500NameBuilder x500NameBuilder = new X500NameBuilder(BCStyle.INSTANCE);
 
 		if (Validator.isNotNull(certificateEntityId.getCommonName())) {

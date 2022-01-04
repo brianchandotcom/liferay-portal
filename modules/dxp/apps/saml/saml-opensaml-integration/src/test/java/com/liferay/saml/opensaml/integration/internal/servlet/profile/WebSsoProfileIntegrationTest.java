@@ -714,7 +714,7 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 	public void testVerifyAssertionSignatureInvalidSignature()
 		throws Exception {
 
-		testVerifyAssertionSignature(UNKNOWN_ENTITY_ID);
+		_testVerifyAssertionSignature(UNKNOWN_ENTITY_ID);
 	}
 
 	@Test
@@ -785,7 +785,7 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 
 	@Test
 	public void testVerifyAssertionSignatureValidSignature() throws Exception {
-		testVerifyAssertionSignature(IDP_ENTITY_ID);
+		_testVerifyAssertionSignature(IDP_ENTITY_ID);
 	}
 
 	@Test
@@ -1221,7 +1221,7 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 			subjectConfirmationData);
 	}
 
-	protected void testVerifyAssertionSignature(String entityId)
+	private void _testVerifyAssertionSignature(String entityId)
 		throws Exception {
 
 		Assertion assertion = OpenSamlUtil.buildAssertion();

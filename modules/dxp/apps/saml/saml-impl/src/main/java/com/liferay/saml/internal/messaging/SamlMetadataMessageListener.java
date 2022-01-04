@@ -103,7 +103,7 @@ public class SamlMetadataMessageListener extends SamlMessageListener {
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
-	protected void updateIdpMetadata(long companyId) {
+	private void _updateIdpMetadata(long companyId) {
 		List<SamlSpIdpConnection> samlSpIdpConnections =
 			_samlSpIdpConnectionLocalService.getSamlSpIdpConnections(companyId);
 
@@ -134,7 +134,34 @@ public class SamlMetadataMessageListener extends SamlMessageListener {
 		}
 	}
 
-	protected void updateSpMetadata(long companyId) {
+	private void _updateMetadata(long companyId) {
+		if (!_samlProviderConfigurationHelper.isEnabled()) {
+			return;
+		}
+
+		try {
+			if (_samlProviderConfigurationHelper.isRoleIdp()) {
+				_updateSpMetadata(companyId);
+			}
+			else if (_samlProviderConfigurationHelper.isRoleSp()) {
+				_updateIdpMetadata(companyId);
+			}
+		}
+		catch (Exception exception) {
+			String msg = StringBundler.concat(
+				"Unable to refresh metadata for company ", companyId, ": ",
+				exception.getMessage());
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(msg, exception);
+			}
+			else if (_log.isWarnEnabled()) {
+				_log.warn(msg);
+			}
+		}
+	}
+
+	private void _updateSpMetadata(long companyId) {
 		List<SamlIdpSpConnection> samlIdpSpConnections =
 			_samlIdpSpConnectionLocalService.getSamlIdpSpConnections(companyId);
 
@@ -161,33 +188,6 @@ public class SamlMetadataMessageListener extends SamlMessageListener {
 				else if (_log.isWarnEnabled()) {
 					_log.warn(message);
 				}
-			}
-		}
-	}
-
-	private void _updateMetadata(long companyId) {
-		if (!_samlProviderConfigurationHelper.isEnabled()) {
-			return;
-		}
-
-		try {
-			if (_samlProviderConfigurationHelper.isRoleIdp()) {
-				updateSpMetadata(companyId);
-			}
-			else if (_samlProviderConfigurationHelper.isRoleSp()) {
-				updateIdpMetadata(companyId);
-			}
-		}
-		catch (Exception exception) {
-			String msg = StringBundler.concat(
-				"Unable to refresh metadata for company ", companyId, ": ",
-				exception.getMessage());
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(msg, exception);
-			}
-			else if (_log.isWarnEnabled()) {
-				_log.warn(msg);
 			}
 		}
 	}

@@ -47,7 +47,16 @@ public class KaleoDefinitionUpgradeProcess extends UpgradeProcess {
 		_userLocalService = userLocalService;
 	}
 
-	protected void addKaleoDefinition(
+	@Override
+	protected void doUpgrade() throws Exception {
+		if (hasTable("KaleoDefinitionVersion") &&
+			hasTable("KaleoDraftDefinition")) {
+
+			_addKaleoDefinitionsFromKaleoDefinitionVersion();
+		}
+	}
+
+	private void _addKaleoDefinition(
 			long groupId, long userId, Timestamp createDate,
 			Timestamp modifiedDate, String name, String title, String content,
 			int version)
@@ -78,7 +87,7 @@ public class KaleoDefinitionUpgradeProcess extends UpgradeProcess {
 		_kaleoDefinitionLocalService.addKaleoDefinition(kaleoDefinition);
 	}
 
-	protected void addKaleoDefinitionsFromKaleoDefinitionVersion()
+	private void _addKaleoDefinitionsFromKaleoDefinitionVersion()
 		throws PortalException, SQLException {
 
 		try (LoggingTimer loggingTimer = new LoggingTimer();
@@ -106,23 +115,14 @@ public class KaleoDefinitionUpgradeProcess extends UpgradeProcess {
 				String content = resultSet.getString("content");
 				String version = resultSet.getString("version");
 
-				addKaleoDefinition(
+				_addKaleoDefinition(
 					groupId, userId, createDate, modifiedDate, name, title,
-					content, getVersion(version));
+					content, _getVersion(version));
 			}
 		}
 	}
 
-	@Override
-	protected void doUpgrade() throws Exception {
-		if (hasTable("KaleoDefinitionVersion") &&
-			hasTable("KaleoDraftDefinition")) {
-
-			addKaleoDefinitionsFromKaleoDefinitionVersion();
-		}
-	}
-
-	protected int getVersion(String version) {
+	private int _getVersion(String version) {
 		int[] versionParts = StringUtil.split(version, StringPool.PERIOD, 0);
 
 		return versionParts[0];

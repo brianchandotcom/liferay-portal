@@ -46,10 +46,10 @@ public class KaleoDesignerWebVerifyProcess extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
-		verifyKaleoDefinitionVersions();
+		_verifyKaleoDefinitionVersions();
 	}
 
-	protected ServiceContext getServiceContext() {
+	private ServiceContext _getServiceContext() {
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
@@ -63,7 +63,7 @@ public class KaleoDesignerWebVerifyProcess extends VerifyProcess {
 		return serviceContext;
 	}
 
-	protected void verifyKaleoDefinitionVersions() throws PortalException {
+	private void _verifyKaleoDefinitionVersions() throws PortalException {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			ActionableDynamicQuery actionableDynamicQuery =
 				_kaleoDefinitionVersionLocalService.getActionableDynamicQuery();
@@ -73,14 +73,14 @@ public class KaleoDesignerWebVerifyProcess extends VerifyProcess {
 					KaleoDefinitionVersion kaleoDefinitionVersion =
 						(KaleoDefinitionVersion)object;
 
-					verifyKaleoDefinitionVersions(kaleoDefinitionVersion);
+					_verifyKaleoDefinitionVersions(kaleoDefinitionVersion);
 				});
 
 			actionableDynamicQuery.performActions();
 		}
 	}
 
-	protected void verifyKaleoDefinitionVersions(
+	private void _verifyKaleoDefinitionVersions(
 			KaleoDefinitionVersion kaleoDefinitionVersion)
 		throws PortalException {
 
@@ -98,7 +98,7 @@ public class KaleoDesignerWebVerifyProcess extends VerifyProcess {
 
 		if (resourcePermission == null) {
 			_resourceLocalService.addModelResources(
-				kaleoDefinitionVersion, getServiceContext());
+				kaleoDefinitionVersion, _getServiceContext());
 		}
 	}
 

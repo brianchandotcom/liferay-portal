@@ -40,23 +40,29 @@ public class SynonymSetFilterWriterImpl implements SynonymSetFilterWriter {
 			return;
 		}
 
-		closeIndex(companyIndexName);
+		_closeIndex(companyIndexName);
 
 		try {
 			UpdateIndexSettingsIndexRequest updateIndexSettingsIndexRequest =
 				new UpdateIndexSettingsIndexRequest(companyIndexName);
 
 			updateIndexSettingsIndexRequest.setSettings(
-				buildSettings(filterName, synonymSets));
+				_buildSettings(filterName, synonymSets));
 
 			searchEngineAdapter.execute(updateIndexSettingsIndexRequest);
 		}
 		finally {
-			openIndex(companyIndexName);
+			_openIndex(companyIndexName);
 		}
 	}
 
-	protected String buildSettings(String filterName, String[] synonymSets) {
+	@Reference
+	protected JSONFactory jsonFactory;
+
+	@Reference
+	protected SearchEngineAdapter searchEngineAdapter;
+
+	private String _buildSettings(String filterName, String[] synonymSets) {
 		return JSONUtil.put(
 			"analysis",
 			JSONUtil.put(
@@ -73,24 +79,18 @@ public class SynonymSetFilterWriterImpl implements SynonymSetFilterWriter {
 		).toString();
 	}
 
-	protected void closeIndex(String indexName) {
+	private void _closeIndex(String indexName) {
 		CloseIndexRequest closeIndexRequest = new CloseIndexRequest(indexName);
 
 		searchEngineAdapter.execute(closeIndexRequest);
 	}
 
-	protected void openIndex(String indexName) {
+	private void _openIndex(String indexName) {
 		OpenIndexRequest openIndexRequest = new OpenIndexRequest(indexName);
 
 		openIndexRequest.setWaitForActiveShards(1);
 
 		searchEngineAdapter.execute(openIndexRequest);
 	}
-
-	@Reference
-	protected JSONFactory jsonFactory;
-
-	@Reference
-	protected SearchEngineAdapter searchEngineAdapter;
 
 }

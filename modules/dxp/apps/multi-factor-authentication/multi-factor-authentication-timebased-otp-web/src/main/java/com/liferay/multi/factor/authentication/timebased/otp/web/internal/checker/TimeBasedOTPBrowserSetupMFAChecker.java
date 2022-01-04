@@ -165,7 +165,7 @@ public class TimeBasedOTPBrowserSetupMFAChecker
 
 		HttpSession httpSession = originalHttpServletRequest.getSession(false);
 
-		if (isVerified(httpSession, userId)) {
+		if (_isVerified(httpSession, userId)) {
 			return true;
 		}
 
@@ -363,7 +363,13 @@ public class TimeBasedOTPBrowserSetupMFAChecker
 		}
 	}
 
-	protected boolean isVerified(HttpSession httpSession, long userId) {
+	private String _getClassName() {
+		Class<?> clazz = getClass();
+
+		return clazz.getName();
+	}
+
+	private boolean _isVerified(HttpSession httpSession, long userId) {
 		User user = _userLocalService.fetchUser(userId);
 
 		if (user == null) {
@@ -413,12 +419,6 @@ public class TimeBasedOTPBrowserSetupMFAChecker
 		}
 
 		return true;
-	}
-
-	private String _getClassName() {
-		Class<?> clazz = getClass();
-
-		return clazz.getName();
 	}
 
 	private void _routeAuditMessage(AuditMessage auditMessage) {

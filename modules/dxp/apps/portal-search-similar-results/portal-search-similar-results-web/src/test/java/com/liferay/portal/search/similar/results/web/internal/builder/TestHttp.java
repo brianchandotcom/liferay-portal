@@ -84,7 +84,7 @@ public class TestHttp {
 		Http http = Mockito.mock(Http.class);
 
 		Mockito.doAnswer(
-			invocationOnMock -> decodeURL(getArg(invocationOnMock))
+			invocationOnMock -> decodeURL(_getArg(invocationOnMock))
 		).when(
 			http
 		).decodeURL(
@@ -92,7 +92,7 @@ public class TestHttp {
 		);
 
 		Mockito.doAnswer(
-			invocationOnMock -> getPath(getArg(invocationOnMock))
+			invocationOnMock -> getPath(_getArg(invocationOnMock))
 		).when(
 			http
 		).getPath(
@@ -100,7 +100,7 @@ public class TestHttp {
 		);
 
 		Mockito.doAnswer(
-			invocationOnMock -> getQueryString(getArg(invocationOnMock))
+			invocationOnMock -> getQueryString(_getArg(invocationOnMock))
 		).when(
 			http
 		).getQueryString(
@@ -108,7 +108,8 @@ public class TestHttp {
 		);
 
 		Mockito.doAnswer(
-			invocationOnMock -> parameterMapFromString(getArg(invocationOnMock))
+			invocationOnMock -> parameterMapFromString(
+				_getArg(invocationOnMock))
 		).when(
 			http
 		).parameterMapFromString(
@@ -117,8 +118,8 @@ public class TestHttp {
 
 		Mockito.doAnswer(
 			invocationOnMock -> setParameter(
-				getArg(invocationOnMock, 0), getArg(invocationOnMock, 1),
-				getArg(invocationOnMock, 2))
+				_getArg(invocationOnMock, 0), _getArg(invocationOnMock, 1),
+				_getArg(invocationOnMock, 2))
 		).when(
 			http
 		).setParameter(
@@ -298,11 +299,11 @@ public class TestHttp {
 		return new String[] {url, anchor};
 	}
 
-	protected static String getArg(InvocationOnMock invocationOnMock) {
-		return getArg(invocationOnMock, 0);
+	private static String _getArg(InvocationOnMock invocationOnMock) {
+		return _getArg(invocationOnMock, 0);
 	}
 
-	protected static String getArg(
+	private static String _getArg(
 		InvocationOnMock invocationOnMock, int index) {
 
 		return invocationOnMock.getArgumentAt(index, String.class);

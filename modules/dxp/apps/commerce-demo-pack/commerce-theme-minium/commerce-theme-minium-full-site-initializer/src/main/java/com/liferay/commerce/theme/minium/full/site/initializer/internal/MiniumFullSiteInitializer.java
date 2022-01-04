@@ -93,7 +93,7 @@ public class MiniumFullSiteInitializer implements SiteInitializer {
 
 			_importCommerceMLRecommendations(groupId);
 
-			fixDLFileEntryPermissions(groupId);
+			_fixDLFileEntryPermissions(groupId);
 		}
 		catch (InitializationException initializationException) {
 			throw initializationException;
@@ -114,7 +114,7 @@ public class MiniumFullSiteInitializer implements SiteInitializer {
 		return _siteInitializer.isActive(companyId);
 	}
 
-	protected void fixDLFileEntryPermissions(long groupId)
+	private void _fixDLFileEntryPermissions(long groupId)
 		throws PortalException {
 
 		List<DLFileEntry> dlFileEntries =

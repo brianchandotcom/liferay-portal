@@ -55,8 +55,8 @@ public class MessageBoardsSimilarResultsContributor
 
 		SearchStringUtil.requireEquals("message_boards", parameters[0]);
 
-		putAttribute(parameters[1], "type", routeBuilder);
-		putAttribute(Long.valueOf(parameters[2]), "id", routeBuilder);
+		_putAttribute(parameters[1], "type", routeBuilder);
+		_putAttribute(Long.valueOf(parameters[2]), "id", routeBuilder);
 	}
 
 	@Override
@@ -66,10 +66,10 @@ public class MessageBoardsSimilarResultsContributor
 		String type = (String)inputHelper.getRouteParameter("type");
 		Long id = (Long)inputHelper.getRouteParameter("id");
 
-		List<?> list = getMBMessageData(type, id, inputHelper.getGroupId());
+		List<?> list = _getMBMessageData(type, id, inputHelper.getGroupId());
 
 		if (list == null) {
-			list = getMBCategoryData(type, id);
+			list = _getMBCategoryData(type, id);
 		}
 
 		if (list == null) {
@@ -129,7 +129,11 @@ public class MessageBoardsSimilarResultsContributor
 		);
 	}
 
-	protected List<?> getMBCategoryData(String type, long id) {
+	protected static final String CATEGORY = "category";
+
+	protected static final String MESSAGE = "message";
+
+	private List<?> _getMBCategoryData(String type, long id) {
 		if (!CATEGORY.equals(type)) {
 			return null;
 		}
@@ -144,7 +148,7 @@ public class MessageBoardsSimilarResultsContributor
 		return null;
 	}
 
-	protected List<?> getMBMessageData(String type, long id, long groupId) {
+	private List<?> _getMBMessageData(String type, long id, long groupId) {
 		if (!MESSAGE.equals(type)) {
 			return null;
 		}
@@ -164,15 +168,11 @@ public class MessageBoardsSimilarResultsContributor
 		return null;
 	}
 
-	protected void putAttribute(
+	private void _putAttribute(
 		Object value, String name, RouteBuilder routeBuilder) {
 
 		routeBuilder.addAttribute(name, value);
 	}
-
-	protected static final String CATEGORY = "category";
-
-	protected static final String MESSAGE = "message";
 
 	private AssetEntryLocalService _assetEntryLocalService;
 	private HttpHelper _httpHelper;

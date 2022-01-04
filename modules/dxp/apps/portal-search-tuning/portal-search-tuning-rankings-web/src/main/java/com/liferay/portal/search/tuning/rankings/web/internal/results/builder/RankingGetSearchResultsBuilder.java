@@ -97,7 +97,7 @@ public class RankingGetSearchResultsBuilder {
 	}
 
 	protected JSONArray buildDocuments(SearchResponse searchResponse) {
-		Stream<JSONObject> stream = getElements(searchResponse);
+		Stream<JSONObject> stream = _getElements(searchResponse);
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
@@ -124,12 +124,6 @@ public class RankingGetSearchResultsBuilder {
 		).build();
 	}
 
-	protected Stream<JSONObject> getElements(SearchResponse searchResponse) {
-		Stream<Document> stream = searchResponse.getDocumentsStream();
-
-		return stream.map(this::translate);
-	}
-
 	protected JSONObject translate(Document document) {
 		RankingJSONBuilder rankingJSONBuilder = new RankingJSONBuilder(
 			_dlAppLocalService, _fastDateFormatFactory, _resourceActions,
@@ -142,6 +136,12 @@ public class RankingGetSearchResultsBuilder {
 		).viewURL(
 			_getViewURL(document)
 		).build();
+	}
+
+	private Stream<JSONObject> _getElements(SearchResponse searchResponse) {
+		Stream<Document> stream = searchResponse.getDocumentsStream();
+
+		return stream.map(this::translate);
 	}
 
 	private String _getViewURL(Document document) {

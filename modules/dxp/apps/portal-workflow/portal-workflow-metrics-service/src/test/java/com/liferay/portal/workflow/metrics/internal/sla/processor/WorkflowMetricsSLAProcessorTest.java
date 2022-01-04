@@ -557,25 +557,6 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 			WorkflowMetricsSLAStatus.STOPPED);
 	}
 
-	protected WorkflowMetricsSLACalendarTracker
-			mockWorkflowMetricsSLACalendarTracker()
-		throws Exception {
-
-		WorkflowMetricsSLACalendarTrackerImpl
-			workflowMetricsSLACalendarTrackerImpl =
-				new WorkflowMetricsSLACalendarTrackerImpl();
-
-		field(
-			WorkflowMetricsSLACalendarTrackerImpl.class,
-			"_defaultWorkflowMetricsSLACalendar"
-		).set(
-			workflowMetricsSLACalendarTrackerImpl,
-			new DefaultWorkflowMetricsSLACalendar()
-		);
-
-		return workflowMetricsSLACalendarTrackerImpl;
-	}
-
 	private void _assertIsBreached(
 		boolean breached, Document document, LocalDateTime nowLocalDateTime,
 		LocalDateTime overdueLocalDateTime) {
@@ -620,6 +601,25 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 
 	private String _format(LocalDateTime nowLocalDateTime) {
 		return _dateTimeFormatter.format(nowLocalDateTime);
+	}
+
+	private WorkflowMetricsSLACalendarTracker
+			_mockWorkflowMetricsSLACalendarTracker()
+		throws Exception {
+
+		WorkflowMetricsSLACalendarTrackerImpl
+			workflowMetricsSLACalendarTrackerImpl =
+				new WorkflowMetricsSLACalendarTrackerImpl();
+
+		field(
+			WorkflowMetricsSLACalendarTrackerImpl.class,
+			"_defaultWorkflowMetricsSLACalendar"
+		).set(
+			workflowMetricsSLACalendarTrackerImpl,
+			new DefaultWorkflowMetricsSLACalendar()
+		);
+
+		return workflowMetricsSLACalendarTrackerImpl;
 	}
 
 	private void _test(
@@ -675,7 +675,8 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 			WorkflowMetricsSLAProcessor.class,
 			"_workflowMetricsSLACalendarTracker"
 		).set(
-			workflowMetricsSLAProcessor, mockWorkflowMetricsSLACalendarTracker()
+			workflowMetricsSLAProcessor,
+			_mockWorkflowMetricsSLACalendarTracker()
 		);
 
 		WorkflowMetricsSLAInstanceResult workflowMetricsSLAInstanceResult =

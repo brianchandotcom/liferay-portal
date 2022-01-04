@@ -83,7 +83,7 @@ public class RankingGetHiddenResultsBuilder {
 
 		List<String> ids = ranking.getHiddenDocumentIds();
 
-		List<String> paginatedIds = paginateIds(ids);
+		List<String> paginatedIds = _paginateIds(ids);
 
 		return JSONUtil.put(
 			"documents", buildDocuments(paginatedIds, ranking)
@@ -114,7 +114,8 @@ public class RankingGetHiddenResultsBuilder {
 		Stream<String> stringStream = ids.stream();
 
 		Stream<JSONObject> jsonObjectStream = stringStream.map(
-			id -> getDocument(ranking.getIndexName(), id, LIFERAY_DOCUMENT_TYPE)
+			id -> _getDocument(
+				ranking.getIndexName(), id, LIFERAY_DOCUMENT_TYPE)
 		).filter(
 			document -> document != null
 		).map(
@@ -128,36 +129,12 @@ public class RankingGetHiddenResultsBuilder {
 		return jsonArray;
 	}
 
-	protected Document getDocument(String indexName, String id, String type) {
-		GetDocumentRequest getDocumentRequest = new GetDocumentRequest(
-			indexName, id);
-
-		getDocumentRequest.setFetchSource(true);
-		getDocumentRequest.setFetchSourceInclude("*");
-		getDocumentRequest.setType(type);
-
-		GetDocumentResponse getDocumentResponse = _searchEngineAdapter.execute(
-			getDocumentRequest);
-
-		if (!getDocumentResponse.isExists()) {
-			return null;
-		}
-
-		return getDocumentResponse.getDocument();
-	}
-
 	protected Query getIdsQuery(List<String> ids) {
 		IdsQuery idsQuery = _queries.ids();
 
 		idsQuery.addIds(ArrayUtil.toStringArray(ids));
 
 		return idsQuery;
-	}
-
-	protected List<String> paginateIds(List<String> ids) {
-		int end = _from + _size;
-
-		return ListUtil.subList(ids, _from, end);
 	}
 
 	protected JSONObject translate(Document document) {
@@ -178,6 +155,24 @@ public class RankingGetHiddenResultsBuilder {
 
 	protected static final String LIFERAY_DOCUMENT_TYPE = "LiferayDocumentType";
 
+	private Document _getDocument(String indexName, String id, String type) {
+		GetDocumentRequest getDocumentRequest = new GetDocumentRequest(
+			indexName, id);
+
+		getDocumentRequest.setFetchSource(true);
+		getDocumentRequest.setFetchSourceInclude("*");
+		getDocumentRequest.setType(type);
+
+		GetDocumentResponse getDocumentResponse = _searchEngineAdapter.execute(
+			getDocumentRequest);
+
+		if (!getDocumentResponse.isExists()) {
+			return null;
+		}
+
+		return getDocumentResponse.getDocument();
+	}
+
 	private String _getViewURL(Document document) {
 		return RankingResultUtil.getRankingResultViewURL(
 			document, _resourceRequest, _resourceResponse, true);
@@ -185,6 +180,12 @@ public class RankingGetHiddenResultsBuilder {
 
 	private boolean _isAssetDeleted(Document document) {
 		return RankingResultUtil.isAssetDeleted(document);
+	}
+
+	private List<String> _paginateIds(List<String> ids) {
+		int end = _from + _size;
+
+		return ListUtil.subList(ids, _from, end);
 	}
 
 	private final DLAppLocalService _dlAppLocalService;

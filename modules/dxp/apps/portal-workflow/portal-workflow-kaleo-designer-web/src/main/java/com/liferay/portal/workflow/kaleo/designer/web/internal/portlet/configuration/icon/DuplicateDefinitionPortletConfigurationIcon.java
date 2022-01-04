@@ -82,7 +82,7 @@ public class DuplicateDefinitionPortletConfigurationIcon
 
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
-		if (!canPublishWorkflowDefinition()) {
+		if (!_canPublishWorkflowDefinition()) {
 			return false;
 		}
 
@@ -113,7 +113,14 @@ public class DuplicateDefinitionPortletConfigurationIcon
 			workflowDefinitionConfiguration.companyAdministratorCanPublish();
 	}
 
-	protected boolean canPublishWorkflowDefinition() {
+	protected KaleoDefinitionVersion getKaleoDefinitionVersion(
+		PortletRequest portletRequest) {
+
+		return (KaleoDefinitionVersion)portletRequest.getAttribute(
+			KaleoDesignerWebKeys.KALEO_DRAFT_DEFINITION);
+	}
+
+	private boolean _canPublishWorkflowDefinition() {
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
@@ -125,13 +132,6 @@ public class DuplicateDefinitionPortletConfigurationIcon
 		}
 
 		return false;
-	}
-
-	protected KaleoDefinitionVersion getKaleoDefinitionVersion(
-		PortletRequest portletRequest) {
-
-		return (KaleoDefinitionVersion)portletRequest.getAttribute(
-			KaleoDesignerWebKeys.KALEO_DRAFT_DEFINITION);
 	}
 
 	private volatile boolean _companyAdministratorCanPublish;

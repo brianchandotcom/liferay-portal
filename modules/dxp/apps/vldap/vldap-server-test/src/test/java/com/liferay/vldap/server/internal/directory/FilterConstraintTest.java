@@ -55,9 +55,9 @@ public class FilterConstraintTest {
 
 	@Test
 	public void testDifferentNameMerge() throws Exception {
-		FilterConstraint leftFilterConstraint = getFilterConstraint(
+		FilterConstraint leftFilterConstraint = _getFilterConstraint(
 			"cn", "test1");
-		FilterConstraint rightFilterConstraint = getFilterConstraint(
+		FilterConstraint rightFilterConstraint = _getFilterConstraint(
 			"description", "test2");
 
 		Assert.assertFalse(leftFilterConstraint.merge(rightFilterConstraint));
@@ -69,9 +69,9 @@ public class FilterConstraintTest {
 
 	@Test
 	public void testDifferentValueMerge() throws Exception {
-		FilterConstraint leftFilterConstraint = getFilterConstraint(
+		FilterConstraint leftFilterConstraint = _getFilterConstraint(
 			"cn", "test1");
-		FilterConstraint rightFilterConstraint = getFilterConstraint(
+		FilterConstraint rightFilterConstraint = _getFilterConstraint(
 			"cn", "test2");
 
 		Assert.assertTrue(leftFilterConstraint.merge(rightFilterConstraint));
@@ -84,13 +84,13 @@ public class FilterConstraintTest {
 
 		Assert.assertTrue(leftFilterConstraint.equals(rightFilterConstraint));
 
-		leftFilterConstraint = getFilterConstraint("cn", "test1");
-		rightFilterConstraint = getFilterConstraint("cn", "test1");
+		leftFilterConstraint = _getFilterConstraint("cn", "test1");
+		rightFilterConstraint = _getFilterConstraint("cn", "test1");
 
 		Assert.assertTrue(leftFilterConstraint.equals(leftFilterConstraint));
 		Assert.assertTrue(leftFilterConstraint.equals(rightFilterConstraint));
 
-		rightFilterConstraint = getFilterConstraint("description", "test2");
+		rightFilterConstraint = _getFilterConstraint("description", "test2");
 
 		Assert.assertFalse(leftFilterConstraint.equals(rightFilterConstraint));
 
@@ -102,8 +102,8 @@ public class FilterConstraintTest {
 		List<FilterConstraint> leftFilterConstraint = new ArrayList<>();
 		List<FilterConstraint> rightFilterConstraint = new ArrayList<>();
 
-		leftFilterConstraint.add(getFilterConstraint("cn", "test1"));
-		rightFilterConstraint.add(getFilterConstraint("description", "test2"));
+		leftFilterConstraint.add(_getFilterConstraint("cn", "test1"));
+		rightFilterConstraint.add(_getFilterConstraint("description", "test2"));
 
 		List<FilterConstraint> filterConstraints =
 			FilterConstraint.getCombinations(
@@ -123,8 +123,8 @@ public class FilterConstraintTest {
 		List<FilterConstraint> leftFilterConstraint = new ArrayList<>();
 		List<FilterConstraint> rightFilterConstraint = new ArrayList<>();
 
-		leftFilterConstraint.add(getFilterConstraint("cn", "test1"));
-		rightFilterConstraint.add(getFilterConstraint("cn", "test2"));
+		leftFilterConstraint.add(_getFilterConstraint("cn", "test1"));
+		rightFilterConstraint.add(_getFilterConstraint("cn", "test2"));
 
 		List<FilterConstraint> filterConstraints =
 			FilterConstraint.getCombinations(
@@ -157,7 +157,7 @@ public class FilterConstraintTest {
 		List<FilterConstraint> filterConstraints =
 			FilterConstraint.getCombinations(
 				leftFilterConstraint,
-				Arrays.asList(getFilterConstraint("description", "test2")));
+				Arrays.asList(_getFilterConstraint("description", "test2")));
 
 		Assert.assertEquals(
 			filterConstraints.toString(), 0, filterConstraints.size());
@@ -168,7 +168,7 @@ public class FilterConstraintTest {
 		List<FilterConstraint> leftFilterConstraint = new ArrayList<>();
 		List<FilterConstraint> rightFilterConstraint = new ArrayList<>();
 
-		leftFilterConstraint.add(getFilterConstraint("cn", "test1"));
+		leftFilterConstraint.add(_getFilterConstraint("cn", "test1"));
 
 		List<FilterConstraint> filterConstraints =
 			FilterConstraint.getCombinations(
@@ -180,8 +180,8 @@ public class FilterConstraintTest {
 
 	@Test
 	public void testLeftAsteriskMerge() throws Exception {
-		FilterConstraint leftFilterConstraint = getFilterConstraint("cn", "*");
-		FilterConstraint rightFilterConstraint = getFilterConstraint(
+		FilterConstraint leftFilterConstraint = _getFilterConstraint("cn", "*");
+		FilterConstraint rightFilterConstraint = _getFilterConstraint(
 			"cn", "test");
 
 		Assert.assertFalse(leftFilterConstraint.merge(rightFilterConstraint));
@@ -191,9 +191,10 @@ public class FilterConstraintTest {
 
 	@Test
 	public void testRightAsteriskMerge() throws Exception {
-		FilterConstraint leftFilterConstraint = getFilterConstraint(
+		FilterConstraint leftFilterConstraint = _getFilterConstraint(
 			"cn", "test");
-		FilterConstraint rightFilterConstraint = getFilterConstraint("cn", "*");
+		FilterConstraint rightFilterConstraint = _getFilterConstraint(
+			"cn", "*");
 
 		Assert.assertFalse(leftFilterConstraint.merge(rightFilterConstraint));
 
@@ -202,9 +203,9 @@ public class FilterConstraintTest {
 
 	@Test
 	public void testSameValueMerge() throws Exception {
-		FilterConstraint leftFilterConstraint = getFilterConstraint(
+		FilterConstraint leftFilterConstraint = _getFilterConstraint(
 			"cn", "test");
-		FilterConstraint rightFilterConstraint = getFilterConstraint(
+		FilterConstraint rightFilterConstraint = _getFilterConstraint(
 			"cn", "test");
 
 		Assert.assertFalse(leftFilterConstraint.merge(rightFilterConstraint));
@@ -212,7 +213,7 @@ public class FilterConstraintTest {
 		Assert.assertEquals("test", leftFilterConstraint.getValue("cn"));
 	}
 
-	protected FilterConstraint getFilterConstraint(String name, String value) {
+	private FilterConstraint _getFilterConstraint(String name, String value) {
 		FilterConstraint filterConstraint = new FilterConstraint();
 
 		filterConstraint.addAttribute(name, value);

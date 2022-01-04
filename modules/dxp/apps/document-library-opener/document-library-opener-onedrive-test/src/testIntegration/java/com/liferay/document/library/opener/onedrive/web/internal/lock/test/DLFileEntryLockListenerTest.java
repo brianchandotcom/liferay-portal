@@ -73,8 +73,8 @@ public class DLFileEntryLockListenerTest {
 
 	@Test
 	public void testOnAfterExpireWithCancelCheckOutPolicy() throws Exception {
-		testWithOneDriveConfigurationDisabled(
-			() -> testWithCancelCheckOutAsPolicy(
+		_testWithOneDriveConfigurationDisabled(
+			() -> _testWithCancelCheckOutAsPolicy(
 				() -> {
 					FileEntry fileEntry = _dlAppLocalService.addFileEntry(
 						null, TestPropsValues.getUserId(), _group.getGroupId(),
@@ -106,8 +106,8 @@ public class DLFileEntryLockListenerTest {
 
 	@Test
 	public void testOnAfterExpireWithCheckInPolicy() throws Exception {
-		testWithOneDriveConfigurationDisabled(
-			() -> testWithCheckInAsPolicy(
+		_testWithOneDriveConfigurationDisabled(
+			() -> _testWithCheckInAsPolicy(
 				() -> {
 					FileEntry fileEntry = _dlAppLocalService.addFileEntry(
 						null, TestPropsValues.getUserId(), _group.getGroupId(),
@@ -139,7 +139,7 @@ public class DLFileEntryLockListenerTest {
 				}));
 	}
 
-	protected void testWithCancelCheckOutAsPolicy(
+	private void _testWithCancelCheckOutAsPolicy(
 			UnsafeRunnable<Exception> unsafeRunnable)
 		throws Exception {
 
@@ -151,7 +151,7 @@ public class DLFileEntryLockListenerTest {
 		}
 	}
 
-	protected void testWithCheckInAsPolicy(
+	private void _testWithCheckInAsPolicy(
 			UnsafeRunnable<Exception> unsafeRunnable)
 		throws Exception {
 
@@ -163,7 +163,7 @@ public class DLFileEntryLockListenerTest {
 		}
 	}
 
-	protected void testWithOneDriveConfigurationDisabled(
+	private void _testWithOneDriveConfigurationDisabled(
 			UnsafeRunnable<Exception> unsafeRunnable)
 		throws Exception {
 

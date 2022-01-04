@@ -40,7 +40,7 @@ public class KaleoDefinitionVersionModelListener
 
 		try {
 			_resourceLocalService.addModelResources(
-				kaleoDefinitionVersion, getServiceContext());
+				kaleoDefinitionVersion, _getServiceContext());
 		}
 		catch (PortalException portalException) {
 			throw new ModelListenerException(portalException);
@@ -60,7 +60,7 @@ public class KaleoDefinitionVersionModelListener
 		}
 	}
 
-	protected ServiceContext getServiceContext() {
+	private ServiceContext _getServiceContext() {
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 

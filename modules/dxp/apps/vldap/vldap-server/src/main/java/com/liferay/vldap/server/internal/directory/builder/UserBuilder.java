@@ -142,7 +142,7 @@ public class UserBuilder extends DirectoryBuilder {
 
 			String member = filterConstraint.getValue("member");
 
-			if (!putParams(filterConstraintParams, member)) {
+			if (!_putParams(filterConstraintParams, member)) {
 				continue;
 			}
 
@@ -266,7 +266,7 @@ public class UserBuilder extends DirectoryBuilder {
 		return users;
 	}
 
-	protected boolean putParams(Map<String, Object> params, String member)
+	private boolean _putParams(Map<String, Object> params, String member)
 		throws Exception {
 
 		if (member == null) {

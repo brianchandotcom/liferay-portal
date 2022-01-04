@@ -54,7 +54,7 @@ public class Archetyper {
 		throws Exception {
 
 		ArchetypeArtifactManager archetypeArtifactManager =
-			newArchetypeArtifactManager();
+			_newArchetypeArtifactManager();
 
 		ReflectionUtil.setFieldValue(
 			_loggerField, archetypeArtifactManager, _logger);
@@ -97,10 +97,6 @@ public class Archetyper {
 		return defaultVelocityComponent;
 	}
 
-	protected ArchetypeArtifactManager newArchetypeArtifactManager() {
-		return new ArchetyperArchetypeArtifactManager(_archetypesDirs);
-	}
-
 	private ArchetypeGenerator _createArchetypeGenerator() throws Exception {
 		ArchetypeGenerator archetypeGenerator = new DefaultArchetypeGenerator();
 
@@ -141,6 +137,10 @@ public class Archetyper {
 			filesetArchetypeGenerator, createVelocityComponent());
 
 		return filesetArchetypeGenerator;
+	}
+
+	private ArchetypeArtifactManager _newArchetypeArtifactManager() {
+		return new ArchetyperArchetypeArtifactManager(_archetypesDirs);
 	}
 
 	private static final Logger _logger = new ArchetyperLogger();

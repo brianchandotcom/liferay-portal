@@ -46,16 +46,16 @@ public class JdbcReportFillManager extends BaseReportFillManager {
 		ReportRequestContext reportRequestContext =
 			reportRequest.getReportRequestContext();
 
-		setProperty(
+		_setProperty(
 			properties, "driverClassName", reportRequestContext,
 			ReportRequestContext.JDBC_DRIVER_CLASS);
-		setProperty(
+		_setProperty(
 			properties, "password", reportRequestContext,
 			ReportRequestContext.JDBC_PASSWORD);
-		setProperty(
+		_setProperty(
 			properties, "url", reportRequestContext,
 			ReportRequestContext.JDBC_URL);
-		setProperty(
+		_setProperty(
 			properties, "username", reportRequestContext,
 			ReportRequestContext.JDBC_USER_NAME);
 
@@ -65,7 +65,7 @@ public class JdbcReportFillManager extends BaseReportFillManager {
 		return dataSource.getConnection();
 	}
 
-	protected void setProperty(
+	private void _setProperty(
 		Properties properties, String propertyKey,
 		ReportRequestContext reportRequestContext, String attributeKey) {
 

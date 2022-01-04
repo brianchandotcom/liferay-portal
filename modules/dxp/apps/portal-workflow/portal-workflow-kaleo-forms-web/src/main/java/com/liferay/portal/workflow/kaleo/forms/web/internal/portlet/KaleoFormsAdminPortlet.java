@@ -172,9 +172,9 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 		throws IOException, PortletException {
 
 		try {
-			setDisplayContext(renderRequest, renderResponse);
+			_setDisplayContext(renderRequest, renderResponse);
 
-			renderKaleoProcess(renderRequest, renderResponse);
+			_renderKaleoProcess(renderRequest, renderResponse);
 		}
 		catch (Exception exception) {
 			if (exception instanceof NoSuchKaleoProcessException ||
@@ -200,13 +200,13 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 			String resourceID = resourceRequest.getResourceID();
 
 			if (Objects.equals(resourceID, "kaleoDraftDefinitions")) {
-				serveKaleoDraftDefinitions(resourceRequest, resourceResponse);
+				_serveKaleoDraftDefinitions(resourceRequest, resourceResponse);
 			}
 			else if (Objects.equals(resourceID, "kaleoProcess")) {
-				serveKaleoProcess(resourceRequest, resourceResponse);
+				_serveKaleoProcess(resourceRequest, resourceResponse);
 			}
 			else if (Objects.equals(resourceID, "saveInPortletSession")) {
-				saveInPortletSession(resourceRequest, resourceResponse);
+				_saveInPortletSession(resourceRequest, resourceResponse);
 			}
 		}
 		catch (IOException ioException) {
@@ -246,6 +246,9 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 		}
 	}
 
+	@Reference
+	protected StorageEngine storageEngine;
+
 	/**
 	 * Returns the workflow instance link ID associated with the company ID,
 	 * group ID, and DDL record ID.
@@ -256,7 +259,7 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 	 * @return the primary key of the workflow instance link
 	 * @throws Exception if an exception occurred
 	 */
-	protected long getDDLRecordWorkflowInstanceLinkId(
+	private long _getDDLRecordWorkflowInstanceLinkId(
 			long companyId, long groupId, long ddlRecordId)
 		throws Exception {
 
@@ -276,7 +279,7 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 	 * @return the DDM form
 	 * @throws Exception if an exception occurred
 	 */
-	protected DDMForm getDDMForm(ActionRequest actionRequest) throws Exception {
+	private DDMForm _getDDMForm(ActionRequest actionRequest) throws Exception {
 		String definition = ParamUtil.getString(actionRequest, "definition");
 
 		DDMFormDeserializer ddmFormDeserializer =
@@ -302,7 +305,7 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 	 * @return the name value in the XML content, or the default name if the XML
 	 *         content does not contain a name
 	 */
-	protected String getName(String content, String defaultName) {
+	private String _getName(String content, String defaultName) {
 		if (Validator.isNull(content)) {
 			return defaultName;
 		}
@@ -332,7 +335,7 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 	 * @param  renderResponse the render response
 	 * @throws Exception if an exception occurred
 	 */
-	protected void renderKaleoProcess(
+	private void _renderKaleoProcess(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws Exception {
 
@@ -379,7 +382,7 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 	 *
 	 * @param actionRequest the request from which to get the request parameters
 	 */
-	protected void saveInPortletSession(
+	private void _saveInPortletSession(
 		ActionRequest actionRequest,
 		KaleoDefinitionVersion kaleoDefinitionVersion) {
 
@@ -398,7 +401,7 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 	 * @param  resourceRequest the resource request
 	 * @param  resourceResponse the resource response
 	 */
-	protected void saveInPortletSession(
+	private void _saveInPortletSession(
 		ResourceRequest resourceRequest, ResourceResponse resourceResponse) {
 
 		Map<String, String[]> parameterMap = resourceRequest.getParameterMap();
@@ -437,7 +440,7 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 	 * @param  resourceResponse the resource response
 	 * @throws Exception if an exception occurred
 	 */
-	protected void serveKaleoDraftDefinitions(
+	private void _serveKaleoDraftDefinitions(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
@@ -483,7 +486,7 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 	 * @param  resourceResponse the resource response
 	 * @throws Exception if an exception occurred
 	 */
-	protected void serveKaleoProcess(
+	private void _serveKaleoProcess(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
@@ -532,7 +535,7 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 	 * @param renderRequest the render request
 	 * @param renderResponse the render response
 	 */
-	protected void setDisplayContext(
+	private void _setDisplayContext(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		KaleoFormsAdminDisplayContext kaleoFormsAdminDisplayContext =
@@ -544,9 +547,6 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, kaleoFormsAdminDisplayContext);
 	}
-
-	@Reference
-	protected StorageEngine storageEngine;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		KaleoFormsAdminPortlet.class);

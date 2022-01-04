@@ -110,7 +110,7 @@ public class XMLSecurityTest extends BaseSamlTestCase {
 
 	@Test(expected = MessageDecodingException.class)
 	public void testXMLBombBillionLaughs() throws Exception {
-		String redirectURL = getAuthnRequestRedirectURL();
+		String redirectURL = _getAuthnRequestRedirectURL();
 
 		String authnRequestXML = OpenSamlUtil.marshall(
 			getAuthnRequest(redirectURL));
@@ -143,7 +143,7 @@ public class XMLSecurityTest extends BaseSamlTestCase {
 
 	@Test(expected = MessageDecodingException.class)
 	public void testXMLBombQuadraticBlowup() throws Exception {
-		String redirectURL = getAuthnRequestRedirectURL();
+		String redirectURL = _getAuthnRequestRedirectURL();
 
 		String authnRequestXML = OpenSamlUtil.marshall(
 			getAuthnRequest(redirectURL));
@@ -177,7 +177,7 @@ public class XMLSecurityTest extends BaseSamlTestCase {
 
 	@Test(expected = MessageDecodingException.class)
 	public void testXXEGeneralEntities1() throws Exception {
-		String redirectURL = getAuthnRequestRedirectURL();
+		String redirectURL = _getAuthnRequestRedirectURL();
 
 		String authnRequestXML = OpenSamlUtil.marshall(
 			getAuthnRequest(redirectURL));
@@ -197,7 +197,7 @@ public class XMLSecurityTest extends BaseSamlTestCase {
 
 	@Test(expected = MessageDecodingException.class)
 	public void testXXEGeneralEntities2() throws Exception {
-		String redirectURL = getAuthnRequestRedirectURL();
+		String redirectURL = _getAuthnRequestRedirectURL();
 
 		String authnRequestXML = OpenSamlUtil.marshall(
 			getAuthnRequest(redirectURL));
@@ -217,7 +217,7 @@ public class XMLSecurityTest extends BaseSamlTestCase {
 
 	@Test(expected = MessageDecodingException.class)
 	public void testXXEParameterEntities() throws Exception {
-		String redirectURL = getAuthnRequestRedirectURL();
+		String redirectURL = _getAuthnRequestRedirectURL();
 
 		String authnRequestXML = OpenSamlUtil.marshall(
 			getAuthnRequest(redirectURL));
@@ -237,7 +237,7 @@ public class XMLSecurityTest extends BaseSamlTestCase {
 
 		Credential credential = metadataManagerImpl.getSigningCredential();
 
-		String encodedAuthnRequest = encodeRequest(authnRequestXML);
+		String encodedAuthnRequest = _encodeRequest(authnRequestXML);
 
 		MockHttpServletRequest mockHttpServletRequest =
 			getMockHttpServletRequest(redirectURL);
@@ -247,7 +247,7 @@ public class XMLSecurityTest extends BaseSamlTestCase {
 
 		mockHttpServletRequest.setParameter("SAMLRequest", encodedAuthnRequest);
 
-		String signature = generateSignature(
+		String signature = _generateSignature(
 			credential, mockHttpServletRequest.getParameter("SigAlg"),
 			mockHttpServletRequest.getQueryString());
 
@@ -255,38 +255,6 @@ public class XMLSecurityTest extends BaseSamlTestCase {
 
 		_webSsoProfileImpl.decodeAuthnRequest(
 			mockHttpServletRequest, new MockHttpServletResponse());
-	}
-
-	protected String encodeRequest(String requestXML) throws Exception {
-		Base64.Encoder encoder = _getEncoder();
-
-		ByteArrayOutputStream byteArrayOutputStream =
-			new ByteArrayOutputStream();
-
-		Deflater deflater = new Deflater(Deflater.DEFLATED, true);
-
-		DeflaterOutputStream deflaterOutputStream = new DeflaterOutputStream(
-			byteArrayOutputStream, deflater);
-
-		deflaterOutputStream.write(requestXML.getBytes("UTF-8"));
-
-		deflaterOutputStream.finish();
-
-		return encoder.encodeToString(byteArrayOutputStream.toByteArray());
-	}
-
-	protected String generateSignature(
-			Credential signingCredential, String algorithmURI,
-			String queryString)
-		throws Exception {
-
-		Base64.Encoder encoder = _getEncoder();
-
-		byte[] signatureBytes = SigningUtil.sign(
-			signingCredential, JCEMapper.translateURItoJCEID(algorithmURI),
-			false, queryString.getBytes("UTF-8"));
-
-		return encoder.encodeToString(signatureBytes);
 	}
 
 	protected AuthnRequest getAuthnRequest(String redirectURL)
@@ -309,7 +277,39 @@ public class XMLSecurityTest extends BaseSamlTestCase {
 		return inboundMessageContext.getMessage();
 	}
 
-	protected String getAuthnRequestRedirectURL() throws Exception {
+	private String _encodeRequest(String requestXML) throws Exception {
+		Base64.Encoder encoder = _getEncoder();
+
+		ByteArrayOutputStream byteArrayOutputStream =
+			new ByteArrayOutputStream();
+
+		Deflater deflater = new Deflater(Deflater.DEFLATED, true);
+
+		DeflaterOutputStream deflaterOutputStream = new DeflaterOutputStream(
+			byteArrayOutputStream, deflater);
+
+		deflaterOutputStream.write(requestXML.getBytes("UTF-8"));
+
+		deflaterOutputStream.finish();
+
+		return encoder.encodeToString(byteArrayOutputStream.toByteArray());
+	}
+
+	private String _generateSignature(
+			Credential signingCredential, String algorithmURI,
+			String queryString)
+		throws Exception {
+
+		Base64.Encoder encoder = _getEncoder();
+
+		byte[] signatureBytes = SigningUtil.sign(
+			signingCredential, JCEMapper.translateURItoJCEID(algorithmURI),
+			false, queryString.getBytes("UTF-8"));
+
+		return encoder.encodeToString(signatureBytes);
+	}
+
+	private String _getAuthnRequestRedirectURL() throws Exception {
 		SamlSpIdpConnectionLocalService samlSpIdpConnectionLocalService =
 			getMockPortletService(
 				SamlSpIdpConnectionLocalServiceUtil.class,

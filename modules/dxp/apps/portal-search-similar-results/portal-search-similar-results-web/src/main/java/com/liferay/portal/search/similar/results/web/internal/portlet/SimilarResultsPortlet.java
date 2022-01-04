@@ -90,18 +90,22 @@ public class SimilarResultsPortlet extends MVCPortlet {
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
-			buildDisplayContext(
+			_buildDisplayContext(
 				portletSharedSearchResponse, renderRequest, renderResponse));
 
 		super.render(renderRequest, renderResponse);
 	}
 
-	protected SimilarResultsDisplayContext buildDisplayContext(
+	@Reference
+	protected SimilarResultsContributorsRegistry
+		similarResultsContributorsRegistry;
+
+	private SimilarResultsDisplayContext _buildDisplayContext(
 		PortletSharedSearchResponse portletSharedSearchResponse,
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		SimilarResultsDisplayContext similarResultsDisplayContext =
-			createSimilarResultsDisplayContext(renderRequest);
+			_createSimilarResultsDisplayContext(renderRequest);
 
 		SimilarResultsPortletPreferences similarResultsPortletPreferences =
 			new SimilarResultsPortletPreferencesImpl(
@@ -122,7 +126,7 @@ public class SimilarResultsPortlet extends MVCPortlet {
 
 		List<Document> legacyDocuments = searchResponse.getDocuments71();
 
-		legacyDocuments = excludingDocumentByUID(
+		legacyDocuments = _excludingDocumentByUID(
 			renderRequest, legacyDocuments);
 
 		int maxItemDisplay =
@@ -144,15 +148,15 @@ public class SimilarResultsPortlet extends MVCPortlet {
 		SimilarResultsRoute similarResultsRoute = optional.orElse(null);
 
 		similarResultsDisplayContext.setSimilarResultsDocumentDisplayContexts(
-			buildSimilarResultsDocumentDisplayContexts(
+			_buildSimilarResultsDocumentDisplayContexts(
 				legacyDocuments, similarResultsRoute, renderRequest,
 				renderResponse, themeDisplay));
 
 		return similarResultsDisplayContext;
 	}
 
-	protected List<SimilarResultsDocumentDisplayContext>
-		buildSimilarResultsDocumentDisplayContexts(
+	private List<SimilarResultsDocumentDisplayContext>
+		_buildSimilarResultsDocumentDisplayContexts(
 			List<Document> documents, SimilarResultsRoute similarResultsRoute,
 			RenderRequest renderRequest, RenderResponse renderResponse,
 			ThemeDisplay themeDisplay) {
@@ -162,7 +166,7 @@ public class SimilarResultsPortlet extends MVCPortlet {
 
 		for (Document document : documents) {
 			SimilarResultsDocumentDisplayContext
-				similarResultsDocumentDisplayContext = doBuildSummary(
+				similarResultsDocumentDisplayContext = _doBuildSummary(
 					document, similarResultsRoute, renderRequest,
 					renderResponse, themeDisplay);
 
@@ -177,19 +181,19 @@ public class SimilarResultsPortlet extends MVCPortlet {
 		return similarResultsDocumentDisplayContexts;
 	}
 
-	protected SimilarResultsDisplayContext createSimilarResultsDisplayContext(
+	private SimilarResultsDisplayContext _createSimilarResultsDisplayContext(
 		RenderRequest renderRequest) {
 
 		try {
 			return new SimilarResultsDisplayContext(
-				getHttpServletRequest(renderRequest));
+				_getHttpServletRequest(renderRequest));
 		}
 		catch (ConfigurationException configurationException) {
 			throw new RuntimeException(configurationException);
 		}
 	}
 
-	protected SimilarResultsDocumentDisplayContext doBuildSummary(
+	private SimilarResultsDocumentDisplayContext _doBuildSummary(
 		Document document, SimilarResultsRoute similarResultsRoute,
 		RenderRequest renderRequest, RenderResponse renderResponse,
 		ThemeDisplay themeDisplay) {
@@ -232,7 +236,7 @@ public class SimilarResultsPortlet extends MVCPortlet {
 		return similarResultsDocumentDisplayContextBuilder.build();
 	}
 
-	protected List<Document> excludingDocumentByUID(
+	private List<Document> _excludingDocumentByUID(
 		RenderRequest renderRequest, List<Document> documents71) {
 
 		String uid = (String)renderRequest.getAttribute(Field.UID);
@@ -257,7 +261,7 @@ public class SimilarResultsPortlet extends MVCPortlet {
 		return legacyDocuments;
 	}
 
-	protected HttpServletRequest getHttpServletRequest(
+	private HttpServletRequest _getHttpServletRequest(
 		RenderRequest renderRequest) {
 
 		LiferayPortletRequest liferayPortletRequest =
@@ -265,10 +269,6 @@ public class SimilarResultsPortlet extends MVCPortlet {
 
 		return liferayPortletRequest.getHttpServletRequest();
 	}
-
-	@Reference
-	protected SimilarResultsContributorsRegistry
-		similarResultsContributorsRegistry;
 
 	private boolean _isReplyMBMessageDocument(Document legacyDocument) {
 		String className = legacyDocument.get(Field.ENTRY_CLASS_NAME);

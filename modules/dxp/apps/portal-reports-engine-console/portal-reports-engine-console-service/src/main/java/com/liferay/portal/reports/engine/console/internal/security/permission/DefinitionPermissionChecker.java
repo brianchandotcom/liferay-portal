@@ -82,10 +82,6 @@ public class DefinitionPermissionChecker implements BaseModelPermissionChecker {
 			permissionChecker, primaryKey, actionId);
 	}
 
-	protected void setDefinitionLocalService(
-		DefinitionLocalService definitionLocalService) {
-	}
-
 	@Reference(
 		target = "(model.class.name=com.liferay.portal.reports.engine.console.model.Definition)",
 		unbind = "-"
@@ -94,6 +90,10 @@ public class DefinitionPermissionChecker implements BaseModelPermissionChecker {
 		ModelResourcePermission<Definition> modelResourcePermission) {
 
 		_definitionModelResourcePermission = modelResourcePermission;
+	}
+
+	private void _setDefinitionLocalService(
+		DefinitionLocalService definitionLocalService) {
 	}
 
 	private static ModelResourcePermission<Definition>

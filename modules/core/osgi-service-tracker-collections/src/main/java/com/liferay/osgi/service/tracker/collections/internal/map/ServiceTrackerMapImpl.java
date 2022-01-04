@@ -89,10 +89,10 @@ public class ServiceTrackerMapImpl<K, SR, TS, R>
 
 	@Override
 	public Collection<R> values() {
-		return Collections.unmodifiableCollection(getServices());
+		return Collections.unmodifiableCollection(_getServices());
 	}
 
-	protected Collection<R> getServices() {
+	private Collection<R> _getServices() {
 		Collection<R> services = new ArrayList<>();
 
 		for (ServiceTrackerBucket<SR, TS, R> serviceTrackerBucket :

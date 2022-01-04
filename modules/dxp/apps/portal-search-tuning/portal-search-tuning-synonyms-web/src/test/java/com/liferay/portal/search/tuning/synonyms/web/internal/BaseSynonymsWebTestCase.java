@@ -126,81 +126,15 @@ public abstract class BaseSynonymsWebTestCase {
 		return Mockito.mock(IndexResponse.class);
 	}
 
-	protected void setUpLayoutIsTypeControlPanel(
-		Layout layout, boolean returnValue) {
-
-		Mockito.doReturn(
-			returnValue
-		).when(
-			layout
-		).isTypeControlPanel();
-	}
-
-	protected void setUpLayoutTypePortletHasPortletId(
-		LayoutTypePortlet layoutTypePortlet, boolean returnValue) {
-
-		Mockito.doReturn(
-			returnValue
-		).when(
-			layoutTypePortlet
-		).hasPortletId(
-			Mockito.anyString()
-		);
-	}
-
 	protected void setUpPortal(HttpServletRequest httpServletRequest) {
 		setUpHttpServletRequestAttribute(
 			httpServletRequest, WebKeys.THEME_DISPLAY,
 			Mockito.mock(ThemeDisplay.class));
 
-		setUpPortalGetCurrentURL();
-		setUpPortalGetHttpServletRequest(httpServletRequest);
-		setUpPortalGetLiferayPortletRequest();
-		setUpPortalGetOriginalServletRequest(httpServletRequest);
-	}
-
-	protected void setUpPortalGetCurrentURL() {
-		Mockito.doReturn(
-			"currentURL"
-		).when(
-			portal
-		).getCurrentURL(
-			Matchers.any(HttpServletRequest.class)
-		);
-	}
-
-	protected void setUpPortalGetHttpServletRequest(
-		HttpServletRequest httpServletRequest) {
-
-		Mockito.doReturn(
-			httpServletRequest
-		).when(
-			portal
-		).getHttpServletRequest(
-			Matchers.any(PortletRequest.class)
-		);
-	}
-
-	protected void setUpPortalGetLiferayPortletRequest() {
-		Mockito.doReturn(
-			Mockito.mock(LiferayPortletRequest.class)
-		).when(
-			portal
-		).getLiferayPortletRequest(
-			Matchers.any(PortletRequest.class)
-		);
-	}
-
-	protected void setUpPortalGetOriginalServletRequest(
-		HttpServletRequest httpServletRequest) {
-
-		Mockito.doReturn(
-			httpServletRequest
-		).when(
-			portal
-		).getOriginalServletRequest(
-			Matchers.any(HttpServletRequest.class)
-		);
+		_setUpPortalGetCurrentURL();
+		_setUpPortalGetHttpServletRequest(httpServletRequest);
+		_setUpPortalGetLiferayPortletRequest();
+		_setUpPortalGetOriginalServletRequest(httpServletRequest);
 	}
 
 	protected void setUpPortalUtil() {
@@ -240,36 +174,24 @@ public abstract class BaseSynonymsWebTestCase {
 	protected void setUpPortletRequest(PortletRequest portletRequest) {
 		Layout layout = Mockito.mock(Layout.class);
 
-		setUpLayoutIsTypeControlPanel(layout, true);
+		_setUpLayoutIsTypeControlPanel(layout, true);
 
 		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
 
-		setUpThemeDisplayGetLayout(themeDisplay, layout);
+		_setUpThemeDisplayGetLayout(themeDisplay, layout);
 
 		LayoutTypePortlet layoutTypePortlet = Mockito.mock(
 			LayoutTypePortlet.class);
 
-		setUpLayoutTypePortletHasPortletId(layoutTypePortlet, true);
+		_setUpLayoutTypePortletHasPortletId(layoutTypePortlet, true);
 
-		setUpThemeDisplayGetLayoutTypePortlet(themeDisplay, layoutTypePortlet);
+		_setUpThemeDisplayGetLayoutTypePortlet(themeDisplay, layoutTypePortlet);
 
-		setUpPortletRequestGetAttribute(
+		_setUpPortletRequestGetAttribute(
 			portletRequest, Mockito.mock(PortletConfig.class),
 			JavaConstants.JAVAX_PORTLET_CONFIG);
-		setUpPortletRequestGetAttribute(
+		_setUpPortletRequestGetAttribute(
 			portletRequest, themeDisplay, WebKeys.THEME_DISPLAY);
-	}
-
-	protected void setUpPortletRequestGetAttribute(
-		PortletRequest portletRequest, Object object, String keyValue) {
-
-		Mockito.doReturn(
-			object
-		).when(
-			portletRequest
-		).getAttribute(
-			Matchers.eq(keyValue)
-		);
 	}
 
 	@SuppressWarnings("deprecation")
@@ -342,7 +264,8 @@ public abstract class BaseSynonymsWebTestCase {
 			searchHits
 		).getTotalHits();
 
-		SearchSearchResponse searchSearchResponse = setUpSearchSearchResponse();
+		SearchSearchResponse searchSearchResponse =
+			_setUpSearchSearchResponse();
 
 		Mockito.doReturn(
 			searchHits
@@ -387,10 +310,6 @@ public abstract class BaseSynonymsWebTestCase {
 		).getSearchHits();
 
 		return searchHits;
-	}
-
-	protected SearchSearchResponse setUpSearchSearchResponse() {
-		return Mockito.mock(SearchSearchResponse.class);
 	}
 
 	protected void setUpSynonymSetFilterNameHolder(String[] synonyms) {
@@ -462,26 +381,6 @@ public abstract class BaseSynonymsWebTestCase {
 		);
 	}
 
-	protected void setUpThemeDisplayGetLayout(
-		ThemeDisplay themeDisplay, Layout layout) {
-
-		Mockito.doReturn(
-			layout
-		).when(
-			themeDisplay
-		).getLayout();
-	}
-
-	protected void setUpThemeDisplayGetLayoutTypePortlet(
-		ThemeDisplay themeDisplay, LayoutTypePortlet layoutTypePortlet) {
-
-		Mockito.doReturn(
-			layoutTypePortlet
-		).when(
-			themeDisplay
-		).getLayoutTypePortlet();
-	}
-
 	@Mock
 	protected Portal portal;
 
@@ -502,5 +401,107 @@ public abstract class BaseSynonymsWebTestCase {
 
 	@Mock
 	protected SynonymSetStorageAdapter synonymSetStorageAdapter;
+
+	private void _setUpLayoutIsTypeControlPanel(
+		Layout layout, boolean returnValue) {
+
+		Mockito.doReturn(
+			returnValue
+		).when(
+			layout
+		).isTypeControlPanel();
+	}
+
+	private void _setUpLayoutTypePortletHasPortletId(
+		LayoutTypePortlet layoutTypePortlet, boolean returnValue) {
+
+		Mockito.doReturn(
+			returnValue
+		).when(
+			layoutTypePortlet
+		).hasPortletId(
+			Mockito.anyString()
+		);
+	}
+
+	private void _setUpPortalGetCurrentURL() {
+		Mockito.doReturn(
+			"currentURL"
+		).when(
+			portal
+		).getCurrentURL(
+			Matchers.any(HttpServletRequest.class)
+		);
+	}
+
+	private void _setUpPortalGetHttpServletRequest(
+		HttpServletRequest httpServletRequest) {
+
+		Mockito.doReturn(
+			httpServletRequest
+		).when(
+			portal
+		).getHttpServletRequest(
+			Matchers.any(PortletRequest.class)
+		);
+	}
+
+	private void _setUpPortalGetLiferayPortletRequest() {
+		Mockito.doReturn(
+			Mockito.mock(LiferayPortletRequest.class)
+		).when(
+			portal
+		).getLiferayPortletRequest(
+			Matchers.any(PortletRequest.class)
+		);
+	}
+
+	private void _setUpPortalGetOriginalServletRequest(
+		HttpServletRequest httpServletRequest) {
+
+		Mockito.doReturn(
+			httpServletRequest
+		).when(
+			portal
+		).getOriginalServletRequest(
+			Matchers.any(HttpServletRequest.class)
+		);
+	}
+
+	private void _setUpPortletRequestGetAttribute(
+		PortletRequest portletRequest, Object object, String keyValue) {
+
+		Mockito.doReturn(
+			object
+		).when(
+			portletRequest
+		).getAttribute(
+			Matchers.eq(keyValue)
+		);
+	}
+
+	private SearchSearchResponse _setUpSearchSearchResponse() {
+		return Mockito.mock(SearchSearchResponse.class);
+	}
+
+	private void _setUpThemeDisplayGetLayout(
+		ThemeDisplay themeDisplay, Layout layout) {
+
+		Mockito.doReturn(
+			layout
+		).when(
+			themeDisplay
+		).getLayout();
+	}
+
+	private void _setUpThemeDisplayGetLayoutTypePortlet(
+		ThemeDisplay themeDisplay, LayoutTypePortlet layoutTypePortlet) {
+
+		Mockito.doReturn(
+			layoutTypePortlet
+		).when(
+			themeDisplay
+		).getLayoutTypePortlet();
+	}
 
 }

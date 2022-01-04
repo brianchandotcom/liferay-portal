@@ -100,9 +100,9 @@ public class SegmentsExperimentDisplayContext {
 		}
 
 		_data = HashMapBuilder.<String, Object>put(
-			"context", getContext()
+			"context", _getContext()
 		).put(
-			"props", getProps()
+			"props", _getProps()
 		).build();
 
 		return _data;
@@ -110,44 +110,6 @@ public class SegmentsExperimentDisplayContext {
 
 	public String getLiferayAnalyticsURL(long companyId) {
 		return PrefsPropsUtil.getString(companyId, "liferayAnalyticsURL");
-	}
-
-	protected Map<String, Object> getContext() throws PortalException {
-		return HashMapBuilder.<String, Object>put(
-			"contentPageEditorNamespace",
-			_getContentPageEditorPortletNamespace()
-		).put(
-			"endpoints", _getEndpoints()
-		).put(
-			"imagesPath", _getImagesPath()
-		).put(
-			"namespace", _getSegmentsExperimentPortletNamespace()
-		).put(
-			"page", _getPage()
-		).build();
-	}
-
-	protected Map<String, Object> getProps() throws PortalException {
-		Locale locale = _themeDisplay.getLocale();
-
-		return HashMapBuilder.<String, Object>put(
-			"historySegmentsExperiments",
-			_getHistorySegmentsExperimentsJSONArray(locale)
-		).put(
-			"initialSegmentsVariants",
-			_getSegmentsExperimentRelsJSONArray(locale)
-		).put(
-			"segmentsExperiences", _getSegmentsExperiencesJSONArray(locale)
-		).put(
-			"segmentsExperiment", _getSegmentsExperimentJSONObject(locale)
-		).put(
-			"segmentsExperimentGoals",
-			_getSegmentsExperimentGoalsJSONArray(locale)
-		).put(
-			"selectedSegmentsExperienceId", _getSelectedSegmentsExperienceId()
-		).put(
-			"winnerSegmentsVariantId", _getWinnerSegmentsExperienceId()
-		).build();
 	}
 
 	private Optional<SegmentsExperiment> _getActiveSegmentsExperimentOptional(
@@ -182,6 +144,21 @@ public class SegmentsExperimentDisplayContext {
 	private String _getContentPageEditorPortletNamespace() {
 		return _portal.getPortletNamespace(
 			ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET);
+	}
+
+	private Map<String, Object> _getContext() throws PortalException {
+		return HashMapBuilder.<String, Object>put(
+			"contentPageEditorNamespace",
+			_getContentPageEditorPortletNamespace()
+		).put(
+			"endpoints", _getEndpoints()
+		).put(
+			"imagesPath", _getImagesPath()
+		).put(
+			"namespace", _getSegmentsExperimentPortletNamespace()
+		).put(
+			"page", _getPage()
+		).build();
 	}
 
 	private String _getCreateSegmentsExperimentURL() {
@@ -321,6 +298,29 @@ public class SegmentsExperimentDisplayContext {
 
 				return layout.getType();
 			}
+		).build();
+	}
+
+	private Map<String, Object> _getProps() throws PortalException {
+		Locale locale = _themeDisplay.getLocale();
+
+		return HashMapBuilder.<String, Object>put(
+			"historySegmentsExperiments",
+			_getHistorySegmentsExperimentsJSONArray(locale)
+		).put(
+			"initialSegmentsVariants",
+			_getSegmentsExperimentRelsJSONArray(locale)
+		).put(
+			"segmentsExperiences", _getSegmentsExperiencesJSONArray(locale)
+		).put(
+			"segmentsExperiment", _getSegmentsExperimentJSONObject(locale)
+		).put(
+			"segmentsExperimentGoals",
+			_getSegmentsExperimentGoalsJSONArray(locale)
+		).put(
+			"selectedSegmentsExperienceId", _getSelectedSegmentsExperienceId()
+		).put(
+			"winnerSegmentsVariantId", _getWinnerSegmentsExperienceId()
 		).build();
 	}
 

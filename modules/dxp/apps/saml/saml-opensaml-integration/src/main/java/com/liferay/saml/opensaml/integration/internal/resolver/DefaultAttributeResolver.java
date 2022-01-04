@@ -81,65 +81,65 @@ public class DefaultAttributeResolver implements AttributeResolver {
 			if (attributeName.startsWith("expando:")) {
 				attributeName = attributeName.substring(8);
 
-				addExpandoAttribute(
+				_addExpandoAttribute(
 					user, attributeResolverSAMLContext, attributePublisher,
 					attributeName, namespaceEnabled);
 			}
 			else if (attributeName.equals("groups")) {
-				addGroupsAttribute(
+				_addGroupsAttribute(
 					user, attributeResolverSAMLContext, attributePublisher,
 					attributeName, namespaceEnabled);
 			}
 			else if (attributeName.startsWith("map:")) {
 				attributeName = attributeName.substring(4);
 
-				addMapAttribute(
+				_addMapAttribute(
 					user, attributeResolverSAMLContext, attributePublisher,
 					attributeName, namespaceEnabled);
 			}
 			else if (attributeName.equals("organizations")) {
-				addOrganizationsAttribute(
+				_addOrganizationsAttribute(
 					user, attributeResolverSAMLContext, attributePublisher,
 					attributeName, namespaceEnabled);
 			}
 			else if (attributeName.equals("organizationRoles")) {
-				addOrganizationRolesAttribute(
+				_addOrganizationRolesAttribute(
 					user, attributeResolverSAMLContext, attributePublisher,
 					attributeName, namespaceEnabled);
 			}
 			else if (attributeName.equals("roles")) {
-				addRolesAttribute(
+				_addRolesAttribute(
 					user, attributeResolverSAMLContext, attributePublisher,
 					attributeName, namespaceEnabled);
 			}
 			else if (attributeName.startsWith("static:")) {
 				attributeName = attributeName.substring(7);
 
-				addStaticAttribute(
+				_addStaticAttribute(
 					user, attributeResolverSAMLContext, attributePublisher,
 					attributeName, namespaceEnabled);
 			}
 			else if (attributeName.equals("siteRoles") ||
 					 attributeName.equals("userGroupRoles")) {
 
-				addSiteRolesAttribute(
+				_addSiteRolesAttribute(
 					user, attributeResolverSAMLContext, attributePublisher,
 					attributeName, namespaceEnabled);
 			}
 			else if (attributeName.equals("userGroups")) {
-				addUserGroupsAttribute(
+				_addUserGroupsAttribute(
 					user, attributeResolverSAMLContext, attributePublisher,
 					attributeName, namespaceEnabled);
 			}
 			else {
-				addUserAttribute(
+				_addUserAttribute(
 					user, attributeResolverSAMLContext, attributePublisher,
 					attributeName, namespaceEnabled);
 			}
 		}
 
-		if (isPeerSalesForce(entityId)) {
-			addSalesForceAttributes(
+		if (_isPeerSalesForce(entityId)) {
+			_addSalesForceAttributes(
 				attributeResolverSAMLContext, attributePublisher);
 		}
 	}
@@ -173,7 +173,11 @@ public class DefaultAttributeResolver implements AttributeResolver {
 		_userGroupRoleLocalService = userGroupRoleLocalService;
 	}
 
-	protected void addExpandoAttribute(
+	protected String[] getAttributeNames(String entityId) {
+		return _metadataManager.getAttributeNames(entityId);
+	}
+
+	private void _addExpandoAttribute(
 		User user, AttributeResolverSAMLContext attributeResolverSAMLContext,
 		AttributePublisher attributePublisher, String attributeName,
 		boolean namespaceEnabled) {
@@ -199,7 +203,7 @@ public class DefaultAttributeResolver implements AttributeResolver {
 		}
 	}
 
-	protected void addGroupsAttribute(
+	private void _addGroupsAttribute(
 		User user, AttributeResolverSAMLContext attributeResolverSAMLContext,
 		AttributePublisher attributePublisher, String attributeName,
 		boolean namespaceEnabled) {
@@ -249,7 +253,7 @@ public class DefaultAttributeResolver implements AttributeResolver {
 		}
 	}
 
-	protected void addMapAttribute(
+	private void _addMapAttribute(
 		User user, AttributeResolverSAMLContext attributeResolverSAMLContext,
 		AttributePublisher attributePublisher, String attributeName,
 		boolean namespaceEnabled) {
@@ -278,7 +282,7 @@ public class DefaultAttributeResolver implements AttributeResolver {
 		}
 	}
 
-	protected void addOrganizationRolesAttribute(
+	private void _addOrganizationRolesAttribute(
 		User user, AttributeResolverSAMLContext attributeResolverSAMLContext,
 		AttributePublisher attributePublisher, String attributeName,
 		boolean namespaceEnabled) {
@@ -348,7 +352,7 @@ public class DefaultAttributeResolver implements AttributeResolver {
 		}
 	}
 
-	protected void addOrganizationsAttribute(
+	private void _addOrganizationsAttribute(
 		User user, AttributeResolverSAMLContext attributeResolverSAMLContext,
 		AttributePublisher publisher, String attributeName,
 		boolean namespaceEnabled) {
@@ -398,7 +402,7 @@ public class DefaultAttributeResolver implements AttributeResolver {
 		}
 	}
 
-	protected void addRolesAttribute(
+	private void _addRolesAttribute(
 		User user, AttributeResolverSAMLContext attributeResolverSAMLContext,
 		AttributePublisher attributePublisher, String attributeName,
 		boolean namespaceEnabled) {
@@ -493,7 +497,7 @@ public class DefaultAttributeResolver implements AttributeResolver {
 		}
 	}
 
-	protected void addSalesForceAttributes(
+	private void _addSalesForceAttributes(
 		AttributeResolverSAMLContext attributeResolverSAMLContext,
 		AttributePublisher attributePublisher) {
 
@@ -523,7 +527,7 @@ public class DefaultAttributeResolver implements AttributeResolver {
 				samlIdpMetadataSalesForceSsoStartPage));
 	}
 
-	protected void addSiteRolesAttribute(
+	private void _addSiteRolesAttribute(
 		User user, AttributeResolverSAMLContext attributeResolverSAMLContext,
 		AttributePublisher attributePublisher, String attributeName,
 		boolean namespaceEnabled) {
@@ -621,7 +625,7 @@ public class DefaultAttributeResolver implements AttributeResolver {
 		}
 	}
 
-	protected void addStaticAttribute(
+	private void _addStaticAttribute(
 		User user, AttributeResolverSAMLContext attributeResolverSAMLContext,
 		AttributePublisher attributePublisher, String attributeName,
 		boolean namespaceEnabled) {
@@ -657,7 +661,7 @@ public class DefaultAttributeResolver implements AttributeResolver {
 			attributePublisher.buildString(attributeValue));
 	}
 
-	protected void addUserAttribute(
+	private void _addUserAttribute(
 		User user, AttributeResolverSAMLContext attributeResolverSAMLContext,
 		AttributePublisher attributePublisher, String attributeName,
 		boolean namespaceEnabled) {
@@ -677,7 +681,7 @@ public class DefaultAttributeResolver implements AttributeResolver {
 		}
 	}
 
-	protected void addUserGroupsAttribute(
+	private void _addUserGroupsAttribute(
 		User user, AttributeResolverSAMLContext attributeResolverSAMLContext,
 		AttributePublisher attributePublisher, String attributeName,
 		boolean namespaceEnabled) {
@@ -727,11 +731,7 @@ public class DefaultAttributeResolver implements AttributeResolver {
 		}
 	}
 
-	protected String[] getAttributeNames(String entityId) {
-		return _metadataManager.getAttributeNames(entityId);
-	}
-
-	protected boolean isPeerSalesForce(String entityId) {
+	private boolean _isPeerSalesForce(String entityId) {
 		if (entityId.equals(_SALESFORCE_ENTITY_ID)) {
 			return true;
 		}

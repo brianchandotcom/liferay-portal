@@ -63,15 +63,6 @@ public class SambaGroupBuilder extends OrganizationBuilder {
 		return buildSingleOrganizationDirectory(searchBase, filterConstraints);
 	}
 
-	protected void addSambaGroup(
-		List<SambaGroup> sambaGroups, String name, String sambaSID,
-		String gidNumber) {
-
-		SambaGroup sambaGroup = new SambaGroup(name, sambaSID, gidNumber);
-
-		sambaGroups.add(sambaGroup);
-	}
-
 	protected void addSubdirectories(
 		List<Directory> directories, List<FilterConstraint> filterConstraints,
 		SearchBase searchBase, Company company, Organization organization) {
@@ -95,7 +86,7 @@ public class SambaGroupBuilder extends OrganizationBuilder {
 
 			String gidNumber = filterConstraint.getValue("gidNumber");
 
-			List<Directory> subdirectories = getSambaGroupDirectories(
+			List<Directory> subdirectories = _getSambaGroupDirectories(
 				searchBase.getTop(), company, organization, name, sambaSID,
 				gidNumber);
 
@@ -136,7 +127,16 @@ public class SambaGroupBuilder extends OrganizationBuilder {
 		return directories;
 	}
 
-	protected void filterSambaGroups(
+	private void _addSambaGroup(
+		List<SambaGroup> sambaGroups, String name, String sambaSID,
+		String gidNumber) {
+
+		SambaGroup sambaGroup = new SambaGroup(name, sambaSID, gidNumber);
+
+		sambaGroups.add(sambaGroup);
+	}
+
+	private void _filterSambaGroups(
 		List<SambaGroup> sambaGroups, String fieldName, String value) {
 
 		if ((value == null) || value.equals(StringPool.STAR)) {
@@ -166,17 +166,17 @@ public class SambaGroupBuilder extends OrganizationBuilder {
 		}
 	}
 
-	protected List<Directory> getSambaGroupDirectories(
+	private List<Directory> _getSambaGroupDirectories(
 		String top, Company company, Organization organization, String name,
 		String sambaSID, String gidNumber) {
 
 		List<Directory> directories = new ArrayList<>();
 
-		List<SambaGroup> sambaGroups = getSambaGroups(company);
+		List<SambaGroup> sambaGroups = _getSambaGroups(company);
 
-		filterSambaGroups(sambaGroups, "name", name);
-		filterSambaGroups(sambaGroups, "gidNumber", gidNumber);
-		filterSambaGroups(sambaGroups, "sambaSID", sambaSID);
+		_filterSambaGroups(sambaGroups, "name", name);
+		_filterSambaGroups(sambaGroups, "gidNumber", gidNumber);
+		_filterSambaGroups(sambaGroups, "sambaSID", sambaSID);
 
 		for (SambaGroup sambaGroup : sambaGroups) {
 			Directory directory = new SambaGroupDirectory(
@@ -188,31 +188,33 @@ public class SambaGroupBuilder extends OrganizationBuilder {
 		return directories;
 	}
 
-	protected List<SambaGroup> getSambaGroups(Company company) {
+	private List<SambaGroup> _getSambaGroups(Company company) {
 		List<SambaGroup> sambaGroups = new ArrayList<>();
 
-		addSambaGroup(sambaGroups, "authenticated", "S-1-5-11", null);
+		_addSambaGroup(sambaGroups, "authenticated", "S-1-5-11", null);
 
 		String domainPrefix = "S-1-5-21-" + company.getCompanyId();
 
-		addSambaGroup(
+		_addSambaGroup(
 			sambaGroups, "domain admins", domainPrefix + "-512",
 			_ADMIN_POSIX_GROUP_ID);
-		addSambaGroup(
+		_addSambaGroup(
 			sambaGroups, "domain guests", domainPrefix + "-514",
 			_GUEST_POSIX_GROUP_ID);
-		addSambaGroup(
+		_addSambaGroup(
 			sambaGroups, "domain users", domainPrefix + "-513",
 			_USER_POSIX_GROUP_ID);
 
-		addSambaGroup(sambaGroups, "everyone", "S-1-1-0", _USER_POSIX_GROUP_ID);
-		addSambaGroup(sambaGroups, "network", "S-1-5-2", null);
-		addSambaGroup(sambaGroups, "nobody", "S-1-0-0", _NOBODY_POSIX_GROUP_ID);
-		addSambaGroup(
+		_addSambaGroup(
+			sambaGroups, "everyone", "S-1-1-0", _USER_POSIX_GROUP_ID);
+		_addSambaGroup(sambaGroups, "network", "S-1-5-2", null);
+		_addSambaGroup(
+			sambaGroups, "nobody", "S-1-0-0", _NOBODY_POSIX_GROUP_ID);
+		_addSambaGroup(
 			sambaGroups, "nogroup", "S-1-5-32-546", _GUEST_POSIX_GROUP_ID);
-		addSambaGroup(
+		_addSambaGroup(
 			sambaGroups, "root", "S-1-5-32-544", _ADMIN_POSIX_GROUP_ID);
-		addSambaGroup(
+		_addSambaGroup(
 			sambaGroups, "users", "S-1-5-32-545", _USER_POSIX_GROUP_ID);
 
 		return sambaGroups;

@@ -88,7 +88,7 @@ public class RankingGetVisibleResultsBuilder {
 
 		Ranking ranking = optional.get();
 
-		SearchResponse searchResponse = getSearchResponse(ranking);
+		SearchResponse searchResponse = _getSearchResponse(ranking);
 
 		return JSONUtil.put(
 			"documents", buildDocuments(ranking, searchResponse)
@@ -172,12 +172,6 @@ public class RankingGetVisibleResultsBuilder {
 		return searchRequestBuilder.build();
 	}
 
-	protected SearchResponse getSearchResponse(Ranking ranking) {
-		SearchRequest searchRequest = buildSearchRequest(ranking);
-
-		return _searcher.search(searchRequest);
-	}
-
 	protected JSONObject translate(Document document, Ranking ranking) {
 		RankingJSONBuilder rankingJSONBuilder = new RankingJSONBuilder(
 			_dlAppLocalService, _fastDateFormatFactory, _resourceActions,
@@ -192,6 +186,12 @@ public class RankingGetVisibleResultsBuilder {
 		).viewURL(
 			_getViewURL(document)
 		).build();
+	}
+
+	private SearchResponse _getSearchResponse(Ranking ranking) {
+		SearchRequest searchRequest = buildSearchRequest(ranking);
+
+		return _searcher.search(searchRequest);
 	}
 
 	private String _getViewURL(Document document) {

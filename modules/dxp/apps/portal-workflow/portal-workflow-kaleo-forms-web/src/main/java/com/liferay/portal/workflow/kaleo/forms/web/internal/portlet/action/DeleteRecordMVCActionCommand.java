@@ -85,7 +85,7 @@ public class DeleteRecordMVCActionCommand
 		final ThemeDisplay themeDisplay =
 			(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
-		long[] ddlRecordIds = getDDLRecordIds(actionRequest);
+		long[] ddlRecordIds = _getDDLRecordIds(actionRequest);
 
 		for (final long ddlRecordId : ddlRecordIds) {
 			try {
@@ -125,7 +125,7 @@ public class DeleteRecordMVCActionCommand
 	 *         parameters
 	 * @return an array of the DDL record IDs
 	 */
-	protected long[] getDDLRecordIds(ActionRequest actionRequest) {
+	private long[] _getDDLRecordIds(ActionRequest actionRequest) {
 		long ddlRecordId = ParamUtil.getLong(actionRequest, "ddlRecordId");
 
 		if (ddlRecordId > 0) {

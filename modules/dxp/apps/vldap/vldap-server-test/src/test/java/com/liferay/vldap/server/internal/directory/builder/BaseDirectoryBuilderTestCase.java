@@ -34,12 +34,20 @@ import org.powermock.modules.junit4.PowerMockRunner;
 public abstract class BaseDirectoryBuilderTestCase extends BaseVLDAPTestCase {
 
 	protected void doTestBuildDirectories() throws Exception {
-		doTestBuildDirectoriesWithDefaultFilterConstraints();
-		doTestBuildDirectoriesWithInvalidFilterConstraints();
-		doTestBuildDirectoriesWithNullFilterConstraints();
+		_doTestBuildDirectoriesWithDefaultFilterConstraints();
+		_doTestBuildDirectoriesWithInvalidFilterConstraints();
+		_doTestBuildDirectoriesWithNullFilterConstraints();
 	}
 
-	protected void doTestBuildDirectoriesWithDefaultFilterConstraints()
+	protected void doTestValidAttributes(String name, String... values) {
+		for (String value : values) {
+			Assert.assertTrue(directoryBuilder.isValidAttribute(name, value));
+		}
+	}
+
+	protected DirectoryBuilder directoryBuilder;
+
+	private void _doTestBuildDirectoriesWithDefaultFilterConstraints()
 		throws Exception {
 
 		List<Directory> directories = directoryBuilder.buildDirectories(
@@ -50,7 +58,7 @@ public abstract class BaseDirectoryBuilderTestCase extends BaseVLDAPTestCase {
 		Assert.assertNotNull(directory);
 	}
 
-	protected void doTestBuildDirectoriesWithInvalidFilterConstraints()
+	private void _doTestBuildDirectoriesWithInvalidFilterConstraints()
 		throws Exception {
 
 		List<FilterConstraint> filterConstraints = new ArrayList<>();
@@ -67,7 +75,7 @@ public abstract class BaseDirectoryBuilderTestCase extends BaseVLDAPTestCase {
 		Assert.assertTrue(directories.isEmpty());
 	}
 
-	protected void doTestBuildDirectoriesWithNullFilterConstraints()
+	private void _doTestBuildDirectoriesWithNullFilterConstraints()
 		throws Exception {
 
 		List<Directory> directories = directoryBuilder.buildDirectories(
@@ -77,13 +85,5 @@ public abstract class BaseDirectoryBuilderTestCase extends BaseVLDAPTestCase {
 
 		Assert.assertNotNull(directory);
 	}
-
-	protected void doTestValidAttributes(String name, String... values) {
-		for (String value : values) {
-			Assert.assertTrue(directoryBuilder.isValidAttribute(name, value));
-		}
-	}
-
-	protected DirectoryBuilder directoryBuilder;
 
 }

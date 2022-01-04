@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
 public class CommerceMLSearchEngineHelper {
 
 	public void createIndex(String indexName, String indexMappingFileName) {
-		if (indicesExists(indexName)) {
+		if (_indicesExists(indexName)) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(String.format("Index %s already exist", indexName));
 			}
@@ -76,7 +76,7 @@ public class CommerceMLSearchEngineHelper {
 	}
 
 	public void dropIndex(String indexName) {
-		if (!indicesExists(indexName)) {
+		if (!_indicesExists(indexName)) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(String.format("Index %s does not exist", indexName));
 			}
@@ -95,7 +95,10 @@ public class CommerceMLSearchEngineHelper {
 		}
 	}
 
-	protected boolean indicesExists(String indexName) {
+	@Reference
+	protected SearchEngineAdapter searchEngineAdapter;
+
+	private boolean _indicesExists(String indexName) {
 		IndicesExistsIndexRequest indicesExistsIndexRequest =
 			new IndicesExistsIndexRequest(indexName);
 
@@ -104,9 +107,6 @@ public class CommerceMLSearchEngineHelper {
 
 		return indicesExistsIndexResponse.isExists();
 	}
-
-	@Reference
-	protected SearchEngineAdapter searchEngineAdapter;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceMLSearchEngineHelper.class);

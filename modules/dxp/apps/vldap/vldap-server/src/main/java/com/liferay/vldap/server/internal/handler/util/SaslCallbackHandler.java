@@ -65,47 +65,45 @@ public class SaslCallbackHandler implements CallbackHandler {
 		if (callback instanceof AuthorizeCallback) {
 			AuthorizeCallback authorizeCallback = (AuthorizeCallback)callback;
 
-			handleAuthorizeCallback(authorizeCallback);
+			_handleAuthorizeCallback(authorizeCallback);
 		}
 		else if (callback instanceof NameCallback) {
 			NameCallback nameCallback = (NameCallback)callback;
 
-			handleNameCallback(nameCallback);
+			_handleNameCallback(nameCallback);
 		}
 		else if (callback instanceof PasswordCallback) {
 			PasswordCallback passwordCallback = (PasswordCallback)callback;
 
-			handlePasswordCallback(passwordCallback);
+			_handlePasswordCallback(passwordCallback);
 		}
 		else if (callback instanceof RealmCallback) {
 			RealmCallback realmCallback = (RealmCallback)callback;
 
-			handleRealmCallback(realmCallback);
+			_handleRealmCallback(realmCallback);
 		}
 		else {
 			throw new UnsupportedCallbackException(callback);
 		}
 	}
 
-	protected void handleAuthorizeCallback(
-		AuthorizeCallback authorizeCallback) {
-
+	private void _handleAuthorizeCallback(AuthorizeCallback authorizeCallback) {
 		authorizeCallback.setAuthorized(true);
 	}
 
-	protected void handleNameCallback(NameCallback nameCallback)
+	private void _handleNameCallback(NameCallback nameCallback)
 		throws LdapInvalidDnException {
 
 		_name = new Dn(nameCallback.getDefaultName());
 	}
 
-	protected void handlePasswordCallback(PasswordCallback passwordCallback) {
+	private void _handlePasswordCallback(PasswordCallback passwordCallback) {
 		String password = "hellojon";
 
 		passwordCallback.setPassword(password.toCharArray());
 	}
 
-	protected void handleRealmCallback(RealmCallback realmCallback) {
+	private void _handleRealmCallback(RealmCallback realmCallback) {
 		_realm = realmCallback.getDefaultText();
 	}
 

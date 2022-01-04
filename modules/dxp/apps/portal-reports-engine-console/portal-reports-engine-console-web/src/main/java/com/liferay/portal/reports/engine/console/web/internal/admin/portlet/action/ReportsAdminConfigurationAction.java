@@ -55,19 +55,19 @@ public class ReportsAdminConfigurationAction
 		String tabs2 = ParamUtil.getString(actionRequest, "tabs2");
 
 		if (tabs2.equals("delivery-email")) {
-			validateEmailDelivery(actionRequest);
+			_validateEmailDelivery(actionRequest);
 		}
 		else if (tabs2.equals("email-from")) {
 			validateEmailFrom(actionRequest);
 		}
 		else if (tabs2.equals("notifications-email")) {
-			validateEmailNotifications(actionRequest);
+			_validateEmailNotifications(actionRequest);
 		}
 
 		super.processAction(portletConfig, actionRequest, actionResponse);
 	}
 
-	protected void validateEmailDelivery(ActionRequest actionRequest)
+	private void _validateEmailDelivery(ActionRequest actionRequest)
 		throws Exception {
 
 		String emailDeliverySubject = getParameter(
@@ -83,7 +83,7 @@ public class ReportsAdminConfigurationAction
 		}
 	}
 
-	protected void validateEmailNotifications(ActionRequest actionRequest)
+	private void _validateEmailNotifications(ActionRequest actionRequest)
 		throws Exception {
 
 		String emailNotificationsSubject = getParameter(

@@ -35,12 +35,12 @@ public class SynonymSetIndexNameBuilderImplTest {
 
 	@Test
 	public void testMultiTenancy() {
-		assertIndexName(
+		_assertIndexName(
 			2021, companyId -> "liferay-" + companyId,
 			"liferay-2021-search-tuning-synonyms");
 	}
 
-	protected void assertIndexName(
+	private void _assertIndexName(
 		int companyId, IndexNameBuilder indexNameBuilder, String expected) {
 
 		SynonymSetIndexNameBuilderImpl synonymSetIndexNameBuilderImpl =

@@ -34,7 +34,7 @@ public class RankingIndexCreationCompanyModelListener
 
 	@Override
 	public void onAfterCreate(Company company) {
-		RankingIndexName rankingIndexName = getRankingIndexName(company);
+		RankingIndexName rankingIndexName = _getRankingIndexName(company);
 
 		if (_rankingIndexReader.isExists(rankingIndexName)) {
 			return;
@@ -45,7 +45,7 @@ public class RankingIndexCreationCompanyModelListener
 
 	@Override
 	public void onBeforeRemove(Company company) {
-		RankingIndexName rankingIndexName = getRankingIndexName(company);
+		RankingIndexName rankingIndexName = _getRankingIndexName(company);
 
 		if (!_rankingIndexReader.isExists(rankingIndexName)) {
 			return;
@@ -54,7 +54,7 @@ public class RankingIndexCreationCompanyModelListener
 		_rankingIndexCreator.delete(rankingIndexName);
 	}
 
-	protected RankingIndexName getRankingIndexName(Company company) {
+	private RankingIndexName _getRankingIndexName(Company company) {
 		return _rankingIndexNameBuilder.getRankingIndexName(
 			company.getCompanyId());
 	}

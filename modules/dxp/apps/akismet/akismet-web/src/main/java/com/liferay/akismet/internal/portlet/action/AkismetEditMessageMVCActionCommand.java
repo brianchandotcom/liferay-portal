@@ -59,18 +59,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class AkismetEditMessageMVCActionCommand extends BaseMVCActionCommand {
 
-	protected void checkPermission(long scopeGroupId) throws PortalException {
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		if (!permissionChecker.hasPermission(
-				scopeGroupId, "com.liferay.message.boards", scopeGroupId,
-				ActionKeys.BAN_USER)) {
-
-			throw new PrincipalException();
-		}
-	}
-
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
@@ -80,7 +68,7 @@ public class AkismetEditMessageMVCActionCommand extends BaseMVCActionCommand {
 
 		if (cmd.equals("updateStatus")) {
 			try {
-				updateStatus(actionRequest, actionResponse);
+				_updateStatus(actionRequest, actionResponse);
 
 				String redirect = _portal.escapeRedirect(
 					ParamUtil.getString(actionRequest, "redirect"));
@@ -98,14 +86,31 @@ public class AkismetEditMessageMVCActionCommand extends BaseMVCActionCommand {
 		mvcActionCommand.processAction(actionRequest, actionResponse);
 	}
 
-	protected void updateStatus(
+	@Reference(
+		target = "(component.name=com.liferay.message.boards.web.internal.portlet.action.EditMessageMVCActionCommand)"
+	)
+	protected MVCActionCommand mvcActionCommand;
+
+	private void _checkPermission(long scopeGroupId) throws PortalException {
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		if (!permissionChecker.hasPermission(
+				scopeGroupId, "com.liferay.message.boards", scopeGroupId,
+				ActionKeys.BAN_USER)) {
+
+			throw new PrincipalException();
+		}
+	}
+
+	private void _updateStatus(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		checkPermission(themeDisplay.getScopeGroupId());
+		_checkPermission(themeDisplay.getScopeGroupId());
 
 		long messageId = ParamUtil.getLong(actionRequest, "messageId");
 
@@ -142,11 +147,6 @@ public class AkismetEditMessageMVCActionCommand extends BaseMVCActionCommand {
 			_akismetClient.submitHam(message);
 		}
 	}
-
-	@Reference(
-		target = "(component.name=com.liferay.message.boards.web.internal.portlet.action.EditMessageMVCActionCommand)"
-	)
-	protected MVCActionCommand mvcActionCommand;
 
 	@Reference
 	private AkismetClient _akismetClient;

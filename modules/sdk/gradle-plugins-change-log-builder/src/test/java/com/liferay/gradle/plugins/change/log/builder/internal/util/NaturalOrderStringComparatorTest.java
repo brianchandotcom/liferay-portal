@@ -26,7 +26,7 @@ public class NaturalOrderStringComparatorTest {
 
 	@Test
 	public void testSortCaseSensitive() {
-		testSort(
+		_testSort(
 			new String[] {"hello", "world", "Hello", "World", "HELLO", "WORLD"},
 			new String[] {"HELLO", "Hello", "WORLD", "World", "hello", "world"},
 			true);
@@ -34,7 +34,7 @@ public class NaturalOrderStringComparatorTest {
 
 	@Test
 	public void testSortNumericalString() {
-		testSort(
+		_testSort(
 			new String[] {
 				"1 book", "100 dollar", "25 shoes", "04:00", "4:00", "04:30",
 				"hello07world", "hello8world", "hello007world"
@@ -48,12 +48,12 @@ public class NaturalOrderStringComparatorTest {
 
 	@Test
 	public void testSortRegularString() {
-		testSort(
+		_testSort(
 			new String[] {"hello", "world", "helloworld"},
 			new String[] {"hello", "helloworld", "world"}, false);
 	}
 
-	protected void testSort(
+	private void _testSort(
 		String[] array, String[] sortedArray, boolean caseSensitive) {
 
 		Arrays.sort(

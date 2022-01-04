@@ -60,13 +60,13 @@ public class AssetPublisherSimilarResultsContributor
 
 		SearchStringUtil.requireEquals("asset_publisher", parameters[0]);
 
-		putAttribute(parameters[2], "type", routeBuilder);
+		_putAttribute(parameters[2], "type", routeBuilder);
 
 		String assetEntryId = _httpHelper.getPortletIdParameter(
 			urlString, "assetEntryId",
 			_getAssetPublisherPortletId(parameters[1]));
 
-		putAttribute(Long.valueOf(assetEntryId), "entryId", routeBuilder);
+		_putAttribute(Long.valueOf(assetEntryId), "entryId", routeBuilder);
 	}
 
 	@Override
@@ -107,12 +107,6 @@ public class AssetPublisherSimilarResultsContributor
 		).replace(
 			String.valueOf(entryId), String.valueOf(assetEntry.getEntryId())
 		);
-	}
-
-	protected void putAttribute(
-		Object value, String name, RouteBuilder routeBuilder) {
-
-		routeBuilder.addAttribute(name, value);
 	}
 
 	@Reference(unbind = "-")
@@ -185,6 +179,12 @@ public class AssetPublisherSimilarResultsContributor
 
 		return Field.getUID(
 			assetEntry.getClassName(), String.valueOf(assetEntry.getClassPK()));
+	}
+
+	private void _putAttribute(
+		Object value, String name, RouteBuilder routeBuilder) {
+
+		routeBuilder.addAttribute(name, value);
 	}
 
 	private AssetEntryLocalService _assetEntryLocalService;

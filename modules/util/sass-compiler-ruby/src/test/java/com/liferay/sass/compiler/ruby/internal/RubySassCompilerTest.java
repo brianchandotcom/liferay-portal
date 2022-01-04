@@ -38,7 +38,7 @@ public class RubySassCompilerTest {
 				"foo { box-shadow: 2px 4px 7px rgba(0, 0, 0, 0.5); }", "");
 
 			Assert.assertEquals(
-				stripNewLines(expectedOutput), stripNewLines(actualOutput));
+				_stripNewLines(expectedOutput), _stripNewLines(actualOutput));
 		}
 	}
 
@@ -73,11 +73,11 @@ public class RubySassCompilerTest {
 					clayCssDir, expectedOutputFileName);
 
 				if (expectedOutputFile.exists()) {
-					String expectedOutput = read(expectedOutputFile.toPath());
+					String expectedOutput = _read(expectedOutputFile.toPath());
 
 					Assert.assertEquals(
-						"Testing: " + fileName, stripNewLines(expectedOutput),
-						stripNewLines(actualOutput));
+						"Testing: " + fileName, _stripNewLines(expectedOutput),
+						_stripNewLines(actualOutput));
 				}
 			}
 		}
@@ -107,11 +107,11 @@ public class RubySassCompilerTest {
 				File expectedOutputFile = new File(
 					testDir, "expected_output.css");
 
-				String expectedOutput = read(expectedOutputFile.toPath());
+				String expectedOutput = _read(expectedOutputFile.toPath());
 
 				Assert.assertEquals(
-					"Testing: " + dirName, stripNewLines(expectedOutput),
-					stripNewLines(actualOutput));
+					"Testing: " + dirName, _stripNewLines(expectedOutput),
+					_stripNewLines(actualOutput));
 			}
 		}
 	}
@@ -133,10 +133,10 @@ public class RubySassCompilerTest {
 			File expectedOutputFile = new File(
 				inputDir, "/unicode/expected_output.css");
 
-			String expectedOutput = read(expectedOutputFile.toPath());
+			String expectedOutput = _read(expectedOutputFile.toPath());
 
 			Assert.assertEquals(
-				stripNewLines(expectedOutput), stripNewLines(actualOutput));
+				_stripNewLines(expectedOutput), _stripNewLines(actualOutput));
 		}
 	}
 
@@ -169,10 +169,10 @@ public class RubySassCompilerTest {
 					"/compiler/jni/internal/dependencies/sourcemap",
 				"expected_output_custom_source_map.css");
 
-			String expectedOutput = read(expectedOutputFile.toPath());
+			String expectedOutput = _read(expectedOutputFile.toPath());
 
 			Assert.assertEquals(
-				stripNewLines(expectedOutput), stripNewLines(actualOutput));
+				_stripNewLines(expectedOutput), _stripNewLines(actualOutput));
 		}
 	}
 
@@ -184,7 +184,7 @@ public class RubySassCompilerTest {
 				"foo { margin: 21px * 2; }", "");
 
 			Assert.assertEquals(
-				stripNewLines(expectedOutput), stripNewLines(actualOutput));
+				_stripNewLines(expectedOutput), _stripNewLines(actualOutput));
 		}
 	}
 
@@ -197,7 +197,7 @@ public class RubySassCompilerTest {
 
 			File inputFile = new File(inputDir, "/unicode/input.scss");
 
-			String input = read(inputFile.toPath());
+			String input = _read(inputFile.toPath());
 
 			String actualOutput = sassCompiler.compileString(input, "");
 
@@ -206,10 +206,10 @@ public class RubySassCompilerTest {
 			File expectedOutputFile = new File(
 				inputDir, "/unicode/expected_output.css");
 
-			String expectedOutput = read(expectedOutputFile.toPath());
+			String expectedOutput = _read(expectedOutputFile.toPath());
 
 			Assert.assertEquals(
-				stripNewLines(expectedOutput), stripNewLines(actualOutput));
+				_stripNewLines(expectedOutput), _stripNewLines(actualOutput));
 		}
 	}
 
@@ -228,7 +228,7 @@ public class RubySassCompilerTest {
 
 			File inputFile = new File(inputDir, "input.scss");
 
-			String input = read(inputFile.toPath());
+			String input = _read(inputFile.toPath());
 
 			String actualOutput = sassCompiler.compileString(
 				input, inputFile.getCanonicalPath(), "", true);
@@ -242,10 +242,10 @@ public class RubySassCompilerTest {
 					"/compiler/jni/internal/dependencies/sourcemap",
 				"expected_output.css");
 
-			String expectedOutput = read(expectedOutputFile.toPath());
+			String expectedOutput = _read(expectedOutputFile.toPath());
 
 			Assert.assertEquals(
-				stripNewLines(expectedOutput), stripNewLines(actualOutput));
+				_stripNewLines(expectedOutput), _stripNewLines(actualOutput));
 		}
 	}
 
@@ -257,7 +257,7 @@ public class RubySassCompilerTest {
 				"$val: 1.428571429;.foo { line-height: $val; }", "");
 
 			Assert.assertEquals(
-				stripNewLines(expectedOutput), stripNewLines(actualOutput));
+				_stripNewLines(expectedOutput), _stripNewLines(actualOutput));
 		}
 
 		try (SassCompiler sassCompiler = new RubySassCompiler(3)) {
@@ -266,15 +266,15 @@ public class RubySassCompilerTest {
 				"$val: 1.428571429;.foo { line-height: $val; }", "");
 
 			Assert.assertEquals(
-				stripNewLines(expectedOutput), stripNewLines(actualOutput));
+				_stripNewLines(expectedOutput), _stripNewLines(actualOutput));
 		}
 	}
 
-	protected String read(Path filePath) throws Exception {
+	private String _read(Path filePath) throws Exception {
 		return new String(Files.readAllBytes(filePath));
 	}
 
-	protected String stripNewLines(String string) {
+	private String _stripNewLines(String string) {
 		string = string.replaceAll("\\n|\\r", "");
 
 		return string.replaceAll("\\s+", "");

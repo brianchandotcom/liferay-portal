@@ -97,7 +97,7 @@ public class SimilarResultsUidsAndDestinationsTest {
 		};
 
 		_similarResultsContributorsRegistry =
-			createSimilarResultsContributorsRegistry();
+			_createSimilarResultsContributorsRegistry();
 	}
 
 	@Test
@@ -190,13 +190,13 @@ public class SimilarResultsUidsAndDestinationsTest {
 			assetEntry2
 		).getEntryId();
 
-		setUpDestinationAssetEntry(assetEntry2);
+		_setUpDestinationAssetEntry(assetEntry2);
 
-		setUpDestinationClassName(className2);
+		_setUpDestinationClassName(className2);
 
-		setUpUIDFactory(expectedUID);
+		_setUpUIDFactory(expectedUID);
 
-		assertSimilarResultsContributor(
+		_assertSimilarResultsContributor(
 			urlString, expectedUID, expectedDestination);
 	}
 
@@ -246,13 +246,13 @@ public class SimilarResultsUidsAndDestinationsTest {
 			blogsEntry
 		).getUuid();
 
-		setUpAssetEntryLocalServiceFetchGroupIdUUID(assetEntry, groupId, uuid);
-		setUpBlogsEntryLocalService(blogsEntry);
-		setUpInputGroupId(groupId);
-		setUpDestinationAssetRenderer(assetRenderer);
-		setUpUIDFactory(expectedUID);
+		_setUpAssetEntryLocalServiceFetchGroupIdUUID(assetEntry, groupId, uuid);
+		_setUpBlogsEntryLocalService(blogsEntry);
+		_setUpInputGroupId(groupId);
+		_setUpDestinationAssetRenderer(assetRenderer);
+		_setUpUIDFactory(expectedUID);
 
-		assertSimilarResultsContributor(
+		_assertSimilarResultsContributor(
 			urlString, expectedUID, expectedDestination);
 	}
 
@@ -290,14 +290,14 @@ public class SimilarResultsUidsAndDestinationsTest {
 			assetRenderer
 		).getAssetObject();
 
-		setUpAssetEntryLocalServiceFetchUUID(getAssetEntry(className, 12345));
+		_setUpAssetEntryLocalServiceFetchUUID(getAssetEntry(className, 12345));
 
-		setUpDestinationAssetRenderer(assetRenderer);
-		setUpDestinationClassName(className);
-		setUpDLFileEntryLocalService(dlFileEntry);
-		setUpInputGroupId(groupId);
+		_setUpDestinationAssetRenderer(assetRenderer);
+		_setUpDestinationClassName(className);
+		_setUpDLFileEntryLocalService(dlFileEntry);
+		_setUpInputGroupId(groupId);
 
-		assertSimilarResultsContributor(
+		_assertSimilarResultsContributor(
 			urlString, expectedUID, expectedDestination);
 	}
 
@@ -335,14 +335,14 @@ public class SimilarResultsUidsAndDestinationsTest {
 			assetRenderer
 		).getAssetObject();
 
-		setUpAssetEntryLocalServiceFetchUUID(getAssetEntry(className, 12345));
+		_setUpAssetEntryLocalServiceFetchUUID(getAssetEntry(className, 12345));
 
-		setUpDestinationAssetRenderer(assetRenderer);
-		setUpDestinationClassName(className);
-		setUpDLFolderLocalService(dlFolder);
-		setUpInputGroupId(groupId);
+		_setUpDestinationAssetRenderer(assetRenderer);
+		_setUpDestinationClassName(className);
+		_setUpDLFolderLocalService(dlFolder);
+		_setUpInputGroupId(groupId);
 
-		assertSimilarResultsContributor(
+		_assertSimilarResultsContributor(
 			urlString, expectedUID, expectedDestination);
 	}
 
@@ -378,10 +378,10 @@ public class SimilarResultsUidsAndDestinationsTest {
 			destinationHelper
 		).getClassPK();
 
-		setUpInputGroupId(groupId);
-		setUpMBCategoryLocalService(categoryId);
+		_setUpInputGroupId(groupId);
+		_setUpMBCategoryLocalService(categoryId);
 
-		assertSimilarResultsContributor(
+		_assertSimilarResultsContributor(
 			urlString, expectedUID, expectedDestination);
 	}
 
@@ -418,12 +418,12 @@ public class SimilarResultsUidsAndDestinationsTest {
 			destinationHelper
 		).getClassPK();
 
-		setUpAssetEntryLocalServiceFetchUUID(getAssetEntry(className, 12345));
+		_setUpAssetEntryLocalServiceFetchUUID(getAssetEntry(className, 12345));
 
-		setUpInputGroupId(groupId);
-		setUpMBMessageLocalService(messageId);
+		_setUpInputGroupId(groupId);
+		_setUpMBMessageLocalService(messageId);
 
-		assertSimilarResultsContributor(
+		_assertSimilarResultsContributor(
 			urlString, expectedUID, expectedDestination);
 	}
 
@@ -450,9 +450,9 @@ public class SimilarResultsUidsAndDestinationsTest {
 			"http://localhost:8080/web/guest/blabal?className=", className,
 			"&classPK=", classPK);
 
-		setUpDestinationAssetEntry(getAssetEntry(className, classPK));
+		_setUpDestinationAssetEntry(getAssetEntry(className, classPK));
 
-		assertSimilarResultsContributor(
+		_assertSimilarResultsContributor(
 			urlString, expectedUID, expectedDestination);
 	}
 
@@ -496,9 +496,9 @@ public class SimilarResultsUidsAndDestinationsTest {
 			assetEntry2
 		).getClassNameId();
 
-		setUpDestinationAssetEntry(assetEntry2);
+		_setUpDestinationAssetEntry(assetEntry2);
 
-		assertSimilarResultsContributor(
+		_assertSimilarResultsContributor(
 			urlString, expectedUID, expectedDestination);
 	}
 
@@ -529,12 +529,12 @@ public class SimilarResultsUidsAndDestinationsTest {
 			assetEntry2
 		).getClassUuid();
 
-		setUpAssetEntryLocalServiceFetchGroupIdUUID(
+		_setUpAssetEntryLocalServiceFetchGroupIdUUID(
 			assetEntry1, groupId, uuid1);
-		setUpDestinationAssetEntry(assetEntry2);
-		setUpInputGroupId(groupId);
+		_setUpDestinationAssetEntry(assetEntry2);
+		_setUpInputGroupId(groupId);
 
-		assertSimilarResultsContributor(
+		_assertSimilarResultsContributor(
 			urlString, expectedUID, expectedDestination);
 	}
 
@@ -566,9 +566,9 @@ public class SimilarResultsUidsAndDestinationsTest {
 			assetEntry
 		);
 
-		setUpDestinationAssetEntry(assetEntry);
+		_setUpDestinationAssetEntry(assetEntry);
 
-		assertSimilarResultsContributor(
+		_assertSimilarResultsContributor(
 			urlString, expectedUID, expectedDestination);
 	}
 
@@ -589,7 +589,7 @@ public class SimilarResultsUidsAndDestinationsTest {
 		String expectedDestination =
 			"http://localhost:8080/web/guest/blabal?uid=new";
 
-		assertSimilarResultsContributor(
+		_assertSimilarResultsContributor(
 			urlString, expectedUID, expectedDestination);
 	}
 
@@ -621,7 +621,7 @@ public class SimilarResultsUidsAndDestinationsTest {
 			"&_com_liferay_wiki_web_portlet_WikiDisplayPortlet_INSTANCE",
 			"_title=", title);
 
-		setUpDestinationClassName(className);
+		_setUpDestinationClassName(className);
 
 		WikiNode wikiNode = Mockito.mock(WikiNode.class);
 
@@ -653,171 +653,17 @@ public class SimilarResultsUidsAndDestinationsTest {
 			assetRenderer
 		).getAssetObject();
 
-		setUpAssetEntryLocalServiceFetchUUID(getAssetEntry(className, classPK));
+		_setUpAssetEntryLocalServiceFetchUUID(
+			getAssetEntry(className, classPK));
 
-		setUpDestinationAssetRenderer(assetRenderer);
-		setUpInputGroupId(groupId);
-		setUpUIDFactory(expectedUID);
-		setUpWikiNodeLocalService(wikiNode);
-		setUpWikiPageLocalService(wikiPage);
+		_setUpDestinationAssetRenderer(assetRenderer);
+		_setUpInputGroupId(groupId);
+		_setUpUIDFactory(expectedUID);
+		_setUpWikiNodeLocalService(wikiNode);
+		_setUpWikiPageLocalService(wikiPage);
 
-		assertSimilarResultsContributor(
+		_assertSimilarResultsContributor(
 			urlString, expectedUID, expectedDestination);
-	}
-
-	protected void assertSimilarResultsContributor(
-		String urlString, String expectedUID, String expectedDestination) {
-
-		SimilarResultsRoute similarResultsRoute = detectRoute(urlString);
-
-		Assert.assertEquals(expectedUID, resolveUID(similarResultsRoute));
-
-		Assert.assertEquals(
-			expectedDestination,
-			writeDestination(urlString, similarResultsRoute));
-	}
-
-	protected SimilarResultsContributor
-		createAssetPublisherSimilarResultsContributor() {
-
-		return new AssetPublisherSimilarResultsContributor() {
-			{
-				setAssetEntryLocalService(_assetEntryLocalService);
-				setHttpHelper(_httpHelper);
-				setUIDFactory(_uidFactory);
-			}
-		};
-	}
-
-	protected SimilarResultsContributor createBlogsSimilarResultsContributor() {
-		return new BlogsSimilarResultsContributor() {
-			{
-				setBlogsEntryLocalService(_blogsEntryLocalService);
-				setHttpHelper(_httpHelper);
-				setUIDFactory(_uidFactory);
-			}
-		};
-	}
-
-	protected SimilarResultsContributor
-		createClassNameClassPKSimilarResultsContributor() {
-
-		return new ClassNameClassPKSimilarResultsContributor() {
-			{
-				setHttpHelper(_httpHelper);
-			}
-		};
-	}
-
-	protected SimilarResultsContributor
-		createClassNameIdClassPKSimilarResultsContributor() {
-
-		return new ClassNameIdClassPKSimilarResultsContributor() {
-			{
-				setAssetEntryLocalService(_assetEntryLocalService);
-				setHttpHelper(_httpHelper);
-			}
-		};
-	}
-
-	protected SimilarResultsContributor
-		createClassUUIDSimilarResultsContributor() {
-
-		return new ClassUUIDSimilarResultsContributor() {
-			{
-				setAssetEntryLocalService(_assetEntryLocalService);
-				setHttpHelper(_httpHelper);
-			}
-		};
-	}
-
-	protected SimilarResultsContributor
-		createDocumentLibrarySimilarResultsContributor() {
-
-		return new DocumentLibrarySimilarResultsContributor() {
-			{
-				setAssetEntryLocalService(_assetEntryLocalService);
-				setDLFileEntryLocalService(_dlFileEntryLocalService);
-				setDLFolderLocalService(_dlFolderLocalService);
-				setHttpHelper(_httpHelper);
-			}
-		};
-	}
-
-	protected SimilarResultsContributor
-		createEntryIdSimilarResultsContributor() {
-
-		return new EntryIdSimilarResultsContributor() {
-			{
-				setAssetEntryLocalService(_assetEntryLocalService);
-				setHttpHelper(_httpHelper);
-			}
-		};
-	}
-
-	protected SimilarResultsContributor
-		createMessageBoardsSimilarResultsContributor() {
-
-		return new MessageBoardsSimilarResultsContributor() {
-			{
-				setAssetEntryLocalService(_assetEntryLocalService);
-				setMbCategoryLocalService(_mbCategoryLocalService);
-				setMbMessageLocalService(_mbMessageLocalService);
-				setHttpHelper(_httpHelper);
-			}
-		};
-	}
-
-	protected SimilarResultsContributorsRegistry
-		createSimilarResultsContributorsRegistry() {
-
-		List<SimilarResultsContributor> list = Arrays.asList(
-			createAssetPublisherSimilarResultsContributor(),
-			createBlogsSimilarResultsContributor(),
-			createClassNameClassPKSimilarResultsContributor(),
-			createClassNameIdClassPKSimilarResultsContributor(),
-			createClassUUIDSimilarResultsContributor(),
-			createDocumentLibrarySimilarResultsContributor(),
-			createEntryIdSimilarResultsContributor(),
-			createMessageBoardsSimilarResultsContributor(),
-			createUIDSimilarResultsContributor(),
-			createWikiSimilarResultsContributor());
-
-		SimilarResultsContributorsHolderImpl
-			similarResultsContributorsHolderImpl =
-				new SimilarResultsContributorsHolderImpl() {
-					{
-						list.forEach(this::addSimilarResultsContributor);
-					}
-				};
-
-		return new SimilarResultsContributorsRegistryImpl() {
-			{
-				setHttp(_http);
-				setSimilarResultsContributorsHolder(
-					similarResultsContributorsHolderImpl);
-			}
-		};
-	}
-
-	protected SimilarResultsContributor createUIDSimilarResultsContributor() {
-		return new UIDSimilarResultsContributor() {
-			{
-				setHttpHelper(_httpHelper);
-			}
-		};
-	}
-
-	protected SimilarResultsContributor createWikiSimilarResultsContributor() {
-		return new WikiDisplaySimilarResultsContributor() {
-			{
-				setAssetEntryLocalService(_assetEntryLocalService);
-				setHttpHelper(_httpHelper);
-				setUIDFactory(_uidFactory);
-				setWikiNodeLocalService(_wikiNodeLocalService);
-				setWikiPageLocalService(_wikiPageLocalService);
-			}
-		};
 	}
 
 	protected SimilarResultsRoute detectRoute(String urlString) {
@@ -843,168 +689,6 @@ public class SimilarResultsUidsAndDestinationsTest {
 		).getClassPK();
 
 		return assetEntry;
-	}
-
-	protected Criteria resolveCriteria(
-		SimilarResultsRoute similarResultsRoute) {
-
-		CriteriaBuilderImpl criteriaBuilderImpl = new CriteriaBuilderImpl();
-
-		CriteriaHelper inputHelper = new CriteriaHelperImpl(
-			_groupId, similarResultsRoute);
-
-		SimilarResultsContributor similarResultsContributor =
-			similarResultsRoute.getContributor();
-
-		similarResultsContributor.resolveCriteria(
-			criteriaBuilderImpl, inputHelper);
-
-		Optional<Criteria> optional = criteriaBuilderImpl.build();
-
-		return optional.get();
-	}
-
-	protected String resolveUID(SimilarResultsRoute similarResultsContributor) {
-		Criteria similarResultsInput = resolveCriteria(
-			similarResultsContributor);
-
-		return similarResultsInput.getUID();
-	}
-
-	protected void setUpAssetEntryLocalServiceFetchGroupIdUUID(
-		AssetEntry assetEntry, long groupId, String uuid) {
-
-		Mockito.doReturn(
-			assetEntry
-		).when(
-			_assetEntryLocalService
-		).fetchEntry(
-			Matchers.eq(groupId), Matchers.eq(uuid)
-		);
-	}
-
-	protected void setUpAssetEntryLocalServiceFetchUUID(AssetEntry assetEntry) {
-		Mockito.when(
-			_assetEntryLocalService.fetchEntry(
-				Matchers.anyLong(), Matchers.anyString())
-		).thenReturn(
-			assetEntry
-		);
-	}
-
-	protected void setUpBlogsEntryLocalService(BlogsEntry blogsEntry) {
-		Mockito.when(
-			_blogsEntryLocalService.fetchEntry(
-				Matchers.anyLong(), Matchers.anyString())
-		).thenReturn(
-			blogsEntry
-		);
-	}
-
-	protected void setUpDestinationAssetEntry(AssetEntry assetEntry) {
-		Mockito.doReturn(
-			assetEntry
-		).when(
-			destinationHelper
-		).getAssetEntry();
-	}
-
-	protected void setUpDestinationAssetRenderer(
-		AssetRenderer<?> assetRenderer) {
-
-		Mockito.doReturn(
-			assetRenderer
-		).when(
-			destinationHelper
-		).getAssetRenderer();
-	}
-
-	protected void setUpDestinationClassName(String className) {
-		Mockito.doReturn(
-			className
-		).when(
-			destinationHelper
-		).getClassName();
-	}
-
-	protected void setUpDLFileEntryLocalService(DLFileEntry dlFileEntry) {
-		Mockito.when(
-			_dlFileEntryLocalService.fetchDLFileEntry(Matchers.anyLong())
-		).thenReturn(
-			dlFileEntry
-		);
-	}
-
-	protected void setUpDLFolderLocalService(DLFolder dlFolder) {
-		Mockito.doReturn(
-			dlFolder
-		).when(
-			_dlFolderLocalService
-		).fetchDLFolder(
-			Mockito.anyLong()
-		);
-	}
-
-	protected void setUpInputGroupId(long groupId) {
-		_groupId = groupId;
-	}
-
-	protected void setUpMBCategoryLocalService(long categoryId) {
-		MBCategory mbCategory = Mockito.mock(MBCategory.class);
-
-		Mockito.doReturn(
-			categoryId
-		).when(
-			mbCategory
-		).getCategoryId();
-
-		Mockito.when(
-			_mbCategoryLocalService.fetchMBCategory(Matchers.anyLong())
-		).thenReturn(
-			mbCategory
-		);
-	}
-
-	protected void setUpMBMessageLocalService(long messageId) {
-		MBMessage mbMessage = Mockito.mock(MBMessage.class);
-
-		Mockito.doReturn(
-			messageId
-		).when(
-			mbMessage
-		).getRootMessageId();
-
-		Mockito.when(
-			_mbMessageLocalService.fetchMBMessage(Matchers.anyLong())
-		).thenReturn(
-			mbMessage
-		);
-	}
-
-	protected void setUpUIDFactory(String uid) {
-		Mockito.when(
-			_uidFactory.getUID(Matchers.any(ClassedModel.class))
-		).thenReturn(
-			uid
-		);
-	}
-
-	protected void setUpWikiNodeLocalService(WikiNode wikiNode) {
-		Mockito.when(
-			_wikiNodeLocalService.fetchNode(
-				Matchers.anyLong(), Matchers.anyString())
-		).thenReturn(
-			wikiNode
-		);
-	}
-
-	protected void setUpWikiPageLocalService(WikiPage wikiPage) {
-		Mockito.when(
-			_wikiPageLocalService.fetchPage(
-				Matchers.anyLong(), Matchers.anyString(), Matchers.anyLong())
-		).thenReturn(
-			wikiPage
-		);
 	}
 
 	protected String writeDestination(
@@ -1033,6 +717,321 @@ public class SimilarResultsUidsAndDestinationsTest {
 
 	@Mock
 	protected DestinationHelper destinationHelper;
+
+	private void _assertSimilarResultsContributor(
+		String urlString, String expectedUID, String expectedDestination) {
+
+		SimilarResultsRoute similarResultsRoute = detectRoute(urlString);
+
+		Assert.assertEquals(expectedUID, _resolveUID(similarResultsRoute));
+
+		Assert.assertEquals(
+			expectedDestination,
+			writeDestination(urlString, similarResultsRoute));
+	}
+
+	private SimilarResultsContributor
+		_createAssetPublisherSimilarResultsContributor() {
+
+		return new AssetPublisherSimilarResultsContributor() {
+			{
+				setAssetEntryLocalService(_assetEntryLocalService);
+				setHttpHelper(_httpHelper);
+				setUIDFactory(_uidFactory);
+			}
+		};
+	}
+
+	private SimilarResultsContributor _createBlogsSimilarResultsContributor() {
+		return new BlogsSimilarResultsContributor() {
+			{
+				setBlogsEntryLocalService(_blogsEntryLocalService);
+				setHttpHelper(_httpHelper);
+				setUIDFactory(_uidFactory);
+			}
+		};
+	}
+
+	private SimilarResultsContributor
+		_createClassNameClassPKSimilarResultsContributor() {
+
+		return new ClassNameClassPKSimilarResultsContributor() {
+			{
+				setHttpHelper(_httpHelper);
+			}
+		};
+	}
+
+	private SimilarResultsContributor
+		_createClassNameIdClassPKSimilarResultsContributor() {
+
+		return new ClassNameIdClassPKSimilarResultsContributor() {
+			{
+				setAssetEntryLocalService(_assetEntryLocalService);
+				setHttpHelper(_httpHelper);
+			}
+		};
+	}
+
+	private SimilarResultsContributor
+		_createClassUUIDSimilarResultsContributor() {
+
+		return new ClassUUIDSimilarResultsContributor() {
+			{
+				setAssetEntryLocalService(_assetEntryLocalService);
+				setHttpHelper(_httpHelper);
+			}
+		};
+	}
+
+	private SimilarResultsContributor
+		_createDocumentLibrarySimilarResultsContributor() {
+
+		return new DocumentLibrarySimilarResultsContributor() {
+			{
+				setAssetEntryLocalService(_assetEntryLocalService);
+				setDLFileEntryLocalService(_dlFileEntryLocalService);
+				setDLFolderLocalService(_dlFolderLocalService);
+				setHttpHelper(_httpHelper);
+			}
+		};
+	}
+
+	private SimilarResultsContributor
+		_createEntryIdSimilarResultsContributor() {
+
+		return new EntryIdSimilarResultsContributor() {
+			{
+				setAssetEntryLocalService(_assetEntryLocalService);
+				setHttpHelper(_httpHelper);
+			}
+		};
+	}
+
+	private SimilarResultsContributor
+		_createMessageBoardsSimilarResultsContributor() {
+
+		return new MessageBoardsSimilarResultsContributor() {
+			{
+				setAssetEntryLocalService(_assetEntryLocalService);
+				setMbCategoryLocalService(_mbCategoryLocalService);
+				setMbMessageLocalService(_mbMessageLocalService);
+				setHttpHelper(_httpHelper);
+			}
+		};
+	}
+
+	private SimilarResultsContributorsRegistry
+		_createSimilarResultsContributorsRegistry() {
+
+		List<SimilarResultsContributor> list = Arrays.asList(
+			_createAssetPublisherSimilarResultsContributor(),
+			_createBlogsSimilarResultsContributor(),
+			_createClassNameClassPKSimilarResultsContributor(),
+			_createClassNameIdClassPKSimilarResultsContributor(),
+			_createClassUUIDSimilarResultsContributor(),
+			_createDocumentLibrarySimilarResultsContributor(),
+			_createEntryIdSimilarResultsContributor(),
+			_createMessageBoardsSimilarResultsContributor(),
+			_createUIDSimilarResultsContributor(),
+			_createWikiSimilarResultsContributor());
+
+		SimilarResultsContributorsHolderImpl
+			similarResultsContributorsHolderImpl =
+				new SimilarResultsContributorsHolderImpl() {
+					{
+						list.forEach(this::addSimilarResultsContributor);
+					}
+				};
+
+		return new SimilarResultsContributorsRegistryImpl() {
+			{
+				setHttp(_http);
+				setSimilarResultsContributorsHolder(
+					similarResultsContributorsHolderImpl);
+			}
+		};
+	}
+
+	private SimilarResultsContributor _createUIDSimilarResultsContributor() {
+		return new UIDSimilarResultsContributor() {
+			{
+				setHttpHelper(_httpHelper);
+			}
+		};
+	}
+
+	private SimilarResultsContributor _createWikiSimilarResultsContributor() {
+		return new WikiDisplaySimilarResultsContributor() {
+			{
+				setAssetEntryLocalService(_assetEntryLocalService);
+				setHttpHelper(_httpHelper);
+				setUIDFactory(_uidFactory);
+				setWikiNodeLocalService(_wikiNodeLocalService);
+				setWikiPageLocalService(_wikiPageLocalService);
+			}
+		};
+	}
+
+	private Criteria _resolveCriteria(SimilarResultsRoute similarResultsRoute) {
+		CriteriaBuilderImpl criteriaBuilderImpl = new CriteriaBuilderImpl();
+
+		CriteriaHelper inputHelper = new CriteriaHelperImpl(
+			_groupId, similarResultsRoute);
+
+		SimilarResultsContributor similarResultsContributor =
+			similarResultsRoute.getContributor();
+
+		similarResultsContributor.resolveCriteria(
+			criteriaBuilderImpl, inputHelper);
+
+		Optional<Criteria> optional = criteriaBuilderImpl.build();
+
+		return optional.get();
+	}
+
+	private String _resolveUID(SimilarResultsRoute similarResultsContributor) {
+		Criteria similarResultsInput = _resolveCriteria(
+			similarResultsContributor);
+
+		return similarResultsInput.getUID();
+	}
+
+	private void _setUpAssetEntryLocalServiceFetchGroupIdUUID(
+		AssetEntry assetEntry, long groupId, String uuid) {
+
+		Mockito.doReturn(
+			assetEntry
+		).when(
+			_assetEntryLocalService
+		).fetchEntry(
+			Matchers.eq(groupId), Matchers.eq(uuid)
+		);
+	}
+
+	private void _setUpAssetEntryLocalServiceFetchUUID(AssetEntry assetEntry) {
+		Mockito.when(
+			_assetEntryLocalService.fetchEntry(
+				Matchers.anyLong(), Matchers.anyString())
+		).thenReturn(
+			assetEntry
+		);
+	}
+
+	private void _setUpBlogsEntryLocalService(BlogsEntry blogsEntry) {
+		Mockito.when(
+			_blogsEntryLocalService.fetchEntry(
+				Matchers.anyLong(), Matchers.anyString())
+		).thenReturn(
+			blogsEntry
+		);
+	}
+
+	private void _setUpDestinationAssetEntry(AssetEntry assetEntry) {
+		Mockito.doReturn(
+			assetEntry
+		).when(
+			destinationHelper
+		).getAssetEntry();
+	}
+
+	private void _setUpDestinationAssetRenderer(
+		AssetRenderer<?> assetRenderer) {
+
+		Mockito.doReturn(
+			assetRenderer
+		).when(
+			destinationHelper
+		).getAssetRenderer();
+	}
+
+	private void _setUpDestinationClassName(String className) {
+		Mockito.doReturn(
+			className
+		).when(
+			destinationHelper
+		).getClassName();
+	}
+
+	private void _setUpDLFileEntryLocalService(DLFileEntry dlFileEntry) {
+		Mockito.when(
+			_dlFileEntryLocalService.fetchDLFileEntry(Matchers.anyLong())
+		).thenReturn(
+			dlFileEntry
+		);
+	}
+
+	private void _setUpDLFolderLocalService(DLFolder dlFolder) {
+		Mockito.doReturn(
+			dlFolder
+		).when(
+			_dlFolderLocalService
+		).fetchDLFolder(
+			Mockito.anyLong()
+		);
+	}
+
+	private void _setUpInputGroupId(long groupId) {
+		_groupId = groupId;
+	}
+
+	private void _setUpMBCategoryLocalService(long categoryId) {
+		MBCategory mbCategory = Mockito.mock(MBCategory.class);
+
+		Mockito.doReturn(
+			categoryId
+		).when(
+			mbCategory
+		).getCategoryId();
+
+		Mockito.when(
+			_mbCategoryLocalService.fetchMBCategory(Matchers.anyLong())
+		).thenReturn(
+			mbCategory
+		);
+	}
+
+	private void _setUpMBMessageLocalService(long messageId) {
+		MBMessage mbMessage = Mockito.mock(MBMessage.class);
+
+		Mockito.doReturn(
+			messageId
+		).when(
+			mbMessage
+		).getRootMessageId();
+
+		Mockito.when(
+			_mbMessageLocalService.fetchMBMessage(Matchers.anyLong())
+		).thenReturn(
+			mbMessage
+		);
+	}
+
+	private void _setUpUIDFactory(String uid) {
+		Mockito.when(
+			_uidFactory.getUID(Matchers.any(ClassedModel.class))
+		).thenReturn(
+			uid
+		);
+	}
+
+	private void _setUpWikiNodeLocalService(WikiNode wikiNode) {
+		Mockito.when(
+			_wikiNodeLocalService.fetchNode(
+				Matchers.anyLong(), Matchers.anyString())
+		).thenReturn(
+			wikiNode
+		);
+	}
+
+	private void _setUpWikiPageLocalService(WikiPage wikiPage) {
+		Mockito.when(
+			_wikiPageLocalService.fetchPage(
+				Matchers.anyLong(), Matchers.anyString(), Matchers.anyLong())
+		).thenReturn(
+			wikiPage
+		);
+	}
 
 	@Mock
 	private AssetEntryLocalService _assetEntryLocalService;

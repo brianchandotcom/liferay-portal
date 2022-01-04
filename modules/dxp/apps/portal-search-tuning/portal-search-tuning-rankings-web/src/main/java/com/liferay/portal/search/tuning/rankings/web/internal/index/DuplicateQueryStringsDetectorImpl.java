@@ -69,7 +69,7 @@ public class DuplicateQueryStringsDetectorImpl
 
 					setIndexNames(rankingIndexName.getIndexName());
 
-					setQuery(getCriteriaQuery(criteria));
+					setQuery(_getCriteriaQuery(criteria));
 					setScoreEnabled(false);
 				}
 			});
@@ -81,70 +81,12 @@ public class DuplicateQueryStringsDetectorImpl
 		Stream<SearchHit> stream = searchHitsList.stream();
 
 		return stream.map(
-			searchHit -> getDuplicateQueryStrings(searchHit, queryStrings)
+			searchHit -> _getDuplicateQueryStrings(searchHit, queryStrings)
 		).flatMap(
 			Collection::stream
 		).collect(
 			Collectors.toList()
 		);
-	}
-
-	protected BooleanQuery getCriteriaQuery(Criteria criteria) {
-		BooleanQuery booleanQuery = queries.booleanQuery();
-
-		_addQueryClauses(
-			booleanQuery::addFilterQueryClauses, getQueryStringsQuery(criteria),
-			getIndexQuery(criteria));
-		_addQueryClauses(
-			booleanQuery::addMustNotQueryClauses,
-			queries.term(RankingFields.INACTIVE, true),
-			getUnlessRankingIdQuery(criteria));
-
-		return booleanQuery;
-	}
-
-	protected Collection<String> getDuplicateQueryStrings(
-		SearchHit searchHit, Collection<String> queryStrings) {
-
-		Document document = searchHit.getDocument();
-
-		Collection<String> documentQueryStrings = document.getStrings(
-			RankingFields.QUERY_STRINGS);
-
-		documentQueryStrings.retainAll(queryStrings);
-
-		return documentQueryStrings;
-	}
-
-	protected Query getIndexQuery(Criteria criteria) {
-		if (Validator.isBlank(criteria.getIndex())) {
-			return null;
-		}
-
-		return queries.term(RankingFields.INDEX, criteria.getIndex());
-	}
-
-	protected TermsQuery getQueryStringsQuery(Criteria criteria) {
-		TermsQuery termsQuery = queries.terms(
-			RankingFields.QUERY_STRINGS_KEYWORD);
-
-		Collection<String> queryStrings = criteria.getQueryStrings();
-
-		termsQuery.addValues(queryStrings.toArray());
-
-		return termsQuery;
-	}
-
-	protected IdsQuery getUnlessRankingIdQuery(Criteria criteria) {
-		if (Validator.isBlank(criteria.getUnlessRankingDocumentId())) {
-			return null;
-		}
-
-		IdsQuery idsQuery = queries.ids();
-
-		idsQuery.addIds(criteria.getUnlessRankingDocumentId());
-
-		return idsQuery;
 	}
 
 	@Reference
@@ -251,6 +193,64 @@ public class DuplicateQueryStringsDetectorImpl
 		).forEach(
 			consumer
 		);
+	}
+
+	private BooleanQuery _getCriteriaQuery(Criteria criteria) {
+		BooleanQuery booleanQuery = queries.booleanQuery();
+
+		_addQueryClauses(
+			booleanQuery::addFilterQueryClauses,
+			_getQueryStringsQuery(criteria), _getIndexQuery(criteria));
+		_addQueryClauses(
+			booleanQuery::addMustNotQueryClauses,
+			queries.term(RankingFields.INACTIVE, true),
+			_getUnlessRankingIdQuery(criteria));
+
+		return booleanQuery;
+	}
+
+	private Collection<String> _getDuplicateQueryStrings(
+		SearchHit searchHit, Collection<String> queryStrings) {
+
+		Document document = searchHit.getDocument();
+
+		Collection<String> documentQueryStrings = document.getStrings(
+			RankingFields.QUERY_STRINGS);
+
+		documentQueryStrings.retainAll(queryStrings);
+
+		return documentQueryStrings;
+	}
+
+	private Query _getIndexQuery(Criteria criteria) {
+		if (Validator.isBlank(criteria.getIndex())) {
+			return null;
+		}
+
+		return queries.term(RankingFields.INDEX, criteria.getIndex());
+	}
+
+	private TermsQuery _getQueryStringsQuery(Criteria criteria) {
+		TermsQuery termsQuery = queries.terms(
+			RankingFields.QUERY_STRINGS_KEYWORD);
+
+		Collection<String> queryStrings = criteria.getQueryStrings();
+
+		termsQuery.addValues(queryStrings.toArray());
+
+		return termsQuery;
+	}
+
+	private IdsQuery _getUnlessRankingIdQuery(Criteria criteria) {
+		if (Validator.isBlank(criteria.getUnlessRankingDocumentId())) {
+			return null;
+		}
+
+		IdsQuery idsQuery = queries.ids();
+
+		idsQuery.addIds(criteria.getUnlessRankingDocumentId());
+
+		return idsQuery;
 	}
 
 }

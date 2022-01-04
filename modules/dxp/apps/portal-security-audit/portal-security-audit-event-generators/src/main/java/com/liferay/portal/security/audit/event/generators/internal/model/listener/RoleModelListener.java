@@ -49,7 +49,7 @@ public class RoleModelListener extends BaseModelListener<Role> {
 			Object associationClassPK)
 		throws ModelListenerException {
 
-		auditOnAddorRemoveAssociation(
+		_auditOnAddorRemoveAssociation(
 			EventTypes.ASSIGN, classPK, associationClassName,
 			associationClassPK);
 	}
@@ -68,7 +68,7 @@ public class RoleModelListener extends BaseModelListener<Role> {
 			Object associationClassPK)
 		throws ModelListenerException {
 
-		auditOnAddorRemoveAssociation(
+		_auditOnAddorRemoveAssociation(
 			EventTypes.UNASSIGN, classPK, associationClassName,
 			associationClassPK);
 	}
@@ -77,7 +77,7 @@ public class RoleModelListener extends BaseModelListener<Role> {
 		throws ModelListenerException {
 
 		try {
-			List<Attribute> attributes = getModifiedAttributes(
+			List<Attribute> attributes = _getModifiedAttributes(
 				originalRole, role);
 
 			if (!attributes.isEmpty()) {
@@ -94,7 +94,21 @@ public class RoleModelListener extends BaseModelListener<Role> {
 		}
 	}
 
-	protected void auditOnAddorRemoveAssociation(
+	protected void auditOnCreateOrRemove(String eventType, Role role)
+		throws ModelListenerException {
+
+		try {
+			AuditMessage auditMessage = AuditMessageBuilder.buildAuditMessage(
+				eventType, Role.class.getName(), role.getRoleId(), null);
+
+			_auditRouter.route(auditMessage);
+		}
+		catch (Exception exception) {
+			throw new ModelListenerException(exception);
+		}
+	}
+
+	private void _auditOnAddorRemoveAssociation(
 			String eventType, Object classPK, String associationClassName,
 			Object associationClassPK)
 		throws ModelListenerException {
@@ -141,21 +155,7 @@ public class RoleModelListener extends BaseModelListener<Role> {
 		}
 	}
 
-	protected void auditOnCreateOrRemove(String eventType, Role role)
-		throws ModelListenerException {
-
-		try {
-			AuditMessage auditMessage = AuditMessageBuilder.buildAuditMessage(
-				eventType, Role.class.getName(), role.getRoleId(), null);
-
-			_auditRouter.route(auditMessage);
-		}
-		catch (Exception exception) {
-			throw new ModelListenerException(exception);
-		}
-	}
-
-	protected List<Attribute> getModifiedAttributes(
+	private List<Attribute> _getModifiedAttributes(
 		Role originalRole, Role role) {
 
 		AttributesBuilder attributesBuilder = new AttributesBuilder(

@@ -181,7 +181,7 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessor
 			return segmentsExperienceIds;
 		}
 
-		segmentsExperienceId = getSegmentsExperimentSegmentsExperienceId(
+		segmentsExperienceId = _getSegmentsExperimentSegmentsExperienceId(
 			segmentsExperiment.getSegmentsExperienceId(),
 			segmentsExperimentRels);
 
@@ -212,25 +212,6 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessor
 		return getSegmentsExperienceIds(
 			httpServletRequest, httpServletResponse, groupId, classNameId,
 			classPK, segmentsExperienceIds);
-	}
-
-	protected long getSegmentsExperimentSegmentsExperienceId(
-		long controlSegmentsExperienceId,
-		List<SegmentsExperimentRel> segmentsExperimentRels) {
-
-		double random = Math.random();
-
-		for (SegmentsExperimentRel segmentsExperimentRel :
-				segmentsExperimentRels) {
-
-			random -= segmentsExperimentRel.getSplit();
-
-			if (random <= 0.0D) {
-				return segmentsExperimentRel.getSegmentsExperienceId();
-			}
-		}
-
-		return controlSegmentsExperienceId;
 	}
 
 	private Optional<Cookie> _getCookieOptional(
@@ -300,6 +281,25 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessor
 		}
 
 		return SegmentsExperienceConstants.KEY_DEFAULT;
+	}
+
+	private long _getSegmentsExperimentSegmentsExperienceId(
+		long controlSegmentsExperienceId,
+		List<SegmentsExperimentRel> segmentsExperimentRels) {
+
+		double random = Math.random();
+
+		for (SegmentsExperimentRel segmentsExperimentRel :
+				segmentsExperimentRels) {
+
+			random -= segmentsExperimentRel.getSplit();
+
+			if (random <= 0.0D) {
+				return segmentsExperimentRel.getSegmentsExperienceId();
+			}
+		}
+
+		return controlSegmentsExperienceId;
 	}
 
 	private long _getSelectedSegmentsExperienceId(

@@ -157,7 +157,7 @@ public class ReportEngineImpl implements ReportEngine {
 			reportRequestMessageListener);
 
 		for (String destinationName : _messageListeners.keySet()) {
-			registerDestination(destinationName);
+			_registerDestination(destinationName);
 		}
 	}
 
@@ -197,7 +197,7 @@ public class ReportEngineImpl implements ReportEngine {
 		activate(componentContext);
 	}
 
-	protected void registerDestination(String destinationName) {
+	private void _registerDestination(String destinationName) {
 		DestinationConfiguration destinationConfiguration =
 			new DestinationConfiguration(
 				DestinationConfiguration.DESTINATION_TYPE_PARALLEL,

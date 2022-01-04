@@ -34,12 +34,12 @@ public class RankingIndexNameBuilderImplTest {
 
 	@Test
 	public void testMultiTenancy() {
-		assertIndexName(
+		_assertIndexName(
 			2021, companyId -> "liferay-" + companyId,
 			"liferay-2021-search-tuning-rankings");
 	}
 
-	protected void assertIndexName(
+	private void _assertIndexName(
 		long companyId, IndexNameBuilder indexNameBuilder, String expected) {
 
 		RankingIndexNameBuilderImpl rankingIndexNameBuilderImpl =

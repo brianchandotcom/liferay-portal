@@ -155,7 +155,7 @@ public class SamlSpSsoFilter extends BaseSamlPortalFilter {
 
 			if (samlSpIdpConnection != null) {
 				try {
-					login(httpServletRequest, httpServletResponse);
+					_login(httpServletRequest, httpServletResponse);
 				}
 				catch (PortalException portalException) {
 					if (_log.isInfoEnabled()) {
@@ -205,7 +205,7 @@ public class SamlSpSsoFilter extends BaseSamlPortalFilter {
 		return _log;
 	}
 
-	protected void login(
+	private void _login(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
 		throws PortalException {

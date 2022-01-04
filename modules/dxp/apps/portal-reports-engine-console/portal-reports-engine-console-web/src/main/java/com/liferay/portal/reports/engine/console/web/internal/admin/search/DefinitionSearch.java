@@ -78,11 +78,11 @@ public class DefinitionSearch extends SearchContainer<Definition> {
 			"asc");
 
 		setOrderByComparator(
-			getDefinitionOrderByComparator(orderByCol, orderByType));
+			_getDefinitionOrderByComparator(orderByCol, orderByType));
 		setOrderByType(orderByType);
 	}
 
-	protected OrderByComparator<Definition> getDefinitionOrderByComparator(
+	private OrderByComparator<Definition> _getDefinitionOrderByComparator(
 		String orderByCol, String orderByType) {
 
 		boolean orderByAsc = false;

@@ -62,10 +62,10 @@ public class SimilarResultsPortletSharedSearchContributor
 
 		Optional<SimilarResultsRoute> optional =
 			similarResultsContributorsRegistry.detectRoute(
-				getURLString(portletSharedSearchSettings));
+				_getURLString(portletSharedSearchSettings));
 
 		optional.flatMap(
-			similarResultsRoute -> getSimilarResultsInputOptional(
+			similarResultsRoute -> _getSimilarResultsInputOptional(
 				getGroupId(portletSharedSearchSettings), similarResultsRoute)
 		).ifPresent(
 			similarResultsInput -> contribute(
@@ -86,13 +86,13 @@ public class SimilarResultsPortletSharedSearchContributor
 				Optional.of(
 					similarResultsPortletPreferences.getFederatedSearchKey()));
 
-		filterByEntryClassName(
+		_filterByEntryClassName(
 			criteria, portletSharedSearchSettings, searchRequestBuilder);
 
-		filterByGroupId(portletSharedSearchSettings, searchRequestBuilder);
+		_filterByGroupId(portletSharedSearchSettings, searchRequestBuilder);
 
 		searchRequestBuilder.query(
-			getMoreLikeThisQuery(
+			_getMoreLikeThisQuery(
 				criteria.getUID(), similarResultsPortletPreferences)
 		).emptySearchEnabled(
 			true
@@ -100,10 +100,23 @@ public class SimilarResultsPortletSharedSearchContributor
 			similarResultsPortletPreferences.getMaxItemDisplay()
 		);
 
-		setUIDRenderRequestAttribute(criteria, portletSharedSearchSettings);
+		_setUIDRenderRequestAttribute(criteria, portletSharedSearchSettings);
 	}
 
-	protected void filterByEntryClassName(
+	protected long getGroupId(
+		PortletSharedSearchSettings portletSharedSearchSettings) {
+
+		ThemeDisplay themeDisplay =
+			portletSharedSearchSettings.getThemeDisplay();
+
+		return themeDisplay.getScopeGroupId();
+	}
+
+	@Reference
+	protected SimilarResultsContributorsRegistry
+		similarResultsContributorsRegistry;
+
+	private void _filterByEntryClassName(
 		Criteria criteria,
 		PortletSharedSearchSettings portletSharedSearchSettings,
 		SearchRequestBuilder searchRequestBuilder) {
@@ -122,12 +135,13 @@ public class SimilarResultsPortletSharedSearchContributor
 			className -> {
 				if (!Validator.isBlank(className)) {
 					searchRequestBuilder.addComplexQueryPart(
-						getComplexQueryPart(getEntryClassNameQuery(className)));
+						_getComplexQueryPart(
+							_getEntryClassNameQuery(className)));
 				}
 			});
 	}
 
-	protected void filterByGroupId(
+	private void _filterByGroupId(
 		PortletSharedSearchSettings portletSharedSearchSettings,
 		SearchRequestBuilder searchRequestBuilder) {
 
@@ -136,27 +150,18 @@ public class SimilarResultsPortletSharedSearchContributor
 				new long[] {getGroupId(portletSharedSearchSettings)}));
 	}
 
-	protected ComplexQueryPart getComplexQueryPart(Query query) {
+	private ComplexQueryPart _getComplexQueryPart(Query query) {
 		return _complexQueryPartBuilderFactory.builder(
 		).query(
 			query
 		).build();
 	}
 
-	protected Query getEntryClassNameQuery(String entryClassName) {
+	private Query _getEntryClassNameQuery(String entryClassName) {
 		return _queries.term(Field.ENTRY_CLASS_NAME, entryClassName);
 	}
 
-	protected long getGroupId(
-		PortletSharedSearchSettings portletSharedSearchSettings) {
-
-		ThemeDisplay themeDisplay =
-			portletSharedSearchSettings.getThemeDisplay();
-
-		return themeDisplay.getScopeGroupId();
-	}
-
-	protected MoreLikeThisQuery getMoreLikeThisQuery(
+	private MoreLikeThisQuery _getMoreLikeThisQuery(
 		String uid,
 		SimilarResultsPortletPreferences similarResultsPortletPreferences) {
 
@@ -171,7 +176,7 @@ public class SimilarResultsPortletSharedSearchContributor
 		return moreLikeThisQuery;
 	}
 
-	protected Optional<Criteria> getSimilarResultsInputOptional(
+	private Optional<Criteria> _getSimilarResultsInputOptional(
 		long groupId, SimilarResultsRoute similarResultsRoute) {
 
 		SimilarResultsContributor similarResultsContributor =
@@ -188,26 +193,12 @@ public class SimilarResultsPortletSharedSearchContributor
 		return criteriaBuilderImpl.build();
 	}
 
-	protected String getURLString(
+	private String _getURLString(
 		PortletSharedSearchSettings portletSharedSearchSettings) {
 
 		return _portal.getCurrentURL(
 			portletSharedSearchSettings.getRenderRequest());
 	}
-
-	protected void setUIDRenderRequestAttribute(
-		Criteria criteria,
-		PortletSharedSearchSettings portletSharedSearchSettings) {
-
-		RenderRequest renderRequest =
-			portletSharedSearchSettings.getRenderRequest();
-
-		renderRequest.setAttribute(Field.UID, criteria.getUID());
-	}
-
-	@Reference
-	protected SimilarResultsContributorsRegistry
-		similarResultsContributorsRegistry;
 
 	private void _populate(
 		MoreLikeThisQuery moreLikeThisQuery,
@@ -247,6 +238,16 @@ public class SimilarResultsPortletSharedSearchContributor
 			similarResultsPortletPreferences.getMinWordLength());
 		moreLikeThisQuery.setTermBoost(
 			similarResultsPortletPreferences.getTermBoost());
+	}
+
+	private void _setUIDRenderRequestAttribute(
+		Criteria criteria,
+		PortletSharedSearchSettings portletSharedSearchSettings) {
+
+		RenderRequest renderRequest =
+			portletSharedSearchSettings.getRenderRequest();
+
+		renderRequest.setAttribute(Field.UID, criteria.getUID());
 	}
 
 	@Reference

@@ -82,10 +82,10 @@ public class KaleoDesignerWorkflowPortletTab extends BaseWorkflowPortletTab {
 				renderRequest, DuplicateKaleoDefinitionNameException.class)) {
 
 			try {
-				setKaleoDefinitionVersionRenderRequestAttribute(
+				_setKaleoDefinitionVersionRenderRequestAttribute(
 					renderRequest, renderResponse);
 
-				setKaleoDesignerServletContextRequestAttribute(renderRequest);
+				_setKaleoDesignerServletContextRequestAttribute(renderRequest);
 			}
 			catch (Exception exception) {
 				_log.error(exception, exception);
@@ -117,7 +117,25 @@ public class KaleoDesignerWorkflowPortletTab extends BaseWorkflowPortletTab {
 			kaleoDefinitionVersionLocalService;
 	}
 
-	protected void setKaleoDefinitionVersionRenderRequestAttribute(
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.portal.workflow.kaleo.designer.web)",
+		unbind = "-"
+	)
+	protected void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected KaleoDefinitionVersionLocalService
+		kaleoDefinitionVersionLocalService;
+
+	private void _setKaleoDefinitionVersionRenderRequestAttribute(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortalException {
 
@@ -166,30 +184,12 @@ public class KaleoDesignerWorkflowPortletTab extends BaseWorkflowPortletTab {
 			kaleoDefinitionVersion);
 	}
 
-	protected void setKaleoDesignerServletContextRequestAttribute(
+	private void _setKaleoDesignerServletContextRequestAttribute(
 		RenderRequest renderRequest) {
 
 		renderRequest.setAttribute(
 			"portletTabServletContext", getServletContext());
 	}
-
-	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.portal.workflow.kaleo.designer.web)",
-		unbind = "-"
-	)
-	protected void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserLocalService(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected KaleoDefinitionVersionLocalService
-		kaleoDefinitionVersionLocalService;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		KaleoDesignerWorkflowPortletTab.class);

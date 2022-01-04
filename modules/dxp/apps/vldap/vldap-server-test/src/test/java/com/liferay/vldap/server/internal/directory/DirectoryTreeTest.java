@@ -122,7 +122,7 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 	public void testGetCommunitiesSearchBaseWithEmptyIdentifiers()
 		throws Exception {
 
-		setUpGroup();
+		_setUpGroup();
 
 		Method getCommunitiesSearchBaseMethod = _clazz.getDeclaredMethod(
 			"getCommunitiesSearchBase", String.class, String.class, long.class,
@@ -145,13 +145,13 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 
 	@Test
 	public void testGetCommunitiesSearchBaseWithIdentifiers() throws Exception {
-		setUpUsers();
+		_setUpUsers();
 
-		setUpExpando();
-		setUpFastDateFormat();
-		setUpGroup();
-		setUpExpando();
-		setUpPasswordPolicy();
+		_setUpExpando();
+		_setUpFastDateFormat();
+		_setUpGroup();
+		_setUpExpando();
+		_setUpPasswordPolicy();
 		setUpPortalUtil();
 
 		Method getCommunitiesSearchBaseMethod = _clazz.getDeclaredMethod(
@@ -165,7 +165,7 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 				_classInstance, "Liferay", "testGroupName", 0, company,
 				Arrays.asList(new Identifier("cn", "testScreenName")));
 
-		assertUserSearchBase(searchBase, true);
+		_assertUserSearchBase(searchBase, true);
 	}
 
 	@Test
@@ -188,7 +188,7 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 	public void testGetCommunitiesSearchBaseWithNullTypeValue()
 		throws Exception {
 
-		setUpGroup();
+		_setUpGroup();
 
 		Method getCommunitiesSearchBaseMethod = _clazz.getDeclaredMethod(
 			"getCommunitiesSearchBase", String.class, String.class, long.class,
@@ -212,8 +212,8 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 	public void testGetCommunitiesSearchBaseWithOrganization()
 		throws Exception {
 
-		setUpGroup();
-		setUpOrganization();
+		_setUpGroup();
+		_setUpOrganization();
 
 		Method getCommunitiesSearchBaseMethod = _clazz.getDeclaredMethod(
 			"getCommunitiesSearchBase", String.class, String.class, long.class,
@@ -388,7 +388,7 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 	public void testGetOrganizationsSearchBaseWithEmptyIdentifiers()
 		throws Exception {
 
-		setUpOrganization();
+		_setUpOrganization();
 
 		Method getOrganizationsSearchBaseMethod = _clazz.getDeclaredMethod(
 			"getOrganizationsSearchBase", String.class, String.class,
@@ -413,12 +413,12 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 	public void testGetOrganizationsSearchBaseWithIdentifiers()
 		throws Exception {
 
-		setUpUsers();
+		_setUpUsers();
 
-		setUpExpando();
-		setUpFastDateFormat();
-		setUpOrganization();
-		setUpPasswordPolicy();
+		_setUpExpando();
+		_setUpFastDateFormat();
+		_setUpOrganization();
+		_setUpPasswordPolicy();
 		setUpPortalUtil();
 
 		Method getOrganizationsSearchBaseMethod = _clazz.getDeclaredMethod(
@@ -432,7 +432,7 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 				_classInstance, "Liferay", "testOrganizationName", 0, company,
 				Arrays.asList(new Identifier("cn", "testScreenName")));
 
-		assertUserSearchBase(searchBase, true);
+		_assertUserSearchBase(searchBase, true);
 	}
 
 	@Test
@@ -457,7 +457,7 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 	public void testGetOrganizationsSearchBaseWithNullTypeValue()
 		throws Exception {
 
-		setUpOrganization();
+		_setUpOrganization();
 
 		Method getOrganizationsSearchBaseMethod = _clazz.getDeclaredMethod(
 			"getOrganizationsSearchBase", String.class, String.class,
@@ -479,7 +479,7 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 
 	@Test
 	public void testGetRolesSearchBaseWithEmptyIdentifiers() throws Exception {
-		setUpRole();
+		_setUpRole();
 
 		Method getRolesSearchBaseMethod = _clazz.getDeclaredMethod(
 			"getRolesSearchBase", String.class, String.class, long.class,
@@ -500,13 +500,13 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 
 	@Test
 	public void testGetRolesSearchBaseWithIdentifiers() throws Exception {
-		setUpUsers();
+		_setUpUsers();
 
-		setUpExpando();
-		setUpFastDateFormat();
-		setUpPasswordPolicy();
+		_setUpExpando();
+		_setUpFastDateFormat();
+		_setUpPasswordPolicy();
 		setUpPortalUtil();
-		setUpRole();
+		_setUpRole();
 
 		Method getRolesSearchBaseMethod = _clazz.getDeclaredMethod(
 			"getRolesSearchBase", String.class, String.class, long.class,
@@ -518,7 +518,7 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 			_classInstance, "Liferay", "testRoleName", 0, company,
 			Arrays.asList(new Identifier("cn", "testScreenName")));
 
-		assertUserSearchBase(searchBase, true);
+		_assertUserSearchBase(searchBase, true);
 	}
 
 	@Test
@@ -538,7 +538,7 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 
 	@Test
 	public void testGetRolesSearchBaseWithNullTypeValue() throws Exception {
-		setUpRole();
+		_setUpRole();
 
 		Method getRolesSearchBaseMethod = _clazz.getDeclaredMethod(
 			"getRolesSearchBase", String.class, String.class, long.class,
@@ -558,7 +558,7 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 
 	@Test
 	public void testGetSambaMachinesSearchBase() throws Exception {
-		setUpOrganization();
+		_setUpOrganization();
 
 		Method getSambaMachinesSearchBaseMethod = _clazz.getDeclaredMethod(
 			"getSambaMachinesSearchBase", String.class, Company.class,
@@ -584,7 +584,7 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 	public void testGetSambaMachinesSearchBaseWithInvalidIdentifier()
 		throws Exception {
 
-		setUpOrganization();
+		_setUpOrganization();
 
 		Method getSambaMachinesSearchBaseMethod = _clazz.getDeclaredMethod(
 			"getSambaMachinesSearchBase", String.class, Company.class,
@@ -608,7 +608,7 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 	public void testGetSambaMachinesSearchBaseWithMultipleIdentifiers()
 		throws Exception {
 
-		setUpOrganization();
+		_setUpOrganization();
 
 		Method getSambaMachinesSearchBaseMethod = _clazz.getDeclaredMethod(
 			"getSambaMachinesSearchBase", String.class, Company.class,
@@ -633,7 +633,7 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 	public void testGetSambaMachinesSearchBaseWithNullDirectories()
 		throws Exception {
 
-		setUpOrganization();
+		_setUpOrganization();
 
 		Method getSambaMachinesSearchBaseMethod = _clazz.getDeclaredMethod(
 			"getSambaMachinesSearchBase", String.class, Company.class,
@@ -734,7 +734,7 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 
 	@Test
 	public void testGetSearchBaseWithMultipleIdentifiers() throws Exception {
-		setUpOrganization();
+		_setUpOrganization();
 
 		Method getSearchBaseMethod = _clazz.getDeclaredMethod(
 			"getSearchBase", String.class, long.class, LinkedHashMap.class,
@@ -865,11 +865,11 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 
 	@Test
 	public void testGetSearchBaseWithOneIdentifier() throws Exception {
-		setUpUsers();
+		_setUpUsers();
 
-		setUpExpando();
-		setUpFastDateFormat();
-		setUpPasswordPolicy();
+		_setUpExpando();
+		_setUpFastDateFormat();
+		_setUpPasswordPolicy();
 		setUpPortalUtil();
 
 		Method getSearchBaseMethod = _clazz.getDeclaredMethod(
@@ -883,7 +883,7 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 			Arrays.asList(new Identifier("cn", "testScreenName")),
 			_organization, company);
 
-		assertUserSearchBase(searchBase, false);
+		_assertUserSearchBase(searchBase, false);
 	}
 
 	@Test
@@ -939,15 +939,15 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 
 		Dn dn = new Dn("ou=Users,ou=liferay.com,o=Liferay");
 
-		assertUsersSearchBase(directoryTree.getSearchBase(dn, 0));
+		_assertUsersSearchBase(directoryTree.getSearchBase(dn, 0));
 	}
 
 	@Test
 	public void testGetUserGroupsSearchBaseWithEmptyIdentifiers()
 		throws Exception {
 
-		setUpGroup();
-		setUpUserGroups();
+		_setUpGroup();
+		_setUpUserGroups();
 
 		Method getUserGroupsSearchBaseMethod = _clazz.getDeclaredMethod(
 			"getUserGroupsSearchBase", String.class, String.class, long.class,
@@ -970,14 +970,14 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 
 	@Test
 	public void testGetUserGroupsSearchBaseWithIdentifiers() throws Exception {
-		setUpUsers();
+		_setUpUsers();
 
-		setUpExpando();
-		setUpFastDateFormat();
-		setUpGroup();
-		setUpPasswordPolicy();
+		_setUpExpando();
+		_setUpFastDateFormat();
+		_setUpGroup();
+		_setUpPasswordPolicy();
 		setUpPortalUtil();
-		setUpUserGroups();
+		_setUpUserGroups();
 
 		Method getUserGroupsSearchBaseMethod = _clazz.getDeclaredMethod(
 			"getUserGroupsSearchBase", String.class, String.class, long.class,
@@ -990,15 +990,15 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 				_classInstance, "Liferay", "testUserGroupName", 0, company,
 				Arrays.asList(new Identifier("cn", "testScreenName")));
 
-		assertUserSearchBase(searchBase, true);
+		_assertUserSearchBase(searchBase, true);
 	}
 
 	@Test
 	public void testGetUserGroupsSearchBaseWithNullTypeValue()
 		throws Exception {
 
-		setUpGroup();
-		setUpUserGroups();
+		_setUpGroup();
+		_setUpUserGroups();
 
 		Method getUserGroupsSearchBaseMethod = _clazz.getDeclaredMethod(
 			"getUserGroupsSearchBase", String.class, String.class, long.class,
@@ -1038,11 +1038,11 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 
 	@Test
 	public void testGetUsersSearchBaseWithEmptyIdentifiers() throws Exception {
-		setUpUsers();
+		_setUpUsers();
 
-		setUpExpando();
-		setUpFastDateFormat();
-		setUpPasswordPolicy();
+		_setUpExpando();
+		_setUpFastDateFormat();
+		_setUpPasswordPolicy();
 		setUpPortalUtil();
 
 		Method getUsersSearchBaseMethod = _clazz.getDeclaredMethod(
@@ -1055,16 +1055,16 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 			_classInstance, "Liferay", "testScreenName", 0, company,
 			new ArrayList<>());
 
-		assertUserSearchBase(searchBase, true);
+		_assertUserSearchBase(searchBase, true);
 	}
 
 	@Test
 	public void testGetUsersSearchBaseWithIdentifiers() throws Exception {
-		setUpUsers();
+		_setUpUsers();
 
-		setUpExpando();
-		setUpFastDateFormat();
-		setUpPasswordPolicy();
+		_setUpExpando();
+		_setUpFastDateFormat();
+		_setUpPasswordPolicy();
 		setUpPortalUtil();
 
 		Method getUsersSearchBaseMethod = _clazz.getDeclaredMethod(
@@ -1077,12 +1077,12 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 			_classInstance, "Liferay", "testScreenName", 0, company,
 			Arrays.asList(new Identifier("cn", "testScreenName")));
 
-		assertUserSearchBase(searchBase, true);
+		_assertUserSearchBase(searchBase, true);
 	}
 
 	@Test
 	public void testGetUsersSearchBaseWithInvalidRdnType() throws Exception {
-		setUpGroup();
+		_setUpGroup();
 
 		Method getUsersSearchBaseMethod = _clazz.getDeclaredMethod(
 			"getUsersSearchBase", String.class, String.class, String.class,
@@ -1099,11 +1099,11 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 
 	@Test
 	public void testGetUsersSearchBaseWithNullTypeValue() throws Exception {
-		setUpUsers();
+		_setUpUsers();
 
-		setUpExpando();
-		setUpFastDateFormat();
-		setUpPasswordPolicy();
+		_setUpExpando();
+		_setUpFastDateFormat();
+		_setUpPasswordPolicy();
 		setUpPortalUtil();
 
 		Method getUsersSearchBaseMethod = _clazz.getDeclaredMethod(
@@ -1115,12 +1115,12 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 		SearchBase searchBase = (SearchBase)getUsersSearchBaseMethod.invoke(
 			_classInstance, "Liferay", null, 0, company, new ArrayList<>());
 
-		assertUsersSearchBase(searchBase);
+		_assertUsersSearchBase(searchBase);
 	}
 
 	@Test
 	public void testGetUsersSearchBaseWithNullUser() throws Exception {
-		setUpGroup();
+		_setUpGroup();
 
 		Method getUsersSearchBaseMethod = _clazz.getDeclaredMethod(
 			"getUsersSearchBase", String.class, String.class, long.class,
@@ -1137,7 +1137,7 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 
 	@Test
 	public void testGetUsersSearchBaseWithNullUsers() throws Exception {
-		setUpGroup();
+		_setUpGroup();
 
 		Method getUsersSearchBaseMethod = _clazz.getDeclaredMethod(
 			"getUsersSearchBase", String.class, String.class, String.class,
@@ -1154,11 +1154,11 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 
 	@Test
 	public void testGetUsersSearchBaseWithUsers() throws Exception {
-		setUpUsers();
+		_setUpUsers();
 
-		setUpExpando();
-		setUpFastDateFormat();
-		setUpPasswordPolicy();
+		_setUpExpando();
+		_setUpFastDateFormat();
+		_setUpPasswordPolicy();
 		setUpPortalUtil();
 
 		Method getUsersSearchBaseMethod = _clazz.getDeclaredMethod(
@@ -1171,7 +1171,7 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 			_classInstance, "Liferay", "cn", "testScreenName",
 			new LinkedHashMap<String, Object>(), 0, company);
 
-		assertUserSearchBase(searchBase, true);
+		_assertUserSearchBase(searchBase, true);
 	}
 
 	@Test
@@ -1179,9 +1179,9 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 		throws Exception {
 
 		List<FilterConstraint> filterConstraints =
-			getFilterConstraintsFromBranchNode(new AndNode(), true);
+			_getFilterConstraintsFromBranchNode(new AndNode(), true);
 
-		assertFilterConstraints(filterConstraints);
+		_assertFilterConstraints(filterConstraints);
 	}
 
 	@Test
@@ -1251,7 +1251,7 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 		throws Exception {
 
 		List<FilterConstraint> filterConstraints =
-			getFilterConstraintsFromBranchNode(new NotNode(), true);
+			_getFilterConstraintsFromBranchNode(new NotNode(), true);
 
 		Assert.assertTrue(ListUtil.isEmpty(filterConstraints));
 	}
@@ -1265,7 +1265,7 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 		branchNode.addNode(null);
 
 		List<FilterConstraint> filterConstraints =
-			getFilterConstraintsFromBranchNode(branchNode, false);
+			_getFilterConstraintsFromBranchNode(branchNode, false);
 
 		Assert.assertTrue(ListUtil.isEmpty(filterConstraints));
 
@@ -1273,7 +1273,7 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 
 		branchNode.addNode(null);
 
-		filterConstraints = getFilterConstraintsFromBranchNode(
+		filterConstraints = _getFilterConstraintsFromBranchNode(
 			branchNode, false);
 
 		Assert.assertTrue(ListUtil.isEmpty(filterConstraints));
@@ -1284,7 +1284,7 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 		throws Exception {
 
 		List<FilterConstraint> filterConstraints =
-			getFilterConstraintsFromBranchNode(null, false);
+			_getFilterConstraintsFromBranchNode(null, false);
 
 		Assert.assertTrue(ListUtil.isEmpty(filterConstraints));
 	}
@@ -1294,9 +1294,9 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 		throws Exception {
 
 		List<FilterConstraint> filterConstraints =
-			getFilterConstraintsFromBranchNode(new OrNode(), true);
+			_getFilterConstraintsFromBranchNode(new OrNode(), true);
 
-		assertFilterConstraints(filterConstraints);
+		_assertFilterConstraints(filterConstraints);
 	}
 
 	@Test
@@ -1306,7 +1306,7 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 		LeafNode leafNode = new SubstringNode("cn");
 
 		List<FilterConstraint> filterConstraints =
-			getFilterConstraintsFromLeafNode(leafNode);
+			_getFilterConstraintsFromLeafNode(leafNode);
 
 		Assert.assertTrue(ListUtil.isEmpty(filterConstraints));
 	}
@@ -1318,9 +1318,9 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 		LeafNode leafNode = new EqualityNode("cn", "testScreenName");
 
 		List<FilterConstraint> filterConstraints =
-			getFilterConstraintsFromLeafNode(leafNode);
+			_getFilterConstraintsFromLeafNode(leafNode);
 
-		assertFilterConstraints(filterConstraints);
+		_assertFilterConstraints(filterConstraints);
 	}
 
 	@Test
@@ -1330,7 +1330,7 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 		LeafNode leafNode = new GreaterEqNode("cn", "testScreenName");
 
 		List<FilterConstraint> filterConstraints =
-			getFilterConstraintsFromLeafNode(leafNode);
+			_getFilterConstraintsFromLeafNode(leafNode);
 
 		Assert.assertTrue(ListUtil.isEmpty(filterConstraints));
 	}
@@ -1342,7 +1342,7 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 		LeafNode leafNode = new LessEqNode("cn", "testScreenName");
 
 		List<FilterConstraint> filterConstraints =
-			getFilterConstraintsFromLeafNode(leafNode);
+			_getFilterConstraintsFromLeafNode(leafNode);
 
 		Assert.assertTrue(ListUtil.isEmpty(filterConstraints));
 	}
@@ -1352,7 +1352,7 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 		throws Exception {
 
 		List<FilterConstraint> filterConstraints =
-			getFilterConstraintsFromLeafNode(null);
+			_getFilterConstraintsFromLeafNode(null);
 
 		Assert.assertTrue(ListUtil.isEmpty(filterConstraints));
 	}
@@ -1364,7 +1364,7 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 		LeafNode leafNode = new PresenceNode("cn");
 
 		List<FilterConstraint> filterConstraints =
-			getFilterConstraintsFromLeafNode(leafNode);
+			_getFilterConstraintsFromLeafNode(leafNode);
 
 		Assert.assertEquals(
 			filterConstraints.toString(), 1, filterConstraints.size());
@@ -1391,7 +1391,7 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 			(List<FilterConstraint>)toFilterConstraintsMethod.invoke(
 				_classInstance, branchNode);
 
-		assertFilterConstraints(filterConstraints);
+		_assertFilterConstraints(filterConstraints);
 	}
 
 	@Test
@@ -1407,7 +1407,7 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 			(List<FilterConstraint>)toFilterConstraintsMethod.invoke(
 				_classInstance, exprNode);
 
-		assertFilterConstraints(filterConstraints);
+		_assertFilterConstraints(filterConstraints);
 	}
 
 	@Test
@@ -1426,7 +1426,7 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 		Assert.assertTrue(ListUtil.isEmpty(filterConstraints));
 	}
 
-	protected static void assertFilterConstraints(
+	private static void _assertFilterConstraints(
 		List<FilterConstraint> filterConstraints) {
 
 		Assert.assertEquals(
@@ -1437,7 +1437,7 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 		Assert.assertEquals("testScreenName", filterConstraint.getValue("cn"));
 	}
 
-	protected static List<FilterConstraint> getFilterConstraintsFromBranchNode(
+	private static List<FilterConstraint> _getFilterConstraintsFromBranchNode(
 			BranchNode branchNode, boolean addExprNode)
 		throws Exception {
 
@@ -1458,7 +1458,7 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 				_classInstance, branchNode);
 	}
 
-	protected static List<FilterConstraint> getFilterConstraintsFromLeafNode(
+	private static List<FilterConstraint> _getFilterConstraintsFromLeafNode(
 			LeafNode leafNode)
 		throws Exception {
 
@@ -1472,7 +1472,7 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 				_classInstance, leafNode);
 	}
 
-	protected static void setUpFastDateFormat() {
+	private static void _setUpFastDateFormat() {
 		FastDateFormat fastDateFormat = FastDateFormat.getInstance(
 			"yyyyMMddHHmmss.SSSZ", null, LocaleUtil.getDefault());
 
@@ -1492,7 +1492,7 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 			fastDateFormatFactory);
 	}
 
-	protected void assertUserSearchBase(
+	private void _assertUserSearchBase(
 		SearchBase searchBase, boolean assertUser) {
 
 		Assert.assertTrue(searchBase.getDirectory() instanceof UserDirectory);
@@ -1508,7 +1508,7 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 		}
 	}
 
-	protected void assertUsersSearchBase(SearchBase searchBase) {
+	private void _assertUsersSearchBase(SearchBase searchBase) {
 		Assert.assertTrue(searchBase.getDirectory() instanceof UsersDirectory);
 		Assert.assertTrue(
 			searchBase.getDirectoryBuilder() instanceof UsersBuilder);
@@ -1516,7 +1516,7 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 		Assert.assertEquals(company.getCompanyId(), searchBase.getCompanyId());
 	}
 
-	protected void setUpExpando() {
+	private void _setUpExpando() {
 		ExpandoBridge expandoBridge = mock(ExpandoBridge.class);
 
 		when(
@@ -1540,7 +1540,7 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 		);
 	}
 
-	protected void setUpGroup() throws Exception {
+	private void _setUpGroup() throws Exception {
 		Group group = mock(Group.class);
 
 		when(
@@ -1563,7 +1563,7 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 		);
 	}
 
-	protected void setUpOrganization() throws Exception {
+	private void _setUpOrganization() throws Exception {
 		_organization = mock(Organization.class);
 
 		when(
@@ -1586,10 +1586,10 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 		);
 	}
 
-	protected void setUpPasswordPolicy() throws Exception {
+	private void _setUpPasswordPolicy() throws Exception {
 		PasswordPolicy passwordPolicy = mock(PasswordPolicy.class);
 
-		setUpPasswordPolicy(passwordPolicy);
+		_setUpPasswordPolicy(passwordPolicy);
 
 		when(
 			_user.getPasswordPolicy()
@@ -1598,7 +1598,7 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 		);
 	}
 
-	protected void setUpRole() throws Exception {
+	private void _setUpRole() throws Exception {
 		Role role = mock(Role.class);
 
 		when(
@@ -1615,7 +1615,7 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 		);
 	}
 
-	protected void setUpUserGroups() throws Exception {
+	private void _setUpUserGroups() throws Exception {
 		UserGroup userGroup = mock(UserGroup.class);
 
 		when(
@@ -1638,7 +1638,7 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 		);
 	}
 
-	protected void setUpUsers() {
+	private void _setUpUsers() {
 		_user = mock(User.class);
 
 		when(

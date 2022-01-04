@@ -91,7 +91,7 @@ public class CommerceMLIndexerPortalInstanceLifecycleListener
 			return;
 		}
 
-		verifyCompanies(commerceMLIndexer);
+		_verifyCompanies(commerceMLIndexer);
 	}
 
 	@Reference(unbind = "-")
@@ -103,7 +103,7 @@ public class CommerceMLIndexerPortalInstanceLifecycleListener
 		for (CommerceMLIndexer queuedCommerceMLIndexer :
 				_queuedCommerceMLIndexers) {
 
-			verifyCompanies(queuedCommerceMLIndexer);
+			_verifyCompanies(queuedCommerceMLIndexer);
 		}
 
 		_queuedCommerceMLIndexers.clear();
@@ -120,7 +120,7 @@ public class CommerceMLIndexerPortalInstanceLifecycleListener
 		_commerceMLIndexers.remove(commerceMLIndexer);
 	}
 
-	protected void verifyCompanies(CommerceMLIndexer commerceMLIndexer) {
+	private void _verifyCompanies(CommerceMLIndexer commerceMLIndexer) {
 		_companyLocalService.forEachCompanyId(
 			companyId -> commerceMLIndexer.createIndex(companyId));
 	}

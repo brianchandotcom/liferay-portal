@@ -45,17 +45,17 @@ public class AddSchedulerMVCActionCommandTest {
 
 	@Before
 	public void setUp() {
-		setUpFastDateFormatFactoryUtil();
+		_setUpFastDateFormatFactoryUtil();
 	}
 
 	@Test
 	public void testDailyEveryTwoDaysRecurrence() {
 		ActionRequest actionRequest = Mockito.mock(ActionRequest.class);
 
-		whenActionRequestGetParameter(actionRequest, "dailyInterval", "2");
+		_whenActionRequestGetParameter(actionRequest, "dailyInterval", "2");
 
 		String actualCronText = _addSchedulerMVCActionCommand.getCronText(
-			actionRequest, calendarOf(2017, 1, 1, 7, 0), true,
+			actionRequest, _calendarOf(2017, 1, 1, 7, 0), true,
 			Recurrence.DAILY);
 
 		Assert.assertEquals("0 0 7 1/2 * ? *", actualCronText);
@@ -65,10 +65,10 @@ public class AddSchedulerMVCActionCommandTest {
 	public void testDailyEveryWeekdayRecurrence() {
 		ActionRequest actionRequest = Mockito.mock(ActionRequest.class);
 
-		whenActionRequestGetParameter(actionRequest, "dailyType", "2");
+		_whenActionRequestGetParameter(actionRequest, "dailyType", "2");
 
 		String actualCronText = _addSchedulerMVCActionCommand.getCronText(
-			actionRequest, calendarOf(2017, 1, 1, 7, 0), true,
+			actionRequest, _calendarOf(2017, 1, 1, 7, 0), true,
 			Recurrence.DAILY);
 
 		Assert.assertEquals("0 0 7 ? * MON,TUE,WED,THU,FRI *", actualCronText);
@@ -78,12 +78,12 @@ public class AddSchedulerMVCActionCommandTest {
 	public void testMonthlyDay12OfEveryTwoMonthsRecurrence() {
 		ActionRequest actionRequest = Mockito.mock(ActionRequest.class);
 
-		whenActionRequestGetParameter(actionRequest, "monthlyType", "0");
-		whenActionRequestGetParameter(actionRequest, "monthlyDay0", "12");
-		whenActionRequestGetParameter(actionRequest, "monthlyInterval0", "2");
+		_whenActionRequestGetParameter(actionRequest, "monthlyType", "0");
+		_whenActionRequestGetParameter(actionRequest, "monthlyDay0", "12");
+		_whenActionRequestGetParameter(actionRequest, "monthlyInterval0", "2");
 
 		String actualCronText = _addSchedulerMVCActionCommand.getCronText(
-			actionRequest, calendarOf(2017, 1, 1, 13, 0), true,
+			actionRequest, _calendarOf(2017, 1, 1, 13, 0), true,
 			Recurrence.MONTHLY);
 
 		Assert.assertEquals("0 0 13 12 1/2 ? *", actualCronText);
@@ -93,13 +93,13 @@ public class AddSchedulerMVCActionCommandTest {
 	public void testMonthlyThirdTuesdayOfEveryThreeMonthsRecurrence() {
 		ActionRequest actionRequest = Mockito.mock(ActionRequest.class);
 
-		whenActionRequestGetParameter(actionRequest, "monthlyType", "1");
-		whenActionRequestGetParameter(actionRequest, "monthlyPos", "3");
-		whenActionRequestGetParameter(actionRequest, "monthlyDay1", "3");
-		whenActionRequestGetParameter(actionRequest, "monthlyInterval1", "3");
+		_whenActionRequestGetParameter(actionRequest, "monthlyType", "1");
+		_whenActionRequestGetParameter(actionRequest, "monthlyPos", "3");
+		_whenActionRequestGetParameter(actionRequest, "monthlyDay1", "3");
+		_whenActionRequestGetParameter(actionRequest, "monthlyInterval1", "3");
 
 		String actualCronText = _addSchedulerMVCActionCommand.getCronText(
-			actionRequest, calendarOf(2017, 1, 1, 14, 0), true,
+			actionRequest, _calendarOf(2017, 1, 1, 14, 0), true,
 			Recurrence.MONTHLY);
 
 		Assert.assertEquals("0 0 14 ? 1/3 TUE#3 *", actualCronText);
@@ -109,10 +109,10 @@ public class AddSchedulerMVCActionCommandTest {
 	public void testWeeklyEverySundayRecurrence() {
 		ActionRequest actionRequest = Mockito.mock(ActionRequest.class);
 
-		whenActionRequestGetParameter(actionRequest, "weeklyDayPos1", "true");
+		_whenActionRequestGetParameter(actionRequest, "weeklyDayPos1", "true");
 
 		String actualCronText = _addSchedulerMVCActionCommand.getCronText(
-			actionRequest, calendarOf(2017, 1, 1, 12, 0), true,
+			actionRequest, _calendarOf(2017, 1, 1, 12, 0), true,
 			Recurrence.WEEKLY);
 
 		Assert.assertEquals("0 0 12 ? * SUN/1 *", actualCronText);
@@ -122,12 +122,12 @@ public class AddSchedulerMVCActionCommandTest {
 	public void testWeeklyMondayAndWednesdayRecurrence() {
 		ActionRequest actionRequest = Mockito.mock(ActionRequest.class);
 
-		whenActionRequestGetParameter(actionRequest, "weeklyDayPos2", "true");
-		whenActionRequestGetParameter(actionRequest, "weeklyDayPos4", "true");
-		whenActionRequestGetParameter(actionRequest, "weeklyInterval", "1");
+		_whenActionRequestGetParameter(actionRequest, "weeklyDayPos2", "true");
+		_whenActionRequestGetParameter(actionRequest, "weeklyDayPos4", "true");
+		_whenActionRequestGetParameter(actionRequest, "weeklyInterval", "1");
 
 		String actualCronText = _addSchedulerMVCActionCommand.getCronText(
-			actionRequest, calendarOf(2017, 1, 1, 12, 0), true,
+			actionRequest, _calendarOf(2017, 1, 1, 12, 0), true,
 			Recurrence.WEEKLY);
 
 		Assert.assertEquals("0 0 12 ? * MON,WED/1 *", actualCronText);
@@ -137,14 +137,14 @@ public class AddSchedulerMVCActionCommandTest {
 	public void testYearlyEveryTwoYearsThirdSundayOfMarchRecurrence() {
 		ActionRequest actionRequest = Mockito.mock(ActionRequest.class);
 
-		whenActionRequestGetParameter(actionRequest, "yearlyType", "1");
-		whenActionRequestGetParameter(actionRequest, "yearlyDay1", "1");
-		whenActionRequestGetParameter(actionRequest, "yearlyMonth1", "2");
-		whenActionRequestGetParameter(actionRequest, "yearlyPos", "3");
-		whenActionRequestGetParameter(actionRequest, "yearlyInterval1", "2");
+		_whenActionRequestGetParameter(actionRequest, "yearlyType", "1");
+		_whenActionRequestGetParameter(actionRequest, "yearlyDay1", "1");
+		_whenActionRequestGetParameter(actionRequest, "yearlyMonth1", "2");
+		_whenActionRequestGetParameter(actionRequest, "yearlyPos", "3");
+		_whenActionRequestGetParameter(actionRequest, "yearlyInterval1", "2");
 
 		String actualCronText = _addSchedulerMVCActionCommand.getCronText(
-			actionRequest, calendarOf(2017, 1, 1, 12, 0), true,
+			actionRequest, _calendarOf(2017, 1, 1, 12, 0), true,
 			Recurrence.YEARLY);
 
 		Assert.assertEquals("0 0 12 ? 3 SUN#3 2017/2", actualCronText);
@@ -154,19 +154,19 @@ public class AddSchedulerMVCActionCommandTest {
 	public void testYearlyYearlyEveryTwoYearsJanuary12Recurrence() {
 		ActionRequest actionRequest = Mockito.mock(ActionRequest.class);
 
-		whenActionRequestGetParameter(actionRequest, "yearlyType", "0");
-		whenActionRequestGetParameter(actionRequest, "yearlyDay0", "12");
-		whenActionRequestGetParameter(actionRequest, "yearlyMonth0", "0");
-		whenActionRequestGetParameter(actionRequest, "yearlyInterval0", "2");
+		_whenActionRequestGetParameter(actionRequest, "yearlyType", "0");
+		_whenActionRequestGetParameter(actionRequest, "yearlyDay0", "12");
+		_whenActionRequestGetParameter(actionRequest, "yearlyMonth0", "0");
+		_whenActionRequestGetParameter(actionRequest, "yearlyInterval0", "2");
 
 		String actualCronText = _addSchedulerMVCActionCommand.getCronText(
-			actionRequest, calendarOf(2017, 1, 1, 12, 0), true,
+			actionRequest, _calendarOf(2017, 1, 1, 12, 0), true,
 			Recurrence.YEARLY);
 
 		Assert.assertEquals("0 0 12 12 1 ? 2017/2", actualCronText);
 	}
 
-	protected Calendar calendarOf(
+	private Calendar _calendarOf(
 		int year, int month, int date, int hour, int minute) {
 
 		Calendar calendar = new GregorianCalendar(
@@ -183,7 +183,7 @@ public class AddSchedulerMVCActionCommandTest {
 		return calendar;
 	}
 
-	protected void setUpFastDateFormatFactoryUtil() {
+	private void _setUpFastDateFormatFactoryUtil() {
 		FastDateFormatFactoryUtil fastDateFormatFactoryUtil =
 			new FastDateFormatFactoryUtil();
 
@@ -191,7 +191,7 @@ public class AddSchedulerMVCActionCommandTest {
 			new FastDateFormatFactoryImpl());
 	}
 
-	protected void whenActionRequestGetParameter(
+	private void _whenActionRequestGetParameter(
 		ActionRequest actionRequest, String parameterName,
 		String parameterValue) {
 

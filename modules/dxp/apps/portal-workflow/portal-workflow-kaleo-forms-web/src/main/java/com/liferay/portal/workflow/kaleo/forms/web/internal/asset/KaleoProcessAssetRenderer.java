@@ -192,7 +192,7 @@ public class KaleoProcessAssetRenderer
 		httpServletRequest.setAttribute(
 			KaleoFormsWebKeys.KALEO_PROCESS, _kaleoProcess);
 
-		KaleoProcessLink kaleoProcessLink = fetchKaleoProcessLink(
+		KaleoProcessLink kaleoProcessLink = _fetchKaleoProcessLink(
 			httpServletRequest);
 
 		httpServletRequest.setAttribute(
@@ -201,13 +201,19 @@ public class KaleoProcessAssetRenderer
 		return super.include(httpServletRequest, httpServletResponse, template);
 	}
 
-	protected KaleoProcessLink fetchKaleoProcessLink(
+	protected void setKaleoProcessLinkLocalService(
+		KaleoProcessLinkLocalService kaleoProcessLinkLocalService) {
+
+		_kaKaleoProcessLinkLocalService = kaleoProcessLinkLocalService;
+	}
+
+	private KaleoProcessLink _fetchKaleoProcessLink(
 			HttpServletRequest httpServletRequest)
 		throws Exception {
 
 		KaleoProcessLink kaleoProcessLink = null;
 
-		WorkflowTask workflowTask = getWorkflowTask(httpServletRequest);
+		WorkflowTask workflowTask = _getWorkflowTask(httpServletRequest);
 
 		if (workflowTask != null) {
 			kaleoProcessLink =
@@ -218,8 +224,7 @@ public class KaleoProcessAssetRenderer
 		return kaleoProcessLink;
 	}
 
-	protected WorkflowTask getWorkflowTask(
-			HttpServletRequest httpServletRequest)
+	private WorkflowTask _getWorkflowTask(HttpServletRequest httpServletRequest)
 		throws Exception {
 
 		WorkflowTask workflowTask = null;
@@ -237,12 +242,6 @@ public class KaleoProcessAssetRenderer
 		}
 
 		return workflowTask;
-	}
-
-	protected void setKaleoProcessLinkLocalService(
-		KaleoProcessLinkLocalService kaleoProcessLinkLocalService) {
-
-		_kaKaleoProcessLinkLocalService = kaleoProcessLinkLocalService;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

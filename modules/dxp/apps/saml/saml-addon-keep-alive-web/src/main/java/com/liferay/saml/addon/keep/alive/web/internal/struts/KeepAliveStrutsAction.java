@@ -70,16 +70,16 @@ public class KeepAliveStrutsAction implements StrutsAction {
 		}
 
 		if (_samlProviderConfigurationHelper.isRoleIdp()) {
-			executeIdpKeepAlive(httpServletRequest, httpServletResponse);
+			_executeIdpKeepAlive(httpServletRequest, httpServletResponse);
 		}
 		else if (_samlProviderConfigurationHelper.isRoleSp()) {
-			executeSpKeepAlive(httpServletRequest, httpServletResponse);
+			_executeSpKeepAlive(httpServletRequest, httpServletResponse);
 		}
 
 		return null;
 	}
 
-	protected void executeIdpKeepAlive(
+	private void _executeIdpKeepAlive(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
 		throws Exception {
@@ -95,7 +95,7 @@ public class KeepAliveStrutsAction implements StrutsAction {
 		String randomString = StringUtil.randomString();
 		PrintWriter printWriter = httpServletResponse.getWriter();
 
-		List<String> keepAliveURLs = getSPsKeepAliveURLs(httpServletRequest);
+		List<String> keepAliveURLs = _getSPsKeepAliveURLs(httpServletRequest);
 
 		for (String keepAliveURL : keepAliveURLs) {
 			keepAliveURL = _http.addParameter(keepAliveURL, "r", randomString);
@@ -107,7 +107,7 @@ public class KeepAliveStrutsAction implements StrutsAction {
 		}
 	}
 
-	protected void executeSpKeepAlive(
+	private void _executeSpKeepAlive(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
 		throws Exception {
@@ -125,7 +125,7 @@ public class KeepAliveStrutsAction implements StrutsAction {
 		outputStream.write(Base64.decode(_BASE64_1X1_GIF));
 	}
 
-	protected List<String> getSPsKeepAliveURLs(
+	private List<String> _getSPsKeepAliveURLs(
 			HttpServletRequest httpServletRequest)
 		throws Exception {
 

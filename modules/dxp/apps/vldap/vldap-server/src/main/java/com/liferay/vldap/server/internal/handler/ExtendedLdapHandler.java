@@ -46,13 +46,13 @@ public class ExtendedLdapHandler extends BaseLdapHandler {
 		String oid = extendedRequest.getRequestName();
 
 		if (oid.equals(OIDConstants.START_TLS)) {
-			return handleStartTLS(extendedRequest, ioSession);
+			return _handleStartTLS(extendedRequest, ioSession);
 		}
 
 		return null;
 	}
 
-	protected List<Response> handleStartTLS(
+	private List<Response> _handleStartTLS(
 		ExtendedRequest extendedRequest, IoSession ioSession) {
 
 		SslFilter sslFilter = new SslFilter(

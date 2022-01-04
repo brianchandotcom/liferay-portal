@@ -75,7 +75,7 @@ public class FileSystemKeyStoreManagerImpl extends BaseKeyStoreManagerImpl {
 			}
 		}
 
-		monitorFile(samlKeyStoreFile);
+		_monitorFile(samlKeyStoreFile);
 
 		String samlKeyStorePassword = getSamlKeyStorePassword();
 
@@ -114,7 +114,7 @@ public class FileSystemKeyStoreManagerImpl extends BaseKeyStoreManagerImpl {
 			return;
 		}
 
-		loadKeyStore();
+		_loadKeyStore();
 	}
 
 	@Deactivate
@@ -142,43 +142,12 @@ public class FileSystemKeyStoreManagerImpl extends BaseKeyStoreManagerImpl {
 		}
 	}
 
-	protected void doLoadKeyStore() throws Exception {
+	private void _doLoadKeyStore() throws Exception {
 		String samlKeyStorePassword = getSamlKeyStorePassword();
 
 		try (InputStream inputStream = _getInputStream()) {
 			_keyStore.load(inputStream, samlKeyStorePassword.toCharArray());
 		}
-	}
-
-	protected void loadKeyStore() {
-		try {
-			_keyStoreException = null;
-
-			doLoadKeyStore();
-		}
-		catch (Exception exception) {
-			String message = StringBundler.concat(
-				"Unable to load SAML keystore ", getSamlKeyStorePath(), ": ",
-				exception.getMessage());
-
-			_keyStoreException = new KeyStoreException(message, exception);
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message, exception);
-			}
-			else {
-				_log.error(message);
-			}
-		}
-	}
-
-	protected void monitorFile(File samlKeyStoreFile) throws IOException {
-		if (_samlKeyStoreFileWatcher != null) {
-			return;
-		}
-
-		_samlKeyStoreFileWatcher = new FileWatcher(
-			ev -> loadKeyStore(), samlKeyStoreFile.toPath());
 	}
 
 	private InputStream _getInputStream() throws Exception {
@@ -206,9 +175,40 @@ public class FileSystemKeyStoreManagerImpl extends BaseKeyStoreManagerImpl {
 			return null;
 		}
 
-		monitorFile(samlKeyStoreFile);
+		_monitorFile(samlKeyStoreFile);
 
 		return new FileInputStream(samlKeyStoreFile);
+	}
+
+	private void _loadKeyStore() {
+		try {
+			_keyStoreException = null;
+
+			_doLoadKeyStore();
+		}
+		catch (Exception exception) {
+			String message = StringBundler.concat(
+				"Unable to load SAML keystore ", getSamlKeyStorePath(), ": ",
+				exception.getMessage());
+
+			_keyStoreException = new KeyStoreException(message, exception);
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(message, exception);
+			}
+			else {
+				_log.error(message);
+			}
+		}
+	}
+
+	private void _monitorFile(File samlKeyStoreFile) throws IOException {
+		if (_samlKeyStoreFileWatcher != null) {
+			return;
+		}
+
+		_samlKeyStoreFileWatcher = new FileWatcher(
+			ev -> _loadKeyStore(), samlKeyStoreFile.toPath());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

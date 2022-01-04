@@ -451,23 +451,11 @@ public class KaleoFormsAdminDisplayContext {
 		return ParamUtil.getString(_renderRequest, "keywords");
 	}
 
-	protected UnsafeConsumer<DropdownItem, Exception> getOrderByDropdownItem(
-		String orderByCol) {
-
-		return dropdownItem -> {
-			dropdownItem.setActive(orderByCol.equals(getOrderByCol()));
-			dropdownItem.setHref(getPortletURL(), "orderByCol", orderByCol);
-			dropdownItem.setLabel(
-				LanguageUtil.get(
-					_kaleoFormsAdminRequestHelper.getRequest(), orderByCol));
-		};
-	}
-
 	protected List<DropdownItem> getOrderByDropdownItems() {
 		return DropdownItemListBuilder.add(
-			getOrderByDropdownItem("create-date")
+			_getOrderByDropdownItem("create-date")
 		).add(
-			getOrderByDropdownItem("modified-date")
+			_getOrderByDropdownItem("modified-date")
 		).build();
 	}
 
@@ -485,6 +473,18 @@ public class KaleoFormsAdminDisplayContext {
 		}
 
 		return false;
+	}
+
+	private UnsafeConsumer<DropdownItem, Exception> _getOrderByDropdownItem(
+		String orderByCol) {
+
+		return dropdownItem -> {
+			dropdownItem.setActive(orderByCol.equals(getOrderByCol()));
+			dropdownItem.setHref(getPortletURL(), "orderByCol", orderByCol);
+			dropdownItem.setLabel(
+				LanguageUtil.get(
+					_kaleoFormsAdminRequestHelper.getRequest(), orderByCol));
+		};
 	}
 
 	private static final String[] _DISPLAY_VIEWS = {"list"};

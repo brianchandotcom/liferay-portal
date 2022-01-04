@@ -67,11 +67,11 @@ public class SourceSearch extends SearchContainer<Source> {
 			"asc");
 
 		setOrderByComparator(
-			getSourceOrderByComparator(orderByCol, orderByType));
+			_getSourceOrderByComparator(orderByCol, orderByType));
 		setOrderByType(orderByType);
 	}
 
-	protected OrderByComparator<Source> getSourceOrderByComparator(
+	private OrderByComparator<Source> _getSourceOrderByComparator(
 		String orderByCol, String orderByType) {
 
 		boolean orderByAsc = false;

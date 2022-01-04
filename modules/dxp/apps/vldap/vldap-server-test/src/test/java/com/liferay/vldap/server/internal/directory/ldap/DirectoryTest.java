@@ -55,7 +55,7 @@ public class DirectoryTest extends BaseVLDAPTestCase {
 
 	@Test
 	public void testAddMemberAttributes() throws Exception {
-		setUpUser();
+		_setUpUser();
 
 		_directory.addMemberAttributes(
 			"Liferay", company, new LinkedHashMap<String, Object>());
@@ -172,7 +172,7 @@ public class DirectoryTest extends BaseVLDAPTestCase {
 		Assert.assertEquals(attributes.toString(), 1, attributes.size());
 	}
 
-	protected void setUpUser() {
+	private void _setUpUser() {
 		User user = mock(User.class);
 
 		when(

@@ -76,7 +76,38 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class UpdateCertificateMVCActionCommand extends BaseMVCActionCommand {
 
-	protected void authenticateCertificate(
+	@Override
+	protected void doProcessAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PermissionChecker permissionChecker =
+			themeDisplay.getPermissionChecker();
+
+		if (!permissionChecker.isCompanyAdmin()) {
+			throw new PrincipalException();
+		}
+
+		String cmd = ParamUtil.get(actionRequest, Constants.CMD, "auth");
+
+		if (cmd.equals("auth")) {
+			_authenticateCertificate(actionRequest, actionResponse);
+		}
+		else if (cmd.equals("delete")) {
+			_deleteCertificate(actionRequest);
+		}
+		else if (cmd.equals("import")) {
+			_importCertificate(actionRequest, themeDisplay.getUser());
+		}
+		else if (cmd.equals("replace")) {
+			_replaceCertificate(actionRequest);
+		}
+	}
+
+	private void _authenticateCertificate(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
@@ -88,7 +119,7 @@ public class UpdateCertificateMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "settings--");
 
 		String keystoreCredentialPassword = unicodeProperties.getProperty(
-			getCertificateUsagePropertyKey(certificateUsage));
+			_getCertificateUsagePropertyKey(certificateUsage));
 
 		if (Validator.isNotNull(keystoreCredentialPassword)) {
 			_samlProviderConfigurationHelper.updateProperties(
@@ -115,7 +146,7 @@ public class UpdateCertificateMVCActionCommand extends BaseMVCActionCommand {
 			"mvcRenderCommandName", "/admin/update_certificate");
 	}
 
-	protected void deleteCertificate(ActionRequest actionRequest)
+	private void _deleteCertificate(ActionRequest actionRequest)
 		throws Exception {
 
 		_localEntityManager.deleteLocalEntityCertificate(
@@ -123,38 +154,7 @@ public class UpdateCertificateMVCActionCommand extends BaseMVCActionCommand {
 				ParamUtil.getString(actionRequest, "certificateUsage")));
 	}
 
-	@Override
-	protected void doProcessAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		PermissionChecker permissionChecker =
-			themeDisplay.getPermissionChecker();
-
-		if (!permissionChecker.isCompanyAdmin()) {
-			throw new PrincipalException();
-		}
-
-		String cmd = ParamUtil.get(actionRequest, Constants.CMD, "auth");
-
-		if (cmd.equals("auth")) {
-			authenticateCertificate(actionRequest, actionResponse);
-		}
-		else if (cmd.equals("delete")) {
-			deleteCertificate(actionRequest);
-		}
-		else if (cmd.equals("import")) {
-			importCertificate(actionRequest, themeDisplay.getUser());
-		}
-		else if (cmd.equals("replace")) {
-			replaceCertificate(actionRequest);
-		}
-	}
-
-	protected String getCertificateUsagePropertyKey(
+	private String _getCertificateUsagePropertyKey(
 			LocalEntityManager.CertificateUsage certificateUsage)
 		throws UnsupportedBindingException {
 
@@ -173,7 +173,7 @@ public class UpdateCertificateMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	protected void importCertificate(ActionRequest actionRequest, User user)
+	private void _importCertificate(ActionRequest actionRequest, User user)
 		throws Exception {
 
 		hideDefaultSuccessMessage(actionRequest);
@@ -274,7 +274,8 @@ public class UpdateCertificateMVCActionCommand extends BaseMVCActionCommand {
 		UnicodeProperties unicodeProperties = new UnicodeProperties();
 
 		unicodeProperties.setProperty(
-			getCertificateUsagePropertyKey(certificateUsage), keyStorePassword);
+			_getCertificateUsagePropertyKey(certificateUsage),
+			keyStorePassword);
 
 		_samlProviderConfigurationHelper.updateProperties(unicodeProperties);
 
@@ -284,7 +285,7 @@ public class UpdateCertificateMVCActionCommand extends BaseMVCActionCommand {
 			SamlWebKeys.SAML_X509_CERTIFICATE, x509Certificate);
 	}
 
-	protected void replaceCertificate(ActionRequest actionRequest)
+	private void _replaceCertificate(ActionRequest actionRequest)
 		throws Exception {
 
 		UnicodeProperties unicodeProperties = PropertiesParamUtil.getProperties(
@@ -295,7 +296,7 @@ public class UpdateCertificateMVCActionCommand extends BaseMVCActionCommand {
 				ParamUtil.getString(actionRequest, "certificateUsage"));
 
 		String keystoreCredentialPassword = unicodeProperties.getProperty(
-			getCertificateUsagePropertyKey(certificateUsage));
+			_getCertificateUsagePropertyKey(certificateUsage));
 
 		if (Validator.isNull(keystoreCredentialPassword)) {
 			throw new CertificateKeyPasswordException();

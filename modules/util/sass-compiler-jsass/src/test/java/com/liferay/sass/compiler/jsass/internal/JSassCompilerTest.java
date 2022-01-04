@@ -38,7 +38,7 @@ public class JSassCompilerTest {
 				"foo { box-shadow: 2px 4px 7px rgba(0, 0, 0, 0.5); }", "");
 
 			Assert.assertEquals(
-				stripNewLines(expectedOutput), stripNewLines(actualOutput));
+				_stripNewLines(expectedOutput), _stripNewLines(actualOutput));
 		}
 	}
 
@@ -73,14 +73,14 @@ public class JSassCompilerTest {
 					clayCssDir, expectedOutputFileName);
 
 				if (expectedOutputFile.exists()) {
-					String expectedOutput = read(expectedOutputFile.toPath());
+					String expectedOutput = _read(expectedOutputFile.toPath());
 
 					Assert.assertEquals(
 						"Testing: " + fileName,
-						stripNewLines(
+						_stripNewLines(
 							expectedOutput.substring(
 								0, Math.min(expectedOutput.length(), 1000))),
-						stripNewLines(
+						_stripNewLines(
 							actualOutput.substring(
 								0, Math.min(actualOutput.length(), 1000))));
 				}
@@ -112,11 +112,11 @@ public class JSassCompilerTest {
 				File expectedOutputFile = new File(
 					testDir, "expected_output.css");
 
-				String expectedOutput = read(expectedOutputFile.toPath());
+				String expectedOutput = _read(expectedOutputFile.toPath());
 
 				Assert.assertEquals(
-					"Testing: " + dirName, stripNewLines(expectedOutput),
-					stripNewLines(actualOutput));
+					"Testing: " + dirName, _stripNewLines(expectedOutput),
+					_stripNewLines(actualOutput));
 			}
 		}
 	}
@@ -138,10 +138,10 @@ public class JSassCompilerTest {
 			File expectedOutputFile = new File(
 				inputDir, "/unicode/expected_output.css");
 
-			String expectedOutput = read(expectedOutputFile.toPath());
+			String expectedOutput = _read(expectedOutputFile.toPath());
 
 			Assert.assertEquals(
-				stripNewLines(expectedOutput), stripNewLines(actualOutput));
+				_stripNewLines(expectedOutput), _stripNewLines(actualOutput));
 		}
 	}
 
@@ -174,10 +174,10 @@ public class JSassCompilerTest {
 					"/compiler/jni/internal/dependencies/sourcemap",
 				"expected_output_custom_source_map.css");
 
-			String expectedOutput = read(expectedOutputFile.toPath());
+			String expectedOutput = _read(expectedOutputFile.toPath());
 
 			Assert.assertEquals(
-				stripNewLines(expectedOutput), stripNewLines(actualOutput));
+				_stripNewLines(expectedOutput), _stripNewLines(actualOutput));
 		}
 	}
 
@@ -189,7 +189,7 @@ public class JSassCompilerTest {
 				"foo { margin: 21px * 2; }", "");
 
 			Assert.assertEquals(
-				stripNewLines(expectedOutput), stripNewLines(actualOutput));
+				_stripNewLines(expectedOutput), _stripNewLines(actualOutput));
 		}
 	}
 
@@ -202,7 +202,7 @@ public class JSassCompilerTest {
 
 			File inputFile = new File(inputDir, "/unicode/input.scss");
 
-			String input = read(inputFile.toPath());
+			String input = _read(inputFile.toPath());
 
 			String actualOutput = sassCompiler.compileString(input, "");
 
@@ -211,10 +211,10 @@ public class JSassCompilerTest {
 			File expectedOutputFile = new File(
 				inputDir, "/unicode/expected_output.css");
 
-			String expectedOutput = read(expectedOutputFile.toPath());
+			String expectedOutput = _read(expectedOutputFile.toPath());
 
 			Assert.assertEquals(
-				stripNewLines(expectedOutput), stripNewLines(actualOutput));
+				_stripNewLines(expectedOutput), _stripNewLines(actualOutput));
 		}
 	}
 
@@ -233,7 +233,7 @@ public class JSassCompilerTest {
 
 			File inputFile = new File(inputDir, "input.scss");
 
-			String input = read(inputFile.toPath());
+			String input = _read(inputFile.toPath());
 
 			String actualOutput = sassCompiler.compileString(
 				input, inputFile.getCanonicalPath(), "", true);
@@ -247,10 +247,10 @@ public class JSassCompilerTest {
 					"/compiler/jni/internal/dependencies/sourcemap",
 				"expected_output.css");
 
-			String expectedOutput = read(expectedOutputFile.toPath());
+			String expectedOutput = _read(expectedOutputFile.toPath());
 
 			Assert.assertEquals(
-				stripNewLines(expectedOutput), stripNewLines(actualOutput));
+				_stripNewLines(expectedOutput), _stripNewLines(actualOutput));
 		}
 	}
 
@@ -262,7 +262,7 @@ public class JSassCompilerTest {
 				"$val: 1.428571429;.foo { line-height: $val; }", "");
 
 			Assert.assertEquals(
-				stripNewLines(expectedOutput), stripNewLines(actualOutput));
+				_stripNewLines(expectedOutput), _stripNewLines(actualOutput));
 		}
 
 		try (SassCompiler sassCompiler = new JSassCompiler(3)) {
@@ -271,15 +271,15 @@ public class JSassCompilerTest {
 				"$val: 1.428571429;.foo { line-height: $val; }", "");
 
 			Assert.assertEquals(
-				stripNewLines(expectedOutput), stripNewLines(actualOutput));
+				_stripNewLines(expectedOutput), _stripNewLines(actualOutput));
 		}
 	}
 
-	protected String read(Path filePath) throws Exception {
+	private String _read(Path filePath) throws Exception {
 		return new String(Files.readAllBytes(filePath));
 	}
 
-	protected String stripNewLines(String string) {
+	private String _stripNewLines(String string) {
 		string = string.replaceAll("\\n|\\r", "");
 
 		return string.replaceAll("\\s", "");

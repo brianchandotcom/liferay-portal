@@ -38,11 +38,11 @@ public class ReportEntryUpgradeProcess extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		if (hasTable("Reports_Entry")) {
-			updateReportEntries();
+			_updateReportEntries();
 		}
 	}
 
-	protected String updateEntryParameters(String reportParameters) {
+	private String _updateEntryParameters(String reportParameters) {
 		Matcher matcher = _pattern.matcher(reportParameters);
 
 		if (!matcher.find()) {
@@ -71,7 +71,7 @@ public class ReportEntryUpgradeProcess extends UpgradeProcess {
 		return reportParametersJSONArray.toString();
 	}
 
-	protected void updateReportEntries() throws Exception {
+	private void _updateReportEntries() throws Exception {
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				"select companyId, entryId, reportParameters from " +
 					"Reports_Entry")) {
@@ -87,7 +87,7 @@ public class ReportEntryUpgradeProcess extends UpgradeProcess {
 					String reportParameters = resultSet.getString(
 						"reportParameters");
 
-					String updatedReportParameters = updateEntryParameters(
+					String updatedReportParameters = _updateEntryParameters(
 						reportParameters);
 
 					if (Validator.isNotNull(reportParameters) &&

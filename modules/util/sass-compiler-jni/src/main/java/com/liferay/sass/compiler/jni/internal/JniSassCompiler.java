@@ -138,10 +138,10 @@ public class JniSassCompiler implements SassCompiler {
 				includeDirName + File.pathSeparator + inputFile.getParent();
 
 			if ((sourceMapFileName == null) || sourceMapFileName.equals("")) {
-				sourceMapFileName = getOutputFileName(inputFileName) + ".map";
+				sourceMapFileName = _getOutputFileName(inputFileName) + ".map";
 			}
 
-			sassFileContextPointer = createSassFileContext(
+			sassFileContextPointer = _createSassFileContext(
 				inputFileName, includeDirNames, generateSourceMap,
 				sourceMapFileName);
 
@@ -173,7 +173,7 @@ public class JniSassCompiler implements SassCompiler {
 						LiferaysassLibrary.sassContextGetSourceMapString(
 							sassContextPointer);
 
-					write(sourceMapFile, sourceMapOutputPointer.getCString());
+					_write(sourceMapFile, sourceMapOutputPointer.getCString());
 				}
 				catch (Exception exception) {
 					System.out.println("Unable to create source map");
@@ -245,7 +245,7 @@ public class JniSassCompiler implements SassCompiler {
 
 			String fileName = inputFileName.substring(index);
 
-			String outputFileName = getOutputFileName(fileName);
+			String outputFileName = _getOutputFileName(fileName);
 
 			if ((sourceMapFileName == null) || sourceMapFileName.equals("")) {
 				sourceMapFileName = dirName + outputFileName + ".map";
@@ -255,7 +255,7 @@ public class JniSassCompiler implements SassCompiler {
 
 			tempFile.deleteOnExit();
 
-			write(tempFile, input);
+			_write(tempFile, input);
 
 			String output = compileFile(
 				tempFile.getCanonicalPath(), includeDirName, generateSourceMap,
@@ -272,7 +272,7 @@ public class JniSassCompiler implements SassCompiler {
 				sourceMapContent = sourceMapContent.replaceAll(
 					"tmp\\.css", outputFileName);
 
-				write(sourceMapFile, sourceMapContent);
+				_write(sourceMapFile, sourceMapContent);
 			}
 
 			return output;
@@ -282,23 +282,23 @@ public class JniSassCompiler implements SassCompiler {
 		}
 	}
 
-	protected Pointer<LiferaysassLibrary.Sass_File_Context>
-		createSassFileContext(
+	private Pointer<LiferaysassLibrary.Sass_File_Context>
+		_createSassFileContext(
 			String inputFileName, String includeDirNames,
 			boolean generateSourceMap, String sourceMapFileName) {
 
 		Pointer<LiferaysassLibrary.Sass_File_Context> sassFileContextPointer =
-			LiferaysassLibrary.sassMakeFileContext(toPointer(inputFileName));
+			LiferaysassLibrary.sassMakeFileContext(_toPointer(inputFileName));
 
 		Pointer<LiferaysassLibrary.Sass_Options> sassOptionsPointer =
 			LiferaysassLibrary.sassMakeOptions();
 
 		LiferaysassLibrary.sassOptionSetIncludePath(
-			sassOptionsPointer, toPointer(includeDirNames));
+			sassOptionsPointer, _toPointer(includeDirNames));
 		LiferaysassLibrary.sassOptionSetInputPath(
-			sassOptionsPointer, toPointer(inputFileName));
+			sassOptionsPointer, _toPointer(inputFileName));
 		LiferaysassLibrary.sassOptionSetOutputPath(
-			sassOptionsPointer, toPointer(""));
+			sassOptionsPointer, _toPointer(""));
 		LiferaysassLibrary.sassOptionSetOutputStyle(
 			sassOptionsPointer,
 			LiferaysassLibrary.Sass_Output_Style.SASS_STYLE_NESTED);
@@ -313,7 +313,7 @@ public class JniSassCompiler implements SassCompiler {
 			LiferaysassLibrary.sassOptionSetSourceMapEmbed(
 				sassOptionsPointer, false);
 			LiferaysassLibrary.sassOptionSetSourceMapFile(
-				sassOptionsPointer, toPointer(sourceMapFileName));
+				sassOptionsPointer, _toPointer(sourceMapFileName));
 			LiferaysassLibrary.sassOptionSetOmitSourceMapUrl(
 				sassOptionsPointer, false);
 		}
@@ -326,15 +326,15 @@ public class JniSassCompiler implements SassCompiler {
 		return sassFileContextPointer;
 	}
 
-	protected String getOutputFileName(String fileName) {
+	private String _getOutputFileName(String fileName) {
 		return fileName.replaceAll("scss$", "css");
 	}
 
-	protected Pointer<Byte> toPointer(String s) {
+	private Pointer<Byte> _toPointer(String s) {
 		return Pointer.pointerToCString(s);
 	}
 
-	protected void write(File file, String string) throws IOException {
+	private void _write(File file, String string) throws IOException {
 		if (!file.exists()) {
 			File parentFile = file.getParentFile();
 

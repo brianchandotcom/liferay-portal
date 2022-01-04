@@ -193,7 +193,7 @@ public class KaleoDesignerDisplayContext {
 			kaleoDefinition.getTitle());
 
 		String newTitle = LanguageUtil.format(
-			getResourceBundle(), "copy-of-x",
+			_getResourceBundle(), "copy-of-x",
 			kaleoDefinition.getTitle(defaultLanguageId));
 
 		return LocalizationUtil.updateLocalization(
@@ -207,14 +207,14 @@ public class KaleoDesignerDisplayContext {
 		return DropdownItemListBuilder.addGroup(
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
-					getFilterNavigationDropdownItems());
+					_getFilterNavigationDropdownItems());
 				dropdownGroupItem.setLabel(
 					LanguageUtil.get(
 						httpServletRequest, "filter-by-navigation"));
 			}
 		).addGroup(
 			dropdownGroupItem -> {
-				dropdownGroupItem.setDropdownItems(getOrderByDropdownItems());
+				dropdownGroupItem.setDropdownItems(_getOrderByDropdownItems());
 				dropdownGroupItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "order-by"));
 			}
@@ -307,7 +307,7 @@ public class KaleoDesignerDisplayContext {
 
 	public String getManageSubmissionsLink() {
 		return _buildErrorLink(
-			"configure-submissions", getWorkflowInstancesPortletURL());
+			"configure-submissions", _getWorkflowInstancesPortletURL());
 	}
 
 	public Object[] getMessageArguments(
@@ -339,7 +339,7 @@ public class KaleoDesignerDisplayContext {
 				workflowDefinitionLinks.get(0);
 
 			return new Object[] {
-				getLocalizedAssetName(workflowDefinitionLink.getClassName())
+				_getLocalizedAssetName(workflowDefinitionLink.getClassName())
 			};
 		}
 		else if (workflowDefinitionLinks.size() == 2) {
@@ -349,9 +349,9 @@ public class KaleoDesignerDisplayContext {
 				workflowDefinitionLinks.get(1);
 
 			return new Object[] {
-				getLocalizedAssetName(workflowDefinitionLink1.getClassName()),
-				getLocalizedAssetName(workflowDefinitionLink2.getClassName()),
-				getConfigureAssignementLink()
+				_getLocalizedAssetName(workflowDefinitionLink1.getClassName()),
+				_getLocalizedAssetName(workflowDefinitionLink2.getClassName()),
+				_getConfigureAssignementLink()
 			};
 		}
 		else {
@@ -363,9 +363,9 @@ public class KaleoDesignerDisplayContext {
 				workflowDefinitionLinks.get(1);
 
 			return new Object[] {
-				getLocalizedAssetName(workflowDefinitionLink1.getClassName()),
-				getLocalizedAssetName(workflowDefinitionLink2.getClassName()),
-				moreAssets, getConfigureAssignementLink()
+				_getLocalizedAssetName(workflowDefinitionLink1.getClassName()),
+				_getLocalizedAssetName(workflowDefinitionLink2.getClassName()),
+				moreAssets, _getConfigureAssignementLink()
 			};
 		}
 	}
@@ -438,7 +438,7 @@ public class KaleoDesignerDisplayContext {
 			KaleoDesignerPortletKeys.CONTROL_PANEL_WORKFLOW);
 
 		portletURL.setParameter("mvcPath", "/view.jsp");
-		portletURL.setParameter("navigation", getDefinitionsNavigation());
+		portletURL.setParameter("navigation", _getDefinitionsNavigation());
 
 		String delta = ParamUtil.getString(
 			_kaleoDesignerRequestHelper.getRequest(), "delta");
@@ -447,7 +447,7 @@ public class KaleoDesignerDisplayContext {
 			portletURL.setParameter("delta", delta);
 		}
 
-		String keywords = getKeywords();
+		String keywords = _getKeywords();
 
 		if (Validator.isNotNull(keywords)) {
 			portletURL.setParameter("keywords", keywords);
@@ -507,11 +507,11 @@ public class KaleoDesignerDisplayContext {
 
 	public String getTitle(KaleoDefinitionVersion kaleoDefinitionVersion) {
 		if (kaleoDefinitionVersion == null) {
-			return getLanguage("new-workflow");
+			return _getLanguage("new-workflow");
 		}
 
 		if (Validator.isNull(kaleoDefinitionVersion.getTitle())) {
-			return getLanguage("untitled-workflow");
+			return _getLanguage("untitled-workflow");
 		}
 
 		ThemeDisplay themeDisplay =
@@ -656,22 +656,31 @@ public class KaleoDesignerDisplayContext {
 			renderRequest);
 	}
 
-	protected String getConfigureAssignementLink() {
-		return _buildErrorLink(
-			"configure-assignments", getWorkflowDefinitionLinkPortletURL());
+	private String _buildErrorLink(String messageKey, PortletURL portletURL) {
+		return StringUtil.replace(
+			_HTML, new String[] {"[$RENDER_URL$]", "[$MESSAGE$]"},
+			new String[] {
+				portletURL.toString(),
+				LanguageUtil.get(_getResourceBundle(), messageKey)
+			});
 	}
 
-	protected String getDefinitionsNavigation() {
+	private String _getConfigureAssignementLink() {
+		return _buildErrorLink(
+			"configure-assignments", _getWorkflowDefinitionLinkPortletURL());
+	}
+
+	private String _getDefinitionsNavigation() {
 		return ParamUtil.getString(
 			_kaleoDesignerRequestHelper.getRequest(), "navigation", "all");
 	}
 
-	protected UnsafeConsumer<DropdownItem, Exception>
-		getFilterNavigationDropdownItem(String definitionsNavigation) {
+	private UnsafeConsumer<DropdownItem, Exception>
+		_getFilterNavigationDropdownItem(String definitionsNavigation) {
 
 		return dropdownItem -> {
 			dropdownItem.setActive(
-				definitionsNavigation.equals(getDefinitionsNavigation()));
+				definitionsNavigation.equals(_getDefinitionsNavigation()));
 			dropdownItem.setHref(
 				getPortletURL(), "navigation", definitionsNavigation);
 			dropdownItem.setLabel(
@@ -681,31 +690,31 @@ public class KaleoDesignerDisplayContext {
 		};
 	}
 
-	protected List<DropdownItem> getFilterNavigationDropdownItems() {
+	private List<DropdownItem> _getFilterNavigationDropdownItems() {
 		return DropdownItemListBuilder.add(
-			getFilterNavigationDropdownItem("all")
+			_getFilterNavigationDropdownItem("all")
 		).add(
-			getFilterNavigationDropdownItem("not-published")
+			_getFilterNavigationDropdownItem("not-published")
 		).add(
-			getFilterNavigationDropdownItem("published")
+			_getFilterNavigationDropdownItem("published")
 		).build();
 	}
 
-	protected String getKeywords() {
+	private String _getKeywords() {
 		return ParamUtil.getString(
 			_kaleoDesignerRequestHelper.getRequest(), "keywords");
 	}
 
-	protected String getLanguage(String key) {
-		return LanguageUtil.get(getResourceBundle(), key);
+	private String _getLanguage(String key) {
+		return LanguageUtil.get(_getResourceBundle(), key);
 	}
 
-	protected String getLocalizedAssetName(String className) {
+	private String _getLocalizedAssetName(String className) {
 		return ResourceActionsUtil.getModelResource(
 			_kaleoDesignerRequestHelper.getLocale(), className);
 	}
 
-	protected UnsafeConsumer<DropdownItem, Exception> getOrderByDropdownItem(
+	private UnsafeConsumer<DropdownItem, Exception> _getOrderByDropdownItem(
 		String orderByCol) {
 
 		return dropdownItem -> {
@@ -717,20 +726,20 @@ public class KaleoDesignerDisplayContext {
 		};
 	}
 
-	protected List<DropdownItem> getOrderByDropdownItems() {
+	private List<DropdownItem> _getOrderByDropdownItems() {
 		return DropdownItemListBuilder.add(
-			getOrderByDropdownItem("last-modified")
+			_getOrderByDropdownItem("last-modified")
 		).add(
-			getOrderByDropdownItem("title")
+			_getOrderByDropdownItem("title")
 		).build();
 	}
 
-	protected ResourceBundle getResourceBundle() {
+	private ResourceBundle _getResourceBundle() {
 		return _resourceBundleLoader.loadResourceBundle(
 			_kaleoDesignerRequestHelper.getLocale());
 	}
 
-	protected PortletURL getWorkflowDefinitionLinkPortletURL() {
+	private PortletURL _getWorkflowDefinitionLinkPortletURL() {
 		return PortletURLBuilder.createLiferayPortletURL(
 			_kaleoDesignerRequestHelper.getLiferayPortletResponse(),
 			KaleoDesignerPortletKeys.CONTROL_PANEL_WORKFLOW,
@@ -742,7 +751,7 @@ public class KaleoDesignerDisplayContext {
 		).buildPortletURL();
 	}
 
-	protected PortletURL getWorkflowInstancesPortletURL() {
+	private PortletURL _getWorkflowInstancesPortletURL() {
 		return PortletURLBuilder.createLiferayPortletURL(
 			_kaleoDesignerRequestHelper.getLiferayPortletResponse(),
 			KaleoDesignerPortletKeys.CONTROL_PANEL_WORKFLOW_INSTANCE,
@@ -752,21 +761,12 @@ public class KaleoDesignerDisplayContext {
 		).buildPortletURL();
 	}
 
-	protected boolean isSearch() {
-		if (Validator.isNotNull(getKeywords())) {
+	private boolean _isSearch() {
+		if (Validator.isNotNull(_getKeywords())) {
 			return true;
 		}
 
 		return false;
-	}
-
-	private String _buildErrorLink(String messageKey, PortletURL portletURL) {
-		return StringUtil.replace(
-			_HTML, new String[] {"[$RENDER_URL$]", "[$MESSAGE$]"},
-			new String[] {
-				portletURL.toString(),
-				LanguageUtil.get(getResourceBundle(), messageKey)
-			});
 	}
 
 	private void _setKaleoDefinitionVersionSearchResults(
@@ -775,7 +775,7 @@ public class KaleoDesignerDisplayContext {
 		List<KaleoDefinitionVersion> kaleoDefinitionVersions =
 			_kaleoDefinitionVersionLocalService.
 				getLatestKaleoDefinitionVersions(
-					_kaleoDesignerRequestHelper.getCompanyId(), getKeywords(),
+					_kaleoDesignerRequestHelper.getCompanyId(), _getKeywords(),
 					WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
 					QueryUtil.ALL_POS, searchContainer.getOrderByComparator());
 

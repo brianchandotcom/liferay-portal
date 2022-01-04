@@ -50,7 +50,7 @@ public class LoginFailure implements AuthFailure {
 			User user = _userLocalService.getUserByEmailAddress(
 				companyId, emailAddress);
 
-			AuditMessage auditMessage = buildAuditMessage(
+			AuditMessage auditMessage = _buildAuditMessage(
 				user, headerMap, "Failed to authenticate by email address");
 
 			_auditRouter.route(auditMessage);
@@ -76,7 +76,7 @@ public class LoginFailure implements AuthFailure {
 			User user = _userLocalService.getUserByScreenName(
 				companyId, screenName);
 
-			AuditMessage auditMessage = buildAuditMessage(
+			AuditMessage auditMessage = _buildAuditMessage(
 				user, headerMap, "Failed to authenticate by screen name");
 
 			_auditRouter.route(auditMessage);
@@ -101,7 +101,7 @@ public class LoginFailure implements AuthFailure {
 		try {
 			User user = _userLocalService.getUserById(companyId, userId);
 
-			AuditMessage auditMessage = buildAuditMessage(
+			AuditMessage auditMessage = _buildAuditMessage(
 				user, headerMap, "Failed to authenticate by user ID");
 
 			_auditRouter.route(auditMessage);
@@ -118,7 +118,7 @@ public class LoginFailure implements AuthFailure {
 		}
 	}
 
-	protected AuditMessage buildAuditMessage(
+	private AuditMessage _buildAuditMessage(
 		User user, Map<String, String[]> headerMap, String reason) {
 
 		JSONObject additionalInfoJSONObject = _jsonFactory.createJSONObject();

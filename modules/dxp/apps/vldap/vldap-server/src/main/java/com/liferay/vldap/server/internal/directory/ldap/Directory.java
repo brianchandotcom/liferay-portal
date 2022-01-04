@@ -130,7 +130,7 @@ public abstract class Directory {
 
 		Entry entry = new DefaultEntry();
 
-		entry.setDn(getDn());
+		entry.setDn(_getDn());
 
 		// According to RFC 2251 Section 4.5.1 we need to return all attributes
 		// if the requested attributes are empty or contain a wildcard
@@ -164,7 +164,17 @@ public abstract class Directory {
 		return entry;
 	}
 
-	protected Dn getDn() throws LdapInvalidDnException {
+	protected String getName() {
+		return _name;
+	}
+
+	protected void setName(
+		String top, Company company, String... organizationUnits) {
+
+		_name = LdapUtil.buildName(null, top, company, organizationUnits);
+	}
+
+	private Dn _getDn() throws LdapInvalidDnException {
 		String name = getName();
 
 		try {
@@ -175,16 +185,6 @@ public abstract class Directory {
 
 			throw ldapInvalidDnException;
 		}
-	}
-
-	protected String getName() {
-		return _name;
-	}
-
-	protected void setName(
-		String top, Company company, String... organizationUnits) {
-
-		_name = LdapUtil.buildName(null, top, company, organizationUnits);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(Directory.class);

@@ -103,7 +103,7 @@ public class UserDirectory extends Directory {
 		if (LdapHandlerThreadLocal.isHostAllowed(
 				PortletPropsValues.SAMBA_HOSTS_ALLOWED)) {
 
-			addSambaAttributes(company, user);
+			_addSambaAttributes(company, user);
 		}
 
 		setName(top, company, "Users", "cn=" + user.getScreenName());
@@ -149,7 +149,7 @@ public class UserDirectory extends Directory {
 		}
 	}
 
-	protected void addSambaAttributes(Company company, User user)
+	private void _addSambaAttributes(Company company, User user)
 		throws PortalException {
 
 		addAttribute("objectclass", "sambaSamAccount");

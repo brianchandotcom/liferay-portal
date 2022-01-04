@@ -89,7 +89,7 @@ public class EditCSDiagramSettingMVCActionCommand extends BaseMVCActionCommand {
 					_transactionConfig, csDiagramSettingCallable);
 
 				if (!publish) {
-					writeJSON(
+					_writeJSON(
 						_portal.getHttpServletResponse(actionResponse),
 						JSONUtil.put("success", true));
 				}
@@ -113,7 +113,7 @@ public class EditCSDiagramSettingMVCActionCommand extends BaseMVCActionCommand {
 					sendRedirect(actionRequest, actionResponse, redirect);
 				}
 				else {
-					writeJSON(
+					_writeJSON(
 						_portal.getHttpServletResponse(actionResponse),
 						JSONUtil.put(
 							"error",
@@ -132,7 +132,7 @@ public class EditCSDiagramSettingMVCActionCommand extends BaseMVCActionCommand {
 					throw new Exception(throwable);
 				}
 
-				writeJSON(
+				_writeJSON(
 					_portal.getHttpServletResponse(actionResponse),
 					JSONUtil.put(
 						"error", throwable.getMessage()
@@ -141,17 +141,6 @@ public class EditCSDiagramSettingMVCActionCommand extends BaseMVCActionCommand {
 					));
 			}
 		}
-	}
-
-	protected void writeJSON(
-			HttpServletResponse httpServletResponse, JSONObject jsonObject)
-		throws IOException {
-
-		httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);
-
-		ServletResponseUtil.write(httpServletResponse, jsonObject.toString());
-
-		httpServletResponse.flushBuffer();
 	}
 
 	private CPAttachmentFileEntry _addOrUpdateCPAttachmentFileEntry(
@@ -239,6 +228,17 @@ public class EditCSDiagramSettingMVCActionCommand extends BaseMVCActionCommand {
 			csDiagramSetting.getCSDiagramSettingId(),
 			cpAttachmentFileEntry.getCPAttachmentFileEntryId(), null, radius,
 			type);
+	}
+
+	private void _writeJSON(
+			HttpServletResponse httpServletResponse, JSONObject jsonObject)
+		throws IOException {
+
+		httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);
+
+		ServletResponseUtil.write(httpServletResponse, jsonObject.toString());
+
+		httpServletResponse.flushBuffer();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

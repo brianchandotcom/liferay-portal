@@ -44,8 +44,8 @@ public class RankingToDocumentTranslatorTest {
 
 	@Before
 	public void setUp() {
-		_documentToRankingTranslator = createDocumentToRankingTranslator();
-		_rankingToDocumentTranslator = createRankingToDocumentTranslator();
+		_documentToRankingTranslator = _createDocumentToRankingTranslator();
+		_rankingToDocumentTranslator = _createRankingToDocumentTranslator();
 	}
 
 	@Test
@@ -133,24 +133,24 @@ public class RankingToDocumentTranslatorTest {
 			String.valueOf(ranking2.getQueryStrings()));
 	}
 
-	protected static DocumentToRankingTranslator
-		createDocumentToRankingTranslator() {
+	protected Document translate(Ranking ranking) {
+		return _rankingToDocumentTranslator.translate(ranking);
+	}
+
+	private static DocumentToRankingTranslator
+		_createDocumentToRankingTranslator() {
 
 		return new DocumentToRankingTranslatorImpl();
 	}
 
-	protected static RankingToDocumentTranslatorImpl
-		createRankingToDocumentTranslator() {
+	private static RankingToDocumentTranslatorImpl
+		_createRankingToDocumentTranslator() {
 
 		return new RankingToDocumentTranslatorImpl() {
 			{
 				setDocumentBuilderFactory(new DocumentBuilderFactoryImpl());
 			}
 		};
-	}
-
-	protected Document translate(Ranking ranking) {
-		return _rankingToDocumentTranslator.translate(ranking);
 	}
 
 	private String _toString(List<Ranking.Pin> pins) {

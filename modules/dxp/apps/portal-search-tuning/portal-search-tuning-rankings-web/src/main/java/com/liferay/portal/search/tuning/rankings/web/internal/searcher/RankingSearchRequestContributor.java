@@ -42,7 +42,7 @@ public class RankingSearchRequestContributor
 
 	@Override
 	public SearchRequest contribute(SearchRequest searchRequest) {
-		RankingIndexName rankingIndexName = getRankingIndexName(searchRequest);
+		RankingIndexName rankingIndexName = _getRankingIndexName(searchRequest);
 
 		if (!rankingIndexReader.isExists(rankingIndexName)) {
 			return searchRequest;
@@ -70,20 +70,6 @@ public class RankingSearchRequestContributor
 		return searchRequestBuilder.build();
 	}
 
-	protected RankingIndexName getRankingIndexName(
-		SearchRequest searchRequest) {
-
-		SearchRequestBuilder builder = searchRequestBuilderFactory.builder(
-			searchRequest);
-
-		long[] companyIds = new long[1];
-
-		builder.withSearchContext(
-			searchContext -> companyIds[0] = searchContext.getCompanyId());
-
-		return rankingIndexNameBuilder.getRankingIndexName(companyIds[0]);
-	}
-
 	@Reference
 	protected RankingIndexNameBuilder rankingIndexNameBuilder;
 
@@ -95,5 +81,17 @@ public class RankingSearchRequestContributor
 
 	@Reference
 	protected SearchRequestBuilderFactory searchRequestBuilderFactory;
+
+	private RankingIndexName _getRankingIndexName(SearchRequest searchRequest) {
+		SearchRequestBuilder builder = searchRequestBuilderFactory.builder(
+			searchRequest);
+
+		long[] companyIds = new long[1];
+
+		builder.withSearchContext(
+			searchContext -> companyIds[0] = searchContext.getCompanyId());
+
+		return rankingIndexNameBuilder.getRankingIndexName(companyIds[0]);
+	}
 
 }

@@ -2,16 +2,6 @@ html#{$cadmin-selector} {
 	.lfr-simulation-device {
 		background-color: rgba(255, 255, 255, 0.95);
 
-		&--prevent-events {
-			.lfr-device {
-				cursor: not-allowed;
-			}
-
-			iframe#simulationDeviceIframe {
-				pointer-events: none;
-			}
-		}
-
 		.lfr-device-size-status-content {
 			border-radius: 3px;
 			box-shadow: 0 0 1px #fff;

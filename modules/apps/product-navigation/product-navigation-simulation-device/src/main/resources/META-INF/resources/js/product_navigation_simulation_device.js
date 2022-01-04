@@ -507,7 +507,7 @@ AUI.add(
 					);
 
 					instance._simulationDeviceNode.className =
-						'lfr-simulation-device lfr-simulation-device--prevent-events';
+						'lfr-simulation-device';
 
 					BODY.appendChild(instance._simulationDeviceNode);
 

@@ -37,7 +37,7 @@ Map<String, Object> translations = translationManagerDisplayContext.getTranslati
 				HashMapBuilder.<String, Object>put(
 					"activeLanguageIds", activeLanguageIds
 				).put(
-					"availableLocalesJsp", availableLocales
+					"availableLocales", translationManagerDisplayContext.getAvailableLocalesJSONArray()
 				).put(
 					"defaultLanguageId", defaultLanguageId
 				).put(

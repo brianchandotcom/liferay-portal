@@ -18,21 +18,10 @@ import React from 'react';
 
 export default function TranslationManagerSamples({
 	activeLanguageIds,
-	availableLocalesJsp,
+	availableLocales,
 	defaultLanguageId,
 	translations,
 }) {
-	const availableLocales = availableLocalesJsp.map((item) => {
-		const newId = item.language + '-' + item.country;
-
-		return {
-			displayName: item.displayName,
-			id: newId.replace('-', '_'),
-			label: newId,
-			symbol: newId.toLowerCase(),
-		};
-	});
-
 	return (
 		<>
 			<ClayLayout.Col>

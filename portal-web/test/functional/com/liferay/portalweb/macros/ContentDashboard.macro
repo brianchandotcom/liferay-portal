@@ -5,7 +5,7 @@ definition {
 	}
 
 	macro clickOnFirstBar {
-		if(!(isSet(fillColor))) {
+		if (!(isSet(fillColor))) {
 			var fillColor = "4B9FFF";
 		}
 

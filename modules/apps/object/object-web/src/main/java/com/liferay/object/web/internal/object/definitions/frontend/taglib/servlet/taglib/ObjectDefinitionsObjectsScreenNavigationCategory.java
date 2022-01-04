@@ -18,7 +18,6 @@ import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.web.internal.configuration.activator.FFExportImportObjectDefinitionTypeConfigurationActivator;
 import com.liferay.object.web.internal.object.definitions.constants.ObjectDefinitionsScreenNavigationEntryConstants;
 import com.liferay.object.web.internal.object.definitions.display.context.ViewObjectDefinitionsDisplayContext;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -86,17 +85,12 @@ public class ObjectDefinitionsObjectsScreenNavigationCategory
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
 			new ViewObjectDefinitionsDisplayContext(
-				_ffExportImportObjectDefinitionTypeConfigurationActivator,
 				httpServletRequest, _objectDefinitionModelResourcePermission));
 
 		_jspRenderer.renderJSP(
 			httpServletRequest, httpServletResponse,
 			"/object_definitions/view_object_definitions.jsp");
 	}
-
-	@Reference
-	private FFExportImportObjectDefinitionTypeConfigurationActivator
-		_ffExportImportObjectDefinitionTypeConfigurationActivator;
 
 	@Reference
 	private JSPRenderer _jspRenderer;

@@ -639,7 +639,7 @@ public class WorkflowDefinitionLinkDisplayContext {
 			}
 
 			return _workflowDefinitionLinkLocalService.
-				_getWorkflowDefinitionLink(
+				getWorkflowDefinitionLink(
 					_workflowDefinitionLinkRequestHelper.getCompanyId(),
 					getGroupId(), className, 0, 0, true);
 		}

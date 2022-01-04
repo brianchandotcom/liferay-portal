@@ -54,33 +54,11 @@ public class PoshiDependenciesFileLocationCheck extends BaseFileCheck {
 			return content;
 		}
 
-		long start = System.currentTimeMillis();
-
 		_getTestCaseFileNames();
-
-		System.out.println(_testCaseFileNames.size());
-
-		long end = System.currentTimeMillis();
-
-		System.out.println("1finished in " + (end - start));
-
-		start = System.currentTimeMillis();
 
 		_checkDependenciesFileReferences(absolutePath, fileName);
 
-		System.out.println(_testCaseFileNames.size());
-
-		end = System.currentTimeMillis();
-
-		System.out.println("2finished in " + (end - start));
-
-		start = System.currentTimeMillis();
-
 		_checkGlobalDependenciesFileReferences(absolutePath, fileName);
-
-		end = System.currentTimeMillis();
-
-		System.out.println("3finished in " + (end - start));
 
 		return content;
 	}

@@ -134,6 +134,14 @@ public class AddFormInstanceRecordMVCActionCommand
 
 		String portletId = _portal.getPortletId(actionRequest);
 
+		if (SessionMessages.contains(
+				actionRequest,
+				portletId +
+					SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_SUCCESS_MESSAGE)) {
+
+			SessionMessages.clear(actionRequest);
+		}
+
 		SessionMessages.add(
 			actionRequest, portletId + "formInstanceRecordAdded");
 

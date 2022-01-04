@@ -761,14 +761,6 @@ public class KaleoDesignerDisplayContext {
 		).buildPortletURL();
 	}
 
-	private boolean _isSearch() {
-		if (Validator.isNotNull(_getKeywords())) {
-			return true;
-		}
-
-		return false;
-	}
-
 	private void _setKaleoDefinitionVersionSearchResults(
 		SearchContainer<KaleoDefinitionVersion> searchContainer, int status) {
 

@@ -23,7 +23,6 @@ import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolder;
-import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.util.DLURLHelperUtil;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.string.StringBundler;
@@ -544,24 +543,6 @@ public class SimilarResultsDocumentDisplayContextBuilder {
 		}
 
 		return _legacyDocument.get(fieldName);
-	}
-
-	private FileEntry _getFileEntryByClassPK(long fileEntryId) {
-		FileEntry fileEntry = null;
-
-		try {
-			fileEntry = DLAppLocalServiceUtil.getFileEntry(fileEntryId);
-		}
-		catch (Exception exception) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Documents and Media search index is stale and contains " +
-						"file entry " + fileEntryId,
-					exception);
-			}
-		}
-
-		return fileEntry;
 	}
 
 	private Indexer<Object> _getIndexer(String className) {

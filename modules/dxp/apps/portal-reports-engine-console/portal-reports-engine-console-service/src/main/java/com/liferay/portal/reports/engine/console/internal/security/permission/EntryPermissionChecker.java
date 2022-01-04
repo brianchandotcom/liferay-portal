@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.reports.engine.console.model.Entry;
-import com.liferay.portal.reports.engine.console.service.EntryLocalService;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -85,9 +84,6 @@ public class EntryPermissionChecker implements BaseModelPermissionChecker {
 		ModelResourcePermission<Entry> modelResourcePermission) {
 
 		_entryModelResourcePermission = modelResourcePermission;
-	}
-
-	private void _setEntryLocalService(EntryLocalService entryLocalService) {
 	}
 
 	private static ModelResourcePermission<Entry> _entryModelResourcePermission;

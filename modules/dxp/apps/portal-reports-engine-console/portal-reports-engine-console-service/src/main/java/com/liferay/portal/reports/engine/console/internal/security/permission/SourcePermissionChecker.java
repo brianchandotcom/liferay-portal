@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.reports.engine.console.model.Source;
-import com.liferay.portal.reports.engine.console.service.SourceLocalService;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -87,9 +86,6 @@ public class SourcePermissionChecker implements BaseModelPermissionChecker {
 		ModelResourcePermission<Source> modelResourcePermission) {
 
 		_sourceModelResourcePermission = modelResourcePermission;
-	}
-
-	private void _setSourceLocalService(SourceLocalService sourceLocalService) {
 	}
 
 	private static ModelResourcePermission<Source>

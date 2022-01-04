@@ -23,14 +23,13 @@ const userName = fragmentElement.querySelector(
 
 (async () => {
 	try {
-		window.addEventListener(eventName, ({detail: userAccount}) => {
+		Liferay.once(eventName, ({detail: userAccount}) => {
 			userIconWrapper.classList.toggle('skeleton');
 			userName.classList.toggle('skeleton');
 
 			if (userAccount.image) {
 				userIcon.src = window.location.origin + userAccount.image;
-			}
-			else {
+			} else {
 				userIconWrapper.className =
 					'mr sticker sticker-circle sticker-lg user-icon-color-1';
 				userIconWrapper.innerHTML = `<svg class="lexicon-icon lexicon-icon-user" focusable="false" role="presentation">
@@ -43,8 +42,7 @@ const userName = fragmentElement.querySelector(
 
 			userName.innerHTML = userAccount.name;
 		});
-	}
-	catch (error) {
+	} catch (error) {
 		console.error(error.message);
 	}
 })();

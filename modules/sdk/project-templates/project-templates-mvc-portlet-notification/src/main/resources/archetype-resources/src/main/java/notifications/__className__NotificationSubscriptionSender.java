@@ -52,7 +52,7 @@ public class ${className}NotificationSubscriptionSender extends SubscriptionSend
 				User user = UserLocalServiceUtil.fetchUserById(
 					subscription.getUserId());
 
-				sendNotification(user, true);
+				sendNotification(user);
 			}
 			catch (Exception exception) {
 				_log.error(

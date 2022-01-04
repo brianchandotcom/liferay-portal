@@ -11,9 +11,9 @@ dependencies {
 	compileOnly group: "com.liferay", name: "com.liferay.site.taglib"
 #end
 #if (${liferayVersion.startsWith("7.0")} || ${liferayVersion.startsWith("7.1")} || ${liferayVersion.startsWith("7.2")})
+	compileOnly group: "com.liferay", name: "com.liferay.petra.function"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.util.taglib"
-	compileOnly group: "com.liferay", name: "com.liferay.petra.function"
 	compileOnly group: "javax.portlet", name: "portlet-api"
 	compileOnly group: "javax.servlet", name: "javax.servlet-api"
 	compileOnly group: "jstl", name: "jstl"

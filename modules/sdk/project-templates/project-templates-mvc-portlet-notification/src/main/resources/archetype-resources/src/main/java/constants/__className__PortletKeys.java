@@ -13,7 +13,7 @@ public class ${className}PortletKeys {
 	public static final String SAMPLE_VALUE = "sampleValue";
 
 	public static final String SENDER = "sender";
-	
+
 	public static final String USER_EMAIL = "userEmail";
 
 }

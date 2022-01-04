@@ -52,7 +52,7 @@ public class NotifyMVCActionCommand extends BaseMVCActionCommand {
 
 		if (${className}PortletKeys.NOTIFY.equals(cmd)) {
 			ServiceContext serviceContext = null;
-			
+
 			serviceContext = ServiceContextFactory.getInstance(actionRequest);
 
 			notifySubscriber(companyId, email, serviceContext);
@@ -96,7 +96,7 @@ public class NotifyMVCActionCommand extends BaseMVCActionCommand {
 
 		subscriptionSender.flushNotificationsAsync();
 	}
-	
+
 	@Reference(unbind = "-")
 	protected void setSubscriptionLocalService(
 		final SubscriptionLocalService subscriptionLocalService) {

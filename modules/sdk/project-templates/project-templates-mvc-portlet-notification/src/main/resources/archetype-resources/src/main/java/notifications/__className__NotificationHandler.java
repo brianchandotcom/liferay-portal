@@ -73,7 +73,7 @@ public class ${className}NotificationHandler extends BaseUserNotificationHandler
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 			userNotificationEvent.getPayload());
-		
+
 		String value = jsonObject.getString(${className}PortletKeys.SAMPLE_VALUE);
 		String sender = jsonObject.getString(${className}PortletKeys.SENDER);
 

@@ -23,6 +23,7 @@ import com.liferay.exportimport.test.util.TestUserIdStrategy;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.layout.test.util.LayoutFriendlyURLRandomizerBumper;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
@@ -49,6 +50,7 @@ import com.liferay.portal.util.PropsValues;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.TreeMap;
 
 import org.junit.Assert;
@@ -523,6 +525,41 @@ public class LayoutReferencesExportImportContentProcessorTest {
 			exportLayout.getFriendlyURL(),
 			_exportAndImportLayoutURL(
 				exportLayout.getFriendlyURL(), exportGroup, importGroup));
+	}
+
+	@Test
+	public void testRelativePublicDefaultPageURLWithLocale() throws Exception {
+		Group exportGroup = GroupTestUtil.addGroup();
+
+		GroupTestUtil.addLayoutSetVirtualHost(exportGroup, false);
+
+		Group importGroup = GroupTestUtil.addGroup();
+
+		GroupTestUtil.addLayoutSetVirtualHost(importGroup, false);
+
+		Locale siteDefaultLocale = _portal.getSiteDefaultLocale(exportGroup);
+
+		String url = StringPool.SLASH + siteDefaultLocale.getLanguage();
+
+		Assert.assertEquals(
+			url, _exportAndImportLayoutURL(url, exportGroup, importGroup));
+	}
+
+	@Test
+	public void testValidateContentRelativePublicDefaultPageURLWithLocale()
+		throws Exception {
+
+		Group group = GroupTestUtil.addGroup();
+
+		GroupTestUtil.addLayoutSetVirtualHost(group, false);
+
+		Locale siteDefaultLocale = _portal.getSiteDefaultLocale(group);
+
+		_layoutReferencesExportImportContentProcessor.validateContentReferences(
+			group.getGroupId(),
+			StringBundler.concat(
+				_CONTENT_PREFIX, StringPool.SLASH,
+				siteDefaultLocale.getLanguage(), _CONTENT_POSTFIX));
 	}
 
 	private String _exportAndImportLayoutURL(

@@ -56,6 +56,7 @@ select {
 .business-home-cover .business-home-cover-image {
 	height: 521px;
 	max-width: 100%;
+	object-fit: cover;
 	width: 791px;
 }
 
@@ -93,10 +94,118 @@ select {
 	color: var(--color-brand-primary-lighten-3) ;
 }
 
-.has-error label {
-	color: var(--warning)
-}
-
 span.form-feedback-indicator {
     margin-top: 2px;
+}
+
+.has-error label {
+	color: var(--color-state-error)
+}
+
+/* ---------- Tablet view ---------- */
+@media screen and (max-width: 768px) {
+
+	.business-home-cover {
+		display: flex;
+		flex-direction: column-reverse ;
+		margin: 0 40px;
+	}
+	
+		.business-home-cover .container {
+			max-width: none;
+		}
+
+	.business-image-container {
+		display: flex;
+		justify-content: center;
+	}
+
+	.business-home-cover .business-home-cover-image {
+		border-radius: 16px;
+		height: 378px;
+		max-width: 100%;
+		width: 688px;
+	}
+
+	.business-home-cover .business-home-cover-box {
+		bottom: 35px;
+		position: inherit;
+		top: auto;
+	}
+}
+
+/* ---------- Landscape view ---------- */
+@media screen and (max-width: 662px) {
+	
+	.new-quote-form {
+		flex-direction: column;
+	}
+	
+	#continue-quote {
+		margin: 0 !important;
+		width: 265px;
+	}
+	
+	#continue-quote span {
+		justify-content: center;
+	}
+}
+
+/* ---------- Mobile view ---------- */
+@media screen and (max-width: 576px) {
+	
+	.business-home-cover {
+		display: flex;
+		flex-direction: column;
+		margin: 0;
+	}
+	
+	.business-home-cover .container {
+		border-radius: 16px;
+		margin: 0;
+		padding: 0;
+		top:34px;
+		background-color: #fff;
+	}
+
+	.business-image-container {
+		display: flex;
+		justify-content: center;
+	}
+
+	.business-home-cover .business-home-cover-image {
+		border-radius: 0;
+	}
+
+	.business-home-cover-box {
+		border-radius: 0 !important;
+		box-shadow: none !important;
+		padding-bottom: 0 !important;
+	}
+	
+	.business-home-cover-box > div:first-child span {
+		font-size: 32px !important;
+	}
+	
+	.business-home-cover-box > div:not(:first-child) div {
+		display: block;
+	}
+	
+	#get-quote-form,
+	.new-quote-form {
+		flex-direction: column;
+	}
+	
+	#continue-quote {
+		margin: 0 !important;
+		width: 100%;
+	}
+	
+	.business-home-cover #zip-container .form-control,
+	.business-home-cover .business-home-cover-box #zip-container,
+	#get-quote-form button,
+	#email-container,
+	#email {
+    	width: 100% !important;
+	}
 }

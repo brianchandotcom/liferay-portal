@@ -136,7 +136,7 @@ const getValueForHidden = (value, locale) => {
 	const newMoment = moment(value, momentLocaleFormatted, true);
 
 	if (newMoment.isValid()) {
-		return newMoment.format('YYYY-MM-DD');
+		return newMoment.locale('en-US').format('YYYY-MM-DD');
 	}
 
 	return '';

@@ -1,0 +1,9 @@
+definition {
+
+	macro typeRetrieveQuoteEmailFields {
+		Type(
+			locator1 = "RaylifeRetrieveQuote#EMAIL_ADDRESS_FIELD",
+			value1 = "${value}");
+	}
+
+}

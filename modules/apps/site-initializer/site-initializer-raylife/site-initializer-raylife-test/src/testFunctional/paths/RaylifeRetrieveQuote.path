@@ -1,0 +1,66 @@
+<html>
+<head>
+<title>RaylifeRetrieveQuote</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">RaylifeRetrieveQuote</td></tr>
+</thead>
+
+<tbody>
+<tr>
+	<td>RETRIEVE_QUOTE</td>
+	<td>//span[contains(text(),'Retrieve a Quote')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>START_NEW_QUOTE</td>
+	<td>//span[contains(text(),'Start a New Quote')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EMAIL_ADDRESS_TITLE</td>
+	<td>//label[contains(text(),'Email Address')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EMAIL_ADDRESS_FIELD</td>
+	<td>//input[contains(@name, '${email}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BUTTON_CONTINUE_QUOTE_DISABLED</td>
+	<td>//button[contains(@class,'disabled')][@id='continue-quote']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BUTTON_CONTINUE_QUOTE</td>
+	<td>//button[@id='continue-quote']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ERROR_MESSAGE_RETRIEVE_QUOTE</td>
+	<td>//span[contains(@class, 'form-feedback-item px-2')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EMAIL_SENT</td>
+	<td>//p[contains(text(),'We just sent a link to ${emailSent}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSERT_QUOTE_NAME</td>
+	<td>//h2[contains(text(),'Welcome Back, ${name}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RETRIEVE_EMAIL</td>
+	<td>//div[contains(text(), '${retrieveEmail}')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

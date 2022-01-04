@@ -121,6 +121,42 @@ definition {
 			locator1 = "WorkflowMetrics#METRICS_ALL_ITEMS_TABLE_INSTANCE");
 	}
 
+	@description = "Verify that the user is able to click on the Current Node link and the node will be in evidence"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanClickCurrentNodeLink {
+
+		// TODO LRQA-72395 CanClickCurrentNodeLink pending implementation
+
+	}
+
+	@description = "Verify that the users are able to identify the current node of the instance in the workflow"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanIdentifyCurrentNode {
+
+		// TODO LRQA-72392 CanIdentifyCurrentNode pending implementation
+
+	}
+
+	@description = "Verify that the users are able to identify the current nodes of the instance in the workflow, when there is multiple statuses"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanIdentifyMultipleCurrentNode {
+
+		// TODO LRQA-72394 CanIdentifyMultipleCurrentNode pending implementation
+
+	}
+
+	@description = "Verify that the users are able to identify the past stages that the workflow instance has already passed by"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanIdentifyPastStagesOnWorkflow {
+
+		// TODO LRQA-72393 CanIdentifyPastStagesOnWorkflow pending implementation
+
+	}
+
 	@description = "LPS-92052 - Verify that the user is able to click on the table header Assignee to choose the items order (A-Z / Z-A)"
 	@priority = "5"
 	test CanOrderByAssignee {
@@ -283,6 +319,33 @@ definition {
 			itemTitle = "Blogs Entry: Second Blogs Entry",
 			keyCompare = "Blogs Entry: Blogs Entry",
 			rowNumber = "2");
+	}
+
+	@description = "Verify that the user is able to see the label of the transitions of a specific node while hovering it"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanSeeTransitionsLabelOnHoverNode {
+
+		// TODO LRQA-72390 CanSeeTransitionsLabelOnHoverNode pending implementation
+
+	}
+
+	@description = "Verify that there is a Track Approval link on the instance detail modal"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanSelectTrackApprovalLinkOnDetailModal {
+
+		// TODO LRQA-72396 CanSelectTrackApprovalLinkOnDetailModal pending implementation
+
+	}
+
+	@description = "Verify that there is a Track Approval option on the kebab menu"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanSelectTrackApprovalOnKebabMenu {
+
+		// TODO LRQA-72391 CanSelectTrackApprovalOnKebabMenu pending implementation
+
 	}
 
 	@description = "LPS-92053 - Verify that, at the items table, users should be able to click on process ID column and open a modal for the respective item details"
@@ -708,6 +771,15 @@ definition {
 		WorkflowMetrics.validateInstanceDetailsSLA(
 			notStartedNumber = "1",
 			slaNames = "SLA Definition 2");
+	}
+
+	@description = "Verify that the component displays the entire workflow that the instance is in"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test DisplaysEntireWorkflow {
+
+		// TODO LRQA-72389 DisplaysEntireWorkflow pending implementation
+
 	}
 
 	@description = "LPS-92053 - Verify that, in the item detail modal, the Due Date by SLA will group SLAs into Open or Resolved"
@@ -2413,6 +2485,24 @@ definition {
 		MouseOver(locator1 = "WorkflowAllItems#DETAIL_PAGE_GO_TO_SUBMISSION_PAGE");
 
 		AssertElementPresent(locator1 = "WorkflowAllItems#DETAIL_PAGE_GO_TO_SUBMISSION_PAGE_TOOLTIP");
+	}
+
+	@description = "Verify that when the user make changes in the Workflow, the Track Approval displays the correct version"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test TrackApprovalDisplayCorrectVersionAfterChange {
+
+		// TODO LRQA-72398 TrackApprovalDisplayCorrectVersionAfterChange pending implementation
+
+	}
+
+	@description = "Verify that when the user clicks the link in the detail modal, the Workflow in use is displayed"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test TrackApprovalDisplayWorkflowInUse {
+
+		// TODO LRQA-72397 TrackApprovalDisplayWorkflowInUse pending implementation
+
 	}
 
 	@description = "LPS-108138 - Verify that, in All Items page, when the users select an instance that can't be transitioned by them, the option to transition is not available to be selected"

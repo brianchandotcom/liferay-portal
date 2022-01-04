@@ -556,6 +556,39 @@ definition {
 			roleType = "Asset Library");
 	}
 
+	@description = "This ensures that a depot owner can assign specific roles to a user."
+	@priority = "5"
+	test OwnerCanAssignSpecificRolesToUser {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONUser.addUserToDepot(
+			depotName = "Test Depot Name",
+			userEmailAddress = "userea@liferay.com");
+
+		DepotNavigator.openDepotMembershipsAdmin(depotName = "Test Depot Name");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Assign Roles",
+			rowEntry = "userfn userln");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		for (var roleTitle : list "Asset Library Administrator,Asset Library Owner,Asset Library Content Reviewer") {
+			LexiconEntry.viewEntryName(rowEntry = "${roleTitle}");
+		}
+	}
+
 	@description = "This ensures that an asset library role can be edited."
 	@priority = "5"
 	@refactorneeded

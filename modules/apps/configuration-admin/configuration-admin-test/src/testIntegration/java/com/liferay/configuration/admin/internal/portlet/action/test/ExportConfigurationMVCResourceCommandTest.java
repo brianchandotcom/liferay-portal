@@ -68,7 +68,7 @@ public class ExportConfigurationMVCResourceCommandTest {
 		Assert.assertEquals(
 			expectedFileName,
 			ReflectionTestUtil.invoke(
-				_mvcResourceCommand, "getFileName",
+				_mvcResourceCommand, "_getFileName",
 				new Class<?>[] {String.class, String.class}, factoryPid, pid));
 	}
 

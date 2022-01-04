@@ -29,7 +29,7 @@ definition {
 
 		Select(
 			locator1 = "AuditReports#ADVANCED_SEARCH_MATCH_SELECT",
-			value1 = "Any");
+			value1 = "${match}");
 
 		Type(
 			locator1 = "AuditReports#ADVANCED_SEARCH_${reportFieldKey}_FIELD",

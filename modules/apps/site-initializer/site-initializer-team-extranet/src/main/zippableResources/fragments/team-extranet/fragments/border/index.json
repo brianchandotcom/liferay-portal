@@ -1,0 +1,41 @@
+{
+	"fieldSets": [
+		{
+			"configurationRole": "style",
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "2",
+					"label": "bottom-spacing",
+					"name": "bottomSpacing",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"value": "1"
+							},
+							{
+								"value": "2"
+							},
+							{
+								"value": "3"
+							},
+							{
+								"value": "4"
+							},
+							{
+								"value": "5"
+							}
+						]
+					}
+				},
+				{
+					"dataType": "object",
+					"label": "separator-color",
+					"name": "separatorColor",
+					"type": "colorPalette"
+				}
+			]
+		}
+	]
+}

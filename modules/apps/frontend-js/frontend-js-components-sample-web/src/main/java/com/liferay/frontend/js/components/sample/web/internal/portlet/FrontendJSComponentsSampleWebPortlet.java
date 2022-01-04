@@ -14,7 +14,7 @@
 
 package com.liferay.frontend.js.components.sample.web.internal.portlet;
 
-import com.liferay.frontend.js.components.sample.web.constants.ComponentsSamplePortletKeys;
+import com.liferay.frontend.js.components.sample.web.internal.constants.ComponentsSamplePortletKeys;
 import com.liferay.frontend.js.components.sample.web.internal.display.context.TranslationManagerDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.Portal;
@@ -47,7 +47,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = Portlet.class
 )
 public class FrontendJSComponentsSampleWebPortlet extends MVCPortlet {
-	
+
 	@Override
 	public void doDispatch(
 			RenderRequest renderRequest, RenderResponse renderResponse)

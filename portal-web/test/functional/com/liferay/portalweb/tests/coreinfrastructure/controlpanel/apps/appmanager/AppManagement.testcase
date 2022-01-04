@@ -422,6 +422,7 @@ definition {
 	@description = "This ensures that the Ratings app in the app manager can be deactivated and reactivated."
 	@priority = "5"
 	test CanDeactivateAndActivateRatings {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "AppManagement#CanDeactivateAndActivateRatings";
 		property testray.main.component.name = "Ratings";
 

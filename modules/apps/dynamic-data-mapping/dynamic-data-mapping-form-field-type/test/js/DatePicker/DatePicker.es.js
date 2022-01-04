@@ -106,4 +106,20 @@ describe('DatePicker', () => {
 
 		expect(input).toHaveValue('1111.11.11.');
 	});
+
+	it('uses only occidental digits into the hidden input', () => {
+		const {container} = render(
+			<DatePicker
+				defaultLanguageId="ar_SA"
+				locale="ar_SA"
+				name="test-date"
+				onChange={() => {}}
+				predefinedValue="٠١/٠١/٢٠٢١"
+			/>
+		);
+
+		const hiddenInput = container.querySelector('[name=test-date]');
+
+		expect(hiddenInput).toHaveValue('2021-01-01');
+	});
 });

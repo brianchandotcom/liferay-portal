@@ -85,6 +85,7 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanDeleteComment {
+		property portal.acceptance = "true";
 		property testray.component.names = "Comment";
 
 		JSONBlog.addEntry(
@@ -200,6 +201,7 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanEditMultipleComments {
+		property portal.acceptance = "true";
 		property testray.component.names = "Comment";
 
 		JSONBlog.addEntry(

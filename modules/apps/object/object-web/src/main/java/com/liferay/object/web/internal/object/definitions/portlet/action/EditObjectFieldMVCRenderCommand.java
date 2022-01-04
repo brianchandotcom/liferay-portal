@@ -19,7 +19,6 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
-import com.liferay.object.web.internal.configuration.activator.FFClobObjectFieldTypeConfigurationActivator;
 import com.liferay.object.web.internal.constants.ObjectWebKeys;
 import com.liferay.object.web.internal.object.definitions.display.context.ObjectDefinitionsFieldsDisplayContext;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -68,7 +67,6 @@ public class EditObjectFieldMVCRenderCommand implements MVCRenderCommand {
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
 				new ObjectDefinitionsFieldsDisplayContext(
-					_ffClobObjectFieldTypeConfigurationActivator,
 					_portal.getHttpServletRequest(renderRequest),
 					_objectDefinitionModelResourcePermission));
 		}
@@ -78,10 +76,6 @@ public class EditObjectFieldMVCRenderCommand implements MVCRenderCommand {
 
 		return "/object_definitions/edit_object_field.jsp";
 	}
-
-	@Reference
-	private FFClobObjectFieldTypeConfigurationActivator
-		_ffClobObjectFieldTypeConfigurationActivator;
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

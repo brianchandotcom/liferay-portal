@@ -24,7 +24,7 @@ import {toCamelCase} from '../utils/string';
 import Input from './form/Input';
 import Select from './form/Select';
 
-let objectFieldTypes = [
+const objectFieldTypes = [
 	'BigDecimal',
 	'Boolean',
 	'Clob',
@@ -43,12 +43,7 @@ const headers = new Headers({
 	'Content-Type': 'application/json',
 });
 
-const ModalAddObjectField: React.FC<IProps> = ({
-	apiURL,
-	ffClobObjectFieldTypeConfigurationEnabled,
-	observer,
-	onClose,
-}) => {
+const ModalAddObjectField: React.FC<IProps> = ({apiURL, observer, onClose}) => {
 	const [error, setError] = useState<string>('');
 	const [picklist, setPicklist] = useState<TPicklist[]>([]);
 	const initialValues: TInitialValues = {
@@ -58,12 +53,6 @@ const ModalAddObjectField: React.FC<IProps> = ({
 		required: false,
 		type: '',
 	};
-
-	if (!ffClobObjectFieldTypeConfigurationEnabled) {
-		objectFieldTypes = objectFieldTypes.filter(
-			(fieldType) => fieldType !== 'Clob'
-		);
-	}
 
 	const onSubmit = async ({
 		label,
@@ -260,7 +249,6 @@ const ModalAddObjectField: React.FC<IProps> = ({
 
 interface IProps extends React.HTMLAttributes<HTMLElement> {
 	apiURL: string;
-	ffClobObjectFieldTypeConfigurationEnabled: boolean;
 	observer: any;
 	onClose: () => void;
 }
@@ -278,10 +266,7 @@ type TInitialValues = {
 	type: string;
 };
 
-const ModalWithProvider: React.FC<IProps> = ({
-	apiURL,
-	ffClobObjectFieldTypeConfigurationEnabled,
-}) => {
+const ModalWithProvider: React.FC<IProps> = ({apiURL}) => {
 	const [visibleModal, setVisibleModal] = useState<boolean>(false);
 	const {observer, onClose} = useModal({
 		onClose: () => setVisibleModal(false),
@@ -300,9 +285,6 @@ const ModalWithProvider: React.FC<IProps> = ({
 			{visibleModal && (
 				<ModalAddObjectField
 					apiURL={apiURL}
-					ffClobObjectFieldTypeConfigurationEnabled={
-						ffClobObjectFieldTypeConfigurationEnabled
-					}
 					observer={observer}
 					onClose={onClose}
 				/>

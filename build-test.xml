@@ -350,7 +350,7 @@ module.framework.properties.osgi.console=11312</echo>
 				<then>
 					<local name="export.dmp.file.path" />
 
-					<property location="export.sh" name="export.sh.file.path" />
+					<property location="export_database_mysql_compact_export.sh" name="export.sh.file.path" />
 					<property name="docker.src.file.path" value="/tmp/export.sql" />
 					<property name="export.dmp.file.path" value="${basedir}/@{database.file.prefix}.sql" />
 
@@ -377,9 +377,9 @@ module.framework.properties.osgi.console=11312</echo>
 
 					<execute>
 						<![CDATA[
-							docker cp ${export.sh.file.path} ${database.host}:/tmp/export.sh
+							docker cp ${export.sh.file.path} ${database.host}:/tmp/export_database_mysql_compact_export.sh
 
-							docker exec ${database.host} /bin/bash /tmp/export.sh
+							docker exec ${database.host} /bin/bash /tmp/export_database_mysql_compact_export.sh
 						]]>
 					</execute>
 
@@ -409,7 +409,7 @@ module.framework.properties.osgi.console=11312</echo>
 				</else>
 			</if>
 
-			<echo file="sortSQL.sh">
+			<echo file="export_database_mysql_compact_sort_sql.sh">
 				<![CDATA[
 					#!/bin/bash
 
@@ -422,11 +422,11 @@ module.framework.properties.osgi.console=11312</echo>
 			</echo>
 
 			<execute>
-				sortSQL.sh @{database.file.prefix}.sql > @{database.file.prefix}-sorted.sql
+				export_database_mysql_compact_sort_sql.sh @{database.file.prefix}.sql > @{database.file.prefix}-sorted.sql
 			</execute>
 
 			<delete file="@{database.file.prefix}.sql" />
-			<delete file="sortSQL.sh" />
+			<delete file="export_database_mysql_compact_sort_sql.sh" />
 
 			<move
 				file="@{database.file.prefix}-sorted.sql"

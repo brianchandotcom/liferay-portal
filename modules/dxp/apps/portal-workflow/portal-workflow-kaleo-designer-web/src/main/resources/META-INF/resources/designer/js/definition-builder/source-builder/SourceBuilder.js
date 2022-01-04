@@ -14,7 +14,7 @@ import ClayLayout from '@clayui/layout';
 import ClayToolbar from '@clayui/toolbar';
 import {Editor} from 'frontend-editor-ckeditor-web';
 import React, {useContext, useEffect, useRef} from 'react';
-import {useStore} from 'react-flow-renderer';
+import {isEdge, isNode} from 'react-flow-renderer';
 
 import {DefinitionBuilderContext} from '../DefinitionBuilderContext';
 import {xmlNamespace} from './constants';
@@ -36,8 +36,6 @@ export default function SourceBuilder({version}) {
 	} = useContext(DefinitionBuilderContext);
 	const editorRef = useRef();
 
-	const store = useStore();
-
 	useEffect(() => {
 		if (elements) {
 			const metada = {
@@ -49,7 +47,8 @@ export default function SourceBuilder({version}) {
 			const xmlContent = serializeDefinition(
 				xmlNamespace,
 				metada,
-				store.getState().nodes
+				elements.filter(isNode),
+				elements.filter(isEdge)
 			);
 
 			if (xmlContent && currentEditor) {

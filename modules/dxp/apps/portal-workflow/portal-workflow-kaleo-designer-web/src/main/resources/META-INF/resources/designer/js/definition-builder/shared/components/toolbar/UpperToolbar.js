@@ -20,7 +20,7 @@ import {TranslationAdminSelector} from 'frontend-js-components-web';
 import {fetch} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useContext, useEffect, useRef, useState} from 'react';
-import {useStore} from 'react-flow-renderer';
+import {isEdge, isNode} from 'react-flow-renderer';
 
 import {DefinitionBuilderContext} from '../../../DefinitionBuilderContext';
 import {defaultLanguageId} from '../../../constants';
@@ -41,6 +41,7 @@ export default function UpperToolbar({
 		currentEditor,
 		definitionId,
 		definitionTitle,
+		elements,
 		selectedLanguageId,
 		setDefinitionTitle,
 		setDeserialize,
@@ -51,7 +52,6 @@ export default function UpperToolbar({
 	} = useContext(DefinitionBuilderContext);
 	const inputRef = useRef(null);
 	const [showSuccessAlert, setShowSuccessAlert] = useState(false);
-	const store = useStore();
 
 	const availableLocales = getAvailableLocalesObject(
 		displayNames,
@@ -84,7 +84,8 @@ export default function UpperToolbar({
 					name: definitionTitle,
 					version,
 				},
-				store.getState().nodes
+				elements.filter(isNode),
+				elements.filter(isEdge)
 			);
 		}
 

@@ -17,7 +17,6 @@ import ClayLabel from '@clayui/label';
 import ClayLayout from '@clayui/layout';
 import ClayToolbar from '@clayui/toolbar';
 import {TranslationAdminSelector} from 'frontend-js-components-web';
-import {fetch} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useContext, useEffect, useRef, useState} from 'react';
 import {isEdge, isNode} from 'react-flow-renderer';
@@ -28,7 +27,10 @@ import {xmlNamespace} from '../../../source-builder/constants';
 import {serializeDefinition} from '../../../source-builder/serializeUtil';
 import XMLUtil from '../../../source-builder/xmlUtil';
 import {getAvailableLocalesObject} from '../../../util/availableLocales';
-import {baseURL, headers} from '../../../util/fetchUtil';
+import {
+	publishDefinitionRequest,
+	saveDefinitionRequest,
+} from '../../../util/fetchUtil';
 
 export default function UpperToolbar({
 	displayNames,
@@ -52,11 +54,35 @@ export default function UpperToolbar({
 	} = useContext(DefinitionBuilderContext);
 	const inputRef = useRef(null);
 	const [showSuccessAlert, setShowSuccessAlert] = useState(false);
+	const [alertMessage, setAlertMessage] = useState('');
 
 	const availableLocales = getAvailableLocalesObject(
 		displayNames,
 		languageIds
 	);
+
+	const getXMLContent = (publishing = false) => {
+		let xmlContent;
+
+		if (currentEditor) {
+			xmlContent = currentEditor.getData();
+		}
+		else {
+			xmlContent = serializeDefinition(
+				xmlNamespace,
+				{
+					description: '',
+					name: definitionTitle,
+					version,
+				},
+				elements.filter(isNode),
+				elements.filter(isEdge),
+				publishing
+			);
+		}
+
+		return xmlContent;
+	};
 
 	const onSelectedLanguageIdChange = (id) => {
 		if (id) {
@@ -70,40 +96,48 @@ export default function UpperToolbar({
 		}
 	};
 
-	const saveDefinition = () => {
-		let content;
+	const definitionNotPublished = version === '0' || !active;
 
-		if (currentEditor) {
-			content = currentEditor.getData();
+	const publishDefinition = () => {
+		let successMessage;
+
+		if (definitionNotPublished) {
+			successMessage = Liferay.Language.get(
+				'workflow-published-successfully'
+			);
 		}
 		else {
-			content = serializeDefinition(
-				xmlNamespace,
-				{
-					description: '',
-					name: definitionTitle,
-					version,
-				},
-				elements.filter(isNode),
-				elements.filter(isEdge)
+			successMessage = Liferay.Language.get(
+				'workflow-updated-successfully'
 			);
 		}
 
-		const name = definitionId ?? definitionTitle;
+		setAlertMessage(successMessage);
 
-		fetch(`${baseURL}/workflow-definitions/save`, {
-			body: JSON.stringify({
-				active,
-				content,
-				name,
-				title: definitionTitle,
-				version,
-			}),
-			headers: {
-				...headers,
-				'Content-Type': 'application/json',
-			},
-			method: 'POST',
+		publishDefinitionRequest({
+			active,
+			content: getXMLContent(true),
+			name: definitionId,
+			title: definitionTitle,
+			version,
+		}).then((response) => {
+			if (response.ok) {
+				setShowSuccessAlert(true);
+			}
+		});
+	};
+
+	const saveDefinition = () => {
+		const successMessage = Liferay.Language.get('workflow-saved');
+
+		setAlertMessage(successMessage);
+
+		saveDefinitionRequest({
+			active,
+			content: getXMLContent(),
+			name: definitionId,
+			title: definitionTitle,
+			version,
 		}).then((response) => {
 			if (response.ok) {
 				setShowSuccessAlert(true);
@@ -180,20 +214,25 @@ export default function UpperToolbar({
 							</ClayButton>
 						</ClayToolbar.Item>
 
-						<ClayToolbar.Item>
-							<ClayButton
-								displayType="secondary"
-								onClick={saveDefinition}
-							>
-								{version !== '0'
-									? Liferay.Language.get('update')
-									: Liferay.Language.get('save')}
-							</ClayButton>
-						</ClayToolbar.Item>
+						{definitionNotPublished && (
+							<ClayToolbar.Item>
+								<ClayButton
+									displayType="secondary"
+									onClick={saveDefinition}
+								>
+									{Liferay.Language.get('save')}
+								</ClayButton>
+							</ClayToolbar.Item>
+						)}
 
 						<ClayToolbar.Item>
-							<ClayButton displayType="primary">
-								{Liferay.Language.get('publish')}
+							<ClayButton
+								displayType="primary"
+								onClick={publishDefinition}
+							>
+								{definitionNotPublished
+									? Liferay.Language.get('publish')
+									: Liferay.Language.get('update')}
 							</ClayButton>
 						</ClayToolbar.Item>
 
@@ -238,11 +277,7 @@ export default function UpperToolbar({
 						onClose={() => setShowSuccessAlert(false)}
 						title={`${Liferay.Language.get('success')}:`}
 					>
-						{version !== '0'
-							? Liferay.Language.get(
-									'workflow-updated-successfully'
-							  )
-							: Liferay.Language.get('workflow-saved')}
+						{alertMessage}
 					</ClayAlert>
 				</ClayAlert.ToastContainer>
 			)}

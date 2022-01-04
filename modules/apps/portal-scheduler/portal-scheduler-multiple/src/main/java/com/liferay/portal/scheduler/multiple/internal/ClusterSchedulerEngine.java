@@ -622,7 +622,7 @@ public class ClusterSchedulerEngine
 					clusterSchedulerEngine._memoryClusteredJobs;
 
 			memoryClusteredJobs.put(
-				clusterSchedulerEngine.getFullName(jobName, groupName),
+				clusterSchedulerEngine._getFullName(jobName, groupName),
 				new ObjectValuePair<SchedulerResponse, TriggerState>(
 					schedulerResponse, TriggerState.NORMAL));
 
@@ -661,7 +661,7 @@ public class ClusterSchedulerEngine
 		writeLock.lock();
 
 		try {
-			clusterSchedulerEngine.initMemoryClusteredJobs();
+			clusterSchedulerEngine._initMemoryClusteredJobs();
 
 			if (_log.isInfoEnabled()) {
 				_log.info(

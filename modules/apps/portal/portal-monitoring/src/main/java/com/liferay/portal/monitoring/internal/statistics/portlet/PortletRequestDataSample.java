@@ -86,7 +86,7 @@ public class PortletRequestDataSample extends BaseDataSample {
 		long groupId = GroupThreadLocal.getGroupId();
 
 		if (groupId != 0) {
-			_setGroupId(groupId);
+			setGroupId(groupId);
 
 			return;
 		}
@@ -103,13 +103,13 @@ public class PortletRequestDataSample extends BaseDataSample {
 				WebKeys.THEME_DISPLAY);
 
 		if (themeDisplay != null) {
-			_setGroupId(themeDisplay.getScopeGroupId());
+			setGroupId(themeDisplay.getScopeGroupId());
 
 			return;
 		}
 
 		try {
-			_setGroupId(portal.getScopeGroupId(portletRequest));
+			setGroupId(portal.getScopeGroupId(portletRequest));
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {

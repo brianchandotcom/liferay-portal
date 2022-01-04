@@ -4643,12 +4643,112 @@ definition {
 	}
 
 	@description = "LPS-135401 - Verify if Disassociate deletion type of Relationship One to Many will allow the entry with relation (from the child Object) to be deleted and its relation to be disassociated"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test DisassociateDeletionOneToManyWillAllowDeleteChild {
+		for (var nameObject : list "A,B") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object ${nameObject}",
+				objectName = "CustomObject${nameObject}",
+				pluralLabelName = "Custom Objects ${nameObject}");
+		}
 
-		// TODO LPS-141677 DisassociateDeletionOneToManyWillAllowDeleteChild pending implementation
+		for (var nameField : list "A,B") {
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldLabelName = "Custom Field ${nameField}",
+				fieldName = "customObjectField${nameField}",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject${nameField}");
+		}
 
+		ObjectAdmin.addObjectRelationshipViaAPI(
+			deletionType = "disassociate",
+			objectName_1 = "CustomObjectA",
+			objectName_2 = "CustomObjectB",
+			relationshipLabel = "Relationship",
+			relationshipName = "relationship",
+			relationshipType = "oneToMany");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object A");
+
+		CreateObject.selectTitleField(fieldLabel = "Custom Field A");
+
+		CreateObject.saveObject();
+
+		ObjectAdmin.addObjectLayoutViaAPI(
+			layoutName = "Layout Name",
+			objectName = "CustomObjectA");
+
+		ObjectAdmin.goToLayoutsTab();
+
+		ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
+
+		ObjectAdmin.markLayoutAsDefault();
+
+		ObjectAdmin.goToLayoutTabOnLayouts();
+
+		ObjectAdmin.addTabFieldsOnLayout(
+			blockName = "Block 1",
+			columnsNumber = "1",
+			fieldLabelName = "Custom Field A",
+			tabName = "Field Tab");
+
+		ObjectAdmin.addTabRelationshipsOnLayout(
+			relationshipsLabelName = "Relationship",
+			tabName = "Relationship Tab");
+
+		Button.clickSave();
+
+		Navigator.openURL();
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object B");
+
+		CreateObject.selectTitleField(fieldLabel = "Custom Field B");
+
+		CreateObject.saveObject();
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObjectA");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObjectB");
+
+		for (var nameEntry : list "A,B") {
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customObjectField${nameEntry}",
+				objectName = "CustomObject${nameEntry}",
+				value = "Entry ${nameEntry}");
+		}
+
+		Navigator.openURL();
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObjectB");
+
+		ObjectPortlet.viewEntryDetails(entry = "Entry B");
+
+		ObjectPortlet.chooseEntryOnRelationshipField(entryOption = "Entry A");
+
+		Button.clickSave();
+
+		Navigator.openURL();
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObjectB");
+
+		ObjectPortlet.deleteEntry(entry = "Entry B");
+
+		ObjectPortlet.assertEntryNotPresent(entry = "Entry B");
+
+		Navigator.openURL();
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObjectA");
+
+		ObjectPortlet.viewEntryDetails(entry = "Entry A");
+
+		ObjectPortlet.gotoRelationshipTab();
+
+		ObjectPortlet.assertEntryNotPresent(entry = "Entry B");
 	}
 
 	@description = "LPS-135401 - Verify if Disassociate deletion type of Relationship One to Many will allow the entry with relation (from the parent Object) to be deleted and its relations to be disassociated"
@@ -4708,6 +4808,8 @@ definition {
 		ObjectPortlet.viewEntryDetails(entry = "Entry B");
 
 		ObjectPortlet.chooseEntryOnRelationshipField(entryOption = "Entry A");
+
+		Button.clickSave();
 
 		Navigator.openURL();
 

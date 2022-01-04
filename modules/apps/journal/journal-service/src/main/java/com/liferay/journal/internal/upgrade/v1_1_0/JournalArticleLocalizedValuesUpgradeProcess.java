@@ -144,13 +144,15 @@ public class JournalArticleLocalizedValuesUpgradeProcess
 							String localizedDescription = descriptionMap.get(
 								locale);
 
-							if ((localizedTitle != null) &&
-								(localizedTitle.length() > _MAX_LENGTH_TITLE)) {
+							if (localizedTitle != null) {
+								String safeLocalizedTitle = _truncate(
+									localizedDescription, _MAX_LENGTH_TITLE);
 
-								localizedTitle = StringUtil.shorten(
-									localizedTitle, _MAX_LENGTH_TITLE);
+								if (localizedTitle != safeLocalizedTitle) {
+									_log(id, "title");
+								}
 
-								_log(id, "title");
+								localizedTitle = safeLocalizedTitle;
 							}
 
 							if (localizedDescription != null) {

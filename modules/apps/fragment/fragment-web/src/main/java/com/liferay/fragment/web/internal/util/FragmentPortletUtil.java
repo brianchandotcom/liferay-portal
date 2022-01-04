@@ -17,7 +17,6 @@ package com.liferay.fragment.web.internal.util;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.util.comparator.FragmentCollectionCreateDateComparator;
 import com.liferay.fragment.util.comparator.FragmentCollectionNameComparator;
-import com.liferay.fragment.util.comparator.FragmentCompositionFragmentEntryCreateDateComparator;
 import com.liferay.fragment.util.comparator.FragmentCompositionFragmentEntryModifiedDateComparator;
 import com.liferay.fragment.util.comparator.FragmentCompositionFragmentEntryNameComparator;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -63,12 +62,7 @@ public class FragmentPortletUtil {
 
 		OrderByComparator<Object> orderByComparator = null;
 
-		if (orderByCol.equals("create-date")) {
-			orderByComparator =
-				new FragmentCompositionFragmentEntryCreateDateComparator(
-					orderByAsc);
-		}
-		else if (orderByCol.equals("name")) {
+		if (orderByCol.equals("name")) {
 			orderByComparator =
 				new FragmentCompositionFragmentEntryNameComparator(orderByAsc);
 		}

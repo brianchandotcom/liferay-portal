@@ -194,6 +194,10 @@
 										"definition": {
 											"fragmentStyle": {
 												"borderWidth": "0",
+												"marginLeft": "4",
+												"marginRight": "4",
+												"marginTop": "4",
+												"paddingLeft": "2",
 												"textAlign": "",
 												"width": "100%"
 											},
@@ -201,177 +205,8 @@
 												"borderWidth": 0,
 												"contentDisplay": "FlexColumn",
 												"marginBottom": 0,
-												"marginLeft": 0,
-												"marginRight": 0,
-												"marginTop": 0,
-												"paddingBottom": 0,
-												"paddingLeft": 0,
-												"paddingRight": 0,
-												"paddingTop": 0,
-												"widthType": "Fluid"
-											}
-										},
-										"pageElements": [
-											{
-												"definition": {
-													"layout": {
-														"borderWidth": 0,
-														"contentDisplay": "FlexColumn",
-														"marginBottom": 0,
-														"marginLeft": 0,
-														"marginRight": 0,
-														"marginTop": 0,
-														"paddingBottom": 0,
-														"paddingLeft": 0,
-														"paddingRight": 0,
-														"paddingTop": 0,
-														"widthType": "Fluid"
-													}
-												},
-												"pageElements": [
-													{
-														"definition": {
-															"fragmentStyle": {
-																"borderWidth": "0",
-																"marginTop": "4",
-																"maxWidth": "1234px",
-																"textAlign": ""
-															},
-															"layout": {
-																"borderWidth": 0,
-																"marginBottom": 0,
-																"marginLeft": 0,
-																"marginRight": 0,
-																"marginTop": 2,
-																"paddingBottom": 0,
-																"paddingLeft": 0,
-																"paddingRight": 0,
-																"paddingTop": 0,
-																"widthType": "Fluid"
-															}
-														},
-														"pageElements": [
-															{
-																"definition": {
-																	"fragmentStyle": {
-																		"height": "163px",
-																		"textAlign": ""
-																	},
-																	"gutters": true,
-																	"modulesPerRow": 2,
-																	"numberOfColumns": 2,
-																	"reverseOrder": false,
-																	"rowViewports": [
-																		{
-																			"id": "landscapeMobile",
-																			"rowViewportDefinition": {
-																			}
-																		},
-																		{
-																			"id": "portraitMobile",
-																			"rowViewportDefinition": {
-																			}
-																		},
-																		{
-																			"id": "tablet",
-																			"rowViewportDefinition": {
-																			}
-																		}
-																	],
-																	"verticalAlignment": "top"
-																},
-																"pageElements": [
-																	{
-																		"definition": {
-																			"columnViewports": [
-																				{
-																					"columnViewportDefinition": {
-																					},
-																					"id": "landscapeMobile"
-																				},
-																				{
-																					"columnViewportDefinition": {
-																					},
-																					"id": "portraitMobile"
-																				},
-																				{
-																					"columnViewportDefinition": {
-																					},
-																					"id": "tablet"
-																				}
-																			],
-																			"size": 5
-																		},
-																		"type": "Column"
-																	},
-																	{
-																		"definition": {
-																			"columnViewports": [
-																				{
-																					"columnViewportDefinition": {
-																					},
-																					"id": "landscapeMobile"
-																				},
-																				{
-																					"columnViewportDefinition": {
-																					},
-																					"id": "portraitMobile"
-																				},
-																				{
-																					"columnViewportDefinition": {
-																					},
-																					"id": "tablet"
-																				}
-																			],
-																			"size": 7
-																		},
-																		"pageElements": [
-																			{
-																				"definition": {
-																					"fragment": {
-																						"key": "liferay-contact"
-																					},
-																					"fragmentConfig": {
-																					},
-																					"fragmentFields": [
-																					]
-																				},
-																				"type": "Fragment"
-																			}
-																		],
-																		"type": "Column"
-																	}
-																],
-																"type": "Row"
-															}
-														],
-														"type": "Section"
-													},
-													{
-														"definition": {
-															"fragmentSettings": {
-																"unallowedFragments": [
-																]
-															}
-														},
-														"type": "DropZone"
-													}
-												],
-												"type": "Section"
-											}
-										],
-										"type": "Section"
-									},
-									{
-										"definition": {
-											"fragmentStyle": {
-												"marginTop": "4"
-											},
-											"layout": {
-												"borderWidth": 0,
-												"marginBottom": 0,
-												"marginLeft": 0,
-												"marginRight": 0,
+												"marginLeft": 2,
+												"marginRight": 2,
 												"marginTop": 2,
 												"paddingBottom": 0,
 												"paddingLeft": 0,
@@ -383,16 +218,12 @@
 										"pageElements": [
 											{
 												"definition": {
-													"fragment": {
-														"key": "actions-card"
-													},
-													"fragmentConfig": {
-														"containerId": "primary"
-													},
-													"fragmentFields": [
-													]
+													"fragmentSettings": {
+														"unallowedFragments": [
+														]
+													}
 												},
-												"type": "Fragment"
+												"type": "DropZone"
 											}
 										],
 										"type": "Section"

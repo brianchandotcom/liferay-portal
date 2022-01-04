@@ -38,6 +38,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import java.sql.Connection;
 
 import java.util.Arrays;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -131,6 +132,48 @@ public class ObjectRelationshipLocalServiceTest {
 			objectRelationship);
 
 		Assert.assertFalse(_hasTable(objectRelationship.getDBTableName()));
+	}
+
+	@Test
+	public void testAddObjectRelationshipMappingTableValues() throws Exception {
+		ObjectRelationship manyToManyObjectRelationship =
+			_objectRelationshipLocalService.addObjectRelationship(
+				TestPropsValues.getUserId(),
+				_objectDefinition1.getObjectDefinitionId(),
+				_objectDefinition1.getObjectDefinitionId(),
+				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				StringUtil.randomId(),
+				ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+
+		_objectRelationshipLocalService.addObjectRelationshipMappingTableValues(
+			manyToManyObjectRelationship.getUserId(),
+			manyToManyObjectRelationship.getObjectRelationshipId(),
+			_objectDefinition1.getPrimaryKey(),
+			_objectDefinition1.getPrimaryKey(), null);
+
+		List<ObjectRelationship> objectRelationships =
+			_objectRelationshipLocalService.getObjectRelationships(
+				_objectDefinition1.getObjectDefinitionId(), 0, 10);
+
+		for (ObjectRelationship objectRelationship : objectRelationships) {
+			Assert.assertEquals(
+				objectRelationship.getDBTableName(),
+				manyToManyObjectRelationship.getDBTableName());
+			Assert.assertEquals(
+				objectRelationship.getObjectDefinitionId1(),
+				_objectDefinition1.getObjectDefinitionId());
+			Assert.assertEquals(
+				objectRelationship.getObjectDefinitionId2(),
+				_objectDefinition1.getObjectDefinitionId());
+			Assert.assertEquals("manyToMany", objectRelationship.getType());
+		}
+
+		_objectRelationshipLocalService.deleteObjectRelationship(
+			manyToManyObjectRelationship);
+
+		Assert.assertFalse(
+			_hasTable(manyToManyObjectRelationship.getDBTableName()));
 	}
 
 	@Test

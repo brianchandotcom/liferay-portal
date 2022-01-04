@@ -105,38 +105,8 @@ public class PoshiDependenciesFileLocationCheck extends BaseFileCheck {
 					String dependenciesFileName =
 						dependenciesFileLocation.replaceFirst(".*/(.+)", "$1");
 
-					int x = -1;
-
-					while (true) {
-						x = testCaseFileContent.indexOf(
-							dependenciesFileName, x + 1);
-
-						if (x == -1) {
-							break;
-						}
-
-						char previousChar = testCaseFileContent.charAt(x - 1);
-
-						if ((previousChar != CharPool.QUOTE) &&
-							(previousChar != CharPool.COMMA)) {
-
-							continue;
-						}
-
-						if ((x + dependenciesFileName.length()) >=
-								testCaseFileContent.length()) {
-
-							break;
-						}
-
-						char nextChar = testCaseFileContent.charAt(
-							x + dependenciesFileName.length());
-
-						if ((nextChar != CharPool.QUOTE) &&
-							(nextChar != CharPool.COMMA)) {
-
-							continue;
-						}
+					if (_containsFileName(
+							testCaseFileContent, dependenciesFileName)) {
 
 						Set<String> referencesFiles = entry.getValue();
 
@@ -206,38 +176,8 @@ public class PoshiDependenciesFileLocationCheck extends BaseFileCheck {
 					String dependenciesFileName =
 						dependenciesFileLocation.replaceFirst(".*/(.+)", "$1");
 
-					int x = -1;
-
-					while (true) {
-						x = testCaseFileContent.indexOf(
-							dependenciesFileName, x + 1);
-
-						if (x == -1) {
-							break;
-						}
-
-						char previousChar = testCaseFileContent.charAt(x - 1);
-
-						if ((previousChar != CharPool.QUOTE) &&
-							(previousChar != CharPool.COMMA)) {
-
-							continue;
-						}
-
-						if ((x + dependenciesFileName.length()) >=
-								testCaseFileContent.length()) {
-
-							break;
-						}
-
-						char nextChar = testCaseFileContent.charAt(
-							x + dependenciesFileName.length());
-
-						if ((nextChar != CharPool.QUOTE) &&
-							(nextChar != CharPool.COMMA)) {
-
-							continue;
-						}
+					if (_containsFileName(
+							testCaseFileContent, dependenciesFileName)) {
 
 						Set<String> referencesFiles = entry.getValue();
 
@@ -272,6 +212,42 @@ public class PoshiDependenciesFileLocationCheck extends BaseFileCheck {
 				}
 			}
 		}
+	}
+
+	private boolean _containsFileName(
+		String content, String dependenciesFileName) {
+
+		int x = -1;
+
+		while (true) {
+			x = content.indexOf(dependenciesFileName, x + 1);
+
+			if (x == -1) {
+				break;
+			}
+
+			char previousChar = content.charAt(x - 1);
+
+			if ((previousChar != CharPool.QUOTE) &&
+				(previousChar != CharPool.COMMA)) {
+
+				continue;
+			}
+
+			if ((x + dependenciesFileName.length()) >= content.length()) {
+				break;
+			}
+
+			char nextChar = content.charAt(x + dependenciesFileName.length());
+
+			if ((nextChar != CharPool.QUOTE) && (nextChar != CharPool.COMMA)) {
+				continue;
+			}
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private synchronized void _getTestCaseDependenciesFileLocations()

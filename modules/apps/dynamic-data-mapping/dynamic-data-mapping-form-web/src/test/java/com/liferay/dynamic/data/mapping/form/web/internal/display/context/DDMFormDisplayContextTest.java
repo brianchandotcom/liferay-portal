@@ -51,6 +51,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.servlet.SessionMessages;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
@@ -567,8 +568,7 @@ public class DDMFormDisplayContextTest extends PowerMockito {
 		MockRenderRequest mockRenderRequest = _mockRenderRequest();
 
 		SessionMessages.add(
-			mockRenderRequest,
-			SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_SUCCESS_MESSAGE);
+			mockRenderRequest, _PORTLET_ID + "formInstanceRecordAdded");
 
 		DDMFormDisplayContext ddmFormDisplayContext =
 			_createDDMFormDisplayContext(mockRenderRequest);
@@ -592,8 +592,7 @@ public class DDMFormDisplayContextTest extends PowerMockito {
 		MockRenderRequest mockRenderRequest = _mockRenderRequest();
 
 		SessionMessages.add(
-			mockRenderRequest,
-			SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_SUCCESS_MESSAGE);
+			mockRenderRequest, _PORTLET_ID + "formInstanceRecordAdded");
 
 		DDMFormDisplayContext ddmFormDisplayContext =
 			_createDDMFormDisplayContext(mockRenderRequest);
@@ -676,7 +675,7 @@ public class DDMFormDisplayContextTest extends PowerMockito {
 			mock(DDMStorageAdapterTracker.class),
 			mock(FFSubmissionsSettingsConfigurationActivator.class),
 			mock(GroupLocalService.class), new JSONFactoryImpl(), null, null,
-			mock(Portal.class), renderRequest, new MockRenderResponse(),
+			_mockPortal(renderRequest), renderRequest, new MockRenderResponse(),
 			mock(RoleLocalService.class), mock(UserLocalService.class),
 			_workflowDefinitionLinkLocalService);
 	}
@@ -847,6 +846,18 @@ public class DDMFormDisplayContextTest extends PowerMockito {
 		);
 	}
 
+	private Portal _mockPortal(RenderRequest renderRequest) {
+		Portal portal = mock(Portal.class);
+
+		Mockito.when(
+			portal.getPortletId(renderRequest)
+		).thenReturn(
+			_PORTLET_ID
+		);
+
+		return portal;
+	}
+
 	private void _mockPortletPermissionUtil() throws Exception {
 		mockStatic(PortletPermissionUtil.class);
 
@@ -1007,6 +1018,8 @@ public class DDMFormDisplayContextTest extends PowerMockito {
 	}
 
 	private static final String _DEFAULT_LANGUAGE_ID = "es_ES";
+
+	private static final String _PORTLET_ID = RandomTestUtil.randomString();
 
 	@Mock
 	private DDMFormInstanceLocalService _ddmFormInstanceLocalService;

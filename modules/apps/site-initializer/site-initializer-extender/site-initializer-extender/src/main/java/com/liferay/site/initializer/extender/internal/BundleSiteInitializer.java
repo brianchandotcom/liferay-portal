@@ -2415,17 +2415,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 					subscriptionPropertiesJSONObject.getJSONObject(
 						"subscriptionTypeSettings");
 
-				UnicodeProperties unicodeProperties = new UnicodeProperties();
-
-				if (subscriptionTypeSettingsJSONObject != null) {
-					for (String key :
-							subscriptionTypeSettingsJSONObject.keySet()) {
-
-						unicodeProperties.put(
-							key,
-							subscriptionTypeSettingsJSONObject.getString(key));
-					}
-				}
+				UnicodeProperties unicodeProperties = new UnicodeProperties(
+					JSONUtil.toStringMap(subscriptionTypeSettingsJSONObject),
+					true);
 
 				CPInstance cpInstance =
 					_commerceReferencesHolder.cpInstanceLocalService.

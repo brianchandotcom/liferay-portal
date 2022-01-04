@@ -117,7 +117,8 @@
 											],
 											"fragmentStyle": {
 												"marginRight": "4",
-												"paddingRight": "3"
+												"paddingRight": "3",
+												"textAlign": ""
 											}
 										},
 										"type": "Fragment"
@@ -127,12 +128,52 @@
 							},
 							{
 								"definition": {
-									"fragmentSettings": {
-										"unallowedFragments": [
-										]
+									"fragmentStyle": {
+										"marginLeft": "5",
+										"marginTop": "4",
+										"paddingTop": "3"
+									},
+									"layout": {
+										"borderWidth": 0,
+										"marginBottom": 0,
+										"marginLeft": 4,
+										"marginRight": 0,
+										"marginTop": 2,
+										"paddingBottom": 0,
+										"paddingLeft": 0,
+										"paddingRight": 0,
+										"paddingTop": 1,
+										"widthType": "Fluid"
 									}
 								},
-								"type": "DropZone"
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "welcome-banner"
+											},
+											"fragmentConfig": {
+											},
+											"fragmentFields": [
+											],
+											"fragmentStyle": {
+												"marginBottom": "4",
+												"paddingBottom": "3"
+											}
+										},
+										"type": "Fragment"
+									},
+									{
+										"definition": {
+											"fragmentSettings": {
+												"unallowedFragments": [
+												]
+											}
+										},
+										"type": "DropZone"
+									}
+								],
+								"type": "Section"
 							}
 						],
 						"type": "Section"

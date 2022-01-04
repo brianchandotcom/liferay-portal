@@ -14,6 +14,7 @@
 
 package com.liferay.source.formatter.checks;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.source.formatter.checks.util.SourceUtil;
@@ -38,8 +39,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @author Alan Huang
@@ -55,11 +54,33 @@ public class PoshiDependenciesFileLocationCheck extends BaseFileCheck {
 			return content;
 		}
 
+		long start = System.currentTimeMillis();
+
 		_getTestCaseFileNames();
+
+		System.out.println(_testCaseFileNames.size());
+
+		long end = System.currentTimeMillis();
+
+		System.out.println("1finished in " + (end - start));
+
+		start = System.currentTimeMillis();
 
 		_checkDependenciesFileReferences(absolutePath, fileName);
 
+		System.out.println(_testCaseFileNames.size());
+
+		end = System.currentTimeMillis();
+
+		System.out.println("2finished in " + (end - start));
+
+		start = System.currentTimeMillis();
+
 		_checkGlobalDependenciesFileReferences(absolutePath, fileName);
+
+		end = System.currentTimeMillis();
+
+		System.out.println("3finished in " + (end - start));
 
 		return content;
 	}
@@ -84,15 +105,39 @@ public class PoshiDependenciesFileLocationCheck extends BaseFileCheck {
 					String dependenciesFileName =
 						dependenciesFileLocation.replaceFirst(".*/(.+)", "$1");
 
-					String s = Pattern.quote(dependenciesFileName);
+					int x = -1;
 
-					Pattern dependenciesFileNamePattern = Pattern.compile(
-						"[\",]" + s + "[\",]");
+					while (true) {
+						x = testCaseFileContent.indexOf(
+							dependenciesFileName, x + 1);
 
-					Matcher matcher = dependenciesFileNamePattern.matcher(
-						testCaseFileContent);
+						if (x == -1) {
+							break;
+						}
 
-					while (matcher.find()) {
+						char previousChar = testCaseFileContent.charAt(x - 1);
+
+						if ((previousChar != CharPool.QUOTE) &&
+							(previousChar != CharPool.COMMA)) {
+
+							continue;
+						}
+
+						if ((x + dependenciesFileName.length()) >=
+								testCaseFileContent.length()) {
+
+							break;
+						}
+
+						char nextChar = testCaseFileContent.charAt(
+							x + dependenciesFileName.length());
+
+						if ((nextChar != CharPool.QUOTE) &&
+							(nextChar != CharPool.COMMA)) {
+
+							continue;
+						}
+
 						Set<String> referencesFiles = entry.getValue();
 
 						referencesFiles.add(testCaseFileName);
@@ -161,15 +206,39 @@ public class PoshiDependenciesFileLocationCheck extends BaseFileCheck {
 					String dependenciesFileName =
 						dependenciesFileLocation.replaceFirst(".*/(.+)", "$1");
 
-					String s = Pattern.quote(dependenciesFileName);
+					int x = -1;
 
-					Pattern dependenciesFileNamePattern = Pattern.compile(
-						"[\",]" + s + "[\",]");
+					while (true) {
+						x = testCaseFileContent.indexOf(
+							dependenciesFileName, x + 1);
 
-					Matcher matcher = dependenciesFileNamePattern.matcher(
-						testCaseFileContent);
+						if (x == -1) {
+							break;
+						}
 
-					while (matcher.find()) {
+						char previousChar = testCaseFileContent.charAt(x - 1);
+
+						if ((previousChar != CharPool.QUOTE) &&
+							(previousChar != CharPool.COMMA)) {
+
+							continue;
+						}
+
+						if ((x + dependenciesFileName.length()) >=
+								testCaseFileContent.length()) {
+
+							break;
+						}
+
+						char nextChar = testCaseFileContent.charAt(
+							x + dependenciesFileName.length());
+
+						if ((nextChar != CharPool.QUOTE) &&
+							(nextChar != CharPool.COMMA)) {
+
+							continue;
+						}
+
 						Set<String> referencesFiles = entry.getValue();
 
 						referencesFiles.add(testCaseFileName);

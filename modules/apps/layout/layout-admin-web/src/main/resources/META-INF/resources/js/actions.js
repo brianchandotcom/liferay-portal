@@ -41,6 +41,10 @@ const ACTIONS = {
 		}
 	},
 
+	exportTranslation: ({exportTranslationURL}) => {
+		Liferay.Util.navigate(exportTranslationURL);
+	},
+
 	permissionLayout: ({permissionLayoutURL}) => {
 		openModal({
 			title: Liferay.Language.get('permissions'),

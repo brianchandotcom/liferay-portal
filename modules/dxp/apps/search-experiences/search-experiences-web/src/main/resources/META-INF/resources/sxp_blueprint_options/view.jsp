@@ -24,7 +24,6 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.PrefsParamUtil" %><%@
-page import="com.liferay.search.experiences.exception.NoSuchSXPBlueprintException" %><%@
 page import="com.liferay.search.experiences.model.SXPBlueprint" %><%@
 page import="com.liferay.search.experiences.service.SXPBlueprintLocalServiceUtil" %>
 
@@ -35,13 +34,7 @@ page import="com.liferay.search.experiences.service.SXPBlueprintLocalServiceUtil
 <%
 long sxpBlueprintId = PrefsParamUtil.getLong(portletPreferences, request, "sxpBlueprintId");
 
-SXPBlueprint sxpBlueprint = null;
-
-try {
-	sxpBlueprint = SXPBlueprintLocalServiceUtil.getSXPBlueprint(sxpBlueprintId);
-}
-catch (NoSuchSXPBlueprintException noSuchSXPBlueprintException) {
-}
+SXPBlueprint sxpBlueprint = SXPBlueprintLocalServiceUtil.fetchSXPBlueprint(sxpBlueprintId);
 %>
 
 <div class="alert alert-info text-center">

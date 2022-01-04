@@ -782,7 +782,7 @@ public class DefaultExportImportContentProcessorTest {
 		throws Exception {
 
 		Map<Locale, String> nameMap = new HashMap<>();
-		Map<Locale, String> firendlyURLMap = new HashMap<>();
+		Map<Locale, String> friendlyURLMap = new HashMap<>();
 
 		for (Locale locale : new Locale[] {_defaultLocale, _nondefaultLocale}) {
 			String name = RandomTestUtil.randomString(
@@ -795,11 +795,11 @@ public class DefaultExportImportContentProcessorTest {
 
 			nameMap.put(locale, name);
 
-			firendlyURLMap.put(locale, friendlyURL);
+			friendlyURLMap.put(locale, friendlyURL);
 		}
 
 		return LayoutTestUtil.addLayout(
-			group.getGroupId(), privateLayout, nameMap, firendlyURLMap);
+			group.getGroupId(), privateLayout, nameMap, friendlyURLMap);
 	}
 
 	protected void assertLinksToLayouts(

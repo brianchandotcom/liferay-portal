@@ -149,6 +149,8 @@ public class PoshiDependenciesFileLocationCheck extends BaseFileCheck {
 			}
 		}
 
+		_dependenciesFileLocationsMapIsReady = true;
+
 		for (Map.Entry<String, Set<String>> entry :
 				_dependenciesFileLocationsMap.entrySet()) {
 
@@ -182,8 +184,6 @@ public class PoshiDependenciesFileLocationCheck extends BaseFileCheck {
 				}
 			}
 		}
-
-		_dependenciesFileLocationsMapIsReady = true;
 	}
 
 	private synchronized void _checkGlobalDependenciesFileReferences(
@@ -250,6 +250,8 @@ public class PoshiDependenciesFileLocationCheck extends BaseFileCheck {
 			}
 		}
 
+		_dependenciesGlobalFileLocationsMapIsReady = true;
+
 		for (Map.Entry<String, Set<String>> entry :
 				_dependenciesGlobalFileLocationsMap.entrySet()) {
 
@@ -270,8 +272,6 @@ public class PoshiDependenciesFileLocationCheck extends BaseFileCheck {
 				}
 			}
 		}
-
-		_dependenciesGlobalFileLocationsMapIsReady = true;
 	}
 
 	private synchronized void _getTestCaseDependenciesFileLocations()

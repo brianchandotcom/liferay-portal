@@ -2,7 +2,7 @@ import ClayButton from '@clayui/button';
 import {DropDown} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
 import React, {useState} from 'react';
-import {POSSIBLE_SUBSCRIPTIONS_STATUS} from '../../utils/constants';
+import {SUBSCRIPTIONS_STATUS} from '../../utils/constants';
 
 const SubscriptionsFilterByStatus = ({selectedStatus, setSelectedStatus}) => {
 	const [active, setActive] = useState(false);
@@ -11,12 +11,12 @@ const SubscriptionsFilterByStatus = ({selectedStatus, setSelectedStatus}) => {
 		if (status === 'All') {
 			return setSelectedStatus(
 				selectedStatus.length ===
-					Object.keys(POSSIBLE_SUBSCRIPTIONS_STATUS).length
+					Object.keys(SUBSCRIPTIONS_STATUS).length
 					? []
 					: [
-							POSSIBLE_SUBSCRIPTIONS_STATUS.active,
-							POSSIBLE_SUBSCRIPTIONS_STATUS.expired,
-							POSSIBLE_SUBSCRIPTIONS_STATUS.future,
+							SUBSCRIPTIONS_STATUS.active,
+							SUBSCRIPTIONS_STATUS.expired,
+							SUBSCRIPTIONS_STATUS.future,
 					  ]
 			);
 		}
@@ -46,7 +46,7 @@ const SubscriptionsFilterByStatus = ({selectedStatus, setSelectedStatus}) => {
 					>
 						{`${
 							selectedStatus.length ===
-							Object.keys(POSSIBLE_SUBSCRIPTIONS_STATUS).length
+							Object.keys(SUBSCRIPTIONS_STATUS).length
 								? 'All'
 								: selectedStatus.length === 0
 								? 'None'
@@ -61,7 +61,7 @@ const SubscriptionsFilterByStatus = ({selectedStatus, setSelectedStatus}) => {
 					onClick={() => handleChange('All')}
 					symbolRight={
 						selectedStatus.length ===
-						Object.keys(POSSIBLE_SUBSCRIPTIONS_STATUS).length
+						Object.keys(SUBSCRIPTIONS_STATUS).length
 							? 'check'
 							: ''
 					}
@@ -70,48 +70,36 @@ const SubscriptionsFilterByStatus = ({selectedStatus, setSelectedStatus}) => {
 				</DropDown.Item>
 
 				<DropDown.Item
-					onClick={() =>
-						handleChange(POSSIBLE_SUBSCRIPTIONS_STATUS.active)
-					}
+					onClick={() => handleChange(SUBSCRIPTIONS_STATUS.active)}
 					symbolRight={
-						selectedStatus.includes(
-							POSSIBLE_SUBSCRIPTIONS_STATUS.active
-						)
+						selectedStatus.includes(SUBSCRIPTIONS_STATUS.active)
 							? 'check'
 							: ''
 					}
 				>
-					{POSSIBLE_SUBSCRIPTIONS_STATUS.active}
+					{SUBSCRIPTIONS_STATUS.active}
 				</DropDown.Item>
 
 				<DropDown.Item
-					onClick={() =>
-						handleChange(POSSIBLE_SUBSCRIPTIONS_STATUS.expired)
-					}
+					onClick={() => handleChange(SUBSCRIPTIONS_STATUS.expired)}
 					symbolRight={
-						selectedStatus.includes(
-							POSSIBLE_SUBSCRIPTIONS_STATUS.expired
-						)
+						selectedStatus.includes(SUBSCRIPTIONS_STATUS.expired)
 							? 'check'
 							: ''
 					}
 				>
-					{POSSIBLE_SUBSCRIPTIONS_STATUS.expired}
+					{SUBSCRIPTIONS_STATUS.expired}
 				</DropDown.Item>
 
 				<DropDown.Item
-					onClick={() =>
-						handleChange(POSSIBLE_SUBSCRIPTIONS_STATUS.future)
-					}
+					onClick={() => handleChange(SUBSCRIPTIONS_STATUS.future)}
 					symbolRight={
-						selectedStatus.includes(
-							POSSIBLE_SUBSCRIPTIONS_STATUS.future
-						)
+						selectedStatus.includes(SUBSCRIPTIONS_STATUS.future)
 							? 'check'
 							: ''
 					}
 				>
-					{POSSIBLE_SUBSCRIPTIONS_STATUS.future}
+					{SUBSCRIPTIONS_STATUS.future}
 				</DropDown.Item>
 			</DropDown>
 		</div>

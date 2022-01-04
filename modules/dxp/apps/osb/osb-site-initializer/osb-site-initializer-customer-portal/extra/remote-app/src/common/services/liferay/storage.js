@@ -50,6 +50,6 @@ export const Storage = {
 
 export const STORAGE_KEYS = {
 	KORONEIKI_APPLICATION: 'liferay-customer-portal-koroneiki-application',
-	QUICK_LINKS_EXPANDED: 'quick-links-container-expanded',
+	QUICK_LINKS_EXPANDED: 'liferay-customer-portal-quick-links-expanded',
 	USER_APPLICATION: 'liferay-customer-portal-user-application',
 };

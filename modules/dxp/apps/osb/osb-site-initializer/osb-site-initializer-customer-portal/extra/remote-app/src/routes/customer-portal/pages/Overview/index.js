@@ -6,7 +6,7 @@ import SubscriptionsFilterByStatus from '../../components/SubscriptionsFilterByS
 import SubscriptionsNavbar from '../../components/SubscriptionsNavbar';
 import {useCustomerPortal} from '../../context';
 import {actionTypes} from '../../context/reducer';
-import {POSSIBLE_SUBSCRIPTIONS_STATUS} from '../../utils/constants';
+import {SUBSCRIPTIONS_STATUS} from '../../utils/constants';
 import {getWebContents} from '../../utils/webContentsGenerator';
 import OverviewSkeleton from './Skeleton';
 
@@ -17,9 +17,9 @@ const Overview = ({project, subscriptionGroups}) => {
 		''
 	);
 	const [selectedStatus, setSelectedStatus] = useState([
-		POSSIBLE_SUBSCRIPTIONS_STATUS.active,
-		POSSIBLE_SUBSCRIPTIONS_STATUS.expired,
-		POSSIBLE_SUBSCRIPTIONS_STATUS.future,
+		SUBSCRIPTIONS_STATUS.active,
+		SUBSCRIPTIONS_STATUS.expired,
+		SUBSCRIPTIONS_STATUS.future,
 	]);
 
 	const parseAccountSubscriptionGroupERC = (subscriptionName) => {
@@ -59,7 +59,7 @@ const Overview = ({project, subscriptionGroups}) => {
 						subscriptionGroup
 					)}'${
 						status.length ===
-						Object.keys(POSSIBLE_SUBSCRIPTIONS_STATUS).length
+						Object.keys(SUBSCRIPTIONS_STATUS).length
 							? ''
 							: `${status.reduce(
 									getAccountSubscriptionFilterQueryString,

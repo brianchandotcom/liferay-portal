@@ -10,6 +10,13 @@ import {
 import {useCustomerPortal} from '../../context';
 import QuickLinksSkeleton from './Skeleton';
 
+DOMPurify.addHook('afterSanitizeAttributes', (node) => {
+	if ('target' in node) {
+		node.setAttribute('target', '_blank');
+		node.setAttribute('rel', 'noopener noreferrer');
+	}
+});
+
 const QuickLinksPanel = ({accountKey}) => {
 	const [{quickLinks, structuredContents}] = useCustomerPortal();
 	const [expandedPanel, setExpandedPanel] = useState(true);
@@ -43,6 +50,7 @@ const QuickLinksPanel = ({accountKey}) => {
 					});
 
 					const htmlBody = await structuredComponent.text();
+
 					accumulator.push(
 						htmlBody.replace('{{accountKey}}', accountKey)
 					);
@@ -61,13 +69,6 @@ const QuickLinksPanel = ({accountKey}) => {
 			fetchQuickLinksPanelContent();
 		}
 	}, [quickLinks, fetchQuickLinksPanelContent]);
-
-	DOMPurify.addHook('afterSanitizeAttributes', (node) => {
-		if ('target' in node) {
-			node.setAttribute('target', '_blank');
-			node.setAttribute('rel', 'noopener noreferrer');
-		}
-	});
 
 	return (
 		<div>
@@ -131,4 +132,5 @@ const QuickLinksPanel = ({accountKey}) => {
 };
 
 QuickLinksPanel.Skeleton = QuickLinksSkeleton;
+
 export default QuickLinksPanel;

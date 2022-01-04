@@ -20,7 +20,7 @@ import {
 	PARAMS_KEYS,
 	SearchParams,
 } from '../../../common/services/liferay/search-params';
-import {isValidPage} from '../../../common/utils';
+import {isValidPage} from '../../../common/utils/page.validation';
 import {CUSTOM_EVENTS} from '../utils/constants';
 import reducer, {actionTypes} from './reducer';
 

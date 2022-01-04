@@ -566,9 +566,7 @@ public class DDMFormDisplayContextTest extends PowerMockito {
 
 		MockRenderRequest mockRenderRequest = _mockRenderRequest();
 
-		SessionMessages.add(
-			mockRenderRequest,
-			SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_SUCCESS_MESSAGE);
+		SessionMessages.add(mockRenderRequest, "formInstanceRecordAdded");
 
 		DDMFormDisplayContext ddmFormDisplayContext =
 			_createDDMFormDisplayContext(mockRenderRequest);
@@ -591,9 +589,7 @@ public class DDMFormDisplayContextTest extends PowerMockito {
 
 		MockRenderRequest mockRenderRequest = _mockRenderRequest();
 
-		SessionMessages.add(
-			mockRenderRequest,
-			SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_SUCCESS_MESSAGE);
+		SessionMessages.add(mockRenderRequest, "formInstanceRecordAdded");
 
 		DDMFormDisplayContext ddmFormDisplayContext =
 			_createDDMFormDisplayContext(mockRenderRequest);

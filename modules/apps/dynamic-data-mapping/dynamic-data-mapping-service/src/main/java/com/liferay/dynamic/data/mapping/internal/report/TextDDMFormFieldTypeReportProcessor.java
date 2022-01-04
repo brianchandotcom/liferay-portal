@@ -15,6 +15,7 @@
 package com.liferay.dynamic.data.mapping.internal.report;
 
 import com.liferay.dynamic.data.mapping.constants.DDMFormInstanceReportConstants;
+import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.model.Value;
@@ -49,9 +50,11 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"ddm.form.field.type.name=color", "ddm.form.field.type.name=date",
-		"ddm.form.field.type.name=search_location",
-		"ddm.form.field.type.name=text"
+		"ddm.form.field.type.name=" + DDMFormFieldTypeConstants.COLOR,
+		"ddm.form.field.type.name=" + DDMFormFieldTypeConstants.DATE,
+		"ddm.form.field.type.name=" + DDMFormFieldTypeConstants.DATE_TIME,
+		"ddm.form.field.type.name=" + DDMFormFieldTypeConstants.SEARCH_LOCATION,
+		"ddm.form.field.type.name=" + DDMFormFieldTypeConstants.TEXT
 	},
 	service = DDMFormFieldTypeReportProcessor.class
 )

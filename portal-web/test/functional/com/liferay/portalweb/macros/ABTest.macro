@@ -92,6 +92,16 @@ definition {
 		Click(locator1 = "ABTest#SAVE_VARIANT_NAME_BUTTON");
 	}
 
+	macro deleteABTestInAC {
+		Click(
+				key_text = "ellipsis-v",
+				locator1 = "Icon#ANY");
+
+		MenuItem.clickNoError(menuItem = "Delete Test");
+
+		Button.clickDelete();
+	}
+	
 	macro deleteVariant {
 		if (!(isSet(key_index))) {
 			var key_index = "1";

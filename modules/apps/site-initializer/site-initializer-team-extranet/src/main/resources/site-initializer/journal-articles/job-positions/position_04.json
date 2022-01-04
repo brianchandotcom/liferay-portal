@@ -1,11 +1,11 @@
 {
-	"articleId": "POSITION-04",
+	"articleId": "POSITION-02",
 	"assetCategoryERCs": [
-		"ROLCAT0003",
-		"REGCAT0004"
+		"ROLCAT0001",
+		"REGCAT0002"
 	],
 	"ddmStructureKey": "POSITION",
 	"ddmTemplateKey": "POSITION",
 	"folder": "Job Positions",
-	"name": "Associate Test Engineer"
+	"name": "Principal Product Manager"
 }

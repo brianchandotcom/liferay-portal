@@ -12,16 +12,17 @@
  * details.
  */
 
-package com.liferay.frontend.js.components.sample.web.constants;
+package com.liferay.frontend.js.components.sample.web.internal.constants;
 
 /**
  * @author Carlos Lancha
  */
 public class ComponentsSamplePortletKeys {
 
-	public static final String TRANSLATION_MANAGER_DISPLAY_CONTEXT = "TRANSLATION_MANAGER_DISPLAY_CONTEXT";
-
 	public static final String COMPONENTS_SAMPLE =
 		"com_liferay_components_sample_web_portlet_ComponentsSamplePortlet";
+
+	public static final String TRANSLATION_MANAGER_DISPLAY_CONTEXT =
+		"TRANSLATION_MANAGER_DISPLAY_CONTEXT";
 
 }

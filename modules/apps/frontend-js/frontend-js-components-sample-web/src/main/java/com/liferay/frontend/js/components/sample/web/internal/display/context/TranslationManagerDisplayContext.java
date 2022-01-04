@@ -14,8 +14,6 @@
 
 package com.liferay.frontend.js.components.sample.web.internal.display.context;
 
-import com.liferay.frontend.js.components.sample.web.constants.ComponentsSamplePortletKeys;
-
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -32,53 +30,55 @@ import java.util.Set;
 public class TranslationManagerDisplayContext {
 
 	public List<String> getActiveLanguageIds() {
-        if (_activeLanguageIds != null) {
+		if (_activeLanguageIds != null) {
 			return _activeLanguageIds;
 		}
 
-        _activeLanguageIds = new ArrayList<String>();
+		_activeLanguageIds = new ArrayList<>();
 
-        _activeLanguageIds.add(getDefaultLanguageId());
-        _activeLanguageIds.add("ca_ES");
-        _activeLanguageIds.add("fr_FR");
+		_activeLanguageIds.add(getDefaultLanguageId());
+		_activeLanguageIds.add("ca_ES");
+		_activeLanguageIds.add("fr_FR");
 
-        return _activeLanguageIds;
-    }
+		return _activeLanguageIds;
+	}
 
-    public Set<Locale> getAvailableLocales() {
-        if (_availableLocales != null) {
-            return _availableLocales;
-        }
+	public Set<Locale> getAvailableLocales() {
+		if (_availableLocales != null) {
+			return _availableLocales;
+		}
 
-        _availableLocales = LanguageUtil.getAvailableLocales();
+		_availableLocales = LanguageUtil.getAvailableLocales();
 
-        return _availableLocales;
-    }
+		return _availableLocales;
+	}
 
-    public String getDefaultLanguageId() {
-        if (_defaultLanguageId != null) {
-            return _defaultLanguageId;
-        }
+	public String getDefaultLanguageId() {
+		if (_defaultLanguageId != null) {
+			return _defaultLanguageId;
+		}
 
-        _defaultLanguageId = LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault());
+		_defaultLanguageId = LocaleUtil.toLanguageId(
+			LocaleUtil.getSiteDefault());
 
-        return _defaultLanguageId;
-    }
+		return _defaultLanguageId;
+	}
 
-    public Map<String, Object> getTranslations() {
-        if (_translations != null) {
-            return _translations;
-        }
+	public Map<String, Object> getTranslations() {
+		if (_translations != null) {
+			return _translations;
+		}
 
-        _translations = HashMapBuilder.<String, Object>put(
-	        "ca-ES", "Lorem"
-        ).build();
+		_translations = HashMapBuilder.<String, Object>put(
+			"ca-ES", "Lorem"
+		).build();
 
-        return _translations;
-    }
+		return _translations;
+	}
 
-    private List<String> _activeLanguageIds;
-    private Set<Locale> _availableLocales;
-    private String _defaultLanguageId;
-    private Map<String, Object> _translations;
+	private List<String> _activeLanguageIds;
+	private Set<Locale> _availableLocales;
+	private String _defaultLanguageId;
+	private Map<String, Object> _translations;
+
 }

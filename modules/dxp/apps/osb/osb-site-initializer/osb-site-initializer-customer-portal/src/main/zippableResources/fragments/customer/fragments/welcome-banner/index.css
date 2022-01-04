@@ -1,0 +1,55 @@
+.customer-portal-welcome-banner {
+	background: #134194;
+	height: 286px;
+}
+
+.customer-portal-welcome-banner > div {
+	z-index: 1;
+}
+
+.customer-portal-welcome-banner.rounded-xl-left {
+	border-bottom-left-radius: var(--border-radius-xl);
+	border-top-left-radius: var(--border-radius-xl);
+}
+
+.customer-portal-welcome-banner > img {
+	border-bottom-left-radius: var(--border-radius-xl);
+	border-top-left-radius: var(--border-radius-xl);
+	height: 286px;
+	right: 0;
+}
+
+.customer-portal-welcome-banner .skeleton {
+	background: #f7f8f9;
+	background-image: linear-gradient(
+		to right,
+		#f8f8f8 0%,
+		rgba(206, 206, 206, 0.1) 20%,
+		#f8f8f8 40%,
+		#f8f8f8 100%
+	);
+	animation: shimmer-customer-portal-select-user 1s linear infinite;
+	background-repeat: no-repeat;
+	background-size: 450px 400px;
+}
+
+@keyframes shimmer-customer-portal-select-user {
+	0% {
+		background-position: -450px 0;
+	}
+	100% {
+		background-position: 450px 0;
+	}
+}
+
+.customer-portal-welcome-banner .skeleton#welcome-user {
+	width: 500px;
+}
+
+.customer-portal-welcome-banner .skeleton#project-title {
+	width: 200px;
+}
+
+.customer-portal-welcome-banner .skeleton#welcome-description {
+	width: 700px;
+}

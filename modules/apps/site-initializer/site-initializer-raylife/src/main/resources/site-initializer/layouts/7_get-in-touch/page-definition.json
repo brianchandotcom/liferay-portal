@@ -8,7 +8,8 @@
 						"maxWidth": "1400px",
 						"opacity": "100",
 						"paddingBottom": "6",
-						"paddingTop": "6"
+						"paddingTop": "6",
+						"textAlign": ""
 					},
 					"layout": {
 						"borderWidth": 0,
@@ -28,8 +29,16 @@
 					{
 						"definition": {
 							"fragmentStyle": {
-								"paddingLeft": "10"
+								"textAlign": ""
 							},
+							"fragmentViewports": [
+								{
+									"fragmentViewportStyle": {
+										"paddingLeft": "0"
+									},
+									"id": "tablet"
+								}
+							],
 							"gutters": false,
 							"modulesPerRow": 2,
 							"numberOfColumns": 2,
@@ -43,11 +52,14 @@
 								{
 									"id": "portraitMobile",
 									"rowViewportDefinition": {
+										"modulesPerRow": 1
 									}
 								},
 								{
 									"id": "tablet",
 									"rowViewportDefinition": {
+										"modulesPerRow": 1,
+										"verticalAlignment": "top"
 									}
 								}
 							],
@@ -64,11 +76,13 @@
 										},
 										{
 											"columnViewportDefinition": {
+												"size": 12
 											},
 											"id": "portraitMobile"
 										},
 										{
 											"columnViewportDefinition": {
+												"size": 12
 											},
 											"id": "tablet"
 										}
@@ -78,19 +92,72 @@
 								"pageElements": [
 									{
 										"definition": {
-											"fragment": {
-												"key": "get-in-touch"
-											},
-											"fragmentConfig": {
-											},
-											"fragmentFields": [
-											],
 											"fragmentStyle": {
-												"marginLeft": "10",
-												"marginTop": "5"
+												"paddingLeft": "10"
+											},
+											"fragmentViewports": [
+												{
+													"fragmentViewportStyle": {
+														"paddingLeft": "0",
+														"paddingRight": "0"
+													},
+													"id": "landscapeMobile"
+												},
+												{
+													"fragmentViewportStyle": {
+														"paddingLeft": "4",
+														"paddingRight": "4"
+													},
+													"id": "portraitMobile"
+												},
+												{
+													"fragmentViewportStyle": {
+														"hidden": false,
+														"paddingLeft": "6",
+														"paddingRight": "6"
+													},
+													"id": "tablet"
+												}
+											],
+											"layout": {
+												"borderWidth": 0,
+												"marginBottom": 0,
+												"marginLeft": 0,
+												"marginRight": 0,
+												"marginTop": 0,
+												"paddingBottom": 0,
+												"paddingLeft": 0,
+												"paddingRight": 0,
+												"paddingTop": 0,
+												"widthType": "Fluid"
 											}
 										},
-										"type": "Fragment"
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "get-in-touch"
+													},
+													"fragmentConfig": {
+													},
+													"fragmentFields": [
+													],
+													"fragmentStyle": {
+														"textAlign": ""
+													},
+													"fragmentViewports": [
+														{
+															"fragmentViewportStyle": {
+																"marginLeft": "0"
+															},
+															"id": "tablet"
+														}
+													]
+												},
+												"type": "Fragment"
+											}
+										],
+										"type": "Section"
 									}
 								],
 								"type": "Column"
@@ -105,11 +172,13 @@
 										},
 										{
 											"columnViewportDefinition": {
+												"size": 12
 											},
 											"id": "portraitMobile"
 										},
 										{
 											"columnViewportDefinition": {
+												"size": 12
 											},
 											"id": "tablet"
 										}
@@ -120,8 +189,34 @@
 									{
 										"definition": {
 											"fragmentStyle": {
-												"marginTop": "9"
+												"borderWidth": "0",
+												"marginTop": "9",
+												"textAlign": ""
 											},
+											"fragmentViewports": [
+												{
+													"fragmentViewportStyle": {
+														"paddingLeft": "2",
+														"paddingRight": "2"
+													},
+													"id": "landscapeMobile"
+												},
+												{
+													"fragmentViewportStyle": {
+														"paddingLeft": "4",
+														"paddingRight": "4"
+													},
+													"id": "portraitMobile"
+												},
+												{
+													"fragmentViewportStyle": {
+														"marginTop": "2",
+														"paddingLeft": "6",
+														"paddingRight": "6"
+													},
+													"id": "tablet"
+												}
+											],
 											"layout": {
 												"borderWidth": 0,
 												"marginBottom": 0,

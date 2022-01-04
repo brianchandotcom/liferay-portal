@@ -79,6 +79,12 @@
 			width: 20px;
 		}
 	</#if>
+
+	@media only screen and (max-width: 992px) {
+		#tip {
+			width: 100%;
+		}
+}
 </style>
 
 <#assign applicationNameSpace = randomNamespace />

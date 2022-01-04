@@ -1135,13 +1135,7 @@ definition {
 		}
 
 		task ("Delete AB Test at AC") {
-			Click(
-				key_text = "ellipsis-v",
-				locator1 = "Icon#ANY");
-
-			MenuItem.clickNoError(menuItem = "Delete Test");
-
-			Button.clickDelete();
+			ABTest.deleteABTestInAC();
 		}
 
 		task ("Go back to DXP") {

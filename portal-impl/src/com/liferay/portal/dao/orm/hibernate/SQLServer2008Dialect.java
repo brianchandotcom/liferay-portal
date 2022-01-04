@@ -35,6 +35,11 @@ public class SQLServer2008Dialect
 	}
 
 	@Override
+	public boolean isLegacyLimitHandlerBehaviorEnabled() {
+		return true;
+	}
+
+	@Override
 	public boolean supportsLimitOffset() {
 		return _SUPPORTS_LIMIT_OFFSET;
 	}

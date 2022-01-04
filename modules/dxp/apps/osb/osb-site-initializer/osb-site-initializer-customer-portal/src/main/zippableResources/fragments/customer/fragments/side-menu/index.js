@@ -11,38 +11,12 @@
  * distribution rights of the Software.
  */
 
-const getAccountSubscriptionGroupsByFilter = (filter) => ({
-	query: `{
-        c {
-          accountSubscriptionGroups(filter: "accountKey eq '${filter}' and hasActivation eq true") {
-              items {
-                name
-              }
-            }
-          }
-    }`,
-});
-
-const doFetch = async (query) => {
-	const queryString = JSON.stringify(query);
-
-	const response = await fetch(`${window.location.origin}/o/graphql`, {
-		body: queryString,
-		headers: {
-			'Content-Type': 'application/json',
-			'x-csrf-token': Liferay.authToken,
-		},
-		method: 'POST',
-	});
-
-	const {data} = await response.json();
-
-	return data.c.accountSubscriptionGroups.items;
-};
-
 const getSubscriptionKey = (name) => {
 	return name.split(' ')[0].toLowerCase();
 };
+
+const {pathname} = new URL(Liferay.ThemeDisplay.getCanonicalURL());
+const pathSplit = pathname.split('/').filter(Boolean);
 
 const htmlElement = (name, key) => {
 	return `<li><button class="align-items-center btn btn-sm btn-menu customer-portal-side-menu-button" value="${key}" type="button">
@@ -64,50 +38,41 @@ const setSrcIcon = (keybutton) => {
 
 const arrowToggleElementKey = 'customer-portal-arrow';
 const productsElementKey = '#customer-portal-products';
-
-const projectExternalReferenceCode = new URLSearchParams(
-	window.location.search
-).get('kor_id');
 const currentProducts = fragmentElement.querySelector(productsElementKey);
 let expandedHeightProducts;
 
-const {pathname} = new URL(Liferay.ThemeDisplay.getCanonicalURL());
-const pathSplit = pathname.split('/').filter(Boolean);
-
 (async () => {
 	try {
-		if (projectExternalReferenceCode) {
-			const accountSubscriptionGroups =
-				(await doFetch(
-					getAccountSubscriptionGroupsByFilter(
-						projectExternalReferenceCode
+		Liferay.once(
+			'customer-portal-subscription-groups-loading',
+			({detail: accountSubscriptionGroups}) => {
+				expandedHeightProducts = accountSubscriptionGroups.length * 40;
+
+				currentProducts.innerHTML = accountSubscriptionGroups
+					.map(({name}) =>
+						htmlElement(name, getSubscriptionKey(name))
 					)
-				)) || [];
-			expandedHeightProducts = accountSubscriptionGroups.length * 40;
+					.join('\n');
 
-			currentProducts.innerHTML = accountSubscriptionGroups
-				.map(({name}) => htmlElement(name, getSubscriptionKey(name)))
-				.join('\n');
+				const buttons =
+					fragmentElement.querySelectorAll(
+						'.customer-portal-side-menu-button'
+					) || [];
 
-			const buttons =
-				fragmentElement.querySelectorAll(
-					'.customer-portal-side-menu-button'
-				) || [];
-
-			buttons.forEach((button) =>
-				button.addEventListener('click', () => {
-					window.dispatchEvent(
-						new CustomEvent('customer-portal-menu-selected', {
-							bubbles: true,
-							composed: true,
-							detail: button.value,
-						})
-					);
-				})
-			);
-		}
-	}
-	catch (error) {
+				buttons.forEach((button) =>
+					button.addEventListener('click', () => {
+						window.dispatchEvent(
+							new CustomEvent('customer-portal-menu-selected', {
+								bubbles: true,
+								composed: true,
+								detail: button.value,
+							})
+						);
+					})
+				);
+			}
+		);
+	} catch (error) {
 		console.error(error.message);
 	}
 })();
@@ -129,8 +94,7 @@ fragmentElement.addEventListener('click', (event) => {
 
 		if (heightProducts < expandedHeightProducts) {
 			currentProducts.style.height = `${expandedHeightProducts}px`;
-		}
-		else {
+		} else {
 			currentProducts.style.height = '0px';
 		}
 
@@ -139,8 +103,7 @@ fragmentElement.addEventListener('click', (event) => {
 		);
 		arrow.classList.toggle('left');
 		arrow.classList.toggle('down');
-	}
-	else if (
+	} else if (
 		lastButton !== currentButton &&
 		currentButton.tagName === 'BUTTON'
 	) {

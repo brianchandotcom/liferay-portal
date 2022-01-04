@@ -9,7 +9,7 @@ const SuccessDXPCloud = () => {
 	const [{project}] = useOnboarding();
 
 	const onClickDone = () => {
-		window.location.href = `${API_BASE_URL}${LiferayTheme.getLiferaySiteName()}/overview?${
+		window.location.href = `${API_BASE_URL}/${LiferayTheme.getLiferaySiteName()}/overview?${
 			PARAMS_KEYS.PROJECT_APPLICATION_EXTERNAL_REFERENCE_CODE
 		}=${project.accountKey}`;
 	};

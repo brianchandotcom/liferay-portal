@@ -14,9 +14,13 @@
 
 package com.liferay.frontend.js.components.sample.web.internal.display.context;
 
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,6 +57,35 @@ public class TranslationManagerDisplayContext {
 		return _availableLocales;
 	}
 
+	public JSONArray getAvailableLocalesJSONArray() {
+		if (_availableLocalesJSONArray != null) {
+			return _availableLocalesJSONArray;
+		}
+
+		Set<Locale> availableLocales = getAvailableLocales();
+
+		JSONArray availableLocalesJSONArray = JSONFactoryUtil.createJSONArray();
+
+		for (Locale availableLocale : availableLocales) {
+			String id =
+				availableLocale.getLanguage() + "-" +
+					availableLocale.getCountry();
+
+			availableLocalesJSONArray.put(
+				JSONUtil.put(
+					"displayName", availableLocale.getDisplayName()
+				).put(
+					"id", StringUtil.replace(id, '-', "_")
+				).put(
+					"label", id
+				).put(
+					"symbol", StringUtil.toLowerCase(id)
+				));
+		}
+
+		return availableLocalesJSONArray;
+	}
+
 	public String getDefaultLanguageId() {
 		if (_defaultLanguageId != null) {
 			return _defaultLanguageId;
@@ -78,6 +111,7 @@ public class TranslationManagerDisplayContext {
 
 	private List<String> _activeLanguageIds;
 	private Set<Locale> _availableLocales;
+	private JSONArray _availableLocalesJSONArray;
 	private String _defaultLanguageId;
 	private Map<String, Object> _translations;
 

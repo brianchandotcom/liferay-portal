@@ -170,6 +170,11 @@
 		<td>//select[@id='_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_deletionType']</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>DELETE_ENTRY_IN_RELATIONSHIP_TAB</td>
+		<td>//a[contains(text(),'Delete')]</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

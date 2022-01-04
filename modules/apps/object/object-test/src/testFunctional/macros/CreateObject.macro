@@ -194,6 +194,14 @@ definition {
 			locator1 = "ObjectAdmin#ENTRY_PICKLIST_OPTION");
 	}
 
+	macro deleteEntryInRelationshipTab {
+		ObjectAdmin.gotoRelationshipsTab();
+
+		Click(locator1 = "CreateObject#DELETE_ENTRY_IN_RELATIONSHIP_TAB");
+
+		AssertElementNotPresent(locator1 = "CreateObject#KEBAB_MENU_BLOCK_FIELD_OPTION_DELETE");
+	}
+
 	macro deleteFieldOnBlock {
 		Click(locator1 = "CreateObject#KEBAB_MENU_BLOCK_FIELD");
 

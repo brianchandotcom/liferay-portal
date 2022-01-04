@@ -1147,13 +1147,97 @@ definition {
 	}
 
 	@description = "LPS-135401 - Verify that it is possible to delete a relation with an entry on the Relationship tab"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanDeleteRelationOnRelationshipTab {
 		property portal.acceptance = "true";
 
-		// TODO LPS-141661 CanDeleteRelationOnRelationshipTab pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "Custom Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject");
+
+		ObjectAdmin.addObjectRelationshipViaAPI(
+			objectName_1 = "CustomObject",
+			objectName_2 = "CustomObject",
+			relationshipLabel = "Relationship",
+			relationshipName = "relationship",
+			relationshipType = "oneToMany");
+
+		ObjectAdmin.addObjectLayoutViaAPI(
+			layoutName = "Layout Name",
+			objectName = "CustomObject");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+		CreateObject.selectTitleField(fieldLabel = "Custom Field");
+
+		Button.clickSave();
+
+		ObjectAdmin.goToLayoutsTab();
+
+		ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
+
+		ObjectAdmin.markLayoutAsDefault();
+
+		Click(locator1 = "ObjectAdmin#LAYOUT_LAYOUT_TAB");
+
+		ObjectAdmin.addTabFieldsOnLayout(
+			blockName = "Block 1",
+			columnsNumber = "1",
+			fieldList = "Custom Field,Custom Object",
+			tabName = "Field Tab");
+
+		ObjectAdmin.addTabFieldsOnLayout(tabName = "Field Tab");
+
+		ObjectAdmin.addTabRelationshipsOnLayout(
+			relationshipsLabelName = "Relationship",
+			tabName = "Relationship Tab");
+
+		Button.clickSave();
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+			fieldName = "customObjectField",
+			objectName = "CustomObject",
+			value = "Entry A");
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+		ObjectAdmin.addObjectStringFieldEntryViaUI(
+			entryOption = "Entry A",
+			entryValue = "Entry B");
+
+		ObjectAdmin.gotoRelationshipsTab();
+
+		CreateObject.addRelationshipAndSelectEntry(titleFieldName = "Entry A");
+
+		Navigator.openURL();
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+		ObjectPortlet.viewEntryDetails(entry = "Entry A");
+
+		CreateObject.deleteEntryInRelationshipTab();
+
+		ObjectPortlet.assertEntryNotPresent(entry = "Entry B");
+
+		Navigator.openURL();
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+		ObjectPortlet.viewEntryDetails(entry = "Entry B");
+
+		ObjectPortlet.assertEntryNotPresent(entry = "Entry A");
 	}
 
 	@description = "LPS-135400 - Verify it is possible to delete a Relationship"

@@ -27,7 +27,7 @@ const TablePagination = ({
 	}
 
 	return (
-		<p className="mb-4 mx-4 text-paragraph">{`Showing ${
+		<p className="mb-4 mx-4 pagination-results">{`Showing ${
 			itemsPerPage * activePage + 1 - itemsPerPage
 		} to ${totalItems} of ${totalItems} entries.`}</p>
 	);

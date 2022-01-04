@@ -177,7 +177,8 @@ public class DB2DB extends BaseDB {
 			String lowerCaseTemplate = StringUtil.toLowerCase(template);
 
 			if (lowerCaseTemplate.startsWith("alter table") ||
-					lowerCaseTemplate.startsWith("delete from")) {
+				lowerCaseTemplate.startsWith("delete from")) {
+
 				tableNames.add(template.split(" ")[2]);
 			}
 			else if (lowerCaseTemplate.startsWith(ALTER_COLUMN_TYPE)) {

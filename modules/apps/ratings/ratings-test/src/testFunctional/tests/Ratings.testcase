@@ -25,6 +25,8 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanChangeBlogsRatingType {
+		property portal.acceptance = "true";
+
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "Blogs Page");
@@ -534,6 +536,7 @@ definition {
 	@refactordone
 	test CanRevokeBlogsStarsRating {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property portal.acceptance = "true";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -641,6 +644,8 @@ definition {
 	@description = "This is a test for LPS-136958. It checks that Stacked stars can be added and removed from a web content."
 	@priority = "5"
 	test CanRevokeStackedStarsFromWC {
+		property portal.acceptance = "true";
+
 		Ratings.configureRatingType(
 			applications = "JournalArticle",
 			portlet = "Ratings",
@@ -692,6 +697,8 @@ definition {
 	@description = "This is a test for LPS-136951. It checks that Stacked stars can be added and removed from a wiki entry."
 	@priority = "5"
 	test CanRevokeStackedStarsFromWiki {
+		property portal.acceptance = "true";
+
 		Ratings.configureRatingType(
 			applications = "Wiki",
 			portlet = "Ratings",
@@ -734,6 +741,8 @@ definition {
 	@description = "This is a test for LPS-136954. It checks that stars can be added and removed from a document."
 	@priority = "5"
 	test CanRevokeStarsFromDocument {
+		property portal.acceptance = "true";
+
 		Ratings.configureRatingType(
 			applications = "document",
 			portlet = "Ratings",
@@ -768,6 +777,8 @@ definition {
 	@description = "This is a test for LPS-136956. It checks that stars can be added and removed from a KB article."
 	@priority = "5"
 	test CanRevokeStarsFromKB {
+		property portal.acceptance = "true";
+
 		Ratings.configureRatingType(
 			applications = "knowledge",
 			portlet = "Ratings",
@@ -798,6 +809,8 @@ definition {
 	@description = "This is a test for LPS-136960. It checks that stars can be added and removed from a MB thread."
 	@priority = "5"
 	test CanRevokeStarsFromMB {
+		property portal.acceptance = "true";
+
 		Ratings.configureRatingType(
 			applications = "MBMessage",
 			portlet = "Ratings",
@@ -878,6 +891,8 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanViewKBArticleWithStarRatings {
+		property portal.acceptance = "true";
+
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "Knowledge Base Display Page");
@@ -930,6 +945,7 @@ definition {
 	@refactordone
 	test CanViewLikeCountForDocument {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property portal.acceptance = "true";
 
 		Ratings.configureRatingType(
 			applications = "document",

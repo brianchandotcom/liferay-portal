@@ -313,6 +313,7 @@ public class SourceFormatter {
 		_sourceProcessors.add(new TLDSourceProcessor());
 		_sourceProcessors.add(new TSSourceProcessor());
 		_sourceProcessors.add(new TXTSourceProcessor());
+		_sourceProcessors.add(new UpgradeSourceProcessor());
 		_sourceProcessors.add(new XMLSourceProcessor());
 		_sourceProcessors.add(new YMLSourceProcessor());
 

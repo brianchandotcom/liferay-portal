@@ -24,6 +24,71 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-81244. The web content can be assigned to the default display page."
+	@priority = "4"
+	test AddWebContentAssignedToDefaultDisplayPage {
+		task ("Add a display page template for Web Content Article and Basic Web Content") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name",
+				subType = "Basic Web Content");
+		}
+
+		task ("Add a Display Page Content fragment to display page template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Display Page Content");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Mark the display page as default") {
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+		}
+
+		task ("Add a web content") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoAddCP();
+
+			WebContent.addCP(
+				webContentContent = "WC WebContent Content",
+				webContentTitle = "WC WebContent Title");
+
+			PortletEntry.publish();
+		}
+
+		task ("Add an Asset Publisher widget to page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				widgetName = "Asset Publisher");
+		}
+
+		task ("Configure Asset Link Behavior to View in Context") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.configureAssetLinkBehaviorPG(assetLinkBehavior = "View in Context");
+		}
+
+		task ("View web content should be rendered in the default display page") {
+			AssetPublisherPortlet.clickAssetTitle(assetTitle = "WC WebContent Title");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Display Page Name");
+		}
+	}
+
 	@priority = "3"
 	test AddWebContentExpirationDate {
 		property testray.component.names = "Web Content Administration";

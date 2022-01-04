@@ -2,7 +2,7 @@ import ClayButton from '@clayui/button';
 import {DropDown} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
 import React, {useState} from 'react';
-import {POSSIBLE_STATUS} from '../Subscriptions';
+import {POSSIBLE_SUBSCRIPTIONS_STATUS} from '../../utils/constants';
 
 const SubscriptionsFilterByStatus = ({selectedStatus, setSelectedStatus}) => {
 	const [active, setActive] = useState(false);
@@ -10,12 +10,13 @@ const SubscriptionsFilterByStatus = ({selectedStatus, setSelectedStatus}) => {
 	const handleChange = (status) => {
 		if (status === 'All') {
 			return setSelectedStatus(
-				selectedStatus.length === Object.keys(POSSIBLE_STATUS).length
+				selectedStatus.length ===
+					Object.keys(POSSIBLE_SUBSCRIPTIONS_STATUS).length
 					? []
 					: [
-							POSSIBLE_STATUS.active,
-							POSSIBLE_STATUS.expired,
-							POSSIBLE_STATUS.future,
+							POSSIBLE_SUBSCRIPTIONS_STATUS.active,
+							POSSIBLE_SUBSCRIPTIONS_STATUS.expired,
+							POSSIBLE_SUBSCRIPTIONS_STATUS.future,
 					  ]
 			);
 		}
@@ -28,7 +29,7 @@ const SubscriptionsFilterByStatus = ({selectedStatus, setSelectedStatus}) => {
 	};
 
 	return (
-		<div className="d-flex mb-4">
+		<div className="d-flex ml-3">
 			<h6 className="mr-2 my-auto">Status:</h6>
 
 			<DropDown
@@ -45,7 +46,7 @@ const SubscriptionsFilterByStatus = ({selectedStatus, setSelectedStatus}) => {
 					>
 						{`${
 							selectedStatus.length ===
-							Object.keys(POSSIBLE_STATUS).length
+							Object.keys(POSSIBLE_SUBSCRIPTIONS_STATUS).length
 								? 'All'
 								: selectedStatus.length === 0
 								? 'None'
@@ -60,7 +61,7 @@ const SubscriptionsFilterByStatus = ({selectedStatus, setSelectedStatus}) => {
 					onClick={() => handleChange('All')}
 					symbolRight={
 						selectedStatus.length ===
-						Object.keys(POSSIBLE_STATUS).length
+						Object.keys(POSSIBLE_SUBSCRIPTIONS_STATUS).length
 							? 'check'
 							: ''
 					}
@@ -69,36 +70,48 @@ const SubscriptionsFilterByStatus = ({selectedStatus, setSelectedStatus}) => {
 				</DropDown.Item>
 
 				<DropDown.Item
-					onClick={() => handleChange(POSSIBLE_STATUS.active)}
+					onClick={() =>
+						handleChange(POSSIBLE_SUBSCRIPTIONS_STATUS.active)
+					}
 					symbolRight={
-						selectedStatus.includes(POSSIBLE_STATUS.active)
+						selectedStatus.includes(
+							POSSIBLE_SUBSCRIPTIONS_STATUS.active
+						)
 							? 'check'
 							: ''
 					}
 				>
-					{POSSIBLE_STATUS.active}
+					{POSSIBLE_SUBSCRIPTIONS_STATUS.active}
 				</DropDown.Item>
 
 				<DropDown.Item
-					onClick={() => handleChange(POSSIBLE_STATUS.expired)}
+					onClick={() =>
+						handleChange(POSSIBLE_SUBSCRIPTIONS_STATUS.expired)
+					}
 					symbolRight={
-						selectedStatus.includes(POSSIBLE_STATUS.expired)
+						selectedStatus.includes(
+							POSSIBLE_SUBSCRIPTIONS_STATUS.expired
+						)
 							? 'check'
 							: ''
 					}
 				>
-					{POSSIBLE_STATUS.expired}
+					{POSSIBLE_SUBSCRIPTIONS_STATUS.expired}
 				</DropDown.Item>
 
 				<DropDown.Item
-					onClick={() => handleChange(POSSIBLE_STATUS.future)}
+					onClick={() =>
+						handleChange(POSSIBLE_SUBSCRIPTIONS_STATUS.future)
+					}
 					symbolRight={
-						selectedStatus.includes(POSSIBLE_STATUS.future)
+						selectedStatus.includes(
+							POSSIBLE_SUBSCRIPTIONS_STATUS.future
+						)
 							? 'check'
 							: ''
 					}
 				>
-					{POSSIBLE_STATUS.future}
+					{POSSIBLE_SUBSCRIPTIONS_STATUS.future}
 				</DropDown.Item>
 			</DropDown>
 		</div>

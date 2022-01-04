@@ -5,7 +5,7 @@ import {useEffect, useMemo, useState} from 'react';
 import BaseButton from '../../../../../common/components/BaseButton';
 import {useApplicationProvider} from '../../../../../common/context/ApplicationPropertiesProvider';
 import {
-	getAccountSubscriptionsGroups,
+	getAccountSubscriptions,
 	getAccountSubscriptionsTerms,
 } from '../../../../../common/services/liferay/graphql/queries';
 import {fetchLicense} from '../../../../../common/services/liferay/raysource-api';
@@ -31,24 +31,20 @@ const ActivationKeysInputs = ({
 	const [selectDateInterval, setSelectedDateInterval] = useState({});
 	const [hasLicenseDownloadError, setLicenseDownloadError] = useState(false);
 
-	const {data: dataAccountSubscriptionGroups} = useQuery(
-		getAccountSubscriptionsGroups,
-		{
-			variables: {
-				accountSubscriptionGroupERC: `accountSubscriptionGroupERC eq '${accountKey}_${productKey}'`,
-			},
-		}
-	);
+	const {data: dataAccountSubscriptions} = useQuery(getAccountSubscriptions, {
+		variables: {
+			accountSubscriptionGroupERC: `accountSubscriptionGroupERC eq '${accountKey}_${productKey}'`,
+		},
+	});
 	const [
 		fetchAccountSubscriptionsTerms,
 		{data: dataAccountSubscriptionsTerms},
 	] = useLazyQuery(getAccountSubscriptionsTerms);
 
 	useEffect(() => {
-		if (dataAccountSubscriptionGroups) {
+		if (dataAccountSubscriptions) {
 			const accountSubscriptionGroups =
-				dataAccountSubscriptionGroups?.c?.accountSubscriptions?.items ||
-				[];
+				dataAccountSubscriptions?.c?.accountSubscriptions?.items || [];
 
 			if (accountSubscriptionGroups.length) {
 				const accountSubscriptionGroupName =
@@ -68,7 +64,7 @@ const ActivationKeysInputs = ({
 		}
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [accountKey, dataAccountSubscriptionGroups, productKey]);
+	}, [accountKey, dataAccountSubscriptions, productKey]);
 
 	useEffect(() => {
 		if (selectedAccountSubscriptionGroupName && selectDateInterval) {
@@ -92,7 +88,7 @@ const ActivationKeysInputs = ({
 	}, [dataAccountSubscriptionsTerms]);
 
 	const accountSubscriptionGroups =
-		dataAccountSubscriptionGroups?.c?.accountSubscriptions?.items || [];
+		dataAccountSubscriptions?.c?.accountSubscriptions?.items || [];
 
 	const updateSelectedAccountSubscriptionGroupName = (name) => {
 		setSelectedAccountSubscriptionGroupName(name);

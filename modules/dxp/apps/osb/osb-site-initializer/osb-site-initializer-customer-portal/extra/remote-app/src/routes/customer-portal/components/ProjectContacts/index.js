@@ -2,7 +2,7 @@ import ProjectContactsSkeleton from './Skeleton';
 
 const ProjectContacts = ({contact}) => {
 	return (
-		<div className="container m-0 project-contacs-container">
+		<div className="container mb-5 mx-0 project-contacs-container">
 			<div className="row">
 				<div className="col-5"></div>
 

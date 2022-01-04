@@ -27,7 +27,6 @@ page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.PrefsParamUtil" %><%@
-page import="com.liferay.search.experiences.exception.NoSuchSXPBlueprintException" %><%@
 page import="com.liferay.search.experiences.model.SXPBlueprint" %><%@
 page import="com.liferay.search.experiences.service.SXPBlueprintLocalServiceUtil" %><%@
 page import="com.liferay.search.experiences.web.internal.blueprint.options.portlet.preferences.SXPBlueprintOptionsPortletPreferences" %><%@
@@ -63,13 +62,7 @@ SXPBlueprintOptionsPortletPreferences sxpBlueprintOptionsPortletPreferences = ne
 					<%
 					long sxpBlueprintId = PrefsParamUtil.getLong(portletPreferences, request, "sxpBlueprintId");
 
-					SXPBlueprint sxpBlueprint = null;
-
-					try {
-						sxpBlueprint = SXPBlueprintLocalServiceUtil.getSXPBlueprint(sxpBlueprintId);
-					}
-					catch (NoSuchSXPBlueprintException noSuchSXPBlueprintException) {
-					}
+					SXPBlueprint sxpBlueprint = SXPBlueprintLocalServiceUtil.fetchSXPBlueprint(sxpBlueprintId);
 					%>
 
 					<react:component

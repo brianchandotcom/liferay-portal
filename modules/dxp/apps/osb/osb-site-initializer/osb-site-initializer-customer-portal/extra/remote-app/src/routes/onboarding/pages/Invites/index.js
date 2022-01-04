@@ -1,15 +1,15 @@
-import {useMutation, useQuery} from '@apollo/client';
+import {useMutation} from '@apollo/client';
 import ClayForm from '@clayui/form';
 import {useFormikContext} from 'formik';
 import {useEffect, useState} from 'react';
+import client from '../../../../apolloClient';
 import BaseButton from '../../../../common/components/BaseButton';
 import WarningBadge from '../../../../common/components/WarningBadge';
 import {useApplicationProvider} from '../../../../common/context/ApplicationPropertiesProvider';
 import {LiferayTheme} from '../../../../common/services/liferay';
 import {
 	addTeamMembersInvitation,
-	getAccountRolesAndAccountFlags,
-	getAccountSubscriptionGroups,
+	getAccountRoles,
 } from '../../../../common/services/liferay/graphql/queries';
 import {PARAMS_KEYS} from '../../../../common/services/liferay/search-params';
 import {API_BASE_URL} from '../../../../common/utils';
@@ -19,7 +19,6 @@ import {useOnboarding} from '../../context';
 import {actionTypes} from '../../context/reducer';
 import {getInitialInvite, roles, steps} from '../../utils/constants';
 
-const ACCOUNT_SUBSCRIPTION_GROUP_NAME = 'DXP Cloud';
 const MAXIMUM_INVITES_COUNT = 10;
 
 const SLA = {
@@ -29,8 +28,9 @@ const SLA = {
 
 const Invites = () => {
 	const {supportLink} = useApplicationProvider();
-	const [{project}, dispatch] = useOnboarding();
+	const [{project, subscriptionGroups}, dispatch] = useOnboarding();
 	const {errors, setFieldValue, setTouched, values} = useFormikContext();
+	const [rolesData, setRolesData] = useState();
 
 	const [AddTeamMemberInvitation, {called, error}] = useMutation(
 		addTeamMembersInvitation
@@ -42,26 +42,29 @@ const Invites = () => {
 	const [accountRoles, setAccountRoles] = useState([]);
 	const [availableAdminsRoles, setAvailableAdminsRoles] = useState(1);
 
-	const {data: rolesData} = useQuery(getAccountRolesAndAccountFlags, {
-		variables: {
-			accountFlagsFilter: '',
-			accountId: project.id,
-		},
-	});
+	useEffect(() => {
+		const getRoles = async () => {
+			const {data} = await client.query({
+				query: getAccountRoles,
+				variables: {
+					accountId: project.id,
+				},
+			});
+
+			if (data) {
+				setRolesData(data.accountAccountRoles?.items);
+			}
+		};
+
+		getRoles();
+	}, [project]);
 
 	const totalEmails = values?.invites?.length || 0;
 	const failedEmails = errors?.invites?.filter((email) => email).length || 0;
 	const filledEmails = values?.invites?.filter(({email}) => email).length;
 	const maxRequestors = project.maxRequestors < 1 ? 1 : project.maxRequestors;
 
-	const {data} = useQuery(getAccountSubscriptionGroups, {
-		variables: {
-			filter: `(accountKey eq '${project.accountKey}') and (name eq '${ACCOUNT_SUBSCRIPTION_GROUP_NAME}')`,
-		},
-	});
-
-	const hasSubscriptionsDXPCloud = !!data?.c?.accountSubscriptionGroups?.items
-		?.length;
+	const hasSubscriptionsDXPCloud = !!subscriptionGroups?.length;
 
 	const nextPage = () => {
 		if (hasSubscriptionsDXPCloud) {
@@ -71,7 +74,7 @@ const Invites = () => {
 			});
 		}
 		else {
-			window.location.href = `${API_BASE_URL}${LiferayTheme.getLiferaySiteName()}/overview?${
+			window.location.href = `${API_BASE_URL}/${LiferayTheme.getLiferaySiteName()}/overview?${
 				PARAMS_KEYS.PROJECT_APPLICATION_EXTERNAL_REFERENCE_CODE
 			}=${project.accountKey}`;
 		}
@@ -140,11 +143,7 @@ const Invites = () => {
 
 	useEffect(() => {
 		if (rolesData) {
-			let filterRoles = [
-				...new Set(
-					rolesData?.accountAccountRoles?.items.map(({name}) => name)
-				),
-			];
+			let filterRoles = [...new Set(rolesData.map(({name}) => name))];
 			const SLA_CURRENT = project.slaCurrent;
 			const isPartner = project.partner;
 

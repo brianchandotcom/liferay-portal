@@ -62,7 +62,7 @@ const SetupDXPCloud = () => {
 	}, [dXPCDataCenterRegions, hasDisasterRecovery]);
 
 	const handleSkip = () => {
-		window.location.href = `${API_BASE_URL}${LiferayTheme.getLiferaySiteName()}/overview?${
+		window.location.href = `${API_BASE_URL}/${LiferayTheme.getLiferaySiteName()}/overview?${
 			PARAMS_KEYS.PROJECT_APPLICATION_EXTERNAL_REFERENCE_CODE
 		}=${project.accountKey}`;
 	};
@@ -105,7 +105,7 @@ const SetupDXPCloud = () => {
 
 	return (
 		<Layout
-			className="pl-3 pt-1"
+			className="pt-1 px-3"
 			footerProps={{
 				leftButton: (
 					<BaseButton borderless onClick={handleSkip}>

@@ -54,9 +54,6 @@ public class AssignableAccountOrganizationSearchContainerFactory {
 			SearchOrderByUtil.getOrderByType(
 				liferayPortletRequest, AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN,
 				"assignable-account-organization-order-by-type", "asc"));
-		searchContainer.setRowChecker(
-			new SelectAccountOrganizationRowChecker(
-				liferayPortletResponse, accountEntryId));
 
 		String keywords = ParamUtil.getString(
 			liferayPortletRequest, "keywords", null);
@@ -73,6 +70,10 @@ public class AssignableAccountOrganizationSearchContainerFactory {
 				SortFactoryUtil.getSort(
 					Organization.class, searchContainer.getOrderByCol(),
 					searchContainer.getOrderByType())));
+
+		searchContainer.setRowChecker(
+			new SelectAccountOrganizationRowChecker(
+				liferayPortletResponse, accountEntryId));
 
 		return searchContainer;
 	}

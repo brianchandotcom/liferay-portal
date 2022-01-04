@@ -24,7 +24,6 @@ import javax.security.auth.callback.UnsupportedCallbackException;
 import javax.security.sasl.AuthorizeCallback;
 import javax.security.sasl.RealmCallback;
 
-import org.apache.directory.api.ldap.model.exception.LdapInvalidDnException;
 import org.apache.directory.api.ldap.model.name.Dn;
 
 /**
@@ -92,7 +91,7 @@ public class SaslCallbackHandler implements CallbackHandler {
 	}
 
 	private void _handleNameCallback(NameCallback nameCallback)
-		throws LdapInvalidDnException {
+		throws Exception {
 
 		_name = new Dn(nameCallback.getDefaultName());
 	}

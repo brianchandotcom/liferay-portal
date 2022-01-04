@@ -28,7 +28,6 @@ import java.util.List;
 
 import org.apache.commons.lang3.time.StopWatch;
 import org.apache.directory.api.ldap.model.entry.Value;
-import org.apache.directory.api.ldap.model.exception.LdapException;
 import org.apache.directory.api.ldap.model.filter.AndNode;
 import org.apache.directory.api.ldap.model.filter.BranchNode;
 import org.apache.directory.api.ldap.model.filter.EqualityNode;
@@ -150,7 +149,7 @@ public class SearchLdapHandler extends BaseLdapHandler {
 	private void _addObjectEntry(
 			SearchRequest searchRequest, List<Response> responses,
 			Directory directory, StopWatch stopWatch)
-		throws LdapException {
+		throws Exception {
 
 		SearchResultEntry searchResponseEntry = new SearchResultEntryImpl(
 			searchRequest.getMessageId());

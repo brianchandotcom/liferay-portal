@@ -33,7 +33,6 @@ import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalServ
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Timestamp;
 
 /**
@@ -189,9 +188,7 @@ public class KaleoDefinitionVersionUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
-	private void _upgradeKaleoDefinitionVersion()
-		throws PortalException, SQLException {
-
+	private void _upgradeKaleoDefinitionVersion() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			PreparedStatement preparedStatement1 = connection.prepareStatement(
 				"select * from KaleoDraftDefinition order by version, " +

@@ -24,7 +24,6 @@ import com.liferay.saml.runtime.credential.KeyStoreManager;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 
 import java.security.KeyStore;
@@ -202,7 +201,7 @@ public class FileSystemKeyStoreManagerImpl extends BaseKeyStoreManagerImpl {
 		}
 	}
 
-	private void _monitorFile(File samlKeyStoreFile) throws IOException {
+	private void _monitorFile(File samlKeyStoreFile) throws Exception {
 		if (_samlKeyStoreFileWatcher != null) {
 			return;
 		}

@@ -209,7 +209,7 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 	private void _delete(
 			ActionRequest actionRequest, ActionResponse actionResponse,
 			EditRankingMVCActionRequest editRankingMVCActionRequest)
-		throws IOException, PortalException {
+		throws Exception {
 
 		_doDelete(actionRequest, editRankingMVCActionRequest);
 
@@ -308,7 +308,7 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 	private void _doDelete(
 			ActionRequest actionRequest,
 			EditRankingMVCActionRequest editRankingMVCActionRequest)
-		throws PortalException {
+		throws Exception {
 
 		String[] rankingDocumentIds = _getRankingDocumentIds(
 			actionRequest, editRankingMVCActionRequest);

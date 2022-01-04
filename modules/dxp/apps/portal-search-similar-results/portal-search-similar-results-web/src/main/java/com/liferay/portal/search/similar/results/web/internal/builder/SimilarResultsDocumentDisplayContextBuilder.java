@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FastDateFormatConstants;
@@ -575,7 +574,7 @@ public class SimilarResultsDocumentDisplayContextBuilder {
 
 	private Summary _getSummary(
 			String className, AssetRenderer<?> assetRenderer)
-		throws SearchException {
+		throws Exception {
 
 		SummaryBuilder summaryBuilder = _summaryBuilderFactory.newInstance();
 

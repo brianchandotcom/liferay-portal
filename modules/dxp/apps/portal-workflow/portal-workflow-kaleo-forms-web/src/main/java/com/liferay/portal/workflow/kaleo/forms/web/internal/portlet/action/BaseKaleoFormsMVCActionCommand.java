@@ -32,7 +32,6 @@ import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesMerger;
 import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -337,7 +336,7 @@ public abstract class BaseKaleoFormsMVCActionCommand
 			long userId, DDLRecord ddlRecord, KaleoProcess kaleoProcess,
 			long[] assetCategoryIds, String[] assetTagNames, Locale locale,
 			Double priority)
-		throws PortalException {
+		throws Exception {
 
 		DDLRecordSet ddlRecordSet = ddlRecord.getRecordSet();
 

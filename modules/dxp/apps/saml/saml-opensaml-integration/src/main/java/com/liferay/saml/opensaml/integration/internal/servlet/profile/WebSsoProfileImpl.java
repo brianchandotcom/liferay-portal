@@ -1507,7 +1507,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 	private String _getAuthRedirectURL(
 			MessageContext<?> messageContext,
 			HttpServletRequest httpServletRequest)
-		throws PortalException {
+		throws Exception {
 
 		StringBundler sb = new StringBundler(3);
 
@@ -1838,7 +1838,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 	private void _sendFailureResponse(
 			SamlSsoRequestContext samlSsoRequestContext, String statusURI,
 			HttpServletResponse httpServletResponse)
-		throws PortalException {
+		throws Exception {
 
 		MessageContext<?> messageContext =
 			samlSsoRequestContext.getSAMLMessageContext();

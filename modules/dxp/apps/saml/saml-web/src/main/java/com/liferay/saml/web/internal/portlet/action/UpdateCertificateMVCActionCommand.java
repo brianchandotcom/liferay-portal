@@ -156,7 +156,7 @@ public class UpdateCertificateMVCActionCommand extends BaseMVCActionCommand {
 
 	private String _getCertificateUsagePropertyKey(
 			LocalEntityManager.CertificateUsage certificateUsage)
-		throws UnsupportedBindingException {
+		throws Exception {
 
 		if (certificateUsage == LocalEntityManager.CertificateUsage.SIGNING) {
 			return PortletPropsKeys.SAML_KEYSTORE_CREDENTIAL_PASSWORD;

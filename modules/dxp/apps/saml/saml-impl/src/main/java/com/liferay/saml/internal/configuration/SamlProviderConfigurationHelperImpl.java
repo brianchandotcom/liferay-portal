@@ -28,8 +28,6 @@ import com.liferay.saml.constants.SamlProviderConfigurationKeys;
 import com.liferay.saml.runtime.configuration.SamlProviderConfiguration;
 import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
 
-import java.io.IOException;
-
 import java.util.Collections;
 import java.util.Dictionary;
 import java.util.Enumeration;
@@ -218,7 +216,7 @@ public class SamlProviderConfigurationHelperImpl
 	protected static final String FACTORY_PID =
 		"com.liferay.saml.runtime.configuration.SamlProviderConfiguration";
 
-	private Dictionary<String, ?> _getSystemProperties() throws IOException {
+	private Dictionary<String, ?> _getSystemProperties() throws Exception {
 		ConfigurationHolder configurationHolder =
 			_configurationHolderByCompanyId.get(CompanyConstants.SYSTEM);
 

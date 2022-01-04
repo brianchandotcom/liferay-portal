@@ -29,7 +29,6 @@ import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalService;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Timestamp;
 
 /**
@@ -88,7 +87,7 @@ public class KaleoDefinitionUpgradeProcess extends UpgradeProcess {
 	}
 
 	private void _addKaleoDefinitionsFromKaleoDefinitionVersion()
-		throws PortalException, SQLException {
+		throws Exception {
 
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			PreparedStatement preparedStatement1 = connection.prepareStatement(

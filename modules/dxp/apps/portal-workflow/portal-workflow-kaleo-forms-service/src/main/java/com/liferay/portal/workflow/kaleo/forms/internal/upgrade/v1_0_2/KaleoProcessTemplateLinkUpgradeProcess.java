@@ -23,7 +23,6 @@ import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 /**
  * @author Rafael Praxedes
@@ -44,7 +43,7 @@ public class KaleoProcessTemplateLinkUpgradeProcess extends UpgradeProcess {
 		_updateKaleoProcessLink();
 	}
 
-	private void _updateKaleoProcess() throws SQLException {
+	private void _updateKaleoProcess() throws Exception {
 		long kaleoProcessClassNameId = _classNameLocalService.getClassNameId(
 			KaleoProcess.class.getName());
 
@@ -68,7 +67,7 @@ public class KaleoProcessTemplateLinkUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
-	private void _updateKaleoProcessLink() throws SQLException {
+	private void _updateKaleoProcessLink() throws Exception {
 		long kaleoProcessLinkClassNameId =
 			_classNameLocalService.getClassNameId(
 				KaleoProcessLink.class.getName());

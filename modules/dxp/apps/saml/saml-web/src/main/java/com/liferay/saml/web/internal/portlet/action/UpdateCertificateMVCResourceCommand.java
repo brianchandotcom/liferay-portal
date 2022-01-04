@@ -38,8 +38,6 @@ import com.liferay.saml.web.internal.upload.CertificateUploadResponseHandler;
 import com.liferay.saml.web.internal.util.SamlTempFileEntryUtil;
 import com.liferay.upload.UploadHandler;
 
-import java.io.IOException;
-
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
@@ -136,7 +134,7 @@ public class UpdateCertificateMVCResourceCommand
 	private void _includeTempFileName(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse,
 			User user)
-		throws IOException {
+		throws Exception {
 
 		String selectUploadedFile = ParamUtil.getString(
 			resourceRequest, "selectUploadedFile");

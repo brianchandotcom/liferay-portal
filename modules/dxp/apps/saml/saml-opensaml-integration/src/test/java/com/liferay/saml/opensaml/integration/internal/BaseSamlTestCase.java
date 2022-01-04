@@ -19,7 +19,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactory;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
@@ -778,7 +777,7 @@ public abstract class BaseSamlTestCase extends PowerMockito {
 		samlBindings.add(new HttpSoap11Binding(parserPool, httpClient));
 	}
 
-	private void _setupSamlPeerBindingsLocalService() throws PortalException {
+	private void _setupSamlPeerBindingsLocalService() throws Exception {
 		samlPeerBindingLocalService = getMockPortletService(
 			SamlPeerBindingLocalServiceUtil.class,
 			SamlPeerBindingLocalService.class);

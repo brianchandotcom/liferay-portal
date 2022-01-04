@@ -3,10 +3,19 @@
 		AUI().use(
 			'aui-base',
 			function(A) {
-				var frameElement = window.frameElement;
+				const frameElement = window.frameElement;
 
 				if (frameElement && frameElement.getAttribute('id') === 'simulationDeviceIframe') {
 					A.getBody().addClass('lfr-has-simulation-panel');
+
+					if (frameElement.contentWindow.location.href.includes('p_l_mode=preview')) {
+						return;
+					}
+
+					const currentLocationHasParams = frameElement.contentWindow.location.href.includes('?');
+					const safePreviewURL = `${frameElement.contentWindow.location.href}${currentLocationHasParams ? '&' : '?'}p_l_mode=preview`;
+
+					frameElement.contentWindow.location.replace(safePreviewURL);
 				}
 			}
 		);

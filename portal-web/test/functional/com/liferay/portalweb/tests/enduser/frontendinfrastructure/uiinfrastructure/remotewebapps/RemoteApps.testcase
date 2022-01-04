@@ -88,6 +88,7 @@ definition {
 	}
 
 	@description = "LPS-143552. Verify that remote app of type Custom Element can be displayed by portal instance"
+	@ignore = "true"
 	@priority = "5"
 	test CustomElementCanBeDisplayedByInstance {
 		property portal.acceptance = "true";

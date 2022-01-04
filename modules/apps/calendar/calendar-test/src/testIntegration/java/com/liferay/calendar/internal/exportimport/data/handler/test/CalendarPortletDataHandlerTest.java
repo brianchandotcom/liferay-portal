@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.calendar.constants.CalendarPortletKeys;
 import com.liferay.exportimport.kernel.lar.DataLevel;
 import com.liferay.exportimport.test.util.lar.BasePortletDataHandlerTestCase;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -48,15 +49,7 @@ public class CalendarPortletDataHandlerTest
 
 	@Override
 	protected String[] getDataPortletPreferences() {
-		return new String[] {
-			"defaultDuration", "defaultView", "displaySchedulerHeader",
-			"displaySchedulerOnly", "enableRss", "eventsPerPage",
-			"maxDaysDisplayed", "portletSetupCss", "portletSetupUseCustomTitle",
-			"rssDelta", "rssDisplayStyle", "rssFeedType", "rssTimeInterval",
-			"showAgendaView", "showDayView", "showMonthView", "showUserEvents",
-			"showWeekView", "timeFormat", "timeZoneId", "usePortalTimeZone",
-			"weekStartsOn"
-		};
+		return new String[] {StringPool.BLANK};
 	}
 
 	@Override

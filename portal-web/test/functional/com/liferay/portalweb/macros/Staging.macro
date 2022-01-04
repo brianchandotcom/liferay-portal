@@ -616,6 +616,19 @@ definition {
 		PortletEntry.inputDescription(description = "${publishTemplateDescriptionEdit}");
 	}
 
+	macro editPublishTemplateRemoteSiteID {
+		Panel.expandPanel(panel = "Remote Live Connection Settings");
+
+		var siteID = JSONGroupAPI._getGroupIdByName(
+			groupName = "${groupName}",
+			portalURL = "http://localhost:${remotePort}",
+			site = "true");
+
+		Type(
+			locator1 = "SiteSettingsStaging#REMOTE_STAGING_SITE_ID",
+			value1 = "${siteID}");
+	}
+
 	macro editSitePageVariationPG {
 		Staging.navigateToSitePageVariation();
 
@@ -787,10 +800,18 @@ definition {
 	}
 
 	macro publishCustomPublication {
-		Staging.addCustomPublication(headerTitle = "${headerTitle}");
+		Staging.addCustomPublication(
+			headerTitle = "${headerTitle}",
+			publishTemplateName = "${publishTemplateName}");
 
 		if (isSet(scheduleProcess)) {
 			Staging.configureScheduleTime();
+		}
+
+		if (isSet(editPublishTemplateName)) {
+			Type(
+				locator1 = "TextInput#NAME",
+				value1 = "${editPublishTemplateName}");
 		}
 
 		if ("${rangeAll}" == "true") {

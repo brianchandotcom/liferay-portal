@@ -61,6 +61,41 @@ definition {
 			remoteStaging = "true");
 	}
 
+	@description = "This is a use case for LPS-83187."
+	@priority = "3"
+	test AssertTemplatesTitleOfScheduledStagingPublishes {
+		property test.name.skip.portal.instance = "RemoteStaging#AssertTemplatesTitleOfScheduledStagingPublishes";
+
+		JSONGroup.addGroup(
+			groupName = "Remote Site 2",
+			portalURL = "http://localhost:9080");
+
+		Staging.openStagingAdmin(siteURLKey = "site-name");
+
+		Staging.addPublishTemplate(
+			publishTemplateDescription = "Publish Template Description",
+			publishTemplateName = "My Template Title");
+
+		Staging.editPublishTemplateRemoteSiteID(
+			groupName = "Remote Site 2",
+			remotePort = "9080");
+
+		Staging.savePublishTemplate(
+			publishTemplateDescription = "Publish Template Description",
+			publishTemplateName = "My Template Title");
+
+		Staging.openStagingAdmin(siteURLKey = "site-name");
+
+		Staging.publishCustomPublication(
+			editPublishTemplateName = "My Publish Title",
+			publishTemplateName = "My Template Title",
+			scheduleProcess = "true");
+
+		Staging.openStagingAdmin(siteURLKey = "site-name");
+
+		Staging.viewPublishTask(publicationTitle = "My Publish Title");
+	}
+
 	@description = "This is a use case for LPS-123156."
 	@priority = "4"
 	test AssertValidationErrors {

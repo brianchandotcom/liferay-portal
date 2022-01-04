@@ -14,14 +14,18 @@
 
 package com.liferay.portal.workflow.task.web.internal.notifications;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.model.UserNotificationEventWrapper;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
+import com.liferay.portal.kernel.notifications.UserNotificationFeedEntry;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
@@ -51,6 +55,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.mockito.Mockito;
+
 import org.osgi.framework.BundleContext;
 
 import org.powermock.api.mockito.PowerMockito;
@@ -77,13 +83,51 @@ public class WorkflowTaskUserNotificationHandlerTest extends PowerMockito {
 	}
 
 	@Test
+	public void testInterpret() throws Exception {
+		_language = Mockito.mock(Language.class);
+
+		ReflectionTestUtil.setFieldValue(
+			LanguageUtil.class, "_language", _language);
+
+		Mockito.when(
+			LanguageUtil.format(
+				Mockito.any(Locale.class),
+				Mockito.eq("notification-for-x-was-inactivated"),
+				Mockito.anyString(), Mockito.eq(false))
+		).thenReturn(
+			"Notification for Sample Object was inactivated."
+		);
+
+		Mockito.when(
+			_language.get(
+				Mockito.any(Locale.class),
+				Mockito.eq("notification-no-longer-applies"))
+		).thenReturn(
+			"Notification no longer applies."
+		);
+
+		UserNotificationFeedEntry userNotificationFeedEntry =
+			_workflowTaskUserNotificationHandler.interpret(
+				mockUserNotificationEvent(null, "Sample Object", 0),
+				_serviceContext);
+
+		Assert.assertEquals(
+			StringBundler.concat(
+				"<div class=\"title\">Notification no longer applies.</div>",
+				"<div class=\"body\">Notification for Sample Object was ",
+				"inactivated.</div>"),
+			userNotificationFeedEntry.getBody());
+	}
+
+	@Test
 	public void testInvalidWorkflowTaskIdShouldReturnBlankBody()
 		throws Exception {
 
 		Assert.assertEquals(
 			StringPool.BLANK,
 			_workflowTaskUserNotificationHandler.getBody(
-				mockUserNotificationEvent(null, _INVALID_WORKFLOW_TASK_ID),
+				mockUserNotificationEvent(
+					null, null, _INVALID_WORKFLOW_TASK_ID),
 				_serviceContext));
 	}
 
@@ -95,7 +139,7 @@ public class WorkflowTaskUserNotificationHandlerTest extends PowerMockito {
 			StringPool.BLANK,
 			_workflowTaskUserNotificationHandler.getLink(
 				mockUserNotificationEvent(
-					_VALID_ENTRY_CLASS_NAME, _INVALID_WORKFLOW_TASK_ID),
+					_VALID_ENTRY_CLASS_NAME, null, _INVALID_WORKFLOW_TASK_ID),
 				_serviceContext));
 	}
 
@@ -104,7 +148,7 @@ public class WorkflowTaskUserNotificationHandlerTest extends PowerMockito {
 		Assert.assertEquals(
 			StringPool.BLANK,
 			_workflowTaskUserNotificationHandler.getLink(
-				mockUserNotificationEvent(_VALID_ENTRY_CLASS_NAME, 0),
+				mockUserNotificationEvent(_VALID_ENTRY_CLASS_NAME, null, 0),
 				_serviceContext));
 	}
 
@@ -113,7 +157,7 @@ public class WorkflowTaskUserNotificationHandlerTest extends PowerMockito {
 		Assert.assertEquals(
 			_NOTIFICATION_MESSAGE,
 			_workflowTaskUserNotificationHandler.getBody(
-				mockUserNotificationEvent(null, 0), _serviceContext));
+				mockUserNotificationEvent(null, null, 0), _serviceContext));
 	}
 
 	@Test
@@ -121,7 +165,7 @@ public class WorkflowTaskUserNotificationHandlerTest extends PowerMockito {
 		Assert.assertEquals(
 			_NOTIFICATION_MESSAGE,
 			_workflowTaskUserNotificationHandler.getBody(
-				mockUserNotificationEvent(null, _VALID_WORKFLOW_TASK_ID),
+				mockUserNotificationEvent(null, null, _VALID_WORKFLOW_TASK_ID),
 				_serviceContext));
 	}
 
@@ -131,15 +175,17 @@ public class WorkflowTaskUserNotificationHandlerTest extends PowerMockito {
 			_VALID_LINK,
 			_workflowTaskUserNotificationHandler.getLink(
 				mockUserNotificationEvent(
-					_VALID_ENTRY_CLASS_NAME, _VALID_WORKFLOW_TASK_ID),
+					_VALID_ENTRY_CLASS_NAME, null, _VALID_WORKFLOW_TASK_ID),
 				_serviceContext));
 	}
 
 	protected UserNotificationEvent mockUserNotificationEvent(
-		String entryClassName, long workflowTaskId) {
+		String entryClassName, String entryType, long workflowTaskId) {
 
 		JSONObject jsonObject = JSONUtil.put(
 			"entryClassName", entryClassName
+		).put(
+			"entryType", entryType
 		).put(
 			"notificationMessage", _NOTIFICATION_MESSAGE
 		).put(
@@ -294,6 +340,8 @@ public class WorkflowTaskUserNotificationHandlerTest extends PowerMockito {
 
 	private static final Long _VALID_WORKFLOW_TASK_ID =
 		RandomTestUtil.randomLong();
+
+	private static Language _language;
 
 	private static final ServiceContext _serviceContext = new ServiceContext() {
 

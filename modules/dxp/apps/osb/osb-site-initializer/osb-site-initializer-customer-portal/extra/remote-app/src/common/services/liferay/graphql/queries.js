@@ -52,6 +52,24 @@ export const getAccountSubscriptionsTerms = gql`
 	}
 `;
 
+export const getStructuredContentFolders = gql`
+	query getStructuredContentFolders($siteKey: String!, $filter: String) {
+		structuredContentFolders(siteKey: $siteKey, filter: $filter) {
+			items {
+				id
+				name
+				structuredContents {
+					items {
+						id
+						friendlyUrlPath
+						key
+					}
+				}
+			}
+		}
+	}
+`;
+
 export const getAccountSubscriptions = gql`
 	query getAccountSubscriptions($filter: String) {
 		c {
@@ -173,6 +191,17 @@ export const getAccountRolesAndAccountFlags = gql`
 	}
 `;
 
+export const getAccountRoles = gql`
+	query getAccountRoles($accountId: Long!) {
+		accountAccountRoles(accountId: $accountId) {
+			items {
+				id
+				name
+			}
+		}
+	}
+`;
+
 export const getAccountSubscriptionGroups = gql`
 	query getAccountSubscriptionGroups(
 		$aggregation: [String]
@@ -236,19 +265,6 @@ export const getUserAccount = gql`
 			id
 			image
 			name
-		}
-	}
-`;
-
-export const getAccountSubscriptionsGroups = gql`
-	query getAccountSubscriptionGroups($accountSubscriptionGroupERC: String) {
-		c {
-			accountSubscriptions(filter: $accountSubscriptionGroupERC) {
-				items {
-					name
-					accountSubscriptionGroupERC
-				}
-			}
 		}
 	}
 `;

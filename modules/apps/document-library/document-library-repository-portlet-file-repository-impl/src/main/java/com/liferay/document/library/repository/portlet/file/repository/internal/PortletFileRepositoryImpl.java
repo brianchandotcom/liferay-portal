@@ -327,21 +327,17 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 				_repositoryProvider.getFileEntryLocalRepository(fileEntryId);
 
 			if (_isAttachment(localRepository.getFileEntry(fileEntryId))) {
-				_run(
-					FileEntry.class,
-					() -> {
-						localRepository.deleteFileEntry(fileEntryId);
+				try {
+					SystemEventHierarchyEntryThreadLocal.push(FileEntry.class);
 
-						return null;
-					});
+					localRepository.deleteFileEntry(fileEntryId);
+				}
+				finally {
+					SystemEventHierarchyEntryThreadLocal.pop(FileEntry.class);
+				}
 			}
 			else {
-				_run(
-					() -> {
-						localRepository.deleteFileEntry(fileEntryId);
-
-						return null;
-					});
+				localRepository.deleteFileEntry(fileEntryId);
 			}
 		}
 		catch (NoSuchFileEntryException noSuchFileEntryException) {

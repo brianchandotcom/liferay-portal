@@ -7,8 +7,14 @@ export const CUSTOM_EVENTS = {
 	MENU_PAGE: 'customer-portal-menu-selected',
 	PROJECT: 'customer-portal-project-loading',
 	QUICK_LINKS: 'customer-portal-quick-links',
-	SUBSCRIPTION_GROUPS: 'cp-tip-container-primary',
+	SUBSCRIPTION_GROUPS: 'customer-portal-subscription-groups-loading',
 	USER_ACCOUNT: 'customer-portal-select-user-loading',
+};
+
+export const POSSIBLE_SUBSCRIPTIONS_STATUS = {
+	active: 'Active',
+	expired: 'Expired',
+	future: 'Future',
 };
 
 export const EXTENSIONS_FILE_TYPE = {
@@ -30,24 +36,12 @@ export const STATUS_CODE = {
 	SUCCESS: 200,
 };
 
-export const WEB_CONTENTS = {
-	'WEB-CONTENT-ACTION-01': 'WEB-CONTENT-ACTION-01',
-	'WEB-CONTENT-ACTION-02': 'WEB-CONTENT-ACTION-02',
-	'WEB-CONTENT-ACTION-03': 'WEB-CONTENT-ACTION-03',
-	'WEB-CONTENT-ACTION-04': 'WEB-CONTENT-ACTION-04',
-	'WEB-CONTENT-ACTION-05': 'WEB-CONTENT-ACTION-05',
-	'WEB-CONTENT-ACTION-06': 'WEB-CONTENT-ACTION-06',
-	'WEB-CONTENT-ACTION-07': 'WEB-CONTENT-ACTION-07',
-	'WEB-CONTENT-ACTION-08': 'WEB-CONTENT-ACTION-08',
-	'WEB-CONTENT-ACTION-09': 'WEB-CONTENT-ACTION-09',
-};
-
 export const WEB_CONTENTS_BY_LIFERAY_VERSION = {
-	'7.0': WEB_CONTENTS['WEB-CONTENT-ACTION-04'],
-	'7.1': WEB_CONTENTS['WEB-CONTENT-ACTION-05'],
-	'7.2': WEB_CONTENTS['WEB-CONTENT-ACTION-06'],
-	'7.3': WEB_CONTENTS['WEB-CONTENT-ACTION-07'],
-	'7.4': WEB_CONTENTS['WEB-CONTENT-ACTION-08'],
+	'7.0': 'WEB-CONTENT-ACTION-04',
+	'7.1': 'WEB-CONTENT-ACTION-05',
+	'7.2': 'WEB-CONTENT-ACTION-06',
+	'7.3': 'WEB-CONTENT-ACTION-07',
+	'7.4': 'WEB-CONTENT-ACTION-08',
 };
 
 export const pages = {

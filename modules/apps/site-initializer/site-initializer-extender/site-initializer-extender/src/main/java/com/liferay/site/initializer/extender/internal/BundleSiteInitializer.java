@@ -633,7 +633,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			TransactionCommitCallbackUtil.registerCallback(
 				() -> {
-					_addSkuSubscriptions(
+					_addCPInstanceSubscriptions(
 						StringUtil.replaceLast(
 							resourcePath, ".json",
 							".products.subscriptions.properties.json"),
@@ -867,6 +867,122 @@ public class BundleSiteInitializer implements SiteInitializer {
 					COMMERCE_INVENTORY_WAREHOUSE_ID_ACCESSOR),
 			_classLoader, StringUtil.replace(resourcePath, ".json", "/"),
 			serviceContext.getScopeGroupId(), serviceContext.getUserId());
+	}
+
+	private void _addCPInstanceSubscriptions(
+			String resourcePath, ServiceContext serviceContext)
+		throws Exception {
+
+		String json = _read(resourcePath);
+
+		if (json == null) {
+			return;
+		}
+
+		ProductOptionResource.Builder productOptionResourceBuilder =
+			_commerceReferencesHolder.productOptionResourceFactory.create();
+
+		ProductOptionResource productOptionResource =
+			productOptionResourceBuilder.user(
+				serviceContext.fetchUser()
+			).build();
+
+		OptionResource.Builder optionResourceBuilder =
+			_commerceReferencesHolder.optionResourceFactory.create();
+
+		OptionResource optionResource = optionResourceBuilder.user(
+			serviceContext.fetchUser()
+		).build();
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(json);
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject subscriptionPropertiesJSONObject =
+				jsonArray.getJSONObject(i);
+
+			Page<Option> optionsPage = optionResource.getOptionsPage(
+				null,
+				optionResource.toFilter(
+					StringBundler.concat(
+						"name eq '",
+						StringUtil.toLowerCase(
+							subscriptionPropertiesJSONObject.getString(
+								"optionName")),
+						"'")),
+				null, null);
+
+			Option option = optionsPage.fetchFirstItem();
+
+			if (option != null) {
+				ProductOption[] productOptions = new ProductOption[1];
+
+				productOptions[0] = new ProductOption() {
+					{
+						facetable = option.getFacetable();
+						fieldType = option.getFieldType(
+						).toString();
+						key = option.getKey();
+						name = option.getName();
+						optionId = option.getId();
+						required = option.getRequired();
+						skuContributor = option.getSkuContributor();
+					}
+				};
+
+				CPDefinition cpDefinition =
+					_commerceReferencesHolder.cpDefinitionLocalService.
+						fetchCPDefinitionByCProductExternalReferenceCode(
+							subscriptionPropertiesJSONObject.getString(
+								"cpDefinitionExternalReferenceCode"),
+							serviceContext.getCompanyId());
+
+				productOptionResource.postProductIdProductOptionsPage(
+					cpDefinition.getCProductId(), productOptions);
+
+				_commerceReferencesHolder.cpInstanceLocalService.
+					buildCPInstances(
+						cpDefinition.getCPDefinitionId(), serviceContext);
+
+				JSONObject subscriptionTypeSettingsJSONObject =
+					subscriptionPropertiesJSONObject.getJSONObject(
+						"subscriptionTypeSettings");
+
+				UnicodeProperties unicodeProperties = new UnicodeProperties(
+					JSONUtil.toStringMap(subscriptionTypeSettingsJSONObject),
+					true);
+
+				CPInstance cpInstance =
+					_commerceReferencesHolder.cpInstanceLocalService.
+						getCPInstance(
+							cpDefinition.getCPDefinitionId(),
+							subscriptionPropertiesJSONObject.getString(
+								"cpInstanceSku"));
+
+				_commerceReferencesHolder.cpInstanceLocalService.
+					updateSubscriptionInfo(
+						cpInstance.getCPInstanceId(),
+						subscriptionPropertiesJSONObject.getBoolean(
+							"overrideSubscriptionInfo"),
+						subscriptionPropertiesJSONObject.getBoolean(
+							"subscriptionEnabled"),
+						subscriptionPropertiesJSONObject.getInt(
+							"subscriptionLength"),
+						subscriptionPropertiesJSONObject.getString(
+							"subscriptionType"),
+						unicodeProperties,
+						subscriptionPropertiesJSONObject.getLong(
+							"maxSubscriptionCycles"),
+						subscriptionPropertiesJSONObject.getBoolean(
+							"deliverySubscriptionEnabled"),
+						subscriptionPropertiesJSONObject.getInt(
+							"deliverySubscriptionLength"),
+						subscriptionPropertiesJSONObject.getString(
+							"deliverySubscriptionType"),
+						new UnicodeProperties(),
+						subscriptionPropertiesJSONObject.getLong(
+							"deliveryMaxSubscriptionCycles"));
+			}
+		}
 	}
 
 	private void _addCPOptions(
@@ -2334,122 +2450,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 			_addSiteNavigationMenu(
 				jsonArray.getJSONObject(i), serviceContext,
 				siteNavigationMenuItemSettings);
-		}
-	}
-
-	private void _addSkuSubscriptions(
-			String resourcePath, ServiceContext serviceContext)
-		throws Exception {
-
-		String json = _read(resourcePath);
-
-		if (json == null) {
-			return;
-		}
-
-		ProductOptionResource.Builder productOptionResourceBuilder =
-			_commerceReferencesHolder.productOptionResourceFactory.create();
-
-		ProductOptionResource productOptionResource =
-			productOptionResourceBuilder.user(
-				serviceContext.fetchUser()
-			).build();
-
-		OptionResource.Builder optionResourceBuilder =
-			_commerceReferencesHolder.optionResourceFactory.create();
-
-		OptionResource optionResource = optionResourceBuilder.user(
-			serviceContext.fetchUser()
-		).build();
-
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(json);
-
-		for (int i = 0; i < jsonArray.length(); i++) {
-			JSONObject subscriptionPropertiesJSONObject =
-				jsonArray.getJSONObject(i);
-
-			Page<Option> optionsPage = optionResource.getOptionsPage(
-				null,
-				optionResource.toFilter(
-					StringBundler.concat(
-						"name eq '",
-						StringUtil.toLowerCase(
-							subscriptionPropertiesJSONObject.getString(
-								"optionName")),
-						"'")),
-				null, null);
-
-			Option option = optionsPage.fetchFirstItem();
-
-			if (option != null) {
-				ProductOption[] productOptions = new ProductOption[1];
-
-				productOptions[0] = new ProductOption() {
-					{
-						facetable = option.getFacetable();
-						fieldType = option.getFieldType(
-						).toString();
-						key = option.getKey();
-						name = option.getName();
-						optionId = option.getId();
-						required = option.getRequired();
-						skuContributor = option.getSkuContributor();
-					}
-				};
-
-				CPDefinition cpDefinition =
-					_commerceReferencesHolder.cpDefinitionLocalService.
-						fetchCPDefinitionByCProductExternalReferenceCode(
-							subscriptionPropertiesJSONObject.getString(
-								"cpDefinitionExternalReferenceCode"),
-							serviceContext.getCompanyId());
-
-				productOptionResource.postProductIdProductOptionsPage(
-					cpDefinition.getCProductId(), productOptions);
-
-				_commerceReferencesHolder.cpInstanceLocalService.
-					buildCPInstances(
-						cpDefinition.getCPDefinitionId(), serviceContext);
-
-				JSONObject subscriptionTypeSettingsJSONObject =
-					subscriptionPropertiesJSONObject.getJSONObject(
-						"subscriptionTypeSettings");
-
-				UnicodeProperties unicodeProperties = new UnicodeProperties(
-					JSONUtil.toStringMap(subscriptionTypeSettingsJSONObject),
-					true);
-
-				CPInstance cpInstance =
-					_commerceReferencesHolder.cpInstanceLocalService.
-						getCPInstance(
-							cpDefinition.getCPDefinitionId(),
-							subscriptionPropertiesJSONObject.getString(
-								"cpInstanceSku"));
-
-				_commerceReferencesHolder.cpInstanceLocalService.
-					updateSubscriptionInfo(
-						cpInstance.getCPInstanceId(),
-						subscriptionPropertiesJSONObject.getBoolean(
-							"overrideSubscriptionInfo"),
-						subscriptionPropertiesJSONObject.getBoolean(
-							"subscriptionEnabled"),
-						subscriptionPropertiesJSONObject.getInt(
-							"subscriptionLength"),
-						subscriptionPropertiesJSONObject.getString(
-							"subscriptionType"),
-						unicodeProperties,
-						subscriptionPropertiesJSONObject.getLong(
-							"maxSubscriptionCycles"),
-						subscriptionPropertiesJSONObject.getBoolean(
-							"deliverySubscriptionEnabled"),
-						subscriptionPropertiesJSONObject.getInt(
-							"deliverySubscriptionLength"),
-						subscriptionPropertiesJSONObject.getString(
-							"deliverySubscriptionType"),
-						new UnicodeProperties(),
-						subscriptionPropertiesJSONObject.getLong(
-							"deliveryMaxSubscriptionCycles"));
-			}
 		}
 	}
 

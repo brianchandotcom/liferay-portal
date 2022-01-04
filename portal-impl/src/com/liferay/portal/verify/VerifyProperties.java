@@ -1690,6 +1690,7 @@ public class VerifyProperties extends VerifyProcess {
 		"ehcache.rmi.peer.listener.factory.properties",
 		"ehcache.rmi.peer.provider.factory.class",
 		"ehcache.rmi.peer.provider.factory.properties",
+		"ehcache.socket.so.timeout", "ehcache.socket.start.port",
 		"ehcache.statistics.enabled",
 		"hot.deploy.hook.custom.jsp.verification.enabled",
 		"hot.undeploy.enabled", "hot.undeploy.interval",

@@ -100,6 +100,12 @@ const mockPropsWithoutSelected = {
 			site: 2,
 			value: 'region',
 		},
+		{
+			global: false,
+			label: 'Another Region (Extra site)',
+			site: 3,
+			value: 'another-region',
+		},
 	],
 	portletNamespace:
 		'_com_liferay_content_dashboard_web_portlet_ContentDashboardAdminPortlet_',
@@ -152,7 +158,7 @@ describe('VocabulariesSelectionBox', () => {
 			'#_com_liferay_content_dashboard_web_portlet_ContentDashboardAdminPortlet_currentAssetVocabularyIds option'
 		);
 
-		expect(availableVocabularies.length).toBe(6);
+		expect(availableVocabularies.length).toBe(7);
 		expect(selectedVocabularies.length).toBe(0);
 
 		const availableSelect = container.querySelector(
@@ -168,7 +174,7 @@ describe('VocabulariesSelectionBox', () => {
 			'#_com_liferay_content_dashboard_web_portlet_ContentDashboardAdminPortlet_currentAssetVocabularyIds option'
 		);
 
-		expect(availableVocabulariesAfterLTR.length).toBe(5);
+		expect(availableVocabulariesAfterLTR.length).toBe(6);
 		expect(selectedVocabulariesAfterLTR.length).toBe(1);
 
 		// Region  vocabulary must be disabled now becasue is from another site
@@ -207,7 +213,7 @@ describe('VocabulariesSelectionBox', () => {
 		expect(disabledVocabularies.length).toBe(0);
 	});
 
-	it('prevents to move more than two vocaularies from Available to In Use', () => {
+	it('prevents to move more than two vocabularies from Available to In Use', () => {
 		const {container} = render(
 			<VocabulariesSelectionBox {...mockPropsWithoutSelected} />
 		);
@@ -244,6 +250,29 @@ describe('VocabulariesSelectionBox', () => {
 		);
 
 		expect(checkedVocabularies.length).toBe(3);
+		expect(leftToRightButton.disabled).toBe(true);
+	});
+
+	it('prevents to move non-global vocabularies from different sites, when selecting then via click and hold', () => {
+		const {container} = render(
+			<VocabulariesSelectionBox {...mockPropsWithoutSelected} />
+		);
+
+		const availableSelect = container.querySelector(
+			'#availableAssetVocabularyIds'
+		);
+
+		userEvent.selectOptions(availableSelect, ['region', 'another-region']);
+		fireEvent.change(availableSelect);
+
+		const checkedVocabularies = container.querySelectorAll(
+			'#availableAssetVocabularyIds option:checked'
+		);
+		const leftToRightButton = container.querySelector(
+			'.transfer-button-ltr'
+		);
+
+		expect(checkedVocabularies.length).toBe(2);
 		expect(leftToRightButton.disabled).toBe(true);
 	});
 });

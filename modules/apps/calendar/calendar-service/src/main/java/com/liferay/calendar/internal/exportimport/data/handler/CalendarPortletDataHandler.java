@@ -47,14 +47,7 @@ public class CalendarPortletDataHandler extends BasePortletDataHandler {
 	@Activate
 	protected void activate() {
 		setDataLevel(DataLevel.PORTLET_INSTANCE);
-		setDataPortletPreferences(
-			"defaultDuration", "defaultView", "displaySchedulerHeader",
-			"displaySchedulerOnly", "enableRss", "eventsPerPage",
-			"maxDaysDisplayed", "portletSetupCss", "portletSetupUseCustomTitle",
-			"rssDelta", "rssDisplayStyle", "rssFeedType", "rssTimeInterval",
-			"showAgendaView", "showDayView", "showMonthView", "showUserEvents",
-			"showWeekView", "timeFormat", "timeZoneId", "usePortalTimeZone",
-			"weekStartsOn");
+		setDataPortletPreferences(StringPool.BLANK);
 	}
 
 	@Override

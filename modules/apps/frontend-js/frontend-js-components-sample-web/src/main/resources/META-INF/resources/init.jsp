@@ -23,6 +23,9 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
+<%@ page import="com.liferay.frontend.js.components.sample.web.constants.ComponentsSamplePortletKeys" %><%@
+page import="com.liferay.frontend.js.components.sample.web.internal.display.context.TranslationManagerDisplayContext" %>
+
 <%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.LocaleUtil" %>
@@ -36,3 +39,7 @@ page import="java.util.Set" %>
 <liferay-theme:defineObjects />
 
 <portlet:defineObjects />
+
+<%
+TranslationManagerDisplayContext translationManagerDisplayContext = (TranslationManagerDisplayContext)request.getAttribute(ComponentsSamplePortletKeys.TRANSLATION_MANAGER_DISPLAY_CONTEXT);
+%>

@@ -17,17 +17,10 @@
 <%@ include file="/init.jsp" %>
 
 <%
-List<String> activeLanguageIds = new ArrayList<String>();
-Set<Locale> availableLocales = LanguageUtil.getAvailableLocales();
-String defaultLanguageId = LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault());
-Map<String, Object> translations = HashMapBuilder.<String, Object>put(
-	"ca-ES", "Lorem"
-).build();
-
-activeLanguageIds.add(defaultLanguageId);
-
-activeLanguageIds.add("ca_ES");
-activeLanguageIds.add("fr_FR");
+List<String> activeLanguageIds = translationManagerDisplayContext.getActiveLanguageIds();
+Set<Locale> availableLocales = translationManagerDisplayContext.getAvailableLocales();
+String defaultLanguageId = translationManagerDisplayContext.getDefaultLanguageId();
+Map<String, Object> translations = translationManagerDisplayContext.getTranslations();
 %>
 
 <clay:container-fluid>

@@ -1,5 +1,6 @@
 .home-projects {
-	gap: var(--spacer-5);
+	column-gap: var(--spacer-5);
+	row-gap: 2rem;
 
 	&-sm {
 		gap: 1rem;
@@ -7,5 +8,14 @@
 }
 
 .project-cards-container {
-	min-width: 720px;
+	max-width: 1177px;
+
+	@media screen and (min-width: 1441px) {
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	&-sm {
+		max-width: 700px;
+	}
 }

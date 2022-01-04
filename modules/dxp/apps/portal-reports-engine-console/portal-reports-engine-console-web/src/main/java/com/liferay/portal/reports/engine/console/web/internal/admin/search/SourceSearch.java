@@ -66,13 +66,12 @@ public class SourceSearch extends SearchContainer<Source> {
 			portletRequest, ReportsEngineConsolePortletKeys.REPORTS_ADMIN,
 			"asc");
 
-		setOrderByComparator(
-			_getSourceOrderByComparator(orderByCol, orderByType));
+		setOrderByComparator(_getSourceOrderByComparator(orderByType));
 		setOrderByType(orderByType);
 	}
 
 	private OrderByComparator<Source> _getSourceOrderByComparator(
-		String orderByCol, String orderByType) {
+		String orderByType) {
 
 		boolean orderByAsc = false;
 

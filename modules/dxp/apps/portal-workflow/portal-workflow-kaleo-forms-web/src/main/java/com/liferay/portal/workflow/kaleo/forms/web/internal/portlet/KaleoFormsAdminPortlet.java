@@ -165,7 +165,7 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 		try {
 			_setDisplayContext(renderRequest, renderResponse);
 
-			_renderKaleoProcess(renderRequest, renderResponse);
+			_renderKaleoProcess(renderRequest);
 		}
 		catch (Exception exception) {
 			if (exception instanceof NoSuchKaleoProcessException ||
@@ -197,7 +197,7 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 				_serveKaleoProcess(resourceRequest, resourceResponse);
 			}
 			else if (Objects.equals(resourceID, "saveInPortletSession")) {
-				_saveInPortletSession(resourceRequest, resourceResponse);
+				_saveInPortletSession(resourceRequest);
 			}
 		}
 		catch (IOException ioException) {
@@ -249,8 +249,7 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 	 * @param  renderResponse the render response
 	 * @throws Exception if an exception occurred
 	 */
-	private void _renderKaleoProcess(
-			RenderRequest renderRequest, RenderResponse renderResponse)
+	private void _renderKaleoProcess(RenderRequest renderRequest)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
@@ -315,9 +314,7 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 	 * @param  resourceRequest the resource request
 	 * @param  resourceResponse the resource response
 	 */
-	private void _saveInPortletSession(
-		ResourceRequest resourceRequest, ResourceResponse resourceResponse) {
-
+	private void _saveInPortletSession(ResourceRequest resourceRequest) {
 		Map<String, String[]> parameterMap = resourceRequest.getParameterMap();
 
 		PortletSession portletSession = resourceRequest.getPortletSession();

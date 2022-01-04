@@ -68,7 +68,7 @@ public class AkismetEditMessageMVCActionCommand extends BaseMVCActionCommand {
 
 		if (cmd.equals("updateStatus")) {
 			try {
-				_updateStatus(actionRequest, actionResponse);
+				_updateStatus(actionRequest);
 
 				String redirect = _portal.escapeRedirect(
 					ParamUtil.getString(actionRequest, "redirect"));
@@ -103,8 +103,7 @@ public class AkismetEditMessageMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private void _updateStatus(
-			ActionRequest actionRequest, ActionResponse actionResponse)
+	private void _updateStatus(ActionRequest actionRequest)
 		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(

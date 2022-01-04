@@ -70,8 +70,8 @@ public class KaleoFormsDDMDisplay extends BaseDDMDisplay {
 				liferayPortletRequest)) {
 
 			return _getSelectTemplateURL(
-				liferayPortletRequest, liferayPortletResponse, classNameId,
-				classPK, resourceClassNameId);
+				liferayPortletRequest, classNameId, classPK,
+				resourceClassNameId);
 		}
 
 		return super.getEditTemplateBackURL(
@@ -165,8 +165,7 @@ public class KaleoFormsDDMDisplay extends BaseDDMDisplay {
 	}
 
 	private String _getSelectTemplateURL(
-			LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse, long classNameId,
+			LiferayPortletRequest liferayPortletRequest, long classNameId,
 			long classPK, long resourceClassNameId)
 		throws Exception {
 

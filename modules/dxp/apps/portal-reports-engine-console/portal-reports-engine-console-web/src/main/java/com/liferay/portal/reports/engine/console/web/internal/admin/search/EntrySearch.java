@@ -85,13 +85,12 @@ public class EntrySearch extends SearchContainer<Entry> {
 			portletRequest, ReportsEngineConsolePortletKeys.REPORTS_ADMIN,
 			"asc");
 
-		setOrderByComparator(
-			_getEntryOrderByComparator(orderByCol, orderByType));
+		setOrderByComparator(_getEntryOrderByComparator(orderByType));
 		setOrderByType(orderByType);
 	}
 
 	private OrderByComparator<Entry> _getEntryOrderByComparator(
-		String orderByCol, String orderByType) {
+		String orderByType) {
 
 		boolean orderByAsc = false;
 

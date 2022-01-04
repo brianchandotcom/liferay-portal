@@ -82,59 +82,47 @@ public class DefaultAttributeResolver implements AttributeResolver {
 				attributeName = attributeName.substring(8);
 
 				_addExpandoAttribute(
-					user, attributeResolverSAMLContext, attributePublisher,
-					attributeName, namespaceEnabled);
+					user, attributePublisher, attributeName, namespaceEnabled);
 			}
 			else if (attributeName.equals("groups")) {
-				_addGroupsAttribute(
-					user, attributeResolverSAMLContext, attributePublisher,
-					attributeName, namespaceEnabled);
+				_addGroupsAttribute(user, attributePublisher, namespaceEnabled);
 			}
 			else if (attributeName.startsWith("map:")) {
 				attributeName = attributeName.substring(4);
 
 				_addMapAttribute(
-					user, attributeResolverSAMLContext, attributePublisher,
-					attributeName, namespaceEnabled);
+					user, attributePublisher, attributeName, namespaceEnabled);
 			}
 			else if (attributeName.equals("organizations")) {
 				_addOrganizationsAttribute(
-					user, attributeResolverSAMLContext, attributePublisher,
-					attributeName, namespaceEnabled);
+					user, attributePublisher, namespaceEnabled);
 			}
 			else if (attributeName.equals("organizationRoles")) {
 				_addOrganizationRolesAttribute(
-					user, attributeResolverSAMLContext, attributePublisher,
-					attributeName, namespaceEnabled);
+					user, attributePublisher, namespaceEnabled);
 			}
 			else if (attributeName.equals("roles")) {
-				_addRolesAttribute(
-					user, attributeResolverSAMLContext, attributePublisher,
-					attributeName, namespaceEnabled);
+				_addRolesAttribute(user, attributePublisher, namespaceEnabled);
 			}
 			else if (attributeName.startsWith("static:")) {
 				attributeName = attributeName.substring(7);
 
 				_addStaticAttribute(
-					user, attributeResolverSAMLContext, attributePublisher,
-					attributeName, namespaceEnabled);
+					attributePublisher, attributeName, namespaceEnabled);
 			}
 			else if (attributeName.equals("siteRoles") ||
 					 attributeName.equals("userGroupRoles")) {
 
 				_addSiteRolesAttribute(
-					user, attributeResolverSAMLContext, attributePublisher,
-					attributeName, namespaceEnabled);
+					user, attributePublisher, attributeName, namespaceEnabled);
 			}
 			else if (attributeName.equals("userGroups")) {
 				_addUserGroupsAttribute(
-					user, attributeResolverSAMLContext, attributePublisher,
-					attributeName, namespaceEnabled);
+					user, attributePublisher, namespaceEnabled);
 			}
 			else {
 				_addUserAttribute(
-					user, attributeResolverSAMLContext, attributePublisher,
-					attributeName, namespaceEnabled);
+					user, attributePublisher, attributeName, namespaceEnabled);
 			}
 		}
 
@@ -178,8 +166,7 @@ public class DefaultAttributeResolver implements AttributeResolver {
 	}
 
 	private void _addExpandoAttribute(
-		User user, AttributeResolverSAMLContext attributeResolverSAMLContext,
-		AttributePublisher attributePublisher, String attributeName,
+		User user, AttributePublisher attributePublisher, String attributeName,
 		boolean namespaceEnabled) {
 
 		ExpandoBridge expandoBridge = user.getExpandoBridge();
@@ -204,8 +191,7 @@ public class DefaultAttributeResolver implements AttributeResolver {
 	}
 
 	private void _addGroupsAttribute(
-		User user, AttributeResolverSAMLContext attributeResolverSAMLContext,
-		AttributePublisher attributePublisher, String attributeName,
+		User user, AttributePublisher attributePublisher,
 		boolean namespaceEnabled) {
 
 		try {
@@ -254,8 +240,7 @@ public class DefaultAttributeResolver implements AttributeResolver {
 	}
 
 	private void _addMapAttribute(
-		User user, AttributeResolverSAMLContext attributeResolverSAMLContext,
-		AttributePublisher attributePublisher, String attributeName,
+		User user, AttributePublisher attributePublisher, String attributeName,
 		boolean namespaceEnabled) {
 
 		if (attributeName.indexOf(StringPool.EQUAL) <= 0) {
@@ -283,8 +268,7 @@ public class DefaultAttributeResolver implements AttributeResolver {
 	}
 
 	private void _addOrganizationRolesAttribute(
-		User user, AttributeResolverSAMLContext attributeResolverSAMLContext,
-		AttributePublisher attributePublisher, String attributeName,
+		User user, AttributePublisher attributePublisher,
 		boolean namespaceEnabled) {
 
 		try {
@@ -353,9 +337,7 @@ public class DefaultAttributeResolver implements AttributeResolver {
 	}
 
 	private void _addOrganizationsAttribute(
-		User user, AttributeResolverSAMLContext attributeResolverSAMLContext,
-		AttributePublisher publisher, String attributeName,
-		boolean namespaceEnabled) {
+		User user, AttributePublisher publisher, boolean namespaceEnabled) {
 
 		try {
 			List<Organization> organizations = user.getOrganizations();
@@ -403,8 +385,7 @@ public class DefaultAttributeResolver implements AttributeResolver {
 	}
 
 	private void _addRolesAttribute(
-		User user, AttributeResolverSAMLContext attributeResolverSAMLContext,
-		AttributePublisher attributePublisher, String attributeName,
+		User user, AttributePublisher attributePublisher,
 		boolean namespaceEnabled) {
 
 		try {
@@ -528,8 +509,7 @@ public class DefaultAttributeResolver implements AttributeResolver {
 	}
 
 	private void _addSiteRolesAttribute(
-		User user, AttributeResolverSAMLContext attributeResolverSAMLContext,
-		AttributePublisher attributePublisher, String attributeName,
+		User user, AttributePublisher attributePublisher, String attributeName,
 		boolean namespaceEnabled) {
 
 		try {
@@ -626,7 +606,6 @@ public class DefaultAttributeResolver implements AttributeResolver {
 	}
 
 	private void _addStaticAttribute(
-		User user, AttributeResolverSAMLContext attributeResolverSAMLContext,
 		AttributePublisher attributePublisher, String attributeName,
 		boolean namespaceEnabled) {
 
@@ -662,8 +641,7 @@ public class DefaultAttributeResolver implements AttributeResolver {
 	}
 
 	private void _addUserAttribute(
-		User user, AttributeResolverSAMLContext attributeResolverSAMLContext,
-		AttributePublisher attributePublisher, String attributeName,
+		User user, AttributePublisher attributePublisher, String attributeName,
 		boolean namespaceEnabled) {
 
 		Serializable value = (Serializable)BeanPropertiesUtil.getObject(
@@ -682,8 +660,7 @@ public class DefaultAttributeResolver implements AttributeResolver {
 	}
 
 	private void _addUserGroupsAttribute(
-		User user, AttributeResolverSAMLContext attributeResolverSAMLContext,
-		AttributePublisher attributePublisher, String attributeName,
+		User user, AttributePublisher attributePublisher,
 		boolean namespaceEnabled) {
 
 		try {

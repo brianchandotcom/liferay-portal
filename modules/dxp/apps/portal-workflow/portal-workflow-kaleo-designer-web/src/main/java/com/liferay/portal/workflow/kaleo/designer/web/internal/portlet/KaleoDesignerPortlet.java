@@ -135,8 +135,7 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 				renderRequest, DuplicateKaleoDefinitionNameException.class)) {
 
 			try {
-				_setKaleoDefinitionVersionRenderRequestAttribute(
-					renderRequest, renderResponse);
+				_setKaleoDefinitionVersionRenderRequestAttribute(renderRequest);
 			}
 			catch (Exception exception) {
 				_log.error(exception, exception);
@@ -490,7 +489,7 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 	}
 
 	private void _setKaleoDefinitionVersionRenderRequestAttribute(
-			RenderRequest renderRequest, RenderResponse renderResponse)
+			RenderRequest renderRequest)
 		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(

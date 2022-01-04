@@ -73,7 +73,7 @@ public class KeepAliveStrutsAction implements StrutsAction {
 			_executeIdpKeepAlive(httpServletRequest, httpServletResponse);
 		}
 		else if (_samlProviderConfigurationHelper.isRoleSp()) {
-			_executeSpKeepAlive(httpServletRequest, httpServletResponse);
+			_executeSpKeepAlive(httpServletResponse);
 		}
 
 		return null;
@@ -107,9 +107,7 @@ public class KeepAliveStrutsAction implements StrutsAction {
 		}
 	}
 
-	private void _executeSpKeepAlive(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
+	private void _executeSpKeepAlive(HttpServletResponse httpServletResponse)
 		throws Exception {
 
 		httpServletResponse.setHeader(

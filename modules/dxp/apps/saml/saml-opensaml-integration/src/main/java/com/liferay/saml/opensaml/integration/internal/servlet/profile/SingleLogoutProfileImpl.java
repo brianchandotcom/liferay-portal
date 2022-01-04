@@ -234,9 +234,7 @@ public class SingleLogoutProfileImpl
 						samlSloContext);
 				}
 				else if (cmd.equals("status")) {
-					_performIdpStatus(
-						httpServletRequest, httpServletResponse,
-						samlSloContext);
+					_performIdpStatus(httpServletResponse, samlSloContext);
 				}
 			}
 		}
@@ -880,7 +878,6 @@ public class SingleLogoutProfileImpl
 	}
 
 	private void _performIdpStatus(
-			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse,
 			SamlSloContext samlSloContext)
 		throws Exception {
@@ -1021,8 +1018,7 @@ public class SingleLogoutProfileImpl
 				httpServletRequest, httpServletResponse, messageContext);
 		}
 		else if (samlProviderConfigurationHelper.isRoleSp()) {
-			_processSpLogoutRequest(
-				httpServletRequest, httpServletResponse, messageContext);
+			_processSpLogoutRequest(httpServletResponse, messageContext);
 		}
 	}
 
@@ -1042,7 +1038,6 @@ public class SingleLogoutProfileImpl
 	}
 
 	private void _processSpLogoutRequest(
-			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse,
 			MessageContext<?> messageContext)
 		throws Exception {

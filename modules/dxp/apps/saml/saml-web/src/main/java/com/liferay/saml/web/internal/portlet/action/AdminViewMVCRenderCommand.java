@@ -77,7 +77,7 @@ public class AdminViewMVCRenderCommand implements MVCRenderCommand {
 			httpServletRequest, "tabs1", "general");
 
 		if (tabs1.equals("general")) {
-			_renderGeneralTab(renderRequest, renderResponse);
+			_renderGeneralTab(renderRequest);
 		}
 		else if (tabs1.equals("identity-provider-connections")) {
 			_renderViewIdentityProviderConnections(
@@ -97,9 +97,7 @@ public class AdminViewMVCRenderCommand implements MVCRenderCommand {
 			SamlConfiguration.class, properties);
 	}
 
-	private void _renderGeneralTab(
-		RenderRequest renderRequest, RenderResponse renderResponse) {
-
+	private void _renderGeneralTab(RenderRequest renderRequest) {
 		String entityId = _localEntityManager.getLocalEntityId();
 
 		renderRequest.setAttribute(SamlWebKeys.SAML_ENTITY_ID, entityId);

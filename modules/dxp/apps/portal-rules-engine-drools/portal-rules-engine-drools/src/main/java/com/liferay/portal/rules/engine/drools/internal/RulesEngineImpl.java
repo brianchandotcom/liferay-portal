@@ -301,8 +301,7 @@ public class RulesEngineImpl implements RulesEngine {
 		return resourceType;
 	}
 
-	private KnowledgeBase _createKnowledgeBase(
-			RulesResourceRetriever retriever, ClassLoader... classloaders)
+	private KnowledgeBase _createKnowledgeBase(RulesResourceRetriever retriever)
 		throws RulesEngineException {
 
 		try {

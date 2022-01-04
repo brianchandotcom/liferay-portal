@@ -85,8 +85,8 @@ public class KaleoProcessUpgradeProcess extends UpgradeProcess {
 				}
 
 				_updateAssetEntry(
-					groupId, companyId, userId, createDate, modifiedDate,
-					kaleoProcessId, uuid, ddlRecordSetId);
+					groupId, companyId, userId, createDate, modifiedDate, uuid,
+					ddlRecordSetId);
 			}
 		}
 	}
@@ -128,8 +128,7 @@ public class KaleoProcessUpgradeProcess extends UpgradeProcess {
 
 	private void _updateAssetEntry(
 			long groupId, long companyId, long userId, Timestamp createDate,
-			Timestamp modifiedDate, long kaleoProcessId, String uuid,
-			long ddlRecordSetId)
+			Timestamp modifiedDate, String uuid, long ddlRecordSetId)
 		throws PortalException {
 
 		String title = _getAssetEntryTitle(companyId, ddlRecordSetId);

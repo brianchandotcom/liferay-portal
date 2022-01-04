@@ -77,13 +77,12 @@ public class DefinitionSearch extends SearchContainer<Definition> {
 			portletRequest, ReportsEngineConsolePortletKeys.REPORTS_ADMIN,
 			"asc");
 
-		setOrderByComparator(
-			_getDefinitionOrderByComparator(orderByCol, orderByType));
+		setOrderByComparator(_getDefinitionOrderByComparator(orderByType));
 		setOrderByType(orderByType);
 	}
 
 	private OrderByComparator<Definition> _getDefinitionOrderByComparator(
-		String orderByCol, String orderByType) {
+		String orderByType) {
 
 		boolean orderByAsc = false;
 

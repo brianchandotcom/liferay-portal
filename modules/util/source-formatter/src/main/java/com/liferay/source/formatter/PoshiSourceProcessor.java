@@ -14,6 +14,7 @@
 
 package com.liferay.source.formatter;
 
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.poshi.core.PoshiContext;
 import com.liferay.poshi.core.elements.PoshiElement;
 import com.liferay.poshi.core.elements.PoshiNodeFactory;
@@ -104,6 +105,21 @@ public class PoshiSourceProcessor extends BaseSourceProcessor {
 			new SimpleFileVisitor<Path>() {
 
 				@Override
+				public FileVisitResult preVisitDirectory(
+						Path dirPath, BasicFileAttributes basicFileAttributes)
+					throws IOException {
+
+					if (ArrayUtil.contains(
+							_SKIP_DIR_NAMES,
+							String.valueOf(dirPath.getFileName()))) {
+
+						return FileVisitResult.SKIP_SUBTREE;
+					}
+
+					return FileVisitResult.CONTINUE;
+				}
+
+				@Override
 				public FileVisitResult visitFile(
 					Path filePath, BasicFileAttributes basicFileAttributes) {
 
@@ -129,6 +145,12 @@ public class PoshiSourceProcessor extends BaseSourceProcessor {
 
 	private static final String[] _INCLUDES = {
 		"**/*.function", "**/*.macro", "**/*.testcase"
+	};
+
+	private static final String[] _SKIP_DIR_NAMES = {
+		".git", ".gradle", ".idea", ".m2", ".releng", ".settings", "bin",
+		"build", "classes", "node_modules", "node_modules_cache", "poshi",
+		"sdk", "third-party"
 	};
 
 	private static boolean _populated;

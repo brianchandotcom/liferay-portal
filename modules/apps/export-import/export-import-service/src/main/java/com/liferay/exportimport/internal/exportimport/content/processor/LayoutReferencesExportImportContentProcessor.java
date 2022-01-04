@@ -322,23 +322,17 @@ public class LayoutReferencesExportImportContentProcessor
 
 				pos = url.indexOf(StringPool.SLASH, 1);
 
-				String localePath = StringPool.BLANK;
+				if (pos == -1) {
+					pos = url.length();
+				}
 
 				Locale locale = null;
 
-				if (pos != -1) {
-					localePath = url.substring(0, pos);
+				String localePath = url.substring(0, pos);
 
+				if (localePath.length() > 1) {
 					locale = LocaleUtil.fromLanguageId(
 						localePath.substring(1), true, false);
-				}
-				else {
-					localePath = url;
-
-					if (localePath.length() > 1) {
-						locale = LocaleUtil.fromLanguageId(
-							localePath.substring(1), true, false);
-					}
 				}
 
 				if (locale != null) {
@@ -981,23 +975,17 @@ public class LayoutReferencesExportImportContentProcessor
 
 			int pos = url.indexOf(StringPool.SLASH, 1);
 
-			String localePath = StringPool.BLANK;
+			if (pos == -1) {
+				pos = url.length();
+			}
 
 			Locale locale = null;
 
-			if (pos != -1) {
-				localePath = url.substring(0, pos);
+			String localePath = url.substring(0, pos);
 
+			if (localePath.length() > 1) {
 				locale = LocaleUtil.fromLanguageId(
 					localePath.substring(1), true, false);
-			}
-			else {
-				localePath = url;
-
-				if (localePath.length() > 1) {
-					locale = LocaleUtil.fromLanguageId(
-						localePath.substring(1), true, false);
-				}
 			}
 
 			if (locale != null) {

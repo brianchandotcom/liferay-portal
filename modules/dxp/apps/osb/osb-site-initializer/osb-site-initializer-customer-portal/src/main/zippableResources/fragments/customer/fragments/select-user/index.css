@@ -1,6 +1,5 @@
 .customer-portal-select-user #customer-portal-user-name-application {
 	height: 24px;
-	width: 94px;
 }
 
 .customer-portal-select-user .lexicon-icon-caret-bottom {
@@ -34,4 +33,8 @@
 	100% {
 		background-position: 450px 0;
 	}
+}
+
+.customer-portal-select-user #customer-portal-user-name-application.skeleton {
+	width: 94px;
 }

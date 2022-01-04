@@ -6297,12 +6297,109 @@ definition {
 	}
 
 	@description = "LPS-135401 - Verify if Prevent deletion type of Relationship One to Many will allow the user to delete an entry with relation from the child Object"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test PreventDeletionOneToManyWillAllowDelete {
+		for (var letter : list "A,B") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object ${letter}",
+				objectName = "CustomObject${letter}",
+				pluralLabelName = "Custom Objects ${letter}");
+		}
 
-		// TODO LPS-141667 PreventDeletionOneToManyWillAllowDelete pending implementation
+		for (var letter : list "A,B") {
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldLabelName = "Custom Field ${letter}",
+				fieldName = "customObjectField${letter}",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject${letter}");
+		}
 
+		ObjectAdmin.addObjectRelationshipViaAPI(
+			objectName_1 = "CustomObjectA",
+			objectName_2 = "CustomObjectB",
+			relationshipLabel = "Relationship",
+			relationshipName = "relationship",
+			relationshipType = "oneToMany");
+
+		ObjectAdmin.addObjectLayoutViaAPI(
+			layoutName = "Layout Name",
+			objectName = "CustomObjectA");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object A");
+
+		CreateObject.selectTitleField(fieldLabel = "Custom Field A");
+
+		CreateObject.saveObject();
+
+		ObjectAdmin.goToLayoutsTab();
+
+		ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
+
+		ObjectAdmin.markLayoutAsDefault();
+
+		ObjectAdmin.goToLayoutTabOnLayouts();
+
+		ObjectAdmin.addTabFieldsOnLayout(
+			blockName = "Block 1",
+			columnsNumber = "1",
+			fieldLabelName = "Custom Field A",
+			tabName = "Field Tab");
+
+		ObjectAdmin.addTabRelationshipsOnLayout(
+			relationshipsLabelName = "Relationship",
+			tabName = "Relationship Tab");
+
+		Button.clickSave();
+
+		Navigator.openURL();
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object B");
+
+		CreateObject.selectTitleField(fieldLabel = "Custom Field B");
+
+		CreateObject.saveObject();
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObjectA");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObjectB");
+
+		for (var fieldEntry : list "A,B") {
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customObjectField${fieldEntry}",
+				objectName = "CustomObject${fieldEntry}",
+				value = "Entry ${fieldEntry}");
+		}
+
+		Navigator.openURL();
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObjectB");
+
+		ObjectPortlet.viewEntryDetails(entry = "Entry B");
+
+		CreateObject.chooseEntryOnRelationshipField(entryOption = "Entry A");
+
+		Button.clickSave();
+
+		Navigator.openURL();
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObjectB");
+
+		ObjectPortlet.deleteEntry(entry = "Entry B");
+
+		ObjectPortlet.assertEntryNotPresent(entry = "Entry B");
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObjectA");
+
+		ObjectPortlet.viewEntryDetails(entry = "Entry A");
+
+		ObjectPortlet.gotoRelationshipTab();
+
+		ObjectPortlet.assertEntryNotPresent(entry = "Entry B");
 	}
 
 	@description = "LPS-135401 - Verify if Prevent deletion type of Relationship One to Many won't allow the user to delete an entry with relation from the parent Object"

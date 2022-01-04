@@ -816,7 +816,7 @@
     core-js-pure "^3.0.0"
     regenerator-runtime "^0.13.4"
 
-"@babel/runtime@^7.1.2", "@babel/runtime@^7.12.1", "@babel/runtime@^7.13.7", "@babel/runtime@^7.15.4", "@babel/runtime@^7.16.3", "@babel/runtime@^7.3.1", "@babel/runtime@^7.4.0", "@babel/runtime@^7.5.1", "@babel/runtime@^7.5.4", "@babel/runtime@^7.5.5", "@babel/runtime@^7.8.7", "@babel/runtime@^7.9.2":
+"@babel/runtime@^7.1.2", "@babel/runtime@^7.13.7", "@babel/runtime@^7.15.4", "@babel/runtime@^7.16.3", "@babel/runtime@^7.3.1", "@babel/runtime@^7.4.0", "@babel/runtime@^7.5.1", "@babel/runtime@^7.5.4", "@babel/runtime@^7.5.5", "@babel/runtime@^7.8.7", "@babel/runtime@^7.9.2":
   version "7.16.3"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.16.3.tgz#b86f0db02a04187a3c17caa77de69840165d42d5"
   integrity sha512-WBwekcqacdY2e9AF/Q7WLFUWmdJGJTkbjqTjoMDgXkVZ3ZRUvOPsLb5KdwISoQVsbP+DQzVZW4Zhci0DvpbNTQ==
@@ -2187,7 +2187,7 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react-redux@^7.1.16", "@types/react-redux@^7.1.20":
+"@types/react-redux@^7.1.20":
   version "7.1.20"
   resolved "https://registry.yarnpkg.com/@types/react-redux/-/react-redux-7.1.20.tgz#42f0e61ababb621e12c66c96dda94c58423bd7df"
   integrity sha512-q42es4c8iIeTgcnB+yJgRTTzftv3eYYvCZOh1Ckn2eX/3o5TdsQYKUWpLoLuGlcY/p+VAhV9IOEZJcWk/vfkXw==
@@ -9822,10 +9822,10 @@ lie@~3.3.0:
   dependencies:
     immediate "~3.0.5"
 
-liferay-ckeditor@4.16.2-liferay.4:
-  version "4.16.2-liferay.4"
-  resolved "https://registry.yarnpkg.com/liferay-ckeditor/-/liferay-ckeditor-4.16.2-liferay.4.tgz#da0553ae5bbcfad93ebc5da051a182190ad4e631"
-  integrity sha512-zrTwUS/dUjDprr/UX6CVjmqJZjTvKr0e6lATg1nzpTQZVDSr55DeZQVdaRUQvW4q0jEAuqDF4eG6ZgL8EMxTBA==
+liferay-ckeditor@4.16.2-liferay.5:
+  version "4.16.2-liferay.5"
+  resolved "https://registry.yarnpkg.com/liferay-ckeditor/-/liferay-ckeditor-4.16.2-liferay.5.tgz#05871ba547fa956084276175b5f2089c468dd1f2"
+  integrity sha512-ELxa5ZsChkt9mTygebIADvf6eGCGFrpGwweaH5C2t9o09MgumfEmksl0FxO5aRkx8qVhD9+uj64vvLjjUtZ2hg==
 
 liferay-font-awesome@3.5.0:
   version "3.5.0"
@@ -12831,7 +12831,7 @@ react-inspector@^2.3.0:
     is-dom "^1.0.9"
     prop-types "^15.6.1"
 
-react-is@^16.12.0, react-is@^16.13.1, react-is@^16.6.0, react-is@^16.7.0, react-is@^16.8.1, react-is@^16.8.4, react-is@^16.8.6:
+react-is@^16.12.0, react-is@^16.6.0, react-is@^16.7.0, react-is@^16.8.1, react-is@^16.8.4, react-is@^16.8.6:
   version "16.13.1"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==

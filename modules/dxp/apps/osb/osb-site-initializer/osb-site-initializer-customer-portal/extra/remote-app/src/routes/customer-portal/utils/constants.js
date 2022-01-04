@@ -11,12 +11,6 @@ export const CUSTOM_EVENTS = {
 	USER_ACCOUNT: 'customer-portal-select-user-loading',
 };
 
-export const POSSIBLE_SUBSCRIPTIONS_STATUS = {
-	active: 'Active',
-	expired: 'Expired',
-	future: 'Future',
-};
-
 export const EXTENSIONS_FILE_TYPE = {
 	[CONTENT_TYPE.JSON]: '.json',
 	[CONTENT_TYPE.XML]: '.xml',
@@ -24,6 +18,12 @@ export const EXTENSIONS_FILE_TYPE = {
 
 export const SLA_NAMES = {
 	limited_subscription: 'Limited Subscription',
+};
+
+export const SUBSCRIPTIONS_STATUS = {
+	active: 'Active',
+	expired: 'Expired',
+	future: 'Future',
 };
 
 export const status = {

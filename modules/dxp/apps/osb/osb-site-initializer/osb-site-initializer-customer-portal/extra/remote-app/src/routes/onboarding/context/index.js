@@ -12,7 +12,9 @@ import {
 	PARAMS_KEYS,
 	SearchParams,
 } from '../../../common/services/liferay/search-params';
-import {isValidPage} from '../../../common/utils';
+import {ROUTES} from '../../../common/utils/constants';
+import {isValidPage} from '../../../common/utils/page.validation';
+import {PRODUCTS} from '../../customer-portal/utils/constants';
 import {
 	getInitialDxpAdmin,
 	getInitialInvite,
@@ -90,7 +92,7 @@ const AppContextProvider = ({assetsPath, children}) => {
 			const {data} = await client.query({
 				query: getAccountSubscriptionGroups,
 				variables: {
-					filter: `(accountKey eq '${accountKey}') and (name eq 'DXP Cloud')`,
+					filter: `(accountKey eq '${accountKey}') and (name eq '${PRODUCTS.dxp_cloud}')`,
 				},
 			});
 
@@ -105,18 +107,22 @@ const AppContextProvider = ({assetsPath, children}) => {
 
 		const fetchData = async () => {
 			const user = await getUser();
+
 			const projectExternalReferenceCode = SearchParams.get(
 				PARAMS_KEYS.PROJECT_APPLICATION_EXTERNAL_REFERENCE_CODE
 			);
 
-			if (
-				user &&
-				(await isValidPage(
-					user,
-					projectExternalReferenceCode,
-					'onboarding'
-				))
-			) {
+			if (!user) {
+				return;
+			}
+
+			const isValid = await isValidPage(
+				user,
+				projectExternalReferenceCode,
+				ROUTES.ONBOARDING
+			);
+
+			if (user && isValid) {
 				const accountBrief = user.accountBriefs?.find(
 					(accountBrief) =>
 						accountBrief.externalReferenceCode ===
@@ -132,7 +138,7 @@ const AppContextProvider = ({assetsPath, children}) => {
 						variables: {
 							accountFlag: {
 								accountKey: projectExternalReferenceCode,
-								name: 'onboarding',
+								name: ROUTES.ONBOARDING,
 								userUuid: user.externalReferenceCode,
 								value: 1,
 							},

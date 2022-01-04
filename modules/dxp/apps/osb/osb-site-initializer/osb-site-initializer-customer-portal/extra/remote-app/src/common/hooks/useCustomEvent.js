@@ -1,19 +1,21 @@
+/**
+ *
+ * @param {String} name
+ * @returns {Function}
+ */
 export function useCustomEvent(name) {
-	try {
-		const event = Liferay.publish(name, {
-			async: true,
-			fireOnce: true,
-		});
+	return (data) => {
+		try {
+			const event = Liferay.publish(name, {
+				async: true,
+				fireOnce: true,
+			});
 
-		const dispatch = (data) =>
 			event.fire({
 				detail: data,
 			});
-
-		return dispatch;
-	}
-	catch {
-		const dispatch = (data) => {
+		}
+		catch {
 			window.dispatchEvent(
 				new CustomEvent(name, {
 					bubbles: true,
@@ -21,8 +23,6 @@ export function useCustomEvent(name) {
 					detail: data,
 				})
 			);
-		};
-
-		return dispatch;
-	}
+		}
+	};
 }

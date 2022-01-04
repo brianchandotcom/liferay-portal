@@ -60,8 +60,8 @@ export const getStructuredContentFolders = gql`
 				name
 				structuredContents {
 					items {
-						id
 						friendlyUrlPath
+						id
 						key
 					}
 				}
@@ -237,11 +237,11 @@ export const getKoroneikiAccounts = gql`
 					accountKey
 					code
 					dxpVersion
-					partner
-					maxRequestors
 					liferayContactEmailAddress
 					liferayContactName
 					liferayContactRole
+					maxRequestors
+					partner
 					region
 					slaCurrent
 					slaCurrentEndDate

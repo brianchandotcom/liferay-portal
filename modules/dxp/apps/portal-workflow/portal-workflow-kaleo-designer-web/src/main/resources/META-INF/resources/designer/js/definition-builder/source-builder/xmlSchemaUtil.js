@@ -22,6 +22,23 @@ function parse(value, field) {
 	return value;
 }
 
+function getChildAttributes(childNodes) {
+	const attributes = [];
+
+	Object.entries(childNodes).map((childNode) => {
+		const childAttributes = childNode[1].attributes;
+		if (childAttributes) {
+			Object.entries(childAttributes).map((attribute) => {
+				attributes.push({
+					[attribute[1].value]: attribute[1].ownerElement.textContent,
+				});
+			});
+		}
+	});
+
+	return attributes;
+}
+
 function getLocationValue(field, context) {
 	const locator = field.locator || field.key || field;
 	const xmlDoc = context.ownerDocument || context;
@@ -43,23 +60,38 @@ function getLocationValue(field, context) {
 		);
 
 		while ((res = result.iterateNext())) {
-			const childNodes = res.childNodes;
-			const attributes = [];
+			const resNodesAttributes = getChildAttributes(res.childNodes);
 
-			Object.entries(childNodes).map((childNode) => {
-				const childAttributes = childNode[1].attributes;
-				if (childAttributes) {
-					Object.entries(childAttributes).map((attribute) => {
-						attributes.push({
-							[attribute[1].value]:
-								attribute[1].ownerElement.textContent,
-						});
-					});
+			if (resNodesAttributes.length) {
+				value.content = resNodesAttributes;
+			}
+			else if (res.children.length) {
+				const content = [];
+
+				for (const child of res.children) {
+					const childContent = {};
+
+					for (const item of child.children) {
+						const childNodesAttributes = getChildAttributes(
+							item.childNodes
+						);
+
+						let itemContent;
+
+						if (childNodesAttributes.length) {
+							itemContent = childNodesAttributes;
+						}
+						else {
+							itemContent = item.textContent;
+						}
+
+						childContent[item.tagName] = itemContent;
+					}
+
+					content.push(childContent);
 				}
-			});
 
-			if (attributes.length) {
-				value.content = attributes;
+				value.content = content;
 			}
 			else {
 				value.content = res.textContent;

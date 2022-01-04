@@ -368,29 +368,6 @@ XMLDefinition.prototype = {
 		};
 	},
 
-	getSchemaTransitions(key, tagName) {
-		return {
-			key: key || 'transitions',
-			schema: {
-				resultFields: [
-					{
-						key: 'default',
-						locator: 'default',
-					},
-					{
-						key: 'name',
-						locator: 'name',
-					},
-					{
-						key: 'target',
-						locator: 'target',
-					},
-				],
-				resultListLocator: tagName || 'transition',
-			},
-		};
-	},
-
 	sanitizeDefinitionXML(value) {
 		const instance = this;
 
@@ -433,11 +410,14 @@ XMLDefinition.prototype = {
 					key: 'scriptLanguage',
 					locator: 'script-language',
 				},
+				{
+					key: 'transitions',
+					locator: 'transitions',
+				},
 				instance.getSchemaActions(),
 				instance.getSchemaAssignments(),
 				instance.getSchemaNotifications(),
 				instance.getSchemaTaskTimers(),
-				instance.getSchemaTransitions(),
 			],
 			resultListLocator: tagName,
 		};

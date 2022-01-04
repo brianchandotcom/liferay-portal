@@ -9,10 +9,34 @@
  * distribution rights of the Software.
  */
 
+import {fetch} from 'frontend-js-web';
+
 const baseURL = '/o/headless-admin-workflow/v1.0';
 
 const headers = {
 	'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
 };
 
-export {baseURL, headers};
+function publishDefinitionRequest(requestBody) {
+	return fetch(`${baseURL}/workflow-definitions/deploy`, {
+		body: JSON.stringify(requestBody),
+		headers: {
+			...headers,
+			'Content-Type': 'application/json',
+		},
+		method: 'POST',
+	});
+}
+
+function saveDefinitionRequest(requestBody) {
+	return fetch(`${baseURL}/workflow-definitions/save`, {
+		body: JSON.stringify(requestBody),
+		headers: {
+			...headers,
+			'Content-Type': 'application/json',
+		},
+		method: 'POST',
+	});
+}
+
+export {baseURL, headers, publishDefinitionRequest, saveDefinitionRequest};

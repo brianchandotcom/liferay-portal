@@ -123,7 +123,7 @@ const ModalCardSubscription = ({
 								? columns
 								: columnsWithoutProvisioned(columns)
 						}
-						hasPagination={totalCount >= 5}
+						hasPagination
 						itemsPerPage={5}
 						rows={dataAccountSubscriptionTerms.map(
 							({

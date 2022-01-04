@@ -2,14 +2,20 @@ import Skeleton from '../../../../common/components/Skeleton';
 
 const ProjectContactsSkeleton = () => {
 	return (
-		<div>
-			<h5 className="mb-4 rounded-sm text-neutral-10">Liferay Contact</h5>
+		<div className="container mb-5 mx-0 project-contacs-container">
+			<div className="row">
+				<div className="col-5"></div>
 
-			<Skeleton className="mb-1" height={24} width={107} />
+				<div className="col-7">
+					<Skeleton className="mb-4" height={20} width={150} />
 
-			<Skeleton className="mb-1" height={24} width={120} />
+					<Skeleton className="mb-1" height={24} width={130} />
 
-			<Skeleton height={16} width={150} />
+					<Skeleton className="mb-1" height={24} width={144} />
+
+					<Skeleton height={16} width={188} />
+				</div>
+			</div>
 		</div>
 	);
 };

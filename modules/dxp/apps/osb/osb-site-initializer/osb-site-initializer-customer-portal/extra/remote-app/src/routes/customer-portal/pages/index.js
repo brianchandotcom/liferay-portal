@@ -8,49 +8,70 @@ import Overview from './Overview';
 import TeamMembers from './TeamMembers';
 
 const Pages = () => {
-	const [{page, project, sessionId, userAccount}] = useCustomerPortal();
+	const [
+		{page, project, sessionId, subscriptionGroups, userAccount},
+	] = useCustomerPortal();
 
-	const PageSkeletons = {
-		[pages.COMMERCE]: <ActivationKeys.Skeleton />,
-		[pages.DXP_CLOUD]: <ActivationKeys.Skeleton />,
-		[pages.ENTERPRISE_SEARCH]: <ActivationKeys.Skeleton />,
-		[pages.HOME]: <Home.Skeleton />,
-		[pages.OVERVIEW]: <div>Overview Skeleton</div>,
-		[pages.TEAM_MEMBERS]: <ActivationKeys.Skeleton />,
-	};
-	const PageComponent = {
-		[pages.COMMERCE]: (
-			<ActivationKeys.Commerce
-				accountKey={project?.accountKey}
-				sessionId={sessionId}
-			/>
-		),
-		[pages.DXP_CLOUD]: <DXPCloud />,
-		[pages.ENTERPRISE_SEARCH]: (
-			<ActivationKeys.EnterpriseSearch
-				accountKey={project?.accountKey}
-				sessionId={sessionId}
-			/>
-		),
-		[pages.HOME]: <Home userAccount={userAccount} />,
-		[pages.OVERVIEW]: (
-			<Overview project={project} userAccount={userAccount} />
-		),
-		[pages.TEAM_MEMBERS]: <TeamMembers />,
+	const PageLayout = {
+		[pages.COMMERCE]: {
+			Component: (
+				<ActivationKeys.Commerce
+					accountKey={project?.accountKey}
+					sessionId={sessionId}
+				/>
+			),
+			Skeleton: <ActivationKeys.Skeleton />,
+		},
+		[pages.DXP_CLOUD]: {
+			Component: <DXPCloud />,
+			Skeleton: <ActivationKeys.Skeleton />,
+		},
+		[pages.ENTERPRISE_SEARCH]: {
+			Component: (
+				<ActivationKeys.EnterpriseSearch
+					accountKey={project?.accountKey}
+					sessionId={sessionId}
+				/>
+			),
+			Skeleton: <ActivationKeys.Skeleton />,
+		},
+		[pages.HOME]: {
+			Component: <Home userAccount={userAccount} />,
+			Skeleton: <Home.Skeleton />,
+		},
+		[pages.OVERVIEW]: {
+			Component: (
+				<Overview
+					project={project}
+					subscriptionGroups={subscriptionGroups}
+				/>
+			),
+			Skeleton: <Overview.Skeleton />,
+		},
+		[pages.TEAM_MEMBERS]: {
+			Component: <TeamMembers />,
+			Skeleton: <ActivationKeys.Skeleton />,
+		},
 	};
 
-	if ((project || page === pages.HOME) && userAccount && sessionId) {
+	if (
+		((project && subscriptionGroups && sessionId) || page === pages.HOME) &&
+		userAccount
+	) {
 		return (
 			<Layout
-				hasProjectContacts={page === pages.OVERVIEW}
-				hasQuickLinks={page !== pages.TEAM_MEMBERS}
+				hasProjectContact={page === pages.OVERVIEW}
+				hasQuickLinks={
+					page !== pages.TEAM_MEMBERS && page !== pages.HOME
+				}
+				project={project}
 			>
-				{PageComponent[page]}
+				{PageLayout[page].Component}
 			</Layout>
 		);
 	}
 
-	return PageSkeletons[page];
+	return PageLayout[page].Skeleton;
 };
 
 export default Pages;

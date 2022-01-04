@@ -37,10 +37,10 @@ const CardSubscription = ({
 				/>
 			)}
 			<div
-				className="card-subscription mr-4"
+				className="card-subscription d-flex mr-4"
 				onClick={() => setVisible(true)}
 			>
-				<div className="card-body">
+				<div className="align-self-center d-flex flex-column mx-auto pb-4 pt-3 px-4">
 					<div
 						className="d-flex head-text justify-content-center mb-1 row"
 						type="text"

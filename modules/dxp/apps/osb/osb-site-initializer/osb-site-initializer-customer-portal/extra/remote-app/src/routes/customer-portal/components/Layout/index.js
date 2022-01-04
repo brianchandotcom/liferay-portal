@@ -1,14 +1,11 @@
-import {useCustomerPortal} from '../../context';
 import ProjectContacts from '../ProjectContacts';
 import QuickLinksPanel from '../QuickLinksPanel';
 
-const Layout = ({children, hasProjectContacts, hasQuickLinks}) => {
-	const [{project}] = useCustomerPortal();
-
+const Layout = ({children, hasProjectContact, hasQuickLinks, project}) => {
 	return (
 		<div className="d-flex position-relative w-100">
 			<div className="w-100">
-				{hasProjectContacts && (
+				{hasProjectContact && (
 					<ProjectContacts
 						contact={{
 							email: project.liferayContactEmailAddress,
@@ -21,7 +18,9 @@ const Layout = ({children, hasProjectContacts, hasQuickLinks}) => {
 				{children}
 			</div>
 
-			{hasQuickLinks && <QuickLinksPanel />}
+			{hasQuickLinks && (
+				<QuickLinksPanel accountKey={project.accountKey} />
+			)}
 		</div>
 	);
 };

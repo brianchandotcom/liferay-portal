@@ -22,6 +22,7 @@ import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServices
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormTemplateContextFactory;
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
+import com.liferay.dynamic.data.mapping.form.web.internal.configuration.FFDateTimeDDMFormFieldTypeConfiguration;
 import com.liferay.dynamic.data.mapping.form.web.internal.configuration.activator.DDMFormWebConfigurationActivator;
 import com.liferay.dynamic.data.mapping.form.web.internal.configuration.activator.FFSubmissionsSettingsConfigurationActivator;
 import com.liferay.dynamic.data.mapping.form.web.internal.display.context.DDMFormAdminDisplayContext;
@@ -40,6 +41,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterTracker;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesMerger;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -54,11 +56,14 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
+import java.util.Map;
+
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
@@ -69,6 +74,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Bruno Basto
  */
 @Component(
+	configurationPid = "com.liferay.dynamic.data.mapping.form.web.internal.configuration.FFDateTimeDDMFormFieldTypeConfiguration",
 	immediate = true,
 	property = {
 		"com.liferay.portlet.autopropagated-parameters=currentTab",
@@ -122,6 +128,13 @@ public class DDMFormAdminPortlet extends MVCPortlet {
 		super.render(renderRequest, renderResponse);
 	}
 
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		_ffDateTimeDDMFormFieldTypeConfiguration =
+			ConfigurableUtil.createConfigurable(
+				FFDateTimeDDMFormFieldTypeConfiguration.class, properties);
+	}
+
 	@Override
 	protected boolean isSessionErrorException(Throwable throwable) {
 		if ((throwable instanceof SystemException) ||
@@ -168,6 +181,7 @@ public class DDMFormAdminPortlet extends MVCPortlet {
 						getDDMFormWebConfiguration(),
 					_ddmStorageAdapterTracker, _ddmStructureLocalService,
 					_ddmStructureService,
+					_ffDateTimeDDMFormFieldTypeConfiguration,
 					_ffSubmissionsSettingsConfigurationActivator, _jsonFactory,
 					_npmResolver, _objectDefinitionLocalService, _portal));
 		}
@@ -192,6 +206,7 @@ public class DDMFormAdminPortlet extends MVCPortlet {
 						getDDMFormWebConfiguration(),
 					_ddmStorageAdapterTracker, _ddmStructureLocalService,
 					_ddmStructureService,
+					_ffDateTimeDDMFormFieldTypeConfiguration,
 					_ffSubmissionsSettingsConfigurationActivator, _jsonFactory,
 					_npmResolver, _objectDefinitionLocalService, _portal));
 		}
@@ -275,6 +290,9 @@ public class DDMFormAdminPortlet extends MVCPortlet {
 
 	@Reference
 	private DDMStructureService _ddmStructureService;
+
+	private FFDateTimeDDMFormFieldTypeConfiguration
+		_ffDateTimeDDMFormFieldTypeConfiguration;
 
 	@Reference
 	private FFSubmissionsSettingsConfigurationActivator

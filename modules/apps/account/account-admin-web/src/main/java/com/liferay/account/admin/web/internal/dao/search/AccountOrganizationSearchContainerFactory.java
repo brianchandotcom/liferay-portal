@@ -75,20 +75,10 @@ public class AccountOrganizationSearchContainerFactory {
 		}
 
 		searchContainer.setOrderByCol(orderByCol);
-
 		searchContainer.setOrderByType(
 			SearchOrderByUtil.getOrderByType(
 				liferayPortletRequest, AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN,
 				"organization-order-by-type", "asc"));
-
-		if (AccountEntryPermission.contains(
-				PermissionCheckerFactoryUtil.create(
-					PortalUtil.getUser(liferayPortletRequest)),
-				accountEntryId, AccountActionKeys.MANAGE_ORGANIZATIONS)) {
-
-			searchContainer.setRowChecker(
-				new EmptyOnClickRowChecker(liferayPortletResponse));
-		}
 
 		String keywords = ParamUtil.getString(
 			liferayPortletRequest, "keywords", null);
@@ -98,6 +88,15 @@ public class AccountOrganizationSearchContainerFactory {
 				accountEntryId, keywords, searchContainer.getStart(),
 				searchContainer.getDelta(), searchContainer.getOrderByCol(),
 				Objects.equals(searchContainer.getOrderByType(), "desc")));
+
+		if (AccountEntryPermission.contains(
+				PermissionCheckerFactoryUtil.create(
+					PortalUtil.getUser(liferayPortletRequest)),
+				accountEntryId, AccountActionKeys.MANAGE_ORGANIZATIONS)) {
+
+			searchContainer.setRowChecker(
+				new EmptyOnClickRowChecker(liferayPortletResponse));
+		}
 
 		return searchContainer;
 	}

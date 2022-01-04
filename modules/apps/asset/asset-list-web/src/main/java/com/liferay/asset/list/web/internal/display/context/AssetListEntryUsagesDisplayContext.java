@@ -215,7 +215,6 @@ public class AssetListEntryUsagesDisplayContext {
 
 		assetListEntryUsagesSearchContainer.setOrderByComparator(
 			new AssetListEntryUsageModifiedDateComparator(orderByAsc));
-
 		assetListEntryUsagesSearchContainer.setOrderByType(orderByType);
 
 		if (Objects.equals(getNavigation(), "pages")) {

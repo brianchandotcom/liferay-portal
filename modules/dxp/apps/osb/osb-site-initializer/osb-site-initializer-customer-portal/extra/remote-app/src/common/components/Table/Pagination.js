@@ -26,10 +26,14 @@ const TablePagination = ({
 		);
 	}
 
+	const itensPerActivePage = itemsPerPage * activePage;
+
 	return (
 		<p className="mb-4 mx-4 text-paragraph">{`Showing ${
-			itemsPerPage * activePage + 1 - itemsPerPage
-		} to ${itemsPerPage * activePage} of ${totalItems} entries.`}</p>
+			itensPerActivePage + 1 - itemsPerPage
+		} to ${
+			totalItems > itensPerActivePage ? itensPerActivePage : totalItems
+		} of ${totalItems} entries.`}</p>
 	);
 };
 

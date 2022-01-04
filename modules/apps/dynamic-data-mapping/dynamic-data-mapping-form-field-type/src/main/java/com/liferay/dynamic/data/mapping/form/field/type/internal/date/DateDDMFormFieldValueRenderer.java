@@ -43,7 +43,10 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = "ddm.form.field.type.name=" + DDMFormFieldTypeConstants.DATE,
+	property = {
+		"ddm.form.field.type.name=" + DDMFormFieldTypeConstants.DATE,
+		"ddm.form.field.type.name=" + DDMFormFieldTypeConstants.DATE_TIME
+	},
 	service = {
 		DateDDMFormFieldValueRenderer.class, DDMFormFieldValueRenderer.class
 	}

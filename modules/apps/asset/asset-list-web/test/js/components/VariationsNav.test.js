@@ -59,71 +59,43 @@ describe('VariationsNav Initial State', () => {
 		const {getByText} = render(_getComponent(emptyStateNoSegments));
 
 		expect(getByText('personalized-variations')).toBeInTheDocument();
+		expect(getByText('no-personalized-variations-yet')).toBeInTheDocument();
 		expect(
-			getByText(
-				'create-personalized-variations-of-the-collections-for-different-segments'
-			)
+			getByText('no-personalized-variations-were-found')
 		).toBeInTheDocument();
-		expect(
-			getByText('you-need-segments-to-create-a-personalized-variation', {
-				exact: false,
-			})
-		).toBeInTheDocument();
-		expect(getByText('create-your-first-segment')).toBeInTheDocument();
 	});
 
-	it('shows an initial state with the Add variation button disabled', () => {
-		const {getByTitle} = render(_getComponent(emptyStateNoSegments));
+	it('shows an initial state without the default variation', () => {
+		const {queryByText} = render(_getComponent(emptyStateNoSegments));
 
-		const addNewVariationButton = getByTitle('create-variation');
-		expect(addNewVariationButton).toBeInTheDocument();
-		expect(addNewVariationButton).toBeDisabled();
+		expect(queryByText('Anyone')).not.toBeInTheDocument();
 	});
 
-	it('shows an initial state with a link to navigate to segments', () => {
-		const {getByText} = render(_getComponent(emptyStateNoSegments));
-
-		const navigateToSegmentsLink = getByText('create-your-first-segment');
-
-		expect(navigateToSegmentsLink).toBeInTheDocument();
-		expect(navigateToSegmentsLink).toHaveAttribute(
-			'href',
-			'http://localhost:8080/create-new-segment-demo-url'
-		);
-	});
-
-	it('shows the default variation', () => {
-		const {getByText} = render(_getComponent(emptyStateNoSegments));
-		expect(getByText('Anyone')).toBeInTheDocument();
-		expect(getByText('prioritize')).toBeInTheDocument();
-		expect(getByText('deprioritize')).toBeInTheDocument();
-		expect(getByText('delete')).toBeInTheDocument();
-	});
-
-	it('shows a create variation button, initially disabled', () => {
-		const {getByTitle, rerender} = render(
+	it('shows the proper texts when a segment is available and no variations are created', () => {
+		const {getByText} = render(
 			_getComponent(emptyStateOneAvailableSegments)
 		);
 
-		const addNewVariationButton = getByTitle('create-variation');
-
+		expect(getByText('personalized-variations')).toBeInTheDocument();
+		expect(getByText('no-personalized-variations-yet')).toBeInTheDocument();
 		expect(
-			addNewVariationButton.getElementsByClassName('lexicon-icon-plus')
-				.length
-		).toBe(1);
+			getByText('no-personalized-variations-were-found')
+		).toBeInTheDocument();
+	});
 
-		expect(addNewVariationButton).toBeInTheDocument();
-		expect(addNewVariationButton).toBeDisabled();
-
-		rerender(
-			_getComponent({
-				...emptyStateOneAvailableSegments,
-				assetListEntryValid: true,
-			})
+	it('shows an add-personalized-variation button, when a segment is available and no variations are created', () => {
+		const {getByText} = render(
+			_getComponent(emptyStateOneAvailableSegments)
 		);
 
-		expect(addNewVariationButton).not.toBeDisabled();
-		fireEvent.click(addNewVariationButton);
+		const addPersonalizedVariationButton = getByText(
+			'add-personalized-variation'
+		);
+
+		expect(addPersonalizedVariationButton).toBeInTheDocument();
+		expect(addPersonalizedVariationButton).not.toBeDisabled();
+
+		fireEvent.click(addPersonalizedVariationButton);
 		expect(
 			window['openSelectSegmentsEntryDialogMethod']
 		).toHaveBeenCalled();
@@ -144,21 +116,34 @@ describe('VariationsNav With segments', () => {
 		cleanup();
 	});
 
-	it('shows a variations nav list with the proper title', () => {
+	it('shows a variations nav list with the proper title and description', () => {
 		const {getByText} = render(_getComponent(listWithTwoVariations));
 		expect(getByText('personalized-variations')).toBeInTheDocument();
+		expect(
+			getByText(
+				'create-personalized-variations-of-the-collections-for-different-segments'
+			)
+		).toBeInTheDocument();
 	});
 
-	it('shows a variations nav list and disables the add new variation button, if no more entries available', () => {
-		const {getByTitle} = render(
+	it('shows a variations nav list with a create-variation button, if segments available', () => {
+		const {queryByTitle} = render(
 			_getComponent(listWithFourVariationsAndNoMoreSegmentsEntries)
 		);
 
-		const addNewVariationButton = getByTitle('create-variation');
-		expect(addNewVariationButton).toBeDisabled();
+		const addNewVariationButton = queryByTitle('create-variation');
+		expect(addNewVariationButton).not.toBeInTheDocument();
 	});
 
-	it('shows a variations nav list with the proper items list', () => {
+	it('shows a variations nav list with a create-variation button hidden, if no more segments are available', () => {
+		const {getByTitle} = render(_getComponent(listWithTwoVariations));
+
+		const addNewVariationButton = getByTitle('create-variation');
+		expect(addNewVariationButton).toBeInTheDocument();
+		expect(addNewVariationButton).not.toBeDisabled();
+	});
+
+	it('shows a variations nav list with the proper items list UI, normal and hover state', () => {
 		const {container, getByText} = render(
 			_getComponent(listWithTwoVariations)
 		);

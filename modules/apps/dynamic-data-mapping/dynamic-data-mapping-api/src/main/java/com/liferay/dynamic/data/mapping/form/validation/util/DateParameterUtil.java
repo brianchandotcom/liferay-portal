@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
@@ -48,6 +49,15 @@ public class DateParameterUtil {
 
 		return LocalDate.parse(
 			dateString, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+	}
+
+	public static LocalDateTime getLocalDateTime(String dateTimeString) {
+		if (Validator.isNull(dateTimeString)) {
+			return null;
+		}
+
+		return LocalDateTime.parse(
+			dateTimeString, DateTimeFormatter.ofPattern("yyyy-MM-dd H:mm"));
 	}
 
 	public static String getParameter(

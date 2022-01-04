@@ -1,11 +1,11 @@
 {
-	"articleId": "POSITION-06",
+	"articleId": "POSITION-08",
 	"assetCategoryERCs": [
-		"ROLCAT0001",
-		"REGCAT0001"
+		"ROLCAT0003",
+		"REGCAT0003"
 	],
 	"ddmStructureKey": "POSITION",
 	"ddmTemplateKey": "POSITION",
 	"folder": "Job Positions",
-	"name": "Junior Back End Developer"
+	"name": "Junior Visual Designer"
 }

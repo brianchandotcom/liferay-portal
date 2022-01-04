@@ -1,11 +1,11 @@
 {
-	"articleId": "POSITION-03",
+	"articleId": "POSITION-04",
 	"assetCategoryERCs": [
-		"ROLCAT0002",
-		"REGCAT0003"
+		"ROLCAT0003",
+		"REGCAT0004"
 	],
 	"ddmStructureKey": "POSITION",
 	"ddmTemplateKey": "POSITION",
 	"folder": "Job Positions",
-	"name": "Senior Front End Developer"
+	"name": "Senior Product Designer"
 }

@@ -2,7 +2,7 @@
 
 <root available-locales="en_US" default-locale="en_US" version="1.0">
 	<dynamic-element index-type="keyword" instance-id="QJxi2nzR" name="Title" type="text">
-		<dynamic-content language-id="en_US"><![CDATA[Junior Back End Developer]]></dynamic-content>
+		<dynamic-content language-id="en_US"><![CDATA[Junior Visual Designer]]></dynamic-content>
 	</dynamic-element>
 	<dynamic-element index-type="keyword" instance-id="d7Uy0VNu" name="ShortDescription" type="text">
 		<dynamic-content language-id="en_US"><![CDATA[Lorem ipsum dolor sit amet adipisicing elit. Est quos eveniet tempora exercitationem?]]></dynamic-content>

@@ -346,6 +346,7 @@ public abstract class BaseSamlTestCase extends PowerMockito {
 	protected SamlProviderConfigurationHelper samlProviderConfigurationHelper;
 	protected List<Class<?>> serviceUtilClasses = new ArrayList<>();
 	protected UserLocalService userLocalService;
+
 	protected class MockMetadataResolver extends AbstractMetadataResolver {
 
 		public MockMetadataResolver() {

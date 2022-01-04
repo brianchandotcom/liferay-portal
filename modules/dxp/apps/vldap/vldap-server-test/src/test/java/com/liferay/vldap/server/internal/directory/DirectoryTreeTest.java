@@ -1426,7 +1426,7 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 		Assert.assertTrue(ListUtil.isEmpty(filterConstraints));
 	}
 
-	private static void _assertFilterConstraints(
+	private void _assertFilterConstraints(
 		List<FilterConstraint> filterConstraints) {
 
 		Assert.assertEquals(
@@ -1435,61 +1435,6 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 		FilterConstraint filterConstraint = filterConstraints.get(0);
 
 		Assert.assertEquals("testScreenName", filterConstraint.getValue("cn"));
-	}
-
-	private static List<FilterConstraint> _getFilterConstraintsFromBranchNode(
-			BranchNode branchNode, boolean addExprNode)
-		throws Exception {
-
-		Method toFilterConstraintsFromBranchNodeMethod =
-			_clazz.getDeclaredMethod(
-				"toFilterConstraintsFromBranchNode", BranchNode.class);
-
-		toFilterConstraintsFromBranchNodeMethod.setAccessible(true);
-
-		if (addExprNode) {
-			ExprNode exprNode = new EqualityNode("cn", "testScreenName");
-
-			branchNode.addNode(exprNode);
-		}
-
-		return (List<FilterConstraint>)
-			toFilterConstraintsFromBranchNodeMethod.invoke(
-				_classInstance, branchNode);
-	}
-
-	private static List<FilterConstraint> _getFilterConstraintsFromLeafNode(
-			LeafNode leafNode)
-		throws Exception {
-
-		Method toFilterConstraintsFromLeafNodeMethod = _clazz.getDeclaredMethod(
-			"toFilterConstraintsFromLeafNode", LeafNode.class);
-
-		toFilterConstraintsFromLeafNodeMethod.setAccessible(true);
-
-		return (List<FilterConstraint>)
-			toFilterConstraintsFromLeafNodeMethod.invoke(
-				_classInstance, leafNode);
-	}
-
-	private static void _setUpFastDateFormat() {
-		FastDateFormat fastDateFormat = FastDateFormat.getInstance(
-			"yyyyMMddHHmmss.SSSZ", null, LocaleUtil.getDefault());
-
-		FastDateFormatFactory fastDateFormatFactory = mock(
-			FastDateFormatFactory.class);
-
-		when(
-			fastDateFormatFactory.getSimpleDateFormat(Mockito.anyString())
-		).thenReturn(
-			fastDateFormat
-		);
-
-		FastDateFormatFactoryUtil fastDateFormatFactoryUtil =
-			new FastDateFormatFactoryUtil();
-
-		fastDateFormatFactoryUtil.setFastDateFormatFactory(
-			fastDateFormatFactory);
 	}
 
 	private void _assertUserSearchBase(
@@ -1516,6 +1461,41 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 		Assert.assertEquals(company.getCompanyId(), searchBase.getCompanyId());
 	}
 
+	private List<FilterConstraint> _getFilterConstraintsFromBranchNode(
+			BranchNode branchNode, boolean addExprNode)
+		throws Exception {
+
+		Method toFilterConstraintsFromBranchNodeMethod =
+			_clazz.getDeclaredMethod(
+				"toFilterConstraintsFromBranchNode", BranchNode.class);
+
+		toFilterConstraintsFromBranchNodeMethod.setAccessible(true);
+
+		if (addExprNode) {
+			ExprNode exprNode = new EqualityNode("cn", "testScreenName");
+
+			branchNode.addNode(exprNode);
+		}
+
+		return (List<FilterConstraint>)
+			toFilterConstraintsFromBranchNodeMethod.invoke(
+				_classInstance, branchNode);
+	}
+
+	private List<FilterConstraint> _getFilterConstraintsFromLeafNode(
+			LeafNode leafNode)
+		throws Exception {
+
+		Method toFilterConstraintsFromLeafNodeMethod = _clazz.getDeclaredMethod(
+			"toFilterConstraintsFromLeafNode", LeafNode.class);
+
+		toFilterConstraintsFromLeafNodeMethod.setAccessible(true);
+
+		return (List<FilterConstraint>)
+			toFilterConstraintsFromLeafNodeMethod.invoke(
+				_classInstance, leafNode);
+	}
+
 	private void _setUpExpando() {
 		ExpandoBridge expandoBridge = mock(ExpandoBridge.class);
 
@@ -1538,6 +1518,26 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 		).thenReturn(
 			expandoBridge
 		);
+	}
+
+	private void _setUpFastDateFormat() {
+		FastDateFormat fastDateFormat = FastDateFormat.getInstance(
+			"yyyyMMddHHmmss.SSSZ", null, LocaleUtil.getDefault());
+
+		FastDateFormatFactory fastDateFormatFactory = mock(
+			FastDateFormatFactory.class);
+
+		when(
+			fastDateFormatFactory.getSimpleDateFormat(Mockito.anyString())
+		).thenReturn(
+			fastDateFormat
+		);
+
+		FastDateFormatFactoryUtil fastDateFormatFactoryUtil =
+			new FastDateFormatFactoryUtil();
+
+		fastDateFormatFactoryUtil.setFastDateFormatFactory(
+			fastDateFormatFactory);
 	}
 
 	private void _setUpGroup() throws Exception {

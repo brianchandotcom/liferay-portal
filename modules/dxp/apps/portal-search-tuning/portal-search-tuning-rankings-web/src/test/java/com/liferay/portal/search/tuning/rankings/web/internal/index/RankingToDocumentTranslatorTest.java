@@ -137,13 +137,11 @@ public class RankingToDocumentTranslatorTest {
 		return _rankingToDocumentTranslator.translate(ranking);
 	}
 
-	private static DocumentToRankingTranslator
-		_createDocumentToRankingTranslator() {
-
+	private DocumentToRankingTranslator _createDocumentToRankingTranslator() {
 		return new DocumentToRankingTranslatorImpl();
 	}
 
-	private static RankingToDocumentTranslatorImpl
+	private RankingToDocumentTranslatorImpl
 		_createRankingToDocumentTranslator() {
 
 		return new RankingToDocumentTranslatorImpl() {

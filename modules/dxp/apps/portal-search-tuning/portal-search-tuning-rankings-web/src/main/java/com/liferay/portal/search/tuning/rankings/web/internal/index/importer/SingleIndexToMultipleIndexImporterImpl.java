@@ -89,15 +89,6 @@ public class SingleIndexToMultipleIndexImporterImpl
 	protected static final RankingIndexName SINGLE_INDEX_NAME =
 		() -> "liferay-search-tuning-rankings";
 
-	private static Map<String, List<Document>> _groupDocumentByIndex(
-		List<Document> documents) {
-
-		Stream<Document> stream = documents.stream();
-
-		return stream.collect(
-			Collectors.groupingBy(document -> document.getString("index")));
-	}
-
 	private boolean _addDocuments(String indexName, List<Document> documents) {
 		boolean successed = true;
 
@@ -164,6 +155,15 @@ public class SingleIndexToMultipleIndexImporterImpl
 
 	private String _getRankingIndexName(String indexName) {
 		return indexName + StringPool.DASH + RANKINGS_INDEX_NAME_SUFFIX;
+	}
+
+	private Map<String, List<Document>> _groupDocumentByIndex(
+		List<Document> documents) {
+
+		Stream<Document> stream = documents.stream();
+
+		return stream.collect(
+			Collectors.groupingBy(document -> document.getString("index")));
 	}
 
 	private void _importDocuments() {

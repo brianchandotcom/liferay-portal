@@ -44,7 +44,7 @@ public class RankingEntryDisplayContextBuilder {
 		return rankingEntryDisplayContext;
 	}
 
-	private static String _getSizeString(List<?> list) {
+	private String _getSizeString(List<?> list) {
 		return String.valueOf(list.size());
 	}
 

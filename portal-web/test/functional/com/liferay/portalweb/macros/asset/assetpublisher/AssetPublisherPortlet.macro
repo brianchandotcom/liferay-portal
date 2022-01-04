@@ -889,6 +889,8 @@ definition {
 			var portletName = "Asset Publisher";
 		}
 
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
 		Portlet.gotoPortletOptions(
 			portletName = "${portletName}",
 			portletOption = "Configuration");

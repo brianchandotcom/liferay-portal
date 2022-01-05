@@ -122,7 +122,7 @@ public class SingleIndexToMultipleIndexImporterImpl
 		stream.map(
 			Company::getCompanyId
 		).map(
-			_rankingIndexNameBuilder::_getRankingIndexName
+			_rankingIndexNameBuilder::getRankingIndexName
 		).filter(
 			rankingIndexName -> !_rankingIndexReader.isExists(rankingIndexName)
 		).forEach(

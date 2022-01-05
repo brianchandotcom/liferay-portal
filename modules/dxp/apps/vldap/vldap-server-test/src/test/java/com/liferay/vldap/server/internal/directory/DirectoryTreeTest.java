@@ -1589,7 +1589,7 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 	private void _setUpPasswordPolicy() throws Exception {
 		PasswordPolicy passwordPolicy = mock(PasswordPolicy.class);
 
-		_setUpPasswordPolicy(passwordPolicy);
+		setUpPasswordPolicy(passwordPolicy);
 
 		when(
 			_user.getPasswordPolicy()

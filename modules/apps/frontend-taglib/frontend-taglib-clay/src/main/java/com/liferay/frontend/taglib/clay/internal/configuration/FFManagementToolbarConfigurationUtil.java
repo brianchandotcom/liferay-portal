@@ -42,6 +42,7 @@ public class FFManagementToolbarConfigurationUtil {
 			FFManagementToolbarConfiguration.class, properties);
 	}
 
-	private static volatile FFManagementToolbarConfiguration _ffManagementToolbarConfiguration;
+	private static volatile FFManagementToolbarConfiguration
+		_ffManagementToolbarConfiguration;
 
 }

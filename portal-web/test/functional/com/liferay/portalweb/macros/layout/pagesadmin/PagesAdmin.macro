@@ -885,7 +885,7 @@ definition {
 		if (isSet(localizedFriendlyURL)) {
 			PortletEntry.changeLocale(
 				fieldName = "Friendly URL",
-				locale = "${friendlyUrlLocalized}");
+				locale = "${localizedFriendlyURL}");
 		}
 
 		AssertTextEquals(

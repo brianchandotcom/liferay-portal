@@ -160,6 +160,30 @@ public class LinkTag extends BaseContainerTag {
 	}
 
 	@Override
+	protected String getHydratedModuleName() {
+		if ((getAdditionalProps() != null) || (getPropsTransformer() != null)) {
+			return "frontend-taglib-clay/Link";
+		}
+
+		return null;
+	}
+
+	@Override
+	protected Map<String, Object> prepareProps(Map<String, Object> props) {
+		props.put("icon", _icon);
+
+		if (Validator.isNotNull(_label)) {
+			props.put(
+				"label",
+				LanguageUtil.get(
+					TagResourceBundleUtil.getResourceBundle(pageContext),
+					_label));
+		}
+
+		return super.prepareProps(props);
+	}
+
+	@Override
 	protected String processCssClasses(Set<String> cssClasses) {
 		String cssPrefix = "link-";
 

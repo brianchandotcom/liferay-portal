@@ -16,7 +16,6 @@ package com.liferay.social.bookmarks.taglib.internal.util;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.social.bookmarks.SocialBookmark;
 
 import java.util.List;
@@ -26,17 +25,6 @@ import java.util.Locale;
  * @author Alejandro Tardín
  */
 public class SocialBookmarksTagUtil {
-
-	public static String getClickJSCall(
-		String className, long classPK, String type, String postURL,
-		String url) {
-
-		return String.format(
-			"socialBookmarks_handleItemClick(event, '%s', %d, '%s', '%s', " +
-				"'%s');",
-			HtmlUtil.escapeJS(className), classPK, HtmlUtil.escapeJS(type),
-			HtmlUtil.escapeJS(postURL), HtmlUtil.escapeJS(url));
-	}
 
 	public static List<DropdownItem> getDropdownItems(
 		Locale locale, String[] types, String className, long classPK,

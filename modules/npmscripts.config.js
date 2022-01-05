@@ -275,6 +275,9 @@ module.exports = {
 					'item-selector-taglib': {
 						'/': '*',
 					},
+					'social-bookmarks-taglib': {
+						'/': '*',
+					},
 				},
 			},
 			exclude: {

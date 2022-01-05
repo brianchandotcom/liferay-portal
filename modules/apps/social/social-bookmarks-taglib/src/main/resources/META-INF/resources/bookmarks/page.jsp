@@ -43,8 +43,9 @@
 					SocialBookmark socialBookmark = SocialBookmarksRegistryUtil.getSocialBookmark(types[i]);
 				%>
 
-					<li class="taglib-social-bookmark <%= "taglib-social-bookmark-" + types[i] %>" onClick="<%= SocialBookmarksTagUtil.getClickJSCall(className, classPK, types[i], socialBookmark.getPostURL(title, url), url) %>">
+					<li class="taglib-social-bookmark <%= "taglib-social-bookmark-" + types[i] %>">
 						<liferay-social-bookmarks:bookmark
+							additionalProps='<%= HashMapBuilder.<String, Object>put("className", HtmlUtil.escapeJS(className)).put("classPK", String.valueOf(classPK)).put("postURL", socialBookmark.getPostURL(title, url)).put("type", types[i]).put("url", HtmlUtil.escapeJS(url)).build() %>'
 							displayStyle="<%= displayStyle %>"
 							target="<%= target %>"
 							title="<%= title %>"
@@ -78,12 +79,4 @@
 			</c:if>
 		</c:otherwise>
 	</c:choose>
-
-	<liferay-util:html-bottom
-		outputKey="social_bookmarks"
-	>
-		<liferay-frontend:component
-			module="js/SocialBookmarksHandleItemClick"
-		/>
-	</liferay-util:html-bottom>
 </div>

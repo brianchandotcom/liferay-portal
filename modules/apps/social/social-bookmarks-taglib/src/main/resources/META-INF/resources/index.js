@@ -12,20 +12,4 @@
  * details.
  */
 
-import openSocialBookmark from './openSocialBookmark';
-
-export default function () {
-	window.socialBookmarks_handleItemClick = function (
-		event,
-		className,
-		classPK,
-		type,
-		postURL,
-		url
-	) {
-		event.preventDefault();
-		event.stopPropagation();
-
-		openSocialBookmark({className, classPK, postURL, type, url});
-	};
-}
+export {default as openSocialBookmark} from './js/openSocialBookmark';

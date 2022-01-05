@@ -1518,6 +1518,12 @@
 		<body-content>empty</body-content>
 		<attribute>
 			<description></description>
+			<name>additionalProps</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
 			<name>borderless</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1579,6 +1585,18 @@
 		<attribute>
 			<description></description>
 			<name>outline</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
+			<name>propsTransformer</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
+			<name>propsTransformerServletContext</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

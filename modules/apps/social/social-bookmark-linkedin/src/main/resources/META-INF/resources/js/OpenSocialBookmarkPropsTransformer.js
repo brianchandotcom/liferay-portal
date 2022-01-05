@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,11 +11,20 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ taglib uri="http://liferay.com/tld/clay" prefix="clay" %>
+import {openSocialBookmark} from 'social-bookmarks-taglib';
 
-<%@ page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
-page import="com.liferay.social.bookmarks.SocialBookmark" %>
+export default function propsTransformer({
+	additionalProps: {className, classPK, postURL, type, url},
+	...otherProps
+}) {
+	return {
+		...otherProps,
+		onClick(event) {
+			event.preventDefault();
+			event.stopPropagation();
 
-<%@ page import="java.util.HashMap" %>
+			return openSocialBookmark({className, classPK, postURL, type, url});
+		},
+	};
+}

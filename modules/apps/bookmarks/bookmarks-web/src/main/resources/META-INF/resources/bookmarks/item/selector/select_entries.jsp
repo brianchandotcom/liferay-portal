@@ -40,8 +40,6 @@ BookmarkEntriesItemSelectorDisplayContext bookmarkEntriesItemSelectorDisplayCont
 			<%
 			row.setCssClass("entries");
 
-			Map<String, Object> data = new HashMap<>();
-
 			JSONObject entryJSONObject = JSONUtil.put(
 				"className", BookmarksEntry.class.getName()
 			).put(
@@ -49,12 +47,13 @@ BookmarkEntriesItemSelectorDisplayContext bookmarkEntriesItemSelectorDisplayCont
 			).put(
 				"classPK", entry.getEntryId()
 			).put(
-                "name", entry.getName()
+				"name", entry.getName()
 			);
 
-			data.put("value", entryJSONObject.toString());
-
-			row.setData(data);
+			row.setData(
+				HashMapBuilder.<String, Object>put(
+					"value", entryJSONObject.toString()
+				).build());
 			%>
 
 			<c:choose>
@@ -72,9 +71,8 @@ BookmarkEntriesItemSelectorDisplayContext bookmarkEntriesItemSelectorDisplayCont
 					<liferay-ui:search-container-column-text
 						colspan="<%= 2 %>"
 					>
-
 						<span class="text-default">
-							<liferay-ui:message arguments="<%= new String[] {entry.getUserName()} %>" key="x-modified-x-ago" />
+							<liferay-ui:message arguments="<%= entry.getUserName() %>" key="x-modified-x-ago" />
 						</span>
 
 						<p class="font-weight-bold h5">
@@ -124,10 +122,10 @@ BookmarkEntriesItemSelectorDisplayContext bookmarkEntriesItemSelectorDisplayCont
 
 <aui:script require="metal-dom/src/all/dom as dom">
 	var selectEntryHandler = dom.delegate(
-		document.querySelector('#<portlet:namespace/>bookmarkEntriesContainer'),
+		document.querySelector('#<portlet:namespace />bookmarkEntriesContainer'),
 		'click',
 		'.entries',
-		function(event) {
+		(event) => {
 			<c:choose>
 				<c:when test='<%= Objects.equals(bookmarkEntriesItemSelectorDisplayContext.getDisplayStyle(), "icon") %>'>
 					dom.removeClasses(
@@ -154,8 +152,8 @@ BookmarkEntriesItemSelectorDisplayContext bookmarkEntriesItemSelectorDisplayCont
 					data: {
 						returnType:
 							'<%= InfoItemItemSelectorReturnType.class.getName() %>',
-						value: event.delegateTarget.dataset.value
-					}
+						value: event.delegateTarget.dataset.value,
+					},
 				}
 			);
 		}

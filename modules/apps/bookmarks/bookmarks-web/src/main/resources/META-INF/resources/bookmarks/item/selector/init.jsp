@@ -22,6 +22,4 @@ page import="com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType" 
 page import="com.liferay.portal.kernel.json.JSONObject" %><%@
 page import="com.liferay.portal.kernel.json.JSONUtil" %>
 
-<%@ page import="java.util.Objects" %>
-
 <%@ include file="/bookmarks/init-ext.jsp" %>

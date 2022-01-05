@@ -76,7 +76,9 @@ function ManagementToolbar({
 	const [searchMobile, setSearchMobile] = useState(false);
 
 	return (
-		<FeatureFlagContext.Provider value={{showDesignImprovements: showDesignImprovementsFF}}>
+		<FeatureFlagContext.Provider
+			value={{showDesignImprovements: showDesignImprovementsFF}}
+		>
 			<ClayManagementToolbar active={active}>
 				<ClayManagementToolbar.ItemList>
 					{selectable && (

@@ -191,7 +191,7 @@
 </tr>
 <tr>
 	<td>FILTER_LABEL</td>
-	<td>//li[contains(@class,'tbar')]//span[contains(@class,'label-item-expand')][starts-with(.,'Category:${filterLabel}')]</td>
+	<td>//li[contains(@class,'tbar')]//span[contains(@class,'label-item-expand')][starts-with(.,'${filterLabel}')]</td>
 	<td></td>
 </tr>
 <tr>

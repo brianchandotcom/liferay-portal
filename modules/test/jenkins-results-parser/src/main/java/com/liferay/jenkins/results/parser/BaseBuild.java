@@ -185,11 +185,6 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
-	public String getAppServer() {
-		return null;
-	}
-
-	@Override
 	public String getArchiveName() {
 		if (getParentBuild() == null) {
 			return _archiveName;
@@ -339,11 +334,6 @@ public abstract class BaseBuild implements Build {
 	@Override
 	public String getBranchName() {
 		return branchName;
-	}
-
-	@Override
-	public String getBrowser() {
-		return null;
 	}
 
 	@Override
@@ -648,11 +638,6 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
-	public String getDatabase() {
-		return null;
-	}
-
-	@Override
 	public Long getDelayTime() {
 		Long startTime = getStartTime();
 
@@ -943,11 +928,6 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
-	public String getJDK() {
-		return null;
-	}
-
-	@Override
 	public JenkinsMaster getJenkinsMaster() {
 		return _jenkinsMaster;
 	}
@@ -991,19 +971,6 @@ public abstract class BaseBuild implements Build {
 	@Override
 	public String getJobName() {
 		return jobName;
-	}
-
-	@Override
-	public Properties getJobProperties() {
-		if (_jobProperties != null) {
-			return _jobProperties;
-		}
-
-		Job job = getJob();
-
-		_jobProperties = job.getJobProperties();
-
-		return _jobProperties;
 	}
 
 	@Override
@@ -1196,11 +1163,6 @@ public abstract class BaseBuild implements Build {
 		}
 
 		return modifiedDownstreamBuilds;
-	}
-
-	@Override
-	public String getOperatingSystem() {
-		return null;
 	}
 
 	@Override
@@ -3928,7 +3890,6 @@ public abstract class BaseBuild implements Build {
 	private JenkinsMaster _jenkinsMaster;
 	private JenkinsSlave _jenkinsSlave;
 	private Job _job;
-	private Properties _jobProperties;
 	private Map<String, String> _parameters = new HashMap<>();
 	private final Build _parentBuild;
 	private String _previousStatus;

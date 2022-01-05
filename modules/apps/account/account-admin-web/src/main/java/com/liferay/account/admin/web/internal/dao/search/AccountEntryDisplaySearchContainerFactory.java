@@ -137,7 +137,7 @@ public class AccountEntryDisplaySearchContainerFactory {
 
 		params.put("types", types);
 
-		BaseModelSearchResult<AccountEntry> baseModelSearchResult = null;
+		BaseModelSearchResult<AccountEntry> baseModelSearchResult;
 
 		if (filterManageableAccountEntries) {
 			baseModelSearchResult =
@@ -160,7 +160,6 @@ public class AccountEntryDisplaySearchContainerFactory {
 			() -> TransformUtil.transform(
 				baseModelSearchResult.getBaseModels(), AccountEntryDisplay::of),
 			baseModelSearchResult.getLength());
-
 		accountEntryDisplaySearchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(liferayPortletResponse));
 

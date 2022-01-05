@@ -1170,6 +1170,14 @@ definition {
 			locator1 = "Checkbox#ANY_CHECKBOX");
 	}
 
+	macro viewPageTemplateTypeNotPresent {
+		LexiconCard.viewCardNotPresent(card = "${pageTemplateName}");
+	}
+
+	macro viewPageTemplateTypePresent {
+		LexiconCard.viewCardPresent(card = "${pageTemplateName}");
+	}
+
 	macro viewPageType {
 		AssertElementPresent(
 			key_pageName = "${pageName}",

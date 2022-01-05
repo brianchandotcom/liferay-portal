@@ -249,7 +249,7 @@ definition {
 
 			Navigator.gotoNavNested(navNested = "Global Templates");
 
-			Page.viewPageTemplateTypeNotPresent(pageTemplateName = "Page Template Name");
+			PagesAdmin.viewPageTemplateTypeNotPresent(pageTemplateName = "Page Template Name");
 		}
 
 		task ("Active the created page template and view status") {
@@ -271,7 +271,7 @@ definition {
 
 			Navigator.gotoNavNested(navNested = "Global Templates");
 
-			Page.viewPageTemplateTypePresent(pageTemplateName = "Page Template Name");
+			PagesAdmin.viewPageTemplateTypePresent(pageTemplateName = "Page Template Name");
 		}
 	}
 

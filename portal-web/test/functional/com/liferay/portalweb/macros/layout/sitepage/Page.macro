@@ -343,14 +343,6 @@ definition {
 			value1 = "This page is linked to a site template which does not allow modifications to it.");
 	}
 
-	macro viewPageTemplateTypeNotPresent {
-		LexiconCard.viewCardNotPresent(card = "${pageTemplateName}");
-	}
-
-	macro viewPageTemplateTypePresent {
-		LexiconCard.viewCardPresent(card = "${pageTemplateName}");
-	}
-
 	macro viewPanelPortletListPG {
 		var key_componentName = "${componentName}";
 

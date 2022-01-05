@@ -26,6 +26,10 @@ List<DiffResult> sourceResults = diffResults[0];
 List<DiffResult> targetResults = diffResults[1];
 %>
 
+<liferay-util:html-top>
+	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/css/diff.css") %>" rel="stylesheet" type="text/css" />
+</liferay-util:html-top>
+
 <clay:container-fluid>
 	<c:choose>
 		<c:when test="<%= !sourceResults.isEmpty() %>">

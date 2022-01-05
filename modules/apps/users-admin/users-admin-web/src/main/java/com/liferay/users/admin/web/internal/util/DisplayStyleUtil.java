@@ -14,7 +14,6 @@
 
 package com.liferay.users.admin.web.internal.util;
 
-import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.users.admin.constants.UsersAdminPortletKeys;
@@ -29,11 +28,8 @@ public class DisplayStyleUtil {
 	public static String getDisplayStyle(
 		PortletRequest portletRequest, String defaultDisplayStyle) {
 
-		LiferayPortletRequest liferayPortletRequest =
-			PortalUtil.getLiferayPortletRequest(portletRequest);
-
 		return SearchDisplayStyleUtil.getDisplayStyle(
-			liferayPortletRequest.getOriginalHttpServletRequest(),
+			PortalUtil.getHttpServletRequest(portletRequest),
 			UsersAdminPortletKeys.USERS_ADMIN, defaultDisplayStyle, true);
 	}
 

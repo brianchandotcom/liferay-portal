@@ -21,6 +21,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGE_EDITOR_WIDGET_SEARCH_REMOTE_APP</td>
+	<td>//div[contains(@class,'page-editor__sidebar')]//li[contains(@class,'page-editor__fragments-widget')]//div[contains(@class, 'text-truncate title')][contains(text(),'${key_remoteAppName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>REMOTE_TABLE_DELETE</td>
 	<td>//a[contains(@class,'dropdown-item') and contains(.,'Delete')]</td>
 	<td></td>

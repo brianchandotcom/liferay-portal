@@ -308,6 +308,81 @@ definition {
 		}
 	}
 
+	@description = "Verify remote app can be configured one its portlet name has been changed"
+	@priority = "3"
+	test CustomElementCanConfigurePortletName {
+		property portal.acceptance = "true";
+
+		task ("Add a public page with JSON") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Test Page",
+				type = "content");
+
+			JSONLayout.publishLayout(
+				groupName = "Guest",
+				layoutName = "Test Page");
+		}
+
+		task ("Create Vanilla Counter as a Custom Element") {
+			JSONRemoteApp.addCustomElementRemoteAppEntry(
+				customElementHTMLName = "vanilla-counter",
+				customElementName = "Vanilla Counter",
+				customElementURL = "http://remote-component-test.wincent.com/packages/vanilla-counter/index.js");
+		}
+
+		task ("Add Vanilla Counter to Test Page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page",
+				siteName = "Guest");
+
+			PageEditor.addWidget(portletName = "Vanilla Counter");
+
+			PageEditor.clickPublish();
+
+			Navigator.gotoPage(pageName = "Test Page");
+		}
+
+		task ("Change Vanilla Counter portlet name") {
+			RemoteApps.goToRemoteAppsPortlet();
+
+			Click(
+				key_tableEntryName = "Vanilla Counter",
+				locator1 = "RemoteApps#TABLE_ENTRY_NAME_REMOTE_TABLE");
+
+			Type(
+				key_text = "Name",
+				locator1 = "TextInput#ANY",
+				value1 = "Vanilla Counter Modified");
+
+			PortletEntry.publish();
+		}
+
+		task ("Assert that Vanilla Counter name has been changed in Widget Page Editor") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page",
+				siteName = "Guest");
+
+			PageEditor.gotoTab(tabName = "Fragments and Widgets");
+
+			Navigator.gotoNavTab(navTab = "Widgets");
+
+			Type.sendKeysApplicationSearch(
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_SEARCH_FIELD",
+				value1 = "Vanilla Counter Modified");
+
+			AssertElementPresent(
+				key_remoteAppName = "Vanilla Counter Modified",
+				locator1 = "RemoteApps#PAGE_EDITOR_WIDGET_SEARCH_REMOTE_APP");
+		}
+
+		task ("Assert Vanilla Counter continues displayed") {
+			Navigator.gotoPage(pageName = "Test Page");
+
+			AssertElementPresent(locator1 = "RemoteApps#VANILLA_COUNTER_REMOTE_APP");
+		}
+	}
+
 	@description = "Verify an iframe remote app can be created"
 	@priority = "5"
 	test IFrameCanBeCreated {

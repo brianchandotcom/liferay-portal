@@ -21,7 +21,6 @@ import java.net.URL;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 
 import org.dom4j.Element;
 
@@ -37,8 +36,6 @@ public interface Build {
 	public void addDownstreamBuilds(String... urls);
 
 	public void archive(String archiveName);
-
-	public String getAppServer();
 
 	public String getArchiveName();
 
@@ -58,8 +55,6 @@ public interface Build {
 
 	public String getBranchName();
 
-	public String getBrowser();
-
 	public String getBuildDescription();
 
 	public String getBuildDirPath();
@@ -78,8 +73,6 @@ public interface Build {
 	public String getBuildURLRegex();
 
 	public String getConsoleText();
-
-	public String getDatabase();
 
 	public Long getDelayTime();
 
@@ -112,8 +105,6 @@ public interface Build {
 
 	public Long getInvokedTime();
 
-	public String getJDK();
-
 	public JenkinsMaster getJenkinsMaster();
 
 	public JenkinsSlave getJenkinsSlave();
@@ -121,8 +112,6 @@ public interface Build {
 	public Job getJob();
 
 	public String getJobName();
-
-	public Properties getJobProperties();
 
 	public String getJobURL();
 
@@ -147,8 +136,6 @@ public interface Build {
 	public List<Build> getModifiedDownstreamBuilds();
 
 	public List<Build> getModifiedDownstreamBuildsByStatus(String status);
-
-	public String getOperatingSystem();
 
 	public Map<String, String> getParameters();
 

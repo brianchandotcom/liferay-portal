@@ -69,13 +69,6 @@ public class AxisBuild extends BaseBuild {
 	}
 
 	@Override
-	public String getAppServer() {
-		Build parentBuild = getParentBuild();
-
-		return parentBuild.getAppServer();
-	}
-
-	@Override
 	public String getArchivePath() {
 		String archiveName = getArchiveName();
 
@@ -146,13 +139,6 @@ public class AxisBuild extends BaseBuild {
 		BatchBuild parentBatchBuild = getParentBatchBuild();
 
 		return parentBatchBuild.getBatchName();
-	}
-
-	@Override
-	public String getBrowser() {
-		Build parentBuild = getParentBuild();
-
-		return parentBuild.getBrowser();
 	}
 
 	public String getBuildDescriptionTestrayReports() {
@@ -270,13 +256,6 @@ public class AxisBuild extends BaseBuild {
 	}
 
 	@Override
-	public String getDatabase() {
-		Build parentBuild = getParentBuild();
-
-		return parentBuild.getDatabase();
-	}
-
-	@Override
 	public String getDisplayName() {
 		return JenkinsResultsParserUtil.combine(
 			getAxisVariable(), " #", String.valueOf(getBuildNumber()));
@@ -350,20 +329,6 @@ public class AxisBuild extends BaseBuild {
 		invokedTime = parentBuild.getStartTime();
 
 		return invokedTime;
-	}
-
-	@Override
-	public String getJDK() {
-		Build parentBuild = getParentBuild();
-
-		return parentBuild.getJDK();
-	}
-
-	@Override
-	public String getOperatingSystem() {
-		Build parentBuild = getParentBuild();
-
-		return parentBuild.getOperatingSystem();
 	}
 
 	public BatchBuild getParentBatchBuild() {

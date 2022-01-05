@@ -1,7 +1,7 @@
-import {useLazyQuery, useQuery} from '@apollo/client';
 import {ClaySelect} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import {useEffect, useMemo, useState} from 'react';
+import {useEffect, useState} from 'react';
+import client from '../../../../../apolloClient';
 import BaseButton from '../../../../../common/components/BaseButton';
 import {useApplicationProvider} from '../../../../../common/context/ApplicationPropertiesProvider';
 import {
@@ -24,93 +24,89 @@ const ActivationKeysInputs = ({
 		licenseKeyDownloadURL,
 	} = useApplicationProvider();
 
+	const [accountSubscriptions, setAccountSubscriptions] = useState([]);
+
 	const [
-		selectedAccountSubscriptionGroupName,
-		setSelectedAccountSubscriptionGroupName,
+		selectedAccountSubscriptionName,
+		setSelectedAccountSubscriptionName,
 	] = useState('');
-	const [selectDateInterval, setSelectedDateInterval] = useState({});
+
+	const [
+		accountSubscriptionsTermsDates,
+		setAccountSubscriptionsTermsDates,
+	] = useState([]);
+	const [selectDateInterval, setSelectedDateInterval] = useState();
+
 	const [hasLicenseDownloadError, setLicenseDownloadError] = useState(false);
 
-	const {data: dataAccountSubscriptions} = useQuery(getAccountSubscriptions, {
-		variables: {
-			accountSubscriptionGroupERC: `accountSubscriptionGroupERC eq '${accountKey}_${productKey}'`,
-		},
-	});
-	const [
-		fetchAccountSubscriptionsTerms,
-		{data: dataAccountSubscriptionsTerms},
-	] = useLazyQuery(getAccountSubscriptionsTerms);
-
 	useEffect(() => {
-		if (dataAccountSubscriptions) {
-			const accountSubscriptionGroups =
-				dataAccountSubscriptions?.c?.accountSubscriptions?.items || [];
+		const fetchAccountSubscriptions = async () => {
+			const {data} = await client.query({
+				query: getAccountSubscriptions,
+				variables: {
+					filter: `accountSubscriptionGroupERC eq '${accountKey}_${productKey}'`,
+				},
+			});
 
-			if (accountSubscriptionGroups.length) {
-				const accountSubscriptionGroupName =
-					accountSubscriptionGroups[0].name;
+			if (data) {
+				const items = data.c?.accountSubscriptions?.items;
+				setAccountSubscriptions(data.c?.accountSubscriptions?.items);
 
-				setSelectedAccountSubscriptionGroupName(
-					accountSubscriptionGroupName
-				);
-				const filterAccountSubscriptionERC = `accountSubscriptionERC eq '${accountKey}_${productKey}_${accountSubscriptionGroupName.toLowerCase()}'`;
-
-				fetchAccountSubscriptionsTerms({
-					variables: {
-						filter: filterAccountSubscriptionERC,
-					},
-				});
+				setSelectedAccountSubscriptionName(items[0].name);
 			}
-		}
+		};
 
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [accountKey, dataAccountSubscriptions, productKey]);
+		fetchAccountSubscriptions();
+	}, [accountKey, productKey]);
 
 	useEffect(() => {
-		if (selectedAccountSubscriptionGroupName && selectDateInterval) {
+		const getSubscriptionTerms = async () => {
+			const filterAccountSubscriptionERC = `accountSubscriptionERC eq '${accountKey}_${productKey}_${selectedAccountSubscriptionName.toLowerCase()}'`;
+
+			const {data} = await client.query({
+				query: getAccountSubscriptionsTerms,
+				variables: {
+					filter: filterAccountSubscriptionERC,
+				},
+			});
+
+			if (data) {
+				const accountSubscriptionsTerms =
+					data.c?.accountSubscriptionTerms?.items || [];
+
+				if (accountSubscriptionsTerms.length) {
+					const dateIntervals = getYearlyTerms(
+						accountSubscriptionsTerms[0]
+					);
+
+					setAccountSubscriptionsTermsDates(dateIntervals);
+					setSelectedDateInterval(dateIntervals[0]);
+				}
+			}
+		};
+
+		if (selectedAccountSubscriptionName) {
+			getSubscriptionTerms();
+		}
+	}, [accountKey, productKey, selectedAccountSubscriptionName]);
+
+	useEffect(() => {
+		if (selectedAccountSubscriptionName && selectDateInterval) {
 			setLicenseDownloadError(false);
 		}
-	}, [selectDateInterval, selectedAccountSubscriptionGroupName]);
-
-	const accountSubscriptionsTermDates = useMemo(() => {
-		const accountSubscriptionsTerms =
-			dataAccountSubscriptionsTerms?.c?.accountSubscriptionTerms?.items ||
-			[];
-
-		if (accountSubscriptionsTerms.length) {
-			const dateIntervals = getYearlyTerms(accountSubscriptionsTerms[0]);
-			setSelectedDateInterval(dateIntervals[0]);
-
-			return dateIntervals;
-		}
-
-		return [];
-	}, [dataAccountSubscriptionsTerms]);
-
-	const accountSubscriptionGroups =
-		dataAccountSubscriptions?.c?.accountSubscriptions?.items || [];
-
-	const updateSelectedAccountSubscriptionGroupName = (name) => {
-		setSelectedAccountSubscriptionGroupName(name);
-
-		const filterAccountSubscriptionERC = `accountSubscriptionERC eq '${accountKey}_${productKey}_${name.toLowerCase()}'`;
-
-		fetchAccountSubscriptionsTerms({
-			variables: {
-				accountSubscriptionERC: filterAccountSubscriptionERC,
-			},
-		});
-	};
+	}, [selectDateInterval, selectedAccountSubscriptionName]);
 
 	const handleClick = async () => {
 		const license = await fetchLicense(
 			accountKey,
-			selectDateInterval.endDate,
-			selectDateInterval.startDate,
+			selectDateInterval.endDate.toISOString(),
+			selectDateInterval.startDate.toISOString(),
+			selectedAccountSubscriptionName.toLowerCase(),
 			licenseKeyDownloadURL,
 			encodeURI(productTitle),
 			sessionId
 		);
+
 		if (license.status === STATUS_CODE.SUCCESS) {
 			const contentType = license.headers.get('content-type');
 			const extensionFile = EXTENSIONS_FILE_TYPE[contentType] || '.txt';
@@ -140,23 +136,21 @@ const ActivationKeysInputs = ({
 
 						<ClaySelect
 							onChange={(event) =>
-								updateSelectedAccountSubscriptionGroupName(
+								setSelectedAccountSubscriptionName(
 									event.target.value
 								)
 							}
-							value={selectedAccountSubscriptionGroupName}
+							value={selectedAccountSubscriptionName}
 						>
-							{accountSubscriptionGroups.map(
-								(accountSubscriptionGroup) => (
-									<ClaySelect.Option
-										key={
-											accountSubscriptionGroup.accountSubscriptionGroupERC
-										}
-										label={accountSubscriptionGroup.name}
-										value={accountSubscriptionGroup.name}
-									/>
-								)
-							)}
+							{accountSubscriptions.map((accountSubscription) => (
+								<ClaySelect.Option
+									key={
+										accountSubscription.accountSubscriptionGroupERC
+									}
+									label={accountSubscription.name}
+									value={accountSubscription.name}
+								/>
+							))}
 						</ClaySelect>
 					</div>
 				</label>
@@ -170,13 +164,16 @@ const ActivationKeysInputs = ({
 						/>
 
 						<ClaySelect
-							onChange={(event) =>
-								setSelectedDateInterval(event.target.value)
-							}
-							value={selectDateInterval}
+							onChange={(event) => {
+								setSelectedDateInterval(
+									accountSubscriptionsTermsDates[
+										event.target.value
+									]
+								);
+							}}
 						>
-							{accountSubscriptionsTermDates.map(
-								(dateInterval) => {
+							{accountSubscriptionsTermsDates.map(
+								(dateInterval, index) => {
 									const formattedDate = `${getCurrentEndDate(
 										dateInterval.startDate
 									)} - ${getCurrentEndDate(
@@ -186,9 +183,9 @@ const ActivationKeysInputs = ({
 									return (
 										<ClaySelect.Option
 											className="options"
-											key={dateInterval.startDate}
+											key={index}
 											label={formattedDate}
-											value={dateInterval}
+											value={index}
 										/>
 									);
 								}
@@ -202,10 +199,7 @@ const ActivationKeysInputs = ({
 				className="btn btn-outline-primary"
 				disabled={
 					hasLicenseDownloadError ||
-					!(
-						selectedAccountSubscriptionGroupName &&
-						Object.keys(selectDateInterval).length > 0
-					)
+					!(selectedAccountSubscriptionName && selectDateInterval)
 				}
 				onClick={handleClick}
 				prependIcon="download"

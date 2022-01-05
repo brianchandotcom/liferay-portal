@@ -137,7 +137,7 @@ public class AccountEntryDisplaySearchContainerFactory {
 
 		params.put("types", types);
 
-		BaseModelSearchResult<AccountEntry> baseModelSearchResult = null;
+		BaseModelSearchResult<AccountEntry> baseModelSearchResult;
 
 		if (filterManageableAccountEntries) {
 			baseModelSearchResult =

@@ -63,7 +63,7 @@
 		<![CDATA[
 			SELECT
 				DISTINCT FragmentComposition.fragmentCompositionId AS fragmentCompositionId, 0 AS fragmentEntryId,
-				FragmentComposition.createDate AS createDate, FragmentComposition.name AS name, FragmentComposition.modifiedDate AS modifiedDate
+				FragmentComposition.createDate AS createDate, FragmentComposition.modifiedDate AS modifiedDate, FragmentComposition.name AS name
 			FROM
 				FragmentComposition
 			WHERE
@@ -76,7 +76,7 @@
 		<![CDATA[
 			SELECT
 				DISTINCT FragmentComposition.fragmentCompositionId AS fragmentCompositionId, 0 AS fragmentEntryId,
-				FragmentComposition.createDate AS createDate, FragmentComposition.name AS name, FragmentComposition.modifiedDate AS modifiedDate
+				FragmentComposition.createDate AS createDate, FragmentComposition.modifiedDate AS modifiedDate, FragmentComposition.name AS name
 			FROM
 				FragmentComposition
 			WHERE
@@ -90,7 +90,7 @@
 		<![CDATA[
 			SELECT
 				DISTINCT 0 AS fragmentCompositionId, FragmentEntry.fragmentEntryId AS fragmentEntryId,
-				FragmentEntry.createDate AS createDate, FragmentEntry.name AS name, FragmentEntry.modifiedDate AS modifiedDate
+				FragmentEntry.createDate AS createDate, FragmentEntry.modifiedDate AS modifiedDate, FragmentEntry.name AS name
 			FROM
 				FragmentEntry
 			WHERE
@@ -107,7 +107,7 @@
 		<![CDATA[
 			SELECT
 				DISTINCT 0 AS fragmentCompositionId, FragmentEntry.fragmentEntryId AS fragmentEntryId,
-				FragmentEntry.createDate AS createDate, FragmentEntry.name AS name, FragmentEntry.modifiedDate AS modifiedDate
+				FragmentEntry.createDate AS createDate, FragmentEntry.modifiedDate AS modifiedDate, FragmentEntry.name AS name
 			FROM
 				FragmentEntry
 			WHERE

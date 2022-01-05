@@ -96,8 +96,8 @@ html#{$cadmin-selector} {
 		}
 
 		&.desktop {
-			padding: 24px;
 			border-radius: 16px;
+			padding: 24px;
 		}
 
 		&.custom,
@@ -124,8 +124,8 @@ html#{$cadmin-selector} {
 					&-tr,
 					&-bl,
 					&-br {
-						background-repeat: no-repeat;
 						background-image: url(/o/frontend-js-aui-web/aui/resize-base/assets/skins/sam/arrows.png);
+						background-repeat: no-repeat;
 						display: block;
 						height: 15px;
 						overflow: hidden;
@@ -134,7 +134,7 @@ html#{$cadmin-selector} {
 					}
 
 					&-bl {
-						bottom: 0px;
+						bottom: 0;
 						right: -18px;
 					}
 
@@ -145,7 +145,7 @@ html#{$cadmin-selector} {
 
 					&-tr {
 						bottom: -15px;
-						right: 0px;
+						right: 0;
 					}
 				}
 			}

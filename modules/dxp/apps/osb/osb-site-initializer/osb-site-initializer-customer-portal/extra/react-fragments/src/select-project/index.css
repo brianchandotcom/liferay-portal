@@ -37,7 +37,7 @@
 }
 
 .custom-projects-dropdown .input-group-item {
-	padding: 0 10px;
+	padding: 10px 16px 0 16px;
 }
 
 .custom-projects-dropdown .dropdown-menu {
@@ -52,6 +52,10 @@
 	background-color: #f7f8f9;
 	border-radius: 8px;
 	padding: 0 10px;
+}
+
+.custom-projects-dropdown .list-unstyled {
+	margin: 0;
 }
 
 .custom-projects-dropdown .dropdown-item-indicator-end {

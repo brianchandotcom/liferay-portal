@@ -12,7 +12,7 @@
 import ClayButton from '@clayui/button';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 
 const MAX_ITEM = 10;
 
@@ -39,59 +39,65 @@ const handleClickHome = () => {
 export default function () {
 	const [items, setItems] = useState([]);
 	const [value, setValue] = useState('');
-	const [
-		selectedExternalReferenceCode,
-		setSelectedExternalReferenceCode,
-	] = useState('');
+	const selectedExternalReferenceCode = useMemo(() => {
+		const liferaySearchParams = new URLSearchParams(window.location.search);
+
+		return liferaySearchParams.get('kor_id');
+	}, []);
 
 	const filteredItems =
 		items?.filter((item) =>
 			item?.label?.toLowerCase().includes(value?.toLowerCase())
 		) || [];
 
+	if (!filteredItems.length) {
+		filteredItems.push({
+			className: 'px-3 my-3 text-neutral-5',
+			disabled: true,
+			label: 'No projects match that name.',
+		});
+	}
+
 	const firstItems = items.filter((_, index) => index <= 19);
-
-	useEffect(() => {
-		const liferaySearchParams = new URLSearchParams(window.location.search);
-
-		setSelectedExternalReferenceCode(liferaySearchParams.get('kor_id'));
-	}, []);
 
 	const itemName =
 		items.find((item) => item.name === selectedExternalReferenceCode)
 			?.label || '';
 
 	useEffect(() => {
-		const accountBriefs = JSON.parse(
-			sessionStorage.getItem('customer-portal-account-briefs')
+		Liferay.once(
+			'customer-portal-select-user-loading',
+			({detail: userAccount}) => {
+				const accountBriefs = userAccount.accountBriefs;
+
+				if (accountBriefs) {
+					setItems(
+						accountBriefs.map(({externalReferenceCode, name}) => {
+							const urlLocation = `${
+								window.location.origin
+							}${getLiferaySiteName()}/overview?kor_id=${externalReferenceCode}`;
+
+							return {
+								className: `c-py-3 m-0 ${
+									selectedExternalReferenceCode ===
+									externalReferenceCode
+										? 'selected-item'
+										: 'unselect-item'
+								}`,
+								href: urlLocation,
+								label: name,
+								name: externalReferenceCode,
+								symbolRight:
+									selectedExternalReferenceCode ===
+									externalReferenceCode
+										? 'check'
+										: '',
+							};
+						})
+					);
+				}
+			}
 		);
-
-		if (accountBriefs) {
-			setItems(
-				accountBriefs.map(({externalReferenceCode, name}) => {
-					const urlLocation = `${
-						window.location.origin
-					}${getLiferaySiteName()}/overview?kor_id=${externalReferenceCode}`;
-
-					return {
-						className: `c-py-3 m-0 ${
-							selectedExternalReferenceCode ===
-							externalReferenceCode
-								? 'selected-item'
-								: 'unselect-item'
-						}`,
-						href: urlLocation,
-						label: name,
-						name: externalReferenceCode,
-						symbolRight:
-							selectedExternalReferenceCode ===
-							externalReferenceCode
-								? 'check'
-								: '',
-					};
-				})
-			);
-		}
 	}, [selectedExternalReferenceCode]);
 
 	return (
@@ -99,12 +105,6 @@ export default function () {
 			alignmentPosition={['tl', 'br']}
 			footerContent={
 				<div className="all-projects c-py-2">
-					{!filteredItems.length && (
-						<p className="mb-4 px-1">
-							No projects match that name.
-						</p>
-					)}
-
 					<a onClick={handleClickHome}>
 						<p className="c-pl-4 my-0 py-2">
 							<ClayIcon

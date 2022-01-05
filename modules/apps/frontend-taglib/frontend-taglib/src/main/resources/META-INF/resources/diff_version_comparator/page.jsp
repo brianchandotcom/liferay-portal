@@ -16,6 +16,10 @@
 
 <%@ include file="/init.jsp" %>
 
+<liferay-util:html-top>
+	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/css/diff_version_comparator.css") %>" rel="stylesheet" type="text/css" />
+</liferay-util:html-top>
+
 <div>
 	<react:component
 		module="diff_version_comparator/index"

@@ -313,7 +313,7 @@ public abstract class BaseDBProcess implements DBProcess {
 			while ((next = unsafeSupplier.get()) != null) {
 				T current = next;
 
-				Future<Void> newFuture = executorService.submit(
+				Future<Void> future = executorService.submit(
 					() -> {
 						try (SafeCloseable safeCloseable =
 								CompanyThreadLocal.lock(companyId)) {
@@ -330,14 +330,14 @@ public abstract class BaseDBProcess implements DBProcess {
 				if (futures.size() >=
 						_UPGRADE_CONCURRENT_PROCESS_FUTURE_LIST_MAX_SIZE) {
 
-					for (Future<Void> future : futures) {
-						future.get();
+					for (Future<Void> curFuture : futures) {
+						curFuture.get();
 					}
 
 					futures.clear();
 				}
 
-				futures.add(newFuture);
+				futures.add(future);
 			}
 		}
 		finally {

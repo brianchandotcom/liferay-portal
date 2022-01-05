@@ -44,7 +44,6 @@ public class JournalArticleDataFileEntryIdUpgradeProcess
 			},
 			columns -> {
 				long id = (long)columns[0];
-
 				String content = (String)columns[1];
 
 				String updateSQL =
@@ -63,7 +62,7 @@ public class JournalArticleDataFileEntryIdUpgradeProcess
 					}
 				}
 			},
-			"Unable to update fileEntryId for journal article data");
+			"Unable to update file entry ID for journal article data");
 	}
 
 	private String _upgradeContent(String content) throws DocumentException {

@@ -9,6 +9,16 @@ html#{$cadmin-selector} {
 		}
 
 		.lfr-device {
+			opacity: 1;
+			pointer-events: all;
+			visibility: visible;
+
+			&.lfr-device--is-navigating {
+				opacity: 0;
+				pointer-events: none;
+				visibility: hidden;
+			}
+
 			&:after,
 			&:before {
 				box-shadow: #111 0 1px 0;
@@ -35,6 +45,17 @@ html#{$cadmin-selector} {
 					border-radius: 5px;
 				}
 			}
+		}
+
+		.loading-animation-simulation-device {
+			align-items: center;
+			display: flex;
+			height: 100%;
+			justify-content: center;
+			left: 0;
+			position: absolute;
+			top: 0;
+			width: 100%;
 		}
 
 		.modal-dialog {

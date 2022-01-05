@@ -632,8 +632,6 @@ public class BaseAutoDeployer implements AutoDeployer {
 		for (String portalJar : portalJars) {
 			portalJar = portalJar.trim();
 
-			portalJar = _fixPortalDependencyJar(portalJar);
-
 			if (_log.isDebugEnabled()) {
 				_log.debug("Copy portal JAR " + portalJar);
 			}
@@ -857,14 +855,6 @@ public class BaseAutoDeployer implements AutoDeployer {
 		FileUtil.deltree(tempDir);
 
 		return true;
-	}
-
-	private String _fixPortalDependencyJar(String portalJar) {
-		if (portalJar.equals("antlr.jar")) {
-			portalJar = "antlr2.jar";
-		}
-
-		return portalJar;
 	}
 
 	private String _getDisplayName(File srcFile) {

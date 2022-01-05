@@ -125,9 +125,6 @@
 	<classpathentry kind="lib" path="lib/development/xmlresolver.jar"/>
 	<classpathentry kind="lib" path="lib/development/xmltask.jar"/>
 	<classpathentry kind="lib" path="lib/portal/ant.jar"/>
-	<classpathentry kind="lib" path="lib/portal/antlr2.jar"/>
-	<classpathentry kind="lib" path="lib/portal/antlr3.jar"/>
-	<classpathentry kind="lib" path="lib/portal/antlr3-runtime.jar"/>
 	<classpathentry kind="lib" path="lib/portal/asm-analysis.jar"/>
 	<classpathentry kind="lib" path="lib/portal/asm-commons.jar"/>
 	<classpathentry kind="lib" path="lib/portal/asm-tree.jar"/>

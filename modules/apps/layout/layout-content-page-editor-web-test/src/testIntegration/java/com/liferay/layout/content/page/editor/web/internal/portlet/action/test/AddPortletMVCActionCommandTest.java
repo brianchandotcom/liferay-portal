@@ -120,7 +120,7 @@ public class AddPortletMVCActionCommandTest {
 			"portletId", JournalPortletKeys.JOURNAL);
 
 		ReflectionTestUtil.invoke(
-			_mvcActionCommand, "processAddPortlet",
+			_mvcActionCommand, "_processAddPortlet",
 			new Class<?>[] {ActionRequest.class, ActionResponse.class},
 			mockLiferayPortletActionRequest,
 			new MockLiferayPortletActionResponse());
@@ -144,7 +144,7 @@ public class AddPortletMVCActionCommandTest {
 			"portletId", RandomTestUtil.randomString());
 
 		ReflectionTestUtil.invoke(
-			_mvcActionCommand, "processAddPortlet",
+			_mvcActionCommand, "_processAddPortlet",
 			new Class<?>[] {ActionRequest.class, ActionResponse.class},
 			mockLiferayPortletActionRequest,
 			new MockLiferayPortletActionResponse());
@@ -159,13 +159,13 @@ public class AddPortletMVCActionCommandTest {
 			"portletId", BlogsPortletKeys.BLOGS);
 
 		ReflectionTestUtil.invoke(
-			_mvcActionCommand, "processAddPortlet",
+			_mvcActionCommand, "_processAddPortlet",
 			new Class<?>[] {ActionRequest.class, ActionResponse.class},
 			mockLiferayPortletActionRequest,
 			new MockLiferayPortletActionResponse());
 
 		JSONObject jsonObject = ReflectionTestUtil.invoke(
-			_mvcActionCommand, "processAddPortlet",
+			_mvcActionCommand, "_processAddPortlet",
 			new Class<?>[] {ActionRequest.class, ActionResponse.class},
 			mockLiferayPortletActionRequest,
 			new MockLiferayPortletActionResponse());
@@ -182,7 +182,7 @@ public class AddPortletMVCActionCommandTest {
 			"portletId", JournalPortletKeys.JOURNAL);
 
 		JSONObject jsonObject = ReflectionTestUtil.invoke(
-			_mvcActionCommand, "processAddPortlet",
+			_mvcActionCommand, "_processAddPortlet",
 			new Class<?>[] {ActionRequest.class, ActionResponse.class},
 			mockLiferayPortletActionRequest,
 			new MockLiferayPortletActionResponse());
@@ -229,7 +229,7 @@ public class AddPortletMVCActionCommandTest {
 		mockLiferayPortletActionRequest.addParameter("position", "0");
 
 		JSONObject jsonObject = ReflectionTestUtil.invoke(
-			_mvcActionCommand, "processAddPortlet",
+			_mvcActionCommand, "_processAddPortlet",
 			new Class<?>[] {ActionRequest.class, ActionResponse.class},
 			mockLiferayPortletActionRequest,
 			new MockLiferayPortletActionResponse());

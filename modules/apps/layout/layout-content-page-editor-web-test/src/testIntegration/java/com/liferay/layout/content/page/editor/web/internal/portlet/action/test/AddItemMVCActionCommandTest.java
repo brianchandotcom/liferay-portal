@@ -105,7 +105,7 @@ public class AddItemMVCActionCommandTest {
 		mockLiferayPortletActionRequest.addParameter("position", "0");
 
 		JSONObject jsonObject = ReflectionTestUtil.invoke(
-			_mvcActionCommand, "addItemToLayoutData",
+			_mvcActionCommand, "_addItemToLayoutData",
 			new Class<?>[] {ActionRequest.class},
 			mockLiferayPortletActionRequest);
 
@@ -157,7 +157,7 @@ public class AddItemMVCActionCommandTest {
 		mockLiferayPortletActionRequest.addParameter("position", "1");
 
 		JSONObject jsonObject = ReflectionTestUtil.invoke(
-			_mvcActionCommand, "addItemToLayoutData",
+			_mvcActionCommand, "_addItemToLayoutData",
 			new Class<?>[] {ActionRequest.class},
 			mockLiferayPortletActionRequest);
 

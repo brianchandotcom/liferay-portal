@@ -213,7 +213,7 @@ public class FragmentDropZoneMVCActionCommandTest {
 		actionRequest.addParameter("position", "0");
 
 		ReflectionTestUtil.invoke(
-			_addItemMVCActionCommand, "addItemToLayoutData",
+			_addItemMVCActionCommand, "_addItemToLayoutData",
 			new Class<?>[] {ActionRequest.class}, actionRequest);
 
 		actionRequest = _getMockLiferayPortletActionRequest(

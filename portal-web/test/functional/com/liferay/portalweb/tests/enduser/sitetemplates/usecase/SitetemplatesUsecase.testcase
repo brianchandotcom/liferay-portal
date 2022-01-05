@@ -136,7 +136,7 @@ definition {
 
 		PagesAdmin.togglePrivacy(privacy = "Public Pages");
 
-		Page.viewNoDeletePagesAssociatedWithSiteTemplate(
+		PagesAdmin.cannotDeletePagesAssociatedWithSiteTemplate(
 			page = "Site Child Page Name",
 			pageName = "Site Page Name");
 
@@ -322,7 +322,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		Page.viewNoDeletePagesAssociatedWithSiteTemplate(
+		PagesAdmin.cannotDeletePagesAssociatedWithSiteTemplate(
 			page = "Home",
 			pageName = "Public Pages");
 	}

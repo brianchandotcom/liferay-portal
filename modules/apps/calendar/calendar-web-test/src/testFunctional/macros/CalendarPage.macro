@@ -24,5 +24,41 @@ definition {
 			locator1 = "CalendarPage#CURRENT_MONTH_MINI_CALENDAR",
 			value1 = "${monthCurrent}");
 	}
+	macro viewCurrentDayForCalendarDay {
+        CalendarNavigator.gotoView(viewType = "Day");
+
+        CalendarNavigator.gotoToday();
+
+        AssertElementPresent(
+            locator1 = "Calendar#SCHEDULER_VIEW_DAY_CURRENT_DAY");
+        
+    }
+
+	macro viewCurrentDayForCalendarWeek {
+        CalendarNavigator.gotoView(viewType = "Week");
+
+        CalendarNavigator.gotoToday();
+
+        AssertElementPresent(locator1 = "Calendar#SCHEDULER_VIEW_WEEK_CURRENT_DAY");
+        
+    }
+
+	macro viewCurrentDayForCalendarMonth {
+        CalendarNavigator.gotoView(viewType = "Month");
+        
+        CalendarNavigator.gotoToday();
+
+        AssertElementPresent(locator1 = "Calendar#SCHEDULER_VIEW_MONTH_CURRENT_DAY");
+        
+    }
+
+    macro viewCurrentDayForCalendarAgenda {
+        CalendarNavigator.gotoView(viewType = "Agenda");
+
+        CalendarNavigator.gotoToday();
+
+        AssertElementPresent(locator1 = "CalendarPage#VIEW_AGENDA_CURRENT_DAY");
+        
+    }
 
 }

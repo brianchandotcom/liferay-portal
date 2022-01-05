@@ -18,6 +18,10 @@
 <tr>
 	<td>CURRENT_MONTH_MINI_CALENDAR</td>
 	<td>//h1[contains(@class, 'yui3-u yui3-calendar-header-label')][contains(text(),'${monthCurrent}')]</td>
+</tr>
+<tr>
+	<td>VIEW_AGENDA_CURRENT_DAY</td>
+	<td>//div[contains(@class,'scheduler-view-agenda-info-label') and not(contains(@class,'hide'))]</td>
 	<td></td>
 </tr>
 </tbody>

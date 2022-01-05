@@ -167,12 +167,18 @@ definition {
 	}
 
 	@description = "LRQA-72024 - Verify that the Today button brings the user back for the current day"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test TodayButtonDisplaysCurrentDay {
+		Navigator.gotoPage(pageName = "Calendar Page");
 
-		// TODO LRQA-72032 TodayButtonDisplaysCurrentDay pending implementation
+		CalendarPage.viewCurrentDayForCalendarDay();
 
+		CalendarPage.viewCurrentDayForCalendarWeek();
+
+		CalendarPage.viewCurrentDayForCalendarMonth();
+
+		CalendarPage.viewCurrentDayForCalendarAgenda();
+		
 	}
 
 }

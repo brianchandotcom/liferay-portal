@@ -186,7 +186,7 @@ definition {
 	@description = "LPS-135396 - Verify it is possible to add a Date field on layout"
 	@priority = "4"
 	test CanAddDateEntryOnLayout {
-		property portal.upstream = "quarantine";
+		
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
@@ -208,7 +208,7 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
-		ObjectPortlet.viewEntry(entry = "01/01/2001");
+		ObjectPortlet.viewEntry(entry = "Jan 1, 2001");
 	}
 
 	@description = "LPS-135396 - Verify it is possible to add a Double field on layout"

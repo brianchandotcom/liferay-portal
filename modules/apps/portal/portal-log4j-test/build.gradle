@@ -1,5 +1,5 @@
 dependencies {
-	testIntegrationCompile group: "com.liferay", name: "org.apache.logging.log4j", version: "2.17.0.LIFERAY-PATCHED-1"
-	testIntegrationCompile group: "com.liferay", name: "org.apache.logging.log4j.core", version: "2.17.0.LIFERAY-PATCHED-1"
+	testIntegrationCompile group: "com.liferay", name: "org.apache.logging.log4j", version: "2.17.1.LIFERAY-PATCHED-1"
+	testIntegrationCompile group: "com.liferay", name: "org.apache.logging.log4j.core", version: "2.17.1.LIFERAY-PATCHED-1"
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

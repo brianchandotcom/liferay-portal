@@ -3160,7 +3160,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.search.elasticsearch7.impl.jar!org.apache.logging.log4j.core.jar</file-name>
-				<version>2.17.0.LIFERAY-PATCHED-1</version>
+				<version>2.17.1.LIFERAY-PATCHED-1</version>
 				<project-name>Apache Log4j Core</project-name>
 				<project-url>https://www.apache.org/</project-url>
 				<licenses>
@@ -3172,7 +3172,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.search.elasticsearch7.impl.jar!org.apache.logging.log4j.jar</file-name>
-				<version>2.17.0.LIFERAY-PATCHED-1</version>
+				<version>2.17.1.LIFERAY-PATCHED-1</version>
 				<project-name>Apache Log4j API</project-name>
 				<project-url>https://www.apache.org/</project-url>
 				<licenses>
@@ -7030,7 +7030,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/log4j-1.2-api.jar</file-name>
-				<version>2.17.0</version>
+				<version>2.17.1</version>
 				<project-name>Log4j 1.x Compatibility API</project-name>
 				<project-url>http://logging.apache.org/log4j</project-url>
 				<licenses>
@@ -7042,7 +7042,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/log4j-api.jar</file-name>
-				<version>2.17.0.LIFERAY-PATCHED-1</version>
+				<version>2.17.1.LIFERAY-PATCHED-1</version>
 				<project-name>Log4j API</project-name>
 				<project-url>http://logging.apache.org/log4j</project-url>
 				<licenses>
@@ -7054,7 +7054,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/log4j-core.jar</file-name>
-				<version>2.17.0.LIFERAY-PATCHED-1</version>
+				<version>2.17.1.LIFERAY-PATCHED-1</version>
 				<project-name>Log4j Core</project-name>
 				<project-url>http://logging.apache.org/log4j</project-url>
 				<licenses>

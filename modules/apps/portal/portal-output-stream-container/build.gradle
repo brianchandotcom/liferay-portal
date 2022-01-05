@@ -1,6 +1,6 @@
 dependencies {
-	compileOnly group: "com.liferay", name: "org.apache.logging.log4j", version: "2.17.0.LIFERAY-PATCHED-1"
-	compileOnly group: "com.liferay", name: "org.apache.logging.log4j.core", version: "2.17.0.LIFERAY-PATCHED-1"
+	compileOnly group: "com.liferay", name: "org.apache.logging.log4j", version: "2.17.1.LIFERAY-PATCHED-1"
+	compileOnly group: "com.liferay", name: "org.apache.logging.log4j.core", version: "2.17.1.LIFERAY-PATCHED-1"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"

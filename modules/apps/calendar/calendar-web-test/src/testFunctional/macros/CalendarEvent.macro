@@ -1276,6 +1276,22 @@ definition {
 		Check(locator1 = "CalendarEditEvent#REPEAT_CHECKBOX");
 	}
 
+	macro setSpecificDate {
+		Click(locator1 = "CalendarEditEvent#START_DATE");
+
+		AssertClick(
+			key_daySpecific = "${startDay}",
+			locator1 = "CalendarEditEvent#MINI_CALENDAR_DAY_SPECIFIC",
+			value1 = "${key_daySpecific}");
+
+		Click(locator1 = "CalendarEditEvent#END_DATE");
+
+		AssertClick(
+			key_daySpecific = "${endDay}",
+			locator1 = "CalendarEditEvent#MINI_CALENDAR_DAY_SPECIFIC",
+			value1 = "${key_daySpecific}");
+	}
+
 	macro setTimes {
 		Type(
 			locator1 = "CalendarEditEvent#START_DATE_TIME",
@@ -1594,6 +1610,12 @@ definition {
 		CalendarEvent.viewApprovedEventRSVPButtons();
 	}
 
+	macro viewEndsDate {
+		AssertTextEquals(
+			locator1 = "CalendarEditEvent#END_DATE",
+			value1 = "${endDate}");
+	}
+
 	macro viewEventNotToday {
 		for (var viewType : list "Day,Week,Month") {
 			CalendarNavigator.gotoView(viewType = "${viewType}");
@@ -1899,6 +1921,12 @@ definition {
 		AssertElementPresent(locator1 = "Calendar#SCHEDULER_EVENT_DIALOG_BOX_CALENDAR");
 
 		AssertElementNotPresent(locator1 = "Calendar#SCHEDULER_EVENT_ATTENDING_ROW_OPTIONS");
+	}
+
+	macro viewStartsDate {
+		AssertTextEquals(
+			locator1 = "CalendarEditEvent#START_DATE",
+			value1 = "${startDate}");
 	}
 
 	macro viewStatusViaDetails {

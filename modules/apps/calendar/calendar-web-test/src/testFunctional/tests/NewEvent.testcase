@@ -1121,9 +1121,30 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "3"
 	test CanSelectStartEndFromDatepicker {
+		CalendarNavigator.gotoAddEvent();
 
-		// TODO LRQA-71917 CanSelectStartEndFromDatepicker pending implementation
+		CalendarEvent.editTitle(eventTitle = "Calendar Event Title");
 
+		CalendarEvent.setSpecificDate(
+			endDay = "14",
+			startDay = "14");
+
+		var displayDateDay = "14";
+		var displayDateMonth = DateUtil.getFormattedCurrentDate("MM");
+		var displayDateYear = DateUtil.getCurrentYear();
+		var displayDate = "${displayDateMonth}/${displayDateDay}/${displayDateYear}";
+
+		CalendarEvent.viewStartsDate(startDate = "${displayDate}");
+
+		CalendarEvent.viewEndsDate(endDate = "${displayDate}");
+
+		Button.clickPublish();
+
+		IFrame.closeFrame();
+
+		CalendarNavigator.gotoSpecificBusyDayViaSmallCalendar(dateNumber = "14");
+
+		CalendarEvent.viewEventNotToday(eventTitle = "Calendar Event Title");
 	}
 
 	@description = "This is a use case for LPS-46700."

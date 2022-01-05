@@ -51,6 +51,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -66,6 +67,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -326,10 +328,18 @@ public class JournalArticleExportImportContentProcessor
 	private DDMStructure _fetchDDMStructure(
 		PortletDataContext portletDataContext, JournalArticle article) {
 
+		Map<String, String> ddmStructureKeys =
+			(Map<String, String>)portletDataContext.getNewPrimaryKeysMap(
+				DDMStructure.class + ".ddmStructureKey");
+
+		String ddmStructureKey = MapUtil.getString(
+			ddmStructureKeys, article.getDDMStructureKey(),
+			article.getDDMStructureKey());
+
 		return _ddmStructureLocalService.fetchStructure(
 			portletDataContext.getScopeGroupId(),
-			_portal.getClassNameId(JournalArticle.class),
-			article.getDDMStructureKey(), true);
+			_portal.getClassNameId(JournalArticle.class), ddmStructureKey,
+			true);
 	}
 
 	private Fields _getDDMStructureFields(

@@ -16,7 +16,7 @@ import {ClayButtonWithIcon} from '@clayui/button';
 import ClayForm, {ClayCheckbox, ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {TranslationAdminSelector} from 'frontend-js-components-web';
-import {openSelectionModal} from 'frontend-js-web';
+import {fetch, objectToFormData, openSelectionModal} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
@@ -36,7 +36,16 @@ function DisplayPageItemContextualSidebar({
 	const [selectedLocaleId, setSelectedLocaleId] = useState(defaultLanguageId);
 	const [selectedItem, setSelectedItem] = useState(item);
 
-	const {eventName, itemSelectorURL, modalTitle} = chooseItemProps;
+	const [type, setType] = useState(itemType);
+	const [subtype, setSubtype] = useState(itemSubtype);
+	const [itemData, setItemData] = useState(item.data);
+
+	const {
+		eventName,
+		getItemTypeURL,
+		itemSelectorURL,
+		modalTitle,
+	} = chooseItemProps;
 
 	const openChooseItemModal = () =>
 		openSelectionModal({
@@ -67,6 +76,23 @@ function DisplayPageItemContextualSidebar({
 					}
 
 					setSelectedItem(infoItem);
+
+					const namespacedInfoItem = Liferay.Util.ns(
+						namespace,
+						infoItem
+					);
+
+					fetch(getItemTypeURL, {
+						body: objectToFormData(namespacedInfoItem),
+						method: 'POST',
+					})
+						.then((response) => response.json())
+						.then((jsonResponse) => {
+							setType(jsonResponse.itemType);
+							setSubtype(jsonResponse.itemSubtype);
+							setItemData(jsonResponse.data);
+						})
+						.catch(() => {});
 				}
 			},
 			selectEventName: eventName,
@@ -163,21 +189,32 @@ function DisplayPageItemContextualSidebar({
 						{Liferay.Language.get('type')}
 					</p>
 
-					<p className="list-group-text">{itemType}</p>
+					<p className="list-group-text">{type}</p>
 				</div>
 			</ClayForm.Group>
 
-			{itemSubtype && (
+			{subtype && (
 				<ClayForm.Group>
 					<div className="list-group">
 						<p className="list-group-title">
 							{Liferay.Language.get('subtype')}
 						</p>
 
-						<p className="list-group-text">{itemSubtype}</p>
+						<p className="list-group-text">{subtype}</p>
 					</div>
 				</ClayForm.Group>
 			)}
+
+			{Boolean(itemData.length) &&
+				itemData.map(({title, value}) => (
+					<ClayForm.Group key={title}>
+						<div className="list-group">
+							<p className="list-group-title">{title}</p>
+
+							<p className="list-group-text">{value}</p>
+						</div>
+					</ClayForm.Group>
+				))}
 
 			<FormValues
 				localizedNames={translations}
@@ -196,6 +233,7 @@ DisplayPageItemContextualSidebar.propTypes = {
 		classNameId: PropTypes.string,
 		classPK: PropTypes.string,
 		classTypeId: PropTypes.string,
+		data: PropTypes.array,
 		title: PropTypes.string,
 		type: PropTypes.string,
 	}).isRequired,
@@ -263,6 +301,7 @@ FormValues.propTypes = {
 		classNameId: PropTypes.string,
 		classPK: PropTypes.string,
 		classTypeId: PropTypes.string,
+		data: PropTypes.array,
 		title: PropTypes.string,
 		type: PropTypes.string,
 	}).isRequired,

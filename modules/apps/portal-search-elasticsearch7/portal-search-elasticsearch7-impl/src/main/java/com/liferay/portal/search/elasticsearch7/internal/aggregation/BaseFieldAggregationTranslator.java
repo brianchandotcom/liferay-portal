@@ -40,9 +40,9 @@ public class BaseFieldAggregationTranslator {
 		T valuesSourceAggregationBuilder =
 			valuesSourceAggregationBuilderFactory.create(baseFieldAggregation);
 
-		setField(valuesSourceAggregationBuilder, baseFieldAggregation);
-		setMissing(valuesSourceAggregationBuilder, baseFieldAggregation);
-		setScript(valuesSourceAggregationBuilder, baseFieldAggregation);
+		_setField(valuesSourceAggregationBuilder, baseFieldAggregation);
+		_setMissing(valuesSourceAggregationBuilder, baseFieldAggregation);
+		_setScript(valuesSourceAggregationBuilder, baseFieldAggregation);
 
 		_baseAggregationTranslator.translate(
 			valuesSourceAggregationBuilder, baseFieldAggregation,
@@ -58,7 +58,7 @@ public class BaseFieldAggregationTranslator {
 
 	}
 
-	protected <T extends ValuesSourceAggregationBuilder> void setField(
+	private <T extends ValuesSourceAggregationBuilder> void _setField(
 		T valuesSourceAggregationBuilder,
 		FieldAggregation baseFieldAggregation) {
 
@@ -68,7 +68,7 @@ public class BaseFieldAggregationTranslator {
 		}
 	}
 
-	protected <T extends ValuesSourceAggregationBuilder> void setMissing(
+	private <T extends ValuesSourceAggregationBuilder> void _setMissing(
 		T valuesSourceAggregationBuilder,
 		FieldAggregation baseFieldAggregation) {
 
@@ -78,7 +78,7 @@ public class BaseFieldAggregationTranslator {
 		}
 	}
 
-	protected <T extends ValuesSourceAggregationBuilder> void setScript(
+	private <T extends ValuesSourceAggregationBuilder> void _setScript(
 		T valuesSourceAggregationBuilder,
 		FieldAggregation baseFieldAggregation) {
 

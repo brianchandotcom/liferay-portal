@@ -42,7 +42,7 @@ public class FolderTitleLookupImpl implements FolderTitleLookup {
 
 	@Override
 	public String getFolderTitle(long curFolderId) {
-		Hits results = searchFolder(curFolderId);
+		Hits results = _searchFolder(curFolderId);
 
 		if (results.getLength() == 0) {
 			return null;
@@ -57,7 +57,7 @@ public class FolderTitleLookupImpl implements FolderTitleLookup {
 		Stream<Map.Entry<String, Field>> stream = fieldsMapEntrySet.stream();
 
 		return stream.filter(
-			this::isTitleFieldEntry
+			this::_isTitleFieldEntry
 		).findAny(
 		).map(
 			Map.Entry::getValue
@@ -68,7 +68,7 @@ public class FolderTitleLookupImpl implements FolderTitleLookup {
 		);
 	}
 
-	protected SearchContext getSearchContext(long curFolderId) {
+	private SearchContext _getSearchContext(long curFolderId) {
 		SearchContext searchContext = SearchContextFactory.getInstance(
 			_httpServletRequest);
 
@@ -79,7 +79,7 @@ public class FolderTitleLookupImpl implements FolderTitleLookup {
 		return searchContext;
 	}
 
-	protected boolean isTitleFieldEntry(Map.Entry<String, Field> entry) {
+	private boolean _isTitleFieldEntry(Map.Entry<String, Field> entry) {
 		String key = entry.getKey();
 
 		if (!key.startsWith(Field.TITLE) || key.endsWith("_sortable")) {
@@ -89,9 +89,9 @@ public class FolderTitleLookupImpl implements FolderTitleLookup {
 		return true;
 	}
 
-	protected Hits searchFolder(long curFolderId) {
+	private Hits _searchFolder(long curFolderId) {
 		try {
-			return _folderSearcher.search(getSearchContext(curFolderId));
+			return _folderSearcher.search(_getSearchContext(curFolderId));
 		}
 		catch (SearchException searchException) {
 			throw new RuntimeException(searchException);

@@ -38,7 +38,7 @@ public class ElasticsearchEngineAdapterFixture {
 
 	public void setUp() {
 		_searchEngineAdapter = createSearchEngineAdapter(
-			_elasticsearchClientResolver, getElasticsearchDocumentFactory(),
+			_elasticsearchClientResolver, _getElasticsearchDocumentFactory(),
 			_facetProcessor);
 	}
 
@@ -110,14 +110,6 @@ public class ElasticsearchEngineAdapterFixture {
 		};
 	}
 
-	protected ElasticsearchDocumentFactory getElasticsearchDocumentFactory() {
-		if (_elasticsearchDocumentFactory != null) {
-			return _elasticsearchDocumentFactory;
-		}
-
-		return new DefaultElasticsearchDocumentFactory();
-	}
-
 	protected void setElasticsearchClientResolver(
 		ElasticsearchClientResolver elasticsearchClientResolver) {
 
@@ -134,6 +126,14 @@ public class ElasticsearchEngineAdapterFixture {
 		FacetProcessor<SearchRequestBuilder> facetProcessor) {
 
 		_facetProcessor = facetProcessor;
+	}
+
+	private ElasticsearchDocumentFactory _getElasticsearchDocumentFactory() {
+		if (_elasticsearchDocumentFactory != null) {
+			return _elasticsearchDocumentFactory;
+		}
+
+		return new DefaultElasticsearchDocumentFactory();
 	}
 
 	private ElasticsearchClientResolver _elasticsearchClientResolver;

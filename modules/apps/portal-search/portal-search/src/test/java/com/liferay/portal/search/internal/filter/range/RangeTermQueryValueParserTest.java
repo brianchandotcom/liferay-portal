@@ -44,9 +44,9 @@ public class RangeTermQueryValueParserTest {
 
 		Assert.assertNotNull(rangeTermQueryValue);
 
-		assertIncludesLower(rangeTermQueryValue);
-		assertDoesNotIncludeUpper(rangeTermQueryValue);
-		assertBounds(rangeTermQueryValue, "now/d", "now+1d/d");
+		_assertIncludesLower(rangeTermQueryValue);
+		_assertDoesNotIncludeUpper(rangeTermQueryValue);
+		_assertBounds(rangeTermQueryValue, "now/d", "now+1d/d");
 	}
 
 	@Test
@@ -56,9 +56,9 @@ public class RangeTermQueryValueParserTest {
 
 		Assert.assertNotNull(rangeTermQueryValue);
 
-		assertIncludesLower(rangeTermQueryValue);
-		assertIncludesUpper(rangeTermQueryValue);
-		assertBounds(rangeTermQueryValue, "now/d", "now+1d/d");
+		_assertIncludesLower(rangeTermQueryValue);
+		_assertIncludesUpper(rangeTermQueryValue);
+		_assertBounds(rangeTermQueryValue, "now/d", "now+1d/d");
 	}
 
 	@Test
@@ -68,9 +68,9 @@ public class RangeTermQueryValueParserTest {
 
 		Assert.assertNotNull(rangeTermQueryValue);
 
-		assertDoesNotIncludeLower(rangeTermQueryValue);
-		assertIncludesUpper(rangeTermQueryValue);
-		assertBounds(rangeTermQueryValue, "now/d", "now+1d/d");
+		_assertDoesNotIncludeLower(rangeTermQueryValue);
+		_assertIncludesUpper(rangeTermQueryValue);
+		_assertBounds(rangeTermQueryValue, "now/d", "now+1d/d");
 	}
 
 	@Test
@@ -97,11 +97,13 @@ public class RangeTermQueryValueParserTest {
 		Assert.assertNotNull(rangeTermQueryValue);
 
 		Assert.assertFalse(rangeTermQueryValue.isIncludesLower());
-		assertDoesNotIncludeUpper(rangeTermQueryValue);
-		assertBounds(rangeTermQueryValue, "now/d", "now+1d/d");
+		_assertDoesNotIncludeUpper(rangeTermQueryValue);
+		_assertBounds(rangeTermQueryValue, "now/d", "now+1d/d");
 	}
 
-	protected void assertBounds(
+	protected RangeTermQueryValueParser rangeTermQueryValueParser;
+
+	private void _assertBounds(
 		RangeTermQueryValue rangeTermQueryValue, String lowerBound,
 		String upperBound) {
 
@@ -109,30 +111,24 @@ public class RangeTermQueryValueParserTest {
 		Assert.assertEquals(upperBound, rangeTermQueryValue.getUpperBound());
 	}
 
-	protected void assertDoesNotIncludeLower(
+	private void _assertDoesNotIncludeLower(
 		RangeTermQueryValue rangeTermQueryValue) {
 
 		Assert.assertFalse(rangeTermQueryValue.isIncludesLower());
 	}
 
-	protected void assertDoesNotIncludeUpper(
+	private void _assertDoesNotIncludeUpper(
 		RangeTermQueryValue rangeTermQueryValue) {
 
 		Assert.assertFalse(rangeTermQueryValue.isIncludesUpper());
 	}
 
-	protected void assertIncludesLower(
-		RangeTermQueryValue rangeTermQueryValue) {
-
+	private void _assertIncludesLower(RangeTermQueryValue rangeTermQueryValue) {
 		Assert.assertTrue(rangeTermQueryValue.isIncludesLower());
 	}
 
-	protected void assertIncludesUpper(
-		RangeTermQueryValue rangeTermQueryValue) {
-
+	private void _assertIncludesUpper(RangeTermQueryValue rangeTermQueryValue) {
 		Assert.assertTrue(rangeTermQueryValue.isIncludesUpper());
 	}
-
-	protected RangeTermQueryValueParser rangeTermQueryValueParser;
 
 }

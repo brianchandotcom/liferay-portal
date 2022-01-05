@@ -82,7 +82,7 @@ public class LowLevelSearchOptionsPortletSharedSearchContributor
 				lowLevelSearchOptionsPortletPreferences.getIndexesOptional())
 		).withSearchContext(
 			searchContext -> {
-				applyAttributes(
+				_applyAttributes(
 					lowLevelSearchOptionsPortletPreferences, searchContext);
 
 				HttpServletRequest httpServletRequest =
@@ -96,7 +96,7 @@ public class LowLevelSearchOptionsPortletSharedSearchContributor
 		);
 	}
 
-	protected void applyAttributes(
+	private void _applyAttributes(
 		LowLevelSearchOptionsPortletPreferences
 			lowLevelSearchOptionsPortletPreferences,
 		SearchContext searchContext) {

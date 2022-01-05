@@ -53,7 +53,7 @@ public class ModifiedFacetPortletPreferencesImpl
 		String rangesString = getRangesString();
 
 		if (Validator.isBlank(rangesString)) {
-			return getDefaultRangesJSONArray();
+			return _getDefaultRangesJSONArray();
 		}
 
 		try {
@@ -64,7 +64,7 @@ public class ModifiedFacetPortletPreferencesImpl
 				"Unable to create a JSON array from: " + rangesString,
 				jsonException);
 
-			return getDefaultRangesJSONArray();
+			return _getDefaultRangesJSONArray();
 		}
 	}
 
@@ -75,7 +75,7 @@ public class ModifiedFacetPortletPreferencesImpl
 			StringPool.BLANK);
 	}
 
-	protected JSONArray getDefaultRangesJSONArray() {
+	private JSONArray _getDefaultRangesJSONArray() {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		for (int i = 0; i < _LABELS.length; i++) {

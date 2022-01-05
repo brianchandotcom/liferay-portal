@@ -69,7 +69,7 @@ public class ModifiedFacetPortletConfigurationAction
 				JavaConstants.JAVAX_PORTLET_REQUEST);
 
 		ModifiedFacetDisplayBuilder modifiedFacetDisplayBuilder =
-			createModifiedFacetDisplayBuilder(renderRequest);
+			_createModifiedFacetDisplayBuilder(renderRequest);
 
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -106,7 +106,7 @@ public class ModifiedFacetPortletConfigurationAction
 		}
 	}
 
-	protected ModifiedFacetDisplayBuilder createModifiedFacetDisplayBuilder(
+	private ModifiedFacetDisplayBuilder _createModifiedFacetDisplayBuilder(
 		RenderRequest renderRequest) {
 
 		try {

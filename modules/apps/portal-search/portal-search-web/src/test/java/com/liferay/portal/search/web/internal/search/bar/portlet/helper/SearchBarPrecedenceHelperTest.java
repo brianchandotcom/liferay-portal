@@ -70,11 +70,11 @@ public class SearchBarPrecedenceHelperTest {
 
 	@Test
 	public void testDifferentDestinationDifferentFederatedKey() {
-		setThemeDisplayLayoutFriendlyURL(RandomTestUtil.randomString());
+		_setThemeDisplayLayoutFriendlyURL(RandomTestUtil.randomString());
 
-		addSearchBarPortletToHeader(RandomTestUtil.randomString());
+		_addSearchBarPortletToHeader(RandomTestUtil.randomString());
 
-		Portlet portlet = addSearchBarPortletToPage(
+		Portlet portlet = _addSearchBarPortletToPage(
 			RandomTestUtil.randomString());
 
 		Assert.assertFalse(
@@ -83,13 +83,13 @@ public class SearchBarPrecedenceHelperTest {
 
 	@Test
 	public void testDifferentDestinationSameFederatedKey() {
-		setThemeDisplayLayoutFriendlyURL(RandomTestUtil.randomString());
+		_setThemeDisplayLayoutFriendlyURL(RandomTestUtil.randomString());
 
 		String federatedSearchKey = RandomTestUtil.randomString();
 
-		addSearchBarPortletToHeader(federatedSearchKey);
+		_addSearchBarPortletToHeader(federatedSearchKey);
 
-		Portlet portlet = addSearchBarPortletToPage(federatedSearchKey);
+		Portlet portlet = _addSearchBarPortletToPage(federatedSearchKey);
 
 		Assert.assertFalse(
 			isSearchBarInBodyWithHeaderSearchBarAlreadyPresent(portlet));
@@ -97,12 +97,12 @@ public class SearchBarPrecedenceHelperTest {
 
 	@Test
 	public void testOverlappingDestinationDifferentFederatedKey() {
-		setThemeDisplayLayoutFriendlyURL(
+		_setThemeDisplayLayoutFriendlyURL(
 			_DESTINATION + RandomTestUtil.randomString());
 
-		addSearchBarPortletToHeader(RandomTestUtil.randomString());
+		_addSearchBarPortletToHeader(RandomTestUtil.randomString());
 
-		Portlet portlet = addSearchBarPortletToPage(
+		Portlet portlet = _addSearchBarPortletToPage(
 			RandomTestUtil.randomString());
 
 		Assert.assertFalse(
@@ -111,14 +111,14 @@ public class SearchBarPrecedenceHelperTest {
 
 	@Test
 	public void testOverlappingDestinationSameFederatedKey() {
-		setThemeDisplayLayoutFriendlyURL(
+		_setThemeDisplayLayoutFriendlyURL(
 			_DESTINATION + RandomTestUtil.randomString());
 
 		String federatedSearchKey = RandomTestUtil.randomString();
 
-		addSearchBarPortletToHeader(federatedSearchKey);
+		_addSearchBarPortletToHeader(federatedSearchKey);
 
-		Portlet portlet = addSearchBarPortletToPage(federatedSearchKey);
+		Portlet portlet = _addSearchBarPortletToPage(federatedSearchKey);
 
 		Assert.assertFalse(
 			isSearchBarInBodyWithHeaderSearchBarAlreadyPresent(portlet));
@@ -126,11 +126,11 @@ public class SearchBarPrecedenceHelperTest {
 
 	@Test
 	public void testSameDestinationDifferentFederatedKey() {
-		setThemeDisplayLayoutFriendlyURL(_DESTINATION);
+		_setThemeDisplayLayoutFriendlyURL(_DESTINATION);
 
-		addSearchBarPortletToHeader(RandomTestUtil.randomString());
+		_addSearchBarPortletToHeader(RandomTestUtil.randomString());
 
-		Portlet portlet = addSearchBarPortletToPage(
+		Portlet portlet = _addSearchBarPortletToPage(
 			RandomTestUtil.randomString());
 
 		Assert.assertFalse(
@@ -139,19 +139,27 @@ public class SearchBarPrecedenceHelperTest {
 
 	@Test
 	public void testSameDestinationSameFederatedKey() {
-		setThemeDisplayLayoutFriendlyURL(_DESTINATION);
+		_setThemeDisplayLayoutFriendlyURL(_DESTINATION);
 
 		String federatedSearchKey = RandomTestUtil.randomString();
 
-		addSearchBarPortletToHeader(federatedSearchKey);
+		_addSearchBarPortletToHeader(federatedSearchKey);
 
-		Portlet portlet = addSearchBarPortletToPage(federatedSearchKey);
+		Portlet portlet = _addSearchBarPortletToPage(federatedSearchKey);
 
 		Assert.assertTrue(
 			isSearchBarInBodyWithHeaderSearchBarAlreadyPresent(portlet));
 	}
 
-	protected Portlet addPortlet(
+	protected boolean isSearchBarInBodyWithHeaderSearchBarAlreadyPresent(
+		Portlet portlet) {
+
+		return _searchBarPrecedenceHelper.
+			isSearchBarInBodyWithHeaderSearchBarAlreadyPresent(
+				_themeDisplay, portlet.getPortletId());
+	}
+
+	private Portlet _addPortlet(
 		String portletName, String portletId, String federatedSearchKey,
 		boolean isStatic) {
 
@@ -177,31 +185,15 @@ public class SearchBarPrecedenceHelperTest {
 		return portlet;
 	}
 
-	protected void addSearchBarPortletToHeader(String federatedSearchKey) {
-		addPortlet(
+	private void _addSearchBarPortletToHeader(String federatedSearchKey) {
+		_addPortlet(
 			SearchBarPortletKeys.SEARCH_BAR, "headerSearchBarPortletId",
 			federatedSearchKey, true);
 	}
 
-	protected Portlet addSearchBarPortletToPage(String federatedSearchKey) {
-		return addPortlet(
+	private Portlet _addSearchBarPortletToPage(String federatedSearchKey) {
+		return _addPortlet(
 			"searchBar", "searchBarPortletId", federatedSearchKey, false);
-	}
-
-	protected boolean isSearchBarInBodyWithHeaderSearchBarAlreadyPresent(
-		Portlet portlet) {
-
-		return _searchBarPrecedenceHelper.
-			isSearchBarInBodyWithHeaderSearchBarAlreadyPresent(
-				_themeDisplay, portlet.getPortletId());
-	}
-
-	protected void setThemeDisplayLayoutFriendlyURL(String destination) {
-		Mockito.when(
-			_themeDisplay.getLayoutFriendlyURL(_layout)
-		).thenReturn(
-			"/" + destination
-		);
 	}
 
 	private Layout _createLayout(List<Portlet> portlets) {
@@ -324,6 +316,14 @@ public class SearchBarPrecedenceHelperTest {
 		);
 
 		return themeDisplay;
+	}
+
+	private void _setThemeDisplayLayoutFriendlyURL(String destination) {
+		Mockito.when(
+			_themeDisplay.getLayoutFriendlyURL(_layout)
+		).thenReturn(
+			"/" + destination
+		);
 	}
 
 	private static final String _DESTINATION = RandomTestUtil.randomString();

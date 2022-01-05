@@ -75,270 +75,36 @@ public class SearchDisplayContextTest {
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
 
-		themeDisplay = createThemeDisplay();
+		themeDisplay = _createThemeDisplay();
 
-		setUpHttpServletRequest();
-		setUpPortletURLFactory();
-		setUpRenderRequest();
-		setUpSearchContextFactory();
-		setUpSearcher();
-		setUpSearchResponseBuilderFactory();
+		_setUpHttpServletRequest();
+		_setUpPortletURLFactory();
+		_setUpRenderRequest();
+		_setUpSearchContextFactory();
+		_setUpSearcher();
+		_setUpSearchResponseBuilderFactory();
 	}
 
 	@Test
 	public void testConfigurationKeywordsEmptySkipsSearch() throws Exception {
-		assertSearchSkippedAndNullResults(
+		_assertSearchSkippedAndNullResults(
 			null,
 			new ConfigurationRenderRequest(renderRequest, portletPreferences));
 	}
 
 	@Test
 	public void testSearchKeywordsBlank() throws Exception {
-		assertSearchKeywords(StringPool.BLANK, StringPool.BLANK);
+		_assertSearchKeywords(StringPool.BLANK, StringPool.BLANK);
 	}
 
 	@Test
 	public void testSearchKeywordsNullWord() throws Exception {
-		assertSearchKeywords(StringPool.NULL, StringPool.NULL);
+		_assertSearchKeywords(StringPool.NULL, StringPool.NULL);
 	}
 
 	@Test
 	public void testSearchKeywordsSpaces() throws Exception {
-		assertSearchKeywords(StringPool.DOUBLE_SPACE, StringPool.BLANK);
-	}
-
-	protected void assertSearchKeywords(
-			String requestKeywords, String searchDisplayContextKeywords)
-		throws Exception {
-
-		SearchDisplayContext searchDisplayContext = createSearchDisplayContext(
-			requestKeywords, renderRequest);
-
-		Assert.assertEquals(
-			searchDisplayContextKeywords, searchDisplayContext.getKeywords());
-
-		Assert.assertNotNull(searchDisplayContext.getHits());
-		Assert.assertNotNull(searchDisplayContext.getSearchContainer());
-		Assert.assertNotNull(searchDisplayContext.getSearchContext());
-
-		SearchContext searchContext = searchDisplayContext.getSearchContext();
-
-		Mockito.verify(
-			searcher
-		).search(
-			Mockito.any()
-		);
-
-		Assert.assertEquals(
-			searchDisplayContextKeywords, searchContext.getKeywords());
-	}
-
-	protected void assertSearchSkippedAndNullResults(
-			String requestKeywords, RenderRequest renderRequest)
-		throws Exception {
-
-		SearchDisplayContext searchDisplayContext = createSearchDisplayContext(
-			requestKeywords, renderRequest);
-
-		Assert.assertNull(searchDisplayContext.getHits());
-		Assert.assertNull(searchDisplayContext.getKeywords());
-		Assert.assertNull(searchDisplayContext.getSearchContainer());
-		Assert.assertNull(searchDisplayContext.getSearchContext());
-
-		Mockito.verifyZeroInteractions(searcher);
-	}
-
-	protected JSONArray createJSONArray() {
-		JSONArray jsonArray = Mockito.mock(JSONArray.class);
-
-		Mockito.doReturn(
-			1
-		).when(
-			jsonArray
-		).length();
-
-		Mockito.doReturn(
-			RandomTestUtil.randomString()
-		).when(
-			jsonArray
-		).getString(
-			0
-		);
-
-		return jsonArray;
-	}
-
-	protected JSONFactory createJSONFactory() {
-		JSONFactory jsonFactory = Mockito.mock(JSONFactory.class);
-
-		Mockito.doReturn(
-			createJSONObject()
-		).when(
-			jsonFactory
-		).createJSONObject();
-
-		return jsonFactory;
-	}
-
-	protected JSONObject createJSONObject() {
-		JSONObject jsonObject = Mockito.mock(JSONObject.class);
-
-		Mockito.doReturn(
-			true
-		).when(
-			jsonObject
-		).has(
-			"values"
-		);
-
-		Mockito.doReturn(
-			createJSONArray()
-		).when(
-			jsonObject
-		).getJSONArray(
-			"values"
-		);
-
-		return jsonObject;
-	}
-
-	protected Portal createPortal(
-			ThemeDisplay themeDisplay, RenderRequest renderRequest)
-		throws Exception {
-
-		Portal portal = Mockito.mock(Portal.class);
-
-		Mockito.doReturn(
-			httpServletRequest
-		).when(
-			portal
-		).getHttpServletRequest(
-			renderRequest
-		);
-
-		return portal;
-	}
-
-	protected SearchDisplayContext createSearchDisplayContext(
-			String keywords, RenderRequest renderRequest)
-		throws Exception {
-
-		setUpRequestKeywords(keywords);
-
-		PropsTestUtil.setProps(Collections.emptyMap());
-
-		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
-
-		jsonFactoryUtil.setJSONFactory(createJSONFactory());
-
-		return new SearchDisplayContext(
-			renderRequest, portletPreferences,
-			createPortal(themeDisplay, renderRequest), Mockito.mock(Html.class),
-			Mockito.mock(Language.class), searcher,
-			Mockito.mock(IndexSearchPropsValues.class), portletURLFactory,
-			Mockito.mock(SummaryBuilderFactory.class), searchContextFactory,
-			searchRequestBuilderFactory, new SearchFacetTracker());
-	}
-
-	protected ThemeDisplay createThemeDisplay() throws Exception {
-		ThemeDisplay themeDisplay = new ThemeDisplay();
-
-		themeDisplay.setCompany(Mockito.mock(Company.class));
-		themeDisplay.setUser(Mockito.mock(User.class));
-
-		return themeDisplay;
-	}
-
-	protected void setUpHttpServletRequest() throws Exception {
-		Mockito.doReturn(
-			themeDisplay
-		).when(
-			httpServletRequest
-		).getAttribute(
-			WebKeys.THEME_DISPLAY
-		);
-	}
-
-	protected void setUpPortletURLFactory() throws Exception {
-		Mockito.doReturn(
-			Mockito.mock(PortletURL.class)
-		).when(
-			portletURLFactory
-		).getPortletURL();
-	}
-
-	protected void setUpRenderRequest() throws Exception {
-		Mockito.doReturn(
-			themeDisplay
-		).when(
-			renderRequest
-		).getAttribute(
-			WebKeys.THEME_DISPLAY
-		);
-	}
-
-	protected void setUpRequestKeywords(String keywords) {
-		Mockito.doReturn(
-			keywords
-		).when(
-			httpServletRequest
-		).getParameter(
-			SearchPortletParameterNames.KEYWORDS
-		);
-
-		Mockito.doReturn(
-			keywords
-		).when(
-			renderRequest
-		).getParameter(
-			SearchPortletParameterNames.KEYWORDS
-		);
-	}
-
-	protected void setUpSearchContextFactory() throws Exception {
-		Mockito.doReturn(
-			new SearchContext()
-		).when(
-			searchContextFactory
-		).getSearchContext(
-			Mockito.any(), Mockito.any(), Mockito.anyLong(), Mockito.any(),
-			Mockito.any(), Mockito.any(), Mockito.any(), Mockito.anyLong(),
-			Mockito.any(), Mockito.anyLong()
-		);
-	}
-
-	protected void setUpSearcher() throws Exception {
-		Mockito.doReturn(
-			Mockito.mock(Hits.class)
-		).when(
-			searchResponse
-		).withHitsGet(
-			Mockito.any()
-		);
-
-		Mockito.doReturn(
-			searchResponse
-		).when(
-			searcher
-		).search(
-			Mockito.any()
-		);
-	}
-
-	protected void setUpSearchResponseBuilderFactory() {
-		Mockito.doReturn(
-			searchResponseBuilder
-		).when(
-			searchResponseBuilderFactory
-		).builder(
-			Mockito.any()
-		);
-
-		Mockito.doReturn(
-			searchResponse
-		).when(
-			searchResponseBuilder
-		).build();
+		_assertSearchKeywords(StringPool.DOUBLE_SPACE, StringPool.BLANK);
 	}
 
 	@Mock
@@ -372,5 +138,239 @@ public class SearchDisplayContextTest {
 	protected SearchResponseBuilderFactory searchResponseBuilderFactory;
 
 	protected ThemeDisplay themeDisplay;
+
+	private void _assertSearchKeywords(
+			String requestKeywords, String searchDisplayContextKeywords)
+		throws Exception {
+
+		SearchDisplayContext searchDisplayContext = _createSearchDisplayContext(
+			requestKeywords, renderRequest);
+
+		Assert.assertEquals(
+			searchDisplayContextKeywords, searchDisplayContext.getKeywords());
+
+		Assert.assertNotNull(searchDisplayContext.getHits());
+		Assert.assertNotNull(searchDisplayContext.getSearchContainer());
+		Assert.assertNotNull(searchDisplayContext.getSearchContext());
+
+		SearchContext searchContext = searchDisplayContext.getSearchContext();
+
+		Mockito.verify(
+			searcher
+		).search(
+			Mockito.any()
+		);
+
+		Assert.assertEquals(
+			searchDisplayContextKeywords, searchContext.getKeywords());
+	}
+
+	private void _assertSearchSkippedAndNullResults(
+			String requestKeywords, RenderRequest renderRequest)
+		throws Exception {
+
+		SearchDisplayContext searchDisplayContext = _createSearchDisplayContext(
+			requestKeywords, renderRequest);
+
+		Assert.assertNull(searchDisplayContext.getHits());
+		Assert.assertNull(searchDisplayContext.getKeywords());
+		Assert.assertNull(searchDisplayContext.getSearchContainer());
+		Assert.assertNull(searchDisplayContext.getSearchContext());
+
+		Mockito.verifyZeroInteractions(searcher);
+	}
+
+	private JSONArray _createJSONArray() {
+		JSONArray jsonArray = Mockito.mock(JSONArray.class);
+
+		Mockito.doReturn(
+			1
+		).when(
+			jsonArray
+		).length();
+
+		Mockito.doReturn(
+			RandomTestUtil.randomString()
+		).when(
+			jsonArray
+		).getString(
+			0
+		);
+
+		return jsonArray;
+	}
+
+	private JSONFactory _createJSONFactory() {
+		JSONFactory jsonFactory = Mockito.mock(JSONFactory.class);
+
+		Mockito.doReturn(
+			_createJSONObject()
+		).when(
+			jsonFactory
+		).createJSONObject();
+
+		return jsonFactory;
+	}
+
+	private JSONObject _createJSONObject() {
+		JSONObject jsonObject = Mockito.mock(JSONObject.class);
+
+		Mockito.doReturn(
+			true
+		).when(
+			jsonObject
+		).has(
+			"values"
+		);
+
+		Mockito.doReturn(
+			_createJSONArray()
+		).when(
+			jsonObject
+		).getJSONArray(
+			"values"
+		);
+
+		return jsonObject;
+	}
+
+	private Portal _createPortal(
+			ThemeDisplay themeDisplay, RenderRequest renderRequest)
+		throws Exception {
+
+		Portal portal = Mockito.mock(Portal.class);
+
+		Mockito.doReturn(
+			httpServletRequest
+		).when(
+			portal
+		).getHttpServletRequest(
+			renderRequest
+		);
+
+		return portal;
+	}
+
+	private SearchDisplayContext _createSearchDisplayContext(
+			String keywords, RenderRequest renderRequest)
+		throws Exception {
+
+		_setUpRequestKeywords(keywords);
+
+		PropsTestUtil.setProps(Collections.emptyMap());
+
+		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
+
+		jsonFactoryUtil.setJSONFactory(_createJSONFactory());
+
+		return new SearchDisplayContext(
+			renderRequest, portletPreferences,
+			_createPortal(themeDisplay, renderRequest),
+			Mockito.mock(Html.class), Mockito.mock(Language.class), searcher,
+			Mockito.mock(IndexSearchPropsValues.class), portletURLFactory,
+			Mockito.mock(SummaryBuilderFactory.class), searchContextFactory,
+			searchRequestBuilderFactory, new SearchFacetTracker());
+	}
+
+	private ThemeDisplay _createThemeDisplay() throws Exception {
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		themeDisplay.setCompany(Mockito.mock(Company.class));
+		themeDisplay.setUser(Mockito.mock(User.class));
+
+		return themeDisplay;
+	}
+
+	private void _setUpHttpServletRequest() throws Exception {
+		Mockito.doReturn(
+			themeDisplay
+		).when(
+			httpServletRequest
+		).getAttribute(
+			WebKeys.THEME_DISPLAY
+		);
+	}
+
+	private void _setUpPortletURLFactory() throws Exception {
+		Mockito.doReturn(
+			Mockito.mock(PortletURL.class)
+		).when(
+			portletURLFactory
+		).getPortletURL();
+	}
+
+	private void _setUpRenderRequest() throws Exception {
+		Mockito.doReturn(
+			themeDisplay
+		).when(
+			renderRequest
+		).getAttribute(
+			WebKeys.THEME_DISPLAY
+		);
+	}
+
+	private void _setUpRequestKeywords(String keywords) {
+		Mockito.doReturn(
+			keywords
+		).when(
+			httpServletRequest
+		).getParameter(
+			SearchPortletParameterNames.KEYWORDS
+		);
+
+		Mockito.doReturn(
+			keywords
+		).when(
+			renderRequest
+		).getParameter(
+			SearchPortletParameterNames.KEYWORDS
+		);
+	}
+
+	private void _setUpSearchContextFactory() throws Exception {
+		Mockito.doReturn(
+			new SearchContext()
+		).when(
+			searchContextFactory
+		).getSearchContext(
+			Mockito.any(), Mockito.any(), Mockito.anyLong(), Mockito.any(),
+			Mockito.any(), Mockito.any(), Mockito.any(), Mockito.anyLong(),
+			Mockito.any(), Mockito.anyLong()
+		);
+	}
+
+	private void _setUpSearcher() throws Exception {
+		Mockito.doReturn(
+			Mockito.mock(Hits.class)
+		).when(
+			searchResponse
+		).withHitsGet(
+			Mockito.any()
+		);
+
+		Mockito.doReturn(
+			searchResponse
+		).when(
+			searcher
+		).search(
+			Mockito.any()
+		);
+	}
+
+	private void _setUpSearchResponseBuilderFactory() {
+		Mockito.doReturn(
+			searchResponseBuilder
+		).when(
+			searchResponseBuilderFactory
+		).builder(
+			Mockito.any()
+		);
+
+		Mockito.doReturn(
+			searchResponse
+		).when(
+			searchResponseBuilder
+		).build();
+	}
 
 }

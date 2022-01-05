@@ -80,7 +80,7 @@ public class SimpleKeywordTokenizer implements KeywordTokenizer {
 			keyword = keyword.trim();
 
 			if (!keyword.isEmpty()) {
-				tokenizeBySpace(keyword, tokens);
+				_tokenizeBySpace(keyword, tokens);
 			}
 
 			return;
@@ -91,7 +91,7 @@ public class SimpleKeywordTokenizer implements KeywordTokenizer {
 		token = token.trim();
 
 		if (!token.isEmpty()) {
-			tokenizeBySpace(token, tokens);
+			_tokenizeBySpace(token, tokens);
 		}
 
 		token = keyword.substring(start, end + 1);
@@ -121,7 +121,11 @@ public class SimpleKeywordTokenizer implements KeywordTokenizer {
 		tokenize(keyword, tokens, start, end);
 	}
 
-	protected void tokenizeBySpace(String keyword, List<String> tokens) {
+	private String _normalizeWhitespace(String keyword) {
+		return StringUtil.replace(keyword, _IDEOGRAPHIC_SPACE, CharPool.SPACE);
+	}
+
+	private void _tokenizeBySpace(String keyword, List<String> tokens) {
 		String[] keywordTokens = split(keyword);
 
 		for (String keywordToken : keywordTokens) {
@@ -131,10 +135,6 @@ public class SimpleKeywordTokenizer implements KeywordTokenizer {
 				tokens.add(keyword);
 			}
 		}
-	}
-
-	private String _normalizeWhitespace(String keyword) {
-		return StringUtil.replace(keyword, _IDEOGRAPHIC_SPACE, CharPool.SPACE);
 	}
 
 	private static final char _IDEOGRAPHIC_SPACE = '\u3000';

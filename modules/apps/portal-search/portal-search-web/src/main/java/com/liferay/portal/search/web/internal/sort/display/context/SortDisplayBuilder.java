@@ -62,7 +62,7 @@ public class SortDisplayBuilder {
 		SortDisplayContext sortDisplayContext = new SortDisplayContext();
 
 		List<SortTermDisplayContext> sortTermDisplayContexts =
-			buildTermDisplayContexts();
+			_buildTermDisplayContexts();
 
 		sortDisplayContext.setAnySelected(
 			isAnySelected(sortTermDisplayContexts));
@@ -100,41 +100,6 @@ public class SortDisplayBuilder {
 		_renderNothing = renderNothing;
 
 		return this;
-	}
-
-	protected SortTermDisplayContext buildTermDisplayContext(
-		String label, String field) {
-
-		SortTermDisplayContext sortTermDisplayContext =
-			new SortTermDisplayContext();
-
-		sortTermDisplayContext.setLabel(label);
-		sortTermDisplayContext.setLanguageLabel(
-			_language.get(
-				_portal.getHttpServletRequest(_renderRequest), label));
-		sortTermDisplayContext.setField(field);
-		sortTermDisplayContext.setSelected(_selectedFields.contains(field));
-
-		return sortTermDisplayContext;
-	}
-
-	protected List<SortTermDisplayContext> buildTermDisplayContexts() {
-		List<SortTermDisplayContext> sortTermDisplayContexts =
-			new ArrayList<>();
-
-		JSONArray fieldsJSONArray =
-			_sortPortletPreferences.getFieldsJSONArray();
-
-		for (int i = 0; i < fieldsJSONArray.length(); i++) {
-			JSONObject jsonObject = fieldsJSONArray.getJSONObject(i);
-
-			sortTermDisplayContexts.add(
-				buildTermDisplayContext(
-					jsonObject.getString("label"),
-					jsonObject.getString("field")));
-		}
-
-		return sortTermDisplayContexts;
 	}
 
 	protected long getDisplayStyleGroupId() {
@@ -189,6 +154,41 @@ public class SortDisplayBuilder {
 		}
 
 		return false;
+	}
+
+	private SortTermDisplayContext _buildTermDisplayContext(
+		String label, String field) {
+
+		SortTermDisplayContext sortTermDisplayContext =
+			new SortTermDisplayContext();
+
+		sortTermDisplayContext.setLabel(label);
+		sortTermDisplayContext.setLanguageLabel(
+			_language.get(
+				_portal.getHttpServletRequest(_renderRequest), label));
+		sortTermDisplayContext.setField(field);
+		sortTermDisplayContext.setSelected(_selectedFields.contains(field));
+
+		return sortTermDisplayContext;
+	}
+
+	private List<SortTermDisplayContext> _buildTermDisplayContexts() {
+		List<SortTermDisplayContext> sortTermDisplayContexts =
+			new ArrayList<>();
+
+		JSONArray fieldsJSONArray =
+			_sortPortletPreferences.getFieldsJSONArray();
+
+		for (int i = 0; i < fieldsJSONArray.length(); i++) {
+			JSONObject jsonObject = fieldsJSONArray.getJSONObject(i);
+
+			sortTermDisplayContexts.add(
+				_buildTermDisplayContext(
+					jsonObject.getString("label"),
+					jsonObject.getString("field")));
+		}
+
+		return sortTermDisplayContexts;
 	}
 
 	private final Language _language;

@@ -61,7 +61,7 @@ public class ElasticsearchConnection {
 			_preConnectElasticsearchConnectionConsumer.accept(this);
 		}
 
-		_restHighLevelClient = createRestHighLevelClient();
+		_restHighLevelClient = _createRestHighLevelClient();
 	}
 
 	public String getConnectionId() {
@@ -140,7 +140,7 @@ public class ElasticsearchConnection {
 		_userName = userName;
 	}
 
-	protected RestHighLevelClient createRestHighLevelClient() {
+	private RestHighLevelClient _createRestHighLevelClient() {
 		return RestHighLevelClientFactory.builder(
 		).authenticationEnabled(
 			_authenticationEnabled

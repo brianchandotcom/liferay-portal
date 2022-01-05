@@ -115,7 +115,7 @@ public class CompanyIndexFactoryTest {
 
 		createIndices();
 
-		Settings settings = getIndexSettings();
+		Settings settings = _getIndexSettings();
 
 		Assert.assertEquals("1", settings.get("index.number_of_replicas"));
 		Assert.assertEquals("2", settings.get("index.number_of_shards"));
@@ -129,7 +129,7 @@ public class CompanyIndexFactoryTest {
 			loadAdditionalTypeMappings()
 		);
 
-		assertAdditionalTypeMappings();
+		_assertAdditionalTypeMappings();
 	}
 
 	@Test
@@ -147,7 +147,7 @@ public class CompanyIndexFactoryTest {
 
 			});
 
-		assertAdditionalTypeMappings();
+		_assertAdditionalTypeMappings();
 	}
 
 	@Test
@@ -155,10 +155,10 @@ public class CompanyIndexFactoryTest {
 		Mockito.when(
 			_elasticsearchConfigurationWrapper.additionalTypeMappings()
 		).thenReturn(
-			loadAdditionalTypeMappingsWithRootType()
+			_loadAdditionalTypeMappingsWithRootType()
 		);
 
-		assertAdditionalTypeMappings();
+		_assertAdditionalTypeMappings();
 	}
 
 	@Test
@@ -173,12 +173,12 @@ public class CompanyIndexFactoryTest {
 					String indexName, TypeMappingsHelper typeMappingsHelper) {
 
 					typeMappingsHelper.addTypeMappings(
-						indexName, loadAdditionalTypeMappingsWithRootType());
+						indexName, _loadAdditionalTypeMappingsWithRootType());
 				}
 
 			});
 
-		assertAdditionalTypeMappings();
+		_assertAdditionalTypeMappings();
 	}
 
 	@Test
@@ -228,7 +228,7 @@ public class CompanyIndexFactoryTest {
 	public void testDefaultIndexSettings() throws Exception {
 		createIndices();
 
-		Settings settings = getIndexSettings();
+		Settings settings = _getIndexSettings();
 
 		Assert.assertEquals("0", settings.get("index.number_of_replicas"));
 		Assert.assertEquals("1", settings.get("index.number_of_shards"));
@@ -238,7 +238,7 @@ public class CompanyIndexFactoryTest {
 	public void testDefaultIndices() throws Exception {
 		createIndices();
 
-		assertMappings(Field.COMPANY_ID, Field.ENTRY_CLASS_NAME);
+		_assertMappings(Field.COMPANY_ID, Field.ENTRY_CLASS_NAME);
 	}
 
 	@Test
@@ -262,7 +262,7 @@ public class CompanyIndexFactoryTest {
 
 		createIndices();
 
-		Settings settings = getIndexSettings();
+		Settings settings = _getIndexSettings();
 
 		Assert.assertEquals("2", settings.get("index.number_of_replicas"));
 		Assert.assertEquals("3", settings.get("index.number_of_shards"));
@@ -282,7 +282,7 @@ public class CompanyIndexFactoryTest {
 					String indexName, TypeMappingsHelper typeMappingsHelper) {
 
 					typeMappingsHelper.addTypeMappings(
-						indexName, replaceAnalyzer(mappings, "brazilian"));
+						indexName, _replaceAnalyzer(mappings, "brazilian"));
 				}
 
 			});
@@ -290,14 +290,14 @@ public class CompanyIndexFactoryTest {
 		Mockito.when(
 			_elasticsearchConfigurationWrapper.additionalTypeMappings()
 		).thenReturn(
-			replaceAnalyzer(mappings, "portuguese")
+			_replaceAnalyzer(mappings, "portuguese")
 		);
 
 		createIndices();
 
 		String field = RandomTestUtil.randomString() + "_ja";
 
-		indexOneDocument(field);
+		_indexOneDocument(field);
 
 		assertAnalyzer(field, "brazilian");
 	}
@@ -318,7 +318,7 @@ public class CompanyIndexFactoryTest {
 
 		createIndices();
 
-		Settings settings = getIndexSettings();
+		Settings settings = _getIndexSettings();
 
 		Assert.assertEquals("1", settings.get("index.number_of_replicas"));
 		Assert.assertEquals("2", settings.get("index.number_of_shards"));
@@ -346,11 +346,11 @@ public class CompanyIndexFactoryTest {
 
 		createIndices();
 
-		assertHasIndex(companyIndexFactoryFixture.getIndexName());
+		_assertHasIndex(companyIndexFactoryFixture.getIndexName());
 
 		deleteIndices();
 
-		assertNoIndex(companyIndexFactoryFixture.getIndexName());
+		_assertNoIndex(companyIndexFactoryFixture.getIndexName());
 	}
 
 	@Test
@@ -404,7 +404,7 @@ public class CompanyIndexFactoryTest {
 
 		createIndices();
 
-		Settings settings = getIndexSettings();
+		Settings settings = _getIndexSettings();
 
 		Assert.assertEquals("2", settings.get("index.number_of_replicas"));
 		Assert.assertEquals("3", settings.get("index.number_of_shards"));
@@ -424,7 +424,7 @@ public class CompanyIndexFactoryTest {
 						typeMappingsHelper) {
 
 					typeMappingsHelper.addTypeMappings(
-						indexName, replaceAnalyzer(mappings, "brazilian"));
+						indexName, _replaceAnalyzer(mappings, "brazilian"));
 				}
 
 				@Override
@@ -438,14 +438,14 @@ public class CompanyIndexFactoryTest {
 		Mockito.when(
 			_elasticsearchConfigurationWrapper.additionalTypeMappings()
 		).thenReturn(
-			replaceAnalyzer(mappings, "portuguese")
+			_replaceAnalyzer(mappings, "portuguese")
 		);
 
 		createIndices();
 
 		String field = RandomTestUtil.randomString() + "_ja";
 
-		indexOneDocument(field);
+		_indexOneDocument(field);
 
 		assertAnalyzer(field, "brazilian");
 	}
@@ -462,8 +462,8 @@ public class CompanyIndexFactoryTest {
 
 		createIndices();
 
-		indexOneDocument("match_additional_mapping");
-		indexOneDocument("match_catch_all");
+		_indexOneDocument("match_additional_mapping");
+		_indexOneDocument("match_catch_all");
 
 		assertType("match_additional_mapping", "keyword");
 		assertType("match_catch_all", "text");
@@ -474,28 +474,28 @@ public class CompanyIndexFactoryTest {
 		Mockito.when(
 			_elasticsearchConfigurationWrapper.additionalIndexConfigurations()
 		).thenReturn(
-			loadAdditionalAnalyzers()
+			_loadAdditionalAnalyzers()
 		);
 
 		Mockito.when(
 			_elasticsearchConfigurationWrapper.overrideTypeMappings()
 		).thenReturn(
-			loadOverrideTypeMappings()
+			_loadOverrideTypeMappings()
 		);
 
 		createIndices();
 
 		String field1 = "title";
 
-		indexOneDocument(field1);
+		_indexOneDocument(field1);
 
 		assertAnalyzer(field1, "kuromoji_liferay_custom");
 
 		String field2 = "description";
 
-		indexOneDocument(field2);
+		_indexOneDocument(field2);
 
-		assertNoAnalyzer(field2);
+		_assertNoAnalyzer(field2);
 	}
 
 	@Test
@@ -503,25 +503,25 @@ public class CompanyIndexFactoryTest {
 		Mockito.when(
 			_elasticsearchConfigurationWrapper.additionalIndexConfigurations()
 		).thenReturn(
-			loadAdditionalAnalyzers()
+			_loadAdditionalAnalyzers()
 		);
 
 		Mockito.when(
 			_elasticsearchConfigurationWrapper.overrideTypeMappings()
 		).thenReturn(
-			loadOverrideTypeMappings()
+			_loadOverrideTypeMappings()
 		);
 
 		createIndices();
 
-		assertMappings(Field.TITLE);
+		_assertMappings(Field.TITLE);
 	}
 
 	@Test
 	public void testOverrideTypeMappingsIgnoreOtherContributions()
 		throws Exception {
 
-		String mappings = replaceAnalyzer(
+		String mappings = _replaceAnalyzer(
 			loadAdditionalTypeMappings(), RandomTestUtil.randomString());
 
 		_companyIndexFactory.addElasticsearchIndexSettingsContributor(
@@ -539,7 +539,7 @@ public class CompanyIndexFactoryTest {
 		Mockito.when(
 			_elasticsearchConfigurationWrapper.additionalIndexConfigurations()
 		).thenReturn(
-			loadAdditionalAnalyzers()
+			_loadAdditionalAnalyzers()
 		);
 
 		Mockito.when(
@@ -551,16 +551,16 @@ public class CompanyIndexFactoryTest {
 		Mockito.when(
 			_elasticsearchConfigurationWrapper.overrideTypeMappings()
 		).thenReturn(
-			loadOverrideTypeMappings()
+			_loadOverrideTypeMappings()
 		);
 
 		createIndices();
 
 		String field = RandomTestUtil.randomString() + "_ja";
 
-		indexOneDocument(field);
+		_indexOneDocument(field);
 
-		assertNoAnalyzer(field);
+		_assertNoAnalyzer(field);
 	}
 
 	@Test
@@ -582,44 +582,6 @@ public class CompanyIndexFactoryTest {
 		_companyIndexFactory.addIndexContributor(indexContributor);
 	}
 
-	protected void assertAdditionalTypeMappings() throws Exception {
-		Mockito.when(
-			_elasticsearchConfigurationWrapper.additionalIndexConfigurations()
-		).thenReturn(
-			loadAdditionalAnalyzers()
-		);
-
-		createIndices();
-
-		String contributedKeywordFieldName = "orderStatus";
-
-		assertType(contributedKeywordFieldName, "keyword");
-
-		String contributedTextFieldName = "productDescription";
-
-		assertType(contributedTextFieldName, "text");
-
-		String liferayKeywordFieldName = "status";
-
-		assertType(liferayKeywordFieldName, "keyword");
-
-		String liferayTextFieldName = "subtitle";
-
-		assertType(liferayTextFieldName, "text");
-
-		String intactFieldName = RandomTestUtil.randomString() + "_en";
-
-		indexOneDocument(intactFieldName);
-
-		assertAnalyzer(intactFieldName, "english");
-
-		String replacedFieldName = RandomTestUtil.randomString() + "_ja";
-
-		indexOneDocument(replacedFieldName);
-
-		assertAnalyzer(replacedFieldName, "kuromoji_liferay_custom");
-	}
-
 	protected void assertAnalyzer(String field, String analyzer)
 		throws Exception {
 
@@ -630,37 +592,6 @@ public class CompanyIndexFactoryTest {
 			analyzer, field, LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE,
 			_companyIndexFactoryFixture.getIndexName(),
 			restHighLevelClient.indices());
-	}
-
-	protected void assertHasIndex(String indexName) {
-		Assert.assertTrue(
-			"Index " + indexName + " does not exist", hasIndex(indexName));
-	}
-
-	protected void assertMappings(String... fieldNames) {
-		String indexName = _companyIndexFactoryFixture.getIndexName();
-
-		GetIndexResponse getIndexResponse = _elasticsearchFixture.getIndex(
-			indexName);
-
-		Map<String, MappingMetadata> mappings = getIndexResponse.getMappings();
-
-		MappingMetadata mappingMetadata = mappings.get(indexName);
-
-		Map<String, Object> map = getPropertiesMap(mappingMetadata);
-
-		Set<String> set = map.keySet();
-
-		Assert.assertThat(set, CoreMatchers.hasItems(fieldNames));
-	}
-
-	protected void assertNoAnalyzer(String field) throws Exception {
-		assertAnalyzer(field, null);
-	}
-
-	protected void assertNoIndex(String indexName) {
-		Assert.assertFalse(
-			"Index " + indexName + " exists", hasIndex(indexName));
 	}
 
 	protected void assertType(String field, String type) throws Exception {
@@ -693,25 +624,6 @@ public class CompanyIndexFactoryTest {
 			indicesClient, RandomTestUtil.randomLong());
 	}
 
-	protected Settings getIndexSettings() {
-		String name = _companyIndexFactoryFixture.getIndexName();
-
-		GetIndexResponse getIndexResponse = _elasticsearchFixture.getIndex(
-			name);
-
-		Map<String, Settings> map = getIndexResponse.getSettings();
-
-		return map.get(name);
-	}
-
-	protected Map<String, Object> getPropertiesMap(
-		MappingMetadata mappingMetadata) {
-
-		Map<String, Object> map = mappingMetadata.getSourceAsMap();
-
-		return (Map<String, Object>)map.get("properties");
-	}
-
 	protected boolean hasIndex(String indexName) {
 		RestHighLevelClient restHighLevelClient =
 			_elasticsearchFixture.getRestHighLevelClient();
@@ -729,21 +641,6 @@ public class CompanyIndexFactoryTest {
 		}
 	}
 
-	protected void indexOneDocument(String field) {
-		indexOneDocument(field, RandomTestUtil.randomString());
-	}
-
-	protected void indexOneDocument(String field, String value) {
-		_singleFieldFixture.setField(field);
-
-		_singleFieldFixture.indexDocument(value);
-	}
-
-	protected String loadAdditionalAnalyzers() throws Exception {
-		return ResourceUtil.getResourceAsString(
-			getClass(), "CompanyIndexFactoryTest-additionalAnalyzers.json");
-	}
-
 	protected String loadAdditionalTypeMappings() {
 		try {
 			return ResourceUtil.getResourceAsString(
@@ -753,28 +650,6 @@ public class CompanyIndexFactoryTest {
 		catch (Exception exception) {
 			throw new RuntimeException(exception);
 		}
-	}
-
-	protected String loadAdditionalTypeMappingsWithRootType() {
-		try {
-			return ResourceUtil.getResourceAsString(
-				getClass(),
-				"CompanyIndexFactoryTest-additionalTypeMappings-with-root-" +
-					"type.json");
-		}
-		catch (Exception exception) {
-			throw new RuntimeException(exception);
-		}
-	}
-
-	protected String loadOverrideTypeMappings() throws Exception {
-		return ResourceUtil.getResourceAsString(
-			getClass(), "CompanyIndexFactoryTest-overrideTypeMappings.json");
-	}
-
-	protected String replaceAnalyzer(String mappings, String analyzer) {
-		return StringUtil.replace(
-			mappings, "kuromoji_liferay_custom", analyzer);
 	}
 
 	protected static class TestIndexSettingsContributor
@@ -793,6 +668,131 @@ public class CompanyIndexFactoryTest {
 				indexSettingsHelper) {
 		}
 
+	}
+
+	private void _assertAdditionalTypeMappings() throws Exception {
+		Mockito.when(
+			_elasticsearchConfigurationWrapper.additionalIndexConfigurations()
+		).thenReturn(
+			_loadAdditionalAnalyzers()
+		);
+
+		createIndices();
+
+		String contributedKeywordFieldName = "orderStatus";
+
+		assertType(contributedKeywordFieldName, "keyword");
+
+		String contributedTextFieldName = "productDescription";
+
+		assertType(contributedTextFieldName, "text");
+
+		String liferayKeywordFieldName = "status";
+
+		assertType(liferayKeywordFieldName, "keyword");
+
+		String liferayTextFieldName = "subtitle";
+
+		assertType(liferayTextFieldName, "text");
+
+		String intactFieldName = RandomTestUtil.randomString() + "_en";
+
+		_indexOneDocument(intactFieldName);
+
+		assertAnalyzer(intactFieldName, "english");
+
+		String replacedFieldName = RandomTestUtil.randomString() + "_ja";
+
+		_indexOneDocument(replacedFieldName);
+
+		assertAnalyzer(replacedFieldName, "kuromoji_liferay_custom");
+	}
+
+	private void _assertHasIndex(String indexName) {
+		Assert.assertTrue(
+			"Index " + indexName + " does not exist", hasIndex(indexName));
+	}
+
+	private void _assertMappings(String... fieldNames) {
+		String indexName = _companyIndexFactoryFixture.getIndexName();
+
+		GetIndexResponse getIndexResponse = _elasticsearchFixture.getIndex(
+			indexName);
+
+		Map<String, MappingMetadata> mappings = getIndexResponse.getMappings();
+
+		MappingMetadata mappingMetadata = mappings.get(indexName);
+
+		Map<String, Object> map = _getPropertiesMap(mappingMetadata);
+
+		Set<String> set = map.keySet();
+
+		Assert.assertThat(set, CoreMatchers.hasItems(fieldNames));
+	}
+
+	private void _assertNoAnalyzer(String field) throws Exception {
+		assertAnalyzer(field, null);
+	}
+
+	private void _assertNoIndex(String indexName) {
+		Assert.assertFalse(
+			"Index " + indexName + " exists", hasIndex(indexName));
+	}
+
+	private Settings _getIndexSettings() {
+		String name = _companyIndexFactoryFixture.getIndexName();
+
+		GetIndexResponse getIndexResponse = _elasticsearchFixture.getIndex(
+			name);
+
+		Map<String, Settings> map = getIndexResponse.getSettings();
+
+		return map.get(name);
+	}
+
+	private Map<String, Object> _getPropertiesMap(
+		MappingMetadata mappingMetadata) {
+
+		Map<String, Object> map = mappingMetadata.getSourceAsMap();
+
+		return (Map<String, Object>)map.get("properties");
+	}
+
+	private void _indexOneDocument(String field) {
+		_indexOneDocument(field, RandomTestUtil.randomString());
+	}
+
+	private void _indexOneDocument(String field, String value) {
+		_singleFieldFixture.setField(field);
+
+		_singleFieldFixture.indexDocument(value);
+	}
+
+	private String _loadAdditionalAnalyzers() throws Exception {
+		return ResourceUtil.getResourceAsString(
+			getClass(), "CompanyIndexFactoryTest-additionalAnalyzers.json");
+	}
+
+	private String _loadAdditionalTypeMappingsWithRootType() {
+		try {
+			return ResourceUtil.getResourceAsString(
+				getClass(),
+				"CompanyIndexFactoryTest-additionalTypeMappings-with-root-" +
+					"type.json");
+		}
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
+		}
+	}
+
+	private String _loadOverrideTypeMappings() throws Exception {
+		return ResourceUtil.getResourceAsString(
+			getClass(), "CompanyIndexFactoryTest-overrideTypeMappings.json");
+	}
+
+	private String _replaceAnalyzer(String mappings, String analyzer) {
+		return StringUtil.replace(
+			mappings, "kuromoji_liferay_custom", analyzer);
 	}
 
 	private static ElasticsearchFixture _elasticsearchFixture;

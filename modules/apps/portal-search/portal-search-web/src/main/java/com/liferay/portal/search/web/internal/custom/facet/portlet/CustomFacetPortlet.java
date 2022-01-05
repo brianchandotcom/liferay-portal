@@ -84,7 +84,7 @@ public class CustomFacetPortlet extends MVCPortlet {
 			portletSharedSearchRequest.search(renderRequest);
 
 		CustomFacetDisplayContext customFacetDisplayContext =
-			createCustomFacetDisplayContext(
+			_createCustomFacetDisplayContext(
 				portletSharedSearchResponse, renderRequest);
 
 		renderRequest.setAttribute(
@@ -98,27 +98,31 @@ public class CustomFacetPortlet extends MVCPortlet {
 		super.render(renderRequest, renderResponse);
 	}
 
-	protected CustomFacetDisplayContext buildDisplayContext(
+	@Reference
+	protected PortletSharedSearchRequest portletSharedSearchRequest;
+
+	private CustomFacetDisplayContext _buildDisplayContext(
 			PortletSharedSearchResponse portletSharedSearchResponse,
 			RenderRequest renderRequest)
 		throws ConfigurationException {
 
 		CustomFacetDisplayBuilder customFacetDisplayBuilder =
-			new CustomFacetDisplayBuilder(getHttpServletRequest(renderRequest));
+			new CustomFacetDisplayBuilder(
+				_getHttpServletRequest(renderRequest));
 
 		CustomFacetPortletPreferences customFacetPortletPreferences =
 			new CustomFacetPortletPreferencesImpl(
 				portletSharedSearchResponse.getPortletPreferences(
 					renderRequest));
 
-		Facet facet = getFacet(
+		Facet facet = _getFacet(
 			portletSharedSearchResponse, customFacetPortletPreferences,
 			renderRequest);
 
-		String parameterName = getParameterName(customFacetPortletPreferences);
+		String parameterName = _getParameterName(customFacetPortletPreferences);
 
 		Optional<List<String>> parameterValuesOptional =
-			getParameterValuesOptional(
+			_getParameterValuesOptional(
 				parameterName, portletSharedSearchResponse, renderRequest);
 
 		return customFacetDisplayBuilder.setCustomDisplayCaption(
@@ -134,7 +138,7 @@ public class CustomFacetPortlet extends MVCPortlet {
 		).setMaxTerms(
 			customFacetPortletPreferences.getMaxTerms()
 		).setPaginationStartParameterName(
-			getPaginationStartParameterName(portletSharedSearchResponse)
+			_getPaginationStartParameterName(portletSharedSearchResponse)
 		).setParameterName(
 			parameterName
 		).setParameterValues(
@@ -142,12 +146,12 @@ public class CustomFacetPortlet extends MVCPortlet {
 		).build();
 	}
 
-	protected CustomFacetDisplayContext createCustomFacetDisplayContext(
+	private CustomFacetDisplayContext _createCustomFacetDisplayContext(
 		PortletSharedSearchResponse portletSharedSearchResponse,
 		RenderRequest renderRequest) {
 
 		try {
-			return buildDisplayContext(
+			return _buildDisplayContext(
 				portletSharedSearchResponse, renderRequest);
 		}
 		catch (ConfigurationException configurationException) {
@@ -155,7 +159,7 @@ public class CustomFacetPortlet extends MVCPortlet {
 		}
 	}
 
-	protected Facet getFacet(
+	private Facet _getFacet(
 		PortletSharedSearchResponse portletSharedSearchResponse,
 		CustomFacetPortletPreferences customFacetPortletPreferences,
 		RenderRequest renderRequest) {
@@ -165,10 +169,11 @@ public class CustomFacetPortlet extends MVCPortlet {
 				customFacetPortletPreferences.getFederatedSearchKeyOptional());
 
 		return searchResponse.withFacetContextGet(
-			facetContext -> facetContext.getFacet(getPortletId(renderRequest)));
+			facetContext -> facetContext.getFacet(
+				_getPortletId(renderRequest)));
 	}
 
-	protected HttpServletRequest getHttpServletRequest(
+	private HttpServletRequest _getHttpServletRequest(
 		RenderRequest renderRequest) {
 
 		LiferayPortletRequest liferayPortletRequest =
@@ -177,7 +182,7 @@ public class CustomFacetPortlet extends MVCPortlet {
 		return liferayPortletRequest.getHttpServletRequest();
 	}
 
-	protected String getPaginationStartParameterName(
+	private String _getPaginationStartParameterName(
 		PortletSharedSearchResponse portletSharedSearchResponse) {
 
 		SearchResponse searchResponse =
@@ -188,7 +193,7 @@ public class CustomFacetPortlet extends MVCPortlet {
 		return searchRequest.getPaginationStartParameterName();
 	}
 
-	protected String getParameterName(
+	private String _getParameterName(
 		CustomFacetPortletPreferences customFacetPortletPreferences) {
 
 		Optional<String> optional = Stream.of(
@@ -203,7 +208,7 @@ public class CustomFacetPortlet extends MVCPortlet {
 		return optional.orElse("customfield");
 	}
 
-	protected Optional<List<String>> getParameterValuesOptional(
+	private Optional<List<String>> _getParameterValuesOptional(
 		String parameterName,
 		PortletSharedSearchResponse portletSharedSearchResponse,
 		RenderRequest renderRequest) {
@@ -215,12 +220,9 @@ public class CustomFacetPortlet extends MVCPortlet {
 		return optional.map(Arrays::asList);
 	}
 
-	protected String getPortletId(RenderRequest renderRequest) {
+	private String _getPortletId(RenderRequest renderRequest) {
 		return _portal.getPortletId(renderRequest);
 	}
-
-	@Reference
-	protected PortletSharedSearchRequest portletSharedSearchRequest;
 
 	@Reference
 	private Portal _portal;

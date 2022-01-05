@@ -63,10 +63,16 @@ public class StagingDocumentContributor implements DocumentContributor<Object> {
 
 		long groupId = GetterUtil.getLong(groupIdField.getValue());
 
-		document.addKeyword(Field.STAGING_GROUP, isStagingGroup(groupId));
+		document.addKeyword(Field.STAGING_GROUP, _isStagingGroup(groupId));
 	}
 
-	protected boolean isStagingGroup(long groupId) {
+	@Reference
+	protected GroupLocalService groupLocalService;
+
+	@Reference
+	protected IndexerRegistry indexerRegistry;
+
+	private boolean _isStagingGroup(long groupId) {
 		Group group = GroupUtil.fetchSiteGroup(groupLocalService, groupId);
 
 		if (group == null) {
@@ -75,11 +81,5 @@ public class StagingDocumentContributor implements DocumentContributor<Object> {
 
 		return group.isStagingGroup();
 	}
-
-	@Reference
-	protected GroupLocalService groupLocalService;
-
-	@Reference
-	protected IndexerRegistry indexerRegistry;
 
 }

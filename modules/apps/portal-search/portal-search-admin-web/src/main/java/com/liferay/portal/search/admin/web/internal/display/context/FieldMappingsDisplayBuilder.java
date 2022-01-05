@@ -100,26 +100,6 @@ public class FieldMappingsDisplayBuilder {
 		return data;
 	}
 
-	protected FieldMappingIndexDisplayContext
-		getFieldMappingIndexDisplayContext(String indexName, boolean selected) {
-
-		FieldMappingIndexDisplayContext fieldMappingIndexDisplayContext =
-			new FieldMappingIndexDisplayContext();
-
-		fieldMappingIndexDisplayContext.setName(indexName);
-
-		if (selected) {
-			fieldMappingIndexDisplayContext.setCssClass("active");
-		}
-
-		String url = _http.setParameter(
-			_currentURL, _namespace + "selectedIndexName", indexName);
-
-		fieldMappingIndexDisplayContext.setUrl(url);
-
-		return fieldMappingIndexDisplayContext;
-	}
-
 	protected List<FieldMappingIndexDisplayContext>
 		getFieldMappingIndexDisplayContexts(
 			List<String> indexNames, String selectedIndexName) {
@@ -127,7 +107,7 @@ public class FieldMappingsDisplayBuilder {
 		Stream<String> stream = indexNames.stream();
 
 		return stream.map(
-			indexName -> getFieldMappingIndexDisplayContext(
+			indexName -> _getFieldMappingIndexDisplayContext(
 				indexName, selectedIndexName.equals(indexName))
 		).collect(
 			Collectors.toList()
@@ -147,6 +127,26 @@ public class FieldMappingsDisplayBuilder {
 		}
 
 		return selectedIndexName;
+	}
+
+	private FieldMappingIndexDisplayContext _getFieldMappingIndexDisplayContext(
+		String indexName, boolean selected) {
+
+		FieldMappingIndexDisplayContext fieldMappingIndexDisplayContext =
+			new FieldMappingIndexDisplayContext();
+
+		fieldMappingIndexDisplayContext.setName(indexName);
+
+		if (selected) {
+			fieldMappingIndexDisplayContext.setCssClass("active");
+		}
+
+		String url = _http.setParameter(
+			_currentURL, _namespace + "selectedIndexName", indexName);
+
+		fieldMappingIndexDisplayContext.setUrl(url);
+
+		return fieldMappingIndexDisplayContext;
 	}
 
 	private long _companyId;

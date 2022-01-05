@@ -48,7 +48,7 @@ public class RestoreSnapshotRequestExecutorImpl
 
 		org.elasticsearch.action.admin.cluster.snapshots.restore.
 			RestoreSnapshotResponse elasticsearchRestoreSnapshotResponse =
-				getRestoreSnapshotResponse(
+				_getRestoreSnapshotResponse(
 					elasticsearchRestoreSnapshotRequest,
 					restoreSnapshotRequest);
 
@@ -102,8 +102,15 @@ public class RestoreSnapshotRequestExecutorImpl
 		return elasticsearchRestoreSnapshotRequest;
 	}
 
-	protected org.elasticsearch.action.admin.cluster.snapshots.restore.
-		RestoreSnapshotResponse getRestoreSnapshotResponse(
+	@Reference(unbind = "-")
+	protected void setElasticsearchClientResolver(
+		ElasticsearchClientResolver elasticsearchClientResolver) {
+
+		_elasticsearchClientResolver = elasticsearchClientResolver;
+	}
+
+	private org.elasticsearch.action.admin.cluster.snapshots.restore.
+		RestoreSnapshotResponse _getRestoreSnapshotResponse(
 			org.elasticsearch.action.admin.cluster.snapshots.restore.
 				RestoreSnapshotRequest elasticsearchRestoreSnapshotRequest,
 			RestoreSnapshotRequest restoreSnapshotRequest) {
@@ -122,13 +129,6 @@ public class RestoreSnapshotRequestExecutorImpl
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
 		}
-	}
-
-	@Reference(unbind = "-")
-	protected void setElasticsearchClientResolver(
-		ElasticsearchClientResolver elasticsearchClientResolver) {
-
-		_elasticsearchClientResolver = elasticsearchClientResolver;
 	}
 
 	private ElasticsearchClientResolver _elasticsearchClientResolver;

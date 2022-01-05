@@ -58,7 +58,7 @@ public class ModifiedFacetBuilderTest {
 
 	@Before
 	public void setUp() {
-		calendarFactory = createCalendarFactory();
+		calendarFactory = _createCalendarFactory();
 		dateFormatFactory = new DateFormatFactoryImpl();
 		filterBuilders = new FilterBuildersImpl();
 		jsonFactory = new JSONFactoryImpl();
@@ -74,61 +74,61 @@ public class ModifiedFacetBuilderTest {
 		).getCalendar();
 
 		ModifiedFacetBuilder modifiedFacetBuilder =
-			createModifiedFacetBuilder();
+			_createModifiedFacetBuilder();
 
 		modifiedFacetBuilder.setSelectedRanges("past-24-hours");
 
-		assertRange(
+		_assertRange(
 			"20180228151923", "20180301151923", modifiedFacetBuilder.build());
 	}
 
 	@Test
 	public void testCustomRange() {
 		ModifiedFacetBuilder modifiedFacetBuilder =
-			createModifiedFacetBuilder();
+			_createModifiedFacetBuilder();
 
 		modifiedFacetBuilder.setCustomRangeFrom("20180131");
 		modifiedFacetBuilder.setCustomRangeTo("20180228");
 
-		assertRange(
+		_assertRange(
 			"20180131000000", "20180228235959", modifiedFacetBuilder.build());
 	}
 
 	@Test
 	public void testCustomRangeSetsSearchContextAttribute() {
 		ModifiedFacetBuilder modifiedFacetBuilder =
-			createModifiedFacetBuilder();
+			_createModifiedFacetBuilder();
 
 		modifiedFacetBuilder.setCustomRangeFrom("20180131");
 		modifiedFacetBuilder.setCustomRangeTo("20180228");
 
 		modifiedFacetBuilder.build();
 
-		assertRange("20180131000000", "20180228235959", searchContext);
+		_assertRange("20180131000000", "20180228235959", searchContext);
 	}
 
 	@Test
 	public void testSelectUserDefinedNamedRange() {
 		ModifiedFacetBuilder modifiedFacetBuilder =
-			createModifiedFacetBuilder();
+			_createModifiedFacetBuilder();
 
-		JSONArray rangesJSONArray = createRangesJSONArray(
+		JSONArray rangesJSONArray = _createRangesJSONArray(
 			"eighties=[19800101000000 TO 19891231235959]");
 
 		modifiedFacetBuilder.setRangesJSONArray(rangesJSONArray);
 
 		modifiedFacetBuilder.setSelectedRanges("eighties");
 
-		assertRange(
+		_assertRange(
 			"19800101000000", "19891231235959", modifiedFacetBuilder.build());
 	}
 
 	@Test
 	public void testUserDefinedNamedRanges() {
 		ModifiedFacetBuilder modifiedFacetBuilder =
-			createModifiedFacetBuilder();
+			_createModifiedFacetBuilder();
 
-		JSONArray rangesJSONArray = createRangesJSONArray(
+		JSONArray rangesJSONArray = _createRangesJSONArray(
 			"past-hour    =[20180215120000 TO 20180215140000]",
 			"past-24-hours=[20180214130000 TO 20180215140000]",
 			"past-week    =[20180208130000 TO 20180215140000]",
@@ -137,10 +137,16 @@ public class ModifiedFacetBuilderTest {
 
 		modifiedFacetBuilder.setRangesJSONArray(rangesJSONArray);
 
-		assertRangesJSONArray(rangesJSONArray, modifiedFacetBuilder.build());
+		_assertRangesJSONArray(rangesJSONArray, modifiedFacetBuilder.build());
 	}
 
-	protected void addRangeJSONObject(
+	protected CalendarFactory calendarFactory;
+	protected DateFormatFactory dateFormatFactory;
+	protected FilterBuilders filterBuilders;
+	protected JSONFactory jsonFactory;
+	protected SearchContext searchContext;
+
+	private void _addRangeJSONObject(
 		JSONArray jsonArray, String label, String range) {
 
 		JSONObject jsonObject = jsonFactory.createJSONObject();
@@ -154,25 +160,25 @@ public class ModifiedFacetBuilderTest {
 		jsonArray.put(jsonObject);
 	}
 
-	protected void assertRange(String from, String to, Facet facet) {
-		assertRange(from, to, facet.getSelections()[0]);
+	private void _assertRange(String from, String to, Facet facet) {
+		_assertRange(from, to, facet.getSelections()[0]);
 	}
 
-	protected void assertRange(
+	private void _assertRange(
 		String from, String to, SearchContext searchContext) {
 
-		assertRange(
+		_assertRange(
 			from, to, (String)searchContext.getAttribute(Field.MODIFIED_DATE));
 	}
 
-	protected void assertRange(String from, String to, String range) {
-		List<String> calendars = getRangeBounds(range);
+	private void _assertRange(String from, String to, String range) {
+		List<String> calendars = _getRangeBounds(range);
 
 		Assert.assertEquals(from, calendars.get(0));
 		Assert.assertEquals(to, calendars.get(1));
 	}
 
-	protected void assertRangeJSONObjectEquals(
+	private void _assertRangeJSONObjectEquals(
 		JSONObject jsonObject1, JSONObject jsonObject2) {
 
 		Assert.assertEquals(
@@ -181,7 +187,7 @@ public class ModifiedFacetBuilderTest {
 			jsonObject1.getString("range"), jsonObject2.getString("range"));
 	}
 
-	protected void assertRangesJSONArray(
+	private void _assertRangesJSONArray(
 		JSONArray rangesJSONArray, Facet facet) {
 
 		FacetConfiguration facetConfiguration = facet.getFacetConfiguration();
@@ -194,13 +200,13 @@ public class ModifiedFacetBuilderTest {
 			rangesJSONArray.length(), facetRangesJSONArray.length());
 
 		for (int i = 0; i < rangesJSONArray.length(); i++) {
-			assertRangeJSONObjectEquals(
+			_assertRangeJSONObjectEquals(
 				rangesJSONArray.getJSONObject(i),
 				facetRangesJSONArray.getJSONObject(i));
 		}
 	}
 
-	protected CalendarFactory createCalendarFactory() {
+	private CalendarFactory _createCalendarFactory() {
 		CalendarFactory calendarFactory = Mockito.mock(CalendarFactory.class);
 
 		Mockito.doReturn(
@@ -212,8 +218,8 @@ public class ModifiedFacetBuilderTest {
 		return calendarFactory;
 	}
 
-	protected ModifiedFacetBuilder createModifiedFacetBuilder() {
-		ModifiedFacetFactory modifiedFacetFactory = createModifiedFacetFactory(
+	private ModifiedFacetBuilder _createModifiedFacetBuilder() {
+		ModifiedFacetFactory modifiedFacetFactory = _createModifiedFacetFactory(
 			searchContext);
 
 		ModifiedFacetBuilder modifiedFacetBuilder = new ModifiedFacetBuilder(
@@ -225,7 +231,7 @@ public class ModifiedFacetBuilderTest {
 		return modifiedFacetBuilder;
 	}
 
-	protected ModifiedFacetFactory createModifiedFacetFactory(
+	private ModifiedFacetFactory _createModifiedFacetFactory(
 		SearchContext searchContext) {
 
 		FilterBuilders filterBuilders1 = filterBuilders;
@@ -237,29 +243,23 @@ public class ModifiedFacetBuilderTest {
 		};
 	}
 
-	protected JSONArray createRangesJSONArray(String... labelsAndRanges) {
+	private JSONArray _createRangesJSONArray(String... labelsAndRanges) {
 		JSONArray jsonArray = jsonFactory.createJSONArray();
 
 		for (String labelAndRange : labelsAndRanges) {
 			String[] labelAndRangeArray = StringUtil.split(labelAndRange, '=');
 
-			addRangeJSONObject(
+			_addRangeJSONObject(
 				jsonArray, labelAndRangeArray[0], labelAndRangeArray[1]);
 		}
 
 		return jsonArray;
 	}
 
-	protected List<String> getRangeBounds(String range) {
+	private List<String> _getRangeBounds(String range) {
 		String[] dateStrings = RangeParserUtil.parserRange(range);
 
 		return Arrays.asList(dateStrings);
 	}
-
-	protected CalendarFactory calendarFactory;
-	protected DateFormatFactory dateFormatFactory;
-	protected FilterBuilders filterBuilders;
-	protected JSONFactory jsonFactory;
-	protected SearchContext searchContext;
 
 }

@@ -64,99 +64,18 @@ public class CommonSearchResponseAssemblerImpl
 		BaseSearchRequest baseSearchRequest,
 		BaseSearchResponse baseSearchResponse) {
 
-		setExecutionProfile(searchResponse, baseSearchResponse);
-		setExecutionTime(searchResponse, baseSearchResponse);
-		setSearchRequestString(
+		_setExecutionProfile(searchResponse, baseSearchResponse);
+		_setExecutionTime(searchResponse, baseSearchResponse);
+		_setSearchRequestString(
 			searchSourceBuilder, baseSearchRequest, baseSearchResponse);
 		setSearchResponseString(
 			searchResponse, baseSearchRequest, baseSearchResponse);
-		setTerminatedEarly(searchResponse, baseSearchResponse);
-		setTimedOut(searchResponse, baseSearchResponse);
+		_setTerminatedEarly(searchResponse, baseSearchResponse);
+		_setTimedOut(searchResponse, baseSearchResponse);
 
-		updateStatsResponses(
+		_updateStatsResponses(
 			baseSearchResponse, searchResponse.getAggregations(),
 			baseSearchRequest.getStatsRequests());
-	}
-
-	protected String getProfileShardResultString(
-			ProfileShardResult profileShardResult)
-		throws IOException {
-
-		XContentBuilder xContentBuilder = XContentFactory.contentBuilder(
-			XContentType.JSON);
-
-		List<QueryProfileShardResult> queryProfileShardResults =
-			profileShardResult.getQueryProfileResults();
-
-		queryProfileShardResults.forEach(
-			queryProfileShardResult -> {
-				try {
-					xContentBuilder.startObject();
-
-					queryProfileShardResult.toXContent(
-						xContentBuilder, ToXContent.EMPTY_PARAMS);
-
-					xContentBuilder.endObject();
-				}
-				catch (IOException ioException) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(ioException, ioException);
-					}
-				}
-			});
-
-		return Strings.toString(xContentBuilder);
-	}
-
-	protected void setExecutionProfile(
-		SearchResponse searchResponse, BaseSearchResponse baseSearchResponse) {
-
-		Map<String, ProfileShardResult> profileShardResults =
-			searchResponse.getProfileResults();
-
-		if (MapUtil.isEmpty(profileShardResults)) {
-			return;
-		}
-
-		Map<String, String> executionProfile = new HashMap<>();
-
-		profileShardResults.forEach(
-			(shardKey, profileShardResult) -> {
-				try {
-					executionProfile.put(
-						shardKey,
-						getProfileShardResultString(profileShardResult));
-				}
-				catch (IOException ioException) {
-					if (_log.isInfoEnabled()) {
-						_log.info(ioException, ioException);
-					}
-				}
-			});
-
-		baseSearchResponse.setExecutionProfile(executionProfile);
-	}
-
-	protected void setExecutionTime(
-		SearchResponse searchResponse, BaseSearchResponse baseSearchResponse) {
-
-		TimeValue tookTimeValue = searchResponse.getTook();
-
-		baseSearchResponse.setExecutionTime(tookTimeValue.getMillis());
-	}
-
-	protected void setSearchRequestString(
-		SearchSourceBuilder searchSourceBuilder,
-		BaseSearchRequest baseSearchRequest,
-		BaseSearchResponse baseSearchResponse) {
-
-		baseSearchResponse.setSearchRequestString(
-			StringUtil.removeSubstrings(
-				toString(searchSourceBuilder), ADJUST_PURE_NEGATIVE_STRING,
-				AUTO_GENERATE_SYNONYMS_PHRASE_QUERY_STRING, BOOST_STRING,
-				FUZZY_TRANSPOSITIONS_STRING, LENIENT_STRING,
-				MAX_EXPANSIONS_STRING, OPERATOR_STRING, PREFIX_LENGTH_STRING,
-				SLOP_STRING, ZERO_TERMS_QUERY_STRING));
 	}
 
 	protected void setSearchResponseString(
@@ -174,19 +93,6 @@ public class CommonSearchResponseAssemblerImpl
 		_statsTranslator = statsTranslator;
 	}
 
-	protected void setTerminatedEarly(
-		SearchResponse searchResponse, BaseSearchResponse baseSearchResponse) {
-
-		baseSearchResponse.setTerminatedEarly(
-			GetterUtil.getBoolean(searchResponse.isTerminatedEarly()));
-	}
-
-	protected void setTimedOut(
-		SearchResponse searchResponse, BaseSearchResponse baseSearchResponse) {
-
-		baseSearchResponse.setTimedOut(searchResponse.isTimedOut());
-	}
-
 	protected String toString(SearchSourceBuilder searchSourceBuilder) {
 		try {
 			return searchSourceBuilder.toString();
@@ -197,37 +103,6 @@ public class CommonSearchResponseAssemblerImpl
 			}
 
 			return elasticsearchException.getMessage();
-		}
-	}
-
-	protected void updateStatsResponse(
-		BaseSearchResponse baseSearchResponse,
-		Map<String, Aggregation> aggregationsMap, StatsRequest statsRequest) {
-
-		baseSearchResponse.addStatsResponse(
-			_statsTranslator.translateResponse(aggregationsMap, statsRequest));
-	}
-
-	protected void updateStatsResponses(
-		BaseSearchResponse baseSearchResponse, Aggregations aggregations,
-		Collection<StatsRequest> statsRequests) {
-
-		if (aggregations == null) {
-			return;
-		}
-
-		updateStatsResponses(
-			baseSearchResponse, aggregations.getAsMap(), statsRequests);
-	}
-
-	protected void updateStatsResponses(
-		BaseSearchResponse baseSearchResponse,
-		Map<String, Aggregation> aggregationsMap,
-		Collection<StatsRequest> statsRequests) {
-
-		for (StatsRequest statsRequest : statsRequests) {
-			updateStatsResponse(
-				baseSearchResponse, aggregationsMap, statsRequest);
 		}
 	}
 
@@ -259,6 +134,131 @@ public class CommonSearchResponseAssemblerImpl
 	protected static final String ZERO_TERMS_QUERY_STRING =
 		",\"zero_terms_query\":\"" + MatchQueryParser.DEFAULT_ZERO_TERMS_QUERY +
 			"\"";
+
+	private String _getProfileShardResultString(
+			ProfileShardResult profileShardResult)
+		throws IOException {
+
+		XContentBuilder xContentBuilder = XContentFactory.contentBuilder(
+			XContentType.JSON);
+
+		List<QueryProfileShardResult> queryProfileShardResults =
+			profileShardResult.getQueryProfileResults();
+
+		queryProfileShardResults.forEach(
+			queryProfileShardResult -> {
+				try {
+					xContentBuilder.startObject();
+
+					queryProfileShardResult.toXContent(
+						xContentBuilder, ToXContent.EMPTY_PARAMS);
+
+					xContentBuilder.endObject();
+				}
+				catch (IOException ioException) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(ioException, ioException);
+					}
+				}
+			});
+
+		return Strings.toString(xContentBuilder);
+	}
+
+	private void _setExecutionProfile(
+		SearchResponse searchResponse, BaseSearchResponse baseSearchResponse) {
+
+		Map<String, ProfileShardResult> profileShardResults =
+			searchResponse.getProfileResults();
+
+		if (MapUtil.isEmpty(profileShardResults)) {
+			return;
+		}
+
+		Map<String, String> executionProfile = new HashMap<>();
+
+		profileShardResults.forEach(
+			(shardKey, profileShardResult) -> {
+				try {
+					executionProfile.put(
+						shardKey,
+						_getProfileShardResultString(profileShardResult));
+				}
+				catch (IOException ioException) {
+					if (_log.isInfoEnabled()) {
+						_log.info(ioException, ioException);
+					}
+				}
+			});
+
+		baseSearchResponse.setExecutionProfile(executionProfile);
+	}
+
+	private void _setExecutionTime(
+		SearchResponse searchResponse, BaseSearchResponse baseSearchResponse) {
+
+		TimeValue tookTimeValue = searchResponse.getTook();
+
+		baseSearchResponse.setExecutionTime(tookTimeValue.getMillis());
+	}
+
+	private void _setSearchRequestString(
+		SearchSourceBuilder searchSourceBuilder,
+		BaseSearchRequest baseSearchRequest,
+		BaseSearchResponse baseSearchResponse) {
+
+		baseSearchResponse.setSearchRequestString(
+			StringUtil.removeSubstrings(
+				toString(searchSourceBuilder), ADJUST_PURE_NEGATIVE_STRING,
+				AUTO_GENERATE_SYNONYMS_PHRASE_QUERY_STRING, BOOST_STRING,
+				FUZZY_TRANSPOSITIONS_STRING, LENIENT_STRING,
+				MAX_EXPANSIONS_STRING, OPERATOR_STRING, PREFIX_LENGTH_STRING,
+				SLOP_STRING, ZERO_TERMS_QUERY_STRING));
+	}
+
+	private void _setTerminatedEarly(
+		SearchResponse searchResponse, BaseSearchResponse baseSearchResponse) {
+
+		baseSearchResponse.setTerminatedEarly(
+			GetterUtil.getBoolean(searchResponse.isTerminatedEarly()));
+	}
+
+	private void _setTimedOut(
+		SearchResponse searchResponse, BaseSearchResponse baseSearchResponse) {
+
+		baseSearchResponse.setTimedOut(searchResponse.isTimedOut());
+	}
+
+	private void _updateStatsResponse(
+		BaseSearchResponse baseSearchResponse,
+		Map<String, Aggregation> aggregationsMap, StatsRequest statsRequest) {
+
+		baseSearchResponse.addStatsResponse(
+			_statsTranslator.translateResponse(aggregationsMap, statsRequest));
+	}
+
+	private void _updateStatsResponses(
+		BaseSearchResponse baseSearchResponse, Aggregations aggregations,
+		Collection<StatsRequest> statsRequests) {
+
+		if (aggregations == null) {
+			return;
+		}
+
+		_updateStatsResponses(
+			baseSearchResponse, aggregations.getAsMap(), statsRequests);
+	}
+
+	private void _updateStatsResponses(
+		BaseSearchResponse baseSearchResponse,
+		Map<String, Aggregation> aggregationsMap,
+		Collection<StatsRequest> statsRequests) {
+
+		for (StatsRequest statsRequest : statsRequests) {
+			_updateStatsResponse(
+				baseSearchResponse, aggregationsMap, statsRequest);
+		}
+	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommonSearchResponseAssemblerImpl.class);

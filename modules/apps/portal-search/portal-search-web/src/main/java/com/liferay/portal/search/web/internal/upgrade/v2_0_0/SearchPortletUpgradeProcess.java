@@ -26,10 +26,10 @@ public class SearchPortletUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		upgradePortletPreferencesPortletId();
+		_upgradePortletPreferencesPortletId();
 	}
 
-	protected void upgradePortletPreferencesPortletId() throws Exception {
+	private void _upgradePortletPreferencesPortletId() throws Exception {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"update PortletPreferences set portletId = ? where " +
 					"portletId= ? and plid = ?")) {

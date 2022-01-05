@@ -72,13 +72,13 @@ public class ModifiedFacetCalendarDisplayBuilderTest {
 
 		yesterdayCalendar.add(Calendar.DAY_OF_MONTH, -1);
 
-		assertFromDateValues(
+		_assertFromDateValues(
 			yesterdayCalendar.get(Calendar.YEAR),
 			yesterdayCalendar.get(Calendar.MONTH),
 			yesterdayCalendar.get(Calendar.DAY_OF_MONTH),
 			modifiedFacetCalendarDisplayContext);
 
-		assertToDateValues(
+		_assertToDateValues(
 			todayCalendar.get(Calendar.YEAR), todayCalendar.get(Calendar.MONTH),
 			todayCalendar.get(Calendar.DAY_OF_MONTH),
 			modifiedFacetCalendarDisplayContext);
@@ -96,15 +96,15 @@ public class ModifiedFacetCalendarDisplayBuilderTest {
 			modifiedFacetCalendarDisplayContext =
 				modifiedFacetCalendarDisplayBuilder.build();
 
-		assertFromDateValues(
+		_assertFromDateValues(
 			2018, Calendar.JANUARY, 31, modifiedFacetCalendarDisplayContext);
-		assertToDateValues(
+		_assertToDateValues(
 			2018, Calendar.FEBRUARY, 28, modifiedFacetCalendarDisplayContext);
 	}
 
 	@Test
 	public void testGetRangeFromLimitAttributesWithWestwardTimeZone() {
-		Optional<TimeZone> timeZoneOptional = findWestwardTimeZoneOptional(
+		Optional<TimeZone> timeZoneOptional = _findWestwardTimeZoneOptional(
 			TimeZone.getDefault());
 
 		timeZoneOptional.ifPresent(
@@ -120,39 +120,13 @@ public class ModifiedFacetCalendarDisplayBuilderTest {
 					modifiedFacetCalendarDisplayContext =
 						modifiedFacetCalendarDisplayBuilder.build();
 
-				assertFromDateValues(
+				_assertFromDateValues(
 					2018, Calendar.JANUARY, 31,
 					modifiedFacetCalendarDisplayContext);
-				assertToDateValues(
+				_assertToDateValues(
 					2018, Calendar.FEBRUARY, 28,
 					modifiedFacetCalendarDisplayContext);
 			});
-	}
-
-	protected void assertFromDateValues(
-		int year, int month, int dayOfMonth,
-		ModifiedFacetCalendarDisplayContext
-			modifiedFacetCalendarDisplayContext) {
-
-		Assert.assertEquals(
-			year, modifiedFacetCalendarDisplayContext.getFromYearValue());
-		Assert.assertEquals(
-			month, modifiedFacetCalendarDisplayContext.getFromMonthValue());
-		Assert.assertEquals(
-			dayOfMonth, modifiedFacetCalendarDisplayContext.getFromDayValue());
-	}
-
-	protected void assertToDateValues(
-		int year, int month, int dayOfMonth,
-		ModifiedFacetCalendarDisplayContext
-			modifiedFacetCalendarDisplayContext) {
-
-		Assert.assertEquals(
-			year, modifiedFacetCalendarDisplayContext.getToYearValue());
-		Assert.assertEquals(
-			month, modifiedFacetCalendarDisplayContext.getToMonthValue());
-		Assert.assertEquals(
-			dayOfMonth, modifiedFacetCalendarDisplayContext.getToDayValue());
 	}
 
 	protected ModifiedFacetCalendarDisplayBuilder createDisplayBuilder() {
@@ -172,7 +146,33 @@ public class ModifiedFacetCalendarDisplayBuilderTest {
 		return modifiedFacetCalendarDisplayBuilder;
 	}
 
-	protected Optional<TimeZone> findWestwardTimeZoneOptional(
+	private void _assertFromDateValues(
+		int year, int month, int dayOfMonth,
+		ModifiedFacetCalendarDisplayContext
+			modifiedFacetCalendarDisplayContext) {
+
+		Assert.assertEquals(
+			year, modifiedFacetCalendarDisplayContext.getFromYearValue());
+		Assert.assertEquals(
+			month, modifiedFacetCalendarDisplayContext.getFromMonthValue());
+		Assert.assertEquals(
+			dayOfMonth, modifiedFacetCalendarDisplayContext.getFromDayValue());
+	}
+
+	private void _assertToDateValues(
+		int year, int month, int dayOfMonth,
+		ModifiedFacetCalendarDisplayContext
+			modifiedFacetCalendarDisplayContext) {
+
+		Assert.assertEquals(
+			year, modifiedFacetCalendarDisplayContext.getToYearValue());
+		Assert.assertEquals(
+			month, modifiedFacetCalendarDisplayContext.getToMonthValue());
+		Assert.assertEquals(
+			dayOfMonth, modifiedFacetCalendarDisplayContext.getToDayValue());
+	}
+
+	private Optional<TimeZone> _findWestwardTimeZoneOptional(
 		TimeZone timeZone) {
 
 		String[] availableIDs = TimeZone.getAvailableIDs(

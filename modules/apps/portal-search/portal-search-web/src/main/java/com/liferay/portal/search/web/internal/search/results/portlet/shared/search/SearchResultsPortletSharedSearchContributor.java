@@ -53,7 +53,7 @@ public class SearchResultsPortletSharedSearchContributor
 				searchResultsPortletPreferences.
 					getFederatedSearchKeyOptional());
 
-		paginate(
+		_paginate(
 			searchResultsPortletPreferences, portletSharedSearchSettings,
 			searchRequestBuilder);
 
@@ -67,7 +67,10 @@ public class SearchResultsPortletSharedSearchContributor
 		}
 	}
 
-	protected void paginate(
+	@Reference
+	protected SearchRequestBuilderFactory searchRequestBuilderFactory;
+
+	private void _paginate(
 		SearchResultsPortletPreferences searchResultsPortletPreferences,
 		PortletSharedSearchSettings portletSharedSearchSettings,
 		SearchRequestBuilder searchRequestBuilder) {
@@ -109,8 +112,5 @@ public class SearchResultsPortletSharedSearchContributor
 						paginationDelta),
 			searchRequestBuilder::from);
 	}
-
-	@Reference
-	protected SearchRequestBuilderFactory searchRequestBuilderFactory;
 
 }

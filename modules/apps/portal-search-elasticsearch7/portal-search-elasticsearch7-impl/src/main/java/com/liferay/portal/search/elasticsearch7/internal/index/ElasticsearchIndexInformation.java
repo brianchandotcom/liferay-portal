@@ -68,7 +68,7 @@ public class ElasticsearchIndexInformation implements IndexInformation {
 	protected GetIndexResponse getIndexResponse(
 		GetIndexRequest getIndexRequest) {
 
-		IndicesClient indicesClient = getIndicesClient();
+		IndicesClient indicesClient = _getIndicesClient();
 
 		try {
 			return indicesClient.get(getIndexRequest, RequestOptions.DEFAULT);
@@ -78,17 +78,10 @@ public class ElasticsearchIndexInformation implements IndexInformation {
 		}
 	}
 
-	protected IndicesClient getIndicesClient() {
-		RestHighLevelClient restHighLevelClient =
-			_elasticsearchClientResolver.getRestHighLevelClient(null, true);
-
-		return restHighLevelClient.indices();
-	}
-
 	protected GetMappingsResponse getMappingsResponse(
 		GetMappingsRequest getMappingsRequest) {
 
-		IndicesClient indicesClient = getIndicesClient();
+		IndicesClient indicesClient = _getIndicesClient();
 
 		try {
 			return indicesClient.getMapping(
@@ -109,6 +102,13 @@ public class ElasticsearchIndexInformation implements IndexInformation {
 	@Reference(unbind = "-")
 	protected void setIndexNameBuilder(IndexNameBuilder indexNameBuilder) {
 		_indexNameBuilder = indexNameBuilder;
+	}
+
+	private IndicesClient _getIndicesClient() {
+		RestHighLevelClient restHighLevelClient =
+			_elasticsearchClientResolver.getRestHighLevelClient(null, true);
+
+		return restHighLevelClient.indices();
 	}
 
 	private ElasticsearchClientResolver _elasticsearchClientResolver;

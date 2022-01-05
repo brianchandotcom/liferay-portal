@@ -45,13 +45,16 @@ public class SubstringFieldQueryBuilder implements FieldQueryBuilder {
 
 		for (String token : tokens) {
 			booleanQueryImpl.add(
-				createQuery(field, token), BooleanClauseOccur.SHOULD);
+				_createQuery(field, token), BooleanClauseOccur.SHOULD);
 		}
 
 		return booleanQueryImpl;
 	}
 
-	protected Query createQuery(String field, String value) {
+	@Reference
+	protected KeywordTokenizer keywordTokenizer;
+
+	private Query _createQuery(String field, String value) {
 		if (StringUtil.startsWith(value, CharPool.QUOTE)) {
 			value = StringUtil.unquote(value);
 		}
@@ -68,8 +71,5 @@ public class SubstringFieldQueryBuilder implements FieldQueryBuilder {
 
 		return new WildcardQueryImpl(new QueryTermImpl(field, value));
 	}
-
-	@Reference
-	protected KeywordTokenizer keywordTokenizer;
 
 }

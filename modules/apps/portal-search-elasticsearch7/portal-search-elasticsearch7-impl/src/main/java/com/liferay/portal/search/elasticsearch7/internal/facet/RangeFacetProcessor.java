@@ -56,9 +56,9 @@ public class RangeFacetProcessor
 
 		rangeAggregationBuilder.field(facetConfiguration.getFieldName());
 
-		addConfigurationRanges(facetConfiguration, rangeAggregationBuilder);
+		_addConfigurationRanges(facetConfiguration, rangeAggregationBuilder);
 
-		addCustomRange(facet, rangeAggregationBuilder);
+		_addCustomRange(facet, rangeAggregationBuilder);
 
 		if (ListUtil.isEmpty(rangeAggregationBuilder.ranges())) {
 			return Optional.empty();
@@ -67,7 +67,7 @@ public class RangeFacetProcessor
 		return Optional.of(rangeAggregationBuilder);
 	}
 
-	protected void addConfigurationRanges(
+	private void _addConfigurationRanges(
 		FacetConfiguration facetConfiguration,
 		RangeAggregationBuilder rangeAggregationBuilder) {
 
@@ -86,11 +86,11 @@ public class RangeFacetProcessor
 
 			String[] range = RangeParserUtil.parserRange(rangeString);
 
-			rangeAggregationBuilder.addRange(createRange(rangeString, range));
+			rangeAggregationBuilder.addRange(_createRange(rangeString, range));
 		}
 	}
 
-	protected void addCustomRange(
+	private void _addCustomRange(
 		Facet facet, RangeAggregationBuilder rangeAggregationBuilder) {
 
 		SearchContext searchContext = facet.getSearchContext();
@@ -104,10 +104,10 @@ public class RangeFacetProcessor
 
 		String[] range = RangeParserUtil.parserRange(rangeString);
 
-		rangeAggregationBuilder.addRange(createRange(rangeString, range));
+		rangeAggregationBuilder.addRange(_createRange(rangeString, range));
 	}
 
-	protected RangeAggregator.Range createRange(String key, String[] range) {
+	private RangeAggregator.Range _createRange(String key, String[] range) {
 		return new RangeAggregator.Range(key, range[0], range[1]);
 	}
 

@@ -138,7 +138,7 @@ public class ElasticsearchSearchEngineAdapterIndexRequestTest {
 
 		analyzeIndexRequest.setAnalyzer("stop");
 
-		assertExecuteAnalyzeIndexRequest(
+		_assertExecuteAnalyzeIndexRequest(
 			analyzeIndexRequest,
 			"quick,brown,foxes,jumped,over,lazy,dog,s,bone");
 	}
@@ -161,7 +161,7 @@ public class ElasticsearchSearchEngineAdapterIndexRequestTest {
 
 		analyzeIndexRequest.setCharFilters(Collections.singleton("custom_cf"));
 
-		assertExecuteAnalyzeIndexRequest(
+		_assertExecuteAnalyzeIndexRequest(
 			analyzeIndexRequest,
 			"The 3 QUICK Brown+Foxes jumped over the lazy dog's bone.");
 	}
@@ -184,7 +184,7 @@ public class ElasticsearchSearchEngineAdapterIndexRequestTest {
 
 		Assert.assertEquals("stop", detailsAnalyzer.getAnalyzerName());
 
-		assertAnalysisIndexResponseTokens(
+		_assertAnalysisIndexResponseTokens(
 			detailsAnalyzer.getAnalysisIndexResponseTokens(),
 			"quick,brown,foxes,jumped,over,lazy,dog,s,bone");
 	}
@@ -216,7 +216,7 @@ public class ElasticsearchSearchEngineAdapterIndexRequestTest {
 		Assert.assertEquals(
 			"uppercase", detailsTokenFilter.getTokenFilterName());
 
-		assertAnalysisIndexResponseTokens(
+		_assertAnalysisIndexResponseTokens(
 			detailsTokenFilter.getAnalysisIndexResponseTokens(),
 			"THE 2 QUICK BROWN-FOXES JUMPED OVER THE LAZY DOG'S BONE.");
 	}
@@ -233,7 +233,7 @@ public class ElasticsearchSearchEngineAdapterIndexRequestTest {
 
 		analyzeIndexRequest.setFieldName("keywordTestField");
 
-		assertExecuteAnalyzeIndexRequest(
+		_assertExecuteAnalyzeIndexRequest(
 			analyzeIndexRequest,
 			"The 2 QUICK Brown-Foxes jumped over the lazy dog's bone.");
 	}
@@ -259,7 +259,7 @@ public class ElasticsearchSearchEngineAdapterIndexRequestTest {
 		// Response contains tokens:
 		// "the,2,quick,brown,foxes,jumped,over,the,lazy,dog's,bone"
 
-		assertExecuteAnalyzeIndexRequest(
+		_assertExecuteAnalyzeIndexRequest(
 			analyzeIndexRequest,
 			"THE 2 QUICK BROWN-FOXES JUMPED OVER THE LAZY DOG'S BONE.");
 	}
@@ -270,7 +270,7 @@ public class ElasticsearchSearchEngineAdapterIndexRequestTest {
 
 		analyzeIndexRequest.setTokenFilters(Collections.singleton("uppercase"));
 
-		assertExecuteAnalyzeIndexRequest(
+		_assertExecuteAnalyzeIndexRequest(
 			analyzeIndexRequest,
 			"THE 2 QUICK BROWN-FOXES JUMPED OVER THE LAZY DOG'S BONE.");
 	}
@@ -281,7 +281,7 @@ public class ElasticsearchSearchEngineAdapterIndexRequestTest {
 
 		analyzeIndexRequest.setTokenizer("letter");
 
-		assertExecuteAnalyzeIndexRequest(
+		_assertExecuteAnalyzeIndexRequest(
 			analyzeIndexRequest,
 			"The,QUICK,Brown,Foxes,jumped,over,the,lazy,dog,s,bone");
 	}
@@ -304,7 +304,7 @@ public class ElasticsearchSearchEngineAdapterIndexRequestTest {
 			"Close request not acknowledged",
 			closeIndexResponse.isAcknowledged());
 
-		assertIndexMetadataState(_INDEX_NAME, IndexMetadata.State.CLOSE);
+		_assertIndexMetadataState(_INDEX_NAME, IndexMetadata.State.CLOSE);
 	}
 
 	@Test
@@ -460,7 +460,7 @@ public class ElasticsearchSearchEngineAdapterIndexRequestTest {
 	public void testExecuteOpenIndexRequest() {
 		_closeIndex(_INDEX_NAME);
 
-		assertIndexMetadataState(_INDEX_NAME, IndexMetadata.State.CLOSE);
+		_assertIndexMetadataState(_INDEX_NAME, IndexMetadata.State.CLOSE);
 
 		OpenIndexRequest openIndexRequest = new OpenIndexRequest(_INDEX_NAME);
 
@@ -477,7 +477,7 @@ public class ElasticsearchSearchEngineAdapterIndexRequestTest {
 			"Open request not acknowledged",
 			openIndexResponse.isAcknowledged());
 
-		assertIndexMetadataState(_INDEX_NAME, IndexMetadata.State.OPEN);
+		_assertIndexMetadataState(_INDEX_NAME, IndexMetadata.State.OPEN);
 	}
 
 	@Test
@@ -550,7 +550,18 @@ public class ElasticsearchSearchEngineAdapterIndexRequestTest {
 		_deleteIndex("test_index_2");
 	}
 
-	protected static IndexRequestExecutor createIndexRequestExecutor(
+	protected static SearchEngineAdapter createSearchEngineAdapter(
+		ElasticsearchClientResolver elasticsearchClientResolver) {
+
+		return new ElasticsearchSearchEngineAdapterImpl() {
+			{
+				setIndexRequestExecutor(
+					_createIndexRequestExecutor(elasticsearchClientResolver));
+			}
+		};
+	}
+
+	private static IndexRequestExecutor _createIndexRequestExecutor(
 		ElasticsearchClientResolver elasticsearchClientResolver) {
 
 		IndexRequestExecutorFixture indexRequestExecutorFixture =
@@ -565,18 +576,7 @@ public class ElasticsearchSearchEngineAdapterIndexRequestTest {
 		return indexRequestExecutorFixture.getIndexRequestExecutor();
 	}
 
-	protected static SearchEngineAdapter createSearchEngineAdapter(
-		ElasticsearchClientResolver elasticsearchClientResolver) {
-
-		return new ElasticsearchSearchEngineAdapterImpl() {
-			{
-				setIndexRequestExecutor(
-					createIndexRequestExecutor(elasticsearchClientResolver));
-			}
-		};
-	}
-
-	protected void assertAnalysisIndexResponseTokens(
+	private void _assertAnalysisIndexResponseTokens(
 		List<AnalysisIndexResponseToken> analysisIndexResponseTokens,
 		String expectedTokens) {
 
@@ -594,7 +594,7 @@ public class ElasticsearchSearchEngineAdapterIndexRequestTest {
 		Assert.assertEquals(expectedTokens, expectedTokens, actualTokens);
 	}
 
-	protected void assertExecuteAnalyzeIndexRequest(
+	private void _assertExecuteAnalyzeIndexRequest(
 		AnalyzeIndexRequest analyzeIndexRequest, String expectedTokens) {
 
 		analyzeIndexRequest.setIndexName(_INDEX_NAME);
@@ -604,12 +604,12 @@ public class ElasticsearchSearchEngineAdapterIndexRequestTest {
 		AnalyzeIndexResponse analyzeIndexResponse =
 			_searchEngineAdapter.execute(analyzeIndexRequest);
 
-		assertAnalysisIndexResponseTokens(
+		_assertAnalysisIndexResponseTokens(
 			analyzeIndexResponse.getAnalysisIndexResponseTokens(),
 			expectedTokens);
 	}
 
-	protected void assertIndexMetadataState(
+	private void _assertIndexMetadataState(
 		String indexName, IndexMetadata.State indexMetadataState) {
 
 		RestHighLevelClient restHighLevelClient =
@@ -639,23 +639,11 @@ public class ElasticsearchSearchEngineAdapterIndexRequestTest {
 
 			String state = GetterUtil.getString(indexJSONObject.get("state"));
 
-			Assert.assertEquals(translateState(indexMetadataState), state);
+			Assert.assertEquals(_translateState(indexMetadataState), state);
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
 		}
-	}
-
-	protected String translateState(IndexMetadata.State state) {
-		if (state == IndexMetadata.State.OPEN) {
-			return "open";
-		}
-
-		if (state == IndexMetadata.State.CLOSE) {
-			return "close";
-		}
-
-		throw new IllegalArgumentException("Unknown state: " + state);
 	}
 
 	private void _closeIndex(String indexName) {
@@ -794,6 +782,18 @@ public class ElasticsearchSearchEngineAdapterIndexRequestTest {
 		}
 
 		_openIndex(_INDEX_NAME);
+	}
+
+	private String _translateState(IndexMetadata.State state) {
+		if (state == IndexMetadata.State.OPEN) {
+			return "open";
+		}
+
+		if (state == IndexMetadata.State.CLOSE) {
+			return "close";
+		}
+
+		throw new IllegalArgumentException("Unknown state: " + state);
 	}
 
 	private static final String _INDEX_NAME = "test_request_index";

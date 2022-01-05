@@ -40,10 +40,10 @@ public class BackgroundTaskExecutorConfigurator {
 			new ReindexPortalBackgroundTaskExecutor(
 				bundleContext, _portalExecutorManager);
 
-		registerBackgroundTaskExecutor(
+		_registerBackgroundTaskExecutor(
 			bundleContext, reindexPortalBackgroundTaskExecutor);
 
-		registerBackgroundTaskExecutor(
+		_registerBackgroundTaskExecutor(
 			bundleContext, _reindexSingleIndexerBackgroundTaskExecutor);
 	}
 
@@ -56,7 +56,7 @@ public class BackgroundTaskExecutorConfigurator {
 		}
 	}
 
-	protected void registerBackgroundTaskExecutor(
+	private void _registerBackgroundTaskExecutor(
 		BundleContext bundleContext,
 		BackgroundTaskExecutor backgroundTaskExecutor) {
 

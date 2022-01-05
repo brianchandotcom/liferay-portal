@@ -45,17 +45,6 @@ public class FacetedSearcherManagerImpl implements FacetedSearcherManager {
 			searchableAssetClassNamesProvider, searchRequestBuilderFactory);
 	}
 
-	protected Localization getLocalization() {
-
-		// See LPS-72507
-
-		if (localization != null) {
-			return localization;
-		}
-
-		return LocalizationUtil.getLocalization();
-	}
-
 	@Reference
 	protected AddSearchKeywordsQueryContributorHelper
 		addSearchKeywordsQueryContributorHelper;
@@ -84,5 +73,16 @@ public class FacetedSearcherManagerImpl implements FacetedSearcherManager {
 
 	@Reference
 	protected SearchRequestBuilderFactory searchRequestBuilderFactory;
+
+	private Localization _getLocalization() {
+
+		// See LPS-72507
+
+		if (localization != null) {
+			return localization;
+		}
+
+		return LocalizationUtil.getLocalization();
+	}
 
 }

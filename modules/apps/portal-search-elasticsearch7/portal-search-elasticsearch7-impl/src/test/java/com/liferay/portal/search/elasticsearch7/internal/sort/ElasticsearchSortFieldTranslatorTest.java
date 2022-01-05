@@ -83,14 +83,14 @@ public class ElasticsearchSortFieldTranslatorTest
 
 		FieldSort fieldSort = _sorts.field(fieldName, SortOrder.DESC);
 
-		assertOrder(
+		_assertOrder(
 			new Sort[] {fieldSort}, fieldName, "[beta gamma, beta, alpha beta]",
 			null);
 	}
 
 	@Test
 	public void testFieldSortNumber() throws Exception {
-		addDocuments(
+		_addDocuments(
 			value -> document -> {
 				document.addDate(
 					Field.MODIFIED_DATE, new Date(value.longValue()));
@@ -100,7 +100,7 @@ public class ElasticsearchSortFieldTranslatorTest
 
 		FieldSort fieldSort = _sorts.field(Field.PRIORITY, SortOrder.DESC);
 
-		assertOrder(
+		_assertOrder(
 			new Sort[] {fieldSort}, Field.PRIORITY, "[3.0, 2.0, 1.0]", null);
 	}
 
@@ -118,7 +118,7 @@ public class ElasticsearchSortFieldTranslatorTest
 
 		Query query = new MatchQuery(fieldName, "delta");
 
-		assertOrder(
+		_assertOrder(
 			new Sort[] {fieldSortMissing}, fieldName,
 			"[delta, alpha delta, delta gamma]", query);
 	}
@@ -148,7 +148,7 @@ public class ElasticsearchSortFieldTranslatorTest
 		geoDistanceSort.setSortMode(SortMode.MIN);
 		geoDistanceSort.setSortOrder(SortOrder.DESC);
 
-		assertOrder(
+		_assertOrder(
 			new Sort[] {geoDistanceSort}, fieldName,
 			"[lat: 90.0, lon: 98.0, lat: 40.0, lon: 20.0, lat: 3.0, lon: 9.0]",
 			null);
@@ -170,14 +170,14 @@ public class ElasticsearchSortFieldTranslatorTest
 		Query query = new MatchQuery(
 			fieldNameForScoreSort, "beta beta beta gamma");
 
-		assertOrder(
+		_assertOrder(
 			new Sort[] {scoreSort}, fieldNameForScoreSort,
 			"[gamma, alpha beta, beta, beta gamma]", query);
 	}
 
 	@Test
 	public void testScriptSort() throws Exception {
-		addDocuments(
+		_addDocuments(
 			value -> document -> {
 				document.addDate(
 					Field.MODIFIED_DATE, new Date(value.longValue()));
@@ -198,7 +198,7 @@ public class ElasticsearchSortFieldTranslatorTest
 
 		scriptSort.setSortOrder(SortOrder.DESC);
 
-		assertOrder(
+		_assertOrder(
 			new Sort[] {scriptSort}, Field.PRIORITY, "[3.0, 2.0, 1.0]", null);
 	}
 
@@ -217,7 +217,12 @@ public class ElasticsearchSortFieldTranslatorTest
 	public void testSort3() throws Exception {
 	}
 
-	protected void addDocuments(
+	@Override
+	protected IndexingFixture createIndexingFixture() throws Exception {
+		return LiferayElasticsearchIndexingFixtureFactory.getInstance();
+	}
+
+	private void _addDocuments(
 			Function<Double, DocumentCreationHelper> function, double... values)
 		throws Exception {
 
@@ -226,13 +231,11 @@ public class ElasticsearchSortFieldTranslatorTest
 		}
 	}
 
-	protected void assertOrder(
-		Sort[] sorts, String fieldName, String expected) {
-
-		assertOrder(sorts, fieldName, expected, null);
+	private void _assertOrder(Sort[] sorts, String fieldName, String expected) {
+		_assertOrder(sorts, fieldName, expected, null);
 	}
 
-	protected void assertOrder(
+	private void _assertOrder(
 		Sort[] sorts, String fieldName, String expected, Query query) {
 
 		assertSearch(
@@ -251,11 +254,6 @@ public class ElasticsearchSortFieldTranslatorTest
 						indexingTestHelper.getRequestString(), hits.getDocs(),
 						fieldName, expected));
 			});
-	}
-
-	@Override
-	protected IndexingFixture createIndexingFixture() throws Exception {
-		return LiferayElasticsearchIndexingFixtureFactory.getInstance();
 	}
 
 	private static final Scripts _scripts = new ScriptsImpl();

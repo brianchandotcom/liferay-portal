@@ -46,10 +46,10 @@ public class UpdateSettingsClusterRequestExecutorImpl
 		UpdateSettingsClusterRequest updateSettingsClusterRequest) {
 
 		ClusterUpdateSettingsRequest clusterUpdateSettingsRequest =
-			createClusterUpdateSettingsRequest(updateSettingsClusterRequest);
+			_createClusterUpdateSettingsRequest(updateSettingsClusterRequest);
 
 		ClusterUpdateSettingsResponse clusterUpdateSettingsResponse =
-			getClusterUpdateSettingsResponse(
+			_getClusterUpdateSettingsResponse(
 				clusterUpdateSettingsRequest, updateSettingsClusterRequest);
 
 		Settings persistentSettings =
@@ -61,7 +61,14 @@ public class UpdateSettingsClusterRequestExecutorImpl
 			persistentSettings.toString(), transientSettings.toString());
 	}
 
-	protected ClusterUpdateSettingsRequest createClusterUpdateSettingsRequest(
+	@Reference(unbind = "-")
+	protected void setElasticsearchClientResolver(
+		ElasticsearchClientResolver elasticsearchClientResolver) {
+
+		_elasticsearchClientResolver = elasticsearchClientResolver;
+	}
+
+	private ClusterUpdateSettingsRequest _createClusterUpdateSettingsRequest(
 		UpdateSettingsClusterRequest updateSettingsClusterRequest) {
 
 		ClusterUpdateSettingsRequest clusterUpdateSettingsRequest =
@@ -94,7 +101,7 @@ public class UpdateSettingsClusterRequestExecutorImpl
 		return clusterUpdateSettingsRequest;
 	}
 
-	protected ClusterUpdateSettingsResponse getClusterUpdateSettingsResponse(
+	private ClusterUpdateSettingsResponse _getClusterUpdateSettingsResponse(
 		ClusterUpdateSettingsRequest clusterUpdateSettingsRequest,
 		UpdateSettingsClusterRequest updateSettingsClusterRequest) {
 
@@ -112,13 +119,6 @@ public class UpdateSettingsClusterRequestExecutorImpl
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
 		}
-	}
-
-	@Reference(unbind = "-")
-	protected void setElasticsearchClientResolver(
-		ElasticsearchClientResolver elasticsearchClientResolver) {
-
-		_elasticsearchClientResolver = elasticsearchClientResolver;
 	}
 
 	private ElasticsearchClientResolver _elasticsearchClientResolver;

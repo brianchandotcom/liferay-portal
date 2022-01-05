@@ -38,7 +38,7 @@ public class ModifiedFacetCalendarDisplayBuilder {
 	}
 
 	public ModifiedFacetCalendarDisplayContext build() {
-		buildBounds();
+		_buildBounds();
 
 		ModifiedFacetCalendarDisplayContext
 			modifiedFacetCalendarDisplayContext =
@@ -94,7 +94,7 @@ public class ModifiedFacetCalendarDisplayBuilder {
 		_to = to;
 	}
 
-	protected void buildBounds() {
+	private void _buildBounds() {
 		String[] bounds = _getBounds();
 
 		if (!ArrayUtil.isEmpty(bounds)) {

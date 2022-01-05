@@ -84,22 +84,10 @@ public class ElasticsearchClusterTest {
 		List<Company> companies = new ArrayList<>(companyIds.length);
 
 		for (long companyId : companyIds) {
-			companies.add(getCompany(companyId));
+			companies.add(_getCompany(companyId));
 		}
 
 		return companies;
-	}
-
-	protected Company getCompany(long companyId) {
-		Company company = Mockito.mock(Company.class);
-
-		Mockito.when(
-			company.getCompanyId()
-		).thenReturn(
-			companyId
-		);
-
-		return company;
 	}
 
 	protected String getTestIndexName(long companyId) {
@@ -112,6 +100,18 @@ public class ElasticsearchClusterTest {
 		).thenReturn(
 			companies
 		);
+	}
+
+	private Company _getCompany(long companyId) {
+		Company company = Mockito.mock(Company.class);
+
+		Mockito.when(
+			company.getCompanyId()
+		).thenReturn(
+			companyId
+		);
+
+		return company;
 	}
 
 	@Mock

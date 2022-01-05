@@ -46,7 +46,7 @@ public class ReindexerImpl implements Reindexer {
 
 	@Override
 	public void reindex(long companyId, String className, long... classPKs) {
-		Reindex reindex = getReindex(companyId);
+		Reindex reindex = _getReindex(companyId);
 
 		reindex.reindex(className, classPKs);
 	}
@@ -57,7 +57,7 @@ public class ReindexerImpl implements Reindexer {
 		_reindexerConfiguration = ConfigurableUtil.createConfigurable(
 			ReindexerConfiguration.class, properties);
 
-		_executorService = Executors.newSingleThreadExecutor(this::getThread);
+		_executorService = Executors.newSingleThreadExecutor(this::_getThread);
 		_reindexRequestsHolder = new ReindexRequestsHolder();
 	}
 
@@ -69,7 +69,13 @@ public class ReindexerImpl implements Reindexer {
 		_reindexRequestsHolder = null;
 	}
 
-	protected Reindex getReindex(long companyId) {
+	@Reference
+	protected BulkReindexersHolder bulkReindexersHolder;
+
+	@Reference
+	protected IndexerRegistry indexerRegistry;
+
+	private Reindex _getReindex(long companyId) {
 		Reindex reindex = new Reindex(
 			indexerRegistry, bulkReindexersHolder, _executorService,
 			_reindexRequestsHolder);
@@ -85,7 +91,7 @@ public class ReindexerImpl implements Reindexer {
 		return reindex;
 	}
 
-	protected Thread getThread(Runnable runnable) {
+	private Thread _getThread(Runnable runnable) {
 		Thread thread = _threadFactory.newThread(runnable);
 
 		thread.setDaemon(true);
@@ -93,12 +99,6 @@ public class ReindexerImpl implements Reindexer {
 
 		return thread;
 	}
-
-	@Reference
-	protected BulkReindexersHolder bulkReindexersHolder;
-
-	@Reference
-	protected IndexerRegistry indexerRegistry;
 
 	private static final ThreadFactory _threadFactory =
 		Executors.defaultThreadFactory();

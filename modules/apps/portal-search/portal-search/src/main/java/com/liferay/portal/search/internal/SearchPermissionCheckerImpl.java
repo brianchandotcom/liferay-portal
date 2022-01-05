@@ -209,14 +209,6 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 			searchPermissionFilterContributor);
 	}
 
-	protected PermissionChecker getPermissionChecker() {
-		if (permissionChecker != null) {
-			return permissionChecker;
-		}
-
-		return PermissionThreadLocal.getPermissionChecker();
-	}
-
 	protected void removeSearchPermissionFieldContributor(
 		SearchPermissionFieldContributor searchPermissionFieldContributor) {
 
@@ -458,7 +450,7 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 			return null;
 		}
 
-		PermissionChecker permissionChecker = getPermissionChecker();
+		PermissionChecker permissionChecker = _getPermissionChecker();
 
 		User user = permissionChecker.getUser();
 
@@ -506,6 +498,14 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 			companyId, searchGroupIds, userId, permissionChecker,
 			_getPermissionName(searchContext, className),
 			searchPermissionContext);
+	}
+
+	private PermissionChecker _getPermissionChecker() {
+		if (permissionChecker != null) {
+			return permissionChecker;
+		}
+
+		return PermissionThreadLocal.getPermissionChecker();
 	}
 
 	private BooleanFilter _getPermissionFilter(

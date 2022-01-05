@@ -57,7 +57,7 @@ public class CustomFilterPortletSharedSearchContributor
 		searchRequestBuilder.addComplexQueryPart(
 			_complexQueryPartBuilderFactory.builder(
 			).boost(
-				getBoost(customFilterPortletPreferences)
+				_getBoost(customFilterPortletPreferences)
 			).disabled(
 				customFilterPortletPreferences.isDisabled()
 			).field(
@@ -71,12 +71,12 @@ public class CustomFilterPortletSharedSearchContributor
 			).type(
 				customFilterPortletPreferences.getFilterQueryType()
 			).value(
-				getFilterValue(
+				_getFilterValue(
 					portletSharedSearchSettings, customFilterPortletPreferences)
 			).build());
 	}
 
-	protected Float getBoost(
+	private Float _getBoost(
 		CustomFilterPortletPreferences customFilterPortletPreferences) {
 
 		Optional<String> optional =
@@ -89,17 +89,17 @@ public class CustomFilterPortletSharedSearchContributor
 		);
 	}
 
-	protected String getFilterValue(
+	private String _getFilterValue(
 		PortletSharedSearchSettings portletSharedSearchSettings,
 		CustomFilterPortletPreferences customFilterPortletPreferences) {
 
-		Optional<String> optional = getFilterValueOptional(
+		Optional<String> optional = _getFilterValueOptional(
 			customFilterPortletPreferences, portletSharedSearchSettings);
 
 		return optional.orElse(null);
 	}
 
-	protected Optional<String> getFilterValueOptional(
+	private Optional<String> _getFilterValueOptional(
 		CustomFilterPortletPreferences customFilterPortletPreferences,
 		PortletSharedSearchSettings portletSharedSearchSettings) {
 

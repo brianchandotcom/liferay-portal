@@ -49,7 +49,7 @@ public class ModelIndexerWriterDocumentHelperTest {
 
 	@Test
 	public void testException() throws PortalException {
-		throwIndexNameBuilderException(new SystemException());
+		_throwIndexNameBuilderException(new SystemException());
 
 		ModelIndexerWriterDocumentHelper modelIndexerWriterDocumentHelper =
 			new ModelIndexerWriterDocumentHelperImpl(
@@ -58,18 +58,18 @@ public class ModelIndexerWriterDocumentHelperTest {
 		modelIndexerWriterDocumentHelper.getDocument(baseModel);
 	}
 
-	protected void throwIndexNameBuilderException(Exception exception) {
+	@Mock
+	protected BaseModel<?> baseModel;
+
+	@Mock
+	protected IndexerDocumentBuilder indexDocumentBuilder;
+
+	private void _throwIndexNameBuilderException(Exception exception) {
 		Mockito.when(
 			indexDocumentBuilder.getDocument(Matchers.any())
 		).thenThrow(
 			exception
 		);
 	}
-
-	@Mock
-	protected BaseModel<?> baseModel;
-
-	@Mock
-	protected IndexerDocumentBuilder indexDocumentBuilder;
 
 }

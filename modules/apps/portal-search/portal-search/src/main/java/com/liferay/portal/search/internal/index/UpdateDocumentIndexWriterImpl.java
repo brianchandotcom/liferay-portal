@@ -76,7 +76,7 @@ public class UpdateDocumentIndexWriterImpl
 		searchContext.setCompanyId(companyId);
 		searchContext.setSearchEngineId(searchEngineId);
 
-		setCommitImmediately(
+		_setCommitImmediately(
 			searchContext,
 			commitImmediately || ProxyModeThreadLocal.isForceSync());
 
@@ -111,7 +111,7 @@ public class UpdateDocumentIndexWriterImpl
 		searchContext.setCompanyId(companyId);
 		searchContext.setSearchEngineId(searchEngineId);
 
-		setCommitImmediately(searchContext, commitImmediately);
+		_setCommitImmediately(searchContext, commitImmediately);
 
 		try {
 			indexWriter.partiallyUpdateDocument(searchContext, document);
@@ -151,7 +151,7 @@ public class UpdateDocumentIndexWriterImpl
 		searchContext.setCompanyId(companyId);
 		searchContext.setSearchEngineId(searchEngineId);
 
-		setCommitImmediately(searchContext, commitImmediately);
+		_setCommitImmediately(searchContext, commitImmediately);
 
 		try {
 			indexWriter.updateDocuments(searchContext, documents);
@@ -182,7 +182,7 @@ public class UpdateDocumentIndexWriterImpl
 		searchContext.setCompanyId(companyId);
 		searchContext.setSearchEngineId(searchEngineId);
 
-		setCommitImmediately(searchContext, commitImmediately);
+		_setCommitImmediately(searchContext, commitImmediately);
 
 		try {
 			indexWriter.partiallyUpdateDocuments(searchContext, documents);
@@ -203,17 +203,6 @@ public class UpdateDocumentIndexWriterImpl
 			indexWriterHelperConfiguration.indexCommitImmediately();
 	}
 
-	protected void setCommitImmediately(
-		SearchContext searchContext, boolean commitImmediately) {
-
-		if (!commitImmediately) {
-			searchContext.setCommitImmediately(_commitImmediately);
-		}
-		else {
-			searchContext.setCommitImmediately(true);
-		}
-	}
-
 	@Reference
 	protected IndexStatusManager indexStatusManager;
 
@@ -223,6 +212,17 @@ public class UpdateDocumentIndexWriterImpl
 	@Reference
 	protected SearchPermissionDocumentContributor
 		searchPermissionDocumentContributor;
+
+	private void _setCommitImmediately(
+		SearchContext searchContext, boolean commitImmediately) {
+
+		if (!commitImmediately) {
+			searchContext.setCommitImmediately(_commitImmediately);
+		}
+		else {
+			searchContext.setCommitImmediately(true);
+		}
+	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		UpdateDocumentIndexWriterImpl.class);

@@ -45,10 +45,10 @@ public class SearchBarPrecedenceHelper {
 	public Optional<Portlet> findHeaderSearchBarPortletOptional(
 		ThemeDisplay themeDisplay) {
 
-		Stream<Portlet> stream = getPortletsStream(themeDisplay);
+		Stream<Portlet> stream = _getPortletsStream(themeDisplay);
 
 		return stream.filter(
-			this::isHeaderSearchBar
+			this::_isHeaderSearchBar
 		).findAny();
 	}
 
@@ -97,12 +97,12 @@ public class SearchBarPrecedenceHelper {
 
 		Portlet portlet = optional.get();
 
-		if (isSamePortlet(portlet, portletId)) {
+		if (_isSamePortlet(portlet, portletId)) {
 			return false;
 		}
 
 		SearchBarPortletPreferences searchBarPortletPreferences1 =
-			getSearchBarPortletPreferences(portlet, themeDisplay);
+			_getSearchBarPortletPreferences(portlet, themeDisplay);
 
 		if (!SearchBarPortletDestinationUtil.isSameDestination(
 				searchBarPortletPreferences1, themeDisplay)) {
@@ -111,7 +111,7 @@ public class SearchBarPrecedenceHelper {
 		}
 
 		SearchBarPortletPreferences searchBarPortletPreferences2 =
-			getSearchBarPortletPreferences(portletId, themeDisplay);
+			_getSearchBarPortletPreferences(portletId, themeDisplay);
 
 		if (!Objects.equals(
 				searchBarPortletPreferences1.getFederatedSearchKeyString(),
@@ -121,56 +121,6 @@ public class SearchBarPrecedenceHelper {
 		}
 
 		return true;
-	}
-
-	protected Stream<Portlet> getPortletsStream(ThemeDisplay themeDisplay) {
-		Layout layout = themeDisplay.getLayout();
-
-		LayoutTypePortlet layoutTypePortlet =
-			(LayoutTypePortlet)layout.getLayoutType();
-
-		List<Portlet> portlets = layoutTypePortlet.getAllPortlets(false);
-
-		return portlets.stream();
-	}
-
-	protected SearchBarPortletPreferences getSearchBarPortletPreferences(
-		Portlet portlet, ThemeDisplay themeDisplay) {
-
-		if (portlet == null) {
-			return new SearchBarPortletPreferencesImpl(Optional.empty());
-		}
-
-		return new SearchBarPortletPreferencesImpl(
-			_portletPreferencesLookup.fetchPreferences(portlet, themeDisplay));
-	}
-
-	protected SearchBarPortletPreferences getSearchBarPortletPreferences(
-		String portletId, ThemeDisplay themeDisplay) {
-
-		return getSearchBarPortletPreferences(
-			_portletLocalService.getPortletById(
-				themeDisplay.getCompanyId(), portletId),
-			themeDisplay);
-	}
-
-	protected boolean isHeaderSearchBar(Portlet portlet) {
-		if (portlet.isStatic() &&
-			Objects.equals(
-				portlet.getPortletName(), SearchBarPortletKeys.SEARCH_BAR)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	protected boolean isSamePortlet(Portlet portlet, String portletId) {
-		if (Objects.equals(portlet.getPortletId(), portletId)) {
-			return true;
-		}
-
-		return false;
 	}
 
 	@Reference(unbind = "-")
@@ -185,6 +135,56 @@ public class SearchBarPrecedenceHelper {
 		PortletPreferencesLookup portletPreferencesLookup) {
 
 		_portletPreferencesLookup = portletPreferencesLookup;
+	}
+
+	private Stream<Portlet> _getPortletsStream(ThemeDisplay themeDisplay) {
+		Layout layout = themeDisplay.getLayout();
+
+		LayoutTypePortlet layoutTypePortlet =
+			(LayoutTypePortlet)layout.getLayoutType();
+
+		List<Portlet> portlets = layoutTypePortlet.getAllPortlets(false);
+
+		return portlets.stream();
+	}
+
+	private SearchBarPortletPreferences _getSearchBarPortletPreferences(
+		Portlet portlet, ThemeDisplay themeDisplay) {
+
+		if (portlet == null) {
+			return new SearchBarPortletPreferencesImpl(Optional.empty());
+		}
+
+		return new SearchBarPortletPreferencesImpl(
+			_portletPreferencesLookup.fetchPreferences(portlet, themeDisplay));
+	}
+
+	private SearchBarPortletPreferences _getSearchBarPortletPreferences(
+		String portletId, ThemeDisplay themeDisplay) {
+
+		return _getSearchBarPortletPreferences(
+			_portletLocalService.getPortletById(
+				themeDisplay.getCompanyId(), portletId),
+			themeDisplay);
+	}
+
+	private boolean _isHeaderSearchBar(Portlet portlet) {
+		if (portlet.isStatic() &&
+			Objects.equals(
+				portlet.getPortletName(), SearchBarPortletKeys.SEARCH_BAR)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isSamePortlet(Portlet portlet, String portletId) {
+		if (Objects.equals(portlet.getPortletId(), portletId)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Reference

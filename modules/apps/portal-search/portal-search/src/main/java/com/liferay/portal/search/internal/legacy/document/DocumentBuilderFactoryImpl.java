@@ -40,12 +40,12 @@ public class DocumentBuilderFactoryImpl implements DocumentBuilderFactory {
 
 		DocumentBuilder documentBuilder = new DocumentBuilderImpl();
 
-		map.forEach((key, field) -> addField(key, field, documentBuilder));
+		map.forEach((key, field) -> _addField(key, field, documentBuilder));
 
 		return documentBuilder;
 	}
 
-	protected void addField(
+	private void _addField(
 		String key, Field field, DocumentBuilder documentBuilder) {
 
 		GeoLocationPoint geoLocationPoint = field.getGeoLocationPoint();

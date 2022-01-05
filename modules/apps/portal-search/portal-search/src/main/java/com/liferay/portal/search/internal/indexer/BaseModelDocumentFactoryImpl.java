@@ -42,7 +42,7 @@ public class BaseModelDocumentFactoryImpl implements BaseModelDocumentFactory {
 
 		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
 
-		Tuple classPKResourcePrimKeyTuple = getClassPKResourcePrimKey(
+		Tuple classPKResourcePrimKeyTuple = _getClassPKResourcePrimKey(
 			baseModel);
 
 		documentBuilder.setString(
@@ -51,7 +51,7 @@ public class BaseModelDocumentFactoryImpl implements BaseModelDocumentFactory {
 			Field.ENTRY_CLASS_PK, (Long)classPKResourcePrimKeyTuple.getObject(0)
 		).setLong(
 			Field.ROOT_ENTRY_CLASS_PK,
-			getRootEntryClassPK(classPKResourcePrimKeyTuple)
+			_getRootEntryClassPK(classPKResourcePrimKeyTuple)
 		);
 
 		uidFactory.setUID(baseModel, documentBuilder);
@@ -60,10 +60,20 @@ public class BaseModelDocumentFactoryImpl implements BaseModelDocumentFactory {
 
 		_enforceStandardUID(document);
 
-		return toLegacyDocument(document);
+		return _toLegacyDocument(document);
 	}
 
-	protected Tuple getClassPKResourcePrimKey(BaseModel<?> baseModel) {
+	@Reference
+	protected DocumentBuilderFactory documentBuilderFactory;
+
+	@Reference
+	protected UIDFactory uidFactory;
+
+	private void _enforceStandardUID(Document document) {
+		uidFactory.getUID(document);
+	}
+
+	private Tuple _getClassPKResourcePrimKey(BaseModel<?> baseModel) {
 		long classPK = 0;
 		long resourcePrimKey = 0;
 
@@ -80,7 +90,7 @@ public class BaseModelDocumentFactoryImpl implements BaseModelDocumentFactory {
 		return new Tuple(classPK, resourcePrimKey);
 	}
 
-	protected Long getRootEntryClassPK(Tuple classPKResourcePrimKeyTuple) {
+	private Long _getRootEntryClassPK(Tuple classPKResourcePrimKeyTuple) {
 		long resourcePrimKey = (Long)classPKResourcePrimKeyTuple.getObject(1);
 
 		if (resourcePrimKey > 0) {
@@ -90,7 +100,7 @@ public class BaseModelDocumentFactoryImpl implements BaseModelDocumentFactory {
 		return null;
 	}
 
-	protected com.liferay.portal.kernel.search.Document toLegacyDocument(
+	private com.liferay.portal.kernel.search.Document _toLegacyDocument(
 		Document document) {
 
 		DocumentImpl documentImpl = new DocumentImpl();
@@ -103,16 +113,6 @@ public class BaseModelDocumentFactoryImpl implements BaseModelDocumentFactory {
 				new Field(key, String.valueOf(field.getValue()))));
 
 		return documentImpl;
-	}
-
-	@Reference
-	protected DocumentBuilderFactory documentBuilderFactory;
-
-	@Reference
-	protected UIDFactory uidFactory;
-
-	private void _enforceStandardUID(Document document) {
-		uidFactory.getUID(document);
 	}
 
 }

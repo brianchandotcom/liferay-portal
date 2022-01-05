@@ -52,16 +52,16 @@ public class FolderTitleLookupTest {
 
 	@Before
 	public void setUp() {
-		setUpPropsUtil();
+		_setUpPropsUtil();
 	}
 
 	@Test
 	public void testGetFolderTitle() throws SearchException {
-		Hits hits = getHitsWithDocument(
-			getTitleLocalizedFieldName(LocaleUtil.BRAZIL), "My Title");
+		Hits hits = _getHitsWithDocument(
+			_getTitleLocalizedFieldName(LocaleUtil.BRAZIL), "My Title");
 
 		FolderTitleLookup folderTitleLookup = new FolderTitleLookupImpl(
-			mockFolderSearcher(hits), mockHttpServletRequest(LocaleUtil.US));
+			_mockFolderSearcher(hits), _mockHttpServletRequest(LocaleUtil.US));
 
 		Assert.assertEquals(
 			"My Title",
@@ -72,11 +72,11 @@ public class FolderTitleLookupTest {
 	public void testGetFolderTitleFromAnyLocalizedField()
 		throws SearchException {
 
-		Hits hits = getHitsWithDocument(Field.TITLE, "My Title");
+		Hits hits = _getHitsWithDocument(Field.TITLE, "My Title");
 
 		FolderTitleLookup folderTitleLookup = new FolderTitleLookupImpl(
-			mockFolderSearcher(hits),
-			mockHttpServletRequest(LocaleUtil.BRAZIL));
+			_mockFolderSearcher(hits),
+			_mockHttpServletRequest(LocaleUtil.BRAZIL));
 
 		Assert.assertEquals(
 			"My Title",
@@ -87,19 +87,19 @@ public class FolderTitleLookupTest {
 	public void testGetFolderTitleFromDisplayLocaleLocalizedField()
 		throws SearchException {
 
-		Hits hits = getHitsWithDocument(
-			getTitleLocalizedFieldName(LocaleUtil.BRAZIL), "My Title");
+		Hits hits = _getHitsWithDocument(
+			_getTitleLocalizedFieldName(LocaleUtil.BRAZIL), "My Title");
 
 		FolderTitleLookup folderTitleLookup = new FolderTitleLookupImpl(
-			mockFolderSearcher(hits),
-			mockHttpServletRequest(LocaleUtil.BRAZIL));
+			_mockFolderSearcher(hits),
+			_mockHttpServletRequest(LocaleUtil.BRAZIL));
 
 		Assert.assertEquals(
 			"My Title",
 			folderTitleLookup.getFolderTitle(RandomTestUtil.randomLong()));
 	}
 
-	protected Hits getHitsWithDocument(String fieldName, String value) {
+	private Hits _getHitsWithDocument(String fieldName, String value) {
 		Document document = new DocumentImpl();
 
 		document.addText(fieldName, value);
@@ -112,11 +112,11 @@ public class FolderTitleLookupTest {
 		return hits;
 	}
 
-	protected String getTitleLocalizedFieldName(Locale locale) {
+	private String _getTitleLocalizedFieldName(Locale locale) {
 		return Field.TITLE + StringPool.UNDERLINE + locale;
 	}
 
-	protected FolderSearcher mockFolderSearcher(Hits hits)
+	private FolderSearcher _mockFolderSearcher(Hits hits)
 		throws SearchException {
 
 		FolderSearcher folderSearcher = Mockito.mock(FolderSearcher.class);
@@ -130,7 +130,7 @@ public class FolderTitleLookupTest {
 		return folderSearcher;
 	}
 
-	protected MockHttpServletRequest mockHttpServletRequest(Locale locale) {
+	private MockHttpServletRequest _mockHttpServletRequest(Locale locale) {
 		MockHttpServletRequest request = new MockHttpServletRequest();
 
 		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
@@ -146,7 +146,7 @@ public class FolderTitleLookupTest {
 		return request;
 	}
 
-	protected void setUpPropsUtil() {
+	private void _setUpPropsUtil() {
 		PropsUtil.setProps(new PropsImpl());
 	}
 

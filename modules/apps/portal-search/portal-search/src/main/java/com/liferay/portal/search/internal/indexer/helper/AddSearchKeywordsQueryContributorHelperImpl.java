@@ -53,10 +53,22 @@ public class AddSearchKeywordsQueryContributorHelperImpl
 			return;
 		}
 
-		addKeywordQueryContributorClauses(booleanQuery, searchContext);
+		_addKeywordQueryContributorClauses(booleanQuery, searchContext);
 	}
 
-	protected void addKeywordQueryContributorClauses(
+	protected Collection<String> getStrings(
+		String string, SearchContext searchContext) {
+
+		return Arrays.asList(
+			SearchStringUtil.splitAndUnquote(
+				Optional.ofNullable(
+					(String)searchContext.getAttribute(string))));
+	}
+
+	@Reference
+	protected KeywordQueryContributorsHolder keywordQueryContributorsHolder;
+
+	private void _addKeywordQueryContributorClauses(
 		BooleanQuery booleanQuery, SearchContext searchContext) {
 
 		boolean luceneSyntax = GetterUtil.getBoolean(
@@ -66,7 +78,7 @@ public class AddSearchKeywordsQueryContributorHelperImpl
 		String keywords = searchContext.getKeywords();
 
 		if (luceneSyntax) {
-			addStringQuery(booleanQuery, keywords);
+			_addStringQuery(booleanQuery, keywords);
 
 			return;
 		}
@@ -103,7 +115,7 @@ public class AddSearchKeywordsQueryContributorHelperImpl
 				}));
 	}
 
-	protected void addStringQuery(BooleanQuery booleanQuery, String keywords) {
+	private void _addStringQuery(BooleanQuery booleanQuery, String keywords) {
 		if (Validator.isBlank(keywords)) {
 			return;
 		}
@@ -116,17 +128,5 @@ public class AddSearchKeywordsQueryContributorHelperImpl
 			throw new RuntimeException(parseException);
 		}
 	}
-
-	protected Collection<String> getStrings(
-		String string, SearchContext searchContext) {
-
-		return Arrays.asList(
-			SearchStringUtil.splitAndUnquote(
-				Optional.ofNullable(
-					(String)searchContext.getAttribute(string))));
-	}
-
-	@Reference
-	protected KeywordQueryContributorsHolder keywordQueryContributorsHolder;
 
 }

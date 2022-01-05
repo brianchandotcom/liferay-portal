@@ -48,7 +48,7 @@ public class GetMappingIndexRequestExecutorImpl
 		GetMappingsRequest getMappingsRequest = createGetMappingsRequest(
 			getMappingIndexRequest);
 
-		GetMappingsResponse getMappingsResponse = getGetMappingsResponse(
+		GetMappingsResponse getMappingsResponse = _getGetMappingsResponse(
 			getMappingsRequest, getMappingIndexRequest);
 
 		Map<String, MappingMetadata> mappings = getMappingsResponse.mappings();
@@ -76,7 +76,14 @@ public class GetMappingIndexRequestExecutorImpl
 		return getMappingsRequest;
 	}
 
-	protected GetMappingsResponse getGetMappingsResponse(
+	@Reference(unbind = "-")
+	protected void setElasticsearchClientResolver(
+		ElasticsearchClientResolver elasticsearchClientResolver) {
+
+		_elasticsearchClientResolver = elasticsearchClientResolver;
+	}
+
+	private GetMappingsResponse _getGetMappingsResponse(
 		GetMappingsRequest getMappingsRequest,
 		GetMappingIndexRequest getMappingIndexRequest) {
 
@@ -94,13 +101,6 @@ public class GetMappingIndexRequestExecutorImpl
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
 		}
-	}
-
-	@Reference(unbind = "-")
-	protected void setElasticsearchClientResolver(
-		ElasticsearchClientResolver elasticsearchClientResolver) {
-
-		_elasticsearchClientResolver = elasticsearchClientResolver;
 	}
 
 	private ElasticsearchClientResolver _elasticsearchClientResolver;

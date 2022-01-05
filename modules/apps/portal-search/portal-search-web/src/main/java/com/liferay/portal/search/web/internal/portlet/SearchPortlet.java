@@ -108,7 +108,7 @@ public class SearchPortlet extends MVCPortlet {
 			try {
 				ServletResponseUtil.sendFile(
 					httpServletRequest, httpServletResponse, null,
-					getXML(resourceRequest, resourceResponse),
+					_getXML(resourceRequest, resourceResponse),
 					ContentTypes.TEXT_XML_UTF8);
 			}
 			catch (Exception exception) {
@@ -128,7 +128,17 @@ public class SearchPortlet extends MVCPortlet {
 		}
 	}
 
-	protected byte[] getXML(
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.portal.search.web)(&(release.schema.version>=2.0.0)(!(release.schema.version>=3.0.0))))",
+		unbind = "-"
+	)
+	protected void setRelease(Release release) {
+	}
+
+	@Reference
+	protected SearchDisplayContextFactory searchDisplayContextFactory;
+
+	private byte[] _getXML(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
@@ -161,16 +171,6 @@ public class SearchPortlet extends MVCPortlet {
 
 		return xml.getBytes();
 	}
-
-	@Reference(
-		target = "(&(release.bundle.symbolic.name=com.liferay.portal.search.web)(&(release.schema.version>=2.0.0)(!(release.schema.version>=3.0.0))))",
-		unbind = "-"
-	)
-	protected void setRelease(Release release) {
-	}
-
-	@Reference
-	protected SearchDisplayContextFactory searchDisplayContextFactory;
 
 	private static final Log _log = LogFactoryUtil.getLog(SearchPortlet.class);
 

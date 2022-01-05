@@ -67,7 +67,7 @@ public class TypeFacetConfigurationAction extends DefaultConfigurationAction {
 
 		AssetEntriesSearchFacetDisplayBuilder
 			assetEntriesSearchFacetDisplayBuilder =
-				createAssetEntriesSearchFacetDisplayBuilder(renderRequest);
+				_createAssetEntriesSearchFacetDisplayBuilder(renderRequest);
 
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -76,8 +76,15 @@ public class TypeFacetConfigurationAction extends DefaultConfigurationAction {
 		super.include(portletConfig, httpServletRequest, httpServletResponse);
 	}
 
-	protected AssetEntriesSearchFacetDisplayBuilder
-		createAssetEntriesSearchFacetDisplayBuilder(
+	@Reference
+	protected ObjectDefinitionLocalService objectDefinitionLocalService;
+
+	@Reference
+	protected SearchableAssetClassNamesProvider
+		searchableAssetClassNamesProvider;
+
+	private AssetEntriesSearchFacetDisplayBuilder
+		_createAssetEntriesSearchFacetDisplayBuilder(
 			RenderRequest renderRequest) {
 
 		try {
@@ -87,12 +94,5 @@ public class TypeFacetConfigurationAction extends DefaultConfigurationAction {
 			throw new RuntimeException(configurationException);
 		}
 	}
-
-	@Reference
-	protected ObjectDefinitionLocalService objectDefinitionLocalService;
-
-	@Reference
-	protected SearchableAssetClassNamesProvider
-		searchableAssetClassNamesProvider;
 
 }

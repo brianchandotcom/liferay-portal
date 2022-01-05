@@ -27,7 +27,7 @@ public class ElasticsearchPipelineAggregationVisitorFixture {
 			elasticsearchPipelineAggregationVisitor =
 				new ElasticsearchPipelineAggregationVisitor();
 
-		injectSortFieldTranslators(elasticsearchPipelineAggregationVisitor);
+		_injectSortFieldTranslators(elasticsearchPipelineAggregationVisitor);
 
 		_elasticsearchPipelineAggregationVisitor =
 			elasticsearchPipelineAggregationVisitor;
@@ -39,7 +39,7 @@ public class ElasticsearchPipelineAggregationVisitorFixture {
 		return _elasticsearchPipelineAggregationVisitor;
 	}
 
-	protected void injectSortFieldTranslators(
+	private void _injectSortFieldTranslators(
 		ElasticsearchPipelineAggregationVisitor
 			elasticsearchPipelineAggregationVisitor) {
 

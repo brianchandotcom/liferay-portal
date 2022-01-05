@@ -44,30 +44,13 @@ public class IndexDocumentRequestExecutorImpl
 			_elasticsearchBulkableDocumentRequestTranslator.translate(
 				indexDocumentRequest);
 
-		IndexResponse indexResponse = getIndexResponse(
+		IndexResponse indexResponse = _getIndexResponse(
 			indexRequest, indexDocumentRequest);
 
 		RestStatus restStatus = indexResponse.status();
 
 		return new IndexDocumentResponse(
 			restStatus.getStatus(), indexResponse.getId());
-	}
-
-	protected IndexResponse getIndexResponse(
-		IndexRequest indexRequest, IndexDocumentRequest indexDocumentRequest) {
-
-		RestHighLevelClient restHighLevelClient =
-			_elasticsearchClientResolver.getRestHighLevelClient(
-				indexDocumentRequest.getConnectionId(),
-				indexDocumentRequest.isPreferLocalCluster());
-
-		try {
-			return restHighLevelClient.index(
-				indexRequest, RequestOptions.DEFAULT);
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
 	}
 
 	@Reference(target = "(search.engine.impl=Elasticsearch)", unbind = "-")
@@ -84,6 +67,23 @@ public class IndexDocumentRequestExecutorImpl
 		ElasticsearchClientResolver elasticsearchClientResolver) {
 
 		_elasticsearchClientResolver = elasticsearchClientResolver;
+	}
+
+	private IndexResponse _getIndexResponse(
+		IndexRequest indexRequest, IndexDocumentRequest indexDocumentRequest) {
+
+		RestHighLevelClient restHighLevelClient =
+			_elasticsearchClientResolver.getRestHighLevelClient(
+				indexDocumentRequest.getConnectionId(),
+				indexDocumentRequest.isPreferLocalCluster());
+
+		try {
+			return restHighLevelClient.index(
+				indexRequest, RequestOptions.DEFAULT);
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
 	}
 
 	private ElasticsearchBulkableDocumentRequestTranslator

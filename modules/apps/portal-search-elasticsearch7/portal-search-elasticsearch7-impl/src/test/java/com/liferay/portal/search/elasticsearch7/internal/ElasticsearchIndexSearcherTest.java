@@ -52,7 +52,7 @@ public class ElasticsearchIndexSearcherTest {
 		SearchRequestBuilderFactory searchRequestBuilderFactory =
 			new SearchRequestBuilderFactoryImpl();
 
-		_elasticsearchIndexSearcher = createElasticsearchIndexSearcher(
+		_elasticsearchIndexSearcher = _createElasticsearchIndexSearcher(
 			searchRequestBuilderFactory);
 		_searchRequestBuilderFactory = searchRequestBuilderFactory;
 	}
@@ -89,9 +89,8 @@ public class ElasticsearchIndexSearcherTest {
 		Assert.assertEquals("testValue", searchSearchRequest.getPreference());
 	}
 
-	protected static ElasticsearchIndexSearcher
-		createElasticsearchIndexSearcher(
-			SearchRequestBuilderFactory searchRequestBuilderFactory) {
+	private static ElasticsearchIndexSearcher _createElasticsearchIndexSearcher(
+		SearchRequestBuilderFactory searchRequestBuilderFactory) {
 
 		return new ElasticsearchIndexSearcher() {
 			{

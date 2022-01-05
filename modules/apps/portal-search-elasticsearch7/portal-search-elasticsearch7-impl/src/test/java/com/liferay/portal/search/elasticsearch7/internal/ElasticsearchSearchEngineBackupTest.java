@@ -82,14 +82,14 @@ public class ElasticsearchSearchEngineBackupTest {
 
 		elasticsearchSearchEngine.backup(companyId, "backup_test");
 
-		GetSnapshotsResponse getSnapshotsResponse = getGetSnapshotsResponse(
+		GetSnapshotsResponse getSnapshotsResponse = _getGetSnapshotsResponse(
 			"liferay_backup", new String[] {"backup_test"}, true);
 
 		List<SnapshotInfo> snapshotInfos = getSnapshotsResponse.getSnapshots();
 
 		Assert.assertTrue(snapshotInfos.size() == 1);
 
-		deleteSnapshot("liferay_backup", "backup_test");
+		_deleteSnapshot("liferay_backup", "backup_test");
 	}
 
 	@Test
@@ -103,15 +103,22 @@ public class ElasticsearchSearchEngineBackupTest {
 
 		elasticsearchSearchEngine.createBackupRepository();
 
-		createSnapshot(
+		_createSnapshot(
 			"liferay_backup", "restore_test", true, String.valueOf(companyId));
 
 		elasticsearchSearchEngine.restore(companyId, "restore_test");
 
-		deleteSnapshot("liferay_backup", "restore_test");
+		_deleteSnapshot("liferay_backup", "restore_test");
 	}
 
-	protected void createSnapshot(
+	protected SnapshotClient getSnapshotClient() {
+		RestHighLevelClient restHighLevelClient =
+			_elasticsearchConnectionFixture.getRestHighLevelClient();
+
+		return restHighLevelClient.snapshot();
+	}
+
+	private void _createSnapshot(
 		String repositoryName, String snapshotName, boolean waitForCompletion,
 		String... indexNames) {
 
@@ -132,7 +139,7 @@ public class ElasticsearchSearchEngineBackupTest {
 		}
 	}
 
-	protected void deleteSnapshot(String repository, String snapshot) {
+	private void _deleteSnapshot(String repository, String snapshot) {
 		DeleteSnapshotRequest deleteSnapshotRequest = new DeleteSnapshotRequest(
 			repository, snapshot);
 
@@ -147,7 +154,7 @@ public class ElasticsearchSearchEngineBackupTest {
 		}
 	}
 
-	protected GetSnapshotsResponse getGetSnapshotsResponse(
+	private GetSnapshotsResponse _getGetSnapshotsResponse(
 		String repository, String[] snapshots, boolean ignoreUnavailable) {
 
 		GetSnapshotsRequest getSnapshotsRequest = new GetSnapshotsRequest();
@@ -165,13 +172,6 @@ public class ElasticsearchSearchEngineBackupTest {
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
 		}
-	}
-
-	protected SnapshotClient getSnapshotClient() {
-		RestHighLevelClient restHighLevelClient =
-			_elasticsearchConnectionFixture.getRestHighLevelClient();
-
-		return restHighLevelClient.snapshot();
 	}
 
 	private static ElasticsearchConnectionFixture

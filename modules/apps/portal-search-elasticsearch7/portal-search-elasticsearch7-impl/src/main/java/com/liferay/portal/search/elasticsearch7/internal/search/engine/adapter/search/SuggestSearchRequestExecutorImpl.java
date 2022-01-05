@@ -52,7 +52,8 @@ public class SuggestSearchRequestExecutorImpl
 	public SuggestSearchResponse execute(
 		SuggestSearchRequest suggestSearchRequest) {
 
-		SearchRequest searchRequest = createSearchRequest(suggestSearchRequest);
+		SearchRequest searchRequest = _createSearchRequest(
+			suggestSearchRequest);
 
 		SearchResponse searchResponse = getSearchResponse(
 			searchRequest, suggestSearchRequest);
@@ -77,40 +78,6 @@ public class SuggestSearchRequestExecutorImpl
 		}
 
 		return suggestSearchResponse;
-	}
-
-	protected SearchRequest createSearchRequest(
-		SuggestSearchRequest suggestSearchRequest) {
-
-		SearchRequest searchRequest = new SearchRequest(
-			suggestSearchRequest.getIndexNames());
-
-		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-
-		Map<String, Suggester> suggesterMap =
-			suggestSearchRequest.getSuggesterMap();
-
-		SuggestBuilder suggestBuilder = new SuggestBuilder();
-
-		if (!Validator.isBlank(suggestSearchRequest.getGlobalText())) {
-			suggestBuilder.setGlobalText(suggestSearchRequest.getGlobalText());
-		}
-
-		for (Map.Entry<String, Suggester> entry : suggesterMap.entrySet()) {
-			Suggester suggester = entry.getValue();
-			String suggesterName = entry.getKey();
-
-			SuggestionBuilder suggestionBuilder =
-				_suggesterTranslator.translate(suggester, null);
-
-			suggestBuilder.addSuggestion(suggesterName, suggestionBuilder);
-		}
-
-		searchSourceBuilder.suggest(suggestBuilder);
-
-		searchRequest.source(searchSourceBuilder);
-
-		return searchRequest;
 	}
 
 	protected SearchResponse getSearchResponse(
@@ -214,6 +181,40 @@ public class SuggestSearchRequestExecutorImpl
 		}
 
 		return suggestSearchResult;
+	}
+
+	private SearchRequest _createSearchRequest(
+		SuggestSearchRequest suggestSearchRequest) {
+
+		SearchRequest searchRequest = new SearchRequest(
+			suggestSearchRequest.getIndexNames());
+
+		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+
+		Map<String, Suggester> suggesterMap =
+			suggestSearchRequest.getSuggesterMap();
+
+		SuggestBuilder suggestBuilder = new SuggestBuilder();
+
+		if (!Validator.isBlank(suggestSearchRequest.getGlobalText())) {
+			suggestBuilder.setGlobalText(suggestSearchRequest.getGlobalText());
+		}
+
+		for (Map.Entry<String, Suggester> entry : suggesterMap.entrySet()) {
+			Suggester suggester = entry.getValue();
+			String suggesterName = entry.getKey();
+
+			SuggestionBuilder suggestionBuilder =
+				_suggesterTranslator.translate(suggester, null);
+
+			suggestBuilder.addSuggestion(suggesterName, suggestionBuilder);
+		}
+
+		searchSourceBuilder.suggest(suggestBuilder);
+
+		searchRequest.source(searchSourceBuilder);
+
+		return searchRequest;
 	}
 
 	private ElasticsearchClientResolver _elasticsearchClientResolver;

@@ -73,7 +73,7 @@ public class IndexerRegistryImpl implements IndexerRegistry {
 	public <T> Indexer<T> getIndexer(String className) {
 		Indexer<T> indexer = (Indexer<T>)_indexers.get(className);
 
-		return proxyIndexer(indexer);
+		return _proxyIndexer(indexer);
 	}
 
 	@Override
@@ -246,56 +246,6 @@ public class IndexerRegistryImpl implements IndexerRegistry {
 		}
 	}
 
-	protected <T> Indexer<T> proxyIndexer(Indexer<T> indexer) {
-		if (indexer == null) {
-			return null;
-		}
-
-		IndexerRequestBuffer indexerRequestBuffer = IndexerRequestBuffer.get();
-
-		if ((indexerRequestBuffer == null) ||
-			!_indexerRegistryConfiguration.buffered()) {
-
-			return indexer;
-		}
-
-		Indexer<?> proxiedIndexer = _proxiedIndexers.get(
-			indexer.getClassName());
-
-		if (proxiedIndexer == null) {
-			List<?> interfaces = ClassUtils.getAllInterfaces(
-				indexer.getClass());
-
-			BufferedIndexerInvocationHandler bufferedIndexerInvocationHandler =
-				new BufferedIndexerInvocationHandler(
-					indexer, _indexStatusManager,
-					_indexerRegistryConfiguration);
-
-			if (_indexerRequestBufferOverflowHandler == null) {
-				bufferedIndexerInvocationHandler.
-					setIndexerRequestBufferOverflowHandler(
-						_defaultIndexerRequestBufferOverflowHandler);
-			}
-			else {
-				bufferedIndexerInvocationHandler.
-					setIndexerRequestBufferOverflowHandler(
-						_indexerRequestBufferOverflowHandler);
-			}
-
-			_bufferedInvocationHandlers.put(
-				indexer.getClassName(), bufferedIndexerInvocationHandler);
-
-			proxiedIndexer = (Indexer<?>)ProxyUtil.newProxyInstance(
-				PortalClassLoaderUtil.getClassLoader(),
-				interfaces.toArray(new Class<?>[0]),
-				bufferedIndexerInvocationHandler);
-
-			_proxiedIndexers.put(indexer.getClassName(), proxiedIndexer);
-		}
-
-		return (Indexer<T>)proxiedIndexer;
-	}
-
 	protected void removeIndexerPostProcessor(
 		IndexerPostProcessor indexerPostProcessor,
 		Map<String, Object> properties) {
@@ -364,6 +314,56 @@ public class IndexerRegistryImpl implements IndexerRegistry {
 				setIndexerRequestBufferOverflowHandler(
 					_defaultIndexerRequestBufferOverflowHandler);
 		}
+	}
+
+	private <T> Indexer<T> _proxyIndexer(Indexer<T> indexer) {
+		if (indexer == null) {
+			return null;
+		}
+
+		IndexerRequestBuffer indexerRequestBuffer = IndexerRequestBuffer.get();
+
+		if ((indexerRequestBuffer == null) ||
+			!_indexerRegistryConfiguration.buffered()) {
+
+			return indexer;
+		}
+
+		Indexer<?> proxiedIndexer = _proxiedIndexers.get(
+			indexer.getClassName());
+
+		if (proxiedIndexer == null) {
+			List<?> interfaces = ClassUtils.getAllInterfaces(
+				indexer.getClass());
+
+			BufferedIndexerInvocationHandler bufferedIndexerInvocationHandler =
+				new BufferedIndexerInvocationHandler(
+					indexer, _indexStatusManager,
+					_indexerRegistryConfiguration);
+
+			if (_indexerRequestBufferOverflowHandler == null) {
+				bufferedIndexerInvocationHandler.
+					setIndexerRequestBufferOverflowHandler(
+						_defaultIndexerRequestBufferOverflowHandler);
+			}
+			else {
+				bufferedIndexerInvocationHandler.
+					setIndexerRequestBufferOverflowHandler(
+						_indexerRequestBufferOverflowHandler);
+			}
+
+			_bufferedInvocationHandlers.put(
+				indexer.getClassName(), bufferedIndexerInvocationHandler);
+
+			proxiedIndexer = (Indexer<?>)ProxyUtil.newProxyInstance(
+				PortalClassLoaderUtil.getClassLoader(),
+				interfaces.toArray(new Class<?>[0]),
+				bufferedIndexerInvocationHandler);
+
+			_proxiedIndexers.put(indexer.getClassName(), proxiedIndexer);
+		}
+
+		return (Indexer<T>)proxiedIndexer;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

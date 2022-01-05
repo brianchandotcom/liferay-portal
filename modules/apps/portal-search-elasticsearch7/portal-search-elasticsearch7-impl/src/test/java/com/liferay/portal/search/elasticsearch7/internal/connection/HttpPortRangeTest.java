@@ -36,40 +36,40 @@ public class HttpPortRangeTest {
 
 	@Test
 	public void testEmbeddedHttpPort() {
-		mockEmbeddedHttpPort(4400);
+		_mockEmbeddedHttpPort(4400);
 
-		assertSidecarHttpPort("4400");
+		_assertSidecarHttpPort("4400");
 	}
 
 	@Test
 	public void testHasDefaultHttpPort() {
-		assertSidecarHttpPort("9201");
+		_assertSidecarHttpPort("9201");
 	}
 
 	@Test
 	public void testSidecarHttpPort() {
-		mockSidecarHttpPort("3100-3199");
+		_mockSidecarHttpPort("3100-3199");
 
-		assertSidecarHttpPort("3100-3199");
+		_assertSidecarHttpPort("3100-3199");
 	}
 
 	@Test
 	public void testSidecarHttpPortAuto() {
-		mockEmbeddedHttpPort(4400);
-		mockSidecarHttpPort(HttpPortRange.AUTO);
+		_mockEmbeddedHttpPort(4400);
+		_mockSidecarHttpPort(HttpPortRange.AUTO);
 
-		assertSidecarHttpPort("9201-9300");
+		_assertSidecarHttpPort("9201-9300");
 	}
 
 	@Test
 	public void testSidecarHttpPortHasPrecedenceOverEmbeddedHttpPort() {
-		mockEmbeddedHttpPort(4400);
-		mockSidecarHttpPort("3100-3199");
+		_mockEmbeddedHttpPort(4400);
+		_mockSidecarHttpPort("3100-3199");
 
-		assertSidecarHttpPort("3100-3199");
+		_assertSidecarHttpPort("3100-3199");
 	}
 
-	protected void assertSidecarHttpPort(String expected) {
+	private void _assertSidecarHttpPort(String expected) {
 		ElasticsearchConfigurationWrapper elasticsearchConfigurationWrapper =
 			new ElasticsearchConfigurationWrapper() {
 				{
@@ -90,11 +90,11 @@ public class HttpPortRangeTest {
 		Assert.assertEquals(expected, httpPortRange.toSettingsString());
 	}
 
-	protected void mockEmbeddedHttpPort(int embeddedHttpPort) {
+	private void _mockEmbeddedHttpPort(int embeddedHttpPort) {
 		_embeddedHttpPort = embeddedHttpPort;
 	}
 
-	protected void mockSidecarHttpPort(String sidecarHttpPort) {
+	private void _mockSidecarHttpPort(String sidecarHttpPort) {
 		_sidecarHttpPort = sidecarHttpPort;
 	}
 

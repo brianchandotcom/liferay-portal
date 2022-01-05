@@ -80,7 +80,7 @@ public class ModifiedFacetDisplayBuilderTest {
 		_httpImpl = new HttpImpl();
 		_jsonFactoryImpl = new JSONFactoryImpl();
 
-		setUpPortalUtil();
+		_setUpPortalUtil();
 
 		Mockito.doReturn(
 			_facetCollector
@@ -100,12 +100,12 @@ public class ModifiedFacetDisplayBuilderTest {
 		String from = "2018-01-01";
 		String to = "2018-01-31";
 
-		TermCollector termCollector = mockTermCollector(
+		TermCollector termCollector = _mockTermCollector(
 			_dateRangeFactory.getRangeString(from, to));
 
 		int frequency = RandomTestUtil.randomInt();
 
-		mockTermCollectorFrequency(termCollector, frequency);
+		_mockTermCollectorFrequency(termCollector, frequency);
 
 		ModifiedFacetDisplayBuilder modifiedFacetDisplayBuilder =
 			createDisplayBuilder();
@@ -127,9 +127,9 @@ public class ModifiedFacetDisplayBuilderTest {
 	@Test
 	public void testCustomRangeHasTermCollectorFrequency() {
 		int frequency = RandomTestUtil.randomInt();
-		TermCollector termCollector = mockTermCollector();
+		TermCollector termCollector = _mockTermCollector();
 
-		mockTermCollectorFrequency(termCollector, frequency);
+		_mockTermCollectorFrequency(termCollector, frequency);
 
 		ModifiedFacetDisplayBuilder modifiedFacetDisplayBuilder =
 			createDisplayBuilder();
@@ -252,7 +252,7 @@ public class ModifiedFacetDisplayBuilderTest {
 		ModifiedFacetDisplayContext modifiedFacetDisplayContext =
 			modifiedFacetDisplayBuilder.build();
 
-		assertTermDisplayContextsDoNotHaveFromAndToParameters(
+		_assertTermDisplayContextsDoNotHaveFromAndToParameters(
 			modifiedFacetDisplayContext.getModifiedFacetTermDisplayContexts());
 	}
 
@@ -261,7 +261,7 @@ public class ModifiedFacetDisplayBuilderTest {
 		ModifiedFacetDisplayBuilder modifiedFacetDisplayBuilder =
 			createDisplayBuilder();
 
-		mockFacetConfiguration(
+		_mockFacetConfiguration(
 			"past-hour=[20180515225959 TO 20180515235959]",
 			"some-time-ago=[20180508235959 TO 20180514235959]");
 
@@ -294,93 +294,17 @@ public class ModifiedFacetDisplayBuilderTest {
 			modifiedFacetTermDisplayContext.getRange());
 	}
 
-	protected void addRangeJSONObject(
-		JSONArray jsonArray, String label, String range) {
-
-		JSONObject jsonObject = _jsonFactoryImpl.createJSONObject();
-
-		jsonObject.put(
-			"label", label
-		).put(
-			"range", range
-		);
-
-		jsonArray.put(jsonObject);
-	}
-
-	protected void assertDoesNotHasParameter(String url, String name) {
-		Assert.assertTrue(
-			Validator.isNull(_httpImpl.getParameter(url, name, false)));
-	}
-
-	protected void assertHasParameter(String url, String name) {
-		Assert.assertTrue(
-			Validator.isNotNull(_httpImpl.getParameter(url, name, false)));
-	}
-
-	protected void assertTermDisplayContextsDoNotHaveFromAndToParameters(
-		List<ModifiedFacetTermDisplayContext> termDisplayContexts) {
-
-		for (ModifiedFacetTermDisplayContext termDisplayContext :
-				termDisplayContexts) {
-
-			String label = termDisplayContext.getLabel();
-
-			if (label.equals("custom-range")) {
-				continue;
-			}
-
-			String rangeURL = termDisplayContext.getRangeURL();
-
-			assertHasParameter(rangeURL, "modified");
-			assertDoesNotHasParameter(rangeURL, "modifiedFrom");
-			assertDoesNotHasParameter(rangeURL, "modifiedTo");
-		}
-	}
-
-	protected JSONObject createDataJSONObject(String... labelsAndRanges) {
-		JSONObject dataJSONObject = _jsonFactoryImpl.createJSONObject();
-
-		dataJSONObject.put("ranges", createRangesJSONArray(labelsAndRanges));
-
-		return dataJSONObject;
-	}
-
 	protected ModifiedFacetDisplayBuilder createDisplayBuilder() {
 		ModifiedFacetDisplayBuilder modifiedFacetDisplayBuilder =
-			createModifiedFacetDisplayBuilder();
+			_createModifiedFacetDisplayBuilder();
 
-		mockFacetConfiguration();
+		_mockFacetConfiguration();
 
 		modifiedFacetDisplayBuilder.setFacet(_facet);
 		modifiedFacetDisplayBuilder.setLocale(LocaleUtil.getDefault());
 		modifiedFacetDisplayBuilder.setTimeZone(TimeZoneUtil.getDefault());
 
 		return modifiedFacetDisplayBuilder;
-	}
-
-	protected ModifiedFacetDisplayBuilder createModifiedFacetDisplayBuilder() {
-		try {
-			return new ModifiedFacetDisplayBuilder(
-				_calendarFactory, _dateFormatFactory, _httpImpl,
-				getRenderRequest());
-		}
-		catch (ConfigurationException configurationException) {
-			throw new RuntimeException(configurationException);
-		}
-	}
-
-	protected JSONArray createRangesJSONArray(String... labelsAndRanges) {
-		JSONArray jsonArray = _jsonFactoryImpl.createJSONArray();
-
-		for (String labelAndRange : labelsAndRanges) {
-			String[] labelAndRangeArray = StringUtil.split(labelAndRange, '=');
-
-			addRangeJSONObject(
-				jsonArray, labelAndRangeArray[0], labelAndRangeArray[1]);
-		}
-
-		return jsonArray;
 	}
 
 	protected FacetConfiguration getFacetConfiguration() {
@@ -413,11 +337,90 @@ public class ModifiedFacetDisplayBuilderTest {
 		return portletDisplay;
 	}
 
-	protected RenderRequest getRenderRequest() throws ConfigurationException {
+	@Mock
+	protected Portal portal;
+
+	private void _addRangeJSONObject(
+		JSONArray jsonArray, String label, String range) {
+
+		JSONObject jsonObject = _jsonFactoryImpl.createJSONObject();
+
+		jsonObject.put(
+			"label", label
+		).put(
+			"range", range
+		);
+
+		jsonArray.put(jsonObject);
+	}
+
+	private void _assertDoesNotHasParameter(String url, String name) {
+		Assert.assertTrue(
+			Validator.isNull(_httpImpl.getParameter(url, name, false)));
+	}
+
+	private void _assertHasParameter(String url, String name) {
+		Assert.assertTrue(
+			Validator.isNotNull(_httpImpl.getParameter(url, name, false)));
+	}
+
+	private void _assertTermDisplayContextsDoNotHaveFromAndToParameters(
+		List<ModifiedFacetTermDisplayContext> termDisplayContexts) {
+
+		for (ModifiedFacetTermDisplayContext termDisplayContext :
+				termDisplayContexts) {
+
+			String label = termDisplayContext.getLabel();
+
+			if (label.equals("custom-range")) {
+				continue;
+			}
+
+			String rangeURL = termDisplayContext.getRangeURL();
+
+			_assertHasParameter(rangeURL, "modified");
+			_assertDoesNotHasParameter(rangeURL, "modifiedFrom");
+			_assertDoesNotHasParameter(rangeURL, "modifiedTo");
+		}
+	}
+
+	private JSONObject _createDataJSONObject(String... labelsAndRanges) {
+		JSONObject dataJSONObject = _jsonFactoryImpl.createJSONObject();
+
+		dataJSONObject.put("ranges", _createRangesJSONArray(labelsAndRanges));
+
+		return dataJSONObject;
+	}
+
+	private ModifiedFacetDisplayBuilder _createModifiedFacetDisplayBuilder() {
+		try {
+			return new ModifiedFacetDisplayBuilder(
+				_calendarFactory, _dateFormatFactory, _httpImpl,
+				_getRenderRequest());
+		}
+		catch (ConfigurationException configurationException) {
+			throw new RuntimeException(configurationException);
+		}
+	}
+
+	private JSONArray _createRangesJSONArray(String... labelsAndRanges) {
+		JSONArray jsonArray = _jsonFactoryImpl.createJSONArray();
+
+		for (String labelAndRange : labelsAndRanges) {
+			String[] labelAndRangeArray = StringUtil.split(labelAndRange, '=');
+
+			_addRangeJSONObject(
+				jsonArray, labelAndRangeArray[0], labelAndRangeArray[1]);
+		}
+
+		return jsonArray;
+	}
+
+	private RenderRequest _getRenderRequest() throws ConfigurationException {
 		RenderRequest renderRequest = Mockito.mock(RenderRequest.class);
 
 		Mockito.doReturn(
-			getThemeDisplay()
+			_getThemeDisplay()
 		).when(
 			renderRequest
 		).getAttribute(
@@ -427,7 +430,7 @@ public class ModifiedFacetDisplayBuilderTest {
 		return renderRequest;
 	}
 
-	protected ThemeDisplay getThemeDisplay() throws ConfigurationException {
+	private ThemeDisplay _getThemeDisplay() throws ConfigurationException {
 		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
 
 		Mockito.doReturn(
@@ -439,15 +442,15 @@ public class ModifiedFacetDisplayBuilderTest {
 		return themeDisplay;
 	}
 
-	protected void mockFacetConfiguration(String... labelsAndRanges) {
+	private void _mockFacetConfiguration(String... labelsAndRanges) {
 		Mockito.doReturn(
-			getFacetConfiguration(createDataJSONObject(labelsAndRanges))
+			getFacetConfiguration(_createDataJSONObject(labelsAndRanges))
 		).when(
 			_facet
 		).getFacetConfiguration();
 	}
 
-	protected TermCollector mockTermCollector() {
+	private TermCollector _mockTermCollector() {
 		TermCollector termCollector = Mockito.mock(TermCollector.class);
 
 		Mockito.doReturn(
@@ -461,7 +464,7 @@ public class ModifiedFacetDisplayBuilderTest {
 		return termCollector;
 	}
 
-	protected TermCollector mockTermCollector(String term) {
+	private TermCollector _mockTermCollector(String term) {
 		TermCollector termCollector = Mockito.mock(TermCollector.class);
 
 		Mockito.doReturn(
@@ -475,7 +478,7 @@ public class ModifiedFacetDisplayBuilderTest {
 		return termCollector;
 	}
 
-	protected void mockTermCollectorFrequency(
+	private void _mockTermCollectorFrequency(
 		TermCollector termCollector, int frequency) {
 
 		Mockito.doReturn(
@@ -485,7 +488,7 @@ public class ModifiedFacetDisplayBuilderTest {
 		).getFrequency();
 	}
 
-	protected void setUpPortalUtil() {
+	private void _setUpPortalUtil() {
 		Mockito.doAnswer(
 			invocation -> new String[] {
 				invocation.getArgumentAt(0, String.class), StringPool.BLANK
@@ -500,9 +503,6 @@ public class ModifiedFacetDisplayBuilderTest {
 
 		portalUtil.setPortal(portal);
 	}
-
-	@Mock
-	protected Portal portal;
 
 	private CalendarFactory _calendarFactory;
 	private DateFormatFactory _dateFormatFactory;

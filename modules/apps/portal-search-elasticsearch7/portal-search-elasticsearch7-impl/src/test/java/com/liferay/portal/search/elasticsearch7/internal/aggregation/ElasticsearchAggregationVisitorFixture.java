@@ -81,12 +81,12 @@ public class ElasticsearchAggregationVisitorFixture {
 				}
 			};
 
-		injectGeoAggregationTranslators(elasticsearchAggregationVisitor);
-		injectQueryAggregationTranslators(
+		_injectGeoAggregationTranslators(elasticsearchAggregationVisitor);
+		_injectQueryAggregationTranslators(
 			elasticsearchAggregationVisitor,
 			elasticsearchQueryTranslatorFixture);
-		injectScriptAggregationTranslators(elasticsearchAggregationVisitor);
-		injectTopHitsAggregationTranslators(
+		_injectScriptAggregationTranslators(elasticsearchAggregationVisitor);
+		_injectTopHitsAggregationTranslators(
 			elasticsearchAggregationVisitor,
 			elasticsearchQueryTranslatorFixture);
 
@@ -99,14 +99,14 @@ public class ElasticsearchAggregationVisitorFixture {
 		return _elasticsearchAggregationVisitor;
 	}
 
-	protected static void injectGeoAggregationTranslators(
+	private static void _injectGeoAggregationTranslators(
 		ElasticsearchAggregationVisitor elasticsearchAggregationVisitor) {
 
 		elasticsearchAggregationVisitor.setGeoDistanceAggregationTranslator(
 			new GeoDistanceAggregationTranslatorImpl());
 	}
 
-	protected static void injectQueryAggregationTranslators(
+	private static void _injectQueryAggregationTranslators(
 		ElasticsearchAggregationVisitor elasticsearchAggregationVisitor,
 		ElasticsearchQueryTranslatorFixture
 			elasticsearchQueryTranslatorFixture) {
@@ -146,7 +146,7 @@ public class ElasticsearchAggregationVisitorFixture {
 			});
 	}
 
-	protected static void injectScriptAggregationTranslators(
+	private static void _injectScriptAggregationTranslators(
 		ElasticsearchAggregationVisitor elasticsearchAggregationVisitor) {
 
 		elasticsearchAggregationVisitor.setScriptedMetricAggregationTranslator(
@@ -155,7 +155,7 @@ public class ElasticsearchAggregationVisitorFixture {
 			new WeightedAvgAggregationTranslatorImpl());
 	}
 
-	protected static void injectTopHitsAggregationTranslators(
+	private static void _injectTopHitsAggregationTranslators(
 		ElasticsearchAggregationVisitor elasticsearchAggregationVisitor,
 		ElasticsearchQueryTranslatorFixture
 			elasticsearchQueryTranslatorFixture) {

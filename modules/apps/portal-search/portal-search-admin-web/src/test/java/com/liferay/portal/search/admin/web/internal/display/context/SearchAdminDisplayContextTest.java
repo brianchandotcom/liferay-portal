@@ -51,7 +51,7 @@ public class SearchAdminDisplayContextTest {
 	public void setUp() {
 		setUpHttpUtil();
 		setUpIndexInformation();
-		setUpLanguage();
+		_setUpLanguage();
 		setUpPortalUtil();
 	}
 
@@ -99,7 +99,7 @@ public class SearchAdminDisplayContextTest {
 		SearchAdminDisplayBuilder searchAdminDisplayBuilder =
 			new SearchAdminDisplayBuilder(
 				_language, _portal,
-				getRenderRequestWithSelectedTab("connections"),
+				_getRenderRequestWithSelectedTab("connections"),
 				new MockRenderResponse());
 
 		searchAdminDisplayBuilder.setIndexInformation(
@@ -134,7 +134,7 @@ public class SearchAdminDisplayContextTest {
 		SearchAdminDisplayBuilder searchAdminDisplayBuilder =
 			new SearchAdminDisplayBuilder(
 				_language, _portal,
-				getRenderRequestWithSelectedTab("field-mappings"),
+				_getRenderRequestWithSelectedTab("field-mappings"),
 				new MockRenderResponse());
 
 		searchAdminDisplayBuilder.setIndexInformation(
@@ -152,7 +152,7 @@ public class SearchAdminDisplayContextTest {
 		SearchAdminDisplayBuilder searchAdminDisplayBuilder =
 			new SearchAdminDisplayBuilder(
 				_language, _portal,
-				getRenderRequestWithSelectedTab("field-mappings"),
+				_getRenderRequestWithSelectedTab("field-mappings"),
 				new MockRenderResponse());
 
 		searchAdminDisplayBuilder.setIndexInformation(null);
@@ -169,7 +169,7 @@ public class SearchAdminDisplayContextTest {
 		SearchAdminDisplayBuilder searchAdminDisplayBuilder =
 			new SearchAdminDisplayBuilder(
 				_language, _portal,
-				getRenderRequestWithSelectedTab("index-actions"),
+				_getRenderRequestWithSelectedTab("index-actions"),
 				new MockRenderResponse());
 
 		searchAdminDisplayBuilder.setIndexInformation(
@@ -187,7 +187,7 @@ public class SearchAdminDisplayContextTest {
 		SearchAdminDisplayBuilder searchAdminDisplayBuilder =
 			new SearchAdminDisplayBuilder(
 				_language, _portal,
-				getRenderRequestWithSelectedTab(RandomTestUtil.randomString()),
+				_getRenderRequestWithSelectedTab(RandomTestUtil.randomString()),
 				new MockRenderResponse());
 
 		searchAdminDisplayBuilder.setIndexInformation(
@@ -198,16 +198,6 @@ public class SearchAdminDisplayContextTest {
 
 		Assert.assertEquals(
 			"connections", searchAdminDisplayContext.getSelectedTab());
-	}
-
-	protected RenderRequest getRenderRequestWithSelectedTab(
-		String selectedTab) {
-
-		MockRenderRequest mockRenderRequest = new MockRenderRequest();
-
-		mockRenderRequest.setParameter("tabs1", selectedTab);
-
-		return mockRenderRequest;
 	}
 
 	protected void setUpHttpUtil() {
@@ -230,10 +220,6 @@ public class SearchAdminDisplayContextTest {
 		);
 	}
 
-	protected void setUpLanguage() {
-		_language = new LanguageImpl();
-	}
-
 	protected void setUpPortalUtil() {
 		_portal = Mockito.mock(Portal.class);
 
@@ -254,6 +240,18 @@ public class SearchAdminDisplayContextTest {
 
 	protected Http http;
 	protected IndexInformation indexInformation;
+
+	private RenderRequest _getRenderRequestWithSelectedTab(String selectedTab) {
+		MockRenderRequest mockRenderRequest = new MockRenderRequest();
+
+		mockRenderRequest.setParameter("tabs1", selectedTab);
+
+		return mockRenderRequest;
+	}
+
+	private void _setUpLanguage() {
+		_language = new LanguageImpl();
+	}
 
 	private Language _language;
 	private Portal _portal;

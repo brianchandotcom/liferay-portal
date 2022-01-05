@@ -42,67 +42,67 @@ public class DefaultSearchLayoutPrototypeCustomizer
 	public void customize(Layout layout) throws Exception {
 		String portletInstanceId = PortletIdCodec.generateInstanceId();
 
-		addBorderlessPortlet(
+		_addBorderlessPortlet(
 			layout,
 			PortletIdCodec.encode(
 				SearchBarPortletKeys.SEARCH_BAR, portletInstanceId),
 			"column-1");
 
-		addBorderlessPortlet(
+		_addBorderlessPortlet(
 			layout,
 			PortletIdCodec.encode(
 				SuggestionsPortletKeys.SUGGESTIONS, portletInstanceId),
 			"column-1");
 
-		addBorderlessPortlet(
+		_addBorderlessPortlet(
 			layout,
 			PortletIdCodec.encode(
 				SearchResultsPortletKeys.SEARCH_RESULTS, portletInstanceId),
 			"column-3");
 
-		addBorderlessPortlet(
+		_addBorderlessPortlet(
 			layout,
 			PortletIdCodec.encode(
 				SearchOptionsPortletKeys.SEARCH_OPTIONS, portletInstanceId),
 			"column-3");
 
-		addBorderlessPortlet(
+		_addBorderlessPortlet(
 			layout,
 			PortletIdCodec.encode(
 				SiteFacetPortletKeys.SITE_FACET, portletInstanceId),
 			"column-2");
 
-		addBorderlessPortlet(
+		_addBorderlessPortlet(
 			layout,
 			PortletIdCodec.encode(
 				TypeFacetPortletKeys.TYPE_FACET, portletInstanceId),
 			"column-2");
 
-		addBorderlessPortlet(
+		_addBorderlessPortlet(
 			layout,
 			PortletIdCodec.encode(
 				TagFacetPortletKeys.TAG_FACET, portletInstanceId),
 			"column-2");
 
-		addBorderlessPortlet(
+		_addBorderlessPortlet(
 			layout,
 			PortletIdCodec.encode(
 				CategoryFacetPortletKeys.CATEGORY_FACET, portletInstanceId),
 			"column-2");
 
-		addBorderlessPortlet(
+		_addBorderlessPortlet(
 			layout,
 			PortletIdCodec.encode(
 				FolderFacetPortletKeys.FOLDER_FACET, portletInstanceId),
 			"column-2");
 
-		addBorderlessPortlet(
+		_addBorderlessPortlet(
 			layout,
 			PortletIdCodec.encode(
 				UserFacetPortletKeys.USER_FACET, portletInstanceId),
 			"column-2");
 
-		addBorderlessPortlet(
+		_addBorderlessPortlet(
 			layout,
 			PortletIdCodec.encode(
 				ModifiedFacetPortletKeys.MODIFIED_FACET, portletInstanceId),
@@ -114,7 +114,7 @@ public class DefaultSearchLayoutPrototypeCustomizer
 		return "1_2_columns_i";
 	}
 
-	protected void addBorderlessPortlet(
+	private void _addBorderlessPortlet(
 			Layout layout, String portletKey, String columnId)
 		throws Exception {
 

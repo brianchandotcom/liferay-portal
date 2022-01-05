@@ -166,7 +166,7 @@ public class SearchDisplayContext {
 			searcher, searchRequestBuilderFactory);
 
 		searchRequestImpl.addSearchSettingsContributor(
-			this::contributeSearchSettings);
+			this::_contributeSearchSettings);
 
 		SearchResponseImpl searchResponseImpl = searchRequestImpl.search();
 
@@ -518,77 +518,6 @@ public class SearchDisplayContext {
 		return _searchResultPreferences.isViewInContext();
 	}
 
-	protected void addEnabledSearchFacets(
-		SearchRequestBuilder searchRequestBuilder) {
-
-		ThemeDisplay themeDisplay = _themeDisplaySupplier.getThemeDisplay();
-
-		long companyId = themeDisplay.getCompanyId();
-
-		Collection<SearchFacet> searchFacets = getEnabledSearchFacets();
-
-		Stream<SearchFacet> searchFacetsStream = searchFacets.stream();
-
-		Stream<Optional<Facet>> facetOptionalsStream = searchFacetsStream.map(
-			searchFacet -> searchRequestBuilder.withSearchContextGet(
-				searchContext -> createFacet(
-					searchFacet, companyId, searchContext)));
-
-		searchRequestBuilder.withFacetContext(
-			facetContext -> facetOptionalsStream.forEach(
-				facetOptional -> facetOptional.ifPresent(
-					facetContext::addFacet)));
-	}
-
-	protected void contributeSearchSettings(SearchSettings searchSettings) {
-		searchSettings.setKeywords(_keywords.getKeywords());
-
-		QueryConfig queryConfig = searchSettings.getQueryConfig();
-
-		queryConfig.setCollatedSpellCheckResultEnabled(
-			isCollatedSpellCheckResultEnabled());
-		queryConfig.setCollatedSpellCheckResultScoresThreshold(
-			getCollatedSpellCheckResultDisplayThreshold());
-		queryConfig.setHighlightEnabled(isHighlightEnabled());
-		queryConfig.setQueryIndexingEnabled(isQueryIndexingEnabled());
-		queryConfig.setQueryIndexingThreshold(getQueryIndexingThreshold());
-		queryConfig.setQuerySuggestionEnabled(isQuerySuggestionEnabled());
-		queryConfig.setQuerySuggestionScoresThreshold(
-			getQuerySuggestionDisplayThreshold());
-		queryConfig.setQuerySuggestionMax(getQuerySuggestionMax());
-
-		addEnabledSearchFacets(searchSettings.getSearchRequestBuilder());
-
-		filterByThisSite(searchSettings);
-	}
-
-	protected Optional<Facet> createFacet(
-		SearchFacet searchFacet, long companyId, SearchContext searchContext) {
-
-		try {
-			searchFacet.init(
-				companyId, getSearchConfiguration(), searchContext);
-		}
-		catch (RuntimeException runtimeException) {
-			throw runtimeException;
-		}
-		catch (Exception exception) {
-			throw new RuntimeException(exception);
-		}
-
-		return Optional.ofNullable(searchFacet.getFacet());
-	}
-
-	protected void filterByThisSite(SearchSettings searchSettings) {
-		SearchOptionalUtil.copy(
-			this::getThisSiteGroupId,
-			groupId -> {
-				SearchContext searchContext = searchSettings.getSearchContext();
-
-				searchContext.setGroupIds(new long[] {groupId});
-			});
-	}
-
 	protected SearchScope getSearchScope() {
 		String scopeString = ParamUtil.getString(
 			_renderRequest, SearchPortletParameterNames.SCOPE);
@@ -620,7 +549,78 @@ public class SearchDisplayContext {
 		return _themeDisplaySupplier.getThemeDisplay();
 	}
 
-	protected Optional<Long> getThisSiteGroupId() {
+	private void _addEnabledSearchFacets(
+		SearchRequestBuilder searchRequestBuilder) {
+
+		ThemeDisplay themeDisplay = _themeDisplaySupplier.getThemeDisplay();
+
+		long companyId = themeDisplay.getCompanyId();
+
+		Collection<SearchFacet> searchFacets = getEnabledSearchFacets();
+
+		Stream<SearchFacet> searchFacetsStream = searchFacets.stream();
+
+		Stream<Optional<Facet>> facetOptionalsStream = searchFacetsStream.map(
+			searchFacet -> searchRequestBuilder.withSearchContextGet(
+				searchContext -> _createFacet(
+					searchFacet, companyId, searchContext)));
+
+		searchRequestBuilder.withFacetContext(
+			facetContext -> facetOptionalsStream.forEach(
+				facetOptional -> facetOptional.ifPresent(
+					facetContext::addFacet)));
+	}
+
+	private void _contributeSearchSettings(SearchSettings searchSettings) {
+		searchSettings.setKeywords(_keywords.getKeywords());
+
+		QueryConfig queryConfig = searchSettings.getQueryConfig();
+
+		queryConfig.setCollatedSpellCheckResultEnabled(
+			isCollatedSpellCheckResultEnabled());
+		queryConfig.setCollatedSpellCheckResultScoresThreshold(
+			getCollatedSpellCheckResultDisplayThreshold());
+		queryConfig.setHighlightEnabled(isHighlightEnabled());
+		queryConfig.setQueryIndexingEnabled(isQueryIndexingEnabled());
+		queryConfig.setQueryIndexingThreshold(getQueryIndexingThreshold());
+		queryConfig.setQuerySuggestionEnabled(isQuerySuggestionEnabled());
+		queryConfig.setQuerySuggestionScoresThreshold(
+			getQuerySuggestionDisplayThreshold());
+		queryConfig.setQuerySuggestionMax(getQuerySuggestionMax());
+
+		_addEnabledSearchFacets(searchSettings.getSearchRequestBuilder());
+
+		_filterByThisSite(searchSettings);
+	}
+
+	private Optional<Facet> _createFacet(
+		SearchFacet searchFacet, long companyId, SearchContext searchContext) {
+
+		try {
+			searchFacet.init(
+				companyId, getSearchConfiguration(), searchContext);
+		}
+		catch (RuntimeException runtimeException) {
+			throw runtimeException;
+		}
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
+		}
+
+		return Optional.ofNullable(searchFacet.getFacet());
+	}
+
+	private void _filterByThisSite(SearchSettings searchSettings) {
+		SearchOptionalUtil.copy(
+			this::_getThisSiteGroupId,
+			groupId -> {
+				SearchContext searchContext = searchSettings.getSearchContext();
+
+				searchContext.setGroupIds(new long[] {groupId});
+			});
+	}
+
+	private Optional<Long> _getThisSiteGroupId() {
 		long searchScopeGroupId = getSearchScopeGroupId();
 
 		if (searchScopeGroupId == 0) {

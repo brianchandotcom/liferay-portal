@@ -92,7 +92,7 @@ public class ScopeSearchFacetDisplayContextTest {
 		long groupId = RandomTestUtil.randomLong();
 		String name = RandomTestUtil.randomString();
 
-		addGroup(groupId, name);
+		_addGroup(groupId, name);
 
 		String parameterValue = String.valueOf(groupId);
 
@@ -129,7 +129,7 @@ public class ScopeSearchFacetDisplayContextTest {
 		long groupId = RandomTestUtil.randomLong();
 		String name = RandomTestUtil.randomString();
 
-		addGroup(groupId, name);
+		_addGroup(groupId, name);
 
 		int count = RandomTestUtil.randomInt();
 
@@ -171,7 +171,7 @@ public class ScopeSearchFacetDisplayContextTest {
 		long groupId = RandomTestUtil.randomLong();
 		String name = RandomTestUtil.randomString();
 
-		addGroup(groupId, name);
+		_addGroup(groupId, name);
 
 		int count = RandomTestUtil.randomInt();
 
@@ -206,16 +206,6 @@ public class ScopeSearchFacetDisplayContextTest {
 			parameterValue, scopeSearchFacetDisplayContext.getParameterValue());
 		Assert.assertFalse(scopeSearchFacetDisplayContext.isNothingSelected());
 		Assert.assertFalse(scopeSearchFacetDisplayContext.isRenderNothing());
-	}
-
-	protected void addGroup(long groupId, String name) throws Exception {
-		Mockito.doReturn(
-			createGroup(groupId, name)
-		).when(
-			_groupLocalService
-		).fetchGroup(
-			groupId
-		);
 	}
 
 	protected ScopeSearchFacetDisplayContext createDisplayContext(
@@ -317,6 +307,16 @@ public class ScopeSearchFacetDisplayContextTest {
 		).when(
 			_facetCollector
 		).getTermCollectors();
+	}
+
+	private void _addGroup(long groupId, String name) throws Exception {
+		Mockito.doReturn(
+			createGroup(groupId, name)
+		).when(
+			_groupLocalService
+		).fetchGroup(
+			groupId
+		);
 	}
 
 	@Mock

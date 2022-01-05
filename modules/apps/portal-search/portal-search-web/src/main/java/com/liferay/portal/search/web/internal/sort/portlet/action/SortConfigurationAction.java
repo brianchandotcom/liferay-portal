@@ -69,7 +69,7 @@ public class SortConfigurationAction extends DefaultConfigurationAction {
 				portletSharedSearchResponse.getPortletPreferences(
 					renderRequest));
 
-		SortDisplayBuilder sortDisplayBuilder = createSortDisplayBuilder(
+		SortDisplayBuilder sortDisplayBuilder = _createSortDisplayBuilder(
 			language, portal, renderRequest, sortPortletPreferences);
 
 		httpServletRequest.setAttribute(
@@ -78,7 +78,13 @@ public class SortConfigurationAction extends DefaultConfigurationAction {
 		super.include(portletConfig, httpServletRequest, httpServletResponse);
 	}
 
-	protected SortDisplayBuilder createSortDisplayBuilder(
+	@Reference
+	protected Language language;
+
+	@Reference
+	protected Portal portal;
+
+	private SortDisplayBuilder _createSortDisplayBuilder(
 		Language language, Portal portal, RenderRequest renderRequest,
 		SortPortletPreferences sortPortletPreferences) {
 
@@ -90,12 +96,6 @@ public class SortConfigurationAction extends DefaultConfigurationAction {
 			throw new RuntimeException(configurationException);
 		}
 	}
-
-	@Reference
-	protected Language language;
-
-	@Reference
-	protected Portal portal;
 
 	@Reference
 	private PortletSharedSearchRequest _portletSharedSearchRequest;

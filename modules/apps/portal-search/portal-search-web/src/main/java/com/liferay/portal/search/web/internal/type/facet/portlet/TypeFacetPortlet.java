@@ -89,7 +89,7 @@ public class TypeFacetPortlet extends MVCPortlet {
 			portletSharedSearchRequest.search(renderRequest);
 
 		AssetEntriesSearchFacetDisplayContext
-			assetEntriesSearchFacetDisplayContext = buildDisplayContext(
+			assetEntriesSearchFacetDisplayContext = _buildDisplayContext(
 				portletSharedSearchResponse, renderRequest);
 
 		renderRequest.setAttribute(
@@ -104,12 +104,25 @@ public class TypeFacetPortlet extends MVCPortlet {
 		super.render(renderRequest, renderResponse);
 	}
 
-	protected AssetEntriesSearchFacetDisplayContext buildDisplayContext(
+	@Reference
+	protected ObjectDefinitionLocalService objectDefinitionLocalService;
+
+	@Reference
+	protected Portal portal;
+
+	@Reference
+	protected PortletSharedSearchRequest portletSharedSearchRequest;
+
+	@Reference
+	protected SearchableAssetClassNamesProvider
+		searchableAssetClassNamesProvider;
+
+	private AssetEntriesSearchFacetDisplayContext _buildDisplayContext(
 		PortletSharedSearchResponse portletSharedSearchResponse,
 		RenderRequest renderRequest) {
 
 		Facet facet = portletSharedSearchResponse.getFacet(
-			getAggregationName(renderRequest));
+			_getAggregationName(renderRequest));
 
 		AssetEntriesFacetConfiguration assetEntriesFacetConfiguration =
 			new AssetEntriesFacetConfigurationImpl(
@@ -124,13 +137,14 @@ public class TypeFacetPortlet extends MVCPortlet {
 
 		AssetEntriesSearchFacetDisplayBuilder
 			assetEntriesSearchFacetDisplayBuilder =
-				createAssetEntriesSearchFacetDisplayBuilder(renderRequest);
+				_createAssetEntriesSearchFacetDisplayBuilder(renderRequest);
 
 		ThemeDisplay themeDisplay = portletSharedSearchResponse.getThemeDisplay(
 			renderRequest);
 
 		assetEntriesSearchFacetDisplayBuilder.setClassNames(
-			getAssetTypesClassNames(typeFacetPortletPreferences, themeDisplay));
+			_getAssetTypesClassNames(
+				typeFacetPortletPreferences, themeDisplay));
 
 		assetEntriesSearchFacetDisplayBuilder.setFacet(facet);
 		assetEntriesSearchFacetDisplayBuilder.setFrequencyThreshold(
@@ -140,25 +154,25 @@ public class TypeFacetPortlet extends MVCPortlet {
 		assetEntriesSearchFacetDisplayBuilder.setLocale(
 			themeDisplay.getLocale());
 		assetEntriesSearchFacetDisplayBuilder.setPaginationStartParameterName(
-			getPaginationStartParameterName(portletSharedSearchResponse));
+			_getPaginationStartParameterName(portletSharedSearchResponse));
 
 		String parameterName = typeFacetPortletPreferences.getParameterName();
 
 		assetEntriesSearchFacetDisplayBuilder.setParameterName(parameterName);
 
 		assetEntriesSearchFacetDisplayBuilder.setTypeNames(
-			getAssetTypesTypeNames(typeFacetPortletPreferences, themeDisplay));
+			_getAssetTypesTypeNames(typeFacetPortletPreferences, themeDisplay));
 
 		SearchOptionalUtil.copy(
-			() -> getParameterValuesOptional(
+			() -> _getParameterValuesOptional(
 				parameterName, portletSharedSearchResponse, renderRequest),
 			assetEntriesSearchFacetDisplayBuilder::setParameterValues);
 
 		return assetEntriesSearchFacetDisplayBuilder.build();
 	}
 
-	protected AssetEntriesSearchFacetDisplayBuilder
-		createAssetEntriesSearchFacetDisplayBuilder(
+	private AssetEntriesSearchFacetDisplayBuilder
+		_createAssetEntriesSearchFacetDisplayBuilder(
 			RenderRequest renderRequest) {
 
 		try {
@@ -169,11 +183,11 @@ public class TypeFacetPortlet extends MVCPortlet {
 		}
 	}
 
-	protected String getAggregationName(RenderRequest renderRequest) {
+	private String _getAggregationName(RenderRequest renderRequest) {
 		return portal.getPortletId(renderRequest);
 	}
 
-	protected String[] getAssetTypesClassNames(
+	private String[] _getAssetTypesClassNames(
 		TypeFacetPortletPreferences typeFacetPortletPreferences,
 		ThemeDisplay themeDisplay) {
 
@@ -181,13 +195,13 @@ public class TypeFacetPortlet extends MVCPortlet {
 			themeDisplay.getCompanyId());
 	}
 
-	protected Map<String, String> getAssetTypesTypeNames(
+	private Map<String, String> _getAssetTypesTypeNames(
 		TypeFacetPortletPreferences typeFacetPortletPreferences,
 		ThemeDisplay themeDisplay) {
 
 		Map<String, String> assetTypesTypeNames = new HashMap<>();
 
-		String[] classNames = getAssetTypesClassNames(
+		String[] classNames = _getAssetTypesClassNames(
 			typeFacetPortletPreferences, themeDisplay);
 
 		for (String className : classNames) {
@@ -219,7 +233,7 @@ public class TypeFacetPortlet extends MVCPortlet {
 		return assetTypesTypeNames;
 	}
 
-	protected String getPaginationStartParameterName(
+	private String _getPaginationStartParameterName(
 		PortletSharedSearchResponse portletSharedSearchResponse) {
 
 		SearchResponse searchResponse =
@@ -230,7 +244,7 @@ public class TypeFacetPortlet extends MVCPortlet {
 		return searchRequest.getPaginationStartParameterName();
 	}
 
-	protected Optional<List<String>> getParameterValuesOptional(
+	private Optional<List<String>> _getParameterValuesOptional(
 		String parameterName,
 		PortletSharedSearchResponse portletSharedSearchResponse,
 		RenderRequest renderRequest) {
@@ -241,18 +255,5 @@ public class TypeFacetPortlet extends MVCPortlet {
 
 		return optional.map(Arrays::asList);
 	}
-
-	@Reference
-	protected ObjectDefinitionLocalService objectDefinitionLocalService;
-
-	@Reference
-	protected Portal portal;
-
-	@Reference
-	protected PortletSharedSearchRequest portletSharedSearchRequest;
-
-	@Reference
-	protected SearchableAssetClassNamesProvider
-		searchableAssetClassNamesProvider;
 
 }

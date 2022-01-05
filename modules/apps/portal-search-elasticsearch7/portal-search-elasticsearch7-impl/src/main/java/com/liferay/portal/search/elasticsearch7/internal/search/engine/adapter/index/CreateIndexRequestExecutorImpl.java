@@ -46,7 +46,7 @@ public class CreateIndexRequestExecutorImpl
 				createIndexRequest);
 
 		org.elasticsearch.action.admin.indices.create.CreateIndexResponse
-			elasticsearchCreateIndexResponse = getCreateIndexResponse(
+			elasticsearchCreateIndexResponse = _getCreateIndexResponse(
 				elasticsearchCreateIndexRequest, createIndexRequest);
 
 		SearchLogHelperUtil.logActionResponse(
@@ -75,8 +75,15 @@ public class CreateIndexRequestExecutorImpl
 		return elasticsearchCreateIndexRequest;
 	}
 
-	protected org.elasticsearch.action.admin.indices.create.CreateIndexResponse
-		getCreateIndexResponse(
+	@Reference(unbind = "-")
+	protected void setElasticsearchClientResolver(
+		ElasticsearchClientResolver elasticsearchClientResolver) {
+
+		_elasticsearchClientResolver = elasticsearchClientResolver;
+	}
+
+	private org.elasticsearch.action.admin.indices.create.CreateIndexResponse
+		_getCreateIndexResponse(
 			org.elasticsearch.action.admin.indices.create.CreateIndexRequest
 				elasticsearchCreateIndexRequest,
 			CreateIndexRequest createIndexRequest) {
@@ -95,13 +102,6 @@ public class CreateIndexRequestExecutorImpl
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
 		}
-	}
-
-	@Reference(unbind = "-")
-	protected void setElasticsearchClientResolver(
-		ElasticsearchClientResolver elasticsearchClientResolver) {
-
-		_elasticsearchClientResolver = elasticsearchClientResolver;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

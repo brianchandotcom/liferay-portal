@@ -102,7 +102,7 @@ public class SearchPermissionCheckerTest {
 		PermissionThreadLocal.setPermissionChecker(
 			PermissionCheckerFactoryUtil.create(_user));
 
-		BooleanFilter booleanFilter = getBooleanFilter(null);
+		BooleanFilter booleanFilter = _getBooleanFilter(null);
 
 		Assert.assertFalse(booleanFilter.hasClauses());
 	}
@@ -118,11 +118,11 @@ public class SearchPermissionCheckerTest {
 
 		UserLocalServiceUtil.addRoleUser(_role.getRoleId(), _user.getUserId());
 
-		addViewPermission(
+		_addViewPermission(
 			ResourceConstants.SCOPE_COMPANY, TestPropsValues.getCompanyId(),
 			_role.getRoleId());
 
-		BooleanFilter booleanFilter = getBooleanFilter(null);
+		BooleanFilter booleanFilter = _getBooleanFilter(null);
 
 		Assert.assertFalse(booleanFilter.hasClauses());
 	}
@@ -138,7 +138,7 @@ public class SearchPermissionCheckerTest {
 			TestPropsValues.getCompanyId(),
 			RoleConstants.ORGANIZATION_ADMINISTRATOR);
 
-		assertFieldValue(
+		_assertFieldValue(
 			new long[] {_group.getGroupId()}, Field.GROUP_ROLE_ID,
 			_group.getGroupId() + StringPool.DASH + role.getRoleId(), false);
 	}
@@ -153,13 +153,14 @@ public class SearchPermissionCheckerTest {
 		Role role = RoleLocalServiceUtil.getRole(
 			TestPropsValues.getCompanyId(), RoleConstants.SITE_ADMINISTRATOR);
 
-		addViewPermission(
+		_addViewPermission(
 			ResourceConstants.SCOPE_GROUP, _group.getGroupId(),
 			role.getRoleId());
 
-		assertFieldValue(
+		_assertFieldValue(
 			null, Field.GROUP_ID, String.valueOf(_group.getGroupId()));
-		assertFieldValue(null, Field.ROLE_ID, String.valueOf(role.getRoleId()));
+		_assertFieldValue(
+			null, Field.ROLE_ID, String.valueOf(role.getRoleId()));
 	}
 
 	@Test
@@ -173,11 +174,11 @@ public class SearchPermissionCheckerTest {
 
 		UserLocalServiceUtil.addRoleUser(_role.getRoleId(), _user.getUserId());
 
-		addViewPermission(
+		_addViewPermission(
 			ResourceConstants.SCOPE_GROUP_TEMPLATE,
 			GroupConstants.DEFAULT_PARENT_GROUP_ID, _role.getRoleId());
 
-		BooleanFilter booleanFilter = getBooleanFilter(null);
+		BooleanFilter booleanFilter = _getBooleanFilter(null);
 
 		Assert.assertFalse(booleanFilter.hasClauses());
 	}
@@ -192,14 +193,14 @@ public class SearchPermissionCheckerTest {
 		Role role = RoleLocalServiceUtil.getRole(
 			TestPropsValues.getCompanyId(), RoleConstants.GUEST);
 
-		addViewPermission(
+		_addViewPermission(
 			ResourceConstants.SCOPE_GROUP, _group.getGroupId(),
 			role.getRoleId());
 
-		assertFieldValue(
+		_assertFieldValue(
 			new long[] {_group.getGroupId()}, Field.GROUP_ID,
 			String.valueOf(_group.getGroupId()));
-		assertFieldValue(
+		_assertFieldValue(
 			new long[] {_group.getGroupId()}, Field.ROLE_ID,
 			String.valueOf(role.getRoleId()));
 	}
@@ -215,13 +216,14 @@ public class SearchPermissionCheckerTest {
 			TestPropsValues.getCompanyId(),
 			RoleConstants.ORGANIZATION_ADMINISTRATOR);
 
-		addViewPermission(
+		_addViewPermission(
 			ResourceConstants.SCOPE_GROUP, _organization.getGroupId(),
 			role.getRoleId());
 
-		assertFieldValue(
+		_assertFieldValue(
 			null, Field.GROUP_ID, String.valueOf(_organization.getGroupId()));
-		assertFieldValue(null, Field.ROLE_ID, String.valueOf(role.getRoleId()));
+		_assertFieldValue(
+			null, Field.ROLE_ID, String.valueOf(role.getRoleId()));
 	}
 
 	@Test
@@ -240,7 +242,7 @@ public class SearchPermissionCheckerTest {
 			_user.getUserId(), _group.getGroupId(),
 			new long[] {_role.getRoleId()});
 
-		assertFieldValue(
+		_assertFieldValue(
 			null, Field.GROUP_ROLE_ID,
 			_group.getGroupId() + StringPool.DASH + _role.getRoleId());
 	}
@@ -248,7 +250,11 @@ public class SearchPermissionCheckerTest {
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
 
-	protected void addViewPermission(int scope, long primKey, long roleId)
+	protected String getClassName() {
+		return DLFileEntry.class.getName();
+	}
+
+	private void _addViewPermission(int scope, long primKey, long roleId)
 		throws Exception {
 
 		ResourcePermissionLocalServiceUtil.addResourcePermission(
@@ -261,17 +267,17 @@ public class SearchPermissionCheckerTest {
 				String.valueOf(primKey), roleId);
 	}
 
-	protected void assertFieldValue(long[] groupIds, String field, String value)
+	private void _assertFieldValue(long[] groupIds, String field, String value)
 		throws Exception {
 
-		assertFieldValue(groupIds, field, value, true);
+		_assertFieldValue(groupIds, field, value, true);
 	}
 
-	protected void assertFieldValue(
+	private void _assertFieldValue(
 			long[] groupIds, String field, String value, boolean expected)
 		throws Exception {
 
-		BooleanFilter booleanFilter = getBooleanFilter(groupIds);
+		BooleanFilter booleanFilter = _getBooleanFilter(groupIds);
 
 		TestFilterVisitor testFilterVisitor = new TestFilterVisitor(
 			expected, field, value);
@@ -281,14 +287,10 @@ public class SearchPermissionCheckerTest {
 		testFilterVisitor.assertField();
 	}
 
-	protected BooleanFilter getBooleanFilter(long[] groupIds) throws Exception {
+	private BooleanFilter _getBooleanFilter(long[] groupIds) throws Exception {
 		return _searchPermissionChecker.getPermissionBooleanFilter(
 			TestPropsValues.getCompanyId(), groupIds, _user.getUserId(),
 			getClassName(), new BooleanFilter(), new SearchContext());
-	}
-
-	protected String getClassName() {
-		return DLFileEntry.class.getName();
 	}
 
 	private BundleContext _bundleContext;

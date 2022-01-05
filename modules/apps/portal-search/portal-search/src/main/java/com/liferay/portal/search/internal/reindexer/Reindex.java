@@ -47,7 +47,7 @@ public class Reindex {
 
 	public void reindex(String className, long... classPKs) {
 		if (_synchronousExecution) {
-			doReindex(className, ListUtil.fromArray(classPKs));
+			_doReindex(className, ListUtil.fromArray(classPKs));
 
 			return;
 		}
@@ -63,7 +63,7 @@ public class Reindex {
 						className);
 
 					if (!classPKs.isEmpty()) {
-						doReindex(className, classPKs);
+						_doReindex(className, classPKs);
 
 						_executorService.submit(this);
 					}
@@ -88,19 +88,6 @@ public class Reindex {
 		ReindexEndListener reindexEndListener) {
 
 		_reindexEndListeners.add(reindexEndListener);
-	}
-
-	protected void doReindex(String className, Collection<Long> classPKs) {
-		if (_nonbulkIndexing || (classPKs.size() < 2)) {
-			for (long classPK : classPKs) {
-				_reindex(className, classPK);
-			}
-		}
-		else {
-			_reindexBulk(className, classPKs);
-		}
-
-		_reindexEndListeners.forEach(ReindexEndListener::onReindexEnd);
 	}
 
 	protected Indexer<Object> getIndexer(String className) {
@@ -161,6 +148,19 @@ public class Reindex {
 			className);
 
 		bulkReindexer.reindex(_companyId, classPKs);
+	}
+
+	private void _doReindex(String className, Collection<Long> classPKs) {
+		if (_nonbulkIndexing || (classPKs.size() < 2)) {
+			for (long classPK : classPKs) {
+				_reindex(className, classPK);
+			}
+		}
+		else {
+			_reindexBulk(className, classPKs);
+		}
+
+		_reindexEndListeners.forEach(ReindexEndListener::onReindexEnd);
 	}
 
 	private void _reindex(String className, long classPK) {

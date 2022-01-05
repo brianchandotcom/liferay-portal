@@ -59,10 +59,10 @@ public class AssetTagsSearchFacetDisplayBuilder {
 			new AssetTagsSearchFacetDisplayContext();
 
 		assetTagsSearchFacetDisplayContext.setCloudWithCount(
-			isCloudWithCount());
+			_isCloudWithCount());
 		assetTagsSearchFacetDisplayContext.setDisplayStyleGroupId(
 			getDisplayStyleGroupId());
-		assetTagsSearchFacetDisplayContext.setFacetLabel(getFacetLabel());
+		assetTagsSearchFacetDisplayContext.setFacetLabel(_getFacetLabel());
 		assetTagsSearchFacetDisplayContext.setNothingSelected(
 			isNothingSelected());
 		assetTagsSearchFacetDisplayContext.setPaginationStartParameterName(
@@ -178,7 +178,7 @@ public class AssetTagsSearchFacetDisplayBuilder {
 		int maxCount = 1;
 		int minCount = 1;
 
-		if (isCloudWithCount()) {
+		if (_isCloudWithCount()) {
 
 			// The cloud style may not list tags in the order of frequency,
 			// so keep looking through the results until we reach the maximum
@@ -265,21 +265,6 @@ public class AssetTagsSearchFacetDisplayBuilder {
 			assetTagsSearchFacetTermDisplayContext);
 	}
 
-	protected String getFacetLabel() {
-		if (_facet != null) {
-			FacetConfiguration facetConfiguration =
-				_facet.getFacetConfiguration();
-
-			if (facetConfiguration != null) {
-				return facetConfiguration.getLabel();
-			}
-
-			return StringPool.BLANK;
-		}
-
-		return StringPool.BLANK;
-	}
-
 	protected String getFirstParameterValue() {
 		if (_selectedTags.isEmpty()) {
 			return StringPool.BLANK;
@@ -306,14 +291,6 @@ public class AssetTagsSearchFacetDisplayBuilder {
 		return facetCollector.getTermCollectors();
 	}
 
-	protected boolean isCloudWithCount() {
-		if (_frequenciesVisible && _displayStyle.equals("cloud")) {
-			return true;
-		}
-
-		return false;
-	}
-
 	protected boolean isNothingSelected() {
 		if (_selectedTags.isEmpty()) {
 			return true;
@@ -334,6 +311,29 @@ public class AssetTagsSearchFacetDisplayBuilder {
 
 	protected boolean isSelected(String value) {
 		if (_selectedTags.contains(value)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private String _getFacetLabel() {
+		if (_facet != null) {
+			FacetConfiguration facetConfiguration =
+				_facet.getFacetConfiguration();
+
+			if (facetConfiguration != null) {
+				return facetConfiguration.getLabel();
+			}
+
+			return StringPool.BLANK;
+		}
+
+		return StringPool.BLANK;
+	}
+
+	private boolean _isCloudWithCount() {
+		if (_frequenciesVisible && _displayStyle.equals("cloud")) {
 			return true;
 		}
 

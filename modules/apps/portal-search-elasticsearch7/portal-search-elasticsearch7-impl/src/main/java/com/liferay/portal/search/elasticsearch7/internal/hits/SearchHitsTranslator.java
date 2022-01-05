@@ -100,18 +100,6 @@ public class SearchHitsTranslator {
 		).build();
 	}
 
-	protected String getExplanationString(
-		org.elasticsearch.search.SearchHit elasticsearchSearchHit) {
-
-		Explanation explanation = elasticsearchSearchHit.getExplanation();
-
-		if (explanation != null) {
-			return explanation.toString();
-		}
-
-		return StringPool.BLANK;
-	}
-
 	protected SearchHit translate(
 		SearchSearchRequest searchSearchRequest,
 		org.elasticsearch.search.SearchHit elasticsearchSearchHit,
@@ -121,15 +109,15 @@ public class SearchHitsTranslator {
 			_searchHitBuilderFactory.getSearchHitBuilder();
 
 		return searchHitBuilder.addHighlightFields(
-			translateHighlightFields(elasticsearchSearchHit)
+			_translateHighlightFields(elasticsearchSearchHit)
 		).addSources(
 			elasticsearchSearchHit.getSourceAsMap()
 		).document(
-			translateDocument(
+			_translateDocument(
 				searchSearchRequest, elasticsearchSearchHit,
 				alternateUidFieldName)
 		).explanation(
-			getExplanationString(elasticsearchSearchHit)
+			_getExplanationString(elasticsearchSearchHit)
 		).id(
 			elasticsearchSearchHit.getId()
 		).matchedQueries(
@@ -141,7 +129,19 @@ public class SearchHitsTranslator {
 		).build();
 	}
 
-	protected Document translateDocument(
+	private String _getExplanationString(
+		org.elasticsearch.search.SearchHit elasticsearchSearchHit) {
+
+		Explanation explanation = elasticsearchSearchHit.getExplanation();
+
+		if (explanation != null) {
+			return explanation.toString();
+		}
+
+		return StringPool.BLANK;
+	}
+
+	private Document _translateDocument(
 		SearchSearchRequest searchSearchRequest,
 		org.elasticsearch.search.SearchHit elasticsearchSearchHit,
 		String alternateUidFieldName) {
@@ -194,7 +194,7 @@ public class SearchHitsTranslator {
 		return documentBuilder.build();
 	}
 
-	protected HighlightField translateHighlightField(
+	private HighlightField _translateHighlightField(
 		org.elasticsearch.search.fetch.subphase.highlight.HighlightField
 			elasticsearchHighlightField) {
 
@@ -210,7 +210,7 @@ public class SearchHitsTranslator {
 		).build();
 	}
 
-	protected List<HighlightField> translateHighlightFields(
+	private List<HighlightField> _translateHighlightFields(
 		org.elasticsearch.search.SearchHit elasticsearchSearchHit) {
 
 		Map
@@ -223,7 +223,7 @@ public class SearchHitsTranslator {
 		for (org.elasticsearch.search.fetch.subphase.highlight.HighlightField
 				highlightField : map.values()) {
 
-			highlightFields.add(translateHighlightField(highlightField));
+			highlightFields.add(_translateHighlightField(highlightField));
 		}
 
 		return highlightFields;

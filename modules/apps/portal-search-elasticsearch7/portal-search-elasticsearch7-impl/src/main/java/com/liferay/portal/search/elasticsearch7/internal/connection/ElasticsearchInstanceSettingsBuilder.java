@@ -141,7 +141,37 @@ public class ElasticsearchInstanceSettingsBuilder {
 		extends Supplier<InetAddress> {
 	}
 
-	protected void configureClustering() {
+	protected Path getHomePath() {
+		Path homePath = _elasticsearchInstancePaths.getHomePath();
+
+		if (homePath != null) {
+			return homePath;
+		}
+
+		Path workPath = _elasticsearchInstancePaths.getWorkPath();
+
+		return workPath.resolve("data/elasticsearch7");
+	}
+
+	protected void load() {
+		_loadDefaultConfigurations();
+
+		_loadSidecarConfigurations();
+
+		_loadAdditionalConfigurations();
+
+		_loadSettingsContributors();
+	}
+
+	protected void put(String key, boolean value) {
+		_settingsBuilder.put(key, value);
+	}
+
+	protected void put(String key, String value) {
+		_settingsBuilder.put(key, value);
+	}
+
+	private void _configureClustering() {
 		put("cluster.name", _clusterName);
 		put("cluster.routing.allocation.disk.threshold_enabled", false);
 
@@ -158,7 +188,7 @@ public class ElasticsearchInstanceSettingsBuilder {
 		}
 	}
 
-	protected void configureHttp() {
+	private void _configureHttp() {
 		put("http.port", _httpPortRange.toSettingsString());
 
 		put(
@@ -177,7 +207,7 @@ public class ElasticsearchInstanceSettingsBuilder {
 			_elasticsearchConfigurationWrapper.httpCORSConfigurations());
 	}
 
-	protected void configureNetworking() {
+	private void _configureNetworking() {
 		String networkBindHost =
 			_elasticsearchConfigurationWrapper.networkBindHost();
 		String networkHost = _elasticsearchConfigurationWrapper.networkHost();
@@ -220,7 +250,7 @@ public class ElasticsearchInstanceSettingsBuilder {
 		}
 	}
 
-	protected void configurePaths() {
+	private void _configurePaths() {
 		Path workPath = _elasticsearchInstancePaths.getWorkPath();
 
 		Path dataParentPath = workPath.resolve("data/elasticsearch7");
@@ -236,7 +266,7 @@ public class ElasticsearchInstanceSettingsBuilder {
 		put("path.repo", String.valueOf(dataParentPath.resolve("repo")));
 	}
 
-	protected void configureTestMode() {
+	private void _configureTestMode() {
 		if (!PortalRunMode.isTestMode()) {
 			return;
 		}
@@ -244,34 +274,12 @@ public class ElasticsearchInstanceSettingsBuilder {
 		put("monitor.jvm.gc.enabled", StringPool.FALSE);
 	}
 
-	protected Path getHomePath() {
-		Path homePath = _elasticsearchInstancePaths.getHomePath();
-
-		if (homePath != null) {
-			return homePath;
-		}
-
-		Path workPath = _elasticsearchInstancePaths.getWorkPath();
-
-		return workPath.resolve("data/elasticsearch7");
-	}
-
-	protected void load() {
-		loadDefaultConfigurations();
-
-		loadSidecarConfigurations();
-
-		loadAdditionalConfigurations();
-
-		loadSettingsContributors();
-	}
-
-	protected void loadAdditionalConfigurations() {
+	private void _loadAdditionalConfigurations() {
 		_settingsBuilder.loadFromSource(
 			_elasticsearchConfigurationWrapper.additionalConfigurations());
 	}
 
-	protected void loadDefaultConfigurations() {
+	private void _loadDefaultConfigurations() {
 		String defaultConfigurations = ResourceUtil.getResourceAsString(
 			getClass(), "/META-INF/elasticsearch-optional-defaults.yml");
 
@@ -282,25 +290,25 @@ public class ElasticsearchInstanceSettingsBuilder {
 			"bootstrap.memory_lock",
 			_elasticsearchConfigurationWrapper.bootstrapMlockAll());
 
-		configureClustering();
+		_configureClustering();
 
-		configureHttp();
+		_configureHttp();
 
-		configureNetworking();
+		_configureNetworking();
 
 		put("node.data", true);
 		put("node.ingest", true);
 		put("node.master", true);
 		put("node.name", _nodeName);
 
-		configurePaths();
+		_configurePaths();
 
-		configureTestMode();
+		_configureTestMode();
 
 		put("transport.type", "netty4");
 	}
 
-	protected void loadSettingsContributors() {
+	private void _loadSettingsContributors() {
 		ClientSettingsHelper clientSettingsHelper = new ClientSettingsHelper() {
 
 			@Override
@@ -320,17 +328,9 @@ public class ElasticsearchInstanceSettingsBuilder {
 		}
 	}
 
-	protected void loadSidecarConfigurations() {
+	private void _loadSidecarConfigurations() {
 		put("bootstrap.system_call_filter", false);
 		put("node.store.allow_mmap", false);
-	}
-
-	protected void put(String key, boolean value) {
-		_settingsBuilder.put(key, value);
-	}
-
-	protected void put(String key, String value) {
-		_settingsBuilder.put(key, value);
 	}
 
 	private String _clusterInitialMasterNodes;

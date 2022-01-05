@@ -94,15 +94,15 @@ public class EditMVCActionCommand extends BaseMVCActionCommand {
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		if (cmd.equals("reindex")) {
-			reindex(actionRequest);
+			_reindex(actionRequest);
 
-			reindexIndexReindexers(actionRequest);
+			_reindexIndexReindexers(actionRequest);
 		}
 		else if (cmd.equals("reindexDictionaries")) {
-			reindexDictionaries(actionRequest);
+			_reindexDictionaries(actionRequest);
 		}
 		else if (cmd.equals("reindexIndexReindexer")) {
-			reindexIndexReindexer(actionRequest);
+			_reindexIndexReindexer(actionRequest);
 		}
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
@@ -129,7 +129,13 @@ public class EditMVCActionCommand extends BaseMVCActionCommand {
 		_indexReindexers.put(clazz.getName(), indexReindexer);
 	}
 
-	protected void reindex(final ActionRequest actionRequest) throws Exception {
+	protected void removeIndexReindexer(IndexReindexer indexReindexer) {
+		Class<?> clazz = indexReindexer.getClass();
+
+		_indexReindexers.remove(clazz.getName());
+	}
+
+	private void _reindex(final ActionRequest actionRequest) throws Exception {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -207,7 +213,7 @@ public class EditMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	protected void reindexDictionaries(ActionRequest actionRequest)
+	private void _reindexDictionaries(ActionRequest actionRequest)
 		throws Exception {
 
 		DictionaryReindexer dictionaryReindexer = new DictionaryReindexer(
@@ -217,7 +223,7 @@ public class EditMVCActionCommand extends BaseMVCActionCommand {
 			ParamUtil.getLongValues(actionRequest, "companyIds"));
 	}
 
-	protected void reindexIndexReindexer(ActionRequest actionRequest)
+	private void _reindexIndexReindexer(ActionRequest actionRequest)
 		throws Exception {
 
 		String className = ParamUtil.getString(actionRequest, "className");
@@ -228,19 +234,13 @@ public class EditMVCActionCommand extends BaseMVCActionCommand {
 			ParamUtil.getLongValues(actionRequest, "companyIds"));
 	}
 
-	protected void reindexIndexReindexers(ActionRequest actionRequest)
+	private void _reindexIndexReindexers(ActionRequest actionRequest)
 		throws Exception {
 
 		for (IndexReindexer indexReindexer : _indexReindexers.values()) {
 			indexReindexer.reindex(
 				ParamUtil.getLongValues(actionRequest, "companyIds"));
 		}
-	}
-
-	protected void removeIndexReindexer(IndexReindexer indexReindexer) {
-		Class<?> clazz = indexReindexer.getClass();
-
-		_indexReindexers.remove(clazz.getName());
 	}
 
 	@Reference

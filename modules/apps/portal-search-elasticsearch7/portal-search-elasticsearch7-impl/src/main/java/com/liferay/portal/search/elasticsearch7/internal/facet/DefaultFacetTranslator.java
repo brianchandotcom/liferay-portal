@@ -56,7 +56,7 @@ public class DefaultFacetTranslator implements FacetTranslator {
 
 		Collection<Facet> facets = facetsMap.values();
 
-		FacetProcessorContext facetProcessorContext = getFacetProcessorContext(
+		FacetProcessorContext facetProcessorContext = _getFacetProcessorContext(
 			facets, basicFacetSelection);
 
 		List<QueryBuilder> postFilterQueryBuilders = new ArrayList<>();
@@ -72,7 +72,7 @@ public class DefaultFacetTranslator implements FacetTranslator {
 			}
 
 			Optional<QueryBuilder> postFilterQueryBuilderOptional =
-				translateFacetQuery(facet);
+				_translateFacetQuery(facet);
 
 			postFilterQueryBuilderOptional.ifPresent(
 				postFilterQueryBuilders::add);
@@ -90,32 +90,8 @@ public class DefaultFacetTranslator implements FacetTranslator {
 
 		if (!ListUtil.isEmpty(postFilterQueryBuilders)) {
 			searchSourceBuilder.postFilter(
-				getPostFilter(postFilterQueryBuilders));
+				_getPostFilter(postFilterQueryBuilders));
 		}
-	}
-
-	protected FacetProcessorContext getFacetProcessorContext(
-		Collection<Facet> facets, boolean basicFacetSelection) {
-
-		if (basicFacetSelection) {
-			return null;
-		}
-
-		return AggregationFilteringFacetProcessorContext.newInstance(facets);
-	}
-
-	protected QueryBuilder getPostFilter(List<QueryBuilder> queryBuilders) {
-		if (queryBuilders.size() == 1) {
-			return queryBuilders.get(0);
-		}
-
-		BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
-
-		for (QueryBuilder queryBuilder : queryBuilders) {
-			boolQueryBuilder.must(queryBuilder);
-		}
-
-		return boolQueryBuilder;
 	}
 
 	protected AggregationBuilder postProcessAggregationBuilder(
@@ -144,7 +120,31 @@ public class DefaultFacetTranslator implements FacetTranslator {
 		_filterTranslator = filterTranslator;
 	}
 
-	protected QueryBuilder translateBooleanClause(
+	private FacetProcessorContext _getFacetProcessorContext(
+		Collection<Facet> facets, boolean basicFacetSelection) {
+
+		if (basicFacetSelection) {
+			return null;
+		}
+
+		return AggregationFilteringFacetProcessorContext.newInstance(facets);
+	}
+
+	private QueryBuilder _getPostFilter(List<QueryBuilder> queryBuilders) {
+		if (queryBuilders.size() == 1) {
+			return queryBuilders.get(0);
+		}
+
+		BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
+
+		for (QueryBuilder queryBuilder : queryBuilders) {
+			boolQueryBuilder.must(queryBuilder);
+		}
+
+		return boolQueryBuilder;
+	}
+
+	private QueryBuilder _translateBooleanClause(
 		BooleanClause<Filter> booleanClause) {
 
 		BooleanFilter booleanFilter = new BooleanFilter();
@@ -155,7 +155,7 @@ public class DefaultFacetTranslator implements FacetTranslator {
 		return _filterTranslator.translate(booleanFilter, null);
 	}
 
-	protected Optional<QueryBuilder> translateFacetQuery(Facet facet) {
+	private Optional<QueryBuilder> _translateFacetQuery(Facet facet) {
 		BooleanClause<Filter> booleanClause =
 			facet.getFacetFilterBooleanClause();
 
@@ -163,7 +163,7 @@ public class DefaultFacetTranslator implements FacetTranslator {
 			return Optional.empty();
 		}
 
-		QueryBuilder queryBuilder = translateBooleanClause(booleanClause);
+		QueryBuilder queryBuilder = _translateBooleanClause(booleanClause);
 
 		return Optional.of(queryBuilder);
 	}

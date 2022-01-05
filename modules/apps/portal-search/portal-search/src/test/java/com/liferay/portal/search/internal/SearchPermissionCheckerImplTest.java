@@ -61,7 +61,7 @@ public class SearchPermissionCheckerImplTest {
 			Mockito.anyString()
 		);
 
-		_searchPermissionChecker = createSearchPermissionChecker();
+		_searchPermissionChecker = _createSearchPermissionChecker();
 	}
 
 	@Test
@@ -77,10 +77,10 @@ public class SearchPermissionCheckerImplTest {
 
 		long userId = RandomTestUtil.randomLong();
 
-		whenIndexerIsPermissionAware(true);
-		whenPermissionCheckerGetUser(_user);
-		whenPermissionCheckerGetUserBag(_userBag);
-		whenUserGetUserId(userId);
+		_whenIndexerIsPermissionAware(true);
+		_whenPermissionCheckerGetUser(_user);
+		_whenPermissionCheckerGetUserBag(_userBag);
+		_whenUserGetUserId(userId);
 
 		BooleanFilter booleanFilter = null;
 
@@ -91,7 +91,7 @@ public class SearchPermissionCheckerImplTest {
 		Assert.assertNotNull(permissionBooleanFilter);
 	}
 
-	protected SearchPermissionCheckerImpl createSearchPermissionChecker() {
+	private SearchPermissionCheckerImpl _createSearchPermissionChecker() {
 		return new SearchPermissionCheckerImpl() {
 			{
 				indexerRegistry = _indexerRegistry;
@@ -106,7 +106,7 @@ public class SearchPermissionCheckerImplTest {
 		};
 	}
 
-	protected boolean whenIndexerIsPermissionAware(boolean permissionAware) {
+	private boolean _whenIndexerIsPermissionAware(boolean permissionAware) {
 		return Mockito.doReturn(
 			permissionAware
 		).when(
@@ -114,7 +114,7 @@ public class SearchPermissionCheckerImplTest {
 		).isPermissionAware();
 	}
 
-	protected User whenPermissionCheckerGetUser(User user) {
+	private User _whenPermissionCheckerGetUser(User user) {
 		return Mockito.doReturn(
 			user
 		).when(
@@ -122,7 +122,7 @@ public class SearchPermissionCheckerImplTest {
 		).getUser();
 	}
 
-	protected void whenPermissionCheckerGetUserBag(UserBag userBag)
+	private void _whenPermissionCheckerGetUserBag(UserBag userBag)
 		throws Exception {
 
 		Mockito.doReturn(
@@ -132,7 +132,7 @@ public class SearchPermissionCheckerImplTest {
 		).getUserBag();
 	}
 
-	protected long whenUserGetUserId(long userId) {
+	private long _whenUserGetUserId(long userId) {
 		return Mockito.doReturn(
 			userId
 		).when(

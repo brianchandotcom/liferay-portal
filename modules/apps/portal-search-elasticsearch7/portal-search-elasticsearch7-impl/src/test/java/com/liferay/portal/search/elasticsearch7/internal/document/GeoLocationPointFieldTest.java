@@ -57,20 +57,33 @@ public class GeoLocationPointFieldTest extends BaseIndexingTestCase {
 
 	@Test
 	public void testCustomField() throws Exception {
-		assertGeoLocationPointField(_CUSTOM_FIELD);
+		_assertGeoLocationPointField(_CUSTOM_FIELD);
 	}
 
 	@Test
 	public void testDefaultField() throws Exception {
-		assertGeoLocationPointField(Field.GEO_LOCATION);
+		_assertGeoLocationPointField(Field.GEO_LOCATION);
 	}
 
 	@Test
 	public void testDefaultTemplate() throws Exception {
-		assertGeoLocationPointField(_CUSTOM_FIELD.concat("_geolocation"));
+		_assertGeoLocationPointField(_CUSTOM_FIELD.concat("_geolocation"));
 	}
 
-	protected void assertGeoLocationPointField(String fieldName) {
+	@Override
+	protected IndexingFixture createIndexingFixture() throws Exception {
+		ElasticsearchIndexingFixture elasticsearchIndexingFixture =
+			LiferayElasticsearchIndexingFixtureFactory.builder(
+			).build();
+
+		elasticsearchIndexingFixture.setIndexCreationHelper(
+			new CustomFieldLiferayIndexCreationHelper(
+				elasticsearchIndexingFixture.getElasticsearchClientResolver()));
+
+		return elasticsearchIndexingFixture;
+	}
+
+	private void _assertGeoLocationPointField(String fieldName) {
 		double latitude = 33.99772698059678;
 		double longitude = -117.814457193017;
 
@@ -92,20 +105,7 @@ public class GeoLocationPointFieldTest extends BaseIndexingTestCase {
 			});
 	}
 
-	@Override
-	protected IndexingFixture createIndexingFixture() throws Exception {
-		ElasticsearchIndexingFixture elasticsearchIndexingFixture =
-			LiferayElasticsearchIndexingFixtureFactory.builder(
-			).build();
-
-		elasticsearchIndexingFixture.setIndexCreationHelper(
-			new CustomFieldLiferayIndexCreationHelper(
-				elasticsearchIndexingFixture.getElasticsearchClientResolver()));
-
-		return elasticsearchIndexingFixture;
-	}
-
-	protected Document searchOneDocument() throws Exception {
+	private Document _searchOneDocument() throws Exception {
 		Hits hits = search(createSearchContext());
 
 		Document[] documents = hits.getDocs();

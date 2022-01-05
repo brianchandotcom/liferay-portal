@@ -57,13 +57,16 @@ public class CategoryFacetPortletSharedSearchContributor
 			).maxTerms(
 				categoryFacetPortletPreferences.getMaxTerms()
 			).selectedCategoryIds(
-				toLongArray(
+				_toLongArray(
 					portletSharedSearchSettings.getParameterValues(
 						categoryFacetPortletPreferences.getParameterName()))
 			));
 	}
 
-	protected static long[] toLongArray(String[] parameterValues) {
+	@Reference
+	protected CategoryFacetSearchContributor categoryFacetSearchContributor;
+
+	private static long[] _toLongArray(String[] parameterValues) {
 		if (!ArrayUtil.isEmpty(parameterValues)) {
 			return ListUtil.toLongArray(
 				Arrays.asList(parameterValues), GetterUtil::getLong);
@@ -71,8 +74,5 @@ public class CategoryFacetPortletSharedSearchContributor
 
 		return new long[0];
 	}
-
-	@Reference
-	protected CategoryFacetSearchContributor categoryFacetSearchContributor;
 
 }

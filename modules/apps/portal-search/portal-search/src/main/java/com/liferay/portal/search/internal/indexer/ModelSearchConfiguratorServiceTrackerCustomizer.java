@@ -122,7 +122,7 @@ public class ModelSearchConfiguratorServiceTrackerCustomizer
 			Collections.singletonMap(
 				"indexer.class.name", modelSearchConfigurator.getClassName()));
 
-		Indexer<?> defaultIndexer = buildIndexer(
+		Indexer<?> defaultIndexer = _buildIndexer(
 			modelSearchConfigurator, serviceRegistrationHolder,
 			serviceProperties);
 
@@ -195,7 +195,72 @@ public class ModelSearchConfiguratorServiceTrackerCustomizer
 			this);
 	}
 
-	protected Indexer<?> buildIndexer(
+	@Deactivate
+	protected void deactivate() {
+		_bundleContext = null;
+
+		_serviceTracker.close();
+		_documentContributors.close();
+		_queryConfigContributors.close();
+		_searchContextContributors.close();
+
+		_serviceRegistrationHolders.forEach(
+			(key, serviceRegistrationHolder) ->
+				serviceRegistrationHolder.close());
+	}
+
+	@Reference
+	protected AddSearchKeywordsQueryContributorHelper
+		addSearchKeywordsQueryContributorHelper;
+
+	@Reference
+	protected BaseModelDocumentFactory baseModelDocumentFactory;
+
+	@Reference
+	protected BaseModelRetriever baseModelRetriever;
+
+	@Reference
+	protected ExpandoQueryContributorHelper expandoQueryContributorHelper;
+
+	@Reference
+	protected HitsProcessorRegistry hitsProcessorRegistry;
+
+	@Reference
+	protected IndexerRegistry indexerRegistry;
+
+	@Reference
+	protected IndexSearcherHelper indexSearcherHelper;
+
+	@Reference
+	protected IndexStatusManager indexStatusManager;
+
+	@Reference
+	protected IndexWriterHelper indexWriterHelper;
+
+	@Reference
+	protected PreFilterContributorHelper preFilterContributorHelper;
+
+	@Reference
+	protected Props props;
+
+	@Reference
+	protected RelatedEntryIndexerRegistry relatedEntryIndexerRegistry;
+
+	@Reference
+	protected SearchPermissionDocumentContributor
+		searchPermissionDocumentContributor;
+
+	@Reference
+	protected SearchPermissionIndexWriter searchPermissionIndexWriter;
+
+	@Reference
+	protected SearchResultPermissionFilterFactory
+		searchResultPermissionFilterFactory;
+
+	@Reference
+	protected UpdateDocumentIndexWriter updateDocumentIndexWriter;
+
+	private Indexer<?> _buildIndexer(
 		ModelSearchConfigurator<T> modelSearchConfigurator,
 		ServiceRegistrationHolder serviceRegistrationHolder,
 		Dictionary<String, ?> serviceProperties) {
@@ -312,71 +377,6 @@ public class ModelSearchConfiguratorServiceTrackerCustomizer
 			indexerPermissionPostFilter, indexerQueryBuilderImpl,
 			indexerSummaryBuilder, indexerPostProcessorsHolder);
 	}
-
-	@Deactivate
-	protected void deactivate() {
-		_bundleContext = null;
-
-		_serviceTracker.close();
-		_documentContributors.close();
-		_queryConfigContributors.close();
-		_searchContextContributors.close();
-
-		_serviceRegistrationHolders.forEach(
-			(key, serviceRegistrationHolder) ->
-				serviceRegistrationHolder.close());
-	}
-
-	@Reference
-	protected AddSearchKeywordsQueryContributorHelper
-		addSearchKeywordsQueryContributorHelper;
-
-	@Reference
-	protected BaseModelDocumentFactory baseModelDocumentFactory;
-
-	@Reference
-	protected BaseModelRetriever baseModelRetriever;
-
-	@Reference
-	protected ExpandoQueryContributorHelper expandoQueryContributorHelper;
-
-	@Reference
-	protected HitsProcessorRegistry hitsProcessorRegistry;
-
-	@Reference
-	protected IndexerRegistry indexerRegistry;
-
-	@Reference
-	protected IndexSearcherHelper indexSearcherHelper;
-
-	@Reference
-	protected IndexStatusManager indexStatusManager;
-
-	@Reference
-	protected IndexWriterHelper indexWriterHelper;
-
-	@Reference
-	protected PreFilterContributorHelper preFilterContributorHelper;
-
-	@Reference
-	protected Props props;
-
-	@Reference
-	protected RelatedEntryIndexerRegistry relatedEntryIndexerRegistry;
-
-	@Reference
-	protected SearchPermissionDocumentContributor
-		searchPermissionDocumentContributor;
-
-	@Reference
-	protected SearchPermissionIndexWriter searchPermissionIndexWriter;
-
-	@Reference
-	protected SearchResultPermissionFilterFactory
-		searchResultPermissionFilterFactory;
-
-	@Reference
-	protected UpdateDocumentIndexWriter updateDocumentIndexWriter;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ModelSearchConfiguratorServiceTrackerCustomizer.class);

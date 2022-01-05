@@ -70,18 +70,27 @@ public class CustomFacetPortletSharedSearchContributor
 		if (!ddmIndexer.isLegacyDDMIndexFieldsEnabled() &&
 			fieldToAggregate.startsWith(DDMIndexer.DDM_FIELD_PREFIX)) {
 
-			contributeWithNestedFacet(
+			_contributeWithNestedFacet(
 				fieldToAggregate, searchRequestBuilder,
 				portletSharedSearchSettings, customFacetPortletPreferences);
 		}
 		else {
-			contributeWithCustomFacet(
+			_contributeWithCustomFacet(
 				fieldToAggregate, searchRequestBuilder,
 				portletSharedSearchSettings, customFacetPortletPreferences);
 		}
 	}
 
-	protected void contributeWithCustomFacet(
+	@Reference
+	protected CustomFacetSearchContributor customFacetSearchContributor;
+
+	@Reference
+	protected DDMIndexer ddmIndexer;
+
+	@Reference
+	protected NestedFacetSearchContributor nestedFacetSearchContributor;
+
+	private void _contributeWithCustomFacet(
 		String fieldToAggregate, SearchRequestBuilder searchRequestBuilder,
 		PortletSharedSearchSettings portletSharedSearchSettings,
 		CustomFacetPortletPreferences customFacetPortletPreferences) {
@@ -98,11 +107,11 @@ public class CustomFacetPortletSharedSearchContributor
 				customFacetPortletPreferences.getMaxTerms()
 			).selectedValues(
 				portletSharedSearchSettings.getParameterValues(
-					getParameterName(customFacetPortletPreferences))
+					_getParameterName(customFacetPortletPreferences))
 			));
 	}
 
-	protected void contributeWithNestedFacet(
+	private void _contributeWithNestedFacet(
 		String fieldToAggregate, SearchRequestBuilder searchRequestBuilder,
 		PortletSharedSearchSettings portletSharedSearchSettings,
 		CustomFacetPortletPreferences customFacetPortletPreferences) {
@@ -135,11 +144,11 @@ public class CustomFacetPortletSharedSearchContributor
 				DDMIndexer.DDM_FIELD_ARRAY
 			).selectedValues(
 				portletSharedSearchSettings.getParameterValues(
-					getParameterName(customFacetPortletPreferences))
+					_getParameterName(customFacetPortletPreferences))
 			));
 	}
 
-	protected String getParameterName(
+	private String _getParameterName(
 		CustomFacetPortletPreferences customFacetPortletPreferences) {
 
 		Optional<String> optional = Stream.of(
@@ -153,15 +162,6 @@ public class CustomFacetPortletSharedSearchContributor
 
 		return optional.orElse("customfield");
 	}
-
-	@Reference
-	protected CustomFacetSearchContributor customFacetSearchContributor;
-
-	@Reference
-	protected DDMIndexer ddmIndexer;
-
-	@Reference
-	protected NestedFacetSearchContributor nestedFacetSearchContributor;
 
 	private Locale _getSuffixLocale(String string) {
 		for (Locale availableLocale : LanguageUtil.getAvailableLocales()) {

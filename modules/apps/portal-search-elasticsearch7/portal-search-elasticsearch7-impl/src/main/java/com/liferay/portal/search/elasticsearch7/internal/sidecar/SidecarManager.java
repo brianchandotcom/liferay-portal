@@ -117,7 +117,7 @@ public class SidecarManager implements ElasticsearchConfigurationObserver {
 
 			_sidecar = new Sidecar(
 				clusterExecutor, elasticsearchConfigurationWrapper,
-				getElasticsearchInstancePaths(), processExecutor,
+				_getElasticsearchInstancePaths(), processExecutor,
 				new ProcessExecutorPathsImpl(props), _settingsContributors,
 				this);
 
@@ -151,23 +151,6 @@ public class SidecarManager implements ElasticsearchConfigurationObserver {
 		elasticsearchConfigurationWrapper.unregister(this);
 	}
 
-	protected ElasticsearchInstancePaths getElasticsearchInstancePaths() {
-		ElasticsearchInstancePathsBuilder elasticsearchInstancePathsBuilder =
-			new ElasticsearchInstancePathsBuilder();
-
-		Path workPath = Paths.get(props.get(PropsKeys.LIFERAY_HOME));
-
-		Path dataPath = workPath.resolve("data/elasticsearch7");
-
-		return elasticsearchInstancePathsBuilder.dataPath(
-			dataPath
-		).homePath(
-			resolveHomePath(workPath)
-		).workPath(
-			workPath
-		).build();
-	}
-
 	protected boolean isStartupSuccessful() {
 		return _startupSuccessful;
 	}
@@ -178,7 +161,43 @@ public class SidecarManager implements ElasticsearchConfigurationObserver {
 		_settingsContributors.remove(settingsContributor);
 	}
 
-	protected Path resolveHomePath(Path path) {
+	@Reference
+	protected ClusterExecutor clusterExecutor;
+
+	@Reference
+	protected volatile ElasticsearchConfigurationWrapper
+		elasticsearchConfigurationWrapper;
+
+	@Reference
+	protected ElasticsearchConnectionManager elasticsearchConnectionManager;
+
+	@Reference
+	protected OperationModeResolver operationModeResolver;
+
+	@Reference
+	protected ProcessExecutor processExecutor;
+
+	@Reference
+	protected Props props;
+
+	private ElasticsearchInstancePaths _getElasticsearchInstancePaths() {
+		ElasticsearchInstancePathsBuilder elasticsearchInstancePathsBuilder =
+			new ElasticsearchInstancePathsBuilder();
+
+		Path workPath = Paths.get(props.get(PropsKeys.LIFERAY_HOME));
+
+		Path dataPath = workPath.resolve("data/elasticsearch7");
+
+		return elasticsearchInstancePathsBuilder.dataPath(
+			dataPath
+		).homePath(
+			_resolveHomePath(workPath)
+		).workPath(
+			workPath
+		).build();
+	}
+
+	private Path _resolveHomePath(Path path) {
 		String sidecarHome = elasticsearchConfigurationWrapper.sidecarHome();
 
 		if (sidecarHome.equals("elasticsearch-sidecar")) {
@@ -200,25 +219,6 @@ public class SidecarManager implements ElasticsearchConfigurationObserver {
 
 		return relativeSidecarHomePath;
 	}
-
-	@Reference
-	protected ClusterExecutor clusterExecutor;
-
-	@Reference
-	protected volatile ElasticsearchConfigurationWrapper
-		elasticsearchConfigurationWrapper;
-
-	@Reference
-	protected ElasticsearchConnectionManager elasticsearchConnectionManager;
-
-	@Reference
-	protected OperationModeResolver operationModeResolver;
-
-	@Reference
-	protected ProcessExecutor processExecutor;
-
-	@Reference
-	protected Props props;
 
 	private static final Log _log = LogFactoryUtil.getLog(SidecarManager.class);
 

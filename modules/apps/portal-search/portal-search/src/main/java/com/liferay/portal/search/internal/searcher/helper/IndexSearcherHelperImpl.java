@@ -42,7 +42,7 @@ public class IndexSearcherHelperImpl implements IndexSearcherHelper {
 			return _indexSearcherHelper.search(searchContext, query);
 		}
 		catch (SearchException searchException) {
-			throw uncheck(searchException);
+			throw _uncheck(searchException);
 		}
 	}
 
@@ -52,7 +52,7 @@ public class IndexSearcherHelperImpl implements IndexSearcherHelper {
 			return _indexSearcherHelper.searchCount(searchContext, query);
 		}
 		catch (SearchException searchException) {
-			throw uncheck(searchException);
+			throw _uncheck(searchException);
 		}
 	}
 
@@ -62,7 +62,7 @@ public class IndexSearcherHelperImpl implements IndexSearcherHelper {
 			return _indexSearcherHelper.spellCheckKeywords(searchContext);
 		}
 		catch (SearchException searchException) {
-			throw uncheck(searchException);
+			throw _uncheck(searchException);
 		}
 	}
 
@@ -74,7 +74,7 @@ public class IndexSearcherHelperImpl implements IndexSearcherHelper {
 			return _indexSearcherHelper.spellCheckKeywords(searchContext, max);
 		}
 		catch (SearchException searchException) {
-			throw uncheck(searchException);
+			throw _uncheck(searchException);
 		}
 	}
 
@@ -87,11 +87,11 @@ public class IndexSearcherHelperImpl implements IndexSearcherHelper {
 				searchContext, max);
 		}
 		catch (SearchException searchException) {
-			throw uncheck(searchException);
+			throw _uncheck(searchException);
 		}
 	}
 
-	protected static RuntimeException uncheck(SearchException searchException) {
+	private static RuntimeException _uncheck(SearchException searchException) {
 		if (searchException.getCause() instanceof RuntimeException) {
 			return (RuntimeException)searchException.getCause();
 		}

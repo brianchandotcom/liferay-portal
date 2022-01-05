@@ -105,13 +105,13 @@ public class SearchBarPortletDisplayBuilder {
 		searchBarPortletDisplayContext.setSearchBarPortletInstanceConfiguration(
 			searchBarPortletInstanceConfiguration);
 
-		setSelectedSearchScope(searchBarPortletDisplayContext);
+		_setSelectedSearchScope(searchBarPortletDisplayContext);
 
 		if (Validator.isBlank(_destination)) {
-			searchBarPortletDisplayContext.setSearchURL(getURLCurrentPath());
+			searchBarPortletDisplayContext.setSearchURL(_getURLCurrentPath());
 		}
 		else {
-			String destinationURL = getDestinationURL(_destination);
+			String destinationURL = _getDestinationURL(_destination);
 
 			if (destinationURL == null) {
 				searchBarPortletDisplayContext.setDestinationUnreachable(true);
@@ -206,14 +206,6 @@ public class SearchBarPortletDisplayBuilder {
 		return this;
 	}
 
-	protected static String slashify(String s) {
-		if (s.charAt(0) == CharPool.SLASH) {
-			return s;
-		}
-
-		return StringPool.SLASH.concat(s);
-	}
-
 	protected Layout fetchLayoutByFriendlyURL(
 		long groupId, String friendlyURL) {
 
@@ -226,17 +218,6 @@ public class SearchBarPortletDisplayBuilder {
 
 		return _layoutLocalService.fetchLayoutByFriendlyURL(
 			groupId, true, friendlyURL);
-	}
-
-	protected String getDestinationURL(String friendlyURL) {
-		Layout layout = fetchLayoutByFriendlyURL(
-			_themeDisplay.getScopeGroupId(), slashify(friendlyURL));
-
-		if (layout == null) {
-			return null;
-		}
-
-		return getLayoutFriendlyURL(layout);
 	}
 
 	protected long getDisplayStyleGroupId(
@@ -330,15 +311,34 @@ public class SearchBarPortletDisplayBuilder {
 		return SearchScope.THIS_SITE;
 	}
 
-	protected String getURLCurrentPath() {
-		return _http.getPath(_themeDisplay.getURLCurrent());
-	}
-
 	protected boolean isAvailableEverythingSearchScope() {
 		return true;
 	}
 
-	protected void setSelectedSearchScope(
+	private static String _slashify(String s) {
+		if (s.charAt(0) == CharPool.SLASH) {
+			return s;
+		}
+
+		return StringPool.SLASH.concat(s);
+	}
+
+	private String _getDestinationURL(String friendlyURL) {
+		Layout layout = fetchLayoutByFriendlyURL(
+			_themeDisplay.getScopeGroupId(), _slashify(friendlyURL));
+
+		if (layout == null) {
+			return null;
+		}
+
+		return getLayoutFriendlyURL(layout);
+	}
+
+	private String _getURLCurrentPath() {
+		return _http.getPath(_themeDisplay.getURLCurrent());
+	}
+
+	private void _setSelectedSearchScope(
 		SearchBarPortletDisplayContext searchBarPortletDisplayContext) {
 
 		SearchScope searchScope = getSearchScope();

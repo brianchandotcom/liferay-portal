@@ -93,7 +93,7 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 		searchContext.setCompanyId(companyId);
 		searchContext.setSearchEngineId(searchEngineId);
 
-		setCommitImmediately(searchContext, commitImmediately);
+		_setCommitImmediately(searchContext, commitImmediately);
 
 		indexWriter.addDocument(searchContext, document);
 	}
@@ -130,7 +130,7 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 		searchContext.setCompanyId(companyId);
 		searchContext.setSearchEngineId(searchEngineId);
 
-		setCommitImmediately(searchContext, commitImmediately);
+		_setCommitImmediately(searchContext, commitImmediately);
 
 		indexWriter.addDocuments(searchContext, documents);
 	}
@@ -179,7 +179,7 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 		searchContext.setCompanyId(companyId);
 		searchContext.setSearchEngineId(searchEngineId);
 
-		setCommitImmediately(searchContext, commitImmediately);
+		_setCommitImmediately(searchContext, commitImmediately);
 
 		indexWriter.deleteDocument(searchContext, uid);
 	}
@@ -206,7 +206,7 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 		searchContext.setCompanyId(companyId);
 		searchContext.setSearchEngineId(searchEngineId);
 
-		setCommitImmediately(searchContext, commitImmediately);
+		_setCommitImmediately(searchContext, commitImmediately);
 
 		indexWriter.deleteDocuments(searchContext, uids);
 	}
@@ -235,7 +235,7 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 		searchContext.setCompanyId(companyId);
 		searchContext.setSearchEngineId(searchEngineId);
 
-		setCommitImmediately(searchContext, commitImmediately);
+		_setCommitImmediately(searchContext, commitImmediately);
 
 		indexWriter.deleteEntityDocuments(searchContext, className);
 	}
@@ -447,7 +447,7 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 		searchContext.setCompanyId(companyId);
 		searchContext.setSearchEngineId(searchEngineId);
 
-		setCommitImmediately(searchContext, commitImmediately);
+		_setCommitImmediately(searchContext, commitImmediately);
 
 		indexWriter.partiallyUpdateDocument(searchContext, document);
 	}
@@ -484,7 +484,7 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 		searchContext.setCompanyId(companyId);
 		searchContext.setSearchEngineId(searchEngineId);
 
-		setCommitImmediately(searchContext, commitImmediately);
+		_setCommitImmediately(searchContext, commitImmediately);
 
 		indexWriter.partiallyUpdateDocuments(searchContext, documents);
 	}
@@ -597,7 +597,7 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 		searchContext.setCompanyId(companyId);
 		searchContext.setSearchEngineId(searchEngineId);
 
-		setCommitImmediately(
+		_setCommitImmediately(
 			searchContext,
 			commitImmediately || ProxyModeThreadLocal.isForceSync());
 
@@ -636,7 +636,7 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 		searchContext.setCompanyId(companyId);
 		searchContext.setSearchEngineId(searchEngineId);
 
-		setCommitImmediately(searchContext, commitImmediately);
+		_setCommitImmediately(searchContext, commitImmediately);
 
 		indexWriter.updateDocuments(searchContext, documents);
 	}
@@ -666,17 +666,6 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 			indexWriterHelperConfiguration.indexCommitImmediately();
 	}
 
-	protected void setCommitImmediately(
-		SearchContext searchContext, boolean commitImmediately) {
-
-		if (!commitImmediately) {
-			searchContext.setCommitImmediately(_commitImmediately);
-		}
-		else {
-			searchContext.setCommitImmediately(true);
-		}
-	}
-
 	@Reference
 	protected UIDFactory uidFactory;
 
@@ -693,6 +682,17 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 			name, ResourceActionsUtil.getCompositeModelNameSeparator());
 
 		return names[0];
+	}
+
+	private void _setCommitImmediately(
+		SearchContext searchContext, boolean commitImmediately) {
+
+		if (!commitImmediately) {
+			searchContext.setCommitImmediately(_commitImmediately);
+		}
+		else {
+			searchContext.setCommitImmediately(true);
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

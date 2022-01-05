@@ -64,7 +64,7 @@ public class LiferayDocumentTypeFactory
 		PutMappingRequest putMappingRequest = new PutMappingRequest(indexName);
 
 		putMappingRequest.source(
-			mergeDynamicTemplates(
+			_mergeDynamicTemplates(
 				source, indexName,
 				LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE),
 			XContentType.JSON);
@@ -154,12 +154,12 @@ public class LiferayDocumentTypeFactory
 		return compressedXContent.toString();
 	}
 
-	protected JSONArray merge(JSONArray jsonArray1, JSONArray jsonArray2) {
+	private JSONArray _merge(JSONArray jsonArray1, JSONArray jsonArray2) {
 		LinkedHashMap<String, JSONObject> linkedHashMap = new LinkedHashMap<>();
 
-		putAll(linkedHashMap, jsonArray1);
+		_putAll(linkedHashMap, jsonArray1);
 
-		putAll(linkedHashMap, jsonArray2);
+		_putAll(linkedHashMap, jsonArray2);
 
 		JSONArray jsonArray3 = _jsonFactory.createJSONArray();
 
@@ -183,7 +183,7 @@ public class LiferayDocumentTypeFactory
 		return jsonArray3;
 	}
 
-	protected String mergeDynamicTemplates(
+	private String _mergeDynamicTemplates(
 		String source, String indexName, String typeName) {
 
 		JSONObject sourceJSONObject = createJSONObject(source);
@@ -215,12 +215,12 @@ public class LiferayDocumentTypeFactory
 
 		sourceTypeJSONObject.put(
 			"dynamic_templates",
-			merge(typeTemplatesJSONArray, sourceTypeTemplatesJSONArray));
+			_merge(typeTemplatesJSONArray, sourceTypeTemplatesJSONArray));
 
 		return sourceJSONObject.toString();
 	}
 
-	protected void putAll(Map<String, JSONObject> map, JSONArray jsonArray) {
+	private void _putAll(Map<String, JSONObject> map, JSONArray jsonArray) {
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
 

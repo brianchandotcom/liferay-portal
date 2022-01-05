@@ -63,12 +63,12 @@ public class SearchResultContentDisplayBuilderTest {
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
 
-		setUpAssetEntry();
+		_setUpAssetEntry();
 		setUpAssetRenderer();
-		setUpAssetRendererFactory();
-		setUpPortal();
-		setUpRenderResponse();
-		setUpThemeDisplay();
+		_setUpAssetRendererFactory();
+		_setUpPortal();
+		_setUpRenderResponse();
+		_setUpThemeDisplay();
 	}
 
 	@Test
@@ -92,12 +92,12 @@ public class SearchResultContentDisplayBuilderTest {
 		).toString();
 
 		SearchResultContentDisplayContext searchResultContentDisplayContext =
-			buildDisplayContext();
+			_buildDisplayContext();
 
 		Assert.assertTrue(
 			searchResultContentDisplayContext.hasEditPermission());
 
-		assertIcon(
+		_assertIcon(
 			title, editPortletURLString, searchResultContentDisplayContext);
 	}
 
@@ -112,24 +112,24 @@ public class SearchResultContentDisplayBuilderTest {
 		);
 
 		SearchResultContentDisplayContext searchResultContentDisplayContext =
-			buildDisplayContext();
+			_buildDisplayContext();
 
 		Assert.assertFalse(
 			searchResultContentDisplayContext.hasEditPermission());
 
-		assertIconMissing(searchResultContentDisplayContext);
+		_assertIconMissing(searchResultContentDisplayContext);
 
-		assertAssetDisplay(searchResultContentDisplayContext);
+		_assertAssetDisplay(searchResultContentDisplayContext);
 	}
 
 	@Test
 	public void testVisible() throws Exception {
 		SearchResultContentDisplayContext searchResultContentDisplayContext =
-			buildDisplayContext();
+			_buildDisplayContext();
 
 		Assert.assertTrue(searchResultContentDisplayContext.isVisible());
 
-		assertAssetDisplay(searchResultContentDisplayContext);
+		_assertAssetDisplay(searchResultContentDisplayContext);
 	}
 
 	@Test
@@ -141,7 +141,7 @@ public class SearchResultContentDisplayBuilderTest {
 		).isVisible();
 
 		SearchResultContentDisplayContext searchResultContentDisplayContext =
-			buildDisplayContext();
+			_buildDisplayContext();
 
 		Assert.assertFalse(searchResultContentDisplayContext.isVisible());
 	}
@@ -157,80 +157,9 @@ public class SearchResultContentDisplayBuilderTest {
 		);
 
 		SearchResultContentDisplayContext searchResultContentDisplayContext =
-			buildDisplayContext();
+			_buildDisplayContext();
 
 		Assert.assertFalse(searchResultContentDisplayContext.isVisible());
-	}
-
-	protected void assertAssetDisplay(
-		SearchResultContentDisplayContext searchResultContentDisplayContext) {
-
-		Assert.assertSame(
-			_assetEntry, searchResultContentDisplayContext.getAssetEntry());
-
-		Assert.assertSame(
-			_assetRenderer,
-			searchResultContentDisplayContext.getAssetRenderer());
-
-		Assert.assertSame(
-			_assetRendererFactory,
-			searchResultContentDisplayContext.getAssetRendererFactory());
-	}
-
-	protected void assertIcon(
-		String editTarget, String urlString,
-		SearchResultContentDisplayContext searchResultContentDisplayContext) {
-
-		Assert.assertEquals(
-			editTarget, searchResultContentDisplayContext.getIconEditTarget());
-
-		Assert.assertEquals(
-			urlString, searchResultContentDisplayContext.getIconURLString());
-	}
-
-	protected void assertIconMissing(
-		SearchResultContentDisplayContext searchResultContentDisplayContext) {
-
-		Assert.assertNull(
-			searchResultContentDisplayContext.getIconEditTarget());
-
-		Assert.assertNull(searchResultContentDisplayContext.getIconURLString());
-	}
-
-	protected SearchResultContentDisplayContext buildDisplayContext()
-		throws Exception {
-
-		SearchResultContentDisplayBuilder searchResultContentDisplayBuilder =
-			new SearchResultContentDisplayBuilder();
-
-		searchResultContentDisplayBuilder.setAssetEntryId(
-			RandomTestUtil.randomLong());
-		searchResultContentDisplayBuilder.setAssetRendererFactoryLookup(
-			_assetRendererFactoryLookup);
-		searchResultContentDisplayBuilder.setLocale(LocaleUtil.US);
-		searchResultContentDisplayBuilder.setPermissionChecker(
-			_permissionChecker);
-		searchResultContentDisplayBuilder.setPortal(_portal);
-		searchResultContentDisplayBuilder.setRenderRequest(_renderRequest);
-		searchResultContentDisplayBuilder.setRenderResponse(_renderResponse);
-		searchResultContentDisplayBuilder.setType(
-			RandomTestUtil.randomString());
-
-		return searchResultContentDisplayBuilder.build();
-	}
-
-	protected void setUpAssetEntry() {
-		Mockito.doReturn(
-			_assetRenderer
-		).when(
-			_assetEntry
-		).getAssetRenderer();
-
-		Mockito.doReturn(
-			true
-		).when(
-			_assetEntry
-		).isVisible();
 	}
 
 	protected void setUpAssetRenderer() throws Exception, PortalException {
@@ -259,7 +188,78 @@ public class SearchResultContentDisplayBuilderTest {
 		);
 	}
 
-	protected void setUpAssetRendererFactory() throws PortalException {
+	private void _assertAssetDisplay(
+		SearchResultContentDisplayContext searchResultContentDisplayContext) {
+
+		Assert.assertSame(
+			_assetEntry, searchResultContentDisplayContext.getAssetEntry());
+
+		Assert.assertSame(
+			_assetRenderer,
+			searchResultContentDisplayContext.getAssetRenderer());
+
+		Assert.assertSame(
+			_assetRendererFactory,
+			searchResultContentDisplayContext.getAssetRendererFactory());
+	}
+
+	private void _assertIcon(
+		String editTarget, String urlString,
+		SearchResultContentDisplayContext searchResultContentDisplayContext) {
+
+		Assert.assertEquals(
+			editTarget, searchResultContentDisplayContext.getIconEditTarget());
+
+		Assert.assertEquals(
+			urlString, searchResultContentDisplayContext.getIconURLString());
+	}
+
+	private void _assertIconMissing(
+		SearchResultContentDisplayContext searchResultContentDisplayContext) {
+
+		Assert.assertNull(
+			searchResultContentDisplayContext.getIconEditTarget());
+
+		Assert.assertNull(searchResultContentDisplayContext.getIconURLString());
+	}
+
+	private SearchResultContentDisplayContext _buildDisplayContext()
+		throws Exception {
+
+		SearchResultContentDisplayBuilder searchResultContentDisplayBuilder =
+			new SearchResultContentDisplayBuilder();
+
+		searchResultContentDisplayBuilder.setAssetEntryId(
+			RandomTestUtil.randomLong());
+		searchResultContentDisplayBuilder.setAssetRendererFactoryLookup(
+			_assetRendererFactoryLookup);
+		searchResultContentDisplayBuilder.setLocale(LocaleUtil.US);
+		searchResultContentDisplayBuilder.setPermissionChecker(
+			_permissionChecker);
+		searchResultContentDisplayBuilder.setPortal(_portal);
+		searchResultContentDisplayBuilder.setRenderRequest(_renderRequest);
+		searchResultContentDisplayBuilder.setRenderResponse(_renderResponse);
+		searchResultContentDisplayBuilder.setType(
+			RandomTestUtil.randomString());
+
+		return searchResultContentDisplayBuilder.build();
+	}
+
+	private void _setUpAssetEntry() {
+		Mockito.doReturn(
+			_assetRenderer
+		).when(
+			_assetEntry
+		).getAssetRenderer();
+
+		Mockito.doReturn(
+			true
+		).when(
+			_assetEntry
+		).isVisible();
+	}
+
+	private void _setUpAssetRendererFactory() throws PortalException {
 		Mockito.doReturn(
 			_assetEntry
 		).when(
@@ -277,7 +277,7 @@ public class SearchResultContentDisplayBuilderTest {
 		);
 	}
 
-	protected void setUpPortal() {
+	private void _setUpPortal() {
 		Mockito.doReturn(
 			Mockito.mock(LiferayPortletRequest.class)
 		).when(
@@ -295,7 +295,7 @@ public class SearchResultContentDisplayBuilderTest {
 		);
 	}
 
-	protected void setUpRenderResponse() {
+	private void _setUpRenderResponse() {
 		Mockito.doReturn(
 			_renderPortletURL
 		).when(
@@ -309,7 +309,7 @@ public class SearchResultContentDisplayBuilderTest {
 		).getRenderParameters();
 	}
 
-	protected void setUpThemeDisplay() {
+	private void _setUpThemeDisplay() {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
 		themeDisplay.setURLCurrent("http://example.com");

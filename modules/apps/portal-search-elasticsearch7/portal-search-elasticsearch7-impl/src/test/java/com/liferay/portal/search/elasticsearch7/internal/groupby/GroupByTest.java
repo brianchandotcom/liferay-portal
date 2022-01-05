@@ -94,7 +94,7 @@ public class GroupByTest extends BaseGroupByTestCase {
 		orderedResults.add("two|2|2");
 		orderedResults.add("three|3|3");
 
-		assertGroupByTermsSortsCountDescKeyDesc(orderedResults, false, false);
+		_assertGroupByTermsSortsCountDescKeyDesc(orderedResults, false, false);
 	}
 
 	@Test
@@ -105,7 +105,7 @@ public class GroupByTest extends BaseGroupByTestCase {
 		orderedResults.add("one|2|2");
 		orderedResults.add("three|3|3");
 
-		assertGroupByTermsSortsCountDescKeyDesc(orderedResults, false, true);
+		_assertGroupByTermsSortsCountDescKeyDesc(orderedResults, false, true);
 	}
 
 	@Test
@@ -116,7 +116,7 @@ public class GroupByTest extends BaseGroupByTestCase {
 		orderedResults.add("one|2|2");
 		orderedResults.add("two|2|2");
 
-		assertGroupByTermsSortsCountDescKeyDesc(orderedResults, true, false);
+		_assertGroupByTermsSortsCountDescKeyDesc(orderedResults, true, false);
 	}
 
 	@Test
@@ -127,7 +127,7 @@ public class GroupByTest extends BaseGroupByTestCase {
 		orderedResults.add("two|2|2");
 		orderedResults.add("one|2|2");
 
-		assertGroupByTermsSortsCountDescKeyDesc(orderedResults, true, true);
+		_assertGroupByTermsSortsCountDescKeyDesc(orderedResults, true, true);
 	}
 
 	@Test
@@ -138,7 +138,7 @@ public class GroupByTest extends BaseGroupByTestCase {
 		orderedResults.add("one|2|2");
 		orderedResults.add("two|2|2");
 
-		indexTermsSortsDuplicates();
+		_indexTermsSortsDuplicates();
 
 		assertSearch(
 			indexingTestHelper -> {
@@ -202,11 +202,16 @@ public class GroupByTest extends BaseGroupByTestCase {
 			});
 	}
 
-	protected void assertGroupByTermsSortsCountDescKeyDesc(
+	@Override
+	protected IndexingFixture createIndexingFixture() {
+		return LiferayElasticsearchIndexingFixtureFactory.getInstance();
+	}
+
+	private void _assertGroupByTermsSortsCountDescKeyDesc(
 			List<String> orderedResults, boolean countDesc, boolean keyDesc)
 		throws Exception {
 
-		indexTermsSortsDuplicates();
+		_indexTermsSortsDuplicates();
 
 		assertSearch(
 			indexingTestHelper -> {
@@ -252,12 +257,7 @@ public class GroupByTest extends BaseGroupByTestCase {
 			});
 	}
 
-	@Override
-	protected IndexingFixture createIndexingFixture() {
-		return LiferayElasticsearchIndexingFixtureFactory.getInstance();
-	}
-
-	protected void indexTermsSortsDuplicates() {
+	private void _indexTermsSortsDuplicates() {
 		indexDuplicates("one", 2);
 		indexDuplicates("two", 2);
 		indexDuplicates("three", 3);

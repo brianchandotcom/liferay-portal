@@ -98,7 +98,7 @@ public class ModifiedSearchFacet extends BaseJSPSearchFacet {
 			new ModifiedFacetConfigurationImpl(facet.getFacetConfiguration());
 
 		modifiedFacetConfiguration.setRangesJSONArray(
-			replaceAliases(modifiedFacetConfiguration.getRangesJSONArray()));
+			_replaceAliases(modifiedFacetConfiguration.getRangesJSONArray()));
 
 		return facet;
 	}
@@ -164,7 +164,19 @@ public class ModifiedSearchFacet extends BaseJSPSearchFacet {
 		super.setServletContext(servletContext);
 	}
 
-	protected CalendarFactory getCalendarFactory() {
+	@Override
+	protected FacetFactory getFacetFactory() {
+		return modifiedFacetFactory;
+	}
+
+	protected CalendarFactory calendarFactory;
+	protected DateFormatFactory dateFormatFactory;
+	protected JSONFactory jsonFactory;
+
+	@Reference
+	protected ModifiedFacetFactory modifiedFacetFactory;
+
+	private CalendarFactory _getCalendarFactory() {
 
 		// See LPS-72507 and LPS-76500
 
@@ -175,7 +187,7 @@ public class ModifiedSearchFacet extends BaseJSPSearchFacet {
 		return CalendarFactoryUtil.getCalendarFactory();
 	}
 
-	protected DateFormatFactory getDateFormatFactory() {
+	private DateFormatFactory _getDateFormatFactory() {
 
 		// See LPS-72507 and LPS-76500
 
@@ -186,12 +198,7 @@ public class ModifiedSearchFacet extends BaseJSPSearchFacet {
 		return DateFormatFactoryUtil.getDateFormatFactory();
 	}
 
-	@Override
-	protected FacetFactory getFacetFactory() {
-		return modifiedFacetFactory;
-	}
-
-	protected JSONFactory getJSONFactory() {
+	private JSONFactory _getJSONFactory() {
 
 		// See LPS-72507 and LPS-76500
 
@@ -202,22 +209,15 @@ public class ModifiedSearchFacet extends BaseJSPSearchFacet {
 		return JSONFactoryUtil.getJSONFactory();
 	}
 
-	protected JSONArray replaceAliases(JSONArray rangesJSONArray) {
+	private JSONArray _replaceAliases(JSONArray rangesJSONArray) {
 		DateRangeFactory dateRangeFactory = new DateRangeFactory(
-			getDateFormatFactory());
+			_getDateFormatFactory());
 
-		CalendarFactory calendarFactory = getCalendarFactory();
+		CalendarFactory calendarFactory = _getCalendarFactory();
 
 		return dateRangeFactory.replaceAliases(
-			rangesJSONArray, calendarFactory.getCalendar(), getJSONFactory());
+			rangesJSONArray, calendarFactory.getCalendar(), _getJSONFactory());
 	}
-
-	protected CalendarFactory calendarFactory;
-	protected DateFormatFactory dateFormatFactory;
-	protected JSONFactory jsonFactory;
-
-	@Reference
-	protected ModifiedFacetFactory modifiedFacetFactory;
 
 	private static final String[] _LABELS = {
 		"past-hour", "past-24-hours", "past-week", "past-month", "past-year"

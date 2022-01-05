@@ -157,7 +157,7 @@ public class ScopeSearchFacetDisplayBuilder {
 
 		scopeSearchFacetTermDisplayContext.setCount(count);
 		scopeSearchFacetTermDisplayContext.setDescriptiveName(
-			getDescriptiveName(groupId));
+			_getDescriptiveName(groupId));
 		scopeSearchFacetTermDisplayContext.setGroupId(groupId);
 		scopeSearchFacetTermDisplayContext.setSelected(selected);
 		scopeSearchFacetTermDisplayContext.setShowCount(_showCounts);
@@ -216,30 +216,6 @@ public class ScopeSearchFacetDisplayBuilder {
 		return scopeSearchFacetTermDisplayContexts;
 	}
 
-	protected String getDescriptiveName(long groupId) {
-		Group group = _groupLocalService.fetchGroup(groupId);
-
-		if (group == null) {
-			return "[" + groupId + "]";
-		}
-
-		try {
-			String name = group.getDescriptiveName(_locale);
-
-			if (group.isStagingGroup()) {
-				name = StringBundler.concat(
-					name, StringPool.SPACE, StringPool.OPEN_PARENTHESIS,
-					_language.get(_httpServletRequest, "staged"),
-					StringPool.CLOSE_PARENTHESIS);
-			}
-
-			return name;
-		}
-		catch (PortalException portalException) {
-			throw new RuntimeException(portalException);
-		}
-	}
-
 	protected long getDisplayStyleGroupId() {
 		long displayStyleGroupId =
 			_siteFacetPortletInstanceConfiguration.displayStyleGroupId();
@@ -295,14 +271,6 @@ public class ScopeSearchFacetDisplayBuilder {
 		return Collections.<TermCollector>emptyList();
 	}
 
-	protected boolean isFilteredByThisSite() {
-		if (_filteredGroupIds.length == 1) {
-			return true;
-		}
-
-		return false;
-	}
-
 	protected boolean isNothingSelected() {
 		if (_selectedGroupIds.isEmpty()) {
 			return true;
@@ -312,7 +280,7 @@ public class ScopeSearchFacetDisplayBuilder {
 	}
 
 	protected boolean isRenderNothing() {
-		if (isFilteredByThisSite()) {
+		if (_isFilteredByThisSite()) {
 			return true;
 		}
 
@@ -331,6 +299,38 @@ public class ScopeSearchFacetDisplayBuilder {
 
 	protected boolean isSelected(Long groupId) {
 		if (_selectedGroupIds.contains(groupId)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private String _getDescriptiveName(long groupId) {
+		Group group = _groupLocalService.fetchGroup(groupId);
+
+		if (group == null) {
+			return "[" + groupId + "]";
+		}
+
+		try {
+			String name = group.getDescriptiveName(_locale);
+
+			if (group.isStagingGroup()) {
+				name = StringBundler.concat(
+					name, StringPool.SPACE, StringPool.OPEN_PARENTHESIS,
+					_language.get(_httpServletRequest, "staged"),
+					StringPool.CLOSE_PARENTHESIS);
+			}
+
+			return name;
+		}
+		catch (PortalException portalException) {
+			throw new RuntimeException(portalException);
+		}
+	}
+
+	private boolean _isFilteredByThisSite() {
+		if (_filteredGroupIds.length == 1) {
 			return true;
 		}
 

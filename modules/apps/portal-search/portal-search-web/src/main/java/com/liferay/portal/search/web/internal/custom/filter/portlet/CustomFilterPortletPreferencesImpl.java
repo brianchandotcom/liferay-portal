@@ -43,7 +43,7 @@ public class CustomFilterPortletPreferencesImpl
 
 	@Override
 	public String getBoostString() {
-		return getString(getBoostOptional());
+		return _getString(getBoostOptional());
 	}
 
 	@Override
@@ -54,7 +54,7 @@ public class CustomFilterPortletPreferencesImpl
 
 	@Override
 	public String getCustomHeadingString() {
-		return getString(getCustomHeadingOptional());
+		return _getString(getCustomHeadingOptional());
 	}
 
 	@Override
@@ -76,7 +76,7 @@ public class CustomFilterPortletPreferencesImpl
 
 	@Override
 	public String getFilterFieldString() {
-		return getString(getFilterFieldOptional());
+		return _getString(getFilterFieldOptional());
 	}
 
 	@Override
@@ -94,7 +94,7 @@ public class CustomFilterPortletPreferencesImpl
 
 	@Override
 	public String getFilterValueString() {
-		return getString(getFilterValueOptional());
+		return _getString(getFilterValueOptional());
 	}
 
 	@Override
@@ -111,7 +111,7 @@ public class CustomFilterPortletPreferencesImpl
 
 	@Override
 	public String getParameterNameString() {
-		return getString(getParameterNameOptional());
+		return _getString(getParameterNameOptional());
 	}
 
 	@Override
@@ -122,7 +122,7 @@ public class CustomFilterPortletPreferencesImpl
 
 	@Override
 	public String getParentQueryNameString() {
-		return getString(getParentQueryNameOptional());
+		return _getString(getParentQueryNameOptional());
 	}
 
 	@Override
@@ -133,7 +133,7 @@ public class CustomFilterPortletPreferencesImpl
 
 	@Override
 	public String getQueryNameString() {
-		return getString(getQueryNameOptional());
+		return _getString(getQueryNameOptional());
 	}
 
 	@Override
@@ -154,7 +154,7 @@ public class CustomFilterPortletPreferencesImpl
 			CustomFilterPortletPreferences.PREFERENCE_KEY_INVISIBLE, false);
 	}
 
-	protected String getString(Optional<String> optional) {
+	private String _getString(Optional<String> optional) {
 		return optional.orElse(StringPool.BLANK);
 	}
 

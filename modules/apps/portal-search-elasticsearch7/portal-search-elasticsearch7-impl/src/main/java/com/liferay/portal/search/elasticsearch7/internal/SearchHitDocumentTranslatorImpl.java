@@ -45,80 +45,18 @@ public class SearchHitDocumentTranslatorImpl
 
 		if (MapUtil.isNotEmpty(documentSourceMap)) {
 			for (String fieldName : documentSourceMap.keySet()) {
-				addFieldFromSource(document, fieldName, documentSourceMap);
+				_addFieldFromSource(document, fieldName, documentSourceMap);
 			}
 		}
 		else {
 			Map<String, DocumentField> documentFields = searchHit.getFields();
 
 			for (String documentFieldName : documentFields.keySet()) {
-				addField(document, documentFieldName, documentFields);
+				_addField(document, documentFieldName, documentFields);
 			}
 		}
 
 		return document;
-	}
-
-	protected void addField(
-		Document document, String fieldName,
-		Map<String, DocumentField> documentFields) {
-
-		Field field = getField(fieldName, documentFields);
-
-		if (field != null) {
-			document.add(field);
-		}
-	}
-
-	protected void addFieldFromSource(
-		Document document, String fieldName,
-		Map<String, Object> documentSourceMap) {
-
-		Field field = getFieldFromSource(fieldName, documentSourceMap);
-
-		if (field != null) {
-			document.add(field);
-		}
-	}
-
-	protected Field getField(
-		String fieldName, Map<String, DocumentField> documentFields) {
-
-		String geopointIndicatorSuffix = ".geopoint";
-
-		if (fieldName.endsWith(geopointIndicatorSuffix)) {
-			return null;
-		}
-
-		DocumentField documentField = documentFields.get(fieldName);
-
-		if (documentFields.containsKey(
-				fieldName.concat(geopointIndicatorSuffix))) {
-
-			return translateGeoPoint(documentField);
-		}
-
-		return translate(documentField);
-	}
-
-	protected Field getFieldFromSource(
-		String fieldName, Map<String, Object> documentSourceMap) {
-
-		String geopointIndicatorSuffix = ".geopoint";
-
-		if (fieldName.endsWith(geopointIndicatorSuffix)) {
-			return null;
-		}
-
-		Object value = documentSourceMap.get(fieldName);
-
-		if (documentSourceMap.containsKey(
-				fieldName.concat(geopointIndicatorSuffix))) {
-
-			return translateGeoPoint(fieldName, value);
-		}
-
-		return translate(fieldName, value);
 	}
 
 	protected Field translate(DocumentField documentField) {
@@ -137,12 +75,74 @@ public class SearchHitDocumentTranslatorImpl
 		return new Field(fieldName, String.valueOf(value));
 	}
 
-	protected Field translateGeoPoint(DocumentField documentField) {
-		return translateGeoPoint(
+	private void _addField(
+		Document document, String fieldName,
+		Map<String, DocumentField> documentFields) {
+
+		Field field = _getField(fieldName, documentFields);
+
+		if (field != null) {
+			document.add(field);
+		}
+	}
+
+	private void _addFieldFromSource(
+		Document document, String fieldName,
+		Map<String, Object> documentSourceMap) {
+
+		Field field = _getFieldFromSource(fieldName, documentSourceMap);
+
+		if (field != null) {
+			document.add(field);
+		}
+	}
+
+	private Field _getField(
+		String fieldName, Map<String, DocumentField> documentFields) {
+
+		String geopointIndicatorSuffix = ".geopoint";
+
+		if (fieldName.endsWith(geopointIndicatorSuffix)) {
+			return null;
+		}
+
+		DocumentField documentField = documentFields.get(fieldName);
+
+		if (documentFields.containsKey(
+				fieldName.concat(geopointIndicatorSuffix))) {
+
+			return _translateGeoPoint(documentField);
+		}
+
+		return translate(documentField);
+	}
+
+	private Field _getFieldFromSource(
+		String fieldName, Map<String, Object> documentSourceMap) {
+
+		String geopointIndicatorSuffix = ".geopoint";
+
+		if (fieldName.endsWith(geopointIndicatorSuffix)) {
+			return null;
+		}
+
+		Object value = documentSourceMap.get(fieldName);
+
+		if (documentSourceMap.containsKey(
+				fieldName.concat(geopointIndicatorSuffix))) {
+
+			return _translateGeoPoint(fieldName, value);
+		}
+
+		return translate(fieldName, value);
+	}
+
+	private Field _translateGeoPoint(DocumentField documentField) {
+		return _translateGeoPoint(
 			documentField.getName(), documentField.getValue());
 	}
 
-	protected Field translateGeoPoint(String fieldName, Object value) {
+	private Field _translateGeoPoint(String fieldName, Object value) {
 		Field field = new Field(fieldName);
 
 		String[] values = StringUtil.split(String.valueOf(value));

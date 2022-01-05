@@ -67,17 +67,8 @@ public class FieldQueryBuilderFactoryImpl implements FieldQueryBuilderFactory {
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_descriptionFieldNames = getFields(properties, "description.fields");
-		_titleFieldNames = getFields(properties, "title.fields");
-	}
-
-	protected Collection<String> getFields(
-		Map<String, Object> properties, String key) {
-
-		String[] values = StringUtil.split(
-			GetterUtil.getString(properties.get(key)), CharPool.PIPE);
-
-		return new HashSet<>(Arrays.asList(values));
+		_descriptionFieldNames = _getFields(properties, "description.fields");
+		_titleFieldNames = _getFields(properties, "title.fields");
 	}
 
 	@Reference
@@ -91,6 +82,15 @@ public class FieldQueryBuilderFactoryImpl implements FieldQueryBuilderFactory {
 
 	@Reference
 	protected TitleFieldQueryBuilder titleFieldQueryBuilder;
+
+	private Collection<String> _getFields(
+		Map<String, Object> properties, String key) {
+
+		String[] values = StringUtil.split(
+			GetterUtil.getString(properties.get(key)), CharPool.PIPE);
+
+		return new HashSet<>(Arrays.asList(values));
+	}
 
 	private volatile Collection<String> _descriptionFieldNames =
 		Collections.singleton("description");

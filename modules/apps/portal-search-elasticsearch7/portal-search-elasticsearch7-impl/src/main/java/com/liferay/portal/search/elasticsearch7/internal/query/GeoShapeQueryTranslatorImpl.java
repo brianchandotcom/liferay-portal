@@ -37,7 +37,7 @@ public class GeoShapeQueryTranslatorImpl implements GeoShapeQueryTranslator {
 
 	@Override
 	public QueryBuilder translate(GeoShapeQuery geoShapeQuery) {
-		GeoShapeQueryBuilder geoShapeQueryBuilder = translateQuery(
+		GeoShapeQueryBuilder geoShapeQueryBuilder = _translateQuery(
 			geoShapeQuery);
 
 		if (geoShapeQuery.getIgnoreUnmapped() != null) {
@@ -96,7 +96,7 @@ public class GeoShapeQueryTranslatorImpl implements GeoShapeQueryTranslator {
 			"Invalid SpatialStrategy: " + spatialStrategy);
 	}
 
-	protected GeoShapeQueryBuilder translateQuery(GeoShapeQuery geoShapeQuery) {
+	private GeoShapeQueryBuilder _translateQuery(GeoShapeQuery geoShapeQuery) {
 		if (geoShapeQuery.getIndexedShapeId() != null) {
 			GeoShapeQueryBuilder geoShapeQueryBuilder =
 				QueryBuilders.geoShapeQuery(

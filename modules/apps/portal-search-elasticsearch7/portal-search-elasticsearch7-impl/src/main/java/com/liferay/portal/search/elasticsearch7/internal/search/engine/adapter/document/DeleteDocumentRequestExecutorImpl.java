@@ -44,30 +44,12 @@ public class DeleteDocumentRequestExecutorImpl
 			_elasticsearchBulkableDocumentRequestTranslator.translate(
 				deleteDocumentRequest);
 
-		DeleteResponse deleteResponse = getDeleteResponse(
+		DeleteResponse deleteResponse = _getDeleteResponse(
 			deleteRequest, deleteDocumentRequest);
 
 		RestStatus restStatus = deleteResponse.status();
 
 		return new DeleteDocumentResponse(restStatus.getStatus());
-	}
-
-	protected DeleteResponse getDeleteResponse(
-		DeleteRequest deleteRequest,
-		DeleteDocumentRequest deleteDocumentRequest) {
-
-		RestHighLevelClient restHighLevelClient =
-			_elasticsearchClientResolver.getRestHighLevelClient(
-				deleteDocumentRequest.getConnectionId(),
-				deleteDocumentRequest.isPreferLocalCluster());
-
-		try {
-			return restHighLevelClient.delete(
-				deleteRequest, RequestOptions.DEFAULT);
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
 	}
 
 	@Reference(target = "(search.engine.impl=Elasticsearch)", unbind = "-")
@@ -84,6 +66,24 @@ public class DeleteDocumentRequestExecutorImpl
 		ElasticsearchClientResolver elasticsearchClientResolver) {
 
 		_elasticsearchClientResolver = elasticsearchClientResolver;
+	}
+
+	private DeleteResponse _getDeleteResponse(
+		DeleteRequest deleteRequest,
+		DeleteDocumentRequest deleteDocumentRequest) {
+
+		RestHighLevelClient restHighLevelClient =
+			_elasticsearchClientResolver.getRestHighLevelClient(
+				deleteDocumentRequest.getConnectionId(),
+				deleteDocumentRequest.isPreferLocalCluster());
+
+		try {
+			return restHighLevelClient.delete(
+				deleteRequest, RequestOptions.DEFAULT);
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
 	}
 
 	private ElasticsearchBulkableDocumentRequestTranslator

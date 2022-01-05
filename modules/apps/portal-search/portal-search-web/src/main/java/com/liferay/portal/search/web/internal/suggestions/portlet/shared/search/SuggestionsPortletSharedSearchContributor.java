@@ -42,15 +42,15 @@ public class SuggestionsPortletSharedSearchContributor
 			new SuggestionsPortletPreferencesImpl(
 				portletSharedSearchSettings.getPortletPreferencesOptional());
 
-		setUpQueryIndexing(
+		_setUpQueryIndexing(
 			suggestionsPortletPreferences, portletSharedSearchSettings);
-		setUpRelatedSuggestions(
+		_setUpRelatedSuggestions(
 			suggestionsPortletPreferences, portletSharedSearchSettings);
-		setUpSpellCheckSuggestion(
+		_setUpSpellCheckSuggestion(
 			suggestionsPortletPreferences, portletSharedSearchSettings);
 	}
 
-	protected void setUpQueryIndexing(
+	private void _setUpQueryIndexing(
 		SuggestionsPortletPreferences suggestionsPortletPreferences,
 		PortletSharedSearchSettings portletSharedSearchSettings) {
 
@@ -62,7 +62,7 @@ public class SuggestionsPortletSharedSearchContributor
 			suggestionsPortletPreferences.getQueryIndexingThreshold());
 	}
 
-	protected void setUpRelatedSuggestions(
+	private void _setUpRelatedSuggestions(
 		SuggestionsPortletPreferences suggestionsPortletPreferences,
 		PortletSharedSearchSettings portletSharedSearchSettings) {
 
@@ -77,7 +77,7 @@ public class SuggestionsPortletSharedSearchContributor
 			suggestionsPortletPreferences.getRelatedQueriesSuggestionsMax());
 	}
 
-	protected void setUpSpellCheckSuggestion(
+	private void _setUpSpellCheckSuggestion(
 		SuggestionsPortletPreferences suggestionsPortletPreferences,
 		PortletSharedSearchSettings portletSharedSearchSettings) {
 

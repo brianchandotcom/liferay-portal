@@ -51,12 +51,13 @@ public class SearchAdminDisplayBuilder {
 		NavigationItemList navigationItemList = new NavigationItemList();
 		String selectedTab = getSelectedTab();
 
-		addNavigationItemList(navigationItemList, "connections", selectedTab);
+		_addNavigationItemList(navigationItemList, "connections", selectedTab);
 
-		addNavigationItemList(navigationItemList, "index-actions", selectedTab);
+		_addNavigationItemList(
+			navigationItemList, "index-actions", selectedTab);
 
-		if (isIndexInformationAvailable()) {
-			addNavigationItemList(
+		if (_isIndexInformationAvailable()) {
+			_addNavigationItemList(
 				navigationItemList, "field-mappings", selectedTab);
 		}
 
@@ -76,7 +77,27 @@ public class SearchAdminDisplayBuilder {
 		_indexReindexerClassNames = indexReindexerClassNames;
 	}
 
-	protected void addNavigationItemList(
+	protected String getSelectedTab() {
+		String selectedTab = ParamUtil.getString(
+			_renderRequest, "tabs1", "connections");
+
+		if (!Objects.equals(selectedTab, "field-mappings") &&
+			!Objects.equals(selectedTab, "index-actions") &&
+			!Objects.equals(selectedTab, "connections")) {
+
+			return "connections";
+		}
+
+		if (Objects.equals(selectedTab, "field-mappings") &&
+			!_isIndexInformationAvailable()) {
+
+			return "connections";
+		}
+
+		return selectedTab;
+	}
+
+	private void _addNavigationItemList(
 		NavigationItemList navigationItemList, String label,
 		String selectedTab) {
 
@@ -91,27 +112,7 @@ public class SearchAdminDisplayBuilder {
 			});
 	}
 
-	protected String getSelectedTab() {
-		String selectedTab = ParamUtil.getString(
-			_renderRequest, "tabs1", "connections");
-
-		if (!Objects.equals(selectedTab, "field-mappings") &&
-			!Objects.equals(selectedTab, "index-actions") &&
-			!Objects.equals(selectedTab, "connections")) {
-
-			return "connections";
-		}
-
-		if (Objects.equals(selectedTab, "field-mappings") &&
-			!isIndexInformationAvailable()) {
-
-			return "connections";
-		}
-
-		return selectedTab;
-	}
-
-	protected boolean isIndexInformationAvailable() {
+	private boolean _isIndexInformationAvailable() {
 		if (_indexInformation != null) {
 			return true;
 		}

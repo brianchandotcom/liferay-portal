@@ -100,12 +100,12 @@ public class ElasticsearchSearchEngineAdapterClusterRequestTest {
 		HealthClusterResponse healthClusterResponse =
 			_searchEngineAdapter.execute(healthClusterRequest);
 
-		assertHealthy(healthClusterResponse.getClusterHealthStatus());
+		_assertHealthy(healthClusterResponse.getClusterHealthStatus());
 
 		JSONObject jsonObject = createJSONObject(
 			healthClusterResponse.getHealthStatusMessage());
 
-		assertClusterName(jsonObject);
+		_assertClusterName(jsonObject);
 
 		Assert.assertEquals(
 			_ELASTICSEARCH_DEFAULT_NUMBER_OF_SHARDS,
@@ -120,20 +120,40 @@ public class ElasticsearchSearchEngineAdapterClusterRequestTest {
 		StateClusterResponse stateClusterResponse =
 			_searchEngineAdapter.execute(stateClusterRequest);
 
-		assertNodesContainLocalhost(stateClusterResponse.getStateMessage());
+		_assertNodesContainLocalhost(stateClusterResponse.getStateMessage());
 	}
 
 	@Test
 	public void testExecuteStatsClusterRequest() {
-		doTestExecuteStatsClusterRequest(null);
+		_doTestExecuteStatsClusterRequest(null);
 	}
 
 	@Test
 	public void testExecuteStatsClusterRequestWithNodeId() {
-		doTestExecuteStatsClusterRequest(new String[] {"liferay"});
+		_doTestExecuteStatsClusterRequest(new String[] {"liferay"});
 	}
 
-	protected static ClusterRequestExecutor createClusterRequestExecutor(
+	protected static SearchEngineAdapter createSearchEngineAdapter(
+		ElasticsearchClientResolver elasticsearchClientResolver) {
+
+		return new ElasticsearchSearchEngineAdapterImpl() {
+			{
+				setClusterRequestExecutor(
+					_createClusterRequestExecutor(elasticsearchClientResolver));
+			}
+		};
+	}
+
+	protected JSONObject createJSONObject(String message) {
+		try {
+			return JSONFactoryUtil.createJSONObject(message);
+		}
+		catch (JSONException jsonException) {
+			throw new RuntimeException(jsonException);
+		}
+	}
+
+	private static ClusterRequestExecutor _createClusterRequestExecutor(
 		ElasticsearchClientResolver elasticsearchClientResolver) {
 
 		ClusterRequestExecutorFixture clusterRequestExecutorFixture =
@@ -148,29 +168,18 @@ public class ElasticsearchSearchEngineAdapterClusterRequestTest {
 		return clusterRequestExecutorFixture.getClusterRequestExecutor();
 	}
 
-	protected static SearchEngineAdapter createSearchEngineAdapter(
-		ElasticsearchClientResolver elasticsearchClientResolver) {
-
-		return new ElasticsearchSearchEngineAdapterImpl() {
-			{
-				setClusterRequestExecutor(
-					createClusterRequestExecutor(elasticsearchClientResolver));
-			}
-		};
-	}
-
-	protected void assertClusterName(JSONObject jsonObject) {
+	private void _assertClusterName(JSONObject jsonObject) {
 		Assert.assertEquals(
 			_CLUSTER_NAME, jsonObject.getString("cluster_name"));
 	}
 
-	protected void assertHealthy(ClusterHealthStatus clusterHealthStatus) {
+	private void _assertHealthy(ClusterHealthStatus clusterHealthStatus) {
 		Assert.assertTrue(
 			clusterHealthStatus.equals(ClusterHealthStatus.GREEN) ||
 			clusterHealthStatus.equals(ClusterHealthStatus.YELLOW));
 	}
 
-	protected void assertNodesContainLocalhost(String message) {
+	private void _assertNodesContainLocalhost(String message) {
 		JSONObject jsonObject = createJSONObject(message);
 
 		String nodesString = jsonObject.getString("nodes");
@@ -178,33 +187,12 @@ public class ElasticsearchSearchEngineAdapterClusterRequestTest {
 		Assert.assertTrue(nodesString.contains("127.0.0.1"));
 	}
 
-	protected void assertOneIndex(String message) {
+	private void _assertOneIndex(String message) {
 		JSONObject jsonObject = createJSONObject(message);
 
 		JSONObject indicesJSONObject = jsonObject.getJSONObject("indices");
 
 		Assert.assertEquals("1", indicesJSONObject.getString("count"));
-	}
-
-	protected JSONObject createJSONObject(String message) {
-		try {
-			return JSONFactoryUtil.createJSONObject(message);
-		}
-		catch (JSONException jsonException) {
-			throw new RuntimeException(jsonException);
-		}
-	}
-
-	protected void doTestExecuteStatsClusterRequest(String[] nodeIds) {
-		StatsClusterRequest statsClusterRequest = new StatsClusterRequest(
-			nodeIds);
-
-		StatsClusterResponse statsClusterResponse =
-			_searchEngineAdapter.execute(statsClusterRequest);
-
-		assertHealthy(statsClusterResponse.getClusterHealthStatus());
-
-		assertOneIndex(statsClusterResponse.getStatsMessage());
 	}
 
 	private void _createIndex() {
@@ -229,6 +217,18 @@ public class ElasticsearchSearchEngineAdapterClusterRequestTest {
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
 		}
+	}
+
+	private void _doTestExecuteStatsClusterRequest(String[] nodeIds) {
+		StatsClusterRequest statsClusterRequest = new StatsClusterRequest(
+			nodeIds);
+
+		StatsClusterResponse statsClusterResponse =
+			_searchEngineAdapter.execute(statsClusterRequest);
+
+		_assertHealthy(statsClusterResponse.getClusterHealthStatus());
+
+		_assertOneIndex(statsClusterResponse.getStatsMessage());
 	}
 
 	private static final String _CLUSTER_NAME =

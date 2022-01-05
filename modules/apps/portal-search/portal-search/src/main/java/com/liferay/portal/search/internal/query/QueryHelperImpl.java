@@ -47,7 +47,7 @@ public class QueryHelperImpl implements QueryHelper {
 
 		addSearchTerm(
 			searchQuery, searchContext,
-			getLocalizedName(field, searchContext.getLocale()), like);
+			_getLocalizedName(field, searchContext.getLocale()), like);
 	}
 
 	@Override
@@ -105,7 +105,9 @@ public class QueryHelperImpl implements QueryHelper {
 		return query;
 	}
 
-	protected Localization getLocalization() {
+	protected Localization localization;
+
+	private Localization _getLocalization() {
 
 		// See LPS-72507
 
@@ -116,13 +118,11 @@ public class QueryHelperImpl implements QueryHelper {
 		return LocalizationUtil.getLocalization();
 	}
 
-	protected String getLocalizedName(String name, Locale locale) {
-		Localization localization = getLocalization();
+	private String _getLocalizedName(String name, Locale locale) {
+		Localization localization = _getLocalization();
 
 		return localization.getLocalizedName(
 			name, LocaleUtil.toLanguageId(locale));
 	}
-
-	protected Localization localization;
 
 }

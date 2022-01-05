@@ -48,7 +48,7 @@ public class WeightedAvgAggregationTranslatorImpl
 			AggregationBuilders.weightedAvg(weightedAvgAggregation.getName());
 
 		MultiValuesSourceFieldConfig valueMultiValuesSourceFieldConfig =
-			getMultiValuesSourceFieldConfig(
+			_getMultiValuesSourceFieldConfig(
 				weightedAvgAggregation.getValueField(),
 				weightedAvgAggregation.getValueMissing(),
 				weightedAvgAggregation.getValueScript());
@@ -56,7 +56,7 @@ public class WeightedAvgAggregationTranslatorImpl
 		weightedAvgAggregationBuilder.value(valueMultiValuesSourceFieldConfig);
 
 		MultiValuesSourceFieldConfig weightMultiValuesSourceFieldConfig =
-			getMultiValuesSourceFieldConfig(
+			_getMultiValuesSourceFieldConfig(
 				weightedAvgAggregation.getWeightField(),
 				weightedAvgAggregation.getWeightMissing(),
 				weightedAvgAggregation.getWeightScript());
@@ -82,7 +82,7 @@ public class WeightedAvgAggregationTranslatorImpl
 		return weightedAvgAggregationBuilder;
 	}
 
-	protected MultiValuesSourceFieldConfig getMultiValuesSourceFieldConfig(
+	private MultiValuesSourceFieldConfig _getMultiValuesSourceFieldConfig(
 		String field, Object missing, Script script) {
 
 		MultiValuesSourceFieldConfig.Builder

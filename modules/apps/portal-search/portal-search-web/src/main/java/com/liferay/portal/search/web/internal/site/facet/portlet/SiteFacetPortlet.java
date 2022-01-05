@@ -90,7 +90,7 @@ public class SiteFacetPortlet extends MVCPortlet {
 			portletSharedSearchRequest.search(renderRequest);
 
 		ScopeSearchFacetDisplayContext siteFacetPortletDisplayContext =
-			buildDisplayContext(portletSharedSearchResponse, renderRequest);
+			_buildDisplayContext(portletSharedSearchResponse, renderRequest);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, siteFacetPortletDisplayContext);
@@ -101,126 +101,6 @@ public class SiteFacetPortlet extends MVCPortlet {
 		}
 
 		super.render(renderRequest, renderResponse);
-	}
-
-	protected ScopeSearchFacetDisplayContext buildDisplayContext(
-		PortletSharedSearchResponse portletSharedSearchResponse,
-		RenderRequest renderRequest) {
-
-		Facet facet = portletSharedSearchResponse.getFacet(
-			getAggregationName(renderRequest));
-
-		ScopeFacetConfiguration siteFacetConfiguration =
-			new ScopeFacetConfigurationImpl(facet.getFacetConfiguration());
-
-		SiteFacetPortletPreferences siteFacetPortletPreferences =
-			new SiteFacetPortletPreferencesImpl(
-				portletSharedSearchResponse.getPortletPreferences(
-					renderRequest));
-
-		ScopeSearchFacetDisplayBuilder scopeSearchFacetDisplayBuilder =
-			createScopeSearchFacetDisplayBuilder(renderRequest);
-
-		scopeSearchFacetDisplayBuilder.setFacet(facet);
-
-		SearchOptionalUtil.copy(
-			() -> getFilteredGroupIdsOptional(portletSharedSearchResponse),
-			scopeSearchFacetDisplayBuilder::setFilteredGroupIds);
-
-		scopeSearchFacetDisplayBuilder.setFrequencyThreshold(
-			siteFacetConfiguration.getFrequencyThreshold());
-		scopeSearchFacetDisplayBuilder.setFrequenciesVisible(
-			siteFacetPortletPreferences.isFrequenciesVisible());
-		scopeSearchFacetDisplayBuilder.setGroupLocalService(groupLocalService);
-		scopeSearchFacetDisplayBuilder.setLanguage(language);
-		scopeSearchFacetDisplayBuilder.setLocale(
-			getLocale(portletSharedSearchResponse, renderRequest));
-		scopeSearchFacetDisplayBuilder.setMaxTerms(
-			siteFacetConfiguration.getMaxTerms());
-		scopeSearchFacetDisplayBuilder.setPaginationStartParameterName(
-			getPaginationStartParameterName(portletSharedSearchResponse));
-
-		String parameterName = siteFacetPortletPreferences.getParameterName();
-
-		scopeSearchFacetDisplayBuilder.setParameterName(parameterName);
-
-		SearchOptionalUtil.copy(
-			() -> getParameterValuesOptional(
-				parameterName, portletSharedSearchResponse, renderRequest),
-			scopeSearchFacetDisplayBuilder::setParameterValues);
-
-		scopeSearchFacetDisplayBuilder.setRequest(
-			getHttpServletRequest(renderRequest));
-
-		return scopeSearchFacetDisplayBuilder.build();
-	}
-
-	protected ScopeSearchFacetDisplayBuilder
-		createScopeSearchFacetDisplayBuilder(RenderRequest renderRequest) {
-
-		try {
-			return new ScopeSearchFacetDisplayBuilder(renderRequest);
-		}
-		catch (ConfigurationException configurationException) {
-			throw new RuntimeException(configurationException);
-		}
-	}
-
-	protected String getAggregationName(RenderRequest renderRequest) {
-		return portal.getPortletId(renderRequest);
-	}
-
-	protected Optional<long[]> getFilteredGroupIdsOptional(
-		PortletSharedSearchResponse portletSharedSearchResponse) {
-
-		SearchSettings searchSettings =
-			portletSharedSearchResponse.getSearchSettings();
-
-		SearchContext searchContext = searchSettings.getSearchContext();
-
-		return Optional.ofNullable(searchContext.getGroupIds());
-	}
-
-	protected HttpServletRequest getHttpServletRequest(
-		RenderRequest renderRequest) {
-
-		LiferayPortletRequest liferayPortletRequest =
-			portal.getLiferayPortletRequest(renderRequest);
-
-		return liferayPortletRequest.getHttpServletRequest();
-	}
-
-	protected Locale getLocale(
-		PortletSharedSearchResponse portletSharedSearchResponse,
-		RenderRequest renderRequest) {
-
-		ThemeDisplay themeDisplay = portletSharedSearchResponse.getThemeDisplay(
-			renderRequest);
-
-		return themeDisplay.getLocale();
-	}
-
-	protected String getPaginationStartParameterName(
-		PortletSharedSearchResponse portletSharedSearchResponse) {
-
-		SearchResponse searchResponse =
-			portletSharedSearchResponse.getSearchResponse();
-
-		SearchRequest searchRequest = searchResponse.getRequest();
-
-		return searchRequest.getPaginationStartParameterName();
-	}
-
-	protected Optional<List<String>> getParameterValuesOptional(
-		String parameterName,
-		PortletSharedSearchResponse portletSharedSearchResponse,
-		RenderRequest renderRequest) {
-
-		Optional<String[]> optional =
-			portletSharedSearchResponse.getParameterValues(
-				parameterName, renderRequest);
-
-		return optional.map(Arrays::asList);
 	}
 
 	@Reference
@@ -234,5 +114,125 @@ public class SiteFacetPortlet extends MVCPortlet {
 
 	@Reference
 	protected PortletSharedSearchRequest portletSharedSearchRequest;
+
+	private ScopeSearchFacetDisplayContext _buildDisplayContext(
+		PortletSharedSearchResponse portletSharedSearchResponse,
+		RenderRequest renderRequest) {
+
+		Facet facet = portletSharedSearchResponse.getFacet(
+			_getAggregationName(renderRequest));
+
+		ScopeFacetConfiguration siteFacetConfiguration =
+			new ScopeFacetConfigurationImpl(facet.getFacetConfiguration());
+
+		SiteFacetPortletPreferences siteFacetPortletPreferences =
+			new SiteFacetPortletPreferencesImpl(
+				portletSharedSearchResponse.getPortletPreferences(
+					renderRequest));
+
+		ScopeSearchFacetDisplayBuilder scopeSearchFacetDisplayBuilder =
+			_createScopeSearchFacetDisplayBuilder(renderRequest);
+
+		scopeSearchFacetDisplayBuilder.setFacet(facet);
+
+		SearchOptionalUtil.copy(
+			() -> _getFilteredGroupIdsOptional(portletSharedSearchResponse),
+			scopeSearchFacetDisplayBuilder::setFilteredGroupIds);
+
+		scopeSearchFacetDisplayBuilder.setFrequencyThreshold(
+			siteFacetConfiguration.getFrequencyThreshold());
+		scopeSearchFacetDisplayBuilder.setFrequenciesVisible(
+			siteFacetPortletPreferences.isFrequenciesVisible());
+		scopeSearchFacetDisplayBuilder.setGroupLocalService(groupLocalService);
+		scopeSearchFacetDisplayBuilder.setLanguage(language);
+		scopeSearchFacetDisplayBuilder.setLocale(
+			_getLocale(portletSharedSearchResponse, renderRequest));
+		scopeSearchFacetDisplayBuilder.setMaxTerms(
+			siteFacetConfiguration.getMaxTerms());
+		scopeSearchFacetDisplayBuilder.setPaginationStartParameterName(
+			_getPaginationStartParameterName(portletSharedSearchResponse));
+
+		String parameterName = siteFacetPortletPreferences.getParameterName();
+
+		scopeSearchFacetDisplayBuilder.setParameterName(parameterName);
+
+		SearchOptionalUtil.copy(
+			() -> _getParameterValuesOptional(
+				parameterName, portletSharedSearchResponse, renderRequest),
+			scopeSearchFacetDisplayBuilder::setParameterValues);
+
+		scopeSearchFacetDisplayBuilder.setRequest(
+			_getHttpServletRequest(renderRequest));
+
+		return scopeSearchFacetDisplayBuilder.build();
+	}
+
+	private ScopeSearchFacetDisplayBuilder
+		_createScopeSearchFacetDisplayBuilder(RenderRequest renderRequest) {
+
+		try {
+			return new ScopeSearchFacetDisplayBuilder(renderRequest);
+		}
+		catch (ConfigurationException configurationException) {
+			throw new RuntimeException(configurationException);
+		}
+	}
+
+	private String _getAggregationName(RenderRequest renderRequest) {
+		return portal.getPortletId(renderRequest);
+	}
+
+	private Optional<long[]> _getFilteredGroupIdsOptional(
+		PortletSharedSearchResponse portletSharedSearchResponse) {
+
+		SearchSettings searchSettings =
+			portletSharedSearchResponse.getSearchSettings();
+
+		SearchContext searchContext = searchSettings.getSearchContext();
+
+		return Optional.ofNullable(searchContext.getGroupIds());
+	}
+
+	private HttpServletRequest _getHttpServletRequest(
+		RenderRequest renderRequest) {
+
+		LiferayPortletRequest liferayPortletRequest =
+			portal.getLiferayPortletRequest(renderRequest);
+
+		return liferayPortletRequest.getHttpServletRequest();
+	}
+
+	private Locale _getLocale(
+		PortletSharedSearchResponse portletSharedSearchResponse,
+		RenderRequest renderRequest) {
+
+		ThemeDisplay themeDisplay = portletSharedSearchResponse.getThemeDisplay(
+			renderRequest);
+
+		return themeDisplay.getLocale();
+	}
+
+	private String _getPaginationStartParameterName(
+		PortletSharedSearchResponse portletSharedSearchResponse) {
+
+		SearchResponse searchResponse =
+			portletSharedSearchResponse.getSearchResponse();
+
+		SearchRequest searchRequest = searchResponse.getRequest();
+
+		return searchRequest.getPaginationStartParameterName();
+	}
+
+	private Optional<List<String>> _getParameterValuesOptional(
+		String parameterName,
+		PortletSharedSearchResponse portletSharedSearchResponse,
+		RenderRequest renderRequest) {
+
+		Optional<String[]> optional =
+			portletSharedSearchResponse.getParameterValues(
+				parameterName, renderRequest);
+
+		return optional.map(Arrays::asList);
+	}
 
 }

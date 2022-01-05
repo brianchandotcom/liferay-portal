@@ -116,7 +116,7 @@ public class ExpandoQueryContributorHelperImpl
 			return;
 		}
 
-		String fieldName = getExpandoFieldName(
+		String fieldName = _getExpandoFieldName(
 			attributeName, expandoBridge, searchContext.getLocale());
 
 		if (fieldName.endsWith("_geolocation")) {
@@ -137,7 +137,21 @@ public class ExpandoQueryContributorHelperImpl
 		}
 	}
 
-	protected String getExpandoFieldName(
+	protected Localization localization;
+
+	private Query _addTerm(
+		BooleanQuery booleanQuery, String fieldName, String keywords,
+		boolean like) {
+
+		try {
+			return booleanQuery.addTerm(fieldName, keywords, like);
+		}
+		catch (ParseException parseException) {
+			throw new RuntimeException(parseException);
+		}
+	}
+
+	private String _getExpandoFieldName(
 		String attributeName, ExpandoBridge expandoBridge, Locale locale) {
 
 		ExpandoColumn expandoColumn =
@@ -157,7 +171,7 @@ public class ExpandoQueryContributorHelperImpl
 		if (expandoColumn.getType() ==
 				ExpandoColumnConstants.STRING_LOCALIZED) {
 
-			fieldName = getLocalizedName(fieldName, locale);
+			fieldName = _getLocalizedName(fieldName, locale);
 		}
 
 		if (expandoColumn.getType() == ExpandoColumnConstants.GEOLOCATION) {
@@ -167,7 +181,7 @@ public class ExpandoQueryContributorHelperImpl
 		return fieldName;
 	}
 
-	protected Localization getLocalization() {
+	private Localization _getLocalization() {
 
 		// See LPS-72507
 
@@ -178,29 +192,15 @@ public class ExpandoQueryContributorHelperImpl
 		return LocalizationUtil.getLocalization();
 	}
 
-	protected String getLocalizedName(String name, Locale locale) {
+	private String _getLocalizedName(String name, Locale locale) {
 		if (locale == null) {
 			return name;
 		}
 
-		Localization localization = getLocalization();
+		Localization localization = _getLocalization();
 
 		return localization.getLocalizedName(
 			name, LocaleUtil.toLanguageId(locale));
-	}
-
-	protected Localization localization;
-
-	private Query _addTerm(
-		BooleanQuery booleanQuery, String fieldName, String keywords,
-		boolean like) {
-
-		try {
-			return booleanQuery.addTerm(fieldName, keywords, like);
-		}
-		catch (ParseException parseException) {
-			throw new RuntimeException(parseException);
-		}
 	}
 
 	private ExpandoBridgeFactory _expandoBridgeFactory;

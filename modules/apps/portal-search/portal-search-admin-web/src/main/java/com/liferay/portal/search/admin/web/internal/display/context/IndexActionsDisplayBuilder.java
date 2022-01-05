@@ -67,24 +67,24 @@ public class IndexActionsDisplayBuilder {
 
 	protected Map<String, Object> getData() {
 		return HashMapBuilder.<String, Object>put(
-			"initialCompanyIds", getInitialCompanyIds()
+			"initialCompanyIds", _getInitialCompanyIds()
 		).put(
-			"initialScope", getInitialScope()
+			"initialScope", _getInitialScope()
 		).put(
-			"virtualInstances", getVirtualInstancesJSONArray()
+			"virtualInstances", _getVirtualInstancesJSONArray()
 		).build();
 	}
 
-	protected long[] getInitialCompanyIds() {
+	private long[] _getInitialCompanyIds() {
 		return StringUtil.split(
 			ParamUtil.getString(_httpServletRequest, "companyIds"), 0L);
 	}
 
-	protected String getInitialScope() {
+	private String _getInitialScope() {
 		return ParamUtil.getString(_httpServletRequest, "scope");
 	}
 
-	protected JSONArray getVirtualInstancesJSONArray() {
+	private JSONArray _getVirtualInstancesJSONArray() {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		long[] companyIds = PortalInstancesLocalServiceUtil.getCompanyIds();

@@ -46,43 +46,48 @@ public class SearchResponseImplTest {
 		SearchResponse searchResponse = new SearchResponseImpl(
 			new SearchContext());
 
-		assertIs(searchResponse.getAggregationResult(null), nullValue());
-		assertIs(searchResponse.getAggregationResultsMap(), emptyMap());
-		assertIs(searchResponse.getCount(), zeroLong());
-		assertIs(searchResponse.getDocuments71(), emptyList());
-		assertIs(searchResponse.getDocumentsStream(), emptyStream());
-		assertIs(searchResponse.getFederatedSearchKey(), blank());
-		assertIs(
+		_assertIs(searchResponse.getAggregationResult(null), _nullValue());
+		_assertIs(searchResponse.getAggregationResultsMap(), _emptyMap());
+		_assertIs(searchResponse.getCount(), _zeroLong());
+		_assertIs(searchResponse.getDocuments71(), emptyList());
+		_assertIs(searchResponse.getDocumentsStream(), _emptyStream());
+		_assertIs(searchResponse.getFederatedSearchKey(), _blank());
+		_assertIs(
 			searchResponse.getFederatedSearchResponse(null),
 			same(searchResponse));
-		assertIs(
-			searchResponse.getFederatedSearchResponsesStream(), emptyStream());
-		assertIs(searchResponse.getGroupByResponses(), emptyList());
-		assertIs(searchResponse.getRequest(), nullValue());
-		assertIs(searchResponse.getRequestString(), blank());
-		assertIs(searchResponse.getResponseString(), blank());
-		assertIs(searchResponse.getSearchHits(), instanceOf(SearchHits.class));
-		assertIs(searchResponse.getStatsResponseMap(), emptyMap());
-		assertIs(searchResponse.getTotalHits(), zeroInt());
-	}
-
-	protected static <T> void assertIs(T actual, Consumer<T> consumer) {
-		consumer.accept(actual);
-	}
-
-	protected static Consumer<String> blank() {
-		return string -> Assert.assertEquals(StringPool.BLANK, string);
+		_assertIs(
+			searchResponse.getFederatedSearchResponsesStream(), _emptyStream());
+		_assertIs(searchResponse.getGroupByResponses(), emptyList());
+		_assertIs(searchResponse.getRequest(), _nullValue());
+		_assertIs(searchResponse.getRequestString(), _blank());
+		_assertIs(searchResponse.getResponseString(), _blank());
+		_assertIs(
+			searchResponse.getSearchHits(), _instanceOf(SearchHits.class));
+		_assertIs(searchResponse.getStatsResponseMap(), _emptyMap());
+		_assertIs(searchResponse.getTotalHits(), _zeroInt());
 	}
 
 	protected static Consumer<List<?>> emptyList() {
 		return list -> Assert.assertEquals("[]", String.valueOf(list));
 	}
 
-	protected static Consumer<Map<String, ?>> emptyMap() {
+	protected static Consumer<Object> same(Object expected) {
+		return actual -> Assert.assertSame(expected, actual);
+	}
+
+	private static <T> void _assertIs(T actual, Consumer<T> consumer) {
+		consumer.accept(actual);
+	}
+
+	private static Consumer<String> _blank() {
+		return string -> Assert.assertEquals(StringPool.BLANK, string);
+	}
+
+	private static Consumer<Map<String, ?>> _emptyMap() {
 		return map -> Assert.assertEquals("{}", String.valueOf(map));
 	}
 
-	protected static Consumer<Stream<?>> emptyStream() {
+	private static Consumer<Stream<?>> _emptyStream() {
 		return stream -> Assert.assertEquals(
 			"[]",
 			String.valueOf(
@@ -93,23 +98,19 @@ public class SearchResponseImplTest {
 				)));
 	}
 
-	protected static Consumer<Object> instanceOf(Class<?> clazz) {
+	private static Consumer<Object> _instanceOf(Class<?> clazz) {
 		return object -> Assert.assertTrue(clazz.isInstance(object));
 	}
 
-	protected static Consumer<Object> nullValue() {
+	private static Consumer<Object> _nullValue() {
 		return object -> Assert.assertNull(object);
 	}
 
-	protected static Consumer<Object> same(Object expected) {
-		return actual -> Assert.assertSame(expected, actual);
-	}
-
-	protected static Consumer<Integer> zeroInt() {
+	private static Consumer<Integer> _zeroInt() {
 		return value -> Assert.assertEquals(0, value.intValue());
 	}
 
-	protected static Consumer<Long> zeroLong() {
+	private static Consumer<Long> _zeroLong() {
 		return value -> Assert.assertEquals(0, value.longValue());
 	}
 

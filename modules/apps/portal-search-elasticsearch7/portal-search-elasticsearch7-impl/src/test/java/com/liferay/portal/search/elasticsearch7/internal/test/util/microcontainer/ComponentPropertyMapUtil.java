@@ -35,18 +35,19 @@ public class ComponentPropertyMapUtil {
 	public static Map<String, String> getComponentPropertyMap(
 		ClassNode classNode) {
 
-		AnnotationNode annotationNode = findComponentAnnotationNode(classNode);
+		AnnotationNode annotationNode = _findComponentAnnotationNode(classNode);
 
-		List<String> propertyLines = getPropertyAttributeValues(annotationNode);
+		List<String> propertyLines = _getPropertyAttributeValues(
+			annotationNode);
 
 		return MapUtil.toLinkedHashMap(
 			ArrayUtil.toStringArray(propertyLines), StringPool.EQUAL);
 	}
 
-	protected static AnnotationNode findComponentAnnotationNode(
+	private static AnnotationNode _findComponentAnnotationNode(
 		ClassNode classNode) {
 
-		List<AnnotationNode> annotationNodes = getInvisibleAnnotations(
+		List<AnnotationNode> annotationNodes = _getInvisibleAnnotations(
 			classNode);
 
 		Stream<AnnotationNode> stream = annotationNodes.stream();
@@ -58,7 +59,7 @@ public class ComponentPropertyMapUtil {
 		).get();
 	}
 
-	protected static List<AnnotationNode> getInvisibleAnnotations(
+	private static List<AnnotationNode> _getInvisibleAnnotations(
 		ClassNode classNode) {
 
 		List<AnnotationNode> annotationNodes = classNode.invisibleAnnotations;
@@ -73,7 +74,7 @@ public class ComponentPropertyMapUtil {
 		return annotationNodes;
 	}
 
-	protected static List<String> getPropertyAttributeValues(
+	private static List<String> _getPropertyAttributeValues(
 		AnnotationNode annotationNode) {
 
 		List<?> values = annotationNode.values;

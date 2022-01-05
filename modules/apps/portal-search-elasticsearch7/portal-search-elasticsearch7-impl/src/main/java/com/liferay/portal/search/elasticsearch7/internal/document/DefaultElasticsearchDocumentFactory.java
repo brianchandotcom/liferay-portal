@@ -80,7 +80,41 @@ public class DefaultElasticsearchDocumentFactory
 		}
 	}
 
-	protected void addDates(
+	protected XContentBuilder translate(
+			com.liferay.portal.kernel.search.Document legacyDocument)
+		throws IOException {
+
+		XContentBuilder xContentBuilder = XContentFactory.jsonBuilder();
+
+		xContentBuilder.startObject();
+
+		Map<String, com.liferay.portal.kernel.search.Field> fields =
+			legacyDocument.getFields();
+
+		_addFields(fields.values(), xContentBuilder);
+
+		xContentBuilder.endObject();
+
+		return xContentBuilder;
+	}
+
+	protected XContentBuilder translate(Document document) throws IOException {
+		XContentBuilder xContentBuilder = XContentFactory.jsonBuilder();
+
+		Map<String, Field> fields = document.getFields();
+
+		xContentBuilder.startObject();
+
+		for (Field field : fields.values()) {
+			_addField(field, xContentBuilder);
+		}
+
+		xContentBuilder.endObject();
+
+		return xContentBuilder;
+	}
+
+	private void _addDates(
 			XContentBuilder xContentBuilder,
 			com.liferay.portal.kernel.search.Field field)
 		throws IOException {
@@ -99,25 +133,25 @@ public class DefaultElasticsearchDocumentFactory
 		}
 	}
 
-	protected void addField(Field field, XContentBuilder xContentBuilder)
+	private void _addField(Field field, XContentBuilder xContentBuilder)
 		throws IOException {
 
 		List<Object> values = field.getValues();
 
 		if (values.isEmpty()) {
-			addFieldValueless(field, xContentBuilder);
+			_addFieldValueless(field, xContentBuilder);
 		}
 
 		if (values.size() == 1) {
-			addFieldValue(field, values.get(0), xContentBuilder);
+			_addFieldValue(field, values.get(0), xContentBuilder);
 
 			return;
 		}
 
-		addFieldValues(field, values, xContentBuilder);
+		_addFieldValues(field, values, xContentBuilder);
 	}
 
-	protected void addField(
+	private void _addField(
 			XContentBuilder xContentBuilder,
 			com.liferay.portal.kernel.search.Field field)
 		throws IOException {
@@ -147,11 +181,12 @@ public class DefaultElasticsearchDocumentFactory
 
 			values = valuesList.toArray(new String[0]);
 
-			addField(xContentBuilder, field, name, values);
+			_addField(xContentBuilder, field, name, values);
 
 			if (field.isSortable()) {
-				addField(
-					xContentBuilder, field, getSortableFieldName(name), values);
+				_addField(
+					xContentBuilder, field, _getSortableFieldName(name),
+					values);
 			}
 		}
 		else {
@@ -174,25 +209,25 @@ public class DefaultElasticsearchDocumentFactory
 				value = value.trim();
 
 				if (languageId.equals(defaultLanguageId)) {
-					addField(xContentBuilder, field, name, value);
+					_addField(xContentBuilder, field, name, value);
 				}
 
 				String localizedName =
 					com.liferay.portal.kernel.search.Field.getLocalizedName(
 						languageId, name);
 
-				addField(xContentBuilder, field, localizedName, value);
+				_addField(xContentBuilder, field, localizedName, value);
 
 				if (field.isSortable()) {
-					addField(
+					_addField(
 						xContentBuilder, field,
-						getSortableFieldName(localizedName), value);
+						_getSortableFieldName(localizedName), value);
 				}
 			}
 		}
 	}
 
-	protected void addField(
+	private void _addField(
 			XContentBuilder xContentBuilder,
 			com.liferay.portal.kernel.search.Field field, String fieldName,
 			String... values)
@@ -215,11 +250,11 @@ public class DefaultElasticsearchDocumentFactory
 			xContentBuilder.value(geoPoint);
 		}
 		else if (field.isDate()) {
-			addDates(xContentBuilder, field);
+			_addDates(xContentBuilder, field);
 		}
 		else {
 			for (String value : values) {
-				xContentBuilder.value(translateValue(field, value));
+				xContentBuilder.value(_translateValue(field, value));
 			}
 		}
 
@@ -228,36 +263,36 @@ public class DefaultElasticsearchDocumentFactory
 		}
 	}
 
-	protected void addFields(
+	private void _addFields(
 			Collection<com.liferay.portal.kernel.search.Field> fields,
 			XContentBuilder xContentBuilder)
 		throws IOException {
 
 		for (com.liferay.portal.kernel.search.Field field : fields) {
 			if (!field.hasChildren()) {
-				addField(xContentBuilder, field);
+				_addField(xContentBuilder, field);
 			}
 			else {
-				addNestedField(xContentBuilder, field);
+				_addNestedField(xContentBuilder, field);
 			}
 		}
 	}
 
-	protected void addFieldValue(
+	private void _addFieldValue(
 			Field field, Object value, XContentBuilder xContentBuilder)
 		throws IOException {
 
-		xContentBuilder.field(field.getName(), toElasticsearchValue(value));
+		xContentBuilder.field(field.getName(), _toElasticsearchValue(value));
 	}
 
-	protected void addFieldValueless(
+	private void _addFieldValueless(
 			Field field, XContentBuilder xContentBuilder)
 		throws IOException {
 
 		xContentBuilder.field(field.getName());
 	}
 
-	protected void addFieldValues(
+	private void _addFieldValues(
 			Field field, List<Object> values, XContentBuilder xContentBuilder)
 		throws IOException {
 
@@ -266,11 +301,11 @@ public class DefaultElasticsearchDocumentFactory
 		xContentBuilder.array(
 			field.getName(),
 			stream.map(
-				this::toElasticsearchValue
+				this::_toElasticsearchValue
 			).toArray());
 	}
 
-	protected void addNestedField(
+	private void _addNestedField(
 			XContentBuilder xContentBuilder,
 			com.liferay.portal.kernel.search.Field field)
 		throws IOException {
@@ -287,7 +322,7 @@ public class DefaultElasticsearchDocumentFactory
 			}
 		}
 
-		addFields(field.getFields(), xContentBuilder);
+		_addFields(field.getFields(), xContentBuilder);
 
 		if (field.isArray()) {
 			xContentBuilder.endArray();
@@ -297,12 +332,12 @@ public class DefaultElasticsearchDocumentFactory
 		}
 	}
 
-	protected String getSortableFieldName(String localizedName) {
+	private String _getSortableFieldName(String localizedName) {
 		return com.liferay.portal.kernel.search.Field.getSortableFieldName(
 			localizedName);
 	}
 
-	protected Object toElasticsearchValue(Object value) {
+	private Object _toElasticsearchValue(Object value) {
 		if (value instanceof GeoLocationPoint) {
 			return GeoLocationPointTranslator.translate(
 				(GeoLocationPoint)value);
@@ -311,41 +346,7 @@ public class DefaultElasticsearchDocumentFactory
 		return value;
 	}
 
-	protected XContentBuilder translate(
-			com.liferay.portal.kernel.search.Document legacyDocument)
-		throws IOException {
-
-		XContentBuilder xContentBuilder = XContentFactory.jsonBuilder();
-
-		xContentBuilder.startObject();
-
-		Map<String, com.liferay.portal.kernel.search.Field> fields =
-			legacyDocument.getFields();
-
-		addFields(fields.values(), xContentBuilder);
-
-		xContentBuilder.endObject();
-
-		return xContentBuilder;
-	}
-
-	protected XContentBuilder translate(Document document) throws IOException {
-		XContentBuilder xContentBuilder = XContentFactory.jsonBuilder();
-
-		Map<String, Field> fields = document.getFields();
-
-		xContentBuilder.startObject();
-
-		for (Field field : fields.values()) {
-			addField(field, xContentBuilder);
-		}
-
-		xContentBuilder.endObject();
-
-		return xContentBuilder;
-	}
-
-	protected Object translateValue(
+	private Object _translateValue(
 		com.liferay.portal.kernel.search.Field field, String value) {
 
 		if (!field.isNumeric()) {

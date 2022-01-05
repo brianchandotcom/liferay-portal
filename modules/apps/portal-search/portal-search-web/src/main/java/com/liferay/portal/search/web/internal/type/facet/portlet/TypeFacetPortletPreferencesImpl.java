@@ -79,7 +79,7 @@ public class TypeFacetPortletPreferencesImpl
 
 		for (String className : allAssetTypes) {
 			if (!ArrayUtil.contains(assetTypes, className)) {
-				availableAssetTypes.add(getKeyValuePair(locale, className));
+				availableAssetTypes.add(_getKeyValuePair(locale, className));
 			}
 		}
 
@@ -95,7 +95,7 @@ public class TypeFacetPortletPreferencesImpl
 		List<KeyValuePair> currentAssetTypes = new ArrayList<>();
 
 		for (String className : assetTypes) {
-			currentAssetTypes.add(getKeyValuePair(locale, className));
+			currentAssetTypes.add(_getKeyValuePair(locale, className));
 		}
 
 		return currentAssetTypes;
@@ -131,7 +131,7 @@ public class TypeFacetPortletPreferencesImpl
 		return _searchableAssetClassNamesProvider.getClassNames(companyId);
 	}
 
-	protected KeyValuePair getKeyValuePair(Locale locale, String className) {
+	private KeyValuePair _getKeyValuePair(Locale locale, String className) {
 		String modelResource = ResourceActionsUtil.getModelResource(
 			locale, className);
 

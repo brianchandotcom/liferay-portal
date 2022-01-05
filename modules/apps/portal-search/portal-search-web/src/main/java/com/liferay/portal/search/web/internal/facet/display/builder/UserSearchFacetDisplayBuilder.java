@@ -73,7 +73,7 @@ public class UserSearchFacetDisplayBuilder {
 		userSearchFacetDisplayContext.setPaginationStartParameterName(
 			_paginationStartParameterName);
 		userSearchFacetDisplayContext.setParamName(_paramName);
-		userSearchFacetDisplayContext.setParamValue(getFirstParamValue());
+		userSearchFacetDisplayContext.setParamValue(_getFirstParamValue());
 		userSearchFacetDisplayContext.setParamValues(_paramValues);
 		userSearchFacetDisplayContext.setRenderNothing(renderNothing);
 		userSearchFacetDisplayContext.setTermDisplayContexts(
@@ -200,14 +200,6 @@ public class UserSearchFacetDisplayBuilder {
 		return Collections.singletonList(userSearchFacetTermDisplayContext);
 	}
 
-	protected String getFirstParamValue() {
-		if (_paramValues.isEmpty()) {
-			return StringPool.BLANK;
-		}
-
-		return _paramValues.get(0);
-	}
-
 	protected List<TermCollector> getTermCollectors() {
 		if (_facet == null) {
 			return Collections.emptyList();
@@ -236,6 +228,14 @@ public class UserSearchFacetDisplayBuilder {
 		}
 
 		return false;
+	}
+
+	private String _getFirstParamValue() {
+		if (_paramValues.isEmpty()) {
+			return StringPool.BLANK;
+		}
+
+		return _paramValues.get(0);
 	}
 
 	private Facet _facet;

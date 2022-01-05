@@ -45,7 +45,7 @@ public class GetDocumentRequestExecutorImpl
 			_elasticsearchBulkableDocumentRequestTranslator.translate(
 				getDocumentRequest);
 
-		GetResponse getResponse = getGetResponse(
+		GetResponse getResponse = _getGetResponse(
 			getRequest, getDocumentRequest);
 
 		GetDocumentResponse getDocumentResponse = new GetDocumentResponse(
@@ -69,22 +69,6 @@ public class GetDocumentRequestExecutorImpl
 		getDocumentResponse.setDocument(documentBuilder.build());
 
 		return getDocumentResponse;
-	}
-
-	protected GetResponse getGetResponse(
-		GetRequest getRequest, GetDocumentRequest getDocumentRequest) {
-
-		RestHighLevelClient restHighLevelClient =
-			_elasticsearchClientResolver.getRestHighLevelClient(
-				getDocumentRequest.getConnectionId(),
-				getDocumentRequest.isPreferLocalCluster());
-
-		try {
-			return restHighLevelClient.get(getRequest, RequestOptions.DEFAULT);
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
 	}
 
 	@Reference(target = "(search.engine.impl=Elasticsearch)", unbind = "-")
@@ -113,6 +97,22 @@ public class GetDocumentRequestExecutorImpl
 	@Reference(unbind = "-")
 	protected void setGeoBuilders(GeoBuilders geoBuilders) {
 		_geoBuilders = geoBuilders;
+	}
+
+	private GetResponse _getGetResponse(
+		GetRequest getRequest, GetDocumentRequest getDocumentRequest) {
+
+		RestHighLevelClient restHighLevelClient =
+			_elasticsearchClientResolver.getRestHighLevelClient(
+				getDocumentRequest.getConnectionId(),
+				getDocumentRequest.isPreferLocalCluster());
+
+		try {
+			return restHighLevelClient.get(getRequest, RequestOptions.DEFAULT);
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
 	}
 
 	private DocumentBuilderFactory _documentBuilderFactory;

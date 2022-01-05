@@ -140,7 +140,7 @@ public class AssetRendererSearchResultInterpreter
 
 	@Override
 	public AssetRenderer<?> getAssetRenderer(Document document) {
-		AssetRendererFactory<?> assetRendererFactory = getAssetRendererFactory(
+		AssetRendererFactory<?> assetRendererFactory = _getAssetRendererFactory(
 			document);
 
 		if (assetRendererFactory == null) {
@@ -582,7 +582,7 @@ public class AssetRendererSearchResultInterpreter
 		return assetRendererFactory.isSupportsClassTypes();
 	}
 
-	protected AssetRendererFactory<?> getAssetRendererFactory(
+	private AssetRendererFactory<?> _getAssetRendererFactory(
 		Document document) {
 
 		return AssetRendererFactoryRegistryUtil.

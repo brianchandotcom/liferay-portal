@@ -51,15 +51,15 @@ public class LiferayTypeMappingsDateDetectionEmptyStringTest {
 
 	@Test
 	public void testEmptyStringInSecondDocument() throws Exception {
-		String field1 = randomField();
-		String field2 = randomField();
-		String field3 = randomField();
-		String field4 = randomField();
-		String field5 = randomField();
-		String field6 = randomField();
-		String field7 = randomField();
-		String field8 = randomField();
-		String field9 = randomField();
+		String field1 = _randomField();
+		String field2 = _randomField();
+		String field3 = _randomField();
+		String field4 = _randomField();
+		String field5 = _randomField();
+		String field6 = _randomField();
+		String field7 = _randomField();
+		String field8 = _randomField();
+		String field9 = _randomField();
 
 		index(
 			HashMapBuilder.<String, Object>put(
@@ -138,16 +138,16 @@ public class LiferayTypeMappingsDateDetectionEmptyStringTest {
 	@Rule
 	public TestName testName = new TestName();
 
-	protected static String randomField() {
-		return "randomField__" + RandomTestUtil.randomString();
-	}
-
 	protected void assertType(String field, String type) throws Exception {
 		_liferayIndexFixture.assertType(field, type);
 	}
 
 	protected void index(Map<String, Object> map) {
 		_liferayIndexFixture.index(map);
+	}
+
+	private static String _randomField() {
+		return "randomField__" + RandomTestUtil.randomString();
 	}
 
 	private LiferayIndexFixture _liferayIndexFixture;

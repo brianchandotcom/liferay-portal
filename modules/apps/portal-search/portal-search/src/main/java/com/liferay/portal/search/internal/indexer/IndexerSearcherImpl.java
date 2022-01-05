@@ -98,7 +98,7 @@ public class IndexerSearcherImpl<T extends BaseModel<?>>
 
 		Hits hits = _search(searchContext);
 
-		processHits(searchContext, hits);
+		_processHits(searchContext, hits);
 
 		return hits;
 	}
@@ -134,7 +134,7 @@ public class IndexerSearcherImpl<T extends BaseModel<?>>
 		return _indexSearcherHelper.searchCount(searchContext, fullQuery);
 	}
 
-	protected Hits doSearch(SearchContext searchContext) {
+	private Hits _doSearch(SearchContext searchContext) {
 		searchContext.setSearchEngineId(
 			_modelSearchSettings.getSearchEngineId());
 
@@ -143,25 +143,6 @@ public class IndexerSearcherImpl<T extends BaseModel<?>>
 		fullQuery.setQueryConfig(searchContext.getQueryConfig());
 
 		return _indexSearcherHelper.search(searchContext, fullQuery);
-	}
-
-	protected boolean isUseSearchResultPermissionFilter() {
-		if (_indexerPermissionPostFilter.isPermissionAware() &&
-			!_modelSearchSettings.isSearchResultPermissionFilterSuppressed()) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	protected void processHits(SearchContext searchContext, Hits hits) {
-		try {
-			_hitsProcessorRegistry.process(searchContext, hits);
-		}
-		catch (SearchException searchException) {
-			throw new RuntimeException(searchException);
-		}
 	}
 
 	private SearchResultPermissionFilter _getSearchResultPermissionFilter(
@@ -184,19 +165,38 @@ public class IndexerSearcherImpl<T extends BaseModel<?>>
 			searchResultPermissionFilterSearcher, permissionChecker);
 	}
 
+	private boolean _isUseSearchResultPermissionFilter() {
+		if (_indexerPermissionPostFilter.isPermissionAware() &&
+			!_modelSearchSettings.isSearchResultPermissionFilterSuppressed()) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private void _processHits(SearchContext searchContext, Hits hits) {
+		try {
+			_hitsProcessorRegistry.process(searchContext, hits);
+		}
+		catch (SearchException searchException) {
+			throw new RuntimeException(searchException);
+		}
+	}
+
 	private Hits _search(SearchContext searchContext) {
 		try {
-			if (isUseSearchResultPermissionFilter()) {
+			if (_isUseSearchResultPermissionFilter()) {
 				SearchResultPermissionFilter searchResultPermissionFilter =
 					_getSearchResultPermissionFilter(
-						searchContext, this::doSearch);
+						searchContext, this::_doSearch);
 
 				if (searchResultPermissionFilter != null) {
 					return searchResultPermissionFilter.search(searchContext);
 				}
 			}
 
-			return doSearch(searchContext);
+			return _doSearch(searchContext);
 		}
 		catch (SearchException searchException) {
 			throw new RuntimeException(searchException);

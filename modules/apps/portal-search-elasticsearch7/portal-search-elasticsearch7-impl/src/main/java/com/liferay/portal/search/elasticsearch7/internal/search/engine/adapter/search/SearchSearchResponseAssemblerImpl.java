@@ -70,13 +70,13 @@ public class SearchSearchResponseAssemblerImpl
 			searchRequestBuilder, searchResponse, searchSearchRequest,
 			searchSearchResponse);
 
-		addAggregations(
+		_addAggregations(
 			searchResponse, searchSearchResponse, searchSearchRequest);
 		setCount(searchResponse, searchSearchResponse);
-		setScrollId(searchResponse, searchSearchResponse);
-		setSearchHits(
+		_setScrollId(searchResponse, searchSearchResponse);
+		_setSearchHits(
 			searchResponse, searchSearchResponse, searchSearchRequest);
-		setSearchTimeValue(searchResponse, searchSearchResponse);
+		_setSearchTimeValue(searchResponse, searchSearchResponse);
 
 		_searchResponseTranslator.populate(
 			searchSearchResponse, searchResponse, searchSearchRequest);
@@ -104,37 +104,6 @@ public class SearchSearchResponseAssemblerImpl
 
 		return new ElasticsearchPipelineAggregationResultTranslator(
 			elasticsearchAggregation, _aggregationResults);
-	}
-
-	protected void addAggregations(
-		SearchResponse searchResponse,
-		SearchSearchResponse searchSearchResponse,
-		SearchSearchRequest searchSearchRequest) {
-
-		Aggregations elasticsearchAggregations =
-			searchResponse.getAggregations();
-
-		if (elasticsearchAggregations == null) {
-			return;
-		}
-
-		Map<String, Aggregation> aggregationsMap =
-			searchSearchRequest.getAggregationsMap();
-
-		Map<String, PipelineAggregation> pipelineAggregationsMap =
-			searchSearchRequest.getPipelineAggregationsMap();
-
-		ElasticsearchAggregationResultsTranslator
-			elasticsearchAggregationResultsTranslator =
-				new ElasticsearchAggregationResultsTranslator(
-					this, this, aggregationsMap::get,
-					pipelineAggregationsMap::get);
-
-		Stream<AggregationResult> stream =
-			elasticsearchAggregationResultsTranslator.translate(
-				elasticsearchAggregations);
-
-		stream.forEach(searchSearchResponse::addAggregationResult);
 	}
 
 	@Reference(unbind = "-")
@@ -182,7 +151,59 @@ public class SearchSearchResponseAssemblerImpl
 		_highlightFieldBuilderFactory = highlightFieldBuilderFactory;
 	}
 
-	protected void setScrollId(
+	@Reference(unbind = "-")
+	protected void setSearchHitBuilderFactory(
+		SearchHitBuilderFactory searchHitBuilderFactory) {
+
+		_searchHitBuilderFactory = searchHitBuilderFactory;
+	}
+
+	@Reference(unbind = "-")
+	protected void setSearchHitsBuilderFactory(
+		SearchHitsBuilderFactory searchHitsBuilderFactory) {
+
+		_searchHitsBuilderFactory = searchHitsBuilderFactory;
+	}
+
+	@Reference(unbind = "-")
+	protected void setSearchResponseTranslator(
+		SearchResponseTranslator searchResponseTranslator) {
+
+		_searchResponseTranslator = searchResponseTranslator;
+	}
+
+	private void _addAggregations(
+		SearchResponse searchResponse,
+		SearchSearchResponse searchSearchResponse,
+		SearchSearchRequest searchSearchRequest) {
+
+		Aggregations elasticsearchAggregations =
+			searchResponse.getAggregations();
+
+		if (elasticsearchAggregations == null) {
+			return;
+		}
+
+		Map<String, Aggregation> aggregationsMap =
+			searchSearchRequest.getAggregationsMap();
+
+		Map<String, PipelineAggregation> pipelineAggregationsMap =
+			searchSearchRequest.getPipelineAggregationsMap();
+
+		ElasticsearchAggregationResultsTranslator
+			elasticsearchAggregationResultsTranslator =
+				new ElasticsearchAggregationResultsTranslator(
+					this, this, aggregationsMap::get,
+					pipelineAggregationsMap::get);
+
+		Stream<AggregationResult> stream =
+			elasticsearchAggregationResultsTranslator.translate(
+				elasticsearchAggregations);
+
+		stream.forEach(searchSearchResponse::addAggregationResult);
+	}
+
+	private void _setScrollId(
 		SearchResponse searchResponse,
 		SearchSearchResponse searchSearchResponse) {
 
@@ -191,14 +212,7 @@ public class SearchSearchResponseAssemblerImpl
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setSearchHitBuilderFactory(
-		SearchHitBuilderFactory searchHitBuilderFactory) {
-
-		_searchHitBuilderFactory = searchHitBuilderFactory;
-	}
-
-	protected void setSearchHits(
+	private void _setSearchHits(
 		SearchResponse searchResponse,
 		SearchSearchResponse searchSearchResponse,
 		SearchSearchRequest searchSearchRequest) {
@@ -218,21 +232,7 @@ public class SearchSearchResponseAssemblerImpl
 		searchSearchResponse.setSearchHits(searchHits);
 	}
 
-	@Reference(unbind = "-")
-	protected void setSearchHitsBuilderFactory(
-		SearchHitsBuilderFactory searchHitsBuilderFactory) {
-
-		_searchHitsBuilderFactory = searchHitsBuilderFactory;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSearchResponseTranslator(
-		SearchResponseTranslator searchResponseTranslator) {
-
-		_searchResponseTranslator = searchResponseTranslator;
-	}
-
-	protected void setSearchTimeValue(
+	private void _setSearchTimeValue(
 		SearchResponse searchResponse,
 		SearchSearchResponse searchSearchResponse) {
 

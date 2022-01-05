@@ -63,17 +63,17 @@ public class SearchResultManagerImpl implements SearchResultManager {
 		throws PortalException {
 
 		SearchResultContributor searchResultContributor =
-			getSearchResultContributor(document);
+			_getSearchResultContributor(document);
 
 		if (searchResultContributor == null) {
-			return createSearchResultWithEntryClass(document);
+			return _createSearchResultWithEntryClass(document);
 		}
 
-		if (isClassPresent(document)) {
-			return createSearchResultWithClass(document);
+		if (_isClassPresent(document)) {
+			return _createSearchResultWithClass(document);
 		}
 
-		return createSearchResultWithEntryClass(document);
+		return _createSearchResultWithEntryClass(document);
 	}
 
 	public void removeSearchResultContributor(
@@ -102,27 +102,27 @@ public class SearchResultManagerImpl implements SearchResultManager {
 		throws PortalException {
 
 		SearchResultContributor searchResultContributor =
-			getSearchResultContributor(document);
+			_getSearchResultContributor(document);
 
-		if ((searchResultContributor != null) && isClassPresent(document)) {
+		if ((searchResultContributor != null) && _isClassPresent(document)) {
 			searchResultContributor.addRelatedModel(
 				searchResult, document, locale, portletRequest,
 				portletResponse);
 
 			if (searchResult.getSummary() == null) {
 				searchResult.setSummary(
-					getSummaryWithClass(searchResult, locale));
+					_getSummaryWithClass(searchResult, locale));
 			}
 
 			return;
 		}
 
 		searchResult.setSummary(
-			getSummaryWithEntryClass(
+			_getSummaryWithEntryClass(
 				document, locale, portletRequest, portletResponse));
 	}
 
-	protected SearchResult createSearchResultWithClass(Document document)
+	private SearchResult _createSearchResultWithClass(Document document)
 		throws PortalException {
 
 		long classNameId = GetterUtil.getLong(
@@ -140,7 +140,7 @@ public class SearchResultManagerImpl implements SearchResultManager {
 		return new SearchResult(className.getClassName(), classPK);
 	}
 
-	protected SearchResult createSearchResultWithEntryClass(Document document) {
+	private SearchResult _createSearchResultWithEntryClass(Document document) {
 		String entryClassName = GetterUtil.getString(
 			document.get(Field.ENTRY_CLASS_NAME));
 		long entryClassPK = GetterUtil.getLong(
@@ -149,7 +149,7 @@ public class SearchResultManagerImpl implements SearchResultManager {
 		return new SearchResult(entryClassName, entryClassPK);
 	}
 
-	protected SearchResultContributor getSearchResultContributor(
+	private SearchResultContributor _getSearchResultContributor(
 		Document document) {
 
 		String entryClassName = GetterUtil.getString(
@@ -158,7 +158,7 @@ public class SearchResultManagerImpl implements SearchResultManager {
 		return _searchResultContributors.get(entryClassName);
 	}
 
-	protected Summary getSummaryWithClass(
+	private Summary _getSummaryWithClass(
 			SearchResult searchResult, Locale locale)
 		throws PortalException {
 
@@ -166,7 +166,7 @@ public class SearchResultManagerImpl implements SearchResultManager {
 			searchResult.getClassName(), searchResult.getClassPK(), locale);
 	}
 
-	protected Summary getSummaryWithEntryClass(
+	private Summary _getSummaryWithEntryClass(
 			Document document, Locale locale, PortletRequest portletRequest,
 			PortletResponse portletResponse)
 		throws PortalException {
@@ -181,7 +181,7 @@ public class SearchResultManagerImpl implements SearchResultManager {
 			portletResponse);
 	}
 
-	protected boolean isClassPresent(Document document) {
+	private boolean _isClassPresent(Document document) {
 		long classNameId = GetterUtil.getLong(
 			document.get(Field.CLASS_NAME_ID));
 		long classPK = GetterUtil.getLong(document.get(Field.CLASS_PK));

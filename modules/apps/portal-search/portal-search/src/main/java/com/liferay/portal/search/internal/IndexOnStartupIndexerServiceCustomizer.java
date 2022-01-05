@@ -68,7 +68,7 @@ public class IndexOnStartupIndexerServiceCustomizer
 		String className = indexer.getClassName();
 
 		if (!indexerIndexOnStartup || Validator.isNull(className) ||
-			isBaseSearcher(indexer.getClass())) {
+			_isBaseSearcher(indexer.getClass())) {
 
 			return indexer;
 		}
@@ -173,7 +173,16 @@ public class IndexOnStartupIndexerServiceCustomizer
 		}
 	}
 
-	protected boolean isBaseSearcher(Class<?> indexerClass) {
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
+	protected void setModuleServiceLifecycle(
+		ModuleServiceLifecycle moduleServiceLifecycle) {
+	}
+
+	@Reference(target = "(search.engine.id=SYSTEM_ENGINE)", unbind = "-")
+	protected void setSearchEngine(SearchEngine searchEngine) {
+	}
+
+	private boolean _isBaseSearcher(Class<?> indexerClass) {
 		while ((indexerClass != null) && !Object.class.equals(indexerClass)) {
 			if (indexerClass.equals(BaseSearcher.class)) {
 				return true;
@@ -183,15 +192,6 @@ public class IndexOnStartupIndexerServiceCustomizer
 		}
 
 		return false;
-	}
-
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
-	}
-
-	@Reference(target = "(search.engine.id=SYSTEM_ENGINE)", unbind = "-")
-	protected void setSearchEngine(SearchEngine searchEngine) {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

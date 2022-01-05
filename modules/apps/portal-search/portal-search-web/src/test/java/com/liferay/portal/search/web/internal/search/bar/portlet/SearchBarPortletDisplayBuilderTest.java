@@ -68,16 +68,16 @@ public class SearchBarPortletDisplayBuilderTest {
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
 
-		setUpHttp();
-		setUpLanguageUtil();
-		setUpPortal();
-		setUpThemeDisplay();
+		_setUpHttp();
+		_setUpLanguageUtil();
+		_setUpPortal();
+		_setUpThemeDisplay();
 	}
 
 	@Test
 	public void testDestinationBlank() throws PortletException {
 		SearchBarPortletDisplayBuilder searchBarPortletDisplayBuilder =
-			createSearchBarPortletDisplayBuilder();
+			_createSearchBarPortletDisplayBuilder();
 
 		searchBarPortletDisplayBuilder.setDestination(StringPool.BLANK);
 
@@ -91,7 +91,7 @@ public class SearchBarPortletDisplayBuilderTest {
 	@Test
 	public void testDestinationNull() throws PortletException {
 		SearchBarPortletDisplayBuilder searchBarPortletDisplayBuilder =
-			createSearchBarPortletDisplayBuilder();
+			_createSearchBarPortletDisplayBuilder();
 
 		searchBarPortletDisplayBuilder.setDestination(null);
 
@@ -106,10 +106,10 @@ public class SearchBarPortletDisplayBuilderTest {
 	public void testDestinationUnreachable() throws PortletException {
 		String destination = RandomTestUtil.randomString();
 
-		whenLayoutLocalServiceFetchLayoutByFriendlyURL(destination, null);
+		_whenLayoutLocalServiceFetchLayoutByFriendlyURL(destination, null);
 
 		SearchBarPortletDisplayBuilder searchBarPortletDisplayBuilder =
-			createSearchBarPortletDisplayBuilder();
+			_createSearchBarPortletDisplayBuilder();
 
 		searchBarPortletDisplayBuilder.setDestination(destination);
 
@@ -126,14 +126,14 @@ public class SearchBarPortletDisplayBuilderTest {
 
 		Layout layout = Mockito.mock(Layout.class);
 
-		whenLayoutLocalServiceFetchLayoutByFriendlyURL(destination, layout);
+		_whenLayoutLocalServiceFetchLayoutByFriendlyURL(destination, layout);
 
 		String layoutFriendlyURL = RandomTestUtil.randomString();
 
-		whenPortalGetLayoutFriendlyURL(layout, layoutFriendlyURL);
+		_whenPortalGetLayoutFriendlyURL(layout, layoutFriendlyURL);
 
 		SearchBarPortletDisplayBuilder searchBarPortletDisplayBuilder =
-			createSearchBarPortletDisplayBuilder();
+			_createSearchBarPortletDisplayBuilder();
 
 		searchBarPortletDisplayBuilder.setDestination(
 			StringPool.SLASH.concat(destination));
@@ -154,14 +154,14 @@ public class SearchBarPortletDisplayBuilderTest {
 
 		Layout layout = Mockito.mock(Layout.class);
 
-		whenLayoutLocalServiceFetchLayoutByFriendlyURL(destination, layout);
+		_whenLayoutLocalServiceFetchLayoutByFriendlyURL(destination, layout);
 
 		String layoutFriendlyURL = RandomTestUtil.randomString();
 
-		whenPortalGetLayoutFriendlyURL(layout, layoutFriendlyURL);
+		_whenPortalGetLayoutFriendlyURL(layout, layoutFriendlyURL);
 
 		SearchBarPortletDisplayBuilder searchBarPortletDisplayBuilder =
-			createSearchBarPortletDisplayBuilder();
+			_createSearchBarPortletDisplayBuilder();
 
 		searchBarPortletDisplayBuilder.setDestination(destination);
 
@@ -184,7 +184,7 @@ public class SearchBarPortletDisplayBuilderTest {
 		).getURLCurrent();
 
 		SearchBarPortletDisplayBuilder searchBarPortletDisplayBuilder =
-			createSearchBarPortletDisplayBuilder();
+			_createSearchBarPortletDisplayBuilder();
 
 		SearchBarPortletDisplayContext searchBarPortletDisplayContext =
 			searchBarPortletDisplayBuilder.build();
@@ -199,7 +199,7 @@ public class SearchBarPortletDisplayBuilderTest {
 	@Test
 	public void testSearchScope() {
 		SearchBarPortletDisplayBuilder searchBarPortletDisplayBuilder =
-			createSearchBarPortletDisplayBuilder();
+			_createSearchBarPortletDisplayBuilder();
 
 		searchBarPortletDisplayBuilder.setScopeParameterValue(
 			Optional.of(SearchScope.EVERYTHING.getParameterString()));
@@ -207,35 +207,6 @@ public class SearchBarPortletDisplayBuilderTest {
 		Assert.assertEquals(
 			SearchScope.EVERYTHING,
 			searchBarPortletDisplayBuilder.getSearchScope());
-	}
-
-	protected LiferayPortletRequest createLiferayPortletRequest() {
-		LiferayPortletRequest liferayPortletRequest = Mockito.mock(
-			LiferayPortletRequest.class);
-
-		Mockito.doReturn(
-			getHttpServletRequest()
-		).when(
-			liferayPortletRequest
-		).getHttpServletRequest();
-
-		return liferayPortletRequest;
-	}
-
-	protected SearchBarPortletDisplayBuilder
-		createSearchBarPortletDisplayBuilder() {
-
-		RenderRequest renderRequest = Mockito.mock(RenderRequest.class);
-
-		SearchBarPortletDisplayBuilder searchBarPortletDisplayBuilder =
-			new SearchBarPortletDisplayBuilder(
-				_http, _layoutLocalService, _portal, renderRequest);
-
-		searchBarPortletDisplayBuilder.setSearchScopePreference(
-			SearchScopePreference.getSearchScopePreference("everything"));
-		searchBarPortletDisplayBuilder.setThemeDisplay(_themeDisplay);
-
-		return searchBarPortletDisplayBuilder;
 	}
 
 	protected HttpServletRequest getHttpServletRequest() {
@@ -272,7 +243,36 @@ public class SearchBarPortletDisplayBuilderTest {
 		return url.substring(0, pos);
 	}
 
-	protected void setUpHttp() {
+	private LiferayPortletRequest _createLiferayPortletRequest() {
+		LiferayPortletRequest liferayPortletRequest = Mockito.mock(
+			LiferayPortletRequest.class);
+
+		Mockito.doReturn(
+			getHttpServletRequest()
+		).when(
+			liferayPortletRequest
+		).getHttpServletRequest();
+
+		return liferayPortletRequest;
+	}
+
+	private SearchBarPortletDisplayBuilder
+		_createSearchBarPortletDisplayBuilder() {
+
+		RenderRequest renderRequest = Mockito.mock(RenderRequest.class);
+
+		SearchBarPortletDisplayBuilder searchBarPortletDisplayBuilder =
+			new SearchBarPortletDisplayBuilder(
+				_http, _layoutLocalService, _portal, renderRequest);
+
+		searchBarPortletDisplayBuilder.setSearchScopePreference(
+			SearchScopePreference.getSearchScopePreference("everything"));
+		searchBarPortletDisplayBuilder.setThemeDisplay(_themeDisplay);
+
+		return searchBarPortletDisplayBuilder;
+	}
+
+	private void _setUpHttp() {
 		Mockito.doAnswer(
 			invocation -> getPath(invocation.getArgumentAt(0, String.class))
 		).when(
@@ -282,15 +282,15 @@ public class SearchBarPortletDisplayBuilderTest {
 		);
 	}
 
-	protected void setUpLanguageUtil() {
+	private void _setUpLanguageUtil() {
 		LanguageUtil languageUtil = new LanguageUtil();
 
 		languageUtil.setLanguage(PowerMockito.mock(Language.class));
 	}
 
-	protected void setUpPortal() {
+	private void _setUpPortal() {
 		Mockito.doReturn(
-			createLiferayPortletRequest()
+			_createLiferayPortletRequest()
 		).when(
 			_portal
 		).getLiferayPortletRequest(
@@ -298,7 +298,7 @@ public class SearchBarPortletDisplayBuilderTest {
 		);
 	}
 
-	protected void setUpThemeDisplay() {
+	private void _setUpThemeDisplay() {
 		Mockito.when(
 			_themeDisplay.getScopeGroup()
 		).thenReturn(
@@ -322,7 +322,7 @@ public class SearchBarPortletDisplayBuilderTest {
 		);
 	}
 
-	protected void whenLayoutLocalServiceFetchLayoutByFriendlyURL(
+	private void _whenLayoutLocalServiceFetchLayoutByFriendlyURL(
 		String friendlyURL, Layout layout) {
 
 		if (!StringUtil.startsWith(friendlyURL, CharPool.SLASH)) {
@@ -338,7 +338,7 @@ public class SearchBarPortletDisplayBuilderTest {
 		);
 	}
 
-	protected void whenPortalGetLayoutFriendlyURL(
+	private void _whenPortalGetLayoutFriendlyURL(
 			Layout layout, String layoutFriendlyURL)
 		throws Exception {
 

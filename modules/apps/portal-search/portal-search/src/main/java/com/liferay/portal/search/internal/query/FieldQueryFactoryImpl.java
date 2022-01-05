@@ -38,7 +38,7 @@ public class FieldQueryFactoryImpl implements FieldQueryFactory {
 		String fieldName, String keywords, boolean like,
 		boolean splitKeywords) {
 
-		FieldQueryBuilder fieldQueryBuilder = getQueryBuilder(fieldName);
+		FieldQueryBuilder fieldQueryBuilder = _getQueryBuilder(fieldName);
 
 		return fieldQueryBuilder.build(fieldName, keywords);
 	}
@@ -53,11 +53,20 @@ public class FieldQueryFactoryImpl implements FieldQueryFactory {
 		_fieldQueryBuilderFactories.add(fieldQueryBuilderFactory);
 	}
 
-	protected FieldQueryBuilder getDefaultQueryBuilder() {
+	protected void removeFieldQueryBuilderFactory(
+		FieldQueryBuilderFactory fieldQueryBuilderFactory) {
+
+		_fieldQueryBuilderFactories.remove(fieldQueryBuilderFactory);
+	}
+
+	@Reference
+	protected DescriptionFieldQueryBuilder descriptionFieldQueryBuilder;
+
+	private FieldQueryBuilder _getDefaultQueryBuilder() {
 		return descriptionFieldQueryBuilder;
 	}
 
-	protected FieldQueryBuilder getQueryBuilder(String fieldName) {
+	private FieldQueryBuilder _getQueryBuilder(String fieldName) {
 		for (FieldQueryBuilderFactory fieldQueryBuilderFactory :
 				_fieldQueryBuilderFactories) {
 
@@ -69,17 +78,8 @@ public class FieldQueryFactoryImpl implements FieldQueryFactory {
 			}
 		}
 
-		return getDefaultQueryBuilder();
+		return _getDefaultQueryBuilder();
 	}
-
-	protected void removeFieldQueryBuilderFactory(
-		FieldQueryBuilderFactory fieldQueryBuilderFactory) {
-
-		_fieldQueryBuilderFactories.remove(fieldQueryBuilderFactory);
-	}
-
-	@Reference
-	protected DescriptionFieldQueryBuilder descriptionFieldQueryBuilder;
 
 	private final HashSet<FieldQueryBuilderFactory>
 		_fieldQueryBuilderFactories = new HashSet<>();

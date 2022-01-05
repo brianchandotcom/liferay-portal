@@ -51,7 +51,7 @@ public class SearchBarConfigurationAction extends DefaultConfigurationAction {
 
 		SearchBarPortletInstanceConfiguration
 			searchBarPortletInstanceConfiguration =
-				getSearchBarPortletInstanceConfiguration(
+				_getSearchBarPortletInstanceConfiguration(
 					themeDisplay.getPortletDisplay());
 
 		long displayStyleGroupId =
@@ -75,8 +75,11 @@ public class SearchBarConfigurationAction extends DefaultConfigurationAction {
 		return "/search/bar/configuration.jsp";
 	}
 
-	protected SearchBarPortletInstanceConfiguration
-		getSearchBarPortletInstanceConfiguration(
+	@Reference
+	protected SearchBarPrecedenceHelper searchBarPrecedenceHelper;
+
+	private SearchBarPortletInstanceConfiguration
+		_getSearchBarPortletInstanceConfiguration(
 			PortletDisplay portletDisplay) {
 
 		try {
@@ -87,8 +90,5 @@ public class SearchBarConfigurationAction extends DefaultConfigurationAction {
 			throw new RuntimeException(configurationException);
 		}
 	}
-
-	@Reference
-	protected SearchBarPrecedenceHelper searchBarPrecedenceHelper;
 
 }

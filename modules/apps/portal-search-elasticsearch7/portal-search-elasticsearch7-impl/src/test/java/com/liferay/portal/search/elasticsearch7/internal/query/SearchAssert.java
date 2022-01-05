@@ -82,8 +82,8 @@ public class SearchAssert {
 		IdempotentRetryAssert.retryAssert(
 			10, TimeUnit.SECONDS,
 			() -> Assert.assertEquals(
-				sort(Arrays.asList(expectedValues)),
-				sort(getValues(supplier.get(), field))));
+				_sort(Arrays.asList(expectedValues)),
+				_sort(getValues(supplier.get(), field))));
 	}
 
 	protected static List<String> getValues(
@@ -130,7 +130,7 @@ public class SearchAssert {
 		}
 	}
 
-	protected static String sort(Collection<String> collection) {
+	private static String _sort(Collection<String> collection) {
 		List<String> list = new ArrayList<>(collection);
 
 		Collections.sort(list);

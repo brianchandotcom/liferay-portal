@@ -85,7 +85,7 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 
 		backupName = StringUtil.toLowerCase(backupName);
 
-		validateBackupName(backupName);
+		_validateBackupName(backupName);
 
 		createBackupRepository();
 
@@ -141,7 +141,7 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 	public void initialize(long companyId) {
 		super.initialize(companyId);
 
-		waitForYellowStatus();
+		_waitForYellowStatus();
 
 		RestHighLevelClient restHighLevelClient =
 			_elasticsearchConnectionManager.getRestHighLevelClient();
@@ -150,7 +150,7 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 
 		_indexFactory.registerCompanyId(companyId);
 
-		waitForYellowStatus();
+		_waitForYellowStatus();
 
 		if (_crossClusterReplicationHelper != null) {
 			_crossClusterReplicationHelper.follow(
@@ -160,7 +160,7 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 
 	@Override
 	public synchronized void removeBackup(long companyId, String backupName) {
-		if (!hasBackupRepository()) {
+		if (!_hasBackupRepository()) {
 			return;
 		}
 
@@ -201,7 +201,7 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 
 		backupName = StringUtil.toLowerCase(backupName);
 
-		validateBackupName(backupName);
+		_validateBackupName(backupName);
 
 		CloseIndexRequest closeIndexRequest = new CloseIndexRequest(
 			_indexNameBuilder.getIndexName(companyId));
@@ -223,7 +223,7 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 
 		_searchEngineAdapter.execute(restoreSnapshotRequest);
 
-		waitForYellowStatus();
+		_waitForYellowStatus();
 	}
 
 	@Override
@@ -266,7 +266,7 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 	}
 
 	protected void createBackupRepository() {
-		if (hasBackupRepository()) {
+		if (_hasBackupRepository()) {
 			return;
 		}
 
@@ -275,23 +275,6 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 				_BACKUP_REPOSITORY_NAME, "es_backup");
 
 		_searchEngineAdapter.execute(createSnapshotRepositoryRequest);
-	}
-
-	protected boolean hasBackupRepository() {
-		GetSnapshotRepositoriesRequest getSnapshotRepositoriesRequest =
-			new GetSnapshotRepositoriesRequest(_BACKUP_REPOSITORY_NAME);
-
-		GetSnapshotRepositoriesResponse getSnapshotRepositoriesResponse =
-			_searchEngineAdapter.execute(getSnapshotRepositoriesRequest);
-
-		List<SnapshotRepositoryDetails> snapshotRepositoryDetailsList =
-			getSnapshotRepositoriesResponse.getSnapshotRepositoryDetails();
-
-		if (snapshotRepositoryDetailsList.isEmpty()) {
-			return false;
-		}
-
-		return true;
 	}
 
 	@Reference(
@@ -328,9 +311,24 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 		_searchEngineAdapter = searchEngineAdapter;
 	}
 
-	protected void validateBackupName(String backupName)
-		throws SearchException {
+	private boolean _hasBackupRepository() {
+		GetSnapshotRepositoriesRequest getSnapshotRepositoriesRequest =
+			new GetSnapshotRepositoriesRequest(_BACKUP_REPOSITORY_NAME);
 
+		GetSnapshotRepositoriesResponse getSnapshotRepositoriesResponse =
+			_searchEngineAdapter.execute(getSnapshotRepositoriesRequest);
+
+		List<SnapshotRepositoryDetails> snapshotRepositoryDetailsList =
+			getSnapshotRepositoriesResponse.getSnapshotRepositoryDetails();
+
+		if (snapshotRepositoryDetailsList.isEmpty()) {
+			return false;
+		}
+
+		return true;
+	}
+
+	private void _validateBackupName(String backupName) throws SearchException {
 		if (Validator.isNull(backupName)) {
 			throw new SearchException(
 				"Backup name must not be an empty string");
@@ -365,7 +363,7 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 		}
 	}
 
-	protected void waitForYellowStatus() {
+	private void _waitForYellowStatus() {
 		long timeout = 30 * Time.SECOND;
 
 		if (PortalRunMode.isTestMode()) {

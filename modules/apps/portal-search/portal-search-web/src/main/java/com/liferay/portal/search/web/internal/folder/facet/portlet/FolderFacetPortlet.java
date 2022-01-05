@@ -80,7 +80,7 @@ public class FolderFacetPortlet extends MVCPortlet {
 			portletSharedSearchRequest.search(renderRequest);
 
 		FolderSearchFacetDisplayContext folderSearchFacetDisplayContext =
-			buildDisplayContext(portletSharedSearchResponse, renderRequest);
+			_buildDisplayContext(portletSharedSearchResponse, renderRequest);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, folderSearchFacetDisplayContext);
@@ -93,12 +93,18 @@ public class FolderFacetPortlet extends MVCPortlet {
 		super.render(renderRequest, renderResponse);
 	}
 
-	protected FolderSearchFacetDisplayContext buildDisplayContext(
+	@Reference
+	protected Portal portal;
+
+	@Reference
+	protected PortletSharedSearchRequest portletSharedSearchRequest;
+
+	private FolderSearchFacetDisplayContext _buildDisplayContext(
 		PortletSharedSearchResponse portletSharedSearchResponse,
 		RenderRequest renderRequest) {
 
 		Facet facet = portletSharedSearchResponse.getFacet(
-			getAggregationName(renderRequest));
+			_getAggregationName(renderRequest));
 
 		FolderTitleLookup folderTitleLookup = new FolderTitleLookupImpl(
 			new FolderSearcher(), portal.getHttpServletRequest(renderRequest));
@@ -112,7 +118,7 @@ public class FolderFacetPortlet extends MVCPortlet {
 					renderRequest));
 
 		FolderSearchFacetDisplayBuilder folderSearchFacetDisplayBuilder =
-			createFolderSearchFacetDisplayBuilder(renderRequest);
+			_createFolderSearchFacetDisplayBuilder(renderRequest);
 
 		folderSearchFacetDisplayBuilder.setFacet(facet);
 		folderSearchFacetDisplayBuilder.setFolderTitleLookup(folderTitleLookup);
@@ -123,7 +129,7 @@ public class FolderFacetPortlet extends MVCPortlet {
 		folderSearchFacetDisplayBuilder.setMaxTerms(
 			folderFacetConfiguration.getMaxTerms());
 		folderSearchFacetDisplayBuilder.setPaginationStartParameterName(
-			getPaginationStartParameterName(portletSharedSearchResponse));
+			_getPaginationStartParameterName(portletSharedSearchResponse));
 
 		String parameterName = folderFacetPortletPreferences.getParameterName();
 
@@ -137,8 +143,8 @@ public class FolderFacetPortlet extends MVCPortlet {
 		return folderSearchFacetDisplayBuilder.build();
 	}
 
-	protected FolderSearchFacetDisplayBuilder
-		createFolderSearchFacetDisplayBuilder(RenderRequest renderRequest) {
+	private FolderSearchFacetDisplayBuilder
+		_createFolderSearchFacetDisplayBuilder(RenderRequest renderRequest) {
 
 		try {
 			return new FolderSearchFacetDisplayBuilder(renderRequest);
@@ -148,11 +154,11 @@ public class FolderFacetPortlet extends MVCPortlet {
 		}
 	}
 
-	protected String getAggregationName(RenderRequest renderRequest) {
+	private String _getAggregationName(RenderRequest renderRequest) {
 		return portal.getPortletId(renderRequest);
 	}
 
-	protected String getPaginationStartParameterName(
+	private String _getPaginationStartParameterName(
 		PortletSharedSearchResponse portletSharedSearchResponse) {
 
 		SearchResponse searchResponse =
@@ -162,11 +168,5 @@ public class FolderFacetPortlet extends MVCPortlet {
 
 		return searchRequest.getPaginationStartParameterName();
 	}
-
-	@Reference
-	protected Portal portal;
-
-	@Reference
-	protected PortletSharedSearchRequest portletSharedSearchRequest;
 
 }

@@ -38,19 +38,13 @@ public class UnfollowCCRRequestExecutorImpl
 
 	@Override
 	public UnfollowCCRResponse execute(UnfollowCCRRequest unfollowCCRRequest) {
-		UnfollowRequest unfollowRequest = createUnfollowRequest(
+		UnfollowRequest unfollowRequest = _createUnfollowRequest(
 			unfollowCCRRequest);
 
 		AcknowledgedResponse acknowledgedResponse = getAcknowledgedResponse(
 			unfollowRequest, unfollowCCRRequest);
 
 		return new UnfollowCCRResponse(acknowledgedResponse.isAcknowledged());
-	}
-
-	protected UnfollowRequest createUnfollowRequest(
-		UnfollowCCRRequest unfollowCCRRequest) {
-
-		return new UnfollowRequest(unfollowCCRRequest.getIndexName());
 	}
 
 	protected AcknowledgedResponse getAcknowledgedResponse(
@@ -77,6 +71,12 @@ public class UnfollowCCRRequestExecutorImpl
 		ElasticsearchClientResolver elasticsearchClientResolver) {
 
 		_elasticsearchClientResolver = elasticsearchClientResolver;
+	}
+
+	private UnfollowRequest _createUnfollowRequest(
+		UnfollowCCRRequest unfollowCCRRequest) {
+
+		return new UnfollowRequest(unfollowCCRRequest.getIndexName());
 	}
 
 	private ElasticsearchClientResolver _elasticsearchClientResolver;

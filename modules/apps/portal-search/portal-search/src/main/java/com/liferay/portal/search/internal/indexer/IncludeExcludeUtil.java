@@ -28,18 +28,24 @@ public class IncludeExcludeUtil {
 		Stream<T> stream, Collection<String> includeIds,
 		Collection<String> excludeIds, Function<T, String> function) {
 
-		return exclude(
-			include(stream, includeIds, function), excludeIds, function);
+		return _exclude(
+			_include(stream, includeIds, function), excludeIds, function);
 	}
 
-	protected static <T> Stream<T> exclude(
+	protected static <T> boolean isPresent(
+		T t, Collection<String> ids, Function<T, String> function) {
+
+		return ids.contains(function.apply(t));
+	}
+
+	private static <T> Stream<T> _exclude(
 		Stream<T> stream, Collection<String> ids,
 		Function<T, String> function) {
 
-		return filter(stream, ids, t -> !isPresent(t, ids, function));
+		return _filter(stream, ids, t -> !isPresent(t, ids, function));
 	}
 
-	protected static <T> Stream<T> filter(
+	private static <T> Stream<T> _filter(
 		Stream<T> stream, Collection<String> ids,
 		Predicate<? super T> predicate) {
 
@@ -50,17 +56,11 @@ public class IncludeExcludeUtil {
 		return stream.filter(predicate);
 	}
 
-	protected static <T> Stream<T> include(
+	private static <T> Stream<T> _include(
 		Stream<T> stream, Collection<String> ids,
 		Function<T, String> function) {
 
-		return filter(stream, ids, t -> isPresent(t, ids, function));
-	}
-
-	protected static <T> boolean isPresent(
-		T t, Collection<String> ids, Function<T, String> function) {
-
-		return ids.contains(function.apply(t));
+		return _filter(stream, ids, t -> isPresent(t, ids, function));
 	}
 
 }

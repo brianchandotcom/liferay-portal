@@ -81,7 +81,7 @@ public class CustomFilterPortlet extends MVCPortlet {
 					renderRequest));
 
 		CustomFilterDisplayContext customFilterDisplayContext =
-			createCustomFilterDisplayContext(
+			_createCustomFilterDisplayContext(
 				customFilterPortletPreferences, portletSharedSearchResponse,
 				renderRequest);
 
@@ -99,7 +99,16 @@ public class CustomFilterPortlet extends MVCPortlet {
 		super.render(renderRequest, renderResponse);
 	}
 
-	protected CustomFilterDisplayContext buildDisplayContext(
+	@Reference
+	protected Http http;
+
+	@Reference
+	protected Portal portal;
+
+	@Reference
+	protected PortletSharedSearchRequest portletSharedSearchRequest;
+
+	private CustomFilterDisplayContext _buildDisplayContext(
 			CustomFilterPortletPreferences customFilterPortletPreferences,
 			PortletSharedSearchResponse portletSharedSearchResponse,
 			RenderRequest renderRequest)
@@ -108,7 +117,7 @@ public class CustomFilterPortlet extends MVCPortlet {
 		String parameterName = CustomFilterPortletUtil.getParameterName(
 			customFilterPortletPreferences);
 
-		SearchResponse searchResponse = getSearchResponse(
+		SearchResponse searchResponse = _getSearchResponse(
 			portletSharedSearchResponse, customFilterPortletPreferences);
 
 		SearchRequest searchRequest = searchResponse.getRequest();
@@ -134,19 +143,19 @@ public class CustomFilterPortlet extends MVCPortlet {
 		).queryNameOptional(
 			customFilterPortletPreferences.getQueryNameOptional()
 		).renderNothing(
-			isRenderNothing(searchRequest)
+			_isRenderNothing(searchRequest)
 		).themeDisplay(
 			portletSharedSearchResponse.getThemeDisplay(renderRequest)
 		).build();
 	}
 
-	protected CustomFilterDisplayContext createCustomFilterDisplayContext(
+	private CustomFilterDisplayContext _createCustomFilterDisplayContext(
 		CustomFilterPortletPreferences customFilterPortletPreferences,
 		PortletSharedSearchResponse portletSharedSearchResponse,
 		RenderRequest renderRequest) {
 
 		try {
-			return buildDisplayContext(
+			return _buildDisplayContext(
 				customFilterPortletPreferences, portletSharedSearchResponse,
 				renderRequest);
 		}
@@ -155,11 +164,11 @@ public class CustomFilterPortlet extends MVCPortlet {
 		}
 	}
 
-	protected String getPortletId(RenderRequest renderRequest) {
+	private String _getPortletId(RenderRequest renderRequest) {
 		return portal.getPortletId(renderRequest);
 	}
 
-	protected SearchResponse getSearchResponse(
+	private SearchResponse _getSearchResponse(
 		PortletSharedSearchResponse portletSharedSearchResponse,
 		CustomFilterPortletPreferences customFilterPortletPreferences) {
 
@@ -167,7 +176,7 @@ public class CustomFilterPortlet extends MVCPortlet {
 			customFilterPortletPreferences.getFederatedSearchKeyOptional());
 	}
 
-	protected boolean isRenderNothing(SearchRequest searchRequest) {
+	private boolean _isRenderNothing(SearchRequest searchRequest) {
 		if ((searchRequest.getQueryString() == null) &&
 			!searchRequest.isEmptySearchEnabled()) {
 
@@ -176,14 +185,5 @@ public class CustomFilterPortlet extends MVCPortlet {
 
 		return false;
 	}
-
-	@Reference
-	protected Http http;
-
-	@Reference
-	protected Portal portal;
-
-	@Reference
-	protected PortletSharedSearchRequest portletSharedSearchRequest;
 
 }

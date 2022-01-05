@@ -101,7 +101,7 @@ public class AssetCategoriesSearchFacetDisplayContextTest {
 	public void testEmptySearchResultsWithPreviousSelection() throws Exception {
 		long assetCategoryId = RandomTestUtil.randomLong();
 
-		setUpAssetCategory(assetCategoryId, 0);
+		_setUpAssetCategory(assetCategoryId, 0);
 
 		String facetParam = String.valueOf(assetCategoryId);
 
@@ -154,7 +154,7 @@ public class AssetCategoriesSearchFacetDisplayContextTest {
 
 		createGroup(groupId, stagingGroupId);
 
-		setUpAssetCategory(assetCategoryId, stagingGroupId);
+		_setUpAssetCategory(assetCategoryId, stagingGroupId);
 
 		_excludedGroupId = stagingGroupId;
 
@@ -184,7 +184,7 @@ public class AssetCategoriesSearchFacetDisplayContextTest {
 	public void testOneTerm() throws Exception {
 		long assetCategoryId = RandomTestUtil.randomLong();
 
-		setUpAssetCategory(assetCategoryId, 0);
+		_setUpAssetCategory(assetCategoryId, 0);
 
 		int frequency = RandomTestUtil.randomInt();
 
@@ -236,7 +236,7 @@ public class AssetCategoriesSearchFacetDisplayContextTest {
 	public void testOneTermWithPreviousSelection() throws Exception {
 		long assetCategoryId = RandomTestUtil.randomLong();
 
-		setUpAssetCategory(assetCategoryId, 0);
+		_setUpAssetCategory(assetCategoryId, 0);
 
 		int frequency = RandomTestUtil.randomInt();
 
@@ -287,7 +287,7 @@ public class AssetCategoriesSearchFacetDisplayContextTest {
 	public void testUnauthorized() throws Exception {
 		long assetCategoryId = RandomTestUtil.randomLong();
 
-		setUpAssetCategoryUnauthorized(assetCategoryId);
+		_setUpAssetCategoryUnauthorized(assetCategoryId);
 
 		int frequency = RandomTestUtil.randomInt();
 
@@ -321,7 +321,7 @@ public class AssetCategoriesSearchFacetDisplayContextTest {
 	public void testUnauthorizedWithPreviousSelection() throws Exception {
 		long assetCategoryId = RandomTestUtil.randomLong();
 
-		setUpAssetCategoryUnauthorized(assetCategoryId);
+		_setUpAssetCategoryUnauthorized(assetCategoryId);
 
 		String facetParam = String.valueOf(assetCategoryId);
 
@@ -347,42 +347,6 @@ public class AssetCategoriesSearchFacetDisplayContextTest {
 			assetCategoriesSearchFacetDisplayContext.isRenderNothing());
 	}
 
-	protected AssetCategory createAssetCategory(
-		long assetCategoryId, long groupId) {
-
-		AssetCategory assetCategory = Mockito.mock(AssetCategory.class);
-
-		Mockito.doReturn(
-			assetCategoryId
-		).when(
-			assetCategory
-		).getCategoryId();
-
-		Mockito.doReturn(
-			groupId
-		).when(
-			assetCategory
-		).getGroupId();
-
-		Mockito.doReturn(
-			String.valueOf(assetCategoryId)
-		).when(
-			assetCategory
-		).getTitle(
-			(Locale)Mockito.any()
-		);
-
-		Mockito.doReturn(
-			assetCategory
-		).when(
-			_assetCategoryLocalService
-		).fetchAssetCategory(
-			assetCategoryId
-		);
-
-		return assetCategory;
-	}
-
 	protected AssetCategoriesSearchFacetDisplayContext createDisplayContext(
 		String parameterValue) {
 
@@ -405,7 +369,7 @@ public class AssetCategoriesSearchFacetDisplayContextTest {
 			_facet.getFieldId());
 		assetCategoriesSearchFacetDisplayBuilder.setParameterValue(
 			parameterValue);
-		assetCategoriesSearchFacetDisplayBuilder.setPortal(getPortal());
+		assetCategoriesSearchFacetDisplayBuilder.setPortal(_getPortal());
 
 		if (_excludedGroupId > 0) {
 			assetCategoriesSearchFacetDisplayBuilder.setExcludedGroupId(
@@ -447,7 +411,64 @@ public class AssetCategoriesSearchFacetDisplayContextTest {
 		return termCollector;
 	}
 
-	protected HttpServletRequest getHttpServletRequest() {
+	protected ThemeDisplay getThemeDisplay() {
+		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
+
+		Mockito.doReturn(
+			Mockito.mock(PortletDisplay.class)
+		).when(
+			themeDisplay
+		).getPortletDisplay();
+
+		return themeDisplay;
+	}
+
+	protected void setUpOneTermCollector(long assetCategoryId, int frequency) {
+		Mockito.doReturn(
+			Collections.singletonList(
+				createTermCollector(assetCategoryId, frequency))
+		).when(
+			_facetCollector
+		).getTermCollectors();
+	}
+
+	private AssetCategory _createAssetCategory(
+		long assetCategoryId, long groupId) {
+
+		AssetCategory assetCategory = Mockito.mock(AssetCategory.class);
+
+		Mockito.doReturn(
+			assetCategoryId
+		).when(
+			assetCategory
+		).getCategoryId();
+
+		Mockito.doReturn(
+			groupId
+		).when(
+			assetCategory
+		).getGroupId();
+
+		Mockito.doReturn(
+			String.valueOf(assetCategoryId)
+		).when(
+			assetCategory
+		).getTitle(
+			(Locale)Mockito.any()
+		);
+
+		Mockito.doReturn(
+			assetCategory
+		).when(
+			_assetCategoryLocalService
+		).fetchAssetCategory(
+			assetCategoryId
+		);
+
+		return assetCategory;
+	}
+
+	private HttpServletRequest _getHttpServletRequest() {
 		HttpServletRequest httpServletRequest = Mockito.mock(
 			HttpServletRequest.class);
 
@@ -462,11 +483,11 @@ public class AssetCategoriesSearchFacetDisplayContextTest {
 		return httpServletRequest;
 	}
 
-	protected Portal getPortal() {
+	private Portal _getPortal() {
 		Portal portal = Mockito.mock(Portal.class);
 
 		Mockito.doReturn(
-			getHttpServletRequest()
+			_getHttpServletRequest()
 		).when(
 			portal
 		).getHttpServletRequest(
@@ -476,20 +497,8 @@ public class AssetCategoriesSearchFacetDisplayContextTest {
 		return portal;
 	}
 
-	protected ThemeDisplay getThemeDisplay() {
-		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
-
-		Mockito.doReturn(
-			Mockito.mock(PortletDisplay.class)
-		).when(
-			themeDisplay
-		).getPortletDisplay();
-
-		return themeDisplay;
-	}
-
-	protected void setUpAssetCategory(long assetCategoryId, long groupId) {
-		AssetCategory assetCategory = createAssetCategory(
+	private void _setUpAssetCategory(long assetCategoryId, long groupId) {
+		AssetCategory assetCategory = _createAssetCategory(
 			assetCategoryId, groupId);
 
 		Mockito.doReturn(
@@ -501,8 +510,8 @@ public class AssetCategoriesSearchFacetDisplayContextTest {
 		);
 	}
 
-	protected void setUpAssetCategoryUnauthorized(long assetCategoryId) {
-		AssetCategory assetCategory = createAssetCategory(assetCategoryId, 0);
+	private void _setUpAssetCategoryUnauthorized(long assetCategoryId) {
+		AssetCategory assetCategory = _createAssetCategory(assetCategoryId, 0);
 
 		Mockito.doReturn(
 			false
@@ -511,15 +520,6 @@ public class AssetCategoriesSearchFacetDisplayContextTest {
 		).hasPermission(
 			assetCategory
 		);
-	}
-
-	protected void setUpOneTermCollector(long assetCategoryId, int frequency) {
-		Mockito.doReturn(
-			Collections.singletonList(
-				createTermCollector(assetCategoryId, frequency))
-		).when(
-			_facetCollector
-		).getTermCollectors();
 	}
 
 	@Mock

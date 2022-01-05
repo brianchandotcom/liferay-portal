@@ -104,35 +104,6 @@ public class SearchHitImpl implements SearchHit, Serializable {
 		_sourcesMap.put(name, value);
 	}
 
-	protected void setDocument(Document document) {
-		_document = document;
-	}
-
-	protected void setExplanation(String explanation) {
-		_explanation = explanation;
-	}
-
-	protected void setId(String id) {
-		_id = id;
-	}
-
-	protected void setMatchedQueries(String... matchedQueries) {
-		if (matchedQueries != null) {
-			_matchedQueries = matchedQueries;
-		}
-		else {
-			_matchedQueries = new String[0];
-		}
-	}
-
-	protected void setScore(float score) {
-		_score = score;
-	}
-
-	protected void setVersion(long version) {
-		_version = version;
-	}
-
 	protected static class Builder implements SearchHitBuilder {
 
 		@Override
@@ -189,42 +160,42 @@ public class SearchHitImpl implements SearchHit, Serializable {
 
 		@Override
 		public SearchHitBuilder document(Document document) {
-			_searchHitImpl.setDocument(document);
+			_searchHitImpl._setDocument(document);
 
 			return this;
 		}
 
 		@Override
 		public SearchHitBuilder explanation(String explanation) {
-			_searchHitImpl.setExplanation(explanation);
+			_searchHitImpl._setExplanation(explanation);
 
 			return this;
 		}
 
 		@Override
 		public SearchHitBuilder id(String id) {
-			_searchHitImpl.setId(id);
+			_searchHitImpl._setId(id);
 
 			return this;
 		}
 
 		@Override
 		public SearchHitBuilder matchedQueries(String... matchedQueries) {
-			_searchHitImpl.setMatchedQueries(matchedQueries);
+			_searchHitImpl._setMatchedQueries(matchedQueries);
 
 			return this;
 		}
 
 		@Override
 		public SearchHitBuilder score(float score) {
-			_searchHitImpl.setScore(score);
+			_searchHitImpl._setScore(score);
 
 			return this;
 		}
 
 		@Override
 		public SearchHitBuilder version(long version) {
-			_searchHitImpl.setVersion(version);
+			_searchHitImpl._setVersion(version);
 
 			return this;
 		}
@@ -234,6 +205,35 @@ public class SearchHitImpl implements SearchHit, Serializable {
 	}
 
 	private SearchHitImpl() {
+	}
+
+	private void _setDocument(Document document) {
+		_document = document;
+	}
+
+	private void _setExplanation(String explanation) {
+		_explanation = explanation;
+	}
+
+	private void _setId(String id) {
+		_id = id;
+	}
+
+	private void _setMatchedQueries(String... matchedQueries) {
+		if (matchedQueries != null) {
+			_matchedQueries = matchedQueries;
+		}
+		else {
+			_matchedQueries = new String[0];
+		}
+	}
+
+	private void _setScore(float score) {
+		_score = score;
+	}
+
+	private void _setVersion(long version) {
+		_version = version;
 	}
 
 	private Document _document;

@@ -61,7 +61,7 @@ public class ElasticsearchIndexWriterTest extends BaseIndexingTestCase {
 		Stream<Document> stream = _documents.stream();
 
 		_indexWriter.deleteDocuments(
-			getSearchContext(),
+			_getSearchContext(),
 			stream.map(
 				document -> document.get(Field.UID)
 			).collect(
@@ -75,7 +75,7 @@ public class ElasticsearchIndexWriterTest extends BaseIndexingTestCase {
 	public void testAddDocument() {
 		addDocument(Field.TITLE, "text");
 
-		assertOnlyOne(Field.TITLE, "text");
+		_assertOnlyOne(Field.TITLE, "text");
 	}
 
 	@Test
@@ -83,9 +83,9 @@ public class ElasticsearchIndexWriterTest extends BaseIndexingTestCase {
 		Document document = addDocument(Field.TITLE, "text");
 
 		_indexWriter.deleteDocument(
-			getSearchContext(), document.get(Field.UID));
+			_getSearchContext(), document.get(Field.UID));
 
-		assertNone(Field.TITLE, "text");
+		_assertNone(Field.TITLE, "text");
 	}
 
 	@Test
@@ -97,10 +97,10 @@ public class ElasticsearchIndexWriterTest extends BaseIndexingTestCase {
 
 		_indexWriter.partiallyUpdateDocument(createSearchContext(), document);
 
-		assertNone(Field.TITLE, "text");
+		_assertNone(Field.TITLE, "text");
 
-		assertOnlyOne(Field.CONTENT, "example");
-		assertOnlyOne(Field.TITLE, "change");
+		_assertOnlyOne(Field.CONTENT, "example");
+		_assertOnlyOne(Field.TITLE, "change");
 	}
 
 	@Test
@@ -114,8 +114,8 @@ public class ElasticsearchIndexWriterTest extends BaseIndexingTestCase {
 
 		_indexWriter.partiallyUpdateDocument(createSearchContext(), document);
 
-		assertOnlyOne(Field.CONTENT, "example");
-		assertOnlyOne(Field.TITLE, "text");
+		_assertOnlyOne(Field.CONTENT, "example");
+		_assertOnlyOne(Field.TITLE, "text");
 	}
 
 	@Test
@@ -126,9 +126,9 @@ public class ElasticsearchIndexWriterTest extends BaseIndexingTestCase {
 
 		_indexWriter.updateDocument(createSearchContext(), document);
 
-		assertNone(Field.TITLE, "text");
+		_assertNone(Field.TITLE, "text");
 
-		assertOnlyOne(Field.TITLE, "example");
+		_assertOnlyOne(Field.TITLE, "example");
 	}
 
 	@Test
@@ -140,9 +140,9 @@ public class ElasticsearchIndexWriterTest extends BaseIndexingTestCase {
 
 		_indexWriter.updateDocument(createSearchContext(), document);
 
-		assertNone(Field.CONTENT, "example");
+		_assertNone(Field.CONTENT, "example");
 
-		assertOnlyOne(Field.TITLE, "text");
+		_assertOnlyOne(Field.TITLE, "text");
 	}
 
 	protected Document addDocument(String fieldName, String fieldValue) {
@@ -167,30 +167,6 @@ public class ElasticsearchIndexWriterTest extends BaseIndexingTestCase {
 		_documents.add(document);
 
 		return document;
-	}
-
-	protected void assertNone(String field, String value) {
-		assertSearch(
-			indexingTestHelper -> {
-				indexingTestHelper.setQuery(new MatchQuery(field, value));
-
-				indexingTestHelper.search();
-
-				indexingTestHelper.verify(
-					hits -> Assert.assertEquals(0, hits.getLength()));
-			});
-	}
-
-	protected void assertOnlyOne(String field, String value) {
-		assertSearch(
-			indexingTestHelper -> {
-				indexingTestHelper.setQuery(new MatchQuery(field, value));
-
-				indexingTestHelper.search();
-
-				indexingTestHelper.verify(
-					hits -> Assert.assertEquals(1, hits.getLength()));
-			});
 	}
 
 	protected Document createDocument(String fieldName, String fieldValue) {
@@ -220,7 +196,31 @@ public class ElasticsearchIndexWriterTest extends BaseIndexingTestCase {
 		return LiferayElasticsearchIndexingFixtureFactory.getInstance();
 	}
 
-	protected SearchContext getSearchContext() {
+	private void _assertNone(String field, String value) {
+		assertSearch(
+			indexingTestHelper -> {
+				indexingTestHelper.setQuery(new MatchQuery(field, value));
+
+				indexingTestHelper.search();
+
+				indexingTestHelper.verify(
+					hits -> Assert.assertEquals(0, hits.getLength()));
+			});
+	}
+
+	private void _assertOnlyOne(String field, String value) {
+		assertSearch(
+			indexingTestHelper -> {
+				indexingTestHelper.setQuery(new MatchQuery(field, value));
+
+				indexingTestHelper.search();
+
+				indexingTestHelper.verify(
+					hits -> Assert.assertEquals(1, hits.getLength()));
+			});
+	}
+
+	private SearchContext _getSearchContext() {
 		SearchContext searchContext = new SearchContext();
 
 		searchContext.setCompanyId(getCompanyId());

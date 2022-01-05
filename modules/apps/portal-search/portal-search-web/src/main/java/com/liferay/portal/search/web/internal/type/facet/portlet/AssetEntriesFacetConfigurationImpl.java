@@ -41,7 +41,7 @@ public class AssetEntriesFacetConfigurationImpl
 		_jsonObject.put("frequencyThreshold", frequencyThreshold);
 	}
 
-	protected JSONArray toJSONArray(String... values) {
+	private JSONArray _toJSONArray(String... values) {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		for (String value : values) {

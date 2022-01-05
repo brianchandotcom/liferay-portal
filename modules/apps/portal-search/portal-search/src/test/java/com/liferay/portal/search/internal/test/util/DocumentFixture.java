@@ -32,16 +32,18 @@ import org.mockito.Mockito;
 public class DocumentFixture {
 
 	public void setUp() {
-		setUpFastDateFormatFactoryUtil();
-		setUpPropsUtil();
+		_setUpFastDateFormatFactoryUtil();
+		_setUpPropsUtil();
 	}
 
 	public void tearDown() {
-		tearDownFastDateFormatFactoryUtil();
-		tearDownPropsUtil();
+		_tearDownFastDateFormatFactoryUtil();
+		_tearDownPropsUtil();
 	}
 
-	protected void setUpFastDateFormatFactoryUtil() {
+	protected Props props;
+
+	private void _setUpFastDateFormatFactoryUtil() {
 		_fastDateFormatFactory =
 			FastDateFormatFactoryUtil.getFastDateFormatFactory();
 
@@ -61,7 +63,7 @@ public class DocumentFixture {
 			fastDateFormatFactory);
 	}
 
-	protected void setUpPropsUtil() {
+	private void _setUpPropsUtil() {
 		_props = PropsUtil.getProps();
 
 		props = PropsTestUtil.setProps(
@@ -97,7 +99,7 @@ public class DocumentFixture {
 			).build());
 	}
 
-	protected void tearDownFastDateFormatFactoryUtil() {
+	private void _tearDownFastDateFormatFactoryUtil() {
 		FastDateFormatFactoryUtil fastDateFormatFactoryUtil =
 			new FastDateFormatFactoryUtil();
 
@@ -107,15 +109,13 @@ public class DocumentFixture {
 		_fastDateFormatFactory = null;
 	}
 
-	protected void tearDownPropsUtil() {
+	private void _tearDownPropsUtil() {
 		PropsUtil.setProps(_props);
 
 		_props = null;
 
 		props = null;
 	}
-
-	protected Props props;
 
 	private FastDateFormatFactory _fastDateFormatFactory;
 	private Props _props;

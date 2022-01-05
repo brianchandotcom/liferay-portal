@@ -55,10 +55,10 @@ public class SuggestionsPortletDisplayBuilderTest {
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
 
-		setUpHtml();
-		setUpHttp();
+		_setUpHtml();
+		_setUpHttp();
 
-		setUpDisplayBuilder();
+		_setUpDisplayBuilder();
 	}
 
 	@Test
@@ -66,7 +66,7 @@ public class SuggestionsPortletDisplayBuilderTest {
 		List<SuggestionDisplayContext> suggestionDisplayContexts =
 			buildRelatedQueriesSuggestions(Arrays.asList("alpha"));
 
-		assertSuggestion(
+		_assertSuggestion(
 			"[alpha] | q=X(q<<alpha)", suggestionDisplayContexts.get(0));
 	}
 
@@ -83,7 +83,7 @@ public class SuggestionsPortletDisplayBuilderTest {
 
 	@Test
 	public void testGetRelatedQueriesSuggestionsMultiple() {
-		setUpSearchedKeywords("q", "a b");
+		_setUpSearchedKeywords("q", "a b");
 
 		List<SuggestionDisplayContext> suggestionDisplayContexts =
 			buildRelatedQueriesSuggestions(Arrays.asList("a C", "a b C"));
@@ -92,16 +92,16 @@ public class SuggestionsPortletDisplayBuilderTest {
 			suggestionDisplayContexts.toString(), 2,
 			suggestionDisplayContexts.size());
 
-		assertSuggestion(
+		_assertSuggestion(
 			"a [C] | q=a b(q<<a C)", suggestionDisplayContexts.get(0));
 
-		assertSuggestion(
+		_assertSuggestion(
 			"a b [C] | q=a b(q<<a b C)", suggestionDisplayContexts.get(1));
 	}
 
 	@Test
 	public void testGetRelatedSuggestionsWithEmptyList() {
-		setUpSearchedKeywords("q", "a b");
+		_setUpSearchedKeywords("q", "a b");
 
 		List<SuggestionDisplayContext> suggestionDisplayContexts =
 			buildRelatedQueriesSuggestions(Collections.emptyList());
@@ -111,7 +111,7 @@ public class SuggestionsPortletDisplayBuilderTest {
 
 	@Test
 	public void testGetRelatedSuggestionsWithKeywordsAsSuggestions() {
-		setUpSearchedKeywords("q", "a b");
+		_setUpSearchedKeywords("q", "a b");
 
 		List<SuggestionDisplayContext> suggestionDisplayContexts =
 			buildRelatedQueriesSuggestions(Arrays.asList("a b", "a b C"));
@@ -120,13 +120,13 @@ public class SuggestionsPortletDisplayBuilderTest {
 			suggestionDisplayContexts.toString(), 1,
 			suggestionDisplayContexts.size());
 
-		assertSuggestion(
+		_assertSuggestion(
 			"a b [C] | q=a b(q<<a b C)", suggestionDisplayContexts.get(0));
 	}
 
 	@Test
 	public void testGetRelatedSuggestionsWithNullSuggestions() {
-		setUpSearchedKeywords("q", "a b");
+		_setUpSearchedKeywords("q", "a b");
 
 		List<SuggestionDisplayContext> suggestionDisplayContexts =
 			buildRelatedQueriesSuggestions(Arrays.asList(null, "", "a b C"));
@@ -135,7 +135,7 @@ public class SuggestionsPortletDisplayBuilderTest {
 			suggestionDisplayContexts.toString(), 1,
 			suggestionDisplayContexts.size());
 
-		assertSuggestion(
+		_assertSuggestion(
 			"a b [C] | q=a b(q<<a b C)", suggestionDisplayContexts.get(0));
 	}
 
@@ -144,24 +144,24 @@ public class SuggestionsPortletDisplayBuilderTest {
 		SuggestionDisplayContext suggestionDisplayContext =
 			buildSpellCheckSuggestion("alpha");
 
-		assertSuggestion("[alpha] | q=X(q<<alpha)", suggestionDisplayContext);
+		_assertSuggestion("[alpha] | q=X(q<<alpha)", suggestionDisplayContext);
 	}
 
 	@Test
 	public void testGetSpellCheckSuggestionEqualsToKeywords() {
-		setUpSearchedKeywords("q", "a b");
+		_setUpSearchedKeywords("q", "a b");
 
 		Assert.assertNull(buildSpellCheckSuggestion("a b"));
 	}
 
 	@Test
 	public void testGetSpellCheckSuggestionFormatted() {
-		setUpSearchedKeywords("q", "a b");
+		_setUpSearchedKeywords("q", "a b");
 
 		SuggestionDisplayContext suggestionDisplayContext =
 			buildSpellCheckSuggestion("a C");
 
-		assertSuggestion("a [C] | q=a b(q<<a C)", suggestionDisplayContext);
+		_assertSuggestion("a [C] | q=a b(q<<a C)", suggestionDisplayContext);
 	}
 
 	@Test
@@ -175,14 +175,14 @@ public class SuggestionsPortletDisplayBuilderTest {
 
 	@Test
 	public void testGetSpellCheckSuggestionWithEmptySuggestion() {
-		setUpSearchedKeywords("q", "a b");
+		_setUpSearchedKeywords("q", "a b");
 
 		Assert.assertNull(buildSpellCheckSuggestion(""));
 	}
 
 	@Test
 	public void testGetSpellCheckSuggestionWithNullSuggestion() {
-		setUpSearchedKeywords("q", "a b");
+		_setUpSearchedKeywords("q", "a b");
 
 		Assert.assertNull(buildSpellCheckSuggestion(null));
 	}
@@ -323,22 +323,6 @@ public class SuggestionsPortletDisplayBuilderTest {
 			suggestionsPortletDisplayContext.isSpellCheckSuggestionEnabled());
 	}
 
-	protected void assertSuggestion(
-		String expected, SuggestionDisplayContext suggestionDisplayContext) {
-
-		String[] parts = StringUtil.split(expected, CharPool.PIPE);
-
-		String suggestedKeywordsFormatted = formatSimplifiedSuggestedKeywords(
-			StringUtil.trim(parts[0]));
-
-		String fullURL = toFullURL(StringUtil.trim(parts[1]));
-
-		Assert.assertEquals(
-			suggestedKeywordsFormatted + " | " + fullURL,
-			suggestionDisplayContext.getSuggestedKeywordsFormatted() + " | " +
-				suggestionDisplayContext.getURL());
-	}
-
 	protected List<SuggestionDisplayContext> buildRelatedQueriesSuggestions(
 		List<String> suggestions) {
 
@@ -363,7 +347,29 @@ public class SuggestionsPortletDisplayBuilderTest {
 		return displayContext.getSpellCheckSuggestion();
 	}
 
-	protected String formatKeyword(String keyword) {
+	@Mock
+	protected Html html;
+
+	@Mock
+	protected Http http;
+
+	private void _assertSuggestion(
+		String expected, SuggestionDisplayContext suggestionDisplayContext) {
+
+		String[] parts = StringUtil.split(expected, CharPool.PIPE);
+
+		String suggestedKeywordsFormatted = _formatSimplifiedSuggestedKeywords(
+			StringUtil.trim(parts[0]));
+
+		String fullURL = _toFullURL(StringUtil.trim(parts[1]));
+
+		Assert.assertEquals(
+			suggestedKeywordsFormatted + " | " + fullURL,
+			suggestionDisplayContext.getSuggestedKeywordsFormatted() + " | " +
+				suggestionDisplayContext.getURL());
+	}
+
+	private String _formatKeyword(String keyword) {
 		if (keyword.charAt(0) == CharPool.OPEN_BRACKET) {
 			return "<span class=\"changed-keyword\">" +
 				keyword.substring(1, keyword.length() - 1) + "</span>";
@@ -372,23 +378,23 @@ public class SuggestionsPortletDisplayBuilderTest {
 		return "<span class=\"unchanged-keyword\">" + keyword + "</span>";
 	}
 
-	protected String formatSimplifiedSuggestedKeywords(String simplifiedQuery) {
+	private String _formatSimplifiedSuggestedKeywords(String simplifiedQuery) {
 		return Stream.of(
 			StringUtil.split(simplifiedQuery, CharPool.SPACE)
 		).map(
-			this::formatKeyword
+			this::_formatKeyword
 		).collect(
 			Collectors.joining(StringPool.SPACE)
 		);
 	}
 
-	protected void setUpDisplayBuilder() {
+	private void _setUpDisplayBuilder() {
 		_displayBuilder = new SuggestionsPortletDisplayBuilder(html, http);
 
-		setUpSearchedKeywords("q", "X");
+		_setUpSearchedKeywords("q", "X");
 	}
 
-	protected void setUpHtml() {
+	private void _setUpHtml() {
 		Mockito.doAnswer(
 			AdditionalAnswers.returnsFirstArg()
 		).when(
@@ -398,7 +404,7 @@ public class SuggestionsPortletDisplayBuilderTest {
 		);
 	}
 
-	protected void setUpHttp() {
+	private void _setUpHttp() {
 		Mockito.doAnswer(
 			invocation -> StringBundler.concat(
 				invocation.getArgumentAt(0, String.class),
@@ -413,7 +419,7 @@ public class SuggestionsPortletDisplayBuilderTest {
 		);
 	}
 
-	protected void setUpSearchedKeywords(
+	private void _setUpSearchedKeywords(
 		String keywordsParameterName, String keywords) {
 
 		_displayBuilder.setKeywords(keywords);
@@ -424,15 +430,9 @@ public class SuggestionsPortletDisplayBuilderTest {
 				keywords));
 	}
 
-	protected String toFullURL(String parameters) {
+	private String _toFullURL(String parameters) {
 		return _URL_PREFIX + parameters;
 	}
-
-	@Mock
-	protected Html html;
-
-	@Mock
-	protected Http http;
 
 	private static final String _URL_PREFIX = "http://localhost:8080/?";
 

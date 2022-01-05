@@ -65,13 +65,16 @@ public class SortPortletSharedSearchContributor
 		SearchRequestBuilder searchRequestBuilder =
 			portletSharedSearchSettings.getSearchRequestBuilder();
 
-		Stream<Sort> stream = buildSorts(
+		Stream<Sort> stream = _buildSorts(
 			portletSharedSearchSettings, sortPortletPreferences);
 
 		searchRequestBuilder.sorts(stream.toArray(Sort[]::new));
 	}
 
-	protected Sort buildSort(String fieldValue, Locale locale) {
+	@Reference
+	protected DDMIndexer ddmIndexer;
+
+	private Sort _buildSort(String fieldValue, Locale locale) {
 		SortOrder sortOrder = SortOrder.ASC;
 
 		if (fieldValue.endsWith("+")) {
@@ -103,11 +106,11 @@ public class SortPortletSharedSearchContributor
 		).build();
 	}
 
-	protected Stream<Sort> buildSorts(
+	private Stream<Sort> _buildSorts(
 		PortletSharedSearchSettings portletSharedSearchSettings,
 		SortPortletPreferences sortPortletPreferences) {
 
-		List<String> fieldValues = getFieldValues(
+		List<String> fieldValues = _getFieldValues(
 			sortPortletPreferences.getParameterName(),
 			portletSharedSearchSettings);
 
@@ -119,11 +122,11 @@ public class SortPortletSharedSearchContributor
 		return stream.filter(
 			fieldValue -> !fieldValue.isEmpty()
 		).map(
-			fieldValue -> buildSort(fieldValue, themeDisplay.getLocale())
+			fieldValue -> _buildSort(fieldValue, themeDisplay.getLocale())
 		);
 	}
 
-	protected List<String> getFieldValues(
+	private List<String> _getFieldValues(
 		String parameterName,
 		PortletSharedSearchSettings portletSharedSearchSettings) {
 
@@ -159,9 +162,6 @@ public class SortPortletSharedSearchContributor
 			throw new RuntimeException(portalException);
 		}
 	}
-
-	@Reference
-	protected DDMIndexer ddmIndexer;
 
 	@Reference
 	private SortBuilderFactory _sortBuilderFactory;

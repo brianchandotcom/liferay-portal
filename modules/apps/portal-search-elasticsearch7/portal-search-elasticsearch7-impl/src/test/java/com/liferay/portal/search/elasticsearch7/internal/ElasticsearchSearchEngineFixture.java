@@ -67,14 +67,14 @@ public class ElasticsearchSearchEngineFixture implements SearchEngineFixture {
 		ElasticsearchConnectionFixture elasticsearchConnectionFixture =
 			Objects.requireNonNull(_elasticsearchConnectionFixture);
 
-		CompanyIdIndexNameBuilder indexNameBuilder = createIndexNameBuilder();
+		CompanyIdIndexNameBuilder indexNameBuilder = _createIndexNameBuilder();
 
 		ElasticsearchConnectionManager elasticsearchConnectionManager =
-			createElasticsearchConnectionManager(
+			_createElasticsearchConnectionManager(
 				elasticsearchConnectionFixture);
 
 		_elasticsearchConnectionManager = elasticsearchConnectionManager;
-		_elasticsearchSearchEngine = createElasticsearchSearchEngine(
+		_elasticsearchSearchEngine = _createElasticsearchSearchEngine(
 			elasticsearchConnectionFixture, elasticsearchConnectionManager,
 			indexNameBuilder,
 			elasticsearchConnectionFixture.
@@ -86,19 +86,6 @@ public class ElasticsearchSearchEngineFixture implements SearchEngineFixture {
 	@Override
 	public void tearDown() throws Exception {
 		_elasticsearchConnectionFixture.destroyNode();
-	}
-
-	protected static CompanyIndexFactory createCompanyIndexFactory(
-		IndexNameBuilder indexNameBuilder, Map<String, Object> properites) {
-
-		return new CompanyIndexFactory() {
-			{
-				setElasticsearchConfigurationWrapper(
-					createElasticsearchConfigurationWrapper(properites));
-				setIndexNameBuilder(indexNameBuilder);
-				setJsonFactory(new JSONFactoryImpl());
-			}
-		};
 	}
 
 	protected static ElasticsearchConfigurationWrapper
@@ -114,8 +101,21 @@ public class ElasticsearchSearchEngineFixture implements SearchEngineFixture {
 		};
 	}
 
-	protected static ElasticsearchConnectionManager
-		createElasticsearchConnectionManager(
+	private static CompanyIndexFactory _createCompanyIndexFactory(
+		IndexNameBuilder indexNameBuilder, Map<String, Object> properites) {
+
+		return new CompanyIndexFactory() {
+			{
+				setElasticsearchConfigurationWrapper(
+					createElasticsearchConfigurationWrapper(properites));
+				setIndexNameBuilder(indexNameBuilder);
+				setJsonFactory(new JSONFactoryImpl());
+			}
+		};
+	}
+
+	private static ElasticsearchConnectionManager
+		_createElasticsearchConnectionManager(
 			ElasticsearchConnectionFixture elasticsearchConnectionFixture) {
 
 		return new ElasticsearchConnectionManager() {
@@ -125,7 +125,7 @@ public class ElasticsearchSearchEngineFixture implements SearchEngineFixture {
 						elasticsearchConnectionFixture.
 							getElasticsearchConfigurationProperties());
 
-				operationModeResolver = createOperationModeResolver(
+				operationModeResolver = _createOperationModeResolver(
 					elasticsearchConfigurationWrapper);
 
 				addElasticsearchConnection(
@@ -135,7 +135,7 @@ public class ElasticsearchSearchEngineFixture implements SearchEngineFixture {
 		};
 	}
 
-	protected static ElasticsearchSearchEngine createElasticsearchSearchEngine(
+	private static ElasticsearchSearchEngine _createElasticsearchSearchEngine(
 		ElasticsearchClientResolver elasticsearchClientResolver,
 		ElasticsearchConnectionManager elasticsearchConnectionManager,
 		IndexNameBuilder indexNameBuilder, Map<String, Object> properites) {
@@ -145,15 +145,15 @@ public class ElasticsearchSearchEngineFixture implements SearchEngineFixture {
 				setElasticsearchConnectionManager(
 					elasticsearchConnectionManager);
 				setIndexFactory(
-					createCompanyIndexFactory(indexNameBuilder, properites));
+					_createCompanyIndexFactory(indexNameBuilder, properites));
 				setIndexNameBuilder(String::valueOf);
 				setSearchEngineAdapter(
-					createSearchEngineAdapter(elasticsearchClientResolver));
+					_createSearchEngineAdapter(elasticsearchClientResolver));
 			}
 		};
 	}
 
-	protected static CompanyIdIndexNameBuilder createIndexNameBuilder() {
+	private static CompanyIdIndexNameBuilder _createIndexNameBuilder() {
 		return new CompanyIdIndexNameBuilder() {
 			{
 				setIndexNamePrefix(null);
@@ -161,7 +161,7 @@ public class ElasticsearchSearchEngineFixture implements SearchEngineFixture {
 		};
 	}
 
-	protected static OperationModeResolver createOperationModeResolver(
+	private static OperationModeResolver _createOperationModeResolver(
 		ElasticsearchConfigurationWrapper elasticsearchConfigurationWrapper1) {
 
 		return new OperationModeResolver() {
@@ -172,7 +172,7 @@ public class ElasticsearchSearchEngineFixture implements SearchEngineFixture {
 		};
 	}
 
-	protected static SearchEngineAdapter createSearchEngineAdapter(
+	private static SearchEngineAdapter _createSearchEngineAdapter(
 		ElasticsearchClientResolver elasticsearchClientResolver) {
 
 		ElasticsearchEngineAdapterFixture elasticsearchEngineAdapterFixture =

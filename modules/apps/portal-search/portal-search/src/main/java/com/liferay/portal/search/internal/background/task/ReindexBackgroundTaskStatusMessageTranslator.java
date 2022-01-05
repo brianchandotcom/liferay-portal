@@ -38,7 +38,7 @@ public class ReindexBackgroundTaskStatusMessageTranslator
 		String phase = message.getString(ReindexBackgroundTaskConstants.PHASE);
 
 		if (Validator.isNotNull(phase)) {
-			setPhaseAttributes(backgroundTaskStatus, message);
+			_setPhaseAttributes(backgroundTaskStatus, message);
 
 			return;
 		}
@@ -100,12 +100,12 @@ public class ReindexBackgroundTaskStatusMessageTranslator
 
 			Set<Indexer<?>> indexers = IndexerRegistryUtil.getIndexers();
 
-			percentage = getPercentage(
+			percentage = _getPercentage(
 				companyCount, companyIds.length, indexerCount, indexers.size(),
 				count, total);
 		}
 		else if (phase.equals(ReindexBackgroundTaskConstants.SINGLE_START)) {
-			percentage = getPercentage(
+			percentage = _getPercentage(
 				companyCount, companyIds.length, 0, 1, count, total);
 		}
 
@@ -113,7 +113,7 @@ public class ReindexBackgroundTaskStatusMessageTranslator
 			"percentage", String.valueOf(percentage));
 	}
 
-	protected int getPercentage(
+	private int _getPercentage(
 		int companyCount, int companyTotal, int indexerCount, int indexerTotal,
 		long documentCount, long documentTotal) {
 
@@ -136,7 +136,7 @@ public class ReindexBackgroundTaskStatusMessageTranslator
 		return (int)Math.min(Math.ceil(totalPercentage * 100), 100);
 	}
 
-	protected void setPhaseAttributes(
+	private void _setPhaseAttributes(
 		BackgroundTaskStatus backgroundTaskStatus, Message message) {
 
 		backgroundTaskStatus.setAttribute(

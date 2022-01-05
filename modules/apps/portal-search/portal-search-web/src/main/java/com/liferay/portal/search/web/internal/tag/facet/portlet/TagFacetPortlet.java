@@ -79,7 +79,7 @@ public class TagFacetPortlet extends MVCPortlet {
 			portletSharedSearchRequest.search(renderRequest);
 
 		AssetTagsSearchFacetDisplayContext assetTagsSearchFacetDisplayContext =
-			buildDisplayContext(portletSharedSearchResponse, renderRequest);
+			_buildDisplayContext(portletSharedSearchResponse, renderRequest);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -93,12 +93,18 @@ public class TagFacetPortlet extends MVCPortlet {
 		super.render(renderRequest, renderResponse);
 	}
 
-	protected AssetTagsSearchFacetDisplayContext buildDisplayContext(
+	@Reference
+	protected Portal portal;
+
+	@Reference
+	protected PortletSharedSearchRequest portletSharedSearchRequest;
+
+	private AssetTagsSearchFacetDisplayContext _buildDisplayContext(
 		PortletSharedSearchResponse portletSharedSearchResponse,
 		RenderRequest renderRequest) {
 
 		Facet facet = portletSharedSearchResponse.getFacet(
-			getAggregationName(renderRequest));
+			_getAggregationName(renderRequest));
 
 		TagFacetPortletPreferences tagFacetPortletPreferences =
 			new TagFacetPortletPreferencesImpl(
@@ -109,7 +115,7 @@ public class TagFacetPortlet extends MVCPortlet {
 			new AssetTagsFacetConfigurationImpl(facet.getFacetConfiguration());
 
 		AssetTagsSearchFacetDisplayBuilder assetTagsSearchFacetDisplayBuilder =
-			createTagsSearchFacetDisplayBuilder(renderRequest);
+			_createTagsSearchFacetDisplayBuilder(renderRequest);
 
 		assetTagsSearchFacetDisplayBuilder.setDisplayStyle(
 			tagFacetPortletPreferences.getDisplayStyle());
@@ -121,7 +127,7 @@ public class TagFacetPortlet extends MVCPortlet {
 		assetTagsSearchFacetDisplayBuilder.setMaxTerms(
 			assetTagsFacetConfiguration.getMaxTerms());
 		assetTagsSearchFacetDisplayBuilder.setPaginationStartParameterName(
-			getPaginationStartParameterName(portletSharedSearchResponse));
+			_getPaginationStartParameterName(portletSharedSearchResponse));
 
 		String parameterName = tagFacetPortletPreferences.getParameterName();
 
@@ -135,8 +141,8 @@ public class TagFacetPortlet extends MVCPortlet {
 		return assetTagsSearchFacetDisplayBuilder.build();
 	}
 
-	protected AssetTagsSearchFacetDisplayBuilder
-		createTagsSearchFacetDisplayBuilder(RenderRequest renderRequest) {
+	private AssetTagsSearchFacetDisplayBuilder
+		_createTagsSearchFacetDisplayBuilder(RenderRequest renderRequest) {
 
 		try {
 			return new AssetTagsSearchFacetDisplayBuilder(renderRequest);
@@ -146,11 +152,11 @@ public class TagFacetPortlet extends MVCPortlet {
 		}
 	}
 
-	protected String getAggregationName(RenderRequest renderRequest) {
+	private String _getAggregationName(RenderRequest renderRequest) {
 		return portal.getPortletId(renderRequest);
 	}
 
-	protected String getPaginationStartParameterName(
+	private String _getPaginationStartParameterName(
 		PortletSharedSearchResponse portletSharedSearchResponse) {
 
 		SearchResponse searchResponse =
@@ -160,11 +166,5 @@ public class TagFacetPortlet extends MVCPortlet {
 
 		return searchRequest.getPaginationStartParameterName();
 	}
-
-	@Reference
-	protected Portal portal;
-
-	@Reference
-	protected PortletSharedSearchRequest portletSharedSearchRequest;
 
 }

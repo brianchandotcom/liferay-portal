@@ -30,28 +30,35 @@ public class SnapshotRequestExecutorFixture {
 		_snapshotRequestExecutor = new ElasticsearchSnapshotRequestExecutor() {
 			{
 				createSnapshotRepositoryRequestExecutor =
-					createCreateSnapshotRepositoryRequestExecutor(
+					_createCreateSnapshotRepositoryRequestExecutor(
 						_elasticsearchClientResolver);
 				createSnapshotRequestExecutor =
-					createCreateSnapshotRequestExecutor(
+					_createCreateSnapshotRequestExecutor(
 						_elasticsearchClientResolver);
 				deleteSnapshotRequestExecutor =
-					createDeleteSnapshotRequestExecutor(
+					_createDeleteSnapshotRequestExecutor(
 						_elasticsearchClientResolver);
 				getSnapshotRepositoriesRequestExecutor =
-					createGetSnapshotRepositoriesRequestExecutor(
+					_createGetSnapshotRepositoriesRequestExecutor(
 						_elasticsearchClientResolver);
-				getSnapshotsRequestExecutor = createGetSnapshotsRequestExecutor(
-					_elasticsearchClientResolver);
+				getSnapshotsRequestExecutor =
+					_createGetSnapshotsRequestExecutor(
+						_elasticsearchClientResolver);
 				restoreSnapshotRequestExecutor =
-					createRestoreSnapshotRequestExecutor(
+					_createRestoreSnapshotRequestExecutor(
 						_elasticsearchClientResolver);
 			}
 		};
 	}
 
-	protected static CreateSnapshotRepositoryRequestExecutor
-		createCreateSnapshotRepositoryRequestExecutor(
+	protected void setElasticsearchClientResolver(
+		ElasticsearchClientResolver elasticsearchClientResolver) {
+
+		_elasticsearchClientResolver = elasticsearchClientResolver;
+	}
+
+	private static CreateSnapshotRepositoryRequestExecutor
+		_createCreateSnapshotRepositoryRequestExecutor(
 			ElasticsearchClientResolver elasticsearchClientResolver) {
 
 		return new CreateSnapshotRepositoryRequestExecutorImpl() {
@@ -61,8 +68,8 @@ public class SnapshotRequestExecutorFixture {
 		};
 	}
 
-	protected static CreateSnapshotRequestExecutor
-		createCreateSnapshotRequestExecutor(
+	private static CreateSnapshotRequestExecutor
+		_createCreateSnapshotRequestExecutor(
 			ElasticsearchClientResolver elasticsearchClientResolver) {
 
 		return new CreateSnapshotRequestExecutorImpl() {
@@ -72,8 +79,8 @@ public class SnapshotRequestExecutorFixture {
 		};
 	}
 
-	protected static DeleteSnapshotRequestExecutor
-		createDeleteSnapshotRequestExecutor(
+	private static DeleteSnapshotRequestExecutor
+		_createDeleteSnapshotRequestExecutor(
 			ElasticsearchClientResolver elasticsearchClientResolver) {
 
 		return new DeleteSnapshotRequestExecutorImpl() {
@@ -83,8 +90,8 @@ public class SnapshotRequestExecutorFixture {
 		};
 	}
 
-	protected static GetSnapshotRepositoriesRequestExecutor
-		createGetSnapshotRepositoriesRequestExecutor(
+	private static GetSnapshotRepositoriesRequestExecutor
+		_createGetSnapshotRepositoriesRequestExecutor(
 			ElasticsearchClientResolver elasticsearchClientResolver) {
 
 		return new GetSnapshotRepositoriesRequestExecutorImpl() {
@@ -94,8 +101,8 @@ public class SnapshotRequestExecutorFixture {
 		};
 	}
 
-	protected static GetSnapshotsRequestExecutor
-		createGetSnapshotsRequestExecutor(
+	private static GetSnapshotsRequestExecutor
+		_createGetSnapshotsRequestExecutor(
 			ElasticsearchClientResolver elasticsearchClientResolver) {
 
 		return new GetSnapshotsRequestExecutorImpl() {
@@ -105,8 +112,8 @@ public class SnapshotRequestExecutorFixture {
 		};
 	}
 
-	protected static RestoreSnapshotRequestExecutor
-		createRestoreSnapshotRequestExecutor(
+	private static RestoreSnapshotRequestExecutor
+		_createRestoreSnapshotRequestExecutor(
 			ElasticsearchClientResolver elasticsearchClientResolver) {
 
 		return new RestoreSnapshotRequestExecutorImpl() {
@@ -114,12 +121,6 @@ public class SnapshotRequestExecutorFixture {
 				setElasticsearchClientResolver(elasticsearchClientResolver);
 			}
 		};
-	}
-
-	protected void setElasticsearchClientResolver(
-		ElasticsearchClientResolver elasticsearchClientResolver) {
-
-		_elasticsearchClientResolver = elasticsearchClientResolver;
 	}
 
 	private ElasticsearchClientResolver _elasticsearchClientResolver;

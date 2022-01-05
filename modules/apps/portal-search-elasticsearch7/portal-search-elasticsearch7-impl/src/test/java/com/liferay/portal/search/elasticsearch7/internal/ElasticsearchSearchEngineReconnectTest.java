@@ -77,14 +77,14 @@ public class ElasticsearchSearchEngineReconnectTest {
 
 		elasticsearchSearchEngine.initialize(companyId);
 
-		reconnect(
+		_reconnect(
 			_elasticsearchSearchEngineFixture.
 				getElasticsearchConnectionManager());
 
 		elasticsearchSearchEngine.initialize(companyId);
 	}
 
-	protected void reconnect(
+	private void _reconnect(
 		ElasticsearchConnectionManager elasticsearchConnectionManager) {
 
 		ElasticsearchConnection elasticsearchConnection =

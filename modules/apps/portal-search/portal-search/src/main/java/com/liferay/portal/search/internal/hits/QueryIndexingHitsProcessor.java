@@ -47,7 +47,7 @@ public class QueryIndexingHitsProcessor implements HitsProcessor {
 		}
 
 		if (hits.getLength() >= queryConfig.getQueryIndexingThreshold()) {
-			addDocument(
+			_addDocument(
 				searchContext.getCompanyId(), searchContext.getKeywords(),
 				searchContext.getLocale());
 		}
@@ -55,15 +55,15 @@ public class QueryIndexingHitsProcessor implements HitsProcessor {
 		return true;
 	}
 
-	protected void addDocument(long companyId, String keywords, Locale locale)
+	@Reference
+	protected IndexWriterHelper indexWriterHelper;
+
+	private void _addDocument(long companyId, String keywords, Locale locale)
 		throws SearchException {
 
 		indexWriterHelper.indexKeyword(
 			companyId, keywords, 0, SuggestionConstants.TYPE_QUERY_SUGGESTION,
 			locale);
 	}
-
-	@Reference
-	protected IndexWriterHelper indexWriterHelper;
 
 }

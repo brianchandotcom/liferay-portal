@@ -82,7 +82,7 @@ public class CategoryFacetPortlet extends MVCPortlet {
 			portletSharedSearchRequest.search(renderRequest);
 
 		AssetCategoriesSearchFacetDisplayContext
-			assetCategoriesSearchFacetDisplayContext = buildDisplayContext(
+			assetCategoriesSearchFacetDisplayContext = _buildDisplayContext(
 				portletSharedSearchResponse, renderRequest);
 
 		renderRequest.setAttribute(
@@ -97,12 +97,21 @@ public class CategoryFacetPortlet extends MVCPortlet {
 		super.render(renderRequest, renderResponse);
 	}
 
-	protected AssetCategoriesSearchFacetDisplayContext buildDisplayContext(
+	@Reference
+	protected AssetCategoryLocalService assetCategoryLocalService;
+
+	@Reference
+	protected Portal portal;
+
+	@Reference
+	protected PortletSharedSearchRequest portletSharedSearchRequest;
+
+	private AssetCategoriesSearchFacetDisplayContext _buildDisplayContext(
 		PortletSharedSearchResponse portletSharedSearchResponse,
 		RenderRequest renderRequest) {
 
 		Facet facet = portletSharedSearchResponse.getFacet(
-			getAggregationName(renderRequest));
+			_getAggregationName(renderRequest));
 
 		CategoryFacetPortletPreferences categoryFacetPortletPreferences =
 			new CategoryFacetPortletPreferencesImpl(
@@ -130,7 +139,7 @@ public class CategoryFacetPortlet extends MVCPortlet {
 			assetCategoriesFacetConfiguration.getMaxTerms());
 		assetCategoriesSearchFacetDisplayBuilder.
 			setPaginationStartParameterName(
-				getPaginationStartParameterName(portletSharedSearchResponse));
+				_getPaginationStartParameterName(portletSharedSearchResponse));
 		assetCategoriesSearchFacetDisplayBuilder.setPortal(portal);
 
 		ThemeDisplay themeDisplay = portletSharedSearchResponse.getThemeDisplay(
@@ -166,11 +175,11 @@ public class CategoryFacetPortlet extends MVCPortlet {
 		return assetCategoriesSearchFacetDisplayBuilder.build();
 	}
 
-	protected String getAggregationName(RenderRequest renderRequest) {
+	private String _getAggregationName(RenderRequest renderRequest) {
 		return portal.getPortletId(renderRequest);
 	}
 
-	protected String getPaginationStartParameterName(
+	private String _getPaginationStartParameterName(
 		PortletSharedSearchResponse portletSharedSearchResponse) {
 
 		SearchResponse searchResponse =
@@ -180,14 +189,5 @@ public class CategoryFacetPortlet extends MVCPortlet {
 
 		return searchRequest.getPaginationStartParameterName();
 	}
-
-	@Reference
-	protected AssetCategoryLocalService assetCategoryLocalService;
-
-	@Reference
-	protected Portal portal;
-
-	@Reference
-	protected PortletSharedSearchRequest portletSharedSearchRequest;
 
 }

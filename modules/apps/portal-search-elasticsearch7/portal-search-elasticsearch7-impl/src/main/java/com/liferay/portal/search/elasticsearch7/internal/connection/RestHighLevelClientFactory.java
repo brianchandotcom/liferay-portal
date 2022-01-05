@@ -53,11 +53,11 @@ public class RestHighLevelClientFactory {
 
 	public RestHighLevelClient newRestHighLevelClient() {
 		RestClientBuilder restClientBuilder = RestClient.builder(
-			getHttpHosts()
+			_getHttpHosts()
 		).setHttpClientConfigCallback(
-			this::customizeHttpClient
+			this::_customizeHttpClient
 		).setRequestConfigCallback(
-			this::customizeRequestConfig
+			this::_customizeRequestConfig
 		);
 
 		return ClassLoaderUtil.getWithContextClassLoader(
@@ -132,7 +132,26 @@ public class RestHighLevelClientFactory {
 
 	}
 
-	protected CredentialsProvider createCredentialsProvider() {
+	private RestHighLevelClientFactory() {
+	}
+
+	private RestHighLevelClientFactory(
+		RestHighLevelClientFactory restHighLevelClientFactory) {
+
+		_authenticationEnabled =
+			restHighLevelClientFactory._authenticationEnabled;
+		_httpSSLEnabled = restHighLevelClientFactory._httpSSLEnabled;
+		_networkHostAddresses =
+			restHighLevelClientFactory._networkHostAddresses;
+		_password = restHighLevelClientFactory._password;
+		_truststorePassword = restHighLevelClientFactory._truststorePassword;
+		_truststorePath = restHighLevelClientFactory._truststorePath;
+		_truststoreType = restHighLevelClientFactory._truststoreType;
+		_proxyConfig = restHighLevelClientFactory._proxyConfig;
+		_userName = restHighLevelClientFactory._userName;
+	}
+
+	private CredentialsProvider _createCredentialsProvider() {
 		CredentialsProvider credentialsProvider =
 			new BasicCredentialsProvider();
 
@@ -150,7 +169,7 @@ public class RestHighLevelClientFactory {
 		return credentialsProvider;
 	}
 
-	protected SSLContext createSSLContext() {
+	private SSLContext _createSSLContext() {
 		try {
 			Path path = Paths.get(_truststorePath);
 
@@ -173,16 +192,16 @@ public class RestHighLevelClientFactory {
 		}
 	}
 
-	protected HttpAsyncClientBuilder customizeHttpClient(
+	private HttpAsyncClientBuilder _customizeHttpClient(
 		HttpAsyncClientBuilder httpAsyncClientBuilder) {
 
 		if (_authenticationEnabled) {
 			httpAsyncClientBuilder.setDefaultCredentialsProvider(
-				createCredentialsProvider());
+				_createCredentialsProvider());
 		}
 
 		if (_httpSSLEnabled) {
-			httpAsyncClientBuilder.setSSLContext(createSSLContext());
+			httpAsyncClientBuilder.setSSLContext(_createSSLContext());
 		}
 
 		if ((_proxyConfig != null) && _proxyConfig.shouldApplyConfig()) {
@@ -194,13 +213,13 @@ public class RestHighLevelClientFactory {
 		return httpAsyncClientBuilder;
 	}
 
-	protected RequestConfig.Builder customizeRequestConfig(
+	private RequestConfig.Builder _customizeRequestConfig(
 		RequestConfig.Builder requestConfigBuilder) {
 
 		return requestConfigBuilder.setSocketTimeout(120000);
 	}
 
-	protected HttpHost[] getHttpHosts() {
+	private HttpHost[] _getHttpHosts() {
 		return Stream.of(
 			_networkHostAddresses
 		).map(
@@ -208,25 +227,6 @@ public class RestHighLevelClientFactory {
 		).toArray(
 			HttpHost[]::new
 		);
-	}
-
-	private RestHighLevelClientFactory() {
-	}
-
-	private RestHighLevelClientFactory(
-		RestHighLevelClientFactory restHighLevelClientFactory) {
-
-		_authenticationEnabled =
-			restHighLevelClientFactory._authenticationEnabled;
-		_httpSSLEnabled = restHighLevelClientFactory._httpSSLEnabled;
-		_networkHostAddresses =
-			restHighLevelClientFactory._networkHostAddresses;
-		_password = restHighLevelClientFactory._password;
-		_truststorePassword = restHighLevelClientFactory._truststorePassword;
-		_truststorePath = restHighLevelClientFactory._truststorePath;
-		_truststoreType = restHighLevelClientFactory._truststoreType;
-		_proxyConfig = restHighLevelClientFactory._proxyConfig;
-		_userName = restHighLevelClientFactory._userName;
 	}
 
 	private boolean _authenticationEnabled;

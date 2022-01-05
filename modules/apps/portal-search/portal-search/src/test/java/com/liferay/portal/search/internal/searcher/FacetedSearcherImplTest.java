@@ -76,12 +76,12 @@ public class FacetedSearcherImplTest {
 
 		searchContext.setKeywords(StringPool.BLANK);
 
-		assertSearchSkipped(searchContext);
+		_assertSearchSkipped(searchContext);
 	}
 
 	@Test
 	public void testEmptySearchDisabledByDefault() throws Exception {
-		assertSearchSkipped(new SearchContext());
+		_assertSearchSkipped(new SearchContext());
 	}
 
 	@Test
@@ -90,7 +90,7 @@ public class FacetedSearcherImplTest {
 
 		searchContext.setKeywords(StringPool.FOUR_SPACES);
 
-		assertSearchSkipped(searchContext);
+		_assertSearchSkipped(searchContext);
 	}
 
 	@Test
@@ -113,34 +113,13 @@ public class FacetedSearcherImplTest {
 		);
 	}
 
-	protected void assertSearchSkipped(SearchContext searchContext)
-		throws SearchException {
-
-		Hits hits = facetedSearcher.search(searchContext);
-
-		Assert.assertEquals(hits.toString(), 0, hits.getLength());
-
-		Mockito.verifyZeroInteractions(indexSearcherHelper);
-	}
-
 	protected FacetedSearcherImpl createFacetedSearcher() {
 		return new FacetedSearcherImpl(
 			addSearchKeywordsQueryContributorHelper,
 			expandoQueryContributorHelper, indexerRegistry, indexSearcherHelper,
 			postProcessSearchQueryContributorHelper, preFilterContributorHelper,
 			searchableAssetClassNamesProvider,
-			createSearchRequestBuilderFactory());
-	}
-
-	protected SearchRequestBuilderFactory createSearchRequestBuilderFactory() {
-		SearchRequestBuilderFactoryImpl searchRequestBuilderFactoryImpl =
-			new SearchRequestBuilderFactoryImpl();
-
-		searchRequestBuilderFactoryImpl.setSearchRequestBuilderFactory(
-			new com.liferay.portal.search.internal.searcher.
-				SearchRequestBuilderFactoryImpl());
-
-		return searchRequestBuilderFactoryImpl;
+			_createSearchRequestBuilderFactory());
 	}
 
 	@Mock
@@ -168,6 +147,27 @@ public class FacetedSearcherImplTest {
 	@Mock
 	protected SearchableAssetClassNamesProvider
 		searchableAssetClassNamesProvider;
+
+	private void _assertSearchSkipped(SearchContext searchContext)
+		throws SearchException {
+
+		Hits hits = facetedSearcher.search(searchContext);
+
+		Assert.assertEquals(hits.toString(), 0, hits.getLength());
+
+		Mockito.verifyZeroInteractions(indexSearcherHelper);
+	}
+
+	private SearchRequestBuilderFactory _createSearchRequestBuilderFactory() {
+		SearchRequestBuilderFactoryImpl searchRequestBuilderFactoryImpl =
+			new SearchRequestBuilderFactoryImpl();
+
+		searchRequestBuilderFactoryImpl.setSearchRequestBuilderFactory(
+			new com.liferay.portal.search.internal.searcher.
+				SearchRequestBuilderFactoryImpl());
+
+		return searchRequestBuilderFactoryImpl;
+	}
 
 	private DocumentFixture _documentFixture;
 

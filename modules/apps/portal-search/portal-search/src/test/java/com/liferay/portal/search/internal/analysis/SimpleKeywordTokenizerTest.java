@@ -39,12 +39,12 @@ public class SimpleKeywordTokenizerTest {
 	public void testJapaneseIdeographicSpace() {
 		String ideographicSpace = "\u3000";
 
-		assertTokenize(ideographicSpace, "[]");
-		assertTokenize("simple" + ideographicSpace + "test", "[simple, test]");
-		assertTokenize(
+		_assertTokenize(ideographicSpace, "[]");
+		_assertTokenize("simple" + ideographicSpace + "test", "[simple, test]");
+		_assertTokenize(
 			"\"simple\"" + ideographicSpace + "\"test\"",
 			"[\"simple\", \"test\"]");
-		assertTokenize(
+		_assertTokenize(
 			StringBundler.concat(
 				"This", ideographicSpace, "is \"a", ideographicSpace,
 				"simple\"", ideographicSpace, "token", ideographicSpace,
@@ -61,7 +61,7 @@ public class SimpleKeywordTokenizerTest {
 
 	@Test
 	public void testTokenize() {
-		assertTokenize(
+		_assertTokenize(
 			"This is a simple token test",
 			"[This, is, a, simple, token, test]");
 	}
@@ -73,50 +73,44 @@ public class SimpleKeywordTokenizerTest {
 
 	@Test
 	public void testTokenizeStringBlank() {
-		assertTokenize(StringPool.BLANK, "[]");
+		_assertTokenize(StringPool.BLANK, "[]");
 	}
 
 	@Test
 	public void testTokenizeStringNull() {
-		assertTokenize(StringPool.NULL, "[null]");
+		_assertTokenize(StringPool.NULL, "[null]");
 	}
 
 	@Test
 	public void testTokenizeWithQuote() {
-		assertTokenize(
+		_assertTokenize(
 			"This is a \"simple token\" test",
 			"[This, is, a, \"simple token\", test]");
 
-		assertTokenize(
+		_assertTokenize(
 			"This \"is a\" simple token test",
 			"[This, \"is a\", simple, token, test]");
 
-		assertTokenize(
+		_assertTokenize(
 			"\"This is a token test\"", "[\"This is a token test\"]");
 	}
 
 	@Test
 	public void testTokenizeWithQuoteAndMixedSpace() {
-		assertTokenize(
+		_assertTokenize(
 			"This   is  a \"simple token\"   test",
 			"[This, is, a, \"simple token\", test]");
 
-		assertTokenize(
+		_assertTokenize(
 			"This  is a \"simple   token\"  test",
 			"[This, is, a, \"simple   token\", test]");
 	}
 
 	@Test
 	public void testTokenizeWithSeveralQuotes() {
-		assertTokenize(
+		_assertTokenize(
 			"\"   This is   \"   a   \"   token test   \"",
 			"[\"   This is   \", a, \"   token test   \"]");
-	}
-
-	protected void assertTokenize(String string, String expected) {
-		List<String> tokens = simpleKeywordTokenizer.tokenize(string);
-
-		Assert.assertEquals(expected, tokens.toString());
 	}
 
 	protected boolean requiresTokenization(String string) {
@@ -125,5 +119,11 @@ public class SimpleKeywordTokenizerTest {
 
 	protected final SimpleKeywordTokenizer simpleKeywordTokenizer =
 		new SimpleKeywordTokenizer();
+
+	private void _assertTokenize(String string, String expected) {
+		List<String> tokens = simpleKeywordTokenizer.tokenize(string);
+
+		Assert.assertEquals(expected, tokens.toString());
+	}
 
 }

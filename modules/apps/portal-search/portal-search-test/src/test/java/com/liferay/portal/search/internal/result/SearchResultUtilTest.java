@@ -61,7 +61,7 @@ public class SearchResultUtilTest extends BaseSearchResultUtilTestCase {
 
 		Assert.assertNull(searchResult.getSummary());
 
-		assertSearchResult(searchResult);
+		_assertSearchResult(searchResult);
 	}
 
 	@Test
@@ -111,7 +111,7 @@ public class SearchResultUtilTest extends BaseSearchResultUtilTestCase {
 			summary.getMaxContentLength());
 		Assert.assertEquals(SearchTestUtil.SUMMARY_TITLE, summary.getTitle());
 
-		assertSearchResult(searchResult);
+		_assertSearchResult(searchResult);
 	}
 
 	@Test
@@ -138,7 +138,7 @@ public class SearchResultUtilTest extends BaseSearchResultUtilTestCase {
 
 		Assert.assertSame(summary, searchResult.getSummary());
 
-		assertSearchResult(searchResult);
+		_assertSearchResult(searchResult);
 	}
 
 	@Test
@@ -160,7 +160,18 @@ public class SearchResultUtilTest extends BaseSearchResultUtilTestCase {
 			searchResult.getClassPK(), SearchTestUtil.ENTRY_CLASS_PK);
 	}
 
-	protected void assertSearchResult(SearchResult searchResult) {
+	@Override
+	protected SearchResultTranslator createSearchResultTranslator() {
+		SearchResultTranslatorImpl searchResultTranslatorImpl =
+			new SearchResultTranslatorImpl();
+
+		searchResultTranslatorImpl.setSearchResultManager(
+			_createSearchResultManagerImpl());
+
+		return searchResultTranslatorImpl;
+	}
+
+	private void _assertSearchResult(SearchResult searchResult) {
 		Assert.assertEquals(StringPool.BLANK, searchResult.getClassName());
 		Assert.assertEquals(0L, searchResult.getClassPK());
 
@@ -169,28 +180,17 @@ public class SearchResultUtilTest extends BaseSearchResultUtilTestCase {
 		assertEmptyVersions(searchResult);
 	}
 
-	protected SearchResultManagerImpl createSearchResultManagerImpl() {
+	private SearchResultManagerImpl _createSearchResultManagerImpl() {
 		SearchResultManagerImpl searchResultManagerImpl =
 			new SearchResultManagerImpl();
 
 		searchResultManagerImpl.setClassNameLocalService(classNameLocalService);
-		searchResultManagerImpl.setSummaryFactory(createSummaryFactory());
+		searchResultManagerImpl.setSummaryFactory(_createSummaryFactory());
 
 		return searchResultManagerImpl;
 	}
 
-	@Override
-	protected SearchResultTranslator createSearchResultTranslator() {
-		SearchResultTranslatorImpl searchResultTranslatorImpl =
-			new SearchResultTranslatorImpl();
-
-		searchResultTranslatorImpl.setSearchResultManager(
-			createSearchResultManagerImpl());
-
-		return searchResultTranslatorImpl;
-	}
-
-	protected SummaryFactory createSummaryFactory() {
+	private SummaryFactory _createSummaryFactory() {
 		SummaryFactoryImpl summaryFactoryImpl = new SummaryFactoryImpl();
 
 		summaryFactoryImpl.setIndexerRegistry(_indexerRegistry);

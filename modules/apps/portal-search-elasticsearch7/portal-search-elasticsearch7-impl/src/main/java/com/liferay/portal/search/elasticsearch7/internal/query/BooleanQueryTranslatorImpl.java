@@ -38,19 +38,19 @@ public class BooleanQueryTranslatorImpl implements BooleanQueryTranslator {
 
 		BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
 
-		processQueryClause(
+		_processQueryClause(
 			booleanQuery.getMustQueryClauses(), queryVisitor,
 			boolQueryBuilder::must);
 
-		processQueryClause(
+		_processQueryClause(
 			booleanQuery.getMustNotQueryClauses(), queryVisitor,
 			boolQueryBuilder::mustNot);
 
-		processQueryClause(
+		_processQueryClause(
 			booleanQuery.getShouldQueryClauses(), queryVisitor,
 			boolQueryBuilder::should);
 
-		processQueryClause(
+		_processQueryClause(
 			booleanQuery.getFilterQueryClauses(), queryVisitor,
 			boolQueryBuilder::filter);
 
@@ -69,7 +69,13 @@ public class BooleanQueryTranslatorImpl implements BooleanQueryTranslator {
 		return boolQueryBuilder;
 	}
 
-	protected void processQueryClause(
+	protected interface QueryBuilderConsumer {
+
+		public void accept(QueryBuilder queryBuilder);
+
+	}
+
+	private void _processQueryClause(
 		List<Query> queryClauses, QueryVisitor<QueryBuilder> queryVisitor,
 		QueryBuilderConsumer queryBuilderConsumer) {
 
@@ -78,12 +84,6 @@ public class BooleanQueryTranslatorImpl implements BooleanQueryTranslator {
 
 			queryBuilderConsumer.accept(queryBuilder);
 		}
-	}
-
-	protected interface QueryBuilderConsumer {
-
-		public void accept(QueryBuilder queryBuilder);
-
 	}
 
 }

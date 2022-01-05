@@ -79,13 +79,13 @@ public class DefaultSelectedFieldNamesQueryConfigContributor
 			}
 
 			if (queryConfigContributorHelper.isSelectAllLocales()) {
-				addSelectedLocalizedFieldNames(
+				_addSelectedLocalizedFieldNames(
 					queryConfigContributorHelper, selectedFieldNames,
 					LocaleUtil.toLanguageIds(
 						LanguageUtil.getAvailableLocales()));
 			}
 			else {
-				addSelectedLocalizedFieldNames(
+				_addSelectedLocalizedFieldNames(
 					queryConfigContributorHelper, selectedFieldNames,
 					LocaleUtil.toLanguageId(queryConfig.getLocale()));
 			}
@@ -97,7 +97,7 @@ public class DefaultSelectedFieldNamesQueryConfigContributor
 		}
 	}
 
-	protected void addSelectedLocalizedFieldNames(
+	private void _addSelectedLocalizedFieldNames(
 		QueryConfigContributorHelper queryConfigContributorHelper,
 		Set<String> selectedFieldNames, String... languageIds) {
 

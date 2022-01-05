@@ -69,32 +69,6 @@ public class ConnectionInformationImpl implements ConnectionInformation {
 		_nodeInformationList = connectionInformationImpl._nodeInformationList;
 	}
 
-	protected void setClusterName(String clusterName) {
-		_clusterName = clusterName;
-	}
-
-	protected void setConnectionId(String connectionId) {
-		_connectionId = connectionId;
-	}
-
-	protected void setError(String error) {
-		_error = error;
-	}
-
-	protected void setHealth(String health) {
-		_health = health;
-	}
-
-	protected void setLabels(Set<String> labels) {
-		_labels = labels;
-	}
-
-	protected void setNodeInformationList(
-		List<NodeInformation> nodeInformationList) {
-
-		_nodeInformationList = nodeInformationList;
-	}
-
 	protected static class Builder implements ConnectionInformationBuilder {
 
 		@Override
@@ -104,34 +78,34 @@ public class ConnectionInformationImpl implements ConnectionInformation {
 
 		@Override
 		public void clusterName(String clusterName) {
-			_connectionInformationImpl.setClusterName(clusterName);
+			_connectionInformationImpl._setClusterName(clusterName);
 		}
 
 		@Override
 		public void connectionId(String connectionId) {
-			_connectionInformationImpl.setConnectionId(connectionId);
+			_connectionInformationImpl._setConnectionId(connectionId);
 		}
 
 		@Override
 		public void error(String error) {
-			_connectionInformationImpl.setError(error);
+			_connectionInformationImpl._setError(error);
 		}
 
 		@Override
 		public void health(String health) {
-			_connectionInformationImpl.setHealth(health);
+			_connectionInformationImpl._setHealth(health);
 		}
 
 		@Override
 		public void labels(Set<String> labels) {
-			_connectionInformationImpl.setLabels(labels);
+			_connectionInformationImpl._setLabels(labels);
 		}
 
 		@Override
 		public void nodeInformationList(
 			List<NodeInformation> nodeInformationList) {
 
-			_connectionInformationImpl.setNodeInformationList(
+			_connectionInformationImpl._setNodeInformationList(
 				nodeInformationList);
 		}
 
@@ -141,6 +115,32 @@ public class ConnectionInformationImpl implements ConnectionInformation {
 	}
 
 	private ConnectionInformationImpl() {
+	}
+
+	private void _setClusterName(String clusterName) {
+		_clusterName = clusterName;
+	}
+
+	private void _setConnectionId(String connectionId) {
+		_connectionId = connectionId;
+	}
+
+	private void _setError(String error) {
+		_error = error;
+	}
+
+	private void _setHealth(String health) {
+		_health = health;
+	}
+
+	private void _setLabels(Set<String> labels) {
+		_labels = labels;
+	}
+
+	private void _setNodeInformationList(
+		List<NodeInformation> nodeInformationList) {
+
+		_nodeInformationList = nodeInformationList;
 	}
 
 	private String _clusterName;

@@ -72,12 +72,12 @@ public class InstantIndexesTest {
 		IndexDefinitionsHolderImpl indexDefinitionsHolderImpl =
 			new IndexDefinitionsHolderImpl();
 
-		IndexSynchronizerImpl indexSynchronizerImpl = createIndexSynchronizer(
+		IndexSynchronizerImpl indexSynchronizerImpl = _createIndexSynchronizer(
 			_elasticsearchFixture, indexDefinitionsHolderImpl);
 
 		IndexSynchronizationPortalInitializedListener
 			indexSynchronizationPortalInitializedListener =
-				createIndexSynchronizationPortalInitializedListener(
+				_createIndexSynchronizationPortalInitializedListener(
 					indexSynchronizerImpl);
 
 		Microcontainer microcontainer = new MicrocontainerImpl();
@@ -102,14 +102,14 @@ public class InstantIndexesTest {
 
 	@Test
 	public void testAutomaticIndexCreation() throws Exception {
-		deployComponents(
+		_deployComponents(
 			_eventsIndexDefinition,
 			_indexSynchronizationPortalInitializedListener,
 			_instancesAndProcessesIndexRegistrar, _tasksIndexDefinition);
 
-		startPortal();
+		_startPortal();
 
-		assertIndexesExist(
+		_assertIndexesExist(
 			EventsIndexDefinition.INDEX_NAME_WORKFLOW_EVENTS,
 			InstancesAndProcessesIndexRegistrar.INDEX_NAME_WORKFLOW_INSTANCES,
 			InstancesAndProcessesIndexRegistrar.INDEX_NAME_WORKFLOW_PROCESSES,
@@ -118,20 +118,20 @@ public class InstantIndexesTest {
 
 	@Test
 	public void testRuntimeIndexCreation() throws Exception {
-		deployComponents(
+		_deployComponents(
 			_indexSynchronizationPortalInitializedListener,
 			_instancesAndProcessesIndexRegistrar, _tasksIndexDefinition);
 
-		startPortal();
+		_startPortal();
 
-		assertIndexesExist(
+		_assertIndexesExist(
 			InstancesAndProcessesIndexRegistrar.INDEX_NAME_WORKFLOW_INSTANCES,
 			InstancesAndProcessesIndexRegistrar.INDEX_NAME_WORKFLOW_PROCESSES,
 			TasksIndexDefinition.INDEX_NAME_WORKFLOW_TASKS);
 
-		deployComponents(_eventsIndexDefinition);
+		_deployComponents(_eventsIndexDefinition);
 
-		assertIndexesExist(
+		_assertIndexesExist(
 			EventsIndexDefinition.INDEX_NAME_WORKFLOW_EVENTS,
 			InstancesAndProcessesIndexRegistrar.INDEX_NAME_WORKFLOW_INSTANCES,
 			InstancesAndProcessesIndexRegistrar.INDEX_NAME_WORKFLOW_PROCESSES,
@@ -140,31 +140,30 @@ public class InstantIndexesTest {
 
 	@Test
 	public void testStartTwiceIndexCreation() throws Exception {
-		deployComponents(
+		_deployComponents(
 			_eventsIndexDefinition,
 			_indexSynchronizationPortalInitializedListener,
 			_instancesAndProcessesIndexRegistrar, _tasksIndexDefinition);
 
-		startPortal();
+		_startPortal();
 
-		assertIndexesExist(
+		_assertIndexesExist(
 			EventsIndexDefinition.INDEX_NAME_WORKFLOW_EVENTS,
 			InstancesAndProcessesIndexRegistrar.INDEX_NAME_WORKFLOW_INSTANCES,
 			InstancesAndProcessesIndexRegistrar.INDEX_NAME_WORKFLOW_PROCESSES,
 			TasksIndexDefinition.INDEX_NAME_WORKFLOW_TASKS);
 
-		startPortal();
+		_startPortal();
 
-		assertIndexesExist(
+		_assertIndexesExist(
 			EventsIndexDefinition.INDEX_NAME_WORKFLOW_EVENTS,
 			InstancesAndProcessesIndexRegistrar.INDEX_NAME_WORKFLOW_INSTANCES,
 			InstancesAndProcessesIndexRegistrar.INDEX_NAME_WORKFLOW_PROCESSES,
 			TasksIndexDefinition.INDEX_NAME_WORKFLOW_TASKS);
 	}
 
-	protected static CreateIndexRequestExecutor
-		createCreateIndexRequestExecutor(
-			ElasticsearchClientResolver elasticsearchClientResolver) {
+	private static CreateIndexRequestExecutor _createCreateIndexRequestExecutor(
+		ElasticsearchClientResolver elasticsearchClientResolver) {
 
 		return new CreateIndexRequestExecutorImpl() {
 			{
@@ -173,8 +172,8 @@ public class InstantIndexesTest {
 		};
 	}
 
-	protected static IndexSynchronizationPortalInitializedListener
-		createIndexSynchronizationPortalInitializedListener(
+	private static IndexSynchronizationPortalInitializedListener
+		_createIndexSynchronizationPortalInitializedListener(
 			IndexSynchronizer indexSynchronizer) {
 
 		return new IndexSynchronizationPortalInitializedListener() {
@@ -184,37 +183,37 @@ public class InstantIndexesTest {
 		};
 	}
 
-	protected static IndexSynchronizerImpl createIndexSynchronizer(
+	private static IndexSynchronizerImpl _createIndexSynchronizer(
 		ElasticsearchFixture elasticsearchFixture,
 		IndexDefinitionsHolderImpl indexDefinitionsHolderImpl) {
 
 		return new IndexSynchronizerImpl() {
 			{
 				setCreateIndexRequestExecutor(
-					createCreateIndexRequestExecutor(elasticsearchFixture));
+					_createCreateIndexRequestExecutor(elasticsearchFixture));
 				setIndexDefinitionsHolder(indexDefinitionsHolderImpl);
 			}
 		};
 	}
 
-	protected void assertIndexesExist(String... expectedIndices) {
+	private void _assertIndexesExist(String... expectedIndices) {
 		GetIndexRequest getIndexRequest = new GetIndexRequest();
 
 		getIndexRequest.indices(expectedIndices);
 
-		GetIndexResponse getIndexResponse = getIndexResponse(getIndexRequest);
+		GetIndexResponse _getIndexResponse = _getIndexResponse(getIndexRequest);
 
-		String[] actualIndices = getIndexResponse.getIndices();
+		String[] actualIndices = _getIndexResponse.getIndices();
 
 		Assert.assertEquals(
 			Arrays.asList(expectedIndices), Arrays.asList(actualIndices));
 	}
 
-	protected void deployComponents(Object... components) {
+	private void _deployComponents(Object... components) {
 		_microcontainer.deploy(components);
 	}
 
-	protected GetIndexResponse getIndexResponse(
+	private GetIndexResponse _getIndexResponse(
 		GetIndexRequest getIndexRequest) {
 
 		RestHighLevelClient restHighLevelClient =
@@ -230,7 +229,7 @@ public class InstantIndexesTest {
 		}
 	}
 
-	protected void startPortal() {
+	private void _startPortal() {
 		_microcontainer.start();
 	}
 

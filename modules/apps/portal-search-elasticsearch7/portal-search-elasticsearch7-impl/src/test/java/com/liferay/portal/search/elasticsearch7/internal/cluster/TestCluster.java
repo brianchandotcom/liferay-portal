@@ -27,7 +27,7 @@ import java.util.HashMap;
 public class TestCluster {
 
 	public TestCluster(int size, Object object) {
-		String prefix = getPrefix(object);
+		String prefix = _getPrefix(object);
 
 		_elasticsearchFixtures = new ElasticsearchConnectionFixture[size];
 
@@ -42,9 +42,9 @@ public class TestCluster {
 			).discoveryTypeZen(
 				true
 			).elasticsearchConfigurationProperties(
-				createElasticsearchConfigurationProperties(
-					getClusterName(), getNodeName(number),
-					getPortRange(9310, _elasticsearchFixtures.length))
+				_createElasticsearchConfigurationProperties(
+					_getClusterName(), _getNodeName(number),
+					_getPortRange(9310, _elasticsearchFixtures.length))
 			).build();
 
 		elasticsearchConnectionFixture.createNode();
@@ -86,9 +86,8 @@ public class TestCluster {
 		destroyNodes();
 	}
 
-	protected HashMap<String, Object>
-		createElasticsearchConfigurationProperties(
-			String clusterName, String nodeName, String transportRange) {
+	private HashMap<String, Object> _createElasticsearchConfigurationProperties(
+		String clusterName, String nodeName, String transportRange) {
 
 		return HashMapBuilder.<String, Object>put(
 			"clusterName", clusterName
@@ -103,15 +102,15 @@ public class TestCluster {
 		).build();
 	}
 
-	protected String getClusterName() {
+	private String _getClusterName() {
 		return _prefix + "-Cluster";
 	}
 
-	protected String getNodeName(int number) {
+	private String _getNodeName(int number) {
 		return _prefix + "-Node-" + number;
 	}
 
-	protected String getPortRange(int startingPort, int size) {
+	private String _getPortRange(int startingPort, int size) {
 		if (size > 1) {
 			return String.valueOf(startingPort) + StringPool.MINUS +
 				String.valueOf(startingPort + size - 1);
@@ -120,7 +119,7 @@ public class TestCluster {
 		return String.valueOf(startingPort);
 	}
 
-	protected String getPrefix(Object object) {
+	private String _getPrefix(Object object) {
 		Class<?> clazz = object.getClass();
 
 		return clazz.getSimpleName();

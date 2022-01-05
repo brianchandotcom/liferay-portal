@@ -81,7 +81,7 @@ public class UserFacetPortlet extends MVCPortlet {
 			portletSharedSearchRequest.search(renderRequest);
 
 		UserSearchFacetDisplayContext userSearchFacetDisplayContext =
-			buildDisplayContext(portletSharedSearchResponse, renderRequest);
+			_buildDisplayContext(portletSharedSearchResponse, renderRequest);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, userSearchFacetDisplayContext);
@@ -94,12 +94,18 @@ public class UserFacetPortlet extends MVCPortlet {
 		super.render(renderRequest, renderResponse);
 	}
 
-	protected UserSearchFacetDisplayContext buildDisplayContext(
+	@Reference
+	protected Portal portal;
+
+	@Reference
+	protected PortletSharedSearchRequest portletSharedSearchRequest;
+
+	private UserSearchFacetDisplayContext _buildDisplayContext(
 		PortletSharedSearchResponse portletSharedSearchResponse,
 		RenderRequest renderRequest) {
 
 		Facet facet = portletSharedSearchResponse.getFacet(
-			getAggregationName(renderRequest));
+			_getAggregationName(renderRequest));
 
 		UserFacetConfiguration userFacetConfiguration =
 			new UserFacetConfigurationImpl(facet.getFacetConfiguration());
@@ -110,7 +116,7 @@ public class UserFacetPortlet extends MVCPortlet {
 					renderRequest));
 
 		UserSearchFacetDisplayBuilder userSearchFacetDisplayBuilder =
-			createUserSearchFacetDisplayBuilder(renderRequest);
+			_createUserSearchFacetDisplayBuilder(renderRequest);
 
 		userSearchFacetDisplayBuilder.setFacet(facet);
 		userSearchFacetDisplayBuilder.setFrequenciesVisible(
@@ -120,21 +126,21 @@ public class UserFacetPortlet extends MVCPortlet {
 		userSearchFacetDisplayBuilder.setMaxTerms(
 			userFacetConfiguration.getMaxTerms());
 		userSearchFacetDisplayBuilder.setPaginationStartParameterName(
-			getPaginationStartParameterName(portletSharedSearchResponse));
+			_getPaginationStartParameterName(portletSharedSearchResponse));
 
 		String parameterName = userFacetPortletPreferences.getParameterName();
 
 		userSearchFacetDisplayBuilder.setParamName(parameterName);
 
 		SearchOptionalUtil.copy(
-			() -> getParameterValuesOptional(
+			() -> _getParameterValuesOptional(
 				parameterName, portletSharedSearchResponse, renderRequest),
 			userSearchFacetDisplayBuilder::setParamValues);
 
 		return userSearchFacetDisplayBuilder.build();
 	}
 
-	protected UserSearchFacetDisplayBuilder createUserSearchFacetDisplayBuilder(
+	private UserSearchFacetDisplayBuilder _createUserSearchFacetDisplayBuilder(
 		RenderRequest renderRequest) {
 
 		try {
@@ -145,11 +151,11 @@ public class UserFacetPortlet extends MVCPortlet {
 		}
 	}
 
-	protected String getAggregationName(RenderRequest renderRequest) {
+	private String _getAggregationName(RenderRequest renderRequest) {
 		return portal.getPortletId(renderRequest);
 	}
 
-	protected String getPaginationStartParameterName(
+	private String _getPaginationStartParameterName(
 		PortletSharedSearchResponse portletSharedSearchResponse) {
 
 		SearchResponse searchResponse =
@@ -160,7 +166,7 @@ public class UserFacetPortlet extends MVCPortlet {
 		return searchRequest.getPaginationStartParameterName();
 	}
 
-	protected Optional<List<String>> getParameterValuesOptional(
+	private Optional<List<String>> _getParameterValuesOptional(
 		String parameterName,
 		PortletSharedSearchResponse portletSharedSearchResponse,
 		RenderRequest renderRequest) {
@@ -171,11 +177,5 @@ public class UserFacetPortlet extends MVCPortlet {
 
 		return optional.map(Arrays::asList);
 	}
-
-	@Reference
-	protected Portal portal;
-
-	@Reference
-	protected PortletSharedSearchRequest portletSharedSearchRequest;
 
 }

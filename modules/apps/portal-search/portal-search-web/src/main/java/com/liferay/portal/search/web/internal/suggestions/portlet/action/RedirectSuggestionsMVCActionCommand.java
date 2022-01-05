@@ -49,7 +49,32 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class RedirectSuggestionsMVCActionCommand extends BaseMVCActionCommand {
 
-	protected String addParameter(
+	@Override
+	protected void doProcessAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		hideDefaultSuccessMessage(actionRequest);
+
+		SearchBarPortletPreferences searchBarPortletPreferences =
+			new SearchBarPortletPreferencesImpl(
+				Optional.ofNullable(actionRequest.getPreferences()));
+
+		String redirectURL = _getRedirectURL(
+			actionRequest, searchBarPortletPreferences);
+
+		redirectURL = _addParameters(
+			redirectURL, actionRequest,
+			searchBarPortletPreferences.getKeywordsParameterName(),
+			searchBarPortletPreferences.getScopeParameterName());
+
+		actionResponse.sendRedirect(portal.escapeRedirect(redirectURL));
+	}
+
+	@Reference
+	protected Portal portal;
+
+	private String _addParameter(
 		String url, PortletRequest portletRequest, String parameterName) {
 
 		Optional<String> parameterValueOptional = SearchStringUtil.maybe(
@@ -62,45 +87,23 @@ public class RedirectSuggestionsMVCActionCommand extends BaseMVCActionCommand {
 		return urlOptional.orElse(url);
 	}
 
-	protected String addParameters(
+	private String _addParameters(
 		String url, PortletRequest portletRequest, String... parameterNames) {
 
 		for (String parameterName : parameterNames) {
-			url = addParameter(url, portletRequest, parameterName);
+			url = _addParameter(url, portletRequest, parameterName);
 		}
 
 		return url;
 	}
 
-	@Override
-	protected void doProcessAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		hideDefaultSuccessMessage(actionRequest);
-
-		SearchBarPortletPreferences searchBarPortletPreferences =
-			new SearchBarPortletPreferencesImpl(
-				Optional.ofNullable(actionRequest.getPreferences()));
-
-		String redirectURL = getRedirectURL(
-			actionRequest, searchBarPortletPreferences);
-
-		redirectURL = addParameters(
-			redirectURL, actionRequest,
-			searchBarPortletPreferences.getKeywordsParameterName(),
-			searchBarPortletPreferences.getScopeParameterName());
-
-		actionResponse.sendRedirect(portal.escapeRedirect(redirectURL));
-	}
-
-	protected String getFriendlyURL(ThemeDisplay themeDisplay) {
+	private String _getFriendlyURL(ThemeDisplay themeDisplay) {
 		Layout layout = themeDisplay.getLayout();
 
 		return layout.getFriendlyURL(themeDisplay.getLocale());
 	}
 
-	protected String getPath(String path, String destination) {
+	private String _getPath(String path, String destination) {
 		if (destination.charAt(0) == CharPool.SLASH) {
 			return path.concat(destination);
 		}
@@ -108,15 +111,15 @@ public class RedirectSuggestionsMVCActionCommand extends BaseMVCActionCommand {
 		return path + CharPool.SLASH + destination;
 	}
 
-	protected String getRedirectURL(
+	private String _getRedirectURL(
 		ActionRequest actionRequest,
 		SearchBarPortletPreferences searchBarPortletPreferences) {
 
-		ThemeDisplay themeDisplay = getThemeDisplay(actionRequest);
+		ThemeDisplay themeDisplay = _getThemeDisplay(actionRequest);
 
 		String url = themeDisplay.getURLCurrent();
 
-		String friendlyURL = getFriendlyURL(themeDisplay);
+		String friendlyURL = _getFriendlyURL(themeDisplay);
 
 		String path = url.substring(0, url.indexOf(friendlyURL));
 
@@ -125,18 +128,15 @@ public class RedirectSuggestionsMVCActionCommand extends BaseMVCActionCommand {
 
 		String destination = destinationOptional.orElse(friendlyURL);
 
-		return getPath(path, destination);
+		return _getPath(path, destination);
 	}
 
-	protected ThemeDisplay getThemeDisplay(ActionRequest actionRequest) {
+	private ThemeDisplay _getThemeDisplay(ActionRequest actionRequest) {
 		ThemeDisplaySupplier themeDisplaySupplier =
 			new PortletRequestThemeDisplaySupplier(actionRequest);
 
 		return themeDisplaySupplier.getThemeDisplay();
 	}
-
-	@Reference
-	protected Portal portal;
 
 	@Reference
 	private Http _http;

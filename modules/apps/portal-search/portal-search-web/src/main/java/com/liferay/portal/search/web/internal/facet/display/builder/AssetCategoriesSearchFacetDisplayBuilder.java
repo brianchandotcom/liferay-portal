@@ -52,13 +52,13 @@ public class AssetCategoriesSearchFacetDisplayBuilder implements Serializable {
 	}
 
 	public AssetCategoriesSearchFacetDisplayContext build() {
-		_buckets = collectBuckets(_facet.getFacetCollector());
+		_buckets = _collectBuckets(_facet.getFacetCollector());
 
 		AssetCategoriesSearchFacetDisplayContext
 			assetCategoriesSearchFacetDisplayContext =
-				createAssetCategoriesSearchFacetDisplayContext();
+				_createAssetCategoriesSearchFacetDisplayContext();
 
-		assetCategoriesSearchFacetDisplayContext.setCloud(isCloud());
+		assetCategoriesSearchFacetDisplayContext.setCloud(_isCloud());
 		assetCategoriesSearchFacetDisplayContext.setNothingSelected(
 			isNothingSelected());
 		assetCategoriesSearchFacetDisplayContext.
@@ -250,57 +250,13 @@ public class AssetCategoriesSearchFacetDisplayBuilder implements Serializable {
 		return assetCategoriesSearchFacetTermDisplayContexts;
 	}
 
-	protected List<Tuple> collectBuckets(FacetCollector facetCollector) {
-		List<TermCollector> termCollectors = facetCollector.getTermCollectors();
-
-		List<Tuple> buckets = new ArrayList<>(termCollectors.size());
-
-		for (TermCollector termCollector : termCollectors) {
-			long assetCategoryId = GetterUtil.getLong(termCollector.getTerm());
-
-			if (assetCategoryId > 0) {
-				AssetCategory assetCategory = _fetchAssetCategory(
-					assetCategoryId);
-
-				if (assetCategory != null) {
-					buckets.add(
-						new Tuple(assetCategory, termCollector.getFrequency()));
-				}
-			}
-		}
-
-		return buckets;
-	}
-
-	protected AssetCategoriesSearchFacetDisplayContext
-		createAssetCategoriesSearchFacetDisplayContext() {
-
-		try {
-			return new AssetCategoriesSearchFacetDisplayContext(
-				_portal.getHttpServletRequest(_renderRequest));
-		}
-		catch (ConfigurationException configurationException) {
-			throw new RuntimeException(configurationException);
-		}
-	}
-
-	protected Optional<AssetCategoriesSearchFacetTermDisplayContext>
-		getEmptyTermDisplayContext(long assetCategoryId) {
-
-		return Optional.ofNullable(
-			_fetchAssetCategory(assetCategoryId)
-		).map(
-			assetCategory -> buildTermDisplayContext(assetCategory, 0, true, 1)
-		);
-	}
-
 	protected List<AssetCategoriesSearchFacetTermDisplayContext>
 		getEmptyTermDisplayContexts() {
 
 		Stream<Long> categoryIdsStream = _selectedCategoryIds.stream();
 
 		return categoryIdsStream.map(
-			this::getEmptyTermDisplayContext
+			this::_getEmptyTermDisplayContext
 		).filter(
 			Optional::isPresent
 		).map(
@@ -336,14 +292,6 @@ public class AssetCategoriesSearchFacetDisplayBuilder implements Serializable {
 		return 1 + (popularity * multiplier);
 	}
 
-	protected boolean isCloud() {
-		if (_frequenciesVisible && _displayStyle.equals("cloud")) {
-			return true;
-		}
-
-		return false;
-	}
-
 	protected boolean isNothingSelected() {
 		if (_selectedCategoryIds.isEmpty()) {
 			return true;
@@ -368,6 +316,40 @@ public class AssetCategoriesSearchFacetDisplayBuilder implements Serializable {
 		return false;
 	}
 
+	private List<Tuple> _collectBuckets(FacetCollector facetCollector) {
+		List<TermCollector> termCollectors = facetCollector.getTermCollectors();
+
+		List<Tuple> buckets = new ArrayList<>(termCollectors.size());
+
+		for (TermCollector termCollector : termCollectors) {
+			long assetCategoryId = GetterUtil.getLong(termCollector.getTerm());
+
+			if (assetCategoryId > 0) {
+				AssetCategory assetCategory = _fetchAssetCategory(
+					assetCategoryId);
+
+				if (assetCategory != null) {
+					buckets.add(
+						new Tuple(assetCategory, termCollector.getFrequency()));
+				}
+			}
+		}
+
+		return buckets;
+	}
+
+	private AssetCategoriesSearchFacetDisplayContext
+		_createAssetCategoriesSearchFacetDisplayContext() {
+
+		try {
+			return new AssetCategoriesSearchFacetDisplayContext(
+				_portal.getHttpServletRequest(_renderRequest));
+		}
+		catch (ConfigurationException configurationException) {
+			throw new RuntimeException(configurationException);
+		}
+	}
+
 	private AssetCategory _fetchAssetCategory(long assetCategoryId) {
 		AssetCategory assetCategory =
 			_assetCategoryLocalService.fetchAssetCategory(assetCategoryId);
@@ -379,6 +361,24 @@ public class AssetCategoriesSearchFacetDisplayBuilder implements Serializable {
 		}
 
 		return null;
+	}
+
+	private Optional<AssetCategoriesSearchFacetTermDisplayContext>
+		_getEmptyTermDisplayContext(long assetCategoryId) {
+
+		return Optional.ofNullable(
+			_fetchAssetCategory(assetCategoryId)
+		).map(
+			assetCategory -> buildTermDisplayContext(assetCategory, 0, true, 1)
+		);
+	}
+
+	private boolean _isCloud() {
+		if (_frequenciesVisible && _displayStyle.equals("cloud")) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private void _removeExcludedGroup() {

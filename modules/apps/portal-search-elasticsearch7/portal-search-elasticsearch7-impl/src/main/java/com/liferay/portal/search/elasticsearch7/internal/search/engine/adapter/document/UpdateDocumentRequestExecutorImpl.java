@@ -44,30 +44,12 @@ public class UpdateDocumentRequestExecutorImpl
 			_elasticsearchBulkableDocumentRequestTranslator.translate(
 				updateDocumentRequest);
 
-		UpdateResponse updateResponse = getUpdateResponse(
+		UpdateResponse updateResponse = _getUpdateResponse(
 			updateRequest, updateDocumentRequest);
 
 		RestStatus restStatus = updateResponse.status();
 
 		return new UpdateDocumentResponse(restStatus.getStatus());
-	}
-
-	protected UpdateResponse getUpdateResponse(
-		UpdateRequest updateRequest,
-		UpdateDocumentRequest updateDocumentRequest) {
-
-		RestHighLevelClient restHighLevelClient =
-			_elasticsearchClientResolver.getRestHighLevelClient(
-				updateDocumentRequest.getConnectionId(),
-				updateDocumentRequest.isPreferLocalCluster());
-
-		try {
-			return restHighLevelClient.update(
-				updateRequest, RequestOptions.DEFAULT);
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
 	}
 
 	@Reference(target = "(search.engine.impl=Elasticsearch)", unbind = "-")
@@ -84,6 +66,24 @@ public class UpdateDocumentRequestExecutorImpl
 		ElasticsearchClientResolver elasticsearchClientResolver) {
 
 		_elasticsearchClientResolver = elasticsearchClientResolver;
+	}
+
+	private UpdateResponse _getUpdateResponse(
+		UpdateRequest updateRequest,
+		UpdateDocumentRequest updateDocumentRequest) {
+
+		RestHighLevelClient restHighLevelClient =
+			_elasticsearchClientResolver.getRestHighLevelClient(
+				updateDocumentRequest.getConnectionId(),
+				updateDocumentRequest.isPreferLocalCluster());
+
+		try {
+			return restHighLevelClient.update(
+				updateRequest, RequestOptions.DEFAULT);
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
 	}
 
 	private ElasticsearchBulkableDocumentRequestTranslator

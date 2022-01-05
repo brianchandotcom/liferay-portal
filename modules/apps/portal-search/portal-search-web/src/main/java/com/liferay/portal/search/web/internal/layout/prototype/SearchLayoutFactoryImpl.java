@@ -58,11 +58,11 @@ public class SearchLayoutFactoryImpl implements SearchLayoutFactory {
 
 	@Override
 	public void createSearchLayout(Group group) {
-		if (!shouldCreateSearchLayout(group)) {
+		if (!_shouldCreateSearchLayout(group)) {
 			return;
 		}
 
-		Optional<LayoutPrototype> optional = findSearchLayoutPrototype(
+		Optional<LayoutPrototype> optional = _findSearchLayoutPrototype(
 			group.getCompanyId());
 
 		optional.ifPresent(
@@ -76,8 +76,8 @@ public class SearchLayoutFactoryImpl implements SearchLayoutFactory {
 		try {
 			createSearchLayoutPrototype(
 				companyId, userLocalService.getDefaultUserId(companyId),
-				getSearchTitleLocalizationMap(),
-				getSearchDescriptionLocalizationMap());
+				_getSearchTitleLocalizationMap(),
+				_getSearchDescriptionLocalizationMap());
 		}
 		catch (RuntimeException runtimeException) {
 			throw runtimeException;
@@ -124,7 +124,7 @@ public class SearchLayoutFactoryImpl implements SearchLayoutFactory {
 			layoutPrototype.getDescriptionMap(), baseLayout.getKeywordsMap(),
 			baseLayout.getRobotsMap(), LayoutConstants.TYPE_PORTLET,
 			baseLayout.getTypeSettings(), baseLayout.isPrivateLayout(),
-			getFriendlyURLMap(), serviceContext);
+			_getFriendlyURLMap(), serviceContext);
 
 		UnicodeProperties unicodeProperties = group.getTypeSettingsProperties();
 
@@ -174,92 +174,12 @@ public class SearchLayoutFactoryImpl implements SearchLayoutFactory {
 		}
 	}
 
-	protected Optional<LayoutPrototype> findSearchLayoutPrototype(
-		long companyId) {
-
-		Map<Locale, String> searchTitleLocalizationMap =
-			getSearchTitleLocalizationMap();
-
-		List<LayoutPrototype> layoutPrototypes =
-			layoutPrototypeLocalService.getLayoutPrototypes(
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		Stream<LayoutPrototype> stream1 = layoutPrototypes.stream();
-
-		Stream<LayoutPrototype> stream2 = stream1.filter(
-			layoutPrototype -> isSearchLayoutPrototype(
-				layoutPrototype, companyId, searchTitleLocalizationMap));
-
-		return stream2.findAny();
-	}
-
-	protected Map<Locale, String> getFriendlyURLMap() {
-		return LocalizationUtil.getLocalizationMap("/search");
-	}
-
 	protected String getLayoutTemplateId() {
 		if (searchLayoutPrototypeCustomizer != null) {
 			return searchLayoutPrototypeCustomizer.getLayoutTemplateId();
 		}
 
 		return _defaultSearchLayoutPrototypeCustomizer.getLayoutTemplateId();
-	}
-
-	protected Map<Locale, String> getLocalizationMap(String key) {
-		return ResourceBundleUtil.getLocalizationMap(
-			LanguageResources.PORTAL_RESOURCE_BUNDLE_LOADER, key);
-	}
-
-	protected Map<Locale, String> getLocalizationMap(
-		String key, ResourceBundleLoader resourceBundleLoader) {
-
-		return ResourceBundleUtil.getLocalizationMap(resourceBundleLoader, key);
-	}
-
-	protected Map<Locale, String> getSearchDescriptionLocalizationMap() {
-		return getLocalizationMap("layout-prototype-search-description");
-	}
-
-	protected Map<Locale, String> getSearchTitleLocalizationMap() {
-		return getLocalizationMap("layout-prototype-search-title");
-	}
-
-	protected boolean hasSearchLayout(Group group) {
-		Layout layout = layoutLocalService.fetchLayoutByFriendlyURL(
-			group.getGroupId(), false, "/search");
-
-		if (layout != null) {
-			return true;
-		}
-
-		return false;
-	}
-
-	protected boolean isSearchLayoutPrototype(
-		LayoutPrototype layoutPrototype, long companyId,
-		Map<Locale, String> searchTitleLocalizationMap) {
-
-		if ((layoutPrototype.getCompanyId() == companyId) &&
-			searchTitleLocalizationMap.equals(layoutPrototype.getNameMap())) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	protected boolean shouldCreateSearchLayout(Group group) {
-		if (hasSearchLayout(group)) {
-			return false;
-		}
-
-		UnicodeProperties unicodeProperties = group.getTypeSettingsProperties();
-
-		if (unicodeProperties.get("searchLayoutCreated") != null) {
-			return false;
-		}
-
-		return true;
 	}
 
 	@Reference
@@ -281,6 +201,86 @@ public class SearchLayoutFactoryImpl implements SearchLayoutFactory {
 
 	@Reference
 	protected UserLocalService userLocalService;
+
+	private Optional<LayoutPrototype> _findSearchLayoutPrototype(
+		long companyId) {
+
+		Map<Locale, String> searchTitleLocalizationMap =
+			_getSearchTitleLocalizationMap();
+
+		List<LayoutPrototype> layoutPrototypes =
+			layoutPrototypeLocalService.getLayoutPrototypes(
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		Stream<LayoutPrototype> stream1 = layoutPrototypes.stream();
+
+		Stream<LayoutPrototype> stream2 = stream1.filter(
+			layoutPrototype -> _isSearchLayoutPrototype(
+				layoutPrototype, companyId, searchTitleLocalizationMap));
+
+		return stream2.findAny();
+	}
+
+	private Map<Locale, String> _getFriendlyURLMap() {
+		return LocalizationUtil.getLocalizationMap("/search");
+	}
+
+	private Map<Locale, String> _getLocalizationMap(String key) {
+		return ResourceBundleUtil.getLocalizationMap(
+			LanguageResources.PORTAL_RESOURCE_BUNDLE_LOADER, key);
+	}
+
+	private Map<Locale, String> _getLocalizationMap(
+		String key, ResourceBundleLoader resourceBundleLoader) {
+
+		return ResourceBundleUtil.getLocalizationMap(resourceBundleLoader, key);
+	}
+
+	private Map<Locale, String> _getSearchDescriptionLocalizationMap() {
+		return _getLocalizationMap("layout-prototype-search-description");
+	}
+
+	private Map<Locale, String> _getSearchTitleLocalizationMap() {
+		return _getLocalizationMap("layout-prototype-search-title");
+	}
+
+	private boolean _hasSearchLayout(Group group) {
+		Layout layout = layoutLocalService.fetchLayoutByFriendlyURL(
+			group.getGroupId(), false, "/search");
+
+		if (layout != null) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isSearchLayoutPrototype(
+		LayoutPrototype layoutPrototype, long companyId,
+		Map<Locale, String> searchTitleLocalizationMap) {
+
+		if ((layoutPrototype.getCompanyId() == companyId) &&
+			searchTitleLocalizationMap.equals(layoutPrototype.getNameMap())) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _shouldCreateSearchLayout(Group group) {
+		if (_hasSearchLayout(group)) {
+			return false;
+		}
+
+		UnicodeProperties unicodeProperties = group.getTypeSettingsProperties();
+
+		if (unicodeProperties.get("searchLayoutCreated") != null) {
+			return false;
+		}
+
+		return true;
+	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SearchLayoutFactoryImpl.class);

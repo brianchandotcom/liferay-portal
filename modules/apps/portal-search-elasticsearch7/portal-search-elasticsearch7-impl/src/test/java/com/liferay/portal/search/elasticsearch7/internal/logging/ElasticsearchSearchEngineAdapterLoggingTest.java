@@ -81,7 +81,7 @@ public class ElasticsearchSearchEngineAdapterLoggingTest {
 
 		elasticsearchEngineAdapterFixture.setUp();
 
-		waitForElasticsearchToStart(_elasticsearchConnectionFixture);
+		_waitForElasticsearchToStart(_elasticsearchConnectionFixture);
 
 		_searchEngineAdapter =
 			elasticsearchEngineAdapterFixture.getSearchEngineAdapter();
@@ -140,7 +140,7 @@ public class ElasticsearchSearchEngineAdapterLoggingTest {
 			});
 	}
 
-	protected void waitForElasticsearchToStart(
+	private void _waitForElasticsearchToStart(
 		ElasticsearchClientResolver elasticsearchClientResolver) {
 
 		ClusterHealthResponseUtil.getClusterHealthResponse(

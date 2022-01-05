@@ -61,17 +61,17 @@ public class SearchSearchRequestAssemblerImpl
 		_commonSearchSourceBuilderAssembler.assemble(
 			searchSourceBuilder, searchSearchRequest, searchRequest);
 
-		setFetchSource(searchSourceBuilder, searchSearchRequest);
-		setGroupBy(searchSourceBuilder, searchSearchRequest);
-		setGroupByRequests(searchSourceBuilder, searchSearchRequest);
-		setHighlighter(searchSourceBuilder, searchSearchRequest);
-		setPagination(searchSourceBuilder, searchSearchRequest);
-		setPreference(searchRequest, searchSearchRequest);
-		setSorts(searchSourceBuilder, searchSearchRequest);
-		setStats(searchSourceBuilder, searchSearchRequest);
-		setStoredFields(searchSourceBuilder, searchSearchRequest);
-		setTrackScores(searchSourceBuilder, searchSearchRequest);
-		setVersion(searchSourceBuilder, searchSearchRequest);
+		_setFetchSource(searchSourceBuilder, searchSearchRequest);
+		_setGroupBy(searchSourceBuilder, searchSearchRequest);
+		_setGroupByRequests(searchSourceBuilder, searchSearchRequest);
+		_setHighlighter(searchSourceBuilder, searchSearchRequest);
+		_setPagination(searchSourceBuilder, searchSearchRequest);
+		_setPreference(searchRequest, searchSearchRequest);
+		_setSorts(searchSourceBuilder, searchSearchRequest);
+		_setStats(searchSourceBuilder, searchSearchRequest);
+		_setStoredFields(searchSourceBuilder, searchSearchRequest);
+		_setTrackScores(searchSourceBuilder, searchSearchRequest);
+		_setVersion(searchSourceBuilder, searchSearchRequest);
 
 		searchRequest.source(searchSourceBuilder);
 	}
@@ -84,7 +84,68 @@ public class SearchSearchRequestAssemblerImpl
 			commonSearchSourceBuilderAssembler;
 	}
 
-	protected void setFetchSource(
+	@Reference(unbind = "-")
+	protected void setGroupByRequestFactory(
+		GroupByRequestFactory groupByRequestFactory) {
+
+		_groupByRequestFactory = groupByRequestFactory;
+	}
+
+	@Reference(unbind = "-")
+	protected void setGroupByTranslator(GroupByTranslator groupByTranslator) {
+		_groupByTranslator = groupByTranslator;
+	}
+
+	@Reference(unbind = "-")
+	protected void setHighlighterTranslator(
+		HighlighterTranslator highlighterTranslator) {
+
+		_highlighterTranslator = highlighterTranslator;
+	}
+
+	@Reference(unbind = "-")
+	protected void setQueryToQueryBuilderTranslator(
+		QueryToQueryBuilderTranslator queryToQueryBuilderTranslator) {
+
+		_queryToQueryBuilderTranslator = queryToQueryBuilderTranslator;
+	}
+
+	@Reference(unbind = "-")
+	protected void setSortFieldTranslator(
+		SortFieldTranslator<SortBuilder<?>> sortFieldTranslator) {
+
+		_sortFieldTranslator = sortFieldTranslator;
+	}
+
+	@Reference(unbind = "-")
+	protected void setSortTranslator(SortTranslator sortTranslator) {
+		_sortTranslator = sortTranslator;
+	}
+
+	@Reference(unbind = "-")
+	protected void setStatsRequestBuilderFactory(
+		StatsRequestBuilderFactory statsRequestBuilderFactory) {
+
+		_statsRequestBuilderFactory = statsRequestBuilderFactory;
+	}
+
+	@Reference(unbind = "-")
+	protected void setStatsTranslator(StatsTranslator statsTranslator) {
+		_statsTranslator = statsTranslator;
+	}
+
+	protected GroupByRequest translate(GroupBy groupBy) {
+		return _groupByRequestFactory.getGroupByRequest(groupBy);
+	}
+
+	protected StatsRequest translate(Stats stats) {
+		StatsRequestBuilder statsRequestBuilder =
+			_statsRequestBuilderFactory.getStatsRequestBuilder(stats);
+
+		return statsRequestBuilder.build();
+	}
+
+	private void _setFetchSource(
 		SearchSourceBuilder searchSourceBuilder,
 		SearchSearchRequest searchSearchRequest) {
 
@@ -106,7 +167,7 @@ public class SearchSearchRequestAssemblerImpl
 		}
 	}
 
-	protected void setGroupBy(
+	private void _setGroupBy(
 		SearchSourceBuilder searchSourceBuilder,
 		SearchSearchRequest searchSearchRequest) {
 
@@ -124,14 +185,7 @@ public class SearchSearchRequestAssemblerImpl
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setGroupByRequestFactory(
-		GroupByRequestFactory groupByRequestFactory) {
-
-		_groupByRequestFactory = groupByRequestFactory;
-	}
-
-	protected void setGroupByRequests(
+	private void _setGroupByRequests(
 		SearchSourceBuilder searchSourceBuilder,
 		SearchSearchRequest searchSearchRequest) {
 
@@ -152,12 +206,7 @@ public class SearchSearchRequestAssemblerImpl
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setGroupByTranslator(GroupByTranslator groupByTranslator) {
-		_groupByTranslator = groupByTranslator;
-	}
-
-	protected void setHighlighter(
+	private void _setHighlighter(
 		SearchSourceBuilder searchSourceBuilder,
 		SearchSearchRequest searchSearchRequest) {
 
@@ -178,14 +227,7 @@ public class SearchSearchRequestAssemblerImpl
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setHighlighterTranslator(
-		HighlighterTranslator highlighterTranslator) {
-
-		_highlighterTranslator = highlighterTranslator;
-	}
-
-	protected void setPagination(
+	private void _setPagination(
 		SearchSourceBuilder searchSourceBuilder,
 		SearchSearchRequest searchSearchRequest) {
 
@@ -198,7 +240,7 @@ public class SearchSearchRequestAssemblerImpl
 		}
 	}
 
-	protected void setPreference(
+	private void _setPreference(
 		SearchRequest searchRequest, SearchSearchRequest searchSearchRequest) {
 
 		String preference = searchSearchRequest.getPreference();
@@ -208,21 +250,7 @@ public class SearchSearchRequestAssemblerImpl
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setQueryToQueryBuilderTranslator(
-		QueryToQueryBuilderTranslator queryToQueryBuilderTranslator) {
-
-		_queryToQueryBuilderTranslator = queryToQueryBuilderTranslator;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSortFieldTranslator(
-		SortFieldTranslator<SortBuilder<?>> sortFieldTranslator) {
-
-		_sortFieldTranslator = sortFieldTranslator;
-	}
-
-	protected void setSorts(
+	private void _setSorts(
 		SearchSourceBuilder searchSourceBuilder,
 		SearchSearchRequest searchSearchRequest) {
 
@@ -234,12 +262,7 @@ public class SearchSearchRequestAssemblerImpl
 			searchSourceBuilder, searchSearchRequest.getSorts71());
 	}
 
-	@Reference(unbind = "-")
-	protected void setSortTranslator(SortTranslator sortTranslator) {
-		_sortTranslator = sortTranslator;
-	}
-
-	protected void setStats(
+	private void _setStats(
 		SearchSourceBuilder searchSourceBuilder,
 		SearchSearchRequest searchSearchRequest) {
 
@@ -252,19 +275,7 @@ public class SearchSearchRequestAssemblerImpl
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setStatsRequestBuilderFactory(
-		StatsRequestBuilderFactory statsRequestBuilderFactory) {
-
-		_statsRequestBuilderFactory = statsRequestBuilderFactory;
-	}
-
-	@Reference(unbind = "-")
-	protected void setStatsTranslator(StatsTranslator statsTranslator) {
-		_statsTranslator = statsTranslator;
-	}
-
-	protected void setStoredFields(
+	private void _setStoredFields(
 		SearchSourceBuilder searchSourceBuilder,
 		SearchSearchRequest searchSearchRequest) {
 
@@ -280,7 +291,7 @@ public class SearchSearchRequestAssemblerImpl
 		}
 	}
 
-	protected void setTrackScores(
+	private void _setTrackScores(
 		SearchSourceBuilder searchSourceBuilder,
 		SearchSearchRequest searchSearchRequest) {
 
@@ -290,24 +301,13 @@ public class SearchSearchRequestAssemblerImpl
 		}
 	}
 
-	protected void setVersion(
+	private void _setVersion(
 		SearchSourceBuilder searchSourceBuilder,
 		SearchSearchRequest searchSearchRequest) {
 
 		if (searchSearchRequest.getVersion() != null) {
 			searchSourceBuilder.version(searchSearchRequest.getVersion());
 		}
-	}
-
-	protected GroupByRequest translate(GroupBy groupBy) {
-		return _groupByRequestFactory.getGroupByRequest(groupBy);
-	}
-
-	protected StatsRequest translate(Stats stats) {
-		StatsRequestBuilder statsRequestBuilder =
-			_statsRequestBuilderFactory.getStatsRequestBuilder(stats);
-
-		return statsRequestBuilder.build();
 	}
 
 	private CommonSearchSourceBuilderAssembler

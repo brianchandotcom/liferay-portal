@@ -59,7 +59,7 @@ public class SearchSettingsImpl implements SearchSettings {
 	public void addFacet(Facet facet) {
 		Map<String, Facet> facets = _searchContext.getFacets();
 
-		facets.put(getAggregationName(facet), facet);
+		facets.put(_getAggregationName(facet), facet);
 	}
 
 	@Override
@@ -154,7 +154,7 @@ public class SearchSettingsImpl implements SearchSettings {
 		_scopeParameterName = scopeParameterName;
 	}
 
-	protected String getAggregationName(Facet facet) {
+	private String _getAggregationName(Facet facet) {
 		if (facet instanceof com.liferay.portal.search.facet.Facet) {
 			com.liferay.portal.search.facet.Facet osgiFacet =
 				(com.liferay.portal.search.facet.Facet)facet;

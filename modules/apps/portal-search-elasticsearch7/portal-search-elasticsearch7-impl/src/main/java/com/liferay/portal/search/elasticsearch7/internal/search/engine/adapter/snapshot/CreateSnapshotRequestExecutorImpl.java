@@ -47,7 +47,7 @@ public class CreateSnapshotRequestExecutorImpl
 			createCreateSnapshotRequest(createSnapshotRequest);
 
 		CreateSnapshotResponse elasticsearchCreateSnapshotResponse =
-			getCreateSnapshotResponse(
+			_getCreateSnapshotResponse(
 				elasticsearchCreateSnapshotRequest, createSnapshotRequest);
 
 		SnapshotDetails snapshotDetails = SnapshotInfoConverter.convert(
@@ -79,7 +79,14 @@ public class CreateSnapshotRequestExecutorImpl
 		return elasticsearchCreateSnapshotRequest;
 	}
 
-	protected CreateSnapshotResponse getCreateSnapshotResponse(
+	@Reference(unbind = "-")
+	protected void setElasticsearchClientResolver(
+		ElasticsearchClientResolver elasticsearchClientResolver) {
+
+		_elasticsearchClientResolver = elasticsearchClientResolver;
+	}
+
+	private CreateSnapshotResponse _getCreateSnapshotResponse(
 		CreateSnapshotRequest elasticsearchCreateSnapshotRequest,
 		com.liferay.portal.search.engine.adapter.snapshot.CreateSnapshotRequest
 			createSnapshotRequest) {
@@ -98,13 +105,6 @@ public class CreateSnapshotRequestExecutorImpl
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
 		}
-	}
-
-	@Reference(unbind = "-")
-	protected void setElasticsearchClientResolver(
-		ElasticsearchClientResolver elasticsearchClientResolver) {
-
-		_elasticsearchClientResolver = elasticsearchClientResolver;
 	}
 
 	private ElasticsearchClientResolver _elasticsearchClientResolver;

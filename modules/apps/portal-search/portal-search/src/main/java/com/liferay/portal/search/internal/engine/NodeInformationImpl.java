@@ -37,14 +37,6 @@ public class NodeInformationImpl implements NodeInformation {
 		_version = nodeInformationImpl._version;
 	}
 
-	protected void setName(String name) {
-		_name = name;
-	}
-
-	protected void setVersion(String version) {
-		_version = version;
-	}
-
 	protected static class Builder implements NodeInformationBuilder {
 
 		@Override
@@ -54,12 +46,12 @@ public class NodeInformationImpl implements NodeInformation {
 
 		@Override
 		public void name(String name) {
-			_nodeInformationImpl.setName(name);
+			_nodeInformationImpl._setName(name);
 		}
 
 		@Override
 		public void version(String version) {
-			_nodeInformationImpl.setVersion(version);
+			_nodeInformationImpl._setVersion(version);
 		}
 
 		private final NodeInformationImpl _nodeInformationImpl =
@@ -68,6 +60,14 @@ public class NodeInformationImpl implements NodeInformation {
 	}
 
 	private NodeInformationImpl() {
+	}
+
+	private void _setName(String name) {
+		_name = name;
+	}
+
+	private void _setVersion(String version) {
+		_version = version;
 	}
 
 	private String _name;

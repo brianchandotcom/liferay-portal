@@ -103,7 +103,7 @@ public class ElasticsearchAggregationVisitor
 
 	@Override
 	public AggregationBuilder visit(AvgAggregation avgAggregation) {
-		return assemble(
+		return _assemble(
 			AggregationBuilders.avg(avgAggregation.getName()), avgAggregation);
 	}
 
@@ -119,7 +119,7 @@ public class ElasticsearchAggregationVisitor
 				cardinalityAggregation.getPrecisionThreshold());
 		}
 
-		return assemble(cardinalityAggregationBuilder, cardinalityAggregation);
+		return _assemble(cardinalityAggregationBuilder, cardinalityAggregation);
 	}
 
 	@Override
@@ -135,7 +135,7 @@ public class ElasticsearchAggregationVisitor
 	public AggregationBuilder visit(
 		DateHistogramAggregation dateHistogramAggregation) {
 
-		return assemble(
+		return _assemble(
 			_dateHistogramAggregationTranslator.translate(
 				dateHistogramAggregation),
 			dateHistogramAggregation);
@@ -270,7 +270,7 @@ public class ElasticsearchAggregationVisitor
 
 	@Override
 	public AggregationBuilder visit(GlobalAggregation globalAggregation) {
-		return assemble(
+		return _assemble(
 			AggregationBuilders.global(globalAggregation.getName()),
 			globalAggregation);
 	}
@@ -307,7 +307,7 @@ public class ElasticsearchAggregationVisitor
 
 	@Override
 	public AggregationBuilder visit(NestedAggregation nestedAggregation) {
-		return assemble(
+		return _assemble(
 			AggregationBuilders.nested(
 				nestedAggregation.getName(), nestedAggregation.getPath()),
 			nestedAggregation);
@@ -414,7 +414,7 @@ public class ElasticsearchAggregationVisitor
 				reverseNestedAggregation.getPath());
 		}
 
-		return assemble(
+		return _assemble(
 			reverseNestedAggregationBuilder, reverseNestedAggregation);
 	}
 
@@ -428,7 +428,7 @@ public class ElasticsearchAggregationVisitor
 				samplerAggregation.getShardSize());
 		}
 
-		return assemble(samplerAggregationBuilder, samplerAggregation);
+		return _assemble(samplerAggregationBuilder, samplerAggregation);
 	}
 
 	@Override
@@ -443,7 +443,7 @@ public class ElasticsearchAggregationVisitor
 	public AggregationBuilder visit(
 		SignificantTermsAggregation significantTermsAggregation) {
 
-		return assemble(
+		return _assemble(
 			_significantTermsAggregationTranslator.translate(
 				significantTermsAggregation),
 			significantTermsAggregation);
@@ -475,7 +475,7 @@ public class ElasticsearchAggregationVisitor
 
 	@Override
 	public AggregationBuilder visit(TermsAggregation termsAggregation) {
-		return assemble(
+		return _assemble(
 			_termsAggregationTranslator.translate(termsAggregation),
 			termsAggregation);
 	}
@@ -502,29 +502,6 @@ public class ElasticsearchAggregationVisitor
 
 		return _weightedAvgAggregationTranslator.translate(
 			weightedAvgAggregation, this, _pipelineAggregationTranslator);
-	}
-
-	protected <AB extends AggregationBuilder> AB assemble(
-		AB aggregationBuilder, Aggregation aggregation) {
-
-		AggregationBuilderAssemblerImpl aggregationBuilderAssemblerImpl =
-			_aggregationBuilderAssemblerFactory.getAggregationBuilderAssembler(
-				this);
-
-		return aggregationBuilderAssemblerImpl.assembleAggregation(
-			aggregationBuilder, aggregation);
-	}
-
-	protected <VSAB extends ValuesSourceAggregationBuilder> VSAB assemble(
-		VSAB valuesSourceAggregationBuilder,
-		FieldAggregation fieldAggregation) {
-
-		AggregationBuilderAssemblerImpl aggregationBuilderAssemblerImpl =
-			_aggregationBuilderAssemblerFactory.getAggregationBuilderAssembler(
-				this);
-
-		return aggregationBuilderAssemblerImpl.assembleFieldAggregation(
-			valuesSourceAggregationBuilder, fieldAggregation);
 	}
 
 	@Reference(unbind = "-")
@@ -639,6 +616,29 @@ public class ElasticsearchAggregationVisitor
 		WeightedAvgAggregationTranslator weightedAvgAggregationTranslator) {
 
 		_weightedAvgAggregationTranslator = weightedAvgAggregationTranslator;
+	}
+
+	private <AB extends AggregationBuilder> AB _assemble(
+		AB aggregationBuilder, Aggregation aggregation) {
+
+		AggregationBuilderAssemblerImpl aggregationBuilderAssemblerImpl =
+			_aggregationBuilderAssemblerFactory.getAggregationBuilderAssembler(
+				this);
+
+		return aggregationBuilderAssemblerImpl.assembleAggregation(
+			aggregationBuilder, aggregation);
+	}
+
+	private <VSAB extends ValuesSourceAggregationBuilder> VSAB _assemble(
+		VSAB valuesSourceAggregationBuilder,
+		FieldAggregation fieldAggregation) {
+
+		AggregationBuilderAssemblerImpl aggregationBuilderAssemblerImpl =
+			_aggregationBuilderAssemblerFactory.getAggregationBuilderAssembler(
+				this);
+
+		return aggregationBuilderAssemblerImpl.assembleFieldAggregation(
+			valuesSourceAggregationBuilder, fieldAggregation);
 	}
 
 	private AggregationBuilderAssemblerFactory

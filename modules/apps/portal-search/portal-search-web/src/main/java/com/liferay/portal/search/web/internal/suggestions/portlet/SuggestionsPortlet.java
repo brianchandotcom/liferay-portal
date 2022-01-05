@@ -84,7 +84,7 @@ public class SuggestionsPortlet extends MVCPortlet {
 			portletSharedSearchRequest.search(renderRequest);
 
 		SuggestionsPortletDisplayContext suggestionsPortletDisplayContext =
-			buildDisplayContext(
+			_buildDisplayContext(
 				suggestionsPortletPreferences, portletSharedSearchResponse,
 				renderRequest);
 
@@ -101,48 +101,6 @@ public class SuggestionsPortlet extends MVCPortlet {
 		super.render(renderRequest, renderResponse);
 	}
 
-	protected static <T> void copy(Supplier<Optional<T>> from, Consumer<T> to) {
-		Optional<T> optional = from.get();
-
-		optional.ifPresent(to);
-	}
-
-	protected SuggestionsPortletDisplayContext buildDisplayContext(
-		SuggestionsPortletPreferences suggestionsPortletPreferences,
-		PortletSharedSearchResponse portletSharedSearchResponse,
-		RenderRequest renderRequest) {
-
-		SuggestionsPortletDisplayBuilder suggestionsPortletDisplayBuilder =
-			new SuggestionsPortletDisplayBuilder(html, http);
-
-		copy(
-			portletSharedSearchResponse::getKeywordsOptional,
-			suggestionsPortletDisplayBuilder::setKeywords);
-
-		SearchSettings searchSettings =
-			portletSharedSearchResponse.getSearchSettings();
-
-		copy(
-			searchSettings::getKeywordsParameterName,
-			suggestionsPortletDisplayBuilder::setKeywordsParameterName);
-
-		suggestionsPortletDisplayBuilder.setRelatedQueriesSuggestions(
-			portletSharedSearchResponse.getRelatedQueriesSuggestions());
-		suggestionsPortletDisplayBuilder.setRelatedQueriesSuggestionsEnabled(
-			suggestionsPortletPreferences.isRelatedQueriesSuggestionsEnabled());
-		suggestionsPortletDisplayBuilder.setSearchURL(
-			portletSharedRequestHelper.getCompleteURL(renderRequest));
-
-		copy(
-			portletSharedSearchResponse::getSpellCheckSuggestionOptional,
-			suggestionsPortletDisplayBuilder::setSpellCheckSuggestion);
-
-		suggestionsPortletDisplayBuilder.setSpellCheckSuggestionEnabled(
-			suggestionsPortletPreferences.isSpellCheckSuggestionEnabled());
-
-		return suggestionsPortletDisplayBuilder.build();
-	}
-
 	@Reference
 	protected Html html;
 
@@ -157,5 +115,47 @@ public class SuggestionsPortlet extends MVCPortlet {
 
 	@Reference
 	protected PortletSharedSearchRequest portletSharedSearchRequest;
+
+	private static <T> void _copy(Supplier<Optional<T>> from, Consumer<T> to) {
+		Optional<T> optional = from.get();
+
+		optional.ifPresent(to);
+	}
+
+	private SuggestionsPortletDisplayContext _buildDisplayContext(
+		SuggestionsPortletPreferences suggestionsPortletPreferences,
+		PortletSharedSearchResponse portletSharedSearchResponse,
+		RenderRequest renderRequest) {
+
+		SuggestionsPortletDisplayBuilder suggestionsPortletDisplayBuilder =
+			new SuggestionsPortletDisplayBuilder(html, http);
+
+		_copy(
+			portletSharedSearchResponse::getKeywordsOptional,
+			suggestionsPortletDisplayBuilder::setKeywords);
+
+		SearchSettings searchSettings =
+			portletSharedSearchResponse.getSearchSettings();
+
+		_copy(
+			searchSettings::getKeywordsParameterName,
+			suggestionsPortletDisplayBuilder::setKeywordsParameterName);
+
+		suggestionsPortletDisplayBuilder.setRelatedQueriesSuggestions(
+			portletSharedSearchResponse.getRelatedQueriesSuggestions());
+		suggestionsPortletDisplayBuilder.setRelatedQueriesSuggestionsEnabled(
+			suggestionsPortletPreferences.isRelatedQueriesSuggestionsEnabled());
+		suggestionsPortletDisplayBuilder.setSearchURL(
+			portletSharedRequestHelper.getCompleteURL(renderRequest));
+
+		_copy(
+			portletSharedSearchResponse::getSpellCheckSuggestionOptional,
+			suggestionsPortletDisplayBuilder::setSpellCheckSuggestion);
+
+		suggestionsPortletDisplayBuilder.setSpellCheckSuggestionEnabled(
+			suggestionsPortletPreferences.isSpellCheckSuggestionEnabled());
+
+		return suggestionsPortletDisplayBuilder.build();
+	}
 
 }

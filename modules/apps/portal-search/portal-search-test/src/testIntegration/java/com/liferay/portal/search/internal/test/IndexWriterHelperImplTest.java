@@ -61,7 +61,7 @@ public class IndexWriterHelperImplTest {
 
 	@Before
 	public void setUp() throws Exception {
-		reindex(null);
+		_reindex(null);
 
 		Thread.sleep(10000);
 	}
@@ -70,13 +70,13 @@ public class IndexWriterHelperImplTest {
 	public void testReindexWithClassName() throws Exception {
 		Map<Long, Long> originalCounts = new HashMap<>();
 
-		addBlogEntry();
+		_addBlogEntry();
 
-		populateOriginalCounts(originalCounts, _CLASS_NAME_BLOGS_ENTRY, false);
+		_populateOriginalCounts(originalCounts, _CLASS_NAME_BLOGS_ENTRY, false);
 
-		reindex(_CLASS_NAME_BLOGS_ENTRY);
+		_reindex(_CLASS_NAME_BLOGS_ENTRY);
 
-		assertReindexedCounts(originalCounts, _CLASS_NAME_BLOGS_ENTRY);
+		_assertReindexedCounts(originalCounts, _CLASS_NAME_BLOGS_ENTRY);
 	}
 
 	@Test
@@ -84,20 +84,21 @@ public class IndexWriterHelperImplTest {
 		Map<Long, Long> originalBlogEntryCounts = new HashMap<>();
 		Map<Long, Long> originalConfigurationModelCounts = new HashMap<>();
 
-		addBlogEntry();
+		_addBlogEntry();
 
-		populateOriginalCounts(
+		_populateOriginalCounts(
 			originalBlogEntryCounts, _CLASS_NAME_BLOGS_ENTRY, false);
 
-		populateOriginalCounts(
+		_populateOriginalCounts(
 			originalConfigurationModelCounts, _CLASS_NAME_CONFIGURATION_MODEL,
 			true);
 
-		reindex(null);
+		_reindex(null);
 
-		assertReindexedCounts(originalBlogEntryCounts, _CLASS_NAME_BLOGS_ENTRY);
+		_assertReindexedCounts(
+			originalBlogEntryCounts, _CLASS_NAME_BLOGS_ENTRY);
 
-		assertReindexedCounts(
+		_assertReindexedCounts(
 			originalConfigurationModelCounts, _CLASS_NAME_CONFIGURATION_MODEL);
 	}
 
@@ -105,17 +106,17 @@ public class IndexWriterHelperImplTest {
 	public void testReindexWithSystemIndexerClassName() throws Exception {
 		Map<Long, Long> originalConfigurationModelCounts = new HashMap<>();
 
-		populateOriginalCounts(
+		_populateOriginalCounts(
 			originalConfigurationModelCounts, _CLASS_NAME_CONFIGURATION_MODEL,
 			true);
 
-		reindex(_CLASS_NAME_CONFIGURATION_MODEL_INDEXER);
+		_reindex(_CLASS_NAME_CONFIGURATION_MODEL_INDEXER);
 
-		assertReindexedCounts(
+		_assertReindexedCounts(
 			originalConfigurationModelCounts, _CLASS_NAME_CONFIGURATION_MODEL);
 	}
 
-	protected void addBlogEntry() throws Exception {
+	private void _addBlogEntry() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				TestPropsValues.getGroupId());
@@ -125,7 +126,7 @@ public class IndexWriterHelperImplTest {
 			serviceContext);
 	}
 
-	protected void assertCountEqualsZero(
+	private void _assertCountEqualsZero(
 		String className, long companyId, long count) {
 
 		Assert.assertTrue(
@@ -134,7 +135,7 @@ public class IndexWriterHelperImplTest {
 			count == 0);
 	}
 
-	protected void assertCountGreaterThanZero(
+	private void _assertCountGreaterThanZero(
 		String className, long companyId, long count) {
 
 		Assert.assertTrue(
@@ -143,10 +144,10 @@ public class IndexWriterHelperImplTest {
 			count > 0);
 	}
 
-	protected void assertReindexedCounts(
+	private void _assertReindexedCounts(
 		Map<Long, Long> originalCounts, String className) {
 
-		for (long companyId : getCompanyIds()) {
+		for (long companyId : _getCompanyIds()) {
 			CountSearchRequest countSearchRequest = new CountSearchRequest();
 
 			countSearchRequest.setIndexNames("liferay-" + companyId);
@@ -168,7 +169,7 @@ public class IndexWriterHelperImplTest {
 		}
 	}
 
-	protected long[] getCompanyIds() {
+	private long[] _getCompanyIds() {
 		long[] companyIds = _portalInstancesLocalService.getCompanyIds();
 
 		if (!ArrayUtil.contains(companyIds, CompanyConstants.SYSTEM)) {
@@ -179,11 +180,11 @@ public class IndexWriterHelperImplTest {
 		return companyIds;
 	}
 
-	protected void populateOriginalCounts(
+	private void _populateOriginalCounts(
 		Map<Long, Long> originalCounts, String className,
 		boolean systemIndexer) {
 
-		for (long companyId : getCompanyIds()) {
+		for (long companyId : _getCompanyIds()) {
 			CountSearchRequest countSearchRequest = new CountSearchRequest();
 
 			countSearchRequest.setIndexNames("liferay-" + companyId);
@@ -198,21 +199,21 @@ public class IndexWriterHelperImplTest {
 
 			if (systemIndexer) {
 				if (companyId == CompanyConstants.SYSTEM) {
-					assertCountGreaterThanZero(
+					_assertCountGreaterThanZero(
 						className, companyId, countSearchResponse.getCount());
 				}
 				else {
-					assertCountEqualsZero(
+					_assertCountEqualsZero(
 						className, companyId, countSearchResponse.getCount());
 				}
 			}
 			else {
 				if (companyId == CompanyConstants.SYSTEM) {
-					assertCountEqualsZero(
+					_assertCountEqualsZero(
 						className, companyId, countSearchResponse.getCount());
 				}
 				else {
-					assertCountGreaterThanZero(
+					_assertCountGreaterThanZero(
 						className, companyId, countSearchResponse.getCount());
 				}
 			}
@@ -221,11 +222,11 @@ public class IndexWriterHelperImplTest {
 		}
 	}
 
-	protected void reindex(String className) throws Exception {
+	private void _reindex(String className) throws Exception {
 		String jobName = "reindex-".concat(_portalUUID.generate());
 
 		_indexWriterHelper.reindex(
-			UserConstants.USER_ID_DEFAULT, jobName, getCompanyIds(), className,
+			UserConstants.USER_ID_DEFAULT, jobName, _getCompanyIds(), className,
 			null);
 	}
 

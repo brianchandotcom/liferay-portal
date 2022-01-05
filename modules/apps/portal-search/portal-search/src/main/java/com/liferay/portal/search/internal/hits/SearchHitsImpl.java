@@ -70,18 +70,6 @@ public class SearchHitsImpl implements SearchHits, Serializable {
 		_searchHits.add(searchHit);
 	}
 
-	protected void setMaxScore(float maxScore) {
-		_maxScore = maxScore;
-	}
-
-	protected void setSearchTime(long searchTime) {
-		_searchTime = searchTime;
-	}
-
-	protected void setTotalHits(long totalHits) {
-		_totalHits = totalHits;
-	}
-
 	protected static class Builder implements SearchHitsBuilder {
 
 		@Override
@@ -122,27 +110,39 @@ public class SearchHitsImpl implements SearchHits, Serializable {
 
 		@Override
 		public SearchHitsBuilder maxScore(float maxScore) {
-			_searchHitsImpl.setMaxScore(maxScore);
+			_searchHitsImpl._setMaxScore(maxScore);
 
 			return this;
 		}
 
 		@Override
 		public SearchHitsBuilder searchTime(long searchTime) {
-			_searchHitsImpl.setSearchTime(searchTime);
+			_searchHitsImpl._setSearchTime(searchTime);
 
 			return this;
 		}
 
 		@Override
 		public SearchHitsBuilder totalHits(long totalHits) {
-			_searchHitsImpl.setTotalHits(totalHits);
+			_searchHitsImpl._setTotalHits(totalHits);
 
 			return this;
 		}
 
 		private final SearchHitsImpl _searchHitsImpl = new SearchHitsImpl();
 
+	}
+
+	private void _setMaxScore(float maxScore) {
+		_maxScore = maxScore;
+	}
+
+	private void _setSearchTime(long searchTime) {
+		_searchTime = searchTime;
+	}
+
+	private void _setTotalHits(long totalHits) {
+		_totalHits = totalHits;
 	}
 
 	private float _maxScore;

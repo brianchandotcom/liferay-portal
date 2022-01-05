@@ -45,18 +45,8 @@ public class PostProcessSearchQueryContributorHelperImpl
 			return;
 		}
 
-		addIndexerProvidedClauses(
+		_addIndexerProvidedClauses(
 			booleanQuery, booleanFilter, indexers, searchContext);
-	}
-
-	protected void addIndexerProvidedClauses(
-		BooleanQuery booleanQuery, BooleanFilter booleanFilter,
-		Collection<Indexer<?>> indexers, SearchContext searchContext) {
-
-		for (Indexer<?> indexer : indexers) {
-			_addIndexerProvidedSearchTerms(
-				booleanQuery, indexer, booleanFilter, searchContext);
-		}
 	}
 
 	protected IndexerPostProcessor[] getIndexerPostProcessors(
@@ -70,7 +60,39 @@ public class PostProcessSearchQueryContributorHelperImpl
 		}
 	}
 
-	protected void postProcessSearchQuery(
+	private void _addIndexerProvidedClauses(
+		BooleanQuery booleanQuery, BooleanFilter booleanFilter,
+		Collection<Indexer<?>> indexers, SearchContext searchContext) {
+
+		for (Indexer<?> indexer : indexers) {
+			_addIndexerProvidedSearchTerms(
+				booleanQuery, indexer, booleanFilter, searchContext);
+		}
+	}
+
+	private void _addIndexerProvidedSearchTerms(
+		BooleanQuery booleanQuery, Indexer<?> indexer,
+		BooleanFilter booleanFilter, SearchContext searchContext) {
+
+		boolean luceneSyntax = GetterUtil.getBoolean(
+			searchContext.getAttribute(
+				SearchContextAttributes.ATTRIBUTE_KEY_LUCENE_SYNTAX));
+
+		if (!luceneSyntax) {
+			_postProcessSearchQuery(
+				booleanQuery, booleanFilter, searchContext, indexer);
+		}
+
+		for (IndexerPostProcessor indexerPostProcessor :
+				getIndexerPostProcessors(indexer)) {
+
+			_postProcessSearchQuery(
+				booleanQuery, booleanFilter, searchContext,
+				indexerPostProcessor);
+		}
+	}
+
+	private void _postProcessSearchQuery(
 		BooleanQuery booleanQuery, BooleanFilter booleanFilter,
 		SearchContext searchContext, Indexer<?> indexer) {
 
@@ -86,7 +108,7 @@ public class PostProcessSearchQueryContributorHelperImpl
 		}
 	}
 
-	protected void postProcessSearchQuery(
+	private void _postProcessSearchQuery(
 		BooleanQuery searchQuery, BooleanFilter booleanFilter,
 		SearchContext searchContext,
 		IndexerPostProcessor indexerPostProcessor) {
@@ -100,28 +122,6 @@ public class PostProcessSearchQueryContributorHelperImpl
 		}
 		catch (Exception exception) {
 			throw new RuntimeException(exception);
-		}
-	}
-
-	private void _addIndexerProvidedSearchTerms(
-		BooleanQuery booleanQuery, Indexer<?> indexer,
-		BooleanFilter booleanFilter, SearchContext searchContext) {
-
-		boolean luceneSyntax = GetterUtil.getBoolean(
-			searchContext.getAttribute(
-				SearchContextAttributes.ATTRIBUTE_KEY_LUCENE_SYNTAX));
-
-		if (!luceneSyntax) {
-			postProcessSearchQuery(
-				booleanQuery, booleanFilter, searchContext, indexer);
-		}
-
-		for (IndexerPostProcessor indexerPostProcessor :
-				getIndexerPostProcessors(indexer)) {
-
-			postProcessSearchQuery(
-				booleanQuery, booleanFilter, searchContext,
-				indexerPostProcessor);
 		}
 	}
 

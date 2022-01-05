@@ -294,12 +294,13 @@ public class ElasticsearchSearchEngineAdapterSnapshotRequestTest {
 		return new ElasticsearchSearchEngineAdapterImpl() {
 			{
 				setSnapshotRequestExecutor(
-					createSnapshotRequestExecutor(elasticsearchClientResolver));
+					_createSnapshotRequestExecutor(
+						elasticsearchClientResolver));
 			}
 		};
 	}
 
-	protected static SnapshotRequestExecutor createSnapshotRequestExecutor(
+	private static SnapshotRequestExecutor _createSnapshotRequestExecutor(
 		ElasticsearchClientResolver elasticsearchClientResolver) {
 
 		SnapshotRequestExecutorFixture snapshotRequestExecutorFixture =

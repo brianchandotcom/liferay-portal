@@ -94,18 +94,6 @@ public class ReindexSingleIndexerBackgroundTaskExecutor
 		}
 	}
 
-	protected boolean isSystemIndexer(Indexer<?> indexer) {
-		if (systemIndexers.size() > 0) {
-			for (Indexer<?> systemIndexer : systemIndexers) {
-				if (indexer.equals(systemIndexer)) {
-					return true;
-				}
-			}
-		}
-
-		return false;
-	}
-
 	@Override
 	protected void reindex(String className, long[] companyIds)
 		throws Exception {
@@ -119,7 +107,7 @@ public class ReindexSingleIndexerBackgroundTaskExecutor
 		Collection<SearchEngine> searchEngines =
 			searchEngineHelper.getSearchEngines();
 
-		boolean systemIndexer = isSystemIndexer(indexer);
+		boolean systemIndexer = _isSystemIndexer(indexer);
 
 		for (long companyId : companyIds) {
 			if (((companyId == CompanyConstants.SYSTEM) && !systemIndexer) ||
@@ -169,6 +157,18 @@ public class ReindexSingleIndexerBackgroundTaskExecutor
 	protected SearchEngineHelper searchEngineHelper;
 
 	protected ServiceTrackerList<Indexer<?>> systemIndexers;
+
+	private boolean _isSystemIndexer(Indexer<?> indexer) {
+		if (systemIndexers.size() > 0) {
+			for (Indexer<?> systemIndexer : systemIndexers) {
+				if (indexer.equals(systemIndexer)) {
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ReindexSingleIndexerBackgroundTaskExecutor.class);

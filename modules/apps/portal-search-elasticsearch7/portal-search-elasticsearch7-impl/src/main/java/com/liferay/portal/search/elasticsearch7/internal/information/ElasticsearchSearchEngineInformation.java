@@ -82,7 +82,7 @@ public class ElasticsearchSearchEngineInformation
 		ElasticsearchConnection elasticsearchConnection =
 			elasticsearchConnectionManager.getElasticsearchConnection();
 
-		addMainConnection(elasticsearchConnection, connectionInformationList);
+		_addMainConnection(elasticsearchConnection, connectionInformationList);
 
 		String filterString = String.format(
 			"(&(service.factoryPid=%s)(active=%s)",
@@ -108,7 +108,7 @@ public class ElasticsearchSearchEngineInformation
 			!elasticsearchConnection.equals(
 				localClusterElasticsearchConnection)) {
 
-			addCCRConnection(
+			_addCCRConnection(
 				localClusterElasticsearchConnection, connectionInformationList);
 
 			filterString = filterString.concat(
@@ -120,7 +120,7 @@ public class ElasticsearchSearchEngineInformation
 		filterString = filterString.concat(")");
 
 		try {
-			addActiveConnections(filterString, connectionInformationList);
+			_addActiveConnections(filterString, connectionInformationList);
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
@@ -134,14 +134,14 @@ public class ElasticsearchSearchEngineInformation
 	@Override
 	public String getNodesString() {
 		try {
-			String clusterNodesString = getClusterNodesString(
+			String clusterNodesString = _getClusterNodesString(
 				elasticsearchConnectionManager.getRestHighLevelClient());
 
 			if (operationModeResolver.isProductionModeEnabled() &&
 				elasticsearchConnectionManager.
 					isCrossClusterReplicationEnabled()) {
 
-				String localClusterNodesString = getClusterNodesString(
+				String localClusterNodesString = _getClusterNodesString(
 					elasticsearchConnectionManager.getRestHighLevelClient(
 						null, true));
 
@@ -170,7 +170,33 @@ public class ElasticsearchSearchEngineInformation
 		return vendor;
 	}
 
-	protected void addActiveConnections(
+	@Reference
+	protected ConfigurationAdmin configurationAdmin;
+
+	@Reference
+	protected ConnectionInformationBuilderFactory
+		connectionInformationBuilderFactory;
+
+	@Reference
+	protected volatile ElasticsearchConfigurationWrapper
+		elasticsearchConfigurationWrapper;
+
+	@Reference
+	protected ElasticsearchConnectionManager elasticsearchConnectionManager;
+
+	@Reference
+	protected ElasticsearchSearchEngine elasticsearchSearchEngine;
+
+	@Reference
+	protected NodeInformationBuilderFactory nodeInformationBuilderFactory;
+
+	@Reference
+	protected OperationModeResolver operationModeResolver;
+
+	@Reference
+	protected SearchEngineAdapter searchEngineAdapter;
+
+	private void _addActiveConnections(
 			String filterString,
 			List<ConnectionInformation> connectionInformationList)
 		throws Exception {
@@ -188,22 +214,22 @@ public class ElasticsearchSearchEngineInformation
 
 			String connectionId = (String)properties.get("connectionId");
 
-			addConnectionInformation(
+			_addConnectionInformation(
 				elasticsearchConnectionManager.getElasticsearchConnection(
 					connectionId),
 				connectionInformationList, null);
 		}
 	}
 
-	protected void addCCRConnection(
+	private void _addCCRConnection(
 		ElasticsearchConnection elasticsearchConnection,
 		List<ConnectionInformation> connectionInformationList) {
 
-		addConnectionInformation(
+		_addConnectionInformation(
 			elasticsearchConnection, connectionInformationList, "read");
 	}
 
-	protected void addConnectionInformation(
+	private void _addConnectionInformation(
 		ElasticsearchConnection elasticsearchConnection,
 		List<ConnectionInformation> connectionInformationList,
 		String... labels) {
@@ -252,7 +278,7 @@ public class ElasticsearchSearchEngineInformation
 		connectionInformationList.add(connectionInformationBuilder.build());
 	}
 
-	protected void addMainConnection(
+	private void _addMainConnection(
 		ElasticsearchConnection elasticsearchConnection,
 		List<ConnectionInformation> connectionInformationList) {
 
@@ -267,11 +293,11 @@ public class ElasticsearchSearchEngineInformation
 			labels = new String[] {"write"};
 		}
 
-		addConnectionInformation(
+		_addConnectionInformation(
 			elasticsearchConnection, connectionInformationList, labels);
 	}
 
-	protected String getClusterNodesString(
+	private String _getClusterNodesString(
 		RestHighLevelClient restHighLevelClient) {
 
 		try {
@@ -317,32 +343,6 @@ public class ElasticsearchSearchEngineInformation
 			return StringBundler.concat("(Error: ", exception.toString(), ")");
 		}
 	}
-
-	@Reference
-	protected ConfigurationAdmin configurationAdmin;
-
-	@Reference
-	protected ConnectionInformationBuilderFactory
-		connectionInformationBuilderFactory;
-
-	@Reference
-	protected volatile ElasticsearchConfigurationWrapper
-		elasticsearchConfigurationWrapper;
-
-	@Reference
-	protected ElasticsearchConnectionManager elasticsearchConnectionManager;
-
-	@Reference
-	protected ElasticsearchSearchEngine elasticsearchSearchEngine;
-
-	@Reference
-	protected NodeInformationBuilderFactory nodeInformationBuilderFactory;
-
-	@Reference
-	protected OperationModeResolver operationModeResolver;
-
-	@Reference
-	protected SearchEngineAdapter searchEngineAdapter;
 
 	private void _setClusterAndNodeInformation(
 			ConnectionInformationBuilder connectionInformationBuilder,

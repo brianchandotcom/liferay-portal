@@ -79,7 +79,7 @@ public class MultisearchSearchRequestExecutorImpl
 				multiSearchRequest.add(searchRequest);
 			});
 
-		MultiSearchResponse multiSearchResponse = getMultiSearchResponse(
+		MultiSearchResponse multiSearchResponse = _getMultiSearchResponse(
 			multiSearchRequest, multisearchSearchRequest);
 
 		Iterator<MultiSearchResponse.Item> iterator =
@@ -128,24 +128,6 @@ public class MultisearchSearchRequestExecutorImpl
 		return multisearchSearchResponse;
 	}
 
-	protected MultiSearchResponse getMultiSearchResponse(
-		MultiSearchRequest multiSearchRequest,
-		MultisearchSearchRequest multisearchSearchRequest) {
-
-		RestHighLevelClient restHighLevelClient =
-			_elasticsearchClientResolver.getRestHighLevelClient(
-				multisearchSearchRequest.getConnectionId(),
-				multisearchSearchRequest.isPreferLocalCluster());
-
-		try {
-			return restHighLevelClient.msearch(
-				multiSearchRequest, RequestOptions.DEFAULT);
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
-	}
-
 	@Reference(unbind = "-")
 	protected void setElasticsearchClientResolver(
 		ElasticsearchClientResolver elasticsearchClientResolver) {
@@ -165,6 +147,24 @@ public class MultisearchSearchRequestExecutorImpl
 		SearchSearchResponseAssembler searchSearchResponseAssembler) {
 
 		_searchSearchResponseAssembler = searchSearchResponseAssembler;
+	}
+
+	private MultiSearchResponse _getMultiSearchResponse(
+		MultiSearchRequest multiSearchRequest,
+		MultisearchSearchRequest multisearchSearchRequest) {
+
+		RestHighLevelClient restHighLevelClient =
+			_elasticsearchClientResolver.getRestHighLevelClient(
+				multisearchSearchRequest.getConnectionId(),
+				multisearchSearchRequest.isPreferLocalCluster());
+
+		try {
+			return restHighLevelClient.msearch(
+				multiSearchRequest, RequestOptions.DEFAULT);
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

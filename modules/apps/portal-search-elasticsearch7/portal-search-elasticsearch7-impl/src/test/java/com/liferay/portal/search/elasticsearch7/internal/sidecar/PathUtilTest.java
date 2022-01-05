@@ -54,30 +54,30 @@ public class PathUtilTest {
 
 	@Test
 	public void testCopyDirectory() throws Exception {
-		Path fromPath = getResourcePath("root");
+		Path fromPath = _getResourcePath("root");
 
-		Path excludedPaths = getResourcePath("root/excluded");
+		Path excludedPaths = _getResourcePath("root/excluded");
 
 		PathUtil.copyDirectory(fromPath, _toPath, excludedPaths);
 
-		assertExists(_toPath, "directory1/file1.txt");
-		assertExists(_toPath, "directory2/file2.txt");
-		assertDoesNotExist(_toPath, "excluded/excluded.txt");
+		_assertExists(_toPath, "directory1/file1.txt");
+		_assertExists(_toPath, "directory2/file2.txt");
+		_assertDoesNotExist(_toPath, "excluded/excluded.txt");
 	}
 
-	protected void assertDoesNotExist(Path path, String name) {
+	private void _assertDoesNotExist(Path path, String name) {
 		Path fullPath = path.resolve(name);
 
 		Assert.assertFalse(Files.exists(fullPath));
 	}
 
-	protected void assertExists(Path path, String name) {
+	private void _assertExists(Path path, String name) {
 		Path fullPath = path.resolve(name);
 
 		Assert.assertTrue(Files.exists(fullPath));
 	}
 
-	protected Path getResourcePath(String name) throws URISyntaxException {
+	private Path _getResourcePath(String name) throws URISyntaxException {
 		Class<? extends PathUtilTest> clazz = getClass();
 
 		URL url = clazz.getResource(name);

@@ -53,7 +53,7 @@ public class GetIndexIndexRequestExecutorImpl
 		GetIndexRequest getIndexRequest = createGetIndexRequest(
 			getIndexIndexRequest);
 
-		GetIndexResponse getIndexResponse = getGetIndexResponse(
+		GetIndexResponse getIndexResponse = _getGetIndexResponse(
 			getIndexRequest, getIndexIndexRequest);
 
 		GetIndexIndexResponse getIndexIndexResponse =
@@ -64,17 +64,34 @@ public class GetIndexIndexRequestExecutorImpl
 		ImmutableOpenMap<String, ImmutableOpenMap<String, MappingMetadata>>
 			indicesMappings = getIndexResponse.getMappings();
 
-		getIndexIndexResponse.setMappings(convertMappings(indicesMappings));
+		getIndexIndexResponse.setMappings(_convertMappings(indicesMappings));
 
 		ImmutableOpenMap<String, Settings> indicesSettings =
 			getIndexResponse.getSettings();
 
-		getIndexIndexResponse.setSettings(convertSettings(indicesSettings));
+		getIndexIndexResponse.setSettings(_convertSettings(indicesSettings));
 
 		return getIndexIndexResponse;
 	}
 
-	protected Map<String, Map<String, String>> convertMappings(
+	protected GetIndexRequest createGetIndexRequest(
+		GetIndexIndexRequest getIndexIndexRequest) {
+
+		GetIndexRequest getIndexRequest = new GetIndexRequest();
+
+		getIndexRequest.indices(getIndexIndexRequest.getIndexNames());
+
+		return getIndexRequest;
+	}
+
+	@Reference(unbind = "-")
+	protected void setElasticsearchClientResolver(
+		ElasticsearchClientResolver elasticsearchClientResolver) {
+
+		_elasticsearchClientResolver = elasticsearchClientResolver;
+	}
+
+	private Map<String, Map<String, String>> _convertMappings(
 		ImmutableOpenMap<String, ImmutableOpenMap<String, MappingMetadata>>
 			indicesMappings) {
 
@@ -119,7 +136,7 @@ public class GetIndexIndexRequestExecutorImpl
 		return indexMappings;
 	}
 
-	protected Map<String, String> convertSettings(
+	private Map<String, String> _convertSettings(
 		ImmutableOpenMap<String, Settings> indicesSettings) {
 
 		Iterator<ObjectObjectCursor<String, Settings>> iterator =
@@ -139,17 +156,7 @@ public class GetIndexIndexRequestExecutorImpl
 		return indicesSettingsMap;
 	}
 
-	protected GetIndexRequest createGetIndexRequest(
-		GetIndexIndexRequest getIndexIndexRequest) {
-
-		GetIndexRequest getIndexRequest = new GetIndexRequest();
-
-		getIndexRequest.indices(getIndexIndexRequest.getIndexNames());
-
-		return getIndexRequest;
-	}
-
-	protected GetIndexResponse getGetIndexResponse(
+	private GetIndexResponse _getGetIndexResponse(
 		GetIndexRequest getIndexRequest,
 		GetIndexIndexRequest getIndexIndexRequest) {
 
@@ -166,13 +173,6 @@ public class GetIndexIndexRequestExecutorImpl
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
 		}
-	}
-
-	@Reference(unbind = "-")
-	protected void setElasticsearchClientResolver(
-		ElasticsearchClientResolver elasticsearchClientResolver) {
-
-		_elasticsearchClientResolver = elasticsearchClientResolver;
 	}
 
 	private ElasticsearchClientResolver _elasticsearchClientResolver;

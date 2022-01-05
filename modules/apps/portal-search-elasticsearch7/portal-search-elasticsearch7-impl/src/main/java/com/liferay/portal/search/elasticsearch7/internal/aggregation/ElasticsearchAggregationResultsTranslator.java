@@ -47,7 +47,7 @@ public class ElasticsearchAggregationResultsTranslator {
 		Aggregations elasticsearchAggregations) {
 
 		Stream<org.elasticsearch.search.aggregations.Aggregation> stream =
-			getElasticsearchAggregations(elasticsearchAggregations);
+			_getElasticsearchAggregations(elasticsearchAggregations);
 
 		return stream.map(
 			this::translate
@@ -66,15 +66,6 @@ public class ElasticsearchAggregationResultsTranslator {
 
 		public PipelineAggregation lookup(String name);
 
-	}
-
-	protected Stream<org.elasticsearch.search.aggregations.Aggregation>
-		getElasticsearchAggregations(Aggregations aggregations) {
-
-		List<org.elasticsearch.search.aggregations.Aggregation> list =
-			aggregations.asList();
-
-		return list.stream();
 	}
 
 	protected AggregationResult translate(
@@ -103,6 +94,15 @@ public class ElasticsearchAggregationResultsTranslator {
 		}
 
 		return null;
+	}
+
+	private Stream<org.elasticsearch.search.aggregations.Aggregation>
+		_getElasticsearchAggregations(Aggregations aggregations) {
+
+		List<org.elasticsearch.search.aggregations.Aggregation> list =
+			aggregations.asList();
+
+		return list.stream();
 	}
 
 	private final AggregationLookup _aggregationLookup;

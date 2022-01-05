@@ -57,7 +57,7 @@ public class FolderFacetPortletConfigurationAction
 				JavaConstants.JAVAX_PORTLET_REQUEST);
 
 		FolderSearchFacetDisplayBuilder folderSearchFacetDisplayBuilder =
-			createFolderSearchFacetDisplayBuilder(renderRequest);
+			_createFolderSearchFacetDisplayBuilder(renderRequest);
 
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -66,8 +66,8 @@ public class FolderFacetPortletConfigurationAction
 		super.include(portletConfig, httpServletRequest, httpServletResponse);
 	}
 
-	protected FolderSearchFacetDisplayBuilder
-		createFolderSearchFacetDisplayBuilder(RenderRequest renderRequest) {
+	private FolderSearchFacetDisplayBuilder
+		_createFolderSearchFacetDisplayBuilder(RenderRequest renderRequest) {
 
 		try {
 			return new FolderSearchFacetDisplayBuilder(renderRequest);

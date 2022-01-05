@@ -62,7 +62,7 @@ public class IndexerDocumentBuilderImpl implements IndexerDocumentBuilder {
 		_searchPermissionDocumentContributor.addPermissionFields(
 			GetterUtil.getLong(document.get(Field.COMPANY_ID)), document);
 
-		postProcessDocument(document, baseModel);
+		_postProcessDocument(document, baseModel);
 
 		return document;
 	}
@@ -74,7 +74,7 @@ public class IndexerDocumentBuilderImpl implements IndexerDocumentBuilder {
 		return document.get(Field.UID);
 	}
 
-	protected <T extends BaseModel<?>> void postProcessDocument(
+	private <T extends BaseModel<?>> void _postProcessDocument(
 		Document document, T baseModel) {
 
 		_indexerPostProcessorsHolder.forEach(

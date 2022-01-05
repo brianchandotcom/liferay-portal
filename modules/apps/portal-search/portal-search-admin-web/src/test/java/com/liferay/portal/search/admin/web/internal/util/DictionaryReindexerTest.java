@@ -59,7 +59,7 @@ public class DictionaryReindexerTest {
 		dictionaryReindexer.reindexDictionaries();
 
 		for (long companyId : _COMPANY_IDS) {
-			assertIndexWriterHelperReindexDictionariesWithCompanyId(companyId);
+			_assertIndexWriterHelperReindexDictionariesWithCompanyId(companyId);
 		}
 	}
 
@@ -70,11 +70,11 @@ public class DictionaryReindexerTest {
 
 		dictionaryReindexer.reindexDictionaries();
 
-		assertIndexWriterHelperReindexDictionariesWithCompanyId(
+		_assertIndexWriterHelperReindexDictionariesWithCompanyId(
 			CompanyConstants.SYSTEM);
 	}
 
-	protected void assertIndexWriterHelperReindexDictionariesWithCompanyId(
+	private void _assertIndexWriterHelperReindexDictionariesWithCompanyId(
 			long companyId)
 		throws SearchException {
 

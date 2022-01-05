@@ -59,11 +59,11 @@ public class CustomFacetDisplayBuilder {
 		customFacetDisplayContext.setPaginationStartParameterName(
 			_paginationStartParameterName);
 		customFacetDisplayContext.setParameterName(_parameterName);
-		customFacetDisplayContext.setParameterValue(getFirstParameterValue());
+		customFacetDisplayContext.setParameterValue(_getFirstParameterValue());
 		customFacetDisplayContext.setParameterValues(_parameterValues);
 		customFacetDisplayContext.setRenderNothing(renderNothing);
 		customFacetDisplayContext.setTermDisplayContexts(
-			buildTermDisplayContexts(termCollectors));
+			_buildTermDisplayContexts(termCollectors));
 
 		return customFacetDisplayContext;
 	}
@@ -148,50 +148,6 @@ public class CustomFacetDisplayBuilder {
 		return this;
 	}
 
-	protected CustomFacetTermDisplayContext buildTermDisplayContext(
-		TermCollector termCollector) {
-
-		String term = GetterUtil.getString(termCollector.getTerm());
-
-		CustomFacetTermDisplayContext customFacetTermDisplayContext =
-			new CustomFacetTermDisplayContext();
-
-		customFacetTermDisplayContext.setFrequency(
-			termCollector.getFrequency());
-		customFacetTermDisplayContext.setFrequencyVisible(_frequenciesVisible);
-		customFacetTermDisplayContext.setSelected(isSelected(term));
-		customFacetTermDisplayContext.setFieldName(term);
-
-		return customFacetTermDisplayContext;
-	}
-
-	protected List<CustomFacetTermDisplayContext> buildTermDisplayContexts(
-		List<TermCollector> termCollectors) {
-
-		if (termCollectors.isEmpty()) {
-			return getEmptyTermDisplayContexts();
-		}
-
-		List<CustomFacetTermDisplayContext> customFacetTermDisplayContexts =
-			new ArrayList<>(termCollectors.size());
-
-		for (int i = 0; i < termCollectors.size(); i++) {
-			TermCollector termCollector = termCollectors.get(i);
-
-			if (((_maxTerms > 0) && (i >= _maxTerms)) ||
-				((_frequencyThreshold > 0) &&
-				 (_frequencyThreshold > termCollector.getFrequency()))) {
-
-				break;
-			}
-
-			customFacetTermDisplayContexts.add(
-				buildTermDisplayContext(termCollector));
-		}
-
-		return customFacetTermDisplayContexts;
-	}
-
 	protected String getDisplayCaption() {
 		Optional<String> optional1 = SearchStringUtil.maybe(
 			_customDisplayCaption);
@@ -200,32 +156,6 @@ public class CustomFacetDisplayBuilder {
 			optional1.orElse(_fieldToAggregate));
 
 		return optional2.orElse("custom");
-	}
-
-	protected List<CustomFacetTermDisplayContext>
-		getEmptyTermDisplayContexts() {
-
-		if (_parameterValues.isEmpty()) {
-			return Collections.emptyList();
-		}
-
-		CustomFacetTermDisplayContext customFacetTermDisplayContext =
-			new CustomFacetTermDisplayContext();
-
-		customFacetTermDisplayContext.setFrequency(0);
-		customFacetTermDisplayContext.setFrequencyVisible(_frequenciesVisible);
-		customFacetTermDisplayContext.setSelected(true);
-		customFacetTermDisplayContext.setFieldName(_parameterValues.get(0));
-
-		return Collections.singletonList(customFacetTermDisplayContext);
-	}
-
-	protected String getFirstParameterValue() {
-		if (_parameterValues.isEmpty()) {
-			return StringPool.BLANK;
-		}
-
-		return _parameterValues.get(0);
 	}
 
 	protected List<TermCollector> getTermCollectors() {
@@ -254,6 +184,74 @@ public class CustomFacetDisplayBuilder {
 		}
 
 		return false;
+	}
+
+	private CustomFacetTermDisplayContext _buildTermDisplayContext(
+		TermCollector termCollector) {
+
+		String term = GetterUtil.getString(termCollector.getTerm());
+
+		CustomFacetTermDisplayContext customFacetTermDisplayContext =
+			new CustomFacetTermDisplayContext();
+
+		customFacetTermDisplayContext.setFrequency(
+			termCollector.getFrequency());
+		customFacetTermDisplayContext.setFrequencyVisible(_frequenciesVisible);
+		customFacetTermDisplayContext.setSelected(isSelected(term));
+		customFacetTermDisplayContext.setFieldName(term);
+
+		return customFacetTermDisplayContext;
+	}
+
+	private List<CustomFacetTermDisplayContext> _buildTermDisplayContexts(
+		List<TermCollector> termCollectors) {
+
+		if (termCollectors.isEmpty()) {
+			return _getEmptyTermDisplayContexts();
+		}
+
+		List<CustomFacetTermDisplayContext> customFacetTermDisplayContexts =
+			new ArrayList<>(termCollectors.size());
+
+		for (int i = 0; i < termCollectors.size(); i++) {
+			TermCollector termCollector = termCollectors.get(i);
+
+			if (((_maxTerms > 0) && (i >= _maxTerms)) ||
+				((_frequencyThreshold > 0) &&
+				 (_frequencyThreshold > termCollector.getFrequency()))) {
+
+				break;
+			}
+
+			customFacetTermDisplayContexts.add(
+				_buildTermDisplayContext(termCollector));
+		}
+
+		return customFacetTermDisplayContexts;
+	}
+
+	private List<CustomFacetTermDisplayContext> _getEmptyTermDisplayContexts() {
+		if (_parameterValues.isEmpty()) {
+			return Collections.emptyList();
+		}
+
+		CustomFacetTermDisplayContext customFacetTermDisplayContext =
+			new CustomFacetTermDisplayContext();
+
+		customFacetTermDisplayContext.setFrequency(0);
+		customFacetTermDisplayContext.setFrequencyVisible(_frequenciesVisible);
+		customFacetTermDisplayContext.setSelected(true);
+		customFacetTermDisplayContext.setFieldName(_parameterValues.get(0));
+
+		return Collections.singletonList(customFacetTermDisplayContext);
+	}
+
+	private String _getFirstParameterValue() {
+		if (_parameterValues.isEmpty()) {
+			return StringPool.BLANK;
+		}
+
+		return _parameterValues.get(0);
 	}
 
 	private String _customDisplayCaption;

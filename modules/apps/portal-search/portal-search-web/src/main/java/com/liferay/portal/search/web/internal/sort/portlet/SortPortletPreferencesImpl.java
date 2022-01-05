@@ -45,7 +45,7 @@ public class SortPortletPreferencesImpl implements SortPortletPreferences {
 		String fieldsString = getFieldsString();
 
 		if (Validator.isBlank(fieldsString)) {
-			return getDefaultFieldsJSONArray();
+			return _getDefaultFieldsJSONArray();
 		}
 
 		try {
@@ -56,7 +56,7 @@ public class SortPortletPreferencesImpl implements SortPortletPreferences {
 				"Unable to create a JSON array from: " + fieldsString,
 				jsonException);
 
-			return getDefaultFieldsJSONArray();
+			return _getDefaultFieldsJSONArray();
 		}
 	}
 
@@ -71,7 +71,7 @@ public class SortPortletPreferencesImpl implements SortPortletPreferences {
 		return "sort";
 	}
 
-	protected JSONArray getDefaultFieldsJSONArray() {
+	private JSONArray _getDefaultFieldsJSONArray() {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		for (Preset preset : _presets) {

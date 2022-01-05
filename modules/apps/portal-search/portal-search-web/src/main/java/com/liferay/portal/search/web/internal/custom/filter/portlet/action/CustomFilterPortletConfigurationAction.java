@@ -65,12 +65,12 @@ public class CustomFilterPortletConfigurationAction
 
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
-			createCustomFilterDisplayContext(renderRequest));
+			_createCustomFilterDisplayContext(renderRequest));
 
 		super.include(portletConfig, httpServletRequest, httpServletResponse);
 	}
 
-	protected CustomFilterDisplayContext buildDisplayContext(
+	private CustomFilterDisplayContext _buildDisplayContext(
 			RenderRequest renderRequest)
 		throws ConfigurationException {
 
@@ -80,11 +80,11 @@ public class CustomFilterPortletConfigurationAction
 		).build();
 	}
 
-	protected CustomFilterDisplayContext createCustomFilterDisplayContext(
+	private CustomFilterDisplayContext _createCustomFilterDisplayContext(
 		RenderRequest renderRequest) {
 
 		try {
-			return buildDisplayContext(renderRequest);
+			return _buildDisplayContext(renderRequest);
 		}
 		catch (ConfigurationException configurationException) {
 			throw new RuntimeException(configurationException);

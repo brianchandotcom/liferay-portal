@@ -57,7 +57,7 @@ public class SiteFacetPortletConfigurationAction
 				JavaConstants.JAVAX_PORTLET_REQUEST);
 
 		ScopeSearchFacetDisplayBuilder scopeSearchFacetDisplayBuilder =
-			createScopeSearchFacetDisplayBuilder(renderRequest);
+			_createScopeSearchFacetDisplayBuilder(renderRequest);
 
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -66,8 +66,8 @@ public class SiteFacetPortletConfigurationAction
 		super.include(portletConfig, httpServletRequest, httpServletResponse);
 	}
 
-	protected ScopeSearchFacetDisplayBuilder
-		createScopeSearchFacetDisplayBuilder(RenderRequest renderRequest) {
+	private ScopeSearchFacetDisplayBuilder
+		_createScopeSearchFacetDisplayBuilder(RenderRequest renderRequest) {
 
 		try {
 			return new ScopeSearchFacetDisplayBuilder(renderRequest);

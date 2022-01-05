@@ -76,7 +76,7 @@ public class SortPortlet extends MVCPortlet {
 		PortletSharedSearchResponse portletSharedSearchResponse =
 			_portletSharedSearchRequest.search(renderRequest);
 
-		SortDisplayContext sortDisplayContext = buildDisplayContext(
+		SortDisplayContext sortDisplayContext = _buildDisplayContext(
 			portletSharedSearchResponse, renderRequest);
 
 		renderRequest.setAttribute(
@@ -90,7 +90,13 @@ public class SortPortlet extends MVCPortlet {
 		super.render(renderRequest, renderResponse);
 	}
 
-	protected SortDisplayContext buildDisplayContext(
+	@Reference
+	protected Language language;
+
+	@Reference
+	protected Portal portal;
+
+	private SortDisplayContext _buildDisplayContext(
 		PortletSharedSearchResponse portletSharedSearchResponse,
 		RenderRequest renderRequest) {
 
@@ -105,18 +111,18 @@ public class SortPortlet extends MVCPortlet {
 			portletSharedSearchResponse.getParameterValues(
 				parameterName, renderRequest);
 
-		return createSortDisplayBuilder(
+		return _createSortDisplayBuilder(
 			renderRequest, sortPortletPreferences
 		).parameterName(
 			parameterName
 		).parameterValues(
 			parameterValuesOptional.orElse(null)
 		).renderNothing(
-			isRenderNothing(portletSharedSearchResponse)
+			_isRenderNothing(portletSharedSearchResponse)
 		).build();
 	}
 
-	protected SortDisplayBuilder createSortDisplayBuilder(
+	private SortDisplayBuilder _createSortDisplayBuilder(
 		RenderRequest renderRequest,
 		SortPortletPreferences sortPortletPreferences) {
 
@@ -129,7 +135,7 @@ public class SortPortlet extends MVCPortlet {
 		}
 	}
 
-	protected boolean isRenderNothing(
+	private boolean _isRenderNothing(
 		PortletSharedSearchResponse portletSharedSearchResponse) {
 
 		Optional<String> keywordsOptional =
@@ -146,12 +152,6 @@ public class SortPortlet extends MVCPortlet {
 
 		return !searchRequest.isEmptySearchEnabled();
 	}
-
-	@Reference
-	protected Language language;
-
-	@Reference
-	protected Portal portal;
 
 	@Reference
 	private PortletSharedSearchRequest _portletSharedSearchRequest;

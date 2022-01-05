@@ -57,13 +57,16 @@ public class FolderFacetPortletSharedSearchContributor
 			).maxTerms(
 				folderFacetPortletPreferences.getMaxTerms()
 			).selectedFolderIds(
-				toLongArray(
+				_toLongArray(
 					portletSharedSearchSettings.getParameterValues(
 						folderFacetPortletPreferences.getParameterName()))
 			));
 	}
 
-	protected static long[] toLongArray(String[] parameterValues) {
+	@Reference
+	protected FolderFacetSearchContributor folderFacetSearchContributor;
+
+	private static long[] _toLongArray(String[] parameterValues) {
 		if (!ArrayUtil.isEmpty(parameterValues)) {
 			return ListUtil.toLongArray(
 				Arrays.asList(parameterValues), GetterUtil::getLong);
@@ -71,8 +74,5 @@ public class FolderFacetPortletSharedSearchContributor
 
 		return new long[0];
 	}
-
-	@Reference
-	protected FolderFacetSearchContributor folderFacetSearchContributor;
 
 }

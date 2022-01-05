@@ -37,12 +37,12 @@ public class Activator {
 	}
 
 	public void activate() {
-		Optional<Method> optional = findMethodActivate();
+		Optional<Method> optional = _findMethodActivate();
 
-		optional.ifPresent(this::invokeActivate);
+		optional.ifPresent(this::_invokeActivate);
 	}
 
-	protected Optional<Method> findMethodActivate() {
+	private Optional<Method> _findMethodActivate() {
 		return Stream.of(
 			_class.getMethods()
 		).filter(
@@ -50,7 +50,7 @@ public class Activator {
 		).findAny();
 	}
 
-	protected void invokeActivate(Method method) {
+	private void _invokeActivate(Method method) {
 		try {
 			Parameter[] parameters = method.getParameters();
 

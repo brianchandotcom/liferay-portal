@@ -44,7 +44,7 @@ public class TermsSetFilterTest extends BaseIndexingTestCase {
 
 	@Test
 	public void testKeywordField() throws Exception {
-		Function<String[], DocumentCreationHelper> function = this::addKeyword;
+		Function<String[], DocumentCreationHelper> function = this::_addKeyword;
 
 		addDocument(function.apply(new String[] {"def", "ghi"}));
 		addDocument(function.apply(new String[] {"ghi", "jkl"}));
@@ -71,7 +71,12 @@ public class TermsSetFilterTest extends BaseIndexingTestCase {
 			});
 	}
 
-	protected DocumentCreationHelper addKeyword(String... values) {
+	@Override
+	protected IndexingFixture createIndexingFixture() throws Exception {
+		return LiferayElasticsearchIndexingFixtureFactory.getInstance();
+	}
+
+	private DocumentCreationHelper _addKeyword(String... values) {
 		return document -> {
 			document.addKeyword(
 				_CONCAT_KEYWORD_FIELD, String.valueOf(Arrays.asList(values)));
@@ -80,11 +85,6 @@ public class TermsSetFilterTest extends BaseIndexingTestCase {
 
 			document.addNumber(_LONG_FIELD, 2);
 		};
-	}
-
-	@Override
-	protected IndexingFixture createIndexingFixture() throws Exception {
-		return LiferayElasticsearchIndexingFixtureFactory.getInstance();
 	}
 
 	private static final String _CONCAT_KEYWORD_FIELD = "screenName";

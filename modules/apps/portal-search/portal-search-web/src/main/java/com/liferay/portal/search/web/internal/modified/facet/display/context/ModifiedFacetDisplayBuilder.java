@@ -82,24 +82,24 @@ public class ModifiedFacetDisplayBuilder implements Serializable {
 
 		if (_calendarFactory != null) {
 			modifiedFacetDisplayContext.setCalendarDisplayContext(
-				buildCalendarDisplayContext());
+				_buildCalendarDisplayContext());
 		}
 
 		if ((_dateFormatFactory != null) && (_dateRangeFactory != null)) {
 			modifiedFacetDisplayContext.
 				setCustomRangeModifiedFacetTermDisplayContext(
-					buildCustomRangeModifiedTermDisplayContext());
+					_buildCustomRangeModifiedTermDisplayContext());
 		}
 
 		modifiedFacetDisplayContext.setDefaultModifiedFacetTermDisplayContext(
-			buildDefaultModifiedFacetTermDisplayContext());
+			_buildDefaultModifiedFacetTermDisplayContext());
 		modifiedFacetDisplayContext.setDisplayStyleGroupId(
 			getDisplayStyleGroupId());
 		modifiedFacetDisplayContext.
 			setModifiedFacetPortletInstanceConfiguration(
 				_modifiedFacetPortletInstanceConfiguration);
 		modifiedFacetDisplayContext.setModifiedFacetTermDisplayContexts(
-			buildTermDisplayContexts());
+			_buildTermDisplayContexts());
 		modifiedFacetDisplayContext.setNothingSelected(isNothingSelected());
 		modifiedFacetDisplayContext.setPaginationStartParameterName(
 			_paginationStartParameterName);
@@ -152,9 +152,58 @@ public class ModifiedFacetDisplayBuilder implements Serializable {
 		_totalHits = totalHits;
 	}
 
-	protected ModifiedFacetCalendarDisplayContext
-		buildCalendarDisplayContext() {
+	protected long getDisplayStyleGroupId() {
+		long displayStyleGroupId =
+			_modifiedFacetPortletInstanceConfiguration.displayStyleGroupId();
 
+		if (displayStyleGroupId <= 0) {
+			displayStyleGroupId = _themeDisplay.getScopeGroupId();
+		}
+
+		return displayStyleGroupId;
+	}
+
+	protected int getFrequency(TermCollector termCollector) {
+		if (termCollector != null) {
+			return termCollector.getFrequency();
+		}
+
+		return 0;
+	}
+
+	protected TermCollector getTermCollector(String range) {
+		if (_facet == null) {
+			return null;
+		}
+
+		FacetCollector facetCollector = _facet.getFacetCollector();
+
+		if (facetCollector == null) {
+			return null;
+		}
+
+		return facetCollector.getTermCollector(range);
+	}
+
+	protected boolean isNothingSelected() {
+		if (!_selectedRanges.isEmpty() ||
+			(!Validator.isBlank(_from) && !Validator.isBlank(_to))) {
+
+			return false;
+		}
+
+		return true;
+	}
+
+	protected boolean isRenderNothing() {
+		if (_totalHits > 0) {
+			return false;
+		}
+
+		return isNothingSelected();
+	}
+
+	private ModifiedFacetCalendarDisplayContext _buildCalendarDisplayContext() {
 		ModifiedFacetCalendarDisplayBuilder
 			modifiedFacetCalendarDisplayBuilder =
 				new ModifiedFacetCalendarDisplayBuilder(_calendarFactory);
@@ -176,26 +225,26 @@ public class ModifiedFacetDisplayBuilder implements Serializable {
 		return modifiedFacetCalendarDisplayBuilder.build();
 	}
 
-	protected ModifiedFacetTermDisplayContext
-		buildCustomRangeModifiedTermDisplayContext() {
+	private ModifiedFacetTermDisplayContext
+		_buildCustomRangeModifiedTermDisplayContext() {
 
-		boolean selected = isCustomRangeSelected();
+		boolean selected = _isCustomRangeSelected();
 
 		ModifiedFacetTermDisplayContext modifiedFacetTermDisplayContext =
 			new ModifiedFacetTermDisplayContext();
 
 		modifiedFacetTermDisplayContext.setFrequency(
-			getFrequency(getCustomRangeTermCollector(selected)));
+			getFrequency(_getCustomRangeTermCollector(selected)));
 		modifiedFacetTermDisplayContext.setLabel("custom-range");
 		modifiedFacetTermDisplayContext.setRange("custom-range");
-		modifiedFacetTermDisplayContext.setRangeURL(getCustomRangeURL());
+		modifiedFacetTermDisplayContext.setRangeURL(_getCustomRangeURL());
 		modifiedFacetTermDisplayContext.setSelected(selected);
 
 		return modifiedFacetTermDisplayContext;
 	}
 
-	protected ModifiedFacetTermDisplayContext
-		buildDefaultModifiedFacetTermDisplayContext() {
+	private ModifiedFacetTermDisplayContext
+		_buildDefaultModifiedFacetTermDisplayContext() {
 
 		if (_facet == null) {
 			return null;
@@ -215,7 +264,7 @@ public class ModifiedFacetDisplayBuilder implements Serializable {
 		return modifiedFacetTermDisplayContext;
 	}
 
-	protected ModifiedFacetTermDisplayContext buildTermDisplayContext(
+	private ModifiedFacetTermDisplayContext _buildTermDisplayContext(
 		String label, String range) {
 
 		ModifiedFacetTermDisplayContext modifiedFacetTermDisplayContext =
@@ -225,15 +274,15 @@ public class ModifiedFacetDisplayBuilder implements Serializable {
 			getFrequency(getTermCollector(range)));
 		modifiedFacetTermDisplayContext.setLabel(label);
 		modifiedFacetTermDisplayContext.setRange(range);
-		modifiedFacetTermDisplayContext.setRangeURL(getLabeledRangeURL(label));
+		modifiedFacetTermDisplayContext.setRangeURL(_getLabeledRangeURL(label));
 		modifiedFacetTermDisplayContext.setSelected(
 			_selectedRanges.contains(label));
 
 		return modifiedFacetTermDisplayContext;
 	}
 
-	protected List<ModifiedFacetTermDisplayContext> buildTermDisplayContexts() {
-		JSONArray rangesJSONArray = getRangesJSONArray();
+	private List<ModifiedFacetTermDisplayContext> _buildTermDisplayContexts() {
+		JSONArray rangesJSONArray = _getRangesJSONArray();
 
 		if (rangesJSONArray == null) {
 			return null;
@@ -246,7 +295,7 @@ public class ModifiedFacetDisplayBuilder implements Serializable {
 			JSONObject jsonObject = rangesJSONArray.getJSONObject(i);
 
 			modifiedFacetTermDisplayContexts.add(
-				buildTermDisplayContext(
+				_buildTermDisplayContext(
 					jsonObject.getString("label"),
 					jsonObject.getString("range")));
 		}
@@ -254,7 +303,7 @@ public class ModifiedFacetDisplayBuilder implements Serializable {
 		return modifiedFacetTermDisplayContexts;
 	}
 
-	protected TermCollector getCustomRangeTermCollector(boolean selected) {
+	private TermCollector _getCustomRangeTermCollector(boolean selected) {
 		if (!selected) {
 			return null;
 		}
@@ -265,7 +314,7 @@ public class ModifiedFacetDisplayBuilder implements Serializable {
 			_dateRangeFactory.getRangeString(_from, _to));
 	}
 
-	protected String getCustomRangeURL() {
+	private String _getCustomRangeURL() {
 		DateFormat format = _dateFormatFactory.getSimpleDateFormat(
 			"yyyy-MM-dd");
 
@@ -287,26 +336,7 @@ public class ModifiedFacetDisplayBuilder implements Serializable {
 		return _http.setParameter(rangeURL, "modifiedTo", to);
 	}
 
-	protected long getDisplayStyleGroupId() {
-		long displayStyleGroupId =
-			_modifiedFacetPortletInstanceConfiguration.displayStyleGroupId();
-
-		if (displayStyleGroupId <= 0) {
-			displayStyleGroupId = _themeDisplay.getScopeGroupId();
-		}
-
-		return displayStyleGroupId;
-	}
-
-	protected int getFrequency(TermCollector termCollector) {
-		if (termCollector != null) {
-			return termCollector.getFrequency();
-		}
-
-		return 0;
-	}
-
-	protected String getLabeledRangeURL(String label) {
+	private String _getLabeledRangeURL(String label) {
 		String rangeURL = _http.removeParameter(_currentURL, "modifiedFrom");
 
 		rangeURL = _http.removeParameter(rangeURL, "modifiedTo");
@@ -317,7 +347,7 @@ public class ModifiedFacetDisplayBuilder implements Serializable {
 		return _http.setParameter(rangeURL, "modified", label);
 	}
 
-	protected JSONArray getRangesJSONArray() {
+	private JSONArray _getRangesJSONArray() {
 		if (_facet == null) {
 			return null;
 		}
@@ -329,44 +359,12 @@ public class ModifiedFacetDisplayBuilder implements Serializable {
 		return dataJSONObject.getJSONArray("ranges");
 	}
 
-	protected TermCollector getTermCollector(String range) {
-		if (_facet == null) {
-			return null;
-		}
-
-		FacetCollector facetCollector = _facet.getFacetCollector();
-
-		if (facetCollector == null) {
-			return null;
-		}
-
-		return facetCollector.getTermCollector(range);
-	}
-
-	protected boolean isCustomRangeSelected() {
+	private boolean _isCustomRangeSelected() {
 		if (Validator.isBlank(_from) && Validator.isBlank(_to)) {
 			return false;
 		}
 
 		return true;
-	}
-
-	protected boolean isNothingSelected() {
-		if (!_selectedRanges.isEmpty() ||
-			(!Validator.isBlank(_from) && !Validator.isBlank(_to))) {
-
-			return false;
-		}
-
-		return true;
-	}
-
-	protected boolean isRenderNothing() {
-		if (_totalHits > 0) {
-			return false;
-		}
-
-		return isNothingSelected();
 	}
 
 	private final CalendarFactory _calendarFactory;

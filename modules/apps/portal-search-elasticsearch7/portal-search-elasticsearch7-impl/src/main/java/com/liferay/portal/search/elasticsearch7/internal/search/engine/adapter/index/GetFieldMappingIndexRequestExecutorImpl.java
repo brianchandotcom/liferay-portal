@@ -51,7 +51,7 @@ public class GetFieldMappingIndexRequestExecutorImpl
 			createGetFieldMappingsRequest(getFieldMappingIndexRequest);
 
 		GetFieldMappingsResponse getFieldMappingsResponse =
-			getGetFieldMappingsResponse(
+			_getGetFieldMappingsResponse(
 				getFieldMappingsRequest, getFieldMappingIndexRequest);
 
 		Map
@@ -104,7 +104,14 @@ public class GetFieldMappingIndexRequestExecutorImpl
 		return getFieldMappingsRequest;
 	}
 
-	protected GetFieldMappingsResponse getGetFieldMappingsResponse(
+	@Reference(unbind = "-")
+	protected void setElasticsearchClientResolver(
+		ElasticsearchClientResolver elasticsearchClientResolver) {
+
+		_elasticsearchClientResolver = elasticsearchClientResolver;
+	}
+
+	private GetFieldMappingsResponse _getGetFieldMappingsResponse(
 		GetFieldMappingsRequest getFieldMappingsRequest,
 		GetFieldMappingIndexRequest getFieldMappingIndexRequest) {
 
@@ -122,13 +129,6 @@ public class GetFieldMappingIndexRequestExecutorImpl
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
 		}
-	}
-
-	@Reference(unbind = "-")
-	protected void setElasticsearchClientResolver(
-		ElasticsearchClientResolver elasticsearchClientResolver) {
-
-		_elasticsearchClientResolver = elasticsearchClientResolver;
 	}
 
 	private ElasticsearchClientResolver _elasticsearchClientResolver;

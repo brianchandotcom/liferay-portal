@@ -71,7 +71,7 @@ public class SearchEngineInitializer implements Runnable {
 	}
 
 	public void reindex(int delay) {
-		doReIndex(delay);
+		_doReIndex(delay);
 	}
 
 	@Override
@@ -79,7 +79,31 @@ public class SearchEngineInitializer implements Runnable {
 		reindex(PropsValues.INDEX_ON_STARTUP_DELAY);
 	}
 
-	protected void doReIndex(int delay) {
+	protected void reindex(Indexer<?> indexer) throws Exception {
+		StopWatch stopWatch = new StopWatch();
+
+		stopWatch.start();
+
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				"Reindexing of " + indexer.getClassName() +
+					" entities started");
+		}
+
+		indexer.reindex(new String[] {String.valueOf(_companyId)});
+
+		_usedSearchEngineIds.add(indexer.getSearchEngineId());
+
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				StringBundler.concat(
+					"Reindexing of ", indexer.getClassName(),
+					" entities completed in ",
+					stopWatch.getTime() / Time.SECOND, " seconds"));
+		}
+	}
+
+	private void _doReIndex(int delay) {
 		if (IndexWriterHelperUtil.isIndexReadOnly()) {
 			return;
 		}
@@ -176,30 +200,6 @@ public class SearchEngineInitializer implements Runnable {
 		}
 
 		_finished = true;
-	}
-
-	protected void reindex(Indexer<?> indexer) throws Exception {
-		StopWatch stopWatch = new StopWatch();
-
-		stopWatch.start();
-
-		if (_log.isInfoEnabled()) {
-			_log.info(
-				"Reindexing of " + indexer.getClassName() +
-					" entities started");
-		}
-
-		indexer.reindex(new String[] {String.valueOf(_companyId)});
-
-		_usedSearchEngineIds.add(indexer.getSearchEngineId());
-
-		if (_log.isInfoEnabled()) {
-			_log.info(
-				StringBundler.concat(
-					"Reindexing of ", indexer.getClassName(),
-					" entities completed in ",
-					stopWatch.getTime() / Time.SECOND, " seconds"));
-		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

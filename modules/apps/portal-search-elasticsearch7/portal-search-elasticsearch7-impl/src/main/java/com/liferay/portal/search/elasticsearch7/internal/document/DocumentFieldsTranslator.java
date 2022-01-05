@@ -83,7 +83,7 @@ public class DocumentFieldsTranslator {
 		DocumentField documentField, DocumentBuilder documentBuilder,
 		Map<String, DocumentField> documentFieldsMap) {
 
-		if (translateGeoLocationPoint(
+		if (_translateGeoLocationPoint(
 				documentField, documentBuilder, documentFieldsMap)) {
 
 			return;
@@ -110,7 +110,7 @@ public class DocumentFieldsTranslator {
 		}
 	}
 
-	protected boolean translateGeoLocationPoint(
+	private boolean _translateGeoLocationPoint(
 		DocumentField documentField1, DocumentBuilder documentBuilder,
 		Map<String, DocumentField> documentFieldsMap) {
 

@@ -175,10 +175,10 @@ public class DocumentImpl implements Document {
 
 	public void setFieldValues(String name, Collection<Object> values) {
 		if ((values == null) || values.isEmpty()) {
-			removeField(name);
+			_removeField(name);
 		}
 		else {
-			putField(name, values);
+			_putField(name, values);
 		}
 	}
 
@@ -188,23 +188,15 @@ public class DocumentImpl implements Document {
 	}
 
 	public void unsetField(String name) {
-		removeField(name);
-	}
-
-	protected Field putField(String name, Collection<Object> values) {
-		return _fields.put(name, new FieldImpl(name, values));
-	}
-
-	protected Field removeField(String name) {
-		return _fields.remove(name);
+		_removeField(name);
 	}
 
 	protected void setFieldValue(String name, Object value) {
 		if (_isEmpty(value)) {
-			removeField(name);
+			_removeField(name);
 		}
 		else {
-			putField(name, Collections.singleton(value));
+			_putField(name, Collections.singleton(value));
 		}
 	}
 
@@ -226,6 +218,14 @@ public class DocumentImpl implements Document {
 		}
 
 		return false;
+	}
+
+	private Field _putField(String name, Collection<Object> values) {
+		return _fields.put(name, new FieldImpl(name, values));
+	}
+
+	private Field _removeField(String name) {
+		return _fields.remove(name);
 	}
 
 	private Collection<Object> _toCollection(Object[] values) {

@@ -46,7 +46,7 @@ public class HealthClusterRequestExecutorImpl
 		ClusterHealthRequest clusterHealthRequest = createClusterHealthRequest(
 			healthClusterRequest);
 
-		ClusterHealthResponse clusterHealthResponse = getClusterHealthResponse(
+		ClusterHealthResponse clusterHealthResponse = _getClusterHealthResponse(
 			clusterHealthRequest, healthClusterRequest);
 
 		ClusterHealthStatus clusterHealthStatus =
@@ -83,7 +83,21 @@ public class HealthClusterRequestExecutorImpl
 		return clusterHealthRequest;
 	}
 
-	protected ClusterHealthResponse getClusterHealthResponse(
+	@Reference(unbind = "-")
+	protected void setClusterHealthStatusTranslator(
+		ClusterHealthStatusTranslator clusterHealthStatusTranslator) {
+
+		_clusterHealthStatusTranslator = clusterHealthStatusTranslator;
+	}
+
+	@Reference(unbind = "-")
+	protected void setElasticsearchClientResolver(
+		ElasticsearchClientResolver elasticsearchClientResolver) {
+
+		_elasticsearchClientResolver = elasticsearchClientResolver;
+	}
+
+	private ClusterHealthResponse _getClusterHealthResponse(
 		ClusterHealthRequest clusterHealthRequest,
 		HealthClusterRequest healthClusterRequest) {
 
@@ -101,20 +115,6 @@ public class HealthClusterRequestExecutorImpl
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
 		}
-	}
-
-	@Reference(unbind = "-")
-	protected void setClusterHealthStatusTranslator(
-		ClusterHealthStatusTranslator clusterHealthStatusTranslator) {
-
-		_clusterHealthStatusTranslator = clusterHealthStatusTranslator;
-	}
-
-	@Reference(unbind = "-")
-	protected void setElasticsearchClientResolver(
-		ElasticsearchClientResolver elasticsearchClientResolver) {
-
-		_elasticsearchClientResolver = elasticsearchClientResolver;
 	}
 
 	private ClusterHealthStatusTranslator _clusterHealthStatusTranslator;

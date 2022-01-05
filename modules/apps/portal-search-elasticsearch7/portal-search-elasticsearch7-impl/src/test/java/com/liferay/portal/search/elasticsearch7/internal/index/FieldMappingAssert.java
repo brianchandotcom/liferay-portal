@@ -51,7 +51,7 @@ public class FieldMappingAssert {
 
 		IdempotentRetryAssert.retryAssert(
 			10, TimeUnit.SECONDS,
-			() -> doAssertFieldMappingMetadata(
+			() -> _doAssertFieldMappingMetadata(
 				expectedValue, key, field, type, index, indicesClient));
 	}
 
@@ -64,20 +64,20 @@ public class FieldMappingAssert {
 			expectedValue, "type", field, type, index, indicesClient);
 	}
 
-	protected static void doAssertFieldMappingMetadata(
+	private static void _doAssertFieldMappingMetadata(
 		String expectedValue, String key, String field, String type,
 		String index, IndicesClient indicesClient) {
 
-		FieldMappingMetadata fieldMappingMetadata = getFieldMapping(
+		FieldMappingMetadata fieldMappingMetadata = _getFieldMapping(
 			field, type, index, indicesClient);
 
-		String value = getFieldMappingMetadataValue(
+		String value = _getFieldMappingMetadataValue(
 			fieldMappingMetadata, field, key);
 
 		Assert.assertEquals(expectedValue, value);
 	}
 
-	protected static FieldMappingMetadata getFieldMapping(
+	private static FieldMappingMetadata _getFieldMapping(
 		String field, String type, String index, IndicesClient indicesClient) {
 
 		GetFieldMappingsRequest getFieldMappingsRequest =
@@ -98,7 +98,7 @@ public class FieldMappingAssert {
 		}
 	}
 
-	protected static String getFieldMappingMetadataValue(
+	private static String _getFieldMappingMetadataValue(
 		FieldMappingMetadata fieldMappingMetadata, String field, String key) {
 
 		Map<String, Object> mappings = fieldMappingMetadata.sourceAsMap();

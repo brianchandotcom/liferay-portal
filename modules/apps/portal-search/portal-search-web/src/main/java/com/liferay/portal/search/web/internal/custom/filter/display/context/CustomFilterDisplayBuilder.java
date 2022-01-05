@@ -47,7 +47,7 @@ public class CustomFilterDisplayBuilder {
 		customFilterDisplayContext.setImmutable(_immutable);
 		customFilterDisplayContext.setParameterName(_parameterName);
 		customFilterDisplayContext.setRenderNothing(isRenderNothing());
-		customFilterDisplayContext.setSearchURL(getURLCurrentPath());
+		customFilterDisplayContext.setSearchURL(_getURLCurrentPath());
 
 		return customFilterDisplayContext;
 	}
@@ -172,20 +172,20 @@ public class CustomFilterDisplayBuilder {
 			"custom");
 	}
 
-	protected String getURLCurrentPath() {
-		if (_http == null) {
-			return null;
-		}
-
-		return _http.getPath(_themeDisplay.getURLCurrent());
-	}
-
 	protected boolean isRenderNothing() {
 		if (_disabled || _renderNothing) {
 			return true;
 		}
 
 		return false;
+	}
+
+	private String _getURLCurrentPath() {
+		if (_http == null) {
+			return null;
+		}
+
+		return _http.getPath(_themeDisplay.getURLCurrent());
 	}
 
 	private Optional<String> _customHeadingOptional = Optional.empty();

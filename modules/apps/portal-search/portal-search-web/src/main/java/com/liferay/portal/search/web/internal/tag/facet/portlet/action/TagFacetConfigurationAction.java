@@ -56,7 +56,7 @@ public class TagFacetConfigurationAction extends DefaultConfigurationAction {
 				JavaConstants.JAVAX_PORTLET_REQUEST);
 
 		AssetTagsSearchFacetDisplayBuilder assetTagsSearchFacetDisplayBuilder =
-			createAssetTagsSearchFacetDisplayBuilder(renderRequest);
+			_createAssetTagsSearchFacetDisplayBuilder(renderRequest);
 
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -65,8 +65,8 @@ public class TagFacetConfigurationAction extends DefaultConfigurationAction {
 		super.include(portletConfig, httpServletRequest, httpServletResponse);
 	}
 
-	protected AssetTagsSearchFacetDisplayBuilder
-		createAssetTagsSearchFacetDisplayBuilder(RenderRequest renderRequest) {
+	private AssetTagsSearchFacetDisplayBuilder
+		_createAssetTagsSearchFacetDisplayBuilder(RenderRequest renderRequest) {
 
 		try {
 			return new AssetTagsSearchFacetDisplayBuilder(renderRequest);

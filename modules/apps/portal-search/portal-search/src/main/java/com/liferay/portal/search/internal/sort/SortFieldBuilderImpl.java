@@ -46,7 +46,7 @@ public class SortFieldBuilderImpl implements SortFieldBuilder {
 
 	@Override
 	public String getSortField(String entityClassName, String orderByCol) {
-		String sortField = doGetSortField(entityClassName, orderByCol);
+		String sortField = _doGetSortField(entityClassName, orderByCol);
 
 		if (_defaultSortableTextFields.contains(sortField)) {
 			return Field.getSortableFieldName(sortField);
@@ -93,19 +93,6 @@ public class SortFieldBuilderImpl implements SortFieldBuilder {
 		_sortFieldNameTranslators.put(entryClassName, sortFieldNameTranslator);
 	}
 
-	protected String doGetSortField(String entityClassName, String orderByCol) {
-		SortFieldNameTranslator sortFieldNameTranslator =
-			_sortFieldNameTranslators.get(entityClassName);
-
-		if (sortFieldNameTranslator == null) {
-			Indexer<?> indexer = indexerRegistry.getIndexer(entityClassName);
-
-			return indexer.getSortField(orderByCol);
-		}
-
-		return sortFieldNameTranslator.getSortFieldName(orderByCol);
-	}
-
 	protected void removeSortFieldNameTranslator(
 		SortFieldNameTranslator sortFieldNameTranslator,
 		Map<String, Object> properties) {
@@ -125,6 +112,19 @@ public class SortFieldBuilderImpl implements SortFieldBuilder {
 
 	@Reference
 	protected Props props;
+
+	private String _doGetSortField(String entityClassName, String orderByCol) {
+		SortFieldNameTranslator sortFieldNameTranslator =
+			_sortFieldNameTranslators.get(entityClassName);
+
+		if (sortFieldNameTranslator == null) {
+			Indexer<?> indexer = indexerRegistry.getIndexer(entityClassName);
+
+			return indexer.getSortField(orderByCol);
+		}
+
+		return sortFieldNameTranslator.getSortFieldName(orderByCol);
+	}
 
 	private Set<String> _defaultSortableTextFields;
 	private final Map<String, SortFieldNameTranslator>

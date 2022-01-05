@@ -101,8 +101,8 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 		_elasticsearchFixture.setUp();
 
 		ElasticsearchEngineAdapterFixture elasticsearchEngineAdapterFixture =
-			createElasticsearchEngineAdapterFixture(
-				_elasticsearchFixture, getFacetProcessor());
+			_createElasticsearchEngineAdapterFixture(
+				_elasticsearchFixture, _getFacetProcessor());
 
 		elasticsearchEngineAdapterFixture.setUp();
 
@@ -114,11 +114,11 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 		Localization localization = new LocalizationImpl();
 
 		ElasticsearchIndexSearcher elasticsearchIndexSearcher =
-			createIndexSearcher(
+			_createIndexSearcher(
 				_elasticsearchFixture, searchEngineAdapter, indexNameBuilder,
 				localization);
 
-		IndexWriter indexWriter = createIndexWriter(
+		IndexWriter indexWriter = _createIndexWriter(
 			_elasticsearchFixture, searchEngineAdapter, indexNameBuilder,
 			localization);
 
@@ -126,7 +126,7 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 		_indexWriter = indexWriter;
 		_searchEngineAdapter = searchEngineAdapter;
 
-		createIndex(indexNameBuilder);
+		_createIndex(indexNameBuilder);
 	}
 
 	@Override
@@ -147,8 +147,26 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 		};
 	}
 
-	protected static ElasticsearchEngineAdapterFixture
-		createElasticsearchEngineAdapterFixture(
+	protected void setElasticsearchFixture(
+		ElasticsearchFixture elasticsearchFixture) {
+
+		_elasticsearchFixture = elasticsearchFixture;
+	}
+
+	protected void setFacetProcessor(
+		FacetProcessor<SearchRequestBuilder> facetProcessor) {
+
+		_facetProcessor = facetProcessor;
+	}
+
+	protected void setLiferayMappingsAddedToIndex(
+		boolean liferayMappingsAddedToIndex) {
+
+		_liferayMappingsAddedToIndex = liferayMappingsAddedToIndex;
+	}
+
+	private static ElasticsearchEngineAdapterFixture
+		_createElasticsearchEngineAdapterFixture(
 			ElasticsearchClientResolver elasticsearchClientResolver,
 			FacetProcessor<SearchRequestBuilder> facetProcessor) {
 
@@ -160,7 +178,7 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 		};
 	}
 
-	protected static QuerySuggester createElasticsearchQuerySuggester(
+	private static QuerySuggester _createElasticsearchQuerySuggester(
 		SearchEngineAdapter searchEngineAdapter,
 		IndexNameBuilder indexNameBuilder, Localization localization) {
 
@@ -173,8 +191,8 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 		};
 	}
 
-	protected static ElasticsearchSpellCheckIndexWriter
-		createElasticsearchSpellCheckIndexWriter(
+	private static ElasticsearchSpellCheckIndexWriter
+		_createElasticsearchSpellCheckIndexWriter(
 			SearchEngineAdapter searchEngineAdapter,
 			IndexNameBuilder indexNameBuilder, Localization localization) {
 
@@ -189,7 +207,7 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 		};
 	}
 
-	protected static ElasticsearchIndexSearcher createIndexSearcher(
+	private static ElasticsearchIndexSearcher _createIndexSearcher(
 		ElasticsearchFixture elasticsearchFixture,
 		SearchEngineAdapter searchEngineAdapter,
 		IndexNameBuilder indexNameBuilder, Localization localization) {
@@ -201,9 +219,9 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 						elasticsearchFixture.
 							getElasticsearchConfigurationProperties()));
 				setIndexNameBuilder(indexNameBuilder);
-				setProps(createProps());
+				setProps(_createProps());
 				setQuerySuggester(
-					createElasticsearchQuerySuggester(
+					_createElasticsearchQuerySuggester(
 						searchEngineAdapter, indexNameBuilder, localization));
 				setSearchEngineAdapter(searchEngineAdapter);
 				setSearchRequestBuilderFactory(
@@ -214,7 +232,7 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 		};
 	}
 
-	protected static IndexWriter createIndexWriter(
+	private static IndexWriter _createIndexWriter(
 		ElasticsearchFixture elasticsearchFixture,
 		SearchEngineAdapter searchEngineAdapter,
 		IndexNameBuilder indexNameBuilder, Localization localization) {
@@ -228,13 +246,13 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 				setIndexNameBuilder(indexNameBuilder);
 				setSearchEngineAdapter(searchEngineAdapter);
 				setSpellCheckIndexWriter(
-					createElasticsearchSpellCheckIndexWriter(
+					_createElasticsearchSpellCheckIndexWriter(
 						searchEngineAdapter, indexNameBuilder, localization));
 			}
 		};
 	}
 
-	protected static Props createProps() {
+	private static Props _createProps() {
 		Props props = Mockito.mock(Props.class);
 
 		Mockito.doReturn(
@@ -248,7 +266,7 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 		return props;
 	}
 
-	protected void createIndex(IndexNameBuilder indexNameBuilder) {
+	private void _createIndex(IndexNameBuilder indexNameBuilder) {
 		IndexCreator indexCreator = new IndexCreator() {
 			{
 				setElasticsearchClientResolver(_elasticsearchFixture);
@@ -261,7 +279,7 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 			new IndexName(indexNameBuilder.getIndexName(_companyId)));
 	}
 
-	protected FacetProcessor<SearchRequestBuilder> getFacetProcessor() {
+	private FacetProcessor<SearchRequestBuilder> _getFacetProcessor() {
 		if (_facetProcessor != null) {
 			return _facetProcessor;
 		}
@@ -279,24 +297,6 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 						"class.name", NestedFacetImpl.class.getName()));
 			}
 		};
-	}
-
-	protected void setElasticsearchFixture(
-		ElasticsearchFixture elasticsearchFixture) {
-
-		_elasticsearchFixture = elasticsearchFixture;
-	}
-
-	protected void setFacetProcessor(
-		FacetProcessor<SearchRequestBuilder> facetProcessor) {
-
-		_facetProcessor = facetProcessor;
-	}
-
-	protected void setLiferayMappingsAddedToIndex(
-		boolean liferayMappingsAddedToIndex) {
-
-		_liferayMappingsAddedToIndex = liferayMappingsAddedToIndex;
 	}
 
 	private final long _companyId;

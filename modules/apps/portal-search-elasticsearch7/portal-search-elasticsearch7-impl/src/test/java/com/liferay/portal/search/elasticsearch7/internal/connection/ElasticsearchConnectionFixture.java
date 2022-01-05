@@ -71,9 +71,9 @@ public class ElasticsearchConnectionFixture
 		Sidecar sidecar = new Sidecar(
 			Mockito.mock(ClusterExecutor.class),
 			elasticsearchConfigurationWrapper,
-			createElasticsearchInstancePaths(), new LocalProcessExecutor(),
+			_createElasticsearchInstancePaths(), new LocalProcessExecutor(),
 			() -> _TMP_PATH.resolve("lib-process-executor"),
-			getSettingsContributors(), Mockito.mock(SidecarManager.class));
+			_getSettingsContributors(), Mockito.mock(SidecarManager.class));
 
 		ElasticsearchConnectionBuilder elasticsearchConnectionBuilder =
 			new ElasticsearchConnectionBuilder();
@@ -86,7 +86,7 @@ public class ElasticsearchConnectionFixture
 			sidecar::stop
 		).preConnectElasticsearchConnectionConsumer(
 			elasticsearchConnection -> {
-				deleteTmpDir();
+				_deleteTmpDir();
 
 				sidecar.start();
 
@@ -111,7 +111,7 @@ public class ElasticsearchConnectionFixture
 			_elasticsearchConnection.close();
 		}
 
-		deleteTmpDir();
+		_deleteTmpDir();
 	}
 
 	public Map<String, Object> getElasticsearchConfigurationProperties() {
@@ -214,7 +214,7 @@ public class ElasticsearchConnectionFixture
 
 	}
 
-	protected ElasticsearchInstancePaths createElasticsearchInstancePaths() {
+	private ElasticsearchInstancePaths _createElasticsearchInstancePaths() {
 		ElasticsearchInstancePaths elasticsearchInstancePaths = Mockito.mock(
 			ElasticsearchInstancePaths.class);
 
@@ -233,12 +233,12 @@ public class ElasticsearchConnectionFixture
 		return elasticsearchInstancePaths;
 	}
 
-	protected void deleteTmpDir() {
+	private void _deleteTmpDir() {
 		PathUtil.deleteDir(_workPath);
 	}
 
-	protected SettingsContributor
-		getClusterLoggingThresholdSettingsContributor() {
+	private SettingsContributor
+		_getClusterLoggingThresholdSettingsContributor() {
 
 		return new BaseSettingsContributor(0) {
 
@@ -251,7 +251,7 @@ public class ElasticsearchConnectionFixture
 		};
 	}
 
-	protected SettingsContributor getDiscoveryTypeZenContributor() {
+	private SettingsContributor _getDiscoveryTypeZenContributor() {
 		if (!GetterUtil.getBoolean(_discoveryTypeZen)) {
 			return null;
 		}
@@ -276,7 +276,7 @@ public class ElasticsearchConnectionFixture
 		};
 	}
 
-	protected SettingsContributor getDiskThresholdSettingsContributor() {
+	private SettingsContributor _getDiskThresholdSettingsContributor() {
 		return new BaseSettingsContributor(0) {
 
 			@Override
@@ -289,11 +289,11 @@ public class ElasticsearchConnectionFixture
 		};
 	}
 
-	protected List<SettingsContributor> getSettingsContributors() {
+	private List<SettingsContributor> _getSettingsContributors() {
 		return Stream.of(
-			getClusterLoggingThresholdSettingsContributor(),
-			getDiskThresholdSettingsContributor(),
-			getDiscoveryTypeZenContributor()
+			_getClusterLoggingThresholdSettingsContributor(),
+			_getDiskThresholdSettingsContributor(),
+			_getDiscoveryTypeZenContributor()
 		).filter(
 			Objects::nonNull
 		).collect(

@@ -52,13 +52,11 @@ public class BookmarksEntryInfoItemObjectProvider
 		BookmarksEntry bookmarksEntry = null;
 
 		try {
-			if (infoItemIdentifier instanceof ClassPKInfoItemIdentifier) {
-				ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
-					(ClassPKInfoItemIdentifier)infoItemIdentifier;
+			ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+				(ClassPKInfoItemIdentifier)infoItemIdentifier;
 
-				bookmarksEntry = _bookmarksEntryLocalService.getEntry(
-					classPKInfoItemIdentifier.getClassPK());
-			}
+			bookmarksEntry = _bookmarksEntryLocalService.getEntry(
+				classPKInfoItemIdentifier.getClassPK());
 		}
 		catch (PortalException portalException) {
 			throw new RuntimeException(portalException);

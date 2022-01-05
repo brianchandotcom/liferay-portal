@@ -518,13 +518,6 @@ public class SimilarResultsDocumentDisplayContextBuilder {
 		return format.format(date);
 	}
 
-	private AssetRendererFactory<?> _getAssetRendererFactoryByClassName(
-		String className) {
-
-		return AssetRendererFactoryRegistryUtil.
-			_getAssetRendererFactoryByClassName(className);
-	}
-
 	private long _getEntryClassPK() {
 		return _getFieldValueLong(Field.ENTRY_CLASS_PK);
 	}

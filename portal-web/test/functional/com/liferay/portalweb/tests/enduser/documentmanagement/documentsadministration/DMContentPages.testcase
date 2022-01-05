@@ -206,6 +206,12 @@ definition {
 			dmDocumentTitle = "Document_1.jpg",
 			siteName = "Site Name");
 
+		DMNavigator.gotoDocumentPG(dmDocumentTitle = "Document_1.jpg");
+
+		AssertVisible(
+			key_dmDocumentFileName = "Document_1.jpg",
+			locator1 = "DocumentsAndMediaDocument#DOCUMENT_DETAILS_IMAGE_PREVIEW");
+
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.deleteCP(dmDocumentTitle = "Document_1.jpg");

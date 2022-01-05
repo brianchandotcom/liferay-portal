@@ -64,5 +64,38 @@
 			"subscriptionType": "monthly"
 		},
 		"warehouse1": 10000
+	},
+	{
+		"backOrders": true,
+		"categories": [
+			"Team"
+		],
+		"description": "Team Extranet description.",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "LOL003",
+		"images": [
+			"team_extranet.png"
+		],
+		"name": "Team",
+		"options": [
+			{
+				"key": "domain"
+			},
+			{
+				"key": "name"
+			}
+		],
+		"price": 0.0,
+		"sku": "LOL003",
+		"specificationOptions": [
+		],
+		"subscriptionInfo": {
+			"maxSubscriptionCycles": 1,
+			"subscriptionEnabled": true,
+			"subscriptionLength": 6,
+			"subscriptionType": "monthly"
+		},
+		"warehouse1": 10000
 	}
 ]

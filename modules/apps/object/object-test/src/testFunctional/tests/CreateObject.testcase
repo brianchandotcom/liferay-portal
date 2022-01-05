@@ -698,7 +698,6 @@ definition {
 	@description = "LPS-135397 - Verify it is possible to collapse and expand a block of fields"
 	@priority = "4"
 	test CanCollapseAndExpandBlock {
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -4857,7 +4856,6 @@ definition {
 	@description = "LPS-135649 - Verify the Asset Title, Asset Type and Item Subject of a Object's entry on the Workflow Metrics page"
 	@priority = "4"
 	test ObjectInfoDisplayedOnWorkflowMetrics {
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",

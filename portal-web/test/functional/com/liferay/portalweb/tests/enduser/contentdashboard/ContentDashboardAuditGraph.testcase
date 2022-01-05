@@ -73,7 +73,7 @@ definition {
 		}
 
 		task ("Assert both filters are applied") {
-			ContentDashboard.viewAppliedFilters(filterLabelList = "Audience 1,Stage 1");
+			ContentDashboard.viewAppliedFilters(filterLabelList = "Category:Audience 1,Category:Stage 1");
 		}
 
 		task ("Assert if only one asset is displayed") {

@@ -14,7 +14,7 @@
 
 package com.liferay.frontend.taglib.clay.servlet.taglib;
 
-import com.liferay.frontend.taglib.clay.internal.configuration.FFManagementToolbarConfiguration;
+import com.liferay.frontend.taglib.clay.internal.configuration.FFManagementToolbarConfigurationUtil;
 import com.liferay.frontend.taglib.clay.internal.servlet.taglib.BaseContainerTag;
 import com.liferay.frontend.taglib.clay.internal.servlet.taglib.display.context.ManagementToolbarDefaults;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.ManagementToolbarDisplayContext;
@@ -48,17 +48,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
-
 /**
  * @author Marko Cikos
  */
-@Component(
-	configurationPid = "com.liferay.frontend.taglib.clay.internal.configuration.FFManagementToolbarConfiguration",
-	immediate = true, service = BaseContainerTag.class
-)
 public class ManagementToolbarTag extends BaseContainerTag {
 
 	@Override
@@ -580,13 +572,6 @@ public class ManagementToolbarTag extends BaseContainerTag {
 		_viewTypeItems = viewTypeItems;
 	}
 
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		_ffManagementToolbarConfiguration = ConfigurableUtil.createConfigurable(
-			FFManagementToolbarConfiguration.class, properties);
-	}
-
 	@Override
 	protected void cleanUp() {
 		super.cleanUp();
@@ -676,7 +661,7 @@ public class ManagementToolbarTag extends BaseContainerTag {
 		props.put("showCreationMenu", isShowCreationMenu());
 		props.put(
 			"showDesignImprovements",
-			_ffManagementToolbarConfiguration.showDesignImprovements());
+			FFManagementToolbarConfigurationUtil.showDesignImprovements());
 		props.put("showInfoButton", isShowInfoButton());
 		props.put("showResultsBar", isShowResultsBar());
 		props.put("showSearch", isShowSearch());
@@ -1215,9 +1200,6 @@ public class ManagementToolbarTag extends BaseContainerTag {
 
 	private static final String _ATTRIBUTE_NAMESPACE =
 		"clay:management-toolbar:";
-
-	private static volatile FFManagementToolbarConfiguration
-		_ffManagementToolbarConfiguration;
 
 	private List<DropdownItem> _actionDropdownItems;
 	private String _checkboxStatus = "unchecked";

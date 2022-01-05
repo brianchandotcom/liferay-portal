@@ -732,7 +732,12 @@ public class LayoutsTreeDisplayContext {
 				exception);
 		}
 
-		if (Validator.isNotNull(url)) {
+		if (Objects.equals(
+				url, _themeDisplay.getURLCurrent() + StringPool.POUND)) {
+
+			url = StringPool.POUND;
+		}
+		else if (Validator.isNotNull(url)) {
 			url = HttpUtil.addParameter(
 				url,
 				getNamespace() + _SITE_NAVIGATION_MENU_ITEM_ID_PARAMETER_NAME,

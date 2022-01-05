@@ -12,25 +12,20 @@
  * details.
  */
 
-package com.liferay.bookmarks.constants;
+package com.liferay.bookmarks.web.internal.constants;
 
 /**
- * @author Iván Zaera
+ * @author
  */
 public class BookmarksWebKeys {
 
-	public static final String BOOKMARKS_ENTRIES = "BOOKMARKS_ENTRIES";
+    public static final String BOOKMARK_ENTRIES_DISPLAY_CONTEXT =
+            "BOOKMARK_ENTRIES_DISPLAY_CONTEXT";
 
-	public static final String BOOKMARKS_ENTRY = "BOOKMARKS_ENTRY";
+    public static final String BOOKMARKS_ITEM_SELECTOR_DISPLAY_CONTEXT =
+            "BOOKMARKS_ITEM_SELECTOR_DISPLAY_CONTEXT";
 
-	public static final String BOOKMARKS_FOLDER = "BOOKMARKS_FOLDER";
-
-	public static final String BOOKMARKS_FOLDERS = "BOOKMARKS_FOLDERS";
-
-	public static final String BOOKMARKS_ITEM_SELECTOR_DISPLAY_CONTEXT =
-		"BOOKMARKS_ITEM_SELECTOR_DISPLAY_CONTEXT";
-
-	public static final String BOOKMARKS_PORTLET_TOOLBAR_CONTRIBUTOR =
-		"BOOKMARKS_PORTLET_TOOLBAR_CONTRIBUTOR";
+//    public static final String BLOGS_ITEM_SELECTOR_HELPER =
+//            "BLOGS_ITEM_SELECTOR_HELPER";
 
 }

@@ -20,6 +20,7 @@ import React, {useState} from 'react';
 
 import ActionControls from './ActionControls';
 import CreationMenu from './CreationMenu';
+import FeatureFlagContext from './FeatureFlagContext';
 import FilterOrderControls from './FilterOrderControls';
 import InfoPanelControl from './InfoPanelControl';
 import ResultsBar from './ResultsBar';
@@ -59,6 +60,7 @@ function ManagementToolbar({
 	selectAllURL,
 	selectable,
 	showCreationMenu,
+	showDesignImprovements,
 	showInfoButton,
 	showResultsBar,
 	showSearch,
@@ -74,7 +76,7 @@ function ManagementToolbar({
 	const [searchMobile, setSearchMobile] = useState(false);
 
 	return (
-		<>
+		<FeatureFlagContext.Provider value={{showDesignImprovements}}>
 			<ClayManagementToolbar active={active}>
 				<ClayManagementToolbar.ItemList>
 					{selectable && (
@@ -216,7 +218,7 @@ function ManagementToolbar({
 					searchValue={searchValue}
 				/>
 			)}
-		</>
+		</FeatureFlagContext.Provider>
 	);
 }
 
@@ -254,6 +256,7 @@ ManagementToolbar.propTypes = {
 	selectAllURL: PropTypes.string,
 	selectable: PropTypes.bool,
 	showCreationMenu: PropTypes.bool,
+	showDesignImprovements: PropTypes.bool,
 	showInfoButton: PropTypes.bool,
 	showResultsBar: PropTypes.bool,
 	showSearch: PropTypes.bool,

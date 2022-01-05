@@ -1772,7 +1772,7 @@ definition {
 	@description = "LPS-135396 - Verify it is possible to view a Date entry and label on layout"
 	@priority = "4"
 	test CanViewDateEntryOnLayout {
-		property portal.upstream = "quarantine";
+		
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
@@ -1795,7 +1795,7 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
-		ObjectPortlet.viewEntryDetails(entry = "01/01/2001");
+		ObjectPortlet.viewEntryDetails(entry = "Jan 1, 2001");
 
 		ObjectPortlet.assertEntryDetailsLabelPresent(entryLabel = "Field");
 

@@ -132,8 +132,15 @@ export default function () {
 			spritemap={spritemap}
 			trigger={
 				<ClayButton className="shadow-none" displayType="unstyled">
-					<h5 className="m-0">
-						<>{`${itemName} `}</>
+					<h5 className="align-items-center d-flex m-0">
+						{!itemName ? (
+							<div
+								className="customer-portal-select-project font-weight-bold mr rounded-sm skeleton text-neutral-10 text-paragraph text-truncate"
+								id="customer-portal-project-application"
+							></div>
+						) : (
+							<>{`${itemName} `}</>
+						)}
 
 						<ClayIcon
 							className="arrow-down-item"

@@ -68,6 +68,32 @@
 	font-weight: 700 !important;
 }
 
+.customer-portal-select-project {
+	height: 24px;
+	width: 180px;
+
+	background: #f7f8f9;
+	background-image: linear-gradient(
+		to right,
+		#f8f8f8 0%,
+		rgba(206, 206, 206, 0.1) 20%,
+		#f8f8f8 40%,
+		#f8f8f8 100%
+	);
+	animation: shimmer-customer-portal-select-project 1s linear infinite;
+	background-repeat: no-repeat;
+	background-size: 450px 400px;
+}
+
+@keyframes shimmer-customer-portal-select-project {
+	0% {
+		background-position: -450px 0;
+	}
+	100% {
+		background-position: 450px 0;
+	}
+}
+
 .inline-scroller {
 	max-height: max-content !important;
 }

@@ -13,18 +13,27 @@
  */
 
 import {ClayButtonWithIcon} from '@clayui/button';
-import ClayForm, {ClayInput} from '@clayui/form';
+import ClayForm, {ClayCheckbox, ClayInput} from '@clayui/form';
+import ClayIcon from '@clayui/icon';
+import {TranslationAdminSelector} from 'frontend-js-components-web';
 import {openSelectionModal} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
 function DisplayPageItemContextualSidebar({
 	chooseItemProps,
+	defaultLanguageId,
 	item,
 	itemSubtype,
 	itemType,
+	locales,
+	localizedNames,
 	namespace,
+	useCustomName,
 }) {
+	const [translations, setTranslations] = useState(localizedNames);
+	const [customNameEnabled, setCustomNameEnabled] = useState(useCustomName);
+	const [selectedLocaleId, setSelectedLocaleId] = useState(defaultLanguageId);
 	const [selectedItem, setSelectedItem] = useState(item);
 
 	const {eventName, itemSelectorURL, modalTitle} = chooseItemProps;
@@ -67,18 +76,56 @@ function DisplayPageItemContextualSidebar({
 
 	return (
 		<>
+			<ClayForm.Group className="align-items-center d-flex mb-2">
+				<ClayCheckbox
+					checked={customNameEnabled}
+					label={Liferay.Language.get('use-custom-name')}
+					onChange={() => setCustomNameEnabled(!customNameEnabled)}
+				/>
+
+				<span
+					className="mb-3 ml-1"
+					data-tooltip-align="top"
+					title={Liferay.Language.get('use-custom-name-help')}
+				>
+					<ClayIcon symbol="question-circle-full" />
+				</span>
+			</ClayForm.Group>
+
 			<ClayForm.Group>
 				<label htmlFor={`${namespace}_nameInput`}>
 					{Liferay.Language.get('name')}
 				</label>
 
-				<ClayInput
-					disabled
-					id={`${namespace}_nameInput`}
-					readOnly
-					type="text"
-					value={selectedItem.title}
-				/>
+				<ClayInput.Group>
+					<ClayInput.GroupItem>
+						<ClayInput
+							disabled={!customNameEnabled}
+							id={`${namespace}_nameInput`}
+							onChange={(event) =>
+								setTranslations({
+									...translations,
+									[selectedLocaleId]: event.target.value,
+								})
+							}
+							type="text"
+							value={translations[selectedLocaleId] || ''}
+						/>
+					</ClayInput.GroupItem>
+
+					<ClayInput.GroupItem shrink>
+						<TranslationAdminSelector
+							activeLanguageIds={locales.map(
+								(locale) => locale.id
+							)}
+							availableLocales={locales}
+							defaultLanguageId={defaultLanguageId}
+							onSelectedLanguageIdChange={setSelectedLocaleId}
+							selectedLanguageId={selectedLocaleId}
+							translations={translations}
+						/>
+					</ClayInput.GroupItem>
+				</ClayInput.Group>
 			</ClayForm.Group>
 
 			<ClayForm.Group>
@@ -90,6 +137,7 @@ function DisplayPageItemContextualSidebar({
 					<ClayInput.GroupItem>
 						<ClayInput
 							className="text-secondary"
+							disabled={!customNameEnabled}
 							id={`${namespace}_itemInput`}
 							readOnly
 							type="text"
@@ -131,13 +179,19 @@ function DisplayPageItemContextualSidebar({
 				</ClayForm.Group>
 			)}
 
-			<FormValues namespace={namespace} selectedItem={selectedItem} />
+			<FormValues
+				localizedNames={translations}
+				namespace={namespace}
+				selectedItem={selectedItem}
+				useCustomName={customNameEnabled}
+			/>
 		</>
 	);
 }
 
 DisplayPageItemContextualSidebar.propTypes = {
 	chooseItemProps: PropTypes.object.isRequired,
+	defaultLanguageId: PropTypes.string.isRequired,
 	item: PropTypes.shape({
 		classNameId: PropTypes.string,
 		classPK: PropTypes.string,
@@ -147,10 +201,13 @@ DisplayPageItemContextualSidebar.propTypes = {
 	}).isRequired,
 	itemSubtype: PropTypes.string,
 	itemType: PropTypes.string.isRequired,
+	locales: PropTypes.array.isRequired,
+	localizedNames: PropTypes.object.isRequired,
 	namespace: PropTypes.string.isRequired,
+	useCustomName: PropTypes.bool.isRequired,
 };
 
-function FormValues({namespace, selectedItem}) {
+function FormValues({localizedNames, namespace, selectedItem, useCustomName}) {
 	return (
 		<>
 			<input
@@ -183,11 +240,24 @@ function FormValues({namespace, selectedItem}) {
 				readOnly
 				value={selectedItem.type || ''}
 			/>
+			<input
+				hidden
+				name={getFieldName(namespace, 'localizedNames')}
+				readOnly
+				value={useCustomName ? JSON.stringify(localizedNames) : '{}'}
+			/>
+			<input
+				hidden
+				name={getFieldName(namespace, 'useCustomName')}
+				readOnly
+				value={useCustomName}
+			/>
 		</>
 	);
 }
 
 FormValues.propTypes = {
+	localizedNames: PropTypes.object.isRequired,
 	namespace: PropTypes.string.isRequired,
 	selectedItem: PropTypes.shape({
 		classNameId: PropTypes.string,

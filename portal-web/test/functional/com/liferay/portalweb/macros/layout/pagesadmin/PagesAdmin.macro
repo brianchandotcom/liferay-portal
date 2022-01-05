@@ -1237,6 +1237,14 @@ definition {
 			value1 = "${metaTagsKeywords}");
 	}
 
+	macro viewVocabularyNotPresent {
+		Navigator.gotoNavTab(navTab = "SEO");
+
+		AssertElementNotPresent(
+			key_vocabularyName = "${vocabularyName}",
+			locator1 = "AssetCategorization#CATEGORY_SELECT");
+	}
+
 	macro viewWidgetPageCurrentTheme {
 		if (IsTextNotEqual(locator1 = "ControlMenu#HEADING", value1 = "Pages")) {
 			ProductMenu.gotoPortlet(

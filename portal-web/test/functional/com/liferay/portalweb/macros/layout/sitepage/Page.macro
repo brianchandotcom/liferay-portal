@@ -335,14 +335,6 @@ definition {
 		AssertElementNotPresent(locator1 = "Home#PAGE");
 	}
 
-	macro viewNoSelectCategory {
-		Navigator.gotoNavTab(navTab = "SEO");
-
-		AssertElementNotPresent(
-			key_vocabularyName = "${vocabularyName}",
-			locator1 = "AssetCategorization#CATEGORY_SELECT");
-	}
-
 	macro viewPageLockCheck {
 		Click(locator1 = "ControlMenu#INFO");
 

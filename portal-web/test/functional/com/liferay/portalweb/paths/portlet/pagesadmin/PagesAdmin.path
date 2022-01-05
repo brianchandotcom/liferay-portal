@@ -44,6 +44,11 @@
 </tr>
 <!--FRIENDLY_URL-->
 <tr>
+	<td>FRIENDLY_URL</td>
+	<td>//input[contains(@name,'friendlyURL') and contains(@value,'${key_friendlyURL}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FRIENDLY_URL_ACTIVE_URL</td>
 	<td>//div[contains(@class,'modal-dialog')]//div[contains(@class,'active-url')]//p[normalize-space(text())='${key_activeURL}']</td>
 	<td></td>

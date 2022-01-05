@@ -27,7 +27,7 @@ export default function (props) {
 	const [deserialize, setDeserialize] = useState(false);
 	const [elements, setElements] = useState(defaultNodes);
 	const [selectedLanguageId, setSelectedLanguageId] = useState('');
-	const [showInvalidContentError, setShowInvalidContentError] = useState(
+	const [showInvalidContentMessage, setShowInvalidContentMessage] = useState(
 		false
 	);
 	const [sourceView, setSourceView] = useState(false);
@@ -47,9 +47,9 @@ export default function (props) {
 		setDeserialize,
 		setElements,
 		setSelectedLanguageId,
-		setShowInvalidContentError,
+		setShowInvalidContentMessage,
 		setSourceView,
-		showInvalidContentError,
+		showInvalidContentMessage,
 		sourceView,
 	};
 

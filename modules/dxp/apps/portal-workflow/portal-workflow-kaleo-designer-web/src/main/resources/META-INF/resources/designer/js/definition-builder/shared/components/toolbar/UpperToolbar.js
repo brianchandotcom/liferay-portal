@@ -48,7 +48,7 @@ export default function UpperToolbar({
 		setDefinitionTitle,
 		setDeserialize,
 		setSelectedLanguageId,
-		setShowInvalidContentError,
+		setShowInvalidContentMessage,
 		setSourceView,
 		sourceView,
 	} = useContext(DefinitionBuilderContext);
@@ -250,7 +250,7 @@ export default function UpperToolbar({
 											setDeserialize(true);
 										}
 										else {
-											setShowInvalidContentError(true);
+											setShowInvalidContentMessage(true);
 										}
 									}}
 									symbol="rules"

@@ -76,12 +76,16 @@ const Overview = ({project, subscriptionGroups}) => {
 			}
 		};
 
-		if (selectedSubscriptionGroup) {
+		if (selectedSubscriptionGroup && selectedStatus.length) {
 			getSubscriptions(
 				project.accountKey,
 				selectedSubscriptionGroup,
 				selectedStatus
 			);
+		}
+
+		if (!selectedStatus.length) {
+			setAccountSubscriptions([]);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [project, selectedStatus, selectedSubscriptionGroup]);

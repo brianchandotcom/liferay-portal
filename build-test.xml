@@ -350,11 +350,11 @@ module.framework.properties.osgi.console=11312</echo>
 				<then>
 					<local name="export.dmp.file.path" />
 
-					<property location="export.sh" name="export.sh.file.path" />
+					<property location="export_database_mysql_compact_export.sh" name="export.database.mysql.compact.file.path" />
 					<property name="docker.src.file.path" value="/tmp/export.sql" />
 					<property name="export.dmp.file.path" value="${basedir}/@{database.file.prefix}.sql" />
 
-					<echo file="${export.sh.file.path}">
+					<echo file="${export.database.mysql.compact.file.path}">
 						<![CDATA[
 							#!/bin/bash
 
@@ -377,9 +377,9 @@ module.framework.properties.osgi.console=11312</echo>
 
 					<execute>
 						<![CDATA[
-							docker cp ${export.sh.file.path} ${database.host}:/tmp/export.sh
+							docker cp ${export.database.mysql.compact.file.path} ${database.host}:/tmp/export_database_mysql_compact_export.sh
 
-							docker exec ${database.host} /bin/bash /tmp/export.sh
+							docker exec ${database.host} /bin/bash /tmp/export_database_mysql_compact_export.sh
 						]]>
 					</execute>
 
@@ -409,7 +409,7 @@ module.framework.properties.osgi.console=11312</echo>
 				</else>
 			</if>
 
-			<echo file="sortSQL.sh">
+			<echo file="export_database_mysql_compact_sort_sql.sh">
 				<![CDATA[
 					#!/bin/bash
 
@@ -422,11 +422,11 @@ module.framework.properties.osgi.console=11312</echo>
 			</echo>
 
 			<execute>
-				sortSQL.sh @{database.file.prefix}.sql > @{database.file.prefix}-sorted.sql
+				export_database_mysql_compact_sort_sql.sh @{database.file.prefix}.sql > @{database.file.prefix}-sorted.sql
 			</execute>
 
 			<delete file="@{database.file.prefix}.sql" />
-			<delete file="sortSQL.sh" />
+			<delete file="export_database_mysql_compact_sort_sql.sh" />
 
 			<move
 				file="@{database.file.prefix}-sorted.sql"
@@ -14149,41 +14149,41 @@ url=${short.hostname}:8080</echo>
 	</target>
 
 	<target name="validate-db-upgrade-schemas">
-		<echo file="printDiff.sh">
+		<echo file="validate_db_upgrade_schemas.sh">
 diff -B --new-line-format='%L' --old-line-format= --unchanged-line-format= upgraded.sql fresh.sql || true
 		</echo>
 
 		<chmod
-			file="printDiff.sh"
+			file="validate_db_upgrade_schemas.sh"
 			perm="a+x"
 		/>
 
-		<exec executable="./printDiff.sh" outputproperty="database.changes.master" />
+		<exec executable="./validate_db_upgrade_schemas.sh" outputproperty="database.changes.master" />
 
 		<if>
 			<not>
 				<equals arg1="${database.changes.master}" arg2="" />
 			</not>
 			<then>
-				<echo file="db-changes.txt">
+				<echo file="validate-db-upgrade-schemas.txt">
 Upgraded database is missing the following elements from a fresh database: ${line.separator}${database.changes.master}
 
 diff:${line.separator}upgraded.sql > fresh.sql
 				</echo>
 
-				<echo file="printDiff.sh">
+				<echo file="validate_db_upgrade_schemas.sh">
 diff -y -B -W250 upgraded.sql fresh.sql | expand | grep -E -C40 '^.{123} [|>]( |$)'
 				</echo>
 
 				<chmod
-					file="printDiff.sh"
+					file="validate_db_upgrade_schemas.sh"
 					perm="a+x"
 				/>
 
-				<exec append="true" executable="./printDiff.sh" output="db-changes.txt" />
+				<exec append="true" executable="./validate_db_upgrade_schemas.sh" output="validate-db-upgrade-schemas.txt" />
 			</then>
 			<else>
-				<echo file="db-changes.txt">Database schemas match</echo>
+				<echo file="validate-db-upgrade-schemas.txt">Database schemas match</echo>
 			</else>
 		</if>
 	</target>

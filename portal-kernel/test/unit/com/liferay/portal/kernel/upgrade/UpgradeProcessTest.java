@@ -130,9 +130,9 @@ public class UpgradeProcessTest {
 		);
 
 		Mockito.when(
-			props.get(PropsKeys.UPGRADE_JDBC_RESULT_SET_FETCH_SIZE)
+			props.get(PropsKeys.UPGRADE_CONCURRENT_FETCH_SIZE)
 		).thenReturn(
-			_UPGRADE_JDBC_RESULT_SET_FETCH_SIZE_DEFAULT_VALUE
+			_UPGRADE_CONCURRENT_FETCH_SIZE_DEFAULT_VALUE
 		);
 
 		PropsUtil.setProps(props);
@@ -157,7 +157,7 @@ public class UpgradeProcessTest {
 		_UPGRADE_CONCURRENT_PROCESS_FUTURE_LIST_MAX_SIZE_DEFAULT_VALUE = "1000";
 
 	private static final String
-		_UPGRADE_JDBC_RESULT_SET_FETCH_SIZE_DEFAULT_VALUE = "1000";
+		_UPGRADE_CONCURRENT_FETCH_SIZE_DEFAULT_VALUE = "1000";
 
 	private static final List<String> _newIndexColumnNames = Arrays.asList(
 		"newColumn1", _NEW_COLUMN_NAME, "newColumn2");

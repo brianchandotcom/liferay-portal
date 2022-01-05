@@ -3337,8 +3337,8 @@ public interface PropsKeys {
 	public static final String UPGRADE_DATABASE_TRANSACTIONS_DISABLED =
 		"upgrade.database.transactions.disabled";
 
-	public static final String UPGRADE_JDBC_RESULT_SET_FETCH_SIZE =
-		"upgrade.jdbc.result.set.fetch.size";
+	public static final String UPGRADE_CONCURRENT_FETCH_SIZE =
+		"upgrade.concurrent.fetch.size";
 
 	public static final String UPGRADE_REPORT_ENABLED =
 		"upgrade.report.enabled";

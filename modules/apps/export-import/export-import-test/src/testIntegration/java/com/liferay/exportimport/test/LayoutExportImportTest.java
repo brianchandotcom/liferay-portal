@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
@@ -36,6 +37,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -429,6 +431,35 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 			layout.getUuid(), importedGroup.getGroupId(), false);
 
 		Assert.assertNotNull(importedLayout);
+	}
+
+	@Test
+	public void testExportImportUnselectedChildLayouts() throws Exception {
+		Layout layout = LayoutTestUtil.addLayout(group);
+
+		Layout childLayout = LayoutTestUtil.addLayout(group, layout.getPlid());
+
+		Map<Long, Boolean> selectedLayouts = HashMapBuilder.put(
+			LayoutConstants.DEFAULT_PLID, true
+		).put(
+			layout.getPlid(), false
+		).build();
+
+		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
+			group.getGroupId(), false);
+
+		exportImportLayouts(
+			ExportImportHelperUtil.getLayoutIds(selectedLayouts),
+			getImportParameterMap());
+
+		Assert.assertNotEquals(
+			layouts.size(),
+			LayoutLocalServiceUtil.getLayoutsCount(importedGroup, false));
+
+		importedLayout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+			childLayout.getUuid(), importedGroup.getGroupId(), false);
+
+		Assert.assertNull(importedLayout);
 	}
 
 	@Ignore

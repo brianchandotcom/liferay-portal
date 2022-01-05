@@ -871,7 +871,6 @@ definition {
 	@description = "LPS-135396 - Verify it is possible to edit a Date entry on layout"
 	@priority = "4"
 	test CanEditDateEntryOnLayout {
-		property portal.upstream = "quarantine";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
@@ -895,14 +894,14 @@ definition {
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
 		ObjectPortlet.updateEntry(
-			entry = "01/01/2001",
+			entry = "Jan 1, 2001",
 			updateEntry = "02/02/2002");
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
 		ObjectPortlet.assertEntryNotPresent(entry = "01/01/2001");
 
-		ObjectPortlet.viewEntry(entry = "02/02/2002");
+		ObjectPortlet.viewEntry(entry = "Feb 2, 2002");
 	}
 
 	@description = "LPS-135396 - Verify it is possible to edit a Double entry on layout"

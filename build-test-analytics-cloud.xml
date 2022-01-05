@@ -182,18 +182,19 @@ networks:
 	</macrodef>
 
 	<macrodef name="pull-docker-image-dependencies">
+		<attribute default="" name="analytics.cloud.image.names.excludes" />
 		<attribute name="analytics.cloud.repository.dir" />
 
 		<sequential>
+			<local name="analytics.cloud.image.names.excludes" />
+
+			<property name="analytics.cloud.image.names.excludes" value="@{analytics.cloud.image.names.excludes}" />
+
 			<beanshell>
 				<![CDATA[
 					import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 
 					String excludedImageNames = project.getProperty("analytics.cloud.image.names.excludes");
-
-					if (excludedImageNames == null) {
-						excludedImageNames = "";
-					}
 
 					JenkinsResultsParserUtil.pullDockerImageDependencies(new File("@{analytics.cloud.repository.dir}"), excludedImageNames.split(","));
 				]]>
@@ -234,7 +235,10 @@ OSB_FARO_FRONTEND_URL=${analytics.cloud.faro.frontend.url}</echo>
 			<if>
 				<equals arg1="${analytics.cloud.asah.build}" arg2="true" />
 				<then>
-					<pull-docker-image-dependencies analytics.cloud.repository.dir="${analytics.cloud.asah.dir}" />
+					<pull-docker-image-dependencies
+						analytics.cloud.image.names.excludes="${analytics.cloud.asah.image.names.excludes}"
+						analytics.cloud.repository.dir="${analytics.cloud.asah.dir}"
+					/>
 
 					<execute dir="${analytics.cloud.asah.dir}">
 						./gradlew jar -Dliferay.ci=true
@@ -249,7 +253,10 @@ OSB_FARO_FRONTEND_URL=${analytics.cloud.faro.frontend.url}</echo>
 			<if>
 				<equals arg1="${analytics.cloud.faro.build}" arg2="true" />
 				<then>
-					<pull-docker-image-dependencies analytics.cloud.repository.dir="${analytics.cloud.faro.dir}" />
+					<pull-docker-image-dependencies
+						analytics.cloud.image.names.excludes="${analytics.cloud.faro.image.names.excludes}"
+						analytics.cloud.repository.dir="${analytics.cloud.faro.dir}"
+					/>
 
 					<local name="portal.gradlew" />
 

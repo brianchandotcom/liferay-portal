@@ -46,11 +46,11 @@ public class JournalArticleDataFileEntryIdUpgradeProcess
 				long id = (long)columns[0];
 				String content = (String)columns[1];
 
-				String updateSQL =
+				String sql =
 					"update JournalArticle set content = ? where id_ = ?";
 
 				try (PreparedStatement updatePreparedStatement =
-						connection.prepareStatement(updateSQL)) {
+						connection.prepareStatement(sql)) {
 
 					String upgradedContent = _upgradeContent(content);
 

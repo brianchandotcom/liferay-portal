@@ -59,6 +59,12 @@ definition {
 				entryURL = "http://remote-component-test.wincent.com/packages/vanilla-counter/index.js");
 		}
 
+		task ("Assert that the Vanilla Counter is listed") {
+			RemoteApps.viewTableEntries(
+				entryName = "Vanilla Counter",
+				entryType = "Custom Element");
+		}
+
 		task ("Assert that the Vanilla Counter fields have been saved correctly") {
 			Click(
 				key_tableEntryName = "Vanilla Counter",
@@ -70,14 +76,6 @@ definition {
 				entryName = "Vanilla Counter",
 				entryProperties = "test-data-user=QAuser",
 				entryURL = "http://remote-component-test.wincent.com/packages/vanilla-counter/index.js");
-		}
-
-		task ("Assert that the Vanilla Counter is listed") {
-			RemoteApps.goToRemoteAppsPortlet();
-
-			RemoteApps.viewTableEntries(
-				entryName = "Vanilla Counter",
-				entryType = "Custom Element");
 		}
 	}
 

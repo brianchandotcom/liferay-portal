@@ -18,9 +18,38 @@
 		}
 	}
 
+	.import-file {
+		align-items: center;
+		display: flex;
+
+		a {
+			cursor: pointer;
+		}
+
+		a,
+		span {
+			font-size: 14px;
+			font-weight: 400;
+		}
+
+		svg {
+			height: 16px;
+			margin-right: 16px;
+			width: 16px;
+		}
+	}
+
 	span {
 		color: #272833;
 		font-size: 20px;
 		font-weight: 700;
+	}
+
+	.tbar-nav {
+		justify-content: space-between;
+	}
+
+	#fileInput {
+		display: none;
 	}
 }

@@ -10,10 +10,13 @@
  *
  */
 
+import ClayAlert from '@clayui/alert';
+import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
+import ClayLink from '@clayui/link';
 import ClayToolbar from '@clayui/toolbar';
 import {Editor} from 'frontend-editor-ckeditor-web';
-import React, {useContext, useEffect, useRef} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import {isEdge, isNode} from 'react-flow-renderer';
 
 import {DefinitionBuilderContext} from '../DefinitionBuilderContext';
@@ -31,10 +34,13 @@ export default function SourceBuilder({version}) {
 		definitionTitle,
 		elements,
 		setCurrentEditor,
-		setShowInvalidContentError,
-		showInvalidContentError,
+		setShowInvalidContentMessage,
+		showInvalidContentMessage,
 	} = useContext(DefinitionBuilderContext);
 	const editorRef = useRef();
+	const [showImportSuccessMessage, setShowImportSuccessMessage] = useState(
+		false
+	);
 
 	useEffect(() => {
 		if (elements) {
@@ -60,18 +66,48 @@ export default function SourceBuilder({version}) {
 	}, [currentEditor, definitionTitle, elements, version]);
 
 	useEffect(() => {
-		if (showInvalidContentError) {
+		if (showInvalidContentMessage) {
 			document.addEventListener('keydown', () => {
-				setShowInvalidContentError(false);
+				setShowInvalidContentMessage(false);
 			});
 
 			return () => {
 				document.removeEventListener('keydown', () => {
-					setShowInvalidContentError(false);
+					setShowInvalidContentMessage(false);
 				});
 			};
 		}
-	}, [setShowInvalidContentError, showInvalidContentError]);
+	}, [setShowInvalidContentMessage, showInvalidContentMessage]);
+
+	const writeDefinitionMessage = Liferay.Language.get(
+		'write-your-definition-or-x'
+	).substring(0, 25);
+
+	const importFileMessage = Liferay.Language.get(
+		'import-a-file'
+	).toLowerCase();
+
+	function loadFile(event) {
+		var files = event.target.files;
+
+		if (files) {
+			var reader = new FileReader();
+
+			reader.onloadend = (event) => {
+				if (event.target.readyState === FileReader.DONE) {
+					currentEditor.setData(event.target.result);
+
+					const fileInput = document.querySelector('#fileInput');
+
+					fileInput.value = '';
+
+					setShowImportSuccessMessage(true);
+				}
+			};
+
+			reader.readAsText(files[0]);
+		}
+	}
 
 	return (
 		<>
@@ -82,7 +118,7 @@ export default function SourceBuilder({version}) {
 							<span>{Liferay.Language.get('source')}</span>
 						</ClayToolbar.Item>
 
-						{showInvalidContentError && (
+						{showInvalidContentMessage && (
 							<ClayToolbar.Item className="error ml-4">
 								<span>
 									{Liferay.Language.get(
@@ -91,6 +127,26 @@ export default function SourceBuilder({version}) {
 								</span>
 							</ClayToolbar.Item>
 						)}
+
+						<ClayToolbar.Item>
+							<div className="import-file">
+								<ClayIcon symbol="document-code" />
+
+								<span>{writeDefinitionMessage}</span>
+
+								<label className="pt-1" htmlFor="fileInput">
+									<ClayLink className="ml-1">
+										{`${importFileMessage}.`}
+									</ClayLink>
+								</label>
+
+								<input
+									id="fileInput"
+									onChange={(event) => loadFile(event)}
+									type="file"
+								/>
+							</div>
+						</ClayToolbar.Item>
 					</ClayToolbar.Nav>
 				</ClayLayout.ContainerFluid>
 			</ClayToolbar>
@@ -104,6 +160,21 @@ export default function SourceBuilder({version}) {
 				}}
 				ref={editorRef}
 			/>
+
+			{showImportSuccessMessage && (
+				<ClayAlert.ToastContainer>
+					<ClayAlert
+						autoClose={5000}
+						displayType="success"
+						onClose={() => setShowImportSuccessMessage(false)}
+						title={`${Liferay.Language.get('success')}:`}
+					>
+						{Liferay.Language.get(
+							'definition-imported-successfully'
+						)}
+					</ClayAlert>
+				</ClayAlert.ToastContainer>
+			)}
 		</>
 	);
 }

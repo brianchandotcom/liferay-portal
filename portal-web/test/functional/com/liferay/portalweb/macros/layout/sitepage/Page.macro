@@ -91,10 +91,6 @@ definition {
 		AssertElementNotPresent(locator1 = "PageEditor#APPLIED_FILTERS_FILTER_LIST_PLACEHOLDER");
 	}
 
-	macro disableMobileDeviceRulesAreInheritedFromPublicPages {
-		Uncheck.uncheckHiddenToggleSwitch(locator1 = "ToggleSwitch#INHERIT_MOBILE_DEVICE_RULES_FROM_PAGE");
-	}
-
 	macro getAuthTokenFromHtmlSource {
 		var javaScript = '''
 		var authToken = Liferay.authToken;
@@ -289,24 +285,6 @@ definition {
 				locator1 = "PageEditor#COLLECTION_FILTER_DROPDOWN_TOGGLE",
 				value1 = "${selectedName}");
 		}
-	}
-
-	macro selectMobileDeviceFamily {
-		WaitForLiferayEvent.initializeLiferayEventLog();
-
-		AssertClick(
-			locator1 = "Button#SELECT_MOBILE_DEVICE_RULES",
-			value1 = "Select");
-
-		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
-
-		var key_deviceFamilyName = "${deviceFamilyName}";
-
-		AssertClick(
-			locator1 = "MobileDevice#DEVICE_FAMILY_TABLE_NAME_LINK",
-			value1 = "${deviceFamilyName}");
-
-		SelectFrame(value1 = "relative=top");
 	}
 
 	macro viewChildPageDropdown {

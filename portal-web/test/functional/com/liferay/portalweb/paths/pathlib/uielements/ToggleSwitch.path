@@ -56,11 +56,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>INHERIT_MOBILE_DEVICE_RULES_FROM_PAGE</td>
-	<td>//*[@id="mobileDeviceRulesContent"]/div/div[1]/label/span[1]/span/span</td>
-	<td></td>
-</tr>
-<tr>
 	<td>READY_FOR_PROPAGATION</td>
 	<td>//label[contains(.,'Ready for Propagation')]//span[contains(@class,'toggle-switch-handle')]</td>
 	<td></td>

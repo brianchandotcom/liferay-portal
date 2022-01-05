@@ -807,6 +807,33 @@ definition {
 		PortletEntry.save();
 	}
 
+	macro selectMobileDeviceFamily {
+		Navigator.gotoNavTab(navTab = "Advanced");
+
+		Panel.expandPanel(panel = "Mobile Device Rules");
+
+		Uncheck.uncheckToggleSwitch(
+			key_toggleSwitchLabel = "Use the same mobile device rules of the Public Pages",
+			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
+		AssertClick(
+			buttonId = "saveInstance",
+			locator1 = "Button#BUTTON_ID",
+			value1 = "Select");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+		AssertClick(
+			key_columnName = "name",
+			key_tableEntry = "${deviceFamilyName}",
+			locator1 = "LexiconTable#TABLE_ENTRY_COLUMN_LINK",
+			value1 = "${deviceFamilyName}");
+
+		PortletEntry.save();
+	}
+
 	macro selectPageItem {
 		var key_pageName = "${pageName}";
 

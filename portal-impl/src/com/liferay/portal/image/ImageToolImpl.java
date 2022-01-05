@@ -45,7 +45,6 @@ import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
 import java.awt.image.DataBuffer;
-import java.awt.image.IndexColorModel;
 import java.awt.image.Raster;
 import java.awt.image.RenderedImage;
 import java.awt.image.SampleModel;
@@ -71,8 +70,6 @@ import javax.imageio.ImageReader;
 import javax.imageio.spi.IIORegistry;
 import javax.imageio.spi.ImageReaderSpi;
 import javax.imageio.stream.ImageInputStream;
-
-import net.jmge.gif.Gif89Encoder;
 
 import org.im4java.core.IMOperation;
 
@@ -205,16 +202,7 @@ public class ImageToolImpl implements ImageTool {
 			RenderedImage renderedImage, OutputStream outputStream)
 		throws IOException {
 
-		BufferedImage bufferedImage = getBufferedImage(renderedImage);
-
-		if (!(bufferedImage.getColorModel() instanceof IndexColorModel)) {
-			bufferedImage = convertImageType(
-				bufferedImage, BufferedImage.TYPE_BYTE_INDEXED);
-		}
-
-		Gif89Encoder encoder = new Gif89Encoder(bufferedImage);
-
-		encoder.encode(outputStream);
+		ImageIO.write(renderedImage, TYPE_GIF, outputStream);
 	}
 
 	@Override

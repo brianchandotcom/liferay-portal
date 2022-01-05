@@ -37,6 +37,8 @@ public interface ProcessorContext<M extends BaseModel<M>> {
 
 	public <V> V[] getValueArray(Class<V> clazz, String fieldExpression);
 
+	public boolean isDefined(Class<?> clazz, String fieldExpression);
+
 	public interface Bind<T extends BaseModel<T>> {
 
 		public void handleUnsafeStringArray(

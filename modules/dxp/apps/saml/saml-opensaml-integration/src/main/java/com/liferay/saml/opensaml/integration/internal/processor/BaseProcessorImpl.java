@@ -104,12 +104,12 @@ public abstract class BaseProcessorImpl
 			String fieldExpression, Class<V> clazz,
 			UnsafeBiConsumer<T, V[], ?> unsafeBiConsumer) {
 
-			V[] values = _processorContext.getValueArray(
-				clazz, fieldExpression);
-
-			if ((values == null) || (values.length == 0)) {
+			if (!_processorContext.isDefined(clazz, fieldExpression)) {
 				return;
 			}
+
+			V[] values = _processorContext.getValueArray(
+				clazz, fieldExpression);
 
 			_patchingQueue.add(
 				object -> unsafeBiConsumer.accept(object, values));
@@ -131,7 +131,7 @@ public abstract class BaseProcessorImpl
 			handleUnsafeStringArray(
 				fieldExpression,
 				(object, values) -> biConsumer.accept(
-					object, GetterUtil.getBoolean(values[0])));
+					object, GetterUtil.getBoolean(_head(values))));
 		}
 
 		@Override
@@ -188,7 +188,7 @@ public abstract class BaseProcessorImpl
 
 			handleUnsafeStringArray(
 				fieldExpression,
-				(object, values) -> biConsumer.accept(object, values[0]));
+				(object, values) -> biConsumer.accept(object, _head(values)));
 		}
 
 		@Override
@@ -205,7 +205,16 @@ public abstract class BaseProcessorImpl
 
 			handleUnsafeStringArray(
 				fieldExpression,
-				(object, values) -> unsafeBiConsumer.accept(object, values[0]));
+				(object, values) -> unsafeBiConsumer.accept(
+					object, _head(values)));
+		}
+
+		private <V> V _head(V[] values) {
+			if ((values == null) || (values.length == 0)) {
+				return null;
+			}
+
+			return values[0];
 		}
 
 		private final Queue<UnsafeConsumer<T, ?>> _patchingQueue =
@@ -263,6 +272,20 @@ public abstract class BaseProcessorImpl
 			}
 
 			return (V[])map.get(fieldExpression);
+		}
+
+		public boolean isDefined(Class<?> clazz, String fieldExpression) {
+			if (!Validator.isBlank(_prefix)) {
+				fieldExpression = _prefix + ':' + fieldExpression;
+			}
+
+			Map<String, Object[]> map = _maps.get(clazz);
+
+			if (map == null) {
+				return false;
+			}
+
+			return map.containsKey(fieldExpression);
 		}
 
 		private final String _prefix;

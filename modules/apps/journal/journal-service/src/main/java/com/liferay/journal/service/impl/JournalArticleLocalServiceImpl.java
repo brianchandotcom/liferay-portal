@@ -2935,8 +2935,8 @@ public class JournalArticleLocalServiceImpl
 			return Collections.emptyList();
 		}
 
-		JournalArticleTable aliasJournalArticleTable =
-			JournalArticleTable.INSTANCE.as("aliasJournalArticleTable");
+		JournalArticleTable tempJournalArticleTable =
+			JournalArticleTable.INSTANCE.as("tempJournalArticleTable");
 
 		DDMStructure ddmStructure = _ddmStructureLocalService.fetchDDMStructure(
 			layoutPageTemplateEntry.getClassTypeId());
@@ -2961,14 +2961,14 @@ public class JournalArticleLocalServiceImpl
 					JournalArticleTable.INSTANCE.version.in(
 						DSLQueryFactoryUtil.select(
 							DSLFunctionFactoryUtil.max(
-								aliasJournalArticleTable.version)
+								tempJournalArticleTable.version)
 						).from(
-							aliasJournalArticleTable
+							tempJournalArticleTable
 						).where(
-							aliasJournalArticleTable.resourcePrimKey.eq(
+							tempJournalArticleTable.resourcePrimKey.eq(
 								JournalArticleTable.INSTANCE.resourcePrimKey
 							).and(
-								aliasJournalArticleTable.status.eq(
+								tempJournalArticleTable.status.eq(
 									WorkflowConstants.STATUS_APPROVED)
 							)
 						))

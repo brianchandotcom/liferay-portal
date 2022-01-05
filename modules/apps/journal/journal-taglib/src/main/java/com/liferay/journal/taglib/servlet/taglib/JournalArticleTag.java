@@ -107,8 +107,8 @@ public class JournalArticleTag extends IncludeTag {
 		return _wrapperCssClass;
 	}
 
-	public boolean isDataAnalyticsTrackEnabled() {
-		return _dataAnalyticsTrackEnabled;
+	public boolean isDataAnalyticsTrackingEnabled() {
+		return _dataAnalyticsTrackingEnabled;
 	}
 
 	public boolean isShowTitle() {
@@ -123,10 +123,10 @@ public class JournalArticleTag extends IncludeTag {
 		_articleId = articleId;
 	}
 
-	public void setDataAnalyticsTrackEnabled(
-		boolean dataAnalyticsTrackEnabled) {
+	public void setDataAnalyticsTrackingEnabled(
+		boolean dataAnalyticsTrackingEnabled) {
 
-		_dataAnalyticsTrackEnabled = dataAnalyticsTrackEnabled;
+		_dataAnalyticsTrackingEnabled = dataAnalyticsTrackingEnabled;
 	}
 
 	public void setDdmTemplateKey(String ddmTemplateKey) {
@@ -163,7 +163,7 @@ public class JournalArticleTag extends IncludeTag {
 		_article = null;
 		_articleDisplay = null;
 		_articleId = null;
-		_dataAnalyticsTrackEnabled = true;
+		_dataAnalyticsTrackingEnabled = true;
 		_ddmTemplateKey = null;
 		_groupId = 0;
 		_languageId = null;
@@ -197,8 +197,8 @@ public class JournalArticleTag extends IncludeTag {
 		httpServletRequest.setAttribute(
 			"liferay-journal:journal-article:articleDisplay", _articleDisplay);
 		httpServletRequest.setAttribute(
-			"liferay-journal:journal-article:dataAnalyticsTrackEnabled",
-			String.valueOf(_dataAnalyticsTrackEnabled));
+			"liferay-journal:journal-article:dataAnalyticsTrackingEnabled",
+			String.valueOf(_dataAnalyticsTrackingEnabled));
 		httpServletRequest.setAttribute(
 			"liferay-journal:journal-article:showTitle",
 			String.valueOf(_showTitle));
@@ -215,7 +215,7 @@ public class JournalArticleTag extends IncludeTag {
 	private JournalArticle _article;
 	private JournalArticleDisplay _articleDisplay;
 	private String _articleId;
-	private boolean _dataAnalyticsTrackEnabled = true;
+	private boolean _dataAnalyticsTrackingEnabled = true;
 	private String _ddmTemplateKey;
 	private long _groupId;
 	private String _languageId;

@@ -484,7 +484,7 @@ definition {
 
 		BundleBlacklist.viewProductMenuBlacklistedModule(
 			category = "System",
-			consoleText = "STOPPED com.liferay.gogo.shell.web",
+			consoleText = "Stopping blacklisted bundle com.liferay.gogo.shell.web",
 			panel = "Control Panel",
 			portlet = "Gogo Shell");
 

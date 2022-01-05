@@ -106,6 +106,47 @@ html#{$cadmin-selector} {
 
 			&.show {
 				overflow: visible;
+
+				.yui3-resize-handle {
+					display: none;
+
+					&-tl,
+					&-tr,
+					&-bl,
+					&-br {
+						display: block;
+					}
+				}
+
+				.yui3-resize-handle-inner {
+					&-tl,
+					&-tr,
+					&-bl,
+					&-br {
+						background-repeat: no-repeat;
+						background-image: url(/o/frontend-js-aui-web/aui/resize-base/assets/skins/sam/arrows.png);
+						display: block;
+						height: 15px;
+						overflow: hidden;
+						text-indent: -99999em;
+						width: 15px;
+					}
+
+					&-bl {
+						bottom: 0px;
+						right: -18px;
+					}
+
+					&-tl {
+						bottom: -15px;
+						right: -18px;
+					}
+
+					&-tr {
+						bottom: -15px;
+						right: 0px;
+					}
+				}
 			}
 		}
 	}

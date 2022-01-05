@@ -51,17 +51,25 @@ processExtraApps {
 	mustRunAfter buildExtraApps
 
 	doLast {
-		copy {
-			from new File(projectDir, "extra/react-fragments/build/select-project/index.js")
-			into new File(projectDir, "extra/react-fragments/src/select-project")
-			rename("index.js", "index.build.js")
-		}
+		File reactFragmentsSrcDir = new File(projectDir, "extra/react-fragments/src")
 
-		copy {
-			exclude "**/index.js"
-			from new File(projectDir, "extra/react-fragments/src")
-			into new File(projectDir, "src/main/zippableResources/fragments/fragments")
-			rename("index.build.js", "index.js")
+		if (reactFragmentsSrcDir.exists()) {
+			reactFragmentsSrcDir.eachDir {
+				File dir ->
+
+				copy {
+					from new File(dir, "../../build/" + dir.name + "/index.js")
+					into dir
+					rename("index.js", "index.build.js")
+				}
+			}
+
+			copy {
+				exclude "**/index.js"
+				from reactFragmentsSrcDir
+				into new File(projectDir, "src/main/zippableResources/fragments/fragments")
+				rename("index.build.js", "index.js")
+			}
 		}
 	}
 }

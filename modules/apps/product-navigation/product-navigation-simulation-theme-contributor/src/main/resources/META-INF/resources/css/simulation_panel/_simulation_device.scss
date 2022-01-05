@@ -100,7 +100,8 @@ html#{$cadmin-selector} {
 			border-radius: 16px;
 		}
 
-		&.custom {
+		&.custom,
+		&.resizable-device {
 			background-color: var(--btn-outline-primary-hover-border-color);
 			padding: 2px;
 

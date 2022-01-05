@@ -77,6 +77,8 @@ AUI.add(
 
 		var WIN = A.config.win;
 
+		var RESIZABLE_DEVICE_CSS_CLASS = 'resizable-device';
+
 		var createIframeURL = () => {
 			const url = new URL(WIN.location.href);
 			const searchParams = new URLSearchParams(url.search);
@@ -392,6 +394,10 @@ AUI.add(
 									STR_BOUNDING_BOX
 								);
 
+								dialogBoundingBox.removeClass(
+									RESIZABLE_DEVICE_CSS_CLASS
+								);
+
 								dialogWindow.align(
 									simulationDeviceNode,
 									DIALOG_ALIGN_POINTS
@@ -461,9 +467,18 @@ AUI.add(
 						var dialogBoundingBox = dialog.get(STR_BOUNDING_BOX);
 
 						dialogBoundingBox.toggleClass(STR_ROTATED, rotation);
+						dialogBoundingBox.removeClass(
+							RESIZABLE_DEVICE_CSS_CLASS
+						);
 
 						if (!device.preventTransition) {
 							dialog.sizeanim.set(STR_PREVENT_TRANSITION, false);
+						}
+
+						if (device.resizable && !device.skin) {
+							dialogBoundingBox.addClass(
+								RESIZABLE_DEVICE_CSS_CLASS
+							);
 						}
 
 						dialog.setAttrs(dialogAttrs);

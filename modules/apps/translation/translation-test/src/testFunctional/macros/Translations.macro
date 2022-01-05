@@ -222,8 +222,13 @@ definition {
 		else if ("${validateInvalidFile}" == "true") {
 			Button.clickPublish();
 		}
-		else if ("${workflowSave}" == "true") {
-			Button.clickSaveAsDraft();
+		else if (("${workflowSave}" == "true") || ("${save}" == "true")) {
+			if ("${workflowSave}" == "true") {
+				Button.clickSaveAsDraft();
+			}
+			else if ("${save}" == "true") {
+				Button.clickSave();
+			}
 
 			AssertTextEquals(
 				locator1 = "Message#SUCCESS_IMPORT_TRANSLATIONS",

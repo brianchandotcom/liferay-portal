@@ -153,11 +153,11 @@ public class UpgradeProcessTest {
 
 	private static final String _TABLE_NAME = "Table";
 
-	private static final String
-		_UPGRADE_CONCURRENT_PROCESS_FUTURE_LIST_MAX_SIZE_DEFAULT_VALUE = "1000";
+	private static final String _UPGRADE_CONCURRENT_FETCH_SIZE_DEFAULT_VALUE =
+		"1000";
 
 	private static final String
-		_UPGRADE_CONCURRENT_FETCH_SIZE_DEFAULT_VALUE = "1000";
+		_UPGRADE_CONCURRENT_PROCESS_FUTURE_LIST_MAX_SIZE_DEFAULT_VALUE = "1000";
 
 	private static final List<String> _newIndexColumnNames = Arrays.asList(
 		"newColumn1", _NEW_COLUMN_NAME, "newColumn2");

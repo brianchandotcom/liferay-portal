@@ -359,14 +359,14 @@ public abstract class BaseDBProcess implements DBProcess {
 		}
 	}
 
+	private static final int _UPGRADE_CONCURRENT_FETCH_SIZE =
+		GetterUtil.getInteger(
+			PropsUtil.get(PropsKeys.UPGRADE_CONCURRENT_FETCH_SIZE));
+
 	private static final int _UPGRADE_CONCURRENT_PROCESS_FUTURE_LIST_MAX_SIZE =
 		GetterUtil.getInteger(
 			PropsUtil.get(
 				PropsKeys.UPGRADE_CONCURRENT_PROCESS_FUTURE_LIST_MAX_SIZE));
-
-	private static final int _UPGRADE_CONCURRENT_FETCH_SIZE =
-		GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.UPGRADE_CONCURRENT_FETCH_SIZE));
 
 	private static final Log _log = LogFactoryUtil.getLog(BaseDBProcess.class);
 

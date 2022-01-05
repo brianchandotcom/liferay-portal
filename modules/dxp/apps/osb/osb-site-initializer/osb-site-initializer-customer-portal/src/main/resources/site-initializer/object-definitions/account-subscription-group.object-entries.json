@@ -1,0 +1,52 @@
+[
+	{
+		"accountKey": "ERC-001",
+		"hasActivation": true,
+		"name": "DXP Cloud"
+	},
+	{
+		"accountKey": "ERC-001",
+		"hasActivation": true,
+		"name": "Portal"
+	},
+	{
+		"accountKey": "ERC-002",
+		"hasActivation": true,
+		"name": "DXP"
+	},
+	{
+		"accountKey": "ERC-002",
+		"hasActivation": true,
+		"name": "Partnership"
+	},
+	{
+		"accountKey": "ERC-002",
+		"hasActivation": true,
+		"name": "Limited SLA"
+	},
+	{
+		"accountKey": "ERC-003",
+		"hasActivation": true,
+		"name": "Analytics Cloud"
+	},
+	{
+		"accountKey": "ERC-004",
+		"hasActivation": true,
+		"name": "Portal"
+	},
+	{
+		"accountKey": "ERC-004",
+		"hasActivation": true,
+		"name": "Commerce"
+	},
+	{
+		"accountKey": "ERC-005",
+		"hasActivation": true,
+		"name": "Portal"
+	},
+	{
+		"accountKey": "ERC-005",
+		"hasActivation": true,
+		"name": "DXP"
+	}
+]

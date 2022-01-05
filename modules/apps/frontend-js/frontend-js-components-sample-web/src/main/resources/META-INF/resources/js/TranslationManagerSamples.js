@@ -13,15 +13,32 @@
  */
 
 import ClayLayout from '@clayui/layout';
-import {TranslationAdminSelector} from 'frontend-js-components-web';
-import React from 'react';
+import {State} from '@liferay/frontend-js-state-web';
+import {
+	TranslationAdminSelector,
+	activeLanguageIdsAtom,
+} from 'frontend-js-components-web';
+import React, {useEffect, useState} from 'react';
 
 export default function TranslationManagerSamples({
-	activeLanguageIds,
+	activeLanguageIds: initialActiveLanguageIds,
 	availableLocales,
 	defaultLanguageId,
 	translations,
 }) {
+	const [activeLanguageIds, setActiveLanguageIds] = useState(
+		initialActiveLanguageIds
+	);
+	const [selectedLanguageId, setSelectedLanguageId] = useState();
+
+	useEffect(() => {
+		State.subscribe(activeLanguageIdsAtom, setActiveLanguageIds);
+	}, []);
+
+	useEffect(() => {
+		State.writeAtom(activeLanguageIdsAtom, activeLanguageIds);
+	}, [activeLanguageIds]);
+
 	return (
 		<>
 			<ClayLayout.Col>
@@ -31,6 +48,9 @@ export default function TranslationManagerSamples({
 					activeLanguageIds={activeLanguageIds}
 					availableLocales={availableLocales}
 					defaultLanguageId={defaultLanguageId}
+					onActiveLanguageIdsChange={setActiveLanguageIds}
+					onSelectedLanguageIdChange={setSelectedLanguageId}
+					selectedLanguageId={selectedLanguageId}
 					translations={translations}
 				/>
 			</ClayLayout.Col>
@@ -43,6 +63,9 @@ export default function TranslationManagerSamples({
 					adminMode
 					availableLocales={availableLocales}
 					defaultLanguageId={defaultLanguageId}
+					onActiveLanguageIdsChange={setActiveLanguageIds}
+					onSelectedLanguageIdChange={setSelectedLanguageId}
+					selectedLanguageId={selectedLanguageId}
 					translations={translations}
 				/>
 			</ClayLayout.Col>
@@ -55,6 +78,9 @@ export default function TranslationManagerSamples({
 					adminMode
 					availableLocales={availableLocales}
 					defaultLanguageId={defaultLanguageId}
+					onActiveLanguageIdsChange={setActiveLanguageIds}
+					onSelectedLanguageIdChange={setSelectedLanguageId}
+					selectedLanguageId={selectedLanguageId}
 					small
 					translations={translations}
 				/>
@@ -68,29 +94,10 @@ export default function TranslationManagerSamples({
 					adminMode
 					availableLocales={availableLocales}
 					defaultLanguageId={defaultLanguageId}
+					onActiveLanguageIdsChange={setActiveLanguageIds}
+					onSelectedLanguageIdChange={setSelectedLanguageId}
+					selectedLanguageId={selectedLanguageId}
 					showOnlyFlags
-					translations={translations}
-				/>
-			</ClayLayout.Col>
-
-			<ClayLayout.Col>
-				<h3>Functions</h3>
-
-				<TranslationAdminSelector
-					activeLanguageIds={activeLanguageIds}
-					adminMode
-					availableLocales={availableLocales}
-					defaultLanguageId={defaultLanguageId}
-					onActiveLanguageIdsChange={() => {
-
-						// console.log('onActiveLanguageIdsChange');
-
-					}}
-					onSelectedLanguageIdChange={() => {
-
-						// console.log('onSelectedLanguageIdChange');
-
-					}}
 					translations={translations}
 				/>
 			</ClayLayout.Col>

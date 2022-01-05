@@ -71,14 +71,6 @@ Map<String, Object> translations = translationManagerDisplayContext.getTranslati
 				<aui:input activeLanguageIds="<%= activeLanguageIds %>" adminMode="<%= true %>" availableLocales="<%= availableLocales %>" defaultLanguageId="<%= defaultLanguageId %>" label="" localized="<%= true %>" name="tm-aui-2" type="text" />
 			</form>
 		</clay:col>
-
-		<clay:col>
-			<h3>Functions (field)</h3>
-
-			<form>
-				<aui:input activeLanguageIds="<%= activeLanguageIds %>" adminMode="<%= true %>" availableLocales="<%= availableLocales %>" defaultLanguageId="<%= defaultLanguageId %>" label="" localized="<%= true %>" name="tm-aui-3" onChange="console.log('onChange', event);" onClick="console.log('onClick', event);" type="text" />
-			</form>
-		</clay:col>
 	</clay:row>
 
 	<hr />
@@ -114,23 +106,6 @@ Map<String, Object> translations = translationManagerDisplayContext.getTranslati
 					availableLocales="<%= availableLocales %>"
 					defaultLanguageId="<%= defaultLanguageId %>"
 					name="tm-liferay-ui-2"
-					xml=""
-				/>
-			</form>
-		</clay:col>
-
-		<clay:col>
-			<h3>Functions (field)</h3>
-
-			<form>
-				<liferay-ui:input-localized
-					activeLanguageIds="<%= activeLanguageIds %>"
-					adminMode="<%= true %>"
-					availableLocales="<%= availableLocales %>"
-					defaultLanguageId="<%= defaultLanguageId %>"
-					name="tm-liferay-ui-3"
-					onChange="console.log('onChange', event);"
-					onClick="console.log('onClick', event);"
 					xml=""
 				/>
 			</form>

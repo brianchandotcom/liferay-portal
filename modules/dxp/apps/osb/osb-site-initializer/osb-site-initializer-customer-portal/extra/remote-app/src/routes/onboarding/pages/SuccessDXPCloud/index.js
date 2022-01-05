@@ -1,7 +1,7 @@
 import BaseButton from '../../../../common/components/BaseButton';
 import {LiferayTheme} from '../../../../common/services/liferay';
-import {PARAMS_KEYS} from '../../../../common/services/liferay/search-params';
 import {API_BASE_URL} from '../../../../common/utils';
+import {PARAMS_KEYS} from '../../../../common/utils/constants';
 import Layout from '../../components/Layout';
 import {useOnboarding} from '../../context';
 

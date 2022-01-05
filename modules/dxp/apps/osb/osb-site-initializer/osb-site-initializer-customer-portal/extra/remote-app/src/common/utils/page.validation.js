@@ -2,8 +2,7 @@ import {API_BASE_URL} from '.';
 import client from '../../apolloClient';
 import {LiferayTheme} from '../services/liferay';
 import {getAccountRolesAndAccountFlags} from '../services/liferay/graphql/queries';
-import {PARAMS_KEYS} from '../services/liferay/search-params';
-import {ROLES_PERMISSIONS, ROUTES} from './constants';
+import {PARAMS_KEYS, ROLES_PERMISSIONS, ROUTES} from './constants';
 
 const {PROJECT_APPLICATION_EXTERNAL_REFERENCE_CODE} = PARAMS_KEYS;
 

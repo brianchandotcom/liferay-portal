@@ -17,8 +17,10 @@ import classNames from 'classnames';
 import React from 'react';
 
 export default function NavigationMenuItemsTreeNode({node}) {
+	const hasUrl = node.url && node.url !== '#';
+
 	const Parent = ({children}) =>
-		node.url ? (
+		hasUrl ? (
 			<a
 				className="d-block h-100 w-100"
 				href={node.url}
@@ -35,7 +37,7 @@ export default function NavigationMenuItemsTreeNode({node}) {
 	return (
 		<div
 			className={classNames('navigation-menu-items-tree-node', {
-				selected: node.selected,
+				selected: node.selected && hasUrl,
 			})}
 		>
 			<Parent>

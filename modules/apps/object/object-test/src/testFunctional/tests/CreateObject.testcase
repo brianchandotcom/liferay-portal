@@ -5283,12 +5283,41 @@ definition {
 	}
 
 	@description = "LPS-135649 - Verify that pending and completed Object entries disappears from Workflow Metrics page when they are deleted"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test ObjectEntriesDisappearsWorkflowMetricsWhenDeleted {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-		// TODO LPS-141636 ObjectEntriesDisappearsWorkflowMetricsWhenDeleted pending implementation
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "Custom Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject");
 
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		ObjectAdmin.openWorkflowProcessBuilderConfiguration();
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Custom Object");
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+		ObjectPortlet.addSingleFieldEntryViaUI(entry = "Entry Test");
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+		ObjectPortlet.deleteEntry(entry = "Entry Test");
+
+		WorkflowMetrics.checkWorkflowReports(
+			key_onTimeValue = "0",
+			key_overdueValue = "0",
+			key_totalPendingValue = "0",
+			key_workflowProcessName = "Single Approver");
 	}
 
 	@description = "LPS-139005 - Verify that pending and completed Object entries with workflow are not displayed on the Workflow Metrics page when inactivated"

@@ -1,6 +1,7 @@
 @component-name = "portal-lol"
 definition {
 
+	property osgi.modules.includes = "site-initializer-team-extranet";
 	property database.types = "mysql";
 	property portal.release = "true";
 	property portal.upstream = "true";

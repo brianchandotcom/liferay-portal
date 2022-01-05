@@ -816,7 +816,7 @@ definition {
 			pageName = "ContentPage",
 			successFileName = "ContentPage-en_US-ja_JP.xlf",
 			successFileName2 = "ContentPage-en_US-zh_CN.xlf",
-			successFileNumber = "2 Files Published");
+			successFileNumber = "2 Files Saved");
 
 		Translations.openTranslationAdmin(siteURLKey = "guest");
 

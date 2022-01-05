@@ -302,7 +302,7 @@ definition {
 			fileName = "TranslationContentPage-en_US-es_ES.xlf",
 			filePath = "/TranslationContentPage-en_US",
 			pageName = "TranslationContentPage",
-			successMessage = "1 File Saved as Draft",
+			successMessage = "1 File Saved",
 			workflowSave = "true");
 
 		Translations.openTranslationAdmin(siteURLKey = "guest");

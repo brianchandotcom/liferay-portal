@@ -776,11 +776,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SELECT_MOBILE_DEVICE_RULES</td>
-	<td>//div[@class='btn-toolbar']/button[contains(.,'Select')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>TRANSLATIONS_DONE</td>
 	<td>//a[contains(@class,'btn-sm btn-primary') and text()='Done']</td>
 	<td></td>

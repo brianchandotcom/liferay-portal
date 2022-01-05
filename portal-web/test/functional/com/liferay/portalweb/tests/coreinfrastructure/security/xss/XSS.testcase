@@ -406,22 +406,14 @@ definition {
 			MobileDevice.addDeviceFamilyCP(deviceFamilyName = '''<script>alert(123);</script>''');
 		}
 
-		task ("Disable mobile device rules are inherited from public pages") {
+		task ("Select <script>alert(123);</script> mobile device family and assert name was interpreted correctly") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Configure",
 				pageName = "Search");
 
-			Navigator.gotoNavTab(navTab = "Advanced");
-
-			Panel.expandPanel(panel = "Mobile Device Rules");
-
-			Page.disableMobileDeviceRulesAreInheritedFromPublicPages();
-		}
-
-		task ("Select <script>alert(123);</script> mobile device family and assert name was interpreted correctly") {
-			Page.selectMobileDeviceFamily(deviceFamilyName = '''<script>alert(123);</script>''');
+			PagesAdmin.selectMobileDeviceFamily(deviceFamilyName = '''<script>alert(123);</script>''');
 
 			AssertElementNotPresent(locator1 = "//body[.='123']");
 		}

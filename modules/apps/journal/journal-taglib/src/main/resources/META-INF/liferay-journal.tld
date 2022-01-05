@@ -28,6 +28,7 @@
 			<name>dataAnalyticsTrackEnabled</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
 			<name>ddmTemplateKey</name>
@@ -66,6 +67,12 @@
 			<name>articleDisplay</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>dataAnalyticsTrackEnabled</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
 			<name>showTitle</name>

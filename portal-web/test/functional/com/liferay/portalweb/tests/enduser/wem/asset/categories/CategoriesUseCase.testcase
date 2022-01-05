@@ -1395,7 +1395,7 @@ definition {
 				menuItem = "Configure",
 				pageName = "Page Name");
 
-			Page.viewNoSelectCategory(
+			PagesAdmin.viewVocabularyNotPresent(
 				pageName = "Page Name",
 				vocabularyName = "Vocabulary Name");
 		}

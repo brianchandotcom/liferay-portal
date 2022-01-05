@@ -16,6 +16,7 @@ package com.liferay.poshi.core;
 
 import com.liferay.poshi.core.elements.PoshiElement;
 import com.liferay.poshi.core.util.OSDetector;
+import com.liferay.poshi.core.util.PoshiParserUtil;
 import com.liferay.poshi.core.util.PropsUtil;
 import com.liferay.poshi.core.util.StringUtil;
 import com.liferay.poshi.core.util.Validator;
@@ -1016,6 +1017,53 @@ public class PoshiValidation {
 		}
 	}
 
+	protected static void validateMethodElement(
+		Element element, String filePath) {
+
+		String attributeName = element.attributeValue("method");
+
+		if ((attributeName != null) && attributeName.contains("selenium")) {
+			Matcher matcher = _seleniumPattern.matcher(attributeName);
+
+			while (matcher.find()) {
+				String seleniumMethod = matcher.group(1);
+
+				String methodName = seleniumMethod.substring(
+					seleniumMethod.indexOf("#") + 1);
+
+				if (!methodName.equals("getCurrentUrl")) {
+					String parameters = matcher.group(2);
+					int parameterCount = PoshiContext.getSeleniumParameterCount(
+						methodName);
+
+					List<String> parameterList =
+						PoshiParserUtil.getMethodParameters(parameters);
+
+					if (parameterList.size() != parameterCount) {
+						_exceptions.add(
+							new ValidationException(
+								element, "Incorrect parameter count", "\n",
+								filePath));
+					}
+
+					for (String parameter : parameterList) {
+						System.out.println(parameter);
+
+						Matcher exceptionMatcher =
+							_seleniumErrorPattern.matcher(parameter);
+
+						if (exceptionMatcher.find()) {
+							_exceptions.add(
+								new ValidationException(
+									element, "Remove locator|value 1-3", "\n",
+									filePath));
+						}
+					}
+				}
+			}
+		}
+	}
+
 	protected static void validateMethodExecuteElement(
 		Element element, String filePath) {
 
@@ -1631,6 +1679,8 @@ public class PoshiValidation {
 		validateRequiredAttributeNames(
 			element, Arrays.asList("name"), filePath);
 
+		validateMethodElement(element, filePath);
+
 		List<Attribute> attributes = element.attributes();
 
 		int minimumAttributeSize = 2;
@@ -1788,6 +1838,10 @@ public class PoshiValidation {
 
 	private static final Set<Exception> _exceptions = new HashSet<>();
 	private static final Pattern _pattern = Pattern.compile("\\$\\{([^}]*)\\}");
+	private static final Pattern _seleniumErrorPattern = Pattern.compile(
+		"^(locator|value)");
+	private static final Pattern _seleniumPattern = Pattern.compile(
+		"^(selenium#get[A-z]+)(?:\\((.*|)\\))?$");
 
 	private static class ValidationException extends Exception {
 

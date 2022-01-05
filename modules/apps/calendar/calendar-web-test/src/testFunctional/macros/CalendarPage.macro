@@ -24,41 +24,41 @@ definition {
 			locator1 = "CalendarPage#CURRENT_MONTH_MINI_CALENDAR",
 			value1 = "${monthCurrent}");
 	}
+	
 	macro viewCurrentDayForCalendarDay {
         CalendarNavigator.gotoView(viewType = "Day");
+	}
+	
+	macro viewCurrentDayForCalendarAgenda {
+		CalendarNavigator.gotoView(viewType = "Agenda");
 
-        CalendarNavigator.gotoToday();
+		CalendarNavigator.gotoToday();
 
-        AssertElementPresent(
-            locator1 = "Calendar#SCHEDULER_VIEW_DAY_CURRENT_DAY");
-        
-    }
+		AssertElementPresent(locator1 = "CalendarPage#VIEW_AGENDA_CURRENT_DAY");
+	}
 
-	macro viewCurrentDayForCalendarWeek {
-        CalendarNavigator.gotoView(viewType = "Week");
+	macro viewCurrentDayForCalendarDay {
+		CalendarNavigator.gotoView(viewType = "Day");
 
-        CalendarNavigator.gotoToday();
+		CalendarNavigator.gotoToday();
 
-        AssertElementPresent(locator1 = "Calendar#SCHEDULER_VIEW_WEEK_CURRENT_DAY");
-        
-    }
+		AssertElementPresent(locator1 = "Calendar#SCHEDULER_VIEW_DAY_CURRENT_DAY");
+	}
 
 	macro viewCurrentDayForCalendarMonth {
-        CalendarNavigator.gotoView(viewType = "Month");
-        
-        CalendarNavigator.gotoToday();
+		CalendarNavigator.gotoView(viewType = "Month");
 
-        AssertElementPresent(locator1 = "Calendar#SCHEDULER_VIEW_MONTH_CURRENT_DAY");
-        
-    }
+		CalendarNavigator.gotoToday();
 
-    macro viewCurrentDayForCalendarAgenda {
-        CalendarNavigator.gotoView(viewType = "Agenda");
+		AssertElementPresent(locator1 = "Calendar#SCHEDULER_VIEW_MONTH_CURRENT_DAY");
+	}
 
-        CalendarNavigator.gotoToday();
+	macro viewCurrentDayForCalendarWeek {
+		CalendarNavigator.gotoView(viewType = "Week");
 
-        AssertElementPresent(locator1 = "CalendarPage#VIEW_AGENDA_CURRENT_DAY");
-        
-    }
+		CalendarNavigator.gotoToday();
+
+		AssertElementPresent(locator1 = "Calendar#SCHEDULER_VIEW_WEEK_CURRENT_DAY");
+	}
 
 }

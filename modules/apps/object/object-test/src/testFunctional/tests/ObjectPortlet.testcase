@@ -1556,7 +1556,7 @@ definition {
 	@description = "LPS-140082 - Verify it is possible to search for a partial Object entry on the Relationship field"
 	@priority = "4"
 	test CanSearchPartialOnRelationshipField {
-		property portal.upstream = "quarantine";
+
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",

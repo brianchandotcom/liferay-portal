@@ -226,7 +226,12 @@
 	<classpathentry kind="lib" path="lib/portal/mp4parser.jar"/>
 	<classpathentry kind="lib" path="lib/portal/nekohtml.jar"/>
 	<classpathentry kind="lib" path="lib/portal/netcdf.jar"/>
-	<classpathentry kind="lib" path="lib/portal/netty-all.jar"/>
+	<classpathentry kind="lib" path="lib/portal/netty-buffer.jar"/>
+	<classpathentry kind="lib" path="lib/portal/netty-codec.jar"/>
+	<classpathentry kind="lib" path="lib/portal/netty-common.jar"/>
+	<classpathentry kind="lib" path="lib/portal/netty-handler.jar"/>
+	<classpathentry kind="lib" path="lib/portal/netty-resolver.jar"/>
+	<classpathentry kind="lib" path="lib/portal/netty-transport.jar"/>
 	<classpathentry kind="lib" path="lib/portal/odmg.jar"/>
 	<classpathentry kind="lib" path="lib/portal/oro.jar"/>
 	<classpathentry kind="lib" path="lib/portal/pdfbox.jar"/>

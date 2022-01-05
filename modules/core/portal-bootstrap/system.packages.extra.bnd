@@ -114,7 +114,7 @@ Export-Package:\
 	\
 	com.thoughtworks.xstream.*;version='1.4.17',\
 	\
-	io.netty.*,\
+	io.netty.*;version='4.1',\
 	\
 	java_cup.runtime.*;version='2.7.1',\
 	\
@@ -345,7 +345,12 @@ Provide-Capability:\
 	@../../../lib/portal/log4j-1.2-api.jar,\
 	@../../../lib/portal/log4j-api.jar,\
 	@../../../lib/portal/log4j-core.jar,\
-	@../../../lib/portal/netty-all.jar,\
+	@../../../lib/portal/netty-buffer.jar,\
+	@../../../lib/portal/netty-codec.jar,\
+	@../../../lib/portal/netty-common.jar,\
+	@../../../lib/portal/netty-handler.jar,\
+	@../../../lib/portal/netty-resolver.jar,\
+	@../../../lib/portal/netty-transport.jar,\
 	@../../../lib/portal/persistence.jar,\
 	@../../../lib/portal/portlet.jar,\
 	@../../../lib/portal/portletmvc4spring-framework.jar,\

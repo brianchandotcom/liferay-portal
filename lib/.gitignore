@@ -195,6 +195,13 @@
 /portal/nekohtml.jar
 /portal/netcdf.jar
 /portal/netty-all.jar
+/portal/netty-buffer.jar
+/portal/netty-codec.jar
+/portal/netty-codec-http.jar
+/portal/netty-common.jar
+/portal/netty-handler.jar
+/portal/netty-resolver.jar
+/portal/netty-transport.jar
 /portal/odmg.jar
 /portal/oro.jar
 /portal/pdfbox.jar

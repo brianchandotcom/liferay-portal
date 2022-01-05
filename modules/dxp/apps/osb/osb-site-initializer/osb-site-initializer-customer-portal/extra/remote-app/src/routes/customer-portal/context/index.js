@@ -45,7 +45,7 @@ const AppContextProvider = ({assetsPath, children, page}) => {
 		page,
 		project: undefined,
 		quickLinks: undefined,
-		sessionId: 'sessionId',
+		sessionId: '',
 		structuredContents: undefined,
 		subscriptionGroups: undefined,
 		userAccount: undefined,

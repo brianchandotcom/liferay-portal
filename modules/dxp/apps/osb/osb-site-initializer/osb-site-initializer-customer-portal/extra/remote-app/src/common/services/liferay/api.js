@@ -20,7 +20,9 @@ const fetchHeadless = async ({resolveAsJson = true, url}) => {
 
 const fetchSession = async (oktaSessionURL) => {
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
-	const response = await fetch(oktaSessionURL);
+	const response = await fetch(oktaSessionURL, {
+		credentials: 'include',
+	});
 	const responseContentType = response.headers.get('content-type');
 
 	return responseContentType === CONTENT_TYPE.JSON ? response.json() : null;

@@ -22,7 +22,7 @@
 							"widgetInstance": {
 								"widgetConfig": {
 									"portletSetupPortletDecoratorId": "barebone",
-									"properties": "create-support-request: https://help.liferay.com/hc/requests/new\nlicense-key-download-url: https://webserver-lrprovisioning-uat.lfr.cloud/o/provisioning-rest/v1.0/accounts\nokta-session-url:https://login-dev.liferay.com/api/v1/sessions/me/\npage: overview\nroute: portal\nsupport-link: https://help.liferay.com/hc/en-us/articles/360018414031-Account-Support"
+									"properties": "create-support-request: https://help.liferay.com/hc/requests/new\nlicense-key-download-url: https://webserver-lrprovisioning-uat.lfr.cloud/o/provisioning-rest/v1.0\nokta-session-url:https://login-dev.liferay.com/api/v1/sessions/me/\npage: overview\nroute: portal\nsupport-link: https://help.liferay.com/hc/en-us/articles/360018414031-Account-Support"
 								},
 								"widgetName": "[$REMOTE_APP_ENTRY_ID:CUSTOMER-PORTAL$]"
 							}

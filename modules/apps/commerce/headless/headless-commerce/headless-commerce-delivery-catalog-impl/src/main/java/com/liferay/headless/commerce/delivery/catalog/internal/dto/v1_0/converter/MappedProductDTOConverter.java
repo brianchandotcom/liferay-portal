@@ -33,6 +33,7 @@ import com.liferay.commerce.product.permission.CommerceProductViewPermission;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
+import com.liferay.commerce.product.service.CProductLocalService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.product.util.JsonHelper;
 import com.liferay.commerce.shop.by.diagram.model.CSDiagramEntry;
@@ -96,11 +97,27 @@ public class MappedProductDTOConverter
 			_csDiagramEntryLocalService.getCSDiagramEntry(
 				(Long)mappedProductDTOConverterContext.getId());
 
+		long cpInstanceId = GetterUtil.getLong(
+			mappedProductDTOConverterContext.getReplacementCPInstanceId(),
+			csDiagramEntry.getCPInstanceId());
+
+		CPInstance cpInstance = _cpInstanceLocalService.fetchCPInstance(
+			cpInstanceId);
+
+		long cProductId = GetterUtil.getLong(
+			mappedProductDTOConverterContext.getReplacementCProductId(),
+			csDiagramEntry.getCProductId());
+
+		if (cpInstance != null) {
+			CProduct cProduct =
+				_cProductLocalService.getCProductByCPInstanceUuid(
+					cpInstance.getCPInstanceUuid());
+
+			cProductId = cProduct.getCProductId();
+		}
+
 		CPDefinition cpDefinition =
-			_cpDefinitionLocalService.fetchCPDefinitionByCProductId(
-				GetterUtil.getLong(
-					mappedProductDTOConverterContext.getReplacementCProductId(),
-					csDiagramEntry.getCProductId()));
+			_cpDefinitionLocalService.fetchCPDefinitionByCProductId(cProductId);
 
 		if ((cpDefinition != null) &&
 			!_commerceProductViewPermission.contains(
@@ -110,13 +127,6 @@ public class MappedProductDTOConverter
 
 			return null;
 		}
-
-		long cpInstanceId = GetterUtil.getLong(
-			mappedProductDTOConverterContext.getReplacementCPInstanceId(),
-			csDiagramEntry.getCPInstanceId());
-
-		CPInstance cpInstance = _cpInstanceLocalService.fetchCPInstance(
-			cpInstanceId);
 
 		CPInstance firstAvailableReplacementCPInstance =
 			_cpInstanceHelper.fetchFirstAvailableReplacementCPInstance(
@@ -577,6 +587,9 @@ public class MappedProductDTOConverter
 
 	@Reference
 	private CPInstanceLocalService _cpInstanceLocalService;
+
+	@Reference
+	private CProductLocalService _cProductLocalService;
 
 	@Reference
 	private CSDiagramEntryLocalService _csDiagramEntryLocalService;

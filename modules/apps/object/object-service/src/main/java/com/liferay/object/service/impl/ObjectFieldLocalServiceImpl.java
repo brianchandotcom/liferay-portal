@@ -250,6 +250,7 @@ public class ObjectFieldLocalServiceImpl
 		}
 
 		objectField.setListTypeDefinitionId(listTypeDefinitionId);
+		objectField.setDBColumnName(name + StringPool.UNDERLINE);
 		objectField.setIndexed(indexed);
 		objectField.setIndexedAsKeyword(indexedAsKeyword);
 		objectField.setIndexedLanguageId(indexedLanguageId);

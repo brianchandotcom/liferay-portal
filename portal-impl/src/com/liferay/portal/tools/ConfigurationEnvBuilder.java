@@ -45,6 +45,12 @@ public class ConfigurationEnvBuilder {
 		Matcher matcher = _pattern.matcher("");
 
 		for (String configurationJavaFileName : configurationJavaFileNames) {
+			if (configurationJavaFileName.contains(
+					"/build/compile-include-sources/")) {
+
+				continue;
+			}
+
 			Path path = Paths.get(configurationJavaFileName);
 
 			String fullyQualifiedName = configurationJavaFileName.substring(

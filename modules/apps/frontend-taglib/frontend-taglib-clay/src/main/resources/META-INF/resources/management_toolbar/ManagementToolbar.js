@@ -60,7 +60,7 @@ function ManagementToolbar({
 	selectAllURL,
 	selectable,
 	showCreationMenu,
-	showDesignImprovements,
+	showDesignImprovementsFF,
 	showInfoButton,
 	showResultsBar,
 	showSearch,
@@ -76,7 +76,7 @@ function ManagementToolbar({
 	const [searchMobile, setSearchMobile] = useState(false);
 
 	return (
-		<FeatureFlagContext.Provider value={{showDesignImprovements}}>
+		<FeatureFlagContext.Provider value={{showDesignImprovements: showDesignImprovementsFF}}>
 			<ClayManagementToolbar active={active}>
 				<ClayManagementToolbar.ItemList>
 					{selectable && (
@@ -256,7 +256,7 @@ ManagementToolbar.propTypes = {
 	selectAllURL: PropTypes.string,
 	selectable: PropTypes.bool,
 	showCreationMenu: PropTypes.bool,
-	showDesignImprovements: PropTypes.bool,
+	showDesignImprovementsFF: PropTypes.bool,
 	showInfoButton: PropTypes.bool,
 	showResultsBar: PropTypes.bool,
 	showSearch: PropTypes.bool,

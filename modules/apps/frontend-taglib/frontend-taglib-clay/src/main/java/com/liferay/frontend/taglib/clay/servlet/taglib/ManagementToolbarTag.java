@@ -660,7 +660,7 @@ public class ManagementToolbarTag extends BaseContainerTag {
 		props.put("selectable", isSelectable());
 		props.put("showCreationMenu", isShowCreationMenu());
 		props.put(
-			"showDesignImprovements",
+			"showDesignImprovementsFF",
 			FFManagementToolbarConfigurationUtil.showDesignImprovements());
 		props.put("showInfoButton", isShowInfoButton());
 		props.put("showResultsBar", isShowResultsBar());

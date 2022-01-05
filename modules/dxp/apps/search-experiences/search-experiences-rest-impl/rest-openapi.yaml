@@ -121,6 +121,8 @@ components:
                             type: boolean
                         includeResponseString:
                             type: boolean
+                        localeId:
+                            type: string
                         queryString:
                             type: string
                         searchableAssetTypes:

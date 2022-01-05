@@ -137,7 +137,7 @@
 </tr>
 <tr>
 	<td>MODAL_BODY</td>
-	<td>//div[contains(@class,'modal-body')]/*[@title]</td>
+	<td>//div[contains(@class,'modal-body')]/iframe</td>
 	<td></td>
 </tr>
 <tr>

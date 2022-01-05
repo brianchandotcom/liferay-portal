@@ -41,3 +41,14 @@ renderResponse.setTitle(objectDefinition.getLabel(locale, true));
 	portletURL="<%= liferayPortletResponse.createRenderURL() %>"
 	style="fluid"
 />
+
+<div id="<portlet:namespace />AddObjectView">
+	<react:component
+		module="js/components/ModalAddObjectCustomView"
+		props='<%=
+			HashMapBuilder.<String, Object>put(
+				"apiURL", objectDefinitionsViewsDisplayContext.getAPIURL()
+			).build()
+		%>'
+	/>
+</div>

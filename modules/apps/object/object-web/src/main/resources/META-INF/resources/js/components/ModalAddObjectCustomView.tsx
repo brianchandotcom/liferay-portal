@@ -16,14 +16,15 @@ import {ClayModalProvider, useModal} from '@clayui/modal';
 import React, {useEffect, useState} from 'react';
 
 import ModalBasicWithFieldName from './ModalBasicWithFieldName';
+
 interface IProps extends React.HTMLAttributes<HTMLElement> {
 	apiURL: string;
-	observer: any;
+	observer: unknown;
 	onClose: () => void;
 }
 
 const ModalWithProvider: React.FC<IProps> = ({apiURL}) => {
-	const [visibleModal, setVisibleModal] = useState<boolean>(false);
+	const [visibleModal, setVisibleModal] = useState<boolean>();
 	const {observer, onClose} = useModal({
 		onClose: () => setVisibleModal(false),
 	});
@@ -31,10 +32,10 @@ const ModalWithProvider: React.FC<IProps> = ({apiURL}) => {
 	useEffect(() => {
 		const openModal = () => setVisibleModal(true);
 
-		Liferay.on('addObjectLayout', openModal);
+		Liferay.on('addObjectView', openModal);
 
 		return () => {
-			Liferay.detach('addObjectLayout', openModal);
+			Liferay.detach('addObjectView', openModal);
 		};
 	}, []);
 
@@ -43,8 +44,8 @@ const ModalWithProvider: React.FC<IProps> = ({apiURL}) => {
 			{visibleModal && (
 				<ModalBasicWithFieldName
 					apiURL={apiURL}
-					inputId="listObjectLayoutName"
-					label={Liferay.Language.get('new-layout')}
+					inputId="listObjectCustomViewName"
+					label={Liferay.Language.get('new-view')}
 					observer={observer}
 					onClose={onClose}
 				/>

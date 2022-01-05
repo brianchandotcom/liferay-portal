@@ -26,25 +26,6 @@ jest.mock(
 	)
 );
 
-// Suppress act warning until @testing-library/react is updated past 9
-// to use screen. See https://javascript.plainenglish.io/
-// you-probably-dont-need-act-in-your-react-tests-2a0bcd2ad65c
-
-const originalError = console.error;
-
-beforeAll(() => {
-	console.error = (...args) => {
-		if (/Warning.*not wrapped in act/.test(args[0])) {
-			return;
-		}
-		originalError.call(console, ...args);
-	};
-});
-
-afterAll(() => {
-	console.error = originalError;
-});
-
 function renderBuilder(props) {
 	return render(
 		<QueryBuilder
@@ -70,30 +51,24 @@ describe('QueryBuilder', () => {
 		expect(container).not.toBeNull();
 	});
 
-	it('renders the title for the selected query element', async () => {
-		const {findAllByText, getByText} = renderBuilder();
-
-		await findAllByText('query-elements');
+	it('renders the title for the selected query element', () => {
+		const {getByText} = renderBuilder();
 
 		QUERY_SXP_ELEMENTS.map((sxpElement) =>
 			getByText(sxpElement.title_i18n['en_US'])
 		);
 	});
 
-	it('renders the description for the selected query element', async () => {
-		const {findAllByText, getByText} = renderBuilder();
-
-		await findAllByText('query-elements');
+	it('renders the description for the selected query element', () => {
+		const {getByText} = renderBuilder();
 
 		QUERY_SXP_ELEMENTS.map((sxpElement) =>
 			getByText(sxpElement.description_i18n['en_US'])
 		);
 	});
 
-	it('can collapse all the query elements', async () => {
-		const {container, findAllByText, getByText} = renderBuilder();
-
-		await findAllByText('query-elements');
+	it('can collapse all the query elements', () => {
+		const {container, getByText} = renderBuilder();
 
 		fireEvent.click(getByText('collapse-all'));
 

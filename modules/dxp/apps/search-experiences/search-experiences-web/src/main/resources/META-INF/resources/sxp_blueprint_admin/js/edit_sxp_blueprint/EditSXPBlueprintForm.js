@@ -15,17 +15,24 @@ import getCN from 'classnames';
 import {useFormik} from 'formik';
 import {fetch, navigate} from 'frontend-js-web';
 import {PropTypes} from 'prop-types';
-import React, {useCallback, useContext, useRef, useState} from 'react';
+import React, {
+	useCallback,
+	useContext,
+	useEffect,
+	useRef,
+	useState,
+} from 'react';
 
 import PageToolbar from '../shared/PageToolbar';
 import SubmitWarningModal from '../shared/SubmitWarningModal';
 import ThemeContext from '../shared/ThemeContext';
 import {DEFAULT_ERROR, SIDEBARS} from '../utils/constants';
-import {addParams} from '../utils/fetch';
+import {addParams, fetchData} from '../utils/fetch';
 import {INPUT_TYPES} from '../utils/inputTypes';
 import {openErrorToast, openSuccessToast} from '../utils/toasts';
 import {
 	cleanUIConfiguration,
+	filterAndSortClassNames,
 	getConfigurationEntry,
 	getUIConfigurationValues,
 	isDefined,
@@ -60,7 +67,9 @@ function EditSXPBlueprintForm({
 	initialTitle = {},
 	sxpBlueprintId,
 }) {
-	const {defaultLocale, namespace, redirectURL} = useContext(ThemeContext);
+	const {defaultLocale, locale, namespace, redirectURL} = useContext(
+		ThemeContext
+	);
 
 	const [errors, setErrors] = useState([]);
 	const [previewInfo, setPreviewInfo] = useState(() => ({
@@ -76,6 +85,20 @@ function EditSXPBlueprintForm({
 	const sxpElementIdCounterRef = useRef(
 		initialSXPElementInstances.length || 0
 	);
+
+	const [searchableTypes, setSearchableTypes] = useState(null);
+	const [indexFields, setIndexFields] = useState(null);
+	const [keywordQueryContributors, setKeywordQueryContributors] = useState(
+		null
+	);
+	const [
+		modelPrefilterContributors,
+		setModelPrefilterContributors,
+	] = useState(null);
+	const [
+		queryPrefilterContributors,
+		setQueryPrefilterContributors,
+	] = useState(null);
 
 	const _getFormInput = (key) => {
 		for (const pair of new FormData(formRef.current).entries()) {
@@ -609,6 +632,58 @@ function EditSXPBlueprintForm({
 		setOpenSidebar(openSidebar === type ? '' : type);
 	};
 
+	useEffect(() => {
+		fetchData(
+			`/o/search-experiences-rest/v1.0/searchable-asset-names/${locale}`,
+			{method: 'GET'},
+			(responseContent) => setSearchableTypes(responseContent.items),
+			() => setSearchableTypes([])
+		);
+
+		fetchData(
+			`/o/search-experiences-rest/v1.0/field-mapping-infos`,
+			{method: 'GET'},
+			(responseContent) => setIndexFields(responseContent.items),
+			() => setIndexFields([])
+		);
+
+		[
+			{
+				setProperty: setKeywordQueryContributors,
+				url:
+					'/o/search-experiences-rest/v1.0/keyword-query-contributors',
+			},
+			{
+				setProperty: setModelPrefilterContributors,
+				url:
+					'/o/search-experiences-rest/v1.0/model-prefilter-contributors',
+			},
+			{
+				setProperty: setQueryPrefilterContributors,
+				url:
+					'/o/search-experiences-rest/v1.0/query-prefilter-contributors',
+			},
+		].forEach(({setProperty, url}) =>
+			fetchData(
+				url,
+				{method: 'GET'},
+				(responseContent) =>
+					setProperty(filterAndSortClassNames(responseContent.items)),
+				() => setProperty([])
+			)
+		);
+	}, []); //eslint-disable-line
+
+	if (
+		!searchableTypes ||
+		!indexFields ||
+		!keywordQueryContributors ||
+		!modelPrefilterContributors ||
+		!queryPrefilterContributors
+	) {
+		return null;
+	}
+
 	const _renderTabContent = () => {
 		switch (tab) {
 			case 'configuration':
@@ -636,6 +711,20 @@ function EditSXPBlueprintForm({
 
 						<ClauseContributorsSidebar
 							frameworkConfig={formik.values.frameworkConfig}
+							initialClauseContributorsList={[
+								{
+									label: 'KeywordQueryContributor',
+									value: keywordQueryContributors,
+								},
+								{
+									label: 'ModelPrefilterContributor',
+									value: modelPrefilterContributors,
+								},
+								{
+									label: 'QueryPrefilterContributor',
+									value: queryPrefilterContributors,
+								},
+							]}
 							onClose={_handleCloseSidebar}
 							onFrameworkConfigChange={
 								_handleFrameworkConfigChange
@@ -658,12 +747,18 @@ function EditSXPBlueprintForm({
 								applyIndexerClauses={
 									formik.values.applyIndexerClauses
 								}
+								clauseContributorsList={[
+									...keywordQueryContributors,
+									...modelPrefilterContributors,
+									...queryPrefilterContributors,
+								]}
 								elementInstances={
 									formik.values.elementInstances
 								}
 								entityJSON={entityJSON}
 								errors={formik.errors.elementInstances}
 								frameworkConfig={formik.values.frameworkConfig}
+								indexFields={indexFields}
 								isSubmitting={
 									formik.isSubmitting || previewInfo.loading
 								}
@@ -677,6 +772,7 @@ function EditSXPBlueprintForm({
 									_handleFrameworkConfigChange
 								}
 								openSidebar={openSidebar}
+								searchableTypes={searchableTypes}
 								setFieldTouched={formik.setFieldTouched}
 								setFieldValue={formik.setFieldValue}
 								setOpenSidebar={setOpenSidebar}

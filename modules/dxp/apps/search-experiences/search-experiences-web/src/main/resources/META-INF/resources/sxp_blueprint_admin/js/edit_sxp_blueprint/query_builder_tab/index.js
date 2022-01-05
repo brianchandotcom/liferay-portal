@@ -12,11 +12,9 @@
 import ClayLayout from '@clayui/layout';
 import {ClayVerticalNav} from '@clayui/nav';
 import {PropTypes} from 'prop-types';
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useState} from 'react';
 
-import ThemeContext from '../../shared/ThemeContext';
 import {SIDEBARS} from '../../utils/constants';
-import {fetchData} from '../../utils/fetch';
 import QuerySXPElements from './QuerySXPElements';
 import QuerySettings from './QuerySettings';
 
@@ -27,97 +25,28 @@ const VERTICAL_NAV_KEYS = {
 
 function QueryBuilderTab({
 	applyIndexerClauses,
+	clauseContributorsList = [],
 	elementInstances,
 	entityJSON,
 	errors = [],
 	frameworkConfig = {},
 	isSubmitting,
+	indexFields,
 	onApplyIndexerClausesChange,
 	onBlur,
 	onChange,
 	onDeleteSXPElement,
 	onFrameworkConfigChange,
+	searchableTypes = [],
 	setFieldTouched,
 	setFieldValue,
 	openSidebar,
 	setOpenSidebar,
 	touched = [],
 }) {
-	const {locale} = useContext(ThemeContext);
-
 	const [activeVerticalNavKey, setActiveVerticalNavKey] = useState(
 		VERTICAL_NAV_KEYS.QUERY_SXP_ELEMENTS
 	);
-	const [searchableTypes, setSearchableTypes] = useState(null);
-	const [indexFields, setIndexFields] = useState(null);
-	const [keywordQueryContributors, setKeywordQueryContributors] = useState(
-		null
-	);
-	const [
-		modelPrefilterContributors,
-		setModelPrefilterContributors,
-	] = useState(null);
-	const [
-		queryPrefilterContributors,
-		setQueryPrefilterContributors,
-	] = useState(null);
-
-	useEffect(() => {
-		fetchData(
-			`/o/search-experiences-rest/v1.0/searchable-asset-names/${locale}`,
-			{method: 'GET'},
-			(responseContent) => setSearchableTypes(responseContent.items),
-			() => setSearchableTypes([])
-		);
-
-		fetchData(
-			`/o/search-experiences-rest/v1.0/field-mapping-infos`,
-			{method: 'GET'},
-			(responseContent) => setIndexFields(responseContent.items),
-			() => setIndexFields([])
-		);
-
-		[
-			{
-				setProperty: setKeywordQueryContributors,
-				url:
-					'/o/search-experiences-rest/v1.0/keyword-query-contributors',
-			},
-			{
-				setProperty: setModelPrefilterContributors,
-				url:
-					'/o/search-experiences-rest/v1.0/model-prefilter-contributors',
-			},
-			{
-				setProperty: setQueryPrefilterContributors,
-				url:
-					'/o/search-experiences-rest/v1.0/query-prefilter-contributors',
-			},
-		].forEach(({setProperty, url}) =>
-			fetchData(
-				url,
-				{method: 'GET'},
-				(responseContent) =>
-					setProperty(
-						responseContent.items
-							.map(({className}) => className)
-							.filter((item) => item)
-							.sort()
-					),
-				() => setProperty([])
-			)
-		);
-	}, []); //eslint-disable-line
-
-	if (
-		!searchableTypes ||
-		!indexFields ||
-		!keywordQueryContributors ||
-		!modelPrefilterContributors ||
-		!queryPrefilterContributors
-	) {
-		return null;
-	}
 
 	/**
 	 * Handles sidebar visibility. If 'visible' is not provided, sidebar
@@ -212,11 +141,9 @@ function QueryBuilderTab({
 								VERTICAL_NAV_KEYS.QUERY_SETTINGS && (
 								<QuerySettings
 									applyIndexerClauses={applyIndexerClauses}
-									clauseContributorsList={[
-										...keywordQueryContributors,
-										...modelPrefilterContributors,
-										...queryPrefilterContributors,
-									]}
+									clauseContributorsList={
+										clauseContributorsList
+									}
 									frameworkConfig={frameworkConfig}
 									onApplyIndexerClausesChange={
 										onApplyIndexerClausesChange
@@ -240,10 +167,12 @@ function QueryBuilderTab({
 
 QueryBuilderTab.propTypes = {
 	applyIndexerClauses: PropTypes.bool,
+	clauseContributorsList: PropTypes.arrayOf(PropTypes.string),
 	elementInstances: PropTypes.arrayOf(PropTypes.object),
 	entityJSON: PropTypes.object,
 	errors: PropTypes.arrayOf(PropTypes.object),
 	frameworkConfig: PropTypes.object,
+	indexFields: PropTypes.arrayOf(PropTypes.object),
 	isSubmitting: PropTypes.bool,
 	onApplyIndexerClausesChange: PropTypes.func,
 	onBlur: PropTypes.func,
@@ -251,6 +180,7 @@ QueryBuilderTab.propTypes = {
 	onDeleteSXPElement: PropTypes.func,
 	onFrameworkConfigChange: PropTypes.func,
 	openSidebar: PropTypes.string,
+	searchableTypes: PropTypes.arrayOf(PropTypes.object),
 	setFieldTouched: PropTypes.func,
 	setFieldValue: PropTypes.func,
 	setOpenSidebar: PropTypes.func,

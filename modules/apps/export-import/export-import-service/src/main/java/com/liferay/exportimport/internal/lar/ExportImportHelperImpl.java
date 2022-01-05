@@ -355,12 +355,12 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 				continue;
 			}
 
-			if (layout.getPlid() == LayoutConstants.DEFAULT_PLID) {
-				continue;
-			}
-
 			if (!layouts.contains(layout)) {
 				layouts.add(layout);
+			}
+
+			if (layout.getPlid() == LayoutConstants.DEFAULT_PLID) {
+				continue;
 			}
 
 			List<Layout> parentLayouts = Collections.emptyList();

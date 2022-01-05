@@ -84,7 +84,7 @@ public class WorkflowTaskUserNotificationHandler
 				_BODY_TEMPLATE_DEFAULT, new String[] {"[$BODY$]", "[$TITLE$]"},
 				new String[] {
 					LanguageUtil.format(
-						locale, "notification-for-x-was-inactivated",
+						locale, "notification-for-x-was-deactivated",
 						jsonObject.getString("entryType"), false),
 					LanguageUtil.get(locale, "notification-no-longer-applies")
 				}),

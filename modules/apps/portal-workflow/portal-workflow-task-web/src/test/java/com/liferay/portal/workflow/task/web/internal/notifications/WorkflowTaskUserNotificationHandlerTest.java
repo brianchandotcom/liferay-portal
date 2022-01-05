@@ -92,10 +92,10 @@ public class WorkflowTaskUserNotificationHandlerTest extends PowerMockito {
 		Mockito.when(
 			LanguageUtil.format(
 				Mockito.any(Locale.class),
-				Mockito.eq("notification-for-x-was-inactivated"),
+				Mockito.eq("notification-for-x-was-deactivated"),
 				Mockito.anyString(), Mockito.eq(false))
 		).thenReturn(
-			"Notification for Sample Object was inactivated."
+			"Notification for Sample Object was deactivated."
 		);
 
 		Mockito.when(
@@ -115,7 +115,7 @@ public class WorkflowTaskUserNotificationHandlerTest extends PowerMockito {
 			StringBundler.concat(
 				"<div class=\"title\">Notification no longer applies.</div>",
 				"<div class=\"body\">Notification for Sample Object was ",
-				"inactivated.</div>"),
+				"deactivated.</div>"),
 			userNotificationFeedEntry.getBody());
 	}
 

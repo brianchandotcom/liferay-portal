@@ -1682,8 +1682,14 @@ definition {
 				locator1 = "DocumentsAndMedia#DOCUMENT_ANY_HREF");
 		}
 
-		if (IsElementNotPresent(locator1 = "DocumentsAndMedia#SIDEBAR_INFO_ACTIVE")) {
+		var count = "0";
+
+		while (("${count}" != "2") && (IsNotVisible(locator1 = "DocumentsAndMedia#SIDEBAR_INFO_ACTIVE"))) {
+			Refresh();
+
 			ManagementBar.clickInfo();
+
+			var count = ${count} + 1;
 		}
 
 		AssertVisible(locator1 = "DocumentsAndMedia#SIDEBAR_INFO_ACTIVE");

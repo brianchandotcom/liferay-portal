@@ -91,13 +91,13 @@
 			</clay:row>
 
 			<clay:row
-				cssClass="custom-devices hide mt-3"
+				cssClass="custom-devices flex-nowrap hide mt-3"
 				hidden="hidden"
 				id='<%= liferayPortletResponse.getNamespace() + "customDeviceContainer" %>'
 			>
-				<aui:input cssClass="input-sm" inlineField="<%= true %>" label='<%= LanguageUtil.get(request, "height") + " (px):" %>' name="height" size="4" value="600" wrapperCssClass="flex-grow-1 mr-3" />
+				<aui:input cssClass="input-sm" inlineField="<%= true %>" label='<%= LanguageUtil.get(request, "height") + " (px):" %>' name="height" size="4" type="number" value="600" wrapperCssClass="flex-grow-1 mr-3" />
 
-				<aui:input cssClass="input-sm" inlineField="<%= true %>" label='<%= LanguageUtil.get(request, "width") + " (px):" %>' name="width" size="4" value="600" wrapperCssClass="flex-grow-1" />
+				<aui:input cssClass="input-sm" inlineField="<%= true %>" label='<%= LanguageUtil.get(request, "width") + " (px):" %>' name="width" size="4" type="number" value="600" wrapperCssClass="flex-grow-1" />
 			</clay:row>
 		</clay:container-fluid>
 	</div>

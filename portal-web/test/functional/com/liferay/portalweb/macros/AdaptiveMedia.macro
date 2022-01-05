@@ -60,7 +60,7 @@ definition {
 			value1 = "Save");
 
 		if (isSet(duplicate)) {
-			Alert.viewErrorMessage(errorMessage = "A configuration with this ID already exists. Please enter a unique ID.");
+			Alert.viewErrorMessage(errorMessage = "A configuration with this ID already exists. Enter a unique ID.");
 		}
 		else if (isSet(zero)) {
 			AssertTextEquals(

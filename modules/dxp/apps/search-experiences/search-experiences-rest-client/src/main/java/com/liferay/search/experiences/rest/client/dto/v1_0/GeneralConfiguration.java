@@ -148,6 +148,27 @@ public class GeneralConfiguration implements Cloneable, Serializable {
 
 	protected Boolean includeResponseString;
 
+	public String getLocaleId() {
+		return localeId;
+	}
+
+	public void setLocaleId(String localeId) {
+		this.localeId = localeId;
+	}
+
+	public void setLocaleId(
+		UnsafeSupplier<String, Exception> localeIdUnsafeSupplier) {
+
+		try {
+			localeId = localeIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String localeId;
+
 	public String getQueryString() {
 		return queryString;
 	}

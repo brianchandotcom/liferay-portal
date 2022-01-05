@@ -207,6 +207,34 @@ public class GeneralConfiguration implements Serializable {
 	protected Boolean includeResponseString;
 
 	@Schema
+	public String getLocaleId() {
+		return localeId;
+	}
+
+	public void setLocaleId(String localeId) {
+		this.localeId = localeId;
+	}
+
+	@JsonIgnore
+	public void setLocaleId(
+		UnsafeSupplier<String, Exception> localeIdUnsafeSupplier) {
+
+		try {
+			localeId = localeIdUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String localeId;
+
+	@Schema
 	public String getQueryString() {
 		return queryString;
 	}
@@ -395,6 +423,20 @@ public class GeneralConfiguration implements Serializable {
 			sb.append("\"includeResponseString\": ");
 
 			sb.append(includeResponseString);
+		}
+
+		if (localeId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"localeId\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(localeId));
+
+			sb.append("\"");
 		}
 
 		if (queryString != null) {

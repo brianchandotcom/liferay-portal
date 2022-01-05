@@ -30,6 +30,7 @@ import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeR
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
+import com.liferay.dynamic.data.mapping.model.DDMFormInstanceSettings;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureConstants;
@@ -39,6 +40,7 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
+import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactoryHelper;
 import com.liferay.dynamic.data.mapping.util.DDMUtil;
 import com.liferay.petra.string.StringPool;
@@ -161,7 +163,8 @@ public class DDMFormImporter {
 		DDMFormValuesDeserializerDeserializeRequest
 			ddmFormValuesDeserializerDeserializeRequest =
 				DDMFormValuesDeserializerDeserializeRequest.Builder.newBuilder(
-					jsonFormSettings, ddmStructure.getDDMForm()
+					jsonFormSettings,
+					DDMFormFactory.create(DDMFormInstanceSettings.class)
 				).build();
 
 		DDMFormValuesDeserializerDeserializeResponse

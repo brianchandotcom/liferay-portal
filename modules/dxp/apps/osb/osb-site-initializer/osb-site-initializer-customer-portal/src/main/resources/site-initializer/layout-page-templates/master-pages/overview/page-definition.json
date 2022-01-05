@@ -27,8 +27,10 @@
 							"fragment": {
 								"key": "side-bar"
 							},
-							"fragmentConfig": {},
-							"fragmentFields": []
+							"fragmentConfig": {
+							},
+							"fragmentFields": [
+							]
 						},
 						"type": "Fragment"
 					},
@@ -83,8 +85,10 @@
 											"fragment": {
 												"key": "select-project"
 											},
-											"fragmentConfig": {},
-											"fragmentFields": [],
+											"fragmentConfig": {
+											},
+											"fragmentFields": [
+											],
 											"fragmentStyle": {
 												"marginLeft": "4"
 											}
@@ -96,13 +100,15 @@
 											"fragment": {
 												"key": "select-user"
 											},
-											"fragmentConfig": {},
+											"fragmentConfig": {
+											},
 											"fragmentFields": [
 												{
 													"id": "user-name",
 													"value": {
 														"fragmentLink": {
-															"value_i18n": {}
+															"value_i18n": {
+															}
 														}
 													}
 												},
@@ -110,7 +116,8 @@
 													"id": "select-icon",
 													"value": {
 														"fragmentLink": {
-															"value_i18n": {}
+															"value_i18n": {
+															}
 														}
 													}
 												},
@@ -118,7 +125,8 @@
 													"id": "user-icon",
 													"value": {
 														"fragmentLink": {
-															"value_i18n": {}
+															"value_i18n": {
+															}
 														}
 													}
 												}
@@ -180,8 +188,10 @@
 													"fragment": {
 														"key": "side-menu"
 													},
-													"fragmentConfig": {},
-													"fragmentFields": [],
+													"fragmentConfig": {
+													},
+													"fragmentFields": [
+													],
 													"fragmentStyle": {
 														"backgroundColor": "",
 														"marginLeft": "3",
@@ -224,7 +234,8 @@
 											{
 												"definition": {
 													"fragmentSettings": {
-														"unallowedFragments": []
+														"unallowedFragments": [
+														]
 													}
 												},
 												"type": "DropZone"

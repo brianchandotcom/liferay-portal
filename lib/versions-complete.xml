@@ -5940,42 +5940,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/portal/antlr2.jar</file-name>
-				<version>2.7.7</version>
-				<project-name>ANTLR</project-name>
-				<project-url>http://www.antlr.org</project-url>
-				<licenses>
-					<license>
-						<license-name>BSD Style License</license-name>
-						<license-url>http://en.wikipedia.org/wiki/BSD_licenses</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/portal/antlr3-runtime.jar</file-name>
-				<version>3.0.1</version>
-				<project-name>ANTLR</project-name>
-				<project-url>http://www.antlr.org</project-url>
-				<licenses>
-					<license>
-						<license-name>BSD Style License</license-name>
-						<license-url>http://en.wikipedia.org/wiki/BSD_licenses</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/portal/antlr3.jar</file-name>
-				<version>3.0.1</version>
-				<project-name>ANTLR</project-name>
-				<project-url>http://www.antlr.org</project-url>
-				<licenses>
-					<license>
-						<license-name>BSD Style License</license-name>
-						<license-url>http://en.wikipedia.org/wiki/BSD_licenses</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/portal/asm-analysis.jar</file-name>
 				<version>7.0</version>
 				<project-name>ASM</project-name>

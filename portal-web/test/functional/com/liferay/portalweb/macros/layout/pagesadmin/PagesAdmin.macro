@@ -465,6 +465,30 @@ definition {
 		WaitForSPARefresh();
 	}
 
+	macro cannotDeletePagesAssociatedWithSiteTemplate {
+		if (isSet(pageName)) {
+			Click(
+				key_itemName = "${pageName}",
+				locator1 = "PagesAdmin#LIST_GROUP_ITEM");
+		}
+
+		Click.waitForMenuToggleJSClick(
+			key_pageName = "${page}",
+			locator1 = "PagesAdmin#LIST_GROUP_ITEM_ELLIPSIS_ICON");
+
+		MenuItem.viewNotPresent(menuItem = "Delete");
+
+		Click.waitForMenuToggleJSClick(
+			key_pageName = "${page}",
+			locator1 = "PagesAdmin#LIST_GROUP_ITEM_ELLIPSIS_ICON");
+
+		PortletEntry.selectAll();
+
+		AssertElementPresent(
+			key_text = "times-circle",
+			locator1 = "Icon#ANY_DISABLED");
+	}
+
 	macro changeLogo {
 		if (IsTextNotEqual(locator1 = "ControlMenu#HEADING", value1 = "Pages")) {
 			ProductMenu.gotoPortlet(

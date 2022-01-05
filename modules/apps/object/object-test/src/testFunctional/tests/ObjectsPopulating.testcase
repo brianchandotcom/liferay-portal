@@ -210,8 +210,6 @@ definition {
 	@description = "LPS-133365 - Verify if it's possible to map an Object field of Date type and view its entries"
 	@priority = "4"
 	test CanMapDateTypeAndViewEntries {
-		
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -505,8 +503,6 @@ definition {
 	@description = "LPS-136451 - Verify if it's possible to see the entries of a field with capitalized letters in the name"
 	@priority = "4"
 	test FieldWithCapitalizedLetters {
-		
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",

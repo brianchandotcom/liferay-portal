@@ -1,4 +1,4 @@
 Bundle-Name: Liferay Petra Log4j
 Bundle-SymbolicName: com.liferay.petra.log4j
-Bundle-Version: 5.0.9
+Bundle-Version: 5.0.10
 Export-Package: com.liferay.petra.log4j

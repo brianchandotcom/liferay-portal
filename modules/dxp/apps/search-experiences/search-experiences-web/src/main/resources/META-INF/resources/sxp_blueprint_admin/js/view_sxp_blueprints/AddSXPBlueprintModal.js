@@ -25,18 +25,17 @@ import {
 	DEFAULT_SORT_CONFIGURATION,
 } from '../utils/data';
 import {fetchData} from '../utils/fetch';
+import {filterAndSortClassNames} from '../utils/utils';
 
 const ADD_EVENT = 'addSXPBlueprint';
 
 const AddModal = ({
+	clauseContributorsList = [],
 	defaultLocale,
 	editSXPBlueprintURL,
-	keywordQueryContributors = [],
-	modelPrefilterContributors = [],
 	observer,
 	onClose,
 	portletNamespace,
-	queryPrefilterContributors = [],
 	searchableTypes = [],
 }) => {
 	const isMounted = useIsMounted();
@@ -56,11 +55,7 @@ const AddModal = ({
 		aggregationConfiguration: {},
 		generalConfiguration: {
 			clauseContributorsExcludes: [],
-			clauseContributorsIncludes: [
-				...keywordQueryContributors,
-				...modelPrefilterContributors,
-				...queryPrefilterContributors,
-			],
+			clauseContributorsIncludes: clauseContributorsList,
 			searchableAssetTypes: searchableTypes,
 		},
 		highlightConfiguration: DEFAULT_HIGHLIGHT_CONFIGURATION,
@@ -306,13 +301,8 @@ export function AddSXPBlueprintModal({
 				url,
 				{method: 'GET'},
 				(responseContent) =>
-					setProperty(
-						responseContent.items
-							.map(({className}) => className)
-							.filter((item) => item)
-							.sort()
-					),
-				() => setProperty({})
+					setProperty(filterAndSortClassNames(responseContent.items)),
+				() => setProperty([])
 			)
 		);
 	}, []); //eslint-disable-line
@@ -330,15 +320,17 @@ export function AddSXPBlueprintModal({
 		<ClayModalProvider>
 			{visibleModal && (
 				<AddModal
+					clauseContributorsList={[
+						...keywordQueryContributors,
+						...modelPrefilterContributors,
+						...queryPrefilterContributors,
+					]}
 					contextPath={contextPath}
 					defaultLocale={defaultLocale}
 					editSXPBlueprintURL={editSXPBlueprintURL}
-					keywordQueryContributors={keywordQueryContributors}
-					modelPrefilterContributors={modelPrefilterContributors}
 					observer={observer}
 					onClose={onClose}
 					portletNamespace={portletNamespace}
-					queryPrefilterContributors={queryPrefilterContributors}
 					searchableTypes={searchableTypes}
 				/>
 			)}

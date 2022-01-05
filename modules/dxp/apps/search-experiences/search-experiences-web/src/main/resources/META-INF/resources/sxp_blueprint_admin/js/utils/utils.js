@@ -15,6 +15,19 @@ import {CONFIG_PREFIX} from './constants';
 import {INPUT_TYPES} from './inputTypes';
 
 /**
+ * Function to get valid classNames and return them sorted.
+ *
+ * @param {Array} items Array of objects with classNames
+ * @return {Array} Array of classNames
+ */
+export function filterAndSortClassNames(items) {
+	return items
+		.map(({className}) => className)
+		.filter((item) => item)
+		.sort();
+}
+
+/**
  * Function used to identify whether a required value is not undefined
  *
  * Examples:

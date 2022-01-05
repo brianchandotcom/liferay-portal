@@ -22,12 +22,12 @@ import SelectTypes from './SelectTypes';
 
 function QuerySettings({
 	applyIndexerClauses,
-	clauseContributorsList = [],
-	onApplyIndexerClausesChange,
+	clauseContributorsList,
 	frameworkConfig,
-	onFrameworkConfigChange,
+	onApplyIndexerClausesChange,
 	onChangeClauseContributorsVisibility,
-	searchableTypes = [],
+	onFrameworkConfigChange,
+	searchableTypes,
 }) {
 	const [selectAllTypes, setSelectAllTypes] = useState(
 		searchableTypes.length === frameworkConfig.searchableAssetTypes?.length

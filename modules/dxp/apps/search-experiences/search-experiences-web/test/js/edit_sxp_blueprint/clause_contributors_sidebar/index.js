@@ -14,6 +14,7 @@ import React from 'react';
 
 import ClauseContributorsSidebar from '../../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/edit_sxp_blueprint/clause_contributors_sidebar';
 const Toasts = require('../../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/utils/toasts');
+import {filterAndSortClassNames} from '../../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/utils/utils';
 import {mockClassNames} from '../../mocks/data';
 
 import '@testing-library/jest-dom/extend-expect';
@@ -22,24 +23,15 @@ import '@testing-library/jest-dom/extend-expect';
 
 Toasts.openSuccessToast = jest.fn();
 
-// Suppress act warning until @testing-library/react is updated past 9
-// to use screen. See https://javascript.plainenglish.io/
-// you-probably-dont-need-act-in-your-react-tests-2a0bcd2ad65c
-
-const originalError = console.error;
-
-beforeAll(() => {
-	console.error = (...args) => {
-		if (/Warning.*not wrapped in act/.test(args[0])) {
-			return;
-		}
-		originalError.call(console, ...args);
-	};
-});
-
-afterAll(() => {
-	console.error = originalError;
-});
+const keywordQueryContributors = filterAndSortClassNames(
+	mockClassNames('KeywordQueryContributor')
+);
+const modelPrefilterContributors = filterAndSortClassNames(
+	mockClassNames('ModelPrefilterContributor')
+);
+const queryPrefilterContributors = filterAndSortClassNames(
+	mockClassNames('QueryPrefilterContributor')
+);
 
 function renderClause(props) {
 	return render(
@@ -48,6 +40,20 @@ function renderClause(props) {
 				clauseContributorsExcludes: [],
 				clauseContributorsIncludes: [],
 			}}
+			initialClauseContributorsList={[
+				{
+					label: 'KeywordQueryContributor',
+					value: keywordQueryContributors,
+				},
+				{
+					label: 'ModelPrefilterContributor',
+					value: modelPrefilterContributors,
+				},
+				{
+					label: 'QueryPrefilterContributor',
+					value: queryPrefilterContributors,
+				},
+			]}
 			onFrameworkConfigChange={jest.fn()}
 			visible={false}
 			{...props}
@@ -62,42 +68,28 @@ describe('QueryBuilder', () => {
 		expect(container).not.toBeNull();
 	});
 
-	it('renders the list of contributors', async () => {
-		const {findAllByText, getByText} = renderClause();
+	it('renders the list of contributors', () => {
+		const {getByText} = renderClause();
 
-		await findAllByText('KeywordQueryContributor', {
-			exact: false,
-		});
+		keywordQueryContributors.forEach((className) => getByText(className));
 
-		mockClassNames('KeywordQueryContributor').forEach(({className}) =>
-			getByText(className)
-		);
+		modelPrefilterContributors.forEach((className) => getByText(className));
 
-		mockClassNames('ModelPrefilterContributor').forEach(({className}) =>
-			getByText(className)
-		);
-
-		mockClassNames('QueryPrefilterContributor').forEach(({className}) =>
-			getByText(className)
-		);
+		queryPrefilterContributors.forEach((className) => getByText(className));
 	});
 
-	it('enables the correct number of active contributors', async () => {
+	it('enables the correct number of active contributors', () => {
 		const activeKeywordContributors = mockClassNames(
 			'KeywordQueryContributor',
 			false,
 			5
 		);
 
-		const {findAllByText, getAllByLabelText} = renderClause({
+		const {getAllByLabelText} = renderClause({
 			frameworkConfig: {
 				clauseContributorsExcludes: [],
 				clauseContributorsIncludes: activeKeywordContributors,
 			},
-		});
-
-		await findAllByText('KeywordQueryContributor', {
-			exact: false,
 		});
 
 		expect(getAllByLabelText('on').length).toEqual(

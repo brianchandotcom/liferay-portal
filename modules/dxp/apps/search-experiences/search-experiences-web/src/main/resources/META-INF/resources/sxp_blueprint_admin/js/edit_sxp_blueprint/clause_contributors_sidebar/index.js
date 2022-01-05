@@ -24,7 +24,6 @@ import {
 	DESCENDING,
 	INACTIVE,
 } from '../../utils/constants';
-import {fetchData} from '../../utils/fetch';
 import {removeDuplicates} from '../../utils/utils';
 import ManagementToolbar from './ManagementToolbar';
 
@@ -46,12 +45,12 @@ const getClassDisplayName = (className) => {
 		.join(' ');
 };
 
-function ClauseContributorsSidebar({
-	onClose,
-	visible,
+export default function ({
 	frameworkConfig,
 	initialClauseContributorsList = [],
+	onClose,
 	onFrameworkConfigChange,
+	visible,
 }) {
 	const [category, setCategory] = useState(ALL);
 	const [contributors, setContributors] = useState(
@@ -337,83 +336,5 @@ function ClauseContributorsSidebar({
 				</ClayList>
 			</ClayLayout.ContainerFluid>
 		</div>
-	);
-}
-
-export default function ({
-	frameworkConfig,
-	onClose,
-	onFrameworkConfigChange,
-	visible,
-}) {
-	const [keywordQueryContributors, setKeywordQueryContributors] = useState(
-		null
-	);
-	const [
-		modelPrefilterContributors,
-		setModelPrefilterContributors,
-	] = useState(null);
-	const [
-		queryPrefilterContributors,
-		setQueryPrefilterContributors,
-	] = useState(null);
-
-	useEffect(() => {
-		[
-			{
-				label: 'KeywordQueryContributor',
-				setProperty: setKeywordQueryContributors,
-				url:
-					'/o/search-experiences-rest/v1.0/keyword-query-contributors',
-			},
-			{
-				label: 'ModelPrefilterContributor',
-				setProperty: setModelPrefilterContributors,
-				url:
-					'/o/search-experiences-rest/v1.0/model-prefilter-contributors',
-			},
-			{
-				label: 'QueryPrefilterContributor',
-				setProperty: setQueryPrefilterContributors,
-				url:
-					'/o/search-experiences-rest/v1.0/query-prefilter-contributors',
-			},
-		].forEach(({label, setProperty, url}) =>
-			fetchData(
-				url,
-				{method: 'GET'},
-				(responseContent) =>
-					setProperty({
-						label,
-						value: responseContent.items
-							.map(({className}) => className)
-							.filter((item) => item)
-							.sort(),
-					}),
-				() => setProperty({label, value: []})
-			)
-		);
-	}, []); //eslint-disable-line
-
-	if (
-		!keywordQueryContributors ||
-		!modelPrefilterContributors ||
-		!queryPrefilterContributors
-	) {
-		return null;
-	}
-
-	return (
-		<ClauseContributorsSidebar
-			frameworkConfig={frameworkConfig}
-			initialClauseContributorsList={[
-				keywordQueryContributors,
-				modelPrefilterContributors,
-				queryPrefilterContributors,
-			]}
-			onClose={onClose}
-			onFrameworkConfigChange={onFrameworkConfigChange}
-			visible={visible}
-		/>
 	);
 }

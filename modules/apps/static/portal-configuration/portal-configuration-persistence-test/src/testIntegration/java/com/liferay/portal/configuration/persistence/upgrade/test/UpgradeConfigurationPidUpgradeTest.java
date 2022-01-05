@@ -25,7 +25,9 @@ import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
@@ -123,6 +125,39 @@ public class UpgradeConfigurationPidUpgradeTest {
 	}
 
 	@Test
+	public void testUpgradeConfigurationWithEmptyDictionary() throws Exception {
+		try {
+			String servicePid = "test.service.pid";
+
+			_addConfiguration(servicePid, new HashMapDictionary<>());
+
+			_upgradeConfigurationPidUpgradeProcess.upgrade();
+
+			try (Connection connection = DataAccess.getConnection();
+				PreparedStatement preparedStatement =
+					connection.prepareStatement(
+						StringBundler.concat(
+							"select dictionary from Configuration_ where ",
+							"configurationId = '", servicePid, "'"));
+				ResultSet resultSet = preparedStatement.executeQuery()) {
+
+				Assert.assertTrue(resultSet.next());
+
+				while (resultSet.next()) {
+					String dictionaryString = resultSet.getString("dictionary");
+
+					Assert.assertTrue(
+						dictionaryString + " should be null or empty",
+						Validator.isNull(dictionaryString));
+				}
+			}
+		}
+		finally {
+			_removeConfiguration("test.service.pid");
+		}
+	}
+
+	@Test
 	public void testUpgradeConfigurationWithFile() throws Exception {
 		_testUpgradeConfigurationWithFile(CharPool.DASH);
 		_testUpgradeConfigurationWithFile(CharPool.PERIOD);
@@ -136,6 +171,29 @@ public class UpgradeConfigurationPidUpgradeTest {
 		_testUpgradeConfigurationWithoutFile(CharPool.PERIOD);
 		_testUpgradeConfigurationWithoutFile(CharPool.TILDE);
 		_testUpgradeConfigurationWithoutFile(CharPool.UNDERLINE);
+	}
+
+	private void _addConfiguration(
+			String servicePid, Dictionary<String, String> dictionary)
+		throws Exception {
+
+		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
+			new UnsyncByteArrayOutputStream();
+
+		ConfigurationHandler.write(unsyncByteArrayOutputStream, dictionary);
+
+		try (Connection connection = DataAccess.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(
+				"insert into Configuration_ (configurationId, dictionary) " +
+					"values(?, ?)")) {
+
+			preparedStatement.setString(1, servicePid);
+
+			preparedStatement.setString(
+				2, unsyncByteArrayOutputStream.toString());
+
+			preparedStatement.execute();
+		}
 	}
 
 	private void _addConfiguration(
@@ -158,23 +216,7 @@ public class UpgradeConfigurationPidUpgradeTest {
 			"service.pid", servicePid
 		).build();
 
-		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
-			new UnsyncByteArrayOutputStream();
-
-		ConfigurationHandler.write(unsyncByteArrayOutputStream, dictionary);
-
-		try (Connection connection = DataAccess.getConnection();
-			PreparedStatement preparedStatement = connection.prepareStatement(
-				"insert into Configuration_ (configurationId, dictionary) " +
-					"values(?, ?)")) {
-
-			preparedStatement.setString(1, servicePid);
-
-			preparedStatement.setString(
-				2, unsyncByteArrayOutputStream.toString());
-
-			preparedStatement.execute();
-		}
+		_addConfiguration(servicePid, dictionary);
 	}
 
 	private void _assertConfiguration(

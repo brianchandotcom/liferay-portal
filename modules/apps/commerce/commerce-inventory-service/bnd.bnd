@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Commerce Inventory Service
 Bundle-SymbolicName: com.liferay.commerce.inventory.service
-Bundle-Version: 4.0.16
+Bundle-Version: 4.0.17
 Liferay-Enterprise-App: product.id=9a473157-06a6-44b6-b017-a360ffaf5f38
 Liferay-Require-SchemaVersion: 2.2.0
 Liferay-Service: true

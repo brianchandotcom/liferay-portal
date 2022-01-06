@@ -146,6 +146,12 @@ definition {
 		AssertElementNotPresent(locator1 = "Button#PLUS");
 	}
 
+	macro assertRelationshipEntrySearchResultsNotPresent {
+		AssertElementNotPresent(
+			key_picklistOption = "${entry}",
+			locator1 = "ObjectAdmin#ENTRY_PICKLIST_OPTION");
+	}
+
 	macro assertRelationshipEntrySearchResultsPresent {
 		AssertElementPresent(
 			key_entry = "${entry}",

@@ -51,7 +51,9 @@ export default function DiagramBuilder({version}) {
 		elements,
 		selectedLanguageId,
 		setActive,
+		setDefinitionDescription,
 		setDefinitionId,
+		setDefinitionTitle,
 		setDeserialize,
 		setElements,
 	} = useContext(DefinitionBuilderContext);
@@ -209,6 +211,11 @@ export default function DiagramBuilder({version}) {
 
 			const elements = deserializeUtil.getElements();
 
+			const metadata = deserializeUtil.getMetadata();
+
+			setDefinitionDescription(metadata.description);
+			setDefinitionTitle(metadata.name);
+
 			setElements(elements);
 
 			setDeserialize(false);
@@ -217,6 +224,8 @@ export default function DiagramBuilder({version}) {
 		currentEditor,
 		definitionTitle,
 		deserialize,
+		setDefinitionDescription,
+		setDefinitionTitle,
 		setDeserialize,
 		setElements,
 		version,
@@ -226,8 +235,9 @@ export default function DiagramBuilder({version}) {
 		if (version !== '0' && !deserialize) {
 			retrieveDefinitionRequest(definitionId)
 				.then((response) => response.json())
-				.then(({active, content, name}) => {
+				.then(({active, content, description, name}) => {
 					setActive(active);
+					setDefinitionDescription(description);
 					setDefinitionId(name);
 
 					deserializeUtil.updateXMLDefinition(content);

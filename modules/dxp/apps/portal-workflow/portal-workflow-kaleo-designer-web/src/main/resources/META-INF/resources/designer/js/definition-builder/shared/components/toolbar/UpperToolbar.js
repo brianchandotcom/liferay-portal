@@ -41,6 +41,7 @@ export default function UpperToolbar({
 	const {
 		active,
 		currentEditor,
+		definitionDescription,
 		definitionId,
 		definitionTitle,
 		elements,
@@ -71,7 +72,7 @@ export default function UpperToolbar({
 			xmlContent = serializeDefinition(
 				xmlNamespace,
 				{
-					description: '',
+					description: definitionDescription,
 					name: definitionTitle,
 					version,
 				},

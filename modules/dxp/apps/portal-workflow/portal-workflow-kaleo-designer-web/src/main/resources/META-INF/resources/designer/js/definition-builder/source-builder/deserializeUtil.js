@@ -151,6 +151,12 @@ DeserializeUtil.prototype = {
 		return elements;
 	},
 
+	getMetadata() {
+		const instance = this;
+
+		return instance.definition.getDefinitionMetadata();
+	},
+
 	updateXMLDefinition(content) {
 		const instance = this;
 

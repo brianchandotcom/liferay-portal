@@ -20,7 +20,7 @@ import sectionComponents from './sections/sectionComponents';
 const contents = {
 	assignments: {
 		backButton: (setContentName) => () => setContentName('task'),
-		sections: [],
+		sections: ['selectAssignment'],
 		title: Liferay.Language.get('assignments'),
 	},
 	end: {

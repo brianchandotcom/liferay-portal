@@ -12,11 +12,13 @@
 import Assignments from './Assignments';
 import EdgeInformation from './EdgeInformation';
 import NodeInformation from './NodeInformation';
+import SelectAssignment from './SelectAssignment';
 
 const sectionComponents = {
 	assignments: Assignments,
 	edgeInformation: EdgeInformation,
 	nodeInformation: NodeInformation,
+	selectAssignment: SelectAssignment,
 };
 
 export default sectionComponents;

@@ -41,7 +41,7 @@ public class PoshiStylingCheck extends BaseFileCheck {
 			"(!(isSet($1)))");
 		content = content.replaceAll(
 			"\\!\\(contains\\(\"\\$\\{(.+?)\\}\", \"\\{\\1\\}\"\\)\\)",
-			"(isSet($1))");
+			"isSet($1)");
 
 		return _formatComments(content);
 	}

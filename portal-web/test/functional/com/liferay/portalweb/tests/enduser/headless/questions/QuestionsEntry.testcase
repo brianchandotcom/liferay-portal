@@ -1034,16 +1034,6 @@ definition {
 
 		var portalURL = PropsUtil.get("portal.url");
 
-		Questions.openToConfigInSystemSettings(portlet = "Questions");
-
-		SystemSettings.editTextAreaSetting(
-			settingName = "Set Base Path for History Router",
-			settingValue = "/questions-page");
-
-		SystemSettings.saveConfiguration();
-
-		Questions.enableAnonymousRead();
-
 		JSONMBMessage.addCategory(
 			categoryDescription = "Description",
 			categoryName = "Category",
@@ -1059,6 +1049,16 @@ definition {
 			layoutName = "questions-page",
 			siteURLKey = "guest",
 			topicName = "category");
+
+		Questions.openToConfigInSystemSettings(portlet = "Questions");
+
+		SystemSettings.editTextAreaSetting(
+			settingName = "Set Base Path for History Router",
+			settingValue = "/questions-page");
+
+		SystemSettings.saveConfiguration();
+
+		Questions.enableAnonymousRead();
 
 		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
 

@@ -1,9 +1,9 @@
 .insurance-faq .content-area {
-	width: 50.5rem;
+	max-width: 860px;
 }
 
 .insurance-faq .custom-icon {
 	cursor: pointer;
-	height: 1.5rem;
-	width: 1.5rem;
+	height: 24px !important;
+	width: 24px !important;
 }

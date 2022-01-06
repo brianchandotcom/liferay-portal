@@ -89,6 +89,19 @@
 					},
 					{
 						"definition": {
+							"fragmentStyle": {
+								"borderWidth": "0",
+								"marginBottom": "6"
+							},
+							"fragmentViewports": [
+								{
+									"fragmentViewportStyle": {
+										"paddingLeft": "5",
+										"paddingRight": "5"
+									},
+									"id": "tablet"
+								}
+							],
 							"layout": {
 								"borderWidth": 0,
 								"marginBottom": 6,

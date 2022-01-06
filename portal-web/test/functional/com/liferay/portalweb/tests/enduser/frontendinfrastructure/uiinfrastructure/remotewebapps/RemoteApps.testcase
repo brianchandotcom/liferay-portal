@@ -286,6 +286,47 @@ definition {
 		}
 	}
 
+	@description = "Verify that remote app of type Custom Element can save multiple URLs"
+	@priority = "4"
+	test CustomElementCanSaveMultipleURLs {
+		property portal.acceptance = "true";
+
+		var customElementName = "Vanilla Counter";
+		var customElementHTMLName = "vanilla-counter";
+		var customElementURL1 = "http://remote-component-test.wincent.com/packages/vanilla-counter/index1.js";
+		var customElementURL2 = "http://remote-component-test.wincent.com/packages/vanilla-counter/index2.js";
+		var customElementCSSURL1 = "http://remote-component-test.wincent.com/index1.css";
+		var customElementCSSURL2 = "http://remote-component-test.wincent.com/index2.css";
+
+		task ("Create Vanilla Counter as a Custom Element") {
+			RemoteApps.goToRemoteAppsPortlet();
+
+			RemoteApps.addCustomElementMultipleURLs(
+				entryCSSURL1 = "${customElementCSSURL1}",
+				entryCSSURL2 = "${customElementCSSURL2}",
+				entryHTMLName = "${customElementHTMLName}",
+				entryName = "${customElementName}",
+				entryURL1 = "${customElementURL1}",
+				entryURL2 = "${customElementURL2}");
+		}
+
+		task ("Edit the entry") {
+			Click(
+				key_tableEntryName = "${customElementName}",
+				locator1 = "RemoteApps#TABLE_ENTRY_NAME_REMOTE_TABLE");
+		}
+
+		task ("Assert multiple URL fields are saved") {
+			RemoteApps.assertCustomElementMultipleURLFields(
+				entryCSSURL1 = "${customElementCSSURL1}",
+				entryCSSURL2 = "${customElementCSSURL2}",
+				entryHTMLName = "${customElementHTMLName}",
+				entryName = "${customElementName}",
+				entryURL1 = "${customElementURL1}",
+				entryURL2 = "${customElementURL2}");
+		}
+	}
+
 	@description = "Verify an iframe remote app can be created"
 	@priority = "5"
 	test IFrameCanBeCreated {

@@ -9,14 +9,26 @@
  * distribution rights of the Software.
  */
 
+import ClayButton from '@clayui/button';
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import SidebarPanel from '../SidebarPanel';
 
-const Assignments = () => (
-	<SidebarPanel
-		panelTitle={Liferay.Language.get('assignments')}
-	></SidebarPanel>
+const Assignments = ({setContentName}) => (
+	<SidebarPanel panelTitle={Liferay.Language.get('assignments')}>
+		<ClayButton
+			className="mr-3"
+			displayType="secondary"
+			onClick={() => setContentName('assignments')}
+		>
+			{Liferay.Language.get('new')}
+		</ClayButton>
+	</SidebarPanel>
 );
+
+Assignments.propTypes = {
+	setContentName: PropTypes.func.isRequired,
+};
 
 export default Assignments;

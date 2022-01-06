@@ -38,6 +38,14 @@ function getModalInfo(itemType) {
 			title: Liferay.Language.get('delete-fork-node'),
 		};
 	}
+	else if (itemType === 'join') {
+		return {
+			message: Liferay.Language.get(
+				'are-you-sure-you-want-to-delete-the-selected-join-node'
+			),
+			title: Liferay.Language.get('delete-join-node'),
+		};
+	}
 	else if (itemType === 'start') {
 		return {
 			message: Liferay.Language.get(

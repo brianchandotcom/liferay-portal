@@ -31,6 +31,10 @@ const contents = {
 		sections: ['nodeInformation'],
 		title: Liferay.Language.get('fork-node'),
 	},
+	join: {
+		sections: ['nodeInformation'],
+		title: Liferay.Language.get('join-node'),
+	},
 	start: {
 		sections: ['nodeInformation'],
 		title: Liferay.Language.get('start'),

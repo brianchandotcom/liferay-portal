@@ -27,6 +27,10 @@ const contents = {
 		component: SelectedNodeInfo,
 		title: Liferay.Language.get('fork-node'),
 	},
+	join: {
+		component: SelectedNodeInfo,
+		title: Liferay.Language.get('join-node'),
+	},
 	start: {
 		component: SelectedNodeInfo,
 		title: Liferay.Language.get('start'),

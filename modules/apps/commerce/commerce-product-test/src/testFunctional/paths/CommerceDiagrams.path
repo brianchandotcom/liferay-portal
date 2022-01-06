@@ -43,6 +43,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DIAGRAM_MAPPED_PRODUCTS</td>
+	<td>//div[contains(@class,'card')][contains(.,'Mapped Products')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DIAGRAM_MAPPED_PRODUCTS_CONTENT</td>
+	<td>//div[contains(@class,'card')][contains(.,'Mapped Products')]//tr[@class]//td[contains(.,'${key_productName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DIAGRAM_PIN</td>
 	<td>//div[contains(@class,'view-wrapper')]//*[contains(@class,'pin') and text()='${key_pinNumber}']</td>
 	<td></td>
@@ -55,11 +65,6 @@
 <tr>
 	<td>DIAGRAM_PIN_TYPE_SELECT</td>
 	<td>//label[contains(.,'Type')]/../select[contains(@id,'typeInput')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DIAGRAM_PRODUCT_IMAGE_PIN</td>
-	<td>//*[contains(@class,'pin-node')]//*[contains(@class,'pin-node-text') and text()='${key_positionNumber}']</td>
 	<td></td>
 </tr>
 <!--DIAGRAM_SETTINGS-->

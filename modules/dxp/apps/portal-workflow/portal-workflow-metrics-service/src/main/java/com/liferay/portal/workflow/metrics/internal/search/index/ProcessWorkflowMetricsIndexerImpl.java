@@ -141,60 +141,6 @@ public class ProcessWorkflowMetricsIndexerImpl
 	}
 
 	@Override
-	public Document addProcess(
-		boolean active, long companyId, Date createDate, String description,
-		Date modifiedDate, String name, long processId, String title,
-		Map<Locale, String> titleMap, String version) {
-
-		return addProcess(
-			active, companyId, createDate, description, modifiedDate, name,
-			processId, title, titleMap, version, new String[] {version});
-	}
-
-	@Override
-	public Document addProcess(
-		boolean active, long companyId, Date createDate, String description,
-		Date modifiedDate, String name, long processId, String title,
-		Map<Locale, String> titleMap, String version, String[] versions) {
-
-		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
-
-		documentBuilder.setValue(
-			"active", active
-		).setLong(
-			"companyId", companyId
-		).setDate(
-			"createDate", getDate(createDate)
-		).setValue(
-			"deleted", false
-		).setString(
-			"description", description
-		).setDate(
-			"modifiedDate", getDate(modifiedDate)
-		).setString(
-			"name", name
-		).setLong(
-			"processId", processId
-		).setString(
-			"title", title
-		).setString(
-			"uid", digest(companyId, processId)
-		).setString(
-			"version", version
-		).setStrings(
-			"versions", versions
-		);
-
-		setLocalizedField(documentBuilder, "title", titleMap);
-
-		Document document = documentBuilder.build();
-
-		workflowMetricsPortalExecutor.execute(() -> addDocument(document));
-
-		return document;
-	}
-
-	@Override
 	public void deleteProcess(long companyId, long processId) {
 		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
 

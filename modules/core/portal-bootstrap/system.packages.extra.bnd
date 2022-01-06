@@ -181,14 +181,6 @@ Export-Package:\
 	org.apache.commons.beanutils.expression;version='1.9.4',\
 	org.apache.commons.beanutils.locale;version='1.9.4',\
 	org.apache.commons.beanutils.locale.converters;version='1.9.4',\
-	org.apache.commons.chain;version='1.2',\
-	org.apache.commons.chain.config;version='1.2',\
-	org.apache.commons.chain.generic;version='1.2',\
-	org.apache.commons.chain.impl;version='1.2',\
-	org.apache.commons.chain.web;version='1.2',\
-	org.apache.commons.chain.web.faces;version='1.2',\
-	org.apache.commons.chain.web.portlet;version='1.2',\
-	org.apache.commons.chain.web.servlet;version='1.2',\
 	org.apache.commons.codec;version='1.9',\
 	org.apache.commons.codec.binary;version='1.9',\
 	org.apache.commons.codec.digest;version='1.9',\
@@ -325,7 +317,6 @@ Provide-Capability:\
 	@../../../lib/portal/asm.jar,\
 	@../../../lib/portal/ccpp.jar,\
 	@../../../lib/portal/commons-beanutils.jar,\
-	@../../../lib/portal/commons-chain.jar,\
 	@../../../lib/portal/commons-codec.jar,\
 	@../../../lib/portal/commons-collections.jar,\
 	@../../../lib/portal/commons-compress.jar,\

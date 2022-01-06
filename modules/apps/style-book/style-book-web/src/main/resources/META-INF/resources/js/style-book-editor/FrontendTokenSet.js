@@ -15,7 +15,6 @@
 import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
-import {config} from '../style-book-editor/config';
 import Collapse from './Collapse';
 import {StyleBookContext} from './StyleBookContext';
 import {FRONTEND_TOKEN_TYPES} from './constants/frontendTokenTypes';
@@ -24,37 +23,10 @@ import ColorFrontendToken from './frontend_tokens/ColorFrontendToken';
 import SelectFrontendToken from './frontend_tokens/SelectFrontendToken';
 import TextFrontendToken from './frontend_tokens/TextFrontendToken';
 
-const getColorFrontendTokens = ({frontendTokenCategories}) => {
-	let tokens = {};
-
-	for (const category of frontendTokenCategories) {
-		for (const tokenSet of category.frontendTokenSets) {
-			for (const token of tokenSet.frontendTokens) {
-				tokens = {
-					...tokens,
-					[token.name]: {
-						editorType: token.editorType,
-						label: token.label,
-						name: token.name,
-						tokenCategoryLabel: category.label,
-						tokenSetLabel: tokenSet.label,
-						value: token.defaultValue,
-						[token.mappings[0].type]: token.mappings[0].value,
-					},
-				};
-			}
-		}
-	}
-
-	return tokens;
-};
-
 export default function FrontendTokenSet({frontendTokens, label}) {
 	const {frontendTokensValues = {}, setFrontendTokensValues} = useContext(
 		StyleBookContext
 	);
-
-	const tokenValues = getColorFrontendTokens(config.frontendTokenDefinition);
 
 	const updateFrontendTokensValues = (frontendToken, value) => {
 		const {mappings = [], name} = frontendToken;
@@ -68,8 +40,7 @@ export default function FrontendTokenSet({frontendTokens, label}) {
 				...frontendTokensValues,
 				[name]: {
 					cssVariableMapping: cssVariableMapping.value,
-					name: tokenValues[value]?.name,
-					value: tokenValues[value]?.value || value,
+					value,
 				},
 			});
 		}
@@ -86,12 +57,10 @@ export default function FrontendTokenSet({frontendTokens, label}) {
 					<FrontendTokenComponent
 						frontendToken={frontendToken}
 						key={frontendToken.name}
-						onValueSelect={(_, value) => {
-							updateFrontendTokensValues(frontendToken, value);
-						}}
-						tokenValues={tokenValues}
+						onValueSelect={(value) =>
+							updateFrontendTokensValues(frontendToken, value)
+						}
 						value={
-							frontendTokensValues[frontendToken.name]?.name ||
 							frontendTokensValues[frontendToken.name]?.value ||
 							frontendToken.defaultValue
 						}

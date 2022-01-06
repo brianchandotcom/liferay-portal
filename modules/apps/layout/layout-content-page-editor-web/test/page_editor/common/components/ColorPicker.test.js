@@ -19,9 +19,15 @@ import React from 'react';
 import {StoreContextProvider} from '../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
 import {ColorPicker} from '../../../../src/main/resources/META-INF/resources/page_editor/common/components/ColorPicker';
 
-const CONFIG = {
-	tokenReuseEnabled: true,
-};
+jest.mock(
+	'../../../../src/main/resources/META-INF/resources/page_editor/app/config/index',
+	() => ({
+		config: {
+			tokenReuseEnabled: true,
+		},
+	})
+);
+
 const COLOR_PICKER_CLASS = '.page-editor__color-picker';
 const INPUT_NAME = 'Color Picker';
 const TOKEN_VALUES = {
@@ -55,7 +61,6 @@ const renderColorPicker = ({onValueSelect = () => {}, value = 'white'}) =>
 	render(
 		<StoreContextProvider initialState={{}} reducer={(state) => state}>
 			<ColorPicker
-				config={CONFIG}
 				field={{label: INPUT_NAME, name: INPUT_NAME}}
 				onValueSelect={onValueSelect}
 				tokenValues={TOKEN_VALUES}

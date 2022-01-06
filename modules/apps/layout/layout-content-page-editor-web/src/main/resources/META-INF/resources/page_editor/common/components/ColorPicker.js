@@ -23,6 +23,7 @@ import {debounce} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useRef, useState} from 'react';
 
+import {config} from '../../app/config/index';
 import {useId} from '../../app/utils/useId';
 import useControlledState from '../../core/hooks/useControlledState';
 import {ConfigurationFieldPropTypes} from '../../prop-types/index';
@@ -35,13 +36,7 @@ const debouncedOnValueSelect = debounce(
 	300
 );
 
-export function ColorPicker({
-	config,
-	field,
-	onValueSelect,
-	tokenValues,
-	value,
-}) {
+export function ColorPicker({field, onValueSelect, tokenValues, value}) {
 	const colors = {};
 	const id = useId();
 
@@ -196,7 +191,6 @@ export function ColorPicker({
 							<DropdownColorPicker
 								active={activeColorPicker}
 								colors={colors}
-								config={config}
 								label={tokenLabel}
 								onSetActive={setActiveColorPicker}
 								onValueChange={({label, name, value}) => {
@@ -324,7 +318,6 @@ export function ColorPicker({
 							<DropdownColorPicker
 								active={activeColorPicker}
 								colors={colors}
-								config={config}
 								onSetActive={setActiveColorPicker}
 								onValueChange={({name, value}) => {
 									setColor(value);
@@ -383,7 +376,6 @@ export function ColorPicker({
 									<DropdownColorPicker
 										active={activeColorPicker}
 										colors={colors}
-										config={config}
 										onSetActive={setActiveColorPicker}
 										onValueChange={({
 											label,

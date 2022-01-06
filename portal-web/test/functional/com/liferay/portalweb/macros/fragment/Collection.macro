@@ -11,7 +11,7 @@ definition {
 	macro editCollection {
 		PortletEntry.inputName(name = "${collectionName}");
 
-		if (!(contains("${collectionDescription}", "{collectionDescription}"))) {
+		if (isSet(collectionDescription)) {
 			PortletEntry.inputDescription(description = "${collectionDescription}");
 		}
 	}

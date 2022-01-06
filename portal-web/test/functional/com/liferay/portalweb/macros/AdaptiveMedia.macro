@@ -138,7 +138,7 @@ definition {
 
 		MenuItem.click(menuItem = "Edit");
 
-		if (!(contains("${imageNameEdit}", "{imageNameEdit}"))) {
+		if (isSet(imageNameEdit)) {
 			PortletEntry.inputName(name = "${imageNameEdit}");
 		}
 
@@ -156,7 +156,7 @@ definition {
 			AssertElementPresent(locator1 = "Radio#CUSTOM_URL_DISABLED");
 		}
 		else {
-			if (!(contains("${maxHeightEdit}", "{maxHeightEdit}"))) {
+			if (isSet(maxHeightEdit)) {
 				TripleClick(locator1 = "TextInput#MAX_HEIGHT");
 
 				Type.sendKeys(
@@ -164,7 +164,7 @@ definition {
 					value1 = "${maxHeightEdit}");
 			}
 
-			if (!(contains("${maxWidthEdit}", "{maxWidthEdit}"))) {
+			if (isSet(maxWidthEdit)) {
 				TripleClick(locator1 = "TextInput#MAX_WIDTH");
 
 				Type.sendKeys(
@@ -172,7 +172,7 @@ definition {
 					value1 = "${maxWidthEdit}");
 			}
 
-			if (!(contains("${imageIDEdit}", "{imageIDEdit}"))) {
+			if (isSet(imageIDEdit)) {
 				Click.clickAtNotVisible(locator1 = "Radio#CUSTOM_URL");
 
 				Type(
@@ -231,7 +231,7 @@ definition {
 	macro openToAddImageResolution {
 		var baseURL = "${baseURL}";
 
-		if (contains("${baseURL}", "{baseURL}")) {
+		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 

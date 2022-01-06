@@ -843,7 +843,7 @@ definition {
 	macro openToAddThread {
 		var baseURL = "${baseURL}";
 
-		if (contains("${baseURL}", "{baseURL}")) {
+		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 
@@ -875,7 +875,7 @@ definition {
 		if (isSet(layoutName)) {
 			var baseURL = "${baseURL}";
 
-			if (contains("${baseURL}", "{baseURL}")) {
+			if (!(isSet(baseURL))) {
 				var baseURL = PropsUtil.get("portal.url");
 			}
 

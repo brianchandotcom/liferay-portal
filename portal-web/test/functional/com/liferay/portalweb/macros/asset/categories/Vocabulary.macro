@@ -3,7 +3,7 @@ definition {
 	macro addAssociatedAssetType {
 		Panel.expandPanel(panel = "Associated Asset Types");
 
-		if (contains("${rowNumber}", "{rowNumber}")) {
+		if (!(isSet(rowNumber))) {
 			var rowNumber = "1";
 		}
 

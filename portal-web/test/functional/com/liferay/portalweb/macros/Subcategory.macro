@@ -14,7 +14,7 @@ definition {
 
 			PortletEntry.inputTitle(title = "${grandSubcategoryName}");
 
-			if (!(contains("${grandSubcategoryDescription}", "{grandSubcategoryDescription}"))) {
+			if (isSet(grandSubcategoryDescription)) {
 				PortletEntry.inputDescription(description = "${grandSubcategoryDescription}");
 			}
 		}
@@ -25,7 +25,7 @@ definition {
 
 			PortletEntry.inputTitle(title = "${subcategoryName}");
 
-			if (!(contains("${subcategoryDescription}", "{subcategoryDescription}"))) {
+			if (isSet(subcategoryDescription)) {
 				PortletEntry.inputDescription(description = "${subcategoryDescription}");
 			}
 		}

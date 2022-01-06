@@ -30,10 +30,6 @@ import com.liferay.portal.workflow.metrics.model.DeleteProcessRequest;
 import com.liferay.portal.workflow.metrics.model.UpdateProcessRequest;
 import com.liferay.portal.workflow.metrics.search.index.ProcessWorkflowMetricsIndexer;
 
-import java.util.Date;
-import java.util.Locale;
-import java.util.Map;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -169,81 +165,6 @@ public class ProcessWorkflowMetricsIndexerImpl
 	@Override
 	public String getIndexType() {
 		return _processWorkflowMetricsIndex.getIndexType();
-	}
-
-	@Override
-	public Document updateProcess(
-		Boolean active, long companyId, String description, Date modifiedDate,
-		long processId, String title, Map<Locale, String> titleMap,
-		String version) {
-
-		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
-
-		if (active != null) {
-			documentBuilder.setValue("active", active);
-		}
-
-		documentBuilder.setLong("companyId", companyId);
-
-		if (description != null) {
-			documentBuilder.setValue("description", description);
-		}
-
-		documentBuilder.setDate(
-			"modifiedDate", getDate(modifiedDate)
-		).setLong(
-			"processId", processId
-		);
-
-		if (title != null) {
-			documentBuilder.setValue("title", title);
-		}
-
-		documentBuilder.setString(
-			"uid", digest(companyId, processId)
-		).setValue(
-			"version", version
-		);
-
-		if (MapUtil.isNotEmpty(titleMap)) {
-			setLocalizedField(documentBuilder, "title", titleMap);
-		}
-
-		Document document = documentBuilder.build();
-
-		workflowMetricsPortalExecutor.execute(
-			() -> {
-				updateDocument(document);
-
-				ScriptBuilder scriptBuilder = scripts.builder();
-
-				UpdateDocumentRequest updateDocumentRequest =
-					new UpdateDocumentRequest(
-						getIndexName(companyId),
-						WorkflowMetricsIndexerUtil.digest(
-							_processWorkflowMetricsIndex.getIndexType(),
-							companyId, processId),
-						scriptBuilder.idOrCode(
-							StringUtil.read(
-								getClass(),
-								"dependencies/workflow-metrics-update-" +
-									"process-versions-script.painless")
-						).language(
-							"painless"
-						).putParameter(
-							"version", version
-						).scriptType(
-							ScriptType.INLINE
-						).build());
-
-				if (PortalRunMode.isTestMode()) {
-					updateDocumentRequest.setRefresh(true);
-				}
-
-				searchEngineAdapter.execute(updateDocumentRequest);
-			});
-
-		return document;
 	}
 
 	@Override

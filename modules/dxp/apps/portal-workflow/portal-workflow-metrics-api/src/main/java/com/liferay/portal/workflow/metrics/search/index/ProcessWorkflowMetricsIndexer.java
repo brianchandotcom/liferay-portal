@@ -19,10 +19,6 @@ import com.liferay.portal.workflow.metrics.model.AddProcessRequest;
 import com.liferay.portal.workflow.metrics.model.DeleteProcessRequest;
 import com.liferay.portal.workflow.metrics.model.UpdateProcessRequest;
 
-import java.util.Date;
-import java.util.Locale;
-import java.util.Map;
-
 /**
  * @author Rafael Praxedes
  */
@@ -31,11 +27,6 @@ public interface ProcessWorkflowMetricsIndexer {
 	public Document addProcess(AddProcessRequest addProcessRequest);
 
 	public void deleteProcess(DeleteProcessRequest deleteProcessRequest);
-
-	public Document updateProcess(
-		Boolean active, long companyId, String description, Date modifiedDate,
-		long processId, String title, Map<Locale, String> titleMap,
-		String version);
 
 	public Document updateProcess(UpdateProcessRequest updateProcessRequest);
 

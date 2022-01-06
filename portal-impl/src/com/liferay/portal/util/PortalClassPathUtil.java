@@ -109,21 +109,29 @@ public class PortalClassPathUtil {
 
 		StringBundler sb = new StringBundler(8);
 
-		sb.append(
-			_buildClassPath(classLoader, ServletException.class.getName()));
+		sb.append(_buildClassPath(ServletException.class));
 
 		sb.append(File.pathSeparator);
-		sb.append(
-			_buildClassPath(
-				classLoader, CentralizedThreadLocal.class.getName()));
+		sb.append(_buildClassPath(CentralizedThreadLocal.class));
 
 		String bootstrapClassPath = sb.toString();
 
-		sb.append(File.pathSeparator);
-		sb.append(
-			_buildClassPath(
-				classLoader,
-				"com.liferay.shielded.container.ShieldedContainerInitializer"));
+		Class<?> shieldedContainerInitializerClass = null;
+
+		try {
+			shieldedContainerInitializerClass = classLoader.loadClass(
+				"com.liferay.shielded.container.ShieldedContainerInitializer");
+		}
+		catch (ClassNotFoundException classNotFoundException) {
+			_log.error(
+				"Unable to load ShieldedContainerInitializer class",
+				classNotFoundException);
+		}
+
+		if (shieldedContainerInitializerClass != null) {
+			sb.append(File.pathSeparator);
+			sb.append(_buildClassPath(shieldedContainerInitializerClass));
+		}
 
 		if (servletContext != null) {
 			sb.append(File.pathSeparator);
@@ -148,25 +156,10 @@ public class PortalClassPathUtil {
 			return StringPool.BLANK;
 		}
 
-		StringBundler sb = new StringBundler(classes.length * 2);
-
-		for (Class<?> clazz : classes) {
-			sb.append(_buildClassPath(clazz.getClassLoader(), clazz.getName()));
-			sb.append(File.pathSeparator);
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		return sb.toString();
-	}
-
-	private static String _buildClassPath(
-		ClassLoader classLoader, String... classNames) {
-
 		Set<File> fileSet = new HashSet<>();
 
-		for (String className : classNames) {
-			File[] files = _listClassPathFiles(classLoader, className);
+		for (Class<?> clazz : classes) {
+			File[] files = _listClassPathFiles(clazz);
 
 			if (files != null) {
 				Collections.addAll(fileSet, files);
@@ -189,8 +182,9 @@ public class PortalClassPathUtil {
 		return sb.toString();
 	}
 
-	private static File[] _listClassPathFiles(
-		ClassLoader classLoader, String className) {
+	private static File[] _listClassPathFiles(Class<?> clazz) {
+		String className = clazz.getName();
+		ClassLoader classLoader = clazz.getClassLoader();
 
 		String pathOfClass = StringUtil.replace(
 			className, CharPool.PERIOD, CharPool.SLASH);
@@ -209,9 +203,9 @@ public class PortalClassPathUtil {
 			try {
 				URLConnection urlConnection = url.openConnection();
 
-				Class<?> clazz = urlConnection.getClass();
+				Class<?> urlConnectionClass = urlConnection.getClass();
 
-				Method getLocalURLMethod = clazz.getDeclaredMethod(
+				Method getLocalURLMethod = urlConnectionClass.getDeclaredMethod(
 					"getLocalURL");
 
 				getLocalURLMethod.setAccessible(true);

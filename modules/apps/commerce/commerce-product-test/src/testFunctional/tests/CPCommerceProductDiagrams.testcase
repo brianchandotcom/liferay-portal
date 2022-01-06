@@ -267,6 +267,8 @@ definition {
 	@description = "This test asserts that a pin can be removed from a diagram product image"
 	@priority = "3"
 	test RemovePin {
+		property test.name.skip.portal.instance = "CPCommerceProductDiagrams#RemovePin";
+
 		task ("Given a diagram product with an image") {
 			CommerceNavigator.gotoPortlet(
 				category = "Product Management",

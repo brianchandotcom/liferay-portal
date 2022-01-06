@@ -400,30 +400,177 @@ definition {
 	}
 
 	@description = "LPS-113910: When the user selects the info option while the Content performance panel is open, the side panel shows the Info panel"
-	@ignore = "true"
 	@priority = "3"
 	test MetricsToInfoPanel {
+		task ("Create a Web Content via JSONWS") {
+			JSONWebcontent.addWebContent(
+				content = "WC Content",
+				groupName = "Test Site Name",
+				title = "WC Title");
+		}
 
-		// TODO LPS-139253 MetricsToInfoPanel pending implementation
+		task ("Create a default Display Page Template") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name",
+				subType = "Basic Web Content");
 
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			Button.clickPublish();
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+		}
+
+		task ("Navigate to Content Dashboard") {
+			ContentDashboard.goToContentDashboard();
+		}
+
+		task ("Open Metrics panel") {
+			LexiconTable.clickEllipsisItem(
+				item = "View Metrics",
+				tableEntry = "WC Title");
+		}
+
+		task ("Open Info panel") {
+			LexiconTable.clickEllipsisItem(
+				item = "Info",
+				tableEntry = "WC Title");
+		}
+
+		task ("Check if Metric panel is closed and Info panel is openned") {
+			AssertTextNotPresent(
+				locator1 = "ContentDashboard#INFO_PANEL_TITLE",
+				value1 = "Content Performance");
+
+			AssertTextPresent(
+				locator1 = "ContentDashboard#INFO_PANEL_TITLE",
+				value1 = "WC Title");
+		}
 	}
 
 	@description = "LPS-113910: When the user has NOT permissions for editing and viewing the web content and the web content has a display page template associated, the View metrics option is not displayed"
-	@ignore = "true"
 	@priority = "4"
 	test MetricsUserWithoutPermissionsDPT {
+		task ("Create a Role with permissios to access Content Dashboard") {
+			JSONRole.addRegularRole(
+				roleKey = "Content Dashboard Viewer",
+				roleTitle = "Content Dashboard Viewer");
 
-		// TODO LPS-139253 MetricsUserWithoutPermissionsDPT pending implementation
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW_SITE_ADMINISTRATION",
+				resourceName = "com.liferay.portal.kernel.model.Group",
+				roleTitle = "Content Dashboard Viewer");
 
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "ACCESS_IN_CONTROL_PANEL",
+				resourceName = "com_liferay_content_dashboard_web_portlet_ContentDashboardAdminPortlet",
+				roleTitle = "Content Dashboard Viewer");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW_CONTROL_PANEL",
+				resourceName = "90",
+				roleTitle = "Content Dashboard Viewer");
+		}
+
+		task ("Create an User and assign to the role created") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				newPassword = "test",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+
+			JSONRole.assignRoleToUser(
+				roleTitle = "Content Dashboard Viewer",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Create a Web Content via JSONWS") {
+			JSONWebcontent.addWebContent(
+				content = "WC Content",
+				groupName = "Test Site Name",
+				title = "WC Title");
+		}
+
+		task ("Create a default Display Page Template") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name",
+				subType = "Basic Web Content");
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			Button.clickPublish();
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+		}
+
+		task ("Login with user created") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
+
+		task ("Navigate to Content Dashboard") {
+			ContentDashboard.goToContentDashboard();
+		}
+
+		task ("Assert that 'View metrics' option is not displayed") {
+			Click.clickNoMouseOver(locator1 = "ContentDashboard#ROW_PANEL_WC");
+
+			AssertNotVisible(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_BUTTON");
+		}
+
+		task ("Longin with Test Tes user to allow teardown") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+		}
+
+		task ("Delete role crated via JSONWS") {
+			JSONRole.deleteRole(roleTitle = "Content Dashboard Viewer");
+		}
+
+		task ("Delete user created") {
+			JSONUser.tearDownNonAdminUsers();
+		}
 	}
 
 	@description = "LPS-113910: When the user has permissions for editing and viewing the web content and the web content has NOT a display page template associated, the View metrics option is not displayed"
-	@ignore = "true"
 	@priority = "4"
 	test MetricsUserWithPermissionsNoDPT {
+		task ("Create a Web Content via JSONWS not associated with any Display Page Template") {
+			JSONWebcontent.addWebContent(
+				content = "WC Content",
+				groupName = "Test Site Name",
+				title = "WC Title");
+		}
 
-		// TODO LPS-139253 MetricsUserWithPermissionsNoDPT pending implementation
+		task ("Navigate to Content Dashboard") {
+			ContentDashboard.goToContentDashboard();
+		}
 
+		task ("Assert that 'View metrics' option is not displayed") {
+			Click.clickNoMouseOver(locator1 = "ContentDashboard#ROW_PANEL_WC");
+
+			AssertNotVisible(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_BUTTON");
+		}
 	}
 
 	@description = "LPS-113835: When the user with edit permissions edits the content of the display page, the Metrics button is shown"

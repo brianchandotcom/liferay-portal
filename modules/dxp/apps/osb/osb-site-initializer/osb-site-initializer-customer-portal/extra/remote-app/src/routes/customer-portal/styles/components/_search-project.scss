@@ -12,6 +12,10 @@
 		font-weight: var(--font-weight-semi-bold);
 	}
 
+	&:hover {
+		border-color: var(--color-action-primary-hover);
+	}
+
 	& + .lexicon-icon {
 		bottom: 25.63px;
 		font-size: 1.421rem;

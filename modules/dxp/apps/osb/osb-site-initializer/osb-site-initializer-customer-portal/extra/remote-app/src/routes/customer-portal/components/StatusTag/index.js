@@ -21,7 +21,9 @@ const StatusTag = ({currentStatus}) => {
 		const labelProp = labelProps[currentStatus];
 
 		return (
-			<ClayLabel className={`label-inverse-${labelProp.displayType}`}>
+			<ClayLabel
+				className={`font-weight-normal label-tonal-${labelProp.displayType} text-paragraph-sm`}
+			>
 				{labelProp.label}
 			</ClayLabel>
 		);

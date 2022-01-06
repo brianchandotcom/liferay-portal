@@ -1,5 +1,5 @@
 {
-	"general": {
+	"generalConfiguration": {
 		"searchableAssetTypes": [
 			"com.liferay.wiki.model.WikiPage",
 			"com.liferay.journal.model.JournalArticle"

@@ -3946,6 +3946,39 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/UserGroup"
             tags: ["UserGroup"]
+    "/user-groups/{userGroupId}/user-group-users":
+        post:
+            operationId: postUserGroupUsers
+            parameters:
+                - in: path
+                  name: userGroupId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            items:
+                                format: int64
+                                type: integer
+                            type: array
+                    application/xml:
+                        schema:
+                            items:
+                                format: int64
+                                type: integer
+                            type: array
+                # @review
+                description:
+                    An array of userIds to add to the user group
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["UserGroup"]
     "/web-urls/{webUrlId}":
         get:
             description:

@@ -20,12 +20,14 @@ import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.util.DateFormatFactoryImpl;
 import com.liferay.portal.util.FastDateFormatFactoryImpl;
 
 import java.util.Locale;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -51,132 +53,105 @@ public class DateDDMFormFieldValueRendererTest extends PowerMockito {
 
 	@Test
 	public void testRenderDisplayLocaleBrazil() {
-		mockStatic(LocaleThreadLocal.class);
+		_mockThemeDisplayLocale(LocaleUtil.BRAZIL);
 
-		when(
-			LocaleThreadLocal.getThemeDisplayLocale()
-		).thenReturn(
-			LocaleUtil.BRAZIL
-		);
-
-		DDMFormFieldValue ddmFormFieldValue =
-			DDMFormValuesTestUtil.createDDMFormFieldValue(
-				"birthday", new UnlocalizedValue("2015-01-25"));
-
-		Assert.assertEquals(
-			"25/01/2015",
-			_dateDDMFormFieldValueRenderer.render(
-				ddmFormFieldValue, LocaleUtil.BRAZIL));
-		Assert.assertEquals(
-			"25/01/2015",
-			_dateDDMFormFieldValueRenderer.render(
-				ddmFormFieldValue, LocaleUtil.HUNGARY));
-		Assert.assertEquals(
-			"25/01/2015",
-			_dateDDMFormFieldValueRenderer.render(
-				ddmFormFieldValue, LocaleUtil.US));
+		_assertRenderValues(
+			_getSingleValueExpectedValuesMap("25/01/2015"), "2015-01-25");
+		_assertRenderValues(
+			_getSingleValueExpectedValuesMap("25/01/2015 01:00"),
+			"2015-01-25 1:00");
 	}
 
 	@Test
 	public void testRenderDisplayLocaleNull() {
-		DDMFormFieldValue ddmFormFieldValue =
-			DDMFormValuesTestUtil.createDDMFormFieldValue(
-				"birthday", new UnlocalizedValue("2015-01-25"));
-
-		Assert.assertEquals(
-			"٢٥/٠١/٢٠١٥",
-			_dateDDMFormFieldValueRenderer.render(
-				ddmFormFieldValue,
+		_assertRenderValues(
+			HashMapBuilder.put(
 				new Locale.Builder().setLanguage(
 					"ar"
 				).setRegion(
 					"SA"
 				).setExtension(
 					Locale.UNICODE_LOCALE_EXTENSION, "nu-arab"
-				).build()));
-		Assert.assertEquals(
-			"25/01/2015",
-			_dateDDMFormFieldValueRenderer.render(
-				ddmFormFieldValue, LocaleUtil.BRAZIL));
-		Assert.assertEquals(
-			"25/01/2015",
-			_dateDDMFormFieldValueRenderer.render(
-				ddmFormFieldValue, new Locale("ca", "ES")));
-		Assert.assertEquals(
-			"25.01.2015",
-			_dateDDMFormFieldValueRenderer.render(
-				ddmFormFieldValue, new Locale("fi", "FI")));
-		Assert.assertEquals(
-			"25/01/2015",
-			_dateDDMFormFieldValueRenderer.render(
-				ddmFormFieldValue, LocaleUtil.FRANCE));
-		Assert.assertEquals(
-			"25.01.2015",
-			_dateDDMFormFieldValueRenderer.render(
-				ddmFormFieldValue, LocaleUtil.GERMANY));
-		Assert.assertEquals(
-			"2015.01.25.",
-			_dateDDMFormFieldValueRenderer.render(
-				ddmFormFieldValue, LocaleUtil.HUNGARY));
-		Assert.assertEquals(
-			"2015/01/25",
-			_dateDDMFormFieldValueRenderer.render(
-				ddmFormFieldValue, LocaleUtil.JAPAN));
-		Assert.assertEquals(
-			"25-01-2015",
-			_dateDDMFormFieldValueRenderer.render(
-				ddmFormFieldValue, LocaleUtil.NETHERLANDS));
-		Assert.assertEquals(
-			"2015-01-25",
-			_dateDDMFormFieldValueRenderer.render(
-				ddmFormFieldValue, LocaleUtil.SIMPLIFIED_CHINESE));
-		Assert.assertEquals(
-			"25/01/2015",
-			_dateDDMFormFieldValueRenderer.render(
-				ddmFormFieldValue, LocaleUtil.SPAIN));
-		Assert.assertEquals(
-			"2015-01-25",
-			_dateDDMFormFieldValueRenderer.render(
-				ddmFormFieldValue, new Locale("sv", "SE")));
-		Assert.assertEquals(
-			"01/25/2015",
-			_dateDDMFormFieldValueRenderer.render(
-				ddmFormFieldValue, LocaleUtil.US));
-
-		ddmFormFieldValue.setValue(new UnlocalizedValue(""));
-
-		Assert.assertEquals(
-			StringPool.BLANK,
-			_dateDDMFormFieldValueRenderer.render(
-				ddmFormFieldValue, LocaleUtil.US));
+				).build(),
+				"٢٥/٠١/٢٠١٥"
+			).put(
+				LocaleUtil.BRAZIL, "25/01/2015"
+			).put(
+				new Locale("ca", "ES"), "25/01/2015"
+			).put(
+				new Locale("fi", "FI"), "25.01.2015"
+			).put(
+				LocaleUtil.FRANCE, "25/01/2015"
+			).put(
+				LocaleUtil.GERMANY, "25.01.2015"
+			).put(
+				LocaleUtil.HUNGARY, "2015.01.25."
+			).put(
+				LocaleUtil.JAPAN, "2015/01/25"
+			).put(
+				LocaleUtil.NETHERLANDS, "25-01-2015"
+			).put(
+				LocaleUtil.SIMPLIFIED_CHINESE, "2015-01-25"
+			).put(
+				LocaleUtil.SPAIN, "25/01/2015"
+			).put(
+				new Locale("sv", "SE"), "2015-01-25"
+			).put(
+				LocaleUtil.US, "01/25/2015"
+			).build(),
+			"2015-01-25");
+		_assertRenderValues(
+			HashMapBuilder.put(
+				new Locale.Builder().setLanguage(
+					"ar"
+				).setRegion(
+					"SA"
+				).setExtension(
+					Locale.UNICODE_LOCALE_EXTENSION, "nu-arab"
+				).build(),
+				"٢٥/٠١/٢٠١٥ ٠١:٠٠ ص"
+			).put(
+				LocaleUtil.BRAZIL, "25/01/2015 01:00"
+			).put(
+				new Locale("ca", "ES"), "25/01/2015 01:00"
+			).put(
+				new Locale("fi", "FI"), "25.01.2015 01:00"
+			).put(
+				LocaleUtil.FRANCE, "25/01/2015 01:00"
+			).put(
+				LocaleUtil.GERMANY, "25.01.2015 01:00"
+			).put(
+				LocaleUtil.HUNGARY, "2015.01.25. 01:00"
+			).put(
+				LocaleUtil.JAPAN, "2015/01/25 01:00"
+			).put(
+				LocaleUtil.NETHERLANDS, "25-01-2015 01:00"
+			).put(
+				LocaleUtil.SIMPLIFIED_CHINESE, "2015-01-25 上午01:00"
+			).put(
+				LocaleUtil.SPAIN, "25/01/2015 01:00"
+			).put(
+				new Locale("sv", "SE"), "2015-01-25 01:00"
+			).put(
+				LocaleUtil.US, "01/25/2015 01:00 AM"
+			).build(),
+			"2015-01-25 1:00");
+		_assertRenderValues(
+			HashMapBuilder.put(
+				LocaleUtil.US, StringPool.BLANK
+			).build(),
+			"");
 	}
 
 	@Test
 	public void testRenderDisplayLocaleUS() {
-		mockStatic(LocaleThreadLocal.class);
+		_mockThemeDisplayLocale(LocaleUtil.US);
 
-		when(
-			LocaleThreadLocal.getThemeDisplayLocale()
-		).thenReturn(
-			LocaleUtil.US
-		);
-
-		DDMFormFieldValue ddmFormFieldValue =
-			DDMFormValuesTestUtil.createDDMFormFieldValue(
-				"birthday", new UnlocalizedValue("2015-01-25"));
-
-		Assert.assertEquals(
-			"01/25/2015",
-			_dateDDMFormFieldValueRenderer.render(
-				ddmFormFieldValue, LocaleUtil.BRAZIL));
-		Assert.assertEquals(
-			"01/25/2015",
-			_dateDDMFormFieldValueRenderer.render(
-				ddmFormFieldValue, LocaleUtil.HUNGARY));
-		Assert.assertEquals(
-			"01/25/2015",
-			_dateDDMFormFieldValueRenderer.render(
-				ddmFormFieldValue, LocaleUtil.US));
+		_assertRenderValues(
+			_getSingleValueExpectedValuesMap("01/25/2015"), "2015-01-25");
+		_assertRenderValues(
+			_getSingleValueExpectedValuesMap("01/25/2015 01:00 AM"),
+			"2015-01-25 1:00");
 	}
 
 	protected void setUpDateFormatFactoryUtil() {
@@ -192,6 +167,70 @@ public class DateDDMFormFieldValueRendererTest extends PowerMockito {
 
 		fastDateFormatFactoryUtil.setFastDateFormatFactory(
 			new FastDateFormatFactoryImpl());
+	}
+
+	private void _assertRenderValues(
+		Map<Locale, String> expectedValuesMap, String inputValue) {
+
+		DDMFormFieldValue ddmFormFieldValue =
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"birthday", new UnlocalizedValue(inputValue));
+
+		for (Map.Entry<Locale, String> entry : expectedValuesMap.entrySet()) {
+			Assert.assertEquals(
+				"locale " + entry.getKey(), entry.getValue(),
+				_dateDDMFormFieldValueRenderer.render(
+					ddmFormFieldValue, entry.getKey()));
+		}
+	}
+
+	private Map<Locale, String> _getSingleValueExpectedValuesMap(
+		String expectedValue) {
+
+		return HashMapBuilder.put(
+			new Locale.Builder().setLanguage(
+				"ar"
+			).setRegion(
+				"SA"
+			).setExtension(
+				Locale.UNICODE_LOCALE_EXTENSION, "nu-arab"
+			).build(),
+			expectedValue
+		).put(
+			LocaleUtil.BRAZIL, expectedValue
+		).put(
+			new Locale("ca", "ES"), expectedValue
+		).put(
+			new Locale("fi", "FI"), expectedValue
+		).put(
+			LocaleUtil.FRANCE, expectedValue
+		).put(
+			LocaleUtil.GERMANY, expectedValue
+		).put(
+			LocaleUtil.HUNGARY, expectedValue
+		).put(
+			LocaleUtil.JAPAN, expectedValue
+		).put(
+			LocaleUtil.NETHERLANDS, expectedValue
+		).put(
+			LocaleUtil.SIMPLIFIED_CHINESE, expectedValue
+		).put(
+			LocaleUtil.SPAIN, expectedValue
+		).put(
+			new Locale("sv", "SE"), expectedValue
+		).put(
+			LocaleUtil.US, expectedValue
+		).build();
+	}
+
+	private void _mockThemeDisplayLocale(Locale locale) {
+		mockStatic(LocaleThreadLocal.class);
+
+		when(
+			LocaleThreadLocal.getThemeDisplayLocale()
+		).thenReturn(
+			locale
+		);
 	}
 
 	private final DateDDMFormFieldValueRenderer _dateDDMFormFieldValueRenderer =

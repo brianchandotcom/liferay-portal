@@ -112,7 +112,7 @@ public class ObjectFieldResourceImpl
 		return _toObjectField(
 			_objectFieldService.addCustomObjectField(
 				objectField.getListTypeDefinitionId(), objectDefinitionId,
-				objectField.getBusinessType(), objectField.getIndexed(),
+				objectField.getBusinessTypeAsString(), objectField.getIndexed(),
 				objectField.getIndexedAsKeyword(),
 				objectField.getIndexedLanguageId(),
 				LocalizedMapUtil.getLocalizedMap(objectField.getLabel()),
@@ -128,7 +128,7 @@ public class ObjectFieldResourceImpl
 		return _toObjectField(
 			_objectFieldService.updateCustomObjectField(
 				objectFieldId, objectField.getListTypeDefinitionId(),
-				objectField.getBusinessType(), objectField.getIndexed(),
+				objectField.getBusinessTypeAsString(), objectField.getIndexed(),
 				objectField.getIndexedAsKeyword(),
 				objectField.getIndexedLanguageId(),
 				LocalizedMapUtil.getLocalizedMap(objectField.getLabel()),

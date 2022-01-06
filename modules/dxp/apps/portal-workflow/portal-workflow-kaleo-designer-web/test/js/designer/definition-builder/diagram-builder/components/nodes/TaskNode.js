@@ -13,9 +13,9 @@ import '@testing-library/jest-dom/extend-expect';
 import {render} from '@testing-library/react';
 import React from 'react';
 
-import TaskNode from '../../../../../../../../src/main/resources/META-INF/resources/designer/js/definition-builder/diagram-builder/components/nodes/state/TaskNode';
-import MockDefinitionBuilderContext from '../../../../../../../mock/MockDefinitionBuilderContext';
-import MockDiagramBuilderContext from '../../../../../../../mock/MockDiagramBuilderContext';
+import TaskNode from '../../../../../../../src/main/resources/META-INF/resources/designer/js/definition-builder/diagram-builder/components/nodes/TaskNode';
+import MockDefinitionBuilderContext from '../../../../../../mock/MockDefinitionBuilderContext';
+import MockDiagramBuilderContext from '../../../../../../mock/MockDiagramBuilderContext';
 
 describe('The StateNode component should', () => {
 	let container;

@@ -37,10 +37,12 @@ describe('The Sidebar component should', () => {
 
 		const nodes = container.querySelectorAll('div.node');
 
-		expect(nodes.length).toBe(4);
+		expect(nodes.length).toBe(5);
 		expect(nodes[0].classList).toContain('end-node');
-		expect(nodes[1].classList).toContain('start-node');
-		expect(nodes[2].classList).toContain('state-node');
+		expect(nodes[1].classList).toContain('fork-node');
+		expect(nodes[2].classList).toContain('start-node');
+		expect(nodes[3].classList).toContain('state-node');
+		expect(nodes[4].classList).toContain('task-node');
 	});
 
 	it('Be rendered with selected node info when a node is selected', () => {

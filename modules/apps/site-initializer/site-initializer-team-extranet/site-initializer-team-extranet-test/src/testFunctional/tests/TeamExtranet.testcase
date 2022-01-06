@@ -50,7 +50,7 @@ definition {
 		task ("Go to Team Extranet Site") {
 			ApplicationsMenu.gotoSite(site = "Test Site Team Extranet");
 		}
-		
+
 		task ("Go to Style Books and Assert the Stylebook One Card") {
 			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-site-team-extranet");
 
@@ -110,7 +110,6 @@ definition {
 					locator1 = "ItemSelector#LOCATION_INFO_LIST_GENERIC");
 			}
 		}
-
 	}
 
 	@description = "This is a test for LPS-142641. View the Team Extranet Documents and Media"
@@ -129,7 +128,6 @@ definition {
 					locator1 = "Card#CARD_TITLE");
 			}
 		}
-
 	}
 
 	@description = "This is a test for LPS-142641. View the Team Extranet Fragments"
@@ -146,7 +144,6 @@ definition {
 					locator1 = "Card#CARD_TITLE");
 			}
 		}
-
 	}
 
 	@description = "This is a test for LPS-142641. View the Team Extranet Pages"
@@ -163,7 +160,6 @@ definition {
 					locator1 = "PagesAdmin#LIST_GROUP_ITEM");
 			}
 		}
-
 	}
 
 	@description = "This is a test for LPS-142641. View the Team Extranet Page Templates"
@@ -188,7 +184,6 @@ definition {
 				DisplayPageTemplatesAdmin.viewDisplayPagePresent(displayPageName = "${displayPageName}");
 			}
 		}
-
 	}
 
 	@description = "This is a test for LPS-142641. View the Team Extranet Web Content"
@@ -255,7 +250,6 @@ definition {
 				WebContentTemplates.viewCardsEntryCP(templateName = "${templateName}");
 			}
 		}
-
 	}
 
 }

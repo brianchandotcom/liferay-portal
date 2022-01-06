@@ -58,7 +58,7 @@ export default function () {
 		});
 	}
 
-	const firstItems = items.filter((_, index) => index <= 19);
+	const firstPageItems = items.filter((_, index) => index <= 19);
 
 	const itemName =
 		items.find((item) => item.name === selectedExternalReferenceCode)
@@ -117,7 +117,7 @@ export default function () {
 					</a>
 				</div>
 			}
-			items={value ? filteredItems : firstItems}
+			items={value ? filteredItems : firstPageItems}
 			menuElementAttrs={{
 				className: `custom-projects-dropdown ${
 					filteredItems.length > MAX_ITEM

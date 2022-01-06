@@ -57,23 +57,11 @@ export function Report() {
 				className="lfr-ddm__form-report__tabs"
 				triggerLabel={Liferay.Language.get('summary')}
 			>
-				{
-
-					// TODO: remove this workaround when the following issue is fixed
-					// ClayNavigationBar throws an exception if only a single item
-					// is provided: https://github.com/liferay/clay/issues/4517
-
-					[1].map((key) => (
-						<ClayNavigationBar.Item active key={key}>
-							<ClayLink
-								className="nav-link"
-								displayType="unstyled"
-							>
-								{Liferay.Language.get('summary')}
-							</ClayLink>
-						</ClayNavigationBar.Item>
-					))
-				}
+				<ClayNavigationBar.Item active>
+					<ClayLink className="nav-link" displayType="unstyled">
+						{Liferay.Language.get('summary')}
+					</ClayLink>
+				</ClayNavigationBar.Item>
 			</ClayNavigationBar>
 
 			<hr className="m-0" />

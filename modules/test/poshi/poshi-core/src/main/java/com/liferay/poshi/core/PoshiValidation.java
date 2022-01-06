@@ -417,14 +417,13 @@ public class PoshiValidation {
 		}
 		else if (classType.equals("testcase")) {
 			List<String> possibleAttributeNames = Arrays.asList(
-				"component-name", "extends", "ignore", "ignore-command-names",
-				"line-number");
+				"extends", "ignore", "ignore-command-names", "line-number");
 
 			validatePossibleAttributeNames(
 				element, possibleAttributeNames, filePath);
 
 			validateRequiredAttributeNames(
-				element, Arrays.asList("component-name"), filePath);
+				element, possibleAttributeNames, filePath);
 		}
 	}
 

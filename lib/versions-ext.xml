@@ -1198,18 +1198,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/portal/commons-chain.jar</file-name>
-				<version>1.2</version>
-				<project-name>Commons Chain</project-name>
-				<project-url>http://commons.apache.org/chain</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/portal/commons-codec.jar</file-name>
 				<version>1.13</version>
 				<project-name>Commons Codec</project-name>

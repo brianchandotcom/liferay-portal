@@ -22,7 +22,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -146,23 +145,11 @@ public class PortalClassPathUtil {
 	}
 
 	private static String _buildClassPath(Class<?>... classes) {
-		if (ArrayUtil.isEmpty(classes)) {
+		File[] files = _listClassPathFiles(classes);
+
+		if (files.length == 0) {
 			return StringPool.BLANK;
 		}
-
-		Set<File> fileSet = new HashSet<>();
-
-		for (Class<?> clazz : classes) {
-			File[] files = _listClassPathFiles(clazz);
-
-			if (files != null) {
-				Collections.addAll(fileSet, files);
-			}
-		}
-
-		File[] files = fileSet.toArray(new File[0]);
-
-		Arrays.sort(files);
 
 		StringBundler sb = new StringBundler(files.length * 2);
 
@@ -313,6 +300,24 @@ public class PortalClassPathUtil {
 				}
 
 			});
+	}
+
+	private static File[] _listClassPathFiles(Class<?>... classes) {
+		Set<File> fileSet = new HashSet<>();
+
+		for (Class<?> clazz : classes) {
+			File[] files = _listClassPathFiles(clazz);
+
+			if (files != null) {
+				Collections.addAll(fileSet, files);
+			}
+		}
+
+		File[] files = fileSet.toArray(new File[0]);
+
+		Arrays.sort(files);
+
+		return files;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

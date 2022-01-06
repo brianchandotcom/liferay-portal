@@ -28,8 +28,6 @@ import useControlledState from '../../core/hooks/useControlledState';
 import {ConfigurationFieldPropTypes} from '../../prop-types/index';
 import {DropdownColorPicker} from './DropdownColorPicker';
 
-import './ColorPicker.scss';
-
 const MAX_HEX_LENGTH = 7;
 
 const debouncedOnValueSelect = debounce(

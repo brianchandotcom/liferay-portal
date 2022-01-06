@@ -13,25 +13,29 @@ import ClayForm, {ClaySelect} from '@clayui/form';
 import React, {useState} from 'react';
 
 import SidebarPanel from '../SidebarPanel';
+import ResourceActions from './select-assignment/ResourceActions';
 
 const options = [
 	{
-        disabled: true,
+		label: '',
+		value: '',
+	},
+	{
+		disabled: true,
 		label: Liferay.Language.get('asset-creator'),
 		value: 'assetCreator',
 	},
 	{
-        disabled: true,
 		label: Liferay.Language.get('resource-actions'),
 		value: 'resourceActions',
 	},
 	{
-        disabled: true,
+		disabled: true,
 		label: Liferay.Language.get('role'),
 		value: 'role',
 	},
 	{
-        disabled: true,
+		disabled: true,
 		label: Liferay.Language.get('user'),
 		value: 'user',
 	},
@@ -47,7 +51,9 @@ const options = [
 	},
 ];
 
-const AssignmentSectionComponents = {};
+const AssignmentSectionComponents = {
+	resourceActions: ResourceActions,
+};
 
 const Assignments = (props) => {
 	const [section, setSection] = useState('');

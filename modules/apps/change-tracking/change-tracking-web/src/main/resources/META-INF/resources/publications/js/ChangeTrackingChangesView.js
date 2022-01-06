@@ -92,7 +92,6 @@ const DrilldownMenu = ({
 };
 
 export default function ChangeTrackingChangesView({
-	activeCTCollection,
 	changeTypesFromURL,
 	changes,
 	collaboratorsData,
@@ -1635,13 +1634,7 @@ export default function ChangeTrackingChangesView({
 
 	const getDataURL = (node) => {
 		if (node.ctEntryId) {
-			const url = setParameter(
-				dataURL,
-				'activeCTCollection',
-				activeCTCollection.toString()
-			);
-
-			return setParameter(url, 'ctEntryId', node.ctEntryId);
+			return setParameter(dataURL, 'ctEntryId', node.ctEntryId);
 		}
 
 		const url = setParameter(
@@ -2700,10 +2693,7 @@ export default function ChangeTrackingChangesView({
 								}
 								handleShowHideable={handleShowHideableToggle}
 								parentEntries={renderState.parents}
-								showDropdown={
-									activeCTCollection &&
-									renderState.node.modelClassNameId
-								}
+								showDropdown={renderState.node.modelClassNameId}
 								showHideable={renderState.showHideable}
 								spritemap={spritemap}
 								title={renderState.node.title}

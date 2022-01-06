@@ -24,6 +24,7 @@ import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
 import com.liferay.change.tracking.web.internal.display.BasePersistenceRegistry;
 import com.liferay.change.tracking.web.internal.display.CTDisplayRendererRegistry;
 import com.liferay.change.tracking.web.internal.display.DisplayContextImpl;
+import com.liferay.change.tracking.web.internal.util.PublicationsPortletURLUtil;
 import com.liferay.diff.DiffHtml;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.lang.SafeCloseable;
@@ -58,6 +59,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Locale;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
@@ -154,7 +156,8 @@ public class GetEntryRenderDataMVCResourceCommand
 
 		String[] availableLanguageIds = null;
 		String defaultLanguageId = null;
-		String editURL = null;
+		JSONObject editInProductionJSONObject = null;
+		JSONObject editInPublicationJSONObject = null;
 		JSONObject localizedTitlesJSONObject =
 			JSONFactoryUtil.createJSONObject();
 		String rightPreview = null;
@@ -183,12 +186,44 @@ public class GetEntryRenderDataMVCResourceCommand
 				ctEntry.getModelClassPK());
 
 			if (rightModel != null) {
-				boolean activeCTCollection = ParamUtil.getBoolean(
-					resourceRequest, "activeCTCollection");
+				String editURL = _ctDisplayRendererRegistry.getEditURL(
+					httpServletRequest, rightModel,
+					ctEntry.getModelClassNameId());
 
-				if (activeCTCollection) {
-					editURL = ctDisplayRenderer.getEditURL(
-						httpServletRequest, rightModel);
+				if (Validator.isNotNull(editURL)) {
+					long activeCTCollectionId = ParamUtil.getLong(
+						resourceRequest, "activeCTCollectionId");
+
+					editInPublicationJSONObject = JSONUtil.put(
+						"editURL", editURL
+					).put(
+						"label",
+						_language.format(
+							httpServletRequest, "edit-in-x",
+							new Object[] {ctCollection.getName()}, false)
+					);
+
+					if (activeCTCollectionId !=
+							ctCollection.getCtCollectionId()) {
+
+						editInPublicationJSONObject.put(
+							"checkoutURL",
+							PublicationsPortletURLUtil.getHref(
+								resourceResponse.createActionURL(),
+								ActionRequest.ACTION_NAME,
+								"/change_tracking/checkout_ct_collection",
+								"redirect", editURL, "ctCollectionId",
+								String.valueOf(
+									ctCollection.getCtCollectionId()))
+						).put(
+							"confirmationMessage",
+							_language.format(
+								httpServletRequest,
+								"you-are-currently-working-on-production.-" +
+									"work-on-x",
+								new Object[] {ctCollection.getName()}, false)
+						);
+					}
 				}
 
 				if (localize) {
@@ -276,6 +311,47 @@ public class GetEntryRenderDataMVCResourceCommand
 				}
 
 				if (leftModel != null) {
+					String editURL = _ctDisplayRendererRegistry.getEditURL(
+						httpServletRequest, leftModel,
+						ctEntry.getModelClassNameId());
+
+					if (Validator.isNotNull(editURL)) {
+						long activeCTCollectionId = ParamUtil.getLong(
+							resourceRequest, "activeCTCollectionId");
+
+						editInProductionJSONObject = JSONUtil.put(
+							"editURL", editURL
+						).put(
+							"label",
+							_language.get(
+								httpServletRequest, "edit-in-production")
+						);
+
+						if (activeCTCollectionId !=
+								CTConstants.CT_COLLECTION_ID_PRODUCTION) {
+
+							editInProductionJSONObject.put(
+								"checkoutURL",
+								PublicationsPortletURLUtil.getHref(
+									resourceResponse.createActionURL(),
+									ActionRequest.ACTION_NAME,
+									"/change_tracking/checkout_ct_collection",
+									"redirect", editURL, "ctCollectionId",
+									String.valueOf(
+										CTConstants.
+											CT_COLLECTION_ID_PRODUCTION))
+							).put(
+								"confirmationMessage",
+								_language.format(
+									httpServletRequest,
+									"you-are-currently-working-on-x.-work-on-" +
+										"production",
+									new Object[] {ctCollection.getName()},
+									false)
+							);
+						}
+					}
+
 					String leftVersionName = ctDisplayRenderer.getVersionName(
 						leftModel);
 
@@ -335,6 +411,51 @@ public class GetEntryRenderDataMVCResourceCommand
 				ctEntry.getModelClassNameId(), ctEntry.getModelClassPK());
 
 			if (leftModel != null) {
+				if (ctEntry.getChangeType() ==
+						CTConstants.CT_CHANGE_TYPE_MODIFICATION) {
+
+					String editURL = _ctDisplayRendererRegistry.getEditURL(
+						httpServletRequest, leftModel,
+						ctEntry.getModelClassNameId());
+
+					if (Validator.isNotNull(editURL)) {
+						long activeCTCollectionId = ParamUtil.getLong(
+							resourceRequest, "activeCTCollectionId");
+
+						editInProductionJSONObject = JSONUtil.put(
+							"editURL", editURL
+						).put(
+							"label",
+							_language.get(
+								httpServletRequest, "edit-in-production")
+						);
+
+						if (activeCTCollectionId !=
+								CTConstants.CT_COLLECTION_ID_PRODUCTION) {
+
+							editInProductionJSONObject.put(
+								"checkoutURL",
+								PublicationsPortletURLUtil.getHref(
+									resourceResponse.createActionURL(),
+									ActionRequest.ACTION_NAME,
+									"/change_tracking/checkout_ct_collection",
+									"redirect", editURL, "ctCollectionId",
+									String.valueOf(
+										CTConstants.
+											CT_COLLECTION_ID_PRODUCTION))
+							).put(
+								"confirmationMessage",
+								_language.format(
+									httpServletRequest,
+									"you-are-currently-working-on-x.-work-on-" +
+										"production",
+									new Object[] {ctCollection.getName()},
+									false)
+							);
+						}
+					}
+				}
+
 				if (localize &&
 					(ctEntry.getChangeType() ==
 						CTConstants.CT_CHANGE_TYPE_DELETION)) {
@@ -474,8 +595,12 @@ public class GetEntryRenderDataMVCResourceCommand
 				"defaultLocale", _getLocaleJSONObject(defaultLanguageId));
 		}
 
-		if (editURL != null) {
-			jsonObject.put("editURL", editURL);
+		if (editInProductionJSONObject != null) {
+			jsonObject.put("editInProduction", editInProductionJSONObject);
+		}
+
+		if (editInPublicationJSONObject != null) {
+			jsonObject.put("editInPublication", editInPublicationJSONObject);
 		}
 
 		if (leftLocalizedPreviewJSONObject != null) {

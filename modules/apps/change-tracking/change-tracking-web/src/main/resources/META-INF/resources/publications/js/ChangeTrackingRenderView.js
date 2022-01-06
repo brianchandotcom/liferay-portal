@@ -789,6 +789,36 @@ export default function ChangeTrackingRenderView({
 		return elements;
 	};
 
+	const navigate = (editURL, checkoutURL, confirmationMessage) => {
+		AUI().use('liferay-portlet-url', () => {
+			const editPortletURL = Liferay.PortletURL.createURL(editURL);
+
+			editPortletURL.setParameter(
+				'redirect',
+				window.location.pathname + window.location.search
+			);
+
+			if (!checkoutURL) {
+				Liferay.Util.navigate(editPortletURL.toString());
+
+				return;
+			}
+
+			const checkoutPortletURL = Liferay.PortletURL.createURL(
+				checkoutURL
+			);
+
+			checkoutPortletURL.setParameter(
+				'redirect',
+				editPortletURL.toString()
+			);
+
+			if (confirm(confirmationMessage)) {
+				submitForm(document.hrefFm, checkoutPortletURL.toString());
+			}
+		});
+	};
+
 	const renderDropdownMenu = () => {
 		if (!showDropdown || !state.renderData) {
 			return null;
@@ -796,53 +826,37 @@ export default function ChangeTrackingRenderView({
 
 		const dropdownItems = [];
 
-		if (state.renderData.editURL) {
+		if (state.renderData.editInPublication) {
 			dropdownItems.push({
-				href: state.renderData.editURL,
-				label: Liferay.Language.get('edit'),
+				label: state.renderData.editInPublication.label,
+				onClick: () =>
+					navigate(
+						state.renderData.editInPublication.editURL,
+						state.renderData.editInPublication.checkoutURL,
+						state.renderData.editInPublication.confirmationMessage
+					),
+				symbolLeft: 'pencil',
+			});
+		}
+
+		if (state.renderData.editInProduction) {
+			dropdownItems.push({
+				label: state.renderData.editInProduction.label,
+				onClick: () =>
+					navigate(
+						state.renderData.editInProduction.editURL,
+						state.renderData.editInProduction.checkoutURL,
+						state.renderData.editInProduction.confirmationMessage
+					),
 				symbolLeft: 'pencil',
 			});
 		}
 
 		dropdownItems.push({
-			href: discardURL,
 			label: Liferay.Language.get('discard'),
+			onClick: () => navigate(discardURL),
 			symbolLeft: 'times-circle',
 		});
-
-		for (let i = 0; i < dropdownItems.length; i++) {
-			const dropdownItem = dropdownItems[i];
-
-			const href = dropdownItem.href;
-
-			if (typeof href !== 'string') {
-				continue;
-			}
-
-			const index = href.indexOf('?');
-
-			if (index > 0) {
-				let redirectKey = null;
-
-				const params = new URLSearchParams(href.substring(index + 1));
-
-				params.forEach((value, key) => {
-					if (key.endsWith('_redirect')) {
-						redirectKey = key;
-					}
-				});
-
-				if (redirectKey) {
-					params.set(
-						redirectKey,
-						window.location.pathname + window.location.search
-					);
-
-					dropdownItem.href =
-						href.substring(0, index) + '?' + params.toString();
-				}
-			}
-		}
 
 		return (
 			<div className="autofit-col">

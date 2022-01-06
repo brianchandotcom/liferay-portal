@@ -49,8 +49,6 @@ public class SXPBlueprintResourceTest extends BaseSXPBlueprintResourceTestCase {
 	public void testPostSXPBlueprint() throws Exception {
 		super.testPostSXPBlueprint();
 
-		// Missing i18n
-
 		SXPBlueprint sxpBlueprint = SXPBlueprint.toDTO(
 			JSONUtil.put(
 				"description", RandomTestUtil.randomString()
@@ -64,6 +62,7 @@ public class SXPBlueprintResourceTest extends BaseSXPBlueprintResourceTestCase {
 		sxpBlueprint.setCreateDate(postSXPBlueprint.getCreateDate());
 		sxpBlueprint.setId(postSXPBlueprint.getId());
 		sxpBlueprint.setModifiedDate(postSXPBlueprint.getModifiedDate());
+		sxpBlueprint.setSchemaVersion(postSXPBlueprint.getSchemaVersion());
 		sxpBlueprint.setUserName(postSXPBlueprint.getUserName());
 
 		Assert.assertEquals(

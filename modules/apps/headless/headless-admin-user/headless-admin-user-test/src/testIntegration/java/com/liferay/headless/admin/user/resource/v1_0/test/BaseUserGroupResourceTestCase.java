@@ -369,6 +369,25 @@ public abstract class BaseUserGroupResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@Test
+	public void testPostUserGroupUsers() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		UserGroup userGroup = testPostUserGroupUsers_addUserGroup();
+
+		assertHttpResponseStatusCode(
+			204,
+			userGroupResource.postUserGroupUsersHttpResponse(
+				userGroup.getId(), null));
+
+		assertHttpResponseStatusCode(
+			404, userGroupResource.postUserGroupUsersHttpResponse(0L, null));
+	}
+
+	protected UserGroup testPostUserGroupUsers_addUserGroup() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
 	protected UserGroup testGraphQLUserGroup_addUserGroup() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");

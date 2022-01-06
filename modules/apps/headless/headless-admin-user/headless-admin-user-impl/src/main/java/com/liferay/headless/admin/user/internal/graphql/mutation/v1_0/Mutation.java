@@ -1266,6 +1266,21 @@ public class Mutation {
 				callbackURL, object));
 	}
 
+	@GraphQLField
+	public boolean createUserGroupUsers(
+			@GraphQLName("userGroupId") Long userGroupId,
+			@GraphQLName("longs") Long[] longs)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_userGroupResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			userGroupResource -> userGroupResource.postUserGroupUsers(
+				userGroupId, longs));
+
+		return true;
+	}
+
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
 			_applyComponentServiceObjects(
 				ComponentServiceObjects<T> componentServiceObjects,

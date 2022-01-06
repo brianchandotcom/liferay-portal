@@ -15,7 +15,7 @@ configurations {
 	extraRemoteApp
 }
 
-task buildExtraRemoteApp
+task buildExtraApps
 task forceDeploy
 task zipExtraRemoteApp(type: Zip)
 
@@ -28,6 +28,7 @@ dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"))
 
 String dateString = dateFormat.format(new Date())
 
+File reactFragmentsSrcDir = new File(projectDir, "extra/react-fragments/src")
 String siteInitializerName = ""
 
 if (GUtil.loadProperties(file("bnd.bnd"))["Liferay-Site-Initializer-Name"] != null) {
@@ -56,7 +57,7 @@ node {
 
 processResources {
 	if (gradle.startParameter.taskNames.contains("forceDeploy") || gradle.startParameter.taskNames.contains("uploadExtraRemoteApp")) {
-		dependsOn buildExtraRemoteApp
+		dependsOn buildExtraApps
 
 		into("site-initializer/documents/company/remote-app/" + siteInitializerName) {
 			from(new File(projectDir, "extra/remote-app/build/static/css")) {
@@ -69,11 +70,41 @@ processResources {
 
 			rename(/([0-9a-zA-Z-]+).*\.(css|js)$/, '$1.$2')
 		}
+
+		if (reactFragmentsSrcDir.exists()) {
+			doFirst {
+				reactFragmentsSrcDir.eachDir {
+					File dir ->
+
+					copy {
+						from new File(dir, "../../build/" + dir.name)
+						include "index.js"
+						into new File(projectDir, "src/main/zippableResources/fragments/fragments/" + dir.name)
+					}
+				}
+
+				copy {
+					exclude "*/index.js"
+					from reactFragmentsSrcDir
+					into new File(projectDir, "src/main/zippableResources/fragments/fragments/")
+				}
+			}
+		}
 	}
 	else {
 		into("site-initializer/documents/company") {
 			from zipTree(configurations.extraRemoteApp.singleFile)
 			include "remote-app/**"
+		}
+
+		if (reactFragmentsSrcDir.exists()) {
+			doFirst {
+				copy {
+					from zipTree(configurations.extraRemoteApp.singleFile)
+					include "fragments/**"
+					into new File(projectDir, "src/main/zippableResources/fragments")
+				}
+			}
 		}
 	}
 }
@@ -112,7 +143,7 @@ uploadExtraRemoteApp {
 
 zipExtraRemoteApp {
 	if (!System.getenv("JENKINS_HOME")) {
-		dependsOn buildExtraRemoteApp
+		dependsOn buildExtraApps
 
 		archiveName "extra-remote-app.zip"
 		destinationDir new File(buildDir, "dist")
@@ -128,51 +159,95 @@ zipExtraRemoteApp {
 
 			rename(/([0-9a-zA-Z-]+).*\.(css|js)$/, '$1.$2')
 		}
+
+		if (reactFragmentsSrcDir.exists()) {
+			reactFragmentsSrcDir.eachDir {
+				File dir ->
+
+				into("fragments/" + dir.name) {
+					from(new File(dir, "../../build/" + dir.name)) {
+						include "index.js"
+					}
+				}
+			}
+
+			into("fragments") {
+				from(reactFragmentsSrcDir) {
+					exclude "*/index.js"
+				}
+			}
+		}
 	}
 }
 
-_createExtraRemoteAppTasks()
+zipZippableResources {
+	doLast {
+		delete new File(projectDir, "src/main/zippableResources/fragments/fragments")
+	}
+}
 
-private void _createExtraRemoteAppTasks() {
-	File dir = new File(projectDir, "extra/remote-app")
+_createExtraTasks()
 
-	Task yarnInstallExtraRemoteAppTask = tasks.create(name: "yarnInstallExtraRemoteApp", type: Exec) {
-		if (OSDetector.windows) {
-			executable "cmd.exe"
+private String _camelCase(String dirName) {
+	String suffix = dirName.replaceAll(/\-(\w)/) {
+		String s = it[1]
 
-			args "/c"
-			args new File(node.nodeDir, "node.exe")
-			args new File(node.nodeDir, "node_modules/yarn/yarn-" + node.yarnVersion + ".js")
-		}
-		else {
-			executable new File(node.nodeDir, "bin/node")
-
-			args new File(node.nodeDir, "lib/node_modules/yarn/yarn-" + node.yarnVersion + ".js")
-		}
-
-		args "install"
-		dependsOn downloadNode
-		workingDir dir
+		s.toUpperCase()
 	}
 
-	Task yarnBuildExtraRemoteAppTask = tasks.create(name: "yarnBuildExtraRemoteApp", type: Exec) {
-		if (OSDetector.windows) {
-			executable "cmd.exe"
+	return StringUtil.capitalize(suffix)
+}
 
-			args "/c"
-			args new File(node.nodeDir, "node.exe")
-			args new File(node.nodeDir, "node_modules/yarn/yarn-" + node.yarnVersion + ".js")
+private void _createExtraTasks() {
+	File extraDir = new File(projectDir, "extra/")
+
+	extraDir.eachDir {
+		File dir ->
+
+		File packageJSONFile = new File(dir, "package.json")
+
+		if (!packageJSONFile.exists()) {
+			return
 		}
-		else {
-			executable new File(node.nodeDir, "bin/node")
 
-			args new File(node.nodeDir, "lib/node_modules/yarn/yarn-" + node.yarnVersion + ".js")
+		Task yarnInstallExtraTask = tasks.create(name: "yarnInstallExtra" + _camelCase(dir.name), type: Exec) {
+			if (OSDetector.windows) {
+				executable "cmd.exe"
+
+				args "/c"
+				args new File(node.nodeDir, "node.exe")
+				args new File(node.nodeDir, "node_modules/yarn/yarn-" + node.yarnVersion + ".js")
+			}
+			else {
+				executable new File(node.nodeDir, "bin/node")
+
+				args new File(node.nodeDir, "lib/node_modules/yarn/yarn-" + node.yarnVersion + ".js")
+			}
+
+			args "install"
+			dependsOn downloadNode
+			workingDir dir
 		}
 
-		args "build"
-		dependsOn yarnInstallExtraRemoteAppTask
-		workingDir dir
+		Task yarnBuildExtraTask = tasks.create(name: "yarnBuildExtra" + _camelCase(dir.name),, type: Exec) {
+			if (OSDetector.windows) {
+				executable "cmd.exe"
+
+				args "/c"
+				args new File(node.nodeDir, "node.exe")
+				args new File(node.nodeDir, "node_modules/yarn/yarn-" + node.yarnVersion + ".js")
+			}
+			else {
+				executable new File(node.nodeDir, "bin/node")
+
+				args new File(node.nodeDir, "lib/node_modules/yarn/yarn-" + node.yarnVersion + ".js")
+			}
+
+			args "build"
+			dependsOn yarnInstallExtraTask
+			workingDir dir
+		}
+
+		buildExtraApps.dependsOn yarnBuildExtraTask
 	}
-
-	buildExtraRemoteApp.finalizedBy yarnBuildExtraRemoteAppTask
 }

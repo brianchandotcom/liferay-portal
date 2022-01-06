@@ -56,6 +56,12 @@
 		}
 	}
 
+	&.join-node {
+		.node-icon svg {
+			fill: #7785ff;
+		}
+	}
+
 	&.task-node {
 		.node-icon svg {
 			fill: #50d2a0;

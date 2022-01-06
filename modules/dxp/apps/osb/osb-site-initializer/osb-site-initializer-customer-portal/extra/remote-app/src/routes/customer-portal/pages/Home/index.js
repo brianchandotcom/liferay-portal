@@ -110,7 +110,13 @@ const Home = ({userAccount}) => {
 						<SearchProject onChange={setKeyword} value={keyword} />
 
 						<h5 className="m-0 text-neutral-7">
-							{projects.length} projects
+							{keyword
+								? `${projectsFiltered.length} result${
+										projectsFiltered.length === 1 ? '' : 's'
+								  }`
+								: `${projects.length} project${
+										projects.length === 1 ? '' : 's'
+								  }`}
 						</h5>
 					</div>
 				)}

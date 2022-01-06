@@ -1263,14 +1263,10 @@ definition {
 		Button.clickAdd();
 
 		if ("${siteNameInvalid}" == "Duplicate") {
-			AssertTextEquals.assertPartialText(
-				locator1 = "Message#ERROR_MODAL_CONTENT",
-				value1 = "Please enter a unique name.");
+			Alert.viewErrorMessage(errorMessage = "Please enter a unique name.");
 		}
 		else {
-			AssertTextEquals.assertPartialText(
-				locator1 = "Message#ERROR_MODAL_CONTENT",
-				value1 = "The Site Name cannot be blank, numeric or a reserved word such as null. The Site Name cannot contain the following invalid characters: *.");
+			Alert.viewErrorMessage(errorMessage = "The Site Name cannot be blank, numeric or a reserved word such as null. The Site Name cannot contain the following invalid characters: *.");
 		}
 	}
 

@@ -1,5 +1,11 @@
 definition {
 
+	macro addCSSURLRow {
+		Click(
+			key_id = "customElementCSSURLs",
+			locator1 = "RemoteAppsEntry#ADD_URL_ROW");
+	}
+
 	macro addCustomElement {
 		Type(
 			key_text = "Name",
@@ -43,6 +49,46 @@ definition {
 			value1 = "${entryProperties}");
 	}
 
+	macro addCustomElementMultipleURLs {
+		Type(
+			key_text = "Name",
+			locator1 = "TextInput#ANY",
+			value1 = "${entryName}");
+
+		Type(
+			key_text = "HTML Element Name",
+			locator1 = "TextInput#ANY",
+			value1 = "${entryHTMLName}");
+
+		RemoteAppsEntry.addURLRow();
+
+		RemoteAppsEntry.addCSSURLRow();
+
+		Type(
+			key_id = "customElementURLs",
+			key_index = "1",
+			locator1 = "RemoteAppsEntry#URL_ROW",
+			value1 = "${entryURL1}");
+
+		Type(
+			key_id = "customElementURLs",
+			key_index = "2",
+			locator1 = "RemoteAppsEntry#URL_ROW",
+			value1 = "${entryURL2}");
+
+		Type(
+			key_id = "customElementCSSURLs",
+			key_index = "1",
+			locator1 = "RemoteAppsEntry#URL_ROW",
+			value1 = "${entryCSSURL1}");
+
+		Type(
+			key_id = "customElementCSSURLs",
+			key_index = "2",
+			locator1 = "RemoteAppsEntry#URL_ROW",
+			value1 = "${entryCSSURL2}");
+	}
+
 	macro addEntry {
 		Type(
 			key_text = "Name",
@@ -53,6 +99,12 @@ definition {
 			key_id = "iFrameURL",
 			locator1 = "RemoteAppsEntry#URL",
 			value1 = "${entryURL}");
+	}
+
+	macro addURLRow {
+		Click(
+			key_id = "customElementURLs",
+			locator1 = "RemoteAppsEntry#ADD_URL_ROW");
 	}
 
 }

@@ -266,7 +266,6 @@
 		<Logger level="ERROR" name="net.sf.hibernate" />
 		<Logger level="WARN" name="org.apache.aries.jax.rs.whiteboard.activator.CxfJaxrsBundleActivator" />
 		<Logger level="INFO" name="org.apache.axis" />
-		<Logger level="FATAL" name="org.apache.bsf" />
 		<Logger level="ERROR" name="org.apache.chemistry.opencmis.client.bindings.spi.atompub.HttpUtils" />
 		<Logger level="ERROR" name="org.apache.commons.beanutils" />
 		<Logger level="ERROR" name="org.apache.commons.digester" />

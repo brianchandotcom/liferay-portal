@@ -107,15 +107,6 @@ public class PortalClassPathUtil {
 			classLoader = currentThread.getContextClassLoader();
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_buildClassPath(ServletException.class));
-
-		sb.append(File.pathSeparator);
-		sb.append(_buildClassPath(CentralizedThreadLocal.class));
-
-		String bootstrapClassPath = sb.toString();
-
 		Class<?> shieldedContainerInitializerClass = null;
 
 		try {
@@ -128,10 +119,13 @@ public class PortalClassPathUtil {
 				classNotFoundException);
 		}
 
-		if (shieldedContainerInitializerClass != null) {
-			sb.append(File.pathSeparator);
-			sb.append(_buildClassPath(shieldedContainerInitializerClass));
-		}
+		String bootstrapClassPath = _buildClassPath(
+			ServletException.class, CentralizedThreadLocal.class,
+			shieldedContainerInitializerClass);
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(bootstrapClassPath);
 
 		if (servletContext != null) {
 			sb.append(File.pathSeparator);

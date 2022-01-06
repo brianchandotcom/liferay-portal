@@ -57,7 +57,12 @@ function QueryBuilderTab({
 	const _handleChangeSidebarVisibility = (type) => (
 		visible = openSidebar !== type
 	) => {
-		setOpenSidebar(visible ? type : '');
+		if (visible) {
+			setOpenSidebar(type);
+		}
+		else if (openSidebar === type) {
+			setOpenSidebar('');
+		}
 	};
 
 	/**

@@ -10,10 +10,11 @@
  */
 
 import {defaultLanguageId} from '../../../constants';
+import ForkNode from './ForkNode';
+import TaskNode from './TaskNode';
 import EndNode from './state/EndNode';
 import StartNode from './state/StartNode';
 import StateNode from './state/StateNode';
-import TaskNode from './state/TaskNode';
 
 const defaultNodes = [
 	{
@@ -38,6 +39,7 @@ const defaultNodes = [
 
 const nodeDescription = {
 	end: Liferay.Language.get('conclude-the-workflow'),
+	fork: Liferay.Language.get('split-the-workflow-into-multiple-paths'),
 	start: Liferay.Language.get('begin-a-workflow'),
 	state: Liferay.Language.get('execute-actions-in-the-workflow'),
 	task: Liferay.Language.get('ask-a-user-to-work-on-the-item'),
@@ -45,6 +47,7 @@ const nodeDescription = {
 
 const nodeTypes = {
 	end: EndNode,
+	fork: ForkNode,
 	start: StartNode,
 	state: StateNode,
 	task: TaskNode,

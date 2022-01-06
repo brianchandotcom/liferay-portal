@@ -27,6 +27,10 @@ const contents = {
 		sections: ['nodeInformation'],
 		title: Liferay.Language.get('end'),
 	},
+	fork: {
+		sections: ['nodeInformation'],
+		title: Liferay.Language.get('fork-node'),
+	},
 	start: {
 		sections: ['nodeInformation'],
 		title: Liferay.Language.get('start'),

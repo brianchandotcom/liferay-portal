@@ -30,6 +30,14 @@ function getModalInfo(itemType) {
 			title: Liferay.Language.get('delete-end-node'),
 		};
 	}
+	else if (itemType === 'fork') {
+		return {
+			message: Liferay.Language.get(
+				'are-you-sure-you-want-to-delete-the-selected-fork-node'
+			),
+			title: Liferay.Language.get('delete-fork-node'),
+		};
+	}
 	else if (itemType === 'start') {
 		return {
 			message: Liferay.Language.get(

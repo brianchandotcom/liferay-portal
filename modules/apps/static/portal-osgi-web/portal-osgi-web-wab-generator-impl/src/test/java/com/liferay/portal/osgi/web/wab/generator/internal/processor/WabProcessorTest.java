@@ -192,9 +192,6 @@ public class WabProcessorTest {
 				importedPackages.containsKey("com.liferay.portlet"));
 			Assert.assertTrue(importedPackages.containsKey("com.sun.el"));
 			Assert.assertTrue(
-				importedPackages.containsKey(
-					"org.apache.commons.chain.generic"));
-			Assert.assertTrue(
 				importedPackages.containsKey("org.apache.naming.java"));
 
 			// Check if packages only referenced in web.xml are imported

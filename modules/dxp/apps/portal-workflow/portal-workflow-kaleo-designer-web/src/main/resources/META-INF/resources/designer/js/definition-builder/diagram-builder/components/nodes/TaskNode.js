@@ -12,8 +12,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import {defaultLanguageId} from '../../../../constants';
-import BaseNode from '../BaseNode';
+import {defaultLanguageId} from '../../../constants';
+import BaseNode from './BaseNode';
 
 export default function TaskNode({
 	data: {description, label, newNode} = {},

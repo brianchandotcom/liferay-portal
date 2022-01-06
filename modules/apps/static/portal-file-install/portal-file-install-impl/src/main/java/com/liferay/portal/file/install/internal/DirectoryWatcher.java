@@ -117,15 +117,9 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 		_useStartTransient = GetterUtil.getBoolean(
 			bundleContext.getProperty(USE_START_TRANSIENT));
 
-		Set<String> dirs = new LinkedHashSet<>();
+		_watchedDirs.add(new File(PropsValues.MODULE_FRAMEWORK_PORTAL_DIR));
 
-		dirs.add(PropsValues.MODULE_FRAMEWORK_PORTAL_DIR);
-
-		Collections.addAll(dirs, PropsValues.MODULE_FRAMEWORK_AUTO_DEPLOY_DIRS);
-
-		_watchedDirs = new ArrayList<>(dirs.size());
-
-		for (String dir : dirs) {
+		for (String dir : PropsValues.MODULE_FRAMEWORK_AUTO_DEPLOY_DIRS) {
 			_watchedDirs.add(new File(dir));
 		}
 
@@ -1404,6 +1398,6 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 	private final Bundle _systemBundle;
 	private final boolean _useStartActivationPolicy;
 	private final boolean _useStartTransient;
-	private final List<File> _watchedDirs;
+	private final List<File> _watchedDirs = new ArrayList<>();
 
 }

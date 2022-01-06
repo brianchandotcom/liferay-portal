@@ -1069,6 +1069,7 @@ public class InstanceResourceImpl
 			));
 
 		filterBooleanQuery.addMustQueryClauses(
+			_queries.term("blocked", Boolean.FALSE),
 			_queries.term("deleted", Boolean.FALSE),
 			_queries.term("processId", processId),
 			_queries.term("status", WorkflowMetricsSLAStatus.RUNNING.name()),

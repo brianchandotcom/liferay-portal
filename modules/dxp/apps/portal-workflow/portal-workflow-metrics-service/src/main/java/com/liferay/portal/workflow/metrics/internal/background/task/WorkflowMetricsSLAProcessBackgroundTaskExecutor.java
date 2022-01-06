@@ -243,7 +243,8 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
 		return booleanQuery.addMustQueryClauses(
-			_queries.term("active", true), _queries.term("deleted", false),
+			_queries.term("active", true), _queries.term("blocked", false),
+			_queries.term("deleted", false),
 			_queries.rangeTerm(
 				"instanceId", true, true, startInstanceId, endInstanceId),
 			_queries.term("processId", processId),

@@ -132,7 +132,6 @@
 	<classpathentry kind="lib" path="lib/portal/asm.jar"/>
 	<classpathentry kind="lib" path="lib/portal/axis.jar"/>
 	<classpathentry kind="lib" path="lib/portal/axis-ant.jar"/>
-	<classpathentry kind="lib" path="lib/portal/bsf.jar"/>
 	<classpathentry kind="lib" path="lib/portal/c3p0.jar"/>
 	<classpathentry kind="lib" path="lib/portal/ccpp.jar"/>
 	<classpathentry kind="lib" path="lib/portal/ccpp-ri.jar"/>

@@ -88,7 +88,9 @@ export default function Sidebar() {
 			/>
 
 			<SidebarBody displayDefaultContent={!content}>
-				<ContentComponent errors={errors} setErrors={setErrors} />
+				{content && (
+					<ContentComponent errors={errors} setErrors={setErrors} />
+				)}
 			</SidebarBody>
 		</div>
 	);

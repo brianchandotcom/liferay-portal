@@ -20,6 +20,7 @@
 @import 'Translation';
 @import 'ViewportSizeSelector';
 
+@import 'fragment-configuration-fields/ColorPickerField';
 @import 'fragment-configuration-fields/TargetCollectionsField';
 
 @import 'fragment-content/FragmentContent';
@@ -35,7 +36,6 @@
 @import '../../common/components/Collapse';
 @import '../../common/components/ColorPalette';
 @import '../../common/components/ColorPicker';
-@import '../../common/components/DropdownColorPicker';
 @import '../../common/components/Editor';
 @import '../../common/components/InlineConfirm';
 @import '../../common/components/ItemSelector';

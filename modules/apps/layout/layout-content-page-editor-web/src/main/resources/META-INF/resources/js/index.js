@@ -12,4 +12,4 @@
  * details.
  */
 
-export {ColorPicker} from '../page_editor/common/components/ColorPicker';
+export {ColorPickerField} from '../page_editor/app/components/fragment-configuration-fields/ColorPickerField';

@@ -98,7 +98,9 @@ public abstract class BaseTestClass implements TestClass {
 
 	@Override
 	public int hashCode() {
-		return _testClassFile.hashCode();
+		JSONObject jsonObject = getJSONObject();
+
+		return jsonObject.hashCode();
 	}
 
 	@Override

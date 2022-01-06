@@ -71,7 +71,7 @@ function SelectTypes({
 	return (
 		<>
 			<ClayButton
-				className="select-types"
+				className="select-types-button"
 				displayType="secondary"
 				onClick={() => {
 					setVisible(true);

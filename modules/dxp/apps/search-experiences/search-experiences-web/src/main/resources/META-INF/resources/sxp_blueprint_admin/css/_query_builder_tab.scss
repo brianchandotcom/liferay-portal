@@ -38,14 +38,16 @@
 				height: 100% !important; // Fixes panel body height when adding or removing asset types
 			}
 
-			.panel-body {
-				.select-types {
-					margin-bottom: 24px;
-				}
-			}
-
 			.panel-header .sticker {
 				height: 1rem;
+			}
+
+			.panel-group .panel-body {
+				margin-bottom: 0;
+
+				.select-types-button {
+					margin-bottom: 24px;
+				}
 			}
 
 			.panel-title {

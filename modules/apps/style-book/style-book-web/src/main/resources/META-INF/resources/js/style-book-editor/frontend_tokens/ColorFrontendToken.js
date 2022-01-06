@@ -29,7 +29,6 @@ const debouncedOnValueSelect = debounce(
 
 export default function ColorFrontendToken({
 	frontendToken,
-	frontendTokensValues,
 	onValueSelect,
 	tokenValues,
 	value,
@@ -53,7 +52,6 @@ export default function ColorFrontendToken({
 	return config.tokenReuseEnabled ? (
 		<ColorPicker
 			config={config}
-			editedTokenValues={frontendTokensValues}
 			field={frontendToken}
 			onValueSelect={onValueSelect}
 			tokenValues={tokenValues}

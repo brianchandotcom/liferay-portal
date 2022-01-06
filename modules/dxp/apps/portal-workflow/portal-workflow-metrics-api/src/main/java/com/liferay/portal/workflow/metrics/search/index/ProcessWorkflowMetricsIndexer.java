@@ -17,6 +17,7 @@ package com.liferay.portal.workflow.metrics.search.index;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.workflow.metrics.model.AddProcessRequest;
 import com.liferay.portal.workflow.metrics.model.DeleteProcessRequest;
+import com.liferay.portal.workflow.metrics.model.UpdateProcessRequest;
 
 import java.util.Date;
 import java.util.Locale;
@@ -35,5 +36,7 @@ public interface ProcessWorkflowMetricsIndexer {
 		Boolean active, long companyId, String description, Date modifiedDate,
 		long processId, String title, Map<Locale, String> titleMap,
 		String version);
+
+	public Document updateProcess(UpdateProcessRequest updateProcessRequest);
 
 }

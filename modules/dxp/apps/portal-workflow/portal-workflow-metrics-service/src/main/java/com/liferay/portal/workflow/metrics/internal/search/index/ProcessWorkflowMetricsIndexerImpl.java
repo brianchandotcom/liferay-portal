@@ -27,6 +27,7 @@ import com.liferay.portal.search.script.ScriptType;
 import com.liferay.portal.workflow.metrics.internal.search.index.util.WorkflowMetricsIndexerUtil;
 import com.liferay.portal.workflow.metrics.model.AddProcessRequest;
 import com.liferay.portal.workflow.metrics.model.DeleteProcessRequest;
+import com.liferay.portal.workflow.metrics.model.UpdateProcessRequest;
 import com.liferay.portal.workflow.metrics.search.index.ProcessWorkflowMetricsIndexer;
 
 import java.util.Date;
@@ -231,6 +232,85 @@ public class ProcessWorkflowMetricsIndexerImpl
 							"painless"
 						).putParameter(
 							"version", version
+						).scriptType(
+							ScriptType.INLINE
+						).build());
+
+				if (PortalRunMode.isTestMode()) {
+					updateDocumentRequest.setRefresh(true);
+				}
+
+				searchEngineAdapter.execute(updateDocumentRequest);
+			});
+
+		return document;
+	}
+
+	@Override
+	public Document updateProcess(UpdateProcessRequest updateProcessRequest) {
+		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
+
+		if (updateProcessRequest.getActive() != null) {
+			documentBuilder.setValue(
+				"active", updateProcessRequest.getActive());
+		}
+
+		documentBuilder.setLong(
+			"companyId", updateProcessRequest.getCompanyId());
+
+		if (updateProcessRequest.getDescription() != null) {
+			documentBuilder.setValue(
+				"description", updateProcessRequest.getDescription());
+		}
+
+		documentBuilder.setDate(
+			"modifiedDate", getDate(updateProcessRequest.getModifiedDate())
+		).setLong(
+			"processId", updateProcessRequest.getProcessId()
+		);
+
+		if (updateProcessRequest.getTitle() != null) {
+			documentBuilder.setValue("title", updateProcessRequest.getTitle());
+		}
+
+		documentBuilder.setString(
+			"uid",
+			digest(
+				updateProcessRequest.getCompanyId(),
+				updateProcessRequest.getProcessId())
+		).setValue(
+			"version", updateProcessRequest.getVersion()
+		);
+
+		if (MapUtil.isNotEmpty(updateProcessRequest.getTitleMap())) {
+			setLocalizedField(
+				documentBuilder, "title", updateProcessRequest.getTitleMap());
+		}
+
+		Document document = documentBuilder.build();
+
+		workflowMetricsPortalExecutor.execute(
+			() -> {
+				updateDocument(document);
+
+				ScriptBuilder scriptBuilder = scripts.builder();
+
+				UpdateDocumentRequest updateDocumentRequest =
+					new UpdateDocumentRequest(
+						getIndexName(updateProcessRequest.getCompanyId()),
+						WorkflowMetricsIndexerUtil.digest(
+							_processWorkflowMetricsIndex.getIndexType(),
+							updateProcessRequest.getCompanyId(),
+							updateProcessRequest.getProcessId()),
+						scriptBuilder.idOrCode(
+							StringUtil.read(
+								getClass(),
+								"dependencies/workflow-metrics-update-" +
+									"process-versions-script.painless")
+						).language(
+							"painless"
+						).putParameter(
+							"version", updateProcessRequest.getVersion()
 						).scriptType(
 							ScriptType.INLINE
 						).build());

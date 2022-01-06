@@ -109,6 +109,9 @@ components:
                         type: object
                     readOnly: true
                     type: object
+                businessType:
+                    enum: [Boolean, Date, Decimal, Integer, LongInteger, LongText, Picklist, PrecisionDecimal, Relationship, Text]
+                    type: string
                 id:
                     format: int64
                     readOnly: true

@@ -28,11 +28,13 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DecimalStyle;
 
 import java.util.Locale;
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -66,22 +68,37 @@ public class DateDDMFormFieldValueRenderer
 			return StringPool.BLANK;
 		}
 
-		LocalDate localDate = DateParameterUtil.getLocalDate(valueString);
-
 		Locale locale = Optional.ofNullable(
 			LocaleThreadLocal.getThemeDisplayLocale()
 		).orElse(
 			defaultLocale
 		);
 
-		SimpleDateFormat simpleDateFormat =
-			(SimpleDateFormat)DateFormat.getDateInstance(
+		boolean dateTime = Pattern.matches(_DATE_TIME_REGEX, valueString);
+
+		SimpleDateFormat simpleDateFormat = null;
+
+		if (dateTime) {
+			simpleDateFormat = (SimpleDateFormat)DateFormat.getDateTimeInstance(
+				DateFormat.SHORT, DateFormat.SHORT, locale);
+		}
+		else {
+			simpleDateFormat = (SimpleDateFormat)DateFormat.getDateInstance(
 				DateFormat.SHORT, locale);
+		}
 
 		String pattern = simpleDateFormat.toPattern();
 
 		if (StringUtils.countMatches(pattern, "d") == 1) {
 			pattern = StringUtil.replace(pattern, 'd', "dd");
+		}
+
+		if (StringUtils.countMatches(pattern, "h") == 1) {
+			pattern = StringUtil.replace(pattern, 'h', "hh");
+		}
+
+		if (StringUtils.countMatches(pattern, "H") == 1) {
+			pattern = StringUtil.replace(pattern, 'H', "HH");
 		}
 
 		if (StringUtils.countMatches(pattern, "M") == 1) {
@@ -95,8 +112,21 @@ public class DateDDMFormFieldValueRenderer
 		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(
 			pattern, locale);
 
+		if (dateTime) {
+			LocalDateTime localDateTime = DateParameterUtil.getLocalDateTime(
+				valueString);
+
+			return localDateTime.format(
+				dateTimeFormatter.withDecimalStyle(DecimalStyle.of(locale)));
+		}
+
+		LocalDate localDate = DateParameterUtil.getLocalDate(valueString);
+
 		return localDate.format(
 			dateTimeFormatter.withDecimalStyle(DecimalStyle.of(locale)));
 	}
+
+	private static final String _DATE_TIME_REGEX =
+		"^\\d{4}-\\d{2}-\\d{2} \\d{1,2}:\\d{2}$";
 
 }

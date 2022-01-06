@@ -42,6 +42,7 @@ import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.Mus
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetValidVisibilityExpression;
 import com.liferay.portal.bean.BeanPropertiesImpl;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -74,6 +75,9 @@ public class DDMFormValidatorTest {
 		_setUpBeanPropertiesUtil();
 		_setUpDDMFormFieldTypeServicesTracker();
 		_setUpDDMFormValidator();
+
+		ReflectionTestUtil.setFieldValue(
+			_ddmFormValidatorImpl, "_beanProperties", new BeanPropertiesImpl());
 	}
 
 	@Test(expected = MustSetValidCharactersForFieldType.class)

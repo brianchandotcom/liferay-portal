@@ -16,8 +16,8 @@ package com.liferay.saml.opensaml.integration.internal.resolver;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.bean.BeanProperties;
-import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.saml.opensaml.integration.internal.BaseSamlTestCase;
 import com.liferay.saml.opensaml.integration.internal.metadata.MetadataManager;
@@ -49,11 +49,10 @@ public class DefaultNameIdResolverTest extends BaseSamlTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 
-		BeanPropertiesUtil beanPropertiesUtil = new BeanPropertiesUtil();
-
 		_beanProperties = mock(BeanProperties.class);
 
-		beanPropertiesUtil.setBeanProperties(_beanProperties);
+		ReflectionTestUtil.setFieldValue(
+			_defaultNameIdResolver, "_beanProperties", _beanProperties);
 
 		_metadataManager = mock(MetadataManager.class);
 

@@ -25,7 +25,8 @@ import java.util.List;
 public class JavaClass extends BaseJavaTerm {
 
 	public JavaClass(
-		String name, String content, String accessModifier, int lineNumber,
+		String name, String packageName, List<String> importNames,
+		String content, String accessModifier, int lineNumber,
 		boolean isAbstract, boolean isFinal, boolean isStatic,
 		boolean isInterface, boolean anonymous) {
 
@@ -33,6 +34,8 @@ public class JavaClass extends BaseJavaTerm {
 			name, content, accessModifier, lineNumber, isAbstract, isFinal,
 			isStatic);
 
+		_packageName = packageName;
+		_importNames = importNames;
 		_isInterface = isInterface;
 		_anonymous = anonymous;
 	}
@@ -59,10 +62,6 @@ public class JavaClass extends BaseJavaTerm {
 					StringUtil.trim(implementedClassName), _packageName,
 					_importNames));
 		}
-	}
-
-	public void addImportName(String importName) {
-		_importNames.add(importName);
 	}
 
 	public List<JavaTerm> getChildJavaTerms() {
@@ -129,21 +128,13 @@ public class JavaClass extends BaseJavaTerm {
 		return _isInterface;
 	}
 
-	public void setImportNames(List<String> importNames) {
-		_importNames = importNames;
-	}
-
-	public void setPackageName(String packageName) {
-		_packageName = packageName;
-	}
-
 	private final boolean _anonymous;
 	private final List<JavaTerm> _childJavaTerms = new ArrayList<>();
 	private final List<JavaClassType> _extendedClassTypes = new ArrayList<>();
 	private final List<JavaClassType> _implementedClassTypes =
 		new ArrayList<>();
-	private List<String> _importNames = new ArrayList<>();
+	private final List<String> _importNames;
 	private final boolean _isInterface;
-	private String _packageName;
+	private final String _packageName;
 
 }

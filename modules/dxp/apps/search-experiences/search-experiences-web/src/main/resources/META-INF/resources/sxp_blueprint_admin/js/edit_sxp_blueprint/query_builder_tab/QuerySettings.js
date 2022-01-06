@@ -77,6 +77,7 @@ function QuerySettings({
 					<ClayPanel
 						className="searchable-types"
 						collapsable
+						defaultExpanded
 						displayTitle={Liferay.Language.get('searchable-types')}
 						displayType="unstyled"
 						showCollapseIcon
@@ -127,6 +128,7 @@ function QuerySettings({
 
 					<ClayPanel
 						collapsable
+						defaultExpanded
 						displayTitle={
 							<ClayPanel.Title>
 								<span className="panel-title">
@@ -182,6 +184,7 @@ function QuerySettings({
 
 					<ClayPanel
 						collapsable
+						defaultExpanded
 						displayTitle={
 							<ClayPanel.Title>
 								<span className="panel-title">

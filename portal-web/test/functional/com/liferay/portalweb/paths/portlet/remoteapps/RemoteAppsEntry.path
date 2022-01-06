@@ -17,8 +17,8 @@
 </tr>
 <tr>
 	<td>URL</td>
-<td>//input[(contains(@id,'${key_id}'))]</td>
-<td></td>
+	<td>//input[(contains(@id,'${key_id}'))]</td>
+	<td></td>
 </tr>
 <tr>
 	<td>REMOTE_APPS_INSTANCEABLE</td>
@@ -28,6 +28,16 @@
 <tr>
 	<td>REMOTE_APPS_PROPERTIES</td>
 	<td>//textarea[contains(@id,'properties')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_URL_ROW</td>
+	<td>//*[contains(@id,'${key_id}')]//button[contains(@class,'add-row')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>URL_ROW</td>
+	<td>//*[contains(@class,'form-row')][${key_index}]//input[(contains(@id,'${key_id}'))]</td>
 	<td></td>
 </tr>
 </tbody>

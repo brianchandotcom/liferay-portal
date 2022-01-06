@@ -251,8 +251,8 @@ public class ResourceHelper {
 					).collect(
 						Collectors.toList()
 					)
-				).orElseGet(
-					() -> null
+				).orElse(
+					null
 				)
 			).put(
 				"assigneeType", Role.class.getName()
@@ -264,8 +264,8 @@ public class ResourceHelper {
 					dateEnd
 				).map(
 					Date::getTime
-				).orElseGet(
-					() -> null
+				).orElse(
+					null
 				)
 			).put(
 				"startDate",
@@ -273,8 +273,8 @@ public class ResourceHelper {
 					dateStart
 				).map(
 					Date::getTime
-				).orElseGet(
-					() -> null
+				).orElse(
+					null
 				)
 			).put(
 				"taskNames",
@@ -282,8 +282,8 @@ public class ResourceHelper {
 					taskNames
 				).filter(
 					ListUtil::isNotEmpty
-				).orElseGet(
-					() -> null
+				).orElse(
+					null
 				)
 			).build());
 		scriptedMetricAggregation.setReduceScript(
@@ -320,8 +320,8 @@ public class ResourceHelper {
 					).collect(
 						Collectors.toList()
 					)
-				).orElseGet(
-					() -> null
+				).orElse(
+					null
 				)
 			).put(
 				"assigneeType", Role.class.getName()
@@ -331,8 +331,8 @@ public class ResourceHelper {
 					slaStatuses
 				).filter(
 					ListUtil::isNotEmpty
-				).orElseGet(
-					() -> null
+				).orElse(
+					null
 				)
 			).put(
 				"taskNames",
@@ -340,8 +340,8 @@ public class ResourceHelper {
 					taskNames
 				).filter(
 					ListUtil::isNotEmpty
-				).orElseGet(
-					() -> null
+				).orElse(
+					null
 				)
 			).build());
 		scriptedMetricAggregation.setReduceScript(

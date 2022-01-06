@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import {useState} from 'react';
 import {LiferayTheme} from '../../../../common/services/liferay';
 import {getKoroneikiAccounts} from '../../../../common/services/liferay/graphql/queries';
-import {PARAMS_KEYS} from '../../../../common/services/liferay/search-params';
+import {PARAMS_KEYS} from '../../../../common/utils/constants';
 import ProjectCard from '../../components/ProjectCard';
 import SearchProject from '../../components/SearchProject';
 import {status} from '../../utils/constants';
@@ -96,11 +96,12 @@ const Home = ({userAccount}) => {
 		<div
 			className={classNames({
 				'mx-auto project-cards-container-sm': withManyProjects,
-				'pl-5 project-cards-container': !withManyProjects,
+				'project-cards-container': !withManyProjects,
 			})}
 		>
 			<div
-				className={classNames('d-flex flex-column w-100', {
+				className={classNames({
+					'd-flex flex-column w-100': withManyProjects,
 					'ml-3': !withManyProjects,
 				})}
 			>
@@ -117,7 +118,7 @@ const Home = ({userAccount}) => {
 				{!loading ? (
 					<div
 						className={classNames('d-flex flex-wrap', {
-							'home-projects': !withManyProjects,
+							'home-projects px-5': !withManyProjects,
 							'home-projects-sm pt-2': withManyProjects,
 						})}
 					>

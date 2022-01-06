@@ -133,9 +133,9 @@ public class JavaMapBuilderGenericsCheck extends BaseJavaTermCheck {
 			try {
 				return Class.forName(importName);
 			}
-			catch (ClassNotFoundException classNotFoundException) {
+			catch (Throwable throwable) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(classNotFoundException, classNotFoundException);
+					_log.debug(throwable, throwable);
 				}
 			}
 		}
@@ -143,27 +143,27 @@ public class JavaMapBuilderGenericsCheck extends BaseJavaTermCheck {
 		try {
 			return Class.forName(typeName);
 		}
-		catch (ClassNotFoundException classNotFoundException) {
+		catch (Throwable throwable) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(classNotFoundException, classNotFoundException);
+				_log.debug(throwable, throwable);
 			}
 		}
 
 		try {
 			return Class.forName("java.lang." + typeName);
 		}
-		catch (ClassNotFoundException classNotFoundException) {
+		catch (Throwable throwable) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(classNotFoundException, classNotFoundException);
+				_log.debug(throwable, throwable);
 			}
 		}
 
 		try {
 			return Class.forName(javaClass.getPackageName() + "." + typeName);
 		}
-		catch (ClassNotFoundException classNotFoundException) {
+		catch (Throwable throwable) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(classNotFoundException, classNotFoundException);
+				_log.debug(throwable, throwable);
 			}
 		}
 

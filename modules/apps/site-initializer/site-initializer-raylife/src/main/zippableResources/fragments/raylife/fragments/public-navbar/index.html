@@ -6,24 +6,20 @@ themeDisplay.getSiteGroup().getFriendlyURL() /]
 <nav class="navbar navbar-expand-lg navbar-light pb-3 pt-2 public-site-navbar">
 	<div class="container d-block">
 		<div class="align-items-center d-flex">
-			<div class="align-items-center d-flex flex-grow-1">
+			<div class="align-items-center d-flex flex-grow-1 justify-content-between justify-content-lg-start mr-3">
 				<a class="navbar-brand" href="${publicFriendlyURL}">
 				<img alt="" class="align-top d-inline-block navbar-logo" data-lfr-editable-id="image-logo" data-lfr-editable-type="image" loading="lazy" src="[resources:raylife_logo.svg]" />
 				</a>
 
-			<button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-target="#navbarSupportedContent" data-toggle="collapse" type="button">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-
 				<a class="d-flex" href="#">
-				<img alt="" class="mx-1" loading="lazy" src="[resources:phone-android.svg]" />
+				<img alt="" class="mx-1 nav-mobile-icon" loading="lazy" src="[resources:phone-android.svg]" />
 
-				<span class="text-brand-primary font-weight-semi-bold" data-lfr-editable-id="public-site-navbar-phone" data-lfr-editable-type="text">800-554-2642</span>
+				<span class="text-brand-primary font-weight-semi-bold public-site-navbar-telephone" data-lfr-editable-id="public-site-navbar-phone" data-lfr-editable-type="text">800-554-2642</span>
 				</a>
 
 				<div class="public-site-navbar-divider"></div>
 
-				<a class="text-brand-primary" href="#">
+				<a class="public-site-navbar-link text-brand-primary" href="#">
 				<span class="text-brand-primary font-weight-semi-bold" data-lfr-editable-id="public-site-navbar-link" data-lfr-editable-type="text">Producer Portal</span>
 				</a>
 			</div>
@@ -31,7 +27,7 @@ themeDisplay.getSiteGroup().getFriendlyURL() /]
 			<div>
 			<img alt="" class="icon-search mr-4" loading="lazy" src="[resources:icon-search.svg]" />
 
-				<label class="switch text-brand-primary">
+				<label class="switch text-brand-primary  public-site-navbar-switch">
 					<input id="togBtn" type="checkbox" />
 
 					<div class="align-items-center bg-brand-primary-lighten-6 d-flex justify-content-between rounded slider text-brand-primary text-link-sm">
@@ -40,6 +36,10 @@ themeDisplay.getSiteGroup().getFriendlyURL() /]
 					</div>
 				</label>
 			</div>
+
+			<button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-target="#navbarSupportedContent" data-toggle="collapse" type="button">
+					<span class="navbar-toggler-icon"></span>
+				</button>
 		</div>
 
 		<div class="collapse navbar-collapse rounded-sm" id="navbarSupportedContent">

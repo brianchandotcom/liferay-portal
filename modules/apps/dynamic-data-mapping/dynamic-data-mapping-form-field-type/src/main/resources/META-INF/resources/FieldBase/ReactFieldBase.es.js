@@ -71,10 +71,8 @@ const getDefaultRows = (nestedFields) => {
 	});
 };
 
-const getFieldDetails = (props) => {
+const getFieldDetails = ({errorMessage, hasError, required, text, tip}) => {
 	let fieldDetails = '';
-
-	const {errorMessage, hasError, required, text, tip} = props;
 
 	if (tip) {
 		fieldDetails += Liferay.Util.escape(tip) + '<br>';
@@ -161,7 +159,7 @@ const Popover = ({tooltip}) => {
 	);
 };
 
-function FieldBase({
+export function FieldBase({
 	accessible = true,
 	children,
 	displayErrors,
@@ -390,7 +388,6 @@ function FieldBase({
 
 			{!hideEditedFlag && (
 				<input
-					key={inputEditedName}
 					name={inputEditedName}
 					type="hidden"
 					value={localizedValue[editingLanguageId] !== undefined}
@@ -425,5 +422,3 @@ function FieldBase({
 		</div>
 	);
 }
-
-export {FieldBase};

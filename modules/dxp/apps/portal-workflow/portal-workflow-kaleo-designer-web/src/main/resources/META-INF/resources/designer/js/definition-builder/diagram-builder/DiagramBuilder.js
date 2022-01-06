@@ -9,7 +9,6 @@
  * distribution rights of the Software.
  */
 
-import {fetch} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {
 	useCallback,
@@ -29,7 +28,7 @@ import {DefinitionBuilderContext} from '../DefinitionBuilderContext';
 import {defaultLanguageId} from '../constants';
 import DeserializeUtil from '../source-builder/deserializeUtil';
 import {singleEventObserver} from '../util/EventObserver';
-import {baseURL, headers} from '../util/fetchUtil';
+import {retrieveDefinitionRequest} from '../util/fetchUtil';
 import {getCollidingElements} from '../util/utils';
 import {DiagramBuilderContextProvider} from './DiagramBuilderContext';
 import {nodeTypes} from './components/nodes/utils';
@@ -225,10 +224,7 @@ export default function DiagramBuilder({version}) {
 
 	useEffect(() => {
 		if (version !== '0' && !deserialize) {
-			fetch(`${baseURL}/workflow-definitions/by-name/${definitionId}`, {
-				headers,
-				method: 'GET',
-			})
+			retrieveDefinitionRequest(definitionId)
 				.then((response) => response.json())
 				.then(({active, content, name}) => {
 					setActive(active);

@@ -67,7 +67,6 @@ public class KaleoProcessUpgradeProcess extends UpgradeProcess {
 
 			while (resultSet.next()) {
 				String uuid = resultSet.getString("uuid_");
-				long kaleoProcessId = resultSet.getLong("kaleoProcessId");
 				long groupId = resultSet.getLong("groupId");
 				long companyId = resultSet.getLong("companyId");
 				long userId = resultSet.getLong("userId");
@@ -77,6 +76,7 @@ public class KaleoProcessUpgradeProcess extends UpgradeProcess {
 
 				if (Validator.isNull(uuid)) {
 					uuid = PortalUUIDUtil.generate();
+					long kaleoProcessId = resultSet.getLong("kaleoProcessId");
 
 					runSQL(
 						StringBundler.concat(

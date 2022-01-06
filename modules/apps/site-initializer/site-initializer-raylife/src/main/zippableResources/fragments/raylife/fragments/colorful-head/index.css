@@ -1,0 +1,5 @@
+@media screen and (max-width: 576px){
+	.colorful-head span {
+		font-size: 32px !important;
+	}
+}

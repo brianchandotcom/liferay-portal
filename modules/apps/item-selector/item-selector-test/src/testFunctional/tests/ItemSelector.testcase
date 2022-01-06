@@ -1,6 +1,7 @@
 @component-name = "portal-collaboration"
 definition {
 
+	property portal.acceptance = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Item Selector";
@@ -30,7 +31,6 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanAddBlogsImageViaURL {
-		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "ItemSelector#AddBlogsImageViaURL";
 
 		JSONDocument.addFileWithUploadedFile(
@@ -461,6 +461,8 @@ definition {
 	@description = "This is a test for LPS-136947. It checks that unsupported files cannot be uploaded to Blogs."
 	@priority = "3"
 	test CannotUploadUnsupportedFilesToBlogs {
+		property portal.acceptance = "false";
+
 		BlogsNavigator.openToAddEntry(siteURLKey = "guest");
 
 		BlogsNavigator.gotoSelectFile();
@@ -732,6 +734,8 @@ definition {
 	@priority = "3"
 	@refactordone
 	test CanSearchForUploadedImageFromBlogsImages {
+		property portal.acceptance = "false";
+
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
 		Blogs.addEntryWithUploadedCoverImage(
@@ -755,6 +759,8 @@ definition {
 	@priority = "3"
 	@refactordone
 	test CanSearchForUploadedImageFromDMImages {
+		property portal.acceptance = "false";
+
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
 		Blogs.addEntryWithUploadedCoverImage(
@@ -1258,6 +1264,7 @@ definition {
 	@description = "This is a test for LPS-136945. It checks that only 'File Upload,' 'Folder,' 'Google Drive Shortcut' and 'External Video Shortcut' options appear when adding a document."
 	@priority = "3"
 	test OnlyRelevantSelectionsAppearWhenAddingDocuments {
+		property portal.acceptance = "false";
 		property portal.release = "false";
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
@@ -1286,6 +1293,8 @@ definition {
 	@description = "This is a test for LPS-136943. It checks that only 'File Upload' and 'Folder' options appear when adding images."
 	@priority = "3"
 	test OnlyRelevantSelectionsAppearWhenAddingImages {
+		property portal.acceptance = "false";
+
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		LexiconEntry.gotoAddMenuItem(menuItem = "Basic Web Content");
@@ -1298,6 +1307,8 @@ definition {
 	@description = "This is a test for LPS-136944. It checks that only 'File Upload,' 'Folder,' and 'External Video Shortcut' options appear when adding a video."
 	@priority = "3"
 	test OnlyRelevantSelectionsAppearWhenAddingVideos {
+		property portal.acceptance = "false";
+
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		LexiconEntry.gotoAddMenuItem(menuItem = "Basic Web Content");

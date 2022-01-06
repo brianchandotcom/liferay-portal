@@ -199,7 +199,6 @@ export function ColorPicker({
 								active={activeColorPicker}
 								colors={colors}
 								config={config}
-								fieldName={field.name}
 								label={tokenLabel}
 								onSetActive={setActiveColorPicker}
 								onValueChange={({label, name, value}) => {
@@ -387,7 +386,6 @@ export function ColorPicker({
 										active={activeColorPicker}
 										colors={colors}
 										config={config}
-										fieldName={field.name}
 										onSetActive={setActiveColorPicker}
 										onValueChange={({
 											label,

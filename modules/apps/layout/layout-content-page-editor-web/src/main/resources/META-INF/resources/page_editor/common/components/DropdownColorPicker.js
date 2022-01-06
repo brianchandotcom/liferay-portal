@@ -35,7 +35,6 @@ export function DropdownColorPicker({
 	colors,
 	config,
 	disabled,
-	fieldName = '',
 	label = null,
 	onValueChange = () => {},
 	onSetActive,
@@ -166,7 +165,6 @@ export function DropdownColorPicker({
 						colors={filteredColors}
 						config={config}
 						dropdownContainerRef={dropdownContainerRef}
-						fieldName={fieldName}
 						onKeyDown={handleKeyDownWrapper}
 						onSetActive={onSetActive}
 						onSetSearchValue={setSearchValue}
@@ -211,7 +209,6 @@ export function DropdownColorPicker({
 								colors={filteredColors}
 								config={config}
 								dropdownContainerRef={dropdownContainerRef}
-								fieldName={fieldName}
 								onKeyDown={handleKeyDownWrapper}
 								onSetActive={onSetActive}
 								onSetSearchValue={setSearchValue}
@@ -230,7 +227,6 @@ const Wrapper = ({
 	colors,
 	config,
 	dropdownContainerRef,
-	fieldName,
 	onKeyDown,
 	onSetActive,
 	onSetSearchValue,
@@ -278,9 +274,6 @@ const Wrapper = ({
 											>
 												<Splotch
 													config={config}
-													disabled={
-														name === fieldName
-													}
 													onClick={() => {
 														onValueChange({
 															label,
@@ -321,17 +314,7 @@ const Wrapper = ({
 
 const Splotch = React.forwardRef(
 	(
-		{
-			active,
-			className,
-			config,
-			disabled,
-			onClick,
-			onKeyPress,
-			size,
-			title,
-			value,
-		},
+		{active, className, config, onClick, onKeyPress, size, title, value},
 		ref
 	) => (
 		<button
@@ -345,7 +328,6 @@ const Splotch = React.forwardRef(
 				}
 			)}
 			data-tooltip-delay="0"
-			disabled={disabled}
 			onClick={onClick}
 			onKeyPress={onKeyPress}
 			ref={ref}
@@ -364,7 +346,6 @@ DropdownColorPicker.propTypes = {
 	active: PropTypes.bool.isRequired,
 	colors: PropTypes.shape({}).isRequired,
 	disabled: PropTypes.bool,
-	fieldName: PropTypes.string,
 	label: PropTypes.string,
 	onSetActive: PropTypes.func.isRequired,
 	onValueChange: PropTypes.func,

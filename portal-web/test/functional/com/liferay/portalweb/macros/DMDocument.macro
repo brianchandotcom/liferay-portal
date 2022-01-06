@@ -2497,7 +2497,7 @@ definition {
 				value1 = "${dmDocumentDescription}");
 		}
 
-		if (isSet(dmDocumentSize) && isSet(dmDocumentSize)) {
+		if (isSet(dmDocumentSize)) {
 			var key_dmDocumentSize = "${dmDocumentSize}";
 
 			AssertVisible(locator1 = "DocumentsAndMediaDocument#DOCUMENT_DETAILS_SIZE");

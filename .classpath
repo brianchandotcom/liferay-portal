@@ -139,7 +139,6 @@
 	<classpathentry kind="lib" path="lib/portal/cglib-nodep.jar"/>
 	<classpathentry kind="lib" path="lib/portal/closure-compiler.jar"/>
 	<classpathentry kind="lib" path="lib/portal/commons-beanutils.jar"/>
-	<classpathentry kind="lib" path="lib/portal/commons-chain.jar"/>
 	<classpathentry kind="lib" path="lib/portal/commons-codec.jar"/>
 	<classpathentry kind="lib" path="lib/portal/commons-collections.jar"/>
 	<classpathentry kind="lib" path="lib/portal/commons-collections4.jar"/>

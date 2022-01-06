@@ -75,6 +75,8 @@ public class SLAInstanceResultWorkflowMetricsIndexer
 
 		documentBuilder.setValue(
 			"active", true
+		).setValue(
+			"blocked", false
 		).setLong(
 			"companyId", workflowMetricsSLAInstanceResult.getCompanyId()
 		);

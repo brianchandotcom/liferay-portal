@@ -10,13 +10,9 @@
  *
  */
 
-import {COL_TYPES_FIELD, STR_BLANK, xmlNamespace} from './constants';
+import {COL_TYPES_FIELD} from './constants';
 import XMLSchemaUtil from './xmlSchemaUtil';
 import XMLUtil from './xmlUtil';
-
-const isNumber = (value) => value instanceof Number;
-
-const isString = (value) => value instanceof String;
 
 let ATTRS;
 
@@ -31,12 +27,6 @@ export default function XMLDefinition(config) {
 
 		instance.definitionDoc = parser.parseFromString(value, 'text/xml');
 	}
-
-	const metadata = instance.getDefinitionMetadata();
-
-	if (metadata) {
-		instance.setAttrs(metadata);
-	}
 }
 
 XMLDefinition.prototype = {
@@ -50,25 +40,6 @@ XMLDefinition.prototype = {
 				fn.call(instance, item, fieldData);
 			}
 		});
-	},
-
-	getAttrs() {
-		return {
-			...ATTRS,
-			description: {
-				validator: isString,
-				value: STR_BLANK,
-			},
-			name: {
-				validator: isString,
-			},
-			value: {},
-			version: {
-				validator: isNumber,
-				value: 1,
-			},
-			xmlNamespace: {value: xmlNamespace},
-		};
 	},
 
 	getDefinitionMetadata() {
@@ -383,12 +354,6 @@ XMLDefinition.prototype = {
 
 	set(key, value) {
 		ATTRS[key] = value;
-	},
-
-	setAttrs(attrs) {
-		Object.entries(attrs).forEach(([key, value]) => {
-			ATTRS[key] = value;
-		});
 	},
 
 	translate(tagName) {

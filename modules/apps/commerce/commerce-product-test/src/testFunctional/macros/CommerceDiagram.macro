@@ -76,7 +76,7 @@ definition {
 
 	macro assertPinToolTipInfo {
 		AssertElementPresent(
-			key_positionValue = "${positionNumber}",
+			key_positionValue = "${pinNumber}",
 			locator1 = "CommerceDiagrams#DIAGRAM_ADMIN_TOOLTIP_POSITION");
 
 		AssertElementPresent(

@@ -45,74 +45,216 @@ definition {
 	}
 
 	@description = "This is a test for LPS-142641. Verify the Stylebook One is marked as default and includes a thumbnail"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test StylebookOneIsDefaultAndIncludesAThumbnail {
+		task ("Go to Team Extranet Site") {
+			ApplicationsMenu.gotoSite(site = "Test Site Team Extranet");
+		}
+		
+		task ("Go to Style Books and Assert the Stylebook One Card") {
+			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-site-team-extranet");
 
-		// TODO LPS-142641 StylebookOneIsDefaultAndIncludesAThumbnail pending implementation
+			StyleBooksAdmin.viewStyleBooksPresent(styleBookName = "Stylebook One");
+		}
 
+		task ("Assert the Stylebook One is Masked as Default") {
+			LexiconCard.viewCardSticker(
+				card = "Stylebook One",
+				icon = "check-circle");
+		}
 	}
 
 	@description = "This is a test for LPS-142641. View the Team Extranet Categories"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test ViewTeamExtranetCategories {
+		task ("Go to Team Extranet Categories") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-team-extranet");
+		}
 
-		// TODO LPS-142641 ViewTeamExtranetCategories pending implementation
+		task ("Assert the Regions Categories are present") {
+			for (var categoryName : list "Asia Pacific,Europe,Latin America,Middle East & Africa,North America") {
+				Category.viewCP(
+					categoryName = "${categoryName}",
+					vocabularyName = "Regions");
+			}
+		}
 
+		task ("Go to Roles and Assert the Categories are Presente") {
+			Click(
+				categoryName = "Roles",
+				locator1 = "ContentDashboard#CATEGORY_NAME_ELEMENT");
+
+			for (var categoryName : list "Back End,Front End,Quality Assurance") {
+				Category.viewCP(
+					categoryName = "${categoryName}",
+					vocabularyName = "Roles");
+			}
+		}
 	}
 
 	@description = "This is a test for LPS-142641. View the Team Extranet Collections"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test ViewTeamExtranetCollections {
+		task ("Go to Team Extranet Collections") {
+			ApplicationsMenu.gotoSite(site = "Test Site Team Extranet");
 
-		// TODO LPS-142641 ViewTeamExtranetCollections pending implementation
+			ProductMenu.gotoPortlet(
+				category = "Site Builder",
+				portlet = "Collections");
+		}
+
+		task ("Assert the Collections are present") {
+			for (var key_title : list "Blog Entries,Featured Blog Entries,Team Members,Job Positions") {
+				AssertElementPresent(
+					key_title = "${key_title}",
+					locator1 = "ItemSelector#LOCATION_INFO_LIST_GENERIC");
+			}
+		}
 
 	}
 
 	@description = "This is a test for LPS-142641. View the Team Extranet Documents and Media"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test ViewTeamExtranetDocumentsAndMedia {
+		task ("Go to Team Extranet Documents and Media") {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-team-extranet");
+		}
 
-		// TODO LPS-142641 ViewTeamExtranetDocumentsAndMedia pending implementation
+		task ("Assert the 22 Documents are present") {
+			Pagination.changePagination(itemsPerPage = "40");
+
+			for (var key_card : list "site_logo_i.svg,member_peter_doe.jpg,member_kristin_watson.jpg,member_jerome_bell.jpg,member_jacob_jones.jpg,member_esther_howard.jpg,member_brooklyn_simmons.jpg,member_arlene_maccoy.jpg,member_albert_frank.jpg,home_video.mp4,home_map.png,entry_10.jpg,entry_09.jpg,entry_08.jpg,entry_07.jpg,entry_06.jpg,entry_05.jpg,entry_04.jpg,entry_03.jpg,entry_02.jpg,entry_01.jpg,arrow_down.svg") {
+				AssertElementPresent(
+					key_card = "${key_card}",
+					locator1 = "Card#CARD_TITLE");
+			}
+		}
 
 	}
 
 	@description = "This is a test for LPS-142641. View the Team Extranet Fragments"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test ViewTeamExtranetFragments {
+		task ("Go to Team Extranet Fragments Collections") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-team-extranet");
+		}
 
-		// TODO LPS-142641 ViewTeamExtranetFragments pending implementation
+		task ("Assert the Fragments Collections are present") {
+			for (var key_card : list "Image,Blog Header,Footer,Heading,Text Block,Main Navbar,Parallax Container,Class Container,Link,Video,Button,Member Header,Job Card,Member Card,Social Links,Entry Card,Home Header,Entry Header") {
+				AssertElementPresent(
+					key_card = "${key_card}",
+					locator1 = "Card#CARD_TITLE");
+			}
+		}
 
 	}
 
 	@description = "This is a test for LPS-142641. View the Team Extranet Pages"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test ViewTeamExtranetPages {
+		task ("Go to Team Extranet Pages") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-team-extranet");
+		}
 
-		// TODO LPS-142641 ViewTeamExtranetPages pending implementation
+		task ("Assert the Team Extranet Pages are present") {
+			for (var pageName : list "Home,Team,Careers,Blog,Resources,Privacy Policy,Cookie Settings") {
+				AssertVisible(
+					key_itemName = "${pageName}",
+					locator1 = "PagesAdmin#LIST_GROUP_ITEM");
+			}
+		}
 
 	}
 
 	@description = "This is a test for LPS-142641. View the Team Extranet Page Templates"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test ViewTeamExtranetPageTemplates {
+		task ("Go to Masters Page Templates in Team Extranet Site") {
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-team-extranet");
+		}
 
-		// TODO LPS-142641 ViewTeamExtranetPageTemplates pending implementation
+		task ("Assert Masters Page Templates are present") {
+			for (var masterLayoutName : list "Blank,Master") {
+				MastersPageTemplatesAdmin.viewMastersPresent(masterLayoutName = "${masterLayoutName}");
+			}
+		}
+
+		task ("Go to Display Page Templates in Team Extranet Site") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-team-extranet");
+		}
+
+		task ("Assert Display Page Templates are present") {
+			for (var displayPageName : list "Blog Entry,Job Position,Team Member") {
+				DisplayPageTemplatesAdmin.viewDisplayPagePresent(displayPageName = "${displayPageName}");
+			}
+		}
 
 	}
 
 	@description = "This is a test for LPS-142641. View the Team Extranet Web Content"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test ViewTeamExtranetWebContent {
+		task ("Go to Team Extranet Web Content") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-team-extranet");
+		}
 
-		// TODO LPS-142641 ViewTeamExtranetWebContent pending implementation
+		task ("Assert the 8 Team Members in Web Content are present") {
+			WebContentFolder.gotoCP(
+				folderName = "Team Members",
+				webContentTitle = "Team Members");
+
+			for (var webContentTitle : list "Jerome Bell,Jane Cooper,Esther Howard,Kristin Watson,Jacob Jones,Arlene MacCoy,Jacob Jones,Brooklyn Simmons") {
+				WebContent.viewTitle(webContentTitle = "${webContentTitle}");
+			}
+		}
+
+		task ("Assert the 9 Job Positions in Web Content are present") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-team-extranet");
+
+			WebContentFolder.gotoCP(
+				folderName = "Job Positions",
+				webContentTitle = "Job Positions");
+
+			for (var webContentTitle : list "Junior Front End Developer,Associate Test Engineer,Senior Front End Developer,Junior Back End Developer,Senior Software Architect,Associate Test Engineer,Senior Front End Developer,Junior Back End Developer,Senior Software Architect") {
+				WebContent.viewTitle(webContentTitle = "${webContentTitle}");
+			}
+		}
+
+		task ("Assert the 9 Blog Entries in Web Content are present") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-team-extranet");
+
+			WebContentFolder.gotoCP(
+				folderName = "Blog Entries",
+				webContentTitle = "Blog Entries");
+
+			for (var webContentTitle : list "25 management tips from top industry experts,00 20 gifts you can give to your marketing boss,What the best Management pros do (and you should too),Great people doing a great job in the design industry,When professionals run into problems with design,5 tools everyone in the design industry should be using,Meet the Steve Jobs of the marketing industry") {
+				WebContent.viewTitle(webContentTitle = "${webContentTitle}");
+			}
+
+			WebContent.viewTitle(
+				webContentTitle = '''The worst advice we've ever heard about marketing''',
+				webContentTitleEscapeCharacter = '''The worst advice we&#39;ve ever heard about marketing''');
+
+			WebContent.viewTitle(
+				webContentTitle = '''Think you're cut out for doing management?''',
+				webContentTitleEscapeCharacter = '''Think you&#39;re cut out for doing management?''');
+		}
+
+		task ("Go to Structures tab and assert the 3 Structures Names are present") {
+			NavItem.gotoStructures();
+
+			for (var webContentTitle : list "Position,Member,Entry") {
+				WebContentStructures.viewCP(structureName = "${structureName}");
+			}
+		}
+
+		task ("Go to Templates tab and assert the 3 Templates Cards are present") {
+			Navigator.gotoNavItem(navItem = "Templates");
+
+			for (var templateName : list "Position,Member,Entry") {
+				WebContentTemplates.viewCardsEntryCP(templateName = "${templateName}");
+			}
+		}
 
 	}
 

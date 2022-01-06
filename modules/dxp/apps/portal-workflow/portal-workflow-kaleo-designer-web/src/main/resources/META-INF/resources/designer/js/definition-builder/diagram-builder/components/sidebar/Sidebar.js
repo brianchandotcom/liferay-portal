@@ -23,6 +23,10 @@ const contents = {
 		component: SelectedNodeInfo,
 		title: Liferay.Language.get('end'),
 	},
+	fork: {
+		component: SelectedNodeInfo,
+		title: Liferay.Language.get('fork-node'),
+	},
 	start: {
 		component: SelectedNodeInfo,
 		title: Liferay.Language.get('start'),

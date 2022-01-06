@@ -5,7 +5,7 @@ definition {
 
 		var baseURL = "${baseURL}";
 
-		if (contains("${baseURL}", "{baseURL}")) {
+		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 
@@ -63,7 +63,7 @@ definition {
 	macro _deleteAllCommerceOrders {
 		var baseURL = "${baseURL}";
 
-		if (contains("${baseURL}", "{baseURL}")) {
+		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 
@@ -92,7 +92,7 @@ definition {
 	macro _getCommerceOrderIds {
 		var baseURL = "${baseURL}";
 
-		if (contains("${baseURL}", "{baseURL}")) {
+		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 
@@ -116,7 +116,7 @@ definition {
 	macro _getCommerceOrdersCount {
 		var baseURL = "${baseURL}";
 
-		if (contains("${baseURL}", "{baseURL}")) {
+		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 

@@ -13,7 +13,7 @@ definition {
 
 		Portlet.clickPortletPlusIconPG(portletName = "${portletName}");
 
-		if (!(contains("${structureName}", "{structureName}"))) {
+		if (isSet(structureName)) {
 			var structureName = "${structureName}";
 		}
 		else {

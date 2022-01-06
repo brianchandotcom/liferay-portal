@@ -57,7 +57,7 @@ definition {
 	macro selectLanguagePG {
 		var portletName = "${portletName}";
 
-		if (contains("${portletName}", "{portletName}")) {
+		if (!(isSet(portletName))) {
 			var portletName = "LanguagePortlet";
 		}
 

@@ -50,7 +50,7 @@ definition {
 		LexiconEntry.gotoAdd();
 
 		if ("${singleSiteTypePermission}" != "true") {
-			if (contains("${siteTemplateName}", "{siteTemplateName}")) {
+			if (!(isSet(siteTemplateName))) {
 				var siteTemplateName = "${siteType} Site";
 			}
 

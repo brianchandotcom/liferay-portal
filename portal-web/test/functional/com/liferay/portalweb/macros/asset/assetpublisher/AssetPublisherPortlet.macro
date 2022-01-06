@@ -885,7 +885,7 @@ definition {
 	}
 
 	macro gotoConfigurationPG {
-		if (contains("${portletName}", "{portletName}")) {
+		if (!(isSet(portletName))) {
 			var portletName = "Asset Publisher";
 		}
 

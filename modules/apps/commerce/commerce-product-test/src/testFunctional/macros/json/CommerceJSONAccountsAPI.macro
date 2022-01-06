@@ -3,7 +3,7 @@ definition {
 	macro _deleteAllCommerceAccounts {
 		var baseURL = "${baseURL}";
 
-		if (contains("${baseURL}", "{baseURL}")) {
+		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 
@@ -32,7 +32,7 @@ definition {
 	macro _getCommerceAccountEmail {
 		var baseURL = "${baseURL}";
 
-		if (contains("${baseURL}", "{baseURL}")) {
+		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 
@@ -63,7 +63,7 @@ definition {
 	macro _getCommerceAccountIds {
 		var baseURL = "${baseURL}";
 
-		if (contains("${baseURL}", "{baseURL}")) {
+		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 
@@ -87,7 +87,7 @@ definition {
 	macro _getCommerceAccountsCount {
 		var baseURL = "${baseURL}";
 
-		if (contains("${baseURL}", "{baseURL}")) {
+		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 

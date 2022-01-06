@@ -3,7 +3,7 @@ definition {
 	macro _deleteAllCommerceSpecificationGroups {
 		var baseURL = "${baseURL}";
 
-		if (contains("${baseURL}", "{baseURL}")) {
+		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 
@@ -32,7 +32,7 @@ definition {
 	macro _getCommerceSpecificationGroupIds {
 		var baseURL = "${baseURL}";
 
-		if (contains("${baseURL}", "{baseURL}")) {
+		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 
@@ -56,7 +56,7 @@ definition {
 	macro _getCommerceSpecificationGroupsCount {
 		var baseURL = "${baseURL}";
 
-		if (contains("${baseURL}", "{baseURL}")) {
+		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 

@@ -1,7 +1,7 @@
 definition {
 
 	macro _openDescriptiveMenulistCP {
-		if (!(contains("${webContentTitleEscapeCharacter}", "{webContentTitleEscapeCharacter}"))) {
+		if (isSet(webContentTitleEscapeCharacter)) {
 			var key_webContentTitle = "${webContentTitleEscapeCharacter}";
 		}
 		else {
@@ -161,7 +161,7 @@ definition {
 	macro openToAddBasicArticle {
 		var baseURL = "${baseURL}";
 
-		if (contains("${baseURL}", "{baseURL}")) {
+		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 
@@ -192,7 +192,7 @@ definition {
 	macro openToEditWCInSite {
 		var baseURL = "${baseURL}";
 
-		if (contains("${baseURL}", "{baseURL}")) {
+		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 

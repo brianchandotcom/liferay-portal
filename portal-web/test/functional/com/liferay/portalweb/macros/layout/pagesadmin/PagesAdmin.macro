@@ -173,7 +173,7 @@ definition {
 	}
 
 	macro _selectPageType {
-		if (!(contains("${pageTemplateName}", "{pageTemplateName}"))) {
+		if (isSet(pageTemplateName)) {
 			var sitePageType = "${pageTemplateName}";
 
 			if (isSet(collectionName)) {
@@ -717,7 +717,7 @@ definition {
 	macro getFriendlyURL {
 		var baseURL = "${baseURL}";
 
-		if (contains("${baseURL}", "{baseURL}")) {
+		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 

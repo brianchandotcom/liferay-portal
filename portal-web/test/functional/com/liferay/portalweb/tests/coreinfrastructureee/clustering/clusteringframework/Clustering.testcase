@@ -223,8 +223,8 @@ definition {
 	}
 
 	@priority = "4"
-	test CanUpdateLogLevelsForAllNodes {
-		property test.name.skip.portal.instance = "Clustering#CanUpdateLogLevelsForAllNodes";
+	test CanUpdateLogLevelsForAllNodesFromMaster {
+		property test.name.skip.portal.instance = "Clustering#CanUpdateLogLevelsForAllNodesFromMaster";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
@@ -249,6 +249,49 @@ definition {
 			userEmailAddress = "test@liferay.com");
 
 		for (var serverPort : list "8080,9080") {
+			Clustering.viewTextPresentOnSpecificNode(
+				expectedText = "Send multicast message",
+				nodePort = "${serverPort}");
+		}
+	}
+
+	@priority = "4"
+	test CanUpdateLogLevelsForAllNodesFromSlave {
+		property app.server.bundles.size = "2";
+		property test.name.skip.portal.instance = "Clustering#CanUpdateLogLevelsForAllNodesFromSlave";
+
+		User.logoutPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		User.loginPG(
+			nodePort = "9080",
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "System",
+			panel = "Control Panel",
+			portlet = "Server Administration");
+
+		ServerAdministration.addCategoryLogLevels(
+			categoryLevel = "DEBUG",
+			categoryName = "com.liferay.portal.cluster");
+
+		ServerAdministration.viewCategoryLogLevels(
+			categoryLevel = "DEBUG",
+			categoryName = "com.liferay.portal.cluster");
+
+		User.logoutPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		User.loginPG(
+			nodePort = "8080",
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		for (var serverPort : list "8080,9080,10080") {
 			Clustering.viewTextPresentOnSpecificNode(
 				expectedText = "Send multicast message",
 				nodePort = "${serverPort}");

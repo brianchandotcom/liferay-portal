@@ -23,6 +23,10 @@
 		"cssVariableMapping": "color-brand-primary",
 		"value": "#0B5FFF"
 	},
+	"colorFocus": {
+		"cssVariableMapping": "color-focus",
+		"value": "#004AD7"
+	},
 	"colorNeutral1": {
 		"cssVariableMapping": "color-neutral-1",
 		"value": "#F7F8F9"

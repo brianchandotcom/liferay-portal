@@ -50,6 +50,7 @@ import com.liferay.portal.workflow.metrics.model.AddProcessRequest;
 import com.liferay.portal.workflow.metrics.model.AddTaskRequest;
 import com.liferay.portal.workflow.metrics.model.AddTransitionRequest;
 import com.liferay.portal.workflow.metrics.model.Assignment;
+import com.liferay.portal.workflow.metrics.model.DeleteProcessRequest;
 import com.liferay.portal.workflow.metrics.model.DeleteTransitionRequest;
 import com.liferay.portal.workflow.metrics.model.RoleAssignment;
 import com.liferay.portal.workflow.metrics.model.UserAssignment;
@@ -341,6 +342,19 @@ public class IndexerHelper {
 		}
 
 		return localizationMap;
+	}
+
+	public DeleteProcessRequest createDeleteProcessRequest(
+		KaleoDefinition kaleoDefinition) {
+
+		DeleteProcessRequest.Builder builder =
+			new DeleteProcessRequest.Builder();
+
+		return builder.companyId(
+			kaleoDefinition.getCompanyId()
+		).processId(
+			kaleoDefinition.getKaleoDefinitionId()
+		).build();
 	}
 
 	public DeleteTransitionRequest createDeleteTransitionRequest(

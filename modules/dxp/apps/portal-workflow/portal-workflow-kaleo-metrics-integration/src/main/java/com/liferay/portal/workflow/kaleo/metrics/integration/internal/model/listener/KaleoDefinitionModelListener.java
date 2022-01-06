@@ -66,8 +66,7 @@ public class KaleoDefinitionModelListener
 		throws ModelListenerException {
 
 		_processWorkflowMetricsIndexer.deleteProcess(
-			kaleoDefinition.getCompanyId(),
-			kaleoDefinition.getKaleoDefinitionId());
+			_indexerHelper.createDeleteProcessRequest(kaleoDefinition));
 	}
 
 	@Reference

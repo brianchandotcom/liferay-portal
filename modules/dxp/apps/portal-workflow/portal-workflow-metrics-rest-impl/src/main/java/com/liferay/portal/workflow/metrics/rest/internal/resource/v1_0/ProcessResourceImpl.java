@@ -27,6 +27,7 @@ import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.workflow.metrics.model.AddProcessRequest;
+import com.liferay.portal.workflow.metrics.model.DeleteProcessRequest;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Process;
 import com.liferay.portal.workflow.metrics.rest.internal.dto.v1_0.util.ProcessUtil;
 import com.liferay.portal.workflow.metrics.rest.internal.resource.exception.NoSuchProcessException;
@@ -56,8 +57,15 @@ public class ProcessResourceImpl extends BaseProcessResourceImpl {
 	public void deleteProcess(Long processId) throws Exception {
 		Process process = getProcess(processId);
 
+		DeleteProcessRequest.Builder builder =
+			new DeleteProcessRequest.Builder();
+
 		_processWorkflowMetricsIndexer.deleteProcess(
-			contextCompany.getCompanyId(), process.getId());
+			builder.companyId(
+				contextCompany.getCompanyId()
+			).processId(
+				process.getId()
+			).build());
 	}
 
 	@Override

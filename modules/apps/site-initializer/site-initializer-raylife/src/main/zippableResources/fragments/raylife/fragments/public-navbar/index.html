@@ -1,50 +1,54 @@
 [#assign privateFriendlyURL = themeDisplay.getPathFriendlyURLPrivateGroup() +
 themeDisplay.getSiteGroup().getFriendlyURL() publicFriendlyURL =
 themeDisplay.getPathFriendlyURLPublic() +
-themeDisplay.getSiteGroup().getFriendlyURL() /]
+themeDisplay.getSiteGroup().getFriendlyURL() /] [#assign clayIconSVG =
+themeDisplay.getCDNBaseURL() + "/o/admin-theme/images/clay/icons.svg" /]
 
 <nav class="navbar navbar-expand-lg navbar-light pb-3 pt-2 public-site-navbar">
 	<div class="container d-block">
 		<div class="align-items-center d-flex">
 			<div class="align-items-center d-flex flex-grow-1 justify-content-between justify-content-lg-start mr-3">
 				<a class="navbar-brand" href="${publicFriendlyURL}">
-				<img alt="" class="align-top d-inline-block navbar-logo" data-lfr-editable-id="image-logo" data-lfr-editable-type="image" loading="lazy" src="[resources:raylife_logo.svg]" />
+					<img alt="" class="align-top d-inline-block navbar-logo" data-lfr-editable-id="image-logo" data-lfr-editable-type="image" loading="lazy" src="[resources:raylife_logo.svg]" />
 				</a>
 
 				<a class="d-flex" href="#">
-				<img alt="" class="mx-1 nav-mobile-icon" loading="lazy" src="[resources:phone-android.svg]" />
+					<img alt="phone-android" class="mx-1 nav-mobile-icon" loading="lazy" src="[resources:phone-android.svg]" />
 
-				<span class="text-brand-primary font-weight-semi-bold public-site-navbar-telephone" data-lfr-editable-id="public-site-navbar-phone" data-lfr-editable-type="text">800-554-2642</span>
+					<span class="text-brand-primary font-weight-semi-bold public-site-navbar-telephone" data-lfr-editable-id="public-site-navbar-phone" data-lfr-editable-type="text">800-554-2642</span>
 				</a>
 
 				<div class="public-site-navbar-divider"></div>
 
 				<a class="public-site-navbar-link text-brand-primary" href="#">
-				<span class="text-brand-primary font-weight-semi-bold" data-lfr-editable-id="public-site-navbar-link" data-lfr-editable-type="text">Producer Portal</span>
+					<span class="text-brand-primary font-weight-semi-bold" data-lfr-editable-id="public-site-navbar-link" data-lfr-editable-type="text">Producer Portal</span>
 				</a>
 			</div>
 
 			<div>
-			<img alt="" class="icon-search mr-4" loading="lazy" src="[resources:icon-search.svg]" />
+				<img alt="icon-search" class="icon-search mr-4" loading="lazy" src="[resources:icon-search.svg]" />
 
-				<label class="switch text-brand-primary  public-site-navbar-switch">
+				<label class="public-site-navbar-switch switch text-brand-primary">
 					<input id="togBtn" type="checkbox" />
 
 					<div class="align-items-center bg-brand-primary-lighten-6 d-flex justify-content-between rounded slider text-brand-primary text-link-sm">
-					<span class="off text-brand-primary rounded bg-brand-primary-lighten-6" data-lfr-editable-id="public-site-navbar-off" data-lfr-editable-type="text">Business</span>
-					<span class="on text-brand-primary rounded bg-brand-primary-lighten-6" data-lfr-editable-id="public-site-navbar-on" data-lfr-editable-type="text">Personal</span>
+						<span class="off text-brand-primary rounded bg-brand-primary-lighten-6" data-lfr-editable-id="public-site-navbar-off" data-lfr-editable-type="text">Business</span>
+						<span class="on text-brand-primary rounded bg-brand-primary-lighten-6" data-lfr-editable-id="public-site-navbar-on" data-lfr-editable-type="text">Personal</span>
 					</div>
 				</label>
 			</div>
 
 			<button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-target="#navbarSupportedContent" data-toggle="collapse" type="button">
-					<span class="navbar-toggler-icon"></span>
-				</button>
+				<svg class="arrow-icon lexicon-icon lexicon-icon-bars" focusable="false" role="presentation">
+					<use xlink:href="${clayIconSVG}#bars" />
+				</svg>
+			</button>
 		</div>
 
 		<div class="collapse navbar-collapse rounded-sm" id="navbarSupportedContent">
 			<lfr-widget-nav id="nav"></lfr-widget-nav>
-		<a class="btn btn-ghost btn-style-primary" href="${publicFriendlyURL}/sign-in" role="button">Sign In</a>
+
+			<a class="btn btn-ghost btn-style-primary" href="${publicFriendlyURL}/sign-in" role="button">Sign In</a>
 		</div>
 	</div>
 </nav>

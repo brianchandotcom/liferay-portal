@@ -51,6 +51,7 @@ export function ColorPicker({field, onValueSelect, tokenValues, value}) {
 	const [customColors, setCustomColors] = useState([value || '']);
 	const [error, setError] = useState(false);
 	const inputRef = useRef(null);
+	const [isHexadecimal, setIsHexadecimal] = useState(false);
 	const listboxRef = useRef(null);
 	const [tokenLabel, setTokenLabel] = useControlledState(
 		value ? tokenValues[value]?.label : Liferay.Language.get('default')
@@ -95,8 +96,7 @@ export function ColorPicker({field, onValueSelect, tokenValues, value}) {
 	};
 
 	const onBlurAutocompleteInput = ({target}) => {
-		const isHexColor = target.value.startsWith('#');
-		let nextValue = isHexColor
+		let nextValue = isHexadecimal
 			? target.value.substring(0, MAX_HEX_LENGTH)
 			: target.value;
 
@@ -110,13 +110,13 @@ export function ColorPicker({field, onValueSelect, tokenValues, value}) {
 				(token) => token.label.toLowerCase() === nextValue
 			);
 
-			if (token || isHexColor) {
+			if (token || isHexadecimal) {
 				nextValue = token?.name || nextValue;
 
-				setTokenLabel(!isHexColor ? token.label : null);
+				setTokenLabel(!isHexadecimal ? token.label : null);
 				onValueSelect(field.name, nextValue);
 
-				if (isHexColor) {
+				if (isHexadecimal) {
 					setCustomColors([nextValue.replace('#', '')]);
 				}
 			}
@@ -135,6 +135,7 @@ export function ColorPicker({field, onValueSelect, tokenValues, value}) {
 
 		setActiveAutocomplete(value.length > 1 && filteredTokenValues.length);
 		setColor(value);
+		setIsHexadecimal(value.startsWith('#'));
 	};
 
 	const onClickAutocompleteItem = ({label, name, value}) => {

@@ -52,6 +52,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.DateRange;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -71,6 +72,7 @@ import java.io.File;
 import java.io.Serializable;
 
 import java.util.Map;
+import java.util.Objects;
 
 import org.apache.commons.lang.time.StopWatch;
 
@@ -382,7 +384,12 @@ public class LayoutExportController implements ExportController {
 		long[] layoutIds = GetterUtil.getLongValues(
 			settingsMap.get("layoutIds"));
 
-		if (ArrayUtil.contains(layoutIds, 0)) {
+		String cmd = MapUtil.getString(parameterMap, Constants.CMD);
+
+		if (ArrayUtil.contains(layoutIds, 0) &&
+			!Objects.equals(cmd, Constants.PUBLISH_TO_LIVE) &&
+			!Objects.equals(cmd, Constants.PUBLISH_TO_REMOTE)) {
+
 			layoutIds = _exportImportHelper.getAllLayoutIds(
 				sourceGroupId, privateLayout);
 		}

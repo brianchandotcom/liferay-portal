@@ -65,7 +65,6 @@ export function ColorPicker({
 			? tokenValues[value]?.value || value
 			: tokenValues[value]?.value
 	);
-	const colorButtonRef = useRef(null);
 	const [customColors, setCustomColors] = useState([value || '']);
 	const [error, setError] = useState(null);
 	const inputRef = useRef(null);
@@ -119,9 +118,6 @@ export function ColorPicker({
 	};
 
 	const onBlurAutocompleteInput = ({target}) => {
-		const colorButton = colorButtonRef.current.querySelector(
-			'.clay-color-btn'
-		);
 		const isHexColor = target.value.startsWith('#');
 		let nextValue = isHexColor
 			? getValidHexColor(target.value)
@@ -153,18 +149,15 @@ export function ColorPicker({
 				}
 
 				setTokenLabel(!isHexColor ? token.label : null);
+				onValueSelect(field.name, nextValue);
 
 				if (isHexColor) {
 					setCustomColors([nextValue.replace('#', '')]);
 				}
 			}
-			else if (colorButton.style.background !== nextValue) {
+			else {
 				setError(ERROR_MESSAGES.valueNotExist);
-
-				return;
 			}
-
-			onValueSelect(field.name, nextValue);
 		}
 
 		setColor(nextValue);
@@ -247,11 +240,7 @@ export function ColorPicker({
 					) : (
 						<ClayInput.GroupItem>
 							<ClayInput.Group>
-								<ClayInput.GroupItem
-									prepend
-									ref={colorButtonRef}
-									shrink
-								>
+								<ClayInput.GroupItem prepend shrink>
 									<ClayColorPicker
 										active={activeColorPicker}
 										colors={customColors}

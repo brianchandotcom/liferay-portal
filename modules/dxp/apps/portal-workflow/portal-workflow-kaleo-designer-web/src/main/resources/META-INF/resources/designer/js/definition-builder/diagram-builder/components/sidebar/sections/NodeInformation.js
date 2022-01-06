@@ -14,15 +14,16 @@ import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
-import {DefinitionBuilderContext} from '../../../DefinitionBuilderContext';
-import {defaultLanguageId} from '../../../constants';
-import {DiagramBuilderContext} from '../../DiagramBuilderContext';
-import SidebarPanel from './SidebarPanel';
-import {isIdDuplicated} from './utils';
+import {DefinitionBuilderContext} from '../../../../DefinitionBuilderContext';
+import {defaultLanguageId} from '../../../../constants';
+import {DiagramBuilderContext} from '../../../DiagramBuilderContext';
+import SidebarPanel from '../SidebarPanel';
+import {isIdDuplicated} from '../utils';
 
-export default function SelectedNodeInfo({errors, setErrors}) {
-	const {elements, selectedLanguageId} = useContext(DefinitionBuilderContext);
+export default function NodeInformation({errors, setErrors}) {
+	const {selectedLanguageId} = useContext(DefinitionBuilderContext);
 	const {
+		elements,
 		selectedItem,
 		selectedItemNewId,
 		setSelectedItem,
@@ -188,7 +189,7 @@ export default function SelectedNodeInfo({errors, setErrors}) {
 	);
 }
 
-SelectedNodeInfo.propTypes = {
+NodeInformation.propTypes = {
 	errors: PropTypes.object.isRequired,
 	setErrors: PropTypes.func.isRequired,
 };

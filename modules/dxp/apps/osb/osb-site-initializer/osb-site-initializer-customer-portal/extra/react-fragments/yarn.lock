@@ -936,18 +936,18 @@
     "@clayui/icon" "^3.40.0"
     classnames "^2.2.6"
 
-"@clayui/css@3.41.0":
-  version "3.41.0"
-  resolved "https://registry.yarnpkg.com/@clayui/css/-/css-3.41.0.tgz#8fb3d1568528a11caccaf7fd3a4eff25642a528e"
-  integrity sha512-ajAm3JJ/2LiDgqdS59JSTKI//2WhWIUFKVNAche1v5Eawf5n/G8kNFaj51LXQqIof+u8eZpJ2KHycr96HyaH/A==
+"@clayui/css@3.43.0":
+  version "3.43.0"
+  resolved "https://registry.yarnpkg.com/@clayui/css/-/css-3.43.0.tgz#838e99cb26f7ee95a5a6a6cde7853cfd063a5531"
+  integrity sha512-b7SoHePPy/lkeQGR5y3Lt9y5WN83n8z48xJbwKA9TetpOI0G1Weq5o+PTWcjeR8tCoSV2Dq2xgGFswcxVN8/tA==
 
-"@clayui/drop-down@3.41.0":
-  version "3.41.0"
-  resolved "https://registry.yarnpkg.com/@clayui/drop-down/-/drop-down-3.41.0.tgz#214a26606cfe99e69d7a6eb2b78c0c5d17022e47"
-  integrity sha512-4Dwaj/ip2rK9Mb2IU1GLWpnHslxqUCYszlmaycq8AKZ8CzdwZwc6vqa8q7vLxXAQThJun6ARXi+IBeICIoeF+w==
+"@clayui/drop-down@3.43.0":
+  version "3.43.0"
+  resolved "https://registry.yarnpkg.com/@clayui/drop-down/-/drop-down-3.43.0.tgz#c5b028c96eb206fdb1860217bf3b83db765252f3"
+  integrity sha512-SKSeGgyj4wMrNMztgMmXPYhh6H6XNFa6licl8ZXd9nSEEcx722gXj990uVesDs4ec7NuxoMEhr+9P9oSzP3dBg==
   dependencies:
     "@clayui/button" "^3.40.0"
-    "@clayui/form" "^3.40.0"
+    "@clayui/form" "^3.42.0"
     "@clayui/icon" "^3.40.0"
     "@clayui/link" "^3.40.0"
     "@clayui/shared" "^3.40.0"
@@ -955,10 +955,10 @@
     react-transition-group "^4.4.1"
     warning "^4.0.3"
 
-"@clayui/form@^3.40.0":
-  version "3.40.0"
-  resolved "https://registry.yarnpkg.com/@clayui/form/-/form-3.40.0.tgz#279571ed3ec61870f14f50789b5e55ba27648fc0"
-  integrity sha512-ZrgvZwli/r304ecimMuFw8Dz5+EjLS6xrc8bAbmM/vxa0+FbtPSiWb8OT3DpxSOjl/W0qyqlXrgbtfZZIiqvVw==
+"@clayui/form@^3.42.0":
+  version "3.42.0"
+  resolved "https://registry.yarnpkg.com/@clayui/form/-/form-3.42.0.tgz#c3cdb166f2b56c07110a9c9df85bf7e6b5919109"
+  integrity sha512-j0Z15thowkIKWyTzOr5AM9IQSY8Se8dUWWiNLqMRJtxsXVhfaSdKZB2OloKOARSez3ny8OTvNW8CDd5YZgqojg==
   dependencies:
     "@clayui/button" "^3.40.0"
     "@clayui/icon" "^3.40.0"

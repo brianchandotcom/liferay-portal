@@ -117,8 +117,6 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 		_useStartTransient = GetterUtil.getBoolean(
 			bundleContext.getProperty(USE_START_TRANSIENT));
 
-		_watchedDirs.add(new File(PropsValues.MODULE_FRAMEWORK_PORTAL_DIR));
-
 		for (String dir : PropsValues.MODULE_FRAMEWORK_AUTO_DEPLOY_DIRS) {
 			_watchedDirs.add(new File(dir));
 		}

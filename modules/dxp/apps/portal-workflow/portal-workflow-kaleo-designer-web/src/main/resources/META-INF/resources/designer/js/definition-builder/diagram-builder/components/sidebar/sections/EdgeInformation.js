@@ -15,19 +15,19 @@ import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 import {isEdge} from 'react-flow-renderer';
 
-import {DefinitionBuilderContext} from '../../../DefinitionBuilderContext';
-import {defaultLanguageId} from '../../../constants';
-import {DiagramBuilderContext} from '../../DiagramBuilderContext';
-import SidebarPanel from './SidebarPanel';
-import {isIdDuplicated} from './utils';
+import {DefinitionBuilderContext} from '../../../../DefinitionBuilderContext';
+import {defaultLanguageId} from '../../../../constants';
+import {DiagramBuilderContext} from '../../../DiagramBuilderContext';
+import SidebarPanel from '../SidebarPanel';
+import {isIdDuplicated} from '../utils';
 
-export default function SelectedEdgeInfo({errors, setErrors}) {
-	const {elements, selectedLanguageId, setElements} = useContext(
-		DefinitionBuilderContext
-	);
+export default function EdgeInformation({errors, setErrors}) {
+	const {selectedLanguageId} = useContext(DefinitionBuilderContext);
 	const {
+		elements,
 		selectedItem,
 		selectedItemNewId,
+		setElements,
 		setSelectedItem,
 		setSelectedItemNewId,
 	} = useContext(DiagramBuilderContext);
@@ -215,7 +215,7 @@ export default function SelectedEdgeInfo({errors, setErrors}) {
 	);
 }
 
-SelectedEdgeInfo.propTypes = {
+EdgeInformation.propTypes = {
 	errors: PropTypes.object.isRequired,
 	setErrors: PropTypes.func.isRequired,
 };

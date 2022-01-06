@@ -28,6 +28,7 @@ import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.workflow.metrics.model.AddProcessRequest;
 import com.liferay.portal.workflow.metrics.model.DeleteProcessRequest;
+import com.liferay.portal.workflow.metrics.model.UpdateProcessRequest;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Process;
 import com.liferay.portal.workflow.metrics.rest.internal.dto.v1_0.util.ProcessUtil;
 import com.liferay.portal.workflow.metrics.rest.internal.resource.exception.NoSuchProcessException;
@@ -179,12 +180,27 @@ public class ProcessResourceImpl extends BaseProcessResourceImpl {
 		Map<Locale, String> titleMap = LocalizedMapUtil.getLocalizedMap(
 			process.getTitle_i18n());
 
+		UpdateProcessRequest.Builder builder =
+			new UpdateProcessRequest.Builder();
+
 		_processWorkflowMetricsIndexer.updateProcess(
-			process.getActive(), contextCompany.getCompanyId(),
-			process.getDescription(), process.getDateModified(),
-			getProcess.getId(),
-			titleMap.get(contextAcceptLanguage.getPreferredLocale()), titleMap,
-			process.getVersion());
+			builder.active(
+				process.getActive()
+			).companyId(
+				contextCompany.getCompanyId()
+			).description(
+				process.getDescription()
+			).modifiedDate(
+				process.getDateModified()
+			).processId(
+				getProcess.getId()
+			).title(
+				titleMap.get(contextAcceptLanguage.getPreferredLocale())
+			).titleMap(
+				titleMap
+			).version(
+				process.getVersion()
+			).build());
 	}
 
 	private BooleanQuery _createBooleanQuery(Long processId) {

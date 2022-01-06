@@ -55,6 +55,7 @@ import com.liferay.portal.workflow.metrics.model.CompleteTaskRequest;
 import com.liferay.portal.workflow.metrics.model.DeleteNodeRequest;
 import com.liferay.portal.workflow.metrics.model.DeleteProcessRequest;
 import com.liferay.portal.workflow.metrics.model.RoleAssignment;
+import com.liferay.portal.workflow.metrics.model.UpdateProcessRequest;
 import com.liferay.portal.workflow.metrics.model.UpdateTaskRequest;
 import com.liferay.portal.workflow.metrics.model.UserAssignment;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Assignee;
@@ -1079,8 +1080,27 @@ public class WorkflowMetricsRESTTestHelper {
 	public void updateProcess(long companyId, long processId, String version)
 		throws Exception {
 
+		UpdateProcessRequest.Builder builder =
+			new UpdateProcessRequest.Builder();
+
 		_processWorkflowMetricsIndexer.updateProcess(
-			null, companyId, null, new Date(), processId, null, null, version);
+			builder.active(
+				null
+			).companyId(
+				companyId
+			).description(
+				null
+			).modifiedDate(
+				new Date()
+			).processId(
+				processId
+			).title(
+				null
+			).titleMap(
+				null
+			).version(
+				version
+			).build());
 
 		_assertCount(
 			_processWorkflowMetricsIndexNameBuilder.getIndexName(companyId),

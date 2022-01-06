@@ -22,8 +22,6 @@ definition {
 		}
 
 		task ("Go to DXP portal, login and create site") {
-			TestCase.setUpPortalInstance();
-
 			User.firstLoginPG();
 
 			Navigator.openURL();
@@ -429,6 +427,8 @@ definition {
 	@description = "LPS-113835: When the user with edit permissions edits the content of the display page, the Metrics button is shown"
 	@priority = "4"
 	test MetricsWithEditPermissions {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
 		task ("Create a Web Content") {
 			JSONWebcontent.addWebContent(
 				content = "WC Content",
@@ -461,9 +461,7 @@ definition {
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
-			Button.clickPublish();
-
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			PageEditor.clickPublish();
 
 			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
 		}
@@ -498,20 +496,6 @@ definition {
 				userEmailAddress = "userea@liferay.com");
 		}
 
-		task ("Disable option to strangers to verify email") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Instance Settings");
-
-			SystemSettings.gotoConfiguration(
-				configurationCategory = "User Authentication",
-				configurationName = "General",
-				configurationScope = "Virtual Instance Scope");
-
-			PortalSettings.uncheckStrangersVerifyEmailCheckbox();
-		}
-
 		task ("Logout and login with created user") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "userea@liferay.com",
@@ -525,17 +509,13 @@ definition {
 
 			AssertElementPresent(locator1 = "ContentPerformance#ICON_VIEW_METRICS");
 		}
-
-		task ("Go to DXP portal, login and create site") {
-			User.firstLoginPG();
-
-			Navigator.openURL();
-		}
 	}
 
 	@description = "LPS-113835: When the user with edit permissions and no permissions to edit the page, the Metrics button is shown"
 	@priority = "4"
 	test MetricsWithEditPermissionsNotEditPage {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
 		task ("Create a Web Content") {
 			JSONWebcontent.addWebContent(
 				content = "WC Content",
@@ -568,9 +548,7 @@ definition {
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
-			Button.clickPublish();
-
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			PageEditor.clickPublish();
 
 			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
 		}
@@ -615,20 +593,6 @@ definition {
 				userEmailAddress = "userea@liferay.com");
 		}
 
-		task ("Disable option to strangers to verify email") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Instance Settings");
-
-			SystemSettings.gotoConfiguration(
-				configurationCategory = "User Authentication",
-				configurationName = "General",
-				configurationScope = "Virtual Instance Scope");
-
-			PortalSettings.uncheckStrangersVerifyEmailCheckbox();
-		}
-
 		task ("Logout and login with created user") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "userea@liferay.com",
@@ -641,12 +605,6 @@ definition {
 			Click(locator1 = "ContentDashboard#ROW_PANEL_WC");
 
 			AssertElementPresent(locator1 = "ContentPerformance#ICON_VIEW_METRICS");
-		}
-
-		task ("Go to DXP portal, login and create site") {
-			User.firstLoginPG();
-
-			Navigator.openURL();
 		}
 	}
 
@@ -728,17 +686,13 @@ definition {
 
 			Navigator.openURL();
 		}
-
-		task ("Go to DXP portal, login and create site") {
-			User.firstLoginPG();
-
-			Navigator.openURL();
-		}
 	}
 
 	@description = "LPS-113835: When the user has no permissions to edit the content of and has permission to edit the display page, the Metrics button is shown"
 	@priority = "4"
 	test MetricsWithoutEditPermissionsYesEditPage {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
 		task ("Create a Web Content") {
 			JSONWebcontent.addWebContent(
 				content = "WC Content",
@@ -771,9 +725,7 @@ definition {
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
-			Button.clickPublish();
-
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			PageEditor.clickPublish();
 
 			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
 		}
@@ -808,20 +760,6 @@ definition {
 				userEmailAddress = "userea@liferay.com");
 		}
 
-		task ("Disable option to strangers to verify email") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Instance Settings");
-
-			SystemSettings.gotoConfiguration(
-				configurationCategory = "User Authentication",
-				configurationName = "General",
-				configurationScope = "Virtual Instance Scope");
-
-			PortalSettings.uncheckStrangersVerifyEmailCheckbox();
-		}
-
 		task ("Logout and login with created user") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "userea@liferay.com",
@@ -834,12 +772,6 @@ definition {
 			Click(locator1 = "ContentDashboard#ROW_PANEL_WC");
 
 			AssertElementPresent(locator1 = "ContentPerformance#ICON_VIEW_METRICS");
-		}
-
-		task ("Go to DXP portal, login and create site") {
-			User.firstLoginPG();
-
-			Navigator.openURL();
 		}
 	}
 

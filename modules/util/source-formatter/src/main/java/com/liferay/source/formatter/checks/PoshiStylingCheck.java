@@ -36,6 +36,13 @@ public class PoshiStylingCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws IOException {
 
+		content = content.replaceAll(
+			"(?<!!)\\(contains\\(\"\\$\\{(.+?)\\}\", \"\\{\\1\\}\"\\)\\)",
+			"(!(isSet($1)))");
+		content = content.replaceAll(
+			"\\!\\(contains\\(\"\\$\\{(.+?)\\}\", \"\\{\\1\\}\"\\)\\)",
+			"(isSet($1))");
+
 		return _formatComments(content);
 	}
 

@@ -161,22 +161,6 @@ public class ProcessWorkflowMetricsIndexerImpl
 	}
 
 	@Override
-	public void deleteProcess(long companyId, long processId) {
-		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
-
-		documentBuilder.setLong(
-			"companyId", companyId
-		).setLong(
-			"processId", processId
-		).setString(
-			"uid", digest(companyId, processId)
-		);
-
-		workflowMetricsPortalExecutor.execute(
-			() -> deleteDocument(documentBuilder));
-	}
-
-	@Override
 	public String getIndexName(long companyId) {
 		return _processWorkflowMetricsIndex.getIndexName(companyId);
 	}

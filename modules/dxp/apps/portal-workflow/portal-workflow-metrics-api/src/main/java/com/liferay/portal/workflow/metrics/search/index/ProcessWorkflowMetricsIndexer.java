@@ -31,8 +31,6 @@ public interface ProcessWorkflowMetricsIndexer {
 
 	public void deleteProcess(DeleteProcessRequest deleteProcessRequest);
 
-	public void deleteProcess(long companyId, long processId);
-
 	public Document updateProcess(
 		Boolean active, long companyId, String description, Date modifiedDate,
 		long processId, String title, Map<Locale, String> titleMap,

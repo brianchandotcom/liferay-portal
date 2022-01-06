@@ -1,5 +1,73 @@
 definition {
 
+	macro addPin {
+		var key_pinNumber = "${pinNumber}";
+
+		Click(locator1 = "CommerceDiagrams#DIAGRAM_IMAGE");
+
+		Type(
+			key_inputField = "Position",
+			locator1 = "CommerceDiagrams#DIAGRAM_PIN_INPUT_FIELD",
+			value1 = "${pinNumber}");
+
+		Select(
+			locator1 = "CommerceDiagrams#DIAGRAM_PIN_TYPE_SELECT",
+			value1 = "${selectType}");
+
+		if ("${selectType}" == "Not Linked to a Catalog") {
+			Type(
+				key_inputField = "Label",
+				locator1 = "CommerceDiagrams#DIAGRAM_PIN_INPUT_FIELD",
+				value1 = "${label}");
+
+			Type(
+				key_inputField = "Quantity",
+				locator1 = "CommerceDiagrams#DIAGRAM_PIN_INPUT_FIELD",
+				value1 = "${quantity}");
+		}
+		else if ("${selectType}" == "Linked to a SKU") {
+			Type(
+				key_inputField = "SKU",
+				locator1 = "CommerceDiagrams#DIAGRAM_PIN_INPUT_FIELD",
+				value1 = "${SKU}");
+
+			Click(
+				key_menuItem = "${SKU}",
+				locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+
+			Type(
+				key_inputField = "Quantity",
+				locator1 = "CommerceDiagrams#DIAGRAM_PIN_INPUT_FIELD",
+				value1 = "${quantity}");
+		}
+		else if ("${selectType}" == "Linked to a Diagram") {
+			Type(
+				key_inputField = "Diagram",
+				locator1 = "CommerceDiagrams#DIAGRAM_PIN_INPUT_FIELD",
+				value1 = "${diagram}");
+
+			Click(
+				key_menuItem = "${diagram}",
+				locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+		}
+
+		Button.clickSave();
+
+		if (isSet(position)) {
+			DragAndDrop.dragAndDropReorganizeObjects(
+				key_pinNumber = "${pinNumber}",
+				locator1 = "CommerceDiagrams#DIAGRAM_PIN",
+				locator2 = "CommerceDiagrams#DIAGRAM_IMAGE",
+				position = "${position}");
+		}
+
+		Refresh();
+
+		WaitForElementPresent(
+			key_pinNumber = "${pinNumber}",
+			locator1 = "CommerceDiagrams#DIAGRAM_PIN");
+	}
+
 	macro assertDiagramSettingsType {
 		AssertElementPresent(
 			key_selectedType = "${settingsType}",
@@ -56,7 +124,7 @@ definition {
 		Type(
 			key_inputField = "Position",
 			locator1 = "CommerceDiagrams#DIAGRAM_PIN_INPUT_FIELD",
-			value1 = "${position}");
+			value1 = "${newPinNumber}");
 
 		Select(
 			locator1 = "CommerceDiagrams#DIAGRAM_PIN_TYPE_SELECT",
@@ -100,8 +168,8 @@ definition {
 		Refresh();
 
 		WaitForElementPresent(
-			key_positionNumber = "${position}",
-			locator1 = "CommerceDiagrams#DIAGRAM_PRODUCT_IMAGE_PIN");
+			key_pinNumber = "${newPinNumber}",
+			locator1 = "CommerceDiagrams#DIAGRAM_PIN");
 	}
 
 	macro changeSettingsType {

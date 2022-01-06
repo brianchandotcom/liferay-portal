@@ -53,6 +53,24 @@ definition {
 		PortletEntry.publish();
 	}
 
+	macro addCustomElementMultipleURLs {
+		LexiconEntry.gotoAdd();
+
+		Select(
+			locator1 = "Select#TYPE",
+			value1 = "Custom Element");
+
+		RemoteAppsEntry.addCustomElementMultipleURLs(
+			entryCSSURL1 = "${entryCSSURL1}",
+			entryCSSURL2 = "${entryCSSURL2}",
+			entryHTMLName = "${entryHTMLName}",
+			entryName = "${entryName}",
+			entryURL1 = "${entryURL1}",
+			entryURL2 = "${entryURL2}");
+
+		PortletEntry.publish();
+	}
+
 	macro assertCustomElementFields {
 		AssertTextEquals(
 			custom_entryName = "${entryName}",
@@ -83,6 +101,44 @@ definition {
 			key_text = "Properties",
 			locator1 = "RemoteAppsEntry#REMOTE_APPS_PROPERTIES",
 			value1 = "${entryProperties}");
+	}
+
+	macro assertCustomElementMultipleURLFields {
+		AssertTextEquals(
+			custom_entryName = "${entryName}",
+			key_text = "Name",
+			locator1 = "TextInput#ANY",
+			value1 = "${entryName}");
+
+		AssertTextEquals(
+			custom_entryHTMLName = "${entryHTMLName}",
+			key_text = "HTML Element Name",
+			locator1 = "TextInput#ANY",
+			value1 = "${entryHTMLName}");
+
+		AssertTextEquals(
+			key_id = "customElementURLs",
+			key_index = "1",
+			locator1 = "RemoteAppsEntry#URL_ROW",
+			value1 = "${entryURL1}");
+
+		AssertTextEquals(
+			key_id = "customElementURLs",
+			key_index = "2",
+			locator1 = "RemoteAppsEntry#URL_ROW",
+			value1 = "${entryURL2}");
+
+		AssertTextEquals(
+			key_id = "customElementCSSURLs",
+			key_index = "1",
+			locator1 = "RemoteAppsEntry#URL_ROW",
+			value1 = "${entryCSSURL1}");
+
+		AssertTextEquals(
+			key_id = "customElementCSSURLs",
+			key_index = "2",
+			locator1 = "RemoteAppsEntry#URL_ROW",
+			value1 = "${entryCSSURL2}");
 	}
 
 	macro assertTableEntryNameNotPresent {

@@ -152,8 +152,8 @@ definition {
 
 		task ("Then a tooltip opens with information on pin 10") {
 			CommerceDiagram.assertPinToolTipInfo(
+				pinNumber = "10",
 				pinType = "SKU",
-				positionNumber = "10",
 				quantity = "1");
 
 			Click(
@@ -291,17 +291,17 @@ definition {
 		}
 
 		task ("And given a pin on the product") {
-			CPCommerceCatalog.addPin(
+			CommerceDiagram.addPin(
 				label = "Test",
-				position = "1",
+				pinNumber = "1",
 				quantity = "1",
 				selectType = "Not Linked to a Catalog");
 		}
 
-		task ("When I delete the pin") {
+		task ("When the pin is deleted") {
 			Click(
-				key_positionNumber = "1",
-				locator1 = "CommerceDiagrams#DIAGRAM_PRODUCT_IMAGE_PIN");
+				key_pinNumber = "1",
+				locator1 = "CommerceDiagrams#DIAGRAM_PIN");
 
 			Button.clickDelete();
 
@@ -310,8 +310,8 @@ definition {
 
 		task ("Then the pin should no longer be present") {
 			AssertElementNotPresent(
-				key_positionNumber = "1",
-				locator1 = "CommerceDiagrams#DIAGRAM_PRODUCT_IMAGE_PIN");
+				key_pinNumber = "1",
+				locator1 = "CommerceDiagrams#DIAGRAM_PIN");
 		}
 	}
 
@@ -422,17 +422,17 @@ definition {
 		}
 
 		task ("And given a pin on the product") {
-			CPCommerceCatalog.addPin(
+			CommerceDiagram.addPin(
 				label = "Test",
-				position = "1",
+				pinNumber = "1",
 				quantity = "1",
 				selectType = "Not Linked to a Catalog");
 		}
 
 		task ("When I change the pin information") {
 			CommerceDiagram.changePinInfo(
+				newPinNumber = "2",
 				pinNumber = "1",
-				position = "2",
 				quantity = "2",
 				selectType = "Linked to a SKU",
 				SKU = "MIN93015");
@@ -442,8 +442,8 @@ definition {
 			CommerceDiagram.viewPin(pinNumber = "2");
 
 			CommerceDiagram.assertPinToolTipInfo(
+				pinNumber = "2",
 				pinType = "SKU",
-				positionNumber = "2",
 				quantity = "2",
 				SKU = "MIN93015");
 		}
@@ -478,6 +478,74 @@ definition {
 		CommerceDiagram.useDragOnBackground(
 			image_name = "Commerce_Black",
 			position = "300,0");
+	}
+
+	@description = "This test asserts that the Mapped Products Table saves all info from pins"
+	@priority = "3"
+	test VerifyMappedProductsTableSavesAllPins {
+		property test.name.skip.portal.instance = "CPCommerceProductDiagrams#VerifyMappedProductsTableSavesAllPins";
+
+		task ("Given a minium site") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And Given two diagram products") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Master",
+				productName = "Diagram T-Shirt 2",
+				productType = "diagram");
+
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Master",
+				productName = "Diagram T-Shirt",
+				productType = "diagram");
+
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.searchEntry(entryName = "Diagram T-Shirt");
+
+			CommerceNavigator.gotoEntry(entryName = "Diagram T-Shirt");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Diagram");
+
+			CommerceProductImages.addDiagramImages(
+				imageTitles = "Black",
+				productType = "Diagram");
+
+			Button.clickPublish();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("When multiple pins are added to a diagram with an image") {
+			CommerceDiagram.addPin(
+				label = "Test",
+				pinNumber = "1",
+				position = "0,150",
+				quantity = "1",
+				selectType = "Not Linked to a Catalog");
+
+			CommerceDiagram.addPin(
+				pinNumber = "2",
+				position = "150,100",
+				quantity = "1",
+				selectType = "Linked to a SKU",
+				SKU = "MIN93015");
+
+			CommerceDiagram.addPin(
+				diagram = "Diagram T-Shirt 2",
+				pinNumber = "3",
+				quantity = "1",
+				selectType = "Linked to a Diagram");
+		}
+
+		task ("Then the Mapped Products table should save information for all pins") {
+			for (var mappedProducts : list "Test,MIN93015,Diagram T-Shirt 2") {
+				AssertElementPresent(
+					key_productName = "${mappedProducts}",
+					locator1 = "CommerceDiagrams#DIAGRAM_MAPPED_PRODUCTS_CONTENT");
+			}
+		}
 	}
 
 }

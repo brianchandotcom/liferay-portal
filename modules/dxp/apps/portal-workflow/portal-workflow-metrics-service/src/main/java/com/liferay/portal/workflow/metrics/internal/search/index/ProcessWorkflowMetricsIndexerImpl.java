@@ -26,6 +26,7 @@ import com.liferay.portal.search.script.ScriptBuilder;
 import com.liferay.portal.search.script.ScriptType;
 import com.liferay.portal.workflow.metrics.internal.search.index.util.WorkflowMetricsIndexerUtil;
 import com.liferay.portal.workflow.metrics.model.AddProcessRequest;
+import com.liferay.portal.workflow.metrics.model.DeleteProcessRequest;
 import com.liferay.portal.workflow.metrics.search.index.ProcessWorkflowMetricsIndexer;
 
 import java.util.Date;
@@ -138,6 +139,25 @@ public class ProcessWorkflowMetricsIndexerImpl
 		workflowMetricsPortalExecutor.execute(() -> addDocument(document));
 
 		return document;
+	}
+
+	@Override
+	public void deleteProcess(DeleteProcessRequest deleteProcessRequest) {
+		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
+
+		documentBuilder.setLong(
+			"companyId", deleteProcessRequest.getCompanyId()
+		).setLong(
+			"processId", deleteProcessRequest.getProcessId()
+		).setString(
+			"uid",
+			digest(
+				deleteProcessRequest.getCompanyId(),
+				deleteProcessRequest.getProcessId())
+		);
+
+		workflowMetricsPortalExecutor.execute(
+			() -> deleteDocument(documentBuilder));
 	}
 
 	@Override

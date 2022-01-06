@@ -474,7 +474,8 @@ public class WorkflowMetricsRESTTestHelper {
 			_assertCount(
 				_slaInstanceResultWorkflowMetricsIndexNameBuilder.getIndexName(
 					companyId),
-				"companyId", companyId, "deleted", false, "instanceCompleted",
+				"blocked", false, "companyId", companyId, "deleted", false,
+				"instanceCompleted",
 				Objects.nonNull(instance.getDateCompletion()), "instanceId",
 				instance.getId(), "onTime", slaResult.getOnTime(), "processId",
 				instance.getProcessId(), "remainingTime",
@@ -1075,6 +1076,8 @@ public class WorkflowMetricsRESTTestHelper {
 
 		documentBuilder.setValue(
 			"active", true
+		).setValue(
+			"blocked", false
 		).setValue(
 			"companyId", companyId
 		).setValue(

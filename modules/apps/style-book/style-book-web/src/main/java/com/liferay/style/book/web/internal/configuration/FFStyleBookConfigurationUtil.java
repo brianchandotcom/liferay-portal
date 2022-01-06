@@ -35,10 +35,6 @@ public class FFStyleBookConfigurationUtil {
 		return _ffStyleBookConfiguration.templatesPreviewEnabled();
 	}
 
-	public static boolean tokenReuseEnabled() {
-		return _ffStyleBookConfiguration.tokenReuseEnabled();
-	}
-
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {

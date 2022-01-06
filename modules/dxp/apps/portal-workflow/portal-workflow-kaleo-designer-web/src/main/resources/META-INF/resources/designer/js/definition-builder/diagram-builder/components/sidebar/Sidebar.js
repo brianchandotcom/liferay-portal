@@ -13,30 +13,34 @@ import React, {useContext, useEffect, useState} from 'react';
 import {isNode} from 'react-flow-renderer';
 
 import {DiagramBuilderContext} from '../../DiagramBuilderContext';
-import SelectedEdgeInfo from './SelectedEdgeInfo';
-import SelectedNodeInfo from './SelectedNodeInfo';
 import SidebarBody from './SidebarBody';
 import SidebarHeader from './SidebarHeader';
+import sectionComponents from './sections/sectionComponents';
 
 const contents = {
+	assignments: {
+		backButton: (setContentName) => () => setContentName('task'),
+		sections: [],
+		title: Liferay.Language.get('assignments'),
+	},
 	end: {
-		component: SelectedNodeInfo,
+		sections: ['nodeInformation'],
 		title: Liferay.Language.get('end'),
 	},
 	start: {
-		component: SelectedNodeInfo,
+		sections: ['nodeInformation'],
 		title: Liferay.Language.get('start'),
 	},
 	state: {
-		component: SelectedNodeInfo,
+		sections: ['nodeInformation'],
 		title: Liferay.Language.get('state'),
 	},
 	task: {
-		component: SelectedNodeInfo,
+		sections: ['nodeInformation', 'assignments'],
 		title: Liferay.Language.get('task'),
 	},
 	transition: {
-		component: SelectedEdgeInfo,
+		sections: ['edgeInformation'],
 		title: Liferay.Language.get('transition'),
 	},
 };
@@ -50,41 +54,63 @@ export default function Sidebar() {
 	const {selectedItem, setSelectedItem, setSelectedItemNewId} = useContext(
 		DiagramBuilderContext
 	);
+	const [contentName, setContentName] = useState('');
 	const [errors, setErrors] = useState(errorsDefaultValues);
 
 	const clearErrors = () => {
 		setErrors(errorsDefaultValues);
 	};
 
+	const defaultBackButton = () => {
+		setSelectedItem(null);
+		setSelectedItemNewId(null);
+		clearErrors();
+	};
+
 	useEffect(() => {
 		setSelectedItemNewId(null);
 		clearErrors();
+
+		let contentKey = '';
+
+		if (selectedItem?.id) {
+			contentKey = isNode(selectedItem)
+				? selectedItem?.type
+				: 'transition';
+		}
+
+		setContentName(contentKey);
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [selectedItem?.id, setSelectedItemNewId]);
 
-	let contentKey = '';
-
-	if (selectedItem?.id) {
-		contentKey = isNode(selectedItem) ? selectedItem?.type : 'transition';
-	}
-
-	const content = contents[contentKey];
-	const ContentComponent = content?.component;
+	const content = contents[contentName];
 	const title = content?.title ?? Liferay.Language.get('nodes');
 
 	return (
 		<div className="sidebar">
 			<SidebarHeader
-				backButtonFunction={() => {
-					setSelectedItem(null);
-					setSelectedItemNewId(null);
-					clearErrors();
-				}}
+				backButtonFunction={
+					content?.backButton?.(setContentName) || defaultBackButton
+				}
 				showHeaderButtons={!!content}
 				title={title}
 			/>
 
 			<SidebarBody displayDefaultContent={!content}>
-				<ContentComponent errors={errors} setErrors={setErrors} />
+				{content?.sections?.map((sectionKey) => {
+					const SectionComponent = sectionComponents[sectionKey];
+
+					return (
+						<SectionComponent
+							errors={errors}
+							key={sectionKey}
+							sections={content?.sections || []}
+							setContentName={setContentName}
+							setErrors={setErrors}
+						/>
+					);
+				})}
 			</SidebarBody>
 		</div>
 	);

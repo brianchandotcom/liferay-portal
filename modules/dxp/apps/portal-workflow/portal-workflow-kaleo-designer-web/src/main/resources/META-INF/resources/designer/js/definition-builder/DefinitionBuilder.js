@@ -22,6 +22,7 @@ import SourceBuilder from './source-builder/SourceBuilder';
 export default function (props) {
 	const [active, setActive] = useState(true);
 	const [currentEditor, setCurrentEditor] = useState(null);
+	const [definitionDescription, setDefinitionDescription] = useState('');
 	const [definitionId, setDefinitionId] = useState(props.definitionName);
 	const [definitionTitle, setDefinitionTitle] = useState(props.title);
 	const [deserialize, setDeserialize] = useState(false);
@@ -35,6 +36,7 @@ export default function (props) {
 	const contextProps = {
 		active,
 		currentEditor,
+		definitionDescription,
 		definitionId,
 		definitionTitle,
 		deserialize,
@@ -42,6 +44,7 @@ export default function (props) {
 		selectedLanguageId,
 		setActive,
 		setCurrentEditor,
+		setDefinitionDescription,
 		setDefinitionId,
 		setDefinitionTitle,
 		setDeserialize,

@@ -31,6 +31,7 @@ const config = {
 export default function SourceBuilder({version}) {
 	const {
 		currentEditor,
+		definitionDescription,
 		definitionTitle,
 		elements,
 		setCurrentEditor,
@@ -45,7 +46,7 @@ export default function SourceBuilder({version}) {
 	useEffect(() => {
 		if (elements) {
 			const metada = {
-				description: '',
+				description: definitionDescription,
 				name: definitionTitle,
 				version,
 			};

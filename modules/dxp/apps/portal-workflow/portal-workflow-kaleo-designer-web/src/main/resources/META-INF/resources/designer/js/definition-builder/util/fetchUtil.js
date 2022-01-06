@@ -28,6 +28,13 @@ function publishDefinitionRequest(requestBody) {
 	});
 }
 
+function retrieveDefinitionRequest(definitionId) {
+	return fetch(`${baseURL}/workflow-definitions/by-name/${definitionId}`, {
+		headers,
+		method: 'GET',
+	});
+}
+
 function saveDefinitionRequest(requestBody) {
 	return fetch(`${baseURL}/workflow-definitions/save`, {
 		body: JSON.stringify(requestBody),
@@ -39,4 +46,10 @@ function saveDefinitionRequest(requestBody) {
 	});
 }
 
-export {baseURL, headers, publishDefinitionRequest, saveDefinitionRequest};
+export {
+	baseURL,
+	headers,
+	publishDefinitionRequest,
+	retrieveDefinitionRequest,
+	saveDefinitionRequest,
+};

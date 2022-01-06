@@ -331,7 +331,7 @@ describe('ColorPicker', () => {
 				await wait(() => {
 					expect(
 						getByText(
-							'tokens-cannot-reference-itself'
+							'invalid-value.-tokens-cannot-reference-itself'
 						)
 					).toBeInTheDocument();
 				});
@@ -354,7 +354,7 @@ describe('ColorPicker', () => {
 				await wait(() => {
 					expect(
 						getByText(
-							'tokens-cannot-be-mutually-referenced'
+							'invalid-value.-tokens-cannot-be-mutually-referenced'
 						)
 					).toBeInTheDocument();
 				});

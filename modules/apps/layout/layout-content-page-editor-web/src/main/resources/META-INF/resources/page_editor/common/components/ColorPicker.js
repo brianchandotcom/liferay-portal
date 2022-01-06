@@ -33,10 +33,10 @@ import './ColorPicker.scss';
 
 const ERROR_MESSAGES = {
 	mutuallyReferenced: Liferay.Language.get(
-		'tokens-cannot-be-mutually-referenced'
+		'invalid-value.-tokens-cannot-be-mutually-referenced'
 	),
 	selfReferenced: Liferay.Language.get(
-		'tokens-cannot-reference-itself'
+		'invalid-value.-tokens-cannot-reference-itself'
 	),
 	valueNotExist: Liferay.Language.get('this-token-does-not-exist'),
 };

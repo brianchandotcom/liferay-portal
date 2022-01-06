@@ -23,58 +23,6 @@ definition {
 		}
 	}
 
-	macro addPin {
-		var key_positionNumber = "${position}";
-
-		Click(locator1 = "CommerceDiagrams#DIAGRAM_IMAGE");
-
-		Type(
-			key_inputField = "Position",
-			locator1 = "CommerceDiagrams#DIAGRAM_PIN_INPUT_FIELD",
-			value1 = "${position}");
-
-		Select(
-			locator1 = "CommerceDiagrams#DIAGRAM_PIN_TYPE_SELECT",
-			value1 = "${selectType}");
-
-		if ("${selectType}" == "Not Linked to a Catalog") {
-			Type(
-				key_inputField = "Label",
-				locator1 = "CommerceDiagrams#DIAGRAM_PIN_INPUT_FIELD",
-				value1 = "${label}");
-
-			Type(
-				key_inputField = "Quantity",
-				locator1 = "CommerceDiagrams#DIAGRAM_PIN_INPUT_FIELD",
-				value1 = "${quantity}");
-		}
-		else if ("${selectType}" == "Linked to a SKU") {
-			Type(
-				key_inputField = "SKU",
-				locator1 = "CommerceDiagrams#DIAGRAM_PIN_INPUT_FIELD",
-				value1 = "${SKU}");
-
-			Type(
-				key_inputField = "Quantity",
-				locator1 = "CommerceDiagrams#DIAGRAM_PIN_INPUT_FIELD",
-				value1 = "${quantity}");
-		}
-		else if ("${selectType}" == "Linked to a Diagram") {
-			Type(
-				key_inputField = "Diagram",
-				locator1 = "CommerceDiagrams#DIAGRAM_PIN_INPUT_FIELD",
-				value1 = "${diagram}");
-		}
-
-		Button.clickSave();
-
-		Refresh();
-
-		WaitForElementPresent(
-			key_positionNumber = "${position}",
-			locator1 = "CommerceDiagrams#DIAGRAM_PRODUCT_IMAGE_PIN");
-	}
-
 	macro newOptionsEntry {
 		Click(locator1 = "CommerceEntry#ADD_BUTTON");
 

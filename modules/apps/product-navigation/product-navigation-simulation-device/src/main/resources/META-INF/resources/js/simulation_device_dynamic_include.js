@@ -13,8 +13,6 @@
  */
 
 AUI().use('aui-base', () => {
-	const frameElement = window.frameElement;
-
 	if (
 		!frameElement ||
 		frameElement.getAttribute('id') !== 'simulationDeviceIframe'
@@ -24,8 +22,32 @@ AUI().use('aui-base', () => {
 
 	document.body.classList.add('lfr-has-simulation-panel');
 
+	handleBeforeNavigate();
+
+	handleFrameOnLoad();
+
+	handlePreviewParam();
+});
+
+function handleBeforeNavigate() {
+	Liferay.on('beforeNavigate', () => {
+		const deviceWrapper = parent.document.getElementsByClassName(
+			'lfr-device'
+		)[0];
+
+		const loadingIndicator = document.createElement('section');
+		loadingIndicator.classList.add('loading-animation-simulation-device');
+		loadingIndicator.innerHTML =
+			'<span aria-hidden="true" class="loading-animation"></span>';
+
+		deviceWrapper.parentNode.appendChild(loadingIndicator);
+		deviceWrapper.classList.add('lfr-device--is-navigating');
+	});
+}
+
+function handleFrameOnLoad() {
 	frameElement.onload = function () {
-		const loadingIndicator = window.parent.document.getElementsByClassName(
+		const loadingIndicator = parent.document.getElementsByClassName(
 			'loading-animation-simulation-device'
 		)[0];
 
@@ -33,24 +55,15 @@ AUI().use('aui-base', () => {
 			loadingIndicator.remove();
 		}
 
+		const deviceWrapper = parent.document.getElementsByClassName(
+			'lfr-device'
+		)[0];
+
 		deviceWrapper.classList.remove('lfr-device--is-navigating');
 	};
+}
 
-	const deviceWrapper = window.parent.document.getElementsByClassName(
-		'lfr-device'
-	)[0];
-
-	Liferay.on('beforeNavigate', () => {
-		const loadingIndicator = document.createElement('section');
-		loadingIndicator.classList.add('loading-animation-simulation-device');
-		loadingIndicator.innerHTML = `
-			<span aria-hidden="true" class="loading-animation"></span>
-		`;
-
-		deviceWrapper.parentNode.appendChild(loadingIndicator);
-		deviceWrapper.classList.add('lfr-device--is-navigating');
-	});
-
+function handlePreviewParam() {
 	const url = new URL(frameElement.contentWindow.location.href);
 	const searchParams = new URLSearchParams(url.search);
 
@@ -60,7 +73,5 @@ AUI().use('aui-base', () => {
 
 	searchParams.append('p_l_mode', 'preview');
 
-	frameElement.contentWindow.location.replace(
-		`${url.origin}${url.pathname}?${searchParams.toString()}`
-	);
-});
+	frameElement.contentWindow.location.search = searchParams.toString();
+}

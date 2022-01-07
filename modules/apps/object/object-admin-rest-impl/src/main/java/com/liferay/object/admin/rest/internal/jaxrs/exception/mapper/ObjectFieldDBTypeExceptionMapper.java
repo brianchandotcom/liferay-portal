@@ -14,7 +14,7 @@
 
 package com.liferay.object.admin.rest.internal.jaxrs.exception.mapper;
 
-import com.liferay.object.exception.ObjectFieldTypeException;
+import com.liferay.object.exception.ObjectFieldDBTypeException;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
@@ -30,19 +30,20 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Object.Admin.REST)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Object.Admin.REST.ObjectFieldTypeExceptionMapper"
+		"osgi.jaxrs.name=Liferay.Object.Admin.REST.ObjectFieldDBTypeExceptionMapper"
 	},
 	service = ExceptionMapper.class
 )
-public class ObjectFieldTypeExceptionMapper
-	extends BaseExceptionMapper<ObjectFieldTypeException> {
+public class ObjectFieldDBTypeExceptionMapper
+	extends BaseExceptionMapper<ObjectFieldDBTypeException> {
 
 	@Override
 	protected Problem getProblem(
-		ObjectFieldTypeException objectFieldTypeException) {
+		ObjectFieldDBTypeException objectFieldDBTypeException) {
 
 		return new Problem(
-			Response.Status.BAD_REQUEST, objectFieldTypeException.getMessage());
+			Response.Status.BAD_REQUEST,
+			objectFieldDBTypeException.getMessage());
 	}
 
 }

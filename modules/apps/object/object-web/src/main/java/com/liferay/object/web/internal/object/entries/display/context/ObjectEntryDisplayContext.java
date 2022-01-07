@@ -458,7 +458,7 @@ public class ObjectEntryDisplayContext {
 		_setDDMFormFieldProperties(
 			ddmFormField,
 			GetterUtil.getLong(objectField.getListTypeDefinitionId()),
-			objectField.getRelationshipType(), objectField.getDBType());
+			objectField.getDBType(), objectField.getRelationshipType());
 
 		LocalizedValue ddmFormFieldLabelLocalizedValue = new LocalizedValue(
 			_objectRequestHelper.getLocale());
@@ -672,36 +672,36 @@ public class ObjectEntryDisplayContext {
 	}
 
 	private void _setDDMFormFieldProperties(
-		DDMFormField ddmFormField, long listTypeDefinitionId,
-		String relationshipType, String type) {
+		DDMFormField ddmFormField, long listTypeDefinitionId, String dbType,
+		String relationshipType) {
 
 		if (Validator.isNotNull(relationshipType)) {
 			ddmFormField.setType("object-relationship");
 		}
-		else if (StringUtil.equals(type, "BigDecimal") ||
-				 StringUtil.equals(type, "Double")) {
+		else if (StringUtil.equals(dbType, "BigDecimal") ||
+				 StringUtil.equals(dbType, "Double")) {
 
 			ddmFormField.setProperty(
 				FieldConstants.DATA_TYPE, FieldConstants.DOUBLE);
 			ddmFormField.setType(DDMFormFieldTypeConstants.NUMERIC);
 		}
-		else if (StringUtil.equals(type, "Boolean")) {
+		else if (StringUtil.equals(dbType, "Boolean")) {
 			ddmFormField.setType(DDMFormFieldTypeConstants.CHECKBOX);
 		}
-		else if (StringUtil.equals(type, "Clob")) {
+		else if (StringUtil.equals(dbType, "Clob")) {
 			ddmFormField.setProperty("displayStyle", "multiline");
 		}
-		else if (StringUtil.equals(type, "Integer") ||
-				 StringUtil.equals(type, "Long")) {
+		else if (StringUtil.equals(dbType, "Integer") ||
+				 StringUtil.equals(dbType, "Long")) {
 
 			ddmFormField.setProperty(
 				FieldConstants.DATA_TYPE, FieldConstants.INTEGER);
 			ddmFormField.setType(DDMFormFieldTypeConstants.NUMERIC);
 		}
-		else if (StringUtil.equals(type, "Date")) {
+		else if (StringUtil.equals(dbType, "Date")) {
 			ddmFormField.setType(DDMFormFieldTypeConstants.DATE);
 		}
-		else if (StringUtil.equals(type, "String") &&
+		else if (StringUtil.equals(dbType, "String") &&
 				 (listTypeDefinitionId > 0)) {
 
 			ddmFormField.setDDMFormFieldOptions(

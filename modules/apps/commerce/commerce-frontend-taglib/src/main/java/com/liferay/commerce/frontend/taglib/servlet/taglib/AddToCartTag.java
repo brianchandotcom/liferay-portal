@@ -119,7 +119,7 @@ public class AddToCartTag extends IncludeTag {
 					_disabled =
 						(!_productSettingsModel.isBackOrders() &&
 						 (_stockQuantity <= 0)) ||
-						!cpSku.isPublished();
+						!cpSku.isPublished() || !cpSku.isPurchasable();
 				}
 			}
 		}

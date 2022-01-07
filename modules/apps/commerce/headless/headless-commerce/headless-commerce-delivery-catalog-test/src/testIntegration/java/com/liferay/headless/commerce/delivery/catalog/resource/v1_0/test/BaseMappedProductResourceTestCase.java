@@ -184,6 +184,7 @@ public abstract class BaseMappedProductResourceTestCase {
 		MappedProduct mappedProduct = randomMappedProduct();
 
 		mappedProduct.setProductExternalReferenceCode(regex);
+		mappedProduct.setReplacementMessage(regex);
 		mappedProduct.setSequence(regex);
 		mappedProduct.setSku(regex);
 		mappedProduct.setSkuExternalReferenceCode(regex);
@@ -197,6 +198,7 @@ public abstract class BaseMappedProductResourceTestCase {
 
 		Assert.assertEquals(
 			regex, mappedProduct.getProductExternalReferenceCode());
+		Assert.assertEquals(regex, mappedProduct.getReplacementMessage());
 		Assert.assertEquals(regex, mappedProduct.getSequence());
 		Assert.assertEquals(regex, mappedProduct.getSku());
 		Assert.assertEquals(regex, mappedProduct.getSkuExternalReferenceCode());
@@ -576,6 +578,19 @@ public abstract class BaseMappedProductResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"firstAvailableReplacementMappedProduct",
+					additionalAssertFieldName)) {
+
+				if (mappedProduct.getFirstAvailableReplacementMappedProduct() ==
+						null) {
+
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("options", additionalAssertFieldName)) {
 				if (mappedProduct.getOptions() == null) {
 					valid = false;
@@ -647,6 +662,26 @@ public abstract class BaseMappedProductResourceTestCase {
 
 			if (Objects.equals("quantity", additionalAssertFieldName)) {
 				if (mappedProduct.getQuantity() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"replacementMappedProduct", additionalAssertFieldName)) {
+
+				if (mappedProduct.getReplacementMappedProduct() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"replacementMessage", additionalAssertFieldName)) {
+
+				if (mappedProduct.getReplacementMessage() == null) {
 					valid = false;
 				}
 
@@ -826,6 +861,22 @@ public abstract class BaseMappedProductResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"firstAvailableReplacementMappedProduct",
+					additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						mappedProduct1.
+							getFirstAvailableReplacementMappedProduct(),
+						mappedProduct2.
+							getFirstAvailableReplacementMappedProduct())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("id", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						mappedProduct1.getId(), mappedProduct2.getId())) {
@@ -932,6 +983,32 @@ public abstract class BaseMappedProductResourceTestCase {
 				if (!Objects.deepEquals(
 						mappedProduct1.getQuantity(),
 						mappedProduct2.getQuantity())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"replacementMappedProduct", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						mappedProduct1.getReplacementMappedProduct(),
+						mappedProduct2.getReplacementMappedProduct())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"replacementMessage", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						mappedProduct1.getReplacementMessage(),
+						mappedProduct2.getReplacementMessage())) {
 
 					return false;
 				}
@@ -1122,6 +1199,11 @@ public abstract class BaseMappedProductResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("firstAvailableReplacementMappedProduct")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("id")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1175,6 +1257,19 @@ public abstract class BaseMappedProductResourceTestCase {
 		if (entityFieldName.equals("quantity")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("replacementMappedProduct")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("replacementMessage")) {
+			sb.append("'");
+			sb.append(String.valueOf(mappedProduct.getReplacementMessage()));
+			sb.append("'");
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("sequence")) {
@@ -1275,6 +1370,8 @@ public abstract class BaseMappedProductResourceTestCase {
 				productId = RandomTestUtil.randomLong();
 				purchasable = RandomTestUtil.randomBoolean();
 				quantity = RandomTestUtil.randomInt();
+				replacementMessage = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				sequence = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				sku = StringUtil.toLowerCase(RandomTestUtil.randomString());

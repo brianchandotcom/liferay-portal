@@ -78,6 +78,32 @@ public class MappedProduct implements Cloneable, Serializable {
 
 	protected Availability availability;
 
+	public MappedProduct getFirstAvailableReplacementMappedProduct() {
+		return firstAvailableReplacementMappedProduct;
+	}
+
+	public void setFirstAvailableReplacementMappedProduct(
+		MappedProduct firstAvailableReplacementMappedProduct) {
+
+		this.firstAvailableReplacementMappedProduct =
+			firstAvailableReplacementMappedProduct;
+	}
+
+	public void setFirstAvailableReplacementMappedProduct(
+		UnsafeSupplier<MappedProduct, Exception>
+			firstAvailableReplacementMappedProductUnsafeSupplier) {
+
+		try {
+			firstAvailableReplacementMappedProduct =
+				firstAvailableReplacementMappedProductUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected MappedProduct firstAvailableReplacementMappedProduct;
+
 	public Long getId() {
 		return id;
 	}
@@ -292,6 +318,52 @@ public class MappedProduct implements Cloneable, Serializable {
 	}
 
 	protected Integer quantity;
+
+	public MappedProduct getReplacementMappedProduct() {
+		return replacementMappedProduct;
+	}
+
+	public void setReplacementMappedProduct(
+		MappedProduct replacementMappedProduct) {
+
+		this.replacementMappedProduct = replacementMappedProduct;
+	}
+
+	public void setReplacementMappedProduct(
+		UnsafeSupplier<MappedProduct, Exception>
+			replacementMappedProductUnsafeSupplier) {
+
+		try {
+			replacementMappedProduct =
+				replacementMappedProductUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected MappedProduct replacementMappedProduct;
+
+	public String getReplacementMessage() {
+		return replacementMessage;
+	}
+
+	public void setReplacementMessage(String replacementMessage) {
+		this.replacementMessage = replacementMessage;
+	}
+
+	public void setReplacementMessage(
+		UnsafeSupplier<String, Exception> replacementMessageUnsafeSupplier) {
+
+		try {
+			replacementMessage = replacementMessageUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String replacementMessage;
 
 	public String getSequence() {
 		return sequence;

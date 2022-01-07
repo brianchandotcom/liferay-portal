@@ -496,6 +496,41 @@ definition {
 			position = "300,0");
 	}
 
+	@description = "This test asserts that a diagram product imagecan be expanded to fit the full screen"
+	@priority = "3"
+	test UseExpand {
+		task ("Given a diagram product with an image") {
+			CommerceNavigator.gotoPortlet(
+				category = "Product Management",
+				portlet = "Products");
+
+			CPCommerceCatalog.newProductsEntry(
+				productCatalog = "Master",
+				productName = "Diagram T-Shirt",
+				productType = "Diagram");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Diagram");
+
+			CommerceProductImages.addDiagramImages(
+				imageTitles = "Black",
+				productType = "Diagram");
+
+			Button.clickPublish();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("When the Expand button is clicked") {
+			CommerceDiagram.clickExpand();
+		}
+
+		task ("Then the diagram product image should fill up the page") {
+			AssertElementNotPresent(locator1 = "ApplicationsMenu#APPLICATIONS_MENU");
+
+			CommerceDiagram.clickExpand();
+		}
+	}
+
 	@description = "Verify user can use the pin tooltip to edit the information of a diagram product image pin"
 	@priority = "3"
 	test UseToolTip {

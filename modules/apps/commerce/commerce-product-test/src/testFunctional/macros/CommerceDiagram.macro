@@ -182,6 +182,10 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro clickExpand {
+		Click(locator1 = "CommerceDiagrams#DIAGRAM_EXPAND");
+	}
+
 	macro useDragOnBackground {
 
 		// Verify the postion after mouse drag

@@ -1,0 +1,11 @@
+[
+	{
+		"actions": [
+		],
+		"description": "",
+		"name": "Customer Portal Member",
+		"roleType": "regular",
+		"scope": 1,
+		"type": 1
+	}
+]

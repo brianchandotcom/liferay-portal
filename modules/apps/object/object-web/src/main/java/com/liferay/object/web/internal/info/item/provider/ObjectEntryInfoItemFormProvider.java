@@ -142,7 +142,7 @@ public class ObjectEntryInfoItemFormProvider
 	}
 
 	private InfoFieldType _getInfoFieldType(ObjectField objectField) {
-		if (Objects.equals(objectField.getType(), "Blob")) {
+		if (Objects.equals(objectField.getDBType(), "Blob")) {
 			return ImageInfoFieldType.INSTANCE;
 		}
 

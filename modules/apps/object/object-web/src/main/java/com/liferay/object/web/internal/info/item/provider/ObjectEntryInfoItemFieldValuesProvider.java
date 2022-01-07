@@ -120,23 +120,23 @@ public class ObjectEntryInfoItemFieldValuesProvider
 		if (Validator.isNotNull(objectField.getRelationshipType())) {
 			return TextInfoFieldType.INSTANCE;
 		}
-		else if (Objects.equals(objectField.getType(), "Boolean")) {
+		else if (Objects.equals(objectField.getDBType(), "Boolean")) {
 			return BooleanInfoFieldType.INSTANCE;
 		}
-		else if (Objects.equals(objectField.getType(), "BigDecimal") ||
-				 Objects.equals(objectField.getType(), "Double") ||
-				 Objects.equals(objectField.getType(), "Integer") ||
-				 Objects.equals(objectField.getType(), "Long")) {
+		else if (Objects.equals(objectField.getDBType(), "BigDecimal") ||
+				 Objects.equals(objectField.getDBType(), "Double") ||
+				 Objects.equals(objectField.getDBType(), "Integer") ||
+				 Objects.equals(objectField.getDBType(), "Long")) {
 
 			return NumberInfoFieldType.INSTANCE;
 		}
-		else if (Objects.equals(objectField.getType(), "Blob")) {
+		else if (Objects.equals(objectField.getDBType(), "Blob")) {
 			return ImageInfoFieldType.INSTANCE;
 		}
-		else if (Objects.equals(objectField.getType(), "Date")) {
+		else if (Objects.equals(objectField.getDBType(), "Date")) {
 			return DateInfoFieldType.INSTANCE;
 		}
-		else if (Objects.equals(objectField.getType(), "String")) {
+		else if (Objects.equals(objectField.getDBType(), "String")) {
 			return TextInfoFieldType.INSTANCE;
 		}
 
@@ -262,7 +262,7 @@ public class ObjectEntryInfoItemFieldValuesProvider
 				return objectEntry.getTitleValue();
 			}
 		}
-		else if (Objects.equals(objectField.getType(), "Date")) {
+		else if (Objects.equals(objectField.getDBType(), "Date")) {
 			Format dateFormat = FastDateFormatFactoryUtil.getDate(
 				serviceContext.getLocale());
 

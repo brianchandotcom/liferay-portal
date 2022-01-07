@@ -33,13 +33,13 @@ public class ObjectFieldUtil {
 		objectField.setListTypeDefinitionId(listTypeDefinitionId);
 		objectField.setBusinessType(businessType);
 		objectField.setDBColumnName(dbColumnName);
+		objectField.setDBType(type);
 		objectField.setIndexed(indexed);
 		objectField.setIndexedAsKeyword(indexedAsKeyword);
 		objectField.setIndexedLanguageId(indexedLanguageId);
 		objectField.setLabelMap(LocalizedMapUtil.getLocalizedMap(label));
 		objectField.setName(name);
 		objectField.setRequired(required);
-		objectField.setType(type);
 
 		return objectField;
 	}

@@ -114,7 +114,7 @@ public class ObjectEntryEntityModel implements EntityModel {
 						"nestedFieldArray.value_keyword#" +
 							objectField.getName()));
 		}
-		else if (Objects.equals(objectField.getType(), "Boolean")) {
+		else if (Objects.equals(objectField.getDBType(), "Boolean")) {
 			return Optional.of(
 				new BooleanEntityField(
 					objectField.getName(),
@@ -122,8 +122,8 @@ public class ObjectEntryEntityModel implements EntityModel {
 						"nestedFieldArray.value_boolean#" +
 							objectField.getName()));
 		}
-		else if (Objects.equals(objectField.getType(), "BigDecimal") ||
-				 Objects.equals(objectField.getType(), "Double")) {
+		else if (Objects.equals(objectField.getDBType(), "BigDecimal") ||
+				 Objects.equals(objectField.getDBType(), "Double")) {
 
 			return Optional.of(
 				new DoubleEntityField(
@@ -132,7 +132,7 @@ public class ObjectEntryEntityModel implements EntityModel {
 						"nestedFieldArray.value_double#" +
 							objectField.getName()));
 		}
-		else if (Objects.equals(objectField.getType(), "Date")) {
+		else if (Objects.equals(objectField.getDBType(), "Date")) {
 			return Optional.of(
 				new DateEntityField(
 					objectField.getName(),
@@ -142,7 +142,7 @@ public class ObjectEntryEntityModel implements EntityModel {
 						"nestedFieldArray.value_date#" +
 							objectField.getName()));
 		}
-		else if (Objects.equals(objectField.getType(), "Integer")) {
+		else if (Objects.equals(objectField.getDBType(), "Integer")) {
 			return Optional.of(
 				new IntegerEntityField(
 					objectField.getName(),
@@ -150,7 +150,7 @@ public class ObjectEntryEntityModel implements EntityModel {
 						"nestedFieldArray.value_integer#" +
 							objectField.getName()));
 		}
-		else if (Objects.equals(objectField.getType(), "Long")) {
+		else if (Objects.equals(objectField.getDBType(), "Long")) {
 			return Optional.of(
 				new IntegerEntityField(
 					objectField.getName(),
@@ -158,7 +158,7 @@ public class ObjectEntryEntityModel implements EntityModel {
 						"nestedFieldArray.value_long#" +
 							objectField.getName()));
 		}
-		else if (Objects.equals(objectField.getType(), "String")) {
+		else if (Objects.equals(objectField.getDBType(), "String")) {
 			return Optional.of(
 				new StringEntityField(
 					objectField.getName(),

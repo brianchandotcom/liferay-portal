@@ -333,6 +333,7 @@ public class ObjectRelationshipLocalServiceImpl
 
 		objectField.setDBTableName(dbTableName);
 
+		objectField.setDBType("Long");
 		objectField.setIndexed(true);
 		objectField.setIndexedAsKeyword(false);
 		objectField.setIndexedLanguageId(null);
@@ -341,7 +342,6 @@ public class ObjectRelationshipLocalServiceImpl
 		objectField.setName(dbColumnName);
 		objectField.setRelationshipType(type);
 		objectField.setRequired(false);
-		objectField.setType("Long");
 
 		objectField = _objectFieldLocalService.updateObjectField(objectField);
 

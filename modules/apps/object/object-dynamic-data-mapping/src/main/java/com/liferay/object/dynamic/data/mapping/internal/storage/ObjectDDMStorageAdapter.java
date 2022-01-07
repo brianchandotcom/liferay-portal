@@ -305,7 +305,7 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 		Stream<ObjectField> stream = objectFields.stream();
 
 		Map<String, String> objectFieldTypes = stream.collect(
-			Collectors.toMap(ObjectField::getName, ObjectField::getType));
+			Collectors.toMap(ObjectField::getName, ObjectField::getDBType));
 
 		Map<String, ObjectField> objectFieldsMap = _toObjectFieldsMap(
 			objectFields);

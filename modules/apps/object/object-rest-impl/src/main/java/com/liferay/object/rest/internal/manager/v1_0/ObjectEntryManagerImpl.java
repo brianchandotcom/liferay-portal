@@ -386,7 +386,7 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 				continue;
 			}
 
-			if (Objects.equals(objectField.getType(), "Date")) {
+			if (Objects.equals(objectField.getDBType(), "Date")) {
 				values.put(name, _toDate(locale, String.valueOf(object)));
 			}
 

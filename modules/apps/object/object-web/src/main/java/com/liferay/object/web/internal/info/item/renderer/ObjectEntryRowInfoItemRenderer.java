@@ -160,7 +160,7 @@ public class ObjectEntryRowInfoItemRenderer
 					else if (Validator.isNull(
 								objectField.getRelationshipType())) {
 
-						if (Objects.equals(objectField.getType(), "Date")) {
+						if (Objects.equals(objectField.getDBType(), "Date")) {
 							Format dateFormat =
 								FastDateFormatFactoryUtil.getDate(
 									serviceContext.getLocale());

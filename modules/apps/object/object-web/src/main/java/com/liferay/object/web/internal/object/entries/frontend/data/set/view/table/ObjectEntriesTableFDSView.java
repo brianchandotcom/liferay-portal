@@ -73,7 +73,7 @@ public class ObjectEntriesTableFDSView extends BaseTableFDSView {
 
 			FDSTableSchemaField fdsTableSchemaField = null;
 
-			if (Objects.equals(objectField.getType(), "Clob")) {
+			if (Objects.equals(objectField.getDBType(), "Clob")) {
 				ClobFDSTableSchemaField clobFDSTableSchemaField =
 					fdsTableSchemaBuilder.addFDSTableSchemaField(
 						ClobFDSTableSchemaField.class, fieldName,
@@ -83,7 +83,7 @@ public class ObjectEntriesTableFDSView extends BaseTableFDSView {
 
 				fdsTableSchemaField = clobFDSTableSchemaField;
 			}
-			else if (Objects.equals(objectField.getType(), "Date")) {
+			else if (Objects.equals(objectField.getDBType(), "Date")) {
 				DateFDSTableSchemaField dateFDSTableSchemaField =
 					fdsTableSchemaBuilder.addFDSTableSchemaField(
 						DateFDSTableSchemaField.class, fieldName,
@@ -98,14 +98,14 @@ public class ObjectEntriesTableFDSView extends BaseTableFDSView {
 					fdsTableSchemaBuilder.addFDSTableSchemaField(
 						fieldName, objectField.getLabel(locale, true));
 
-				if (Objects.equals(objectField.getType(), "Boolean")) {
+				if (Objects.equals(objectField.getDBType(), "Boolean")) {
 					fdsTableSchemaField.setContentRenderer("boolean");
 				}
 			}
 
 			fdsTableSchemaBuilder.addFDSTableSchemaField(fdsTableSchemaField);
 
-			if (!Objects.equals(objectField.getType(), "Blob") &&
+			if (!Objects.equals(objectField.getDBType(), "Blob") &&
 				objectField.isIndexed()) {
 
 				fdsTableSchemaField.setSortable(true);

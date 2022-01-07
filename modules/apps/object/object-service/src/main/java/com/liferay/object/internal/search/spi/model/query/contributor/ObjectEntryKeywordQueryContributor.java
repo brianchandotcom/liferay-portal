@@ -143,9 +143,9 @@ public class ObjectEntryKeywordQueryContributor
 		throws ParseException {
 
 		boolean addedRangeQuery = _addRangeQuery(
-			nestedBooleanQuery, fieldName, token, objectField.getType());
+			nestedBooleanQuery, fieldName, token, objectField.getDBType());
 
-		if (!addedRangeQuery && _isValidInput(token, objectField.getType())) {
+		if (!addedRangeQuery && _isValidInput(token, objectField.getDBType())) {
 			nestedBooleanQuery.add(
 				new TermQueryImpl(fieldName, token), BooleanClauseOccur.MUST);
 		}
@@ -215,15 +215,15 @@ public class ObjectEntryKeywordQueryContributor
 
 			queryConfig.addHighlightFieldNames(fieldName);
 		}
-		else if (Objects.equals(objectField.getType(), "BigDecimal")) {
+		else if (Objects.equals(objectField.getDBType(), "BigDecimal")) {
 			_addNumericClause(
 				"nestedFieldArray.value_double", nestedBooleanQuery,
 				objectField, token);
 		}
-		else if (Objects.equals(objectField.getType(), "Blob")) {
+		else if (Objects.equals(objectField.getDBType(), "Blob")) {
 			_log.error("Blob type is not indexable");
 		}
-		else if (Objects.equals(objectField.getType(), "Boolean")) {
+		else if (Objects.equals(objectField.getDBType(), "Boolean")) {
 			String fieldName = null;
 
 			if (StringUtil.equalsIgnoreCase(token, "false") ||
@@ -245,27 +245,27 @@ public class ObjectEntryKeywordQueryContributor
 				queryConfig.addHighlightFieldNames(fieldName);
 			}
 		}
-		else if (Objects.equals(objectField.getType(), "Date")) {
+		else if (Objects.equals(objectField.getDBType(), "Date")) {
 			_addNumericClause(
 				"nestedFieldArray.value_date", nestedBooleanQuery, objectField,
 				token);
 		}
-		else if (Objects.equals(objectField.getType(), "Double")) {
+		else if (Objects.equals(objectField.getDBType(), "Double")) {
 			_addNumericClause(
 				"nestedFieldArray.value_double", nestedBooleanQuery,
 				objectField, token);
 		}
-		else if (Objects.equals(objectField.getType(), "Integer")) {
+		else if (Objects.equals(objectField.getDBType(), "Integer")) {
 			_addNumericClause(
 				"nestedFieldArray.value_integer", nestedBooleanQuery,
 				objectField, token);
 		}
-		else if (Objects.equals(objectField.getType(), "Long")) {
+		else if (Objects.equals(objectField.getDBType(), "Long")) {
 			_addNumericClause(
 				"nestedFieldArray.value_long", nestedBooleanQuery, objectField,
 				token);
 		}
-		else if (Objects.equals(objectField.getType(), "String")) {
+		else if (Objects.equals(objectField.getDBType(), "String")) {
 			if (Validator.isBlank(objectField.getIndexedLanguageId())) {
 				String fieldName = "nestedFieldArray.value_text";
 

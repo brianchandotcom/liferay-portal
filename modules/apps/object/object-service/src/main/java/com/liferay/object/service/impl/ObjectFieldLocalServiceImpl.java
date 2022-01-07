@@ -237,8 +237,8 @@ public class ObjectFieldLocalServiceImpl
 		_validateIndexed(indexed, indexedAsKeyword, indexedLanguageId, type);
 
 		if (Validator.isNotNull(objectField.getRelationshipType())) {
-			if (!Objects.equals(objectField.getName(), name) ||
-				!Objects.equals(objectField.getType(), type)) {
+			if (!Objects.equals(objectField.getDBType(), type) ||
+				!Objects.equals(objectField.getName(), name)) {
 
 				throw new ObjectFieldRelationshipTypeException(
 					"Object field relationship name and type cannot be " +
@@ -254,12 +254,12 @@ public class ObjectFieldLocalServiceImpl
 		objectField.setListTypeDefinitionId(listTypeDefinitionId);
 		objectField.setBusinessType(businessType);
 		objectField.setDBColumnName(name + StringPool.UNDERLINE);
+		objectField.setDBType(type);
 		objectField.setIndexed(indexed);
 		objectField.setIndexedAsKeyword(indexedAsKeyword);
 		objectField.setIndexedLanguageId(indexedLanguageId);
 		objectField.setName(name);
 		objectField.setRequired(required);
-		objectField.setType(type);
 
 		return objectFieldPersistence.update(objectField);
 	}
@@ -302,6 +302,7 @@ public class ObjectFieldLocalServiceImpl
 		objectField.setBusinessType(businessType);
 		objectField.setDBColumnName(dbColumnName);
 		objectField.setDBTableName(dbTableName);
+		objectField.setDBType(type);
 		objectField.setIndexed(indexed);
 		objectField.setIndexedAsKeyword(indexedAsKeyword);
 		objectField.setIndexedLanguageId(indexedLanguageId);
@@ -309,7 +310,6 @@ public class ObjectFieldLocalServiceImpl
 		objectField.setName(name);
 		objectField.setRelationshipType(null);
 		objectField.setRequired(required);
-		objectField.setType(type);
 
 		return objectFieldPersistence.update(objectField);
 	}

@@ -40,14 +40,14 @@ ObjectField objectField = (ObjectField)request.getAttribute(ObjectWebKeys.OBJECT
 					<aui:input disabled="<%= objectDefinition.isApproved() || !objectDefinitionsFieldsDisplayContext.hasUpdateObjectDefinitionPermission() || Validator.isNotNull(objectField.getRelationshipType()) %>" name="name" required="<%= true %>" value="<%= objectField.getName() %>" />
 
 					<aui:select disabled="<%= objectDefinition.isApproved() || !objectDefinitionsFieldsDisplayContext.hasUpdateObjectDefinitionPermission() || Validator.isNotNull(objectField.getRelationshipType()) %>" name="type" required="<%= true %>">
-						<aui:option label="BigDecimal" selected='<%= Objects.equals(objectField.getType(), "BigDecimal") %>' value="BigDecimal" />
-						<aui:option label="Boolean" selected='<%= Objects.equals(objectField.getType(), "Boolean") %>' value="Boolean" />
-						<aui:option label="Clob" selected='<%= Objects.equals(objectField.getType(), "Clob") %>' value="Clob" />
-						<aui:option label="Date" selected='<%= Objects.equals(objectField.getType(), "Date") %>' value="Date" />
-						<aui:option label="Double" selected='<%= Objects.equals(objectField.getType(), "Double") %>' value="Double" />
-						<aui:option label="Integer" selected='<%= Objects.equals(objectField.getType(), "Integer") %>' value="Integer" />
-						<aui:option label="Long" selected='<%= Objects.equals(objectField.getType(), "Long") %>' value="Long" />
-						<aui:option label="String" selected='<%= Objects.equals(objectField.getType(), "String") %>' value="String" />
+						<aui:option label="BigDecimal" selected='<%= Objects.equals(objectField.getDBType(), "BigDecimal") %>' value="BigDecimal" />
+						<aui:option label="Boolean" selected='<%= Objects.equals(objectField.getDBType(), "Boolean") %>' value="Boolean" />
+						<aui:option label="Clob" selected='<%= Objects.equals(objectField.getDBType(), "Clob") %>' value="Clob" />
+						<aui:option label="Date" selected='<%= Objects.equals(objectField.getDBType(), "Date") %>' value="Date" />
+						<aui:option label="Double" selected='<%= Objects.equals(objectField.getDBType(), "Double") %>' value="Double" />
+						<aui:option label="Integer" selected='<%= Objects.equals(objectField.getDBType(), "Integer") %>' value="Integer" />
+						<aui:option label="Long" selected='<%= Objects.equals(objectField.getDBType(), "Long") %>' value="Long" />
+						<aui:option label="String" selected='<%= Objects.equals(objectField.getDBType(), "String") %>' value="String" />
 					</aui:select>
 
 					<aui:field-wrapper cssClass="form-group lfr-input-text-container">
@@ -55,7 +55,7 @@ ObjectField objectField = (ObjectField)request.getAttribute(ObjectWebKeys.OBJECT
 					</aui:field-wrapper>
 				</div>
 
-				<div class="mt-4 sheet" id="<portlet:namespace />searchableContainer" style="display: <%= Objects.equals(objectField.getType(), "Blob") ? "none;" : "block;" %>">
+				<div class="mt-4 sheet" id="<portlet:namespace />searchableContainer" style="display: <%= Objects.equals(objectField.getDBType(), "Blob") ? "none;" : "block;" %>">
 					<h2 class="sheet-title">
 						<liferay-ui:message key="searchable" />
 					</h2>
@@ -64,7 +64,7 @@ ObjectField objectField = (ObjectField)request.getAttribute(ObjectWebKeys.OBJECT
 						<aui:input disabled="<%= objectDefinition.isApproved() || !objectDefinitionsFieldsDisplayContext.hasUpdateObjectDefinitionPermission() || Validator.isNotNull(objectField.getRelationshipType()) %>" inlineLabel="right" label='<%= LanguageUtil.get(request, "searchable") %>' labelCssClass="simple-toggle-switch" name="indexed" type="toggle-switch" value="<%= objectField.getIndexed() %>" />
 					</aui:field-wrapper>
 
-					<div id="<portlet:namespace />indexedGroup" style="display: <%= (Objects.equals(objectField.getType(), "String") && objectField.getIndexed()) ? "block;" : "none;" %>">
+					<div id="<portlet:namespace />indexedGroup" style="display: <%= (Objects.equals(objectField.getDBType(), "String") && objectField.getIndexed()) ? "block;" : "none;" %>">
 						<div class="form-group">
 							<clay:radio
 								checked="<%= objectField.getIndexed() && objectField.getIndexedAsKeyword() %>"

@@ -205,14 +205,15 @@ public class ObjectDefinitionLocalServiceImpl
 					newObjectField.getBusinessType(),
 					newObjectField.getDBColumnName(), false, false, "",
 					newObjectField.getLabelMap(), newObjectField.getName(),
-					newObjectField.isRequired(), newObjectField.getType());
+					newObjectField.isRequired(), newObjectField.getDBType());
 			}
 			else {
-				if (!Objects.equals(oldObjectField, newObjectField.getType())) {
+				if (!Objects.equals(
+						oldObjectField, newObjectField.getDBType())) {
 					oldObjectField.setBusinessType(
 						newObjectField.getBusinessType());
+					oldObjectField.setDBType(newObjectField.getDBType());
 					oldObjectField.setRequired(newObjectField.isRequired());
-					oldObjectField.setType(newObjectField.getType());
 
 					_objectFieldPersistence.update(oldObjectField);
 				}
@@ -677,7 +678,7 @@ public class ObjectDefinitionLocalServiceImpl
 						objectField.isIndexedAsKeyword(),
 						objectField.getIndexedLanguageId(),
 						objectField.getLabelMap(), objectField.getName(),
-						objectField.isRequired(), objectField.getType());
+						objectField.isRequired(), objectField.getDBType());
 				}
 				else {
 					_objectFieldLocalService.addCustomObjectField(
@@ -687,7 +688,7 @@ public class ObjectDefinitionLocalServiceImpl
 						objectField.isIndexedAsKeyword(),
 						objectField.getIndexedLanguageId(),
 						objectField.getLabelMap(), objectField.getName(),
-						objectField.isRequired(), objectField.getType());
+						objectField.isRequired(), objectField.getDBType());
 				}
 			}
 		}

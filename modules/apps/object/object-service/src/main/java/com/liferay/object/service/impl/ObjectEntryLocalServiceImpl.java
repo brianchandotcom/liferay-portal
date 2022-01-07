@@ -1680,7 +1680,7 @@ public class ObjectEntryLocalServiceImpl
 				continue;
 			}
 
-			if (StringUtil.equals(objectField.getType(), "String")) {
+			if (StringUtil.equals(objectField.getDBType(), "String")) {
 				_validateObjectFieldStringTypeLength(entry);
 			}
 

@@ -97,7 +97,7 @@ public class ObjectDefinitionGraphQLDTOContributor
 					GraphQLDTOProperty.of(
 						objectField.getName(),
 						_typedClasses.getOrDefault(
-							objectField.getType(), Object.class)));
+							objectField.getDBType(), Object.class)));
 			}
 		}
 

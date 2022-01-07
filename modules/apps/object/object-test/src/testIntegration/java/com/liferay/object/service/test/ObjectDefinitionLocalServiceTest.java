@@ -1050,11 +1050,11 @@ public class ObjectDefinitionLocalServiceTest {
 			objectDefinition.getObjectDefinitionId(), name);
 
 		Assert.assertEquals(dbColumnName, objectField.getDBColumnName());
+		Assert.assertEquals(type, objectField.getDBType());
 		Assert.assertFalse(objectField.isIndexed());
 		Assert.assertFalse(objectField.isIndexedAsKeyword());
 		Assert.assertEquals("", objectField.getIndexedLanguageId());
 		Assert.assertEquals(required, objectField.isRequired());
-		Assert.assertEquals(type, objectField.getType());
 	}
 
 	private boolean _hasColumn(String tableName, String columnName)

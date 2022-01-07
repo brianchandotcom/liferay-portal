@@ -105,7 +105,7 @@ public class ObjectEntryApplication extends Application {
 
 		return new DTOProperty(
 			Collections.singletonMap("x-parent-map", "properties"),
-			objectField.getName(), objectField.getType());
+			objectField.getName(), objectField.getDBType());
 	}
 
 	private OpenAPISchemaFilter _getOpenAPISchemaFilter(

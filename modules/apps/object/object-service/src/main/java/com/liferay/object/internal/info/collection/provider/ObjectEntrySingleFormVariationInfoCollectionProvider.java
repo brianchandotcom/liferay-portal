@@ -139,9 +139,9 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 								_objectDefinition.getObjectDefinitionId())) {
 
 						if (!(Objects.equals(
-								objectField.getType(), "Boolean") ||
+								objectField.getDBType(), "Boolean") ||
 							  (Objects.equals(
-								  objectField.getType(), "String") &&
+								  objectField.getDBType(), "String") &&
 							   (objectField.getListTypeDefinitionId() != 0))) ||
 							!objectField.isIndexed()) {
 
@@ -298,10 +298,10 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 	}
 
 	private String _getField(ObjectField objectField) {
-		if (Objects.equals(objectField.getType(), "Boolean")) {
+		if (Objects.equals(objectField.getDBType(), "Boolean")) {
 			return "nestedFieldArray.value_boolean";
 		}
-		else if (Objects.equals(objectField.getType(), "String")) {
+		else if (Objects.equals(objectField.getDBType(), "String")) {
 			return "nestedFieldArray.value_keyword_lowercase";
 		}
 
@@ -349,7 +349,7 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 					serviceContext.getLocale(), "choose-an-option"),
 				""));
 
-		if (Objects.equals(objectField.getType(), "Boolean")) {
+		if (Objects.equals(objectField.getDBType(), "Boolean")) {
 			options.add(
 				new SelectInfoFieldType.Option(
 					LanguageUtil.get(serviceContext.getLocale(), "true"),

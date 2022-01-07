@@ -458,7 +458,7 @@ public class ObjectEntryDisplayContext {
 		_setDDMFormFieldProperties(
 			ddmFormField,
 			GetterUtil.getLong(objectField.getListTypeDefinitionId()),
-			objectField.getRelationshipType(), objectField.getType());
+			objectField.getRelationshipType(), objectField.getDBType());
 
 		LocalizedValue ddmFormFieldLabelLocalizedValue = new LocalizedValue(
 			_objectRequestHelper.getLocale());

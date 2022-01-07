@@ -470,6 +470,7 @@ public class ObjectFieldLocalServiceTest {
 			"Long");
 
 		Assert.assertEquals("able_", objectField.getDBColumnName());
+		Assert.assertEquals("Long", objectField.getDBType());
 		Assert.assertFalse(objectField.isIndexed());
 		Assert.assertTrue(objectField.isIndexedAsKeyword());
 		Assert.assertEquals("", objectField.getIndexedLanguageId());
@@ -478,13 +479,13 @@ public class ObjectFieldLocalServiceTest {
 			objectField.getLabelMap());
 		Assert.assertEquals("able", objectField.getName());
 		Assert.assertFalse(objectField.isRequired());
-		Assert.assertEquals("Long", objectField.getType());
 
 		objectField = _objectFieldLocalService.updateCustomObjectField(
 			objectField.getObjectFieldId(), 0, "LongInteger", false, true, "",
 			LocalizedMapUtil.getLocalizedMap("able"), "able", false, "Long");
 
 		Assert.assertEquals("able_", objectField.getDBColumnName());
+		Assert.assertEquals("Long", objectField.getDBType());
 		Assert.assertFalse(objectField.isIndexed());
 		Assert.assertTrue(objectField.isIndexedAsKeyword());
 		Assert.assertEquals("", objectField.getIndexedLanguageId());
@@ -493,7 +494,6 @@ public class ObjectFieldLocalServiceTest {
 			objectField.getLabelMap());
 		Assert.assertEquals("able", objectField.getName());
 		Assert.assertFalse(objectField.isRequired());
-		Assert.assertEquals("Long", objectField.getType());
 
 		String indexedLanguageId = LanguageUtil.getLanguageId(
 			LocaleUtil.getDefault());
@@ -504,6 +504,7 @@ public class ObjectFieldLocalServiceTest {
 			"baker", true, "String");
 
 		Assert.assertEquals("baker_", objectField.getDBColumnName());
+		Assert.assertEquals("String", objectField.getDBType());
 		Assert.assertTrue(objectField.isIndexed());
 		Assert.assertFalse(objectField.isIndexedAsKeyword());
 		Assert.assertEquals(
@@ -513,7 +514,6 @@ public class ObjectFieldLocalServiceTest {
 			objectField.getLabelMap());
 		Assert.assertEquals("baker", objectField.getName());
 		Assert.assertTrue(objectField.isRequired());
-		Assert.assertEquals("String", objectField.getType());
 
 		_objectDefinitionLocalService.publishCustomObjectDefinition(
 			TestPropsValues.getUserId(),
@@ -525,6 +525,7 @@ public class ObjectFieldLocalServiceTest {
 			"Integer");
 
 		Assert.assertEquals("baker_", objectField.getDBColumnName());
+		Assert.assertEquals("String", objectField.getDBType());
 		Assert.assertTrue(objectField.isIndexed());
 		Assert.assertFalse(objectField.isIndexedAsKeyword());
 		Assert.assertEquals(
@@ -534,7 +535,6 @@ public class ObjectFieldLocalServiceTest {
 			LocalizedMapUtil.getLocalizedMap("charlie"));
 		Assert.assertEquals("baker", objectField.getName());
 		Assert.assertTrue(objectField.isRequired());
-		Assert.assertEquals("String", objectField.getType());
 
 		_testUpdateCustomObjectFieldThrowsObjectFieldRelationshipTypeException(
 			objectDefinition);

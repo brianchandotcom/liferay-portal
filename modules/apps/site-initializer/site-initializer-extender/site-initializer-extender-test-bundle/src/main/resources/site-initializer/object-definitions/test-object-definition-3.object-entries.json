@@ -1,17 +1,22 @@
 [
 	{
-		"field1": "Test Object Entry 1"
+		"field1": "Test Object Entry 1",
+		"objectEntrySiteInitializerKey": "objectEntrySiteInitializerKey-1"
 	},
 	{
-		"field1": "Test Object Entry 2"
+		"field1": "Test Object Entry 2",
+		"objectEntrySiteInitializerKey": "objectEntrySiteInitializerKey-2"
 	},
 	{
-		"field1": "Test Object Entry 3"
+		"field1": "Test Object Entry 3",
+		"objectEntrySiteInitializerKey": "objectEntrySiteInitializerKey-3"
 	},
 	{
-		"field1": "Test Object Entry 4"
+		"field1": "Test Object Entry 4",
+		"objectEntrySiteInitializerKey": "objectEntrySiteInitializerKey-4"
 	},
 	{
-		"field1": "Test Object Entry 5"
+		"field1": "Test Object Entry 5",
+		"objectEntrySiteInitializerKey": "objectEntrySiteInitializerKey-5"
 	}
 ]

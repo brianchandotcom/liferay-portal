@@ -50,7 +50,8 @@ const useFormActions = (form, previousSection, nextSection, errorMessage) => {
 			Storage.setItem(STORAGE_KEYS.CONTEXTUAL_MESSAGE, phraseAgentPage);
 			window.location.href = `${liferaySiteName}/get-in-touch`;
 			validated = false;
-		} else {
+		}
+		else {
 			Storage.removeItem(STORAGE_KEYS.CONTEXTUAL_MESSAGE);
 		}
 
@@ -68,7 +69,8 @@ const useFormActions = (form, previousSection, nextSection, errorMessage) => {
 			setApplicationId(response.data.id);
 
 			return response;
-		} catch (error) {
+		}
+		catch (error) {
 			setError('continueButton', {
 				message:
 					errorMessage ||

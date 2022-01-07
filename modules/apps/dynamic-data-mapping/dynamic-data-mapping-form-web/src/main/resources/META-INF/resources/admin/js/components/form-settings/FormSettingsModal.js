@@ -16,7 +16,6 @@ import ClayButton from '@clayui/button';
 import ClayModal, {useModal} from '@clayui/modal';
 import {
 	EVENT_TYPES as CORE_EVENT_TYPES,
-	PagesVisitor,
 	useConfig,
 	useForm,
 	useFormState,
@@ -53,7 +52,7 @@ const FormSettingsModal = ({
 	}, [dispatch, prevPagesRef, serializedSettingsContext]);
 
 	const {observer, onClose} = useModal({
-		onClose: () => {
+		onClose: async () => {
 			if (undoPagesRef.current) {
 				dispatch({
 					payload: prevPagesRef.current,
@@ -70,11 +69,16 @@ const FormSettingsModal = ({
 				});
 			}
 
-			const visitor = new PagesVisitor(pages);
+			const settingsDDMForm = await Liferay.componentReady(
+				'formSettingsAPI'
+			);
 
-			const showPartialResultsToRespondents = visitor.findField(
-				({fieldName}) => fieldName === 'showPartialResultsToRespondents'
-			)?.value;
+			const showPartialResultsToRespondents = settingsDDMForm.reactComponentRef.current
+				.getFields()
+				.find(
+					({fieldName}) =>
+						fieldName === 'showPartialResultsToRespondents'
+				)?.value;
 
 			const alertElement = document.querySelector(
 				'.lfr-ddm__show-partial-results-alert'

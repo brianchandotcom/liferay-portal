@@ -181,6 +181,7 @@
 
 		<column name="listTypeDefinitionId" type="long" />
 		<column name="objectDefinitionId" type="long" />
+		<column name="businessType" type="String" />
 		<column method-name="DBColumnName" name="dbColumnName" type="String" />
 		<column method-name="DBTableName" name="dbTableName" type="String" />
 		<column name="indexed" type="boolean" />

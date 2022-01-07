@@ -14,12 +14,12 @@ import javax.servlet.http.HttpServletResponse;
 public class ${className}LoginPostAction extends Action {
 
 	@Override
-    public void run(HttpServletRequest request, HttpServletResponse response) {
+	public void run(HttpServletRequest request, HttpServletResponse response) {
 		long userId = PortalUtil.getUserId(request);
 
 		User user = UserLocalServiceUtil.fetchUser(userId);
 
-        System.out.println(user.getFirstName() + " has logged in.");
-    }
+		System.out.println(user.getFirstName() + " has logged in.");
+	}
 
 }

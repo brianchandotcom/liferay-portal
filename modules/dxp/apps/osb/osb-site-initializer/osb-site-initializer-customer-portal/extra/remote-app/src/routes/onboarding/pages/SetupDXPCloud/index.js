@@ -42,10 +42,6 @@ const SetupDXPCloud = () => {
 	);
 
 	const hasDisasterRecovery = !!data?.c?.accountSubscriptions?.items?.length;
-	const projectBrief = {
-		code: project.code,
-		dxpVersion: project.dxpVersion,
-	};
 
 	useEffect(() => {
 		if (dXPCDataCenterRegions.length) {
@@ -129,11 +125,15 @@ const SetupDXPCloud = () => {
 			}}
 		>
 			<div className="d-flex justify-content-between mb-2 pb-1 pl-3">
-				<div className="flex-fill">
+				<div className="mr-4 pr-2">
 					<label>Project Name</label>
 
-					<p className="text-neutral-6 text-paragraph-lg">
-						<strong>{projectBrief ? projectBrief.code : ''}</strong>
+					<p className="dxp-cloud-project-name text-neutral-6 text-paragraph-lg">
+						<strong>
+							{project.name.length > 71
+								? project.name.substring(0, 71) + '...'
+								: project.name}
+						</strong>
 					</p>
 				</div>
 
@@ -141,9 +141,7 @@ const SetupDXPCloud = () => {
 					<label>Liferay DXP Version</label>
 
 					<p className="text-neutral-6 text-paragraph-lg">
-						<strong>
-							{projectBrief ? projectBrief.dxpVersion : ''}
-						</strong>
+						<strong>{project.dxpVersion}</strong>
 					</p>
 				</div>
 			</div>
@@ -152,7 +150,7 @@ const SetupDXPCloud = () => {
 				<ClayForm.Group className="mb-0 pb-1">
 					<Input
 						groupStyle="pb-1"
-						helper="Lowercase letters and numbers only. Project IDs cannot be change."
+						helper="Lowercase letters and numbers only. The Project ID cannot be changed."
 						label="Project ID"
 						name="dxp.projectId"
 						required

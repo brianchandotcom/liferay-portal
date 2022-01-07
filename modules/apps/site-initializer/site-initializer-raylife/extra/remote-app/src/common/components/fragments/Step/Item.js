@@ -26,7 +26,7 @@ export function StepItem({
 			)}
 			onClick={partially ? onClick : undefined}
 		>
-			<i className="align-items-center justify-content-center">
+			<i className="align-items-center justify-content-center position-relative">
 				{partially && (
 					<ProgressRing
 						className="position-absolute progress-ring"

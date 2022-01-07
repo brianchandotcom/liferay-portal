@@ -1,17 +1,6 @@
 import {useEffect, useState} from 'react';
 import {DEVICES} from '../utils/constants';
-
-function getLiferayDimensions() {
-	try {
-		// eslint-disable-next-line no-undef
-		return Liferay.BREAKPOINTS;
-	} catch (error) {
-		return {
-			PHONE: 0,
-			TABLET: 0,
-		};
-	}
-}
+import {Liferay} from '../utils/liferay';
 
 /**
  * @param {Number} currentWidth
@@ -19,7 +8,9 @@ function getLiferayDimensions() {
  * @returns {("DESKTOP"|"PHONE"|"TABLET")} type
  */
 
-function getDeviceSize(currentWidth, dimensions) {
+function getDeviceSize(currentWidth) {
+	const dimensions = Liferay.BREAKPOINTS;
+
 	const devices = Object.entries(dimensions).sort(
 		(dimensionA, dimensionB) => dimensionB[1] - dimensionA[1] // Order by dimension DESC
 	);
@@ -45,16 +36,14 @@ function getWindowDimensions(dimensions = {}) {
 	};
 }
 
-const dimensions = getLiferayDimensions();
-
 export default function useWindowDimensions() {
 	const [windowDimensions, setWindowDimensions] = useState(
-		getWindowDimensions(dimensions)
+		getWindowDimensions()
 	);
 
 	useEffect(() => {
 		const handleResize = () => {
-			setWindowDimensions(getWindowDimensions(dimensions));
+			setWindowDimensions(getWindowDimensions());
 		};
 
 		window.addEventListener('resize', handleResize);

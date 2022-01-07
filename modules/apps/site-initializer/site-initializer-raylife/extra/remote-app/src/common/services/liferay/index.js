@@ -1,11 +1,8 @@
 import '../../../types';
+import {Liferay} from '../../utils/liferay';
 
 import {LiferayAdapt} from './adapter';
-import LiferayFetchAPI, {
-	REACT_APP_LIFERAY_API,
-	getLiferayAuthenticationToken,
-} from './api';
-import {getLiferayGroupId, getScopeGroupId} from './themeDisplay';
+import LiferayFetchAPI, {REACT_APP_LIFERAY_API} from './api';
 
 const RaylifeApplicationAPI = 'o/c/raylifeapplications';
 const DeliveryAPI = 'o/headless-delivery';
@@ -41,7 +38,7 @@ const getProductQuotes = async () => {
 
 const getQuoteComparison = async () => {
 	const response = await LiferayFetchAPI.get(
-		`${quoteComparisonAPI}/scopes/${getScopeGroupId()}`
+		`${quoteComparisonAPI}/scopes/${Liferay.ThemeDisplay.getScopeGroupId()}`
 	);
 
 	return response.data;
@@ -58,15 +55,10 @@ const getQuoteComparisonById = async (id) => {
  */
 const getLiferaySiteName = () => {
 	let siteName = '/web/raylife';
-	try {
-		// eslint-disable-next-line no-undef
-		const {pathname} = new URL(Liferay.ThemeDisplay.getCanonicalURL());
-		const pathSplit = pathname.split('/').filter(Boolean);
-		siteName = `/${pathSplit.slice(0, pathSplit.length - 1).join('/')}`;
-	}
-	catch (error) {
-		console.warn('Not able to find Liferay PathName\n', error);
-	}
+
+	const {pathname} = new URL(Liferay.ThemeDisplay.getCanonicalURL());
+	const pathSplit = pathname.split('/').filter(Boolean);
+	siteName = `/${pathSplit.slice(0, pathSplit.length - 1).join('/')}`;
 
 	return siteName;
 };
@@ -96,7 +88,7 @@ const uploadToDocumentsAndMedia = (folderId) => {
  */
 const _postBasicsFormApplication = (body) =>
 	LiferayFetchAPI.post(
-		`${RaylifeApplicationAPI}/scopes/${getScopeGroupId()}`,
+		`${RaylifeApplicationAPI}/scopes/${Liferay.ThemeDisplay.getScopeGroupId()}`,
 		{
 			body,
 		}
@@ -114,8 +106,6 @@ export const LiferayService = {
 	REACT_APP_LIFERAY_API,
 	createOrUpdateRaylifeApplication,
 	fetch: LiferayFetchAPI,
-	getLiferayAuthenticationToken,
-	getLiferayGroupId,
 	getLiferaySiteName,
 	getProductQuotes,
 	getQuoteComparison,

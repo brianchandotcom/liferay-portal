@@ -1,5 +1,5 @@
 import {axios} from '../../../common/services/liferay/api';
-import {getCompanyGroupId} from '../../../common/services/liferay/themeDisplay';
+import {Liferay} from '../../../common/utils/liferay';
 
 export function getTaxonomyCategories(id, taxonomyCategoryName) {
 	const taxonomyCategories = axios.get(
@@ -13,7 +13,7 @@ export function getTaxonomyVocabularies() {
 	const taxonomyVocabularyName = 'Raylife';
 
 	const taxonomyVocabularies = axios.get(
-		`o/headless-admin-taxonomy/v1.0/sites/${getCompanyGroupId()}/taxonomy-vocabularies?filter=name eq '${taxonomyVocabularyName}'`
+		`o/headless-admin-taxonomy/v1.0/sites/${Liferay.ThemeDisplay.getCompanyGroupId()}/taxonomy-vocabularies?filter=name eq '${taxonomyVocabularyName}'`
 	);
 
 	return taxonomyVocabularies;

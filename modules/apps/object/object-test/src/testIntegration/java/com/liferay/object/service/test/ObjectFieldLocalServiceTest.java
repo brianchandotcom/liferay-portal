@@ -17,10 +17,10 @@ package com.liferay.object.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
+import com.liferay.object.exception.ObjectFieldDBTypeException;
 import com.liferay.object.exception.ObjectFieldLabelException;
 import com.liferay.object.exception.ObjectFieldNameException;
 import com.liferay.object.exception.ObjectFieldRelationshipTypeException;
-import com.liferay.object.exception.ObjectFieldTypeException;
 import com.liferay.object.exception.RequiredObjectFieldException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
@@ -77,10 +77,10 @@ public class ObjectFieldLocalServiceTest {
 
 			Assert.fail();
 		}
-		catch (ObjectFieldTypeException objectFieldTypeException) {
+		catch (ObjectFieldDBTypeException objectFieldDBTypeException) {
 			Assert.assertEquals(
 				"Blob type is not indexable",
-				objectFieldTypeException.getMessage());
+				objectFieldDBTypeException.getMessage());
 		}
 
 		// Indexed language ID can only be applied with type \"String\" that
@@ -94,11 +94,11 @@ public class ObjectFieldLocalServiceTest {
 
 			Assert.fail();
 		}
-		catch (ObjectFieldTypeException objectFieldTypeException) {
+		catch (ObjectFieldDBTypeException objectFieldDBTypeException) {
 			Assert.assertEquals(
 				"Indexed language ID can only be applied with type " +
 					"\"String\" that is not indexed as a keyword",
-				objectFieldTypeException.getMessage());
+				objectFieldDBTypeException.getMessage());
 		}
 
 		try {
@@ -109,11 +109,11 @@ public class ObjectFieldLocalServiceTest {
 
 			Assert.fail();
 		}
-		catch (ObjectFieldTypeException objectFieldTypeException) {
+		catch (ObjectFieldDBTypeException objectFieldDBTypeException) {
 			Assert.assertEquals(
 				"Indexed language ID can only be applied with type " +
 					"\"String\" that is not indexed as a keyword",
-				objectFieldTypeException.getMessage());
+				objectFieldDBTypeException.getMessage());
 		}
 
 		try {
@@ -124,11 +124,11 @@ public class ObjectFieldLocalServiceTest {
 
 			Assert.fail();
 		}
-		catch (ObjectFieldTypeException objectFieldTypeException) {
+		catch (ObjectFieldDBTypeException objectFieldDBTypeException) {
 			Assert.assertEquals(
 				"Indexed language ID can only be applied with type " +
 					"\"String\" that is not indexed as a keyword",
-				objectFieldTypeException.getMessage());
+				objectFieldDBTypeException.getMessage());
 		}
 
 		// Label is null
@@ -283,15 +283,15 @@ public class ObjectFieldLocalServiceTest {
 
 		// Types
 
-		String[] types = {
+		String[] dbTypes = {
 			"BigDecimal", "Blob", "Clob", "Boolean", "Date", "Double",
 			"Integer", "Long", "String"
 		};
 
-		for (String type : types) {
+		for (String dbType : dbTypes) {
 			_testAddSystemObjectField(
 				ObjectFieldUtil.createObjectField(
-					"Text", "Able", "able", type));
+					"Text", "Able", "able", dbType));
 		}
 
 		try {
@@ -301,9 +301,10 @@ public class ObjectFieldLocalServiceTest {
 
 			Assert.fail();
 		}
-		catch (ObjectFieldTypeException objectFieldTypeException) {
+		catch (ObjectFieldDBTypeException objectFieldDBTypeException) {
 			Assert.assertEquals(
-				"Invalid type STRING", objectFieldTypeException.getMessage());
+				"Invalid DB type STRING",
+				objectFieldDBTypeException.getMessage());
 		}
 	}
 
@@ -635,7 +636,7 @@ public class ObjectFieldLocalServiceTest {
 					objectFieldRelationshipTypeException) {
 
 			Assert.assertEquals(
-				"Object field relationship name and type cannot be changed",
+				"Object field relationship name and DB type cannot be changed",
 				objectFieldRelationshipTypeException.getMessage());
 		}
 		finally {

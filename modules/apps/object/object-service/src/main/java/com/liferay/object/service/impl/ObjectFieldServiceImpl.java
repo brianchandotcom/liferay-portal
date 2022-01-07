@@ -47,9 +47,9 @@ public class ObjectFieldServiceImpl extends ObjectFieldServiceBaseImpl {
 	@Override
 	public ObjectField addCustomObjectField(
 			long listTypeDefinitionId, long objectDefinitionId,
-			String businessType, boolean indexed, boolean indexedAsKeyword,
-			String indexedLanguageId, Map<Locale, String> labelMap, String name,
-			boolean required, String type)
+			String businessType, String dbType, boolean indexed,
+			boolean indexedAsKeyword, String indexedLanguageId,
+			Map<Locale, String> labelMap, String name, boolean required)
 		throws PortalException {
 
 		ObjectDefinition objectDefinition =
@@ -68,8 +68,8 @@ public class ObjectFieldServiceImpl extends ObjectFieldServiceBaseImpl {
 
 		return objectFieldLocalService.addCustomObjectField(
 			getUserId(), listTypeDefinitionId, objectDefinitionId, businessType,
-			indexed, indexedAsKeyword, indexedLanguageId, labelMap, name,
-			required, type);
+			dbType, indexed, indexedAsKeyword, indexedLanguageId, labelMap,
+			name, required);
 	}
 
 	@Override
@@ -101,9 +101,9 @@ public class ObjectFieldServiceImpl extends ObjectFieldServiceBaseImpl {
 	@Override
 	public ObjectField updateCustomObjectField(
 			long objectFieldId, long listTypeDefinitionId, String businessType,
-			boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
-			Map<Locale, String> labelMap, String name, boolean required,
-			String type)
+			String dbType, boolean indexed, boolean indexedAsKeyword,
+			String indexedLanguageId, Map<Locale, String> labelMap, String name,
+			boolean required)
 		throws PortalException {
 
 		ObjectField objectField = objectFieldPersistence.findByPrimaryKey(
@@ -114,9 +114,8 @@ public class ObjectFieldServiceImpl extends ObjectFieldServiceBaseImpl {
 			ActionKeys.UPDATE);
 
 		return objectFieldLocalService.updateCustomObjectField(
-			objectFieldId, listTypeDefinitionId, businessType, indexed,
-			indexedAsKeyword, indexedLanguageId, labelMap, name, required,
-			type);
+			objectFieldId, listTypeDefinitionId, businessType, dbType, indexed,
+			indexedAsKeyword, indexedLanguageId, labelMap, name, required);
 	}
 
 	@Reference(

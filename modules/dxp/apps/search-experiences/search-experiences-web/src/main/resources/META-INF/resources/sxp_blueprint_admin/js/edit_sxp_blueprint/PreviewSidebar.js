@@ -28,7 +28,7 @@ import {PreviewModalWithCopyDownload} from '../shared/PreviewModal';
 import SearchInput from '../shared/SearchInput';
 import {sub} from '../utils/language';
 import useDidUpdateEffect from '../utils/useDidUpdateEffect';
-import {parseAndPrettifyJSON} from '../utils/utils';
+import {isDefined, parseAndPrettifyJSON} from '../utils/utils';
 import PreviewAttributesModal from './PreviewAttributesModal';
 import ResultListItem from './ResultListItem';
 
@@ -152,7 +152,9 @@ function PreviewSidebar({
 					<span className="text-truncate-inline total-hits-label">
 						<span className="text-truncate">
 							{sub(Liferay.Language.get('x-results'), [
-								totalHits.toLocaleString(),
+								isDefined(totalHits)
+									? totalHits.toLocaleString()
+									: 0,
 							])}
 						</span>
 					</span>
@@ -257,7 +259,9 @@ function PreviewSidebar({
 				</div>
 			)}
 
-			{totalHits > 0 && !errors.length && _renderResultsManagementBar()}
+			{isDefined(totalHits) &&
+				!errors.length &&
+				_renderResultsManagementBar()}
 
 			{!loading ? (
 				errors.length ? (

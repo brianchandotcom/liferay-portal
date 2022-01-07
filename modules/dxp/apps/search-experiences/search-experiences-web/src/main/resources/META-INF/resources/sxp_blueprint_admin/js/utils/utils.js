@@ -80,7 +80,7 @@ export function isEmpty(value, type = '') {
  * @return {String} The converted JSON string.
  */
 export function parseAndPrettifyJSON(json) {
-	if (!isDefined(json)) {
+	if (!isDefined(json) || json === '') {
 		return '';
 	}
 

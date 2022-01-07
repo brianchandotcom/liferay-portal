@@ -1,20 +1,15 @@
 import {ClayIconSpriteContext} from '@clayui/icon';
+import {Liferay} from '../utils/liferay';
 
 const getIconSpriteMap = () => {
-	try {
-		// eslint-disable-next-line no-undef
-		if (!themeDisplay) {
-			new Error('themeDisplay is not defined');
-		}
+	const pathThemeImages = Liferay.ThemeDisplay.getPathThemeImages();
 
-		return `${themeDisplay.getPathThemeImages()}/clay/icons.svg`;
-	}
-	catch (error) {
-		console.warn(error.message);
+	const spritemap = pathThemeImages
+		? `${pathThemeImages}/clay/icons.svg`
+		: // eslint-disable-next-line no-undef
+		  require('@clayui/css/lib/images/icons/icons.svg').default;
 
-		// eslint-disable-next-line no-undef
-		return require('@clayui/css/lib/images/icons/icons.svg').default;
-	}
+	return spritemap;
 };
 
 const ClayIconProvider = ({children}) => (

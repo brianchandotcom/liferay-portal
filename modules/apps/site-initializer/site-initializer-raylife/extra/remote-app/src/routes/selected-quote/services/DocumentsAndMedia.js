@@ -1,6 +1,6 @@
 import {axios} from '../../../common/services/liferay/api';
 import {STORAGE_KEYS, Storage} from '../../../common/services/liferay/storage';
-import {getScopeGroupId} from '../../../common/services/liferay/themeDisplay';
+import {Liferay} from '../../../common/utils/liferay';
 
 const DeliveryAPI = 'o/headless-delivery';
 
@@ -64,8 +64,7 @@ export async function createFolderIfNotExist(siteId, folderName, parentFolder) {
 
 	if (folderExist.data.totalCount) {
 		folder = folderExist.data.items[0];
-	}
-	else {
+	} else {
 		const response = await createDocumentFolder(
 			siteId,
 			{
@@ -83,10 +82,9 @@ export async function createFolderIfNotExist(siteId, folderName, parentFolder) {
 
 export async function createRootFolders(applicationsFolderName) {
 	const applicationId = Storage.getItem(STORAGE_KEYS.APPLICATION_ID);
-	const siteId = getScopeGroupId();
 
 	const rootFolder = await createFolderIfNotExist(
-		siteId,
+		Liferay.ThemeDisplay.getScopeGroupId(),
 		applicationsFolderName
 	);
 	const quoteFolder = await createFolderIfNotExist(

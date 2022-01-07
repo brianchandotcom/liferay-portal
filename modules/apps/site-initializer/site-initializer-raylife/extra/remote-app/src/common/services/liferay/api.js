@@ -1,23 +1,7 @@
 import baseAxios from 'axios';
+import {Liferay} from '../../utils/liferay';
 
 const {REACT_APP_LIFERAY_API = window.location.origin} = process.env;
-
-/**
- * @returns {string} Liferay Authentication Token
- */
-export function getLiferayAuthenticationToken() {
-	try {
-		// eslint-disable-next-line no-undef
-		const token = Liferay.authToken;
-
-		return token;
-	}
-	catch (error) {
-		console.warn('Not able to find Liferay auth token\n', error);
-
-		return '';
-	}
-}
 
 const baseFetch = async (url, {body, method = 'GET'} = {}) => {
 	const liferayAPIUrl = new URL(`${REACT_APP_LIFERAY_API}/${url}`);
@@ -27,7 +11,7 @@ const baseFetch = async (url, {body, method = 'GET'} = {}) => {
 		...(body && {body: JSON.stringify(body)}),
 		headers: {
 			'Content-Type': 'application/json',
-			'x-csrf-token': getLiferayAuthenticationToken(),
+			'x-csrf-token': Liferay.authToken,
 		},
 		method,
 	});
@@ -48,7 +32,7 @@ const LiferayFetchAPI = {
 const axios = baseAxios.create({
 	baseURL: REACT_APP_LIFERAY_API,
 	headers: {
-		'x-csrf-token': getLiferayAuthenticationToken(),
+		'x-csrf-token': Liferay.authToken,
 	},
 });
 

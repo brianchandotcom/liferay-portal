@@ -1,6 +1,7 @@
-/* eslint-disable no-undef */
 import '../../types';
 import {Loader} from '@googlemaps/js-api-loader';
+
+const google = window.google;
 
 /**
  * @description Load google global variable asynchronously
@@ -14,8 +15,7 @@ const setup = (GOOGLE_API) => {
 		});
 
 		googleMapsLoader.load();
-	}
-	catch (error) {
+	} catch (error) {
 		console.warn(error);
 	}
 };

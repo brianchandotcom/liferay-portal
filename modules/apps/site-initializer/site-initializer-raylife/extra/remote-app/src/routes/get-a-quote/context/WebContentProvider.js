@@ -6,8 +6,8 @@ import {
 	useState,
 } from 'react';
 import {useCustomEvent} from '../../../common/hooks/useCustomEvent';
-import {getLiferayGroupId} from '../../../common/services/liferay/themeDisplay';
 import {DEVICES} from '../../../common/utils/constants';
+import {Liferay} from '../../../common/utils/liferay';
 import {SANITIZE_EMPTY_KEYS_REGEX} from '../../../common/utils/patterns';
 import TipContainerModal from '../components/tip-container-modal';
 import {
@@ -18,7 +18,7 @@ import {
 } from '../services/WebContent';
 import {AppContext} from './AppContextProvider';
 
-const siteGroupId = getLiferayGroupId();
+const siteGroupId = Liferay.ThemeDisplay.getSiteGroupId();
 const WEB_CONTENT_NAME = 'Tip';
 const WebContentContext = createContext();
 

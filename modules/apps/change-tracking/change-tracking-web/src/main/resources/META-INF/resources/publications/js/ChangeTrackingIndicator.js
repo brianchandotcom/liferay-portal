@@ -745,10 +745,33 @@ export default function ChangeTrackingIndicator({
 
 	const [showModal, setShowModal] = useState(false);
 
+	const navigate = (url, action) => {
+		AUI().use('liferay-portlet-url', () => {
+			const portletURL = Liferay.PortletURL.createURL(url);
+
+			portletURL.setParameter(
+				'redirect',
+				window.location.pathname + window.location.search
+			);
+
+			if (action) {
+				submitForm(document.hrefFm, portletURL.toString());
+
+				return;
+			}
+
+			Liferay.Util.navigate(portletURL.toString());
+		});
+	};
+
 	const dropdownItems = [];
 
 	if (checkoutDropdownItem) {
-		dropdownItems.push(checkoutDropdownItem);
+		dropdownItems.push({
+			label: checkoutDropdownItem.label,
+			onClick: () => navigate(checkoutDropdownItem.href, true),
+			symbolLeft: checkoutDropdownItem.symbolLeft,
+		});
 	}
 
 	dropdownItems.push({
@@ -893,45 +916,13 @@ export default function ChangeTrackingIndicator({
 		if (entry.checkoutURL) {
 			dropdownItems.push({
 				label: Liferay.Language.get('work-on-publication'),
-				onClick: () => {
-					AUI().use('liferay-portlet-url', () => {
-						const portletURL = Liferay.PortletURL.createURL(
-							entry.checkoutURL
-						);
-
-						portletURL.setParameter(
-							'redirect',
-							window.location.pathname + window.location.search
-						);
-
-						submitForm(document.hrefFm, portletURL.toString());
-					});
-				},
+				onClick: () => navigate(entry.checkoutURL, true),
 				symbolLeft: 'radio-button',
 			});
 
 			itemField = (
 				<ClayList.ItemField expand>
-					<a
-						onClick={() => {
-							AUI().use('liferay-portlet-url', () => {
-								const portletURL = Liferay.PortletURL.createURL(
-									entry.checkoutURL
-								);
-
-								portletURL.setParameter(
-									'redirect',
-									window.location.pathname +
-										window.location.search
-								);
-
-								submitForm(
-									document.hrefFm,
-									portletURL.toString()
-								);
-							});
-						}}
-					>
+					<a onClick={() => navigate(entry.checkoutURL, true)}>
 						<ClayList.ItemTitle>{entry.name}</ClayList.ItemTitle>
 
 						<ClayList.ItemText subtext>
@@ -964,20 +955,7 @@ export default function ChangeTrackingIndicator({
 
 		dropdownItems.push({
 			label: Liferay.Language.get('review-changes'),
-			onClick: () => {
-				AUI().use('liferay-portlet-url', () => {
-					const portletURL = Liferay.PortletURL.createURL(
-						entry.viewURL
-					);
-
-					portletURL.setParameter(
-						'redirect',
-						window.location.pathname + window.location.search
-					);
-
-					submitForm(document.hrefFm, portletURL.toString());
-				});
-			},
+			onClick: () => navigate(entry.viewURL),
 			symbolLeft: 'list-ul',
 		});
 
@@ -996,29 +974,9 @@ export default function ChangeTrackingIndicator({
 								{entry.checkoutURL && (
 									<ClayList.QuickActionMenu.Item
 										data-tooltip-align="top"
-										onClick={() => {
-											AUI().use(
-												'liferay-portlet-url',
-												() => {
-													const portletURL = Liferay.PortletURL.createURL(
-														entry.checkoutURL
-													);
-
-													portletURL.setParameter(
-														'redirect',
-														window.location
-															.pathname +
-															window.location
-																.search
-													);
-
-													submitForm(
-														document.hrefFm,
-														portletURL.toString()
-													);
-												}
-											);
-										}}
+										onClick={() =>
+											navigate(entry.checkoutURL, true)
+										}
 										spritemap={spritemap}
 										symbol="radio-button"
 										title={Liferay.Language.get(
@@ -1029,24 +987,7 @@ export default function ChangeTrackingIndicator({
 
 								<ClayList.QuickActionMenu.Item
 									data-tooltip-align="top"
-									onClick={() => {
-										AUI().use('liferay-portlet-url', () => {
-											const portletURL = Liferay.PortletURL.createURL(
-												entry.viewURL
-											);
-
-											portletURL.setParameter(
-												'redirect',
-												window.location.pathname +
-													window.location.search
-											);
-
-											submitForm(
-												document.hrefFm,
-												portletURL.toString()
-											);
-										});
-									}}
+									onClick={() => navigate(entry.viewURL)}
 									spritemap={spritemap}
 									symbol="list-ul"
 									title={Liferay.Language.get(

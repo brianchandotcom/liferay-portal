@@ -24,12 +24,14 @@ import {
 } from 'data-engine-js-components-web/js/core/reducers/index.es';
 import React, {useRef} from 'react';
 
+import FormSettingsApi from './FormSettingsApi';
 import FormSettingsModal from './FormSettingsModal';
 
 const FormSettings = (props) => {
 	const {onCloseFormSettings, portletNamespace, visibleFormSettings} = props;
 	const {config, state} = parseProps(props);
 
+	const apiRef = useRef(null);
 	const containerRef = useRef(null);
 	const prevPagesRef = useRef(props.pages);
 	const undoPagesRef = useRef(true);
@@ -58,6 +60,8 @@ const FormSettings = (props) => {
 				>
 					<Pages editable={false} ref={containerRef} />
 				</FormSettingsModal>
+
+				<FormSettingsApi ref={apiRef} />
 			</FormProvider>
 		</ConfigProvider>
 	);

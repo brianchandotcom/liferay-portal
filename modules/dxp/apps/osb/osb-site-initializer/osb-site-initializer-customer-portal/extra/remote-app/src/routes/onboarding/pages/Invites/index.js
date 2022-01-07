@@ -72,8 +72,7 @@ const Invites = () => {
 				payload: steps.dxpCloud,
 				type: actionTypes.CHANGE_STEP,
 			});
-		}
-		else {
+		} else {
 			window.location.href = `${API_BASE_URL}/${LiferayTheme.getLiferaySiteName()}/overview?${
 				PARAMS_KEYS.PROJECT_APPLICATION_EXTERNAL_REFERENCE_CODE
 			}=${project.accountKey}`;
@@ -103,8 +102,7 @@ const Invites = () => {
 			if (!error) {
 				nextPage();
 			}
-		}
-		else {
+		} else {
 			setInitialError(true);
 			setBaseButtonDisabled(true);
 			setTouched({
@@ -274,8 +272,8 @@ const Invites = () => {
 				<div className="px-3">
 					<label>Project Name</label>
 
-					<p className="text-neutral-6 text-paragraph-lg">
-						<strong>{project ? project.code : ''}</strong>
+					<p className="invites-project-name text-neutral-6 text-paragraph-lg">
+						<strong>{project.name}</strong>
 					</p>
 				</div>
 

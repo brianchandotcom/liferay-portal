@@ -41,6 +41,69 @@ let id = 2;
 const getId = () => `item_${id++}`;
 
 const deserializeUtil = new DeserializeUtil();
+const isOverlapping = (
+	elementPosition,
+	elementRectangle,
+	newElementPosition
+) => {
+	if (elementRectangle !== null) {
+		const existingElement = {
+			bottomBound: elementPosition.y + 84,
+			lefBound: elementPosition.x - 10,
+			rightBound: elementPosition.x + 264,
+			topBound: elementPosition.y - 10,
+		};
+
+		const {rectangleHeight, rectangleWidth} = elementRectangle;
+
+		const isInHorizontalBounds =
+			(newElementPosition.x > existingElement.lefBound ||
+				newElementPosition.x + rectangleWidth >
+					existingElement.lefBound) &&
+			(newElementPosition.x < existingElement.rightBound ||
+				newElementPosition.x + rectangleWidth <
+					existingElement.rightBound);
+
+		const isInVerticalBounds =
+			(newElementPosition.y > existingElement.topBound ||
+				newElementPosition.y + rectangleHeight >
+					existingElement.topBound) &&
+			(newElementPosition.y < existingElement.bottomBound ||
+				newElementPosition.y + rectangleHeight <
+					existingElement.bottomBound);
+
+		const isOverlapping = isInHorizontalBounds && isInVerticalBounds;
+
+		return isOverlapping;
+	}
+
+	return false;
+};
+
+const getCollidingElements = (
+	elements,
+	elementRectangle,
+	newElementPosition
+) => {
+	const collidingElements = [];
+
+	elements.forEach((element) => {
+		if (
+			isNode(element) &&
+			isOverlapping(
+				element.position,
+				elementRectangle,
+				newElementPosition
+			)
+		) {
+			collidingElements.push(element.id);
+		}
+	});
+
+	return collidingElements;
+};
+
+const definitionDiagramController = new DefinitionDiagramController();
 
 export default function DiagramBuilder({version}) {
 	const {
@@ -113,7 +176,9 @@ export default function DiagramBuilder({version}) {
 				elementRectangle.mouseYInRectangle,
 		});
 
-		setCollidingElements(getCollidingElements(elements, position));
+		setCollidingElements(
+			getCollidingElements(elements, elementRectangle, position)
+		);
 
 		event.preventDefault();
 
@@ -135,7 +200,10 @@ export default function DiagramBuilder({version}) {
 					elementRectangle.mouseYInRectangle,
 			});
 
-			if (getCollidingElements(elements, position).length === 0) {
+			if (
+				getCollidingElements(elements, elementRectangle, position)
+					.length === 0
+			) {
 				event.preventDefault();
 
 				const type = event.dataTransfer.getData(

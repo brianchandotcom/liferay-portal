@@ -221,7 +221,8 @@ public class AssetListDisplayContext {
 
 		String className = clazz.getName();
 
-		return className.substring(className.lastIndexOf(StringPool.PERIOD));
+		return className.substring(
+			className.lastIndexOf(StringPool.PERIOD) + 1);
 	}
 
 	public ClassType getClassType(

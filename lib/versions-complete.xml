@@ -6525,18 +6525,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/portal/freshcookies-security.jar</file-name>
-				<version>0.60</version>
-				<project-name>Freshcookies</project-name>
-				<project-url>http://freshcookies.org/freshcookies-security</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/portal/hessian.jar</file-name>
 				<version>4.0.3</version>
 				<project-name>Hessian</project-name>

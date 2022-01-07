@@ -54,8 +54,6 @@ public class AccountGroupDisplaySearchContainerFactory {
 			SearchOrderByUtil.getOrderByType(
 				liferayPortletRequest, AccountPortletKeys.ACCOUNT_GROUPS_ADMIN,
 				"account-group-order-by-type", "asc"));
-		accountGroupDisplaySearchContainer.setRowChecker(
-			new EmptyOnClickRowChecker(liferayPortletResponse));
 
 		String keywords = ParamUtil.getString(
 			liferayPortletRequest, "keywords");
@@ -79,6 +77,9 @@ public class AccountGroupDisplaySearchContainerFactory {
 			() -> TransformUtil.transform(
 				baseModelSearchResult.getBaseModels(), AccountGroupDisplay::of),
 			baseModelSearchResult.getLength());
+
+		accountGroupDisplaySearchContainer.setRowChecker(
+			new EmptyOnClickRowChecker(liferayPortletResponse));
 
 		return accountGroupDisplaySearchContainer;
 	}

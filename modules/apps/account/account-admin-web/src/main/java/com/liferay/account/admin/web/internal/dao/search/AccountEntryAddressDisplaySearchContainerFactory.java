@@ -63,8 +63,6 @@ public class AccountEntryAddressDisplaySearchContainerFactory {
 			SearchOrderByUtil.getOrderByType(
 				liferayPortletRequest, AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN,
 				"address-order-by-type", "asc"));
-		searchContainer.setRowChecker(
-			new EmptyOnClickRowChecker(liferayPortletResponse));
 
 		String keywords = ParamUtil.getString(
 			liferayPortletRequest, "keywords");
@@ -96,6 +94,9 @@ public class AccountEntryAddressDisplaySearchContainerFactory {
 			() -> TransformUtil.transform(
 				baseModelSearchResult.getBaseModels(), AddressDisplay::of),
 			baseModelSearchResult.getLength());
+
+		searchContainer.setRowChecker(
+			new EmptyOnClickRowChecker(liferayPortletResponse));
 
 		return searchContainer;
 	}

@@ -928,13 +928,7 @@ public abstract class BaseBuild implements Build {
 
 		sb.deleteCharAt(sb.length() - 1);
 
-		try {
-			return JenkinsResultsParserUtil.encode(sb.toString());
-		}
-		catch (MalformedURLException | URISyntaxException exception) {
-			throw new RuntimeException(
-				"Unable to encode URL " + sb.toString(), exception);
-		}
+		return JenkinsResultsParserUtil.fixURL(sb.toString());
 	}
 
 	@Override

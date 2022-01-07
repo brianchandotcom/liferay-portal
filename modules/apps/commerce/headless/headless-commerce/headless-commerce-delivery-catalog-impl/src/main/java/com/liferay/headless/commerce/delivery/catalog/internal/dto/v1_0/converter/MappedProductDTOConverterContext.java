@@ -44,7 +44,25 @@ public class MappedProductDTOConverterContext
 		return _companyId;
 	}
 
+	public Long getReplacementCPInstanceId() {
+		return _replacementCPInstanceId;
+	}
+
+	public Long getReplacementCProductId() {
+		return _replacementCProductId;
+	}
+
+	public void setReplacementCPInstanceId(Long replacementCPInstanceId) {
+		_replacementCPInstanceId = replacementCPInstanceId;
+	}
+
+	public void setReplacementCProductId(Long replacementCProductId) {
+		_replacementCProductId = replacementCProductId;
+	}
+
 	private final CommerceContext _commerceContext;
 	private final long _companyId;
+	private Long _replacementCPInstanceId;
+	private Long _replacementCProductId;
 
 }

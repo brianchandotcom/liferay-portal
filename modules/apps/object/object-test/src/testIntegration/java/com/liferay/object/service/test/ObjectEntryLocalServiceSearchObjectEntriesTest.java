@@ -68,7 +68,8 @@ public class ObjectEntryLocalServiceSearchObjectEntriesTest {
 	public void testBigDecimal() throws Exception {
 		_addObjectDefinition(
 			ObjectFieldUtil.createObjectField(
-				true, false, null, "Alpha", "alpha", false, "BigDecimal"));
+				"PrecisionDecimal", true, false, null, "Alpha", "alpha", false,
+				"BigDecimal"));
 
 		_addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
@@ -95,7 +96,8 @@ public class ObjectEntryLocalServiceSearchObjectEntriesTest {
 	public void testBigDecimalKeyword() throws Exception {
 		_addObjectDefinition(
 			ObjectFieldUtil.createObjectField(
-				true, true, null, "Alpha", "alpha", false, "BigDecimal"));
+				"PrecisionDecimal", true, true, null, "Alpha", "alpha", false,
+				"BigDecimal"));
 
 		_addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
@@ -122,7 +124,8 @@ public class ObjectEntryLocalServiceSearchObjectEntriesTest {
 	public void testBoolean() throws Exception {
 		_addObjectDefinition(
 			ObjectFieldUtil.createObjectField(
-				true, false, null, "Alpha", "alpha", false, "Boolean"));
+				"Boolean", true, false, null, "Alpha", "alpha", false,
+				"Boolean"));
 
 		_addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
@@ -150,7 +153,8 @@ public class ObjectEntryLocalServiceSearchObjectEntriesTest {
 	public void testBooleanKeyword() throws Exception {
 		_addObjectDefinition(
 			ObjectFieldUtil.createObjectField(
-				true, true, null, "Alpha", "alpha", false, "Boolean"));
+				"Boolean", true, true, null, "Alpha", "alpha", false,
+				"Boolean"));
 
 		_addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
@@ -178,7 +182,7 @@ public class ObjectEntryLocalServiceSearchObjectEntriesTest {
 	public void testDate() throws Exception {
 		_addObjectDefinition(
 			ObjectFieldUtil.createObjectField(
-				true, false, null, "Alpha", "alpha", false, "Date"));
+				"Date", true, false, null, "Alpha", "alpha", false, "Date"));
 
 		long date = 1632335654272L;
 
@@ -211,7 +215,7 @@ public class ObjectEntryLocalServiceSearchObjectEntriesTest {
 	public void testDateKeyword() throws Exception {
 		_addObjectDefinition(
 			ObjectFieldUtil.createObjectField(
-				true, true, null, "Alpha", "alpha", false, "Date"));
+				"Date", true, true, null, "Alpha", "alpha", false, "Date"));
 
 		long date = 1632335654272L;
 
@@ -244,7 +248,8 @@ public class ObjectEntryLocalServiceSearchObjectEntriesTest {
 	public void testDouble() throws Exception {
 		_addObjectDefinition(
 			ObjectFieldUtil.createObjectField(
-				true, false, null, "Alpha", "alpha", false, "Double"));
+				"Decimal", true, false, null, "Alpha", "alpha", false,
+				"Double"));
 
 		_addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
@@ -272,7 +277,8 @@ public class ObjectEntryLocalServiceSearchObjectEntriesTest {
 	public void testDoubleKeyword() throws Exception {
 		_addObjectDefinition(
 			ObjectFieldUtil.createObjectField(
-				true, true, null, "Alpha", "alpha", false, "Double"));
+				"Decimal", true, true, null, "Alpha", "alpha", false,
+				"Double"));
 
 		_addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
@@ -300,7 +306,8 @@ public class ObjectEntryLocalServiceSearchObjectEntriesTest {
 	public void testInteger() throws Exception {
 		_addObjectDefinition(
 			ObjectFieldUtil.createObjectField(
-				true, false, null, "Alpha", "alpha", false, "Integer"));
+				"Integer", true, false, null, "Alpha", "alpha", false,
+				"Integer"));
 
 		_addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
@@ -326,7 +333,8 @@ public class ObjectEntryLocalServiceSearchObjectEntriesTest {
 	public void testIntegerKeyword() throws Exception {
 		_addObjectDefinition(
 			ObjectFieldUtil.createObjectField(
-				true, true, null, "Alpha", "alpha", false, "Integer"));
+				"Integer", true, true, null, "Alpha", "alpha", false,
+				"Integer"));
 
 		_addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
@@ -352,7 +360,8 @@ public class ObjectEntryLocalServiceSearchObjectEntriesTest {
 	public void testLong() throws Exception {
 		_addObjectDefinition(
 			ObjectFieldUtil.createObjectField(
-				true, false, null, "Alpha", "alpha", false, "Long"));
+				"LongInteger", true, false, null, "Alpha", "alpha", false,
+				"Long"));
 
 		_addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
@@ -375,7 +384,8 @@ public class ObjectEntryLocalServiceSearchObjectEntriesTest {
 	public void testLongKeyword() throws Exception {
 		_addObjectDefinition(
 			ObjectFieldUtil.createObjectField(
-				true, true, null, "Alpha", "alpha", false, "Long"));
+				"LongInteger", true, true, null, "Alpha", "alpha", false,
+				"Long"));
 
 		_addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
@@ -398,7 +408,7 @@ public class ObjectEntryLocalServiceSearchObjectEntriesTest {
 	public void testSearchByTitleValue() throws Exception {
 		_addObjectDefinition(
 			ObjectFieldUtil.createObjectField(
-				false, false, null, "Alpha", "alpha", false, "String"));
+				"Text", false, false, null, "Alpha", "alpha", false, "String"));
 
 		ObjectEntry objectEntry = _addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
@@ -420,7 +430,7 @@ public class ObjectEntryLocalServiceSearchObjectEntriesTest {
 	public void testString() throws Exception {
 		_addObjectDefinition(
 			ObjectFieldUtil.createObjectField(
-				true, false, null, "Alpha", "alpha", false, "String"));
+				"Text", true, false, null, "Alpha", "alpha", false, "String"));
 
 		_addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
@@ -438,7 +448,8 @@ public class ObjectEntryLocalServiceSearchObjectEntriesTest {
 	public void testStringAnalyzed() throws Exception {
 		_addObjectDefinition(
 			ObjectFieldUtil.createObjectField(
-				true, false, "en_US", "Alpha", "alpha", false, "String"));
+				"Text", true, false, "en_US", "Alpha", "alpha", false,
+				"String"));
 
 		_addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
@@ -456,7 +467,7 @@ public class ObjectEntryLocalServiceSearchObjectEntriesTest {
 	public void testStringKeyword() throws Exception {
 		_addObjectDefinition(
 			ObjectFieldUtil.createObjectField(
-				true, true, null, "Alpha", "alpha", false, "String"));
+				"Text", true, true, null, "Alpha", "alpha", false, "String"));
 
 		_addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
@@ -477,7 +488,7 @@ public class ObjectEntryLocalServiceSearchObjectEntriesTest {
 	public void testStringNotIndexed() throws Exception {
 		_addObjectDefinition(
 			ObjectFieldUtil.createObjectField(
-				false, false, null, "Alpha", "alpha", false, "String"));
+				"Text", false, false, null, "Alpha", "alpha", false, "String"));
 
 		_addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(

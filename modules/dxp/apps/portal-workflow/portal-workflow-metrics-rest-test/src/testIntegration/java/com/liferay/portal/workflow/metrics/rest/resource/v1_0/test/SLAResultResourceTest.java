@@ -99,6 +99,19 @@ public class SLAResultResourceTest extends BaseSLAResultResourceTestCase {
 
 		assertEquals(slaResult2, getSLAResult);
 		assertValid(getSLAResult);
+
+		_workflowMetricsRESTTestHelper.blockSLAInstanceResults(
+			testGroup.getCompanyId(), _process.getId(), slaResult2.getId());
+
+		getSLAResult = slaResultResource.getProcessLastSLAResult(
+			_process.getId());
+
+		Assert.assertEquals(
+			slaResult2.getDateModified(), getSLAResult.getDateModified());
+		Assert.assertEquals(slaResult2.getId(), getSLAResult.getId());
+
+		assertEquals(slaResult2, getSLAResult);
+		assertValid(getSLAResult);
 	}
 
 	@Override

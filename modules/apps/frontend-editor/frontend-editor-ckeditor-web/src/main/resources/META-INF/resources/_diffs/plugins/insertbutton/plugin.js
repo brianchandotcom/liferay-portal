@@ -289,6 +289,17 @@
 
 				editor.on('change', hide),
 
+				CKEDITOR.document.getWindow().on('click', (event) => {
+					const target = event.data.getTarget();
+
+					if (
+						!editor.element.contains(target) &&
+						!target.equals(button)
+					) {
+						hide();
+					}
+				}),
+
 				editor.on('contentDom', () => {
 					const body = editor.document.getBody();
 

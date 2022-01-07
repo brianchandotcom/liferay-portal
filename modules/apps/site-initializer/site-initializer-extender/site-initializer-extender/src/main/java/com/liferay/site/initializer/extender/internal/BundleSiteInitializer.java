@@ -122,6 +122,7 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.zip.ZipWriter;
@@ -392,10 +393,12 @@ public class BundleSiteInitializer implements SiteInitializer {
 					() -> _addRemoteAppEntries(
 						documentsStringUtilReplaceValues, serviceContext));
 
+			Map<String, String> displayPageInfoItems = new HashMap<>();
+
 			_invoke(
 				() -> _addLayouts(
 					assetListEntryIdsStringUtilReplaceValues,
-					documentsStringUtilReplaceValues,
+					displayPageInfoItems, documentsStringUtilReplaceValues,
 					remoteAppEntryIdsStringUtilReplaceValues, serviceContext));
 		}
 		catch (Exception exception) {
@@ -1488,6 +1491,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 	private void _addLayouts(
 			Map<String, String> assetListEntryIdsStringUtilReplaceValues,
+			Map<String, String> displayPageInfoItems,
 			Map<String, String> documentsStringUtilReplaceValues,
 			Map<String, String> remoteAppEntryIdsStringUtilReplaceValues,
 			ServiceContext serviceContext)
@@ -1517,7 +1521,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			}
 		}
 
-		_addSiteNavigationMenus(serviceContext);
+		_addSiteNavigationMenus(displayPageInfoItems, serviceContext);
 	}
 
 	private Map<String, String> _addListTypeDefinitions(
@@ -2067,7 +2071,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private void _addSiteNavigationMenu(
-			JSONObject jsonObject, ServiceContext serviceContext)
+			JSONObject jsonObject, Map<String, String> displayPageInfoItems,
+			ServiceContext serviceContext)
 		throws Exception {
 
 		SiteNavigationMenu siteNavigationMenu =
@@ -2076,12 +2081,15 @@ public class BundleSiteInitializer implements SiteInitializer {
 				jsonObject.getString("name"), serviceContext);
 
 		_addSiteNavigationMenuItems(
-			jsonObject, siteNavigationMenu, 0, serviceContext);
+			jsonObject, siteNavigationMenu, 0, displayPageInfoItems,
+			serviceContext);
 	}
 
 	private void _addSiteNavigationMenuItems(
 			JSONObject jsonObject, SiteNavigationMenu siteNavigationMenu,
-			long parentSiteNavigationMenuItemId, ServiceContext serviceContext)
+			long parentSiteNavigationMenuItemId,
+			Map<String, String> displayPageInfoItems,
+			ServiceContext serviceContext)
 		throws Exception {
 
 		for (Object object :
@@ -2136,6 +2144,34 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 				typeSettings = typeSettingsUnicodeProperties.toString();
 			}
+			else if (type.equals("display-page")) {
+				String key = siteMenuItemJSONObject.getString("key");
+
+				if (Validator.isNull(key) ||
+					!displayPageInfoItems.containsKey("CLASS_NAME:" + key)) {
+
+					continue;
+				}
+
+				type = displayPageInfoItems.get("CLASS_NAME:" + key);
+
+				typeSettings = UnicodePropertiesBuilder.create(
+					true
+				).put(
+					"className", type
+				).put(
+					"classNameId", String.valueOf(_portal.getClassNameId(type))
+				).put(
+					"classPK", displayPageInfoItems.get("CLASS_PK:" + key)
+				).put(
+					"classTypeId",
+					displayPageInfoItems.get("CLASS_TYPE_ID:" + key)
+				).put(
+					"title", displayPageInfoItems.get("TITLE:" + key)
+				).put(
+					"type", displayPageInfoItems.get("TYPE:" + key)
+				).buildString();
+			}
 
 			SiteNavigationMenuItem siteNavigationMenuItem =
 				_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
@@ -2148,11 +2184,13 @@ public class BundleSiteInitializer implements SiteInitializer {
 			_addSiteNavigationMenuItems(
 				siteMenuItemJSONObject, siteNavigationMenu,
 				siteNavigationMenuItem.getSiteNavigationMenuItemId(),
-				serviceContext);
+				displayPageInfoItems, serviceContext);
 		}
 	}
 
-	private void _addSiteNavigationMenus(ServiceContext serviceContext)
+	private void _addSiteNavigationMenus(
+			Map<String, String> displayPageInfoItems,
+			ServiceContext serviceContext)
 		throws Exception {
 
 		String json = _read("/site-initializer/site-navigation-menus.json");
@@ -2164,7 +2202,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(json);
 
 		for (int i = 0; i < jsonArray.length(); i++) {
-			_addSiteNavigationMenu(jsonArray.getJSONObject(i), serviceContext);
+			_addSiteNavigationMenu(
+				jsonArray.getJSONObject(i), displayPageInfoItems,
+				serviceContext);
 		}
 	}
 

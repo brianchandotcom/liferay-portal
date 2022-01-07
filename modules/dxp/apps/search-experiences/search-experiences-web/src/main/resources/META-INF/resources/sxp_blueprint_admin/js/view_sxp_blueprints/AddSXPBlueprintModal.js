@@ -38,42 +38,42 @@ const AddModal = ({
 	portletNamespace,
 }) => {
 	const isMounted = useIsMounted();
+
 	const [errorMessage, setErrorMessage] = useState();
 	const [loadingResponse, setLoadingResponse] = useState(false);
-	const [inputValue, setInputValue] = useState('');
-	const [descriptionInputValue, setDescriptionInputValue] = useState('');
 
-	const handleFormError = (responseContent) => {
+	const [descriptionInputValue, setDescriptionInputValue] = useState('');
+	const [titleInputValue, setTitleInputValue] = useState('');
+
+	const _handleFormError = (responseContent) => {
 		setErrorMessage(responseContent.error || DEFAULT_ERROR);
 
 		setLoadingResponse(false);
 	};
-
-	const _getConfiguration = () => ({
-		advancedConfiguration: DEFAULT_ADVANCED_CONFIGURATION,
-		aggregationConfiguration: {},
-		generalConfiguration: {
-			clauseContributorsExcludes: [],
-			clauseContributorsIncludes: clauseContributorsList,
-			searchableAssetTypes: [],
-		},
-		highlightConfiguration: DEFAULT_HIGHLIGHT_CONFIGURATION,
-		parameterConfiguration: DEFAULT_PARAMETER_CONFIGURATION,
-		queryConfiguration: {
-			applyIndexerClauses: true,
-		},
-		sortConfiguration: DEFAULT_SORT_CONFIGURATION,
-	});
 
 	const _handleSubmit = (event) => {
 		event.preventDefault();
 
 		fetch('/o/search-experiences-rest/v1.0/sxp-blueprints', {
 			body: JSON.stringify({
-				configuration: _getConfiguration(),
+				configuration: {
+					advancedConfiguration: DEFAULT_ADVANCED_CONFIGURATION,
+					aggregationConfiguration: {},
+					generalConfiguration: {
+						clauseContributorsExcludes: [],
+						clauseContributorsIncludes: clauseContributorsList,
+						searchableAssetTypes: [],
+					},
+					highlightConfiguration: DEFAULT_HIGHLIGHT_CONFIGURATION,
+					parameterConfiguration: DEFAULT_PARAMETER_CONFIGURATION,
+					queryConfiguration: {
+						applyIndexerClauses: true,
+					},
+					sortConfiguration: DEFAULT_SORT_CONFIGURATION,
+				},
 				description_i18n: {[defaultLocale]: descriptionInputValue},
 				elementInstances: [],
-				title_i18n: {[defaultLocale]: inputValue},
+				title_i18n: {[defaultLocale]: titleInputValue},
 			}),
 			headers: new Headers({
 				'Content-Type': 'application/json',
@@ -82,7 +82,7 @@ const AddModal = ({
 		})
 			.then((response) => {
 				if (!response.ok) {
-					handleFormError();
+					_handleFormError();
 				}
 
 				return response.json();
@@ -90,7 +90,7 @@ const AddModal = ({
 			.then((responseContent) => {
 				if (isMounted()) {
 					if (responseContent.error) {
-						handleFormError(responseContent);
+						_handleFormError(responseContent);
 					}
 					else {
 						onClose();
@@ -112,7 +112,7 @@ const AddModal = ({
 				}
 			})
 			.catch((response) => {
-				handleFormError(response);
+				_handleFormError(response);
 			});
 
 		setLoadingResponse(true);
@@ -153,18 +153,18 @@ const AddModal = ({
 							id={`${portletNamespace}title`}
 							name={`${portletNamespace}title`}
 							onChange={(event) =>
-								setInputValue(event.target.value)
+								setTitleInputValue(event.target.value)
 							}
 							required
 							type="text"
-							value={inputValue}
+							value={titleInputValue}
 						/>
 
 						<input
 							id={`${portletNamespace}title_${defaultLocale}`}
 							name={`${portletNamespace}title_${defaultLocale}`}
 							type="hidden"
-							value={inputValue}
+							value={titleInputValue}
 						/>
 
 						{errorMessage && (

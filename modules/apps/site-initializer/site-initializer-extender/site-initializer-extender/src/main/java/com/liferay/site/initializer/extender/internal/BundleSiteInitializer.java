@@ -366,10 +366,13 @@ public class BundleSiteInitializer implements SiteInitializer {
 			_invoke(
 				() -> _addDDMTemplates(
 					_ddmStructureLocalService, serviceContext));
-			_invoke(
-				() -> _addJournalArticles(
-					_ddmStructureLocalService, _ddmTemplateLocalService,
-					documentsStringUtilReplaceValues, serviceContext));
+
+			displayPageInfoItems.putAll(
+				_invoke(
+					() -> _addJournalArticles(
+						_ddmStructureLocalService, _ddmTemplateLocalService,
+						documentsStringUtilReplaceValues, serviceContext)));
+
 			_invoke(
 				() -> _addLayoutPageTemplates(
 					assetListEntryIdsStringUtilReplaceValues,
@@ -1214,7 +1217,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			FileUtil.createTempFile(url.openStream()), false);
 	}
 
-	private void _addJournalArticles(
+	private Map<String, String> _addJournalArticles(
 			DDMStructureLocalService ddmStructureLocalService,
 			DDMTemplateLocalService ddmTemplateLocalService,
 			Long documentFolderId,
@@ -1222,11 +1225,13 @@ public class BundleSiteInitializer implements SiteInitializer {
 			String parentResourcePath, ServiceContext serviceContext)
 		throws Exception {
 
+		Map<String, String> displayPageInfoItems = new HashMap<>();
+
 		Set<String> resourcePaths = _servletContext.getResourcePaths(
 			parentResourcePath);
 
 		if (SetUtil.isEmpty(resourcePaths)) {
-			return;
+			return displayPageInfoItems;
 		}
 
 		for (String resourcePath : resourcePaths) {
@@ -1234,12 +1239,14 @@ public class BundleSiteInitializer implements SiteInitializer {
 				0, resourcePath.length() - 1);
 
 			if (resourcePath.endsWith("/")) {
-				_addJournalArticles(
-					ddmStructureLocalService, ddmTemplateLocalService,
-					_addStructuredContentFolders(
-						documentFolderId, parentResourcePath, serviceContext),
-					documentsStringUtilReplaceValues, resourcePath,
-					serviceContext);
+				displayPageInfoItems.putAll(
+					_addJournalArticles(
+						ddmStructureLocalService, ddmTemplateLocalService,
+						_addStructuredContentFolders(
+							documentFolderId, parentResourcePath,
+							serviceContext),
+						documentsStringUtilReplaceValues, resourcePath,
+						serviceContext));
 
 				continue;
 			}
@@ -1289,35 +1296,66 @@ public class BundleSiteInitializer implements SiteInitializer {
 				JSONUtil.toStringArray(
 					jsonObject.getJSONArray("assetTagNames")));
 
-			_journalArticleLocalService.addArticle(
-				null, serviceContext.getUserId(),
-				serviceContext.getScopeGroupId(), journalFolderId,
-				JournalArticleConstants.CLASS_NAME_ID_DEFAULT, 0,
-				jsonObject.getString("articleId"), false, 1, titleMap, null,
-				titleMap,
-				StringUtil.replace(
-					_read(StringUtil.replace(resourcePath, ".json", ".xml")),
-					"[$", "$]", documentsStringUtilReplaceValues),
-				ddmStructureKey, ddmTemplateKey, null,
-				calendar.get(Calendar.MONTH),
-				calendar.get(Calendar.DAY_OF_MONTH),
-				calendar.get(Calendar.YEAR), calendar.get(Calendar.HOUR_OF_DAY),
-				calendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0, true, 0, 0, 0, 0,
-				0, true, true, false, null, null, null, null, serviceContext);
+			JournalArticle journalArticle =
+				_journalArticleLocalService.addArticle(
+					null, serviceContext.getUserId(),
+					serviceContext.getScopeGroupId(), journalFolderId,
+					JournalArticleConstants.CLASS_NAME_ID_DEFAULT, 0,
+					jsonObject.getString("articleId"), false, 1, titleMap, null,
+					titleMap,
+					StringUtil.replace(
+						_read(
+							StringUtil.replace(resourcePath, ".json", ".xml")),
+						"[$", "$]", documentsStringUtilReplaceValues),
+					ddmStructureKey, ddmTemplateKey, null,
+					calendar.get(Calendar.MONTH),
+					calendar.get(Calendar.DAY_OF_MONTH),
+					calendar.get(Calendar.YEAR),
+					calendar.get(Calendar.HOUR_OF_DAY),
+					calendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0, true, 0, 0, 0,
+					0, 0, true, true, false, null, null, null, null,
+					serviceContext);
+
+			String key = resourcePath;
+
+			DDMStructure ddmStructure = journalArticle.getDDMStructure();
+
+			displayPageInfoItems.put(
+				"CLASS_NAME:" + key, JournalArticle.class.getName());
+
+			displayPageInfoItems.put(
+				"CLASS_PK:" + key,
+				String.valueOf(journalArticle.getResourcePrimKey()));
+
+			displayPageInfoItems.put(
+				"CLASS_TYPE_ID:" + key,
+				String.valueOf(ddmStructure.getStructureId()));
+
+			displayPageInfoItems.put(
+				"TITLE:" + key,
+				journalArticle.getTitle(serviceContext.getLocale()));
+
+			displayPageInfoItems.put(
+				"TYPE:" + key,
+				ResourceActionsUtil.getModelResource(
+					serviceContext.getLocale(),
+					JournalArticle.class.getName()));
 
 			serviceContext.setAssetCategoryIds(null);
 			serviceContext.setAssetTagNames(null);
 		}
+
+		return displayPageInfoItems;
 	}
 
-	private void _addJournalArticles(
+	private Map<String, String> _addJournalArticles(
 			DDMStructureLocalService ddmStructureLocalService,
 			DDMTemplateLocalService ddmTemplateLocalService,
 			Map<String, String> documentsStringUtilReplaceValues,
 			ServiceContext serviceContext)
 		throws Exception {
 
-		_addJournalArticles(
+		return _addJournalArticles(
 			ddmStructureLocalService, ddmTemplateLocalService, null,
 			documentsStringUtilReplaceValues,
 			"/site-initializer/journal-articles", serviceContext);

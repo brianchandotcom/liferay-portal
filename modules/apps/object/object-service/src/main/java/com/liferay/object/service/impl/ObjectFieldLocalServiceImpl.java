@@ -15,6 +15,7 @@
 package com.liferay.object.service.impl;
 
 import com.liferay.object.exception.ObjectDefinitionStatusException;
+import com.liferay.object.exception.ObjectFieldBusinessTypeException;
 import com.liferay.object.exception.ObjectFieldLabelException;
 import com.liferay.object.exception.ObjectFieldNameException;
 import com.liferay.object.exception.ObjectFieldRelationshipTypeException;
@@ -245,6 +246,7 @@ public class ObjectFieldLocalServiceImpl
 			}
 		}
 		else {
+			_validateBusinessType(businessType);
 			_validateName(objectFieldId, objectDefinition, name);
 			validateType(type);
 		}
@@ -280,6 +282,7 @@ public class ObjectFieldLocalServiceImpl
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
 
+		_validateBusinessType(businessType);
 		_validateIndexed(indexed, indexedAsKeyword, indexedLanguageId, type);
 		_validateLabel(labelMap);
 		_validateName(0, objectDefinition, name);
@@ -309,6 +312,17 @@ public class ObjectFieldLocalServiceImpl
 		objectField.setType(type);
 
 		return objectFieldPersistence.update(objectField);
+	}
+
+	private void _validateBusinessType(String businessType)
+		throws PortalException {
+
+		if (Validator.isNotNull(businessType) &&
+			!_businessTypes.contains(businessType)) {
+
+			throw new ObjectFieldBusinessTypeException(
+				"Invalid business type " + businessType);
+		}
 	}
 
 	private void _validateIndexed(
@@ -381,6 +395,10 @@ public class ObjectFieldLocalServiceImpl
 			throw new ObjectFieldNameException.MustNotBeDuplicate(name);
 		}
 	}
+
+	private final Set<String> _businessTypes = SetUtil.fromArray(
+		"Boolean", "Date", "Decimal", "Integer", "LongInteger", "LongText",
+		"Picklist", "PrecisionDecimal", "Relationship", "Text");
 
 	@Reference
 	private ObjectDefinitionPersistence _objectDefinitionPersistence;

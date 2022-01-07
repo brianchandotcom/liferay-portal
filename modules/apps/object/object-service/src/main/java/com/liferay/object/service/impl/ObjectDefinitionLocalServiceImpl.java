@@ -202,12 +202,15 @@ public class ObjectDefinitionLocalServiceImpl
 			if (oldObjectField == null) {
 				_objectFieldLocalService.addSystemObjectField(
 					userId, objectDefinition.getObjectDefinitionId(),
+					newObjectField.getBusinessType(),
 					newObjectField.getDBColumnName(), false, false, "",
 					newObjectField.getLabelMap(), newObjectField.getName(),
 					newObjectField.isRequired(), newObjectField.getType());
 			}
 			else {
 				if (!Objects.equals(oldObjectField, newObjectField.getType())) {
+					oldObjectField.setBusinessType(
+						newObjectField.getBusinessType());
 					oldObjectField.setRequired(newObjectField.isRequired());
 					oldObjectField.setType(newObjectField.getType());
 
@@ -669,6 +672,7 @@ public class ObjectDefinitionLocalServiceImpl
 				if (system) {
 					_objectFieldLocalService.addSystemObjectField(
 						userId, objectDefinition.getObjectDefinitionId(),
+						objectField.getBusinessType(),
 						objectField.getDBColumnName(), objectField.isIndexed(),
 						objectField.isIndexedAsKeyword(),
 						objectField.getIndexedLanguageId(),
@@ -679,7 +683,7 @@ public class ObjectDefinitionLocalServiceImpl
 					_objectFieldLocalService.addCustomObjectField(
 						userId, objectField.getListTypeDefinitionId(),
 						objectDefinition.getObjectDefinitionId(),
-						objectField.isIndexed(),
+						objectField.getBusinessType(), objectField.isIndexed(),
 						objectField.isIndexedAsKeyword(),
 						objectField.getIndexedLanguageId(),
 						objectField.getLabelMap(), objectField.getName(),

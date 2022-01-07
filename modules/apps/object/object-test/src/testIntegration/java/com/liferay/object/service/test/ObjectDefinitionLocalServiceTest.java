@@ -283,8 +283,8 @@ public class ObjectDefinitionLocalServiceTest {
 
 		_objectFieldLocalService.addCustomObjectField(
 			TestPropsValues.getUserId(), 0,
-			objectDefinition.getObjectDefinitionId(), false, false, null,
-			LocalizedMapUtil.getLocalizedMap("Charlie"), "charlie", true,
+			objectDefinition.getObjectDefinitionId(), "Text", false, false,
+			null, LocalizedMapUtil.getLocalizedMap("Charlie"), "charlie", true,
 			"String");
 
 		// Before publish, database table
@@ -329,8 +329,9 @@ public class ObjectDefinitionLocalServiceTest {
 
 		_objectFieldLocalService.addCustomObjectField(
 			TestPropsValues.getUserId(), 0,
-			objectDefinition.getObjectDefinitionId(), false, false, null,
-			LocalizedMapUtil.getLocalizedMap("Dog"), "dog", true, "String");
+			objectDefinition.getObjectDefinitionId(), "Text", false, false,
+			null, LocalizedMapUtil.getLocalizedMap("Dog"), "dog", true,
+			"String");
 
 		// After publish, database table
 
@@ -783,8 +784,9 @@ public class ObjectDefinitionLocalServiceTest {
 
 		_objectFieldLocalService.addCustomObjectField(
 			TestPropsValues.getUserId(), 0,
-			objectDefinition.getObjectDefinitionId(), false, false, null,
-			LocalizedMapUtil.getLocalizedMap("Able"), "able", true, "String");
+			objectDefinition.getObjectDefinitionId(), "Text", false, false,
+			null, LocalizedMapUtil.getLocalizedMap("Able"), "able", true,
+			"String");
 
 		// Database table
 
@@ -951,7 +953,8 @@ public class ObjectDefinitionLocalServiceTest {
 
 		ObjectField objectField = _objectFieldLocalService.addCustomObjectField(
 			TestPropsValues.getUserId(), 0,
-			objectDefinition.getObjectDefinitionId(), false, false, null,
+			objectDefinition.getObjectDefinitionId(), "Text", false, false,
+			null,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			StringUtil.randomId(), true, "String");
 

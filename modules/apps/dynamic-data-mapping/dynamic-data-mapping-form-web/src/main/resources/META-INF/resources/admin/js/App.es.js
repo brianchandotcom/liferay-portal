@@ -79,18 +79,20 @@ export function App({autosaveInterval, autosaveURL, ...otherProps}) {
 						]}
 						value={state}
 					>
-						<ToastProvider>
-							<Router>
-								<Switch>
-									<AutoSaveProvider
-										interval={autosaveInterval}
-										url={autosaveURL}
-									>
+						<AutoSaveProvider
+							interval={autosaveInterval}
+							url={autosaveURL}
+						>
+							<ToastProvider>
+								<Router>
+									<Switch>
 										<Route
 											component={NavigationBar}
 											path="/"
 										/>
+									</Switch>
 
+									<Switch>
 										<Route
 											component={FormBuilder}
 											exact
@@ -106,10 +108,10 @@ export function App({autosaveInterval, autosaveURL, ...otherProps}) {
 											component={Report}
 											path="/report"
 										/>
-									</AutoSaveProvider>
-								</Switch>
-							</Router>
-						</ToastProvider>
+									</Switch>
+								</Router>
+							</ToastProvider>
+						</AutoSaveProvider>
 					</FormProvider>
 				</ClayModalProvider>
 			</ConfigProvider>

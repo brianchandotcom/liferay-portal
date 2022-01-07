@@ -68,6 +68,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -244,11 +245,31 @@ public class AssetCategoriesDisplayContext {
 			orderByAsc = true;
 		}
 
+		categoriesSearchContainer.setOrderByCol(_getOrderByCol());
 		categoriesSearchContainer.setOrderByComparator(
 			new AssetCategoryCreateDateComparator(orderByAsc));
 		categoriesSearchContainer.setOrderByType(orderByType);
 
+		EmptyOnClickRowChecker emptyOnClickRowChecker =
+			new EmptyOnClickRowChecker(_renderResponse);
+
+		StringBundler sb = new StringBundler(7);
+
+		sb.append("^(?!.*");
+		sb.append(_renderResponse.getNamespace());
+		sb.append("redirect).*(/vocabulary/");
+
 		AssetVocabulary vocabulary = getVocabulary();
+
+		sb.append(vocabulary.getVocabularyId());
+
+		sb.append("/category/");
+		sb.append(getCategoryId());
+		sb.append(")");
+
+		emptyOnClickRowChecker.setRememberCheckBoxStateURLRegex(sb.toString());
+
+		categoriesSearchContainer.setRowChecker(emptyOnClickRowChecker);
 
 		if (Validator.isNotNull(_getKeywords())) {
 			Sort sort = null;
@@ -311,25 +332,6 @@ public class AssetCategoriesDisplayContext {
 					vocabulary.getGroupId(), getCategoryId(),
 					vocabulary.getVocabularyId()));
 		}
-
-		EmptyOnClickRowChecker emptyOnClickRowChecker =
-			new EmptyOnClickRowChecker(_renderResponse);
-
-		StringBundler sb = new StringBundler(7);
-
-		sb.append("^(?!.*");
-		sb.append(_renderResponse.getNamespace());
-		sb.append("redirect).*(/vocabulary/");
-
-		sb.append(vocabulary.getVocabularyId());
-
-		sb.append("/category/");
-		sb.append(getCategoryId());
-		sb.append(")");
-
-		emptyOnClickRowChecker.setRememberCheckBoxStateURLRegex(sb.toString());
-
-		categoriesSearchContainer.setRowChecker(emptyOnClickRowChecker);
 
 		_categoriesSearchContainer = categoriesSearchContainer;
 
@@ -602,9 +604,17 @@ public class AssetCategoriesDisplayContext {
 			orderByAsc = true;
 		}
 
-		vocabulariesSearchContainer.setOrderByComparator(
-			new AssetVocabularyCreateDateComparator(orderByAsc));
+		OrderByComparator<AssetVocabulary> orderByComparator =
+			new AssetVocabularyCreateDateComparator(orderByAsc);
+
+		vocabulariesSearchContainer.setOrderByComparator(orderByComparator);
+
 		vocabulariesSearchContainer.setOrderByType(orderByType);
+
+		EmptyOnClickRowChecker emptyOnClickRowChecker =
+			new EmptyOnClickRowChecker(_renderResponse);
+
+		vocabulariesSearchContainer.setRowChecker(emptyOnClickRowChecker);
 
 		String keywords = _getKeywords();
 
@@ -638,9 +648,6 @@ public class AssetCategoriesDisplayContext {
 						_themeDisplay.getScopeGroupId()));
 			}
 		}
-
-		vocabulariesSearchContainer.setRowChecker(
-			new EmptyOnClickRowChecker(_renderResponse));
 
 		_vocabulariesSearchContainer = vocabulariesSearchContainer;
 

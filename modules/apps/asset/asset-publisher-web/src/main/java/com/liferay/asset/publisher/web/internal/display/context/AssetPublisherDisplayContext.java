@@ -188,9 +188,11 @@ public class AssetPublisherDisplayContext {
 			return _assetListEntry;
 		}
 
+		long assetListEntryId = GetterUtil.getLong(
+			_portletPreferences.getValue("assetListEntryId", null));
+
 		_assetListEntry = AssetListEntryServiceUtil.fetchAssetListEntry(
-			GetterUtil.getLong(
-				_portletPreferences.getValue("assetListEntryId", null)));
+			assetListEntryId);
 
 		return _assetListEntry;
 	}
@@ -690,9 +692,12 @@ public class AssetPublisherDisplayContext {
 			return _availableClassNameIds;
 		}
 
-		_availableClassNameIds = ArrayUtil.filter(
+		long[] availableClassNameIds =
 			AssetRendererFactoryRegistryUtil.getClassNameIds(
-				_themeDisplay.getCompanyId(), true),
+				_themeDisplay.getCompanyId(), true);
+
+		_availableClassNameIds = ArrayUtil.filter(
+			availableClassNameIds,
 			availableClassNameId -> {
 				Indexer<?> indexer = IndexerRegistryUtil.getIndexer(
 					PortalUtil.getClassName(availableClassNameId));
@@ -1236,8 +1241,11 @@ public class AssetPublisherDisplayContext {
 		long[] groupIds = PortalUtil.getCurrentAndAncestorSiteGroupIds(
 			getReferencedModelsGroupIds());
 
-		List<AssetVocabulary> vocabularies = ListUtil.filter(
-			AssetVocabularyServiceUtil.getGroupsVocabularies(groupIds),
+		List<AssetVocabulary> vocabularies =
+			AssetVocabularyServiceUtil.getGroupsVocabularies(groupIds);
+
+		vocabularies = ListUtil.filter(
+			vocabularies,
 			vocabulary -> {
 				long[] classNameIds = vocabulary.getSelectedClassNameIds();
 

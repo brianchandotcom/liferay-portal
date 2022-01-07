@@ -266,6 +266,9 @@ public class AssetTagsDisplayContext {
 			_renderRequest, _renderResponse.createRenderURL(), null,
 			"there-are-no-tags");
 
+		tagsSearchContainer.setRowChecker(
+			new EmptyOnClickRowChecker(_renderResponse));
+
 		String keywords = getKeywords();
 
 		if (Validator.isNotNull(keywords)) {
@@ -314,6 +317,7 @@ public class AssetTagsDisplayContext {
 			}
 
 			tagsSearchContainer.setOrderByComparator(orderByComparator);
+
 			tagsSearchContainer.setOrderByType(orderByType);
 
 			long scopeGroupId = _themeDisplay.getScopeGroupId();
@@ -326,9 +330,6 @@ public class AssetTagsDisplayContext {
 					tagsSearchContainer.getOrderByComparator()),
 				AssetTagServiceUtil.getTagsCount(scopeGroupId, keywords));
 		}
-
-		tagsSearchContainer.setRowChecker(
-			new EmptyOnClickRowChecker(_renderResponse));
 
 		_tagsSearchContainer = tagsSearchContainer;
 

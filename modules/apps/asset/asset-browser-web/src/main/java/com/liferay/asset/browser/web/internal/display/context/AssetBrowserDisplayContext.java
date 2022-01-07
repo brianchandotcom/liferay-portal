@@ -97,6 +97,12 @@ public class AssetBrowserDisplayContext {
 		AssetBrowserSearch assetBrowserSearch = new AssetBrowserSearch(
 			_renderRequest, getPortletURL());
 
+		if (isMultipleSelection()) {
+			assetBrowserSearch.setRowChecker(
+				new AddAssetEntryChecker(
+					_renderResponse, getRefererAssetEntryId()));
+		}
+
 		assetBrowserSearch.setOrderByCol(getOrderByCol());
 		assetBrowserSearch.setOrderByType(getOrderByType());
 
@@ -117,12 +123,6 @@ public class AssetBrowserDisplayContext {
 					subtypeSelectionIds, _getKeywords(), _getKeywords(),
 					_getKeywords(), _getKeywords(), _getListable(), false,
 					false));
-
-			if (isMultipleSelection()) {
-				assetBrowserSearch.setRowChecker(
-					new AddAssetEntryChecker(
-						_renderResponse, getRefererAssetEntryId()));
-			}
 
 			return assetBrowserSearch;
 		}
@@ -146,10 +146,10 @@ public class AssetBrowserDisplayContext {
 			sort = new Sort(null, Sort.SCORE_TYPE, false);
 		}
 		else if (Objects.equals(getOrderByCol(), "title")) {
-			sort = new Sort(
-				Field.getSortableFieldName(
-					"localized_title_".concat(themeDisplay.getLanguageId())),
-				Sort.STRING_TYPE, !orderByAsc);
+			String sortFieldName = Field.getSortableFieldName(
+				"localized_title_".concat(themeDisplay.getLanguageId()));
+
+			sort = new Sort(sortFieldName, Sort.STRING_TYPE, !orderByAsc);
 		}
 
 		Hits hits = AssetEntryLocalServiceUtil.search(
@@ -161,12 +161,6 @@ public class AssetBrowserDisplayContext {
 
 		assetBrowserSearch.setResultsAndTotal(
 			() -> _assetHelper.getAssetEntries(hits), hits.getLength());
-
-		if (isMultipleSelection()) {
-			assetBrowserSearch.setRowChecker(
-				new AddAssetEntryChecker(
-					_renderResponse, getRefererAssetEntryId()));
-		}
 
 		_assetBrowserSearch = assetBrowserSearch;
 
@@ -343,10 +337,12 @@ public class AssetBrowserDisplayContext {
 			(ThemeDisplay)_httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
+		long selectedGroupId = ParamUtil.getLong(
+			_httpServletRequest, "selectedGroupId");
+
 		try {
 			return PortalUtil.getSharedContentSiteGroupIds(
-				themeDisplay.getCompanyId(),
-				ParamUtil.getLong(_httpServletRequest, "selectedGroupId"),
+				themeDisplay.getCompanyId(), selectedGroupId,
 				themeDisplay.getUserId());
 		}
 		catch (PortalException portalException) {
@@ -438,10 +434,13 @@ public class AssetBrowserDisplayContext {
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
+		boolean showBreadcrumb = ParamUtil.getBoolean(
+			_httpServletRequest, "showBreadcrumb");
+
 		if (Objects.equals(
 				ItemSelectorPortletKeys.ITEM_SELECTOR,
 				portletDisplay.getPortletName()) ||
-			ParamUtil.getBoolean(_httpServletRequest, "showBreadcrumb")) {
+			showBreadcrumb) {
 
 			return true;
 		}
@@ -556,9 +555,10 @@ public class AssetBrowserDisplayContext {
 	private Boolean _getListable() {
 		Boolean listable = null;
 
-		if (Validator.isNotNull(
-				ParamUtil.getString(_httpServletRequest, "listable", null))) {
+		String listableValue = ParamUtil.getString(
+			_httpServletRequest, "listable", null);
 
+		if (Validator.isNotNull(listableValue)) {
 			listable = ParamUtil.getBoolean(
 				_httpServletRequest, "listable", true);
 		}

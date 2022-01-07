@@ -61,6 +61,8 @@ public class AccountRoleDisplaySearchContainerFactory {
 			SearchOrderByUtil.getOrderByType(
 				liferayPortletRequest, AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN,
 				"account-role-order-by-type", "asc"));
+		searchContainer.setRowChecker(
+			new AccountRoleRowChecker(liferayPortletResponse));
 
 		String keywords = ParamUtil.getString(
 			liferayPortletRequest, "keywords");
@@ -95,9 +97,6 @@ public class AccountRoleDisplaySearchContainerFactory {
 					return null;
 				}),
 			baseModelSearchResult.getLength());
-
-		searchContainer.setRowChecker(
-			new AccountRoleRowChecker(liferayPortletResponse));
 
 		return searchContainer;
 	}

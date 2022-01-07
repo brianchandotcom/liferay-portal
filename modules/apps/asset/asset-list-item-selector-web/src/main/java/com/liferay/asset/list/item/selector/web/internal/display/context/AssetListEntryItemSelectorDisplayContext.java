@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -142,15 +143,15 @@ public class AssetListEntryItemSelectorDisplayContext {
 
 		String orderByCol = ParamUtil.getString(
 			_httpServletRequest, "orderByCol", "create-date");
-
-		searchContainer.setOrderByCol(orderByCol);
-
 		String orderByType = ParamUtil.getString(
 			_httpServletRequest, "orderByType", "asc");
 
-		searchContainer.setOrderByComparator(
+		OrderByComparator<AssetListEntry> orderByComparator =
 			AssetListPortletUtil.getAssetListEntryOrderByComparator(
-				orderByCol, orderByType));
+				orderByCol, orderByType);
+
+		searchContainer.setOrderByCol(orderByCol);
+		searchContainer.setOrderByComparator(orderByComparator);
 		searchContainer.setOrderByType(orderByType);
 
 		String keywords = ParamUtil.getString(_httpServletRequest, "keywords");

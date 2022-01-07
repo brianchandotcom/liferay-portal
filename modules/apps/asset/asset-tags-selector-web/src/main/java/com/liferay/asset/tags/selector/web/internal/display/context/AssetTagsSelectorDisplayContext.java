@@ -139,7 +139,13 @@ public class AssetTagsSelectorDisplayContext {
 
 		tagsSearchContainer.setOrderByComparator(
 			new AssetTagNameComparator(orderByAsc));
+
 		tagsSearchContainer.setOrderByType(orderByType);
+
+		if (_rowChecker) {
+			tagsSearchContainer.setRowChecker(
+				new EntriesChecker(_renderRequest, _renderResponse));
+		}
 
 		tagsSearchContainer.setResultsAndTotal(
 			() -> AssetTagServiceUtil.getTags(
@@ -147,11 +153,6 @@ public class AssetTagsSelectorDisplayContext {
 				tagsSearchContainer.getEnd(),
 				tagsSearchContainer.getOrderByComparator()),
 			AssetTagServiceUtil.getTagsCount(_getGroupIds(), _getKeywords()));
-
-		if (_rowChecker) {
-			tagsSearchContainer.setRowChecker(
-				new EntriesChecker(_renderRequest, _renderResponse));
-		}
 
 		_tagsSearchContainer = tagsSearchContainer;
 

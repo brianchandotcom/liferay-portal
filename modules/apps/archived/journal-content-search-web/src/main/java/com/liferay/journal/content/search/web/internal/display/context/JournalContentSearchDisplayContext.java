@@ -146,11 +146,12 @@ public class JournalContentSearchDisplayContext {
 
 		ContentHits contentHits = new ContentHits();
 
+		contentHits.setShowListed(
+			_journalContentSearchPortletInstanceConfiguration.showListed());
+
 		contentHits.recordHits(
 			hits, layout.getGroupId(), layout.isPrivateLayout(),
 			_searchContainer.getStart(), _searchContainer.getEnd());
-		contentHits.setShowListed(
-			_journalContentSearchPortletInstanceConfiguration.showListed());
 
 		_searchContainer.setResultsAndTotal(
 			() -> ListUtil.fromArray(hits.getDocs()), hits.getLength());

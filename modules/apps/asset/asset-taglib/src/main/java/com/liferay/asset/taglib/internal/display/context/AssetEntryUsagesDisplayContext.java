@@ -53,6 +53,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -333,8 +334,6 @@ public class AssetEntryUsagesDisplayContext {
 				_renderRequest, getPortletURL(), null,
 				"there-are-no-asset-entry-usages");
 
-		assetEntryUsagesSearchContainer.setOrderByCol(_getOrderByCol());
-
 		boolean orderByAsc = false;
 
 		String orderByType = _getOrderByType();
@@ -343,8 +342,11 @@ public class AssetEntryUsagesDisplayContext {
 			orderByAsc = true;
 		}
 
-		assetEntryUsagesSearchContainer.setOrderByComparator(
-			new AssetEntryUsageModifiedDateComparator(orderByAsc));
+		OrderByComparator<AssetEntryUsage> orderByComparator =
+			new AssetEntryUsageModifiedDateComparator(orderByAsc);
+
+		assetEntryUsagesSearchContainer.setOrderByCol(_getOrderByCol());
+		assetEntryUsagesSearchContainer.setOrderByComparator(orderByComparator);
 		assetEntryUsagesSearchContainer.setOrderByType(_getOrderByType());
 
 		if (Objects.equals(getNavigation(), "pages")) {
@@ -354,7 +356,7 @@ public class AssetEntryUsagesDisplayContext {
 					AssetEntryUsageConstants.TYPE_LAYOUT,
 					assetEntryUsagesSearchContainer.getStart(),
 					assetEntryUsagesSearchContainer.getEnd(),
-					assetEntryUsagesSearchContainer.getOrderByComparator()),
+					orderByComparator),
 				getPagesUsageCount());
 		}
 		else if (Objects.equals(getNavigation(), "page-templates")) {
@@ -364,7 +366,7 @@ public class AssetEntryUsagesDisplayContext {
 					AssetEntryUsageConstants.TYPE_PAGE_TEMPLATE,
 					assetEntryUsagesSearchContainer.getStart(),
 					assetEntryUsagesSearchContainer.getEnd(),
-					assetEntryUsagesSearchContainer.getOrderByComparator()),
+					orderByComparator),
 				getPageTemplatesUsageCount());
 		}
 		else if (Objects.equals(getNavigation(), "display-page-templates")) {
@@ -374,7 +376,7 @@ public class AssetEntryUsagesDisplayContext {
 					AssetEntryUsageConstants.TYPE_DISPLAY_PAGE_TEMPLATE,
 					assetEntryUsagesSearchContainer.getStart(),
 					assetEntryUsagesSearchContainer.getEnd(),
-					assetEntryUsagesSearchContainer.getOrderByComparator()),
+					orderByComparator),
 				getDisplayPagesUsageCount());
 		}
 		else {
@@ -383,7 +385,7 @@ public class AssetEntryUsagesDisplayContext {
 					_assetEntry.getEntryId(),
 					assetEntryUsagesSearchContainer.getStart(),
 					assetEntryUsagesSearchContainer.getEnd(),
-					assetEntryUsagesSearchContainer.getOrderByComparator()),
+					orderByComparator),
 				getAllUsageCount());
 		}
 

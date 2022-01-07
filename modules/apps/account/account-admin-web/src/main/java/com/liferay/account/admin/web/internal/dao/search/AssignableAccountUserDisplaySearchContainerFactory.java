@@ -77,6 +77,7 @@ public class AssignableAccountUserDisplaySearchContainerFactory {
 			SearchOrderByUtil.getOrderByType(
 				liferayPortletRequest, AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN,
 				"assignable-account-user-order-by-type", "asc"));
+		searchContainer.setRowChecker(rowChecker);
 
 		String navigation = ParamUtil.getString(
 			liferayPortletRequest, "navigation");
@@ -100,8 +101,6 @@ public class AssignableAccountUserDisplaySearchContainerFactory {
 			() -> TransformUtil.transform(
 				baseModelSearchResult.getBaseModels(), AccountUserDisplay::of),
 			baseModelSearchResult.getLength());
-
-		searchContainer.setRowChecker(rowChecker);
 
 		return searchContainer;
 	}

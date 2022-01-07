@@ -43,6 +43,7 @@ public class AccountEntryAccountGroupSearchContainerFactory {
 
 		accountGroupDisplaySearchContainer.setId(
 			"accountEntryAccountGroupsSearchContainer");
+
 		accountGroupDisplaySearchContainer.setResultsAndTotal(
 			() -> TransformUtil.transform(
 				TransformUtil.transform(

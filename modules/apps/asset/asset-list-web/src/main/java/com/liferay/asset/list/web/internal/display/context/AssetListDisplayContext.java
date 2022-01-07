@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -117,10 +118,15 @@ public class AssetListDisplayContext {
 				_renderRequest, _renderResponse.createRenderURL(), null,
 				"there-are-no-collections");
 
-		assetListEntriesSearchContainer.setOrderByCol(_getOrderByCol());
-		assetListEntriesSearchContainer.setOrderByComparator(
+		assetListEntriesSearchContainer.setRowChecker(
+			new EmptyOnClickRowChecker(_renderResponse));
+
+		OrderByComparator<AssetListEntry> orderByComparator =
 			AssetListPortletUtil.getAssetListEntryOrderByComparator(
-				_getOrderByCol(), getOrderByType()));
+				_getOrderByCol(), getOrderByType());
+
+		assetListEntriesSearchContainer.setOrderByCol(_getOrderByCol());
+		assetListEntriesSearchContainer.setOrderByComparator(orderByComparator);
 		assetListEntriesSearchContainer.setOrderByType(getOrderByType());
 
 		if (_isSearch()) {
@@ -129,7 +135,7 @@ public class AssetListDisplayContext {
 					_themeDisplay.getScopeGroupId(), _getKeywords(),
 					assetListEntriesSearchContainer.getStart(),
 					assetListEntriesSearchContainer.getEnd(),
-					assetListEntriesSearchContainer.getOrderByComparator()),
+					orderByComparator),
 				AssetListEntryServiceUtil.getAssetListEntriesCount(
 					_themeDisplay.getScopeGroupId(), _getKeywords()));
 		}
@@ -139,12 +145,9 @@ public class AssetListDisplayContext {
 					_themeDisplay.getScopeGroupId(),
 					assetListEntriesSearchContainer.getStart(),
 					assetListEntriesSearchContainer.getEnd(),
-					assetListEntriesSearchContainer.getOrderByComparator()),
+					orderByComparator),
 				getAssetListEntriesCount());
 		}
-
-		assetListEntriesSearchContainer.setRowChecker(
-			new EmptyOnClickRowChecker(_renderResponse));
 
 		_assetListEntriesSearchContainer = assetListEntriesSearchContainer;
 
@@ -221,7 +224,9 @@ public class AssetListDisplayContext {
 
 		String className = clazz.getName();
 
-		return className.substring(className.lastIndexOf(StringPool.PERIOD));
+		int pos = className.lastIndexOf(StringPool.PERIOD);
+
+		return className.substring(pos + 1);
 	}
 
 	public ClassType getClassType(

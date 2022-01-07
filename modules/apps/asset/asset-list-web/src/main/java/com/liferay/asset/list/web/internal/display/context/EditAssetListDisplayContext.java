@@ -498,8 +498,9 @@ public class EditAssetListDisplayContext {
 
 		String className = clazz.getName();
 
-		return className.substring(
-			className.lastIndexOf(StringPool.PERIOD) + 1);
+		int pos = className.lastIndexOf(StringPool.PERIOD);
+
+		return className.substring(pos + 1);
 	}
 
 	public long[] getClassNameIds() {
@@ -1020,10 +1021,14 @@ public class EditAssetListDisplayContext {
 	}
 
 	public List<Long> getVocabularyIds() throws PortalException {
-		List<AssetVocabulary> vocabularies = ListUtil.filter(
-			AssetVocabularyServiceUtil.getGroupsVocabularies(
-				PortalUtil.getCurrentAndAncestorSiteGroupIds(
-					getReferencedModelsGroupIds())),
+		long[] groupIds = PortalUtil.getCurrentAndAncestorSiteGroupIds(
+			getReferencedModelsGroupIds());
+
+		List<AssetVocabulary> vocabularies =
+			AssetVocabularyServiceUtil.getGroupsVocabularies(groupIds);
+
+		vocabularies = ListUtil.filter(
+			vocabularies,
 			vocabulary -> {
 				long[] classNameIds = vocabulary.getSelectedClassNameIds();
 
@@ -1234,10 +1239,11 @@ public class EditAssetListDisplayContext {
 		UnicodeProperties unicodeProperties, String className,
 		Long[] availableClassTypeIds) {
 
-		if (GetterUtil.getBoolean(
-				unicodeProperties.getProperty(
-					"anyClassType" + className, Boolean.TRUE.toString()))) {
+		boolean anyAssetType = GetterUtil.getBoolean(
+			unicodeProperties.getProperty(
+				"anyClassType" + className, Boolean.TRUE.toString()));
 
+		if (anyAssetType) {
 			return availableClassTypeIds;
 		}
 

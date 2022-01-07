@@ -76,9 +76,13 @@ public class AssetDisplayPagesItemSelectorViewDisplayContext {
 				"there-are-no-display-page-templates");
 
 		assetDisplayPageSearchContainer.setOrderByCol(_getOrderByCol());
-		assetDisplayPageSearchContainer.setOrderByComparator(
+
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator =
 			_getLayoutPageTemplateEntryOrderByComparator(
-				_getOrderByCol(), getOrderByType()));
+				_getOrderByCol(), getOrderByType());
+
+		assetDisplayPageSearchContainer.setOrderByComparator(orderByComparator);
+
 		assetDisplayPageSearchContainer.setOrderByType(getOrderByType());
 
 		if (Validator.isNotNull(_getKeywords())) {

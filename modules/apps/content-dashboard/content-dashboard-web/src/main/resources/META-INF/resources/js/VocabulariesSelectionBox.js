@@ -36,6 +36,11 @@ const VocabulariesSelectionBox = ({
 
 	const selectorRef = useRef();
 
+	const previousLeftElementsRef = useRef();
+	useEffect(() => {
+		previousLeftElementsRef.current = leftElements;
+	});
+
 	const enableAllOptions = () => {
 		const options = Array.from(
 			selectorRef.current.querySelectorAll(
@@ -124,6 +129,33 @@ const VocabulariesSelectionBox = ({
 			(allSitesAreNonGlobal && mixedNonGlobalSites)
 		);
 	};
+
+	const maintainSelectedVocabularies = () => {
+		const previousLeftElements = previousLeftElementsRef.current;
+
+		if (typeof previousLeftElements === 'undefined') {
+			return;
+		}
+
+		if (previousLeftElements.length < leftElements.length) {
+			const intersection = leftElements.filter(
+				(x) => !previousLeftElements.includes(x)
+			);
+			const newLeftSelection = intersection.map((elem) => elem.value);
+			previousLeftElementsRef.current = leftElements;
+			setLeftSelected(newLeftSelection);
+		}
+		else if (previousLeftElements.length > leftElements.length) {
+			const intersection = previousLeftElements.filter(
+				(x) => !leftElements.includes(x)
+			);
+			const newRightSelection = intersection.map((elem) => elem.value);
+			previousLeftElementsRef.current = leftElements;
+			setRightSelected(newRightSelection);
+		}
+	};
+
+	maintainSelectedVocabularies();
 
 	useEffect(() => {
 		enableAllOptions();

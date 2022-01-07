@@ -507,22 +507,11 @@ definition {
 			depotDescription = "This depot will duplicate a site name",
 			depotName = "Site Name");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		Site.openSitesAdmin();
 
-		LexiconEntry.gotoAdd();
-
-		LexiconCard.clickCard(card = "Blank Site");
-
-		PortletEntry.inputName(name = "Site Name");
-
-		Button.clickSave();
-
-		AssertTextEquals(
-			locator1 = "Message#ERROR_FORM_FIELD_REQUIRED",
-			value1 = "Please enter a unique name.");
+		Site.viewCannotAdd(
+			siteName = "Site Name",
+			siteNameInvalid = "Duplicate");
 	}
 
 	@description = "This ensures that users cannot edit repository name same as another repository name."

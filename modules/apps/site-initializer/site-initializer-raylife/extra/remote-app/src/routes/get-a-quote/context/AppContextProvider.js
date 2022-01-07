@@ -1,9 +1,11 @@
 import React, {createContext, useEffect, useReducer} from 'react';
+import useWindowDimensions from '../../../common/hooks/useWindowDimensions';
 import {TIP_EVENT_DISMISS} from '../../../common/utils/events';
 import {getTaxonomyVocabularies} from '../services/TaxonomyVolucabularies';
 import {AVAILABLE_STEPS} from '../utils/constants';
 
 const initialState = {
+	dimensions: {},
 	selectedProduct: '',
 	selectedStep: {
 		percentage: {
@@ -21,6 +23,7 @@ const initialState = {
 };
 
 export const ActionTypes = {
+	SET_DIMENSIONS: 'SET_DIMENSIONS',
 	SET_SELECTED_PRODUCT: 'SET_SELECTED_PRODUCT',
 	SET_SELECTED_STEP: 'SET_SELECTED_STEP',
 	SET_SELECTED_TRIGGER: 'SET_SELECTED_TRIGGER',
@@ -29,6 +32,12 @@ export const ActionTypes = {
 
 function AppContextReducer(state, action) {
 	switch (action.type) {
+		case ActionTypes.SET_DIMENSIONS:
+			return {
+				...state,
+				dimensions: action.payload,
+			};
+
 		case ActionTypes.SET_SELECTED_STEP:
 			return {
 				...state,
@@ -61,6 +70,7 @@ function AppContextReducer(state, action) {
 export const AppContext = createContext({});
 
 export function AppContextProvider({children}) {
+	const dimensions = useWindowDimensions();
 	const [state, dispatch] = useReducer(AppContextReducer, initialState);
 
 	useEffect(() => {
@@ -85,6 +95,13 @@ export function AppContextProvider({children}) {
 			)
 			.catch((error) => console.error(error));
 	}, []);
+
+	useEffect(() => {
+		dispatch({
+			payload: dimensions,
+			type: ActionTypes.SET_DIMENSIONS,
+		});
+	}, [dimensions]);
 
 	return (
 		<AppContext.Provider value={{dispatch, state}}>

@@ -26,7 +26,7 @@
 							"range": {
 								"format": "yyyyMMdd",
 								"gte": "${time.current_date|modifier=-${configuration.time_range},date_format=yyyyMMdd}",
-								"lte": "${time.current_date|modifier=+1d,dateFormat=yyyyMMdd}",
+								"lte": "${time.current_date|modifier=+1d,date_format=yyyyMMdd}",
 								"parameterName": "user.create_date"
 							}
 						}

@@ -147,6 +147,9 @@ components:
                     type: object
                 availability:
                     $ref: "#/components/schemas/Availability"
+                firstAvailableReplacementMappedProduct:
+                    $ref: "#/components/schemas/MappedProduct"
+                    readOnly: true
                 id:
                     example: 33130
                     format: int64
@@ -194,6 +197,13 @@ components:
                     format: int32
                     minimum: 0
                     type: integer
+                replacementMappedProduct:
+                    $ref: "#/components/schemas/MappedProduct"
+                    readOnly: true
+                replacementMessage:
+                    example: MIN3123 has been replaced by MIN1289
+                    readOnly: true
+                    type: string
                 sequence:
                     example: 1
                     type: string

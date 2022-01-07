@@ -50,6 +50,8 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.nio.charset.StandardCharsets;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -64,6 +66,7 @@ import java.util.stream.Stream;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.cxf.jaxrs.ext.MessageContext;
+import org.apache.cxf.jaxrs.utils.HttpUtils;
 import org.apache.cxf.rs.security.oauth2.common.AccessTokenRegistration;
 import org.apache.cxf.rs.security.oauth2.common.Client;
 import org.apache.cxf.rs.security.oauth2.common.OAuthPermission;
@@ -72,6 +75,7 @@ import org.apache.cxf.rs.security.oauth2.common.UserSubject;
 import org.apache.cxf.rs.security.oauth2.grants.code.AbstractAuthorizationCodeDataProvider;
 import org.apache.cxf.rs.security.oauth2.grants.code.AuthorizationCodeRegistration;
 import org.apache.cxf.rs.security.oauth2.grants.code.ServerAuthorizationCodeGrant;
+import org.apache.cxf.rs.security.oauth2.grants.jwt.Constants;
 import org.apache.cxf.rs.security.oauth2.provider.OAuthServiceException;
 import org.apache.cxf.rs.security.oauth2.tokens.bearer.BearerAccessToken;
 import org.apache.cxf.rs.security.oauth2.tokens.refresh.RefreshToken;
@@ -1000,6 +1004,15 @@ public class LiferayOAuthDataProvider
 					 (allowedGrantType == GrantType.CLIENT_CREDENTIALS)) {
 
 				clientGrantTypes.add(OAuthConstants.CLIENT_CREDENTIALS_GRANT);
+			}
+			else if (_oAuth2ProviderConfiguration.allowJWTBearerGrant() &&
+					 (allowedGrantType == GrantType.JWT_BEARER)) {
+
+				clientGrantTypes.add(Constants.JWT_BEARER_GRANT);
+				clientGrantTypes.add(
+					HttpUtils.urlEncode(
+						Constants.JWT_BEARER_GRANT,
+						StandardCharsets.UTF_8.name()));
 			}
 			else if (_oAuth2ProviderConfiguration.
 						allowResourceOwnerPasswordCredentialsGrant() &&

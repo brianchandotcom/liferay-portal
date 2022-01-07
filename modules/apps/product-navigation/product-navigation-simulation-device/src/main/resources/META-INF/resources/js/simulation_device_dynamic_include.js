@@ -51,16 +51,16 @@ AUI().use('aui-base', () => {
 		deviceWrapper.classList.add('lfr-device--is-navigating');
 	});
 
-	if (frameElement.contentWindow.location.href.includes('p_l_mode=preview')) {
+	const url = new URL(frameElement.contentWindow.location.href);
+	const searchParams = new URLSearchParams(url.search);
+
+	if (searchParams.has('p_l_mode')) {
 		return;
 	}
 
-	const currentLocationHasParams = frameElement.contentWindow.location.href.includes(
-		'?'
-	);
-	const safePreviewURL = `${frameElement.contentWindow.location.href}${
-		currentLocationHasParams ? '&' : '?'
-	}p_l_mode=preview`;
+	searchParams.append('p_l_mode', 'preview');
 
-	frameElement.contentWindow.location.replace(safePreviewURL);
+	frameElement.contentWindow.location.replace(
+		`${url.origin}${url.pathname}?${searchParams.toString()}`
+	);
 });

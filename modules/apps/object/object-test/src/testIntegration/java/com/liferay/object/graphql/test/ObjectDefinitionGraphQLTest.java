@@ -81,8 +81,9 @@ public class ObjectDefinitionGraphQLTest {
 				ObjectDefinitionConstants.SCOPE_COMPANY,
 				Collections.singletonList(
 					ObjectFieldUtil.createObjectField(
-						"Text", true, true, null, RandomTestUtil.randomString(),
-						_objectFieldName, false, "String")));
+						"Text", "String", true, true, null,
+						RandomTestUtil.randomString(), _objectFieldName,
+						false)));
 
 		_objectDefinition =
 			ObjectDefinitionLocalServiceUtil.publishCustomObjectDefinition(

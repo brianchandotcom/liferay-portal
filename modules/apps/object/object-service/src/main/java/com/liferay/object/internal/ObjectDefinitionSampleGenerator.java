@@ -93,35 +93,35 @@ public class ObjectDefinitionSampleGenerator {
 				ObjectDefinitionConstants.SCOPE_COMPANY,
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(
-						"LongInteger", true, false, null, "Able", "able", false,
-						"Long"),
+						"LongInteger", "Long", true, false, null, "Able",
+						"able", false),
 					ObjectFieldUtil.createObjectField(
-						"Boolean", true, false, null, "Baker", "baker", false,
-						"Boolean"),
+						"Boolean", "Boolean", true, false, null, "Baker",
+						"baker", false),
 					ObjectFieldUtil.createObjectField(
-						"Date", true, false, null, "Charlie", "charlie", false,
-						"Date"),
+						"Date", "Date", true, false, null, "Charlie", "charlie",
+						false),
 					ObjectFieldUtil.createObjectField(
-						"Text", true, false, null, "Dog", "dog", false,
-						"String"),
+						"Text", "String", true, false, null, "Dog", "dog",
+						false),
 					ObjectFieldUtil.createObjectField(
-						0, "Text", null, true, true, null, "Easy", "easy",
-						false, "String"),
+						0, "Text", null, "String", true, true, null, "Easy",
+						"easy", false),
 					ObjectFieldUtil.createObjectField(
-						0, "Text", null, true, false, "en_US", "Fox", "fox",
-						false, "String"),
+						0, "Text", null, "String", true, false, "en_US", "Fox",
+						"fox", false),
 					ObjectFieldUtil.createObjectField(
-						0, "Text", null, false, false, null, "George", "george",
-						false, "String"),
+						0, "Text", null, "String", false, false, null, "George",
+						"george", false),
 					ObjectFieldUtil.createObjectField(
-						"Decimal", true, false, null, "How", "how", false,
-						"Double"),
+						"Decimal", "Double", true, false, null, "How", "how",
+						false),
 					ObjectFieldUtil.createObjectField(
-						"Integer", true, false, null, "Item", "item", false,
-						"Integer"),
+						"Integer", "Integer", true, false, null, "Item", "item",
+						false),
 					ObjectFieldUtil.createObjectField(
-						"PrecisionDecimal", true, false, null, "Jig", "jig",
-						false, "BigDecimal")));
+						"PrecisionDecimal", "BigDecimal", true, false, null,
+						"Jig", "jig", false)));
 
 		objectDefinition =
 			_objectDefinitionLocalService.publishCustomObjectDefinition(

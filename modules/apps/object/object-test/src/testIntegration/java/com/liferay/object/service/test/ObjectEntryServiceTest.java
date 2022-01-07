@@ -82,11 +82,11 @@ public class ObjectEntryServiceTest {
 				ObjectDefinitionConstants.SCOPE_COMPANY,
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(
-						"Text", true, false, null, "First Name", "firstName",
-						false, "String"),
+						"Text", "String", true, false, null, "First Name",
+						"firstName", false),
 					ObjectFieldUtil.createObjectField(
-						"Text", true, false, null, "Last Name", "lastName",
-						false, "String")));
+						"Text", "String", true, false, null, "Last Name",
+						"lastName", false)));
 
 		_objectDefinition =
 			_objectDefinitionLocalService.publishCustomObjectDefinition(

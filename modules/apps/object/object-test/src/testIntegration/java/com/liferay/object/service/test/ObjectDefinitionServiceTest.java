@@ -194,8 +194,8 @@ public class ObjectDefinitionServiceTest {
 			ObjectDefinitionConstants.SCOPE_COMPANY,
 			Arrays.asList(
 				ObjectFieldUtil.createObjectField(
-					"Text", RandomTestUtil.randomString(),
-					StringUtil.randomId(), "String")));
+					"Text", "String", RandomTestUtil.randomString(),
+					StringUtil.randomId())));
 	}
 
 	private void _setUser(User user) {
@@ -221,8 +221,8 @@ public class ObjectDefinitionServiceTest {
 					ObjectDefinitionConstants.SCOPE_COMPANY,
 					Arrays.asList(
 						ObjectFieldUtil.createObjectField(
-							"Text", RandomTestUtil.randomString(),
-							StringUtil.randomId(), "String")));
+							"Text", "String", RandomTestUtil.randomString(),
+							StringUtil.randomId())));
 
 			objectDefinition =
 				_objectDefinitionLocalService.publishCustomObjectDefinition(
@@ -299,8 +299,8 @@ public class ObjectDefinitionServiceTest {
 					ObjectDefinitionConstants.SCOPE_COMPANY,
 					Arrays.asList(
 						ObjectFieldUtil.createObjectField(
-							"Text", RandomTestUtil.randomString(),
-							StringUtil.randomId(), "String")));
+							"Text", "String", RandomTestUtil.randomString(),
+							StringUtil.randomId())));
 
 			objectDefinition =
 				_objectDefinitionService.publishCustomObjectDefinition(
@@ -333,8 +333,8 @@ public class ObjectDefinitionServiceTest {
 					ObjectDefinitionConstants.SCOPE_COMPANY,
 					Arrays.asList(
 						ObjectFieldUtil.createObjectField(
-							"Text", RandomTestUtil.randomString(),
-							StringUtil.randomId(), "String")));
+							"Text", "String", RandomTestUtil.randomString(),
+							StringUtil.randomId())));
 
 			objectDefinition =
 				_objectDefinitionService.updateCustomObjectDefinition(

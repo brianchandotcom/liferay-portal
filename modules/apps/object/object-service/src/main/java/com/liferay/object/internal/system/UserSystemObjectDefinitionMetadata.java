@@ -52,13 +52,13 @@ public class UserSystemObjectDefinitionMetadata
 	public List<ObjectField> getObjectFields() {
 		return Arrays.asList(
 			createObjectField(
-				"Text", "email-address", "emailAddress", true, "String"),
+				"Text", "String", "email-address", "emailAddress", true),
 			createObjectField(
-				"Text", "first-name", "firstName", true, "String"),
+				"Text", "String", "first-name", "firstName", true),
 			createObjectField(
-				"Text", "middle-name", "middleName", false, "String"),
+				"Text", "String", "middle-name", "middleName", false),
 			createObjectField(
-				"Text", "uuid_", "uuid", "uuid", false, "String"));
+				"Text", "uuid_", "String", "uuid", "uuid", false));
 	}
 
 	@Override

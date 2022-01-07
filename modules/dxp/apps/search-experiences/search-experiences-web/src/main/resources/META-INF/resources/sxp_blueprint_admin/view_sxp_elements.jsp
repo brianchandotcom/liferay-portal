@@ -30,6 +30,7 @@ ViewSXPElementsDisplayContext viewSXPElementsDisplayContext = (ViewSXPElementsDi
 	namespace="<%= liferayPortletResponse.getNamespace() %>"
 	pageNumber="<%= 1 %>"
 	portletURL="<%= liferayPortletResponse.createRenderURL() %>"
+	propsTransformer="sxp_blueprint_admin/js/view_sxp_elements/ViewSXPElementsPropsTransformer"
 	style="fluid"
 />
 

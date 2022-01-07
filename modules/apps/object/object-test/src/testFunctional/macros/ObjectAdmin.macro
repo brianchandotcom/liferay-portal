@@ -353,6 +353,16 @@ definition {
 			locator1 = "ObjectAdmin#FIELDS_RADIO_OPTION");
 	}
 
+	macro assertKeywordAndTextNotPresent {
+		AssertNotVisible(
+			key_radioOption = "Keyword",
+			locator1 = "ObjectAdmin#FIELDS_RADIO_OPTION");
+
+		AssertNotVisible(
+			key_radioOption = "Text",
+			locator1 = "ObjectAdmin#FIELDS_RADIO_OPTION");
+	}
+
 	macro assertLabelFieldRequired {
 		AssertElementPresent(locator1 = "ObjectAdmin#LABEL_FIELD_REQUIRED");
 	}

@@ -65,13 +65,13 @@ public class SegmentsExperienceSelectorDisplayContext {
 		JSONArray segmentsExperiencesJSONArray =
 			JSONFactoryUtil.createJSONArray();
 
+		boolean addedDefault = false;
+
 		List<SegmentsExperience> segmentsExperiences =
 			SegmentsExperienceLocalServiceUtil.getSegmentsExperiences(
 				_themeDisplay.getScopeGroupId(),
 				PortalUtil.getClassNameId(Layout.class.getName()),
 				_themeDisplay.getPlid(), true);
-
-		boolean addedDefault = false;
 
 		for (SegmentsExperience segmentsExperience : segmentsExperiences) {
 			if ((segmentsExperience.getPriority() <
@@ -281,4 +281,5 @@ public class SegmentsExperienceSelectorDisplayContext {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SegmentsExperienceSelectorDisplayContext.class);
+
 }

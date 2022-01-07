@@ -172,6 +172,12 @@ definition {
 		Button.click(button = "Create New Order");
 	}
 
+	macro createNewOrderFromPendingOrders {
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Pending Orders");
+
+		Button.click(button = "Add Order");
+	}
+
 	macro deactivateCommerceAccountViaFront {
 		Accounts.deactivateAccount(accountName = "${accountName}");
 	}

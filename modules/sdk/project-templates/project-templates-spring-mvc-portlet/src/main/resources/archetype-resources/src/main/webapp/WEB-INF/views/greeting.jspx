@@ -6,11 +6,13 @@
 		  xmlns:portlet="http://java.sun.com/portlet_2_0"
 #end
 		  xmlns:spring="http://www.springframework.org/tags"
+		  xmlns:fn="http://java.sun.com/jsp/jstl/functions"
 		  version="2.1">
 	<jsp:directive.page contentType="text/html" pageEncoding="UTF-8" />
 	<portlet:defineObjects/>
 	<p class="user-greeting">
-		<spring:message arguments="${user.firstName},${user.lastName}" code="greetings" />
+	#set( $dollar = '$' )
+		<spring:message arguments="${dollar}{fn:escapeXml(user.firstName),${dollar}{fn:escapeXml(user.lastName)}" code="greetings" />
 	</p>
 	<p>
 		<spring:message arguments="${todaysDate}" argumentSeparator=";" code="todays-date-is" />

@@ -90,6 +90,7 @@ definition {
 	@refactorneeded
 	test ViewDMArchive621015 {
 		property data.archive.type = "data-archive-documents-and-media";
+		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "6.2.10.15";
 
 		Upgrade.viewDocument();
@@ -99,6 +100,7 @@ definition {
 	@refactorneeded
 	test ViewDMArchive621021 {
 		property data.archive.type = "data-archive-documents-and-media";
+		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "6.2.10.21";
 
 		Upgrade.viewDocument();

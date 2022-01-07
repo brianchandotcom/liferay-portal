@@ -29,6 +29,19 @@ import java.util.concurrent.TimeoutException;
  */
 public class BuildDatabaseUtil {
 
+	public static void clear() {
+		_buildDatabases.clear();
+
+		File buildDir = _getBuildDir(null);
+
+		File buildDatabaseFile = new File(
+			buildDir, BuildDatabase.FILE_NAME_BUILD_DATABASE);
+
+		if (buildDatabaseFile.exists()) {
+			buildDatabaseFile.delete();
+		}
+	}
+
 	public static BuildDatabase getBuildDatabase() {
 		return getBuildDatabase(null);
 	}

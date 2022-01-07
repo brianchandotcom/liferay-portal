@@ -1183,7 +1183,7 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 		ExpandoBridge expandoBridge = fileEntry.getExpandoBridge();
 
 		serviceContext.setExpandoBridgeAttributes(
-			expandoBridge.getAttributes());
+			expandoBridge.getAttributes(false));
 
 		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
 

@@ -25,7 +25,8 @@ public enum GrantType {
 
 	AUTHORIZATION_CODE(true, true, false),
 	AUTHORIZATION_CODE_PKCE(true, false, true),
-	CLIENT_CREDENTIALS(false, true, false), REFRESH_TOKEN(false, true, true),
+	CLIENT_CREDENTIALS(false, true, false), JWT_BEARER(false, true, true),
+	REFRESH_TOKEN(false, true, true),
 	RESOURCE_OWNER_PASSWORD(false, true, true);
 
 	public boolean isRequiresRedirectURI() {

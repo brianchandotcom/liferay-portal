@@ -3646,13 +3646,13 @@ definition {
 				backgroundColor = "Danger",
 				panel = "Styles");
 
-			Button.clickPublish();
+			PageEditor.clickPublish();
 
 			PageEditor.addExperience(
 				experienceName = "New Experience",
 				segmentName = "Anyone");
 
-			Button.clickPublish();
+			PageEditor.clickPublish();
 		}
 
 		task ("Change the background color of the default experience") {
@@ -3660,10 +3660,14 @@ definition {
 				backgroundColor = "Success",
 				panel = "Styles");
 
-			Button.clickPublish();
+			PageEditor.clickPublish();
 		}
 
 		task ("Check if any experience has its own container with its own background color") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Experience Content Page",
+				siteName = "Test Site Name");
+
 			PageEditor.viewContainerStyle(
 				backgroundColor = "success",
 				position = "1");
@@ -3680,43 +3684,47 @@ definition {
 	@ignore = "false"
 	@priority = "3"
 	test ChangingBackgroundImage {
-		task ("Go to Experience Content Page and create a new experience") {
+		task ("Go to Experience Content Page and create a container") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Experience Content Page",
 				siteName = "Test Site Name");
 
-			PageEditor.addExperience(
-				experienceName = "New Experience",
-				segmentName = "Anyone");
-		}
-
-		task ("Add a container with a background image") {
 			PageEditor.addFragment(
 				collectionName = "Layout Elements",
 				fragmentName = "Container");
+		}
+
+		task ("Create an experience and add a background image to the container") {
+			PageEditor.addExperience(
+				experienceName = "New Experience",
+				segmentName = "Anyone");
 
 			PageEditor.editLayoutContainer(
 				backgroundImage = "Direct",
 				panel = "Styles",
 				uploadFileName = "high_resolution_photo.jpg");
 
-			Button.clickPublish();
+			PageEditor.clickPublish();
 		}
 
-		task ("Add a container with an another background image") {
-			PageEditor.addFragment(
-				collectionName = "Layout Elements",
-				fragmentName = "Container");
+		task ("Change the background image in the default experience") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Experience Content Page",
+				siteName = "Test Site Name");
 
 			PageEditor.editLayoutContainer(
 				backgroundImage = "Direct",
 				panel = "Styles",
 				uploadFileName = "Document_4.jpg");
 
-			Button.clickPublish();
+			PageEditor.clickPublish();
 		}
 
 		task ("Check if any experience has his own background image") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Experience Content Page",
+				siteName = "Test Site Name");
+
 			PageEditor.viewContainerStyle(backgroundImage = "Document_4.jpg");
 
 			PageEditor.changeExperience(newExperience = "New Experience");
@@ -3864,33 +3872,33 @@ definition {
 			PageEditor.addWidget(portletName = "Asset Publisher");
 		}
 
-		task ("Create an experience and add the Content on it") {
+		task ("Create an Experience") {
 			PageEditor.addExperience(
 				experienceName = "New Experience",
 				segmentName = "Anyone");
 
-			Button.clickPublish();
+			PageEditor.clickPublish();
 		}
 
-		AssetPublisherPortlet.configureManualAssetSelectionPG(
-			assetTitle = "WC Title 1",
-			assetType = "Basic Web Content");
+		task ("Add content to both experiences")
+			AssetPublisherPortlet.configureManualAssetSelectionPG(
+				assetTitle = "WC Title 1",
+				assetType = "Basic Web Content");
 
-		Button.clickPublish();
+			PageEditor.changeExperience(newExperience = "New Experience");
 
-		PageEditor.changeExperience(newExperience = "New Experience");
+			AssetPublisherPortlet.configureManualAssetSelectionPG(
+				assetTitle = "Blogs Entry Title",
+				assetType = "Blogs Entry");
 
-		AssetPublisherPortlet.configureManualAssetSelectionPG(
-			assetTitle = "Blogs Entry Title",
-			assetType = "Blogs Entry");
-
-		Button.clickPublish();
-
-		ContentPagesNavigator.openEditContentPage(
-			pageName = "Experience Content Page",
-			siteName = "Test Site Name");
+			PageEditor.clickPublish();
+		}
 
 		task ("Check if the content is present only in the New Experience") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Experience Content Page",
+				siteName = "Test Site Name");
+				
 			AssertTextEquals(
 				key_assetTitle = "WC Title 1",
 				locator1 = "AP#ASSET_ABSTRACT_TITLE",
@@ -4091,18 +4099,16 @@ definition {
 	@ignore = "false"
 	@priority = "3"
 	test DiscardingASectionOfAnUnpublishedExperience {
-		task ("Go to Experience Content Page") {
+		task ("Create an experience, add a component and make changes without publish it") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Experience Content Page",
 				siteName = "Test Site Name");
-		}
 
-		task ("Create an experience, add a component and make changes without publish it") {
 			PageEditor.addFragment(
 				collectionName = "Layout Elements",
 				fragmentName = "Container");
 
-			Button.clickPublish();
+			PageEditor.clickPublish();
 
 			PageEditor.addExperience(
 				experienceName = "New Experience",
@@ -4110,9 +4116,7 @@ definition {
 		}
 
 		task ("Go to the pages menu and discard changes") {
-			ProductMenu.gotoPortlet(
-				category = "Site Builder",
-				portlet = "Pages");
+			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
 
 			PageEditor.clickDiscardDraft(pageName = "Experience Content Page");
 		}
@@ -4136,24 +4140,23 @@ definition {
 	@ignore = "false"
 	@priority = "3"
 	test DiscardingChangesFromUnpublishedExperiences {
-		task ("Go to Experience Content Page") {
+		task ("Create a component and add a component without publishing them") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Experience Content Page",
 				siteName = "Test Site Name");
-		}
 
-		task ("Create a component and add a component without publishing them") {
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
 				fragmentName = "Heading");
 
-			Button.clickPublish();
+			PageEditor.clickPublish();
 
 			PageEditor.addExperience(
 				experienceName = "New Experience",
 				segmentName = "Anyone");
 
 			Click(locator1 = "PageEditor#EXPERIENCE_LABEL");
+
 		}
 
 		task ("Edit the the component without publishing the changes") {
@@ -4164,9 +4167,7 @@ definition {
 		}
 
 		task ("Go to the pages menu and discard changes") {
-			ProductMenu.gotoPortlet(
-				category = "Site Builder",
-				portlet = "Pages");
+			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
 
 			PageEditor.clickDiscardDraft(pageName = "Experience Content Page");
 		}
@@ -4205,10 +4206,14 @@ definition {
 				experienceName = "New Experience",
 				segmentName = "Anyone");
 
-			Button.clickPublish();
+			PageEditor.clickPublish();
 		}
 
 		task ("Edit the fragment recently added without publishing the changes") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Experience Content Page",
+				siteName = "Test Site Name");
+
 			PageEditor.changeExperience(newExperience = "New Experience");
 
 			PageEditor.editFragmentText(
@@ -4218,9 +4223,7 @@ definition {
 		}
 
 		task ("Go to the pages menu and discard changes") {
-			ProductMenu.gotoPortlet(
-				category = "Site Builder",
-				portlet = "Pages");
+			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
 
 			PageEditor.clickDiscardDraft(pageName = "Experience Content Page");
 		}
@@ -4259,9 +4262,7 @@ definition {
 				experienceName = "New Experience",
 				segmentName = "Anyone");
 
-			Button.clickPublish();
-
-			PageEditor.changeExperience(newExperience = "New Experience");
+			PageEditor.clickPublish();
 
 			PageEditor.addFragment(
 				collectionName = "Layout Elements",
@@ -4269,9 +4270,7 @@ definition {
 		}
 
 		task ("Go to the pages menu and discard changes") {
-			ProductMenu.gotoPortlet(
-				category = "Site Builder",
-				portlet = "Pages");
+			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
 
 			PageEditor.clickDiscardDraft(pageName = "Experience Content Page");
 		}
@@ -4768,23 +4767,25 @@ definition {
 				title = "WC Title 1");
 		}
 
-		task ("Go to edit Experience Content Page") {
+		task ("Create an experience and add the Content on it") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Experience Content Page",
 				siteName = "Test Site Name");
-		}
 
-		task ("Create an experience and add the Content on it") {
 			PageEditor.addExperience(
 				experienceName = "New Experience",
 				segmentName = "Anyone");
 
 			PageEditor.addWidget(portletName = "Asset Publisher");
 
-			Button.clickPublish();
+			PageEditor.clickPublish();
 		}
 
 		task ("Check if the content is present only in the New Experience") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Experience Content Page",
+				siteName = "Test Site Name");
+
 			PageEditor.viewFragmentNotPresent(fragmentName = "Asset Publisher");
 
 			PageEditor.changeExperience(newExperience = "New Experience");
@@ -4797,13 +4798,11 @@ definition {
 	@ignore = "false"
 	@priority = "5"
 	test RemoveDifferentSections {
-		task ("Go to Experience Content Page") {
+		task ("Add an element to page, create an experience and publish it") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Experience Content Page",
 				siteName = "Test Site Name");
-		}
 
-		task ("Add an element to page, create an experience and publish it") {
 			PageEditor.addFragment(
 				collectionName = "Layout Elements",
 				fragmentName = "Grid");
@@ -4812,18 +4811,26 @@ definition {
 				experienceName = "New Experience",
 				segmentName = "Anyone");
 
-			Button.clickPublish();
+			PageEditor.clickPublish();
 		}
 
 		task ("Remove the fragment from the Default Experience and check that is not present") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Experience Content Page",
+				siteName = "Test Site Name");
+
 			PageEditor.removeFragment(fragmentName = "Grid");
 
-			Button.clickPublish();
-
-			PageEditor.viewFragmentNotPresent(fragmentName = "Grid");
+			PageEditor.clickPublish();		
 		}
 
 		task ("Check the fragment is present in the Default experience") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Experience Content Page",
+				siteName = "Test Site Name");
+
+			PageEditor.viewFragmentNotPresent(fragmentName = "Grid");
+
 			PageEditor.changeExperience(newExperience = "New Experience");
 
 			PageEditor.viewFragment(fragmentName = "Grid");
@@ -4880,7 +4887,7 @@ definition {
 		PageEditor.viewFragmentNotPresent(fragmentName = "Heading");
 	}
 
-	@description = "LPS-86285: Validate in the content page if, the user can remove a section in the experiences that can be different from others experiences (not published)	"
+	@description = "LPS-86285: Validate in the content page if, the user can remove a section in the experiences that can be different from others experiences (not published)"
 	@ignore = "false"
 	@priority = "3"
 	test RemovingASectionOfDifferentAndUnpublishedExperiences {
@@ -4894,8 +4901,6 @@ definition {
 			PageEditor.addFragment(
 				collectionName = "Layout Elements",
 				fragmentName = "Container");
-
-			Button.clickPublish();
 
 			PageEditor.addExperience(
 				experienceName = "New Experience",
@@ -4932,20 +4937,32 @@ definition {
 		}
 
 		task ("Create an experience and add a fragment on both experiences") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Experience Content Page",
+				siteName = "Test Site Name");
+
 			PageEditor.addExperience(
 				experienceName = "New Experience",
 				segmentName = "Anyone");
 
-			Button.clickPublish();
+			PageEditor.clickPublish();
 		}
 
 		task ("Remove the fragment created from the default experience") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Experience Content Page",
+				siteName = "Test Site Name");
+
 			PageEditor.removeFragment(fragmentName = "Heading");
 
-			Button.clickPublish();
+			PageEditor.clickPublish();
 		}
 
 		task ("Check if the fragment is only present in the new experience") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Experience Content Page",
+				siteName = "Test Site Name");
+
 			PageEditor.viewFragmentNotPresent(fragmentName = "Heading");
 
 			PageEditor.changeExperience(newExperience = "New Experience");
@@ -4967,7 +4984,11 @@ definition {
 				collectionName = "Basic Components",
 				fragmentName = "Heading");
 
-			Button.clickPublish();
+			PageEditor.clickPublish();
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Experience Content Page",
+				siteName = "Test Site Name");
 
 			PageEditor.addExperience(
 				experienceName = "New Experience",

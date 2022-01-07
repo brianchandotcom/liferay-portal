@@ -79,6 +79,7 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 			<liferay-ratings:ratings
 				className="<%= BlogsEntry.class.getName() %>"
 				classPK="<%= entry.getEntryId() %>"
+				contentTitle="<%= BlogsEntryUtil.getDisplayTitle(resourceBundle, entry) %>"
 				inTrash="<%= entry.isInTrash() %>"
 				ratingsEntry="<%= ratingsEntry %>"
 				ratingsStats="<%= ratingsStats %>"

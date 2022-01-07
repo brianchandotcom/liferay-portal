@@ -24,6 +24,7 @@
 				classPK: event.classPK,
 				ratingType: event.ratingType,
 				score: event.score,
+				title: event.contentTitle,
 			});
 		}
 	};

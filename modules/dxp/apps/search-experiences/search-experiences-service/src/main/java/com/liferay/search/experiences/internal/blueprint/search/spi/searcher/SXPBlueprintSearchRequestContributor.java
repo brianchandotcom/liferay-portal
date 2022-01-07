@@ -95,14 +95,27 @@ public class SXPBlueprintSearchRequestContributor
 			_log.debug("Search experiences blueprint JSON " + sxpBlueprintJSON);
 		}
 
-		if (Validator.isNotNull(sxpBlueprintJSON)) {
-			_sxpBlueprintSearchRequestEnhancer.enhance(
-				searchRequestBuilder, sxpBlueprintJSON);
+		RuntimeException runtimeException = new RuntimeException();
+
+		try {
+			if (Validator.isNotNull(sxpBlueprintJSON)) {
+				_sxpBlueprintSearchRequestEnhancer.enhance(
+					searchRequestBuilder, sxpBlueprintJSON);
+			}
+		}
+		catch (Exception exception) {
+			runtimeException.addSuppressed(exception);
+		}
+
+		if (_hasErrors(runtimeException)) {
+			throw runtimeException;
 		}
 	}
 
 	private void _enhance(
 		SearchRequestBuilder searchRequestBuilder, long... sxpBlueprintIds) {
+
+		RuntimeException runtimeException = new RuntimeException();
 
 		for (long sxpBlueprintId : sxpBlueprintIds) {
 			if (sxpBlueprintId == 0) {
@@ -116,11 +129,44 @@ public class SXPBlueprintSearchRequestContributor
 				_log.debug("Search experiences blueprint " + sxpBlueprint);
 			}
 
-			if (sxpBlueprint != null) {
-				_sxpBlueprintSearchRequestEnhancer.enhance(
-					searchRequestBuilder, sxpBlueprint);
+			try {
+				if (sxpBlueprint != null) {
+					_sxpBlueprintSearchRequestEnhancer.enhance(
+						searchRequestBuilder, sxpBlueprint);
+				}
+			}
+			catch (Exception exception) {
+				runtimeException.addSuppressed(exception);
 			}
 		}
+
+		if (_hasErrors(runtimeException)) {
+			throw runtimeException;
+		}
+	}
+
+	private boolean _hasErrors(Throwable throwable) {
+		Class<? extends Throwable> clazz = throwable.getClass();
+
+		String simpleName = clazz.getSimpleName();
+
+		if (simpleName.equals("InvalidElementInstanceException")) {
+			return false;
+		}
+
+		if ((throwable.getClass() == RuntimeException.class) &&
+			Validator.isBlank(throwable.getMessage())) {
+
+			for (Throwable curThrowable : throwable.getSuppressed()) {
+				if (_hasErrors(curThrowable)) {
+					return true;
+				}
+			}
+
+			return false;
+		}
+
+		return true;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

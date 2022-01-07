@@ -72,6 +72,7 @@ List<DropdownItem> dropdownItems = assetEntryActionDropdownItemsProvider.getActi
 				icon='<%= String.valueOf(dropdownItem.get("icon")) %>'
 				linkCssClass="text-primary"
 				markupView="lexicon"
+				message='<%= String.valueOf(dropdownItem.get("label")) %>'
 				method="get"
 				url='<%= String.valueOf(dropdownItem.get("href")) %>'
 				useDialog='<%= GetterUtil.getBoolean(data.get("useDialog")) %>'

@@ -1,0 +1,46 @@
+<html>
+<head>
+<title>CP2LiferayContact</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CP2LiferayContact</td></tr>
+</thead>
+
+<tbody>
+<tr>
+    <td>CONTACT_NAME</td>
+    <td>//h5[contains(text(),'Liferay Contact')]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>PROJECT_CARD</td>
+    <td>//div[contains(@class, 'card-body') and contains(.,'${title}')]['${status}']</td>
+    <td></td>
+</tr>
+<tr>
+    <td>HIDE_WIDGET</td>
+    <td>//input[@id='_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_portlet']</td>
+    <td></td>
+</tr>
+<tr>
+    <td>SHOW_WIDGET</td>
+    <td>//input[@id='_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_portlet']</td>
+    <td></td>
+</tr>
+<tr>
+    <td>CONTACT_ROLE</td>
+    <td>//input[contains(@name, 'liferayContactRole')]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>DISPLAY_CONTACT</td>
+    <td>//div[contains(@class, 'rounded-sm') and contains(., '${title}')]</td>
+    <td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

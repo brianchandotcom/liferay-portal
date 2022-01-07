@@ -1,34 +1,77 @@
 definition {
+    
+    macro createCPSite {
+        ApplicationsMenu.gotoPortlet(
+            category = "Sites",
+            panel = "Control Panel",
+            portlet = "Sites");
 
-	macro createCPSite {
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+        LexiconEntry.gotoAdd();
 
-		LexiconEntry.gotoAdd();
+        LexiconCard.clickCard(card = "Customer Portal");
 
-		LexiconCard.clickCard(card = "Customer Portal");
+        PortletEntry.inputName(name = "${siteName}");
 
-		PortletEntry.inputName(name = "${siteName}");
+        Click(locator1 = "Modal#SAVE_BUTTON");
 
-		Click(locator1 = "Modal#SAVE_BUTTON");
+        Click(
+            key_itemName = "Site Configuration",
+            locator1 = "ListGroupItem#ITEM_TEXT");
 
-		Click(
-			key_itemName = "Site Configuration",
-			locator1 = "ListGroupItem#ITEM_TEXT");
+        AssertTextEquals(
+            locator1 = "SitesEditSite#DETAILS_NAME",
+            value1 = "${siteName}");
 
-		AssertTextEquals(
-			locator1 = "SitesEditSite#DETAILS_NAME",
-			value1 = "${siteName}");
-	}
+        ApplicationsMenu.gotoPortlet(
+            category = "Object",
+            panel = "Control Panel",
+            portlet = "Objects");
 
-	macro customerPortalTearDowm {
-		CommerceJSONAccountsAPI._deleteAllCommerceAccounts();
+        ObjectPortlet.selectCustomObject(label = "Koroneiki Account");
 
-		CommerceJSONChannelsAPI._deleteAllCommerceChannels();
+        CreateObject.checkToggleActive();
 
-		RemoteApps.deleteRemoteAppAPI();
-	}
+        CP2LiferayContact.checkToggleHideWidget();
+
+        CreateObject.saveObject();
+
+    }
+
+    macro checkToggleHideWidget{
+        Check.checkToggleSwitch(locator1 = "CP2LiferayContact#HIDE_WIDGET");
+    }
+
+    macro activeContactRole{
+        ApplicationsMenu.gotoPortlet(
+            category = "Object",
+            panel = "Control Panel",
+            portlet = "Koroneiki Accounts");
+
+        CP2LiferayContact.viewKoroneikiInfo();
+
+        Type(
+            locator1 = "CP2LiferayContact#CONTACT_ROLE",
+            value1 = "Quality Assurance Analyst");
+
+        Click(locator1 = "Button#SAVE");
+    }
+
+    macro customerPortalTearDowm {
+        CommerceJSONAccountsAPI._deleteAllCommerceAccounts();
+
+        CommerceJSONChannelsAPI._deleteAllCommerceChannels();
+
+        RemoteApps.deleteRemoteAppAPI();
+
+    }
+
+    macro viewKoroneikiInfo {
+        Click(
+            key_text = "",
+            locator1 = "Icon#ANY_VERTICAL_ELLIPSIS");
+
+        MenuItem.click(menuItem = "View");
+    }
+
 
 }

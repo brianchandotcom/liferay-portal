@@ -18,9 +18,6 @@ import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.object.constants.ObjectConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
-import com.liferay.object.model.ObjectRelationship;
-import com.liferay.object.related.models.ObjectRelatedModelsProvider;
-import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistry;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.internal.dto.v1_0.converter.ObjectEntryDTOConverter;
 import com.liferay.object.rest.internal.resource.v1_0.ObjectEntryResourceImpl;
@@ -28,11 +25,8 @@ import com.liferay.object.rest.internal.search.aggregation.AggregationUtil;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
-import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectFieldLocalService;
-import com.liferay.object.service.ObjectRelationshipLocalService;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
@@ -42,7 +36,6 @@ import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -300,46 +293,6 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 		return ObjectDefinition.class.getName() + "#" + objectDefinitionId;
 	}
 
-	private boolean _hasRelatedModels(
-			com.liferay.object.model.ObjectEntry objectEntry)
-		throws PortalException {
-
-		List<ObjectRelationship> objectRelationships =
-			_objectRelationshipLocalService.getObjectRelationships(
-				objectEntry.getObjectDefinitionId());
-
-		for (ObjectRelationship objectRelationship : objectRelationships) {
-			ObjectDefinition objectDefinition =
-				_objectDefinitionLocalService.getObjectDefinition(
-					objectRelationship.getObjectDefinitionId2());
-
-			ObjectRelatedModelsProvider<com.liferay.object.model.ObjectEntry>
-				objectRelatedModelsProvider =
-					_objectRelatedModelsProviderRegistry.
-						getObjectRelatedModelsProvider(
-							objectDefinition.getClassName(),
-							objectRelationship.getType());
-
-			ObjectScopeProvider objectScopeProvider =
-				_objectScopeProviderRegistry.getObjectScopeProvider(
-					objectDefinition.getScope());
-
-			ServiceContext serviceContext =
-				ServiceContextThreadLocal.getServiceContext();
-
-			int count = objectRelatedModelsProvider.getRelatedModelsCount(
-				objectScopeProvider.getGroupId(serviceContext.getRequest()),
-				objectRelationship.getObjectRelationshipId(),
-				objectEntry.getObjectEntryId());
-
-			if (count > 0) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
 	private Date _toDate(Locale locale, String valueString) {
 		if (Validator.isNull(valueString)) {
 			return null;
@@ -377,19 +330,13 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 				dtoConverterContext.isAcceptAllLanguages(),
 				HashMapBuilder.put(
 					"delete",
-					() -> {
-						if (_hasRelatedModels(objectEntry)) {
-							return null;
-						}
-
-						return ActionUtil.addAction(
-							ActionKeys.DELETE, ObjectEntryResourceImpl.class,
-							objectEntry.getObjectEntryId(), "deleteObjectEntry",
-							null, objectEntry.getUserId(),
-							_getObjectEntryPermissionName(
-								objectEntry.getObjectDefinitionId()),
-							objectEntry.getGroupId(), uriInfo);
-					}
+					ActionUtil.addAction(
+						ActionKeys.DELETE, ObjectEntryResourceImpl.class,
+						objectEntry.getObjectEntryId(), "deleteObjectEntry",
+						null, objectEntry.getUserId(),
+						_getObjectEntryPermissionName(
+							objectEntry.getObjectDefinitionId()),
+						objectEntry.getGroupId(), uriInfo)
 				).put(
 					"get",
 					ActionUtil.addAction(
@@ -466,9 +413,6 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 	private GroupLocalService _groupLocalService;
 
 	@Reference
-	private ObjectDefinitionLocalService _objectDefinitionLocalService;
-
-	@Reference
 	private ObjectEntryDTOConverter _objectEntryDTOConverter;
 
 	@Reference
@@ -476,13 +420,6 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;
-
-	@Reference
-	private ObjectRelatedModelsProviderRegistry
-		_objectRelatedModelsProviderRegistry;
-
-	@Reference
-	private ObjectRelationshipLocalService _objectRelationshipLocalService;
 
 	@Reference
 	private ObjectScopeProviderRegistry _objectScopeProviderRegistry;

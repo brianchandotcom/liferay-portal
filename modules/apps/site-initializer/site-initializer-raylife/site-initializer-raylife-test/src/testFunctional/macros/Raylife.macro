@@ -28,8 +28,6 @@ definition {
 			panel = "Control Panel",
 			portlet = "Sites");
 
-		Refresh();
-
 		LexiconEntry.gotoAdd();
 
 		LexiconCard.clickCard(card = "Raylife");

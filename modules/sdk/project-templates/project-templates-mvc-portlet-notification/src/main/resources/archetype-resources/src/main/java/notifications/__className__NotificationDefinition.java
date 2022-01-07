@@ -16,12 +16,12 @@ import org.osgi.service.component.annotations.Component;
 	property = "javax.portlet.name=" + ${className}PortletKeys.${className.toUpperCase()},
 	service = UserNotificationDefinition.class
 )
-public class  ${className}NotificationDefinition extends UserNotificationDefinition {
+public class ${className}NotificationDefinition extends UserNotificationDefinition {
 
 	public  ${className}NotificationDefinition() {
-
-		super(${className}PortletKeys.${className.toUpperCase()}, 0,
-		${className}NotificationType.NOTIFICATION_TYPE_${className.toUpperCase()},
+		super(
+			${className}PortletKeys.${className.toUpperCase()}, 0,
+			${className}NotificationType.NOTIFICATION_TYPE_${className.toUpperCase()},
 			"received-a-notification-from-${className.toLowerCase()}");
 
 		addUserNotificationDeliveryType(new UserNotificationDeliveryType(
@@ -32,4 +32,5 @@ public class  ${className}NotificationDefinition extends UserNotificationDefinit
 			"website", UserNotificationDeliveryConstants.TYPE_WEBSITE, true,
 			true));
 	}
+
 }

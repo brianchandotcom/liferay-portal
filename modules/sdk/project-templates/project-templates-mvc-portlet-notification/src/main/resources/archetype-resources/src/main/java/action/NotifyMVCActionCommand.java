@@ -49,13 +49,18 @@ public class NotifyMVCActionCommand extends BaseMVCActionCommand {
 
 		if (${className}PortletKeys.NOTIFY.equals(cmd)) {
 			long companyId = _portal.getCompanyId(actionRequest);
-			String email =  ParamUtil.getString(actionRequest, ${className}PortletKeys.USER_EMAIL);
+			String email =  ParamUtil.getString(
+				actionRequest, ${className}PortletKeys.USER_EMAIL);
 
-			notifySubscriber(companyId, email, ServiceContextFactory.getInstance(actionRequest));
+			notifySubscriber(
+				companyId, email,
+				ServiceContextFactory.getInstance(actionRequest));
 		}
 	}
 
-	protected void notifySubscriber(long companyId, String userEmail, ServiceContext serviceContext) {
+	protected void notifySubscriber(
+		long companyId, String userEmail, ServiceContext serviceContext) {
+
 		String entryTitle = "${className} notification";
 
 		String fromName = "${className} Notification Sender";
@@ -66,7 +71,8 @@ public class NotifyMVCActionCommand extends BaseMVCActionCommand {
 
 		subscriptionSender.setValue("sample value");
 
-		User sender = _userLocalService.fetchUserById(serviceContext.getUserId());
+		User sender = _userLocalService.fetchUserById(
+			serviceContext.getUserId());
 
 		subscriptionSender.setSender(sender.getScreenName());
 
@@ -79,13 +85,16 @@ public class NotifyMVCActionCommand extends BaseMVCActionCommand {
 		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setHtmlFormat(true);
 		subscriptionSender.setMailId("${className} Notification", 0);
-		subscriptionSender.setNotificationType(${className}NotificationType.NOTIFICATION_TYPE_${className.toUpperCase()});
-		subscriptionSender.setPortletId(${className}PortletKeys.${className.toUpperCase()});
+		subscriptionSender.setNotificationType(
+			${className}NotificationType.NOTIFICATION_TYPE_${className.toUpperCase()});
+		subscriptionSender.setPortletId(
+			${className}PortletKeys.${className.toUpperCase()});
 		subscriptionSender.setReplyToAddress(fromAddress);
 		subscriptionSender.setServiceContext(serviceContext);
 		subscriptionSender.setSubject("${className} Notification Subject");
 
-		subscriptionSender.addPersistedSubscribers(${className}Portlet.class.getName(), 0);
+		subscriptionSender.addPersistedSubscribers(
+			${className}Portlet.class.getName(), 0);
 
 		subscriptionSender.flushNotificationsAsync();
 	}
@@ -109,4 +118,5 @@ public class NotifyMVCActionCommand extends BaseMVCActionCommand {
 
 	private SubscriptionLocalService _subscriptionLocalService;
 	private UserLocalService _userLocalService;
+
 }

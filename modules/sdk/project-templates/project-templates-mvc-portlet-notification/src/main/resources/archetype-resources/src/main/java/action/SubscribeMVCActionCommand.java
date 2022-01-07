@@ -64,4 +64,5 @@ public class SubscribeMVCActionCommand extends BaseMVCActionCommand {
 	private Portal _portal;
 
 	private SubscriptionLocalService _subscriptionLocalService;
+
 }

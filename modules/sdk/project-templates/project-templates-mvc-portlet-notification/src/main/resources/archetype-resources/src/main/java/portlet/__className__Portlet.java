@@ -40,15 +40,19 @@ public class ${className}Portlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		renderRequest.setAttribute("subscriptionLocalService", _subscriptionLocalService);
+		renderRequest.setAttribute(
+			"subscriptionLocalService", _subscriptionLocalService);
 
 		super.render(renderRequest, renderResponse);
 	}
 
 	@Reference(unbind = "-")
-	protected void setSubscriptionLocalService(final SubscriptionLocalService subscriptionLocalService) {
+	protected void setSubscriptionLocalService(
+		final SubscriptionLocalService subscriptionLocalService) {
+
 		_subscriptionLocalService = subscriptionLocalService;
 	}
 
 	private SubscriptionLocalService _subscriptionLocalService;
+
 }

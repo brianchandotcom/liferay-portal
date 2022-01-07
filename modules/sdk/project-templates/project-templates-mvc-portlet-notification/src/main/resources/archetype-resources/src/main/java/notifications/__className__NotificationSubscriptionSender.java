@@ -17,7 +17,8 @@ import java.util.List;
 /**
  * @author ${author}
  */
-public class ${className}NotificationSubscriptionSender extends SubscriptionSender {
+public class ${className}NotificationSubscriptionSender
+	extends SubscriptionSender {
 
 	public void setValue(String value) {
 		_value = value;
@@ -65,4 +66,5 @@ public class ${className}NotificationSubscriptionSender extends SubscriptionSend
 
 	private String _value;
 	private String _sender;
+
 }

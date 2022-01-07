@@ -142,6 +142,8 @@ projectTemplateJarVersions {
 }
 
 repositories {
+	mavenLocal()
+
 	File dir = rootProject.projectDir
 
 	while (dir != null) {
@@ -155,7 +157,7 @@ repositories {
 
 		dir = dir.getParentFile();
 	}
-	mavenLocal()
+
 	if (project.hasProperty("releaseApiJarRepoUsername")) {
 		maven {
 			credentials {

@@ -1,13 +1,14 @@
 <%@ include file="/init.jsp" %>
 
 <%
-	Subscription subscription = subscriptionLocalService.fetchSubscription(user.getCompanyId(), user.getUserId(), ${className}Portlet.class.getName(), 0);
-	boolean subscribed = false;
-	String command = Constants.SUBSCRIBE;
-	if (subscription != null) {
-		subscribed = true;
-		command = Constants.UNSUBSCRIBE;
-	}
+Subscription subscription = subscriptionLocalService.fetchSubscription(user.getCompanyId(), user.getUserId(), ${className}Portlet.class.getName(), 0);
+boolean subscribed = false;
+String command = Constants.SUBSCRIBE;
+
+if (subscription != null) {
+	subscribed = true;
+	command = Constants.UNSUBSCRIBE;
+}
 %>
 
 <p>

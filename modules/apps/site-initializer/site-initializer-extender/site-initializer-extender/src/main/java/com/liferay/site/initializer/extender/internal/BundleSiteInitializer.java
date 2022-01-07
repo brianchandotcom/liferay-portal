@@ -337,15 +337,12 @@ public class BundleSiteInitializer implements SiteInitializer {
 				}
 			};
 
-			_invoke(() -> _addPermissions(serviceContext));
-
 			_invoke(() -> _addAccounts(serviceContext));
 			_invoke(() -> _addDDMStructures(serviceContext));
 			_invoke(() -> _addFragmentEntries(serviceContext));
 			_invoke(() -> _addSAPEntries(serviceContext));
 			_invoke(() -> _addStyleBookEntries(serviceContext));
 			_invoke(() -> _addTaxonomyVocabularies(serviceContext));
-			_invoke(() -> _addUserAccounts(serviceContext));
 			_invoke(() -> _updateLayoutSets(serviceContext));
 
 			Map<String, String> assetListEntryIdsStringUtilReplaceValues =
@@ -387,6 +384,11 @@ public class BundleSiteInitializer implements SiteInitializer {
 					objectDefinitionIdsStringUtilReplaceValues,
 					serviceContext));
 
+			_invoke(
+				() -> _addPermissions(
+					objectDefinitionIdsStringUtilReplaceValues,
+					serviceContext));
+
 			Map<String, String> remoteAppEntryIdsStringUtilReplaceValues =
 				_invoke(
 					() -> _addRemoteAppEntries(
@@ -397,6 +399,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 					assetListEntryIdsStringUtilReplaceValues,
 					documentsStringUtilReplaceValues,
 					remoteAppEntryIdsStringUtilReplaceValues, serviceContext));
+
+			_invoke(() -> _addUserAccounts(serviceContext));
+
+			_invoke(() -> _addUserRoles(serviceContext));
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
@@ -1836,12 +1842,15 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 	}
 
-	private void _addPermissions(ServiceContext serviceContext)
+	private void _addPermissions(
+			Map<String, String> objectDefinitionIdsStringUtilReplaceValues,
+			ServiceContext serviceContext)
 		throws Exception {
 
 		_addRoles(serviceContext);
 
 		_addResourcePermissions(
+			objectDefinitionIdsStringUtilReplaceValues,
 			"/site-initializer/resource-permissions.json", serviceContext);
 	}
 
@@ -1917,6 +1926,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private void _addResourcePermissions(
+			Map<String, String> objectDefinitionIdsStringUtilReplaceValues,
 			String resourcePath, ServiceContext serviceContext)
 		throws Exception {
 
@@ -1925,6 +1935,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 		if (json == null) {
 			return;
 		}
+
+		json = StringUtil.replace(
+			json, "[$", "$]", objectDefinitionIdsStringUtilReplaceValues);
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(json);
 
@@ -2003,10 +2016,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private void _addRoles(ServiceContext serviceContext) throws Exception {
-		if (_commerceReferencesHolder == null) {
-			return;
-		}
-
 		String json = _read("/site-initializer/roles.json");
 
 		if (json == null) {
@@ -2467,6 +2476,39 @@ public class BundleSiteInitializer implements SiteInitializer {
 				postAccountUserAccountByExternalReferenceCodeByEmailAddress(
 					externalReferenceCode,
 					existingUserAccount.getEmailAddress());
+		}
+	}
+
+	private void _addUserRoles(ServiceContext serviceContext) throws Exception {
+		String json = _read("/site-initializer/user-roles.json");
+
+		if (json == null) {
+			return;
+		}
+
+		JSONArray jsonArray = _jsonFactory.createJSONArray(json);
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			JSONArray rolesJSONArray = jsonObject.getJSONArray("roles");
+
+			List<Role> roles = new ArrayList<>();
+
+			for (int j = 0; j < rolesJSONArray.length(); j++) {
+				roles.add(
+					_roleLocalService.getRole(
+						serviceContext.getCompanyId(),
+						rolesJSONArray.getString(j)));
+			}
+
+			if (ListUtil.isNotEmpty(roles)) {
+				User user = _userLocalService.fetchUserByEmailAddress(
+					serviceContext.getCompanyId(),
+					jsonObject.getString("emailAddress"));
+
+				_roleLocalService.addUserRoles(user.getUserId(), roles);
+			}
 		}
 	}
 

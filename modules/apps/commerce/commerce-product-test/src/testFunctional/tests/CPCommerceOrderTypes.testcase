@@ -206,6 +206,37 @@ definition {
 		}
 	}
 
+	@description = "Verify single active order type is automatically assigned to orders created via the account selector."
+	@priority = "3"
+	test AssertSingleOrderTypeAutomaticallyAssignedToOrderCreatedViaAccountSelector {
+		property portal.acceptance = "false";
+
+		task ("Given an active order type") {
+			CommerceJSONOrdersAPI._addOrderType(
+				active = "true",
+				orderTypeDescription = "Test Order Type Descripiton",
+				orderTypeName = "Test Order Type");
+		}
+
+		task ("When I log in as the buyer user and create a new order in the Minium site via the account selector") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "ttest",
+				resetPassword = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			CommerceAcceleratorsInitializer.createNewOrderFromAccountSelectorDropdown();
+		}
+
+		task ("Then the active order type should be automatically assigned to the order") {
+			AssertElementPresent(
+				key_OrderType = "Test Order Type",
+				locator1 = "CommerceOrders#PENDING_ORDERS_ORDER_TYPE");
+		}
+	}
+
 	@description = "Verify users can select order type when creating a new order via pending orders if there are multiple order types."
 	@priority = "3"
 	test SelectOrderTypeWhenCreatingNewOrderViaPendingOrders {

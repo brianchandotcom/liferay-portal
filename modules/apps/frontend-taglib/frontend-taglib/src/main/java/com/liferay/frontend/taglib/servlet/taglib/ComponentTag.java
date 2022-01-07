@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.taglib.util.ParamAndPropertyAncestorTagImpl;
 
 import java.io.IOException;
@@ -39,6 +40,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -197,8 +199,14 @@ public class ComponentTag extends ParamAndPropertyAncestorTagImpl {
 	private String _getRenderInvocation(String variableName) {
 		StringBundler sb = new StringBundler(14);
 
+		String componentId = Optional.ofNullable(
+			getComponentId()
+		).orElse(
+			_UNNAMED_COMPONENT_NAME + PortalUUIDUtil.generate()
+		);
+
 		sb.append("Liferay.component('");
-		sb.append(getComponentId());
+		sb.append(componentId);
 		sb.append("', new ");
 
 		sb.append(variableName);
@@ -305,6 +313,9 @@ public class ComponentTag extends ParamAndPropertyAncestorTagImpl {
 				module + " as " + variableName, ScriptData.ModulesType.ES6);
 		}
 	}
+
+	private static final String _UNNAMED_COMPONENT_NAME =
+		"__UNNAMED_COMPONENT__";
 
 	private static final char[] _UNSAFE_MODULE_NAME_CHARS = {
 		CharPool.PERIOD, CharPool.DASH

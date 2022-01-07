@@ -1,0 +1,65 @@
+[
+	{
+		"actionId": "VIEW",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:AccountSubscription$]",
+		"roleName": "Customer Portal Member",
+		"scope": "1"
+	},
+	{
+		"actionId": "VIEW",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:AccountFlag$]",
+		"roleName": "Customer Portal Member",
+		"scope": "1"
+	},
+	{
+		"actionId": "VIEW",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:AccountSubscriptionGroup$]",
+		"roleName": "Customer Portal Member",
+		"scope": "1"
+	},
+	{
+		"actionId": "VIEW",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:AccountSubscriptionTerm$]",
+		"roleName": "Customer Portal Member",
+		"scope": "1"
+	},
+	{
+		"actionId": "VIEW",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:BannedEmailDomain$]",
+		"roleName": "Customer Portal Member",
+		"scope": "1"
+	},
+	{
+		"actionId": "VIEW",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:DXPCDataCenterRegion$]",
+		"roleName": "Customer Portal Member",
+		"scope": "1"
+	},
+	{
+		"actionId": "VIEW",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:KoroneikiAccount$]",
+		"roleName": "Customer Portal Member",
+		"scope": "1"
+	},
+	{
+		"actionId": "VIEW",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:SetupDXPCloud$]",
+		"roleName": "Customer Portal Member",
+		"scope": "1"
+	},
+	{
+		"actionId": "VIEW",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:TeamMembersInvitation$]",
+		"roleName": "Customer Portal Member",
+		"scope": "1"
+	}
+]

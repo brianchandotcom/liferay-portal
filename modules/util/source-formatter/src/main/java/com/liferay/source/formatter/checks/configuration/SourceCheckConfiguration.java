@@ -57,8 +57,17 @@ public class SourceCheckConfiguration {
 		return _name;
 	}
 
+	public int getWeight() {
+		return _weight;
+	}
+
+	public void setWeight(int weight) {
+		_weight = weight;
+	}
+
 	private final JSONObject _attributesJSONObject = new JSONObjectImpl();
 	private final String _category;
 	private final String _name;
+	private int _weight = -1;
 
 }

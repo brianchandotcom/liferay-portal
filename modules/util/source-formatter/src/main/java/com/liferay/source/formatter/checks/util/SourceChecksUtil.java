@@ -45,18 +45,19 @@ import java.io.File;
 
 import java.lang.reflect.Constructor;
 
-import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * @author Hugo Huijser
  */
 public class SourceChecksUtil {
 
-	public static List<SourceCheck> getSourceChecks(
+	public static Set<SourceCheck> getSourceChecks(
 			SourceFormatterConfiguration sourceFormatterConfiguration,
 			String sourceProcessorName, Map<String, Properties> propertiesMap,
 			List<String> filterCheckNames,
@@ -65,7 +66,7 @@ public class SourceChecksUtil {
 			boolean includeModuleChecks)
 		throws Exception {
 
-		List<SourceCheck> sourceChecks = _getSourceChecks(
+		Set<SourceCheck> sourceChecks = _getSourceChecks(
 			sourceFormatterConfiguration, sourceProcessorName, propertiesMap,
 			filterCheckNames, filterCheckCategoryNames, skipCheckNames,
 			portalSource, subrepository, includeModuleChecks);
@@ -225,7 +226,7 @@ public class SourceChecksUtil {
 			checkName);
 	}
 
-	private static List<SourceCheck> _getSourceChecks(
+	private static Set<SourceCheck> _getSourceChecks(
 			SourceFormatterConfiguration sourceFormatterConfiguration,
 			String sourceProcessorName, Map<String, Properties> propertiesMap,
 			List<String> filterCheckNames,
@@ -234,7 +235,24 @@ public class SourceChecksUtil {
 			boolean includeModuleChecks)
 		throws Exception {
 
-		List<SourceCheck> sourceChecks = new ArrayList<>();
+		Set<SourceCheck> sourceChecks = new TreeSet<>(
+			new Comparator<SourceCheck>() {
+
+				@Override
+				public int compare(
+					SourceCheck sourceCheck1, SourceCheck sourceCheck2) {
+
+					int compare =
+						sourceCheck2.getWeight() - sourceCheck1.getWeight();
+
+					if (compare != 0) {
+						return compare;
+					}
+
+					return sourceCheck1.hashCode() - sourceCheck2.hashCode();
+				}
+
+			});
 
 		List<SourceCheckConfiguration> sourceCheckConfigurations =
 			sourceFormatterConfiguration.getSourceCheckConfigurations(
@@ -310,16 +328,18 @@ public class SourceChecksUtil {
 				continue;
 			}
 
-			if (excludesJSONObject.length() != 0) {
-				sourceCheck.setExcludes(excludesJSONObject.toString());
-			}
-
 			JSONObject attributesJSONObject = _getAttributesJSONObject(
 				propertiesMap, clazz.getSimpleName(), sourceCheckConfiguration);
 
 			if (attributesJSONObject.length() != 0) {
 				sourceCheck.setAttributes(attributesJSONObject.toString());
 			}
+
+			if (excludesJSONObject.length() != 0) {
+				sourceCheck.setExcludes(excludesJSONObject.toString());
+			}
+
+			sourceCheck.setWeight(sourceCheckConfiguration.getWeight());
 
 			sourceChecks.add(sourceCheck);
 		}

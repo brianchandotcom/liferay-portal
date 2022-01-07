@@ -76,6 +76,11 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	}
 
 	@Override
+	public int getWeight() {
+		return _weight;
+	}
+
+	@Override
 	public boolean isEnabled(String absolutePath) {
 		Class<?> clazz = getClass();
 
@@ -199,6 +204,11 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	@Override
 	public void setSubrepository(boolean subrepository) {
 		_subrepository = subrepository;
+	}
+
+	@Override
+	public void setWeight(int weight) {
+		_weight = weight;
 	}
 
 	protected void addMessage(String fileName, String message) {
@@ -843,5 +853,6 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		_sourceFormatterMessagesMap = new ConcurrentHashMap<>();
 	private SourceProcessor _sourceProcessor;
 	private boolean _subrepository;
+	private int _weight;
 
 }

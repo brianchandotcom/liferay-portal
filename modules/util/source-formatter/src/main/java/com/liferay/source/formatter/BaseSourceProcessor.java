@@ -411,7 +411,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return _propertiesMap;
 	}
 
-	protected List<SourceCheck> getSourceChecks() {
+	protected Set<SourceCheck> getSourceChecks() {
 		return _sourceChecks;
 	}
 
@@ -602,12 +602,12 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		format(file, fileName, absolutePath, content);
 	}
 
-	private List<SourceCheck> _getSourceChecks(List<String> fileNames)
+	private Set<SourceCheck> _getSourceChecks(List<String> fileNames)
 		throws Exception {
 
 		Class<?> clazz = getClass();
 
-		List<SourceCheck> sourceChecks = SourceChecksUtil.getSourceChecks(
+		Set<SourceCheck> sourceChecks = SourceChecksUtil.getSourceChecks(
 			_sourceFormatterConfiguration, clazz.getSimpleName(),
 			getPropertiesMap(), _sourceFormatterArgs.getCheckNames(),
 			_sourceFormatterArgs.getCheckCategoryNames(),
@@ -749,7 +749,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	private boolean _portalSource;
 	private String _projectPathPrefix;
 	private Map<String, Properties> _propertiesMap;
-	private List<SourceCheck> _sourceChecks = new ArrayList<>();
+	private Set<SourceCheck> _sourceChecks;
 	private SourceFormatterArgs _sourceFormatterArgs;
 	private SourceFormatterConfiguration _sourceFormatterConfiguration;
 	private SourceFormatterExcludes _sourceFormatterExcludes;

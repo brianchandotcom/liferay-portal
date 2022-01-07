@@ -30,6 +30,8 @@ public interface SourceCheck {
 	public Set<SourceFormatterMessage> getSourceFormatterMessages(
 		String fileName);
 
+	public int getWeight();
+
 	public boolean isEnabled(String absolutePath);
 
 	public boolean isJavaSource(String content, int pos);
@@ -70,5 +72,7 @@ public interface SourceCheck {
 	public void setSourceProcessor(SourceProcessor sourceProcessor);
 
 	public void setSubrepository(boolean subrepository);
+
+	public void setWeight(int weight);
 
 }

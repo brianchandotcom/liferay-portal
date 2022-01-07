@@ -424,6 +424,7 @@
 		<exception>ObjectDefinitionStatus</exception>
 		<exception>ObjectDefinitionVersion</exception>
 		<exception>ObjectEntryValues</exception>
+		<exception>ObjectFieldBusinessType</exception>
 		<exception>ObjectFieldLabel</exception>
 		<exception>ObjectFieldName</exception>
 		<exception>ObjectFieldRelationshipType</exception>

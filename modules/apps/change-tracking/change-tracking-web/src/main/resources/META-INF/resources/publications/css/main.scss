@@ -42,6 +42,10 @@
 		.list-group-item {
 			word-wrap: break-word;
 
+			a {
+				cursor: pointer;
+			}
+
 			.btn-group.dropdown .dropdown-toggle {
 				border-bottom-left-radius: 0;
 				border-top-left-radius: 0;
@@ -353,15 +357,6 @@ table.publications-render-view {
 }
 
 .publications-table {
-	.publication-description {
-		color: #6b6c7e;
-	}
-
-	.publication-name {
-		color: #272833;
-		font-weight: 600;
-	}
-
 	.change-row-button {
 		background-color: inherit;
 		border: none;
@@ -373,6 +368,19 @@ table.publications-render-view {
 			box-shadow: none;
 			outline: none;
 		}
+	}
+
+	.list-group-item a {
+		cursor: pointer;
+	}
+
+	.publication-description {
+		color: #6b6c7e;
+	}
+
+	.publication-name {
+		color: #272833;
+		font-weight: 600;
 	}
 }
 

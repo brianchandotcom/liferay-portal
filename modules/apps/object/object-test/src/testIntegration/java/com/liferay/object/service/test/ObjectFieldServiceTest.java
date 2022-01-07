@@ -191,7 +191,7 @@ public class ObjectFieldServiceTest {
 	private ObjectField _addObjectField(User user) throws Exception {
 		return _objectFieldLocalService.addCustomObjectField(
 			user.getUserId(), 0, _objectDefinition.getObjectDefinitionId(),
-			false, false, null,
+			"Text", false, false, null,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			StringUtil.randomId(), true, "String");
 	}
@@ -212,7 +212,7 @@ public class ObjectFieldServiceTest {
 			_setUser(user);
 
 			objectField = _objectFieldService.addCustomObjectField(
-				0, objectDefinitionId, false, false, null,
+				0, objectDefinitionId, "Text", false, false, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				StringUtil.randomId(), true, "String");
 		}
@@ -268,7 +268,7 @@ public class ObjectFieldServiceTest {
 			objectField = _addObjectField(user);
 
 			objectField = _objectFieldService.updateCustomObjectField(
-				objectField.getObjectFieldId(), 0, true, false,
+				objectField.getObjectFieldId(), 0, "Text", true, false,
 				LanguageUtil.getLanguageId(LocaleUtil.getDefault()),
 				LocalizedMapUtil.getLocalizedMap("baker"), "baker", true,
 				"String");

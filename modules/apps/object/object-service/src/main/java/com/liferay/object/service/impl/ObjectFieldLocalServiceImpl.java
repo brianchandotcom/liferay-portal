@@ -64,9 +64,9 @@ public class ObjectFieldLocalServiceImpl
 	@Override
 	public ObjectField addCustomObjectField(
 			long userId, long listTypeDefinitionId, long objectDefinitionId,
-			boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
-			Map<Locale, String> labelMap, String name, boolean required,
-			String type)
+			String businessType, boolean indexed, boolean indexedAsKeyword,
+			String indexedLanguageId, Map<Locale, String> labelMap, String name,
+			boolean required, String type)
 		throws PortalException {
 
 		name = StringUtil.trim(name);
@@ -81,7 +81,7 @@ public class ObjectFieldLocalServiceImpl
 		}
 
 		ObjectField objectField = _addObjectField(
-			userId, listTypeDefinitionId, objectDefinitionId,
+			userId, listTypeDefinitionId, objectDefinitionId, businessType,
 			name + StringPool.UNDERLINE, dbTableName, indexed, indexedAsKeyword,
 			indexedLanguageId, labelMap, name, required, type);
 
@@ -97,10 +97,10 @@ public class ObjectFieldLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public ObjectField addSystemObjectField(
-			long userId, long objectDefinitionId, String dbColumnName,
-			boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
-			Map<Locale, String> labelMap, String name, boolean required,
-			String type)
+			long userId, long objectDefinitionId, String businessType,
+			String dbColumnName, boolean indexed, boolean indexedAsKeyword,
+			String indexedLanguageId, Map<Locale, String> labelMap, String name,
+			boolean required, String type)
 		throws PortalException {
 
 		name = StringUtil.trim(name);
@@ -113,7 +113,7 @@ public class ObjectFieldLocalServiceImpl
 		}
 
 		return _addObjectField(
-			userId, 0, objectDefinitionId, dbColumnName,
+			userId, 0, objectDefinitionId, businessType, dbColumnName,
 			objectDefinition.getDBTableName(), indexed, indexedAsKeyword,
 			indexedLanguageId, labelMap, name, required, type);
 	}
@@ -208,8 +208,8 @@ public class ObjectFieldLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public ObjectField updateCustomObjectField(
-			long objectFieldId, long listTypeDefinitionId, boolean indexed,
-			boolean indexedAsKeyword, String indexedLanguageId,
+			long objectFieldId, long listTypeDefinitionId, String businessType,
+			boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
 			Map<Locale, String> labelMap, String name, boolean required,
 			String type)
 		throws PortalException {
@@ -250,6 +250,7 @@ public class ObjectFieldLocalServiceImpl
 		}
 
 		objectField.setListTypeDefinitionId(listTypeDefinitionId);
+		objectField.setBusinessType(businessType);
 		objectField.setDBColumnName(name + StringPool.UNDERLINE);
 		objectField.setIndexed(indexed);
 		objectField.setIndexedAsKeyword(indexedAsKeyword);
@@ -270,8 +271,8 @@ public class ObjectFieldLocalServiceImpl
 
 	private ObjectField _addObjectField(
 			long userId, long listTypeDefinitionId, long objectDefinitionId,
-			String dbColumnName, String dbTableName, boolean indexed,
-			boolean indexedAsKeyword, String indexedLanguageId,
+			String businessType, String dbColumnName, String dbTableName,
+			boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
 			Map<Locale, String> labelMap, String name, boolean required,
 			String type)
 		throws PortalException {
@@ -295,6 +296,7 @@ public class ObjectFieldLocalServiceImpl
 
 		objectField.setListTypeDefinitionId(listTypeDefinitionId);
 		objectField.setObjectDefinitionId(objectDefinitionId);
+		objectField.setBusinessType(businessType);
 		objectField.setDBColumnName(dbColumnName);
 		objectField.setDBTableName(dbTableName);
 		objectField.setIndexed(indexed);

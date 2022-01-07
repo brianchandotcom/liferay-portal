@@ -20,5 +20,5 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 <portlet:defineObjects />
 
 <%
-    SubscriptionLocalService subscriptionLocalService = (SubscriptionLocalService) renderRequest.getAttribute("subscriptionLocalService");
+	SubscriptionLocalService subscriptionLocalService = (SubscriptionLocalService) renderRequest.getAttribute("subscriptionLocalService");
 %>

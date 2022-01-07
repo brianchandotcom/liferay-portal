@@ -47,29 +47,22 @@ public class NotifyMVCActionCommand extends BaseMVCActionCommand {
 			return;
 		}
 
-		String email =  ParamUtil.getString(actionRequest, ${className}PortletKeys.USER_EMAIL);
-		long companyId = _portal.getCompanyId(actionRequest);
-
 		if (${className}PortletKeys.NOTIFY.equals(cmd)) {
-			ServiceContext serviceContext = null;
+			long companyId = _portal.getCompanyId(actionRequest);
+			String email =  ParamUtil.getString(actionRequest, ${className}PortletKeys.USER_EMAIL);
 
-			serviceContext = ServiceContextFactory.getInstance(actionRequest);
-
-			notifySubscriber(companyId, email, serviceContext);
+			notifySubscriber(companyId, email, ServiceContextFactory.getInstance(actionRequest));
 		}
 	}
 
 	protected void notifySubscriber(long companyId, String userEmail, ServiceContext serviceContext) {
-
-		User user = _userLocalService.fetchUserByEmailAddress(companyId, userEmail);
-
 		String entryTitle = "${className} notification";
 
 		String fromName = "${className} Notification Sender";
 		String fromAddress = "joebloggs@liferay.com";
 
 		${className}NotificationSubscriptionSender subscriptionSender =
-				new ${className}NotificationSubscriptionSender();
+			new ${className}NotificationSubscriptionSender();
 
 		subscriptionSender.setValue("sample value");
 
@@ -116,5 +109,4 @@ public class NotifyMVCActionCommand extends BaseMVCActionCommand {
 
 	private SubscriptionLocalService _subscriptionLocalService;
 	private UserLocalService _userLocalService;
-
 }

@@ -37,9 +37,7 @@ public class ${className}NotificationSubscriptionSender extends SubscriptionSend
 			${className}PortletKeys.SAMPLE_VALUE, _value);
 		notificationEventJSONObject.put(
 			${className}PortletKeys.SENDER, _sender);
-
 	}
-
 
 	@Override
 	public void flushNotifications() throws Exception {
@@ -67,5 +65,4 @@ public class ${className}NotificationSubscriptionSender extends SubscriptionSend
 
 	private String _value;
 	private String _sender;
-
 }

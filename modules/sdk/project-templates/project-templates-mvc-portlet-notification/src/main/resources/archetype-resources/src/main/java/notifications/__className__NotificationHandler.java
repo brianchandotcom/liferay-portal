@@ -61,8 +61,8 @@ public class ${className}NotificationHandler extends BaseUserNotificationHandler
 
 			return userNotificationFeedEntry;
 		}
-		catch (Exception e) {
-			_log.error("Unable to interpret notification", e);
+		catch (Exception exception) {
+			_log.error("Unable to interpret notification", exception);
 		}
 
 		return null;
@@ -81,9 +81,7 @@ public class ${className}NotificationHandler extends BaseUserNotificationHandler
 
 		String body = LanguageUtil.format(serviceContext.getLocale(), _BODY_KEY, new Object[] {sender, value});
 
-		String html = StringUtil.replace(_BODY_TEMPLATE, _BODY_REPLACEMENTS, new String[] {title, body});
-
-		return html;
+		return StringUtil.replace(_BODY_TEMPLATE, _BODY_REPLACEMENTS, new String[] {title, body});
 	}
 
     @Reference(unbind = "-")
@@ -91,20 +89,21 @@ public class ${className}NotificationHandler extends BaseUserNotificationHandler
 		_companyLocalService = companyLocalService;
 	}
 
-    @Reference(unbind = "-")
+
+	@Reference(unbind = "-")
 	protected void setUserLocalService(final UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
 	}
 
 	private CompanyLocalService _companyLocalService;
-    private UserLocalService _userLocalService;
+	private UserLocalService _userLocalService;
 
 	private static final String _BODY_KEY = "{0} has sent you a ${className} Notification with value: {1}";
 	private static final String _TITLE_KEY = "${className}P Notification";
 
-	private static final String _BODY_TEMPLATE = "<div class=\"title\">[$TITLE$]</div><div class=\"body\">[$BODY$]</div>";
+	private static final String _BODY_TEMPLATE = "<div class=\"title\">[$TITLE$]</div>"
+			+ "<div class=\"body\">[$BODY$]</div>";
 	private static final String[] _BODY_REPLACEMENTS = new String[] {"[$TITLE$]", "[$BODY$]"};
 
 	private static final Log _log = LogFactoryUtil.getLog(${className}NotificationHandler.class);
-
 }

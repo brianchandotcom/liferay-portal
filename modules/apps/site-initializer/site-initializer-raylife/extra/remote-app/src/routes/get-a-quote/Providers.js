@@ -5,6 +5,7 @@ import ClayIconProvider from '../../common/context/ClayIconProvider';
 import {LiferayAdapt} from '../../common/services/liferay/adapter';
 import {STORAGE_KEYS, Storage} from '../../common/services/liferay/storage';
 import {AppContextProvider} from './context/AppContextProvider';
+import WebContentProvider from './context/WebContentProvider';
 import {getRaylifeApplicationById} from './services/RaylifeApplication';
 import {getLoadedContentFlag} from './utils/util';
 
@@ -31,13 +32,15 @@ const Providers = ({children, initialValues}) => {
 	});
 
 	return (
-		<AppContextProvider>
-			<ClayIconProvider>
-				<FormProvider {...form}>
-					<Template>{children}</Template>
-				</FormProvider>
-			</ClayIconProvider>
-		</AppContextProvider>
+		<ClayIconProvider>
+			<AppContextProvider>
+				<WebContentProvider>
+					<FormProvider {...form}>
+						<Template>{children}</Template>
+					</FormProvider>
+				</WebContentProvider>
+			</AppContextProvider>
+		</ClayIconProvider>
 	);
 };
 

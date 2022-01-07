@@ -36,7 +36,6 @@ const AddModal = ({
 	observer,
 	onClose,
 	portletNamespace,
-	searchableTypes = [],
 }) => {
 	const isMounted = useIsMounted();
 	const [errorMessage, setErrorMessage] = useState();
@@ -56,7 +55,7 @@ const AddModal = ({
 		generalConfiguration: {
 			clauseContributorsExcludes: [],
 			clauseContributorsIncludes: clauseContributorsList,
-			searchableAssetTypes: searchableTypes,
+			searchableAssetTypes: [],
 		},
 		highlightConfiguration: DEFAULT_HIGHLIGHT_CONFIGURATION,
 		parameterConfiguration: DEFAULT_PARAMETER_CONFIGURATION,
@@ -264,7 +263,6 @@ export function AddSXPBlueprintModal({
 		queryPrefilterContributors,
 		setQueryPrefilterContributors,
 	] = useState(null);
-	const [searchableTypes, setSearchableTypes] = useState(null);
 	const [visibleModal, setVisibleModal] = useState(false);
 
 	useEffect(() => {
@@ -277,10 +275,6 @@ export function AddSXPBlueprintModal({
 
 	useEffect(() => {
 		[
-			{
-				setProperty: setSearchableTypes,
-				url: '/o/search-experiences-rest/v1.0/searchable-asset-names',
-			},
 			{
 				setProperty: setKeywordQueryContributors,
 				url:
@@ -310,8 +304,7 @@ export function AddSXPBlueprintModal({
 	if (
 		!keywordQueryContributors ||
 		!modelPrefilterContributors ||
-		!queryPrefilterContributors ||
-		!searchableTypes
+		!queryPrefilterContributors
 	) {
 		return null;
 	}
@@ -331,7 +324,6 @@ export function AddSXPBlueprintModal({
 					observer={observer}
 					onClose={onClose}
 					portletNamespace={portletNamespace}
-					searchableTypes={searchableTypes}
 				/>
 			)}
 		</ClayModalProvider>

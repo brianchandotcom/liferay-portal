@@ -58,9 +58,7 @@ function QuerySettings({
 		setSelectAllTypes(selectAll);
 
 		onFrameworkConfigChange({
-			searchableAssetTypes: selectAll
-				? searchableTypes.map(({className}) => className)
-				: [],
+			searchableAssetTypes: [],
 		});
 	};
 

@@ -24,6 +24,8 @@ import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceCatalogLocalServiceUtil;
+import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.mapping.constants.DDMTemplateConstants;
@@ -94,6 +96,7 @@ import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
@@ -358,7 +361,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 						_ddmStructureLocalService, serviceContext));
 
 			Map<String, String> documentsStringUtilReplaceValues = _invoke(
-				() -> _addDocuments(serviceContext));
+				() -> _addDocuments(displayPageInfoItems, serviceContext));
 
 			_invoke(
 				() -> _addDDMTemplates(
@@ -990,6 +993,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 	private Map<String, String> _addDocuments(
 			Long documentFolderId, long groupId, String parentResourcePath,
+			Map<String, String> displayPageInfoItems,
 			ServiceContext serviceContext)
 		throws Exception {
 
@@ -1016,7 +1020,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 						_addDocumentFolder(
 							documentFolderId, groupId, resourcePath,
 							serviceContext),
-						groupId, resourcePath, serviceContext));
+						groupId, resourcePath, displayPageInfoItems,
+						serviceContext));
 
 				continue;
 			}
@@ -1143,12 +1148,41 @@ public class BundleSiteInitializer implements SiteInitializer {
 				_dlURLHelper.getPreviewURL(
 					fileEntry, fileEntry.getFileVersion(), null,
 					StringPool.BLANK, false, false));
+
+			displayPageInfoItems.put(
+				"CLASS_NAME:" + key, FileEntry.class.getName());
+
+			displayPageInfoItems.put(
+				"CLASS_PK:" + key, String.valueOf(fileEntry.getFileEntryId()));
+
+			long fileEntryTypeId = 0;
+
+			if (fileEntry.getModel() instanceof DLFileEntry) {
+				DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
+
+				DLFileEntryType dlFileEntryType =
+					dlFileEntry.getDLFileEntryType();
+
+				fileEntryTypeId = dlFileEntryType.getFileEntryTypeId();
+			}
+
+			displayPageInfoItems.put(
+				"CLASS_TYPE_ID:" + key, String.valueOf(fileEntryTypeId));
+
+			displayPageInfoItems.put("TITLE:" + key, fileEntry.getTitle());
+
+			displayPageInfoItems.put(
+				"TYPE:" + key,
+				ResourceActionsUtil.getModelResource(
+					serviceContext.getLocale(), FileEntry.class.getName()));
 		}
 
 		return documentsStringUtilReplaceValues;
 	}
 
-	private Map<String, String> _addDocuments(ServiceContext serviceContext)
+	private Map<String, String> _addDocuments(
+			Map<String, String> displayPageInfoItems,
+			ServiceContext serviceContext)
 		throws Exception {
 
 		Group group = _groupLocalService.getCompanyGroup(
@@ -1157,11 +1191,12 @@ public class BundleSiteInitializer implements SiteInitializer {
 		return HashMapBuilder.putAll(
 			_addDocuments(
 				null, group.getGroupId(), "/site-initializer/documents/company",
-				serviceContext)
+				displayPageInfoItems, serviceContext)
 		).putAll(
 			_addDocuments(
 				null, serviceContext.getScopeGroupId(),
-				"/site-initializer/documents/group", serviceContext)
+				"/site-initializer/documents/group", displayPageInfoItems,
+				serviceContext)
 		).build();
 	}
 

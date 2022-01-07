@@ -29,79 +29,18 @@ import {defaultLanguageId} from '../constants';
 import DeserializeUtil from '../source-builder/deserializeUtil';
 import {singleEventObserver} from '../util/EventObserver';
 import {retrieveDefinitionRequest} from '../util/fetchUtil';
-import {getCollidingElements} from '../util/utils';
 import {DiagramBuilderContextProvider} from './DiagramBuilderContext';
 import {nodeTypes} from './components/nodes/utils';
 import Sidebar from './components/sidebar/Sidebar';
 import {isIdDuplicated} from './components/sidebar/utils';
 import edgeTypes from './components/transitions/Edge';
 import FloatingConnectionLine from './components/transitions/FloatingConnectionLine';
+import getCollidingElements from './util/collisionDetection';
 
 let id = 2;
 const getId = () => `item_${id++}`;
 
 const deserializeUtil = new DeserializeUtil();
-const isOverlapping = (
-	elementPosition,
-	elementRectangle,
-	newElementPosition
-) => {
-	if (elementRectangle !== null) {
-		const existingElement = {
-			bottomBound: elementPosition.y + 84,
-			lefBound: elementPosition.x - 10,
-			rightBound: elementPosition.x + 264,
-			topBound: elementPosition.y - 10,
-		};
-
-		const {rectangleHeight, rectangleWidth} = elementRectangle;
-
-		const isInHorizontalBounds =
-			(newElementPosition.x > existingElement.lefBound ||
-				newElementPosition.x + rectangleWidth >
-					existingElement.lefBound) &&
-			(newElementPosition.x < existingElement.rightBound ||
-				newElementPosition.x + rectangleWidth <
-					existingElement.rightBound);
-
-		const isInVerticalBounds =
-			(newElementPosition.y > existingElement.topBound ||
-				newElementPosition.y + rectangleHeight >
-					existingElement.topBound) &&
-			(newElementPosition.y < existingElement.bottomBound ||
-				newElementPosition.y + rectangleHeight <
-					existingElement.bottomBound);
-
-		const isOverlapping = isInHorizontalBounds && isInVerticalBounds;
-
-		return isOverlapping;
-	}
-
-	return false;
-};
-
-const getCollidingElements = (
-	elements,
-	elementRectangle,
-	newElementPosition
-) => {
-	const collidingElements = [];
-
-	elements.forEach((element) => {
-		if (
-			isNode(element) &&
-			isOverlapping(
-				element.position,
-				elementRectangle,
-				newElementPosition
-			)
-		) {
-			collidingElements.push(element.id);
-		}
-	});
-
-	return collidingElements;
-};
 
 const definitionDiagramController = new DefinitionDiagramController();
 

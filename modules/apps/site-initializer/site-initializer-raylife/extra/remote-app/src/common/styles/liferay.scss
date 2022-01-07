@@ -1,0 +1,31 @@
+@media screen and (max-width: 767px) {
+	@import 'variables';
+
+	section#content.raylife-mobile {
+		background-color: $color-brand-primary-darken-5;
+	}
+
+	.get-a-quote-structure {
+		color: $color-neutral-white;
+
+		.step-list {
+			.step-item {
+				color: $color-neutral-white !important;
+
+				i {
+					circle {
+						stroke: $color-neutral-white;
+					}
+				}
+
+				i::after {
+					background-color: $color-neutral-white !important;
+				}
+
+				svg {
+					fill: $color-neutral-white;
+				}
+			}
+		}
+	}
+}

@@ -227,8 +227,6 @@ definition {
 				userEmailAddress = "test@www.able.com",
 				virtualHostsURL = "http://www.able.com:8080");
 
-			Navigator.openSpecificURL(url = "http://www.able.com:8080");
-
 			WebContentNavigator.openWebContentAdmin(
 				baseURL = "http://www.able.com:8080",
 				siteURLKey = "global");

@@ -6,42 +6,28 @@ definition {
 	property testray.main.component.name = "Order Management";
 
 	setUp {
-		TestCase.setUpPortalInstance();
-
-		User.firstLoginPG();
-	}
-
-	tearDown {
-		Navigator.openURL();
-
-		if (IsElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE")) {
-			User.logoutPG();
+		task ("Setup: Setup portal instance") {
+			TestCase.setUpPortalInstance();
 		}
 
-		User.firstLoginPG();
+		task ("Setup: Login") {
+			User.firstLoginPG();
+		}
 
-		CommerceConfiguration.commerceAdminTearDown();
+		task ("Setup: Uncheck Require strangers to verify their email address") {
+			PortalSettings.gotoConfiguration(
+				configurationCategory = "User Authentication",
+				configurationName = "General",
+				configurationScope = "Virtual Instance Scope");
 
-		CommerceConfiguration.commerceInitializersTearDown();
-	}
+			PortalSettings.uncheckStrangersVerifyEmailCheckbox();
+		}
 
-	@description = "Verify users can select order type when creating a new order via pending orders if there are multiple order types."
-	@priority = "3"
-	test SelectOrderTypeWhenCreatingNewOrderViaPendingOrders {
-		property portal.acceptance = "false";
-
-		PortalSettings.gotoConfiguration(
-			configurationCategory = "User Authentication",
-			configurationName = "General",
-			configurationScope = "Virtual Instance Scope");
-
-		PortalSettings.uncheckStrangersVerifyEmailCheckbox();
-
-		task ("Given a Minium Site") {
+		task ("Setup: Create a Minium site") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 		}
 
-		task ("And given an account with a buyer user") {
+		task ("Setup: Create an account with a buyer user") {
 			JSONAccountEntry.addAccountEntry(
 				accountEntryName = "Test Account",
 				accountEntryType = "Business");
@@ -67,8 +53,28 @@ definition {
 				requirePasswordReset = "true",
 				userScreenName = "buyeruser");
 		}
+	}
 
-		task ("And given two new order types") {
+	tearDown {
+		Navigator.openURL();
+
+		if (IsElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE")) {
+			User.logoutPG();
+		}
+
+		User.firstLoginPG();
+
+		CommerceConfiguration.commerceAdminTearDown();
+
+		CommerceConfiguration.commerceInitializersTearDown();
+	}
+
+	@description = "Verify users can select order type when creating a new order via pending orders if there are multiple order types."
+	@priority = "3"
+	test SelectOrderTypeWhenCreatingNewOrderViaPendingOrders {
+		property portal.acceptance = "false";
+
+		task ("Given two new order types") {
 			CommerceJSONOrdersAPI._addOrderType(
 				active = "true",
 				orderTypeDescription = "Test Order Type Descripiton",
@@ -89,9 +95,7 @@ definition {
 				urlAppend = "web/minium",
 				userEmailAddress = "buyer@liferay.com");
 
-			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Pending Orders");
-
-			Button.click(button = "Add Order");
+			CommerceAcceleratorsInitializer.createNewOrderFromPendingOrders();
 		}
 
 		task ("Then I should be able to select the order type for my new order") {

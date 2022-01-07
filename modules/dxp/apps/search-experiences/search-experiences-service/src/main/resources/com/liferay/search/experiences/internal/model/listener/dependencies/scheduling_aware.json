@@ -35,7 +35,7 @@
 																	"from": "-9223372036854775808",
 																	"include_lower": true,
 																	"include_upper": true,
-																	"to": "${time.current_date|dateFormat=timestamp}"
+																	"to": "${time.current_date|date_format=timestamp}"
 																}
 															}
 														}
@@ -58,14 +58,14 @@
 																	"from": "-9223372036854775808",
 																	"include_lower": true,
 																	"include_upper": true,
-																	"to": "${time.current_date|dateFormat=timestamp}"
+																	"to": "${time.current_date|date_format=timestamp}"
 																}
 															}
 														},
 														{
 															"range": {
 																"expirationDate_sortable": {
-																	"from": "${time.current_date|dateFormat=timestamp}",
+																	"from": "${time.current_date|date_format=timestamp}",
 																	"include_lower": true,
 																	"include_upper": true,
 																	"to": "9223372036854775807"

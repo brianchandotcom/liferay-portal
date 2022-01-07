@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.List;
 import java.util.Objects;
 
 import javax.portlet.PortletURL;
@@ -218,61 +219,64 @@ public class AssetListEntryUsagesDisplayContext {
 
 		assetListEntryUsagesSearchContainer.setOrderByType(orderByType);
 
+		List<AssetListEntryUsage> assetListEntryUsages = null;
+
+		int assetListEntryUsagesCount = 0;
+
 		if (Objects.equals(getNavigation(), "pages")) {
-			assetListEntryUsagesSearchContainer.setResultsAndTotal(
-				() ->
-					AssetListEntryUsageLocalServiceUtil.getAssetListEntryUsages(
-						_themeDisplay.getScopeGroupId(),
-						PortalUtil.getClassNameId(AssetListEntry.class),
-						String.valueOf(getAssetListEntryId()),
-						AssetListEntryUsageConstants.TYPE_LAYOUT,
-						assetListEntryUsagesSearchContainer.getStart(),
-						assetListEntryUsagesSearchContainer.getEnd(),
-						assetListEntryUsagesSearchContainer.
-							getOrderByComparator()),
-				getPagesUsageCount());
+			assetListEntryUsages =
+				AssetListEntryUsageLocalServiceUtil.getAssetListEntryUsages(
+					_themeDisplay.getScopeGroupId(),
+					PortalUtil.getClassNameId(AssetListEntry.class),
+					String.valueOf(getAssetListEntryId()),
+					AssetListEntryUsageConstants.TYPE_LAYOUT,
+					assetListEntryUsagesSearchContainer.getStart(),
+					assetListEntryUsagesSearchContainer.getEnd(),
+					assetListEntryUsagesSearchContainer.getOrderByComparator());
+
+			assetListEntryUsagesCount = getPagesUsageCount();
 		}
 		else if (Objects.equals(getNavigation(), "page-templates")) {
-			assetListEntryUsagesSearchContainer.setResultsAndTotal(
-				() ->
-					AssetListEntryUsageLocalServiceUtil.getAssetListEntryUsages(
-						_themeDisplay.getScopeGroupId(),
-						PortalUtil.getClassNameId(AssetListEntry.class),
-						String.valueOf(getAssetListEntryId()),
-						AssetListEntryUsageConstants.TYPE_PAGE_TEMPLATE,
-						assetListEntryUsagesSearchContainer.getStart(),
-						assetListEntryUsagesSearchContainer.getEnd(),
-						assetListEntryUsagesSearchContainer.
-							getOrderByComparator()),
-				getDisplayPagesUsageCount());
+			assetListEntryUsages =
+				AssetListEntryUsageLocalServiceUtil.getAssetListEntryUsages(
+					_themeDisplay.getScopeGroupId(),
+					PortalUtil.getClassNameId(AssetListEntry.class),
+					String.valueOf(getAssetListEntryId()),
+					AssetListEntryUsageConstants.TYPE_PAGE_TEMPLATE,
+					assetListEntryUsagesSearchContainer.getStart(),
+					assetListEntryUsagesSearchContainer.getEnd(),
+					assetListEntryUsagesSearchContainer.getOrderByComparator());
+
+			assetListEntryUsagesCount = getDisplayPagesUsageCount();
 		}
 		else if (Objects.equals(getNavigation(), "display-page-templates")) {
-			assetListEntryUsagesSearchContainer.setResultsAndTotal(
-				() ->
-					AssetListEntryUsageLocalServiceUtil.getAssetListEntryUsages(
-						_themeDisplay.getScopeGroupId(),
-						PortalUtil.getClassNameId(AssetListEntry.class),
-						String.valueOf(getAssetListEntryId()),
-						AssetListEntryUsageConstants.TYPE_DISPLAY_PAGE_TEMPLATE,
-						assetListEntryUsagesSearchContainer.getStart(),
-						assetListEntryUsagesSearchContainer.getEnd(),
-						assetListEntryUsagesSearchContainer.
-							getOrderByComparator()),
-				getDisplayPagesUsageCount());
+			assetListEntryUsages =
+				AssetListEntryUsageLocalServiceUtil.getAssetListEntryUsages(
+					_themeDisplay.getScopeGroupId(),
+					PortalUtil.getClassNameId(AssetListEntry.class),
+					String.valueOf(getAssetListEntryId()),
+					AssetListEntryUsageConstants.TYPE_DISPLAY_PAGE_TEMPLATE,
+					assetListEntryUsagesSearchContainer.getStart(),
+					assetListEntryUsagesSearchContainer.getEnd(),
+					assetListEntryUsagesSearchContainer.getOrderByComparator());
+
+			assetListEntryUsagesCount = getDisplayPagesUsageCount();
 		}
 		else {
-			assetListEntryUsagesSearchContainer.setResultsAndTotal(
-				() ->
-					AssetListEntryUsageLocalServiceUtil.getAssetListEntryUsages(
-						_themeDisplay.getScopeGroupId(),
-						PortalUtil.getClassNameId(AssetListEntry.class),
-						String.valueOf(getAssetListEntryId()),
-						assetListEntryUsagesSearchContainer.getStart(),
-						assetListEntryUsagesSearchContainer.getEnd(),
-						assetListEntryUsagesSearchContainer.
-							getOrderByComparator()),
-				getAllUsageCount());
+			assetListEntryUsages =
+				AssetListEntryUsageLocalServiceUtil.getAssetListEntryUsages(
+					_themeDisplay.getScopeGroupId(),
+					PortalUtil.getClassNameId(AssetListEntry.class),
+					String.valueOf(getAssetListEntryId()),
+					assetListEntryUsagesSearchContainer.getStart(),
+					assetListEntryUsagesSearchContainer.getEnd(),
+					assetListEntryUsagesSearchContainer.getOrderByComparator());
+
+			assetListEntryUsagesCount = getAllUsageCount();
 		}
+
+		assetListEntryUsagesSearchContainer.setResults(assetListEntryUsages);
+		assetListEntryUsagesSearchContainer.setTotal(assetListEntryUsagesCount);
 
 		_searchContainer = assetListEntryUsagesSearchContainer;
 

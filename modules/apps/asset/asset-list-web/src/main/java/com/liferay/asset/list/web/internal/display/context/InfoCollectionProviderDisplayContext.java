@@ -68,11 +68,11 @@ public class InfoCollectionProviderDisplayContext {
 		List<InfoCollectionProvider<?>> infoCollectionProviders =
 			_getInfoCollectionProviders();
 
-		searchContainer.setResultsAndTotal(
-			() -> ListUtil.subList(
+		searchContainer.setResults(
+			ListUtil.subList(
 				infoCollectionProviders, searchContainer.getStart(),
-				searchContainer.getEnd()),
-			infoCollectionProviders.size());
+				searchContainer.getEnd()));
+		searchContainer.setTotal(infoCollectionProviders.size());
 
 		return searchContainer;
 	}

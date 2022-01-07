@@ -97,10 +97,10 @@ public class AssignableAccountUserDisplaySearchContainerFactory {
 				searchContainer.getDelta(), searchContainer.getOrderByCol(),
 				_isReverseOrder(searchContainer.getOrderByType()));
 
-		searchContainer.setResultsAndTotal(
-			() -> TransformUtil.transform(
-				baseModelSearchResult.getBaseModels(), AccountUserDisplay::of),
-			baseModelSearchResult.getLength());
+		searchContainer.setResults(
+			TransformUtil.transform(
+				baseModelSearchResult.getBaseModels(), AccountUserDisplay::of));
+		searchContainer.setTotal(baseModelSearchResult.getLength());
 
 		return searchContainer;
 	}

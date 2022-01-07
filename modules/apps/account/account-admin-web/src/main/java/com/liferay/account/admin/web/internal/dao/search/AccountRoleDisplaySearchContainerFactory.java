@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.util.comparator.RoleNameComparator;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -84,19 +85,21 @@ public class AccountRoleDisplaySearchContainerFactory {
 				new RoleNameComparator(
 					Objects.equals(searchContainer.getOrderByType(), "asc")));
 
-		searchContainer.setResultsAndTotal(
-			() -> TransformUtil.transform(
-				baseModelSearchResult.getBaseModels(),
-				accountRole -> {
-					if (!AccountRoleConstants.isImpliedRole(
-							accountRole.getRole())) {
+		List<AccountRoleDisplay> accountRoleDisplays = TransformUtil.transform(
+			baseModelSearchResult.getBaseModels(),
+			accountRole -> {
+				if (!AccountRoleConstants.isImpliedRole(
+						accountRole.getRole())) {
 
-						return AccountRoleDisplay.of(accountRole);
-					}
+					return AccountRoleDisplay.of(accountRole);
+				}
 
-					return null;
-				}),
-			baseModelSearchResult.getLength());
+				return null;
+			});
+
+		searchContainer.setResults(accountRoleDisplays);
+
+		searchContainer.setTotal(baseModelSearchResult.getLength());
 
 		return searchContainer;
 	}

@@ -349,45 +349,56 @@ public class AssetEntryUsagesDisplayContext {
 		assetEntryUsagesSearchContainer.setOrderByComparator(orderByComparator);
 		assetEntryUsagesSearchContainer.setOrderByType(_getOrderByType());
 
+		List<AssetEntryUsage> assetEntryUsages = null;
+
+		int assetEntryUsagesCount = 0;
+
 		if (Objects.equals(getNavigation(), "pages")) {
-			assetEntryUsagesSearchContainer.setResultsAndTotal(
-				() -> AssetEntryUsageLocalServiceUtil.getAssetEntryUsages(
+			assetEntryUsages =
+				AssetEntryUsageLocalServiceUtil.getAssetEntryUsages(
 					_assetEntry.getEntryId(),
 					AssetEntryUsageConstants.TYPE_LAYOUT,
 					assetEntryUsagesSearchContainer.getStart(),
 					assetEntryUsagesSearchContainer.getEnd(),
-					orderByComparator),
-				getPagesUsageCount());
+					orderByComparator);
+
+			assetEntryUsagesCount = getPagesUsageCount();
 		}
 		else if (Objects.equals(getNavigation(), "page-templates")) {
-			assetEntryUsagesSearchContainer.setResultsAndTotal(
-				() -> AssetEntryUsageLocalServiceUtil.getAssetEntryUsages(
+			assetEntryUsages =
+				AssetEntryUsageLocalServiceUtil.getAssetEntryUsages(
 					_assetEntry.getEntryId(),
 					AssetEntryUsageConstants.TYPE_PAGE_TEMPLATE,
 					assetEntryUsagesSearchContainer.getStart(),
 					assetEntryUsagesSearchContainer.getEnd(),
-					orderByComparator),
-				getPageTemplatesUsageCount());
+					orderByComparator);
+
+			assetEntryUsagesCount = getPageTemplatesUsageCount();
 		}
 		else if (Objects.equals(getNavigation(), "display-page-templates")) {
-			assetEntryUsagesSearchContainer.setResultsAndTotal(
-				() -> AssetEntryUsageLocalServiceUtil.getAssetEntryUsages(
+			assetEntryUsages =
+				AssetEntryUsageLocalServiceUtil.getAssetEntryUsages(
 					_assetEntry.getEntryId(),
 					AssetEntryUsageConstants.TYPE_DISPLAY_PAGE_TEMPLATE,
 					assetEntryUsagesSearchContainer.getStart(),
 					assetEntryUsagesSearchContainer.getEnd(),
-					orderByComparator),
-				getDisplayPagesUsageCount());
+					orderByComparator);
+
+			assetEntryUsagesCount = getDisplayPagesUsageCount();
 		}
 		else {
-			assetEntryUsagesSearchContainer.setResultsAndTotal(
-				() -> AssetEntryUsageLocalServiceUtil.getAssetEntryUsages(
+			assetEntryUsages =
+				AssetEntryUsageLocalServiceUtil.getAssetEntryUsages(
 					_assetEntry.getEntryId(),
 					assetEntryUsagesSearchContainer.getStart(),
 					assetEntryUsagesSearchContainer.getEnd(),
-					orderByComparator),
-				getAllUsageCount());
+					orderByComparator);
+
+			assetEntryUsagesCount = getAllUsageCount();
 		}
+
+		assetEntryUsagesSearchContainer.setResults(assetEntryUsages);
+		assetEntryUsagesSearchContainer.setTotal(assetEntryUsagesCount);
 
 		_searchContainer = assetEntryUsagesSearchContainer;
 

@@ -73,10 +73,12 @@ public class SitesThatIAdministerItemSelectorViewDisplayContext
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			groupSearch.getOrderByComparator());
 
-		groupSearch.setResultsAndTotal(
-			() -> groups.subList(
-				groupSearch.getStart(), groupSearch.getResultEnd()),
-			groups.size());
+		groupSearch.setTotal(groups.size());
+
+		groups = groups.subList(
+			groupSearch.getStart(), groupSearch.getResultEnd());
+
+		groupSearch.setResults(groups);
 
 		return groupSearch;
 	}

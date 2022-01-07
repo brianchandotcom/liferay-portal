@@ -213,9 +213,10 @@ public class AccountUserDisplaySearchContainerFactory {
 				orderByType);
 		}
 
-		accountUserDisplaySearchContainer.setResultsAndTotal(
-			() -> TransformUtil.transform(
-				baseModelSearchResult.getBaseModels(), AccountUserDisplay::of),
+		accountUserDisplaySearchContainer.setResults(
+			TransformUtil.transform(
+				baseModelSearchResult.getBaseModels(), AccountUserDisplay::of));
+		accountUserDisplaySearchContainer.setTotal(
 			baseModelSearchResult.getLength());
 
 		return accountUserDisplaySearchContainer;

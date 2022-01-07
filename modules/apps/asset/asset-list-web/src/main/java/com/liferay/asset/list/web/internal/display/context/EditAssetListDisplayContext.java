@@ -867,15 +867,16 @@ public class EditAssetListDisplayContext {
 				_portletRequest, getPortletURL(), null,
 				"there-are-no-asset-entries");
 
-		searchContainer.setResultsAndTotal(
-			() ->
-				AssetListEntryAssetEntryRelLocalServiceUtil.
-					getAssetListEntryAssetEntryRels(
-						getAssetListEntryId(), getSegmentsEntryId(),
-						searchContainer.getStart(), searchContainer.getEnd()),
+		searchContainer.setTotal(
 			AssetListEntryAssetEntryRelLocalServiceUtil.
 				getAssetListEntryAssetEntryRelsCount(
 					getAssetListEntryId(), getSegmentsEntryId()));
+
+		searchContainer.setResults(
+			AssetListEntryAssetEntryRelLocalServiceUtil.
+				getAssetListEntryAssetEntryRels(
+					getAssetListEntryId(), getSegmentsEntryId(),
+					searchContainer.getStart(), searchContainer.getEnd()));
 
 		_searchContainer = searchContainer;
 

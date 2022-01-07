@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -75,9 +76,13 @@ public class AccountGroupDisplaySearchContainerFactory {
 						accountGroupDisplaySearchContainer.getOrderByType(),
 						"asc")));
 
-		accountGroupDisplaySearchContainer.setResultsAndTotal(
-			() -> TransformUtil.transform(
-				baseModelSearchResult.getBaseModels(), AccountGroupDisplay::of),
+		List<AccountGroupDisplay> accountGroupDisplays =
+			TransformUtil.transform(
+				baseModelSearchResult.getBaseModels(), AccountGroupDisplay::of);
+
+		accountGroupDisplaySearchContainer.setResults(accountGroupDisplays);
+
+		accountGroupDisplaySearchContainer.setTotal(
 			baseModelSearchResult.getLength());
 
 		return accountGroupDisplaySearchContainer;

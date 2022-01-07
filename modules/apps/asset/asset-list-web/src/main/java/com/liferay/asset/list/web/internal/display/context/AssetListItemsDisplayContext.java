@@ -26,6 +26,8 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsEntryConstants;
 
+import java.util.List;
+
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -60,12 +62,17 @@ public class AssetListItemsDisplayContext {
 			_renderRequest, _getAssetListContentURL(), null,
 			"there-are-no-asset-entries");
 
-		searchContainer.setResultsAndTotal(
-			() -> _assetListAssetEntryProvider.getAssetEntries(
+		List<AssetEntry> assetEntries =
+			_assetListAssetEntryProvider.getAssetEntries(
 				getAssetListEntry(), getSegmentsEntryId(),
-				searchContainer.getStart(), searchContainer.getEnd()),
-			_assetListAssetEntryProvider.getAssetEntriesCount(
-				getAssetListEntry(), getSegmentsEntryId()));
+				searchContainer.getStart(), searchContainer.getEnd());
+
+		searchContainer.setResults(assetEntries);
+
+		int total = _assetListAssetEntryProvider.getAssetEntriesCount(
+			getAssetListEntry(), getSegmentsEntryId());
+
+		searchContainer.setTotal(total);
 
 		_assetListContentSearchContainer = searchContainer;
 

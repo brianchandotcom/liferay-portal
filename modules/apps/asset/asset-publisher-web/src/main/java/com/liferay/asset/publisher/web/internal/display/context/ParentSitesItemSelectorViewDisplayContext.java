@@ -57,9 +57,13 @@ public class ParentSitesItemSelectorViewDisplayContext
 
 		Group group = themeDisplay.getSiteGroup();
 
-		List<Group> groups = _filterParentSitesGroups(group.getAncestors());
+		List<Group> groups = group.getAncestors();
 
-		groupSearch.setResultsAndTotal(() -> groups, groups.size());
+		groups = _filterParentSitesGroups(groups);
+
+		groupSearch.setTotal(groups.size());
+
+		groupSearch.setResults(groups);
 
 		return groupSearch;
 	}

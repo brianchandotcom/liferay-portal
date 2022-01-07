@@ -19,6 +19,7 @@ import com.liferay.analytics.settings.web.internal.constants.AnalyticsSettingsWe
 import com.liferay.analytics.settings.web.internal.search.OrganizationChecker;
 import com.liferay.analytics.settings.web.internal.search.OrganizationSearch;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
@@ -31,6 +32,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.util.comparator.OrganizationNameComparator;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Objects;
 
 import javax.portlet.PortletURL;
@@ -71,22 +73,26 @@ public class OrganizationDisplayContext {
 
 		organizationSearch.setOrderByCol(_getOrderByCol());
 		organizationSearch.setOrderByType(getOrderByType());
-		organizationSearch.setResultsAndTotal(
-			() -> OrganizationLocalServiceUtil.search(
-				_getCompanyId(),
-				OrganizationConstants.ANY_PARENT_ORGANIZATION_ID,
-				_getKeywords(), null, null, null, _getOrganizationParams(),
-				organizationSearch.getStart(), organizationSearch.getEnd(),
-				new OrganizationNameComparator(_isOrderByAscending())),
-			OrganizationLocalServiceUtil.searchCount(
-				_getCompanyId(),
-				OrganizationConstants.ANY_PARENT_ORGANIZATION_ID,
-				_getKeywords(), null, null, null, _getOrganizationParams()));
+
+		List<Organization> organizations = OrganizationLocalServiceUtil.search(
+			_getCompanyId(), OrganizationConstants.ANY_PARENT_ORGANIZATION_ID,
+			_getKeywords(), null, null, null, _getOrganizationParams(),
+			organizationSearch.getStart(), organizationSearch.getEnd(),
+			new OrganizationNameComparator(_isOrderByAscending()));
+
+		organizationSearch.setResults(organizations);
+
 		organizationSearch.setRowChecker(
 			new OrganizationChecker(
 				_renderResponse,
 				SetUtil.fromArray(
 					_analyticsConfiguration.syncedOrganizationIds())));
+
+		int total = OrganizationLocalServiceUtil.searchCount(
+			_getCompanyId(), OrganizationConstants.ANY_PARENT_ORGANIZATION_ID,
+			_getKeywords(), null, null, null, _getOrganizationParams());
+
+		organizationSearch.setTotal(total);
 
 		return organizationSearch;
 	}

@@ -271,6 +271,9 @@ public class AssetCategoriesDisplayContext {
 
 		categoriesSearchContainer.setRowChecker(emptyOnClickRowChecker);
 
+		List<AssetCategory> categories = null;
+		int categoriesCount = 0;
+
 		if (Validator.isNotNull(_getKeywords())) {
 			Sort sort = null;
 
@@ -288,50 +291,58 @@ public class AssetCategoriesDisplayContext {
 					categoriesSearchContainer.getStart(),
 					categoriesSearchContainer.getEnd(), sort);
 
-			categoriesSearchContainer.setResultsAndTotal(
-				assetCategoryDisplay::getCategories,
-				assetCategoryDisplay.getTotal());
+			categoriesCount = assetCategoryDisplay.getTotal();
+
+			categoriesSearchContainer.setTotal(categoriesCount);
+
+			categories = assetCategoryDisplay.getCategories();
 		}
 		else if (isFlattenedNavigationAllowed()) {
 			AssetCategory category = getCategory();
 
-			AssetCategoryTreePathComparator assetCategoryTreePathComparator =
-				AssetCategoryTreePathComparator.getInstance(orderByAsc);
-
 			if (category == null) {
-				categoriesSearchContainer.setResultsAndTotal(
-					() -> AssetCategoryServiceUtil.getVocabularyCategories(
-						vocabulary.getVocabularyId(),
-						categoriesSearchContainer.getStart(),
-						categoriesSearchContainer.getEnd(),
-						assetCategoryTreePathComparator),
+				categoriesCount =
 					AssetCategoryServiceUtil.getVocabularyCategoriesCount(
-						vocabulary.getGroupId(), vocabulary.getVocabularyId()));
-			}
-			else {
-				categoriesSearchContainer.setResultsAndTotal(
-					() -> AssetCategoryServiceUtil.getVocabularyCategories(
-						category.getCategoryId(), vocabulary.getVocabularyId(),
-						categoriesSearchContainer.getStart(),
-						categoriesSearchContainer.getEnd(),
-						assetCategoryTreePathComparator),
-					AssetCategoryServiceUtil.getVocabularyCategoriesCount(
-						vocabulary.getGroupId(), category.getCategoryId(),
-						vocabulary.getVocabularyId()));
-			}
-		}
-		else {
-			categoriesSearchContainer.setResultsAndTotal(
-				() -> AssetCategoryServiceUtil.getVocabularyCategories(
-					vocabulary.getGroupId(), getCategoryId(),
+						vocabulary.getGroupId(), vocabulary.getVocabularyId());
+
+				categories = AssetCategoryServiceUtil.getVocabularyCategories(
 					vocabulary.getVocabularyId(),
 					categoriesSearchContainer.getStart(),
 					categoriesSearchContainer.getEnd(),
-					categoriesSearchContainer.getOrderByComparator()),
+					AssetCategoryTreePathComparator.getInstance(orderByAsc));
+			}
+			else {
+				categoriesCount =
+					AssetCategoryServiceUtil.getVocabularyCategoriesCount(
+						vocabulary.getGroupId(), category.getCategoryId(),
+						vocabulary.getVocabularyId());
+
+				categories = AssetCategoryServiceUtil.getVocabularyCategories(
+					category.getCategoryId(), vocabulary.getVocabularyId(),
+					categoriesSearchContainer.getStart(),
+					categoriesSearchContainer.getEnd(),
+					AssetCategoryTreePathComparator.getInstance(orderByAsc));
+			}
+
+			categoriesSearchContainer.setTotal(categoriesCount);
+		}
+		else {
+			categoriesCount =
 				AssetCategoryServiceUtil.getVocabularyCategoriesCount(
 					vocabulary.getGroupId(), getCategoryId(),
-					vocabulary.getVocabularyId()));
+					vocabulary.getVocabularyId());
+
+			categoriesSearchContainer.setTotal(categoriesCount);
+
+			categories = AssetCategoryServiceUtil.getVocabularyCategories(
+				vocabulary.getGroupId(), getCategoryId(),
+				vocabulary.getVocabularyId(),
+				categoriesSearchContainer.getStart(),
+				categoriesSearchContainer.getEnd(),
+				categoriesSearchContainer.getOrderByComparator());
 		}
+
+		categoriesSearchContainer.setResults(categories);
 
 		_categoriesSearchContainer = categoriesSearchContainer;
 
@@ -616,6 +627,9 @@ public class AssetCategoriesDisplayContext {
 
 		vocabulariesSearchContainer.setRowChecker(emptyOnClickRowChecker);
 
+		List<AssetVocabulary> vocabularies = null;
+		int vocabulariesCount = 0;
+
 		String keywords = _getKeywords();
 
 		if (Validator.isNotNull(keywords)) {
@@ -627,27 +641,35 @@ public class AssetCategoriesDisplayContext {
 					vocabulariesSearchContainer.getStart(),
 					vocabulariesSearchContainer.getEnd(), sort);
 
-			vocabulariesSearchContainer.setResultsAndTotal(
-				assetVocabularyDisplay::getVocabularies,
-				assetVocabularyDisplay.getTotal());
+			vocabulariesCount = assetVocabularyDisplay.getTotal();
+
+			vocabulariesSearchContainer.setTotal(vocabulariesCount);
+
+			vocabularies = assetVocabularyDisplay.getVocabularies();
 		}
 		else {
-			vocabulariesSearchContainer.setResultsAndTotal(
-				() -> AssetVocabularyServiceUtil.getGroupVocabularies(
-					_themeDisplay.getScopeGroupId(), false,
-					vocabulariesSearchContainer.getStart(),
-					vocabulariesSearchContainer.getEnd(),
-					vocabulariesSearchContainer.getOrderByComparator()),
+			vocabulariesCount =
 				AssetVocabularyServiceUtil.getGroupVocabulariesCount(
-					_themeDisplay.getScopeGroupId()));
+					_themeDisplay.getScopeGroupId());
 
-			if (vocabulariesSearchContainer.getTotal() == 0) {
-				vocabulariesSearchContainer.setResultsAndTotal(
-					vocabulariesSearchContainer::getResults,
+			vocabulariesSearchContainer.setTotal(vocabulariesCount);
+
+			vocabularies = AssetVocabularyServiceUtil.getGroupVocabularies(
+				_themeDisplay.getScopeGroupId(), false,
+				vocabulariesSearchContainer.getStart(),
+				vocabulariesSearchContainer.getEnd(),
+				vocabulariesSearchContainer.getOrderByComparator());
+
+			if (vocabulariesCount == 0) {
+				vocabulariesCount =
 					AssetVocabularyServiceUtil.getGroupVocabulariesCount(
-						_themeDisplay.getScopeGroupId()));
+						_themeDisplay.getScopeGroupId());
+
+				vocabulariesSearchContainer.setTotal(vocabulariesCount);
 			}
 		}
+
+		vocabulariesSearchContainer.setResults(vocabularies);
 
 		_vocabulariesSearchContainer = vocabulariesSearchContainer;
 

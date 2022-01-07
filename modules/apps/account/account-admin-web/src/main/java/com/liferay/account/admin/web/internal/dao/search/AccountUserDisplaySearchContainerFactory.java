@@ -184,9 +184,6 @@ public class AccountUserDisplaySearchContainerFactory {
 
 		accountUserDisplaySearchContainer.setOrderByType(orderByType);
 
-		accountUserDisplaySearchContainer.setRowChecker(
-			new EmptyOnClickRowChecker(liferayPortletResponse));
-
 		String keywords = ParamUtil.getString(
 			liferayPortletRequest, "keywords", null);
 
@@ -217,6 +214,8 @@ public class AccountUserDisplaySearchContainerFactory {
 			() -> TransformUtil.transform(
 				baseModelSearchResult.getBaseModels(), AccountUserDisplay::of),
 			baseModelSearchResult.getLength());
+		accountUserDisplaySearchContainer.setRowChecker(
+			new EmptyOnClickRowChecker(liferayPortletResponse));
 
 		return accountUserDisplaySearchContainer;
 	}

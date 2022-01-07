@@ -94,7 +94,6 @@ public class GroupDisplayContext {
 
 		groupSearch.setOrderByCol(_getOrderByCol());
 		groupSearch.setOrderByType(getOrderByType());
-
 		groupSearch.setResultsAndTotal(
 			() -> {
 				List<Group> groups = Collections.emptyList();

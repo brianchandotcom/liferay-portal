@@ -1,0 +1,15 @@
+[
+	{
+		"emailAddress": "test.user1@liferay.com",
+		"roles": [
+			"Account Administrator",
+			"Customer Portal Member"
+		]
+	},
+	{
+		"emailAddress": "test.user2@liferay.com",
+		"roles": [
+			"Customer Portal Member"
+		]
+	}
+]

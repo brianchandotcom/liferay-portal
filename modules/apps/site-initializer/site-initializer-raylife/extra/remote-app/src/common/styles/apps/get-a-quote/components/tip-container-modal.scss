@@ -1,0 +1,34 @@
+.modal-content-body.modal-small-mobile {
+	height: fit-content !important;
+	background-color: $color-brand-primary-darken-4 !important;
+
+	.tip-container-modal {
+		#tip {
+			background-color: transparent !important;
+			height: auto !important;
+			padding: $spacer-2 !important;
+			width: auto !important;
+
+			a,
+			p,
+			li {
+				color: $color-neutral-white !important;
+			}
+
+			p {
+				margin: 5px 0 !important;
+			}
+
+			.title {
+				align-items: center;
+				color: $color-neutral-white;
+				display: flex;
+				font-size: 23px;
+			}
+
+			.title::before {
+				background-color: $color-neutral-white !important;
+			}
+		}
+	}
+}

@@ -3,7 +3,7 @@ liferay-remote-app-raylife {
 
 	@import 'global';
 
-	@import 'apps/get-a-quote/progress-saved';
+	@import 'apps/get-a-quote';
 	@import 'apps/quote-comparison';
 	@import 'apps/selected-quote';
 
@@ -20,3 +20,5 @@ liferay-remote-app-raylife {
 	@import 'components/progress-bar';
 	@import 'components/quote-comparison';
 }
+
+@import 'liferay';

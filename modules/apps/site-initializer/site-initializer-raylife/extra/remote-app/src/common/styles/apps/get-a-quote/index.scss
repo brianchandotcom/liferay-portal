@@ -1,0 +1,47 @@
+@import './components/progress-saved.scss';
+@import './components/tip-container-modal.scss';
+
+@media screen and (max-width: 992px) {
+	.get-a-quote-structure {
+		flex-direction: column;
+
+		.step-list {
+			align-items: center;
+			flex-direction: row !important;
+			justify-content: center;
+			margin: 39px 0 39px 20px;
+
+			&::-webkit-scrollbar {
+				width: 0;
+			}
+		}
+
+		h2 {
+			text-align: center;
+		}
+	}
+}
+
+@media screen and (max-width: 767px) {
+	.raylife-template {
+		padding-left: 16px !important;
+	}
+
+	.get-a-quote-structure {
+		h2 {
+			display: none;
+		}
+
+		.step-list {
+			justify-content: center;
+		}
+	}
+}
+
+@media screen and (max-width: 644px) {
+	.get-a-quote-structure {
+		.step-list {
+			justify-content: start;
+		}
+	}
+}

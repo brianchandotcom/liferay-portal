@@ -184,6 +184,7 @@
 		<column name="businessType" type="String" />
 		<column method-name="DBColumnName" name="dbColumnName" type="String" />
 		<column method-name="DBTableName" name="dbTableName" type="String" />
+		<column method-name="DBType" name="dbType" type="String" />
 		<column name="indexed" type="boolean" />
 		<column name="indexedAsKeyword" type="boolean" />
 		<column name="indexedLanguageId" type="String" />
@@ -191,7 +192,6 @@
 		<column name="name" type="String" />
 		<column name="relationshipType" type="String" />
 		<column name="required" type="boolean" />
-		<column name="type" type="String" />
 
 		<!-- Order -->
 

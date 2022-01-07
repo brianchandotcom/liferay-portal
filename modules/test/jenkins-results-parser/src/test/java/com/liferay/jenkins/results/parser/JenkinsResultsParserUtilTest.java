@@ -81,10 +81,18 @@ public class JenkinsResultsParserUtilTest
 
 	@Test
 	public void testFixURL() {
-		testEquals("ABC%28123", JenkinsResultsParserUtil.fixURL("ABC(123"));
-		testEquals("ABC%29123", JenkinsResultsParserUtil.fixURL("ABC)123"));
-		testEquals("ABC%5B123", JenkinsResultsParserUtil.fixURL("ABC[123"));
-		testEquals("ABC%5D123", JenkinsResultsParserUtil.fixURL("ABC]123"));
+		testEquals("ABC%28123", _fixURLMultipleTimes("ABC(123"));
+		testEquals("ABC%29123", _fixURLMultipleTimes("ABC)123"));
+		testEquals("ABC%5B123", _fixURLMultipleTimes("ABC[123"));
+		testEquals("ABC%5D123", _fixURLMultipleTimes("ABC]123"));
+		testEquals("!master", _fixURLMultipleTimes("!master"));
+		testEquals("0%201%202", _fixURLMultipleTimes("0 1 2"));
+		testEquals(
+			"https://test-1-1.liferay.com/job(master)?" +
+				"AXIS_VARIABLE=0%201&label_exp=!master&job=test%287.2.x%29",
+			_fixURLMultipleTimes(
+				"https://test-1-1.liferay.com/job(master)?" +
+					"AXIS_VARIABLE=0 1&label_exp=!master&job=test(7.2.x)"));
 	}
 
 	@Test
@@ -461,6 +469,12 @@ public class JenkinsResultsParserUtilTest
 		URL url = uri.toURL();
 
 		return url.toString();
+	}
+
+	private String _fixURLMultipleTimes(String urlString) {
+		return JenkinsResultsParserUtil.fixURL(
+			JenkinsResultsParserUtil.fixURL(
+				JenkinsResultsParserUtil.fixURL(urlString)));
 	}
 
 	private void _testGetProperty(

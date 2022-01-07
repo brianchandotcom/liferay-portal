@@ -68,7 +68,7 @@ function QueryBuilderTab({
 	/**
 	 * Handles navigating to a different vertical nav tab. Certain sidebars
 	 * will close depending on which tab it navigates to.
-	 * @param {string} key A `VERTICAL_NAV_KEYS` value.
+	 * @param {string} verticalNavKey A `VERTICAL_NAV_KEYS` value.
 	 */
 	const _handleClickVerticalNav = (verticalNavKey) => () => {
 		setActiveVerticalNavKey(verticalNavKey);

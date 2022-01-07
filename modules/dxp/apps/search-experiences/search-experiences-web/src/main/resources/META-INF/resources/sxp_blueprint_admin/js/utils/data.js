@@ -11,6 +11,12 @@
 
 import textMatchOverMultipleFields from '../sxp_elements/textMatchOverMultipleFields';
 
+/**
+ * This variable is not currently being used, but it used to be used for
+ * applying the baseline clauses. This has been removed for the moment to avoid
+ * confusion. Leaving this value as-is in case it gets implemented again in
+ * some type of form.
+ */
 export const BASELINE_CLAUSE_CONTRIBUTORS_CONFIGURATION = {
 	clauseContributorsExcludes: [
 		'com.liferay.account.internal.search.spi.model.query.contributor.AccountEntryKeywordQueryContributor',

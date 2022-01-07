@@ -30,8 +30,8 @@ import ManagementToolbar from './ManagementToolbar';
 /**
  * Converts a class name "com.liferay.account.internal.search.spi.model.query.contributor.AccountEntryKeywordQueryContributor"
  * to "Account Entry Keyword Query Contributor".
- * @param {String} className
- * @returns
+ * @param {String} className The class name to be converted.
+ * @return {String} The converted class name.
  */
 const getClassDisplayName = (className) => {
 	if (!className) {
@@ -58,8 +58,8 @@ export default function ({
 	);
 	const [keyword, setKeyword] = useState('');
 	const [selected, setSelected] = useState([]);
-	const [status, setStatus] = useState(ALL);
 	const [sortDirection, setSortDirection] = useState(DESCENDING);
+	const [status, setStatus] = useState(ALL);
 
 	const filterItems = [
 		{
@@ -154,23 +154,24 @@ export default function ({
 				}))
 		);
 	}, [
-		frameworkConfig,
 		category,
+		frameworkConfig,
+		initialClauseContributorsList,
 		keyword,
 		sortDirection,
 		status,
-		initialClauseContributorsList,
 	]);
 
-	const _handleSelectChange = (className) => () => {
-		setSelected(
-			selected.includes(className)
-				? selected.filter(
-						(preselectedClassName) =>
-							preselectedClassName !== className
-				  )
-				: [...selected, className]
-		);
+	const _handleEnableClauseContributors = (classNames) => {
+		onFrameworkConfigChange({
+			clauseContributorsExcludes: frameworkConfig.clauseContributorsExcludes.filter(
+				(clause) => !classNames.includes(clause)
+			),
+			clauseContributorsIncludes: removeDuplicates([
+				...frameworkConfig.clauseContributorsIncludes,
+				...classNames,
+			]),
+		});
 	};
 
 	const _handleDisableClauseContributors = (classNames) => {
@@ -185,16 +186,15 @@ export default function ({
 		});
 	};
 
-	const _handleEnableClauseContributors = (classNames) => {
-		onFrameworkConfigChange({
-			clauseContributorsExcludes: frameworkConfig.clauseContributorsExcludes.filter(
-				(clause) => !classNames.includes(clause)
-			),
-			clauseContributorsIncludes: removeDuplicates([
-				...frameworkConfig.clauseContributorsIncludes,
-				...classNames,
-			]),
-		});
+	const _handleSelectChange = (className) => () => {
+		setSelected(
+			selected.includes(className)
+				? selected.filter(
+						(preselectedClassName) =>
+							preselectedClassName !== className
+				  )
+				: [...selected, className]
+		);
 	};
 
 	const _handleToggleClauseContributor = (className) => () => {

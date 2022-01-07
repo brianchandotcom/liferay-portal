@@ -71,6 +71,11 @@ function EditSXPBlueprintForm({
 		ThemeContext
 	);
 
+	const formRef = useRef();
+	const sxpElementIdCounterRef = useRef(
+		initialSXPElementInstances.length || 0
+	);
+
 	const [errors, setErrors] = useState([]);
 	const [previewInfo, setPreviewInfo] = useState(() => ({
 		loading: false,
@@ -80,13 +85,6 @@ function EditSXPBlueprintForm({
 	const [showSubmitWarningModal, setShowSubmitWarningModal] = useState(false);
 	const [tab, setTab] = useState('query-builder');
 
-	const formRef = useRef();
-
-	const sxpElementIdCounterRef = useRef(
-		initialSXPElementInstances.length || 0
-	);
-
-	const [searchableTypes, setSearchableTypes] = useState(null);
 	const [indexFields, setIndexFields] = useState(null);
 	const [keywordQueryContributors, setKeywordQueryContributors] = useState(
 		null
@@ -99,72 +97,11 @@ function EditSXPBlueprintForm({
 		queryPrefilterContributors,
 		setQueryPrefilterContributors,
 	] = useState(null);
-
-	const _getFormInput = (key) => {
-		for (const pair of new FormData(formRef.current).entries()) {
-			if (pair[0].includes(`${namespace}${key}`)) {
-				return pair[1];
-			}
-		}
-
-		return '';
-	};
+	const [searchableTypes, setSearchableTypes] = useState(null);
 
 	/**
-	 * Formats the form values for the "configuration" parameter to send to
-	 * the server. Sets defaults so the JSON.parse calls don't break.
-	 * @param {Object} values Form values
-	 * @return {Object}
+	 * This method must go before the useFormik hook.
 	 */
-	const _getConfiguration = ({
-		advancedConfig,
-		aggregationConfig,
-		applyIndexerClauses,
-		frameworkConfig,
-		highlightConfig,
-		parameterConfig,
-		sortConfig,
-	}) => ({
-		advancedConfiguration: advancedConfig ? JSON.parse(advancedConfig) : {},
-		aggregationConfiguration: aggregationConfig
-			? JSON.parse(aggregationConfig)
-			: {},
-		generalConfiguration: frameworkConfig,
-		highlightConfiguration: highlightConfig
-			? JSON.parse(highlightConfig)
-			: {},
-		parameterConfiguration: parameterConfig
-			? JSON.parse(parameterConfig)
-			: {},
-		queryConfiguration: {
-			applyIndexerClauses,
-		},
-		sortConfiguration: sortConfig ? JSON.parse(sortConfig) : {},
-	});
-
-	const _getElementInstances = (values) =>
-		values.elementInstances.map(
-			({
-				id, // eslint-disable-line
-				sxpElement,
-				sxpElementId,
-				type,
-				uiConfigurationValues,
-			}) => ({
-				configurationEntry: getConfigurationEntry({
-					sxpElement,
-					uiConfigurationValues,
-				}),
-				sxpElement: parseCustomSXPElement(
-					sxpElement,
-					uiConfigurationValues
-				),
-				sxpElementId,
-				type,
-				uiConfigurationValues,
-			})
-		);
-
 	const _handleFormikSubmit = async (values) => {
 		let configuration;
 		let elementInstances;
@@ -272,6 +209,9 @@ function EditSXPBlueprintForm({
 		}
 	};
 
+	/**
+	 * This method must go before the useFormik hook.
+	 */
 	const _handleFormikValidate = (values) => {
 		const errors = {};
 
@@ -320,8 +260,7 @@ function EditSXPBlueprintForm({
 							}
 						});
 					});
-				}
-				else if (!uiConfiguration) {
+				} else if (!uiConfiguration) {
 					const configValue = uiConfigurationValues?.sxpElement;
 
 					const configError =
@@ -411,6 +350,113 @@ function EditSXPBlueprintForm({
 		validate: _handleFormikValidate,
 	});
 
+	useEffect(() => {
+		fetchData(
+			`/o/search-experiences-rest/v1.0/searchable-asset-names/${locale}`,
+			{method: 'GET'},
+			(responseContent) => setSearchableTypes(responseContent.items),
+			() => setSearchableTypes([])
+		);
+
+		fetchData(
+			`/o/search-experiences-rest/v1.0/field-mapping-infos`,
+			{method: 'GET'},
+			(responseContent) => setIndexFields(responseContent.items),
+			() => setIndexFields([])
+		);
+
+		[
+			{
+				setProperty: setKeywordQueryContributors,
+				url:
+					'/o/search-experiences-rest/v1.0/keyword-query-contributors',
+			},
+			{
+				setProperty: setModelPrefilterContributors,
+				url:
+					'/o/search-experiences-rest/v1.0/model-prefilter-contributors',
+			},
+			{
+				setProperty: setQueryPrefilterContributors,
+				url:
+					'/o/search-experiences-rest/v1.0/query-prefilter-contributors',
+			},
+		].forEach(({setProperty, url}) =>
+			fetchData(
+				url,
+				{method: 'GET'},
+				(responseContent) =>
+					setProperty(filterAndSortClassNames(responseContent.items)),
+				() => setProperty([])
+			)
+		);
+	}, []); //eslint-disable-line
+
+	/**
+	 * Formats the form values for the "configuration" parameter to send to
+	 * the server. Sets defaults so the JSON.parse calls don't break.
+	 * @param {Object} values Form values
+	 * @return {Object}
+	 */
+	const _getConfiguration = ({
+		advancedConfig,
+		aggregationConfig,
+		applyIndexerClauses,
+		frameworkConfig,
+		highlightConfig,
+		parameterConfig,
+		sortConfig,
+	}) => ({
+		advancedConfiguration: advancedConfig ? JSON.parse(advancedConfig) : {},
+		aggregationConfiguration: aggregationConfig
+			? JSON.parse(aggregationConfig)
+			: {},
+		generalConfiguration: frameworkConfig,
+		highlightConfiguration: highlightConfig
+			? JSON.parse(highlightConfig)
+			: {},
+		parameterConfiguration: parameterConfig
+			? JSON.parse(parameterConfig)
+			: {},
+		queryConfiguration: {
+			applyIndexerClauses,
+		},
+		sortConfiguration: sortConfig ? JSON.parse(sortConfig) : {},
+	});
+
+	const _getElementInstances = (values) =>
+		values.elementInstances.map(
+			({
+				id, // eslint-disable-line
+				sxpElement,
+				sxpElementId,
+				type,
+				uiConfigurationValues,
+			}) => ({
+				configurationEntry: getConfigurationEntry({
+					sxpElement,
+					uiConfigurationValues,
+				}),
+				sxpElement: parseCustomSXPElement(
+					sxpElement,
+					uiConfigurationValues
+				),
+				sxpElementId,
+				type,
+				uiConfigurationValues,
+			})
+		);
+
+	const _getFormInput = (key) => {
+		for (const pair of new FormData(formRef.current).entries()) {
+			if (pair[0].includes(`${namespace}${key}`)) {
+				return pair[1];
+			}
+		}
+
+		return '';
+	};
+
 	const _handleAddSXPElement = (sxpElement) => {
 		if (formik.touched?.elementInstances) {
 			formik.setTouched({
@@ -436,8 +482,9 @@ function EditSXPBlueprintForm({
 		});
 	};
 
-	const _handleApplyIndexerClausesChange = (value) =>
+	const _handleApplyIndexerClausesChange = (value) => {
 		formik.setFieldValue('applyIndexerClauses', value);
+	};
 
 	const _handleChangeTab = (tab) => {
 		if (
@@ -632,58 +679,6 @@ function EditSXPBlueprintForm({
 		setOpenSidebar(openSidebar === type ? '' : type);
 	};
 
-	useEffect(() => {
-		fetchData(
-			`/o/search-experiences-rest/v1.0/searchable-asset-names/${locale}`,
-			{method: 'GET'},
-			(responseContent) => setSearchableTypes(responseContent.items),
-			() => setSearchableTypes([])
-		);
-
-		fetchData(
-			`/o/search-experiences-rest/v1.0/field-mapping-infos`,
-			{method: 'GET'},
-			(responseContent) => setIndexFields(responseContent.items),
-			() => setIndexFields([])
-		);
-
-		[
-			{
-				setProperty: setKeywordQueryContributors,
-				url:
-					'/o/search-experiences-rest/v1.0/keyword-query-contributors',
-			},
-			{
-				setProperty: setModelPrefilterContributors,
-				url:
-					'/o/search-experiences-rest/v1.0/model-prefilter-contributors',
-			},
-			{
-				setProperty: setQueryPrefilterContributors,
-				url:
-					'/o/search-experiences-rest/v1.0/query-prefilter-contributors',
-			},
-		].forEach(({setProperty, url}) =>
-			fetchData(
-				url,
-				{method: 'GET'},
-				(responseContent) =>
-					setProperty(filterAndSortClassNames(responseContent.items)),
-				() => setProperty([])
-			)
-		);
-	}, []); //eslint-disable-line
-
-	if (
-		!searchableTypes ||
-		!indexFields ||
-		!keywordQueryContributors ||
-		!modelPrefilterContributors ||
-		!queryPrefilterContributors
-	) {
-		return null;
-	}
-
 	const _renderTabContent = () => {
 		switch (tab) {
 			case 'configuration':
@@ -783,6 +778,16 @@ function EditSXPBlueprintForm({
 				);
 		}
 	};
+
+	if (
+		!indexFields ||
+		!keywordQueryContributors ||
+		!modelPrefilterContributors ||
+		!queryPrefilterContributors ||
+		!searchableTypes
+	) {
+		return null;
+	}
 
 	return (
 		<form ref={formRef}>

@@ -103,8 +103,14 @@ export default function DiagramBuilder({version}) {
 		const reactFlowBounds = reactFlowWrapperRef.current.getBoundingClientRect();
 
 		const position = reactFlowInstance.project({
-			x: event.clientX - reactFlowBounds.left,
-			y: event.clientY - reactFlowBounds.top,
+			x:
+				event.clientX -
+				reactFlowBounds.left -
+				elementRectangle.mouseXInRectangle,
+			y:
+				event.clientY -
+				reactFlowBounds.top -
+				elementRectangle.mouseYInRectangle,
 		});
 
 		setCollidingElements(getCollidingElements(elements, position));
@@ -119,8 +125,14 @@ export default function DiagramBuilder({version}) {
 			const reactFlowBounds = reactFlowWrapperRef.current.getBoundingClientRect();
 
 			const position = reactFlowInstance.project({
-				x: event.clientX - reactFlowBounds.left,
-				y: event.clientY - reactFlowBounds.top,
+				x:
+					event.clientX -
+					reactFlowBounds.left -
+					elementRectangle.mouseXInRectangle,
+				y:
+					event.clientY -
+					reactFlowBounds.top -
+					elementRectangle.mouseYInRectangle,
 			});
 
 			if (getCollidingElements(elements, position).length === 0) {
@@ -143,7 +155,7 @@ export default function DiagramBuilder({version}) {
 			}
 			setCollidingElements(null);
 		},
-		[elements, reactFlowInstance, setElements]
+		[elements, elementRectangle, reactFlowInstance, setElements]
 	);
 
 	const onLoad = (reactFlowInstance) => {

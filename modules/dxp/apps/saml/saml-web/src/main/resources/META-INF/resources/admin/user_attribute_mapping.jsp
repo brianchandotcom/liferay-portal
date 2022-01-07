@@ -104,28 +104,34 @@ String userIdentifierExpression = attributeMappingDisplayContext.getUserIdentifi
 		);
 		var selectTarget = row.querySelector('select');
 		var attributeMappingSelected = document.querySelector(
-			'input[name="_com_liferay_saml_web_internal_portlet_SamlAdminPortlet_userIdentifierExpression"][value="attribute"]').checked
+			'input[name="_com_liferay_saml_web_internal_portlet_SamlAdminPortlet_userIdentifierExpression"][value="attribute"]'
+		).checked;
 
 		if (event == null || event.target == radioTarget) {
 			if (radioTarget.checked) {
-				<portlet:namespace />handleAttributeMappingMatchingSelection(row, attributeMappingSelected);
+				<portlet:namespace />handleAttributeMappingMatchingSelection(
+					row,
+					attributeMappingSelected
+				);
 			}
 		}
 
-		if (attributeMappingSelected &&
-			(event == null || event.target == selectTarget)) {
-				if (
-					selectTarget.options[selectTarget.selectedIndex].dataset
-						.authsupported == 'true'
-				) {
-					radioTarget.disabled = false;
-					radioTarget.closest('label').classList.toggle('disabled', false);
-				}
-				else {
-					radioTarget.disabled = true;
-					radioTarget.closest('label').classList.toggle('disabled', true);
-				}
+		if (
+			attributeMappingSelected &&
+			(event == null || event.target == selectTarget)
+		) {
+			if (
+				selectTarget.options[selectTarget.selectedIndex].dataset
+					.authsupported == 'true'
+			) {
+				radioTarget.disabled = false;
+				radioTarget.closest('label').classList.toggle('disabled', false);
 			}
+			else {
+				radioTarget.disabled = true;
+				radioTarget.closest('label').classList.toggle('disabled', true);
+			}
+		}
 	};
 
 	<portlet:namespace />handleAttributeMappingMatchingDeselection = function () {
@@ -143,15 +149,23 @@ String userIdentifierExpression = attributeMappingDisplayContext.getUserIdentifi
 			});
 	};
 
-	<portlet:namespace />handleAttributeMappingMatchingSelection = function (row, attributeMappingSelected) {
+	<portlet:namespace />handleAttributeMappingMatchingSelection = function (
+		row,
+		attributeMappingSelected
+	) {
 		document.querySelector(
 			'input[name="<portlet:namespace />attribute:userIdentifierExpressionPrefix"]'
 		).value = row.dataset.prefix;
 
 		if (!attributeMappingSelected) {
-			document.querySelector('input[name="<portlet:namespace />userIdentifierExpression"][value="attribute"]').checked = true;
-			document.querySelectorAll('.user-attribute-mapping-row').forEach(
-				(row) => <portlet:namespace />evaluateAttributeMappingRow(row));
+			document.querySelector(
+				'input[name="<portlet:namespace />userIdentifierExpression"][value="attribute"]'
+			).checked = true;
+			document
+				.querySelectorAll('.user-attribute-mapping-row')
+				.forEach((row) =>
+					<portlet:namespace />evaluateAttributeMappingRow(row)
+				);
 		}
 	};
 
@@ -189,11 +203,12 @@ String userIdentifierExpression = attributeMappingDisplayContext.getUserIdentifi
 			'input[name="<portlet:namespace />userIdentifierExpression"][value="attribute"]'
 		)
 		.addEventListener('change', (event) => {
-				document
-					.querySelectorAll('.user-attribute-mapping-row')
-					.forEach((row) => <portlet:namespace />evaluateAttributeMappingRow(row));
-			}
-		);
+			document
+				.querySelectorAll('.user-attribute-mapping-row')
+				.forEach((row) =>
+					<portlet:namespace />evaluateAttributeMappingRow(row)
+				);
+		});
 	document
 		.querySelectorAll('.user-attribute-mapping-row')
 		.forEach((row) => <portlet:namespace />evaluateAttributeMappingRow(row));

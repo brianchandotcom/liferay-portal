@@ -3,16 +3,19 @@ import ClayButton from '@clayui/button';
 import React, {useEffect, useState} from 'react';
 import {useFormContext} from 'react-hook-form';
 import {WarningBadge} from '../../../../../../../common/components/fragments/Badges/Warning';
+import {MoreInfoButton} from '../../../../../../../common/components/fragments/Buttons/MoreInfo';
 import {SearchInput} from '../../../../../../../common/components/fragments/Forms/Input/Search';
 import {useDebounce} from '../../../../../../../common/hooks/useDebounce';
 import {calculatePercentage} from '../../../../../../../common/utils';
+import {TIP_EVENT} from '../../../../../../../common/utils/events';
 import {useStepWizard} from '../../../../../hooks/useStepWizard';
+import {useTriggerContext} from '../../../../../hooks/useTriggerContext';
 import {getTaxonomyCategories} from '../../../../../services/TaxonomyVolucabularies';
 import {AVAILABLE_STEPS, TOTAL_OF_FIELD} from '../../../../../utils/constants';
 import {getLoadedContentFlag, truncateSearch} from '../../../../../utils/util';
 import BusinessTypeRadioGroup from './BusinessTypeRadioGroup';
 
-import InfoPanelButton from './InfoPanelButton';
+const templateName = 'i-am-unable-to-find-my-industry';
 
 const MAX_LENGTH_TO_TRUNCATE = 18;
 
@@ -24,6 +27,7 @@ export function BusinessTypeSearch({
 	const [taxonomyCategories, setTaxonomyCategories] = useState([]);
 	const [error, setError] = useState();
 	const {register, setValue} = useFormContext();
+	const {isSelected, updateState} = useTriggerContext();
 
 	const {selectedStep, setPercentage} = useStepWizard();
 	const [isLoading, setIsLoading] = useState(false);
@@ -138,7 +142,13 @@ export function BusinessTypeSearch({
 			{error && <WarningBadge>{error}</WarningBadge>}
 
 			{businessSearchDebounced && !isLoading && (
-				<InfoPanelButton selectedStep={selectedStep} />
+				<MoreInfoButton
+					callback={() => updateState(templateName)}
+					event={TIP_EVENT}
+					label="I am unable to find my industry"
+					selected={isSelected(templateName)}
+					value={{step: selectedStep, templateName}}
+				/>
 			)}
 		</>
 	);

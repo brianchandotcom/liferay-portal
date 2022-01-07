@@ -6,7 +6,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Koroneiki Accounts");
 
-		CP2LiferayContact.viewKoroneikiInfo();
+		CustomerPortal.viewKoroneikiInfo();
 
 		Type(
 			locator1 = "CP2LiferayContact#CONTACT_ROLE",
@@ -50,12 +50,12 @@ definition {
 
 		CreateObject.checkToggleActive();
 
-		CP2LiferayContact.checkToggleHideWidget();
+		CustomerPortal.checkToggleHideWidget();
 
 		CreateObject.saveObject();
 	}
 
-	macro customerPortalApisTearDowm {
+	macro customerPortalApisTearDown {
 		CommerceJSONAccountsAPI._deleteAllCommerceAccounts();
 
 		CommerceJSONChannelsAPI._deleteAllCommerceChannels();
@@ -65,8 +65,8 @@ definition {
 		RemoteApps.deleteRemoteApp();
 	}
 
-	macro customerPortalTearDowm {
-		CustomerPortal.customerPortalApisTearDowm();
+	macro customerPortalTearDown {
+		CustomerPortal.customerPortalApisTearDown();
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Sites",

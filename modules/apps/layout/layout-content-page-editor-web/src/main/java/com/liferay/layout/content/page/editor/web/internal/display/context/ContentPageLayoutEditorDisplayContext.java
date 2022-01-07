@@ -703,7 +703,7 @@ public class ContentPageLayoutEditorDisplayContext
 				return !segmentsExperimentRel.isControl();
 			}
 			catch (PortalException portalException) {
-				portalException.printStackTrace();
+				_log.error(portalException, portalException);
 			}
 		}
 

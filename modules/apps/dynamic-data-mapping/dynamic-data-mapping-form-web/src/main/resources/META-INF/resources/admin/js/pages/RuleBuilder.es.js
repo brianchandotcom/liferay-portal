@@ -106,13 +106,11 @@ export function RuleBuilder({history, location}) {
 	const navigate = useCallback(
 		(path) => {
 			const method =
-				path === history.location.pathname
-					? history.replace
-					: history.push;
+				path === location.pathname ? history.replace : history.push;
 
 			method(path);
 		},
-		[history]
+		[history, location.pathname]
 	);
 
 	useEffect(() => {

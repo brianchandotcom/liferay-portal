@@ -16,7 +16,6 @@ package com.liferay.account.admin.web.internal.dao.search;
 
 import com.liferay.account.admin.web.internal.display.AccountGroupDisplay;
 import com.liferay.account.model.AccountEntry;
-import com.liferay.account.model.AccountGroup;
 import com.liferay.account.service.AccountGroupLocalServiceUtil;
 import com.liferay.account.service.AccountGroupRelLocalServiceUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -25,8 +24,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
-
-import java.util.List;
 
 /**
  * @author Erick Monteiro
@@ -47,19 +44,19 @@ public class AccountEntryAccountGroupSearchContainerFactory {
 		accountGroupDisplaySearchContainer.setId(
 			"accountEntryAccountGroupsSearchContainer");
 
-		List<AccountGroup> accountGroups = TransformUtil.transform(
-			AccountGroupRelLocalServiceUtil.getAccountGroupRels(
-				AccountEntry.class.getName(),
-				ParamUtil.getLong(liferayPortletRequest, "accountEntryId"),
-				accountGroupDisplaySearchContainer.getStart(),
-				accountGroupDisplaySearchContainer.getEnd(), null),
-			accountGroupRel -> AccountGroupLocalServiceUtil.getAccountGroup(
-				accountGroupRel.getAccountGroupId()));
-
-		accountGroupDisplaySearchContainer.setResults(
-			TransformUtil.transform(accountGroups, AccountGroupDisplay::of));
-
-		accountGroupDisplaySearchContainer.setTotal(
+		accountGroupDisplaySearchContainer.setResultsAndTotal(
+			() -> TransformUtil.transform(
+				TransformUtil.transform(
+					AccountGroupRelLocalServiceUtil.getAccountGroupRels(
+						AccountEntry.class.getName(),
+						ParamUtil.getLong(
+							liferayPortletRequest, "accountEntryId"),
+						accountGroupDisplaySearchContainer.getStart(),
+						accountGroupDisplaySearchContainer.getEnd(), null),
+					accountGroupRel ->
+						AccountGroupLocalServiceUtil.getAccountGroup(
+							accountGroupRel.getAccountGroupId())),
+				AccountGroupDisplay::of),
 			AccountGroupRelLocalServiceUtil.getAccountGroupRelsCount(
 				AccountEntry.class.getName(),
 				ParamUtil.getLong(liferayPortletRequest, "accountEntryId")));

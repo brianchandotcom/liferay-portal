@@ -107,12 +107,11 @@ public class ChannelDisplayContext {
 						channelJSONObject.getString("name")));
 			}
 
-			channelSearch.setResults(channels);
-
 			JSONObject pageJSONObject = responseJSONObject.getJSONObject(
 				"page");
 
-			channelSearch.setTotal(pageJSONObject.getInt("totalElements"));
+			channelSearch.setResultsAndTotal(
+				() -> channels, pageJSONObject.getInt("totalElements"));
 
 			return channelSearch;
 		}

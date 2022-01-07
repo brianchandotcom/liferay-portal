@@ -92,10 +92,10 @@ public class AccountEntryAddressDisplaySearchContainerFactory {
 					searchContainer.getOrderByCol(),
 					searchContainer.getOrderByType()));
 
-		searchContainer.setResults(
-			TransformUtil.transform(
-				baseModelSearchResult.getBaseModels(), AddressDisplay::of));
-		searchContainer.setTotal(baseModelSearchResult.getLength());
+		searchContainer.setResultsAndTotal(
+			() -> TransformUtil.transform(
+				baseModelSearchResult.getBaseModels(), AddressDisplay::of),
+			baseModelSearchResult.getLength());
 
 		return searchContainer;
 	}

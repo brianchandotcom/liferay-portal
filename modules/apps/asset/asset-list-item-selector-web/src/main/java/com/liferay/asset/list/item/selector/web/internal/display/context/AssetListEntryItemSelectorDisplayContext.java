@@ -156,94 +156,82 @@ public class AssetListEntryItemSelectorDisplayContext {
 
 		String keywords = ParamUtil.getString(_httpServletRequest, "keywords");
 
-		List<AssetListEntry> assetListEntries = null;
-		int assetListEntriesCount = 0;
-
 		List<String> itemTypes = _infoListItemSelectorCriterion.getItemTypes();
 
 		if (ListUtil.isEmpty(itemTypes)) {
 			if (Validator.isNotNull(keywords)) {
-				assetListEntries =
-					AssetListEntryServiceUtil.getAssetListEntries(
+				searchContainer.setResultsAndTotal(
+					() -> AssetListEntryServiceUtil.getAssetListEntries(
 						themeDisplay.getScopeGroupId(), keywords,
 						searchContainer.getStart(), searchContainer.getEnd(),
-						searchContainer.getOrderByComparator());
-				assetListEntriesCount =
+						searchContainer.getOrderByComparator()),
 					AssetListEntryServiceUtil.getAssetListEntriesCount(
-						themeDisplay.getScopeGroupId(), keywords);
+						themeDisplay.getScopeGroupId(), keywords));
 			}
 			else {
-				assetListEntries =
-					AssetListEntryServiceUtil.getAssetListEntries(
+				searchContainer.setResultsAndTotal(
+					() -> AssetListEntryServiceUtil.getAssetListEntries(
 						themeDisplay.getScopeGroupId(),
 						searchContainer.getStart(), searchContainer.getEnd(),
-						searchContainer.getOrderByComparator());
-				assetListEntriesCount =
+						searchContainer.getOrderByComparator()),
 					AssetListEntryServiceUtil.getAssetListEntriesCount(
-						themeDisplay.getScopeGroupId());
+						themeDisplay.getScopeGroupId()));
 			}
 		}
 		else if (Validator.isNull(
 					_infoListItemSelectorCriterion.getItemSubtype())) {
 
 			if (Validator.isNotNull(keywords)) {
-				assetListEntries =
-					AssetListEntryServiceUtil.getAssetListEntries(
+				searchContainer.setResultsAndTotal(
+					() -> AssetListEntryServiceUtil.getAssetListEntries(
 						new long[] {themeDisplay.getScopeGroupId()}, keywords,
 						itemTypes.toArray(new String[0]),
 						searchContainer.getStart(), searchContainer.getEnd(),
-						searchContainer.getOrderByComparator());
-				assetListEntriesCount =
+						searchContainer.getOrderByComparator()),
 					AssetListEntryServiceUtil.getAssetListEntriesCount(
 						new long[] {themeDisplay.getScopeGroupId()}, keywords,
-						itemTypes.toArray(new String[0]));
+						itemTypes.toArray(new String[0])));
 			}
 			else {
-				assetListEntries =
-					AssetListEntryServiceUtil.getAssetListEntries(
+				searchContainer.setResultsAndTotal(
+					() -> AssetListEntryServiceUtil.getAssetListEntries(
 						new long[] {themeDisplay.getScopeGroupId()},
 						itemTypes.toArray(new String[0]),
 						searchContainer.getStart(), searchContainer.getEnd(),
-						searchContainer.getOrderByComparator());
-				assetListEntriesCount =
+						searchContainer.getOrderByComparator()),
 					AssetListEntryServiceUtil.getAssetListEntriesCount(
 						new long[] {themeDisplay.getScopeGroupId()},
-						itemTypes.toArray(new String[0]));
+						itemTypes.toArray(new String[0])));
 			}
 		}
 		else {
 			if (Validator.isNotNull(keywords)) {
-				assetListEntries =
-					AssetListEntryServiceUtil.getAssetListEntries(
+				searchContainer.setResultsAndTotal(
+					() -> AssetListEntryServiceUtil.getAssetListEntries(
 						new long[] {themeDisplay.getScopeGroupId()}, keywords,
 						_infoListItemSelectorCriterion.getItemSubtype(),
 						_infoListItemSelectorCriterion.getItemType(),
 						searchContainer.getStart(), searchContainer.getEnd(),
-						searchContainer.getOrderByComparator());
-				assetListEntriesCount =
+						searchContainer.getOrderByComparator()),
 					AssetListEntryServiceUtil.getAssetListEntriesCount(
 						new long[] {themeDisplay.getScopeGroupId()}, keywords,
 						_infoListItemSelectorCriterion.getItemSubtype(),
-						_infoListItemSelectorCriterion.getItemType());
+						_infoListItemSelectorCriterion.getItemType()));
 			}
 			else {
-				assetListEntries =
-					AssetListEntryServiceUtil.getAssetListEntries(
+				searchContainer.setResultsAndTotal(
+					() -> AssetListEntryServiceUtil.getAssetListEntries(
 						new long[] {themeDisplay.getScopeGroupId()},
 						_infoListItemSelectorCriterion.getItemSubtype(),
 						_infoListItemSelectorCriterion.getItemType(),
 						searchContainer.getStart(), searchContainer.getEnd(),
-						searchContainer.getOrderByComparator());
-				assetListEntriesCount =
+						searchContainer.getOrderByComparator()),
 					AssetListEntryServiceUtil.getAssetListEntriesCount(
 						new long[] {themeDisplay.getScopeGroupId()},
 						_infoListItemSelectorCriterion.getItemSubtype(),
-						_infoListItemSelectorCriterion.getItemType());
+						_infoListItemSelectorCriterion.getItemType()));
 			}
 		}
-
-		searchContainer.setResults(assetListEntries);
-		searchContainer.setTotal(assetListEntriesCount);
 
 		return searchContainer;
 	}

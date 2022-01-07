@@ -129,32 +129,25 @@ public class AssetListDisplayContext {
 		assetListEntriesSearchContainer.setOrderByComparator(orderByComparator);
 		assetListEntriesSearchContainer.setOrderByType(getOrderByType());
 
-		List<AssetListEntry> assetListEntries = null;
-
-		int assetListEntriesCount = 0;
-
 		if (_isSearch()) {
-			assetListEntries = AssetListEntryServiceUtil.getAssetListEntries(
-				_themeDisplay.getScopeGroupId(), _getKeywords(),
-				assetListEntriesSearchContainer.getStart(),
-				assetListEntriesSearchContainer.getEnd(), orderByComparator);
-
-			assetListEntriesCount =
+			assetListEntriesSearchContainer.setResultsAndTotal(
+				() -> AssetListEntryServiceUtil.getAssetListEntries(
+					_themeDisplay.getScopeGroupId(), _getKeywords(),
+					assetListEntriesSearchContainer.getStart(),
+					assetListEntriesSearchContainer.getEnd(),
+					orderByComparator),
 				AssetListEntryServiceUtil.getAssetListEntriesCount(
-					_themeDisplay.getScopeGroupId(), _getKeywords());
+					_themeDisplay.getScopeGroupId(), _getKeywords()));
 		}
 		else {
-			assetListEntries = AssetListEntryServiceUtil.getAssetListEntries(
-				_themeDisplay.getScopeGroupId(),
-				assetListEntriesSearchContainer.getStart(),
-				assetListEntriesSearchContainer.getEnd(), orderByComparator);
-
-			assetListEntriesCount = getAssetListEntriesCount();
+			assetListEntriesSearchContainer.setResultsAndTotal(
+				() -> AssetListEntryServiceUtil.getAssetListEntries(
+					_themeDisplay.getScopeGroupId(),
+					assetListEntriesSearchContainer.getStart(),
+					assetListEntriesSearchContainer.getEnd(),
+					orderByComparator),
+				getAssetListEntriesCount());
 		}
-
-		assetListEntriesSearchContainer.setResults(assetListEntries);
-
-		assetListEntriesSearchContainer.setTotal(assetListEntriesCount);
 
 		_assetListEntriesSearchContainer = assetListEntriesSearchContainer;
 

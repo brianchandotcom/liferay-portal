@@ -48,6 +48,20 @@ public class LayoutScopesItemSelectorViewDisplayContext
 			groupItemSelectorCriterion, itemSelectedEventName, portletURL);
 	}
 
+	public long getGroupId() {
+		long groupId = super.getGroupId();
+
+		if (groupId <= 0) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			return themeDisplay.getScopeGroupId();
+		}
+
+		return groupId;
+	}
+
 	@Override
 	public GroupSearch getGroupSearch() throws Exception {
 		ThemeDisplay themeDisplay =
@@ -56,25 +70,17 @@ public class LayoutScopesItemSelectorViewDisplayContext
 
 		long groupId = getGroupId();
 
-		if (groupId <= 0) {
-			groupId = themeDisplay.getScopeGroupId();
-		}
-
 		GroupSearch groupSearch = new GroupSearch(
 			getPortletRequest(), getPortletURL());
 
-		int total = GroupLocalServiceUtil.getGroupsCount(
-			themeDisplay.getCompanyId(), Layout.class.getName(), groupId);
-
-		groupSearch.setTotal(total);
-
-		List<Group> groups = GroupLocalServiceUtil.getGroups(
-			themeDisplay.getCompanyId(), Layout.class.getName(), groupId,
-			groupSearch.getStart(), groupSearch.getEnd());
-
-		groups = _filterLayoutGroups(groups, _isPrivateLayout());
-
-		groupSearch.setResults(groups);
+		groupSearch.setResultsAndTotal(
+			() -> _filterLayoutGroups(
+				GroupLocalServiceUtil.getGroups(
+					themeDisplay.getCompanyId(), Layout.class.getName(),
+					groupId, groupSearch.getStart(), groupSearch.getEnd()),
+				_isPrivateLayout()),
+			GroupLocalServiceUtil.getGroupsCount(
+				themeDisplay.getCompanyId(), Layout.class.getName(), groupId));
 
 		return groupSearch;
 	}

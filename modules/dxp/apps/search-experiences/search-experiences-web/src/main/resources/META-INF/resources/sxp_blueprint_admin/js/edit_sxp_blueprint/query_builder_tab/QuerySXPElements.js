@@ -18,6 +18,7 @@ import React, {useState} from 'react';
 import JSONSXPElement from '../../shared/JSONSXPElement';
 import SXPElement from '../../shared/sxp_element/index';
 import {SXP_ELEMENT_PREFIX} from '../../utils/constants';
+import {isCustomJSONSXPElement} from '../../utils/utils';
 
 function QuerySXPElements({
 	elementInstances,
@@ -35,53 +36,6 @@ function QuerySXPElements({
 	touched = [],
 }) {
 	const [collapseAll, setCollapseAll] = useState(false);
-
-	const _renderSelectedElements = () => (
-		<>
-			{elementInstances.map(
-				({id, sxpElement, uiConfigurationValues}, index) => {
-					return sxpElement.elementDefinition?.uiConfiguration ? (
-						<SXPElement
-							collapseAll={collapseAll}
-							entityJSON={entityJSON}
-							error={errors[index]}
-							id={id}
-							index={index}
-							indexFields={indexFields}
-							isSubmitting={isSubmitting}
-							key={id}
-							onBlur={onBlur}
-							onChange={onChange}
-							onDeleteSXPElement={onDeleteSXPElement}
-							prefixedId={`${SXP_ELEMENT_PREFIX.QUERY}-${index}`}
-							searchableTypes={searchableTypes}
-							setFieldTouched={setFieldTouched}
-							setFieldValue={setFieldValue}
-							sxpElement={sxpElement}
-							touched={touched[index]}
-							uiConfigurationValues={uiConfigurationValues}
-						/>
-					) : (
-						<JSONSXPElement
-							collapseAll={collapseAll}
-							error={errors[index]}
-							id={id}
-							index={index}
-							isSubmitting={isSubmitting}
-							key={id}
-							onDeleteSXPElement={onDeleteSXPElement}
-							prefixedId={`${SXP_ELEMENT_PREFIX.QUERY}-${index}`}
-							setFieldTouched={setFieldTouched}
-							setFieldValue={setFieldValue}
-							sxpElement={sxpElement}
-							touched={touched[index]}
-							uiConfigurationValues={uiConfigurationValues}
-						/>
-					);
-				}
-			)}
-		</>
-	);
 
 	return (
 		<div className="query-sxp-elements">
@@ -134,7 +88,48 @@ function QuerySXPElements({
 					</div>
 				</div>
 			) : (
-				_renderSelectedElements()
+				elementInstances.map(
+					({id, sxpElement, uiConfigurationValues}, index) => {
+						return isCustomJSONSXPElement(uiConfigurationValues) ? (
+							<JSONSXPElement
+								collapseAll={collapseAll}
+								error={errors[index]}
+								id={id}
+								index={index}
+								isSubmitting={isSubmitting}
+								key={id}
+								onDeleteSXPElement={onDeleteSXPElement}
+								prefixedId={`${SXP_ELEMENT_PREFIX.QUERY}-${index}`}
+								setFieldTouched={setFieldTouched}
+								setFieldValue={setFieldValue}
+								sxpElement={sxpElement}
+								touched={touched[index]}
+								uiConfigurationValues={uiConfigurationValues}
+							/>
+						) : (
+							<SXPElement
+								collapseAll={collapseAll}
+								entityJSON={entityJSON}
+								error={errors[index]}
+								id={id}
+								index={index}
+								indexFields={indexFields}
+								isSubmitting={isSubmitting}
+								key={id}
+								onBlur={onBlur}
+								onChange={onChange}
+								onDeleteSXPElement={onDeleteSXPElement}
+								prefixedId={`${SXP_ELEMENT_PREFIX.QUERY}-${index}`}
+								searchableTypes={searchableTypes}
+								setFieldTouched={setFieldTouched}
+								setFieldValue={setFieldValue}
+								sxpElement={sxpElement}
+								touched={touched[index]}
+								uiConfigurationValues={uiConfigurationValues}
+							/>
+						);
+					}
+				)
 			)}
 		</div>
 	);

@@ -35,6 +35,7 @@ import {
 	filterAndSortClassNames,
 	getConfigurationEntry,
 	getUIConfigurationValues,
+	isCustomJSONSXPElement,
 	isDefined,
 	parseCustomSXPElement,
 	transformToSearchContextAttributes,
@@ -235,7 +236,10 @@ function EditSXPBlueprintForm({
 				const fieldSets = cleanUIConfiguration(uiConfiguration)
 					.fieldSets;
 
-				if (fieldSets.length > 0) {
+				if (
+					fieldSets.length > 0 &&
+					!isCustomJSONSXPElement(uiConfigurationValues)
+				) {
 					fieldSets.map(({fields}) => {
 						fields.map(({name, type, typeOptions = {}}) => {
 							const configValue = uiConfigurationValues[name];
@@ -260,7 +264,8 @@ function EditSXPBlueprintForm({
 							}
 						});
 					});
-				} else if (!uiConfiguration) {
+				}
+				else if (isCustomJSONSXPElement(uiConfigurationValues)) {
 					const configValue = uiConfigurationValues?.sxpElement;
 
 					const configError =

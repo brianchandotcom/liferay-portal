@@ -320,7 +320,10 @@ export function getConfigurationEntry({sxpElement, uiConfigurationValues}) {
 		sxpElement.elementDefinition?.uiConfiguration
 	).fieldSets;
 
-	if (fieldSets.length > 0) {
+	if (
+		fieldSets.length > 0 &&
+		!isCustomJSONSXPElement(uiConfigurationValues)
+	) {
 		let flattenJSON = JSON.stringify(
 			sxpElement.elementDefinition?.configuration || {}
 		);
@@ -563,6 +566,17 @@ export function getUIConfigurationValues(sxpElement = {}) {
 	}
 
 	return {sxpElement: JSON.stringify(sxpElement, null, '\t')};
+}
+
+/**
+ * Used for handling if the element instance is a custom JSON element. This
+ * function makes it easier to globally handle the logic for differentiating
+ * between a custom JSON element and a standard element.
+ * @param {object} uiConfigurationValues
+ * @returns {boolean}
+ */
+export function isCustomJSONSXPElement(uiConfigurationValues) {
+	return isDefined(uiConfigurationValues.sxpElement);
 }
 
 /**

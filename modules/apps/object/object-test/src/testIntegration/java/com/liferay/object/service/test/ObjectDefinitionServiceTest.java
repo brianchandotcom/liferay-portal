@@ -194,8 +194,8 @@ public class ObjectDefinitionServiceTest {
 			ObjectDefinitionConstants.SCOPE_COMPANY,
 			Arrays.asList(
 				ObjectFieldUtil.createObjectField(
-					RandomTestUtil.randomString(), StringUtil.randomId(),
-					"String")));
+					"Text", RandomTestUtil.randomString(),
+					StringUtil.randomId(), "String")));
 	}
 
 	private void _setUser(User user) {
@@ -221,7 +221,7 @@ public class ObjectDefinitionServiceTest {
 					ObjectDefinitionConstants.SCOPE_COMPANY,
 					Arrays.asList(
 						ObjectFieldUtil.createObjectField(
-							RandomTestUtil.randomString(),
+							"Text", RandomTestUtil.randomString(),
 							StringUtil.randomId(), "String")));
 
 			objectDefinition =
@@ -299,7 +299,7 @@ public class ObjectDefinitionServiceTest {
 					ObjectDefinitionConstants.SCOPE_COMPANY,
 					Arrays.asList(
 						ObjectFieldUtil.createObjectField(
-							RandomTestUtil.randomString(),
+							"Text", RandomTestUtil.randomString(),
 							StringUtil.randomId(), "String")));
 
 			objectDefinition =
@@ -333,7 +333,7 @@ public class ObjectDefinitionServiceTest {
 					ObjectDefinitionConstants.SCOPE_COMPANY,
 					Arrays.asList(
 						ObjectFieldUtil.createObjectField(
-							RandomTestUtil.randomString(),
+							"Text", RandomTestUtil.randomString(),
 							StringUtil.randomId(), "String")));
 
 			objectDefinition =

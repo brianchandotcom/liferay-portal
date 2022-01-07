@@ -116,12 +116,14 @@ public class FDSSamplePortlet extends MVCPortlet {
 				ObjectDefinitionConstants.SCOPE_COMPANY,
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(
-						true, false, null, "Title", "title", false, "String"),
-					ObjectFieldUtil.createObjectField(
-						true, false, null, "Description", "description", false,
+						"Text", true, false, null, "Title", "title", false,
 						"String"),
 					ObjectFieldUtil.createObjectField(
-						true, false, null, "Date", "date", false, "Date")));
+						"Text", true, false, null, "Description", "description",
+						false, "String"),
+					ObjectFieldUtil.createObjectField(
+						"Date", true, false, null, "Date", "date", false,
+						"Date")));
 
 		objectDefinition =
 			_objectDefinitionLocalService.publishCustomObjectDefinition(

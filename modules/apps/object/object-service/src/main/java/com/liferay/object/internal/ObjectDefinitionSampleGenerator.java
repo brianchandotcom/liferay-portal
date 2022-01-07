@@ -93,28 +93,35 @@ public class ObjectDefinitionSampleGenerator {
 				ObjectDefinitionConstants.SCOPE_COMPANY,
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(
-						true, false, null, "Able", "able", false, "Long"),
+						"LongInteger", true, false, null, "Able", "able", false,
+						"Long"),
 					ObjectFieldUtil.createObjectField(
-						true, false, null, "Baker", "baker", false, "Boolean"),
+						"Boolean", true, false, null, "Baker", "baker", false,
+						"Boolean"),
 					ObjectFieldUtil.createObjectField(
-						true, false, null, "Charlie", "charlie", false, "Date"),
+						"Date", true, false, null, "Charlie", "charlie", false,
+						"Date"),
 					ObjectFieldUtil.createObjectField(
-						true, false, null, "Dog", "dog", false, "String"),
-					ObjectFieldUtil.createObjectField(
-						0, null, true, true, null, "Easy", "easy", false,
+						"Text", true, false, null, "Dog", "dog", false,
 						"String"),
 					ObjectFieldUtil.createObjectField(
-						0, null, true, false, "en_US", "Fox", "fox", false,
-						"String"),
+						0, "Text", null, true, true, null, "Easy", "easy",
+						false, "String"),
 					ObjectFieldUtil.createObjectField(
-						0, null, false, false, null, "George", "george", false,
-						"String"),
+						0, "Text", null, true, false, "en_US", "Fox", "fox",
+						false, "String"),
 					ObjectFieldUtil.createObjectField(
-						true, false, null, "How", "how", false, "Double"),
+						0, "Text", null, false, false, null, "George", "george",
+						false, "String"),
 					ObjectFieldUtil.createObjectField(
-						true, false, null, "Item", "item", false, "Integer"),
+						"Decimal", true, false, null, "How", "how", false,
+						"Double"),
 					ObjectFieldUtil.createObjectField(
-						true, false, null, "Jig", "jig", false, "BigDecimal")));
+						"Integer", true, false, null, "Item", "item", false,
+						"Integer"),
+					ObjectFieldUtil.createObjectField(
+						"PrecisionDecimal", true, false, null, "Jig", "jig",
+						false, "BigDecimal")));
 
 		objectDefinition =
 			_objectDefinitionLocalService.publishCustomObjectDefinition(

@@ -116,8 +116,8 @@ public class ObjectEntryLocalServiceTest {
 				ObjectDefinitionConstants.SCOPE_COMPANY,
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(
-						RandomTestUtil.randomString(), StringUtil.randomId(),
-						"String")));
+						"Text", RandomTestUtil.randomString(),
+						StringUtil.randomId(), "String")));
 
 		_irrelevantObjectDefinition =
 			_objectDefinitionLocalService.publishCustomObjectDefinition(
@@ -155,48 +155,49 @@ public class ObjectEntryLocalServiceTest {
 				ObjectDefinitionConstants.SCOPE_COMPANY,
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(
-						true, false, null, "Age of Death", "ageOfDeath", false,
-						"Long"),
+						"LongInteger", true, false, null, "Age of Death",
+						"ageOfDeath", false, "Long"),
 					ObjectFieldUtil.createObjectField(
-						true, false, null, "Author of Gospel", "authorOfGospel",
-						false, "Boolean"),
+						"Boolean", true, false, null, "Author of Gospel",
+						"authorOfGospel", false, "Boolean"),
 					ObjectFieldUtil.createObjectField(
-						true, false, null, "Birthday", "birthday", false,
-						"Date"),
+						"Date", true, false, null, "Birthday", "birthday",
+						false, "Date"),
 					ObjectFieldUtil.createObjectField(
-						true, true, null, "Email Address", "emailAddress", true,
-						"String"),
+						"Text", true, true, null, "Email Address",
+						"emailAddress", true, "String"),
 					ObjectFieldUtil.createObjectField(
-						true, true, null, "Email Address Domain",
+						"Text", true, true, null, "Email Address Domain",
 						"emailAddressDomain", false, "String"),
 					ObjectFieldUtil.createObjectField(
-						true, false, null, "First Name", "firstName", false,
-						"String"),
+						"Text", true, false, null, "First Name", "firstName",
+						false, "String"),
 					ObjectFieldUtil.createObjectField(
-						true, false, null, "Height", "height", false, "Double"),
+						"Decimal", true, false, null, "Height", "height", false,
+						"Double"),
 					ObjectFieldUtil.createObjectField(
-						true, false, null, "Last Name", "lastName", false,
-						"String"),
+						"Text", true, false, null, "Last Name", "lastName",
+						false, "String"),
 					ObjectFieldUtil.createObjectField(
-						_listTypeDefinition.getListTypeDefinitionId(), null,
-						true, false, null, "List Type Entry Key",
+						_listTypeDefinition.getListTypeDefinitionId(), "Text",
+						null, true, false, null, "List Type Entry Key",
 						"listTypeEntryKey", false, "String"),
 					ObjectFieldUtil.createObjectField(
-						_listTypeDefinition.getListTypeDefinitionId(), null,
-						true, false, null, "List Type Entry Key Required",
+						_listTypeDefinition.getListTypeDefinitionId(), "Text",
+						null, true, false, null, "List Type Entry Key Required",
 						"listTypeEntryKeyRequired", true, "String"),
 					ObjectFieldUtil.createObjectField(
-						true, false, null, "Middle Name", "middleName", false,
-						"String"),
+						"Text", true, false, null, "Middle Name", "middleName",
+						false, "String"),
 					ObjectFieldUtil.createObjectField(
-						true, false, null, "Number of Books Written",
+						"Integer", true, false, null, "Number of Books Written",
 						"numberOfBooksWritten", false, "Integer"),
 					ObjectFieldUtil.createObjectField(
-						false, false, null, "Portrait", "portrait", false,
-						"Blob"),
+						"LongText", false, false, null, "Portrait", "portrait",
+						false, "Blob"),
 					ObjectFieldUtil.createObjectField(
-						false, false, null, "Script", "script", false,
-						"Clob")));
+						"LongText", false, false, null, "Script", "script",
+						false, "Clob")));
 
 		_objectDefinition =
 			_objectDefinitionLocalService.publishCustomObjectDefinition(
@@ -1452,8 +1453,8 @@ public class ObjectEntryLocalServiceTest {
 				scope,
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(
-						RandomTestUtil.randomString(), StringUtil.randomId(),
-						"String")));
+						"Text", RandomTestUtil.randomString(),
+						StringUtil.randomId(), "String")));
 
 		objectDefinition =
 			_objectDefinitionLocalService.publishCustomObjectDefinition(

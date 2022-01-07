@@ -81,7 +81,7 @@ public class ObjectDefinitionGraphQLTest {
 				ObjectDefinitionConstants.SCOPE_COMPANY,
 				Collections.singletonList(
 					ObjectFieldUtil.createObjectField(
-						true, true, null, RandomTestUtil.randomString(),
+						"Text", true, true, null, RandomTestUtil.randomString(),
 						_objectFieldName, false, "String")));
 
 		_objectDefinition =

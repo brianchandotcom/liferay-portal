@@ -82,8 +82,8 @@ public class ObjectActionLocalServiceTest {
 				ObjectDefinitionConstants.SCOPE_COMPANY,
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(
-						true, true, null, "First Name", "firstName", true,
-						"String")));
+						"Text", true, true, null, "First Name", "firstName",
+						true, "String")));
 
 		_objectDefinition =
 			_objectDefinitionLocalService.publishCustomObjectDefinition(

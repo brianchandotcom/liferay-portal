@@ -78,8 +78,8 @@ public class ObjectRelationshipServiceTest {
 				ObjectDefinitionConstants.SCOPE_COMPANY,
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(
-						RandomTestUtil.randomString(), StringUtil.randomId(),
-						"String")));
+						"Text", RandomTestUtil.randomString(),
+						StringUtil.randomId(), "String")));
 
 		_objectDefinition1 =
 			_objectDefinitionLocalService.publishCustomObjectDefinition(
@@ -94,8 +94,8 @@ public class ObjectRelationshipServiceTest {
 				ObjectDefinitionConstants.SCOPE_COMPANY,
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(
-						RandomTestUtil.randomString(), StringUtil.randomId(),
-						"String")));
+						"Text", RandomTestUtil.randomString(),
+						StringUtil.randomId(), "String")));
 
 		_objectDefinition2 =
 			_objectDefinitionLocalService.publishCustomObjectDefinition(

@@ -162,7 +162,7 @@ public class InlineSQLHelperImplTest {
 			_groupThree.getCompanyId(), RoleConstants.USER);
 
 		long[] roleIds = ReflectionTestUtil.invoke(
-			_inlineSQLHelper, "getRoleIds", new Class<?>[] {long.class},
+			_inlineSQLHelper, "_getRoleIds", new Class<?>[] {long.class},
 			_groupThree.getGroupId());
 
 		String msg = StringUtil.merge(roleIds);

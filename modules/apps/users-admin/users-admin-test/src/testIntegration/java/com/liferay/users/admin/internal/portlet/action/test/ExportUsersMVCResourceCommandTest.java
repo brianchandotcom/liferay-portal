@@ -118,7 +118,7 @@ public class ExportUsersMVCResourceCommandTest {
 
 	private String _getUserCSV(User user) {
 		return ReflectionTestUtil.invoke(
-			_mvcResourceCommand, "getUserCSV", new Class<?>[] {User.class},
+			_mvcResourceCommand, "_getUserCSV", new Class<?>[] {User.class},
 			user);
 	}
 

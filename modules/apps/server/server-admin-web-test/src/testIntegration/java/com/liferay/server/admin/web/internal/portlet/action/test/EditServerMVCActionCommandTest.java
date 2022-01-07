@@ -74,7 +74,7 @@ public class EditServerMVCActionCommandTest {
 		Assert.assertNotNull(portletPreferences);
 
 		ReflectionTestUtil.invoke(
-			_mvcActionCommand, "cleanUpLayoutRevisionPortletPreferences",
+			_mvcActionCommand, "_cleanUpLayoutRevisionPortletPreferences",
 			new Class<?>[0]);
 
 		Assert.assertNull(
@@ -115,7 +115,7 @@ public class EditServerMVCActionCommandTest {
 		Assert.assertTrue(portletIds.isEmpty());
 
 		ReflectionTestUtil.invoke(
-			_mvcActionCommand, "cleanUpLayoutRevisionPortletPreferences",
+			_mvcActionCommand, "_cleanUpLayoutRevisionPortletPreferences",
 			new Class<?>[0]);
 
 		Assert.assertNotNull(

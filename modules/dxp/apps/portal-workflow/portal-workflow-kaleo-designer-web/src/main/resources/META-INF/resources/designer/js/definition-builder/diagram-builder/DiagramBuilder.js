@@ -59,6 +59,7 @@ export default function DiagramBuilder({version}) {
 	} = useContext(DefinitionBuilderContext);
 	const reactFlowWrapperRef = useRef(null);
 	const [collidingElements, setCollidingElements] = useState(null);
+	const [elementRectangle, setElementRectangle] = useState(null);
 	const [reactFlowInstance, setReactFlowInstance] = useState(null);
 	const [selectedItem, setSelectedItem] = useState(null);
 	const [selectedItemNewId, setSelectedItemNewId] = useState(null);
@@ -253,9 +254,13 @@ export default function DiagramBuilder({version}) {
 
 	const contextProps = {
 		collidingElements,
+		elementRectangle,
+		elements,
 		selectedItem,
 		selectedItemNewId,
 		setCollidingElements,
+		setElementRectangle,
+		setElements,
 		setSelectedItem,
 		setSelectedItemNewId,
 	};

@@ -53,54 +53,58 @@ function ConfigurationTab({
 
 	return (
 		<ClayLayout.ContainerFluid className="builder" size="xl">
-			<div className="builder-content-shift sheet">
-				<h2 className="sheet-title">
-					{Liferay.Language.get('configuration')}
-				</h2>
+			<div className="builder-content-shift">
+				<div className="sheet sheet-lg">
+					<h2 className="sheet-title">
+						{Liferay.Language.get('configuration')}
+					</h2>
 
-				<div className="sheet-text">
-					{Liferay.Language.get(
-						'enter-additional-blueprints-configuration-settings-below-refer-to-the-documentation-for-help'
-					)}
+					<div className="sheet-text">
+						{Liferay.Language.get(
+							'enter-additional-blueprints-configuration-settings-below-refer-to-the-documentation-for-help'
+						)}
+					</div>
+
+					<ClayForm.Group>
+						<label>
+							{Liferay.Language.get('aggregation-configuration')}
+						</label>
+
+						{_renderEditor('aggregationConfig', aggregationConfig)}
+					</ClayForm.Group>
+
+					<ClayForm.Group>
+						<label>
+							{Liferay.Language.get('highlight-configuration')}
+						</label>
+
+						{_renderEditor('highlightConfig', highlightConfig)}
+					</ClayForm.Group>
+
+					<ClayForm.Group>
+						<label>
+							{Liferay.Language.get('sort-configuration')}
+						</label>
+
+						{_renderEditor('sortConfig', sortConfig)}
+					</ClayForm.Group>
+
+					<ClayForm.Group>
+						<label>
+							{Liferay.Language.get('parameter-configuration')}
+						</label>
+
+						{_renderEditor('parameterConfig', parameterConfig)}
+					</ClayForm.Group>
+
+					<ClayForm.Group>
+						<label>
+							{Liferay.Language.get('advanced-configuration')}
+						</label>
+
+						{_renderEditor('advancedConfig', advancedConfig)}
+					</ClayForm.Group>
 				</div>
-
-				<ClayForm.Group>
-					<label>
-						{Liferay.Language.get('aggregation-configuration')}
-					</label>
-
-					{_renderEditor('aggregationConfig', aggregationConfig)}
-				</ClayForm.Group>
-
-				<ClayForm.Group>
-					<label>
-						{Liferay.Language.get('highlight-configuration')}
-					</label>
-
-					{_renderEditor('highlightConfig', highlightConfig)}
-				</ClayForm.Group>
-
-				<ClayForm.Group>
-					<label>{Liferay.Language.get('sort-configuration')}</label>
-
-					{_renderEditor('sortConfig', sortConfig)}
-				</ClayForm.Group>
-
-				<ClayForm.Group>
-					<label>
-						{Liferay.Language.get('parameter-configuration')}
-					</label>
-
-					{_renderEditor('parameterConfig', parameterConfig)}
-				</ClayForm.Group>
-
-				<ClayForm.Group>
-					<label>
-						{Liferay.Language.get('advanced-configuration')}
-					</label>
-
-					{_renderEditor('advancedConfig', advancedConfig)}
-				</ClayForm.Group>
 			</div>
 		</ClayLayout.ContainerFluid>
 	);

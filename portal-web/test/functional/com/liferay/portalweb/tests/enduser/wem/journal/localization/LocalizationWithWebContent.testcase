@@ -28,6 +28,84 @@ definition {
 		}
 	}
 
+	@description = "LPS-100416 - Non-Repeatable text fields show incorrect translation on label at first load."
+	@priority = "4"
+	test AddNonRepeatableTextFieldWithTranslation {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Name");
+
+		DataEngine.addField(
+			fieldFieldLabel = "English",
+			fieldName = "Text");
+
+		Click(
+			key_fieldFieldLabel = "English",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+
+		Navigator.gotoNavTab(navTab = "Advanced");
+
+		Uncheck.uncheckToggleSwitch(
+			key_fieldName = "repeatable",
+			locator1 = "Checkbox#SWITCH");
+
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "WC Structure Name");
+
+		WebContentStructures.addLocalization(
+			locale = "de-DE",
+			localization1Name = "WC Structure German Name");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "English",
+			fieldFieldLabelEdit = "German");
+
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
+
+		NavItem.gotoTemplates();
+
+		WebContentTemplates.addCP(
+			structureName = "WC Structure Name",
+			templateFieldNames = "English",
+			templateName = "WC Template Name");
+
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Localization",
+			configurationName = "Language",
+			configurationScope = "Virtual Instance Scope");
+
+		PortalSettings.configureCurrentLanguagesCP(defaultPortalLanguage = "German (Germany)");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+		AssertVisible(locator1 = "WCEditWebContent#SIDEBAR");
+
+		PortletEntry.viewLocale(locale = "de-DE");
+
+		AssertElementPresent(
+			key_fieldFieldLabel = "German",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+
+		PortletEntry.changeLocale(locale = "en-US");
+
+		AssertElementPresent(
+			key_fieldFieldLabel = "English",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+
+		PortletEntry.changeLocale(locale = "de-DE");
+
+		AssertElementPresent(
+			key_fieldFieldLabel = "German",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+	}
+
 	@priority = "4"
 	test AddWCWithMultipleTranslations {
 		property test.name.skip.portal.instance = "LocalizationWithWebContent#AddWCWithMultipleTranslations";

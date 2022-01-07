@@ -951,8 +951,10 @@ public class JenkinsResultsParserUtil {
 					urlString, StandardCharsets.UTF_8.name());
 
 				urlString = urlString.replaceAll("\\+", "%20");
+
 				urlString = urlString.replaceAll("%21", "!");
 				urlString = urlString.replaceAll("%25", "%");
+				urlString = urlString.replaceAll("%2B", "+");
 
 				return urlString;
 			}
@@ -988,10 +990,13 @@ public class JenkinsResultsParserUtil {
 
 				queryParameterValue = queryParameterValue.replaceAll(
 					"\\+", "%20");
+
 				queryParameterValue = queryParameterValue.replaceAll(
 					"%21", "!");
 				queryParameterValue = queryParameterValue.replaceAll(
 					"%25", "%");
+				queryParameterValue = queryParameterValue.replaceAll(
+					"%2B", "+");
 
 				sb.append(queryParameterValue);
 			}

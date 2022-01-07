@@ -175,6 +175,37 @@ definition {
 		}
 	}
 
+	@description = "Verify inactive order type is not assigned to an order created via pending orders."
+	@priority = "3"
+	test AssertInactiveOrderTypeNotAssignedToOrderViaPendingOrders {
+		property portal.acceptance = "false";
+
+		task ("Given an inactive order type") {
+			CommerceJSONOrdersAPI._addOrderType(
+				active = "false",
+				orderTypeDescription = "Test Order Type Descripiton",
+				orderTypeName = "Test Order Type");
+		}
+
+		task ("When I log in as the buyer user and create a new order in the Minium site via pending orders") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "ttest",
+				resetPassword = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			CommerceAcceleratorsInitializer.createNewOrderFromPendingOrders();
+		}
+
+		task ("Then the inactive order type should not be assigned to the order") {
+			AssertElementNotPresent(
+				key_OrderType = "Test Order Type",
+				locator1 = "CommerceOrders#PENDING_ORDERS_ORDER_TYPE");
+		}
+	}
+
 	@description = "Verify users can select order type when creating a new order via pending orders if there are multiple order types."
 	@priority = "3"
 	test SelectOrderTypeWhenCreatingNewOrderViaPendingOrders {

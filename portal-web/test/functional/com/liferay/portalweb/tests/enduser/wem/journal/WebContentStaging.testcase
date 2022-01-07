@@ -170,6 +170,123 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-121695. Assert imported DDMStructures in Global Staging are not published in Global Live."
+	@priority = "4"
+	test ImportedDDMStructuresInGlobalStagingNotPublishedInLive {
+		task ("Access Global Site") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "global");
+		}
+
+		task ("Add a web content structure") {
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(
+				structureDescription = "WC Structure Description",
+				structureName = "WC Structure Name");
+
+			DataEngine.addField(
+				fieldFieldLabel = "Text",
+				fieldName = "Text");
+
+			WebContentStructures.saveCP(structureName = "WC Structure Name");
+		}
+
+		task ("Add a web content template") {
+			NavItem.gotoTemplates();
+
+			WebContentTemplates.addCP(
+				structureName = "WC Structure Name",
+				templateDescription = "WC Template Description",
+				templateFieldNames = "Text",
+				templateName = "WC Template Name");
+		}
+
+		task ("Export DDMStructures") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "global");
+
+			LAR.exportPortlet(larFileName = "WebContent_portlet.lar");
+		}
+
+		task ("Add Portal Instance") {
+			ApplicationsMenu.gotoPortlet(
+				category = "System",
+				panel = "Control Panel",
+				portlet = "Virtual Instances");
+
+			PortalInstances.addCP(
+				mailDomain = "www.able.com",
+				virtualHost = "www.able.com",
+				webId = "www.able.com");
+
+			PortalInstances.viewCP(virtualHost = "www.able.com");
+		}
+
+		task ("Activate local staging in the created portal instance global site") {
+			User.firstLoginPG(
+				password = "test",
+				userEmailAddress = "test@www.able.com",
+				virtualHostsURL = "http://www.able.com:8080");
+
+			Navigator.openSpecificURL(url = "http://www.able.com:8080");
+
+			WebContentNavigator.openWebContentAdmin(
+				baseURL = "http://www.able.com:8080",
+				siteURLKey = "global");
+
+			ProductMenu.gotoPortlet(
+				category = "Publishing",
+				portlet = "Staging");
+
+			Staging.activateStagingCP(siteName = "Global");
+		}
+
+		task ("Import DDMStructures") {
+			WebContentNavigator.openWebContentAdmin(
+				baseURL = "http://www.able.com:8080",
+				siteURLKey = "global-staging");
+
+			LAR.importPortlet(larFileName = "WebContent_portlet.lar");
+		}
+
+		task ("Assert DDMStructures has been imported in Global staging") {
+			WebContentNavigator.openWebContentAdmin(
+				baseURL = "http://www.able.com:8080",
+				siteURLKey = "global-staging");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.viewCP(
+				structureDescription = "WC Structure Description",
+				structureName = "WC Structure Name");
+
+			NavItem.gotoTemplates();
+
+			LexiconEntry.changeDisplayStyle(displayStyle = "table");
+
+			WebContentTemplates.viewTableEntryCP(
+				templateDescription = "WC Template Description",
+				templateName = "WC Template Name");
+		}
+
+		task ("Assert DDMStructures has not been imported in Global Live") {
+			WebContentNavigator.openWebContentAdmin(
+				baseURL = "http://www.able.com:8080",
+				siteURLKey = "global");
+
+			NavItem.gotoStructures();
+
+			AssertElementNotPresent(
+				key_ddlDataDefinitionName = "WC Structure Name",
+				locator1 = "DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME");
+
+			NavItem.gotoTemplates();
+
+			AssertElementNotPresent(
+				key_tableEntry = "WC Template Name",
+				locator1 = "LexiconTable#TABLE_ENTRY");
+		}
+	}
+
 	@description = "Publish in Staging a Web Content From Structure"
 	@priority = "5"
 	test PublishInStagingWebContentFromStructure {

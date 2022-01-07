@@ -40,7 +40,8 @@ public class SimulationDeviceDynamicInclude extends BaseDynamicInclude {
 
 		PrintWriter printWriter = httpServletResponse.getWriter();
 
-		printWriter.print(_TMPL_CONTENT);
+		printWriter.print(
+			"<script type=\"text/javascript\">" + _TMPL_CONTENT + "</script>");
 	}
 
 	@Override
@@ -50,6 +51,6 @@ public class SimulationDeviceDynamicInclude extends BaseDynamicInclude {
 
 	private static final String _TMPL_CONTENT = StringUtil.read(
 		SimulationDeviceDynamicInclude.class,
-		"/META-INF/resources/simulation_device_dynamic_include.tmpl");
+		"/META-INF/resources/js/simulation_device_dynamic_include.js");
 
 }

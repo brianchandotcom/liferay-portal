@@ -1,77 +1,74 @@
 definition {
-    
-    macro createCPSite {
-        ApplicationsMenu.gotoPortlet(
-            category = "Sites",
-            panel = "Control Panel",
-            portlet = "Sites");
 
-        LexiconEntry.gotoAdd();
+	macro activeContactRole {
+		ApplicationsMenu.gotoPortlet(
+			category = "Object",
+			panel = "Control Panel",
+			portlet = "Koroneiki Accounts");
 
-        LexiconCard.clickCard(card = "Customer Portal");
+		CP2LiferayContact.viewKoroneikiInfo();
 
-        PortletEntry.inputName(name = "${siteName}");
+		Type(
+			locator1 = "CP2LiferayContact#CONTACT_ROLE",
+			value1 = "Quality Assurance Analyst");
 
-        Click(locator1 = "Modal#SAVE_BUTTON");
+		Click(locator1 = "Button#SAVE");
+	}
 
-        Click(
-            key_itemName = "Site Configuration",
-            locator1 = "ListGroupItem#ITEM_TEXT");
+	macro checkToggleHideWidget {
+		Check.checkToggleSwitch(locator1 = "CP2LiferayContact#HIDE_WIDGET");
+	}
 
-        AssertTextEquals(
-            locator1 = "SitesEditSite#DETAILS_NAME",
-            value1 = "${siteName}");
+	macro createCPSite {
+		ApplicationsMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites");
 
-        ApplicationsMenu.gotoPortlet(
-            category = "Object",
-            panel = "Control Panel",
-            portlet = "Objects");
+		LexiconEntry.gotoAdd();
 
-        ObjectPortlet.selectCustomObject(label = "Koroneiki Account");
+		LexiconCard.clickCard(card = "Customer Portal");
 
-        CreateObject.checkToggleActive();
+		PortletEntry.inputName(name = "${siteName}");
 
-        CP2LiferayContact.checkToggleHideWidget();
+		Click(locator1 = "Modal#SAVE_BUTTON");
 
-        CreateObject.saveObject();
+		Click(
+			key_itemName = "Site Configuration",
+			locator1 = "ListGroupItem#ITEM_TEXT");
 
-    }
+		AssertTextEquals(
+			locator1 = "SitesEditSite#DETAILS_NAME",
+			value1 = "${siteName}");
 
-    macro checkToggleHideWidget{
-        Check.checkToggleSwitch(locator1 = "CP2LiferayContact#HIDE_WIDGET");
-    }
+		ApplicationsMenu.gotoPortlet(
+			category = "Object",
+			panel = "Control Panel",
+			portlet = "Objects");
 
-    macro activeContactRole{
-        ApplicationsMenu.gotoPortlet(
-            category = "Object",
-            panel = "Control Panel",
-            portlet = "Koroneiki Accounts");
+		ObjectPortlet.selectCustomObject(label = "Koroneiki Account");
 
-        CP2LiferayContact.viewKoroneikiInfo();
+		CreateObject.checkToggleActive();
 
-        Type(
-            locator1 = "CP2LiferayContact#CONTACT_ROLE",
-            value1 = "Quality Assurance Analyst");
+		CP2LiferayContact.checkToggleHideWidget();
 
-        Click(locator1 = "Button#SAVE");
-    }
+		CreateObject.saveObject();
+	}
 
-    macro customerPortalTearDowm {
-        CommerceJSONAccountsAPI._deleteAllCommerceAccounts();
+	macro customerPortalTearDowm {
+		CommerceJSONAccountsAPI._deleteAllCommerceAccounts();
 
-        CommerceJSONChannelsAPI._deleteAllCommerceChannels();
+		CommerceJSONChannelsAPI._deleteAllCommerceChannels();
 
-        RemoteApps.deleteRemoteAppAPI();
+		RemoteApps.deleteRemoteAppAPI();
+	}
 
-    }
+	macro viewKoroneikiInfo {
+		Click(
+			key_text = "",
+			locator1 = "Icon#ANY_VERTICAL_ELLIPSIS");
 
-    macro viewKoroneikiInfo {
-        Click(
-            key_text = "",
-            locator1 = "Icon#ANY_VERTICAL_ELLIPSIS");
-
-        MenuItem.click(menuItem = "View");
-    }
-
+		MenuItem.click(menuItem = "View");
+	}
 
 }

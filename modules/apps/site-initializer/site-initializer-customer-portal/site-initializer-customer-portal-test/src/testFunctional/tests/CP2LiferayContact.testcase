@@ -6,35 +6,32 @@ definition {
 	property testray.main.component.name = "Customer Portal";
 
 	setUp {
-
 	}
 
 	tearDown {
+	}
+
+	@description = "LPS-143375 - Verify if Liferay Contact displays Liferay Contact's email."
+	@priority = "4"
+	test IsContactEmailDisplayed {
+
+		// TODO LPS-143375 Verify if Liferay Contact displays Liferay Contact's email.
 
 	}
 
-
-    @description = "LPS-143373 - Verify if Liferay Contact displays Liferay Contact's name."
+	@description = "LPS-143373 - Verify if Liferay Contact displays Liferay Contact's name."
 	@priority = "4"
 	test IsContactNameDisplayed {
-		
-        // TODO LPS-143373 Verify if Liferay Contact displays Liferay Contact's name.
-		
+
+		// TODO LPS-143373 Verify if Liferay Contact displays Liferay Contact's name.
+
 	}
 
 	@description = "LPS-143374 - Verify if Liferay Contact displays Liferay Contact's role."
 	@priority = "3"
 	test IsContactRoleDisplayed {
 
-        // TODO LPS-143374 Verify if Liferay Contact displays Liferay Contact's role.
-
-	}
-
-	@description = "LPS-143375 - Verify if Liferay Contact displays Liferay Contact's email."
-	@priority = "4"
-	test IsContactEmailDisplayed {
-		
-        // TODO LPS-143375 Verify if Liferay Contact displays Liferay Contact's email.
+		// TODO LPS-143374 Verify if Liferay Contact displays Liferay Contact's role.
 
 	}
 

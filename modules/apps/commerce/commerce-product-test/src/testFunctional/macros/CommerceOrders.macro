@@ -80,6 +80,21 @@ definition {
 		}
 	}
 
+	macro editCartPortletOrderQuantity {
+		Type(
+			locator1 = "CommerceAccelerators#CART_PORTLET_ORDER_QUANTITY",
+			value1 = "${orderQuantity}");
+
+		Click(
+			key_text = "Update",
+			locator1 = "Button#ANY");
+
+
+		AssertTextEquals(
+			locator1 = "CommerceAccelerators#CART_PORTLET_ORDER_QUANTITY",
+			value1 = "${orderQuantity}");
+	}
+
 	macro editOrderItemDetails {
 		CommerceNavigator.gotoEntry(entryName = "${orderItemSKU}");
 

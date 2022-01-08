@@ -276,6 +276,110 @@ definition {
 		}
 	}
 
+	@description = "COMMERCE-7695. As a buyer, I want to verify if I will be redirected to the product details when I click on the item in the minicart"
+	@priority = "3"
+	test ClickOnCartItemRedirectToProductDetails {
+		property portal.acceptance = "false";
+
+		task ("Given a Commerce Minium site") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			ApplicationsMenu.gotoSite(site = "Minium");
+
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+			CommerceAcceleratorsInitializer.createNewAccountViaFront(accountName = "Commerce Account");
+		}
+
+		task ("And Given a product in the cart") {
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+			CommerceNavigator.searchCatalog(productName = "U-Joint");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = "3");
+
+			CommerceNavigator.gotoMiniCart();
+
+			FrontStore.viewMiniCartItem(
+				cartItemName = "U-Joint",
+				cartItemQuantity = "3",
+				cartItemSKU = "MIN55861");
+		}
+
+		task ("When the item in the minicart is selected") {
+			CommerceNavigator.gotoMiniCartEntry(
+				cartItemSKU = "MIN55861",
+				entryName = "U-Joint");
+		}
+
+		task ("Then the user is navigated to the product detail page") {
+			FrontStore.viewProductDetail(FSProductName = "U-Joint");
+		}
+
+		task ("And When the product in the minicart has the number in the quantity box changed") {
+			CommerceNavigator.gotoMiniCart();
+
+			FrontStore.viewMiniCartItem(
+				cartItemName = "U-Joint",
+				cartItemQuantity = "3",
+				cartItemSKU = "MIN55861");
+
+			CommerceNavigator.editMiniCartItemQuantity(
+				cartItemSKU = "MIN55861",
+				productQuantity = "5");
+		}
+
+		task ("Then the item quantity will be changed to the new number") {
+			CommerceNavigator.validateMiniCartItemQuantity(
+				cartItemSKU = "MIN55861",
+				productQuantity = "5");
+		}
+	}
+
+	@description = "COMMERCE-7751 As a buyer, I want to add a cart widget to the pending orders page and I want to view the product details and edit the quantity of an item in the cart widget"
+	@priority = "3"
+	test ClickOnCartItemWidgetRedirectToProductDetails {
+		property portal.acceptance = "false";
+
+		task ("Given a Commerce Minium Site") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			ApplicationsMenu.gotoSite(site = "Minium");
+
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+			CommerceAcceleratorsInitializer.createNewAccountViaFront(accountName = "Commerce Account");
+		}
+
+		task ("And Given a product in the cart") {
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+			CommerceNavigator.searchCatalog(productName = "U-Joint");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = "3");
+		}
+
+		task ("When a cart widget is added to pending orders page") {
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Pending Orders");
+
+			Portlet.addPGCmd(portletName = "Cart");
+		}
+
+		task ("Then clicking on product in cart widget navigates to product detail page") {
+			CommerceNavigator.viewCartPortletEntry(productName = "U-Joint");
+
+			FrontStore.viewProductDetail(FSProductName = "U-Joint");
+
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Pending Orders");
+
+			CommerceOrders.editCartPortletOrderQuantity(orderQuantity = "2");
+		}
+	}
+
 	@description = "COMMERCE-6335. As a buyer, I want to edit the quantity of an bundled product in the mini-cart using it's quantity selector and I want to view the changes applied to the mini-cart summary and the bundled items to change their quantity"
 	@priority = "3"
 	test EditBundledProductQuantityFromMiniCart {
@@ -581,6 +685,70 @@ definition {
 			key_cartItemSKU = "MIN55859",
 			locator1 = "CommerceAccelerators#MINI_CART_ITEM_NAME_USING_SKU",
 			value1 = "Torque Converters");
+	}
+
+	@description = "COMMERCE-7736, As a buyer, I want to be able to view product details for more than one item in the cart"
+	@priority = "3"
+	test VerifyTheProductDetailPageRedirectWithTwoProducts {
+		property portal.acceptance = "false";
+
+		task ("Given a Commerce Minium Site") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			ApplicationsMenu.gotoSite(site = "Minium");
+
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+			CommerceAcceleratorsInitializer.createNewAccountViaFront(accountName = "Commerce Account");
+		}
+
+		task ("And Given 2 products in the cart") {
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+			CommerceNavigator.searchCatalog(productName = "U-Joint");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = "3");
+
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+			CommerceNavigator.searchCatalog(productName = "ABS Sensor");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "ABS Sensor",
+				productQuantity = "1");
+		}
+
+		task ("When the product in the minicart is clicked") {
+			CommerceNavigator.gotoMiniCart();
+
+			FrontStore.viewMiniCartItem(
+				cartItemName = "U-Joint",
+				cartItemQuantity = "3",
+				cartItemSKU = "MIN55861");
+
+			FrontStore.viewMiniCartItem(
+				cartItemName = "ABS Sensor",
+				cartItemQuantity = "1",
+				cartItemSKU = "MIN93015");
+
+			CommerceNavigator.gotoMiniCartEntry(
+				cartItemSKU = "MIN55861",
+				entryName = "U-Joint");
+		}
+
+		task ("Then the user will be navigated to the product detail page") {
+			FrontStore.viewProductDetail(FSProductName = "U-Joint");
+
+			CommerceNavigator.gotoMiniCart();
+
+			CommerceNavigator.gotoMiniCartEntry(
+				cartItemSKU = "MIN93015",
+				entryName = "ABS Sensor");
+
+			FrontStore.viewProductDetail(FSProductName = "ABS Sensor");
+		}
 	}
 
 	@description = "COMMERCE-6348. As a buyer, I want the first selectable quantity of a cart item to be the minimum multiple quantity if Minimum Order Quantity is higher than Multiple Order Quantity"

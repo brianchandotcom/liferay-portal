@@ -1,5 +1,12 @@
 definition {
 
+	macro editMiniCartItemQuantity {
+		Type(
+			key_cartItemSKU = "${cartItemSKU}",
+			locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY",
+			value1 = "${productQuantity}");
+	}
+
 	macro gotoCommercePortletNavItem {
 		AssertClick(
 			key_navItem = "${navItem}",
@@ -25,6 +32,13 @@ definition {
 		Click.clickNoMouseOver(locator1 = "CommerceAccelerators#MINI_CART_BUTTON");
 
 		WaitForElementPresent(locator1 = "CommerceAccelerators#MINI_CART_OPENED");
+	}
+
+	macro gotoMiniCartEntry {
+		AssertClickNoError(
+			key_cartItemSKU = "${cartItemSKU}",
+			locator1 = "CommerceAccelerators#MINI_CART_ITEM_NAME_USING_SKU",
+			value1 = "${entryName}");
 	}
 
 	macro gotoMiniumSidebarItem {
@@ -95,6 +109,14 @@ definition {
 			locator1 = "CommerceEntry#TABLE_LIST_TITLE");
 	}
 
+	macro searchCatalog {
+		Type(
+			locator1 = "AppBuilder#SEARCH_BAR_INPUT",
+			value1 = "${productName}");
+
+		Click(locator1 = "Button#SUBMIT");
+	}
+
 	macro searchEntry {
 		AssertElementPresent(locator1 = "CommerceNavigation#SEARCH_FIELD");
 
@@ -112,6 +134,19 @@ definition {
 			key_sortFieldName = "${sortFieldName}",
 			locator1 = "CommerceNavigation#SORT_FIELD",
 			value1 = "${sortFieldName}");
+	}
+
+	macro validateMiniCartItemQuantity {
+		AssertTextEquals(
+			key_cartItemSKU = "${cartItemSKU}",
+			locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY",
+			value1 = "${productQuantity}");
+	}
+
+	macro viewCartPortletEntry {
+		Click(
+			key_productName = "${productName}",
+			locator1 = "CommerceAccelerators#CART_PORTLET_ORDER_DESCRIPTION");
 	}
 
 	macro viewFilterResultsSpecificOrder {

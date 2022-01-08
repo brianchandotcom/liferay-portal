@@ -519,6 +519,21 @@
 	<td>//div[contains(@class,'add-to-cart d-flex my-2 pt-5')]//a[contains(@href,'${key_productName}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>CART_PORTLET_ORDER_QUANTITY</td>
+	<td>//input[@id='_com_liferay_commerce_cart_content_web_internal_portlet_CommerceCartContentPortlet_moil_column_2d_1_1_Quantity']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CART_PORTLET_ORDER_DESCRIPTION</td>
+	<td>//td[contains(@class, 'lfr-description-column')]//a[contains(text(),'${key_productName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CART_PORTLET_ORDER_UPDATE</td>
+	<td>//span[contains(text(),'Update')]</td>
+	<td></td>
+</tr>
 <!--COMPARE-->
 <tr>
 	<td>CHECK_ITEM_COMPARE</td>

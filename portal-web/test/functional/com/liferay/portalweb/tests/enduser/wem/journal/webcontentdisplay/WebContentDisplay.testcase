@@ -120,51 +120,6 @@ definition {
 	}
 
 	@priority = "5"
-	test AddExistingPageAsDisplayPageInSiteCP {
-		property portal.acceptance = "true";
-		property testray.component.names = "Training,Web Content Administration";
-
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Site Page Name");
-
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Site Page Name",
-			widgetName = "Asset Publisher");
-
-		Navigator.gotoSitePage(
-			pageName = "Site Page Name",
-			siteName = "Test Site Name");
-
-		AssetPublisherPortlet.configureDisplaySettings(displaySettings = "Set as the Default Asset Publisher for This Page");
-
-		JSONWebcontent.addWebContent(
-			content = "Web Content Content",
-			groupName = "Test Site Name",
-			title = "Web Content Title");
-
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
-
-		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
-
-		WebContent.editDisplayPage(
-			pageName = "Site Page Name",
-			pageType = "Public Pages",
-			webContentTitle = "Web Content Title");
-
-		PortletEntry.publish();
-
-		Navigator.gotoSitePage(
-			pageName = "Site Page Name",
-			siteName = "Test Site Name");
-
-		WebContent.viewPGViaAP(
-			webContentContent = "Web Content Content",
-			webContentTitle = "Web Content Title");
-	}
-
-	@priority = "5"
 	test AddImageToWebContentViaItemSelector {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training,Web Content Administration";

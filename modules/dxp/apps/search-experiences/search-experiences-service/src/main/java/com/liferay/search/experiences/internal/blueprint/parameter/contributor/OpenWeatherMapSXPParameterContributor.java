@@ -16,6 +16,7 @@ package com.liferay.search.experiences.internal.blueprint.parameter.contributor;
 
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -67,35 +68,55 @@ public class OpenWeatherMapSXPParameterContributor
 			return;
 		}
 
-		JSONObject jsonObject = IpstackWebCacheItem.get(
+		JSONObject jsonObject1 = IpstackWebCacheItem.get(
 			ipAddress, _getIpstackConfiguration(searchContext.getCompanyId()));
 
-		if (jsonObject.length() == 0) {
+		if (jsonObject1.length() == 0) {
 			return;
 		}
 
-		String latitude = jsonObject.getString("ipstack.latitude");
-		String longitude = jsonObject.getString("ipstack.longitude");
+		String latitude = jsonObject1.getString("latitude");
+		String longitude = jsonObject1.getString("longitude");
 
-		jsonObject = OpenWeatherMapWebCacheItem.get(
+		JSONObject jsonObject2 = OpenWeatherMapWebCacheItem.get(
 			latitude, longitude, openWeatherMapConfiguration);
 
-		if (jsonObject.length() == 0) {
+		if (jsonObject2.length() == 0) {
 			return;
 		}
 
 		sxpParameters.add(
 			new DoubleSXPParameter(
-				"openweathermap.temperature", true,
-				jsonObject.getDouble("temp")));
-		sxpParameters.add(
-			new IntegerSXPParameter(
-				"openweathermap.weather_condition_id", true,
-				jsonObject.getInt("id")));
+				"openweathermap.temp", true,
+				JSONUtil.getValueAsDouble(
+					jsonObject2, "JSONObject/main", "Object/temp")));
+
 		sxpParameters.add(
 			new StringSXPParameter(
-				"openweathermap.weather_condition_name", true,
-				jsonObject.getString("main")));
+				"openweathermap.weather_description", true,
+				JSONUtil.getValueAsString(
+					jsonObject2, "JSONArray/weather", "JSONObject/0",
+					"Object/description")));
+
+		sxpParameters.add(
+			new IntegerSXPParameter(
+				"openweathermap.weather_id", true,
+				JSONUtil.getValueAsInt(
+					jsonObject2, "JSONArray/weather", "JSONObject/0",
+					"Object/id")));
+
+		sxpParameters.add(
+			new StringSXPParameter(
+				"openweathermap.weather_main", true,
+				JSONUtil.getValueAsString(
+					jsonObject2, "JSONArray/weather", "JSONObject/0",
+					"Object/main")));
+
+		sxpParameters.add(
+			new DoubleSXPParameter(
+				"openweathermap.wind_speed", true,
+				JSONUtil.getValueAsDouble(
+					jsonObject2, "JSONObject/wind", "Object/speed")));
 	}
 
 	@Override
@@ -116,14 +137,19 @@ public class OpenWeatherMapSXPParameterContributor
 
 		return Arrays.asList(
 			new SXPParameterContributorDefinition(
-				DoubleSXPParameter.class, "temperature",
-				"openweathermap.temperature"),
+				DoubleSXPParameter.class, "temperature", "openweathermap.temp"),
+			new SXPParameterContributorDefinition(
+				StringSXPParameter.class, "description",
+				"openweathermap.weather_description"),
 			new SXPParameterContributorDefinition(
 				IntegerSXPParameter.class, "weather-condition-id",
 				"openweathermap.weather_id"),
 			new SXPParameterContributorDefinition(
 				StringSXPParameter.class, "weather-condition-name",
-				"openweathermap.weather_name"));
+				"openweathermap.weather_main"),
+			new SXPParameterContributorDefinition(
+				DoubleSXPParameter.class, "wind-speed",
+				"openweathermap.wind_speed"));
 	}
 
 	private IpstackConfiguration _getIpstackConfiguration(long companyId) {

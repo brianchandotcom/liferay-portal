@@ -200,8 +200,7 @@ public class UserSXPParameterContributor implements SXPParameterContributor {
 				_getCurrentSiteRoleIds(scopeGroupId, user)));
 		sxpParameters.add(
 			new StringSXPParameter(
-				"user.email_address_domain", true,
-				_getEmailAddressDomain(user)));
+				"user.email_domain", true, _getEmailAddressDomain(user)));
 		sxpParameters.add(
 			new StringSXPParameter(
 				"user.first_name", true, user.getFirstName()));
@@ -257,7 +256,7 @@ public class UserSXPParameterContributor implements SXPParameterContributor {
 		int x = GetterUtil.getInteger(formatter.format(date));
 		int y = GetterUtil.getInteger(formatter.format(new Date()));
 
-		return (x - y) / 10000;
+		return (y - x) / 10000;
 	}
 
 	private Long[] _getCurrentSiteRoleIds(Long scopeGroupId, User user) {

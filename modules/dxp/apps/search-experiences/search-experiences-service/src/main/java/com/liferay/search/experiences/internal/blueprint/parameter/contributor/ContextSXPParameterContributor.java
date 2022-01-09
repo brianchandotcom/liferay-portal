@@ -131,7 +131,7 @@ public class ContextSXPParameterContributor implements SXPParameterContributor {
 				LongSXPParameter.class, "company-id", "context.company_id"),
 			new SXPParameterContributorDefinition(
 				LongSXPParameter.class, "publication-id",
-				"context.ct_collection_id"),
+				"context.publication_id"),
 			new SXPParameterContributorDefinition(
 				BooleanSXPParameter.class, "is-staging-group",
 				"context.is_staging_group"),

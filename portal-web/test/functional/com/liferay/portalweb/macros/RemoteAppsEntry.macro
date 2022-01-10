@@ -67,25 +67,25 @@ definition {
 		Type(
 			key_id = "customElementURLs",
 			key_index = "1",
-			locator1 = "RemoteAppsEntry#URL_ROW",
+			locator1 = "RemoteAppsEntry#URL_ROW_INDEX",
 			value1 = "${entryURL1}");
 
 		Type(
 			key_id = "customElementURLs",
 			key_index = "2",
-			locator1 = "RemoteAppsEntry#URL_ROW",
+			locator1 = "RemoteAppsEntry#URL_ROW_INDEX",
 			value1 = "${entryURL2}");
 
 		Type(
 			key_id = "customElementCSSURLs",
 			key_index = "1",
-			locator1 = "RemoteAppsEntry#URL_ROW",
+			locator1 = "RemoteAppsEntry#URL_ROW_INDEX",
 			value1 = "${entryCSSURL1}");
 
 		Type(
 			key_id = "customElementCSSURLs",
 			key_index = "2",
-			locator1 = "RemoteAppsEntry#URL_ROW",
+			locator1 = "RemoteAppsEntry#URL_ROW_INDEX",
 			value1 = "${entryCSSURL2}");
 	}
 

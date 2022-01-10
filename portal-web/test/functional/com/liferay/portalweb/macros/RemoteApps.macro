@@ -61,12 +61,12 @@ definition {
 			value1 = "Custom Element");
 
 		RemoteAppsEntry.addCustomElementMultipleURLs(
-			entryCSSURL1 = "${entryCSSURL1}",
-			entryCSSURL2 = "${entryCSSURL2}",
-			entryHTMLName = "${entryHTMLName}",
-			entryName = "${entryName}",
-			entryURL1 = "${entryURL1}",
-			entryURL2 = "${entryURL2}");
+			entryCSSURL1 = "https://liferay.github.io/liferay-frontend-projects/index1.css",
+			entryCSSURL2 = "https://liferay.github.io/liferay-frontend-projects/index2.css",
+			entryHTMLName = "vanilla-counter",
+			entryName = "Vanilla Counter",
+			entryURL1 = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index1.js",
+			entryURL2 = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index2.js");
 
 		PortletEntry.publish();
 	}
@@ -105,40 +105,40 @@ definition {
 
 	macro assertCustomElementMultipleURLFields {
 		AssertTextEquals(
-			custom_entryName = "${entryName}",
+			custom_entryName = "Vanilla Counter",
 			key_text = "Name",
 			locator1 = "TextInput#ANY",
-			value1 = "${entryName}");
+			value1 = "Vanilla Counter");
 
 		AssertTextEquals(
-			custom_entryHTMLName = "${entryHTMLName}",
+			custom_entryHTMLName = "vanilla-counter",
 			key_text = "HTML Element Name",
 			locator1 = "TextInput#ANY",
-			value1 = "${entryHTMLName}");
+			value1 = "vanilla-counter");
 
 		AssertTextEquals(
 			key_id = "customElementURLs",
 			key_index = "1",
-			locator1 = "RemoteAppsEntry#URL_ROW",
-			value1 = "${entryURL1}");
+			locator1 = "RemoteAppsEntry#URL_ROW_INDEX",
+			value1 = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index1.js");
 
 		AssertTextEquals(
 			key_id = "customElementURLs",
 			key_index = "2",
-			locator1 = "RemoteAppsEntry#URL_ROW",
-			value1 = "${entryURL2}");
+			locator1 = "RemoteAppsEntry#URL_ROW_INDEX",
+			value1 = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index2.js");
 
 		AssertTextEquals(
 			key_id = "customElementCSSURLs",
 			key_index = "1",
-			locator1 = "RemoteAppsEntry#URL_ROW",
-			value1 = "${entryCSSURL1}");
+			locator1 = "RemoteAppsEntry#URL_ROW_INDEX",
+			value1 = "https://liferay.github.io/liferay-frontend-projects/index1.css");
 
 		AssertTextEquals(
 			key_id = "customElementCSSURLs",
 			key_index = "2",
-			locator1 = "RemoteAppsEntry#URL_ROW",
-			value1 = "${entryCSSURL2}");
+			locator1 = "RemoteAppsEntry#URL_ROW_INDEX",
+			value1 = "https://liferay.github.io/liferay-frontend-projects/index2.css");
 	}
 
 	macro assertTableEntryNameNotPresent {

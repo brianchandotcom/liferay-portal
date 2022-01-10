@@ -144,6 +144,10 @@ definition {
 			value1 = "${entryTitle}");
 	}
 
+	macro gotoFriendlyURLHistory {
+		Click(locator1 = "Icon#FRIENDLY_URL_HISTORY");
+	}
+
 	macro gotoPG {
 		var key_entryTitle = "${entryTitle}";
 

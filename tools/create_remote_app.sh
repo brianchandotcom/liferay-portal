@@ -174,11 +174,6 @@ EOF
 	#
 
 	cat <<EOF > common/services/liferay/liferay.js
-/**
- * Whenever you need to access the global variable Liferay, use this
- * to avoid runtime errors when you run the React application out of Liferay Portal
- */
-
 export const Liferay = window.Liferay || {
 ThemeDisplay: {
 	getCompanyGroupId: () => 0,

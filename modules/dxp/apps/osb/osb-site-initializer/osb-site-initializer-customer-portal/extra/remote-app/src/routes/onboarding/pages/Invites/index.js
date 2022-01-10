@@ -26,9 +26,9 @@ const SLA = {
 	platinum: 'Platinum',
 };
 
-const Invites = () => {
+const Invites = ({project}) => {
 	const {supportLink} = useApplicationProvider();
-	const [{project, subscriptionGroups}, dispatch] = useOnboarding();
+	const [{subscriptionGroups}, dispatch] = useOnboarding();
 	const {errors, setFieldValue, setTouched, values} = useFormikContext();
 	const [rolesData, setRolesData] = useState();
 
@@ -72,8 +72,7 @@ const Invites = () => {
 				payload: steps.dxpCloud,
 				type: actionTypes.CHANGE_STEP,
 			});
-		}
-		else {
+		} else {
 			window.location.href = `${API_BASE_URL}/${LiferayTheme.getLiferaySiteName()}/overview?${
 				PARAMS_KEYS.PROJECT_APPLICATION_EXTERNAL_REFERENCE_CODE
 			}=${project.accountKey}`;
@@ -103,8 +102,7 @@ const Invites = () => {
 			if (!error) {
 				nextPage();
 			}
-		}
-		else {
+		} else {
 			setInitialError(true);
 			setBaseButtonDisabled(true);
 			setTouched({

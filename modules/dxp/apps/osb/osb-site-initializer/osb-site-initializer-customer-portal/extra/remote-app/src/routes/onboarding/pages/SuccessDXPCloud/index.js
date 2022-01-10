@@ -3,11 +3,8 @@ import {LiferayTheme} from '../../../../common/services/liferay';
 import {PARAMS_KEYS} from '../../../../common/services/liferay/search-params';
 import {API_BASE_URL} from '../../../../common/utils';
 import Layout from '../../components/Layout';
-import {useOnboarding} from '../../context';
 
-const SuccessDXPCloud = () => {
-	const [{project}] = useOnboarding();
-
+const SuccessDXPCloud = ({project}) => {
 	const onClickDone = () => {
 		window.location.href = `${API_BASE_URL}/${LiferayTheme.getLiferaySiteName()}/overview?${
 			PARAMS_KEYS.PROJECT_APPLICATION_EXTERNAL_REFERENCE_CODE

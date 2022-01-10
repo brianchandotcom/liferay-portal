@@ -7,25 +7,25 @@ import SuccessDXPCloud from './SuccessDXPCloud';
 import Welcome from './Welcome';
 
 const Pages = () => {
-	const [{project, step, userAccount}] = useContext(AppContext);
+	const [{project, step}] = useContext(AppContext);
 
 	const StepsLayout = {
 		[steps.invites]: {
-			Component: <Invites />,
+			Component: <Invites project={project} />,
 		},
 		[steps.dxpCloud]: {
-			Component: <SetupDXPCloud />,
+			Component: <SetupDXPCloud project={project} />,
 		},
 		[steps.successDxpCloud]: {
-			Component: <SuccessDXPCloud />,
+			Component: <SuccessDXPCloud project={project} />,
 		},
 		[steps.welcome]: {
-			Component: <Welcome project={project} userAccount={userAccount} />,
+			Component: <Welcome />,
 			Skeleton: <Welcome.Skeleton />,
 		},
 	};
 
-	if (userAccount && project) {
+	if (project) {
 		return StepsLayout[step].Component;
 	}
 

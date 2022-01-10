@@ -207,7 +207,12 @@ public class UpdateLanguageAction implements Action {
 			}
 		}
 
-		if (isFriendlyURLResolver(layoutURL) || layout.isTypeControlPanel()) {
+		if (layoutURL.startsWith(themeDisplay.getPathMain())) {
+			redirect = layoutURL;
+		}
+		else if (isFriendlyURLResolver(layoutURL) ||
+				 layout.isTypeControlPanel()) {
+
 			redirect = layoutURL + friendlyURLSeparatorPart;
 		}
 		else if (layoutURL.equals(StringPool.SLASH) ||

@@ -54,8 +54,8 @@ public class SXPBlueprintWrapper
 		attributes.put("configurationJSON", getConfigurationJSON());
 		attributes.put("description", getDescription());
 		attributes.put("elementInstancesJSON", getElementInstancesJSON());
-		attributes.put("title", getTitle());
 		attributes.put("schemaVersion", getSchemaVersion());
+		attributes.put("title", getTitle());
 		attributes.put("status", getStatus());
 		attributes.put("statusByUserId", getStatusByUserId());
 		attributes.put("statusByUserName", getStatusByUserName());
@@ -133,16 +133,16 @@ public class SXPBlueprintWrapper
 			setElementInstancesJSON(elementInstancesJSON);
 		}
 
-		String title = (String)attributes.get("title");
-
-		if (title != null) {
-			setTitle(title);
-		}
-
 		String schemaVersion = (String)attributes.get("schemaVersion");
 
 		if (schemaVersion != null) {
 			setSchemaVersion(schemaVersion);
+		}
+
+		String title = (String)attributes.get("title");
+
+		if (title != null) {
+			setTitle(title);
 		}
 
 		Integer status = (Integer)attributes.get("status");

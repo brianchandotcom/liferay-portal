@@ -101,10 +101,10 @@ public class SXPBlueprintCacheModel
 		sb.append(description);
 		sb.append(", elementInstancesJSON=");
 		sb.append(elementInstancesJSON);
-		sb.append(", title=");
-		sb.append(title);
 		sb.append(", schemaVersion=");
 		sb.append(schemaVersion);
+		sb.append(", title=");
+		sb.append(title);
 		sb.append(", status=");
 		sb.append(status);
 		sb.append(", statusByUserId=");
@@ -177,18 +177,18 @@ public class SXPBlueprintCacheModel
 			sxpBlueprintImpl.setElementInstancesJSON(elementInstancesJSON);
 		}
 
-		if (title == null) {
-			sxpBlueprintImpl.setTitle("");
-		}
-		else {
-			sxpBlueprintImpl.setTitle(title);
-		}
-
 		if (schemaVersion == null) {
 			sxpBlueprintImpl.setSchemaVersion("");
 		}
 		else {
 			sxpBlueprintImpl.setSchemaVersion(schemaVersion);
+		}
+
+		if (title == null) {
+			sxpBlueprintImpl.setTitle("");
+		}
+		else {
+			sxpBlueprintImpl.setTitle(title);
 		}
 
 		sxpBlueprintImpl.setStatus(status);
@@ -231,8 +231,8 @@ public class SXPBlueprintCacheModel
 		configurationJSON = (String)objectInput.readObject();
 		description = objectInput.readUTF();
 		elementInstancesJSON = (String)objectInput.readObject();
-		title = objectInput.readUTF();
 		schemaVersion = objectInput.readUTF();
+		title = objectInput.readUTF();
 
 		status = objectInput.readInt();
 
@@ -289,18 +289,18 @@ public class SXPBlueprintCacheModel
 			objectOutput.writeObject(elementInstancesJSON);
 		}
 
-		if (title == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(title);
-		}
-
 		if (schemaVersion == null) {
 			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(schemaVersion);
+		}
+
+		if (title == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(title);
 		}
 
 		objectOutput.writeInt(status);
@@ -328,8 +328,8 @@ public class SXPBlueprintCacheModel
 	public String configurationJSON;
 	public String description;
 	public String elementInstancesJSON;
-	public String title;
 	public String schemaVersion;
+	public String title;
 	public int status;
 	public long statusByUserId;
 	public String statusByUserName;

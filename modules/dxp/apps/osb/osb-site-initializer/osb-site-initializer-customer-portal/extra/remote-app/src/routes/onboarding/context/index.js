@@ -138,9 +138,8 @@ const AppContextProvider = ({assetsPath, children}) => {
 						variables: {
 							accountFlag: {
 								accountKey: projectExternalReferenceCode,
+								finished: true,
 								name: ROUTES.ONBOARDING,
-								userUuid: user.externalReferenceCode,
-								value: 1,
 							},
 						},
 					});

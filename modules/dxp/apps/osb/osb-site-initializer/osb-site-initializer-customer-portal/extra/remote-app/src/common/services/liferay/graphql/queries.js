@@ -95,11 +95,9 @@ export const addAccountFlag = gql`
 	mutation addAccountFlag($accountFlag: InputC_AccountFlag!) {
 		c {
 			createAccountFlag(AccountFlag: $accountFlag) {
-				accountFlagId
 				accountKey
 				name
-				userUuid
-				value
+				finished
 			}
 		}
 	}
@@ -184,7 +182,7 @@ export const getAccountRolesAndAccountFlags = gql`
 				items {
 					accountKey
 					name
-					userUuid
+					finished
 				}
 			}
 		}

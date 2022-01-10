@@ -178,4 +178,30 @@
 		<field name="reverse" type="boolean" />
 		<field name="type" type="String" />
 	</model>
+	<model name="com.liferay.object.model.ObjectView">
+		<field name="mvccVersion" type="long" />
+		<field name="uuid" type="String" />
+		<field name="objectViewId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="objectDefinitionId" type="long" />
+		<field name="defaultObjectView" type="boolean" />
+		<field localized="true" name="name" type="String" />
+	</model>
+	<model name="com.liferay.object.model.ObjectViewColumn">
+		<field name="mvccVersion" type="long" />
+		<field name="uuid" type="String" />
+		<field name="objectViewColumnId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="objectViewId" type="long" />
+		<field name="objectFieldName" type="String" />
+		<field name="priority" type="int" />
+	</model>
 </model-hints>

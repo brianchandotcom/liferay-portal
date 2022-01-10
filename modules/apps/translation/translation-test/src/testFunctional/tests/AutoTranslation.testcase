@@ -496,7 +496,7 @@ definition {
 		if (IsTextEqual.isPartialText(locator1 = "Toolbar#FEEDBACK", value1 = "Successfully received translations.")) {
 			Translations.viewTargetFields(
 				webContentContent = "これは英語のウェブ記事の内容です",
-				webContentDescription = "これは英語のウェブ記事の説明です",
+				webContentDescription = "これは英語でのウェブ記事の説明です",
 				webContentTitle = "これは英語のウェブ記事のタイトルです");
 
 			PortletEntry.publish();

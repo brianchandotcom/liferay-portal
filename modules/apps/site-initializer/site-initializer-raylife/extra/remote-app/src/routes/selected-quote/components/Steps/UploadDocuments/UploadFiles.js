@@ -19,8 +19,7 @@ const UploadFiles = ({dropAreaProps, files, setFiles, title}) => {
 			const filteredFiles = files.filter((file) => file.id !== id);
 
 			setFiles(filteredFiles);
-		}
-		catch (error) {
+		} catch (error) {
 			console.error(error);
 		}
 	};
@@ -47,7 +46,7 @@ const UploadFiles = ({dropAreaProps, files, setFiles, title}) => {
 					<InfoBadge>
 						<div className="alert-content align-items-center d-flex justify-content-between w-100">
 							<div className="alert-description font-weight-normal text-paragraph">
-								{dropAreaProps.limitFiles} file upload limit
+								{dropAreaProps.limitFiles} files upload limit
 								reached for {title}.
 							</div>
 

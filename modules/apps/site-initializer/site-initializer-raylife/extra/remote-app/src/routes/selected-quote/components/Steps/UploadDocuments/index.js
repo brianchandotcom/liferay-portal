@@ -59,6 +59,7 @@ const UploadDocuments = () => {
 			sections.map((section) => {
 				if (section.title === _section.title) {
 					section.files = files;
+					section.error = false;
 				}
 
 				return section;
@@ -157,8 +158,7 @@ const UploadDocuments = () => {
 					);
 
 					setFilePropertyValue(fileEntry.id, 'documentId', data.id);
-				}
-				catch (error) {
+				} catch (error) {
 					console.error(error);
 				}
 			}

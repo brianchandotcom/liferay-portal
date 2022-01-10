@@ -64,19 +64,18 @@ public class SXPElementResourceTest extends BaseSXPElementResourceTestCase {
 			sxpElement);
 
 		sxpElement.setCreateDate(postSXPElement.getCreateDate());
-		sxpElement.setId(postSXPElement.getId());
-		sxpElement.setModifiedDate(postSXPElement.getModifiedDate());
-		sxpElement.setSchemaVersion(postSXPElement.getSchemaVersion());
-		sxpElement.setUserName(postSXPElement.getUserName());
-
 		sxpElement.setDescription_i18n(
 			Collections.singletonMap(
 				LocaleUtil.toBCP47LanguageId(LocaleUtil.US), description));
+		sxpElement.setId(postSXPElement.getId());
+		sxpElement.setModifiedDate(postSXPElement.getModifiedDate());
 		sxpElement.setReadOnly(false);
+		sxpElement.setSchemaVersion(postSXPElement.getSchemaVersion());
 		sxpElement.setTitle_i18n(
 			Collections.singletonMap(
 				LocaleUtil.toBCP47LanguageId(LocaleUtil.US), title));
 		sxpElement.setType(0);
+		sxpElement.setUserName(postSXPElement.getUserName());
 
 		Assert.assertEquals(sxpElement.toString(), postSXPElement.toString());
 

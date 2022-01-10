@@ -286,12 +286,6 @@ public interface PropsKeys {
 		AUTO_DEPLOY_WEBSPHERE_WSADMIN_APP_MANAGER_UPDATE_OPTIONS =
 			"auto.deploy.websphere.wsadmin.app.manager.update.options";
 
-	public static final String AUTO_DEPLOY_WEBSPHERE_WSADMIN_APP_NAME_SUFFIX =
-		"auto.deploy.websphere.wsadmin.app.name.suffix";
-
-	public static final String AUTO_DEPLOY_WEBSPHERE_WSADMIN_PROPERTIES_FILE =
-		"auto.deploy.websphere.wsadmin.properties.file.name";
-
 	public static final String AUTO_LOGIN_HOOKS = "auto.login.hooks";
 
 	public static final String AUTO_LOGIN_IGNORE_HOSTS =

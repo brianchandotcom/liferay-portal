@@ -304,12 +304,6 @@ public class PropsValues {
 				PropsKeys.
 					AUTO_DEPLOY_WEBSPHERE_WSADMIN_APP_MANAGER_UPDATE_OPTIONS);
 
-	public static final String AUTO_DEPLOY_WEBSPHERE_WSADMIN_APP_NAME_SUFFIX =
-		PropsUtil.get(PropsKeys.AUTO_DEPLOY_WEBSPHERE_WSADMIN_APP_NAME_SUFFIX);
-
-	public static final String AUTO_DEPLOY_WEBSPHERE_WSADMIN_PROPERTIES_FILE =
-		PropsUtil.get(PropsKeys.AUTO_DEPLOY_WEBSPHERE_WSADMIN_PROPERTIES_FILE);
-
 	public static final boolean AXIS_SERVLET_ENABLED = GetterUtil.getBoolean(
 		PropsUtil.get(PropsKeys.AXIS_SERVLET_ENABLED));
 

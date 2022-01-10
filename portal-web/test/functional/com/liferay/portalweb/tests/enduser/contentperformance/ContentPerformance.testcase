@@ -22,6 +22,8 @@ definition {
 		}
 
 		task ("Go to DXP portal, login and create site") {
+			TestCase.setUpPortalInstance();
+			
 			User.firstLoginPG();
 
 			Navigator.openURL();

@@ -37,6 +37,8 @@ DisplayPageTypeSiteNavigationMenuTypeDisplayContext displayPageTypeSiteNavigatio
 						).put(
 							"classTypeId", displayPageTypeSiteNavigationMenuTypeDisplayContext.getClassTypeId()
 						).put(
+							"data", displayPageTypeSiteNavigationMenuTypeDisplayContext.getDataJSONArray()
+						).put(
 							"title", displayPageTypeSiteNavigationMenuTypeDisplayContext.getTitle()
 						).put(
 							"type", displayPageTypeSiteNavigationMenuTypeDisplayContext.getType()
@@ -46,7 +48,13 @@ DisplayPageTypeSiteNavigationMenuTypeDisplayContext displayPageTypeSiteNavigatio
 					).put(
 						"itemType", displayPageTypeSiteNavigationMenuTypeDisplayContext.getItemType()
 					).put(
+						"locales", displayPageTypeSiteNavigationMenuTypeDisplayContext.getAvailableLocalesJSONArray()
+					).put(
+						"localizedNames", displayPageTypeSiteNavigationMenuTypeDisplayContext.getLocalizedNamesJSONObject()
+					).put(
 						"namespace", liferayPortletResponse.getNamespace()
+					).put(
+						"useCustomName", displayPageTypeSiteNavigationMenuTypeDisplayContext.isUseCustomName()
 					).build()
 				%>'
 			/>

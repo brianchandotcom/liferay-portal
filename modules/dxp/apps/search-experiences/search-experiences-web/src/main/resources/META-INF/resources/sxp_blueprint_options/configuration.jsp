@@ -16,10 +16,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-SXPBlueprintOptionsPortletPreferences sxpBlueprintOptionsPortletPreferences = new SXPBlueprintOptionsPortletPreferences(java.util.Optional.ofNullable(portletPreferences));
-%>
-
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />
 
 <liferay-portlet:renderURL portletConfiguration="<%= true %>" var="configurationRenderURL" />
@@ -48,17 +44,17 @@ SXPBlueprintOptionsPortletPreferences sxpBlueprintOptionsPortletPreferences = ne
 						module="sxp_blueprint_options/js/configuration/index"
 						props='<%=
 							HashMapBuilder.<String, Object>put(
-								"initialFederatedSearchKey", sxpBlueprintOptionsPortletPreferences.getFederatedSearchKeyString()
+								"initialFederatedSearchKey", SXPBlueprintOptionsPortletPreferencesUtil.getValue(portletPreferences, "federatedSearchKey")
 							).put(
-								"initialSXPBlueprintId", sxpBlueprintOptionsPortletPreferences.getSXPBlueprintIdString()
+								"initialSXPBlueprintId", SXPBlueprintOptionsPortletPreferencesUtil.getValue(portletPreferences, "sxpBlueprintId")
 							).put(
 								"initialSXPBlueprintTitle", (sxpBlueprint != null) ? HtmlUtil.escape(sxpBlueprint.getTitle(locale)) : StringPool.BLANK
 							).put(
 								"portletNamespace", liferayPortletResponse.getNamespace()
 							).put(
-								"preferenceKeyFederatedSearchKey", _getInputName(SXPBlueprintOptionsPortletPreferences.PREFERENCE_KEY_FEDERATED_SEARCH_KEY)
+								"preferenceKeyFederatedSearchKey", _getInputName("federatedSearchKey")
 							).put(
-								"preferenceKeySXPBlueprintId", _getInputName(SXPBlueprintOptionsPortletPreferences.PREFERENCE_KEY_SXP_BLUEPRINT_ID)
+								"preferenceKeySXPBlueprintId", _getInputName("sxpBlueprintId")
 							).build()
 						%>'
 					/>

@@ -21,7 +21,9 @@ import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchContributor;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchSettings;
 import com.liferay.search.experiences.constants.SXPPortletKeys;
-import com.liferay.search.experiences.web.internal.blueprint.options.portlet.preferences.SXPBlueprintOptionsPortletPreferences;
+import com.liferay.search.experiences.web.internal.blueprint.options.portlet.preferences.SXPBlueprintOptionsPortletPreferencesUtil;
+
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -43,19 +45,20 @@ public class SXPBlueprintOptionsPortletSharedSearchContributor
 	public void contribute(
 		PortletSharedSearchSettings portletSharedSearchSettings) {
 
-		SXPBlueprintOptionsPortletPreferences
-			sxpBlueprintOptionsPortletPreferences =
-				new SXPBlueprintOptionsPortletPreferences(
-					portletSharedSearchSettings.
-						getPortletPreferencesOptional());
+		String federatedSearchKey =
+			SXPBlueprintOptionsPortletPreferencesUtil.getValue(
+				portletSharedSearchSettings.getPortletPreferencesOptional(),
+				"federatedSearchKey");
 
 		SearchRequestBuilder searchRequestBuilder =
 			portletSharedSearchSettings.getFederatedSearchRequestBuilder(
-				sxpBlueprintOptionsPortletPreferences.
-					getFederatedSearchKeyOptional());
+				Optional.of(federatedSearchKey));
 
 		searchRequestBuilder.withSearchContext(
 			searchContext -> {
+				searchContext.setAttribute(
+					"federatedSearchKey", federatedSearchKey);
+
 				String sxpBlueprintId = GetterUtil.getString(
 					searchContext.getAttribute(
 						"search.experiences.blueprint.id"));
@@ -63,14 +66,11 @@ public class SXPBlueprintOptionsPortletSharedSearchContributor
 				if (Validator.isBlank(sxpBlueprintId)) {
 					searchContext.setAttribute(
 						"search.experiences.blueprint.id",
-						sxpBlueprintOptionsPortletPreferences.
-							getSXPBlueprintIdString());
+						SXPBlueprintOptionsPortletPreferencesUtil.getValue(
+							portletSharedSearchSettings.
+								getPortletPreferencesOptional(),
+							"sxpBlueprintId"));
 				}
-
-				searchContext.setAttribute(
-					"federatedSearchKey",
-					sxpBlueprintOptionsPortletPreferences.
-						getFederatedSearchKeyString());
 
 				HttpServletRequest httpServletRequest =
 					_portal.getHttpServletRequest(

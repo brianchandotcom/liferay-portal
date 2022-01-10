@@ -102,6 +102,9 @@ components:
             type: object
         ObjectField:
             properties:
+                DBType:
+                    enum: [BigDecimal, Boolean, Clob, Date, Double, Integer, Long, String]
+                    type: string
                 actions:
                     additionalProperties:
                         additionalProperties:
@@ -138,6 +141,7 @@ components:
                 required:
                     type: boolean
                 type:
+                    deprecated: true
                     enum: [BigDecimal, Boolean, Clob, Date, Double, Integer, Long, String]
                     type: string
         ObjectLayout:

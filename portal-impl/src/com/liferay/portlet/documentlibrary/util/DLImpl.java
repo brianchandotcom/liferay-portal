@@ -850,6 +850,10 @@ public class DLImpl implements DL {
 		return title;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #getUniqueFileName(long, long, String, boolean)}
+	 */
+	@Deprecated
 	@Override
 	public String getUniqueFileName(
 		long groupId, long folderId, String fileName) {

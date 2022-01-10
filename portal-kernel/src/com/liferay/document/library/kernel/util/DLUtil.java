@@ -324,6 +324,10 @@ public class DLUtil {
 		return _dl.getTitleWithExtension(title, extension);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #getUniqueFileName(long, long, String, boolean)}
+	 */
+	@Deprecated
 	public static String getUniqueFileName(
 		long groupId, long folderId, String fileName) {
 

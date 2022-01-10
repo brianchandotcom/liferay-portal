@@ -23,6 +23,7 @@ taglib uri="http://liferay.com/tld/react" prefix="react" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
 <%@ page import="com.liferay.petra.string.StringPool" %><%@
+page import="com.liferay.portal.kernel.settings.ParameterMapSettings" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
@@ -30,8 +31,7 @@ page import="com.liferay.portal.kernel.util.PrefsParamUtil" %><%@
 page import="com.liferay.search.experiences.model.SXPBlueprint" %><%@
 page import="com.liferay.search.experiences.service.SXPBlueprintLocalServiceUtil" %><%@
 page import="com.liferay.search.experiences.web.internal.blueprint.options.portlet.preferences.SXPBlueprintOptionsPortletPreferences" %><%@
-page import="com.liferay.search.experiences.web.internal.blueprint.options.portlet.preferences.SXPBlueprintOptionsPortletPreferencesImpl" %><%@
-page import="com.liferay.search.experiences.web.internal.blueprint.options.util.PortletPreferencesJspUtil" %>
+page import="com.liferay.search.experiences.web.internal.blueprint.options.portlet.preferences.SXPBlueprintOptionsPortletPreferencesImpl" %>
 
 <liferay-theme:defineObjects />
 
@@ -77,9 +77,9 @@ SXPBlueprintOptionsPortletPreferences sxpBlueprintOptionsPortletPreferences = ne
 							).put(
 								"portletNamespace", liferayPortletResponse.getNamespace()
 							).put(
-								"preferenceKeyFederatedSearchKey", PortletPreferencesJspUtil.getInputName(SXPBlueprintOptionsPortletPreferences.PREFERENCE_KEY_FEDERATED_SEARCH_KEY)
+								"preferenceKeyFederatedSearchKey", _getInputName(SXPBlueprintOptionsPortletPreferences.PREFERENCE_KEY_FEDERATED_SEARCH_KEY)
 							).put(
-								"preferenceKeySXPBlueprintId", PortletPreferencesJspUtil.getInputName(SXPBlueprintOptionsPortletPreferences.PREFERENCE_KEY_SXP_BLUEPRINT_ID)
+								"preferenceKeySXPBlueprintId", _getInputName(SXPBlueprintOptionsPortletPreferences.PREFERENCE_KEY_SXP_BLUEPRINT_ID)
 							).build()
 						%>'
 					/>
@@ -94,3 +94,9 @@ SXPBlueprintOptionsPortletPreferences sxpBlueprintOptionsPortletPreferences = ne
 		<aui:button type="cancel" />
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
+
+<%!
+public String _getInputName(String key) {
+	return ParameterMapSettings.PREFERENCES_PREFIX + key + StringPool.DOUBLE_DASH;
+}
+%>

@@ -15,7 +15,8 @@
 package com.liferay.search.experiences.web.internal.blueprint.options.portlet.preferences;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.search.experiences.web.internal.blueprint.options.util.PortletPreferencesHelper;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Optional;
 
@@ -30,13 +31,12 @@ public class SXPBlueprintOptionsPortletPreferencesImpl
 	public SXPBlueprintOptionsPortletPreferencesImpl(
 		Optional<PortletPreferences> portletPreferencesOptional) {
 
-		_portletPreferencesHelper = new PortletPreferencesHelper(
-			portletPreferencesOptional);
+		_portletPreferencesOptional = portletPreferencesOptional;
 	}
 
 	@Override
 	public Optional<String> getFederatedSearchKeyOptional() {
-		return _portletPreferencesHelper.getString(
+		return _getString(
 			SXPBlueprintOptionsPortletPreferences.
 				PREFERENCE_KEY_FEDERATED_SEARCH_KEY);
 	}
@@ -48,7 +48,7 @@ public class SXPBlueprintOptionsPortletPreferencesImpl
 
 	@Override
 	public Optional<String> getSXPBlueprintIdOptional() {
-		return _portletPreferencesHelper.getString(
+		return _getString(
 			SXPBlueprintOptionsPortletPreferences.
 				PREFERENCE_KEY_SXP_BLUEPRINT_ID);
 	}
@@ -58,6 +58,22 @@ public class SXPBlueprintOptionsPortletPreferencesImpl
 		return getSXPBlueprintIdOptional().orElse(StringPool.BLANK);
 	}
 
-	private final PortletPreferencesHelper _portletPreferencesHelper;
+	private Optional<String> _getString(String key) {
+		return _portletPreferencesOptional.flatMap(
+			portletPreferences -> _maybe(
+				portletPreferences.getValue(key, StringPool.BLANK)));
+	}
+
+	private Optional<String> _maybe(String s) {
+		s = StringUtil.trim(s);
+
+		if (Validator.isBlank(s)) {
+			return Optional.empty();
+		}
+
+		return Optional.of(s);
+	}
+
+	private final Optional<PortletPreferences> _portletPreferencesOptional;
 
 }

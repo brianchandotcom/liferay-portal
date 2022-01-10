@@ -85,7 +85,7 @@ public abstract class BaseAPICheck extends BaseCheck {
 				constructorCalls.add(
 					new ConstructorCall(
 						constructorTypeName,
-						_getParameterTypeNames(literalNewDetailAST),
+						getParameterTypeNames(literalNewDetailAST),
 						literalNewDetailAST.getLineNo()));
 			}
 		}
@@ -248,7 +248,7 @@ public abstract class BaseAPICheck extends BaseCheck {
 				methodCalls.add(
 					new MethodCall(
 						methodName, variableTypeName,
-						_getParameterTypeNames(methodCallDetailAST),
+						getParameterTypeNames(methodCallDetailAST),
 						methodCallDetailAST.getLineNo()));
 			}
 		}
@@ -341,6 +341,22 @@ public abstract class BaseAPICheck extends BaseCheck {
 		}
 
 		return methodJSONObjects;
+	}
+
+	protected List<String> getParameterTypeNames(DetailAST detailAST) {
+		List<String> parameterTypeNames = new ArrayList<>();
+
+		DetailAST elistDetailAST = detailAST.findFirstToken(TokenTypes.ELIST);
+
+		List<DetailAST> exprDetailASTList = getAllChildTokens(
+			elistDetailAST, false, TokenTypes.EXPR);
+
+		for (DetailAST exprDetailAST : exprDetailASTList) {
+			parameterTypeNames.add(
+				_getParameterTypeName(exprDetailAST.getFirstChild()));
+		}
+
+		return parameterTypeNames;
 	}
 
 	protected Map<String, Set<Integer>> getTypeNamesMap(
@@ -834,22 +850,6 @@ public abstract class BaseAPICheck extends BaseCheck {
 		}
 
 		return null;
-	}
-
-	private List<String> _getParameterTypeNames(DetailAST detailAST) {
-		List<String> parameterTypeNames = new ArrayList<>();
-
-		DetailAST elistDetailAST = detailAST.findFirstToken(TokenTypes.ELIST);
-
-		List<DetailAST> exprDetailASTList = getAllChildTokens(
-			elistDetailAST, false, TokenTypes.EXPR);
-
-		for (DetailAST exprDetailAST : exprDetailASTList) {
-			parameterTypeNames.add(
-				_getParameterTypeName(exprDetailAST.getFirstChild()));
-		}
-
-		return parameterTypeNames;
 	}
 
 	private boolean _isNumeric(String typeName) {

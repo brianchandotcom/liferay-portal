@@ -32,7 +32,7 @@ import org.osgi.framework.Version;
 /**
  * @author Simon Jiang
  */
-public class UpgradeUnusedAPICheck extends BaseCheck {
+public class UpgradeUnusedAPICheck extends BaseAPICheck {
 
 	@Override
 	public int[] getDefaultTokens() {
@@ -82,27 +82,11 @@ public class UpgradeUnusedAPICheck extends BaseCheck {
 				detailAST);
 			String methodCallName = getMethodName(detailAST);
 
-			DetailAST parentDetailAST = _getParentDetailAST(detailAST);
-
 			String fullyQualifiedTypeName = getVariableTypeName(
 				detailAST, methodCallClassOrVariableName, true, true, true);
 
-			List<String> methodCallParameters = new ArrayList<>();
-			List<DetailAST> allChildTokens = getAllChildTokens(
-				detailAST, true, TokenTypes.ELIST);
-
-			for (DetailAST typeArgumentDetailAST : allChildTokens) {
-				List<DetailAST> parametersAllChildTokens = getAllChildTokens(
-					typeArgumentDetailAST, true, TokenTypes.IDENT);
-
-				for (DetailAST parameterDetailAST : parametersAllChildTokens) {
-					String parameterText = parameterDetailAST.getText();
-
-					methodCallParameters.add(
-						getVariableTypeName(
-							parentDetailAST, parameterText, true, true, true));
-				}
-			}
+			List<String> methodCallParameters = getParameterTypeNames(
+				detailAST);
 
 			if (Objects.equals(
 					qualifiedPackageClassName, fullyQualifiedTypeName) &&
@@ -114,18 +98,6 @@ public class UpgradeUnusedAPICheck extends BaseCheck {
 					fullyQualifiedTypeName, targetVersion);
 			}
 		}
-	}
-
-	private DetailAST _getParentDetailAST(DetailAST detailAST) {
-		if (detailAST != null) {
-			DetailAST parentDetailAST = detailAST.getParent();
-
-			if (parentDetailAST != null) {
-				return _getParentDetailAST(detailAST.getParent());
-			}
-		}
-
-		return detailAST;
 	}
 
 	private List<UnusedClassMethod> _getUnusedClassMethod(

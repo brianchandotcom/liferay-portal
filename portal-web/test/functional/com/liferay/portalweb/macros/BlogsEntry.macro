@@ -41,6 +41,10 @@ definition {
 	macro addCustomURL {
 		Click(locator1 = "Radio#CUSTOM_URL");
 
+		if (isSet(friendlyURLHistory)) {
+			AssertVisible(locator1 = "Icon#FRIENDLY_URL_HISTORY");
+		}
+
 		Type(
 			locator1 = "TextInput#BLOGS_ENTRY_URL",
 			value1 = "${customURL}");

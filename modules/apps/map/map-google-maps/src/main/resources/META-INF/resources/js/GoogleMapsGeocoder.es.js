@@ -46,7 +46,7 @@ class GoogleMapsGeocoder extends State {
 			error: status === google.maps.GeocoderStatus.OK ? null : status,
 		};
 
-		if (!result.err) {
+		if (!result.error) {
 			const geocoderResult = response[0];
 			const geolocation = geocoderResult.geometry.location;
 

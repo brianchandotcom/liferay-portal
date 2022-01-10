@@ -59,7 +59,7 @@ import java.util.Map;
  * The SOAP utility is only generated for remote services.
  * </p>
  *
- * @author Brian Wing Shun Chan
+ * @author Drew Brokke
  * @see PLOEntryServiceHttp
  * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated

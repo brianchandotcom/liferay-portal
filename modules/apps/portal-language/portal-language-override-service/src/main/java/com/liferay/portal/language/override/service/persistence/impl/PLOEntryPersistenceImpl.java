@@ -50,7 +50,7 @@ import com.liferay.portal.language.override.model.impl.PLOEntryImpl;
 import com.liferay.portal.language.override.model.impl.PLOEntryModelImpl;
 import com.liferay.portal.language.override.service.persistence.PLOEntryPersistence;
 import com.liferay.portal.language.override.service.persistence.PLOEntryUtil;
-import com.liferay.portal.language.override.service.persistence.impl.constants.PortalLanguageOverridePersistenceConstants;
+import com.liferay.portal.language.override.service.persistence.impl.constants.PLOPersistenceConstants;
 
 import java.io.Serializable;
 
@@ -78,7 +78,7 @@ import org.osgi.service.component.annotations.Reference;
  * Caching information and settings can be found in <code>portal.properties</code>
  * </p>
  *
- * @author Brian Wing Shun Chan
+ * @author Drew Brokke
  * @generated
  */
 @Component(service = {PLOEntryPersistence.class, BasePersistence.class})
@@ -2732,7 +2732,7 @@ public class PLOEntryPersistenceImpl
 
 	@Override
 	@Reference(
-		target = PortalLanguageOverridePersistenceConstants.SERVICE_CONFIGURATION_FILTER,
+		target = PLOPersistenceConstants.SERVICE_CONFIGURATION_FILTER,
 		unbind = "-"
 	)
 	public void setConfiguration(Configuration configuration) {
@@ -2740,7 +2740,7 @@ public class PLOEntryPersistenceImpl
 
 	@Override
 	@Reference(
-		target = PortalLanguageOverridePersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		target = PLOPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
 		unbind = "-"
 	)
 	public void setDataSource(DataSource dataSource) {
@@ -2749,7 +2749,7 @@ public class PLOEntryPersistenceImpl
 
 	@Override
 	@Reference(
-		target = PortalLanguageOverridePersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		target = PLOPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
 		unbind = "-"
 	)
 	public void setSessionFactory(SessionFactory sessionFactory) {

@@ -30,7 +30,7 @@ import java.util.Date;
 /**
  * The cache model class for representing PLOEntry in entity cache.
  *
- * @author Brian Wing Shun Chan
+ * @author Drew Brokke
  * @generated
  */
 public class PLOEntryCacheModel

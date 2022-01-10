@@ -26,7 +26,7 @@ import java.util.Map;
  * This class is a wrapper for {@link PLOEntry}.
  * </p>
  *
- * @author Brian Wing Shun Chan
+ * @author Drew Brokke
  * @see PLOEntry
  * @generated
  */

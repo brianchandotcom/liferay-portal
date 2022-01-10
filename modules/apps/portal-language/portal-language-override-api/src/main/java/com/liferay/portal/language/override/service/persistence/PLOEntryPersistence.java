@@ -27,7 +27,7 @@ import org.osgi.annotation.versioning.ProviderType;
  * Caching information and settings can be found in <code>portal.properties</code>
  * </p>
  *
- * @author Brian Wing Shun Chan
+ * @author Drew Brokke
  * @see PLOEntryUtil
  * @generated
  */

@@ -27,7 +27,7 @@ import java.util.Map;
  * based on the propagated JAAS credentials because this service can be
  * accessed remotely.
  *
- * @author Brian Wing Shun Chan
+ * @author Drew Brokke
  * @see PLOEntryService
  * @generated
  */

@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link PLOEntryLocalService}.
  *
- * @author Brian Wing Shun Chan
+ * @author Drew Brokke
  * @see PLOEntryLocalService
  * @generated
  */

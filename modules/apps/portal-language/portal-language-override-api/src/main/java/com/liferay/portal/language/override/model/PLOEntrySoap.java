@@ -23,7 +23,7 @@ import java.util.List;
 /**
  * This class is used by SOAP remote services, specifically {@link com.liferay.portal.language.override.service.http.PLOEntryServiceSoap}.
  *
- * @author Brian Wing Shun Chan
+ * @author Drew Brokke
  * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */

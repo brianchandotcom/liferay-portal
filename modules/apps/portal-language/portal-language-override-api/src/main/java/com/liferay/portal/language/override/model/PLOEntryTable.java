@@ -25,7 +25,7 @@ import java.util.Date;
 /**
  * The table class for the &quot;PLOEntry&quot; database table.
  *
- * @author Brian Wing Shun Chan
+ * @author Drew Brokke
  * @see PLOEntry
  * @generated
  */

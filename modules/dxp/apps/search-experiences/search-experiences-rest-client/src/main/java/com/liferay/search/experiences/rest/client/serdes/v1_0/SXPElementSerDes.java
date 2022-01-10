@@ -59,6 +59,16 @@ public class SXPElementSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
+		if (sxpElement.getActions() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"actions\": ");
+
+			sb.append(_toJSON(sxpElement.getActions()));
+		}
+
 		if (sxpElement.getCreateDate() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -236,6 +246,13 @@ public class SXPElementSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
+		if (sxpElement.getActions() == null) {
+			map.put("actions", null);
+		}
+		else {
+			map.put("actions", String.valueOf(sxpElement.getActions()));
+		}
+
 		if (sxpElement.getCreateDate() == null) {
 			map.put("createDate", null);
 		}
@@ -357,7 +374,14 @@ public class SXPElementSerDes {
 			SXPElement sxpElement, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "createDate")) {
+			if (Objects.equals(jsonParserFieldName, "actions")) {
+				if (jsonParserFieldValue != null) {
+					sxpElement.setActions(
+						(Map)SXPElementSerDes.toMap(
+							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "createDate")) {
 				if (jsonParserFieldValue != null) {
 					sxpElement.setCreateDate(
 						toDate((String)jsonParserFieldValue));

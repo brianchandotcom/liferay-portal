@@ -199,14 +199,21 @@ public class CTTableMapperHelper {
 							StringBundler.concat(
 								"select ", _leftColumnName, ", ",
 								_rightColumnName, " from ", _tableName,
-								" where ctCollectionId = ", ctCollectionId,
-								" and ctChangeType = ", ctChangeType));
-					ResultSet resultSet = preparedStatement.executeQuery()) {
+								" where ctCollectionId = ? and ctChangeType = ",
+								"?"))) {
 
-					while (resultSet.next()) {
-						mappingChanges.add(
-							new AbstractMap.SimpleImmutableEntry<>(
-								resultSet.getLong(1), resultSet.getLong(2)));
+					preparedStatement.setLong(1, ctCollectionId);
+					preparedStatement.setBoolean(2, ctChangeType);
+
+					try (ResultSet resultSet =
+							preparedStatement.executeQuery()) {
+
+						while (resultSet.next()) {
+							mappingChanges.add(
+								new AbstractMap.SimpleImmutableEntry<>(
+									resultSet.getLong(1),
+									resultSet.getLong(2)));
+						}
 					}
 				}
 			});

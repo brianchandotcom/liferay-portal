@@ -429,7 +429,8 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 
 				uniqueFileName = DLUtil.getUniqueFileName(
 					tempFileEntry.getGroupId(),
-					message.getAttachmentsFolderId(), originalSelectedFileName);
+					message.getAttachmentsFolderId(), originalSelectedFileName,
+					false);
 			}
 
 			ObjectValuePair<String, InputStream> inputStreamOVP =

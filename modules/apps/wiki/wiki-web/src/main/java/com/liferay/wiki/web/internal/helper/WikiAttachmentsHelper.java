@@ -98,7 +98,8 @@ public class WikiAttachmentsHelper {
 						wikiPage.getGroupId(),
 						wikiPage.getAttachmentsFolderId(),
 						TempFileEntryUtil.getOriginalTempFileName(
-							tempFileEntry.getFileName()));
+							tempFileEntry.getFileName()),
+						false);
 
 					ObjectValuePair<String, InputStream> inputStreamOVP =
 						new ObjectValuePair<>(

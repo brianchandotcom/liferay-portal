@@ -6961,7 +6961,7 @@ public class JournalArticleLocalServiceImpl
 
 						String fileEntryName = DLUtil.getUniqueFileName(
 							folder.getGroupId(), folder.getFolderId(),
-							tempFileEntry.getFileName());
+							tempFileEntry.getFileName(), false);
 
 						fileEntry = _portletFileRepository.addPortletFileEntry(
 							folder.getGroupId(), tempFileEntry.getUserId(),
@@ -9171,7 +9171,7 @@ public class JournalArticleLocalServiceImpl
 			fileEntry -> {
 				String fileEntryName = DLUtil.getUniqueFileName(
 					fileEntry.getGroupId(), fileEntry.getFolderId(),
-					fileEntry.getFileName());
+					fileEntry.getFileName(), false);
 
 				Folder folder = article.addImagesFolder();
 

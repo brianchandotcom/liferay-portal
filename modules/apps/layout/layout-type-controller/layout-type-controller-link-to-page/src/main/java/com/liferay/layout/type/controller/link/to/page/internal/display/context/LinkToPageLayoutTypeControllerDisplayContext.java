@@ -63,6 +63,7 @@ public class LinkToPageLayoutTypeControllerDisplayContext {
 		layoutItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new UUIDItemSelectorReturnType());
 		layoutItemSelectorCriterion.setEnableCurrentPage(false);
+		layoutItemSelectorCriterion.setShowBreadcrumb(false);
 		layoutItemSelectorCriterion.setShowHiddenPages(true);
 
 		boolean privateLayout = ParamUtil.getBoolean(

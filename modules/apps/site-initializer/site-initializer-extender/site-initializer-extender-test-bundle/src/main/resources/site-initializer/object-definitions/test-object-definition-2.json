@@ -3,6 +3,18 @@
 		"en_US": "Test Object Definition 2"
 	},
 	"name": "TestObjectDefinition2",
+	"objectFields": [
+		{
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Field 1"
+			},
+			"name": "field1",
+			"required": false,
+			"type": "String"
+		}
+	],
 	"pluralLabel": {
 		"en_US": "Test Object Definitions 2"
 	},

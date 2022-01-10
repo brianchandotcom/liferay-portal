@@ -81,12 +81,12 @@ public class ObjectFieldResourceTest extends BaseObjectFieldResourceTestCase {
 	protected ObjectField randomObjectField() throws Exception {
 		ObjectField objectField = super.randomObjectField();
 
+		objectField.setDBType(ObjectField.DBType.create("String"));
 		objectField.setIndexedAsKeyword(false);
 		objectField.setLabel(
 			Collections.singletonMap(
 				LocaleUtil.US.toString(), "a" + objectField.getName()));
 		objectField.setName("a" + objectField.getName());
-		objectField.setType(ObjectField.Type.create("String"));
 
 		return objectField;
 	}

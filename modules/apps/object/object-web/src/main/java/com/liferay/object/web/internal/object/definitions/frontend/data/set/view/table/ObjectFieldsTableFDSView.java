@@ -47,7 +47,7 @@ public class ObjectFieldsTableFDSView extends BaseTableFDSView {
 
 		labelFDSTableSchemaField.setContentRenderer("actionLink");
 
-		fdsTableSchemaBuilder.addFDSTableSchemaField("type", "type");
+		fdsTableSchemaBuilder.addFDSTableSchemaField("DBType", "type");
 
 		FDSTableSchemaField requiredFDSTableSchemaField =
 			fdsTableSchemaBuilder.addFDSTableSchemaField(

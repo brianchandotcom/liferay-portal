@@ -5,94 +5,94 @@
 	"name": "QuoteComparison",
 	"objectFields": [
 		{
+			"DBType": "Boolean",
 			"indexed": false,
 			"indexedAsKeyword": false,
 			"label": {
 				"en_US": "Most Popular"
 			},
 			"name": "mostPopular",
-			"required": false,
-			"type": "Boolean"
+			"required": false
 		},
 		{
+			"DBType": "String",
 			"indexed": false,
 			"indexedAsKeyword": false,
 			"label": {
 				"en_US": "Category"
 			},
 			"name": "category",
-			"required": false,
-			"type": "String"
+			"required": false
 		},
 		{
+			"DBType": "String",
 			"indexed": false,
 			"indexedAsKeyword": false,
 			"label": {
 				"en_US": "Price"
 			},
 			"name": "price",
-			"required": false,
-			"type": "String"
+			"required": false
 		},
 		{
+			"DBType": "String",
 			"indexed": false,
 			"indexedAsKeyword": false,
 			"label": {
 				"en_US": "Promo"
 			},
 			"name": "promo",
-			"required": true,
-			"type": "String"
+			"required": true
 		},
 		{
+			"DBType": "String",
 			"indexed": false,
 			"indexedAsKeyword": false,
 			"label": {
 				"en_US": "Per Occurance Limit"
 			},
 			"name": "perOccuranceLimit",
-			"required": true,
-			"type": "String"
+			"required": true
 		},
 		{
+			"DBType": "String",
 			"indexed": false,
 			"indexedAsKeyword": false,
 			"label": {
 				"en_US": "Aggregate Limit"
 			},
 			"name": "aggregateLimit",
-			"required": true,
-			"type": "String"
+			"required": true
 		},
 		{
+			"DBType": "String",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
 				"en_US": "Business Personal Property"
 			},
 			"name": "businessPersonalProperty",
-			"required": false,
-			"type": "String"
+			"required": false
 		},
 		{
+			"DBType": "Boolean",
 			"indexed": false,
 			"indexedAsKeyword": false,
 			"label": {
 				"en_US": "Product Recall or Replacement"
 			},
 			"name": "productRecallOrReplacement",
-			"required": false,
-			"type": "Boolean"
+			"required": false
 		},
 		{
+			"DBType": "String",
 			"indexed": false,
 			"indexedAsKeyword": false,
 			"label": {
 				"en_US": "Money and Securities"
 			},
 			"name": "moneyAndSecurities",
-			"required": false,
-			"type": "String"
+			"required": false
 		}
 	],
 	"panelAppOrder": "100",

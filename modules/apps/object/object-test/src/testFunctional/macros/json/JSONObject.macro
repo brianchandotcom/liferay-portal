@@ -81,6 +81,7 @@ definition {
 			-H 'Content-Type: application/json' \
 			-u ${userEmailAddress}:${userPassword} \
 			-d '{
+			"DBType": "${fieldType}",
 			"indexed": ${indexed},
 			"indexedAsKeyword": ${indexedAsKeyword},
 			"label": {
@@ -88,8 +89,7 @@ definition {
 			},
 			"listTypeDefinitionId": ${picklistId},
 			"name": "${fieldName}",
-			"required": ${isRequired},
-			"type": "${fieldType}"
+			"required": ${isRequired}
 			}'
 		''';
 

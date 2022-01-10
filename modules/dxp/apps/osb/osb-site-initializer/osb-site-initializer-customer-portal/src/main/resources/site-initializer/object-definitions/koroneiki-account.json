@@ -5,204 +5,204 @@
 	"name": "KoroneikiAccount",
 	"objectFields": [
 		{
+			"DBType": "String",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
 				"en-US": "Account Key"
 			},
 			"name": "accountKey",
-			"required": true,
-			"type": "String"
+			"required": true
 		},
 		{
+			"DBType": "String",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
 				"en-US": "AC Workspace Name"
 			},
 			"name": "acWorkspaceName",
-			"required": false,
-			"type": "String"
+			"required": false
 		},
 		{
+			"DBType": "String",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
 				"en-US": "Code"
 			},
 			"name": "code",
-			"required": false,
-			"type": "String"
+			"required": false
 		},
 		{
+			"DBType": "String",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
 				"en-US": "Data Region"
 			},
 			"name": "dataRegion",
-			"required": false,
-			"type": "String"
+			"required": false
 		},
 		{
+			"DBType": "String",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
 				"en-US": "DXP Version"
 			},
 			"name": "dxpVersion",
-			"required": false,
-			"type": "String"
+			"required": false
 		},
 		{
+			"DBType": "Integer",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
 				"en-US": "Max Requestors"
 			},
 			"name": "maxRequestors",
-			"required": false,
-			"type": "Integer"
+			"required": false
 		},
 		{
+			"DBType": "Boolean",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
 				"en-US": "Partner"
 			},
 			"name": "partner",
-			"required": false,
-			"type": "Boolean"
+			"required": false
 		},
 		{
+			"DBType": "String",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
 				"en-US": "Region"
 			},
 			"name": "region",
-			"required": false,
-			"type": "String"
+			"required": false
 		},
 		{
+			"DBType": "String",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
 				"en-US": "SLA Current"
 			},
 			"name": "slaCurrent",
-			"required": false,
-			"type": "String"
+			"required": false
 		},
 		{
+			"DBType": "Date",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
 				"en-US": "SLA Current Start Date"
 			},
 			"name": "slaCurrentStartDate",
-			"required": false,
-			"type": "Date"
+			"required": false
 		},
 		{
+			"DBType": "Date",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
 				"en-US": "SLA Current End Date"
 			},
 			"name": "slaCurrentEndDate",
-			"required": false,
-			"type": "Date"
+			"required": false
 		},
 		{
+			"DBType": "String",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
 				"en-US": "SLA Expired"
 			},
 			"name": "slaExpired",
-			"required": false,
-			"type": "String"
+			"required": false
 		},
 		{
+			"DBType": "Date",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
 				"en-US": "SLA Expired Start Date"
 			},
 			"name": "slaExpiredStartDate",
-			"required": false,
-			"type": "Date"
+			"required": false
 		},
 		{
+			"DBType": "Date",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
 				"en-US": "SLA Expired End Date"
 			},
 			"name": "slaExpiredEndDate",
-			"required": false,
-			"type": "Date"
+			"required": false
 		},
 		{
+			"DBType": "String",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
 				"en-US": "SLA Future"
 			},
 			"name": "slaFuture",
-			"required": false,
-			"type": "String"
+			"required": false
 		},
 		{
+			"DBType": "Date",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
 				"en-US": "SLA Future Start Date"
 			},
 			"name": "slaFutureStartDate",
-			"required": false,
-			"type": "Date"
+			"required": false
 		},
 		{
+			"DBType": "Date",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
 				"en-US": "SLA Future End Date"
 			},
 			"name": "slaFutureEndDate",
-			"required": false,
-			"type": "Date"
+			"required": false
 		},
 		{
+			"DBType": "String",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
 				"en-US": "Liferay Contact Name"
 			},
 			"name": "liferayContactName",
-			"required": false,
-			"type": "String"
+			"required": false
 		},
 		{
+			"DBType": "String",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
 				"en-US": "Liferay Contact Role"
 			},
 			"name": "liferayContactRole",
-			"required": false,
-			"type": "String"
+			"required": false
 		},
 		{
+			"DBType": "String",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
 				"en-US": "Liferay Contact Email Address"
 			},
 			"name": "liferayContactEmailAddress",
-			"required": false,
-			"type": "String"
+			"required": false
 		}
 	],
 	"pluralLabel": {

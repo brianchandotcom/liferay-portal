@@ -34,6 +34,8 @@ public class ObjectFieldUtil {
 			{
 				businessType = ObjectField.BusinessType.create(
 					serviceBuilderObjectField.getBusinessType());
+				DBType = ObjectField.DBType.create(
+					serviceBuilderObjectField.getDBType());
 				id = serviceBuilderObjectField.getObjectFieldId();
 				indexed = serviceBuilderObjectField.getIndexed();
 				indexedAsKeyword =
@@ -69,7 +71,7 @@ public class ObjectFieldUtil {
 			GetterUtil.getLong(objectField.getListTypeDefinitionId()));
 		serviceBuilderObjectField.setBusinessType(
 			objectField.getBusinessTypeAsString());
-		serviceBuilderObjectField.setDBType(objectField.getTypeAsString());
+		serviceBuilderObjectField.setDBType(objectField.getDBTypeAsString());
 		serviceBuilderObjectField.setIndexed(
 			GetterUtil.getBoolean(objectField.getIndexed()));
 		serviceBuilderObjectField.setIndexedAsKeyword(

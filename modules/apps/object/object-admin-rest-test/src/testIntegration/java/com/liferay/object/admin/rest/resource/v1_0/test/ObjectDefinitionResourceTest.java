@@ -134,9 +134,9 @@ public class ObjectDefinitionResourceTest
 			new ObjectField[] {
 				new ObjectField() {
 					{
+						setDBType(ObjectField.DBType.create("String"));
 						setLabel(Collections.singletonMap("en_US", "Column"));
 						setName("column");
-						setType(ObjectField.Type.create("String"));
 					}
 				}
 			});

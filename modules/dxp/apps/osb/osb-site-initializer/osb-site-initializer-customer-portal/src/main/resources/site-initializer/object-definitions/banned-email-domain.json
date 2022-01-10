@@ -5,14 +5,14 @@
 	"name": "BannedEmailDomain",
 	"objectFields": [
 		{
+			"DBType": "String",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
 				"en-US": "Domain"
 			},
 			"name": "domain",
-			"required": true,
-			"type": "String"
+			"required": true
 		}
 	],
 	"pluralLabel": {

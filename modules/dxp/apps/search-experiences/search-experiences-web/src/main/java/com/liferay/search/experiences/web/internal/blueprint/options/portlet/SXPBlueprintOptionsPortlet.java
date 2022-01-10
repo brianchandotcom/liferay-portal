@@ -60,7 +60,7 @@ public class SXPBlueprintOptionsPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		if (!_containsConfiguration(portletPermission, renderRequest, portal)) {
+		if (!_containsConfiguration(renderRequest)) {
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
 		}
@@ -69,22 +69,19 @@ public class SXPBlueprintOptionsPortlet extends MVCPortlet {
 	}
 
 	@Reference
-	protected Portal portal;
+	private Portal _portal;
 
 	@Reference
-	protected PortletPermission portletPermission;
+	private PortletPermission _portletPermission;
 
-	private boolean _containsConfiguration(
-		PortletPermission portletPermission, RenderRequest renderRequest,
-		Portal portal) {
-
+	private boolean _containsConfiguration(RenderRequest renderRequest) {
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		try {
-			return portletPermission.contains(
+			return _portletPermission.contains(
 				themeDisplay.getPermissionChecker(), themeDisplay.getPlid(),
-				portal.getPortletId(renderRequest), ActionKeys.CONFIGURATION);
+				_portal.getPortletId(renderRequest), ActionKeys.CONFIGURATION);
 		}
 		catch (PortalException portalException) {
 			_log.error(portalException, portalException);

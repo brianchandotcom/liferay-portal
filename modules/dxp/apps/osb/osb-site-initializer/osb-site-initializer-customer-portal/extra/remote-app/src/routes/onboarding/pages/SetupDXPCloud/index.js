@@ -19,8 +19,8 @@ import Layout from '../../components/Layout';
 import {actionTypes} from '../../context/reducer';
 import {getInitialDxpAdmin, steps} from '../../utils/constants';
 
-const SetupDXPCloud = () => {
-	const [{project}, dispatch] = useOnboarding();
+const SetupDXPCloud = ({project}) => {
+	const [, dispatch] = useOnboarding();
 	const {errors, setFieldValue, touched, values} = useFormikContext();
 	const [baseButtonDisabled, setBaseButtonDisabled] = useState(true);
 

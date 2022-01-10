@@ -68,20 +68,20 @@ public class OpenWeatherMapSXPParameterContributor
 			return;
 		}
 
-		JSONObject jsonObject1 = IpstackWebCacheItem.get(
+		JSONObject jsonObject = IpstackWebCacheItem.get(
 			ipAddress, _getIpstackConfiguration(searchContext.getCompanyId()));
 
-		if (jsonObject1.length() == 0) {
+		if (jsonObject.length() == 0) {
 			return;
 		}
 
-		String latitude = jsonObject1.getString("latitude");
-		String longitude = jsonObject1.getString("longitude");
+		String latitude = jsonObject.getString("latitude");
+		String longitude = jsonObject.getString("longitude");
 
-		JSONObject jsonObject2 = OpenWeatherMapWebCacheItem.get(
+		jsonObject = OpenWeatherMapWebCacheItem.get(
 			latitude, longitude, openWeatherMapConfiguration);
 
-		if (jsonObject2.length() == 0) {
+		if (jsonObject.length() == 0) {
 			return;
 		}
 
@@ -89,34 +89,34 @@ public class OpenWeatherMapSXPParameterContributor
 			new DoubleSXPParameter(
 				"openweathermap.temp", true,
 				JSONUtil.getValueAsDouble(
-					jsonObject2, "JSONObject/main", "Object/temp")));
+					jsonObject, "JSONObject/main", "Object/temp")));
 
 		sxpParameters.add(
 			new StringSXPParameter(
 				"openweathermap.weather_description", true,
 				JSONUtil.getValueAsString(
-					jsonObject2, "JSONArray/weather", "JSONObject/0",
+					jsonObject, "JSONArray/weather", "JSONObject/0",
 					"Object/description")));
 
 		sxpParameters.add(
 			new IntegerSXPParameter(
 				"openweathermap.weather_id", true,
 				JSONUtil.getValueAsInt(
-					jsonObject2, "JSONArray/weather", "JSONObject/0",
+					jsonObject, "JSONArray/weather", "JSONObject/0",
 					"Object/id")));
 
 		sxpParameters.add(
 			new StringSXPParameter(
 				"openweathermap.weather_main", true,
 				JSONUtil.getValueAsString(
-					jsonObject2, "JSONArray/weather", "JSONObject/0",
+					jsonObject, "JSONArray/weather", "JSONObject/0",
 					"Object/main")));
 
 		sxpParameters.add(
 			new DoubleSXPParameter(
 				"openweathermap.wind_speed", true,
 				JSONUtil.getValueAsDouble(
-					jsonObject2, "JSONObject/wind", "Object/speed")));
+					jsonObject, "JSONObject/wind", "Object/speed")));
 	}
 
 	@Override

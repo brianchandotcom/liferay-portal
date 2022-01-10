@@ -100,39 +100,39 @@ public class UpgradeUnusedAPICheck extends BaseAPICheck {
 	private List<UnusedClassMethod> _getUnusedClassMethod(
 		List<String> unusedMethodNameList) {
 
-		if (!unusedMethodNameList.isEmpty()) {
-			List<UnusedClassMethod> unusedClassMethodList = new ArrayList<>();
-
-			for (String unusedMethodName : unusedMethodNameList) {
-				String[] unusedMethod = unusedMethodName.split("\\|");
-
-				if (unusedMethod.length < 2) {
-					continue;
-				}
-
-				String qualifiedPackageClassName = unusedMethod[0];
-
-				String methodName = unusedMethod[1];
-
-				if (unusedMethod.length == 2) {
-					unusedClassMethodList.add(
-						new UnusedClassMethod(
-							qualifiedPackageClassName, methodName));
-				}
-				else {
-					List<String> parameters = StringUtil.split(
-						unusedMethod[2], ' ');
-
-					unusedClassMethodList.add(
-						new UnusedClassMethod(
-							qualifiedPackageClassName, methodName, parameters));
-				}
-			}
-
-			return unusedClassMethodList;
+		if (unusedMethodNameList.isEmpty()) {
+			return Collections.emptyList();
 		}
 
-		return Collections.emptyList();
+		List<UnusedClassMethod> unusedClassMethodList = new ArrayList<>();
+
+		for (String unusedMethodName : unusedMethodNameList) {
+			String[] unusedMethod = unusedMethodName.split("\\|");
+
+			if (unusedMethod.length < 2) {
+				continue;
+			}
+
+			String qualifiedPackageClassName = unusedMethod[0];
+
+			String methodName = unusedMethod[1];
+
+			if (unusedMethod.length == 2) {
+				unusedClassMethodList.add(
+					new UnusedClassMethod(
+						qualifiedPackageClassName, methodName));
+			}
+			else {
+				List<String> parameters = StringUtil.split(
+					unusedMethod[2], ' ');
+
+				unusedClassMethodList.add(
+					new UnusedClassMethod(
+						qualifiedPackageClassName, methodName, parameters));
+			}
+		}
+
+		return unusedClassMethodList;
 	}
 
 	private static final String _MSG_UNUSED_METHOD = "method.unused";

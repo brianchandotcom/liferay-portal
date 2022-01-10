@@ -19,7 +19,7 @@ import com.liferay.object.admin.rest.dto.v1_0.ObjectLayoutBox;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectLayoutColumn;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectLayoutRow;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectLayoutTab;
-import com.liferay.portal.vulcan.util.LocalizedMapUtil;
+import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.Map;
@@ -44,7 +44,7 @@ public class ObjectLayoutUtil {
 				defaultObjectLayout =
 					serviceBuilderObjectLayout.getDefaultObjectLayout();
 				id = serviceBuilderObjectLayout.getObjectLayoutId();
-				name = LocalizedMapUtil.getI18nMap(
+				name = LocalizedMapUtil.getLanguageIdMap(
 					serviceBuilderObjectLayout.getNameMap());
 				objectDefinitionId =
 					serviceBuilderObjectLayout.getObjectDefinitionId();
@@ -70,7 +70,7 @@ public class ObjectLayoutUtil {
 		return new ObjectLayoutTab() {
 			{
 				id = serviceBuilderObjectLayoutTab.getObjectLayoutTabId();
-				name = LocalizedMapUtil.getI18nMap(
+				name = LocalizedMapUtil.getLanguageIdMap(
 					serviceBuilderObjectLayoutTab.getNameMap());
 				objectLayoutBoxes = TransformUtil.transformToArray(
 					serviceBuilderObjectLayoutTab.getObjectLayoutBoxes(),
@@ -95,7 +95,7 @@ public class ObjectLayoutUtil {
 			{
 				collapsable = serviceBuilderObjectLayoutBox.getCollapsable();
 				id = serviceBuilderObjectLayoutBox.getObjectLayoutBoxId();
-				name = LocalizedMapUtil.getI18nMap(
+				name = LocalizedMapUtil.getLanguageIdMap(
 					serviceBuilderObjectLayoutBox.getNameMap());
 				objectLayoutRows = TransformUtil.transformToArray(
 					serviceBuilderObjectLayoutBox.getObjectLayoutRows(),

@@ -30,6 +30,7 @@ import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectLayoutLocalService;
+import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
@@ -44,7 +45,6 @@ import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
-import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
 import javax.ws.rs.core.MultivaluedMap;
@@ -222,7 +222,7 @@ public class ObjectDefinitionResourceImpl
 				dateCreated = objectDefinition.getCreateDate();
 				dateModified = objectDefinition.getModifiedDate();
 				id = objectDefinition.getObjectDefinitionId();
-				label = LocalizedMapUtil.getI18nMap(
+				label = LocalizedMapUtil.getLanguageIdMap(
 					objectDefinition.getLabelMap());
 				name = objectDefinition.getShortName();
 				objectActions = transformToArray(
@@ -244,7 +244,7 @@ public class ObjectDefinitionResourceImpl
 						null, objectLayout),
 					ObjectLayout.class);
 				panelCategoryKey = objectDefinition.getPanelCategoryKey();
-				pluralLabel = LocalizedMapUtil.getI18nMap(
+				pluralLabel = LocalizedMapUtil.getLanguageIdMap(
 					objectDefinition.getPluralLabelMap());
 				portlet = objectDefinition.getPortlet();
 				scope = objectDefinition.getScope();

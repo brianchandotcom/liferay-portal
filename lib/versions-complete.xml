@@ -7341,6 +7341,18 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>lib/portal/netty-resolver.jar</file-name>
+				<version>4.1.72.Final</version>
+				<project-name>Netty</project-name>
+				<project-url>http://netty.io</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>lib/portal/netty-transport.jar</file-name>
 				<version>4.1.72.Final</version>
 				<project-name>Netty</project-name>

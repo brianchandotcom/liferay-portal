@@ -73,8 +73,9 @@ public class ViewManagementToolbarDisplayContext
 		return CreationMenuBuilder.addPrimaryDropdownItem(
 			dropdownItem -> {
 				dropdownItem.setHref(
-					getPortletURL(), "mvcPath", "/edit_plo_entry.jsp", "backURL",
-					String.valueOf(getPortletURL()), "key", StringPool.BLANK);
+					getPortletURL(), "mvcPath", "/edit_plo_entry.jsp",
+					"backURL", String.valueOf(getPortletURL()), "key",
+					StringPool.BLANK);
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "add-language-key"));
 			}

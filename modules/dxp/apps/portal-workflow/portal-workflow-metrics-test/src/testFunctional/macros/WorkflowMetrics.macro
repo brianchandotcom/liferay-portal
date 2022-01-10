@@ -1895,7 +1895,7 @@ definition {
 		}
 	}
 
-		macro viewNodes {
+	macro viewNodes {
 		AssertElementPresent(
 			locator1 = "WorkflowAllItems#TRACK_APPROVAL_NODE",
 			value1 = "${node}");
@@ -1914,6 +1914,7 @@ definition {
 			Click(locator1 = "WorkflowAllItems#TRACK_WORKFLOW_DROPDOWN");
 		}
 	}
+
 	macro viewTrackWorkflowModal {
 
 		SelectFrame(locator1 = "WorkflowAllItems#TRACK_APPROVAL_BODY");

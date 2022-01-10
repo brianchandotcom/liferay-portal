@@ -340,12 +340,32 @@ definition {
 	}
 
 	@description = "Verify that there is a Track Approval option on the kebab menu"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanSelectTrackApprovalOnKebabMenu {
 
-		// TODO LRQA-72391 CanSelectTrackApprovalOnKebabMenu pending implementation
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
+		Navigator.gotoNavItem(navItem = "Configuration");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		JSONBlog.addEntry(
+			entryContent = "Test Content",
+			entryTitle = "Test Blog");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Metrics");
+
+		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Single Approver");
+
+		WorkflowMetrics.viewKebabMenu3OptionsIsAvailable(dropdownItem = "Track Workflow");
 	}
 
 	@description = "LPS-92053 - Verify that, at the items table, users should be able to click on process ID column and open a modal for the respective item details"

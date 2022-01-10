@@ -1382,6 +1382,20 @@ definition {
 		Click(locator1 = "PageEditor#EXPERIENCE_DEPRIORITIZE_BUTTON");
 	}
 
+	macro detachToken {
+		Click.clickNoWaitForVisible(
+			key_fieldLabel = "${fieldLabel}",
+			key_text = "chain-broken",
+			locator1 = "Icon#ANY_ITEM_SELECTOR");
+
+		PageEditor.waitForAutoSave();
+
+		AssertElementPresent(
+			key_fieldLabel = "${fieldLabel}",
+			key_text = "theme",
+			locator1 = "Icon#ANY_ITEM_SELECTOR");
+	}
+
 	macro duplicateExperience {
 		var key_experienceName = "${experienceName}";
 

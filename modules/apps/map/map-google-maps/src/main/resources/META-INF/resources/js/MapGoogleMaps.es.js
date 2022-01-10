@@ -34,6 +34,12 @@ class MapGoogleMaps extends MapBase {
 	constructor(...args) {
 		super(...args);
 
+		MapBase.DialogImpl = GoogleMapsDialog;
+		MapBase.GeocoderImpl = GoogleMapsGeocoder;
+		MapBase.GeoJSONImpl = GoogleMapsGeoJSON;
+		MapBase.MarkerImpl = GoogleMapsMarker;
+		MapBase.SearchImpl = GoogleMapsSearch;
+
 		this._bounds = null;
 	}
 
@@ -111,16 +117,6 @@ class MapGoogleMaps extends MapBase {
 		}
 	}
 }
-
-MapBase.DialogImpl = GoogleMapsDialog;
-
-MapBase.GeocoderImpl = GoogleMapsGeocoder;
-
-MapBase.GeoJSONImpl = GoogleMapsGeoJSON;
-
-MapBase.MarkerImpl = GoogleMapsMarker;
-
-MapBase.SearchImpl = GoogleMapsSearch;
 
 MapGoogleMaps.CONTROLS_MAP = {
 	[MapBase.CONTROLS.OVERVIEW]: 'overviewMapControl',

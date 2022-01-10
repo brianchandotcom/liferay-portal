@@ -1258,6 +1258,8 @@ definition {
 	@description = "This is a test for LPS-136945. It checks that only 'File Upload,' 'Folder,' 'Google Drive Shortcut' and 'External Video Shortcut' options appear when adding a document."
 	@priority = "3"
 	test OnlyRelevantSelectionsAppearWhenAddingDocuments {
+		property portal.release = "false";
+
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		NavItem.gotoStructures();

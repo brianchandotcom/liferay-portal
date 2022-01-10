@@ -14,28 +14,7 @@
  */
 --%>
 
-<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
-
-<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
-taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
-taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
-taglib uri="http://liferay.com/tld/react" prefix="react" %><%@
-taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
-
-<%@ page import="com.liferay.petra.string.StringPool" %><%@
-page import="com.liferay.portal.kernel.settings.ParameterMapSettings" %><%@
-page import="com.liferay.portal.kernel.util.Constants" %><%@
-page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
-page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
-page import="com.liferay.portal.kernel.util.PrefsParamUtil" %><%@
-page import="com.liferay.search.experiences.model.SXPBlueprint" %><%@
-page import="com.liferay.search.experiences.service.SXPBlueprintLocalServiceUtil" %><%@
-page import="com.liferay.search.experiences.web.internal.blueprint.options.portlet.preferences.SXPBlueprintOptionsPortletPreferences" %><%@
-page import="com.liferay.search.experiences.web.internal.blueprint.options.portlet.preferences.SXPBlueprintOptionsPortletPreferencesImpl" %>
-
-<liferay-theme:defineObjects />
-
-<portlet:defineObjects />
+<%@ include file="/init.jsp" %>
 
 <%
 SXPBlueprintOptionsPortletPreferences sxpBlueprintOptionsPortletPreferences = new SXPBlueprintOptionsPortletPreferencesImpl(java.util.Optional.ofNullable(portletPreferences));

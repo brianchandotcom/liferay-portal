@@ -3630,7 +3630,6 @@ definition {
 	}
 
 	@description = "LPS-86285: Validate in the content page if, the user can change the background color of some section in the experiences that can be different from other experiences (already published)"
-	@ignore = "false"
 	@priority = "3"
 	test ChangingBackgroundColor {
 		task ("Go to Experience Content Page") {
@@ -3681,7 +3680,6 @@ definition {
 	}
 
 	@description = "LPS-86285: Validate in the content page if, the user can change the background image of some section in the experiences that can be different from other experiences (already published)"
-	@ignore = "false"
 	@priority = "3"
 	test ChangingBackgroundImage {
 		task ("Go to Experience Content Page and create a container") {
@@ -3847,7 +3845,6 @@ definition {
 	}
 
 	@description = "LPS-86285: Validate in the content page if, the user can create the content in the experiences that can be different from others experiences"
-	@ignore = "false"
 	@priority = "3"
 	test CreatingContentInDifferentExperiences {
 		task ("Create a Web Content") {
@@ -4096,7 +4093,6 @@ definition {
 	}
 
 	@description = "LPS-86285: Validate in the content page if, the user can discard the section when he is editing the experiences (not published)	"
-	@ignore = "false"
 	@priority = "3"
 	test DiscardingASectionOfAnUnpublishedExperience {
 		task ("Create an experience, add a component and make changes without publish it") {
@@ -4137,7 +4133,6 @@ definition {
 	}
 
 	@description = "LPS-86285: Validate in the content page if, the user can discard the changes when he is editing the experiences (not published)"
-	@ignore = "false"
 	@priority = "3"
 	test DiscardingChangesFromUnpublishedExperiences {
 		task ("Create a component and add a component without publishing them") {
@@ -4188,7 +4183,6 @@ definition {
 	}
 
 	@description = "LPS-86285: Validate in the content page if, the user can discard the changes when he is editing the experiences (already published)"
-	@ignore = "false"
 	@priority = "4"
 	test DiscardingChangesStillInTheEdition {
 		task ("Go to Experience Content Page") {
@@ -4248,7 +4242,6 @@ definition {
 	}
 
 	@description = "LPS-86285: Validate in the content page if, the user can discard the section when he is editing the experiences (already published)"
-	@ignore = "false"
 	@priority = "3"
 	test DiscardingSection {
 		task ("Go to Experience Content Page") {
@@ -4757,7 +4750,6 @@ definition {
 	}
 
 	@description = "LPS-86285: Validate in the content page if, the user can publish the content in the experiences that can be different from others experiences"
-	@ignore = "false"
 	@priority = "5"
 	test PublishContentInDifferentExperiences {
 		task ("Create a Web Content and add it to the page") {
@@ -4795,7 +4787,6 @@ definition {
 	}
 
 	@description = "LPS-86285: Validate in the content page if, the user can remove a section in the experiences that can be different from others experiences (already published)"
-	@ignore = "false"
 	@priority = "5"
 	test RemoveDifferentSections {
 		task ("Add an element to page, create an experience and publish it") {
@@ -4888,7 +4879,6 @@ definition {
 	}
 
 	@description = "LPS-86285: Validate in the content page if, the user can remove a section in the experiences that can be different from others experiences (not published)"
-	@ignore = "false"
 	@priority = "3"
 	test RemovingASectionOfDifferentAndUnpublishedExperiences {
 		task ("Go to Experience Content Page") {
@@ -4923,7 +4913,6 @@ definition {
 	}
 
 	@description = "LPS-86285: Validate in the content page if, the user can remove fragment in the experiences that can be different from others experiences (already published)"
-	@ignore = "false"
 	@priority = "4"
 	test RemovingFragmentInDifferentExperiences {
 		task ("Go to Experience Content Page") {
@@ -4972,7 +4961,6 @@ definition {
 	}
 
 	@description = "LPS-86285: Validate in the content page if, the user can remove fragment in the experiences that can be different from others experiences (not published)"
-	@ignore = "false"
 	@priority = "3"
 	test RemovingFragmentOfUnpublishedExperiences {
 		task ("Go to Experience Content Page, add an experience and a fragment without publishing them") {

@@ -85,12 +85,7 @@ DeserializeUtil.prototype = {
 
 				// To be removed after next stories
 
-				if (
-					type !== 'start' &&
-					type !== 'end' &&
-					type !== 'state' &&
-					type !== 'task'
-				) {
+				if (type === 'joinxor' || type === 'condition') {
 					type = 'state';
 				}
 

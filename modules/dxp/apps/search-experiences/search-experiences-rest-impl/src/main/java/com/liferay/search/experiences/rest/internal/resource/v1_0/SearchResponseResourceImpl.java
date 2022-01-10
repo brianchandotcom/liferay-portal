@@ -208,16 +208,20 @@ public class SearchResponseResourceImpl extends BaseSearchResponseResourceImpl {
 		return null;
 	}
 
-	private boolean _hasErrors(Throwable throwable1) {
-		if (_isWarning(throwable1)) {
+	private boolean _hasErrors(Throwable throwable) {
+		Class<? extends Throwable> clazz = throwable.getClass();
+
+		String simpleName = clazz.getSimpleName();
+
+		if (simpleName.equals("InvalidElementInstanceException")) {
 			return false;
 		}
 
-		if ((throwable1.getClass() == RuntimeException.class) &&
-			Validator.isBlank(throwable1.getMessage())) {
+		if ((throwable.getClass() == RuntimeException.class) &&
+			Validator.isBlank(throwable.getMessage())) {
 
-			for (Throwable throwable2 : throwable1.getSuppressed()) {
-				if (_hasErrors(throwable2)) {
+			for (Throwable curThrowable : throwable.getSuppressed()) {
+				if (_hasErrors(curThrowable)) {
 					return true;
 				}
 			}
@@ -226,18 +230,6 @@ public class SearchResponseResourceImpl extends BaseSearchResponseResourceImpl {
 		}
 
 		return true;
-	}
-
-	private boolean _isWarning(Throwable throwable) {
-		Class<? extends Throwable> clazz = throwable.getClass();
-
-		String simpleName = clazz.getSimpleName();
-
-		if (simpleName.equals("InvalidElementInstanceException")) {
-			return true;
-		}
-
-		return false;
 	}
 
 	private Map<String, DocumentField> _toDocumentFields(

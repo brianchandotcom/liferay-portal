@@ -39,6 +39,7 @@ public class ServiceBuilderModulesTestClass extends ModulesTestClass {
 		super(batchTestClassGroup, testClassFile, "buildService");
 	}
 
+	@Override
 	protected List<File> getModulesProjectDirs() {
 		final List<File> modulesProjectDirs = new ArrayList<>();
 

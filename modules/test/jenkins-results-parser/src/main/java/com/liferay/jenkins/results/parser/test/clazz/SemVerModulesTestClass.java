@@ -39,6 +39,7 @@ public class SemVerModulesTestClass extends ModulesTestClass {
 		super(batchTestClassGroup, moduleBaseDir, "baseline");
 	}
 
+	@Override
 	protected List<File> getModulesProjectDirs() {
 		final List<File> modulesProjectDirs = new ArrayList<>();
 

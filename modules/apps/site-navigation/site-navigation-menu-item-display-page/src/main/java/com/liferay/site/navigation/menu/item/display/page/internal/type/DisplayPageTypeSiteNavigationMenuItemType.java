@@ -352,6 +352,7 @@ public class DisplayPageTypeSiteNavigationMenuItemType
 		return true;
 	}
 
+	@Override
 	public boolean isMultiSelection() {
 		if (!FFDisplayPageSiteNavigationMenuItemConfigurationUtil.
 				multipleSelectionEnabled()) {

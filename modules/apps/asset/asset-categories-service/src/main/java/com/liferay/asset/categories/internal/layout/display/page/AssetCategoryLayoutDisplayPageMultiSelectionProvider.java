@@ -63,6 +63,7 @@ public class AssetCategoryLayoutDisplayPageMultiSelectionProvider
 		return AssetCategory.class.getName();
 	}
 
+	@Override
 	public String getPluralLabel(Locale locale) {
 		return LanguageUtil.get(locale, "categories");
 	}

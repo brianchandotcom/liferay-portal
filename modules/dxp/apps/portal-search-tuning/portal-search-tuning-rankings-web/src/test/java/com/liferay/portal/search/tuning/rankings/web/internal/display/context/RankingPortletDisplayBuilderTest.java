@@ -111,6 +111,7 @@ public class RankingPortletDisplayBuilderTest extends BaseRankingsWebTestCase {
 		Assert.assertEquals(dropdownItems.toString(), 2, dropdownItems.size());
 	}
 
+	@Override
 	protected HttpServletRequest setUpPortalGetHttpServletRequest() {
 		Mockito.doReturn(
 			_httpServletRequest

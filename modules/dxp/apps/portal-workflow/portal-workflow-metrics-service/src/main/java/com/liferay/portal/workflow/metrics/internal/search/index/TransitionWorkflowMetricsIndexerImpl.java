@@ -31,6 +31,7 @@ public class TransitionWorkflowMetricsIndexerImpl
 	extends BaseWorkflowMetricsIndexer
 	implements TransitionWorkflowMetricsIndexer {
 
+	@Override
 	public Document addTransition(AddTransitionRequest addTransitionRequest) {
 		if (searchEngineAdapter == null) {
 			return null;
@@ -76,6 +77,7 @@ public class TransitionWorkflowMetricsIndexerImpl
 		return document;
 	}
 
+	@Override
 	public void deleteTransition(
 		DeleteTransitionRequest deleteTransitionRequest) {
 

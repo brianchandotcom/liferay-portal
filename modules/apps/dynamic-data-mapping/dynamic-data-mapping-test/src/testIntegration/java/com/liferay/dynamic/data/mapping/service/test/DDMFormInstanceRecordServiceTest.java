@@ -60,6 +60,7 @@ public class DDMFormInstanceRecordServiceTest extends BaseDDMServiceTestCase {
 		new LiferayIntegrationTestRule();
 
 	@Before
+	@Override
 	public void setUp() throws Exception {
 		super.setUp();
 

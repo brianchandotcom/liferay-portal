@@ -39,6 +39,7 @@ public class CompileModulesTestClass extends ModulesTestClass {
 		super(batchTestClassGroup, moduleBaseDir, "assemble");
 	}
 
+	@Override
 	protected List<File> getModulesProjectDirs() {
 		final List<File> modulesProjectDirs = new ArrayList<>();
 

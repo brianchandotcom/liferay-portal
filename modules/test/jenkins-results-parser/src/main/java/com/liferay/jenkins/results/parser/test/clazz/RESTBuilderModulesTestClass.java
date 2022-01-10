@@ -39,6 +39,7 @@ public class RESTBuilderModulesTestClass extends ModulesTestClass {
 		super(batchTestClassGroup, testClassFile, "buildREST");
 	}
 
+	@Override
 	protected List<File> getModulesProjectDirs() {
 		final List<File> modulesProjectDirs = new ArrayList<>();
 

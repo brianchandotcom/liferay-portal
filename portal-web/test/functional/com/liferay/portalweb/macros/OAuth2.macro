@@ -220,12 +220,6 @@ definition {
 		Button.click(button = "Obtain OAuth2 Access");
 	}
 
-	macro checkIfMessageNotDenied {
-		if (!(contains("${portalVersionOutput}", "${msg}"))) {
-			fail("Access denied message was not returned");
-		}
-	}
-
 	macro deleteApplication {
 		LexiconEntry.gotoEntryMenuItemNoError(
 			menuItem = "Delete",

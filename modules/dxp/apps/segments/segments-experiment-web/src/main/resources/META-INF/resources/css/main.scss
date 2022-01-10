@@ -59,6 +59,11 @@ html#{$cadmin-selector} {
 			dt {
 				font-weight: 500;
 			}
+
+			.segments-experiment-details {
+				hyphens: auto;
+				overflow-wrap: break-word;
+			}
 		}
 	}
 }

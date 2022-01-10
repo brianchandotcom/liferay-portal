@@ -30,7 +30,7 @@ function SegmentsExperimentsDetails({segmentsExperiment}) {
 				{Liferay.Language.get('details')}
 			</h4>
 
-			<dl>
+			<dl className="pl-0 segments-experiment-details">
 				{description && (
 					<div className="c-my-2">
 						<dt className="d-inline-block">

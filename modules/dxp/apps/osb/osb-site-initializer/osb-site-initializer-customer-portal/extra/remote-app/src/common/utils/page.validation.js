@@ -31,12 +31,10 @@ const isValidPage = async (userAccount, externalReferenceCode, pageKey) => {
 		return hasAccountBrief;
 	};
 
-	const accountFlagValue = 1;
-
 	const {data} = await client.query({
 		query: getAccountRolesAndAccountFlags,
 		variables: {
-			accountFlagsFilter: `accountKey eq '${externalReferenceCode}' and name eq '${ROUTES.ONBOARDING}' and userUuid eq '${userAccount.externalReferenceCode}' and value eq ${accountFlagValue}`,
+			accountFlagsFilter: `accountKey eq '${externalReferenceCode}' and name eq '${ROUTES.ONBOARDING}' and finished eq true`,
 			accountId: userAccount.id,
 		},
 	});
@@ -78,8 +76,7 @@ const isValidPage = async (userAccount, externalReferenceCode, pageKey) => {
 		if (pageKey === ROUTES.OVERVIEW) {
 			if (!isValidExternalReferenceCode) {
 				window.location.href = getHomeLocation();
-			}
-			else if (!hasAccountFlags) {
+			} else if (!hasAccountFlags) {
 				window.location.href = getOnboardingLocation(
 					externalReferenceCode
 				);

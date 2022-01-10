@@ -13,82 +13,80 @@
  */
 
 export default function ({namespace}) {
-	Liferay.provide(
-		window,
-		`${namespace}transition`,
-		(event) => {
-			var link = event.currentTarget;
+	Liferay.provide(window, `${namespace}transition`, (event) => {
+		const link = event.currentTarget;
 
-			var workflowTaskId = parseInt(link.getData('workflowTaskId'), 10);
+		const workflowTaskId = parseInt(link.getData('workflowTaskId'), 10);
 
-			var form = document.getElementById(`${namespace}transitionFm`);
+		const form = document.getElementById(`${namespace}transitionFm`);
 
-			A.one('#<portlet:namespace />transitionCommerceOrderId').val(
-				link.getData('commerceOrderId')
-			);
-			A.one('#<portlet:namespace />workflowTaskId').val(workflowTaskId);
-			A.one('#<portlet:namespace />transitionName').val(
-				link.getData('transitionName')
-			);
+		document.getElementById(
+			`${namespace}transitionCommerceOrderId`
+		).value = link.getData('commerceOrderId');
 
-			if (workflowTaskId <= 0) {
-				submitForm(form);
+		document.getElementById(
+			`${namespace}workflowTaskId`
+		).value = workflowTaskId;
+		document.getElementById(
+			`${namespace}transitionName`
+		).value = link.getData('transitionName');
 
-				return;
-			}
+		if (workflowTaskId <= 0) {
+			submitForm(form);
 
-			var transitionComments = A.one(
-				'#<portlet:namespace />transitionComments'
-			);
+			return;
+		}
 
-			transitionComments.show();
+		const transitionComments = document.getElementById(
+			`${namespace}transitionComments`
+		);
 
-			var dialog = Liferay.Util.Window.getWindow({
-				dialog: {
-					bodyContent: form,
-					destroyOnHide: true,
-					height: 400,
-					resizable: false,
-					toolbars: {
-						footer: [
-							{
-								cssClass: 'btn-primary mr-2',
-								label: '<liferay-ui:message key="done" />',
-								on: {
-									click() {
-										submitForm(form);
-									},
+		transitionComments.style.display = 'block';
+
+		const dialog = Liferay.Util.Window.getWindow({
+			dialog: {
+				bodyContent: form,
+				destroyOnHide: true,
+				height: 400,
+				resizable: false,
+				toolbars: {
+					footer: [
+						{
+							cssClass: 'btn-primary mr-2',
+							label: Liferay.Language.get('done'),
+							on: {
+								click() {
+									submitForm(form);
 								},
 							},
-							{
-								cssClass: 'btn-cancel',
-								label: '<liferay-ui:message key="cancel" />',
-								on: {
-									click() {
-										dialog.hide();
-									},
+						},
+						{
+							cssClass: 'btn-cancel',
+							label: Liferay.Language.get('cancel'),
+							on: {
+								click() {
+									dialog.style.display = 'none';
 								},
 							},
-						],
-						header: [
-							{
-								cssClass: 'close',
-								discardDefaultButtonCssClasses: true,
-								labelHTML:
-									'<span aria-hidden="true">&times;</span>',
-								on: {
-									click(event) {
-										dialog.hide();
-									},
+						},
+					],
+					header: [
+						{
+							cssClass: 'close',
+							discardDefaultButtonCssClasses: true,
+							labelHTML:
+								'<span aria-hidden="true">&times;</span>',
+							on: {
+								click() {
+									dialog.style.display = 'none';
 								},
 							},
-						],
-					},
-					width: 720,
+						},
+					],
 				},
-				title: link.text(),
-			});
-		},
-		['aui-base', 'liferay-util-window']
-	);
+				width: 720,
+			},
+			title: link.innerText,
+		});
+	});
 }

@@ -150,7 +150,6 @@ SearchContainer<CommerceOrderItem> commerceOrderItemSearchContainer = commerceCa
 	</aui:button-row>
 
 	<liferay-frontend:component
-	module="js/cart_total/view"
-/>
-
+		module="js/cart_total/view"
+	/>
 </liferay-ddm:template-renderer>

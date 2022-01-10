@@ -219,9 +219,8 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultMap = 
 			</liferay-ui:search-container>
 		</div>
 	</div>
-	
-<liferay-frontend:component
-	module="js/cart_total/view"
-/>
 
+	<liferay-frontend:component
+		module="js/cart_total/view"
+	/>
 </liferay-ddm:template-renderer>

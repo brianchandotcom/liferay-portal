@@ -278,20 +278,8 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 	</ul>
 
 	<%@ include file="/cart_mini/transition.jspf" %>
-
-		var orderTransition = A.one('#<portlet:namespace />orderTransition');
-
-		if (orderTransition) {
-			orderTransition.delegate(
-				'click',
-				(event) => {
-					<portlet:namespace />transition(event);
-				},
-				'.transition-link'
-			);
-		}
-	
-		Liferay.after('current-order-updated', (event) => {
-			Liferay.Portlet.refresh('#p_p_id<portlet:namespace />');
-		});
 </liferay-ddm:template-renderer>
+
+<liferay-frontend:component
+	module="js/cart_mini/view"
+/>

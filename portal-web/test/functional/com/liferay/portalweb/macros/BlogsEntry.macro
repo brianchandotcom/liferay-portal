@@ -668,6 +668,28 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
+	macro restoreOldFriendlyURL {
+		MouseOver(
+			key_oldFriendlyURL = "${oldFriendlyURL}",
+			locator1 = "BlogsEntry#FRIENDLY_URL_HISTORY_ITEM");
+
+		Click(locator1 = "Icon#FRIENDLY_URL_HISTORY_ITEM_RESTORE");
+
+		AssertVisible(
+			key_activeURL = "${restoredURL}",
+			locator1 = "BlogsEntry#FRIENDLY_URL_ACTIVE_URL");
+
+		AssertVisible(
+			key_oldFriendlyURL = "${activeURL}",
+			locator1 = "BlogsEntry#FRIENDLY_URL_HISTORY_ITEM");
+
+		Click(locator1 = "Modal#CLOSE_BUTTON");
+
+		AssertVisible(
+			locator1 = "TextInput#BLOGS_ENTRY_URL",
+			value1 = "${restoredURL}");
+	}
+
 	macro saveAsDraft {
 		Click(locator1 = "Button#SAVE_AS_DRAFT");
 

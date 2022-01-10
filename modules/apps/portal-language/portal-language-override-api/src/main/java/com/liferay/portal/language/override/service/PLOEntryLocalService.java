@@ -46,7 +46,7 @@ import org.osgi.annotation.versioning.ProviderType;
  * credentials because this service can only be accessed from within the same
  * VM.
  *
- * @author Brian Wing Shun Chan
+ * @author Drew Brokke
  * @see PLOEntryLocalServiceUtil
  * @generated
  */

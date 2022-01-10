@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * The arguments resolver class for retrieving value from PLOEntry.
  *
- * @author Brian Wing Shun Chan
+ * @author Drew Brokke
  * @generated
  */
 @Component(

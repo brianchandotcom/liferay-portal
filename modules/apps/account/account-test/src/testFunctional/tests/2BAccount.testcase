@@ -729,7 +729,7 @@ definition {
 				rowEntry = "Account Name");
 		}
 
-		task ("Assert all users can be searched") {
+		task ("Assert all users can be searched by first last name") {
 			for (var userNum : list "2,3,4") {
 				Search.searchPG(
 					portletName = "Account Name",
@@ -753,6 +753,34 @@ definition {
 					LexiconEntry.viewNoEntry(rowEntry = "userfn2 userln3");
 
 					LexiconEntry.viewNoEntry(rowEntry = "userfn3 userln3");
+				}
+			}
+		}
+
+		task ("Assert all users can be searched by email") {
+			for (var userNum : list "2,3,4") {
+				Search.searchPG(
+					portletName = "Account Name",
+					searchTerm = "userea${userNum}@liferay.com");
+
+				LexiconEntry.viewEntryName(rowEntry = "userea${userNum}@liferay.com");
+
+				LexiconEntry.viewNoEntry(rowEntry = "userea@liferay.com");
+
+				if ("${userNum}" == "2") {
+					LexiconEntry.viewNoEntry(rowEntry = "userea3@liferay.com");
+
+					LexiconEntry.viewNoEntry(rowEntry = "userea4@liferay.com");
+				}
+				else if ("${userNum}" == "3") {
+					LexiconEntry.viewNoEntry(rowEntry = "userea2@liferay.com");
+
+					LexiconEntry.viewNoEntry(rowEntry = "userea4@liferay.com");
+				}
+				else {
+					LexiconEntry.viewNoEntry(rowEntry = "userea2@liferay.com");
+
+					LexiconEntry.viewNoEntry(rowEntry = "userea3@liferay.com");
 				}
 			}
 		}

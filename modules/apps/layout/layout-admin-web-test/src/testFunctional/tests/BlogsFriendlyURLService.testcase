@@ -1,0 +1,242 @@
+@component-name = "portal-collaboration"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Friendly URL Service";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Blogs Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Site Name",
+			layoutName = "Blogs Page",
+			widgetName = "Blogs");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			User.logoutPG();
+		}
+	}
+
+	@description = "This ensures that the multiple old friendlyURLs can be viewed from the history."
+	@priority = "4"
+	test CanAddMultipleOldFriendlyURLs {
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title",
+			groupName = "Site Name");
+
+		BlogsNavigator.openToEditEntryInSite(
+			entryTitle = "Blogs Entry Title",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		Panel.expandPanel(panel = "Configuration");
+
+		BlogsEntry.addCustomURL(customURL = "custom&");
+
+		PortletEntry.publish();
+
+		BlogsNavigator.openToEditEntryInSite(
+			entryTitle = "Blogs Entry Title",
+			friendlyURL = "custom-",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		BlogsEntry.editCustomURL(customURL = "custom-url");
+
+		PortletEntry.publish();
+
+		BlogsNavigator.openToEditEntryInSite(
+			entryTitle = "Blogs Entry Title",
+			friendlyURL = "custom-url",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		BlogsNavigator.gotoFriendlyURLHistory();
+
+		BlogsEntry.viewOldFriendlyURL(
+			lastOldFriendlyURL = "blogs-entry-title",
+			oldFriendlyURL = "custom-");
+
+		BlogsEntry.viewActiveURL(activeURL = "custom-url");
+	}
+
+	@description = "This ensures that a duplicate URL title cannot be used even if it is an old friendly URL."
+	@priority = "4"
+	test CannotAddEntryWithDuplicateOldFriendlyURL {
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title",
+			groupName = "Site Name");
+
+		BlogsNavigator.openToEditEntryInSite(
+			entryTitle = "Blogs Entry Title",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		Panel.expandPanel(panel = "Configuration");
+
+		BlogsEntry.addCustomURL(customURL = "custom-url");
+
+		PortletEntry.publish();
+
+		BlogsNavigator.openToAddEntry(
+			layoutName = "Blogs Page",
+			siteURLKey = "site-name");
+
+		BlogsEntry.addEntryContent(
+			entryContent = "Blogs Entry Content 2nd",
+			entryTitle = "Blogs Entry Title 2nd");
+
+		Panel.expandPanel(panel = "Configuration");
+
+		BlogsEntry.addCustomURL(customURL = "blogs-entry-title");
+
+		Button.clickPublish();
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#ERROR_ENTER_A_UNIQUE_TITLE",
+			value1 = "The URL title is already in use. Please enter a unique URL title.");
+	}
+
+	@description = "This ensures that an old friendlyURL can be removed from the history."
+	@priority = "5"
+	test CanRemoveOldFriendlyURL {
+		var portalURL = PropsUtil.get("portal.url");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title",
+			groupName = "Site Name");
+
+		BlogsNavigator.openToEditEntryInSite(
+			entryTitle = "Blogs Entry Title",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		Panel.expandPanel(panel = "Configuration");
+
+		BlogsEntry.addCustomURL(customURL = "custom-url");
+
+		PortletEntry.publish();
+
+		BlogsNavigator.openToEditEntryInSite(
+			entryTitle = "Blogs Entry Title",
+			friendlyURL = "custom-url",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		BlogsNavigator.gotoFriendlyURLHistory();
+
+		BlogsEntry.removeOldFriendlyURL(oldFriendlyURL = "blogs-entry-title");
+
+		PortletEntry.publish();
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/site-name/blogs-page/-/blogs/blogs-entry-title");
+
+		Alert.viewErrorMessage(errorMessage = "The entry could not be found.");
+	}
+
+	@description = "This ensures that an old friendlyURL can be restored from the history."
+	@priority = "5"
+	test CanRestoreOldFriendlyURL {
+		var portalURL = PropsUtil.get("portal.url");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title",
+			groupName = "Site Name");
+
+		BlogsNavigator.openToEditEntryInSite(
+			entryTitle = "Blogs Entry Title",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		Panel.expandPanel(panel = "Configuration");
+
+		BlogsEntry.addCustomURL(customURL = "custom-url");
+
+		PortletEntry.publish();
+
+		BlogsNavigator.openToEditEntryInSite(
+			entryTitle = "Blogs Entry Title",
+			friendlyURL = "custom-url",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		BlogsNavigator.gotoFriendlyURLHistory();
+
+		BlogsEntry.restoreOldFriendlyURL(
+			activeURL = "custom-url",
+			oldFriendlyURL = "blogs-entry-title",
+			restoredURL = "blogs-entry-title");
+
+		PortletEntry.publish();
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/site-name/blogs-page/-/blogs/blogs-entry-title");
+
+		BlogsEntry.viewEntryPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+	}
+
+	@description = "This ensures that both the active URL and old friendlyURL can be viewed from the history."
+	@priority = "5"
+	test CanViewFriendlyURLs {
+		var portalURL = PropsUtil.get("portal.url");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title",
+			groupName = "Site Name");
+
+		BlogsNavigator.openToEditEntryInSite(
+			entryTitle = "Blogs Entry Title",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		Panel.expandPanel(panel = "Configuration");
+
+		BlogsEntry.addCustomURL(
+			customURL = "hola-adiós",
+			friendlyURLHistory = "true");
+
+		PortletEntry.publish();
+
+		BlogsNavigator.openToEditEntryInSite(
+			entryTitle = "Blogs Entry Title",
+			friendlyURL = "hola-adi%C3%B3s",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		BlogsNavigator.gotoFriendlyURLHistory();
+
+		BlogsEntry.viewActiveURL(activeURL = "hola-adiós");
+
+		BlogsEntry.viewOldFriendlyURL(oldFriendlyURL = "blogs-entry-title");
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/site-name/blogs-page/-/blogs/hola-adi%C3%B3s");
+
+		BlogsEntry.viewEntryPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+	}
+
+}

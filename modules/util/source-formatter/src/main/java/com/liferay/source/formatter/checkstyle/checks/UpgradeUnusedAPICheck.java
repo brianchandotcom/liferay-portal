@@ -41,6 +41,12 @@ public class UpgradeUnusedAPICheck extends BaseCheck {
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
+		DetailAST dotDetailAST = detailAST.findFirstToken(TokenTypes.DOT);
+
+		if (dotDetailAST == null) {
+			return;
+		}
+
 		String upgradeFromVersion = getAttributeValue(
 			SourceFormatterUtil.UPGRADE_FROM_VERSION);
 		String upgradeToVersion = getAttributeValue(

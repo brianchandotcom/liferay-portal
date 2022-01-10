@@ -63,7 +63,27 @@ function check_usage {
 	fi
 }
 
+function react_requirements {
+	# Verify Yarn
+	status=$?
+	cmd="which yarn"
+	$cmd
+	status=$?
+
+	if [ $status -ne 0 ]
+	then
+		echo "Error: Yarn not found"
+		echo ""
+		echo "  To install run the following command: npm install -g yarn"
+		echo ""
+		echo "After install yarn, run the command again"
+		exit 1
+	fi
+}
+
 function create_react_app {
+	react_requirements
+
 	yarn create react-app ${REMOTE_APP_DIR}
 
 	cd ${REMOTE_APP_DIR}
@@ -157,13 +177,13 @@ import { Liferay } from "./liferay";
 const { REACT_APP_LIFERAY_HOST = window.location.origin } = process.env;
 
 const baseFetch = async (url, options = {}) => {
-return fetch(REACT_APP_LIFERAY_HOST + "/" + url, {
-	headers: {
-	  "Content-Type": "application/json",
-	  "x-csrf-token": Liferay.authToken,
-	},
-	...options,
-});
+	return fetch(REACT_APP_LIFERAY_HOST + "/" + url, {
+		headers: {
+			"Content-Type": "application/json",
+			"x-csrf-token": Liferay.authToken,
+		},
+		...options,
+	});
 };
 
 export default baseFetch;
@@ -175,12 +195,12 @@ EOF
 
 	cat <<EOF > common/services/liferay/liferay.js
 export const Liferay = window.Liferay || {
-ThemeDisplay: {
-	getCompanyGroupId: () => 0,
-	getScopeGroupId: () => 0,
-	getSiteGroupId: () => 0,
-},
-authToken: "",
+	ThemeDisplay: {
+		getCompanyGroupId: () => 0,
+		getScopeGroupId: () => 0,
+		getSiteGroupId: () => 0,
+	},
+	authToken: "",
 };
 EOF
 

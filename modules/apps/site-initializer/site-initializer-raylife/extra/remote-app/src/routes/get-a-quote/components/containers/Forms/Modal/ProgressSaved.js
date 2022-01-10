@@ -1,14 +1,14 @@
 import ClayIcon from '@clayui/icon';
 import Modal from '../../../../../../common/components/modal';
-import {LiferayService} from '../../../../../../common/services/liferay';
 import {
 	STORAGE_KEYS,
 	Storage,
 } from '../../../../../../common/services/liferay/storage';
 import {clearExitAlert} from '../../../../../../common/utils/exitAlert';
+import {getLiferaySiteName} from '../../../../../../common/utils/liferay';
 import {createQuoteRetrieve} from '../../../../services/QuoteRetrieve';
 
-const liferaySiteName = LiferayService.getLiferaySiteName();
+const liferaySiteName = getLiferaySiteName();
 
 const ProgressSaved = ({email, onClose, productQuote, setError, show}) => {
 	const onSendLinkAndExit = async () => {

@@ -1,14 +1,14 @@
 import {useEffect, useState} from 'react';
-import {LiferayService} from '../../../common/services/liferay';
+import {getProductQuotes} from '../services/CommerceCatalog';
 
 export function useProductQuotes() {
 	const [productQuotes, setProductQuotes] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState();
 
-	const getProductQuotes = async () => {
+	const _getProductQuotes = async () => {
 		try {
-			const response = await LiferayService.getProductQuotes();
+			const response = await getProductQuotes();
 
 			setProductQuotes(response);
 		}
@@ -19,7 +19,8 @@ export function useProductQuotes() {
 	};
 
 	useEffect(() => {
-		getProductQuotes();
+		_getProductQuotes();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	return {

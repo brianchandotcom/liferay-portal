@@ -1,14 +1,15 @@
 import React, {useEffect, useState} from 'react';
 
 import ProductComparison from '../../../common/components/product-comparison';
-import {LiferayService} from '../../../common/services/liferay';
 import {STORAGE_KEYS, Storage} from '../../../common/services/liferay/storage';
+import {getLiferaySiteName} from '../../../common/utils/liferay';
+import {getQuoteComparisons} from '../service/QuoteComparison';
 
 const QuoteComparison = () => {
 	const [quotes, setQuotes] = useState([]);
 
 	useEffect(() => {
-		LiferayService.getQuoteComparison()
+		getQuoteComparisons()
 			.then((data) => setQuotes(data.items))
 			.catch((error) => console.error(error.message));
 	}, []);
@@ -16,9 +17,7 @@ const QuoteComparison = () => {
 	const onClickPurchase = ({id}) => {
 		Storage.setItem(STORAGE_KEYS.PRODUCT_ID, id);
 
-		const siteName = LiferayService.getLiferaySiteName();
-
-		window.location.href = `${siteName}/selected-quote`;
+		window.location.href = `${getLiferaySiteName()}/selected-quote`;
 	};
 
 	const onClickPolicyDetails = () => {};

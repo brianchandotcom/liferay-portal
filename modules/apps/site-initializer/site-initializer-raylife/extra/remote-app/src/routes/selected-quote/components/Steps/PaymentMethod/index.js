@@ -2,7 +2,7 @@ import ClayButton from '@clayui/button';
 import {ClayCheckbox} from '@clayui/form';
 import classNames from 'classnames';
 import {useContext, useEffect, useState} from 'react';
-import {LiferayService} from '../../../../../common/services/liferay';
+import {getLiferaySiteName} from '../../../../../common/utils/liferay';
 import {SelectedQuoteContext} from '../../../context/SelectedQuoteContextProvider';
 import {getPaymentMethodURL, getPaymentMethods} from '../../../services/Cart';
 import {updateOrderPaymentMethod} from '../../../services/Order';
@@ -22,10 +22,7 @@ const PaymentMethod = () => {
 					data: {items},
 				} = response;
 
-				const siteName = LiferayService.getLiferaySiteName().replace(
-					'/web/',
-					''
-				);
+				const siteName = getLiferaySiteName().replace('/web/', '');
 
 				const methodList = items.map((item) => ({
 					checked: false,
@@ -91,7 +88,7 @@ const PaymentMethod = () => {
 
 		const {data: paymentMethodURL} = await getPaymentMethodURL(
 			orderId,
-			`${origin}${LiferayService.getLiferaySiteName()}/congrats`
+			`${origin}${getLiferaySiteName()}/congrats`
 		);
 
 		window.location.href = paymentMethodURL;

@@ -1,13 +1,14 @@
 import {useEffect, useState} from 'react';
 import {useFormContext} from 'react-hook-form';
-import {LiferayService} from '../../../common/services/liferay';
 import {STORAGE_KEYS, Storage} from '../../../common/services/liferay/storage';
 import {clearExitAlert} from '../../../common/utils/exitAlert';
+import {getLiferaySiteName} from '../../../common/utils/liferay';
 import {smoothScroll} from '../../../common/utils/scroll';
 import {useStepWizard} from '../hooks/useStepWizard';
+import {createOrUpdateRaylifeApplication} from '../services/RaylifeApplication';
 import {verifyInputAgentPage} from '../utils/contact-agent';
 
-const liferaySiteName = LiferayService.getLiferaySiteName();
+const liferaySiteName = getLiferaySiteName();
 
 /**
  *
@@ -62,9 +63,7 @@ const useFormActions = (form, previousSection, nextSection, errorMessage) => {
 		setError('continueButton', {});
 
 		try {
-			const response = await LiferayService.createOrUpdateRaylifeApplication(
-				form
-			);
+			const response = await createOrUpdateRaylifeApplication(form);
 
 			setApplicationId(response.data.id);
 

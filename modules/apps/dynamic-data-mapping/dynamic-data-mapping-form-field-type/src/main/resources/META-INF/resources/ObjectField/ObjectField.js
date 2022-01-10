@@ -37,10 +37,6 @@ const normalizeDataType = (type) => {
 	return dataTypes[formattedType] ?? formattedType;
 };
 
-const formatLanguageId = (languageId) => {
-	return languageId.replace('_', '-');
-};
-
 const ObjectField = ({
 	label,
 	objectFields,
@@ -108,10 +104,7 @@ const ObjectField = ({
 
 			return filteredObjectFields.map(({label, name}) => ({
 				disabled: !!mappedFields.includes(name),
-				label:
-					label[
-						formatLanguageId(themeDisplay.getDefaultLanguageId())
-					] ?? name,
+				label: label[themeDisplay.getDefaultLanguageId()] ?? name,
 				value: name,
 			}));
 		}
@@ -174,10 +167,7 @@ const ObjectDefinitionObjectField = ({
 	const options =
 		resource?.objectFields?.map(({label, name}) => {
 			return {
-				label:
-					label[
-						formatLanguageId(themeDisplay.getDefaultLanguageId())
-					] ?? name,
+				label: label[themeDisplay.getDefaultLanguageId()] ?? name,
 				value: name,
 			};
 		}) || [];

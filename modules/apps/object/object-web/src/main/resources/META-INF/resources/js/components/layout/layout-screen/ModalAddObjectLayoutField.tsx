@@ -19,7 +19,6 @@ import classNames from 'classnames';
 import React, {useContext, useMemo, useState} from 'react';
 
 import useForm from '../../../hooks/useForm';
-import {normalizeLanguageId} from '../../../utils/string';
 import AutoComplete from '../../form/AutoComplete';
 import LayoutContext, {TYPES} from '../context';
 import {TObjectField} from '../types';
@@ -27,9 +26,7 @@ import RequiredLabel from './RequiredLabel';
 
 const objectFieldSizes = [1, 2, 3];
 
-const defaultLanguageId = normalizeLanguageId(
-	Liferay.ThemeDisplay.getDefaultLanguageId()
-);
+const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 type TInitialValues = {
 	objectFieldId: number;

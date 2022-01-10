@@ -15,14 +15,11 @@
 import ClayForm, {ClayCheckbox} from '@clayui/form';
 import React, {useContext} from 'react';
 
-import {normalizeLanguageId} from '../../../utils/string';
 import Card from '../../Card/Card';
 import Input from '../../form/Input';
 import LayoutContext, {TYPES} from '../context';
 
-const defaultLanguageId = normalizeLanguageId(
-	Liferay.ThemeDisplay.getDefaultLanguageId()
-);
+const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 const InfoScreen: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 	const [{isViewOnly, objectLayout}, dispatch] = useContext(LayoutContext);

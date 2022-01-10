@@ -14,16 +14,13 @@
 
 import React, {useContext} from 'react';
 
-import {normalizeLanguageId} from '../../../utils/string';
 import Panel from '../../Panel/Panel';
 import LayoutContext, {TYPES} from '../context';
 import {TObjectField} from '../types';
 import DropdownWithDeleteButton from './DropdownWithDeleteButton';
 import RequiredLabel from './RequiredLabel';
 
-const defaultLanguageId = normalizeLanguageId(
-	Liferay.ThemeDisplay.getDefaultLanguageId()
-);
+const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 interface IObjectLayoutFieldProps extends React.HTMLAttributes<HTMLElement> {
 	boxIndex: number;

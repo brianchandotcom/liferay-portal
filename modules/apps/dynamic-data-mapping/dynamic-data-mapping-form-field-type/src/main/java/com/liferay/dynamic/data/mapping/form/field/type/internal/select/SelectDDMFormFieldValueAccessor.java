@@ -82,11 +82,11 @@ public class SelectDDMFormFieldValueAccessor
 				optionsValuesJSONArray.getString(i));
 
 			if (matcher.matches()) {
-				return createJSONArray(
-					StringBundler.concat(
-						StringPool.OPEN_BRACKET,
-						getOptionsLabels(ddmFormFieldValue, locale),
-						StringPool.CLOSE_BRACKET));
+				JSONArray jsonArray = createJSONArray("[]");
+
+				jsonArray.put(getOptionsLabels(ddmFormFieldValue, locale));
+
+				return jsonArray;
 			}
 		}
 

@@ -20,6 +20,7 @@ import com.liferay.object.admin.rest.internal.odata.entity.v1_0.ObjectRelationsh
 import com.liferay.object.admin.rest.resource.v1_0.ObjectRelationshipResource;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectRelationshipService;
+import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -31,7 +32,6 @@ import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
-import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.util.Collections;
@@ -165,7 +165,7 @@ public class ObjectRelationshipResourceImpl
 				deletionType = ObjectRelationship.DeletionType.create(
 					objectRelationship.getDeletionType());
 				id = objectRelationship.getObjectRelationshipId();
-				label = LocalizedMapUtil.getI18nMap(
+				label = LocalizedMapUtil.getLanguageIdMap(
 					objectRelationship.getLabelMap());
 				name = objectRelationship.getName();
 				objectDefinitionId1 =

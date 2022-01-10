@@ -82,31 +82,10 @@ public class UpgradeUnusedAPICheck extends BaseCheck {
 				detailAST);
 			String methodCallName = getMethodName(detailAST);
 
-			DetailAST variableClassDetailAST = getVariableDefinitionDetailAST(
-				detailAST, methodCallClassOrVariableName, true);
-
 			DetailAST parentDetailAST = _getParentDetailAST(detailAST);
 
-			String fullyQualifiedTypeName = null;
-
-			if (variableClassDetailAST == null) {
-				fullyQualifiedTypeName = getFullyQualifiedTypeName(
-					methodCallClassOrVariableName, detailAST, true);
-			}
-			else {
-				if (variableClassDetailAST != null) {
-					List<DetailAST> variableTypeTokens = getAllChildTokens(
-						variableClassDetailAST, true, TokenTypes.TYPE);
-
-					for (DetailAST variableTypeTokenDetailAST :
-							variableTypeTokens) {
-
-						fullyQualifiedTypeName = getVariableTypeName(
-							variableTypeTokenDetailAST,
-							methodCallClassOrVariableName, true, true, true);
-					}
-				}
-			}
+			String fullyQualifiedTypeName = getVariableTypeName(
+				detailAST, methodCallClassOrVariableName, true, true, true);
 
 			List<String> methodCallParameters = new ArrayList<>();
 			List<DetailAST> allChildTokens = getAllChildTokens(

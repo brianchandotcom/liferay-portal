@@ -1,5 +1,10 @@
 @import '../../../app/components/variables';
 
+$average-label-width: 120px;
+$base-dropdown-padding: 24px;
+$experiences-dropdown-width: 808px;
+$product-menu-width: 320px;
+
 html#{$cadmin-selector} {
 	.cadmin {
 		.page-editor__toolbar-experience {
@@ -20,10 +25,10 @@ html#{$cadmin-selector} {
 		.page-editor__toolbar-experience__dropdown-menu.toggled {
 			display: block;
 			left: 0;
-			max-width: 100vw;
+			max-width: $experiences-dropdown-width;
 			position: fixed;
 			top: 0;
-			width: 808px;
+			width: calc(100vw - #{$base-dropdown-padding});
 			z-index: $modalZIndex + 1;
 
 			li.dropdown-menu__experience {
@@ -33,6 +38,26 @@ html#{$cadmin-selector} {
 				&:focus {
 					background-color: $cadmin-primary-l3;
 					border: 1px solid $cadmin-primary-l1;
+				}
+			}
+		}
+	}
+
+	body.product-menu-open {
+		.cadmin {
+			.page-editor__toolbar-experience__dropdown-menu.toggled {
+				width: calc(
+					100vw - (#{$base-dropdown-padding} + #{$product-menu-width})
+				);
+
+				@include media-breakpoint-up(lg) {
+					width: calc(
+						100vw -
+							(
+								#{$average-label-width} + #{$base-dropdown-padding} +
+									#{$product-menu-width}
+							)
+					);
 				}
 			}
 		}

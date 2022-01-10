@@ -101,16 +101,20 @@ public class HeaderResponseImpl
 				return;
 			}
 
-			if (parsedElements.size() > 1) {
+			ParsedElement firstParsedElement = parsedElements.get(0);
+
+			if (!firstParsedElement.isScriptTemplate() &&
+				(parsedElements.size() > 1)) {
+
 				throw new IllegalArgumentException(
 					"More than one element in markup: " + xml);
 			}
 
-			ParsedElement parsedElement = parsedElements.get(0);
-
-			if (!parsedElement.isValid()) {
-				throw new IllegalArgumentException(
-					"Invalid dependency: " + xml);
+			for (ParsedElement parsedElement : parsedElements) {
+				if (!parsedElement.isValid()) {
+					throw new IllegalArgumentException(
+						"Invalid dependency: " + xml);
+				}
 			}
 		}
 
@@ -478,6 +482,8 @@ public class HeaderResponseImpl
 			String elementName = null;
 			StringBundler elementTextSB = null;
 
+			boolean parsingScriptTemplate = false;
+
 			while (xmlStreamReader.hasNext()) {
 				int event = xmlStreamReader.next();
 
@@ -508,7 +514,14 @@ public class HeaderResponseImpl
 						parsedElements.add(
 							new ParsedElement(
 								elementName, elementAttributeValues,
-								elementTextSB.toString(), true));
+								parsingScriptTemplate, elementTextSB.toString(),
+								true));
+
+						if (parsingScriptTemplate &&
+							elementName.equals("script")) {
+
+							parsingScriptTemplate = false;
+						}
 
 						elementAttributeValues = null;
 						elementName = null;
@@ -519,7 +532,7 @@ public class HeaderResponseImpl
 					String localName = xmlStreamReader.getLocalName();
 
 					if (!localName.equals("head")) {
-						if (localName.equals("link") ||
+						if (parsingScriptTemplate || localName.equals("link") ||
 							localName.equals("meta") ||
 							localName.equals("script") ||
 							localName.equals("style")) {
@@ -532,9 +545,20 @@ public class HeaderResponseImpl
 								xmlStreamReader.getAttributeCount();
 
 							for (int i = 0; i < attributeCount; i++) {
-								elementAttributeValues.put(
-									xmlStreamReader.getAttributeLocalName(i),
-									xmlStreamReader.getAttributeValue(i));
+								String name =
+									xmlStreamReader.getAttributeLocalName(i);
+								String value =
+									xmlStreamReader.getAttributeValue(i);
+
+								if (localName.equals("script") &&
+									Objects.equals(name, "type") &&
+									(Objects.equals(value, "data/template") ||
+									 Objects.equals(value, "text/template"))) {
+
+									parsingScriptTemplate = true;
+								}
+
+								elementAttributeValues.put(name, value);
 							}
 						}
 						else {
@@ -548,7 +572,8 @@ public class HeaderResponseImpl
 		catch (XMLStreamException xmlStreamException) {
 			_log.error(xmlStreamException, xmlStreamException);
 
-			parsedElements.add(new ParsedElement(null, null, null, false));
+			parsedElements.add(
+				new ParsedElement(null, null, false, null, false));
 		}
 		finally {
 			if (xmlStreamReader != null) {
@@ -575,6 +600,10 @@ public class HeaderResponseImpl
 	private PrintWriter _printWriter;
 
 	private static class ParsedElement {
+
+		public boolean isScriptTemplate() {
+			return _scriptTemplate;
+		}
 
 		public boolean isValid() {
 			return _valid;
@@ -612,8 +641,8 @@ public class HeaderResponseImpl
 		}
 
 		private ParsedElement(
-			String name, Map<String, String> attributes, String text,
-			boolean valid) {
+			String name, Map<String, String> attributes, boolean scriptTemplate,
+			String text, boolean valid) {
 
 			_name = name;
 
@@ -624,12 +653,14 @@ public class HeaderResponseImpl
 				_attributes = attributes;
 			}
 
+			_scriptTemplate = scriptTemplate;
 			_text = text;
 			_valid = valid;
 		}
 
 		private final Map<String, String> _attributes;
 		private final String _name;
+		private final boolean _scriptTemplate;
 		private final String _text;
 		private final boolean _valid;
 

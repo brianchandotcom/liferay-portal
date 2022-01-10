@@ -4,13 +4,13 @@ import {MoreInfoButton} from '../../../../../../common/components/fragments/Butt
 import {CardFormActions} from '../../../../../../common/components/fragments/Card/FormActions';
 import FormCard from '../../../../../../common/components/fragments/Card/FormCard';
 import {Radio} from '../../../../../../common/components/fragments/Forms/Radio';
-import {LiferayService} from '../../../../../../common/services/liferay';
 import {
 	STORAGE_KEYS,
 	Storage,
 } from '../../../../../../common/services/liferay/storage';
 import {TIP_EVENT} from '../../../../../../common/utils/events';
 import {clearExitAlert} from '../../../../../../common/utils/exitAlert';
+import {getLiferaySiteName} from '../../../../../../common/utils/liferay';
 import {smoothScroll} from '../../../../../../common/utils/scroll';
 import {useProductQuotes} from '../../../../hooks/useProductQuotes';
 import {useStepWizard} from '../../../../hooks/useStepWizard';
@@ -37,7 +37,7 @@ export function FormBasicProductQuote({form}) {
 	const goToPreviousPage = () => {
 		clearExitAlert();
 
-		window.location.href = LiferayService.getLiferaySiteName();
+		window.location.href = getLiferaySiteName();
 
 		if (Storage.itemExist(STORAGE_KEYS.BACK_TO_EDIT)) {
 			Storage.removeItem(STORAGE_KEYS.BACK_TO_EDIT);

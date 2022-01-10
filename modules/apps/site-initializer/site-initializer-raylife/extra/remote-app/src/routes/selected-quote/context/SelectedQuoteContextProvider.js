@@ -1,6 +1,6 @@
 import {createContext, useEffect, useReducer} from 'react';
-import {LiferayService} from '../../../common/services/liferay';
 import {STORAGE_KEYS, Storage} from '../../../common/services/liferay/storage';
+import {getQuoteComparisonById} from '../../quote-comparison/service/QuoteComparison';
 
 export const SelectedQuoteContext = createContext();
 
@@ -140,7 +140,7 @@ const SelectedQuoteContextProvider = ({children}) => {
 	const [state, dispatch] = useReducer(SelectedQuoteReducer, initialState);
 
 	useEffect(() => {
-		LiferayService.getQuoteComparisonById(productId)
+		getQuoteComparisonById(productId)
 			.then((product) => {
 				dispatch({
 					payload: {...product, mostPopular: true},

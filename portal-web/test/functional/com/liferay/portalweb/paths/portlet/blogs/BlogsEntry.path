@@ -180,6 +180,22 @@
 	<td>//div[@class='embed-help-message']//span</td>
 	<td></td>
 </tr>
+<!--FRIENDLY_URL-->
+<tr>
+	<td>FRIENDLY_URL_ACTIVE_URL</td>
+	<td>//div[contains(@class,'modal-dialog')]//div[contains(@class,'active-url')]//p[normalize-space(text())='${key_activeURL}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FRIENDLY_URL_HISTORY_ITEM</td>
+	<td>//div[contains(@class,'modal-dialog')]//ul/li[contains(@class,'list-group-item')]//p[normalize-space(text())='${key_oldFriendlyURL}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FRIENDLY_URL_HISTORY_ITEM_LAST</td>
+	<td>xpath=(//div[contains(@class,'modal-dialog')]//ul/li[contains(@class,'list-group-item')]//p[normalize-space(text())='${key_oldFriendlyURL}'])[last()]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

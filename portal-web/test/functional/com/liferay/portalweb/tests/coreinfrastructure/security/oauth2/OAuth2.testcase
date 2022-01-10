@@ -1038,11 +1038,9 @@ definition {
 				enabled = "false",
 				policyName = "OAUTH2_read.portalversion");
 
-			var portalVersionOutput = JSONCurlUtil.post("${portalVersionCurl}");
+			Navigator.openSpecificURL(url = "http://localhost:8080/api/jsonws/portal/get-version");
 
-			OAuth2.checkIfMessageNotDenied(
-				msg = "Access denied to com.liferay.portal.kernel.service.PortalService#getVersion",
-				portalVersionOutput = "${portalVersionOutput}");
+			AssertTextPresent(value1 = "You do not have permission to access the requested resource.");
 		}
 
 		task ("View OAuth 2 application scope") {

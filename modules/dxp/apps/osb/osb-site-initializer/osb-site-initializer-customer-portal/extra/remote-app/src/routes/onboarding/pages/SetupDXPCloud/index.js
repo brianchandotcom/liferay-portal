@@ -10,8 +10,8 @@ import {
 	addSetupDXPCloud,
 	getSetupDXPCloudInfo,
 } from '../../../../common/services/liferay/graphql/queries';
-import {PARAMS_KEYS} from '../../../../common/services/liferay/search-params';
 import {API_BASE_URL} from '../../../../common/utils';
+import {PARAMS_KEYS} from '../../../../common/utils/constants';
 import {isLowercaseAndNumbers} from '../../../../common/utils/validations.form';
 import {useOnboarding} from '../../../../routes/onboarding/context';
 import AdminInputs from '../../components/AdminInputs';

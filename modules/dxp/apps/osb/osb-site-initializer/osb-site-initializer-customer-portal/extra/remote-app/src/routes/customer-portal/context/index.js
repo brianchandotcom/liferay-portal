@@ -8,6 +8,7 @@ import {
 import client from '../../../apolloClient';
 import {useApplicationProvider} from '../../../common/context/ApplicationPropertiesProvider';
 import {useCustomEvent} from '../../../common/hooks/useCustomEvent';
+import useSearchParams from '../../../common/hooks/useSearchParams';
 import {LiferayTheme} from '../../../common/services/liferay';
 import {fetchSession} from '../../../common/services/liferay/api';
 import {
@@ -16,10 +17,7 @@ import {
 	getStructuredContentFolders,
 	getUserAccount,
 } from '../../../common/services/liferay/graphql/queries';
-import {
-	PARAMS_KEYS,
-	SearchParams,
-} from '../../../common/services/liferay/search-params';
+import {PARAMS_KEYS} from '../../../common/utils/constants';
 import {isValidPage} from '../../../common/utils/page.validation';
 import {CUSTOM_EVENTS} from '../utils/constants';
 import reducer, {actionTypes} from './reducer';
@@ -39,6 +37,7 @@ const AppContextProvider = ({assetsPath, children, page}) => {
 	const dispatchEventSubscriptionGroups = useCustomEvent(
 		CUSTOM_EVENTS.SUBSCRIPTION_GROUPS
 	);
+	const liferaySearchParams = useSearchParams();
 
 	const [state, dispatch] = useReducer(reducer, {
 		assetsPath,
@@ -161,7 +160,7 @@ const AppContextProvider = ({assetsPath, children, page}) => {
 
 		const fetchData = async () => {
 			const user = await getUser();
-			const projectExternalReferenceCode = SearchParams.get(
+			const projectExternalReferenceCode = liferaySearchParams.get(
 				PARAMS_KEYS.PROJECT_APPLICATION_EXTERNAL_REFERENCE_CODE
 			);
 

@@ -1,5 +1,6 @@
 import {createContext, useContext, useEffect, useReducer} from 'react';
 import client from '../../../apolloClient';
+import useSearchParams from '../../../common/hooks/useSearchParams';
 import FormProvider from '../../../common/providers/FormProvider';
 import {LiferayTheme} from '../../../common/services/liferay';
 import {
@@ -8,11 +9,7 @@ import {
 	getKoroneikiAccounts,
 	getUserAccount,
 } from '../../../common/services/liferay/graphql/queries';
-import {
-	PARAMS_KEYS,
-	SearchParams,
-} from '../../../common/services/liferay/search-params';
-import {ROUTES} from '../../../common/utils/constants';
+import {PARAMS_KEYS, ROUTES} from '../../../common/utils/constants';
 import {isValidPage} from '../../../common/utils/page.validation';
 import {PRODUCTS} from '../../customer-portal/utils/constants';
 import {
@@ -40,6 +37,8 @@ const initialForm = {
 const AppContext = createContext();
 
 const AppContextProvider = ({assetsPath, children}) => {
+	const liferaySearchParams = useSearchParams();
+
 	const [state, dispatch] = useReducer(reducer, {
 		assetsPath,
 		koroneikiAccount: {},
@@ -108,7 +107,7 @@ const AppContextProvider = ({assetsPath, children}) => {
 		const fetchData = async () => {
 			const user = await getUser();
 
-			const projectExternalReferenceCode = SearchParams.get(
+			const projectExternalReferenceCode = liferaySearchParams.get(
 				PARAMS_KEYS.PROJECT_APPLICATION_EXTERNAL_REFERENCE_CODE
 			);
 
@@ -149,6 +148,7 @@ const AppContextProvider = ({assetsPath, children}) => {
 		};
 
 		fetchData();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	return (

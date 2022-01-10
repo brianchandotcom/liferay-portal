@@ -1,0 +1,83 @@
+@component-name = "portal-wcm"
+definition {
+
+	property osgi.module.configuration.file.names = "com.liferay.layout.content.page.editor.web.internal.configuration.FFLayoutContentPageEditorConfiguration.config";
+	property osgi.module.configurations = "tokenReuseEnabled=&quot;true&quot;";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Style Books";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a site via JSON") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a test for LPS-136199. The user could detach the linked token."
+	@priority = "5"
+	test DetachLinkedColorTokenInPageEditor {
+		task ("Add a Heading fragment to a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+		}
+
+		task ("Change the Text Color to Success") {
+			PageEditor.gotoStyle(fragmentName = "Heading");
+
+			PageEditor.configureFragment(textColor = "Success");
+		}
+
+		task ("View the Text Color of Heading is Success") {
+			PageEditor.viewFragmentStyle(
+				fragmentName = "heading",
+				textColor = "success");
+		}
+
+		task ("Detach the linked token") {
+			PageEditor.detachToken(fieldLabel = "Text Color");
+		}
+
+		task ("View the color reference is shown in Text Color field") {
+			AssertTextEquals(
+				key_text = "Text Color",
+				locator1 = "TextInput#ANY",
+				value1 = "#287d3c");
+
+			AssertCssValue(
+				fragmentName = "heading",
+				id = "element-text",
+				index = "1",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
+				locator2 = "color",
+				value1 = "rgba(40, 125, 60, 1)");
+		}
+	}
+
+}

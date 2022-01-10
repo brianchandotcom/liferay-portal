@@ -110,26 +110,22 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-7100. Verify user can change a diagram product type to SVG."
-	@ignore = "true"
 	@priority = "3"
 	test ChangeDiagramType {
-
-		// TODO COMMERCE-7100 Add SVG file to testcase dependencies and replace imageTitles variable in test once an alternative SVG file is created
-
 		task ("Given a diagram product with an svg diagram image") {
 			CommerceJSONProductsAPI._addCommerceProduct(
 				catalogName = "Master",
-				productName = "Diagram T-Shirt",
+				productName = "Diagram Product",
 				productType = "diagram");
 
 			CommerceProducts.openProductsAdmin();
 
-			CommerceNavigator.gotoEntry(entryName = "Diagram T-Shirt");
+			CommerceNavigator.gotoEntry(entryName = "Diagram Product");
 
 			CommerceEntry.gotoMenuTab(menuTab = "Diagram");
 
 			CommerceProductImages.addDiagramImages(
-				imageTitles = "imageTitle",
+				imageTitles = "sbd",
 				imageType = "svg",
 				productType = "Diagram");
 
@@ -144,15 +140,15 @@ definition {
 			CommerceDiagram.assertPinToolTipOpens();
 		}
 
-		task ("When I change the Diagram Settings Type to SVG and click on pin 10") {
+		task ("When I change the Diagram Settings Type to SVG and click on pin 1") {
 			CommerceDiagram.changeSettingsType(settingsType = "SVG");
 
-			CommerceDiagram.viewPin(pinNumber = "10");
+			CommerceDiagram.viewPin(pinNumber = "1");
 		}
 
-		task ("Then a tooltip opens with information on pin 10") {
+		task ("Then a tooltip opens with information on pin 1") {
 			CommerceDiagram.assertPinToolTipInfo(
-				pinNumber = "10",
+				pinNumber = "1",
 				pinType = "SKU",
 				quantity = "1");
 
@@ -160,7 +156,9 @@ definition {
 				key_text = "Cancel",
 				locator1 = "Button#ANY_SECONDARY");
 
-			Click(locator1 = "CommerceDiagrams#DIAGRAM_IMAGE");
+			Click(
+				key_imageItem = "rect",
+				locator1 = "CommerceDiagrams#DIAGRAM_IMAGE_SVG_SPECIFIC");
 
 			CommerceDiagram.assertPinToolTipNotOpen();
 		}

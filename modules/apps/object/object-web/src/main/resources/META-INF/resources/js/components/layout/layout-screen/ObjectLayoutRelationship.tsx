@@ -15,14 +15,11 @@
 import ClayLabel from '@clayui/label';
 import React, {useContext} from 'react';
 
-import {normalizeLanguageId} from '../../../utils/string';
 import Panel from '../../Panel/Panel';
 import LayoutContext from '../context';
 import {TObjectRelationship} from '../types';
 
-const defaultLanguageId = normalizeLanguageId(
-	Liferay.ThemeDisplay.getDefaultLanguageId()
-);
+const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 interface IObjectLayoutRelationshipProps
 	extends React.HTMLAttributes<HTMLElement> {

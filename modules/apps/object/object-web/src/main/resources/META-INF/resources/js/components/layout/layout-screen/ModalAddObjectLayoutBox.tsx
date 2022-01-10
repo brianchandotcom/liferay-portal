@@ -18,13 +18,10 @@ import ClayModal from '@clayui/modal';
 import React, {useContext} from 'react';
 
 import useForm from '../../../hooks/useForm';
-import {normalizeLanguageId} from '../../../utils/string';
 import Input from '../../form/Input';
 import LayoutContext, {TYPES} from '../context';
 
-const defaultLanguageId = normalizeLanguageId(
-	Liferay.ThemeDisplay.getDefaultLanguageId()
-);
+const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 type TInitialValues = {
 	name: string;

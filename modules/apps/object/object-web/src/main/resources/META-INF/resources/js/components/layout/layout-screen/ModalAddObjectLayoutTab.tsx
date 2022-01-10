@@ -21,7 +21,7 @@ import classNames from 'classnames';
 import React, {useContext, useMemo, useState} from 'react';
 
 import useForm from '../../../hooks/useForm';
-import {normalizeLanguageId, separateCamelCase} from '../../../utils/string';
+import {separateCamelCase} from '../../../utils/string';
 import AutoComplete from '../../form/AutoComplete';
 import Input from '../../form/Input';
 import LayoutContext, {TYPES as EVENT_TYPES} from '../context';
@@ -57,9 +57,7 @@ const types: TTabTypes = {
 	},
 };
 
-const defaultLanguageId = normalizeLanguageId(
-	Liferay.ThemeDisplay.getDefaultLanguageId()
-);
+const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 interface IModalAddObjectLayoutTabProps
 	extends React.HTMLAttributes<HTMLElement> {

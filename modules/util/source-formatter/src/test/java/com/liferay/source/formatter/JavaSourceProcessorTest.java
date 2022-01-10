@@ -47,6 +47,11 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testCollapseImports() throws Exception {
+		test("CollapseImports.testjava");
+	}
+
+	@Test
 	public void testCombineLines() throws Exception {
 		test("CombineLines.testjava");
 	}

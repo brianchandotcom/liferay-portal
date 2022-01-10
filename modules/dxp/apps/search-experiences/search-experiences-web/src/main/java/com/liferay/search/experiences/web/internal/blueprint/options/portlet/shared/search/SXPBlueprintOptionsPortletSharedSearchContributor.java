@@ -22,7 +22,6 @@ import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchCo
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchSettings;
 import com.liferay.search.experiences.constants.SXPPortletKeys;
 import com.liferay.search.experiences.web.internal.blueprint.options.portlet.preferences.SXPBlueprintOptionsPortletPreferences;
-import com.liferay.search.experiences.web.internal.blueprint.options.portlet.preferences.SXPBlueprintOptionsPortletPreferencesImpl;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -46,7 +45,7 @@ public class SXPBlueprintOptionsPortletSharedSearchContributor
 
 		SXPBlueprintOptionsPortletPreferences
 			sxpBlueprintOptionsPortletPreferences =
-				new SXPBlueprintOptionsPortletPreferencesImpl(
+				new SXPBlueprintOptionsPortletPreferences(
 					portletSharedSearchSettings.
 						getPortletPreferencesOptional());
 

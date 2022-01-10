@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-SXPBlueprintOptionsPortletPreferences sxpBlueprintOptionsPortletPreferences = new SXPBlueprintOptionsPortletPreferencesImpl(java.util.Optional.ofNullable(portletPreferences));
+SXPBlueprintOptionsPortletPreferences sxpBlueprintOptionsPortletPreferences = new SXPBlueprintOptionsPortletPreferences(java.util.Optional.ofNullable(portletPreferences));
 %>
 
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />

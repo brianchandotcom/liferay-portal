@@ -14,12 +14,18 @@
 
 package com.liferay.search.experiences.web.internal.blueprint.options.portlet.preferences;
 
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
+
 import java.util.Optional;
+
+import javax.portlet.PortletPreferences;
 
 /**
  * @author Kevin Tan
  */
-public interface SXPBlueprintOptionsPortletPreferences {
+public class SXPBlueprintOptionsPortletPreferences {
 
 	public static final String PREFERENCE_KEY_FEDERATED_SEARCH_KEY =
 		"federatedSearchKey";
@@ -27,12 +33,48 @@ public interface SXPBlueprintOptionsPortletPreferences {
 	public static final String PREFERENCE_KEY_SXP_BLUEPRINT_ID =
 		"sxpBlueprintId";
 
-	public Optional<String> getFederatedSearchKeyOptional();
+	public SXPBlueprintOptionsPortletPreferences(
+		Optional<PortletPreferences> portletPreferencesOptional) {
 
-	public String getFederatedSearchKeyString();
+		_portletPreferencesOptional = portletPreferencesOptional;
+	}
 
-	public Optional<String> getSXPBlueprintIdOptional();
+	public Optional<String> getFederatedSearchKeyOptional() {
+		return _getString(
+			SXPBlueprintOptionsPortletPreferences.
+				PREFERENCE_KEY_FEDERATED_SEARCH_KEY);
+	}
 
-	public String getSXPBlueprintIdString();
+	public String getFederatedSearchKeyString() {
+		return getFederatedSearchKeyOptional().orElse(StringPool.BLANK);
+	}
+
+	public Optional<String> getSXPBlueprintIdOptional() {
+		return _getString(
+			SXPBlueprintOptionsPortletPreferences.
+				PREFERENCE_KEY_SXP_BLUEPRINT_ID);
+	}
+
+	public String getSXPBlueprintIdString() {
+		return getSXPBlueprintIdOptional().orElse(StringPool.BLANK);
+	}
+
+	private Optional<String> _getString(String key) {
+		return _portletPreferencesOptional.flatMap(
+			portletPreferences -> _maybe(
+				portletPreferences.getValue(key, StringPool.BLANK)));
+	}
+
+	private Optional<String> _maybe(String s) {
+		s = StringUtil.trim(s);
+
+		if (Validator.isBlank(s)) {
+			return Optional.empty();
+		}
+
+		return Optional.of(s);
+	}
+
+	private final Optional<PortletPreferences> _portletPreferencesOptional;
 
 }

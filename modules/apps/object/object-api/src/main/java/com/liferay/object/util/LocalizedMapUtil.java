@@ -14,7 +14,6 @@
 
 package com.liferay.object.util;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.util.Collections;
@@ -39,10 +38,6 @@ public class LocalizedMapUtil {
 		return Collections.unmodifiableMap(localizedMap);
 	}
 
-	public static Map<Locale, String> getLocalizedMap(String label) {
-		return Collections.singletonMap(LocaleUtil.getDefault(), label);
-	}
-
 	public static Map<Locale, String> getLocalizedMap(
 		Map<String, String> i18nMap) {
 
@@ -62,6 +57,10 @@ public class LocalizedMapUtil {
 		}
 
 		return localizedMap;
+	}
+
+	public static Map<Locale, String> getLocalizedMap(String label) {
+		return Collections.singletonMap(LocaleUtil.getDefault(), label);
 	}
 
 	private static Locale _getLocale(String languageId) {

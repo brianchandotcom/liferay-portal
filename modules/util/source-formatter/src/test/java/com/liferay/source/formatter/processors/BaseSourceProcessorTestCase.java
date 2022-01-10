@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.source.formatter;
+package com.liferay.source.formatter.processors;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
@@ -20,6 +20,9 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
+import com.liferay.source.formatter.SourceFormatter;
+import com.liferay.source.formatter.SourceFormatterArgs;
+import com.liferay.source.formatter.SourceFormatterMessage;
 import com.liferay.source.formatter.util.FileUtil;
 
 import java.io.File;

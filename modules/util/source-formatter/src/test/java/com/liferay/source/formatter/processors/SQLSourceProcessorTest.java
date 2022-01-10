@@ -12,18 +12,18 @@
  * details.
  */
 
-package com.liferay.source.formatter;
+package com.liferay.source.formatter.processors;
 
 import org.junit.Test;
 
 /**
- * @author Alan Huang
+ * @author David Zhang
  */
-public class MarkdownSourceProcessorTest extends BaseSourceProcessorTestCase {
+public class SQLSourceProcessorTest extends BaseSourceProcessorTestCase {
 
 	@Test
-	public void testMissingEmptyLines() throws Exception {
-		test("MissingEmptyLines.testmarkdown");
+	public void testIncorrectEmptyLines() throws Exception {
+		test("IncorrectEmptyLines.testsql");
 	}
 
 }

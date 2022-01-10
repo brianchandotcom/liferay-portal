@@ -12,23 +12,18 @@
  * details.
  */
 
-package com.liferay.source.formatter;
+package com.liferay.source.formatter.processors;
 
 import org.junit.Test;
 
 /**
- * @author Hugo Huijser
+ * @author Alan Huang
  */
-public class JavaParserTest extends BaseSourceProcessorTestCase {
+public class CSSSourceProcessorTest extends BaseSourceProcessorTestCase {
 
 	@Test
-	public void testJavaAnnotation() throws Exception {
-		test("JavaAnnotation.testjava");
-	}
-
-	@Test
-	public void testJavaArray() throws Exception {
-		test("JavaArray.testjava");
+	public void testIncorrectWhitespace() throws Exception {
+		//test("IncorrectWhitespace.testcss");
 	}
 
 }

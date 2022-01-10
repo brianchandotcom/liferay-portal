@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.source.formatter;
+package com.liferay.source.formatter.processors;
 
 import org.junit.Test;
 

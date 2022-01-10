@@ -12,18 +12,23 @@
  * details.
  */
 
-package com.liferay.source.formatter;
+package com.liferay.source.formatter.processors;
 
 import org.junit.Test;
 
 /**
- * @author David Zhang
+ * @author Hugo Huijser
  */
-public class TLDSourceProcessorTest extends BaseSourceProcessorTestCase {
+public class JavaParserTest extends BaseSourceProcessorTestCase {
 
 	@Test
-	public void testIncorrectEmptyLines() throws Exception {
-		test("IncorrectEmptyLines.testtld");
+	public void testJavaAnnotation() throws Exception {
+		test("JavaAnnotation.testjava");
+	}
+
+	@Test
+	public void testJavaArray() throws Exception {
+		test("JavaArray.testjava");
 	}
 
 }

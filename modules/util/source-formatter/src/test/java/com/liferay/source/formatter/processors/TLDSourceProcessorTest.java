@@ -12,23 +12,18 @@
  * details.
  */
 
-package com.liferay.source.formatter;
+package com.liferay.source.formatter.processors;
 
 import org.junit.Test;
 
 /**
- * @author Alan Huang
+ * @author David Zhang
  */
-public class HTMLSourceProcessorTest extends BaseSourceProcessorTestCase {
-
-	@Test
-	public void testFormatSelfClosingTags() throws Exception {
-		test("FormatSelfClosingTags.testhtml");
-	}
+public class TLDSourceProcessorTest extends BaseSourceProcessorTestCase {
 
 	@Test
 	public void testIncorrectEmptyLines() throws Exception {
-		test("IncorrectEmptyLines.testhtml");
+		test("IncorrectEmptyLines.testtld");
 	}
 
 }

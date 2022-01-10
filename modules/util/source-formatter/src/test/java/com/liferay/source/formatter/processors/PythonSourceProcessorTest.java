@@ -12,18 +12,28 @@
  * details.
  */
 
-package com.liferay.source.formatter;
+package com.liferay.source.formatter.processors;
 
 import org.junit.Test;
 
 /**
- * @author David Zhang
+ * @author Alan Huang
  */
-public class SQLSourceProcessorTest extends BaseSourceProcessorTestCase {
+public class PythonSourceProcessorTest extends BaseSourceProcessorTestCase {
 
 	@Test
-	public void testIncorrectEmptyLines() throws Exception {
-		test("IncorrectEmptyLines.testsql");
+	public void testIncorrectClassesAndMethodsOrder() throws Exception {
+		test("IncorrectClassesAndMethodsOrder.testpy");
+	}
+
+	@Test
+	public void testIncorrectImportsOrder() throws Exception {
+		test("IncorrectImportsOrder.testpy");
+	}
+
+	@Test
+	public void testIncorrectWhitespace() throws Exception {
+		test("IncorrectWhitespace.testpy");
 	}
 
 }

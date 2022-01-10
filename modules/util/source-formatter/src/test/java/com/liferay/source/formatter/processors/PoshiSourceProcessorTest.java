@@ -12,28 +12,18 @@
  * details.
  */
 
-package com.liferay.source.formatter;
+package com.liferay.source.formatter.processors;
 
 import org.junit.Test;
 
 /**
  * @author Alan Huang
  */
-public class PythonSourceProcessorTest extends BaseSourceProcessorTestCase {
+public class PoshiSourceProcessorTest extends BaseSourceProcessorTestCase {
 
 	@Test
-	public void testIncorrectClassesAndMethodsOrder() throws Exception {
-		test("IncorrectClassesAndMethodsOrder.testpy");
-	}
-
-	@Test
-	public void testIncorrectImportsOrder() throws Exception {
-		test("IncorrectImportsOrder.testpy");
-	}
-
-	@Test
-	public void testIncorrectWhitespace() throws Exception {
-		test("IncorrectWhitespace.testpy");
+	public void testIncorrectComments() throws Exception {
+		test("IncorrectComments.testmacro");
 	}
 
 }

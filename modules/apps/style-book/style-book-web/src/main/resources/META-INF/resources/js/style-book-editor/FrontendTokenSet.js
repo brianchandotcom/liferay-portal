@@ -68,8 +68,13 @@ export default function FrontendTokenSet({frontendTokens, label}) {
 				...frontendTokensValues,
 				[name]: {
 					cssVariableMapping: cssVariableMapping.value,
-					name: tokenValues[value]?.name,
-					value: tokenValues[value]?.value || value,
+					value:
+						(config.tokenReuseEnabled &&
+							tokenValues[value]?.value) ||
+						value,
+					...(config.tokenReuseEnabled && {
+						name: tokenValues[value]?.name,
+					}),
 				},
 			});
 		}
@@ -82,7 +87,7 @@ export default function FrontendTokenSet({frontendTokens, label}) {
 					frontendToken
 				);
 
-				return (
+				return config.tokenReuseEnabled ? (
 					<FrontendTokenComponent
 						frontendToken={frontendToken}
 						frontendTokensValues={frontendTokensValues}
@@ -93,6 +98,18 @@ export default function FrontendTokenSet({frontendTokens, label}) {
 						tokenValues={tokenValues}
 						value={
 							frontendTokensValues[frontendToken.name]?.name ||
+							frontendTokensValues[frontendToken.name]?.value ||
+							frontendToken.defaultValue
+						}
+					/>
+				) : (
+					<FrontendTokenComponent
+						frontendToken={frontendToken}
+						key={frontendToken.name}
+						onValueSelect={(value) =>
+							updateFrontendTokensValues(frontendToken, value)
+						}
+						value={
 							frontendTokensValues[frontendToken.name]?.value ||
 							frontendToken.defaultValue
 						}

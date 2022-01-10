@@ -47,6 +47,7 @@ dependencies {
 	compileOnly group: "com.liferay.portal", name: "com.liferay.util.java", version: "2.5.0"
 	compileOnly group: "org.apache.felix", name: "org.apache.felix.http.servlet-api", version: "1.1.2"
 	compileOnly group: "org.apache.maven", name: "maven-plugin-api", transitive: false, version: "3.0.4"
+	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 }
 
 deployDependencies {

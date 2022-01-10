@@ -114,10 +114,7 @@ public class SXPBlueprintResourceImpl
 				_jsonFactory.createJSONArray(
 					sxpBlueprint.getElementInstancesJSON())
 			).put(
-				"schemaVersion",
-				_jsonFactory.createJSONObject(
-					_jsonFactory.looseSerialize(
-						sxpBlueprint.getSchemaVersion()))
+				"schemaVersion", sxpBlueprint.getSchemaVersion()
 			).put(
 				"title_i18n",
 				_jsonFactory.createJSONObject(

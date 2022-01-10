@@ -114,19 +114,25 @@ export function formatLabel(label) {
 
 export function formatMappedProductForTable(mappedProducts, isAdmin) {
 	return mappedProducts.map((mappedProduct) => {
+		const firstAvailableProduct =
+			mappedProduct.firstAvailableReplacementMappedProduct ||
+			mappedProduct;
+
 		return {
-			...mappedProduct,
+			...firstAvailableProduct,
 			initialQuantity:
-				isAdmin || mappedProduct.type !== 'sku'
+				isAdmin || firstAvailableProduct.type !== 'sku'
 					? 0
-					: getProductMinQuantity(mappedProduct.productConfiguration),
+					: getProductMinQuantity(
+							firstAvailableProduct.productConfiguration
+					  ),
 			selectable:
-				isAdmin || mappedProduct.type !== 'sku'
+				isAdmin || firstAvailableProduct.type !== 'sku'
 					? false
 					: isProductPurchasable(
-							mappedProduct.availability,
-							mappedProduct.productConfiguration,
-							mappedProduct.purchasable
+							firstAvailableProduct.availability,
+							firstAvailableProduct.productConfiguration,
+							firstAvailableProduct.purchasable
 					  ),
 		};
 	});

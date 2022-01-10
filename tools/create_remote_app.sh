@@ -147,45 +147,46 @@ EOF
 }
 
 function write_react_app_files {
-
 	#
 	# common/services/liferay/api.js
 	#
 
 	cat <<EOF > common/services/liferay/api.js
-const {REACT_APP_LIFERAY_API = window.location.origin} = process.env;
+import { Liferay } from "./liferay";
 
-export const getLiferayAuthenticationToken = () => {
-	try {
-		// eslint-disable-next-line no-undef
-		const token = Liferay.authToken;
+const { REACT_APP_LIFERAY_HOST = window.location.origin } = process.env;
 
-		return token;
-	} catch (error) {
-		console.warn('Not able to find Liferay auth token\n', error);
-
-		return '';
-	}
+const baseFetch = async (url, options = {}) => {
+return fetch(REACT_APP_LIFERAY_HOST + "/" + url, {
+	headers: {
+	  "Content-Type": "application/json",
+	  "x-csrf-token": Liferay.authToken,
+	},
+	...options,
+});
 };
-
-const baseFetch = async (url, {body, method = 'GET'} = {}) => {
-	const response = await fetch(REACT_APP_LIFERAY_API + '/' + url, {
-		...(body && {body: JSON.stringify(body)}),
-		headers: {
-			'Content-Type': 'application/json',
-			'x-csrf-token': getLiferayAuthenticationToken(),
-		},
-		method,
-	});
-
-	const data = await response.json();
-
-	return {data};
-};
-
-export {REACT_APP_LIFERAY_API};
 
 export default baseFetch;
+EOF
+
+	#
+	# common/services/liferay/liferay.js
+	#
+
+	cat <<EOF > common/services/liferay/liferay.js
+/**
+ * Whenever you need to access the global variable Liferay, use this
+ * to avoid runtime errors when you run the React application out of Liferay Portal
+ */
+
+export const Liferay = window.Liferay || {
+ThemeDisplay: {
+	getCompanyGroupId: () => 0,
+	getScopeGroupId: () => 0,
+	getSiteGroupId: () => 0,
+},
+authToken: "",
+};
 EOF
 
 	#

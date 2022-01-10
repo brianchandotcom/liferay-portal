@@ -77,7 +77,7 @@ public class SXPBlueprintOptionsPortletSharedSearchContributor
 						portletSharedSearchSettings.getRenderRequest());
 
 				searchContext.setAttribute(
-					"search.experiences.ipaddress",
+					"search.experiences.ip.address",
 					httpServletRequest.getRemoteAddr());
 			});
 	}

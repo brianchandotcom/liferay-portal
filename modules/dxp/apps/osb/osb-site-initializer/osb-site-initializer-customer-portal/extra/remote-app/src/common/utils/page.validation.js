@@ -76,7 +76,8 @@ const isValidPage = async (userAccount, externalReferenceCode, pageKey) => {
 		if (pageKey === ROUTES.OVERVIEW) {
 			if (!isValidExternalReferenceCode) {
 				window.location.href = getHomeLocation();
-			} else if (!hasAccountFlags) {
+			}
+			else if (!hasAccountFlags) {
 				window.location.href = getOnboardingLocation(
 					externalReferenceCode
 				);

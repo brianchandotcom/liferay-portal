@@ -391,6 +391,10 @@
 			<category name="Naming Conventions" />
 			<description name="Checks if class names follow naming conventions." />
 		</check>
+		<check name="JavaCollapseImportsCheck">
+			<category name="Performance" />
+			<description name="Collapses imports that use wildcard" />
+		</check>
 		<check name="JavaCollatorUtilCheck">
 			<category name="Bug Prevention" />
 			<description name="Checks for correct use of `Collator`." />

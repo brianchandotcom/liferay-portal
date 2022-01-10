@@ -14,8 +14,23 @@
 
 package com.liferay.object.model.impl;
 
+import com.liferay.object.model.ObjectViewColumn;
+
+import java.util.List;
+
 /**
- * @author Marco Leo
+ * @author Gabriel Albuquerque
  */
 public class ObjectViewImpl extends ObjectViewBaseImpl {
+
+	public List<ObjectViewColumn> getObjectViewColumns() {
+		return _objectViewColumns;
+	}
+
+	public void setObjectViewColumns(List<ObjectViewColumn> objectViewColumns) {
+		_objectViewColumns = objectViewColumns;
+	}
+
+	private List<ObjectViewColumn> _objectViewColumns;
+
 }

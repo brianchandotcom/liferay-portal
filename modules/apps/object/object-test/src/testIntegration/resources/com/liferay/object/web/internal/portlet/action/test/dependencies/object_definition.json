@@ -11,7 +11,7 @@
 	},
 	"active": false,
 	"label": {
-		"en-US": "Object Definition"
+		"en_US": "Object Definition"
 	},
 	"name": "ImportedObjectDefinition",
 	"objectActions": [
@@ -31,7 +31,7 @@
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "",
 			"label": {
-				"en-US": "Text Field 1"
+				"en_US": "Text Field 1"
 			},
 			"name": "textField1",
 			"required": false,
@@ -42,7 +42,7 @@
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "",
 			"label": {
-				"en-US": "Text Field 2"
+				"en_US": "Text Field 2"
 			},
 			"name": "textField2",
 			"required": false,
@@ -53,18 +53,18 @@
 		{
 			"defaultObjectLayout": true,
 			"name": {
-				"en-US": "Layout"
+				"en_US": "Layout"
 			},
 			"objectLayoutTabs": [
 				{
 					"name": {
-						"en-US": "Tab"
+						"en_US": "Tab"
 					},
 					"objectLayoutBoxes": [
 						{
 							"collapsable": false,
 							"name": {
-								"en-US": "Block"
+								"en_US": "Block"
 							},
 							"objectLayoutRows": [
 								{
@@ -98,7 +98,7 @@
 	],
 	"panelCategoryKey": "",
 	"pluralLabel": {
-		"en-US": "Object Definitions"
+		"en_US": "Object Definitions"
 	},
 	"portlet": false,
 	"scope": "company",

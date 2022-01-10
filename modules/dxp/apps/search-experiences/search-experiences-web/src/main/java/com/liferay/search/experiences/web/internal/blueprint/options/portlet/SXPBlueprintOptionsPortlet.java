@@ -68,12 +68,6 @@ public class SXPBlueprintOptionsPortlet extends MVCPortlet {
 		super.render(renderRequest, renderResponse);
 	}
 
-	@Reference
-	private Portal _portal;
-
-	@Reference
-	private PortletPermission _portletPermission;
-
 	private boolean _containsConfiguration(RenderRequest renderRequest) {
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -92,5 +86,11 @@ public class SXPBlueprintOptionsPortlet extends MVCPortlet {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SXPBlueprintOptionsPortlet.class);
+
+	@Reference
+	private Portal _portal;
+
+	@Reference
+	private PortletPermission _portletPermission;
 
 }

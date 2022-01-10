@@ -810,6 +810,12 @@ definition {
 			value1 = "${entryContent}");
 	}
 
+	macro viewActiveURL {
+		AssertVisible(
+			key_activeURL = "${activeURL}",
+			locator1 = "BlogsEntry#FRIENDLY_URL_ACTIVE_URL");
+	}
+
 	macro viewAsRelatedAssetPG {
 		AssertTextEquals(
 			key_entryTitle = "${entryTitle}",
@@ -1192,6 +1198,18 @@ definition {
 				locator1 = "BlogsEntry#TAG",
 				tagName = StringUtil.lowerCase("${tagName}"));
 		}
+	}
+
+	macro viewOldFriendlyURL {
+		if (isSet(lastOldFriendlyURL)) {
+			AssertVisible(
+				key_oldFriendlyURL = "${lastOldFriendlyURL}",
+				locator1 = "BlogsEntry#FRIENDLY_URL_HISTORY_ITEM_LAST");
+		}
+
+		AssertVisible(
+			key_oldFriendlyURL = "${oldFriendlyURL}",
+			locator1 = "BlogsEntry#FRIENDLY_URL_HISTORY_ITEM");
 	}
 
 	macro viewPermissionsNoPermission {

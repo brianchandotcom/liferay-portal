@@ -53,6 +53,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DIAGRAM_IMAGE_SVG_SPECIFIC</td>
+	<td>//div[contains(@class,'view-wrapper')]//*[name()='g']//*[name()='${key_imageItem}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DIAGRAM_PIN</td>
 	<td>//div[contains(@class,'view-wrapper')]//*[contains(@class,'pin') and text()='${key_pinNumber}']</td>
 	<td></td>

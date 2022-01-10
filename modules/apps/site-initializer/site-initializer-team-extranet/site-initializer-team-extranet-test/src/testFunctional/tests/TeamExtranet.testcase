@@ -2,7 +2,6 @@
 definition {
 
 	property osgi.modules.includes = "site-initializer-team-extranet";
-	property database.types = "mysql";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Team Extranet";
@@ -15,7 +14,14 @@ definition {
 		}
 
 		task ("Create a new Team Extranet Site") {
-			TeamExtranet.addTeamExtranetSite(siteName = "Test Site Team Extranet");
+			ApplicationsMenu.gotoPortlet(
+				category = "Sites",
+				panel = "Control Panel",
+				portlet = "Sites");
+
+			Site.addSiteTemplateCP(
+				siteName = "Test Site Team Extranet",
+				siteTemplateName = "Team Extranet");
 		}
 	}
 

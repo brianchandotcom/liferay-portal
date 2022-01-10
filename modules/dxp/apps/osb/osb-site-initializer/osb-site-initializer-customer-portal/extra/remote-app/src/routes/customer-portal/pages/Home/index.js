@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import {useState} from 'react';
 import {LiferayTheme} from '../../../../common/services/liferay';
 import {getKoroneikiAccounts} from '../../../../common/services/liferay/graphql/queries';
-import {PARAMS_KEYS} from '../../../../common/utils/constants';
+import {PARAMS_KEYS} from '../../../../common/services/liferay/search-params';
 import ProjectCard from '../../components/ProjectCard';
 import SearchProject from '../../components/SearchProject';
 import {status} from '../../utils/constants';

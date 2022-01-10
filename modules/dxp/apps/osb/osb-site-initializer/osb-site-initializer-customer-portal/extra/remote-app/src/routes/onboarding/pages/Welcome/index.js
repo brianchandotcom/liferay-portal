@@ -41,7 +41,7 @@ const Welcome = () => {
 			/>
 
 			<p className="mb-0 px-1 text-center text-neutral-8">
-				We'll start by adding any team members to your project and
+				We&apos;ll start by adding any team members to your project and
 				complete your product activation.
 			</p>
 		</Layout>

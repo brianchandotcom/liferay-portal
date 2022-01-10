@@ -64,6 +64,7 @@ public class SXPElementResourceTest extends BaseSXPElementResourceTestCase {
 			sxpElement);
 
 		sxpElement.setCreateDate(postSXPElement.getCreateDate());
+
 		sxpElement.setDescription_i18n(
 			Collections.singletonMap(
 				LocaleUtil.toBCP47LanguageId(LocaleUtil.US), description));

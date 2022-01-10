@@ -23,9 +23,6 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
-
-import org.apache.commons.collections.ListUtils;
 
 import org.osgi.framework.Version;
 
@@ -62,7 +59,7 @@ public class UpgradeUnusedAPICheck extends BaseAPICheck {
 
 		String targetVersion = getAttributeValue(_TARGET_VERSION);
 
-		if (!Objects.equals(targetVersion, upgradeToVersion)) {
+		if (targetVersion.equals(upgradeToVersion)) {
 			return;
 		}
 
@@ -88,10 +85,10 @@ public class UpgradeUnusedAPICheck extends BaseAPICheck {
 			List<String> methodCallParameters = getParameterTypeNames(
 				detailAST);
 
-			if (Objects.equals(
-					qualifiedPackageClassName, fullyQualifiedTypeName) &&
-				Objects.equals(methodName, methodCallName) &&
-				ListUtils.isEqualList(parameterNames, methodCallParameters)) {
+			if (qualifiedPackageClassName.equals(fullyQualifiedTypeName) &&
+				methodName.equals(methodCallName) &&
+				(parameterNames.size() == methodCallParameters.size()) &&
+				parameterNames.containsAll(methodCallParameters)) {
 
 				log(
 					detailAST, _MSG_UNUSED_METHOD, methodName,
@@ -103,7 +100,7 @@ public class UpgradeUnusedAPICheck extends BaseAPICheck {
 	private List<UnusedClassMethod> _getUnusedClassMethod(
 		List<String> unusedMethodNameList) {
 
-		if (Objects.nonNull(unusedMethodNameList)) {
+		if (!unusedMethodNameList.isEmpty()) {
 			List<UnusedClassMethod> unusedClassMethodList = new ArrayList<>();
 
 			for (String unusedMethodName : unusedMethodNameList) {

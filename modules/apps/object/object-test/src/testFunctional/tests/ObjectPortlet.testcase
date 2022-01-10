@@ -84,6 +84,13 @@ definition {
 			objectName = "CustomObject",
 			pluralLabelName = "Custom Objects");
 
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject");
+
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
 
 		JSONRole.addRegularRole(

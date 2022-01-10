@@ -50,10 +50,9 @@ public class UpgradePortletPreferences extends UpgradeProcess {
 			SQLTransformer.transform(
 				StringBundler.concat(
 					"select ctCollectionId, portletPreferencesId, companyId, ",
-					"preferences from PortletPreferences where ",
-					"CAST_CLOB_TEXT(preferences) != '",
-					PortletConstants.DEFAULT_PREFERENCES,
-					"' and preferences is not null")),
+					"preferences from PortletPreferences where preferences ",
+					"not like '", PortletConstants.DEFAULT_PREFERENCES,
+					"%' and preferences is not null")),
 			resultSet -> new Object[] {
 				resultSet.getLong("ctCollectionId"),
 				resultSet.getLong("portletPreferencesId"),

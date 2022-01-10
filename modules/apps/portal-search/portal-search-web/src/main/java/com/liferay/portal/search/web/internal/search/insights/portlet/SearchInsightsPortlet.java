@@ -80,7 +80,7 @@ public class SearchInsightsPortlet extends MVCPortlet {
 		throws IOException, PortletException {
 
 		PortletSharedSearchResponse portletSharedSearchResponse =
-			portletSharedSearchRequest.search(renderRequest);
+			_portletSharedSearchRequest.search(renderRequest);
 
 		SearchInsightsPortletPreferences searchInsightsPortletPreferences =
 			new SearchInsightsPortletPreferencesImpl(
@@ -94,7 +94,7 @@ public class SearchInsightsPortlet extends MVCPortlet {
 				renderRequest));
 
 		if (!SearchPortletPermissionUtil.containsConfiguration(
-				portletPermission, renderRequest, portal)) {
+				_portletPermission, renderRequest, _portal)) {
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
@@ -152,7 +152,7 @@ public class SearchInsightsPortlet extends MVCPortlet {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", renderRequest.getLocale(), getClass());
 
-		return language.get(resourceBundle, "search-insights-help");
+		return _language.get(resourceBundle, "search-insights-help");
 	}
 
 	protected boolean isCompanyAdmin() {
@@ -177,15 +177,15 @@ public class SearchInsightsPortlet extends MVCPortlet {
 	}
 
 	@Reference
-	protected Language language;
+	private Language _language;
 
 	@Reference
-	protected Portal portal;
+	private Portal _portal;
 
 	@Reference
-	protected PortletPermission portletPermission;
+	private PortletPermission _portletPermission;
 
 	@Reference
-	protected PortletSharedSearchRequest portletSharedSearchRequest;
+	private PortletSharedSearchRequest _portletSharedSearchRequest;
 
 }

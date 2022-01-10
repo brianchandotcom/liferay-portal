@@ -67,19 +67,17 @@ public class TranslationManagerDisplayContext {
 		JSONArray availableLocalesJSONArray = JSONFactoryUtil.createJSONArray();
 
 		for (Locale availableLocale : availableLocales) {
-			String id =
-				availableLocale.getLanguage() + "-" +
-					availableLocale.getCountry();
+			String label = LocaleUtil.toW3cLanguageId(availableLocale);
 
 			availableLocalesJSONArray.put(
 				JSONUtil.put(
 					"displayName", availableLocale.getDisplayName()
 				).put(
-					"id", StringUtil.replace(id, '-', "_")
+					"id", LocaleUtil.toLanguageId(availableLocale)
 				).put(
-					"label", id
+					"label", label
 				).put(
-					"symbol", StringUtil.toLowerCase(id)
+					"symbol", StringUtil.toLowerCase(label)
 				));
 		}
 

@@ -14,9 +14,19 @@
 
 package com.liferay.object.service.http;
 
+import com.liferay.object.service.ObjectViewServiceUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
+
+import java.rmi.RemoteException;
+
+import java.util.Locale;
+import java.util.Map;
+
 /**
  * Provides the SOAP utility for the
- * <code>com.liferay.object.service.ObjectViewServiceUtil</code> service
+ * <code>ObjectViewServiceUtil</code> service
  * utility. The static methods of this class call the same methods of the
  * service utility. However, the signatures are different because it is
  * difficult for SOAP to support certain types.
@@ -56,4 +66,96 @@ package com.liferay.object.service.http;
  */
 @Deprecated
 public class ObjectViewServiceSoap {
+
+	public static com.liferay.object.model.ObjectViewSoap addObjectView(
+			long objectDefinitionId, boolean defaultObjectView,
+			String[] nameMapLanguageIds, String[] nameMapValues,
+			com.liferay.object.model.ObjectViewColumnSoap[] objectViewColumns)
+		throws RemoteException {
+
+		try {
+			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
+				nameMapLanguageIds, nameMapValues);
+
+			com.liferay.object.model.ObjectView returnValue =
+				ObjectViewServiceUtil.addObjectView(
+					objectDefinitionId, defaultObjectView, nameMap,
+					com.liferay.object.model.impl.ObjectViewColumnModelImpl.
+						toModels(objectViewColumns));
+
+			return com.liferay.object.model.ObjectViewSoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.object.model.ObjectViewSoap deleteObjectView(
+			long objectViewId)
+		throws RemoteException {
+
+		try {
+			com.liferay.object.model.ObjectView returnValue =
+				ObjectViewServiceUtil.deleteObjectView(objectViewId);
+
+			return com.liferay.object.model.ObjectViewSoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.object.model.ObjectViewSoap getObjectView(
+			long objectViewId)
+		throws RemoteException {
+
+		try {
+			com.liferay.object.model.ObjectView returnValue =
+				ObjectViewServiceUtil.getObjectView(objectViewId);
+
+			return com.liferay.object.model.ObjectViewSoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.object.model.ObjectViewSoap updateObjectView(
+			long objectViewId, boolean defaultObjectView,
+			String[] nameMapLanguageIds, String[] nameMapValues,
+			com.liferay.object.model.ObjectViewColumnSoap[] objectViewColumns)
+		throws RemoteException {
+
+		try {
+			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
+				nameMapLanguageIds, nameMapValues);
+
+			com.liferay.object.model.ObjectView returnValue =
+				ObjectViewServiceUtil.updateObjectView(
+					objectViewId, defaultObjectView, nameMap,
+					com.liferay.object.model.impl.ObjectViewColumnModelImpl.
+						toModels(objectViewColumns));
+
+			return com.liferay.object.model.ObjectViewSoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		ObjectViewServiceSoap.class);
+
 }

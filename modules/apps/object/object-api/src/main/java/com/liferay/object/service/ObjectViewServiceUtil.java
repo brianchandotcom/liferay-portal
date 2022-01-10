@@ -14,6 +14,12 @@
 
 package com.liferay.object.service;
 
+import com.liferay.object.model.ObjectView;
+import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.List;
+import java.util.Map;
+
 /**
  * Provides the remote service utility for ObjectView. This utility wraps
  * <code>com.liferay.object.service.impl.ObjectViewServiceImpl</code> and is an
@@ -33,14 +39,45 @@ public class ObjectViewServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.object.service.impl.ObjectViewServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static ObjectView addObjectView(
+			long objectDefinitionId, boolean defaultObjectView,
+			Map<java.util.Locale, String> nameMap,
+			List<com.liferay.object.model.ObjectViewColumn> objectViewColumns)
+		throws PortalException {
+
+		return getService().addObjectView(
+			objectDefinitionId, defaultObjectView, nameMap, objectViewColumns);
+	}
+
+	public static ObjectView deleteObjectView(long objectViewId)
+		throws PortalException {
+
+		return getService().deleteObjectView(objectViewId);
+	}
+
+	public static ObjectView getObjectView(long objectViewId)
+		throws PortalException {
+
+		return getService().getObjectView(objectViewId);
+	}
 
 	/**
 	 * Returns the OSGi service identifier.
 	 *
 	 * @return the OSGi service identifier
 	 */
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static ObjectView updateObjectView(
+			long objectViewId, boolean defaultObjectView,
+			Map<java.util.Locale, String> nameMap,
+			List<com.liferay.object.model.ObjectViewColumn> objectViewColumns)
+		throws PortalException {
+
+		return getService().updateObjectView(
+			objectViewId, defaultObjectView, nameMap, objectViewColumns);
 	}
 
 	public static ObjectViewService getService() {

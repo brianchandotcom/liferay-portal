@@ -36,6 +36,19 @@ public class ObjectViewLocalServiceWrapper
 		_objectViewLocalService = objectViewLocalService;
 	}
 
+	@Override
+	public com.liferay.object.model.ObjectView addObjectView(
+			long userId, long objectDefinitionId, boolean defaultObjectView,
+			java.util.Map<java.util.Locale, String> nameMap,
+			java.util.List<com.liferay.object.model.ObjectViewColumn>
+				objectViewColumns)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectViewLocalService.addObjectView(
+			userId, objectDefinitionId, defaultObjectView, nameMap,
+			objectViewColumns);
+	}
+
 	/**
 	 * Adds the object view to the database. Also notifies the appropriate model listeners.
 	 *
@@ -350,6 +363,18 @@ public class ObjectViewLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectViewLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	@Override
+	public com.liferay.object.model.ObjectView updateObjectView(
+			long objectViewId, boolean defaultObjectView,
+			java.util.Map<java.util.Locale, String> nameMap,
+			java.util.List<com.liferay.object.model.ObjectViewColumn>
+				objectViewColumns)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectViewLocalService.updateObjectView(
+			objectViewId, defaultObjectView, nameMap, objectViewColumns);
 	}
 
 	/**

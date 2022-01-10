@@ -34,6 +34,33 @@ public class ObjectViewServiceWrapper
 		_objectViewService = objectViewService;
 	}
 
+	@Override
+	public com.liferay.object.model.ObjectView addObjectView(
+			long objectDefinitionId, boolean defaultObjectView,
+			java.util.Map<java.util.Locale, String> nameMap,
+			java.util.List<com.liferay.object.model.ObjectViewColumn>
+				objectViewColumns)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectViewService.addObjectView(
+			objectDefinitionId, defaultObjectView, nameMap, objectViewColumns);
+	}
+
+	@Override
+	public com.liferay.object.model.ObjectView deleteObjectView(
+			long objectViewId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectViewService.deleteObjectView(objectViewId);
+	}
+
+	@Override
+	public com.liferay.object.model.ObjectView getObjectView(long objectViewId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectViewService.getObjectView(objectViewId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -42,6 +69,18 @@ public class ObjectViewServiceWrapper
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _objectViewService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.object.model.ObjectView updateObjectView(
+			long objectViewId, boolean defaultObjectView,
+			java.util.Map<java.util.Locale, String> nameMap,
+			java.util.List<com.liferay.object.model.ObjectViewColumn>
+				objectViewColumns)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectViewService.updateObjectView(
+			objectViewId, defaultObjectView, nameMap, objectViewColumns);
 	}
 
 	@Override

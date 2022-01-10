@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the local service utility for ObjectView. This utility wraps
@@ -44,6 +45,16 @@ public class ObjectViewLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.object.service.impl.ObjectViewLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static ObjectView addObjectView(
+			long userId, long objectDefinitionId, boolean defaultObjectView,
+			Map<java.util.Locale, String> nameMap,
+			List<com.liferay.object.model.ObjectViewColumn> objectViewColumns)
+		throws PortalException {
+
+		return getService().addObjectView(
+			userId, objectDefinitionId, defaultObjectView, nameMap,
+			objectViewColumns);
+	}
 
 	/**
 	 * Adds the object view to the database. Also notifies the appropriate model listeners.
@@ -311,6 +322,16 @@ public class ObjectViewLocalServiceUtil {
 		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	public static ObjectView updateObjectView(
+			long objectViewId, boolean defaultObjectView,
+			Map<java.util.Locale, String> nameMap,
+			List<com.liferay.object.model.ObjectViewColumn> objectViewColumns)
+		throws PortalException {
+
+		return getService().updateObjectView(
+			objectViewId, defaultObjectView, nameMap, objectViewColumns);
 	}
 
 	/**

@@ -16,6 +16,7 @@ package com.liferay.object.service;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.object.model.ObjectView;
+import com.liferay.object.model.ObjectViewColumn;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -25,10 +26,12 @@ import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -37,6 +40,8 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -63,6 +68,11 @@ public interface ObjectViewLocalService
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.object.service.impl.ObjectViewLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the object view local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link ObjectViewLocalServiceUtil} if injection and service tracking are not available.
 	 */
+	public ObjectView addObjectView(
+			long userId, long objectDefinitionId, boolean defaultObjectView,
+			Map<Locale, String> nameMap,
+			List<ObjectViewColumn> objectViewColumns)
+		throws PortalException;
 
 	/**
 	 * Adds the object view to the database. Also notifies the appropriate model listeners.
@@ -118,6 +128,7 @@ public interface ObjectViewLocalService
 	 * @return the object view that was removed
 	 */
 	@Indexable(type = IndexableType.DELETE)
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public ObjectView deleteObjectView(ObjectView objectView);
 
 	/**
@@ -281,6 +292,12 @@ public interface ObjectViewLocalService
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	public ObjectView updateObjectView(
+			long objectViewId, boolean defaultObjectView,
+			Map<Locale, String> nameMap,
+			List<ObjectViewColumn> objectViewColumns)
 		throws PortalException;
 
 	/**

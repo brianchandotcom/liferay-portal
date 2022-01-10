@@ -1410,7 +1410,7 @@ definition {
 		Click(locator1 = "PageEditor#EXPERIENCE_DUPLICATE_BUTTON");
 
 		AssertElementPresent(
-			key_experienceName = "${experienceName} (Copy)",
+			key_experienceName = "Copy of ${experienceName}",
 			locator1 = "PageEditor#EXPERIENCE_SELECT_ITEM");
 	}
 

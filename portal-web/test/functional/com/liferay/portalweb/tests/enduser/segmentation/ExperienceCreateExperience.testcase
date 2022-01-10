@@ -4331,7 +4331,7 @@ definition {
 
 		ContentPages.gotoPageEditor();
 
-		PageEditor.changeExperience(newExperience = "NewExp1 (Copy)");
+		PageEditor.changeExperience(newExperience = "Copy of NewExp1");
 
 		AssertTextEquals(
 			locator1 = "Experience#FRAGMENT_HEADING",

@@ -671,12 +671,6 @@ definition {
 
 			SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");
 
-			if (IsTextNotEqual(locator1 = "CKEditor#BODY", value1 = "${webContentContent}")) {
-				Refresh();
-
-				SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");
-			}
-
 			AssertTextEquals(
 				locator1 = "CKEditor#BODY",
 				value1 = "${webContentContent}");
@@ -688,12 +682,6 @@ definition {
 			Pause(locator1 = "3000");
 
 			SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
-
-			if (IsTextNotEqual(locator1 = "CKEditor#BODY", value1 = "${webContentDescription}")) {
-				Refresh();
-
-				SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
-			}
 
 			AssertTextEquals(
 				locator1 = "CKEditor#BODY",

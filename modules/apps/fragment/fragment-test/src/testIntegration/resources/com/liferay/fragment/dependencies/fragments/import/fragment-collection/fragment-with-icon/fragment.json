@@ -1,0 +1,10 @@
+{
+	"cssPath": "index.css",
+	"fragmentEntryKey": "heading",
+	"htmlPath": "index.html",
+	"icon": "heading",
+	"jsPath": "index.js",
+	"name": "Fragment With Icon",
+	"thumbnailPath": "thumbnail.png",
+	"type": "section"
+}

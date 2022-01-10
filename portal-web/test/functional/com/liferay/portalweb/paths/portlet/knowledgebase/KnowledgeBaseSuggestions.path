@@ -17,12 +17,12 @@
 </tr>
 <tr>
 	<td>CONTENT</td>
-	<td>//div/ul/li[contains(@class,'list-group-item')]/div[contains(@class,'autofit-col')]//a[contains(.,'${kbSuggestionBody}')]</td>
+	<td>//div/dl/dd[contains(@class,'list-group-item')]/div[contains(@class,'autofit-col')]//a[contains(.,'${kbSuggestionBody}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONTENT_DUPLICATE</td>
-	<td>//ul[contains(@class,'tabular-list-group')]/li[contains(@class,'list-group-item')][2]/div[contains(@class,'list-group-item-field')]/following-sibling::*[@data-qa-id='rowItemContent']/h4[contains(.,'${kbSuggestionBody}')]</td>
+	<td>//dl[contains(@class,'tabular-list-group')]/li[contains(@class,'list-group-item')][2]/div[contains(@class,'list-group-item-field')]/following-sibling::*[@data-qa-id='rowItemContent']/h4[contains(.,'${kbSuggestionBody}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -43,7 +43,7 @@
 <!--NAVIGATION-->
 <tr>
 	<td>NAVIGATION_BAR</td>
-	<td>//ul[contains(@id,'knowledge_base_web') and contains(@class,'navbar')]</td>
+	<td>//dl[contains(@id,'knowledge_base_web') and contains(@class,'navbar')]</td>
 	<td></td>
 </tr>
 <tr>

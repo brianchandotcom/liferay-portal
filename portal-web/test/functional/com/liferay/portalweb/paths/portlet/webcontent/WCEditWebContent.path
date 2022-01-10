@@ -42,7 +42,7 @@
 </tr>
 <tr>
 	<td>ENTRY_LIST_AUTHOR</td>
-	<td>//li[contains(.,'${key_entryTitle}')]//span[contains(.,'${key_entryAuthor}')]</td>
+	<td>//dd[contains(.,'${key_entryTitle}')]//span[contains(.,'${key_entryAuthor}')]</td>
 	<td></td>
 </tr>
 <tr>

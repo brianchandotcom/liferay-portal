@@ -22,8 +22,8 @@
 		<column name="configurationJSON" type="String" />
 		<column localized="true" name="description" type="String" />
 		<column name="elementInstancesJSON" type="String" />
-		<column localized="true" name="title" type="String" />
 		<column name="schemaVersion" type="String" />
+		<column localized="true" name="title" type="String" />
 		<column name="status" type="int" />
 		<column name="statusByUserId" type="long" />
 		<column name="statusByUserName" type="String" />

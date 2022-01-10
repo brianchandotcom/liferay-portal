@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.navigation.admin.constants.SiteNavigationAdminPortletKeys;
@@ -75,22 +75,6 @@ public class AddDisplayPageTypeSiteNavigationMenuItemMVCActionCommand
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
-			UnicodeProperties typeSettingsUnicodeProperties =
-				new UnicodeProperties(true);
-
-			typeSettingsUnicodeProperties.setProperty(
-				"classNameId", String.valueOf(classNameId));
-			typeSettingsUnicodeProperties.setProperty(
-				"classTypeId",
-				String.valueOf(
-					ParamUtil.getLong(actionRequest, "classTypeId")));
-			typeSettingsUnicodeProperties.setProperty(
-				"classPK", String.valueOf(classPK));
-			typeSettingsUnicodeProperties.setProperty(
-				"title", ParamUtil.getString(actionRequest, "title"));
-			typeSettingsUnicodeProperties.setProperty(
-				"type", ParamUtil.getString(actionRequest, "type"));
-
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				actionRequest);
 
@@ -98,7 +82,24 @@ public class AddDisplayPageTypeSiteNavigationMenuItemMVCActionCommand
 				_siteNavigationMenuItemService.addSiteNavigationMenuItem(
 					themeDisplay.getScopeGroupId(), siteNavigationMenuId, 0,
 					siteNavigationMenuItemType,
-					typeSettingsUnicodeProperties.toString(), serviceContext);
+					UnicodePropertiesBuilder.create(
+						true
+					).put(
+						"className", siteNavigationMenuItemType
+					).put(
+						"classNameId", String.valueOf(classNameId)
+					).put(
+						"classPK", String.valueOf(classPK)
+					).put(
+						"classTypeId",
+						String.valueOf(
+							ParamUtil.getLong(actionRequest, "classTypeId"))
+					).put(
+						"title", ParamUtil.getString(actionRequest, "title")
+					).put(
+						"type", ParamUtil.getString(actionRequest, "type")
+					).buildString(),
+					serviceContext);
 			}
 			catch (SiteNavigationMenuItemNameException
 						siteNavigationMenuItemNameException) {

@@ -29,7 +29,7 @@ definition {
 	@description = "This test Audit can capture events when assign, unassign user to user group or role, and event details contain the correct info."
 	@priority = "5"
 	test CanCaptureEventsAboutAssignAndUnassignUserToUserGroupAndRole {
-		property test.name.skip.portal.instance = "CPAuditreportsUsecaseEE#AuditCanCaptureEventsAboutAssignAndUnassignUserToUserGroupAndRole";
+		property test.name.skip.portal.instance = "CPAuditreportsUsecaseEE#CanCaptureEventsAboutAssignAndUnassignUserToUserGroupAndRole";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -138,7 +138,7 @@ definition {
 	@description = "This test Audit can capture events when add, update, delete, impersonate user, and event details contain the correct info."
 	@priority = "5"
 	test CanCaptureEventsAboutUserActions {
-		property test.name.skip.portal.instance = "CPAuditreportsUsecaseEE#AuditCanCaptureEventsAboutUserActions";
+		property test.name.skip.portal.instance = "CPAuditreportsUsecaseEE#CanCaptureEventsAboutUserActions";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -246,7 +246,7 @@ definition {
 	@description = "This test Audit can capture events when assign, unassign user to user group or role, and event details contain the correct info."
 	@priority = "5"
 	test CanCaptureEventsAboutUserGroupAndRole {
-		property test.name.skip.portal.instance = "CPAuditreportsUsecaseEE#AuditCanCaptureEventsAboutUserGroupAndRole";
+		property test.name.skip.portal.instance = "CPAuditreportsUsecaseEE#CanCaptureEventsAboutUserGroupAndRole";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -392,7 +392,7 @@ definition {
 	@description = "This test Audit can capture events when user login, logout, login fail, view pages, and event details contain the correct info."
 	@priority = "5"
 	test CanCaptureEventsAboutUserLoginLogoutLoginFailAndViewPages {
-		property test.name.skip.portal.instance = "CPAuditreportsUsecaseEE#AuditCanCaptureEventsAboutUserLoginLogoutLoginFailViewPages";
+		property test.name.skip.portal.instance = "CPAuditreportsUsecaseEE#CanCaptureEventsAboutUserLoginLogoutLoginFailAndViewPages";
 		property custom.properties = "audit.message.com.liferay.portal.kernel.model.Layout.VIEW=true";
 
 		ApplicationsMenu.gotoPortlet(
@@ -473,7 +473,7 @@ definition {
 	@description = "This test Audit events can be searched with the Audit app's advanced search by various search criteria."
 	@priority = "5"
 	test CanSearchEventsInAuditAdvancedSearch {
-		property test.name.skip.portal.instance = "CPAuditreportsUsecaseEE#AuditCanCaptureEventsBeAdvancedSearched";
+		property test.name.skip.portal.instance = "CPAuditreportsUsecaseEE#CanSearchEventsInAuditAdvancedSearch";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Security",

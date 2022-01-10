@@ -279,6 +279,11 @@ public class ObjectViewWrapper
 		return model.getObjectDefinitionId();
 	}
 
+	@Override
+	public java.util.List<ObjectViewColumn> getObjectViewColumns() {
+		return model.getObjectViewColumns();
+	}
+
 	/**
 	 * Returns the object view ID of this object view.
 	 *
@@ -490,6 +495,13 @@ public class ObjectViewWrapper
 	@Override
 	public void setObjectDefinitionId(long objectDefinitionId) {
 		model.setObjectDefinitionId(objectDefinitionId);
+	}
+
+	@Override
+	public void setObjectViewColumns(
+		java.util.List<ObjectViewColumn> objectViewColumns) {
+
+		model.setObjectViewColumns(objectViewColumns);
 	}
 
 	/**

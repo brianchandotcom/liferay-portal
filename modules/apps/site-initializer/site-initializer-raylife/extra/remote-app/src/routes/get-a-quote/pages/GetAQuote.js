@@ -73,7 +73,7 @@ const QuoteApp = () => {
 			<Steps />
 
 			<main className="d-flex flex-wrap justify-content-lg-start justify-content-md-center">
-				<h2 className="display-4 mb-6 mx-6">
+				<h2 className="display-4 mb-6 mx-6 step-title">
 					{selectedStep.title}
 
 					{AVAILABLE_STEPS.PROPERTY.section ===

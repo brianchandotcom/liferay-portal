@@ -6,6 +6,7 @@ import useImperativeDisableScroll from '../../hooks/useImperativeDisableScroll';
 const MODAL_BACKDROP_ID = 'modal-backdrop';
 
 const Modal = ({
+	backdropLight = false,
 	closeable = true,
 	children,
 	footer,
@@ -55,6 +56,8 @@ const Modal = ({
 					{
 						'd-block': show,
 						'd-none': !show,
+						'dark': !backdropLight,
+						'light': backdropLight,
 					}
 				)}
 				id={MODAL_BACKDROP_ID}

@@ -1,9 +1,17 @@
 #modal-backdrop {
 	&.backdrop {
-		background-color: rgba(0, 18, 56, 0.6);
 		left: 0;
+		opacity: 0.6;
 		top: 0;
 		z-index: 1;
+
+		&.light {
+			background-color: $color-brand-primary-lighten-5;
+		}
+
+		&.dark {
+			background-color: $color-brand-primary-darken-5;
+		}
 	}
 }
 

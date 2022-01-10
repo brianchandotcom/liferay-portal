@@ -129,6 +129,7 @@ const WebContentProvider = ({children}) => {
 	return (
 		<WebContentContext.Provider value={[context, dispatchCustomEvent]}>
 			<TipContainerModal
+				isMobile={dimensions.deviceSize === DEVICES.PHONE}
 				setWebContentModal={setWebContentModal}
 				webContentModal={webContentModal}
 			/>

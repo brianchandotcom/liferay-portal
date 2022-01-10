@@ -15,8 +15,25 @@
 				color: $color-neutral-white !important;
 			}
 
+			li {
+				margin-bottom: 8px;
+			}
+
+			li::before {
+				background-color: $color-neutral-white !important;
+			}
+
 			p {
 				margin: 5px 0 !important;
+			}
+
+			.external_link a {
+				font-weight: 600;
+				margin-top: 10px;
+			}
+
+			.external_link a::after {
+				background-color: $color-neutral-white !important;
 			}
 
 			.title {
@@ -24,6 +41,7 @@
 				color: $color-neutral-white;
 				display: flex;
 				font-size: 23px;
+				margin-bottom: 10px;
 			}
 
 			.title::before {

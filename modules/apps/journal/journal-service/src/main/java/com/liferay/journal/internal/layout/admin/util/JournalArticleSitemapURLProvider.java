@@ -282,7 +282,14 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 			}
 
 			sb.append(groupFriendlyURL);
-			sb.append(JournalArticleConstants.CANONICAL_URL_SEPARATOR);
+
+			if (Validator.isNotNull(journalArticle.getLayoutUuid())) {
+				sb.append(JournalArticleConstants.CANONICAL_URL_SEPARATOR);
+			}
+			else {
+				sb.append("/w/");
+			}
+
 			sb.append(journalArticle.getUrlTitle());
 
 			String articleURL = _portal.getCanonicalURL(

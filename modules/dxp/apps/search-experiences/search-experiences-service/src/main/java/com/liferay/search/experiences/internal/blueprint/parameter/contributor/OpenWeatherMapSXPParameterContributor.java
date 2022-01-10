@@ -90,28 +90,24 @@ public class OpenWeatherMapSXPParameterContributor
 				"openweathermap.temp", true,
 				JSONUtil.getValueAsDouble(
 					jsonObject, "JSONObject/main", "Object/temp")));
-
 		sxpParameters.add(
 			new StringSXPParameter(
 				"openweathermap.weather_description", true,
 				JSONUtil.getValueAsString(
 					jsonObject, "JSONArray/weather", "JSONObject/0",
 					"Object/description")));
-
 		sxpParameters.add(
 			new IntegerSXPParameter(
 				"openweathermap.weather_id", true,
 				JSONUtil.getValueAsInt(
 					jsonObject, "JSONArray/weather", "JSONObject/0",
 					"Object/id")));
-
 		sxpParameters.add(
 			new StringSXPParameter(
 				"openweathermap.weather_main", true,
 				JSONUtil.getValueAsString(
 					jsonObject, "JSONArray/weather", "JSONObject/0",
 					"Object/main")));
-
 		sxpParameters.add(
 			new DoubleSXPParameter(
 				"openweathermap.wind_speed", true,

@@ -59,6 +59,10 @@ definition {
 		property data.archive.type = "data-archive-adaptive-media";
 		property portal.version = "7.0.10.15";
 
+		AdaptiveMedia.openAdaptiveMediaAdmin();
+
+		AdaptiveMedia.adaptRemainingImages(imageName = "Thumbnail 300x300");
+
 		Upgrade.viewAndAddImageResolution();
 
 		Upgrade.editImageResolution();

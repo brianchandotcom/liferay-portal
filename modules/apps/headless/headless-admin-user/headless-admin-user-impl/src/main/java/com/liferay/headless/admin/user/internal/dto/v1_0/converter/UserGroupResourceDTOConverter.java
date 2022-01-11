@@ -55,6 +55,7 @@ public class UserGroupResourceDTOConverter
 			{
 				actions = dtoConverterContext.getActions();
 				description = userGroup.getDescription();
+				externalReferenceCode = userGroup.getExternalReferenceCode();
 				id = userGroup.getUserGroupId();
 				name = userGroup.getName();
 				usersCount = _userLocalService.getUserGroupUsersCount(

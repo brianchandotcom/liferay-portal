@@ -12,10 +12,11 @@
  * details.
  */
 
-package com.liferay.portal.language.override.web.internal.display;
+package com.liferay.portal.language.override.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.language.override.web.internal.display.LanguageItemDisplay;
 
 import java.util.List;
 import java.util.Locale;

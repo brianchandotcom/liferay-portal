@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.language.override.web.internal.display;
+package com.liferay.portal.language.override.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
@@ -40,6 +40,7 @@ import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.language.override.constants.PLOActionKeys;
 import com.liferay.portal.language.override.model.PLOEntry;
 import com.liferay.portal.language.override.service.PLOEntryLocalService;
+import com.liferay.portal.language.override.web.internal.display.LanguageItemDisplay;
 
 import java.util.ArrayList;
 import java.util.Arrays;

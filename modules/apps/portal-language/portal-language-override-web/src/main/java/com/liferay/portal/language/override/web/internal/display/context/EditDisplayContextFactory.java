@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.language.override.web.internal.display;
+package com.liferay.portal.language.override.web.internal.display.context;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;

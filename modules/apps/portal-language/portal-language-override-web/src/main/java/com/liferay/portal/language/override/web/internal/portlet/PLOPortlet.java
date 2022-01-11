@@ -25,8 +25,8 @@ import com.liferay.portal.language.override.provider.PLOOriginalTranslationProvi
 import com.liferay.portal.language.override.service.PLOEntryLocalService;
 import com.liferay.portal.language.override.service.PLOEntryService;
 import com.liferay.portal.language.override.web.internal.constants.PLOPortletKeys;
-import com.liferay.portal.language.override.web.internal.display.EditDisplayContextFactory;
-import com.liferay.portal.language.override.web.internal.display.ViewDisplayContextFactory;
+import com.liferay.portal.language.override.web.internal.display.context.EditDisplayContextFactory;
+import com.liferay.portal.language.override.web.internal.display.context.ViewDisplayContextFactory;
 
 import java.io.IOException;
 

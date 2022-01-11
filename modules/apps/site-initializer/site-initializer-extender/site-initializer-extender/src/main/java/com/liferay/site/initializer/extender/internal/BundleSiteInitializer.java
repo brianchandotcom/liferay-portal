@@ -24,6 +24,8 @@ import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceCatalogLocalServiceUtil;
+import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.mapping.constants.DDMTemplateConstants;
@@ -94,6 +96,7 @@ import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
@@ -122,6 +125,7 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.zip.ZipWriter;
@@ -353,8 +357,13 @@ public class BundleSiteInitializer implements SiteInitializer {
 					() -> _addAssetListEntries(
 						_ddmStructureLocalService, serviceContext));
 
+			SiteNavigationMenuItemSettingsBuilder
+				siteNavigationMenuItemSettingsBuilder =
+					new SiteNavigationMenuItemSettingsBuilder();
+
 			Map<String, String> documentsStringUtilReplaceValues = _invoke(
-				() -> _addDocuments(serviceContext));
+				() -> _addDocuments(
+					serviceContext, siteNavigationMenuItemSettingsBuilder));
 
 			_invoke(
 				() -> _addDDMTemplates(
@@ -396,7 +405,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 				() -> _addLayouts(
 					assetListEntryIdsStringUtilReplaceValues,
 					documentsStringUtilReplaceValues,
-					remoteAppEntryIdsStringUtilReplaceValues, serviceContext));
+					remoteAppEntryIdsStringUtilReplaceValues, serviceContext,
+					siteNavigationMenuItemSettingsBuilder.build()));
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
@@ -986,7 +996,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 	private Map<String, String> _addDocuments(
 			Long documentFolderId, long groupId, String parentResourcePath,
-			ServiceContext serviceContext)
+			ServiceContext serviceContext,
+			SiteNavigationMenuItemSettingsBuilder
+				siteNavigationMenuItemSettingsBuilder)
 		throws Exception {
 
 		Map<String, String> documentsStringUtilReplaceValues = new HashMap<>();
@@ -1012,7 +1024,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 						_addDocumentFolder(
 							documentFolderId, groupId, resourcePath,
 							serviceContext),
-						groupId, resourcePath, serviceContext));
+						groupId, resourcePath, serviceContext,
+						siteNavigationMenuItemSettingsBuilder));
 
 				continue;
 			}
@@ -1139,12 +1152,42 @@ public class BundleSiteInitializer implements SiteInitializer {
 				_dlURLHelper.getPreviewURL(
 					fileEntry, fileEntry.getFileVersion(), null,
 					StringPool.BLANK, false, false));
+
+			long fileEntryTypeId = 0;
+
+			if (fileEntry.getModel() instanceof DLFileEntry) {
+				DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
+
+				DLFileEntryType dlFileEntryType =
+					dlFileEntry.getDLFileEntryType();
+
+				fileEntryTypeId = dlFileEntryType.getFileEntryTypeId();
+			}
+
+			String fileEntryTypeIdString = String.valueOf(fileEntryTypeId);
+
+			siteNavigationMenuItemSettingsBuilder.put(
+				key,
+				new SiteNavigationMenuItemSetting() {
+					{
+						className = FileEntry.class.getName();
+						classPK = fileEntry.getFileEntryId();
+						classTypeId = fileEntryTypeIdString;
+						title = fileEntry.getTitle();
+						type = ResourceActionsUtil.getModelResource(
+							serviceContext.getLocale(),
+							FileEntry.class.getName());
+					}
+				});
 		}
 
 		return documentsStringUtilReplaceValues;
 	}
 
-	private Map<String, String> _addDocuments(ServiceContext serviceContext)
+	private Map<String, String> _addDocuments(
+			ServiceContext serviceContext,
+			SiteNavigationMenuItemSettingsBuilder
+				siteNavigationMenuItemSettingsBuilder)
 		throws Exception {
 
 		Group group = _groupLocalService.getCompanyGroup(
@@ -1153,11 +1196,12 @@ public class BundleSiteInitializer implements SiteInitializer {
 		return HashMapBuilder.putAll(
 			_addDocuments(
 				null, group.getGroupId(), "/site-initializer/documents/company",
-				serviceContext)
+				serviceContext, siteNavigationMenuItemSettingsBuilder)
 		).putAll(
 			_addDocuments(
 				null, serviceContext.getScopeGroupId(),
-				"/site-initializer/documents/group", serviceContext)
+				"/site-initializer/documents/group", serviceContext,
+				siteNavigationMenuItemSettingsBuilder)
 		).build();
 	}
 
@@ -1490,7 +1534,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 			Map<String, String> assetListEntryIdsStringUtilReplaceValues,
 			Map<String, String> documentsStringUtilReplaceValues,
 			Map<String, String> remoteAppEntryIdsStringUtilReplaceValues,
-			ServiceContext serviceContext)
+			ServiceContext serviceContext,
+			Map<String, SiteNavigationMenuItemSetting>
+				siteNavigationMenuItemSettings)
 		throws Exception {
 
 		Set<String> resourcePaths = _servletContext.getResourcePaths(
@@ -1517,7 +1563,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			}
 		}
 
-		_addSiteNavigationMenus(serviceContext);
+		_addSiteNavigationMenus(serviceContext, siteNavigationMenuItemSettings);
 	}
 
 	private Map<String, String> _addListTypeDefinitions(
@@ -2067,7 +2113,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private void _addSiteNavigationMenu(
-			JSONObject jsonObject, ServiceContext serviceContext)
+			JSONObject jsonObject, ServiceContext serviceContext,
+			Map<String, SiteNavigationMenuItemSetting>
+				siteNavigationMenuItemSettings)
 		throws Exception {
 
 		SiteNavigationMenu siteNavigationMenu =
@@ -2076,12 +2124,15 @@ public class BundleSiteInitializer implements SiteInitializer {
 				jsonObject.getString("name"), serviceContext);
 
 		_addSiteNavigationMenuItems(
-			jsonObject, siteNavigationMenu, 0, serviceContext);
+			jsonObject, siteNavigationMenu, 0, serviceContext,
+			siteNavigationMenuItemSettings);
 	}
 
 	private void _addSiteNavigationMenuItems(
 			JSONObject jsonObject, SiteNavigationMenu siteNavigationMenu,
-			long parentSiteNavigationMenuItemId, ServiceContext serviceContext)
+			long parentSiteNavigationMenuItemId, ServiceContext serviceContext,
+			Map<String, SiteNavigationMenuItemSetting>
+				siteNavigationMenuItemSettings)
 		throws Exception {
 
 		for (Object object :
@@ -2136,6 +2187,40 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 				typeSettings = typeSettingsUnicodeProperties.toString();
 			}
+			else if (type.equals("display-page")) {
+				String key = siteMenuItemJSONObject.getString("key");
+
+				if (Validator.isNull(key)) {
+					continue;
+				}
+
+				SiteNavigationMenuItemSetting siteNavigationMenuItemSetting =
+					siteNavigationMenuItemSettings.get(key);
+
+				if (siteNavigationMenuItemSetting == null) {
+					continue;
+				}
+
+				typeSettings = UnicodePropertiesBuilder.create(
+					true
+				).put(
+					"className", siteNavigationMenuItemSetting.className
+				).put(
+					"classNameId",
+					String.valueOf(
+						_portal.getClassNameId(
+							siteNavigationMenuItemSetting.className))
+				).put(
+					"classPK",
+					String.valueOf(siteNavigationMenuItemSetting.classPK)
+				).put(
+					"classTypeId", siteNavigationMenuItemSetting.classTypeId
+				).put(
+					"title", siteNavigationMenuItemSetting.title
+				).put(
+					"type", siteNavigationMenuItemSetting.type
+				).buildString();
+			}
 
 			SiteNavigationMenuItem siteNavigationMenuItem =
 				_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
@@ -2148,11 +2233,14 @@ public class BundleSiteInitializer implements SiteInitializer {
 			_addSiteNavigationMenuItems(
 				siteMenuItemJSONObject, siteNavigationMenu,
 				siteNavigationMenuItem.getSiteNavigationMenuItemId(),
-				serviceContext);
+				serviceContext, siteNavigationMenuItemSettings);
 		}
 	}
 
-	private void _addSiteNavigationMenus(ServiceContext serviceContext)
+	private void _addSiteNavigationMenus(
+			ServiceContext serviceContext,
+			Map<String, SiteNavigationMenuItemSetting>
+				siteNavigationMenuItemSettings)
 		throws Exception {
 
 		String json = _read("/site-initializer/site-navigation-menus.json");
@@ -2164,7 +2252,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(json);
 
 		for (int i = 0; i < jsonArray.length(); i++) {
-			_addSiteNavigationMenu(jsonArray.getJSONObject(i), serviceContext);
+			_addSiteNavigationMenu(
+				jsonArray.getJSONObject(i), serviceContext,
+				siteNavigationMenuItemSettings);
 		}
 	}
 
@@ -2780,5 +2870,34 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private final ThemeLocalService _themeLocalService;
 	private final UserAccountResource.Factory _userAccountResourceFactory;
 	private final UserLocalService _userLocalService;
+
+	private class SiteNavigationMenuItemSetting {
+
+		public String className;
+		public long classPK;
+		public String classTypeId = StringPool.BLANK;
+		public String title;
+		public String type;
+
+	}
+
+	private class SiteNavigationMenuItemSettingsBuilder {
+
+		public Map<String, SiteNavigationMenuItemSetting> build() {
+			return _siteNavigationMenuItemSettings;
+		}
+
+		public void put(
+			String key,
+			SiteNavigationMenuItemSetting siteNavigationMenuItemSetting) {
+
+			_siteNavigationMenuItemSettings.put(
+				key, siteNavigationMenuItemSetting);
+		}
+
+		private Map<String, SiteNavigationMenuItemSetting>
+			_siteNavigationMenuItemSettings = new HashMap<>();
+
+	}
 
 }

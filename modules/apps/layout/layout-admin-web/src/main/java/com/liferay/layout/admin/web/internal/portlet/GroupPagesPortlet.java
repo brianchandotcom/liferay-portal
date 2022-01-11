@@ -214,7 +214,6 @@ public class GroupPagesPortlet extends MVCPortlet {
 			renderRequest.setAttribute(
 				LayoutAdminWebKeys.LAYOUT_PAGE_LAYOUT_ADMIN_DISPLAY_CONTEXT,
 				layoutsAdminDisplayContext);
-
 			renderRequest.setAttribute(
 				LayoutAdminWebKeys.MILLER_COLUMNS_DISPLAY_CONTEXT,
 				new MillerColumnsDisplayContext(
@@ -223,14 +222,12 @@ public class GroupPagesPortlet extends MVCPortlet {
 					_portal.getLiferayPortletRequest(renderRequest),
 					_portal.getLiferayPortletResponse(renderResponse),
 					_translationInfoItemFieldValuesExporterTracker));
-
 			renderRequest.setAttribute(
 				LayoutAdminWebKeys.SELECT_LAYOUT_COLLECTION_DISPLAY_CONTEXT,
 				new SelectLayoutCollectionDisplayContext(
 					_infoItemServiceTracker,
 					_portal.getLiferayPortletRequest(renderRequest),
 					_portal.getLiferayPortletResponse(renderResponse)));
-
 			renderRequest.setAttribute(
 				TranslationURLProvider.class.getName(),
 				_translationURLProvider);

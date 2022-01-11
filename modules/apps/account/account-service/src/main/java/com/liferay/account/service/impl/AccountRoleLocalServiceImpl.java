@@ -28,7 +28,6 @@ import com.liferay.petra.sql.dsl.query.FromStep;
 import com.liferay.petra.sql.dsl.query.GroupByStep;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
-import com.liferay.portal.kernel.dao.search.SearchPaginationUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -277,32 +276,33 @@ public class AccountRoleLocalServiceImpl
 		LinkedHashMap<String, Object> params, int start, int end,
 		OrderByComparator<?> orderByComparator) {
 
+		LinkedHashMap<String, Object> searchParams;
+
 		if (params == null) {
-			params = new LinkedHashMap<>();
+			searchParams = new LinkedHashMap<>();
+		}
+		else {
+			searchParams = params;
 		}
 
-		int total = accountRoleLocalService.dslQueryCount(
-			_getGroupByStep(
-				accountEntryIds, companyId,
-				DSLQueryFactoryUtil.countDistinct(
-					AccountRoleTable.INSTANCE.roleId),
-				keywords, params));
-
-		int[] startAndEnd = SearchPaginationUtil.calculateStartAndEnd(
-			start, end, total);
-
-		return new BaseModelSearchResult<>(
-			accountRoleLocalService.dslQuery(
+		return BaseModelSearchResult.createWithStartAndEnd(
+			startAndEnd -> accountRoleLocalService.dslQuery(
 				_getGroupByStep(
 					accountEntryIds, companyId,
 					DSLQueryFactoryUtil.select(AccountRoleTable.INSTANCE),
-					keywords, params
+					keywords, searchParams
 				).orderBy(
 					RoleTable.INSTANCE, orderByComparator
 				).limit(
-					startAndEnd[0], startAndEnd[1]
+					startAndEnd.getStart(), startAndEnd.getEnd()
 				)),
-			total);
+			accountRoleLocalService.dslQueryCount(
+				_getGroupByStep(
+					accountEntryIds, companyId,
+					DSLQueryFactoryUtil.countDistinct(
+						AccountRoleTable.INSTANCE.roleId),
+					keywords, searchParams)),
+			start, end);
 	}
 
 	@Override

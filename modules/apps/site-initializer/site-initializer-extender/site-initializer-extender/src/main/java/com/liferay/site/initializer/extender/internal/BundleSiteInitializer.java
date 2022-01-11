@@ -345,10 +345,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			_invoke(() -> _addFragmentEntries(serviceContext));
 			_invoke(() -> _addSAPEntries(serviceContext));
 			_invoke(() -> _addStyleBookEntries(serviceContext));
-
-			Map<String, String> displayPageInfoItems = _invoke(
-				() -> _addTaxonomyVocabularies(serviceContext));
-
+			_invoke(() -> _addTaxonomyVocabularies(serviceContext));
 			_invoke(() -> _addUserAccounts(serviceContext));
 			_invoke(() -> _updateLayoutSets(serviceContext));
 
@@ -395,6 +392,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 				_invoke(
 					() -> _addRemoteAppEntries(
 						documentsStringUtilReplaceValues, serviceContext));
+
+			Map<String, String> displayPageInfoItems = new HashMap<>();
 
 			_invoke(
 				() -> _addLayouts(
@@ -2263,19 +2262,17 @@ public class BundleSiteInitializer implements SiteInitializer {
 			FileUtil.createTempFile(url.openStream()), false);
 	}
 
-	private Map<String, String> _addTaxonomyCategories(
+	private void _addTaxonomyCategories(
 			long groupId, String parentResourcePath,
 			String parentTaxonomyCategoryId, ServiceContext serviceContext,
 			long taxonomyVocabularyId)
 		throws Exception {
 
-		Map<String, String> displayPageInfoItems = new HashMap<>();
-
 		Set<String> resourcePaths = _servletContext.getResourcePaths(
 			parentResourcePath);
 
 		if (SetUtil.isEmpty(resourcePaths)) {
-			return displayPageInfoItems;
+			return;
 		}
 
 		for (String resourcePath : resourcePaths) {
@@ -2303,29 +2300,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 					parentTaxonomyCategoryId, serviceContext, taxonomyCategory);
 			}
 
-			String key = resourcePath;
-
-			displayPageInfoItems.put(
-				"CLASS_NAME:" + key, AssetCategory.class.getName());
-
-			displayPageInfoItems.put(
-				"CLASS_PK:" + key, String.valueOf(taxonomyCategory.getId()));
-
-			displayPageInfoItems.put("CLASS_TYPE_ID:" + key, StringPool.BLANK);
-
-			displayPageInfoItems.put(
-				"TITLE:" + key, String.valueOf(taxonomyCategory.getName()));
-
-			displayPageInfoItems.put("TYPE:" + key, StringPool.BLANK);
-
-			displayPageInfoItems.putAll(
-				_addTaxonomyCategories(
-					groupId, StringUtil.replaceLast(resourcePath, ".json", "/"),
-					taxonomyCategory.getId(), serviceContext,
-					taxonomyVocabularyId));
+			_addTaxonomyCategories(
+				groupId, StringUtil.replaceLast(resourcePath, ".json", "/"),
+				taxonomyCategory.getId(), serviceContext, taxonomyVocabularyId);
 		}
-
-		return displayPageInfoItems;
 	}
 
 	private TaxonomyCategory _addTaxonomyCategoryTaxonomyCategory(
@@ -2365,18 +2343,16 @@ public class BundleSiteInitializer implements SiteInitializer {
 		return taxonomyCategory;
 	}
 
-	private Map<String, String> _addTaxonomyVocabularies(
+	private void _addTaxonomyVocabularies(
 			long groupId, String parentResourcePath,
 			ServiceContext serviceContext)
 		throws Exception {
-
-		Map<String, String> displayPageInfoItems = new HashMap<>();
 
 		Set<String> resourcePaths = _servletContext.getResourcePaths(
 			parentResourcePath);
 
 		if (SetUtil.isEmpty(resourcePaths)) {
-			return displayPageInfoItems;
+			return;
 		}
 
 		TaxonomyVocabularyResource.Builder taxonomyVocabularyResourceBuilder =
@@ -2427,32 +2403,25 @@ public class BundleSiteInitializer implements SiteInitializer {
 						existingTaxonomyVocabulary.getId(), taxonomyVocabulary);
 			}
 
-			displayPageInfoItems.putAll(
-				_addTaxonomyCategories(
-					groupId, StringUtil.replaceLast(resourcePath, ".json", "/"),
-					null, serviceContext, taxonomyVocabulary.getId()));
+			_addTaxonomyCategories(
+				groupId, StringUtil.replaceLast(resourcePath, ".json", "/"),
+				null, serviceContext, taxonomyVocabulary.getId());
 		}
-
-		return displayPageInfoItems;
 	}
 
-	private Map<String, String> _addTaxonomyVocabularies(
-			ServiceContext serviceContext)
+	private void _addTaxonomyVocabularies(ServiceContext serviceContext)
 		throws Exception {
 
 		Group group = _groupLocalService.getCompanyGroup(
 			serviceContext.getCompanyId());
 
-		return HashMapBuilder.putAll(
-			_addTaxonomyVocabularies(
-				group.getGroupId(),
-				"/site-initializer/taxonomy-vocabularies/company",
-				serviceContext)
-		).putAll(
-			_addTaxonomyVocabularies(
-				serviceContext.getScopeGroupId(),
-				"/site-initializer/taxonomy-vocabularies/group", serviceContext)
-		).build();
+		_addTaxonomyVocabularies(
+			group.getGroupId(),
+			"/site-initializer/taxonomy-vocabularies/company", serviceContext);
+
+		_addTaxonomyVocabularies(
+			serviceContext.getScopeGroupId(),
+			"/site-initializer/taxonomy-vocabularies/group", serviceContext);
 	}
 
 	private TaxonomyCategory _addTaxonomyVocabularyTaxonomyCategory(

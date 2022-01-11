@@ -48,8 +48,8 @@ public class ObjectDefinitionsRelationshipsDisplayContext {
 		ModelResourcePermission<ObjectDefinition>
 			objectDefinitionModelResourcePermission) {
 
-		_ffOneToOneRelationshipConfigurationActivator =			ffOneToOneRelationshipConfigurationActivator;
-
+		_ffOneToOneRelationshipConfigurationActivator =
+			ffOneToOneRelationshipConfigurationActivator;
 		_objectDefinitionModelResourcePermission =
 			objectDefinitionModelResourcePermission;
 

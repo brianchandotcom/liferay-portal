@@ -105,7 +105,7 @@ NotificationsUtil.populateResults(themeDisplay.getUserId(), actionRequired, navi
 	<aui:form action="<%= currentURL %>" method="get" name="fm">
 		<div class="user-notifications">
 			<liferay-ui:search-container
-				rowChecker="<%= actionRequired ? null : new UserNotificationEventRowChecker(renderResponse) %>"
+				rowChecker="<%= actionRequired ? null : new UserNotificationEventRowChecker(request, renderResponse) %>"
 				searchContainer="<%= notificationsSearchContainer %>"
 			>
 				<liferay-ui:search-container-row

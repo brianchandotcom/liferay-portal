@@ -14,18 +14,33 @@
 
 package com.liferay.notifications.web.internal.search;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
+import com.liferay.portal.kernel.notifications.UserNotificationFeedEntry;
+import com.liferay.portal.kernel.notifications.UserNotificationManagerUtil;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.UserNotificationEventLocalServiceUtil;
 
 import javax.portlet.PortletResponse;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author István András Dézsi
  */
 public class UserNotificationEventRowChecker extends EmptyOnClickRowChecker {
 
-	public UserNotificationEventRowChecker(PortletResponse portletResponse) {
+	public UserNotificationEventRowChecker(
+		HttpServletRequest httpServletRequest,
+		PortletResponse portletResponse) {
+
 		super(portletResponse);
+
+		_httpServletRequest = httpServletRequest;
 	}
 
 	@Override
@@ -37,7 +52,37 @@ public class UserNotificationEventRowChecker extends EmptyOnClickRowChecker {
 			return true;
 		}
 
-		return super.isDisabled(object);
+		UserNotificationFeedEntry userNotificationFeedEntry = null;
+
+		try {
+			UserNotificationEvent storedUserNotificationEvent =
+				UserNotificationEventLocalServiceUtil.
+					fetchUserNotificationEvent(
+						userNotificationEvent.getUserNotificationEventId());
+
+			if (storedUserNotificationEvent != null) {
+				userNotificationFeedEntry =
+					UserNotificationManagerUtil.interpret(
+						StringPool.BLANK, userNotificationEvent,
+						ServiceContextFactory.getInstance(_httpServletRequest));
+			}
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException, portalException);
+			}
+		}
+
+		if ((userNotificationFeedEntry == null) || super.isDisabled(object)) {
+			return true;
+		}
+
+		return false;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		UserNotificationEventRowChecker.class);
+
+	private final HttpServletRequest _httpServletRequest;
 
 }

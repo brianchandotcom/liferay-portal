@@ -116,7 +116,9 @@ String userIdentifierExpression = attributeMappingDisplayContext.getUserIdentifi
 
 		if (event == null || event.target == radioTarget) {
 			if (radioTarget.checked) {
-				<portlet:namespace />handleAttributeMappingMatchingSelection(row);
+				document.querySelector(
+					'input[name="<portlet:namespace />attribute:userIdentifierExpressionPrefix"]'
+				).value = row.dataset.prefix;
 			}
 		}
 
@@ -135,12 +137,6 @@ String userIdentifierExpression = attributeMappingDisplayContext.getUserIdentifi
 				radioTarget.closest('label').classList.toggle('disabled', true);
 			}
 		}
-	};
-
-	<portlet:namespace />handleAttributeMappingMatchingSelection = function (row) {
-		document.querySelector(
-			'input[name="<portlet:namespace />attribute:userIdentifierExpressionPrefix"]'
-		).value = row.dataset.prefix;
 	};
 
 	var userAttributeMappings = document.getElementById(

@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.csv.CSVFormat;
@@ -136,98 +135,6 @@ public class CommerceOrderImporterTypeUtil {
 			tempCommerceOrder.getCommerceOrderId());
 
 		return ListUtil.fromArray(commerceOrderImporterItemImpls);
-	}
-
-	public static List<CommerceOrderImporterItem> getCommerceOrderImporterItems(
-			CommerceContextFactory commerceContextFactory,
-			CommerceOrder commerceOrder,
-			List<CommerceOrderItem> commerceOrderItems,
-			CommerceOrderItemService commerceOrderItemService,
-			CommerceOrderPriceCalculation commerceOrderPriceCalculation,
-			CommerceOrderService commerceOrderService,
-			UserLocalService userLocalService)
-		throws Exception {
-
-		List<CommerceOrderImporterItem> commerceOrderImporterItems =
-			new ArrayList<>(commerceOrderItems.size());
-
-		// Temporary commerce order
-
-		CommerceOrder tempCommerceOrder = commerceOrderService.addCommerceOrder(
-			commerceOrder.getGroupId(), commerceOrder.getCommerceAccountId(),
-			commerceOrder.getCommerceCurrencyId(),
-			commerceOrder.getCommerceOrderTypeId());
-
-		CommerceContext commerceContext = commerceContextFactory.create(
-			tempCommerceOrder.getCompanyId(), tempCommerceOrder.getGroupId(),
-			PrincipalThreadLocal.getUserId(),
-			tempCommerceOrder.getCommerceOrderId(),
-			tempCommerceOrder.getCommerceAccountId());
-
-		ServiceContext serviceContext = _getServiceContext(userLocalService);
-
-		_addPreviousCommerceOrderItems(
-			commerceContext, commerceOrder,
-			tempCommerceOrder.getCommerceOrderId(), commerceOrderItemService,
-			serviceContext);
-
-		for (CommerceOrderItem commerceOrderItem : commerceOrderItems) {
-			CommerceOrderImporterItemImpl commerceOrderImporterItemImpl =
-				new CommerceOrderImporterItemImpl();
-
-			commerceOrderImporterItemImpl.setCPDefinitionId(
-				commerceOrderItem.getCPDefinitionId());
-			commerceOrderImporterItemImpl.setCPInstanceId(
-				commerceOrderItem.getCPInstanceId());
-			commerceOrderImporterItemImpl.setJSON(commerceOrderItem.getJson());
-			commerceOrderImporterItemImpl.setNameMap(
-				commerceOrderItem.getNameMap());
-			commerceOrderImporterItemImpl.
-				setParentCommerceOrderItemCPDefinitionId(
-					commerceOrderItem.
-						getParentCommerceOrderItemCPDefinitionId());
-			commerceOrderImporterItemImpl.setQuantity(
-				commerceOrderItem.getQuantity());
-			commerceOrderImporterItemImpl.setSku(commerceOrderItem.getSku());
-
-			try {
-
-				// Temporary commerce order item
-
-				CommerceOrderItem tempCommerceOrderItem =
-					commerceOrderItemService.addOrUpdateCommerceOrderItem(
-						tempCommerceOrder.getCommerceOrderId(),
-						commerceOrderItem.getCPInstanceId(),
-						commerceOrderItem.getJson(),
-						commerceOrderItem.getQuantity(), 0, commerceContext,
-						serviceContext);
-
-				commerceOrderImporterItemImpl.setCommerceOrderItemPrice(
-					commerceOrderPriceCalculation.getCommerceOrderItemPrice(
-						tempCommerceOrder.getCommerceCurrency(),
-						tempCommerceOrderItem));
-			}
-			catch (CommerceOrderValidatorException
-						commerceOrderValidatorException) {
-
-				commerceOrderImporterItemImpl.setErrorMessages(
-					TransformUtil.transformToArray(
-						commerceOrderValidatorException.
-							getCommerceOrderValidatorResults(),
-						commerceOrderValidatorResult ->
-							commerceOrderValidatorResult.getLocalizedMessage(),
-						String.class));
-			}
-
-			commerceOrderImporterItems.add(commerceOrderImporterItemImpl);
-		}
-
-		// Delete temporary commerce order
-
-		commerceOrderService.deleteCommerceOrder(
-			tempCommerceOrder.getCommerceOrderId());
-
-		return commerceOrderImporterItems;
 	}
 
 	public static CSVFormat getCSVFormat(

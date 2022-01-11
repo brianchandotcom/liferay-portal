@@ -4184,6 +4184,18 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>com.liferay.portal.urlrewrite.filter.jar!urlrewritefilter.jar</file-name>
+				<version>4.0.4</version>
+				<project-name>UrlRewriteFilter</project-name>
+				<project-url>http://www.tuckey.org/urlrewrite/</project-url>
+				<licenses>
+					<license>
+						<license-name>BSD</license-name>
+						<license-url>http://www.opensource.org/licenses/bsd-license.php</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>com.liferay.portal.vulcan.api.jar!jackson-dataformat-xml.jar</file-name>
 				<version>2.9.8</version>
 				<project-name>Jackson-dataformat-XML</project-name>

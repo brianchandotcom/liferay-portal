@@ -50,6 +50,8 @@
 					group_id = commerceContext.getCommerceChannelGroupId()
 
 					publicFriendlyURL = themeDisplay.getPortalURL() + themeDisplay.getPathFriendlyURLPublic() + themeDisplay.getSiteGroup().getFriendlyURL()
+
+					user = themeDisplay.getUser()
 				/>
 
 				<div class="col-md-4 mb-5">
@@ -67,7 +69,7 @@
 								</div>
 
 								<div class="mt-1">
-									<a class="btn btn-primary" href="javascript:openItem(${cpInstanceId},${commerceChannelId},${commerceAccountId},${group_id},'${publicFriendlyURL}/my-site')">
+									<a class="btn btn-primary" href="javascript:openItem('${user.getEmailAddress()}','${user.getFirstName()}','${user.getLastName()}',${commerceChannelId},${commerceAccountId},${cpInstanceId},${group_id},'${publicFriendlyURL}/my-site', '${cpSku.getSku()}')">
 										Select
 									</a>
 								</div>

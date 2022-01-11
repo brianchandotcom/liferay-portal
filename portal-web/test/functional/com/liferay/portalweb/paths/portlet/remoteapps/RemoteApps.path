@@ -21,8 +21,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PAGE_EDITOR_WIDGET_SEARCH_REMOTE_APP</td>
-	<td>//div[contains(@class,'page-editor__sidebar')]//li[contains(@class,'page-editor__fragments-widget')]//div[contains(@class, 'text-truncate title')][contains(text(),'${key_remoteAppName}')]</td>
+	<td>APPLICATION_SEARCH_FIELD_WIDGET_SEARCH_REMOTE_APP</td>
+	<td>//div[contains(@class,'sidebar-body__add-panel')]//div[contains(@class, 'text-truncate title')][contains(text(),'${key_remoteAppName}')]</td>
 	<td></td>
 </tr>
 <tr>

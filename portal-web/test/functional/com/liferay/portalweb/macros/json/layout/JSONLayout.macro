@@ -126,6 +126,7 @@ definition {
 			groupId = "${groupId}",
 			layoutName = "${layoutName}",
 			privateLayout = "false",
+			remoteAppEntryId = "${remoteAppEntryId}",
 			widgetName = "${widgetName}");
 
 		JSONLayoutAPI._updateTypeSettings(

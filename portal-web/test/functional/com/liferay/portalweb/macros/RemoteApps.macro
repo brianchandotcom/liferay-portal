@@ -190,6 +190,21 @@ definition {
 		PortletEntry.publish();
 	}
 
+	macro getRemoteAppEntryIdValue {
+		WaitForSPARefresh();
+
+		RemoteApps.goToRemoteAppsPortlet();
+
+		Click(locator1 = "xPath=(//div[@class='table-list-title']//a)");
+
+		var currentURL = Navigator.getCurrentURL();
+
+		var findWhereIdBegins = StringUtil.extractLast("${currentURL}", "remoteAppEntryId=");
+		var remoteAppEntryIdValue = StringUtil.extractFirst("${findWhereIdBegins}", "&_com_liferay_remote_app_admin_web_portlet_RemoteAppAdminPortlet_redirect");
+
+		return "${remoteAppEntryIdValue}";
+	}
+
 	macro getRemoteAppEntryName {
 		WaitForSPARefresh();
 

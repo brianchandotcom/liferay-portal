@@ -49,7 +49,9 @@ definition {
 			B = "${titleMap}",
 			failMessage = "Please only set 'title' or only 'titleMap' but not both or none.");
 
-		var groupId = JSONCategorySetter.setGroupId(groupName = "${groupName}");
+		var groupId = JSONCategorySetter.setGroupId(
+			groupName = "${groupName}",
+			site = "${site}");
 
 		var vocabularyId = JSONCategorySetter.setVocabularyId(
 			groupId = "${groupId}",

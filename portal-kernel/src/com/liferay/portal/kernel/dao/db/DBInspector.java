@@ -296,7 +296,25 @@ public class DBInspector {
 			}
 		}
 
+		Integer dataTypeSize = _getSQLVarcharSize(columnType);
+
+		if ((dataTypeSize != null) && (dataTypeSize.intValue() != -1)) {
+			return dataTypeSize.intValue();
+		}
+
 		return -1;
+	}
+
+	private Integer _getSQLVarcharSize(String columnType) {
+		Matcher matcher = _columnTypePattern.matcher(columnType);
+
+		if (!matcher.lookingAt()) {
+			return null;
+		}
+
+		DB db = DBManagerUtil.getDB();
+
+		return db.getSQLVarcharSize(matcher.group(1));
 	}
 
 	private boolean _hasTable(String tableName) throws Exception {

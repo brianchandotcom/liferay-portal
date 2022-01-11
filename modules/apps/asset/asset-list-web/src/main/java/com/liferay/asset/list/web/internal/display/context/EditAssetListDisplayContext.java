@@ -742,31 +742,37 @@ public class EditAssetListDisplayContext {
 				continue;
 			}
 
+			Class<? extends AssetRendererFactory<?>> clazz =
+				_assetRendererFactoryClassProvider.getClass(
+					assetRendererFactory);
+
 			ClassTypeReader classTypeReader =
 				assetRendererFactory.getClassTypeReader();
 
-			List<ClassType> assetAvailableClassTypes =
-				classTypeReader.getAvailableClassTypes(
-					PortalUtil.getCurrentAndAncestorSiteGroupIds(
-						_themeDisplay.getScopeGroupId()),
-					_themeDisplay.getLocale());
+			long[] classTypeIds = GetterUtil.getLongValues(
+				StringUtil.split(
+					unicodeProperties.getProperty(
+						"classTypeIds" + clazz.getSimpleName(), null)),
+				_getDefaultClassTypeIds(classTypeReader));
 
-			for (ClassType assetAvailableClassType : assetAvailableClassTypes) {
+			for (long classTypeId : classTypeIds) {
+				ClassType classType = classTypeReader.getClassType(
+					classTypeId, _themeDisplay.getLocale());
+
 				if (Validator.isNotNull(
 						assetListEntry.getAssetEntrySubtype()) &&
 					!Objects.equals(
 						assetListEntry.getAssetEntrySubtype(),
-						String.valueOf(
-							assetAvailableClassType.getClassTypeId()))) {
+						String.valueOf(classType.getClassTypeId()))) {
 
 					continue;
 				}
 
 				manualAddIconDataMap.put(
-					assetAvailableClassType.getName(),
+					classType.getName(),
 					_getDataMap(
-						assetRendererFactory, assetAvailableClassType.getName(),
-						assetAvailableClassType.getClassTypeId()));
+						assetRendererFactory, classType.getName(),
+						classType.getClassTypeId()));
 			}
 		}
 
@@ -1274,6 +1280,19 @@ public class EditAssetListDisplayContext {
 		).put(
 			"type", type
 		).build();
+	}
+
+	private long[] _getDefaultClassTypeIds(ClassTypeReader classTypeReader)
+		throws Exception {
+
+		List<ClassType> assetAvailableClassTypes =
+			classTypeReader.getAvailableClassTypes(
+				PortalUtil.getCurrentAndAncestorSiteGroupIds(
+					_themeDisplay.getScopeGroupId()),
+				_themeDisplay.getLocale());
+
+		return ListUtil.toLongArray(
+			assetAvailableClassTypes, classType -> classType.getClassTypeId());
 	}
 
 	private String _getDeleteAssetListEntryVariationURL(

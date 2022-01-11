@@ -7,7 +7,7 @@
 	<description/>
 	<groupId>com.liferay</groupId>
 	<artifactId>com.liferay.source.formatter</artifactId>
-	<version>1.0.1186</version>
+	<version>1.0.1187</version>
 	<goalPrefix>source-formatter</goalPrefix>
 	<isolatedRealm>false</isolatedRealm>
 	<inheritedByDefault>true</inheritedByDefault>
@@ -264,43 +264,7 @@
 			<groupId>jaxen</groupId>
 			<artifactId>jaxen</artifactId>
 			<type>jar</type>
-			<version>1.1.1</version>
-		</dependency>
-		<dependency>
-			<groupId>dom4j</groupId>
-			<artifactId>dom4j</artifactId>
-			<type>jar</type>
-			<version>1.6.1</version>
-		</dependency>
-		<dependency>
-			<groupId>jdom</groupId>
-			<artifactId>jdom</artifactId>
-			<type>jar</type>
-			<version>1.0</version>
-		</dependency>
-		<dependency>
-			<groupId>xml-apis</groupId>
-			<artifactId>xml-apis</artifactId>
-			<type>jar</type>
-			<version>1.3.02</version>
-		</dependency>
-		<dependency>
-			<groupId>xom</groupId>
-			<artifactId>xom</artifactId>
-			<type>jar</type>
-			<version>1.0</version>
-		</dependency>
-		<dependency>
-			<groupId>xerces</groupId>
-			<artifactId>xmlParserAPIs</artifactId>
-			<type>jar</type>
-			<version>2.6.2</version>
-		</dependency>
-		<dependency>
-			<groupId>xalan</groupId>
-			<artifactId>xalan</artifactId>
-			<type>jar</type>
-			<version>2.6.0</version>
+			<version>1.1.6</version>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
@@ -391,6 +355,12 @@
 			<artifactId>xercesImpl</artifactId>
 			<type>jar</type>
 			<version>2.12.1</version>
+		</dependency>
+		<dependency>
+			<groupId>xml-apis</groupId>
+			<artifactId>xml-apis</artifactId>
+			<type>jar</type>
+			<version>1.4.01</version>
 		</dependency>
 		<dependency>
 			<groupId>com.ibm.icu</groupId>

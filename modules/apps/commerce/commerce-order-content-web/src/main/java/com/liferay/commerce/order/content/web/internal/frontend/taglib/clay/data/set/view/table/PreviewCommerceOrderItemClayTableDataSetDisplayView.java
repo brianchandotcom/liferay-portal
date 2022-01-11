@@ -53,6 +53,8 @@ public class PreviewCommerceOrderItemClayTableDataSetDisplayView
 			"totalPrice", "total-price");
 		clayTableSchemaBuilder.addClayTableSchemaField(
 			"importStatus", "import-status");
+		clayTableSchemaBuilder.addClayTableSchemaField(
+			"replacingSKU", "replacing");
 
 		return clayTableSchemaBuilder.build();
 	}

@@ -24,6 +24,7 @@ import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.spi.searcher.SearchRequestContributor;
 import com.liferay.search.experiences.blueprint.search.request.enhancer.SXPBlueprintSearchRequestEnhancer;
+import com.liferay.search.experiences.exception.ExceptionUtil;
 import com.liferay.search.experiences.model.SXPBlueprint;
 import com.liferay.search.experiences.service.SXPBlueprintLocalService;
 
@@ -107,7 +108,7 @@ public class SXPBlueprintSearchRequestContributor
 			runtimeException.addSuppressed(exception);
 		}
 
-		if (_hasErrors(runtimeException)) {
+		if (ExceptionUtil.hasErrors(runtimeException)) {
 			throw runtimeException;
 		}
 	}
@@ -140,33 +141,9 @@ public class SXPBlueprintSearchRequestContributor
 			}
 		}
 
-		if (_hasErrors(runtimeException)) {
+		if (ExceptionUtil.hasErrors(runtimeException)) {
 			throw runtimeException;
 		}
-	}
-
-	private boolean _hasErrors(Throwable throwable) {
-		Class<? extends Throwable> clazz = throwable.getClass();
-
-		String simpleName = clazz.getSimpleName();
-
-		if (simpleName.equals("InvalidElementInstanceException")) {
-			return false;
-		}
-
-		if ((throwable.getClass() == RuntimeException.class) &&
-			Validator.isBlank(throwable.getMessage())) {
-
-			for (Throwable curThrowable : throwable.getSuppressed()) {
-				if (_hasErrors(curThrowable)) {
-					return true;
-				}
-			}
-
-			return false;
-		}
-
-		return true;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

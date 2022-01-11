@@ -341,6 +341,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 				}
 			};
 
+			SiteNavigationMenuItemSettingsBuilder
+				siteNavigationMenuItemSettingsBuilder =
+					new SiteNavigationMenuItemSettingsBuilder();
+
 			_invoke(() -> _addPermissions(serviceContext));
 
 			_invoke(() -> _addAccounts(serviceContext));
@@ -348,7 +352,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 			_invoke(() -> _addFragmentEntries(serviceContext));
 			_invoke(() -> _addSAPEntries(serviceContext));
 			_invoke(() -> _addStyleBookEntries(serviceContext));
-			_invoke(() -> _addTaxonomyVocabularies(serviceContext));
+			_invoke(
+				() -> _addTaxonomyVocabularies(
+					serviceContext, siteNavigationMenuItemSettingsBuilder));
 			_invoke(() -> _addUserAccounts(serviceContext));
 			_invoke(() -> _updateLayoutSets(serviceContext));
 
@@ -356,10 +362,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 				_invoke(
 					() -> _addAssetListEntries(
 						_ddmStructureLocalService, serviceContext));
-
-			SiteNavigationMenuItemSettingsBuilder
-				siteNavigationMenuItemSettingsBuilder =
-					new SiteNavigationMenuItemSettingsBuilder();
 
 			Map<String, String> documentsStringUtilReplaceValues = _invoke(
 				() -> _addDocuments(
@@ -1171,7 +1173,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				new SiteNavigationMenuItemSetting() {
 					{
 						className = FileEntry.class.getName();
-						classPK = fileEntry.getFileEntryId();
+						classPK = String.valueOf(fileEntry.getFileEntryId());
 						classTypeId = fileEntryTypeIdString;
 						title = fileEntry.getTitle();
 						type = ResourceActionsUtil.getModelResource(
@@ -2315,6 +2317,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private void _addTaxonomyCategories(
 			long groupId, String parentResourcePath,
 			String parentTaxonomyCategoryId, ServiceContext serviceContext,
+			SiteNavigationMenuItemSettingsBuilder
+				siteNavigationMenuItemSettingsBuilder,
 			long taxonomyVocabularyId)
 		throws Exception {
 
@@ -2350,9 +2354,22 @@ public class BundleSiteInitializer implements SiteInitializer {
 					parentTaxonomyCategoryId, serviceContext, taxonomyCategory);
 			}
 
+			TaxonomyCategory finalTaxonomyCategory = taxonomyCategory;
+
+			siteNavigationMenuItemSettingsBuilder.put(
+				resourcePath,
+				new SiteNavigationMenuItemSetting() {
+					{
+						className = AssetCategory.class.getName();
+						classPK = finalTaxonomyCategory.getId();
+						title = finalTaxonomyCategory.getName();
+					}
+				});
+
 			_addTaxonomyCategories(
 				groupId, StringUtil.replaceLast(resourcePath, ".json", "/"),
-				taxonomyCategory.getId(), serviceContext, taxonomyVocabularyId);
+				taxonomyCategory.getId(), serviceContext,
+				siteNavigationMenuItemSettingsBuilder, taxonomyVocabularyId);
 		}
 	}
 
@@ -2395,7 +2412,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 	private void _addTaxonomyVocabularies(
 			long groupId, String parentResourcePath,
-			ServiceContext serviceContext)
+			ServiceContext serviceContext,
+			SiteNavigationMenuItemSettingsBuilder
+				siteNavigationMenuItemSettingsBuilder)
 		throws Exception {
 
 		Set<String> resourcePaths = _servletContext.getResourcePaths(
@@ -2455,11 +2474,15 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			_addTaxonomyCategories(
 				groupId, StringUtil.replaceLast(resourcePath, ".json", "/"),
-				null, serviceContext, taxonomyVocabulary.getId());
+				null, serviceContext, siteNavigationMenuItemSettingsBuilder,
+				taxonomyVocabulary.getId());
 		}
 	}
 
-	private void _addTaxonomyVocabularies(ServiceContext serviceContext)
+	private void _addTaxonomyVocabularies(
+			ServiceContext serviceContext,
+			SiteNavigationMenuItemSettingsBuilder
+				siteNavigationMenuItemSettingsBuilder)
 		throws Exception {
 
 		Group group = _groupLocalService.getCompanyGroup(
@@ -2467,11 +2490,13 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		_addTaxonomyVocabularies(
 			group.getGroupId(),
-			"/site-initializer/taxonomy-vocabularies/company", serviceContext);
+			"/site-initializer/taxonomy-vocabularies/company", serviceContext,
+			siteNavigationMenuItemSettingsBuilder);
 
 		_addTaxonomyVocabularies(
 			serviceContext.getScopeGroupId(),
-			"/site-initializer/taxonomy-vocabularies/group", serviceContext);
+			"/site-initializer/taxonomy-vocabularies/group", serviceContext,
+			siteNavigationMenuItemSettingsBuilder);
 	}
 
 	private TaxonomyCategory _addTaxonomyVocabularyTaxonomyCategory(
@@ -2874,10 +2899,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private class SiteNavigationMenuItemSetting {
 
 		public String className;
-		public long classPK;
+		public String classPK;
 		public String classTypeId = StringPool.BLANK;
 		public String title;
-		public String type;
+		public String type = StringPool.BLANK;
 
 	}
 

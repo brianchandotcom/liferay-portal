@@ -105,16 +105,14 @@ String userIdentifierExpression = attributeMappingDisplayContext.getUserIdentifi
 
 		document
 			.querySelectorAll('.user-attribute-mapping-row')
-			.forEach((row) => <portlet:namespace />evaluateAttributeMappingRow(row));
+			.forEach((row) => <portlet:namespace />evaluateAttributeMappingRow(
+				row, document.querySelector('input[name="<portlet:namespace />userIdentifierExpression"][value="attribute"]').checked));
 	}
-	<portlet:namespace />evaluateAttributeMappingRow = function (row, event) {
+	<portlet:namespace />evaluateAttributeMappingRow = function (row, userIdentifierExpressionIsAttributeMapping, event) {
 		var radioTarget = row.querySelector(
 			'input[name="<portlet:namespace />attribute:userIdentifierExpressionIndex"]'
 		);
 		var selectTarget = row.querySelector('select');
-		var attributeMappingSelected = document.querySelector(
-			'input[name="<portlet:namespace />userIdentifierExpression"][value="attribute"]'
-		).checked;
 
 		if (event == null || event.target == radioTarget) {
 			if (radioTarget.checked) {
@@ -124,7 +122,7 @@ String userIdentifierExpression = attributeMappingDisplayContext.getUserIdentifi
 
 		if (event == null || event.target == selectTarget) {
 			if (
-				attributeMappingSelected &&
+				userIdentifierExpressionIsAttributeMapping &&
 				selectTarget.options[selectTarget.selectedIndex].dataset
 					.authsupported == 'true'
 			) {
@@ -149,12 +147,13 @@ String userIdentifierExpression = attributeMappingDisplayContext.getUserIdentifi
 		'<portlet:namespace />userAttributeMappings'
 	);
 
-	userAttributeMappings.addEventListener('change', (event) => {
+	userAttributeMappings.addEventListener('change', (event) =>
 		<portlet:namespace />evaluateAttributeMappingRow(
 			event.target.closest('.user-attribute-mapping-row'),
+			document.querySelector('input[name="<portlet:namespace />userIdentifierExpression"][value="attribute"]').checked,
 			event
-		);
-	});
+		)
+	);
 	userAttributeMappings.addEventListener('click', (event) => {
 		if (event.target.closest('.user-attribute-mapping-row button')) {
 			<portlet:namespace />evaluateAttributeMappingRows();

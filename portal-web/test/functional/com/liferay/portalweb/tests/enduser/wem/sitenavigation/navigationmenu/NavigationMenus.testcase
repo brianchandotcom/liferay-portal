@@ -1109,9 +1109,76 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-137577. The modal confirmation is displayed when delete a item with children."
+	@priority = "4"
+	test ViewModalWhenDeleteItemWithChildren {
+		property osgi.module.configuration.file.names = "com.liferay.asset.categories.item.selector.web.internal.configuration.FFAssetCategoriesItemSelectorConfiguration.config:com.liferay.site.navigation.admin.web.internal.configuration.FFSiteNavigationAdminConfiguration.config:com.liferay.site.navigation.menu.item.display.page.internal.configuration.FFDisplayPageSiteNavigationMenuItemConfiguration.config";
+		property osgi.module.configurations = "categoriesMultipleSelectionEnabled=&quot;true&quot;:categoriesMultipleSelectionEnabled=&quot;true&quot;:multipleSelectionEnabled=B&quot;true&quot;";
 
+		task ("Add three hierarchy levels categories to a vocabulary within a site") {
+			JSONCategory.addVocabulary(
+				groupName = "Test Site Name",
+				title = "Vocabulary Name");
 
+			JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category Name",
+				vocabularyName = "Vocabulary Name");
 
+			JSONCategory.addSubcategory(
+				groupName = "Test Site Name",
+				parentCategoryName = "Category Name",
+				title = "Subcategory Name",
+				vocabularyName = "Vocabulary Name");
+
+			JSONCategory.addSubcategory(
+				groupName = "Test Site Name",
+				parentCategoryName = "Subcategory Name",
+				title = "SubSubcategory Name",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("Add a navigation menu") {
+			JSONSitenavigation.addSiteNavigationMenu(
+				groupName = "Test Site Name",
+				siteNavigationMenuName = "Navigation Menu Name");
+		}
+
+		task ("Add all categories into Navigation Menu") {
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
+
+			NavigationMenusAdmin.gotoEdit(navigationMenuName = "Navigation Menu Name");
+
+			NavigationMenusAdmin.addCategoryItem(assetTitleList = "Category Name,Subcategory Name,SubSubcategory Name");
+		}
+
+		task ("Delete only the second leve item that has child") {
+			NavigationMenusAdmin.deleteItem(
+				actionName = "Only delete this item",
+				itemName = "Subcategory Name");
+		}
+
+		task ("View Subcategory is not shown") {
+			NavigationMenusAdmin.viewItemNotPresent(itemNameList = "Subcategory Name");
+		}
+
+		task ("View third level of category is nested to first category") {
+			NavigationMenusAdmin.viewItemNested(
+				groupName = "Test Site Name",
+				itemNameList = "SubSubcategory Name",
+				parentItemNameList = "Category Name",
+				site = "true",
+				siteNavigationMenuName = "Navigation Menu Name");
+		}
+
+		task ("Delete first level of a item and children") {
+			NavigationMenusAdmin.deleteItem(
+				actionName = "Delete item and children",
+				itemName = "Category Name");
+		}
+
+		task ("View categories are not shown") {
+			NavigationMenusAdmin.viewItemNotPresent(itemNameList = "Category Name,SubSubcategory Name");
 		}
 	}
 

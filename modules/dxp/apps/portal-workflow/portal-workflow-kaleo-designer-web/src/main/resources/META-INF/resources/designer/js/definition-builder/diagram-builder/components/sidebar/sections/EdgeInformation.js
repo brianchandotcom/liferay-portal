@@ -19,7 +19,7 @@ import {DefinitionBuilderContext} from '../../../../DefinitionBuilderContext';
 import {defaultLanguageId} from '../../../../constants';
 import {DiagramBuilderContext} from '../../../DiagramBuilderContext';
 import SidebarPanel from '../SidebarPanel';
-import {isIdDuplicated} from '../utils';
+import {checkIdErrors, checkLabelErrors, getUpdatedLabelItem} from './utils';
 
 export default function EdgeInformation({errors, setErrors}) {
 	const {selectedLanguageId} = useContext(DefinitionBuilderContext);
@@ -76,28 +76,14 @@ export default function EdgeInformation({errors, setErrors}) {
 				<ClayInput
 					id="edgeLabel"
 					onChange={({target}) => {
-						if (target.value.trim() === '') {
-							setErrors({...errors, label: true});
-						}
-						else {
-							setErrors({...errors, label: false});
-						}
+						setErrors(checkLabelErrors(errors, target));
 
 						const key =
 							selectedLanguageId !== ''
 								? selectedLanguageId
 								: defaultLanguageId;
 
-						setSelectedItem({
-							...selectedItem,
-							data: {
-								...selectedItem.data,
-								label: {
-									...selectedItem.data.label,
-									[key]: target.value,
-								},
-							},
-						});
+						setSelectedItem(getUpdatedLabelItem(key, selectedItem, target));
 					}}
 					type="text"
 					value={
@@ -147,27 +133,7 @@ export default function EdgeInformation({errors, setErrors}) {
 				<ClayInput
 					id="transitionId"
 					onChange={({target}) => {
-						if (target.value.trim() === '') {
-							setErrors({
-								...errors,
-								id: {duplicated: false, empty: true},
-							});
-						}
-						else {
-							if (isIdDuplicated(elements, target.value.trim())) {
-								setErrors({
-									...errors,
-									id: {duplicated: true, empty: false},
-								});
-							}
-							else {
-								setErrors({
-									...errors,
-									id: {duplicated: false, empty: false},
-								});
-							}
-						}
-
+						setErrors(checkIdErrors(elements, errors, target));
 						setSelectedItemNewId(target.value);
 					}}
 					type="text"

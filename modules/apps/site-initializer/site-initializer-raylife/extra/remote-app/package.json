@@ -32,20 +32,12 @@
 		"react-scripts": "4.0.3"
 	},
 	"devDependencies": {
-		"eslint": "^7.32.0",
 		"json-server": "^0.16.3"
-	},
-	"eslintConfig": {
-		"extends": [
-			"react-app",
-			"react-app/jest"
-		]
 	},
 	"name": "@liferay/site-initializer-raylife-d2c",
 	"private": true,
 	"scripts": {
 		"build": "react-scripts build",
-		"lint": "eslint src --ext js",
 		"mock": "json-server -p 3333 -d 200 ./mock/db.json --routes ./mock/routes.json",
 		"run": "yarn build && npx serve ./build",
 		"serve": "npx serve ./build",

@@ -137,6 +137,8 @@ public class ObjectLayoutLocalServiceTest {
 				_objectDefinition.getObjectDefinitionId(), true,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				Collections.singletonList(objectLayoutTab));
+
+			Assert.fail();
 		}
 		catch (DefaultObjectLayoutException defaultObjectLayoutException) {
 			String message = defaultObjectLayoutException.getMessage();

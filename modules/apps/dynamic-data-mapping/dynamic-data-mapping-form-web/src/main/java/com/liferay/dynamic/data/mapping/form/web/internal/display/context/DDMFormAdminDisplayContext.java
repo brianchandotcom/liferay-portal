@@ -1750,12 +1750,6 @@ public class DDMFormAdminDisplayContext {
 		}
 
 		if (!_ffSubmissionsSettingsConfigurationActivator.
-				limitToOneSubmissionEnabled()) {
-
-			ddmFormFieldNames.remove("limitToOneSubmissionPerUser");
-		}
-
-		if (!_ffSubmissionsSettingsConfigurationActivator.
 				showPartialResultsEnabled()) {
 
 			ddmFormFieldNames.remove("showPartialResultsToRespondents");

@@ -31,9 +31,6 @@ public interface FFSubmissionsSettingsConfiguration {
 	public boolean expirationDateEnabled();
 
 	@Meta.AD(deflt = "false", required = false)
-	public boolean limitToOneSubmissionEnabled();
-
-	@Meta.AD(deflt = "false", required = false)
 	public boolean showPartialResultsEnabled();
 
 }

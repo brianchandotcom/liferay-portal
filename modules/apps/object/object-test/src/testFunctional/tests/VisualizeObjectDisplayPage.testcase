@@ -578,7 +578,6 @@ definition {
 	}
 
 	@description = "LPS-137104 - Verify if Objects and its data are displayed as a Content Type and Subtype for a Page Template"
-	@ignore = "true"
 	@priority = "5"
 	test ObjectDisplayedForPageTemplate {
 		property portal.acceptance = "true";

@@ -2130,7 +2130,6 @@ definition {
 	}
 
 	@description = "LPS-135635 - Verify it is not possible to update the Object name after it is published"
-	@ignore = "true"
 	@priority = "5"
 	test CannotUpdateObjectNameAfterPublished {
 		property portal.acceptance = "true";
@@ -2246,7 +2245,6 @@ definition {
 	}
 
 	@description = "LPS-135549 - Verify it is possible to Publish a Custom Object"
-	@ignore = "true"
 	@priority = "5"
 	test CanPublishCustomObject {
 		property portal.acceptance = "true";
@@ -2300,7 +2298,6 @@ definition {
 	}
 
 	@description = "LPS-135551 - Verify it is possible to scope the Object by Company"
-	@ignore = "true"
 	@priority = "5"
 	test CanScopeObjectByCompany {
 		property portal.acceptance = "true";
@@ -2331,7 +2328,6 @@ definition {
 	}
 
 	@description = "LPS-135551 - Verify it is possible to scope the Object by Site"
-	@ignore = "true"
 	@priority = "5"
 	test CanScopeObjectBySite {
 		property portal.acceptance = "true";

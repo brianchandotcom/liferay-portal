@@ -20,8 +20,10 @@ definition {
 			ACUtils.launchDXP();
 		}
 
-		task ("Add a new site with a public widget page") {
+		task ("Add a new site and blog") {
 			ACUtils.addSiteAndPage();
+
+			ACUtils.createBlogsAndAddToPage();
 		}
 
 		task ("Connect the DXP to AC") {
@@ -136,6 +138,19 @@ definition {
 			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
 		}
 
+		task ("Add a new user") {
+			JSONUser.addUser(
+				userEmailAddress = "ac1@liferay.com",
+				userFirstName = "ac1",
+				userLastName = "ac1",
+				userScreenName = "ac1");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "ac1@liferay.com");
+		}
+
 		task ("Assign the user to site") {
 			JSONGroup.assignUserToGroup(
 				groupName = "Site Name",
@@ -146,12 +161,11 @@ definition {
 			ACDXPSettings.syncNewContactData();
 		}
 
-		task ("View the page as the new added user") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "ac@liferay.com",
-				userLoginFullName = "ac ac");
-
-			ACUtils.navigateToSitePage(
+		task ("View the page as the new users") {
+			ACUtils.navigateToSitePageWithUser(
+				actionType = "View Blog",
+				documentTitleList = "Blogs AC Title,Blogs AC Title",
+				emailList = "${emailList}",
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}
@@ -184,10 +198,86 @@ definition {
 				indexField = "1");
 		}
 
-		task ("View the user showns on the Preview mode") {
+		task ("View the user showns on the Preview mode and save segment") {
 			ACSegments.previewSegmentMembership();
 
 			ACUtils.viewNameList(nameList = "ac ac");
+
+			Button.clickDone();
+
+			ACSegments.saveSegment();
+		}
+
+		task ("Assert that the user is present in the Segments") {
+			ACNavigation.switchTab(tabName = "Membership");
+
+			ACUtils.viewNameList(nameList = "ac ac");
+		}
+
+		task ("Edit Segment") {
+			Button.click(button = "Edit Segment");
+
+			ACSegments.selectOperator(operator = "is not");
+
+			ACSegments.selectDocument(
+				documentTitle = "Site Name",
+				indexField = "1");
+
+			ACSegments.previewSegmentMembership();
+
+			ACUtils.viewNameList(nameList = "ac1 ac1");
+		}
+
+		task ("View the user showns on the Preview mode and save segment") {
+			ACSegments.previewSegmentMembership();
+
+			ACUtils.viewNameList(nameList = "ac1 ac1");
+
+			Button.clickDone();
+
+			ACSegments.saveSegment();
+		}
+
+		task ("Assert that the user is present in the Segments") {
+			ACNavigation.switchTab(tabName = "Membership");
+
+			ACUtils.viewNameList(nameList = "ac1 ac1");
+		}
+
+		task ("Edit Segment") {
+			Button.click(button = "Edit Segment");
+
+			ACSegments.goToSidebarAttributes(criterion = "Individual Attributes");
+
+			ACSegments.addSegmentField(segmentField = "Site Membership");
+
+			ACSegments.selectOperator(operator = "is not");
+
+			ACSegments.selectDocument(
+				documentTitle = "Site Name",
+				indexField = "1");
+
+			ACSegments.selectDocument(
+				documentTitle = "Site Name",
+				indexField = "2");
+
+			ACSegments.editConjunction();
+		}
+
+		task ("View the users showns on the Preview mode and save segment") {
+			ACSegments.previewSegmentMembership();
+
+			ACUtils.viewNameList(nameList = "ac ac,ac1 ac1");
+
+			Button.clickDone();
+
+			ACSegments.saveSegment();
+		}
+
+		task ("Assert that the users are present in the Segments") {
+			ACNavigation.switchTab(tabName = "Membership");
+
+			ACUtils.viewNameList(nameList = "ac ac,ac1 ac1");
 		}
 	}
 

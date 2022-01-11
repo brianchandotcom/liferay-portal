@@ -88,9 +88,9 @@ public class AccountRoleModelResourcePermissionTest {
 			PermissionThreadLocal.setPermissionChecker(
 				PermissionCheckerFactoryUtil.create(user));
 
-			_assertHasPermission(accountRole, AccountActionKeys.ASSIGN_USERS);
-			_assertHasPermission(accountRole, ActionKeys.DELETE);
-			_assertHasPermission(accountRole, ActionKeys.UPDATE);
+			_assertContains(accountRole, AccountActionKeys.ASSIGN_USERS);
+			_assertContains(accountRole, ActionKeys.DELETE);
+			_assertContains(accountRole, ActionKeys.UPDATE);
 		}
 		finally {
 			PermissionThreadLocal.setPermissionChecker(
@@ -109,7 +109,7 @@ public class AccountRoleModelResourcePermissionTest {
 		}
 	}
 
-	private void _assertHasPermission(AccountRole accountRole, String actionId)
+	private void _assertContains(AccountRole accountRole, String actionId)
 		throws Exception {
 
 		Assert.assertTrue(

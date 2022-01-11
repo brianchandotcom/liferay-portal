@@ -68,10 +68,10 @@ public class AccountEntryModelResourcePermissionTest {
 			PermissionThreadLocal.setPermissionChecker(
 				PermissionCheckerFactoryUtil.create(user));
 
-			_assertHasPermission(accountEntry, AccountActionKeys.VIEW_USERS);
-			_assertHasPermission(accountEntry, ActionKeys.DELETE);
-			_assertHasPermission(accountEntry, ActionKeys.VIEW);
-			_assertHasPermission(accountEntry, ActionKeys.UPDATE);
+			_assertContains(accountEntry, AccountActionKeys.VIEW_USERS);
+			_assertContains(accountEntry, ActionKeys.DELETE);
+			_assertContains(accountEntry, ActionKeys.VIEW);
+			_assertContains(accountEntry, ActionKeys.UPDATE);
 		}
 		finally {
 			PermissionThreadLocal.setPermissionChecker(
@@ -79,8 +79,7 @@ public class AccountEntryModelResourcePermissionTest {
 		}
 	}
 
-	private void _assertHasPermission(
-			AccountEntry accountEntry, String actionId)
+	private void _assertContains(AccountEntry accountEntry, String actionId)
 		throws Exception {
 
 		Assert.assertTrue(

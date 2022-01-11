@@ -14,7 +14,6 @@
 
 package com.liferay.portal.template.freemarker.internal;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -64,7 +63,6 @@ public class FreeMarkerManagerTest {
 
 					return null;
 				}));
-
 		ReflectionTestUtil.setFieldValue(
 			freeMarkerManager, "_freeMarkerEngineConfiguration",
 			ProxyUtil.newProxyInstance(
@@ -83,12 +81,7 @@ public class FreeMarkerManagerTest {
 		String macroLibrary = ReflectionTestUtil.invoke(
 			freeMarkerManager, "_getMacroLibrary", new Class<?>[0]);
 
-		Assert.assertTrue(
-			StringBundler.concat(
-				"Macro library used for freemarker engine should always ",
-				"contains \'FTL_liferay.ftl as liferay\', but it is \'",
-				macroLibrary, "\'"),
-			macroLibrary.contains("FTL_liferay.ftl as liferay"));
+		Assert.assertTrue(macroLibrary.contains("FTL_liferay.ftl as liferay"));
 	}
 
 }

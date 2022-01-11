@@ -241,6 +241,12 @@ definition {
 		PortletEntry.save();
 	}
 
+	macro gotoEdit {
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "${navigationMenuName}");
+	}
+
 	macro markAsPrimaryNavigation {
 		LexiconEntry.gotoEntryMenuItemNoError(
 			menuItem = "Primary Navigation",

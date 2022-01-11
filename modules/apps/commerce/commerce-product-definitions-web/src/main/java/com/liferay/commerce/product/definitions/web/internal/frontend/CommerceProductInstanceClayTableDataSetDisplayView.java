@@ -53,6 +53,9 @@ public class CommerceProductInstanceClayTableDataSetDisplayView
 			clayTableSchemaBuilder.addClayTableSchemaField("status", "status");
 
 		statusField.setContentRenderer("label");
+
+		clayTableSchemaBuilder.addClayTableSchemaField(
+			"discontinued", "discontinued");
 	}
 
 }

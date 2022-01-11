@@ -184,9 +184,7 @@ definition {
 		AssertElementPresent(locator1 = "Button#SELECT_FILE");
 
 		if ("${uploadFrom}" == "dependencies") {
-			UploadDependencyFile.uploadArchiveFile(
-				compressedFile = "${compressedFile}",
-				fileName = "${larFileName}");
+			UploadDependencyFile.uploadArchiveFile(fileName = "${larFileName}");
 		}
 		else {
 			UploadTempFile.uploadTempFileHiddenNoMouseOver(
@@ -291,9 +289,7 @@ definition {
 		AssertElementPresent(locator1 = "Button#SELECT_FILE");
 
 		if ("${uploadFrom}" == "dependencies") {
-			UploadDependencyFile.uploadArchiveFile(
-				compressedFile = "${compressedFile}",
-				fileName = "${larFileName}");
+			UploadDependencyFile.uploadArchiveFile(fileName = "${larFileName}");
 		}
 		else {
 			UploadTempFile.uploadTempFileHiddenNoMouseOver(
@@ -571,7 +567,6 @@ definition {
 
 		LAR._selectImportFile(
 			cannotImport = "${cannotImport}",
-			compressedFile = "${compressedFile}",
 			failureExpected = "${failureExpected}",
 			importDeletions = "${importDeletions}",
 			importPermissions = "${importPermissions}",
@@ -603,7 +598,6 @@ definition {
 		}
 
 		LAR._selectImportFileSite(
-			compressedFile = "${compressedFile}",
 			importCampaignValidationError = "${importCampaignValidationError}",
 			importValidationMissingItem = "${importValidationMissingItem}",
 			larFileName = "${larFileName}",

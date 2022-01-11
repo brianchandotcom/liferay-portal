@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,17 +11,15 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/init.jsp" %>
+package com.liferay.frontend.js.components.sample.web.internal.constants;
 
-<div class="frontend-js-components-sample-web">
-	<liferay-ui:tabs
-		names="Translation Manager"
-		refresh="<%= false %>"
-	>
-		<liferay-ui:section>
-			<liferay-util:include page='<%= "/partials/translation_manager.jsp" %>' servletContext="<%= application %>" />
-		</liferay-ui:section>
-	</liferay-ui:tabs>
-</div>
+/**
+ * @author Carlos Lancha
+ */
+public class ComponentsSampleWebKeys {
+
+	public static final String TRANSLATION_MANAGER_DISPLAY_CONTEXT =
+		"TRANSLATION_MANAGER_DISPLAY_CONTEXT";
+
+}

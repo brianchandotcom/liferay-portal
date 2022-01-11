@@ -22,7 +22,4 @@ public class ComponentsSamplePortletKeys {
 	public static final String COMPONENTS_SAMPLE =
 		"com_liferay_components_sample_web_portlet_ComponentsSamplePortlet";
 
-	public static final String TRANSLATION_MANAGER_DISPLAY_CONTEXT =
-		"TRANSLATION_MANAGER_DISPLAY_CONTEXT";
-
 }

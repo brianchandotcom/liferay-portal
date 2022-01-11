@@ -39,6 +39,8 @@ public interface CommerceOrderImporterItem {
 
 	public int getQuantity();
 
+	public String getReplacingSKU();
+
 	public String getSKU();
 
 	public boolean hasParentCommerceOrderItem();

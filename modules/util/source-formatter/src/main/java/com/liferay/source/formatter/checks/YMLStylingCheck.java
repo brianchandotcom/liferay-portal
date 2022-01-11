@@ -23,6 +23,10 @@ public class YMLStylingCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
+		if (content.startsWith("---\n")) {
+			content = content.substring(4);
+		}
+
 		content = content.replaceAll(
 			"(\\A|\n)( *)(description:) (?!\\|-)(.+)(\\Z|\n)",
 			"$1$2$3\n    $2$4$5");

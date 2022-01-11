@@ -67,7 +67,7 @@ public class YMLWhitespaceCheck extends WhitespaceCheck {
 			contentBlock = super.doProcess(
 				fileName, absolutePath, contentBlock);
 
-			if (contentBlock.startsWith("---")) {
+			if (contentBlock.startsWith("---") && (i != 0)) {
 				contentBlock = StringPool.NEW_LINE + contentBlock;
 			}
 

@@ -1888,6 +1888,10 @@ public class VerifyProperties extends VerifyProcess {
 			"com.liferay.portal.servlet.filters.gzip.GZipFilter"
 		},
 		{
+			"com.liferay.portal.servlet.filters.urlrewrite.UrlRewriteFilter",
+			"com.liferay.portal.urlrewrite.filter.internal.UrlRewriteFilter"
+		},
+		{
 			"default.guest.friendly.url",
 			"default.guest.public.layout.friendly.url"
 		},

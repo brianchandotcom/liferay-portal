@@ -23,6 +23,22 @@
 				],
 				"name": "Other Links",
 				"type": "node"
+			},
+			{
+				"key": "/site-initializer/taxonomy-vocabularies/group/test-asset-vocabulary-2/test-asset-category-3/test-asset-category-4.json",
+				"type": "display-page"
+			},
+			{
+				"key": "/site-initializer/journal-articles/test-journal-article-1/journal_article.json",
+				"type": "display-page"
+			},
+			{
+				"key": "/site-initializer/documents/group/Old Testament/Genesis.txt",
+				"type": "display-page"
+			},
+			{
+				"key": "objectEntrySiteInitializerKey-2",
+				"type": "display-page"
 			}
 		],
 		"name": "Test Site Navigation Menu"

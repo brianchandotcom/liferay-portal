@@ -1985,18 +1985,17 @@ public class BundleSiteInitializer implements SiteInitializer {
 							Serializable.class, String.valueOf(jsonObject)),
 						serviceContext);
 
-				// TODO Rename "objectEntryKey" because it is too generic
+				String objectEntrySiteInitializerKey = jsonObject.getString(
+					"objectEntrySiteInitializerKey");
 
-				String objectEntryKey = jsonObject.getString("objectEntryKey");
-
-				if (objectEntryKey == null) {
+				if (objectEntrySiteInitializerKey == null) {
 					continue;
 				}
 
 				String objectDefinitionName = objectDefinition.getName();
 
 				siteNavigationMenuItemSettingsBuilder.put(
-					objectEntryKey,
+					objectEntrySiteInitializerKey,
 					new SiteNavigationMenuItemSetting() {
 						{
 							className = objectEntry.getModelClassName();
@@ -2394,6 +2393,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 				if (siteNavigationMenuItemSetting == null) {
 					continue;
 				}
+
+				type = siteNavigationMenuItemSetting.className;
 
 				typeSettings = UnicodePropertiesBuilder.create(
 					true

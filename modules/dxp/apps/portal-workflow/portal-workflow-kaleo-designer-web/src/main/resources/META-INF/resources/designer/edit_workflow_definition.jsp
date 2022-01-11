@@ -27,11 +27,7 @@ portletDisplay.setURLBack(
 		"/view.jsp"
 	).buildString());
 
-String definitionTitle = (kaleoDefinitionVersion == null) ? LanguageUtil.get(request, "new-workflow") : kaleoDefinitionVersion.getTitle(locale);
-
-String pageTitle = (kaleoDefinitionVersion == null) ? LanguageUtil.get(request, "new-workflow-definition") : LanguageUtil.get(request, "edit-workflow-definition");
-
-renderResponse.setTitle(pageTitle);
+renderResponse.setTitle((kaleoDefinitionVersion == null) ? LanguageUtil.get(request, "new-workflow-definition") : LanguageUtil.get(request, "edit-workflow-definition"));
 %>
 
 <react:component
@@ -44,7 +40,7 @@ renderResponse.setTitle(pageTitle);
 		).put(
 			"languageIds", LocaleUtil.toLanguageIds(LanguageUtil.getAvailableLocales())
 		).put(
-			"title", definitionTitle
+			"title", (kaleoDefinitionVersion == null) ? LanguageUtil.get(request, "new-workflow") : kaleoDefinitionVersion.getTitle(locale)
 		).put(
 			"translations", (kaleoDefinitionVersion == null) ? new HashMap<>() : kaleoDefinitionVersion.getTitleMap()
 		).put(

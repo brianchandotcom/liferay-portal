@@ -199,14 +199,16 @@ public class ComponentTag extends ParamAndPropertyAncestorTagImpl {
 	private String _getRenderInvocation(String variableName) {
 		StringBundler sb = new StringBundler(14);
 
+		sb.append("Liferay.component('");
+
 		String componentId = Optional.ofNullable(
 			getComponentId()
 		).orElse(
 			_UNNAMED_COMPONENT_NAME + PortalUUIDUtil.generate()
 		);
 
-		sb.append("Liferay.component('");
 		sb.append(componentId);
+
 		sb.append("', new ");
 
 		sb.append(variableName);

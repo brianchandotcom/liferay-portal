@@ -28,12 +28,19 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.theme.PortletDisplay;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 
 import javax.portlet.PortletURL;
@@ -315,78 +322,94 @@ public class HeadlessDisplayTag extends IncludeTag {
 		httpServletRequest = getRequest();
 
 		httpServletRequest.setAttribute(
-			"frontend-data-set:headless-display:actionParameterName",
-			_actionParameterName);
-		httpServletRequest.setAttribute(
-			"frontend-data-set:headless-display:activeViewSettingsJSON",
-			_activeViewSettingsJSON);
-		httpServletRequest.setAttribute(
-			"frontend-data-set:headless-display:apiURL", _apiURL);
-		httpServletRequest.setAttribute(
-			"frontend-data-set:headless-display:appURL", _appURL);
-		httpServletRequest.setAttribute(
-			"frontend-data-set:headless-display:bulkActionDropdownItems",
-			_bulkActionDropdownItems);
-		httpServletRequest.setAttribute(
-			"frontend-data-set:headless-display:creationMenu", _creationMenu);
-		httpServletRequest.setAttribute(
-			"frontend-data-set:headless-display:customViewsEnabled",
-			_customViewsEnabled);
-		httpServletRequest.setAttribute(
-			"frontend-data-set:headless-display:fdsActionDropdownItems",
-			_fdsActionDropdownItems);
-		httpServletRequest.setAttribute(
-			"frontend-data-set:headless-display:fdsDisplayViewsContext",
-			_fdsViewsContext);
-		httpServletRequest.setAttribute(
-			"frontend-data-set:headless-display:fdsFiltersContext",
-			_fdsFiltersContext);
-		httpServletRequest.setAttribute(
-			"frontend-data-set:headless-display:fdsPaginationEntries",
-			_fdsPaginationEntries);
-		httpServletRequest.setAttribute(
-			"frontend-data-set:headless-display:fdsSortItemList",
-			_fdsSortItemList);
-		httpServletRequest.setAttribute(
-			"frontend-data-set:headless-display:formId", _formId);
-		httpServletRequest.setAttribute(
-			"frontend-data-set:headless-display:formName", _formName);
-		httpServletRequest.setAttribute(
-			"frontend-data-set:headless-display:id", _id);
-		httpServletRequest.setAttribute(
-			"frontend-data-set:headless-display:itemsPerPage", _itemsPerPage);
-		httpServletRequest.setAttribute(
-			"frontend-data-set:headless-display:namespace", _namespace);
-		httpServletRequest.setAttribute(
-			"frontend-data-set:headless-display:nestedItemsKey",
-			_nestedItemsKey);
-		httpServletRequest.setAttribute(
-			"frontend-data-set:headless-display:nestedItemsReferenceKey",
-			_nestedItemsReferenceKey);
-		httpServletRequest.setAttribute(
-			"frontend-data-set:headless-display:pageNumber", _pageNumber);
-		httpServletRequest.setAttribute(
-			"frontend-data-set:headless-display:paginationSelectedEntry",
-			_paginationSelectedEntry);
-		httpServletRequest.setAttribute(
-			"frontend-data-set:headless-display:portletURL", _portletURL);
-		httpServletRequest.setAttribute(
-			"frontend-data-set:headless-display:selectedItems", _selectedItems);
-		httpServletRequest.setAttribute(
-			"frontend-data-set:headless-display:selectedItemsKey",
-			_selectedItemsKey);
-		httpServletRequest.setAttribute(
-			"frontend-data-set:headless-display:selectionType", _selectionType);
-		httpServletRequest.setAttribute(
-			"frontend-data-set:headless-display:showManagementBar",
-			_showManagementBar);
-		httpServletRequest.setAttribute(
-			"frontend-data-set:headless-display:showPagination",
-			_showPagination);
-		httpServletRequest.setAttribute(
-			"frontend-data-set:headless-display:showSearch", _showSearch);
-		httpServletRequest.setAttribute(
-			"frontend-data-set:headless-display:style", _style);
+			"frontend-data-set:headless-display:data",
+			_getData(httpServletRequest));
+	}
+
+	private Map<String, Object> _getData(
+		HttpServletRequest httpServletRequest) {
+
+		Map<String, Object> data = HashMapBuilder.<String, Object>put(
+			"actionParameterName", GetterUtil.getString(_actionParameterName)
+		).put(
+			"activeViewSettings", _activeViewSettingsJSON
+		).put(
+			"apiURL", _apiURL
+		).put(
+			"appURL", _appURL
+		).put(
+			"bulkActions", _bulkActionDropdownItems
+		).put(
+			"creationMenu", _creationMenu
+		).put(
+			"currentURL", PortalUtil.getCurrentURL(httpServletRequest)
+		).put(
+			"customViewsEnabled", _customViewsEnabled
+		).put(
+			"filters", _fdsFiltersContext
+		).build();
+
+		if (Validator.isNotNull(_formName)) {
+			data.put("formName", _formName);
+		}
+
+		if (Validator.isNotNull(_formId)) {
+			data.put("formId", _formId);
+		}
+
+		data.put("id", _id);
+		data.put("itemsActions", _fdsActionDropdownItems);
+		data.put("namespace", _namespace);
+
+		if (Validator.isNotNull(_nestedItemsKey)) {
+			data.put("nestedItemsKey", _nestedItemsKey);
+		}
+
+		if (Validator.isNotNull(_nestedItemsReferenceKey)) {
+			data.put("nestedItemsReferenceKey", _nestedItemsReferenceKey);
+		}
+
+		data.put(
+			"pagination",
+			HashMapBuilder.<String, Object>put(
+				"deltas", _fdsPaginationEntries
+			).put(
+				"initialDelta", _itemsPerPage
+			).put(
+				"initialPageNumber", _pageNumber
+			).build());
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		data.put("portletId", portletDisplay.getRootPortletId());
+
+		data.put("portletURL", _portletURL.toString());
+		data.put("selectedItems", _selectedItems);
+
+		if (Validator.isNotNull(_selectedItemsKey)) {
+			data.put("selectedItemsKey", _selectedItemsKey);
+		}
+
+		if (Validator.isNotNull(_selectionType)) {
+			data.put("selectionType", _selectionType);
+		}
+
+		data.put("showManagementBar", _showManagementBar);
+		data.put("showPagination", _showPagination);
+		data.put("showSearch", _showSearch);
+		data.put("sorting", _fdsSortItemList);
+
+		if (Validator.isNotNull(_style)) {
+			data.put("style", _style);
+		}
+
+		data.put("views", _fdsViewsContext);
+
+		return data;
 	}
 
 	private List<FDSPaginationEntry> _getFdsPaginationEntries() {

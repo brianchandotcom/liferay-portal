@@ -74,7 +74,8 @@ public class DateDDMFormFieldValueRenderer
 			defaultLocale
 		);
 
-		boolean dateTime = Pattern.matches(_DATE_TIME_REGEX, valueString);
+		boolean dateTime = Pattern.matches(
+			"^\\d{4}-\\d{2}-\\d{2} \\d{1,2}:\\d{2}$", valueString);
 
 		SimpleDateFormat simpleDateFormat = null;
 
@@ -125,8 +126,5 @@ public class DateDDMFormFieldValueRenderer
 		return localDate.format(
 			dateTimeFormatter.withDecimalStyle(DecimalStyle.of(locale)));
 	}
-
-	private static final String _DATE_TIME_REGEX =
-		"^\\d{4}-\\d{2}-\\d{2} \\d{1,2}:\\d{2}$";
 
 }

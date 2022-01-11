@@ -733,11 +733,13 @@ definition {
 			groupName = "Guest",
 			titleField = "Title AddQuestion");
 
-		Questions.openToQuestionDetails(
-			layoutName = "questions-page",
-			questionsTitle = "title-addquestion",
-			siteURLKey = "guest",
-			topicName = "questions-test-category");
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoCategory(categoryName = "Questions Test Category");
+
+		Questions.gotoDetails(
+			questionTabField = "Questions",
+			questionTitle = "Title AddQuestion");
 
 		Questions.viewDetailsTitle(questionTitle = "Title AddQuestion");
 	}
@@ -1045,11 +1047,6 @@ definition {
 			groupName = "Guest",
 			titleField = "Question");
 
-		Questions.openToQuestionsTopic(
-			layoutName = "questions-page",
-			siteURLKey = "guest",
-			topicName = "category");
-
 		Questions.openToConfigInSystemSettings(portlet = "Questions");
 
 		SystemSettings.editTextAreaSetting(
@@ -1060,7 +1057,7 @@ definition {
 
 		Questions.enableAnonymousRead();
 
-		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
+		User.logoutPG();
 
 		Navigator.gotoPage(pageName = "Questions Page");
 
@@ -1111,14 +1108,9 @@ definition {
 			groupName = "Guest",
 			titleField = "Question");
 
-		Questions.openToQuestionsTopic(
-			layoutName = "questions-page",
-			siteURLKey = "guest",
-			topicName = "category");
+		User.logoutPG();
 
-		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
-
-		Navigator.openSpecificURL(url = "${portalURL}/web/guest/questions-page");
+		Navigator.gotoPage(pageName = "Questions Page");
 
 		Questions.gotoCategory(categoryName = "Category");
 
@@ -1176,9 +1168,9 @@ definition {
 			groupName = "Guest",
 			titleField = "Question@#");
 
-		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
+		User.logoutPG();
 
-		Navigator.openSpecificURL(url = "${portalURL}/web/guest/questions-page");
+		Navigator.gotoPage(pageName = "Questions Page");
 
 		Questions.gotoCategory(categoryName = "Category");
 

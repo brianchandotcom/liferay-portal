@@ -462,25 +462,21 @@ public class EditAssetListDisplayContext {
 
 	public String getCategorySelectorURL() {
 		try {
-			PortletURL portletURL = PortletProviderUtil.getPortletURL(
-				_httpServletRequest, AssetCategory.class.getName(),
-				PortletProvider.Action.BROWSE);
-
-			if (portletURL == null) {
-				return null;
-			}
-
-			portletURL.setParameter(
-				"eventName",
-				_portletResponse.getNamespace() + "selectCategory");
-			portletURL.setParameter(
-				"selectedCategories", "{selectedCategories}");
-			portletURL.setParameter("singleSelect", "{singleSelect}");
-			portletURL.setParameter("vocabularyIds", "{vocabularyIds}");
-
-			portletURL.setWindowState(LiferayWindowState.POP_UP);
-
-			return portletURL.toString();
+			return PortletURLBuilder.create(
+				PortletProviderUtil.getPortletURL(
+					_httpServletRequest, AssetCategory.class.getName(),
+					PortletProvider.Action.BROWSE)
+			).setParameter(
+				"eventName", _portletResponse.getNamespace() + "selectCategory"
+			).setParameter(
+				"selectedCategories", "{selectedCategories}"
+			).setParameter(
+				"singleSelect", "{singleSelect}"
+			).setParameter(
+				"vocabularyIds", "{vocabularyIds}"
+			).setWindowState(
+				LiferayWindowState.POP_UP
+			).buildString();
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -987,22 +983,19 @@ public class EditAssetListDisplayContext {
 
 	public String getTagSelectorURL() {
 		try {
-			PortletURL portletURL = PortletProviderUtil.getPortletURL(
-				_httpServletRequest, AssetTag.class.getName(),
-				PortletProvider.Action.BROWSE);
-
-			if (portletURL == null) {
-				return null;
-			}
-
-			portletURL.setParameter(
-				"groupIds", StringUtil.merge(getSelectedGroupIds()));
-			portletURL.setParameter(
-				"eventName", _portletResponse.getNamespace() + "selectTag");
-			portletURL.setParameter("selectedTagNames", "{selectedTagNames}");
-			portletURL.setWindowState(LiferayWindowState.POP_UP);
-
-			return portletURL.toString();
+			return PortletURLBuilder.create(
+				PortletProviderUtil.getPortletURL(
+					_httpServletRequest, AssetTag.class.getName(),
+					PortletProvider.Action.BROWSE)
+			).setParameter(
+				"eventName", _portletResponse.getNamespace() + "selectTag"
+			).setParameter(
+				"groupIds", StringUtil.merge(getSelectedGroupIds())
+			).setParameter(
+				"selectedTagNames", "{selectedTagNames}"
+			).setWindowState(
+				LiferayWindowState.POP_UP
+			).buildString();
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

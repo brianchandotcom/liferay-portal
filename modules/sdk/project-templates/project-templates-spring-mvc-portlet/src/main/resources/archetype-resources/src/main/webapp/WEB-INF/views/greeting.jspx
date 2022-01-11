@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page"
+<jsp:root xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+			xmlns:jsp="http://java.sun.com/JSP/Page"
 #if (${framework.equals("portletmvc4spring")})
 		  xmlns:portlet="http://xmlns.jcp.org/portlet_3_0"
 #elseif (${framework.equals("springportletmvc")})
 		  xmlns:portlet="http://java.sun.com/portlet_2_0"
 #end
 		  xmlns:spring="http://www.springframework.org/tags"
-		  xmlns:fn="http://java.sun.com/jsp/jstl/functions"
 		  version="2.1">
 	<jsp:directive.page contentType="text/html" pageEncoding="UTF-8" />
 	<portlet:defineObjects/>

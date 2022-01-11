@@ -945,18 +945,18 @@ public class BundleSiteInitializer implements SiteInitializer {
 			_commerceReferencesHolder.cpInstanceLocalService.buildCPInstances(
 				cpDefinition.getCPDefinitionId(), serviceContext);
 
+			CPInstance cpInstance =
+				_commerceReferencesHolder.cpInstanceLocalService.getCPInstance(
+					cpDefinition.getCPDefinitionId(),
+					subscriptionPropertiesJSONObject.getString(
+						"cpInstanceSku"));
+
 			JSONObject subscriptionTypeSettingsJSONObject =
 				subscriptionPropertiesJSONObject.getJSONObject(
 					"subscriptionTypeSettings");
 
 			UnicodeProperties unicodeProperties = new UnicodeProperties(
 				JSONUtil.toStringMap(subscriptionTypeSettingsJSONObject), true);
-
-			CPInstance cpInstance =
-				_commerceReferencesHolder.cpInstanceLocalService.getCPInstance(
-					cpDefinition.getCPDefinitionId(),
-					subscriptionPropertiesJSONObject.getString(
-						"cpInstanceSku"));
 
 			_commerceReferencesHolder.cpInstanceLocalService.
 				updateSubscriptionInfo(

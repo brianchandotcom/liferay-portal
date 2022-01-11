@@ -236,6 +236,18 @@ definition {
 		Click(
 			key_itemName = "${itemName}",
 			locator1 = "SiteNavigationMenu#ITEM_ENTRY_CLOSE");
+
+		if (IsTextEqual(locator1 = "Modal#HEADER", value1 = "Delete Item")) {
+			AssertTextEquals.assertPartialText(
+				locator1 = "Modal#BODY",
+				value1 = "The item you want to delete has children that also can be removed.");
+
+			Check.checkNotVisible(
+				key_text = "${actionName}",
+				locator1 = "TextInput#ANY");
+
+			Button.clickDelete();
+		}
 	}
 
 	macro editItem {
@@ -403,12 +415,6 @@ definition {
 			key_rowEntry = "${rowEntry}",
 			locator1 = "SiteNavigationMenu#MENU_MARKED_AS",
 			value1 = "${menuType}");
-	}
-
-	macro viewNoItem {
-		AssertElementNotPresent(
-			key_itemName = "${itemName}",
-			locator1 = "SiteNavigationMenu#ITEM_ENTRY");
 	}
 
 }

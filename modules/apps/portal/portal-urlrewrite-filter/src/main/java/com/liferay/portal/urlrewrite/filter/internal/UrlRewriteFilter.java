@@ -12,21 +12,39 @@
  * details.
  */
 
-package com.liferay.portal.servlet.filters.urlrewrite;
+package com.liferay.portal.urlrewrite.filter.internal;
 
+import com.liferay.portal.asm.ASMWrapperUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.AggregateClassLoader;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
 
+import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author László Csontos
  */
+@Component(
+	immediate = true,
+	property = {
+		"before-filter=Session Id Filter", "dispatcher=ERROR",
+		"dispatcher=FORWARD", "dispatcher=INCLUDE", "dispatcher=REQUEST",
+		"init-param.logLevel=ERROR", "init-param.statusEnabled=false",
+		"init-param.url-regex-ignore-pattern=(^/combo/)|(^/html/.+\\.(css|gif|html|ico|jpg|js|png)(\\?.*)?$)",
+		"servlet-context-name=", "servlet-filter-name=URL Rewrite Filter",
+		"url-pattern=/*"
+	},
+	service = Filter.class
+)
 public class UrlRewriteFilter extends BasePortalFilter {
 
 	@Override
@@ -45,8 +63,22 @@ public class UrlRewriteFilter extends BasePortalFilter {
 		_urlRewriteFilter =
 			new org.tuckey.web.filters.urlrewrite.UrlRewriteFilter();
 
+		ServletContext servletContext = filterConfig.getServletContext();
+
+		ClassLoader classLoader = AggregateClassLoader.getAggregateClassLoader(
+			UrlRewriteFilter.class.getClassLoader(),
+			servletContext.getClassLoader());
+
 		try {
-			_urlRewriteFilter.init(filterConfig);
+			_urlRewriteFilter.init(
+				ASMWrapperUtil.createASMWrapper(
+					classLoader, FilterConfig.class,
+					new FilterConfigDelegate(
+						ASMWrapperUtil.createASMWrapper(
+							classLoader, ServletContext.class,
+							new ServletContextDelegate(servletContext),
+							servletContext)),
+					filterConfig));
 		}
 		catch (ServletException servletException) {
 			_urlRewriteFilter = null;

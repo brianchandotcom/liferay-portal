@@ -943,6 +943,42 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-142234. The user could view error message when save site settings without required category."
+	@priority = "4"
+	test ViewErrorMessageWhenSaveSiteSettingsWithoutRequiredCategory {
+		task ("Add a vocabulary with associated asset type") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+			Vocabulary.addWithAssociatedAssetTypeCP(
+				assetType = "Site",
+				required = "true",
+				vocabularyName = "Vocabulary Name 1");
+		}
+
+		task ("Add a category") {
+			JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category Name",
+				vocabularyName = "Vocabulary Name 1");
+		}
+
+		task ("Go to Categorization settings") {
+			Site.openSiteSettingsAdmin(siteURLKey = "test-site-name");
+
+			Click(
+				key_itemName = "Assets",
+				locator1 = "ListGroupItem#ITEM_TEXT");
+
+			Navigator.gotoNavTab(navTab = "Categorization");
+
+			Button.click(button = "Save");
+		}
+
+		task ("Assert error message is shown") {
+			Alert.viewErrorMessage(errorMessage = "Error: Please select at least one category for Vocabulary Name 1.");
+		}
+	}
+
 	@description = "View the navigation."
 	@priority = "3"
 	test ViewNavigation {

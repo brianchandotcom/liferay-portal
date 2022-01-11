@@ -17,6 +17,8 @@ package com.liferay.document.library.web.internal.display.context;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryServiceUtil;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryServiceUtil;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
@@ -37,12 +39,14 @@ import com.liferay.document.library.web.internal.settings.DLPortletInstanceSetti
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -66,6 +70,7 @@ import com.liferay.portal.kernel.search.SearchResult;
 import com.liferay.portal.kernel.search.SearchResultUtil;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -410,6 +415,26 @@ public class DLAdminDisplayContext {
 				if (_rootFolderInTrash) {
 					_rootFolderName = _trashHelper.getOriginalTitle(
 						rootFolder.getName());
+				}
+			}
+
+			if (rootFolder.getGroupId() != _themeDisplay.getScopeGroupId()) {
+				Group group = GroupLocalServiceUtil.getGroup(
+					rootFolder.getGroupId());
+
+				if (group.isDepot()) {
+					List<Long> groupConnectedDepotEntries = ListUtil.toList(
+						DepotEntryServiceUtil.getGroupConnectedDepotEntries(
+							_themeDisplay.getScopeGroupId(), QueryUtil.ALL_POS,
+							QueryUtil.ALL_POS),
+						DepotEntry::getGroupId);
+
+					if (!groupConnectedDepotEntries.contains(
+							rootFolder.getGroupId())) {
+
+						throw new NoSuchFolderException(
+							"{folderId=" + _rootFolderId + "}");
+					}
 				}
 			}
 		}

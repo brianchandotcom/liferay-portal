@@ -85,7 +85,8 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.init-param.view-template=/pending_commerce_orders/view.jsp",
 		"javax.portlet.name=" + CommercePortletKeys.COMMERCE_OPEN_ORDER_CONTENT,
 		"javax.portlet.resource-bundle=content.Language",
-		"javax.portlet.security-role-ref=power-user,user"
+		"javax.portlet.security-role-ref=power-user,user",
+		"javax.portlet.version=3.0"
 	},
 	service = {CommerceOpenOrderContentPortlet.class, Portlet.class}
 )

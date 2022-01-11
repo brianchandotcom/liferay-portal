@@ -2394,6 +2394,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 					continue;
 				}
 
+				type = siteNavigationMenuItemSetting.className;
+
 				typeSettings = UnicodePropertiesBuilder.create(
 					true
 				).put(

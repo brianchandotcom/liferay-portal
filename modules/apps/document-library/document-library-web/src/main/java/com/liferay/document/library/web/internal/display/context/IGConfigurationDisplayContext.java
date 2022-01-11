@@ -14,6 +14,8 @@
 
 package com.liferay.document.library.web.internal.display.context;
 
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryServiceUtil;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
@@ -24,8 +26,10 @@ import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.FolderItemSelectorReturnType;
 import com.liferay.item.selector.criteria.folder.criterion.FolderItemSelectorCriterion;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
@@ -39,6 +43,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.KeyValuePair;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -265,6 +270,24 @@ public class IGConfigurationDisplayContext {
 
 			if (_folderInTrash) {
 				_folderName = _trashHelper.getOriginalTitle(_folder.getName());
+			}
+		}
+
+		if (_folder.getGroupId() != _themeDisplay.getScopeGroupId()) {
+			Group group = GroupLocalServiceUtil.getGroup(_folder.getGroupId());
+
+			if (group.isDepot()) {
+				List<Long> groupConnectedDepotEntries = ListUtil.toList(
+					DepotEntryServiceUtil.getGroupConnectedDepotEntries(
+						_themeDisplay.getScopeGroupId(), QueryUtil.ALL_POS,
+						QueryUtil.ALL_POS),
+					DepotEntry::getGroupId);
+
+				if (!groupConnectedDepotEntries.contains(
+						_folder.getGroupId())) {
+
+					_folderNotFound = true;
+				}
 			}
 		}
 	}

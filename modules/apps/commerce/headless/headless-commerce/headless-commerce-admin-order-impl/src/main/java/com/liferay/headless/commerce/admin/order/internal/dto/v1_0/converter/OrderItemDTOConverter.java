@@ -98,6 +98,7 @@ public class OrderItemDTOConverter
 				id = commerceOrderItem.getCommerceOrderItemId();
 				name = LanguageUtils.getLanguageIdMap(
 					commerceOrderItem.getNameMap());
+				options = commerceOrderItem.getJson();
 				orderExternalReferenceCode =
 					commerceOrder.getExternalReferenceCode();
 				orderId = commerceOrder.getCommerceOrderId();

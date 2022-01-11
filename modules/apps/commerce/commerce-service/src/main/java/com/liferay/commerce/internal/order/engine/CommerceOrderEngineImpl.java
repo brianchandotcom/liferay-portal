@@ -462,10 +462,6 @@ public class CommerceOrderEngineImpl implements CommerceOrderEngine {
 				JSONFactoryUtil.createJSONObject(
 					commerceOrderItemObject.toString());
 
-			commerceOrderItemJSONObject.put(
-				"options",
-				JSONFactoryUtil.createJSONArray(commerceOrderItem.getJson()));
-
 			commerceOrderItemsJSONArray.put(commerceOrderItemJSONObject);
 		}
 

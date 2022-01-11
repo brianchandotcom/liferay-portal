@@ -623,6 +623,9 @@ components:
                         hr_HR: Product Name HR
                         hu_HU: Product Name HU
                     type: object
+                options:
+                    readOnly: true
+                    type: string
                 orderExternalReferenceCode:
                     example: CAB-34098-789-N
                     type: string

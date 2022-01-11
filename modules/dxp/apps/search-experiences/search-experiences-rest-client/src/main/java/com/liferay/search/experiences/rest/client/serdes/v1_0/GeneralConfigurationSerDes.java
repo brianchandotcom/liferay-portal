@@ -153,16 +153,16 @@ public class GeneralConfigurationSerDes {
 			sb.append(generalConfiguration.getIncludeResponseString());
 		}
 
-		if (generalConfiguration.getLocaleId() != null) {
+		if (generalConfiguration.getLanguageId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"localeId\": ");
+			sb.append("\"languageId\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(generalConfiguration.getLocaleId()));
+			sb.append(_escape(generalConfiguration.getLanguageId()));
 
 			sb.append("\"");
 		}
@@ -293,12 +293,13 @@ public class GeneralConfigurationSerDes {
 					generalConfiguration.getIncludeResponseString()));
 		}
 
-		if (generalConfiguration.getLocaleId() == null) {
-			map.put("localeId", null);
+		if (generalConfiguration.getLanguageId() == null) {
+			map.put("languageId", null);
 		}
 		else {
 			map.put(
-				"localeId", String.valueOf(generalConfiguration.getLocaleId()));
+				"languageId",
+				String.valueOf(generalConfiguration.getLanguageId()));
 		}
 
 		if (generalConfiguration.getQueryString() == null) {
@@ -387,9 +388,9 @@ public class GeneralConfigurationSerDes {
 						(Boolean)jsonParserFieldValue);
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "localeId")) {
+			else if (Objects.equals(jsonParserFieldName, "languageId")) {
 				if (jsonParserFieldValue != null) {
-					generalConfiguration.setLocaleId(
+					generalConfiguration.setLanguageId(
 						(String)jsonParserFieldValue);
 				}
 			}

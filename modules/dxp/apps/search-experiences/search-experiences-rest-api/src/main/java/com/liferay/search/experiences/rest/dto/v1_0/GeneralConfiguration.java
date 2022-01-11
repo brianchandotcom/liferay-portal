@@ -207,20 +207,20 @@ public class GeneralConfiguration implements Serializable {
 	protected Boolean includeResponseString;
 
 	@Schema
-	public String getLocaleId() {
-		return localeId;
+	public String getLanguageId() {
+		return languageId;
 	}
 
-	public void setLocaleId(String localeId) {
-		this.localeId = localeId;
+	public void setLanguageId(String languageId) {
+		this.languageId = languageId;
 	}
 
 	@JsonIgnore
-	public void setLocaleId(
-		UnsafeSupplier<String, Exception> localeIdUnsafeSupplier) {
+	public void setLanguageId(
+		UnsafeSupplier<String, Exception> languageIdUnsafeSupplier) {
 
 		try {
-			localeId = localeIdUnsafeSupplier.get();
+			languageId = languageIdUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -232,7 +232,7 @@ public class GeneralConfiguration implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String localeId;
+	protected String languageId;
 
 	@Schema
 	public String getQueryString() {
@@ -425,16 +425,16 @@ public class GeneralConfiguration implements Serializable {
 			sb.append(includeResponseString);
 		}
 
-		if (localeId != null) {
+		if (languageId != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"localeId\": ");
+			sb.append("\"languageId\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(localeId));
+			sb.append(_escape(languageId));
 
 			sb.append("\"");
 		}

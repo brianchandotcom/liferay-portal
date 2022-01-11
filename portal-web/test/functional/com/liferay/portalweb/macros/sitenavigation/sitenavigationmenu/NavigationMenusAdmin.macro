@@ -76,6 +76,49 @@ definition {
 		}
 	}
 
+	macro addCategoryItem {
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
+		Click(locator1 = "Button#PLUS");
+
+		MenuItem.click(menuItem = "Category");
+
+		Pause(locator1 = "1000");
+
+		IFrame.selectConfigurationFrame();
+
+		Portlet.expandTree();
+
+		var i = "1";
+
+		for (var assetTitle : list "${assetTitleList}") {
+			AssertVisible(
+				key_nodeName = "${assetTitle}",
+				locator1 = "Treeview#NODE_ITEM");
+
+			Click(
+				key_nodeName = "${assetTitle}",
+				locator1 = "Treeview#NODE_UNSELECTED");
+
+			if ("${i}" == "1") {
+				AssertTextEquals(
+					locator1 = "Search#SEARCH_INFO",
+					value1 = "${i} Item Selected");
+			}
+			else {
+				AssertTextEquals(
+					locator1 = "Search#SEARCH_INFO",
+					value1 = "${i} Items Selected");
+			}
+
+			var i = ${i} + 1;
+		}
+
+		SelectFrame.selectFrameTop();
+
+		Button.clickSelect();
+	}
+
 	macro addItem {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 

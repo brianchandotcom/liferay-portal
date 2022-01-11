@@ -1066,6 +1066,7 @@
 		<exception>CPInstanceDisplayDate</exception>
 		<exception>CPInstanceExpirationDate</exception>
 		<exception>CPInstanceJson</exception>
+		<exception>CPInstanceReplacementCPInstanceUuid</exception>
 		<exception>CPInstanceSku</exception>
 		<exception>CPMeasurementUnitKey</exception>
 		<exception>CPOptionCategoryKey</exception>

@@ -308,10 +308,14 @@ definition {
 	}
 
 	macro viewItemNotNested {
-		AssertElementPresent(
-			key_itemName = "${itemName}",
-			key_parentItemId = "0",
-			locator1 = "SiteNavigationMenu#ITEM_ENTRY_NESTED");
+		for (var itemName : list "${itemNameList}") {
+			AssertElementPresent(
+				key_itemName = "${itemName}",
+				key_parentItemId = "0",
+				locator1 = "SiteNavigationMenu#ITEM_ENTRY_NESTED");
+		}
+	}
+
 	}
 
 	macro viewItemOrder {

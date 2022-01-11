@@ -1030,9 +1030,7 @@ definition {
 		}
 
 		task ("View the hierachy of page items") {
-			for (var n : list "1,2,3") {
-				NavigationMenusAdmin.viewItemNotNested(itemName = "Test Page Name ${n}");
-			}
+			NavigationMenusAdmin.viewItemNotNested(itemNameList = "Test Page Name 1,Test Page Name 2,Test Page Name 3");
 
 			for (var n : list "1,2,3") {
 				NavigationMenusAdmin.viewItemNested(
@@ -1053,9 +1051,8 @@ definition {
 		}
 
 		task ("View the hierachy of page items") {
-			for (var n : list "1,2,3") {
-				NavigationMenusAdmin.viewItemNotNested(itemName = "Test Page Name ${n}");
-			}
+			NavigationMenusAdmin.viewItemNotNested(itemNameList = "Test Page Name 1,Test Page Name 2,Test Page Name 3");
+
 
 			for (var n : list "1,2,3") {
 				NavigationMenusAdmin.viewItemNested(

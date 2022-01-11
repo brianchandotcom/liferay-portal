@@ -57,10 +57,9 @@ definition {
 
 		User.logoutPG();
 
-		Questions.openToQuestionsTopic(
-			layoutName = "questions-page",
-			siteURLKey = "guest",
-			topicName = "category");
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoCategory(categoryName = "Category");
 
 		Questions.askQuestionFillingTheMandatoryFields(
 			anonymousUser = "true",

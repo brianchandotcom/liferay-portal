@@ -19,7 +19,6 @@ import com.liferay.petra.process.ProcessConfig;
 import com.liferay.petra.process.ProcessLog;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
@@ -29,6 +28,7 @@ import com.liferay.portal.kernel.util.URLCodec;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.io.IOException;
 
 import java.lang.reflect.Method;
 
@@ -40,6 +40,9 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.jar.Attributes;
+import java.util.jar.JarFile;
+import java.util.jar.Manifest;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -135,41 +138,77 @@ public class PortalClassPathUtil {
 			ServletException.class, CentralizedThreadLocal.class,
 			shieldedContainerInitializerClass);
 
-		StringBundler sb = new StringBundler((files.length * 2) + 3);
-
-		String bootstrapClassPath = StringPool.BLANK;
+		StringBundler runtimeClassPathSB = new StringBundler(
+			(files.length * 2) + 3);
+		StringBundler bootstrapClassPathSB = new StringBundler(
+			files.length * 2);
 
 		if (files.length > 0) {
 			for (File file : files) {
-				sb.append(file.getAbsolutePath());
-				sb.append(File.pathSeparator);
+				if (_isPetraJar(file)) {
+					bootstrapClassPathSB.append(file.getAbsolutePath());
+					bootstrapClassPathSB.append(File.pathSeparator);
+				}
+
+				runtimeClassPathSB.append(file.getAbsolutePath());
+				runtimeClassPathSB.append(File.pathSeparator);
 			}
-
-			sb.setIndex(sb.index() - 1);
-
-			bootstrapClassPath = sb.toString();
 		}
 		else {
 			throw new IllegalStateException(
 				"Class path files could not be loaded");
 		}
 
-		if (servletContext != null) {
-			sb.append(File.pathSeparator);
-			sb.append(servletContext.getRealPath(""));
-			sb.append("/WEB-INF/classes");
+		runtimeClassPathSB.setIndex(runtimeClassPathSB.index() - 1);
+
+		if (bootstrapClassPathSB.index() > 0) {
+			bootstrapClassPathSB.setIndex(bootstrapClassPathSB.index() - 1);
 		}
 
-		String portalClassPath = sb.toString();
+		if (servletContext != null) {
+			runtimeClassPathSB.append(File.pathSeparator);
+			runtimeClassPathSB.append(servletContext.getRealPath(""));
+			runtimeClassPathSB.append("/WEB-INF/classes");
+		}
 
 		ProcessConfig.Builder builder = new ProcessConfig.Builder();
 
 		builder.setArguments(_processArgs);
-		builder.setBootstrapClassPath(bootstrapClassPath);
+		builder.setBootstrapClassPath(bootstrapClassPathSB.toString());
 		builder.setReactClassLoader(classLoader);
-		builder.setRuntimeClassPath(portalClassPath);
+		builder.setRuntimeClassPath(runtimeClassPathSB.toString());
 
 		_portalProcessConfig = builder.build();
+	}
+
+	private static boolean _isPetraJar(File file) {
+		String filePath = file.getAbsolutePath();
+
+		if (filePath.contains("petra")) {
+			try (JarFile jarFile = new JarFile(new File(filePath))) {
+				Manifest manifest = jarFile.getManifest();
+
+				if (manifest == null) {
+					return false;
+				}
+
+				Attributes attributes = manifest.getMainAttributes();
+
+				if (attributes.containsKey("Liferay-Releng-App-Title")) {
+					return false;
+				}
+
+				return true;
+			}
+			catch (IOException ioException) {
+				_log.error(
+					"Unable to resolve bootstrap entry: " + file.getName() +
+						" from bundle",
+					ioException);
+			}
+		}
+
+		return false;
 	}
 
 	private static File[] _listClassPathFiles(Class<?> clazz) {

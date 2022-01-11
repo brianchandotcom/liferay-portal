@@ -529,7 +529,6 @@ definition {
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
 		LAR.importPortlet(
-			compressedFile = "true",
 			larFileName = "organizations-7.0.lar",
 			uploadFrom = "dependencies");
 

@@ -1709,7 +1709,6 @@ definition {
 
 		LAR.importPortlet(
 			cannotImport = "true",
-			compressedFile = "true",
 			larFileName = "bookmarks-corrupted.portlet.lar",
 			uploadFrom = "dependencies");
 	}

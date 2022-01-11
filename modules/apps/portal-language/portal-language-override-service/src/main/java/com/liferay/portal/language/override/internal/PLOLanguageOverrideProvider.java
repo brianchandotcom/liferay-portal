@@ -104,7 +104,7 @@ public class PLOLanguageOverrideProvider implements LanguageOverrideProvider {
 			overrideMap = new HashMap<>();
 
 			for (PLOEntry ploEntry :
-					_ploEntryLocalService.getPLOEntriesByLanguageId(
+					_ploEntryLocalService.getPLOEntries(
 						companyId, languageId)) {
 
 				overrideMap.put(ploEntry.getKey(), ploEntry.getValue());

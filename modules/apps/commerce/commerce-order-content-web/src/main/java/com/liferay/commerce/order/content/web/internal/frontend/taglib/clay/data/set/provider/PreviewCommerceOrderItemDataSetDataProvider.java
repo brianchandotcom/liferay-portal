@@ -101,6 +101,7 @@ public class PreviewCommerceOrderItemDataSetDataProvider
 					_getCommerceOrderOptions(commerceOrderImporterItem, locale),
 					commerceOrderImporterItem.getName(locale),
 					commerceOrderImporterItem.getQuantity(),
+					commerceOrderImporterItem.getReplacingSKU(),
 					integerWrapper.increment(),
 					commerceOrderImporterItem.getSKU(),
 					_formatFinalPrice(commerceOrderItemPrice, locale),

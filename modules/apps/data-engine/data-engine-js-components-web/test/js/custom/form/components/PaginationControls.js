@@ -21,7 +21,6 @@ import {PaginationControls} from '../../../../../src/main/resources/META-INF/res
 
 const INITIAL_CONFIG = {
 	cancelLabel: 'Cancel',
-	ffShowPartialResultsEnabled: true,
 	redirectURL: null,
 	showCancelButton: false,
 	showPartialResultsToRespondents: true,
@@ -51,7 +50,7 @@ describe('Pagination Controls', () => {
 			<WithProvider
 				config={{
 					...INITIAL_CONFIG,
-					ffShowPartialResultsEnabled: false,
+					showPartialResultsToRespondents: false,
 				}}
 			>
 				<PaginationControls />

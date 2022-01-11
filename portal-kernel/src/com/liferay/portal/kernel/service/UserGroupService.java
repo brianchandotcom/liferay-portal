@@ -280,6 +280,10 @@ public interface UserGroupService extends BaseService {
 	public void unsetTeamUserGroups(long teamId, long[] userGroupIds)
 		throws PortalException;
 
+	public UserGroup updateExternalReferenceCode(
+			UserGroup userGroup, String externalReferenceCode)
+		throws PortalException;
+
 	/**
 	 * Updates the user group.
 	 *

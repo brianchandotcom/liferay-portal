@@ -362,6 +362,29 @@ public class UserGroupServiceSoap {
 		}
 	}
 
+	public static com.liferay.portal.kernel.model.UserGroupSoap
+			updateExternalReferenceCode(
+				com.liferay.portal.kernel.model.UserGroupSoap userGroup,
+				String externalReferenceCode)
+		throws RemoteException {
+
+		try {
+			com.liferay.portal.kernel.model.UserGroup returnValue =
+				UserGroupServiceUtil.updateExternalReferenceCode(
+					com.liferay.portal.model.impl.UserGroupModelImpl.toModel(
+						userGroup),
+					externalReferenceCode);
+
+			return com.liferay.portal.kernel.model.UserGroupSoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	/**
 	 * Updates the user group.
 	 *

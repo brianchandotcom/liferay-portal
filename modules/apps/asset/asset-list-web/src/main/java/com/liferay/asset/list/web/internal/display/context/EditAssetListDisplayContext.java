@@ -36,6 +36,7 @@ import com.liferay.asset.list.service.AssetListEntrySegmentsEntryRelLocalService
 import com.liferay.asset.list.web.internal.constants.AssetListWebKeys;
 import com.liferay.asset.list.web.internal.util.comparator.ClassNameModelResourceComparator;
 import com.liferay.asset.util.AssetRendererFactoryClassProvider;
+import com.liferay.asset.util.comparator.AssetRendererFactoryTypeNameComparator;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
@@ -712,8 +713,7 @@ public class EditAssetListDisplayContext {
 		long[] classNameIds = GetterUtil.getLongValues(
 			StringUtil.split(
 				unicodeProperties.getProperty("classNameIds", null)),
-			AssetRendererFactoryRegistryUtil.getClassNameIds(
-				_themeDisplay.getCompanyId(), true));
+			_getDefaultClassNameIds());
 
 		for (long classNameId : classNameIds) {
 			AssetRendererFactory<?> assetRendererFactory =
@@ -1280,6 +1280,17 @@ public class EditAssetListDisplayContext {
 		).put(
 			"type", type
 		).build();
+	}
+
+	private long[] _getDefaultClassNameIds() {
+		List<AssetRendererFactory<?>> assetRendererFactories = ListUtil.sort(
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactories(
+				_themeDisplay.getCompanyId(), true),
+			new AssetRendererFactoryTypeNameComparator(
+				_themeDisplay.getLocale()));
+
+		return ListUtil.toLongArray(
+			assetRendererFactories, AssetRendererFactory::getClassNameId);
 	}
 
 	private long[] _getDefaultClassTypeIds(ClassTypeReader classTypeReader)

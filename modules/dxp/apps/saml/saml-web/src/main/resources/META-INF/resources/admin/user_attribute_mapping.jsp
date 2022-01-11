@@ -113,11 +113,9 @@ String userIdentifierExpression = attributeMappingDisplayContext.getUserIdentifi
 			}
 		}
 
-		if (
-			attributeMappingSelected &&
-			(event == null || event.target == selectTarget)
-		) {
+		if (event == null || event.target == selectTarget) {
 			if (
+				attributeMappingSelected &&
 				selectTarget.options[selectTarget.selectedIndex].dataset
 					.authsupported == 'true'
 			) {
@@ -125,6 +123,7 @@ String userIdentifierExpression = attributeMappingDisplayContext.getUserIdentifi
 				radioTarget.closest('label').classList.toggle('disabled', false);
 			}
 			else {
+				radioTarget.checked = false;
 				radioTarget.disabled = true;
 				radioTarget.closest('label').classList.toggle('disabled', true);
 			}
@@ -136,13 +135,9 @@ String userIdentifierExpression = attributeMappingDisplayContext.getUserIdentifi
 			'input[name="<portlet:namespace />attribute:userIdentifierExpressionPrefix"]'
 		).value = '';
 		document
-			.querySelectorAll(
-				'input[name="<portlet:namespace />attribute:userIdentifierExpressionIndex"]'
-			)
-			.forEach((radioControl) => {
-				radioControl.checked = false;
-				radioControl.disabled = true;
-				radioControl.closest('label').classList.toggle('disabled', true);
+			.querySelectorAll('.user-attribute-mapping-row')
+			.forEach((row) => {
+				<portlet:namespace />evaluateAttributeMappingRow(row);
 			});
 	};
 

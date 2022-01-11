@@ -576,10 +576,10 @@ public class FreeMarkerManager extends BaseTemplateManager {
 	}
 
 	private String _getMacroLibrary() {
-		Set<String> marcroLibraries = SetUtil.fromArray(
+		Set<String> macroLibraries = SetUtil.fromArray(
 			_freeMarkerEngineConfiguration.macroLibrary());
 
-		marcroLibraries.add(_LIFERAY_MARCO_LIBRARY);
+		macroLibraries.add(_LIFERAY_MACRO_LIBRARY);
 
 		Class<?> clazz = getClass();
 
@@ -589,9 +589,9 @@ public class FreeMarkerManager extends BaseTemplateManager {
 		contextName = contextName.concat(
 			TemplateConstants.CLASS_LOADER_SEPARATOR);
 
-		StringBundler sb = new StringBundler(3 * marcroLibraries.size());
+		StringBundler sb = new StringBundler(3 * macroLibraries.size());
 
-		for (String library : marcroLibraries) {
+		for (String library : macroLibraries) {
 			if (_hasLibrary(library)) {
 				sb.append(contextName);
 				sb.append(library);
@@ -674,7 +674,7 @@ public class FreeMarkerManager extends BaseTemplateManager {
 		return false;
 	}
 
-	private static final String _LIFERAY_MARCO_LIBRARY =
+	private static final String _LIFERAY_MACRO_LIBRARY =
 		"FTL_liferay.ftl as liferay";
 
 	private static final Log _log = LogFactoryUtil.getLog(

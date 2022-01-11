@@ -17,6 +17,7 @@ package com.liferay.commerce.product.service.impl;
 import com.liferay.commerce.product.constants.CPField;
 import com.liferay.commerce.product.exception.CPInstanceDisplayDateException;
 import com.liferay.commerce.product.exception.CPInstanceExpirationDateException;
+import com.liferay.commerce.product.exception.CPInstanceReplacementCPInstanceUuidException;
 import com.liferay.commerce.product.exception.CPInstanceSkuException;
 import com.liferay.commerce.product.exception.NoSuchCPInstanceException;
 import com.liferay.commerce.product.exception.NoSuchSkuContributorCPDefinitionOptionRelException;
@@ -1064,6 +1065,9 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 
 		_validateSku(cpInstance.getCPDefinitionId(), cpInstanceId, sku);
 
+		_validateReplacement(
+			cpInstance, replacementCProductId, replacementCPInstanceUuid);
+
 		User user = userLocalService.getUser(serviceContext.getUserId());
 
 		if (cpDefinitionLocalService.isVersionable(
@@ -1917,6 +1921,40 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		}
 
 		return cpDefinitionOptionRelIdCPDefinitionOptionValueRelIds;
+	}
+
+	private void _validateReplacement(
+			CPInstance cpInstance, long replacementCProductId,
+			String replacementCPInstanceUuid)
+		throws PortalException {
+
+		CPDefinition cpDefinition = cpInstance.getCPDefinition();
+
+		if ((replacementCProductId == cpDefinition.getCProductId()) &&
+			replacementCPInstanceUuid.equals(cpInstance.getCPInstanceUuid())) {
+
+			throw new CPInstanceReplacementCPInstanceUuidException();
+		}
+
+		CPInstance replacement = cpInstanceLocalService.fetchCProductInstance(
+			replacementCProductId, replacementCPInstanceUuid);
+
+		while (replacement != null) {
+			String replacementCPInstanceUuid1 =
+				replacement.getReplacementCPInstanceUuid();
+
+			if ((replacement.getReplacementCProductId() ==
+					cpDefinition.getCProductId()) &&
+				replacementCPInstanceUuid1.equals(
+					cpInstance.getCPInstanceUuid())) {
+
+				throw new CPInstanceReplacementCPInstanceUuidException();
+			}
+
+			replacement = cpInstanceLocalService.fetchCProductInstance(
+				replacement.getReplacementCProductId(),
+				replacement.getReplacementCPInstanceUuid());
+		}
 	}
 
 	private void _validateSku(

@@ -3895,7 +3895,7 @@ definition {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Experience Content Page",
 				siteName = "Test Site Name");
-				
+
 			AssertTextEquals(
 				key_assetTitle = "WC Title 1",
 				locator1 = "AP#ASSET_ABSTRACT_TITLE",
@@ -4151,7 +4151,6 @@ definition {
 				segmentName = "Anyone");
 
 			Click(locator1 = "PageEditor#EXPERIENCE_LABEL");
-
 		}
 
 		task ("Edit the the component without publishing the changes") {
@@ -4812,7 +4811,7 @@ definition {
 
 			PageEditor.removeFragment(fragmentName = "Grid");
 
-			PageEditor.clickPublish();		
+			PageEditor.clickPublish();
 		}
 
 		task ("Check the fragment is present in the Default experience") {

@@ -104,12 +104,8 @@ public class NotificationsManagementToolbarDisplayContext {
 		}
 
 		if (!userNotificationEvent.isActionRequired()) {
-			if (!userNotificationEvent.isArchived()) {
-				availableActions.add("markNotificationsAsRead");
-			}
-			else {
-				availableActions.add("markNotificationsAsUnread");
-			}
+			availableActions.add("markNotificationsAsRead");
+			availableActions.add("markNotificationsAsUnread");
 		}
 
 		return availableActions;

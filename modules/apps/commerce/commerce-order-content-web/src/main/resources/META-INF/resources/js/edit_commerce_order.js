@@ -16,6 +16,7 @@ export default function ({commerceOrderImporterTypeKey, title, url}) {
 	const commerceOrderImporterTypeKeySelector = document.querySelector(
 		`.${commerceOrderImporterTypeKey}`
 	);
+
 	commerceOrderImporterTypeKeySelector.addEventListener('click', (event) => {
 		event.preventDefault();
 

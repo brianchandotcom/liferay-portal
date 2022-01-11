@@ -316,7 +316,8 @@ public abstract class BaseJSPTermsCheck extends BaseFileCheck {
 
 			if ((z == -1) ||
 				(getLineNumber(content, y) != getLineNumber(content, z)) ||
-				!ToolsUtil.isInsideQuotes(content.substring(y, z), x - y)) {
+				!ToolsUtil.isInsideQuotes(
+					content.substring(y, z), x - y, false)) {
 
 				count++;
 			}

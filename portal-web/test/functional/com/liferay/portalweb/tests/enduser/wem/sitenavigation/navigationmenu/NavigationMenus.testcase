@@ -180,9 +180,7 @@ definition {
 		task ("Add the Display Page type items in navigation menu") {
 			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
 
-			LexiconEntry.gotoEntryMenuItem(
-				menuItem = "Edit",
-				rowEntry = "Navigation Menu Name");
+			NavigationMenusAdmin.gotoEdit(navigationMenuName = "Navigation Menu Name");
 		}
 
 		task ("Add the Display Page items to the navigation menu") {
@@ -299,7 +297,7 @@ definition {
 		task ("Navigate to the navigation menu") {
 			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
 
-			LexiconEntry.gotoEntry(rowEntry = "Navigation Menu Name");
+			NavigationMenusAdmin.gotoEdit(navigationMenuName = "Navigation Menu Name");
 		}
 
 		task ("Add a page item") {
@@ -353,7 +351,7 @@ definition {
 
 			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
 
-			LexiconEntry.gotoEntry(rowEntry = "Navigation Menu Name");
+			NavigationMenusAdmin.gotoEdit(navigationMenuName = "Navigation Menu Name");
 		}
 
 		task ("Add a URL item to the navigation menu") {
@@ -417,7 +415,7 @@ definition {
 
 			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
 
-			LexiconEntry.gotoEntry(rowEntry = "Navigation Menu Name");
+			NavigationMenusAdmin.gotoEdit(navigationMenuName = "Navigation Menu Name");
 		}
 
 		task ("Add a URL item to the navigation menu") {
@@ -492,9 +490,7 @@ definition {
 		task ("Navigate to the Global navigation menu") {
 			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "global");
 
-			LexiconEntry.gotoEntryMenuItem(
-				menuItem = "Edit",
-				rowEntry = "Global Navigation Menu Name");
+			NavigationMenusAdmin.gotoEdit(navigationMenuName = "Global Navigation Menu Name");
 		}
 
 		task ("Assert no Page option in drop down list") {
@@ -912,7 +908,7 @@ definition {
 		task ("Navigate to the first navigation menu") {
 			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
 
-			LexiconEntry.gotoEntry(rowEntry = "Navigation Menu Name 1");
+			NavigationMenusAdmin.gotoEdit(navigationMenuName = "Navigation Menu Name 1");
 		}
 
 		task ("Assert the first navigation menu has only the first page already added as items") {
@@ -924,7 +920,7 @@ definition {
 		task ("Navigate to the second navigation menu") {
 			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
 
-			LexiconEntry.gotoEntry(rowEntry = "Navigation Menu Name 2");
+			NavigationMenusAdmin.gotoEdit(navigationMenuName = "Navigation Menu Name 2");
 		}
 
 		task ("Assert the second navigation menu has both pages already added as items") {
@@ -936,7 +932,7 @@ definition {
 		task ("Disable the option to offer new pages for the first navigation menu") {
 			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
 
-			LexiconEntry.gotoEntry(rowEntry = "Navigation Menu Name 1");
+			NavigationMenusAdmin.gotoEdit(navigationMenuName = "Navigation Menu Name 1");
 
 			NavigationMenusAdmin.toggleAutomaticallyAddNewPagesToMenu(toggleValue = "disable");
 		}
@@ -953,7 +949,7 @@ definition {
 		task ("Assert the third page was not added to the first navigation menu") {
 			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
 
-			LexiconEntry.gotoEntry(rowEntry = "Navigation Menu Name 1");
+			NavigationMenusAdmin.gotoEdit(navigationMenuName = "Navigation Menu Name 1");
 
 			NavigationMenusAdmin.viewItemNotPresent(itemNameList = "Page 3");
 		}
@@ -1018,7 +1014,7 @@ definition {
 		task ("Navigate to the navigation menu") {
 			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
 
-			LexiconEntry.gotoEntry(rowEntry = "Navigation Menu Name");
+			NavigationMenusAdmin.gotoEdit(navigationMenuName = "Navigation Menu Name");
 
 			WaitForPageLoad();
 		}

@@ -1052,6 +1052,15 @@ public class UserGroupLocalServiceWrapper
 		_userGroupLocalService.unsetTeamUserGroups(teamId, userGroupIds);
 	}
 
+	@Override
+	public UserGroup updateExternalReferenceCode(
+			UserGroup userGroup, String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _userGroupLocalService.updateExternalReferenceCode(
+			userGroup, externalReferenceCode);
+	}
+
 	/**
 	 * Updates the user group.
 	 *

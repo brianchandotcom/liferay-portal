@@ -752,6 +752,11 @@ public interface UserGroupLocalService
 	 */
 	public void unsetTeamUserGroups(long teamId, long[] userGroupIds);
 
+	@Indexable(type = IndexableType.REINDEX)
+	public UserGroup updateExternalReferenceCode(
+			UserGroup userGroup, String externalReferenceCode)
+		throws PortalException;
+
 	/**
 	 * Updates the user group.
 	 *

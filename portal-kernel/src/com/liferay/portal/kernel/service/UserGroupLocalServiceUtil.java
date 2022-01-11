@@ -942,6 +942,14 @@ public class UserGroupLocalServiceUtil {
 		getService().unsetTeamUserGroups(teamId, userGroupIds);
 	}
 
+	public static UserGroup updateExternalReferenceCode(
+			UserGroup userGroup, String externalReferenceCode)
+		throws PortalException {
+
+		return getService().updateExternalReferenceCode(
+			userGroup, externalReferenceCode);
+	}
+
 	/**
 	 * Updates the user group.
 	 *

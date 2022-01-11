@@ -16,6 +16,7 @@ package com.liferay.search.experiences.internal.blueprint.search.spi.searcher;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -107,6 +108,12 @@ public class SXPBlueprintSearchRequestContributor
 			runtimeException.addSuppressed(exception);
 		}
 
+		if (ArrayUtil.isNotEmpty(runtimeException.getSuppressed())) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(runtimeException);
+			}
+		}
+
 		if (_hasErrors(runtimeException)) {
 			throw runtimeException;
 		}
@@ -137,6 +144,12 @@ public class SXPBlueprintSearchRequestContributor
 			}
 			catch (Exception exception) {
 				runtimeException.addSuppressed(exception);
+			}
+		}
+
+		if (ArrayUtil.isNotEmpty(runtimeException.getSuppressed())) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(runtimeException);
 			}
 		}
 

@@ -19,9 +19,12 @@ import com.puppycrawl.tools.checkstyle.api.FullIdent;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 import com.puppycrawl.tools.checkstyle.utils.AnnotationUtil;
 
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * @author Hugo Huijser
@@ -51,9 +54,10 @@ public class UnusedMethodCheck extends BaseCheck {
 		List<String> allowedMethodNames = getAttributeValues(
 			_ALLOWED_METHOD_NAMES_KEY);
 
-		List<String> referencedMethodNames = _getReferencedMethodNames(
-			detailAST);
+		Map<String, Set<Integer>> referencedMethodNamesMap =
+			_getReferencedMethodNamesMap(detailAST);
 
+		outerLoop:
 		for (DetailAST methodDefinitionDetailAST :
 				methodDefinitionDetailASTList) {
 
@@ -74,18 +78,80 @@ public class UnusedMethodCheck extends BaseCheck {
 
 			String name = nameDetailAST.getText();
 
-			if (!allowedMethodNames.contains(name) &&
-				!referencedMethodNames.contains(nameDetailAST.getText())) {
+			if (allowedMethodNames.contains(name)) {
+				continue;
+			}
 
+			DetailAST parametersDetailAST =
+				methodDefinitionDetailAST.findFirstToken(TokenTypes.PARAMETERS);
+
+			Set<Integer> parameterCountSet = referencedMethodNamesMap.get(name);
+
+			if (parameterCountSet == null) {
+				log(methodDefinitionDetailAST, _MSG_UNUSED_METHOD, name);
+
+				continue;
+			}
+
+			if (parameterCountSet.contains(-1)) {
+				continue;
+			}
+
+			List<DetailAST> parameterDefinitionDetailASTList =
+				getAllChildTokens(
+					parametersDetailAST, false, TokenTypes.PARAMETER_DEF);
+
+			int parameterCount = parameterDefinitionDetailASTList.size();
+
+			boolean varArgs = false;
+
+			if (parameterCount > 0) {
+				DetailAST lastParameterDefinitionDetailAST =
+					parameterDefinitionDetailASTList.get(
+						parameterDefinitionDetailASTList.size() - 1);
+
+				if (lastParameterDefinitionDetailAST.branchContains(
+						TokenTypes.ELLIPSIS)) {
+
+					varArgs = true;
+				}
+			}
+
+			if (varArgs) {
+				for (int curParameterCount : parameterCountSet) {
+					if (curParameterCount >= (parameterCount - 1)) {
+						continue outerLoop;
+					}
+				}
+
+				log(methodDefinitionDetailAST, _MSG_UNUSED_METHOD, name);
+			}
+			else if (!parameterCountSet.contains(parameterCount)) {
 				log(methodDefinitionDetailAST, _MSG_UNUSED_METHOD, name);
 			}
 		}
 	}
 
-	private List<String> _getReferencedMethodNames(
+	private Map<String, Set<Integer>> _addMapEntry(
+		Map<String, Set<Integer>> map, String key, int value) {
+
+		Set<Integer> set = map.get(key);
+
+		if (set == null) {
+			set = new HashSet<>();
+		}
+
+		set.add(value);
+
+		map.put(key, set);
+
+		return map;
+	}
+
+	private Map<String, Set<Integer>> _getReferencedMethodNamesMap(
 		DetailAST classDefinitionDetailAST) {
 
-		List<String> referencedMethodNames = new ArrayList<>();
+		Map<String, Set<Integer>> referencedMethodNamesMap = new HashMap<>();
 
 		List<DetailAST> methodCallDetailASTList = getAllChildTokens(
 			classDefinitionDetailAST, true, TokenTypes.METHOD_CALL);
@@ -97,7 +163,20 @@ public class UnusedMethodCheck extends BaseCheck {
 				nameDetailAST = nameDetailAST.getLastChild();
 			}
 
-			referencedMethodNames.add(nameDetailAST.getText());
+			DetailAST elistDetailAST = methodCallDetailAST.findFirstToken(
+				TokenTypes.ELIST);
+
+			int parameterCount = 0;
+
+			int childCount = elistDetailAST.getChildCount();
+
+			if (childCount > 0) {
+				parameterCount = (childCount + 1) / 2;
+			}
+
+			referencedMethodNamesMap = _addMapEntry(
+				referencedMethodNamesMap, nameDetailAST.getText(),
+				parameterCount);
 		}
 
 		List<DetailAST> methodReferenceDetailASTList = getAllChildTokens(
@@ -109,7 +188,8 @@ public class UnusedMethodCheck extends BaseCheck {
 			DetailAST lastChildDetailAST =
 				methodReferenceDetailAST.getLastChild();
 
-			referencedMethodNames.add(lastChildDetailAST.getText());
+			referencedMethodNamesMap = _addMapEntry(
+				referencedMethodNamesMap, lastChildDetailAST.getText(), -1);
 		}
 
 		List<DetailAST> literalNewDetailASTList = getAllChildTokens(
@@ -142,7 +222,10 @@ public class UnusedMethodCheck extends BaseCheck {
 			if (firstChildDetailAST.getType() == TokenTypes.STRING_LITERAL) {
 				String text = firstChildDetailAST.getText();
 
-				referencedMethodNames.add(text.substring(1, text.length() - 1));
+				referencedMethodNamesMap = _addMapEntry(
+					referencedMethodNamesMap,
+					text.substring(1, text.length() - 1),
+					exprDetailASTList.size() - 2);
 			}
 		}
 
@@ -188,14 +271,16 @@ public class UnusedMethodCheck extends BaseCheck {
 				String propertyValueName = fullIdent.getText();
 
 				if (propertyValueName.matches("\".*\"")) {
-					referencedMethodNames.add(
+					referencedMethodNamesMap = _addMapEntry(
+						referencedMethodNamesMap,
 						propertyValueName.substring(
-							1, propertyValueName.length() - 1));
+							1, propertyValueName.length() - 1),
+						1);
 				}
 			}
 		}
 
-		return referencedMethodNames;
+		return referencedMethodNamesMap;
 	}
 
 	private boolean _hasSuppressUnusedWarningsAnnotation(

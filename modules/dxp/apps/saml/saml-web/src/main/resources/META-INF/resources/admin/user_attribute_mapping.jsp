@@ -98,6 +98,15 @@ String userIdentifierExpression = attributeMappingDisplayContext.getUserIdentifi
 </aui:fieldset>
 
 <script>
+	<portlet:namespace />evaluateAttributeMappingRows = function () {
+		document.querySelector(
+			'input[name="<portlet:namespace />attribute:userIdentifierExpressionPrefix"]'
+		).value = '';
+
+		document
+			.querySelectorAll('.user-attribute-mapping-row')
+			.forEach((row) => <portlet:namespace />evaluateAttributeMappingRow(row));
+	}
 	<portlet:namespace />evaluateAttributeMappingRow = function (row, event) {
 		var radioTarget = row.querySelector(
 			'input[name="<portlet:namespace />attribute:userIdentifierExpressionIndex"]'
@@ -130,17 +139,6 @@ String userIdentifierExpression = attributeMappingDisplayContext.getUserIdentifi
 		}
 	};
 
-	<portlet:namespace />handleAttributeMappingMatchingDeselection = function () {
-		document.querySelector(
-			'input[name="<portlet:namespace />attribute:userIdentifierExpressionPrefix"]'
-		).value = '';
-		document
-			.querySelectorAll('.user-attribute-mapping-row')
-			.forEach((row) => {
-				<portlet:namespace />evaluateAttributeMappingRow(row);
-			});
-	};
-
 	<portlet:namespace />handleAttributeMappingMatchingSelection = function (row) {
 		document.querySelector(
 			'input[name="<portlet:namespace />attribute:userIdentifierExpressionPrefix"]'
@@ -159,11 +157,7 @@ String userIdentifierExpression = attributeMappingDisplayContext.getUserIdentifi
 	});
 	userAttributeMappings.addEventListener('click', (event) => {
 		if (event.target.closest('.user-attribute-mapping-row button')) {
-			document
-				.querySelectorAll('.user-attribute-mapping-row')
-				.forEach((row) => {
-					<portlet:namespace />evaluateAttributeMappingRow(row);
-				});
+			<portlet:namespace />evaluateAttributeMappingRows();
 		}
 	});
 
@@ -178,23 +172,13 @@ String userIdentifierExpression = attributeMappingDisplayContext.getUserIdentifi
 			'input[name="<portlet:namespace />userIdentifierExpression"]:not([value="attribute"])'
 		)
 		.forEach((radioControl) =>
-			radioControl.addEventListener('change', (event) => {
-				<portlet:namespace />handleAttributeMappingMatchingDeselection();
-			})
+			radioControl.addEventListener('change', (event) => <portlet:namespace />evaluateAttributeMappingRows())
 		);
 	document
 		.querySelector(
 			'input[name="<portlet:namespace />userIdentifierExpression"][value="attribute"]'
 		)
-		.addEventListener('change', (event) => {
-			document
-				.querySelectorAll('.user-attribute-mapping-row')
-				.forEach((row) =>
-					<portlet:namespace />evaluateAttributeMappingRow(row)
-				);
-		});
+		.addEventListener('change', (event) => <portlet:namespace />evaluateAttributeMappingRows());
 
-	document
-		.querySelectorAll('.user-attribute-mapping-row')
-		.forEach((row) => <portlet:namespace />evaluateAttributeMappingRow(row));
+	<portlet:namespace />evaluateAttributeMappingRows();
 </script>

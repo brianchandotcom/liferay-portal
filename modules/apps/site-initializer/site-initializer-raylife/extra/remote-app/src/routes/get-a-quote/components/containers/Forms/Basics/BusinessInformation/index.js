@@ -19,6 +19,7 @@ import {EmailControlledInput} from '../../../../../../../common/components/conne
 import {WebsiteControlledInput} from '../../../../../../../common/components/connectors/Controlled/Input/Website';
 import {PhoneControlledInput} from '../../../../../../../common/components/connectors/Controlled/Input/WithMask/Phone';
 import {CardFormActions} from '../../../../../../../common/components/fragments/Card/FormActions';
+import {CardFormActionsMobile} from '../../../../../../../common/components/fragments/Card/FormActionsMobile';
 import FormCard from '../../../../../../../common/components/fragments/Card/FormCard';
 import {useCustomEvent} from '../../../../../../../common/hooks/useCustomEvent';
 import {TIP_EVENT} from '../../../../../../../common/utils/events';
@@ -75,71 +76,74 @@ export function FormBasicBusinessInformation({form}) {
 	}, []);
 
 	return (
-		<FormCard>
-			<div className="container p-0">
-				<div className="d-flex justify-content-between mb-5">
-					<ControlledInput
+		<>
+			<FormCard>
+				<div className="container p-0">
+					<div className="d-flex justify-content-between mb-5">
+						<ControlledInput
+							control={control}
+							inputProps={{
+								autoFocus: true,
+								className: 'flex-grow-1 p-0 mr-4',
+								maxLength: 256,
+								onBlur: onFirstNameSettled,
+							}}
+							label="First Name"
+							name={setFormPath('firstName')}
+							rules={{
+								required: 'First name is required.',
+							}}
+						/>
+
+						<ControlledInput
+							control={control}
+							inputProps={{
+								className: 'flex-grow-1 p-0 ',
+								maxLength: 256,
+							}}
+							label="Last Name"
+							name={setFormPath('lastName')}
+							rules={{
+								required: 'Last name is required.',
+							}}
+						/>
+					</div>
+
+					<EmailControlledInput
 						control={control}
-						inputProps={{
-							autoFocus: true,
-							className: 'flex-grow-1 p-0 mr-4',
-							maxLength: 256,
-							onBlur: onFirstNameSettled,
-						}}
-						label="First Name"
-						name={setFormPath('firstName')}
+						label="Business Email"
+						name={setFormPath('business.email')}
 						rules={{
-							required: 'First name is required.',
+							required: 'Email is required.',
 						}}
 					/>
 
-					<ControlledInput
+					<PhoneControlledInput
 						control={control}
-						inputProps={{
-							className: 'flex-grow-1 p-0 ',
-							maxLength: 256,
-						}}
-						label="Last Name"
-						name={setFormPath('lastName')}
+						label="Phone"
+						name={setFormPath('business.phone')}
 						rules={{
-							required: 'Last name is required.',
+							required: 'Phone number is required.',
 						}}
 					/>
+
+					<WebsiteControlledInput
+						control={control}
+						label="Business Website (optional)"
+						name={setFormPath('business.website')}
+					/>
+
+					<BusinessInformationAddress />
 				</div>
 
-				<EmailControlledInput
-					control={control}
-					label="Business Email"
-					name={setFormPath('business.email')}
-					rules={{
-						required: 'Email is required.',
-					}}
+				<CardFormActions
+					isValid={isValid}
+					onNext={onNext}
+					onPrevious={onPrevious}
+					onSave={onSave}
 				/>
-
-				<PhoneControlledInput
-					control={control}
-					label="Phone"
-					name={setFormPath('business.phone')}
-					rules={{
-						required: 'Phone number is required.',
-					}}
-				/>
-
-				<WebsiteControlledInput
-					control={control}
-					label="Business Website (optional)"
-					name={setFormPath('business.website')}
-				/>
-
-				<BusinessInformationAddress />
-			</div>
-
-			<CardFormActions
-				isValid={isValid}
-				onNext={onNext}
-				onPrevious={onPrevious}
-				onSave={onSave}
-			/>
-		</FormCard>
+			</FormCard>
+			<CardFormActionsMobile onPrevious={onPrevious} onSave={onSave} />
+		</>
 	);
 }

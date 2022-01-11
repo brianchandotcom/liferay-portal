@@ -15,6 +15,7 @@
 import React, {useContext, useState} from 'react';
 import {useFormContext} from 'react-hook-form';
 import {CardFormActions} from '../../../../../../../common/components/fragments/Card/FormActions';
+import {CardFormActionsMobile} from '../../../../../../../common/components/fragments/Card/FormActionsMobile';
 import FormCard from '../../../../../../../common/components/fragments/Card/FormCard';
 import {DEVICES} from '../../../../../../../common/utils/constants';
 import {smoothScroll} from '../../../../../../../common/utils/scroll';
@@ -55,22 +56,25 @@ export function FormBasicBusinessType({form}) {
 	};
 
 	return (
-		<FormCard>
-			<div className="d-flex flex-column mb-5">
-				<BusinessTypeSearch
-					form={form}
-					isMobileDevice={isMobileDevice}
-					setNewSelectedProduct={setNewSelectedProduct}
-					taxonomyVocabularyId={state.taxonomyVocabulary.id}
-				/>
-			</div>
+		<>
+			<FormCard>
+				<div className="d-flex flex-column mb-5">
+					<BusinessTypeSearch
+						form={form}
+						isMobileDevice={isMobileDevice}
+						setNewSelectedProduct={setNewSelectedProduct}
+						taxonomyVocabularyId={state.taxonomyVocabulary.id}
+					/>
+				</div>
 
-			<CardFormActions
-				isMobileDevice={isMobileDevice}
-				isValid={!!form?.basics?.businessCategoryId}
-				onNext={goToNextForm}
-				onPrevious={goToPreviousPage}
-			/>
-		</FormCard>
+				<CardFormActions
+					isMobileDevice={isMobileDevice}
+					isValid={!!form?.basics?.businessCategoryId}
+					onNext={goToNextForm}
+					onPrevious={goToPreviousPage}
+				/>
+			</FormCard>
+			<CardFormActionsMobile onPrevious={goToPreviousPage} />
+		</>
 	);
 }

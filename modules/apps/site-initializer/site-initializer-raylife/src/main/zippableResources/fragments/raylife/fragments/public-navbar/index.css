@@ -104,3 +104,44 @@
 			brightness(89%) contrast(83%);
 	}
 }
+
+.raylife-navbar-button {
+	border: none;
+	border: 1px solid var(--color-action-primary-default) !important;
+	color: var(--color-action-primary-default) !important;
+	cursor: pointer;
+	font-size: 15px;
+	padding: 15px;
+  }
+
+.menu-drop {
+	display: inline-block;
+	position: relative;
+  }
+
+.drop-content {
+	border: 1px solid #C4D6FF;
+	display: none;
+	position: absolute;
+	right: 0;
+	z-index: 1;
+  }
+
+.drop-content a {
+	display: block;
+	height: 48px;
+	text-decoration: none;
+	width: 243px;
+  }
+
+.menu-drop .drop-content.menu-options {
+	display: block;
+  }
+
+.menu-drop .drop-content {
+	display: none;
+  }
+
+.menu-close {
+	display: none;
+}

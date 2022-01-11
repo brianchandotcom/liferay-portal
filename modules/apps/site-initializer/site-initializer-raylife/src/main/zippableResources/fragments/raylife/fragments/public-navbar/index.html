@@ -40,12 +40,36 @@ themeDisplay.getCDNBaseURL() + "/o/admin-theme/images/clay/icons.svg" /]
 				</label>
 			</div>
 
-			<button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-target="#navbarSupportedContent" data-toggle="collapse" type="button">
-				<svg class="arrow-icon lexicon-icon lexicon-icon-bars" focusable="false" role="presentation">
-					<use xlink:href="${clayIconSVG}#bars" />
-				</svg>
+		<div class="menu-drop">
+			<button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler raylife-navbar-button" data-target="#navbarSupportedContent" data-toggle="collapse" type="button">
+				<div class="align-items-center d-flex">
+					<span class="font-weight-bolder mr-1 paragraph-sm">MENU</span>
+
+					<img alt="" class="menu-grid" id="menu-icon-grid" src="[resources:grid-icon-blue.svg]" />
+
+					<img alt="" class="menu-close" id="menu-icon-close" src="[resources:close-menu.svg]" />
+				</div>
 			</button>
+
+			<div class="bg-neutral-0 drop-content mt-2 p-4 rounded" id="myDropdown">
+				<a class="align-items-center d-flex justify-content-center my-3 rounded-pill shadow-lg text-neutral-0" href="#">
+					<img alt="icon phone" class="mx-1" loading="lazy" src="[resources:phone-android.svg]" />
+
+					<span class="text-brand-primary font-weight-semi-bold" data-lfr-editable-id="public-site-navbar-ddl-phone" data-lfr-editable-type="text">800-554-2642</span>
+					</a>
+				<a class="align-items-center d-flex justify-content-center my-3 rounded-pill shadow-lg text-neutral-0" href="#">
+					<img alt="help icon" class="mx-1" loading="lazy" src="[resources:help_circle_menu.svg]" />
+
+					<span class="text-brand-primary font-weight-semi-bold" data-lfr-editable-id="public-site-navbar-ddl-help" data-lfr-editable-type="text">HELP & ANSWERS</span>
+					</a>
+				<a class="align-items-center d-flex justify-content-center my-3 rounded-pill shadow-lg text-neutral-0" href="#">
+					<img alt="camera icon" class="mx-1" loading="lazy" src="[resources:voice-chat-menu.svg]" />
+
+					<span class="text-brand-primary font-weight-semi-bold" data-lfr-editable-id="public-site-navbar-ddl-chat" data-lfr-editable-type="text">CHAT WITH AN AGENT</span>
+				</a>
+			</div>
 		</div>
+	</div>
 
 		<div class="collapse navbar-collapse rounded-sm" id="navbarSupportedContent">
 			<lfr-widget-nav id="nav"></lfr-widget-nav>

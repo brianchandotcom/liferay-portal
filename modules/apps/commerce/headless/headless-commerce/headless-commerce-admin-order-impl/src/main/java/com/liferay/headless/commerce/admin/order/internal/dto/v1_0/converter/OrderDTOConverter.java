@@ -118,8 +118,7 @@ public class OrderDTOConverter implements DTOConverter<CommerceOrder, Order> {
 				channelId = commerceChannel.getCommerceChannelId();
 				couponCode = commerceOrder.getCouponCode();
 				createDate = commerceOrder.getCreateDate();
-				currencyCode = commerceCurrency.getName(
-					dtoConverterContext.getLocale());
+				currencyCode = commerceCurrency.getCode();
 				customFields = expandoBridge.getAttributes();
 				externalReferenceCode =
 					commerceOrder.getExternalReferenceCode();

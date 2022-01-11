@@ -375,6 +375,276 @@ public class CommerceOrderTypeUtil {
 	}
 
 	/**
+	 * Returns all the commerce order types where companyId = &#63; and active = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @return the matching commerce order types
+	 */
+	public static List<CommerceOrderType> findByC_A(
+		long companyId, boolean active) {
+
+		return getPersistence().findByC_A(companyId, active);
+	}
+
+	/**
+	 * Returns a range of all the commerce order types where companyId = &#63; and active = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceOrderTypeModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param start the lower bound of the range of commerce order types
+	 * @param end the upper bound of the range of commerce order types (not inclusive)
+	 * @return the range of matching commerce order types
+	 */
+	public static List<CommerceOrderType> findByC_A(
+		long companyId, boolean active, int start, int end) {
+
+		return getPersistence().findByC_A(companyId, active, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce order types where companyId = &#63; and active = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceOrderTypeModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param start the lower bound of the range of commerce order types
+	 * @param end the upper bound of the range of commerce order types (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce order types
+	 */
+	public static List<CommerceOrderType> findByC_A(
+		long companyId, boolean active, int start, int end,
+		OrderByComparator<CommerceOrderType> orderByComparator) {
+
+		return getPersistence().findByC_A(
+			companyId, active, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce order types where companyId = &#63; and active = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceOrderTypeModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param start the lower bound of the range of commerce order types
+	 * @param end the upper bound of the range of commerce order types (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching commerce order types
+	 */
+	public static List<CommerceOrderType> findByC_A(
+		long companyId, boolean active, int start, int end,
+		OrderByComparator<CommerceOrderType> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByC_A(
+			companyId, active, start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first commerce order type in the ordered set where companyId = &#63; and active = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce order type
+	 * @throws NoSuchOrderTypeException if a matching commerce order type could not be found
+	 */
+	public static CommerceOrderType findByC_A_First(
+			long companyId, boolean active,
+			OrderByComparator<CommerceOrderType> orderByComparator)
+		throws com.liferay.commerce.exception.NoSuchOrderTypeException {
+
+		return getPersistence().findByC_A_First(
+			companyId, active, orderByComparator);
+	}
+
+	/**
+	 * Returns the first commerce order type in the ordered set where companyId = &#63; and active = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce order type, or <code>null</code> if a matching commerce order type could not be found
+	 */
+	public static CommerceOrderType fetchByC_A_First(
+		long companyId, boolean active,
+		OrderByComparator<CommerceOrderType> orderByComparator) {
+
+		return getPersistence().fetchByC_A_First(
+			companyId, active, orderByComparator);
+	}
+
+	/**
+	 * Returns the last commerce order type in the ordered set where companyId = &#63; and active = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce order type
+	 * @throws NoSuchOrderTypeException if a matching commerce order type could not be found
+	 */
+	public static CommerceOrderType findByC_A_Last(
+			long companyId, boolean active,
+			OrderByComparator<CommerceOrderType> orderByComparator)
+		throws com.liferay.commerce.exception.NoSuchOrderTypeException {
+
+		return getPersistence().findByC_A_Last(
+			companyId, active, orderByComparator);
+	}
+
+	/**
+	 * Returns the last commerce order type in the ordered set where companyId = &#63; and active = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce order type, or <code>null</code> if a matching commerce order type could not be found
+	 */
+	public static CommerceOrderType fetchByC_A_Last(
+		long companyId, boolean active,
+		OrderByComparator<CommerceOrderType> orderByComparator) {
+
+		return getPersistence().fetchByC_A_Last(
+			companyId, active, orderByComparator);
+	}
+
+	/**
+	 * Returns the commerce order types before and after the current commerce order type in the ordered set where companyId = &#63; and active = &#63;.
+	 *
+	 * @param commerceOrderTypeId the primary key of the current commerce order type
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce order type
+	 * @throws NoSuchOrderTypeException if a commerce order type with the primary key could not be found
+	 */
+	public static CommerceOrderType[] findByC_A_PrevAndNext(
+			long commerceOrderTypeId, long companyId, boolean active,
+			OrderByComparator<CommerceOrderType> orderByComparator)
+		throws com.liferay.commerce.exception.NoSuchOrderTypeException {
+
+		return getPersistence().findByC_A_PrevAndNext(
+			commerceOrderTypeId, companyId, active, orderByComparator);
+	}
+
+	/**
+	 * Returns all the commerce order types that the user has permission to view where companyId = &#63; and active = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @return the matching commerce order types that the user has permission to view
+	 */
+	public static List<CommerceOrderType> filterFindByC_A(
+		long companyId, boolean active) {
+
+		return getPersistence().filterFindByC_A(companyId, active);
+	}
+
+	/**
+	 * Returns a range of all the commerce order types that the user has permission to view where companyId = &#63; and active = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceOrderTypeModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param start the lower bound of the range of commerce order types
+	 * @param end the upper bound of the range of commerce order types (not inclusive)
+	 * @return the range of matching commerce order types that the user has permission to view
+	 */
+	public static List<CommerceOrderType> filterFindByC_A(
+		long companyId, boolean active, int start, int end) {
+
+		return getPersistence().filterFindByC_A(companyId, active, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce order types that the user has permissions to view where companyId = &#63; and active = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceOrderTypeModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param start the lower bound of the range of commerce order types
+	 * @param end the upper bound of the range of commerce order types (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce order types that the user has permission to view
+	 */
+	public static List<CommerceOrderType> filterFindByC_A(
+		long companyId, boolean active, int start, int end,
+		OrderByComparator<CommerceOrderType> orderByComparator) {
+
+		return getPersistence().filterFindByC_A(
+			companyId, active, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns the commerce order types before and after the current commerce order type in the ordered set of commerce order types that the user has permission to view where companyId = &#63; and active = &#63;.
+	 *
+	 * @param commerceOrderTypeId the primary key of the current commerce order type
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce order type
+	 * @throws NoSuchOrderTypeException if a commerce order type with the primary key could not be found
+	 */
+	public static CommerceOrderType[] filterFindByC_A_PrevAndNext(
+			long commerceOrderTypeId, long companyId, boolean active,
+			OrderByComparator<CommerceOrderType> orderByComparator)
+		throws com.liferay.commerce.exception.NoSuchOrderTypeException {
+
+		return getPersistence().filterFindByC_A_PrevAndNext(
+			commerceOrderTypeId, companyId, active, orderByComparator);
+	}
+
+	/**
+	 * Removes all the commerce order types where companyId = &#63; and active = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 */
+	public static void removeByC_A(long companyId, boolean active) {
+		getPersistence().removeByC_A(companyId, active);
+	}
+
+	/**
+	 * Returns the number of commerce order types where companyId = &#63; and active = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @return the number of matching commerce order types
+	 */
+	public static int countByC_A(long companyId, boolean active) {
+		return getPersistence().countByC_A(companyId, active);
+	}
+
+	/**
+	 * Returns the number of commerce order types that the user has permission to view where companyId = &#63; and active = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @return the number of matching commerce order types that the user has permission to view
+	 */
+	public static int filterCountByC_A(long companyId, boolean active) {
+		return getPersistence().filterCountByC_A(companyId, active);
+	}
+
+	/**
 	 * Returns all the commerce order types where displayDate &lt; &#63; and status = &#63;.
 	 *
 	 * @param displayDate the display date

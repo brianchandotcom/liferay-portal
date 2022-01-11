@@ -39,6 +39,7 @@ create index IX_EF4EEF80 on CommerceOrderNote (companyId, externalReferenceCode[
 
 create index IX_CF274005 on CommerceOrderPayment (commerceOrderId);
 
+create index IX_72C90BD4 on CommerceOrderType (companyId, active_);
 create index IX_4EC1CAC8 on CommerceOrderType (companyId, externalReferenceCode[$COLUMN_LENGTH:75$]);
 create index IX_CAB43113 on CommerceOrderType (displayDate, status);
 create index IX_56A0F58A on CommerceOrderType (expirationDate, status);

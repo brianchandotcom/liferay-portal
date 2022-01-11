@@ -72,11 +72,11 @@ public class FieldWrapperTag extends BaseFieldWrapperTag {
 
 		jspWriter.write("<div class=\"");
 
-		String controlGroupCss = "lfr-ddm-field-group";
+		String controlGroupCss = "lfr-ddm-field-group mb-3";
 
 		if (getInlineField()) {
 			controlGroupCss = controlGroupCss.concat(
-				" lfr-ddm-field-group-inline");
+				" align-middle d-inline-block lfr-ddm-field-group-inline");
 		}
 
 		if (Validator.isNotNull(getInlineLabel())) {

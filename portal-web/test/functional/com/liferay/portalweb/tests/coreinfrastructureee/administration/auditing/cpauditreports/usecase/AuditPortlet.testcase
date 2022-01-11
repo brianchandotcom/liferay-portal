@@ -27,7 +27,7 @@ definition {
 	}
 
 	@description = "This test Audit can capture events when assign, unassign user to user group or role, and event details contain the correct info."
-	@priority = "5"
+	@priority = "3"
 	test CanCaptureEventsAboutAssignAndUnassignUserToUserGroupAndRole {
 		property test.name.skip.portal.instance = "AuditPortlet#CanCaptureEventsAboutAssignAndUnassignUserToUserGroupAndRole";
 
@@ -138,6 +138,7 @@ definition {
 	@description = "This test Audit can capture events when add, update, delete, impersonate user, and event details contain the correct info."
 	@priority = "5"
 	test CanCaptureEventsAboutUserActions {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "AuditPortlet#CanCaptureEventsAboutUserActions";
 
 		ApplicationsMenu.gotoPortlet(
@@ -244,7 +245,7 @@ definition {
 	}
 
 	@description = "This test Audit can capture events when assign, unassign user to user group or role, and event details contain the correct info."
-	@priority = "5"
+	@priority = "3"
 	test CanCaptureEventsAboutUserGroupAndRole {
 		property test.name.skip.portal.instance = "AuditPortlet#CanCaptureEventsAboutUserGroupAndRole";
 
@@ -390,7 +391,7 @@ definition {
 	}
 
 	@description = "This test Audit can capture events when user login, logout, login fail, view pages, and event details contain the correct info."
-	@priority = "5"
+	@priority = "4"
 	test CanCaptureEventsAboutUserLoginLogoutLoginFailAndViewPages {
 		property test.name.skip.portal.instance = "AuditPortlet#CanCaptureEventsAboutUserLoginLogoutLoginFailAndViewPages";
 		property custom.properties = "audit.message.com.liferay.portal.kernel.model.Layout.VIEW=true";
@@ -471,7 +472,7 @@ definition {
 	}
 
 	@description = "This test Audit events can be searched with the Audit app's advanced search by various search criteria."
-	@priority = "5"
+	@priority = "4"
 	test CanSearchEventsInAuditAdvancedSearch {
 		property test.name.skip.portal.instance = "AuditPortlet#CanSearchEventsInAuditAdvancedSearch";
 

@@ -55,7 +55,7 @@ ViewAccountGroupsManagementToolbarDisplayContext viewAccountGroupsManagementTool
 				</portlet:renderURL>
 
 				<%
-				if (!AccountGroupPermission.contains(permissionChecker, accountGroupDisplay.getAccountGroupId(), ActionKeys.UPDATE)) {
+				if (!AccountGroupPermission.contains(permissionChecker, accountGroupDisplay.getAccountGroupId(), AccountActionKeys.VIEW_ACCOUNTS)) {
 					rowURL = null;
 				}
 				%>

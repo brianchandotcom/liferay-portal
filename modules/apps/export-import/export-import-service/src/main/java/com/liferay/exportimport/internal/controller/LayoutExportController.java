@@ -387,6 +387,7 @@ public class LayoutExportController implements ExportController {
 		String cmd = MapUtil.getString(parameterMap, Constants.CMD);
 
 		if (ArrayUtil.contains(layoutIds, 0) &&
+			!Objects.equals(cmd, Constants.EXPORT) &&
 			!Objects.equals(cmd, Constants.PUBLISH_TO_LIVE) &&
 			!Objects.equals(cmd, Constants.PUBLISH_TO_REMOTE)) {
 

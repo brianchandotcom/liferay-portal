@@ -295,16 +295,29 @@ definition {
 	}
 
 	macro viewItemNested {
-		var parentItemId = JSONSitenavigationSetter.setSiteNavigationMenuItemId(
-			groupName = "${groupName}",
-			site = "${site}",
-			siteNavigationMenuItemName = "${parentItemName}",
-			siteNavigationMenuName = "${siteNavigationMenuName}");
+		var list1 = ListUtil.newListFromString("${itemNameList}");
+		var list2 = ListUtil.newListFromString("${parentItemNameList}");
+		var size = ListUtil.size("${list1}");
+		var i = "0";
 
-		AssertElementPresent(
-			key_itemName = "${itemName}",
-			key_parentItemId = "${parentItemId}",
-			locator1 = "SiteNavigationMenu#ITEM_ENTRY_NESTED");
+		while ("${i}" != "${size}") {
+			var itemName = ListUtil.get("${list1}", "${i}");
+			var parentItemName = ListUtil.get("${list2}", "${i}");
+
+			var parentItemId = JSONSitenavigationSetter.setSiteNavigationMenuItemId(
+				groupName = "${groupName}",
+				site = "${site}",
+				siteNavigationMenuItemName = "${parentItemName}",
+				siteNavigationMenuName = "${siteNavigationMenuName}");
+
+			AssertElementPresent(
+				key_itemName = "${itemName}",
+				key_parentItemId = "${parentItemId}",
+				locator1 = "SiteNavigationMenu#ITEM_ENTRY_NESTED");
+
+			var i = ${i} + 1;
+			var i = StringUtil.valueOf("${i}");
+		}
 	}
 
 	macro viewItemNotNested {

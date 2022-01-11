@@ -1034,14 +1034,12 @@ definition {
 		task ("View the hierachy of page items") {
 			NavigationMenusAdmin.viewItemNotNested(itemNameList = "Test Page Name 1,Test Page Name 2,Test Page Name 3");
 
-			for (var n : list "1,2,3") {
-				NavigationMenusAdmin.viewItemNested(
-					groupName = "Test Site Name",
-					itemName = "Child Page ${n}",
-					parentItemName = "Test Page Name ${n}",
-					site = "true",
-					siteNavigationMenuName = "Navigation Menu Name");
-			}
+			NavigationMenusAdmin.viewItemNested(
+				groupName = "Test Site Name",
+				itemNameList = "Child Page 1,Child Page 2,Child Page 3",
+				parentItemNameList = "Test Page Name 1,Test Page Name 2,Test Page Name 3",
+				site = "true",
+				siteNavigationMenuName = "Navigation Menu Name");
 		}
 
 		task ("Change back to the original order of the second parent page item and third parent page item") {
@@ -1055,15 +1053,18 @@ definition {
 		task ("View the hierachy of page items") {
 			NavigationMenusAdmin.viewItemNotNested(itemNameList = "Test Page Name 1,Test Page Name 2,Test Page Name 3");
 
+			NavigationMenusAdmin.viewItemNested(
+				groupName = "Test Site Name",
+				itemNameList = "Child Page 1,Child Page 2,Child Page 3",
+				parentItemNameList = "Test Page Name 1,Test Page Name 2,Test Page Name 3",
+				site = "true",
+				siteNavigationMenuName = "Navigation Menu Name");
+		}
+	}
 
-			for (var n : list "1,2,3") {
-				NavigationMenusAdmin.viewItemNested(
-					groupName = "Test Site Name",
-					itemName = "Child Page ${n}",
-					parentItemName = "Test Page Name ${n}",
-					site = "true",
-					siteNavigationMenuName = "Navigation Menu Name");
-			}
+
+
+
 		}
 	}
 

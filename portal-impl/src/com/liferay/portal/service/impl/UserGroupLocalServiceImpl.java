@@ -27,6 +27,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.DuplicateUserGroupException;
+import com.liferay.portal.kernel.exception.DuplicateUserGroupExternalReferenceCodeException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.RequiredUserGroupException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -89,6 +90,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.LongStream;
@@ -869,9 +871,21 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public UserGroup updateExternalReferenceCode(
-		UserGroup userGroup, String externalReferenceCode)
+			UserGroup userGroup, String externalReferenceCode)
 		throws PortalException {
 
+		if (Objects.equals(
+				userGroup.getExternalReferenceCode(), externalReferenceCode)) {
+
+			return userGroup;
+		}
+
+		_validateExternalReferenceCode(
+			userGroup.getUserGroupId(), externalReferenceCode);
+
+		userGroup.setExternalReferenceCode(externalReferenceCode);
+
+		return updateUserGroup(userGroup);
 	}
 
 	/**
@@ -1237,6 +1251,28 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 			(userGroup.getUserGroupId() != userGroupId)) {
 
 			throw new DuplicateUserGroupException("{name=" + name + "}");
+		}
+	}
+
+	private void _validateExternalReferenceCode(
+			long userGroupId, String externalReferenceCode)
+		throws PortalException {
+
+		if (Validator.isNull(externalReferenceCode)) {
+			return;
+		}
+
+		UserGroup userGroup = getUserGroup(userGroupId);
+
+		userGroup = fetchUserGroupByExternalReferenceCode(
+			userGroup.getCompanyId(), externalReferenceCode);
+
+		if (userGroup == null) {
+			return;
+		}
+
+		if (userGroup.getUserGroupId() != userGroupId) {
+			throw new DuplicateUserGroupExternalReferenceCodeException();
 		}
 	}
 

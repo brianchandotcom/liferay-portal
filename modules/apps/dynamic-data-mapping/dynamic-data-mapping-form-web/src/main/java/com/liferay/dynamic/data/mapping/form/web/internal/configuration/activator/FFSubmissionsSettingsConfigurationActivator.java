@@ -37,11 +37,6 @@ public class FFSubmissionsSettingsConfigurationActivator {
 		return _ffSubmissionsSettingsConfiguration.expirationDateEnabled();
 	}
 
-	public boolean limitToOneSubmissionEnabled() {
-		return _ffSubmissionsSettingsConfiguration.
-			limitToOneSubmissionEnabled();
-	}
-
 	public boolean showPartialResultsEnabled() {
 		return _ffSubmissionsSettingsConfiguration.showPartialResultsEnabled();
 	}

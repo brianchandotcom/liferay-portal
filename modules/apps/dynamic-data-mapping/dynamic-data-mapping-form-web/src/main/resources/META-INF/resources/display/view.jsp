@@ -82,8 +82,8 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 			<c:when test="<%= !preview && (expired || showSuccessPage || ddmFormDisplayContext.hasSubmittedAnEntry()) %>">
 
 				<%
-				String pageDescription;
-				String pageTitle;
+				String pageDescription = null;
+				String pageTitle = null;
 
 				if (expired) {
 					pageDescription = LanguageUtil.get(request, "this-form-has-an-expiration-date");

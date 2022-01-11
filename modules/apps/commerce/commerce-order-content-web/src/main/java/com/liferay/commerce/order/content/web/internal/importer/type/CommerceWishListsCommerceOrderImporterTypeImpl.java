@@ -17,6 +17,7 @@ package com.liferay.commerce.order.content.web.internal.importer.type;
 import com.liferay.commerce.configuration.CommerceOrderImporterTypeConfiguration;
 import com.liferay.commerce.context.CommerceContextFactory;
 import com.liferay.commerce.exception.CommerceOrderImporterTypeException;
+import com.liferay.commerce.inventory.CPDefinitionInventoryEngine;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.content.web.internal.importer.type.util.CommerceOrderImporterTypeUtil;
 import com.liferay.commerce.order.importer.item.CommerceOrderImporterItem;
@@ -25,7 +26,10 @@ import com.liferay.commerce.order.importer.type.CommerceOrderImporterType;
 import com.liferay.commerce.price.CommerceOrderPriceCalculation;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
+import com.liferay.commerce.product.service.CommerceChannelLocalService;
+import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.wish.list.model.CommerceWishList;
@@ -102,9 +106,14 @@ public class CommerceWishListsCommerceOrderImporterTypeImpl
 			throw new CommerceOrderImporterTypeException();
 		}
 
+		CommerceChannel commerceChannel =
+			_commerceChannelLocalService.getCommerceChannelByOrderGroupId(
+				commerceOrder.getGroupId());
+
 		return CommerceOrderImporterTypeUtil.getCommerceOrderImporterItems(
 			_commerceContextFactory, commerceOrder,
-			_getCommerceOrderImporterItemImpls((CommerceWishList)object),
+			_getCommerceOrderImporterItemImpls(
+				commerceChannel.getGroupId(), (CommerceWishList)object),
 			_commerceOrderItemService, _commerceOrderPriceCalculation,
 			_commerceOrderService, _userLocalService);
 	}
@@ -160,7 +169,7 @@ public class CommerceWishListsCommerceOrderImporterTypeImpl
 	}
 
 	private CommerceOrderImporterItemImpl[] _getCommerceOrderImporterItemImpls(
-			CommerceWishList commerceWishList)
+			long commerceChannelGroupId, CommerceWishList commerceWishList)
 		throws Exception {
 
 		return TransformUtil.transformToArray(
@@ -168,34 +177,56 @@ public class CommerceWishListsCommerceOrderImporterTypeImpl
 				commerceWishList.getCommerceWishListId(), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, null),
 			commerceWishListItem -> _toCommerceOrderImporterItemImpl(
-				commerceWishListItem),
+				commerceChannelGroupId, commerceWishListItem),
 			CommerceOrderImporterItemImpl.class);
 	}
 
 	private CommerceOrderImporterItemImpl _toCommerceOrderImporterItemImpl(
+			long commerceChannelGroupId,
 			CommerceWishListItem commerceWishListItem)
 		throws Exception {
+
+		CommerceOrderImporterItemImpl commerceOrderImporterItemImpl =
+			new CommerceOrderImporterItemImpl();
 
 		CPInstance cpInstance = _cpInstanceLocalService.fetchCProductInstance(
 			commerceWishListItem.getCProductId(),
 			commerceWishListItem.getCPInstanceUuid());
 
 		if (cpInstance == null) {
-			return null;
+			CPDefinition cpDefinition = commerceWishListItem.getCPDefinition();
+
+			commerceOrderImporterItemImpl.setNameMap(cpDefinition.getNameMap());
+
+			commerceOrderImporterItemImpl.setErrorMessages(
+				new String[] {"the-product-is-no-longer-available"});
+			commerceOrderImporterItemImpl.setQuantity(1);
 		}
+		else {
+			CPInstance firstAvailableReplacementCPInstance =
+				_cpInstanceHelper.fetchFirstAvailableReplacementCPInstance(
+					commerceChannelGroupId, cpInstance.getCPInstanceId());
 
-		CommerceOrderImporterItemImpl commerceOrderImporterItemImpl =
-			new CommerceOrderImporterItemImpl();
+			if (firstAvailableReplacementCPInstance != null) {
+				commerceOrderImporterItemImpl.setReplacingSKU(
+					cpInstance.getSku());
 
-		commerceOrderImporterItemImpl.setCPInstanceId(
-			cpInstance.getCPInstanceId());
-		commerceOrderImporterItemImpl.setSku(cpInstance.getSku());
+				cpInstance = firstAvailableReplacementCPInstance;
+			}
 
-		CPDefinition cpDefinition = cpInstance.getCPDefinition();
+			commerceOrderImporterItemImpl.setCPInstanceId(
+				cpInstance.getCPInstanceId());
+			commerceOrderImporterItemImpl.setSku(cpInstance.getSku());
 
-		commerceOrderImporterItemImpl.setCPDefinitionId(
-			cpDefinition.getCPDefinitionId());
-		commerceOrderImporterItemImpl.setNameMap(cpDefinition.getNameMap());
+			CPDefinition cpDefinition = cpInstance.getCPDefinition();
+
+			commerceOrderImporterItemImpl.setCPDefinitionId(
+				cpDefinition.getCPDefinitionId());
+			commerceOrderImporterItemImpl.setNameMap(cpDefinition.getNameMap());
+
+			commerceOrderImporterItemImpl.setQuantity(
+				_cpDefinitionInventoryEngine.getMinOrderQuantity(cpInstance));
+		}
 
 		String json = commerceWishListItem.getJson();
 
@@ -205,10 +236,11 @@ public class CommerceWishListsCommerceOrderImporterTypeImpl
 
 		commerceOrderImporterItemImpl.setJSON(json);
 
-		commerceOrderImporterItemImpl.setQuantity(1);
-
 		return commerceOrderImporterItemImpl;
 	}
+
+	@Reference
+	private CommerceChannelLocalService _commerceChannelLocalService;
 
 	@Reference
 	private CommerceContextFactory _commerceContextFactory;
@@ -230,6 +262,12 @@ public class CommerceWishListsCommerceOrderImporterTypeImpl
 
 	@Reference
 	private CommerceWishListService _commerceWishListService;
+
+	@Reference
+	private CPDefinitionInventoryEngine _cpDefinitionInventoryEngine;
+
+	@Reference
+	private CPInstanceHelper _cpInstanceHelper;
 
 	@Reference
 	private CPInstanceLocalService _cpInstanceLocalService;

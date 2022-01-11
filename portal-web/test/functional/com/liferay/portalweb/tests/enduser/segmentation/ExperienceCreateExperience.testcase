@@ -3877,7 +3877,7 @@ definition {
 			PageEditor.clickPublish();
 		}
 
-		task ("Add content to both experiences")
+		task ("Add content to both experiences") {
 			AssetPublisherPortlet.configureManualAssetSelectionPG(
 				assetTitle = "WC Title 1",
 				assetType = "Basic Web Content");

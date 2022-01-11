@@ -350,22 +350,6 @@
 		<filter-class>com.liferay.portal.servlet.filters.unsyncprintwriterpool.UnsyncPrintWriterPoolFilter</filter-class>
 	</filter>
 	<filter>
-		<filter-name>URL Rewrite Filter</filter-name>
-		<filter-class>com.liferay.portal.servlet.filters.urlrewrite.UrlRewriteFilter</filter-class>
-		<init-param>
-			<param-name>logLevel</param-name>
-			<param-value>ERROR</param-value>
-		</init-param>
-		<init-param>
-			<param-name>statusEnabled</param-name>
-			<param-value>false</param-value>
-		</init-param>
-		<init-param>
-			<param-name>url-regex-ignore-pattern</param-name>
-			<param-value>(^/combo/)|(^/html/.+\.(css|gif|html|ico|jpg|js|png)(\?.*)?$)</param-value>
-		</init-param>
-	</filter>
-	<filter>
 		<filter-name>Valid Host Name Filter</filter-name>
 		<filter-class>com.liferay.portal.servlet.filters.validhostname.ValidHostNameFilter</filter-class>
 	</filter>
@@ -440,10 +424,6 @@
 	</filter-mapping>
 	<filter-mapping>
 		<filter-name>UnsyncPrintWriter Pool Filter</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping>
-	<filter-mapping>
-		<filter-name>URL Rewrite Filter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 	<filter-mapping>

@@ -322,15 +322,9 @@ definition {
 
 			WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
 
-			PortletEntry.changeLocale(locale = "zh-CN");
-
-			Click(locator1 = "TextInput#NAME");
-
-			RobotType.robotTypeShortcut(locator1 = "Ctrl + a");
-
-			KeyPress(
-				locator1 = "TextInput#NAME",
-				value1 = "\BACK_SPACE");
+			WebContentStructures.addLocalization(
+				locale = "zh-CN",
+				localization1Name = "");
 
 			WebContentStructures.saveCP();
 

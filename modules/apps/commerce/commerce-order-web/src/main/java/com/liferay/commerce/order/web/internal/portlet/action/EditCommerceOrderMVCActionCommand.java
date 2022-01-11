@@ -26,6 +26,7 @@ import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceShipment;
+import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.order.engine.CommerceOrderEngine;
 import com.liferay.commerce.payment.engine.CommercePaymentEngine;
 import com.liferay.commerce.service.CommerceAddressService;
@@ -251,7 +252,8 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		for (long deleteCommerceOrderId : deleteCommerceOrderIds) {
-			_commerceOrderService.deleteCommerceOrder(deleteCommerceOrderId);
+			_commerceOrderHttpHelper.deleteCommerceOrder(
+				actionRequest, deleteCommerceOrderId);
 		}
 	}
 
@@ -591,6 +593,9 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private CommerceOrderEngine _commerceOrderEngine;
+
+	@Reference
+	private CommerceOrderHttpHelper _commerceOrderHttpHelper;
 
 	@Reference
 	private CommerceOrderService _commerceOrderService;

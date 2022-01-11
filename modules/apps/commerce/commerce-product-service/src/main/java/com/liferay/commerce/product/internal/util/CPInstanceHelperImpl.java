@@ -108,7 +108,11 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 		CPInstance cpInstance = _cpInstanceLocalService.fetchCPInstance(
 			cpInstanceId);
 
-		if ((cpInstance == null) || !cpInstance.isDiscontinued()) {
+		if ((cpInstance == null) || !cpInstance.isDiscontinued() ||
+			_cpAvailabilityChecker.check(
+				commerceChannelGroupId, cpInstance,
+				_cpDefinitionInventoryEngine.getMinOrderQuantity(cpInstance))) {
+
 			return null;
 		}
 
@@ -707,11 +711,7 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 			long commerceChannelGroupId, CPInstance cpInstance)
 		throws PortalException {
 
-		if (cpInstance == null) {
-			return null;
-		}
-
-		if (cpInstance.isDiscontinued() &&
+		if ((cpInstance == null) || !cpInstance.isDiscontinued() ||
 			_cpAvailabilityChecker.check(
 				commerceChannelGroupId, cpInstance,
 				_cpDefinitionInventoryEngine.getMinOrderQuantity(cpInstance))) {

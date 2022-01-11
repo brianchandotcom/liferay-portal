@@ -173,8 +173,16 @@ describe('VariationsNav With segments', () => {
 	it('shows a variations nav list with an action menu for each item', () => {
 		const {getAllByText} = render(_getComponent(listWithTwoVariations));
 
-		expect(getAllByText('prioritize').length).toBe(2);
-		expect(getAllByText('deprioritize').length).toBe(2);
+		const prioritizeButtons = getAllByText('prioritize');
+		const deprioritizeButtons = getAllByText('deprioritize');
+
+		expect(prioritizeButtons.length).toBe(2);
+		expect(deprioritizeButtons.length).toBe(2);
+
+		expect(prioritizeButtons[0]).toBeDisabled();
+		expect(prioritizeButtons[1]).not.toBeDisabled();
+		expect(deprioritizeButtons[1]).toBeDisabled();
+		expect(deprioritizeButtons[0]).not.toBeDisabled();
 
 		const deleteButtons = getAllByText('delete');
 		expect(deleteButtons.length).toBe(2);

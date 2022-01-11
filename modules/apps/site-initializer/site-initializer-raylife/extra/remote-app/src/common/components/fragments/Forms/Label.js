@@ -1,12 +1,13 @@
 import classNames from 'classnames';
 import React from 'react';
 
-export function Label({children, label, name, required = false}) {
+export function Label({children, className, label, name, required = false}) {
 	return (
-		<label htmlFor={name}>
+		<label className="align-items-center" htmlFor={name}>
 			<h6
 				className={classNames(
-					`align-items-center d-flex font-weight-bolder`,
+					'd-inline-block font-weight-bolder',
+					className,
 					{required}
 				)}
 			>

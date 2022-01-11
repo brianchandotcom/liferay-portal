@@ -1,5 +1,5 @@
 import ClayButton from '@clayui/button';
-
+import classNames from 'classnames';
 import React, {useEffect, useState} from 'react';
 import {useFormContext} from 'react-hook-form';
 import {WarningBadge} from '../../../../../../../common/components/fragments/Badges/Warning';
@@ -21,6 +21,7 @@ const MAX_LENGTH_TO_TRUNCATE = 18;
 
 export function BusinessTypeSearch({
 	form,
+	isMobileDevice = false,
 	setNewSelectedProduct,
 	taxonomyVocabularyId,
 }) {
@@ -55,8 +56,7 @@ export function BusinessTypeSearch({
 			setError('');
 
 			setTaxonomyCategories(taxonomyCategories);
-		}
-		catch (error) {
+		} catch (error) {
 			setError('Unable to make the request. Please try again later.');
 		}
 	};
@@ -99,8 +99,12 @@ export function BusinessTypeSearch({
 		<>
 			<div className="mb-5">
 				<SearchInput
-					className="bg-neutral-1 font-weight-bold px-4 py-0 search text-neutral-10 text-paragraph-lg"
+					className={classNames(
+						'bg-neutral-1 font-weight-bold px-4 py-0 search text-neutral-10 text-paragraph-lg',
+						{'pr-7': isMobileDevice}
+					)}
 					defaultValue=""
+					isMobileDevice={isMobileDevice}
 					label="Search for your primary industry and then select it from the list."
 					placeholder="Begin typing to show options..."
 					required
@@ -109,12 +113,14 @@ export function BusinessTypeSearch({
 							'Please, search for a business type in order to proceed.',
 					})}
 				>
-					<ClayButton
-						className="font-weight-bolder ml-3 search text-paragraph text-small-caps"
-						displayType="primary"
-					>
-						Search
-					</ClayButton>
+					{!isMobileDevice && (
+						<ClayButton
+							className="font-weight-bolder ml-3 search text-paragraph text-small-caps"
+							displayType="primary"
+						>
+							Search
+						</ClayButton>
+					)}
 				</SearchInput>
 
 				<p className="mt-1 paragraph">

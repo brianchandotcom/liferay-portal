@@ -1,5 +1,5 @@
 import {ClayInput} from '@clayui/form';
-
+import ClayIcon from '@clayui/icon';
 import React from 'react';
 import {InputAreaWithError} from '../InputArea/WithError';
 import {Label} from '../Label';
@@ -9,6 +9,7 @@ export const SearchInput = React.forwardRef(
 		{
 			children,
 			error,
+			isMobileDevice = false,
 			label,
 			name,
 			renderActions,
@@ -20,14 +21,19 @@ export const SearchInput = React.forwardRef(
 		return (
 			<>
 				{label && (
-					<div className="mb-2">
-						<Label label={label} name={name} required={required}>
+					<div className="mb-4 mb-lg-2 mb-md-2 mb-sm-4">
+						<Label
+							className={isMobileDevice ? 'h4 text-center' : null}
+							label={label}
+							name={name}
+							required={required}
+						>
 							{renderActions}
 						</Label>
 					</div>
 				)}
-				<div className="d-flex flex-row">
-					<InputAreaWithError className="col pl-0" error={error}>
+				<div className="d-flex flex-row position-relative">
+					<InputAreaWithError className="col px-0" error={error}>
 						<ClayInput
 							{...props}
 							id={name}
@@ -41,6 +47,13 @@ export const SearchInput = React.forwardRef(
 							ref={ref}
 							required={required}
 						/>
+
+						{isMobileDevice && (
+							<ClayIcon
+								className="bussiness-type-search-icon position-absolute text-neutral-6"
+								symbol="search"
+							/>
+						)}
 					</InputAreaWithError>
 
 					{children}

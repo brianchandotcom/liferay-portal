@@ -110,6 +110,38 @@ definition {
 			value1 = "${fieldType}");
 	}
 
+	macro assertLabelBasicInfo {
+		var key_fieldType = "value";
+
+		WaitForSPARefresh();
+
+		if (!(IsElementPresent(locator1 = "CreateObject#FIELD_VALUE"))) {
+			SelectFrame.selectFrameTop();
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+		}
+
+		AssertElementPresent(
+			fieldLabel = "${fieldLabel}",
+			locator1 = "CreateObject#FIELD_VALUE");
+	}
+
+	macro assertLabelBasicInfoNotPresent {
+		var key_fieldType = "value";
+
+		WaitForSPARefresh();
+
+		if (!(IsElementPresent(locator1 = "CreateObject#FIELD_VALUE"))) {
+			SelectFrame.selectFrameTop();
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+		}
+
+		AssertElementNotPresent(
+			fieldLabel = "${fieldLabel}",
+			locator1 = "CreateObject#FIELD_VALUE");
+	}
+
 	macro assertObjectDefinitionName {
 		AssertTextEquals(
 			locator1 = "CreateObject#OBJECT_DEFINITION_NAME",

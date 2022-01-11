@@ -2515,12 +2515,21 @@ definition {
 	}
 
 	@description = "LPS-135547 - Verify it is possible to search for a field from a System Object"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanSearchForFieldSystemObject {
+		ObjectAdmin.openObjectAdmin();
 
-		// TODO LPS-141642 CanSearchForFieldSystemObject pending implementation
+		ObjectPortlet.selectCustomObject(label = "User");
 
+		ObjectAdmin.goToFieldsTab();
+
+		Search.searchCP(searchTerm = "FirstName");
+
+		CreateObject.viewObject(labelName = "First Name");
+
+		CreateObject.assertLabelBasicInfo(fieldLabel = "First Name");
+
+		CreateObject.assertLabelBasicInfoNotPresent(fieldLabel = "Email Address");
 	}
 
 	@description = "LPS-135547 - Verify it is possible to search for a System Object"

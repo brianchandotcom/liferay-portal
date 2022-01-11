@@ -36,7 +36,6 @@ import com.liferay.asset.list.service.AssetListEntrySegmentsEntryRelLocalService
 import com.liferay.asset.list.web.internal.constants.AssetListWebKeys;
 import com.liferay.asset.list.web.internal.util.comparator.ClassNameModelResourceComparator;
 import com.liferay.asset.util.AssetRendererFactoryClassProvider;
-import com.liferay.asset.util.comparator.AssetRendererFactoryTypeNameComparator;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
@@ -81,6 +80,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsEntryConstants;
@@ -701,34 +701,41 @@ public class EditAssetListDisplayContext {
 
 		Map<String, Map<String, Object>> manualAddIconDataMap = new HashMap<>();
 
-		List<AssetRendererFactory<?>> assetRendererFactories = ListUtil.sort(
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactories(
-				_themeDisplay.getCompanyId(), true),
-			new AssetRendererFactoryTypeNameComparator(
-				_themeDisplay.getLocale()));
+		AssetListEntry assetListEntry = getAssetListEntry();
 
-		for (AssetRendererFactory<?> curAssetRendererFactory :
-				assetRendererFactories) {
+		UnicodeProperties unicodeProperties = UnicodePropertiesBuilder.create(
+			true
+		).fastLoad(
+			assetListEntry.getTypeSettings(getSegmentsEntryId())
+		).build();
 
-			AssetListEntry assetListEntry = getAssetListEntry();
+		long[] classNameIds = GetterUtil.getLongValues(
+			StringUtil.split(
+				unicodeProperties.getProperty("classNameIds", null)),
+			AssetRendererFactoryRegistryUtil.getClassNameIds(
+				_themeDisplay.getCompanyId(), true));
+
+		for (long classNameId : classNameIds) {
+			AssetRendererFactory<?> assetRendererFactory =
+				AssetRendererFactoryRegistryUtil.
+					getAssetRendererFactoryByClassNameId(classNameId);
 
 			if (!Objects.equals(
 					assetListEntry.getAssetEntryType(),
 					AssetEntry.class.getName()) &&
 				!Objects.equals(
 					assetListEntry.getAssetEntryType(),
-					curAssetRendererFactory.getClassName())) {
+					assetRendererFactory.getClassName())) {
 
 				continue;
 			}
 
-			if (!curAssetRendererFactory.isSupportsClassTypes()) {
+			if (!assetRendererFactory.isSupportsClassTypes()) {
 				manualAddIconDataMap.put(
-					curAssetRendererFactory.getTypeName(
-						_themeDisplay.getLocale()),
+					assetRendererFactory.getTypeName(_themeDisplay.getLocale()),
 					_getDataMap(
-						curAssetRendererFactory,
-						curAssetRendererFactory.getTypeName(
+						assetRendererFactory,
+						assetRendererFactory.getTypeName(
 							_themeDisplay.getLocale()),
 						_DEFAULT_SUBTYPE_SELECTION_ID));
 
@@ -736,7 +743,7 @@ public class EditAssetListDisplayContext {
 			}
 
 			ClassTypeReader classTypeReader =
-				curAssetRendererFactory.getClassTypeReader();
+				assetRendererFactory.getClassTypeReader();
 
 			List<ClassType> assetAvailableClassTypes =
 				classTypeReader.getAvailableClassTypes(
@@ -758,8 +765,7 @@ public class EditAssetListDisplayContext {
 				manualAddIconDataMap.put(
 					assetAvailableClassType.getName(),
 					_getDataMap(
-						curAssetRendererFactory,
-						assetAvailableClassType.getName(),
+						assetRendererFactory, assetAvailableClassType.getName(),
 						assetAvailableClassType.getClassTypeId()));
 			}
 		}

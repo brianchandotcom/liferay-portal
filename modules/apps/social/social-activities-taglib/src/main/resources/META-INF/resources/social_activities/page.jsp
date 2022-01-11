@@ -60,10 +60,10 @@
 								<liferay-ui:message key="yesterday" />
 							</c:when>
 							<c:when test="<%= DateUtil.getYear(activityDate) == DateUtil.getYear(date) %>">
-								<%= dateFormatDate.format(activityDescriptor.getCreateDate()) %>
+								<%= dateFormat.format(activityDescriptor.getCreateDate()) %>
 							</c:when>
 							<c:otherwise>
-								<%= yearDateFormatDate.format(activityDescriptor.getCreateDate()) %>
+								<%= yearDateFormat.format(activityDescriptor.getCreateDate()) %>
 							</c:otherwise>
 						</c:choose>
 					</div>
@@ -101,7 +101,7 @@
 
 						<div class="autofit-col autofit-col-expand">
 							<h5 class="component-subtitle">
-								<%= timeFormatDate.format(activityDescriptor.getCreateDate()) %>
+								<%= timeFormat.format(activityDescriptor.getCreateDate()) %>
 							</h5>
 
 							<div>

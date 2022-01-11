@@ -489,6 +489,17 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testUnusedMethods() throws Exception {
+		test(
+			"UnusedMethods.testjava",
+			new String[] {
+				"Method '_getInteger' is unused",
+				"Method '_getString' is unused"
+			},
+			new Integer[] {33, 41});
+	}
+
+	@Test
 	public void testUnusedParameter() throws Exception {
 		test("UnusedParameter.testjava", "Parameter 'color' is unused", 26);
 	}

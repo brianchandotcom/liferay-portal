@@ -169,16 +169,11 @@ String userIdentifierExpression = attributeMappingDisplayContext.getUserIdentifi
 
 	document
 		.querySelectorAll(
-			'input[name="<portlet:namespace />userIdentifierExpression"]:not([value="attribute"])'
+			'input[name="<portlet:namespace />userIdentifierExpression"]'
 		)
 		.forEach((radioControl) =>
 			radioControl.addEventListener('change', (event) => <portlet:namespace />evaluateAttributeMappingRows())
 		);
-	document
-		.querySelector(
-			'input[name="<portlet:namespace />userIdentifierExpression"][value="attribute"]'
-		)
-		.addEventListener('change', (event) => <portlet:namespace />evaluateAttributeMappingRows());
 
 	<portlet:namespace />evaluateAttributeMappingRows();
 </script>

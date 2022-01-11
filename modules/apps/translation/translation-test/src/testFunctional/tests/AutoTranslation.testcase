@@ -554,9 +554,9 @@ definition {
 				newTargetLocale = "es-ES");
 
 			Translations.viewTargetFields(
-				webContentContent = "Este es el contenido de un artículo web en inglés.",
+				webContentContent = "Este es el contenido de un artículo web en inglés",
 				webContentDescription = "Esta es la descripción de un artículo web en inglés",
-				webContentTitle = "Este es el título de un artículo web en inglés.");
+				webContentTitle = "Este es el título de un artículo web en inglés");
 		}
 		else if (IsTextEqual.isPartialText(locator1 = "Toolbar#FEEDBACK", value1 = "There is a problem with the translation service. Please contact your administrator.")) {
 			echo("There is a Google network issue. Ending test.");

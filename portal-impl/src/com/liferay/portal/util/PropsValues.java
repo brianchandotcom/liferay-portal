@@ -3080,10 +3080,6 @@ public class PropsValues {
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.VERIFY_DATABASE_TRANSACTIONS_DISABLED));
 
-	public static final boolean VERIFY_PATCH_LEVELS_DISABLED =
-		GetterUtil.getBoolean(
-			PropsUtil.get(PropsKeys.VERIFY_PATCH_LEVELS_DISABLED));
-
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
 	 */

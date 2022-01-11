@@ -192,15 +192,6 @@ public class MBThreadUADDisplayTest extends BaseUADDisplayTestCase<MBThread> {
 		return mbCategory;
 	}
 
-	private MBMessage _addMessage(long mbCategoryId) throws Exception {
-		MBMessage mbMessage = MBMessageUADTestUtil.addMBMessage(
-			_mbMessageLocalService, TestPropsValues.getUserId(), mbCategoryId);
-
-		_mbMessages.add(mbMessage);
-
-		return mbMessage;
-	}
-
 	private MBMessage _addMessage(long mbCategoryId, long mbThreadId)
 		throws Exception {
 

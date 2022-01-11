@@ -231,10 +231,6 @@ public class ElasticsearchSortFieldTranslatorTest
 		}
 	}
 
-	private void _assertOrder(Sort[] sorts, String fieldName, String expected) {
-		_assertOrder(sorts, fieldName, expected, null);
-	}
-
 	private void _assertOrder(
 		Sort[] sorts, String fieldName, String expected, Query query) {
 

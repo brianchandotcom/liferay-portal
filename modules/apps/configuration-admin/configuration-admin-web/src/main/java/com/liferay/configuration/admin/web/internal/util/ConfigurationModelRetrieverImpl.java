@@ -299,12 +299,6 @@ public class ConfigurationModelRetrieverImpl
 			"(!", _getPropertyFilterString(propertyName, "*"), ")");
 	}
 
-	private Configuration[] _getFactoryConfigurations(String factoryPid)
-		throws IOException {
-
-		return _getFactoryConfigurations(factoryPid, null, null);
-	}
-
 	private Configuration[] _getFactoryConfigurations(
 			String factoryPid, String property, String value)
 		throws IOException {

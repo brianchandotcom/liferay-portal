@@ -22,7 +22,6 @@ import com.liferay.dynamic.data.mapping.storage.StorageEngine;
 import com.liferay.dynamic.data.mapping.util.DDMDisplayRegistry;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -284,25 +283,6 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 			renderRequest.setAttribute(
 				KaleoFormsWebKeys.WORKFLOW_TASK, workflowTask);
 		}
-	}
-
-	/**
-	 * Binds the workflow definition to the portlet session, following the
-	 * format <code>KaleoDraftDefinition.getName() + "@" +
-	 * KaleoDraftDefinition.getVersion()</code>.
-	 *
-	 * @param actionRequest the request from which to get the request parameters
-	 */
-	private void _saveInPortletSession(
-		ActionRequest actionRequest,
-		KaleoDefinitionVersion kaleoDefinitionVersion) {
-
-		PortletSession portletSession = actionRequest.getPortletSession();
-
-		portletSession.setAttribute(
-			"workflowDefinition",
-			kaleoDefinitionVersion.getName() + StringPool.AT +
-				kaleoDefinitionVersion.getVersion());
 	}
 
 	/**

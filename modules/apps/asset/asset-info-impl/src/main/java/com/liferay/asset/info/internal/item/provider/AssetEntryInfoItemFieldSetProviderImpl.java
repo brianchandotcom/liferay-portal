@@ -170,40 +170,6 @@ public class AssetEntryInfoItemFieldSetProviderImpl
 			assetCategory -> assetCategory.getVocabularyId() == vocabularyId);
 	}
 
-	private Set<AssetVocabulary> _getAssetVocabularies(AssetEntry assetEntry) {
-		Set<AssetVocabulary> assetVocabularies = new HashSet<>(
-			_getAssetVocabularies(
-				assetEntry.getClassName(), assetEntry.getClassTypeId(),
-				assetEntry.getGroupId()));
-
-		for (AssetCategory assetCategory : assetEntry.getCategories()) {
-			assetVocabularies.add(
-				_assetVocabularyLocalService.fetchAssetVocabulary(
-					assetCategory.getVocabularyId()));
-		}
-
-		return assetVocabularies;
-	}
-
-	private List<AssetVocabulary> _getAssetVocabularies(
-		String itemClassName, long itemClassTypeId, long scopeGroupId) {
-
-		try {
-			if (itemClassTypeId > 0) {
-				return _assetVocabularyLocalService.getGroupsVocabularies(
-					_portal.getCurrentAndAncestorSiteGroupIds(scopeGroupId),
-					itemClassName, itemClassTypeId);
-			}
-
-			return _assetVocabularyLocalService.getGroupsVocabularies(
-				_portal.getCurrentAndAncestorSiteGroupIds(scopeGroupId),
-				itemClassName);
-		}
-		catch (PortalException portalException) {
-			throw new RuntimeException(portalException);
-		}
-	}
-
 	private List<Category> _getCategories(List<AssetCategory> assetCategories) {
 		List<Category> categories = new SortedArrayList<>(
 			Comparator.comparing(Category::getKey));

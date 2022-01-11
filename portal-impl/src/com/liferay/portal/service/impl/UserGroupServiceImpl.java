@@ -452,9 +452,15 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 
 	@Override
 	public UserGroup updateExternalReferenceCode(
-		UserGroup userGroup, String externalReferenceCode)
+			UserGroup userGroup, String externalReferenceCode)
 		throws PortalException {
 
+		UserGroupPermissionUtil.check(
+			getPermissionChecker(), userGroup.getUserGroupId(),
+			ActionKeys.UPDATE);
+
+		return userGroupLocalService.updateExternalReferenceCode(
+			userGroup, externalReferenceCode);
 	}
 
 	/**

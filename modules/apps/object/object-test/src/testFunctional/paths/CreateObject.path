@@ -175,6 +175,11 @@
 		<td>//a[contains(text(),'Delete')]</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>FIELD_VALUE</td>
+		<td>//input[contains(@class,'${key_fieldType}') and @value='${fieldLabel}']</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

@@ -123,7 +123,7 @@
 </tr>
 <tr>
 	<td>SEARCH_INFO</td>
-	<td>//div[contains(@class,'container-fluid')]//span[contains(@class,'text-truncate')]/span</td>
+	<td>//div[contains(@class,'container-fluid')]//span[contains(@class,'text-truncate')]/span | //section[contains(@class,'count-feedback')]//p</td>
 	<td></td>
 </tr>
 <tr>

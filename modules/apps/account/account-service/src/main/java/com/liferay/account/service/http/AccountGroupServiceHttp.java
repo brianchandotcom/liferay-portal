@@ -168,6 +168,51 @@ public class AccountGroupServiceHttp {
 		}
 	}
 
+	public static com.liferay.portal.kernel.search.BaseModelSearchResult
+		<com.liferay.account.model.AccountGroup> searchAccountGroups(
+				HttpPrincipal httpPrincipal, long companyId, String keywords,
+				int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.account.model.AccountGroup> orderByComparator)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				AccountGroupServiceUtil.class, "searchAccountGroups",
+				_searchAccountGroupsParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, companyId, keywords, start, end, orderByComparator);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.portal.kernel.search.BaseModelSearchResult
+				<com.liferay.account.model.AccountGroup>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static com.liferay.account.model.AccountGroup updateAccountGroup(
 			HttpPrincipal httpPrincipal, long accountGroupId,
 			String description, String name)
@@ -176,7 +221,7 @@ public class AccountGroupServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				AccountGroupServiceUtil.class, "updateAccountGroup",
-				_updateAccountGroupParameterTypes3);
+				_updateAccountGroupParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, accountGroupId, description, name);
@@ -218,7 +263,12 @@ public class AccountGroupServiceHttp {
 		new Class[] {long.class};
 	private static final Class<?>[] _deleteAccountGroupsParameterTypes2 =
 		new Class[] {long[].class};
-	private static final Class<?>[] _updateAccountGroupParameterTypes3 =
+	private static final Class<?>[] _searchAccountGroupsParameterTypes3 =
+		new Class[] {
+			long.class, String.class, int.class, int.class,
+			com.liferay.portal.kernel.util.OrderByComparator.class
+		};
+	private static final Class<?>[] _updateAccountGroupParameterTypes4 =
 		new Class[] {long.class, String.class, String.class};
 
 }

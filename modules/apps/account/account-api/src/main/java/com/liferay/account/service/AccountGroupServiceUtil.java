@@ -16,6 +16,7 @@ package com.liferay.account.service;
 
 import com.liferay.account.model.AccountGroup;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.OrderByComparator;
 
 /**
  * Provides the remote service utility for AccountGroup. This utility wraps
@@ -62,6 +63,16 @@ public class AccountGroupServiceUtil {
 	 */
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static com.liferay.portal.kernel.search.BaseModelSearchResult
+		<AccountGroup> searchAccountGroups(
+				long companyId, String keywords, int start, int end,
+				OrderByComparator<AccountGroup> orderByComparator)
+			throws PortalException {
+
+		return getService().searchAccountGroups(
+			companyId, keywords, start, end, orderByComparator);
 	}
 
 	public static AccountGroup updateAccountGroup(

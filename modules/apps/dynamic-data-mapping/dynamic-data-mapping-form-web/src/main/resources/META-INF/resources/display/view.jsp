@@ -84,7 +84,6 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 				<%
 				String pageDescription;
 				String pageTitle;
-				boolean showPartialResultsToRespondents = ddmFormDisplayContext.isFFShowPartialResultsEnabled() && ddmFormDisplayContext.isShowPartialResultsToRespondents();
 
 				if (expired) {
 					pageDescription = LanguageUtil.get(request, "this-form-has-an-expiration-date");
@@ -114,7 +113,7 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 						).put(
 							"pageTitle", pageTitle
 						).put(
-							"showPartialResultsToRespondents", showPartialResultsToRespondents
+							"showPartialResultsToRespondents", ddmFormDisplayContext.isShowPartialResultsToRespondents()
 						).put(
 							"showSubmitAgainButton", !ddmFormDisplayContext.isLimitToOneSubmissionPerUserEnabled() && !expired
 						).build()

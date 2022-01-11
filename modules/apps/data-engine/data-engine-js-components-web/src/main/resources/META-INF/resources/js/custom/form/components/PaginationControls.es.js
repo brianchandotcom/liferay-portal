@@ -32,7 +32,6 @@ export function PaginationControls({
 }) {
 	const {
 		cancelLabel,
-		ffShowPartialResultsEnabled,
 		redirectURL,
 		showCancelButton,
 		showPartialResultsToRespondents,
@@ -50,9 +49,7 @@ export function PaginationControls({
 		<div className="lfr-ddm-form-pagination-controls">
 			{activePage > 0 && (
 				<ClayButton
-					className={`${
-						ffShowPartialResultsEnabled ? 'float-left' : ''
-					} lfr-ddm-form-pagination-prev`}
+					className="float-left lfr-ddm-form-pagination-prev"
 					displayType="secondary"
 					onClick={() =>
 						dispatch(
@@ -74,11 +71,7 @@ export function PaginationControls({
 
 			{activePage < total - 1 && (
 				<ClayButton
-					className={`${
-						ffShowPartialResultsEnabled
-							? 'float-left'
-							: 'float-right'
-					}  lfr-ddm-form-pagination-next`}
+					className="float-left lfr-ddm-form-pagination-next"
 					displayType="primary"
 					onClick={() =>
 						dispatch(
@@ -100,11 +93,7 @@ export function PaginationControls({
 
 			{activePage === total - 1 && !readOnly && showSubmitButton && (
 				<ClayButton
-					className={
-						ffShowPartialResultsEnabled
-							? 'float-left'
-							: 'float-right'
-					}
+					className="float-left"
 					id="ddm-form-submit"
 					type="submit"
 				>
@@ -123,7 +112,7 @@ export function PaginationControls({
 				</div>
 			)}
 
-			{ffShowPartialResultsEnabled && showPartialResultsToRespondents && (
+			{showPartialResultsToRespondents && (
 				<ClayButton
 					className="float-right"
 					displayType="secondary"

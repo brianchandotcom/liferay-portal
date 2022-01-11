@@ -7,21 +7,33 @@
 		"description": "Masterclass description.",
 		"displayAvailability": true,
 		"displayStockQuantity": true,
-		"externalReferenceCode": "LOL001",
+		"externalReferenceCode": "com.liferay.site.initializer.masterclass",
 		"images": [
 			"masterclass.png"
 		],
 		"name": "Masterclass",
 		"options": [
 			{
-				"key": "domain"
+				"key": "admin-email-address"
 			},
 			{
-				"key": "name"
+				"key": "admin-first-name"
+			},
+			{
+				"key": "admin-last-name"
+			},
+			{
+				"key": "site-domain"
+			},
+			{
+				"key": "site-initializer-key"
+			},
+			{
+				"key": "site-name"
 			}
 		],
 		"price": 0.0,
-		"sku": "LOL001",
+		"sku": "com.liferay.site.initializer.masterclass",
 		"specificationOptions": [
 		],
 		"subscriptionInfo": {
@@ -40,21 +52,33 @@
 		"description": "Raylife description.",
 		"displayAvailability": true,
 		"displayStockQuantity": true,
-		"externalReferenceCode": "LOL002",
+		"externalReferenceCode": "com.liferay.site.initializer.raylife",
 		"images": [
 			"raylife.png"
 		],
 		"name": "Raylife",
 		"options": [
 			{
-				"key": "domain"
+				"key": "admin-email-address"
 			},
 			{
-				"key": "name"
+				"key": "admin-first-name"
+			},
+			{
+				"key": "admin-last-name"
+			},
+			{
+				"key": "site-domain"
+			},
+			{
+				"key": "site-initializer-key"
+			},
+			{
+				"key": "site-name"
 			}
 		],
 		"price": 0.0,
-		"sku": "LOL002",
+		"sku": "com.liferay.site.initializer.raylife",
 		"specificationOptions": [
 		],
 		"subscriptionInfo": {
@@ -73,21 +97,33 @@
 		"description": "Team Extranet description.",
 		"displayAvailability": true,
 		"displayStockQuantity": true,
-		"externalReferenceCode": "LOL003",
+		"externalReferenceCode": "com.liferay.site.initializer.team.extranet",
 		"images": [
 			"team_extranet.png"
 		],
 		"name": "Team",
 		"options": [
 			{
-				"key": "domain"
+				"key": "admin-email-address"
 			},
 			{
-				"key": "name"
+				"key": "admin-first-name"
+			},
+			{
+				"key": "admin-last-name"
+			},
+			{
+				"key": "site-domain"
+			},
+			{
+				"key": "site-initializer-key"
+			},
+			{
+				"key": "site-name"
 			}
 		],
 		"price": 0.0,
-		"sku": "LOL003",
+		"sku": "com.liferay.site.initializer.team.extranet",
 		"specificationOptions": [
 		],
 		"subscriptionInfo": {

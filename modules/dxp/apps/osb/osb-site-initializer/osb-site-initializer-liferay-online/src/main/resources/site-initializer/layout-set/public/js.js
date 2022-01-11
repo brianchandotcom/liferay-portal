@@ -27,8 +27,8 @@ if (starterkitList) {
 function copySiteName() {
 	var letterNumber = /^[0-9a-zA-Z]+$/;
 
-	copyFrom = document.getElementById('sn');
-	copyTo = document.getElementById('lod');
+	copyFrom = document.getElementById('siteName');
+	copyTo = document.getElementById('siteDomain');
 	snGroup = document.getElementById('snGroup');
 	createSite = document.getElementById('createSite');
 
@@ -55,25 +55,29 @@ function copySiteName() {
 }
 
 function openItem(
-	cpInstanceId,
+	adminEmailAddress,
+	adminFirstName,
+	adminLastName,
 	commerceChannelId,
 	commerceAccountId,
+	cpInstanceId,
 	groupId,
-	redirectURL
+	redirectURL,
+	siteInitializerKey
 ) {
 	Liferay.Util.openModal({
 		bodyHTML: `<div class="form-group" id="snGroup">
-				 <label for="sn">Site name
+				 <label for="siteName">Site name
 					 <small> (more than 4 characters)</small>
 				 </label>
 
-				 <input class="form-control" id="sn" maxlength="30" onKeyUp="copySiteName()" placeholder="Site name" type="text" />
+				 <input class="form-control" id="siteName" maxlength="30" onKeyUp="copySiteName()" placeholder="Site name" type="text" />
 			 </div>
 
 			 <div class="form-group">
-				 <label for="lod">Liferay Online Domain</label>
+				 <label for="siteDomain">Liferay Online Domain</label>
 
-				 <input class="form-control" readonly id="lod" placeholder="liferay.online" type="text" />
+				 <input class="form-control" readonly id="siteDomain" placeholder="liferay.online" type="text" />
 			 </div>
 
 			 <p class="alert alert-feedback alert-info">You can later manage custom domains from site settings.</p>
@@ -96,17 +100,23 @@ function openItem(
 						id: 'selectStarterkit',
 					});
 
-					var domainName = document.getElementById('lod').value;
-					var siteName = document.getElementById('sn').value;
+					var siteDomain = document.getElementById('siteDomain').value;
+					var siteName = document.getElementById('siteName').value;
 
 					createOrder(
-						cpInstanceId,
+						adminEmailAddress,
+						adminFirstName,
+						adminLastName,
 						commerceChannelId,
 						commerceAccountId,
-						domainName,
-						siteName,
+						cpInstanceId,
 						groupId,
-						redirectURL
+						redirectURL,
+						'',
+						siteDomain,
+						siteInitializerKey,
+						siteName,
+						''
 					);
 				},
 			},
@@ -121,13 +131,19 @@ function openItem(
 }
 
 function createOrder(
-	cpInstanceId,
+	adminEmailAddress,
+	adminFirstName,
+	adminLastName,
 	commerceChannelId,
 	commerceAccountId,
-	domainName,
-	siteName,
+	cpInstanceId,
 	groupId,
-	redirectURL
+	redirectURL,
+	siteCertificate,
+	siteDomain,
+	siteInitializerKey,
+	siteName,
+	sitePrivateKey,
 ) {
 	var cartsURL =
 		themeDisplay.getPortalURL() +
@@ -160,10 +176,22 @@ function createOrder(
 			return Liferay.Util.fetch(cartURL, {
 				body: JSON.stringify({
 					options:
-						'[{"key":"domain","value":["' +
-						domainName +
-						'"]},{"key":"name","value":["' +
+						'[{"key":"admin-email-address","value":["' +
+						adminEmailAddress +
+						'"]},{"key":"admin-first-name","value":["' +
+						adminFirstName +
+						'"]},{"key":"admin-last-name","value":["' +
+						adminLastName +
+						'"]},{"key":"site-certificate","value":["' +
+						siteCertificate +
+						'"]},{"key":"site-domain","value":["' +
+						siteDomain +
+						'"]},{"key":"site-initializer-key","value":["' +
+						siteInitializerKey +
+						'"]},{"key":"site-name","value":["' +
 						siteName +
+						'"]},{"key":"site-private-key","value":["' +
+						sitePrivateKey +
 						'"]}]',
 					quantity: 1,
 					skuId: cpInstanceId,

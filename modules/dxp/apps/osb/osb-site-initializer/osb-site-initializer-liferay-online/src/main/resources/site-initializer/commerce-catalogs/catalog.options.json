@@ -1,12 +1,42 @@
 [
 	{
 		"ddmFormFieldTypeName": "text",
-		"key": "domain",
+		"key": "admin-email-address",
 		"required": true
 	},
 	{
 		"ddmFormFieldTypeName": "text",
-		"key": "name",
+		"key": "admin-first-name",
 		"required": true
+	},
+	{
+		"ddmFormFieldTypeName": "text",
+		"key": "admin-last-name",
+		"required": true
+	},
+	{
+		"ddmFormFieldTypeName": "text",
+		"key": "site-certificate",
+		"required": false
+	},
+	{
+		"ddmFormFieldTypeName": "text",
+		"key": "site-domain",
+		"required": true
+	},
+	{
+		"ddmFormFieldTypeName": "text",
+		"key": "site-initializer-key",
+		"required": true
+	},
+	{
+		"ddmFormFieldTypeName": "text",
+		"key": "site-name",
+		"required": true
+	},
+	{
+		"ddmFormFieldTypeName": "text",
+		"key": "site-private-key",
+		"required": false
 	}
 ]

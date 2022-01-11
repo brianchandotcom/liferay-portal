@@ -25,6 +25,8 @@
 		group_id = commerceContext.getCommerceChannelGroupId()
 
 		publicFriendlyURL = themeDisplay.getPortalURL() + themeDisplay.getPathFriendlyURLPublic() + themeDisplay.getSiteGroup().getFriendlyURL()
+
+		user = themeDisplay.getUser()
 	/>
 
 	<div class="d-flex mb-6">
@@ -41,7 +43,7 @@
 		</div>
 
 		<div>
-			<a class="btn btn-primary" href="javascript:openItem(${cpInstanceId},${commerceChannelId},${commerceAccountId},${group_id},'${publicFriendlyURL}/my-site')">
+			<a class="btn btn-primary" href="javascript:openItem('${user.getEmailAddress()}','${user.getFirstName()}','${user.getLastName()}',${commerceChannelId},${commerceAccountId},${cpInstanceId},${group_id},'${publicFriendlyURL}/my-site', '${cpSku.getSku()}')">
 				Start with this starterkit
 			</a>
 		</div>

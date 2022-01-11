@@ -1264,8 +1264,8 @@ definition {
 	@description = "This is a test for LPS-136945. It checks that only 'File Upload,' 'Folder,' 'Google Drive Shortcut' and 'External Video Shortcut' options appear when adding a document."
 	@priority = "3"
 	test OnlyRelevantSelectionsAppearWhenAddingDocuments {
+		property osgi.app.includes = "document-library-google-docs";
 		property portal.acceptance = "false";
-		property portal.release = "false";
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 

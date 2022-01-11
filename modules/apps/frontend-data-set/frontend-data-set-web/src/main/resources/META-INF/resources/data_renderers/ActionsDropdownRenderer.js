@@ -121,21 +121,22 @@ export function handleAction(
 }
 
 function ActionItem({
+	action,
 	closeMenu,
 	data,
 	handleAction,
-	href,
-	icon,
+	itemData,
 	itemId,
-	label,
 	method,
 	onClick,
 	setLoading,
 	size,
-	target,
 	title,
+	url,
 }) {
 	const context = useContext(DataSetContext);
+
+	const {icon, label, target} = action;
 
 	function handleClickOnLink(event) {
 		event.preventDefault();
@@ -152,7 +153,7 @@ function ActionItem({
 				successMessage: data?.successMessage,
 				target,
 				title,
-				url: href,
+				url,
 			},
 			context
 		);
@@ -162,10 +163,24 @@ function ActionItem({
 
 	const link = isLink(target, onClick);
 
+	const onActionDropdownItemClick = context.onActionDropdownItemClick;
+
 	return (
 		<ClayDropDown.Item
-			href={link ? href : null}
-			onClick={link ? null : handleClickOnLink}
+			href={link ? url : null}
+			onClick={(event) => {
+				if (onActionDropdownItemClick) {
+					onActionDropdownItemClick({
+						action,
+						event,
+						itemData,
+					});
+				}
+
+				if (!link) {
+					handleClickOnLink(event);
+				}
+			}}
 		>
 			{icon && (
 				<span className="pr-2">
@@ -292,11 +307,24 @@ function ActionsDropdownRenderer({actions, itemData, itemId}) {
 			action.label
 		);
 
+		const onActionDropdownItemClick = context.onActionDropdownItemClick;
+
+		const url = formatActionURL(action.href, itemData);
+
 		return isLink(action.target, action.onClick) ? (
 			<ClayLink
 				className="btn btn-secondary btn-sm"
-				href={formatActionURL(action.href, itemData)}
+				href={url}
 				monospaced={Boolean(action.icon)}
+				onClick={(event) => {
+					if (onActionDropdownItemClick) {
+						onActionDropdownItemClick({
+							action,
+							event,
+							itemData,
+						});
+					}
+				}}
 			>
 				{content}
 			</ClayLink>
@@ -307,6 +335,14 @@ function ActionsDropdownRenderer({actions, itemData, itemId}) {
 				href="#"
 				monospaced={Boolean(action.icon)}
 				onClick={(event) => {
+					if (onActionDropdownItemClick) {
+						onActionDropdownItemClick({
+							action,
+							event,
+							itemData,
+						});
+					}
+
 					handleAction(
 						{
 							event,
@@ -314,7 +350,7 @@ function ActionsDropdownRenderer({actions, itemData, itemId}) {
 							method: action.method ?? actionData?.method,
 							setLoading,
 							successMessage: actionData?.successMessage,
-							url: formatActionURL(action.href, itemData),
+							url,
 							...action,
 						},
 						context
@@ -348,14 +384,15 @@ function ActionsDropdownRenderer({actions, itemData, itemId}) {
 
 			return (
 				<ActionItem
-					{...item}
+					action={item}
 					closeMenu={() => setMenuActive(false)}
 					handleAction={handleAction}
-					href={item.href && formatActionURL(item.href, itemData)}
+					itemData={itemData}
 					itemId={itemId}
 					key={i}
 					method={item.method ?? item.data?.method}
 					setLoading={setLoading}
+					url={item.href && formatActionURL(item.href, itemData)}
 				/>
 			);
 		});

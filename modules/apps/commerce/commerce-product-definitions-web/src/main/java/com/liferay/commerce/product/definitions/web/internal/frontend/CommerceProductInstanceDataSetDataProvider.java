@@ -112,6 +112,12 @@ public class CommerceProductInstanceDataSetDataProvider
 				statusDisplayStyle = "success";
 			}
 
+			String discontinued = "No";
+
+			if (cpInstance.isDiscontinued()) {
+				discontinued = "Yes";
+			}
+
 			skus.add(
 				new Sku(
 					cpInstance.getCPInstanceId(), cpInstance.getSku(),
@@ -126,7 +132,8 @@ public class CommerceProductInstanceDataSetDataProvider
 						LanguageUtil.get(
 							httpServletRequest,
 							WorkflowConstants.getStatusLabel(
-								cpInstance.getStatus())))));
+								cpInstance.getStatus()))),
+					discontinued));
 		}
 
 		return skus;

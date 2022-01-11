@@ -913,75 +913,74 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			Option option = optionsPage.fetchFirstItem();
 
-			if (option != null) {
-				ProductOption[] productOptions = new ProductOption[1];
-
-				productOptions[0] = new ProductOption() {
-					{
-						facetable = option.getFacetable();
-						fieldType = option.getFieldType(
-						).toString();
-						key = option.getKey();
-						name = option.getName();
-						optionId = option.getId();
-						required = option.getRequired();
-						skuContributor = option.getSkuContributor();
-					}
-				};
-
-				CPDefinition cpDefinition =
-					_commerceReferencesHolder.cpDefinitionLocalService.
-						fetchCPDefinitionByCProductExternalReferenceCode(
-							subscriptionPropertiesJSONObject.getString(
-								"cpDefinitionExternalReferenceCode"),
-							serviceContext.getCompanyId());
-
-				productOptionResource.postProductIdProductOptionsPage(
-					cpDefinition.getCProductId(), productOptions);
-
-				_commerceReferencesHolder.cpInstanceLocalService.
-					buildCPInstances(
-						cpDefinition.getCPDefinitionId(), serviceContext);
-
-				JSONObject subscriptionTypeSettingsJSONObject =
-					subscriptionPropertiesJSONObject.getJSONObject(
-						"subscriptionTypeSettings");
-
-				UnicodeProperties unicodeProperties = new UnicodeProperties(
-					JSONUtil.toStringMap(subscriptionTypeSettingsJSONObject),
-					true);
-
-				CPInstance cpInstance =
-					_commerceReferencesHolder.cpInstanceLocalService.
-						getCPInstance(
-							cpDefinition.getCPDefinitionId(),
-							subscriptionPropertiesJSONObject.getString(
-								"cpInstanceSku"));
-
-				_commerceReferencesHolder.cpInstanceLocalService.
-					updateSubscriptionInfo(
-						cpInstance.getCPInstanceId(),
-						subscriptionPropertiesJSONObject.getBoolean(
-							"overrideSubscriptionInfo"),
-						subscriptionPropertiesJSONObject.getBoolean(
-							"subscriptionEnabled"),
-						subscriptionPropertiesJSONObject.getInt(
-							"subscriptionLength"),
-						subscriptionPropertiesJSONObject.getString(
-							"subscriptionType"),
-						unicodeProperties,
-						subscriptionPropertiesJSONObject.getLong(
-							"maxSubscriptionCycles"),
-						subscriptionPropertiesJSONObject.getBoolean(
-							"deliverySubscriptionEnabled"),
-						subscriptionPropertiesJSONObject.getInt(
-							"deliverySubscriptionLength"),
-						subscriptionPropertiesJSONObject.getString(
-							"deliverySubscriptionType"),
-						new UnicodeProperties(),
-						subscriptionPropertiesJSONObject.getLong(
-							"deliveryMaxSubscriptionCycles"));
+			if (option == null) {
+				continue;
 			}
+
+			ProductOption[] productOptions = new ProductOption[1];
+
+			productOptions[0] = new ProductOption() {
+				{
+					facetable = option.getFacetable();
+					fieldType = option.getFieldType(
+					).toString();
+					key = option.getKey();
+					name = option.getName();
+					optionId = option.getId();
+					required = option.getRequired();
+					skuContributor = option.getSkuContributor();
+				}
+			};
+
+			CPDefinition cpDefinition =
+				_commerceReferencesHolder.cpDefinitionLocalService.
+					fetchCPDefinitionByCProductExternalReferenceCode(
+						subscriptionPropertiesJSONObject.getString(
+							"cpDefinitionExternalReferenceCode"),
+						serviceContext.getCompanyId());
+
+			productOptionResource.postProductIdProductOptionsPage(
+				cpDefinition.getCProductId(), productOptions);
+
+			_commerceReferencesHolder.cpInstanceLocalService.buildCPInstances(
+				cpDefinition.getCPDefinitionId(), serviceContext);
+
+			JSONObject subscriptionTypeSettingsJSONObject =
+				subscriptionPropertiesJSONObject.getJSONObject(
+					"subscriptionTypeSettings");
+
+			UnicodeProperties unicodeProperties = new UnicodeProperties(
+				JSONUtil.toStringMap(subscriptionTypeSettingsJSONObject), true);
+
+			CPInstance cpInstance =
+				_commerceReferencesHolder.cpInstanceLocalService.getCPInstance(
+					cpDefinition.getCPDefinitionId(),
+					subscriptionPropertiesJSONObject.getString(
+						"cpInstanceSku"));
+
+			_commerceReferencesHolder.cpInstanceLocalService.
+				updateSubscriptionInfo(
+					cpInstance.getCPInstanceId(),
+					subscriptionPropertiesJSONObject.getBoolean(
+						"overrideSubscriptionInfo"),
+					subscriptionPropertiesJSONObject.getBoolean(
+						"subscriptionEnabled"),
+					subscriptionPropertiesJSONObject.getInt(
+						"subscriptionLength"),
+					subscriptionPropertiesJSONObject.getString(
+						"subscriptionType"),
+					unicodeProperties,
+					subscriptionPropertiesJSONObject.getLong(
+						"maxSubscriptionCycles"),
+					subscriptionPropertiesJSONObject.getBoolean(
+						"deliverySubscriptionEnabled"),
+					subscriptionPropertiesJSONObject.getInt(
+						"deliverySubscriptionLength"),
+					subscriptionPropertiesJSONObject.getString(
+						"deliverySubscriptionType"),
+					new UnicodeProperties(),
+					subscriptionPropertiesJSONObject.getLong(
+						"deliveryMaxSubscriptionCycles"));
 		}
 	}
 

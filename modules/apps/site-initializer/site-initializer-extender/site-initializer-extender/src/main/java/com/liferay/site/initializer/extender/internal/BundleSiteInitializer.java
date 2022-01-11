@@ -373,7 +373,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 			_invoke(
 				() -> _addJournalArticles(
 					_ddmStructureLocalService, _ddmTemplateLocalService,
-					documentsStringUtilReplaceValues, serviceContext));
+					documentsStringUtilReplaceValues, serviceContext,
+					siteNavigationMenuItemSettingsBuilder));
 			_invoke(
 				() -> _addLayoutPageTemplates(
 					assetListEntryIdsStringUtilReplaceValues,
@@ -1226,7 +1227,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 			DDMTemplateLocalService ddmTemplateLocalService,
 			Long documentFolderId,
 			Map<String, String> documentsStringUtilReplaceValues,
-			String parentResourcePath, ServiceContext serviceContext)
+			String parentResourcePath, ServiceContext serviceContext,
+			SiteNavigationMenuItemSettingsBuilder
+				siteNavigationMenuItemSettingsBuilder)
 		throws Exception {
 
 		Set<String> resourcePaths = _servletContext.getResourcePaths(
@@ -1246,7 +1249,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 					_addStructuredContentFolders(
 						documentFolderId, parentResourcePath, serviceContext),
 					documentsStringUtilReplaceValues, resourcePath,
-					serviceContext);
+					serviceContext, siteNavigationMenuItemSettingsBuilder);
 
 				continue;
 			}
@@ -1296,24 +1299,47 @@ public class BundleSiteInitializer implements SiteInitializer {
 				JSONUtil.toStringArray(
 					jsonObject.getJSONArray("assetTagNames")));
 
-			_journalArticleLocalService.addArticle(
-				null, serviceContext.getUserId(),
-				serviceContext.getScopeGroupId(), journalFolderId,
-				JournalArticleConstants.CLASS_NAME_ID_DEFAULT, 0,
-				jsonObject.getString("articleId"), false, 1, titleMap, null,
-				titleMap,
-				StringUtil.replace(
-					_read(StringUtil.replace(resourcePath, ".json", ".xml")),
-					"[$", "$]", documentsStringUtilReplaceValues),
-				ddmStructureKey, ddmTemplateKey, null,
-				calendar.get(Calendar.MONTH),
-				calendar.get(Calendar.DAY_OF_MONTH),
-				calendar.get(Calendar.YEAR), calendar.get(Calendar.HOUR_OF_DAY),
-				calendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0, true, 0, 0, 0, 0,
-				0, true, true, false, null, null, null, null, serviceContext);
+			JournalArticle journalArticle =
+				_journalArticleLocalService.addArticle(
+					null, serviceContext.getUserId(),
+					serviceContext.getScopeGroupId(), journalFolderId,
+					JournalArticleConstants.CLASS_NAME_ID_DEFAULT, 0,
+					jsonObject.getString("articleId"), false, 1, titleMap, null,
+					titleMap,
+					StringUtil.replace(
+						_read(
+							StringUtil.replace(resourcePath, ".json", ".xml")),
+						"[$", "$]", documentsStringUtilReplaceValues),
+					ddmStructureKey, ddmTemplateKey, null,
+					calendar.get(Calendar.MONTH),
+					calendar.get(Calendar.DAY_OF_MONTH),
+					calendar.get(Calendar.YEAR),
+					calendar.get(Calendar.HOUR_OF_DAY),
+					calendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0, true, 0, 0, 0,
+					0, 0, true, true, false, null, null, null, null,
+					serviceContext);
 
 			serviceContext.setAssetCategoryIds(null);
 			serviceContext.setAssetTagNames(null);
+
+			DDMStructure ddmStructure = journalArticle.getDDMStructure();
+
+			siteNavigationMenuItemSettingsBuilder.put(
+				resourcePath,
+				new SiteNavigationMenuItemSetting() {
+					{
+						className = JournalArticle.class.getName();
+						classPK = String.valueOf(
+							journalArticle.getResourcePrimKey());
+						classTypeId = String.valueOf(
+							ddmStructure.getStructureId());
+						title = journalArticle.getTitle(
+							serviceContext.getLocale());
+						type = ResourceActionsUtil.getModelResource(
+							serviceContext.getLocale(),
+							JournalArticle.class.getName());
+					}
+				});
 		}
 	}
 
@@ -1321,13 +1347,16 @@ public class BundleSiteInitializer implements SiteInitializer {
 			DDMStructureLocalService ddmStructureLocalService,
 			DDMTemplateLocalService ddmTemplateLocalService,
 			Map<String, String> documentsStringUtilReplaceValues,
-			ServiceContext serviceContext)
+			ServiceContext serviceContext,
+			SiteNavigationMenuItemSettingsBuilder
+				siteNavigationMenuItemSettingsBuilder)
 		throws Exception {
 
 		_addJournalArticles(
 			ddmStructureLocalService, ddmTemplateLocalService, null,
 			documentsStringUtilReplaceValues,
-			"/site-initializer/journal-articles", serviceContext);
+			"/site-initializer/journal-articles", serviceContext,
+			siteNavigationMenuItemSettingsBuilder);
 	}
 
 	private void _addLayout(

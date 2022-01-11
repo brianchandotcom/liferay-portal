@@ -14,7 +14,7 @@
 
 package com.liferay.learn.taglib.servlet.taglib;
 
-import com.liferay.learn.taglib.internal.web.cache.JSONObjectWebCacheItem;
+import com.liferay.learn.LearnMessageUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.util.IncludeTag;
@@ -36,7 +36,7 @@ public class JSONTag extends IncludeTag {
 
 	@Override
 	public int processEndTag() throws Exception {
-		JSONObject jsonObject = JSONObjectWebCacheItem.get(_resource);
+		JSONObject jsonObject = LearnMessageUtil.getJSONObject(_resource);
 
 		if (Validator.isNotNull(_var)) {
 			pageContext.setAttribute(_var, jsonObject.toString());

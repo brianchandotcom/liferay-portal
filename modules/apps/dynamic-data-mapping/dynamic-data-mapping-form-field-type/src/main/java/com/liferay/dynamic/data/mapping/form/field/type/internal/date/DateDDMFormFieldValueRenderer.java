@@ -74,10 +74,10 @@ public class DateDDMFormFieldValueRenderer
 			defaultLocale
 		);
 
+		SimpleDateFormat simpleDateFormat = null;
+
 		boolean dateTime = Pattern.matches(
 			"^\\d{4}-\\d{2}-\\d{2} \\d{1,2}:\\d{2}$", valueString);
-
-		SimpleDateFormat simpleDateFormat = null;
 
 		if (dateTime) {
 			simpleDateFormat = (SimpleDateFormat)DateFormat.getDateTimeInstance(

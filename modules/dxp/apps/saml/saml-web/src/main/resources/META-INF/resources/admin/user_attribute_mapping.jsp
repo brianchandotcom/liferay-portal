@@ -104,7 +104,7 @@ String userIdentifierExpression = attributeMappingDisplayContext.getUserIdentifi
 		);
 		var selectTarget = row.querySelector('select');
 		var attributeMappingSelected = document.querySelector(
-			'input[name="_com_liferay_saml_web_internal_portlet_SamlAdminPortlet_userIdentifierExpression"][value="attribute"]'
+			'input[name="<portlet:namespace />userIdentifierExpression"][value="attribute"]'
 		).checked;
 
 		if (event == null || event.target == radioTarget) {

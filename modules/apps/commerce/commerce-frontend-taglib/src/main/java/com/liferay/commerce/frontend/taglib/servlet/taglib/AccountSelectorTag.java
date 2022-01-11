@@ -189,7 +189,8 @@ public class AccountSelectorTag extends IncludeTag {
 		throws PortalException {
 
 		int commerceOrderTypesCount =
-			_commerceOrderTypeLocalService.getCommerceOrderTypesCount();
+			_commerceOrderTypeLocalService.getCommerceOrderTypesCount(
+				themeDisplay.getCompanyId(), true);
 
 		if (commerceOrderTypesCount > 1) {
 			httpServletRequest.setAttribute(

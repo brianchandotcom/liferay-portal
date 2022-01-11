@@ -27,8 +27,6 @@ import com.liferay.portal.language.override.service.PLOEntryLocalService;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import java.util.Locale;
-
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -50,43 +48,40 @@ public class PLOEntryLocalServiceTest {
 	@Test
 	public void testAddPLOEntryNewKey() throws Exception {
 		String key = RandomTestUtil.randomString();
-		Locale locale = LocaleUtil.getDefault();
 
-		_assertTranslationValue(locale, key, null);
+		_assertTranslationValue(key, null);
 
 		PLOEntry ploEntry = _ploEntryLocalService.addOrUpdatePLOEntry(
 			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(), key,
-			LanguageUtil.getLanguageId(locale), RandomTestUtil.randomString());
+			LanguageUtil.getLanguageId(LocaleUtil.getDefault()),
+			RandomTestUtil.randomString());
 
-		_assertTranslationValue(locale, key, ploEntry.getValue());
+		_assertTranslationValue(key, ploEntry.getValue());
 	}
 
 	@Test
 	public void testAddPLOEntryOverrideExistingKey() throws Exception {
 		String key = "available-languages";
-		Locale locale = LocaleUtil.getDefault();
 
-		String originalValue = LanguageResources.getMessage(locale, key);
-
-		Assert.assertNotNull(originalValue);
+		Assert.assertNotNull(
+			LanguageResources.getMessage(LocaleUtil.getDefault(), key));
 
 		PLOEntry ploEntry = _ploEntryLocalService.addOrUpdatePLOEntry(
 			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(), key,
-			LanguageUtil.getLanguageId(locale), RandomTestUtil.randomString());
+			LanguageUtil.getLanguageId(LocaleUtil.getDefault()),
+			RandomTestUtil.randomString());
 
-		_assertTranslationValue(locale, key, ploEntry.getValue());
+		_assertTranslationValue(key, ploEntry.getValue());
 	}
 
-	private void _assertTranslationValue(
-		Locale locale, String key, String expectedValue) {
-
+	private void _assertTranslationValue(String key, String value) {
 		Assert.assertEquals(
-			expectedValue, LanguageResources.getMessage(locale, key));
-
+			value, LanguageResources.getMessage(LocaleUtil.getDefault(), key));
 		Assert.assertEquals(
-			expectedValue,
+			value,
 			ResourceBundleUtil.getString(
-				LanguageResources.getResourceBundle(locale), key));
+				LanguageResources.getResourceBundle(LocaleUtil.getDefault()),
+				key));
 	}
 
 	@Inject

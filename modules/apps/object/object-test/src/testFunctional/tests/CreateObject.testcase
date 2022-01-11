@@ -514,7 +514,7 @@ definition {
 
 		CreateObject.selectTitleField(fieldLabel = "Custom Field");
 
-		Button.clickSave();
+		CreateObject.saveObject();
 
 		ObjectAdmin.goToLayoutsTab();
 
@@ -3528,7 +3528,7 @@ definition {
 
 		CreateObject.selectTitleField(fieldLabel = "BigDecimal");
 
-		Button.clickSave();
+		CreateObject.saveObject();
 
 		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
 			fieldName = "customObjectField",
@@ -3612,7 +3612,7 @@ definition {
 
 		CreateObject.selectTitleField(fieldLabel = "Date");
 
-		Button.clickSave();
+		CreateObject.saveObject();
 
 		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
 			fieldName = "customObjectField",
@@ -3805,12 +3805,81 @@ definition {
 	}
 
 	@description = "LPS-139803 - Verify it the Object Entry Title is displayed on the Relationship tab"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanViewObjectEntryTitleOnRelationshipTab {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-		// TODO LPS-141620 CanViewObjectEntryTitleOnRelationshipTab pending implementation
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "Custom Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject");
 
+		ObjectAdmin.addObjectRelationshipViaAPI(
+			objectName_1 = "CustomObject",
+			objectName_2 = "CustomObject",
+			relationshipLabel = "Relationship",
+			relationshipName = "relationship",
+			relationshipType = "oneToMany");
+
+		ObjectAdmin.addObjectLayoutViaAPI(
+			layoutName = "Layout Name",
+			objectName = "CustomObject");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+		CreateObject.selectTitleField(fieldLabel = "Custom Field");
+
+		CreateObject.saveObject();
+
+		ObjectAdmin.goToLayoutsTab();
+
+		ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
+
+		ObjectAdmin.markLayoutAsDefault();
+
+		ObjectAdmin.goToLayoutTabOnLayouts();
+
+		ObjectAdmin.addTabFieldsOnLayout(
+			blockName = "Block 1",
+			columnsNumber = "1",
+			fieldList = "Custom Field,Custom Object",
+			tabName = "Field Tab");
+
+		ObjectAdmin.addTabRelationshipsOnLayout(
+			relationshipsLabelName = "Relationship",
+			tabName = "Relationship Tab");
+
+		Button.clickSave();
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		for (var fieldEntry : list "A,B") {
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customObjectField",
+				objectName = "CustomObject",
+				value = "Entry ${fieldEntry}");
+		}
+
+		Navigator.openURL();
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+		ObjectPortlet.viewEntryDetails(entry = "Entry A");
+
+		ObjectAdmin.gotoRelationshipsTab();
+
+		CreateObject.addRelationshipAndSelectEntry(titleFieldName = "Entry B");
+
+		Refresh();
+
+		ObjectPortlet.viewEntry(entry = "Entry B");
 	}
 
 	@description = "LPS-139803 - Verify if the Object Entry Title is displayed for Object entries on workflow pages (My Workflow Tasks, My Submissions, and Submissions)"

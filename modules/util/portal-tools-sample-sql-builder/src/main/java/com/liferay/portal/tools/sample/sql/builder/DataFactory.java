@@ -2106,7 +2106,7 @@ public class DataFactory {
 						"commerce/commerce_theme_portlet_settings.json"))));
 	}
 
-	public CompanyModel newCompanyModel(int... index) {
+	public CompanyModel newCompanyModel(String webId) {
 		CompanyModel companyModel = new CompanyModelImpl();
 
 		// PK fields
@@ -2120,17 +2120,10 @@ public class DataFactory {
 
 		// Other fields
 
-		if (index.length == 0) {
-			companyModel.setWebId("liferay.com");
-		}
-		else {
-			companyModel.setWebId(
-				StringBundler.concat("liferay", index[0], ".com"));
-		}
-
+		companyModel.setWebId(webId);
 		companyModel.setMx("liferay.com");
 		companyModel.setActive(true);
-		companyModel.setName(companyModel.getWebId());
+		companyModel.setName(webId);
 		companyModel.setLegalName("Liferay, Inc.");
 
 		return companyModel;
@@ -2140,12 +2133,13 @@ public class DataFactory {
 		List<CompanyModel> companyModels = new ArrayList<>(
 			BenchmarksPropsValues.MAX_VIRTUAL_INSTANCE_COUNT + 1);
 
-		companyModels.add(newCompanyModel());
+		companyModels.add(newCompanyModel("liferay.com"));
 
 		for (int i = 1; i <= BenchmarksPropsValues.MAX_VIRTUAL_INSTANCE_COUNT;
 			 i++) {
 
-			companyModels.add(newCompanyModel(i));
+			companyModels.add(
+				newCompanyModel(StringBundler.concat("liferay", i, ".com")));
 		}
 
 		return companyModels;

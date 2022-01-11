@@ -1303,7 +1303,7 @@ public class EditAssetListDisplayContext {
 				_themeDisplay.getLocale());
 
 		return ListUtil.toLongArray(
-			assetAvailableClassTypes, classType -> classType.getClassTypeId());
+			assetAvailableClassTypes, ClassType::getClassTypeId);
 	}
 
 	private String _getDeleteAssetListEntryVariationURL(

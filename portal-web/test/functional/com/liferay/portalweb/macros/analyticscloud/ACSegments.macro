@@ -481,9 +481,11 @@ definition {
 
 		Click(locator1 = "ACSegments#CRITERION_TYPE_DROPDOWN");
 
-		Click(
-			locator1 = "ACSegments#SELECT_CRITERION_TYPE",
-			value1 = "${criterion}");
+		while (IsElementPresent(locator1 = "ACSegments#SELECT_CRITERION_TYPE", value1 = "${criterion}")) {
+			Click(
+				locator1 = "ACSegments#SELECT_CRITERION_TYPE",
+				value1 = "${criterion}");
+		}
 	}
 
 	macro includeAnonymous {

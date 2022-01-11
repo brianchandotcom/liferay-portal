@@ -321,7 +321,8 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		for (long deleteCommerceOrderId : deleteCommerceOrderIds) {
-			_commerceOrderService.deleteCommerceOrder(deleteCommerceOrderId);
+			_commerceOrderHttpHelper.deleteCommerceOrder(
+				actionRequest, deleteCommerceOrderId);
 		}
 	}
 

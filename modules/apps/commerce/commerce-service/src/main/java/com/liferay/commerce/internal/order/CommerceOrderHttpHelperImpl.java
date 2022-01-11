@@ -69,6 +69,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowStateException;
@@ -128,6 +129,32 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 		setCurrentCommerceOrder(httpServletRequest, commerceOrder);
 
 		return commerceOrder;
+	}
+
+	@Override
+	public void deleteCommerceOrder(
+			ActionRequest actionRequest, long commerceOrderId)
+		throws PortalException {
+
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
+			actionRequest);
+
+		httpServletRequest = _portal.getOriginalServletRequest(
+			httpServletRequest);
+
+		httpServletRequest.removeAttribute(
+			CommerceCheckoutWebKeys.COMMERCE_ORDER);
+
+		HttpSession httpSession = httpServletRequest.getSession();
+
+		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
+			commerceOrderId);
+
+		httpSession.removeAttribute(
+			CommerceOrder.class.getName() + StringPool.POUND +
+				commerceOrder.getGroupId());
+
+		_commerceOrderService.deleteCommerceOrder(commerceOrderId);
 	}
 
 	@Override

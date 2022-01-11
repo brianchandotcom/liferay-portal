@@ -954,6 +954,57 @@ definition {
 			NavigationMenusAdmin.viewItemNotPresent(itemNameList = "Page 3");
 		}
 	}
+
+	@description = "This is a test for LPS-137577. The category should be added under the nearest ancestor selected."
+	@priority = "4"
+	test ViewCategoryAddedToNearestAncestor {
+		property osgi.module.configuration.file.names = "com.liferay.asset.categories.item.selector.web.internal.configuration.FFAssetCategoriesItemSelectorConfiguration.config:com.liferay.site.navigation.admin.web.internal.configuration.FFSiteNavigationAdminConfiguration.config:com.liferay.site.navigation.menu.item.display.page.internal.configuration.FFDisplayPageSiteNavigationMenuItemConfiguration.config";
+		property osgi.module.configurations = "categoriesMultipleSelectionEnabled=&quot;true&quot;:categoriesMultipleSelectionEnabled=&quot;true&quot;:multipleSelectionEnabled=B&quot;true&quot;";
+
+		task ("Add three hierarchy levels categories to a vocabulary within a site") {
+			JSONCategory.addVocabulary(
+				groupName = "Test Site Name",
+				title = "Vocabulary Name");
+
+			JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category Name",
+				vocabularyName = "Vocabulary Name");
+
+			JSONCategory.addSubcategory(
+				groupName = "Test Site Name",
+				parentCategoryName = "Category Name",
+				title = "Subcategory Name",
+				vocabularyName = "Vocabulary Name");
+
+			JSONCategory.addSubcategory(
+				groupName = "Test Site Name",
+				parentCategoryName = "Subcategory Name",
+				title = "SubSubcategory Name",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("Add a navigation menu") {
+			JSONSitenavigation.addSiteNavigationMenu(
+				groupName = "Test Site Name",
+				siteNavigationMenuName = "Navigation Menu Name");
+		}
+
+		task ("Add first and third category into Navigation Menu") {
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
+
+			NavigationMenusAdmin.gotoEdit(navigationMenuName = "Navigation Menu Name");
+
+			NavigationMenusAdmin.addCategoryItem(assetTitleList = "Category Name,SubSubcategory Name");
+		}
+
+		task ("View third level of category is nested to first category") {
+			NavigationMenusAdmin.viewItemNested(
+				groupName = "Test Site Name",
+				itemNameList = "SubSubcategory Name",
+				parentItemNameList = "Category Name",
+				site = "true",
+				siteNavigationMenuName = "Navigation Menu Name");
 		}
 	}
 

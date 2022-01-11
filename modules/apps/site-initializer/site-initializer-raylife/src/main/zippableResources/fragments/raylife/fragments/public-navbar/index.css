@@ -4,6 +4,12 @@
 	margin: 0 20px;
 }
 
+.public-site-navbar .brand-subtext {
+	margin-left: 38px;
+	position: absolute;
+	top: 45px;
+}
+
 .public-site-navbar .dropdown-menu {
 	left: auto;
 	right: 0;
@@ -81,7 +87,8 @@
 	.public-site-navbar-telephone,
 	.public-site-navbar-divider,
 	.public-site-navbar-link,
-	.public-site-navbar-switch {
+	.public-site-navbar-switch,
+	.public-site-navbar .brand-subtext {
 		display: none;
 	}
 

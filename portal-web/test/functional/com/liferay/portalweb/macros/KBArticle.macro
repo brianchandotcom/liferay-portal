@@ -813,7 +813,7 @@ definition {
 	macro importCP {
 		LexiconEntry.gotoAddDropdownMenuItem(menuItem = "Import");
 
-		UploadDependencyFile.uploadFile(fileName = "${kbZipFile}");
+		UploadDependencyFile.uploadArchiveFile(fileName = "${kbZipFile}");
 
 		if ("${applyNumericalPrefix}" == "true") {
 			Check(locator1 = "Checkbox#PRIORITIZATION_STRATEGY");

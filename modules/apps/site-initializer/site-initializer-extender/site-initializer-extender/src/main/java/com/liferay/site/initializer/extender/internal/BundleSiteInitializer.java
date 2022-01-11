@@ -72,6 +72,7 @@ import com.liferay.object.admin.rest.dto.v1_0.ObjectRelationship;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectRelationshipResource;
 import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.function.UnsafeRunnable;
@@ -387,7 +388,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				_invoke(
 					() -> _addObjectDefinitions(
 						listTypeDefinitionIdsStringUtilReplaceValues,
-						serviceContext));
+						serviceContext, siteNavigationMenuItemSettingsBuilder));
 
 			_invoke(
 				() -> _addCPDefinitions(
@@ -1743,7 +1744,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 	private Map<String, String> _addObjectDefinitions(
 			Map<String, String> listTypeDefinitionIdsStringUtilReplaceValues,
-			ServiceContext serviceContext)
+			ServiceContext serviceContext,
+			SiteNavigationMenuItemSettingsBuilder
+				siteNavigationMenuItemSettingsBuilder)
 		throws Exception {
 
 		Map<String, String> objectDefinitionIdsStringUtilReplaceValues =
@@ -1837,13 +1840,38 @@ public class BundleSiteInitializer implements SiteInitializer {
 				objectEntriesJSON);
 
 			for (int i = 0; i < jsonArray.length(); i++) {
-				_objectEntryLocalService.addObjectEntry(
-					serviceContext.getUserId(), groupId,
-					objectDefinition.getId(),
-					ObjectMapperUtil.readValue(
-						Serializable.class,
-						String.valueOf(jsonArray.getJSONObject(i))),
-					serviceContext);
+				JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+				ObjectEntry objectEntry =
+					_objectEntryLocalService.addObjectEntry(
+						serviceContext.getUserId(), groupId,
+						objectDefinition.getId(),
+						ObjectMapperUtil.readValue(
+							Serializable.class, String.valueOf(jsonObject)),
+						serviceContext);
+
+				// TODO Rename "objectEntryKey" because it is too generic
+
+				String objectEntryKey = jsonObject.getString("objectEntryKey");
+
+				if (objectEntryKey == null) {
+					continue;
+				}
+
+				String objectDefinitionName = objectDefinition.getName();
+
+				siteNavigationMenuItemSettingsBuilder.put(
+					objectEntryKey,
+					new SiteNavigationMenuItemSetting() {
+						{
+							className = objectEntry.getModelClassName();
+							classPK = String.valueOf(
+								objectEntry.getObjectEntryId());
+							title =
+								objectDefinitionName + StringPool.SPACE +
+									objectEntry.getObjectEntryId();
+						}
+					});
 			}
 		}
 

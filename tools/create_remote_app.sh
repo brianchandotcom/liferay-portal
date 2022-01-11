@@ -63,26 +63,20 @@ function check_usage {
 	fi
 }
 
-function react_requirements {
-	# Verify Yarn
-	status=$?
-	cmd="which yarn"
-	$cmd
-	status=$?
+function check_utils {
 
-	if [ $status -ne 0 ]
-	then
-		echo "Error: Yarn not found"
-		echo ""
-		echo "  To install run the following command: npm install -g yarn"
-		echo ""
-		echo "After install yarn, run the command again"
-		exit 1
-	fi
+	#
+	# https://stackoverflow.com/a/677212
+	#
+
+	for util in "${@}"
+	do
+		command -v ${util} >/dev/null 2>&1 || { echo >&2 "The utility ${util} is not installed."; exit 1; }
+	done
 }
 
 function create_react_app {
-	react_requirements
+	check_utils yarn
 
 	yarn create react-app ${REMOTE_APP_DIR}
 
@@ -113,6 +107,8 @@ function create_react_app {
 }
 
 function create_vue_2_app {
+	check_utils npm
+
 	npm i -g @vue/cli
 
 	vue create ${REMOTE_APP_DIR} --default

@@ -25,6 +25,7 @@ import com.liferay.commerce.pricing.exception.CommerceUndefinedBasePriceListExce
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.exception.CPDefinitionIgnoreSKUCombinationsException;
 import com.liferay.commerce.product.exception.CPInstanceJsonException;
+import com.liferay.commerce.product.exception.CPInstanceReplacementCPInstanceUuidException;
 import com.liferay.commerce.product.exception.CPInstanceSkuException;
 import com.liferay.commerce.product.exception.NoSuchSkuContributorCPDefinitionOptionRelException;
 import com.liferay.commerce.product.model.CPDefinition;
@@ -48,7 +49,9 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
+import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -59,6 +62,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import java.math.BigDecimal;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Objects;
 import java.util.concurrent.Callable;
 
@@ -119,7 +123,10 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 				throwable instanceof CPInstanceJsonException ||
 				throwable instanceof CPInstanceSkuException ||
 				throwable instanceof
-					NoSuchSkuContributorCPDefinitionOptionRelException) {
+					CPInstanceReplacementCPInstanceUuidException ||
+				throwable instanceof
+					NoSuchSkuContributorCPDefinitionOptionRelException
+			) {
 
 				hideDefaultErrorMessage(actionRequest);
 				hideDefaultSuccessMessage(actionRequest);
@@ -345,31 +352,51 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 
 		String replacementCPInstanceUuid = null;
 		long replacementCProductId = 0;
+		int discontinuedDateMonth = 0;
+		int discontinuedDateDay = 0;
+		int discontinuedDateYear = 0;
 
-		long replacementCPInstanceId = ParamUtil.getLong(
-			actionRequest, "replacementCPInstanceId");
+		if (discontinued) {
+			long replacementCPInstanceId = ParamUtil.getLong(
+				actionRequest, "replacementCPInstanceId");
 
-		if (replacementCPInstanceId > 0) {
-			CPInstance replacementCPInstance =
-				_cpInstanceService.fetchCPInstance(replacementCPInstanceId);
+			if (replacementCPInstanceId > 0) {
+				CPInstance replacementCPInstance =
+					_cpInstanceService.fetchCPInstance(replacementCPInstanceId);
 
-			if (replacementCPInstance != null) {
-				replacementCPInstanceUuid =
-					replacementCPInstance.getCPInstanceUuid();
+				if (replacementCPInstance != null) {
+					replacementCPInstanceUuid =
+						replacementCPInstance.getCPInstanceUuid();
 
-				CPDefinition replacementCPDefinition =
-					replacementCPInstance.getCPDefinition();
+					CPDefinition replacementCPDefinition =
+						replacementCPInstance.getCPDefinition();
 
-				replacementCProductId = replacementCPDefinition.getCProductId();
+					replacementCProductId =
+						replacementCPDefinition.getCProductId();
+				}
+			}
+
+			Date discontinuedDate = ParamUtil.getDate(
+				actionRequest, "discontinuedDate",
+				DateFormatFactoryUtil.getSimpleDateFormat("MM/dd/yyyy"));
+
+			if (discontinuedDate != null) {
+				Calendar calendar = CalendarFactoryUtil.getCalendar(
+					discontinuedDate.getTime());
+
+				discontinuedDateDay = calendar.get(Calendar.DAY_OF_MONTH);
+				discontinuedDateMonth = calendar.get(Calendar.MONTH);
+				discontinuedDateYear = calendar.get(Calendar.YEAR);
+			}
+			else {
+				discontinuedDateMonth = ParamUtil.getInteger(
+					actionRequest, "discontinuedDateMonth");
+				discontinuedDateDay = ParamUtil.getInteger(
+					actionRequest, "discontinuedDateDay");
+				discontinuedDateYear = ParamUtil.getInteger(
+					actionRequest, "discontinuedDateYear");
 			}
 		}
-
-		int discontinuedDateMonth = ParamUtil.getInteger(
-			actionRequest, "discontinuedDateMonth");
-		int discontinuedDateDay = ParamUtil.getInteger(
-			actionRequest, "discontinuedDateDay");
-		int discontinuedDateYear = ParamUtil.getInteger(
-			actionRequest, "discontinuedDateYear");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			CPInstance.class.getName(), actionRequest);

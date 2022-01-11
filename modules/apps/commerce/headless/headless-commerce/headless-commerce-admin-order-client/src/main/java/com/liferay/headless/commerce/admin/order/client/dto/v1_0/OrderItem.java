@@ -495,6 +495,27 @@ public class OrderItem implements Cloneable, Serializable {
 
 	protected Map<String, String> name;
 
+	public String getOptions() {
+		return options;
+	}
+
+	public void setOptions(String options) {
+		this.options = options;
+	}
+
+	public void setOptions(
+		UnsafeSupplier<String, Exception> optionsUnsafeSupplier) {
+
+		try {
+			options = optionsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String options;
+
 	public String getOrderExternalReferenceCode() {
 		return orderExternalReferenceCode;
 	}

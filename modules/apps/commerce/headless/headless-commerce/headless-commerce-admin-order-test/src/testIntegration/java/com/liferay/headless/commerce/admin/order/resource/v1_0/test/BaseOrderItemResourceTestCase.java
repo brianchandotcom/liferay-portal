@@ -183,6 +183,7 @@ public abstract class BaseOrderItemResourceTestCase {
 		orderItem.setDeliveryGroup(regex);
 		orderItem.setExternalReferenceCode(regex);
 		orderItem.setFormattedQuantity(regex);
+		orderItem.setOptions(regex);
 		orderItem.setOrderExternalReferenceCode(regex);
 		orderItem.setPrintedNote(regex);
 		orderItem.setSku(regex);
@@ -198,6 +199,7 @@ public abstract class BaseOrderItemResourceTestCase {
 		Assert.assertEquals(regex, orderItem.getDeliveryGroup());
 		Assert.assertEquals(regex, orderItem.getExternalReferenceCode());
 		Assert.assertEquals(regex, orderItem.getFormattedQuantity());
+		Assert.assertEquals(regex, orderItem.getOptions());
 		Assert.assertEquals(regex, orderItem.getOrderExternalReferenceCode());
 		Assert.assertEquals(regex, orderItem.getPrintedNote());
 		Assert.assertEquals(regex, orderItem.getSku());
@@ -968,6 +970,14 @@ public abstract class BaseOrderItemResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("options", additionalAssertFieldName)) {
+				if (orderItem.getOptions() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals(
 					"orderExternalReferenceCode", additionalAssertFieldName)) {
 
@@ -1457,6 +1467,16 @@ public abstract class BaseOrderItemResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("options", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						orderItem1.getOptions(), orderItem2.getOptions())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals(
 					"orderExternalReferenceCode", additionalAssertFieldName)) {
 
@@ -1857,6 +1877,14 @@ public abstract class BaseOrderItemResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("options")) {
+			sb.append("'");
+			sb.append(String.valueOf(orderItem.getOptions()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("orderExternalReferenceCode")) {
 			sb.append("'");
 			sb.append(
@@ -2039,6 +2067,7 @@ public abstract class BaseOrderItemResourceTestCase {
 				formattedQuantity = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
+				options = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				orderExternalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				orderId = RandomTestUtil.randomLong();

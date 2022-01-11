@@ -273,6 +273,20 @@ public class OrderItemSerDes {
 			sb.append(_toJSON(orderItem.getName()));
 		}
 
+		if (orderItem.getOptions() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"options\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(orderItem.getOptions()));
+
+			sb.append("\"");
+		}
+
 		if (orderItem.getOrderExternalReferenceCode() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -666,6 +680,13 @@ public class OrderItemSerDes {
 			map.put("name", String.valueOf(orderItem.getName()));
 		}
 
+		if (orderItem.getOptions() == null) {
+			map.put("options", null);
+		}
+		else {
+			map.put("options", String.valueOf(orderItem.getOptions()));
+		}
+
 		if (orderItem.getOrderExternalReferenceCode() == null) {
 			map.put("orderExternalReferenceCode", null);
 		}
@@ -968,6 +989,11 @@ public class OrderItemSerDes {
 					orderItem.setName(
 						(Map)OrderItemSerDes.toMap(
 							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "options")) {
+				if (jsonParserFieldValue != null) {
+					orderItem.setOptions((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(

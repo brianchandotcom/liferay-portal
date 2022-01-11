@@ -84,7 +84,7 @@ const QuoteApp = () => {
 
 	return (
 		<div className="d-flex get-a-quote-structure justify-content-between">
-			<Steps />
+			<Steps isMobileDevice={isMobileDevice} />
 
 			<main className="d-flex flex-wrap justify-content-lg-start justify-content-md-center">
 				<h2 className="display-4 mb-6 mx-6 step-title">

@@ -20,6 +20,7 @@ import {ProgressRing} from '../ProgressRing';
 
 export function StepItem({
 	children,
+	isMobileDevice = false,
 	onClick,
 	percentage = 0,
 	selected = false,
@@ -38,7 +39,7 @@ export function StepItem({
 					'text-brand-primary': selected || partially,
 				}
 			)}
-			onClick={partially ? onClick : undefined}
+			onClick={partially && !isMobileDevice ? onClick : undefined}
 		>
 			<i className="align-items-center justify-content-center position-relative">
 				{partially && (

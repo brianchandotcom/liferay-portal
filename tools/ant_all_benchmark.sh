@@ -11,8 +11,20 @@ function echo_time {
 function main {
 	pushd .. > /dev/null
 
-	echo "Running... wait for all 3 runs to complete."
-	echo ""
+	local binaries_cache_dir_name=liferay-binaries-cache-2020
+
+	if [ ! -e "../${binaries_cache_dir_name}" ]
+	then
+		echo "Clone https://github.com/liferay/${binaries_cache_dir_name} into ../${binaries_cache_dir_name} and rerun ${0}."
+
+		exit
+	fi
+
+	pushd ../${binaries_cache_dir_name} > /dev/null
+
+	git pull upstream master
+
+	popd > /dev/null
 
 	git clean -dfx -e "*.${USER}.*"  > /dev/null
 
@@ -22,9 +34,12 @@ function main {
 
 	ant setup-profile-dxp
 
+	echo ""
+	echo "Running \"ant all\". Wait for all 3 runs to complete."
+
 	run_ant_all
 
-	echo "Run 1 with a clean repo $(echo_time)"
+	echo "Run 1 with a clean repository $(echo_time)"
 
 	rm -fr .gradle/caches
 
@@ -44,6 +59,8 @@ function run_ant_all {
 
 	ant all > /dev/null
 	#sleep 5
+
+	echo ""
 }
 
 main "${@}"

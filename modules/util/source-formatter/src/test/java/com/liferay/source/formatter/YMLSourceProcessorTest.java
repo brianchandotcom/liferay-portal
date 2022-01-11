@@ -63,7 +63,7 @@ public class YMLSourceProcessorTest extends BaseSourceProcessorTestCase {
 
 	@Test
 	public void testStyleBlock() throws Exception {
-		//test("StyleBlock.testyaml");
+		test("StyleBlock.testyaml");
 	}
 
 	@Test

@@ -2,35 +2,14 @@
 	{
 		"actionId": "ACCESS_IN_CONTROL_PANEL",
 		"primKey": "0",
-		"resourceName": "com_liferay_commerce_pricing_web_internal_portlet_CommercePriceListPortlet",
-		"roleName": "Discount Manager",
-		"scope": "1"
-	},
-	{
-		"actionId": "ACCESS_IN_CONTROL_PANEL",
-		"primKey": "0",
-		"resourceName": "com_liferay_commerce_pricing_web_internal_portlet_CommercePromotionPortlet",
-		"roleName": "Discount Manager",
+		"resourceName": "com_liferay_asset_categories_admin_web_portlet_AssetCategoriesAdminPortlet",
+		"roleName": "Category Manager",
 		"scope": "1"
 	},
 	{
 		"actionId": "ACCESS_IN_CONTROL_PANEL",
 		"primKey": "0",
 		"resourceName": "com_liferay_commerce_catalog_web_internal_portlet_CommerceCatalogsPortlet",
-		"roleName": "Category Manager",
-		"scope": "1"
-	},
-	{
-		"actionId": "ACCESS_IN_CONTROL_PANEL",
-		"primKey": "0",
-		"resourceName": "com_liferay_commerce_product_definitions_web_internal_portlet_CPDefinitionsPortlet",
-		"roleName": "Category Manager",
-		"scope": "1"
-	},
-	{
-		"actionId": "ACCESS_IN_CONTROL_PANEL",
-		"primKey": "0",
-		"resourceName": "com_liferay_asset_categories_admin_web_portlet_AssetCategoriesAdminPortlet",
 		"roleName": "Category Manager",
 		"scope": "1"
 	},
@@ -46,6 +25,27 @@
 		"primKey": "0",
 		"resourceName": "com_liferay_commerce_order_web_internal_portlet_CommerceOrderPortlet",
 		"roleName": "Operations Manager",
+		"scope": "1"
+	},
+	{
+		"actionId": "ACCESS_IN_CONTROL_PANEL",
+		"primKey": "0",
+		"resourceName": "com_liferay_commerce_pricing_web_internal_portlet_CommercePriceListPortlet",
+		"roleName": "Discount Manager",
+		"scope": "1"
+	},
+	{
+		"actionId": "ACCESS_IN_CONTROL_PANEL",
+		"primKey": "0",
+		"resourceName": "com_liferay_commerce_pricing_web_internal_portlet_CommercePromotionPortlet",
+		"roleName": "Discount Manager",
+		"scope": "1"
+	},
+	{
+		"actionId": "ACCESS_IN_CONTROL_PANEL",
+		"primKey": "0",
+		"resourceName": "com_liferay_commerce_product_definitions_web_internal_portlet_CPDefinitionsPortlet",
+		"roleName": "Category Manager",
 		"scope": "1"
 	},
 	{
@@ -184,14 +184,21 @@
 	{
 		"actionId": "VIEW",
 		"primKey": "0",
-		"resourceName": "com_liferay_asset_categories_admin_web_portlet_AssetCategoriesAdminPortlet",
+		"resourceName": "com.liferay.commerce.product.model.CommerceCatalog",
 		"roleName": "Category Manager",
 		"scope": "1"
 	},
 	{
 		"actionId": "VIEW",
 		"primKey": "0",
-		"resourceName": "com.liferay.commerce.product.model.CommerceCatalog",
+		"resourceName": "com_liferay_asset_categories_admin_web_portlet_AssetCategoriesAdminPortlet",
+		"roleName": "Category Manager",
+		"scope": "1"
+	},
+	{
+		"actionId": "VIEW_CONTROL_PANEL",
+		"primKey": "0",
+		"resourceName": "90",
 		"roleName": "Category Manager",
 		"scope": "1"
 	},
@@ -206,13 +213,6 @@
 		"actionId": "VIEW_CONTROL_PANEL",
 		"primKey": "0",
 		"resourceName": "90",
-		"roleName": "Category Manager",
-		"scope": "1"
-	},
-	{
-		"actionId": "VIEW_CONTROL_PANEL",
-		"primKey": "0",
-		"resourceName": "90",
 		"roleName": "Operations Manager",
 		"scope": "1"
 	},
@@ -220,14 +220,14 @@
 		"actionId": "VIEW_OPEN_COMMERCE_ORDERS",
 		"primKey": "0",
 		"resourceName": "com.liferay.commerce.order",
-		"roleName": "Sales Agent",
+		"roleName": "Punch Out",
 		"scope": "1"
 	},
 	{
 		"actionId": "VIEW_OPEN_COMMERCE_ORDERS",
 		"primKey": "0",
 		"resourceName": "com.liferay.commerce.order",
-		"roleName": "Punch Out",
+		"roleName": "Sales Agent",
 		"scope": "1"
 	},
 	{

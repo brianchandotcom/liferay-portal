@@ -26,8 +26,6 @@ import com.liferay.portal.kernel.service.RegionService;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 
-import java.util.List;
-
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -135,26 +133,24 @@ public class CommerceRegionsDisplayContext
 		searchContainer.setOrderByType(orderByType);
 		searchContainer.setRowChecker(getRowChecker());
 
-		int total;
-		List<Region> results;
-
 		long countryId = getCountryId();
 
 		if (active != null) {
-			total = _regionService.getRegionsCount(countryId, active);
-			results = _regionService.getRegions(
-				countryId, active, searchContainer.getStart(),
-				searchContainer.getEnd(), orderByComparator);
+			boolean navigationActive = active;
+
+			searchContainer.setResultsAndTotal(
+				() -> _regionService.getRegions(
+					countryId, navigationActive, searchContainer.getStart(),
+					searchContainer.getEnd(), orderByComparator),
+				_regionService.getRegionsCount(countryId, navigationActive));
 		}
 		else {
-			total = _regionService.getRegionsCount(countryId);
-			results = _regionService.getRegions(
-				countryId, searchContainer.getStart(), searchContainer.getEnd(),
-				orderByComparator);
+			searchContainer.setResultsAndTotal(
+				() -> _regionService.getRegions(
+					countryId, searchContainer.getStart(),
+					searchContainer.getEnd(), orderByComparator),
+				_regionService.getRegionsCount(countryId));
 		}
-
-		searchContainer.setTotal(total);
-		searchContainer.setResults(results);
 
 		return searchContainer;
 	}

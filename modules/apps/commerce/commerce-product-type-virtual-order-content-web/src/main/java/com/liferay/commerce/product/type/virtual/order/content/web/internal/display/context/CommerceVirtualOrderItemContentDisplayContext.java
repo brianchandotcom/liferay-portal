@@ -314,18 +314,16 @@ public class CommerceVirtualOrderItemContentDisplayContext {
 			(CommerceContext)_httpServletRequest.getAttribute(
 				CommerceWebKeys.COMMERCE_CONTEXT));
 
-		int total =
+		_searchContainer.setResultsAndTotal(
+			() ->
+				_commerceVirtualOrderItemLocalService.
+					getCommerceVirtualOrderItems(
+						commerceChannelGroupId, commerceAccountId,
+						_searchContainer.getStart(), _searchContainer.getEnd(),
+						new CommerceVirtualOrderItemCreateDateComparator()),
 			_commerceVirtualOrderItemLocalService.
 				getCommerceVirtualOrderItemsCount(
-					commerceChannelGroupId, commerceAccountId);
-		List<CommerceVirtualOrderItem> results =
-			_commerceVirtualOrderItemLocalService.getCommerceVirtualOrderItems(
-				commerceChannelGroupId, commerceAccountId,
-				_searchContainer.getStart(), _searchContainer.getEnd(),
-				new CommerceVirtualOrderItemCreateDateComparator());
-
-		_searchContainer.setTotal(total);
-		_searchContainer.setResults(results);
+					commerceChannelGroupId, commerceAccountId));
 
 		return _searchContainer;
 	}

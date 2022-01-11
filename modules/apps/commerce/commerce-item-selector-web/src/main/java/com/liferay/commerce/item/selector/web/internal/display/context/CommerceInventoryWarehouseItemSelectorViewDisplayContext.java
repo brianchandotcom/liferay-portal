@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -154,39 +153,32 @@ public class CommerceInventoryWarehouseItemSelectorViewDisplayContext
 				_getDisabledCommerceInventoryWarehouseIds()));
 		searchContainer.setSearch(_search);
 
-		int total = 0;
-		List<CommerceInventoryWarehouse> results = Collections.emptyList();
+		String a2 = country.getA2();
 
 		if (searchContainer.isSearch() && (country != null)) {
-			total =
+			searchContainer.setResultsAndTotal(
+				() -> _commerceInventoryWarehouseService.search(
+					cpRequestHelper.getCompanyId(), true, a2, getKeywords(),
+					searchContainer.getStart(), searchContainer.getEnd(),
+					CommerceUtil.getCommerceInventoryWarehouseSort(
+						orderByCol, orderByType)),
 				_commerceInventoryWarehouseService.
 					searchCommerceInventoryWarehousesCount(
-						cpRequestHelper.getCompanyId(), true, country.getA2(),
-						getKeywords());
-
-			results = _commerceInventoryWarehouseService.search(
-				cpRequestHelper.getCompanyId(), true, country.getA2(),
-				getKeywords(), searchContainer.getStart(),
-				searchContainer.getEnd(),
-				CommerceUtil.getCommerceInventoryWarehouseSort(
-					orderByCol, orderByType));
+						cpRequestHelper.getCompanyId(), true, a2,
+						getKeywords()));
 		}
 		else if (country != null) {
-			total =
+			searchContainer.setResultsAndTotal(
+				() ->
+					_commerceInventoryWarehouseService.
+						getCommerceInventoryWarehouses(
+							cpRequestHelper.getCompanyId(), true, a2,
+							searchContainer.getStart(),
+							searchContainer.getEnd(), orderByComparator),
 				_commerceInventoryWarehouseService.
 					getCommerceInventoryWarehousesCount(
-						cpRequestHelper.getCompanyId(), true, country.getA2());
-
-			results =
-				_commerceInventoryWarehouseService.
-					getCommerceInventoryWarehouses(
-						cpRequestHelper.getCompanyId(), true, country.getA2(),
-						searchContainer.getStart(), searchContainer.getEnd(),
-						orderByComparator);
+						cpRequestHelper.getCompanyId(), true, a2));
 		}
-
-		searchContainer.setTotal(total);
-		searchContainer.setResults(results);
 
 		return searchContainer;
 	}

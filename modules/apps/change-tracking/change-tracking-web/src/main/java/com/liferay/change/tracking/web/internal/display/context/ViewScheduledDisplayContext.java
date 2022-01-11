@@ -102,8 +102,6 @@ public class ViewScheduledDisplayContext
 				displayTerms.getKeywords(), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, _getOrderByComparator());
 
-		searchContainer.setTotal(ctCollections.size());
-
 		if (Objects.equals(getOrderByCol(), "publishing")) {
 			ctCollections = new ArrayList<>(ctCollections);
 
@@ -137,14 +135,20 @@ public class ViewScheduledDisplayContext
 				});
 		}
 
-		int end = searchContainer.getEnd();
+		List<CTCollection> sortedCTCollections = ctCollections;
 
-		if (end > ctCollections.size()) {
-			end = ctCollections.size();
-		}
+		searchContainer.setResultsAndTotal(
+			() -> {
+				int end = searchContainer.getEnd();
 
-		searchContainer.setResults(
-			ctCollections.subList(searchContainer.getStart(), end));
+				if (end > sortedCTCollections.size()) {
+					end = sortedCTCollections.size();
+				}
+
+				return sortedCTCollections.subList(
+					searchContainer.getStart(), end);
+			},
+			sortedCTCollections.size());
 
 		_searchContainer = searchContainer;
 

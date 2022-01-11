@@ -173,23 +173,20 @@ public class CommerceSubscriptionContentDisplayContext {
 		OrderByComparator<CommerceSubscriptionEntry> orderByComparator =
 			new CommerceSubscriptionEntryCreateDateComparator();
 
-		List<CommerceSubscriptionEntry> subscriptionEntries =
-			_commerceSubscriptionEntryService.getCommerceSubscriptionEntries(
-				_cpRequestHelper.getCompanyId(),
-				_cpRequestHelper.getCommerceChannelGroupId(),
-				_cpRequestHelper.getUserId(), _searchContainer.getStart(),
-				_searchContainer.getEnd(), orderByComparator);
-
-		_searchContainer.setResults(subscriptionEntries);
-
-		int subscriptionEntriesCount =
+		_searchContainer.setResultsAndTotal(
+			() ->
+				_commerceSubscriptionEntryService.
+					getCommerceSubscriptionEntries(
+						_cpRequestHelper.getCompanyId(),
+						_cpRequestHelper.getCommerceChannelGroupId(),
+						_cpRequestHelper.getUserId(),
+						_searchContainer.getStart(), _searchContainer.getEnd(),
+						orderByComparator),
 			_commerceSubscriptionEntryService.
 				getCommerceSubscriptionEntriesCount(
 					_cpRequestHelper.getCompanyId(),
 					_cpRequestHelper.getCommerceChannelGroupId(),
-					_cpRequestHelper.getUserId());
-
-		_searchContainer.setTotal(subscriptionEntriesCount);
+					_cpRequestHelper.getUserId()));
 
 		return _searchContainer;
 	}

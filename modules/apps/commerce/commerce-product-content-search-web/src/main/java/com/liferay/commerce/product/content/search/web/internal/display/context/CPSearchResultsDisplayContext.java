@@ -303,8 +303,9 @@ public class CPSearchResultsDisplayContext {
 			_getPortletURL(), headerNames, emptyResultsMessage, cssClass);
 
 		searchContainer.setDeltaParam(paginationDeltaParameterName);
-		searchContainer.setResults(cpDataSourceResult.getCPCatalogEntries());
-		searchContainer.setTotal(cpDataSourceResult.getLength());
+		searchContainer.setResultsAndTotal(
+			cpDataSourceResult::getCPCatalogEntries,
+			cpDataSourceResult.getLength());
 
 		return searchContainer;
 	}

@@ -82,28 +82,26 @@ public class BatchPlannerPlanDisplayContext extends BaseDisplayContext {
 			renderRequest, "navigation", "all");
 
 		if (navigation.equals("all")) {
-			_searchContainer.setResults(
-				BatchPlannerPlanServiceUtil.getBatchPlannerPlans(
+			_searchContainer.setResultsAndTotal(
+				() -> BatchPlannerPlanServiceUtil.getBatchPlannerPlans(
 					companyId, true, _searchContainer.getStart(),
 					_searchContainer.getEnd(),
 					OrderByComparatorFactoryUtil.create(
 						"BatchPlannerPlan", orderByCol,
-						orderByType.equals("asc"))));
-			_searchContainer.setTotal(
+						orderByType.equals("asc"))),
 				BatchPlannerPlanServiceUtil.getBatchPlannerPlansCount(
 					companyId, true));
 		}
 		else {
 			boolean export = isExport(navigation);
 
-			_searchContainer.setResults(
-				BatchPlannerPlanServiceUtil.getBatchPlannerPlans(
+			_searchContainer.setResultsAndTotal(
+				() -> BatchPlannerPlanServiceUtil.getBatchPlannerPlans(
 					companyId, export, true, _searchContainer.getStart(),
 					_searchContainer.getEnd(),
 					OrderByComparatorFactoryUtil.create(
 						"BatchPlannerPlan", orderByCol,
-						orderByType.equals("asc"))));
-			_searchContainer.setTotal(
+						orderByType.equals("asc"))),
 				BatchPlannerPlanServiceUtil.getBatchPlannerPlansCount(
 					companyId, export, true));
 		}

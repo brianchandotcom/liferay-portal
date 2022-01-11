@@ -612,36 +612,28 @@ public class CommerceOrderContentDisplayContext {
 			_cpRequestHelper.getLiferayPortletRequest(), getPortletURL(), null,
 			"no-orders-were-found");
 
-		List<CommerceOrder> commerceOrders = null;
-		long commerceOrdersTotal = 0;
-
 		String keywords = ParamUtil.getString(_httpServletRequest, "keywords");
 
 		if (isOpenOrderContentPortlet()) {
-			commerceOrders = _commerceOrderService.getUserPendingCommerceOrders(
-				_cpRequestHelper.getCompanyId(),
-				_cpRequestHelper.getCommerceChannelGroupId(), keywords,
-				_searchContainer.getStart(), _searchContainer.getEnd());
-
-			commerceOrdersTotal =
-				_commerceOrderService.getUserPendingCommerceOrdersCount(
+			_searchContainer.setResultsAndTotal(
+				() -> _commerceOrderService.getUserPendingCommerceOrders(
 					_cpRequestHelper.getCompanyId(),
-					_cpRequestHelper.getCommerceChannelGroupId(), keywords);
+					_cpRequestHelper.getCommerceChannelGroupId(), keywords,
+					_searchContainer.getStart(), _searchContainer.getEnd()),
+				(int)_commerceOrderService.getUserPendingCommerceOrdersCount(
+					_cpRequestHelper.getCompanyId(),
+					_cpRequestHelper.getCommerceChannelGroupId(), keywords));
 		}
 		else {
-			commerceOrders = _commerceOrderService.getUserPlacedCommerceOrders(
-				_cpRequestHelper.getCompanyId(),
-				_cpRequestHelper.getCommerceChannelGroupId(), keywords,
-				_searchContainer.getStart(), _searchContainer.getEnd());
-
-			commerceOrdersTotal =
-				_commerceOrderService.getUserPlacedCommerceOrdersCount(
+			_searchContainer.setResultsAndTotal(
+				() -> _commerceOrderService.getUserPlacedCommerceOrders(
 					_cpRequestHelper.getCompanyId(),
-					_cpRequestHelper.getCommerceChannelGroupId(), keywords);
+					_cpRequestHelper.getCommerceChannelGroupId(), keywords,
+					_searchContainer.getStart(), _searchContainer.getEnd()),
+				(int)_commerceOrderService.getUserPlacedCommerceOrdersCount(
+					_cpRequestHelper.getCompanyId(),
+					_cpRequestHelper.getCommerceChannelGroupId(), keywords));
 		}
-
-		_searchContainer.setResults(commerceOrders);
-		_searchContainer.setTotal((int)commerceOrdersTotal);
 
 		return _searchContainer;
 	}

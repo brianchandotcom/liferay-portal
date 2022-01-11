@@ -179,18 +179,13 @@ public class CPDefinitionGroupedEntriesDisplayContext
 		searchContainer.setOrderByType(getOrderByType());
 		searchContainer.setRowChecker(getRowChecker());
 
-		int total =
+		searchContainer.setResultsAndTotal(
+			() ->
+				_cpDefinitionGroupedEntryService.getCPDefinitionGroupedEntries(
+					getCPDefinitionId(), searchContainer.getStart(),
+					searchContainer.getEnd(), orderByComparator),
 			_cpDefinitionGroupedEntryService.getCPDefinitionGroupedEntriesCount(
-				getCPDefinitionId());
-
-		searchContainer.setTotal(total);
-
-		List<CPDefinitionGroupedEntry> results =
-			_cpDefinitionGroupedEntryService.getCPDefinitionGroupedEntries(
-				getCPDefinitionId(), searchContainer.getStart(),
-				searchContainer.getEnd(), orderByComparator);
-
-		searchContainer.setResults(results);
+				getCPDefinitionId()));
 
 		return searchContainer;
 	}

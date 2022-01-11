@@ -389,15 +389,6 @@ public class PublicationsDisplayContext extends BasePublicationsDisplayContext {
 
 		String keywords = displayTerms.getKeywords();
 
-		int count = _ctCollectionService.getCTCollectionsCount(
-			_themeDisplay.getCompanyId(),
-			new int[] {
-				WorkflowConstants.STATUS_DRAFT, WorkflowConstants.STATUS_EXPIRED
-			},
-			keywords);
-
-		searchContainer.setTotal(count);
-
 		String column = searchContainer.getOrderByCol();
 
 		if (column.equals("modified-date")) {
@@ -409,15 +400,22 @@ public class PublicationsDisplayContext extends BasePublicationsDisplayContext {
 				"CTCollection", column,
 				Objects.equals(searchContainer.getOrderByType(), "asc"));
 
-		List<CTCollection> results = _ctCollectionService.getCTCollections(
-			_themeDisplay.getCompanyId(),
-			new int[] {
-				WorkflowConstants.STATUS_DRAFT, WorkflowConstants.STATUS_EXPIRED
-			},
-			keywords, searchContainer.getStart(), searchContainer.getEnd(),
-			orderByComparator);
-
-		searchContainer.setResults(results);
+		searchContainer.setResultsAndTotal(
+			() -> _ctCollectionService.getCTCollections(
+				_themeDisplay.getCompanyId(),
+				new int[] {
+					WorkflowConstants.STATUS_DRAFT,
+					WorkflowConstants.STATUS_EXPIRED
+				},
+				keywords, searchContainer.getStart(), searchContainer.getEnd(),
+				orderByComparator),
+			_ctCollectionService.getCTCollectionsCount(
+				_themeDisplay.getCompanyId(),
+				new int[] {
+					WorkflowConstants.STATUS_DRAFT,
+					WorkflowConstants.STATUS_EXPIRED
+				},
+				keywords));
 
 		_searchContainer = searchContainer;
 

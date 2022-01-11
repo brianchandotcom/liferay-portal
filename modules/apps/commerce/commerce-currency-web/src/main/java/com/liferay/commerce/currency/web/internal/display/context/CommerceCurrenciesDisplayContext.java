@@ -46,8 +46,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-import java.util.List;
-
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -225,27 +223,25 @@ public class CommerceCurrenciesDisplayContext {
 		_searchContainer.setOrderByType(orderByType);
 		_searchContainer.setRowChecker(_getRowChecker());
 
-		int total;
-		List<CommerceCurrency> results;
-
 		if (active != null) {
-			total = _commerceCurrencyService.getCommerceCurrenciesCount(
-				themeDisplay.getCompanyId(), active);
-			results = _commerceCurrencyService.getCommerceCurrencies(
-				themeDisplay.getCompanyId(), active,
-				_searchContainer.getStart(), _searchContainer.getEnd(),
-				orderByComparator);
+			boolean navigationActive = active;
+
+			_searchContainer.setResultsAndTotal(
+				() -> _commerceCurrencyService.getCommerceCurrencies(
+					themeDisplay.getCompanyId(), navigationActive,
+					_searchContainer.getStart(), _searchContainer.getEnd(),
+					orderByComparator),
+				_commerceCurrencyService.getCommerceCurrenciesCount(
+					themeDisplay.getCompanyId(), navigationActive));
 		}
 		else {
-			total = _commerceCurrencyService.getCommerceCurrenciesCount(
-				themeDisplay.getCompanyId());
-			results = _commerceCurrencyService.getCommerceCurrencies(
-				themeDisplay.getCompanyId(), _searchContainer.getStart(),
-				_searchContainer.getEnd(), orderByComparator);
+			_searchContainer.setResultsAndTotal(
+				() -> _commerceCurrencyService.getCommerceCurrencies(
+					themeDisplay.getCompanyId(), _searchContainer.getStart(),
+					_searchContainer.getEnd(), orderByComparator),
+				_commerceCurrencyService.getCommerceCurrenciesCount(
+					themeDisplay.getCompanyId()));
 		}
-
-		_searchContainer.setTotal(total);
-		_searchContainer.setResults(results);
 
 		return _searchContainer;
 	}

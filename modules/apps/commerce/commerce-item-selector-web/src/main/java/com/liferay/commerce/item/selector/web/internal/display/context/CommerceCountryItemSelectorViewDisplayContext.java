@@ -28,8 +28,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.List;
-
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -93,16 +91,12 @@ public class CommerceCountryItemSelectorViewDisplayContext
 
 		searchContainer.setRowChecker(rowChecker);
 
-		List<Country> results = _countryService.getCompanyCountries(
-			themeDisplay.getCompanyId(), true, searchContainer.getStart(),
-			searchContainer.getEnd(), orderByComparator);
-
-		searchContainer.setResults(results);
-
-		int total = _countryService.getCompanyCountriesCount(
-			themeDisplay.getCompanyId());
-
-		searchContainer.setTotal(total);
+		searchContainer.setResultsAndTotal(
+			() -> _countryService.getCompanyCountries(
+				themeDisplay.getCompanyId(), true, searchContainer.getStart(),
+				searchContainer.getEnd(), orderByComparator),
+			_countryService.getCompanyCountriesCount(
+				themeDisplay.getCompanyId()));
 
 		return searchContainer;
 	}

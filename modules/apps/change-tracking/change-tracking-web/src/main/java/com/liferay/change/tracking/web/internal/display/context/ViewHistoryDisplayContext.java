@@ -284,19 +284,15 @@ public class ViewHistoryDisplayContext extends BasePublicationsDisplayContext {
 
 		DisplayTerms displayTerms = searchContainer.getDisplayTerms();
 
-		List<CTProcess> results = _ctProcessService.getCTProcesses(
-			_themeDisplay.getCompanyId(), CTWebConstants.USER_FILTER_ALL,
-			displayTerms.getKeywords(), _getStatus(getFilterByStatus()),
-			searchContainer.getStart(), searchContainer.getEnd(),
-			_getOrderByComparator(getOrderByCol(), getOrderByType()));
-
-		searchContainer.setResults(results);
-
-		int count = _ctProcessService.getCTProcessesCount(
-			_themeDisplay.getCompanyId(), CTWebConstants.USER_FILTER_ALL,
-			displayTerms.getKeywords(), _getStatus(getFilterByStatus()));
-
-		searchContainer.setTotal(count);
+		searchContainer.setResultsAndTotal(
+			() -> _ctProcessService.getCTProcesses(
+				_themeDisplay.getCompanyId(), CTWebConstants.USER_FILTER_ALL,
+				displayTerms.getKeywords(), _getStatus(getFilterByStatus()),
+				searchContainer.getStart(), searchContainer.getEnd(),
+				_getOrderByComparator(getOrderByCol(), getOrderByType())),
+			_ctProcessService.getCTProcessesCount(
+				_themeDisplay.getCompanyId(), CTWebConstants.USER_FILTER_ALL,
+				displayTerms.getKeywords(), _getStatus(getFilterByStatus())));
 
 		_searchContainer = searchContainer;
 

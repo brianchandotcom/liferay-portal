@@ -29,8 +29,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
-import java.util.List;
-
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -110,12 +108,7 @@ public class CPInstanceItemSelectorViewDisplayContext
 					searchContainer.getStart(), searchContainer.getEnd(), sort);
 		}
 
-		List<CPInstance> cpInstances =
-			cpInstanceBaseModelSearchResult.getBaseModels();
-		int totalCPInstances = cpInstanceBaseModelSearchResult.getLength();
-
-		searchContainer.setResults(cpInstances);
-		searchContainer.setTotal(totalCPInstances);
+		searchContainer.setResultsAndTotal(cpInstanceBaseModelSearchResult);
 
 		return searchContainer;
 	}

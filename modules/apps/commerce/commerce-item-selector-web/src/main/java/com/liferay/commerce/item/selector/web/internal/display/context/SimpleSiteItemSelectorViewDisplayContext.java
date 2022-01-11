@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.comparator.GroupNameComparator;
 
-import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -128,24 +127,22 @@ public class SimpleSiteItemSelectorViewDisplayContext
 		searchContainer.setOrderByType(orderByType);
 		searchContainer.setSearch(_search);
 
-		int total = _groupService.searchCount(
-			cpRequestHelper.getCompanyId(), null, null, new String[0]);
-		List<Group> groups = _groupService.search(
-			cpRequestHelper.getCompanyId(),
-			new long[] {
-				ClassNameLocalServiceUtil.getClassNameId(Group.class),
-				ClassNameLocalServiceUtil.getClassNameId(Organization.class)
-			},
-			null,
-			LinkedHashMapBuilder.<String, Object>put(
-				"active", true
-			).put(
-				"site", true
-			).build(),
-			searchContainer.getStart(), searchContainer.getEnd(), null);
-
-		searchContainer.setTotal(total);
-		searchContainer.setResults(groups);
+		searchContainer.setResultsAndTotal(
+			() -> _groupService.search(
+				cpRequestHelper.getCompanyId(),
+				new long[] {
+					ClassNameLocalServiceUtil.getClassNameId(Group.class),
+					ClassNameLocalServiceUtil.getClassNameId(Organization.class)
+				},
+				null,
+				LinkedHashMapBuilder.<String, Object>put(
+					"active", true
+				).put(
+					"site", true
+				).build(),
+				searchContainer.getStart(), searchContainer.getEnd(), null),
+			_groupService.searchCount(
+				cpRequestHelper.getCompanyId(), null, null, new String[0]));
 
 		return searchContainer;
 	}

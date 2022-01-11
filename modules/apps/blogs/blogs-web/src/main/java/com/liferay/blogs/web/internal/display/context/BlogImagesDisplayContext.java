@@ -94,25 +94,19 @@ public class BlogImagesDisplayContext {
 			BlogsEntryLocalServiceUtil.addAttachmentsFolder(
 				themeDisplay.getUserId(), themeDisplay.getScopeGroupId());
 
-		int total = 0;
-		List<FileEntry> results = null;
-
 		String keywords = ParamUtil.getString(_httpServletRequest, "keywords");
 
 		if (Validator.isNull(keywords)) {
-			total = PortletFileRepositoryUtil.getPortletFileEntriesCount(
-				themeDisplay.getScopeGroupId(),
-				attachmentsFolder.getFolderId());
-
-			searchContainer.setTotal(total);
-
-			results = PortletFileRepositoryUtil.getPortletFileEntries(
-				themeDisplay.getScopeGroupId(), attachmentsFolder.getFolderId(),
-				WorkflowConstants.STATUS_APPROVED, searchContainer.getStart(),
-				searchContainer.getEnd(),
-				searchContainer.getOrderByComparator());
-
-			searchContainer.setResults(results);
+			searchContainer.setResultsAndTotal(
+				() -> PortletFileRepositoryUtil.getPortletFileEntries(
+					themeDisplay.getScopeGroupId(),
+					attachmentsFolder.getFolderId(),
+					WorkflowConstants.STATUS_APPROVED,
+					searchContainer.getStart(), searchContainer.getEnd(),
+					searchContainer.getOrderByComparator()),
+				PortletFileRepositoryUtil.getPortletFileEntriesCount(
+					themeDisplay.getScopeGroupId(),
+					attachmentsFolder.getFolderId()));
 		}
 		else {
 			SearchContext searchContext = SearchContextFactory.getInstance(
@@ -135,11 +129,9 @@ public class BlogImagesDisplayContext {
 			Hits hits = PortletFileRepositoryUtil.searchPortletFileEntries(
 				folder.getRepositoryId(), searchContext);
 
-			total = hits.getLength();
-
 			Document[] docs = hits.getDocs();
 
-			results = new ArrayList<>();
+			List<FileEntry> results = new ArrayList<>();
 
 			for (Document doc : docs) {
 				long fileEntryId = GetterUtil.getLong(
@@ -160,8 +152,7 @@ public class BlogImagesDisplayContext {
 				}
 			}
 
-			searchContainer.setTotal(total);
-			searchContainer.setResults(results);
+			searchContainer.setResultsAndTotal(() -> results, hits.getLength());
 		}
 	}
 

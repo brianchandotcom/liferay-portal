@@ -25,8 +25,6 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ParamUtil;
 
-import java.util.List;
-
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -101,21 +99,16 @@ public class CommerceAccountItemSelectorViewDisplayContext {
 
 		_searchContainer.setRowChecker(rowChecker);
 
-		List<CommerceAccount> results =
-			_commerceAccountService.getUserCommerceAccounts(
+		_searchContainer.setResultsAndTotal(
+			() -> _commerceAccountService.getUserCommerceAccounts(
 				_commerceAccountItemSelectorRequestHelper.getUserId(),
 				CommerceAccountConstants.DEFAULT_PARENT_ACCOUNT_ID,
 				CommerceAccountConstants.SITE_TYPE_B2X, getKeywords(),
-				_searchContainer.getStart(), _searchContainer.getEnd());
-
-		_searchContainer.setResults(results);
-
-		int total = _commerceAccountService.getUserCommerceAccountsCount(
-			_commerceAccountItemSelectorRequestHelper.getUserId(),
-			CommerceAccountConstants.DEFAULT_PARENT_ACCOUNT_ID,
-			CommerceAccountConstants.SITE_TYPE_B2X, getKeywords());
-
-		_searchContainer.setTotal(total);
+				_searchContainer.getStart(), _searchContainer.getEnd()),
+			_commerceAccountService.getUserCommerceAccountsCount(
+				_commerceAccountItemSelectorRequestHelper.getUserId(),
+				CommerceAccountConstants.DEFAULT_PARENT_ACCOUNT_ID,
+				CommerceAccountConstants.SITE_TYPE_B2X, getKeywords()));
 
 		return _searchContainer;
 	}

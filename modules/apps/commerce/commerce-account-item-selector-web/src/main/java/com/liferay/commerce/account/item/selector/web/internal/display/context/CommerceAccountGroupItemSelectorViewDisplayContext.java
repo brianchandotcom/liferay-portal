@@ -23,8 +23,6 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ParamUtil;
 
-import java.util.List;
-
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -96,19 +94,14 @@ public class CommerceAccountGroupItemSelectorViewDisplayContext {
 
 		_searchContainer.setRowChecker(rowChecker);
 
-		int total =
-			_commerceAccountGroupLocalService.searchCommerceAccountsGroupCount(
-				_commerceAccountItemSelectorRequestHelper.getCompanyId(),
-				getKeywords());
-
-		List<CommerceAccountGroup> results =
-			_commerceAccountGroupLocalService.search(
+		_searchContainer.setResultsAndTotal(
+			() -> _commerceAccountGroupLocalService.search(
 				_commerceAccountItemSelectorRequestHelper.getCompanyId(),
 				getKeywords(), _searchContainer.getStart(),
-				_searchContainer.getEnd(), null);
-
-		_searchContainer.setTotal(total);
-		_searchContainer.setResults(results);
+				_searchContainer.getEnd(), null),
+			_commerceAccountGroupLocalService.searchCommerceAccountsGroupCount(
+				_commerceAccountItemSelectorRequestHelper.getCompanyId(),
+				getKeywords()));
 
 		return _searchContainer;
 	}

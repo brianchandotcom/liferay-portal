@@ -252,22 +252,19 @@ public class CommerceInventoryWarehousesDisplayContext {
 		_searchContainer.setOrderByType(orderByType);
 		_searchContainer.setSearch(search);
 
-		List<CommerceInventoryWarehouse> commerceInventoryWarehouses =
-			_commerceInventoryWarehouseService.search(
-				_cpRequestHelper.getCompanyId(), active,
+		Boolean navigationActive = active;
+
+		_searchContainer.setResultsAndTotal(
+			() -> _commerceInventoryWarehouseService.search(
+				_cpRequestHelper.getCompanyId(), navigationActive,
 				countryTwoLettersIsoCode, _getKeywords(),
 				_searchContainer.getStart(), _searchContainer.getEnd(),
 				CommerceUtil.getCommerceInventoryWarehouseSort(
-					orderByCol, orderByType));
-
-		int commerceInventoryWarehousesCount =
+					orderByCol, orderByType)),
 			_commerceInventoryWarehouseService.
 				searchCommerceInventoryWarehousesCount(
-					_cpRequestHelper.getCompanyId(), active,
-					countryTwoLettersIsoCode, _getKeywords());
-
-		_searchContainer.setResults(commerceInventoryWarehouses);
-		_searchContainer.setTotal(commerceInventoryWarehousesCount);
+					_cpRequestHelper.getCompanyId(), navigationActive,
+					countryTwoLettersIsoCode, _getKeywords()));
 
 		return _searchContainer;
 	}

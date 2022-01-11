@@ -42,8 +42,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import java.text.DateFormat;
 import java.text.Format;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collections;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -162,19 +161,14 @@ public class CommerceShipmentContentDisplayContext {
 			_commerceShipmentContentRequestHelper.getLiferayPortletRequest(),
 			getPortletURL(), null, "this-shipment-has-no-items");
 
-		int total =
-			_commerceShipmentItemLocalService.getCommerceShipmentItemsCount(
-				_commerceShipmentId);
-
-		List<CommerceShipmentItem> results =
-			_commerceShipmentItemLocalService.getCommerceShipmentItems(
+		_commerceShipmentItemSearchContainer.setResultsAndTotal(
+			() -> _commerceShipmentItemLocalService.getCommerceShipmentItems(
 				_commerceShipmentId,
 				_commerceShipmentItemSearchContainer.getStart(),
 				_commerceShipmentItemSearchContainer.getEnd(),
-				new CommerceShipmentItemCreateDateComparator());
-
-		_commerceShipmentItemSearchContainer.setTotal(total);
-		_commerceShipmentItemSearchContainer.setResults(results);
+				new CommerceShipmentItemCreateDateComparator()),
+			_commerceShipmentItemLocalService.getCommerceShipmentItemsCount(
+				_commerceShipmentId));
 
 		return _commerceShipmentItemSearchContainer;
 	}
@@ -249,25 +243,22 @@ public class CommerceShipmentContentDisplayContext {
 
 		_searchContainer.setEmptyResultsMessage("no-shipments-were-found");
 
-		int total = 0;
-		List<CommerceShipment> results = new ArrayList<>();
-
 		CommerceChannel commerceChannel =
 			_commerceChannelLocalService.fetchCommerceChannelBySiteGroupId(
 				_commerceShipmentContentRequestHelper.getScopeGroupId());
 
 		if (commerceChannel != null) {
-			total = _commerceShipmentLocalService.getCommerceShipmentsCount(
-				new long[] {commerceChannel.getGroupId()});
-
-			results = _commerceShipmentLocalService.getCommerceShipments(
-				new long[] {commerceChannel.getGroupId()},
-				_searchContainer.getStart(), _searchContainer.getEnd(),
-				new CommerceShipmentCreateDateComparator());
+			_searchContainer.setResultsAndTotal(
+				() -> _commerceShipmentLocalService.getCommerceShipments(
+					new long[] {commerceChannel.getGroupId()},
+					_searchContainer.getStart(), _searchContainer.getEnd(),
+					new CommerceShipmentCreateDateComparator()),
+				_commerceShipmentLocalService.getCommerceShipmentsCount(
+					new long[] {commerceChannel.getGroupId()}));
 		}
-
-		_searchContainer.setTotal(total);
-		_searchContainer.setResults(results);
+		else {
+			_searchContainer.setResultsAndTotal(Collections::emptyList, 0);
+		}
 
 		return _searchContainer;
 	}

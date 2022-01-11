@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.service.CountryService;
 import com.liferay.portal.kernel.service.RegionService;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -274,14 +273,11 @@ public class CommerceAddressDisplayContext {
 
 		CommerceAccount commerceAccount = getCommerceAccount();
 
-		BaseModelSearchResult<CommerceAddress> baseModelSearchResult =
+		_searchContainer.setResultsAndTotal(
 			_commerceAddressService.searchCommerceAddresses(
 				commerceAccount.getCompanyId(), CommerceAccount.class.getName(),
 				commerceAccount.getCommerceAccountId(), null,
-				_searchContainer.getStart(), _searchContainer.getEnd(), null);
-
-		_searchContainer.setTotal(baseModelSearchResult.getLength());
-		_searchContainer.setResults(baseModelSearchResult.getBaseModels());
+				_searchContainer.getStart(), _searchContainer.getEnd(), null));
 
 		return _searchContainer;
 	}

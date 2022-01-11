@@ -29,8 +29,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.List;
-
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -121,19 +119,16 @@ public class CommerceAvailabilityEstimateDisplayContext {
 		_searchContainer.setOrderByType(orderByType);
 		_searchContainer.setRowChecker(_getRowChecker());
 
-		int total =
+		_searchContainer.setResultsAndTotal(
+			() ->
+				_commerceAvailabilityEstimateService.
+					getCommerceAvailabilityEstimates(
+						themeDisplay.getCompanyId(),
+						_searchContainer.getStart(), _searchContainer.getEnd(),
+						orderByComparator),
 			_commerceAvailabilityEstimateService.
 				getCommerceAvailabilityEstimatesCount(
-					themeDisplay.getCompanyId());
-
-		List<CommerceAvailabilityEstimate> results =
-			_commerceAvailabilityEstimateService.
-				getCommerceAvailabilityEstimates(
-					themeDisplay.getCompanyId(), _searchContainer.getStart(),
-					_searchContainer.getEnd(), orderByComparator);
-
-		_searchContainer.setTotal(total);
-		_searchContainer.setResults(results);
+					themeDisplay.getCompanyId()));
 
 		return _searchContainer;
 	}

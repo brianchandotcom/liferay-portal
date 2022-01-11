@@ -282,17 +282,12 @@ public class CommerceCartContentDisplayContext {
 			return _searchContainer;
 		}
 
-		int total = _commerceOrderItemService.getCommerceOrderItemsCount(
-			commerceOrderId);
-
-		_searchContainer.setTotal(total);
-
-		List<CommerceOrderItem> results =
-			_commerceOrderItemService.getCommerceOrderItems(
+		_searchContainer.setResultsAndTotal(
+			() -> _commerceOrderItemService.getCommerceOrderItems(
 				commerceOrderId, _searchContainer.getStart(),
-				_searchContainer.getEnd());
-
-		_searchContainer.setResults(results);
+				_searchContainer.getEnd()),
+			_commerceOrderItemService.getCommerceOrderItemsCount(
+				commerceOrderId));
 
 		return _searchContainer;
 	}

@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Region;
-import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.CountryService;
 import com.liferay.portal.kernel.service.RegionServiceUtil;
@@ -139,42 +138,36 @@ public class CommerceCountriesDisplayContext
 		searchContainer.setOrderByType(orderByType);
 		searchContainer.setRowChecker(getRowChecker());
 
-		int total;
-		List<Country> results;
-
 		if (_isSearch()) {
-			BaseModelSearchResult<Country> baseModelSearchResult =
+			searchContainer.setResultsAndTotal(
 				_countryService.searchCountries(
 					_commerceCountryRequestHelper.getCompanyId(), active,
 					_getKeywords(), searchContainer.getStart(),
-					searchContainer.getEnd(), orderByComparator);
-
-			total = baseModelSearchResult.getLength();
-			results = baseModelSearchResult.getBaseModels();
+					searchContainer.getEnd(), orderByComparator));
 		}
 		else {
 			if (active == null) {
-				total = _countryService.getCompanyCountriesCount(
-					_commerceCountryRequestHelper.getCompanyId());
-
-				results = _countryService.getCompanyCountries(
-					_commerceCountryRequestHelper.getCompanyId(),
-					searchContainer.getStart(), searchContainer.getEnd(),
-					orderByComparator);
+				searchContainer.setResultsAndTotal(
+					() -> _countryService.getCompanyCountries(
+						_commerceCountryRequestHelper.getCompanyId(),
+						searchContainer.getStart(), searchContainer.getEnd(),
+						orderByComparator),
+					_countryService.getCompanyCountriesCount(
+						_commerceCountryRequestHelper.getCompanyId()));
 			}
 			else {
-				total = _countryService.getCompanyCountriesCount(
-					_commerceCountryRequestHelper.getCompanyId(), active);
+				boolean navigationActive = active;
 
-				results = _countryService.getCompanyCountries(
-					_commerceCountryRequestHelper.getCompanyId(), active,
-					searchContainer.getStart(), searchContainer.getEnd(),
-					orderByComparator);
+				searchContainer.setResultsAndTotal(
+					() -> _countryService.getCompanyCountries(
+						_commerceCountryRequestHelper.getCompanyId(),
+						navigationActive, searchContainer.getStart(),
+						searchContainer.getEnd(), orderByComparator),
+					_countryService.getCompanyCountriesCount(
+						_commerceCountryRequestHelper.getCompanyId(),
+						navigationActive));
 			}
 		}
-
-		searchContainer.setTotal(total);
-		searchContainer.setResults(results);
 
 		return searchContainer;
 	}

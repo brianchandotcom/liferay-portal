@@ -203,17 +203,13 @@ public class CPMeasurementUnitsDisplayContext {
 		_searchContainer.setOrderByType(orderByType);
 		_searchContainer.setRowChecker(_getRowChecker());
 
-		int total = _cpMeasurementUnitService.getCPMeasurementUnitsCount(
-			themeDisplay.getCompanyId(), getType());
-
-		List<CPMeasurementUnit> results =
-			_cpMeasurementUnitService.getCPMeasurementUnits(
+		_searchContainer.setResultsAndTotal(
+			() -> _cpMeasurementUnitService.getCPMeasurementUnits(
 				themeDisplay.getCompanyId(), getType(),
 				_searchContainer.getStart(), _searchContainer.getEnd(),
-				orderByComparator);
-
-		_searchContainer.setTotal(total);
-		_searchContainer.setResults(results);
+				orderByComparator),
+			_cpMeasurementUnitService.getCPMeasurementUnitsCount(
+				themeDisplay.getCompanyId(), getType()));
 
 		return _searchContainer;
 	}

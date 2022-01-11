@@ -247,19 +247,14 @@ public class CommerceWishListDisplayContext {
 			return _commerceWishListItemsSearchContainer;
 		}
 
-		int total = _commerceWishListItemService.getCommerceWishListItemsCount(
-			commerceWishList.getCommerceWishListId());
-
-		_commerceWishListItemsSearchContainer.setTotal(total);
-
-		List<CommerceWishListItem> results =
-			_commerceWishListItemService.getCommerceWishListItems(
+		_commerceWishListItemsSearchContainer.setResultsAndTotal(
+			() -> _commerceWishListItemService.getCommerceWishListItems(
 				commerceWishList.getCommerceWishListId(),
 				_commerceWishListItemsSearchContainer.getStart(),
 				_commerceWishListItemsSearchContainer.getEnd(),
-				orderByComparator);
-
-		_commerceWishListItemsSearchContainer.setResults(results);
+				orderByComparator),
+			_commerceWishListItemService.getCommerceWishListItemsCount(
+				commerceWishList.getCommerceWishListId()));
 
 		return _commerceWishListItemsSearchContainer;
 	}
@@ -317,19 +312,15 @@ public class CommerceWishListDisplayContext {
 
 		_searchContainer.setOrderByComparator(orderByComparator);
 
-		int total = _commerceWishListService.getCommerceWishListsCount(
-			_commerceWishListRequestHelper.getScopeGroupId(),
-			_commerceWishListRequestHelper.getUserId());
-
-		List<CommerceWishList> results =
-			_commerceWishListService.getCommerceWishLists(
+		_searchContainer.setResultsAndTotal(
+			() -> _commerceWishListService.getCommerceWishLists(
 				_commerceWishListRequestHelper.getScopeGroupId(),
 				_commerceWishListRequestHelper.getUserId(),
 				_searchContainer.getStart(), _searchContainer.getEnd(),
-				orderByComparator);
-
-		_searchContainer.setTotal(total);
-		_searchContainer.setResults(results);
+				orderByComparator),
+			_commerceWishListService.getCommerceWishListsCount(
+				_commerceWishListRequestHelper.getScopeGroupId(),
+				_commerceWishListRequestHelper.getUserId()));
 
 		return _searchContainer;
 	}

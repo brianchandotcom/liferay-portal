@@ -26,8 +26,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.List;
-
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -84,18 +82,12 @@ public class CommercePricingClassItemSelectorViewDisplayContext
 
 		searchContainer.setRowChecker(rowChecker);
 
-		List<CommercePricingClass> commercePricingClasses =
-			_commercePricingClassService.getCommercePricingClasses(
+		searchContainer.setResultsAndTotal(
+			() -> _commercePricingClassService.getCommercePricingClasses(
 				themeDisplay.getCompanyId(), searchContainer.getStart(),
-				searchContainer.getEnd(), orderByComparator);
-
-		searchContainer.setResults(commercePricingClasses);
-
-		int commercePricingClassesCount =
+				searchContainer.getEnd(), orderByComparator),
 			_commercePricingClassService.getCommercePricingClassesCount(
-				themeDisplay.getCompanyId());
-
-		searchContainer.setTotal(commercePricingClassesCount);
+				themeDisplay.getCompanyId()));
 
 		return searchContainer;
 	}

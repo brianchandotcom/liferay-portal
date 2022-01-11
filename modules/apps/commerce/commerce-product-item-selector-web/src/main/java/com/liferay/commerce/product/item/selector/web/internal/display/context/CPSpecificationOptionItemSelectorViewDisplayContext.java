@@ -19,7 +19,6 @@ import com.liferay.commerce.product.model.CPSpecificationOption;
 import com.liferay.commerce.product.service.CPSpecificationOptionService;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
@@ -71,16 +70,10 @@ public class CPSpecificationOptionItemSelectorViewDisplayContext
 		Sort sort = CPItemSelectorViewUtil.getCPSpecificationOptionSort(
 			getOrderByCol(), getOrderByType());
 
-		BaseModelSearchResult<CPSpecificationOption>
-			cpSpecificationOptionBaseModelSearchResult =
-				_cpSpecificationOptionService.searchCPSpecificationOptions(
-					cpRequestHelper.getCompanyId(), null, getKeywords(),
-					searchContainer.getStart(), searchContainer.getEnd(), sort);
-
-		searchContainer.setTotal(
-			cpSpecificationOptionBaseModelSearchResult.getLength());
-		searchContainer.setResults(
-			cpSpecificationOptionBaseModelSearchResult.getBaseModels());
+		searchContainer.setResultsAndTotal(
+			_cpSpecificationOptionService.searchCPSpecificationOptions(
+				cpRequestHelper.getCompanyId(), null, getKeywords(),
+				searchContainer.getStart(), searchContainer.getEnd(), sort));
 
 		return searchContainer;
 	}

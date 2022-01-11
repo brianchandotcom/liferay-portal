@@ -60,8 +60,7 @@ public class CommerceHealthStatusDisplayContext {
 
 		List<CommerceHealthHttpStatus> results = getCommerceHealthStatuses();
 
-		_searchContainer.setResults(results);
-		_searchContainer.setTotal(results.size());
+		_searchContainer.setResultsAndTotal(() -> results, results.size());
 
 		return _searchContainer;
 	}

@@ -31,8 +31,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.List;
-
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -145,15 +143,12 @@ public class CPTaxCategoryDisplayContext {
 		_searchContainer.setOrderByType(orderByType);
 		_searchContainer.setRowChecker(_getRowChecker());
 
-		int total = _cpTaxCategoryService.getCPTaxCategoriesCount(
-			themeDisplay.getCompanyId());
-
-		List<CPTaxCategory> results = _cpTaxCategoryService.getCPTaxCategories(
-			themeDisplay.getCompanyId(), _searchContainer.getStart(),
-			_searchContainer.getEnd(), orderByComparator);
-
-		_searchContainer.setTotal(total);
-		_searchContainer.setResults(results);
+		_searchContainer.setResultsAndTotal(
+			() -> _cpTaxCategoryService.getCPTaxCategories(
+				themeDisplay.getCompanyId(), _searchContainer.getStart(),
+				_searchContainer.getEnd(), orderByComparator),
+			_cpTaxCategoryService.getCPTaxCategoriesCount(
+				themeDisplay.getCompanyId()));
 
 		return _searchContainer;
 	}

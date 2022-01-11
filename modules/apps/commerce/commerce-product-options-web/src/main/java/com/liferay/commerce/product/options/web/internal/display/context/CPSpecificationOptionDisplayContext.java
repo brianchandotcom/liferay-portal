@@ -140,16 +140,10 @@ public class CPSpecificationOptionDisplayContext
 			facetable = true;
 		}
 
-		BaseModelSearchResult<CPSpecificationOption>
-			cpSpecificationOptionBaseModelSearchResult =
-				_cpSpecificationOptionService.searchCPSpecificationOptions(
-					cpRequestHelper.getCompanyId(), facetable, getKeywords(),
-					searchContainer.getStart(), searchContainer.getEnd(), sort);
-
-		searchContainer.setTotal(
-			cpSpecificationOptionBaseModelSearchResult.getLength());
-		searchContainer.setResults(
-			cpSpecificationOptionBaseModelSearchResult.getBaseModels());
+		searchContainer.setResultsAndTotal(
+			_cpSpecificationOptionService.searchCPSpecificationOptions(
+				cpRequestHelper.getCompanyId(), facetable, getKeywords(),
+				searchContainer.getStart(), searchContainer.getEnd(), sort));
 
 		return searchContainer;
 	}

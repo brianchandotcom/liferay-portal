@@ -23,7 +23,6 @@ import com.liferay.commerce.price.list.util.comparator.CommercePriceListPriority
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
@@ -32,8 +31,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-
-import java.util.List;
 
 import javax.portlet.PortletURL;
 
@@ -95,33 +92,23 @@ public class CommercePriceListItemSelectorViewDisplayContext
 			Sort sort = _getCommercePriceListSort(
 				getOrderByCol(), getOrderByType());
 
-			BaseModelSearchResult<CommercePriceList>
-				commercePriceListBaseModelSearchResult =
-					_commercePriceListService.searchCommercePriceLists(
-						themeDisplay.getCompanyId(), getKeywords(),
-						WorkflowConstants.STATUS_APPROVED,
-						searchContainer.getStart(), searchContainer.getEnd(),
-						sort);
-
-			searchContainer.setResults(
-				commercePriceListBaseModelSearchResult.getBaseModels());
-			searchContainer.setTotal(
-				commercePriceListBaseModelSearchResult.getLength());
+			searchContainer.setResultsAndTotal(
+				_commercePriceListService.searchCommercePriceLists(
+					themeDisplay.getCompanyId(), getKeywords(),
+					WorkflowConstants.STATUS_APPROVED,
+					searchContainer.getStart(), searchContainer.getEnd(),
+					sort));
 		}
 		else {
-			List<CommercePriceList> results =
-				_commercePriceListService.getCommercePriceLists(
+			searchContainer.setResultsAndTotal(
+				() -> _commercePriceListService.getCommercePriceLists(
 					themeDisplay.getCompanyId(),
 					WorkflowConstants.STATUS_APPROVED,
 					searchContainer.getStart(), searchContainer.getEnd(),
-					orderByComparator);
-
-			searchContainer.setResults(results);
-
-			int total = _commercePriceListService.getCommercePriceListsCount(
-				themeDisplay.getCompanyId(), WorkflowConstants.STATUS_APPROVED);
-
-			searchContainer.setTotal(total);
+					orderByComparator),
+				_commercePriceListService.getCommercePriceListsCount(
+					themeDisplay.getCompanyId(),
+					WorkflowConstants.STATUS_APPROVED));
 		}
 
 		return searchContainer;

@@ -143,9 +143,7 @@ public class CPDefinitionItemSelectorViewDisplayContext
 					searchContainer.getStart(), searchContainer.getEnd(), sort);
 		}
 
-		searchContainer.setTotal(cpDefinitionBaseModelSearchResult.getLength());
-		searchContainer.setResults(
-			cpDefinitionBaseModelSearchResult.getBaseModels());
+		searchContainer.setResultsAndTotal(cpDefinitionBaseModelSearchResult);
 
 		return searchContainer;
 	}

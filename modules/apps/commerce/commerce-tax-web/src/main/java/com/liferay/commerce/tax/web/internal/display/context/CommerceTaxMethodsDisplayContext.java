@@ -191,11 +191,13 @@ public class CommerceTaxMethodsDisplayContext {
 			results = _addDefaultCommerceTaxMethods(results);
 		}
 
-		results.sort(
+		List<CommerceTaxMethod> sortedRresults = results;
+
+		sortedRresults.sort(
 			new CommerceTaxMethodNameComparator(themeDisplay.getLocale()));
 
-		_searchContainer.setTotal(results.size());
-		_searchContainer.setResults(results);
+		_searchContainer.setResultsAndTotal(
+			() -> sortedRresults, sortedRresults.size());
 
 		return _searchContainer;
 	}

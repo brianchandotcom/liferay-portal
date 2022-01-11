@@ -24,8 +24,6 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ParamUtil;
 
-import java.util.List;
-
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -102,15 +100,12 @@ public class CommerceChannelItemSelectorViewDisplayContext
 
 		_searchContainer.setRowChecker(rowChecker);
 
-		int total = _commerceChannelService.searchCommerceChannelsCount(
-			cpRequestHelper.getCompanyId(), getKeywords());
-
-		List<CommerceChannel> results = _commerceChannelService.search(
-			cpRequestHelper.getCompanyId(), getKeywords(),
-			_searchContainer.getStart(), _searchContainer.getEnd(), null);
-
-		_searchContainer.setTotal(total);
-		_searchContainer.setResults(results);
+		_searchContainer.setResultsAndTotal(
+			() -> _commerceChannelService.search(
+				cpRequestHelper.getCompanyId(), getKeywords(),
+				_searchContainer.getStart(), _searchContainer.getEnd(), null),
+			_commerceChannelService.searchCommerceChannelsCount(
+				cpRequestHelper.getCompanyId(), getKeywords()));
 
 		return _searchContainer;
 	}

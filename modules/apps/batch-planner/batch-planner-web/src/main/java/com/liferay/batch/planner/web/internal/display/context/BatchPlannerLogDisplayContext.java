@@ -88,30 +88,28 @@ public class BatchPlannerLogDisplayContext extends BaseDisplayContext {
 			renderRequest, "navigation", "all");
 
 		if (navigation.equals("all")) {
-			_searchContainer.setResults(
-				TransformUtil.transform(
+			_searchContainer.setResultsAndTotal(
+				() -> TransformUtil.transform(
 					BatchPlannerLogServiceUtil.getCompanyBatchPlannerLogs(
 						companyId, _searchContainer.getStart(),
 						_searchContainer.getEnd(),
 						OrderByComparatorFactoryUtil.create(
 							"BatchPlannerLog", orderByCol,
 							orderByType.equals("asc"))),
-					this::_toBatchPlannerLogDisplay));
-			_searchContainer.setTotal(
+					this::_toBatchPlannerLogDisplay),
 				BatchPlannerLogServiceUtil.getCompanyBatchPlannerLogsCount(
 					companyId));
 		}
 		else {
-			_searchContainer.setResults(
-				TransformUtil.transform(
+			_searchContainer.setResultsAndTotal(
+				() -> TransformUtil.transform(
 					BatchPlannerLogServiceUtil.getCompanyBatchPlannerLogs(
 						companyId, isExport(navigation),
 						_searchContainer.getStart(), _searchContainer.getEnd(),
 						OrderByComparatorFactoryUtil.create(
 							"BatchPlannerLog", orderByCol,
 							orderByType.equals("asc"))),
-					this::_toBatchPlannerLogDisplay));
-			_searchContainer.setTotal(
+					this::_toBatchPlannerLogDisplay),
 				BatchPlannerLogServiceUtil.getCompanyBatchPlannerLogsCount(
 					companyId, isExport(navigation)));
 		}

@@ -918,7 +918,7 @@ definition {
 		task ("Assert the first navigation menu has only the first page already added as items") {
 			NavigationMenusAdmin.viewItem(itemName = "Page 1");
 
-			NavigationMenusAdmin.viewNoItem(itemName = "Page 2");
+			NavigationMenusAdmin.viewItemNotPresent(itemNameList = "Page 2");
 		}
 
 		task ("Navigate to the second navigation menu") {
@@ -955,7 +955,9 @@ definition {
 
 			LexiconEntry.gotoEntry(rowEntry = "Navigation Menu Name 1");
 
-			NavigationMenusAdmin.viewNoItem(itemName = "Page 3");
+			NavigationMenusAdmin.viewItemNotPresent(itemNameList = "Page 3");
+		}
+	}
 		}
 	}
 

@@ -54,11 +54,20 @@ public class PortalClassPathUtil {
 
 		builder.setArguments(_processArgs);
 
-		String classpath = _buildClassPath(classes);
+		File[] files = _listClassPathFiles(classes);
 
-		classpath = StringBundler.concat(
-			classpath, File.pathSeparator,
-			_portalProcessConfig.getBootstrapClassPath());
+		StringBundler sb = new StringBundler((files.length * 2) + 1);
+
+		if (files.length > 0) {
+			for (File file : files) {
+				sb.append(file.getAbsolutePath());
+				sb.append(File.pathSeparator);
+			}
+		}
+
+		sb.append(_portalProcessConfig.getBootstrapClassPath());
+
+		String classpath = sb.toString();
 
 		builder.setBootstrapClassPath(classpath);
 
@@ -118,13 +127,24 @@ public class PortalClassPathUtil {
 				classNotFoundException);
 		}
 
-		String bootstrapClassPath = _buildClassPath(
+		File[] files = _listClassPathFiles(
 			ServletException.class, CentralizedThreadLocal.class,
 			shieldedContainerInitializerClass);
 
-		StringBundler sb = new StringBundler(4);
+		StringBundler sb = new StringBundler((files.length * 2) + 3);
 
-		sb.append(bootstrapClassPath);
+		String bootstrapClassPath = StringPool.BLANK;
+
+		if (files.length > 0) {
+			for (File file : files) {
+				sb.append(file.getAbsolutePath());
+				sb.append(File.pathSeparator);
+			}
+
+			sb.setIndex(sb.index() - 1);
+
+			bootstrapClassPath = sb.toString();
+		}
 
 		if (servletContext != null) {
 			sb.append(File.pathSeparator);
@@ -142,25 +162,6 @@ public class PortalClassPathUtil {
 		builder.setRuntimeClassPath(portalClassPath);
 
 		_portalProcessConfig = builder.build();
-	}
-
-	private static String _buildClassPath(Class<?>... classes) {
-		File[] files = _listClassPathFiles(classes);
-
-		if (files.length == 0) {
-			return StringPool.BLANK;
-		}
-
-		StringBundler sb = new StringBundler(files.length * 2);
-
-		for (File file : files) {
-			sb.append(file.getAbsolutePath());
-			sb.append(File.pathSeparator);
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		return sb.toString();
 	}
 
 	private static File[] _listClassPathFiles(Class<?> clazz) {

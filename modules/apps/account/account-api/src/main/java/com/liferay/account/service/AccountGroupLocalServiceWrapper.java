@@ -426,6 +426,18 @@ public class AccountGroupLocalServiceWrapper
 			companyId, keywords, start, end, orderByComparator);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.search.BaseModelSearchResult
+		<com.liferay.account.model.AccountGroup> searchAccountGroups(
+			long companyId, String keywords,
+			java.util.LinkedHashMap<String, Object> params, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.account.model.AccountGroup> orderByComparator) {
+
+		return _accountGroupLocalService.searchAccountGroups(
+			companyId, keywords, params, start, end, orderByComparator);
+	}
+
 	/**
 	 * Updates the account group in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

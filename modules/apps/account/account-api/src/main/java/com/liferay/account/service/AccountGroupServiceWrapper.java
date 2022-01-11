@@ -68,6 +68,18 @@ public class AccountGroupServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.search.BaseModelSearchResult
+		<com.liferay.account.model.AccountGroup> searchAccountGroups(
+				long companyId, String keywords, int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.account.model.AccountGroup> orderByComparator)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _accountGroupService.searchAccountGroups(
+			companyId, keywords, start, end, orderByComparator);
+	}
+
+	@Override
 	public com.liferay.account.model.AccountGroup updateAccountGroup(
 			long accountGroupId, String description, String name)
 		throws com.liferay.portal.kernel.exception.PortalException {

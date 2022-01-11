@@ -72,7 +72,6 @@ import com.liferay.object.admin.rest.dto.v1_0.ObjectRelationship;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectRelationshipResource;
 import com.liferay.object.constants.ObjectDefinitionConstants;
-import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.function.UnsafeRunnable;
@@ -385,7 +384,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 			Map<String, String> objectDefinitionIdsStringUtilReplaceValues =
 				_invoke(
 					() -> _addObjectDefinitions(
-						displayPageInfoItems,
 						listTypeDefinitionIdsStringUtilReplaceValues,
 						serviceContext));
 
@@ -1745,7 +1743,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private Map<String, String> _addObjectDefinitions(
-			Map<String, String> displayPageInfoItems,
 			Map<String, String> listTypeDefinitionIdsStringUtilReplaceValues,
 			ServiceContext serviceContext)
 		throws Exception {
@@ -1841,38 +1838,13 @@ public class BundleSiteInitializer implements SiteInitializer {
 				objectEntriesJSON);
 
 			for (int i = 0; i < jsonArray.length(); i++) {
-				JSONObject jsonObject = jsonArray.getJSONObject(i);
-
-				ObjectEntry objectEntry =
-					_objectEntryLocalService.addObjectEntry(
-						serviceContext.getUserId(), groupId,
-						objectDefinition.getId(),
-						ObjectMapperUtil.readValue(
-							Serializable.class, String.valueOf(jsonObject)),
-						serviceContext);
-
-				if (jsonObject.has("objectEntryKey")) {
-					String key = jsonObject.getString("objectEntryKey");
-
-					displayPageInfoItems.put(
-						"CLASS_NAME:" + key,
-						"com.liferay.object.model.ObjectDefinition#" +
-							objectEntry.getObjectDefinitionId());
-
-					displayPageInfoItems.put(
-						"CLASS_PK:" + key,
-						String.valueOf(objectEntry.getObjectEntryId()));
-
-					displayPageInfoItems.put(
-						"CLASS_TYPE_ID:" + key, StringPool.BLANK);
-
-					displayPageInfoItems.put(
-						"TITLE:" + key,
-						objectDefinition.getName() + StringPool.SPACE +
-							objectEntry.getObjectEntryId());
-
-					displayPageInfoItems.put("TYPE:" + key, StringPool.BLANK);
-				}
+				_objectEntryLocalService.addObjectEntry(
+					serviceContext.getUserId(), groupId,
+					objectDefinition.getId(),
+					ObjectMapperUtil.readValue(
+						Serializable.class,
+						String.valueOf(jsonArray.getJSONObject(i))),
+					serviceContext);
 			}
 		}
 

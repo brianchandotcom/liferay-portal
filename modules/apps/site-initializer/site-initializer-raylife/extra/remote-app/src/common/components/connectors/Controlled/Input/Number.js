@@ -1,15 +1,13 @@
 import React from 'react';
 
-import {ControlledInput} from '.';
+import {ControlledInputWithMask} from './WithMask';
 
 export function NumberControlledInput({...props}) {
 	return (
-		<ControlledInput
+		<ControlledInputWithMask
 			{...props}
 			inputProps={{
 				className: 'mb-5',
-				onWheel: (event) => event.target.blur(),
-				type: 'number',
 			}}
 		/>
 	);

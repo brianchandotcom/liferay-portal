@@ -1,12 +1,13 @@
 .sidebar {
 	background: #fff;
 	border-left: 1px solid #e7e7ed;
-	width: 30vw;
+	max-width: 850px;
+	min-width: 510px;
 
 	.node {
 		border: none;
 		cursor: grab;
-		width: 100%;
+		width: 480px;
 
 		&:hover {
 			border: 2px solid #80acff;
@@ -25,6 +26,8 @@
 	}
 
 	.sidebar-body {
+		overflow: hidden;
+
 		.panel .sheet-subtitle {
 			align-items: center;
 			cursor: pointer;

@@ -230,21 +230,22 @@ public class CountryLocalServiceImpl extends CountryLocalServiceBaseImpl {
 			OrderByComparator<Country> orderByComparator)
 		throws PortalException {
 
-		return new BaseModelSearchResult<>(
-			countryPersistence.dslQuery(
+		return BaseModelSearchResult.unsafeCreateWithStartAndEnd(
+			startAndEnd -> countryPersistence.dslQuery(
 				_getGroupByStep(
 					DSLQueryFactoryUtil.selectDistinct(CountryTable.INSTANCE),
 					companyId, active, keywords
 				).orderBy(
 					CountryTable.INSTANCE, orderByComparator
 				).limit(
-					start, end
+					startAndEnd.getStart(), startAndEnd.getEnd()
 				)),
 			countryPersistence.dslQueryCount(
 				_getGroupByStep(
 					DSLQueryFactoryUtil.countDistinct(
 						CountryTable.INSTANCE.countryId),
-					companyId, active, keywords)));
+					companyId, active, keywords)),
+			start, end);
 	}
 
 	@Override

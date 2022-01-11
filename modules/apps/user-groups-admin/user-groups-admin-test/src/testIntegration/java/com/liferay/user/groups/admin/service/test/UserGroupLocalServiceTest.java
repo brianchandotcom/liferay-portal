@@ -16,6 +16,7 @@ package com.liferay.user.groups.admin.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.DuplicateUserGroupExternalReferenceCodeException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
@@ -34,6 +35,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
@@ -217,6 +219,39 @@ public class UserGroupLocalServiceTest {
 			UsersAdminUtil.getUserGroupOrderByComparator("name", "desc"));
 
 		Assert.assertEquals(expectedUserGroups, userGroups);
+	}
+
+	@Test
+	public void testUpdateExternalReferenceCode() throws Exception {
+		UserGroup userGroup = UserGroupTestUtil.addUserGroup();
+
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		Assert.assertNotEquals(
+			userGroup.getExternalReferenceCode(), externalReferenceCode);
+
+		userGroup = _userGroupLocalService.updateExternalReferenceCode(
+			userGroup, externalReferenceCode);
+
+		Assert.assertEquals(
+			userGroup.getExternalReferenceCode(), externalReferenceCode);
+	}
+
+	@Test(expected = DuplicateUserGroupExternalReferenceCodeException.class)
+	public void testUpdateExternalReferenceCodeInvalidExternalReferenceCode()
+		throws Exception {
+
+		UserGroup userGroup1 = UserGroupTestUtil.addUserGroup();
+
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		_userGroupLocalService.updateExternalReferenceCode(
+			userGroup1, externalReferenceCode);
+
+		UserGroup userGroup2 = UserGroupTestUtil.addUserGroup();
+
+		_userGroupLocalService.updateExternalReferenceCode(
+			userGroup2, externalReferenceCode);
 	}
 
 	@Rule

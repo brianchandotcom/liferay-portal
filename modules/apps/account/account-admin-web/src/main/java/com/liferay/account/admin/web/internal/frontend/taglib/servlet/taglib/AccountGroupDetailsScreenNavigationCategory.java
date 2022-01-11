@@ -16,10 +16,14 @@ package com.liferay.account.admin.web.internal.frontend.taglib.servlet.taglib;
 
 import com.liferay.account.admin.web.internal.constants.AccountScreenNavigationEntryConstants;
 import com.liferay.account.admin.web.internal.display.AccountGroupDisplay;
+import com.liferay.account.admin.web.internal.security.permission.resource.AccountGroupPermission;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 
 import java.io.IOException;
 
@@ -64,6 +68,15 @@ public class AccountGroupDetailsScreenNavigationCategory
 	public String getScreenNavigationKey() {
 		return AccountScreenNavigationEntryConstants.
 			SCREEN_NAVIGATION_KEY_ACCOUNT_GROUP;
+	}
+
+	@Override
+	public boolean isVisible(
+		User user, AccountGroupDisplay accountGroupDisplay) {
+
+		return AccountGroupPermission.contains(
+			PermissionCheckerFactoryUtil.create(user),
+			accountGroupDisplay.getAccountGroupId(), ActionKeys.UPDATE);
 	}
 
 	@Override

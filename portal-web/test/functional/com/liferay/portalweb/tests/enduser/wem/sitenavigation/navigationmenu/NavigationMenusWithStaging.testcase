@@ -1274,6 +1274,95 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-137577. The user can select multiple categories in the navigation menu in a staging site."
+	@priority = "4"
+	test SelectMultipleCategories {
+		property osgi.module.configuration.file.names = "com.liferay.asset.categories.item.selector.web.internal.configuration.FFAssetCategoriesItemSelectorConfiguration.config:com.liferay.site.navigation.admin.web.internal.configuration.FFSiteNavigationAdminConfiguration.config:com.liferay.site.navigation.menu.item.display.page.internal.configuration.FFDisplayPageSiteNavigationMenuItemConfiguration.config";
+		property osgi.module.configurations = "categoriesMultipleSelectionEnabled=&quot;true&quot;:categoriesMultipleSelectionEnabled=&quot;true&quot;:multipleSelectionEnabled=B&quot;true&quot;";
+
+		task ("Add three hierarchy levels categories to a vocabulary within Global site") {
+			JSONCategory.addVocabulary(
+				groupName = "Global",
+				title = "Global Vocabulary Name");
+
+			JSONCategory.addCategory(
+				groupName = "Global",
+				title = "Global Category Name",
+				vocabularyName = "Global Vocabulary Name");
+
+			JSONCategory.addSubcategory(
+				groupName = "Global",
+				parentCategoryName = "Global Category Name",
+				title = "Global Subcategory Name",
+				vocabularyName = "Global Vocabulary Name");
+
+			JSONCategory.addSubcategory(
+				groupName = "Global",
+				parentCategoryName = "Global Subcategory Name",
+				title = "Global SubSubcategory Name",
+				vocabularyName = "Global Vocabulary Name");
+		}
+
+		task ("Add three hierarchy levels categories to a vocabulary within a staging site") {
+			JSONCategory.addVocabulary(
+				groupName = "Test Site Name (Staging)",
+				site = "false",
+				title = "Site Vocabulary Name");
+
+			JSONCategory.addCategory(
+				groupName = "Test Site Name (Staging)",
+				site = "false",
+				title = "Site Category Name",
+				vocabularyName = "Site Vocabulary Name");
+
+			JSONCategory.addSubcategory(
+				groupName = "Test Site Name (Staging)",
+				parentCategoryName = "Site Category Name",
+				site = "false",
+				title = "Site Subcategory Name",
+				vocabularyName = "Site Vocabulary Name");
+
+			JSONCategory.addSubcategory(
+				groupName = "Test Site Name (Staging)",
+				parentCategoryName = "Site Subcategory Name",
+				site = "false",
+				title = "Site SubSubcategory Name",
+				vocabularyName = "Site Vocabulary Name");
+		}
+
+		task ("Add a navigation menu") {
+			JSONSitenavigation.addSiteNavigationMenu(
+				groupName = "Test Site Name (Staging)",
+				site = "false",
+				siteNavigationMenuName = "Navigation Menu Name");
+		}
+
+		task ("Add all categories from each vocabulary into Navigation Menu") {
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name-staging");
+
+			NavigationMenusAdmin.gotoEdit(navigationMenuName = "Navigation Menu Name");
+
+			NavigationMenusAdmin.addCategoryItem(assetTitleList = "Global Category Name,Global Subcategory Name,Global SubSubcategory Name,Site Category Name,Site Subcategory Name,Site SubSubcategory Name");
+		}
+
+		task ("View categories are shown in hiearchy order") {
+			NavigationMenusAdmin.viewItemNested(
+				groupName = "Test Site Name (Staging)",
+				itemNameList = "Global Subcategory Name,Global SubSubcategory Name,Site Subcategory Name,Site SubSubcategory Name",
+				parentItemNameList = "Global Category Name,Global Subcategory Name,Site Category Name,Site Subcategory Name",
+				site = "false",
+				siteNavigationMenuName = "Navigation Menu Name");
+
+			NavigationMenusAdmin.viewItemNotNested(itemNameList = "Global Category Name,Site Category Name");
+		}
+
+		task ("Delete the global vocabulary") {
+			JSONCategory.deleteVocabulary(
+				groupName = "Global",
+				vocabularyName = "Global Vocabulary Name");
+		}
+	}
+
 	@description = "This is a use case for LPS-113994. The Navigation Menu widget can display more than 2 sublevels page hierarchy when use the default template after enable Live."
 	@priority = "3"
 	@uitest

@@ -102,13 +102,11 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 
 			_checkContentType(uploadPortletRequest.getContentType("file"));
 
-			Map<String, String> failureMessages = new HashMap<>();
-			List<String> successMessages = new ArrayList<>();
-
 			TranslationRequestHelper translationRequestHelper =
 				new TranslationRequestHelper(
 					_infoItemServiceTracker, actionRequest);
-
+			Map<String, String> failureMessages = new HashMap<>();
+			List<String> successMessages = new ArrayList<>();
 			String fileName = uploadPortletRequest.getFileName("file");
 
 			_processUploadedFile(

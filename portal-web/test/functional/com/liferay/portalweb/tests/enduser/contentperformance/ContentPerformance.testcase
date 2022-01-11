@@ -57,6 +57,8 @@ definition {
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
+
+		JSONUser.tearDownNonAdminUsers();
 	}
 
 	@description = "LPS-144031: When the user accesses to the content performance panel of a blog's display page, the author's field is NOT shown in the content performance panel"
@@ -420,9 +422,7 @@ definition {
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
-			Button.clickPublish();
-
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			PageEditor.clickPublish();
 
 			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
 		}
@@ -444,11 +444,11 @@ definition {
 		}
 
 		task ("Check if Metric panel is closed and Info panel is openned") {
-			AssertTextNotPresent(
+			AssertTextNotEquals(
 				locator1 = "ContentDashboard#INFO_PANEL_TITLE",
 				value1 = "Content Performance");
 
-			AssertTextPresent(
+			AssertTextEquals(
 				locator1 = "ContentDashboard#INFO_PANEL_TITLE",
 				value1 = "WC Title");
 		}
@@ -457,6 +457,8 @@ definition {
 	@description = "LPS-113910: When the user has NOT permissions for editing and viewing the web content and the web content has a display page template associated, the View metrics option is not displayed"
 	@priority = "4"
 	test MetricsUserWithoutPermissionsDPT {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
 		task ("Create a Role with permissios to access Content Dashboard") {
 			JSONRole.addRegularRole(
 				roleKey = "Content Dashboard Viewer",
@@ -514,9 +516,7 @@ definition {
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
-			Button.clickPublish();
-
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			PageEditor.clickPublish();
 
 			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
 		}
@@ -543,12 +543,8 @@ definition {
 				userLoginFullName = "Test Test");
 		}
 
-		task ("Delete role crated via JSONWS") {
+		task ("Delete role via JSONWS") {
 			JSONRole.deleteRole(roleTitle = "Content Dashboard Viewer");
-		}
-
-		task ("Delete user created") {
-			JSONUser.tearDownNonAdminUsers();
 		}
 	}
 

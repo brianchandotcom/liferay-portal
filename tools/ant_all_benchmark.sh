@@ -57,7 +57,7 @@ function main {
 function run_ant_all {
 	SECONDS=0;
 
-	ant all > /dev/null
+	ant -Dmirrors.hostname= all > /dev/null
 	#sleep 5
 
 	echo ""

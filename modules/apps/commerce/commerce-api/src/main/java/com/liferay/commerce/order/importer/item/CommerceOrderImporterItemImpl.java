@@ -70,6 +70,11 @@ public class CommerceOrderImporterItemImpl
 	}
 
 	@Override
+	public String getReplacingSKU() {
+		return _replacingSKU;
+	}
+
+	@Override
 	public String getSKU() {
 		return _sku;
 	}
@@ -131,6 +136,10 @@ public class CommerceOrderImporterItemImpl
 		_quantity = quantity;
 	}
 
+	public void setReplacingSKU(String replacingSKU) {
+		_replacingSKU = replacingSKU;
+	}
+
 	public void setSku(String sku) {
 		_sku = sku;
 	}
@@ -143,6 +152,7 @@ public class CommerceOrderImporterItemImpl
 	private Map<Locale, String> _nameMap;
 	private long _parentCommerceOrderItemCPDefinitionId;
 	private int _quantity;
+	private String _replacingSKU;
 	private String _sku;
 
 }

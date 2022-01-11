@@ -2138,16 +2138,16 @@ public class BundleSiteInitializer implements SiteInitializer {
 		for (Object object :
 				JSONUtil.toObjectArray(jsonObject.getJSONArray("menuItems"))) {
 
-			JSONObject siteMenuItemJSONObject = (JSONObject)object;
+			JSONObject menuItemJSONObject = (JSONObject)object;
 
-			String type = siteMenuItemJSONObject.getString("type");
+			String type = menuItemJSONObject.getString("type");
 
 			String typeSettings = null;
 
 			if (type.equals(SiteNavigationMenuItemTypeConstants.LAYOUT)) {
-				boolean privateLayout = siteMenuItemJSONObject.getBoolean(
+				boolean privateLayout = menuItemJSONObject.getBoolean(
 					"privateLayout");
-				String friendlyURL = siteMenuItemJSONObject.getString(
+				String friendlyURL = menuItemJSONObject.getString(
 					"friendlyURL");
 
 				Layout layout = _layoutLocalService.fetchLayoutByFriendlyURL(
@@ -2172,23 +2172,23 @@ public class BundleSiteInitializer implements SiteInitializer {
 					new UnicodeProperties();
 
 				typeSettingsUnicodeProperties.setProperty(
-					"name", siteMenuItemJSONObject.getString("name"));
+					"name", menuItemJSONObject.getString("name"));
 			}
 			else if (type.equals(SiteNavigationMenuItemTypeConstants.URL)) {
 				UnicodeProperties typeSettingsUnicodeProperties =
 					new UnicodeProperties();
 
 				typeSettingsUnicodeProperties.setProperty(
-					"name", siteMenuItemJSONObject.getString("name"));
+					"name", menuItemJSONObject.getString("name"));
 				typeSettingsUnicodeProperties.setProperty(
-					"url", siteMenuItemJSONObject.getString("url"));
+					"url", menuItemJSONObject.getString("url"));
 				typeSettingsUnicodeProperties.setProperty(
-					"useNewTab", siteMenuItemJSONObject.getString("useNewTab"));
+					"useNewTab", menuItemJSONObject.getString("useNewTab"));
 
 				typeSettings = typeSettingsUnicodeProperties.toString();
 			}
 			else if (type.equals("display-page")) {
-				String key = siteMenuItemJSONObject.getString("key");
+				String key = menuItemJSONObject.getString("key");
 
 				if (Validator.isNull(key)) {
 					continue;
@@ -2231,7 +2231,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 					serviceContext);
 
 			_addSiteNavigationMenuItems(
-				siteMenuItemJSONObject, siteNavigationMenu,
+				menuItemJSONObject, siteNavigationMenu,
 				siteNavigationMenuItem.getSiteNavigationMenuItemId(),
 				serviceContext, siteNavigationMenuItemSettings);
 		}

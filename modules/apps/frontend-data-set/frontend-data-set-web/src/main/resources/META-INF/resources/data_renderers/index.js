@@ -29,7 +29,7 @@ import QuantitySelectorRenderer from './QuantitySelectorRenderer';
 import StatusRenderer from './StatusRenderer';
 import TooltipSummaryRenderer from './TooltipSummaryRenderer';
 
-const dataRenderers = {
+export const dataRenderers = {
 	actionLink: ActionsLinkRenderer,
 	actionsDropdown: ActionsDropdownRenderer,
 	boolean: BooleanRenderer,
@@ -49,9 +49,4 @@ export const inputRenderers = {
 	checkbox: InputCheckboxRenderer,
 	dateTime: InputDateTimeRenderer,
 	text: InputTextRenderer,
-};
-
-export default {
-	...dataRenderers,
-	...inputRenderers,
 };

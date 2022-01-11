@@ -12,7 +12,7 @@
  * details.
  */
 
-import dataRenderers, {inputRenderers} from '../data_renderers/index';
+import {dataRenderers, inputRenderers} from '../data_renderers/index';
 import {getJsModule} from './modules';
 
 export function getInputRendererById(id) {

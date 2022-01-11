@@ -129,7 +129,6 @@ definition {
 	}
 
 	@description = "LPS-133865 - Verify if the Object is displayed to be selected as Collection Provider on the Collection Display fragment"
-	@ignore = "true"
 	@priority = "5"
 	test ObjectDisplayedToCollectionProdiver {
 		property portal.acceptance = "true";

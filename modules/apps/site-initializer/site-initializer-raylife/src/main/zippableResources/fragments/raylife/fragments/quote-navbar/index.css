@@ -2,3 +2,9 @@
   cursor: pointer;
   user-select: none;
 }
+
+.quote-site-navbar .brand-subtext {
+  margin-left: -94px;
+  position: absolute;
+  top: 54px;
+}

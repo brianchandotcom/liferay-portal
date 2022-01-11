@@ -253,8 +253,7 @@ public interface PLOEntryLocalService
 	public List<PLOEntry> getPLOEntries(long companyId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<PLOEntry> getPLOEntriesByLanguageId(
-		long companyId, String languageId);
+	public List<PLOEntry> getPLOEntries(long companyId, String languageId);
 
 	/**
 	 * Returns the number of plo entries.

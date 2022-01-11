@@ -325,10 +325,9 @@ public class PLOEntryLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.portal.language.override.model.PLOEntry>
-		getPLOEntriesByLanguageId(long companyId, String languageId) {
+		getPLOEntries(long companyId, String languageId) {
 
-		return _ploEntryLocalService.getPLOEntriesByLanguageId(
-			companyId, languageId);
+		return _ploEntryLocalService.getPLOEntries(companyId, languageId);
 	}
 
 	/**

@@ -284,10 +284,10 @@ public class PLOEntryLocalServiceUtil {
 		return getService().getPLOEntries(companyId);
 	}
 
-	public static List<PLOEntry> getPLOEntriesByLanguageId(
+	public static List<PLOEntry> getPLOEntries(
 		long companyId, String languageId) {
 
-		return getService().getPLOEntriesByLanguageId(companyId, languageId);
+		return getService().getPLOEntries(companyId, languageId);
 	}
 
 	/**

@@ -5,25 +5,11 @@ dependencies {
 	compileOnly group: "javax.portlet", name: "portlet-api", version: "3.0.1"
 	compileOnly group: "org.apache.felix", name: "org.apache.felix.http.servlet-api", version: "1.1.2"
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
-	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
-	compileOnly project(":apps:account:account-api")
 	compileOnly project(":apps:application-list:application-list-api")
-	compileOnly project(":apps:asset:asset-taglib")
-	compileOnly project(":apps:expando:expando-api")
-	compileOnly project(":apps:expando:expando-taglib")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-clay")
-	compileOnly project(":apps:frontend-taglib:frontend-taglib-soy")
-	compileOnly project(":apps:oauth2-provider:oauth2-provider-scope-api")
 	compileOnly project(":apps:petra:petra-portlet-url-builder")
 	compileOnly project(":apps:portal-language:portal-language-override-api")
-	compileOnly project(":apps:portal-vulcan:portal-vulcan-api")
-	compileOnly project(":apps:portal:portal-instance-lifecycle-api")
-	compileOnly project(":apps:product-navigation:product-navigation-personal-menu-api")
-	compileOnly project(":apps:roles:roles-admin-api")
-	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")
-	compileOnly project(":apps:text-localizer:text-localizer-taglib")
-	compileOnly project(":apps:users-admin:users-admin-api")
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-sql-dsl-api")

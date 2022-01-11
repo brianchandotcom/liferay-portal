@@ -1,7 +1,7 @@
 {
 	"deletionType": "cascade",
 	"label": {
-		"en-US": "Test Object Relationship 1"
+		"en_US": "Test Object Relationship 1"
 	},
 	"name": "testOR1",
 	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:TestObjectDefinition1$]",

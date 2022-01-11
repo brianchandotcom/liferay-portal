@@ -102,11 +102,10 @@ public class CommerceOrdersCommerceOrderImporterTypeImpl
 			throw new CommerceOrderImporterTypeException();
 		}
 
-		CommerceOrder selectedCommerceOrder = (CommerceOrder)object;
-
 		CommerceChannel commerceChannel =
 			_commerceChannelLocalService.getCommerceChannelByOrderGroupId(
 				commerceOrder.getGroupId());
+		CommerceOrder selectedCommerceOrder = (CommerceOrder)object;
 
 		return CommerceOrderImporterTypeUtil.getCommerceOrderImporterItems(
 			_commerceContextFactory, commerceOrder,

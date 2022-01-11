@@ -41,9 +41,11 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -195,11 +197,29 @@ public class AccountGroupLocalServiceImpl
 		long companyId, String keywords, int start, int end,
 		OrderByComparator<AccountGroup> orderByComparator) {
 
+		return searchAccountGroups(
+			companyId, keywords, null, start, end, orderByComparator);
+	}
+
+	@Override
+	public BaseModelSearchResult<AccountGroup> searchAccountGroups(
+		long companyId, String keywords, LinkedHashMap<String, Object> params,
+		int start, int end, OrderByComparator<AccountGroup> orderByComparator) {
+
 		try {
 			SearchContext searchContext = _buildSearchContext(
 				companyId, start, end, orderByComparator);
 
 			searchContext.setKeywords(keywords);
+
+			if (MapUtil.isNotEmpty(params)) {
+				long permissionUserId = GetterUtil.getLong(
+					params.get("permissionUserId"));
+
+				if (permissionUserId != GetterUtil.DEFAULT_LONG) {
+					searchContext.setUserId(permissionUserId);
+				}
+			}
 
 			return _searchAccountGroups(searchContext);
 		}

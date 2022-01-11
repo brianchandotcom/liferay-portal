@@ -19,9 +19,13 @@ import com.liferay.account.model.AccountGroup;
 import com.liferay.account.service.base.AccountGroupServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
+import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
+import com.liferay.portal.kernel.util.OrderByComparator;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -67,6 +71,22 @@ public class AccountGroupServiceImpl extends AccountGroupServiceBaseImpl {
 		for (long accountGroupId : accountGroupIds) {
 			deleteAccountGroup(accountGroupId);
 		}
+	}
+
+	@Override
+	public BaseModelSearchResult<AccountGroup> searchAccountGroups(
+			long companyId, String keywords, int start, int end,
+			OrderByComparator<AccountGroup> orderByComparator)
+		throws PortalException {
+
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		return accountGroupLocalService.searchAccountGroups(
+			companyId, keywords,
+			LinkedHashMapBuilder.<String, Object>put(
+				"permissionUserId", permissionChecker.getUserId()
+			).build(),
+			start, end, orderByComparator);
 	}
 
 	@Override

@@ -39,16 +39,18 @@ public class ContactBatchReindexerImpl implements ContactBatchReindexer {
 
 		batchIndexingActionable.setAddCriteriaMethod(
 			dynamicQuery -> {
-				Property property = PropertyFactoryUtil.forName("classNameId");
+				Property classNameIdProperty = PropertyFactoryUtil.forName(
+					"classNameId");
 
 				long classNameId = _classNameLocalService.getClassNameId(
 					User.class);
 
-				dynamicQuery.add(property.eq(classNameId));
+				dynamicQuery.add(classNameIdProperty.eq(classNameId));
 
-				property = PropertyFactoryUtil.forName("classPK");
+				Property classPKProperty = PropertyFactoryUtil.forName(
+					"classPK");
 
-				dynamicQuery.add(property.eq(userId));
+				dynamicQuery.add(classPKProperty.eq(userId));
 			});
 		batchIndexingActionable.setCompanyId(companyId);
 		batchIndexingActionable.setPerformActionMethod(

@@ -121,7 +121,7 @@ components:
                             type: boolean
                         includeResponseString:
                             type: boolean
-                        localeId:
+                        languageId:
                             type: string
                         queryString:
                             type: string

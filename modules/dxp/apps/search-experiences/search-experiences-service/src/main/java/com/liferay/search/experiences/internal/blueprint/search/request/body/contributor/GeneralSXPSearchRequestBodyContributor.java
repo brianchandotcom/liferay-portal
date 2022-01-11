@@ -63,9 +63,10 @@ public class GeneralSXPSearchRequestBodyContributor
 				generalConfiguration.getSearchableAssetTypes());
 		}
 
-		if (generalConfiguration.getLocaleId() != null) {
+		if (generalConfiguration.getLanguageId() != null) {
 			searchRequestBuilder.locale(
-				LocaleUtil.fromLanguageId(generalConfiguration.getLocaleId()));
+				LocaleUtil.fromLanguageId(
+					generalConfiguration.getLanguageId()));
 		}
 
 		if (generalConfiguration.getTimeZoneId() != null) {

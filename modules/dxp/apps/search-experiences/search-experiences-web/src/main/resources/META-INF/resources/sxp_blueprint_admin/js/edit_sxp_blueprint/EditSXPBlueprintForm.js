@@ -588,7 +588,7 @@ function EditSXPBlueprintForm({
 							emptySearchEnabled: true,
 							explain: true,
 							includeResponseString: true,
-							localeId: Liferay.ThemeDisplay.getLanguageId(),
+							languageId: Liferay.ThemeDisplay.getLanguageId(),
 						},
 						searchContextAttributes: transformToSearchContextAttributes(
 							attributes

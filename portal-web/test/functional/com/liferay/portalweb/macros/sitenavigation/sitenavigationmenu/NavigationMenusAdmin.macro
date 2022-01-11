@@ -316,6 +316,12 @@ definition {
 		}
 	}
 
+	macro viewItemNotPresent {
+		for (var itemName : list "${itemNameList}") {
+			AssertElementNotPresent(
+				key_itemName = "${itemName}",
+				locator1 = "SiteNavigationMenu#ITEM_ENTRY");
+		}
 	}
 
 	macro viewItemOrder {

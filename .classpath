@@ -279,7 +279,6 @@
 	<classpathentry kind="lib" path="lib/portal/tomcat-juli.jar"/>
 	<classpathentry kind="lib" path="lib/portal/transaction.jar"/>
 	<classpathentry kind="lib" path="lib/portal/unoil.jar"/>
-	<classpathentry kind="lib" path="lib/portal/urlrewritefilter.jar"/>
 	<classpathentry kind="lib" path="lib/portal/vorbis-java-core.jar"/>
 	<classpathentry kind="lib" path="lib/portal/vorbis-java-tika.jar"/>
 	<classpathentry kind="lib" path="lib/portal/wsdl4j.jar"/>

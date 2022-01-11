@@ -15,6 +15,7 @@
 package com.liferay.frontend.js.components.sample.web.internal.portlet;
 
 import com.liferay.frontend.js.components.sample.web.internal.constants.ComponentsSamplePortletKeys;
+import com.liferay.frontend.js.components.sample.web.internal.constants.ComponentsSampleWebKeys;
 import com.liferay.frontend.js.components.sample.web.internal.display.context.TranslationManagerDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.Portal;
@@ -46,7 +47,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = Portlet.class
 )
-public class FrontendJSComponentsSampleWebPortlet extends MVCPortlet {
+public class ComponentsSampleWebPortlet extends MVCPortlet {
 
 	@Override
 	public void doDispatch(
@@ -54,7 +55,7 @@ public class FrontendJSComponentsSampleWebPortlet extends MVCPortlet {
 		throws IOException, PortletException {
 
 		renderRequest.setAttribute(
-			ComponentsSamplePortletKeys.TRANSLATION_MANAGER_DISPLAY_CONTEXT,
+			ComponentsSampleWebKeys.TRANSLATION_MANAGER_DISPLAY_CONTEXT,
 			new TranslationManagerDisplayContext());
 
 		super.doDispatch(renderRequest, renderResponse);

@@ -109,10 +109,7 @@ String userIdentifierExpression = attributeMappingDisplayContext.getUserIdentifi
 
 		if (event == null || event.target == radioTarget) {
 			if (radioTarget.checked) {
-				<portlet:namespace />handleAttributeMappingMatchingSelection(
-					row,
-					attributeMappingSelected
-				);
+				<portlet:namespace />handleAttributeMappingMatchingSelection(row);
 			}
 		}
 
@@ -149,24 +146,10 @@ String userIdentifierExpression = attributeMappingDisplayContext.getUserIdentifi
 			});
 	};
 
-	<portlet:namespace />handleAttributeMappingMatchingSelection = function (
-		row,
-		attributeMappingSelected
-	) {
+	<portlet:namespace />handleAttributeMappingMatchingSelection = function (row) {
 		document.querySelector(
 			'input[name="<portlet:namespace />attribute:userIdentifierExpressionPrefix"]'
 		).value = row.dataset.prefix;
-
-		if (!attributeMappingSelected) {
-			document.querySelector(
-				'input[name="<portlet:namespace />userIdentifierExpression"][value="attribute"]'
-			).checked = true;
-			document
-				.querySelectorAll('.user-attribute-mapping-row')
-				.forEach((row) =>
-					<portlet:namespace />evaluateAttributeMappingRow(row)
-				);
-		}
 	};
 
 	var userAttributeMappings = document.getElementById(
@@ -189,6 +172,12 @@ String userIdentifierExpression = attributeMappingDisplayContext.getUserIdentifi
 		}
 	});
 
+	if (userAttributeMappings.querySelector('input[name="<portlet:namespace />attribute:userIdentifierExpressionIndex"]:checked')) {
+		document.querySelector(
+			'input[name="<portlet:namespace />userIdentifierExpression"][value="attribute"]'
+		).checked = true;
+	}
+
 	document
 		.querySelectorAll(
 			'input[name="<portlet:namespace />userIdentifierExpression"]:not([value="attribute"])'
@@ -209,6 +198,7 @@ String userIdentifierExpression = attributeMappingDisplayContext.getUserIdentifi
 					<portlet:namespace />evaluateAttributeMappingRow(row)
 				);
 		});
+
 	document
 		.querySelectorAll('.user-attribute-mapping-row')
 		.forEach((row) => <portlet:namespace />evaluateAttributeMappingRow(row));

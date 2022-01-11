@@ -147,6 +147,11 @@ public class OracleDB extends BaseDB {
 	}
 
 	@Override
+	protected int[] getSQLVarcharSizes() {
+		return _SQL_VARCHAR_SIZES;
+	}
+
+	@Override
 	protected String[] getTemplate() {
 		return _ORACLE;
 	}
@@ -263,10 +268,14 @@ public class OracleDB extends BaseDB {
 		" varchar2", "", "commit"
 	};
 
+	private static final int _SQL_STRING_SIZE = 4000;
+
 	private static final int[] _SQL_TYPES = {
 		Types.BLOB, Types.BLOB, Types.NUMERIC, Types.TIMESTAMP, Types.NUMERIC,
 		Types.NUMERIC, Types.NUMERIC, Types.VARCHAR, Types.CLOB, Types.VARCHAR
 	};
+
+	private static final int[] _SQL_VARCHAR_SIZES = {_SQL_STRING_SIZE, -1};
 
 	private static final boolean _SUPPORTS_INLINE_DISTINCT = false;
 

@@ -120,6 +120,11 @@ public class DB2DB extends BaseDB {
 	}
 
 	@Override
+	protected int[] getSQLVarcharSizes() {
+		return _SQL_VARCHAR_SIZES;
+	}
+
+	@Override
 	protected String[] getTemplate() {
 		return _DB2;
 	}
@@ -281,10 +286,14 @@ public class DB2DB extends BaseDB {
 		" generated always as identity", "commit"
 	};
 
+	private static final int _SQL_STRING_SIZE = 4000;
+
 	private static final int[] _SQL_TYPES = {
 		Types.BLOB, Types.BLOB, Types.SMALLINT, Types.TIMESTAMP, Types.DOUBLE,
 		Types.INTEGER, Types.BIGINT, Types.VARCHAR, Types.CLOB, Types.VARCHAR
 	};
+
+	private static final int[] _SQL_VARCHAR_SIZES = {_SQL_STRING_SIZE, -1};
 
 	private static final boolean _SUPPORTS_INLINE_DISTINCT = false;
 

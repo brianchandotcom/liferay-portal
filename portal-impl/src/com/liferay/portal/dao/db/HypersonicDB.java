@@ -63,6 +63,11 @@ public class HypersonicDB extends BaseDB {
 	}
 
 	@Override
+	protected int[] getSQLVarcharSizes() {
+		return _SQL_VARCHAR_SIZES;
+	}
+
+	@Override
 	protected String[] getTemplate() {
 		return _HYPERSONIC;
 	}
@@ -130,9 +135,17 @@ public class HypersonicDB extends BaseDB {
 		" longvarchar", " longvarchar", " varchar", "", "commit"
 	};
 
+	private static final int _SQL_STRING_SIZE = 16777216;
+
+	private static final int _SQL_TEXT_SIZE = 16777216;
+
 	private static final int[] _SQL_TYPES = {
 		Types.BLOB, Types.BLOB, Types.BIT, Types.TIMESTAMP, Types.DOUBLE,
 		Types.INTEGER, Types.BIGINT, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR
+	};
+
+	private static final int[] _SQL_VARCHAR_SIZES = {
+		_SQL_STRING_SIZE, _SQL_TEXT_SIZE
 	};
 
 }

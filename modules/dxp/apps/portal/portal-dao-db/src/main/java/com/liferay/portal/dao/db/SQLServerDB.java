@@ -117,6 +117,11 @@ public class SQLServerDB extends BaseDB {
 	}
 
 	@Override
+	protected int[] getSQLVarcharSizes() {
+		return _SQL_VARCHAR_SIZES;
+	}
+
+	@Override
 	protected String[] getTemplate() {
 		return _SQL_SERVER;
 	}
@@ -187,10 +192,18 @@ public class SQLServerDB extends BaseDB {
 
 	private static final int _SQL_SERVER_2000 = 8;
 
+	private static final int _SQL_STRING_SIZE = 4000;
+
+	private static final int _SQL_TEXT_SIZE = 2147483647;
+
 	private static final int[] _SQL_TYPES = {
 		Types.LONGVARBINARY, Types.LONGVARBINARY, Types.BIT, Types.TIMESTAMP,
 		Types.DOUBLE, Types.INTEGER, Types.BIGINT, Types.NVARCHAR,
 		Types.NVARCHAR, Types.NVARCHAR
+	};
+
+	private static final int[] _SQL_VARCHAR_SIZES = {
+		_SQL_STRING_SIZE, _SQL_TEXT_SIZE
 	};
 
 	private static final boolean _SUPPORTS_NEW_UUID_FUNCTION = true;

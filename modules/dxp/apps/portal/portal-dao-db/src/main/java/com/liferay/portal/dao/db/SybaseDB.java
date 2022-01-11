@@ -95,6 +95,11 @@ public class SybaseDB extends BaseDB {
 	}
 
 	@Override
+	protected int[] getSQLVarcharSizes() {
+		return _SQL_VARCHAR_SIZES;
+	}
+
+	@Override
 	protected String[] getTemplate() {
 		return _SYBASE;
 	}
@@ -195,6 +200,8 @@ public class SybaseDB extends BaseDB {
 
 	protected static final String DROP_COLUMN = "drop column";
 
+	private static final int _SQL_STRING_SIZE = 4000;
+
 	private static final int _SQL_TYPE_TIMESTAMP = 11;
 
 	private static final int[] _SQL_TYPES = {
@@ -202,6 +209,8 @@ public class SybaseDB extends BaseDB {
 		_SQL_TYPE_TIMESTAMP, Types.DOUBLE, Types.INTEGER, Types.DECIMAL,
 		Types.VARCHAR, Types.LONGVARCHAR, Types.VARCHAR
 	};
+
+	private static final int[] _SQL_VARCHAR_SIZES = {_SQL_STRING_SIZE, -1};
 
 	private static final boolean _SUPPORTS_INLINE_DISTINCT = false;
 

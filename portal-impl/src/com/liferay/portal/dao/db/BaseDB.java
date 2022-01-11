@@ -243,6 +243,11 @@ public abstract class BaseDB implements DB {
 	}
 
 	@Override
+	public Integer getSQLVarcharSize(String templateType) {
+		return _sqlVarcharSizes.get(templateType);
+	}
+
+	@Override
 	public String getTemplateBlob() {
 		return getTemplate()[5];
 	}
@@ -679,6 +684,14 @@ public abstract class BaseDB implements DB {
 		for (int i = 0; i < templateTypes.length; i++) {
 			_sqlTypes.put(StringUtil.trim(templateTypes[i]), getSQLTypes()[i]);
 		}
+
+		String[] sqlTypeStringAndText = ArrayUtil.clone(TEMPLATE, 12, 14);
+
+		for (int i = 0; i < sqlTypeStringAndText.length; i++) {
+			_sqlVarcharSizes.put(
+				StringUtil.trim(sqlTypeStringAndText[i]),
+				getSQLVarcharSizes()[i]);
+		}
 	}
 
 	protected String[] buildColumnNameTokens(String line) {
@@ -805,6 +818,10 @@ public abstract class BaseDB implements DB {
 	}
 
 	protected abstract int[] getSQLTypes();
+
+	protected int[] getSQLVarcharSizes() {
+		return new int[] {-1, -1};
+	}
 
 	protected abstract String[] getTemplate();
 
@@ -965,6 +982,7 @@ public abstract class BaseDB implements DB {
 	private final int _majorVersion;
 	private final int _minorVersion;
 	private final Map<String, Integer> _sqlTypes = new HashMap<>();
+	private final Map<String, Integer> _sqlVarcharSizes = new HashMap<>();
 	private boolean _supportsStringCaseSensitiveQuery = true;
 	private final Map<String, String> _templates = new HashMap<>();
 

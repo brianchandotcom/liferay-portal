@@ -44,6 +44,8 @@ public class PoshiRunnerDefaultsPlugin implements Plugin<Project> {
 			GradleUtil.getExtension(
 				project, WebDriverBinariesPluginExtension.class);
 
+		webDriverBinariesPluginExtension.setChromedriver("86.0.4240.22");
+
 		ResourceHandler resourceHandler = project.getResources();
 
 		TextResourceFactory textResourceFactory = resourceHandler.getText();

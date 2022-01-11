@@ -27,15 +27,15 @@ import java.util.Map;
 public class LocalizedMapUtil {
 
 	public static Map<String, String> getLanguageIdMap(
-		Map<Locale, String> map) {
+		Map<Locale, String> localizedMap) {
 
-		Map<String, String> localizedMap = new HashMap<>();
+		Map<String, String> languageIdMap = new HashMap<>();
 
-		map.forEach(
-			(locale, value) -> localizedMap.put(
+		localizedMap.forEach(
+			(locale, value) -> languageIdMap.put(
 				LocaleUtil.toLanguageId(locale), value));
 
-		return Collections.unmodifiableMap(localizedMap);
+		return Collections.unmodifiableMap(languageIdMap);
 	}
 
 	public static Map<Locale, String> getLocalizedMap(

@@ -15,7 +15,8 @@
 const noop = () => {};
 
 function parse(req) {
-	var result;
+	let result;
+
 	try {
 		result = JSON.parse(req.responseText);
 	}

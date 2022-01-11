@@ -64,6 +64,10 @@ public class PortalClassPathUtil {
 				sb.append(File.pathSeparator);
 			}
 		}
+		else {
+			throw new IllegalStateException(
+				"Class path files could not be loaded");
+		}
 
 		sb.append(_portalProcessConfig.getBootstrapClassPath());
 
@@ -144,6 +148,10 @@ public class PortalClassPathUtil {
 			sb.setIndex(sb.index() - 1);
 
 			bootstrapClassPath = sb.toString();
+		}
+		else {
+			throw new IllegalStateException(
+				"Class path files could not be loaded");
 		}
 
 		if (servletContext != null) {

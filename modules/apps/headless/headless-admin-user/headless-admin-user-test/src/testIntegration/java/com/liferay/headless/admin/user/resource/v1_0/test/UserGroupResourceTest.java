@@ -17,6 +17,8 @@ package com.liferay.headless.admin.user.resource.v1_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.admin.user.client.dto.v1_0.UserGroup;
 
+import org.junit.Assert;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -24,6 +26,20 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 public class UserGroupResourceTest extends BaseUserGroupResourceTestCase {
+
+	@Override
+	@Test
+	public void testPostUserGroup() throws Exception {
+		super.testPostUserGroup();
+
+		UserGroup userGroup = randomUserGroup();
+
+		UserGroup postUserGroup = userGroupResource.postUserGroup(userGroup);
+
+		Assert.assertEquals(
+			userGroup.getExternalReferenceCode(),
+			postUserGroup.getExternalReferenceCode());
+	}
 
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {

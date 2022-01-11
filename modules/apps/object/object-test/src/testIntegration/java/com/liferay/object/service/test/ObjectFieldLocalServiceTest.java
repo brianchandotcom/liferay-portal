@@ -455,6 +455,7 @@ public class ObjectFieldLocalServiceTest {
 			objectDefinition.getObjectDefinitionId(), false, true, "",
 			LocalizedMapUtil.getLocalizedMap("able"), "able", false, "Long");
 
+		Assert.assertEquals("able_", objectField.getDBColumnName());
 		Assert.assertFalse(objectField.isIndexed());
 		Assert.assertTrue(objectField.isIndexedAsKeyword());
 		Assert.assertEquals("", objectField.getIndexedLanguageId());

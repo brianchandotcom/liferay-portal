@@ -57,8 +57,6 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -460,31 +458,22 @@ public class EditAssetListDisplayContext {
 		return _backURL;
 	}
 
-	public String getCategorySelectorURL() {
-		try {
-			return PortletURLBuilder.create(
-				PortletProviderUtil.getPortletURL(
-					_httpServletRequest, AssetCategory.class.getName(),
-					PortletProvider.Action.BROWSE)
-			).setParameter(
-				"eventName", _portletResponse.getNamespace() + "selectCategory"
-			).setParameter(
-				"selectedCategories", "{selectedCategories}"
-			).setParameter(
-				"singleSelect", "{singleSelect}"
-			).setParameter(
-				"vocabularyIds", "{vocabularyIds}"
-			).setWindowState(
-				LiferayWindowState.POP_UP
-			).buildString();
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
-			}
-		}
-
-		return null;
+	public String getCategorySelectorURL() throws Exception {
+		return PortletURLBuilder.create(
+			PortletProviderUtil.getPortletURL(
+				_httpServletRequest, AssetCategory.class.getName(),
+				PortletProvider.Action.BROWSE)
+		).setParameter(
+			"eventName", _portletResponse.getNamespace() + "selectCategory"
+		).setParameter(
+			"selectedCategories", "{selectedCategories}"
+		).setParameter(
+			"singleSelect", "{singleSelect}"
+		).setParameter(
+			"vocabularyIds", "{vocabularyIds}"
+		).setWindowState(
+			LiferayWindowState.POP_UP
+		).buildString();
 	}
 
 	public String getClassName(AssetRendererFactory<?> assetRendererFactory) {
@@ -970,29 +959,20 @@ public class EditAssetListDisplayContext {
 		return _selectSegmentsEntryURL;
 	}
 
-	public String getTagSelectorURL() {
-		try {
-			return PortletURLBuilder.create(
-				PortletProviderUtil.getPortletURL(
-					_httpServletRequest, AssetTag.class.getName(),
-					PortletProvider.Action.BROWSE)
-			).setParameter(
-				"eventName", _portletResponse.getNamespace() + "selectTag"
-			).setParameter(
-				"groupIds", StringUtil.merge(getSelectedGroupIds())
-			).setParameter(
-				"selectedTagNames", "{selectedTagNames}"
-			).setWindowState(
-				LiferayWindowState.POP_UP
-			).buildString();
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
-			}
-		}
-
-		return null;
+	public String getTagSelectorURL() throws Exception {
+		return PortletURLBuilder.create(
+			PortletProviderUtil.getPortletURL(
+				_httpServletRequest, AssetTag.class.getName(),
+				PortletProvider.Action.BROWSE)
+		).setParameter(
+			"eventName", _portletResponse.getNamespace() + "selectTag"
+		).setParameter(
+			"groupIds", StringUtil.merge(getSelectedGroupIds())
+		).setParameter(
+			"selectedTagNames", "{selectedTagNames}"
+		).setWindowState(
+			LiferayWindowState.POP_UP
+		).buildString();
 	}
 
 	public UnicodeProperties getUnicodeProperties() {
@@ -1362,9 +1342,6 @@ public class EditAssetListDisplayContext {
 	}
 
 	private static final long _DEFAULT_SUBTYPE_SELECTION_ID = 0;
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		EditAssetListDisplayContext.class);
 
 	private AssetListEntry _assetListEntry;
 	private Long _assetListEntryId;

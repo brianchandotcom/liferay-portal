@@ -1,5 +1,5 @@
 Bundle-Name: Liferay Staging Processes Web
 Bundle-SymbolicName: com.liferay.staging.processes.web
-Bundle-Version: 5.0.15
+Bundle-Version: 5.0.16
 Liferay-JS-Config: /META-INF/resources/js/config.js
 Web-ContextPath: /staging-processes-web

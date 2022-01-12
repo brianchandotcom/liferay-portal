@@ -294,7 +294,7 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro gotoEdit {
+	macro editMenu {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
 			rowEntry = "${navigationMenuName}");

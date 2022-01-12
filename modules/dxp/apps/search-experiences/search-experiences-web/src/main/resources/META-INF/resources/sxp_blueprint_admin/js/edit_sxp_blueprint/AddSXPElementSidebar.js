@@ -15,6 +15,7 @@ import ClayIcon from '@clayui/icon';
 import ClayList from '@clayui/list';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClaySticker from '@clayui/sticker';
+import {useIsMounted} from '@liferay/frontend-js-react-web';
 import getCN from 'classnames';
 import PropTypes from 'prop-types';
 import React, {
@@ -289,6 +290,7 @@ function SXPElementSidebar({
 function AddSXPElementSidebar(props) {
 	const {defaultLocale} = useContext(ThemeContext);
 	const [querySXPElements, setQuerySXPElements] = useState(null);
+	const isMounted = useIsMounted();
 
 	// TODO check pagesize
 
@@ -298,25 +300,34 @@ function AddSXPElementSidebar(props) {
 				pageSize: 200,
 			}),
 			{method: 'GET'},
-			(responseContent) =>
-				setQuerySXPElements(
-					responseContent.items.map(
-						({
-							description,
-							description_i18n,
-							title,
-							title_i18n,
-							...props
-						}) => ({
-							...props,
-							description_i18n: description_i18n || {
-								[defaultLocale]: description,
-							},
-							title_i18n: title_i18n || {[defaultLocale]: title},
-						})
-					)
-				),
-			() => setQuerySXPElements([])
+			(responseContent) => {
+				if (isMounted()) {
+					setQuerySXPElements(
+						responseContent.items.map(
+							({
+								description,
+								description_i18n,
+								title,
+								title_i18n,
+								...props
+							}) => ({
+								...props,
+								description_i18n: description_i18n || {
+									[defaultLocale]: description,
+								},
+								title_i18n: title_i18n || {
+									[defaultLocale]: title,
+								},
+							})
+						)
+					);
+				}
+			},
+			() => {
+				if (isMounted()) {
+					setQuerySXPElements([]);
+				}
+			}
 		);
 	}, []); //eslint-disable-line
 

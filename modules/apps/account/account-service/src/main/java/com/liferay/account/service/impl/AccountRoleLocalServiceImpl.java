@@ -276,21 +276,12 @@ public class AccountRoleLocalServiceImpl
 		LinkedHashMap<String, Object> params, int start, int end,
 		OrderByComparator<?> orderByComparator) {
 
-		LinkedHashMap<String, Object> searchParams;
-
-		if (params == null) {
-			searchParams = new LinkedHashMap<>();
-		}
-		else {
-			searchParams = params;
-		}
-
 		return BaseModelSearchResult.createWithStartAndEnd(
 			startAndEnd -> accountRoleLocalService.dslQuery(
 				_getGroupByStep(
 					accountEntryIds, companyId,
 					DSLQueryFactoryUtil.select(AccountRoleTable.INSTANCE),
-					keywords, searchParams
+					keywords, params
 				).orderBy(
 					RoleTable.INSTANCE, orderByComparator
 				).limit(
@@ -301,7 +292,7 @@ public class AccountRoleLocalServiceImpl
 					accountEntryIds, companyId,
 					DSLQueryFactoryUtil.countDistinct(
 						AccountRoleTable.INSTANCE.roleId),
-					keywords, searchParams)),
+					keywords, params)),
 			start, end);
 	}
 
@@ -393,6 +384,10 @@ public class AccountRoleLocalServiceImpl
 				}
 			).and(
 				() -> {
+					if (params == null) {
+						return null;
+					}
+
 					String[] excludedRoleNames = (String[])params.get(
 						"excludedRoleNames");
 
@@ -404,6 +399,10 @@ public class AccountRoleLocalServiceImpl
 				}
 			).and(
 				() -> {
+					if (params == null) {
+						return null;
+					}
+
 					Long[] excludedRoleIds = (Long[])params.get(
 						"excludedRoleIds");
 

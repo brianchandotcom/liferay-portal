@@ -106,7 +106,7 @@ public class SessionClicks {
 
 				int size = portalPreferences.size();
 
-				if (size <= _SESSION_CLICKS_MAX_ALLOWED_VALUES) {
+				if (size < _SESSION_CLICKS_MAX_ALLOWED_VALUES) {
 					portalPreferences.setValue(namespace, key, value);
 				}
 				else {

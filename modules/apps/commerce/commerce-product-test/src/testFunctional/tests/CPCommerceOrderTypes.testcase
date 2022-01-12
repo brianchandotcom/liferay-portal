@@ -268,6 +268,30 @@ definition {
 		}
 	}
 
+	@description = "Verify users can create a new order type."
+	@priority = "3"
+	test CreateOrderType {
+		property portal.acceptance = "false";
+
+		task ("When I create a new order type from the Order Types page") {
+			CommerceOrders.openOrderTypesAdmin();
+
+			CommerceOrders.addOrderType(
+				orderTypeDescription = "Test Order Type Description",
+				orderTypeName = "Test Order Type");
+		}
+
+		task ("Then the order type will be added correctly") {
+			Navigator.gotoBack();
+
+			CommerceNavigator.gotoEntry(entryName = "Test Order Type");
+
+			CommerceOrders.assertOrderTypesEntry(
+				orderTypeDescription = "Test Order Type Description",
+				orderTypeName = "Test Order Type");
+		}
+	}
+
 	@description = "Verify users can select order type when creating a new order via pending orders if there are multiple order types."
 	@priority = "3"
 	test SelectOrderTypeWhenCreatingNewOrderViaPendingOrders {

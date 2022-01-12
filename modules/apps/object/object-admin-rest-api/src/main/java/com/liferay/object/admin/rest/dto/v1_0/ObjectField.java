@@ -91,6 +91,44 @@ public class ObjectField implements Serializable {
 	protected Map<String, Map<String, String>> actions;
 
 	@Schema
+	@Valid
+	public BusinessType getBusinessType() {
+		return businessType;
+	}
+
+	@JsonIgnore
+	public String getBusinessTypeAsString() {
+		if (businessType == null) {
+			return null;
+		}
+
+		return businessType.toString();
+	}
+
+	public void setBusinessType(BusinessType businessType) {
+		this.businessType = businessType;
+	}
+
+	@JsonIgnore
+	public void setBusinessType(
+		UnsafeSupplier<BusinessType, Exception> businessTypeUnsafeSupplier) {
+
+		try {
+			businessType = businessTypeUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected BusinessType businessType;
+
+	@Schema
 	public Long getId() {
 		return id;
 	}
@@ -423,6 +461,20 @@ public class ObjectField implements Serializable {
 			sb.append(_toJSON(actions));
 		}
 
+		if (businessType != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"businessType\": ");
+
+			sb.append("\"");
+
+			sb.append(businessType);
+
+			sb.append("\"");
+		}
+
 		if (id != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -550,6 +602,47 @@ public class ObjectField implements Serializable {
 		name = "x-class-name"
 	)
 	public String xClassName;
+
+	@GraphQLName("BusinessType")
+	public static enum BusinessType {
+
+		BOOLEAN("Boolean"), DATE("Date"), DECIMAL("Decimal"),
+		INTEGER("Integer"), LONG_INTEGER("LongInteger"), LONG_TEXT("LongText"),
+		PICKLIST("Picklist"), PRECISION_DECIMAL("PrecisionDecimal"),
+		RELATIONSHIP("Relationship"), TEXT("Text");
+
+		@JsonCreator
+		public static BusinessType create(String value) {
+			if ((value == null) || value.equals("")) {
+				return null;
+			}
+
+			for (BusinessType businessType : values()) {
+				if (Objects.equals(businessType.getValue(), value)) {
+					return businessType;
+				}
+			}
+
+			throw new IllegalArgumentException("Invalid enum value: " + value);
+		}
+
+		@JsonValue
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private BusinessType(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
 
 	@GraphQLName("RelationshipType")
 	public static enum RelationshipType {

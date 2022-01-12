@@ -65,6 +65,20 @@ public class ObjectFieldSerDes {
 			sb.append(_toJSON(objectField.getActions()));
 		}
 
+		if (objectField.getBusinessType() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"businessType\": ");
+
+			sb.append("\"");
+
+			sb.append(objectField.getBusinessType());
+
+			sb.append("\"");
+		}
+
 		if (objectField.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -207,6 +221,14 @@ public class ObjectFieldSerDes {
 			map.put("actions", String.valueOf(objectField.getActions()));
 		}
 
+		if (objectField.getBusinessType() == null) {
+			map.put("businessType", null);
+		}
+		else {
+			map.put(
+				"businessType", String.valueOf(objectField.getBusinessType()));
+		}
+
 		if (objectField.getId() == null) {
 			map.put("id", null);
 		}
@@ -310,6 +332,13 @@ public class ObjectFieldSerDes {
 				if (jsonParserFieldValue != null) {
 					objectField.setActions(
 						(Map)ObjectFieldSerDes.toMap(
+							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "businessType")) {
+				if (jsonParserFieldValue != null) {
+					objectField.setBusinessType(
+						ObjectField.BusinessType.create(
 							(String)jsonParserFieldValue));
 				}
 			}

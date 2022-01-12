@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -210,6 +211,18 @@ public class DefaultUserResolver implements UserResolver {
 		return String.valueOf(values.get(0));
 	}
 
+	private String[] _getValuesAsString(
+		String key, Map<String, List<Serializable>> attributesMap) {
+
+		List<Serializable> values = attributesMap.get(key);
+
+		if (ListUtil.isEmpty(values)) {
+			return null;
+		}
+
+		return ArrayUtil.toStringArray(values);
+	}
+
 	private User _importUser(
 			long companyId, SamlSpIdpConnection samlSpIdpConnection,
 			String subjectNameIdentifier, String nameIdFormat,
@@ -326,7 +339,7 @@ public class DefaultUserResolver implements UserResolver {
 
 		for (String key : attributesMap.keySet()) {
 			userProcessor.setValueArray(
-				key, new String[] {_getValueAsString(key, attributesMap)});
+				key, _getValuesAsString(key, attributesMap));
 		}
 
 		return userProcessor.process(serviceContext);

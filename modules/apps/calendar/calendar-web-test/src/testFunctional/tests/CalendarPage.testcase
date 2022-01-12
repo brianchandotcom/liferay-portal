@@ -92,8 +92,6 @@ definition {
 		CalendarNavigator.gotoView(viewType = "Week");
 
 		CalendarPage.viewWeekTableIsDisplayed();
-
-		
 	}
 
 	@description = "LRQA-72024 - Verify that the user can change the color of the Calendar"

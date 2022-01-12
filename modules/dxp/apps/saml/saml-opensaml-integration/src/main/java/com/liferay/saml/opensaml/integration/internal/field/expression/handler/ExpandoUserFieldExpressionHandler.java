@@ -14,13 +14,16 @@
 
 package com.liferay.saml.opensaml.integration.internal.field.expression.handler;
 
+import com.liferay.expando.kernel.exception.ValueDataException;
 import com.liferay.expando.kernel.model.ExpandoColumn;
+import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.expando.kernel.model.ExpandoTable;
 import com.liferay.expando.kernel.model.ExpandoTableConstants;
 import com.liferay.expando.kernel.model.ExpandoValue;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.expando.kernel.service.ExpandoValueLocalService;
+import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -33,6 +36,7 @@ import com.liferay.portal.kernel.security.ldap.LDAPSettings;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -53,12 +57,15 @@ import com.liferay.saml.opensaml.integration.processor.context.ProcessorContext;
 import com.liferay.saml.opensaml.integration.processor.context.UserProcessorContext;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
+import java.util.function.Function;
 import java.util.stream.Stream;
 
 import javax.naming.Binding;
@@ -103,7 +110,30 @@ public class ExpandoUserFieldExpressionHandler
 					user -> _getExpandoValue(user, validFieldExpression),
 					_processingIndex, validFieldExpression, this::_update);
 
-			userBind.mapString(validFieldExpression, ExpandoValue::setData);
+			userBind.handleUnsafeStringArray(
+				validFieldExpression,
+				(expandoValue, values) -> {
+					ExpandoColumn expandoColumn = expandoValue.getColumn();
+
+					try {
+						_setExpandoValueData(
+							expandoValue,
+							_unsafeBiConsumers.get(expandoColumn.getType()),
+							values);
+					}
+					catch (Exception exception) {
+						if (exception instanceof PortalException) {
+							throw exception;
+						}
+
+						throw new PortalException(
+							StringBundler.concat(
+								"Failed to set value for Expando field ",
+								validFieldExpression, ": ",
+								exception.getMessage()),
+							exception);
+					}
+				});
 		}
 	}
 
@@ -237,6 +267,62 @@ public class ExpandoUserFieldExpressionHandler
 			ldapServerConfigurationProvider) {
 
 		_ldapServerConfigurationProvider = ldapServerConfigurationProvider;
+	}
+
+	private static int[] _getIntegerValuesStrict(String[] values) {
+		if (values == null) {
+			return null;
+		}
+
+		Stream<String> stream = Arrays.stream(values);
+
+		return stream.mapToInt(
+			GetterUtil::getIntegerStrict
+		).toArray();
+	}
+
+	private static long[] _getLongValuesStrict(String[] values) {
+		if (values == null) {
+			return null;
+		}
+
+		Stream<String> stream = Arrays.stream(values);
+
+		return stream.mapToLong(
+			GetterUtil::getLongStrict
+		).toArray();
+	}
+
+	private static short[] _getShortValuesStrict(String[] values) {
+		if (values == null) {
+			return null;
+		}
+
+		short[] shortValues = new short[values.length];
+
+		for (int i = 0; i < values.length; i++) {
+			shortValues[i] = GetterUtil.getShortStrict(values[i]);
+		}
+
+		return shortValues;
+	}
+
+	private static <V> UnsafeBiConsumer<ExpandoValue, String[], PortalException>
+		_getUnsafeBiConsumer(
+			Function<String[], V> function,
+			UnsafeBiConsumer<ExpandoValue, V, PortalException>
+				unsafeBiConsumer) {
+
+		return (expandoValue, value) -> unsafeBiConsumer.accept(
+			expandoValue, function.apply(value));
+	}
+
+	private static <V> V _head(V[] values) {
+		if ((values == null) || (values.length == 0)) {
+			return null;
+		}
+
+		return values[0];
 	}
 
 	private ExpandoValue _getExpandoValue(
@@ -403,6 +489,27 @@ public class ExpandoUserFieldExpressionHandler
 		}
 	}
 
+	private void _setExpandoValueData(
+			ExpandoValue expandoValue,
+			UnsafeBiConsumer<ExpandoValue, String[], PortalException>
+				unsafeBiConsumer,
+			String[] values)
+		throws PortalException {
+
+		if (unsafeBiConsumer == null) {
+			ExpandoColumn expandoColumn = expandoValue.getColumn();
+
+			throw new ValueDataException(
+				StringBundler.concat(
+					"Column ", expandoColumn.getColumnId(), " has type ",
+					ExpandoColumnConstants.getTypeLabel(
+						expandoColumn.getType()),
+					" and this is not a supported mapping"));
+		}
+
+		unsafeBiConsumer.accept(expandoValue, values);
+	}
+
 	private ExpandoValue _update(
 			ExpandoValue currentExpandoValue, ExpandoValue newExpandoValue,
 			ServiceContext serviceContext)
@@ -419,11 +526,102 @@ public class ExpandoUserFieldExpressionHandler
 		return _expandoValueLocalService.addValue(
 			newExpandoValue.getCompanyId(), User.class.getName(),
 			ExpandoTableConstants.DEFAULT_TABLE_NAME, column.getName(),
-			newExpandoValue.getClassPK(), newExpandoValue.getData());
+			newExpandoValue.getClassPK(), (Object)newExpandoValue.getData());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ExpandoUserFieldExpressionHandler.class);
+
+	private static final HashMap
+		<Integer, UnsafeBiConsumer<ExpandoValue, String[], PortalException>>
+			_unsafeBiConsumers =
+				HashMapBuilder.
+					<Integer,
+					 UnsafeBiConsumer<ExpandoValue, String[], PortalException>>
+						put(
+							ExpandoColumnConstants.BOOLEAN,
+							_getUnsafeBiConsumer(
+								values -> GetterUtil.getBoolean(_head(values)),
+								ExpandoValue::setBoolean)
+					).put(
+						ExpandoColumnConstants.BOOLEAN_ARRAY,
+						_getUnsafeBiConsumer(
+							GetterUtil::getBooleanValues,
+							ExpandoValue::setBooleanArray)
+					).put(
+						ExpandoColumnConstants.DOUBLE,
+						_getUnsafeBiConsumer(
+							values -> GetterUtil.getDouble(_head(values)),
+							ExpandoValue::setDouble)
+					).put(
+						ExpandoColumnConstants.DOUBLE_ARRAY,
+						_getUnsafeBiConsumer(
+							GetterUtil::getDoubleValues,
+							ExpandoValue::setDoubleArray)
+					).put(
+						ExpandoColumnConstants.FLOAT,
+						_getUnsafeBiConsumer(
+							values -> GetterUtil.getFloat(_head(values)),
+							ExpandoValue::setFloat)
+					).put(
+						ExpandoColumnConstants.FLOAT_ARRAY,
+						_getUnsafeBiConsumer(
+							GetterUtil::getLongValues,
+							ExpandoValue::setLongArray)
+					).put(
+						ExpandoColumnConstants.LONG,
+						_getUnsafeBiConsumer(
+							values -> GetterUtil.getLongStrict(_head(values)),
+							ExpandoValue::setLong)
+					).put(
+						ExpandoColumnConstants.LONG_ARRAY,
+						_getUnsafeBiConsumer(
+							ExpandoUserFieldExpressionHandler::
+								_getLongValuesStrict,
+							ExpandoValue::setLongArray)
+					).put(
+						ExpandoColumnConstants.INTEGER,
+						_getUnsafeBiConsumer(
+							values -> GetterUtil.getIntegerStrict(
+								_head(values)),
+							ExpandoValue::setInteger)
+					).put(
+						ExpandoColumnConstants.INTEGER_ARRAY,
+						_getUnsafeBiConsumer(
+							ExpandoUserFieldExpressionHandler::
+								_getIntegerValuesStrict,
+							ExpandoValue::setIntegerArray)
+					).put(
+						ExpandoColumnConstants.NUMBER,
+						_getUnsafeBiConsumer(
+							values -> GetterUtil.getNumber(_head(values)),
+							ExpandoValue::setNumber)
+					).put(
+						ExpandoColumnConstants.NUMBER_ARRAY,
+						_getUnsafeBiConsumer(
+							GetterUtil::getNumberValues,
+							ExpandoValue::setNumberArray)
+					).put(
+						ExpandoColumnConstants.SHORT,
+						_getUnsafeBiConsumer(
+							values -> GetterUtil.getShortStrict(_head(values)),
+							ExpandoValue::setShort)
+					).put(
+						ExpandoColumnConstants.SHORT_ARRAY,
+						_getUnsafeBiConsumer(
+							ExpandoUserFieldExpressionHandler::
+								_getShortValuesStrict,
+							ExpandoValue::setShortArray)
+					).put(
+						ExpandoColumnConstants.STRING,
+						_getUnsafeBiConsumer(
+							ExpandoUserFieldExpressionHandler::_head,
+							ExpandoValue::setString)
+					).put(
+						ExpandoColumnConstants.STRING_ARRAY,
+						_getUnsafeBiConsumer(
+							Function.identity(), ExpandoValue::setStringArray)
+					).build();
 
 	@Reference
 	private ExpandoColumnLocalService _expandoColumnLocalService;

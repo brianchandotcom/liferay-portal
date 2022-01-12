@@ -35,7 +35,7 @@ function main {
 	ant setup-profile-dxp
 
 	echo ""
-	echo "Running \"ant all\". Wait for 3 runs to complete."
+	echo "Running \"ant all\" 3 times..."
 
 	run_ant_all
 

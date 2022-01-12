@@ -42,8 +42,6 @@ const getId = () => `item_${id++}`;
 
 const deserializeUtil = new DeserializeUtil();
 
-const definitionDiagramController = new DefinitionDiagramController();
-
 export default function DiagramBuilder({version}) {
 	const {
 		currentEditor,

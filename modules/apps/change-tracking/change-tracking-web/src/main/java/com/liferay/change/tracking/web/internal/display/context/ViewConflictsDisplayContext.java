@@ -20,6 +20,8 @@ import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.web.internal.display.CTDisplayRendererRegistry;
+import com.liferay.learn.LearnMessage;
+import com.liferay.learn.LearnMessageUtil;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.change.tracking.sql.CTSQLModeThreadLocal;
@@ -107,12 +109,17 @@ public class ViewConflictsDisplayContext {
 
 		return HashMapBuilder.<String, Object>put(
 			"learnLink",
-			JSONUtil.put(
-				"message", "Learn More"
-			).put(
-				"url",
-				"https://learn.liferay.com/dxp/latest/en/site-building/publishing-tools/publications/resolving-conflicts.html#manually-resolving-conflicts"
-			)
+			() -> {
+				LearnMessage learnMessage = LearnMessageUtil.getLearnMessage(
+					"manually-resolving-conflicts",
+					_themeDisplay.getLanguageId(), "change-tracking-web");
+
+				return JSONUtil.put(
+					"message", learnMessage.getMessage()
+				).put(
+					"url", learnMessage.getURL()
+				);
+			}
 		).put(
 			"publishURL",
 			() -> PortletURLBuilder.createActionURL(

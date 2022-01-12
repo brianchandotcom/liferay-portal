@@ -69,9 +69,10 @@ public class ObjectFieldServiceSoap {
 
 	public static com.liferay.object.model.ObjectFieldSoap addCustomObjectField(
 			long listTypeDefinitionId, long objectDefinitionId,
-			String businessType, boolean indexed, boolean indexedAsKeyword,
-			String indexedLanguageId, String[] labelMapLanguageIds,
-			String[] labelMapValues, String name, boolean required, String type)
+			String businessType, String dbType, boolean indexed,
+			boolean indexedAsKeyword, String indexedLanguageId,
+			String[] labelMapLanguageIds, String[] labelMapValues, String name,
+			boolean required)
 		throws RemoteException {
 
 		try {
@@ -81,8 +82,8 @@ public class ObjectFieldServiceSoap {
 			com.liferay.object.model.ObjectField returnValue =
 				ObjectFieldServiceUtil.addCustomObjectField(
 					listTypeDefinitionId, objectDefinitionId, businessType,
-					indexed, indexedAsKeyword, indexedLanguageId, labelMap,
-					name, required, type);
+					dbType, indexed, indexedAsKeyword, indexedLanguageId,
+					labelMap, name, required);
 
 			return com.liferay.object.model.ObjectFieldSoap.toSoapModel(
 				returnValue);
@@ -133,10 +134,10 @@ public class ObjectFieldServiceSoap {
 	public static com.liferay.object.model.ObjectFieldSoap
 			updateCustomObjectField(
 				long objectFieldId, long listTypeDefinitionId,
-				String businessType, boolean indexed, boolean indexedAsKeyword,
-				String indexedLanguageId, String[] labelMapLanguageIds,
-				String[] labelMapValues, String name, boolean required,
-				String type)
+				String businessType, String dbType, boolean indexed,
+				boolean indexedAsKeyword, String indexedLanguageId,
+				String[] labelMapLanguageIds, String[] labelMapValues,
+				String name, boolean required)
 		throws RemoteException {
 
 		try {
@@ -145,9 +146,9 @@ public class ObjectFieldServiceSoap {
 
 			com.liferay.object.model.ObjectField returnValue =
 				ObjectFieldServiceUtil.updateCustomObjectField(
-					objectFieldId, listTypeDefinitionId, businessType, indexed,
-					indexedAsKeyword, indexedLanguageId, labelMap, name,
-					required, type);
+					objectFieldId, listTypeDefinitionId, businessType, dbType,
+					indexed, indexedAsKeyword, indexedLanguageId, labelMap,
+					name, required);
 
 			return com.liferay.object.model.ObjectFieldSoap.toSoapModel(
 				returnValue);

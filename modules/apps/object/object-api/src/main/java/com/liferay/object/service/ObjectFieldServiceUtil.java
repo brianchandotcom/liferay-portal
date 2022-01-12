@@ -40,15 +40,16 @@ public class ObjectFieldServiceUtil {
 	 */
 	public static ObjectField addCustomObjectField(
 			long listTypeDefinitionId, long objectDefinitionId,
-			String businessType, boolean indexed, boolean indexedAsKeyword,
-			String indexedLanguageId, Map<java.util.Locale, String> labelMap,
-			String name, boolean required, String type)
+			String businessType, String dbType, boolean indexed,
+			boolean indexedAsKeyword, String indexedLanguageId,
+			Map<java.util.Locale, String> labelMap, String name,
+			boolean required)
 		throws PortalException {
 
 		return getService().addCustomObjectField(
-			listTypeDefinitionId, objectDefinitionId, businessType, indexed,
-			indexedAsKeyword, indexedLanguageId, labelMap, name, required,
-			type);
+			listTypeDefinitionId, objectDefinitionId, businessType, dbType,
+			indexed, indexedAsKeyword, indexedLanguageId, labelMap, name,
+			required);
 	}
 
 	public static ObjectField deleteObjectField(long objectFieldId)
@@ -74,15 +75,14 @@ public class ObjectFieldServiceUtil {
 
 	public static ObjectField updateCustomObjectField(
 			long objectFieldId, long listTypeDefinitionId, String businessType,
-			boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
-			Map<java.util.Locale, String> labelMap, String name,
-			boolean required, String type)
+			String dbType, boolean indexed, boolean indexedAsKeyword,
+			String indexedLanguageId, Map<java.util.Locale, String> labelMap,
+			String name, boolean required)
 		throws PortalException {
 
 		return getService().updateCustomObjectField(
-			objectFieldId, listTypeDefinitionId, businessType, indexed,
-			indexedAsKeyword, indexedLanguageId, labelMap, name, required,
-			type);
+			objectFieldId, listTypeDefinitionId, businessType, dbType, indexed,
+			indexedAsKeyword, indexedLanguageId, labelMap, name, required);
 	}
 
 	public static ObjectFieldService getService() {

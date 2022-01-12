@@ -25,8 +25,7 @@ import {useStepWizard} from '../../../hooks/useStepWizard';
 import {useTriggerContext} from '../../../hooks/useTriggerContext';
 import {AVAILABLE_STEPS} from '../../../utils/constants';
 import FormCard from '../../card/FormCard';
-import {CardFormActions} from '../../form-actions/FormActions';
-import {CardFormActionsMobile} from '../../form-actions/FormActionsMobile';
+import {CardFormActions} from '../../form-actions/FormAction';
 
 const setFormPath = (value) => `employees.${value}`;
 
@@ -64,12 +63,15 @@ export function FormEmployees({form}) {
 
 	return (
 		<FormCard
-			footer={
-				<CardFormActionsMobile
+			Footer={(footerProps) => (
+				<CardFormActions
+					{...footerProps}
+					isValid={isValid}
+					onNext={onNext}
 					onPrevious={onPrevious}
 					onSave={onSave}
 				/>
-			}
+			)}
 		>
 			<div className="card-content">
 				<ControlledSwitch
@@ -172,13 +174,6 @@ export function FormEmployees({form}) {
 					rules={{required: 'This field is required'}}
 				/>
 			</div>
-
-			<CardFormActions
-				isValid={isValid}
-				onNext={onNext}
-				onPrevious={onPrevious}
-				onSave={onSave}
-			/>
 		</FormCard>
 	);
 }

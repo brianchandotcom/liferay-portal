@@ -151,8 +151,9 @@ public class JenkinsResultsParserPlugin implements Plugin<Project> {
 	}
 
 	private FileCollection _getJenkinsResultsParserClasspath(Project project) {
-		Configuration jenkinsResultsParserConfiguration = GradleUtil.getConfiguration(
-			project, JENKINS_RESULTS_PARSER_CONFIGURATION_NAME);
+		Configuration jenkinsResultsParserConfiguration =
+			GradleUtil.getConfiguration(
+				project, JENKINS_RESULTS_PARSER_CONFIGURATION_NAME);
 
 		return project.files(jenkinsResultsParserConfiguration);
 	}

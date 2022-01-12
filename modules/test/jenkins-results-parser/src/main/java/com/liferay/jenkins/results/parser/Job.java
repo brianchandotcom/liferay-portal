@@ -59,8 +59,6 @@ public interface Job {
 
 	public List<File> getJobPropertiesFiles();
 
-	public String getJobProperty(String key);
-
 	public List<String> getJobPropertyOptions();
 
 	public String getJobURL(JenkinsMaster jenkinsMaster);

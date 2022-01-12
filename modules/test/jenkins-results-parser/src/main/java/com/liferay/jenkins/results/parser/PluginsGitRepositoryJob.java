@@ -110,13 +110,6 @@ public abstract class PluginsGitRepositoryJob
 		return buildProperties.getProperty(buildPropertyName);
 	}
 
-	@Override
-	protected Set<String> getRawBatchNames() {
-		return getSetFromString(
-			JenkinsResultsParserUtil.getProperty(
-				getJobProperties(), "test.batch.names", getJobName()));
-	}
-
 	protected Properties buildProperties;
 	protected PortalGitWorkingDirectory portalGitWorkingDirectory;
 

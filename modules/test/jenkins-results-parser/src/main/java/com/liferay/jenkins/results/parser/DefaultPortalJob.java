@@ -97,13 +97,6 @@ public class DefaultPortalJob
 		readJobProperties();
 	}
 
-	@Override
-	protected Set<String> getRawBatchNames() {
-		return getSetFromString(
-			JenkinsResultsParserUtil.getProperty(
-				getJobProperties(), "test.batch.names"));
-	}
-
 	private PortalGitWorkingDirectory _portalGitWorkingDirectory;
 	private final String _testSuiteName;
 

@@ -62,13 +62,6 @@ public abstract class PortalGitRepositoryJob
 			getBranchName());
 	}
 
-	@Override
-	protected Set<String> getRawBatchNames() {
-		return getSetFromString(
-			JenkinsResultsParserUtil.getProperty(
-				getJobProperties(), "test.batch.names"));
-	}
-
 	protected void init() {
 		GitWorkingDirectory jenkinsGitWorkingDirectory =
 			GitWorkingDirectoryFactory.newJenkinsGitWorkingDirectory();

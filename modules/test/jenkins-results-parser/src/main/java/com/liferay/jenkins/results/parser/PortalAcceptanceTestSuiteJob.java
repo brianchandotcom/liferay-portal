@@ -14,12 +14,12 @@
 
 package com.liferay.jenkins.results.parser;
 
+import com.liferay.jenkins.results.parser.job.property.JobProperty;
 import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.BatchTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.SegmentTestClassGroup;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
 import java.util.Set;
@@ -139,42 +139,23 @@ public abstract class PortalAcceptanceTestSuiteJob
 
 	@Override
 	protected Set<String> getRawBatchNames() {
-		Properties jobProperties = getJobProperties();
-
-		String testBatchNames = JenkinsResultsParserUtil.getProperty(
-			jobProperties, "test.batch.names[" + _testSuiteName + "]");
-
-		if (testBatchNames == null) {
-			testBatchNames = JenkinsResultsParserUtil.getProperty(
-				jobProperties, "test.batch.names");
-		}
-
-		Set<String> batchNames = getSetFromString(testBatchNames);
+		Set<String> rawBatchNames = super.getRawBatchNames();
 
 		if (!_testSuiteName.equals("relevant")) {
-			return batchNames;
+			return rawBatchNames;
 		}
 
-		String stableTestBatchNames = JenkinsResultsParserUtil.getProperty(
-			jobProperties, "test.batch.names[stable]");
+		JobProperty jobProperty = getJobProperty("test.batch.names[stable]");
 
-		if (stableTestBatchNames != null) {
-			batchNames.addAll(getSetFromString(stableTestBatchNames));
-		}
+		rawBatchNames.addAll(getSetFromString(jobProperty.getValue()));
 
-		return batchNames;
+		return rawBatchNames;
 	}
 
 	protected Set<String> getRawDependentBatchNames() {
-		String dependentBatchNames = JenkinsResultsParserUtil.getProperty(
-			getJobProperties(), "test.batch.names.smoke", getBranchName(),
-			getTestSuiteName());
+		JobProperty batchJobProperty = getJobProperty("test.batch.names.smoke");
 
-		if ((dependentBatchNames == null) || dependentBatchNames.isEmpty()) {
-			return new HashSet<>();
-		}
-
-		return getSetFromString(dependentBatchNames);
+		return getSetFromString(batchJobProperty.getValue());
 	}
 
 	private final String _testSuiteName;

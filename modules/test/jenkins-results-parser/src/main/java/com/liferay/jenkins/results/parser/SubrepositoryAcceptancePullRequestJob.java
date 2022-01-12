@@ -47,32 +47,6 @@ public class SubrepositoryAcceptancePullRequestJob
 		return _testSuiteName;
 	}
 
-	@Override
-	protected Set<String> getRawBatchNames() {
-		String batchNames = JenkinsResultsParserUtil.getProperty(
-			getJobProperties(), "test.batch.names", getBranchName(),
-			getTestSuiteName());
-
-		if (JenkinsResultsParserUtil.isNullOrEmpty(batchNames)) {
-			return super.getRawBatchNames();
-		}
-
-		return getSetFromString(batchNames);
-	}
-
-	@Override
-	protected Set<String> getRawDependentBatchNames() {
-		String dependentBatchNames = JenkinsResultsParserUtil.getProperty(
-			getJobProperties(), "test.batch.names.smoke", getBranchName(),
-			getTestSuiteName());
-
-		if (JenkinsResultsParserUtil.isNullOrEmpty(dependentBatchNames)) {
-			return super.getRawDependentBatchNames();
-		}
-
-		return getSetFromString(dependentBatchNames);
-	}
-
 	private void _setValidationRequired() {
 		String testRunValidationProperty = JenkinsResultsParserUtil.getProperty(
 			getJobProperties(), "test.run.validation", getTestSuiteName());

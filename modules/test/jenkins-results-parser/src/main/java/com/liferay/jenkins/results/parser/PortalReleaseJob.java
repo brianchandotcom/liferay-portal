@@ -14,11 +14,6 @@
 
 package com.liferay.jenkins.results.parser;
 
-import java.util.Collections;
-import java.util.Properties;
-import java.util.Set;
-import java.util.TreeSet;
-
 /**
  * @author Michael Hashimoto
  */
@@ -30,44 +25,5 @@ public class PortalReleaseJob extends BasePortalReleaseJob {
 
 		super(jobName, buildProfile, portalBranchName, testSuiteName);
 	}
-
-	public void setPortalReleaseRef(String portalReleaseRef) {
-		_portalReleaseRef = portalReleaseRef;
-	}
-
-	@Override
-	protected Set<String> getRawBatchNames() {
-		Set<String> batchNames = super.getRawBatchNames();
-
-		batchNames.addAll(_getOptionalBatchNames());
-
-		return batchNames;
-	}
-
-	private Set<String> _getOptionalBatchNames() {
-		if (_portalReleaseRef == null) {
-			return Collections.emptySet();
-		}
-
-		Set<String> batchNames = new TreeSet<>();
-
-		Properties jobProperties = getJobProperties();
-
-		batchNames.addAll(
-			getSetFromString(
-				JenkinsResultsParserUtil.getProperty(
-					jobProperties, "test.batch.names.optional", false,
-					_portalReleaseRef)));
-
-		batchNames.addAll(
-			getSetFromString(
-				JenkinsResultsParserUtil.getProperty(
-					jobProperties, "test.batch.names.optional", false,
-					_portalReleaseRef, String.valueOf(getBuildProfile()))));
-
-		return batchNames;
-	}
-
-	private String _portalReleaseRef;
 
 }

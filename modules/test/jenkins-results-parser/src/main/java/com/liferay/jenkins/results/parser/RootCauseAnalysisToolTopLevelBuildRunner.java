@@ -185,7 +185,7 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 	}
 
 	private Integer _getAllowedPortalBranchSHAs() {
-		String allowedPortalBranchSHAs = getJobProperty(
+		String allowedPortalBranchSHAs = getJobPropertyValue(
 			"allowed.portal.branch.shas");
 
 		if ((allowedPortalBranchSHAs == null) ||
@@ -385,7 +385,7 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 			failBuildRunner(_NAME_BUILD_PARAMETER_PORTAL_BATCH + " is null");
 		}
 
-		String allowedPortalBatchNames = getJobProperty(
+		String allowedPortalBatchNames = getJobPropertyValue(
 			JenkinsResultsParserUtil.combine(
 				"allowed.portal.batch.names[",
 				getBuildParameter(
@@ -544,7 +544,7 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 				_NAME_BUILD_PARAMETER_PORTAL_UPSTREAM_BRANCH_NAME + " is null");
 		}
 
-		String allowedPortalUpstreamBranchNames = getJobProperty(
+		String allowedPortalUpstreamBranchNames = getJobPropertyValue(
 			"allowed.portal.upstream.branch.names");
 
 		if ((allowedPortalUpstreamBranchNames == null) ||

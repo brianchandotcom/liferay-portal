@@ -81,13 +81,6 @@ public class QAWebsitesGitRepositoryJob
 		readJobProperties();
 	}
 
-	@Override
-	protected Set<String> getRawBatchNames() {
-		return getSetFromString(
-			JenkinsResultsParserUtil.getProperty(
-				getJobProperties(), "test.batch.names"));
-	}
-
 	private File _getQAWebsitesGitRepositoryDir() {
 		Properties buildProperties = null;
 

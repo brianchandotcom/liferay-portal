@@ -61,23 +61,6 @@ public class PluginsExtraAppsJob extends BaseJob implements PortalTestClassJob {
 		readJobProperties();
 	}
 
-	@Override
-	protected Set<String> getRawBatchNames() {
-		String portalBundleVersion = System.getenv(
-			"TEST_PORTAL_BUNDLE_VERSION");
-
-		if (!JenkinsResultsParserUtil.isNullOrEmpty(portalBundleVersion)) {
-			return getSetFromString(
-				JenkinsResultsParserUtil.getProperty(
-					getJobProperties(), "test.batch.names", getJobName()));
-		}
-
-		return getSetFromString(
-			JenkinsResultsParserUtil.getProperty(
-				getJobProperties(), "test.batch.names", getJobName(),
-				"release"));
-	}
-
 	private final PortalGitWorkingDirectory _portalGitWorkingDirectory;
 
 }

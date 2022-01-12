@@ -65,13 +65,6 @@ public class FixPackBuilderGitRepositoryJob
 		readJobProperties();
 	}
 
-	@Override
-	protected Set<String> getRawBatchNames() {
-		return getSetFromString(
-			JenkinsResultsParserUtil.getProperty(
-				getJobProperties(), "test.batch.names"));
-	}
-
 	private File _getFixPackBuilderGitRepositoryDir() {
 		Properties buildProperties = null;
 

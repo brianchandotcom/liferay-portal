@@ -20,17 +20,18 @@ import com.liferay.layout.friendly.url.LayoutFriendlyURLEntryHelper;
 import com.liferay.portal.kernel.exception.LayoutFriendlyURLException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.service.LayoutFriendlyURLValidator;
+import com.liferay.portal.kernel.service.LayoutFriendlyURLEntryValidator;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Noor Najjar
+ * @author Roberto Díaz
  */
-@Component(service = LayoutFriendlyURLValidator.class)
-public class LayoutFriendlyURLValidatorImpl
-	implements LayoutFriendlyURLValidator {
+@Component(service = LayoutFriendlyURLEntryValidator.class)
+public class LayoutFriendlyURLEntryValidatorImpl
+	implements LayoutFriendlyURLEntryValidator {
 
 	@Override
 	public void validateFriendlyURLEntry(

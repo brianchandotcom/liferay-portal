@@ -18,8 +18,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Noor Najjar
+ * @author Roberto Díaz
  */
-public interface LayoutFriendlyURLValidator {
+public interface LayoutFriendlyURLEntryValidator {
 
 	public void validateFriendlyURLEntry(
 			long groupId, boolean privateLayout, long classPK, String urlTitle)

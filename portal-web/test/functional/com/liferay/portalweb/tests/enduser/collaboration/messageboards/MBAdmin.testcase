@@ -1,6 +1,7 @@
 @component-name = "portal-collaboration"
 definition {
 
+	property portal.acceptance = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Message Boards";
@@ -99,6 +100,7 @@ definition {
 	@priority = "3"
 	test CanChangeBanLengthAndExpiration {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}message.boards.expire.ban.interval=0${line.separator}company.default.time.zone=America/Los_Angeles";
+		property portal.acceptance = "false";
 
 		MessageboardsThread.updateCheckInterval(fieldValue = "1");
 
@@ -241,6 +243,8 @@ definition {
 	@description = "This is a test for LPS-136923. It checks that a user can be unbanned."
 	@priority = "3"
 	test CanUnbanUser {
+		property portal.acceptance = "false";
+
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "Message Boards Page");

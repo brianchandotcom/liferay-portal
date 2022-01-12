@@ -1,6 +1,7 @@
 @component-name = "portal-collaboration"
 definition {
 
+	property portal.acceptance = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.component.names = "Notifications";
@@ -56,6 +57,7 @@ definition {
 	@priority = "3"
 	test CanReceiveEmailInHTMLFormat {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}message.boards.email.bulk=false";
+		property portal.acceptance = "false";
 		property test.smtp.server.enabled = "true";
 
 		MessageboardsPortlet.configureMessageFormat(
@@ -96,6 +98,7 @@ definition {
 	@priority = "3"
 	test CanReceiveEmailWhenPostIsFlagged {
 		property custom.properties = "message.boards.email.bulk=false";
+		property portal.acceptance = "false";
 		property test.smtp.server.enabled = "true";
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
@@ -127,6 +130,7 @@ definition {
 	@priority = "3"
 	test CanReceiveEmailWithLocalizedTemplate {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}message.boards.email.bulk=false";
+		property portal.acceptance = "false";
 		property test.smtp.server.enabled = "true";
 
 		MessageboardsPortlet.configureMessageAddedEmail(

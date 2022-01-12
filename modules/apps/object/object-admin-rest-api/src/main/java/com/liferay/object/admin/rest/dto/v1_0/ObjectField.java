@@ -62,6 +62,44 @@ public class ObjectField implements Serializable {
 
 	@Schema
 	@Valid
+	public DBType getDBType() {
+		return DBType;
+	}
+
+	@JsonIgnore
+	public String getDBTypeAsString() {
+		if (DBType == null) {
+			return null;
+		}
+
+		return DBType.toString();
+	}
+
+	public void setDBType(DBType DBType) {
+		this.DBType = DBType;
+	}
+
+	@JsonIgnore
+	public void setDBType(
+		UnsafeSupplier<DBType, Exception> DBTypeUnsafeSupplier) {
+
+		try {
+			DBType = DBTypeUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected DBType DBType;
+
+	@Schema
+	@Valid
 	public Map<String, Map<String, String>> getActions() {
 		return actions;
 	}
@@ -388,7 +426,7 @@ public class ObjectField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean required;
 
-	@Schema
+	@Schema(deprecated = true)
 	@Valid
 	public Type getType() {
 		return type;
@@ -420,6 +458,7 @@ public class ObjectField implements Serializable {
 		}
 	}
 
+	@Deprecated
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Type type;
@@ -450,6 +489,20 @@ public class ObjectField implements Serializable {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		if (DBType != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"DBType\": ");
+
+			sb.append("\"");
+
+			sb.append(DBType);
+
+			sb.append("\"");
+		}
 
 		if (actions != null) {
 			if (sb.length() > 1) {
@@ -637,6 +690,46 @@ public class ObjectField implements Serializable {
 		}
 
 		private BusinessType(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
+
+	@GraphQLName("DBType")
+	public static enum DBType {
+
+		BIG_DECIMAL("BigDecimal"), BOOLEAN("Boolean"), CLOB("Clob"),
+		DATE("Date"), DOUBLE("Double"), INTEGER("Integer"), LONG("Long"),
+		STRING("String");
+
+		@JsonCreator
+		public static DBType create(String value) {
+			if ((value == null) || value.equals("")) {
+				return null;
+			}
+
+			for (DBType dbType : values()) {
+				if (Objects.equals(dbType.getValue(), value)) {
+					return dbType;
+				}
+			}
+
+			throw new IllegalArgumentException("Invalid enum value: " + value);
+		}
+
+		@JsonValue
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private DBType(String value) {
 			_value = value;
 		}
 

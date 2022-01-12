@@ -589,6 +589,14 @@ public abstract class BaseObjectFieldResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
+			if (Objects.equals("DBType", additionalAssertFieldName)) {
+				if (objectField.getDBType() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("actions", additionalAssertFieldName)) {
 				if (objectField.getActions() == null) {
 					valid = false;
@@ -772,6 +780,16 @@ public abstract class BaseObjectFieldResourceTestCase {
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals("DBType", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						objectField1.getDBType(), objectField2.getDBType())) {
+
+					return false;
+				}
+
+				continue;
+			}
 
 			if (Objects.equals("actions", additionalAssertFieldName)) {
 				if (!equals(
@@ -1001,6 +1019,11 @@ public abstract class BaseObjectFieldResourceTestCase {
 		sb.append(" ");
 		sb.append(operator);
 		sb.append(" ");
+
+		if (entityFieldName.equals("DBType")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
 
 		if (entityFieldName.equals("actions")) {
 			throw new IllegalArgumentException(

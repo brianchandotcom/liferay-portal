@@ -236,6 +236,10 @@ public class DisplayPageTypeSiteNavigationMenuTypeDisplayContext {
 			));
 	}
 
+	public String getDefaultLanguageId() {
+		return LocaleUtil.toLanguageId(LocaleUtil.getMostRelevantLocale());
+	}
+
 	public String getItemSubtype() {
 		InfoItemFormVariationsProvider<?> infoItemFormVariationsProvider =
 			_displayPageTypeContext.getInfoItemFormVariationsProvider();

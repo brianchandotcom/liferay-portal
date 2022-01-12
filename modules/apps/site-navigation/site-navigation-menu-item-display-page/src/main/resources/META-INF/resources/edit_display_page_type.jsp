@@ -29,6 +29,8 @@ DisplayPageTypeSiteNavigationMenuTypeDisplayContext displayPageTypeSiteNavigatio
 					HashMapBuilder.<String, Object>put(
 						"chooseItemProps", displayPageTypeSiteNavigationMenuTypeDisplayContext.getChooseInfoItemButtonContext(request, liferayPortletResponse)
 					).put(
+						"defaultLanguageId", displayPageTypeSiteNavigationMenuTypeDisplayContext.getDefaultLanguageId()
+					).put(
 						"item",
 						HashMapBuilder.<String, Object>put(
 							"classNameId", displayPageTypeSiteNavigationMenuTypeDisplayContext.getClassNameId()

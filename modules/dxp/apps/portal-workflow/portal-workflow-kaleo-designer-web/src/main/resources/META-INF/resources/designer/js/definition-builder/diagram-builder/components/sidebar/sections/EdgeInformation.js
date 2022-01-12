@@ -22,12 +22,12 @@ import SidebarPanel from '../SidebarPanel';
 import {checkIdErrors, checkLabelErrors, getUpdatedLabelItem} from './utils';
 
 export default function EdgeInformation({errors, setErrors}) {
-	const {selectedLanguageId} = useContext(DefinitionBuilderContext);
+	const {elements, selectedLanguageId, setElements} = useContext(
+		DefinitionBuilderContext
+	);
 	const {
-		elements,
 		selectedItem,
 		selectedItemNewId,
-		setElements,
 		setSelectedItem,
 		setSelectedItemNewId,
 	} = useContext(DiagramBuilderContext);
@@ -83,7 +83,9 @@ export default function EdgeInformation({errors, setErrors}) {
 								? selectedLanguageId
 								: defaultLanguageId;
 
-						setSelectedItem(getUpdatedLabelItem(key, selectedItem, target));
+						setSelectedItem(
+							getUpdatedLabelItem(key, selectedItem, target)
+						);
 					}}
 					type="text"
 					value={

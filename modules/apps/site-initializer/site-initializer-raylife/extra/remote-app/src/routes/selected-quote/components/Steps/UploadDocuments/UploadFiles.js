@@ -61,7 +61,10 @@ const UploadFiles = ({dropAreaProps, files, setFiles, title}) => {
 						<div className="alert-content align-items-center d-flex justify-content-between w-100">
 							<div className="alert-description font-weight-normal text-paragraph">
 								{dropAreaProps.limitFiles}
-								files upload limit reached for {title}.
+
+								<span>
+									files upload limit reached for {title}.
+								</span>
 							</div>
 
 							<div

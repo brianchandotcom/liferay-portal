@@ -9,16 +9,16 @@
 			<property name="keycloak.dependency.dir" value="${project.dir}/portal-web/test/functional/com/liferay/portalweb/tests/coreinfrastructure/security/openidconnect/dependencies" />
 			<mirrors-get
 				dest="${liferay.dependency.dir}"
-				src="https://github.com/keycloak/keycloak/releases/download/15.0.2/keycloak-15.0.2.tar.gz"
+				src="https://github.com/keycloak/keycloak/releases/download/16.1.0/keycloak-16.1.0.tar.gz"
 			/>
 			<decompress
 				dest="${liferay.dependency.dir}"
-				src="${liferay.dependency.dir}/keycloak-15.0.2.tar.gz"
+				src="${liferay.dependency.dir}/keycloak-16.1.0.tar.gz"
 			/>
 
 			<parallel>
 				<daemons>
-					<exec dir="${liferay.dependency.dir}/keycloak-15.0.2/bin" executable="/bin/bash">
+					<exec dir="${liferay.dependency.dir}/keycloak-16.1.0/bin" executable="/bin/bash">
 						<arg value="./standalone.sh" />
 						<arg value="-Djboss.socket.binding.port-offset=10000" />
 						<arg value="-Dkeycloak.migration.action=import" />
@@ -41,7 +41,7 @@
 		<sequential>
 			<property name="liferay.dependency.dir" value="${project.dir}/portal-web/test/functional/com/liferay/portalweb/dependencies" />
 
-			<exec dir="${liferay.dependency.dir}/keycloak-15.0.2/bin" executable="/bin/bash">
+			<exec dir="${liferay.dependency.dir}/keycloak-16.1.0/bin" executable="/bin/bash">
 				<arg value="./jboss-cli.sh" />
 				<arg value="--connect" />
 				<arg value="--controller=localhost:19990" />

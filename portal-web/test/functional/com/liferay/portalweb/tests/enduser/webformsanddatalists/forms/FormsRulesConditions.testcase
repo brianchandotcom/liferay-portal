@@ -38,7 +38,6 @@ definition {
 	@description = "LPS-69733 - Verify that a Rule Condition cannot be added until the Condition Field is selected"
 	@priority = "2"
 	test AreDisabledUntilAConditionFieldIsSelected {
-		property forms.functional = "true";
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "FormRulesConditions#AreDisabledUntilAConditionFieldIsSelected";
@@ -69,7 +68,7 @@ definition {
 	@description = "Verify that a Rule Condition can be deleted"
 	@priority = "5"
 	test CanBeDeleted {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -146,7 +145,7 @@ definition {
 	@description = "Verify that a Rule Condition can be edited"
 	@priority = "5"
 	test CanBeEdited {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -205,7 +204,7 @@ definition {
 	@description = "Verify that a Rule with 'Contains' condition can be created"
 	@priority = "4"
 	test CanCreateAContainsRule {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -270,7 +269,7 @@ definition {
 	@description = "Verify that a Rule with 'Does Not Contain' condition can be created"
 	@priority = "4"
 	test CanCreateADoesNotContainRule {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -339,7 +338,7 @@ definition {
 	@description = "Verify that a Rule with 'Is Empty' condition can be created"
 	@priority = "4"
 	test CanCreateAnIsEmptyRule {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -399,7 +398,7 @@ definition {
 	@description = "Verify that a Rule with 'Is Equal To' condition can be created"
 	@priority = "4"
 	test CanCreateAnIsEqualToRule {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -466,7 +465,7 @@ definition {
 	@description = "Verify that a Rule with 'Is greater than or Equal To' condition is working fine on the numeric field"
 	@priority = "4"
 	test CanCreateAnIsGreaterThanOrEqualToRule {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -541,7 +540,7 @@ definition {
 	@description = "Verify that a Rule with 'Is greater than' condition is working fine on the numeric field"
 	@priority = "4"
 	test CanCreateAnIsGreaterThanRule {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -610,7 +609,7 @@ definition {
 	@description = "Verify that a Rule with 'Is less than or Equal To' condition is working fine on the numeric field"
 	@priority = "4"
 	test CanCreateAnIsLessThanOrEqualToRule {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -693,7 +692,7 @@ definition {
 	@description = "Verify that a Rule with 'Is less than' condition is working fine on the numeric field"
 	@priority = "4"
 	test CanCreateAnIsLessThanRule {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -774,7 +773,6 @@ definition {
 	@description = "LPS-71399 - Verify that a Rule with 'Is Not Empty' condition can be created"
 	@priority = "4"
 	test CanCreateAnIsNotEmptyRule {
-		property forms.functional = "true";
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "FormRulesConditions#CanCreateAnIsNotEmptyRule";
@@ -871,7 +869,7 @@ definition {
 	@description = "Verify that a Rule with 'Is Not Equal To' condition can be created"
 	@priority = "4"
 	test CanCreateAnIsNotEqualToRule {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -924,7 +922,6 @@ definition {
 	@description = "Verify that a Rule of User with condition 'Belongs To' can be created"
 	@priority = "4"
 	test CanCreateAnUserBelongsToRule {
-		property forms.functional = "true";
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "FormsRulesConditions#CanCreateAnUserBelongsToRule";
@@ -1086,7 +1083,6 @@ definition {
 	@description = "Verify that the AND operator on Condition is working as expected"
 	@priority = "5"
 	test CanCreateMultipleConditionsUsingAND {
-		property forms.functional = "true";
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "FormRulesConditions#CanCreateMultipleConditionsUsingAND";
@@ -1190,7 +1186,7 @@ definition {
 	@description = "Verify that the OR operator on Condition is working as expected"
 	@priority = "5"
 	test CanCreateMultipleConditionsUsingOR {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -1293,7 +1289,7 @@ definition {
 	@description = "Verify that the OR operator on Condition is disabled by default"
 	@priority = "5"
 	test OrOperatorisDisabledByDefault {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 

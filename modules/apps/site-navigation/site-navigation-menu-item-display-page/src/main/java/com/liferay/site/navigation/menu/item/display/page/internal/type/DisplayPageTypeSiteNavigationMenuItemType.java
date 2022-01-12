@@ -24,14 +24,19 @@ import com.liferay.layout.display.page.LayoutDisplayPageMultiSelectionProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -293,11 +298,45 @@ public class DisplayPageTypeSiteNavigationMenuItemType
 				GetterUtil.getLong(
 					typeSettingsUnicodeProperties.get("classPK")));
 
-		if (layoutDisplayPageObjectProvider == null) {
-			return typeSettingsUnicodeProperties.getProperty("title");
+		String defaultTitle = typeSettingsUnicodeProperties.getProperty(
+			"title");
+
+		if (layoutDisplayPageObjectProvider != null) {
+			defaultTitle = layoutDisplayPageObjectProvider.getTitle(locale);
 		}
 
-		return layoutDisplayPageObjectProvider.getTitle(locale);
+		if (!FFDisplayPageSiteNavigationMenuItemConfigurationUtil.
+				multipleSelectionEnabled() ||
+			!GetterUtil.getBoolean(
+				typeSettingsUnicodeProperties.get("useCustomName"))) {
+
+			return defaultTitle;
+		}
+
+		String defaultLanguageId = typeSettingsUnicodeProperties.getProperty(
+			Field.DEFAULT_LANGUAGE_ID,
+			LocaleUtil.toLanguageId(LocaleUtil.getMostRelevantLocale()));
+
+		String localizedNames = typeSettingsUnicodeProperties.getProperty(
+			"localizedNames", "{}");
+
+		try {
+			JSONObject localizedNamesJSONObject =
+				JSONFactoryUtil.createJSONObject(localizedNames);
+
+			return localizedNamesJSONObject.getString(
+				LocaleUtil.toLanguageId(locale),
+				localizedNamesJSONObject.getString(
+					defaultLanguageId, defaultTitle));
+		}
+		catch (JSONException jsonException) {
+			_log.error(
+				"Unable to get localizedNamesJSONObject from localizedNames: " +
+					localizedNames,
+				jsonException);
+		}
+
+		return defaultTitle;
 	}
 
 	@Override

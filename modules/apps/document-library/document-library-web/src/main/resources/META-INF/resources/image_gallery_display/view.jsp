@@ -90,7 +90,7 @@ String[] mediaGalleryMimeTypes = dlPortletInstanceSettings.getMimeTypes();
 	contextObjects="<%= contextObjects %>"
 	displayStyle="<%= displayStyle %>"
 	displayStyleGroupId="<%= displayStyleGroupId %>"
-	entries="<%= DLAppServiceUtil.getGroupFileEntries(scopeGroupId, 0, folderId, mediaGalleryMimeTypes, status, 0, SearchContainer.MAX_DELTA, null) %>"
+	entries="<%= DLAppServiceUtil.getGroupFileEntries(repositoryId, 0, folderId, mediaGalleryMimeTypes, status, 0, SearchContainer.MAX_DELTA, null) %>"
 >
 
 	<%

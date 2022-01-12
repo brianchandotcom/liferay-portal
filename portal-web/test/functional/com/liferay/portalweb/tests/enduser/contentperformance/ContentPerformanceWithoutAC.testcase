@@ -52,7 +52,6 @@ definition {
 	}
 
 	@description = "LPS-108856: When user opens Content Performance panel and AC is not connected, a Dont show me this again button is displayed"
-	@ignore = "true"
 	@priority = "3"
 	test DontShowButton {
 		task ("Assert if element is not present") {
@@ -67,7 +66,6 @@ definition {
 	}
 
 	@description = "LPS-105216: Validate that Free trial and dismiss buttons are displayed when AC is disabled"
-	@ignore = "true"
 	@priority = "5"
 	test FreeTrialButtonPresent {
 		task ("Open Content Performance and Assert if element is present") {
@@ -190,7 +188,6 @@ definition {
 	}
 
 	@description = "LPS-108856: When user opens Content Performance panel and AC is connected but not synced, the Content Performance panel displays instructions to sync to AC (Dont show me this again button and the message is not displayed)"
-	@ignore = "true"
 	@priority = "3"
 	test NotSyncedPanel {
 		task ("Open Analytics Cloud") {

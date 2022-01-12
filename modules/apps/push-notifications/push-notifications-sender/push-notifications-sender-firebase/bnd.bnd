@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Push Notifications Sender Firebase
 Bundle-SymbolicName: com.liferay.push.notifications.sender.firebase
-Bundle-Version: 5.0.11
+Bundle-Version: 5.0.12
 Import-Package:\
 	!android.util.*,\
 	\

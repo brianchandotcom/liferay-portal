@@ -282,6 +282,21 @@ public interface ObjectFieldModel
 	public void setDBTableName(String dbTableName);
 
 	/**
+	 * Returns the db type of this object field.
+	 *
+	 * @return the db type of this object field
+	 */
+	@AutoEscape
+	public String getDBType();
+
+	/**
+	 * Sets the db type of this object field.
+	 *
+	 * @param dbType the db type of this object field
+	 */
+	public void setDBType(String dbType);
+
+	/**
 	 * Returns the indexed of this object field.
 	 *
 	 * @return the indexed of this object field
@@ -487,21 +502,6 @@ public interface ObjectFieldModel
 	 * @param required the required of this object field
 	 */
 	public void setRequired(boolean required);
-
-	/**
-	 * Returns the type of this object field.
-	 *
-	 * @return the type of this object field
-	 */
-	@AutoEscape
-	public String getType();
-
-	/**
-	 * Sets the type of this object field.
-	 *
-	 * @param type the type of this object field
-	 */
-	public void setType(String type);
 
 	@Override
 	public String[] getAvailableLanguageIds();

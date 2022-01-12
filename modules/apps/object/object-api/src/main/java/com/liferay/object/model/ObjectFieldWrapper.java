@@ -56,6 +56,7 @@ public class ObjectFieldWrapper
 		attributes.put("businessType", getBusinessType());
 		attributes.put("dbColumnName", getDBColumnName());
 		attributes.put("dbTableName", getDBTableName());
+		attributes.put("dbType", getDBType());
 		attributes.put("indexed", isIndexed());
 		attributes.put("indexedAsKeyword", isIndexedAsKeyword());
 		attributes.put("indexedLanguageId", getIndexedLanguageId());
@@ -63,7 +64,6 @@ public class ObjectFieldWrapper
 		attributes.put("name", getName());
 		attributes.put("relationshipType", getRelationshipType());
 		attributes.put("required", isRequired());
-		attributes.put("type", getType());
 
 		return attributes;
 	}
@@ -149,6 +149,12 @@ public class ObjectFieldWrapper
 			setDBTableName(dbTableName);
 		}
 
+		String dbType = (String)attributes.get("dbType");
+
+		if (dbType != null) {
+			setDBType(dbType);
+		}
+
 		Boolean indexed = (Boolean)attributes.get("indexed");
 
 		if (indexed != null) {
@@ -189,12 +195,6 @@ public class ObjectFieldWrapper
 
 		if (required != null) {
 			setRequired(required);
-		}
-
-		String type = (String)attributes.get("type");
-
-		if (type != null) {
-			setType(type);
 		}
 	}
 
@@ -256,6 +256,16 @@ public class ObjectFieldWrapper
 	@Override
 	public String getDBTableName() {
 		return model.getDBTableName();
+	}
+
+	/**
+	 * Returns the db type of this object field.
+	 *
+	 * @return the db type of this object field
+	 */
+	@Override
+	public String getDBType() {
+		return model.getDBType();
 	}
 
 	@Override
@@ -460,16 +470,6 @@ public class ObjectFieldWrapper
 	}
 
 	/**
-	 * Returns the type of this object field.
-	 *
-	 * @return the type of this object field
-	 */
-	@Override
-	public String getType() {
-		return model.getType();
-	}
-
-	/**
 	 * Returns the user ID of this object field.
 	 *
 	 * @return the user ID of this object field
@@ -607,6 +607,16 @@ public class ObjectFieldWrapper
 	@Override
 	public void setDBTableName(String dbTableName) {
 		model.setDBTableName(dbTableName);
+	}
+
+	/**
+	 * Sets the db type of this object field.
+	 *
+	 * @param dbType the db type of this object field
+	 */
+	@Override
+	public void setDBType(String dbType) {
+		model.setDBType(dbType);
 	}
 
 	/**
@@ -791,16 +801,6 @@ public class ObjectFieldWrapper
 	@Override
 	public void setRequired(boolean required) {
 		model.setRequired(required);
-	}
-
-	/**
-	 * Sets the type of this object field.
-	 *
-	 * @param type the type of this object field
-	 */
-	@Override
-	public void setType(String type) {
-		model.setType(type);
 	}
 
 	/**

@@ -76,14 +76,14 @@ create table ObjectField (
 	businessType VARCHAR(75) null,
 	dbColumnName VARCHAR(75) null,
 	dbTableName VARCHAR(75) null,
+	dbType VARCHAR(75) null,
 	indexed BOOLEAN,
 	indexedAsKeyword BOOLEAN,
 	indexedLanguageId VARCHAR(75) null,
 	label STRING null,
 	name VARCHAR(75) null,
 	relationshipType VARCHAR(75) null,
-	required BOOLEAN,
-	type_ VARCHAR(75) null
+	required BOOLEAN
 );
 
 create table ObjectLayout (

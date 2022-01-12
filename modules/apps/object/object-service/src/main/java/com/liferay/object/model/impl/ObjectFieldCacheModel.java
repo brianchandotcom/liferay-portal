@@ -105,6 +105,8 @@ public class ObjectFieldCacheModel
 		sb.append(dbColumnName);
 		sb.append(", dbTableName=");
 		sb.append(dbTableName);
+		sb.append(", dbType=");
+		sb.append(dbType);
 		sb.append(", indexed=");
 		sb.append(indexed);
 		sb.append(", indexedAsKeyword=");
@@ -119,8 +121,6 @@ public class ObjectFieldCacheModel
 		sb.append(relationshipType);
 		sb.append(", required=");
 		sb.append(required);
-		sb.append(", type=");
-		sb.append(type);
 		sb.append("}");
 
 		return sb.toString();
@@ -188,6 +188,13 @@ public class ObjectFieldCacheModel
 			objectFieldImpl.setDBTableName(dbTableName);
 		}
 
+		if (dbType == null) {
+			objectFieldImpl.setDBType("");
+		}
+		else {
+			objectFieldImpl.setDBType(dbType);
+		}
+
 		objectFieldImpl.setIndexed(indexed);
 		objectFieldImpl.setIndexedAsKeyword(indexedAsKeyword);
 
@@ -221,13 +228,6 @@ public class ObjectFieldCacheModel
 
 		objectFieldImpl.setRequired(required);
 
-		if (type == null) {
-			objectFieldImpl.setType("");
-		}
-		else {
-			objectFieldImpl.setType(type);
-		}
-
 		objectFieldImpl.resetOriginalValues();
 
 		return objectFieldImpl;
@@ -253,6 +253,7 @@ public class ObjectFieldCacheModel
 		businessType = objectInput.readUTF();
 		dbColumnName = objectInput.readUTF();
 		dbTableName = objectInput.readUTF();
+		dbType = objectInput.readUTF();
 
 		indexed = objectInput.readBoolean();
 
@@ -263,7 +264,6 @@ public class ObjectFieldCacheModel
 		relationshipType = objectInput.readUTF();
 
 		required = objectInput.readBoolean();
-		type = objectInput.readUTF();
 	}
 
 	@Override
@@ -318,6 +318,13 @@ public class ObjectFieldCacheModel
 			objectOutput.writeUTF(dbTableName);
 		}
 
+		if (dbType == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(dbType);
+		}
+
 		objectOutput.writeBoolean(indexed);
 
 		objectOutput.writeBoolean(indexedAsKeyword);
@@ -351,13 +358,6 @@ public class ObjectFieldCacheModel
 		}
 
 		objectOutput.writeBoolean(required);
-
-		if (type == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(type);
-		}
 	}
 
 	public long mvccVersion;
@@ -373,6 +373,7 @@ public class ObjectFieldCacheModel
 	public String businessType;
 	public String dbColumnName;
 	public String dbTableName;
+	public String dbType;
 	public boolean indexed;
 	public boolean indexedAsKeyword;
 	public String indexedLanguageId;
@@ -380,6 +381,5 @@ public class ObjectFieldCacheModel
 	public String name;
 	public String relationshipType;
 	public boolean required;
-	public String type;
 
 }

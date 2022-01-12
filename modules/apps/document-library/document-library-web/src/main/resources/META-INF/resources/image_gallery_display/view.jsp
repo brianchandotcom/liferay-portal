@@ -199,7 +199,7 @@ String[] mediaGalleryMimeTypes = dlPortletInstanceSettings.getMimeTypes();
 
 					<div class="lfr-asset-metadata">
 						<div class="icon-calendar lfr-asset-icon">
-							<liferay-ui:message arguments="<%= dateFormatDate.format(folder.getModifiedDate()) %>" key="last-updated-x" translateArguments="<%= false %>" />
+							<liferay-ui:message arguments="<%= (folder.getModifiedDate() != null) ? dateFormatDate.format(folder.getModifiedDate()) : StringPool.BLANK %>" key="last-updated-x" translateArguments="<%= false %>" />
 						</div>
 
 						<%

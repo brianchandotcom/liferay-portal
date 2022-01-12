@@ -22,6 +22,22 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro assertOrderTypesEntry {
+		AssertTextEquals(
+			locator1 = "CommerceEntry#NAME_FIELD",
+			value1 = "${orderTypeName}");
+
+		AssertTextEquals(
+			locator1 = "CommerceEntry#DESCRIPTION_FIELD",
+			value1 = "${orderTypeDescription}");
+
+		if (isSet(displayOrder)) {
+			AssertTextEquals(
+				locator1 = "CommerceEntry#DISPLAY_ORDER_FIELD",
+				value1 = "${displayOrder}");
+		}
+	}
+
 	macro createShipment {
 		Click(
 			key_text = "Create Shipment",

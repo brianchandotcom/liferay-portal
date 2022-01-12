@@ -14,8 +14,8 @@
 
 package com.liferay.jenkins.results.parser;
 
-import java.util.Arrays;
-import java.util.HashSet;
+import com.liferay.jenkins.results.parser.job.property.JobProperty;
+
 import java.util.Set;
 
 /**
@@ -31,11 +31,10 @@ public class PortalReleaseEnvironmentJob extends PortalEnvironmentJob {
 
 	@Override
 	protected Set<String> getRawBatchNames() {
-		String environmentJobNames = JenkinsResultsParserUtil.getProperty(
-			getJobProperties(), "environment.release.job.names",
-			getPortalBranchName());
+		JobProperty jobProperty = getJobProperty(
+			"environment.release.job.names");
 
-		return new HashSet<>(Arrays.asList(environmentJobNames.split(",")));
+		return getSetFromString(jobProperty.getValue());
 	}
 
 }

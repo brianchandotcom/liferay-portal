@@ -68,14 +68,6 @@ public class PluginsMarketplaceAppJob
 		readJobProperties();
 	}
 
-	@Override
-	protected Set<String> getRawBatchNames() {
-		return getSetFromString(
-			JenkinsResultsParserUtil.getProperty(
-				getJobProperties(), "test.batch.names", getJobName(),
-				getTestSuiteName()));
-	}
-
 	private final String _appType;
 	private final PortalGitWorkingDirectory _portalGitWorkingDirectory;
 

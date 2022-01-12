@@ -75,28 +75,6 @@ public class PortalAppReleaseJob extends BaseJob implements PortalTestClassJob {
 		readJobProperties();
 	}
 
-	@Override
-	protected Set<String> getRawBatchNames() {
-		BuildProfile buildProfile = getBuildProfile();
-
-		if (buildProfile == null) {
-			buildProfile = BuildProfile.PORTAL;
-		}
-
-		String testBatchName = JenkinsResultsParserUtil.getProperty(
-			getJobProperties(), "test.batch.names", false, getJobName(),
-			buildProfile.toString());
-
-		if (JenkinsResultsParserUtil.isNullOrEmpty(testBatchName)) {
-			testBatchName = JenkinsResultsParserUtil.getProperty(
-				getJobProperties(), "test.batch.names", false, getJobName(),
-				_portalGitWorkingDirectory.getUpstreamBranchName(),
-				buildProfile.toString());
-		}
-
-		return getSetFromString(testBatchName);
-	}
-
 	private final PortalGitWorkingDirectory _portalGitWorkingDirectory;
 
 }

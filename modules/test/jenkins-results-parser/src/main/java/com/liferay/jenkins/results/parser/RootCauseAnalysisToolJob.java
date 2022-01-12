@@ -74,13 +74,6 @@ public class RootCauseAnalysisToolJob
 		return true;
 	}
 
-	@Override
-	protected Set<String> getRawBatchNames() {
-		return getSetFromString(
-			JenkinsResultsParserUtil.getProperty(
-				getJobProperties(), "test.batch.names"));
-	}
-
 	private final GitWorkingDirectory _jenkinsGitWorkingDirectory;
 	private final PortalGitWorkingDirectory _portalGitWorkingDirectory;
 

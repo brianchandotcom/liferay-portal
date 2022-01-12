@@ -18,7 +18,6 @@ import java.io.File;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author Michael Hashimoto
@@ -50,14 +49,6 @@ public abstract class PluginsTestSuiteJob
 
 		jobPropertiesFiles.add(
 			new File(_getPluginTestBaseDir(), "test.properties"));
-	}
-
-	@Override
-	protected Set<String> getRawBatchNames() {
-		return getSetFromString(
-			JenkinsResultsParserUtil.getProperty(
-				getJobProperties(), "test.batch.names", getJobName(),
-				getTestSuiteName()));
 	}
 
 	private File _getPluginTestBaseDir() {

@@ -14,6 +14,8 @@
 
 package com.liferay.jenkins.results.parser;
 
+import com.liferay.jenkins.results.parser.job.property.JobProperty;
+import com.liferay.jenkins.results.parser.job.property.JobPropertyFactory;
 import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.BatchTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.FunctionalBatchTestClassGroup;
@@ -175,11 +177,6 @@ public abstract class BaseJob implements Job {
 	@Override
 	public List<File> getJobPropertiesFiles() {
 		return jobPropertiesFiles;
-	}
-
-	@Override
-	public String getJobProperty(String key) {
-		return _jobProperties.getProperty(key);
 	}
 
 	@Override
@@ -575,7 +572,24 @@ public abstract class BaseJob implements Job {
 		}
 	}
 
-	protected abstract Set<String> getRawBatchNames();
+	protected JobProperty getJobProperty(String basePropertyName) {
+		return JobPropertyFactory.newJobProperty(
+			basePropertyName, null, null, this, null, null, true);
+	}
+
+	protected JobProperty getJobProperty(
+		String basePropertyName, boolean useBasePropertyName) {
+
+		return JobPropertyFactory.newJobProperty(
+			basePropertyName, null, null, this, null, null,
+			useBasePropertyName);
+	}
+
+	protected Set<String> getRawBatchNames() {
+		JobProperty jobProperty = getJobProperty("test.batch.names");
+
+		return getSetFromString(jobProperty.getValue());
+	}
 
 	protected List<SegmentTestClassGroup> getSegmentTestClassGroups(
 		Set<String> rawBatchNames) {

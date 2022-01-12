@@ -1,6 +1,6 @@
 Bundle-Name: Liferay VLDAP Server
 Bundle-SymbolicName: com.liferay.vldap.server
-Bundle-Version: 5.0.11
+Bundle-Version: 5.0.12
 Import-Package:\
 	!com.sun.msv.*,\
 	\

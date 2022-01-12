@@ -79,13 +79,11 @@ definition {
 	macro addCategoryItem {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
-		Click(locator1 = "Button#PLUS");
+		LexiconEntry.gotoAdd();
 
 		MenuItem.click(menuItem = "Category");
 
-		Pause(locator1 = "1000");
-
-		IFrame.selectConfigurationFrame();
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		Portlet.expandTree();
 

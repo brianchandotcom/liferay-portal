@@ -11,5 +11,9 @@ definition {
 	macro viewMonthTableIsDisplayed {
 		AssertElementPresent(locator1 = "Calendar#SCHEDULER_VIEW_MONTH");
 	}
+	macro viewAgendaTableIsDisplayed {
+		AssertElementPresent(locator1 = "Calendar#SCHEDULER_VIEW_AGENDA");
+	}
+
 
 }

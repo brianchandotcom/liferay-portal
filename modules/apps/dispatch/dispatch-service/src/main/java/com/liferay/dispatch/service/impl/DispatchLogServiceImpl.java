@@ -49,7 +49,7 @@ public class DispatchLogServiceImpl extends DispatchLogServiceBaseImpl {
 			getPermissionChecker(), dispatchLog.getDispatchTriggerId(),
 			ActionKeys.UPDATE);
 
-		dispatchLogLocalService.deleteDispatchLog(dispatchLog);
+		dispatchLogLocalService.deleteDispatchLog(dispatchLogId);
 	}
 
 	@Override

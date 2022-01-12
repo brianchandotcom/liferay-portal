@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.urlrewrite.filter.internal;
+package com.liferay.portal.url.rewrite.filter.internal;
 
 import com.liferay.portal.asm.ASMWrapperUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -30,6 +30,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 
+import org.tuckey.web.filters.urlrewrite.UrlRewriteFilter;
+
 /**
  * @author László Csontos
  */
@@ -45,7 +47,7 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = Filter.class
 )
-public class UrlRewriteFilter extends BasePortalFilter {
+public class URLRewriteFilter extends BasePortalFilter {
 
 	@Override
 	public void destroy() {
@@ -60,13 +62,12 @@ public class UrlRewriteFilter extends BasePortalFilter {
 	public void init(FilterConfig filterConfig) {
 		super.init(filterConfig);
 
-		_urlRewriteFilter =
-			new org.tuckey.web.filters.urlrewrite.UrlRewriteFilter();
+		_urlRewriteFilter = new UrlRewriteFilter();
 
 		ServletContext servletContext = filterConfig.getServletContext();
 
 		ClassLoader classLoader = AggregateClassLoader.getAggregateClassLoader(
-			UrlRewriteFilter.class.getClassLoader(),
+			URLRewriteFilter.class.getClassLoader(),
 			servletContext.getClassLoader());
 
 		try {
@@ -100,9 +101,8 @@ public class UrlRewriteFilter extends BasePortalFilter {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		UrlRewriteFilter.class);
+		URLRewriteFilter.class);
 
-	private org.tuckey.web.filters.urlrewrite.UrlRewriteFilter
-		_urlRewriteFilter;
+	private UrlRewriteFilter _urlRewriteFilter;
 
 }

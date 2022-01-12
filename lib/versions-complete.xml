@@ -4184,7 +4184,7 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.portal.urlrewrite.filter.jar!urlrewritefilter.jar</file-name>
+				<file-name>com.liferay.portal.url.rewrite.filter.jar!urlrewritefilter.jar</file-name>
 				<version>4.0.4</version>
 				<project-name>UrlRewriteFilter</project-name>
 				<project-url>http://www.tuckey.org/urlrewrite/</project-url>

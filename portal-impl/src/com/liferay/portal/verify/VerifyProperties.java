@@ -1889,7 +1889,7 @@ public class VerifyProperties extends VerifyProcess {
 		},
 		{
 			"com.liferay.portal.servlet.filters.urlrewrite.UrlRewriteFilter",
-			"com.liferay.portal.urlrewrite.filter.internal.UrlRewriteFilter"
+			"com.liferay.portal.url.rewrite.filter.internal.URLRewriteFilter"
 		},
 		{
 			"default.guest.friendly.url",

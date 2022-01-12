@@ -12,21 +12,32 @@
  * details.
  */
 
-package com.liferay.portal.urlrewrite.filter.internal;
+package com.liferay.portal.url.rewrite.filter.internal;
+
+import java.io.InputStream;
+
+import java.util.Objects;
 
 import javax.servlet.ServletContext;
+
+import org.tuckey.web.filters.urlrewrite.UrlRewriteFilter;
 
 /**
  * @author Shuyang Zhou
  */
-public class FilterConfigDelegate {
+public class ServletContextDelegate {
 
-	public FilterConfigDelegate(ServletContext servletContext) {
+	public ServletContextDelegate(ServletContext servletContext) {
 		_servletContext = servletContext;
 	}
 
-	public ServletContext getServletContext() {
-		return _servletContext;
+	public InputStream getResourceAsStream(String path) {
+		if (Objects.equals(path, UrlRewriteFilter.DEFAULT_WEB_CONF_PATH)) {
+			return ServletContextDelegate.class.getResourceAsStream(
+				"/urlrewrite.xml");
+		}
+
+		return _servletContext.getResourceAsStream(path);
 	}
 
 	private final ServletContext _servletContext;

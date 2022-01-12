@@ -1,5 +1,27 @@
 definition {
 
+	macro addOrderType {
+		LexiconEntry.gotoAdd();
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		Type(
+			locator1 = "TextInput#NAME",
+			value1 = "${orderTypeName}");
+
+		Type(
+			locator1 = "CommerceEntry#DESCRIPTION_FIELD",
+			value1 = "${orderTypeDescription}");
+
+		Button.clickSubmitButton();
+
+		ClickNoError(locator1 = "ToggleSwitch#ACTIVE");
+
+		Button.clickPublish();
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro createShipment {
 		Click(
 			key_text = "Create Shipment",

@@ -24,11 +24,12 @@ import com.liferay.portal.kernel.util.BasePortalLifecycle;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalLifecycle;
 import com.liferay.portal.kernel.util.PortalLifecycleUtil;
-import org.apache.logging.log4j.ThreadContext;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.logging.log4j.ThreadContext;
 
 /**
  * @author Tina Tian

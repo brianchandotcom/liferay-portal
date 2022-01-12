@@ -100,7 +100,8 @@ function openItem(
 						id: 'selectStarterkit',
 					});
 
-					var siteDomain = document.getElementById('siteDomain').value;
+					var siteDomain = document.getElementById('siteDomain')
+						.value;
 					var siteName = document.getElementById('siteName').value;
 
 					createOrder(
@@ -143,7 +144,7 @@ function createOrder(
 	siteDomain,
 	siteInitializerKey,
 	siteName,
-	sitePrivateKey,
+	sitePrivateKey
 ) {
 	var cartsURL =
 		themeDisplay.getPortalURL() +

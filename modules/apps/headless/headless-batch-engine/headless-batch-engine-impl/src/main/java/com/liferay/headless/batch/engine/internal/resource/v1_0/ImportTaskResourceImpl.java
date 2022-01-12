@@ -41,7 +41,6 @@ import com.liferay.portal.vulcan.multipart.BinaryFile;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.AbstractMap;
@@ -92,7 +91,7 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 	public ImportTask deleteImportTask(
 			String className, String callbackURL, String taskItemDelegateName,
 			Object object)
-		throws IOException {
+		throws Exception {
 
 		String contentType = contextHttpServletRequest.getHeader(
 			HttpHeaders.CONTENT_TYPE);
@@ -201,7 +200,7 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 	}
 
 	private byte[] _getBytes(Object object, String contentType)
-		throws IOException {
+		throws Exception {
 
 		byte[] bytes = null;
 
@@ -258,7 +257,7 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 
 	private UnsyncByteArrayOutputStream _getUnsyncByteArrayOutputStream(
 			String fileName, InputStream inputStream)
-		throws IOException {
+		throws Exception {
 
 		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 			new UnsyncByteArrayOutputStream();
@@ -299,9 +298,11 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 	}
 
 	private ImportTask _importFile(
-		BatchEngineTaskOperation batchEngineTaskOperation, byte[] bytes,
-		String callbackURL, String className, String batchEngineTaskContentType,
-		String fieldNameMappingString, String taskItemDelegateName) {
+			BatchEngineTaskOperation batchEngineTaskOperation, byte[] bytes,
+			String callbackURL, String className,
+			String batchEngineTaskContentType, String fieldNameMappingString,
+			String taskItemDelegateName)
+		throws Exception {
 
 		Class<?> clazz = _itemClassRegistry.getItemClass(className);
 

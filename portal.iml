@@ -11,7 +11,6 @@
 			<excludeFolder url="file://$MODULE_DIR$/lib" />
 			<excludeFolder url="file://$MODULE_DIR$/modules" />
 			<excludeFolder url="file://$MODULE_DIR$/nbproject" />
-			<excludeFolder url="file://$MODULE_DIR$/portal-client" />
 			<excludeFolder url="file://$MODULE_DIR$/portal-impl" />
 			<excludeFolder url="file://$MODULE_DIR$/portal-kernel" />
 			<excludeFolder url="file://$MODULE_DIR$/portal-test" />

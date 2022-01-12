@@ -14,6 +14,8 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.io.IOException;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -77,11 +79,17 @@ public class PortalReleasePortalTopLevelBuild
 
 		try {
 			if (JenkinsResultsParserUtil.isNullOrEmpty(tomcatURLString)) {
-				_portalRelease = new PortalRelease(
-					new URL(
-						JenkinsResultsParserUtil.combine(
-							String.valueOf(getUserContentURL()), "/bundles")),
-					getParameterValue("TEST_PORTAL_RELEASE_VERSION"));
+				try {
+					_portalRelease = new PortalRelease(
+						new URL(getUserContentURL() + "/bundles"),
+						JenkinsResultsParserUtil.getProperty(
+							JenkinsResultsParserUtil.getBuildProperties(),
+							"portal.latest.bundle.version",
+							getParameterValue("TEST_PORTAL_BRANCH_NAME")));
+				}
+				catch (IOException ioException) {
+					throw new RuntimeException(ioException);
+				}
 			}
 			else {
 				URL portalReleaseTomcatURL = new URL(tomcatURLString);

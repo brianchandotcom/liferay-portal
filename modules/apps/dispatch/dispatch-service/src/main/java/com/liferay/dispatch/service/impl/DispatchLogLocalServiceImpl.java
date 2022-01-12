@@ -82,8 +82,12 @@ public class DispatchLogLocalServiceImpl
 		DispatchLog dispatchLog = dispatchLogPersistence.findByPrimaryKey(
 			dispatchLogId);
 
-		_checkDispatchTaskStatusNotInProgress(
-			DispatchTaskStatus.valueOf(dispatchLog.getStatus()));
+		if (DispatchTaskStatus.valueOf(dispatchLog.getStatus()) ==
+				DispatchTaskStatus.IN_PROGRESS) {
+
+			throw new DispatchLogStatusException(
+				"Dispatch log cannot be deleted while task is in progress");
+		}
 
 		return dispatchLogPersistence.remove(dispatchLogId);
 	}
@@ -176,16 +180,6 @@ public class DispatchLogLocalServiceImpl
 		if (dispatchTaskStatus == null) {
 			throw new DispatchLogStatusException(
 				"Dispatch task status is required");
-		}
-	}
-
-	private void _checkDispatchTaskStatusNotInProgress(
-			DispatchTaskStatus dispatchTaskStatus)
-		throws PortalException {
-
-		if (dispatchTaskStatus == DispatchTaskStatus.IN_PROGRESS) {
-			throw new DispatchLogStatusException(
-				"Dispatch log cannot be deleted while task is in progress");
 		}
 	}
 

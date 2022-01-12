@@ -187,6 +187,8 @@ public class JenkinsResultsParserUtilTest
 		properties.setProperty("base0[opt[0]]", "5");
 		properties.setProperty("base0[opt[1][1][1]]", "6");
 		properties.setProperty("base0[opt[1][1][1]][opt[2][2][2]]", "7");
+		properties.setProperty("base1[opt1]", "8");
+		properties.setProperty("base1[opt1][opt2]", "");
 
 		_testGetProperty("0", properties, "base");
 		_testGetProperty(null, properties, "invalid");
@@ -199,6 +201,7 @@ public class JenkinsResultsParserUtilTest
 		_testGetProperty(
 			"7", properties, "base0", "opt[2][2][2]", "invalid", "opt[1][1][1]",
 			null);
+		_testGetProperty("", properties, "base1", "opt1", "opt2");
 
 		testEquals(
 			"1",
@@ -225,6 +228,8 @@ public class JenkinsResultsParserUtilTest
 		properties.setProperty("base0[opt[0]]", "5");
 		properties.setProperty("base0[opt[1][1][1]]", "6");
 		properties.setProperty("base0[opt[1][1][1]][opt[2][2][2]]", "7");
+		properties.setProperty("base1[opt1]", "8");
+		properties.setProperty("base1[opt1][opt2]", "");
 
 		_testGetPropertyName("base", "0", properties, "base");
 		_testGetPropertyName("invalid", null, properties, "invalid");
@@ -244,6 +249,8 @@ public class JenkinsResultsParserUtilTest
 		_testGetPropertyName(
 			"base0[opt[1][1][1]][opt[2][2][2]]", "7", properties, "base0",
 			"opt[2][2][2]", "invalid", "opt[1][1][1]", null);
+		_testGetPropertyName(
+			"base1[opt1][opt2]", "", properties, "base1", "opt1", "opt2");
 	}
 
 	@Test

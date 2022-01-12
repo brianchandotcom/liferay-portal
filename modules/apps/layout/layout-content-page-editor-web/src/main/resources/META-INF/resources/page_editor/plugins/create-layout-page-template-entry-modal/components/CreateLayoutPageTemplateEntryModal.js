@@ -128,7 +128,11 @@ const CreateLayoutPageTemplateEntryModal = ({observer, onClose}) => {
 	);
 
 	return (
-		<ClayModal observer={observer} size="md">
+		<ClayModal
+			containerProps={{className: 'cadmin'}}
+			observer={observer}
+			size="md"
+		>
 			<ClayModal.Header>
 				{Liferay.Language.get('create-page-template')}
 			</ClayModal.Header>

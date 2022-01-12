@@ -162,7 +162,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-105215: Validate the Content Performance panel default time range is by week"
+	@description = "LPS-127220: When the user opens the flag selector dropdown in the panel, the default language is in top of the list"
 	@ignore = "true"
 	@priority = "3"
 	test DefaultLanguageOnTop {
@@ -171,6 +171,7 @@ definition {
 
 	}
 
+	@description = "LPS-105215: Validate the Content Performance panel default time range is by week"
 	@ignore = "true"
 	@priority = "5"
 	test DefaultTimeRangeWeek {

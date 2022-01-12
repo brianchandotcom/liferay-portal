@@ -35,6 +35,9 @@ import com.liferay.document.library.web.internal.display.context.helper.DLPortle
 import com.liferay.document.library.web.internal.display.context.helper.DLRequestHelper;
 import com.liferay.document.library.web.internal.settings.DLPortletInstanceSettings;
 import com.liferay.document.library.web.internal.util.DLFolderUtil;
+import com.liferay.item.selector.ItemSelector;
+import com.liferay.item.selector.criteria.FolderItemSelectorReturnType;
+import com.liferay.item.selector.criteria.folder.criterion.FolderItemSelectorCriterion;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -44,11 +47,13 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -67,6 +72,8 @@ import com.liferay.portal.kernel.search.SearchResult;
 import com.liferay.portal.kernel.search.SearchResultUtil;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -318,6 +325,47 @@ public class DLAdminDisplayContext {
 		_selectedRepositoryId = getRepositoryId();
 
 		return _selectedRepositoryId;
+	}
+
+	public PortletURL getSelectFolderURL(HttpServletRequest httpServletRequest)
+		throws PortalException {
+
+		ItemSelector itemSelector =
+			(ItemSelector)httpServletRequest.getAttribute(
+				ItemSelector.class.getName());
+
+		FolderItemSelectorCriterion folderItemSelectorCriterion =
+			new FolderItemSelectorCriterion();
+
+		folderItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			new FolderItemSelectorReturnType());
+		folderItemSelectorCriterion.setFolderId(getRootFolderId());
+		folderItemSelectorCriterion.setIgnoreRootFolder(true);
+		folderItemSelectorCriterion.setRepositoryId(getSelectedRepositoryId());
+		folderItemSelectorCriterion.setSelectedFolderId(getRootFolderId());
+		folderItemSelectorCriterion.setSelectedRepositoryId(
+			getSelectedRepositoryId());
+		folderItemSelectorCriterion.setShowGroupSelector(true);
+		folderItemSelectorCriterion.setShowMountFolder(false);
+
+		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+
+		long groupId = getSelectedRepositoryId();
+
+		Repository repository = RepositoryLocalServiceUtil.fetchRepository(
+			getSelectedRepositoryId());
+
+		if (repository != null) {
+			groupId = repository.getGroupId();
+		}
+
+		return itemSelector.getItemSelectorURL(
+			RequestBackedPortletURLFactoryUtil.create(httpServletRequest),
+			GroupLocalServiceUtil.getGroup(
+				GetterUtil.getLong(groupId, _themeDisplay.getScopeGroupId())),
+			_themeDisplay.getScopeGroupId(),
+			portletDisplay.getNamespace() + "folderSelected",
+			folderItemSelectorCriterion);
 	}
 
 	public boolean isDefaultFolderView() {

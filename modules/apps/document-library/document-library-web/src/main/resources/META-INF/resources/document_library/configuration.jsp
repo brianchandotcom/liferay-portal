@@ -187,20 +187,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 							title: '<liferay-ui:message arguments="folder" key="select-x" />',
 
 							<%
-							ItemSelector itemSelector = (ItemSelector)request.getAttribute(ItemSelector.class.getName());
-
-							FolderItemSelectorCriterion folderItemSelectorCriterion = new FolderItemSelectorCriterion();
-
-							folderItemSelectorCriterion.setDesiredItemSelectorReturnTypes(new FolderItemSelectorReturnType());
-							folderItemSelectorCriterion.setFolderId(dlAdminDisplayContext.getRootFolderId());
-							folderItemSelectorCriterion.setIgnoreRootFolder(true);
-							folderItemSelectorCriterion.setRepositoryId(dlAdminDisplayContext.getSelectedRepositoryId());
-							folderItemSelectorCriterion.setSelectedFolderId(dlAdminDisplayContext.getRootFolderId());
-							folderItemSelectorCriterion.setSelectedRepositoryId(dlAdminDisplayContext.getSelectedRepositoryId());
-							folderItemSelectorCriterion.setShowGroupSelector(true);
-							folderItemSelectorCriterion.setShowMountFolder(false);
-
-							PortletURL selectFolderURL = itemSelector.getItemSelectorURL(RequestBackedPortletURLFactoryUtil.create(request), GroupLocalServiceUtil.getGroup(GetterUtil.getLong(dlAdminDisplayContext.getSelectedRepositoryId(), themeDisplay.getScopeGroupId())), themeDisplay.getScopeGroupId(), portletDisplay.getNamespace() + "folderSelected", folderItemSelectorCriterion);
+							PortletURL selectFolderURL = dlAdminDisplayContext.getSelectFolderURL(request);
 							%>
 
 							url: '<%= HtmlUtil.escapeJS(selectFolderURL.toString()) %>',

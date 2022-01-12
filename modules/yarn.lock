@@ -951,10 +951,10 @@
     classnames "^2.2.6"
     tinycolor2 "^1.4.2"
 
-"@clayui/css@3.43.0":
-  version "3.43.0"
-  resolved "https://registry.yarnpkg.com/@clayui/css/-/css-3.43.0.tgz#838e99cb26f7ee95a5a6a6cde7853cfd063a5531"
-  integrity sha512-b7SoHePPy/lkeQGR5y3Lt9y5WN83n8z48xJbwKA9TetpOI0G1Weq5o+PTWcjeR8tCoSV2Dq2xgGFswcxVN8/tA==
+"@clayui/css@3.44.2":
+  version "3.44.2"
+  resolved "https://registry.yarnpkg.com/@clayui/css/-/css-3.44.2.tgz#84d48d03675ff680a7a4bc442da3a11a2d644865"
+  integrity sha512-0kz8MylQEmdT5UwyFdakPyDp33vXmfffJ76TOGdVveqok92/Jmm2uT6Y2TCp5NQlNGB40NNDPJQ2k/hkMbbYRA==
 
 "@clayui/data-provider@3.40.0":
   version "3.40.0"
@@ -1180,10 +1180,10 @@
     classnames "^2.2.6"
     react-transition-group "^4.4.1"
 
-"@clayui/popover@3.40.0":
-  version "3.40.0"
-  resolved "https://registry.yarnpkg.com/@clayui/popover/-/popover-3.40.0.tgz#cf4612b716e752aa20a4719571f4edec5069d715"
-  integrity sha512-zmwxHHKJmVCxfOTgiKrc8+Csc5fuUhwneUJaOlkD0qoLHqkapITQIZYT9K624UEeQTli+FKLkC2Q6cJzU7sDyQ==
+"@clayui/popover@3.44.0":
+  version "3.44.0"
+  resolved "https://registry.yarnpkg.com/@clayui/popover/-/popover-3.44.0.tgz#f18d1544ee5bf4c9b5b7392ecdf0061a88248d23"
+  integrity sha512-M7KiNiZqAbCIPdQnXZ0S/k7rAFiA7FSKrmXC8Z8OhzWE0KMi2iXMLWL4RHZVjHSv5xrjfBNIWGTmQQe5wKFrWQ==
   dependencies:
     "@clayui/shared" "^3.40.0"
     classnames "^2.2.6"

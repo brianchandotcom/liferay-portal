@@ -9,7 +9,7 @@
 		"@clayui/layout": "3.40.0",
 		"@clayui/loading-indicator": "3.40.0",
 		"@clayui/panel": "3.40.0",
-		"@clayui/popover": "3.40.0",
+		"@clayui/popover": "3.44.0",
 		"@liferay/template-web": "*",
 		"codemirror": "^5.59.0",
 		"frontend-js-components-web": "*",

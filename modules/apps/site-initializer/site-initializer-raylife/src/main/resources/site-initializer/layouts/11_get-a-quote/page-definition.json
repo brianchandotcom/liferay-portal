@@ -110,7 +110,7 @@
 											"id": "tablet"
 										}
 									],
-									"size": 8
+									"size": 9
 								},
 								"pageElements": [
 									{
@@ -148,7 +148,7 @@
 											"id": "tablet"
 										}
 									],
-									"size": 4
+									"size": 3
 								},
 								"pageElements": [
 									{
@@ -162,7 +162,7 @@
 											"fragmentFields": [
 											],
 											"fragmentStyle": {
-												"marginLeft": "9",
+												"marginRight": "3",
 												"marginTop": "10",
 												"paddingTop": "4",
 												"textAlign": ""

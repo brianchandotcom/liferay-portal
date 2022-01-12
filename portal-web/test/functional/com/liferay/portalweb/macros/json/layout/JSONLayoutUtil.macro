@@ -10,13 +10,10 @@ definition {
 
 		Variables.assertDefined(parameterList = "${typeSettings}");
 
+		var widget = JSONLayoutUtil._generateWidget(widgetName = "${widgetName}");
+
 		if (isSet(remoteAppEntryId)) {
-			var widget = JSONLayoutUtil._generateWidget(
-				remoteAppEntryId = "${remoteAppEntryId}",
-				widgetName = "${widgetName}");
-		}
-		else {
-			var widget = JSONLayoutUtil._generateWidget(widgetName = "${widgetName}");
+			var widget = StringUtil.replace("${widget}", "remoteAppEntryId", "${remoteAppEntryId}");
 		}
 
 		if (contains("${typeSettings}", "column-${column}=")) {
@@ -189,7 +186,7 @@ definition {
 			var portletId = "com_liferay_social_user_statistics_web_portlet_SocialUserStatisticsPortlet";
 		}
 		else if ("${widgetName}" == "Vanilla Counter") {
-			var portletId = "com_liferay_remote_app_web_internal_portlet_RemoteAppEntryPortlet_${remoteAppEntryId}";
+			var portletId = "com_liferay_remote_app_web_internal_portlet_RemoteAppEntryPortlet_remoteAppEntryId";
 		}
 		else if ("${widgetName}" == "Web Content Display") {
 			var portletId = "com_liferay_journal_content_web_portlet_JournalContentPortlet";

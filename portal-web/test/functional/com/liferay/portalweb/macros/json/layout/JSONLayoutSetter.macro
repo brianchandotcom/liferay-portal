@@ -114,12 +114,6 @@ definition {
 		if (isSet(widgetName)) {
 			var typeSettings = JSONLayoutUtil._addWidgetToTypeSettings(
 				column = "${column}",
-				typeSettings = "${typeSettings}",
-				widgetName = "${widgetName}");
-		}
-		else if (isSet(widgetName) && isSet(remoteAppEntryId)) {
-			var typeSettings = JSONLayoutUtil._addWidgetToTypeSettings(
-				column = "${column}",
 				remoteAppEntryId = "${remoteAppEntryId}",
 				typeSettings = "${typeSettings}",
 				widgetName = "${widgetName}");

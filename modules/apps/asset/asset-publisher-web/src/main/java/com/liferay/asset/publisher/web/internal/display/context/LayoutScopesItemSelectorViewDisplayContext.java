@@ -48,6 +48,7 @@ public class LayoutScopesItemSelectorViewDisplayContext
 			groupItemSelectorCriterion, itemSelectedEventName, portletURL);
 	}
 
+	@Override
 	public long getGroupId() {
 		long groupId = super.getGroupId();
 

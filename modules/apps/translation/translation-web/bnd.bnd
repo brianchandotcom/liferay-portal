@@ -1,4 +1,4 @@
 Bundle-Name: Liferay Translation Web
 Bundle-SymbolicName: com.liferay.translation.web
-Bundle-Version: 2.0.32
+Bundle-Version: 2.0.33
 Web-ContextPath: /translation-web

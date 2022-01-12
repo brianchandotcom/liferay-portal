@@ -206,8 +206,6 @@ public class ExpandoUserFieldExpressionHandler
 				QueryUtil.ALL_POS);
 
 		if (expandoValues.size() > 1) {
-			expandoValues.forEach(StringBundler::concat);
-
 			List<Long> userIds = new ArrayList<>();
 
 			expandoValues.forEach(

@@ -44,33 +44,39 @@ export function CardFormActionsMobile({onPrevious, onSave}) {
 
 	return (
 		<>
-			{(errors?.continueButton?.message || errorModal) && (
-				<WarningBadge>
-					{errors?.continueButton?.message || errorModal}
-				</WarningBadge>
-			)}
-			<div className="col-12 d-flex justify-content-between mt-5">
-				{onPrevious && isMobileDevice && (
-					<ClayButton
-						className="btn-borderless btn-style-neutral font-weight-bolder previous text-neutral-0 text-paragraph text-small-caps"
-						displayType="null"
-						onClick={onPrevious}
-					>
-						Previous
-					</ClayButton>
-				)}
+			<div className="col-12 mt-5">
+				{(errors?.continueButton?.message || errorModal) &&
+					isMobileDevice && (
+						<div className="mb-5">
+							<WarningBadge>
+								{errors?.continueButton?.message || errorModal}
+							</WarningBadge>
+						</div>
+					)}
 
-				<div className="d-flex">
-					{onSave && isMobileDevice && (
+				<div className="d-flex justify-content-between mx-0 row">
+					{onPrevious && isMobileDevice && (
 						<ClayButton
-							className="btn btn-ghost btn-inverted btn-style-neutral font-weight-bolder mr-3 save-exit text-neutral-0 text-paragraph text-small-caps"
-							disabled={!email || emailHasError || loading}
-							displayType={null}
-							onClick={onClickSaveAndExit}
+							className="btn-borderless btn-style-neutral font-weight-bolder previous text-neutral-0 text-paragraph text-small-caps"
+							displayType="null"
+							onClick={onPrevious}
 						>
-							Save & Exit
+							Previous
 						</ClayButton>
 					)}
+
+					<div className="d-flex">
+						{onSave && isMobileDevice && (
+							<ClayButton
+								className="btn btn-ghost btn-inverted btn-style-neutral font-weight-bolder mr-3 save-exit text-neutral-0 text-paragraph text-small-caps"
+								disabled={!email || emailHasError || loading}
+								displayType={null}
+								onClick={onClickSaveAndExit}
+							>
+								Save & Exit
+							</ClayButton>
+						)}
+					</div>
 				</div>
 
 				<ProgressSavedModal

@@ -10,20 +10,35 @@
 
 		.step-list {
 			.step-item {
-				color: $color-neutral-white !important;
+				font-size: 18px;
 
-				i {
-					circle {
-						stroke: $color-neutral-white;
+				&.completed,
+				&.partially,
+				&.selected {
+					color: $color-neutral-white !important;
+
+					svg {
+						fill: $color-neutral-white;
+					}
+
+					i {
+						circle {
+							stroke: $color-neutral-white;
+						}
+					}
+
+					i::after {
+						background-color: $color-neutral-white !important;
 					}
 				}
 
-				i::after {
-					background-color: $color-neutral-white !important;
-				}
-
-				svg {
-					fill: $color-neutral-white;
+				&.completed {
+					div {
+						background-color: $color-neutral-white !important;
+					}
+					svg {
+						fill: $color-brand-primary-darken-5 !important;
+					}
 				}
 			}
 		}

@@ -1,6 +1,7 @@
 @component-name = "portal-collaboration"
 definition {
 
+	property portal.acceptance = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Wiki";
@@ -168,8 +169,6 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanDeleteNode {
-		property portal.acceptance = "true";
-
 		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
 
 		JSONWiki.addWikiNode(
@@ -201,8 +200,6 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanEditFrontPage {
-		property portal.acceptance = "true";
-
 		WikiNavigator.openToWikiPage(
 			siteURLKey = "guest",
 			wikiNodeName = "Main",
@@ -229,8 +226,6 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanEditNode {
-		property portal.acceptance = "true";
-
 		JSONWiki.addWikiNode(
 			groupName = "Guest",
 			wikiNodeDescription = "Wiki Node Description",

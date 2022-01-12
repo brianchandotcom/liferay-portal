@@ -1,6 +1,7 @@
 @component-name = "portal-collaboration"
 definition {
 
+	property portal.acceptance = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Wiki";
@@ -196,6 +197,8 @@ definition {
 	@priority = "3"
 	@refactordone
 	test CanViewConfiguredEmailContent {
+		property portal.acceptance = "false";
+
 		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
 
 		WikiPortlet.configureEmailCP(
@@ -213,6 +216,8 @@ definition {
 	@priority = "3"
 	@refactordone
 	test CanViewEscapedScriptFromHTML {
+		property portal.acceptance = "false";
+
 		WikiNavigator.openToWikiPage(
 			layoutURLKey = "wiki-test-page",
 			siteURLKey = "guest",

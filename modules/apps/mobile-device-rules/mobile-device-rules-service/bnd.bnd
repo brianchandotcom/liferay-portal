@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Mobile Device Rules Service
 Bundle-SymbolicName: com.liferay.mobile.device.rules.service
-Bundle-Version: 5.0.13
+Bundle-Version: 5.0.14
 Liferay-Require-SchemaVersion: 2.1.0
 Liferay-Service: true
 -dsannotations-options: inherit

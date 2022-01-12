@@ -17,6 +17,7 @@ package com.liferay.jenkins.results.parser;
 import java.io.File;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -27,6 +28,15 @@ public class PluginsExtraAppsJob extends BaseJob implements PortalTestClassJob {
 	@Override
 	public Set<String> getDistTypes() {
 		return Collections.emptySet();
+	}
+
+	@Override
+	public List<String> getJobPropertyOptions() {
+		List<String> jobPropertyOptions = super.getJobPropertyOptions();
+
+		jobPropertyOptions.add("release");
+
+		return jobPropertyOptions;
 	}
 
 	@Override

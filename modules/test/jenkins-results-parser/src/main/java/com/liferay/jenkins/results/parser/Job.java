@@ -18,6 +18,8 @@ import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.BatchTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.SegmentTestClassGroup;
 
+import java.io.File;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -55,7 +57,11 @@ public interface Job {
 
 	public Properties getJobProperties();
 
+	public List<File> getJobPropertiesFiles();
+
 	public String getJobProperty(String key);
+
+	public List<String> getJobPropertyOptions();
 
 	public String getJobURL(JenkinsMaster jenkinsMaster);
 

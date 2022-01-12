@@ -173,8 +173,32 @@ public abstract class BaseJob implements Job {
 	}
 
 	@Override
+	public List<File> getJobPropertiesFiles() {
+		return jobPropertiesFiles;
+	}
+
+	@Override
 	public String getJobProperty(String key) {
 		return _jobProperties.getProperty(key);
+	}
+
+	@Override
+	public List<String> getJobPropertyOptions() {
+		List<String> jobPropertyOptions = new ArrayList<>();
+
+		jobPropertyOptions.add(String.valueOf(getBuildProfile()));
+
+		String jobName = getJobName();
+
+		jobPropertyOptions.add(jobName);
+
+		if (jobName.contains("(")) {
+			jobPropertyOptions.add(jobName.substring(0, jobName.indexOf("(")));
+		}
+
+		jobPropertyOptions.removeAll(Collections.singleton(null));
+
+		return jobPropertyOptions;
 	}
 
 	@Override
@@ -579,7 +603,7 @@ public abstract class BaseJob implements Job {
 	protected Set<String> getSetFromString(String string) {
 		Set<String> set = new TreeSet<>();
 
-		if (string == null) {
+		if (JenkinsResultsParserUtil.isNullOrEmpty(string)) {
 			return set;
 		}
 

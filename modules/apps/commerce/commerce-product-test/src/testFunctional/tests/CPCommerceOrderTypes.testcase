@@ -292,6 +292,39 @@ definition {
 		}
 	}
 
+	@description = "Verify users can edit an order type."
+	@priority = "3"
+	test EditOrderType {
+		property portal.acceptance = "false";
+
+		task ("Given an order type") {
+			CommerceJSONOrdersAPI._addOrderType(
+				active = "true",
+				orderTypeDescription = "Test Order Type Descripiton",
+				orderTypeName = "Test Order Type");
+		}
+
+		task ("When I edit the name and description of the order type and publish it") {
+			CommerceOrders.openOrderTypesAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Test Order Type");
+
+			CommerceOrders.editOrderType(
+				orderTypeDescription = "Test Order Type Description Edit",
+				orderTypeName = "Test Order Type Edit");
+		}
+
+		task ("Then the order type name and description should be updated") {
+			Navigator.gotoBack();
+
+			CommerceNavigator.gotoEntry(entryName = "Test Order Type Edit");
+
+			CommerceOrders.assertOrderTypesEntry(
+				orderTypeDescription = "Test Order Type Description Edit",
+				orderTypeName = "Test Order Type Edit");
+		}
+	}
+
 	@description = "Verify users can select order type when creating a new order via pending orders if there are multiple order types."
 	@priority = "3"
 	test SelectOrderTypeWhenCreatingNewOrderViaPendingOrders {

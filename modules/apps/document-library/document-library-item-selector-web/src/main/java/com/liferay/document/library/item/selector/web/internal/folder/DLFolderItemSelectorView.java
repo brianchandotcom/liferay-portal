@@ -126,6 +126,12 @@ public class DLFolderItemSelectorView
 		if (repositoryId != itemSelectorCriterion.getRepositoryId()) {
 			folderId = ParamUtil.getLong(
 				(HttpServletRequest)servletRequest, "folderId");
+
+			if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+				Folder folder = _fetchFolder(folderId);
+
+				repositoryId = folder.getRepositoryId();
+			}
 		}
 
 		Group group = _getGroup(repositoryId);

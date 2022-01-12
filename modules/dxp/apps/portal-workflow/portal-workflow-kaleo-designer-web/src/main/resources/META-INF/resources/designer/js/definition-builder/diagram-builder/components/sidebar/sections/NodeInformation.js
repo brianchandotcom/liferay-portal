@@ -21,9 +21,8 @@ import SidebarPanel from '../SidebarPanel';
 import {checkIdErrors, checkLabelErrors, getUpdatedLabelItem} from './utils';
 
 export default function NodeInformation({errors, setErrors}) {
-	const {selectedLanguageId} = useContext(DefinitionBuilderContext);
+	const {elements, selectedLanguageId} = useContext(DefinitionBuilderContext);
 	const {
-		elements,
 		selectedItem,
 		selectedItemNewId,
 		setSelectedItem,
@@ -56,7 +55,9 @@ export default function NodeInformation({errors, setErrors}) {
 								? selectedLanguageId
 								: defaultLanguageId;
 
-						setSelectedItem(getUpdatedLabelItem(key, selectedItem, target));
+						setSelectedItem(
+							getUpdatedLabelItem(key, selectedItem, target)
+						);
 					}}
 					type="text"
 					value={

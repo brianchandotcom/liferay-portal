@@ -152,22 +152,11 @@ public class DBInspector {
 		throws Exception {
 
 		DatabaseMetaData databaseMetaData = _connection.getMetaData();
-		DB db = DBManagerUtil.getDB();
 
-		ResultSet resultSet = null;
-
-		if (db.getDBType() == DBType.ORACLE) {
-			resultSet = databaseMetaData.getIndexInfo(
+		try (ResultSet resultSet = databaseMetaData.getIndexInfo(
 				_connection.getCatalog(), _connection.getSchema(),
-				normalizeName(tableName, databaseMetaData), false, true);
-		}
-		else {
-			resultSet = databaseMetaData.getIndexInfo(
-				_connection.getCatalog(), _connection.getSchema(),
-				normalizeName(tableName, databaseMetaData), false, false);
-		}
+				normalizeName(tableName, databaseMetaData), false, false)) {
 
-		try {
 			while (resultSet.next()) {
 				if (Objects.equals(
 						normalizeName(indexName, databaseMetaData),
@@ -179,11 +168,6 @@ public class DBInspector {
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
-		}
-		finally {
-			if (resultSet != null) {
-				resultSet.close();
-			}
 		}
 
 		return false;

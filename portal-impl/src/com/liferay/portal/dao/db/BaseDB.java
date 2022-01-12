@@ -24,7 +24,6 @@ import com.liferay.portal.db.partition.DBPartitionUtil;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBInspector;
-import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.db.Index;
 import com.liferay.portal.kernel.dao.db.IndexMetadata;
@@ -157,7 +156,6 @@ public abstract class BaseDB implements DB {
 		Set<Index> indexes = new HashSet<>();
 
 		DatabaseMetaData databaseMetaData = connection.getMetaData();
-		DB db = DBManagerUtil.getDB();
 
 		DBInspector dbInspector = new DBInspector(connection);
 
@@ -171,18 +169,9 @@ public abstract class BaseDB implements DB {
 				String tableName = dbInspector.normalizeName(
 					tableResultSet.getString("TABLE_NAME"));
 
-				ResultSet indexResultSet = null;
+				try (ResultSet indexResultSet = databaseMetaData.getIndexInfo(
+						catalog, schema, tableName, false, false)) {
 
-				if (db.getDBType() == DBType.ORACLE) {
-					indexResultSet = databaseMetaData.getIndexInfo(
-						catalog, schema, tableName, false, true);
-				}
-				else {
-					indexResultSet = databaseMetaData.getIndexInfo(
-						catalog, schema, tableName, false, false);
-				}
-
-				try {
 					while (indexResultSet.next()) {
 						String indexName = indexResultSet.getString(
 							"INDEX_NAME");
@@ -204,11 +193,6 @@ public abstract class BaseDB implements DB {
 							"NON_UNIQUE");
 
 						indexes.add(new Index(indexName, tableName, unique));
-					}
-				}
-				finally {
-					if (indexResultSet != null) {
-						indexResultSet.close();
 					}
 				}
 			}

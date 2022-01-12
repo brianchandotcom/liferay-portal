@@ -1065,8 +1065,8 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 
 		_validateSku(cpInstance.getCPDefinitionId(), cpInstanceId, sku);
 
-		_validateReplacement(
-			cpInstance, replacementCProductId, replacementCPInstanceUuid);
+		_validateReplacementCPInstance(
+			cpInstance, replacementCPInstanceUuid, replacementCProductId);
 
 		User user = userLocalService.getUser(serviceContext.getUserId());
 
@@ -1687,6 +1687,32 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			cpInstance, serviceContext, workflowContext);
 	}
 
+	private void _checkReplacementCPInstance(
+			String cpInstanceUuid, long cProductId,
+			String replacementCPInstanceUuid, long replacementCProductId)
+		throws CPInstanceReplacementCPInstanceUuidException {
+
+		CPInstance replacementCPInstance =
+			cpInstanceLocalService.fetchCProductInstance(
+				replacementCProductId, replacementCPInstanceUuid);
+
+		if (replacementCPInstance == null) {
+			return;
+		}
+
+		if ((cProductId == replacementCPInstance.getReplacementCProductId()) &&
+			cpInstanceUuid.equals(
+				replacementCPInstance.getReplacementCPInstanceUuid())) {
+
+			throw new CPInstanceReplacementCPInstanceUuidException();
+		}
+
+		_checkReplacementCPInstance(
+			cpInstanceUuid, cProductId,
+			replacementCPInstance.getReplacementCPInstanceUuid(),
+			replacementCPInstance.getReplacementCProductId());
+	}
+
 	private void _expireApprovedSiblingCPInstances(
 			long cpDefinitionId, long siblingCPInstanceId,
 			ServiceContext serviceContext)
@@ -1923,9 +1949,9 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		return cpDefinitionOptionRelIdCPDefinitionOptionValueRelIds;
 	}
 
-	private void _validateReplacement(
-			CPInstance cpInstance, long replacementCProductId,
-			String replacementCPInstanceUuid)
+	private void _validateReplacementCPInstance(
+			CPInstance cpInstance, String replacementCPInstanceUuid,
+			long replacementCProductId)
 		throws PortalException {
 
 		CPDefinition cpDefinition = cpInstance.getCPDefinition();
@@ -1936,25 +1962,9 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			throw new CPInstanceReplacementCPInstanceUuidException();
 		}
 
-		CPInstance replacement = cpInstanceLocalService.fetchCProductInstance(
-			replacementCProductId, replacementCPInstanceUuid);
-
-		while (replacement != null) {
-			String replacementCPInstanceUuid1 =
-				replacement.getReplacementCPInstanceUuid();
-
-			if ((replacement.getReplacementCProductId() ==
-					cpDefinition.getCProductId()) &&
-				replacementCPInstanceUuid1.equals(
-					cpInstance.getCPInstanceUuid())) {
-
-				throw new CPInstanceReplacementCPInstanceUuidException();
-			}
-
-			replacement = cpInstanceLocalService.fetchCProductInstance(
-				replacement.getReplacementCProductId(),
-				replacement.getReplacementCPInstanceUuid());
-		}
+		_checkReplacementCPInstance(
+			cpInstance.getCPInstanceUuid(), cpDefinition.getCProductId(),
+			replacementCPInstanceUuid, replacementCProductId);
 	}
 
 	private void _validateSku(

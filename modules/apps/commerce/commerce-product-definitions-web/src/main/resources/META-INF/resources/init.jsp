@@ -76,6 +76,7 @@ page import="com.liferay.commerce.product.exception.CPDefinitionProductTypeNameE
 page import="com.liferay.commerce.product.exception.CPDisplayLayoutEntryException" %><%@
 page import="com.liferay.commerce.product.exception.CPDisplayLayoutLayoutUuidException" %><%@
 page import="com.liferay.commerce.product.exception.CPInstanceJsonException" %><%@
+page import="com.liferay.commerce.product.exception.CPInstanceReplacementCPInstanceUuidException" %><%@
 page import="com.liferay.commerce.product.exception.CPInstanceSkuException" %><%@
 page import="com.liferay.commerce.product.exception.DuplicateCPAttachmentFileEntryException" %><%@
 page import="com.liferay.commerce.product.exception.NoSuchCPAttachmentFileEntryException" %><%@

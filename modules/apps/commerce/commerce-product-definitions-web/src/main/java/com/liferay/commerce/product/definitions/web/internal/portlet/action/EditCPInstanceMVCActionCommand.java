@@ -121,12 +121,11 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 				throwable instanceof
 					CPDefinitionIgnoreSKUCombinationsException ||
 				throwable instanceof CPInstanceJsonException ||
-				throwable instanceof CPInstanceSkuException ||
 				throwable instanceof
 					CPInstanceReplacementCPInstanceUuidException ||
+				throwable instanceof CPInstanceSkuException ||
 				throwable instanceof
-					NoSuchSkuContributorCPDefinitionOptionRelException
-			) {
+					NoSuchSkuContributorCPDefinitionOptionRelException) {
 
 				hideDefaultErrorMessage(actionRequest);
 				hideDefaultSuccessMessage(actionRequest);

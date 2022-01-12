@@ -75,7 +75,6 @@ definition {
 		CalendarNavigator.gotoView(viewType = "Agenda");
 
 		CalendarPage.viewAgendaTableIsDisplayed();
-		
 	}
 
 	@description = "LRQA-72024 - Verify that the calendar has Day view"

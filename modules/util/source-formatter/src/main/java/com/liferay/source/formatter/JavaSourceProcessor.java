@@ -176,8 +176,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		String[] excludes = {
 			"**/*_IW.java", "**/counter/service/**",
 			"**/model/impl/*Model.java", "**/model/impl/*ModelImpl.java",
-			"**/portal/service/**", "**/portal-client/**",
-			"**/portal-web/test/**/*Test.java", "**/test/*-generated/**"
+			"**/portal/service/**", "**/portal-web/test/**/*Test.java",
+			"**/test/*-generated/**"
 		};
 
 		for (String directoryName : getPluginsInsideModulesDirectoryNames()) {
@@ -188,7 +188,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		fileNames.addAll(getFileNames(excludes, includes));
 
 		excludes = new String[] {
-			"**/portal-client/**", "**/tools/ext_tmpl/**", "**/*_IW.java",
+			"**/tools/ext_tmpl/**", "**/*_IW.java",
 			"**/test/**/*PersistenceTest.java"
 		};
 		includes = new String[] {

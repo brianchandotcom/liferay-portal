@@ -376,7 +376,6 @@
 
 		<antcall target="zip-jboss" />
 		<antcall target="zip-patching-tool" />
-		<antcall target="zip-portal-client" />
 		<antcall target="zip-portal-dependencies" />
 		<antcall target="zip-sql" />
 		<antcall target="zip-src" />
@@ -508,8 +507,6 @@ release was successful.</echo>
 				<waitfor>
 					<http url="http://localhost:8080" />
 				</waitfor>
-
-				<ant dir="portal-client" inheritAll="false" target="build-client" />
 
 				<if>
 					<os family="windows" />
@@ -2622,25 +2619,6 @@ plugins.includes=</echo>
 				<delete dir="${tstamp.value}" />
 			</then>
 		</if>
-	</target>
-
-	<target name="zip-portal-client">
-		<delete failonerror="false" file="dist/liferay-portal-client-${lp.version}.zip" />
-
-		<zip
-			destfile="dist/liferay-portal-client-${lp.version}.zip"
-		>
-			<zipfileset
-				dir="lib/development"
-				includes="activation.jar,mail.jar"
-				prefix="liferay-portal-client-${lp.version}"
-			/>
-			<zipfileset
-				dir="lib/portal"
-				includes="axis.jar,commons-discovery.jar,commons-logging.jar,jaxrpc.jar,portal-client.jar,saaj-api.jar,saaj-impl.jar,wsdl4j.jar"
-				prefix="liferay-portal-client-${lp.version}"
-			/>
-		</zip>
 	</target>
 
 	<target name="zip-portal-dependencies">

@@ -673,15 +673,15 @@ definition {
 
 		task ("Add a web content") {
 			JSONWebcontent.addWebContent(
-				content = "Webcontent Content",
+				content = "Web Content Content",
 				groupName = "Test Site Name",
-				title = "Webcontent Title");
+				title = "Web Content Title");
 		}
 
 		task ("Save web content as draft") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-			WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title");
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
 			WebContent.editCP(
 				saveAsDraft = "true",
@@ -712,7 +712,7 @@ definition {
 		task ("View the content is in published version") {
 			AssertTextEquals(
 				locator1 = "PageEditor#CONTENT_PAGE_WEB_CONTENT_CONTENT",
-				value1 = "WC WebContent Content");
+				value1 = "Web Content Content");
 		}
 	}
 

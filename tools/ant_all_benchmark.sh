@@ -55,6 +55,11 @@ function main {
 }
 
 function run_ant_all {
+	if [ -e gradlew ]
+	then
+		./gradlew --stop
+	fi
+
 	SECONDS=0;
 
 	ant -Dmirrors.hostname= all > /dev/null

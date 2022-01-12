@@ -373,18 +373,18 @@ public class ClassicDisplayTag extends IncludeTag {
 			).put(
 				"dataProviderKey", _dataProviderKey
 			).put(
-				"formId", _validateDataAttribute(_formId)
+				"formId", _toNullOrObject(_formId)
 			).put(
-				"formName", _validateDataAttribute(_formName)
+				"formName", _toNullOrObject(_formName)
 			).put(
 				"id", _id
 			).put(
 				"namespace", _namespace
 			).put(
-				"nestedItemsKey", _validateDataAttribute(_nestedItemsKey)
+				"nestedItemsKey", _toNullOrObject(_nestedItemsKey)
 			).put(
 				"nestedItemsReferenceKey",
-				_validateDataAttribute(_nestedItemsReferenceKey)
+				_toNullOrObject(_nestedItemsReferenceKey)
 			).put(
 				"pagination",
 				HashMapBuilder.<String, Object>put(
@@ -401,9 +401,9 @@ public class ClassicDisplayTag extends IncludeTag {
 			).put(
 				"selectedItems", _selectedItems
 			).put(
-				"selectedItemsKey", _validateDataAttribute(_selectedItemsKey)
+				"selectedItemsKey", _toNullOrObject(_selectedItemsKey)
 			).put(
-				"selectionType", _validateDataAttribute(_selectionType)
+				"selectionType", _toNullOrObject(_selectionType)
 			).put(
 				"showManagementBar", _showManagementBar
 			).put(
@@ -413,7 +413,7 @@ public class ClassicDisplayTag extends IncludeTag {
 			).put(
 				"sorting", _fdsSortItemList
 			).put(
-				"style", _validateDataAttribute(_style)
+				"style", _toNullOrObject(_style)
 			).put(
 				"views", _dataSetDisplayViewsContext
 			).build());
@@ -476,7 +476,7 @@ public class ClassicDisplayTag extends IncludeTag {
 			fdsPaginationEntry);
 	}
 
-	private Object _validateDataAttribute(Object object) {
+	private Object _toNullOrObject(Object object) {
 		if (Validator.isNull(object)) {
 			return null;
 		}

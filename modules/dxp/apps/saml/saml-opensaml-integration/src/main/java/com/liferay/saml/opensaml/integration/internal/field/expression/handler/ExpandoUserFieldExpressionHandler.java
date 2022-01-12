@@ -235,11 +235,10 @@ public class ExpandoUserFieldExpressionHandler
 	@Override
 	public List<String> getValidFieldExpressions() {
 		List<String> validExpressions = new ArrayList<>();
-		long companyId = CompanyThreadLocal.getCompanyId();
 
 		for (ExpandoColumn column :
 				_expandoColumnLocalService.getDefaultTableColumns(
-					companyId, User.class.getName())) {
+					CompanyThreadLocal.getCompanyId(), User.class.getName())) {
 
 			validExpressions.add(column.getName());
 		}

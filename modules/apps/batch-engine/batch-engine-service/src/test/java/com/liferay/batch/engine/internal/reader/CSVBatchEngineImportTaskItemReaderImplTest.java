@@ -22,9 +22,11 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.Serializable;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -338,8 +340,12 @@ public class CSVBatchEngineImportTaskItemReaderImplTest
 				String[] cellNames, String delimiter, Object[][] rowValues)
 		throws IOException {
 
+		Map<String, Serializable> parameters = new HashMapBuilder<>();
+
+		parameters.put("delimiter", (Serializable)StringPool.COMMA);
+
 		return new CSVBatchEngineImportTaskItemReaderImpl(
-			delimiter,
+			delimiter, parameters,
 			new ByteArrayInputStream(
 				_getContent(cellNames, delimiter, rowValues)));
 	}

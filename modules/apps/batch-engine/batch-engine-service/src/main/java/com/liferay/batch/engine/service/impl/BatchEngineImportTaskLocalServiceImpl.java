@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
@@ -76,10 +77,13 @@ public class BatchEngineImportTaskLocalServiceImpl
 		batchEngineImportTask.setOperation(operation);
 
 		if ((parameters != null) && !parameters.isEmpty()) {
-			_validateParameters(parameters);
-			batchEngineImportTask.setParameters(parameters);
+			_validateDelimiter(
+				(String)parameters.getOrDefault("delimiter", null));
+			_validateEnclosingCharacter(
+				(String)parameters.getOrDefault("enclosingCharacter", null));
 		}
 
+		batchEngineImportTask.setParameters(parameters);
 		batchEngineImportTask.setTaskItemDelegateName(taskItemDelegateName);
 
 		return batchEngineImportTaskPersistence.update(batchEngineImportTask);
@@ -115,38 +119,33 @@ public class BatchEngineImportTaskLocalServiceImpl
 		return batchEngineImportTaskPersistence.countByCompanyId(companyId);
 	}
 
-	private void _validateParameters(Map<String, Serializable> parameters)
+	private void _validateDelimiter(String delimiter)
 		throws BatchEngineImportTaskParametersException {
 
-		String delimiter = (String)parameters.getOrDefault(
-			"delimiter", (Serializable)StringPool.COMMA);
-
-		if (delimiter.length() > 1) {
-			throw new BatchEngineImportTaskParametersException(
-				"Delimiter cannot be more than one character");
+		if (Validator.isNull(delimiter)) {
+			return;
 		}
 
-		if (delimiter.equals(StringPool.APOSTROPHE)) {
+		if (_VALID_ENCLOSING_CHARACTERS.contains(delimiter)) {
 			throw new BatchEngineImportTaskParametersException(
-				"Apostrophe (') cannot be used as delimiter");
-		}
-
-		if (delimiter.equals(StringPool.QUOTE)) {
-			throw new BatchEngineImportTaskParametersException(
-				"Quote (\") cannot be used as delimiter");
-		}
-
-		String enclosingCharacter = (String)parameters.getOrDefault(
-			"enclosingCharacter", null);
-
-		if ((enclosingCharacter != null) &&
-			!enclosingCharacter.equals(StringPool.QUOTE) &&
-			!enclosingCharacter.equals(StringPool.APOSTROPHE)) {
-
-			throw new BatchEngineImportTaskParametersException(
-				"Only Quote(\") or Apostrophe(') can be used as" +
-					" enclosing character");
+				"Illegal delimiter value " + delimiter);
 		}
 	}
+
+	private void _validateEnclosingCharacter(String enclosingCharacter)
+		throws BatchEngineImportTaskParametersException {
+
+		if (Validator.isNull(enclosingCharacter)) {
+			return;
+		}
+
+		if (!_VALID_ENCLOSING_CHARACTERS.contains(enclosingCharacter)) {
+			throw new BatchEngineImportTaskParametersException(
+				"Illegal enclosing character value " + enclosingCharacter);
+		}
+	}
+
+	private static final String _VALID_ENCLOSING_CHARACTERS =
+		StringPool.APOSTROPHE + StringPool.QUOTE;
 
 }

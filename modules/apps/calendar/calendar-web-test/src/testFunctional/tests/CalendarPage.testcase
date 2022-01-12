@@ -82,7 +82,6 @@ definition {
 		CalendarNavigator.gotoView(viewType = "Day");
 
 		CalendarPage.viewDayTableIsDisplayed();
-		
 	}
 
 	@description = "LRQA-72024 - Verify that the calendar has Week view"

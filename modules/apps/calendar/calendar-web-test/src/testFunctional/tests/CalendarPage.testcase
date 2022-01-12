@@ -64,8 +64,6 @@ definition {
 		CalendarNavigator.gotoView(viewType = "Month");
 
 		CalendarPage.viewMonthTableIsDisplayed();
-
-		
 	}
 
 	@description = "LRQA-72024 - Verify that the calendar has Agenda view"

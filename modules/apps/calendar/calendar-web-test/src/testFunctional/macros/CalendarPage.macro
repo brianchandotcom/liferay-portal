@@ -12,5 +12,4 @@ definition {
 		AssertElementPresent(locator1 = "Calendar#SCHEDULER_VIEW_MONTH");
 	}
 
-	
 }

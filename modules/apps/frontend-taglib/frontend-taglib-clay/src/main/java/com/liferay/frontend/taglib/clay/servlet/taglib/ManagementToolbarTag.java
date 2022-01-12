@@ -1068,7 +1068,7 @@ public class ManagementToolbarTag extends BaseContainerTag {
 				linkTag = new LinkTag();
 
 				linkTag.setCssClass(
-					"nav-btn btn-content-spaced d-md-flex d-none btn btn-primary");
+					"nav-btn d-md-flex d-none pl-4 pr-4 btn btn-primary");
 				linkTag.setLabel(LanguageUtil.get(resourceBundle, "new"));
 
 				linkTag.doTag(pageContext);

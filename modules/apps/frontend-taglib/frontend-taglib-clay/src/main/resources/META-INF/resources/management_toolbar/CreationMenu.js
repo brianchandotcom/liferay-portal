@@ -21,8 +21,6 @@ import getDataAttributes from '../get_data_attributes';
 import FeatureFlagContext from './FeatureFlagContext';
 import LinkOrButton from './LinkOrButton';
 
-import './ManagementToolbar.scss';
-
 const CreationMenu = ({
 	maxPrimaryItems,
 	maxSecondaryItems,
@@ -176,6 +174,7 @@ const CreationMenu = ({
 								className="nav-btn"
 								symbol="plus"
 								title={getPlusIconLabel()}
+								wide
 							>
 								{getPlusIconLabel()}
 							</LinkOrButton>
@@ -254,6 +253,7 @@ const CreationMenu = ({
 						}}
 						symbol="plus"
 						title={getPlusIconLabel()}
+						wide
 					>
 						{Liferay.Language.get('new')}
 					</LinkOrButton>

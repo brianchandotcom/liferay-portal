@@ -21,11 +21,14 @@ import React, {useContext} from 'react';
 import FeatureFlagContext from './FeatureFlagContext';
 
 const LinkOrButton = ({
+	ariaLabel,
 	children,
 	className,
 	disabled,
 	href,
 	symbol,
+	title,
+	wide,
 	...otherProps
 }) => {
 	const {showDesignImprovements} = useContext(FeatureFlagContext);
@@ -35,13 +38,15 @@ const LinkOrButton = ({
 	return (
 		<>
 			<Wrapper
+				aria-label={symbol && ariaLabel}
 				block={otherProps.button?.block}
 				className={classNames(className, {
-					'btn-content-spaced': !symbol,
 					'd-md-none': showDesignImprovements && responsive,
+					'pl-4 pr-4': wide && !symbol,
 				})}
 				href={href}
 				{...otherProps}
+				title={symbol && title}
 			>
 				{symbol ? <ClayIcon symbol={symbol} /> : children}
 			</Wrapper>
@@ -49,7 +54,9 @@ const LinkOrButton = ({
 			{showDesignImprovements && responsive && (
 				<Wrapper
 					block={otherProps.button?.block}
-					className={classNames(className, 'btn-content-spaced d-md-flex d-none')}
+					className={classNames(className, 'd-md-flex d-none', {
+						'pl-4 pr-4': wide,
+					})}
 					href={href}
 					{...otherProps}
 				>

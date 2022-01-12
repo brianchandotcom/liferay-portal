@@ -122,6 +122,9 @@ function getBatchSummaryElement(batch) {
 
 	infoBoxElement.setAttribute("class", "info-box");
 
+	infoBoxElement.appendChild(createInfoItemElement("Job Name", data.job_name));
+	infoBoxElement.appendChild(createInfoItemElement("Test Suite Name", data.test_suite_name));
+	infoBoxElement.appendChild(createInfoItemElement("Build Profile", data.build_profile));
 	infoBoxElement.appendChild(createInfoItemElement("Batch Name", batch.batch_name));
 
 	let batchPropertiesElements = getBatchPropertiesElements(batch.batch_properties);
@@ -179,7 +182,20 @@ function getBatchPropertiesElements(batch_properties) {
 
 		for (let [name, value] of Object.entries(properties)) {
 			if (value.includes(",")) {
-				value = "&bsol;<br />&nbsp;&nbsp;" + value.replaceAll(",", ",&bsol;<br />&nbsp;&nbsp;");
+				value = "\\<br />&nbsp;&nbsp;" + value.replaceAll(",", ",\\<br />&nbsp;&nbsp;");
+			}
+			else if (name.includes("query")) {
+				var pqlQueryLines = getPQLQueryLines(value, 1);
+
+				value = "\\<br />";
+
+				for (var i = 0; i < pqlQueryLines.length; i++) {
+					value += pqlQueryLines[i];
+
+					if (i != (pqlQueryLines.length - 1)) {
+						value += "\\<br />";
+					}
+				}
 			}
 
 			lines.push(name + "=" + value);
@@ -193,14 +209,30 @@ function getBatchPropertiesElements(batch_properties) {
 	return batchPropertiesElements;
 }
 
-function getPQLQueryLines(pql_query) {
+function getPQLQueryLines(pql_query, balance) {
 	if (pql_query == undefined) {
 		return undefined;
 	}
 
-	var balance = 0;
+	if (balance == undefined) {
+		balance = 0;
+	}
+
+	var lines = [];
+
+	if (!pql_query.includes("(") || !pql_query.includes(")")) {
+		var tab = "";
+
+		for (var i = 0; i < balance; i++) {
+			tab += "&nbsp;&nbsp;";
+		}
+
+		lines.push(tab + pql_query);
+
+		return lines;
+	}
+
 	var line = "";
-	var lines = []
 
 	for (var i = 0; i < pql_query.length; i++) {
 		var current = pql_query[i];
@@ -267,9 +299,11 @@ function getTestClassElement(test_class) {
 }
 
 function initialize() {
+	updateBatchSummaries();
+
 	updateJobSummary();
 
-	updateBatchSummaries();
+	updateSmokeBatchSummaries();
 }
 
 function updateBatchSummaries() {
@@ -288,18 +322,43 @@ function updateJobSummary() {
 	infoBoxElement.appendChild(createInfoItemElement("Job Name", data.job_name));
 	infoBoxElement.appendChild(createInfoItemElement("Test Suite Name", data.test_suite_name));
 	infoBoxElement.appendChild(createInfoItemElement("Build Profile", data.build_profile));
-	infoBoxElement.appendChild(createInfoItemElement("Current Branch Name", data.branch.current_branch_name));
-	infoBoxElement.appendChild(createInfoItemElement("Current Branch SHA", data.branch.current_branch_sha.substring(0, 7)));
 
-	if (data.job_name.includes("pullrequest")) {
-		infoBoxElement.appendChild(createInfoItemElement("Upstream Branch Name", data.branch.upstream_branch_name));
-		infoBoxElement.appendChild(createInfoItemElement("Upstream Branch SHA", data.branch.upstream_branch_sha.substring(0, 7)));
+	if (data.branch != undefined) {
+		infoBoxElement.appendChild(createInfoItemElement("Current Branch Name", data.branch.current_branch_name));
+		infoBoxElement.appendChild(createInfoItemElement("Current Branch SHA", data.branch.current_branch_sha.substring(0, 7)));
 
-		infoBoxElement.appendChild(createInfoItemElement("Merge Branch SHA", data.branch.merge_branch_sha.substring(0, 7)));
+		if (data.job_name.includes("pullrequest")) {
+			infoBoxElement.appendChild(createInfoItemElement("Upstream Branch Name", data.branch.upstream_branch_name));
+			infoBoxElement.appendChild(createInfoItemElement("Upstream Branch SHA", data.branch.upstream_branch_sha.substring(0, 7)));
 
-		let branch_sha_range = data.branch.merge_branch_sha.substring(0, 7) + "..." + data.branch.current_branch_sha.substring(0, 7);
+			infoBoxElement.appendChild(createInfoItemElement("Merge Branch SHA", data.branch.merge_branch_sha.substring(0, 7)));
 
-		infoBoxElement.appendChild(createInfoItemElement("Modified Files (" + branch_sha_range + ")", data.branch.modified_files));
-		infoBoxElement.appendChild(createInfoItemElement("Modified Modules (" + branch_sha_range + ")", data.branch.modified_modules));
+			let branch_sha_range = data.branch.merge_branch_sha.substring(0, 7) + "..." + data.branch.current_branch_sha.substring(0, 7);
+
+			infoBoxElement.appendChild(createInfoItemElement("Modified Files (" + branch_sha_range + ")", data.branch.modified_files));
+			infoBoxElement.appendChild(createInfoItemElement("Modified Modules (" + branch_sha_range + ")", data.branch.modified_modules));
+		}
 	}
+
+	let batchPropertiesElements = getBatchPropertiesElements(data.batch_properties);
+
+	for (var i = 0; i < batchPropertiesElements.length; i++) {
+		infoBoxElement.appendChild(batchPropertiesElements[i]);
+	}
+}
+
+function updateSmokeBatchSummaries() {
+	let smokeBatchSummariesElement = document.getElementById("smokeBatchSummaries");
+
+	if ((data.smoke_batches == undefined) || (data.smoke_batches.length == 0)) {
+		return;
+	}
+
+	for (var i = 0; i < data.smoke_batches.length; i++) {
+		smokeBatchSummariesElement.appendChild(getBatchElement(data.smoke_batches[i]));
+	}
+
+	let smokeBatchSummaryElement = document.getElementById("smokeBatchSummary");
+
+	smokeBatchSummaryElement.removeAttribute("hidden");
 }

@@ -81,6 +81,7 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="listTypeDefinitionId" type="long" />
 		<field name="objectDefinitionId" type="long" />
+		<field name="businessType" type="String" />
 		<field name="DBColumnName" type="String" />
 		<field name="DBTableName" type="String" />
 		<field name="indexed" type="boolean" />

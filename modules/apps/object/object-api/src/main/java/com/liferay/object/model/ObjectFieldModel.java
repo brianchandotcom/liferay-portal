@@ -237,6 +237,21 @@ public interface ObjectFieldModel
 	public void setObjectDefinitionId(long objectDefinitionId);
 
 	/**
+	 * Returns the business type of this object field.
+	 *
+	 * @return the business type of this object field
+	 */
+	@AutoEscape
+	public String getBusinessType();
+
+	/**
+	 * Sets the business type of this object field.
+	 *
+	 * @param businessType the business type of this object field
+	 */
+	public void setBusinessType(String businessType);
+
+	/**
 	 * Returns the db column name of this object field.
 	 *
 	 * @return the db column name of this object field

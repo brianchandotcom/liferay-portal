@@ -56,6 +56,8 @@ public class ObjectFieldTable extends BaseTable<ObjectFieldTable> {
 		createColumn(
 			"objectDefinitionId", Long.class, Types.BIGINT,
 			Column.FLAG_DEFAULT);
+	public final Column<ObjectFieldTable, String> businessType = createColumn(
+		"businessType", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<ObjectFieldTable, String> dbColumnName = createColumn(
 		"dbColumnName", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<ObjectFieldTable, String> dbTableName = createColumn(

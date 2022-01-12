@@ -68,10 +68,10 @@ import java.util.Map;
 public class ObjectFieldServiceSoap {
 
 	public static com.liferay.object.model.ObjectFieldSoap addCustomObjectField(
-			long listTypeDefinitionId, long objectDefinitionId, boolean indexed,
-			boolean indexedAsKeyword, String indexedLanguageId,
-			String[] labelMapLanguageIds, String[] labelMapValues, String name,
-			boolean required, String type)
+			long listTypeDefinitionId, long objectDefinitionId,
+			String businessType, boolean indexed, boolean indexedAsKeyword,
+			String indexedLanguageId, String[] labelMapLanguageIds,
+			String[] labelMapValues, String name, boolean required, String type)
 		throws RemoteException {
 
 		try {
@@ -80,9 +80,9 @@ public class ObjectFieldServiceSoap {
 
 			com.liferay.object.model.ObjectField returnValue =
 				ObjectFieldServiceUtil.addCustomObjectField(
-					listTypeDefinitionId, objectDefinitionId, indexed,
-					indexedAsKeyword, indexedLanguageId, labelMap, name,
-					required, type);
+					listTypeDefinitionId, objectDefinitionId, businessType,
+					indexed, indexedAsKeyword, indexedLanguageId, labelMap,
+					name, required, type);
 
 			return com.liferay.object.model.ObjectFieldSoap.toSoapModel(
 				returnValue);
@@ -132,10 +132,11 @@ public class ObjectFieldServiceSoap {
 
 	public static com.liferay.object.model.ObjectFieldSoap
 			updateCustomObjectField(
-				long objectFieldId, long listTypeDefinitionId, boolean indexed,
-				boolean indexedAsKeyword, String indexedLanguageId,
-				String[] labelMapLanguageIds, String[] labelMapValues,
-				String name, boolean required, String type)
+				long objectFieldId, long listTypeDefinitionId,
+				String businessType, boolean indexed, boolean indexedAsKeyword,
+				String indexedLanguageId, String[] labelMapLanguageIds,
+				String[] labelMapValues, String name, boolean required,
+				String type)
 		throws RemoteException {
 
 		try {
@@ -144,7 +145,7 @@ public class ObjectFieldServiceSoap {
 
 			com.liferay.object.model.ObjectField returnValue =
 				ObjectFieldServiceUtil.updateCustomObjectField(
-					objectFieldId, listTypeDefinitionId, indexed,
+					objectFieldId, listTypeDefinitionId, businessType, indexed,
 					indexedAsKeyword, indexedLanguageId, labelMap, name,
 					required, type);
 

@@ -40,15 +40,16 @@ public class ObjectFieldLocalServiceWrapper
 	@Override
 	public com.liferay.object.model.ObjectField addCustomObjectField(
 			long userId, long listTypeDefinitionId, long objectDefinitionId,
-			boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
+			String businessType, boolean indexed, boolean indexedAsKeyword,
+			String indexedLanguageId,
 			java.util.Map<java.util.Locale, String> labelMap, String name,
 			boolean required, String type)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectFieldLocalService.addCustomObjectField(
-			userId, listTypeDefinitionId, objectDefinitionId, indexed,
-			indexedAsKeyword, indexedLanguageId, labelMap, name, required,
-			type);
+			userId, listTypeDefinitionId, objectDefinitionId, businessType,
+			indexed, indexedAsKeyword, indexedLanguageId, labelMap, name,
+			required, type);
 	}
 
 	/**
@@ -70,15 +71,17 @@ public class ObjectFieldLocalServiceWrapper
 
 	@Override
 	public com.liferay.object.model.ObjectField addSystemObjectField(
-			long userId, long objectDefinitionId, String dbColumnName,
-			boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
+			long userId, long objectDefinitionId, String businessType,
+			String dbColumnName, boolean indexed, boolean indexedAsKeyword,
+			String indexedLanguageId,
 			java.util.Map<java.util.Locale, String> labelMap, String name,
 			boolean required, String type)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectFieldLocalService.addSystemObjectField(
-			userId, objectDefinitionId, dbColumnName, indexed, indexedAsKeyword,
-			indexedLanguageId, labelMap, name, required, type);
+			userId, objectDefinitionId, businessType, dbColumnName, indexed,
+			indexedAsKeyword, indexedLanguageId, labelMap, name, required,
+			type);
 	}
 
 	/**
@@ -431,15 +434,16 @@ public class ObjectFieldLocalServiceWrapper
 
 	@Override
 	public com.liferay.object.model.ObjectField updateCustomObjectField(
-			long objectFieldId, long listTypeDefinitionId, boolean indexed,
-			boolean indexedAsKeyword, String indexedLanguageId,
+			long objectFieldId, long listTypeDefinitionId, String businessType,
+			boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
 			java.util.Map<java.util.Locale, String> labelMap, String name,
 			boolean required, String type)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectFieldLocalService.updateCustomObjectField(
-			objectFieldId, listTypeDefinitionId, indexed, indexedAsKeyword,
-			indexedLanguageId, labelMap, name, required, type);
+			objectFieldId, listTypeDefinitionId, businessType, indexed,
+			indexedAsKeyword, indexedLanguageId, labelMap, name, required,
+			type);
 	}
 
 	/**

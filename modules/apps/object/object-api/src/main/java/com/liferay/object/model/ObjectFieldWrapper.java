@@ -53,6 +53,7 @@ public class ObjectFieldWrapper
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("listTypeDefinitionId", getListTypeDefinitionId());
 		attributes.put("objectDefinitionId", getObjectDefinitionId());
+		attributes.put("businessType", getBusinessType());
 		attributes.put("dbColumnName", getDBColumnName());
 		attributes.put("dbTableName", getDBTableName());
 		attributes.put("indexed", isIndexed());
@@ -130,6 +131,12 @@ public class ObjectFieldWrapper
 			setObjectDefinitionId(objectDefinitionId);
 		}
 
+		String businessType = (String)attributes.get("businessType");
+
+		if (businessType != null) {
+			setBusinessType(businessType);
+		}
+
 		String dbColumnName = (String)attributes.get("dbColumnName");
 
 		if (dbColumnName != null) {
@@ -199,6 +206,16 @@ public class ObjectFieldWrapper
 	@Override
 	public String[] getAvailableLanguageIds() {
 		return model.getAvailableLanguageIds();
+	}
+
+	/**
+	 * Returns the business type of this object field.
+	 *
+	 * @return the business type of this object field
+	 */
+	@Override
+	public String getBusinessType() {
+		return model.getBusinessType();
 	}
 
 	/**
@@ -540,6 +557,16 @@ public class ObjectFieldWrapper
 		throws com.liferay.portal.kernel.exception.LocaleException {
 
 		model.prepareLocalizedFieldsForImport(defaultImportLocale);
+	}
+
+	/**
+	 * Sets the business type of this object field.
+	 *
+	 * @param businessType the business type of this object field
+	 */
+	@Override
+	public void setBusinessType(String businessType) {
+		model.setBusinessType(businessType);
 	}
 
 	/**

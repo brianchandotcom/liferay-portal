@@ -39,15 +39,16 @@ public class ObjectFieldServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.object.service.impl.ObjectFieldServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static ObjectField addCustomObjectField(
-			long listTypeDefinitionId, long objectDefinitionId, boolean indexed,
-			boolean indexedAsKeyword, String indexedLanguageId,
-			Map<java.util.Locale, String> labelMap, String name,
-			boolean required, String type)
+			long listTypeDefinitionId, long objectDefinitionId,
+			String businessType, boolean indexed, boolean indexedAsKeyword,
+			String indexedLanguageId, Map<java.util.Locale, String> labelMap,
+			String name, boolean required, String type)
 		throws PortalException {
 
 		return getService().addCustomObjectField(
-			listTypeDefinitionId, objectDefinitionId, indexed, indexedAsKeyword,
-			indexedLanguageId, labelMap, name, required, type);
+			listTypeDefinitionId, objectDefinitionId, businessType, indexed,
+			indexedAsKeyword, indexedLanguageId, labelMap, name, required,
+			type);
 	}
 
 	public static ObjectField deleteObjectField(long objectFieldId)
@@ -72,15 +73,16 @@ public class ObjectFieldServiceUtil {
 	}
 
 	public static ObjectField updateCustomObjectField(
-			long objectFieldId, long listTypeDefinitionId, boolean indexed,
-			boolean indexedAsKeyword, String indexedLanguageId,
+			long objectFieldId, long listTypeDefinitionId, String businessType,
+			boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
 			Map<java.util.Locale, String> labelMap, String name,
 			boolean required, String type)
 		throws PortalException {
 
 		return getService().updateCustomObjectField(
-			objectFieldId, listTypeDefinitionId, indexed, indexedAsKeyword,
-			indexedLanguageId, labelMap, name, required, type);
+			objectFieldId, listTypeDefinitionId, businessType, indexed,
+			indexedAsKeyword, indexedLanguageId, labelMap, name, required,
+			type);
 	}
 
 	public static ObjectFieldService getService() {

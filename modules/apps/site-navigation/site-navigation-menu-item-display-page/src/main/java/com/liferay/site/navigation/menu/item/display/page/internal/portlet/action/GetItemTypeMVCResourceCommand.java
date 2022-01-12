@@ -14,16 +14,22 @@
 
 package com.liferay.site.navigation.menu.item.display.page.internal.portlet.action;
 
+import com.liferay.info.field.InfoField;
+import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.InfoItemClassDetails;
+import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemFormVariation;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemDetailsProvider;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
+import com.liferay.layout.display.page.LayoutDisplayPageInfoItemFieldValuesProvider;
+import com.liferay.layout.display.page.LayoutDisplayPageInfoItemFieldValuesProviderTracker;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -39,6 +45,10 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.navigation.admin.constants.SiteNavigationAdminPortletKeys;
+
+import java.util.Collection;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -87,6 +97,10 @@ public class GetItemTypeMVCResourceCommand extends BaseMVCResourceCommand {
 				jsonObject.put("itemSubtype", itemSubtype);
 			}
 
+			jsonObject.put(
+				"data",
+				_getDetailsJSONArray(classNameId, classPK, themeDisplay));
+
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse, jsonObject);
 		}
@@ -101,6 +115,43 @@ public class GetItemTypeMVCResourceCommand extends BaseMVCResourceCommand {
 						themeDisplay.getRequest(),
 						"an-unexpected-error-occurred")));
 		}
+	}
+
+	private JSONArray _getDetailsJSONArray(
+			long classNameId, long classPK, ThemeDisplay themeDisplay)
+		throws Exception {
+
+		LayoutDisplayPageInfoItemFieldValuesProvider
+			layoutDisplayPageInfoItemFieldValuesProvider =
+				_layoutDisplayPageInfoItemFieldValuesProviderTracker.
+					getLayoutDisplayPageInfoItemFieldValuesProvider(
+						_portal.getClassName(classNameId));
+
+		if (layoutDisplayPageInfoItemFieldValuesProvider == null) {
+			return JSONFactoryUtil.createJSONArray();
+		}
+
+		InfoItemFieldValues infoItemFieldValues =
+			layoutDisplayPageInfoItemFieldValuesProvider.getInfoItemFieldValues(
+				classPK);
+
+		Collection<InfoFieldValue<Object>> infoFieldValues =
+			infoItemFieldValues.getInfoFieldValues();
+
+		Stream<InfoFieldValue<Object>> stream = infoFieldValues.stream();
+
+		return JSONUtil.toJSONArray(
+			stream.collect(Collectors.toList()),
+			infoFieldValue -> JSONUtil.put(
+				"title",
+				() -> {
+					InfoField infoField = infoFieldValue.getInfoField();
+
+					return infoField.getLabel(themeDisplay.getLocale());
+				}
+			).put(
+				"value", infoFieldValue.getValue(themeDisplay.getLocale())
+			));
 	}
 
 	private String _getItemSubtype(
@@ -170,6 +221,10 @@ public class GetItemTypeMVCResourceCommand extends BaseMVCResourceCommand {
 
 	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;
+
+	@Reference
+	private LayoutDisplayPageInfoItemFieldValuesProviderTracker
+		_layoutDisplayPageInfoItemFieldValuesProviderTracker;
 
 	@Reference
 	private LayoutDisplayPageProviderTracker _layoutDisplayPageProviderTracker;

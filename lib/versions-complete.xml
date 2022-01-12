@@ -6132,18 +6132,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/portal/axis-ant.jar</file-name>
-				<version>1.4</version>
-				<project-name>Axis</project-name>
-				<project-url>http://ws.apache.org/axis</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/portal/axis.jar</file-name>
 				<version>1.4.LIFERAY-PATCHED-6</version>
 				<project-name>Axis</project-name>

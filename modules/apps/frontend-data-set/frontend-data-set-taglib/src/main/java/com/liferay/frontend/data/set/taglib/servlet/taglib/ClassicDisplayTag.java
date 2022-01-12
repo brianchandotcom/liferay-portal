@@ -355,90 +355,68 @@ public class ClassicDisplayTag extends IncludeTag {
 
 		httpServletRequest.setAttribute(
 			"frontend-data-set:classic-display:data",
-			_getData(httpServletRequest));
-	}
-
-	private Map<String, Object> _getData(
-		HttpServletRequest httpServletRequest) {
-
-		Map<String, Object> data = HashMapBuilder.<String, Object>put(
-			"actionParameterName", GetterUtil.getString(_actionParameterName)
-		).put(
-			"activeViewSettings", _activeViewSettingsJSON
-		).put(
-			"apiURL", _apiURL
-		).put(
-			"appURL", _appURL
-		).put(
-			"bulkActions", _bulkActionDropdownItems
-		).put(
-			"creationMenu", _creationMenu
-		).put(
-			"currentURL", PortalUtil.getCurrentURL(httpServletRequest)
-		).put(
-			"dataProviderKey", _dataProviderKey
-		).build();
-
-		if (Validator.isNotNull(_formId)) {
-			data.put("formId", _formId);
-		}
-
-		if (Validator.isNotNull(_formName)) {
-			data.put("formName", _formName);
-		}
-
-		data.put("id", _id);
-		data.put("namespace", _namespace);
-
-		if (Validator.isNotNull(_nestedItemsKey)) {
-			data.put("nestedItemsKey", _nestedItemsKey);
-		}
-
-		if (Validator.isNotNull(_nestedItemsReferenceKey)) {
-			data.put("nestedItemsReferenceKey", _nestedItemsReferenceKey);
-		}
-
-		data.put(
-			"pagination",
 			HashMapBuilder.<String, Object>put(
-				"deltas", _fdsPaginationEntries
+				"actionParameterName",
+				GetterUtil.getString(_actionParameterName)
 			).put(
-				"initialDelta", _itemsPerPage
+				"activeViewSettings", _activeViewSettingsJSON
 			).put(
-				"initialPageNumber", _pageNumber
+				"apiURL", _apiURL
+			).put(
+				"appURL", _appURL
+			).put(
+				"bulkActions", _bulkActionDropdownItems
+			).put(
+				"creationMenu", _creationMenu
+			).put(
+				"currentURL", PortalUtil.getCurrentURL(httpServletRequest)
+			).put(
+				"dataProviderKey", _dataProviderKey
+			).put(
+				"formId", _validateDataAttribute(_formId)
+			).put(
+				"formName", _validateDataAttribute(_formName)
+			).put(
+				"id", _id
+			).put(
+				"namespace", _namespace
+			).put(
+				"nestedItemsKey", _validateDataAttribute(_nestedItemsKey)
+			).put(
+				"nestedItemsReferenceKey",
+				_validateDataAttribute(_nestedItemsReferenceKey)
+			).put(
+				"pagination",
+				HashMapBuilder.<String, Object>put(
+					"deltas", _fdsPaginationEntries
+				).put(
+					"initialDelta", _itemsPerPage
+				).put(
+					"initialPageNumber", _pageNumber
+				).build()
+			).put(
+				"portletId", _getRootPortletId(httpServletRequest)
+			).put(
+				"portletURL", _portletURL.toString()
+			).put(
+				"selectedItems", _selectedItems
+			).put(
+				"selectedItemsKey", _validateDataAttribute(_selectedItemsKey)
+			).put(
+				"selectionType", _validateDataAttribute(_selectionType)
+			).put(
+				"showManagementBar", _showManagementBar
+			).put(
+				"showPagination", _showPagination
+			).put(
+				"showSearch", _showSearch
+			).put(
+				"sorting", _fdsSortItemList
+			).put(
+				"style", _validateDataAttribute(_style)
+			).put(
+				"views", _dataSetDisplayViewsContext
 			).build());
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		data.put("portletId", portletDisplay.getRootPortletId());
-
-		data.put("portletURL", _portletURL.toString());
-		data.put("selectedItems", _selectedItems);
-
-		if (Validator.isNotNull(_selectedItemsKey)) {
-			data.put("selectedItemsKey", _selectedItemsKey);
-		}
-
-		if (Validator.isNotNull(_selectionType)) {
-			data.put("selectionType", _selectionType);
-		}
-
-		data.put("showManagementBar", _showManagementBar);
-		data.put("showPagination", _showPagination);
-		data.put("showSearch", _showSearch);
-		data.put("sorting", _fdsSortItemList);
-
-		if (Validator.isNotNull(_style)) {
-			data.put("style", _style);
-		}
-
-		data.put("views", _dataSetDisplayViewsContext);
-
-		return data;
 	}
 
 	private List<FDSPaginationEntry> _getFDSPaginationEntries() {
@@ -453,6 +431,16 @@ public class ClassicDisplayTag extends IncludeTag {
 		}
 
 		return fdsPaginationEntries;
+	}
+
+	private String _getRootPortletId(HttpServletRequest httpServletRequest) {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		return portletDisplay.getRootPortletId();
 	}
 
 	private void _setActiveViewSettingsJSON() {
@@ -486,6 +474,14 @@ public class ClassicDisplayTag extends IncludeTag {
 
 		_paginationSelectedEntry = _fdsPaginationEntries.indexOf(
 			fdsPaginationEntry);
+	}
+
+	private Object _validateDataAttribute(Object object) {
+		if (Validator.isNull(object)) {
+			return null;
+		}
+
+		return object;
 	}
 
 	private static final String _PAGE = "/classic_display/page.jsp";

@@ -22,16 +22,18 @@ export function useTriggerContext() {
 		state: {selectedTrigger},
 	} = useContext(AppContext);
 
-	const isSelected = (label) => {
-		return label === selectedTrigger;
-	};
+	const isSelected = (label) => label === selectedTrigger;
+
+	const dispatchState = (payload) =>
+		dispatch({
+			payload,
+			type: ActionTypes.SET_SELECTED_TRIGGER,
+		});
 
 	return {
+		clearState: () => dispatchState(''),
 		isSelected,
-		updateState: (label) =>
-			dispatch({
-				payload: label === selectedTrigger ? '' : label,
-				type: ActionTypes.SET_SELECTED_TRIGGER,
-			}),
+		selectedTrigger,
+		updateState: (label) => dispatchState(!isSelected(label) ? label : ''),
 	};
 }

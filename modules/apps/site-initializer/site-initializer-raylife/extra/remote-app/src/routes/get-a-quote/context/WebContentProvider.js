@@ -20,10 +20,11 @@ import {
 	useState,
 } from 'react';
 import {useCustomEvent} from '../../../common/hooks/useCustomEvent';
+import usePrevious from '../../../common/hooks/usePrevious';
 import {DEVICES} from '../../../common/utils/constants';
 import {Liferay} from '../../../common/utils/liferay';
-import {SANITIZE_EMPTY_KEYS_REGEX} from '../../../common/utils/patterns';
 import TipContainerModal from '../components/tip-container-modal';
+import {useTriggerContext} from '../hooks/useTriggerContext';
 import {
 	getContentTemplates,
 	getRenderedContent,
@@ -36,49 +37,55 @@ const siteGroupId = Liferay.ThemeDisplay.getSiteGroupId();
 const WEB_CONTENT_NAME = 'Tip';
 const WebContentContext = createContext();
 
-const getTipFolderId = async () => {
-	const {
-		data: {items: structuredContentFolders = [{}]},
-	} = await getStructuredContentFolders(
-		siteGroupId,
-		`?filter=name eq '${WEB_CONTENT_NAME}'`
-	);
+const getHeadlessFirstItemId = async (headlessFn) => {
+	try {
+		const {
+			data: {
+				items: [firstItem],
+			},
+		} = await headlessFn();
 
-	const [{id}] = structuredContentFolders;
-
-	return id;
-};
-
-const getTipTemplateId = async () => {
-	const {
-		data: {items: contentTemplates = [{}]},
-	} = await getContentTemplates(
-		siteGroupId,
-		`?filter=contains(name, '${WEB_CONTENT_NAME}')`
-	);
-
-	const [{id}] = contentTemplates;
-
-	return id;
+		return firstItem?.id;
+	}
+	catch (error) {
+		return null;
+	}
 };
 
 const WebContentProvider = ({children}) => {
 	const {
-		state: {dimensions},
+		state: {
+			dimensions: {deviceSize},
+		},
 	} = useContext(AppContext);
 	const [dispatchEvent] = useCustomEvent();
+	const {clearState, selectedTrigger} = useTriggerContext();
 	const [context, setContext] = useState();
+	const previousDeviceSize = usePrevious(deviceSize);
 	const [webContentModal, setWebContentModal] = useState({
 		html: '',
 		show: false,
 	});
-	const isMobileDevice = dimensions.deviceSize !== DEVICES.DESKTOP;
+	const isMobileDevice = deviceSize !== DEVICES.DESKTOP;
 
 	const getInitialData = async () => {
 		const [
 			{value: tipFolderId},
 			{value: tipTemplateId},
-		] = await Promise.allSettled([getTipFolderId(), getTipTemplateId()]);
+		] = await Promise.allSettled([
+			getHeadlessFirstItemId(() =>
+				getStructuredContentFolders(
+					siteGroupId,
+					`?filter=name eq '${WEB_CONTENT_NAME}'`
+				)
+			),
+			getHeadlessFirstItemId(() =>
+				getContentTemplates(
+					siteGroupId,
+					`?filter=contains(name, '${WEB_CONTENT_NAME}')`
+				)
+			),
+		]);
 
 		if (!tipFolderId) {
 			return console.warn('Raylife TIP Folder not found');
@@ -100,12 +107,9 @@ const WebContentProvider = ({children}) => {
 	};
 
 	const prepareHtmlElement = (html) => {
-		html = html.replace(SANITIZE_EMPTY_KEYS_REGEX, '');
-
 		const container = document.createElement('div');
 
 		container.innerHTML = html;
-
 		container.querySelector('#dismiss').remove();
 
 		setWebContentModal({html: container.innerHTML, show: true});
@@ -134,6 +138,20 @@ const WebContentProvider = ({children}) => {
 		[isMobileDevice, context]
 	);
 
+	const onClose = useCallback(() => {
+		document.getElementById('tip').classList.add('hide');
+
+		setWebContentModal({html: '', show: false});
+
+		clearState();
+	}, [clearState]);
+
+	useEffect(() => {
+		if (selectedTrigger && deviceSize !== previousDeviceSize) {
+			onClose();
+		}
+	}, [deviceSize, selectedTrigger, previousDeviceSize, onClose]);
+
 	useEffect(() => {
 		if (isMobileDevice && !context) {
 			getInitialData();
@@ -143,8 +161,8 @@ const WebContentProvider = ({children}) => {
 	return (
 		<WebContentContext.Provider value={[context, dispatchCustomEvent]}>
 			<TipContainerModal
-				isMobile={dimensions.deviceSize === DEVICES.PHONE}
-				setWebContentModal={setWebContentModal}
+				isMobile={deviceSize === DEVICES.PHONE}
+				onClose={onClose}
 				webContentModal={webContentModal}
 			/>
 

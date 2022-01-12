@@ -24,8 +24,6 @@ export const PERCENTAGE_REGEX_MAX_100 = /^(?:100(?:\.00?)?|\d?\d(?:\.\d\d?)?)?%$
 
 export const PHONE_REGEX = /\((\d{3})\)\s\d{3}-\d{4}/g;
 
-export const SANITIZE_EMPTY_KEYS_REGEX = /{{[^\s]*}}/g;
-
 export const STATE_REGEX = /^\w{2}$/g;
 
 export const SYMBOL_REGEX = /[^A-Za-z0-9 ]/g;

@@ -78,7 +78,7 @@ export function FormBasicBusinessInformation({form}) {
 	return (
 		<>
 			<FormCard>
-				<div className="container p-0">
+				<div className="p-0">
 					<div className="d-flex justify-content-between mb-5">
 						<ControlledInput
 							control={control}

@@ -15,25 +15,23 @@
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {useFormContext} from 'react-hook-form';
+import {DEVICES} from '../../../../common/utils/constants';
 import ProgressSavedModal from '../../../../routes/get-a-quote/components/containers/Forms/Modal/ProgressSaved';
+import {AppContext} from '../../../../routes/get-a-quote/context/AppContextProvider';
 
 import {WarningBadge} from '../Badges/Warning';
 
-export function CardFormActions({
-	isMobileDevice = false,
-	isValid = true,
-	onNext,
-	onPrevious,
-	onSave,
-}) {
+export function CardFormActions({isValid = true, onNext, onPrevious, onSave}) {
 	const {
 		formState: {errors},
 		getValues,
 		setValue,
 	} = useFormContext();
+	const {state} = useContext(AppContext);
 
+	const isMobileDevice = state.dimensions.deviceSize === DEVICES.PHONE;
 	const productQuote = getValues('basics.productQuoteName');
 	const email = getValues('basics.businessInformation.business.email');
 	const emailHasError = !!errors?.basics?.businessInformation?.business
@@ -59,11 +57,12 @@ export function CardFormActions({
 
 	return (
 		<>
-			{(errors?.continueButton?.message || errorModal) && (
-				<WarningBadge>
-					{errors?.continueButton?.message || errorModal}
-				</WarningBadge>
-			)}
+			{(errors?.continueButton?.message || errorModal) &&
+				!isMobileDevice && (
+					<WarningBadge>
+						{errors?.continueButton?.message || errorModal}
+					</WarningBadge>
+				)}
 			<div
 				className={classNames('d-flex justify-content-between', {
 					'mt-5': !isMobileDevice,

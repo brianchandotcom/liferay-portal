@@ -55,6 +55,7 @@ const ProgressSaved = ({
 	return (
 		<Modal
 			backdropLight={isMobileDevice}
+			closeable={!isMobileDevice}
 			footer={
 				<div
 					className={classNames(

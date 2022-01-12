@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Frontend JS Web
 Bundle-SymbolicName: com.liferay.frontend.js.web
-Bundle-Version: 5.0.22
+Bundle-Version: 5.0.23
 Liferay-JS-Resources-Top-Head:\
 	/liferay/dom_task_runner.js,\
 	/liferay/events.js,\

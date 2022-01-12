@@ -34,7 +34,7 @@ definition {
 	@description = "Verify that a Form can be published after adding a Fieldset"
 	@priority = "5"
 	test AddedToAFormCanBePublished {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -82,7 +82,7 @@ definition {
 	@description = "Verify that a Form can be saved after adding a Fieldset"
 	@priority = "5"
 	test AddedToAFormCanBeSaved {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -128,7 +128,7 @@ definition {
 	@description = "Verify that a Form can be submitted after adding a Fieldset"
 	@priority = "5"
 	test AddedToAFormCanBeSubmitted {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -915,7 +915,7 @@ definition {
 	@description = "Verify that a Fieldset can be added to a Fieldset"
 	@priority = "4"
 	test CanBeAddedToAFieldset {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -1027,7 +1027,7 @@ definition {
 	@description = "Verify that a Fieldset can be created"
 	@priority = "5"
 	test CanBeCreated {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -1065,7 +1065,7 @@ definition {
 	@description = "Verify that a Fieldset can be deleted"
 	@priority = "5"
 	test CanBeDeleted {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -1103,7 +1103,7 @@ definition {
 	@description = "Verify that a Fieldset can be edited"
 	@priority = "5"
 	test CanBeEdited {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -1220,7 +1220,7 @@ definition {
 	@description = "Verify that a Field with the Autocomplete Property persists after being added to a Form via Fieldset"
 	@priority = "5"
 	test PreserveTheAutoCompleteProperty {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -1874,7 +1874,7 @@ definition {
 	@description = "Verify that leaving a Fieldset without saving will prompt a notification warning the user that any unsaved changes wil be lost"
 	@priority = "5"
 	test WillWarnUsersWhenExitingWithoutSaving {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",

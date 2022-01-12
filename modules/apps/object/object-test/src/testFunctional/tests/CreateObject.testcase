@@ -115,6 +115,8 @@ definition {
 	@description = "LPS-135635 - Verify it is possible to add a field after the Object is published and submit entries to it"
 	@priority = "5"
 	test CanAddFieldAndViewEntriesAfterPublished {
+		property portal.acceptance = "true";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -476,6 +478,8 @@ definition {
 	@description = "LPS-135400 - Verify it is possible to add many relations through the Relationship tab"
 	@priority = "5"
 	test CanAddRelationOnRelationshipTab {
+		property portal.acceptance = "true";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -1336,6 +1340,8 @@ definition {
 	@description = "LPS-135400 - Verify it is possible to delete a Relationship"
 	@priority = "5"
 	test CanDeleteRelationship {
+		property portal.acceptance = "true";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -1364,6 +1370,8 @@ definition {
 	@description = "LPS-135390 - Verify it is not possible to view and access the Object Admin portlet without the Access in Control Panel permission"
 	@priority = "5"
 	test CannotAccessObjectAdminWithoutAccessPermission {
+		property portal.acceptance = "true";
+
 		JSONRole.addRegularRole(
 			roleKey = "Regular Role",
 			roleTitle = "Regular Role");
@@ -1393,6 +1401,8 @@ definition {
 	@description = "LPS-135390 - Verify it is not possible to add an Object without the Add Object Definition permission"
 	@priority = "5"
 	test CannotAddObjectWithoutAddPermission {
+		property portal.acceptance = "true";
+
 		JSONRole.addRegularRole(
 			roleKey = "Regular Role",
 			roleTitle = "Regular Role");

@@ -614,6 +614,8 @@ definition {
 	@description = "LPS-137105 - Verify if the Object entries are rendered when previewing it"
 	@priority = "5"
 	test ObjectEntriesAreRendered {
+		property portal.acceptance = "true";
+
 		ObjectAdmin.openObjectAdmin();
 
 		ObjectAdmin.addNewObject(

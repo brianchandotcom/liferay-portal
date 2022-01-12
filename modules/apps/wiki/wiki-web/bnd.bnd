@@ -1,4 +1,4 @@
 Bundle-Name: Liferay Wiki Web
 Bundle-SymbolicName: com.liferay.wiki.web
-Bundle-Version: 7.0.28
+Bundle-Version: 7.0.29
 Web-ContextPath: /wiki-web

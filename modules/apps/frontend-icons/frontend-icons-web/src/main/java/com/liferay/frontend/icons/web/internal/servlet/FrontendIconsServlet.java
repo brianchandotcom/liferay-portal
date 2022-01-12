@@ -69,11 +69,10 @@ public class FrontendIconsServlet extends HttpServlet {
 				httpServletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
 			}
 			else {
-				String spritemap = StringUtil.read(
-					FrontendIconsServlet.class,
-					"/META-INF/resources/images/icons.svg");
-
-				printWriter.write(spritemap);
+				printWriter.write(
+					StringUtil.read(
+						FrontendIconsServlet.class,
+						"/META-INF/resources/images/icons.svg"));
 			}
 		}
 		catch (Exception exception) {

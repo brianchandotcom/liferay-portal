@@ -65,6 +65,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
@@ -239,11 +240,15 @@ public class ExpandoUserFieldExpressionHandler
 	public List<String> getValidFieldExpressions() {
 		List<String> validExpressions = new ArrayList<>();
 
+		Set<Integer> keySet = _unsafeBiConsumers.keySet();
+
 		for (ExpandoColumn column :
 				_expandoColumnLocalService.getDefaultTableColumns(
 					CompanyThreadLocal.getCompanyId(), User.class.getName())) {
 
-			validExpressions.add(column.getName());
+			if (keySet.contains(column.getType())) {
+				validExpressions.add(column.getName());
+			}
 		}
 
 		return Collections.unmodifiableList(validExpressions);

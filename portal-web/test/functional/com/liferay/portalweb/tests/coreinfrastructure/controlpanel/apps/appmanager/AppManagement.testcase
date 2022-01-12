@@ -359,6 +359,7 @@ definition {
 	@description = "This ensures that the Notifications app in the app manager can be deactivated and reactivated."
 	@priority = "5"
 	test CanDeactivateAndActivateNotifications {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "AppManagement#CanDeactivateAndActivateNotifications";
 		property testray.main.component.name = "Notifications";
 

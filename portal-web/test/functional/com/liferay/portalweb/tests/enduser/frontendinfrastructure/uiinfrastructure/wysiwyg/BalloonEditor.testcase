@@ -217,7 +217,7 @@ definition {
 		}
 
 		task ("Remove the table") {
-			TripleClick(locator1 = "CKEditorBalloonEditorSample#TABLE_CELL");
+			Click(locator1 = "CKEditorBalloonEditorSample#TABLE_CELL");
 
 			Click(locator1 = "CKEditor#REMOVE_TABLE_BUTTON");
 
@@ -246,7 +246,9 @@ definition {
 		task ("Assert text edition toolbar appearance when highlighting a text inside the cell") {
 			TripleClick(locator1 = "CKEditorBalloonEditorSample#TABLE_CELL");
 
-			AssertVisible(locator1 = "CKEditor#TOOLBAR_ANY_ITEM_BUTTON");
+			AssertElementPresent(
+				key_titleName = "",
+				locator1 = "CKEditor#TOOLBAR_ANY_ITEM_BUTTON");
 		}
 	}
 

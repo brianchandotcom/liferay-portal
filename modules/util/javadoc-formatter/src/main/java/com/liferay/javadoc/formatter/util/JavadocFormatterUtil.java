@@ -71,7 +71,7 @@ public class JavadocFormatterUtil {
 			new String[] {
 				"**/.git/**", "**/.gradle/**", "**/bin/**", "**/build/**",
 				"**/classes/**", "**/node_modules/**",
-				"**/node_modules_cache/**", "**/portal-client/**", "**/tmp/**"
+				"**/node_modules_cache/**", "**/tmp/**"
 			},
 			new String[] {"**/*.java"});
 

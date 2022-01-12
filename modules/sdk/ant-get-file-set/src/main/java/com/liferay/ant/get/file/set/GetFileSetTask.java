@@ -267,7 +267,7 @@ public class GetFileSetTask extends Task {
 
 	private static final List<String> _skipFileNames = Arrays.asList(
 		"benchmarks", "definitions", "gradle", "lib", "nbproject",
-		"oss-licenses", "portal-client", "readme", "sql", "tools");
+		"oss-licenses", "readme", "sql", "tools");
 	private static final List<String> _skipModuleFileNames = Arrays.asList(
 		"node_modules");
 

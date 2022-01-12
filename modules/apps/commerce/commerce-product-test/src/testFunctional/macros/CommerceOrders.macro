@@ -136,6 +136,12 @@ definition {
 		IFrame.selectTopFrame();
 	}
 
+	macro openOrderTypesAdmin {
+		Navigator.openWithAppendToBaseURL(
+			baseURL = "${baseURL}",
+			urlAppend = "group/control_panel/manage?p_p_id=com_liferay_commerce_order_web_internal_portlet_CommerceOrderTypePortlet");
+	}
+
 	macro viewOrdersEntry {
 		if (isSet(addressAddress) && isSet(addressCity) && isSet(addressZipCode)) {
 			AssertTextEquals.assertPartialText(

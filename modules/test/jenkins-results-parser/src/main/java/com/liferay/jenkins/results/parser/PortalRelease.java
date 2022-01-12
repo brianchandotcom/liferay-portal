@@ -469,7 +469,7 @@ public class PortalRelease {
 	};
 
 	private static final String _PORTAL_VERSION_REGEX =
-		"(?<portalVersion>\\d\\.([\\d\\.]+)(-ee)?(\\-(ep|ga|rc|sp)\\d+)?)";
+		"(?<portalVersion>\\d\\.([u\\d\\.]+)(-ee)?(\\-(ep|ga|rc|sp)\\d+)?)";
 
 	private static final Pattern _bundleFileNamePattern = Pattern.compile(
 		".+\\-" + _PORTAL_VERSION_REGEX + ".*\\.(7z|tar.gz|zip)");

@@ -195,7 +195,9 @@ definition {
 
 		RemoteApps.goToRemoteAppsPortlet();
 
-		Click(locator1 = "xPath=(//div[@class='table-list-title']//a)");
+		Click(
+			key_tableEntryName = "Vanilla Counter",
+			locator1 = "RemoteApps#TABLE_ENTRY_NAME_REMOTE_TABLE");
 
 		var currentURL = Navigator.getCurrentURL();
 

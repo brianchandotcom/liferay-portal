@@ -12,8 +12,9 @@
  * details.
  */
 
-import {ClayButtonWithIcon} from '@clayui/button';
+import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
+import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import React, {useContext, useRef, useState} from 'react';
 
@@ -169,15 +170,17 @@ const CreationMenu = ({
 					onActiveChange={setActive}
 					trigger={
 						showDesignImprovements ? (
-							<LinkOrButton
+							<ClayButton
 								aria-label={getPlusIconLabel()}
-								className="nav-btn"
-								symbol="plus"
+								className="nav-btn nav-btn-monospaced"
 								title={getPlusIconLabel()}
-								wide
 							>
-								{getPlusIconLabel()}
-							</LinkOrButton>
+								<ClayIcon className="d-md-none" symbol="plus" />
+
+								<span className="d-md-block d-none pl-4 pr-4">
+									{getPlusIconLabel()}
+								</span>
+							</ClayButton>
 						) : (
 							<ClayButtonWithIcon
 								aria-label={getPlusIconLabel()}
@@ -243,7 +246,7 @@ const CreationMenu = ({
 					<LinkOrButton
 						aria-label={getPlusIconLabel()}
 						button={true}
-						className="nav-btn"
+						className="nav-btn nav-btn-monospaced"
 						displayType="primary"
 						href={firstItemRef.current.href}
 						onClick={(event) => {

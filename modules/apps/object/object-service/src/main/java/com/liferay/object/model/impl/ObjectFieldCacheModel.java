@@ -77,7 +77,7 @@ public class ObjectFieldCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(41);
+		StringBundler sb = new StringBundler(43);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -99,6 +99,8 @@ public class ObjectFieldCacheModel
 		sb.append(listTypeDefinitionId);
 		sb.append(", objectDefinitionId=");
 		sb.append(objectDefinitionId);
+		sb.append(", businessType=");
+		sb.append(businessType);
 		sb.append(", dbColumnName=");
 		sb.append(dbColumnName);
 		sb.append(", dbTableName=");
@@ -164,6 +166,13 @@ public class ObjectFieldCacheModel
 
 		objectFieldImpl.setListTypeDefinitionId(listTypeDefinitionId);
 		objectFieldImpl.setObjectDefinitionId(objectDefinitionId);
+
+		if (businessType == null) {
+			objectFieldImpl.setBusinessType("");
+		}
+		else {
+			objectFieldImpl.setBusinessType(businessType);
+		}
 
 		if (dbColumnName == null) {
 			objectFieldImpl.setDBColumnName("");
@@ -241,6 +250,7 @@ public class ObjectFieldCacheModel
 		listTypeDefinitionId = objectInput.readLong();
 
 		objectDefinitionId = objectInput.readLong();
+		businessType = objectInput.readUTF();
 		dbColumnName = objectInput.readUTF();
 		dbTableName = objectInput.readUTF();
 
@@ -286,6 +296,13 @@ public class ObjectFieldCacheModel
 		objectOutput.writeLong(listTypeDefinitionId);
 
 		objectOutput.writeLong(objectDefinitionId);
+
+		if (businessType == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(businessType);
+		}
 
 		if (dbColumnName == null) {
 			objectOutput.writeUTF("");
@@ -353,6 +370,7 @@ public class ObjectFieldCacheModel
 	public long modifiedDate;
 	public long listTypeDefinitionId;
 	public long objectDefinitionId;
+	public String businessType;
 	public String dbColumnName;
 	public String dbTableName;
 	public boolean indexed;

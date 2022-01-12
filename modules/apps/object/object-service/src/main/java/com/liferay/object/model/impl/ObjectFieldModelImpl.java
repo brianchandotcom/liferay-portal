@@ -89,9 +89,9 @@ public class ObjectFieldModelImpl
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"listTypeDefinitionId", Types.BIGINT},
-		{"objectDefinitionId", Types.BIGINT}, {"dbColumnName", Types.VARCHAR},
-		{"dbTableName", Types.VARCHAR}, {"indexed", Types.BOOLEAN},
-		{"indexedAsKeyword", Types.BOOLEAN},
+		{"objectDefinitionId", Types.BIGINT}, {"businessType", Types.VARCHAR},
+		{"dbColumnName", Types.VARCHAR}, {"dbTableName", Types.VARCHAR},
+		{"indexed", Types.BOOLEAN}, {"indexedAsKeyword", Types.BOOLEAN},
 		{"indexedLanguageId", Types.VARCHAR}, {"label", Types.VARCHAR},
 		{"name", Types.VARCHAR}, {"relationshipType", Types.VARCHAR},
 		{"required", Types.BOOLEAN}, {"type_", Types.VARCHAR}
@@ -111,6 +111,7 @@ public class ObjectFieldModelImpl
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("listTypeDefinitionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("objectDefinitionId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("businessType", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("dbColumnName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("dbTableName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("indexed", Types.BOOLEAN);
@@ -124,7 +125,7 @@ public class ObjectFieldModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table ObjectField (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,objectFieldId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,listTypeDefinitionId LONG,objectDefinitionId LONG,dbColumnName VARCHAR(75) null,dbTableName VARCHAR(75) null,indexed BOOLEAN,indexedAsKeyword BOOLEAN,indexedLanguageId VARCHAR(75) null,label STRING null,name VARCHAR(75) null,relationshipType VARCHAR(75) null,required BOOLEAN,type_ VARCHAR(75) null)";
+		"create table ObjectField (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,objectFieldId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,listTypeDefinitionId LONG,objectDefinitionId LONG,businessType VARCHAR(75) null,dbColumnName VARCHAR(75) null,dbTableName VARCHAR(75) null,indexed BOOLEAN,indexedAsKeyword BOOLEAN,indexedLanguageId VARCHAR(75) null,label STRING null,name VARCHAR(75) null,relationshipType VARCHAR(75) null,required BOOLEAN,type_ VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table ObjectField";
 
@@ -213,6 +214,7 @@ public class ObjectFieldModelImpl
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setListTypeDefinitionId(soapModel.getListTypeDefinitionId());
 		model.setObjectDefinitionId(soapModel.getObjectDefinitionId());
+		model.setBusinessType(soapModel.getBusinessType());
 		model.setDBColumnName(soapModel.getDBColumnName());
 		model.setDBTableName(soapModel.getDBTableName());
 		model.setIndexed(soapModel.isIndexed());
@@ -418,6 +420,11 @@ public class ObjectFieldModelImpl
 		attributeSetterBiConsumers.put(
 			"objectDefinitionId",
 			(BiConsumer<ObjectField, Long>)ObjectField::setObjectDefinitionId);
+		attributeGetterFunctions.put(
+			"businessType", ObjectField::getBusinessType);
+		attributeSetterBiConsumers.put(
+			"businessType",
+			(BiConsumer<ObjectField, String>)ObjectField::setBusinessType);
 		attributeGetterFunctions.put(
 			"dbColumnName", ObjectField::getDBColumnName);
 		attributeSetterBiConsumers.put(
@@ -686,6 +693,26 @@ public class ObjectFieldModelImpl
 	public long getOriginalObjectDefinitionId() {
 		return GetterUtil.getLong(
 			this.<Long>getColumnOriginalValue("objectDefinitionId"));
+	}
+
+	@JSON
+	@Override
+	public String getBusinessType() {
+		if (_businessType == null) {
+			return "";
+		}
+		else {
+			return _businessType;
+		}
+	}
+
+	@Override
+	public void setBusinessType(String businessType) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_businessType = businessType;
 	}
 
 	@JSON
@@ -1136,6 +1163,7 @@ public class ObjectFieldModelImpl
 		objectFieldImpl.setModifiedDate(getModifiedDate());
 		objectFieldImpl.setListTypeDefinitionId(getListTypeDefinitionId());
 		objectFieldImpl.setObjectDefinitionId(getObjectDefinitionId());
+		objectFieldImpl.setBusinessType(getBusinessType());
 		objectFieldImpl.setDBColumnName(getDBColumnName());
 		objectFieldImpl.setDBTableName(getDBTableName());
 		objectFieldImpl.setIndexed(isIndexed());
@@ -1174,6 +1202,8 @@ public class ObjectFieldModelImpl
 			this.<Long>getColumnOriginalValue("listTypeDefinitionId"));
 		objectFieldImpl.setObjectDefinitionId(
 			this.<Long>getColumnOriginalValue("objectDefinitionId"));
+		objectFieldImpl.setBusinessType(
+			this.<String>getColumnOriginalValue("businessType"));
 		objectFieldImpl.setDBColumnName(
 			this.<String>getColumnOriginalValue("dbColumnName"));
 		objectFieldImpl.setDBTableName(
@@ -1312,6 +1342,14 @@ public class ObjectFieldModelImpl
 		objectFieldCacheModel.listTypeDefinitionId = getListTypeDefinitionId();
 
 		objectFieldCacheModel.objectDefinitionId = getObjectDefinitionId();
+
+		objectFieldCacheModel.businessType = getBusinessType();
+
+		String businessType = objectFieldCacheModel.businessType;
+
+		if ((businessType != null) && (businessType.length() == 0)) {
+			objectFieldCacheModel.businessType = null;
+		}
 
 		objectFieldCacheModel.dbColumnName = getDBColumnName();
 
@@ -1476,6 +1514,7 @@ public class ObjectFieldModelImpl
 	private boolean _setModifiedDate;
 	private long _listTypeDefinitionId;
 	private long _objectDefinitionId;
+	private String _businessType;
 	private String _dbColumnName;
 	private String _dbTableName;
 	private boolean _indexed;
@@ -1528,6 +1567,7 @@ public class ObjectFieldModelImpl
 		_columnOriginalValues.put(
 			"listTypeDefinitionId", _listTypeDefinitionId);
 		_columnOriginalValues.put("objectDefinitionId", _objectDefinitionId);
+		_columnOriginalValues.put("businessType", _businessType);
 		_columnOriginalValues.put("dbColumnName", _dbColumnName);
 		_columnOriginalValues.put("dbTableName", _dbTableName);
 		_columnOriginalValues.put("indexed", _indexed);
@@ -1582,25 +1622,27 @@ public class ObjectFieldModelImpl
 
 		columnBitmasks.put("objectDefinitionId", 512L);
 
-		columnBitmasks.put("dbColumnName", 1024L);
+		columnBitmasks.put("businessType", 1024L);
 
-		columnBitmasks.put("dbTableName", 2048L);
+		columnBitmasks.put("dbColumnName", 2048L);
 
-		columnBitmasks.put("indexed", 4096L);
+		columnBitmasks.put("dbTableName", 4096L);
 
-		columnBitmasks.put("indexedAsKeyword", 8192L);
+		columnBitmasks.put("indexed", 8192L);
 
-		columnBitmasks.put("indexedLanguageId", 16384L);
+		columnBitmasks.put("indexedAsKeyword", 16384L);
 
-		columnBitmasks.put("label", 32768L);
+		columnBitmasks.put("indexedLanguageId", 32768L);
 
-		columnBitmasks.put("name", 65536L);
+		columnBitmasks.put("label", 65536L);
 
-		columnBitmasks.put("relationshipType", 131072L);
+		columnBitmasks.put("name", 131072L);
 
-		columnBitmasks.put("required", 262144L);
+		columnBitmasks.put("relationshipType", 262144L);
 
-		columnBitmasks.put("type_", 524288L);
+		columnBitmasks.put("required", 524288L);
+
+		columnBitmasks.put("type_", 1048576L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

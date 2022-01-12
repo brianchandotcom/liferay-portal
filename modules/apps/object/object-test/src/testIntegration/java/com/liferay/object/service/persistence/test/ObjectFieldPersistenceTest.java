@@ -142,6 +142,8 @@ public class ObjectFieldPersistenceTest {
 
 		newObjectField.setObjectDefinitionId(RandomTestUtil.nextLong());
 
+		newObjectField.setBusinessType(RandomTestUtil.randomString());
+
 		newObjectField.setDBColumnName(RandomTestUtil.randomString());
 
 		newObjectField.setDBTableName(RandomTestUtil.randomString());
@@ -193,6 +195,9 @@ public class ObjectFieldPersistenceTest {
 		Assert.assertEquals(
 			existingObjectField.getObjectDefinitionId(),
 			newObjectField.getObjectDefinitionId());
+		Assert.assertEquals(
+			existingObjectField.getBusinessType(),
+			newObjectField.getBusinessType());
 		Assert.assertEquals(
 			existingObjectField.getDBColumnName(),
 			newObjectField.getDBColumnName());
@@ -298,10 +303,11 @@ public class ObjectFieldPersistenceTest {
 			"ObjectField", "mvccVersion", true, "uuid", true, "objectFieldId",
 			true, "companyId", true, "userId", true, "userName", true,
 			"createDate", true, "modifiedDate", true, "listTypeDefinitionId",
-			true, "objectDefinitionId", true, "dbColumnName", true,
-			"dbTableName", true, "indexed", true, "indexedAsKeyword", true,
-			"indexedLanguageId", true, "label", true, "name", true,
-			"relationshipType", true, "required", true, "type", true);
+			true, "objectDefinitionId", true, "businessType", true,
+			"dbColumnName", true, "dbTableName", true, "indexed", true,
+			"indexedAsKeyword", true, "indexedLanguageId", true, "label", true,
+			"name", true, "relationshipType", true, "required", true, "type",
+			true);
 	}
 
 	@Test
@@ -598,6 +604,8 @@ public class ObjectFieldPersistenceTest {
 		objectField.setListTypeDefinitionId(RandomTestUtil.nextLong());
 
 		objectField.setObjectDefinitionId(RandomTestUtil.nextLong());
+
+		objectField.setBusinessType(RandomTestUtil.randomString());
 
 		objectField.setDBColumnName(RandomTestUtil.randomString());
 

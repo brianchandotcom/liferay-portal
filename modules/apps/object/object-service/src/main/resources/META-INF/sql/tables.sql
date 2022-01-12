@@ -73,6 +73,7 @@ create table ObjectField (
 	modifiedDate DATE null,
 	listTypeDefinitionId LONG,
 	objectDefinitionId LONG,
+	businessType VARCHAR(75) null,
 	dbColumnName VARCHAR(75) null,
 	dbTableName VARCHAR(75) null,
 	indexed BOOLEAN,

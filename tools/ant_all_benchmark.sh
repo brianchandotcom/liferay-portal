@@ -57,7 +57,7 @@ function main {
 function run_ant_all {
 	if [ -e tools/gradle*.zip ]
 	then
-		echo ./gradlew --stop
+		./gradlew --stop
 	fi
 
 	SECONDS=0;

@@ -808,8 +808,9 @@ public class BatchEngineImportTaskExecutorTest
 	}
 
 	private void _importBlogPostings(
-		BatchEngineTaskOperation batchEngineTaskOperation, byte[] content,
-		String contentType, Map<String, String> fieldNameMappingMap) {
+			BatchEngineTaskOperation batchEngineTaskOperation, byte[] content,
+			String contentType, Map<String, String> fieldNameMappingMap)
+		throws Exception {
 
 		_batchEngineImportTask =
 			_batchEngineImportTaskLocalService.addBatchEngineImportTask(

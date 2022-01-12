@@ -59,8 +59,20 @@ public class CommercePaymentMethodRegistryImpl
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, CommercePaymentMethod.class,
-			"commerce.payment.engine.method.key");
+			bundleContext, CommercePaymentMethod.class, null,
+			(serviceReference, emitter) -> {
+				CommercePaymentMethod commercePaymentMethod =
+					bundleContext.getService(serviceReference);
+
+				try {
+					if (commercePaymentMethod.getKey() != null) {
+						emitter.emit(commercePaymentMethod.getKey());
+					}
+				}
+				finally {
+					bundleContext.ungetService(serviceReference);
+				}
+			});
 	}
 
 	@Deactivate

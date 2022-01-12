@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<portlet-data-permissions>
+	<portlet-data resource-name="com.liferay.portal.kernel.model.LayoutSetPrototype" resource-pk="33131">
+		<permissions role-name="Owner" actions="DELETE,PERMISSIONS,UPDATE,VIEW"/>
+	</portlet-data>
+</portlet-data-permissions>

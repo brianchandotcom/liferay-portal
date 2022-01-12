@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+
+<root>
+	<header available-locales="es_ES,ja_JP,iw_IL,fi_FI,nl_NL,zh_CN,de_DE,en_US,ca_ES,pt_BR,fr_FR,hu_HU" build-number="7010" export-date="Tue, 10 May 2016 17:50:34 +0000" type="portlet" company-id="20202" company-group-id="20246" group-id="20219" user-personal-site-group-id="20243" private-layout="true" root-portlet-id="com_liferay_users_admin_web_portlet_UsersAdminPortlet"/>
+	<missing-references/>
+	<portlet portlet-id="com_liferay_users_admin_web_portlet_UsersAdminPortlet" layout-id="1" path="/group/20219/portlet/com_liferay_users_admin_web_portlet_UsersAdminPortlet/20223/portlet.xml" portlet-data="true" schema-version="1.0.0" portlet-configuration="setup"/>
+	<manifest-summary>
+		<staged-model manifest-summary-key="com.liferay.portal.kernel.model.Organization" addition-count="1"/>
+	</manifest-summary>
+</root>

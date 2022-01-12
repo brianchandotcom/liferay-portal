@@ -154,12 +154,19 @@ public class IGConfigurationDisplayContext {
 			getSelectedRepositoryId());
 		folderItemSelectorCriterion.setShowGroupSelector(true);
 
+		long groupId = getSelectedRepositoryId();
+
+		Repository repository = _repositoryLocalService.fetchRepository(
+			getSelectedRepositoryId());
+
+		if (repository != null) {
+			groupId = repository.getGroupId();
+		}
+
 		return _itemSelector.getItemSelectorURL(
 			RequestBackedPortletURLFactoryUtil.create(_httpServletRequest),
 			GroupLocalServiceUtil.getGroup(
-				GetterUtil.getLong(
-					getSelectedRepositoryId(),
-					_themeDisplay.getScopeGroupId())),
+				GetterUtil.getLong(groupId, _themeDisplay.getScopeGroupId())),
 			_themeDisplay.getScopeGroupId(), getItemSelectedEventName(),
 			folderItemSelectorCriterion);
 	}
@@ -286,7 +293,7 @@ public class IGConfigurationDisplayContext {
 		}
 	}
 
-	private void _initRepository() {
+	private void _initRepository() throws PortalException {
 		if (_selectedRepositoryId != 0) {
 			return;
 		}
@@ -297,9 +304,16 @@ public class IGConfigurationDisplayContext {
 		_selectedRepositoryId =
 			dlPortletInstanceSettings.getSelectedRepositoryId();
 
+		_repository = _repositoryLocalService.fetchRepository(
+			_selectedRepositoryId);
+
+		_repositoryNotFound = _repository == null;
+
 		if (_selectedRepositoryId != 0) {
 			return;
 		}
+
+		_initFolder();
 
 		if ((_folder == null) && (_folderId != null) &&
 			(_folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
@@ -314,17 +328,6 @@ public class IGConfigurationDisplayContext {
 			_selectedRepositoryId = ParamUtil.getLong(
 				_httpServletRequest, "repositoryId",
 				_themeDisplay.getScopeGroupId());
-		}
-
-		try {
-			_repository = _repositoryLocalService.getRepository(
-				_selectedRepositoryId);
-
-			_repositoryNotFound = false;
-		}
-		catch (Exception exception) {
-			_repository = null;
-			_repositoryNotFound = true;
 		}
 	}
 

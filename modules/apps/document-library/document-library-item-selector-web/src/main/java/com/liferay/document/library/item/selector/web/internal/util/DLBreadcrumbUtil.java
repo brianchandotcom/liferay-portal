@@ -16,12 +16,17 @@ package com.liferay.document.library.item.selector.web.internal.util;
 
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.GroupServiceUtil;
+import com.liferay.portal.kernel.service.RepositoryServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -143,7 +148,17 @@ public class DLBreadcrumbUtil {
 		Group group = themeDisplay.getScopeGroup();
 
 		if (repositoryId != 0) {
-			group = GroupServiceUtil.getGroup(repositoryId);
+			try {
+				group = GroupServiceUtil.getGroup(repositoryId);
+			}
+			catch (PortalException portalException) {
+				_log.error(portalException);
+
+				Repository repository = RepositoryServiceUtil.getRepository(
+					repositoryId);
+
+				group = GroupServiceUtil.getGroup(repository.getGroupId());
+			}
 		}
 		else if (folder != null) {
 			group = GroupServiceUtil.getGroup(folder.getGroupId());
@@ -151,5 +166,8 @@ public class DLBreadcrumbUtil {
 
 		return group.getDescriptiveName(themeDisplay.getLocale());
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DLBreadcrumbUtil.class);
 
 }

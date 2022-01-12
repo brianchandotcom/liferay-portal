@@ -24,6 +24,7 @@ definition {
 		var classNameQuery = "SELECT * FROM ClassName_ WHERE value LIKE '%com.liferay.opensocial.model.%';";
 		var releaseQuery = "SELECT * FROM Release_ WHERE servletContextName LIKE '%opensocial-portlet%';";
 		var resourceActionQuery = "SELECT * FROM ResourceAction WHERE name LIKE '%com.liferay.opensocial%';";
+		var expandoTableQuery = "SELECT * FROM ExpandoTable WHERE name LIKE '%OPEN_SOCIAL_DATA_%';";
 
 		AssertConsoleTextNotPresent(value1 = "Completed upgrade process com.liferay.data.cleanup.internal.upgrade.OpenSocialUpgradeProcess");
 
@@ -32,6 +33,8 @@ definition {
 		var releaseTable = SQL.executeMySQLStatement(mysqlStatement = "${releaseQuery}");
 
 		var resourceActionTable = SQL.executeMySQLStatement(mysqlStatement = "${resourceActionQuery}");
+
+		var expandoTable = SQL.executeMySQLStatement(mysqlStatement = "${expandoTableQuery}");
 
 		if (!(contains("${classNameTable}", "com.liferay.opensocial.model."))) {
 			echo("${classNameTable}");
@@ -47,6 +50,11 @@ definition {
 			echo("${resourceActionTable}");
 
 			fail("Failed to find opensocial portlet in ResourceAction table.");
+		}
+		else if (!(contains("${expandoTable}", "OPEN_SOCIAL_DATA_"))) {
+			echo("${expandoTable}");
+
+			fail("Failed to find opensocial portlet in expandoTable table.");
 		}
 
 		ApplicationsMenu.gotoPortlet(
@@ -73,6 +81,8 @@ definition {
 
 		var resourceActionTable = SQL.executeMySQLStatement(mysqlStatement = "${resourceActionQuery}");
 
+		var expandoTable = SQL.executeMySQLStatement(mysqlStatement = "${expandoTableQuery}");
+
 		if (contains("${classNameTable}", "com.liferay.opensocial.model.")) {
 			echo("${classNameTable}");
 
@@ -87,6 +97,11 @@ definition {
 			echo("${resourceActionTable}");
 
 			fail("Failed: opensocial data still present in ResourceAction table.");
+		}
+		else if (contains("${expandoTable}", "OPEN_SOCIAL_DATA_")) {
+			echo("${expandoTable}");
+
+			fail("Failed: opensocial data still present in expandoTable table.");
 		}
 	}
 

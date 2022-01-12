@@ -146,6 +146,9 @@ public class ExpandoUserFieldExpressionHandler
 		Collection<LDAPServerConfiguration> ldapServerConfigurations =
 			_ldapServerConfigurationProvider.getConfigurations(companyId);
 
+		userIdentifier = _getNormalizedData(
+			companyId, userIdentifierExpression, userIdentifier);
+
 		for (LDAPServerConfiguration ldapServerConfiguration :
 				ldapServerConfigurations) {
 
@@ -202,8 +205,10 @@ public class ExpandoUserFieldExpressionHandler
 			_expandoValueLocalService.getColumnValues(
 				companyId, User.class.getName(),
 				ExpandoTableConstants.DEFAULT_TABLE_NAME,
-				userIdentifierExpression, userIdentifier, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
+				userIdentifierExpression,
+				_getNormalizedData(
+					companyId, userIdentifierExpression, userIdentifier),
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		if (expandoValues.size() > 1) {
 			List<Long> userIds = new ArrayList<>();
@@ -484,6 +489,26 @@ public class ExpandoUserFieldExpressionHandler
 				safeLdapContext.close();
 			}
 		}
+	}
+
+	private String _getNormalizedData(
+			long companyId, String columnName, String... values)
+		throws PortalException {
+
+		ExpandoColumn expandoColumn = _expandoColumnLocalService.getColumn(
+			companyId, User.class.getName(),
+			ExpandoTableConstants.DEFAULT_TABLE_NAME, columnName);
+
+		ExpandoValue expandoValue =
+			_expandoValueLocalService.createExpandoValue(0);
+
+		expandoValue.setColumnId(expandoColumn.getColumnId());
+
+		_setExpandoValueData(
+			expandoValue, _unsafeBiConsumers.get(expandoColumn.getType()),
+			values);
+
+		return expandoValue.getData();
 	}
 
 	private void _setExpandoValueData(

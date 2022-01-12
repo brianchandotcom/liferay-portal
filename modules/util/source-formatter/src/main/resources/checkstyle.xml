@@ -788,6 +788,7 @@
 			<property name="category" value="Performance" />
 			<property name="description" value="Finds variables that are declared, but not used." />
 			<message key="variable.unused" value="Variable ''{0}'' is unused" />
+			<message key="variable.value.unused" value="Value of variable ''{0}'' is unused" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.UnwrappedVariableInfoCheck">
 			<property name="category" value="Bug Prevention" />

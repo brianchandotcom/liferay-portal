@@ -34,7 +34,6 @@ definition {
 	@description = "LPS-68182 - Verify that the Field Label is blank when adding a new Field"
 	@priority = "3"
 	test AddingANewFieldCreatesADefaultLabel {
-		property forms.functional = "true";
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "FormsFields#AddingANewFieldCreatesADefaultLabel";
@@ -67,7 +66,6 @@ definition {
 	@description = "LPS-73274 - Verify that when duplicating a Field, the new Field Reference is unique"
 	@priority = "4"
 	test CanBeDuplicated {
-		property forms.functional = "true";
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "FormsFields#CanBeDuplicated";
@@ -108,7 +106,7 @@ definition {
 	@description = "Verify that a Form with all the Fields can be submitted"
 	@priority = "5"
 	test CanBeSubmittedWithAllFields {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "FormsFields#CanBeSubmittedWithAllFields";
 		property testray.component.names = "Training";
 
@@ -390,7 +388,6 @@ definition {
 	@description = "LPS-70560 - Verify that a user is not able to bypass field validation by pressing Next twice"
 	@priority = "4"
 	test ViewFieldValidationIsNotBypassedWhenNextButtonIsHitTwice {
-		property forms.functional = "true";
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "FormsFields#ViewFieldValidationIsNotBypassedWhenNextButtonIsHitTwice";

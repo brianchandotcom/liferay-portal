@@ -34,7 +34,7 @@ definition {
 	@description = "Verify that Entries can be deleted"
 	@priority = "5"
 	test CanBeDeleted {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -76,7 +76,7 @@ definition {
 	@description = "Verify that Entries can be edited"
 	@priority = "5"
 	test CanBeEdited {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -120,7 +120,7 @@ definition {
 	@description = "Verify that a user can navigate to the correct metric by using the list on the right"
 	@priority = "5"
 	test CanBeNavigatedUsingNavigationList {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -188,7 +188,7 @@ definition {
 	@description = "Verify that Entries can be viewed"
 	@priority = "5"
 	test CanBeViewed {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -227,7 +227,6 @@ definition {
 	@description = "LPS-74997 - Verify that editing a Form does not affect previously submitted Form Entries"
 	@priority = "4"
 	test CanBeViewedAfterEditingTheForm {
-		property forms.functional = "true";
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
 
@@ -316,7 +315,7 @@ definition {
 	@description = "Verify that Entries Previews display the correct information"
 	@priority = "5"
 	test DisplayCorrectInfoInPreviews {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -376,7 +375,7 @@ definition {
 	@description = "Verify that the correct number of Entries are displayed"
 	@priority = "3"
 	test DisplayCorrectNumberOfEntries {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -501,7 +500,7 @@ definition {
 	@description = "Verify that Entries for the Paragraph, Rich Text, Separator, Image, and Upload Fields do not display any metrics in the Summary Tab"
 	@priority = "5"
 	test DisplayNoMetricsInSummaryTab {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -581,7 +580,7 @@ definition {
 	@description = "Verify that Entries for the Numeric Field display a Field List, Average, Maximum Value, Minimum Value, and Sum in the Summary Tab"
 	@priority = "5"
 	test DisplayStatisticsInSummaryTab {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -640,7 +639,7 @@ definition {
 	@description = "LPS-61197 - Verify that with Single Approver Workflow enabled, the Date Field is properly displayed on an Entry submitted from the Forms Widget"
 	@priority = "5"
 	test FromWidgetWithWorkflowEnabledDisplaysDateField {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -728,7 +727,7 @@ definition {
 	@description = "Verify that with Single Approver Workflow enabled and after the form entry was approved, the entry will have an approved label"
 	@priority = "5"
 	test WorkflowApprovalChangesLabelToApproved {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -829,7 +828,7 @@ definition {
 	@description = "Verify that with Single Approver Workflow enabled, the Submit button now reads "Submit for Publication""
 	@priority = "5"
 	test WorkflowChangesSubmitButtonToSubmitForPublication {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -855,7 +854,7 @@ definition {
 	@description = "Verify that with Single Approver Workflow enabled and after the user Submit for Publication, the form entry will have a pending label"
 	@priority = "5"
 	test WorkflowSubmissionChangesLabelToPending {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 

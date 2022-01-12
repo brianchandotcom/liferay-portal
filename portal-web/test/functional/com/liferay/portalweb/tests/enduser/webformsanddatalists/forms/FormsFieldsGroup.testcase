@@ -34,7 +34,7 @@ definition {
 	@description = "Verify that a Fields Group can be collapsed"
 	@priority = "5"
 	test CanBeCollapsed {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "FormsFieldsGroup#CanBeCollapsed";
 
 		FormsAdmin.addForm();
@@ -81,7 +81,7 @@ definition {
 	@description = "Verify that a Fields Group can be created"
 	@priority = "5"
 	test CanBeCreated {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -113,7 +113,7 @@ definition {
 	@description = "Verify that a Fields Group can be created from an existing Field"
 	@priority = "5"
 	test CanBeCreatedFromExistingField {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -163,7 +163,7 @@ definition {
 	@description = "Verify that a Fields Group can be deleted"
 	@priority = "5"
 	test CanBeDeleted {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -201,7 +201,7 @@ definition {
 	@description = "Verify that a Fields Group can be duplicated"
 	@priority = "5"
 	test CanBeDuplicated {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -227,7 +227,7 @@ definition {
 	@description = "Verify that a Fields Group can be moved between pages"
 	@priority = "5"
 	test CanBeMovedBetweenPages {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -273,7 +273,7 @@ definition {
 	@description = "Verify that a Fields Group can be repeatable"
 	@priority = "5"
 	test CanBeRepeatable {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -323,7 +323,7 @@ definition {
 	@description = "LPS-115196, Verify that an Entry using a Group Field can be viewed in Forms Details"
 	@priority = "5"
 	test EntryWithGroupFieldCanBeViewedInFormsDetails {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -373,7 +373,7 @@ definition {
 	@description = "Verify that fields within a Fields Group can be reordered"
 	@priority = "4"
 	test FieldsCanBeReordered {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -407,7 +407,7 @@ definition {
 	@description = "Verify that a Fields Group's Label can be edited"
 	@priority = "5"
 	test LabelCanBeEdited {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -443,7 +443,7 @@ definition {
 	@description = "Verify that a Fields Group's Label can be hidden"
 	@priority = "5"
 	test LabelCanBeHidden {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 

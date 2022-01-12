@@ -35,5 +35,5 @@
 		"test": "env TZ=utc liferay-npm-scripts test",
 		"test:watch": "env TZ=utc liferay-npm-scripts test --watch"
 	},
-	"version": "3.0.33"
+	"version": "3.0.34"
 }

@@ -41,7 +41,8 @@ public class CSVBatchEngineImportTaskItemReaderImpl
 
 		_delimiter = (String)parameters.getOrDefault("delimiter", delimiter);
 
-		_enclosingCharacter = _getEnclosingCharacter(parameters);
+		_delimiterRegex = _getDelimiterRegex(
+			_getEnclosingCharacter(parameters));
 
 		_inputStream = inputStream;
 
@@ -61,37 +62,12 @@ public class CSVBatchEngineImportTaskItemReaderImpl
 	public Map<String, Object> read() throws Exception {
 		String line = _unsyncBufferedReader.readLine();
 
-		if (line == null) {
+		if (Validator.isNull(line)) {
 			return null;
 		}
 
-		String escapedDelimiter = _delimiter;
-
-		for (String delimiter : _ESCAPED_DELIMITERS) {
-			if (delimiter.equals(escapedDelimiter)) {
-				escapedDelimiter = StringPool.BACK_SLASH + _delimiter;
-
-				break;
-			}
-		}
-
-		String regex = StringBundler.concat(
-			StringPool.OPEN_BRACKET, escapedDelimiter,
-			StringPool.CLOSE_BRACKET);
-
-		if (_enclosingCharacter != null) {
-			regex = StringBundler.concat(
-				escapedDelimiter, "(?=(?:[^", _enclosingCharacter, "]*",
-				_enclosingCharacter, "[^", _enclosingCharacter);
-
-			regex = StringBundler.concat(
-				regex, "]*", _enclosingCharacter, ")*[^", _enclosingCharacter,
-				"]*$)");
-		}
-
 		Map<String, Object> fieldNameValueMap = new HashMap<>();
-		String[] values =
-			Validator.isNull(line) ? _EMPTY_STRING_ARRAY : line.split(regex);
+		String[] values = line.split(_delimiterRegex);
 
 		for (int i = 0; i < values.length; i++) {
 			String fieldName = _fieldNames[i];
@@ -120,26 +96,45 @@ public class CSVBatchEngineImportTaskItemReaderImpl
 		return fieldNameValueMap;
 	}
 
+	private String _getDelimiterRegex(String enclosingCharacter) {
+		String escapedDelimiter = _delimiter;
+
+		for (String delimiter : _ESCAPED_DELIMITERS) {
+			if (delimiter.equals(escapedDelimiter)) {
+				escapedDelimiter = StringPool.BACK_SLASH + _delimiter;
+
+				break;
+			}
+		}
+
+		if (Validator.isNull(enclosingCharacter)) {
+			return StringBundler.concat(
+				StringPool.OPEN_BRACKET, escapedDelimiter,
+				StringPool.CLOSE_BRACKET);
+		}
+
+		return StringBundler.concat(
+			escapedDelimiter, "(?=(?:[^", enclosingCharacter, "]*",
+			enclosingCharacter, "[^", enclosingCharacter, "]*",
+			enclosingCharacter, ")*[^", enclosingCharacter, "]*$)");
+	}
+
 	private String _getEnclosingCharacter(
 		Map<String, Serializable> parameters) {
 
 		String enclosingCharacter = (String)parameters.getOrDefault(
 			"enclosingCharacter", null);
 
-		if (enclosingCharacter == null) {
+		if (Validator.isNull(enclosingCharacter)) {
 			return null;
 		}
 
-		// return ' or \"
-
-		if (enclosingCharacter.equals(StringPool.APOSTROPHE)) {
-			return enclosingCharacter;
+		if (enclosingCharacter.equals(StringPool.QUOTE)) {
+			return StringPool.BACK_SLASH + enclosingCharacter;
 		}
 
-		return StringPool.BACK_SLASH + enclosingCharacter;
+		return enclosingCharacter;
 	}
-
-	private static final String[] _EMPTY_STRING_ARRAY = new String[0];
 
 	private static final String[] _ESCAPED_DELIMITERS = {
 		StringPool.OPEN_BRACKET, StringPool.CLOSE_BRACKET,
@@ -151,7 +146,7 @@ public class CSVBatchEngineImportTaskItemReaderImpl
 	};
 
 	private final String _delimiter;
-	private final String _enclosingCharacter;
+	private final String _delimiterRegex;
 	private final String[] _fieldNames;
 	private final InputStream _inputStream;
 	private final UnsyncBufferedReader _unsyncBufferedReader;

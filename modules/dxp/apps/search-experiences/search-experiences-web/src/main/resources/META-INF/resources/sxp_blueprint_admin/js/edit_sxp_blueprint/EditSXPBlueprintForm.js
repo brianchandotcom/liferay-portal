@@ -12,7 +12,7 @@
 import ClayButton from '@clayui/button';
 import ClayToolbar from '@clayui/toolbar';
 import getCN from 'classnames';
-import {useFormik} from 'formik';
+import {setNestedObjectValues, useFormik} from 'formik';
 import {fetch, navigate} from 'frontend-js-web';
 import {PropTypes} from 'prop-types';
 import React, {
@@ -530,7 +530,19 @@ function EditSXPBlueprintForm({
 		});
 	};
 
-	const _handleFetchPreviewSearch = (value, delta, page, attributes) => {
+	/**
+	 * Used by the preview sidebar to perform searches.
+	 * @param {string} query The keyword search query
+	 * @param {number} delta The number of results to return
+	 * @param {number} page The page to return
+	 * @param {Array} attributes The search context attributes
+	 */
+	const _handleFetchPreviewSearch = async (
+		query,
+		delta,
+		page,
+		attributes
+	) => {
 		setPreviewInfo((previewInfo) => ({
 			...previewInfo,
 			loading: true,
@@ -542,20 +554,41 @@ function EditSXPBlueprintForm({
 		try {
 			configuration = _getConfiguration(formik.values);
 			elementInstances = _getElementInstances(formik.values);
+
+			// Touch inputs with errors to show validation errors.
+
+			const errors = await formik.validateForm();
+
+			formik.setTouched(setNestedObjectValues(errors, true));
+
+			// Don't perform a search if there are missing required fields.
+
+			if (!formik.isValid) {
+				throw Liferay.Language.get(
+					'the-configuration-has-missing-or-invalid-values'
+				);
+			}
 		}
 		catch (error) {
-			setPreviewInfo({
-				loading: false,
-				results: {
-					errors: [
-						{
-							msg: Liferay.Language.get(
-								'the-configuration-has-missing-or-invalid-values'
-							),
-						},
-					],
-				},
-			});
+
+			// Add a delay so the loading indicator is visible before showing
+			// the error message. This provides feedback that a new search has
+			// been made.
+
+			setTimeout(() => {
+				setPreviewInfo({
+					loading: false,
+					results: {
+						errors: [
+							{
+								msg: Liferay.Language.get(
+									'the-configuration-has-missing-or-invalid-values'
+								),
+							},
+						],
+					},
+				});
+			}, 100);
 
 			if (process.env.NODE_ENV === 'development') {
 				console.error(error);
@@ -577,7 +610,7 @@ function EditSXPBlueprintForm({
 			addParams('/o/search-experiences-rest/v1.0/search', {
 				page,
 				pageSize: delta,
-				query: value,
+				query,
 			}),
 			{
 				body: JSON.stringify({
@@ -612,18 +645,7 @@ function EditSXPBlueprintForm({
 			.then((responseContent) => {
 				setPreviewInfo({
 					loading: false,
-					results: {
-						...responseContent,
-						warnings: !formik.isValid
-							? [
-									{
-										msg: Liferay.Language.get(
-											'the-configuration-has-missing-or-invalid-values'
-										),
-									},
-							  ]
-							: [],
-					},
+					results: responseContent,
 				});
 			})
 			.catch(() => {
@@ -632,7 +654,7 @@ function EditSXPBlueprintForm({
 						loading: false,
 						results: resultsError,
 					});
-				}, 1000);
+				}, 100);
 			});
 	};
 

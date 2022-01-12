@@ -2,7 +2,7 @@
 	"dependencies": {
 		"@clayui/icon": "3.40.0",
 		"@clayui/layout": "3.40.0",
-		"@clayui/popover": "3.40.0",
+		"@clayui/popover": "3.44.0",
 		"@clayui/sticker": "3.40.0",
 		"classnames": "2.3.1",
 		"frontend-js-web": "*",

@@ -8,7 +8,7 @@
 		"@clayui/icon": "3.40.0",
 		"@clayui/layout": "3.40.0",
 		"@clayui/modal": "3.40.0",
-		"@clayui/popover": "3.40.0",
+		"@clayui/popover": "3.44.0",
 		"@clayui/shared": "3.40.0",
 		"@clayui/table": "3.40.0",
 		"@liferay/map-google-maps": "*",

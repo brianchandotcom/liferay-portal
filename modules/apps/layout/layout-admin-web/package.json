@@ -10,7 +10,7 @@
 		"@clayui/link": "3.40.0",
 		"@clayui/list": "3.43.0",
 		"@clayui/modal": "3.40.0",
-		"@clayui/popover": "3.40.0",
+		"@clayui/popover": "3.44.0",
 		"classnames": "2.3.1",
 		"frontend-js-web": "*",
 		"metal-state": "2.16.8",

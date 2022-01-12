@@ -15,7 +15,6 @@
 package com.liferay.portlet;
 
 import com.liferay.petra.encryptor.Encryptor;
-import com.liferay.petra.encryptor.EncryptorException;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -330,11 +329,11 @@ public class PortletPreferencesFactoryImpl
 				userId = GetterUtil.getLong(
 					Encryptor.decrypt(company.getKeyObj(), doAsUserId), userId);
 			}
-			catch (EncryptorException encryptorException) {
+			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						"Unable to decrypt user ID from " + doAsUserId,
-						encryptorException);
+						exception);
 				}
 				else if (_log.isWarnEnabled()) {
 					_log.warn("Unable to decrypt user ID from " + doAsUserId);

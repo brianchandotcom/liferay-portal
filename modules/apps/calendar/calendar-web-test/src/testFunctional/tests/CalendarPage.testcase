@@ -75,12 +75,14 @@ definition {
 	}
 
 	@description = "LRQA-72024 - Verify that the calendar has Day view"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CalendarHasDayView {
+		Navigator.gotoPage(pageName = "Calendar Page");
 
-		// TODO LRQA-72026 CalendarHasDayView pending implementation
+		CalendarNavigator.gotoView(viewType = "Day");
 
+		CalendarPage.viewDayTableIsDisplayed();
+		
 	}
 
 	@description = "LRQA-72024 - Verify that the calendar has Week view"

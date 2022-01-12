@@ -39,6 +39,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -52,6 +53,127 @@ public class ExpressionVisitorImplTest {
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
+
+	@Before
+	public void setUp() {
+		_expressionVisitorImpl = new ExpressionVisitorImpl(0, _entityModel);
+	}
+
+	@Test
+	public void testMultipleNotNestedOperationsWithSameTitle()
+		throws ExpressionVisitException {
+
+		Map<String, EntityField> entityFieldsMap =
+			_entityModel.getEntityFieldsMap();
+
+		JSONObject jsonObject =
+			(JSONObject)_expressionVisitorImpl.visitBinaryExpressionOperation(
+				BinaryExpression.Operation.AND,
+				_expressionVisitorImpl.visitBinaryExpressionOperation(
+					BinaryExpression.Operation.AND,
+					_expressionVisitorImpl.visitBinaryExpressionOperation(
+						BinaryExpression.Operation.EQ,
+						entityFieldsMap.get("title"), "title1"),
+					_expressionVisitorImpl.visitBinaryExpressionOperation(
+						BinaryExpression.Operation.EQ,
+						entityFieldsMap.get("title"), "title1")),
+				_expressionVisitorImpl.visitBinaryExpressionOperation(
+					BinaryExpression.Operation.EQ, entityFieldsMap.get("title"),
+					"title1"));
+
+		Assert.assertEquals("and", jsonObject.getString("conjunctionName"));
+		Assert.assertEquals("group_2", jsonObject.getString("groupId"));
+
+		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
+
+		Assert.assertEquals(
+			JSONUtil.putAll(
+				JSONUtil.put(
+					"operatorName", "eq"
+				).put(
+					"propertyName", "title"
+				).put(
+					"value", "title1"
+				),
+				JSONUtil.put(
+					"operatorName", "eq"
+				).put(
+					"propertyName", "title"
+				).put(
+					"value", "title1"
+				),
+				JSONUtil.put(
+					"operatorName", "eq"
+				).put(
+					"propertyName", "title"
+				).put(
+					"value", "title1"
+				)
+			).toString(),
+			itemsJSONArray.toString());
+	}
+
+	@Test
+	public void testNestedMultipleOperationsWithSameTitle()
+		throws ExpressionVisitException {
+
+		Map<String, EntityField> entityFieldsMap =
+			_entityModel.getEntityFieldsMap();
+
+		JSONObject jsonObject =
+			(JSONObject)_expressionVisitorImpl.visitBinaryExpressionOperation(
+				BinaryExpression.Operation.OR,
+				_expressionVisitorImpl.visitBinaryExpressionOperation(
+					BinaryExpression.Operation.EQ, entityFieldsMap.get("title"),
+					"title1"),
+				_expressionVisitorImpl.visitBinaryExpressionOperation(
+					BinaryExpression.Operation.AND,
+					_expressionVisitorImpl.visitBinaryExpressionOperation(
+						BinaryExpression.Operation.EQ,
+						entityFieldsMap.get("title"), "title1"),
+					_expressionVisitorImpl.visitBinaryExpressionOperation(
+						BinaryExpression.Operation.EQ,
+						entityFieldsMap.get("title"), "title1")));
+
+		Assert.assertEquals("or", jsonObject.getString("conjunctionName"));
+		Assert.assertEquals("group_2", jsonObject.getString("groupId"));
+
+		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
+
+		Assert.assertEquals(
+			JSONUtil.putAll(
+				JSONUtil.put(
+					"operatorName", "eq"
+				).put(
+					"propertyName", "title"
+				).put(
+					"value", "title1"
+				),
+				JSONUtil.put(
+					"conjunctionName", "and"
+				).put(
+					"groupId", "group_1"
+				).put(
+					"items",
+					JSONUtil.putAll(
+						JSONUtil.put(
+							"operatorName", "eq"
+						).put(
+							"propertyName", "title"
+						).put(
+							"value", "title1"
+						),
+						JSONUtil.put(
+							"operatorName", "eq"
+						).put(
+							"propertyName", "title"
+						).put(
+							"value", "title1"
+						))
+				)
+			).toString(),
+			itemsJSONArray.toString());
+	}
 
 	@Test
 	public void testVisitBinaryExpressionOperationWithAndOperation()
@@ -242,7 +364,6 @@ public class ExpressionVisitorImplTest {
 
 	};
 
-	private static final ExpressionVisitorImpl _expressionVisitorImpl =
-		new ExpressionVisitorImpl(0, _entityModel);
+	private ExpressionVisitorImpl _expressionVisitorImpl;
 
 }

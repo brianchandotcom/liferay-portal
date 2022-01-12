@@ -59,6 +59,7 @@
 			background-color: #98999B;
 			content: "";
 			display: inline-block;
+			flex-shrink: 0;
 			height: 20px;
 			margin-right: 5px;
 			mask: url(${titleIcon.getData()}) no-repeat 50% 50%;

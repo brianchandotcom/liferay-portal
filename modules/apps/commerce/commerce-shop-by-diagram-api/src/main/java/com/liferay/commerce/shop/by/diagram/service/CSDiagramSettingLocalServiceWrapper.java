@@ -14,7 +14,10 @@
 
 package com.liferay.commerce.shop.by.diagram.service;
 
+import com.liferay.commerce.shop.by.diagram.model.CSDiagramSetting;
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
  * Provides a wrapper for {@link CSDiagramSettingLocalService}.
@@ -48,20 +51,17 @@ public class CSDiagramSettingLocalServiceWrapper
 	 * @return the cs diagram setting that was added
 	 */
 	@Override
-	public com.liferay.commerce.shop.by.diagram.model.CSDiagramSetting
-		addCSDiagramSetting(
-			com.liferay.commerce.shop.by.diagram.model.CSDiagramSetting
-				csDiagramSetting) {
+	public CSDiagramSetting addCSDiagramSetting(
+		CSDiagramSetting csDiagramSetting) {
 
 		return _csDiagramSettingLocalService.addCSDiagramSetting(
 			csDiagramSetting);
 	}
 
 	@Override
-	public com.liferay.commerce.shop.by.diagram.model.CSDiagramSetting
-			addCSDiagramSetting(
-				long userId, long cpDefinitionId, long cpAttachmentFileEntryId,
-				String color, double radius, String type)
+	public CSDiagramSetting addCSDiagramSetting(
+			long userId, long cpDefinitionId, long cpAttachmentFileEntryId,
+			String color, double radius, String type)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _csDiagramSettingLocalService.addCSDiagramSetting(
@@ -76,9 +76,7 @@ public class CSDiagramSettingLocalServiceWrapper
 	 * @return the new cs diagram setting
 	 */
 	@Override
-	public com.liferay.commerce.shop.by.diagram.model.CSDiagramSetting
-		createCSDiagramSetting(long CSDiagramSettingId) {
-
+	public CSDiagramSetting createCSDiagramSetting(long CSDiagramSettingId) {
 		return _csDiagramSettingLocalService.createCSDiagramSetting(
 			CSDiagramSettingId);
 	}
@@ -106,10 +104,8 @@ public class CSDiagramSettingLocalServiceWrapper
 	 * @return the cs diagram setting that was removed
 	 */
 	@Override
-	public com.liferay.commerce.shop.by.diagram.model.CSDiagramSetting
-		deleteCSDiagramSetting(
-			com.liferay.commerce.shop.by.diagram.model.CSDiagramSetting
-				csDiagramSetting) {
+	public CSDiagramSetting deleteCSDiagramSetting(
+		CSDiagramSetting csDiagramSetting) {
 
 		return _csDiagramSettingLocalService.deleteCSDiagramSetting(
 			csDiagramSetting);
@@ -127,8 +123,7 @@ public class CSDiagramSettingLocalServiceWrapper
 	 * @throws PortalException if a cs diagram setting with the primary key could not be found
 	 */
 	@Override
-	public com.liferay.commerce.shop.by.diagram.model.CSDiagramSetting
-			deleteCSDiagramSetting(long CSDiagramSettingId)
+	public CSDiagramSetting deleteCSDiagramSetting(long CSDiagramSettingId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _csDiagramSettingLocalService.deleteCSDiagramSetting(
@@ -136,8 +131,8 @@ public class CSDiagramSettingLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.commerce.shop.by.diagram.model.CSDiagramSetting
-		deleteCSDiagramSettingByCPDefinitionId(long cpDefinitionId) {
+	public CSDiagramSetting deleteCSDiagramSettingByCPDefinitionId(
+		long cpDefinitionId) {
 
 		return _csDiagramSettingLocalService.
 			deleteCSDiagramSettingByCPDefinitionId(cpDefinitionId);
@@ -259,16 +254,14 @@ public class CSDiagramSettingLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.commerce.shop.by.diagram.model.CSDiagramSetting
-		fetchCSDiagramSetting(long CSDiagramSettingId) {
-
+	public CSDiagramSetting fetchCSDiagramSetting(long CSDiagramSettingId) {
 		return _csDiagramSettingLocalService.fetchCSDiagramSetting(
 			CSDiagramSettingId);
 	}
 
 	@Override
-	public com.liferay.commerce.shop.by.diagram.model.CSDiagramSetting
-		fetchCSDiagramSettingByCPDefinitionId(long cpDefinitionId) {
+	public CSDiagramSetting fetchCSDiagramSettingByCPDefinitionId(
+		long cpDefinitionId) {
 
 		return _csDiagramSettingLocalService.
 			fetchCSDiagramSettingByCPDefinitionId(cpDefinitionId);
@@ -282,8 +275,8 @@ public class CSDiagramSettingLocalServiceWrapper
 	 * @return the matching cs diagram setting, or <code>null</code> if a matching cs diagram setting could not be found
 	 */
 	@Override
-	public com.liferay.commerce.shop.by.diagram.model.CSDiagramSetting
-		fetchCSDiagramSettingByUuidAndCompanyId(String uuid, long companyId) {
+	public CSDiagramSetting fetchCSDiagramSettingByUuidAndCompanyId(
+		String uuid, long companyId) {
 
 		return _csDiagramSettingLocalService.
 			fetchCSDiagramSettingByUuidAndCompanyId(uuid, companyId);
@@ -304,8 +297,7 @@ public class CSDiagramSettingLocalServiceWrapper
 	 * @throws PortalException if a cs diagram setting with the primary key could not be found
 	 */
 	@Override
-	public com.liferay.commerce.shop.by.diagram.model.CSDiagramSetting
-			getCSDiagramSetting(long CSDiagramSettingId)
+	public CSDiagramSetting getCSDiagramSetting(long CSDiagramSettingId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _csDiagramSettingLocalService.getCSDiagramSetting(
@@ -313,8 +305,8 @@ public class CSDiagramSettingLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.commerce.shop.by.diagram.model.CSDiagramSetting
-			getCSDiagramSettingByCPDefinitionId(long cpDefinitionId)
+	public CSDiagramSetting getCSDiagramSettingByCPDefinitionId(
+			long cpDefinitionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _csDiagramSettingLocalService.
@@ -330,8 +322,8 @@ public class CSDiagramSettingLocalServiceWrapper
 	 * @throws PortalException if a matching cs diagram setting could not be found
 	 */
 	@Override
-	public com.liferay.commerce.shop.by.diagram.model.CSDiagramSetting
-			getCSDiagramSettingByUuidAndCompanyId(String uuid, long companyId)
+	public CSDiagramSetting getCSDiagramSettingByUuidAndCompanyId(
+			String uuid, long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _csDiagramSettingLocalService.
@@ -350,9 +342,8 @@ public class CSDiagramSettingLocalServiceWrapper
 	 * @return the range of cs diagram settings
 	 */
 	@Override
-	public java.util.List
-		<com.liferay.commerce.shop.by.diagram.model.CSDiagramSetting>
-			getCSDiagramSettings(int start, int end) {
+	public java.util.List<CSDiagramSetting> getCSDiagramSettings(
+		int start, int end) {
 
 		return _csDiagramSettingLocalService.getCSDiagramSettings(start, end);
 	}
@@ -417,24 +408,41 @@ public class CSDiagramSettingLocalServiceWrapper
 	 * @return the cs diagram setting that was updated
 	 */
 	@Override
-	public com.liferay.commerce.shop.by.diagram.model.CSDiagramSetting
-		updateCSDiagramSetting(
-			com.liferay.commerce.shop.by.diagram.model.CSDiagramSetting
-				csDiagramSetting) {
+	public CSDiagramSetting updateCSDiagramSetting(
+		CSDiagramSetting csDiagramSetting) {
 
 		return _csDiagramSettingLocalService.updateCSDiagramSetting(
 			csDiagramSetting);
 	}
 
 	@Override
-	public com.liferay.commerce.shop.by.diagram.model.CSDiagramSetting
-			updateCSDiagramSetting(
-				long csDiagramSettingId, long cpAttachmentFileEntryId,
-				String color, double radius, String type)
+	public CSDiagramSetting updateCSDiagramSetting(
+			long csDiagramSettingId, long cpAttachmentFileEntryId, String color,
+			double radius, String type)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _csDiagramSettingLocalService.updateCSDiagramSetting(
 			csDiagramSettingId, cpAttachmentFileEntryId, color, radius, type);
+	}
+
+	@Override
+	public CTPersistence<CSDiagramSetting> getCTPersistence() {
+		return _csDiagramSettingLocalService.getCTPersistence();
+	}
+
+	@Override
+	public Class<CSDiagramSetting> getModelClass() {
+		return _csDiagramSettingLocalService.getModelClass();
+	}
+
+	@Override
+	public <R, E extends Throwable> R updateWithUnsafeFunction(
+			UnsafeFunction<CTPersistence<CSDiagramSetting>, R, E>
+				updateUnsafeFunction)
+		throws E {
+
+		return _csDiagramSettingLocalService.updateWithUnsafeFunction(
+			updateUnsafeFunction);
 	}
 
 	@Override

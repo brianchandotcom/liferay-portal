@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * <p>
@@ -43,6 +45,7 @@ public class CSDiagramEntryWrapper
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("mvccVersion", getMvccVersion());
+		attributes.put("ctCollectionId", getCtCollectionId());
 		attributes.put("CSDiagramEntryId", getCSDiagramEntryId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
@@ -66,6 +69,12 @@ public class CSDiagramEntryWrapper
 
 		if (mvccVersion != null) {
 			setMvccVersion(mvccVersion);
+		}
+
+		Long ctCollectionId = (Long)attributes.get("ctCollectionId");
+
+		if (ctCollectionId != null) {
+			setCtCollectionId(ctCollectionId);
 		}
 
 		Long CSDiagramEntryId = (Long)attributes.get("CSDiagramEntryId");
@@ -217,6 +226,16 @@ public class CSDiagramEntryWrapper
 	@Override
 	public long getCSDiagramEntryId() {
 		return model.getCSDiagramEntryId();
+	}
+
+	/**
+	 * Returns the ct collection ID of this cs diagram entry.
+	 *
+	 * @return the ct collection ID of this cs diagram entry
+	 */
+	@Override
+	public long getCtCollectionId() {
+		return model.getCtCollectionId();
 	}
 
 	/**
@@ -395,6 +414,16 @@ public class CSDiagramEntryWrapper
 	}
 
 	/**
+	 * Sets the ct collection ID of this cs diagram entry.
+	 *
+	 * @param ctCollectionId the ct collection ID of this cs diagram entry
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		model.setCtCollectionId(ctCollectionId);
+	}
+
+	/**
 	 * Sets whether this cs diagram entry is diagram.
 	 *
 	 * @param diagram the diagram of this cs diagram entry
@@ -492,6 +521,20 @@ public class CSDiagramEntryWrapper
 	@Override
 	public void setUserUuid(String userUuid) {
 		model.setUserUuid(userUuid);
+	}
+
+	@Override
+	public Map<String, Function<CSDiagramEntry, Object>>
+		getAttributeGetterFunctions() {
+
+		return model.getAttributeGetterFunctions();
+	}
+
+	@Override
+	public Map<String, BiConsumer<CSDiagramEntry, Object>>
+		getAttributeSetterBiConsumers() {
+
+		return model.getAttributeSetterBiConsumers();
 	}
 
 	@Override

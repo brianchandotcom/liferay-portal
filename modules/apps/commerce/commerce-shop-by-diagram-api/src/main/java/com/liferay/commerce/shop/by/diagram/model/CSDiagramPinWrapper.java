@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * <p>
@@ -43,6 +45,7 @@ public class CSDiagramPinWrapper
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("mvccVersion", getMvccVersion());
+		attributes.put("ctCollectionId", getCtCollectionId());
 		attributes.put("CSDiagramPinId", getCSDiagramPinId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
@@ -63,6 +66,12 @@ public class CSDiagramPinWrapper
 
 		if (mvccVersion != null) {
 			setMvccVersion(mvccVersion);
+		}
+
+		Long ctCollectionId = (Long)attributes.get("ctCollectionId");
+
+		if (ctCollectionId != null) {
+			setCtCollectionId(ctCollectionId);
 		}
 
 		Long CSDiagramPinId = (Long)attributes.get("CSDiagramPinId");
@@ -176,6 +185,16 @@ public class CSDiagramPinWrapper
 	@Override
 	public long getCSDiagramPinId() {
 		return model.getCSDiagramPinId();
+	}
+
+	/**
+	 * Returns the ct collection ID of this cs diagram pin.
+	 *
+	 * @return the ct collection ID of this cs diagram pin
+	 */
+	@Override
+	public long getCtCollectionId() {
+		return model.getCtCollectionId();
 	}
 
 	/**
@@ -314,6 +333,16 @@ public class CSDiagramPinWrapper
 	}
 
 	/**
+	 * Sets the ct collection ID of this cs diagram pin.
+	 *
+	 * @param ctCollectionId the ct collection ID of this cs diagram pin
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		model.setCtCollectionId(ctCollectionId);
+	}
+
+	/**
 	 * Sets the modified date of this cs diagram pin.
 	 *
 	 * @param modifiedDate the modified date of this cs diagram pin
@@ -401,6 +430,20 @@ public class CSDiagramPinWrapper
 	@Override
 	public void setUserUuid(String userUuid) {
 		model.setUserUuid(userUuid);
+	}
+
+	@Override
+	public Map<String, Function<CSDiagramPin, Object>>
+		getAttributeGetterFunctions() {
+
+		return model.getAttributeGetterFunctions();
+	}
+
+	@Override
+	public Map<String, BiConsumer<CSDiagramPin, Object>>
+		getAttributeSetterBiConsumers() {
+
+		return model.getAttributeSetterBiConsumers();
 	}
 
 	@Override

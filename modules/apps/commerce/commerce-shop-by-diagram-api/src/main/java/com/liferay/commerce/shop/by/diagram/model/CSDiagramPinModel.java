@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.model.AuditedModel;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import java.util.Date;
 
@@ -37,7 +38,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface CSDiagramPinModel
-	extends AuditedModel, BaseModel<CSDiagramPin>, MVCCModel, ShardedModel {
+	extends AuditedModel, BaseModel<CSDiagramPin>, CTModel<CSDiagramPin>,
+			MVCCModel, ShardedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -50,6 +52,7 @@ public interface CSDiagramPinModel
 	 *
 	 * @return the primary key of this cs diagram pin
 	 */
+	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -57,6 +60,7 @@ public interface CSDiagramPinModel
 	 *
 	 * @param primaryKey the primary key of this cs diagram pin
 	 */
+	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -74,6 +78,22 @@ public interface CSDiagramPinModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
+
+	/**
+	 * Returns the ct collection ID of this cs diagram pin.
+	 *
+	 * @return the ct collection ID of this cs diagram pin
+	 */
+	@Override
+	public long getCtCollectionId();
+
+	/**
+	 * Sets the ct collection ID of this cs diagram pin.
+	 *
+	 * @param ctCollectionId the ct collection ID of this cs diagram pin
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the cs diagram pin ID of this cs diagram pin.

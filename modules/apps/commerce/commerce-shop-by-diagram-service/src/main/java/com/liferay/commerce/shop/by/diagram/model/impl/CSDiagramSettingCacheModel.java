@@ -78,10 +78,12 @@ public class CSDiagramSettingCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", CSDiagramSettingId=");
@@ -116,6 +118,7 @@ public class CSDiagramSettingCacheModel
 		CSDiagramSettingImpl csDiagramSettingImpl = new CSDiagramSettingImpl();
 
 		csDiagramSettingImpl.setMvccVersion(mvccVersion);
+		csDiagramSettingImpl.setCtCollectionId(ctCollectionId);
 
 		if (uuid == null) {
 			csDiagramSettingImpl.setUuid("");
@@ -177,6 +180,8 @@ public class CSDiagramSettingCacheModel
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
+
+		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		CSDiagramSettingId = objectInput.readLong();
@@ -200,6 +205,8 @@ public class CSDiagramSettingCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(ctCollectionId);
 
 		if (uuid == null) {
 			objectOutput.writeUTF("");
@@ -246,6 +253,7 @@ public class CSDiagramSettingCacheModel
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public String uuid;
 	public long CSDiagramSettingId;
 	public long companyId;

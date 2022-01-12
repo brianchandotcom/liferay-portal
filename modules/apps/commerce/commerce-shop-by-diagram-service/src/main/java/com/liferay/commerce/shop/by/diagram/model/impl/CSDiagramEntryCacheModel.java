@@ -77,10 +77,12 @@ public class CSDiagramEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", CSDiagramEntryId=");
 		sb.append(CSDiagramEntryId);
 		sb.append(", companyId=");
@@ -117,6 +119,7 @@ public class CSDiagramEntryCacheModel
 		CSDiagramEntryImpl csDiagramEntryImpl = new CSDiagramEntryImpl();
 
 		csDiagramEntryImpl.setMvccVersion(mvccVersion);
+		csDiagramEntryImpl.setCtCollectionId(ctCollectionId);
 		csDiagramEntryImpl.setCSDiagramEntryId(CSDiagramEntryId);
 		csDiagramEntryImpl.setCompanyId(companyId);
 		csDiagramEntryImpl.setUserId(userId);
@@ -171,6 +174,8 @@ public class CSDiagramEntryCacheModel
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
 
+		ctCollectionId = objectInput.readLong();
+
 		CSDiagramEntryId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
@@ -196,6 +201,8 @@ public class CSDiagramEntryCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(ctCollectionId);
 
 		objectOutput.writeLong(CSDiagramEntryId);
 
@@ -239,6 +246,7 @@ public class CSDiagramEntryCacheModel
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public long CSDiagramEntryId;
 	public long companyId;
 	public long userId;

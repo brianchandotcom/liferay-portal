@@ -127,6 +127,8 @@ public class CSDiagramEntryPersistenceTest {
 
 		newCSDiagramEntry.setMvccVersion(RandomTestUtil.nextLong());
 
+		newCSDiagramEntry.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newCSDiagramEntry.setCompanyId(RandomTestUtil.nextLong());
 
 		newCSDiagramEntry.setUserId(RandomTestUtil.nextLong());
@@ -159,6 +161,9 @@ public class CSDiagramEntryPersistenceTest {
 		Assert.assertEquals(
 			existingCSDiagramEntry.getMvccVersion(),
 			newCSDiagramEntry.getMvccVersion());
+		Assert.assertEquals(
+			existingCSDiagramEntry.getCtCollectionId(),
+			newCSDiagramEntry.getCtCollectionId());
 		Assert.assertEquals(
 			existingCSDiagramEntry.getCSDiagramEntryId(),
 			newCSDiagramEntry.getCSDiagramEntryId());
@@ -245,11 +250,11 @@ public class CSDiagramEntryPersistenceTest {
 
 	protected OrderByComparator<CSDiagramEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"CSDiagramEntry", "mvccVersion", true, "CSDiagramEntryId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "CPDefinitionId", true, "CPInstanceId",
-			true, "CProductId", true, "diagram", true, "quantity", true,
-			"sequence", true, "sku", true);
+			"CSDiagramEntry", "mvccVersion", true, "ctCollectionId", true,
+			"CSDiagramEntryId", true, "companyId", true, "userId", true,
+			"userName", true, "createDate", true, "modifiedDate", true,
+			"CPDefinitionId", true, "CPInstanceId", true, "CProductId", true,
+			"diagram", true, "quantity", true, "sequence", true, "sku", true);
 	}
 
 	@Test
@@ -535,6 +540,8 @@ public class CSDiagramEntryPersistenceTest {
 		CSDiagramEntry csDiagramEntry = _persistence.create(pk);
 
 		csDiagramEntry.setMvccVersion(RandomTestUtil.nextLong());
+
+		csDiagramEntry.setCtCollectionId(RandomTestUtil.nextLong());
 
 		csDiagramEntry.setCompanyId(RandomTestUtil.nextLong());
 

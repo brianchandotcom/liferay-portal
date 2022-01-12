@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedAuditedModel;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import java.util.Date;
 
@@ -37,8 +38,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface CSDiagramSettingModel
-	extends BaseModel<CSDiagramSetting>, MVCCModel, ShardedModel,
-			StagedAuditedModel {
+	extends BaseModel<CSDiagramSetting>, CTModel<CSDiagramSetting>, MVCCModel,
+			ShardedModel, StagedAuditedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -51,6 +52,7 @@ public interface CSDiagramSettingModel
 	 *
 	 * @return the primary key of this cs diagram setting
 	 */
+	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -58,6 +60,7 @@ public interface CSDiagramSettingModel
 	 *
 	 * @param primaryKey the primary key of this cs diagram setting
 	 */
+	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -75,6 +78,22 @@ public interface CSDiagramSettingModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
+
+	/**
+	 * Returns the ct collection ID of this cs diagram setting.
+	 *
+	 * @return the ct collection ID of this cs diagram setting
+	 */
+	@Override
+	public long getCtCollectionId();
+
+	/**
+	 * Sets the ct collection ID of this cs diagram setting.
+	 *
+	 * @param ctCollectionId the ct collection ID of this cs diagram setting
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the uuid of this cs diagram setting.

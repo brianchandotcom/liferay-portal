@@ -14,7 +14,10 @@
 
 package com.liferay.commerce.shop.by.diagram.service;
 
+import com.liferay.commerce.shop.by.diagram.model.CSDiagramPin;
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
  * Provides a wrapper for {@link CSDiagramPinLocalService}.
@@ -48,19 +51,14 @@ public class CSDiagramPinLocalServiceWrapper
 	 * @return the cs diagram pin that was added
 	 */
 	@Override
-	public com.liferay.commerce.shop.by.diagram.model.CSDiagramPin
-		addCSDiagramPin(
-			com.liferay.commerce.shop.by.diagram.model.CSDiagramPin
-				csDiagramPin) {
-
+	public CSDiagramPin addCSDiagramPin(CSDiagramPin csDiagramPin) {
 		return _csDiagramPinLocalService.addCSDiagramPin(csDiagramPin);
 	}
 
 	@Override
-	public com.liferay.commerce.shop.by.diagram.model.CSDiagramPin
-			addCSDiagramPin(
-				long userId, long cpDefinitionId, double positionX,
-				double positionY, String sequence)
+	public CSDiagramPin addCSDiagramPin(
+			long userId, long cpDefinitionId, double positionX,
+			double positionY, String sequence)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _csDiagramPinLocalService.addCSDiagramPin(
@@ -74,9 +72,7 @@ public class CSDiagramPinLocalServiceWrapper
 	 * @return the new cs diagram pin
 	 */
 	@Override
-	public com.liferay.commerce.shop.by.diagram.model.CSDiagramPin
-		createCSDiagramPin(long CSDiagramPinId) {
-
+	public CSDiagramPin createCSDiagramPin(long CSDiagramPinId) {
 		return _csDiagramPinLocalService.createCSDiagramPin(CSDiagramPinId);
 	}
 
@@ -102,11 +98,7 @@ public class CSDiagramPinLocalServiceWrapper
 	 * @return the cs diagram pin that was removed
 	 */
 	@Override
-	public com.liferay.commerce.shop.by.diagram.model.CSDiagramPin
-		deleteCSDiagramPin(
-			com.liferay.commerce.shop.by.diagram.model.CSDiagramPin
-				csDiagramPin) {
-
+	public CSDiagramPin deleteCSDiagramPin(CSDiagramPin csDiagramPin) {
 		return _csDiagramPinLocalService.deleteCSDiagramPin(csDiagramPin);
 	}
 
@@ -122,8 +114,7 @@ public class CSDiagramPinLocalServiceWrapper
 	 * @throws PortalException if a cs diagram pin with the primary key could not be found
 	 */
 	@Override
-	public com.liferay.commerce.shop.by.diagram.model.CSDiagramPin
-			deleteCSDiagramPin(long CSDiagramPinId)
+	public CSDiagramPin deleteCSDiagramPin(long CSDiagramPinId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _csDiagramPinLocalService.deleteCSDiagramPin(CSDiagramPinId);
@@ -248,9 +239,7 @@ public class CSDiagramPinLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.commerce.shop.by.diagram.model.CSDiagramPin
-		fetchCSDiagramPin(long CSDiagramPinId) {
-
+	public CSDiagramPin fetchCSDiagramPin(long CSDiagramPinId) {
 		return _csDiagramPinLocalService.fetchCSDiagramPin(CSDiagramPinId);
 	}
 
@@ -269,8 +258,7 @@ public class CSDiagramPinLocalServiceWrapper
 	 * @throws PortalException if a cs diagram pin with the primary key could not be found
 	 */
 	@Override
-	public com.liferay.commerce.shop.by.diagram.model.CSDiagramPin
-			getCSDiagramPin(long CSDiagramPinId)
+	public CSDiagramPin getCSDiagramPin(long CSDiagramPinId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _csDiagramPinLocalService.getCSDiagramPin(CSDiagramPinId);
@@ -288,17 +276,13 @@ public class CSDiagramPinLocalServiceWrapper
 	 * @return the range of cs diagram pins
 	 */
 	@Override
-	public java.util.List
-		<com.liferay.commerce.shop.by.diagram.model.CSDiagramPin>
-			getCSDiagramPins(int start, int end) {
-
+	public java.util.List<CSDiagramPin> getCSDiagramPins(int start, int end) {
 		return _csDiagramPinLocalService.getCSDiagramPins(start, end);
 	}
 
 	@Override
-	public java.util.List
-		<com.liferay.commerce.shop.by.diagram.model.CSDiagramPin>
-			getCSDiagramPins(long cpDefinitionId, int start, int end) {
+	public java.util.List<CSDiagramPin> getCSDiagramPins(
+		long cpDefinitionId, int start, int end) {
 
 		return _csDiagramPinLocalService.getCSDiagramPins(
 			cpDefinitionId, start, end);
@@ -358,23 +342,38 @@ public class CSDiagramPinLocalServiceWrapper
 	 * @return the cs diagram pin that was updated
 	 */
 	@Override
-	public com.liferay.commerce.shop.by.diagram.model.CSDiagramPin
-		updateCSDiagramPin(
-			com.liferay.commerce.shop.by.diagram.model.CSDiagramPin
-				csDiagramPin) {
-
+	public CSDiagramPin updateCSDiagramPin(CSDiagramPin csDiagramPin) {
 		return _csDiagramPinLocalService.updateCSDiagramPin(csDiagramPin);
 	}
 
 	@Override
-	public com.liferay.commerce.shop.by.diagram.model.CSDiagramPin
-			updateCSDiagramPin(
-				long csDiagramPinId, double positionX, double positionY,
-				String sequence)
+	public CSDiagramPin updateCSDiagramPin(
+			long csDiagramPinId, double positionX, double positionY,
+			String sequence)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _csDiagramPinLocalService.updateCSDiagramPin(
 			csDiagramPinId, positionX, positionY, sequence);
+	}
+
+	@Override
+	public CTPersistence<CSDiagramPin> getCTPersistence() {
+		return _csDiagramPinLocalService.getCTPersistence();
+	}
+
+	@Override
+	public Class<CSDiagramPin> getModelClass() {
+		return _csDiagramPinLocalService.getModelClass();
+	}
+
+	@Override
+	public <R, E extends Throwable> R updateWithUnsafeFunction(
+			UnsafeFunction<CTPersistence<CSDiagramPin>, R, E>
+				updateUnsafeFunction)
+		throws E {
+
+		return _csDiagramPinLocalService.updateWithUnsafeFunction(
+			updateUnsafeFunction);
 	}
 
 	@Override

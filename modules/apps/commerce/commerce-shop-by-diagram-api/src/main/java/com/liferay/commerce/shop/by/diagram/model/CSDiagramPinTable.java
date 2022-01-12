@@ -34,6 +34,8 @@ public class CSDiagramPinTable extends BaseTable<CSDiagramPinTable> {
 
 	public final Column<CSDiagramPinTable, Long> mvccVersion = createColumn(
 		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<CSDiagramPinTable, Long> ctCollectionId = createColumn(
+		"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<CSDiagramPinTable, Long> CSDiagramPinId = createColumn(
 		"CSDiagramPinId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<CSDiagramPinTable, Long> companyId = createColumn(

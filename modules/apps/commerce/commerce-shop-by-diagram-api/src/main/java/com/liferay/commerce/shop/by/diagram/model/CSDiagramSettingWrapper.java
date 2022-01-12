@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * <p>
@@ -44,6 +46,7 @@ public class CSDiagramSettingWrapper
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("mvccVersion", getMvccVersion());
+		attributes.put("ctCollectionId", getCtCollectionId());
 		attributes.put("uuid", getUuid());
 		attributes.put("CSDiagramSettingId", getCSDiagramSettingId());
 		attributes.put("companyId", getCompanyId());
@@ -66,6 +69,12 @@ public class CSDiagramSettingWrapper
 
 		if (mvccVersion != null) {
 			setMvccVersion(mvccVersion);
+		}
+
+		Long ctCollectionId = (Long)attributes.get("ctCollectionId");
+
+		if (ctCollectionId != null) {
+			setCtCollectionId(ctCollectionId);
 		}
 
 		String uuid = (String)attributes.get("uuid");
@@ -220,6 +229,16 @@ public class CSDiagramSettingWrapper
 	@Override
 	public long getCSDiagramSettingId() {
 		return model.getCSDiagramSettingId();
+	}
+
+	/**
+	 * Returns the ct collection ID of this cs diagram setting.
+	 *
+	 * @return the ct collection ID of this cs diagram setting
+	 */
+	@Override
+	public long getCtCollectionId() {
+		return model.getCtCollectionId();
 	}
 
 	/**
@@ -378,6 +397,16 @@ public class CSDiagramSettingWrapper
 	}
 
 	/**
+	 * Sets the ct collection ID of this cs diagram setting.
+	 *
+	 * @param ctCollectionId the ct collection ID of this cs diagram setting
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		model.setCtCollectionId(ctCollectionId);
+	}
+
+	/**
 	 * Sets the modified date of this cs diagram setting.
 	 *
 	 * @param modifiedDate the modified date of this cs diagram setting
@@ -465,6 +494,20 @@ public class CSDiagramSettingWrapper
 	@Override
 	public void setUuid(String uuid) {
 		model.setUuid(uuid);
+	}
+
+	@Override
+	public Map<String, Function<CSDiagramSetting, Object>>
+		getAttributeGetterFunctions() {
+
+		return model.getAttributeGetterFunctions();
+	}
+
+	@Override
+	public Map<String, BiConsumer<CSDiagramSetting, Object>>
+		getAttributeSetterBiConsumers() {
+
+		return model.getAttributeSetterBiConsumers();
 	}
 
 	@Override

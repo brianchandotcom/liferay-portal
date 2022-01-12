@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.shop.by.diagram.service;
 
+import com.liferay.commerce.shop.by.diagram.model.CSDiagramPin;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
@@ -35,10 +36,9 @@ public class CSDiagramPinServiceWrapper
 	}
 
 	@Override
-	public com.liferay.commerce.shop.by.diagram.model.CSDiagramPin
-			addCSDiagramPin(
-				long cpDefinitionId, double positionX, double positionY,
-				String sequence)
+	public CSDiagramPin addCSDiagramPin(
+			long cpDefinitionId, double positionX, double positionY,
+			String sequence)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _csDiagramPinService.addCSDiagramPin(
@@ -46,9 +46,7 @@ public class CSDiagramPinServiceWrapper
 	}
 
 	@Override
-	public void deleteCSDiagramPin(
-			com.liferay.commerce.shop.by.diagram.model.CSDiagramPin
-				csDiagramPin)
+	public void deleteCSDiagramPin(CSDiagramPin csDiagramPin)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_csDiagramPinService.deleteCSDiagramPin(csDiagramPin);
@@ -62,25 +60,21 @@ public class CSDiagramPinServiceWrapper
 	}
 
 	@Override
-	public com.liferay.commerce.shop.by.diagram.model.CSDiagramPin
-		fetchCSDiagramPin(long csDiagramPinId) {
-
+	public CSDiagramPin fetchCSDiagramPin(long csDiagramPinId) {
 		return _csDiagramPinService.fetchCSDiagramPin(csDiagramPinId);
 	}
 
 	@Override
-	public com.liferay.commerce.shop.by.diagram.model.CSDiagramPin
-			getCSDiagramPin(long csDiagramPinId)
+	public CSDiagramPin getCSDiagramPin(long csDiagramPinId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _csDiagramPinService.getCSDiagramPin(csDiagramPinId);
 	}
 
 	@Override
-	public java.util.List
-		<com.liferay.commerce.shop.by.diagram.model.CSDiagramPin>
-				getCSDiagramPins(long cpDefinitionId, int start, int end)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public java.util.List<CSDiagramPin> getCSDiagramPins(
+			long cpDefinitionId, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _csDiagramPinService.getCSDiagramPins(
 			cpDefinitionId, start, end);
@@ -104,10 +98,9 @@ public class CSDiagramPinServiceWrapper
 	}
 
 	@Override
-	public com.liferay.commerce.shop.by.diagram.model.CSDiagramPin
-			updateCSDiagramPin(
-				long csDiagramPinId, double positionX, double positionY,
-				String sequence)
+	public CSDiagramPin updateCSDiagramPin(
+			long csDiagramPinId, double positionX, double positionY,
+			String sequence)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _csDiagramPinService.updateCSDiagramPin(

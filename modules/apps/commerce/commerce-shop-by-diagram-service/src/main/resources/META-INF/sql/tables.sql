@@ -1,6 +1,7 @@
 create table CSDiagramEntry (
 	mvccVersion LONG default 0 not null,
-	CSDiagramEntryId LONG not null primary key,
+	ctCollectionId LONG default 0 not null,
+	CSDiagramEntryId LONG not null,
 	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
@@ -12,12 +13,14 @@ create table CSDiagramEntry (
 	diagram BOOLEAN,
 	quantity INTEGER,
 	sequence VARCHAR(75) null,
-	sku VARCHAR(75) null
+	sku VARCHAR(75) null,
+	primary key (CSDiagramEntryId, ctCollectionId)
 );
 
 create table CSDiagramPin (
 	mvccVersion LONG default 0 not null,
-	CSDiagramPinId LONG not null primary key,
+	ctCollectionId LONG default 0 not null,
+	CSDiagramPinId LONG not null,
 	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
@@ -26,13 +29,15 @@ create table CSDiagramPin (
 	CPDefinitionId LONG,
 	positionX DOUBLE,
 	positionY DOUBLE,
-	sequence VARCHAR(75) null
+	sequence VARCHAR(75) null,
+	primary key (CSDiagramPinId, ctCollectionId)
 );
 
 create table CSDiagramSetting (
 	mvccVersion LONG default 0 not null,
+	ctCollectionId LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
-	CSDiagramSettingId LONG not null primary key,
+	CSDiagramSettingId LONG not null,
 	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
@@ -42,5 +47,6 @@ create table CSDiagramSetting (
 	CPDefinitionId LONG,
 	color VARCHAR(75) null,
 	radius DOUBLE,
-	type_ VARCHAR(75) null
+	type_ VARCHAR(75) null,
+	primary key (CSDiagramSettingId, ctCollectionId)
 );

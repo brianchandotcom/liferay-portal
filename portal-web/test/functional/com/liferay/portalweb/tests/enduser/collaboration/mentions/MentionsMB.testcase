@@ -2,6 +2,7 @@
 definition {
 
 	property custom.properties = "jsonws.web.service.paths.excludes=";
+	property portal.acceptance = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.component.names = "Message Boards";

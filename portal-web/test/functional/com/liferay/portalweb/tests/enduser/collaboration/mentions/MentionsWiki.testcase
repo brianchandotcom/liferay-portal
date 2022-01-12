@@ -55,6 +55,8 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanViewWikiCommentMentionedUser {
+		property portal.acceptance = "true";
+
 		JSONWiki.addWikiPage(
 			groupName = "Guest",
 			wikiNodeName = "Main",

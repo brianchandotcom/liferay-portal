@@ -241,6 +241,10 @@ definition {
 			PortletEntry.publish();
 		}
 
+		task ("Assert there is no error in the console") {
+			AssertConsoleTextNotPresent(value1 = "error");
+		}
+
 		task ("View the default language of web content is es-ES") {
 			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 

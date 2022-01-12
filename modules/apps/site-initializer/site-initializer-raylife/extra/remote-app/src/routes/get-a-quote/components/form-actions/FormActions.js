@@ -17,11 +17,11 @@ import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import React, {useContext, useState} from 'react';
 import {useFormContext} from 'react-hook-form';
+import {WarningBadge} from '../../../../common/components/fragments/Badges/Warning';
 import {DEVICES} from '../../../../common/utils/constants';
-import ProgressSavedModal from '../../../../routes/get-a-quote/components/containers/Forms/Modal/ProgressSaved';
-import {AppContext} from '../../../../routes/get-a-quote/context/AppContextProvider';
+import {AppContext} from '../../context/AppContextProvider';
 
-import {WarningBadge} from '../Badges/Warning';
+import ProgressSavedModal from '../containers/Forms/Modal/ProgressSaved';
 
 export function CardFormActions({isValid = true, onNext, onPrevious, onSave}) {
 	const {

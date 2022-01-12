@@ -1206,21 +1206,21 @@ definition {
 	@priority = "4"
 	test ViewAssociatedDisplayPageFromCopyOfWebContent {
 		task ("Add two Public Pages and Add an Asset Publisher to each page") {
-			for (var index : list "1,2") {
+			for (var i : list "1,2") {
 				JSONLayout.addPublicLayout(
 					groupName = "Test Site Name",
-					layoutName = "Test Page ${index}");
+					layoutName = "Test Page Name ${i}");
 
 				JSONLayout.addWidgetToPublicLayout(
 					groupName = "Test Site Name",
-					layoutName = "Test Page ${index}",
+					layoutName = "Test Page Name ${i}",
 					widgetName = "Asset Publisher");
 			}
 		}
 
 		task ("Set Asset Publisher in the second page as the Default Asset Publisher") {
 			Navigator.gotoSitePage(
-				pageName = "Test Page 2",
+				pageName = "Test Page Name 2",
 				siteName = "Test Site Name");
 
 			AssetPublisherPortlet.configureDisplaySettings(displaySettings = "Set as the Default Asset Publisher for This Page");
@@ -1236,7 +1236,7 @@ definition {
 				webContentTitle = "WC WebContent 1");
 
 			WebContent.editDisplayPage(
-				pageName = "Test Page 2",
+				pageName = "Test Page Name 2",
 				pageType = "Public Pages");
 
 			PortletEntry.publish();
@@ -1256,7 +1256,7 @@ definition {
 				webContentTitle = "WC WebContent 2");
 
 			WebContent.editDisplayPage(
-				pageName = "Test Page 2",
+				pageName = "Test Page Name 2",
 				pageType = "Public Pages");
 
 			PortletEntry.publish();
@@ -1264,7 +1264,7 @@ definition {
 
 		task ("View the friendly URL shown in address") {
 			Navigator.gotoSitePage(
-				pageName = "Test Page 1",
+				pageName = "Test Page Name 1",
 				siteName = "Test Site Name");
 
 			AssetPublisherPortlet.clickAssetTitle(assetTitle = "WC WebContent 1 Duplicate 2");

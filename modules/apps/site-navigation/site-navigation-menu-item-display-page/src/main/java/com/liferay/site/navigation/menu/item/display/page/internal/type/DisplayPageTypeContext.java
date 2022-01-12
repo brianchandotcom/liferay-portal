@@ -19,6 +19,8 @@ import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemDetailsProvider;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
+import com.liferay.layout.display.page.LayoutDisplayPageInfoItemFieldValuesProvider;
+import com.liferay.layout.display.page.LayoutDisplayPageInfoItemFieldValuesProviderTracker;
 import com.liferay.layout.display.page.LayoutDisplayPageMultiSelectionProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageMultiSelectionProviderTracker;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
@@ -35,12 +37,16 @@ public class DisplayPageTypeContext {
 
 	public DisplayPageTypeContext(
 		String className, InfoItemServiceTracker infoItemServiceTracker,
+		LayoutDisplayPageInfoItemFieldValuesProviderTracker
+			layoutDisplayPageInfoItemFieldValuesProviderTracker,
 		LayoutDisplayPageMultiSelectionProviderTracker
 			layoutDisplayPageMultiSelectionProviderTracker,
 		LayoutDisplayPageProviderTracker layoutDisplayPageProviderTracker) {
 
 		_className = className;
 		_infoItemServiceTracker = infoItemServiceTracker;
+		_layoutDisplayPageInfoItemFieldValuesProviderTracker =
+			layoutDisplayPageInfoItemFieldValuesProviderTracker;
 		_layoutDisplayPageMultiSelectionProviderTracker =
 			layoutDisplayPageMultiSelectionProviderTracker;
 		_layoutDisplayPageProviderTracker = layoutDisplayPageProviderTracker;
@@ -79,6 +85,14 @@ public class DisplayPageTypeContext {
 		return infoItemClassDetails.getLabel(locale);
 	}
 
+	public Optional<LayoutDisplayPageInfoItemFieldValuesProvider<?>>
+		getLayoutDisplayPageInfoItemFieldValuesProviderOptional() {
+
+		return Optional.ofNullable(
+			_layoutDisplayPageInfoItemFieldValuesProviderTracker.
+				getLayoutDisplayPageInfoItemFieldValuesProvider(_className));
+	}
+
 	public Optional<LayoutDisplayPageMultiSelectionProvider<?>>
 		getLayoutDisplayPageMultiSelectionProviderOptional() {
 
@@ -108,6 +122,8 @@ public class DisplayPageTypeContext {
 
 	private final String _className;
 	private final InfoItemServiceTracker _infoItemServiceTracker;
+	private final LayoutDisplayPageInfoItemFieldValuesProviderTracker
+		_layoutDisplayPageInfoItemFieldValuesProviderTracker;
 	private final LayoutDisplayPageMultiSelectionProviderTracker
 		_layoutDisplayPageMultiSelectionProviderTracker;
 	private final LayoutDisplayPageProviderTracker

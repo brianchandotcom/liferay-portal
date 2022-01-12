@@ -26,7 +26,7 @@ function main {
 
 	popd > /dev/null
 
-	git clean -dfx -e "*.${USER}.*"  > /dev/null
+	git clean -dfx -e "*.${USER}.*" > /dev/null
 
 	rm -fr ~/.liferay
 

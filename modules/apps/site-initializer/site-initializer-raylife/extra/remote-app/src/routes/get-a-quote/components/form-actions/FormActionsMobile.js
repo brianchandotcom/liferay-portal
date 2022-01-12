@@ -1,11 +1,11 @@
 import ClayButton from '@clayui/button';
 import React, {useContext, useState} from 'react';
 import {useFormContext} from 'react-hook-form';
-import ProgressSavedModal from '../../../../routes/get-a-quote/components/containers/Forms/Modal/ProgressSaved';
-import {AppContext} from '../../../../routes/get-a-quote/context/AppContextProvider';
-import {DEVICES} from '../../../utils/constants';
+import {WarningBadge} from '../../../../common/components/fragments/Badges/Warning';
+import {DEVICES} from '../../../../common/utils/constants';
+import {AppContext} from '../../context/AppContextProvider';
 
-import {WarningBadge} from '../Badges/Warning';
+import ProgressSavedModal from '../containers/Forms/Modal/ProgressSaved';
 
 export function CardFormActionsMobile({onPrevious, onSave}) {
 	const {

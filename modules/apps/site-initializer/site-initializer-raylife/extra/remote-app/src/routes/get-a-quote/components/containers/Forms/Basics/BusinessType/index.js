@@ -14,9 +14,6 @@
 
 import React, {useContext, useState} from 'react';
 import {useFormContext} from 'react-hook-form';
-import {CardFormActions} from '../../../../../../../common/components/fragments/Card/FormActions';
-import {CardFormActionsMobile} from '../../../../../../../common/components/fragments/Card/FormActionsMobile';
-import FormCard from '../../../../../../../common/components/fragments/Card/FormCard';
 import {DEVICES} from '../../../../../../../common/utils/constants';
 import {smoothScroll} from '../../../../../../../common/utils/scroll';
 import {
@@ -25,6 +22,9 @@ import {
 } from '../../../../../context/AppContextProvider';
 import {useStepWizard} from '../../../../../hooks/useStepWizard';
 import {AVAILABLE_STEPS} from '../../../../../utils/constants';
+import FormCard from '../../../../card/FormCard';
+import {CardFormActions} from '../../../../form-actions/FormActions';
+import {CardFormActionsMobile} from '../../../../form-actions/FormActionsMobile';
 import {BusinessTypeSearch} from './Search';
 
 export function FormBasicBusinessType({form}) {
@@ -56,25 +56,24 @@ export function FormBasicBusinessType({form}) {
 	};
 
 	return (
-		<>
-			<FormCard>
-				<div className="d-flex flex-column mb-5">
-					<BusinessTypeSearch
-						form={form}
-						isMobileDevice={isMobileDevice}
-						setNewSelectedProduct={setNewSelectedProduct}
-						taxonomyVocabularyId={state.taxonomyVocabulary.id}
-					/>
-				</div>
-
-				<CardFormActions
+		<FormCard
+			footer={<CardFormActionsMobile onPrevious={goToPreviousPage} />}
+		>
+			<div className="d-flex flex-column mb-5">
+				<BusinessTypeSearch
+					form={form}
 					isMobileDevice={isMobileDevice}
-					isValid={!!form?.basics?.businessCategoryId}
-					onNext={goToNextForm}
-					onPrevious={goToPreviousPage}
+					setNewSelectedProduct={setNewSelectedProduct}
+					taxonomyVocabularyId={state.taxonomyVocabulary.id}
 				/>
-			</FormCard>
-			<CardFormActionsMobile onPrevious={goToPreviousPage} />
-		</>
+			</div>
+
+			<CardFormActions
+				isMobileDevice={isMobileDevice}
+				isValid={!!form?.basics?.businessCategoryId}
+				onNext={goToNextForm}
+				onPrevious={goToPreviousPage}
+			/>
+		</FormCard>
 	);
 }

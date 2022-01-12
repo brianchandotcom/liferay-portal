@@ -361,7 +361,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			_invoke(
 				() -> _addTaxonomyVocabularies(
 					serviceContext, siteNavigationMenuItemSettingsBuilder));
-
+			_invoke(() -> _addUserAccounts(serviceContext));
 			_invoke(() -> _updateLayoutSets(serviceContext));
 
 			Map<String, String> assetListEntryIdsStringUtilReplaceValues =
@@ -420,12 +420,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 					assetListEntryIdsStringUtilReplaceValues,
 					documentsStringUtilReplaceValues,
 					remoteAppEntryIdsStringUtilReplaceValues, serviceContext,
-					siteNavigationMenuItemSettingsBuilder.build());
-					remoteAppEntryIdsStringUtilReplaceValues, serviceContext);
-
-			_invoke(() -> _addUserAccounts(serviceContext));
-
-			_invoke(() -> _addUserRoles(serviceContext));
+					siteNavigationMenuItemSettingsBuilder.build()));
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
@@ -2093,6 +2088,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_addResourcePermissions(
 			objectDefinitionIdsStringUtilReplaceValues,
 			"/site-initializer/resource-permissions.json", serviceContext);
+
+		_addUserRoles(serviceContext);
 	}
 
 	private Map<String, String> _addRemoteAppEntries(

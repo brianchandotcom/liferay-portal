@@ -31,8 +31,7 @@ import {useStepWizard} from '../../../../hooks/useStepWizard';
 import {useTriggerContext} from '../../../../hooks/useTriggerContext';
 import {AVAILABLE_STEPS} from '../../../../utils/constants';
 import FormCard from '../../../card/FormCard';
-import {CardFormActions} from '../../../form-actions/FormActions';
-import {CardFormActionsMobile} from '../../../form-actions/FormActionsMobile';
+import {CardFormActions} from '../../../form-actions/FormAction';
 
 export function FormBasicProductQuote({form}) {
 	const {control, setValue} = useFormContext();
@@ -71,7 +70,14 @@ export function FormBasicProductQuote({form}) {
 
 	return (
 		<FormCard
-			footer={<CardFormActionsMobile onPrevious={goToPreviousPage} />}
+			Footer={(footerProps) => (
+				<CardFormActions
+					{...footerProps}
+					isValid={!!form?.basics?.productQuote}
+					onNext={onNext}
+					onPrevious={goToPreviousPage}
+				/>
+			)}
 		>
 			<div className="card-content d-flex">
 				<div className="content-column">
@@ -130,12 +136,6 @@ export function FormBasicProductQuote({form}) {
 					</fieldset>
 				</div>
 			</div>
-
-			<CardFormActions
-				isValid={!!form?.basics?.productQuote}
-				onNext={onNext}
-				onPrevious={goToPreviousPage}
-			/>
 		</FormCard>
 	);
 }

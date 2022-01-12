@@ -23,8 +23,7 @@ import {
 import {useStepWizard} from '../../../../../hooks/useStepWizard';
 import {AVAILABLE_STEPS} from '../../../../../utils/constants';
 import FormCard from '../../../../card/FormCard';
-import {CardFormActions} from '../../../../form-actions/FormActions';
-import {CardFormActionsMobile} from '../../../../form-actions/FormActionsMobile';
+import {CardFormActions} from '../../../../form-actions/FormAction';
 import {BusinessTypeSearch} from './Search';
 
 export function FormBasicBusinessType({form}) {
@@ -57,7 +56,15 @@ export function FormBasicBusinessType({form}) {
 
 	return (
 		<FormCard
-			footer={<CardFormActionsMobile onPrevious={goToPreviousPage} />}
+			Footer={(footerProps) => (
+				<CardFormActions
+					{...footerProps}
+					isMobileDevice={isMobileDevice}
+					isValid={!!form?.basics?.businessCategoryId}
+					onNext={goToNextForm}
+					onPrevious={goToPreviousPage}
+				/>
+			)}
 		>
 			<div className="d-flex flex-column mb-5">
 				<BusinessTypeSearch
@@ -67,13 +74,6 @@ export function FormBasicBusinessType({form}) {
 					taxonomyVocabularyId={state.taxonomyVocabulary.id}
 				/>
 			</div>
-
-			<CardFormActions
-				isMobileDevice={isMobileDevice}
-				isValid={!!form?.basics?.businessCategoryId}
-				onNext={goToNextForm}
-				onPrevious={goToPreviousPage}
-			/>
 		</FormCard>
 	);
 }

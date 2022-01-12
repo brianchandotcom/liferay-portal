@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.pricing.service;
 
+import com.liferay.commerce.pricing.model.CommercePriceModifierRel;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
@@ -38,10 +39,9 @@ public class CommercePriceModifierRelServiceWrapper
 	}
 
 	@Override
-	public com.liferay.commerce.pricing.model.CommercePriceModifierRel
-			addCommercePriceModifierRel(
-				long commercePriceModifierId, String className, long classPK,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public CommercePriceModifierRel addCommercePriceModifierRel(
+			long commercePriceModifierId, String className, long classPK,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commercePriceModifierRelService.addCommercePriceModifierRel(
@@ -57,9 +57,8 @@ public class CommercePriceModifierRelServiceWrapper
 	}
 
 	@Override
-	public com.liferay.commerce.pricing.model.CommercePriceModifierRel
-			fetchCommercePriceModifierRel(
-				long commercePriceModifierId, String className, long classPK)
+	public CommercePriceModifierRel fetchCommercePriceModifierRel(
+			long commercePriceModifierId, String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commercePriceModifierRelService.fetchCommercePriceModifierRel(
@@ -67,10 +66,9 @@ public class CommercePriceModifierRelServiceWrapper
 	}
 
 	@Override
-	public java.util.List
-		<com.liferay.commerce.pricing.model.CommercePriceModifierRel>
-			getCategoriesCommercePriceModifierRels(
-				long commercePriceModifierId, String name, int start, int end) {
+	public java.util.List<CommercePriceModifierRel>
+		getCategoriesCommercePriceModifierRels(
+			long commercePriceModifierId, String name, int start, int end) {
 
 		return _commercePriceModifierRelService.
 			getCategoriesCommercePriceModifierRels(
@@ -95,8 +93,8 @@ public class CommercePriceModifierRelServiceWrapper
 	}
 
 	@Override
-	public com.liferay.commerce.pricing.model.CommercePriceModifierRel
-			getCommercePriceModifierRel(long commercePriceModifierRelId)
+	public CommercePriceModifierRel getCommercePriceModifierRel(
+			long commercePriceModifierRelId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commercePriceModifierRelService.getCommercePriceModifierRel(
@@ -104,26 +102,23 @@ public class CommercePriceModifierRelServiceWrapper
 	}
 
 	@Override
-	public java.util.List
-		<com.liferay.commerce.pricing.model.CommercePriceModifierRel>
-				getCommercePriceModifierRels(
-					long commercePriceModifierRelId, String className)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public java.util.List<CommercePriceModifierRel>
+			getCommercePriceModifierRels(
+				long commercePriceModifierRelId, String className)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commercePriceModifierRelService.getCommercePriceModifierRels(
 			commercePriceModifierRelId, className);
 	}
 
 	@Override
-	public java.util.List
-		<com.liferay.commerce.pricing.model.CommercePriceModifierRel>
-				getCommercePriceModifierRels(
-					long commercePriceModifierRelId, String className,
-					int start, int end,
-					com.liferay.portal.kernel.util.OrderByComparator
-						<com.liferay.commerce.pricing.model.
-							CommercePriceModifierRel> orderByComparator)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public java.util.List<CommercePriceModifierRel>
+			getCommercePriceModifierRels(
+				long commercePriceModifierRelId, String className, int start,
+				int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<CommercePriceModifierRel> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commercePriceModifierRelService.getCommercePriceModifierRels(
 			commercePriceModifierRelId, className, start, end,
@@ -141,20 +136,17 @@ public class CommercePriceModifierRelServiceWrapper
 	}
 
 	@Override
-	public java.util.List
-		<com.liferay.commerce.pricing.model.CommercePriceModifierRel>
-			getCommercePriceModifiersRels(String className, long classPK) {
+	public java.util.List<CommercePriceModifierRel>
+		getCommercePriceModifiersRels(String className, long classPK) {
 
 		return _commercePriceModifierRelService.getCommercePriceModifiersRels(
 			className, classPK);
 	}
 
 	@Override
-	public java.util.List
-		<com.liferay.commerce.pricing.model.CommercePriceModifierRel>
-			getCommercePricingClassesCommercePriceModifierRels(
-				long commercePriceModifierId, String title, int start,
-				int end) {
+	public java.util.List<CommercePriceModifierRel>
+		getCommercePricingClassesCommercePriceModifierRels(
+			long commercePriceModifierId, String title, int start, int end) {
 
 		return _commercePriceModifierRelService.
 			getCommercePricingClassesCommercePriceModifierRels(
@@ -171,11 +163,10 @@ public class CommercePriceModifierRelServiceWrapper
 	}
 
 	@Override
-	public java.util.List
-		<com.liferay.commerce.pricing.model.CommercePriceModifierRel>
-			getCPDefinitionsCommercePriceModifierRels(
-				long commercePriceModifierId, String name, String languageId,
-				int start, int end) {
+	public java.util.List<CommercePriceModifierRel>
+		getCPDefinitionsCommercePriceModifierRels(
+			long commercePriceModifierId, String name, String languageId,
+			int start, int end) {
 
 		return _commercePriceModifierRelService.
 			getCPDefinitionsCommercePriceModifierRels(

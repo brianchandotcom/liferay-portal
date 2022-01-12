@@ -17,6 +17,7 @@ package com.liferay.commerce.pricing.service.persistence;
 import com.liferay.commerce.pricing.exception.NoSuchPriceModifierException;
 import com.liferay.commerce.pricing.model.CommercePriceModifier;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 import java.util.Date;
 
@@ -35,7 +36,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface CommercePriceModifierPersistence
-	extends BasePersistence<CommercePriceModifier> {
+	extends BasePersistence<CommercePriceModifier>,
+			CTPersistence<CommercePriceModifier> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

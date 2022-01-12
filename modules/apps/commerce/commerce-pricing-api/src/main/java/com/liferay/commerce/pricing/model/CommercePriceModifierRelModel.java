@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.model.AuditedModel;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import java.util.Date;
 
@@ -39,7 +40,7 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface CommercePriceModifierRelModel
 	extends AttachedModel, AuditedModel, BaseModel<CommercePriceModifierRel>,
-			MVCCModel, ShardedModel {
+			CTModel<CommercePriceModifierRel>, MVCCModel, ShardedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -52,6 +53,7 @@ public interface CommercePriceModifierRelModel
 	 *
 	 * @return the primary key of this commerce price modifier rel
 	 */
+	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -59,6 +61,7 @@ public interface CommercePriceModifierRelModel
 	 *
 	 * @param primaryKey the primary key of this commerce price modifier rel
 	 */
+	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -76,6 +79,22 @@ public interface CommercePriceModifierRelModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
+
+	/**
+	 * Returns the ct collection ID of this commerce price modifier rel.
+	 *
+	 * @return the ct collection ID of this commerce price modifier rel
+	 */
+	@Override
+	public long getCtCollectionId();
+
+	/**
+	 * Sets the ct collection ID of this commerce price modifier rel.
+	 *
+	 * @param ctCollectionId the ct collection ID of this commerce price modifier rel
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the commerce price modifier rel ID of this commerce price modifier rel.

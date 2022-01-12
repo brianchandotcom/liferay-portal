@@ -38,6 +38,9 @@ public class CommercePricingClassCPDefinitionRelTable
 		mvccVersion = createColumn(
 			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<CommercePricingClassCPDefinitionRelTable, Long>
+		ctCollectionId = createColumn(
+			"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
+	public final Column<CommercePricingClassCPDefinitionRelTable, Long>
 		CommercePricingClassCPDefinitionRelId = createColumn(
 			"CPricingClassCPDefinitionRelId", Long.class, Types.BIGINT,
 			Column.FLAG_PRIMARY);

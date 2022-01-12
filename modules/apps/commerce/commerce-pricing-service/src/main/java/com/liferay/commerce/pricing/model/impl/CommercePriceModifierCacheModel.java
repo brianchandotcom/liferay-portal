@@ -80,10 +80,12 @@ public class CommercePriceModifierCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(49);
+		StringBundler sb = new StringBundler(51);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", externalReferenceCode=");
@@ -141,6 +143,7 @@ public class CommercePriceModifierCacheModel
 			new CommercePriceModifierImpl();
 
 		commercePriceModifierImpl.setMvccVersion(mvccVersion);
+		commercePriceModifierImpl.setCtCollectionId(ctCollectionId);
 
 		if (uuid == null) {
 			commercePriceModifierImpl.setUuid("");
@@ -262,6 +265,8 @@ public class CommercePriceModifierCacheModel
 		throws ClassNotFoundException, IOException {
 
 		mvccVersion = objectInput.readLong();
+
+		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		externalReferenceCode = objectInput.readUTF();
 
@@ -299,6 +304,8 @@ public class CommercePriceModifierCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(ctCollectionId);
 
 		if (uuid == null) {
 			objectOutput.writeUTF("");
@@ -379,6 +386,7 @@ public class CommercePriceModifierCacheModel
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public String uuid;
 	public String externalReferenceCode;
 	public long commercePriceModifierId;

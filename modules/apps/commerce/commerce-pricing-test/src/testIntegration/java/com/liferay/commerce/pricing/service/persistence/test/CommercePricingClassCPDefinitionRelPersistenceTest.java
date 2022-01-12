@@ -135,6 +135,9 @@ public class CommercePricingClassCPDefinitionRelPersistenceTest {
 		newCommercePricingClassCPDefinitionRel.setMvccVersion(
 			RandomTestUtil.nextLong());
 
+		newCommercePricingClassCPDefinitionRel.setCtCollectionId(
+			RandomTestUtil.nextLong());
+
 		newCommercePricingClassCPDefinitionRel.setCompanyId(
 			RandomTestUtil.nextLong());
 
@@ -167,6 +170,9 @@ public class CommercePricingClassCPDefinitionRelPersistenceTest {
 		Assert.assertEquals(
 			existingCommercePricingClassCPDefinitionRel.getMvccVersion(),
 			newCommercePricingClassCPDefinitionRel.getMvccVersion());
+		Assert.assertEquals(
+			existingCommercePricingClassCPDefinitionRel.getCtCollectionId(),
+			newCommercePricingClassCPDefinitionRel.getCtCollectionId());
 		Assert.assertEquals(
 			existingCommercePricingClassCPDefinitionRel.
 				getCommercePricingClassCPDefinitionRelId(),
@@ -256,10 +262,10 @@ public class CommercePricingClassCPDefinitionRelPersistenceTest {
 
 		return OrderByComparatorFactoryUtil.create(
 			"CPricingClassCPDefinitionRel", "mvccVersion", true,
-			"CommercePricingClassCPDefinitionRelId", true, "companyId", true,
-			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "commercePricingClassId", true,
-			"CPDefinitionId", true);
+			"ctCollectionId", true, "CommercePricingClassCPDefinitionRelId",
+			true, "companyId", true, "userId", true, "userName", true,
+			"createDate", true, "modifiedDate", true, "commercePricingClassId",
+			true, "CPDefinitionId", true);
 	}
 
 	@Test
@@ -616,6 +622,9 @@ public class CommercePricingClassCPDefinitionRelPersistenceTest {
 			commercePricingClassCPDefinitionRel = _persistence.create(pk);
 
 		commercePricingClassCPDefinitionRel.setMvccVersion(
+			RandomTestUtil.nextLong());
+
+		commercePricingClassCPDefinitionRel.setCtCollectionId(
 			RandomTestUtil.nextLong());
 
 		commercePricingClassCPDefinitionRel.setCompanyId(

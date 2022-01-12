@@ -14,7 +14,10 @@
 
 package com.liferay.commerce.pricing.service;
 
+import com.liferay.commerce.pricing.model.CommercePriceModifierRel;
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
  * Provides a wrapper for {@link CommercePriceModifierRelLocalService}.
@@ -50,20 +53,17 @@ public class CommercePriceModifierRelLocalServiceWrapper
 	 * @return the commerce price modifier rel that was added
 	 */
 	@Override
-	public com.liferay.commerce.pricing.model.CommercePriceModifierRel
-		addCommercePriceModifierRel(
-			com.liferay.commerce.pricing.model.CommercePriceModifierRel
-				commercePriceModifierRel) {
+	public CommercePriceModifierRel addCommercePriceModifierRel(
+		CommercePriceModifierRel commercePriceModifierRel) {
 
 		return _commercePriceModifierRelLocalService.
 			addCommercePriceModifierRel(commercePriceModifierRel);
 	}
 
 	@Override
-	public com.liferay.commerce.pricing.model.CommercePriceModifierRel
-			addCommercePriceModifierRel(
-				long commercePriceModifierId, String className, long classPK,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public CommercePriceModifierRel addCommercePriceModifierRel(
+			long commercePriceModifierId, String className, long classPK,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commercePriceModifierRelLocalService.
@@ -78,8 +78,8 @@ public class CommercePriceModifierRelLocalServiceWrapper
 	 * @return the new commerce price modifier rel
 	 */
 	@Override
-	public com.liferay.commerce.pricing.model.CommercePriceModifierRel
-		createCommercePriceModifierRel(long commercePriceModifierRelId) {
+	public CommercePriceModifierRel createCommercePriceModifierRel(
+		long commercePriceModifierRelId) {
 
 		return _commercePriceModifierRelLocalService.
 			createCommercePriceModifierRel(commercePriceModifierRelId);
@@ -109,10 +109,8 @@ public class CommercePriceModifierRelLocalServiceWrapper
 	 * @throws PortalException
 	 */
 	@Override
-	public com.liferay.commerce.pricing.model.CommercePriceModifierRel
-			deleteCommercePriceModifierRel(
-				com.liferay.commerce.pricing.model.CommercePriceModifierRel
-					commercePriceModifierRel)
+	public CommercePriceModifierRel deleteCommercePriceModifierRel(
+			CommercePriceModifierRel commercePriceModifierRel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commercePriceModifierRelLocalService.
@@ -131,8 +129,8 @@ public class CommercePriceModifierRelLocalServiceWrapper
 	 * @throws PortalException if a commerce price modifier rel with the primary key could not be found
 	 */
 	@Override
-	public com.liferay.commerce.pricing.model.CommercePriceModifierRel
-			deleteCommercePriceModifierRel(long commercePriceModifierRelId)
+	public CommercePriceModifierRel deleteCommercePriceModifierRel(
+			long commercePriceModifierRelId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commercePriceModifierRelLocalService.
@@ -272,17 +270,16 @@ public class CommercePriceModifierRelLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.commerce.pricing.model.CommercePriceModifierRel
-		fetchCommercePriceModifierRel(long commercePriceModifierRelId) {
+	public CommercePriceModifierRel fetchCommercePriceModifierRel(
+		long commercePriceModifierRelId) {
 
 		return _commercePriceModifierRelLocalService.
 			fetchCommercePriceModifierRel(commercePriceModifierRelId);
 	}
 
 	@Override
-	public com.liferay.commerce.pricing.model.CommercePriceModifierRel
-		fetchCommercePriceModifierRel(
-			long commercePriceModifierId, String className, long classPK) {
+	public CommercePriceModifierRel fetchCommercePriceModifierRel(
+		long commercePriceModifierId, String className, long classPK) {
 
 		return _commercePriceModifierRelLocalService.
 			fetchCommercePriceModifierRel(
@@ -298,10 +295,9 @@ public class CommercePriceModifierRelLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List
-		<com.liferay.commerce.pricing.model.CommercePriceModifierRel>
-			getCategoriesCommercePriceModifierRels(
-				long commercePriceModifierId, String name, int start, int end) {
+	public java.util.List<CommercePriceModifierRel>
+		getCategoriesCommercePriceModifierRels(
+			long commercePriceModifierId, String name, int start, int end) {
 
 		return _commercePriceModifierRelLocalService.
 			getCategoriesCommercePriceModifierRels(
@@ -331,8 +327,8 @@ public class CommercePriceModifierRelLocalServiceWrapper
 	 * @throws PortalException if a commerce price modifier rel with the primary key could not be found
 	 */
 	@Override
-	public com.liferay.commerce.pricing.model.CommercePriceModifierRel
-			getCommercePriceModifierRel(long commercePriceModifierRelId)
+	public CommercePriceModifierRel getCommercePriceModifierRel(
+			long commercePriceModifierRelId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commercePriceModifierRelLocalService.
@@ -351,33 +347,28 @@ public class CommercePriceModifierRelLocalServiceWrapper
 	 * @return the range of commerce price modifier rels
 	 */
 	@Override
-	public java.util.List
-		<com.liferay.commerce.pricing.model.CommercePriceModifierRel>
-			getCommercePriceModifierRels(int start, int end) {
+	public java.util.List<CommercePriceModifierRel>
+		getCommercePriceModifierRels(int start, int end) {
 
 		return _commercePriceModifierRelLocalService.
 			getCommercePriceModifierRels(start, end);
 	}
 
 	@Override
-	public java.util.List
-		<com.liferay.commerce.pricing.model.CommercePriceModifierRel>
-			getCommercePriceModifierRels(
-				long commercePriceModifierId, String className) {
+	public java.util.List<CommercePriceModifierRel>
+		getCommercePriceModifierRels(
+			long commercePriceModifierId, String className) {
 
 		return _commercePriceModifierRelLocalService.
 			getCommercePriceModifierRels(commercePriceModifierId, className);
 	}
 
 	@Override
-	public java.util.List
-		<com.liferay.commerce.pricing.model.CommercePriceModifierRel>
-			getCommercePriceModifierRels(
-				long commercePriceModifierId, String className, int start,
-				int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.commerce.pricing.model.
-						CommercePriceModifierRel> orderByComparator) {
+	public java.util.List<CommercePriceModifierRel>
+		getCommercePriceModifierRels(
+			long commercePriceModifierId, String className, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<CommercePriceModifierRel> orderByComparator) {
 
 		return _commercePriceModifierRelLocalService.
 			getCommercePriceModifierRels(
@@ -406,20 +397,17 @@ public class CommercePriceModifierRelLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List
-		<com.liferay.commerce.pricing.model.CommercePriceModifierRel>
-			getCommercePriceModifiersRels(String className, long classPK) {
+	public java.util.List<CommercePriceModifierRel>
+		getCommercePriceModifiersRels(String className, long classPK) {
 
 		return _commercePriceModifierRelLocalService.
 			getCommercePriceModifiersRels(className, classPK);
 	}
 
 	@Override
-	public java.util.List
-		<com.liferay.commerce.pricing.model.CommercePriceModifierRel>
-			getCommercePricingClassesCommercePriceModifierRels(
-				long commercePriceModifierId, String title, int start,
-				int end) {
+	public java.util.List<CommercePriceModifierRel>
+		getCommercePricingClassesCommercePriceModifierRels(
+			long commercePriceModifierId, String title, int start, int end) {
 
 		return _commercePriceModifierRelLocalService.
 			getCommercePricingClassesCommercePriceModifierRels(
@@ -436,11 +424,10 @@ public class CommercePriceModifierRelLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List
-		<com.liferay.commerce.pricing.model.CommercePriceModifierRel>
-			getCPDefinitionsCommercePriceModifierRels(
-				long commercePriceModifierId, String name, String languageId,
-				int start, int end) {
+	public java.util.List<CommercePriceModifierRel>
+		getCPDefinitionsCommercePriceModifierRels(
+			long commercePriceModifierId, String name, String languageId,
+			int start, int end) {
 
 		return _commercePriceModifierRelLocalService.
 			getCPDefinitionsCommercePriceModifierRels(
@@ -497,13 +484,31 @@ public class CommercePriceModifierRelLocalServiceWrapper
 	 * @return the commerce price modifier rel that was updated
 	 */
 	@Override
-	public com.liferay.commerce.pricing.model.CommercePriceModifierRel
-		updateCommercePriceModifierRel(
-			com.liferay.commerce.pricing.model.CommercePriceModifierRel
-				commercePriceModifierRel) {
+	public CommercePriceModifierRel updateCommercePriceModifierRel(
+		CommercePriceModifierRel commercePriceModifierRel) {
 
 		return _commercePriceModifierRelLocalService.
 			updateCommercePriceModifierRel(commercePriceModifierRel);
+	}
+
+	@Override
+	public CTPersistence<CommercePriceModifierRel> getCTPersistence() {
+		return _commercePriceModifierRelLocalService.getCTPersistence();
+	}
+
+	@Override
+	public Class<CommercePriceModifierRel> getModelClass() {
+		return _commercePriceModifierRelLocalService.getModelClass();
+	}
+
+	@Override
+	public <R, E extends Throwable> R updateWithUnsafeFunction(
+			UnsafeFunction<CTPersistence<CommercePriceModifierRel>, R, E>
+				updateUnsafeFunction)
+		throws E {
+
+		return _commercePriceModifierRelLocalService.updateWithUnsafeFunction(
+			updateUnsafeFunction);
 	}
 
 	@Override

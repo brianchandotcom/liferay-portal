@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.model.AuditedModel;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import java.util.Date;
 
@@ -38,7 +39,8 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface CommercePricingClassCPDefinitionRelModel
 	extends AuditedModel, BaseModel<CommercePricingClassCPDefinitionRel>,
-			MVCCModel, ShardedModel {
+			CTModel<CommercePricingClassCPDefinitionRel>, MVCCModel,
+			ShardedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -51,6 +53,7 @@ public interface CommercePricingClassCPDefinitionRelModel
 	 *
 	 * @return the primary key of this commerce pricing class cp definition rel
 	 */
+	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -58,6 +61,7 @@ public interface CommercePricingClassCPDefinitionRelModel
 	 *
 	 * @param primaryKey the primary key of this commerce pricing class cp definition rel
 	 */
+	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -75,6 +79,22 @@ public interface CommercePricingClassCPDefinitionRelModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
+
+	/**
+	 * Returns the ct collection ID of this commerce pricing class cp definition rel.
+	 *
+	 * @return the ct collection ID of this commerce pricing class cp definition rel
+	 */
+	@Override
+	public long getCtCollectionId();
+
+	/**
+	 * Sets the ct collection ID of this commerce pricing class cp definition rel.
+	 *
+	 * @param ctCollectionId the ct collection ID of this commerce pricing class cp definition rel
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the commerce pricing class cp definition rel ID of this commerce pricing class cp definition rel.

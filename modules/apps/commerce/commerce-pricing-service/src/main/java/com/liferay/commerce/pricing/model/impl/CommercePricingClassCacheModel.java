@@ -78,10 +78,12 @@ public class CommercePricingClassCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(27);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", externalReferenceCode=");
@@ -115,6 +117,7 @@ public class CommercePricingClassCacheModel
 			new CommercePricingClassImpl();
 
 		commercePricingClassImpl.setMvccVersion(mvccVersion);
+		commercePricingClassImpl.setCtCollectionId(ctCollectionId);
 
 		if (uuid == null) {
 			commercePricingClassImpl.setUuid("");
@@ -187,6 +190,8 @@ public class CommercePricingClassCacheModel
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
+
+		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		externalReferenceCode = objectInput.readUTF();
 
@@ -206,6 +211,8 @@ public class CommercePricingClassCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(ctCollectionId);
 
 		if (uuid == null) {
 			objectOutput.writeUTF("");
@@ -255,6 +262,7 @@ public class CommercePricingClassCacheModel
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public String uuid;
 	public String externalReferenceCode;
 	public long commercePricingClassId;

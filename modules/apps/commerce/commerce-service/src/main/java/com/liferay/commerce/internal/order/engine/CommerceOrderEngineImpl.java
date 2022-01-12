@@ -440,15 +440,15 @@ public class CommerceOrderEngineImpl implements CommerceOrderEngine {
 		JSONObject commerceOrderJSONObject = JSONFactoryUtil.createJSONObject(
 			commerceOrderObject.toString());
 
+		JSONArray commerceOrderItemsJSONArray =
+			JSONFactoryUtil.createJSONArray();
+
 		DTOConverter<?, ?> commerceOrderItemDTOConverter =
 			_dtoConverterRegistry.getDTOConverter(
 				CommerceOrderItem.class.getName());
 
 		List<CommerceOrderItem> commerceOrderItems =
 			commerceOrder.getCommerceOrderItems();
-
-		JSONArray commerceOrderItemsJSONArray =
-			JSONFactoryUtil.createJSONArray();
 
 		for (CommerceOrderItem commerceOrderItem : commerceOrderItems) {
 			Object commerceOrderItemObject =

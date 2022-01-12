@@ -105,10 +105,20 @@ String userIdentifierExpression = attributeMappingDisplayContext.getUserIdentifi
 
 		document
 			.querySelectorAll('.user-attribute-mapping-row')
-			.forEach((row) => <portlet:namespace />evaluateAttributeMappingRow(
-				row, document.querySelector('input[name="<portlet:namespace />userIdentifierExpression"][value="attribute"]').checked));
-	}
-	<portlet:namespace />evaluateAttributeMappingRow = function (row, userIdentifierExpressionIsAttributeMapping, event) {
+			.forEach((row) =>
+				<portlet:namespace />evaluateAttributeMappingRow(
+					row,
+					document.querySelector(
+						'input[name="<portlet:namespace />userIdentifierExpression"][value="attribute"]'
+					).checked
+				)
+			);
+	};
+	<portlet:namespace />evaluateAttributeMappingRow = function (
+		row,
+		userIdentifierExpressionIsAttributeMapping,
+		event
+	) {
 		var radioTarget = row.querySelector(
 			'input[name="<portlet:namespace />attribute:userIdentifierExpressionIndex"]'
 		);
@@ -146,7 +156,9 @@ String userIdentifierExpression = attributeMappingDisplayContext.getUserIdentifi
 	userAttributeMappings.addEventListener('change', (event) =>
 		<portlet:namespace />evaluateAttributeMappingRow(
 			event.target.closest('.user-attribute-mapping-row'),
-			document.querySelector('input[name="<portlet:namespace />userIdentifierExpression"][value="attribute"]').checked,
+			document.querySelector(
+				'input[name="<portlet:namespace />userIdentifierExpression"][value="attribute"]'
+			).checked,
 			event
 		)
 	);
@@ -156,7 +168,11 @@ String userIdentifierExpression = attributeMappingDisplayContext.getUserIdentifi
 		}
 	});
 
-	if (userAttributeMappings.querySelector('input[name="<portlet:namespace />attribute:userIdentifierExpressionIndex"]:checked')) {
+	if (
+		userAttributeMappings.querySelector(
+			'input[name="<portlet:namespace />attribute:userIdentifierExpressionIndex"]:checked'
+		)
+	) {
 		document.querySelector(
 			'input[name="<portlet:namespace />userIdentifierExpression"][value="attribute"]'
 		).checked = true;
@@ -167,7 +183,9 @@ String userIdentifierExpression = attributeMappingDisplayContext.getUserIdentifi
 			'input[name="<portlet:namespace />userIdentifierExpression"]'
 		)
 		.forEach((radioControl) =>
-			radioControl.addEventListener('change', (event) => <portlet:namespace />evaluateAttributeMappingRows())
+			radioControl.addEventListener('change', (event) =>
+				<portlet:namespace />evaluateAttributeMappingRows()
+			)
 		);
 
 	<portlet:namespace />evaluateAttributeMappingRows();

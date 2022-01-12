@@ -1,7 +1,7 @@
 #set ($symbol_dollar = '$')
 <?xml version="1.0" encoding="UTF-8"?>
 <jsp:root xmlns:fn="http://java.sun.com/jsp/jstl/functions"
-			xmlns:jsp="http://java.sun.com/JSP/Page"
+		  xmlns:jsp="http://java.sun.com/JSP/Page"
 #if (${framework.equals("portletmvc4spring")})
 		  xmlns:portlet="http://xmlns.jcp.org/portlet_3_0"
 #elseif (${framework.equals("springportletmvc")})

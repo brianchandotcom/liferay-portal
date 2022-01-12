@@ -9,7 +9,7 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="key" type="String">
-			<hint name="max-length">255</hint>
+			<hint name="max-length">1000</hint>
 		</field>
 		<field name="languageId" type="String" />
 		<field name="value" type="String">

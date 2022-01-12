@@ -50,12 +50,6 @@
 /modules/private/node_modules_cache
 /nbproject/private
 /out
-/portal-client/*.ipr
-/portal-client/*.iws
-/portal-client/classes
-/portal-client/portal-client*.asc
-/portal-client/portal-client*.jar
-/portal-client/src
 /portal-impl/*.ipr
 /portal-impl/*.iws
 /portal-impl/ServiceBuilder.temp

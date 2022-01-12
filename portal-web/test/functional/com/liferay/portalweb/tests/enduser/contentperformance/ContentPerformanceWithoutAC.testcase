@@ -96,30 +96,39 @@ definition {
 
 	}
 
-	@description = "LPS-126044: When DXP is not connected to AC, the metrics icon is not shown in the bar above the blog display page in the view mode"
+	@description = "LPS-126044: When DXP is not connected to AC, the metrics icon is shown in the bar above the blog display page in the view mode"
 	@ignore = "true"
 	@priority = "3"
-	test MetricsIconNotVisibleInBlogDisplayPage {
+	test MetricsIconNotVisibleInBlogDisplayPageWithoutAC {
 
-		// TODO LPS-144030 MetricsIconNotVisibleInBlogDisplayPage pending implementation
+		// TODO LPS-144030 MetricsIconNotVisibleInBlogDisplayPageWithoutAC pending implementation
 
 	}
 
-	@description = "LPS-126044: When DXP is not connected to AC, the metrics icon is not shown in the bar above the document display page in the view mode"
+	@description = "LPS-127220: When DXP is not connected to AC, the metrics icon is shown in the bar above the content page in the view mode"
 	@ignore = "true"
 	@priority = "3"
-	test MetricsIconNotVisibleInDocumentDisplayPage {
+	MetricsIconVisibleInContentPageWithoutAC {
 
-		// TODO LPS-144030 MetricsIconNotVisibleInDocumentDisplayPage pending implementation
+		// TODO LPS-144028 MetricsIconVisibleInContentPageWithoutAC pending implementation
 
 	}
 
-	@description = "LPS-126047: When DXP is not connected to AC, the metrics icon is not shown in the bar above the widget page in the view mode"
+	@description = "LPS-126044: When DXP is not connected to AC, the metrics icon is shown in the bar above the document display page in the view mode"
 	@ignore = "true"
 	@priority = "3"
-	test MetricsIconNotVisibleInWidgetPage {
+	test MetricsIconNotVisibleInDocumentDisplayPageWithoutAC {
 
-		// TODO LPS-144029 MetricsIconNotVisibleInWidgetPage pending implementation
+		// TODO LPS-144030 MetricsIconNotVisibleInDocumentDisplayPageWithoutAC pending implementation
+
+	}
+
+	@description = "LPS-126047: When DXP is not connected to AC, the metrics icon is shown in the bar above the widget page in the view mode"
+	@ignore = "true"
+	@priority = "3"
+	test MetricsIconNotVisibleInWidgetPageWithoutAC {
+
+		// TODO LPS-144029 MetricsIconNotVisibleInWidgetPageWithoutAC pending implementation
 
 	}
 

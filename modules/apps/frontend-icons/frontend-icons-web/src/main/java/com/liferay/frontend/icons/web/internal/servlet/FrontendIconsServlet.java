@@ -80,8 +80,6 @@ public class FrontendIconsServlet extends HttpServlet {
 				_log.debug(exception, exception);
 			}
 
-			exception.printStackTrace();
-
 			httpServletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
 		}
 	}

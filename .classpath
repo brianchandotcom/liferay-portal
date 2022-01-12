@@ -237,7 +237,6 @@
 	<classpathentry kind="lib" path="lib/portal/poi-ooxml.jar"/>
 	<classpathentry kind="lib" path="lib/portal/poi-ooxml-schemas.jar"/>
 	<classpathentry kind="lib" path="lib/portal/poi-scratchpad.jar"/>
-	<classpathentry kind="lib" path="lib/portal/portal-client.jar"/>
 	<classpathentry kind="lib" path="lib/portal/portlet.jar"/>
 	<classpathentry kind="lib" path="lib/portal/portletmvc4spring-framework.jar"/>
 	<classpathentry kind="lib" path="lib/portal/rdffilter.jar"/>

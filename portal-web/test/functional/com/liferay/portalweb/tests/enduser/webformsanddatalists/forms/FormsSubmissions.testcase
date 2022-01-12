@@ -34,7 +34,7 @@ definition {
 	@description = "Verify that a Form with required fields can be partially filled out and submitted"
 	@priority = "5"
 	test CanBePartiallyFilledWithRequiredFields {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -74,7 +74,7 @@ definition {
 	@description = "Verify that a Form can be submitted"
 	@priority = "5"
 	test CanBeSubmitted {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -104,7 +104,7 @@ definition {
 	@description = "Verify that a Form can be submitted from the Forms Widget"
 	@priority = "5"
 	test CanBeSubmittedFromWidget {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -173,7 +173,7 @@ definition {
 	@description = "Verify that a Form that is partially filled out can be submitted"
 	@priority = "5"
 	test CanBeSubmittedWhilePartiallyFilled {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -207,7 +207,6 @@ definition {
 	@description = "LPS-59338 - Verify that a Form with a required Field can be submitted"
 	@priority = "5"
 	test CanBeSubmittedWithARequiredField {
-		property forms.functional = "true";
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "FormsSubmissions#CanBeSubmittedWithARequiredField";
@@ -287,7 +286,7 @@ definition {
 	@description = "Verify that a Form with multiple pages can be submitted"
 	@priority = "5"
 	test CanBeSubmittedWithMultiplePages {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -329,7 +328,6 @@ definition {
 	@description = "Verify that a Form cannot be submitted without filling out a required field"
 	@priority = "5"
 	test CannotBeSubmittedWithoutARequiredField {
-		property forms.functional = "true";
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "FormsSubmissions#CannotBeSubmittedWithoutARequiredField";
@@ -393,7 +391,7 @@ definition {
 	@description = "Verify that a Form can redirect a user after being submitted"
 	@priority = "5"
 	test CanRedirectUserAfterFormSubmission {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
@@ -458,7 +456,6 @@ definition {
 	@priority = "5"
 	test CanRequireCAPTCHA {
 		property captcha.enabled = "true";
-		property forms.functional = "true";
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "FormsSubmissions#CanRequireCAPTCHA";
@@ -548,7 +545,7 @@ definition {
 	@description = "Verify that a Form can require user authentication before being accessed"
 	@priority = "5"
 	test CanRequireUserAuthentication {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -600,7 +597,7 @@ definition {
 	@description = "Verify that a Form's Success Page can be restored"
 	@priority = "5"
 	test DefaultSuccessPageCanBeRestored {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -612,7 +609,6 @@ definition {
 	@description = "Verify that an email notification is sent after a Form is submitted"
 	@priority = "4"
 	test SendEmailNotificationsSubmittingForm {
-		property forms.functional = "true";
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "FormsSubmissions#SendEmailNotificationsSubmittingForm";
@@ -742,7 +738,7 @@ definition {
 	@description = "Verify that a Form's Submit button's text can be customized"
 	@priority = "5"
 	test SubmitButtonTextCanBeCustomized {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -816,7 +812,7 @@ definition {
 	@description = "Verify that a Form's Submit button's text can be customized with numbers"
 	@priority = "3"
 	test SubmitButtonTextCanBeCustomizedWithNumbers {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -846,7 +842,7 @@ definition {
 	@description = "Verify that a Form's Submit button's text can be customized with special characters"
 	@priority = "3"
 	test SubmitButtonTextCanBeCustomizedWithSpecialCharacters {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -876,7 +872,6 @@ definition {
 	@description = "LPS-71072 - Verify that a Form's Success Page can be customized"
 	@priority = "5"
 	test SuccessPageCanBeCustomized {
-		property forms.functional = "true";
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "FormsSubmissions#SuccessPageCanBeCustomized";
@@ -942,7 +937,7 @@ definition {
 	@description = "Verify that a Form's Success Page can be deleted"
 	@priority = "5"
 	test SuccessPageCanBeDeleted {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 

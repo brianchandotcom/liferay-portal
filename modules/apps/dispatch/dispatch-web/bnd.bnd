@@ -1,4 +1,4 @@
 Bundle-Name: Liferay Dispatch Web
 Bundle-SymbolicName: com.liferay.dispatch.web
-Bundle-Version: 3.0.25
+Bundle-Version: 3.0.26
 Web-ContextPath: /dispatch-web

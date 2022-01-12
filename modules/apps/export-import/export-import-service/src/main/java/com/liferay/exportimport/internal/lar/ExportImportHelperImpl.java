@@ -765,7 +765,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 				isPublishDisplayedContent();
 		}
 		catch (Exception exception) {
-			_log.error(exception.getMessage());
+			_log.error(exception);
 
 			return true;
 		}

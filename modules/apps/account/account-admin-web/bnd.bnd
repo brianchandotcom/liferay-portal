@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Account Admin Web
 Bundle-SymbolicName: com.liferay.account.admin.web
-Bundle-Version: 2.0.28
+Bundle-Version: 2.0.29
 Liferay-JS-Submodules-Bridge: account-admin-web
 Web-ContextPath: /account-admin-web
 -dsannotations-options: inherit

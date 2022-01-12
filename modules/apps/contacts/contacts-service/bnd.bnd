@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Contacts Service
 Bundle-SymbolicName: com.liferay.contacts.service
-Bundle-Version: 6.0.13
+Bundle-Version: 6.0.14
 Liferay-Require-SchemaVersion: 3.0.0
 Liferay-Service: true
 -dsannotations-options: inherit

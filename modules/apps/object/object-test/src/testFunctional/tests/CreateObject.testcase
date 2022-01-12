@@ -741,12 +741,31 @@ definition {
 	}
 
 	@description = "LPS-135551 - Verify it is possible to change the Panel Category Key after publishing the Object"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanChangePanelCategoryKeyAfterPublished {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-		// TODO LPS-141648 CanChangePanelCategoryKeyAfterPublished pending implementation
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "Custom Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject");
 
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+		CreateObject.selectPanelCategoryKey(panelCategoryKey = "Control Panel > Users");
+
+		CreateObject.saveObject();
+
+		ObjectPortlet.assertObjectIsDisplayedOnControlPanel();
 	}
 
 	@description = "LPS-135397 - Verify it is possible to collapse and expand a block of fields"

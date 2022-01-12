@@ -98,7 +98,6 @@ String dataProviderInstancesURL = ddmFormAdminDisplayContext.getDataProviderInst
 String displayStyle = ddmFormAdminDisplayContext.getDisplayStyle();
 JSONObject functionsMetadataJSONObject = ddmFormAdminDisplayContext.getFunctionsMetadataJSONObject();
 String functionsURL = ddmFormAdminDisplayContext.getFunctionsURL();
-String mainRequire = ddmFormAdminDisplayContext.getMainRequire();
 String rolesURL = ddmFormAdminDisplayContext.getRolesURL();
 JSONArray ddmFormRulesJSONArray = ddmFormAdminDisplayContext.getDDMFormRulesJSONArray();
 JSONObject formBuilderContextJSONObject = ddmFormAdminDisplayContext.getFormBuilderContextJSONObject();

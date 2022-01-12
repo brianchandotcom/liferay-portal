@@ -73,9 +73,12 @@ FormInstancePermissionCheckerHelper formInstancePermissionCheckerHelper = ddmFor
 									path="/admin/view_form_instance_descriptive.jsp"
 								/>
 
-								<liferay-ui:search-container-column-jsp
-									path="/admin/form_instance_action.jsp"
-								/>
+								<liferay-ui:search-container-column-text>
+									<clay:dropdown-actions
+										dropdownItems="<%= ddmFormAdminDisplayContext.getActionDropdownItems(formInstance) %>"
+										propsTransformer="admin/js/DDMFormAdminActionDropdownPropsTransformer"
+									/>
+								</liferay-ui:search-container-column-text>
 							</c:when>
 							<c:otherwise>
 
@@ -163,9 +166,12 @@ FormInstancePermissionCheckerHelper formInstancePermissionCheckerHelper = ddmFor
 									value="<%= formInstance.getModifiedDate() %>"
 								/>
 
-								<liferay-ui:search-container-column-jsp
-									path="/admin/form_instance_action.jsp"
-								/>
+								<liferay-ui:search-container-column-text>
+									<clay:dropdown-actions
+										dropdownItems="<%= ddmFormAdminDisplayContext.getActionDropdownItems(formInstance) %>"
+										propsTransformer="admin/js/DDMFormAdminActionDropdownPropsTransformer"
+									/>
+								</liferay-ui:search-container-column-text>
 							</c:otherwise>
 						</c:choose>
 					</liferay-ui:search-container-row>
@@ -188,42 +194,6 @@ FormInstancePermissionCheckerHelper formInstancePermissionCheckerHelper = ddmFor
 		</c:choose>
 	</aui:form>
 </clay:container-fluid>
-
-<aui:script require='<%= mainRequire + "/admin/js/components/share-form/openShareFormModal.es as Modal" %>'>
-	var spritemap = themeDisplay.getPathThemeImages() + '/clay/icons.svg';
-
-	var afterOpenShareFormModal = function (data) {
-		Liferay.namespace('DDM').FormSettings = {
-			portletNamespace: '<portlet:namespace />',
-			spritemap: spritemap,
-		};
-
-		Modal.openShareFormModal({
-			autocompleteUserURL:
-				'<%= ddmFormAdminDisplayContext.getAutocompleteUserURL() %>',
-			localizedName: data.localizedName,
-			portletNamespace: '<portlet:namespace />',
-			shareFormInstanceURL: data.shareFormInstanceURL,
-			spritemap: spritemap,
-			url: data.url,
-		});
-	};
-
-	Liferay.after(
-		'<portlet:namespace />openShareFormModal',
-		afterOpenShareFormModal
-	);
-
-	function handleDestroyPortlet() {
-		Liferay.detach(
-			'<portlet:namespace />openShareFormModal',
-			afterOpenShareFormModal
-		);
-		Liferay.detach('destroyPortlet', handleDestroyPortlet);
-	}
-
-	Liferay.on('destroyPortlet', handleDestroyPortlet);
-</aui:script>
 
 <%@ include file="/admin/copy_form_publish_url.jspf" %>
 

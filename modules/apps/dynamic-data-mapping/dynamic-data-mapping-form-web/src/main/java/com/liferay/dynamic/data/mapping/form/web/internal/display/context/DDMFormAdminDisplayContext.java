@@ -36,6 +36,7 @@ import com.liferay.dynamic.data.mapping.form.web.internal.configuration.activato
 import com.liferay.dynamic.data.mapping.form.web.internal.constants.DDMFormWebKeys;
 import com.liferay.dynamic.data.mapping.form.web.internal.display.context.helper.DDMFormAdminRequestHelper;
 import com.liferay.dynamic.data.mapping.form.web.internal.display.context.helper.FormInstancePermissionCheckerHelper;
+import com.liferay.dynamic.data.mapping.form.web.internal.display.context.util.DDMFormAdminActionDropdownItemsProvider;
 import com.liferay.dynamic.data.mapping.form.web.internal.instance.lifecycle.AddDefaultSharedFormLayoutPortalInstanceLifecycleListener;
 import com.liferay.dynamic.data.mapping.form.web.internal.search.DDMFormInstanceRowChecker;
 import com.liferay.dynamic.data.mapping.form.web.internal.search.DDMFormInstanceSearch;
@@ -219,6 +220,34 @@ public class DDMFormAdminDisplayContext {
 
 		_formInstancePermissionCheckerHelper =
 			new FormInstancePermissionCheckerHelper(ddmFormAdminRequestHelper);
+	}
+
+	public List<DropdownItem> getActionDropdownItems(
+			DDMFormInstance ddmFormInstance)
+		throws PortalException {
+
+		boolean invalidDDMFormInstance = false;
+
+		if (!hasValidDDMFormFields(ddmFormInstance) ||
+			!hasValidStorageType(ddmFormInstance)) {
+
+			invalidDDMFormInstance = true;
+		}
+
+		DDMFormAdminActionDropdownItemsProvider
+			ddmFormAdminActionDropdownItemsProvider =
+				new DDMFormAdminActionDropdownItemsProvider(
+					getAutocompleteUserURL(), ddmFormInstance,
+					_formInstancePermissionCheckerHelper,
+					isFormPublished(ddmFormInstance),
+					ddmFormAdminRequestHelper.getRequest(),
+					invalidDDMFormInstance,
+					getFormLocalizedNameJSONObject(ddmFormInstance),
+					getPublishedFormURL(ddmFormInstance), renderResponse,
+					getScopeGroupId(),
+					getShareFormInstanceURL(ddmFormInstance));
+
+		return ddmFormAdminActionDropdownItemsProvider.getActionDropdownItems();
 	}
 
 	public List<DropdownItem> getActionItemsDropdownItems() {

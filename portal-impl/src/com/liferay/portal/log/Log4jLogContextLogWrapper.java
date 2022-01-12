@@ -16,8 +16,6 @@ package com.liferay.portal.log;
 
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogContext;
 import com.liferay.portal.kernel.log.LogWrapper;
@@ -35,12 +33,12 @@ import java.util.Map;
 /**
  * @author Tina Tian
  */
-public class LogContextLogWrapper extends LogWrapper {
+public class Log4jLogContextLogWrapper extends LogWrapper {
 
-	public LogContextLogWrapper(Log log) {
+	public Log4jLogContextLogWrapper(Log log) {
 		super(log);
 
-		setLogWrapperClassName(LogContextLogWrapper.class.getName());
+		setLogWrapperClassName(Log4jLogContextLogWrapper.class.getName());
 	}
 
 	@Override

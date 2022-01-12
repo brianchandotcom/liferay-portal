@@ -30,7 +30,7 @@ function QuerySettings({
 	searchableTypes,
 }) {
 	const [selectAllTypes, setSelectAllTypes] = useState(
-		searchableTypes.length === frameworkConfig.searchableAssetTypes?.length
+		frameworkConfig.searchableAssetTypes?.length === 0
 	);
 	const [enableAllContributors, setEnableAllContributors] = useState(
 		frameworkConfig.clauseContributorsIncludes?.length ===

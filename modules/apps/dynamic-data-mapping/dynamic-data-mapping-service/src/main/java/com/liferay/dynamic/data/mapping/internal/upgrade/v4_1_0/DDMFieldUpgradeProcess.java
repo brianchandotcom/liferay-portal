@@ -81,9 +81,9 @@ public class DDMFieldUpgradeProcess extends UpgradeProcess {
 				"create table DDMField (mvccVersion LONG default 0 not null, ",
 				"ctCollectionId LONG default 0 not null, fieldId LONG not ",
 				"null, companyId LONG, parentFieldId LONG, storageId LONG, ",
-				"structureVersionId LONG, fieldName VARCHAR(255) null, ",
-				"fieldType VARCHAR(255) null, instanceId VARCHAR(75) null, ",
-				"localizable BOOLEAN, priority INTEGER, primary key (fieldId, ",
+				"structureVersionId LONG, fieldName TEXT null, fieldType ",
+				"VARCHAR(255) null, instanceId VARCHAR(75) null, localizable ",
+				"BOOLEAN, priority INTEGER, primary key (fieldId, ",
 				"ctCollectionId))"));
 
 		runSQL(

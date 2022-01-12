@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, {useContext,useEffect} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {Controller, useFormContext} from 'react-hook-form';
 import {MoreInfoButton} from '../../../../../../common/components/fragments/Buttons/MoreInfo';
 import {CardFormActions} from '../../../../../../common/components/fragments/Card/FormActions';
@@ -9,12 +9,12 @@ import {
 	STORAGE_KEYS,
 	Storage,
 } from '../../../../../../common/services/liferay/storage';
-import { DEVICES } from '../../../../../../common/utils/constants';
+import {DEVICES} from '../../../../../../common/utils/constants';
 import {TIP_EVENT} from '../../../../../../common/utils/events';
 import {clearExitAlert} from '../../../../../../common/utils/exitAlert';
 import {getLiferaySiteName} from '../../../../../../common/utils/liferay';
 import {smoothScroll} from '../../../../../../common/utils/scroll';
-import { AppContext } from '../../../../context/AppContextProvider';
+import {AppContext} from '../../../../context/AppContextProvider';
 import {useProductQuotes} from '../../../../hooks/useProductQuotes';
 import {useStepWizard} from '../../../../hooks/useStepWizard';
 import {useTriggerContext} from '../../../../hooks/useTriggerContext';
@@ -63,14 +63,18 @@ export function FormBasicProductQuote({form}) {
 		<FormCard>
 			<div className="card-content d-flex">
 				<div className="col-12 d-flex flex-wrap p-0">
-					<label className={classNames("mb-4 d-flex col-12",{	
-							"d-flex justify-content-start":!isMobileDevice,
-							"justify-content-sm-center justify-content-center": isMobileDevice,
-					})}>
-						<div className={classNames("d-flex font-weight-bolder",{
-							"text-paragraph justify-content-start":!isMobileDevice,
-							"text-paragraph-lg justify-content-sm-center justify-content-center": isMobileDevice,
-						})}>	
+					<label
+						className={classNames('mb-4 d-flex col-12', {
+							'd-flex justify-content-start': !isMobileDevice,
+							'justify-content-sm-center justify-content-center': isMobileDevice,
+						})}
+					>
+						<div
+							className={classNames('d-flex font-weight-bolder', {
+								'text-paragraph justify-content-start': !isMobileDevice,
+								'text-paragraph-lg justify-content-sm-center justify-content-center': isMobileDevice,
+							})}
+						>
 							Select a product to quote.
 						</div>
 					</label>

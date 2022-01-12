@@ -92,12 +92,12 @@ public class UnusedVariableCheck extends BaseCheck {
 			}
 		}
 
-		log(detailAST, _MSG_UNUSED_VARIABLE_VALUE, variableName);
+		//log(detailAST, _MSG_UNUSED_VARIABLE_VALUE, variableName);
 	}
 
 	private static final String _MSG_UNUSED_VARIABLE = "variable.unused";
 
-	private static final String _MSG_UNUSED_VARIABLE_VALUE =
-		"variable.value.unused";
+	//private static final String _MSG_UNUSED_VARIABLE_VALUE =
+	//	"variable.value.unused";
 
 }

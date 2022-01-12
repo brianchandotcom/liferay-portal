@@ -6,7 +6,6 @@ lib/development/com.liferay.ant.manifest.helper.jar
 lib/development/com.liferay.ant.mirrors.get.jar
 lib/development/com.liferay.ant.sync.dir.jar
 lib/development/com.liferay.bnd.invoker.jar
-lib/portal/portal-client.jar
 tmp/lib-pre/com.liferay.osgi.service.tracker.collections.jar
 tmp/lib-pre/com.liferay.petra.concurrent.jar
 tmp/lib-pre/com.liferay.petra.content.jar

@@ -1,4 +1,4 @@
 Bundle-Name: Liferay Headless Commerce Admin Order Implementation
 Bundle-SymbolicName: com.liferay.headless.commerce.admin.order.impl
-Bundle-Version: 4.0.28
+Bundle-Version: 4.0.29
 Liferay-Enterprise-App: product.id=9a473157-06a6-44b6-b017-a360ffaf5f38

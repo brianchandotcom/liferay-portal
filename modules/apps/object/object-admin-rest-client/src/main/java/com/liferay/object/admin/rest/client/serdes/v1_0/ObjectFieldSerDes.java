@@ -55,6 +55,20 @@ public class ObjectFieldSerDes {
 
 		sb.append("{");
 
+		if (objectField.getDBType() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"DBType\": ");
+
+			sb.append("\"");
+
+			sb.append(objectField.getDBType());
+
+			sb.append("\"");
+		}
+
 		if (objectField.getActions() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -214,6 +228,13 @@ public class ObjectFieldSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
+		if (objectField.getDBType() == null) {
+			map.put("DBType", null);
+		}
+		else {
+			map.put("DBType", String.valueOf(objectField.getDBType()));
+		}
+
 		if (objectField.getActions() == null) {
 			map.put("actions", null);
 		}
@@ -328,7 +349,14 @@ public class ObjectFieldSerDes {
 			ObjectField objectField, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "actions")) {
+			if (Objects.equals(jsonParserFieldName, "DBType")) {
+				if (jsonParserFieldValue != null) {
+					objectField.setDBType(
+						ObjectField.DBType.create(
+							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "actions")) {
 				if (jsonParserFieldValue != null) {
 					objectField.setActions(
 						(Map)ObjectFieldSerDes.toMap(

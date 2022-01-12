@@ -35,6 +35,35 @@ public class ObjectField implements Cloneable, Serializable {
 		return ObjectFieldSerDes.toDTO(json);
 	}
 
+	public DBType getDBType() {
+		return DBType;
+	}
+
+	public String getDBTypeAsString() {
+		if (DBType == null) {
+			return null;
+		}
+
+		return DBType.toString();
+	}
+
+	public void setDBType(DBType DBType) {
+		this.DBType = DBType;
+	}
+
+	public void setDBType(
+		UnsafeSupplier<DBType, Exception> DBTypeUnsafeSupplier) {
+
+		try {
+			DBType = DBTypeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected DBType DBType;
+
 	public Map<String, Map<String, String>> getActions() {
 		return actions;
 	}
@@ -367,6 +396,41 @@ public class ObjectField implements Cloneable, Serializable {
 		}
 
 		private BusinessType(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
+
+	public static enum DBType {
+
+		BIG_DECIMAL("BigDecimal"), BOOLEAN("Boolean"), CLOB("Clob"),
+		DATE("Date"), DOUBLE("Double"), INTEGER("Integer"), LONG("Long"),
+		STRING("String");
+
+		public static DBType create(String value) {
+			for (DBType dbType : values()) {
+				if (Objects.equals(dbType.getValue(), value) ||
+					Objects.equals(dbType.name(), value)) {
+
+					return dbType;
+				}
+			}
+
+			return null;
+		}
+
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private DBType(String value) {
 			_value = value;
 		}
 

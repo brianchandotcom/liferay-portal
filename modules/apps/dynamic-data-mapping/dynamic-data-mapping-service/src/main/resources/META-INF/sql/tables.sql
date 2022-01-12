@@ -52,7 +52,7 @@ create table DDMField (
 	parentFieldId LONG,
 	storageId LONG,
 	structureVersionId LONG,
-	fieldName VARCHAR(255) null,
+	fieldName TEXT null,
 	fieldType VARCHAR(255) null,
 	instanceId VARCHAR(75) null,
 	localizable BOOLEAN,

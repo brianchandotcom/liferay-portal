@@ -70,7 +70,7 @@ public class DDMFieldModelImpl
 		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
 		{"fieldId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"parentFieldId", Types.BIGINT}, {"storageId", Types.BIGINT},
-		{"structureVersionId", Types.BIGINT}, {"fieldName", Types.VARCHAR},
+		{"structureVersionId", Types.BIGINT}, {"fieldName", Types.CLOB},
 		{"fieldType", Types.VARCHAR}, {"instanceId", Types.VARCHAR},
 		{"localizable", Types.BOOLEAN}, {"priority", Types.INTEGER}
 	};
@@ -86,7 +86,7 @@ public class DDMFieldModelImpl
 		TABLE_COLUMNS_MAP.put("parentFieldId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("storageId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("structureVersionId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("fieldName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("fieldName", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("fieldType", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("instanceId", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("localizable", Types.BOOLEAN);
@@ -94,7 +94,7 @@ public class DDMFieldModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DDMField (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,fieldId LONG not null,companyId LONG,parentFieldId LONG,storageId LONG,structureVersionId LONG,fieldName VARCHAR(255) null,fieldType VARCHAR(255) null,instanceId VARCHAR(75) null,localizable BOOLEAN,priority INTEGER,primary key (fieldId, ctCollectionId))";
+		"create table DDMField (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,fieldId LONG not null,companyId LONG,parentFieldId LONG,storageId LONG,structureVersionId LONG,fieldName TEXT null,fieldType VARCHAR(255) null,instanceId VARCHAR(75) null,localizable BOOLEAN,priority INTEGER,primary key (fieldId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table DDMField";
 

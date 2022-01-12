@@ -239,8 +239,8 @@ public class DDMFieldPersistenceTest {
 		return OrderByComparatorFactoryUtil.create(
 			"DDMField", "mvccVersion", true, "ctCollectionId", true, "fieldId",
 			true, "companyId", true, "parentFieldId", true, "storageId", true,
-			"structureVersionId", true, "fieldName", true, "fieldType", true,
-			"instanceId", true, "localizable", true, "priority", true);
+			"structureVersionId", true, "fieldType", true, "instanceId", true,
+			"localizable", true, "priority", true);
 	}
 
 	@Test

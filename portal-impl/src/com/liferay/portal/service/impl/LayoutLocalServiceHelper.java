@@ -41,11 +41,10 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
-import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolverRegistryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.LayoutFriendlyURLValidator;
+import com.liferay.portal.kernel.service.LayoutFriendlyURLEntryValidator;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutRevisionLocalService;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
@@ -60,6 +59,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.comparator.LayoutPriorityComparator;
@@ -76,24 +76,10 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.osgi.util.tracker.ServiceTracker;
-
 /**
  * @author Raymond Augé
  */
 public class LayoutLocalServiceHelper implements IdentifiableOSGiService {
-
-	public void afterPropertiesSet() {
-		_serviceTracker = new ServiceTracker(
-			SystemBundleUtil.getBundleContext(),
-			LayoutFriendlyURLValidator.class, null);
-
-		_serviceTracker.open();
-	}
-
-	public void destroy() {
-		_serviceTracker.close();
-	}
 
 	public String getFriendlyURL(
 			long groupId, boolean privateLayout, long layoutId, String name,
@@ -123,13 +109,6 @@ public class LayoutLocalServiceHelper implements IdentifiableOSGiService {
 			try {
 				validateFriendlyURL(
 					groupId, privateLayout, layoutId, friendlyURL, languageId);
-
-				_layoutFriendlyURLValidator = _serviceTracker.getService();
-
-				if (_layoutFriendlyURLValidator != null) {
-					_layoutFriendlyURLValidator.validateFriendlyURLEntry(
-						groupId, privateLayout, layoutId, friendlyURL);
-				}
 
 				break;
 			}
@@ -403,6 +382,11 @@ public class LayoutLocalServiceHelper implements IdentifiableOSGiService {
 
 		if (Validator.isNull(friendlyURL)) {
 			return;
+		}
+
+		if (_layoutFriendlyURLEntryValidator != null) {
+			_layoutFriendlyURLEntryValidator.validateFriendlyURLEntry(
+				groupId, privateLayout, layoutId, friendlyURL);
 		}
 
 		int exceptionType = LayoutImpl.validateFriendlyURL(friendlyURL);
@@ -742,12 +726,13 @@ public class LayoutLocalServiceHelper implements IdentifiableOSGiService {
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutLocalServiceHelper.class);
 
+	private static volatile LayoutFriendlyURLEntryValidator
+		_layoutFriendlyURLEntryValidator =
+			ServiceProxyFactory.newServiceTrackedInstance(
+				LayoutFriendlyURLEntryValidator.class,
+				LayoutLocalServiceHelper.class,
+				"_layoutFriendlyURLEntryValidator", false);
 	private static final Pattern _urlSeparatorPattern = Pattern.compile(
 		"/[A-Za-z]");
-
-	private LayoutFriendlyURLValidator _layoutFriendlyURLValidator;
-	private ServiceTracker
-		<LayoutFriendlyURLValidator, LayoutFriendlyURLValidator>
-			_serviceTracker;
 
 }

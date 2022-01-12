@@ -2,5 +2,5 @@ Bundle-Name: Liferay Commerce Pricing Service
 Bundle-SymbolicName: com.liferay.commerce.pricing.service
 Bundle-Version: 4.0.24
 Liferay-Enterprise-App: product.id=9a473157-06a6-44b6-b017-a360ffaf5f38
-Liferay-Require-SchemaVersion: 2.2.0
+Liferay-Require-SchemaVersion: 2.3.0
 Liferay-Service: true

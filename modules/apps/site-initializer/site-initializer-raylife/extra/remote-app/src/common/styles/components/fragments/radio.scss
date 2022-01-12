@@ -10,6 +10,9 @@
 			}
 		}
 	}
+	.radio-card-label {
+		gap: 0 !important;
+	}
 	.custom-control-label {
 		&::before {
 			top: 0.3rem;

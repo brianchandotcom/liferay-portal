@@ -31,7 +31,7 @@ export function Radio({
 	return (
 		<ClayCard
 			className={classNames(
-				'align-items-baseline d-flex flex-row mb-3 pb-3 pl-3 pr-3 pt-3 radio-card rounded user-select-auto',
+				'align-items-baseline d-flex flex-row mb-3 py-2 py-sm-3 px-sm-3 px-2 radio-card rounded user-select-auto',
 				{
 					'bg-brand-primary-lighten-5 border border-primary text-brand-primary': selected,
 					'card-outlined': !selected,
@@ -61,25 +61,32 @@ export function Radio({
 				value={value}
 			/>
 
-			<div className="content d-flex flex-column flex-grow-1 flex-shrink-1">
-				<div className="align-items-center d-flex justify-content-between">
+			<div className="d-flex flex-wrap p-0">
+				<div className="align-items-start align-self-start col-12 d-flex flex-wrap justify-content-between mb-0 p-0">
 					<label
-						className={`font-weight-bolder text-paragraph-lg ${
-							selected && 'text-brand-primary'
-						}`}
+						className={classNames(
+							'd-flex flex-wrap radio-card-label flex-lg-nowrap font-weight-bolder text-paragraph-lg col-8 col-sm-8 col-md-10 col-lg-auto p-0 ',
+							{
+								'text-brand-primary': selected,
+							}
+						)}
 						htmlFor={name}
 					>
-						{label}
+						<p className="col-12 col-lg-auto col-md-auto col-sm-12 p-0">
+							{label} &nbsp;
+						</p>
 
-						<small className="font-weight-normal ml-0 text-paragraph-lg">
+						<small className="col-12 col-lg-auto col-md-5 col-sm-12 font-weight-normal justify-content-md-end mb-1 ml-0 p-0 text-neutral-10 text-paragraph-lg">
 							{sideLabel}
 						</small>
 					</label>
 
-					{renderActions}
+					<div className="col-4 col-lg-auto col-md-auto col-sm-4 d-flex justify-content-end p-0">
+						{renderActions}
+					</div>
 				</div>
 
-				<p className="text-neutral-8 text-paragraph-sm">
+				<p className="col-12 p-0 text-neutral-8 text-paragraph-sm">
 					{description}
 				</p>
 			</div>

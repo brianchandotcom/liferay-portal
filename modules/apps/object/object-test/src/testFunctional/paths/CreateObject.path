@@ -199,7 +199,12 @@
 		<td>SAVE_BUTTON_DISABLED</td>
 		<td>//button[contains(@id,'save') and @disabled]</td>
 		<td></td>
-</tr>
+	</tr>
+	<tr>
+		<td>ERROR_MESSAGE</td>
+		<td>//div[contains(@class,'${key_className}') and contains(.,'${key_errorMessage}')]</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

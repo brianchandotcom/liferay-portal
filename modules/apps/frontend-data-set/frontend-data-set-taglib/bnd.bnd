@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Frontend Data Set Taglib
 Bundle-SymbolicName: com.liferay.frontend.data.set.taglib
-Bundle-Version: 1.0.4
+Bundle-Version: 1.0.5
 Provide-Capability:\
 	osgi.extender;\
 		osgi.extender="jsp.taglib";\

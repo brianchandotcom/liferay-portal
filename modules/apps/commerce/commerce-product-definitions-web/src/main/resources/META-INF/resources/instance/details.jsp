@@ -36,7 +36,7 @@ boolean discontinued = BeanParamUtil.getBoolean(cpInstance, request, "discontinu
 
 <portlet:actionURL name="/cp_definitions/edit_cp_instance" var="editProductInstanceActionURL" />
 
-<aui:form action="<%= editProductInstanceActionURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "saveInstance();" %>'>
+<aui:form action="<%= editProductInstanceActionURL %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (cpInstance == null) ? Constants.ADD : Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="cpDefinitionId" type="hidden" value="<%= cpDefinition.getCPDefinitionId() %>" />
@@ -197,7 +197,7 @@ boolean discontinued = BeanParamUtil.getBoolean(cpInstance, request, "discontinu
 		</div>
 
 		<%
-		String replacementAutocompleteWrapperCssClasses = "row";
+		String replacementAutocompleteWrapperCssClasses = "mb-8 pb-5";
 
 		if (!discontinued) {
 			replacementAutocompleteWrapperCssClasses += " d-none";
@@ -205,11 +205,9 @@ boolean discontinued = BeanParamUtil.getBoolean(cpInstance, request, "discontinu
 		%>
 
 		<div class="<%= replacementAutocompleteWrapperCssClasses %>" id="<portlet:namespace />replacementAutocompleteWrapper">
-			<div class="col">
-				<label class="control-label" for="replacementCPInstanceId"><%= LanguageUtil.get(request, "replacement") %></label>
+			<label class="control-label" for="replacementCPInstanceId"><%= LanguageUtil.get(request, "replacement") %></label>
 
-				<div id="autocomplete-root"></div>
-			</div>
+			<div id="autocomplete-root"></div>
 		</div>
 	</commerce-ui:panel>
 
@@ -262,132 +260,17 @@ boolean discontinued = BeanParamUtil.getBoolean(cpInstance, request, "discontinu
 	</aui:button-row>
 </aui:form>
 
-<aui:script>
-	var fieldValues = [];
-
-	Liferay.componentReady(
-		'ProductOptions<%= cpDefinition.getCPDefinitionId() %>'
-	).then((ddmForm) => {
-		ddmForm.unstable_onEvent((e) => {
-			var eventName = e.type;
-			if (eventName === 'field_change') {
-				var key = e.payload.fieldInstance.fieldName;
-				var updatedItem = {
-					key: e.payload.fieldInstance.fieldName,
-					value: e.payload.value,
-				};
-
-				var itemFound = fieldValues.find((item) => {
-					return item.key === key;
-				});
-
-				if (itemFound) {
-					fieldValues = fieldValues.reduce((acc, item) => {
-						return acc.concat(item.key === key ? updatedItem : item);
-					}, []);
-				}
-				else {
-					fieldValues.push(updatedItem);
-				}
-
-				var form = window.document['<portlet:namespace />fm'];
-				form['<portlet:namespace />ddmFormValues'].value = JSON.stringify(
-					fieldValues
-				);
-			}
-		});
-	});
-
-	function <portlet:namespace />saveInstance(forceDisable) {
-		var form = window.document['<portlet:namespace />fm'];
-
-		var ddmForm = Liferay.component(
-			'ProductOptions<%= cpDefinition.getCPDefinitionId() %>DDMForm'
-		);
-
-		if (ddmForm) {
-			var fields = ddmForm.getImmediateFields();
-
-			var fieldValues = [];
-
-			fields.forEach((field) => {
-				var fieldValue = {};
-
-				fieldValue.key = field.get('fieldName');
-
-				var value = field.getValue();
-
-				var arrValue = [];
-
-				if (Array.isArray(value)) {
-					arrValue = value;
-				}
-				else {
-					arrValue.push(value);
-				}
-
-				fieldValue.value = arrValue;
-
-				fieldValues.push(fieldValue);
-			});
-
-			form['<portlet:namespace />ddmFormValues'].value = JSON.stringify(
-				fieldValues
-			);
-		}
-
-		submitForm(form);
-	}
-</aui:script>
-
-<aui:script use="aui-base,event-input">
-	var form = A.one('#<portlet:namespace />fm');
-
-	var publishButton = form.one('#<portlet:namespace />publishButton');
-
-	publishButton.on('click', () => {
-		var workflowActionInput = form.one('#<portlet:namespace />workflowAction');
-
-		if (workflowActionInput) {
-			workflowActionInput.val('<%= WorkflowConstants.ACTION_PUBLISH %>');
-		}
-	});
-</aui:script>
-
-<aui:script require="commerce-frontend-js/components/autocomplete/entry as autocomplete, commerce-frontend-js/utilities/eventsDefinitions as events">
-	autocomplete.default('autocomplete', 'autocomplete-root', {
-		apiUrl: '/o/headless-commerce-admin-catalog/v1.0/skus',
-		initialLabel:
-			'<%= cpInstanceDisplayContext.getReplacementCPInstanceLabel() %>',
-		initialValue:
-			'<%= cpInstanceDisplayContext.getReplacementCPInstanceId() %>',
-		inputId: 'replacementId',
-		inputName:
-			'<%= liferayPortletResponse.getNamespace() %>replacementCPInstanceId',
-		itemsKey: 'id',
-		itemsLabel: 'sku',
-	});
-
-	const discontinuedInput = document.getElementById(
-		'<%= liferayPortletResponse.getNamespace() %>discontinued'
-	);
-	const discontinuedDateInput = document.getElementById(
-		'<%= liferayPortletResponse.getNamespace() %>discontinuedDate'
-	);
-	const replacementAutocompleteWrapper = document.getElementById(
-		'<%= liferayPortletResponse.getNamespace() %>replacementAutocompleteWrapper'
-	);
-
-	discontinuedInput.addEventListener('change', (event) => {
-		if (event.target.checked) {
-			discontinuedDateInput.disabled = false;
-			discontinuedDateInput.classList.remove('disabled');
-			replacementAutocompleteWrapper.classList.remove('d-none');
-		}
-		else {
-			discontinuedDateInput.disabled = true;
-			discontinuedDateInput.classList.add('disabled');
-			replacementAutocompleteWrapper.classList.add('d-none');
-		}
-	});
-</aui:script>
+<liferay-frontend:component
+	context='<%=
+		HashMapBuilder.<String, Object>put(
+			"cpDefinitionId", cpDefinition.getCPDefinitionId()
+		).put(
+			"initialLabel", cpInstanceDisplayContext.getReplacementCPInstanceLabel()
+		).put(
+			"initialValue", cpInstanceDisplayContext.getReplacementCPInstanceId()
+		).put(
+			"WORKFLOW_ACTION_PUBLISH", WorkflowConstants.ACTION_PUBLISH
+		).build()
+	%>'
+	module="js/InstanceDetails"
+/>

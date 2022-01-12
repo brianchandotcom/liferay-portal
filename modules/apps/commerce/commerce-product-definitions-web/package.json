@@ -1,5 +1,6 @@
 {
 	"dependencies": {
+		"commerce-frontend-js": "*",
 		"frontend-js-web": "*"
 	},
 	"name": "@liferay/commerce-product-definitions-web",

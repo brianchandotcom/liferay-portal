@@ -13,6 +13,7 @@
  */
 
 import ClayAutocomplete from '@clayui/autocomplete';
+import {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import {FocusScope} from '@clayui/shared';
 import {ReactPortal, useIsMounted} from '@liferay/frontend-js-react-web';
@@ -276,67 +277,92 @@ function Autocomplete({onChange, onItemsUpdated, onValueUpdated, ...props}) {
 			results
 		);
 
+	const inputHiddenValue = selectedItem
+		? getValueFromItem(selectedItem, props.itemsKey)
+		: '';
+
 	return (
 		<>
 			<FocusScope>
-				<ClayAutocomplete className={props.inputClass} ref={nodeRef}>
-					<input
-						id={props.inputId || props.inputName}
-						name={props.inputName}
-						type="hidden"
-						value={
-							selectedItem
-								? getValueFromItem(selectedItem, props.itemsKey)
-								: ''
-						}
-					/>
-
-					<ClayAutocomplete.Input
-						disabled={props.readOnly}
-						id={props.id}
-						name={props.name}
-						onChange={(event) => {
-							setSelectedItem(null);
-							setPage(1);
-							setQuery(event.target.value);
-						}}
-						onFocus={(_e) => {
-							setActive(true);
-							setInitialised(true);
-						}}
-						onKeyUp={(event) => {
-							setActive(event.keyCode !== 27);
-						}}
-						placeholder={props.inputPlaceholder}
-						ref={inputNodeRef}
-						required={props.required || false}
-						value={
-							selectedItem
-								? getValueFromItem(
-										selectedItem,
-										props.itemsLabel
-								  )
-								: query
-						}
-					/>
-
-					{!CustomView && !props.disabled && (
-						<ClayAutocomplete.DropDown
-							active={
-								active && ((items && page === 1) || page > 1)
-							}
+				<div className="row">
+					<div className="col">
+						<ClayAutocomplete
+							className={props.inputClass}
+							ref={nodeRef}
 						>
-							<div
-								className="autocomplete-items"
-								ref={dropdownNodeRef}
-							>
-								{wrappedResults}
-							</div>
-						</ClayAutocomplete.DropDown>
-					)}
+							<input
+								id={props.inputId || props.inputName}
+								name={props.inputName}
+								type="hidden"
+								value={inputHiddenValue}
+							/>
 
-					{loading && <ClayAutocomplete.LoadingIndicator />}
-				</ClayAutocomplete>
+							<ClayAutocomplete.Input
+								disabled={props.readOnly}
+								id={props.id}
+								name={props.name}
+								onChange={(event) => {
+									setSelectedItem(null);
+									setPage(1);
+									setQuery(event.target.value);
+								}}
+								onFocus={() => {
+									setActive(true);
+									setInitialised(true);
+								}}
+								onKeyUp={(event) => {
+									setActive(event.keyCode !== 27);
+								}}
+								placeholder={props.inputPlaceholder}
+								ref={inputNodeRef}
+								required={props.required || false}
+								value={
+									selectedItem
+										? getValueFromItem(
+												selectedItem,
+												props.itemsLabel
+										  )
+										: query
+								}
+							/>
+
+							{!CustomView && !props.disabled && (
+								<ClayAutocomplete.DropDown
+									active={
+										active &&
+										((items && page === 1) || page > 1)
+									}
+								>
+									<div
+										className="autocomplete-items"
+										ref={dropdownNodeRef}
+									>
+										{wrappedResults}
+									</div>
+								</ClayAutocomplete.DropDown>
+							)}
+
+							{loading && <ClayAutocomplete.LoadingIndicator />}
+						</ClayAutocomplete>
+					</div>
+
+					{props.showDeleteButton && (
+						<div className="col-auto d-inline-flex flex-column justify-content-end">
+							<ClayButtonWithIcon
+								disabled={!query && !inputHiddenValue}
+								displayType="secondary"
+								onClick={() => {
+									setActive(false);
+									setInitialised(false);
+									setPage(1);
+									setQuery('');
+									setSelectedItem(null);
+								}}
+								symbol="trash"
+							/>
+						</div>
+					)}
+				</div>
 			</FocusScope>
 			{CustomView &&
 				!props.disabled &&
@@ -381,6 +407,7 @@ Autocomplete.propTypes = {
 	onItemsUpdated: PropTypes.func,
 	onValueUpdated: PropTypes.func,
 	required: PropTypes.bool,
+	showDeleteButton: PropTypes.bool,
 	value: PropTypes.string,
 };
 

@@ -62,4 +62,5 @@ launcher('autocomplete-2', 'autocomplete-root-2', {
 	onValueUpdated: (value, itemData) =>
 		// eslint-disable-next-line no-console
 		console.log(`Value: ${value}`, `Data: ${JSON.stringify(itemData)}`),
+	showDeleteButton: true,
 });

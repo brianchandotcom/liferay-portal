@@ -26,5 +26,5 @@ export default function launcher(
 		...props,
 	};
 
-	render(Component, renderData, container);
+	return render(Component, renderData, container);
 }

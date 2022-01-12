@@ -59,9 +59,8 @@ public class FrontendIconsServlet extends HttpServlet {
 
 			PrintWriter printWriter = httpServletResponse.getWriter();
 
-			String path = httpServletRequest.getPathInfo();
-
-			Matcher matcher = _pattern.matcher(path);
+			Matcher matcher = _pattern.matcher(
+				httpServletRequest.getPathInfo());
 
 			if (!matcher.matches() ||
 				!Objects.equals(matcher.group(1), "clay")) {

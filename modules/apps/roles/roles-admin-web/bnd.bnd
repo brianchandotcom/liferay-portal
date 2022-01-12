@@ -1,5 +1,5 @@
 Bundle-Name: Liferay Roles Admin Web
 Bundle-SymbolicName: com.liferay.roles.admin.web
-Bundle-Version: 5.0.27
+Bundle-Version: 5.0.28
 Liferay-JS-Submodules-Bridge: roles-admin-web
 Web-ContextPath: /roles-admin-web

@@ -15,10 +15,13 @@
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import classNames from 'classnames';
-import React, {useRef, useState} from 'react';
+import React, {useContext, useRef, useState} from 'react';
 
 import getDataAttributes from '../get_data_attributes';
+import FeatureFlagContext from './FeatureFlagContext';
 import LinkOrButton from './LinkOrButton';
+
+import './ManagementToolbar.scss';
 
 const CreationMenu = ({
 	maxPrimaryItems,
@@ -32,6 +35,7 @@ const CreationMenu = ({
 	viewMoreURL,
 }) => {
 	const [active, setActive] = useState(false);
+	const {showDesignImprovements} = useContext(FeatureFlagContext);
 
 	const secondaryItemsCountRef = useRef(
 		secondaryItems?.reduce((acc, cur) => {
@@ -166,12 +170,23 @@ const CreationMenu = ({
 					active={active}
 					onActiveChange={setActive}
 					trigger={
-						<ClayButtonWithIcon
-							aria-label={getPlusIconLabel()}
-							className="nav-btn nav-btn-monospaced"
-							symbol="plus"
-							title={getPlusIconLabel()}
-						/>
+						showDesignImprovements ? (
+							<LinkOrButton
+								aria-label={getPlusIconLabel()}
+								className="nav-btn"
+								symbol="plus"
+								title={getPlusIconLabel()}
+							>
+								{getPlusIconLabel()}
+							</LinkOrButton>
+						) : (
+							<ClayButtonWithIcon
+								aria-label={getPlusIconLabel()}
+								className="nav-btn nav-btn-monospaced"
+								symbol="plus"
+								title={getPlusIconLabel()}
+							/>
+						)
 					}
 				>
 					{visibleItemsCount < totalItemsCountRef.current ? (
@@ -224,6 +239,25 @@ const CreationMenu = ({
 						/>
 					)}
 				</ClayDropDown>
+			) : showDesignImprovements ? (
+				<>
+					<LinkOrButton
+						aria-label={getPlusIconLabel()}
+						button={true}
+						className="nav-btn"
+						displayType="primary"
+						href={firstItemRef.current.href}
+						onClick={(event) => {
+							onCreateButtonClick(event, {
+								item: firstItemRef.current,
+							});
+						}}
+						symbol="plus"
+						title={getPlusIconLabel()}
+					>
+						{Liferay.Language.get('new')}
+					</LinkOrButton>
+				</>
 			) : (
 				<LinkOrButton
 					aria-label={getPlusIconLabel()}

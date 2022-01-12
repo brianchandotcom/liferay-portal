@@ -15,6 +15,7 @@
 import {ClayButtonWithIcon} from '@clayui/button';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayManagementToolbar from '@clayui/management-toolbar';
+import {LinkOrButton} from '@clayui/shared';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
@@ -199,6 +200,15 @@ function ManagementToolbar({
 												onShowMoreButtonClick
 											}
 										/>
+									) : showDesignImprovementsFF ? (
+										<LinkOrButton
+											className="nav-btn nav-btn-monospaced"
+											displayType="primary"
+											onClick={onCreateButtonClick}
+											symbol="plus"
+										>
+											{Liferay.Language.get('new')}
+										</LinkOrButton>
 									) : (
 										<ClayButtonWithIcon
 											className="nav-btn nav-btn-monospaced"

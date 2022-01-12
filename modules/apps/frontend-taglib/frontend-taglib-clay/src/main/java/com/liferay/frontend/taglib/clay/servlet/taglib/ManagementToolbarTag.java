@@ -1056,8 +1056,20 @@ public class ManagementToolbarTag extends BaseContainerTag {
 				LinkTag linkTag = new LinkTag();
 
 				linkTag.setCssClass(
-					"nav-btn nav-btn-monospaced btn btn-primary");
+					"d-md-none nav-btn nav-btn-monospaced btn btn-primary");
 				linkTag.setIcon("plus");
+
+				linkTag.doTag(pageContext);
+
+				jspWriter.write("</li>");
+
+				jspWriter.write("<li class=\"nav-item\">");
+
+				linkTag = new LinkTag();
+
+				linkTag.setCssClass(
+					"nav-btn btn-content-spaced d-md-flex d-none btn btn-primary");
+				linkTag.setLabel(LanguageUtil.get(resourceBundle, "new"));
 
 				linkTag.doTag(pageContext);
 

@@ -1,6 +1,7 @@
 @component-name = "portal-collaboration"
 definition {
 
+	property portal.acceptance = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.component.names = "Roles";
@@ -38,6 +39,8 @@ definition {
 	@description = "This is a test for LPS-136986. It checks that page permissions can be configured via More Options."
 	@priority = "3"
 	test CanConfigurePermissionsViaMoreOptions {
+		property portal.acceptance = "false";
+
 		WikiNavigator.openToAddPage(
 			groupName = "Guest",
 			siteURLKey = "guest",

@@ -1,6 +1,7 @@
 @component-name = "portal-collaboration"
 definition {
 
+	property portal.acceptance = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Wiki";
@@ -93,8 +94,6 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanAddChildPage {
-		property portal.acceptance = "true";
-
 		WikiNavigator.gotoWidgetSpecificTabByURL(
 			layoutURLKey = "wiki-test-page",
 			siteURLKey = "guest",
@@ -195,8 +194,6 @@ definition {
 	@refactordone
 	@uitest
 	test CanAddFrontPageWithHTMLFormat {
-		property portal.acceptance = "true";
-
 		Navigator.gotoPage(pageName = "Wiki Test Page");
 
 		WikiPage.addFrontPagePG(
@@ -222,8 +219,6 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanAddPageWithHTMLFormat {
-		property portal.acceptance = "true";
-
 		WikiNavigator.gotoWidgetSpecificTabByURL(
 			layoutURLKey = "wiki-test-page",
 			siteURLKey = "guest",
@@ -483,8 +478,6 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanDeleteFrontPage {
-		property portal.acceptance = "true";
-
 		JSONWiki.updateWikiPage(
 			groupName = "Guest",
 			wikiNodeName = "Main",
@@ -504,8 +497,6 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanDeletePage {
-		property portal.acceptance = "true";
-
 		JSONWiki.addWikiPage(
 			groupName = "Guest",
 			wikiNodeName = "Main",
@@ -575,8 +566,6 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanEditFrontPage {
-		property portal.acceptance = "true";
-
 		JSONWiki.updateWikiPage(
 			groupName = "Guest",
 			wikiNodeName = "Main",
@@ -718,6 +707,7 @@ definition {
 	@priority = "3"
 	@refactordone
 	test CanRemoveRedirectLinkFromPage {
+		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "PGWiki#CanRemoveRedirectLinkFromPage";
 
 		JSONWiki.addWikiPage(

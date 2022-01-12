@@ -519,6 +519,7 @@ definition {
 	@description = "This ensures that the Wiki app in the app manager can be deactivated and reactivated."
 	@priority = "5"
 	test CanDeactivateAndActivateWiki {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "AppManagement#CanDeactivateAndActivateWiki";
 		property testray.main.component.name = "Wiki";
 

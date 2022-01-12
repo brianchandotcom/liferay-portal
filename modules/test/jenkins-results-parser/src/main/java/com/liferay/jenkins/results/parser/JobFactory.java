@@ -382,12 +382,6 @@ public class JobFactory {
 			return _jobs.get(jobKey);
 		}
 
-		if (jobName.startsWith("test-portal-upstream(")) {
-			_jobs.put(jobKey, new PortalUpstreamJob(jobName, buildProfile));
-
-			return _jobs.get(jobKey);
-		}
-
 		if (jobName.equals("test-qa-websites-functional-daily") ||
 			jobName.equals("test-qa-websites-functional-environment") ||
 			jobName.equals("test-qa-websites-functional-weekly")) {

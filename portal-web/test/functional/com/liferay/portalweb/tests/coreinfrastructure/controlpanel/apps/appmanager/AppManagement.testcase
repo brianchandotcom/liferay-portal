@@ -326,6 +326,7 @@ definition {
 	@description = "This ensures that the Message Boards app in the app manager can be deactivated and reactivated."
 	@priority = "5"
 	test CanDeactivateAndActivateMessageBoards {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "AppManagement#CanDeactivateAndActivateMessageBoards";
 		property testray.main.component.name = "Message Boards";
 

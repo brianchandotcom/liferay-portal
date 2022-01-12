@@ -1,6 +1,7 @@
 @component-name = "portal-collaboration"
 definition {
 
+	property portal.acceptance = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Message Boards";
@@ -135,6 +136,8 @@ definition {
 	@priority = "3"
 	@refactordone
 	test CanConfigureWidgetToAddThreadAsQuestionByDefault {
+		property portal.acceptance = "false";
+
 		MessageboardsThread.viewMarkAsQuestionNotChecked(siteURLKey = "guest");
 
 		MessageboardsPortlet.configureGeneralCP(
@@ -172,8 +175,6 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanDeleteCategory {
-		property portal.acceptance = "true";
-
 		JSONMBMessage.addCategory(
 			categoryDescription = "Description",
 			categoryName = "MB Category Name",
@@ -192,8 +193,6 @@ definition {
 	@refactordone
 	@uitest
 	test CanDeleteThread {
-		property portal.acceptance = "true";
-
 		JSONMBMessage.addMessage(
 			groupName = "Guest",
 			threadBody = "MB Thread Message Body",
@@ -207,8 +206,6 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanEditCategory {
-		property portal.acceptance = "true";
-
 		JSONMBMessage.addCategory(
 			categoryDescription = "Description",
 			categoryName = "MB Category Name",
@@ -381,6 +378,8 @@ definition {
 	@priority = "3"
 	@refactordone
 	test CanSearchForAttachment {
+		property portal.acceptance = "false";
+
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "Message Boards Page");
@@ -457,6 +456,8 @@ definition {
 	@priority = "3"
 	@refactordone
 	test CanSplitThread {
+		property portal.acceptance = "false";
+
 		JSONMBMessage.addMessage(
 			groupName = "Guest",
 			threadBody = "MB Thread Message Body",

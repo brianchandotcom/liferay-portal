@@ -100,6 +100,7 @@ definition {
 	@priority = "4"
 	test CannotViewMessageViaNotificationWithoutPermissionsOnContentPage {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property portal.acceptance = "true";
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -428,6 +429,7 @@ definition {
 	@refactordone
 	test CanViewMessageBoardsPortletRegRole {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property portal.acceptance = "true";
 
 		Permissions.setUpRegRoleLoginUserCP(
 			roleTitle = "Regrole Name",
@@ -463,6 +465,8 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanViewMessageBoardsPortletSiteRole {
+		property portal.acceptance = "true";
+
 		Permissions.setUpSiteRoleLoginUserCP(
 			pageName = "Blogs Page",
 			portletName = "Message Boards",

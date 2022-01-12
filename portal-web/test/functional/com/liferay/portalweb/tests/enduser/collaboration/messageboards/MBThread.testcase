@@ -1,6 +1,7 @@
 @component-name = "portal-collaboration"
 definition {
 
+	property portal.acceptance = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Message Boards";
@@ -92,7 +93,6 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanAddLinkToDocument {
-		property portal.acceptance = "true";
 		property testray.component.names = "WYSIWYG";
 
 		JSONDocument.addFileWithUploadedFile(
@@ -118,7 +118,6 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanAddLinkToPage {
-		property portal.acceptance = "true";
 		property testray.component.names = "WYSIWYG";
 
 		MessageboardsThread.addCP(
@@ -269,6 +268,7 @@ definition {
 	@refactordone
 	test CanDeleteThreadWithAttachment {
 		property custom.properties = "trash.entry.check.interval=1${line.separator}trash.entries.max.age=1";
+		property portal.acceptance = "false";
 
 		JSONGroup.addGroup(groupName = "Site Name");
 
@@ -470,6 +470,8 @@ definition {
 	@priority = "3"
 	@refactordone
 	test CanMoveMBCategory1ThreadWithExplanationPostToCategory2 {
+		property portal.acceptance = "false";
+
 		JSONMBMessage.addCategory(
 			categoryDescription = "MB Category Description",
 			categoryName = "MB Category1 Name",
@@ -520,6 +522,8 @@ definition {
 	@description = "This test covers LPS-137634. It ensures that a user cannot publish a thread with a tag that contains Java Script."
 	@priority = "3"
 	test CannotPublishThreadWithTagContainingJavaScript {
+		property portal.acceptance = "false";
+
 		MessageboardsThread.addPG(
 			groupName = "Guest",
 			invalidCharacters = "true",

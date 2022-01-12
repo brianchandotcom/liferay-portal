@@ -57,12 +57,15 @@ definition {
 	}
 
 	@description = "LRQA-72024 - Verify that the calendar has Month view"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CalendaHasMonthView {
+		Navigator.gotoPage(pageName = "Calendar Page");
 
-		// TODO LRQA-72028 CalendaHasMonthView pending implementation
+		CalendarNavigator.gotoView(viewType = "Month");
 
+		CalendarPage.viewMonthTableIsDisplayed();
+
+		
 	}
 
 	@description = "LRQA-72024 - Verify that the calendar has Agenda view"

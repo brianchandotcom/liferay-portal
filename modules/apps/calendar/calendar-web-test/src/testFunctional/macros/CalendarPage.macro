@@ -8,4 +8,9 @@ definition {
 		AssertElementPresent(locator1 = "Calendar#SCHEDULER_VIEW_WEEK");
 	}
 
+	macro viewMonthTableIsDisplayed {
+		AssertElementPresent(locator1 = "Calendar#SCHEDULER_VIEW_MONTH");
+	}
+
+	
 }

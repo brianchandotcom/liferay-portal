@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.object.web.internal.object.entries.frontend.data.set.data.model;
+package com.liferay.object.web.internal.object.entries.frontend.taglib.clay.data.set.data.model;
 
 /**
  * @author Marco Leo

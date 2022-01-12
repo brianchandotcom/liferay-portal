@@ -1,4 +1,4 @@
 Bundle-Name: Liferay Segments Context Vocabulary
 Bundle-SymbolicName: com.liferay.segments.context.vocabulary
-Bundle-Version: 2.0.14
+Bundle-Version: 2.0.15
 Web-ContextPath: /segments-context-vocabulary

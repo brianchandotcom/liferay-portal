@@ -15,6 +15,7 @@
 package com.liferay.gradle.plugins.defaults;
 
 import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
+import com.liferay.gradle.plugins.jenkins.results.parser.JenkinsResultsParserPlugin;
 import com.liferay.gradle.plugins.source.formatter.SourceFormatterPlugin;
 
 import org.gradle.api.Plugin;
@@ -27,6 +28,7 @@ public class PoshiDefaultsPlugin implements Plugin<Project> {
 
 	@Override
 	public void apply(Project project) {
+		GradleUtil.applyPlugin(project, JenkinsResultsParserPlugin.class);
 		GradleUtil.applyPlugin(project, PoshiRunnerDefaultsPlugin.class);
 		GradleUtil.applyPlugin(
 			project, PoshiRunnerResourcesDefaultsPlugin.class);

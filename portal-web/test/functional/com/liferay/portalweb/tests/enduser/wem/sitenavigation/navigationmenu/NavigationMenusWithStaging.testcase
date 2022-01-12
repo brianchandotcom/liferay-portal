@@ -1340,7 +1340,7 @@ definition {
 		task ("Add all categories from each vocabulary into Navigation Menu") {
 			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name-staging");
 
-			NavigationMenusAdmin.gotoEdit(navigationMenuName = "Navigation Menu Name");
+			NavigationMenusAdmin.editMenu(navigationMenuName = "Navigation Menu Name");
 
 			NavigationMenusAdmin.addCategoryItem(assetTitleList = "Global Category Name,Global Subcategory Name,Global SubSubcategory Name,Site Category Name,Site Subcategory Name,Site SubSubcategory Name");
 		}

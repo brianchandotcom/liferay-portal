@@ -14,11 +14,15 @@
 
 package com.liferay.site.navigation.menu.item.display.page.internal.display.context;
 
+import com.liferay.info.field.InfoField;
+import com.liferay.info.field.InfoFieldValue;
+import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemFormVariation;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType;
 import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
+import com.liferay.layout.display.page.LayoutDisplayPageInfoItemFieldValuesProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -46,7 +50,11 @@ import com.liferay.site.navigation.menu.item.display.page.internal.constants.Sit
 import com.liferay.site.navigation.menu.item.display.page.internal.type.DisplayPageTypeContext;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 
+import java.util.Collection;
 import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.portlet.PortletURL;
 
@@ -191,7 +199,41 @@ public class DisplayPageTypeSiteNavigationMenuTypeDisplayContext {
 	}
 
 	public JSONArray getDataJSONArray() throws Exception {
-		return JSONFactoryUtil.createJSONArray();
+		Optional<LayoutDisplayPageInfoItemFieldValuesProvider<?>>
+			layoutDisplayPageInfoItemFieldValuesProviderOptional =
+				_displayPageTypeContext.
+					getLayoutDisplayPageInfoItemFieldValuesProviderOptional();
+
+		LayoutDisplayPageInfoItemFieldValuesProvider
+			layoutDisplayPageInfoItemFieldValuesProvider =
+				layoutDisplayPageInfoItemFieldValuesProviderOptional.orElse(
+					null);
+
+		if (layoutDisplayPageInfoItemFieldValuesProvider == null) {
+			return JSONFactoryUtil.createJSONArray();
+		}
+
+		InfoItemFieldValues infoItemFieldValues =
+			layoutDisplayPageInfoItemFieldValuesProvider.getInfoItemFieldValues(
+				getClassPK());
+
+		Collection<InfoFieldValue<Object>> infoFieldValues =
+			infoItemFieldValues.getInfoFieldValues();
+
+		Stream<InfoFieldValue<Object>> stream = infoFieldValues.stream();
+
+		return JSONUtil.toJSONArray(
+			stream.collect(Collectors.toList()),
+			infoFieldValue -> JSONUtil.put(
+				"title",
+				() -> {
+					InfoField infoField = infoFieldValue.getInfoField();
+
+					return infoField.getLabel(_themeDisplay.getLocale());
+				}
+			).put(
+				"value", infoFieldValue.getValue(_themeDisplay.getLocale())
+			));
 	}
 
 	public String getItemSubtype() {

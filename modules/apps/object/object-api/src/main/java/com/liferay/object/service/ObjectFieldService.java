@@ -54,9 +54,9 @@ public interface ObjectFieldService extends BaseService {
 	 */
 	public ObjectField addCustomObjectField(
 			long listTypeDefinitionId, long objectDefinitionId,
-			String businessType, boolean indexed, boolean indexedAsKeyword,
-			String indexedLanguageId, Map<Locale, String> labelMap, String name,
-			boolean required, String type)
+			String businessType, String dbType, boolean indexed,
+			boolean indexedAsKeyword, String indexedLanguageId,
+			Map<Locale, String> labelMap, String name, boolean required)
 		throws PortalException;
 
 	public ObjectField deleteObjectField(long objectFieldId) throws Exception;
@@ -74,9 +74,9 @@ public interface ObjectFieldService extends BaseService {
 
 	public ObjectField updateCustomObjectField(
 			long objectFieldId, long listTypeDefinitionId, String businessType,
-			boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
-			Map<Locale, String> labelMap, String name, boolean required,
-			String type)
+			String dbType, boolean indexed, boolean indexedAsKeyword,
+			String indexedLanguageId, Map<Locale, String> labelMap, String name,
+			boolean required)
 		throws PortalException;
 
 }

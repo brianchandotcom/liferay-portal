@@ -148,36 +148,36 @@ public class DispatchLogLocalServiceTest {
 
 		Class<?> exceptionClass = Exception.class;
 
-		DispatchLog dispatchLogInProgress =
-			DispatchLogTestUtil.randomDispatchLog(
-				user, DispatchTaskStatus.IN_PROGRESS);
+		for (DispatchTaskStatus dispatchTaskStatus :
+				DispatchTaskStatus.values()) {
 
-		_dispatchLogLocalService.addDispatchLog(dispatchLogInProgress);
+			DispatchLog dispatchLog = DispatchLogTestUtil.randomDispatchLog(
+				user, dispatchTaskStatus);
 
-		try {
-			_dispatchLogLocalService.deleteDispatchLog(
-				dispatchLogInProgress.getDispatchLogId());
+			dispatchLog = _dispatchLogLocalService.addDispatchLog(dispatchLog);
+
+			try {
+				_dispatchLogLocalService.deleteDispatchLog(
+					dispatchLog.getDispatchLogId());
+
+				Assert.assertNotEquals(
+					"Dispatch log must not be deleted",
+					DispatchTaskStatus.IN_PROGRESS, dispatchTaskStatus);
+
+				Assert.assertNull(
+					_dispatchLogLocalService.fetchDispatchLog(
+						dispatchLog.getDispatchLogId()));
+
+				continue;
+			}
+			catch (Exception exception) {
+				exceptionClass = exception.getClass();
+			}
+
+			Assert.assertEquals(
+				"Dispatch log cannot be deleted while task is in progress",
+				DispatchLogStatusException.class, exceptionClass);
 		}
-		catch (Exception exception) {
-			exceptionClass = exception.getClass();
-		}
-
-		Assert.assertEquals(
-			"Dispatch log cannot be deleted while task is in progress",
-			DispatchLogStatusException.class, exceptionClass);
-
-		DispatchLog dispatchLogNotInProgress =
-			DispatchLogTestUtil.randomDispatchLog(
-				user, DispatchTaskStatus.SUCCESSFUL);
-
-		_dispatchLogLocalService.addDispatchLog(dispatchLogNotInProgress);
-
-		_dispatchLogLocalService.deleteDispatchLog(
-			dispatchLogNotInProgress.getDispatchLogId());
-
-		Assert.assertNull(
-			_dispatchLogLocalService.fetchDispatchLog(
-				dispatchLogNotInProgress.getDispatchLogId()));
 	}
 
 	@Test

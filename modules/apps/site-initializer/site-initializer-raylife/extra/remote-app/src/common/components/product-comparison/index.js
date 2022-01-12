@@ -148,14 +148,18 @@ const ProductComparison = ({
 					</h4>
 
 					<div className="d-flex display-3 flex-row font-weight-bolder justify-content-center text-neutral-10 value">
-						&#36;{Number(price).toLocaleString('en-US')}
+						<span>
+							&#36;{Number(price).toLocaleString('en-US')}
+						</span>
+
 						<div className="font-weight-light text-neutral-9">
 							/yr
 						</div>
 					</div>
 
 					<div className="font-weight-normal m-auto mt-1 quote-subtitle text-neutral-8 text-paragraph-xs">
-						Minimum payment of{' '}
+						<span>Minimum payment of </span>
+						<></>
 						<span className="text-brand-primary">
 							&#36;
 							{promoPrice % 1 === 0

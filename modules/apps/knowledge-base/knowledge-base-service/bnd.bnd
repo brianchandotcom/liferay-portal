@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Knowledge Base Service
 Bundle-SymbolicName: com.liferay.knowledge.base.service
-Bundle-Version: 5.0.17
+Bundle-Version: 5.0.18
 Liferay-Require-SchemaVersion: 4.1.0
 Liferay-Service: true
 -dsannotations-options: inherit

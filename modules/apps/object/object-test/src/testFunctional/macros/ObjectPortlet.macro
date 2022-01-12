@@ -122,6 +122,16 @@ definition {
 			locator1 = "ObjectPortlet#OBJECT_PORTLET_HEADER");
 	}
 
+	macro assertIsDisplayedOnControlPanel {
+		ApplicationsMenuHelper.openApplicationsMenu();
+
+		ApplicationsMenu.gotoPanel(panel = "Control Panel");
+
+		AssertElementPresent(
+			key_itemMenu = "${itemMenu}",
+			locator1 = "ObjectPortlet#VIEW_FIELD_ON_MENU");
+	}
+
 	macro assertMenuItemColumn {
 		AssertElementPresent(
 			key_dropdowntItem = "${dropdowntItem}",

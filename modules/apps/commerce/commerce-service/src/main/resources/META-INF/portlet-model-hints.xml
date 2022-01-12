@@ -408,6 +408,7 @@
 	</model>
 	<model name="com.liferay.commerce.model.CPDefinitionInventory">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="CPDefinitionInventoryId" type="long" />
 		<field name="groupId" type="long" />

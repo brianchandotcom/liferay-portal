@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.service;
 
+import com.liferay.commerce.model.CPDefinitionInventory;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
@@ -38,13 +39,12 @@ public class CPDefinitionInventoryServiceWrapper
 	}
 
 	@Override
-	public com.liferay.commerce.model.CPDefinitionInventory
-			addCPDefinitionInventory(
-				long cpDefinitionId, String cpDefinitionInventoryEngine,
-				String lowStockActivity, boolean displayAvailability,
-				boolean displayStockQuantity, int minStockQuantity,
-				boolean backOrders, int minOrderQuantity, int maxOrderQuantity,
-				String allowedOrderQuantities, int multipleOrderQuantity)
+	public CPDefinitionInventory addCPDefinitionInventory(
+			long cpDefinitionId, String cpDefinitionInventoryEngine,
+			String lowStockActivity, boolean displayAvailability,
+			boolean displayStockQuantity, int minStockQuantity,
+			boolean backOrders, int minOrderQuantity, int maxOrderQuantity,
+			String allowedOrderQuantities, int multipleOrderQuantity)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpDefinitionInventoryService.addCPDefinitionInventory(
@@ -63,8 +63,8 @@ public class CPDefinitionInventoryServiceWrapper
 	}
 
 	@Override
-	public com.liferay.commerce.model.CPDefinitionInventory
-			fetchCPDefinitionInventoryByCPDefinitionId(long cpDefinitionId)
+	public CPDefinitionInventory fetchCPDefinitionInventoryByCPDefinitionId(
+			long cpDefinitionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpDefinitionInventoryService.
@@ -86,14 +86,13 @@ public class CPDefinitionInventoryServiceWrapper
 	 */
 	@Deprecated
 	@Override
-	public com.liferay.commerce.model.CPDefinitionInventory
-			updateCPDefinitionInventory(
-				long groupId, long cpDefinitionInventoryId,
-				String cpDefinitionInventoryEngine, String lowStockActivity,
-				boolean displayAvailability, boolean displayStockQuantity,
-				int minStockQuantity, boolean backOrders, int minOrderQuantity,
-				int maxOrderQuantity, String allowedOrderQuantities,
-				int multipleOrderQuantity)
+	public CPDefinitionInventory updateCPDefinitionInventory(
+			long groupId, long cpDefinitionInventoryId,
+			String cpDefinitionInventoryEngine, String lowStockActivity,
+			boolean displayAvailability, boolean displayStockQuantity,
+			int minStockQuantity, boolean backOrders, int minOrderQuantity,
+			int maxOrderQuantity, String allowedOrderQuantities,
+			int multipleOrderQuantity)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpDefinitionInventoryService.updateCPDefinitionInventory(
@@ -104,14 +103,12 @@ public class CPDefinitionInventoryServiceWrapper
 	}
 
 	@Override
-	public com.liferay.commerce.model.CPDefinitionInventory
-			updateCPDefinitionInventory(
-				long cpDefinitionInventoryId,
-				String cpDefinitionInventoryEngine, String lowStockActivity,
-				boolean displayAvailability, boolean displayStockQuantity,
-				int minStockQuantity, boolean backOrders, int minOrderQuantity,
-				int maxOrderQuantity, String allowedOrderQuantities,
-				int multipleOrderQuantity)
+	public CPDefinitionInventory updateCPDefinitionInventory(
+			long cpDefinitionInventoryId, String cpDefinitionInventoryEngine,
+			String lowStockActivity, boolean displayAvailability,
+			boolean displayStockQuantity, int minStockQuantity,
+			boolean backOrders, int minOrderQuantity, int maxOrderQuantity,
+			String allowedOrderQuantities, int multipleOrderQuantity)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpDefinitionInventoryService.updateCPDefinitionInventory(

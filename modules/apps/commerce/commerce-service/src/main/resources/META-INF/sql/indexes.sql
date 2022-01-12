@@ -2,9 +2,10 @@ create unique index IX_17D56F1B on CPDAvailabilityEstimate (CProductId);
 create index IX_E560850D on CPDAvailabilityEstimate (commerceAvailabilityEstimateId);
 create index IX_609B2AF4 on CPDAvailabilityEstimate (uuid_[$COLUMN_LENGTH:75$], companyId);
 
-create unique index IX_34D62DF1 on CPDefinitionInventory (CPDefinitionId);
-create index IX_51AED1D6 on CPDefinitionInventory (uuid_[$COLUMN_LENGTH:75$], companyId);
-create unique index IX_274DD5D8 on CPDefinitionInventory (uuid_[$COLUMN_LENGTH:75$], groupId);
+create unique index IX_2A31024F on CPDefinitionInventory (CPDefinitionId, ctCollectionId);
+create index IX_E7573C34 on CPDefinitionInventory (uuid_[$COLUMN_LENGTH:75$], companyId, ctCollectionId);
+create index IX_9C196570 on CPDefinitionInventory (uuid_[$COLUMN_LENGTH:75$], ctCollectionId);
+create unique index IX_E7C1FC36 on CPDefinitionInventory (uuid_[$COLUMN_LENGTH:75$], groupId, ctCollectionId);
 
 create unique index IX_9DD3ABD3 on CommerceAddressRestriction (classNameId, classPK, countryId);
 create index IX_AE21488 on CommerceAddressRestriction (countryId);

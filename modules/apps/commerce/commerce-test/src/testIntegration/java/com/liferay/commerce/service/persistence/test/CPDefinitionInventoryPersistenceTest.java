@@ -130,6 +130,8 @@ public class CPDefinitionInventoryPersistenceTest {
 
 		newCPDefinitionInventory.setMvccVersion(RandomTestUtil.nextLong());
 
+		newCPDefinitionInventory.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newCPDefinitionInventory.setUuid(RandomTestUtil.randomString());
 
 		newCPDefinitionInventory.setGroupId(RandomTestUtil.nextLong());
@@ -182,6 +184,9 @@ public class CPDefinitionInventoryPersistenceTest {
 		Assert.assertEquals(
 			existingCPDefinitionInventory.getMvccVersion(),
 			newCPDefinitionInventory.getMvccVersion());
+		Assert.assertEquals(
+			existingCPDefinitionInventory.getCtCollectionId(),
+			newCPDefinitionInventory.getCtCollectionId());
 		Assert.assertEquals(
 			existingCPDefinitionInventory.getUuid(),
 			newCPDefinitionInventory.getUuid());
@@ -305,10 +310,10 @@ public class CPDefinitionInventoryPersistenceTest {
 
 	protected OrderByComparator<CPDefinitionInventory> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"CPDefinitionInventory", "mvccVersion", true, "uuid", true,
-			"CPDefinitionInventoryId", true, "groupId", true, "companyId", true,
-			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "CPDefinitionId", true,
+			"CPDefinitionInventory", "mvccVersion", true, "ctCollectionId",
+			true, "uuid", true, "CPDefinitionInventoryId", true, "groupId",
+			true, "companyId", true, "userId", true, "userName", true,
+			"createDate", true, "modifiedDate", true, "CPDefinitionId", true,
 			"CPDefinitionInventoryEngine", true, "lowStockActivity", true,
 			"displayAvailability", true, "displayStockQuantity", true,
 			"minStockQuantity", true, "backOrders", true, "minOrderQuantity",
@@ -635,6 +640,8 @@ public class CPDefinitionInventoryPersistenceTest {
 		CPDefinitionInventory cpDefinitionInventory = _persistence.create(pk);
 
 		cpDefinitionInventory.setMvccVersion(RandomTestUtil.nextLong());
+
+		cpDefinitionInventory.setCtCollectionId(RandomTestUtil.nextLong());
 
 		cpDefinitionInventory.setUuid(RandomTestUtil.randomString());
 

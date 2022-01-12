@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.mapping.model;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.base.BaseTable;
 
+import java.sql.Clob;
 import java.sql.Types;
 
 /**
@@ -44,8 +45,8 @@ public class DDMFieldTable extends BaseTable<DDMFieldTable> {
 		"storageId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<DDMFieldTable, Long> structureVersionId = createColumn(
 		"structureVersionId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
-	public final Column<DDMFieldTable, String> fieldName = createColumn(
-		"fieldName", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<DDMFieldTable, Clob> fieldName = createColumn(
+		"fieldName", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 	public final Column<DDMFieldTable, String> fieldType = createColumn(
 		"fieldType", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<DDMFieldTable, String> instanceId = createColumn(

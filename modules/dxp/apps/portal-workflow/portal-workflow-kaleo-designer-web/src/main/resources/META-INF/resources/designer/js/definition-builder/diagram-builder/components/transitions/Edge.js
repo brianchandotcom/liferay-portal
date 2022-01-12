@@ -144,7 +144,7 @@ function Edge(props) {
 
 			<EdgeText
 				className="reaft-flow-__edge-text"
-				label={edgeLabel.toUpperCase()}
+				label={edgeLabel?.toUpperCase()}
 				labelBgBorderRadius="13px"
 				labelBgPadding={[8, 4]}
 				labelBgStyle={{

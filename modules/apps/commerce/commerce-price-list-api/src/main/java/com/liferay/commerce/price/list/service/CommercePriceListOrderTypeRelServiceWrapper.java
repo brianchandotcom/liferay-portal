@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.price.list.service;
 
+import com.liferay.commerce.price.list.model.CommercePriceListOrderTypeRel;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
@@ -40,11 +41,9 @@ public class CommercePriceListOrderTypeRelServiceWrapper
 	}
 
 	@Override
-	public com.liferay.commerce.price.list.model.CommercePriceListOrderTypeRel
-			addCommercePriceListOrderTypeRel(
-				long commercePriceListId, long commerceOrderTypeId,
-				int priority,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public CommercePriceListOrderTypeRel addCommercePriceListOrderTypeRel(
+			long commercePriceListId, long commerceOrderTypeId, int priority,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commercePriceListOrderTypeRelService.
@@ -64,9 +63,8 @@ public class CommercePriceListOrderTypeRelServiceWrapper
 	}
 
 	@Override
-	public com.liferay.commerce.price.list.model.CommercePriceListOrderTypeRel
-			fetchCommercePriceListOrderTypeRel(
-				long commercePriceListId, long commerceOrderTypeId)
+	public CommercePriceListOrderTypeRel fetchCommercePriceListOrderTypeRel(
+			long commercePriceListId, long commerceOrderTypeId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commercePriceListOrderTypeRelService.
@@ -75,9 +73,8 @@ public class CommercePriceListOrderTypeRelServiceWrapper
 	}
 
 	@Override
-	public com.liferay.commerce.price.list.model.CommercePriceListOrderTypeRel
-			getCommercePriceListOrderTypeRel(
-				long commercePriceListOrderTypeRelId)
+	public CommercePriceListOrderTypeRel getCommercePriceListOrderTypeRel(
+			long commercePriceListOrderTypeRelId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commercePriceListOrderTypeRelService.
@@ -85,14 +82,12 @@ public class CommercePriceListOrderTypeRelServiceWrapper
 	}
 
 	@Override
-	public java.util.List
-		<com.liferay.commerce.price.list.model.CommercePriceListOrderTypeRel>
-				getCommercePriceListOrderTypeRels(
-					long commercePriceListId, String name, int start, int end,
-					com.liferay.portal.kernel.util.OrderByComparator
-						<com.liferay.commerce.price.list.model.
-							CommercePriceListOrderTypeRel> orderByComparator)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public java.util.List<CommercePriceListOrderTypeRel>
+			getCommercePriceListOrderTypeRels(
+				long commercePriceListId, String name, int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<CommercePriceListOrderTypeRel> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commercePriceListOrderTypeRelService.
 			getCommercePriceListOrderTypeRels(

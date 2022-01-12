@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.price.list.service;
 
+import com.liferay.commerce.price.list.model.CommercePriceListDiscountRel;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
@@ -40,10 +41,9 @@ public class CommercePriceListDiscountRelServiceWrapper
 	}
 
 	@Override
-	public com.liferay.commerce.price.list.model.CommercePriceListDiscountRel
-			addCommercePriceListDiscountRel(
-				long commercePriceListId, long commerceDiscountId, int order,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public CommercePriceListDiscountRel addCommercePriceListDiscountRel(
+			long commercePriceListId, long commerceDiscountId, int order,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commercePriceListDiscountRelService.
@@ -61,9 +61,8 @@ public class CommercePriceListDiscountRelServiceWrapper
 	}
 
 	@Override
-	public com.liferay.commerce.price.list.model.CommercePriceListDiscountRel
-			fetchCommercePriceListDiscountRel(
-				long commercePriceListId, long commerceDiscountId)
+	public CommercePriceListDiscountRel fetchCommercePriceListDiscountRel(
+			long commercePriceListId, long commerceDiscountId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commercePriceListDiscountRelService.
@@ -72,8 +71,8 @@ public class CommercePriceListDiscountRelServiceWrapper
 	}
 
 	@Override
-	public com.liferay.commerce.price.list.model.CommercePriceListDiscountRel
-			getCommercePriceListDiscountRel(long commercePriceListDiscountRelId)
+	public CommercePriceListDiscountRel getCommercePriceListDiscountRel(
+			long commercePriceListDiscountRelId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commercePriceListDiscountRelService.
@@ -81,24 +80,21 @@ public class CommercePriceListDiscountRelServiceWrapper
 	}
 
 	@Override
-	public java.util.List
-		<com.liferay.commerce.price.list.model.CommercePriceListDiscountRel>
-				getCommercePriceListDiscountRels(long commercePriceListId)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public java.util.List<CommercePriceListDiscountRel>
+			getCommercePriceListDiscountRels(long commercePriceListId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commercePriceListDiscountRelService.
 			getCommercePriceListDiscountRels(commercePriceListId);
 	}
 
 	@Override
-	public java.util.List
-		<com.liferay.commerce.price.list.model.CommercePriceListDiscountRel>
-				getCommercePriceListDiscountRels(
-					long commercePriceListId, int start, int end,
-					com.liferay.portal.kernel.util.OrderByComparator
-						<com.liferay.commerce.price.list.model.
-							CommercePriceListDiscountRel> orderByComparator)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public java.util.List<CommercePriceListDiscountRel>
+			getCommercePriceListDiscountRels(
+				long commercePriceListId, int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<CommercePriceListDiscountRel> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commercePriceListDiscountRelService.
 			getCommercePriceListDiscountRels(

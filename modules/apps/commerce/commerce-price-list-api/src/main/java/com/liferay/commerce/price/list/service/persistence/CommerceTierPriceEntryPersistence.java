@@ -17,6 +17,7 @@ package com.liferay.commerce.price.list.service.persistence;
 import com.liferay.commerce.price.list.exception.NoSuchTierPriceEntryException;
 import com.liferay.commerce.price.list.model.CommerceTierPriceEntry;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 import java.util.Date;
 
@@ -35,7 +36,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface CommerceTierPriceEntryPersistence
-	extends BasePersistence<CommerceTierPriceEntry> {
+	extends BasePersistence<CommerceTierPriceEntry>,
+			CTPersistence<CommerceTierPriceEntry> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

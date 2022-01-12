@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedAuditedModel;
 import com.liferay.portal.kernel.model.WorkflowedModel;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import java.math.BigDecimal;
 
@@ -40,8 +41,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface CommercePriceEntryModel
-	extends BaseModel<CommercePriceEntry>, MVCCModel, ShardedModel,
-			StagedAuditedModel, WorkflowedModel {
+	extends BaseModel<CommercePriceEntry>, CTModel<CommercePriceEntry>,
+			MVCCModel, ShardedModel, StagedAuditedModel, WorkflowedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -54,6 +55,7 @@ public interface CommercePriceEntryModel
 	 *
 	 * @return the primary key of this commerce price entry
 	 */
+	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -61,6 +63,7 @@ public interface CommercePriceEntryModel
 	 *
 	 * @param primaryKey the primary key of this commerce price entry
 	 */
+	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -78,6 +81,22 @@ public interface CommercePriceEntryModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
+
+	/**
+	 * Returns the ct collection ID of this commerce price entry.
+	 *
+	 * @return the ct collection ID of this commerce price entry
+	 */
+	@Override
+	public long getCtCollectionId();
+
+	/**
+	 * Sets the ct collection ID of this commerce price entry.
+	 *
+	 * @param ctCollectionId the ct collection ID of this commerce price entry
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the uuid of this commerce price entry.

@@ -36,6 +36,9 @@ public class CommercePriceListTable extends BaseTable<CommercePriceListTable> {
 	public final Column<CommercePriceListTable, Long> mvccVersion =
 		createColumn(
 			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<CommercePriceListTable, Long> ctCollectionId =
+		createColumn(
+			"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<CommercePriceListTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<CommercePriceListTable, String> externalReferenceCode =

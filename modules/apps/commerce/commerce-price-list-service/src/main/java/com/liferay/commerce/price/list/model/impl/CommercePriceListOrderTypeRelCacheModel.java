@@ -82,10 +82,12 @@ public class CommercePriceListOrderTypeRelCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(27);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", commercePriceListOrderTypeRelId=");
@@ -119,6 +121,7 @@ public class CommercePriceListOrderTypeRelCacheModel
 			new CommercePriceListOrderTypeRelImpl();
 
 		commercePriceListOrderTypeRelImpl.setMvccVersion(mvccVersion);
+		commercePriceListOrderTypeRelImpl.setCtCollectionId(ctCollectionId);
 
 		if (uuid == null) {
 			commercePriceListOrderTypeRelImpl.setUuid("");
@@ -177,6 +180,8 @@ public class CommercePriceListOrderTypeRelCacheModel
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
+
+		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		commercePriceListOrderTypeRelId = objectInput.readLong();
@@ -199,6 +204,8 @@ public class CommercePriceListOrderTypeRelCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(ctCollectionId);
 
 		if (uuid == null) {
 			objectOutput.writeUTF("");
@@ -232,6 +239,7 @@ public class CommercePriceListOrderTypeRelCacheModel
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public String uuid;
 	public long commercePriceListOrderTypeRelId;
 	public long companyId;

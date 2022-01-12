@@ -75,7 +75,8 @@ public class CommercePriceListAccountRelModelImpl
 	public static final String TABLE_NAME = "CommercePriceListAccountRel";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
+		{"uuid_", Types.VARCHAR},
 		{"commercePriceListAccountRelId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
@@ -89,6 +90,7 @@ public class CommercePriceListAccountRelModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("commercePriceListAccountRelId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -103,7 +105,7 @@ public class CommercePriceListAccountRelModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommercePriceListAccountRel (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,commercePriceListAccountRelId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceAccountId LONG,commercePriceListId LONG,order_ INTEGER,lastPublishDate DATE null)";
+		"create table CommercePriceListAccountRel (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,commercePriceListAccountRelId LONG not null,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceAccountId LONG,commercePriceListId LONG,order_ INTEGER,lastPublishDate DATE null,primary key (commercePriceListAccountRelId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CommercePriceListAccountRel";
@@ -312,6 +314,12 @@ public class CommercePriceListAccountRelModelImpl
 			(BiConsumer<CommercePriceListAccountRel, Long>)
 				CommercePriceListAccountRel::setMvccVersion);
 		attributeGetterFunctions.put(
+			"ctCollectionId", CommercePriceListAccountRel::getCtCollectionId);
+		attributeSetterBiConsumers.put(
+			"ctCollectionId",
+			(BiConsumer<CommercePriceListAccountRel, Long>)
+				CommercePriceListAccountRel::setCtCollectionId);
+		attributeGetterFunctions.put(
 			"uuid", CommercePriceListAccountRel::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
@@ -400,6 +408,21 @@ public class CommercePriceListAccountRelModelImpl
 		}
 
 		_mvccVersion = mvccVersion;
+	}
+
+	@JSON
+	@Override
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_ctCollectionId = ctCollectionId;
 	}
 
 	@JSON
@@ -706,6 +729,7 @@ public class CommercePriceListAccountRelModelImpl
 			new CommercePriceListAccountRelImpl();
 
 		commercePriceListAccountRelImpl.setMvccVersion(getMvccVersion());
+		commercePriceListAccountRelImpl.setCtCollectionId(getCtCollectionId());
 		commercePriceListAccountRelImpl.setUuid(getUuid());
 		commercePriceListAccountRelImpl.setCommercePriceListAccountRelId(
 			getCommercePriceListAccountRelId());
@@ -734,6 +758,8 @@ public class CommercePriceListAccountRelModelImpl
 
 		commercePriceListAccountRelImpl.setMvccVersion(
 			this.<Long>getColumnOriginalValue("mvccVersion"));
+		commercePriceListAccountRelImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
 		commercePriceListAccountRelImpl.setUuid(
 			this.<String>getColumnOriginalValue("uuid_"));
 		commercePriceListAccountRelImpl.setCommercePriceListAccountRelId(
@@ -845,6 +871,9 @@ public class CommercePriceListAccountRelModelImpl
 				new CommercePriceListAccountRelCacheModel();
 
 		commercePriceListAccountRelCacheModel.mvccVersion = getMvccVersion();
+
+		commercePriceListAccountRelCacheModel.ctCollectionId =
+			getCtCollectionId();
 
 		commercePriceListAccountRelCacheModel.uuid = getUuid();
 
@@ -1004,6 +1033,7 @@ public class CommercePriceListAccountRelModelImpl
 	}
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
 	private String _uuid;
 	private long _commercePriceListAccountRelId;
 	private long _companyId;
@@ -1047,6 +1077,7 @@ public class CommercePriceListAccountRelModelImpl
 		_columnOriginalValues = new HashMap<String, Object>();
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
+		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
 		_columnOriginalValues.put("uuid_", _uuid);
 		_columnOriginalValues.put(
 			"commercePriceListAccountRelId", _commercePriceListAccountRelId);
@@ -1085,27 +1116,29 @@ public class CommercePriceListAccountRelModelImpl
 
 		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("uuid_", 2L);
+		columnBitmasks.put("ctCollectionId", 2L);
 
-		columnBitmasks.put("commercePriceListAccountRelId", 4L);
+		columnBitmasks.put("uuid_", 4L);
 
-		columnBitmasks.put("companyId", 8L);
+		columnBitmasks.put("commercePriceListAccountRelId", 8L);
 
-		columnBitmasks.put("userId", 16L);
+		columnBitmasks.put("companyId", 16L);
 
-		columnBitmasks.put("userName", 32L);
+		columnBitmasks.put("userId", 32L);
 
-		columnBitmasks.put("createDate", 64L);
+		columnBitmasks.put("userName", 64L);
 
-		columnBitmasks.put("modifiedDate", 128L);
+		columnBitmasks.put("createDate", 128L);
 
-		columnBitmasks.put("commerceAccountId", 256L);
+		columnBitmasks.put("modifiedDate", 256L);
 
-		columnBitmasks.put("commercePriceListId", 512L);
+		columnBitmasks.put("commerceAccountId", 512L);
 
-		columnBitmasks.put("order_", 1024L);
+		columnBitmasks.put("commercePriceListId", 1024L);
 
-		columnBitmasks.put("lastPublishDate", 2048L);
+		columnBitmasks.put("order_", 2048L);
+
+		columnBitmasks.put("lastPublishDate", 4096L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.price.list.service;
 
+import com.liferay.commerce.price.list.model.CommercePriceListCommerceAccountGroupRel;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
@@ -40,14 +41,12 @@ public class CommercePriceListCommerceAccountGroupRelServiceWrapper
 	}
 
 	@Override
-	public com.liferay.commerce.price.list.model.
-		CommercePriceListCommerceAccountGroupRel
-				addCommercePriceListCommerceAccountGroupRel(
-					long commercePriceListId, long commerceAccountGroupId,
-					int order,
-					com.liferay.portal.kernel.service.ServiceContext
-						serviceContext)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public CommercePriceListCommerceAccountGroupRel
+			addCommercePriceListCommerceAccountGroupRel(
+				long commercePriceListId, long commerceAccountGroupId,
+				int order,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commercePriceListCommerceAccountGroupRelService.
 			addCommercePriceListCommerceAccountGroupRel(
@@ -76,11 +75,10 @@ public class CommercePriceListCommerceAccountGroupRelServiceWrapper
 	}
 
 	@Override
-	public com.liferay.commerce.price.list.model.
-		CommercePriceListCommerceAccountGroupRel
-				fetchCommercePriceListCommerceAccountGroupRel(
-					long commercePriceListId, long commerceAccountGroupId)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public CommercePriceListCommerceAccountGroupRel
+			fetchCommercePriceListCommerceAccountGroupRel(
+				long commercePriceListId, long commerceAccountGroupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commercePriceListCommerceAccountGroupRelService.
 			fetchCommercePriceListCommerceAccountGroupRel(
@@ -88,11 +86,10 @@ public class CommercePriceListCommerceAccountGroupRelServiceWrapper
 	}
 
 	@Override
-	public com.liferay.commerce.price.list.model.
-		CommercePriceListCommerceAccountGroupRel
-				getCommercePriceListCommerceAccountGroupRel(
-					long commercePriceListCommerceAccoungGroupRelId)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public CommercePriceListCommerceAccountGroupRel
+			getCommercePriceListCommerceAccountGroupRel(
+				long commercePriceListCommerceAccoungGroupRelId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commercePriceListCommerceAccountGroupRelService.
 			getCommercePriceListCommerceAccountGroupRel(
@@ -100,28 +97,23 @@ public class CommercePriceListCommerceAccountGroupRelServiceWrapper
 	}
 
 	@Override
-	public java.util.List
-		<com.liferay.commerce.price.list.model.
-			CommercePriceListCommerceAccountGroupRel>
-					getCommercePriceListCommerceAccountGroupRels(
-						long commercePriceListId)
-				throws com.liferay.portal.kernel.exception.PortalException {
+	public java.util.List<CommercePriceListCommerceAccountGroupRel>
+			getCommercePriceListCommerceAccountGroupRels(
+				long commercePriceListId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commercePriceListCommerceAccountGroupRelService.
 			getCommercePriceListCommerceAccountGroupRels(commercePriceListId);
 	}
 
 	@Override
-	public java.util.List
-		<com.liferay.commerce.price.list.model.
-			CommercePriceListCommerceAccountGroupRel>
-					getCommercePriceListCommerceAccountGroupRels(
-						long commercePriceListId, int start, int end,
-						com.liferay.portal.kernel.util.OrderByComparator
-							<com.liferay.commerce.price.list.model.
-								CommercePriceListCommerceAccountGroupRel>
-									orderByComparator)
-				throws com.liferay.portal.kernel.exception.PortalException {
+	public java.util.List<CommercePriceListCommerceAccountGroupRel>
+			getCommercePriceListCommerceAccountGroupRels(
+				long commercePriceListId, int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<CommercePriceListCommerceAccountGroupRel>
+						orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commercePriceListCommerceAccountGroupRelService.
 			getCommercePriceListCommerceAccountGroupRels(
@@ -129,11 +121,9 @@ public class CommercePriceListCommerceAccountGroupRelServiceWrapper
 	}
 
 	@Override
-	public java.util.List
-		<com.liferay.commerce.price.list.model.
-			CommercePriceListCommerceAccountGroupRel>
-				getCommercePriceListCommerceAccountGroupRels(
-					long commercePriceListId, String name, int start, int end) {
+	public java.util.List<CommercePriceListCommerceAccountGroupRel>
+		getCommercePriceListCommerceAccountGroupRels(
+			long commercePriceListId, String name, int start, int end) {
 
 		return _commercePriceListCommerceAccountGroupRelService.
 			getCommercePriceListCommerceAccountGroupRels(
@@ -171,13 +161,11 @@ public class CommercePriceListCommerceAccountGroupRelServiceWrapper
 	}
 
 	@Override
-	public com.liferay.commerce.price.list.model.
-		CommercePriceListCommerceAccountGroupRel
-				updateCommercePriceListCommerceAccountGroupRel(
-					long commercePriceListCommerceAccountGroupRelId, int order,
-					com.liferay.portal.kernel.service.ServiceContext
-						serviceContext)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public CommercePriceListCommerceAccountGroupRel
+			updateCommercePriceListCommerceAccountGroupRel(
+				long commercePriceListCommerceAccountGroupRelId, int order,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commercePriceListCommerceAccountGroupRelService.
 			updateCommercePriceListCommerceAccountGroupRel(

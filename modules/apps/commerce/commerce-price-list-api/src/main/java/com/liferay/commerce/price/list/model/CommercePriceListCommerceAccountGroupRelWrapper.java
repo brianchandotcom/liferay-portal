@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * <p>
@@ -48,6 +50,7 @@ public class CommercePriceListCommerceAccountGroupRelWrapper
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("mvccVersion", getMvccVersion());
+		attributes.put("ctCollectionId", getCtCollectionId());
 		attributes.put("uuid", getUuid());
 		attributes.put(
 			"commercePriceListCommerceAccountGroupRelId",
@@ -71,6 +74,12 @@ public class CommercePriceListCommerceAccountGroupRelWrapper
 
 		if (mvccVersion != null) {
 			setMvccVersion(mvccVersion);
+		}
+
+		Long ctCollectionId = (Long)attributes.get("ctCollectionId");
+
+		if (ctCollectionId != null) {
+			setCtCollectionId(ctCollectionId);
 		}
 
 		String uuid = (String)attributes.get("uuid");
@@ -211,6 +220,16 @@ public class CommercePriceListCommerceAccountGroupRelWrapper
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
+	}
+
+	/**
+	 * Returns the ct collection ID of this commerce price list commerce account group rel.
+	 *
+	 * @return the ct collection ID of this commerce price list commerce account group rel
+	 */
+	@Override
+	public long getCtCollectionId() {
+		return model.getCtCollectionId();
 	}
 
 	/**
@@ -362,6 +381,16 @@ public class CommercePriceListCommerceAccountGroupRelWrapper
 	}
 
 	/**
+	 * Sets the ct collection ID of this commerce price list commerce account group rel.
+	 *
+	 * @param ctCollectionId the ct collection ID of this commerce price list commerce account group rel
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		model.setCtCollectionId(ctCollectionId);
+	}
+
+	/**
 	 * Sets the last publish date of this commerce price list commerce account group rel.
 	 *
 	 * @param lastPublishDate the last publish date of this commerce price list commerce account group rel
@@ -449,6 +478,22 @@ public class CommercePriceListCommerceAccountGroupRelWrapper
 	@Override
 	public void setUuid(String uuid) {
 		model.setUuid(uuid);
+	}
+
+	@Override
+	public Map
+		<String, Function<CommercePriceListCommerceAccountGroupRel, Object>>
+			getAttributeGetterFunctions() {
+
+		return model.getAttributeGetterFunctions();
+	}
+
+	@Override
+	public Map
+		<String, BiConsumer<CommercePriceListCommerceAccountGroupRel, Object>>
+			getAttributeSetterBiConsumers() {
+
+		return model.getAttributeSetterBiConsumers();
 	}
 
 	@Override

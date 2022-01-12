@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * <p>
@@ -47,6 +49,7 @@ public class CommercePriceListOrderTypeRelWrapper
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("mvccVersion", getMvccVersion());
+		attributes.put("ctCollectionId", getCtCollectionId());
 		attributes.put("uuid", getUuid());
 		attributes.put(
 			"commercePriceListOrderTypeRelId",
@@ -70,6 +73,12 @@ public class CommercePriceListOrderTypeRelWrapper
 
 		if (mvccVersion != null) {
 			setMvccVersion(mvccVersion);
+		}
+
+		Long ctCollectionId = (Long)attributes.get("ctCollectionId");
+
+		if (ctCollectionId != null) {
+			setCtCollectionId(ctCollectionId);
 		}
 
 		String uuid = (String)attributes.get("uuid");
@@ -200,6 +209,16 @@ public class CommercePriceListOrderTypeRelWrapper
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
+	}
+
+	/**
+	 * Returns the ct collection ID of this commerce price list order type rel.
+	 *
+	 * @return the ct collection ID of this commerce price list order type rel
+	 */
+	@Override
+	public long getCtCollectionId() {
+		return model.getCtCollectionId();
 	}
 
 	/**
@@ -351,6 +370,16 @@ public class CommercePriceListOrderTypeRelWrapper
 	}
 
 	/**
+	 * Sets the ct collection ID of this commerce price list order type rel.
+	 *
+	 * @param ctCollectionId the ct collection ID of this commerce price list order type rel
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		model.setCtCollectionId(ctCollectionId);
+	}
+
+	/**
 	 * Sets the last publish date of this commerce price list order type rel.
 	 *
 	 * @param lastPublishDate the last publish date of this commerce price list order type rel
@@ -438,6 +467,20 @@ public class CommercePriceListOrderTypeRelWrapper
 	@Override
 	public void setUuid(String uuid) {
 		model.setUuid(uuid);
+	}
+
+	@Override
+	public Map<String, Function<CommercePriceListOrderTypeRel, Object>>
+		getAttributeGetterFunctions() {
+
+		return model.getAttributeGetterFunctions();
+	}
+
+	@Override
+	public Map<String, BiConsumer<CommercePriceListOrderTypeRel, Object>>
+		getAttributeSetterBiConsumers() {
+
+		return model.getAttributeSetterBiConsumers();
 	}
 
 	@Override

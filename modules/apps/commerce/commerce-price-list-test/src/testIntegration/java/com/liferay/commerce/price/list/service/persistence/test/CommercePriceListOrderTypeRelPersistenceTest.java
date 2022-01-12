@@ -133,6 +133,9 @@ public class CommercePriceListOrderTypeRelPersistenceTest {
 		newCommercePriceListOrderTypeRel.setMvccVersion(
 			RandomTestUtil.nextLong());
 
+		newCommercePriceListOrderTypeRel.setCtCollectionId(
+			RandomTestUtil.nextLong());
+
 		newCommercePriceListOrderTypeRel.setUuid(RandomTestUtil.randomString());
 
 		newCommercePriceListOrderTypeRel.setCompanyId(
@@ -170,6 +173,9 @@ public class CommercePriceListOrderTypeRelPersistenceTest {
 		Assert.assertEquals(
 			existingCommercePriceListOrderTypeRel.getMvccVersion(),
 			newCommercePriceListOrderTypeRel.getMvccVersion());
+		Assert.assertEquals(
+			existingCommercePriceListOrderTypeRel.getCtCollectionId(),
+			newCommercePriceListOrderTypeRel.getCtCollectionId());
 		Assert.assertEquals(
 			existingCommercePriceListOrderTypeRel.getUuid(),
 			newCommercePriceListOrderTypeRel.getUuid());
@@ -277,7 +283,8 @@ public class CommercePriceListOrderTypeRelPersistenceTest {
 		getOrderByComparator() {
 
 		return OrderByComparatorFactoryUtil.create(
-			"CommercePriceListOrderTypeRel", "mvccVersion", true, "uuid", true,
+			"CommercePriceListOrderTypeRel", "mvccVersion", true,
+			"ctCollectionId", true, "uuid", true,
 			"commercePriceListOrderTypeRelId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "commercePriceListId", true,
@@ -615,6 +622,9 @@ public class CommercePriceListOrderTypeRelPersistenceTest {
 			_persistence.create(pk);
 
 		commercePriceListOrderTypeRel.setMvccVersion(RandomTestUtil.nextLong());
+
+		commercePriceListOrderTypeRel.setCtCollectionId(
+			RandomTestUtil.nextLong());
 
 		commercePriceListOrderTypeRel.setUuid(RandomTestUtil.randomString());
 

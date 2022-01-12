@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedAuditedModel;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import java.util.Date;
 
@@ -37,7 +38,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface CommercePriceListOrderTypeRelModel
-	extends BaseModel<CommercePriceListOrderTypeRel>, MVCCModel, ShardedModel,
+	extends BaseModel<CommercePriceListOrderTypeRel>,
+			CTModel<CommercePriceListOrderTypeRel>, MVCCModel, ShardedModel,
 			StagedAuditedModel {
 
 	/*
@@ -51,6 +53,7 @@ public interface CommercePriceListOrderTypeRelModel
 	 *
 	 * @return the primary key of this commerce price list order type rel
 	 */
+	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -58,6 +61,7 @@ public interface CommercePriceListOrderTypeRelModel
 	 *
 	 * @param primaryKey the primary key of this commerce price list order type rel
 	 */
+	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -75,6 +79,22 @@ public interface CommercePriceListOrderTypeRelModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
+
+	/**
+	 * Returns the ct collection ID of this commerce price list order type rel.
+	 *
+	 * @return the ct collection ID of this commerce price list order type rel
+	 */
+	@Override
+	public long getCtCollectionId();
+
+	/**
+	 * Sets the ct collection ID of this commerce price list order type rel.
+	 *
+	 * @param ctCollectionId the ct collection ID of this commerce price list order type rel
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the uuid of this commerce price list order type rel.

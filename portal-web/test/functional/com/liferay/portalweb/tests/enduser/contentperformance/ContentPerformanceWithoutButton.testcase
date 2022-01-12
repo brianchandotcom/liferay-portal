@@ -23,7 +23,6 @@ definition {
 	}
 
 	@description = "LPS-108856: When user clicks on Dont show me this again button, the Content Performance panel disappears"
-	@ignore = "true"
 	@priority = "5"
 	test HideContentPerformancePanel {
 		task ("Assert if element is not present") {

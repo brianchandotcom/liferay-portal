@@ -172,7 +172,6 @@ definition {
 	}
 
 	@description = "LPS-105215: Validate the Content Performance panel default time range is by week"
-	@ignore = "true"
 	@priority = "5"
 	test DefaultTimeRangeWeek {
 		task ("Open Content Performance and Assert") {
@@ -221,7 +220,6 @@ definition {
 	}
 
 	@description = "LPS-108068: When there is no views nor reads in the selected range or in the default view, the line of the graphic will be at 0"
-	@ignore = "true"
 	@priority = "3"
 	test GraphicLineNoViewsReads {
 		task ("Assert line equal 0") {
@@ -260,7 +258,6 @@ definition {
 	}
 
 	@description = "LPS-110920: When the user selects a language in the switcher, the title, the URL and the metrics change accordingly"
-	@ignore = "true"
 	@priority = "5"
 	test LanguageSelector {
 		task ("Add a translation for that page") {
@@ -309,7 +306,6 @@ definition {
 	}
 
 	@description = "LPS-110920: When the user selects a language in the switcher, it doesn't affect the user's language"
-	@ignore = "true"
 	@priority = "3"
 	test LanguageSelectorUserLanguage {
 		task ("Set a custom page as canonical URL to have data already loaded") {

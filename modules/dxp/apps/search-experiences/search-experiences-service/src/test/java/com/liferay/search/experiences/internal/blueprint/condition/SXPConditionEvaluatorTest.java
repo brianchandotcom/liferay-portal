@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.search.experiences.blueprint.parameter.SXPParameter;
 import com.liferay.search.experiences.internal.blueprint.parameter.BooleanSXPParameter;
@@ -38,6 +37,8 @@ import com.liferay.search.experiences.rest.dto.v1_0.Exists;
 import java.time.ZonedDateTime;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.TimeZone;
 import java.util.function.Consumer;
 
@@ -693,14 +694,23 @@ public class SXPConditionEvaluatorTest {
 	}
 
 	private void _setSXPParameters(SXPParameter... sxpParameters) {
-		_sxpParameterData = new SXPParameterData(
-			null, SetUtil.fromArray(sxpParameters));
+		_sxpParameterData = new SXPParameterData(null, _toMap(sxpParameters));
+	}
+
+	private Map<String, SXPParameter> _toMap(SXPParameter... sxpParameters) {
+		Map<String, SXPParameter> map = new HashMap<>();
+
+		for (SXPParameter sxpParameter : sxpParameters) {
+			map.put(sxpParameter.getName(), sxpParameter);
+		}
+
+		return map;
 	}
 
 	private Condition _condition = new Condition();
 	private SXPParameterData _sxpParameterData = new SXPParameterData(
 		"test",
-		SetUtil.fromArray(
+		_toMap(
 			new BooleanSXPParameter("boolean", true, true),
 			new DoubleSXPParameter("double", true, 1.0D),
 			new FloatSXPParameter("float", true, 1.0F),

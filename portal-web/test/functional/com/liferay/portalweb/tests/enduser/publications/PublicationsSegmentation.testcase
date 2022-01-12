@@ -24,6 +24,44 @@ definition {
 		}
 	}
 
+	@description = "Assert we can publish a publication with an edited Segment."
+	@priority = "4"
+	test CanPublishEditedSegment {
+		Segmentation.openSegmentsAdmin(siteURLKey = "guest");
+
+		LexiconEntry.gotoAdd();
+
+		Segmentation.addProperties(propertyOption = "Regular Role");
+
+		Segmentation.fillTitle(titleField = "Segment Title");
+
+		Segmentation.changeCriterionInput(criterionInputOption = "Equals");
+
+		Segmentation.fillProperty(selectCheckbox = "Administrator");
+
+		Button.clickSave();
+
+		JSONPublications.addPublication(publicationName = "Publication Name");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name");
+
+		Segmentation.editSegment(entry = "Segment Title");
+
+		Segmentation.fillTitle(titleField = "Edited Segment Title");
+
+		Button.clickSave();
+
+		JSONPublications.publishPublication(publicationName = "Publication Name");
+
+		Publications.viewPublicationPublished(publicationName = "Publication Name");
+
+		Segmentation.openSegmentsAdmin(siteURLKey = "guest");
+
+		AssertElementPresent(
+			key_tableEntry = "Edited Segment Title",
+			locator1 = "LexiconTable#TABLE_ENTRY");
+	}
+
 	@description = "Assert we can publish a publication with a Segment and Page Experience."
 	@priority = "4"
 	test CanPublishWithSegmentAndPageExperience {

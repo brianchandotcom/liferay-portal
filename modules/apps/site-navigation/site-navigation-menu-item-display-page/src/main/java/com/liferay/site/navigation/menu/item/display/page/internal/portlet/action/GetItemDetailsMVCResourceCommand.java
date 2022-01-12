@@ -63,11 +63,11 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + SiteNavigationAdminPortletKeys.SITE_NAVIGATION_ADMIN,
-		"mvc.command.name=/navigation_menu/get_item_type"
+		"mvc.command.name=/navigation_menu/get_item_details"
 	},
 	service = MVCResourceCommand.class
 )
-public class GetItemTypeMVCResourceCommand extends BaseMVCResourceCommand {
+public class GetItemDetailsMVCResourceCommand extends BaseMVCResourceCommand {
 
 	@Override
 	protected void doServeResource(
@@ -217,7 +217,7 @@ public class GetItemTypeMVCResourceCommand extends BaseMVCResourceCommand {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		GetItemTypeMVCResourceCommand.class);
+		GetItemDetailsMVCResourceCommand.class);
 
 	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;

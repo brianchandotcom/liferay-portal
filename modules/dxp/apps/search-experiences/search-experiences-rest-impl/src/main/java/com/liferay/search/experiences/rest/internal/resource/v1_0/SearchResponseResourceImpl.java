@@ -34,7 +34,7 @@ import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.search.experiences.blueprint.search.request.enhancer.SXPBlueprintSearchRequestEnhancer;
-import com.liferay.search.experiences.exception.ExceptionUtil;
+import com.liferay.search.experiences.exception.SXPExceptionUtil;
 import com.liferay.search.experiences.rest.dto.v1_0.Document;
 import com.liferay.search.experiences.rest.dto.v1_0.DocumentField;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
@@ -129,7 +129,7 @@ public class SearchResponseResourceImpl extends BaseSearchResponseResourceImpl {
 			runtimeException.addSuppressed(exception);
 		}
 
-		if (ExceptionUtil.hasErrors(runtimeException)) {
+		if (SXPExceptionUtil.hasErrors(runtimeException)) {
 			throw runtimeException;
 		}
 

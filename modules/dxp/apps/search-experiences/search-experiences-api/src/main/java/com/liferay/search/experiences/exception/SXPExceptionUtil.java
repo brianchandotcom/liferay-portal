@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.util.Validator;
  * @author André de Oliveira
  * @author Wade Cao
  */
-public class ExceptionUtil {
+public class SXPExceptionUtil {
 
 	public static boolean hasErrors(Throwable throwable) {
 		Class<? extends Throwable> clazz = throwable.getClass();

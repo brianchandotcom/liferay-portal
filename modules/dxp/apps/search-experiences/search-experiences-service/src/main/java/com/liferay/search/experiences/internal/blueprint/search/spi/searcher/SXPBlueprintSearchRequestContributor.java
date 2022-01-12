@@ -25,7 +25,7 @@ import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.spi.searcher.SearchRequestContributor;
 import com.liferay.search.experiences.blueprint.search.request.enhancer.SXPBlueprintSearchRequestEnhancer;
-import com.liferay.search.experiences.exception.ExceptionUtil;
+import com.liferay.search.experiences.exception.SXPExceptionUtil;
 import com.liferay.search.experiences.model.SXPBlueprint;
 import com.liferay.search.experiences.service.SXPBlueprintLocalService;
 
@@ -115,7 +115,7 @@ public class SXPBlueprintSearchRequestContributor
 			}
 		}
 
-		if (ExceptionUtil.hasErrors(runtimeException)) {
+		if (SXPExceptionUtil.hasErrors(runtimeException)) {
 			throw runtimeException;
 		}
 	}
@@ -154,7 +154,7 @@ public class SXPBlueprintSearchRequestContributor
 			}
 		}
 
-		if (ExceptionUtil.hasErrors(runtimeException)) {
+		if (SXPExceptionUtil.hasErrors(runtimeException)) {
 			throw runtimeException;
 		}
 	}

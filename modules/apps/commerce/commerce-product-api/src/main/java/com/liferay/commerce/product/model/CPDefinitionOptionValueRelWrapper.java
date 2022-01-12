@@ -23,6 +23,8 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * <p>
@@ -49,6 +51,7 @@ public class CPDefinitionOptionValueRelWrapper
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("mvccVersion", getMvccVersion());
+		attributes.put("ctCollectionId", getCtCollectionId());
 		attributes.put("uuid", getUuid());
 		attributes.put(
 			"CPDefinitionOptionValueRelId", getCPDefinitionOptionValueRelId());
@@ -77,6 +80,12 @@ public class CPDefinitionOptionValueRelWrapper
 
 		if (mvccVersion != null) {
 			setMvccVersion(mvccVersion);
+		}
+
+		Long ctCollectionId = (Long)attributes.get("ctCollectionId");
+
+		if (ctCollectionId != null) {
+			setCtCollectionId(ctCollectionId);
 		}
 
 		String uuid = (String)attributes.get("uuid");
@@ -264,6 +273,16 @@ public class CPDefinitionOptionValueRelWrapper
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
+	}
+
+	/**
+	 * Returns the ct collection ID of this cp definition option value rel.
+	 *
+	 * @return the ct collection ID of this cp definition option value rel
+	 */
+	@Override
+	public long getCtCollectionId() {
+		return model.getCtCollectionId();
 	}
 
 	@Override
@@ -570,6 +589,16 @@ public class CPDefinitionOptionValueRelWrapper
 	}
 
 	/**
+	 * Sets the ct collection ID of this cp definition option value rel.
+	 *
+	 * @param ctCollectionId the ct collection ID of this cp definition option value rel
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		model.setCtCollectionId(ctCollectionId);
+	}
+
+	/**
 	 * Sets the group ID of this cp definition option value rel.
 	 *
 	 * @param groupId the group ID of this cp definition option value rel
@@ -760,6 +789,20 @@ public class CPDefinitionOptionValueRelWrapper
 	@Override
 	public void setUuid(String uuid) {
 		model.setUuid(uuid);
+	}
+
+	@Override
+	public Map<String, Function<CPDefinitionOptionValueRel, Object>>
+		getAttributeGetterFunctions() {
+
+		return model.getAttributeGetterFunctions();
+	}
+
+	@Override
+	public Map<String, BiConsumer<CPDefinitionOptionValueRel, Object>>
+		getAttributeSetterBiConsumers() {
+
+		return model.getAttributeSetterBiConsumers();
 	}
 
 	@Override

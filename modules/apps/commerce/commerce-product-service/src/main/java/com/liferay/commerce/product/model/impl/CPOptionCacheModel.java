@@ -76,10 +76,12 @@ public class CPOptionCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", externalReferenceCode=");
@@ -122,6 +124,7 @@ public class CPOptionCacheModel
 		CPOptionImpl cpOptionImpl = new CPOptionImpl();
 
 		cpOptionImpl.setMvccVersion(mvccVersion);
+		cpOptionImpl.setCtCollectionId(ctCollectionId);
 
 		if (uuid == null) {
 			cpOptionImpl.setUuid("");
@@ -209,6 +212,8 @@ public class CPOptionCacheModel
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
+
+		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		externalReferenceCode = objectInput.readUTF();
 
@@ -236,6 +241,8 @@ public class CPOptionCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(ctCollectionId);
 
 		if (uuid == null) {
 			objectOutput.writeUTF("");
@@ -305,6 +312,7 @@ public class CPOptionCacheModel
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public String uuid;
 	public String externalReferenceCode;
 	public long CPOptionId;

@@ -78,10 +78,12 @@ public class CPDisplayLayoutCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(27);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", CPDisplayLayoutId=");
@@ -114,6 +116,7 @@ public class CPDisplayLayoutCacheModel
 		CPDisplayLayoutImpl cpDisplayLayoutImpl = new CPDisplayLayoutImpl();
 
 		cpDisplayLayoutImpl.setMvccVersion(mvccVersion);
+		cpDisplayLayoutImpl.setCtCollectionId(ctCollectionId);
 
 		if (uuid == null) {
 			cpDisplayLayoutImpl.setUuid("");
@@ -166,6 +169,8 @@ public class CPDisplayLayoutCacheModel
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
+
+		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		CPDisplayLayoutId = objectInput.readLong();
@@ -188,6 +193,8 @@ public class CPDisplayLayoutCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(ctCollectionId);
 
 		if (uuid == null) {
 			objectOutput.writeUTF("");
@@ -227,6 +234,7 @@ public class CPDisplayLayoutCacheModel
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public String uuid;
 	public long CPDisplayLayoutId;
 	public long groupId;

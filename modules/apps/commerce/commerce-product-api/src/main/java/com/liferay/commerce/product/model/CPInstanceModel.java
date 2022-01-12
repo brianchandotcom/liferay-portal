@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedGroupedModel;
 import com.liferay.portal.kernel.model.WorkflowedModel;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import java.math.BigDecimal;
 
@@ -40,8 +41,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface CPInstanceModel
-	extends BaseModel<CPInstance>, MVCCModel, ShardedModel, StagedGroupedModel,
-			WorkflowedModel {
+	extends BaseModel<CPInstance>, CTModel<CPInstance>, MVCCModel, ShardedModel,
+			StagedGroupedModel, WorkflowedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -54,6 +55,7 @@ public interface CPInstanceModel
 	 *
 	 * @return the primary key of this cp instance
 	 */
+	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -61,6 +63,7 @@ public interface CPInstanceModel
 	 *
 	 * @param primaryKey the primary key of this cp instance
 	 */
+	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -78,6 +81,22 @@ public interface CPInstanceModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
+
+	/**
+	 * Returns the ct collection ID of this cp instance.
+	 *
+	 * @return the ct collection ID of this cp instance
+	 */
+	@Override
+	public long getCtCollectionId();
+
+	/**
+	 * Sets the ct collection ID of this cp instance.
+	 *
+	 * @param ctCollectionId the ct collection ID of this cp instance
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the uuid of this cp instance.

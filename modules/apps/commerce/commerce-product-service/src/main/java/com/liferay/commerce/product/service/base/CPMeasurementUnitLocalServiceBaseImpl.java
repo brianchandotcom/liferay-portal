@@ -48,6 +48,7 @@ import com.liferay.exportimport.kernel.lar.ManifestSummary;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -69,9 +70,11 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.service.change.tracking.CTService;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -98,7 +101,8 @@ import javax.sql.DataSource;
  */
 public abstract class CPMeasurementUnitLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements CPMeasurementUnitLocalService, IdentifiableOSGiService {
+	implements CPMeasurementUnitLocalService, CTService<CPMeasurementUnit>,
+			   IdentifiableOSGiService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -1699,8 +1703,23 @@ public abstract class CPMeasurementUnitLocalServiceBaseImpl
 		return CPMeasurementUnitLocalService.class.getName();
 	}
 
-	protected Class<?> getModelClass() {
+	@Override
+	public CTPersistence<CPMeasurementUnit> getCTPersistence() {
+		return cpMeasurementUnitPersistence;
+	}
+
+	@Override
+	public Class<CPMeasurementUnit> getModelClass() {
 		return CPMeasurementUnit.class;
+	}
+
+	@Override
+	public <R, E extends Throwable> R updateWithUnsafeFunction(
+			UnsafeFunction<CTPersistence<CPMeasurementUnit>, R, E>
+				updateUnsafeFunction)
+		throws E {
+
+		return updateUnsafeFunction.apply(cpMeasurementUnitPersistence);
 	}
 
 	protected String getModelClassName() {

@@ -131,6 +131,8 @@ public class CPAttachmentFileEntryPersistenceTest {
 
 		newCPAttachmentFileEntry.setMvccVersion(RandomTestUtil.nextLong());
 
+		newCPAttachmentFileEntry.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newCPAttachmentFileEntry.setUuid(RandomTestUtil.randomString());
 
 		newCPAttachmentFileEntry.setExternalReferenceCode(
@@ -191,6 +193,9 @@ public class CPAttachmentFileEntryPersistenceTest {
 		Assert.assertEquals(
 			existingCPAttachmentFileEntry.getMvccVersion(),
 			newCPAttachmentFileEntry.getMvccVersion());
+		Assert.assertEquals(
+			existingCPAttachmentFileEntry.getCtCollectionId(),
+			newCPAttachmentFileEntry.getCtCollectionId());
 		Assert.assertEquals(
 			existingCPAttachmentFileEntry.getUuid(),
 			newCPAttachmentFileEntry.getUuid());
@@ -402,12 +407,13 @@ public class CPAttachmentFileEntryPersistenceTest {
 
 	protected OrderByComparator<CPAttachmentFileEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"CPAttachmentFileEntry", "mvccVersion", true, "uuid", true,
-			"externalReferenceCode", true, "CPAttachmentFileEntryId", true,
-			"groupId", true, "companyId", true, "userId", true, "userName",
-			true, "createDate", true, "modifiedDate", true, "classNameId", true,
-			"classPK", true, "fileEntryId", true, "cdnEnabled", true, "cdnURL",
-			true, "displayDate", true, "expirationDate", true, "title", true,
+			"CPAttachmentFileEntry", "mvccVersion", true, "ctCollectionId",
+			true, "uuid", true, "externalReferenceCode", true,
+			"CPAttachmentFileEntryId", true, "groupId", true, "companyId", true,
+			"userId", true, "userName", true, "createDate", true,
+			"modifiedDate", true, "classNameId", true, "classPK", true,
+			"fileEntryId", true, "cdnEnabled", true, "cdnURL", true,
+			"displayDate", true, "expirationDate", true, "title", true,
 			"priority", true, "type", true, "lastPublishDate", true, "status",
 			true, "statusByUserId", true, "statusByUserName", true,
 			"statusDate", true);
@@ -737,6 +743,8 @@ public class CPAttachmentFileEntryPersistenceTest {
 		CPAttachmentFileEntry cpAttachmentFileEntry = _persistence.create(pk);
 
 		cpAttachmentFileEntry.setMvccVersion(RandomTestUtil.nextLong());
+
+		cpAttachmentFileEntry.setCtCollectionId(RandomTestUtil.nextLong());
 
 		cpAttachmentFileEntry.setUuid(RandomTestUtil.randomString());
 

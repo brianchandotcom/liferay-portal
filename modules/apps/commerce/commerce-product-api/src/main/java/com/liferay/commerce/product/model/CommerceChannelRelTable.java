@@ -37,6 +37,9 @@ public class CommerceChannelRelTable
 	public final Column<CommerceChannelRelTable, Long> mvccVersion =
 		createColumn(
 			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<CommerceChannelRelTable, Long> ctCollectionId =
+		createColumn(
+			"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<CommerceChannelRelTable, Long> commerceChannelRelId =
 		createColumn(
 			"commerceChannelRelId", Long.class, Types.BIGINT,

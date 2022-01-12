@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.model.LocalizedModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedAuditedModel;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import java.util.Date;
 import java.util.Locale;
@@ -41,8 +42,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface CPOptionValueModel
-	extends BaseModel<CPOptionValue>, LocalizedModel, MVCCModel, ShardedModel,
-			StagedAuditedModel {
+	extends BaseModel<CPOptionValue>, CTModel<CPOptionValue>, LocalizedModel,
+			MVCCModel, ShardedModel, StagedAuditedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -55,6 +56,7 @@ public interface CPOptionValueModel
 	 *
 	 * @return the primary key of this cp option value
 	 */
+	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -62,6 +64,7 @@ public interface CPOptionValueModel
 	 *
 	 * @param primaryKey the primary key of this cp option value
 	 */
+	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -79,6 +82,22 @@ public interface CPOptionValueModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
+
+	/**
+	 * Returns the ct collection ID of this cp option value.
+	 *
+	 * @return the ct collection ID of this cp option value
+	 */
+	@Override
+	public long getCtCollectionId();
+
+	/**
+	 * Sets the ct collection ID of this cp option value.
+	 *
+	 * @param ctCollectionId the ct collection ID of this cp option value
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the uuid of this cp option value.

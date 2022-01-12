@@ -17,6 +17,7 @@ package com.liferay.commerce.product.service.persistence;
 import com.liferay.commerce.product.exception.NoSuchChannelException;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -33,7 +34,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface CommerceChannelPersistence
-	extends BasePersistence<CommerceChannel> {
+	extends BasePersistence<CommerceChannel>, CTPersistence<CommerceChannel> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

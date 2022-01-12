@@ -50,6 +50,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -77,9 +78,11 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.service.change.tracking.CTService;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -107,7 +110,8 @@ import javax.sql.DataSource;
  */
 public abstract class CPAttachmentFileEntryLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements CPAttachmentFileEntryLocalService, IdentifiableOSGiService {
+	implements CPAttachmentFileEntryLocalService,
+			   CTService<CPAttachmentFileEntry>, IdentifiableOSGiService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -1857,8 +1861,23 @@ public abstract class CPAttachmentFileEntryLocalServiceBaseImpl
 		return CPAttachmentFileEntryLocalService.class.getName();
 	}
 
-	protected Class<?> getModelClass() {
+	@Override
+	public CTPersistence<CPAttachmentFileEntry> getCTPersistence() {
+		return cpAttachmentFileEntryPersistence;
+	}
+
+	@Override
+	public Class<CPAttachmentFileEntry> getModelClass() {
 		return CPAttachmentFileEntry.class;
+	}
+
+	@Override
+	public <R, E extends Throwable> R updateWithUnsafeFunction(
+			UnsafeFunction<CTPersistence<CPAttachmentFileEntry>, R, E>
+				updateUnsafeFunction)
+		throws E {
+
+		return updateUnsafeFunction.apply(cpAttachmentFileEntryPersistence);
 	}
 
 	protected String getModelClassName() {

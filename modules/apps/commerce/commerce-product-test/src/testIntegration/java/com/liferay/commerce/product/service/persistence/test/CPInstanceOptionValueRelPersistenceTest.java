@@ -131,6 +131,9 @@ public class CPInstanceOptionValueRelPersistenceTest {
 
 		newCPInstanceOptionValueRel.setMvccVersion(RandomTestUtil.nextLong());
 
+		newCPInstanceOptionValueRel.setCtCollectionId(
+			RandomTestUtil.nextLong());
+
 		newCPInstanceOptionValueRel.setUuid(RandomTestUtil.randomString());
 
 		newCPInstanceOptionValueRel.setGroupId(RandomTestUtil.nextLong());
@@ -163,6 +166,9 @@ public class CPInstanceOptionValueRelPersistenceTest {
 		Assert.assertEquals(
 			existingCPInstanceOptionValueRel.getMvccVersion(),
 			newCPInstanceOptionValueRel.getMvccVersion());
+		Assert.assertEquals(
+			existingCPInstanceOptionValueRel.getCtCollectionId(),
+			newCPInstanceOptionValueRel.getCtCollectionId());
 		Assert.assertEquals(
 			existingCPInstanceOptionValueRel.getUuid(),
 			newCPInstanceOptionValueRel.getUuid());
@@ -298,11 +304,11 @@ public class CPInstanceOptionValueRelPersistenceTest {
 		getOrderByComparator() {
 
 		return OrderByComparatorFactoryUtil.create(
-			"CPInstanceOptionValueRel", "mvccVersion", true, "uuid", true,
-			"CPInstanceOptionValueRelId", true, "groupId", true, "companyId",
-			true, "userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "CPDefinitionOptionRelId", true,
-			"CPDefinitionOptionValueRelId", true, "CPInstanceId", true);
+			"CPInstanceOptionValueRel", "mvccVersion", true, "ctCollectionId",
+			true, "uuid", true, "CPInstanceOptionValueRelId", true, "groupId",
+			true, "companyId", true, "userId", true, "userName", true,
+			"createDate", true, "modifiedDate", true, "CPDefinitionOptionRelId",
+			true, "CPDefinitionOptionValueRelId", true, "CPInstanceId", true);
 	}
 
 	@Test
@@ -650,6 +656,8 @@ public class CPInstanceOptionValueRelPersistenceTest {
 			pk);
 
 		cpInstanceOptionValueRel.setMvccVersion(RandomTestUtil.nextLong());
+
+		cpInstanceOptionValueRel.setCtCollectionId(RandomTestUtil.nextLong());
 
 		cpInstanceOptionValueRel.setUuid(RandomTestUtil.randomString());
 

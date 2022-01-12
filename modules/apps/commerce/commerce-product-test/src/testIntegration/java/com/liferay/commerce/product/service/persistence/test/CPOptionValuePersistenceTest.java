@@ -127,6 +127,8 @@ public class CPOptionValuePersistenceTest {
 
 		newCPOptionValue.setMvccVersion(RandomTestUtil.nextLong());
 
+		newCPOptionValue.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newCPOptionValue.setUuid(RandomTestUtil.randomString());
 
 		newCPOptionValue.setExternalReferenceCode(
@@ -160,6 +162,9 @@ public class CPOptionValuePersistenceTest {
 		Assert.assertEquals(
 			existingCPOptionValue.getMvccVersion(),
 			newCPOptionValue.getMvccVersion());
+		Assert.assertEquals(
+			existingCPOptionValue.getCtCollectionId(),
+			newCPOptionValue.getCtCollectionId());
 		Assert.assertEquals(
 			existingCPOptionValue.getUuid(), newCPOptionValue.getUuid());
 		Assert.assertEquals(
@@ -272,11 +277,12 @@ public class CPOptionValuePersistenceTest {
 
 	protected OrderByComparator<CPOptionValue> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"CPOptionValue", "mvccVersion", true, "uuid", true,
-			"externalReferenceCode", true, "CPOptionValueId", true, "companyId",
-			true, "userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "CPOptionId", true, "name", true, "priority",
-			true, "key", true, "lastPublishDate", true);
+			"CPOptionValue", "mvccVersion", true, "ctCollectionId", true,
+			"uuid", true, "externalReferenceCode", true, "CPOptionValueId",
+			true, "companyId", true, "userId", true, "userName", true,
+			"createDate", true, "modifiedDate", true, "CPOptionId", true,
+			"name", true, "priority", true, "key", true, "lastPublishDate",
+			true);
 	}
 
 	@Test
@@ -572,6 +578,8 @@ public class CPOptionValuePersistenceTest {
 		CPOptionValue cpOptionValue = _persistence.create(pk);
 
 		cpOptionValue.setMvccVersion(RandomTestUtil.nextLong());
+
+		cpOptionValue.setCtCollectionId(RandomTestUtil.nextLong());
 
 		cpOptionValue.setUuid(RandomTestUtil.randomString());
 

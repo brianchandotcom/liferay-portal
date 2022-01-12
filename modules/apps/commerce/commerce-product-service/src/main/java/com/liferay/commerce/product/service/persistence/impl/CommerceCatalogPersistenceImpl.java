@@ -22,6 +22,7 @@ import com.liferay.commerce.product.model.impl.CommerceCatalogModelImpl;
 import com.liferay.commerce.product.service.persistence.CommerceCatalogPersistence;
 import com.liferay.commerce.product.service.persistence.CommerceCatalogUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -36,6 +37,7 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -51,9 +53,13 @@ import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.EnumMap;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -166,18 +172,21 @@ public class CommerceCatalogPersistenceImpl
 		OrderByComparator<CommerceCatalog> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			CommerceCatalog.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByCompanyId;
 				finderArgs = new Object[] {companyId};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByCompanyId;
 			finderArgs = new Object[] {
 				companyId, start, end, orderByComparator
@@ -186,7 +195,7 @@ public class CommerceCatalogPersistenceImpl
 
 		List<CommerceCatalog> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<CommerceCatalog>)finderCache.getResult(
 				finderPath, finderArgs);
 
@@ -242,7 +251,7 @@ public class CommerceCatalogPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.putResult(finderPath, finderArgs, list);
 				}
 			}
@@ -878,11 +887,21 @@ public class CommerceCatalogPersistenceImpl
 	 */
 	@Override
 	public int countByCompanyId(long companyId) {
-		FinderPath finderPath = _finderPathCountByCompanyId;
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			CommerceCatalog.class);
 
-		Object[] finderArgs = new Object[] {companyId};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByCompanyId;
+
+			finderArgs = new Object[] {companyId};
+
+			count = (Long)finderCache.getResult(finderPath, finderArgs);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -906,7 +925,9 @@ public class CommerceCatalogPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				finderCache.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
 				throw processException(exception);
@@ -1051,18 +1072,21 @@ public class CommerceCatalogPersistenceImpl
 		OrderByComparator<CommerceCatalog> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			CommerceCatalog.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByC_S;
 				finderArgs = new Object[] {companyId, system};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByC_S;
 			finderArgs = new Object[] {
 				companyId, system, start, end, orderByComparator
@@ -1071,7 +1095,7 @@ public class CommerceCatalogPersistenceImpl
 
 		List<CommerceCatalog> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<CommerceCatalog>)finderCache.getResult(
 				finderPath, finderArgs);
 
@@ -1133,7 +1157,7 @@ public class CommerceCatalogPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.putResult(finderPath, finderArgs, list);
 				}
 			}
@@ -1807,11 +1831,21 @@ public class CommerceCatalogPersistenceImpl
 	 */
 	@Override
 	public int countByC_S(long companyId, boolean system) {
-		FinderPath finderPath = _finderPathCountByC_S;
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			CommerceCatalog.class);
 
-		Object[] finderArgs = new Object[] {companyId, system};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByC_S;
+
+			finderArgs = new Object[] {companyId, system};
+
+			count = (Long)finderCache.getResult(finderPath, finderArgs);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1839,7 +1873,9 @@ public class CommerceCatalogPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				finderCache.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
 				throw processException(exception);
@@ -1984,15 +2020,18 @@ public class CommerceCatalogPersistenceImpl
 
 		externalReferenceCode = Objects.toString(externalReferenceCode, "");
 
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			CommerceCatalog.class);
+
 		Object[] finderArgs = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			finderArgs = new Object[] {companyId, externalReferenceCode};
 		}
 
 		Object result = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			result = finderCache.getResult(_finderPathFetchByC_ERC, finderArgs);
 		}
 
@@ -2046,7 +2085,7 @@ public class CommerceCatalogPersistenceImpl
 				List<CommerceCatalog> list = query.list();
 
 				if (list.isEmpty()) {
-					if (useFinderCache) {
+					if (useFinderCache && productionMode) {
 						finderCache.putResult(
 							_finderPathFetchByC_ERC, finderArgs, list);
 					}
@@ -2056,7 +2095,7 @@ public class CommerceCatalogPersistenceImpl
 						Collections.sort(list, Collections.reverseOrder());
 
 						if (_log.isWarnEnabled()) {
-							if (!useFinderCache) {
+							if (!productionMode || !useFinderCache) {
 								finderArgs = new Object[] {
 									companyId, externalReferenceCode
 								};
@@ -2121,11 +2160,21 @@ public class CommerceCatalogPersistenceImpl
 	public int countByC_ERC(long companyId, String externalReferenceCode) {
 		externalReferenceCode = Objects.toString(externalReferenceCode, "");
 
-		FinderPath finderPath = _finderPathCountByC_ERC;
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			CommerceCatalog.class);
 
-		Object[] finderArgs = new Object[] {companyId, externalReferenceCode};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByC_ERC;
+
+			finderArgs = new Object[] {companyId, externalReferenceCode};
+
+			count = (Long)finderCache.getResult(finderPath, finderArgs);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -2164,7 +2213,9 @@ public class CommerceCatalogPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				finderCache.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
 				throw processException(exception);
@@ -2208,6 +2259,10 @@ public class CommerceCatalogPersistenceImpl
 	 */
 	@Override
 	public void cacheResult(CommerceCatalog commerceCatalog) {
+		if (commerceCatalog.getCtCollectionId() != 0) {
+			return;
+		}
+
 		entityCache.putResult(
 			CommerceCatalogImpl.class, commerceCatalog.getPrimaryKey(),
 			commerceCatalog);
@@ -2239,6 +2294,10 @@ public class CommerceCatalogPersistenceImpl
 		}
 
 		for (CommerceCatalog commerceCatalog : commerceCatalogs) {
+			if (commerceCatalog.getCtCollectionId() != 0) {
+				continue;
+			}
+
 			if (entityCache.getResult(
 					CommerceCatalogImpl.class,
 					commerceCatalog.getPrimaryKey()) == null) {
@@ -2390,7 +2449,9 @@ public class CommerceCatalogPersistenceImpl
 					commerceCatalog.getPrimaryKeyObj());
 			}
 
-			if (commerceCatalog != null) {
+			if ((commerceCatalog != null) &&
+				ctPersistenceHelper.isRemove(commerceCatalog)) {
+
 				session.delete(commerceCatalog);
 			}
 		}
@@ -2462,7 +2523,13 @@ public class CommerceCatalogPersistenceImpl
 		try {
 			session = openSession();
 
-			if (isNew) {
+			if (ctPersistenceHelper.isInsert(commerceCatalog)) {
+				if (!isNew) {
+					session.evict(
+						CommerceCatalogImpl.class,
+						commerceCatalog.getPrimaryKeyObj());
+				}
+
 				session.save(commerceCatalog);
 			}
 			else {
@@ -2475,6 +2542,16 @@ public class CommerceCatalogPersistenceImpl
 		}
 		finally {
 			closeSession(session);
+		}
+
+		if (commerceCatalog.getCtCollectionId() != 0) {
+			if (isNew) {
+				commerceCatalog.setNew(false);
+			}
+
+			commerceCatalog.resetOriginalValues();
+
+			return commerceCatalog;
 		}
 
 		entityCache.putResult(
@@ -2533,12 +2610,141 @@ public class CommerceCatalogPersistenceImpl
 	/**
 	 * Returns the commerce catalog with the primary key or returns <code>null</code> if it could not be found.
 	 *
+	 * @param primaryKey the primary key of the commerce catalog
+	 * @return the commerce catalog, or <code>null</code> if a commerce catalog with the primary key could not be found
+	 */
+	@Override
+	public CommerceCatalog fetchByPrimaryKey(Serializable primaryKey) {
+		if (ctPersistenceHelper.isProductionMode(CommerceCatalog.class)) {
+			return super.fetchByPrimaryKey(primaryKey);
+		}
+
+		CommerceCatalog commerceCatalog = null;
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			commerceCatalog = (CommerceCatalog)session.get(
+				CommerceCatalogImpl.class, primaryKey);
+
+			if (commerceCatalog != null) {
+				cacheResult(commerceCatalog);
+			}
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+
+		return commerceCatalog;
+	}
+
+	/**
+	 * Returns the commerce catalog with the primary key or returns <code>null</code> if it could not be found.
+	 *
 	 * @param commerceCatalogId the primary key of the commerce catalog
 	 * @return the commerce catalog, or <code>null</code> if a commerce catalog with the primary key could not be found
 	 */
 	@Override
 	public CommerceCatalog fetchByPrimaryKey(long commerceCatalogId) {
 		return fetchByPrimaryKey((Serializable)commerceCatalogId);
+	}
+
+	@Override
+	public Map<Serializable, CommerceCatalog> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys) {
+
+		if (ctPersistenceHelper.isProductionMode(CommerceCatalog.class)) {
+			return super.fetchByPrimaryKeys(primaryKeys);
+		}
+
+		if (primaryKeys.isEmpty()) {
+			return Collections.emptyMap();
+		}
+
+		Map<Serializable, CommerceCatalog> map =
+			new HashMap<Serializable, CommerceCatalog>();
+
+		if (primaryKeys.size() == 1) {
+			Iterator<Serializable> iterator = primaryKeys.iterator();
+
+			Serializable primaryKey = iterator.next();
+
+			CommerceCatalog commerceCatalog = fetchByPrimaryKey(primaryKey);
+
+			if (commerceCatalog != null) {
+				map.put(primaryKey, commerceCatalog);
+			}
+
+			return map;
+		}
+
+		if ((databaseInMaxParameters > 0) &&
+			(primaryKeys.size() > databaseInMaxParameters)) {
+
+			Iterator<Serializable> iterator = primaryKeys.iterator();
+
+			while (iterator.hasNext()) {
+				Set<Serializable> page = new HashSet<>();
+
+				for (int i = 0;
+					 (i < databaseInMaxParameters) && iterator.hasNext(); i++) {
+
+					page.add(iterator.next());
+				}
+
+				map.putAll(fetchByPrimaryKeys(page));
+			}
+
+			return map;
+		}
+
+		StringBundler sb = new StringBundler((primaryKeys.size() * 2) + 1);
+
+		sb.append(getSelectSQL());
+		sb.append(" WHERE ");
+		sb.append(getPKDBName());
+		sb.append(" IN (");
+
+		for (Serializable primaryKey : primaryKeys) {
+			sb.append((long)primaryKey);
+
+			sb.append(",");
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		sb.append(")");
+
+		String sql = sb.toString();
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Query query = session.createQuery(sql);
+
+			for (CommerceCatalog commerceCatalog :
+					(List<CommerceCatalog>)query.list()) {
+
+				map.put(commerceCatalog.getPrimaryKeyObj(), commerceCatalog);
+
+				cacheResult(commerceCatalog);
+			}
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+
+		return map;
 	}
 
 	/**
@@ -2606,25 +2812,28 @@ public class CommerceCatalogPersistenceImpl
 		OrderByComparator<CommerceCatalog> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			CommerceCatalog.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindAll;
 				finderArgs = FINDER_ARGS_EMPTY;
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<CommerceCatalog> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<CommerceCatalog>)finderCache.getResult(
 				finderPath, finderArgs);
 		}
@@ -2662,7 +2871,7 @@ public class CommerceCatalogPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.putResult(finderPath, finderArgs, list);
 				}
 			}
@@ -2695,8 +2904,15 @@ public class CommerceCatalogPersistenceImpl
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY);
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			CommerceCatalog.class);
+
+		Long count = null;
+
+		if (productionMode) {
+			count = (Long)finderCache.getResult(
+				_finderPathCountAll, FINDER_ARGS_EMPTY);
+		}
 
 		if (count == null) {
 			Session session = null;
@@ -2708,8 +2924,10 @@ public class CommerceCatalogPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				finderCache.putResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
+				if (productionMode) {
+					finderCache.putResult(
+						_finderPathCountAll, FINDER_ARGS_EMPTY, count);
+				}
 			}
 			catch (Exception exception) {
 				throw processException(exception);
@@ -2743,8 +2961,68 @@ public class CommerceCatalogPersistenceImpl
 	}
 
 	@Override
-	protected Map<String, Integer> getTableColumnsMap() {
+	public Set<String> getCTColumnNames(
+		CTColumnResolutionType ctColumnResolutionType) {
+
+		return _ctColumnNamesMap.getOrDefault(
+			ctColumnResolutionType, Collections.emptySet());
+	}
+
+	@Override
+	public List<String> getMappingTableNames() {
+		return _mappingTableNames;
+	}
+
+	@Override
+	public Map<String, Integer> getTableColumnsMap() {
 		return CommerceCatalogModelImpl.TABLE_COLUMNS_MAP;
+	}
+
+	@Override
+	public String getTableName() {
+		return "CommerceCatalog";
+	}
+
+	@Override
+	public List<String[]> getUniqueIndexColumnNames() {
+		return _uniqueIndexColumnNames;
+	}
+
+	private static final Map<CTColumnResolutionType, Set<String>>
+		_ctColumnNamesMap = new EnumMap<CTColumnResolutionType, Set<String>>(
+			CTColumnResolutionType.class);
+	private static final List<String> _mappingTableNames =
+		new ArrayList<String>();
+	private static final List<String[]> _uniqueIndexColumnNames =
+		new ArrayList<String[]>();
+
+	static {
+		Set<String> ctControlColumnNames = new HashSet<String>();
+		Set<String> ctIgnoreColumnNames = new HashSet<String>();
+		Set<String> ctStrictColumnNames = new HashSet<String>();
+
+		ctControlColumnNames.add("mvccVersion");
+		ctControlColumnNames.add("ctCollectionId");
+		ctStrictColumnNames.add("externalReferenceCode");
+		ctStrictColumnNames.add("companyId");
+		ctStrictColumnNames.add("userId");
+		ctStrictColumnNames.add("userName");
+		ctStrictColumnNames.add("createDate");
+		ctIgnoreColumnNames.add("modifiedDate");
+		ctStrictColumnNames.add("name");
+		ctStrictColumnNames.add("commerceCurrencyCode");
+		ctStrictColumnNames.add("catalogDefaultLanguageId");
+		ctStrictColumnNames.add("system_");
+
+		_ctColumnNamesMap.put(
+			CTColumnResolutionType.CONTROL, ctControlColumnNames);
+		_ctColumnNamesMap.put(
+			CTColumnResolutionType.IGNORE, ctIgnoreColumnNames);
+		_ctColumnNamesMap.put(
+			CTColumnResolutionType.PK,
+			Collections.singleton("commerceCatalogId"));
+		_ctColumnNamesMap.put(
+			CTColumnResolutionType.STRICT, ctStrictColumnNames);
 	}
 
 	/**
@@ -2837,6 +3115,9 @@ public class CommerceCatalogPersistenceImpl
 			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
+
+	@ServiceReference(type = CTPersistenceHelper.class)
+	protected CTPersistenceHelper ctPersistenceHelper;
 
 	@ServiceReference(type = EntityCache.class)
 	protected EntityCache entityCache;

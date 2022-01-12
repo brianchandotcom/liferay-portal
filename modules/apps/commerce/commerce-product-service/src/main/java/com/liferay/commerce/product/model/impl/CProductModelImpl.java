@@ -73,11 +73,12 @@ public class CProductModelImpl
 	public static final String TABLE_NAME = "CProduct";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
-		{"externalReferenceCode", Types.VARCHAR}, {"CProductId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
+		{"uuid_", Types.VARCHAR}, {"externalReferenceCode", Types.VARCHAR},
+		{"CProductId", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP},
 		{"publishedCPDefinitionId", Types.BIGINT},
 		{"latestVersion", Types.INTEGER}
 	};
@@ -87,6 +88,7 @@ public class CProductModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("CProductId", Types.BIGINT);
@@ -101,7 +103,7 @@ public class CProductModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CProduct (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,CProductId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,publishedCPDefinitionId LONG,latestVersion INTEGER)";
+		"create table CProduct (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,CProductId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,publishedCPDefinitionId LONG,latestVersion INTEGER,primary key (CProductId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table CProduct";
 
@@ -297,6 +299,11 @@ public class CProductModelImpl
 		attributeSetterBiConsumers.put(
 			"mvccVersion",
 			(BiConsumer<CProduct, Long>)CProduct::setMvccVersion);
+		attributeGetterFunctions.put(
+			"ctCollectionId", CProduct::getCtCollectionId);
+		attributeSetterBiConsumers.put(
+			"ctCollectionId",
+			(BiConsumer<CProduct, Long>)CProduct::setCtCollectionId);
 		attributeGetterFunctions.put("uuid", CProduct::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid", (BiConsumer<CProduct, String>)CProduct::setUuid);
@@ -356,6 +363,20 @@ public class CProductModelImpl
 		}
 
 		_mvccVersion = mvccVersion;
+	}
+
+	@Override
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_ctCollectionId = ctCollectionId;
 	}
 
 	@Override
@@ -649,6 +670,7 @@ public class CProductModelImpl
 		CProductImpl cProductImpl = new CProductImpl();
 
 		cProductImpl.setMvccVersion(getMvccVersion());
+		cProductImpl.setCtCollectionId(getCtCollectionId());
 		cProductImpl.setUuid(getUuid());
 		cProductImpl.setExternalReferenceCode(getExternalReferenceCode());
 		cProductImpl.setCProductId(getCProductId());
@@ -672,6 +694,8 @@ public class CProductModelImpl
 
 		cProductImpl.setMvccVersion(
 			this.<Long>getColumnOriginalValue("mvccVersion"));
+		cProductImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
 		cProductImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
 		cProductImpl.setExternalReferenceCode(
 			this.<String>getColumnOriginalValue("externalReferenceCode"));
@@ -769,6 +793,8 @@ public class CProductModelImpl
 		CProductCacheModel cProductCacheModel = new CProductCacheModel();
 
 		cProductCacheModel.mvccVersion = getMvccVersion();
+
+		cProductCacheModel.ctCollectionId = getCtCollectionId();
 
 		cProductCacheModel.uuid = getUuid();
 
@@ -918,6 +944,7 @@ public class CProductModelImpl
 	}
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
 	private String _uuid;
 	private String _externalReferenceCode;
 	private long _CProductId;
@@ -961,6 +988,7 @@ public class CProductModelImpl
 		_columnOriginalValues = new HashMap<String, Object>();
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
+		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
 		_columnOriginalValues.put("uuid_", _uuid);
 		_columnOriginalValues.put(
 			"externalReferenceCode", _externalReferenceCode);
@@ -999,27 +1027,29 @@ public class CProductModelImpl
 
 		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("uuid_", 2L);
+		columnBitmasks.put("ctCollectionId", 2L);
 
-		columnBitmasks.put("externalReferenceCode", 4L);
+		columnBitmasks.put("uuid_", 4L);
 
-		columnBitmasks.put("CProductId", 8L);
+		columnBitmasks.put("externalReferenceCode", 8L);
 
-		columnBitmasks.put("groupId", 16L);
+		columnBitmasks.put("CProductId", 16L);
 
-		columnBitmasks.put("companyId", 32L);
+		columnBitmasks.put("groupId", 32L);
 
-		columnBitmasks.put("userId", 64L);
+		columnBitmasks.put("companyId", 64L);
 
-		columnBitmasks.put("userName", 128L);
+		columnBitmasks.put("userId", 128L);
 
-		columnBitmasks.put("createDate", 256L);
+		columnBitmasks.put("userName", 256L);
 
-		columnBitmasks.put("modifiedDate", 512L);
+		columnBitmasks.put("createDate", 512L);
 
-		columnBitmasks.put("publishedCPDefinitionId", 1024L);
+		columnBitmasks.put("modifiedDate", 1024L);
 
-		columnBitmasks.put("latestVersion", 2048L);
+		columnBitmasks.put("publishedCPDefinitionId", 2048L);
+
+		columnBitmasks.put("latestVersion", 4096L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

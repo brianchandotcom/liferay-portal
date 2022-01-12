@@ -17,6 +17,7 @@ package com.liferay.commerce.product.service.persistence;
 import com.liferay.commerce.product.exception.NoSuchCPAttachmentFileEntryException;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 import java.util.Date;
 
@@ -35,7 +36,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface CPAttachmentFileEntryPersistence
-	extends BasePersistence<CPAttachmentFileEntry> {
+	extends BasePersistence<CPAttachmentFileEntry>,
+			CTPersistence<CPAttachmentFileEntry> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

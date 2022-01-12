@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedAuditedModel;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import java.util.Date;
 
@@ -38,7 +39,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface CPInstanceOptionValueRelModel
-	extends BaseModel<CPInstanceOptionValueRel>, GroupedModel, MVCCModel,
+	extends BaseModel<CPInstanceOptionValueRel>,
+			CTModel<CPInstanceOptionValueRel>, GroupedModel, MVCCModel,
 			ShardedModel, StagedAuditedModel {
 
 	/*
@@ -52,6 +54,7 @@ public interface CPInstanceOptionValueRelModel
 	 *
 	 * @return the primary key of this cp instance option value rel
 	 */
+	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -59,6 +62,7 @@ public interface CPInstanceOptionValueRelModel
 	 *
 	 * @param primaryKey the primary key of this cp instance option value rel
 	 */
+	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -76,6 +80,22 @@ public interface CPInstanceOptionValueRelModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
+
+	/**
+	 * Returns the ct collection ID of this cp instance option value rel.
+	 *
+	 * @return the ct collection ID of this cp instance option value rel
+	 */
+	@Override
+	public long getCtCollectionId();
+
+	/**
+	 * Sets the ct collection ID of this cp instance option value rel.
+	 *
+	 * @param ctCollectionId the ct collection ID of this cp instance option value rel
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the uuid of this cp instance option value rel.

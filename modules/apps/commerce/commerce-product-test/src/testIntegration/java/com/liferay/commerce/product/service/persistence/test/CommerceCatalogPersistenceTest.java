@@ -126,6 +126,8 @@ public class CommerceCatalogPersistenceTest {
 
 		newCommerceCatalog.setMvccVersion(RandomTestUtil.nextLong());
 
+		newCommerceCatalog.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newCommerceCatalog.setExternalReferenceCode(
 			RandomTestUtil.randomString());
 
@@ -157,6 +159,9 @@ public class CommerceCatalogPersistenceTest {
 		Assert.assertEquals(
 			existingCommerceCatalog.getMvccVersion(),
 			newCommerceCatalog.getMvccVersion());
+		Assert.assertEquals(
+			existingCommerceCatalog.getCtCollectionId(),
+			newCommerceCatalog.getCtCollectionId());
 		Assert.assertEquals(
 			existingCommerceCatalog.getExternalReferenceCode(),
 			newCommerceCatalog.getExternalReferenceCode());
@@ -239,11 +244,11 @@ public class CommerceCatalogPersistenceTest {
 
 	protected OrderByComparator<CommerceCatalog> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"CommerceCatalog", "mvccVersion", true, "externalReferenceCode",
-			true, "commerceCatalogId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "modifiedDate", true, "name",
-			true, "commerceCurrencyCode", true, "catalogDefaultLanguageId",
-			true, "system", true);
+			"CommerceCatalog", "mvccVersion", true, "ctCollectionId", true,
+			"externalReferenceCode", true, "commerceCatalogId", true,
+			"companyId", true, "userId", true, "userName", true, "createDate",
+			true, "modifiedDate", true, "name", true, "commerceCurrencyCode",
+			true, "catalogDefaultLanguageId", true, "system", true);
 	}
 
 	@Test
@@ -531,6 +536,8 @@ public class CommerceCatalogPersistenceTest {
 		CommerceCatalog commerceCatalog = _persistence.create(pk);
 
 		commerceCatalog.setMvccVersion(RandomTestUtil.nextLong());
+
+		commerceCatalog.setCtCollectionId(RandomTestUtil.nextLong());
 
 		commerceCatalog.setExternalReferenceCode(RandomTestUtil.randomString());
 

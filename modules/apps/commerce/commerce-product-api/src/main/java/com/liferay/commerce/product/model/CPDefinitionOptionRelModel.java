@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.model.LocalizedModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedAuditedModel;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import java.util.Date;
 import java.util.Locale;
@@ -42,8 +43,9 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface CPDefinitionOptionRelModel
-	extends BaseModel<CPDefinitionOptionRel>, GroupedModel, LocalizedModel,
-			MVCCModel, ShardedModel, StagedAuditedModel {
+	extends BaseModel<CPDefinitionOptionRel>, CTModel<CPDefinitionOptionRel>,
+			GroupedModel, LocalizedModel, MVCCModel, ShardedModel,
+			StagedAuditedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -56,6 +58,7 @@ public interface CPDefinitionOptionRelModel
 	 *
 	 * @return the primary key of this cp definition option rel
 	 */
+	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -63,6 +66,7 @@ public interface CPDefinitionOptionRelModel
 	 *
 	 * @param primaryKey the primary key of this cp definition option rel
 	 */
+	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -80,6 +84,22 @@ public interface CPDefinitionOptionRelModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
+
+	/**
+	 * Returns the ct collection ID of this cp definition option rel.
+	 *
+	 * @return the ct collection ID of this cp definition option rel
+	 */
+	@Override
+	public long getCtCollectionId();
+
+	/**
+	 * Sets the ct collection ID of this cp definition option rel.
+	 *
+	 * @param ctCollectionId the ct collection ID of this cp definition option rel
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the uuid of this cp definition option rel.

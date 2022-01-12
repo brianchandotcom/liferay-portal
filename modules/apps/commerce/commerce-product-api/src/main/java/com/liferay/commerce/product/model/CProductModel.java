@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedAuditedModel;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import java.util.Date;
 
@@ -38,8 +39,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface CProductModel
-	extends BaseModel<CProduct>, GroupedModel, MVCCModel, ShardedModel,
-			StagedAuditedModel {
+	extends BaseModel<CProduct>, CTModel<CProduct>, GroupedModel, MVCCModel,
+			ShardedModel, StagedAuditedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -52,6 +53,7 @@ public interface CProductModel
 	 *
 	 * @return the primary key of this c product
 	 */
+	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -59,6 +61,7 @@ public interface CProductModel
 	 *
 	 * @param primaryKey the primary key of this c product
 	 */
+	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -76,6 +79,22 @@ public interface CProductModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
+
+	/**
+	 * Returns the ct collection ID of this c product.
+	 *
+	 * @return the ct collection ID of this c product
+	 */
+	@Override
+	public long getCtCollectionId();
+
+	/**
+	 * Sets the ct collection ID of this c product.
+	 *
+	 * @param ctCollectionId the ct collection ID of this c product
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the uuid of this c product.

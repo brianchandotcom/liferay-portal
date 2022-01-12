@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.model.LocalizedModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedGroupedModel;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import java.util.Date;
 import java.util.Locale;
@@ -41,8 +42,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface CPMeasurementUnitModel
-	extends BaseModel<CPMeasurementUnit>, LocalizedModel, MVCCModel,
-			ShardedModel, StagedGroupedModel {
+	extends BaseModel<CPMeasurementUnit>, CTModel<CPMeasurementUnit>,
+			LocalizedModel, MVCCModel, ShardedModel, StagedGroupedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -55,6 +56,7 @@ public interface CPMeasurementUnitModel
 	 *
 	 * @return the primary key of this cp measurement unit
 	 */
+	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -62,6 +64,7 @@ public interface CPMeasurementUnitModel
 	 *
 	 * @param primaryKey the primary key of this cp measurement unit
 	 */
+	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -79,6 +82,22 @@ public interface CPMeasurementUnitModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
+
+	/**
+	 * Returns the ct collection ID of this cp measurement unit.
+	 *
+	 * @return the ct collection ID of this cp measurement unit
+	 */
+	@Override
+	public long getCtCollectionId();
+
+	/**
+	 * Sets the ct collection ID of this cp measurement unit.
+	 *
+	 * @param ctCollectionId the ct collection ID of this cp measurement unit
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the uuid of this cp measurement unit.

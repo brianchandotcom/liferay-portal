@@ -126,6 +126,8 @@ public class CPOptionPersistenceTest {
 
 		newCPOption.setMvccVersion(RandomTestUtil.nextLong());
 
+		newCPOption.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newCPOption.setUuid(RandomTestUtil.randomString());
 
 		newCPOption.setExternalReferenceCode(RandomTestUtil.randomString());
@@ -163,6 +165,9 @@ public class CPOptionPersistenceTest {
 
 		Assert.assertEquals(
 			existingCPOption.getMvccVersion(), newCPOption.getMvccVersion());
+		Assert.assertEquals(
+			existingCPOption.getCtCollectionId(),
+			newCPOption.getCtCollectionId());
 		Assert.assertEquals(existingCPOption.getUuid(), newCPOption.getUuid());
 		Assert.assertEquals(
 			existingCPOption.getExternalReferenceCode(),
@@ -268,10 +273,10 @@ public class CPOptionPersistenceTest {
 
 	protected OrderByComparator<CPOption> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"CPOption", "mvccVersion", true, "uuid", true,
-			"externalReferenceCode", true, "CPOptionId", true, "companyId",
-			true, "userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "name", true, "description", true,
+			"CPOption", "mvccVersion", true, "ctCollectionId", true, "uuid",
+			true, "externalReferenceCode", true, "CPOptionId", true,
+			"companyId", true, "userId", true, "userName", true, "createDate",
+			true, "modifiedDate", true, "name", true, "description", true,
 			"DDMFormFieldTypeName", true, "facetable", true, "required", true,
 			"skuContributor", true, "key", true, "lastPublishDate", true);
 	}
@@ -562,6 +567,8 @@ public class CPOptionPersistenceTest {
 		CPOption cpOption = _persistence.create(pk);
 
 		cpOption.setMvccVersion(RandomTestUtil.nextLong());
+
+		cpOption.setCtCollectionId(RandomTestUtil.nextLong());
 
 		cpOption.setUuid(RandomTestUtil.randomString());
 

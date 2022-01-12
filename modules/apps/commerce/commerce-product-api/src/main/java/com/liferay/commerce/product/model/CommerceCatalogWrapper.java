@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * <p>
@@ -43,6 +45,7 @@ public class CommerceCatalogWrapper
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("mvccVersion", getMvccVersion());
+		attributes.put("ctCollectionId", getCtCollectionId());
 		attributes.put("externalReferenceCode", getExternalReferenceCode());
 		attributes.put("commerceCatalogId", getCommerceCatalogId());
 		attributes.put("companyId", getCompanyId());
@@ -65,6 +68,12 @@ public class CommerceCatalogWrapper
 
 		if (mvccVersion != null) {
 			setMvccVersion(mvccVersion);
+		}
+
+		Long ctCollectionId = (Long)attributes.get("ctCollectionId");
+
+		if (ctCollectionId != null) {
+			setCtCollectionId(ctCollectionId);
 		}
 
 		String externalReferenceCode = (String)attributes.get(
@@ -190,6 +199,16 @@ public class CommerceCatalogWrapper
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
+	}
+
+	/**
+	 * Returns the ct collection ID of this commerce catalog.
+	 *
+	 * @return the ct collection ID of this commerce catalog
+	 */
+	@Override
+	public long getCtCollectionId() {
+		return model.getCtCollectionId();
 	}
 
 	/**
@@ -358,6 +377,16 @@ public class CommerceCatalogWrapper
 	}
 
 	/**
+	 * Sets the ct collection ID of this commerce catalog.
+	 *
+	 * @param ctCollectionId the ct collection ID of this commerce catalog
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		model.setCtCollectionId(ctCollectionId);
+	}
+
+	/**
 	 * Sets the external reference code of this commerce catalog.
 	 *
 	 * @param externalReferenceCode the external reference code of this commerce catalog
@@ -445,6 +474,20 @@ public class CommerceCatalogWrapper
 	@Override
 	public void setUserUuid(String userUuid) {
 		model.setUserUuid(userUuid);
+	}
+
+	@Override
+	public Map<String, Function<CommerceCatalog, Object>>
+		getAttributeGetterFunctions() {
+
+		return model.getAttributeGetterFunctions();
+	}
+
+	@Override
+	public Map<String, BiConsumer<CommerceCatalog, Object>>
+		getAttributeSetterBiConsumers() {
+
+		return model.getAttributeSetterBiConsumers();
 	}
 
 	@Override

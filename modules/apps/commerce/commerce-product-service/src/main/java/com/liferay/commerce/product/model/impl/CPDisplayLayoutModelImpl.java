@@ -75,12 +75,13 @@ public class CPDisplayLayoutModelImpl
 	public static final String TABLE_NAME = "CPDisplayLayout";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
-		{"CPDisplayLayoutId", Types.BIGINT}, {"groupId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"classNameId", Types.BIGINT},
-		{"classPK", Types.BIGINT}, {"layoutUuid", Types.VARCHAR}
+		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
+		{"uuid_", Types.VARCHAR}, {"CPDisplayLayoutId", Types.BIGINT},
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
+		{"layoutUuid", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -88,6 +89,7 @@ public class CPDisplayLayoutModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("CPDisplayLayoutId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -102,7 +104,7 @@ public class CPDisplayLayoutModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CPDisplayLayout (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,CPDisplayLayoutId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,layoutUuid VARCHAR(75) null)";
+		"create table CPDisplayLayout (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,CPDisplayLayoutId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,layoutUuid VARCHAR(75) null,primary key (CPDisplayLayoutId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table CPDisplayLayout";
 
@@ -313,6 +315,12 @@ public class CPDisplayLayoutModelImpl
 		attributeSetterBiConsumers.put(
 			"mvccVersion",
 			(BiConsumer<CPDisplayLayout, Long>)CPDisplayLayout::setMvccVersion);
+		attributeGetterFunctions.put(
+			"ctCollectionId", CPDisplayLayout::getCtCollectionId);
+		attributeSetterBiConsumers.put(
+			"ctCollectionId",
+			(BiConsumer<CPDisplayLayout, Long>)
+				CPDisplayLayout::setCtCollectionId);
 		attributeGetterFunctions.put("uuid", CPDisplayLayout::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
@@ -386,6 +394,21 @@ public class CPDisplayLayoutModelImpl
 		}
 
 		_mvccVersion = mvccVersion;
+	}
+
+	@JSON
+	@Override
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_ctCollectionId = ctCollectionId;
 	}
 
 	@JSON
@@ -730,6 +753,7 @@ public class CPDisplayLayoutModelImpl
 		CPDisplayLayoutImpl cpDisplayLayoutImpl = new CPDisplayLayoutImpl();
 
 		cpDisplayLayoutImpl.setMvccVersion(getMvccVersion());
+		cpDisplayLayoutImpl.setCtCollectionId(getCtCollectionId());
 		cpDisplayLayoutImpl.setUuid(getUuid());
 		cpDisplayLayoutImpl.setCPDisplayLayoutId(getCPDisplayLayoutId());
 		cpDisplayLayoutImpl.setGroupId(getGroupId());
@@ -753,6 +777,8 @@ public class CPDisplayLayoutModelImpl
 
 		cpDisplayLayoutImpl.setMvccVersion(
 			this.<Long>getColumnOriginalValue("mvccVersion"));
+		cpDisplayLayoutImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
 		cpDisplayLayoutImpl.setUuid(
 			this.<String>getColumnOriginalValue("uuid_"));
 		cpDisplayLayoutImpl.setCPDisplayLayoutId(
@@ -854,6 +880,8 @@ public class CPDisplayLayoutModelImpl
 			new CPDisplayLayoutCacheModel();
 
 		cpDisplayLayoutCacheModel.mvccVersion = getMvccVersion();
+
+		cpDisplayLayoutCacheModel.ctCollectionId = getCtCollectionId();
 
 		cpDisplayLayoutCacheModel.uuid = getUuid();
 
@@ -1000,6 +1028,7 @@ public class CPDisplayLayoutModelImpl
 	}
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
 	private String _uuid;
 	private long _CPDisplayLayoutId;
 	private long _groupId;
@@ -1043,6 +1072,7 @@ public class CPDisplayLayoutModelImpl
 		_columnOriginalValues = new HashMap<String, Object>();
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
+		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
 		_columnOriginalValues.put("uuid_", _uuid);
 		_columnOriginalValues.put("CPDisplayLayoutId", _CPDisplayLayoutId);
 		_columnOriginalValues.put("groupId", _groupId);
@@ -1079,27 +1109,29 @@ public class CPDisplayLayoutModelImpl
 
 		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("uuid_", 2L);
+		columnBitmasks.put("ctCollectionId", 2L);
 
-		columnBitmasks.put("CPDisplayLayoutId", 4L);
+		columnBitmasks.put("uuid_", 4L);
 
-		columnBitmasks.put("groupId", 8L);
+		columnBitmasks.put("CPDisplayLayoutId", 8L);
 
-		columnBitmasks.put("companyId", 16L);
+		columnBitmasks.put("groupId", 16L);
 
-		columnBitmasks.put("userId", 32L);
+		columnBitmasks.put("companyId", 32L);
 
-		columnBitmasks.put("userName", 64L);
+		columnBitmasks.put("userId", 64L);
 
-		columnBitmasks.put("createDate", 128L);
+		columnBitmasks.put("userName", 128L);
 
-		columnBitmasks.put("modifiedDate", 256L);
+		columnBitmasks.put("createDate", 256L);
 
-		columnBitmasks.put("classNameId", 512L);
+		columnBitmasks.put("modifiedDate", 512L);
 
-		columnBitmasks.put("classPK", 1024L);
+		columnBitmasks.put("classNameId", 1024L);
 
-		columnBitmasks.put("layoutUuid", 2048L);
+		columnBitmasks.put("classPK", 2048L);
+
+		columnBitmasks.put("layoutUuid", 4096L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

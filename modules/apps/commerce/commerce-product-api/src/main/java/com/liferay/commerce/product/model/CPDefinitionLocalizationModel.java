@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -34,7 +35,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface CPDefinitionLocalizationModel
-	extends BaseModel<CPDefinitionLocalization>, MVCCModel, ShardedModel {
+	extends BaseModel<CPDefinitionLocalization>,
+			CTModel<CPDefinitionLocalization>, MVCCModel, ShardedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -47,6 +49,7 @@ public interface CPDefinitionLocalizationModel
 	 *
 	 * @return the primary key of this cp definition localization
 	 */
+	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -54,6 +57,7 @@ public interface CPDefinitionLocalizationModel
 	 *
 	 * @param primaryKey the primary key of this cp definition localization
 	 */
+	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -71,6 +75,22 @@ public interface CPDefinitionLocalizationModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
+
+	/**
+	 * Returns the ct collection ID of this cp definition localization.
+	 *
+	 * @return the ct collection ID of this cp definition localization
+	 */
+	@Override
+	public long getCtCollectionId();
+
+	/**
+	 * Sets the ct collection ID of this cp definition localization.
+	 *
+	 * @param ctCollectionId the ct collection ID of this cp definition localization
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the cp definition localization ID of this cp definition localization.

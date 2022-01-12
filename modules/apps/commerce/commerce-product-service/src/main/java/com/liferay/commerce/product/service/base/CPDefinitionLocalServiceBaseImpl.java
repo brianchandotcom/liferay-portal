@@ -51,6 +51,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -78,9 +79,11 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.service.change.tracking.CTService;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -111,7 +114,8 @@ import javax.sql.DataSource;
  */
 public abstract class CPDefinitionLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements CPDefinitionLocalService, IdentifiableOSGiService {
+	implements CPDefinitionLocalService, CTService<CPDefinition>,
+			   IdentifiableOSGiService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -777,6 +781,8 @@ public abstract class CPDefinitionLocalServiceBaseImpl
 					cpDefinitionLocalization);
 			}
 			else {
+				cpDefinitionLocalization.setCtCollectionId(
+					cpDefinition.getCtCollectionId());
 				cpDefinitionLocalization.setCompanyId(
 					cpDefinition.getCompanyId());
 
@@ -808,6 +814,8 @@ public abstract class CPDefinitionLocalServiceBaseImpl
 			CPDefinitionLocalization cpDefinitionLocalization =
 				cpDefinitionLocalizationPersistence.create(++batchCounter);
 
+			cpDefinitionLocalization.setCtCollectionId(
+				cpDefinition.getCtCollectionId());
 			cpDefinitionLocalization.setCPDefinitionId(
 				cpDefinition.getCPDefinitionId());
 			cpDefinitionLocalization.setCompanyId(cpDefinition.getCompanyId());
@@ -850,6 +858,8 @@ public abstract class CPDefinitionLocalServiceBaseImpl
 			cpDefinitionLocalization.setLanguageId(languageId);
 		}
 
+		cpDefinitionLocalization.setCtCollectionId(
+			cpDefinition.getCtCollectionId());
 		cpDefinitionLocalization.setCompanyId(cpDefinition.getCompanyId());
 
 		cpDefinitionLocalization.setName(name);
@@ -2009,8 +2019,23 @@ public abstract class CPDefinitionLocalServiceBaseImpl
 		return CPDefinitionLocalService.class.getName();
 	}
 
-	protected Class<?> getModelClass() {
+	@Override
+	public CTPersistence<CPDefinition> getCTPersistence() {
+		return cpDefinitionPersistence;
+	}
+
+	@Override
+	public Class<CPDefinition> getModelClass() {
 		return CPDefinition.class;
+	}
+
+	@Override
+	public <R, E extends Throwable> R updateWithUnsafeFunction(
+			UnsafeFunction<CTPersistence<CPDefinition>, R, E>
+				updateUnsafeFunction)
+		throws E {
+
+		return updateUnsafeFunction.apply(cpDefinitionPersistence);
 	}
 
 	protected String getModelClassName() {

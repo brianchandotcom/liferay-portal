@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.product.service;
 
+import com.liferay.commerce.product.model.CPTaxCategory;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
@@ -42,7 +43,7 @@ public class CPTaxCategoryServiceWrapper
 	 */
 	@Deprecated
 	@Override
-	public com.liferay.commerce.product.model.CPTaxCategory addCPTaxCategory(
+	public CPTaxCategory addCPTaxCategory(
 			java.util.Map<java.util.Locale, String> nameMap,
 			java.util.Map<java.util.Locale, String> descriptionMap,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -53,7 +54,7 @@ public class CPTaxCategoryServiceWrapper
 	}
 
 	@Override
-	public com.liferay.commerce.product.model.CPTaxCategory addCPTaxCategory(
+	public CPTaxCategory addCPTaxCategory(
 			String externalReferenceCode,
 			java.util.Map<java.util.Locale, String> nameMap,
 			java.util.Map<java.util.Locale, String> descriptionMap,
@@ -80,9 +81,8 @@ public class CPTaxCategoryServiceWrapper
 	}
 
 	@Override
-	public java.util.List<com.liferay.commerce.product.model.CPTaxCategory>
-			findCPTaxCategoriesByCompanyId(
-				long companyId, String keyword, int start, int end)
+	public java.util.List<CPTaxCategory> findCPTaxCategoriesByCompanyId(
+			long companyId, String keyword, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpTaxCategoryService.findCPTaxCategoriesByCompanyId(
@@ -90,20 +90,17 @@ public class CPTaxCategoryServiceWrapper
 	}
 
 	@Override
-	public java.util.List<com.liferay.commerce.product.model.CPTaxCategory>
-			getCPTaxCategories(long companyId)
+	public java.util.List<CPTaxCategory> getCPTaxCategories(long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpTaxCategoryService.getCPTaxCategories(companyId);
 	}
 
 	@Override
-	public java.util.List<com.liferay.commerce.product.model.CPTaxCategory>
-			getCPTaxCategories(
-				long companyId, int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.commerce.product.model.CPTaxCategory>
-						orderByComparator)
+	public java.util.List<CPTaxCategory> getCPTaxCategories(
+			long companyId, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator<CPTaxCategory>
+				orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpTaxCategoryService.getCPTaxCategories(
@@ -118,8 +115,7 @@ public class CPTaxCategoryServiceWrapper
 	}
 
 	@Override
-	public com.liferay.commerce.product.model.CPTaxCategory getCPTaxCategory(
-			long cpTaxCategoryId)
+	public CPTaxCategory getCPTaxCategory(long cpTaxCategoryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpTaxCategoryService.getCPTaxCategory(cpTaxCategoryId);
@@ -141,7 +137,7 @@ public class CPTaxCategoryServiceWrapper
 	 */
 	@Deprecated
 	@Override
-	public com.liferay.commerce.product.model.CPTaxCategory updateCPTaxCategory(
+	public CPTaxCategory updateCPTaxCategory(
 			long cpTaxCategoryId,
 			java.util.Map<java.util.Locale, String> nameMap,
 			java.util.Map<java.util.Locale, String> descriptionMap)
@@ -152,7 +148,7 @@ public class CPTaxCategoryServiceWrapper
 	}
 
 	@Override
-	public com.liferay.commerce.product.model.CPTaxCategory updateCPTaxCategory(
+	public CPTaxCategory updateCPTaxCategory(
 			String externalReferenceCode, long cpTaxCategoryId,
 			java.util.Map<java.util.Locale, String> nameMap,
 			java.util.Map<java.util.Locale, String> descriptionMap)

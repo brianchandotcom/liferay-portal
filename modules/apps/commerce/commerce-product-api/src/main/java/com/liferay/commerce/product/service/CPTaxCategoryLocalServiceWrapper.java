@@ -14,7 +14,10 @@
 
 package com.liferay.commerce.product.service;
 
+import com.liferay.commerce.product.model.CPTaxCategory;
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
  * Provides a wrapper for {@link CPTaxCategoryLocalService}.
@@ -48,9 +51,7 @@ public class CPTaxCategoryLocalServiceWrapper
 	 * @return the cp tax category that was added
 	 */
 	@Override
-	public com.liferay.commerce.product.model.CPTaxCategory addCPTaxCategory(
-		com.liferay.commerce.product.model.CPTaxCategory cpTaxCategory) {
-
+	public CPTaxCategory addCPTaxCategory(CPTaxCategory cpTaxCategory) {
 		return _cpTaxCategoryLocalService.addCPTaxCategory(cpTaxCategory);
 	}
 
@@ -60,7 +61,7 @@ public class CPTaxCategoryLocalServiceWrapper
 	 */
 	@Deprecated
 	@Override
-	public com.liferay.commerce.product.model.CPTaxCategory addCPTaxCategory(
+	public CPTaxCategory addCPTaxCategory(
 			java.util.Map<java.util.Locale, String> nameMap,
 			java.util.Map<java.util.Locale, String> descriptionMap,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -71,7 +72,7 @@ public class CPTaxCategoryLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.commerce.product.model.CPTaxCategory addCPTaxCategory(
+	public CPTaxCategory addCPTaxCategory(
 			String externalReferenceCode,
 			java.util.Map<java.util.Locale, String> nameMap,
 			java.util.Map<java.util.Locale, String> descriptionMap,
@@ -95,9 +96,7 @@ public class CPTaxCategoryLocalServiceWrapper
 	 * @return the new cp tax category
 	 */
 	@Override
-	public com.liferay.commerce.product.model.CPTaxCategory createCPTaxCategory(
-		long CPTaxCategoryId) {
-
+	public CPTaxCategory createCPTaxCategory(long CPTaxCategoryId) {
 		return _cpTaxCategoryLocalService.createCPTaxCategory(CPTaxCategoryId);
 	}
 
@@ -129,8 +128,7 @@ public class CPTaxCategoryLocalServiceWrapper
 	 * @throws PortalException
 	 */
 	@Override
-	public com.liferay.commerce.product.model.CPTaxCategory deleteCPTaxCategory(
-			com.liferay.commerce.product.model.CPTaxCategory cpTaxCategory)
+	public CPTaxCategory deleteCPTaxCategory(CPTaxCategory cpTaxCategory)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpTaxCategoryLocalService.deleteCPTaxCategory(cpTaxCategory);
@@ -148,8 +146,7 @@ public class CPTaxCategoryLocalServiceWrapper
 	 * @throws PortalException if a cp tax category with the primary key could not be found
 	 */
 	@Override
-	public com.liferay.commerce.product.model.CPTaxCategory deleteCPTaxCategory(
-			long CPTaxCategoryId)
+	public CPTaxCategory deleteCPTaxCategory(long CPTaxCategoryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpTaxCategoryLocalService.deleteCPTaxCategory(CPTaxCategoryId);
@@ -270,9 +267,7 @@ public class CPTaxCategoryLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.commerce.product.model.CPTaxCategory fetchCPTaxCategory(
-		long CPTaxCategoryId) {
-
+	public CPTaxCategory fetchCPTaxCategory(long CPTaxCategoryId) {
 		return _cpTaxCategoryLocalService.fetchCPTaxCategory(CPTaxCategoryId);
 	}
 
@@ -284,9 +279,8 @@ public class CPTaxCategoryLocalServiceWrapper
 	 * @return the matching cp tax category, or <code>null</code> if a matching cp tax category could not be found
 	 */
 	@Override
-	public com.liferay.commerce.product.model.CPTaxCategory
-		fetchCPTaxCategoryByExternalReferenceCode(
-			long companyId, String externalReferenceCode) {
+	public CPTaxCategory fetchCPTaxCategoryByExternalReferenceCode(
+		long companyId, String externalReferenceCode) {
 
 		return _cpTaxCategoryLocalService.
 			fetchCPTaxCategoryByExternalReferenceCode(
@@ -298,18 +292,16 @@ public class CPTaxCategoryLocalServiceWrapper
 	 */
 	@Deprecated
 	@Override
-	public com.liferay.commerce.product.model.CPTaxCategory
-		fetchCPTaxCategoryByReferenceCode(
-			long companyId, String externalReferenceCode) {
+	public CPTaxCategory fetchCPTaxCategoryByReferenceCode(
+		long companyId, String externalReferenceCode) {
 
 		return _cpTaxCategoryLocalService.fetchCPTaxCategoryByReferenceCode(
 			companyId, externalReferenceCode);
 	}
 
 	@Override
-	public java.util.List<com.liferay.commerce.product.model.CPTaxCategory>
-		findCPTaxCategoriesByCompanyId(
-			long companyId, String keyword, int start, int end) {
+	public java.util.List<CPTaxCategory> findCPTaxCategoriesByCompanyId(
+		long companyId, String keyword, int start, int end) {
 
 		return _cpTaxCategoryLocalService.findCPTaxCategoriesByCompanyId(
 			companyId, keyword, start, end);
@@ -334,26 +326,22 @@ public class CPTaxCategoryLocalServiceWrapper
 	 * @return the range of cp tax categories
 	 */
 	@Override
-	public java.util.List<com.liferay.commerce.product.model.CPTaxCategory>
-		getCPTaxCategories(int start, int end) {
+	public java.util.List<CPTaxCategory> getCPTaxCategories(
+		int start, int end) {
 
 		return _cpTaxCategoryLocalService.getCPTaxCategories(start, end);
 	}
 
 	@Override
-	public java.util.List<com.liferay.commerce.product.model.CPTaxCategory>
-		getCPTaxCategories(long companyId) {
-
+	public java.util.List<CPTaxCategory> getCPTaxCategories(long companyId) {
 		return _cpTaxCategoryLocalService.getCPTaxCategories(companyId);
 	}
 
 	@Override
-	public java.util.List<com.liferay.commerce.product.model.CPTaxCategory>
-		getCPTaxCategories(
-			long companyId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.commerce.product.model.CPTaxCategory>
-					orderByComparator) {
+	public java.util.List<CPTaxCategory> getCPTaxCategories(
+		long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CPTaxCategory>
+			orderByComparator) {
 
 		return _cpTaxCategoryLocalService.getCPTaxCategories(
 			companyId, start, end, orderByComparator);
@@ -382,8 +370,7 @@ public class CPTaxCategoryLocalServiceWrapper
 	 * @throws PortalException if a cp tax category with the primary key could not be found
 	 */
 	@Override
-	public com.liferay.commerce.product.model.CPTaxCategory getCPTaxCategory(
-			long CPTaxCategoryId)
+	public CPTaxCategory getCPTaxCategory(long CPTaxCategoryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpTaxCategoryLocalService.getCPTaxCategory(CPTaxCategoryId);
@@ -398,9 +385,8 @@ public class CPTaxCategoryLocalServiceWrapper
 	 * @throws PortalException if a matching cp tax category could not be found
 	 */
 	@Override
-	public com.liferay.commerce.product.model.CPTaxCategory
-			getCPTaxCategoryByExternalReferenceCode(
-				long companyId, String externalReferenceCode)
+	public CPTaxCategory getCPTaxCategoryByExternalReferenceCode(
+			long companyId, String externalReferenceCode)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpTaxCategoryLocalService.
@@ -447,9 +433,7 @@ public class CPTaxCategoryLocalServiceWrapper
 	 * @return the cp tax category that was updated
 	 */
 	@Override
-	public com.liferay.commerce.product.model.CPTaxCategory updateCPTaxCategory(
-		com.liferay.commerce.product.model.CPTaxCategory cpTaxCategory) {
-
+	public CPTaxCategory updateCPTaxCategory(CPTaxCategory cpTaxCategory) {
 		return _cpTaxCategoryLocalService.updateCPTaxCategory(cpTaxCategory);
 	}
 
@@ -459,7 +443,7 @@ public class CPTaxCategoryLocalServiceWrapper
 	 */
 	@Deprecated
 	@Override
-	public com.liferay.commerce.product.model.CPTaxCategory updateCPTaxCategory(
+	public CPTaxCategory updateCPTaxCategory(
 			long cpTaxCategoryId,
 			java.util.Map<java.util.Locale, String> nameMap,
 			java.util.Map<java.util.Locale, String> descriptionMap)
@@ -470,7 +454,7 @@ public class CPTaxCategoryLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.commerce.product.model.CPTaxCategory updateCPTaxCategory(
+	public CPTaxCategory updateCPTaxCategory(
 			String externalReferenceCode, long cpTaxCategoryId,
 			java.util.Map<java.util.Locale, String> nameMap,
 			java.util.Map<java.util.Locale, String> descriptionMap)
@@ -478,6 +462,26 @@ public class CPTaxCategoryLocalServiceWrapper
 
 		return _cpTaxCategoryLocalService.updateCPTaxCategory(
 			externalReferenceCode, cpTaxCategoryId, nameMap, descriptionMap);
+	}
+
+	@Override
+	public CTPersistence<CPTaxCategory> getCTPersistence() {
+		return _cpTaxCategoryLocalService.getCTPersistence();
+	}
+
+	@Override
+	public Class<CPTaxCategory> getModelClass() {
+		return _cpTaxCategoryLocalService.getModelClass();
+	}
+
+	@Override
+	public <R, E extends Throwable> R updateWithUnsafeFunction(
+			UnsafeFunction<CTPersistence<CPTaxCategory>, R, E>
+				updateUnsafeFunction)
+		throws E {
+
+		return _cpTaxCategoryLocalService.updateWithUnsafeFunction(
+			updateUnsafeFunction);
 	}
 
 	@Override

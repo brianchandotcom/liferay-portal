@@ -78,10 +78,12 @@ public class CPDefinitionLinkCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", CPDefinitionLinkId=");
@@ -116,6 +118,7 @@ public class CPDefinitionLinkCacheModel
 		CPDefinitionLinkImpl cpDefinitionLinkImpl = new CPDefinitionLinkImpl();
 
 		cpDefinitionLinkImpl.setMvccVersion(mvccVersion);
+		cpDefinitionLinkImpl.setCtCollectionId(ctCollectionId);
 
 		if (uuid == null) {
 			cpDefinitionLinkImpl.setUuid("");
@@ -169,6 +172,8 @@ public class CPDefinitionLinkCacheModel
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
+
+		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		CPDefinitionLinkId = objectInput.readLong();
@@ -193,6 +198,8 @@ public class CPDefinitionLinkCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(ctCollectionId);
 
 		if (uuid == null) {
 			objectOutput.writeUTF("");
@@ -234,6 +241,7 @@ public class CPDefinitionLinkCacheModel
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public String uuid;
 	public long CPDefinitionLinkId;
 	public long groupId;

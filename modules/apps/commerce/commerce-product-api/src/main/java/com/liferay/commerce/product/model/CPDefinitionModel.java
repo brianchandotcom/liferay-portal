@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedGroupedModel;
 import com.liferay.portal.kernel.model.WorkflowedModel;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import java.util.Date;
 import java.util.Map;
@@ -39,8 +40,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface CPDefinitionModel
-	extends BaseModel<CPDefinition>, MVCCModel, ShardedModel,
-			StagedGroupedModel, WorkflowedModel {
+	extends BaseModel<CPDefinition>, CTModel<CPDefinition>, MVCCModel,
+			ShardedModel, StagedGroupedModel, WorkflowedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -53,6 +54,7 @@ public interface CPDefinitionModel
 	 *
 	 * @return the primary key of this cp definition
 	 */
+	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -60,6 +62,7 @@ public interface CPDefinitionModel
 	 *
 	 * @param primaryKey the primary key of this cp definition
 	 */
+	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -77,6 +80,22 @@ public interface CPDefinitionModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
+
+	/**
+	 * Returns the ct collection ID of this cp definition.
+	 *
+	 * @return the ct collection ID of this cp definition
+	 */
+	@Override
+	public long getCtCollectionId();
+
+	/**
+	 * Sets the ct collection ID of this cp definition.
+	 *
+	 * @param ctCollectionId the ct collection ID of this cp definition
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the uuid of this cp definition.

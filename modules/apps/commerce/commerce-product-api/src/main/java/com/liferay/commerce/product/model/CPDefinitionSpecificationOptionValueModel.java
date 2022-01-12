@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.model.LocalizedModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedGroupedModel;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import java.util.Date;
 import java.util.Locale;
@@ -41,7 +42,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface CPDefinitionSpecificationOptionValueModel
-	extends BaseModel<CPDefinitionSpecificationOptionValue>, LocalizedModel,
+	extends BaseModel<CPDefinitionSpecificationOptionValue>,
+			CTModel<CPDefinitionSpecificationOptionValue>, LocalizedModel,
 			MVCCModel, ShardedModel, StagedGroupedModel {
 
 	/*
@@ -55,6 +57,7 @@ public interface CPDefinitionSpecificationOptionValueModel
 	 *
 	 * @return the primary key of this cp definition specification option value
 	 */
+	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -62,6 +65,7 @@ public interface CPDefinitionSpecificationOptionValueModel
 	 *
 	 * @param primaryKey the primary key of this cp definition specification option value
 	 */
+	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -79,6 +83,22 @@ public interface CPDefinitionSpecificationOptionValueModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
+
+	/**
+	 * Returns the ct collection ID of this cp definition specification option value.
+	 *
+	 * @return the ct collection ID of this cp definition specification option value
+	 */
+	@Override
+	public long getCtCollectionId();
+
+	/**
+	 * Sets the ct collection ID of this cp definition specification option value.
+	 *
+	 * @param ctCollectionId the ct collection ID of this cp definition specification option value
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the uuid of this cp definition specification option value.

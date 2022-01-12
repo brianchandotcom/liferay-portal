@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.product.service;
 
+import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
@@ -38,18 +39,17 @@ public class CPAttachmentFileEntryServiceWrapper
 	}
 
 	@Override
-	public com.liferay.commerce.product.model.CPAttachmentFileEntry
-			addCPAttachmentFileEntry(
-				long groupId, long classNameId, long classPK, long fileEntryId,
-				boolean cdnEnabled, String cdnURL, int displayDateMonth,
-				int displayDateDay, int displayDateYear, int displayDateHour,
-				int displayDateMinute, int expirationDateMonth,
-				int expirationDateDay, int expirationDateYear,
-				int expirationDateHour, int expirationDateMinute,
-				boolean neverExpire,
-				java.util.Map<java.util.Locale, String> titleMap, String json,
-				double priority, int type,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public CPAttachmentFileEntry addCPAttachmentFileEntry(
+			long groupId, long classNameId, long classPK, long fileEntryId,
+			boolean cdnEnabled, String cdnURL, int displayDateMonth,
+			int displayDateDay, int displayDateYear, int displayDateHour,
+			int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire,
+			java.util.Map<java.util.Locale, String> titleMap, String json,
+			double priority, int type,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpAttachmentFileEntryService.addCPAttachmentFileEntry(
@@ -61,19 +61,18 @@ public class CPAttachmentFileEntryServiceWrapper
 	}
 
 	@Override
-	public com.liferay.commerce.product.model.CPAttachmentFileEntry
-			addOrUpdateCPAttachmentFileEntry(
-				String externalReferenceCode, long groupId, long classNameId,
-				long classPK, long cpAttachmentFileEntryId, long fileEntryId,
-				boolean cdnEnabled, String cdnURL, int displayDateMonth,
-				int displayDateDay, int displayDateYear, int displayDateHour,
-				int displayDateMinute, int expirationDateMonth,
-				int expirationDateDay, int expirationDateYear,
-				int expirationDateHour, int expirationDateMinute,
-				boolean neverExpire,
-				java.util.Map<java.util.Locale, String> titleMap, String json,
-				double priority, int type,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public CPAttachmentFileEntry addOrUpdateCPAttachmentFileEntry(
+			String externalReferenceCode, long groupId, long classNameId,
+			long classPK, long cpAttachmentFileEntryId, long fileEntryId,
+			boolean cdnEnabled, String cdnURL, int displayDateMonth,
+			int displayDateDay, int displayDateYear, int displayDateHour,
+			int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire,
+			java.util.Map<java.util.Locale, String> titleMap, String json,
+			double priority, int type,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpAttachmentFileEntryService.addOrUpdateCPAttachmentFileEntry(
@@ -94,9 +93,8 @@ public class CPAttachmentFileEntryServiceWrapper
 	}
 
 	@Override
-	public com.liferay.commerce.product.model.CPAttachmentFileEntry
-			fetchByExternalReferenceCode(
-				String externalReferenceCode, long companyId)
+	public CPAttachmentFileEntry fetchByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpAttachmentFileEntryService.fetchByExternalReferenceCode(
@@ -104,8 +102,8 @@ public class CPAttachmentFileEntryServiceWrapper
 	}
 
 	@Override
-	public com.liferay.commerce.product.model.CPAttachmentFileEntry
-			fetchCPAttachmentFileEntry(long cpAttachmentFileEntryId)
+	public CPAttachmentFileEntry fetchCPAttachmentFileEntry(
+			long cpAttachmentFileEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpAttachmentFileEntryService.fetchCPAttachmentFileEntry(
@@ -113,27 +111,22 @@ public class CPAttachmentFileEntryServiceWrapper
 	}
 
 	@Override
-	public java.util.List
-		<com.liferay.commerce.product.model.CPAttachmentFileEntry>
-				getCPAttachmentFileEntries(
-					long classNameId, long classPK, int type, int status,
-					int start, int end)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public java.util.List<CPAttachmentFileEntry> getCPAttachmentFileEntries(
+			long classNameId, long classPK, int type, int status, int start,
+			int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpAttachmentFileEntryService.getCPAttachmentFileEntries(
 			classNameId, classPK, type, status, start, end);
 	}
 
 	@Override
-	public java.util.List
-		<com.liferay.commerce.product.model.CPAttachmentFileEntry>
-				getCPAttachmentFileEntries(
-					long classNameId, long classPK, int type, int status,
-					int start, int end,
-					com.liferay.portal.kernel.util.OrderByComparator
-						<com.liferay.commerce.product.model.
-							CPAttachmentFileEntry> orderByComparator)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public java.util.List<CPAttachmentFileEntry> getCPAttachmentFileEntries(
+			long classNameId, long classPK, int type, int status, int start,
+			int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<CPAttachmentFileEntry> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpAttachmentFileEntryService.getCPAttachmentFileEntries(
 			classNameId, classPK, type, status, start, end, orderByComparator);
@@ -149,8 +142,8 @@ public class CPAttachmentFileEntryServiceWrapper
 	}
 
 	@Override
-	public com.liferay.commerce.product.model.CPAttachmentFileEntry
-			getCPAttachmentFileEntry(long cpAttachmentFileEntryId)
+	public CPAttachmentFileEntry getCPAttachmentFileEntry(
+			long cpAttachmentFileEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpAttachmentFileEntryService.getCPAttachmentFileEntry(
@@ -168,18 +161,16 @@ public class CPAttachmentFileEntryServiceWrapper
 	}
 
 	@Override
-	public com.liferay.commerce.product.model.CPAttachmentFileEntry
-			updateCPAttachmentFileEntry(
-				long cpAttachmentFileEntryId, long fileEntryId,
-				boolean cdnEnabled, String cdnURL, int displayDateMonth,
-				int displayDateDay, int displayDateYear, int displayDateHour,
-				int displayDateMinute, int expirationDateMonth,
-				int expirationDateDay, int expirationDateYear,
-				int expirationDateHour, int expirationDateMinute,
-				boolean neverExpire,
-				java.util.Map<java.util.Locale, String> titleMap, String json,
-				double priority, int type,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public CPAttachmentFileEntry updateCPAttachmentFileEntry(
+			long cpAttachmentFileEntryId, long fileEntryId, boolean cdnEnabled,
+			String cdnURL, int displayDateMonth, int displayDateDay,
+			int displayDateYear, int displayDateHour, int displayDateMinute,
+			int expirationDateMonth, int expirationDateDay,
+			int expirationDateYear, int expirationDateHour,
+			int expirationDateMinute, boolean neverExpire,
+			java.util.Map<java.util.Locale, String> titleMap, String json,
+			double priority, int type,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpAttachmentFileEntryService.updateCPAttachmentFileEntry(

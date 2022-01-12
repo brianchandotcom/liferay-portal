@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.product.service;
 
+import com.liferay.commerce.product.model.CPOptionValue;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
@@ -37,7 +38,7 @@ public class CPOptionValueServiceWrapper
 	}
 
 	@Override
-	public com.liferay.commerce.product.model.CPOptionValue addCPOptionValue(
+	public CPOptionValue addCPOptionValue(
 			long cpOptionId, java.util.Map<java.util.Locale, String> titleMap,
 			double priority, String key,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -48,12 +49,11 @@ public class CPOptionValueServiceWrapper
 	}
 
 	@Override
-	public com.liferay.commerce.product.model.CPOptionValue
-			addOrUpdateCPOptionValue(
-				String externalReferenceCode, long cpOptionId,
-				java.util.Map<java.util.Locale, String> nameMap,
-				double priority, String key,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public CPOptionValue addOrUpdateCPOptionValue(
+			String externalReferenceCode, long cpOptionId,
+			java.util.Map<java.util.Locale, String> nameMap, double priority,
+			String key,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpOptionValueService.addOrUpdateCPOptionValue(
@@ -69,9 +69,8 @@ public class CPOptionValueServiceWrapper
 	}
 
 	@Override
-	public com.liferay.commerce.product.model.CPOptionValue
-			fetchByExternalReferenceCode(
-				String externalReferenceCode, long companyId)
+	public CPOptionValue fetchByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpOptionValueService.fetchByExternalReferenceCode(
@@ -79,24 +78,22 @@ public class CPOptionValueServiceWrapper
 	}
 
 	@Override
-	public com.liferay.commerce.product.model.CPOptionValue fetchCPOptionValue(
-			long cpOptionValueId)
+	public CPOptionValue fetchCPOptionValue(long cpOptionValueId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpOptionValueService.fetchCPOptionValue(cpOptionValueId);
 	}
 
 	@Override
-	public com.liferay.commerce.product.model.CPOptionValue getCPOptionValue(
-			long cpOptionValueId)
+	public CPOptionValue getCPOptionValue(long cpOptionValueId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpOptionValueService.getCPOptionValue(cpOptionValueId);
 	}
 
 	@Override
-	public java.util.List<com.liferay.commerce.product.model.CPOptionValue>
-			getCPOptionValues(long cpOptionId, int start, int end)
+	public java.util.List<CPOptionValue> getCPOptionValues(
+			long cpOptionId, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpOptionValueService.getCPOptionValues(cpOptionId, start, end);
@@ -120,11 +117,11 @@ public class CPOptionValueServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portal.kernel.search.BaseModelSearchResult
-		<com.liferay.commerce.product.model.CPOptionValue> searchCPOptionValues(
+	public com.liferay.portal.kernel.search.BaseModelSearchResult<CPOptionValue>
+			searchCPOptionValues(
 				long companyId, long cpOptionId, String keywords, int start,
 				int end, com.liferay.portal.kernel.search.Sort[] sorts)
-			throws com.liferay.portal.kernel.exception.PortalException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpOptionValueService.searchCPOptionValues(
 			companyId, cpOptionId, keywords, start, end, sorts);
@@ -140,7 +137,7 @@ public class CPOptionValueServiceWrapper
 	}
 
 	@Override
-	public com.liferay.commerce.product.model.CPOptionValue updateCPOptionValue(
+	public CPOptionValue updateCPOptionValue(
 			long cpOptionValueId,
 			java.util.Map<java.util.Locale, String> titleMap, double priority,
 			String key,

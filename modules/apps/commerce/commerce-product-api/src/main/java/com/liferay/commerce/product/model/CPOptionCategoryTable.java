@@ -35,6 +35,9 @@ public class CPOptionCategoryTable extends BaseTable<CPOptionCategoryTable> {
 
 	public final Column<CPOptionCategoryTable, Long> mvccVersion = createColumn(
 		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<CPOptionCategoryTable, Long> ctCollectionId =
+		createColumn(
+			"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<CPOptionCategoryTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<CPOptionCategoryTable, Long> CPOptionCategoryId =

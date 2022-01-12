@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * <p>
@@ -43,6 +45,7 @@ public class CPTaxCategoryWrapper
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("mvccVersion", getMvccVersion());
+		attributes.put("ctCollectionId", getCtCollectionId());
 		attributes.put("externalReferenceCode", getExternalReferenceCode());
 		attributes.put("CPTaxCategoryId", getCPTaxCategoryId());
 		attributes.put("companyId", getCompanyId());
@@ -62,6 +65,12 @@ public class CPTaxCategoryWrapper
 
 		if (mvccVersion != null) {
 			setMvccVersion(mvccVersion);
+		}
+
+		Long ctCollectionId = (Long)attributes.get("ctCollectionId");
+
+		if (ctCollectionId != null) {
+			setCtCollectionId(ctCollectionId);
 		}
 
 		String externalReferenceCode = (String)attributes.get(
@@ -158,6 +167,16 @@ public class CPTaxCategoryWrapper
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
+	}
+
+	/**
+	 * Returns the ct collection ID of this cp tax category.
+	 *
+	 * @return the ct collection ID of this cp tax category
+	 */
+	@Override
+	public long getCtCollectionId() {
+		return model.getCtCollectionId();
 	}
 
 	@Override
@@ -438,6 +457,16 @@ public class CPTaxCategoryWrapper
 	}
 
 	/**
+	 * Sets the ct collection ID of this cp tax category.
+	 *
+	 * @param ctCollectionId the ct collection ID of this cp tax category
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		model.setCtCollectionId(ctCollectionId);
+	}
+
+	/**
 	 * Sets the description of this cp tax category.
 	 *
 	 * @param description the description of this cp tax category
@@ -635,6 +664,20 @@ public class CPTaxCategoryWrapper
 	@Override
 	public void setUserUuid(String userUuid) {
 		model.setUserUuid(userUuid);
+	}
+
+	@Override
+	public Map<String, Function<CPTaxCategory, Object>>
+		getAttributeGetterFunctions() {
+
+		return model.getAttributeGetterFunctions();
+	}
+
+	@Override
+	public Map<String, BiConsumer<CPTaxCategory, Object>>
+		getAttributeSetterBiConsumers() {
+
+		return model.getAttributeSetterBiConsumers();
 	}
 
 	@Override

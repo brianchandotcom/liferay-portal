@@ -126,6 +126,8 @@ public class CPTaxCategoryPersistenceTest {
 
 		newCPTaxCategory.setMvccVersion(RandomTestUtil.nextLong());
 
+		newCPTaxCategory.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newCPTaxCategory.setExternalReferenceCode(
 			RandomTestUtil.randomString());
 
@@ -151,6 +153,9 @@ public class CPTaxCategoryPersistenceTest {
 		Assert.assertEquals(
 			existingCPTaxCategory.getMvccVersion(),
 			newCPTaxCategory.getMvccVersion());
+		Assert.assertEquals(
+			existingCPTaxCategory.getCtCollectionId(),
+			newCPTaxCategory.getCtCollectionId());
 		Assert.assertEquals(
 			existingCPTaxCategory.getExternalReferenceCode(),
 			newCPTaxCategory.getExternalReferenceCode());
@@ -219,10 +224,10 @@ public class CPTaxCategoryPersistenceTest {
 
 	protected OrderByComparator<CPTaxCategory> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"CPTaxCategory", "mvccVersion", true, "externalReferenceCode", true,
-			"CPTaxCategoryId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "modifiedDate", true, "name",
-			true, "description", true);
+			"CPTaxCategory", "mvccVersion", true, "ctCollectionId", true,
+			"externalReferenceCode", true, "CPTaxCategoryId", true, "companyId",
+			true, "userId", true, "userName", true, "createDate", true,
+			"modifiedDate", true, "name", true, "description", true);
 	}
 
 	@Test
@@ -507,6 +512,8 @@ public class CPTaxCategoryPersistenceTest {
 		CPTaxCategory cpTaxCategory = _persistence.create(pk);
 
 		cpTaxCategory.setMvccVersion(RandomTestUtil.nextLong());
+
+		cpTaxCategory.setCtCollectionId(RandomTestUtil.nextLong());
 
 		cpTaxCategory.setExternalReferenceCode(RandomTestUtil.randomString());
 

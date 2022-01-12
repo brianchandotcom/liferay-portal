@@ -73,7 +73,8 @@ public class CommerceChannelModelImpl
 	public static final String TABLE_NAME = "CommerceChannel";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"externalReferenceCode", Types.VARCHAR},
+		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
+		{"externalReferenceCode", Types.VARCHAR},
 		{"commerceChannelId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
@@ -89,6 +90,7 @@ public class CommerceChannelModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("commerceChannelId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -106,7 +108,7 @@ public class CommerceChannelModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceChannel (mvccVersion LONG default 0 not null,externalReferenceCode VARCHAR(75) null,commerceChannelId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,siteGroupId LONG,name VARCHAR(75) null,type_ VARCHAR(75) null,typeSettings VARCHAR(75) null,commerceCurrencyCode VARCHAR(75) null,priceDisplayType VARCHAR(75) null,discountsTargetNetPrice BOOLEAN)";
+		"create table CommerceChannel (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,externalReferenceCode VARCHAR(75) null,commerceChannelId LONG not null,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,siteGroupId LONG,name VARCHAR(75) null,type_ VARCHAR(75) null,typeSettings VARCHAR(75) null,commerceCurrencyCode VARCHAR(75) null,priceDisplayType VARCHAR(75) null,discountsTargetNetPrice BOOLEAN,primary key (commerceChannelId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table CommerceChannel";
 
@@ -300,6 +302,12 @@ public class CommerceChannelModelImpl
 			"mvccVersion",
 			(BiConsumer<CommerceChannel, Long>)CommerceChannel::setMvccVersion);
 		attributeGetterFunctions.put(
+			"ctCollectionId", CommerceChannel::getCtCollectionId);
+		attributeSetterBiConsumers.put(
+			"ctCollectionId",
+			(BiConsumer<CommerceChannel, Long>)
+				CommerceChannel::setCtCollectionId);
+		attributeGetterFunctions.put(
 			"externalReferenceCode", CommerceChannel::getExternalReferenceCode);
 		attributeSetterBiConsumers.put(
 			"externalReferenceCode",
@@ -393,6 +401,21 @@ public class CommerceChannelModelImpl
 		}
 
 		_mvccVersion = mvccVersion;
+	}
+
+	@JSON
+	@Override
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_ctCollectionId = ctCollectionId;
 	}
 
 	@JSON
@@ -754,6 +777,7 @@ public class CommerceChannelModelImpl
 		CommerceChannelImpl commerceChannelImpl = new CommerceChannelImpl();
 
 		commerceChannelImpl.setMvccVersion(getMvccVersion());
+		commerceChannelImpl.setCtCollectionId(getCtCollectionId());
 		commerceChannelImpl.setExternalReferenceCode(
 			getExternalReferenceCode());
 		commerceChannelImpl.setCommerceChannelId(getCommerceChannelId());
@@ -782,6 +806,8 @@ public class CommerceChannelModelImpl
 
 		commerceChannelImpl.setMvccVersion(
 			this.<Long>getColumnOriginalValue("mvccVersion"));
+		commerceChannelImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
 		commerceChannelImpl.setExternalReferenceCode(
 			this.<String>getColumnOriginalValue("externalReferenceCode"));
 		commerceChannelImpl.setCommerceChannelId(
@@ -890,6 +916,8 @@ public class CommerceChannelModelImpl
 			new CommerceChannelCacheModel();
 
 		commerceChannelCacheModel.mvccVersion = getMvccVersion();
+
+		commerceChannelCacheModel.ctCollectionId = getCtCollectionId();
 
 		commerceChannelCacheModel.externalReferenceCode =
 			getExternalReferenceCode();
@@ -1075,6 +1103,7 @@ public class CommerceChannelModelImpl
 	}
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
 	private String _externalReferenceCode;
 	private long _commerceChannelId;
 	private long _companyId;
@@ -1121,6 +1150,7 @@ public class CommerceChannelModelImpl
 		_columnOriginalValues = new HashMap<String, Object>();
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
+		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
 		_columnOriginalValues.put(
 			"externalReferenceCode", _externalReferenceCode);
 		_columnOriginalValues.put("commerceChannelId", _commerceChannelId);
@@ -1163,33 +1193,35 @@ public class CommerceChannelModelImpl
 
 		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("externalReferenceCode", 2L);
+		columnBitmasks.put("ctCollectionId", 2L);
 
-		columnBitmasks.put("commerceChannelId", 4L);
+		columnBitmasks.put("externalReferenceCode", 4L);
 
-		columnBitmasks.put("companyId", 8L);
+		columnBitmasks.put("commerceChannelId", 8L);
 
-		columnBitmasks.put("userId", 16L);
+		columnBitmasks.put("companyId", 16L);
 
-		columnBitmasks.put("userName", 32L);
+		columnBitmasks.put("userId", 32L);
 
-		columnBitmasks.put("createDate", 64L);
+		columnBitmasks.put("userName", 64L);
 
-		columnBitmasks.put("modifiedDate", 128L);
+		columnBitmasks.put("createDate", 128L);
 
-		columnBitmasks.put("siteGroupId", 256L);
+		columnBitmasks.put("modifiedDate", 256L);
 
-		columnBitmasks.put("name", 512L);
+		columnBitmasks.put("siteGroupId", 512L);
 
-		columnBitmasks.put("type_", 1024L);
+		columnBitmasks.put("name", 1024L);
 
-		columnBitmasks.put("typeSettings", 2048L);
+		columnBitmasks.put("type_", 2048L);
 
-		columnBitmasks.put("commerceCurrencyCode", 4096L);
+		columnBitmasks.put("typeSettings", 4096L);
 
-		columnBitmasks.put("priceDisplayType", 8192L);
+		columnBitmasks.put("commerceCurrencyCode", 8192L);
 
-		columnBitmasks.put("discountsTargetNetPrice", 16384L);
+		columnBitmasks.put("priceDisplayType", 16384L);
+
+		columnBitmasks.put("discountsTargetNetPrice", 32768L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

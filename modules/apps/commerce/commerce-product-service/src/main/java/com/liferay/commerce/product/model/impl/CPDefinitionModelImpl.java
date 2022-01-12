@@ -80,13 +80,13 @@ public class CPDefinitionModelImpl
 	public static final String TABLE_NAME = "CPDefinition";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
-		{"defaultLanguageId", Types.VARCHAR}, {"CPDefinitionId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"CProductId", Types.BIGINT}, {"CPTaxCategoryId", Types.BIGINT},
-		{"productTypeName", Types.VARCHAR},
+		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
+		{"uuid_", Types.VARCHAR}, {"defaultLanguageId", Types.VARCHAR},
+		{"CPDefinitionId", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"CProductId", Types.BIGINT},
+		{"CPTaxCategoryId", Types.BIGINT}, {"productTypeName", Types.VARCHAR},
 		{"availableIndividually", Types.BOOLEAN},
 		{"ignoreSKUCombinations", Types.BOOLEAN}, {"shippable", Types.BOOLEAN},
 		{"freeShipping", Types.BOOLEAN}, {"shipSeparately", Types.BOOLEAN},
@@ -118,6 +118,7 @@ public class CPDefinitionModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("defaultLanguageId", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("CPDefinitionId", Types.BIGINT);
@@ -167,7 +168,7 @@ public class CPDefinitionModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CPDefinition (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,defaultLanguageId VARCHAR(75) null,CPDefinitionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CProductId LONG,CPTaxCategoryId LONG,productTypeName VARCHAR(75) null,availableIndividually BOOLEAN,ignoreSKUCombinations BOOLEAN,shippable BOOLEAN,freeShipping BOOLEAN,shipSeparately BOOLEAN,shippingExtraPrice DOUBLE,width DOUBLE,height DOUBLE,depth DOUBLE,weight DOUBLE,taxExempt BOOLEAN,telcoOrElectronics BOOLEAN,DDMStructureKey VARCHAR(75) null,published BOOLEAN,displayDate DATE null,expirationDate DATE null,lastPublishDate DATE null,subscriptionEnabled BOOLEAN,subscriptionLength INTEGER,subscriptionType VARCHAR(75) null,subscriptionTypeSettings TEXT null,maxSubscriptionCycles LONG,deliverySubscriptionEnabled BOOLEAN,deliverySubscriptionLength INTEGER,deliverySubscriptionType VARCHAR(75) null,deliverySubTypeSettings VARCHAR(75) null,deliveryMaxSubscriptionCycles LONG,accountGroupFilterEnabled BOOLEAN,channelFilterEnabled BOOLEAN,version INTEGER,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+		"create table CPDefinition (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,defaultLanguageId VARCHAR(75) null,CPDefinitionId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CProductId LONG,CPTaxCategoryId LONG,productTypeName VARCHAR(75) null,availableIndividually BOOLEAN,ignoreSKUCombinations BOOLEAN,shippable BOOLEAN,freeShipping BOOLEAN,shipSeparately BOOLEAN,shippingExtraPrice DOUBLE,width DOUBLE,height DOUBLE,depth DOUBLE,weight DOUBLE,taxExempt BOOLEAN,telcoOrElectronics BOOLEAN,DDMStructureKey VARCHAR(75) null,published BOOLEAN,displayDate DATE null,expirationDate DATE null,lastPublishDate DATE null,subscriptionEnabled BOOLEAN,subscriptionLength INTEGER,subscriptionType VARCHAR(75) null,subscriptionTypeSettings TEXT null,maxSubscriptionCycles LONG,deliverySubscriptionEnabled BOOLEAN,deliverySubscriptionLength INTEGER,deliverySubscriptionType VARCHAR(75) null,deliverySubTypeSettings VARCHAR(75) null,deliveryMaxSubscriptionCycles LONG,accountGroupFilterEnabled BOOLEAN,channelFilterEnabled BOOLEAN,version INTEGER,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,primary key (CPDefinitionId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table CPDefinition";
 
@@ -395,6 +396,11 @@ public class CPDefinitionModelImpl
 		attributeSetterBiConsumers.put(
 			"mvccVersion",
 			(BiConsumer<CPDefinition, Long>)CPDefinition::setMvccVersion);
+		attributeGetterFunctions.put(
+			"ctCollectionId", CPDefinition::getCtCollectionId);
+		attributeSetterBiConsumers.put(
+			"ctCollectionId",
+			(BiConsumer<CPDefinition, Long>)CPDefinition::setCtCollectionId);
 		attributeGetterFunctions.put("uuid", CPDefinition::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid", (BiConsumer<CPDefinition, String>)CPDefinition::setUuid);
@@ -1067,6 +1073,21 @@ public class CPDefinitionModelImpl
 		}
 
 		_mvccVersion = mvccVersion;
+	}
+
+	@JSON
+	@Override
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_ctCollectionId = ctCollectionId;
 	}
 
 	@JSON
@@ -2157,6 +2178,7 @@ public class CPDefinitionModelImpl
 		CPDefinitionImpl cpDefinitionImpl = new CPDefinitionImpl();
 
 		cpDefinitionImpl.setMvccVersion(getMvccVersion());
+		cpDefinitionImpl.setCtCollectionId(getCtCollectionId());
 		cpDefinitionImpl.setUuid(getUuid());
 		cpDefinitionImpl.setDefaultLanguageId(getDefaultLanguageId());
 		cpDefinitionImpl.setCPDefinitionId(getCPDefinitionId());
@@ -2222,6 +2244,8 @@ public class CPDefinitionModelImpl
 
 		cpDefinitionImpl.setMvccVersion(
 			this.<Long>getColumnOriginalValue("mvccVersion"));
+		cpDefinitionImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
 		cpDefinitionImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
 		cpDefinitionImpl.setDefaultLanguageId(
 			this.<String>getColumnOriginalValue("defaultLanguageId"));
@@ -2400,6 +2424,8 @@ public class CPDefinitionModelImpl
 			new CPDefinitionCacheModel();
 
 		cpDefinitionCacheModel.mvccVersion = getMvccVersion();
+
+		cpDefinitionCacheModel.ctCollectionId = getCtCollectionId();
 
 		cpDefinitionCacheModel.uuid = getUuid();
 
@@ -2705,6 +2731,7 @@ public class CPDefinitionModelImpl
 	}
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
 	private String _uuid;
 	private String _defaultLanguageId;
 	private long _CPDefinitionId;
@@ -2783,6 +2810,7 @@ public class CPDefinitionModelImpl
 		_columnOriginalValues = new HashMap<String, Object>();
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
+		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
 		_columnOriginalValues.put("uuid_", _uuid);
 		_columnOriginalValues.put("defaultLanguageId", _defaultLanguageId);
 		_columnOriginalValues.put("CPDefinitionId", _CPDefinitionId);
@@ -2867,97 +2895,99 @@ public class CPDefinitionModelImpl
 
 		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("uuid_", 2L);
+		columnBitmasks.put("ctCollectionId", 2L);
 
-		columnBitmasks.put("defaultLanguageId", 4L);
+		columnBitmasks.put("uuid_", 4L);
 
-		columnBitmasks.put("CPDefinitionId", 8L);
+		columnBitmasks.put("defaultLanguageId", 8L);
 
-		columnBitmasks.put("groupId", 16L);
+		columnBitmasks.put("CPDefinitionId", 16L);
 
-		columnBitmasks.put("companyId", 32L);
+		columnBitmasks.put("groupId", 32L);
 
-		columnBitmasks.put("userId", 64L);
+		columnBitmasks.put("companyId", 64L);
 
-		columnBitmasks.put("userName", 128L);
+		columnBitmasks.put("userId", 128L);
 
-		columnBitmasks.put("createDate", 256L);
+		columnBitmasks.put("userName", 256L);
 
-		columnBitmasks.put("modifiedDate", 512L);
+		columnBitmasks.put("createDate", 512L);
 
-		columnBitmasks.put("CProductId", 1024L);
+		columnBitmasks.put("modifiedDate", 1024L);
 
-		columnBitmasks.put("CPTaxCategoryId", 2048L);
+		columnBitmasks.put("CProductId", 2048L);
 
-		columnBitmasks.put("productTypeName", 4096L);
+		columnBitmasks.put("CPTaxCategoryId", 4096L);
 
-		columnBitmasks.put("availableIndividually", 8192L);
+		columnBitmasks.put("productTypeName", 8192L);
 
-		columnBitmasks.put("ignoreSKUCombinations", 16384L);
+		columnBitmasks.put("availableIndividually", 16384L);
 
-		columnBitmasks.put("shippable", 32768L);
+		columnBitmasks.put("ignoreSKUCombinations", 32768L);
 
-		columnBitmasks.put("freeShipping", 65536L);
+		columnBitmasks.put("shippable", 65536L);
 
-		columnBitmasks.put("shipSeparately", 131072L);
+		columnBitmasks.put("freeShipping", 131072L);
 
-		columnBitmasks.put("shippingExtraPrice", 262144L);
+		columnBitmasks.put("shipSeparately", 262144L);
 
-		columnBitmasks.put("width", 524288L);
+		columnBitmasks.put("shippingExtraPrice", 524288L);
 
-		columnBitmasks.put("height", 1048576L);
+		columnBitmasks.put("width", 1048576L);
 
-		columnBitmasks.put("depth", 2097152L);
+		columnBitmasks.put("height", 2097152L);
 
-		columnBitmasks.put("weight", 4194304L);
+		columnBitmasks.put("depth", 4194304L);
 
-		columnBitmasks.put("taxExempt", 8388608L);
+		columnBitmasks.put("weight", 8388608L);
 
-		columnBitmasks.put("telcoOrElectronics", 16777216L);
+		columnBitmasks.put("taxExempt", 16777216L);
 
-		columnBitmasks.put("DDMStructureKey", 33554432L);
+		columnBitmasks.put("telcoOrElectronics", 33554432L);
 
-		columnBitmasks.put("published", 67108864L);
+		columnBitmasks.put("DDMStructureKey", 67108864L);
 
-		columnBitmasks.put("displayDate", 134217728L);
+		columnBitmasks.put("published", 134217728L);
 
-		columnBitmasks.put("expirationDate", 268435456L);
+		columnBitmasks.put("displayDate", 268435456L);
 
-		columnBitmasks.put("lastPublishDate", 536870912L);
+		columnBitmasks.put("expirationDate", 536870912L);
 
-		columnBitmasks.put("subscriptionEnabled", 1073741824L);
+		columnBitmasks.put("lastPublishDate", 1073741824L);
 
-		columnBitmasks.put("subscriptionLength", 2147483648L);
+		columnBitmasks.put("subscriptionEnabled", 2147483648L);
 
-		columnBitmasks.put("subscriptionType", 4294967296L);
+		columnBitmasks.put("subscriptionLength", 4294967296L);
 
-		columnBitmasks.put("subscriptionTypeSettings", 8589934592L);
+		columnBitmasks.put("subscriptionType", 8589934592L);
 
-		columnBitmasks.put("maxSubscriptionCycles", 17179869184L);
+		columnBitmasks.put("subscriptionTypeSettings", 17179869184L);
 
-		columnBitmasks.put("deliverySubscriptionEnabled", 34359738368L);
+		columnBitmasks.put("maxSubscriptionCycles", 34359738368L);
 
-		columnBitmasks.put("deliverySubscriptionLength", 68719476736L);
+		columnBitmasks.put("deliverySubscriptionEnabled", 68719476736L);
 
-		columnBitmasks.put("deliverySubscriptionType", 137438953472L);
+		columnBitmasks.put("deliverySubscriptionLength", 137438953472L);
 
-		columnBitmasks.put("deliverySubTypeSettings", 274877906944L);
+		columnBitmasks.put("deliverySubscriptionType", 274877906944L);
 
-		columnBitmasks.put("deliveryMaxSubscriptionCycles", 549755813888L);
+		columnBitmasks.put("deliverySubTypeSettings", 549755813888L);
 
-		columnBitmasks.put("accountGroupFilterEnabled", 1099511627776L);
+		columnBitmasks.put("deliveryMaxSubscriptionCycles", 1099511627776L);
 
-		columnBitmasks.put("channelFilterEnabled", 2199023255552L);
+		columnBitmasks.put("accountGroupFilterEnabled", 2199023255552L);
 
-		columnBitmasks.put("version", 4398046511104L);
+		columnBitmasks.put("channelFilterEnabled", 4398046511104L);
 
-		columnBitmasks.put("status", 8796093022208L);
+		columnBitmasks.put("version", 8796093022208L);
 
-		columnBitmasks.put("statusByUserId", 17592186044416L);
+		columnBitmasks.put("status", 17592186044416L);
 
-		columnBitmasks.put("statusByUserName", 35184372088832L);
+		columnBitmasks.put("statusByUserId", 35184372088832L);
 
-		columnBitmasks.put("statusDate", 70368744177664L);
+		columnBitmasks.put("statusByUserName", 70368744177664L);
+
+		columnBitmasks.put("statusDate", 140737488355328L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

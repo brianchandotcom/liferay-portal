@@ -17,6 +17,7 @@ package com.liferay.commerce.product.service.persistence;
 import com.liferay.commerce.product.exception.NoSuchCPDefinitionSpecificationOptionValueException;
 import com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -33,7 +34,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface CPDefinitionSpecificationOptionValuePersistence
-	extends BasePersistence<CPDefinitionSpecificationOptionValue> {
+	extends BasePersistence<CPDefinitionSpecificationOptionValue>,
+			CTPersistence<CPDefinitionSpecificationOptionValue> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

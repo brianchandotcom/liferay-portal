@@ -128,6 +128,8 @@ public class CPMeasurementUnitPersistenceTest {
 
 		newCPMeasurementUnit.setMvccVersion(RandomTestUtil.nextLong());
 
+		newCPMeasurementUnit.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newCPMeasurementUnit.setUuid(RandomTestUtil.randomString());
 
 		newCPMeasurementUnit.setGroupId(RandomTestUtil.nextLong());
@@ -164,6 +166,9 @@ public class CPMeasurementUnitPersistenceTest {
 		Assert.assertEquals(
 			existingCPMeasurementUnit.getMvccVersion(),
 			newCPMeasurementUnit.getMvccVersion());
+		Assert.assertEquals(
+			existingCPMeasurementUnit.getCtCollectionId(),
+			newCPMeasurementUnit.getCtCollectionId());
 		Assert.assertEquals(
 			existingCPMeasurementUnit.getUuid(),
 			newCPMeasurementUnit.getUuid());
@@ -296,10 +301,10 @@ public class CPMeasurementUnitPersistenceTest {
 
 	protected OrderByComparator<CPMeasurementUnit> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"CPMeasurementUnit", "mvccVersion", true, "uuid", true,
-			"CPMeasurementUnitId", true, "groupId", true, "companyId", true,
-			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "name", true, "key", true, "rate", true,
+			"CPMeasurementUnit", "mvccVersion", true, "ctCollectionId", true,
+			"uuid", true, "CPMeasurementUnitId", true, "groupId", true,
+			"companyId", true, "userId", true, "userName", true, "createDate",
+			true, "modifiedDate", true, "name", true, "key", true, "rate", true,
 			"primary", true, "priority", true, "type", true, "lastPublishDate",
 			true);
 	}
@@ -606,6 +611,8 @@ public class CPMeasurementUnitPersistenceTest {
 		CPMeasurementUnit cpMeasurementUnit = _persistence.create(pk);
 
 		cpMeasurementUnit.setMvccVersion(RandomTestUtil.nextLong());
+
+		cpMeasurementUnit.setCtCollectionId(RandomTestUtil.nextLong());
 
 		cpMeasurementUnit.setUuid(RandomTestUtil.randomString());
 

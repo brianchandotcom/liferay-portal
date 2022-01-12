@@ -83,10 +83,12 @@ public class CPDefinitionOptionValueRelCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(39);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", CPDefinitionOptionValueRelId=");
@@ -132,6 +134,7 @@ public class CPDefinitionOptionValueRelCacheModel
 			new CPDefinitionOptionValueRelImpl();
 
 		cpDefinitionOptionValueRelImpl.setMvccVersion(mvccVersion);
+		cpDefinitionOptionValueRelImpl.setCtCollectionId(ctCollectionId);
 
 		if (uuid == null) {
 			cpDefinitionOptionValueRelImpl.setUuid("");
@@ -210,6 +213,8 @@ public class CPDefinitionOptionValueRelCacheModel
 		throws ClassNotFoundException, IOException {
 
 		mvccVersion = objectInput.readLong();
+
+		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		CPDefinitionOptionValueRelId = objectInput.readLong();
@@ -241,6 +246,8 @@ public class CPDefinitionOptionValueRelCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(ctCollectionId);
 
 		if (uuid == null) {
 			objectOutput.writeUTF("");
@@ -301,6 +308,7 @@ public class CPDefinitionOptionValueRelCacheModel
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public String uuid;
 	public long CPDefinitionOptionValueRelId;
 	public long groupId;

@@ -77,10 +77,12 @@ public class CPDefinitionCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(95);
+		StringBundler sb = new StringBundler(97);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", defaultLanguageId=");
@@ -183,6 +185,7 @@ public class CPDefinitionCacheModel
 		CPDefinitionImpl cpDefinitionImpl = new CPDefinitionImpl();
 
 		cpDefinitionImpl.setMvccVersion(mvccVersion);
+		cpDefinitionImpl.setCtCollectionId(ctCollectionId);
 
 		if (uuid == null) {
 			cpDefinitionImpl.setUuid("");
@@ -350,6 +353,8 @@ public class CPDefinitionCacheModel
 		throws ClassNotFoundException, IOException {
 
 		mvccVersion = objectInput.readLong();
+
+		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		defaultLanguageId = objectInput.readUTF();
 
@@ -431,6 +436,8 @@ public class CPDefinitionCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(ctCollectionId);
 
 		if (uuid == null) {
 			objectOutput.writeUTF("");
@@ -572,6 +579,7 @@ public class CPDefinitionCacheModel
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public String uuid;
 	public String defaultLanguageId;
 	public long CPDefinitionId;

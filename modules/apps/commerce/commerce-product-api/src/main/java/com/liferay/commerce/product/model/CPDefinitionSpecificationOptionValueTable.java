@@ -37,6 +37,9 @@ public class CPDefinitionSpecificationOptionValueTable
 	public final Column<CPDefinitionSpecificationOptionValueTable, Long>
 		mvccVersion = createColumn(
 			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<CPDefinitionSpecificationOptionValueTable, Long>
+		ctCollectionId = createColumn(
+			"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<CPDefinitionSpecificationOptionValueTable, String>
 		uuid = createColumn(
 			"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);

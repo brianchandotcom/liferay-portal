@@ -129,6 +129,8 @@ public class CPInstancePersistenceTest {
 
 		newCPInstance.setMvccVersion(RandomTestUtil.nextLong());
 
+		newCPInstance.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newCPInstance.setUuid(RandomTestUtil.randomString());
 
 		newCPInstance.setExternalReferenceCode(RandomTestUtil.randomString());
@@ -235,6 +237,9 @@ public class CPInstancePersistenceTest {
 		Assert.assertEquals(
 			existingCPInstance.getMvccVersion(),
 			newCPInstance.getMvccVersion());
+		Assert.assertEquals(
+			existingCPInstance.getCtCollectionId(),
+			newCPInstance.getCtCollectionId());
 		Assert.assertEquals(
 			existingCPInstance.getUuid(), newCPInstance.getUuid());
 		Assert.assertEquals(
@@ -508,11 +513,11 @@ public class CPInstancePersistenceTest {
 
 	protected OrderByComparator<CPInstance> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"CPInstance", "mvccVersion", true, "uuid", true,
-			"externalReferenceCode", true, "CPInstanceId", true, "groupId",
-			true, "companyId", true, "userId", true, "userName", true,
-			"createDate", true, "modifiedDate", true, "CPDefinitionId", true,
-			"CPInstanceUuid", true, "sku", true, "gtin", true,
+			"CPInstance", "mvccVersion", true, "ctCollectionId", true, "uuid",
+			true, "externalReferenceCode", true, "CPInstanceId", true,
+			"groupId", true, "companyId", true, "userId", true, "userName",
+			true, "createDate", true, "modifiedDate", true, "CPDefinitionId",
+			true, "CPInstanceUuid", true, "sku", true, "gtin", true,
 			"manufacturerPartNumber", true, "purchasable", true, "width", true,
 			"height", true, "depth", true, "weight", true, "price", true,
 			"promoPrice", true, "cost", true, "published", true, "displayDate",
@@ -840,6 +845,8 @@ public class CPInstancePersistenceTest {
 		CPInstance cpInstance = _persistence.create(pk);
 
 		cpInstance.setMvccVersion(RandomTestUtil.nextLong());
+
+		cpInstance.setCtCollectionId(RandomTestUtil.nextLong());
 
 		cpInstance.setUuid(RandomTestUtil.randomString());
 

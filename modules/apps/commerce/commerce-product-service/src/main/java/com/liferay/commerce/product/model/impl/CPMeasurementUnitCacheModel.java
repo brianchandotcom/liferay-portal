@@ -78,10 +78,12 @@ public class CPMeasurementUnitCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(35);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", CPMeasurementUnitId=");
@@ -123,6 +125,7 @@ public class CPMeasurementUnitCacheModel
 			new CPMeasurementUnitImpl();
 
 		cpMeasurementUnitImpl.setMvccVersion(mvccVersion);
+		cpMeasurementUnitImpl.setCtCollectionId(ctCollectionId);
 
 		if (uuid == null) {
 			cpMeasurementUnitImpl.setUuid("");
@@ -191,6 +194,8 @@ public class CPMeasurementUnitCacheModel
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
+
+		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		CPMeasurementUnitId = objectInput.readLong();
@@ -219,6 +224,8 @@ public class CPMeasurementUnitCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(ctCollectionId);
 
 		if (uuid == null) {
 			objectOutput.writeUTF("");
@@ -270,6 +277,7 @@ public class CPMeasurementUnitCacheModel
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public String uuid;
 	public long CPMeasurementUnitId;
 	public long groupId;

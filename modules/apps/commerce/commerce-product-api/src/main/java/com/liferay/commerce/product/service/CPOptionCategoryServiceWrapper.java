@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.product.service;
 
+import com.liferay.commerce.product.model.CPOptionCategory;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
@@ -38,12 +39,11 @@ public class CPOptionCategoryServiceWrapper
 	}
 
 	@Override
-	public com.liferay.commerce.product.model.CPOptionCategory
-			addCPOptionCategory(
-				java.util.Map<java.util.Locale, String> titleMap,
-				java.util.Map<java.util.Locale, String> descriptionMap,
-				double priority, String key,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public CPOptionCategory addCPOptionCategory(
+			java.util.Map<java.util.Locale, String> titleMap,
+			java.util.Map<java.util.Locale, String> descriptionMap,
+			double priority, String key,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpOptionCategoryService.addCPOptionCategory(
@@ -58,8 +58,7 @@ public class CPOptionCategoryServiceWrapper
 	}
 
 	@Override
-	public com.liferay.commerce.product.model.CPOptionCategory
-			fetchCPOptionCategory(long cpOptionCategoryId)
+	public CPOptionCategory fetchCPOptionCategory(long cpOptionCategoryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpOptionCategoryService.fetchCPOptionCategory(
@@ -67,8 +66,7 @@ public class CPOptionCategoryServiceWrapper
 	}
 
 	@Override
-	public com.liferay.commerce.product.model.CPOptionCategory
-			getCPOptionCategory(long cpOptionCategoryId)
+	public CPOptionCategory getCPOptionCategory(long cpOptionCategoryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpOptionCategoryService.getCPOptionCategory(cpOptionCategoryId);
@@ -86,10 +84,9 @@ public class CPOptionCategoryServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.search.BaseModelSearchResult
-		<com.liferay.commerce.product.model.CPOptionCategory>
-				searchCPOptionCategories(
-					long companyId, String keywords, int start, int end,
-					com.liferay.portal.kernel.search.Sort sort)
+		<CPOptionCategory> searchCPOptionCategories(
+				long companyId, String keywords, int start, int end,
+				com.liferay.portal.kernel.search.Sort sort)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpOptionCategoryService.searchCPOptionCategories(
@@ -97,12 +94,11 @@ public class CPOptionCategoryServiceWrapper
 	}
 
 	@Override
-	public com.liferay.commerce.product.model.CPOptionCategory
-			updateCPOptionCategory(
-				long cpOptionCategoryId,
-				java.util.Map<java.util.Locale, String> titleMap,
-				java.util.Map<java.util.Locale, String> descriptionMap,
-				double priority, String key)
+	public CPOptionCategory updateCPOptionCategory(
+			long cpOptionCategoryId,
+			java.util.Map<java.util.Locale, String> titleMap,
+			java.util.Map<java.util.Locale, String> descriptionMap,
+			double priority, String key)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpOptionCategoryService.updateCPOptionCategory(

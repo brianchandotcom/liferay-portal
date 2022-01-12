@@ -34,6 +34,8 @@ public class CPTaxCategoryTable extends BaseTable<CPTaxCategoryTable> {
 
 	public final Column<CPTaxCategoryTable, Long> mvccVersion = createColumn(
 		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<CPTaxCategoryTable, Long> ctCollectionId = createColumn(
+		"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<CPTaxCategoryTable, String> externalReferenceCode =
 		createColumn(
 			"externalReferenceCode", String.class, Types.VARCHAR,

@@ -127,6 +127,8 @@ public class CPOptionCategoryPersistenceTest {
 
 		newCPOptionCategory.setMvccVersion(RandomTestUtil.nextLong());
 
+		newCPOptionCategory.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newCPOptionCategory.setUuid(RandomTestUtil.randomString());
 
 		newCPOptionCategory.setCompanyId(RandomTestUtil.nextLong());
@@ -157,6 +159,9 @@ public class CPOptionCategoryPersistenceTest {
 		Assert.assertEquals(
 			existingCPOptionCategory.getMvccVersion(),
 			newCPOptionCategory.getMvccVersion());
+		Assert.assertEquals(
+			existingCPOptionCategory.getCtCollectionId(),
+			newCPOptionCategory.getCtCollectionId());
 		Assert.assertEquals(
 			existingCPOptionCategory.getUuid(), newCPOptionCategory.getUuid());
 		Assert.assertEquals(
@@ -253,11 +258,11 @@ public class CPOptionCategoryPersistenceTest {
 
 	protected OrderByComparator<CPOptionCategory> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"CPOptionCategory", "mvccVersion", true, "uuid", true,
-			"CPOptionCategoryId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "modifiedDate", true, "title",
-			true, "description", true, "priority", true, "key", true,
-			"lastPublishDate", true);
+			"CPOptionCategory", "mvccVersion", true, "ctCollectionId", true,
+			"uuid", true, "CPOptionCategoryId", true, "companyId", true,
+			"userId", true, "userName", true, "createDate", true,
+			"modifiedDate", true, "title", true, "description", true,
+			"priority", true, "key", true, "lastPublishDate", true);
 	}
 
 	@Test
@@ -547,6 +552,8 @@ public class CPOptionCategoryPersistenceTest {
 		CPOptionCategory cpOptionCategory = _persistence.create(pk);
 
 		cpOptionCategory.setMvccVersion(RandomTestUtil.nextLong());
+
+		cpOptionCategory.setCtCollectionId(RandomTestUtil.nextLong());
 
 		cpOptionCategory.setUuid(RandomTestUtil.randomString());
 

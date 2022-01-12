@@ -17,6 +17,7 @@ package com.liferay.commerce.product.service.persistence;
 import com.liferay.commerce.product.exception.NoSuchCProductException;
 import com.liferay.commerce.product.model.CProduct;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -32,7 +33,8 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @ProviderType
-public interface CProductPersistence extends BasePersistence<CProduct> {
+public interface CProductPersistence
+	extends BasePersistence<CProduct>, CTPersistence<CProduct> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

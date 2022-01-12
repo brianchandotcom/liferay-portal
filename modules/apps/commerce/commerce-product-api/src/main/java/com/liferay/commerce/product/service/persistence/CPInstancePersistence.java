@@ -17,6 +17,7 @@ package com.liferay.commerce.product.service.persistence;
 import com.liferay.commerce.product.exception.NoSuchCPInstanceException;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 import java.util.Date;
 
@@ -34,7 +35,8 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @ProviderType
-public interface CPInstancePersistence extends BasePersistence<CPInstance> {
+public interface CPInstancePersistence
+	extends BasePersistence<CPInstance>, CTPersistence<CPInstance> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

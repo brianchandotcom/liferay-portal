@@ -78,8 +78,8 @@ public class CPInstanceModelImpl
 	public static final String TABLE_NAME = "CPInstance";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
-		{"externalReferenceCode", Types.VARCHAR},
+		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
+		{"uuid_", Types.VARCHAR}, {"externalReferenceCode", Types.VARCHAR},
 		{"CPInstanceId", Types.BIGINT}, {"groupId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
@@ -117,6 +117,7 @@ public class CPInstanceModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("CPInstanceId", Types.BIGINT);
@@ -166,7 +167,7 @@ public class CPInstanceModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CPInstance (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,CPInstanceId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPDefinitionId LONG,CPInstanceUuid VARCHAR(75) null,sku VARCHAR(75) null,gtin VARCHAR(75) null,manufacturerPartNumber VARCHAR(75) null,purchasable BOOLEAN,width DOUBLE,height DOUBLE,depth DOUBLE,weight DOUBLE,price DECIMAL(30, 16) null,promoPrice DECIMAL(30, 16) null,cost DECIMAL(30, 16) null,published BOOLEAN,displayDate DATE null,expirationDate DATE null,lastPublishDate DATE null,overrideSubscriptionInfo BOOLEAN,subscriptionEnabled BOOLEAN,subscriptionLength INTEGER,subscriptionType VARCHAR(75) null,subscriptionTypeSettings TEXT null,maxSubscriptionCycles LONG,deliverySubscriptionEnabled BOOLEAN,deliverySubscriptionLength INTEGER,deliverySubscriptionType VARCHAR(75) null,deliverySubTypeSettings VARCHAR(75) null,deliveryMaxSubscriptionCycles LONG,unspsc VARCHAR(75) null,discontinued BOOLEAN,discontinuedDate DATE null,replacementCPInstanceUuid VARCHAR(75) null,replacementCProductId LONG,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+		"create table CPInstance (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,CPInstanceId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPDefinitionId LONG,CPInstanceUuid VARCHAR(75) null,sku VARCHAR(75) null,gtin VARCHAR(75) null,manufacturerPartNumber VARCHAR(75) null,purchasable BOOLEAN,width DOUBLE,height DOUBLE,depth DOUBLE,weight DOUBLE,price DECIMAL(30, 16) null,promoPrice DECIMAL(30, 16) null,cost DECIMAL(30, 16) null,published BOOLEAN,displayDate DATE null,expirationDate DATE null,lastPublishDate DATE null,overrideSubscriptionInfo BOOLEAN,subscriptionEnabled BOOLEAN,subscriptionLength INTEGER,subscriptionType VARCHAR(75) null,subscriptionTypeSettings TEXT null,maxSubscriptionCycles LONG,deliverySubscriptionEnabled BOOLEAN,deliverySubscriptionLength INTEGER,deliverySubscriptionType VARCHAR(75) null,deliverySubTypeSettings VARCHAR(75) null,deliveryMaxSubscriptionCycles LONG,unspsc VARCHAR(75) null,discontinued BOOLEAN,discontinuedDate DATE null,replacementCPInstanceUuid VARCHAR(75) null,replacementCProductId LONG,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,primary key (CPInstanceId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table CPInstance";
 
@@ -392,6 +393,11 @@ public class CPInstanceModelImpl
 		attributeSetterBiConsumers.put(
 			"mvccVersion",
 			(BiConsumer<CPInstance, Long>)CPInstance::setMvccVersion);
+		attributeGetterFunctions.put(
+			"ctCollectionId", CPInstance::getCtCollectionId);
+		attributeSetterBiConsumers.put(
+			"ctCollectionId",
+			(BiConsumer<CPInstance, Long>)CPInstance::setCtCollectionId);
 		attributeGetterFunctions.put("uuid", CPInstance::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid", (BiConsumer<CPInstance, String>)CPInstance::setUuid);
@@ -627,6 +633,21 @@ public class CPInstanceModelImpl
 		}
 
 		_mvccVersion = mvccVersion;
+	}
+
+	@JSON
+	@Override
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_ctCollectionId = ctCollectionId;
 	}
 
 	@JSON
@@ -1696,6 +1717,7 @@ public class CPInstanceModelImpl
 		CPInstanceImpl cpInstanceImpl = new CPInstanceImpl();
 
 		cpInstanceImpl.setMvccVersion(getMvccVersion());
+		cpInstanceImpl.setCtCollectionId(getCtCollectionId());
 		cpInstanceImpl.setUuid(getUuid());
 		cpInstanceImpl.setExternalReferenceCode(getExternalReferenceCode());
 		cpInstanceImpl.setCPInstanceId(getCPInstanceId());
@@ -1762,6 +1784,8 @@ public class CPInstanceModelImpl
 
 		cpInstanceImpl.setMvccVersion(
 			this.<Long>getColumnOriginalValue("mvccVersion"));
+		cpInstanceImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
 		cpInstanceImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
 		cpInstanceImpl.setExternalReferenceCode(
 			this.<String>getColumnOriginalValue("externalReferenceCode"));
@@ -1931,6 +1955,8 @@ public class CPInstanceModelImpl
 		CPInstanceCacheModel cpInstanceCacheModel = new CPInstanceCacheModel();
 
 		cpInstanceCacheModel.mvccVersion = getMvccVersion();
+
+		cpInstanceCacheModel.ctCollectionId = getCtCollectionId();
 
 		cpInstanceCacheModel.uuid = getUuid();
 
@@ -2275,6 +2301,7 @@ public class CPInstanceModelImpl
 	}
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
 	private String _uuid;
 	private String _externalReferenceCode;
 	private long _CPInstanceId;
@@ -2353,6 +2380,7 @@ public class CPInstanceModelImpl
 		_columnOriginalValues = new HashMap<String, Object>();
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
+		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
 		_columnOriginalValues.put("uuid_", _uuid);
 		_columnOriginalValues.put(
 			"externalReferenceCode", _externalReferenceCode);
@@ -2438,97 +2466,99 @@ public class CPInstanceModelImpl
 
 		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("uuid_", 2L);
+		columnBitmasks.put("ctCollectionId", 2L);
 
-		columnBitmasks.put("externalReferenceCode", 4L);
+		columnBitmasks.put("uuid_", 4L);
 
-		columnBitmasks.put("CPInstanceId", 8L);
+		columnBitmasks.put("externalReferenceCode", 8L);
 
-		columnBitmasks.put("groupId", 16L);
+		columnBitmasks.put("CPInstanceId", 16L);
 
-		columnBitmasks.put("companyId", 32L);
+		columnBitmasks.put("groupId", 32L);
 
-		columnBitmasks.put("userId", 64L);
+		columnBitmasks.put("companyId", 64L);
 
-		columnBitmasks.put("userName", 128L);
+		columnBitmasks.put("userId", 128L);
 
-		columnBitmasks.put("createDate", 256L);
+		columnBitmasks.put("userName", 256L);
 
-		columnBitmasks.put("modifiedDate", 512L);
+		columnBitmasks.put("createDate", 512L);
 
-		columnBitmasks.put("CPDefinitionId", 1024L);
+		columnBitmasks.put("modifiedDate", 1024L);
 
-		columnBitmasks.put("CPInstanceUuid", 2048L);
+		columnBitmasks.put("CPDefinitionId", 2048L);
 
-		columnBitmasks.put("sku", 4096L);
+		columnBitmasks.put("CPInstanceUuid", 4096L);
 
-		columnBitmasks.put("gtin", 8192L);
+		columnBitmasks.put("sku", 8192L);
 
-		columnBitmasks.put("manufacturerPartNumber", 16384L);
+		columnBitmasks.put("gtin", 16384L);
 
-		columnBitmasks.put("purchasable", 32768L);
+		columnBitmasks.put("manufacturerPartNumber", 32768L);
 
-		columnBitmasks.put("width", 65536L);
+		columnBitmasks.put("purchasable", 65536L);
 
-		columnBitmasks.put("height", 131072L);
+		columnBitmasks.put("width", 131072L);
 
-		columnBitmasks.put("depth", 262144L);
+		columnBitmasks.put("height", 262144L);
 
-		columnBitmasks.put("weight", 524288L);
+		columnBitmasks.put("depth", 524288L);
 
-		columnBitmasks.put("price", 1048576L);
+		columnBitmasks.put("weight", 1048576L);
 
-		columnBitmasks.put("promoPrice", 2097152L);
+		columnBitmasks.put("price", 2097152L);
 
-		columnBitmasks.put("cost", 4194304L);
+		columnBitmasks.put("promoPrice", 4194304L);
 
-		columnBitmasks.put("published", 8388608L);
+		columnBitmasks.put("cost", 8388608L);
 
-		columnBitmasks.put("displayDate", 16777216L);
+		columnBitmasks.put("published", 16777216L);
 
-		columnBitmasks.put("expirationDate", 33554432L);
+		columnBitmasks.put("displayDate", 33554432L);
 
-		columnBitmasks.put("lastPublishDate", 67108864L);
+		columnBitmasks.put("expirationDate", 67108864L);
 
-		columnBitmasks.put("overrideSubscriptionInfo", 134217728L);
+		columnBitmasks.put("lastPublishDate", 134217728L);
 
-		columnBitmasks.put("subscriptionEnabled", 268435456L);
+		columnBitmasks.put("overrideSubscriptionInfo", 268435456L);
 
-		columnBitmasks.put("subscriptionLength", 536870912L);
+		columnBitmasks.put("subscriptionEnabled", 536870912L);
 
-		columnBitmasks.put("subscriptionType", 1073741824L);
+		columnBitmasks.put("subscriptionLength", 1073741824L);
 
-		columnBitmasks.put("subscriptionTypeSettings", 2147483648L);
+		columnBitmasks.put("subscriptionType", 2147483648L);
 
-		columnBitmasks.put("maxSubscriptionCycles", 4294967296L);
+		columnBitmasks.put("subscriptionTypeSettings", 4294967296L);
 
-		columnBitmasks.put("deliverySubscriptionEnabled", 8589934592L);
+		columnBitmasks.put("maxSubscriptionCycles", 8589934592L);
 
-		columnBitmasks.put("deliverySubscriptionLength", 17179869184L);
+		columnBitmasks.put("deliverySubscriptionEnabled", 17179869184L);
 
-		columnBitmasks.put("deliverySubscriptionType", 34359738368L);
+		columnBitmasks.put("deliverySubscriptionLength", 34359738368L);
 
-		columnBitmasks.put("deliverySubTypeSettings", 68719476736L);
+		columnBitmasks.put("deliverySubscriptionType", 68719476736L);
 
-		columnBitmasks.put("deliveryMaxSubscriptionCycles", 137438953472L);
+		columnBitmasks.put("deliverySubTypeSettings", 137438953472L);
 
-		columnBitmasks.put("unspsc", 274877906944L);
+		columnBitmasks.put("deliveryMaxSubscriptionCycles", 274877906944L);
 
-		columnBitmasks.put("discontinued", 549755813888L);
+		columnBitmasks.put("unspsc", 549755813888L);
 
-		columnBitmasks.put("discontinuedDate", 1099511627776L);
+		columnBitmasks.put("discontinued", 1099511627776L);
 
-		columnBitmasks.put("replacementCPInstanceUuid", 2199023255552L);
+		columnBitmasks.put("discontinuedDate", 2199023255552L);
 
-		columnBitmasks.put("replacementCProductId", 4398046511104L);
+		columnBitmasks.put("replacementCPInstanceUuid", 4398046511104L);
 
-		columnBitmasks.put("status", 8796093022208L);
+		columnBitmasks.put("replacementCProductId", 8796093022208L);
 
-		columnBitmasks.put("statusByUserId", 17592186044416L);
+		columnBitmasks.put("status", 17592186044416L);
 
-		columnBitmasks.put("statusByUserName", 35184372088832L);
+		columnBitmasks.put("statusByUserId", 35184372088832L);
 
-		columnBitmasks.put("statusDate", 70368744177664L);
+		columnBitmasks.put("statusByUserName", 70368744177664L);
+
+		columnBitmasks.put("statusDate", 140737488355328L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

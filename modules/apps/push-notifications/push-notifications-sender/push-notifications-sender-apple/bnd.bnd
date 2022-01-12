@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Push Notifications Sender Apple
 Bundle-SymbolicName: com.liferay.push.notifications.sender.apple
-Bundle-Version: 5.0.14
+Bundle-Version: 5.0.15
 Import-Package:\
 	!com.aayushatharva.brotli4j.*,\
 	\

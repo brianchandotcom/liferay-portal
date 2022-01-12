@@ -46,6 +46,7 @@ public class ObjectFieldSoap implements Serializable {
 		soapModel.setBusinessType(model.getBusinessType());
 		soapModel.setDBColumnName(model.getDBColumnName());
 		soapModel.setDBTableName(model.getDBTableName());
+		soapModel.setDBType(model.getDBType());
 		soapModel.setIndexed(model.isIndexed());
 		soapModel.setIndexedAsKeyword(model.isIndexedAsKeyword());
 		soapModel.setIndexedLanguageId(model.getIndexedLanguageId());
@@ -53,7 +54,6 @@ public class ObjectFieldSoap implements Serializable {
 		soapModel.setName(model.getName());
 		soapModel.setRelationshipType(model.getRelationshipType());
 		soapModel.setRequired(model.isRequired());
-		soapModel.setType(model.getType());
 
 		return soapModel;
 	}
@@ -211,6 +211,14 @@ public class ObjectFieldSoap implements Serializable {
 		_dbTableName = dbTableName;
 	}
 
+	public String getDBType() {
+		return _dbType;
+	}
+
+	public void setDBType(String dbType) {
+		_dbType = dbType;
+	}
+
 	public boolean getIndexed() {
 		return _indexed;
 	}
@@ -279,14 +287,6 @@ public class ObjectFieldSoap implements Serializable {
 		_required = required;
 	}
 
-	public String getType() {
-		return _type;
-	}
-
-	public void setType(String type) {
-		_type = type;
-	}
-
 	private long _mvccVersion;
 	private String _uuid;
 	private long _objectFieldId;
@@ -300,6 +300,7 @@ public class ObjectFieldSoap implements Serializable {
 	private String _businessType;
 	private String _dbColumnName;
 	private String _dbTableName;
+	private String _dbType;
 	private boolean _indexed;
 	private boolean _indexedAsKeyword;
 	private String _indexedLanguageId;
@@ -307,6 +308,5 @@ public class ObjectFieldSoap implements Serializable {
 	private String _name;
 	private String _relationshipType;
 	private boolean _required;
-	private String _type;
 
 }

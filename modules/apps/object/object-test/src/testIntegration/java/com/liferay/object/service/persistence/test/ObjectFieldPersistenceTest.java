@@ -148,6 +148,8 @@ public class ObjectFieldPersistenceTest {
 
 		newObjectField.setDBTableName(RandomTestUtil.randomString());
 
+		newObjectField.setDBType(RandomTestUtil.randomString());
+
 		newObjectField.setIndexed(RandomTestUtil.randomBoolean());
 
 		newObjectField.setIndexedAsKeyword(RandomTestUtil.randomBoolean());
@@ -161,8 +163,6 @@ public class ObjectFieldPersistenceTest {
 		newObjectField.setRelationshipType(RandomTestUtil.randomString());
 
 		newObjectField.setRequired(RandomTestUtil.randomBoolean());
-
-		newObjectField.setType(RandomTestUtil.randomString());
 
 		_objectFields.add(_persistence.update(newObjectField));
 
@@ -205,6 +205,8 @@ public class ObjectFieldPersistenceTest {
 			existingObjectField.getDBTableName(),
 			newObjectField.getDBTableName());
 		Assert.assertEquals(
+			existingObjectField.getDBType(), newObjectField.getDBType());
+		Assert.assertEquals(
 			existingObjectField.isIndexed(), newObjectField.isIndexed());
 		Assert.assertEquals(
 			existingObjectField.isIndexedAsKeyword(),
@@ -221,8 +223,6 @@ public class ObjectFieldPersistenceTest {
 			newObjectField.getRelationshipType());
 		Assert.assertEquals(
 			existingObjectField.isRequired(), newObjectField.isRequired());
-		Assert.assertEquals(
-			existingObjectField.getType(), newObjectField.getType());
 	}
 
 	@Test
@@ -304,10 +304,10 @@ public class ObjectFieldPersistenceTest {
 			true, "companyId", true, "userId", true, "userName", true,
 			"createDate", true, "modifiedDate", true, "listTypeDefinitionId",
 			true, "objectDefinitionId", true, "businessType", true,
-			"dbColumnName", true, "dbTableName", true, "indexed", true,
-			"indexedAsKeyword", true, "indexedLanguageId", true, "label", true,
-			"name", true, "relationshipType", true, "required", true, "type",
-			true);
+			"dbColumnName", true, "dbTableName", true, "dbType", true,
+			"indexed", true, "indexedAsKeyword", true, "indexedLanguageId",
+			true, "label", true, "name", true, "relationshipType", true,
+			"required", true);
 	}
 
 	@Test
@@ -611,6 +611,8 @@ public class ObjectFieldPersistenceTest {
 
 		objectField.setDBTableName(RandomTestUtil.randomString());
 
+		objectField.setDBType(RandomTestUtil.randomString());
+
 		objectField.setIndexed(RandomTestUtil.randomBoolean());
 
 		objectField.setIndexedAsKeyword(RandomTestUtil.randomBoolean());
@@ -624,8 +626,6 @@ public class ObjectFieldPersistenceTest {
 		objectField.setRelationshipType(RandomTestUtil.randomString());
 
 		objectField.setRequired(RandomTestUtil.randomBoolean());
-
-		objectField.setType(RandomTestUtil.randomString());
 
 		_objectFields.add(_persistence.update(objectField));
 

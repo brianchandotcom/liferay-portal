@@ -155,6 +155,11 @@
 		<td>//input[@type = 'text']</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>VIEW_FIELD_ON_MENU</td>
+		<td>//span[contains(@class,'c-inner') and contains(text(),'${key_itemMenu}')]</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

@@ -175,6 +175,11 @@
 		<td>//a[contains(text(),'Delete')]</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>ERROR_MESSAGE</td>
+		<td>//div[contains(@class,'${key_className}') and contains(.,'${key_errorMessage}')]</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

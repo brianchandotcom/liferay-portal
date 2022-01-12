@@ -302,6 +302,13 @@ definition {
 		AssertElementPresent(locator1 = "RemoteApps#EMPTY_REMOTE_TABLE_MESSAGE");
 	}
 
+	macro viewErrorValueInvalid {
+		AssertElementPresent(
+			key_className = "${className}",
+			key_errorMessage = "${errorMessage}",
+			locator1 = "CreateObject#ERROR_MESSAGE");
+	}
+
 	macro viewObject {
 		Click(
 			key_labelName = "${labelName}",

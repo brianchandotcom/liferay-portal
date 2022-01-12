@@ -18,6 +18,9 @@ import com.liferay.batch.engine.BatchEngineTaskContentType;
 import com.liferay.batch.engine.internal.util.ZipInputStreamUtil;
 
 import java.io.InputStream;
+import java.io.Serializable;
+
+import java.util.Map;
 
 /**
  * @author Shuyang Zhou
@@ -32,6 +35,7 @@ public class BatchEngineImportTaskItemReaderFactory {
 	}
 
 	public BatchEngineImportTaskItemReader create(
+			Map<String, Serializable> parameters,
 			BatchEngineTaskContentType batchEngineTaskContentType,
 			InputStream inputStream)
 		throws Exception {
@@ -40,7 +44,7 @@ public class BatchEngineImportTaskItemReaderFactory {
 
 		if (batchEngineTaskContentType == BatchEngineTaskContentType.CSV) {
 			return new CSVBatchEngineImportTaskItemReaderImpl(
-				_csvFileColumnDelimiter, inputStream);
+				_csvFileColumnDelimiter, parameters, inputStream);
 		}
 
 		if (batchEngineTaskContentType == BatchEngineTaskContentType.JSON) {

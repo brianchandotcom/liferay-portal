@@ -151,6 +151,7 @@ public class BatchEngineImportTaskExecutorImpl
 
 		try (BatchEngineImportTaskItemReader batchEngineImportTaskItemReader =
 				_batchEngineImportTaskItemReaderFactory.create(
+					batchEngineImportTask.getParameters(),
 					BatchEngineTaskContentType.valueOf(
 						batchEngineImportTask.getContentType()),
 					_batchEngineImportTaskLocalService.openContentInputStream(

@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal Language Servlet Filter
 Bundle-SymbolicName: com.liferay.portal.language.servlet.filter
-Bundle-Version: 6.0.8
+Bundle-Version: 6.0.9
 Import-Package:\
 	com.liferay.portal.kernel.util;version="[7.38.0,99.0.0)",\
 	\

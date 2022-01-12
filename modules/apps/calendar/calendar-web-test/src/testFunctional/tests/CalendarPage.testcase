@@ -85,12 +85,15 @@ definition {
 	}
 
 	@description = "LRQA-72024 - Verify that the calendar has Week view"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CalendarHasWeekView {
+		Navigator.gotoPage(pageName = "Calendar Page");
 
-		// TODO LRQA-72027 CalendarHasWeekView pending implementation
+		CalendarNavigator.gotoView(viewType = "Week");
 
+		CalendarPage.viewWeekTableIsDisplayed();
+
+		
 	}
 
 	@description = "LRQA-72024 - Verify that the user can change the color of the Calendar"

@@ -4,4 +4,10 @@ definition {
 		AssertElementPresent(locator1 = "Calendar#SCHEDULER_VIEW_DAY");
 	}
 
+	macro viewWeekTableIsDisplayed {
+		AssertElementPresent(locator1 = "Calendar#SCHEDULER_VIEW_WEEK");
+	}
+
+
+
 }

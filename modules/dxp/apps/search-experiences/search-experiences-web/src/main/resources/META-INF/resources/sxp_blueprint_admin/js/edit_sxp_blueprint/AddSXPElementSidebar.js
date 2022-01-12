@@ -287,10 +287,16 @@ function SXPElementSidebar({
 	);
 }
 
-function AddSXPElementSidebar(props) {
+function AddSXPElementSidebar({
+	emptyMessage,
+	onAddSXPElement,
+	onClose,
+	visible,
+}) {
 	const {defaultLocale} = useContext(ThemeContext);
-	const [querySXPElements, setQuerySXPElements] = useState(null);
 	const isMounted = useIsMounted();
+
+	const [querySXPElements, setQuerySXPElements] = useState(null);
 
 	// TODO check pagesize
 
@@ -335,7 +341,15 @@ function AddSXPElementSidebar(props) {
 		return null;
 	}
 
-	return <SXPElementSidebar querySXPElements={querySXPElements} {...props} />;
+	return (
+		<SXPElementSidebar
+			emptyMessage={emptyMessage}
+			onAddSXPElement={onAddSXPElement}
+			onClose={onClose}
+			querySXPElements={querySXPElements}
+			visible={visible}
+		/>
+	);
 }
 
 AddSXPElementSidebar.propTypes = {

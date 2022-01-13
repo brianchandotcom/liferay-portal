@@ -404,7 +404,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 				() -> _addObjectRelationships(
 					objectDefinitionIdsStringUtilReplaceValues,
 					serviceContext));
-
 			_invoke(
 				() -> _addPermissions(
 					objectDefinitionIdsStringUtilReplaceValues,
@@ -2084,11 +2083,11 @@ public class BundleSiteInitializer implements SiteInitializer {
 		throws Exception {
 
 		_addRoles(serviceContext);
+
 		_addResourcePermissions(
 			objectDefinitionIdsStringUtilReplaceValues,
-			"/site-initializer/resource-permissions.json", _roleLocalService,
-			serviceContext);
-		_addUserRoles(_roleLocalService, serviceContext);
+			"/site-initializer/resource-permissions.json", serviceContext);
+		_addUserRoles(serviceContext);
 	}
 
 	private Map<String, String> _addRemoteAppEntries(
@@ -2164,8 +2163,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 	private void _addResourcePermissions(
 			Map<String, String> objectDefinitionIdsStringUtilReplaceValues,
-			String resourcePath, RoleLocalService roleLocalService,
-			ServiceContext serviceContext)
+			String resourcePath, ServiceContext serviceContext)
 		throws Exception {
 
 		String json = _read(resourcePath);
@@ -2182,7 +2180,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-			Role role = roleLocalService.fetchRole(
+			Role role = _roleLocalService.fetchRole(
 				serviceContext.getCompanyId(),
 				jsonObject.getString("roleName"));
 
@@ -2786,8 +2784,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 	}
 
-	private void _addUserRoles(
-			RoleLocalService roleLocalService, ServiceContext serviceContext)
+	private void _addUserRoles(ServiceContext serviceContext)
 		throws Exception {
 
 		String json = _read("/site-initializer/user-roles.json");
@@ -2807,7 +2804,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			for (int j = 0; j < rolesJSONArray.length(); j++) {
 				roles.add(
-					roleLocalService.getRole(
+					_roleLocalService.getRole(
 						serviceContext.getCompanyId(),
 						rolesJSONArray.getString(j)));
 			}
@@ -2817,7 +2814,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 					serviceContext.getCompanyId(),
 					jsonObject.getString("emailAddress"));
 
-				roleLocalService.addUserRoles(user.getUserId(), roles);
+				_roleLocalService.addUserRoles(user.getUserId(), roles);
 			}
 		}
 	}

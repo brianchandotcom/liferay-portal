@@ -1,6 +1,6 @@
 {
-    "name": "DXP Version",
-    "name_i18n": {
-        "en-US": "DXP Version"
-    }
+	"name": "DXP Version",
+	"name_i18n": {
+		"en-US": "DXP Version"
+	}
 }

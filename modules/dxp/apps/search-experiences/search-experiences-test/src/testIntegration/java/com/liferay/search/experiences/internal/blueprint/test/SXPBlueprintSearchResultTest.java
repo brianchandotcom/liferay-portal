@@ -754,10 +754,11 @@ public class SXPBlueprintSearchResultTest {
 				).withSearchContext(
 					_searchContext -> {
 						_searchContext.setAttribute(
-							"scope_group_id", _group.getGroupId());
-						_searchContext.setAttribute(
 							"search.experiences.blueprint.id",
 							String.valueOf(_sxpBlueprint.getSXPBlueprintId()));
+						_searchContext.setAttribute(
+							"search.experiences.current.group.id",
+							_group.getGroupId());
 						_searchContext.setTimeZone(_user.getTimeZone());
 						_searchContext.setUserId(_serviceContext.getUserId());
 					}

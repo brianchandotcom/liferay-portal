@@ -99,7 +99,7 @@ public class ContextSXPParameterContributor implements SXPParameterContributor {
 		}
 
 		Long scopeGroupId = (Long)searchContext.getAttribute(
-			"search.experiences.scope_group_id");
+			"search.experiences.current.group.id");
 
 		if (scopeGroupId != null) {
 			sxpParameters.add(

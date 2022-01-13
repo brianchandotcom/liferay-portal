@@ -159,7 +159,8 @@ public class UserSXPParameterContributor implements SXPParameterContributor {
 			return;
 		}
 
-		Long scopeGroupId = (Long)searchContext.getAttribute("scope_group_id");
+		Long scopeGroupId = (Long)searchContext.getAttribute(
+			"search.experiences.current.group.id");
 
 		if (scopeGroupId != null) {
 			long[] segmentsEntryIds =

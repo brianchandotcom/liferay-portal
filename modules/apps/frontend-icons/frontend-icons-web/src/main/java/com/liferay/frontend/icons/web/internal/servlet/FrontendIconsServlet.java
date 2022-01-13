@@ -14,15 +14,18 @@
 
 package com.liferay.frontend.icons.web.internal.servlet;
 
-import com.liferay.frontend.icons.web.internal.util.ClayFrontendIconsResourcePackUtil;
+import com.liferay.frontend.icons.web.internal.model.FrontendIconsResourcePack;
+import com.liferay.frontend.icons.web.internal.repository.FrontendIconsResourcePackRepository;
+import com.liferay.frontend.icons.web.internal.util.SVGUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.PrintWriter;
 
-import java.util.Objects;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -57,20 +60,36 @@ public class FrontendIconsServlet extends HttpServlet {
 			httpServletResponse.setContentType(ContentTypes.IMAGE_SVG_XML);
 			httpServletResponse.setStatus(HttpServletResponse.SC_OK);
 
-			PrintWriter printWriter = httpServletResponse.getWriter();
-
 			Matcher matcher = _pattern.matcher(
 				httpServletRequest.getPathInfo());
 
-			if (!matcher.matches() ||
-				!Objects.equals(matcher.group(1), "clay")) {
-
+			if (!matcher.matches()) {
 				httpServletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
+
+				return;
 			}
-			else {
-				printWriter.write(
-					ClayFrontendIconsResourcePackUtil.getSpritemap());
+
+			Optional<FrontendIconsResourcePack>
+				frontendIconsResourcePackOptional =
+					_frontendIconsResourcePackRepository.
+						getFrontendIconsResourcePack(
+							(Long)httpServletRequest.getAttribute(
+								WebKeys.COMPANY_ID),
+							matcher.group(1));
+
+			if (!frontendIconsResourcePackOptional.isPresent()) {
+				httpServletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
+
+				return;
 			}
+
+			FrontendIconsResourcePack frontendIconsResourcePack =
+				frontendIconsResourcePackOptional.get();
+
+			PrintWriter printWriter = httpServletResponse.getWriter();
+
+			printWriter.write(
+				SVGUtil.getSVGSpritemap(frontendIconsResourcePack));
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -85,6 +104,10 @@ public class FrontendIconsServlet extends HttpServlet {
 		FrontendIconsServlet.class);
 
 	private static final Pattern _pattern = Pattern.compile("^/(.*).svg");
+
+	@Reference
+	private FrontendIconsResourcePackRepository
+		_frontendIconsResourcePackRepository;
 
 	@Reference
 	private Portal _portal;

@@ -1,0 +1,42 @@
+[
+    {
+        "key": "1",
+        "name": "7.0",
+        "name_i18n": {
+            "en-US": "7.0"
+        },
+        "type": "string"
+    },
+    {
+        "key": "2",
+        "name": "7.1",
+        "name_i18n": {
+            "en-US": "7.1"
+        },
+        "type": "string"
+    },
+    {
+        "key": "3",
+        "name": "7.2",
+        "name_i18n": {
+            "en-US": "7.2"
+        },
+        "type": "string"
+    },
+    {
+        "key": "4",
+        "name": "7.3",
+        "name_i18n": {
+            "en-US": "7.3"
+        },
+        "type": "string"
+    },
+    {
+        "key": "5",
+        "name": "7.4",
+        "name_i18n": {
+            "en-US": "7.4"
+        },
+        "type": "string"
+    }
+]

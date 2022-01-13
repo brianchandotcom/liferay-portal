@@ -147,4 +147,58 @@ definition {
 			value1 = "This experience is for Administrators only.");
 	}
 
+	@description = "Assert we can resolve conflicting Segment changes by discarding."
+	@priority = "4"
+	test CanResolveConflictingPublicationsByDiscarding {
+		Segmentation.openSegmentsAdmin(siteURLKey = "guest");
+
+		LexiconEntry.gotoAdd();
+
+		Segmentation.addProperties(propertyOption = "Regular Role");
+
+		Segmentation.fillTitle(titleField = "Segment Title");
+
+		Segmentation.changeCriterionInput(criterionInputOption = "Equals");
+
+		Segmentation.fillProperty(selectCheckbox = "Administrator");
+
+		Button.clickSave();
+
+		JSONPublications.addPublication(publicationName = "Publication Name 1");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name 1");
+
+		Segmentation.editSegment(entry = "Segment Title");
+
+		Segmentation.fillTitle(titleField = "Edited Segment Title");
+
+		Button.clickSave();
+
+		JSONPublications.addPublication(publicationName = "Publication Name 2");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name 2");
+
+		Segmentation.deleteSegment(entry = "Segment Title");
+
+		JSONPublications.publishPublication(publicationName = "Publication Name 2");
+
+		Publications.viewPublicationPublished(publicationName = "Publication Name 2");
+
+		Publications.selectPublication(publicationName = "Publication Name 1");
+
+		PublicationsNavigator.gotoPublish(publicationName = "Publication Name 1");
+
+		Publications.viewNeedsManualResolution(
+			entryTitle = "Segments Entry",
+			warningMessage = "Deletion Modification Conflict: Modification conflicts with a deletion.");
+
+		PublicationsNavigator.gotoViewChangeDiffInConflictingPublications(entryTitle = "Segments Entry");
+
+		PublicationsChanges.discardChanges(
+			changeCategory = "Asset",
+			changeTitle = "Segments Entry",
+			conflictingChanges = "true",
+			entryTitle = "Segments Entry");
+	}
+
 }

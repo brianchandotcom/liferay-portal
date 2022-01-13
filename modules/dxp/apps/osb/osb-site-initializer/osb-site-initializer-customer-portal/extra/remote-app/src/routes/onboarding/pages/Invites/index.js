@@ -17,12 +17,13 @@ import client from '../../../../apolloClient';
 import BaseButton from '../../../../common/components/BaseButton';
 import WarningBadge from '../../../../common/components/WarningBadge';
 import {useApplicationProvider} from '../../../../common/context/ApplicationPropertiesProvider';
-import {LiferayTheme} from '../../../../common/services/liferay';
+import {Liferay} from '../../../../common/services/liferay';
 import {
 	addTeamMembersInvitation,
 	getAccountRoles,
 } from '../../../../common/services/liferay/graphql/queries';
 import {PARAMS_KEYS} from '../../../../common/services/liferay/search-params';
+import {getLiferaySiteName} from '../../../../common/services/liferay/utils';
 import {API_BASE_URL} from '../../../../common/utils';
 import InvitesInputs from '../../components/InvitesInputs';
 import Layout from '../../components/Layout';
@@ -83,9 +84,8 @@ const Invites = ({project}) => {
 				payload: steps.dxpCloud,
 				type: actionTypes.CHANGE_STEP,
 			});
-		}
-		else {
-			window.location.href = `${API_BASE_URL}/${LiferayTheme.getLiferaySiteName()}/overview?${
+		} else {
+			window.location.href = `${API_BASE_URL}/${getLiferaySiteName()}/overview?${
 				PARAMS_KEYS.PROJECT_APPLICATION_EXTERNAL_REFERENCE_CODE
 			}=${project.accountKey}`;
 		}
@@ -105,7 +105,7 @@ const Invites = ({project}) => {
 									email,
 									role: roleId,
 								},
-								scopeKey: LiferayTheme.getScopeGroupId(),
+								scopeKey: Liferay.ThemeDisplay.getScopeGroupId(),
 							},
 						})
 					)
@@ -114,8 +114,7 @@ const Invites = ({project}) => {
 			if (!error) {
 				nextPage();
 			}
-		}
-		else {
+		} else {
 			setInitialError(true);
 			setBaseButtonDisabled(true);
 			setTouched({

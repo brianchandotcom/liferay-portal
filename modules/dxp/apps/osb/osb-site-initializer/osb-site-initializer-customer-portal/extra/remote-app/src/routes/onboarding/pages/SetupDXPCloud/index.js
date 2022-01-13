@@ -16,12 +16,12 @@ import {useEffect, useMemo, useState} from 'react';
 import BaseButton from '../../../../common/components/BaseButton';
 import Input from '../../../../common/components/Input';
 import Select from '../../../../common/components/Select';
-import {LiferayTheme} from '../../../../common/services/liferay';
 import {
 	addSetupDXPCloud,
 	getSetupDXPCloudInfo,
 } from '../../../../common/services/liferay/graphql/queries';
 import {PARAMS_KEYS} from '../../../../common/services/liferay/search-params';
+import {getLiferaySiteName} from '../../../../common/services/liferay/utils';
 import {API_BASE_URL} from '../../../../common/utils';
 import {isLowercaseAndNumbers} from '../../../../common/utils/validations.form';
 import {useOnboarding} from '../../../../routes/onboarding/context';
@@ -69,7 +69,7 @@ const SetupDXPCloud = ({project}) => {
 	}, [dXPCDataCenterRegions, hasDisasterRecovery]);
 
 	const handleSkip = () => {
-		window.location.href = `${API_BASE_URL}/${LiferayTheme.getLiferaySiteName()}/overview?${
+		window.location.href = `${API_BASE_URL}/${getLiferaySiteName()}/overview?${
 			PARAMS_KEYS.PROJECT_APPLICATION_EXTERNAL_REFERENCE_CODE
 		}=${project.accountKey}`;
 	};
@@ -97,7 +97,7 @@ const SetupDXPCloud = ({project}) => {
 						),
 						projectId: JSON.stringify(dxp.projectId),
 					},
-					scopeKey: LiferayTheme.getScopeGroupId(),
+					scopeKey: Liferay.ThemeDisplay.getScopeGroupId(),
 				},
 			});
 

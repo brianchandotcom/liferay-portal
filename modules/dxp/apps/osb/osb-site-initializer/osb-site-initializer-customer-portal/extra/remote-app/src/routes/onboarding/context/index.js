@@ -12,7 +12,7 @@
 import {createContext, useContext, useEffect, useReducer} from 'react';
 import client from '../../../apolloClient';
 import FormProvider from '../../../common/providers/FormProvider';
-import {LiferayTheme} from '../../../common/services/liferay';
+import {Liferay} from '../../../common/services/liferay';
 import {
 	addAccountFlag,
 	getAccountSubscriptionGroups,
@@ -65,7 +65,7 @@ const AppContextProvider = ({assetsPath, children}) => {
 			const {data} = await client.query({
 				query: getUserAccount,
 				variables: {
-					id: LiferayTheme.getUserId(),
+					id: Liferay.ThemeDisplay.getUserId(),
 				},
 			});
 

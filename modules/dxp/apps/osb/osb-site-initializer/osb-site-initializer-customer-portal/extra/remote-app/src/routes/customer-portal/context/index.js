@@ -19,7 +19,7 @@ import {
 import client from '../../../apolloClient';
 import {useApplicationProvider} from '../../../common/context/ApplicationPropertiesProvider';
 import {useCustomEvent} from '../../../common/hooks/useCustomEvent';
-import {LiferayTheme} from '../../../common/services/liferay';
+import {Liferay} from '../../../common/services/liferay';
 import {fetchSession} from '../../../common/services/liferay/api';
 import {
 	getAccountSubscriptionGroups,
@@ -85,7 +85,7 @@ const AppContextProvider = ({assetsPath, children, page}) => {
 			const {data} = await client.query({
 				query: getUserAccount,
 				variables: {
-					id: LiferayTheme.getUserId(),
+					id: Liferay.ThemeDisplay.getUserId(),
 				},
 			});
 
@@ -156,7 +156,7 @@ const AppContextProvider = ({assetsPath, children, page}) => {
 				query: getStructuredContentFolders,
 				variables: {
 					filter: `name eq 'actions'`,
-					siteKey: LiferayTheme.getScopeGroupId(),
+					siteKey: Liferay.ThemeDisplay.getScopeGroupId(),
 				},
 			});
 

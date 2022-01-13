@@ -10,14 +10,13 @@
  */
 
 import {ApolloClient, InMemoryCache} from '@apollo/client';
+import {Liferay} from './common/services/liferay';
 import {API_BASE_URL} from './common/utils';
-
-const authToken = Liferay?.authToken;
 
 const client = new ApolloClient({
 	cache: new InMemoryCache(),
 	headers: {
-		'x-csrf-token': authToken,
+		'x-csrf-token': Liferay.authToken,
 	},
 	uri: `${API_BASE_URL}/o/graphql`,
 });

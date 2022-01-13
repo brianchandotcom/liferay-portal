@@ -10,14 +10,14 @@
  */
 
 import BaseButton from '../../../../common/components/BaseButton';
-import {LiferayTheme} from '../../../../common/services/liferay';
 import {PARAMS_KEYS} from '../../../../common/services/liferay/search-params';
+import {getLiferaySiteName} from '../../../../common/services/liferay/utils';
 import {API_BASE_URL} from '../../../../common/utils';
 import Layout from '../../components/Layout';
 
 const SuccessDXPCloud = ({project}) => {
 	const onClickDone = () => {
-		window.location.href = `${API_BASE_URL}/${LiferayTheme.getLiferaySiteName()}/overview?${
+		window.location.href = `${API_BASE_URL}/${getLiferaySiteName()}/overview?${
 			PARAMS_KEYS.PROJECT_APPLICATION_EXTERNAL_REFERENCE_CODE
 		}=${project.accountKey}`;
 	};

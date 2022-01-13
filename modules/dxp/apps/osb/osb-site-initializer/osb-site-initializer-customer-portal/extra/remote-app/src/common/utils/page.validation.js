@@ -11,14 +11,14 @@
 
 import {API_BASE_URL} from '.';
 import client from '../../apolloClient';
-import {LiferayTheme} from '../services/liferay';
 import {getAccountRolesAndAccountFlags} from '../services/liferay/graphql/queries';
 import {PARAMS_KEYS} from '../services/liferay/search-params';
+import {getLiferaySiteName} from '../services/liferay/utils';
 import {ROLES_PERMISSIONS, ROUTES} from './constants';
 
 const {PROJECT_APPLICATION_EXTERNAL_REFERENCE_CODE} = PARAMS_KEYS;
 
-const BASE_API = `${API_BASE_URL}/${LiferayTheme.getLiferaySiteName()}`;
+const BASE_API = `${API_BASE_URL}/${getLiferaySiteName()}`;
 
 const getHomeLocation = () => BASE_API;
 
@@ -87,8 +87,7 @@ const isValidPage = async (userAccount, externalReferenceCode, pageKey) => {
 		if (pageKey === ROUTES.OVERVIEW) {
 			if (!isValidExternalReferenceCode) {
 				window.location.href = getHomeLocation();
-			}
-			else if (!hasAccountFlags) {
+			} else if (!hasAccountFlags) {
 				window.location.href = getOnboardingLocation(
 					externalReferenceCode
 				);

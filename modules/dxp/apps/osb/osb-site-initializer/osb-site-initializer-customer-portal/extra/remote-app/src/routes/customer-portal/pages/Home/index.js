@@ -9,19 +9,19 @@
  * distribution rights of the Software.
  */
 
-import {useQuery} from '@apollo/client';
 import classNames from 'classnames';
-import {useState} from 'react';
-import {LiferayTheme} from '../../../../common/services/liferay';
+import {useEffect, useState} from 'react';
+import client from '../../../../apolloClient';
 import {getKoroneikiAccounts} from '../../../../common/services/liferay/graphql/queries';
 import {PARAMS_KEYS} from '../../../../common/services/liferay/search-params';
+import {getLiferaySiteName} from '../../../../common/services/liferay/utils';
 import ProjectCard from '../../components/ProjectCard';
 import SearchProject from '../../components/SearchProject';
 import {status} from '../../utils/constants';
 import HomeSkeleton from './Skeleton';
 
 const PROJECT_THRESHOLD_COUNT = 4;
-const liferaySiteName = LiferayTheme.getLiferaySiteName();
+const liferaySiteName = getLiferaySiteName();
 
 const getStatus = (slaCurrent, slaFuture) => {
 	if (slaCurrent) {
@@ -37,63 +37,79 @@ const getStatus = (slaCurrent, slaFuture) => {
 
 const Home = ({userAccount}) => {
 	const [keyword, setKeyword] = useState('');
+	const [projects, setProjects] = useState([]);
+	const [isLoading, setIsLoading] = useState(true);
 
-	const {data, loading} = useQuery(getKoroneikiAccounts, {
-		variables: {
-			filter: userAccount.accountBriefs
-				.map(
+	useEffect(() => {
+		const getProjects = async (accountKeysFilter, accountBriefs) => {
+			const {data} = await client.query({
+				query: getKoroneikiAccounts,
+				variables: {
+					filter: accountKeysFilter,
+				},
+			});
+
+			if (data) {
+				setProjects(
+					data.c?.koroneikiAccounts?.items.map(
+						({
+							accountKey,
+							code,
+							liferayContactEmailAddress,
+							liferayContactName,
+							liferayContactRole,
+							region,
+							slaCurrent,
+							slaCurrentEndDate,
+							slaFuture,
+						}) => ({
+							accountKey,
+							code,
+							contact: {
+								emailAddress: liferayContactEmailAddress,
+								name: liferayContactName,
+								role: liferayContactRole,
+							},
+							region,
+							sla: {
+								current: slaCurrent,
+								currentEndDate: slaCurrentEndDate,
+								future: slaFuture,
+							},
+							status: getStatus(slaCurrent, slaFuture),
+							title: accountBriefs.find(
+								({externalReferenceCode}) =>
+									externalReferenceCode === accountKey
+							)?.name,
+						})
+					) || []
+				);
+			}
+
+			setIsLoading(false);
+		};
+
+		if (userAccount.accountBriefs.length) {
+			const accountKeys = userAccount.accountBriefs
+				?.map(
 					(
 						{externalReferenceCode},
 						index,
 						{length: totalAccountBriefs}
 					) =>
-						`accountKey eq '${externalReferenceCode}' ${
-							index + 1 < totalAccountBriefs ? ' or ' : ' '
+						`accountKey eq '${externalReferenceCode}'${
+							index + 1 < totalAccountBriefs ? ' or' : ''
 						}`
 				)
-				.join(' '),
-		},
-	});
+				.join(' ');
 
-	const koroneikiAccountsData = data?.c?.koroneikiAccounts?.items || [];
+			getProjects(accountKeys, userAccount.accountBriefs);
+		}
+	}, [userAccount]);
 
 	const nextPage = (project) => {
 		window.location.href = `${window.location.origin}/${liferaySiteName}/overview?${PARAMS_KEYS.PROJECT_APPLICATION_EXTERNAL_REFERENCE_CODE}=${project.accountKey}`;
 	};
-
-	const projects =
-		koroneikiAccountsData.map(
-			({
-				accountKey,
-				code,
-				liferayContactEmailAddress,
-				liferayContactName,
-				liferayContactRole,
-				region,
-				slaCurrent,
-				slaCurrentEndDate,
-				slaFuture,
-			}) => ({
-				accountKey,
-				code,
-				contact: {
-					emailAddress: liferayContactEmailAddress,
-					name: liferayContactName,
-					role: liferayContactRole,
-				},
-				region,
-				sla: {
-					current: slaCurrent,
-					currentEndDate: slaCurrentEndDate,
-					future: slaFuture,
-				},
-				status: getStatus(slaCurrent, slaFuture),
-				title: userAccount.accountBriefs.find(
-					({externalReferenceCode}) =>
-						externalReferenceCode === accountKey
-				)?.name,
-			})
-		) || [];
 
 	const projectsFiltered = projects.filter((project) =>
 		keyword
@@ -132,7 +148,7 @@ const Home = ({userAccount}) => {
 					</div>
 				)}
 
-				{!loading ? (
+				{!isLoading ? (
 					<div
 						className={classNames('d-flex flex-wrap', {
 							'home-projects px-5': !withManyProjects,

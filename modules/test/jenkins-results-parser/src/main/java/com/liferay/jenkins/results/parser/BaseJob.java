@@ -216,6 +216,12 @@ public abstract class BaseJob implements Job {
 			batchesJSONArray.put(batchTestClassGroup.getJSONObject());
 		}
 
+		jsonObject.put("batches", batchesJSONArray);
+
+		jsonObject.put("build_profile", String.valueOf(getBuildProfile()));
+		jsonObject.put("job_name", getJobName());
+		jsonObject.put("job_property_options", getJobPropertyOptions());
+
 		JSONArray smokeBatchesJSONArray = new JSONArray();
 
 		if (this instanceof BatchDependentJob) {
@@ -228,10 +234,6 @@ public abstract class BaseJob implements Job {
 			}
 		}
 
-		jsonObject.put("batches", batchesJSONArray);
-		jsonObject.put("build_profile", String.valueOf(getBuildProfile()));
-		jsonObject.put("job_name", getJobName());
-		jsonObject.put("job_property_options", getJobPropertyOptions());
 		jsonObject.put("smoke_batches", smokeBatchesJSONArray);
 
 		if (this instanceof TestSuiteJob) {

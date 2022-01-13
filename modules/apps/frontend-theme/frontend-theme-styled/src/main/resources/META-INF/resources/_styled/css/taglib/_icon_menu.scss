@@ -1,5 +1,18 @@
-.lfr-icon-menu .lfr-icon-menu-icon {
-	max-width: none;
+.lfr-icon-menu {
+	.lfr-icon-menu-icon {
+		max-width: none;
+	}
+
+	@include media-breakpoint-down(sm) {
+		.table-cell.last & .dropdown-toggle {
+			text-align: center;
+
+			> img,
+			.lfr-icon-menu-text {
+				display: none;
+			}
+		}
+	}
 }
 
 .lfr-menu-list {
@@ -37,17 +50,6 @@
 			.menu-item-filter {
 				width: auto;
 			}
-		}
-	}
-}
-
-@include media-breakpoint-down(sm) {
-	.table-cell.last .lfr-icon-menu .dropdown-toggle {
-		text-align: center;
-
-		> img,
-		.lfr-icon-menu-text {
-			display: none;
 		}
 	}
 }

@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.search.experiences.rest.client.dto.v1_0.SXPBlueprint;
+import com.liferay.search.experiences.rest.client.dto.v1_0.SearchHits;
 import com.liferay.search.experiences.rest.client.dto.v1_0.SearchResponse;
 import com.liferay.search.experiences.rest.client.dto.v1_0.util.SXPBlueprintUtil;
 import com.liferay.search.experiences.rest.client.pagination.Pagination;
@@ -227,7 +228,9 @@ public class SearchResponseResourceTest
 	private void _testPostSearchZeroResults() throws Exception {
 		SearchResponse searchResponse = _postSearch(_read());
 
-		Assert.assertEquals(Integer.valueOf(0), searchResponse.getTotalHits());
+		SearchHits searchHits = searchResponse.getSearchHits();
+
+		Assert.assertEquals(Long.valueOf(0), searchHits.getTotalHits());
 
 		String response = String.valueOf(searchResponse.getResponse());
 

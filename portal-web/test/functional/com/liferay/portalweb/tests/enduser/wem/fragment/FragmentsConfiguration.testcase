@@ -944,6 +944,98 @@ main();
 		}
 	}
 
+	@description = "This is a test for LPS-142166. Fragment with item selector breaks when being added to a page."
+	@priority = "4"
+	test DisplayBlogsEntryWhenItemTypeIsBlogsEntry {
+		task ("Create a blog entry") {
+			HeadlessBlog.addBlogEntry(
+				content = "Blogs Entry Content",
+				groupName = "Test Site Name",
+				title = "Blogs Entry Title");
+		}
+
+		task ("Add a fragment with Item Selector in configuration text field") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+			FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
+
+			FragmentsEditor.gotoConfigurationTab();
+
+			var jsonSnippet = '''
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"label": "Item",
+					"name": "itemSelectorName",
+					"type": "itemSelector",
+					"typeOptions": {
+						"itemType": "com.liferay.blogs.model.BlogsEntry"
+					}
+				}
+			]
+		}
+	]
+}
+			''';
+
+			FragmentsEditor.typeConfigurationEditor(content = "${jsonSnippet}");
+
+			FragmentsEditor.waitForAutoSave();
+
+			FragmentsEditor.gotoCodeTab();
+
+			var htmlSnippet = '''
+<div class="fragment-blogs">
+	[#if configuration.itemSelectorName.content??]
+		${configuration.itemSelectorName.content}
+	[#else]
+		<div class="portlet-msg-info">The selected content will be shown here.</div>
+	[/#if]
+</div>
+			''';
+
+			FragmentsEditor.typeHtmlEditor(content = "${htmlSnippet}");
+
+			FragmentsEditor.waitForAutoSave();
+
+			FragmentsEditor.publish();
+		}
+
+		task ("Add the fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Fragment Name");
+
+			PageEditor.viewFragmentMessageInfo(
+				fragmentName = "Fragment Name",
+				messageInfo = "The selected content will be shown here.");
+		}
+
+		task ("Select Blog Entry in Fragment") {
+			PageEditor.gotoSelectPanel(fragmentName = "Fragment Name");
+
+			LexiconCard.clickCard(card = "Blogs Entry Title");
+
+			PageEditor.viewItemSelectorText(
+				fieldLabel = "Item",
+				text = "Blogs Entry Title");
+		}
+
+		task ("View the displayed content in Fragment") {
+			AssertTextEquals(
+				fragmentName = "blogs",
+				index = "1",
+				locator1 = "Fragment#FRAGMENT_BODY",
+				value1 = "Blogs Entry Content");
+		}
+	}
+
 	@description = "This is a test for LPS-100751. View placeholder in fragment configuration without default value."
 	@priority = "5"
 	@uitest

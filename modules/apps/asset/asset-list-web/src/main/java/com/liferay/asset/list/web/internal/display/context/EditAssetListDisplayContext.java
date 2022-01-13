@@ -692,7 +692,7 @@ public class EditAssetListDisplayContext {
 		UnicodeProperties unicodeProperties = UnicodePropertiesBuilder.create(
 			true
 		).fastLoad(
-			assetListEntry.getTypeSettings(getSegmentsEntryId())
+			_getTypeSettings()
 		).build();
 
 		long[] classNameIds = GetterUtil.getLongValues(
@@ -1290,6 +1290,20 @@ public class EditAssetListDisplayContext {
 			"segmentsEntryId",
 			assetListEntrySegmentsEntryRel.getSegmentsEntryId()
 		).buildString();
+	}
+
+	private String _getTypeSettings() {
+		AssetListEntry assetListEntry = getAssetListEntry();
+
+		String typeSettings = assetListEntry.getTypeSettings(
+			getSegmentsEntryId());
+
+		if (Validator.isNull(typeSettings)) {
+			typeSettings = assetListEntry.getTypeSettings(
+				SegmentsEntryConstants.ID_DEFAULT);
+		}
+
+		return typeSettings;
 	}
 
 	private void _setDDMStructure() throws Exception {

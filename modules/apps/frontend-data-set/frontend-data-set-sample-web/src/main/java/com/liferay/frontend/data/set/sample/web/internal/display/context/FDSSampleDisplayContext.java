@@ -17,9 +17,10 @@ package com.liferay.frontend.data.set.sample.web.internal.display.context;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.data.set.sample.web.internal.display.context.helper.FDSRequestHelper;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.portlet.PortletException;
@@ -48,7 +49,11 @@ public class FDSSampleDisplayContext {
 	public List<FDSActionDropdownItem> getFDSActionDropdownItems()
 		throws Exception {
 
-		return new ArrayList<>();
+		return Arrays.asList(
+			new FDSActionDropdownItem(
+				"#", "view", "sampleMessage",
+				LanguageUtil.get(_fdsRequestHelper.getRequest(), "view"), null,
+				null, null));
 	}
 
 	public PortletURL getPortletURL() throws PortletException {

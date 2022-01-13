@@ -21,6 +21,11 @@ FDSSampleDisplayContext fdsSampleDisplayContext = (FDSSampleDisplayContext)reque
 %>
 
 <frontend-data-set:headless-display
+	additionalProps='<%=
+		HashMapBuilder.<String, Object>put(
+			"greeting", "Hello"
+		).build()
+	%>'
 	apiURL="<%= fdsSampleDisplayContext.getAPIURL() %>"
 	customViewsEnabled="<%= true %>"
 	fdsActionDropdownItems="<%= fdsSampleDisplayContext.getFDSActionDropdownItems() %>"
@@ -30,5 +35,6 @@ FDSSampleDisplayContext fdsSampleDisplayContext = (FDSSampleDisplayContext)reque
 	namespace="<%= liferayPortletResponse.getNamespace() %>"
 	pageNumber="<%= 1 %>"
 	portletURL="<%= liferayPortletResponse.createRenderURL() %>"
+	propsTransformer="js/SampleFDSPropsTransformer"
 	style="fluid"
 />

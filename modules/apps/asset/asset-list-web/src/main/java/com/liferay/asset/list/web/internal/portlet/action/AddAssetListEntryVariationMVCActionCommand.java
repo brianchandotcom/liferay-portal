@@ -16,6 +16,8 @@ package com.liferay.asset.list.web.internal.portlet.action;
 
 import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
 import com.liferay.asset.list.constants.AssetListPortletKeys;
+import com.liferay.asset.list.model.AssetListEntry;
+import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.asset.list.service.AssetListEntryService;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -27,6 +29,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.segments.constants.SegmentsEntryConstants;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -59,7 +62,7 @@ public class AddAssetListEntryVariationMVCActionCommand
 		long segmentsEntryId = ParamUtil.getLong(
 			actionRequest, "segmentsEntryId");
 
-		String typeSettings = null;
+		UnicodeProperties unicodeProperties = new UnicodeProperties(true);
 
 		int type = ParamUtil.getInteger(actionRequest, "type");
 
@@ -67,19 +70,25 @@ public class AddAssetListEntryVariationMVCActionCommand
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
-			UnicodeProperties unicodeProperties = new UnicodeProperties(true);
-
 			unicodeProperties.setProperty(
 				"groupIds", String.valueOf(themeDisplay.getScopeGroupId()));
+		}
+		else if (type == AssetListEntryTypeConstants.TYPE_MANUAL) {
+			AssetListEntry assetListEntry =
+				_assetListEntryLocalService.fetchAssetListEntry(
+					assetListEntryId);
 
-			typeSettings = unicodeProperties.toString();
+			unicodeProperties.load(
+				assetListEntry.getTypeSettings(
+					SegmentsEntryConstants.ID_DEFAULT));
 		}
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
 		_assetListEntryService.updateAssetListEntry(
-			assetListEntryId, segmentsEntryId, typeSettings, serviceContext);
+			assetListEntryId, segmentsEntryId, unicodeProperties.toString(),
+			serviceContext);
 
 		sendRedirect(
 			actionRequest, actionResponse,
@@ -100,6 +109,9 @@ public class AddAssetListEntryVariationMVCActionCommand
 			"segmentsEntryId", segmentsEntryId
 		).buildString();
 	}
+
+	@Reference
+	private AssetListEntryLocalService _assetListEntryLocalService;
 
 	@Reference
 	private AssetListEntryService _assetListEntryService;

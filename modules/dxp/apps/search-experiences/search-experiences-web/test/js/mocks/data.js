@@ -161,9 +161,35 @@ export function mockClassNames(prefix, isObject = true, itemCount = 10) {
 
 export function mockSearchResults(itemsPerPage = 10) {
 	const hits = [];
+	const documents = [];
 
 	for (var i = 1; i <= itemsPerPage; i++) {
 		const score = Math.random() * 100;
+
+		const fields = {
+			assetEntryId: [`4273${i}`],
+			classPK: ['0'],
+			content_en_US: ['Web Content'],
+			createDate: ['20211102190832'],
+			ddmTemplateKey: ['BASIC-WEB-CONTENT'],
+			defaultLanguageId: ['en_US'],
+			entryClassName: ['com.liferay.journal.model.JournalArticle'],
+			entryClassPK: ['40116'],
+			modified: ['20211102192146'],
+			scopeGroupId: ['20123'],
+			title_en_US: [`Article Number ${i}`],
+			userId: ['20127'],
+			userName: ['test test'],
+			visible: ['true'],
+		};
+
+		const documentFields = {};
+
+		documentFields['assetTitle'] = {values: [`Article Number ${i}`]};
+
+		Object.keys(fields).forEach((field) => {
+			documentFields[field] = {values: fields[field]};
+		});
 
 		hits.push({
 			_explanation: {},
@@ -171,37 +197,34 @@ export function mockSearchResults(itemsPerPage = 10) {
 			_index: 'liferay-20099',
 			_score: score,
 			_type: 'LiferayDocumentType',
-			fields: {
-				classPK: ['0'],
-				content_en_US: ['Web Content'],
-				createDate: ['20211102190832'],
-				ddmTemplateKey: ['BASIC-WEB-CONTENT'],
-				defaultLanguageId: ['en_US'],
-				entryClassName: ['com.liferay.journal.model.JournalArticle'],
-				entryClassPK: ['40116'],
-				modified: ['20211102192146'],
-				scopeGroupId: ['20123'],
-				title_en_US: [`Article Number ${i}`],
-				userId: ['20127'],
-				userName: ['test test'],
-				visible: ['true'],
-			},
+			fields,
 		});
+
+		documents.push({documentFields});
 	}
+
+	const response = {
+		hits: {
+			hits,
+			total: {
+				value: 2,
+			},
+		},
+		timed_out: false,
+	};
+
+	const searchHits = {
+		hits: documents,
+		maxScore: 65.878,
+		totalHits: 1000,
+	};
 
 	return {
 		page: 0,
 		pageSize: itemsPerPage,
 		requestString: '',
-		responseString: JSON.stringify({
-			hits: {
-				hits,
-				total: {
-					value: 2,
-				},
-			},
-			timed_out: false,
-		}),
-		totalHits: 1000,
+		response,
+		responseString: JSON.stringify(response),
+		searchHits,
 	};
 }

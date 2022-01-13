@@ -37,14 +37,17 @@ const DELTAS = [10, 20, 30, 50];
 function PreviewSidebar({
 	errors = [],
 	loading,
+	onClose,
 	onFetchResults,
 	onFocusSXPElement,
-	onClose,
+	response = {},
 	responseString = '',
-	totalHits,
+	searchHits = {},
 	visible,
 	warnings = [],
 }) {
+	const {hits, totalHits} = searchHits;
+
 	const [activeDelta, setActiveDelta] = useState(10);
 	const [activePage, setActivePage] = useState(1);
 	const [attributes, setAttributes] = useState([]);
@@ -79,71 +82,62 @@ function PreviewSidebar({
 		</ClayList>
 	);
 
-	const _renderHits = () => {
-		let hits = [];
+	const _renderHits = () => (
+		<div className="preview-results-list sidebar-body">
+			<ClayList>
+				{hits.map((result, index) => {
+					const responseHit = response.hits?.hits?.[index] || {};
 
-		try {
-			hits = JSON.parse(responseString).hits?.hits;
-		}
-		catch (error) {
-			if (process.env.NODE_ENV === 'development') {
-				console.error(error);
-			}
-		}
-
-		return (
-			<div className="preview-results-list sidebar-body">
-				<ClayList>
-					{hits.map((result) => (
+					return (
 						<ResultListItem
-							item={{...result, ...result.fields}}
-							key={result._id}
+							explanation={responseHit._explanation}
+							fields={result.documentFields}
+							id={responseHit._id}
+							key={responseHit._id}
+							score={responseHit._score}
 						/>
-					))}
-				</ClayList>
+					);
+				})}
+			</ClayList>
 
-				<ClayPaginationBar>
-					<ClayPaginationBar.DropDown
-						alignmentPosition={Align.TopLeft}
-						items={DELTAS.map((delta) => ({
-							label: delta,
-							onClick: _handleDeltaChange(delta),
-						}))}
-						trigger={
-							<ClayButton displayType="unstyled">
-								{sub(Liferay.Language.get('x-entries'), [
-									activeDelta,
-								])}
+			<ClayPaginationBar>
+				<ClayPaginationBar.DropDown
+					alignmentPosition={Align.TopLeft}
+					items={DELTAS.map((delta) => ({
+						label: delta,
+						onClick: _handleDeltaChange(delta),
+					}))}
+					trigger={
+						<ClayButton displayType="unstyled">
+							{sub(Liferay.Language.get('x-entries'), [
+								activeDelta,
+							])}
 
-								<ClayIcon symbol="caret-double-l" />
-							</ClayButton>
-						}
-					/>
+							<ClayIcon symbol="caret-double-l" />
+						</ClayButton>
+					}
+				/>
 
-					<ClayPaginationBar.Results>
-						{sub(
-							Liferay.Language.get('showing-x-to-x-of-x-entries'),
-							[
-								(activePage - 1) * activeDelta + 1,
-								activePage * activeDelta < totalHits
-									? activePage * activeDelta
-									: totalHits,
-								totalHits,
-							]
-						)}
-					</ClayPaginationBar.Results>
+				<ClayPaginationBar.Results>
+					{sub(Liferay.Language.get('showing-x-to-x-of-x-entries'), [
+						(activePage - 1) * activeDelta + 1,
+						activePage * activeDelta < totalHits
+							? activePage * activeDelta
+							: totalHits,
+						totalHits,
+					])}
+				</ClayPaginationBar.Results>
 
-					<ClayPaginationWithBasicItems
-						activePage={activePage}
-						alignmentPosition={Align.TopCenter}
-						ellipsisBuffer={1}
-						onPageChange={setActivePage}
-						totalPages={Math.ceil(totalHits / activeDelta)}
-					/>
-				</ClayPaginationBar>
-			</div>
-		);
-	};
+				<ClayPaginationWithBasicItems
+					activePage={activePage}
+					alignmentPosition={Align.TopCenter}
+					ellipsisBuffer={1}
+					onPageChange={setActivePage}
+					totalPages={Math.ceil(totalHits / activeDelta)}
+				/>
+			</ClayPaginationBar>
+		</div>
+	);
 
 	const _renderResultsManagementBar = () => (
 		<ClayManagementToolbar>
@@ -292,8 +286,9 @@ PreviewSidebar.propTypes = {
 	onClose: PropTypes.func,
 	onFetchResults: PropTypes.func,
 	onFocusSXPElement: PropTypes.func,
+	response: PropTypes.object,
 	responseString: PropTypes.string,
-	totalHits: PropTypes.number,
+	searchHits: PropTypes.object,
 	visible: PropTypes.bool,
 	warnings: PropTypes.arrayOf(PropTypes.object),
 };

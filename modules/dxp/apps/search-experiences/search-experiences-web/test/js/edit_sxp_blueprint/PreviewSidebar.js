@@ -26,9 +26,7 @@ jest.mock(
 
 Liferay.ThemeDisplay.getDefaultLanguageId = () => 'en_US';
 
-const SEARCH_RESULTS = mockSearchResults();
-
-const SEARCH_RESULTS_HITS = JSON.parse(SEARCH_RESULTS.responseString).hits.hits;
+const {response, responseString, searchHits} = mockSearchResults();
 
 function renderPreviewSidebar(props) {
 	return render(
@@ -59,8 +57,9 @@ describe('PreviewSidebar', () => {
 	it('renders the loading icon', () => {
 		const {container} = renderPreviewSidebar({
 			loading: true,
-			responseString: SEARCH_RESULTS.responseString,
-			totalHits: SEARCH_RESULTS.totalHits,
+			response,
+			responseString,
+			searchHits,
 		});
 
 		container.querySelector('.loading-animation');
@@ -68,25 +67,29 @@ describe('PreviewSidebar', () => {
 
 	it('renders the titles for the search results', () => {
 		const {getByText} = renderPreviewSidebar({
-			responseString: SEARCH_RESULTS.responseString,
-			totalHits: SEARCH_RESULTS.totalHits,
+			response,
+			responseString,
+			searchHits,
 		});
 
-		SEARCH_RESULTS_HITS.map((result) => {
-			getByText(result.fields.title_en_US[0]);
+		searchHits.hits.forEach(({documentFields}) => {
+			getByText(documentFields.assetTitle.values);
 		});
 	});
 
 	it('expands the result when clicked on', () => {
 		const {getAllByLabelText, queryAllByText} = renderPreviewSidebar({
-			responseString: SEARCH_RESULTS.responseString,
-			totalHits: SEARCH_RESULTS.totalHits,
+			response,
+			responseString,
+			searchHits,
 		});
 
 		fireEvent.click(getAllByLabelText('expand')[0]);
 
-		Object.keys(SEARCH_RESULTS_HITS[0].fields).map((key) => {
-			queryAllByText(`${SEARCH_RESULTS_HITS[0].fields[key][0]}`);
+		const firstHitDocumentFields = searchHits.hits[0].documentFields;
+
+		Object.keys(firstHitDocumentFields).forEach((key) => {
+			queryAllByText(`${firstHitDocumentFields[key].values}`);
 		});
 	});
 

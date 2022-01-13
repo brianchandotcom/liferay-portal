@@ -1916,37 +1916,6 @@ public class JournalArticleFinderImpl
 		return sql;
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #replaceStatusJoin(String, long, QueryDefinition)}
-	 */
-	@Deprecated
-	protected String replaceStatusJoin(
-		String sql, QueryDefinition<JournalArticle> queryDefinition) {
-
-		if (queryDefinition.getStatus() == WorkflowConstants.STATUS_ANY) {
-			return StringUtil.removeSubstring(sql, "[$STATUS_JOIN$] AND");
-		}
-
-		if (queryDefinition.isExcludeStatus()) {
-			sql = StringUtil.replace(
-				sql, "[$STATUS_JOIN$]",
-				StringBundler.concat(
-					"(JournalArticle.status != ", queryDefinition.getStatus(),
-					") AND (tempJournalArticle.status != ",
-					queryDefinition.getStatus(), ")"));
-		}
-		else {
-			sql = StringUtil.replace(
-				sql, "[$STATUS_JOIN$]",
-				StringBundler.concat(
-					"(JournalArticle.status = ", queryDefinition.getStatus(),
-					") AND (tempJournalArticle.status = ",
-					queryDefinition.getStatus(), ")"));
-		}
-
-		return sql;
-	}
-
 	protected String replaceStructureTemplate(
 		String sql, String[] ddmStructureKeys, String[] ddmTemplateKeys) {
 

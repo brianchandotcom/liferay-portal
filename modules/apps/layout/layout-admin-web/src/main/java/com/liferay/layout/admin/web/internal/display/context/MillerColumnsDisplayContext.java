@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutRevision;
@@ -144,6 +145,13 @@ public class MillerColumnsDisplayContext {
 				"breadcrumbEntries", _getBreadcrumbEntriesJSONArray()
 			).put(
 				"getItemChildrenURL", getLayoutChildrenURL()
+			).put(
+				"isPrivateLayoutsEnabled",
+				() -> {
+					Group group = _themeDisplay.getScopeGroup();
+
+					return group.isPrivateLayoutsEnabled();
+				}
 			).put(
 				"languageId", _themeDisplay.getLanguageId()
 			).put(

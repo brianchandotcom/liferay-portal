@@ -58,6 +58,7 @@ const isValidTarget = (sources, parent) =>
 const MillerColumnsColumn = ({
 	columnItems = [],
 	columnsContainer,
+	isPrivateLayoutsEnabled,
 	items,
 	namespace,
 	onItemDrop,
@@ -110,6 +111,7 @@ const MillerColumnsColumn = ({
 		>
 			{columnItems.map((item, index) => (
 				<MillerColumnsItem
+					isPrivateLayoutsEnabled={isPrivateLayoutsEnabled}
 					item={{...item, itemIndex: index}}
 					items={items}
 					key={item.key}

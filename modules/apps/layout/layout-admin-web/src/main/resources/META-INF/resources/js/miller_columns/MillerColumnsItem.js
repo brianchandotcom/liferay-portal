@@ -41,7 +41,7 @@ const ITEM_STATES_COLORS = {
 	'pending': 'info',
 };
 
-const isValidTarget = (sources, target, dropZone) => {
+const isValidTarget = (sources, target, dropZone, isPrivateLayoutsEnabled) => {
 	if (sources.some((item) => item.id === target.id)) {
 		return false;
 	}
@@ -50,7 +50,8 @@ const isValidTarget = (sources, target, dropZone) => {
 		sources.some(
 			(source) =>
 				!(
-					(target.parentId &&
+					(((isPrivateLayoutsEnabled && target.parentId) ||
+						!isPrivateLayoutsEnabled) &&
 						target.columnIndex <= source.columnIndex) ||
 					(target.columnIndex > source.columnIndex && !source.active)
 				)
@@ -164,6 +165,7 @@ function filterEmptyGroups(items) {
 const noop = () => {};
 
 const MillerColumnsItem = ({
+	isPrivateLayoutsEnabled,
 	item: {
 		actions = [],
 		active,
@@ -273,7 +275,8 @@ const MillerColumnsItem = ({
 			return isValidTarget(
 				source.items,
 				{columnIndex, id: itemId, itemIndex, parentId, parentable},
-				dropZone
+				dropZone,
+				isPrivateLayoutsEnabled
 			);
 		},
 		collect: (monitor) => ({

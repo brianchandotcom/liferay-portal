@@ -1433,12 +1433,12 @@ public class PortalImpl implements Portal {
 				getSiteDefaultLocale(layout.getGroupId()));
 		}
 
-		Group siteGroup = themeDisplay.getSiteGroup();
+		Group layoutGroup = layout.getGroup();
 
 		if (forceLayoutFriendlyURL ||
 			((!layout.isFirstParent() || Validator.isNotNull(parametersURL)) &&
 			 _requiresLayoutFriendlyURL(
-				 siteGroup.getFriendlyURL(),
+				 layoutGroup.getFriendlyURL(),
 				 themeDisplay.getLayoutFriendlyURL(layout),
 				 StringUtil.toLowerCase(groupFriendlyURL))) ||
 			groupFriendlyURL.endsWith(

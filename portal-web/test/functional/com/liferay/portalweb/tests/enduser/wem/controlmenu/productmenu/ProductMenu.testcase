@@ -86,49 +86,4 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-119114. Test the Product Menu works on Mobile Device."
-	@priority = "3"
-	@uitest
-	test ViewProductMenuWorkOnMobileDevice {
-		task ("Select Mobile Device in simulation menu") {
-			MobileDevice.previewPG(deviceType = "smartphone");
-		}
-
-		task ("Navigate to Home page via Navigation Menu") {
-			Click(locator1 = "NavBar#TOGGLE_NAVIGATION");
-
-			Click(
-				key_pageName = "Home",
-				locator1 = "Home#PAGE");
-
-			AssertTextEquals(
-				locator1 = "ControlMenu#HEADING",
-				value1 = "Home");
-		}
-
-		task ("Assert the categories are shown in Product Menu") {
-			ProductMenuHelper.openProductMenu();
-
-			WaitForPageLoad();
-
-			for (var category : list "Design,Site Builder,Content & Data,Categorization,Recycle Bin,People,Configuration,Publishing") {
-				AssertElementPresent(
-					key_category = "${category}",
-					locator1 = "ProductMenu#CATEGORY_COLLAPSED");
-			}
-		}
-
-		task ("Close the Product Menu") {
-			Click(locator1 = "ProductMenu#PRODUCT_MENU_PANEL_TIMES");
-
-			AssertElementPresent(locator1 = "ProductMenu#PRODUCT_MENU_CLOSED");
-		}
-
-		task ("Quit simulation mode") {
-			SelectFrameTop();
-
-			Click(locator1 = "ControlMenu#SIMULATION");
-		}
-	}
-
 }

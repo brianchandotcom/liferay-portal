@@ -153,9 +153,10 @@ public class DBInspector {
 
 		DatabaseMetaData databaseMetaData = _connection.getMetaData();
 
-		try (ResultSet resultSet = databaseMetaData.getIndexInfo(
-				_connection.getCatalog(), _connection.getSchema(),
-				normalizeName(tableName, databaseMetaData), false, false)) {
+		DB db = DBManagerUtil.getDB();
+
+		try (ResultSet resultSet = db.getIndexResultSet(
+				_connection, normalizeName(tableName, databaseMetaData))) {
 
 			while (resultSet.next()) {
 				if (Objects.equals(

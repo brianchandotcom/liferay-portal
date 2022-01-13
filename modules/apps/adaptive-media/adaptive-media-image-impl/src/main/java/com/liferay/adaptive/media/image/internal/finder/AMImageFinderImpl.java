@@ -35,14 +35,12 @@ import com.liferay.adaptive.media.image.url.AMImageURLFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.ContentTypes;
-
-import java.io.InputStream;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.net.URI;
 
 import java.util.Collection;
 import java.util.Map;
-import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -95,7 +93,7 @@ public class AMImageFinderImpl implements AMImageFinder {
 		String mimeType = fileVersion.getMimeType();
 
 		if (mimeType.equals(ContentTypes.IMAGE_SVG_XML)) {
-			return Stream.of(new SVGAdaptiveMedia(fileVersion));
+			return Stream.of(_createRawAdaptiveMedia(fileVersion));
 		}
 
 		BiFunction<FileVersion, AMImageConfigurationEntry, URI> uriFactory =
@@ -194,6 +192,48 @@ public class AMImageFinderImpl implements AMImageFinder {
 			uriFactory.apply(fileVersion, amImageConfigurationEntry));
 	}
 
+	private AdaptiveMedia<AMImageProcessor> _createRawAdaptiveMedia(
+			FileVersion fileVersion)
+		throws PortalException {
+
+		Map<String, String> properties = HashMapBuilder.put(
+			() -> {
+				AMAttribute<Object, Long> contentLengthAMAttribute =
+					AMAttribute.getContentLengthAMAttribute();
+
+				return contentLengthAMAttribute.getName();
+			},
+			String.valueOf(fileVersion.getSize())
+		).put(
+			() -> {
+				AMAttribute<Object, String> contentTypeAMAttribute =
+					AMAttribute.getContentTypeAMAttribute();
+
+				return contentTypeAMAttribute.getName();
+			},
+			fileVersion.getMimeType()
+		).put(
+			() -> {
+				AMAttribute<Object, String> fileNameAMAttribute =
+					AMAttribute.getFileNameAMAttribute();
+
+				return fileNameAMAttribute.getName();
+			},
+			fileVersion.getFileName()
+		).build();
+
+		return new AMImage(
+			() -> {
+				try {
+					return fileVersion.getContentStream(false);
+				}
+				catch (PortalException portalException) {
+					throw new AMRuntimeException(portalException);
+				}
+			},
+			AMImageAttributeMapping.fromProperties(properties), null);
+	}
+
 	private BiFunction<FileVersion, AMImageConfigurationEntry, URI>
 		_getURIFactory(AMImageQueryBuilderImpl amImageQueryBuilderImpl) {
 
@@ -230,38 +270,5 @@ public class AMImageFinderImpl implements AMImageFinder {
 
 	@Reference
 	private AMImageURLFactory _amImageURLFactory;
-
-	private static class SVGAdaptiveMedia
-		implements AdaptiveMedia<AMImageProcessor> {
-
-		public SVGAdaptiveMedia(FileVersion fileVersion) {
-			_fileVersion = fileVersion;
-		}
-
-		@Override
-		public InputStream getInputStream() {
-			try {
-				return _fileVersion.getContentStream(false);
-			}
-			catch (PortalException portalException) {
-				throw new AMRuntimeException.IOException(portalException);
-			}
-		}
-
-		@Override
-		public URI getURI() {
-			return null;
-		}
-
-		@Override
-		public <V> Optional<V> getValueOptional(
-			AMAttribute<AMImageProcessor, V> amAttribute) {
-
-			return Optional.empty();
-		}
-
-		private final FileVersion _fileVersion;
-
-	}
 
 }

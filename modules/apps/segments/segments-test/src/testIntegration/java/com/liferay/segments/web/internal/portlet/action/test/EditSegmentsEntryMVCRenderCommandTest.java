@@ -90,10 +90,12 @@ public class EditSegmentsEntryMVCRenderCommandTest {
 		_mvcRenderCommand.render(
 			mockLiferayPortletRenderRequest, mockLiferayPortletRenderResponse);
 
-		Map<String, Object> props = ReflectionTestUtil.invoke(
+		Map<String, Object> data = ReflectionTestUtil.invoke(
 			mockLiferayPortletRenderRequest.getAttribute(
 				"EDIT_SEGMENTS_ENTRY_DISPLAY_CONTEXT"),
-			"getProps", new Class<?>[0]);
+			"getData", new Class<?>[0]);
+
+		Map<String, Object> props = (Map<String, Object>)data.get("props");
 
 		JSONArray contributorsJSONArray = (JSONArray)props.get("contributors");
 

@@ -7819,16 +7819,4 @@ ${output.content}</echo>
 	<target name="unit-jdk8_stable">
 		<antcall target="unit-jdk8" />
 	</target>
-
-	<target name="wsdd-builder-jdk8">
-		<run-batch-test>
-			<test-action>
-				<ant dir="portal-impl" target="build-wsdds" />
-			</test-action>
-
-			<test-set-up>
-				<setup-test-environment />
-			</test-set-up>
-		</run-batch-test>
-	</target>
 </project>

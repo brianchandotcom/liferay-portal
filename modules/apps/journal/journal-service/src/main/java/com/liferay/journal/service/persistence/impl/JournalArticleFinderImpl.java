@@ -907,7 +907,7 @@ public class JournalArticleFinderImpl
 			String sql = _customSQL.get(
 				getClass(), COUNT_BY_G_F, queryDefinition, "JournalArticle");
 
-			sql = replaceStatusJoin(sql, queryDefinition);
+			sql = replaceStatusJoin(sql, groupId, queryDefinition);
 
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
@@ -1013,7 +1013,7 @@ public class JournalArticleFinderImpl
 			String sql = _customSQL.get(
 				getClass(), COUNT_BY_G_C_S, queryDefinition, "JournalArticle");
 
-			sql = replaceStatusJoin(sql, queryDefinition);
+			sql = replaceStatusJoin(sql, groupId, queryDefinition);
 
 			if (groupId <= 0) {
 				sql = StringUtil.removeSubstring(
@@ -1079,7 +1079,7 @@ public class JournalArticleFinderImpl
 				getClass(), COUNT_BY_G_U_F_C, queryDefinition,
 				"JournalArticle");
 
-			sql = replaceStatusJoin(sql, queryDefinition);
+			sql = replaceStatusJoin(sql, groupId, queryDefinition);
 
 			if (folderIds.isEmpty()) {
 				sql = StringUtil.removeSubstring(sql, "([$FOLDER_ID$]) AND");
@@ -1203,7 +1203,7 @@ public class JournalArticleFinderImpl
 			String sql = _customSQL.get(
 				getClass(), FIND_BY_G_F, queryDefinition, "JournalArticle");
 
-			sql = replaceStatusJoin(sql, queryDefinition);
+			sql = replaceStatusJoin(sql, groupId, queryDefinition);
 
 			OrderByComparator<JournalArticle> orderByComparator =
 				queryDefinition.getOrderByComparator();
@@ -1364,7 +1364,7 @@ public class JournalArticleFinderImpl
 			String sql = _customSQL.get(
 				getClass(), FIND_BY_G_F_L, queryDefinition, "JournalArticle");
 
-			sql = replaceStatusJoin(sql, queryDefinition);
+			sql = replaceStatusJoin(sql, groupId, queryDefinition);
 
 			OrderByComparator<JournalArticle> orderByComparator =
 				queryDefinition.getOrderByComparator();
@@ -1429,7 +1429,7 @@ public class JournalArticleFinderImpl
 			String sql = _customSQL.get(
 				getClass(), FIND_BY_G_C_S, queryDefinition, "JournalArticle");
 
-			sql = replaceStatusJoin(sql, queryDefinition);
+			sql = replaceStatusJoin(sql, groupId, queryDefinition);
 
 			OrderByComparator<JournalArticle> orderByComparator =
 				queryDefinition.getOrderByComparator();
@@ -1499,7 +1499,7 @@ public class JournalArticleFinderImpl
 			String sql = _customSQL.get(
 				getClass(), FIND_BY_G_U_F_C, queryDefinition, "JournalArticle");
 
-			sql = replaceStatusJoin(sql, queryDefinition);
+			sql = replaceStatusJoin(sql, groupId, queryDefinition);
 
 			OrderByComparator<JournalArticle> orderByComparator =
 				queryDefinition.getOrderByComparator();
@@ -1577,7 +1577,7 @@ public class JournalArticleFinderImpl
 			String sql = _customSQL.get(
 				getClass(), FIND_BY_G_C_S_L, queryDefinition, "JournalArticle");
 
-			sql = replaceStatusJoin(sql, queryDefinition);
+			sql = replaceStatusJoin(sql, groupId, queryDefinition);
 
 			OrderByComparator<JournalArticle> orderByComparator =
 				queryDefinition.getOrderByComparator();
@@ -1650,7 +1650,7 @@ public class JournalArticleFinderImpl
 				getClass(), FIND_BY_G_U_F_C_L, queryDefinition,
 				"JournalArticle");
 
-			sql = replaceStatusJoin(sql, queryDefinition);
+			sql = replaceStatusJoin(sql, groupId, queryDefinition);
 
 			OrderByComparator<JournalArticle> orderByComparator =
 				queryDefinition.getOrderByComparator();

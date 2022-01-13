@@ -163,6 +163,8 @@ declare module Liferay {
 			data: Object
 		): void;
 
+		export function sub(langKey: string, ...args: any[]): string;
+
 		/**
 		 * Get character code at the start of the given string.
 		 */
@@ -312,6 +314,53 @@ declare module Liferay {
 		export function reset(): void;
 
 		export function runTasks(node: any): void;
+	}
+
+	namespace Language {
+		type Locale =
+			| 'ar_SA'
+			| 'ca_ES'
+			| 'de_DE'
+			| 'en_US'
+			| 'es_ES'
+			| 'fi_FI'
+			| 'fr_FR'
+			| 'hu_HU'
+			| 'nl_NL'
+			| 'ja_JP'
+			| 'pt_BR'
+			| 'sv_SE'
+			| 'zh_CN';
+
+		type LocalizedTextKey =
+			| 'choose-an-option'
+			| 'days'
+			| 'date'
+			| 'date-fields'
+			| 'decimal-places'
+			| 'decimal-separator'
+			| 'for-security-reasons-upload-field-repeatability-is-limited-the-limit-is-defined-in-x-system-settings-x'
+			| 'input-mask-append-placeholder'
+			| 'minus'
+			| 'months'
+			| 'operation'
+			| 'plus'
+			| 'prefix'
+			| 'prefix-or-suffix'
+			| 'quantity'
+			| 'suffix'
+			| 'the-maximum-length-is-10-characters'
+			| 'thousands-separator'
+			| 'unit'
+			| 'years';
+
+		type LocalizedValue<T> = {[key in Locale]?: T};
+
+		type Direction = 'ltr' | 'rtl';
+
+		export function get(key: LocalizedTextKey): string;
+
+		export const direction: LocalizedValue<Direction>;
 	}
 
 	/**

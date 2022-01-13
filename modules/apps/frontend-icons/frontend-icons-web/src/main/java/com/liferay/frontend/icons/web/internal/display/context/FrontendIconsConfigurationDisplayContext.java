@@ -17,6 +17,7 @@ package com.liferay.frontend.icons.web.internal.display.context;
 import com.liferay.frontend.icons.web.internal.model.FrontendIconsResource;
 import com.liferay.frontend.icons.web.internal.model.FrontendIconsResourcePack;
 import com.liferay.frontend.icons.web.internal.repository.FrontendIconsResourcePackRepository;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -31,6 +32,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
+import javax.portlet.RenderResponse;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -40,10 +43,11 @@ public class FrontendIconsConfigurationDisplayContext {
 
 	public FrontendIconsConfigurationDisplayContext(
 		FrontendIconsResourcePackRepository frontendIconsResourcePackRepository,
-		HttpServletRequest httpServletRequest) {
+		HttpServletRequest httpServletRequest, RenderResponse renderResponse) {
 
 		_frontendIconsResourcePackRepository =
 			frontendIconsResourcePackRepository;
+		_renderResponse = renderResponse;
 
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -90,11 +94,27 @@ public class FrontendIconsConfigurationDisplayContext {
 
 				return jsonObject;
 			}
+		).put(
+			"saveFromExistingIconsActionURL",
+			PortletURLBuilder.createActionURL(
+				_renderResponse
+			).setActionName(
+				"/instance_settings" +
+					"/save_frontend_icons_pack_from_existing_icons"
+			).buildString()
+		).put(
+			"saveFromSpritemapActionURL",
+			PortletURLBuilder.createActionURL(
+				_renderResponse
+			).setActionName(
+				"/instance_settings/save_frontend_icons_pack_from_spritemap"
+			).buildString()
 		).build();
 	}
 
 	private final FrontendIconsResourcePackRepository
 		_frontendIconsResourcePackRepository;
+	private final RenderResponse _renderResponse;
 	private final ThemeDisplay _themeDisplay;
 
 }

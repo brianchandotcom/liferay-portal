@@ -35,6 +35,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -88,6 +90,49 @@ public class FrontendIconsResourcePackRepository {
 			iconPackName);
 	}
 
+	public Optional<FrontendIconsResourcePack> getFrontendIconsResourcePack(
+		long companyId, String name) {
+
+		if (Objects.equals(
+				name,
+				ClayFrontendIconsResourcePackUtil.
+					CLAY_FRONTEND_ICONS_PACK_NAME)) {
+
+			return Optional.of(
+				ClayFrontendIconsResourcePackUtil.
+					getFrontendIconResourcePack());
+		}
+
+		try {
+			Company company = _companyLocalService.getCompany(companyId);
+
+			Folder companyIconsFolder = _getFolder(company);
+
+			FileEntry fileEntry = _portletFileRepository.fetchPortletFileEntry(
+				company.getGroupId(), companyIconsFolder.getFolderId(), name);
+
+			if (fileEntry == null) {
+				return Optional.empty();
+			}
+
+			FrontendIconsResourcePack frontendIconsResourcePack =
+				new FrontendIconsResourcePack(name);
+
+			frontendIconsResourcePack.addFrontendIconsResources(
+				SVGUtil.getFrontendIconResources(
+					StringUtil.read(
+						_dlFileEntryLocalService.getFileAsStream(
+							fileEntry.getFileEntryId(),
+							fileEntry.getVersion())),
+					StringPool.BLANK));
+
+			return Optional.of(frontendIconsResourcePack);
+		}
+		catch (Exception exception) {
+			return Optional.empty();
+		}
+	}
+
 	public List<FrontendIconsResourcePack> getFrontendIconsResourcePacks(
 			long companyId)
 		throws Exception {
@@ -118,7 +163,7 @@ public class FrontendIconsResourcePackRepository {
 							fileEntry.getVersion())),
 					StringPool.BLANK);
 
-			frontendIconsResourcePack.addIconResources(iconResources);
+			frontendIconsResourcePack.addFrontendIconsResources(iconResources);
 
 			frontendIconsResourcePacks.add(frontendIconsResourcePack);
 		}

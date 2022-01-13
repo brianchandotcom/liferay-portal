@@ -54,6 +54,7 @@ import com.liferay.portal.kernel.xml.Element;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -689,6 +690,13 @@ public class DDMFormValuesExportImportContentProcessor
 
 					if (className.equals(Layout.class.getName())) {
 						String uuid = element.attributeValue("uuid");
+
+						if (jsonObject.has("id") &&
+							!Objects.equals(uuid, jsonObject.getString("id"))) {
+
+							continue;
+						}
+
 						String privateLayout = element.attributeValue(
 							"private-layout");
 

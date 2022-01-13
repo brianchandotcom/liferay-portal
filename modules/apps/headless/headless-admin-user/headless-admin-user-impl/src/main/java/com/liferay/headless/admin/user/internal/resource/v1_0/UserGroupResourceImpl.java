@@ -95,6 +95,11 @@ public class UserGroupResourceImpl extends BaseUserGroupResourceImpl {
 					ActionKeys.UPDATE, userGroupId, "patchUserGroup",
 					_userGroupModelResourcePermission)
 			).put(
+				"post-user-group-users",
+				addAction(
+					ActionKeys.ASSIGN_MEMBERS, userGroupId,
+					"postUserGroupUsers", _userGroupModelResourcePermission)
+			).put(
 				"put",
 				addAction(
 					ActionKeys.UPDATE, userGroupId, "putUserGroup",

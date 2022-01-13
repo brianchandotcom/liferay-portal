@@ -1,5 +1,39 @@
 # Poshi Runner Change Log
 
+## 1.0.329
+
+### Other
+
+* [LPS-105380](https://issues.liferay.com/browse/LPS-105380) - SourceFormatter Improvements
+* [LPS-141109](https://issues.liferay.com/browse/LPS-141109) - SF: Rebuild Poshi Script
+
+### Resources
+
+* [LRCI-2692](https://issues.liferay.com/browse/LRCI-2692) - Always use latest release of poshi runner resources
+* [LRQA-72244](https://issues.liferay.com/browse/LRQA-72244) - Formatting issues in source-format-jdk8/0/0
+
+### Runner
+
+* [POSHI-83](https://issues.liferay.com/browse/POSHI-83) - As a test engineer, exceptions from Javascript executor should be made clearer
+
+### Script
+
+* [LRCI-2691](https://issues.liferay.com/browse/LRCI-2691) - Add additional poshi script parser testing
+
+### Standalone
+
+* [LRCI-2670](https://issues.liferay.com/browse/LRCI-2670) - Create a sample Poshi testcase for development
+* [LRCI-2671](https://issues.liferay.com/browse/LRCI-2671) - Implement Gradle tasks that will upload Poshi test results to Testray
+
+### Utils
+
+* [LRCI-2605](https://issues.liferay.com/browse/LRCI-2605) - Allow testing for test.properties globs locally
+
+### WebDriver
+
+* [POSHI-226](https://issues.liferay.com/browse/POSHI-226) - Allow webdriver binary paths to be passed in as system properties
+* [POSHI-228](https://issues.liferay.com/browse/POSHI-228) - Modify selectFrame to switchTo current window
+
 ## 1.0.324
 
 ### Other

@@ -69,19 +69,24 @@ describe('CategoriesPopover', () => {
 
 	it('hides the Popover when clicking outside', () => {
 		const {container, getByText, queryByText} = render(
-			<CategoriesPopover {...mockProps} />
+			<>
+				<CategoriesPopover {...mockProps} />
+				<button>Other place to click</button>
+			</>
 		);
 
 		fireEvent.click(container.querySelector('.category-label-see-more'));
 		expect(getByText('4 Public categories')).toBeInTheDocument();
 		expect(getByText('Teenagers')).toBeInTheDocument();
 
-		fireEvent.click(
+		fireEvent.mouseDown(
 			container.querySelector(
 				':not(.categories-popover):not(.category-label-see-more)'
 			)
 		);
+
 		expect(queryByText('4 Public categories')).not.toBeInTheDocument();
+
 		expect(queryByText('Teenagers')).not.toBeInTheDocument();
 	});
 });

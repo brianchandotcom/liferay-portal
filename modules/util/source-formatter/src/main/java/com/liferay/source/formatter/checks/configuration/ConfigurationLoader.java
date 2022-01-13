@@ -14,8 +14,8 @@
 
 package com.liferay.source.formatter.checks.configuration;
 
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.poshi.core.util.GetterUtil;
 import com.liferay.source.formatter.checks.util.SourceUtil;
 
 import java.io.IOException;

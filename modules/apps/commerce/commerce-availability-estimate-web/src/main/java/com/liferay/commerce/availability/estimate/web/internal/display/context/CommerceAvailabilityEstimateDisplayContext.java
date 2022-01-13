@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -117,34 +116,27 @@ public class CommerceAvailabilityEstimateDisplayContext {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String emptyResultsMessage = "there-are-no-availability-estimates";
-
 		_searchContainer = new SearchContainer<>(
-			_renderRequest, getPortletURL(), null, emptyResultsMessage);
+			_renderRequest, getPortletURL(), null,
+			"there-are-no-availability-estimates");
 
-		String orderByCol = getOrderByCol();
-		String orderByType = getOrderByType();
-
-		OrderByComparator<CommerceAvailabilityEstimate> orderByComparator =
+		_searchContainer.setOrderByCol(getOrderByCol());
+		_searchContainer.setOrderByComparator(
 			CommerceAvailabilityEstimateUtil.
 				getCommerceAvailabilityEstimateOrderByComparator(
-					orderByCol, orderByType);
-
-		_searchContainer.setOrderByCol(orderByCol);
-		_searchContainer.setOrderByComparator(orderByComparator);
-		_searchContainer.setOrderByType(orderByType);
-		_searchContainer.setRowChecker(_getRowChecker());
-
+					getOrderByCol(), getOrderByType()));
+		_searchContainer.setOrderByType(getOrderByType());
 		_searchContainer.setResultsAndTotal(
 			() ->
 				_commerceAvailabilityEstimateService.
 					getCommerceAvailabilityEstimates(
 						themeDisplay.getCompanyId(),
 						_searchContainer.getStart(), _searchContainer.getEnd(),
-						orderByComparator),
+						_searchContainer.getOrderByComparator()),
 			_commerceAvailabilityEstimateService.
 				getCommerceAvailabilityEstimatesCount(
 					themeDisplay.getCompanyId()));
+		_searchContainer.setRowChecker(_getRowChecker());
 
 		return _searchContainer;
 	}

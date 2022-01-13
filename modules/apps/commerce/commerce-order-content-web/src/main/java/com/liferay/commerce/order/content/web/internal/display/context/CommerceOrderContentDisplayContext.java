@@ -211,11 +211,9 @@ public class CommerceOrderContentDisplayContext {
 				getCommerceOrderId());
 		}
 
-		String commerceOrderUuid = ParamUtil.getString(
-			_httpServletRequest, "commerceOrderUuid");
-
 		return _commerceOrderService.fetchCommerceOrder(
-			commerceOrderUuid, _cpRequestHelper.getCommerceChannelGroupId());
+			ParamUtil.getString(_httpServletRequest, "commerceOrderUuid"),
+			_cpRequestHelper.getCommerceChannelGroupId());
 	}
 
 	public String getCommerceOrderDate(CommerceOrder commerceOrder) {

@@ -18,7 +18,6 @@ import com.liferay.commerce.item.selector.web.internal.search.CommercePricingCla
 import com.liferay.commerce.pricing.model.CommercePricingClass;
 import com.liferay.commerce.pricing.service.CommercePricingClassService;
 import com.liferay.commerce.pricing.util.comparator.CommercePricingClassCreateDateComparator;
-import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -62,32 +61,25 @@ public class CommercePricingClassItemSelectorViewDisplayContext
 				WebKeys.THEME_DISPLAY);
 
 		searchContainer = new SearchContainer<>(
-			cpRequestHelper.getRenderRequest(), getPortletURL(), null, null);
-
-		searchContainer.setEmptyResultsMessage("there-are-no-product-groups");
+			cpRequestHelper.getRenderRequest(), getPortletURL(), null,
+			"there-are-no-product-groups");
 
 		searchContainer.setOrderByCol(getOrderByCol());
-
-		OrderByComparator<CommercePricingClass> orderByComparator =
+		searchContainer.setOrderByComparator(
 			_getCommercePricingClassOrderByComparator(
-				getOrderByCol(), getOrderByType());
-
-		searchContainer.setOrderByComparator(orderByComparator);
-
+				getOrderByCol(), getOrderByType()));
 		searchContainer.setOrderByType(getOrderByType());
-
-		RowChecker rowChecker = new CommercePricingClassItemSelectorChecker(
-			cpRequestHelper.getRenderResponse(),
-			_getCheckedCommercePricingClassIds());
-
-		searchContainer.setRowChecker(rowChecker);
-
 		searchContainer.setResultsAndTotal(
 			() -> _commercePricingClassService.getCommercePricingClasses(
 				themeDisplay.getCompanyId(), searchContainer.getStart(),
-				searchContainer.getEnd(), orderByComparator),
+				searchContainer.getEnd(),
+				searchContainer.getOrderByComparator()),
 			_commercePricingClassService.getCommercePricingClassesCount(
 				themeDisplay.getCompanyId()));
+		searchContainer.setRowChecker(
+			new CommercePricingClassItemSelectorChecker(
+				cpRequestHelper.getRenderResponse(),
+				_getCheckedCommercePricingClassIds()));
 
 		return searchContainer;
 	}

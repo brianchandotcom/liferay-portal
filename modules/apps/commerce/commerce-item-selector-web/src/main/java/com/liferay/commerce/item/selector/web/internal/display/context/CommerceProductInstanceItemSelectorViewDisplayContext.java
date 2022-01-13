@@ -24,7 +24,6 @@ import com.liferay.commerce.product.util.comparator.CPInstanceCreateDateComparat
 import com.liferay.commerce.product.util.comparator.CPInstanceDisplayDateComparator;
 import com.liferay.commerce.product.util.comparator.CPInstanceSkuComparator;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
@@ -106,23 +105,13 @@ public class CommerceProductInstanceItemSelectorViewDisplayContext
 		}
 
 		searchContainer = new SearchContainer<>(
-			cpRequestHelper.getRenderRequest(), getPortletURL(), null, null);
-
-		searchContainer.setEmptyResultsMessage("no-skus-were-found");
-
-		OrderByComparator<CPInstance> orderByComparator =
-			_getCPInstanceOrderByComparator(getOrderByCol(), getOrderByType());
-
-		RowChecker rowChecker = new CommerceProductInstanceItemSelectorChecker(
-			cpRequestHelper.getRenderResponse(),
-			_commercePriceListService.fetchCommercePriceList(
-				_getCommercePriceListId()),
-			_commercePriceEntryLocalService);
+			cpRequestHelper.getRenderRequest(), getPortletURL(), null,
+			"no-skus-were-found");
 
 		searchContainer.setOrderByCol(getOrderByCol());
-		searchContainer.setOrderByComparator(orderByComparator);
+		searchContainer.setOrderByComparator(
+			_getCPInstanceOrderByComparator(getOrderByCol(), getOrderByType()));
 		searchContainer.setOrderByType(getOrderByType());
-		searchContainer.setRowChecker(rowChecker);
 
 		Sort sort = getCPInstanceSort(getOrderByCol(), getOrderByType());
 
@@ -144,6 +133,12 @@ public class CommerceProductInstanceItemSelectorViewDisplayContext
 		}
 
 		searchContainer.setResultsAndTotal(cpInstanceBaseModelSearchResult);
+		searchContainer.setRowChecker(
+			new CommerceProductInstanceItemSelectorChecker(
+				cpRequestHelper.getRenderResponse(),
+				_commercePriceListService.fetchCommercePriceList(
+					_getCommercePriceListId()),
+				_commercePriceEntryLocalService));
 
 		return searchContainer;
 	}

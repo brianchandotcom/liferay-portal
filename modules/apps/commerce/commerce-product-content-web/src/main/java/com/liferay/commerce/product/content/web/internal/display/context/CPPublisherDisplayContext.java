@@ -117,11 +117,9 @@ public class CPPublisherDisplayContext extends BaseCPPublisherDisplayContext {
 				end = catalogEntries.size();
 			}
 
-			List<CPCatalogEntry> results = catalogEntries.subList(
-				_searchContainer.getStart(), end);
-
 			cpDataSourceResult = new CPDataSourceResult(
-				results, catalogEntries.size());
+				catalogEntries.subList(_searchContainer.getStart(), end),
+				catalogEntries.size());
 		}
 
 		return cpDataSourceResult;

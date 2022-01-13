@@ -24,13 +24,11 @@ import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.type.CPType;
 import com.liferay.commerce.product.type.CPTypeServicesTracker;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -100,25 +98,14 @@ public class CPDefinitionItemSelectorViewDisplayContext
 		}
 
 		searchContainer = new SearchContainer<>(
-			liferayPortletRequest, getPortletURL(), null, null);
-
-		searchContainer.setEmptyResultsMessage("no-products-were-found");
-
-		OrderByComparator<CPDefinition> orderByComparator =
-			CPItemSelectorViewUtil.getCPDefinitionOrderByComparator(
-				getOrderByCol(), getOrderByType());
+			liferayPortletRequest, getPortletURL(), null,
+			"no-products-were-found");
 
 		searchContainer.setOrderByCol(getOrderByCol());
-		searchContainer.setOrderByComparator(orderByComparator);
+		searchContainer.setOrderByComparator(
+			CPItemSelectorViewUtil.getCPDefinitionOrderByComparator(
+				getOrderByCol(), getOrderByType()));
 		searchContainer.setOrderByType(getOrderByType());
-
-		if (!isSingleSelection()) {
-			RowChecker rowChecker = new CPDefinitionItemSelectorChecker(
-				cpRequestHelper.getRenderResponse(),
-				_getCheckedCPDefinitionIds(), getCPDefinitionId());
-
-			searchContainer.setRowChecker(rowChecker);
-		}
 
 		Sort sort = CPItemSelectorViewUtil.getCPDefinitionSort(
 			getOrderByCol(), getOrderByType());
@@ -144,6 +131,13 @@ public class CPDefinitionItemSelectorViewDisplayContext
 		}
 
 		searchContainer.setResultsAndTotal(cpDefinitionBaseModelSearchResult);
+
+		if (!isSingleSelection()) {
+			searchContainer.setRowChecker(
+				new CPDefinitionItemSelectorChecker(
+					cpRequestHelper.getRenderResponse(),
+					_getCheckedCPDefinitionIds(), getCPDefinitionId()));
+		}
 
 		return searchContainer;
 	}

@@ -20,9 +20,7 @@ import com.liferay.commerce.product.options.web.internal.util.CPOptionsPortletUt
 import com.liferay.commerce.product.service.CPOptionCategoryService;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.util.OrderByComparator;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -42,9 +40,9 @@ public class CPOptionCategoryDisplayContext
 			actionHelper, httpServletRequest,
 			CPOptionCategory.class.getSimpleName(), portletResourcePermission);
 
-		setDefaultOrderByCol("priority");
-
 		_cpOptionCategoryService = cpOptionCategoryService;
+
+		setDefaultOrderByCol("priority");
 	}
 
 	@Override
@@ -56,27 +54,21 @@ public class CPOptionCategoryDisplayContext
 		}
 
 		searchContainer = new SearchContainer<>(
-			liferayPortletRequest, getPortletURL(), null, null);
-
-		searchContainer.setEmptyResultsMessage(
+			liferayPortletRequest, getPortletURL(), null,
 			"no-specification-groups-were-found");
 
-		OrderByComparator<CPOptionCategory> orderByComparator =
-			CPOptionsPortletUtil.getCPOptionCategoryOrderByComparator(
-				getOrderByCol(), getOrderByType());
-
-		Sort sort = CPOptionsPortletUtil.getCPOptionCategorySort(
-			getOrderByCol(), getOrderByType());
-
 		searchContainer.setOrderByCol(getOrderByCol());
-		searchContainer.setOrderByComparator(orderByComparator);
+		searchContainer.setOrderByComparator(
+			CPOptionsPortletUtil.getCPOptionCategoryOrderByComparator(
+				getOrderByCol(), getOrderByType()));
 		searchContainer.setOrderByType(getOrderByType());
-		searchContainer.setRowChecker(getRowChecker());
-
 		searchContainer.setResultsAndTotal(
 			_cpOptionCategoryService.searchCPOptionCategories(
 				cpRequestHelper.getCompanyId(), getKeywords(),
-				searchContainer.getStart(), searchContainer.getEnd(), sort));
+				searchContainer.getStart(), searchContainer.getEnd(),
+				CPOptionsPortletUtil.getCPOptionCategorySort(
+					getOrderByCol(), getOrderByType())));
+		searchContainer.setRowChecker(getRowChecker());
 
 		return searchContainer;
 	}

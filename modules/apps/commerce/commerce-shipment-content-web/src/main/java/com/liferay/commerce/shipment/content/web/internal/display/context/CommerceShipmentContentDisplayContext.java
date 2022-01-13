@@ -239,9 +239,7 @@ public class CommerceShipmentContentDisplayContext {
 
 		_searchContainer = new SearchContainer<>(
 			_commerceShipmentContentRequestHelper.getLiferayPortletRequest(),
-			getPortletURL(), null, null);
-
-		_searchContainer.setEmptyResultsMessage("no-shipments-were-found");
+			getPortletURL(), null, "no-shipments-were-found");
 
 		CommerceChannel commerceChannel =
 			_commerceChannelLocalService.fetchCommerceChannelBySiteGroupId(

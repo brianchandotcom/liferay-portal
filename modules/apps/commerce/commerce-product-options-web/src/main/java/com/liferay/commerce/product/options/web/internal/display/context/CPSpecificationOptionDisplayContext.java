@@ -26,10 +26,8 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
-import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -57,10 +55,10 @@ public class CPSpecificationOptionDisplayContext
 			CPSpecificationOption.class.getSimpleName(),
 			portletResourcePermission);
 
-		setDefaultOrderByCol("label");
-
 		_cpOptionCategoryService = cpOptionCategoryService;
 		_cpSpecificationOptionService = cpSpecificationOptionService;
+
+		setDefaultOrderByCol("label");
 	}
 
 	public List<CPOptionCategory> getCPOptionCategories()
@@ -112,22 +110,14 @@ public class CPSpecificationOptionDisplayContext
 		}
 
 		searchContainer = new SearchContainer<>(
-			liferayPortletRequest, getPortletURL(), null, null);
-
-		searchContainer.setEmptyResultsMessage(
+			liferayPortletRequest, getPortletURL(), null,
 			"no-specification-labels-were-found");
 
-		OrderByComparator<CPSpecificationOption> orderByComparator =
-			CPOptionsPortletUtil.getCPSpecificationOptionOrderByComparator(
-				getOrderByCol(), getOrderByType());
-
 		searchContainer.setOrderByCol(getOrderByCol());
-		searchContainer.setOrderByComparator(orderByComparator);
+		searchContainer.setOrderByComparator(
+			CPOptionsPortletUtil.getCPSpecificationOptionOrderByComparator(
+				getOrderByCol(), getOrderByType()));
 		searchContainer.setOrderByType(getOrderByType());
-		searchContainer.setRowChecker(getRowChecker());
-
-		Sort sort = CPOptionsPortletUtil.getCPSpecificationOptionSort(
-			getOrderByCol(), getOrderByType());
 
 		Boolean facetable = null;
 
@@ -143,7 +133,10 @@ public class CPSpecificationOptionDisplayContext
 		searchContainer.setResultsAndTotal(
 			_cpSpecificationOptionService.searchCPSpecificationOptions(
 				cpRequestHelper.getCompanyId(), facetable, getKeywords(),
-				searchContainer.getStart(), searchContainer.getEnd(), sort));
+				searchContainer.getStart(), searchContainer.getEnd(),
+				CPOptionsPortletUtil.getCPSpecificationOptionSort(
+					getOrderByCol(), getOrderByType())));
+		searchContainer.setRowChecker(getRowChecker());
 
 		return searchContainer;
 	}

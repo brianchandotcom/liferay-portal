@@ -28,12 +28,12 @@ import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.comparator.GroupNameComparator;
 
 import java.util.Locale;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 import javax.portlet.PortletException;
@@ -115,18 +115,17 @@ public class SimpleSiteItemSelectorViewDisplayContext
 			cpRequestHelper.getRenderRequest(), getPortletURL(), null,
 			emptyResultsMessage);
 
-		String orderByCol = getOrderByCol();
+		searchContainer.setOrderByCol(getOrderByCol());
 
-		String orderByType = getOrderByType();
+		boolean orderByAsc = false;
 
-		OrderByComparator<Group> orderByComparator = new GroupNameComparator(
-			orderByType.equals("asc"));
+		if (Objects.equals(getOrderByType(), "asc")) {
+			orderByAsc = true;
+		}
 
-		searchContainer.setOrderByCol(orderByCol);
-		searchContainer.setOrderByComparator(orderByComparator);
-		searchContainer.setOrderByType(orderByType);
-		searchContainer.setSearch(_search);
-
+		searchContainer.setOrderByComparator(
+			new GroupNameComparator(orderByAsc));
+		searchContainer.setOrderByType(getOrderByType());
 		searchContainer.setResultsAndTotal(
 			() -> _groupService.search(
 				cpRequestHelper.getCompanyId(),
@@ -143,6 +142,7 @@ public class SimpleSiteItemSelectorViewDisplayContext
 				searchContainer.getStart(), searchContainer.getEnd(), null),
 			_groupService.searchCount(
 				cpRequestHelper.getCompanyId(), null, null, new String[0]));
+		searchContainer.setSearch(_search);
 
 		return searchContainer;
 	}

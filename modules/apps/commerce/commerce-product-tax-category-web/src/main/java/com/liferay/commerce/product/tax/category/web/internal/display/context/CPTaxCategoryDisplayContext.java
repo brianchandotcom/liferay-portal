@@ -140,28 +140,23 @@ public class CPTaxCategoryDisplayContext {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String emptyResultsMessage = "there-are-no-tax-categories";
-
 		_searchContainer = new SearchContainer<>(
-			_renderRequest, getPortletURL(), null, emptyResultsMessage);
+			_renderRequest, getPortletURL(), null,
+			"there-are-no-tax-categories");
 
-		String orderByCol = getOrderByCol();
-		String orderByType = getOrderByType();
-
-		OrderByComparator<CPTaxCategory> orderByComparator =
-			_getCPTaxCategoryOrderByComparator(orderByCol, orderByType);
-
-		_searchContainer.setOrderByCol(orderByCol);
-		_searchContainer.setOrderByComparator(orderByComparator);
-		_searchContainer.setOrderByType(orderByType);
-		_searchContainer.setRowChecker(_getRowChecker());
-
+		_searchContainer.setOrderByCol(getOrderByCol());
+		_searchContainer.setOrderByComparator(
+			_getCPTaxCategoryOrderByComparator(
+				getOrderByCol(), getOrderByType()));
+		_searchContainer.setOrderByType(getOrderByType());
 		_searchContainer.setResultsAndTotal(
 			() -> _cpTaxCategoryService.getCPTaxCategories(
 				themeDisplay.getCompanyId(), _searchContainer.getStart(),
-				_searchContainer.getEnd(), orderByComparator),
+				_searchContainer.getEnd(),
+				_searchContainer.getOrderByComparator()),
 			_cpTaxCategoryService.getCPTaxCategoriesCount(
 				themeDisplay.getCompanyId()));
+		_searchContainer.setRowChecker(_getRowChecker());
 
 		return _searchContainer;
 	}

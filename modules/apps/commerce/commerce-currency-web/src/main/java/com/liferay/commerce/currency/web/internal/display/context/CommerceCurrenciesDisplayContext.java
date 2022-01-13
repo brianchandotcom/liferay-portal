@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.security.permission.resource.PortletResourcePer
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.SystemSettingsLocator;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -227,17 +226,11 @@ public class CommerceCurrenciesDisplayContext {
 		_searchContainer = new SearchContainer<>(
 			_renderRequest, getPortletURL(), null, emptyResultsMessage);
 
-		String orderByCol = getOrderByCol();
-		String orderByType = getOrderByType();
-
-		OrderByComparator<CommerceCurrency> orderByComparator =
+		_searchContainer.setOrderByCol(getOrderByCol());
+		_searchContainer.setOrderByComparator(
 			CommerceCurrencyUtil.getCommerceCurrencyOrderByComparator(
-				orderByCol, orderByType);
-
-		_searchContainer.setOrderByCol(orderByCol);
-		_searchContainer.setOrderByComparator(orderByComparator);
-		_searchContainer.setOrderByType(orderByType);
-		_searchContainer.setRowChecker(_getRowChecker());
+				getOrderByCol(), getOrderByType()));
+		_searchContainer.setOrderByType(getOrderByType());
 
 		if (active != null) {
 			boolean navigationActive = active;
@@ -246,7 +239,7 @@ public class CommerceCurrenciesDisplayContext {
 				() -> _commerceCurrencyService.getCommerceCurrencies(
 					themeDisplay.getCompanyId(), navigationActive,
 					_searchContainer.getStart(), _searchContainer.getEnd(),
-					orderByComparator),
+					_searchContainer.getOrderByComparator()),
 				_commerceCurrencyService.getCommerceCurrenciesCount(
 					themeDisplay.getCompanyId(), navigationActive));
 		}
@@ -254,10 +247,13 @@ public class CommerceCurrenciesDisplayContext {
 			_searchContainer.setResultsAndTotal(
 				() -> _commerceCurrencyService.getCommerceCurrencies(
 					themeDisplay.getCompanyId(), _searchContainer.getStart(),
-					_searchContainer.getEnd(), orderByComparator),
+					_searchContainer.getEnd(),
+					_searchContainer.getOrderByComparator()),
 				_commerceCurrencyService.getCommerceCurrenciesCount(
 					themeDisplay.getCompanyId()));
 		}
+
+		_searchContainer.setRowChecker(_getRowChecker());
 
 		return _searchContainer;
 	}

@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.KeyValuePair;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -170,9 +169,6 @@ public class CommerceSubscriptionContentDisplayContext {
 			_cpRequestHelper.getLiferayPortletRequest(), getPortletURL(), null,
 			"there-are-no-subscriptions");
 
-		OrderByComparator<CommerceSubscriptionEntry> orderByComparator =
-			new CommerceSubscriptionEntryCreateDateComparator();
-
 		_searchContainer.setResultsAndTotal(
 			() ->
 				_commerceSubscriptionEntryService.
@@ -181,7 +177,7 @@ public class CommerceSubscriptionContentDisplayContext {
 						_cpRequestHelper.getCommerceChannelGroupId(),
 						_cpRequestHelper.getUserId(),
 						_searchContainer.getStart(), _searchContainer.getEnd(),
-						orderByComparator),
+						new CommerceSubscriptionEntryCreateDateComparator()),
 			_commerceSubscriptionEntryService.
 				getCommerceSubscriptionEntriesCount(
 					_cpRequestHelper.getCompanyId(),

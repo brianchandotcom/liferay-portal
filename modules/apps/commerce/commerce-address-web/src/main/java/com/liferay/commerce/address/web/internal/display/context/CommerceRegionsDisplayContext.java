@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.RegionService;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 
 import javax.portlet.PortletURL;
@@ -122,16 +121,11 @@ public class CommerceRegionsDisplayContext
 		searchContainer = new SearchContainer<>(
 			renderRequest, getPortletURL(), null, emptyResultsMessage);
 
-		String orderByCol = getOrderByCol();
-		String orderByType = getOrderByType();
-
-		OrderByComparator<Region> orderByComparator =
-			CommerceUtil.getRegionOrderByComparator(orderByCol, orderByType);
-
-		searchContainer.setOrderByCol(orderByCol);
-		searchContainer.setOrderByComparator(orderByComparator);
-		searchContainer.setOrderByType(orderByType);
-		searchContainer.setRowChecker(getRowChecker());
+		searchContainer.setOrderByCol(getOrderByCol());
+		searchContainer.setOrderByComparator(
+			CommerceUtil.getRegionOrderByComparator(
+				getOrderByCol(), getOrderByType()));
+		searchContainer.setOrderByType(getOrderByType());
 
 		long countryId = getCountryId();
 
@@ -141,16 +135,20 @@ public class CommerceRegionsDisplayContext
 			searchContainer.setResultsAndTotal(
 				() -> _regionService.getRegions(
 					countryId, navigationActive, searchContainer.getStart(),
-					searchContainer.getEnd(), orderByComparator),
+					searchContainer.getEnd(),
+					searchContainer.getOrderByComparator()),
 				_regionService.getRegionsCount(countryId, navigationActive));
 		}
 		else {
 			searchContainer.setResultsAndTotal(
 				() -> _regionService.getRegions(
 					countryId, searchContainer.getStart(),
-					searchContainer.getEnd(), orderByComparator),
+					searchContainer.getEnd(),
+					searchContainer.getOrderByComparator()),
 				_regionService.getRegionsCount(countryId));
 		}
+
+		searchContainer.setRowChecker(getRowChecker());
 
 		return searchContainer;
 	}

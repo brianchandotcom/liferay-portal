@@ -236,12 +236,10 @@ public class CalendarDisplayContext {
 	public Recurrence getLastRecurrence(CalendarBooking calendarBooking)
 		throws PortalException {
 
-		List<CalendarBooking> calendarBookings =
-			_calendarBookingLocalService.getRecurringCalendarBookings(
-				calendarBooking);
-
 		CalendarBooking lastCalendarBooking =
-			RecurrenceUtil.getLastInstanceCalendarBooking(calendarBookings);
+			RecurrenceUtil.getLastInstanceCalendarBooking(
+				_calendarBookingLocalService.getRecurringCalendarBookings(
+					calendarBooking));
 
 		return lastCalendarBooking.getRecurrenceObj();
 	}
@@ -252,12 +250,6 @@ public class CalendarDisplayContext {
 
 		String tabs1 = ParamUtil.getString(
 			httpServletRequest, "tabs1", "calendar");
-
-		String scope = ParamUtil.getString(
-			_renderRequest, "scope",
-			String.valueOf(_themeDisplay.getScopeGroupId()));
-		String active = ParamUtil.getString(
-			_renderRequest, "active", Boolean.TRUE.toString());
 
 		return NavigationItemList.of(
 			NavigationItemBuilder.setActive(
@@ -271,7 +263,13 @@ public class CalendarDisplayContext {
 				tabs1.equals("resources")
 			).setHref(
 				_renderResponse.createRenderURL(), "tabs1", "resources",
-				"scope", scope, "active", active
+				"scope",
+				ParamUtil.getString(
+					_renderRequest, "scope",
+					String.valueOf(_themeDisplay.getScopeGroupId())),
+				"active",
+				ParamUtil.getString(
+					_renderRequest, "active", Boolean.TRUE.toString())
 			).setLabel(
 				LanguageUtil.get(httpServletRequest, "resources")
 			).build());

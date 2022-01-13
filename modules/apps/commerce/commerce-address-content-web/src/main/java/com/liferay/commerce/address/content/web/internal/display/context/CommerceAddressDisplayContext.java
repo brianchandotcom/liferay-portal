@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.service.RegionService;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -259,16 +258,13 @@ public class CommerceAddressDisplayContext {
 		}
 
 		_searchContainer = new SearchContainer<>(
-			_liferayPortletRequest, getPortletURL(), null, null);
-
-		_searchContainer.setEmptyResultsMessage("there-are-no-addresses");
-
-		OrderByComparator<CommerceAddress> orderByComparator =
-			CommerceUtil.getCommerceAddressOrderByComparator(
-				"create-date", "desc");
+			_liferayPortletRequest, getPortletURL(), null,
+			"there-are-no-addresses");
 
 		_searchContainer.setOrderByCol("create-date");
-		_searchContainer.setOrderByComparator(orderByComparator);
+		_searchContainer.setOrderByComparator(
+			CommerceUtil.getCommerceAddressOrderByComparator(
+				"create-date", "desc"));
 		_searchContainer.setOrderByType("desc");
 
 		CommerceAccount commerceAccount = getCommerceAccount();

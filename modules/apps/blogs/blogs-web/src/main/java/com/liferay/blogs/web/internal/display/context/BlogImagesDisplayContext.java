@@ -115,13 +115,11 @@ public class BlogImagesDisplayContext {
 			searchContext.setEnd(searchContainer.getEnd());
 			searchContext.setFolderIds(
 				new long[] {attachmentsFolder.getFolderId()});
+			searchContext.setSorts(
+				new Sort(
+					getOrderByCol(),
+					!StringUtil.equalsIgnoreCase(getOrderByType(), "asc")));
 			searchContext.setStart(searchContainer.getStart());
-
-			Sort sort = new Sort(
-				getOrderByCol(),
-				!StringUtil.equalsIgnoreCase(getOrderByType(), "asc"));
-
-			searchContext.setSorts(sort);
 
 			Folder folder = DLAppLocalServiceUtil.getFolder(
 				attachmentsFolder.getFolderId());

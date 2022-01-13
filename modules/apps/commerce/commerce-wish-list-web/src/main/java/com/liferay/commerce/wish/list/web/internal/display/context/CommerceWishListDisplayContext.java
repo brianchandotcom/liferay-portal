@@ -48,7 +48,6 @@ import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.KeyValuePair;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
@@ -231,17 +230,13 @@ public class CommerceWishListDisplayContext {
 
 		_commerceWishListItemsSearchContainer.setOrderByCol(
 			_getOrderByCol("item", "create-date"));
-		_commerceWishListItemsSearchContainer.setOrderByType(
-			_getOrderByType("item", "desc"));
-
-		OrderByComparator<CommerceWishListItem> orderByComparator =
+		_commerceWishListItemsSearchContainer.setOrderByComparator(
 			CommerceWishListPortletUtil.
 				getCommerceWishListItemOrderByComparator(
-					_commerceWishListItemsSearchContainer.getOrderByCol(),
-					_commerceWishListItemsSearchContainer.getOrderByType());
-
-		_commerceWishListItemsSearchContainer.setOrderByComparator(
-			orderByComparator);
+					_getOrderByCol("item", "create-date"),
+					_getOrderByType("item", "desc")));
+		_commerceWishListItemsSearchContainer.setOrderByType(
+			_getOrderByType("item", "desc"));
 
 		CommerceWishList commerceWishList = getCommerceWishList();
 
@@ -254,7 +249,7 @@ public class CommerceWishListDisplayContext {
 				commerceWishList.getCommerceWishListId(),
 				_commerceWishListItemsSearchContainer.getStart(),
 				_commerceWishListItemsSearchContainer.getEnd(),
-				orderByComparator),
+				_commerceWishListItemsSearchContainer.getOrderByComparator()),
 			_commerceWishListItemService.getCommerceWishListItemsCount(
 				commerceWishList.getCommerceWishListId()));
 
@@ -305,21 +300,17 @@ public class CommerceWishListDisplayContext {
 			getPortletURL(), null, "no-wish-lists-were-found");
 
 		_searchContainer.setOrderByCol(_getOrderByCol("wish", "name"));
-		_searchContainer.setOrderByType(_getOrderByType("wish", "asc"));
-
-		OrderByComparator<CommerceWishList> orderByComparator =
+		_searchContainer.setOrderByComparator(
 			CommerceWishListPortletUtil.getCommerceWishListOrderByComparator(
-				_searchContainer.getOrderByCol(),
-				_searchContainer.getOrderByType());
-
-		_searchContainer.setOrderByComparator(orderByComparator);
-
+				_getOrderByCol("wish", "name"),
+				_getOrderByType("wish", "asc")));
+		_searchContainer.setOrderByType(_getOrderByType("wish", "asc"));
 		_searchContainer.setResultsAndTotal(
 			() -> _commerceWishListService.getCommerceWishLists(
 				_commerceWishListRequestHelper.getScopeGroupId(),
 				_commerceWishListRequestHelper.getUserId(),
 				_searchContainer.getStart(), _searchContainer.getEnd(),
-				orderByComparator),
+				_searchContainer.getOrderByComparator()),
 			_commerceWishListService.getCommerceWishListsCount(
 				_commerceWishListRequestHelper.getScopeGroupId(),
 				_commerceWishListRequestHelper.getUserId()));

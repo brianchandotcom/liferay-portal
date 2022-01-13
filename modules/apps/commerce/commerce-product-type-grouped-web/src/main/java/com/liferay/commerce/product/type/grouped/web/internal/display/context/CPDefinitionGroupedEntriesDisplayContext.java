@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -63,11 +62,11 @@ public class CPDefinitionGroupedEntriesDisplayContext
 			actionHelper, httpServletRequest,
 			CPDefinitionGroupedEntry.class.getSimpleName());
 
-		setDefaultOrderByCol("priority");
-		setDefaultOrderByType("asc");
-
 		_cpDefinitionGroupedEntryService = cpDefinitionGroupedEntryService;
 		_itemSelector = itemSelector;
+
+		setDefaultOrderByCol("priority");
+		setDefaultOrderByType("asc");
 	}
 
 	public CPDefinitionGroupedEntry getCPDefinitionGroupedEntry()
@@ -77,12 +76,11 @@ public class CPDefinitionGroupedEntriesDisplayContext
 			return _cpDefinitionGroupedEntry;
 		}
 
-		long cpDefinitionGroupedEntryId = ParamUtil.getLong(
-			cpRequestHelper.getRenderRequest(), "cpDefinitionGroupedEntryId");
-
 		_cpDefinitionGroupedEntry =
 			_cpDefinitionGroupedEntryService.getCPDefinitionGroupedEntry(
-				cpDefinitionGroupedEntryId);
+				ParamUtil.getLong(
+					cpRequestHelper.getRenderRequest(),
+					"cpDefinitionGroupedEntryId"));
 
 		return _cpDefinitionGroupedEntry;
 	}
@@ -166,26 +164,23 @@ public class CPDefinitionGroupedEntriesDisplayContext
 		}
 
 		searchContainer = new SearchContainer<>(
-			liferayPortletRequest, getPortletURL(), null, null);
-
-		searchContainer.setEmptyResultsMessage("no-grouped-entries-were-found");
-
-		OrderByComparator<CPDefinitionGroupedEntry> orderByComparator =
-			GroupedCPTypeUtil.getCPDefinitionGroupedEntryOrderByComparator(
-				getOrderByCol(), getOrderByType());
+			liferayPortletRequest, getPortletURL(), null,
+			"no-grouped-entries-were-found");
 
 		searchContainer.setOrderByCol(getOrderByCol());
-		searchContainer.setOrderByComparator(orderByComparator);
+		searchContainer.setOrderByComparator(
+			GroupedCPTypeUtil.getCPDefinitionGroupedEntryOrderByComparator(
+				getOrderByCol(), getOrderByType()));
 		searchContainer.setOrderByType(getOrderByType());
-		searchContainer.setRowChecker(getRowChecker());
-
 		searchContainer.setResultsAndTotal(
 			() ->
 				_cpDefinitionGroupedEntryService.getCPDefinitionGroupedEntries(
 					getCPDefinitionId(), searchContainer.getStart(),
-					searchContainer.getEnd(), orderByComparator),
+					searchContainer.getEnd(),
+					searchContainer.getOrderByComparator()),
 			_cpDefinitionGroupedEntryService.getCPDefinitionGroupedEntriesCount(
 				getCPDefinitionId()));
+		searchContainer.setRowChecker(getRowChecker());
 
 		return searchContainer;
 	}

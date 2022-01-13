@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.service.CountryService;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
@@ -136,32 +135,22 @@ public class CommerceInventoryWarehouseItemSelectorViewDisplayContext
 			cpRequestHelper.getRenderRequest(), getPortletURL(), null,
 			emptyResultsMessage);
 
-		String orderByCol = getOrderByCol();
-		String orderByType = getOrderByType();
-
-		OrderByComparator<CommerceInventoryWarehouse> orderByComparator =
+		searchContainer.setOrderByCol(getOrderByCol());
+		searchContainer.setOrderByComparator(
 			CommerceUtil.getCommerceInventoryWarehouseOrderByComparator(
-				orderByCol, orderByType);
-
-		searchContainer.setOrderByCol(orderByCol);
-		searchContainer.setOrderByComparator(orderByComparator);
-		searchContainer.setOrderByType(orderByType);
-		searchContainer.setRowChecker(
-			new CommerceInventoryWarehouseChecker(
-				cpRequestHelper.getRenderResponse(),
-				_getCheckedCommerceInventoryWarehouseIds(),
-				_getDisabledCommerceInventoryWarehouseIds()));
-		searchContainer.setSearch(_search);
+				getOrderByCol(), getOrderByType()));
+		searchContainer.setOrderByType(getOrderByType());
 
 		String a2 = country.getA2();
 
-		if (searchContainer.isSearch() && (country != null)) {
+		if (_search && (country != null)) {
 			searchContainer.setResultsAndTotal(
 				() -> _commerceInventoryWarehouseService.search(
 					cpRequestHelper.getCompanyId(), true, a2, getKeywords(),
 					searchContainer.getStart(), searchContainer.getEnd(),
 					CommerceUtil.getCommerceInventoryWarehouseSort(
-						orderByCol, orderByType)),
+						searchContainer.getOrderByCol(),
+						searchContainer.getOrderByType())),
 				_commerceInventoryWarehouseService.
 					searchCommerceInventoryWarehousesCount(
 						cpRequestHelper.getCompanyId(), true, a2,
@@ -174,11 +163,19 @@ public class CommerceInventoryWarehouseItemSelectorViewDisplayContext
 						getCommerceInventoryWarehouses(
 							cpRequestHelper.getCompanyId(), true, a2,
 							searchContainer.getStart(),
-							searchContainer.getEnd(), orderByComparator),
+							searchContainer.getEnd(),
+							searchContainer.getOrderByComparator()),
 				_commerceInventoryWarehouseService.
 					getCommerceInventoryWarehousesCount(
 						cpRequestHelper.getCompanyId(), true, a2));
 		}
+
+		searchContainer.setRowChecker(
+			new CommerceInventoryWarehouseChecker(
+				cpRequestHelper.getRenderResponse(),
+				_getCheckedCommerceInventoryWarehouseIds(),
+				_getDisabledCommerceInventoryWarehouseIds()));
+		searchContainer.setSearch(_search);
 
 		return searchContainer;
 	}

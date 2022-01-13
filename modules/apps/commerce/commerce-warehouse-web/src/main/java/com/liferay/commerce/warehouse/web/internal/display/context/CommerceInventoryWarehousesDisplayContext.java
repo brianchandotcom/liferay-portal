@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.service.CountryService;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -254,17 +253,11 @@ public class CommerceInventoryWarehousesDisplayContext {
 				"taglib-empty-result-message-header-has-plus-btn");
 		}
 
-		String orderByCol = getOrderByCol();
-		String orderByType = getOrderByType();
-
-		OrderByComparator<CommerceInventoryWarehouse> orderByComparator =
+		_searchContainer.setOrderByCol(getOrderByCol());
+		_searchContainer.setOrderByComparator(
 			CommerceUtil.getCommerceInventoryWarehouseOrderByComparator(
-				orderByCol, orderByType);
-
-		_searchContainer.setOrderByCol(orderByCol);
-		_searchContainer.setOrderByComparator(orderByComparator);
-		_searchContainer.setOrderByType(orderByType);
-		_searchContainer.setSearch(search);
+				getOrderByCol(), getOrderByType()));
+		_searchContainer.setOrderByType(getOrderByType());
 
 		Boolean navigationActive = active;
 
@@ -274,11 +267,14 @@ public class CommerceInventoryWarehousesDisplayContext {
 				countryTwoLettersIsoCode, _getKeywords(),
 				_searchContainer.getStart(), _searchContainer.getEnd(),
 				CommerceUtil.getCommerceInventoryWarehouseSort(
-					orderByCol, orderByType)),
+					_searchContainer.getOrderByCol(),
+					_searchContainer.getOrderByType())),
 			_commerceInventoryWarehouseService.
 				searchCommerceInventoryWarehousesCount(
 					_cpRequestHelper.getCompanyId(), navigationActive,
 					countryTwoLettersIsoCode, _getKeywords()));
+
+		_searchContainer.setSearch(search);
 
 		return _searchContainer;
 	}

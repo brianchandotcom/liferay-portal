@@ -272,9 +272,7 @@ public class CommerceCartContentDisplayContext {
 
 		_searchContainer = new SearchContainer<>(
 			commerceCartContentRequestHelper.getLiferayPortletRequest(),
-			getPortletURL(), null, null);
-
-		_searchContainer.setEmptyResultsMessage("no-items-were-found");
+			getPortletURL(), null, "no-items-were-found");
 
 		long commerceOrderId = getCommerceOrderId();
 

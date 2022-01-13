@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -83,16 +82,6 @@ public class CPMeasurementUnitsDisplayContext {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String viewDimensionProductMeasurementUnitsURL = _getNavigationItemURL(
-			"view-all-dimension-product-measurement-units",
-			CPMeasurementUnitConstants.TYPE_DIMENSION);
-		String viewUnitProductMeasurementUnitsURL = _getNavigationItemURL(
-			"view-all-piece-product-measurement-units",
-			CPMeasurementUnitConstants.TYPE_UNIT);
-		String viewWeightProductMeasurementUnitsURL = _getNavigationItemURL(
-			"view-all-weight-product-measurement-units",
-			CPMeasurementUnitConstants.TYPE_WEIGHT);
-
 		String toolbarItem = ParamUtil.getString(
 			_renderRequest, "toolbarItem",
 			"view-all-dimension-product-measurement-units");
@@ -100,28 +89,28 @@ public class CPMeasurementUnitsDisplayContext {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", themeDisplay.getLocale(), getClass());
 
-		NavigationItem dimensionCPMeasurementUnitsNavigationItem =
+		navigationItems.add(
 			_getNavigationItem(
 				toolbarItem.equals(
 					"view-all-dimension-product-measurement-units"),
-				viewDimensionProductMeasurementUnitsURL,
-				LanguageUtil.get(resourceBundle, "dimensions"));
-
-		NavigationItem unitCPMeasurementUnitsNavigationItem =
+				_getNavigationItemURL(
+					"view-all-dimension-product-measurement-units",
+					CPMeasurementUnitConstants.TYPE_DIMENSION),
+				LanguageUtil.get(resourceBundle, "dimensions")));
+		navigationItems.add(
 			_getNavigationItem(
 				toolbarItem.equals("view-all-unit-product-measurement-units"),
-				viewUnitProductMeasurementUnitsURL,
-				LanguageUtil.get(resourceBundle, "unit"));
-
-		NavigationItem weightCPMeasurementUnitsNavigationItem =
+				_getNavigationItemURL(
+					"view-all-piece-product-measurement-units",
+					CPMeasurementUnitConstants.TYPE_UNIT),
+				LanguageUtil.get(resourceBundle, "unit")));
+		navigationItems.add(
 			_getNavigationItem(
 				toolbarItem.equals("view-all-weight-product-measurement-units"),
-				viewWeightProductMeasurementUnitsURL,
-				LanguageUtil.get(resourceBundle, "weight"));
-
-		navigationItems.add(dimensionCPMeasurementUnitsNavigationItem);
-		navigationItems.add(unitCPMeasurementUnitsNavigationItem);
-		navigationItems.add(weightCPMeasurementUnitsNavigationItem);
+				_getNavigationItemURL(
+					"view-all-weight-product-measurement-units",
+					CPMeasurementUnitConstants.TYPE_WEIGHT),
+				LanguageUtil.get(resourceBundle, "weight")));
 
 		return navigationItems;
 	}
@@ -204,25 +193,19 @@ public class CPMeasurementUnitsDisplayContext {
 		_searchContainer = new SearchContainer<>(
 			_renderRequest, getPortletURL(), null, emptyResultsMessage);
 
-		String orderByCol = getOrderByCol();
-		String orderByType = getOrderByType();
-
-		OrderByComparator<CPMeasurementUnit> orderByComparator =
+		_searchContainer.setOrderByCol(getOrderByCol());
+		_searchContainer.setOrderByComparator(
 			CPMeasurementUnitUtil.getCPMeasurementUnitOrderByComparator(
-				orderByCol, orderByType);
-
-		_searchContainer.setOrderByCol(orderByCol);
-		_searchContainer.setOrderByComparator(orderByComparator);
-		_searchContainer.setOrderByType(orderByType);
-		_searchContainer.setRowChecker(_getRowChecker());
-
+				getOrderByCol(), getOrderByType()));
+		_searchContainer.setOrderByType(getOrderByType());
 		_searchContainer.setResultsAndTotal(
 			() -> _cpMeasurementUnitService.getCPMeasurementUnits(
 				themeDisplay.getCompanyId(), getType(),
 				_searchContainer.getStart(), _searchContainer.getEnd(),
-				orderByComparator),
+				_searchContainer.getOrderByComparator()),
 			_cpMeasurementUnitService.getCPMeasurementUnitsCount(
 				themeDisplay.getCompanyId(), getType()));
+		_searchContainer.setRowChecker(_getRowChecker());
 
 		return _searchContainer;
 	}

@@ -30,7 +30,6 @@ import com.liferay.commerce.product.type.CPTypeServicesTracker;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
@@ -50,7 +49,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.portlet.PortletPreferences;
-import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 
@@ -287,20 +285,10 @@ public class CPSearchResultsDisplayContext {
 		String paginationStartParameterName, int paginationDelta,
 		String paginationDeltaParameterName) {
 
-		PortletRequest portletRequest =
-			_cpRequestHelper.getLiferayPortletRequest();
-		DisplayTerms displayTerms = null;
-		DisplayTerms searchTerms = null;
-		String curParam = paginationStartParameterName;
-		int cur = paginationStart;
-		int delta = paginationDelta;
-		List<String> headerNames = null;
-		String emptyResultsMessage = null;
-		String cssClass = null;
-
 		SearchContainer<CPCatalogEntry> searchContainer = new SearchContainer<>(
-			portletRequest, displayTerms, searchTerms, curParam, cur, delta,
-			_getPortletURL(), headerNames, emptyResultsMessage, cssClass);
+			_cpRequestHelper.getLiferayPortletRequest(), null, null,
+			paginationStartParameterName, paginationStart, paginationDelta,
+			_getPortletURL(), null, null, null);
 
 		searchContainer.setDeltaParam(paginationDeltaParameterName);
 		searchContainer.setResultsAndTotal(

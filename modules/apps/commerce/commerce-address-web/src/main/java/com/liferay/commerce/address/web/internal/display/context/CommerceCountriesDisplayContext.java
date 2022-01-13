@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.CountryService;
 import com.liferay.portal.kernel.service.RegionServiceUtil;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -127,23 +126,19 @@ public class CommerceCountriesDisplayContext
 		searchContainer = new SearchContainer<>(
 			renderRequest, getPortletURL(), null, emptyResultsMessage);
 
-		String orderByCol = getOrderByCol();
-		String orderByType = getOrderByType();
-
-		OrderByComparator<Country> orderByComparator =
-			CommerceUtil.getCountryOrderByComparator(orderByCol, orderByType);
-
-		searchContainer.setOrderByCol(orderByCol);
-		searchContainer.setOrderByComparator(orderByComparator);
-		searchContainer.setOrderByType(orderByType);
-		searchContainer.setRowChecker(getRowChecker());
+		searchContainer.setOrderByCol(getOrderByCol());
+		searchContainer.setOrderByComparator(
+			CommerceUtil.getCountryOrderByComparator(
+				getOrderByCol(), getOrderByType()));
+		searchContainer.setOrderByType(getOrderByType());
 
 		if (_isSearch()) {
 			searchContainer.setResultsAndTotal(
 				_countryService.searchCountries(
 					_commerceCountryRequestHelper.getCompanyId(), active,
 					_getKeywords(), searchContainer.getStart(),
-					searchContainer.getEnd(), orderByComparator));
+					searchContainer.getEnd(),
+					searchContainer.getOrderByComparator()));
 		}
 		else {
 			if (active == null) {
@@ -151,7 +146,7 @@ public class CommerceCountriesDisplayContext
 					() -> _countryService.getCompanyCountries(
 						_commerceCountryRequestHelper.getCompanyId(),
 						searchContainer.getStart(), searchContainer.getEnd(),
-						orderByComparator),
+						searchContainer.getOrderByComparator()),
 					_countryService.getCompanyCountriesCount(
 						_commerceCountryRequestHelper.getCompanyId()));
 			}
@@ -162,12 +157,15 @@ public class CommerceCountriesDisplayContext
 					() -> _countryService.getCompanyCountries(
 						_commerceCountryRequestHelper.getCompanyId(),
 						navigationActive, searchContainer.getStart(),
-						searchContainer.getEnd(), orderByComparator),
+						searchContainer.getEnd(),
+						searchContainer.getOrderByComparator()),
 					_countryService.getCompanyCountriesCount(
 						_commerceCountryRequestHelper.getCompanyId(),
 						navigationActive));
 			}
 		}
+
+		searchContainer.setRowChecker(getRowChecker());
 
 		return searchContainer;
 	}

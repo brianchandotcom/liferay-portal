@@ -69,9 +69,6 @@ public class BatchPlannerPlanDisplayContext extends BaseDisplayContext {
 		_searchContainer.setOrderByCol(_getOrderByCol());
 		_searchContainer.setOrderByType(_getOrderByType());
 
-		_searchContainer.setRowChecker(
-			new EmptyOnClickRowChecker(renderResponse));
-
 		long companyId = PortalUtil.getCompanyId(renderRequest);
 
 		String navigation = ParamUtil.getString(
@@ -103,6 +100,9 @@ public class BatchPlannerPlanDisplayContext extends BaseDisplayContext {
 				BatchPlannerPlanServiceUtil.getBatchPlannerPlansCount(
 					companyId, export, true));
 		}
+
+		_searchContainer.setRowChecker(
+			new EmptyOnClickRowChecker(renderResponse));
 
 		return _searchContainer;
 	}

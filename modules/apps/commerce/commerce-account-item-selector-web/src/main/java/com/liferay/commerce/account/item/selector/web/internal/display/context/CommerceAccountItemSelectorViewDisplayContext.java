@@ -20,7 +20,6 @@ import com.liferay.commerce.account.item.selector.web.internal.search.CommerceAc
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.service.CommerceAccountService;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -86,19 +85,10 @@ public class CommerceAccountItemSelectorViewDisplayContext {
 		_searchContainer = new SearchContainer<>(
 			_commerceAccountItemSelectorRequestHelper.
 				getLiferayPortletRequest(),
-			getPortletURL(), null, null);
-
-		_searchContainer.setEmptyResultsMessage("there-are-no-accounts");
+			getPortletURL(), null, "there-are-no-accounts");
 
 		_searchContainer.setOrderByCol(getOrderByCol());
 		_searchContainer.setOrderByType(getOrderByType());
-
-		RowChecker rowChecker = new CommerceAccountItemSelectorChecker(
-			_commerceAccountItemSelectorRequestHelper.getRenderResponse(),
-			_getCheckedCommerceAccountIds());
-
-		_searchContainer.setRowChecker(rowChecker);
-
 		_searchContainer.setResultsAndTotal(
 			() -> _commerceAccountService.getUserCommerceAccounts(
 				_commerceAccountItemSelectorRequestHelper.getUserId(),
@@ -109,6 +99,10 @@ public class CommerceAccountItemSelectorViewDisplayContext {
 				_commerceAccountItemSelectorRequestHelper.getUserId(),
 				CommerceAccountConstants.DEFAULT_PARENT_ACCOUNT_ID,
 				CommerceAccountConstants.SITE_TYPE_B2X, getKeywords()));
+		_searchContainer.setRowChecker(
+			new CommerceAccountItemSelectorChecker(
+				_commerceAccountItemSelectorRequestHelper.getRenderResponse(),
+				_getCheckedCommerceAccountIds()));
 
 		return _searchContainer;
 	}

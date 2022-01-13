@@ -17,13 +17,11 @@ package com.liferay.commerce.item.selector.web.internal.display.context;
 import com.liferay.commerce.item.selector.web.internal.search.CommerceCountryItemSelectorChecker;
 import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.service.CountryService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -72,31 +70,24 @@ public class CommerceCountryItemSelectorViewDisplayContext
 				WebKeys.THEME_DISPLAY);
 
 		searchContainer = new SearchContainer<>(
-			cpRequestHelper.getRenderRequest(), getPortletURL(), null, null);
-
-		searchContainer.setEmptyResultsMessage("there-are-no-countries");
+			cpRequestHelper.getRenderRequest(), getPortletURL(), null,
+			"there-are-no-countries");
 
 		searchContainer.setOrderByCol(getOrderByCol());
-
-		OrderByComparator<Country> orderByComparator =
+		searchContainer.setOrderByComparator(
 			CommerceUtil.getCountryOrderByComparator(
-				getOrderByCol(), getOrderByType());
-
-		searchContainer.setOrderByComparator(orderByComparator);
-
+				getOrderByCol(), getOrderByType()));
 		searchContainer.setOrderByType(getOrderByType());
-
-		RowChecker rowChecker = new CommerceCountryItemSelectorChecker(
-			cpRequestHelper.getRenderResponse(), _getCheckedCountryIds());
-
-		searchContainer.setRowChecker(rowChecker);
-
 		searchContainer.setResultsAndTotal(
 			() -> _countryService.getCompanyCountries(
 				themeDisplay.getCompanyId(), true, searchContainer.getStart(),
-				searchContainer.getEnd(), orderByComparator),
+				searchContainer.getEnd(),
+				searchContainer.getOrderByComparator()),
 			_countryService.getCompanyCountriesCount(
 				themeDisplay.getCompanyId()));
+		searchContainer.setRowChecker(
+			new CommerceCountryItemSelectorChecker(
+				cpRequestHelper.getRenderResponse(), _getCheckedCountryIds()));
 
 		return searchContainer;
 	}

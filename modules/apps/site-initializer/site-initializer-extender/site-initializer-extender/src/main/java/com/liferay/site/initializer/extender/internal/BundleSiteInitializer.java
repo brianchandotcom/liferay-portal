@@ -2793,11 +2793,11 @@ public class BundleSiteInitializer implements SiteInitializer {
 		JSONArray jsonArray = _jsonFactory.createJSONArray(json);
 
 		for (int i = 0; i < jsonArray.length(); i++) {
+			List<Role> roles = new ArrayList<>();
+
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
 			JSONArray rolesJSONArray = jsonObject.getJSONArray("roles");
-
-			List<Role> roles = new ArrayList<>();
 
 			for (int j = 0; j < rolesJSONArray.length(); j++) {
 				roles.add(

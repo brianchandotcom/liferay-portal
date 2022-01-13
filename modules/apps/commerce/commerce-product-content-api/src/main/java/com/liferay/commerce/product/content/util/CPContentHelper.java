@@ -64,10 +64,6 @@ public interface CPContentHelper {
 				long cpDefinitionId, long cpOptionCategoryId)
 		throws PortalException;
 
-	public List<CPMedia> getCPAttachmentFileEntries(
-			long cpDefinitionId, ThemeDisplay themeDisplay)
-		throws PortalException;
-
 	public CPCatalogEntry getCPCatalogEntry(
 			HttpServletRequest httpServletRequest)
 		throws PortalException;
@@ -92,6 +88,10 @@ public interface CPContentHelper {
 
 	public List<CPDefinitionSpecificationOptionValue>
 			getCPDefinitionSpecificationOptionValues(long cpDefinitionId)
+		throws PortalException;
+
+	public List<CPMedia> getCPMedias(
+			long cpDefinitionId, ThemeDisplay themeDisplay)
 		throws PortalException;
 
 	public List<CPOptionCategory> getCPOptionCategories(long companyId);
@@ -128,7 +128,7 @@ public interface CPContentHelper {
 		throws Exception;
 
 	public String getReplacementCommerceProductFriendlyURL(
-			long cProductId, String cpIntanceUuid, ThemeDisplay themeDisplay)
+			CPSku cpSku, ThemeDisplay themeDisplay)
 		throws PortalException;
 
 	public String getStockQuantity(HttpServletRequest httpServletRequest)
@@ -152,6 +152,12 @@ public interface CPContentHelper {
 
 	public boolean hasCPDefinitionSpecificationOptionValues(long cpDefinitionId)
 		throws PortalException;
+
+	public boolean hasDirectReplacement(CPSku cpSku) throws Exception;
+
+	public boolean hasReplacement(
+			CPSku cpSku, HttpServletRequest httpServletRequest)
+		throws Exception;
 
 	public boolean isInWishList(
 			CPSku cpSku, CPCatalogEntry cpCatalogEntry,

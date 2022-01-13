@@ -164,36 +164,6 @@ public class CPContentHelperImpl implements CPContentHelper {
 	}
 
 	@Override
-	public List<CPMedia> getCPAttachmentFileEntries(
-			long cpDefinitionId, ThemeDisplay themeDisplay)
-		throws PortalException {
-
-		List<CPMedia> cpMedias = new ArrayList<>();
-
-		List<CPAttachmentFileEntry> cpAttachmentFileEntries =
-			_cpAttachmentFileEntryLocalService.getCPAttachmentFileEntries(
-				_portal.getClassNameId(CPDefinition.class), cpDefinitionId,
-				CPAttachmentFileEntryConstants.TYPE_OTHER,
-				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
-
-		for (CPAttachmentFileEntry cpAttachmentFileEntry :
-				cpAttachmentFileEntries) {
-
-			HttpServletRequest httpServletRequest = themeDisplay.getRequest();
-
-			cpMedias.add(
-				new CPMediaImpl(
-					CommerceUtil.getCommerceAccountId(
-						(CommerceContext)httpServletRequest.getAttribute(
-							CommerceWebKeys.COMMERCE_CONTEXT)),
-					cpAttachmentFileEntry, themeDisplay));
-		}
-
-		return cpMedias;
-	}
-
-	@Override
 	public CPCatalogEntry getCPCatalogEntry(
 			HttpServletRequest httpServletRequest)
 		throws PortalException {
@@ -344,6 +314,36 @@ public class CPContentHelperImpl implements CPContentHelper {
 	}
 
 	@Override
+	public List<CPMedia> getCPMedias(
+			long cpDefinitionId, ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		List<CPMedia> cpMedias = new ArrayList<>();
+
+		List<CPAttachmentFileEntry> cpAttachmentFileEntries =
+			_cpAttachmentFileEntryLocalService.getCPAttachmentFileEntries(
+				_portal.getClassNameId(CPDefinition.class), cpDefinitionId,
+				CPAttachmentFileEntryConstants.TYPE_OTHER,
+				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
+
+		for (CPAttachmentFileEntry cpAttachmentFileEntry :
+				cpAttachmentFileEntries) {
+
+			HttpServletRequest httpServletRequest = themeDisplay.getRequest();
+
+			cpMedias.add(
+				new CPMediaImpl(
+					CommerceUtil.getCommerceAccountId(
+						(CommerceContext)httpServletRequest.getAttribute(
+							CommerceWebKeys.COMMERCE_CONTEXT)),
+					cpAttachmentFileEntry, themeDisplay));
+		}
+
+		return cpMedias;
+	}
+
+	@Override
 	public List<CPOptionCategory> getCPOptionCategories(long companyId) {
 		return _cpOptionCategoryLocalService.getCPOptionCategories(
 			companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
@@ -482,18 +482,27 @@ public class CPContentHelperImpl implements CPContentHelper {
 
 	@Override
 	public String getReplacementCommerceProductFriendlyURL(
-			long cProductId, String cpIntanceUuid, ThemeDisplay themeDisplay)
+			CPSku cpSku, ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		CPInstance cpInstance = _cpInstanceLocalService.fetchCProductInstance(
-			cProductId, cpIntanceUuid);
+		HttpServletRequest httpServletRequest = themeDisplay.getRequest();
 
-		if (cpInstance == null) {
+		CommerceContext commerceContext =
+			(CommerceContext)httpServletRequest.getAttribute(
+				CommerceWebKeys.COMMERCE_CONTEXT);
+
+		CPInstance firstAvailableReplacementCPInstance =
+			_cpInstanceHelper.fetchFirstAvailableReplacementCPInstance(
+				commerceContext.getCommerceChannelGroupId(),
+				cpSku.getCPInstanceId());
+
+		if (firstAvailableReplacementCPInstance == null) {
 			return StringPool.BLANK;
 		}
 
 		return _cpDefinitionHelper.getFriendlyURL(
-			cpInstance.getCPDefinitionId(), themeDisplay);
+			firstAvailableReplacementCPInstance.getCPDefinitionId(),
+			themeDisplay);
 	}
 
 	@Override
@@ -602,6 +611,57 @@ public class CPContentHelperImpl implements CPContentHelper {
 						null);
 
 		return !cpDefinitionSpecificationOptionValues.isEmpty();
+	}
+
+	@Override
+	public boolean hasDirectReplacement(CPSku cpSku) throws Exception {
+		if (cpSku == null) {
+			return false;
+		}
+
+		CPInstance cpInstance = _cpInstanceLocalService.fetchCPInstance(
+			cpSku.getCPInstanceId());
+
+		if ((cpInstance == null) || !cpInstance.isDiscontinued()) {
+			return false;
+		}
+
+		CPDefinition cpDefinition = cpInstance.getCPDefinition();
+
+		CPInstance replacementCPInstance =
+			_cpInstanceHelper.fetchReplacementCPInstance(
+				cpDefinition.getCProductId(), cpInstance.getCPInstanceUuid());
+
+		if (replacementCPInstance != null) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean hasReplacement(
+			CPSku cpSku, HttpServletRequest httpServletRequest)
+		throws Exception {
+
+		if ((cpSku == null) || !cpSku.isDiscontinued()) {
+			return false;
+		}
+
+		CommerceContext commerceContext =
+			(CommerceContext)httpServletRequest.getAttribute(
+				CommerceWebKeys.COMMERCE_CONTEXT);
+
+		CPInstance firstAvailableReplacementCPInstance =
+			_cpInstanceHelper.fetchFirstAvailableReplacementCPInstance(
+				commerceContext.getCommerceChannelGroupId(),
+				cpSku.getCPInstanceId());
+
+		if (firstAvailableReplacementCPInstance != null) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override

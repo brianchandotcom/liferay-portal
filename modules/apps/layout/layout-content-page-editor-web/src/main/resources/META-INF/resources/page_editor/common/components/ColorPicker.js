@@ -35,9 +35,7 @@ const ERROR_MESSAGES = {
 	mutuallyReferenced: Liferay.Language.get(
 		'tokens-cannot-be-mutually-referenced'
 	),
-	selfReferenced: Liferay.Language.get(
-		'tokens-cannot-reference-itself'
-	),
+	selfReferenced: Liferay.Language.get('tokens-cannot-reference-itself'),
 	valueNotExist: Liferay.Language.get('this-token-does-not-exist'),
 };
 

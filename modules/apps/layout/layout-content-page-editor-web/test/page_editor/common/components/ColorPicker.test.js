@@ -330,9 +330,7 @@ describe('ColorPicker', () => {
 
 				await waitFor(() => {
 					expect(
-						getByText(
-							'tokens-cannot-reference-itself'
-						)
+						getByText('tokens-cannot-reference-itself')
 					).toBeInTheDocument();
 				});
 			});
@@ -353,9 +351,7 @@ describe('ColorPicker', () => {
 
 				await waitFor(() => {
 					expect(
-						getByText(
-							'tokens-cannot-be-mutually-referenced'
-						)
+						getByText('tokens-cannot-be-mutually-referenced')
 					).toBeInTheDocument();
 				});
 			});

@@ -6238,6 +6238,16 @@ definition {
 			value1 = "");
 	}
 
+	@description = "LPS-135401 - Verify that the Relationship is created on both objects for a Many to Many Relationship"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test RelationshipCreatedBothObjectsManyToMany {
+		property portal.acceptance = "true";
+
+		// TODO LPS-145353 RelationshipCreatedBothObjectsManyToMany pending implementation
+
+	}
+
 	@description = "LPS-135400 - Verify that relationship field is automatically created"
 	@priority = "5"
 	test RelationshipFieldAutomaticallyCreated {

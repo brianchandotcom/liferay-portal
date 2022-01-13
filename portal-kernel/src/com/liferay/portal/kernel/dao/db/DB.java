@@ -19,6 +19,7 @@ import com.liferay.petra.function.UnsafeConsumer;
 import java.io.IOException;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import java.util.List;
@@ -75,6 +76,9 @@ public interface DB {
 	public void buildSQLFile(String sqlDir, String fileName) throws IOException;
 
 	public DBType getDBType();
+
+	public ResultSet getIndexResultSet(Connection connection, String tableName)
+		throws SQLException;
 
 	public List<Index> getIndexes(Connection connection) throws SQLException;
 

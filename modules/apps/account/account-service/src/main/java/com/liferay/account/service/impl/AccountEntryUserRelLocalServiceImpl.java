@@ -366,6 +366,14 @@ public class AccountEntryUserRelLocalServiceImpl
 		return false;
 	}
 
+	public boolean isAccountEntryUser(long userId) {
+		if (accountEntryUserRelPersistence.countByAccountUserId(userId) > 0) {
+			return true;
+		}
+
+		return false;
+	}
+
 	@Override
 	public void setPersonTypeAccountEntryUser(long accountEntryId, long userId)
 		throws PortalException {

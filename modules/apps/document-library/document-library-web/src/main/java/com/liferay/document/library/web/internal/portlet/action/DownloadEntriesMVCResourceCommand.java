@@ -207,30 +207,28 @@ public class DownloadEntriesMVCResourceCommand implements MVCResourceCommand {
 
 		_checkFolder(folderId);
 
-		File file = null;
+		ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
 
 		try {
 			String zipFileName = _getZipFileName(folderId, themeDisplay);
-
-			ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
 
 			long repositoryId = ParamUtil.getLong(
 				resourceRequest, "repositoryId");
 
 			_zipFolder(repositoryId, folderId, StringPool.SLASH, zipWriter);
 
-			file = zipWriter.getFile();
+			try (InputStream inputStream = new FileInputStream(
+					zipWriter.getFile())) {
 
-			try (InputStream inputStream = new FileInputStream(file)) {
 				PortletResponseUtil.sendFile(
 					resourceRequest, resourceResponse, zipFileName, inputStream,
 					ContentTypes.APPLICATION_ZIP);
 			}
 		}
 		finally {
-			if (file != null) {
-				file.delete();
-			}
+			File file = zipWriter.getFile();
+
+			file.delete();
 		}
 	}
 

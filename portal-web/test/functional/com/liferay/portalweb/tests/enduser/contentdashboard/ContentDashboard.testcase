@@ -1327,9 +1327,69 @@ definition {
 	@ignore = "true"
 	@priority = "3"
 	test CloseContentPerformancePanel {
+		task ("Connect to AC") {
+			ACUtils.launchAC();
 
-		// TODO LPS-144038 CloseContentPerformancePanel pending implementation
+			ACSettings.takeTokenFromAnalyticsCloud();
 
+			ACUtils.launchDXP();
+
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Test Site Name");
+		}
+
+		task ("Add Display Page and mark it as default") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Document",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name",
+				subType = "Basic Document");
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			Button.clickPublish();
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+		}
+
+		task ("Add a document") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "DM Document Title",
+				groupName = "Test Site Name",
+				mimeType = "text/plain",
+				sourceFileName = "Document_1.txt");
+		}
+		
+		task ("Go to Content Dashboard and click on View Metrics") {
+			ContentDashboard.goToContentDashboard();
+
+			MouseOver(locator1 = "ACIndividualsDashboard#KNOWN_INDIVIDUAL_ATTRIBUTE",
+					key_individualAttribute = "DM Document Title");
+
+			Click(
+				locator1 = "ContentDashboard#QUICK_ACTION_BUTTON_MENU", 
+				keyButtonAction = "View Metrics");
+
+		}
+
+		task ("Assert the Content Performance is present") {
+			AssertVisible(locator1 = "ContentDashboard#CONTENT_PERFORMANCE_TITLE_PANEL");
+		}
+
+
+		task ("Exit the Content Performance panel and assert is not visible anymore"){
+			Click(locator1 = "ContentDashboard#CLOSE_CONTENT_PERFORMANCE_PANEL");
+			AssertNotVisible(locator1 = "ContentDashboard#CONTENT_PERFORMANCE_TITLE_PANEL");
+		}
+
+		task ("Close AC connection"){
+			ACUtils.tearDownDXP();
+
+			ACUtils.tearDownAC();
+		}
 	}
 
 	@description = "Given a document created in an Asset Library
@@ -3767,9 +3827,61 @@ definition {
 	@ignore = "true"
 	@priority = "4"
 	test ViewMetricsButtonKebabWhenDocumentHasDPT {
+		task ("Connect to AC") {
+			ACUtils.launchAC();
 
-		// TODO LPS-144038 ViewMetricsButtonKebabWhenDocumentHasDPT pending implementation
+			ACSettings.takeTokenFromAnalyticsCloud();
 
+			ACUtils.launchDXP();
+
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Test Site Name");
+		}
+
+		task ("Add Display Page and mark it as default") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Document",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name",
+				subType = "Basic Document");
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			Button.clickPublish();
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+		}
+
+		task ("Add a document") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "DM Document Title",
+				groupName = "Test Site Name",
+				mimeType = "text/plain",
+				sourceFileName = "Document_1.txt");
+		}
+		
+		task ("Go to Content Dashboard and click on View Mtrics in the kebab menu") {
+			ContentDashboard.goToContentDashboard();
+			
+			Click(locator1 = "Icon#VERTICAL_ELLIPSIS_BUTTON");
+
+			Click(
+				locator1 = "ACUtils#DROPDOWN_ITEM", 
+				key_dropdownItem = "View Metrics");
+		}
+
+		task ("Assert the Content Performance is present") {
+			AssertVisible(locator1 = "ContentDashboard#CONTENT_PERFORMANCE_TITLE_PANEL");
+		}
+
+		task ("Close AC connection"){
+			ACUtils.tearDownDXP();
+
+			ACUtils.tearDownAC();
+		}
 	}
 
 	@description = "LPS-136512 Given A document associated with a Display Page
@@ -3778,9 +3890,63 @@ definition {
 	@ignore = "true"
 	@priority = "4"
 	test ViewMetricsButtonWhenDocumentHasDPT {
+		task ("Connect to AC") {
+			ACUtils.launchAC();
 
-		// TODO LPS-144038 ViewMetricsButtonWhenDocumentHasDPT pending implementation
+			ACSettings.takeTokenFromAnalyticsCloud();
 
+			ACUtils.launchDXP();
+
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Test Site Name");
+		}
+
+		task ("Add Display Page and mark it as default") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Document",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name",
+				subType = "Basic Document");
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			Button.clickPublish();
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+		}
+
+		task ("Add a document") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "DM Document Title",
+				groupName = "Test Site Name",
+				mimeType = "text/plain",
+				sourceFileName = "Document_1.txt");
+		}
+		
+		task ("Go to Content Dashboard and click on View Mtrics") {
+			ContentDashboard.goToContentDashboard();
+
+			MouseOver(locator1 = "ACIndividualsDashboard#KNOWN_INDIVIDUAL_ATTRIBUTE",
+					key_individualAttribute = "DM Document Title");
+
+			Click(
+				locator1 = "ContentDashboard#QUICK_ACTION_BUTTON_MENU", 
+				keyButtonAction = "View Metrics");
+		}
+
+		task ("Assert the Content Performance is present") {
+			AssertVisible(locator1 = "ContentDashboard#CONTENT_PERFORMANCE_TITLE_PANEL");
+		}
+
+		task ("Close AC connection"){
+			ACUtils.tearDownDXP();
+
+			ACUtils.tearDownAC();
+		}
+		
 	}
 
 	@description = "LPS-116840 When the user clicks on the view icon of a content with an associated display page, the user is led to the view mode of the page"

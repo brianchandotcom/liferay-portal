@@ -130,6 +130,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CLOSE_CONTENT_PERFORMANCE_PANEL</td>
+	<td>//button[contains(@type,'button') and contains(@aria-label, 'Close')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CLOSE_INFO_PANEL_BUTTON</td>
 	<td>//*[contains(@class, 'component-action btn btn-monospaced btn-unstyled')]</td>
 	<td></td>
@@ -137,6 +142,11 @@
 <tr>
 	<td>CONTENT_CHART_SVG</td>
 	<td>//*[@class = 'recharts-surface']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_PERFORMANCE_TITLE_PANEL</td>
+	<td>//*[contains(@class, 'font-weight-bold mb-0 pr-2') and contains(text(), 'Content Performance')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -272,6 +282,16 @@
 <tr>
 	<td>PANEL_INFO_VIEW</td>
 	<td>//*[contains(@class,'link-outline-secondary')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>QUICK_ACTION_MENU</td>
+	<td>//a[contains(@class, 'component-action quick-action-item') and contains(@label, '${keyAction}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>QUICK_ACTION_BUTTON_MENU</td>
+	<td>//button[contains(@class, 'component-action quick-action-item') and contains(@label, '${keyButtonAction}')]</td>
 	<td></td>
 </tr>
 <tr>

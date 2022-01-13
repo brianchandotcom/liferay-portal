@@ -220,7 +220,7 @@ export function ColorPicker({
 
 			<ClayInput.Group
 				className={classNames('page-editor__color-picker', {
-					'has-warning': error,
+					'has-error': error,
 					'hovered':
 						!config.tokenReuseEnabled ||
 						activeColorPicker ||
@@ -478,10 +478,10 @@ export function ColorPicker({
 			</ClayInput.Group>
 
 			{config.tokenReuseEnabled && error && (
-				<div className="autofit-row mt-2 small text-warning">
+				<div className="autofit-row mt-2 small text-danger">
 					<div className="autofit-col">
 						<div className="autofit-section mr-2">
-							<ClayIcon symbol="warning-full" />
+							<ClayIcon symbol="exclamation-full" />
 						</div>
 					</div>
 

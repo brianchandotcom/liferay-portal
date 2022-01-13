@@ -18,14 +18,13 @@ html#{$cadmin-selector} {
 				border-radius: 4px 0 0 4px;
 			}
 
-			&.has-warning {
+			&.has-error {
 				.clay-color > .input-group-item > .input-group-text {
-					border-color: $cadmin-warning-l1;
+					border-color: $cadmin-danger-l1;
 				}
 			}
 
-			&:not(.has-warning),
-			&.has-warning:not(:hover):not(:focus-within):not(.hovered) {
+			&:not(:hover):not(:focus-within):not(.hovered) {
 				.input-group
 					> .input-group-item
 					> .form-control.page-editor__color-picker__autocomplete__input {

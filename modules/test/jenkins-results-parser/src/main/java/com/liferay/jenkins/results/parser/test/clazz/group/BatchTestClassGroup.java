@@ -22,6 +22,8 @@ import com.liferay.jenkins.results.parser.Job;
 import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
 import com.liferay.jenkins.results.parser.PortalTestClassJob;
 import com.liferay.jenkins.results.parser.TestSuiteJob;
+import com.liferay.jenkins.results.parser.job.property.JobProperty;
+import com.liferay.jenkins.results.parser.job.property.JobPropertyFactory;
 import com.liferay.jenkins.results.parser.test.clazz.TestClass;
 
 import java.io.File;
@@ -49,10 +51,12 @@ import org.json.JSONObject;
 public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 
 	public int getAxisCount() {
-		String axisCount = getFirstPropertyValue("test.batch.axis.count");
+		JobProperty jobProperty = getJobProperty("test.batch.axis.count");
 
-		if (axisCount != null) {
-			return Integer.parseInt(axisCount);
+		String jobPropertyValue = jobProperty.getValue();
+
+		if ((jobPropertyValue != null) && jobPropertyValue.matches("\\d+")) {
+			return Integer.parseInt(jobPropertyValue);
 		}
 
 		int testClassCount = testClasses.size();
@@ -382,6 +386,10 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		return portalTestClassJob.getJobName();
 	}
 
+	protected JobProperty getJobProperty(String basePropertyName) {
+		return _getJobProperty(basePropertyName, null, null, null, null, true);
+	}
+
 	protected List<PathMatcher> getPathMatchers(
 		String relativeGlobs, File workingDirectory) {
 
@@ -642,6 +650,19 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 
 		private List<Row> _csvReportRows = new ArrayList<>();
 
+	}
+
+	private JobProperty _getJobProperty(
+		String basePropertyName, String testSuiteName, String testBatchName,
+		File testBaseDir, JobProperty.Type type, boolean useBasePropertyName) {
+
+		if (testBatchName == null) {
+			testBatchName = getBatchName();
+		}
+
+		return JobPropertyFactory.newJobProperty(
+			basePropertyName, testSuiteName, testBatchName, getJob(),
+			testBaseDir, type, useBasePropertyName);
 	}
 
 	private List<File> _getRequiredModuleDirs(

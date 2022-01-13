@@ -154,7 +154,7 @@ public class JavaConstructorParametersCheck extends BaseJavaTermCheck {
 			String nextStatementsBlock = _getNextStatementsBlock(
 				content, matcher.group(1), matcher.start(6));
 
-			if (Validator.isNotNull(nextStatementsBlock) &&
+			if (Validator.isNull(nextStatementsBlock) ||
 				!nextStatementsBlock.matches(
 					StringBundler.concat(
 						"(?s).*\\W(", matcher.group(2), ")?", name2,
@@ -162,7 +162,7 @@ public class JavaConstructorParametersCheck extends BaseJavaTermCheck {
 
 				return StringUtil.replaceFirst(
 					content, StringPool.NEW_LINE, StringPool.BLANK,
-					matcher.start(1));
+					matcher.start(4));
 			}
 		}
 

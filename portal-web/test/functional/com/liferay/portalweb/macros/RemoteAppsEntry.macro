@@ -101,6 +101,12 @@ definition {
 			value1 = "${entryURL}");
 	}
 
+	macro addPortletCategory {
+		Select(
+			locator1 = "RemoteAppsEntry#REMOTE_APPS_PORTLET_CATEGORY_NAME",
+			value1 = "${categoryName}");
+	}
+
 	macro addURLRow {
 		Click(
 			key_id = "customElementURLs",

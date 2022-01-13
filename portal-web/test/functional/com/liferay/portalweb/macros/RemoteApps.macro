@@ -71,6 +71,18 @@ definition {
 		PortletEntry.publish();
 	}
 
+	macro addEntryWithPortletCategory {
+		LexiconEntry.gotoAdd();
+
+		RemoteAppsEntry.addEntry(
+			entryName = "Test Remote App",
+			entryURL = "http://www.liferay.com");
+
+		RemoteAppsEntry.addPortletCategory(categoryName = "Collaboration");
+
+		PortletEntry.publish();
+	}
+
 	macro assertCustomElementFields {
 		AssertTextEquals(
 			custom_entryName = "${entryName}",

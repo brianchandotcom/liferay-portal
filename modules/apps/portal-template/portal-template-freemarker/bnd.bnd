@@ -11,7 +11,9 @@ Import-Package:\
 	!org.apache.crimson.jaxp,\
 	!org.apache.log,\
 	!org.apache.xml.resolver.*,\
+	!org.apache.xml.utils,\
 	!org.apache.xmlbeans.*,\
+	!org.apache.xpath.*,\
 	\
 	!org.jdom.*,\
 	\

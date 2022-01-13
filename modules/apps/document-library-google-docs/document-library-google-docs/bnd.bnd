@@ -7,6 +7,8 @@ Import-Package:\
 	!com.sun.org.apache.xpath.internal.objects,\
 	\
 	!org.apache.log,\
+	!org.apache.xml.utils,\
+	!org.apache.xpath.*,\
 	\
 	!org.jdom.*,\
 	\

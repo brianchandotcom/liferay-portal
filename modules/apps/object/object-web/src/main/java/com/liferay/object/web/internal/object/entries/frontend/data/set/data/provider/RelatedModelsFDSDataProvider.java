@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.object.web.internal.object.entries.frontend.taglib.clay.data.set.data.provider;
+package com.liferay.object.web.internal.object.entries.frontend.data.set.data.provider;
 
-import com.liferay.frontend.taglib.clay.data.Filter;
-import com.liferay.frontend.taglib.clay.data.Pagination;
-import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
+import com.liferay.frontend.data.set.provider.FDSDataProvider;
+import com.liferay.frontend.data.set.provider.search.FDSKeywords;
+import com.liferay.frontend.data.set.provider.search.FDSPagination;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectRelationship;
@@ -27,7 +27,7 @@ import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.web.internal.object.entries.constants.ObjectEntriesFDSNames;
-import com.liferay.object.web.internal.object.entries.frontend.taglib.clay.data.set.data.model.RelatedModel;
+import com.liferay.object.web.internal.object.entries.frontend.data.set.data.model.RelatedModel;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -44,16 +44,16 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marco Leo
  */
 @Component(
-	property = "clay.data.provider.key=" + ObjectEntriesFDSNames.RELATED_MODELS,
-	service = ClayDataSetDataProvider.class
+	property = "fds.data.provider.key=" + ObjectEntriesFDSNames.RELATED_MODELS,
+	service = FDSDataProvider.class
 )
-public class RelatedModelsDataSetDataProvider
-	implements ClayDataSetDataProvider<RelatedModel> {
+public class RelatedModelsFDSDataProvider
+	implements FDSDataProvider<RelatedModel> {
 
 	@Override
 	public List<RelatedModel> getItems(
-			HttpServletRequest httpServletRequest, Filter filter,
-			Pagination pagination, Sort sort)
+			FDSKeywords fdsKeywords, FDSPagination fdsPagination,
+			HttpServletRequest httpServletRequest, Sort sort)
 		throws PortalException {
 
 		long objectRelationshipId = ParamUtil.getLong(
@@ -82,14 +82,15 @@ public class RelatedModelsDataSetDataProvider
 			objectRelatedModelsProvider.getRelatedModels(
 				objectScopeProvider.getGroupId(httpServletRequest),
 				objectRelationshipId, objectEntryId,
-				pagination.getStartPosition(), pagination.getEndPosition()),
+				fdsPagination.getStartPosition(),
+				fdsPagination.getEndPosition()),
 			objectEntry -> new RelatedModel(
 				objectEntry.getObjectEntryId(), objectEntry.getTitleValue()));
 	}
 
 	@Override
 	public int getItemsCount(
-			HttpServletRequest httpServletRequest, Filter filter)
+			FDSKeywords fdsKeywords, HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		long objectRelationshipId = ParamUtil.getLong(

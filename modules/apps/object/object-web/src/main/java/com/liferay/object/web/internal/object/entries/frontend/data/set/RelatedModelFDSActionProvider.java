@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.object.web.internal.object.entries.frontend.taglib.clay.data.set;
+package com.liferay.object.web.internal.object.entries.frontend.data.set;
 
-import com.liferay.frontend.taglib.clay.data.set.ClayDataSetActionProvider;
+import com.liferay.frontend.data.set.provider.FDSActionProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.object.model.ObjectDefinition;
@@ -22,7 +22,7 @@ import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.web.internal.object.entries.constants.ObjectEntriesFDSNames;
-import com.liferay.object.web.internal.object.entries.frontend.taglib.clay.data.set.data.model.RelatedModel;
+import com.liferay.object.web.internal.object.entries.frontend.data.set.data.model.RelatedModel;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -44,15 +44,14 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marco Leo
  */
 @Component(
-	property = "clay.data.provider.key=" + ObjectEntriesFDSNames.RELATED_MODELS,
-	service = ClayDataSetActionProvider.class
+	property = "fds.data.provider.key=" + ObjectEntriesFDSNames.RELATED_MODELS,
+	service = FDSActionProvider.class
 )
-public class RelatedModelDataSetActionProvider
-	implements ClayDataSetActionProvider {
+public class RelatedModelFDSActionProvider implements FDSActionProvider {
 
 	@Override
 	public List<DropdownItem> getDropdownItems(
-			HttpServletRequest httpServletRequest, long groupId, Object model)
+			long groupId, HttpServletRequest httpServletRequest, Object model)
 		throws PortalException {
 
 		RelatedModel relatedModel = (RelatedModel)model;

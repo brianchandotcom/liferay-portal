@@ -49,7 +49,6 @@ import java.nio.charset.CodingErrorAction;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -751,7 +750,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	private SourceFormatterArgs _sourceFormatterArgs;
 	private SourceFormatterConfiguration _sourceFormatterConfiguration;
 	private SourceFormatterExcludes _sourceFormatterExcludes;
-	private Map<String, Set<SourceFormatterMessage>>
+	private final Map<String, Set<SourceFormatterMessage>>
 		_sourceFormatterMessagesMap = new ConcurrentHashMap<>();
 	private SourceFormatterSuppressions _sourceFormatterSuppressions;
 	private final List<SourceMismatchException> _sourceMismatchExceptions =

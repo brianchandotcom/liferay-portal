@@ -496,9 +496,14 @@
 	<td></td>
 </tr>
 <tr>
-    <td>TRACK_WORKFLOW_DROPDOWN</td>
-    <td>//div[@class='dropdown-menu show']//button[@class='dropdown-item'][contains(text(),'Track Workflow')]</td>
-    <td></td>
+	<td>TRACK_WORKFLOW_DROPDOWN</td>
+	<td>//div[@class='dropdown-menu show']//button[@class='dropdown-item'][contains(text(),'Track Workflow')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NODE_CIRCLE_ICON</td>
+	<td>//div[contains(@class, 'current-task') and contains(@title,'${currentNode}')]//*[name()='svg'][contains(@class,'lexicon-icon')]</td>
+	<td></td>
 </tr>
 </tbody>
 </table>

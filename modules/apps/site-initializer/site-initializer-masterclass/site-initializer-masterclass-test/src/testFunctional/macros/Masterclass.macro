@@ -6,23 +6,9 @@ definition {
 			panel = "Control Panel",
 			portlet = "Sites");
 
-		LexiconEntry.gotoAdd();
-
-		LexiconCard.clickCard(card = "Masterclass");
-
-		PortletEntry.inputName(name = "${siteName}");
-
-		Modal.save();
-
-		while (IsElementNotPresent(locator1 = "Raylife#SITE_TITLE", siteTitle = "${siteName}")) {
-			WaitForPageLoad();
-		}
-
-		Click(locator1 = "ProductMenu#TOGGLE");
-
-		WaitForElementPresent(
-			locator1 = "Raylife#SITE_TITLE",
-			siteTitle = "${siteName}");
+		Site.addSiteTemplateCP(
+			siteName = "${siteName}",
+			siteTemplateName = "Masterclass");
 	}
 
 	macro createAccount {

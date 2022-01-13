@@ -18,6 +18,7 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.frontend.icons.web.internal.model.FrontendIconsResource;
 import com.liferay.frontend.icons.web.internal.model.FrontendIconsResourcePack;
+import com.liferay.frontend.icons.web.internal.util.ClayFrontendIconsResourcePackUtil;
 import com.liferay.frontend.icons.web.internal.util.SVGUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -93,6 +94,9 @@ public class FrontendIconsResourcePackRepository {
 
 		List<FrontendIconsResourcePack> frontendIconsResourcePacks =
 			new ArrayList<>();
+
+		frontendIconsResourcePacks.add(
+			ClayFrontendIconsResourcePackUtil.getFrontendIconResourcePack());
 
 		Company company = _companyLocalService.getCompany(companyId);
 

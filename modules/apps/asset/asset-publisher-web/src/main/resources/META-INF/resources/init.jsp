@@ -69,6 +69,7 @@ page import="com.liferay.asset.util.comparator.AssetRendererFactoryTypeNameCompa
 page import="com.liferay.document.library.kernel.document.conversion.DocumentConversionUtil" %><%@
 page import="com.liferay.dynamic.data.mapping.model.DDMStructure" %><%@
 page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem" %><%@
+page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.SelectOption" %><%@
 page import="com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType" %><%@
 page import="com.liferay.item.selector.ItemSelector" %><%@
 page import="com.liferay.item.selector.criteria.GroupItemSelectorReturnType" %><%@
@@ -81,7 +82,6 @@ page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.exception.NoSuchGroupException" %><%@
 page import="com.liferay.portal.kernel.exception.NoSuchModelException" %><%@
-page import="com.liferay.portal.kernel.json.JSONUtil" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.log.Log" %><%@
 page import="com.liferay.portal.kernel.log.LogFactoryUtil" %><%@
@@ -141,7 +141,8 @@ page import="java.util.Objects" %><%@
 page import="java.util.Set" %>
 
 <%@ page import="javax.portlet.PortletMode" %><%@
-page import="javax.portlet.PortletURL" %>
+page import="javax.portlet.PortletURL" %><%@
+page import="javax.portlet.ResourceURL" %>
 
 <liferay-frontend:defineObjects />
 

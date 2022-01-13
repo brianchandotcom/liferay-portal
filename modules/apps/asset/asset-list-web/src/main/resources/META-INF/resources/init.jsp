@@ -61,6 +61,7 @@ page import="com.liferay.asset.list.web.internal.util.comparator.ClassTypeNameCo
 page import="com.liferay.asset.util.comparator.AssetRendererFactoryTypeNameComparator" %><%@
 page import="com.liferay.dynamic.data.mapping.model.DDMStructure" %><%@
 page import="com.liferay.dynamic.data.mapping.storage.Field" %><%@
+page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.SelectOption" %><%@
 page import="com.liferay.frontend.taglib.servlet.taglib.util.EmptyResultMessageKeys" %><%@
 page import="com.liferay.info.field.InfoFieldValue" %><%@
 page import="com.liferay.info.item.InfoItemFieldValues" %><%@
@@ -69,7 +70,6 @@ page import="com.liferay.petra.portlet.url.builder.PortletURLBuilder" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.exception.NoSuchModelException" %><%@
-page import="com.liferay.portal.kernel.json.JSONUtil" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.model.ClassName" %><%@
 page import="com.liferay.portal.kernel.model.Group" %><%@
@@ -104,7 +104,8 @@ page import="java.util.List" %><%@
 page import="java.util.Map" %><%@
 page import="java.util.Objects" %>
 
-<%@ page import="javax.portlet.PortletURL" %>
+<%@ page import="javax.portlet.PortletURL" %><%@
+page import="javax.portlet.ResourceURL" %>
 
 <liferay-frontend:defineObjects />
 

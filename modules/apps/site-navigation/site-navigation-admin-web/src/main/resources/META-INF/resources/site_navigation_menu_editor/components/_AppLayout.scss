@@ -36,6 +36,10 @@ $sidebarWidth: 320px;
 		.rtl & {
 			transition: padding-left ease 0.5s;
 		}
+
+		.taglib-empty-result-message {
+			padding: 80px 16px 16px;
+		}
 	}
 
 	&-sidebar {

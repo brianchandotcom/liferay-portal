@@ -12,18 +12,20 @@
  * details.
  */
 
-package com.liferay.frontend.icons.web.internal.display;
+package com.liferay.frontend.icons.web.internal.portal.settings.configuration.admin.display;
 
 import com.liferay.configuration.admin.display.ConfigurationScreen;
+import com.liferay.frontend.icons.web.internal.display.context.FrontendIconsConfigurationDisplayContext;
+import com.liferay.frontend.icons.web.internal.repository.FrontendIconsResourcePackRepository;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import java.util.Locale;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -65,10 +67,27 @@ public class FrontendIconsConfigurationScreen implements ConfigurationScreen {
 			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		PrintWriter printWriter = httpServletResponse.getWriter();
+		httpServletRequest.setAttribute(
+			FrontendIconsConfigurationDisplayContext.class.getName(),
+			new FrontendIconsConfigurationDisplayContext(
+				_frontendIconsResourcePackRepository));
 
-		printWriter.write("<div>Icons admin</div>");
+		try {
+			RequestDispatcher requestDispatcher =
+				_servletContext.getRequestDispatcher(
+					"/portal_settings/frontend_icons_configuration.jsp");
+
+			requestDispatcher.include(httpServletRequest, httpServletResponse);
+		}
+		catch (Exception exception) {
+			throw new IOException(
+				"Unable to render frontend_icons_configuration.jsp", exception);
+		}
 	}
+
+	@Reference
+	private FrontendIconsResourcePackRepository
+		_frontendIconsResourcePackRepository;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.frontend.icons.web)",

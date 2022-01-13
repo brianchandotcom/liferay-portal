@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.frontend.icons.web.internal.category;
+package com.liferay.frontend.icons.web.internal.portal.settings.configuration.admin.category;
 
 import com.liferay.configuration.admin.category.ConfigurationCategory;
 

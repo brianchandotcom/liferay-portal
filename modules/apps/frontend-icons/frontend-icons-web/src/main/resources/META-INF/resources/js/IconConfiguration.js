@@ -12,23 +12,8 @@
  * details.
  */
 
-package com.liferay.frontend.icons.web.internal.category;
+import React from 'react';
 
-import aQute.bnd.annotation.metatype.Meta;
-
-import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
-
-/**
- * @author Bryce Osterhaus
- */
-@ExtendedObjectClassDefinition(
-	category = "frontend-icons", generateUI = false,
-	scope = ExtendedObjectClassDefinition.Scope.COMPANY
-)
-@Meta.OCD(
-	id = "com.liferay.frontend.icons.web.internal.category.FrontendIconsConfiguration",
-	localization = "content/Language",
-	name = "frontend-icons-configuration-name"
-)
-public interface FrontendIconsConfiguration {
+export default function IconConfiguration() {
+	return <div>icon config </div>;
 }

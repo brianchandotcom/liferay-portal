@@ -20,6 +20,7 @@
 
 <%@ taglib uri="http://liferay.com/tld/adaptive-media-image" prefix="liferay-adaptive-media" %><%@
 taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
 taglib uri="http://liferay.com/tld/commerce" prefix="liferay-commerce" %><%@
 taglib uri="http://liferay.com/tld/commerce-product" prefix="liferay-commerce-product" %><%@
 taglib uri="http://liferay.com/tld/commerce-ui" prefix="commerce-ui" %><%@
@@ -54,6 +55,7 @@ page import="com.liferay.commerce.product.content.web.internal.display.context.C
 page import="com.liferay.commerce.product.content.web.internal.display.context.CPContentConfigurationDisplayContext" %><%@
 page import="com.liferay.commerce.product.content.web.internal.display.context.CPPublisherConfigurationDisplayContext" %><%@
 page import="com.liferay.commerce.product.content.web.internal.display.context.CPPublisherDisplayContext" %><%@
+page import="com.liferay.commerce.product.content.web.internal.frontend.constants.CPContentDataSetConstants" %><%@
 page import="com.liferay.commerce.product.content.web.internal.portlet.CPCompareContentMiniPortlet" %><%@
 page import="com.liferay.commerce.product.content.web.internal.portlet.CPCompareContentPortlet" %><%@
 page import="com.liferay.commerce.product.content.web.internal.portlet.CPContentPortlet" %><%@

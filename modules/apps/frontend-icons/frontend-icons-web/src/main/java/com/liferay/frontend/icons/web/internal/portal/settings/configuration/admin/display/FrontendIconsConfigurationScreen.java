@@ -70,7 +70,7 @@ public class FrontendIconsConfigurationScreen implements ConfigurationScreen {
 		httpServletRequest.setAttribute(
 			FrontendIconsConfigurationDisplayContext.class.getName(),
 			new FrontendIconsConfigurationDisplayContext(
-				_frontendIconsResourcePackRepository));
+				_frontendIconsResourcePackRepository, httpServletRequest));
 
 		try {
 			RequestDispatcher requestDispatcher =

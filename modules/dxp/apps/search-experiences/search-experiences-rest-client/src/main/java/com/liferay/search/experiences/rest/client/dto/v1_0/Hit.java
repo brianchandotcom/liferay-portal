@@ -15,7 +15,7 @@
 package com.liferay.search.experiences.rest.client.dto.v1_0;
 
 import com.liferay.search.experiences.rest.client.function.UnsafeSupplier;
-import com.liferay.search.experiences.rest.client.serdes.v1_0.DocumentSerDes;
+import com.liferay.search.experiences.rest.client.serdes.v1_0.HitSerDes;
 
 import java.io.Serializable;
 
@@ -29,10 +29,10 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class Document implements Cloneable, Serializable {
+public class Hit implements Cloneable, Serializable {
 
-	public static Document toDTO(String json) {
-		return DocumentSerDes.toDTO(json);
+	public static Hit toDTO(String json) {
+		return HitSerDes.toDTO(json);
 	}
 
 	public Map<String, DocumentField> getDocumentFields() {
@@ -78,17 +78,34 @@ public class Document implements Cloneable, Serializable {
 
 	protected String explanation;
 
-	public Double getScore() {
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public void setId(UnsafeSupplier<String, Exception> idUnsafeSupplier) {
+		try {
+			id = idUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String id;
+
+	public Float getScore() {
 		return score;
 	}
 
-	public void setScore(Double score) {
+	public void setScore(Float score) {
 		this.score = score;
 	}
 
-	public void setScore(
-		UnsafeSupplier<Double, Exception> scoreUnsafeSupplier) {
-
+	public void setScore(UnsafeSupplier<Float, Exception> scoreUnsafeSupplier) {
 		try {
 			score = scoreUnsafeSupplier.get();
 		}
@@ -97,11 +114,32 @@ public class Document implements Cloneable, Serializable {
 		}
 	}
 
-	protected Double score;
+	protected Float score;
+
+	public Long getVersion() {
+		return version;
+	}
+
+	public void setVersion(Long version) {
+		this.version = version;
+	}
+
+	public void setVersion(
+		UnsafeSupplier<Long, Exception> versionUnsafeSupplier) {
+
+		try {
+			version = versionUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long version;
 
 	@Override
-	public Document clone() throws CloneNotSupportedException {
-		return (Document)super.clone();
+	public Hit clone() throws CloneNotSupportedException {
+		return (Hit)super.clone();
 	}
 
 	@Override
@@ -110,13 +148,13 @@ public class Document implements Cloneable, Serializable {
 			return true;
 		}
 
-		if (!(object instanceof Document)) {
+		if (!(object instanceof Hit)) {
 			return false;
 		}
 
-		Document document = (Document)object;
+		Hit hit = (Hit)object;
 
-		return Objects.equals(toString(), document.toString());
+		return Objects.equals(toString(), hit.toString());
 	}
 
 	@Override
@@ -127,7 +165,7 @@ public class Document implements Cloneable, Serializable {
 	}
 
 	public String toString() {
-		return DocumentSerDes.toJSON(this);
+		return HitSerDes.toJSON(this);
 	}
 
 }

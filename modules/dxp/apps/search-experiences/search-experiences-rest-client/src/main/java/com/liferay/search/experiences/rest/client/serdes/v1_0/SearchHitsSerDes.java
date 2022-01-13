@@ -14,7 +14,8 @@
 
 package com.liferay.search.experiences.rest.client.serdes.v1_0;
 
-import com.liferay.search.experiences.rest.client.dto.v1_0.Document;
+import com.liferay.search.experiences.rest.client.dto.v1_0.Hit;
+import com.liferay.search.experiences.rest.client.dto.v1_0.SearchHits;
 import com.liferay.search.experiences.rest.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -22,6 +23,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -30,22 +32,22 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class DocumentSerDes {
+public class SearchHitsSerDes {
 
-	public static Document toDTO(String json) {
-		DocumentJSONParser documentJSONParser = new DocumentJSONParser();
+	public static SearchHits toDTO(String json) {
+		SearchHitsJSONParser searchHitsJSONParser = new SearchHitsJSONParser();
 
-		return documentJSONParser.parseToDTO(json);
+		return searchHitsJSONParser.parseToDTO(json);
 	}
 
-	public static Document[] toDTOs(String json) {
-		DocumentJSONParser documentJSONParser = new DocumentJSONParser();
+	public static SearchHits[] toDTOs(String json) {
+		SearchHitsJSONParser searchHitsJSONParser = new SearchHitsJSONParser();
 
-		return documentJSONParser.parseToDTOs(json);
+		return searchHitsJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(Document document) {
-		if (document == null) {
+	public static String toJSON(SearchHits searchHits) {
+		if (searchHits == null) {
 			return "null";
 		}
 
@@ -53,38 +55,44 @@ public class DocumentSerDes {
 
 		sb.append("{");
 
-		if (document.getDocumentFields() != null) {
+		if (searchHits.getHits() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"documentFields\": ");
+			sb.append("\"hits\": ");
 
-			sb.append(_toJSON(document.getDocumentFields()));
+			sb.append("[");
+
+			for (int i = 0; i < searchHits.getHits().length; i++) {
+				sb.append(String.valueOf(searchHits.getHits()[i]));
+
+				if ((i + 1) < searchHits.getHits().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
-		if (document.getExplanation() != null) {
+		if (searchHits.getMaxScore() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"explanation\": ");
+			sb.append("\"maxScore\": ");
 
-			sb.append("\"");
-
-			sb.append(_escape(document.getExplanation()));
-
-			sb.append("\"");
+			sb.append(searchHits.getMaxScore());
 		}
 
-		if (document.getScore() != null) {
+		if (searchHits.getTotalHits() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"score\": ");
+			sb.append("\"totalHits\": ");
 
-			sb.append(document.getScore());
+			sb.append(searchHits.getTotalHits());
 		}
 
 		sb.append("}");
@@ -93,76 +101,82 @@ public class DocumentSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		DocumentJSONParser documentJSONParser = new DocumentJSONParser();
+		SearchHitsJSONParser searchHitsJSONParser = new SearchHitsJSONParser();
 
-		return documentJSONParser.parseToMap(json);
+		return searchHitsJSONParser.parseToMap(json);
 	}
 
-	public static Map<String, String> toMap(Document document) {
-		if (document == null) {
+	public static Map<String, String> toMap(SearchHits searchHits) {
+		if (searchHits == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (document.getDocumentFields() == null) {
-			map.put("documentFields", null);
+		if (searchHits.getHits() == null) {
+			map.put("hits", null);
 		}
 		else {
-			map.put(
-				"documentFields", String.valueOf(document.getDocumentFields()));
+			map.put("hits", String.valueOf(searchHits.getHits()));
 		}
 
-		if (document.getExplanation() == null) {
-			map.put("explanation", null);
+		if (searchHits.getMaxScore() == null) {
+			map.put("maxScore", null);
 		}
 		else {
-			map.put("explanation", String.valueOf(document.getExplanation()));
+			map.put("maxScore", String.valueOf(searchHits.getMaxScore()));
 		}
 
-		if (document.getScore() == null) {
-			map.put("score", null);
+		if (searchHits.getTotalHits() == null) {
+			map.put("totalHits", null);
 		}
 		else {
-			map.put("score", String.valueOf(document.getScore()));
+			map.put("totalHits", String.valueOf(searchHits.getTotalHits()));
 		}
 
 		return map;
 	}
 
-	public static class DocumentJSONParser extends BaseJSONParser<Document> {
+	public static class SearchHitsJSONParser
+		extends BaseJSONParser<SearchHits> {
 
 		@Override
-		protected Document createDTO() {
-			return new Document();
+		protected SearchHits createDTO() {
+			return new SearchHits();
 		}
 
 		@Override
-		protected Document[] createDTOArray(int size) {
-			return new Document[size];
+		protected SearchHits[] createDTOArray(int size) {
+			return new SearchHits[size];
 		}
 
 		@Override
 		protected void setField(
-			Document document, String jsonParserFieldName,
+			SearchHits searchHits, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "documentFields")) {
+			if (Objects.equals(jsonParserFieldName, "hits")) {
 				if (jsonParserFieldValue != null) {
-					document.setDocumentFields(
-						(Map)DocumentSerDes.toMap(
-							(String)jsonParserFieldValue));
+					searchHits.setHits(
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> HitSerDes.toDTO((String)object)
+						).toArray(
+							size -> new Hit[size]
+						));
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "explanation")) {
+			else if (Objects.equals(jsonParserFieldName, "maxScore")) {
 				if (jsonParserFieldValue != null) {
-					document.setExplanation((String)jsonParserFieldValue);
+					searchHits.setMaxScore(
+						Float.valueOf((String)jsonParserFieldValue));
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "score")) {
+			else if (Objects.equals(jsonParserFieldName, "totalHits")) {
 				if (jsonParserFieldValue != null) {
-					document.setScore(
-						Double.valueOf((String)jsonParserFieldValue));
+					searchHits.setTotalHits(
+						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 		}

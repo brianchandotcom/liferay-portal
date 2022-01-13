@@ -60,63 +60,6 @@ public class SearchResponse implements Serializable {
 	}
 
 	@Schema
-	@Valid
-	public Document[] getDocuments() {
-		return documents;
-	}
-
-	public void setDocuments(Document[] documents) {
-		this.documents = documents;
-	}
-
-	@JsonIgnore
-	public void setDocuments(
-		UnsafeSupplier<Document[], Exception> documentsUnsafeSupplier) {
-
-		try {
-			documents = documentsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Document[] documents;
-
-	@Schema
-	public Double getMaxScore() {
-		return maxScore;
-	}
-
-	public void setMaxScore(Double maxScore) {
-		this.maxScore = maxScore;
-	}
-
-	@JsonIgnore
-	public void setMaxScore(
-		UnsafeSupplier<Double, Exception> maxScoreUnsafeSupplier) {
-
-		try {
-			maxScore = maxScoreUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Double maxScore;
-
-	@Schema
 	public Integer getPage() {
 		return page;
 	}
@@ -286,6 +229,35 @@ public class SearchResponse implements Serializable {
 
 	@Schema
 	@Valid
+	public SearchHits getSearchHits() {
+		return searchHits;
+	}
+
+	public void setSearchHits(SearchHits searchHits) {
+		this.searchHits = searchHits;
+	}
+
+	@JsonIgnore
+	public void setSearchHits(
+		UnsafeSupplier<SearchHits, Exception> searchHitsUnsafeSupplier) {
+
+		try {
+			searchHits = searchHitsUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected SearchHits searchHits;
+
+	@Schema
+	@Valid
 	public SearchRequest getSearchRequest() {
 		return searchRequest;
 	}
@@ -313,34 +285,6 @@ public class SearchResponse implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected SearchRequest searchRequest;
 
-	@Schema
-	public Integer getTotalHits() {
-		return totalHits;
-	}
-
-	public void setTotalHits(Integer totalHits) {
-		this.totalHits = totalHits;
-	}
-
-	@JsonIgnore
-	public void setTotalHits(
-		UnsafeSupplier<Integer, Exception> totalHitsUnsafeSupplier) {
-
-		try {
-			totalHits = totalHitsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Integer totalHits;
-
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -367,36 +311,6 @@ public class SearchResponse implements Serializable {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
-
-		if (documents != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"documents\": ");
-
-			sb.append("[");
-
-			for (int i = 0; i < documents.length; i++) {
-				sb.append(String.valueOf(documents[i]));
-
-				if ((i + 1) < documents.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
-		if (maxScore != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"maxScore\": ");
-
-			sb.append(maxScore);
-		}
 
 		if (page != null) {
 			if (sb.length() > 1) {
@@ -487,6 +401,16 @@ public class SearchResponse implements Serializable {
 			sb.append("\"");
 		}
 
+		if (searchHits != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"searchHits\": ");
+
+			sb.append(String.valueOf(searchHits));
+		}
+
 		if (searchRequest != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -495,16 +419,6 @@ public class SearchResponse implements Serializable {
 			sb.append("\"searchRequest\": ");
 
 			sb.append(String.valueOf(searchRequest));
-		}
-
-		if (totalHits != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"totalHits\": ");
-
-			sb.append(totalHits);
 		}
 
 		sb.append("}");

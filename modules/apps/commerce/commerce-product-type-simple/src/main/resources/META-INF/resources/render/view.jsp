@@ -124,8 +124,8 @@ long commerceAccountId = CommerceUtil.getCommerceAccountId((CommerceContext)requ
 	</div>
 
 	<%
-	List<CPMedia> cpAttachmentFileEntries = cpContentHelper.getCPAttachmentFileEntries(cpDefinitionId, themeDisplay);
 	List<CPDefinitionSpecificationOptionValue> cpDefinitionSpecificationOptionValues = cpContentHelper.getCPDefinitionSpecificationOptionValues(cpDefinitionId);
+	List<CPMedia> cpMedias = cpContentHelper.getCPMedias(cpDefinitionId, themeDisplay);
 	List<CPOptionCategory> cpOptionCategories = cpContentHelper.getCPOptionCategories(company.getCompanyId());
 	%>
 
@@ -147,7 +147,7 @@ long commerceAccountId = CommerceUtil.getCommerceAccountId((CommerceContext)requ
 						</li>
 					</c:if>
 
-					<c:if test="<%= !cpAttachmentFileEntries.isEmpty() %>">
+					<c:if test="<%= !cpMedias.isEmpty() %>">
 						<li class="nav-item" role="presentation">
 							<a aria-controls="<portlet:namespace />attachments" aria-expanded="false" class="nav-link" data-toggle="tab" href="#<portlet:namespace />attachments" role="tab">
 								<%= LanguageUtil.get(resourceBundle, "attachments") %>
@@ -223,21 +223,21 @@ long commerceAccountId = CommerceUtil.getCommerceAccountId((CommerceContext)requ
 						</div>
 					</c:if>
 
-					<c:if test="<%= !cpAttachmentFileEntries.isEmpty() %>">
+					<c:if test="<%= !cpMedias.isEmpty() %>">
 						<div class="tab-pane" id="<portlet:namespace />attachments">
 							<div class="table-responsive">
 								<table class="table table-bordered table-striped">
 
 									<%
-									for (CPMedia curCPMedia : cpAttachmentFileEntries) {
+									for (CPMedia cpMedia : cpMedias) {
 									%>
 
 										<tr>
 											<td>
-												<span><%= HtmlUtil.escape(curCPMedia.getTitle()) %></span>
+												<span><%= HtmlUtil.escape(cpMedia.getTitle()) %></span>
 
 												<span>
-													<aui:icon cssClass="icon-monospaced" image="download" markupView="lexicon" target="_blank" url="<%= curCPMedia.getDownloadURL() %>" />
+													<aui:icon cssClass="icon-monospaced" image="download" markupView="lexicon" target="_blank" url="<%= cpMedia.getDownloadURL() %>" />
 												</span>
 											</td>
 										</tr>

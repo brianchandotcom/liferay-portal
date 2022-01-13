@@ -19,11 +19,14 @@ import com.liferay.frontend.icons.web.internal.display.context.FrontendIconsConf
 import com.liferay.frontend.icons.web.internal.repository.FrontendIconsResourcePackRepository;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.io.IOException;
 
 import java.util.Locale;
+
+import javax.portlet.RenderResponse;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -70,7 +73,9 @@ public class FrontendIconsConfigurationScreen implements ConfigurationScreen {
 		httpServletRequest.setAttribute(
 			FrontendIconsConfigurationDisplayContext.class.getName(),
 			new FrontendIconsConfigurationDisplayContext(
-				_frontendIconsResourcePackRepository, httpServletRequest));
+				_frontendIconsResourcePackRepository, httpServletRequest,
+				(RenderResponse)httpServletRequest.getAttribute(
+					JavaConstants.JAVAX_PORTLET_RESPONSE)));
 
 		try {
 			RequestDispatcher requestDispatcher =

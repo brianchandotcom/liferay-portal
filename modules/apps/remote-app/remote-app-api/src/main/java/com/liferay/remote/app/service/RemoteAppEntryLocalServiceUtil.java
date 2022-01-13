@@ -429,7 +429,7 @@ public class RemoteAppEntryLocalServiceUtil {
 	}
 
 	public static RemoteAppEntry updateCustomElementRemoteAppEntry(
-			long remoteAppEntryId, String customElementCSSURLs,
+			long userId, long remoteAppEntryId, String customElementCSSURLs,
 			String customElementHTMLElementName, String customElementURLs,
 			String description, String friendlyURLMapping,
 			Map<java.util.Locale, String> nameMap, String portletCategoryName,
@@ -437,22 +437,22 @@ public class RemoteAppEntryLocalServiceUtil {
 		throws PortalException {
 
 		return getService().updateCustomElementRemoteAppEntry(
-			remoteAppEntryId, customElementCSSURLs,
+			userId, remoteAppEntryId, customElementCSSURLs,
 			customElementHTMLElementName, customElementURLs, description,
 			friendlyURLMapping, nameMap, portletCategoryName, properties,
 			sourceCodeURL);
 	}
 
 	public static RemoteAppEntry updateIFrameRemoteAppEntry(
-			long remoteAppEntryId, String description,
+			long userId, long remoteAppEntryId, String description,
 			String friendlyURLMapping, String iFrameURL,
 			Map<java.util.Locale, String> nameMap, String portletCategoryName,
 			String properties, String sourceCodeURL)
 		throws PortalException {
 
 		return getService().updateIFrameRemoteAppEntry(
-			remoteAppEntryId, description, friendlyURLMapping, iFrameURL,
-			nameMap, portletCategoryName, properties, sourceCodeURL);
+			userId, remoteAppEntryId, description, friendlyURLMapping,
+			iFrameURL, nameMap, portletCategoryName, properties, sourceCodeURL);
 	}
 
 	/**

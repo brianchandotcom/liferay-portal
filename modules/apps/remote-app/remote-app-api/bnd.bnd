@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Remote App API
 Bundle-SymbolicName: com.liferay.remote.app.api
-Bundle-Version: 6.0.1
+Bundle-Version: 7.0.0
 Export-Package:\
 	com.liferay.remote.app.constants,\
 	com.liferay.remote.app.deployer,\

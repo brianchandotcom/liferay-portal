@@ -45,17 +45,17 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("Document")
+@GraphQLName("Hit")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "Document")
-public class Document implements Serializable {
+@XmlRootElement(name = "Hit")
+public class Hit implements Serializable {
 
-	public static Document toDTO(String json) {
-		return ObjectMapperUtil.readValue(Document.class, json);
+	public static Hit toDTO(String json) {
+		return ObjectMapperUtil.readValue(Hit.class, json);
 	}
 
-	public static Document unsafeToDTO(String json) {
-		return ObjectMapperUtil.unsafeReadValue(Document.class, json);
+	public static Hit unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(Hit.class, json);
 	}
 
 	@Schema
@@ -117,18 +117,43 @@ public class Document implements Serializable {
 	protected String explanation;
 
 	@Schema
-	public Double getScore() {
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	@JsonIgnore
+	public void setId(UnsafeSupplier<String, Exception> idUnsafeSupplier) {
+		try {
+			id = idUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String id;
+
+	@Schema
+	@Valid
+	public Float getScore() {
 		return score;
 	}
 
-	public void setScore(Double score) {
+	public void setScore(Float score) {
 		this.score = score;
 	}
 
 	@JsonIgnore
-	public void setScore(
-		UnsafeSupplier<Double, Exception> scoreUnsafeSupplier) {
-
+	public void setScore(UnsafeSupplier<Float, Exception> scoreUnsafeSupplier) {
 		try {
 			score = scoreUnsafeSupplier.get();
 		}
@@ -142,7 +167,35 @@ public class Document implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Double score;
+	protected Float score;
+
+	@Schema
+	public Long getVersion() {
+		return version;
+	}
+
+	public void setVersion(Long version) {
+		this.version = version;
+	}
+
+	@JsonIgnore
+	public void setVersion(
+		UnsafeSupplier<Long, Exception> versionUnsafeSupplier) {
+
+		try {
+			version = versionUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long version;
 
 	@Override
 	public boolean equals(Object object) {
@@ -150,13 +203,13 @@ public class Document implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof Document)) {
+		if (!(object instanceof Hit)) {
 			return false;
 		}
 
-		Document document = (Document)object;
+		Hit hit = (Hit)object;
 
-		return Objects.equals(toString(), document.toString());
+		return Objects.equals(toString(), hit.toString());
 	}
 
 	@Override
@@ -195,6 +248,20 @@ public class Document implements Serializable {
 			sb.append("\"");
 		}
 
+		if (id != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"id\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(id));
+
+			sb.append("\"");
+		}
+
 		if (score != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -205,6 +272,16 @@ public class Document implements Serializable {
 			sb.append(score);
 		}
 
+		if (version != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"version\": ");
+
+			sb.append(version);
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -212,7 +289,7 @@ public class Document implements Serializable {
 
 	@Schema(
 		accessMode = Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.search.experiences.rest.dto.v1_0.Document",
+		defaultValue = "com.liferay.search.experiences.rest.dto.v1_0.Hit",
 		name = "x-class-name"
 	)
 	public String xClassName;

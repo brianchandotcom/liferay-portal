@@ -34,48 +34,6 @@ public class SearchResponse implements Cloneable, Serializable {
 		return SearchResponseSerDes.toDTO(json);
 	}
 
-	public Document[] getDocuments() {
-		return documents;
-	}
-
-	public void setDocuments(Document[] documents) {
-		this.documents = documents;
-	}
-
-	public void setDocuments(
-		UnsafeSupplier<Document[], Exception> documentsUnsafeSupplier) {
-
-		try {
-			documents = documentsUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Document[] documents;
-
-	public Double getMaxScore() {
-		return maxScore;
-	}
-
-	public void setMaxScore(Double maxScore) {
-		this.maxScore = maxScore;
-	}
-
-	public void setMaxScore(
-		UnsafeSupplier<Double, Exception> maxScoreUnsafeSupplier) {
-
-		try {
-			maxScore = maxScoreUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Double maxScore;
-
 	public Integer getPage() {
 		return page;
 	}
@@ -200,6 +158,27 @@ public class SearchResponse implements Cloneable, Serializable {
 
 	protected String responseString;
 
+	public SearchHits getSearchHits() {
+		return searchHits;
+	}
+
+	public void setSearchHits(SearchHits searchHits) {
+		this.searchHits = searchHits;
+	}
+
+	public void setSearchHits(
+		UnsafeSupplier<SearchHits, Exception> searchHitsUnsafeSupplier) {
+
+		try {
+			searchHits = searchHitsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected SearchHits searchHits;
+
 	public SearchRequest getSearchRequest() {
 		return searchRequest;
 	}
@@ -220,27 +199,6 @@ public class SearchResponse implements Cloneable, Serializable {
 	}
 
 	protected SearchRequest searchRequest;
-
-	public Integer getTotalHits() {
-		return totalHits;
-	}
-
-	public void setTotalHits(Integer totalHits) {
-		this.totalHits = totalHits;
-	}
-
-	public void setTotalHits(
-		UnsafeSupplier<Integer, Exception> totalHitsUnsafeSupplier) {
-
-		try {
-			totalHits = totalHitsUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Integer totalHits;
 
 	@Override
 	public SearchResponse clone() throws CloneNotSupportedException {

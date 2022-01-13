@@ -96,7 +96,7 @@ definition {
 				entryHTMLName = "vanilla-counter",
 				entryName = "Vanilla Counter",
 				entryProperties = "test-data-user=QAuser",
-				entryURL = "http://remote-component-test.wincent.com/packages/vanilla-counter/index.js");
+				entryURL = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js");
 		}
 
 		task ("Assert that the Vanilla Counter is listed") {
@@ -115,7 +115,7 @@ definition {
 				entryHTMLName = "vanilla-counter",
 				entryName = "Vanilla Counter",
 				entryProperties = "test-data-user=QAuser",
-				entryURL = "http://remote-component-test.wincent.com/packages/vanilla-counter/index.js");
+				entryURL = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js");
 		}
 	}
 
@@ -128,7 +128,7 @@ definition {
 			JSONRemoteApp.addCustomElementRemoteAppEntry(
 				customElementHTMLName = "vanilla-counter",
 				customElementName = "Vanilla Counter",
-				customElementURL = "http://remote-component-test.wincent.com/packages/vanilla-counter/index.js");
+				customElementURL = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js");
 		}
 
 		task ("Delete Vanilla Counter") {
@@ -184,7 +184,7 @@ definition {
 
 		var customElementName = "Vanilla Counter";
 		var customElementHTMLName = "vanilla-counter";
-		var customElementURL = "http://remote-component-test.wincent.com/packages/vanilla-counter/index.js";
+		var customElementURL = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js";
 
 		task ("Add a public page with JSON") {
 			JSONLayout.addPublicLayout(
@@ -230,7 +230,7 @@ definition {
 			JSONRemoteApp.addCustomElementRemoteAppEntry(
 				customElementHTMLName = "new-counter",
 				customElementName = "New Counter",
-				customElementURL = "http://remote-component-test.wincent.com/packages/vanilla-counter/index.js");
+				customElementURL = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js");
 		}
 
 		task ("Edit the fields of the Custom Element") {
@@ -261,7 +261,7 @@ definition {
 				entryHTMLName = "vanilla-counter-edited",
 				entryName = "Vanilla Counter Edited",
 				entryProperties = "test-data-user=QAuser",
-				entryURL = "http://remote-component-test.wincent.com/packages/vanilla-counter/index.js");
+				entryURL = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js");
 		}
 	}
 
@@ -285,7 +285,7 @@ definition {
 			JSONRemoteApp.addCustomElementRemoteAppEntry(
 				customElementHTMLName = "vanilla-counter",
 				customElementName = "Vanilla Counter",
-				customElementURL = "http://remote-component-test.wincent.com/packages/vanilla-counter/index.js");
+				customElementURL = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js");
 		}
 
 		task ("Add a Grid to page") {
@@ -341,7 +341,7 @@ definition {
 			JSONRemoteApp.addCustomElementRemoteAppEntry(
 				customElementHTMLName = "vanilla-counter",
 				customElementName = "Vanilla Counter",
-				customElementURL = "http://remote-component-test.wincent.com/packages/vanilla-counter/index.js");
+				customElementURL = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js");
 		}
 
 		task ("Obtain Vanilla Counter's remoteAppEntryId") {

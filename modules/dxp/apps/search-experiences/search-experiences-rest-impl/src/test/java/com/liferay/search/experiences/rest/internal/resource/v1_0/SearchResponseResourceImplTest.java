@@ -18,7 +18,9 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.document.DocumentBuilderFactory;
+import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHitBuilder;
 import com.liferay.portal.search.hits.SearchHitBuilderFactory;
 import com.liferay.portal.search.hits.SearchHitsBuilder;
@@ -38,9 +40,13 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.search.experiences.blueprint.search.request.enhancer.SXPBlueprintSearchRequestEnhancer;
 import com.liferay.search.experiences.internal.blueprint.exception.InvalidElementInstanceException;
 import com.liferay.search.experiences.internal.blueprint.exception.InvalidQueryEntryException;
-import com.liferay.search.experiences.rest.dto.v1_0.Document;
+import com.liferay.search.experiences.rest.dto.v1_0.Hit;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
+import com.liferay.search.experiences.rest.dto.v1_0.SearchHits;
 import com.liferay.search.experiences.rest.dto.v1_0.SearchResponse;
+
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -143,10 +149,8 @@ public class SearchResponseResourceImplTest {
 			"took", 5
 		).toString();
 
-		float score = 1.3862942F;
-
 		String responseString = JSONUtil.put(
-			"hits", JSONUtil.put("max_score", score)
+			"hits", JSONUtil.put("max_score", RandomTestUtil.randomDouble())
 		).put(
 			"took", 5
 		).toString();
@@ -156,44 +160,72 @@ public class SearchResponseResourceImplTest {
 		SearchHitsBuilder searchHitsBuilder =
 			_searchHitsBuilderFactory.getSearchHitsBuilder();
 
-		searchResponseBuilder.searchHits(
-			searchHitsBuilder.addSearchHit(
-				searchHitBuilder.document(
-					_documentBuilderFactory.builder(
-					).setString(
-						"field1st", "Lone Value"
-					).setIntegers(
-						"field2nd", 4, 8, 15, 16, 23, 42
+		com.liferay.portal.search.searcher.SearchResponse portalSearchResponse =
+			searchResponseBuilder.searchHits(
+				searchHitsBuilder.addSearchHit(
+					searchHitBuilder.document(
+						_documentBuilderFactory.builder(
+						).setString(
+							"field1st", "Lone Value"
+						).setIntegers(
+							"field2nd", 4, 8, 15, 16, 23, 42
+						).build()
+					).explanation(
+						RandomTestUtil.randomString()
+					).score(
+						(float)RandomTestUtil.randomDouble()
+					).version(
+						RandomTestUtil.randomLong()
 					).build()
-				).score(
-					score
+				).maxScore(
+					Float.NaN
+				).totalHits(
+					RandomTestUtil.randomLong()
 				).build()
-			).maxScore(
-				score
-			).build()
-		).request(
-			searchRequestBuilder.build()
-		).requestString(
-			requestString
-		).responseString(
-			responseString
-		);
+			).request(
+				searchRequestBuilder.build()
+			).requestString(
+				requestString
+			).responseString(
+				responseString
+			).build();
 
 		SearchResponseResourceImpl searchResponseResourceImpl =
 			_createSearchResponseResourceImpl();
 
 		SearchResponse searchResponse =
-			searchResponseResourceImpl.toSearchResponse(
-				searchResponseBuilder.build());
+			searchResponseResourceImpl.toSearchResponse(portalSearchResponse);
 
-		Document document = searchResponse.getDocuments()[0];
+		com.liferay.portal.search.hits.SearchHits portalSearchHits =
+			portalSearchResponse.getSearchHits();
+		SearchHits searchHits = searchResponse.getSearchHits();
+
+		Assert.assertEquals(null, searchHits.getMaxScore());
+		Assert.assertEquals(
+			Long.valueOf(portalSearchHits.getTotalHits()),
+			searchHits.getTotalHits());
+
+		List<SearchHit> list = portalSearchHits.getSearchHits();
+
+		SearchHit portalSearchHit = list.get(0);
+
+		Hit hit = searchHits.getHits()[0];
 
 		Assert.assertEquals(
 			"{field1st={\"values\": [\"Lone Value\"]}, field2nd={\"values\": " +
 				"[\"4\", \"8\", \"15\", \"16\", \"23\", \"42\"]}}",
-			String.valueOf(document.getDocumentFields()));
+			String.valueOf(hit.getDocumentFields()));
+		Assert.assertEquals(
+			portalSearchHit.getExplanation(), hit.getExplanation());
+		Assert.assertEquals(portalSearchHit.getId(), hit.getId());
+		Assert.assertEquals(
+			Float.valueOf(portalSearchHit.getScore()), hit.getScore());
+		Assert.assertEquals(
+			Long.valueOf(portalSearchHit.getVersion()), hit.getVersion());
 
+		Assert.assertTrue(searchResponse.getRequest() instanceof Map);
 		Assert.assertEquals(requestString, searchResponse.getRequestString());
+		Assert.assertTrue(searchResponse.getResponse() instanceof Map);
 		Assert.assertEquals(responseString, searchResponse.getResponseString());
 	}
 

@@ -109,4 +109,6 @@ public interface CPInstanceHelper {
 			long cpDefinitionId, String json, Locale locale)
 		throws PortalException;
 
+	public CPSku toCPSku(CPInstance cpInstance);
+
 }

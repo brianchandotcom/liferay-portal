@@ -624,6 +624,11 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 		return values;
 	}
 
+	@Override
+	public CPSku toCPSku(CPInstance cpInstance) {
+		return new CPSkuImpl(cpInstance);
+	}
+
 	private CPInstance _fetchCPInstanceBySKUContributors(
 			long cpDefinitionId, String json)
 		throws PortalException {

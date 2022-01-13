@@ -83,6 +83,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NODE_FIELD</td>
+	<td>//div[contains(@class,'tabs-content')]//li[contains(@class,'builder-field')][div[contains(@class,'field-label')][normalize-space(text())='${key_nodeNodeLabel}']]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NODE_PNG</td>
 	<td>portal/screenshots/kaleodesigner/node_${key_nodeType}.png</td>
 	<td></td>

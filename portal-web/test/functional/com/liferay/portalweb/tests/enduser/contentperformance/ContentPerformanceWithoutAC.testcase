@@ -116,15 +116,6 @@ definition {
 
 	}
 
-	@description = "LPS-127220: When DXP is not connected to AC, the metrics icon is shown in the bar above the content page in the view mode"
-	@ignore = "true"
-	@priority = "3"
-	test MetricsIconVisibleInContentPageWithoutAC {
-
-		// TODO LPS-144028 MetricsIconVisibleInContentPageWithoutAC pending implementation
-
-	}
-
 	@description = "LPS-126044: When DXP is not connected to AC, the metrics icon is shown in the bar above the document display page in the view mode"
 	@ignore = "true"
 	@priority = "3"
@@ -140,6 +131,15 @@ definition {
 	test MetricsIconNotVisibleInWidgetPageWithoutAC {
 
 		// TODO LPS-144029 MetricsIconNotVisibleInWidgetPageWithoutAC pending implementation
+
+	}
+
+	@description = "LPS-127220: When DXP is not connected to AC, the metrics icon is shown in the bar above the content page in the view mode"
+	@ignore = "true"
+	@priority = "3"
+	test MetricsIconVisibleInContentPageWithoutAC {
+
+		// TODO LPS-144028 MetricsIconVisibleInContentPageWithoutAC pending implementation
 
 	}
 

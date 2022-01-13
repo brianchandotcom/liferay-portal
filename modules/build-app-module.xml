@@ -73,10 +73,6 @@
 		<available file="build.xml" />
 	</condition>
 
-	<condition property="download.artifact.wsdd">
-		<available file=".lfrbuild-deploy-wsdd" />
-	</condition>
-
 	<target if="artifact.hotfix" name="copy-hotfix-artifact">
 		<copy
 			todir="${dist.dir}"
@@ -98,13 +94,12 @@
 			download-artifact,
 			download-artifact-dependencies,
 			download-artifact-sources,
-			download-artifact-wsdd,
 			record-artifact-change-log,
 			replace-artifact-sources-license-text"
 		name="dist-module-artifact"
 	/>
 
-	<target depends="move-artifact,move-artifact-dependencies,move-artifact-wsdd,move-hotfix-artifact" name="dist-module-artifact-lpkg" />
+	<target depends="move-artifact,move-artifact-dependencies,move-hotfix-artifact" name="dist-module-artifact-lpkg" />
 
 	<target depends="get-artifact-properties-releng" name="download-artifact" unless="artifact.exclude">
 		<if>
@@ -174,29 +169,6 @@
 				<istrue value="${download.artifact.sources}" />
 			</and>
 		</condition>
-	</target>
-
-	<target depends="get-artifact-properties-releng" if="download.artifact.wsdd" name="download-artifact-wsdd" unless="artifact.exclude">
-		<if>
-			<or>
-				<contains string="${basedir}" substring="private${file.separator}" />
-				<istrue value="${download.artifact.private.override}" />
-			</or>
-			<then>
-				<get
-					dest="${dist.dir}"
-					password="${build.repository.private.password}"
-					src="${artifact.wsdd.url}"
-					username="${build.repository.private.username}"
-				/>
-			</then>
-			<else>
-				<get
-					dest="${dist.dir}"
-					src="${artifact.wsdd.url}"
-				/>
-			</else>
-		</if>
 	</target>
 
 	<target depends="get-artifact-version-previous-release,get-artifact-change-log-ticket-list-since-previous-release,get-artifact-change-log-ticket-list-full" description="Get an aggregated list of tickets from the change logs of all versions of the current module since the version present in the previous release of this app." if="${app.has.artifact.previous.release}" name="get-artifact-change-log-ticket-list" />
@@ -507,35 +479,6 @@
 		</move>
 
 		<delete dir="artifact.dependencies.tmp.dir" quiet="true" />
-	</target>
-
-	<target depends="get-artifact-properties" if="download.artifact.wsdd" name="move-artifact-wsdd" unless="artifact.exclude">
-		<loadfile
-			property="artifact.location.wsdd.dest"
-		>
-			<filterchain>
-				<replaceregex pattern="(.*?)(-\d+\.\d+\.\d+)(\..+)?(\.[jw]ar)" replace="\1-wsdd\2\3\4" />
-
-				<striplinebreaks />
-			</filterchain>
-			<propertyresource name="artifact.location.dest" />
-		</loadfile>
-
-		<loadfile
-			property="artifact.location.wsdd.src"
-		>
-			<filterchain>
-				<replaceregex pattern="\.jar$" replace="-wsdd.jar" />
-
-				<striplinebreaks />
-			</filterchain>
-			<propertyresource name="artifact.location.src" />
-		</loadfile>
-
-		<move
-			file="${artifact.location.wsdd.src}"
-			tofile="${artifact.location.wsdd.dest}"
-		/>
 	</target>
 
 	<target depends="get-artifact-properties" if="artifact.hotfix" name="move-hotfix-artifact">

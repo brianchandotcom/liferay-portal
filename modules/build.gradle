@@ -379,7 +379,6 @@ gradle.beforeProject {
 
 			if (FileUtil.exists(project, "docroot/WEB-INF/service.xml")) {
 				task buildService(dependsOn: "build-service")
-				task buildWSDD(dependsOn: "build-wsdd")
 			}
 
 			// See the "compile-jsp" target in tools/sdk/build-common-plugin.xml
@@ -517,16 +516,6 @@ gradle.beforeProject {
 			if (dir.exists() && !GradleUtil.getProperty(project, "com.liferay.portal.tools.service.builder.ignore.local", true)) {
 				buildService {
 					dependsOn ":util:portal-tools-service-builder:deploy"
-				}
-			}
-		}
-
-		pluginManager.withPlugin("com.liferay.portal.tools.wsdd.builder") {
-			if (bndPrintJarFiles != null) {
-				buildWSDDJar {
-					doLast {
-						bndPrintJarFiles << archivePath
-					}
 				}
 			}
 		}

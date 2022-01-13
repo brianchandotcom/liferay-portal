@@ -459,7 +459,6 @@ release was successful.</echo>
 		<ant dir="portal-impl" inheritAll="false" target="build-iw" />
 		<ant dir="portal-impl" inheritAll="false" target="build-lib-versions" />
 		<ant dir="portal-impl" inheritAll="false" target="build-services" />
-		<ant dir="portal-impl" inheritAll="false" target="build-wsdds" />
 
 		<delete file="portal-impl/classes/META-INF/javadocs-all.xml" />
 		<delete file="portal-impl/classes/META-INF/javadocs-rt.xml" />

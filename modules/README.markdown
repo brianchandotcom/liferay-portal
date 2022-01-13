@@ -90,7 +90,6 @@ File Name | Description
 
 File Name | Description
 --------- | -----------
-`.lfrbuild-deploy-wsdd` | Deploys the WSDD fragment JAR file when deploying the OSGi module.
 `.lfrbuild-lowest-major-version` | Declares the lowest major version of the released artifact to use in the semantic versioning check.
 `.lfrbuild-portal-deprecated` | Marks the module as deprecated and skip deployment during the `ant all` execution. `-test` modules never have this file.
 `.lfrbuild-portal-pre` | Builds the module during the `ant compile` execution in the `tmp/lib-pre` directory before building `portal-kernel`, `portal-impl`, etc.

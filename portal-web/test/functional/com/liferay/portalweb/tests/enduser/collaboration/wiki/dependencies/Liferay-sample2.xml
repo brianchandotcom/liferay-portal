@@ -1,76 +1,76 @@
-<mediawiki xmlns="http://www.mediawiki.org/xml/export-0.10/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mediawiki.org/xml/export-0.10/ http://www.mediawiki.org/xml/export-0.10.xsd" version="0.10" xml:lang="en">
-  <siteinfo>
-    <sitename>Wikipedia</sitename>
-    <dbname>enwiki</dbname>
-    <base>https://en.wikipedia.org/wiki/Main_Page</base>
-    <generator>MediaWiki 1.32.0-wmf.1</generator>
-    <case>first-letter</case>
-    <namespaces>
-      <namespace key="-2" case="first-letter">Media</namespace>
-      <namespace key="-1" case="first-letter">Special</namespace>
-      <namespace key="0" case="first-letter" />
-      <namespace key="1" case="first-letter">Talk</namespace>
-      <namespace key="2" case="first-letter">User</namespace>
-      <namespace key="3" case="first-letter">User talk</namespace>
-      <namespace key="4" case="first-letter">Wikipedia</namespace>
-      <namespace key="5" case="first-letter">Wikipedia talk</namespace>
-      <namespace key="6" case="first-letter">File</namespace>
-      <namespace key="7" case="first-letter">File talk</namespace>
-      <namespace key="8" case="first-letter">MediaWiki</namespace>
-      <namespace key="9" case="first-letter">MediaWiki talk</namespace>
-      <namespace key="10" case="first-letter">Template</namespace>
-      <namespace key="11" case="first-letter">Template talk</namespace>
-      <namespace key="12" case="first-letter">Help</namespace>
-      <namespace key="13" case="first-letter">Help talk</namespace>
-      <namespace key="14" case="first-letter">Category</namespace>
-      <namespace key="15" case="first-letter">Category talk</namespace>
-      <namespace key="100" case="first-letter">Portal</namespace>
-      <namespace key="101" case="first-letter">Portal talk</namespace>
-      <namespace key="108" case="first-letter">Book</namespace>
-      <namespace key="109" case="first-letter">Book talk</namespace>
-      <namespace key="118" case="first-letter">Draft</namespace>
-      <namespace key="119" case="first-letter">Draft talk</namespace>
-      <namespace key="446" case="first-letter">Education Program</namespace>
-      <namespace key="447" case="first-letter">Education Program talk</namespace>
-      <namespace key="710" case="first-letter">TimedText</namespace>
-      <namespace key="711" case="first-letter">TimedText talk</namespace>
-      <namespace key="828" case="first-letter">Module</namespace>
-      <namespace key="829" case="first-letter">Module talk</namespace>
-      <namespace key="2300" case="first-letter">Gadget</namespace>
-      <namespace key="2301" case="first-letter">Gadget talk</namespace>
-      <namespace key="2302" case="case-sensitive">Gadget definition</namespace>
-      <namespace key="2303" case="case-sensitive">Gadget definition talk</namespace>
-    </namespaces>
-  </siteinfo>
-  <page>
-    <title>Liferay</title>
-    <ns>0</ns>
-    <id>12584512</id>
-    <revision>
-      <id>834547449</id>
-      <parentid>834303300</parentid>
-      <timestamp>2018-04-06T09:13:23Z</timestamp>
-      <contributor>
-        <username>Taromsky</username>
-        <id>9710872</id>
-      </contributor>
-      <comment>/* References */</comment>
-      <model>wikitext</model>
-      <format>text/x-wiki</format>
-      <text xml:space="preserve" bytes="4635">{{Infobox software
+<mediawiki version="0.10" xml:lang="en" xmlns="http://www.mediawiki.org/xml/export-0.10/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mediawiki.org/xml/export-0.10/ http://www.mediawiki.org/xml/export-0.10.xsd">
+	<siteinfo>
+		<sitename>Wikipedia</sitename>
+		<dbname>enwiki</dbname>
+		<base>https://en.wikipedia.org/wiki/Main_Page</base>
+		<generator>MediaWiki 1.32.0-wmf.1</generator>
+		<case>first-letter</case>
+		<namespaces>
+			<namespace key="-2" case="first-letter">Media</namespace>
+			<namespace key="-1" case="first-letter">Special</namespace>
+			<namespace case="first-letter" key="0" />
+			<namespace key="1" case="first-letter">Talk</namespace>
+			<namespace key="2" case="first-letter">User</namespace>
+			<namespace key="3" case="first-letter">User talk</namespace>
+			<namespace key="4" case="first-letter">Wikipedia</namespace>
+			<namespace key="5" case="first-letter">Wikipedia talk</namespace>
+			<namespace key="6" case="first-letter">File</namespace>
+			<namespace key="7" case="first-letter">File talk</namespace>
+			<namespace key="8" case="first-letter">MediaWiki</namespace>
+			<namespace key="9" case="first-letter">MediaWiki talk</namespace>
+			<namespace key="10" case="first-letter">Template</namespace>
+			<namespace key="11" case="first-letter">Template talk</namespace>
+			<namespace key="12" case="first-letter">Help</namespace>
+			<namespace key="13" case="first-letter">Help talk</namespace>
+			<namespace key="14" case="first-letter">Category</namespace>
+			<namespace key="15" case="first-letter">Category talk</namespace>
+			<namespace key="100" case="first-letter">Portal</namespace>
+			<namespace key="101" case="first-letter">Portal talk</namespace>
+			<namespace key="108" case="first-letter">Book</namespace>
+			<namespace key="109" case="first-letter">Book talk</namespace>
+			<namespace key="118" case="first-letter">Draft</namespace>
+			<namespace key="119" case="first-letter">Draft talk</namespace>
+			<namespace key="446" case="first-letter">Education Program</namespace>
+			<namespace key="447" case="first-letter">Education Program talk</namespace>
+			<namespace key="710" case="first-letter">TimedText</namespace>
+			<namespace key="711" case="first-letter">TimedText talk</namespace>
+			<namespace key="828" case="first-letter">Module</namespace>
+			<namespace key="829" case="first-letter">Module talk</namespace>
+			<namespace key="2300" case="first-letter">Gadget</namespace>
+			<namespace key="2301" case="first-letter">Gadget talk</namespace>
+			<namespace key="2302" case="case-sensitive">Gadget definition</namespace>
+			<namespace key="2303" case="case-sensitive">Gadget definition talk</namespace>
+		</namespaces>
+	</siteinfo>
+	<page>
+		<title>Liferay</title>
+		<ns>0</ns>
+		<id>12584512</id>
+		<revision>
+			<id>834547449</id>
+			<parentid>834303300</parentid>
+			<timestamp>2018-04-06T09:13:23Z</timestamp>
+			<contributor>
+				<username>Taromsky</username>
+				<id>9710872</id>
+			</contributor>
+			<comment>/* References */</comment>
+			<model>wikitext</model>
+			<format>text/x-wiki</format>
+			<text xml:space="preserve" bytes="4635">{{Infobox software
 | name = Liferay Portal
 | logo = Liferaylogo.png
 | logo size = 120px
-| screenshot = 
+| screenshot =
 | developer = Liferay Inc
 | latest release version = 7.0.4 (7.0.4 GA5)
 | latest release date = {{release date|2017|10|23}}
 | status = Active
 | programming language = [[Java (programming language)|Java]]
 | operating system = [[Cross-platform]]
-| size = 
+| size =
 | genre = [[Enterprise portal]], [[content management framework]], [[content management system]], [[community]]
-| license = [[GNU Lesser General Public License|LGPL License]] [http://www.liferay.com/web/bryan.cheung/blog/-/blogs/liferay-adopting-the-lgpl-license]  and proprietary&lt;ref name=&quot;liferay&quot;&gt;{{cite web |url=http://www.liferay.com/community/forums/-/message_boards/message/4882318 |title=Liferay 6.0 CE vs. EE licensing question |work=www.liferay.com |accessdate=2012-01-04 }}&lt;/ref&gt;
+| license = [[GNU Lesser General Public License|LGPL License]] [http://www.liferay.com/web/bryan.cheung/blog/-/blogs/liferay-adopting-the-lgpl-license] and proprietary&lt;ref name=&quot;liferay&quot;&gt;{{cite web |url=http://www.liferay.com/community/forums/-/message_boards/message/4882318 |title=Liferay 6.0 CE vs. EE licensing question |work=www.liferay.com |accessdate=2012-01-04 }}&lt;/ref&gt;
 | website = {{URL|http://www.liferay.com}}
 }}
 
@@ -78,7 +78,7 @@
 
 == History ==
 
-Liferay’s original product, Liferay Portal, was created in 2000 by [[chief software architect]] Brian Chan to provide an [[enterprise portal]] solution for [[non-profit organizations]].&lt;ref&gt;{{cite news |last=Howard |first=Phil |title=Liferay after Plumtree: Pure play portals alive and kicking |publisher=Reg Developer |date=October 18, 2005 |url=http://www.regdeveloper.co.uk/2005/10/18/pure_play_portal_alive_and_kicking/ }}&lt;/ref&gt; In 2004, the company was incorporated under the name Liferay, Inc. and formalized its [[Germany]] subsidiary Liferay GmbH. In 2007, the company opened a new [[Asia]]n headquarters in [[Dalian]], [[China]], and the [[Spain|Spanish]] subsidiary Liferay SL. In March 2009, the company opened a new office in [[Bangalore]], [[India]]. To date Liferay has 21 offices worldwide with over 150 partners and 180,000 open source community members.{{Citation needed|date=April 2018}}
+Liferay's original product, Liferay Portal, was created in 2000 by [[chief software architect]] Brian Chan to provide an [[enterprise portal]] solution for [[non-profit organizations]].&lt;ref&gt;{{cite news |last=Howard |first=Phil |title=Liferay after Plumtree: Pure play portals alive and kicking |publisher=Reg Developer |date=October 18, 2005 |url=http://www.regdeveloper.co.uk/2005/10/18/pure_play_portal_alive_and_kicking/ }}&lt;/ref&gt; In 2004, the company was incorporated under the name Liferay, Inc. and formalized its [[Germany]] subsidiary Liferay GmbH. In 2007, the company opened a new [[Asia]]n headquarters in [[Dalian]], [[China]], and the [[Spain|Spanish]] subsidiary Liferay SL. In March 2009, the company opened a new office in [[Bangalore]], [[India]]. To date Liferay has 21 offices worldwide with over 150 partners and 180,000 open source community members.{{Citation needed|date=April 2018}}
 
 [[Sun Microsystems]] and Liferay signed a technology-sharing agreement during May 2008.&lt;ref&gt;{{cite web | url=http://www.liferay.com/web/guest/news/latest/-/blogs/1403796?_33_redirect=%2Fweb%2Fguest%2Fnews%2Flatest%3Fp_p_id%3D33%26p_p_lifecycle%3D0%26p_p_state%3Dnormal%26p_p_mode%3Dview%26p_p_col_id%3Dcolumn-3%26p_p_col_count%3D1%26_33_struts_action%3D%252Fblogs%252Fview%26_33_delta%3D10%26_33_keywords%3D%26_33_advancedSearch%3Dfalse%26_33_andOperator%3Dtrue%26cur%3D3
 |title=Press Release: Sun Joins Liferay Open Source Community|date=May 2008}}&lt;/ref&gt; Sun Microsystems rebranded the offering [[GlassFish]] Web Space Server. ZDNet further describes the relationship in the May 2008 article ''Sun and Liferay launch web-presentation platform''.&lt;ref&gt;{{cite web | url=http://news.zdnet.co.uk/software/0,1000000121,39412974,00.htm
@@ -88,7 +88,6 @@ Liferay’s original product, Liferay Portal, was created in 2000 by [[chief sof
 In April 2013, Liferay partnered with [[TIBCO Software]] to offer a series of Liferay enterprise Connectivity Adapters (eC Adapters) that use TIBCO ActiveMatrix BusinessWorks with the intention of easing integration of Liferay Portal with multiple systems.&lt;ref&gt;{{cite web |url=http://www.cmswire.com/cms/information-management/enterprise-portal-liferay-partners-with-tibco-software-for-lower-cost-backend-integration-020698.php |title=Enterprise Portal Liferay Partners with TIBCO Software for Lower Cost Back-End Integration |work=www.cmswire.com |accessdate=2013-04-30 }}&lt;/ref&gt;
 
 In May 2016, Liferay introduced the Liferay Digital Experience Platform (DXP), a shift from simply portal software to a more comprehensive solution to manage customers and users.&lt;ref&gt;https://www.liferay.com/press-release?title=liferay-announces-a-platform-for-the-digital-enterprise&lt;/ref&gt;
-
 
 == See also ==
 {{Portal|Free software}}
@@ -103,7 +102,7 @@ In May 2016, Liferay introduced the Liferay Digital Experience Platform (DXP), a
 [[Category:Portal software]]
 [[Category:Free content management systems]]
 [[Category:Free software programmed in Java (programming language)]]</text>
-      <sha1>kv5huqa4rgjz3yxzfmx38tdsgbafr31</sha1>
-    </revision>
-  </page>
+			<sha1>kv5huqa4rgjz3yxzfmx38tdsgbafr31</sha1>
+		</revision>
+	</page>
 </mediawiki>

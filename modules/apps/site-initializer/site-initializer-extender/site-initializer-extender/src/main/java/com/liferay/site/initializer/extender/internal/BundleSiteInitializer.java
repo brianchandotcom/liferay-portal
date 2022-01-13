@@ -2172,10 +2172,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 			return;
 		}
 
-		json = StringUtil.replace(
-			json, "[$", "$]", objectDefinitionIdsStringUtilReplaceValues);
-
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(json);
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
+			StringUtil.replace(
+				json, "[$", "$]", objectDefinitionIdsStringUtilReplaceValues));
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);

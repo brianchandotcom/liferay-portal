@@ -1,0 +1,13 @@
+{
+	"dependencies": {
+		"frontend-js-web": "*",
+		"react": "16.12.0"
+	},
+	"name": "@liferay/frontend-icon-admin-web",
+	"scripts": {
+		"build": "liferay-npm-scripts build",
+		"checkFormat": "liferay-npm-scripts check",
+		"format": "liferay-npm-scripts fix"
+	},
+	"version": "1.0.0"
+}

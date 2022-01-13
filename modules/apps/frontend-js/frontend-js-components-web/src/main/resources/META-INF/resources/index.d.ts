@@ -14,9 +14,9 @@
 
 import {ReactElement} from 'react';
 
-import type {Atom} from './State';
+import type {Atom} from '@liferay/frontend-js-state-web';
 
-export const activeLanguageIdsAtom: Atom;
+export const activeLanguageIdsAtom: Atom<any>;
 
 export function Treeview(
 	NodeComponent: () => void,

@@ -312,15 +312,14 @@ public abstract class UpgradeProcess
 		throws Exception {
 
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			DatabaseMetaData databaseMetaData = connection.getMetaData();
 			DB db = DBManagerUtil.getDB();
 
 			String tableName = getTableName(tableClass);
 
 			try (ResultSet resultSet1 = db.getIndexResultSet(
 					connection, tableName);
-					ResultSet resultSet2 = db.getIndexResultSet(
-						connection, tableName)) {
+				ResultSet resultSet2 = db.getIndexResultSet(
+					connection, tableName)) {
 
 				Set<String> primaryKeyNames = new HashSet<>();
 

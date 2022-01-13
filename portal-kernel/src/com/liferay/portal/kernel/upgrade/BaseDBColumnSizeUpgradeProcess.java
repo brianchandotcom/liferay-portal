@@ -58,7 +58,7 @@ public abstract class BaseDBColumnSizeUpgradeProcess extends UpgradeProcess {
 
 	private void _upgradeTables() throws Exception {
 		DatabaseMetaData databaseMetaData = connection.getMetaData();
-		
+
 		DB db = DBManagerUtil.getDB();
 
 		DBInspector dbInspector = new DBInspector(connection);

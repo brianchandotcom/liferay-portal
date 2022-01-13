@@ -64,6 +64,8 @@ definition {
 	@description = "This is a test for LPS-140483. The site admin could create page template from a content page with elements."
 	@priority = "5"
 	test CreatePageTemplateFromContentPage {
+		property portal.acceptance = "true";
+
 		task ("Add a Heading fragment and an Asset Publisher widget to content page then publish") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
@@ -119,6 +121,8 @@ definition {
 	@description = "This is a test for LPS-140483. The site admin could create page template from content page based on content page template."
 	@priority = "5"
 	test CreatePageTemplateFromContentPageBasedOnContentPageTemplate {
+		property portal.acceptance = "true";
+
 		task ("Add a Heading fragment to a content page template") {
 			JSONLayoutpagetemplate.addLayoutPageTemplateEntry(
 				groupName = "Test Site Name",
@@ -184,6 +188,8 @@ definition {
 	@description = "This is a test for LPS-140483. The site admin could create page template from content page based on master page."
 	@priority = "5"
 	test CreatePageTemplateFromContentPageBasedOnMasterPage {
+		property portal.acceptance = "true";
+
 		task ("Add a Header Dark fragment to the header of master page") {
 			JSONLayoutpagetemplate.addMasterPageTemplateEntry(
 				groupName = "Test Site Name",
@@ -256,6 +262,8 @@ definition {
 	@description = "This is a test for LPS-140483. The site admin could create page template from content page based on style book."
 	@priority = "5"
 	test CreatePageTemplateFromContentPageBasedOnStyleBook {
+		property portal.acceptance = "true";
+
 		task ("Add a style book") {
 			JSONStylebooks.addStyleBookEntry(
 				groupName = "Test Site Name",

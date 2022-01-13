@@ -33,6 +33,8 @@ definition {
 	@description = "This is a test for LPS-136199. The user could detach the linked token."
 	@priority = "5"
 	test DetachLinkedColorTokenInPageEditor {
+		property portal.acceptance = "true";
+
 		task ("Add a Heading fragment to a content page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",

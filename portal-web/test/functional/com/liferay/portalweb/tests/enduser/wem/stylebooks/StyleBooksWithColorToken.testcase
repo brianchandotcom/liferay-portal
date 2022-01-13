@@ -68,7 +68,7 @@ definition {
 			AssertTextEquals(
 				key_text = "Text Color",
 				locator1 = "TextInput#ANY",
-				value1 = "#287d3c");
+				value1 = "#287D3C");
 
 			AssertCssValue(
 				fragmentName = "heading",

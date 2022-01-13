@@ -24,6 +24,46 @@ definition {
 		}
 	}
 
+	@description = "LPS-141236. Verify remote app can be displayed under a portlet category"
+	@priority = "3"
+	test CanBeAssignedAPortletCategory {
+		property portal.acceptance = "true";
+
+		task ("Create remote app entry with portlet category") {
+			RemoteApps.goToRemoteAppsPortlet();
+
+			RemoteApps.addEntryWithPortletCategory();
+		}
+
+		task ("Add a public widget page with JSON") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Test Page");
+
+			Navigator.openURL();
+
+			Navigator.gotoPage(pageName = "Test Page");
+		}
+
+		task ("Assert remote app is categorized under correct portlet category") {
+			Click(locator1 = "ControlMenu#ADD");
+
+			AssertElementPresent(locator1 = "ControlMenuAddPanel#SIDEBAR_HEADER");
+
+			Navigator.gotoNavTab(navTab = "Widgets");
+
+			Pause(locator1 = "3000");
+
+			Type(
+				locator1 = "NavBar#APPLICATION_SEARCH_FIELD",
+				value1 = "Test Remote App");
+
+			AssertElementPresent(
+				key_assetItem = "Collaboration",
+				locator1 = "ControlMenuAddPanel#ASSET_ITEM");
+		}
+	}
+
 	@description = "Verify remote app can be deleted"
 	@priority = "5"
 	@refactordone

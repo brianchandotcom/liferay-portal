@@ -40,6 +40,11 @@
 	<td>//textarea[contains(@id,'properties')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>REMOTE_APPS_PORTLET_CATEGORY_NAME</td>
+	<td>//div[label[contains(.,'Portlet Category Name')]]/select</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

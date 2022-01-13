@@ -17,7 +17,7 @@
 <%@ include file="/headless_display/init.jsp" %>
 
 <%
-String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_step_tracker") + StringPool.UNDERLINE;
+String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_frontend_data_set_headless_display_page") + StringPool.UNDERLINE;
 %>
 
 <div class="table-root" id="<%= randomNamespace + "table-id" %>">

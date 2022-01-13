@@ -25,7 +25,7 @@ page import="com.liferay.portal.kernel.util.PortalUtil" %>
 <liferay-theme:defineObjects />
 
 <%
-String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_step_tracker") + StringPool.UNDERLINE;
+String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_frontend_data_set_classic_display") + StringPool.UNDERLINE;
 
 String containerId = randomNamespace + "table-id";
 %>

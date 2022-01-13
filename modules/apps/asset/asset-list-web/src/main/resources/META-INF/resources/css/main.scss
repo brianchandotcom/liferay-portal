@@ -1,6 +1,10 @@
 @import './variations-nav';
 
 .portlet-asset-list-web {
+	.taglib-empty-result-message {
+		padding-top: 80px;
+	}
+
 	.timeline-item {
 		&:first-child {
 			.timeline-increment {

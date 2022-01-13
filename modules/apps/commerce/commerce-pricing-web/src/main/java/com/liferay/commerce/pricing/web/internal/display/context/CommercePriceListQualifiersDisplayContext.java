@@ -71,7 +71,6 @@ public class CommercePriceListQualifiersDisplayContext
 			commercePriceListCommerceAccountGroupRelService;
 		_commercePriceListOrderTypeRelService =
 			commercePriceListOrderTypeRelService;
-
 		_portal = portal;
 	}
 

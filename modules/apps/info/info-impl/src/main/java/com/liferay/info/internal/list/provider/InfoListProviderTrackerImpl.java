@@ -149,7 +149,6 @@ public class InfoListProviderTrackerImpl implements InfoListProviderTracker {
 					serviceRegistrations) {
 
 			_bundleContext = bundleContext;
-
 			_serviceRegistrations = serviceRegistrations;
 		}
 

@@ -129,7 +129,6 @@ public class DisplayPageSiteNavigationMenuItemTypeProviderTrackerImpl {
 				serviceRegistrations) {
 
 			_bundleContext = bundleContext;
-
 			_serviceRegistrations = serviceRegistrations;
 		}
 

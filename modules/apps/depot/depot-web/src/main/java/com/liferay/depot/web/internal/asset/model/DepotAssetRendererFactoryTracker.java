@@ -92,7 +92,6 @@ public class DepotAssetRendererFactoryTracker {
 					serviceRegistrations) {
 
 			_bundleContext = bundleContext;
-
 			_serviceRegistrations = serviceRegistrations;
 		}
 

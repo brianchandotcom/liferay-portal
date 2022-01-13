@@ -1,0 +1,244 @@
+@component-name = "portal-document-management"
+definition {
+
+	property osgi.module.configuration.file.names = "com.liferay.document.library.item.selector.web.internal.configuration.FFFolderItemSelectorGroupSelectorConfiguration.config";
+	property osgi.module.configurations = "enabled=B&quot;true&quot;";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Depot";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Media Gallery Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "2",
+			groupName = "Site Name",
+			layoutName = "Media Gallery Page",
+			widgetName = "Media Gallery");
+
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+
+		Navigator.openSitePage(
+			pageName = "Media Gallery Page",
+			siteName = "Site Name");
+
+		MGPortlet.configureShowAllPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONDepot.deleteDepot(depotName = "Test Depot Name");
+
+			Site.tearDownCP();
+
+			DMDocument.tearDownCP();
+
+			User.logoutPG();
+		}
+	}
+
+	@description = "This ensures that a user can add non-image/video files to asset library folder via MG on a connected site."
+	@priority = "3"
+	test CanAddDocumentToFolder {
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Test Depot Name");
+
+		JSONDepot.connectSite(
+			depotName = "Test Depot Name",
+			groupName = "Site Name");
+
+		Navigator.openSitePage(
+			pageName = "Media Gallery Page",
+			siteName = "Site Name");
+
+		MGPortlet.setRootFolder(
+			depotName = "Test Depot Name",
+			dmRootFolderName = "DM Folder Name");
+
+		DMDocument.addPGViaMG(
+			mgDocumentDescription = "DM Document Description",
+			mgDocumentFile = "Document_1.txt",
+			mgDocumentTitle = "Document_1.txt");
+
+		DMDocument.viewNoFilesViaMG(mgImagePreview = "Document_1.txt");
+
+		DepotNavigator.openToDMFolder(
+			depotName = "Test Depot Name",
+			folderName = "DM Folder Name");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1.txt");
+
+		DMDocument.viewCP(dmDocumentTitle = "Document_1.txt");
+	}
+
+	@description = "This ensures that a user can add an image to the subfolder of asset library via MG on a connected site."
+	@priority = "5"
+	test CanAddImageToSubFolder {
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Test Depot Name");
+
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM SubFolder1 Description",
+			dmFolderName = "DM SubFolder Name",
+			groupName = "Test Depot Name",
+			parentFolderName = "DM Folder Name");
+
+		JSONDepot.connectSite(
+			depotName = "Test Depot Name",
+			groupName = "Site Name");
+
+		Navigator.openSitePage(
+			pageName = "Media Gallery Page",
+			siteName = "Site Name");
+
+		MGPortlet.setRootFolder(
+			depotName = "Test Depot Name",
+			dmRootFolderName = "DM Folder Name");
+
+		Navigator.openSitePage(
+			pageName = "Media Gallery Page",
+			siteName = "Site Name");
+
+		DMFolder.gotoPGViaMG(mgFolderName = "DM SubFolder Name");
+
+		DMDocument.addPGViaMG(
+			mgDocumentDescription = "Add an image to the subfolder of asset library",
+			mgDocumentFile = "Document_1.jpg",
+			mgDocumentTitle = "Document_1.jpg");
+
+		DMDocument.viewPGViaMG(mgDocumentTitle = "Document_1.jpg");
+
+		DepotNavigator.openToDMFolder(
+			depotName = "Test Depot Name",
+			folderName = "DM SubFolder Name",
+			parentFolderName = "DM Folder Name");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1.jpg");
+
+		DMDocument.viewCP(dmDocumentTitle = "Document_1.jpg");
+	}
+
+	@description = "This ensures that a user can edit the image stored in asset library folder via MG on a connected site."
+	@priority = "5"
+	test CanEditImage {
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Test Depot Name");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Image Description",
+			dmDocumentTitle = "Document_2.jpg",
+			folderName = "DM Folder Name",
+			groupName = "Test Depot Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_2.jpg");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_1.txt",
+			folderName = "DM Folder Name",
+			groupName = "Test Depot Name",
+			mimeType = "text/plain",
+			sourceFileName = "Document_1.txt");
+
+		JSONDepot.connectSite(
+			depotName = "Test Depot Name",
+			groupName = "Site Name");
+
+		Navigator.openSitePage(
+			pageName = "Media Gallery Page",
+			siteName = "Site Name");
+
+		MGPortlet.setRootFolder(
+			depotName = "Test Depot Name",
+			dmRootFolderName = "DM Folder Name");
+
+		DMDocument.viewNoFilesViaMG(mgImagePreview = "Document_1.txt");
+
+		DMDocument.editPGViaMG(
+			mgDocumentDescription = "DM Image Description",
+			mgDocumentDescriptionEdit = "DM Image Description Edit",
+			mgDocumentTitle = "Document_2.jpg",
+			mgDocumentTitleEdit = "DM Image Title Edit");
+
+		DepotNavigator.openToDMFolder(
+			depotName = "Test Depot Name",
+			folderName = "DM Folder Name");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Image Title Edit");
+
+		DMDocument.viewCP(dmDocumentTitle = "DM Image Title Edit");
+	}
+
+	@description = "This ensures that a user can move video stored in asset library folder to recycle bin via MG on a connected site."
+	@priority = "5"
+	test CanMoveVideoToRecycleBin {
+		DMNavigator.openToConfigInSystemSettings(portlet = "FFMPEG Video Converter");
+
+		FormFields.enableCheckbox(fieldName = "enabled");
+
+		SystemSettings.saveConfiguration();
+
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Test Depot Name");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM video Description",
+			dmDocumentTitle = "Document_1.mp4",
+			folderName = "DM Folder Name",
+			groupName = "Test Depot Name",
+			mimeType = "video/mp4",
+			sourceFileName = "Document_1.mp4");
+
+		JSONDepot.connectSite(
+			depotName = "Test Depot Name",
+			groupName = "Site Name");
+
+		Navigator.openSitePage(
+			pageName = "Media Gallery Page",
+			siteName = "Site Name");
+
+		MGPortlet.setRootFolder(
+			depotName = "Test Depot Name",
+			dmRootFolderName = "DM Folder Name");
+
+		DMDocument.viewPGViaMG(
+			mgDocumentTitle = "Document_1.mp4",
+			mgVideoPreview = "true");
+
+		Navigator.openSitePage(
+			pageName = "Media Gallery Page",
+			siteName = "Site Name");
+
+		DMDocument.deletePGViaMG(mgDocumentTitle = "Document_1.mp4");
+
+		DepotNavigator.openToDMFolder(
+			depotName = "Test Depot Name",
+			folderName = "DM Folder Name");
+
+		DMDocument.viewDefault();
+	}
+
+}

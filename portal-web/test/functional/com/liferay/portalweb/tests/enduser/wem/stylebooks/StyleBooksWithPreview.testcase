@@ -368,6 +368,7 @@ definition {
 	test PreviewStyleBookOnDisplayPageTemplates {
 		property osgi.module.configuration.file.names = "com.liferay.style.book.web.internal.configuration.FFStyleBookConfiguration.config";
 		property osgi.module.configurations = "templatesPreviewEnabled=&quot;true&quot;";
+		property portal.acceptance = "true";
 
 		task ("Add a Heading fragment to the first display page template for Web Content Article and Basic Web Content") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
@@ -660,6 +661,7 @@ definition {
 	test PreviewStyleBookOnMasterPage {
 		property osgi.module.configuration.file.names = "com.liferay.style.book.web.internal.configuration.FFStyleBookConfiguration.config";
 		property osgi.module.configurations = "templatesPreviewEnabled=&quot;true&quot;";
+		property portal.acceptance = "true";
 
 		task ("Add a master with a Header Dark fragment then publish") {
 			JSONLayoutpagetemplate.addMasterPageTemplateEntry(
@@ -733,6 +735,7 @@ definition {
 	test PreviewStyleBookOnPages {
 		property osgi.module.configuration.file.names = "com.liferay.style.book.web.internal.configuration.FFStyleBookConfiguration.config";
 		property osgi.module.configurations = "templatesPreviewEnabled=&quot;true&quot;";
+		property portal.acceptance = "true";
 
 		task ("Add the first widget page with a Blogs widget") {
 			JSONLayout.addPublicLayout(
@@ -981,6 +984,7 @@ definition {
 	test PreviewStyleBookOnPageTemplates {
 		property osgi.module.configuration.file.names = "com.liferay.style.book.web.internal.configuration.FFStyleBookConfiguration.config";
 		property osgi.module.configurations = "templatesPreviewEnabled=&quot;true&quot;";
+		property portal.acceptance = "true";
 
 		task ("Add a page template collection") {
 			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(

@@ -4,5 +4,28 @@
 		"externalReferenceCode": "TESTOPT001",
 		"key": "test-option-1",
 		"required": false
+	},
+	{
+		"externalReferenceCode": "TESTOPT002",
+		"facetable": false,
+		"fieldType": "select",
+		"key": "test-option-2",
+		"name": "Test Option 2",
+		"required": true,
+		"skuContributor": true,
+		"values": [
+			{
+				"externalReferenceCode": "TEST_VALUE_1",
+				"key": "test_value_1",
+				"name": "Test Value 1",
+				"priority": 1
+			},
+			{
+				"externalReferenceCode": "TEST_VALUE_2",
+				"key": "test_value_2",
+				"name": "Test Value 2",
+				"priority": 0
+			}
+		]
 	}
 ]

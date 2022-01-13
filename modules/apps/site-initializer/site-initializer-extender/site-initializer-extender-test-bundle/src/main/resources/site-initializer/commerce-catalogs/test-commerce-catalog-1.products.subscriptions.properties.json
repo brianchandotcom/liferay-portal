@@ -1,0 +1,31 @@
+[
+	{
+		"cpDefinitionExternalReferenceCode": "TEST001",
+		"cpInstanceProperties": [
+			{
+				"cpInstanceSku": "TEST VALUE 1",
+				"propertyType": "UPDATE_PRICE",
+				"skuPrice": 60,
+				"skuPromoPrice": 25
+			},
+			{
+				"cpInstanceSku": "TEST VALUE 2",
+				"deliveryMaxSubscriptionCycles": 0,
+				"deliverySubscriptionEnabled": false,
+				"deliverySubscriptionLength": 1,
+				"deliverySubscriptionType": "daily",
+				"maxSubscriptionCycles": 2,
+				"overrideSubscriptionInfo": true,
+				"propertyType": "CREATE_SUBSCRIPTION",
+				"subscriptionEnabled": true,
+				"subscriptionLength": 2,
+				"subscriptionType": "monthly",
+				"subscriptionTypeSettings": {
+					"monthDay": "1",
+					"monthlyMode": "0"
+				}
+			}
+		],
+		"optionName": "Test Option 2"
+	}
+]

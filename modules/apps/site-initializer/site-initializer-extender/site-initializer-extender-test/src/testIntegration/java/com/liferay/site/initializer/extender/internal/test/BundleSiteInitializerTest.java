@@ -28,10 +28,12 @@ import com.liferay.commerce.notification.service.CommerceNotificationTemplateLoc
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
+import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
+import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CPOptionLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
@@ -112,6 +114,7 @@ import com.liferay.style.book.service.StyleBookEntryLocalService;
 
 import java.io.InputStream;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -171,6 +174,7 @@ public class BundleSiteInitializerTest {
 			_assertCommerceChannel(group);
 			_assertCommerceInventoryWarehouse(group);
 			_assertCPDefinition(group);
+			_assertCPInstanceProperties(group);
 			_assertDDMStructure(group);
 			_assertDDMTemplate(group);
 			_assertDLFileEntry(group);
@@ -459,12 +463,43 @@ public class BundleSiteInitializerTest {
 			"test_commerce_product.png", fileEntry.getFileName());
 	}
 
+	private void _assertCPInstanceProperties(Group group)
+		throws Exception {
+
+		CPDefinition cpDefinition =
+			_cpDefinitionLocalService.
+				fetchCPDefinitionByCProductExternalReferenceCode(
+					"TEST001", group.getCompanyId());
+
+		CPInstance cpInstance1 = _cpInstanceLocalService.getCPInstance(
+			cpDefinition.getCPDefinitionId(), "Test Value 1");
+
+		BigDecimal actualPrice = cpInstance1.getPrice();
+		BigDecimal actualPromoPrice = cpInstance1.getPromoPrice();
+
+		Assert.assertEquals(Double.valueOf(60), actualPrice.doubleValue(), 0.0001);
+		Assert.assertEquals(Double.valueOf(25), actualPromoPrice.doubleValue(), 0.0001);
+		Assert.assertNotNull(cpInstance1);
+
+		CPInstance cpInstance2 = _cpInstanceLocalService.getCPInstance(
+			cpDefinition.getCPDefinitionId(), "Test Value 2");
+
+		Assert.assertNotNull(cpInstance2);
+		Assert.assertTrue(cpInstance2.isSubscriptionEnabled());
+	}
+
 	private void _assertCPOption(Group group) throws Exception {
-		CPOption cpOption = _cpOptionLocalService.fetchCPOption(
+		CPOption cpOption1 = _cpOptionLocalService.fetchCPOption(
 			group.getCompanyId(), "test-option-1");
 
-		Assert.assertNotNull(cpOption);
-		Assert.assertEquals("test-option-1", cpOption.getKey());
+		Assert.assertNotNull(cpOption1);
+		Assert.assertEquals("test-option-1", cpOption1.getKey());
+
+		CPOption cpOption2 = _cpOptionLocalService.fetchCPOption(
+			group.getCompanyId(), "test-option-2");
+
+		Assert.assertNotNull(cpOption2);
+		Assert.assertEquals("test-option-2", cpOption2.getKey());
 
 		CPDefinition cpDefinition =
 			_cpDefinitionLocalService.
@@ -475,15 +510,22 @@ public class BundleSiteInitializerTest {
 			cpDefinition.getCPDefinitionOptionRels();
 
 		Assert.assertEquals(
-			cpDefinitionOptionRels.toString(), 1,
+			cpDefinitionOptionRels.toString(), 2,
 			cpDefinitionOptionRels.size());
 
-		CPDefinitionOptionRel cpDefinitionOptionRel =
+		CPDefinitionOptionRel cpDefinitionOptionRel1 =
 			cpDefinitionOptionRels.get(0);
 
-		cpOption = cpDefinitionOptionRel.getCPOption();
+		cpOption1 = cpDefinitionOptionRel1.getCPOption();
 
-		Assert.assertEquals("test-option-1", cpOption.getKey());
+		Assert.assertEquals("test-option-1", cpOption1.getKey());
+
+		CPDefinitionOptionRel cpDefinitionOptionRel2 =
+			cpDefinitionOptionRels.get(1);
+
+		cpOption2 = cpDefinitionOptionRel2.getCPOption();
+
+		Assert.assertEquals("test-option-2", cpOption2.getKey());
 	}
 
 	private void _assertDDMStructure(Group group) {
@@ -1059,6 +1101,9 @@ public class BundleSiteInitializerTest {
 
 	@Inject
 	private CPDefinitionLocalService _cpDefinitionLocalService;
+
+	@Inject
+	private CPInstanceLocalService _cpInstanceLocalService;
 
 	@Inject
 	private CPOptionLocalService _cpOptionLocalService;

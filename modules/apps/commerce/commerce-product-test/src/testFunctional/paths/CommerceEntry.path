@@ -81,6 +81,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DISPLAY_PAGE_ITEM_REMOVE</td>
+	<td>//span[contains(@id,'displayPageItemRemove')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DISPLAY_DATE_FIELD</td>
 	<td>//span/input[contains(@id,'displayDate') and (@placeholder='mm/dd/yyyy')]</td>
 	<td></td>

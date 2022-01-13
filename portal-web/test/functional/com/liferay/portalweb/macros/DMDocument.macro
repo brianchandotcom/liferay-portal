@@ -3344,9 +3344,25 @@ definition {
 	macro viewPGViaMG {
 		var key_mgDocumentTitle = "${mgDocumentTitle}";
 
-		AssertElementPresent(locator1 = "MediaGallery#ENTRY_THUMBNAIL");
+		if (isSet(mgVideoPreview)) {
+			Click(
+				key_mgDocumentTitle = "${mgDocumentTitle}",
+				locator1 = "MediaGallery#ENTRY_THUMBNAIL");
 
-		AssertElementPresent(locator1 = "MediaGallery#IMAGE_TITLE");
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#SELECT_MEDIA_GALLERY_VIDEO");
+
+			AssertElementPresent(locator1 = "MediaGallery#ENTRY_VIDEO_PLAYED");
+		}
+		else if (isSet(staging)) {
+			AssertVisible(
+				key_mgImageName = "${mgDocumentTitle}",
+				locator1 = "MediaGallery#ENTRY_IMAGE_PREVIEW");
+		}
+		else {
+			AssertElementPresent(locator1 = "MediaGallery#ENTRY_THUMBNAIL");
+
+			AssertElementPresent(locator1 = "MediaGallery#IMAGE_TITLE");
+		}
 	}
 
 	macro viewPGViaSearch {

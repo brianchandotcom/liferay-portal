@@ -152,7 +152,7 @@ public class SXPElementResourceImpl
 			},
 			sorts,
 			document -> {
-				Long sxpElementId = GetterUtil.getLong(
+				long sxpElementId = GetterUtil.getLong(
 					document.get(Field.ENTRY_CLASS_PK));
 
 				SXPElement sxpElement = _sxpElementDTOConverter.toDTO(

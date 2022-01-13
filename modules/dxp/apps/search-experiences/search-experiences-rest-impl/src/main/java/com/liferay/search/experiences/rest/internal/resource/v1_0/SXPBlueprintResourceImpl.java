@@ -159,7 +159,7 @@ public class SXPBlueprintResourceImpl
 			},
 			sorts,
 			document -> {
-				Long sxpBlueprintId = GetterUtil.getLong(
+				long sxpBlueprintId = GetterUtil.getLong(
 					document.get(Field.ENTRY_CLASS_PK));
 
 				SXPBlueprint sxpBlueprint = _sxpBlueprintDTOConverter.toDTO(

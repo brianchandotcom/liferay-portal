@@ -201,7 +201,7 @@
 
 	<target depends="get-artifact-version-previous-release,get-artifact-change-log-ticket-list-since-previous-release,get-artifact-change-log-ticket-list-full" description="Get an aggregated list of tickets from the change logs of all versions of the current module since the version present in the previous release of this app." if="${app.has.artifact.previous.release}" name="get-artifact-change-log-ticket-list" />
 
-	<target name="get-artifact-change-log-ticket-list-full" unless="${app.has.artifact.previous.release}">
+	<target name="get-artifact-change-log-ticket-list-full" unless="app.has.artifact.previous.release">
 		<loadfile
 			failonerror="false"
 			property="artifact.change.log.ticket.list"
@@ -227,7 +227,7 @@
 		</condition>
 	</target>
 
-	<target depends="get-artifact-version-previous-release" description="Get an aggregated list of tickets from the change logs of all versions of the current module since the version present in the previous release of this app." if="${app.has.artifact.previous.release}" name="get-artifact-change-log-ticket-list-since-previous-release">
+	<target depends="get-artifact-version-previous-release" description="Get an aggregated list of tickets from the change logs of all versions of the current module since the version present in the previous release of this app." if="app.has.artifact.previous.release" name="get-artifact-change-log-ticket-list-since-previous-release">
 		<loadfile
 			failonerror="false"
 			property="artifact.change.log.ticket.list"

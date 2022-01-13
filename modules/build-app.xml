@@ -458,7 +458,7 @@
 		</subant>
 	</target>
 
-	<target depends="init-build-app,get-app-version" name="get-app-artifacts" unless="module.dirs.null">
+	<target depends="dist-module-artifacts,init-build-app,get-app-version" name="get-app-artifacts" unless="module.dirs.null">
 		<pathconvert pathsep=",\${line.separator}&#x0009;" property="module.versions.list">
 			<flattenmapper />
 
@@ -878,7 +878,7 @@
 			</or>
 		</condition>
 
-		<condition property="app.first.version">
+		<condition else="false" property="app.first.version" value="true">
 			<not>
 				<available file="${releng.app.dir}/app.changelog" />
 			</not>

@@ -1,5 +1,5 @@
 Bundle-Name: Liferay Commerce Payment Method Money Order
 Bundle-SymbolicName: com.liferay.commerce.payment.method.money.order
-Bundle-Version: 4.0.10
+Bundle-Version: 4.0.11
 Liferay-Enterprise-App: product.id=9a473157-06a6-44b6-b017-a360ffaf5f38
 Web-ContextPath: /commerce-payment-method-money-order

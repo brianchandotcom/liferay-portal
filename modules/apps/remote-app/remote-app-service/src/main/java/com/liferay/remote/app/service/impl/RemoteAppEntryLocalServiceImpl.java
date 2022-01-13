@@ -20,6 +20,7 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.cluster.Clusterable;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
@@ -34,6 +35,7 @@ import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -523,19 +525,19 @@ public class RemoteAppEntryLocalServiceImpl
 			long userId, RemoteAppEntry remoteAppEntry)
 		throws PortalException {
 
+		Company company = _companyLocalService.getCompany(
+			remoteAppEntry.getCompanyId());
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+
 		return WorkflowHandlerRegistryUtil.startWorkflowInstance(
-			remoteAppEntry.getCompanyId(), WorkflowConstants.DEFAULT_GROUP_ID,
-			userId, RemoteAppEntry.class.getName(),
+			remoteAppEntry.getCompanyId(), company.getGroupId(), userId,
+			RemoteAppEntry.class.getName(),
 			remoteAppEntry.getRemoteAppEntryId(), remoteAppEntry,
-			new ServiceContext() {
-				{
-					setAddGroupPermissions(true);
-					setAddGuestPermissions(true);
-					setCompanyId(remoteAppEntry.getCompanyId());
-					setScopeGroupId(WorkflowConstants.DEFAULT_GROUP_ID);
-					setUserId(userId);
-				}
-			},
+			serviceContext,
 			Collections.singletonMap(
 				WorkflowConstants.CONTEXT_URL,
 				Optional.ofNullable(
@@ -666,6 +668,9 @@ public class RemoteAppEntryLocalServiceImpl
 		"[A-Za-z0-9-_]*");
 
 	private BundleContext _bundleContext;
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private RemoteAppEntryDeployer _remoteAppEntryDeployer;

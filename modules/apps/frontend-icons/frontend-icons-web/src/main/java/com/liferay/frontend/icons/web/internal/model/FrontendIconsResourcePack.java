@@ -34,25 +34,27 @@ public class FrontendIconsResourcePack {
 		_editable = editable;
 	}
 
-	public void addIconResource(FrontendIconsResource frontendIconsResource) {
+	public void addFrontendIconResource(
+		FrontendIconsResource frontendIconsResource) {
+
 		_iconResources.put(
 			frontendIconsResource.getId(), frontendIconsResource);
 	}
 
-	public void addIconResources(
+	public void addFrontendIconsResources(
 		List<FrontendIconsResource> frontendIconsResources) {
 
-		frontendIconsResources.forEach(this::addIconResource);
+		frontendIconsResources.forEach(this::addFrontendIconResource);
+	}
+
+	public Optional<FrontendIconsResource> getFrontendIconsResource(
+		String iconName) {
+
+		return Optional.ofNullable(_iconResources.get(iconName));
 	}
 
 	public Collection<FrontendIconsResource> getFrontendIconsResources() {
 		return _iconResources.values();
-	}
-
-	public Optional<FrontendIconsResource> getIconResourceOptional(
-		String iconName) {
-
-		return Optional.ofNullable(_iconResources.get(iconName));
 	}
 
 	public String getName() {
@@ -63,7 +65,7 @@ public class FrontendIconsResourcePack {
 		return _editable;
 	}
 
-	public void removeIconResource(String iconName) {
+	public void removeFrontendIconsResource(String iconName) {
 		_iconResources.remove(iconName);
 	}
 

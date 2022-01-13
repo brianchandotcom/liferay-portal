@@ -26,6 +26,8 @@ import java.util.List;
  */
 public class ClayFrontendIconsResourcePackUtil {
 
+	public static final String CLAY_FRONTEND_ICONS_PACK_NAME = "clay";
+
 	public static FrontendIconsResourcePack getFrontendIconResourcePack() {
 		if (_frontendIconsResourcePack != null) {
 			return _frontendIconsResourcePack;
@@ -35,9 +37,10 @@ public class ClayFrontendIconsResourcePackUtil {
 			SVGUtil.getFrontendIconResources(getSpritemap(), StringPool.BLANK);
 
 		FrontendIconsResourcePack frontendIconsResourcePack =
-			new FrontendIconsResourcePack("clay", false);
+			new FrontendIconsResourcePack(CLAY_FRONTEND_ICONS_PACK_NAME, false);
 
-		frontendIconsResourcePack.addIconResources(frontendIconResources);
+		frontendIconsResourcePack.addFrontendIconsResources(
+			frontendIconResources);
 
 		_frontendIconsResourcePack = frontendIconsResourcePack;
 

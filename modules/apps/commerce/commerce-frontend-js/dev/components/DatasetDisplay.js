@@ -12,13 +12,13 @@
  * details.
  */
 
-import {DataSet} from '@liferay/frontend-data-set-web';
+import {FrontendDataSet} from '@liferay/frontend-data-set-web';
 import {render} from '@liferay/frontend-js-react-web';
 import React from 'react';
 
 import '../../src/main/resources/META-INF/resources/styles/main.scss';
 
-const datasetDisplayLauncher = (...data) => render(DataSet, ...data);
+const datasetDisplayLauncher = (...data) => render(FrontendDataSet, ...data);
 
 const fluidDataSetProps = {
 	activeViewSettings: {},

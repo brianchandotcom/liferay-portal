@@ -12,11 +12,11 @@
  * details.
  */
 
-import {DataSet} from '@liferay/frontend-data-set-web';
+import {FrontendDataSet} from '@liferay/frontend-data-set-web';
 import React from 'react';
 
 const DataSetTag = (props) => {
-	return <DataSet {...props} />;
+	return <FrontendDataSet {...props} />;
 };
 
 export default DataSetTag;

@@ -12,67 +12,9 @@
  * details.
  */
 
-import {useThunk} from '@liferay/frontend-js-react-web';
-import PropTypes from 'prop-types';
-import React, {useReducer} from 'react';
+// Frontend Data Set API
 
-import {AppContext} from './AppContext';
-import DataSet from './DataSet';
-import ViewsContext, {viewsReducer} from './views/ViewsContext';
-
-const App = ({
-	activeViewSettings,
-	apiURL,
-	appURL,
-	customViewsEnabled,
-	portletId,
-	views,
-	...props
-}) => {
-	const activeViewName = activeViewSettings?.name;
-
-	const activeView = activeViewName
-		? views.find(({name}) => name === activeViewName)
-		: views[0];
-	const [state, dispatch] = useThunk(
-		useReducer(viewsReducer, {
-			activeView,
-			customViewsEnabled,
-			views,
-			visibleFieldNames: activeViewSettings?.visibleFieldNames || {},
-		})
-	);
-
-	return (
-		<AppContext.Provider value={{apiURL, appURL, portletId}}>
-			<ViewsContext.Provider value={[state, dispatch]}>
-				<DataSet {...props} />
-			</ViewsContext.Provider>
-		</AppContext.Provider>
-	);
-};
-
-App.proptypes = {
-	activeViewSettings: PropTypes.shape({
-		name: PropTypes.string,
-		visibleFieldNames: PropTypes.array,
-	}),
-	apiURL: PropTypes.string,
-	appURL: PropTypes.string,
-	portletId: PropTypes.string,
-	views: PropTypes.arrayOf(
-		PropTypes.shape({
-			component: PropTypes.any,
-			contentRenderer: PropTypes.string,
-			contentRendererModuleURL: PropTypes.string,
-			label: PropTypes.string,
-			schema: PropTypes.object,
-			thumbnail: PropTypes.string,
-		})
-	).isRequired,
-};
-
-export {App as DataSet};
+export {default as FrontendDataSet} from './FrontendDataSet';
 
 // Renderers API
 

@@ -272,12 +272,10 @@ export default function DiagramBuilder({version}) {
 	const contextProps = {
 		collidingElements,
 		elementRectangle,
-		elements,
 		selectedItem,
 		selectedItemNewId,
 		setCollidingElements,
 		setElementRectangle,
-		setElements,
 		setSelectedItem,
 		setSelectedItemNewId,
 	};

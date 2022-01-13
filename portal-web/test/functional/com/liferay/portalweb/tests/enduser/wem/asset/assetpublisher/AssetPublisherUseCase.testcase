@@ -759,7 +759,7 @@ definition {
 		}
 	}
 
-	@description = "Filter the displayed assets by categories when enable pagination."
+	@description = "This is a test for LPS-135460. Filter the displayed assets by categories when enable pagination."
 	@priority = "5"
 	test FilterAssetsByCategoriesWithPagination {
 		property portal.acceptance = "true";
@@ -880,6 +880,20 @@ definition {
 				pageNumber = "2 of 2",
 				paginationNumber = "3",
 				paginationType = "Regular");
+		}
+
+		task ("Assert URL contains delta by click next pagination") {
+			AssertLocation.assertPartialLocation(value1 = "_delta");
+		}
+
+		task ("Assert URL contains delta by dropdown pagination") {
+			ClickNoError(
+				key_pageNumber = "2 of 2",
+				locator1 = "Pagination#PARTICULAR_PAGE");
+
+			SelectFrame(value1 = "relative=top");
+
+			AssertLocation.assertPartialLocation(value1 = "_delta");
 		}
 	}
 

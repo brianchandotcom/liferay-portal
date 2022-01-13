@@ -167,6 +167,23 @@ definition {
 			value1 = "There are no documents or media files in this folder.");
 	}
 
+	macro viewInvalidRootFolder {
+		Alert.viewErrorMessage(errorMessage = "The folder could not be found");
+
+		Portlet.gotoPortletOptions(
+			portletName = "Documents and Media",
+			portletOption = "Configuration");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "DocumentsAndMedia#CONFIGURATION_IFRAME");
+
+		AssertTextEquals.assertPartialText(
+			key_warningMessage = "The selected root folder cannot be found. Please select another one",
+			locator1 = "Message#WARNING_SPECIFIC",
+			value1 = "The selected root folder cannot be found. Please select another one");
+
+		SelectFrame.selectFrameTop();
+	}
+
 	macro viewNoPermissionCP {
 		var key_portletTitle = "Documents and Media";
 

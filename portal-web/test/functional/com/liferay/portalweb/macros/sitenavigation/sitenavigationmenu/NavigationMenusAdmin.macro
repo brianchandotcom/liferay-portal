@@ -235,7 +235,11 @@ definition {
 			key_itemName = "${itemName}",
 			locator1 = "SiteNavigationMenu#ITEM_ENTRY_CLOSE");
 
-		if (IsTextEqual(locator1 = "Modal#HEADER", value1 = "Delete Item")) {
+		if (IsElementPresent(locator1 = "Modal#HEADER")) {
+			AssertTextEquals(
+				locator1 = "Modal#HEADER",
+				value1 = "Delete Item");
+
 			AssertTextEquals.assertPartialText(
 				locator1 = "Modal#BODY",
 				value1 = "The item you want to delete has children that also can be removed.");

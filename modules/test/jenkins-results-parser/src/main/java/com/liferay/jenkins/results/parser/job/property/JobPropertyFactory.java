@@ -74,9 +74,14 @@ public class JobPropertyFactory {
 			return jobProperty;
 		}
 
-		if ((type == JobProperty.Type.EXCLUDE_GLOB) ||
-			(type == JobProperty.Type.FILTER_GLOB) ||
-			(type == JobProperty.Type.INCLUDE_GLOB)) {
+		if (type == JobProperty.Type.DEFAULT_TEST_DIR) {
+			jobProperty = new DefaultTestDirProperty(
+				job, type, testBaseDir, basePropertyName, useBasePropertyName,
+				testSuiteName, testBatchName);
+		}
+		else if ((type == JobProperty.Type.EXCLUDE_GLOB) ||
+				 (type == JobProperty.Type.FILTER_GLOB) ||
+				 (type == JobProperty.Type.INCLUDE_GLOB)) {
 
 			jobProperty = new DefaultGlobJobProperty(
 				job, type, testBaseDir, basePropertyName, useBasePropertyName,
@@ -101,11 +106,6 @@ public class JobPropertyFactory {
 		}
 		else if (type == JobProperty.Type.QA_WEBSITES_TEST_DIR) {
 			jobProperty = new QAWebsitesTestDirJobProperty(
-				job, type, testBaseDir, basePropertyName, useBasePropertyName,
-				testSuiteName, testBatchName);
-		}
-		else if (type == JobProperty.Type.DEFAULT_TEST_DIR) {
-			jobProperty = new DefaultTestDirProperty(
 				job, type, testBaseDir, basePropertyName, useBasePropertyName,
 				testSuiteName, testBatchName);
 		}

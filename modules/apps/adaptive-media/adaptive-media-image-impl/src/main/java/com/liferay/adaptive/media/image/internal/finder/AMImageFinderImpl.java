@@ -35,7 +35,6 @@ import com.liferay.adaptive.media.image.url.AMImageURLFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.net.URI;
 
@@ -193,34 +192,7 @@ public class AMImageFinderImpl implements AMImageFinder {
 	}
 
 	private AdaptiveMedia<AMImageProcessor> _createRawAdaptiveMedia(
-			FileVersion fileVersion)
-		throws PortalException {
-
-		Map<String, String> properties = HashMapBuilder.put(
-			() -> {
-				AMAttribute<Object, Long> contentLengthAMAttribute =
-					AMAttribute.getContentLengthAMAttribute();
-
-				return contentLengthAMAttribute.getName();
-			},
-			String.valueOf(fileVersion.getSize())
-		).put(
-			() -> {
-				AMAttribute<Object, String> contentTypeAMAttribute =
-					AMAttribute.getContentTypeAMAttribute();
-
-				return contentTypeAMAttribute.getName();
-			},
-			fileVersion.getMimeType()
-		).put(
-			() -> {
-				AMAttribute<Object, String> fileNameAMAttribute =
-					AMAttribute.getFileNameAMAttribute();
-
-				return fileNameAMAttribute.getName();
-			},
-			fileVersion.getFileName()
-		).build();
+		FileVersion fileVersion) {
 
 		return new AMImage(
 			() -> {
@@ -231,7 +203,7 @@ public class AMImageFinderImpl implements AMImageFinder {
 					throw new AMRuntimeException(portalException);
 				}
 			},
-			AMImageAttributeMapping.fromProperties(properties), null);
+			AMImageAttributeMapping.fromFileVersion(fileVersion), null);
 	}
 
 	private BiFunction<FileVersion, AMImageConfigurationEntry, URI>

@@ -17,6 +17,7 @@ package com.liferay.adaptive.media.image.internal.configuration;
 import com.liferay.adaptive.media.AMAttribute;
 import com.liferay.adaptive.media.image.processor.AMImageAttribute;
 import com.liferay.adaptive.media.image.processor.AMImageProcessor;
+import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.util.Map;
@@ -31,6 +32,22 @@ import java.util.Optional;
  * @author Adolfo Pérez
  */
 public class AMImageAttributeMapping {
+
+	public static AMImageAttributeMapping fromFileVersion(
+		FileVersion fileVersion) {
+
+		return new AMImageAttributeMapping(
+			HashMapBuilder.<AMAttribute<AMImageProcessor, ?>, Optional<?>>put(
+				AMAttribute.getContentLengthAMAttribute(),
+				Optional.of(fileVersion.getSize())
+			).put(
+				AMAttribute.getContentTypeAMAttribute(),
+				Optional.of(fileVersion.getMimeType())
+			).put(
+				AMAttribute.getFileNameAMAttribute(),
+				Optional.of(fileVersion.getFileName())
+			).build());
+	}
 
 	/**
 	 * Returns an {@link AMImageAttributeMapping} that uses the map as the

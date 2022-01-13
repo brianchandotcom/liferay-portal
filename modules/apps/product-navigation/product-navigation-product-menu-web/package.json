@@ -1,6 +1,7 @@
 {
 	"dependencies": {
 		"@clayui/button": "3.40.0",
+		"@clayui/core": "3.44.1",
 		"@clayui/drop-down": "3.43.0",
 		"@clayui/icon": "3.40.0",
 		"@clayui/loading-indicator": "3.40.0",

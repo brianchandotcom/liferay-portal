@@ -12,22 +12,105 @@
  * details.
  */
 
-import {Treeview} from 'frontend-js-components-web';
-import React from 'react';
-
-import NavigationMenuItemsTreeNode from './NavigationMenuItemsTreeNode';
+import {TreeView as ClayTreeView} from '@clayui/core';
+import ClayIcon from '@clayui/icon';
+import classNames from 'classnames';
+import React, {useEffect} from 'react';
 
 export default function NavigationMenuItemsTree({
 	selectedSiteNavigationMenuItemId,
 	siteNavigationMenuItems,
 }) {
+	const selectedKeys = new Set([selectedSiteNavigationMenuItemId]);
+
+	const removeEmptyChildren = (item) => {
+		if (item.children.length === 0) {
+			delete item.children;
+		}
+		else {
+			item.children.forEach(removeEmptyChildren);
+		}
+	};
+
+	useEffect(() => {
+		siteNavigationMenuItems.forEach((siteNavigationMenuItem) => {
+			removeEmptyChildren(siteNavigationMenuItem);
+		});
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
 	return (
 		<div className="navigation-menu-items-tree">
-			<Treeview
-				NodeComponent={NavigationMenuItemsTreeNode}
-				initialSelectedNodeIds={[selectedSiteNavigationMenuItemId]}
-				nodes={siteNavigationMenuItems}
-			/>
+			<ClayTreeView
+				displayType="dark"
+				expandedKeys={selectedKeys}
+				expanderIcons={{
+					close: <ClayIcon symbol="hr" />,
+					open: <ClayIcon symbol="plus" />,
+				}}
+				items={siteNavigationMenuItems}
+			>
+				{(item) => {
+					const hasUrl = item.url && item.url !== '#';
+
+					return (
+						<ClayTreeView.Item>
+							<ClayTreeView.ItemStack
+								className={classNames(
+									'navigation-menu-items-tree-node',
+									{selected: selectedKeys.has(item.id)}
+								)}
+							>
+								<ClayIcon
+									symbol={item.url ? 'page' : 'folder'}
+								/>
+
+								{hasUrl ? (
+									<a
+										className="d-block h-100 w-100"
+										href={item.url}
+										onMouseDownCapture={() => {
+											Liferay.Util.navigate(item.url);
+										}}
+									>
+										{item.name}
+									</a>
+								) : (
+									<p className="m-0">{item.name}</p>
+								)}
+							</ClayTreeView.ItemStack>
+
+							<ClayTreeView.Group items={item.children}>
+								{(item) => (
+									<ClayTreeView.Item>
+										<ClayIcon
+											symbol={
+												item.url ? 'page' : 'folder'
+											}
+										/>
+
+										{hasUrl ? (
+											<a
+												className="d-block h-100 w-100"
+												href={item.url}
+												onMouseDownCapture={() => {
+													Liferay.Util.navigate(
+														item.url
+													);
+												}}
+											>
+												{item.name}
+											</a>
+										) : (
+											<p className="m-0">{item.name}</p>
+										)}
+									</ClayTreeView.Item>
+								)}
+							</ClayTreeView.Group>
+						</ClayTreeView.Item>
+					);
+				}}
+			</ClayTreeView>
 		</div>
 	);
 }

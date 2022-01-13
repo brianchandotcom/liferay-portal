@@ -212,5 +212,78 @@ describe('remote-app-web', () => {
 				version: VERSION,
 			});
 		});
+
+		it('allows fetching on same domain', async () => {
+			const headers = new Headers();
+			headers.append('Content-Type', 'application/json');
+
+			fetch.mockResponse(
+				JSON.stringify({
+					headers,
+					ok: true,
+					redirected: false,
+					url: window.location.origin + '/foo',
+				})
+			);
+
+			iframe.contentWindow.parent.postMessage(
+				{
+					appID: 'some UUID',
+					command: 'fetch',
+					init: {},
+					protocol: REMOTE_APP_PROTOCOL,
+					resource: window.location.origin + '/foo',
+					role: 'client',
+					version: VERSION,
+				},
+				'*'
+			);
+
+			await reply();
+
+			expect(receiveMessage).toHaveBeenCalled();
+
+			expect(receiveMessage.mock.calls[0][0].data).toEqual({
+				appID: 'some UUID',
+				headers: [['content-type', 'text/plain;charset=UTF-8']],
+				kind: 'fetch:resolve',
+				ok: true,
+				protocol: 'com.liferay.remote.app.protocol',
+				redirected: false,
+				requestID: undefined,
+				role: 'host',
+				status: 200,
+				statusText: 'OK',
+				type: undefined,
+				url: '',
+				version: VERSION,
+			});
+		});
+
+		it('prevents fetching resources cross domain', async () => {
+			iframe.contentWindow.parent.postMessage(
+				{
+					appID: 'some UUID',
+					command: 'fetch',
+					init: {},
+					protocol: REMOTE_APP_PROTOCOL,
+					resource: 'http://evildomain.com',
+					role: 'client',
+					version: VERSION,
+				},
+				'*'
+			);
+
+			await reply();
+
+			expect(receiveMessage.mock.calls[0][0].data).toEqual({
+				appID: 'some UUID',
+				kind: 'fetch:reject',
+				protocol: 'com.liferay.remote.app.protocol',
+				requestID: undefined,
+				role: 'host',
+				version: 0,
+			});
+		});
 	});
 });

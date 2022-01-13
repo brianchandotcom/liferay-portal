@@ -121,6 +121,24 @@ function receiveMessage(event) {
 					// TODO: more validation here
 
 					const resource = data.resource;
+
+					// LPS-145277: Prevent requests to other origins
+
+					if (
+						!(
+							resource.startsWith(window.location.origin) ||
+							resource.startsWith('/o/')
+						)
+					) {
+						postMessage(source, {
+							appID,
+							kind: 'fetch:reject',
+							requestID,
+						});
+
+						return;
+					}
+
 					const init = data.init;
 
 					const {body} = init;

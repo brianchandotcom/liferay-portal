@@ -146,8 +146,6 @@ public class RemoteAppEntryLocalServiceImpl
 
 		_addResources(remoteAppEntry);
 
-		remoteAppEntryLocalService.deployRemoteAppEntry(remoteAppEntry);
-
 		return _startWorkflowInstance(userId, remoteAppEntry);
 	}
 
@@ -191,8 +189,6 @@ public class RemoteAppEntryLocalServiceImpl
 
 		_addResources(remoteAppEntry);
 
-		remoteAppEntryLocalService.deployRemoteAppEntry(remoteAppEntry);
-
 		return _startWorkflowInstance(userId, remoteAppEntry);
 	}
 
@@ -216,10 +212,10 @@ public class RemoteAppEntryLocalServiceImpl
 
 		if (remoteAppEntry != null) {
 			return remoteAppEntryLocalService.updateCustomElementRemoteAppEntry(
-				remoteAppEntry.getRemoteAppEntryId(), customElementCSSURLs,
-				customElementHTMLElementName, customElementURLs, description,
-				friendlyURLMapping, nameMap, portletCategoryName, properties,
-				sourceCodeURL);
+				userId, remoteAppEntry.getRemoteAppEntryId(),
+				customElementCSSURLs, customElementHTMLElementName,
+				customElementURLs, description, friendlyURLMapping, nameMap,
+				portletCategoryName, properties, sourceCodeURL);
 		}
 
 		return addCustomElementRemoteAppEntry(
@@ -336,7 +332,7 @@ public class RemoteAppEntryLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public RemoteAppEntry updateCustomElementRemoteAppEntry(
-			long remoteAppEntryId, String customElementCSSURLs,
+			long userId, long remoteAppEntryId, String customElementCSSURLs,
 			String customElementHTMLElementName, String customElementURLs,
 			String description, String friendlyURLMapping,
 			Map<Locale, String> nameMap, String portletCategoryName,
@@ -357,6 +353,8 @@ public class RemoteAppEntryLocalServiceImpl
 		RemoteAppEntry remoteAppEntry =
 			remoteAppEntryPersistence.findByPrimaryKey(remoteAppEntryId);
 
+		remoteAppEntryLocalService.undeployRemoteAppEntry(remoteAppEntry);
+
 		remoteAppEntry.setCustomElementCSSURLs(customElementCSSURLs);
 		remoteAppEntry.setCustomElementHTMLElementName(
 			customElementHTMLElementName);
@@ -367,18 +365,19 @@ public class RemoteAppEntryLocalServiceImpl
 		remoteAppEntry.setPortletCategoryName(portletCategoryName);
 		remoteAppEntry.setProperties(properties);
 		remoteAppEntry.setSourceCodeURL(sourceCodeURL);
+		remoteAppEntry.setStatus(WorkflowConstants.STATUS_DRAFT);
+		remoteAppEntry.setStatusByUserId(userId);
+		remoteAppEntry.setStatusDate(new Date());
 
 		remoteAppEntry = remoteAppEntryPersistence.update(remoteAppEntry);
 
-		remoteAppEntryLocalService.deployRemoteAppEntry(remoteAppEntry);
-
-		return remoteAppEntry;
+		return _startWorkflowInstance(userId, remoteAppEntry);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public RemoteAppEntry updateIFrameRemoteAppEntry(
-			long remoteAppEntryId, String description,
+			long userId, long remoteAppEntryId, String description,
 			String friendlyURLMapping, String iFrameURL,
 			Map<Locale, String> nameMap, String portletCategoryName,
 			String properties, String sourceCodeURL)
@@ -393,6 +392,8 @@ public class RemoteAppEntryLocalServiceImpl
 		RemoteAppEntry remoteAppEntry =
 			remoteAppEntryPersistence.findByPrimaryKey(remoteAppEntryId);
 
+		remoteAppEntryLocalService.undeployRemoteAppEntry(remoteAppEntry);
+
 		remoteAppEntry.setDescription(description);
 		remoteAppEntry.setFriendlyURLMapping(friendlyURLMapping);
 		remoteAppEntry.setIFrameURL(iFrameURL);
@@ -400,12 +401,13 @@ public class RemoteAppEntryLocalServiceImpl
 		remoteAppEntry.setPortletCategoryName(portletCategoryName);
 		remoteAppEntry.setProperties(properties);
 		remoteAppEntry.setSourceCodeURL(sourceCodeURL);
+		remoteAppEntry.setStatus(WorkflowConstants.STATUS_DRAFT);
+		remoteAppEntry.setStatusByUserId(userId);
+		remoteAppEntry.setStatusDate(new Date());
 
 		remoteAppEntry = remoteAppEntryPersistence.update(remoteAppEntry);
 
-		remoteAppEntryLocalService.deployRemoteAppEntry(remoteAppEntry);
-
-		return remoteAppEntry;
+		return _startWorkflowInstance(userId, remoteAppEntry);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -419,6 +421,15 @@ public class RemoteAppEntryLocalServiceImpl
 
 		if (status == remoteAppEntry.getStatus()) {
 			return remoteAppEntry;
+		}
+
+		if (status == WorkflowConstants.STATUS_APPROVED) {
+			remoteAppEntryLocalService.deployRemoteAppEntry(remoteAppEntry);
+		}
+		else if (remoteAppEntry.getStatus() ==
+					WorkflowConstants.STATUS_APPROVED) {
+
+			remoteAppEntryLocalService.undeployRemoteAppEntry(remoteAppEntry);
 		}
 
 		User user = _userLocalService.getUser(userId);

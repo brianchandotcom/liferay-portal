@@ -110,7 +110,7 @@ public class RemoteAppEntryServiceImpl extends RemoteAppEntryServiceBaseImpl {
 			getPermissionChecker(), remoteAppEntryId, ActionKeys.UPDATE);
 
 		return remoteAppEntryLocalService.updateCustomElementRemoteAppEntry(
-			remoteAppEntryId, customElementCSSURLs,
+			getUserId(), remoteAppEntryId, customElementCSSURLs,
 			customElementHTMLElementName, customElementURLs, description,
 			friendlyURLMapping, nameMap, portletCategoryName, properties,
 			sourceCodeURL);
@@ -128,8 +128,8 @@ public class RemoteAppEntryServiceImpl extends RemoteAppEntryServiceBaseImpl {
 			getPermissionChecker(), remoteAppEntryId, ActionKeys.UPDATE);
 
 		return remoteAppEntryLocalService.updateIFrameRemoteAppEntry(
-			remoteAppEntryId, description, friendlyURLMapping, iFrameURL,
-			nameMap, portletCategoryName, properties, sourceCodeURL);
+			getUserId(), remoteAppEntryId, description, friendlyURLMapping,
+			iFrameURL, nameMap, portletCategoryName, properties, sourceCodeURL);
 	}
 
 	@Reference(

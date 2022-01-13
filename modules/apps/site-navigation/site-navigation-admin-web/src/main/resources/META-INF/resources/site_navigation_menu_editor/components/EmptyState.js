@@ -19,7 +19,7 @@ import {AddItemDropDown} from './AddItemDropdown';
 
 export function EmptyState() {
 	return (
-		<div className="p-3 taglib-empty-result-message text-center">
+		<div className="taglib-empty-result-message text-center">
 			<div className="taglib-empty-state" />
 
 			<h1 className="taglib-empty-result-message-title">
@@ -35,7 +35,7 @@ export function EmptyState() {
 			<div className="taglib-empty-result-message-actionDropdownItems">
 				<AddItemDropDown
 					trigger={
-						<ClayButton small>
+						<ClayButton displayType="secondary" small>
 							{Liferay.Language.get('new')}
 						</ClayButton>
 					}

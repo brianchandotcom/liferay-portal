@@ -475,6 +475,11 @@ public class AccountEntryUserRelLocalServiceWrapper
 	}
 
 	@Override
+	public boolean isAccountEntryUser(long userId) {
+		return _accountEntryUserRelLocalService.isAccountEntryUser(userId);
+	}
+
+	@Override
 	public void setPersonTypeAccountEntryUser(long accountEntryId, long userId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

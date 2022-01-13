@@ -416,6 +416,10 @@ public class AccountEntryUserRelLocalServiceUtil {
 		return getService().hasAccountEntryUserRel(accountEntryId, userId);
 	}
 
+	public static boolean isAccountEntryUser(long userId) {
+		return getService().isAccountEntryUser(userId);
+	}
+
 	public static void setPersonTypeAccountEntryUser(
 			long accountEntryId, long userId)
 		throws PortalException {

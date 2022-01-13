@@ -39,13 +39,16 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -1871,6 +1874,53 @@ public class JournalArticleFinderImpl
 	}
 
 	protected String replaceStatusJoin(
+		String sql, long groupId,
+		QueryDefinition<JournalArticle> queryDefinition) {
+
+		if (queryDefinition.getStatus() == WorkflowConstants.STATUS_ANY) {
+			return StringUtil.removeSubstring(sql, "[$STATUS_JOIN$] AND");
+		}
+
+		Group group = null;
+
+		try {
+			group = _groupLocalService.getGroup(groupId);
+		}
+		catch (PortalException portalException) {
+			throw new SystemException(portalException);
+		}
+
+		if (queryDefinition.isExcludeStatus()) {
+			sql = StringUtil.replace(
+				sql, "[$STATUS_JOIN$]",
+				StringBundler.concat(
+					"(JournalArticle.status != ", queryDefinition.getStatus(),
+					" AND JournalArticle.companyId = ", group.getCompanyId(),
+					") AND (tempJournalArticle.status != ",
+					queryDefinition.getStatus(),
+					" AND tempJournalArticle.companyId = ",
+					group.getCompanyId(), ")"));
+		}
+		else {
+			sql = StringUtil.replace(
+				sql, "[$STATUS_JOIN$]",
+				StringBundler.concat(
+					"(JournalArticle.status = ", queryDefinition.getStatus(),
+					" AND JournalArticle.companyId = ", group.getCompanyId(),
+					") AND (tempJournalArticle.status = ",
+					queryDefinition.getStatus(),
+					" AND tempJournalArticle.companyId = ",
+					group.getCompanyId(), ")"));
+		}
+
+		return sql;
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #replaceStatusJoin(String, long, QueryDefinition)}
+	 */
+	@Deprecated
+	protected String replaceStatusJoin(
 		String sql, QueryDefinition<JournalArticle> queryDefinition) {
 
 		if (queryDefinition.getStatus() == WorkflowConstants.STATUS_ANY) {
@@ -2233,6 +2283,9 @@ public class JournalArticleFinderImpl
 
 	@Reference
 	private CustomSQL _customSQL;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private InlineSQLHelper _inlineSQLHelper;

@@ -40,7 +40,7 @@
 	"private": true,
 	"scripts": {
 		"build": "react-scripts build",
-		"format": "eslint src --ext js",
+		"format": "eslint src --ext js --fix",
 		"run-serve": "yarn build && npx serve ./build",
 		"serve": "npx serve ./build",
 		"start": "react-scripts start"

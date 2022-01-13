@@ -1,9 +1,9 @@
 {
 	"dependencies": {
 		"clay-icon": "2.23.2",
-		"clay-modal": "2.23.2",
-		"clay-pagination-bar": "2.23.2",
-		"clay-table": "2.23.2",
+		"clay-modal": "2.23.3",
+		"clay-pagination-bar": "2.23.3",
+		"clay-table": "2.23.3",
 		"frontend-js-web": "*",
 		"metal-component": "2.16.8",
 		"metal-soy": "2.16.9",

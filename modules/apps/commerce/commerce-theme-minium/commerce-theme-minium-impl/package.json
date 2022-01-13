@@ -2,9 +2,9 @@
 	"dependencies": {
 		"clay": "^2.4.1",
 		"clay-icon": "2.23.2",
-		"clay-modal": "2.23.2",
-		"clay-pagination-bar": "2.23.2",
-		"clay-table": "2.23.2",
+		"clay-modal": "2.23.3",
+		"clay-pagination-bar": "2.23.3",
+		"clay-table": "2.23.3",
 		"metal-component": "2.16.8",
 		"metal-soy": "2.16.9",
 		"metal-state": "2.16.8"

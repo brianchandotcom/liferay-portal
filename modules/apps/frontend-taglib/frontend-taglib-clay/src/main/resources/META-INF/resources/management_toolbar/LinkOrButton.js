@@ -42,6 +42,7 @@ const LinkOrButton = ({
 				block={otherProps.button?.block}
 				className={classNames(className, {
 					'd-md-none': showDesignImprovements && responsive,
+					'nav-btn-monospaced': showDesignImprovements && responsive,
 					'pl-4 pr-4': wide && !symbol,
 				})}
 				href={href}

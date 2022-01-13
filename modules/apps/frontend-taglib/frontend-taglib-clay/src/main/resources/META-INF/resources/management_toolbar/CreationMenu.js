@@ -22,6 +22,8 @@ import getDataAttributes from '../get_data_attributes';
 import FeatureFlagContext from './FeatureFlagContext';
 import LinkOrButton from './LinkOrButton';
 
+import './CreationMenu.scss';
+
 const CreationMenu = ({
 	maxPrimaryItems,
 	maxSecondaryItems,
@@ -167,17 +169,21 @@ const CreationMenu = ({
 			{totalItemsCountRef.current > 1 ? (
 				<ClayDropDown
 					active={active}
+					className="creation-menu"
 					onActiveChange={setActive}
 					trigger={
 						showDesignImprovements ? (
 							<ClayButton
 								aria-label={getPlusIconLabel()}
-								className="nav-btn nav-btn-monospaced"
+								className="nav-btn"
 								title={getPlusIconLabel()}
 							>
-								<ClayIcon className="d-md-none" symbol="plus" />
+								<ClayIcon
+									className="d-md-none dropdown-icon"
+									symbol="plus"
+								/>
 
-								<span className="d-md-block d-none pl-4 pr-4">
+								<span className="d-md-block d-none pl-3 pr-3">
 									{getPlusIconLabel()}
 								</span>
 							</ClayButton>
@@ -246,7 +252,7 @@ const CreationMenu = ({
 					<LinkOrButton
 						aria-label={getPlusIconLabel()}
 						button={true}
-						className="nav-btn nav-btn-monospaced"
+						className="nav-btn"
 						displayType="primary"
 						href={firstItemRef.current.href}
 						onClick={(event) => {

@@ -1362,30 +1362,30 @@ definition {
 				mimeType = "text/plain",
 				sourceFileName = "Document_1.txt");
 		}
-		
+
 		task ("Go to Content Dashboard and click on View Metrics") {
 			ContentDashboard.goToContentDashboard();
 
-			MouseOver(locator1 = "ACIndividualsDashboard#KNOWN_INDIVIDUAL_ATTRIBUTE",
-					key_individualAttribute = "DM Document Title");
+			MouseOver(
+				key_individualAttribute = "DM Document Title",
+				locator1 = "ACIndividualsDashboard#KNOWN_INDIVIDUAL_ATTRIBUTE");
 
 			Click(
-				locator1 = "ContentDashboard#QUICK_ACTION_BUTTON_MENU", 
-				keyButtonAction = "View Metrics");
-
+				keyButtonAction = "View Metrics",
+				locator1 = "ContentDashboard#QUICK_ACTION_BUTTON_MENU");
 		}
 
 		task ("Assert the Content Performance is present") {
 			AssertVisible(locator1 = "ContentDashboard#CONTENT_PERFORMANCE_TITLE_PANEL");
 		}
 
-
-		task ("Exit the Content Performance panel and assert is not visible anymore"){
+		task ("Exit the Content Performance panel and assert is not visible anymore") {
 			Click(locator1 = "ContentDashboard#CLOSE_CONTENT_PERFORMANCE_PANEL");
+
 			AssertNotVisible(locator1 = "ContentDashboard#CONTENT_PERFORMANCE_TITLE_PANEL");
 		}
 
-		task ("Close AC connection"){
+		task ("Close AC connection") {
 			ACUtils.tearDownDXP();
 
 			ACUtils.tearDownAC();
@@ -3862,22 +3862,22 @@ definition {
 				mimeType = "text/plain",
 				sourceFileName = "Document_1.txt");
 		}
-		
+
 		task ("Go to Content Dashboard and click on View Mtrics in the kebab menu") {
 			ContentDashboard.goToContentDashboard();
-			
+
 			Click(locator1 = "Icon#VERTICAL_ELLIPSIS_BUTTON");
 
 			Click(
-				locator1 = "ACUtils#DROPDOWN_ITEM", 
-				key_dropdownItem = "View Metrics");
+				key_dropdownItem = "View Metrics",
+				locator1 = "ACUtils#DROPDOWN_ITEM");
 		}
 
 		task ("Assert the Content Performance is present") {
 			AssertVisible(locator1 = "ContentDashboard#CONTENT_PERFORMANCE_TITLE_PANEL");
 		}
 
-		task ("Close AC connection"){
+		task ("Close AC connection") {
 			ACUtils.tearDownDXP();
 
 			ACUtils.tearDownAC();
@@ -3925,28 +3925,28 @@ definition {
 				mimeType = "text/plain",
 				sourceFileName = "Document_1.txt");
 		}
-		
+
 		task ("Go to Content Dashboard and click on View Mtrics") {
 			ContentDashboard.goToContentDashboard();
 
-			MouseOver(locator1 = "ACIndividualsDashboard#KNOWN_INDIVIDUAL_ATTRIBUTE",
-					key_individualAttribute = "DM Document Title");
+			MouseOver(
+				key_individualAttribute = "DM Document Title",
+				locator1 = "ACIndividualsDashboard#KNOWN_INDIVIDUAL_ATTRIBUTE");
 
 			Click(
-				locator1 = "ContentDashboard#QUICK_ACTION_BUTTON_MENU", 
-				keyButtonAction = "View Metrics");
+				keyButtonAction = "View Metrics",
+				locator1 = "ContentDashboard#QUICK_ACTION_BUTTON_MENU");
 		}
 
 		task ("Assert the Content Performance is present") {
 			AssertVisible(locator1 = "ContentDashboard#CONTENT_PERFORMANCE_TITLE_PANEL");
 		}
 
-		task ("Close AC connection"){
+		task ("Close AC connection") {
 			ACUtils.tearDownDXP();
 
 			ACUtils.tearDownAC();
 		}
-		
 	}
 
 	@description = "LPS-116840 When the user clicks on the view icon of a content with an associated display page, the user is led to the view mode of the page"

@@ -81,24 +81,14 @@ ClassType classType = classTypeReader.getClassType(classTypeId, locale);
 				<aui:form action="<%= structureFieldURL %>" disabled="<%= !Objects.equals(field.getName(), ddmStructureFieldName) %>" name='<%= field.getName() + "fieldForm" %>' onSubmit="event.preventDefault()">
 					<aui:input disabled="<%= true %>" name="buttonId" type="hidden" value='<%= liferayPortletResponse.getNamespace() + "applyButton" + field.getName() %>' />
 
-					<%
-					Field ddmField = new com.liferay.dynamic.data.mapping.storage.Field();
-
-					ddmField.setDefaultLocale(themeDisplay.getLocale());
-					ddmField.setDDMStructureId(field.getClassTypeId());
-					ddmField.setName(field.getName());
-
-					if (Objects.equals(field.getName(), ddmStructureFieldName)) {
-						ddmField.setValue(themeDisplay.getLocale(), ddmStructureFieldValue);
-					}
-					%>
-
-					<liferay-ddm:html-field
-						classNameId="<%= PortalUtil.getClassNameId(DDMStructure.class) %>"
-						classPK="<%= field.getClassTypeId() %>"
-						field="<%= ddmField %>"
-						fieldsNamespace="<%= fieldsNamespace %>"
-					/>
+					<liferay-util:include page="/select_structure_field_item.jsp" servletContext="<%= application %>">
+						<liferay-util:param name="portletResource" value="<%= portletResource %>" />
+						<liferay-util:param name="classTypeId" value="<%= String.valueOf(classTypeId) %>" />
+						<liferay-util:param name="ddmStructureFieldName" value="<%= ddmStructureFieldName %>" />
+						<liferay-util:param name="ddmStructureFieldValue" value="<%= String.valueOf(ddmStructureFieldValue) %>" />
+						<liferay-util:param name="name" value="<%= field.getName() %>" />
+						<liferay-util:param name="fieldsNamespace" value="<%= fieldsNamespace %>" />
+					</liferay-util:include>
 				</aui:form>
 			</liferay-ui:search-container-column-text>
 

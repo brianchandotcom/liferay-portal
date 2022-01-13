@@ -20,8 +20,17 @@ import ClayLayout from '@clayui/layout';
 import ClayPanel from '@clayui/panel';
 import React, {useMemo, useState} from 'react';
 
-export default function IconConfiguration({icons}) {
+import AddIconPackModal from './AddIconPackModal';
+
+export default function IconConfiguration({
+	icons: initialIcons,
+	portletNamespace,
+	saveFromExistingIconsActionURL,
+	saveFromSpritemapActionURL,
+}) {
 	const [searchQuery, setSearchQuery] = useState('');
+	const [icons, setIcons] = useState(initialIcons);
+	const [addModal, setAddModal] = useState({visible: false});
 
 	const iconPackNames = Object.keys(icons);
 
@@ -155,6 +164,55 @@ export default function IconConfiguration({icons}) {
 					</div>
 				))}
 			</ClayPanel.Group>
+
+			<ClayLayout.SheetFooter>
+				<ClayDropDownWithItems
+					items={[
+						{
+							label: 'Add Icon Pack from spritemap',
+							onClick: () =>
+								setAddModal({
+									uploadSpritemap: true,
+									visible: true,
+								}),
+						},
+						{
+							label: 'Add Icon Pack from existing icons',
+							onClick: () =>
+								setAddModal({
+									uploadSpritemap: false,
+									visible: true,
+								}),
+						},
+					]}
+					trigger={
+						<ClayButton>
+							{Liferay.Language.get('add-icon-pack')}
+						</ClayButton>
+					}
+				/>
+			</ClayLayout.SheetFooter>
+
+			{addModal.visible && (
+				<AddIconPackModal
+					existingIconPackName={addModal.existingIconPackName}
+					icons={icons}
+					portletNamespace={portletNamespace}
+					saveFromExistingIconsActionURL={
+						saveFromExistingIconsActionURL
+					}
+					saveFromSpritemapActionURL={saveFromSpritemapActionURL}
+					setIcons={setIcons}
+					setVisible={(visible) =>
+						setAddModal((previousModal) => ({
+							...previousModal,
+							visible,
+						}))
+					}
+					uploadSpritemap={addModal.uploadSpritemap}
+					visible={addModal.visible}
+				/>
+			)}
 		</ClayLayout.Sheet>
 	);
 }

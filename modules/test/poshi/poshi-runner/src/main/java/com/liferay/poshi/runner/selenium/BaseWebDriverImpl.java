@@ -964,6 +964,59 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	@Override
+	public void dragAtAndDrop(
+		String locator, String coordString, String coordinatePairs) {
+
+		try {
+			WebElement webElement = getWebElement(locator);
+
+			WrapsDriver wrapsDriver = (WrapsDriver)webElement;
+
+			WebDriver webDriver = wrapsDriver.getWrappedDriver();
+
+			Actions actions = new Actions(webDriver);
+
+			String[] coords = coordString.split(",");
+
+			int x = GetterUtil.getInteger(coords[0]);
+			int y = GetterUtil.getInteger(coords[1]);
+
+			actions.moveToElement(webElement, x, y);
+
+			actions.clickAndHold();
+
+			actions.pause(1500);
+
+			Matcher matcher = _coordinatePairsPattern.matcher(coordinatePairs);
+
+			if (!matcher.matches()) {
+				throw new Exception(
+					"Coordinate pairs \"" + coordinatePairs +
+						"\" do not match pattern \"" +
+							_coordinatePairsPattern.pattern() + "\"");
+			}
+
+			for (String coordinatePair : coordinatePairs.split("\\|")) {
+				String[] coordinates = coordinatePair.split(",");
+
+				actions.moveByOffset(
+					GetterUtil.getInteger(coordinates[0]),
+					GetterUtil.getInteger(coordinates[1]));
+			}
+
+			actions.pause(1500);
+
+			actions.release();
+
+			Action action = actions.build();
+
+			action.perform();
+		}
+		catch (Exception exception) {
+		}
+	}
+
+	@Override
 	public void echo(String message) {
 		LiferaySeleniumUtil.echo(message);
 	}

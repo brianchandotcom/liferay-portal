@@ -180,6 +180,9 @@ public interface LiferaySelenium {
 		String locatorOfObjectToBeDragged,
 		String locatorOfDragDestinationObject);
 
+	public void dragAtAndDrop(
+		String locator, String coordString, String movementsString);
+
 	public void echo(String message);
 
 	public void executeJavaScript(

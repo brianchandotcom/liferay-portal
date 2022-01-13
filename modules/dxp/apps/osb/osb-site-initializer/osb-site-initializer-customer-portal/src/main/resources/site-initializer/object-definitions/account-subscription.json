@@ -5,36 +5,37 @@
 	"name": "AccountSubscription",
 	"objectFields": [
 		{
+			"DBType": "String",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
 				"en-US": "Account Key"
 			},
 			"name": "accountKey",
-			"required": true,
-			"type": "String"
+			"required": true
 		},
 		{
+			"DBType": "String",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
 				"en-US": "Account Subscription Group ERC"
 			},
 			"name": "accountSubscriptionGroupERC",
-			"required": false,
-			"type": "String"
+			"required": false
 		},
 		{
+			"DBType": "Date",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
 				"en-US": "End Date"
 			},
 			"name": "endDate",
-			"required": false,
-			"type": "Date"
+			"required": false
 		},
 		{
+			"DBType": "Boolean",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -42,10 +43,10 @@
 			},
 			"listTypeDefinitionId": 0,
 			"name": "hasDisasterDataCenterRegion",
-			"required": false,
-			"type": "Boolean"
+			"required": false
 		},
 		{
+			"DBType": "String",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "",
@@ -53,48 +54,47 @@
 				"en-US": "Instance Size"
 			},
 			"name": "instanceSize",
-			"required": false,
-			"type": "String"
+			"required": false
 		},
 		{
+			"DBType": "String",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
 				"en-US": "Name"
 			},
 			"name": "name",
-			"required": false,
-			"type": "String"
+			"required": false
 		},
 		{
+			"DBType": "Integer",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
 				"en-US": "Quantity"
 			},
 			"name": "quantity",
-			"required": false,
-			"type": "Integer"
+			"required": false
 		},
 		{
+			"DBType": "Date",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
 				"en-US": "Start Date"
 			},
 			"name": "startDate",
-			"required": false,
-			"type": "Date"
+			"required": false
 		},
 		{
+			"DBType": "String",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
 				"en-US": "Status"
 			},
 			"name": "subscriptionStatus",
-			"required": false,
-			"type": "String"
+			"required": false
 		}
 	],
 	"pluralLabel": {

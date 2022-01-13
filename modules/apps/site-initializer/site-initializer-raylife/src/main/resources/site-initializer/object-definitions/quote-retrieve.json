@@ -5,34 +5,34 @@
 	"name": "QuoteRetrieve",
 	"objectFields": [
 		{
+			"DBType": "String",
 			"indexed": false,
 			"indexedAsKeyword": false,
 			"label": {
 				"en_US": "Quote Retrieve Link"
 			},
 			"name": "quoteRetrieveLink",
-			"required": true,
-			"type": "String"
+			"required": true
 		},
 		{
+			"DBType": "String",
 			"indexed": false,
 			"indexedAsKeyword": false,
 			"label": {
 				"en_US": "Product Name"
 			},
 			"name": "productName",
-			"required": true,
-			"type": "String"
+			"required": true
 		},
 		{
+			"DBType": "String",
 			"indexed": false,
 			"indexedAsKeyword": false,
 			"label": {
 				"en_US": "Retrieve E-mail"
 			},
 			"name": "retrieveEmail",
-			"required": true,
-			"type": "String"
+			"required": true
 		}
 	],
 	"panelAppOrder": "100",

@@ -113,8 +113,10 @@ public class ObjectFieldResourceImpl
 			_objectFieldService.addCustomObjectField(
 				objectField.getListTypeDefinitionId(), objectDefinitionId,
 				objectField.getBusinessTypeAsString(),
-				objectField.getTypeAsString(), objectField.getIndexed(),
-				objectField.getIndexedAsKeyword(),
+				ObjectFieldUtil.getDBType(
+					objectField.getDBTypeAsString(),
+					objectField.getTypeAsString()),
+				objectField.getIndexed(), objectField.getIndexedAsKeyword(),
 				objectField.getIndexedLanguageId(),
 				LocalizedMapUtil.getLocalizedMap(objectField.getLabel()),
 				objectField.getName(), objectField.getRequired()));
@@ -129,8 +131,10 @@ public class ObjectFieldResourceImpl
 			_objectFieldService.updateCustomObjectField(
 				objectFieldId, objectField.getListTypeDefinitionId(),
 				objectField.getBusinessTypeAsString(),
-				objectField.getTypeAsString(), objectField.getIndexed(),
-				objectField.getIndexedAsKeyword(),
+				ObjectFieldUtil.getDBType(
+					objectField.getDBTypeAsString(),
+					objectField.getTypeAsString()),
+				objectField.getIndexed(), objectField.getIndexedAsKeyword(),
 				objectField.getIndexedLanguageId(),
 				LocalizedMapUtil.getLocalizedMap(objectField.getLabel()),
 				objectField.getName(), objectField.getRequired()));

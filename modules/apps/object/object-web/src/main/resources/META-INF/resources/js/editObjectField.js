@@ -94,6 +94,7 @@ const saveObjectField = (iframeDocument, namespace, objectFieldId) => {
 
 	Liferay.Util.fetch(`/o/object-admin/v1.0/object-fields/${objectFieldId}`, {
 		body: JSON.stringify({
+			DBType: type,
 			indexed,
 			indexedAsKeyword,
 			indexedLanguageId,
@@ -101,7 +102,6 @@ const saveObjectField = (iframeDocument, namespace, objectFieldId) => {
 			listTypeDefinitionId: 0,
 			name,
 			required,
-			type,
 		}),
 		headers: new Headers({
 			'Accept': 'application/json',

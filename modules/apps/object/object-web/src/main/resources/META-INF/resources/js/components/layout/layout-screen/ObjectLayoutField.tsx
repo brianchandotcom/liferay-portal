@@ -66,7 +66,7 @@ const ObjectLayoutField: React.FC<IObjectLayoutFieldProps> = ({
 					title={objectField?.label[defaultLanguageId]}
 				>
 					<small className="text-secondary">
-						{objectField?.type} |{' '}
+						{objectField?.DBType} |{' '}
 					</small>
 
 					<RequiredLabel required={objectField?.required} />

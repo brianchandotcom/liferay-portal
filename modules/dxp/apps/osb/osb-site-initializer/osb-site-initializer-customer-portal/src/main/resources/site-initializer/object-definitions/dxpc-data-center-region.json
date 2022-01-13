@@ -5,24 +5,24 @@
 	"name": "DXPCDataCenterRegion",
 	"objectFields": [
 		{
+			"DBType": "String",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
 				"en-US": "Name"
 			},
 			"name": "name",
-			"required": true,
-			"type": "String"
+			"required": true
 		},
 		{
+			"DBType": "String",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
 				"en-US": "Value"
 			},
 			"name": "value",
-			"required": true,
-			"type": "String"
+			"required": true
 		}
 	],
 	"pluralLabel": {

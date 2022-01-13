@@ -17,7 +17,10 @@ package com.liferay.object.admin.rest.internal.dto.v1_0.util;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectField;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.util.LocalizedMapUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Map;
 
@@ -25,6 +28,20 @@ import java.util.Map;
  * @author Gabriel Albuquerque
  */
 public class ObjectFieldUtil {
+
+	public static String getDBType(String dbType, String type) {
+		if (Validator.isNull(dbType) && Validator.isNotNull(type)) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"The type property is deprecated. Use the DBType " +
+						"property instead.");
+			}
+
+			return type;
+		}
+
+		return dbType;
+	}
 
 	public static ObjectField toObjectField(
 		Map<String, Map<String, String>> actions,
@@ -34,6 +51,8 @@ public class ObjectFieldUtil {
 			{
 				businessType = ObjectField.BusinessType.create(
 					serviceBuilderObjectField.getBusinessType());
+				DBType = ObjectField.DBType.create(
+					serviceBuilderObjectField.getDBType());
 				id = serviceBuilderObjectField.getObjectFieldId();
 				indexed = serviceBuilderObjectField.getIndexed();
 				indexedAsKeyword =
@@ -69,7 +88,10 @@ public class ObjectFieldUtil {
 			GetterUtil.getLong(objectField.getListTypeDefinitionId()));
 		serviceBuilderObjectField.setBusinessType(
 			objectField.getBusinessTypeAsString());
-		serviceBuilderObjectField.setDBType(objectField.getTypeAsString());
+		serviceBuilderObjectField.setDBType(
+			getDBType(
+				objectField.getDBTypeAsString(),
+				objectField.getTypeAsString()));
 		serviceBuilderObjectField.setIndexed(
 			GetterUtil.getBoolean(objectField.getIndexed()));
 		serviceBuilderObjectField.setIndexedAsKeyword(
@@ -84,5 +106,8 @@ public class ObjectFieldUtil {
 
 		return serviceBuilderObjectField;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ObjectFieldUtil.class);
 
 }

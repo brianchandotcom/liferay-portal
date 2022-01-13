@@ -63,6 +63,7 @@ const ModalAddObjectField: React.FC<IProps> = ({apiURL, observer, onClose}) => {
 	}: TInitialValues) => {
 		const response = await Liferay.Util.fetch(apiURL, {
 			body: JSON.stringify({
+				DBType: type === 'Picklist' ? 'String' : type,
 				indexed: true,
 				indexedAsKeyword: false,
 				indexedLanguageId: null,
@@ -72,7 +73,6 @@ const ModalAddObjectField: React.FC<IProps> = ({apiURL, observer, onClose}) => {
 				listTypeDefinitionId,
 				name: name || toCamelCase(label),
 				required,
-				type: type === 'Picklist' ? 'String' : type,
 			}),
 			headers,
 			method: 'POST',

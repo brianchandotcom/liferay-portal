@@ -48,6 +48,7 @@ export type TObjectLayoutColumn = {
 };
 
 export type TObjectField = {
+	DBType: string;
 	id: number;
 	indexed: boolean;
 	indexedAsKeyword: boolean;
@@ -57,7 +58,6 @@ export type TObjectField = {
 	listTypeDefinitionId: boolean;
 	name: string;
 	required: boolean;
-	type: string;
 };
 
 export type TObjectRelationship = {

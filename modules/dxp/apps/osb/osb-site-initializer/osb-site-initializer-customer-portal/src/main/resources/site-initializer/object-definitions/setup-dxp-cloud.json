@@ -5,44 +5,44 @@
 	"name": "SetupDXPCloud",
 	"objectFields": [
 		{
+			"DBType": "String",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
 				"en-US": "Admins"
 			},
 			"name": "admins",
-			"required": true,
-			"type": "String"
+			"required": true
 		},
 		{
+			"DBType": "String",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
 				"en-US": "Data Center Region"
 			},
 			"name": "dataCenterRegion",
-			"required": true,
-			"type": "String"
+			"required": true
 		},
 		{
+			"DBType": "String",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
 				"en-US": "Project Id"
 			},
 			"name": "projectId",
-			"required": true,
-			"type": "String"
+			"required": true
 		},
 		{
+			"DBType": "String",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
 				"en-US": "Disaster Data Center Region"
 			},
 			"name": "disasterDataCenterRegion",
-			"required": false,
-			"type": "String"
+			"required": false
 		}
 	],
 	"pluralLabel": {

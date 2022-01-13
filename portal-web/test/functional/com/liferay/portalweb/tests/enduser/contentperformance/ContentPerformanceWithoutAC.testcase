@@ -86,12 +86,25 @@ definition {
 	}
 
 	@description = "LPS-108856: When user clicks on Dont show me this again button, the Content Performance panel disappears"
-	@ignore = "true"
 	@priority = "5"
 	test HideContentPerformancePanel {
+		task ("Assert if element is not present") {
+			if (IsVisible(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_PANEL")) {
+				Click(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_BUTTON");
+			}
 
-		// TODO LPS-139239 HideContentPerformancePanel pending implementation
+			Click(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_BUTTON");
+		}
 
+		task ("Click on the button") {
+			Click(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_DO_NOT_SHOW_AGAIN");
+		}
+
+		task ("Assert that the Content Performance panel button disappears") {
+			AssertElementNotPresent(
+				locator1 = "ContentPerformance#CONTENT_PERFORMANCE_BUTTON",
+				value1 = "Content Performance");
+		}
 	}
 
 	@description = "LPS-126044: When DXP is not connected to AC, the metrics icon is shown in the bar above the blog display page in the view mode"
@@ -106,7 +119,7 @@ definition {
 	@description = "LPS-127220: When DXP is not connected to AC, the metrics icon is shown in the bar above the content page in the view mode"
 	@ignore = "true"
 	@priority = "3"
-	MetricsIconVisibleInContentPageWithoutAC {
+	test MetricsIconVisibleInContentPageWithoutAC {
 
 		// TODO LPS-144028 MetricsIconVisibleInContentPageWithoutAC pending implementation
 

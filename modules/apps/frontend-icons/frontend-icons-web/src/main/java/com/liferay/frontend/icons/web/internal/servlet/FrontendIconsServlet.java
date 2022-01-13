@@ -14,11 +14,11 @@
 
 package com.liferay.frontend.icons.web.internal.servlet;
 
+import com.liferay.frontend.icons.web.internal.util.ClayFrontendIconsResourcePackUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.PrintWriter;
 
@@ -69,9 +69,7 @@ public class FrontendIconsServlet extends HttpServlet {
 			}
 			else {
 				printWriter.write(
-					StringUtil.read(
-						FrontendIconsServlet.class,
-						"/META-INF/resources/images/icons.svg"));
+					ClayFrontendIconsResourcePackUtil.getSpritemap());
 			}
 		}
 		catch (Exception exception) {

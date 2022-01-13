@@ -23,7 +23,6 @@ function PageTypeSelector({
 	addCollectionLayoutURL,
 	addLayoutURL,
 	configureLayoutSetURL,
-	isPrivateLayoutsEnabled,
 	namespace,
 	pageTypeOptions,
 	pageTypeSelectedOption,
@@ -56,64 +55,53 @@ function PageTypeSelector({
 
 	return (
 		<div className="align-items-center d-flex page-type-selector">
-			{isPrivateLayoutsEnabled ? (
-				<ClayDropDown
-					active={pageTypeDropdownActive}
-					menuElementAttrs={{
-						containerProps: {
-							className: 'cadmin',
-						},
-					}}
-					onActiveChange={setPageTypeDropdownActive}
-					trigger={
-						<ClayButton
-							className="form-control-select text-left"
-							displayType="secondary"
-							small
-							type="button"
-						>
-							{pageTypeSelectedOptionLabel}
-						</ClayButton>
-					}
-				>
-					<ClayDropDown.ItemList>
-						{pageTypeOptions
-							.filter((option) => option.items.length)
-							.map((option, index) => (
-								<React.Fragment key={index}>
-									<ClayDropDown.Item
-										disabled
-										key={option.value}
-									>
-										{option.name}
-									</ClayDropDown.Item>
+			<ClayDropDown
+				active={pageTypeDropdownActive}
+				menuElementAttrs={{
+					containerProps: {
+						className: 'cadmin',
+					},
+				}}
+				onActiveChange={setPageTypeDropdownActive}
+				trigger={
+					<ClayButton
+						className="form-control-select text-left"
+						displayType="secondary"
+						small
+						type="button"
+					>
+						{pageTypeSelectedOptionLabel}
+					</ClayButton>
+				}
+			>
+				<ClayDropDown.ItemList>
+					{pageTypeOptions
+						.filter((option) => option.items.length)
+						.map((option, index) => (
+							<React.Fragment key={index}>
+								<ClayDropDown.Item disabled key={option.value}>
+									{option.name}
+								</ClayDropDown.Item>
 
-									{option.items.map((item) => (
-										<ClayDropDown.Item
-											className="page-type-selector-option"
-											key={item.value}
-											onClick={() =>
-												handleSelect(item.value)
-											}
-											symbolRight={
-												item.value ===
-												pageTypeSelectedOption
-													? 'check'
-													: null
-											}
-										>
-											{item.name}
-										</ClayDropDown.Item>
-									))}
-								</React.Fragment>
-							))}
-					</ClayDropDown.ItemList>
-				</ClayDropDown>
-			) : (
-				<span className="text-white">
-					{Liferay.Language.get('pages-hierarchy')}
-				</span>
-			)}
+								{option.items.map((item) => (
+									<ClayDropDown.Item
+										className="page-type-selector-option"
+										key={item.value}
+										onClick={() => handleSelect(item.value)}
+										symbolRight={
+											item.value ===
+											pageTypeSelectedOption
+												? 'check'
+												: null
+										}
+									>
+										{item.name}
+									</ClayDropDown.Item>
+								))}
+							</React.Fragment>
+						))}
+				</ClayDropDown.ItemList>
+			</ClayDropDown>
 
 			<div className="flex-fill flex-grow-1 text-right">
 				{showAddIcon && (

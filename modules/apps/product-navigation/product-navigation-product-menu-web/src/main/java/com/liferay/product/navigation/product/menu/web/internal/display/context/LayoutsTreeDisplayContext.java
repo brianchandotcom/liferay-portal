@@ -316,13 +316,6 @@ public class LayoutsTreeDisplayContext {
 				return _setSelPlid(getConfigureLayoutSetURL());
 			}
 		).put(
-			"isPrivateLayoutsEnabled",
-			() -> {
-				Group group = _themeDisplay.getScopeGroup();
-
-				return group.isPrivateLayoutsEnabled();
-			}
-		).put(
 			"namespace", getNamespace()
 		).put(
 			"pageTypeOptions", _getPageTypeOptionsJSONArray()

@@ -186,6 +186,23 @@ public class PortalImplCanonicalURLTest {
 	}
 
 	@Test
+	public void testCanonicalURLDistinctThemeDisplayGroup() throws Exception {
+		String portalDomain = "localhost";
+
+		ThemeDisplay themeDisplay = _createThemeDisplay(
+			portalDomain, _defaultGroup, 8080, false);
+
+		String completeURL = _generateURL(
+			portalDomain, "8080", StringPool.BLANK, _group.getFriendlyURL(),
+			_layout2.getFriendlyURL(), false);
+
+		Assert.assertEquals(
+			completeURL,
+			_portal.getCanonicalURL(
+				completeURL, themeDisplay, _layout2, false, false));
+	}
+
+	@Test
 	public void testCanonicalURLPartialCollisionWIthPublicGroupServletMapping()
 		throws Exception {
 

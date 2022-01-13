@@ -9,6 +9,7 @@
  * distribution rights of the Software.
  */
 
+import ClayAlert from '@clayui/alert';
 import ClayLabel from '@clayui/label';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClaySticker from '@clayui/sticker';
@@ -77,6 +78,22 @@ function SkuContent({
 
 	return (
 		<div className="row">
+			{mappedProduct.firstAvailableReplacementMappedProduct && (
+				<div className="col-12">
+					<ClayAlert
+						className="p-2"
+						displayType="warning"
+						title={Liferay.Language.get('alert')}
+					>
+						{Liferay.Util.sub(
+							Liferay.Language.get('x-has-been-replaced-by-x'),
+							mappedProduct.sku,
+							product.sku
+						)}
+					</ClayAlert>
+				</div>
+			)}
+
 			{product.thumbnail && (
 				<div className="col-auto">
 					<ClaySticker className="fill-cover" size="xl">

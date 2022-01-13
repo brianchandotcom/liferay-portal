@@ -60,6 +60,7 @@ page import="com.liferay.asset.publisher.web.internal.constants.AssetPublisherSe
 page import="com.liferay.asset.publisher.web.internal.display.context.AssetPublisherDisplayContext" %><%@
 page import="com.liferay.asset.publisher.web.internal.display.context.AssetPublisherViewContentDisplayContext" %><%@
 page import="com.liferay.asset.publisher.web.internal.display.context.ItemSelectorViewDisplayContext" %><%@
+page import="com.liferay.asset.publisher.web.internal.display.context.SelectStructureFieldDisplayContext" %><%@
 page import="com.liferay.asset.publisher.web.internal.helper.AssetPublisherWebHelper" %><%@
 page import="com.liferay.asset.publisher.web.internal.servlet.taglib.util.AssetEntryActionDropdownItemsProvider" %><%@
 page import="com.liferay.asset.publisher.web.internal.util.AssetRendererUtil" %><%@
@@ -69,7 +70,6 @@ page import="com.liferay.asset.util.comparator.AssetRendererFactoryTypeNameCompa
 page import="com.liferay.document.library.kernel.document.conversion.DocumentConversionUtil" %><%@
 page import="com.liferay.dynamic.data.mapping.model.DDMStructure" %><%@
 page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem" %><%@
-page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.SelectOption" %><%@
 page import="com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType" %><%@
 page import="com.liferay.item.selector.ItemSelector" %><%@
 page import="com.liferay.item.selector.criteria.GroupItemSelectorReturnType" %><%@
@@ -141,8 +141,7 @@ page import="java.util.Objects" %><%@
 page import="java.util.Set" %>
 
 <%@ page import="javax.portlet.PortletMode" %><%@
-page import="javax.portlet.PortletURL" %><%@
-page import="javax.portlet.ResourceURL" %>
+page import="javax.portlet.PortletURL" %>
 
 <liferay-frontend:defineObjects />
 

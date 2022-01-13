@@ -26,6 +26,7 @@ import com.liferay.asset.list.web.internal.display.context.AssetListItemsDisplay
 import com.liferay.asset.list.web.internal.display.context.EditAssetListDisplayContext;
 import com.liferay.asset.list.web.internal.display.context.InfoCollectionProviderDisplayContext;
 import com.liferay.asset.list.web.internal.display.context.InfoCollectionProviderItemsDisplayContext;
+import com.liferay.asset.list.web.internal.display.context.SelectStructureFieldDisplayContext;
 import com.liferay.asset.list.web.internal.servlet.taglib.util.ListItemsActionDropdownItems;
 import com.liferay.asset.util.AssetRendererFactoryClassProvider;
 import com.liferay.document.library.kernel.service.DLAppService;
@@ -118,6 +119,12 @@ public class AssetListPortlet extends MVCPortlet {
 
 		renderRequest.setAttribute(
 			AssetListWebKeys.ITEM_SELECTOR, _itemSelector);
+
+		renderRequest.setAttribute(
+			AssetListWebKeys.SELECT_STRUCTURE_FIELD_DISPLAY_CONTEXT,
+			new SelectStructureFieldDisplayContext(
+				_assetRendererFactoryClassProvider, renderRequest,
+				renderResponse));
 
 		super.doDispatch(renderRequest, renderResponse);
 	}

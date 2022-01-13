@@ -17,25 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String className = ParamUtil.getString(request, "className");
-long classTypeId = ParamUtil.getLong(request, "classTypeId");
-String ddmStructureFieldName = ParamUtil.getString(request, "ddmStructureFieldName");
-String ddmStructureFieldValue = ParamUtil.getString(request, "ddmStructureFieldValue");
-String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectDDMStructureField");
-
-AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(className);
-
-ClassTypeReader classTypeReader = assetRendererFactory.getClassTypeReader();
-
-ClassType classType = classTypeReader.getClassType(classTypeId, locale);
-
-List<SelectOption> selectOptions = new ArrayList<>();
-
-selectOptions.add(new SelectOption(LanguageUtil.get(themeDisplay.getLocale(), "none"), StringPool.BLANK));
-
-for (ClassTypeField classTypeField : classType.getClassTypeFields()) {
-	selectOptions.add(new SelectOption(classTypeField.getLabel(), classTypeField.getName()));
-}
+SelectStructureFieldDisplayContext selectStructureFieldDisplayContext = (SelectStructureFieldDisplayContext)request.getAttribute(AssetListWebKeys.SELECT_STRUCTURE_FIELD_DISPLAY_CONTEXT);
 %>
 
 <div class="alert alert-danger hide" id="<portlet:namespace />message">
@@ -49,14 +31,10 @@ for (ClassTypeField classTypeField : classType.getClassTypeFields()) {
 		id='<%= liferayPortletResponse.getNamespace() + "fieldName" %>'
 		label="select"
 		name="fieldName"
-		options="<%= selectOptions %>"
+		options="<%= selectStructureFieldDisplayContext.getSelectOptions() %>"
 	/>
 
-	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/asset_list/get_field_value" var="structureFieldURL">
-		<portlet:param name="structureId" value="<%= String.valueOf(classTypeId) %>" />
-	</liferay-portlet:resourceURL>
-
-	<aui:form action="<%= structureFieldURL %>" name="fieldForm" onSubmit="event.preventDefault()">
+	<aui:form action="<%= selectStructureFieldDisplayContext.getFieldValueURL() %>" name="fieldForm" onSubmit="event.preventDefault()">
 		<aui:input name="name" type="hidden" />
 
 		<div id="<portlet:namespace />selectDDMStructureFieldContainer"></div>
@@ -70,27 +48,8 @@ for (ClassTypeField classTypeField : classType.getClassTypeFields()) {
 	</aui:form>
 </clay:container-fluid>
 
-<%
-ResourceURL getFieldItemURL = renderResponse.createResourceURL();
-
-getFieldItemURL.setParameter("className", className);
-getFieldItemURL.setParameter("classTypeId", String.valueOf(classTypeId));
-getFieldItemURL.setParameter("ddmStructureFieldName", ddmStructureFieldName);
-getFieldItemURL.setParameter("ddmStructureFieldValue", ddmStructureFieldValue);
-
-getFieldItemURL.setResourceID("/asset_list/get_field_item");
-%>
-
 <liferay-frontend:component
 	componentId='<%= liferayPortletResponse.getNamespace() + "selectStructureField" %>'
-	context='<%=
-		HashMapBuilder.<String, Object>put(
-			"assetClassName", editAssetListDisplayContext.getClassName(assetRendererFactory)
-		).put(
-			"eventName", HtmlUtil.escapeJS(eventName)
-		).put(
-			"getFieldItemURL", getFieldItemURL
-		).build()
-	%>'
+	context="<%= selectStructureFieldDisplayContext.getComponentContextData() %>"
 	module="js/SelectStructureField"
 />

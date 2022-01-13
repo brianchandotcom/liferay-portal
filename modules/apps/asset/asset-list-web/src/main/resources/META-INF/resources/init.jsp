@@ -23,7 +23,6 @@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
 taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
 taglib uri="http://liferay.com/tld/ddm" prefix="liferay-ddm" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
-taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/react" prefix="react" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
@@ -53,6 +52,7 @@ page import="com.liferay.asset.list.web.internal.display.context.AssetListManage
 page import="com.liferay.asset.list.web.internal.display.context.EditAssetListDisplayContext" %><%@
 page import="com.liferay.asset.list.web.internal.display.context.InfoCollectionProviderDisplayContext" %><%@
 page import="com.liferay.asset.list.web.internal.display.context.InfoCollectionProviderItemsDisplayContext" %><%@
+page import="com.liferay.asset.list.web.internal.display.context.SelectStructureFieldDisplayContext" %><%@
 page import="com.liferay.asset.list.web.internal.security.permission.resource.AssetListEntryPermission" %><%@
 page import="com.liferay.asset.list.web.internal.servlet.taglib.util.AssetEntryListActionDropdownItems" %><%@
 page import="com.liferay.asset.list.web.internal.servlet.taglib.util.InfoCollectionProviderActionDropdownItems" %><%@
@@ -61,7 +61,6 @@ page import="com.liferay.asset.list.web.internal.util.comparator.ClassTypeNameCo
 page import="com.liferay.asset.util.comparator.AssetRendererFactoryTypeNameComparator" %><%@
 page import="com.liferay.dynamic.data.mapping.model.DDMStructure" %><%@
 page import="com.liferay.dynamic.data.mapping.storage.Field" %><%@
-page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.SelectOption" %><%@
 page import="com.liferay.frontend.taglib.servlet.taglib.util.EmptyResultMessageKeys" %><%@
 page import="com.liferay.info.field.InfoFieldValue" %><%@
 page import="com.liferay.info.item.InfoItemFieldValues" %><%@
@@ -104,8 +103,7 @@ page import="java.util.List" %><%@
 page import="java.util.Map" %><%@
 page import="java.util.Objects" %>
 
-<%@ page import="javax.portlet.PortletURL" %><%@
-page import="javax.portlet.ResourceURL" %>
+<%@ page import="javax.portlet.PortletURL" %>
 
 <liferay-frontend:defineObjects />
 

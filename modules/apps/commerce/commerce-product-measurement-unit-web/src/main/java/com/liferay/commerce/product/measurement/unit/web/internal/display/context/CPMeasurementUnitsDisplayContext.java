@@ -16,6 +16,7 @@ package com.liferay.commerce.product.measurement.unit.web.internal.display.conte
 
 import com.liferay.commerce.product.constants.CPActionKeys;
 import com.liferay.commerce.product.constants.CPMeasurementUnitConstants;
+import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.measurement.unit.web.internal.util.CPMeasurementUnitUtil;
 import com.liferay.commerce.product.model.CPMeasurementUnit;
 import com.liferay.commerce.product.service.CPMeasurementUnitService;
@@ -27,6 +28,7 @@ import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -125,14 +127,25 @@ public class CPMeasurementUnitsDisplayContext {
 	}
 
 	public String getOrderByCol() {
-		return ParamUtil.getString(
-			_renderRequest, SearchContainer.DEFAULT_ORDER_BY_COL_PARAM,
-			"priority");
+		if (Validator.isNotNull(_orderByCol)) {
+			return _orderByCol;
+		}
+
+		_orderByCol = SearchOrderByUtil.getOrderByCol(
+			_renderRequest, CPPortletKeys.CP_MEASUREMENT_UNIT, "priority");
+
+		return _orderByCol;
 	}
 
 	public String getOrderByType() {
-		return ParamUtil.getString(
-			_renderRequest, SearchContainer.DEFAULT_ORDER_BY_TYPE_PARAM, "asc");
+		if (Validator.isNotNull(_orderByType)) {
+			return _orderByType;
+		}
+
+		_orderByType = SearchOrderByUtil.getOrderByType(
+			_renderRequest, CPPortletKeys.CP_MEASUREMENT_UNIT, "asc");
+
+		return _orderByType;
 	}
 
 	public PortletURL getPortletURL() {
@@ -264,6 +277,8 @@ public class CPMeasurementUnitsDisplayContext {
 
 	private CPMeasurementUnit _cpMeasurementUnit;
 	private final CPMeasurementUnitService _cpMeasurementUnitService;
+	private String _orderByCol;
+	private String _orderByType;
 	private final PortletResourcePermission _portletResourcePermission;
 	private CPMeasurementUnit _primaryCPMeasurementUnit;
 	private final RenderRequest _renderRequest;

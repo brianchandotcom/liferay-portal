@@ -17,6 +17,7 @@ package com.liferay.commerce.warehouse.web.internal.display.context;
 import com.liferay.commerce.country.CommerceCountryManager;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseService;
+import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.display.context.helper.CPRequestHelper;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.model.CommerceChannelRel;
@@ -32,6 +33,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.service.CountryService;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -158,15 +160,27 @@ public class CommerceInventoryWarehousesDisplayContext {
 	}
 
 	public String getOrderByCol() {
-		return ParamUtil.getString(
+		if (Validator.isNotNull(_orderByCol)) {
+			return _orderByCol;
+		}
+
+		_orderByCol = SearchOrderByUtil.getOrderByCol(
 			_cpRequestHelper.getRenderRequest(),
-			SearchContainer.DEFAULT_ORDER_BY_COL_PARAM, "name");
+			CPPortletKeys.COMMERCE_INVENTORY_WAREHOUSE, "name");
+
+		return _orderByCol;
 	}
 
 	public String getOrderByType() {
-		return ParamUtil.getString(
+		if (Validator.isNotNull(_orderByType)) {
+			return _orderByType;
+		}
+
+		_orderByType = SearchOrderByUtil.getOrderByType(
 			_cpRequestHelper.getRenderRequest(),
-			SearchContainer.DEFAULT_ORDER_BY_TYPE_PARAM, "asc");
+			CPPortletKeys.COMMERCE_INVENTORY_WAREHOUSE, "asc");
+
+		return _orderByType;
 	}
 
 	public PortletURL getPortletURL() {
@@ -337,6 +351,8 @@ public class CommerceInventoryWarehousesDisplayContext {
 	private final CountryService _countryService;
 	private final CPRequestHelper _cpRequestHelper;
 	private String _keywords;
+	private String _orderByCol;
+	private String _orderByType;
 	private SearchContainer<CommerceInventoryWarehouse> _searchContainer;
 
 }

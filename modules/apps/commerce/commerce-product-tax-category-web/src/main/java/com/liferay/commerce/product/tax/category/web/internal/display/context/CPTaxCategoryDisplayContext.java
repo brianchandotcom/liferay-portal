@@ -15,6 +15,7 @@
 package com.liferay.commerce.product.tax.category.web.internal.display.context;
 
 import com.liferay.commerce.product.constants.CPActionKeys;
+import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.model.CPTaxCategory;
 import com.liferay.commerce.product.service.CPTaxCategoryService;
 import com.liferay.commerce.product.util.comparator.CPTaxCategoryCreateDateComparator;
@@ -25,10 +26,12 @@ import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletURL;
@@ -96,15 +99,25 @@ public class CPTaxCategoryDisplayContext {
 	}
 
 	public String getOrderByCol() {
-		return ParamUtil.getString(
-			_renderRequest, SearchContainer.DEFAULT_ORDER_BY_COL_PARAM,
-			"create-date");
+		if (Validator.isNotNull(_orderByCol)) {
+			return _orderByCol;
+		}
+
+		_orderByCol = SearchOrderByUtil.getOrderByCol(
+			_renderRequest, CPPortletKeys.CP_TAX_CATEGORY, "create-date");
+
+		return _orderByCol;
 	}
 
 	public String getOrderByType() {
-		return ParamUtil.getString(
-			_renderRequest, SearchContainer.DEFAULT_ORDER_BY_TYPE_PARAM,
-			"desc");
+		if (Validator.isNotNull(_orderByType)) {
+			return _orderByType;
+		}
+
+		_orderByType = SearchOrderByUtil.getOrderByType(
+			_renderRequest, CPPortletKeys.CP_TAX_CATEGORY, "desc");
+
+		return _orderByType;
 	}
 
 	public PortletURL getPortletURL() {
@@ -193,6 +206,8 @@ public class CPTaxCategoryDisplayContext {
 	private final CommerceTaxMethodService _commerceTaxMethodService;
 	private CPTaxCategory _cpTaxCategory;
 	private final CPTaxCategoryService _cpTaxCategoryService;
+	private String _orderByCol;
+	private String _orderByType;
 	private final PortletResourcePermission _portletResourcePermission;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;

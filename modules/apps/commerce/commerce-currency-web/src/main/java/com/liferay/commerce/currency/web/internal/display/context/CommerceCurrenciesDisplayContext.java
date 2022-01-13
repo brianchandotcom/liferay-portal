@@ -19,6 +19,7 @@ import com.liferay.commerce.currency.configuration.RoundingTypeConfiguration;
 import com.liferay.commerce.currency.constants.CommerceCurrencyActionKeys;
 import com.liferay.commerce.currency.constants.CommerceCurrencyConstants;
 import com.liferay.commerce.currency.constants.CommerceCurrencyExchangeRateConstants;
+import com.liferay.commerce.currency.constants.CommerceCurrencyPortletKeys;
 import com.liferay.commerce.currency.constants.RoundingTypeConstants;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
@@ -33,6 +34,7 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.SystemSettingsLocator;
@@ -41,6 +43,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.math.BigDecimal;
@@ -140,14 +143,27 @@ public class CommerceCurrenciesDisplayContext {
 	}
 
 	public String getOrderByCol() {
-		return ParamUtil.getString(
-			_renderRequest, SearchContainer.DEFAULT_ORDER_BY_COL_PARAM,
+		if (Validator.isNotNull(_orderByCol)) {
+			return _orderByCol;
+		}
+
+		_orderByCol = SearchOrderByUtil.getOrderByCol(
+			_renderRequest, CommerceCurrencyPortletKeys.COMMERCE_CURRENCY,
 			"priority");
+
+		return _orderByCol;
 	}
 
 	public String getOrderByType() {
-		return ParamUtil.getString(
-			_renderRequest, SearchContainer.DEFAULT_ORDER_BY_TYPE_PARAM, "asc");
+		if (Validator.isNotNull(_orderByType)) {
+			return _orderByType;
+		}
+
+		_orderByType = SearchOrderByUtil.getOrderByType(
+			_renderRequest, CommerceCurrencyPortletKeys.COMMERCE_CURRENCY,
+			"asc");
+
+		return _orderByType;
 	}
 
 	public PortletURL getPortletURL() {
@@ -280,6 +296,8 @@ public class CommerceCurrenciesDisplayContext {
 	private final CommercePriceFormatter _commercePriceFormatter;
 	private final ConfigurationProvider _configurationProvider;
 	private final ExchangeRateProviderRegistry _exchangeRateProviderRegistry;
+	private String _orderByCol;
+	private String _orderByType;
 	private final PortletResourcePermission _portletResourcePermission;
 	private CommerceCurrency _primaryCommerceCurrency;
 	private final RenderRequest _renderRequest;

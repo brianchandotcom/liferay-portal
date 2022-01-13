@@ -20,6 +20,7 @@ import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.batch.engine.service.BatchEngineExportTaskLocalServiceUtil;
 import com.liferay.batch.engine.service.BatchEngineImportTaskLocalServiceUtil;
 import com.liferay.batch.planner.constants.BatchPlannerLogConstants;
+import com.liferay.batch.planner.constants.BatchPlannerPortletKeys;
 import com.liferay.batch.planner.model.BatchPlannerLog;
 import com.liferay.batch.planner.model.BatchPlannerPlan;
 import com.liferay.batch.planner.service.BatchPlannerLogServiceUtil;
@@ -29,10 +30,14 @@ import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.util.TransformUtil;
+
+import java.util.Objects;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -71,16 +76,8 @@ public class BatchPlannerLogDisplayContext extends BaseDisplayContext {
 		_searchContainer = new SearchContainer<>(
 			renderRequest, getPortletURL(), null, "no-items-were-found");
 
-		String orderByCol = ParamUtil.getString(
-			renderRequest, SearchContainer.DEFAULT_ORDER_BY_COL_PARAM,
-			"modifiedDate");
-
-		_searchContainer.setOrderByCol(orderByCol);
-
-		String orderByType = ParamUtil.getString(
-			renderRequest, SearchContainer.DEFAULT_ORDER_BY_TYPE_PARAM, "desc");
-
-		_searchContainer.setOrderByType(orderByType);
+		_searchContainer.setOrderByCol(_getOrderByCol());
+		_searchContainer.setOrderByType(_getOrderByType());
 
 		long companyId = PortalUtil.getCompanyId(renderRequest);
 
@@ -94,8 +91,9 @@ public class BatchPlannerLogDisplayContext extends BaseDisplayContext {
 						companyId, _searchContainer.getStart(),
 						_searchContainer.getEnd(),
 						OrderByComparatorFactoryUtil.create(
-							"BatchPlannerLog", orderByCol,
-							orderByType.equals("asc"))),
+							"BatchPlannerLog", _searchContainer.getOrderByCol(),
+							Objects.equals(
+								_searchContainer.getOrderByType(), "asc"))),
 					this::_toBatchPlannerLogDisplay),
 				BatchPlannerLogServiceUtil.getCompanyBatchPlannerLogsCount(
 					companyId));
@@ -107,14 +105,39 @@ public class BatchPlannerLogDisplayContext extends BaseDisplayContext {
 						companyId, isExport(navigation),
 						_searchContainer.getStart(), _searchContainer.getEnd(),
 						OrderByComparatorFactoryUtil.create(
-							"BatchPlannerLog", orderByCol,
-							orderByType.equals("asc"))),
+							"BatchPlannerLog", _searchContainer.getOrderByCol(),
+							Objects.equals(
+								_searchContainer.getOrderByType(), "asc"))),
 					this::_toBatchPlannerLogDisplay),
 				BatchPlannerLogServiceUtil.getCompanyBatchPlannerLogsCount(
 					companyId, isExport(navigation)));
 		}
 
 		return _searchContainer;
+	}
+
+	private String _getOrderByCol() {
+		if (Validator.isNotNull(_orderByCol)) {
+			return _orderByCol;
+		}
+
+		_orderByCol = SearchOrderByUtil.getOrderByCol(
+			httpServletRequest, BatchPlannerPortletKeys.BATCH_PLANNER,
+			"log-order-by-col", "modifiedDate");
+
+		return _orderByCol;
+	}
+
+	private String _getOrderByType() {
+		if (Validator.isNotNull(_orderByType)) {
+			return _orderByType;
+		}
+
+		_orderByType = SearchOrderByUtil.getOrderByType(
+			httpServletRequest, BatchPlannerPortletKeys.BATCH_PLANNER,
+			"log-order-by-type", "desc");
+
+		return _orderByType;
 	}
 
 	private BatchPlannerLogDisplay _toBatchPlannerLogDisplay(
@@ -176,6 +199,8 @@ public class BatchPlannerLogDisplayContext extends BaseDisplayContext {
 		return builder.build();
 	}
 
+	private String _orderByCol;
+	private String _orderByType;
 	private SearchContainer<BatchPlannerLogDisplay> _searchContainer;
 
 }

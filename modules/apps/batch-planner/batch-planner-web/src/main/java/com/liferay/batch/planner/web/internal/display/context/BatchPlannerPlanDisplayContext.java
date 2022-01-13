@@ -14,14 +14,19 @@
 
 package com.liferay.batch.planner.web.internal.display.context;
 
+import com.liferay.batch.planner.constants.BatchPlannerPortletKeys;
 import com.liferay.batch.planner.model.BatchPlannerPlan;
 import com.liferay.batch.planner.service.BatchPlannerPlanServiceUtil;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Validator;
+
+import java.util.Objects;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -61,17 +66,8 @@ public class BatchPlannerPlanDisplayContext extends BaseDisplayContext {
 			renderRequest, getPortletURL(), null, "no-items-were-found");
 
 		_searchContainer.setId("batchPlannerPlanSearchContainer");
-
-		String orderByCol = ParamUtil.getString(
-			renderRequest, SearchContainer.DEFAULT_ORDER_BY_COL_PARAM,
-			"modifiedDate");
-
-		_searchContainer.setOrderByCol(orderByCol);
-
-		String orderByType = ParamUtil.getString(
-			renderRequest, SearchContainer.DEFAULT_ORDER_BY_TYPE_PARAM, "desc");
-
-		_searchContainer.setOrderByType(orderByType);
+		_searchContainer.setOrderByCol(_getOrderByCol());
+		_searchContainer.setOrderByType(_getOrderByType());
 
 		_searchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(renderResponse));
@@ -87,8 +83,9 @@ public class BatchPlannerPlanDisplayContext extends BaseDisplayContext {
 					companyId, true, _searchContainer.getStart(),
 					_searchContainer.getEnd(),
 					OrderByComparatorFactoryUtil.create(
-						"BatchPlannerPlan", orderByCol,
-						orderByType.equals("asc"))),
+						"BatchPlannerPlan", _searchContainer.getOrderByCol(),
+						Objects.equals(
+							_searchContainer.getOrderByType(), "asc"))),
 				BatchPlannerPlanServiceUtil.getBatchPlannerPlansCount(
 					companyId, true));
 		}
@@ -100,8 +97,9 @@ public class BatchPlannerPlanDisplayContext extends BaseDisplayContext {
 					companyId, export, true, _searchContainer.getStart(),
 					_searchContainer.getEnd(),
 					OrderByComparatorFactoryUtil.create(
-						"BatchPlannerPlan", orderByCol,
-						orderByType.equals("asc"))),
+						"BatchPlannerPlan", _searchContainer.getOrderByCol(),
+						Objects.equals(
+							_searchContainer.getOrderByType(), "asc"))),
 				BatchPlannerPlanServiceUtil.getBatchPlannerPlansCount(
 					companyId, export, true));
 		}
@@ -109,6 +107,32 @@ public class BatchPlannerPlanDisplayContext extends BaseDisplayContext {
 		return _searchContainer;
 	}
 
+	private String _getOrderByCol() {
+		if (Validator.isNotNull(_orderByCol)) {
+			return _orderByCol;
+		}
+
+		_orderByCol = SearchOrderByUtil.getOrderByCol(
+			httpServletRequest, BatchPlannerPortletKeys.BATCH_PLANNER,
+			"plan-order-by-col", "modifiedDate");
+
+		return _orderByCol;
+	}
+
+	private String _getOrderByType() {
+		if (Validator.isNotNull(_orderByType)) {
+			return _orderByType;
+		}
+
+		_orderByType = SearchOrderByUtil.getOrderByType(
+			httpServletRequest, BatchPlannerPortletKeys.BATCH_PLANNER,
+			"paln-order-by-type", "desc");
+
+		return _orderByType;
+	}
+
+	private String _orderByCol;
+	private String _orderByType;
 	private SearchContainer<BatchPlannerPlan> _searchContainer;
 
 }

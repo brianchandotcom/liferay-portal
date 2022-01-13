@@ -2747,6 +2747,9 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 				_applyLayoutPrototype(
 					layoutPrototypeUuid, layout, layoutPrototypeLinkEnabled);
+
+				layout = layoutPersistence.findByG_P_L(
+					groupId, privateLayout, layoutId);
 			}
 		}
 

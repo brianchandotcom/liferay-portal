@@ -14,6 +14,7 @@
 
 package com.liferay.search.experiences.web.internal.blueprint.options.portlet.shared.search;
 
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -79,6 +80,13 @@ public class SXPBlueprintOptionsPortletSharedSearchContributor
 				searchContext.setAttribute(
 					"search.experiences.ip.address",
 					httpServletRequest.getRemoteAddr());
+
+				ThemeDisplay themeDisplay =
+					portletSharedSearchSettings.getThemeDisplay();
+
+				searchContext.setAttribute(
+					"search.experiences.current.group.id",
+					themeDisplay.getScopeGroupId());
 			});
 	}
 

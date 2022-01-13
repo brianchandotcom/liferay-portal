@@ -16,6 +16,7 @@ package com.liferay.portal.search.web.internal.low.level.search.options.portlet.
 
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.web.internal.low.level.search.options.constants.LowLevelSearchOptionsPortletKeys;
@@ -92,6 +93,13 @@ public class LowLevelSearchOptionsPortletSharedSearchContributor
 				searchContext.setAttribute(
 					"search.experiences.ip.address",
 					httpServletRequest.getRemoteAddr());
+
+				ThemeDisplay themeDisplay =
+					portletSharedSearchSettings.getThemeDisplay();
+
+				searchContext.setAttribute(
+					"search.experiences.current.group.id",
+					themeDisplay.getScopeGroupId());
 			}
 		);
 	}

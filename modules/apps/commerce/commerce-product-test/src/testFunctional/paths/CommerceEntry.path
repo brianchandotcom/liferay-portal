@@ -272,7 +272,7 @@
 </tr>
 <tr>
 	<td>PRODUCT_SKU_CONFIGURATION_AVAILABLE_QUANTITY</td>
-	<td>//div[contains(@class,'dnd-table fixed table-style-stacked')]//descendant::div[16][contains(text(),'${key_productQuantity}')]</td>
+	<td>//div[contains(@class,'dnd-table fixed table-style-stacked')]//descendant::div[17][contains(text(),'${key_productQuantity}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -3,7 +3,7 @@ definition {
 
 	property portal.release = "quarantine";
 	property portal.upstream = "quarantine";
-	property testray.main.component.name = "Product Info Management";
+	property testray.main.component.name = "Shopping Experience";
 
 	setUp {
 		TestCase.setUpPortalInstance();

@@ -172,8 +172,10 @@ public class CollectionLayoutStructureItemMapper
 			return PageCollectionDefinition.PaginationType.NONE;
 		}
 
-		if (Objects.equals(paginationType, "regular")) {
-			return PageCollectionDefinition.PaginationType.REGULAR;
+		if (Objects.equals(paginationType, "numeric") ||
+			Objects.equals(paginationType, "regular")) {
+
+			return PageCollectionDefinition.PaginationType.NUMERIC;
 		}
 
 		if (Objects.equals(paginationType, "simple")) {

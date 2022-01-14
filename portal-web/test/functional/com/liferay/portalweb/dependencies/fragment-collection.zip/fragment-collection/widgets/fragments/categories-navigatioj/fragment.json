@@ -3,7 +3,7 @@
 	"cssPath": "index.css",
 	"htmlPath": "index.html",
 	"jsPath": "index.js",
-	"name": "Categories Navigation",
+	"name": "Category filter",
 	"thumbnailPath": "thumbnail.png",
 	"type": "section"
 }

@@ -231,7 +231,7 @@ definition {
 			}
 			else if (contains("${permissionDefinitionKey}", "SITE_ADMIN_APPLICATIONS_CATEGORIES_NAVIGATION")) {
 				var permissionNavigationKey = "SITE_ADMIN_APPLICATIONS_CATEGORIES_NAVIGATION";
-				var permissionNavigationValue = "Categories Navigation";
+				var permissionNavigationValue = "Category filter";
 			}
 			else if (contains("${permissionDefinitionKey}", "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS")) {
 				var permissionNavigationKey = "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS";

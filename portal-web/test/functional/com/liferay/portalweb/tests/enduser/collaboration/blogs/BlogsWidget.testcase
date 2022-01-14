@@ -566,7 +566,7 @@ definition {
 			column = "2",
 			groupName = "Guest",
 			layoutName = "Blogs Page",
-			widgetName = "Categories Navigation");
+			widgetName = "Category filter");
 
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content 1",

@@ -791,7 +791,7 @@ definition {
 			JSONLayout.addWidgetToPublicLayout(
 				groupName = "Test Site Name",
 				layoutName = "Asset Publisher Page",
-				widgetName = "Categories Navigation");
+				widgetName = "Category filter");
 		}
 
 		task ("Configure the pagination type to Regular") {

@@ -56,7 +56,7 @@ definition {
 		else if ("${widgetName}" == "Breadcrumb") {
 			var portletId = "com_liferay_site_navigation_breadcrumb_web_portlet_SiteNavigationBreadcrumbPortlet";
 		}
-		else if ("${widgetName}" == "Categories Navigation") {
+		else if ("${widgetName}" == "Category filter") {
 			var portletId = "com_liferay_asset_categories_navigation_web_portlet_AssetCategoriesNavigationPortlet";
 		}
 		else if ("${widgetName}" == "Clay Sample") {

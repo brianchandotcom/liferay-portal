@@ -81,7 +81,7 @@ definition {
 
 		Portlet.viewTitle(portletName = "Wiki");
 
-		Portlet.viewTitle(portletName = "Categories Navigation");
+		Portlet.viewTitle(portletName = "Category filter");
 
 		Portlet.viewTitle(portletName = "Tags Navigation");
 
@@ -91,7 +91,7 @@ definition {
 
 		Portlet.viewTitle(portletName = "Wiki");
 
-		Portlet.viewTitle(portletName = "Categories Navigation");
+		Portlet.viewTitle(portletName = "Category filter");
 
 		Portlet.viewTitle(portletName = "Tags Navigation");
 
@@ -180,7 +180,7 @@ definition {
 
 		Portlet.viewTitle(portletName = "Wiki");
 
-		Portlet.viewTitle(portletName = "Categories Navigation");
+		Portlet.viewTitle(portletName = "Category filter");
 
 		Portlet.viewTitle(portletName = "Tags Navigation");
 
@@ -190,7 +190,7 @@ definition {
 
 		Portlet.viewTitle(portletName = "Wiki");
 
-		Portlet.viewTitle(portletName = "Categories Navigation");
+		Portlet.viewTitle(portletName = "Category filter");
 
 		Portlet.viewTitle(portletName = "Tags Navigation");
 
@@ -304,7 +304,7 @@ definition {
 
 		Portlet.viewTitle(portletName = "Wiki");
 
-		Portlet.viewTitle(portletName = "Categories Navigation");
+		Portlet.viewTitle(portletName = "Category filter");
 
 		Portlet.viewTitle(portletName = "Tags Navigation");
 
@@ -314,7 +314,7 @@ definition {
 
 		Portlet.viewTitle(portletName = "Wiki");
 
-		Portlet.viewTitle(portletName = "Categories Navigation");
+		Portlet.viewTitle(portletName = "Category filter");
 
 		Portlet.viewTitle(portletName = "Tags Navigation");
 
@@ -403,7 +403,7 @@ definition {
 
 		Portlet.viewTitle(portletName = "Wiki");
 
-		Portlet.viewTitle(portletName = "Categories Navigation");
+		Portlet.viewTitle(portletName = "Category filter");
 
 		Portlet.viewTitle(portletName = "Tags Navigation");
 
@@ -413,7 +413,7 @@ definition {
 
 		Portlet.viewTitle(portletName = "Wiki");
 
-		Portlet.viewTitle(portletName = "Categories Navigation");
+		Portlet.viewTitle(portletName = "Category filter");
 
 		Portlet.viewTitle(portletName = "Tags Navigation");
 

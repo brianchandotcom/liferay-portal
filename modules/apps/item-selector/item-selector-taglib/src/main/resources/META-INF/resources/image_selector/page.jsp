@@ -40,6 +40,10 @@ if (isDraggable) {
 }
 %>
 
+<liferay-util:html-top>
+	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/css/image_selector.css") %>" rel="stylesheet" type="text/css" />
+</liferay-util:html-top>
+
 <div>
 	<react:component
 		module="image_selector/js/ImageSelector"

@@ -32,7 +32,8 @@ import org.osgi.service.component.annotations.Reference;
 public class FrontendIconsImporterImpl implements FrontendIconsImporter {
 
 	@Override
-	public void importFrontendIcons(long companyId, String name, String spritemap)
+	public void importFrontendIcons(
+			long companyId, String name, String spritemap)
 		throws Exception {
 
 		List<FrontendIconsResource> frontendIconsResources =
@@ -41,7 +42,8 @@ public class FrontendIconsImporterImpl implements FrontendIconsImporter {
 		FrontendIconsResourcePack frontendIconsResourcePack =
 			new FrontendIconsResourcePack(name);
 
-		frontendIconsResourcePack.addFrontendIconsResources(frontendIconsResources);
+		frontendIconsResourcePack.addFrontendIconsResources(
+			frontendIconsResources);
 
 		_frontendIconsResourcePackRepository.addFrontendIconsResourcePack(
 			companyId, frontendIconsResourcePack);

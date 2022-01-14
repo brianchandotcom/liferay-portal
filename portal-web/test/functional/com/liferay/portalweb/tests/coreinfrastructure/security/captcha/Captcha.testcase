@@ -26,6 +26,7 @@ definition {
 	@priority = "4"
 	test AssertCaptchaEnabled {
 		property captcha.enabled = "true";
+		property portal.acceptance = "true";
 
 		task ("View captcha") {
 			SignInNavigator.gotoCreateAccount();
@@ -40,6 +41,7 @@ definition {
 		property captcha.enabled = "true";
 		property osgi.module.configuration.file.names = "com.liferay.captcha.configuration.CaptchaConfiguration.config";
 		property osgi.module.configurations = "maxChallenges=&quot;0&quot;";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "Captcha#ViewRecaptchaEnabled";
 
 		var recaptchaPrivateKey = PropsUtil.get("recaptcha.private.key");

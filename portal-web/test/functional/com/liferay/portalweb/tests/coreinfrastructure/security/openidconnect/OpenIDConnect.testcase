@@ -253,6 +253,7 @@ definition {
 	@priority = "4"
 	test OpenIDConnectOnInstanceLevelSmoke {
 		property dummy.socket.proxy.disabled = "true";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "OpenIDConnect#OpenIDConnectOnInstanceLevelSmoke";
 
 		var openIdConnectClientId = PropsUtil.get("google.client.id.1");
@@ -319,6 +320,7 @@ definition {
 	@priority = "4"
 	test OpenIDConnectSmoke {
 		property dummy.socket.proxy.disabled = "true";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "OpenIDConnect#OpenIDConnectSmoke";
 
 		var openIdConnectClientId = PropsUtil.get("google.client.id.3");
@@ -433,6 +435,7 @@ definition {
 	@description = "This is a use case for LRQA-27622. Users could login using Token Based SSO."
 	@priority = "5"
 	test TokenBasedSSOSmoke {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "OpenIDConnect#TokenBasedSSOSmoke";
 
 		task ("Reset token based SSO configuration") {
@@ -531,6 +534,7 @@ definition {
 	test VerifyUserIsStillLoggedInAfterAccessTokenExpiresAndRenew {
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.sso.openid.connect.configuration.OpenIdConnectConfiguration.config";
 		property osgi.module.configurations = "enabled=&quot;true&quot;";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "OpenIDConnect#VerifyUserIsStillLoggedInAfterAccessTokenExpiresAndRenew";
 
 		task ("Startup Keycloak for test") {

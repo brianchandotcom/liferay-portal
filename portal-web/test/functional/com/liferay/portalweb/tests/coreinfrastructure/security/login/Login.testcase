@@ -13,6 +13,7 @@ definition {
 	@priority = "5"
 	test DefaultPortalLandingPageSetByProperty {
 		property custom.properties = "default.landing.page.path=/web/guest/landing${line.separator}company.default.home.url=";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "Login#DefaultPortalLandingPageSetByProperty";
 
 		task ("Login and add a public page ") {
@@ -43,6 +44,7 @@ definition {
 	@description = "This is a use case for LPS-72398. Users could login to Portal when the default langauge is not English."
 	@priority = "5"
 	test LoginWithSpanishOnlyEnabledLocale {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "Login#LoginWithSpanishOnlyEnabledLocale";
 
 		task ("Login and configure spanish as default and current portal language") {

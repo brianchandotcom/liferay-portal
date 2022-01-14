@@ -16,6 +16,7 @@ definition {
 	@description = "LPS-133646 and LPS-133653 TC-1: Verify that information is present in the logs after enabling log context & Incoming X-Request-ID."
 	@priority = "5"
 	test AssertAuditConsoleInformationIsPresentAfterEnabledLog {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "Audit#AssertAuditConsoleInformationIsPresentAfterEnabledLog";
 
 		var companyId = JSONCompany.getCompanyId();
@@ -86,6 +87,7 @@ definition {
 		property test.name.skip.portal.instance = "Audit#AssertValidXRequestId";
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.audit.wiring.internal.configuration.AuditLogContextConfiguration.config";
 		property osgi.module.configurations = "enabled=&quot;true&quot;${line.separator}useIncomingXRequestId=&quot;true&quot;";
+		property portal.acceptance = "true";
 
 		var companyId = JSONCompany.getCompanyId();
 

@@ -28,6 +28,7 @@ definition {
 	@priority = "5"
 	test AntiSamyConfigXMLShouldBeConfigurableInPortal {
 		property antisamy.enabled = "true";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "AntiSamy#AntiSamyConfigXMLShouldBeConfigurableInPortal";
 
 		task ("Verify that AntiSamy module has been started") {
@@ -62,6 +63,7 @@ definition {
 	@priority = "5"
 	test ModelSpecificAntiSamyRulesShouldWorkForModel {
 		property antisamy.enabled = "true";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "AntiSamy#ModelSpecificAntiSamyRulesShouldWorkForModel";
 
 		task ("Verify that AntiSamy module has been started") {

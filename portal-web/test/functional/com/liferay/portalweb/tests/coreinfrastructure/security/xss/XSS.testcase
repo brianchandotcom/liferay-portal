@@ -198,6 +198,8 @@ definition {
 	@description = "This is a use case for LPS-90727. Assert no XSS vulnerability when modifying a specific URL from the control panel"
 	@priority = "5"
 	test NoXSSVulnerabilityInControlPanel {
+		property portal.acceptance = "true";
+
 		task ("Go to Account Settings and save p_p_auth param from the URL") {
 			var portalURL = PropsUtil.get("portal.url");
 
@@ -538,6 +540,8 @@ definition {
 	@description = "This is a use case for LRQA-30154. View search results"
 	@priority = "5"
 	test NoXSSVulnerabilityInSearchResults {
+		property portal.acceptance = "true";
+
 		var siteName = '''<script>alert(123);</script>''';
 
 		task ("Add blank CP") {

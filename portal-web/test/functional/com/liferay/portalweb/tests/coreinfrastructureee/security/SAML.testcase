@@ -1,4 +1,4 @@
-@component-name = "portal-authentication-ee"
+@component-name = "portal-security"
 definition {
 
 	property app.server.bundles.size = "1";
@@ -20,6 +20,7 @@ definition {
 	@description = "This is a use case for LPS-32577. Add user inherited roles as SAML attribute statements."
 	@priority = "5"
 	test AddUserInheritedRolesAsSAMLAttributeStatements {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "SAML#AddUserInheritedRolesAsSAMLAttributeStatements";
 
 		task ("Configure SAML as IdP") {
@@ -119,6 +120,7 @@ definition {
 	@priority = "4"
 	test AssertAuthorizationOnOAuth2WithSAMLConnectionWithExistingUser {
 		property app.server.bundles.size = "1";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "SAML#AssertAuthorizationOnOAuth2WithSAMLConnectionWithExistingUser";
 
 		task ("Enable SAML debug logs") {
@@ -376,6 +378,7 @@ definition {
 	test AssertFirstNameCannotBeUsedForUserMatchingEvenWithLDAPEnabled {
 		property apacheds.enabled = "true";
 		property app.server.bundles.size = "0";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "SAML#AssertFirstNameCannotBeUsedForUserMatchingEvenWithLDAPEnabled";
 
 		task ("Ad LDAP server and test connection") {
@@ -414,6 +417,7 @@ definition {
 	@description = "This is a use case for LPS-105165. Assert instance admin cannot configure IdP when disable IdP role."
 	@priority = "5"
 	test AssertInstanceAdminCannotConfigureIdPWhenDisableIdPRole {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "SAML#AssertInstanceAdminCannotConfigureIdPWhenDisableIdPRole";
 
 		task ("Disable IdP role to be configured") {
@@ -1482,6 +1486,7 @@ definition {
 	@priority = "4"
 	test ConfigureSAMLToImportUsersFromLDAP {
 		property apacheds.enabled = "true";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "SAML#ConfigureSAMLToImportUsersFromLDAP";
 
 		task ("Configure samlidp as IdP") {
@@ -1798,7 +1803,7 @@ definition {
 	@priority = "5"
 	test CreateAndSyncUserAfterSAMLSetupwithMatchingScreenNameAttribute {
 		property app.server.bundles.size = "0";
-		property portal.upstream = "true";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "SAML#CreateAndSyncUserAfterSAMLSetupwithMatchingScreenNameAttribute";
 
 		task ("Enable SAML debug logs") {
@@ -2166,6 +2171,7 @@ definition {
 	@description = "This is a use case for LPS-108077. Import encryption certificate from PKCS12 keystore file."
 	@priority = "5"
 	test ImportEncryptionCertificateFromPKCS12KeystoreFile {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "SAML#ImportEncryptionCertificateFromPKCS12KeystoreFile";
 
 		task ("Configure samlidp as IdP and samlsp as SP") {
@@ -2224,6 +2230,7 @@ definition {
 	@description = "This is a use case for LPS-108077. Import signing certificate from PKCS12 keystore file."
 	@priority = "5"
 	test ImportSigningCertificateFromPKCS12KeystoreFile {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "SAML#ImportSigningCertificateFromPKCS12KeystoreFile";
 
 		task ("Configure samlidp as IdP and samlsp as SP") {
@@ -2515,6 +2522,7 @@ definition {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property environment.acceptance = "true";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "SAML#SPInitiatedSSOSyncsUserAttributesFromIdPToSPDefaultMapping";
 
 		var identityProviderEntityId = "samlidp";
@@ -2830,6 +2838,7 @@ definition {
 	@description = "This is a use case for LPS-50747. Validate vulnerabilities XML attacks."
 	@priority = "5"
 	test ValidateVulnerabilitiesXMLAttacks {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "SAML#ValidateVulnerabilitiesXMLAttacks";
 
 		task ("Configure samlidp as IdP and samlsp as SP") {
@@ -2899,6 +2908,7 @@ definition {
 	@description = "This is a use case for LRQA-35866. Sign into portal by executing a IdP initiated SSO login. After a successful login, the IdP will redirect to the SP. If the same users with the same email address are present on both instances, it will authenticate and show the SP. SAML can authenticate across major portal versions, that is, the IdP can be Portal 6.1 EE GA3 and the SP can be Portal 6.2. EE GA1. For testing purposes, it is obvious if the authentication succeeds or fails if the IdP and SP are different portal versions."
 	@priority = "4"
 	test ViewIdPInitiatedSSO {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "SAML#ViewIdPInitiatedSSO";
 
 		task ("Configure samlidp as IdP and samlsp as SP at able.com:9080") {
@@ -2996,7 +3006,7 @@ definition {
 	@description = "This is a use case for LPS-129934. View IdP single logout with multiple SPs - Using virtual instances."
 	@priority = "4"
 	test ViewIdPSingleLogoutWithMultipleSPs {
-		property portal.upstream = "true";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "SAML#ViewIdPSingleLogoutWithMultipleSPs";
 
 		task ("Add CP able.com and baker.com") {
@@ -3144,6 +3154,7 @@ definition {
 	@description = "This is a use case for LRQA-31886. View single logout and force auth with multiple SPs."
 	@priority = "4"
 	test ViewSingleLogoutAndForceAuthWithMultipleSPs {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "SAML#ViewSingleLogoutAndForceAuthWithMultipleSPs";
 
 		task ("Login at localhost:9080 and Add 2 CP able.com and baker.com") {
@@ -3366,7 +3377,7 @@ definition {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property environment.acceptance = "true";
-		property portal.upstream = "true";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "SAML#ViewSPInitiatedSSO";
 
 		task ("Configure samlidp as IdP and samlsp as SP") {
@@ -3992,7 +4003,7 @@ definition {
 	@priority = "5"
 	test ViewSPInitiatedSSOWithSAMLAttributeUUIDUsedForUserMatching {
 		property app.server.bundles.size = "0";
-		property portal.upstream = "true";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "SAML#ViewSPInitiatedSSOWithSAMLAttributeUUIDUsedForUserMatching";
 
 		var identityProviderEntityId = "samlidp";
@@ -4109,7 +4120,7 @@ definition {
 	@priority = "4"
 	test ViewSPInitiatedSSOWithSAMLAttributeUUIDUsedForUserMatchingMultipleSP {
 		property app.server.bundles.size = "0";
-		property portal.upstream = "true";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "SAML#ViewSPInitiatedSSOWithSAMLAttributeUUIDUsedForUserMatchingMultipleSP";
 
 		var identityProviderEntityId = "samlidp";

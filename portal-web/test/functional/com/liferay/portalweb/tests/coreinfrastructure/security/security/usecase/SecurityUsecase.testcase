@@ -65,6 +65,7 @@ definition {
 	@description = "This is a use case for LPS-83566. Escape url redirect with groovy script"
 	@priority = "5"
 	test EscapeUrlRedirectWithGroovyScript {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "SecurityUsecase#EscapeUrlRedirectWithGroovyScript";
 
 		task ("Escape url redirect with groovy script") {
@@ -87,6 +88,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 	@description = "This is a use case for LPS-87768. No permission from unauthorized url as power user"
 	@priority = "5"
 	test NoPermissionFromUnauthorizedURLAsPowerUser {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "SecurityUsecase#NoPermissionFromUnauthorizedURLAsPowerUser";
 
 		task ("Add new user") {

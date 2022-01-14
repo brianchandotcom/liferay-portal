@@ -83,6 +83,7 @@ definition {
 	@description = "This is a use case for LPS-126597. User can authorize external application multiple times with remember device option. After the first authorization flow login is not needed."
 	@priority = "5"
 	test ApplicationCanBeAuthorizedWithRememberDeviceEnabled {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "OAuth2#ExternalApplicationCanBeAuthorizedAndRememberDeviceShouldBeEnabled";
 
 		task ("Add and edit an external application with remember device enabled") {
@@ -187,6 +188,7 @@ definition {
 	@description = "This is a use case for LPS-129397 TC-1: User can revoke authorization via kebab menu on	the OAuth 2 administration page."
 	@priority = "5"
 	test AuthorizationCanBeRevokedViaKebabMenu {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "OAuth2#AuthorizationCanBeRevokedViaKebabMenu";
 
 		task ("Add and edit an external application") {
@@ -482,6 +484,7 @@ definition {
 	@description = "This is a use case for LPS-105158. Configuring the settings on system level will set the same settings on the Instance level."
 	@priority = "5"
 	test ConfigureOnSystemLevelShouldApplyToInstanceLevel {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "OAuth2#ConfigureOnSystemLevelShouldApplyToInstanceLevel";
 
 		task ("Delete OSGi JAX-RS Default configuration") {
@@ -733,6 +736,7 @@ definition {
 	test ExternalApplicationCanBeAddedAndEdited {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "OAuth2#ExternalApplicationCanBeAddedAndEdited";
 
 		task ("Add a new OAuth 2 application") {
@@ -835,6 +839,7 @@ definition {
 	@description = "This is a use case for LRQA-47381. User can authorize external applications."
 	test ExternalApplicationCanBeAuthorized {
 		property custom.properties = "virtual.hosts.default.site.name=Guest";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "OAuth2#ExternalApplicationCanBeAuthorized";
 
 		task ("Add and edit an external application") {

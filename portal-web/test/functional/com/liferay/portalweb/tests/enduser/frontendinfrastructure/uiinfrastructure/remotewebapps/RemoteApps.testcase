@@ -92,7 +92,7 @@ definition {
 			RemoteApps.goToRemoteAppsPortlet();
 
 			RemoteApps.addCustomElementAllFields(
-				entryCSSURL = "http://remote-component-test.wincent.com/index.css",
+				entryCSSURL = "https://liferay.github.io/liferay-frontend-projects/index.css",
 				entryHTMLName = "vanilla-counter",
 				entryName = "Vanilla Counter",
 				entryProperties = "test-data-user=QAuser",
@@ -111,7 +111,7 @@ definition {
 				locator1 = "RemoteApps#TABLE_ENTRY_NAME_REMOTE_TABLE");
 
 			RemoteApps.assertCustomElementFields(
-				entryCSSURL = "http://remote-component-test.wincent.com/index.css",
+				entryCSSURL = "https://liferay.github.io/liferay-frontend-projects/index.css",
 				entryHTMLName = "vanilla-counter",
 				entryName = "Vanilla Counter",
 				entryProperties = "test-data-user=QAuser",
@@ -241,7 +241,7 @@ definition {
 				locator1 = "RemoteApps#TABLE_ENTRY_NAME_REMOTE_TABLE");
 
 			RemoteApps.editCustomElement(
-				entryCSSURL = "http://remote-component-test.wincent.com/index.css",
+				entryCSSURL = "https://liferay.github.io/liferay-frontend-projects/index.css",
 				entryHTMLName = "vanilla-counter-edited",
 				entryName = "Vanilla Counter Edited",
 				entryProperties = "test-data-user=QAuser");
@@ -257,7 +257,7 @@ definition {
 				locator1 = "RemoteApps#TABLE_ENTRY_NAME_REMOTE_TABLE");
 
 			RemoteApps.assertCustomElementFields(
-				entryCSSURL = "http://remote-component-test.wincent.com/index.css",
+				entryCSSURL = "https://liferay.github.io/liferay-frontend-projects/index.css",
 				entryHTMLName = "vanilla-counter-edited",
 				entryName = "Vanilla Counter Edited",
 				entryProperties = "test-data-user=QAuser",

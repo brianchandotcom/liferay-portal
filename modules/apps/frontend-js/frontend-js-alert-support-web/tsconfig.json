@@ -1,5 +1,5 @@
 {
-	"@generated": "178befb1447f05f6caa2d7945b17c7fc73bc4831",
+	"@generated": "01001a7685a8a911b779854a9bd58a775d560b0a",
 	"@overrides": {
 	},
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT OUTSIDE @overrides **",
@@ -28,7 +28,8 @@
 	},
 	"include": [
 		"src/**/*",
-		"test/**/*"
+		"test/**/*",
+		"../../../global.d.ts"
 	],
 	"references": [
 		{

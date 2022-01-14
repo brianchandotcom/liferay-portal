@@ -1,5 +1,5 @@
 {
-	"@generated": "abe9898d8a0d3e395d3fbc9373bd36ae6a1c7a90",
+	"@generated": "89dd6568c3ce642641272ff9b934c0b638ba3322",
 	"@overrides": {
 		"compilerOptions": {
 			"outDir": "./build/node/packageRunBuild/dist/",
@@ -29,7 +29,8 @@
 	},
 	"include": [
 		"src/**/*",
-		"test/**/*"
+		"test/**/*",
+		"../../../global.d.ts"
 	],
 	"references": [
 	]

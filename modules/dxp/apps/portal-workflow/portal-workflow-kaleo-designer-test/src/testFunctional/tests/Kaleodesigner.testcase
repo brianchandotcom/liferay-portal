@@ -216,7 +216,7 @@ definition {
 
 		KaleoDesigner.addConnectorViaViewTab(
 			connectorName = "Join2",
-			nodeType = "state2",
+			nodeType = "state",
 			nodeTypeDestination = "join-xor");
 
 		KaleoDesigner.addConnectorAndNodeViaViewTab(

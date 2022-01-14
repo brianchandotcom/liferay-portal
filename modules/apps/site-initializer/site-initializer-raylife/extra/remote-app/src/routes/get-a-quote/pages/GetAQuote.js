@@ -44,7 +44,7 @@ const adaptRaylifeLayout = (isMobileDevice) => {
 		.querySelector('.quote-site-navbar .container img.navbar-logo')
 		?.setAttribute(
 			'src',
-			`${getWebDavUrl()}/${
+			`${getWebDavUrl()}${
 				isMobileDevice ? 'raylife_logo_mobile.svg' : 'raylife_logo.svg'
 			}`
 		);

@@ -42,7 +42,7 @@ import org.hibernate.dialect.HSQLDialect;
 import org.hibernate.dialect.MySQLDialect;
 import org.hibernate.dialect.Oracle8iDialect;
 import org.hibernate.dialect.Oracle9Dialect;
-import org.hibernate.dialect.PostgreSQLDialect;
+import org.hibernate.dialect.PostgreSQL82Dialect;
 import org.hibernate.dialect.SQLServerDialect;
 import org.hibernate.dialect.Sybase11Dialect;
 import org.hibernate.dialect.SybaseASE15Dialect;
@@ -138,7 +138,7 @@ public class DBManagerImpl implements DBManager {
 			return DBType.ORACLE;
 		}
 
-		if (dialect instanceof PostgreSQLDialect) {
+		if (dialect instanceof PostgreSQL82Dialect) {
 			return DBType.POSTGRESQL;
 		}
 

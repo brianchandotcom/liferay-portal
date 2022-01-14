@@ -69,4 +69,5 @@ export const STORAGE_KEYS = {
 	CONTEXTUAL_MESSAGE: 'raylife-contextual-message',
 	PRODUCT: 'raylife-product',
 	PRODUCT_ID: 'raylife-product-id',
+	SELECTED_PRODUCT: 'raylife-selected-product',
 };

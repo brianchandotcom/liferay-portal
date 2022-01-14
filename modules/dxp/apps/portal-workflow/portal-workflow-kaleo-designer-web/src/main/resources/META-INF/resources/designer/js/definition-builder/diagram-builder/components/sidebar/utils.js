@@ -46,6 +46,14 @@ function getModalInfo(itemType) {
 			title: Liferay.Language.get('delete-join-node'),
 		};
 	}
+	else if (itemType === 'join-xor') {
+		return {
+			message: Liferay.Language.get(
+				'are-you-sure-you-want-to-delete-the-selected-join-xor-node'
+			),
+			title: Liferay.Language.get('delete-join-xor-node'),
+		};
+	}
 	else if (itemType === 'start') {
 		return {
 			message: Liferay.Language.get(

@@ -310,7 +310,7 @@ public class PageCollectionDefinition implements Cloneable, Serializable {
 
 	public static enum PaginationType {
 
-		NONE("None"), REGULAR("Regular"), SIMPLE("Simple");
+		NONE("None"), NUMERIC("Numeric"), REGULAR("Regular"), SIMPLE("Simple");
 
 		public static PaginationType create(String value) {
 			for (PaginationType paginationType : values()) {

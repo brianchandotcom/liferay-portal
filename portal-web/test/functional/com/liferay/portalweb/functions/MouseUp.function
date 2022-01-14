@@ -11,4 +11,16 @@ definition {
 		selenium.assertLiferayErrors();
 	}
 
+	function mouseUpAt {
+		WaitForSPARefresh();
+
+		selenium.waitForVisible();
+
+		selenium.mouseUpAt("${locator1}", "${value1}");
+
+		selenium.assertJavaScriptErrors();
+
+		selenium.assertLiferayErrors();
+	}
+
 }

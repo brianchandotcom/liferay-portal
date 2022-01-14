@@ -131,6 +131,7 @@ definition {
 	}
 
 	@description = "LPS-133365 - Verify if it's not possible to publish the Form when a required Object field is not mapped to a Form field"
+	@ignore = "true"
 	@priority = "5"
 	test CannotPublishWhenRequiredFieldNotMapped {
 		property portal.acceptance = "true";
@@ -186,6 +187,7 @@ definition {
 	}
 
 	@description = "LPS-133365 - Verify if is not possible to publish the Form when required Object field is not mapped to a Form Field in a Field Group"
+	@ignore = "true"
 	@priority = "4"
 	test CannotPublishWhenRequiredFieldNotMappedForFieldGroup {
 		ObjectAdmin.addObjectViaAPI(
@@ -258,6 +260,7 @@ definition {
 	}
 
 	@description = "LPS-133365 - Verify if it's not possible to save or publish the Form if a added Form field is not mapped to a Object field"
+	@ignore = "true"
 	@priority = "4"
 	test CannotSaveOrPublishWhenAddedFieldNotMapped {
 		property portal.acceptance = "true";
@@ -304,6 +307,7 @@ definition {
 	}
 
 	@description = "LPS-133365 - Verify if it's not possible to save or publish the Form if a added Form field is not mapped to a Object field in a Field Group"
+	@ignore = "true"
 	@priority = "4"
 	test CannotSaveOrPublishWhenAddedFieldNotMappedForFieldGroup {
 		property portal.acceptance = "true";

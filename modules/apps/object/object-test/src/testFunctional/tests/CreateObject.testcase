@@ -4079,6 +4079,8 @@ definition {
 	@description = "LPS-139803 - Verify it the Object Entry Title is displayed on the Relationship tab"
 	@priority = "4"
 	test CanViewObjectEntryTitleOnRelationshipTab {
+		property portal.upstream = "quarantine";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -4157,6 +4159,8 @@ definition {
 	@description = "LPS-139803 - Verify if the Object Entry Title is displayed for Object entries on workflow pages (My Workflow Tasks, My Submissions, and Submissions)"
 	@priority = "4"
 	test CanViewObjectEntryTitleOnWorkflowPages {
+		property portal.upstream = "quarantine";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -4219,6 +4223,8 @@ definition {
 	@description = "LPS-139803 - Verify if the Object Entry Title is displayed when selecting to preview an object entry on a Page Template"
 	@priority = "4"
 	test CanViewObjectEntryTitlePreviewOnPageTemplate {
+		property portal.upstream = "quarantine";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -5805,7 +5811,7 @@ definition {
 	@description = "LPS-139005 - Verify that the Object portlet is no longer displayed on the Open Menu when inactivated"
 	@priority = "5"
 	test ObjectPorletDisappearsOpenMenuWhenInactivated {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",

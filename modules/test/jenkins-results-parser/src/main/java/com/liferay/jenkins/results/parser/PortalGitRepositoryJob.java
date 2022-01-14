@@ -16,21 +16,11 @@ package com.liferay.jenkins.results.parser;
 
 import java.io.File;
 
-import java.util.Set;
-
 /**
  * @author Michael Hashimoto
  */
 public abstract class PortalGitRepositoryJob
 	extends GitRepositoryJob implements PortalTestClassJob {
-
-	@Override
-	public Set<String> getDistTypes() {
-		String testBatchDistAppServers = JenkinsResultsParserUtil.getProperty(
-			getJobProperties(), "test.batch.dist.app.servers");
-
-		return getSetFromString(testBatchDistAppServers);
-	}
 
 	@Override
 	public PortalGitWorkingDirectory getPortalGitWorkingDirectory() {

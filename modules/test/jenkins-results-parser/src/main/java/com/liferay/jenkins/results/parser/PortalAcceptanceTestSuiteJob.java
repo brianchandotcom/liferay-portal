@@ -21,7 +21,6 @@ import com.liferay.jenkins.results.parser.test.clazz.group.SegmentTestClassGroup
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 import java.util.Set;
 
 /**
@@ -79,57 +78,35 @@ public abstract class PortalAcceptanceTestSuiteJob
 
 	@Override
 	public DistType getDistType() {
-		String distType = JenkinsResultsParserUtil.getProperty(
-			getJobProperties(), "dist.type[" + _testSuiteName + "]");
+		JobProperty jobProperty = getJobProperty("dist.type");
 
-		if ((distType == null) && _testSuiteName.equals("default")) {
-			distType = JenkinsResultsParserUtil.getProperty(
-				getJobProperties(), "dist.type");
-		}
+		String distType = jobProperty.getValue();
 
-		if (distType == null) {
-			return DistType.CI;
-		}
-
-		for (DistType distTypeValue : DistType.values()) {
-			if (distType.equals(distTypeValue.toString())) {
-				return distTypeValue;
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(distType)) {
+			for (DistType distTypeValue : DistType.values()) {
+				if (distType.equals(distTypeValue.toString())) {
+					return distTypeValue;
+				}
 			}
 		}
 
-		return DistType.CI;
+		return super.getDistType();
 	}
 
 	@Override
 	public Set<String> getDistTypes() {
-		Properties jobProperties = getJobProperties();
-
-		String testBatchDistAppServers = JenkinsResultsParserUtil.getProperty(
-			jobProperties,
-			"test.batch.dist.app.servers[" + _testSuiteName + "]");
-
-		if (testBatchDistAppServers == null) {
-			testBatchDistAppServers = JenkinsResultsParserUtil.getProperty(
-				jobProperties, "test.batch.dist.app.servers");
-		}
-
-		Set<String> testBatchDistAppServersSet = getSetFromString(
-			testBatchDistAppServers);
+		Set<String> distTypes = super.getDistTypes();
 
 		if (!_testSuiteName.equals("relevant")) {
-			return testBatchDistAppServersSet;
+			return distTypes;
 		}
 
-		String stableTestBatchDistAppServers =
-			JenkinsResultsParserUtil.getProperty(
-				jobProperties, "test.batch.dist.app.servers[stable]");
+		JobProperty jobProperty = getJobProperty(
+			"test.batch.dist.app.servers[stable]");
 
-		if (stableTestBatchDistAppServers != null) {
-			testBatchDistAppServersSet.addAll(
-				getSetFromString(stableTestBatchDistAppServers));
-		}
+		distTypes.addAll(getSetFromString(jobProperty.getValue()));
 
-		return testBatchDistAppServersSet;
+		return distTypes;
 	}
 
 	@Override

@@ -156,6 +156,13 @@ public abstract class BaseJob implements Job {
 	}
 
 	@Override
+	public Set<String> getDistTypes() {
+		JobProperty jobProperty = getJobProperty("test.batch.dist.app.servers");
+
+		return getSetFromString(jobProperty.getValue());
+	}
+
+	@Override
 	public Set<String> getDistTypesExcludingTomcat() {
 		Set<String> distTypesExcludingTomcat = new TreeSet<>(getDistTypes());
 

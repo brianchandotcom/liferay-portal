@@ -74,14 +74,6 @@ public class SubrepositoryGitRepositoryJob
 	}
 
 	@Override
-	public Set<String> getDistTypes() {
-		String testBatchDistAppServers = JenkinsResultsParserUtil.getProperty(
-			getJobProperties(), "test.batch.dist.app.servers");
-
-		return getSetFromString(testBatchDistAppServers);
-	}
-
-	@Override
 	public GitWorkingDirectory getGitWorkingDirectory() {
 		if (gitWorkingDirectory != null) {
 			return gitWorkingDirectory;

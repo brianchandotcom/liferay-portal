@@ -14,8 +14,6 @@
 
 package com.liferay.jenkins.results.parser;
 
-import java.util.Set;
-
 /**
  * @author Michael Hashimoto
  */
@@ -31,15 +29,6 @@ public class SubrepositoryAcceptancePullRequestJob
 		_testSuiteName = testSuiteName;
 
 		_setValidationRequired();
-	}
-
-	@Override
-	public Set<String> getDistTypes() {
-		String testBatchDistAppServers = JenkinsResultsParserUtil.getProperty(
-			getJobProperties(), "test.batch.dist.app.servers",
-			getTestSuiteName());
-
-		return getSetFromString(testBatchDistAppServers);
 	}
 
 	@Override

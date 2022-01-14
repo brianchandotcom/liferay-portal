@@ -179,7 +179,7 @@ definition {
 	@description = "Verify that a Text Field can be Autocompleted from a list of options"
 	@priority = "4"
 	test CanBeAutocompletedUsingAList {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -223,7 +223,7 @@ definition {
 	@description = "Verify that a Text Field can be created"
 	@priority = "5"
 	test CanBeCreated {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -245,7 +245,7 @@ definition {
 	@description = "Verify that a Text Field can be deleted"
 	@priority = "5"
 	test CanBeDeleted {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -288,7 +288,7 @@ definition {
 	@description = "Verify that a Text Field can be duplicated"
 	@priority = "5"
 	test CanBeDuplicated {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -326,7 +326,6 @@ definition {
 	@description = "LPS-58829 - Verify that a Text Field can be required"
 	@priority = "5"
 	test CanBeRequired {
-		property forms.functional = "true";
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "FormsTextField#CanBeRequired";
@@ -385,7 +384,6 @@ definition {
 	@description = "LPS-59335 - Verify that a Text Field can be set to Repeatable "
 	@priority = "5"
 	test CanBeSetAsRepeatable {
-		property forms.functional = "true";
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "FormsTextField#CanBeSetAsRepeatable";
@@ -443,7 +441,6 @@ definition {
 	@description = "LPS-59997 - Verify that a Text Field can be set to Multiple Lines"
 	@priority = "3"
 	test CanBeSetToMultipleLines {
-		property forms.functional = "true";
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "FormsTextField#CanBeSetToMultipleLines";
@@ -506,7 +503,7 @@ definition {
 	@description = "Verify that the "Contains" option can be used to validate a Text Field"
 	@priority = "4"
 	test CanBeValidatedUsingTheContainsOption {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -564,7 +561,6 @@ definition {
 	@description = "Verify that the Does Not Contain option can be used to validate a Text Field"
 	@priority = "4"
 	test CanBeValidatedUsingTheDoesNotContainOption {
-		property forms.functional = "true";
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "FormsTextField#CanBeValidatedUsingTheDoesNotContainOption";
@@ -628,7 +624,7 @@ definition {
 	@description = "Verify that the Does Not Match option can be used to validate a Text Field"
 	@priority = "4"
 	test CanBeValidatedUsingTheDoesNotMatchOption {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -679,7 +675,7 @@ definition {
 	@description = "Verify that the Is Not Email option can be used to validate a Text Field"
 	@priority = "4"
 	test CanBeValidatedUsingTheIsNotEmailOption {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -733,7 +729,7 @@ definition {
 	@description = "Verify that the Is Not URL option can be used to validate a Text Field"
 	@priority = "4"
 	test CanBeValidatedUsingTheIsNotURLOption {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -785,7 +781,6 @@ definition {
 	@description = "LPS-125860 - Verify that Confirmation field property is working as expected"
 	@priority = "5"
 	test CanRequireConfirmation {
-		property forms.functional = "true";
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
 
@@ -851,7 +846,7 @@ definition {
 	@description = "Verify that a Text Field can require Confirmation"
 	@priority = "5"
 	test CanRequireConfirmationWithValidation {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -910,7 +905,7 @@ definition {
 	@description = "Verify that the Confirmation can be placed Horizontally"
 	@priority = "5"
 	test ConfirmationBoxCanBePlacedHorizontally {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -969,7 +964,7 @@ definition {
 	@description = "Verify that the Confirmation Error Message can be edited"
 	@priority = "5"
 	test ConfirmationErrorMessageCanBeEdited {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -1020,7 +1015,7 @@ definition {
 	@description = "Verify that the Confirmation Label can be edited"
 	@priority = "5"
 	test ConfirmationLabelCanBeEdited {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -1075,7 +1070,7 @@ definition {
 	@description = "Verify that a Help Text can be added to a Text Field"
 	@priority = "5"
 	test HelpTextCanBeAdded {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -1099,7 +1094,7 @@ definition {
 	@description = "LPS-129411 - Verify that a field can be hidden"
 	@priority = "5"
 	test HiddenFieldCanBeEnabled {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -1127,7 +1122,7 @@ definition {
 	@description = "LPS-129411 - Verify that hidden field is working in a published Form"
 	@priority = "5"
 	test HiddenFieldIsWorking {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -1180,7 +1175,7 @@ definition {
 	@description = "Veriy that the Field Label can be hidden"
 	@priority = "5"
 	test LabelCanBeHidden {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -1206,7 +1201,7 @@ definition {
 	@description = "Verify that Placeholder Text can be set"
 	@priority = "5"
 	test PlaceholderTextCanBeAdded {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -1228,7 +1223,7 @@ definition {
 	@description = "Verify that a Predefined Value can be set"
 	@priority = "5"
 	test PredefinedValueCanBeAdded {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -1258,7 +1253,7 @@ definition {
 	@description = "Verify that the Field Reference can be Edited"
 	@priority = "5"
 	test ReferenceCanBeEdited {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -1282,7 +1277,7 @@ definition {
 	@description = "LPS-129419 - Verify that the Required Field Error Message can be Edited"
 	@priority = "5"
 	test RequiredFieldErrorMessageCanBeEdited {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -1335,7 +1330,7 @@ definition {
 	@description = "LPS-129419 - Verify that the Required Field Error Message can be translated"
 	@priority = "5"
 	test RequiredFieldErrorMessageCanBeTranslated {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -1391,7 +1386,7 @@ definition {
 	@description = "LPS-84111 - Verify that Text Field can be autosaved on form builder"
 	@priority = "5"
 	test TextFieldCanBeAutosaved {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 

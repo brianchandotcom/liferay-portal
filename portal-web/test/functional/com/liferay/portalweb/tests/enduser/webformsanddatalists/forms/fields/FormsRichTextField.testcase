@@ -34,7 +34,7 @@ definition {
 	@description = "Verify that a Rich Text Field can be created"
 	@priority = "5"
 	test CanBeCreated {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -57,7 +57,7 @@ definition {
 	@description = "Verify that a Rich Text Field can be deleted"
 	@priority = "5"
 	test CanBeDeleted {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -95,7 +95,7 @@ definition {
 	@description = "Verify that a Rich Text Field can be duplicated"
 	@priority = "5"
 	test CanBeDuplicated {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -151,7 +151,7 @@ definition {
 	@description = "Verify that a Rich Text Field can be edited"
 	@priority = "5"
 	test CanBeEdited {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -187,7 +187,7 @@ definition {
 	@description = "Verify that a Rich Text Field can be required"
 	@priority = "5"
 	test CanBeRequired {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -403,7 +403,7 @@ definition {
 	@description = "Verify that a Predefined Value can be set for the Rich Text Field"
 	@priority = "5"
 	test PredefinedValueCanBeAdded {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 

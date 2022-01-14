@@ -34,7 +34,6 @@ definition {
 	@description = "LPS-76079 - Verify that a Select From List Field can allow Multiple Selections"
 	@priority = "5"
 	test CanAllowMultipleSelections {
-		property forms.functional = "true";
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "FormsSelectFromListField#CanAllowMultipleSelections";
@@ -110,7 +109,7 @@ definition {
 	@description = "Verify that a Select From List Field can be created"
 	@priority = "5"
 	test CanBeCreated {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -210,7 +209,7 @@ definition {
 	@description = "Verify that a Select From List Field can be edited"
 	@priority = "5"
 	test CanBeEdited {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -256,7 +255,7 @@ definition {
 	@description = "Verify that a Select From List Field can be required"
 	@priority = "5"
 	test CanBeRequired {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -296,7 +295,7 @@ definition {
 	@description = "Verify that a Select From List Field can be set to repeatable"
 	@priority = "5"
 	test CanBeSetAsRepeatable {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -390,7 +389,7 @@ definition {
 	@description = "Verify that a list can be created using Autofill"
 	@priority = "5"
 	test CanCreateListUsingAutofill {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "FormsSelectFromListField#CanCreateListUsingAutofill";
 
 		FormsAdminNavigator.enableLocalNetworkDataProvider();
@@ -574,7 +573,7 @@ definition {
 	@description = "Verify that the Field References for the options can be edited"
 	@priority = "5"
 	test FieldReferenceOfOptionsCanBeEdited {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -688,7 +687,7 @@ definition {
 	@description = "Verify that options can be added"
 	@priority = "5"
 	test OptionsCanBeAdded {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -729,7 +728,6 @@ definition {
 	@description = "LPS-68362 - Verify that options can be removed"
 	@priority = "3"
 	test OptionsCanBeDeleted {
-		property forms.functional = "true";
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "FormsSelectFromListField#OptionsCanBeDeleted";
@@ -787,7 +785,7 @@ definition {
 	@description = "Verify that options can be rearranged"
 	@priority = "5"
 	test OptionsCanBeRearranged {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -962,7 +960,7 @@ definition {
 	@description = "Verify that the Field Reference can be Edited"
 	@priority = "5"
 	test ReferenceCanBeEdited {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 

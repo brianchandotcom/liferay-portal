@@ -34,7 +34,7 @@ definition {
 	@description = "Verify that a Single Selection Field can be created"
 	@priority = "5"
 	test CanBeCreated {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -62,7 +62,7 @@ definition {
 	@description = "Verify that a Single Selection Field can be deleted"
 	@priority = "5"
 	test CanBeDeleted {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -151,7 +151,7 @@ definition {
 	@description = "Verify that a Single Selection Field can be edited"
 	@priority = "5"
 	test CanBeEdited {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -187,7 +187,7 @@ definition {
 	@description = "Verify that a Single Selection Field can be required"
 	@priority = "5"
 	test CanBeRequired {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -228,7 +228,7 @@ definition {
 	@description = "Verify that a Single Selection Field can be set to repeatable"
 	@priority = "5"
 	test CanBeSetToRepeatable {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -356,7 +356,7 @@ definition {
 	@description = "Verify that the Field References for the options can be edited"
 	@priority = "5"
 	test FieldReferencesOfOptionsCanBeEdited {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -444,7 +444,7 @@ definition {
 	@description = "Verify that the Field Label can be edited"
 	@priority = "5"
 	test LabelCanBeEdited {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -475,7 +475,7 @@ definition {
 	@description = "Verify that the Field Label can be hidden"
 	@priority = "5"
 	test LabelCanBeHidden {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -504,7 +504,7 @@ definition {
 	@description = "Verify that options can be added"
 	@priority = "5"
 	test OptionsCanBeAdded {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -544,7 +544,7 @@ definition {
 	@description = "Verify that options can be deleted"
 	@priority = "5"
 	test OptionsCanBeDeleted {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -588,7 +588,7 @@ definition {
 	@description = "Verify that options can be displayed both Inline and as a list"
 	@priority = "5"
 	test OptionsCanBeDisplayedInlineAndAsList {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -644,7 +644,7 @@ definition {
 	@description = "Verify that options can be rearranged"
 	@priority = "5"
 	test OptionsCanBeRearranged {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -725,7 +725,7 @@ definition {
 	@description = "Verify that after deleting an option that had been selected as the Predefined Value, the Predefined Value is reset to "Choose Options""
 	@priority = "4"
 	test PredefinedValueIsResetWhenSelectedOptionIsDeleted {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -763,7 +763,7 @@ definition {
 	@description = "Verify that the Field Reference can be Edited"
 	@priority = "5"
 	test ReferenceCanBeEdited {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 

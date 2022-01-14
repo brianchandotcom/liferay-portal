@@ -235,22 +235,6 @@ public class NumericDDMFormFieldTemplateContextContributorTest
 	}
 
 	@Test
-	public void testGetPredefinedValue() {
-		DDMFormField ddmFormField = new DDMFormField("field", "numeric");
-
-		ddmFormField.setProperty(
-			"predefinedValue",
-			DDMFormValuesTestUtil.createLocalizedValue("42", _locale));
-
-		Map<String, Object> parameters =
-			_numericDDMFormFieldTemplateContextContributor.getParameters(
-				ddmFormField, _createDDMFormFieldRenderingContext());
-
-		Assert.assertEquals(
-			"42", String.valueOf(parameters.get("predefinedValue")));
-	}
-
-	@Test
 	public void testGetSymbols() {
 		DDMFormField ddmFormField = new DDMFormField("field", "numeric");
 

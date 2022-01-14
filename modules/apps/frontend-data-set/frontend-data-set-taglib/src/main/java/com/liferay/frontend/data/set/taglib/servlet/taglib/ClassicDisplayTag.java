@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.taglib.util.IncludeTag;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -55,7 +54,7 @@ import javax.servlet.jsp.PageContext;
  * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
-public class ClassicDisplayTag extends IncludeTag {
+public class ClassicDisplayTag extends BaseDisplayTag {
 
 	@Override
 	public int doStartTag() throws JspException {
@@ -79,7 +78,7 @@ public class ClassicDisplayTag extends IncludeTag {
 
 			sb.append(_appURL);
 			sb.append("/data-set/");
-			sb.append(_id);
+			sb.append(getId());
 			sb.append(StringPool.FORWARD_SLASH);
 			sb.append(_dataProviderKey);
 			sb.append("?groupId=");
@@ -109,6 +108,11 @@ public class ClassicDisplayTag extends IncludeTag {
 		catch (Exception exception) {
 			_log.error(exception, exception);
 		}
+
+		String randomKey = PortalUtil.generateRandomKey(
+			getRequest(), "taglib_frontend_data_set_classic_display_page");
+
+		setRandomNamespace(randomKey + StringPool.UNDERLINE);
 
 		return super.doStartTag();
 	}
@@ -147,10 +151,6 @@ public class ClassicDisplayTag extends IncludeTag {
 
 	public String getFormName() {
 		return _formName;
-	}
-
-	public String getId() {
-		return _id;
 	}
 
 	public int getItemsPerPage() {
@@ -243,10 +243,6 @@ public class ClassicDisplayTag extends IncludeTag {
 		_formName = formName;
 	}
 
-	public void setId(String id) {
-		_id = id;
-	}
-
 	public void setItemsPerPage(int itemsPerPage) {
 		_itemsPerPage = itemsPerPage;
 	}
@@ -327,7 +323,6 @@ public class ClassicDisplayTag extends IncludeTag {
 		_fdsViewSerializer = null;
 		_formId = null;
 		_formName = null;
-		_id = null;
 		_itemsPerPage = 0;
 		_namespace = null;
 		_nestedItemsKey = null;
@@ -345,17 +340,11 @@ public class ClassicDisplayTag extends IncludeTag {
 	}
 
 	@Override
-	protected String getPage() {
-		return _PAGE;
-	}
-
-	@Override
-	protected void setAttributes(HttpServletRequest httpServletRequest) {
-		httpServletRequest = getRequest();
-
-		httpServletRequest.setAttribute(
-			"frontend-data-set:classic-display:data",
-			HashMapBuilder.<String, Object>put(
+	protected Map<String, Object> prepareProps(Map<String, Object> props) {
+		return super.prepareProps(
+			HashMapBuilder.<String, Object>putAll(
+				props
+			).put(
 				"actionParameterName",
 				GetterUtil.getString(_actionParameterName)
 			).put(
@@ -369,7 +358,7 @@ public class ClassicDisplayTag extends IncludeTag {
 			).put(
 				"creationMenu", _creationMenu
 			).put(
-				"currentURL", PortalUtil.getCurrentURL(httpServletRequest)
+				"currentURL", PortalUtil.getCurrentURL(getRequest())
 			).put(
 				"dataProviderKey", _dataProviderKey
 			).put(
@@ -377,7 +366,7 @@ public class ClassicDisplayTag extends IncludeTag {
 			).put(
 				"formName", _toNullOrObject(_formName)
 			).put(
-				"id", _id
+				"id", getId()
 			).put(
 				"namespace", _namespace
 			).put(
@@ -395,7 +384,7 @@ public class ClassicDisplayTag extends IncludeTag {
 					"initialPageNumber", _pageNumber
 				).build()
 			).put(
-				"portletId", _getRootPortletId(httpServletRequest)
+				"portletId", PortalUtil.getPortletId(getRequest())
 			).put(
 				"portletURL", _portletURL.toString()
 			).put(
@@ -433,16 +422,6 @@ public class ClassicDisplayTag extends IncludeTag {
 		return fdsPaginationEntries;
 	}
 
-	private String _getRootPortletId(HttpServletRequest httpServletRequest) {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		return portletDisplay.getRootPortletId();
-	}
-
 	private void _setActiveViewSettingsJSON() {
 		HttpServletRequest httpServletRequest = getRequest();
 
@@ -451,13 +430,14 @@ public class ClassicDisplayTag extends IncludeTag {
 				httpServletRequest);
 
 		_activeViewSettingsJSON = portalPreferences.getValue(
-			ServletContextUtil.getFDSSettingsNamespace(httpServletRequest, _id),
+			ServletContextUtil.getFDSSettingsNamespace(
+				httpServletRequest, getId()),
 			"activeViewSettingsJSON");
 	}
 
 	private void _setDataSetDisplayViewsContext() {
 		_dataSetDisplayViewsContext = _fdsViewSerializer.serialize(
-			_id, PortalUtil.getLocale(getRequest()));
+			getId(), PortalUtil.getLocale(getRequest()));
 	}
 
 	private void _setFDSPaginationEntries() {
@@ -484,8 +464,6 @@ public class ClassicDisplayTag extends IncludeTag {
 		return object;
 	}
 
-	private static final String _PAGE = "/classic_display/page.jsp";
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		ClassicDisplayTag.class);
 
@@ -504,7 +482,6 @@ public class ClassicDisplayTag extends IncludeTag {
 	private FDSViewSerializer _fdsViewSerializer;
 	private String _formId;
 	private String _formName;
-	private String _id;
 	private int _itemsPerPage;
 	private String _namespace;
 	private String _nestedItemsKey;

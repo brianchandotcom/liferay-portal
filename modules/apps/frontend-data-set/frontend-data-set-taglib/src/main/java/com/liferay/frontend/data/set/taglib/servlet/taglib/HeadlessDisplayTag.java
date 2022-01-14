@@ -23,23 +23,21 @@ import com.liferay.frontend.data.set.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.frontend.data.set.view.FDSViewSerializer;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portal.kernel.theme.PortletDisplay;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.taglib.util.IncludeTag;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 
 import javax.portlet.PortletURL;
@@ -52,7 +50,7 @@ import javax.servlet.jsp.PageContext;
  * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
-public class HeadlessDisplayTag extends IncludeTag {
+public class HeadlessDisplayTag extends BaseDisplayTag {
 
 	@Override
 	public int doStartTag() throws JspException {
@@ -73,6 +71,11 @@ public class HeadlessDisplayTag extends IncludeTag {
 		catch (Exception exception) {
 			_log.error(exception, exception);
 		}
+
+		String randomKey = PortalUtil.generateRandomKey(
+			getRequest(), "taglib_frontend_data_set_headless_display_page");
+
+		setRandomNamespace(randomKey + StringPool.UNDERLINE);
 
 		return super.doStartTag();
 	}
@@ -107,10 +110,6 @@ public class HeadlessDisplayTag extends IncludeTag {
 
 	public String getFormName() {
 		return _formName;
-	}
-
-	public String getId() {
-		return _id;
 	}
 
 	public int getItemsPerPage() {
@@ -207,10 +206,6 @@ public class HeadlessDisplayTag extends IncludeTag {
 		_formName = formName;
 	}
 
-	public void setId(String id) {
-		_id = id;
-	}
-
 	public void setItemsPerPage(int itemsPerPage) {
 		_itemsPerPage = itemsPerPage;
 	}
@@ -294,7 +289,6 @@ public class HeadlessDisplayTag extends IncludeTag {
 		_fdsViewSerializer = null;
 		_formId = null;
 		_formName = null;
-		_id = null;
 		_itemsPerPage = 0;
 		_namespace = null;
 		_nestedItemsKey = null;
@@ -312,17 +306,11 @@ public class HeadlessDisplayTag extends IncludeTag {
 	}
 
 	@Override
-	protected String getPage() {
-		return _PAGE;
-	}
-
-	@Override
-	protected void setAttributes(HttpServletRequest httpServletRequest) {
-		httpServletRequest = getRequest();
-
-		httpServletRequest.setAttribute(
-			"frontend-data-set:headless-display:data",
-			HashMapBuilder.<String, Object>put(
+	protected Map<String, Object> prepareProps(Map<String, Object> props) {
+		return super.prepareProps(
+			HashMapBuilder.<String, Object>putAll(
+				props
+			).put(
 				"actionParameterName",
 				GetterUtil.getString(_actionParameterName)
 			).put(
@@ -336,7 +324,7 @@ public class HeadlessDisplayTag extends IncludeTag {
 			).put(
 				"creationMenu", _creationMenu
 			).put(
-				"currentURL", PortalUtil.getCurrentURL(httpServletRequest)
+				"currentURL", PortalUtil.getCurrentURL(getRequest())
 			).put(
 				"customViewsEnabled", _customViewsEnabled
 			).put(
@@ -346,7 +334,7 @@ public class HeadlessDisplayTag extends IncludeTag {
 			).put(
 				"formName", _validateDataAttribute(_formName)
 			).put(
-				"id", _id
+				"id", getId()
 			).put(
 				"itemsActions", _fdsActionDropdownItems
 			).put(
@@ -366,7 +354,7 @@ public class HeadlessDisplayTag extends IncludeTag {
 					"initialPageNumber", _pageNumber
 				).build()
 			).put(
-				"portletId", _getRootPortletId(httpServletRequest)
+				"portletId", PortalUtil.getPortletId(getRequest())
 			).put(
 				"portletURL", _portletURL.toString()
 			).put(
@@ -404,16 +392,6 @@ public class HeadlessDisplayTag extends IncludeTag {
 		return fdsPaginationEntries;
 	}
 
-	private String _getRootPortletId(HttpServletRequest httpServletRequest) {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		return portletDisplay.getRootPortletId();
-	}
-
 	private void _setActiveViewSettingsJSON() {
 		HttpServletRequest httpServletRequest = getRequest();
 
@@ -422,13 +400,14 @@ public class HeadlessDisplayTag extends IncludeTag {
 				httpServletRequest);
 
 		_activeViewSettingsJSON = portalPreferences.getValue(
-			ServletContextUtil.getFDSSettingsNamespace(httpServletRequest, _id),
+			ServletContextUtil.getFDSSettingsNamespace(
+				httpServletRequest, getId()),
 			"activeViewSettingsJSON");
 	}
 
 	private void _setFDSFiltersContext() {
 		_fdsFiltersContext = _fdsFilterSerializer.serialize(
-			_id, PortalUtil.getLocale(getRequest()));
+			getId(), PortalUtil.getLocale(getRequest()));
 	}
 
 	private void _setFDSPaginationEntries() {
@@ -449,7 +428,7 @@ public class HeadlessDisplayTag extends IncludeTag {
 
 	private void _setFDSViewsContext() {
 		_fdsViewsContext = _fdsViewSerializer.serialize(
-			_id, PortalUtil.getLocale(getRequest()));
+			getId(), PortalUtil.getLocale(getRequest()));
 	}
 
 	private Object _validateDataAttribute(Object object) {
@@ -459,8 +438,6 @@ public class HeadlessDisplayTag extends IncludeTag {
 
 		return object;
 	}
-
-	private static final String _PAGE = "/headless_display/page.jsp";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		HeadlessDisplayTag.class);
@@ -482,7 +459,6 @@ public class HeadlessDisplayTag extends IncludeTag {
 	private FDSViewSerializer _fdsViewSerializer;
 	private String _formId;
 	private String _formName;
-	private String _id;
 	private int _itemsPerPage;
 	private String _namespace;
 	private String _nestedItemsKey;

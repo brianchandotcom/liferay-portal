@@ -100,6 +100,7 @@ Map<String, Object> fragmentsEditorData = HashMapBuilder.<String, Object>put(
 						cssClass="header-back-to"
 						icon="angle-left"
 						markupView="lexicon"
+						message="back"
 						url="<%= redirect %>"
 					/>
 				</c:if>

@@ -109,8 +109,6 @@ accountEntryDisplaySearchContainer.setRowChecker(null);
 </liferay-ui:search-container>
 
 <aui:script use="liferay-search-container">
-	var AArray = A.Array;
-
 	var addAccountEntryIds = [];
 	var deleteAccountEntryIds = [];
 
@@ -143,7 +141,7 @@ accountEntryDisplaySearchContainer.setRowChecker(null);
 
 			searchContainer.deleteRow(tr, rowId);
 
-			AArray.removeItem(addAccountEntryIds, rowId);
+			addAccountEntryIds = addAccountEntryIds.filter((id) => id !== rowId);
 
 			deleteAccountEntryIds.push(rowId);
 
@@ -195,7 +193,9 @@ accountEntryDisplaySearchContainer.setRowChecker(null);
 
 					searchContainer.updateDataStore();
 
-					AArray.removeItem(deleteAccountEntryIds, entityId);
+					deleteAccountEntryIds = deleteAccountEntryIds.filter(
+						(id) => id !== rowId
+					);
 
 					document.<portlet:namespace />fm.<portlet:namespace />addAccountEntryIds.value = addAccountEntryIds.join(
 						','

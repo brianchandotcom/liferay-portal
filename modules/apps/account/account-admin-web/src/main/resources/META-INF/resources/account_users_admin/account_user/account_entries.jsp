@@ -136,8 +136,6 @@ portletDisplay.setURLBack(backURL);
 </aui:form>
 
 <aui:script use="liferay-search-container">
-	var AArray = A.Array;
-
 	var addAccountEntryIds = [];
 
 	var deleteAccountEntryIds = [];
@@ -171,7 +169,7 @@ portletDisplay.setURLBack(backURL);
 
 			searchContainer.deleteRow(tr, rowId);
 
-			AArray.removeItem(addAccountEntryIds, rowId);
+			addAccountEntryIds = addAccountEntryIds.filter((id) => id !== rowId);
 
 			deleteAccountEntryIds.push(rowId);
 
@@ -217,7 +215,9 @@ portletDisplay.setURLBack(backURL);
 
 					searchContainer.updateDataStore();
 
-					AArray.removeItem(deleteAccountEntryIds, entityId);
+					deleteAccountEntryIds = deleteAccountEntryIds.filter(
+						(id) => id !== rowId
+					);
 
 					addAccountEntryIds.push(entityId);
 

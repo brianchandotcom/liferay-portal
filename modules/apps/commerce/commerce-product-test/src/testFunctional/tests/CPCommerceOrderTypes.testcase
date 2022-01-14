@@ -70,12 +70,9 @@ definition {
 	}
 
 	@description = "Verify active order type is automatically assigned to an order created via the account selector."
-	@ignore = "true"
 	@priority = "3"
 	test AssertActiveOrderTypeAutomaticallyAssignedToOrderCreatedViaAccountSelector {
 		property portal.acceptance = "false";
-
-		// TODO Unignore test when automatic order type assignment is implemented for orders created in the account selector when a single active order type exists along with inactive order types
 
 		task ("Given active and inactive order types") {
 			CommerceJSONOrdersAPI._addOrderType(

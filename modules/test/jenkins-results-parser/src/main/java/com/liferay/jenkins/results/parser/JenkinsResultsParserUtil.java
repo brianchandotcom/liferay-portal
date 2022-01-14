@@ -3118,6 +3118,14 @@ public class JenkinsResultsParserUtil {
 		return false;
 	}
 
+	public static boolean isInteger(String string) {
+		if ((string != null) && string.matches("\\d+")) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public static boolean isJSONArrayEqual(
 		JSONArray expectedJSONArray, JSONArray actualJSONArray) {
 

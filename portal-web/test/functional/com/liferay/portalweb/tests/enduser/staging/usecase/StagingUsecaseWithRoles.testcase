@@ -889,7 +889,7 @@ definition {
 
 		Navigator.openStagingSiteURL(siteName = "Site Name");
 
-		Portlet.addPG(portletName = "Navigation Menu");
+		Portlet.addPG(portletName = "Menu Display Widget");
 
 		Staging.markAsReadyForPublication();
 
@@ -909,7 +909,7 @@ definition {
 			pageName = "Staging Test Page",
 			siteName = "Site Name");
 
-		Portlet.viewPG(portletName = "Navigation Menu");
+		Portlet.viewPG(portletName = "Menu Display Widget");
 
 		Navigator.gotoSitePage(
 			pageName = "Wiki",

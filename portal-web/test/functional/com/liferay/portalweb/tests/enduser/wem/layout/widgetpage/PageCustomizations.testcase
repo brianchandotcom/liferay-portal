@@ -168,7 +168,7 @@ definition {
 			JSONLayout.addWidgetToPublicLayout(
 				groupName = "Test Site Name",
 				layoutName = "Test Page Name",
-				widgetName = "Navigation Menu");
+				widgetName = "Menu Display Widget");
 		}
 
 		task ("View Navigation Menu widget is shown") {
@@ -176,7 +176,7 @@ definition {
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
-			Portlet.viewSpecificPG(portletName = "Navigation Menu");
+			Portlet.viewSpecificPG(portletName = "Menu Display Widget");
 		}
 	}
 

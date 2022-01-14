@@ -53,7 +53,7 @@ definition {
 				pageName = "Test Page Name",
 				siteName = "Test Site Name Staging");
 
-			PageEditor.addWidget(portletName = "Navigation Menu");
+			PageEditor.addWidget(portletName = "Menu Display Widget");
 		}
 
 		task ("Select the List Menu as display template in Navigation Menu") {

@@ -77,7 +77,7 @@ definition {
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Guest",
 			layoutName = "Navigation Menu Page",
-			widgetName = "Navigation Menu");
+			widgetName = "Menu Display Widget");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "fr/web/guest/navigation-menu-page");
 
@@ -180,7 +180,7 @@ definition {
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Guest",
 			layoutName = "Navigation Menu Page",
-			widgetName = "Navigation Menu");
+			widgetName = "Menu Display Widget");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "fr/web/guest/navigation-menu-page");
 
@@ -194,7 +194,7 @@ definition {
 
 		task ("Assert default locale returned by asserting Widget name.") {
 			AssertElementPresent(
-				key_portletName = "Navigation Menu",
+				key_portletName = "Menu Display Widget",
 				locator1 = "Portlet#TITLE");
 		}
 	}

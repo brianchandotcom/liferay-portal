@@ -530,7 +530,7 @@ definition {
 
 			Portlet.viewSpecificPG(portletName = "Members");
 
-			Portlet.viewSpecificPG(portletName = "Navigation Menu");
+			Portlet.viewSpecificPG(portletName = "Menu Display Widget");
 		}
 	}
 

@@ -36,7 +36,7 @@ definition {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
 		Portlet.gotoPortletOptions(
-			portletName = "Navigation Menu",
+			portletName = "Menu Display Widget",
 			portletOption = "Configuration");
 
 		IFrame.selectModalFrame();

@@ -180,7 +180,7 @@ definition {
 
 		task ("Select the Split Button Dropdowns display template in Navigation Menu widget") {
 			ApplicationDisplayTemplates.selectPortletADT(
-				portletName = "Navigation Menu",
+				portletName = "Menu Display Widget",
 				templateName = "Split Button Dropdowns");
 		}
 
@@ -242,7 +242,7 @@ definition {
 
 		task ("Select Bar minimally styled display template in Navigation Menu widget") {
 			ApplicationDisplayTemplates.selectPortletADT(
-				portletName = "Navigation Menu",
+				portletName = "Menu Display Widget",
 				templateName = "Bar minimally styled");
 		}
 	}
@@ -811,7 +811,7 @@ definition {
 			ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "test-site-name");
 
 			ApplicationDisplayTemplates.addCP(
-				adtType = "Navigation Menu",
+				adtType = "Menu Display Widget",
 				templateScript = "${templateScript}");
 		}
 
@@ -836,7 +836,7 @@ definition {
 		task ("View the custom fields are shown in Navigation Menu widget") {
 			for (var fieldValue : list "Page,Submenu,URL") {
 				AssertTextEquals.assertPartialText(
-					key_portletName = "Navigation Menu",
+					key_portletName = "Menu Display Widget",
 					locator1 = "ManagementBar#PORTLET_BODY",
 					value1 = "${fieldValue}");
 			}

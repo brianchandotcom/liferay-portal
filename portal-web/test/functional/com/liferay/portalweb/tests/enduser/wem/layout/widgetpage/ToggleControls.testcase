@@ -222,11 +222,11 @@ definition {
 			WidgetPages.viewToggleControls(status = "hidden");
 
 			MouseOver(
-				key_portletName = "Navigation Menu",
+				key_portletName = "Menu Display Widget",
 				locator1 = "ManagementBar#PORTLET_BODY");
 
 			AssertNotVisible(
-				key_portletName = "Navigation Menu",
+				key_portletName = "Menu Display Widget",
 				locator1 = "Portlet#SPECIFIC_BORDERLESS_BAR");
 		}
 
@@ -244,11 +244,11 @@ definition {
 				locator1 = "ControlMenu#TOGGLE_CONTROLS");
 
 			MouseOver(
-				key_portletName = "Navigation Menu",
+				key_portletName = "Menu Display Widget",
 				locator1 = "ManagementBar#PORTLET_BODY");
 
 			AssertVisible(
-				key_portletName = "Navigation Menu",
+				key_portletName = "Menu Display Widget",
 				locator1 = "Portlet#SPECIFIC_BORDERLESS_BAR");
 		}
 	}

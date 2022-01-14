@@ -34,7 +34,7 @@ definition {
 
 		var pageName = "Test Page1";
 		var portletBody = "Test Page1";
-		var portletName = "Navigation Menu";
+		var portletName = "Menu Display Widget";
 		var siteName = "Site Name";
 
 		task ("Add a '${portletName}' portlet to the page named '${pageName}'") {

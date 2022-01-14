@@ -128,7 +128,7 @@ definition {
 		else if ("${widgetName}" == "My Sites") {
 			var portletId = "com_liferay_site_my_sites_web_portlet_MySitesPortlet";
 		}
-		else if ("${widgetName}" == "Navigation Menu") {
+		else if ("${widgetName}" == "Menu Display Widget") {
 			var portletId = "com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet";
 		}
 		else if ("${widgetName}" == "Nested Applications") {

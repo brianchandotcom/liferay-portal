@@ -53,14 +53,15 @@ if (hasReplacement) {
 						/>
 					</div>
 
-					<div class="col stock-quantity text-truncate-inline <%= ((cpSku != null) && cpSku.isDiscontinued()) ? StringPool.BLANK : "hide" %>">
+					<div class="col stock-quantity text-truncate-inline">
 						<span class="text-truncate" data-text-cp-instance-stock-quantity>
-							<span class="text-danger">
-								<%= LanguageUtil.get(request, "discontinued") %>
+							<span class="<%= ((cpSku != null) && cpSku.isDiscontinued()) ? StringPool.BLANK : "hide" %>">
+								<span class="text-danger">
+									<%= LanguageUtil.get(request, "discontinued") %>
+								</span>
+								-
 							</span>
-							-
-
-							<%= LanguageUtil.format(request, "x-in-stock", cpContentHelper.getStockQuantity(request)) %>
+							<span data-qa-id="in-stock-quantity"><%= LanguageUtil.format(request, "x-in-stock", cpContentHelper.getStockQuantity(request)) %></span>
 						</span>
 					</div>
 				</div>

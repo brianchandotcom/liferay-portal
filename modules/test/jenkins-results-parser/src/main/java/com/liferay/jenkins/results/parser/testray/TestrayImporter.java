@@ -45,6 +45,8 @@ import com.liferay.jenkins.results.parser.Retryable;
 import com.liferay.jenkins.results.parser.TopLevelBuild;
 import com.liferay.jenkins.results.parser.Workspace;
 import com.liferay.jenkins.results.parser.WorkspaceBuild;
+import com.liferay.jenkins.results.parser.job.property.JobProperty;
+import com.liferay.jenkins.results.parser.job.property.JobPropertyFactory;
 import com.liferay.jenkins.results.parser.test.clazz.TestClass;
 import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.FunctionalAxisTestClassGroup;
@@ -303,35 +305,31 @@ public class TestrayImporter {
 
 			Job job = getJob();
 
-			for (Properties properties : _getPropertiesList(testBaseDir)) {
-				if (testrayBuild != null) {
-					break;
-				}
+			if (testrayBuild == null) {
+				JobProperty jobProperty = JobPropertyFactory.newJobProperty(
+					job, "testray.build.id");
 
-				testrayBuildID = JenkinsResultsParserUtil.getProperty(
-					properties, "testray.build.id", job.getJobName(),
-					_topLevelBuild.getTestSuiteName());
+				testrayBuildID = jobProperty.getValue();
 
 				if ((testrayBuildID != null) &&
 					testrayBuildID.matches("\\d+")) {
 
 					testrayBuild = testrayRoutine.getTestrayBuildByID(
 						Integer.parseInt(testrayBuildID));
-
-					break;
 				}
+			}
 
-				testrayBuildName = JenkinsResultsParserUtil.getProperty(
-					properties, "testray.build.name", job.getJobName(),
-					_topLevelBuild.getTestSuiteName());
+			if (testrayBuild == null) {
+				JobProperty jobProperty = JobPropertyFactory.newJobProperty(
+					job, "testray.build.name");
+
+				testrayBuildName = jobProperty.getValue();
 
 				if (!JenkinsResultsParserUtil.isNullOrEmpty(testrayBuildName)) {
 					testrayBuild = testrayRoutine.createTestrayBuild(
 						testrayProductVersion,
 						_replaceEnvVars(testrayBuildName), testrayBuildDate,
 						testrayBuildDescription, testrayBuildSHA);
-
-					break;
 				}
 			}
 		}
@@ -554,14 +552,11 @@ public class TestrayImporter {
 
 			Job job = getJob();
 
-			for (Properties properties : _getPropertiesList(testBaseDir)) {
-				if (testrayProductVersion != null) {
-					break;
-				}
+			if (testrayProductVersion == null) {
+				JobProperty jobProperty = JobPropertyFactory.newJobProperty(
+					job, "testray.product.version.id");
 
-				testrayProductVersionID = JenkinsResultsParserUtil.getProperty(
-					properties, "testray.product.version.id", job.getJobName(),
-					_topLevelBuild.getTestSuiteName());
+				testrayProductVersionID = jobProperty.getValue();
 
 				if ((testrayProductVersionID != null) &&
 					testrayProductVersionID.matches("\\d+")) {
@@ -569,14 +564,14 @@ public class TestrayImporter {
 					testrayProductVersion =
 						testrayProject.getTestrayProductVersionByID(
 							Integer.parseInt(testrayProductVersionID));
-
-					break;
 				}
+			}
 
-				testrayProductVersionName =
-					JenkinsResultsParserUtil.getProperty(
-						properties, "testray.product.version.name",
-						job.getJobName(), _topLevelBuild.getTestSuiteName());
+			if (testrayProductVersion == null) {
+				JobProperty jobProperty = JobPropertyFactory.newJobProperty(
+					job, "testray.product.version.name");
+
+				testrayProductVersionName = jobProperty.getValue();
 
 				if (!JenkinsResultsParserUtil.isNullOrEmpty(
 						testrayProductVersionName)) {
@@ -584,8 +579,6 @@ public class TestrayImporter {
 					testrayProductVersion =
 						testrayProject.createTestrayProductVersion(
 							_replaceEnvVars(testrayProductVersionName));
-
-					break;
 				}
 			}
 
@@ -667,35 +660,31 @@ public class TestrayImporter {
 
 			Job job = getJob();
 
-			for (Properties properties : _getPropertiesList(testBaseDir)) {
-				if (testrayProject != null) {
-					break;
-				}
+			if (testrayProject == null) {
+				JobProperty jobProperty = JobPropertyFactory.newJobProperty(
+					job, "testray.project.id");
 
-				testrayProjectID = JenkinsResultsParserUtil.getProperty(
-					properties, "testray.project.id", job.getJobName(),
-					_topLevelBuild.getTestSuiteName());
+				testrayProjectID = jobProperty.getValue();
 
 				if ((testrayProjectID != null) &&
 					testrayProjectID.matches("\\d+")) {
 
 					testrayProject = testrayServer.getTestrayProjectByID(
 						Integer.parseInt(testrayProjectID));
-
-					break;
 				}
+			}
 
-				testrayProjectName = JenkinsResultsParserUtil.getProperty(
-					properties, "testray.project.name", job.getJobName(),
-					_topLevelBuild.getTestSuiteName());
+			if (testrayProject == null) {
+				JobProperty jobProperty = JobPropertyFactory.newJobProperty(
+					job, "testray.project.name");
+
+				testrayProjectName = jobProperty.getValue();
 
 				if (!JenkinsResultsParserUtil.isNullOrEmpty(
 						testrayProjectName)) {
 
 					testrayProject = testrayServer.getTestrayProjectByName(
 						_replaceEnvVars(testrayProjectName));
-
-					break;
 				}
 			}
 		}
@@ -777,35 +766,31 @@ public class TestrayImporter {
 
 			Job job = getJob();
 
-			for (Properties properties : _getPropertiesList(testBaseDir)) {
-				if (testrayRoutine != null) {
-					break;
-				}
+			if (testrayRoutine == null) {
+				JobProperty jobProperty = JobPropertyFactory.newJobProperty(
+					job, "testray.routine.id");
 
-				testrayRoutineID = JenkinsResultsParserUtil.getProperty(
-					properties, "testray.routine.id", job.getJobName(),
-					_topLevelBuild.getTestSuiteName());
+				testrayRoutineID = jobProperty.getValue();
 
 				if ((testrayRoutineID != null) &&
 					testrayRoutineID.matches("\\d+")) {
 
 					testrayRoutine = testrayProject.getTestrayRoutineByID(
 						Integer.parseInt(testrayRoutineID));
-
-					break;
 				}
+			}
 
-				testrayRoutineName = JenkinsResultsParserUtil.getProperty(
-					properties, "testray.routine.name", job.getJobName(),
-					_topLevelBuild.getTestSuiteName());
+			if (testrayRoutine == null) {
+				JobProperty jobProperty = JobPropertyFactory.newJobProperty(
+					job, "testray.routine.name");
+
+				testrayRoutineName = jobProperty.getValue();
 
 				if (!JenkinsResultsParserUtil.isNullOrEmpty(
 						testrayRoutineName)) {
 
 					testrayRoutine = testrayProject.createTestrayRoutine(
 						_replaceEnvVars(testrayRoutineName));
-
-					break;
 				}
 			}
 		}
@@ -856,24 +841,17 @@ public class TestrayImporter {
 					testrayServerURL);
 			}
 
-			Job job = getJob();
+			if (testrayServer == null) {
+				JobProperty jobProperty = JobPropertyFactory.newJobProperty(
+					getJob(), "testray.server.url");
 
-			for (Properties properties : _getPropertiesList(testBaseDir)) {
-				if (testrayServer != null) {
-					break;
-				}
-
-				testrayServerURL = JenkinsResultsParserUtil.getProperty(
-					properties, "testray.server.url", job.getJobName(),
-					_topLevelBuild.getTestSuiteName());
+				testrayServerURL = jobProperty.getValue();
 
 				if ((testrayServerURL != null) &&
 					testrayServerURL.matches("https?://.*")) {
 
 					testrayServer = TestrayFactory.newTestrayServer(
 						testrayServerURL);
-
-					break;
 				}
 			}
 		}
@@ -933,7 +911,7 @@ public class TestrayImporter {
 	}
 
 	public void recordTestrayCaseResults() {
-		Job job = getJob();
+		final Job job = getJob();
 
 		List<AxisTestClassGroup> axisTestClassGroups =
 			job.getAxisTestClassGroups();
@@ -960,8 +938,7 @@ public class TestrayImporter {
 
 						TestrayRun testrayRun = new TestrayRun(
 							testrayBuild, axisTestClassGroup.getBatchName(),
-							_getPropertiesList(
-								axisTestClassGroup.getTestBaseDir()));
+							job.getJobPropertiesFiles());
 
 						long start =
 							JenkinsResultsParserUtil.getCurrentTimeMillis();
@@ -1526,41 +1503,11 @@ public class TestrayImporter {
 			_topLevelBuild.getBranchName());
 	}
 
-	private List<Properties> _getPropertiesList(File testBaseDir) {
-		List<Properties> propertiesList = new ArrayList<>();
-
-		if ((testBaseDir != null) && testBaseDir.exists()) {
-			propertiesList.add(
-				JenkinsResultsParserUtil.getProperties(
-					new File(testBaseDir, "test.properties")));
-
-			propertiesList.add(
-				JenkinsResultsParserUtil.getProperties(
-					new File(testBaseDir, "test/functional/test.properties")));
-		}
-
-		Job job = getJob();
-
-		propertiesList.add(job.getJobProperties());
-
-		try {
-			propertiesList.add(JenkinsResultsParserUtil.getBuildProperties());
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
-
-		return propertiesList;
-	}
-
 	private String _getSlackBody(File testBaseDir) {
-		Job job = getJob();
+		JobProperty jobProperty = JobPropertyFactory.newJobProperty(
+			getJob(), "testray.slack.body");
 
-		TopLevelBuild topLevelBuild = getTopLevelBuild();
-
-		String slackBody = JenkinsResultsParserUtil.getProperty(
-			job.getJobProperties(), "testray.slack.body",
-			topLevelBuild.getTestSuiteName(), topLevelBuild.getJobName());
+		String slackBody = jobProperty.getValue();
 
 		if (JenkinsResultsParserUtil.isNullOrEmpty(slackBody)) {
 			StringBuilder sb = new StringBuilder();
@@ -1580,13 +1527,10 @@ public class TestrayImporter {
 	}
 
 	private String _getSlackChannels(File testBaseDir) {
-		Job job = getJob();
+		JobProperty jobProperty = JobPropertyFactory.newJobProperty(
+			getJob(), "testray.slack.channels");
 
-		TopLevelBuild topLevelBuild = getTopLevelBuild();
-
-		String slackChannels = JenkinsResultsParserUtil.getProperty(
-			job.getJobProperties(), "testray.slack.channels",
-			topLevelBuild.getTestSuiteName(), topLevelBuild.getJobName());
+		String slackChannels = jobProperty.getValue();
 
 		if (JenkinsResultsParserUtil.isNullOrEmpty(slackChannels)) {
 			slackChannels = "testray-reports";
@@ -1596,13 +1540,10 @@ public class TestrayImporter {
 	}
 
 	private String _getSlackIconEmoji(File testBaseDir) {
-		Job job = getJob();
+		JobProperty jobProperty = JobPropertyFactory.newJobProperty(
+			getJob(), "testray.slack.icon.emoji");
 
-		TopLevelBuild topLevelBuild = getTopLevelBuild();
-
-		String slackIconEmoji = JenkinsResultsParserUtil.getProperty(
-			job.getJobProperties(), "testray.slack.icon.emoji",
-			topLevelBuild.getTestSuiteName(), topLevelBuild.getJobName());
+		String slackIconEmoji = jobProperty.getValue();
 
 		if (!JenkinsResultsParserUtil.isNullOrEmpty(slackIconEmoji)) {
 			return _replaceSlackEnvVars(slackIconEmoji, testBaseDir);
@@ -1612,17 +1553,16 @@ public class TestrayImporter {
 	}
 
 	private String _getSlackSubject(File testBaseDir) {
-		Job job = getJob();
+		JobProperty jobProperty = JobPropertyFactory.newJobProperty(
+			getJob(), "testray.slack.subject");
 
-		TopLevelBuild topLevelBuild = getTopLevelBuild();
-
-		String slackSubject = JenkinsResultsParserUtil.getProperty(
-			job.getJobProperties(), "testray.slack.subject",
-			topLevelBuild.getTestSuiteName(), topLevelBuild.getJobName());
+		String slackSubject = jobProperty.getValue();
 
 		if (!JenkinsResultsParserUtil.isNullOrEmpty(slackSubject)) {
 			return _replaceSlackEnvVars(slackSubject, testBaseDir);
 		}
+
+		TopLevelBuild topLevelBuild = getTopLevelBuild();
 
 		return JenkinsResultsParserUtil.combine(
 			topLevelBuild.getJobName(), "#",
@@ -1630,13 +1570,10 @@ public class TestrayImporter {
 	}
 
 	private String _getSlackUsername(File testBaseDir) {
-		Job job = getJob();
+		JobProperty jobProperty = JobPropertyFactory.newJobProperty(
+			getJob(), "testray.slack.username");
 
-		TopLevelBuild topLevelBuild = getTopLevelBuild();
-
-		String slackUsername = JenkinsResultsParserUtil.getProperty(
-			job.getJobProperties(), "testray.slack.username",
-			topLevelBuild.getTestSuiteName(), topLevelBuild.getJobName());
+		String slackUsername = jobProperty.getValue();
 
 		if (!JenkinsResultsParserUtil.isNullOrEmpty(slackUsername)) {
 			return _replaceSlackEnvVars(slackUsername, testBaseDir);

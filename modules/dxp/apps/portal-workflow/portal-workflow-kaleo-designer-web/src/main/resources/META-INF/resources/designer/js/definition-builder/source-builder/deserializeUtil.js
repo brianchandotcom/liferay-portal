@@ -85,7 +85,7 @@ DeserializeUtil.prototype = {
 
 				// To be removed after next stories
 
-				if (type === 'joinxor' || type === 'condition') {
+				if (type === 'condition') {
 					type = 'state';
 				}
 

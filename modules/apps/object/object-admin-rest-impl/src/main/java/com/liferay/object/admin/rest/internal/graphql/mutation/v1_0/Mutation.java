@@ -19,11 +19,13 @@ import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectField;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectLayout;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectRelationship;
+import com.liferay.object.admin.rest.dto.v1_0.ObjectView;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectActionResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectFieldResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectLayoutResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectRelationshipResource;
+import com.liferay.object.admin.rest.resource.v1_0.ObjectViewResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.search.Sort;
@@ -90,6 +92,14 @@ public class Mutation {
 
 		_objectRelationshipResourceComponentServiceObjects =
 			objectRelationshipResourceComponentServiceObjects;
+	}
+
+	public static void setObjectViewResourceComponentServiceObjects(
+		ComponentServiceObjects<ObjectViewResource>
+			objectViewResourceComponentServiceObjects) {
+
+		_objectViewResourceComponentServiceObjects =
+			objectViewResourceComponentServiceObjects;
 	}
 
 	@GraphQLField
@@ -569,6 +579,88 @@ public class Mutation {
 					callbackURL, object));
 	}
 
+	@GraphQLField
+	public ObjectView createObjectDefinitionObjectView(
+			@GraphQLName("objectDefinitionId") Long objectDefinitionId,
+			@GraphQLName("objectView") ObjectView objectView)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_objectViewResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			objectViewResource ->
+				objectViewResource.postObjectDefinitionObjectView(
+					objectDefinitionId, objectView));
+	}
+
+	@GraphQLField
+	public Response createObjectDefinitionObjectViewBatch(
+			@GraphQLName("objectDefinitionId") Long objectDefinitionId,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_objectViewResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			objectViewResource ->
+				objectViewResource.postObjectDefinitionObjectViewBatch(
+					objectDefinitionId, callbackURL, object));
+	}
+
+	@GraphQLField
+	public boolean deleteObjectView(
+			@GraphQLName("objectViewId") Long objectViewId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_objectViewResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			objectViewResource -> objectViewResource.deleteObjectView(
+				objectViewId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public Response deleteObjectViewBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_objectViewResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			objectViewResource -> objectViewResource.deleteObjectViewBatch(
+				callbackURL, object));
+	}
+
+	@GraphQLField
+	public ObjectView updateObjectView(
+			@GraphQLName("objectViewId") Long objectViewId,
+			@GraphQLName("objectView") ObjectView objectView)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_objectViewResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			objectViewResource -> objectViewResource.putObjectView(
+				objectViewId, objectView));
+	}
+
+	@GraphQLField
+	public Response updateObjectViewBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_objectViewResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			objectViewResource -> objectViewResource.putObjectViewBatch(
+				callbackURL, object));
+	}
+
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
 			_applyComponentServiceObjects(
 				ComponentServiceObjects<T> componentServiceObjects,
@@ -683,6 +775,19 @@ public class Mutation {
 		objectRelationshipResource.setRoleLocalService(_roleLocalService);
 	}
 
+	private void _populateResourceContext(ObjectViewResource objectViewResource)
+		throws Exception {
+
+		objectViewResource.setContextAcceptLanguage(_acceptLanguage);
+		objectViewResource.setContextCompany(_company);
+		objectViewResource.setContextHttpServletRequest(_httpServletRequest);
+		objectViewResource.setContextHttpServletResponse(_httpServletResponse);
+		objectViewResource.setContextUriInfo(_uriInfo);
+		objectViewResource.setContextUser(_user);
+		objectViewResource.setGroupLocalService(_groupLocalService);
+		objectViewResource.setRoleLocalService(_roleLocalService);
+	}
+
 	private static ComponentServiceObjects<ObjectActionResource>
 		_objectActionResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ObjectDefinitionResource>
@@ -693,6 +798,8 @@ public class Mutation {
 		_objectLayoutResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ObjectRelationshipResource>
 		_objectRelationshipResourceComponentServiceObjects;
+	private static ComponentServiceObjects<ObjectViewResource>
+		_objectViewResourceComponentServiceObjects;
 
 	private AcceptLanguage _acceptLanguage;
 	private com.liferay.portal.kernel.model.Company _company;

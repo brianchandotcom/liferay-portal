@@ -21,11 +21,13 @@ import com.liferay.object.admin.rest.dto.v1_0.ObjectLayout;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectLayoutColumn;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectLayoutTab;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectRelationship;
+import com.liferay.object.admin.rest.dto.v1_0.ObjectView;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectActionResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectFieldResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectLayoutResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectRelationshipResource;
+import com.liferay.object.admin.rest.resource.v1_0.ObjectViewResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.search.Sort;
@@ -99,6 +101,14 @@ public class Query {
 
 		_objectRelationshipResourceComponentServiceObjects =
 			objectRelationshipResourceComponentServiceObjects;
+	}
+
+	public static void setObjectViewResourceComponentServiceObjects(
+		ComponentServiceObjects<ObjectViewResource>
+			objectViewResourceComponentServiceObjects) {
+
+		_objectViewResourceComponentServiceObjects =
+			objectViewResourceComponentServiceObjects;
 	}
 
 	/**
@@ -310,6 +320,44 @@ public class Query {
 					objectRelationshipId));
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {objectDefinitionObjectViews(objectDefinitionId: ___, page: ___, pageSize: ___, search: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public ObjectViewPage objectDefinitionObjectViews(
+			@GraphQLName("objectDefinitionId") Long objectDefinitionId,
+			@GraphQLName("search") String search,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_objectViewResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			objectViewResource -> new ObjectViewPage(
+				objectViewResource.getObjectDefinitionObjectViewsPage(
+					objectDefinitionId, search,
+					Pagination.of(page, pageSize))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {objectView(objectViewId: ___){actions, dateCreated, dateModified, defaultObjectView, id, name, objectDefinitionId, objectViewColumns}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public ObjectView objectView(@GraphQLName("objectViewId") Long objectViewId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_objectViewResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			objectViewResource -> objectViewResource.getObjectView(
+				objectViewId));
+	}
+
 	@GraphQLTypeExtension(ObjectLayoutTab.class)
 	public class GetObjectRelationshipTypeExtension {
 
@@ -333,11 +381,11 @@ public class Query {
 
 	}
 
-	@GraphQLTypeExtension(ObjectLayout.class)
+	@GraphQLTypeExtension(ObjectView.class)
 	public class GetObjectDefinitionTypeExtension {
 
-		public GetObjectDefinitionTypeExtension(ObjectLayout objectLayout) {
-			_objectLayout = objectLayout;
+		public GetObjectDefinitionTypeExtension(ObjectView objectView) {
+			_objectView = objectView;
 		}
 
 		@GraphQLField
@@ -347,10 +395,10 @@ public class Query {
 				Query.this::_populateResourceContext,
 				objectDefinitionResource ->
 					objectDefinitionResource.getObjectDefinition(
-						_objectLayout.getObjectDefinitionId()));
+						_objectView.getObjectDefinitionId()));
 		}
 
-		private ObjectLayout _objectLayout;
+		private ObjectView _objectView;
 
 	}
 
@@ -373,6 +421,35 @@ public class Query {
 		}
 
 		private ObjectLayoutColumn _objectLayoutColumn;
+
+	}
+
+	@GraphQLTypeExtension(ObjectDefinition.class)
+	public class GetObjectDefinitionObjectViewsPageTypeExtension {
+
+		public GetObjectDefinitionObjectViewsPageTypeExtension(
+			ObjectDefinition objectDefinition) {
+
+			_objectDefinition = objectDefinition;
+		}
+
+		@GraphQLField
+		public ObjectViewPage objectViews(
+				@GraphQLName("search") String search,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_objectViewResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				objectViewResource -> new ObjectViewPage(
+					objectViewResource.getObjectDefinitionObjectViewsPage(
+						_objectDefinition.getId(), search,
+						Pagination.of(page, pageSize))));
+		}
+
+		private ObjectDefinition _objectDefinition;
 
 	}
 
@@ -566,6 +643,44 @@ public class Query {
 
 	}
 
+	@GraphQLName("ObjectViewPage")
+	public class ObjectViewPage {
+
+		public ObjectViewPage(Page objectViewPage) {
+			actions = objectViewPage.getActions();
+
+			facets = objectViewPage.getFacets();
+
+			items = objectViewPage.getItems();
+			lastPage = objectViewPage.getLastPage();
+			page = objectViewPage.getPage();
+			pageSize = objectViewPage.getPageSize();
+			totalCount = objectViewPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
+
+		@GraphQLField
+		protected List<Facet> facets;
+
+		@GraphQLField
+		protected java.util.Collection<ObjectView> items;
+
+		@GraphQLField
+		protected long lastPage;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
 			_applyComponentServiceObjects(
 				ComponentServiceObjects<T> componentServiceObjects,
@@ -661,6 +776,19 @@ public class Query {
 		objectRelationshipResource.setRoleLocalService(_roleLocalService);
 	}
 
+	private void _populateResourceContext(ObjectViewResource objectViewResource)
+		throws Exception {
+
+		objectViewResource.setContextAcceptLanguage(_acceptLanguage);
+		objectViewResource.setContextCompany(_company);
+		objectViewResource.setContextHttpServletRequest(_httpServletRequest);
+		objectViewResource.setContextHttpServletResponse(_httpServletResponse);
+		objectViewResource.setContextUriInfo(_uriInfo);
+		objectViewResource.setContextUser(_user);
+		objectViewResource.setGroupLocalService(_groupLocalService);
+		objectViewResource.setRoleLocalService(_roleLocalService);
+	}
+
 	private static ComponentServiceObjects<ObjectActionResource>
 		_objectActionResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ObjectDefinitionResource>
@@ -671,6 +799,8 @@ public class Query {
 		_objectLayoutResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ObjectRelationshipResource>
 		_objectRelationshipResourceComponentServiceObjects;
+	private static ComponentServiceObjects<ObjectViewResource>
+		_objectViewResourceComponentServiceObjects;
 
 	private AcceptLanguage _acceptLanguage;
 	private BiFunction<Object, List<String>, Aggregation>

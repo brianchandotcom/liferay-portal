@@ -56,27 +56,4 @@ public class EnvironmentFunctionalBatchTestClassGroup
 		super(batchName, portalEnvironmentJob);
 	}
 
-	@Override
-	protected String getDefaultTestBatchRunPropertyQuery(
-		File testBaseDir, String testSuiteName) {
-
-		String propertyQuery = System.getenv("TEST_BATCH_RUN_PROPERTY_QUERY");
-
-		if (JenkinsResultsParserUtil.isNullOrEmpty(propertyQuery)) {
-			propertyQuery = getBuildStartProperty(
-				"TEST_BATCH_RUN_PROPERTY_QUERY");
-		}
-
-		if ((propertyQuery != null) && !propertyQuery.isEmpty()) {
-			return propertyQuery;
-		}
-
-		String jobName = portalTestClassJob.getJobName();
-
-		return JenkinsResultsParserUtil.getProperty(
-			portalTestClassJob.getJobProperties(),
-			"test.batch.run.property.query",
-			jobName.replaceAll("([^\\(]+)\\([^\\)]+\\)", "$1"));
-	}
-
 }

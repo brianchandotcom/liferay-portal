@@ -77,6 +77,10 @@ public interface Job {
 
 	public void readJobProperties();
 
+	public boolean testReleaseBundle();
+
+	public boolean testRelevantChanges();
+
 	public static enum BuildProfile {
 
 		DXP("DXP", "dxp"), PORTAL("Portal", "portal");

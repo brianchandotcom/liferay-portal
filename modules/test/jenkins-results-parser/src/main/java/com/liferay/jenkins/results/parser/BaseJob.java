@@ -416,6 +416,28 @@ public abstract class BaseJob implements Job {
 		}
 	}
 
+	@Override
+	public boolean testReleaseBundle() {
+		JobProperty jobProperty = getJobProperty("test.release.bundle");
+
+		if (jobProperty != null) {
+			return Boolean.parseBoolean(jobProperty.getValue());
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean testRelevantChanges() {
+		JobProperty jobProperty = getJobProperty("test.relevant.changes");
+
+		if (jobProperty != null) {
+			return Boolean.parseBoolean(jobProperty.getValue());
+		}
+
+		return false;
+	}
+
 	protected BaseJob(String jobName, BuildProfile buildProfile) {
 		_jobName = jobName;
 		_buildProfile = buildProfile;

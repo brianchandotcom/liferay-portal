@@ -19,25 +19,6 @@ import {A11yIframe} from './A11yIframe';
 
 import type {A11yCheckerOptions} from './A11yChecker';
 
-declare global {
-	var Liferay: {
-		Language: {
-			get(value: string): string;
-		};
-		Util: {
-			sub(...value: string[]): string;
-		};
-	};
-
-	interface ThemeDisplay {
-		isStatePopUp(): boolean;
-	}
-
-	interface Window {
-		themeDisplay: ThemeDisplay;
-	}
-}
-
 const DEFAULT_CONTAINER_ID = 'a11yContainer';
 
 const getDefaultContainer = () => {

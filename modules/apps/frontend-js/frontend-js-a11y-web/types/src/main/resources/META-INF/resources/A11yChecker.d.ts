@@ -13,12 +13,6 @@
  */
 
 import {AxeResults, RunOptions} from 'axe-core';
-declare global {
-	interface Window {
-		cancelIdleCallback(handle: number): void;
-		requestIdleCallback(callback: Function): any;
-	}
-}
 declare type Task<T> = {
 	callback: Function;
 	id: number;

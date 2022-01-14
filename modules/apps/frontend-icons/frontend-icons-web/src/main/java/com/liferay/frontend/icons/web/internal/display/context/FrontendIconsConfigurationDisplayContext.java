@@ -89,7 +89,11 @@ public class FrontendIconsConfigurationDisplayContext {
 
 					jsonObject.put(
 						frontendIconsResourcePack.getName(),
-						JSONUtil.put("icons", iconNamesJSONArray));
+						JSONUtil.put(
+							"editable", frontendIconsResourcePack.isEditable()
+						).put(
+							"icons", iconNamesJSONArray
+						));
 				}
 
 				return jsonObject;

@@ -1,7 +1,7 @@
-<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-<circle opacity="0.2" cx="12" cy="12" r="12" fill="#FF8F39"/>
-<g style="mix-blend-mode:multiply" opacity="0.25">
-<circle cx="12" cy="12" r="8" fill="#FF8F39"/>
-</g>
-<circle cx="12" cy="12" r="3" fill="#FF8F39"/>
+<svg fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+	<circle cx="12" cy="12" fill="#FF8F39" opacity="0.2" r="12" />
+	<g opacity="0.25" style="mix-blend-mode:multiply">
+		<circle cx="12" cy="12" fill="#FF8F39" r="8" />
+	</g>
+	<circle cx="12" cy="12" fill="#FF8F39" r="3" />
 </svg>

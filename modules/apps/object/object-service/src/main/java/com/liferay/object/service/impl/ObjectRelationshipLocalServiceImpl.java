@@ -427,10 +427,12 @@ public class ObjectRelationshipLocalServiceImpl
 			reverseObjectRelationship.setDBTableName(
 				objectRelationship.getDBTableName());
 
-			objectRelationshipPersistence.update(reverseObjectRelationship);
+			objectRelationshipLocalService.updateObjectRelationship(
+				reverseObjectRelationship);
 		}
 
-		return objectRelationshipPersistence.update(objectRelationship);
+		return objectRelationshipLocalService.updateObjectRelationship(
+			objectRelationship);
 	}
 
 	private void _validate(

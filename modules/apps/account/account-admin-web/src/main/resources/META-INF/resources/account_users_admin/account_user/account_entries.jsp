@@ -137,7 +137,6 @@ portletDisplay.setURLBack(backURL);
 
 <aui:script use="liferay-search-container">
 	var AArray = A.Array;
-	var Util = Liferay.Util;
 
 	var addAccountEntryIds = [];
 
@@ -158,7 +157,7 @@ portletDisplay.setURLBack(backURL);
 
 			var tr = link.ancestor('tr');
 
-			var selectAccountEntry = Util.getWindow(
+			var selectAccountEntry = Liferay.Util.getWindow(
 				'<portlet:namespace />selectAccountEntry'
 			);
 
@@ -167,7 +166,7 @@ portletDisplay.setURLBack(backURL);
 					.get('contentWindow.document')
 					.one('.selector-button[data-entityid="' + rowId + '"]');
 
-				Util.toggleDisabled(selectButton, false);
+				Liferay.Util.toggleDisabled(selectButton, false);
 			}
 
 			searchContainer.deleteRow(tr, rowId);
@@ -199,7 +198,7 @@ portletDisplay.setURLBack(backURL);
 				searchContainerData = searchContainerData.split(',');
 			}
 
-			Util.openSelectionModal({
+			Liferay.Util.openSelectionModal({
 				id: '<portlet:namespace />selectAccountEntry',
 				onSelect: function (selectedItem) {
 					var entityId = selectedItem.entityid;

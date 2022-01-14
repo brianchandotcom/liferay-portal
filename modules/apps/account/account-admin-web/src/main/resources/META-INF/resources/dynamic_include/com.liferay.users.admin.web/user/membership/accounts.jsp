@@ -110,7 +110,6 @@ accountEntryDisplaySearchContainer.setRowChecker(null);
 
 <aui:script use="liferay-search-container">
 	var AArray = A.Array;
-	var Util = Liferay.Util;
 
 	var addAccountEntryIds = [];
 	var deleteAccountEntryIds = [];
@@ -130,7 +129,7 @@ accountEntryDisplaySearchContainer.setRowChecker(null);
 
 			var tr = link.ancestor('tr');
 
-			var selectAccountEntry = Util.getWindow(
+			var selectAccountEntry = Liferay.Util.getWindow(
 				'<portlet:namespace />selectAccountEntry'
 			);
 
@@ -139,7 +138,7 @@ accountEntryDisplaySearchContainer.setRowChecker(null);
 					.get('contentWindow.document')
 					.one('.selector-button[data-entityid="' + rowId + '"]');
 
-				Util.toggleDisabled(selectButton, false);
+				Liferay.Util.toggleDisabled(selectButton, false);
 			}
 
 			searchContainer.deleteRow(tr, rowId);

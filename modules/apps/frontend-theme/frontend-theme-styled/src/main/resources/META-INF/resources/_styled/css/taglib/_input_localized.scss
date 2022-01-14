@@ -11,6 +11,10 @@
 
 	.input-localized-content {
 		margin-left: 6px;
+
+		.input-group & {
+			margin-top: 3px;
+		}
 	}
 
 	.lfr-input-localized .lfr-input-localized-state {
@@ -74,11 +78,5 @@
 		img {
 			display: block;
 		}
-	}
-}
-
-.input-group {
-	.input-localized .input-localized-content {
-		margin-top: 3px;
 	}
 }

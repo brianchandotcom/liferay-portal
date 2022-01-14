@@ -1448,6 +1448,18 @@ public class AMImageFinderImplTest {
 		);
 
 		Mockito.when(
+			_fileVersion.getFileName()
+		).thenReturn(
+			RandomTestUtil.randomString()
+		);
+
+		Mockito.when(
+			_fileVersion.getSize()
+		).thenReturn(
+			RandomTestUtil.randomLong()
+		);
+
+		Mockito.when(
 			_amImageMimeTypeProvider.isMimeTypeSupported(
 				ContentTypes.IMAGE_SVG_XML)
 		).thenReturn(

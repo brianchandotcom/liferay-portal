@@ -22,9 +22,11 @@ import {fetch, openToast} from 'frontend-js-web';
 import React, {useMemo, useState} from 'react';
 
 import AddIconPackModal from './AddIconPackModal';
+import DeleteIconModal from './DeleteIconModal';
 
 export default function IconConfiguration({
 	deleteIconPackURL,
+	deleteIconURL,
 	icons: initialIcons,
 	portletNamespace,
 	saveFromExistingIconsActionURL,
@@ -33,6 +35,7 @@ export default function IconConfiguration({
 	const [searchQuery, setSearchQuery] = useState('');
 	const [icons, setIcons] = useState(initialIcons);
 	const [addModal, setAddModal] = useState({visible: false});
+	const [deleteModal, setDeleteModal] = useState({visible: false});
 
 	const iconPackNames = Object.keys(icons);
 
@@ -172,7 +175,20 @@ export default function IconConfiguration({
 											>
 												<ClayButton
 													displayType={null}
-													onClick={() => {}}
+													onClick={() => {
+														if (
+															filteredIcons[
+																iconPackName
+															].editable
+														) {
+															setDeleteModal({
+																iconPackName,
+																selectedIcon:
+																	icon.name,
+																visible: true,
+															});
+														}
+													}}
 												>
 													<ClayIcon
 														spritemap={`/o/icons/${iconPackName}.svg?${referenceTime}`}
@@ -256,6 +272,24 @@ export default function IconConfiguration({
 					}
 					uploadSpritemap={addModal.uploadSpritemap}
 					visible={addModal.visible}
+				/>
+			)}
+
+			{deleteModal.visible && (
+				<DeleteIconModal
+					deleteIconURL={deleteIconURL}
+					iconPackName={deleteModal.iconPackName}
+					icons={icons}
+					portletNamespace={portletNamespace}
+					selectedIcon={deleteModal.selectedIcon}
+					setIcons={setIcons}
+					setVisible={(visible) =>
+						setDeleteModal((previousModal) => ({
+							...previousModal,
+							visible,
+						}))
+					}
+					visible={deleteModal.visible}
 				/>
 			)}
 		</ClayLayout.Sheet>

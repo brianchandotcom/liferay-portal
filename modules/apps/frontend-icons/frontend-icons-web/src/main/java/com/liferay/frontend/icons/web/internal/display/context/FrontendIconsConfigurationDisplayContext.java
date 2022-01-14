@@ -62,6 +62,13 @@ public class FrontendIconsConfigurationDisplayContext {
 				"/instance_settings/delete_frontend_icons_pack"
 			).buildString()
 		).put(
+			"deleteIconURL",
+			PortletURLBuilder.createActionURL(
+				_renderResponse
+			).setActionName(
+				"/instance_settings/delete_custom_icon"
+			).buildString()
+		).put(
 			"icons",
 			() -> {
 				JSONObject jsonObject = JSONFactoryUtil.createJSONObject();

@@ -105,14 +105,6 @@ export function mergePages(
 			}
 
 			if (newField.localizable) {
-				if (
-					field.type === 'numeric' &&
-					field.valueChanged &&
-					field.value !== field.localizedValue[editingLanguageId]
-				) {
-					sourceField.localizedValue[editingLanguageId] = field.value;
-				}
-
 				newField = {
 					...newField,
 					localizedValue: {

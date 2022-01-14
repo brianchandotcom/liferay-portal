@@ -227,7 +227,7 @@ definition {
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Guest",
 			layoutName = "Tags Navigation Page",
-			widgetName = "Tags Navigation");
+			widgetName = "Tag filter");
 
 		Navigator.gotoPage(pageName = "Tags Navigation Page");
 
@@ -289,7 +289,7 @@ definition {
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Guest",
 			layoutName = "Tags Navigation Page",
-			widgetName = "Tags Navigation");
+			widgetName = "Tag filter");
 
 		Navigator.gotoPage(pageName = "Tags Navigation Page");
 
@@ -341,7 +341,7 @@ definition {
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Guest",
 			layoutName = "Tags Navigation Page",
-			widgetName = "Tags Navigation");
+			widgetName = "Tag filter");
 
 		Navigator.gotoPage(pageName = "Tags Navigation Page");
 
@@ -569,7 +569,7 @@ definition {
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Guest",
 			layoutName = "Tags Navigation Page",
-			widgetName = "Tags Navigation");
+			widgetName = "Tag filter");
 
 		Navigator.gotoPage(pageName = "Tags Navigation Page");
 

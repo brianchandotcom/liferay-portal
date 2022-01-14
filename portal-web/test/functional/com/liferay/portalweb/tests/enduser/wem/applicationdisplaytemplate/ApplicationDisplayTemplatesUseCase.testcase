@@ -330,7 +330,7 @@ definition {
 			JSONLayout.addWidgetToPublicLayout(
 				groupName = "Test Site Name",
 				layoutName = "ADT Test Page",
-				widgetName = "Tags Navigation");
+				widgetName = "Tag filter");
 		}
 
 		task ("Add a widget page") {

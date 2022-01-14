@@ -173,7 +173,7 @@ definition {
 		else if ("${widgetName}" == "Sites Directory") {
 			var portletId = "com_liferay_site_navigation_directory_web_portlet_SitesDirectoryPortlet";
 		}
-		else if ("${widgetName}" == "Tags Navigation") {
+		else if ("${widgetName}" == "Tag filter") {
 			var portletId = "com_liferay_asset_tags_navigation_web_portlet_AssetTagsNavigationPortlet";
 		}
 		else if ("${widgetName}" == "Tree Menu") {

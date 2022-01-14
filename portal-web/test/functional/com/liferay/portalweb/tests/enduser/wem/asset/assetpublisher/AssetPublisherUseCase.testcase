@@ -1839,7 +1839,7 @@ catch (Exception e) {
 			JSONLayout.addWidgetToPublicLayout(
 				groupName = "Test Site Name",
 				layoutName = "Asset Publisher Page",
-				widgetName = "Tags Navigation");
+				widgetName = "Tag filter");
 		}
 
 		task ("Configure the Asset Publisher to display tags") {

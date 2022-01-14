@@ -14,30 +14,29 @@
 
 import React, {createContext, useEffect, useReducer} from 'react';
 import useWindowDimensions from '../../../common/hooks/useWindowDimensions';
+import {STORAGE_KEYS, Storage} from '../../../common/services/liferay/storage';
 import {TIP_EVENT_DISMISS} from '../../../common/utils/events';
 import {getTaxonomyVocabularies} from '../services/TaxonomyVolucabularies';
-import {AVAILABLE_STEPS} from '../utils/constants';
+import {AVAILABLE_STEPS, STEP_ORDERED} from '../utils/constants';
 
 const initialState = {
 	dimensions: {},
-	selectedProduct: '',
-	selectedStep: {
-		percentage: {
-			[AVAILABLE_STEPS.BASICS_BUSINESS_INFORMATION.section]: 0,
-			[AVAILABLE_STEPS.BUSINESS.section]: 0,
-			[AVAILABLE_STEPS.EMPLOYEES.section]: 0,
-			[AVAILABLE_STEPS.PROPERTY.section]: 0,
-		},
-		section: 'basics',
-		subsection: 'product-quote',
-		title: 'Welcome! Select a product.',
+	percentage: {
+		[AVAILABLE_STEPS.BASICS_BUSINESS_INFORMATION.section]: 0,
+		[AVAILABLE_STEPS.BUSINESS.section]: 0,
+		[AVAILABLE_STEPS.EMPLOYEES.section]: 0,
+		[AVAILABLE_STEPS.PROPERTY.section]: 0,
 	},
+	selectedProduct: JSON.parse(Storage.getItem(STORAGE_KEYS.APPLICATION_FORM))
+		?.basics?.businessCategoryId,
+	selectedStep: STEP_ORDERED.at(0),
 	selectedTrigger: '',
 	taxonomyVocabulary: {},
 };
 
 export const ActionTypes = {
 	SET_DIMENSIONS: 'SET_DIMENSIONS',
+	SET_PERCENTAGE: 'SET_PERCENTAGE',
 	SET_SELECTED_PRODUCT: 'SET_SELECTED_PRODUCT',
 	SET_SELECTED_STEP: 'SET_SELECTED_STEP',
 	SET_SELECTED_TRIGGER: 'SET_SELECTED_TRIGGER',
@@ -50,6 +49,12 @@ function AppContextReducer(state, action) {
 			return {
 				...state,
 				dimensions: action.payload,
+			};
+
+		case ActionTypes.SET_PERCENTAGE:
+			return {
+				...state,
+				percentage: action.payload,
 			};
 
 		case ActionTypes.SET_SELECTED_STEP:

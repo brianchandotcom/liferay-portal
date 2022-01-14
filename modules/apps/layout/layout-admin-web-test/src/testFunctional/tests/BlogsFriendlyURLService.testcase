@@ -216,7 +216,7 @@ definition {
 
 		BlogsEntry.addCustomURL(
 			customURL = "hola-adiós",
-			friendlyURLHistory = "true");
+			viewNoHistory = "true");
 
 		PortletEntry.publish();
 

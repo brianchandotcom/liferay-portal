@@ -23,10 +23,6 @@ import java.util.List;
  */
 public class TrashEntryList implements Serializable {
 
-	public TrashEntrySoap[] getArray() {
-		return _array;
-	}
-
 	public int getCount() {
 		return _count;
 	}
@@ -43,10 +39,6 @@ public class TrashEntryList implements Serializable {
 		_approximate = approximate;
 	}
 
-	public void setArray(TrashEntrySoap[] array) {
-		_array = array;
-	}
-
 	public void setCount(int count) {
 		_count = count;
 	}
@@ -56,7 +48,6 @@ public class TrashEntryList implements Serializable {
 	}
 
 	private boolean _approximate;
-	private TrashEntrySoap[] _array;
 	private int _count;
 	private transient List<TrashEntry> _originalTrashEntries;
 

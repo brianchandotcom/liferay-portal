@@ -39,7 +39,6 @@ import com.liferay.trash.constants.TrashEntryConstants;
 import com.liferay.trash.exception.RestoreEntryException;
 import com.liferay.trash.model.TrashEntry;
 import com.liferay.trash.model.TrashEntryList;
-import com.liferay.trash.model.TrashEntrySoap;
 import com.liferay.trash.model.impl.TrashEntryImpl;
 import com.liferay.trash.service.base.TrashEntryServiceBaseImpl;
 
@@ -306,8 +305,6 @@ public class TrashEntryServiceImpl extends TrashEntryServiceBaseImpl {
 		end = startAndEnd[1];
 
 		filteredEntries = filteredEntries.subList(start, end);
-
-		trashEntriesList.setArray(TrashEntrySoap.toSoapModels(filteredEntries));
 
 		trashEntriesList.setCount(total);
 		trashEntriesList.setOriginalTrashEntries(filteredEntries);

@@ -405,6 +405,55 @@ definition {
 			webContentTitle = "WC WebContent Title Edit");
 	}
 
+	@description = "This is a use case for LPS-141842. View Error message when editing web contents concurrently."
+	@priority = "4"
+	test EditWebContentConcurrently {
+		property portal.acceptance = "true";
+		property testray.component.names = "Web Content Administration";
+
+		task ("Add a Web Content article") {
+			JSONWebcontent.addWebContent(
+				content = "WC WebContent Content",
+				groupName = "Test Site Name",
+				title = "WC WebContent Title");
+		}
+
+		task ("Go to the Edit Web Content mode in the first tab") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+		}
+
+		task ("Open a second tab and select it") {
+			var baseURL = PropsUtil.get("portal.url");
+
+			Open.openInTheNewTab(locator1 = "${baseURL}/group/test-site-name/~/control_panel/manage?p_p_id=com_liferay_journal_web_portlet_JournalPortlet");
+
+			SelectWindow.selectPopUp(locator1 = "null");
+		}
+
+		task ("Edit Web Content article in the second tab") {
+			WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+
+			WebContent.editCP(
+				webContentContentEdit = "WC WebContent Content Edit",
+				webContentTitle = "WC WebContent Title",
+				webContentTitleEdit = "WC WebContent Title Edit");
+		}
+
+		task ("Select the first tab and edit Web Content Title") {
+			SelectWindow.selectPopUp(locator1 = "null");
+
+			WebContent.addCP(webContentTitle = "WC WebContent Title Edit");
+		}
+
+		task ("Publish Web Content and view the error message") {
+			PortletEntry.publish();
+
+			Alert.viewErrorMessage(errorMessage = "Another user has made changes since you started editing. Publish this article to save this version and overwrite the recent changes.");
+		}
+	}
+
 	@priority = "5"
 	test EditWebContentViaArticleTitle {
 		property portal.acceptance = "true";

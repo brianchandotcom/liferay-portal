@@ -248,10 +248,3 @@ declare const State: {
  * ambient module declarations."
  */
 export default State;
-declare global {
-	interface Window {
-		Liferay: {
-			State: typeof State;
-		};
-	}
-}

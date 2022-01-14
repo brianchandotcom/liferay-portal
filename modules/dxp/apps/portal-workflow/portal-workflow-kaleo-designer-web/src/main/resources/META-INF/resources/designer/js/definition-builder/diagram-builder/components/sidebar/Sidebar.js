@@ -18,36 +18,40 @@ import SidebarHeader from './SidebarHeader';
 import sectionComponents from './sections/sectionComponents';
 
 const contents = {
-	assignments: {
+	'assignments': {
 		backButton: (setContentName) => () => setContentName('task'),
 		sections: ['selectAssignment'],
 		title: Liferay.Language.get('assignments'),
 	},
-	end: {
+	'end': {
 		sections: ['nodeInformation'],
 		title: Liferay.Language.get('end'),
 	},
-	fork: {
+	'fork': {
 		sections: ['nodeInformation'],
 		title: Liferay.Language.get('fork-node'),
 	},
-	join: {
+	'join': {
 		sections: ['nodeInformation'],
 		title: Liferay.Language.get('join-node'),
 	},
-	start: {
+	'join-xor': {
+		sections: ['nodeInformation'],
+		title: Liferay.Language.get('join-xor-node'),
+	},
+	'start': {
 		sections: ['nodeInformation'],
 		title: Liferay.Language.get('start'),
 	},
-	state: {
+	'state': {
 		sections: ['nodeInformation'],
 		title: Liferay.Language.get('state'),
 	},
-	task: {
+	'task': {
 		sections: ['nodeInformation', 'assignments'],
 		title: Liferay.Language.get('task'),
 	},
-	transition: {
+	'transition': {
 		sections: ['edgeInformation'],
 		title: Liferay.Language.get('transition'),
 	},

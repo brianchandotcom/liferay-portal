@@ -204,7 +204,7 @@ portletDisplay.setURLBack(backURL);
 					var rowColumns = [];
 
 					rowColumns.push(selectedItem.entityname);
-					rowColumns.push(<%= StringPool.BLANK %>);
+					rowColumns.push('');
 					rowColumns.push(
 						'<a class="modify-link" data-rowId="' +
 							entityId +

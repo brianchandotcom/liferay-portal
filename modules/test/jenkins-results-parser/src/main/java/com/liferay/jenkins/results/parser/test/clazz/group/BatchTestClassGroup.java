@@ -55,7 +55,7 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 
 		String jobPropertyValue = jobProperty.getValue();
 
-		if ((jobPropertyValue != null) && jobPropertyValue.matches("\\d+")) {
+		if (JenkinsResultsParserUtil.isInteger(jobPropertyValue)) {
 			return Integer.parseInt(jobPropertyValue);
 		}
 
@@ -110,16 +110,18 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 	}
 
 	public String getCohortName() {
-		String cohortName = getFirstPropertyValue("test.batch.cohort.name");
+		JobProperty jobProperty = getJobProperty("test.batch.cohort.name");
 
-		if (!JenkinsResultsParserUtil.isNullOrEmpty(cohortName)) {
-			return cohortName;
+		String jobPropertyValue = jobProperty.getValue();
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(jobPropertyValue)) {
+			return jobPropertyValue;
 		}
 
-		cohortName = JenkinsResultsParserUtil.getCohortName();
+		jobPropertyValue = JenkinsResultsParserUtil.getCohortName();
 
-		if (!JenkinsResultsParserUtil.isNullOrEmpty(cohortName)) {
-			return cohortName;
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(jobPropertyValue)) {
+			return jobPropertyValue;
 		}
 
 		return "test-1";
@@ -151,25 +153,29 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 	}
 
 	public Integer getMaximumSlavesPerHost() {
-		String maximumSlavesPerHost = getFirstPropertyValue(
+		JobProperty jobProperty = getJobProperty(
 			"test.batch.maximum.slaves.per.host");
 
-		if (maximumSlavesPerHost == null) {
-			return JenkinsMaster.getSlavesPerHostDefault();
+		String jobPropertyValue = jobProperty.getValue();
+
+		if (JenkinsResultsParserUtil.isInteger(jobPropertyValue)) {
+			return Integer.valueOf(jobPropertyValue);
 		}
 
-		return Integer.valueOf(maximumSlavesPerHost);
+		return JenkinsMaster.getSlavesPerHostDefault();
 	}
 
 	public Integer getMinimumSlaveRAM() {
-		String minimumSlaveRAM = getFirstPropertyValue(
+		JobProperty jobProperty = getJobProperty(
 			"test.batch.minimum.slave.ram");
 
-		if (minimumSlaveRAM == null) {
-			return JenkinsMaster.getSlaveRAMMinimumDefault();
+		String jobPropertyValue = jobProperty.getValue();
+
+		if (JenkinsResultsParserUtil.isInteger(jobPropertyValue)) {
+			return Integer.valueOf(jobPropertyValue);
 		}
 
-		return Integer.valueOf(minimumSlaveRAM);
+		return JenkinsMaster.getSlaveRAMMinimumDefault();
 	}
 
 	public PortalGitWorkingDirectory getPortalGitWorkingDirectory() {
@@ -189,10 +195,12 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 	}
 
 	public String getSlaveLabel() {
-		String slaveLabel = getFirstPropertyValue("test.batch.slave.label");
+		JobProperty jobProperty = getJobProperty("test.batch.slave.label");
 
-		if (!JenkinsResultsParserUtil.isNullOrEmpty(slaveLabel)) {
-			return slaveLabel;
+		String jobPropertyValue = jobProperty.getValue();
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(jobPropertyValue)) {
+			return jobPropertyValue;
 		}
 
 		return SLAVE_LABEL_DEFAULT;
@@ -238,16 +246,6 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 
 		jobProperties = portalTestClassJob.getJobProperties();
 
-		String stableTestSuiteBatchNamesFirstPropertyValue =
-			getFirstPropertyValue(
-				"test.batch.names", batchName, NAME_STABLE_TEST_SUITE);
-
-		if (stableTestSuiteBatchNamesFirstPropertyValue != null) {
-			Collections.addAll(
-				stableTestSuiteBatchNames,
-				stableTestSuiteBatchNamesFirstPropertyValue.split("\\s*,\\s*"));
-		}
-
 		_setTestReleaseBundle();
 		_setTestRelevantChanges();
 		_setTestRelevantIntegrationUnitOnly();
@@ -256,10 +254,12 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 	}
 
 	protected int getAxisMaxSize() {
-		String axisMaxSize = getFirstPropertyValue("test.batch.axis.max.size");
+		JobProperty jobProperty = getJobProperty("test.batch.axis.max.size");
 
-		if (axisMaxSize != null) {
-			return Integer.parseInt(axisMaxSize);
+		String jobPropertyValue = jobProperty.getValue();
+
+		if (JenkinsResultsParserUtil.isInteger(jobPropertyValue)) {
+			return Integer.parseInt(jobPropertyValue);
 		}
 
 		return _AXES_SIZE_MAX_DEFAULT;
@@ -406,24 +406,25 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 	protected List<String> getRelevantIntegrationUnitBatchList() {
 		List<String> relevantIntegrationUnitBatchList = new ArrayList<>();
 
-		if (testSuiteName.equals("relevant")) {
-			String relevantTestBatchNames = getFirstPropertyValue(
-				"test.batch.names");
+		if (!testSuiteName.equals("relevant")) {
+			return relevantIntegrationUnitBatchList;
+		}
 
-			if (relevantTestBatchNames != null) {
-				for (String relevantTestBatchName :
-						relevantTestBatchNames.split(",")) {
+		JobProperty jobProperty = getJobProperty("test.batch.names");
 
-					if (relevantTestBatchName.startsWith("integration-") ||
-						relevantTestBatchName.startsWith(
-							"modules-integration") ||
-						relevantTestBatchName.startsWith("modules-unit") ||
-						relevantTestBatchName.startsWith("unit-")) {
+		String jobPropertyValue = jobProperty.getValue();
 
-						relevantIntegrationUnitBatchList.add(
-							relevantTestBatchName);
-					}
-				}
+		if (JenkinsResultsParserUtil.isNullOrEmpty(jobPropertyValue)) {
+			return relevantIntegrationUnitBatchList;
+		}
+
+		for (String relevantTestBatchName : jobPropertyValue.split(",")) {
+			if (relevantTestBatchName.startsWith("integration-") ||
+				relevantTestBatchName.startsWith("modules-integration") ||
+				relevantTestBatchName.startsWith("modules-unit") ||
+				relevantTestBatchName.startsWith("unit-")) {
+
+				relevantIntegrationUnitBatchList.add(relevantTestBatchName);
 			}
 		}
 
@@ -465,16 +466,16 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 	}
 
 	protected int getSegmentMaxChildren() {
-		String segmentMaxChildren = getFirstPropertyValue(
+		JobProperty jobProperty = getJobProperty(
 			"test.batch.segment.max.children");
 
-		if ((segmentMaxChildren == null) ||
-			!segmentMaxChildren.matches("\\d+")) {
+		String jobPropertyValue = jobProperty.getValue();
 
-			return _SEGMENT_MAX_CHILDREN_DEFAULT;
+		if (JenkinsResultsParserUtil.isInteger(jobPropertyValue)) {
+			return Integer.valueOf(jobPropertyValue);
 		}
 
-		return Integer.valueOf(segmentMaxChildren);
+		return _SEGMENT_MAX_CHILDREN_DEFAULT;
 	}
 
 	protected String getTestSuiteName() {
@@ -507,7 +508,23 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 	}
 
 	protected boolean isStableTestSuiteBatch() {
-		return stableTestSuiteBatchNames.contains(batchName);
+		List<String> testBatchNames = new ArrayList<>();
+
+		JobProperty jobProperty = getJobProperty("test.batch.names[stable]");
+
+		String jobPropertyValue = jobProperty.getValue();
+
+		if (jobPropertyValue != null) {
+			Collections.addAll(testBatchNames, jobPropertyValue.split(","));
+		}
+
+		if (testBatchNames.contains(batchName) ||
+			testBatchNames.contains(batchName + "_stable")) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	protected void setAxisTestClassGroups() {
@@ -584,7 +601,6 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 	protected final Properties jobProperties;
 	protected final PortalGitWorkingDirectory portalGitWorkingDirectory;
 	protected final PortalTestClassJob portalTestClassJob;
-	protected List<String> stableTestSuiteBatchNames = new ArrayList<>();
 	protected boolean testPrivatePortalBranch;
 	protected boolean testReleaseBundle;
 	protected boolean testRelevantChanges;
@@ -829,10 +845,12 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 	}
 
 	private void _setTestReleaseBundle() {
-		String propertyValue = getFirstPropertyValue("test.release.bundle");
+		JobProperty jobProperty = getJobProperty("test.release.bundle");
 
-		if (propertyValue != null) {
-			testReleaseBundle = Boolean.parseBoolean(propertyValue);
+		String jobPropertyValue = jobProperty.getValue();
+
+		if (jobPropertyValue != null) {
+			testReleaseBundle = Boolean.parseBoolean(jobPropertyValue);
 
 			return;
 		}
@@ -841,10 +859,12 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 	}
 
 	private void _setTestRelevantChanges() {
-		String propertyValue = getFirstPropertyValue("test.relevant.changes");
+		JobProperty jobProperty = getJobProperty("test.relevant.changes");
 
-		if (propertyValue != null) {
-			testRelevantChanges = Boolean.parseBoolean(propertyValue);
+		String jobPropertyValue = jobProperty.getValue();
+
+		if (jobPropertyValue != null) {
+			testRelevantChanges = Boolean.parseBoolean(jobPropertyValue);
 
 			return;
 		}

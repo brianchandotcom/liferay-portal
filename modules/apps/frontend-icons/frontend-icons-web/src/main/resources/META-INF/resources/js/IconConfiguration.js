@@ -97,12 +97,22 @@ export default function IconConfiguration({
 											{
 												label:
 													'Add Icons Pack from spritemap',
-												onClick: () => {},
+												onClick: () =>
+													setAddModal({
+														existingIconPackName: iconPackName,
+														uploadSpritemap: true,
+														visible: true,
+													}),
 											},
 											{
 												label:
 													'Add Icons Pack from existing icons',
-												onClick: () => {},
+												onClick: () =>
+													setAddModal({
+														existingIconPackName: iconPackName,
+														uploadSpritemap: false,
+														visible: true,
+													}),
 											},
 										]}
 										trigger={

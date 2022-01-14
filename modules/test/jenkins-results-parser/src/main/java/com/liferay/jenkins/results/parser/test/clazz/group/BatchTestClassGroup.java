@@ -868,31 +868,15 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 	}
 
 	private void _setTestReleaseBundle() {
-		JobProperty jobProperty = getJobProperty("test.release.bundle");
+		Job job = getJob();
 
-		String jobPropertyValue = jobProperty.getValue();
-
-		if (jobPropertyValue != null) {
-			testReleaseBundle = Boolean.parseBoolean(jobPropertyValue);
-
-			return;
-		}
-
-		testReleaseBundle = _ENABLE_TEST_RELEASE_BUNDLE_DEFAULT;
+		testReleaseBundle = job.testReleaseBundle();
 	}
 
 	private void _setTestRelevantChanges() {
-		JobProperty jobProperty = getJobProperty("test.relevant.changes");
+		Job job = getJob();
 
-		String jobPropertyValue = jobProperty.getValue();
-
-		if (jobPropertyValue != null) {
-			testRelevantChanges = Boolean.parseBoolean(jobPropertyValue);
-
-			return;
-		}
-
-		testRelevantChanges = _ENABLE_TEST_RELEVANT_CHANGES_DEFAULT;
+		testRelevantChanges = job.testRelevantChanges();
 	}
 
 	private void _setTestRelevantIntegrationUnitOnly() {
@@ -906,10 +890,6 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 	}
 
 	private static final int _AXES_SIZE_MAX_DEFAULT = 5000;
-
-	private static final boolean _ENABLE_TEST_RELEASE_BUNDLE_DEFAULT = false;
-
-	private static final boolean _ENABLE_TEST_RELEVANT_CHANGES_DEFAULT = false;
 
 	private static final int _SEGMENT_MAX_CHILDREN_DEFAULT = 25;
 

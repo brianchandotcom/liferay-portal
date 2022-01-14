@@ -1,3 +1,3 @@
 <svg fill="none" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg">
-<g style="mix-blend-mode:multiply"><path d="m90 165c41.421 0 75-33.579 75-75 0-41.421-33.579-75-75-75-41.421 0-75 33.579-75 75 0 41.421 33.579 75 75 75z" fill="#2E303D" fill-opacity=".5"/></g><path d="m75 60 45 30-45 30v-60z" fill="#fff"/>
+	<g style="mix-blend-mode:multiply"><path d="m90 165c41.421 0 75-33.579 75-75 0-41.421-33.579-75-75-75-41.421 0-75 33.579-75 75 0 41.421 33.579 75 75 75z" fill="#2E303D" fill-opacity=".5"/></g><path d="m75 60 45 30-45 30v-60z" fill="#fff" />
 </svg>

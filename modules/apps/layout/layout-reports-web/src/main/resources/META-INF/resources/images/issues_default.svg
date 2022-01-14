@@ -1,14 +1,14 @@
-<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-	<circle cx="60" cy="60" r="60" fill="#F1F2F5"/>
-	<rect x="49" y="98" width="22" height="2" rx="1" stroke="#6B6C7E" stroke-width="2"/>
-	<rect x="21.5" y="31.5" width="77" height="57" rx="6.5" fill="white" stroke="#6B6C7E" stroke-width="3"/>
-	<line x1="62.5" y1="39.5" x2="91.5" y2="39.5" stroke="#E7E7ED" stroke-width="3" stroke-linecap="round"/>
-	<line x1="62.5" y1="47.5" x2="91.5" y2="47.5" stroke="#E7E7ED" stroke-width="3" stroke-linecap="round"/>
-	<line x1="62.5" y1="55.5" x2="91.5" y2="55.5" stroke="#E7E7ED" stroke-width="3" stroke-linecap="round"/>
-	<line x1="28.5" y1="64.5" x2="91.5" y2="64.5" stroke="#E7E7ED" stroke-width="3" stroke-linecap="round"/>
-	<line x1="28.5" y1="72.5" x2="91.5" y2="72.5" stroke="#E7E7ED" stroke-width="3" stroke-linecap="round"/>
-	<line x1="28.5" y1="80.5" x2="91.5" y2="80.5" stroke="#E7E7ED" stroke-width="3" stroke-linecap="round"/>
-	<rect x="27" y="37" width="26" height="20" rx="4" fill="#E7E7ED"/>
-	<circle cx="60" cy="60" r="12" fill="#50D2A0"/>
-	<path d="M58.0286 65.4238C57.7692 65.4238 57.5161 65.3207 57.3317 65.1363L53.3911 61.1925C52.4692 60.2269 53.9598 58.9394 54.7848 59.7988L57.9848 63.0019L65.1723 54.9113C66.0223 53.9582 67.4942 55.2707 66.6442 56.2207L58.7629 65.0925C58.5817 65.2957 58.3254 65.4144 58.0567 65.4238C58.0473 65.4238 58.0379 65.4238 58.0286 65.4238Z" fill="white"/>
+<svg fill="none" height="120" viewBox="0 0 120 120" width="120" xmlns="http://www.w3.org/2000/svg">
+	<circle cx="60" cy="60" fill="#F1F2F5" r="60" />
+	<rect height="2" rx="1" stroke="#6B6C7E" stroke-width="2" width="22" x="49" y="98" />
+	<rect fill="white" height="57" rx="6.5" stroke="#6B6C7E" stroke-width="3" width="77" x="21.5" y="31.5" />
+	<line stroke="#E7E7ED" stroke-linecap="round" stroke-width="3" x1="62.5" x2="91.5" y1="39.5" y2="39.5" />
+	<line stroke="#E7E7ED" stroke-linecap="round" stroke-width="3" x1="62.5" x2="91.5" y1="47.5" y2="47.5" />
+	<line stroke="#E7E7ED" stroke-linecap="round" stroke-width="3" x1="62.5" x2="91.5" y1="55.5" y2="55.5" />
+	<line stroke="#E7E7ED" stroke-linecap="round" stroke-width="3" x1="28.5" x2="91.5" y1="64.5" y2="64.5" />
+	<line stroke="#E7E7ED" stroke-linecap="round" stroke-width="3" x1="28.5" x2="91.5" y1="72.5" y2="72.5" />
+	<line stroke="#E7E7ED" stroke-linecap="round" stroke-width="3" x1="28.5" x2="91.5" y1="80.5" y2="80.5" />
+	<rect fill="#E7E7ED" height="20" rx="4" width="26" x="27" y="37" />
+	<circle cx="60" cy="60" fill="#50D2A0" r="12" />
+	<path d="M58.0286 65.4238C57.7692 65.4238 57.5161 65.3207 57.3317 65.1363L53.3911 61.1925C52.4692 60.2269 53.9598 58.9394 54.7848 59.7988L57.9848 63.0019L65.1723 54.9113C66.0223 53.9582 67.4942 55.2707 66.6442 56.2207L58.7629 65.0925C58.5817 65.2957 58.3254 65.4144 58.0567 65.4238C58.0473 65.4238 58.0379 65.4238 58.0286 65.4238Z" fill="white" />
 </svg>

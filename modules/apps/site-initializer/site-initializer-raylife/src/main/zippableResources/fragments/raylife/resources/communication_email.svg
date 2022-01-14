@@ -1,12 +1,12 @@
-<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g id="Communication / email">
-<mask id="mask0" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="2" y="4" width="20" height="16">
-<g id="Icon Mask">
-<path id="Round" fill-rule="evenodd" clip-rule="evenodd" d="M4 4H20C21.1 4 22 4.9 22 6V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18L2.01 6C2.01 4.9 2.9 4 4 4ZM12.53 12.67L19.6 8.25C19.85 8.09 20 7.82 20 7.53C20 6.86 19.27 6.46 18.7 6.81L12 11L5.3 6.81C4.73 6.46 4 6.86 4 7.53C4 7.82 4.15 8.09 4.4 8.25L11.47 12.67C11.79 12.87 12.21 12.87 12.53 12.67Z" fill="black"/>
-</g>
-</mask>
-<g mask="url(#mask0)">
-<rect id="Color Fill" width="24" height="24" fill="#AFAFB1"/>
-</g>
-</g>
+<svg fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+	<g id="Communication / email">
+		<mask height="16" id="mask0" maskUnits="userSpaceOnUse" style="mask-type:alpha" width="20" x="2" y="4">
+			<g id="Icon Mask">
+				<path clip-rule="evenodd" d="M4 4H20C21.1 4 22 4.9 22 6V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18L2.01 6C2.01 4.9 2.9 4 4 4ZM12.53 12.67L19.6 8.25C19.85 8.09 20 7.82 20 7.53C20 6.86 19.27 6.46 18.7 6.81L12 11L5.3 6.81C4.73 6.46 4 6.86 4 7.53C4 7.82 4.15 8.09 4.4 8.25L11.47 12.67C11.79 12.87 12.21 12.87 12.53 12.67Z" fill="black" fill-rule="evenodd" id="Round" />
+			</g>
+		</mask>
+		<g mask="url(#mask0)">
+			<rect fill="#AFAFB1" height="24" id="Color Fill" width="24" />
+		</g>
+	</g>
 </svg>

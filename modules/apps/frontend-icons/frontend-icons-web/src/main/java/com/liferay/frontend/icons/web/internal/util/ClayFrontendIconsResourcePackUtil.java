@@ -32,14 +32,14 @@ public class ClayFrontendIconsResourcePackUtil {
 			return _frontendIconsResourcePack;
 		}
 
-		List<FrontendIconsResource> frontendIconResources =
+		List<FrontendIconsResource> frontendIconsResources =
 			SVGUtil.getFrontendIconsResources(getSpritemap());
 
 		FrontendIconsResourcePack frontendIconsResourcePack =
 			new FrontendIconsResourcePack(CLAY_FRONTEND_ICONS_PACK_NAME, false);
 
 		frontendIconsResourcePack.addFrontendIconsResources(
-			frontendIconResources);
+			frontendIconsResources);
 
 		_frontendIconsResourcePack = frontendIconsResourcePack;
 

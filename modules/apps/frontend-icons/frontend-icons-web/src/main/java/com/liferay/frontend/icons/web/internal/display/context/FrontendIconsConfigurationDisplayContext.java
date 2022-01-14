@@ -55,6 +55,13 @@ public class FrontendIconsConfigurationDisplayContext {
 
 	public Map<String, Object> getProps() {
 		return HashMapBuilder.<String, Object>put(
+			"deleteIconPackURL",
+			PortletURLBuilder.createActionURL(
+				_renderResponse
+			).setActionName(
+				"/instance_settings/delete_frontend_icons_pack"
+			).buildString()
+		).put(
 			"icons",
 			() -> {
 				JSONObject jsonObject = JSONFactoryUtil.createJSONObject();

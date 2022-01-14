@@ -17,6 +17,7 @@ package com.liferay.source.formatter.check;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.check.util.JavaSourceUtil;
 import com.liferay.source.formatter.parser.JavaClass;
@@ -26,13 +27,12 @@ import com.liferay.source.formatter.util.FileUtil;
 
 import java.io.File;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -78,9 +78,14 @@ public class JavaUpgradeAlterCheck extends BaseFileCheck {
 				}
 			}
 
-			_checkAlterObjects(
+			String newContent = _formatAlterObjects(
 				tableName, fileName, content,
-				parameterList.subList(1, parameterList.size()));
+				parameterList.subList(1, parameterList.size()),
+				matcher1.start());
+
+			if (!newContent.equals(content)) {
+				return newContent;
+			}
 		}
 
 		return content;
@@ -101,7 +106,7 @@ public class JavaUpgradeAlterCheck extends BaseFileCheck {
 		if ((tableName != null) &&
 			_columnNamesByTables.containsKey(tableName)) {
 
-			Set<String> columnNames = _columnNamesByTables.get(tableName);
+			List<String> columnNames = _columnNamesByTables.get(tableName);
 
 			if (!columnNames.contains(columnName)) {
 				String message = String.format(
@@ -145,24 +150,88 @@ public class JavaUpgradeAlterCheck extends BaseFileCheck {
 		}
 	}
 
-	private void _checkAlterObjects(
+	private synchronized String _formatAlterObjects(
 		String tableName, String fileName, String content,
-		List<String> alterObjects) {
+		List<String> alterObjects, int pos) {
 
-		for (String alterObject : alterObjects) {
+		String previousAlterType = null;
+		int previousColumnIndex = -1;
+
+		for (int i = 0; i < alterObjects.size(); i++) {
+			String alterObject = alterObjects.get(i);
+
 			Matcher matcher = _alterObjectPattern.matcher(alterObject);
 
-			while (matcher.find()) {
-				String alterType = matcher.group(1);
+			if (!matcher.find()) {
+				previousAlterType = null;
 
-				int pos = content.indexOf(alterObject, matcher.start());
+				continue;
+			}
 
-				if (Objects.equals(alterType, "AlterColumnType")) {
-					_checkAlterColumnType(
-						pos, tableName, fileName, content, alterObject);
-				}
+			String alterType = matcher.group(1);
+
+			if (Objects.equals(alterType, "AlterColumnType")) {
+				_checkAlterColumnType(
+					content.indexOf(alterObject, matcher.start()), tableName,
+					fileName, content, alterObject);
+			}
+
+			int columnIndex = _getColumnIndex(tableName, alterObject);
+
+			if (columnIndex == -1) {
+				previousAlterType = null;
+
+				continue;
+			}
+
+			if ((previousAlterType != null) &&
+				previousAlterType.equals(alterType) &&
+				(previousColumnIndex > columnIndex)) {
+
+				String previousAlterObject = alterObjects.get(i - 1);
+
+				content = StringUtil.replaceFirst(
+					content, alterObject, previousAlterObject, pos);
+
+				return StringUtil.replaceFirst(
+					content, previousAlterObject, alterObject, pos);
+			}
+
+			previousAlterType = alterType;
+			previousColumnIndex = columnIndex;
+		}
+
+		return content;
+	}
+
+	private int _getColumnIndex(String tableName, String alterObject) {
+		if (!_columnNamesByTables.containsKey(tableName)) {
+			return -1;
+		}
+
+		List<String> parameters = JavaSourceUtil.getParameterList(alterObject);
+
+		if (parameters.isEmpty()) {
+			return -1;
+		}
+
+		Matcher matcher = _stringPattern.matcher(parameters.get(0));
+
+		if (!matcher.find()) {
+			return -1;
+		}
+
+		String columnName = matcher.group(1);
+
+		List<String> columnNames = _columnNamesByTables.get(tableName);
+
+		for (int i = 0; i < columnNames.size(); i++) {
+			if (columnName.equals(columnNames.get(i))) {
+				return i;
 			}
 		}
+
+		return -1;
 	}
 
 	private String _getMethodCall(String content, int start) {
@@ -216,7 +285,7 @@ public class JavaUpgradeAlterCheck extends BaseFileCheck {
 				continue;
 			}
 
-			Set<String> columnNames = new HashSet<>();
+			List<String> columnNames = new ArrayList<>();
 
 			Matcher matcher = _stringPattern.matcher(javaTerm.getContent());
 
@@ -247,7 +316,7 @@ public class JavaUpgradeAlterCheck extends BaseFileCheck {
 		"(\\w+)Table\\.class");
 	private static final Pattern _stringPattern = Pattern.compile("\"(\\w+)\"");
 
-	private final Map<String, Set<String>> _columnNamesByTables =
+	private final Map<String, List<String>> _columnNamesByTables =
 		new HashMap<>();
 
 }

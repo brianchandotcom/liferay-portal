@@ -21,6 +21,7 @@ import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -80,7 +81,7 @@ public class JournalArticleLayoutDisplayPageProvider
 
 	@Override
 	public String getURLSeparator() {
-		return "/w/";
+		return FriendlyURLResolverConstants.URL_SEPARATOR_JOURNAL_ARTICLE;
 	}
 
 	@Reference

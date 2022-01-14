@@ -18,6 +18,7 @@ import com.liferay.info.item.InfoItemReference;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.RepositoryProvider;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -76,7 +77,7 @@ public class FileEntryLayoutDisplayPageProvider
 
 	@Override
 	public String getURLSeparator() {
-		return "/d/";
+		return FriendlyURLResolverConstants.URL_SEPARATOR_FILE_ENTRY;
 	}
 
 	@Reference

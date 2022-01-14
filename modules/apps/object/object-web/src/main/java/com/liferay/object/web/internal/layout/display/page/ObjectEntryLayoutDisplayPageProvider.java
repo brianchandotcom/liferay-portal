@@ -22,6 +22,7 @@ import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
 
 /**
  * @author Guilherme Camacho
@@ -80,7 +81,7 @@ public class ObjectEntryLayoutDisplayPageProvider
 
 	@Override
 	public String getURLSeparator() {
-		return "/l/";
+		return FriendlyURLResolverConstants.URL_SEPARATOR_OBJECT_ENTRY;
 	}
 
 	private final ObjectDefinition _objectDefinition;

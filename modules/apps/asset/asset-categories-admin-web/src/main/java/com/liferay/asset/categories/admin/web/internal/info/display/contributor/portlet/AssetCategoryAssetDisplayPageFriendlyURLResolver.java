@@ -16,6 +16,7 @@ package com.liferay.asset.categories.admin.web.internal.info.display.contributor
 
 import com.liferay.asset.display.page.portlet.BaseAssetDisplayPageFriendlyURLResolver;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
+import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -28,7 +29,7 @@ public class AssetCategoryAssetDisplayPageFriendlyURLResolver
 
 	@Override
 	public String getURLSeparator() {
-		return "/v/";
+		return FriendlyURLResolverConstants.URL_SEPARATOR_ASSET_CATEGORY;
 	}
 
 }

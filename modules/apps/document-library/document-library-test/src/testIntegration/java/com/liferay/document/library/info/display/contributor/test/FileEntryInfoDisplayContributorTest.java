@@ -32,6 +32,7 @@ import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -92,7 +93,8 @@ public class FileEntryInfoDisplayContributorTest {
 
 					String expectedURL = StringBundler.concat(
 						"/", locale.getLanguage(), "/web/",
-						StringUtil.lowerCase(_group.getGroupKey()), "/d/",
+						StringUtil.lowerCase(_group.getGroupKey()),
+						FriendlyURLResolverConstants.URL_SEPARATOR_FILE_ENTRY,
 						fileEntry.getFileEntryId());
 
 					ThemeDisplay themeDisplay = new ThemeDisplay();
@@ -131,7 +133,8 @@ public class FileEntryInfoDisplayContributorTest {
 
 					String expectedURL = StringBundler.concat(
 						"/web/", StringUtil.lowerCase(_group.getGroupKey()),
-						"/d/", fileEntry.getFileEntryId());
+						FriendlyURLResolverConstants.URL_SEPARATOR_FILE_ENTRY,
+						fileEntry.getFileEntryId());
 
 					ThemeDisplay themeDisplay = new ThemeDisplay();
 
@@ -169,7 +172,8 @@ public class FileEntryInfoDisplayContributorTest {
 
 					String expectedURL = StringBundler.concat(
 						"/", locale.getLanguage(), "/web/",
-						StringUtil.lowerCase(_group.getGroupKey()), "/d/",
+						StringUtil.lowerCase(_group.getGroupKey()),
+						FriendlyURLResolverConstants.URL_SEPARATOR_FILE_ENTRY,
 						fileEntry.getFileEntryId());
 
 					ThemeDisplay themeDisplay = new ThemeDisplay();
@@ -208,7 +212,8 @@ public class FileEntryInfoDisplayContributorTest {
 
 					String expectedURL = StringBundler.concat(
 						"/web/", StringUtil.lowerCase(_group.getGroupKey()),
-						"/d/", fileEntry.getFileEntryId());
+						FriendlyURLResolverConstants.URL_SEPARATOR_FILE_ENTRY,
+						fileEntry.getFileEntryId());
 
 					ThemeDisplay themeDisplay = new ThemeDisplay();
 

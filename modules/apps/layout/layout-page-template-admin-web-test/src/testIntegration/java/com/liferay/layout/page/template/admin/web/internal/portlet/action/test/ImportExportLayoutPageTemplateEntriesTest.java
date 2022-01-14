@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -234,7 +235,8 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 		).put(
 			"DISPLAY_PAGE_URL",
 			StringBundler.concat(
-				"\"http://localhost:8080/web", _group.getFriendlyURL(), "/w/",
+				"\"http://localhost:8080/web", _group.getFriendlyURL(),
+				FriendlyURLResolverConstants.URL_SEPARATOR_JOURNAL_ARTICLE,
 				journalArticle.getUrlTitle(), "\"")
 		).build();
 

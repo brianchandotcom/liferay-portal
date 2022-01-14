@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.model.VirtualLayoutConstants;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -883,7 +884,11 @@ public class LayoutReferencesExportImportContentProcessor
 
 		Group group = _groupLocalService.getGroup(groupId);
 
-		String[] friendlyURLSeparators = {"/-/", "/b/", "/d/", "/w/"};
+		String[] friendlyURLSeparators = {
+			"/-/", FriendlyURLResolverConstants.URL_SEPARATOR_BLOGS_ENTRY,
+			FriendlyURLResolverConstants.URL_SEPARATOR_FILE_ENTRY,
+			FriendlyURLResolverConstants.URL_SEPARATOR_JOURNAL_ARTICLE
+		};
 		String[] patterns = {"href=", "[[", "{{"};
 
 		int beginPos = -1;

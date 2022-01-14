@@ -20,6 +20,7 @@ import com.liferay.info.item.InfoItemReference;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -77,7 +78,7 @@ public class BlogsLayoutDisplayPageProvider
 
 	@Override
 	public String getURLSeparator() {
-		return "/b/";
+		return FriendlyURLResolverConstants.URL_SEPARATOR_BLOGS_ENTRY;
 	}
 
 	@Reference

@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -141,7 +142,9 @@ public class GoogleDriveBackgroundTaskStatusMVCResourceCommand
 		String googleDriveFileId, String mimeType) {
 
 		return StringBundler.concat(
-			_paths.get(mimeType), "/d/", googleDriveFileId, "/edit");
+			_paths.get(mimeType),
+			FriendlyURLResolverConstants.URL_SEPARATOR_FILE_ENTRY,
+			googleDriveFileId, "/edit");
 	}
 
 	private static final Map<String, String> _paths = MapUtil.fromArray(

@@ -89,7 +89,7 @@ definition {
 			PageEditor.addFragment(
 				collectionName = "Menu Display",
 				dropTarget = "Header",
-				fragmentName = "Menu Display",
+				fragmentName = "Menu Display Fragment",
 				scope = "Master");
 		}
 
@@ -128,7 +128,7 @@ definition {
 		}
 
 		task ("Assert the All is shown in Sublevels field") {
-			PageEditor.clickConfigurableField(fragmentName = "Menu Display");
+			PageEditor.clickConfigurableField(fragmentName = "Menu Display Fragment");
 
 			Pause(locator1 = "3000");
 
@@ -229,7 +229,7 @@ definition {
 			PageEditor.addFragment(
 				collectionName = "Menu Display",
 				dropTarget = "Header",
-				fragmentName = "Menu Display",
+				fragmentName = "Menu Display Fragment",
 				scope = "Master");
 		}
 
@@ -260,7 +260,7 @@ definition {
 		}
 
 		task ("Assert the Horizontal is shown in Display Style field") {
-			PageEditor.clickConfigurableField(fragmentName = "Menu Display");
+			PageEditor.clickConfigurableField(fragmentName = "Menu Display Fragment");
 
 			Pause(locator1 = "3000");
 
@@ -316,7 +316,7 @@ definition {
 			PageEditor.addFragment(
 				collectionName = "Menu Display",
 				dropTarget = "Header",
-				fragmentName = "Menu Display",
+				fragmentName = "Menu Display Fragment",
 				scope = "Master");
 		}
 
@@ -447,7 +447,7 @@ definition {
 			PageEditor.addFragment(
 				collectionName = "Menu Display",
 				dropTarget = "Header",
-				fragmentName = "Menu Display",
+				fragmentName = "Menu Display Fragment",
 				scope = "Master");
 		}
 
@@ -458,7 +458,7 @@ definition {
 		}
 
 		task ("Assert the Public Pages Hierarchy is shown in Source field") {
-			PageEditor.clickConfigurableField(fragmentName = "Menu Display");
+			PageEditor.clickConfigurableField(fragmentName = "Menu Display Fragment");
 
 			AssertTextEquals(
 				key_fieldLabel = "Source",

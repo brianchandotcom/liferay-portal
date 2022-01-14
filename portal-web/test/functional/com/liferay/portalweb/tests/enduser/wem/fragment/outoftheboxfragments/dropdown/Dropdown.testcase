@@ -61,7 +61,7 @@ definition {
 		task ("Add a Menu Display into dropdown panel") {
 			PageEditor.addElementToDropdownPanel(
 				collectionName = "Menu Display",
-				fragmentName = "Menu Display",
+				fragmentName = "Menu Display Fragment",
 				navTab = "Fragments");
 
 			Button.click(button = "Publish Master");

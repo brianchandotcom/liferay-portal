@@ -2626,9 +2626,9 @@ definition {
 	}
 
 	macro editMenuDisplay {
-		var key_fragmentName = "Menu Display";
+		var key_fragmentName = "Menu Display Fragment";
 
-		PageEditor.clickConfigurableField(fragmentName = "Menu Display");
+		PageEditor.clickConfigurableField(fragmentName = "Menu Display Fragment");
 
 		AssertVisible(
 			key_sidebarButton = "Browser",

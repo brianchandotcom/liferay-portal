@@ -1,4 +1,4 @@
-# Checks for .action, .function, .jrxml, .macro, .pom, .project, .properties, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd
+# Checks for .action, .function, .jrxml, .macro, .pom, .project, .properties, .svg, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd
 
 Check | Category | Description
 ----- | -------- | -----------

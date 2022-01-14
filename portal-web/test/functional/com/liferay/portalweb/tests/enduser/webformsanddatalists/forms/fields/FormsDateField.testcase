@@ -34,7 +34,7 @@ definition {
 	@description = "Verify that is able to add a future validation using the response date as parameter"
 	@priority = "5"
 	test CanAddFutureValidationUsingResponseDate {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		var displayDateYear = DateUtil.getCurrentYear();
 		var futureYear = ${displayDateYear} + 1;
@@ -88,7 +88,7 @@ definition {
 	@description = "Verify that is able to add a past and range validation using the response date as parameter"
 	@priority = "5"
 	test CanAddPastValidationUsingResponseDate {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		var displayDateYear = DateUtil.getCurrentYear();
 		var futureYear = ${displayDateYear} + 1;
@@ -144,7 +144,7 @@ definition {
 	@description = "Verify that a Date Field can be created"
 	@priority = "5"
 	test CanBeCreated {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -168,7 +168,7 @@ definition {
 	@description = "Verify that a Date Field can be deleted"
 	@priority = "5"
 	test CanBeDeleted {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -246,7 +246,7 @@ definition {
 	@description = "Verify that a Date Field can be edited"
 	@priority = "5"
 	test CanBeEdited {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -284,7 +284,6 @@ definition {
 	@description = "LPS-73322 - Verify that a Date Field can be required"
 	@priority = "4"
 	test CanBeRequired {
-		property forms.functional = "true";
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "FormsDateField#CanBeRequired";
@@ -418,7 +417,7 @@ definition {
 	@description = "Verify if the Custom Date has Plus, 1 and Days as default value"
 	@priority = "5"
 	test CanBeSetValidationWithCustomDate {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -496,7 +495,7 @@ definition {
 	@description = "Verify that its possible to have more than one Date field using the Validation with custom date in a form"
 	@priority = "5"
 	test CanHaveMoreThanOneDateFieldUsingDateValidation {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		var displayDateYear = DateUtil.getCurrentYear();
 		var futureYear = ${displayDateYear} + 1;
@@ -614,7 +613,7 @@ definition {
 	@description = "Verify that the Field Label can be edited"
 	@priority = "5"
 	test LabelCanBeEdited {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -641,7 +640,7 @@ definition {
 	@description = "Veriy that the Field Label can be hidden"
 	@priority = "5"
 	test LabelCanBeHidden {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -667,7 +666,7 @@ definition {
 	@description = "Verify that a Predefined Value can be applied"
 	@priority = "5"
 	test PredefinedValueCanBeAdded {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -702,7 +701,7 @@ definition {
 	@description = "Verify that the Field Reference can be Edited"
 	@priority = "5"
 	test ReferenceCanBeEdited {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -740,7 +739,7 @@ definition {
 	@description = "Verify if the Repeatable option is working correctly on the Date field using the Validation with custom date"
 	@priority = "4"
 	test ValidationCanBeRepeatable {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		var displayDateYear = DateUtil.getCurrentYear();
 		var futureYear = ${displayDateYear} + 1;
@@ -798,7 +797,7 @@ definition {
 	@description = "Verify if the Date field using the Validation with custom date can be translated"
 	@priority = "4"
 	test ValidationCanBeTranslated {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		var displayDateYear = DateUtil.getCurrentYear();
 		var futureYear = ${displayDateYear} + 1;
@@ -884,7 +883,7 @@ definition {
 	@description = "Verify if that with date validation in the datefield the error message appears correctly on forms"
 	@priority = "5"
 	test ValidationErrorMessageCanBeEdited {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -924,7 +923,7 @@ definition {
 	@description = "Verify if the Predefined values are working correctly on the Date field using the Validation with custom date"
 	@priority = "5"
 	test ValidationIsWorkingOnPredefinedValue {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		var displayDateYear = DateUtil.getCurrentYear();
 		var futureYear = ${displayDateYear} + 1;

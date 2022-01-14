@@ -24,28 +24,28 @@ public class LayoutReference implements Serializable {
 	public LayoutReference() {
 	}
 
-	public LayoutReference(LayoutSoap layoutSoap, String portletId) {
-		_layoutSoap = layoutSoap;
+	public LayoutReference(LayoutModel layoutModel, String portletId) {
+		_layoutModel = layoutModel;
 		_portletId = portletId;
 	}
 
-	public LayoutSoap getLayoutSoap() {
-		return _layoutSoap;
+	public LayoutModel getLayoutModel() {
+		return _layoutModel;
 	}
 
 	public String getPortletId() {
 		return _portletId;
 	}
 
-	public void setLayoutSoap(LayoutSoap layoutSoap) {
-		_layoutSoap = layoutSoap;
+	public void setLayoutSoap(LayoutModel layoutModel) {
+		_layoutModel = layoutModel;
 	}
 
 	public void setPortletId(String portletId) {
 		_portletId = portletId;
 	}
 
-	private LayoutSoap _layoutSoap;
+	private LayoutModel _layoutModel;
 	private String _portletId;
 
 }

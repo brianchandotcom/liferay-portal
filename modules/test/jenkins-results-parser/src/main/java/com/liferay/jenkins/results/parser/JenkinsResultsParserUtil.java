@@ -3581,7 +3581,7 @@ public class JenkinsResultsParserUtil {
 
 	public static void tarGzip(File sourceDir, File targetTarGzipFile) {
 		if (!sourceDir.isDirectory()) {
-			throw new RuntimeException("Can not tar gzip a file");
+			throw new RuntimeException(sourceDir + " is not a directory");
 		}
 
 		try (FileOutputStream fileOutputStream = new FileOutputStream(

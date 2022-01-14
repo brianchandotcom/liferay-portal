@@ -6498,18 +6498,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/portal/eclipse-core-runtime.jar</file-name>
-				<version>20070801</version>
-				<project-name>Eclipse Core Runtime</project-name>
-				<project-url>http://dev.eclipse.org/viewcvs/index.cgi/org.eclipse.core.runtime</project-url>
-				<licenses>
-					<license>
-						<license-name>Eclipse Public License 1.0</license-name>
-						<license-url>http://www.eclipse.org/legal/epl-v10.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/portal/fontbox.jar</file-name>
 				<version>2.0.24</version>
 				<project-name>PDFBox</project-name>

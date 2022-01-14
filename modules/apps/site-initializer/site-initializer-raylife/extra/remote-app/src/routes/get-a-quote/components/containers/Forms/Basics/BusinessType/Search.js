@@ -70,7 +70,8 @@ export function BusinessTypeSearch({
 			setError('');
 
 			setTaxonomyCategories(taxonomyCategories);
-		} catch (error) {
+		}
+		catch (error) {
 			setError('Unable to make the request. Please try again later.');
 		}
 	};

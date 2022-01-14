@@ -129,7 +129,8 @@ export function useStepWizard() {
 							currentPercentage.basics,
 							AVAILABLE_STEPS.BASICS_BUSINESS_TYPE.section
 						);
-					} else {
+					}
+					else {
 						if (form?.basics?.businessCategoryId) {
 							return setPercentage(
 								100,

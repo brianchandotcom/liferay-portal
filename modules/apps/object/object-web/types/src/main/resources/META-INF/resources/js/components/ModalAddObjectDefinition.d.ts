@@ -13,9 +13,6 @@
  */
 
 import React from 'react';
-declare global {
-	const Liferay: any;
-}
 interface IProps extends React.HTMLAttributes<HTMLElement> {
 	apiURL: string;
 	observer: any;

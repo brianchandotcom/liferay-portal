@@ -26,10 +26,6 @@ import {
 } from '../utils/string';
 import Input from './form/Input';
 
-declare global {
-	const Liferay: any;
-}
-
 const headers = new Headers({
 	'Accept': 'application/json',
 	'Content-Type': 'application/json',

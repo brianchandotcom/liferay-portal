@@ -57,6 +57,95 @@ definition {
 		}
 	}
 
+	@description = "Verify user is redirected to private content and widget pages with a Product Details widget when clicking on a catalog product after the page is defined as the Default Product Display Page."
+	@priority = "3"
+	test ViewDefaultProductDisplayPageWithPrivateContentAndWidgetPages {
+		task ("Given a Minium site") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And given the Minium site has a private content page with a Product Details widget") {
+			JSONLayout.addPrivateLayout(
+				groupName = "Minium",
+				layoutName = "Test Private Content Page",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Private Content Page",
+				privateLayout = "true",
+				siteName = "Minium");
+
+			PageEditor.addWidget(portletName = "Product Details");
+
+			Button.clickPublish();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("And given the content page is set as the Default Product Display Page") {
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Product Display Pages");
+
+			CommerceChannels.addProductDisplayPage(
+				pageName = "Test Private Content Page",
+				pageType = "Private");
+		}
+
+		task ("When I click on a product in the catalog page") {
+			ApplicationsMenu.gotoSite(site = "Minium");
+
+			CommerceNavigator.gotoProductDetails(productName = "U-Joint");
+		}
+
+		task ("Then I should be redirected to the content page with the Product Details widget showing the product details") {
+			FrontStore.viewProductDetail(FSProductName = "U-Joint");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Test Private Content Page");
+
+			AssertLocation(value1 = "http://localhost:8080/group/minium/p/u-joint");
+		}
+
+		task ("Given the Minium site has a private widget page with a Product Details widget") {
+			JSONLayout.addPrivateLayout(
+				groupName = "Minium",
+				layoutName = "Test Private Widget Page");
+
+			JSONLayout.addWidgetToPrivateLayout(
+				groupName = "Minium",
+				layoutName = "Test Private Widget Page",
+				widgetName = "Product Details");
+		}
+
+		task ("And given the widget page is set as the Default Product Display Page") {
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Product Display Pages");
+
+			CommerceChannels.addProductDisplayPage(
+				pageName = "Test Private Widget Page",
+				pageType = "Private");
+		}
+
+		task ("When I click on a product in the catalog page") {
+			ApplicationsMenu.gotoSite(site = "Minium");
+
+			CommerceNavigator.gotoProductDetails(productName = "U-Joint");
+		}
+
+		task ("Then I should be redirected to the widget page with the Product Details widget showing the product details") {
+			FrontStore.viewProductDetail(FSProductName = "U-Joint");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Test Private Widget Page");
+
+			AssertLocation(value1 = "http://localhost:8080/group/minium/p/u-joint");
+		}
+	}
+
 	@description = "Verify user is redirected to public content and widget pages with a Product Details widget when clicking on a catalog product after the page is defined as the Default Product Display Page."
 	@priority = "3"
 	test ViewDefaultProductDisplayPageWithPublicContentAndWidgetPages {

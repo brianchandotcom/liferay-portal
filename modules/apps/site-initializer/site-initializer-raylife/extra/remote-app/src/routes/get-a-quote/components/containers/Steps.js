@@ -12,20 +12,25 @@
  * details.
  */
 
-import React, { useContext } from 'react';
+import React, {useContext} from 'react';
 import {StepItem} from '../../../../common/components/fragments/Step/Item';
 import {StepList} from '../../../../common/components/fragments/Step/List';
 import {
 	STORAGE_KEYS,
 	Storage,
 } from '../../../../common/services/liferay/storage';
-import { AppContext } from '../../context/AppContextProvider';
+import {AppContext} from '../../context/AppContextProvider';
 import {useStepWizard} from '../../hooks/useStepWizard';
 import {AVAILABLE_STEPS} from '../../utils/constants';
 
 export function Steps({isMobileDevice}) {
-	const {selectedStep: {section}, setSection} = useStepWizard();
-	const {state: {percentage}} = useContext(AppContext)
+	const {
+		selectedStep: {section},
+		setSection,
+	} = useStepWizard();
+	const {
+		state: {percentage},
+	} = useContext(AppContext);
 
 	return (
 		<StepList>
@@ -36,13 +41,10 @@ export function Steps({isMobileDevice}) {
 					setSection(AVAILABLE_STEPS.BASICS_PRODUCT_QUOTE);
 				}}
 				percentage={
-					percentage[
-						AVAILABLE_STEPS.BASICS_PRODUCT_QUOTE.section
-					]
+					percentage[AVAILABLE_STEPS.BASICS_PRODUCT_QUOTE.section]
 				}
 				selected={
-					section ===
-					AVAILABLE_STEPS.BASICS_PRODUCT_QUOTE.section
+					section === AVAILABLE_STEPS.BASICS_PRODUCT_QUOTE.section
 				}
 			>
 				Basics
@@ -51,12 +53,8 @@ export function Steps({isMobileDevice}) {
 			<StepItem
 				isMobileDevice={isMobileDevice}
 				onClick={() => setSection(AVAILABLE_STEPS.BUSINESS)}
-				percentage={
-					percentage[AVAILABLE_STEPS.BUSINESS.section]
-				}
-				selected={
-					section === AVAILABLE_STEPS.BUSINESS.section
-				}
+				percentage={percentage[AVAILABLE_STEPS.BUSINESS.section]}
+				selected={section === AVAILABLE_STEPS.BUSINESS.section}
 			>
 				Business
 			</StepItem>
@@ -64,12 +62,8 @@ export function Steps({isMobileDevice}) {
 			<StepItem
 				isMobileDevice={isMobileDevice}
 				onClick={() => setSection(AVAILABLE_STEPS.EMPLOYEES)}
-				percentage={
-					percentage[AVAILABLE_STEPS.EMPLOYEES.section]
-				}
-				selected={
-					section === AVAILABLE_STEPS.EMPLOYEES.section
-				}
+				percentage={percentage[AVAILABLE_STEPS.EMPLOYEES.section]}
+				selected={section === AVAILABLE_STEPS.EMPLOYEES.section}
 			>
 				Employees
 			</StepItem>
@@ -77,12 +71,8 @@ export function Steps({isMobileDevice}) {
 			<StepItem
 				isMobileDevice={isMobileDevice}
 				onClick={() => setSection(AVAILABLE_STEPS.PROPERTY)}
-				percentage={
-					percentage[AVAILABLE_STEPS.PROPERTY.section]
-				}
-				selected={
-					section === AVAILABLE_STEPS.PROPERTY.section
-				}
+				percentage={percentage[AVAILABLE_STEPS.PROPERTY.section]}
+				selected={section === AVAILABLE_STEPS.PROPERTY.section}
 			>
 				Property
 			</StepItem>

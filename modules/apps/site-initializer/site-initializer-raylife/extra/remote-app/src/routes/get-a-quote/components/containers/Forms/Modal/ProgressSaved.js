@@ -46,7 +46,8 @@ const ProgressSaved = ({
 			clearExitAlert();
 
 			window.location.href = liferaySiteName;
-		} catch (error) {
+		}
+		catch (error) {
 			setError('Unable to save your information. Please try again.');
 			onClose();
 		}

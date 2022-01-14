@@ -18,8 +18,6 @@ import com.liferay.dynamic.data.mapping.expression.UpdateFieldPropertyRequest;
 import com.liferay.dynamic.data.mapping.form.evaluator.internal.expression.DDMFormEvaluatorExpressionObserver;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormRule;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.Collection;
 import java.util.List;
@@ -55,33 +53,6 @@ public class DDMFormEvaluatorRuleHelper {
 		_checkFieldAffectedBySetReadOnlyAction(ddmFormRule, ddmFormField);
 		_checkFieldAffectedBySetRequiredAction(ddmFormRule, ddmFormField);
 		_checkFieldAffectedBySetVisibleAction(ddmFormRule, ddmFormField);
-		_checkFieldAffectedByCalculateAction(ddmFormRule, ddmFormField);
-	}
-
-	private void _checkFieldAffectedByCalculateAction(
-		DDMFormRule ddmFormRule, DDMFormField ddmFormField) {
-
-		Map<String, Object> properties = ddmFormField.getProperties();
-
-		if (_containsAction(
-				ddmFormRule, "calculate", ddmFormField.getName(),
-				GetterUtil.getString(properties.get("value")))) {
-
-			String value = StringPool.BLANK;
-
-			if (GetterUtil.getString(properties.get("predefinedValue")) !=
-					null) {
-
-				value = GetterUtil.getString(properties.get("predefinedValue"));
-			}
-
-			UpdateFieldPropertyRequest.Builder builder =
-				UpdateFieldPropertyRequest.Builder.newBuilder(
-					ddmFormField.getName(), "value", value);
-
-			_ddmFormEvaluatorExpressionObserver.updateFieldProperty(
-				builder.build());
-		}
 	}
 
 	private void _checkFieldAffectedBySetReadOnlyAction(
@@ -135,9 +106,9 @@ public class DDMFormEvaluatorRuleHelper {
 
 	private boolean _containsAction(
 		DDMFormRule ddmFormRule, String functionName, String ddmFormFieldName,
-		Object defaultValue) {
+		boolean defaultValue) {
 
-		String setPropertyAction = String.format(
+		String setBooleanPropertyAction = String.format(
 			"%s('%s', %s)", functionName, ddmFormFieldName, defaultValue);
 
 		List<String> actions = ddmFormRule.getActions();
@@ -145,7 +116,7 @@ public class DDMFormEvaluatorRuleHelper {
 		Stream<String> stream = actions.stream();
 
 		return stream.anyMatch(
-			action -> Objects.equals(setPropertyAction, action));
+			action -> Objects.equals(setBooleanPropertyAction, action));
 	}
 
 	private final DDMFormEvaluatorExpressionObserver

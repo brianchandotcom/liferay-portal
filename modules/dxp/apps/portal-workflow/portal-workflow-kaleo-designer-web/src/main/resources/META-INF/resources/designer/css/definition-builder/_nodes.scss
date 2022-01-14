@@ -56,7 +56,8 @@
 		}
 	}
 
-	&.join-node {
+	&.join-node,
+	&.join-xor-node {
 		.node-icon svg {
 			fill: #7785ff;
 		}

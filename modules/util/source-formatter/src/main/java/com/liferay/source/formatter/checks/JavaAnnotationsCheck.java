@@ -57,6 +57,7 @@ public class JavaAnnotationsCheck extends BaseJavaTermCheck {
 
 		annotation = _fixAnnotationLineBreaks(annotation);
 		annotation = _fixSingleValueArray(annotation);
+		annotation = _fixWhitespaceAroundPipe(annotation);
 
 		return annotation;
 	}
@@ -160,6 +161,12 @@ public class JavaAnnotationsCheck extends BaseJavaTermCheck {
 		}
 
 		return annotation;
+	}
+
+	private String _fixWhitespaceAroundPipe(String annotation) {
+		Matcher matcher = _pipePattern.matcher(annotation);
+
+		return matcher.replaceFirst("$1|");
 	}
 
 	private String _formatAnnotations(
@@ -284,5 +291,7 @@ public class JavaAnnotationsCheck extends BaseJavaTermCheck {
 	private static final Pattern _arrayPattern = Pattern.compile("=\\s+\\{");
 	private static final Pattern _modifierPattern = Pattern.compile(
 		"[^\n]\n(\t*)(public|protected|private)");
+	private static final Pattern _pipePattern = Pattern.compile(
+		"(= \".*)( \\| | \\||\\| )");
 
 }

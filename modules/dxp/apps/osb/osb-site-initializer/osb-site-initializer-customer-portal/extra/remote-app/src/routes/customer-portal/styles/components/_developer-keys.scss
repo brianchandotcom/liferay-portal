@@ -1,0 +1,9 @@
+.developer-keys-label {
+	width: fit-content;
+}
+.developer-keys-select {
+	margin-right: 2.5rem;
+	&:focus {
+		box-shadow: none;
+	}
+}

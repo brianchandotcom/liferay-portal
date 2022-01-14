@@ -9,14 +9,24 @@
  * distribution rights of the Software.
  */
 import ActivationStatus from '../../components/ActivationStatus/index';
+import DeveloperKeysLayouts from '../../components/DeveloperKeysLayout';
 
 const DXPCloud = ({project, subscriptionGroups, userAccount}) => {
 	return (
-		<ActivationStatus
-			project={project}
-			subscriptionGroups={subscriptionGroups}
-			userAccount={userAccount}
-		/>
+		<div>
+			<ActivationStatus
+				project={project}
+				subscriptionGroups={subscriptionGroups}
+				userAccount={userAccount}
+			/>
+
+			<DeveloperKeysLayouts>
+				<DeveloperKeysLayouts.Inputs
+					accountKey={project.accountKey}
+					dxpVersion={project.dxpVersion}
+				></DeveloperKeysLayouts.Inputs>
+			</DeveloperKeysLayouts>
+		</div>
 	);
 };
 

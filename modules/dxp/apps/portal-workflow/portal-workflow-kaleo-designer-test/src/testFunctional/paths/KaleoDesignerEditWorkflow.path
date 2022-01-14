@@ -88,6 +88,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NODE</td>
+	<td>//div[contains(@class,'drop-container')]//div[contains(@class,'diagram-node-${key_nodeType}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NODE_PNG</td>
 	<td>portal/screenshots/kaleodesigner/node_${key_nodeType}.png</td>
 	<td></td>

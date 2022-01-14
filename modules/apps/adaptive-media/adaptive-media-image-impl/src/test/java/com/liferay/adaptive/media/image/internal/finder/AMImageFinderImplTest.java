@@ -1442,15 +1442,15 @@ public class AMImageFinderImplTest {
 		);
 
 		Mockito.when(
-			_fileVersion.getMimeType()
-		).thenReturn(
-			ContentTypes.IMAGE_SVG_XML
-		);
-
-		Mockito.when(
 			_fileVersion.getFileName()
 		).thenReturn(
 			RandomTestUtil.randomString()
+		);
+
+		Mockito.when(
+			_fileVersion.getMimeType()
+		).thenReturn(
+			ContentTypes.IMAGE_SVG_XML
 		);
 
 		Mockito.when(

@@ -3970,9 +3970,6 @@ paths:
                                 format: int64
                                 type: integer
                             type: array
-                # @review
-                description:
-                    An array of userIds to add to the user group
             responses:
                 204:
                     content:

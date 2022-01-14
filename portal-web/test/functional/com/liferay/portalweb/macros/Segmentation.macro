@@ -107,7 +107,7 @@ definition {
 
 		Button.clickSave();
 
-		Type(
+		Type.type(
 			locator1 = "PageEditor#EXPERIENCE_NAME",
 			value1 = "${newExperience}");
 
@@ -172,18 +172,18 @@ definition {
 
 	macro fillProperty {
 		if (isSet(criterionKey)) {
-			Type(
+			Type.type(
 				key_criterion = "key",
 				locator1 = "Segmentation#CRITERION_INPUT_FORM_CONTROL",
 				value1 = "${criterionKey}");
 
-			Type(
+			Type.type(
 				key_criterion = "value",
 				locator1 = "Segmentation#CRITERION_INPUT_FORM_CONTROL",
 				value1 = "${criterionValue}");
 		}
 		else if (isSet(resolutionValue)) {
-			Type(
+			Type.type(
 				key_criterion = "decimal-number",
 				locator1 = "Segmentation#CRITERION_INPUT_FORM_CONTROL",
 				value1 = "${resolutionValue}");
@@ -246,7 +246,7 @@ definition {
 				value1 = "${optionsValue}");
 		}
 		else {
-			Type(
+			Type.type(
 				locator1 = "Segmentation#PROPERTY_FIELD",
 				value1 = "${propertyField}");
 		}
@@ -255,7 +255,7 @@ definition {
 	macro fillTitle {
 		Click(locator1 = "Segmentation#TITLE_FIELD");
 
-		Type(
+		Type.type(
 			locator1 = "Segmentation#TITLE_FIELD",
 			value1 = "${titleField}");
 	}
@@ -287,7 +287,7 @@ definition {
 	macro openSegmentOptions {
 		Click(locator1 = "Segmentation#SEARCH_FIELD");
 
-		Type(
+		Type.type(
 			locator1 = "Segmentation#SEARCH_FIELD",
 			value1 = "${segmentName}");
 
@@ -311,7 +311,7 @@ definition {
 
 		Click(locator1 = "Segmentation#SEARCH_TAG_FIELD");
 
-		Type(
+		Type.type(
 			locator1 = "Segmentation#SEARCH_TAG_FIELD",
 			value1 = "${tagOption}");
 

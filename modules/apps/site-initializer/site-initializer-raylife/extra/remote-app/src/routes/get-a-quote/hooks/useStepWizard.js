@@ -30,6 +30,7 @@ export function useStepWizard() {
 	const [dispatchEvent] = useCustomEvent(TIP_EVENT);
 	const {dispatch, state} = useContext(AppContext);
 	const {applicationId, backToEdit} = getLoadedContentFlag();
+	const currentPercentage = state.percentage;
 
 	const loadInitialData = applicationId || backToEdit;
 
@@ -37,6 +38,13 @@ export function useStepWizard() {
 		dispatch({
 			payload,
 			type: ActionTypes.SET_SELECTED_STEP,
+		});
+	};
+
+	const dispatchPercentage = (payload) => {
+		dispatch({
+			payload,
+			type: ActionTypes.SET_PERCENTAGE,
 		});
 	};
 
@@ -118,11 +126,10 @@ export function useStepWizard() {
 						!form?.basics?.businessCategoryId
 					) {
 						return setPercentage(
-							state.selectedStep.percentage.basics,
+							currentPercentage.basics,
 							AVAILABLE_STEPS.BASICS_BUSINESS_TYPE.section
 						);
-					}
-					else {
+					} else {
 						if (form?.basics?.businessCategoryId) {
 							return setPercentage(
 								100,
@@ -131,7 +138,7 @@ export function useStepWizard() {
 						}
 
 						return setPercentage(
-							state.selectedStep.percentage.basics,
+							currentPercentage.basics,
 							AVAILABLE_STEPS.BASICS_BUSINESS_TYPE.section
 						);
 					}
@@ -196,21 +203,18 @@ export function useStepWizard() {
 		percentage = 0,
 		step = AVAILABLE_STEPS.BASICS_BUSINESS_TYPE.section
 	) => {
-		dispatchSelectedStep({
-			...state.selectedStep,
-			percentage: {
-				...state.selectedStep.percentage,
-				[step]: percentage,
-			},
+		dispatchPercentage({
+			...currentPercentage,
+			[step]: percentage,
 		});
 	};
 
 	const setAllPercentages = (
 		step = {basics: 0, business: 0, employees: 0, property: 0}
 	) => {
-		dispatchSelectedStep({
-			...state.selectedStep,
-			percentage: step,
+		dispatchPercentage({
+			...currentPercentage,
+			...step,
 		});
 	};
 

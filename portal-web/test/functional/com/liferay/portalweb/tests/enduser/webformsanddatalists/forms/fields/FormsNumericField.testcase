@@ -34,7 +34,7 @@ definition {
 	@description = "This is a use case for LPS-75457, LPS-80246 and LPS-75393. Automate Numeric field with Decimal configurations."
 	@priority = "4"
 	test AutomateNumericFieldWithDecimalConfigurations {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "FormsNumericField#AutomateNumericFieldWithDecimalConfigurations";
 
 		FormsAdmin.addForm();
@@ -112,7 +112,7 @@ definition {
 	@description = "Verify that a Numeric Field can be created"
 	@priority = "5"
 	test CanBeCreated {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -138,7 +138,7 @@ definition {
 	@description = "Verify that a Numeric Field can be deleted"
 	@priority = "5"
 	test CanBeDeleted {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -211,7 +211,7 @@ definition {
 	@description = "Verify that a Numeric Field can be edited"
 	@priority = "5"
 	test CanBeEdited {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -247,7 +247,7 @@ definition {
 	@description = "Verify that a Numeric Field can be required"
 	@priority = "5"
 	test CanBeRequired {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -282,7 +282,7 @@ definition {
 	@description = "Verify that a Numeric Field can accept decimals when the numeric type set to Decimal"
 	@priority = "5"
 	test CanBeSetToAcceptDecimals {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -317,7 +317,7 @@ definition {
 	@description = "Verify that a Numeric Field can be set to repeatable"
 	@priority = "5"
 	test CanBeSetToRepeatable {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -407,7 +407,7 @@ definition {
 	@description = "Verify that the "Is Equal To" option can be used to validate a Numeric Field"
 	@priority = "5"
 	test CanBeValidatedUsingIsEqualTo {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -454,7 +454,7 @@ definition {
 	@description = "Verify that the "Is Greater Than" option can be used to validate a Numeric Field"
 	@priority = "5"
 	test CanBeValidatedUsingIsGreaterThan {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -501,7 +501,7 @@ definition {
 	@description = "Verify that the "Is Greater Than Or Equal To" option can be used to validate a Numeric Field"
 	@priority = "5"
 	test CanBeValidatedUsingIsGreaterThanOrEqualTo {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -548,7 +548,7 @@ definition {
 	@description = "Verify that the "Is Less Than" option can be used to validate a Numeric Field"
 	@priority = "5"
 	test CanBeValidatedUsingIsLessThan {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -595,7 +595,7 @@ definition {
 	@description = "Verify that the "Is Less Than Or Equal To" option can be used to validate a Numeric Field"
 	@priority = "5"
 	test CanBeValidatedUsingIsLessThanOrEqualTo {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -642,7 +642,7 @@ definition {
 	@description = "Verify that the "Is Not Equal To" option can be used to validate a Numeric Field"
 	@priority = "5"
 	test CanBeValidatedUsingIsNotEqualTo {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -699,7 +699,7 @@ definition {
 	@description = "Verify that a Numeric Field does not accept decimals by default"
 	@priority = "5"
 	test DoesNotAcceptDecimalsByDefault {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -767,7 +767,7 @@ definition {
 	@description = "LPS-129411 - Verify that a field can be hidden"
 	@priority = "5"
 	test HiddenFieldCanBeEnabled {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -794,7 +794,7 @@ definition {
 	@description = "LPS-129411 - Verify that hidden field is working on Forms Rules"
 	@priority = "5"
 	test HiddenFieldIWorkingOnRules {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -879,7 +879,7 @@ definition {
 	@description = "LPS-130164 - Verify that the Input Mask can be enabled on decimals"
 	@priority = "5"
 	test InputMaskCanBeEnabledOnDecimal {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -954,7 +954,7 @@ definition {
 	@description = "LPS-125861 - Verify that the Input Mask can be enabled on integers"
 	@priority = "5"
 	test InputMaskCanBeEnabledOnIntegers {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -985,7 +985,7 @@ definition {
 	@description = "LPS-130164 - Verify that the Input Mask can be enabled on decimals using prefix"
 	@priority = "5"
 	test InputMaskIsWorkingOnDecimalWithPrefix {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -1049,7 +1049,7 @@ definition {
 	@description = "LPS-130164 - Verify that the Input Mask can be enabled on decimals using suffix"
 	@priority = "5"
 	test InputMaskIsWorkingOnDecimalWithSuffix {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -1113,7 +1113,7 @@ definition {
 	@description = "LPS-130848 - Verify that the Input Mask can be applied on integers"
 	@priority = "5"
 	test InputMaskIsWorkingOnIntegers {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -1169,7 +1169,7 @@ definition {
 	@description = "LRQA-70003 - Verify that input mask on decimal can be translated"
 	@priority = "5"
 	test InputMaskOnDecimalCanBeTranslated {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -1237,7 +1237,7 @@ definition {
 	@description = "LRQA-70003 - Verify if the decimal input mask is working in the rules"
 	@priority = "5"
 	test InputMaskOnDecimalWorkingOnRules {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -1327,7 +1327,7 @@ definition {
 	@description = "Verify that input mask on integers can be translated"
 	@priority = "5"
 	test InputMaskOnIntegersCanBeTranslated {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -1382,7 +1382,7 @@ definition {
 	@description = "Verify that input mask on integers working on rules"
 	@priority = "5"
 	test InputMaskOnIntegersWorkingOnRules {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -1485,7 +1485,7 @@ definition {
 	@description = "Verify that the Field Label can be hidden"
 	@priority = "5"
 	test LabelCanBeHidden {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -1518,7 +1518,7 @@ definition {
 	@description = "Verify that a Numeric Field only accepts numbers"
 	@priority = "5"
 	test OnlyAcceptsNumbers {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -1547,7 +1547,7 @@ definition {
 	@description = "Verify that a Placeholder Text can be set"
 	@priority = "5"
 	test PlaceholderTextCanBeSet {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -1581,7 +1581,7 @@ definition {
 	@description = "Verify that a Predefined Value can be set"
 	@priority = "5"
 	test PredefinedValueCanBeSet {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -1677,7 +1677,7 @@ definition {
 	@description = "Verify that the Field Reference can be Edited"
 	@priority = "5"
 	test ReferenceCanBeEdited {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 

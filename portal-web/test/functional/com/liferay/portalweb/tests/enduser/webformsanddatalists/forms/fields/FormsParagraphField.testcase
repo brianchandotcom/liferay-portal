@@ -34,7 +34,7 @@ definition {
 	@description = "LPS-64798 - Verify that adding the Paragraph Field does not prevent page navigation"
 	@priority = "4"
 	test CanBeAddedWithoutAffectingNavigation {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "FormsParagraphField#CanBeAddedWithoutAffectingNavigation";
 		property testray.component.names = "Training";
 
@@ -395,7 +395,7 @@ definition {
 	@description = "Verify that a Paragraph Field can be created"
 	@priority = "5"
 	test CanBeCreated {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -422,7 +422,7 @@ definition {
 	@description = "Verify that a Paragraph Field can be deleted"
 	@priority = "5"
 	test CanBeDeleted {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -458,7 +458,7 @@ definition {
 	@description = "Verify that a Paragraph Field can be duplicated"
 	@priority = "5"
 	test CanBeDuplicated {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -521,7 +521,7 @@ definition {
 	@description = "Verify that a Paragraph Field can be edited"
 	@priority = "5"
 	test CanBeEdited {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 
@@ -721,7 +721,7 @@ definition {
 	@description = "Verify that a Form cannot be saved or published without adding anything in the Body Text"
 	@priority = "5"
 	test CannotBeSavedOrPublishedWithoutBodyText {
-		property forms.functional = "true";
+		property portal.acceptance = "true";
 
 		FormsAdmin.addForm();
 

@@ -119,7 +119,6 @@ definition {
 	@description = "This is a use case for LRQA-57574 TC-1: Combines SAML.CreateAndSyncUserAfterSAMLSetupWithMatchingScreenNameAttribute and OAuth2.AuthorizeExternalApplication to verify that the portal works when OAuth 2 and SAML are both enabled with a synced user on SP."
 	@priority = "4"
 	test AssertAuthorizationOnOAuth2WithSAMLConnectionWithExistingUser {
-		property app.server.bundles.size = "1";
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "SAML#AssertAuthorizationOnOAuth2WithSAMLConnectionWithExistingUser";
 
@@ -238,7 +237,6 @@ definition {
 	@description = "This is a use case for LRQA-57574 TC-2: Combines SAML.CreateAndSyncUserAfterSAMLSetupWithMatchingScreenNameAttribute and OAuth2.AuthorizeExternalApplication to verify that the portal works when OAuth 2 and SAML are both enabled and authenticating with a user who is not synced to SP."
 	@priority = "4"
 	test AssertAuthorizationOnOAuth2WithSAMLConnectionWithoutExistingUser {
-		property app.server.bundles.size = "1";
 		property test.name.skip.portal.instance = "SAML#AssertAuthorizationOnOAuth2WithSAMLConnectionWithoutExistingUser";
 
 		task ("Enable SAML debug logs") {
@@ -349,7 +347,6 @@ definition {
 	@priority = "4"
 	test AssertEmptyMappingCannotBeUsedForUserMatching {
 		property app.server.bundles.size = "0";
-		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "SAML#AssertEmptyMappingCannotBeUsedForUserMatching";
 
 		task ("Configure samlsp as SP") {
@@ -1329,7 +1326,6 @@ definition {
 	@priority = "3"
 	test AssertVerificationForDuplicatedUserAttributeMappingSAML {
 		property app.server.bundles.size = "0";
-		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "SAML#AssertVerificationForDuplicatedUserAttributeMappingSAML";
 
 		task ("Enable SAML debug logs") {
@@ -1419,7 +1415,6 @@ definition {
 	@priority = "3"
 	test AssertVerificationForEmptyUserAttributeMappingSAML {
 		property app.server.bundles.size = "0";
-		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "SAML#AssertVerificationForEmptyUserAttributeMappingSAML";
 
 		task ("Enable SAML debug logs") {
@@ -1619,7 +1614,6 @@ definition {
 	@priority = "3"
 	test CreateAndSyncUserAfterSAMLSetupMatchingEmailAddressNameIDWithScreenNameAttribute {
 		property app.server.bundles.size = "0";
-		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "SAML#CreateAndSyncUserAfterSAMLSetupMatchingEmailAddressNameIDWithScreenNameAttribute";
 
 		task ("Enable SAML debug logs") {
@@ -1712,7 +1706,6 @@ definition {
 	@priority = "3"
 	test CreateAndSyncUserAfterSAMLSetupMatchingScreenNameIdentifierWithUUIDAttribute {
 		property app.server.bundles.size = "0";
-		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "SAML#CreateAndSyncUserAfterSAMLSetupMatchingScreenNameIdentifierWithUUIDAttribute";
 
 		task ("Enable SAML debug logs") {
@@ -1894,7 +1887,6 @@ definition {
 	@priority = "3"
 	test CreateAndSyncUserAfterSAMLSetupWithMultipleIdPs {
 		property app.server.bundles.size = "0";
-		property portal.upstream = "true";
 
 		task ("Enable SAML debug logs") {
 			SAML.enableSAMLDebugLogs();
@@ -2038,7 +2030,6 @@ definition {
 	@priority = "3"
 	test DeleteUserAfterSAMLSetupAndVerify {
 		property app.server.bundles.size = "0";
-		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "SAML#DeleteUserAfterSAMLSetupAndVerify";
 
 		task ("Enable SAML debug logs") {
@@ -3621,7 +3612,6 @@ definition {
 	@priority = "4"
 	test ViewSPInitiatedSSOWithSAMLAttributeEmailAddressUsedForUserMatching {
 		property app.server.bundles.size = "0";
-		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "SAML#ViewSPInitiatedSSOWithSAMLAttributeEmailAddressUsedForUserMatching";
 
 		var identityProviderEntityId = "samlidp";
@@ -3738,7 +3728,6 @@ definition {
 	@priority = "4"
 	test ViewSPInitiatedSSOWithSAMLAttributeScreenNameUsedForUserMatching {
 		property app.server.bundles.size = "0";
-		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "SAML#ViewSPInitiatedSSOWithSAMLAttributeScreenNameUsedForUserMatching";
 
 		var identityProviderEntityId = "samlidp";

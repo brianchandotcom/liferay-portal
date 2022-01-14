@@ -19,7 +19,6 @@ import com.liferay.frontend.icons.web.internal.model.FrontendIconsResource;
 import com.liferay.frontend.icons.web.internal.model.FrontendIconsResourcePack;
 import com.liferay.frontend.icons.web.internal.repository.FrontendIconsResourcePackRepository;
 import com.liferay.frontend.icons.web.internal.util.SVGUtil;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -104,8 +103,7 @@ public class SaveFrontendIconsPackFromSpritemapMVCActionCommand
 				new FrontendIconsResourcePack(iconPack));
 
 		frontendIconsResourcePack.addFrontendIconsResources(
-			SVGUtil.getFrontendIconResources(
-				StringUtil.read(inputStream), StringPool.BLANK));
+			SVGUtil.getFrontendIconsResources(StringUtil.read(inputStream)));
 
 		_frontendIconsResourcePackRepository.addFrontendIconsResourcePack(
 			themeDisplay.getCompanyId(), frontendIconsResourcePack);

@@ -16,7 +16,6 @@ package com.liferay.frontend.icons.web.internal.util;
 
 import com.liferay.frontend.icons.web.internal.model.FrontendIconsResource;
 import com.liferay.frontend.icons.web.internal.model.FrontendIconsResourcePack;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.List;
@@ -34,7 +33,7 @@ public class ClayFrontendIconsResourcePackUtil {
 		}
 
 		List<FrontendIconsResource> frontendIconResources =
-			SVGUtil.getFrontendIconResources(getSpritemap(), StringPool.BLANK);
+			SVGUtil.getFrontendIconsResources(getSpritemap());
 
 		FrontendIconsResourcePack frontendIconsResourcePack =
 			new FrontendIconsResourcePack(CLAY_FRONTEND_ICONS_PACK_NAME, false);

@@ -40,7 +40,13 @@ const SLA = {
 const Invites = ({project}) => {
 	const {supportLink} = useApplicationProvider();
 	const [{subscriptionGroups}, dispatch] = useOnboarding();
-	const {errors, setFieldValue, setTouched, values} = useFormikContext();
+	const {
+		errors,
+		setFieldValue,
+		setTouched,
+		touched,
+		values,
+	} = useFormikContext();
 	const [rolesData, setRolesData] = useState();
 
 	const [AddTeamMemberInvitation, {called, error}] = useMutation(
@@ -241,12 +247,15 @@ const Invites = ({project}) => {
 
 	useEffect(() => {
 		if (filledEmails) {
-			setInitialError(false);
 			const sucessfullyEmails = totalEmails - failedEmails;
-
-			setBaseButtonDisabled(sucessfullyEmails < filledEmails);
+			setInitialError(false);
+			setBaseButtonDisabled(sucessfullyEmails !== totalEmails);
 		}
-	}, [failedEmails, filledEmails, totalEmails]);
+		else if (touched['invites']?.some((field) => field.email)) {
+			setInitialError(true);
+			setBaseButtonDisabled(true);
+		}
+	}, [touched, failedEmails, filledEmails, totalEmails]);
 
 	return (
 		<Layout

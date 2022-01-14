@@ -25,7 +25,7 @@ const maxLength = (value, max) => {
 };
 
 const isValidEmail = (value, bannedEmailDomains) => {
-	if (!EMAIL_REGEX.test(value)) {
+	if (value && !EMAIL_REGEX.test(value)) {
 		return 'Please insert a valid e-mail.';
 	}
 

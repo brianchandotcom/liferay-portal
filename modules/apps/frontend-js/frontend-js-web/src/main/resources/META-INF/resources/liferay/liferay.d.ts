@@ -117,6 +117,8 @@ declare module Liferay {
 			elementName: string
 		): Element | NodeList | null;
 
+		export function getOpener(): any;
+
 		/**
 		 * Returns the portlet namespace with underscores prepended and appended to it
 		 */
@@ -212,19 +214,31 @@ declare module Liferay {
 		 * Function that implements the Toast pattern, which allows to present feedback
 		 * to user actions as a toast message in the lower left corner of the page
 		 */
-		export function openToast(
-			autoClose: number | boolean,
-			container: HTMLElement,
-			containerId: string,
-			message: string,
-			onClick: () => void,
-			onClose: () => void,
-			renderData: {portletId: string},
-			title: string,
-			toastProps: Object,
-			type: string,
-			variant: string
-		): void;
+		export function openToast({
+			autoClose,
+			container,
+			containerId,
+			message,
+			onClick,
+			onClose,
+			renderData,
+			title,
+			toastProps,
+			type,
+			variant,
+		}: {
+			autoClose?: number | boolean;
+			container?: HTMLElement;
+			containerId?: string;
+			message?: string;
+			onClick?: () => void;
+			onClose?: () => void;
+			renderData?: {portletId: string};
+			title?: string;
+			toastProps?: Object;
+			type?: string;
+			variant?: string;
+		}): void;
 	}
 
 	namespace Portal {
@@ -306,6 +320,90 @@ declare module Liferay {
 		): Promise<void>;
 	}
 
+	namespace State {
+		type Primitive =
+			| bigint
+			| boolean
+			| null
+			| number
+			| string
+			| symbol
+			| undefined;
+
+		type Builtin = Date | Error | Function | Primitive | RegExp;
+
+		/**
+		 * A local "DeepReadonly" until TypeScript bundles one out of the box.
+		 *
+		 * See: https://github.com/microsoft/TypeScript/issues/13923
+		 */
+		export type Immutable<T> = T extends Builtin
+			? T
+			: T extends Map<infer K, infer V>
+			? ReadonlyMap<Immutable<K>, Immutable<V>>
+			: T extends ReadonlyMap<infer K, infer V>
+			? ReadonlyMap<Immutable<K>, Immutable<V>>
+			: T extends WeakMap<infer K, infer V>
+			? WeakMap<Immutable<K>, Immutable<V>>
+			: T extends Set<infer U>
+			? ReadonlySet<Immutable<U>>
+			: T extends ReadonlySet<infer U>
+			? ReadonlySet<Immutable<U>>
+			: T extends WeakSet<infer U>
+			? WeakSet<Immutable<U>>
+			: T extends Promise<infer U>
+			? Promise<Immutable<U>>
+			: T extends {}
+			? {readonly [K in keyof T]: Immutable<T[K]>}
+			: Readonly<T>;
+
+		const ATOM = 'Liferay.State.ATOM';
+		const SELECTOR = 'Liferay.State.SELECTOR';
+
+		type Atom<T> = Immutable<{
+			[ATOM]: true;
+			default: T;
+			key: string;
+		}>;
+
+		interface Getter {
+			<T>(atomOrSelector: Atom<T> | Selector<T>): Immutable<T>;
+		}
+
+		type Selector<T> = Immutable<{
+			[SELECTOR]: true;
+			deriveValue: (get: Getter) => T;
+			key: string;
+		}>;
+
+		export function atom<T>(key: string, value: T): Atom<T>;
+
+		export function read<T>(
+			atomOrSelector: Atom<T> | Selector<T>
+		): Immutable<T>;
+
+		export function readAtom<T>(atom: Atom<T>): Immutable<T>;
+
+		export function readSelector<T>(selector: Selector<T>): Immutable<T>;
+
+		export function selector<T>(
+			key: string,
+			deriveValue: (get: Getter) => T
+		): Selector<T>;
+
+		export function subscribe<T extends any>(
+			atomOrSelector: Atom<T> | Selector<T>,
+			callback: (value: Immutable<T>) => void
+		): {dispose: () => void};
+
+		export function write<T>(
+			atomOrSelector: Atom<T> | Selector<T>,
+			value: T
+		): void;
+
+		export function writeAtom<T>(atom: Atom<T>, value: T): void;
+	}
+
 	namespace DOMTaskRunner {
 		export function addTask(task: object): void;
 
@@ -332,35 +430,19 @@ declare module Liferay {
 			| 'sv_SE'
 			| 'zh_CN';
 
-		type LocalizedTextKey =
-			| 'choose-an-option'
-			| 'days'
-			| 'date'
-			| 'date-fields'
-			| 'decimal-places'
-			| 'decimal-separator'
-			| 'for-security-reasons-upload-field-repeatability-is-limited-the-limit-is-defined-in-x-system-settings-x'
-			| 'input-mask-append-placeholder'
-			| 'minus'
-			| 'months'
-			| 'operation'
-			| 'plus'
-			| 'prefix'
-			| 'prefix-or-suffix'
-			| 'quantity'
-			| 'suffix'
-			| 'the-maximum-length-is-10-characters'
-			| 'thousands-separator'
-			| 'unit'
-			| 'years';
-
 		type LocalizedValue<T> = {[key in Locale]?: T};
 
 		type Direction = 'ltr' | 'rtl';
 
-		export function get(key: LocalizedTextKey): string;
+		export function get(key: string): string;
 
 		export const direction: LocalizedValue<Direction>;
+
+		export const available: Object;
+	}
+
+	namespace ThemeDisplay {
+		export function getDefaultLanguageId(): string;
 	}
 
 	/**
@@ -417,4 +499,19 @@ declare module Liferay {
 	export function namespace(object: Object, path: string): Object;
 
 	export function lazyLoad(): void;
+
+	export function on(events: string | string[], callback?: () => void): void;
+
+	export function detach(event: string, callback?: () => void): void;
+}
+interface ThemeDisplay {
+	isStatePopUp(): boolean;
+}
+
+interface Window {
+	cancelIdleCallback(handle: number): void;
+
+	requestIdleCallback(callback: Function): any;
+
+	themeDisplay: ThemeDisplay;
 }

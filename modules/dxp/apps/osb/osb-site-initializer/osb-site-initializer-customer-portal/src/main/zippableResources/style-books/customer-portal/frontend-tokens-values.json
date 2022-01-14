@@ -15,6 +15,10 @@
 		"cssVariableMapping": "color-action-primary-default",
 		"value": "#0B5FFF"
 	},
+	"colorActionPrimaryDisabled": {
+		"cssVariableMapping": "color-action-primary-disabled",
+		"value": "#0B5FFF99"
+	},
 	"colorActionPrimaryHover": {
 		"cssVariableMapping": "color-action-primary-hover",
 		"value": "#0053F0"

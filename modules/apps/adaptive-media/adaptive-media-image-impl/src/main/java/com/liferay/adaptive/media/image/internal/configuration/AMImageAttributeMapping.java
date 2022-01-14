@@ -38,6 +38,8 @@ public class AMImageAttributeMapping {
 
 		return new AMImageAttributeMapping(
 			HashMapBuilder.<AMAttribute<AMImageProcessor, ?>, Optional<?>>put(
+				AMAttribute.getConfigurationUuidAMAttribute(), Optional.empty()
+			).put(
 				AMAttribute.getContentLengthAMAttribute(),
 				Optional.of(fileVersion.getSize())
 			).put(
@@ -46,6 +48,10 @@ public class AMImageAttributeMapping {
 			).put(
 				AMAttribute.getFileNameAMAttribute(),
 				Optional.of(fileVersion.getFileName())
+			).put(
+				AMImageAttribute.AM_IMAGE_ATTRIBUTE_HEIGHT, Optional.empty()
+			).put(
+				AMImageAttribute.AM_IMAGE_ATTRIBUTE_WIDTH, Optional.empty()
 			).build());
 	}
 

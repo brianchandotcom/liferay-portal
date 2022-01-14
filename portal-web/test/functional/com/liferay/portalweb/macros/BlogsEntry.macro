@@ -41,8 +41,8 @@ definition {
 	macro addCustomURL {
 		Click(locator1 = "Radio#CUSTOM_URL");
 
-		if (isSet(friendlyURLHistory)) {
-			AssertVisible(locator1 = "Icon#FRIENDLY_URL_HISTORY");
+		if (isSet(viewNoHistory)) {
+			AssertElementNotPresent(locator1 = "Icon#FRIENDLY_URL_HISTORY");
 		}
 
 		Type(

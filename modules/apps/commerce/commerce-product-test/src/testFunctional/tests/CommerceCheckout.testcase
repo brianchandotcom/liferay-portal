@@ -25,7 +25,7 @@ definition {
 		CommerceConfiguration.commerceInitializersTearDown();
 	}
 
-    @description = "COMMERCE-8168. This is a use case for COMMERCE-8127"
+	@description = "COMMERCE-8168. This is a use case for COMMERCE-8127"
 	@priority = "5"
 	test DeleteOrderAndCheckoutNewOrder {
 		property portal.acceptance = "true";
@@ -45,7 +45,7 @@ definition {
 
 		CommerceAcceleratorsInitializer.createNewAccountViaFront(accountName = "Commerce Account");
 
-        CommerceAcceleratorsInitializer.inviteNewMemberWithRoleToAccount(
+		CommerceAcceleratorsInitializer.inviteNewMemberWithRoleToAccount(
 			accountName = "Commerce Account",
 			emailAddress = "buyer@liferay.com",
 			role = "Buyer",
@@ -63,7 +63,7 @@ definition {
 			requirePasswordReset = "true",
 			userScreenName = "buyeruser");
 
-        User.logoutPG();
+		User.logoutPG();
 
 		CommerceLogin.miniumLogin(
 			password = "ttest",
@@ -75,23 +75,23 @@ definition {
 			productName = "U-Joint",
 			productQuantity = "1");
 
-        CommerceNavigator.gotoMiniCart();
+		CommerceNavigator.gotoMiniCart();
 
 		Button.click(button = "View Details");
 
-        ClickNoError(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
+		ClickNoError(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
 
 		MenuItem.clickNoError(menuItem = "Delete");
 
 		AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
 
-        CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
-        
-        FrontStore.addInitializerProductToCart(
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+		FrontStore.addInitializerProductToCart(
 			productName = "U-Joint",
 			productQuantity = "1");
 
-        CommerceNavigator.gotoMiniCart();
+		CommerceNavigator.gotoMiniCart();
 
 		Button.click(button = "View Details");
 
@@ -107,9 +107,10 @@ definition {
 			productQuantity = "1",
 			productUnitPrice = "24",
 			shippingMethod = "Standard");
-        
-        AssertTextEquals(
+
+		AssertTextEquals(
 			locator1 = "CommerceAccelerators#CHECKOUT_SUCCESS_MESSAGE",
 			value1 = "Success! Your order has been processed.");
 	}
+
 }

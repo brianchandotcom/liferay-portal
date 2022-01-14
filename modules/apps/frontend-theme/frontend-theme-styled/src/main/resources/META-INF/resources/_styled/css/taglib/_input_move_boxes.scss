@@ -97,8 +97,10 @@
 			}
 		}
 	}
-}
 
-.mobile .taglib-move-boxes .selector-container {
-	display: none;
+	.selector-container {
+		.mobile & {
+			display: none;
+		}
+	}
 }

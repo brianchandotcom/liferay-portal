@@ -33,20 +33,29 @@ public class CIJobSummaryReportUtil {
 			new File(summaryDir, "js/job-data.js"),
 			"data=" + job.getJSONObject());
 
-		JenkinsResultsParserUtil.write(
-			new File(summaryDir, "index.html"),
+		String indexHTMLContent =
 			JenkinsResultsParserUtil.getResourceFileContent(
-				"dependencies/job/summary/index.html"));
+				"dependencies/job/summary/index.html");
+
+		indexHTMLContent = indexHTMLContent.replace(
+			"href=\"css/main.css\"",
+			JenkinsResultsParserUtil.combine(
+				"href=\"", _JOB_SUMMARY_RESOURCE_URL, "/css/main.css\""));
+
+		indexHTMLContent = indexHTMLContent.replace(
+			"src=\"js/main.js\"",
+			JenkinsResultsParserUtil.combine(
+				"src=\"", _JOB_SUMMARY_RESOURCE_URL, "/js/main.js\""));
 
 		JenkinsResultsParserUtil.write(
-			new File(summaryDir, "css/main.css"),
-			JenkinsResultsParserUtil.getResourceFileContent(
-				"dependencies/job/summary/css/main.css"));
-
-		JenkinsResultsParserUtil.write(
-			new File(summaryDir, "js/main.js"),
-			JenkinsResultsParserUtil.getResourceFileContent(
-				"dependencies/job/summary/js/main.js"));
+			new File(summaryDir, "index.html"), indexHTMLContent);
 	}
+
+	private static final String _JOB_SUMMARY_RESOURCE_URL =
+		JenkinsResultsParserUtil.combine(
+			"https://cdn.jsdelivr.net/gh/liferay/liferay-portal@",
+			"011dbd665f46df51172dd579150de60ef9d732c2",
+			"/modules/test/jenkins-results-parser/src/main/resources/com",
+			"/liferay/jenkins/results/parser/dependencies/job/summary");
 
 }

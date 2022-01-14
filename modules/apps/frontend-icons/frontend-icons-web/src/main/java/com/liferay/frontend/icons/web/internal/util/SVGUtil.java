@@ -33,8 +33,8 @@ import java.util.List;
  */
 public class SVGUtil {
 
-	public static List<FrontendIconsResource> getFrontendIconResources(
-		String svgContent, String name) {
+	public static List<FrontendIconsResource> getFrontendIconsResources(
+		String svgContent) {
 
 		List<FrontendIconsResource> frontendIconsResources = new ArrayList<>();
 
@@ -49,15 +49,14 @@ public class SVGUtil {
 				for (Element symbol : symbols) {
 					frontendIconsResources.add(
 						new FrontendIconsResource(
-							symbol.attributeValue("id", name),
-							_getInnerSVG(symbol),
+							symbol.attributeValue("id"), _getInnerSVG(symbol),
 							symbol.attributeValue("viewBox")));
 				}
 			}
 			else {
 				return Collections.singletonList(
 					new FrontendIconsResource(
-						rootElement.attributeValue("id", name),
+						rootElement.attributeValue("id"),
 						_getInnerSVG(rootElement),
 						rootElement.attributeValue("viewBox")));
 			}

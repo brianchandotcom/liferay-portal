@@ -20,7 +20,6 @@ import com.liferay.frontend.icons.web.internal.model.FrontendIconsResource;
 import com.liferay.frontend.icons.web.internal.model.FrontendIconsResourcePack;
 import com.liferay.frontend.icons.web.internal.util.ClayFrontendIconsResourcePackUtil;
 import com.liferay.frontend.icons.web.internal.util.SVGUtil;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Repository;
@@ -119,12 +118,11 @@ public class FrontendIconsResourcePackRepository {
 				new FrontendIconsResourcePack(name);
 
 			frontendIconsResourcePack.addFrontendIconsResources(
-				SVGUtil.getFrontendIconResources(
+				SVGUtil.getFrontendIconsResources(
 					StringUtil.read(
 						_dlFileEntryLocalService.getFileAsStream(
 							fileEntry.getFileEntryId(),
-							fileEntry.getVersion())),
-					StringPool.BLANK));
+							fileEntry.getVersion()))));
 
 			return Optional.of(frontendIconsResourcePack);
 		}
@@ -156,12 +154,11 @@ public class FrontendIconsResourcePackRepository {
 				new FrontendIconsResourcePack(fileEntry.getTitle());
 
 			List<FrontendIconsResource> iconResources =
-				SVGUtil.getFrontendIconResources(
+				SVGUtil.getFrontendIconsResources(
 					StringUtil.read(
 						_dlFileEntryLocalService.getFileAsStream(
 							fileEntry.getFileEntryId(),
-							fileEntry.getVersion())),
-					StringPool.BLANK);
+							fileEntry.getVersion())));
 
 			frontendIconsResourcePack.addFrontendIconsResources(iconResources);
 

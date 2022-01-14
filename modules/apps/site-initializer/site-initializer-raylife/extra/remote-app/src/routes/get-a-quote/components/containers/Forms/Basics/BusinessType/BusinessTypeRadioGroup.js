@@ -36,11 +36,11 @@ const BusinessTypeRadioGroup = ({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [form?.basics?.businessCategoryId, selectedBusinessType]);
 
-	const setCategoryProperties = async () => {
-		try {
-			const categoryProperties =
-				selectedBusinessType.taxonomyCategoryProperties;
+	const setCategoryProperties = () => {
+		const categoryProperties =
+			selectedBusinessType?.taxonomyCategoryProperties || [];
 
+		if (categoryProperties && categoryProperties.length) {
 			setValue(
 				'basics.properties.businessClassCode',
 				categoryProperties.find(({key}) => key === 'BCC')?.value
@@ -53,9 +53,6 @@ const BusinessTypeRadioGroup = ({
 				'basics.properties.segment',
 				categoryProperties.find(({key}) => key === 'Segment')?.value
 			);
-		}
-		catch (error) {
-			console.warn(error);
 		}
 	};
 

@@ -19,7 +19,7 @@ import {DEVICES} from '../../../common/utils/constants';
 import {createExitAlert} from '../../../common/utils/exitAlert';
 import {getWebDavUrl} from '../../../common/utils/webdav';
 import Providers from '../Providers';
-import {Forms} from '../components/containers/Forms';
+import {FormLayout} from '../components/containers/Forms';
 import {Steps} from '../components/containers/Steps';
 import {AppContext} from '../context/AppContextProvider';
 import {useStepWizard} from '../hooks/useStepWizard';
@@ -101,7 +101,7 @@ const QuoteApp = () => {
 					)}
 				</h2>
 
-				<Forms form={form} />
+				<FormLayout form={form} />
 			</main>
 		</div>
 	);

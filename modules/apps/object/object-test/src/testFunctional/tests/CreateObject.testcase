@@ -1773,12 +1773,26 @@ definition {
 	}
 
 	@description = "LPS-136595 - Verify it is not possible to leave the Picklist field empty when creating an Object Picklist field"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CannotLeavePicklistFieldEmpty {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-		// TODO LPS-141595 CannotLeavePicklistFieldEmpty pending implementation
+		ObjectAdmin.openObjectAdmin();
 
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+		ObjectAdmin.goToFieldsTab();
+
+		ObjectAdmin.addObjectFieldViaUI(
+			fieldLabel = "Custom Field",
+			fieldType = "Picklist");
+
+		Button.clickSave();
+
+		CreateObject.assertRequiredPicklistOnField();
 	}
 
 	@description = "LPS-135400 - Verify it is not possible to leave the Relationship Name blank"
@@ -1822,7 +1836,7 @@ definition {
 			label = "Custom Relationship",
 			type = "One to Many");
 
-		AssertElementPresent(locator1 = "ObjectAdmin#SELECT_OBJECT_RELATIONSHIP_REQUIRED");
+		CreateObject.assertRequiredPicklistOnField();
 	}
 
 	@description = "LPS-135400 - Verify it is not possible to leave the Relationship Type blank"

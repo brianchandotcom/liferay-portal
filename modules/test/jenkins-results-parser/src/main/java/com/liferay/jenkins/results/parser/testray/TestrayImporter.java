@@ -2072,9 +2072,28 @@ public class TestrayImporter {
 
 		parameters.put(
 			"liferay.portal.bundle", portalRelease.getPortalVersion());
-		parameters.put(
-			"test.build.bundle.zip.url",
-			String.valueOf(portalRelease.getTomcatLocalURL()));
+
+		String tomcatURL = String.valueOf(portalRelease.getTomcatURL());
+
+		if (tomcatURL.startsWith("https://release.liferay.com")) {
+			try {
+				tomcatURL = tomcatURL.replaceAll(
+					"https://(release\\.liferay\\.com.*)",
+					JenkinsResultsParserUtil.combine(
+						"https://",
+						JenkinsResultsParserUtil.getBuildProperty(
+							"jenkins.admin.user.name"),
+						":",
+						JenkinsResultsParserUtil.getBuildProperty(
+							"jenkins.admin.user.password"),
+						"@$1"));
+			}
+			catch (IOException ioException) {
+				throw new RuntimeException(ioException);
+			}
+		}
+
+		parameters.put("test.build.bundle.zip.url", tomcatURL);
 
 		PortalFixpackRelease portalFixpackRelease = getPortalFixpackRelease();
 		PortalHotfixRelease portalHotfixRelease = getPortalHotfixRelease();

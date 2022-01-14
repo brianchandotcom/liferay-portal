@@ -18,11 +18,13 @@ import {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import ClayPanel from '@clayui/panel';
+import {fetch, openToast} from 'frontend-js-web';
 import React, {useMemo, useState} from 'react';
 
 import AddIconPackModal from './AddIconPackModal';
 
 export default function IconConfiguration({
+	deleteIconPackURL,
 	icons: initialIcons,
 	portletNamespace,
 	saveFromExistingIconsActionURL,
@@ -56,6 +58,39 @@ export default function IconConfiguration({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[icons]
 	);
+
+	const handleDelete = (iconPackName) => {
+		if (
+			!confirm(
+				`are you sure you want to delete icon pack ${iconPackName}`
+			)
+		) {
+			return;
+		}
+
+		const formData = new FormData();
+
+		formData.append(portletNamespace + 'iconPack', iconPackName);
+
+		return fetch(deleteIconPackURL, {body: formData, method: 'post'}).then(
+			() => {
+				openToast({
+					message: Liferay.Language.get('icon-pack-deleted'),
+					title: Liferay.Language.get('success'),
+					toastProps: {
+						autoClose: 5000,
+					},
+					type: 'success',
+				});
+
+				const newIcons = {...icons};
+
+				delete newIcons[iconPackName];
+
+				setIcons(newIcons);
+			}
+		);
+	};
 
 	return (
 		<ClayLayout.Sheet>
@@ -167,7 +202,7 @@ export default function IconConfiguration({
 							borderless
 							disabled={!filteredIcons[iconPackName].editable}
 							displayType="secondary ml-2 mt-1"
-							onClick={() => {}}
+							onClick={() => handleDelete(iconPackName)}
 							small
 							symbol="times-circle"
 						/>

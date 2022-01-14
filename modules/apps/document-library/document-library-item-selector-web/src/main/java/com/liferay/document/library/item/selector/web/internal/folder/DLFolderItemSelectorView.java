@@ -123,13 +123,25 @@ public class DLFolderItemSelectorView
 			(HttpServletRequest)servletRequest, "folderId",
 			itemSelectorCriterion.getFolderId());
 
-		if (repositoryId != itemSelectorCriterion.getRepositoryId()) {
+		long itemSelectorCriterionRepositoryId =
+			itemSelectorCriterion.getRepositoryId();
+
+		Folder folder = _fetchFolder(folderId);
+
+		if ((folder != null) &&
+			(folder.getRepositoryId() !=
+				itemSelectorCriterion.getRepositoryId())) {
+
+			itemSelectorCriterionRepositoryId = folder.getRepositoryId();
+		}
+
+		if (repositoryId != itemSelectorCriterionRepositoryId) {
 			folderId = ParamUtil.getLong(
 				(HttpServletRequest)servletRequest, "folderId");
 
-			if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-				Folder folder = _fetchFolder(folderId);
+			folder = _fetchFolder(folderId);
 
+			if (folder != null) {
 				repositoryId = folder.getRepositoryId();
 			}
 		}

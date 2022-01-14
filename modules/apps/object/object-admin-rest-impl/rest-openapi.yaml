@@ -278,6 +278,51 @@ components:
                 type:
                     enum: [oneToMany, oneToOne, manyToMany]
                     type: string
+        ObjectView:
+            properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    readOnly: true
+                    type: object
+                dateCreated:
+                    format: date
+                    readOnly: true
+                    type: string
+                dateModified:
+                    format: date
+                    readOnly: true
+                    type: string
+                defaultObjectView:
+                    type: boolean
+                id:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                name:
+                    additionalProperties:
+                        type: string
+                    type: object
+                objectDefinitionId:
+                    format: int64
+                    type: integer
+                objectViewColumns:
+                    items:
+                        $ref: "#/components/schemas/ObjectViewColumn"
+                    type: array
+        ObjectViewColumn:
+            properties:
+                id:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                objectFieldName:
+                    type: string
+                priority:
+                    format: int32
+                    type: integer
         Status:
             properties:
                 code:
@@ -806,6 +851,73 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/ObjectRelationship"
             tags: ["ObjectRelationship"]
+    "/object-definitions/{objectDefinitionId}/object-views":
+        get:
+            operationId: getObjectDefinitionObjectViewsPage
+            parameters:
+                - in: path
+                  name: objectDefinitionId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: search
+                  schema:
+                      type: string
+                - in: header
+                  name: Accept-Language
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ObjectView"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ObjectView"
+                                type: array
+            tags: ["ObjectView"]
+        post:
+            operationId: postObjectDefinitionObjectView
+            parameters:
+                - in: path
+                  name: objectDefinitionId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ObjectView"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/ObjectView"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ObjectView"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ObjectView"
+            tags: ["ObjectView"]
     "/object-definitions/{objectDefinitionId}/publish":
         post:
             operationId: postObjectDefinitionPublish
@@ -1035,3 +1147,65 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/ObjectRelationship"
             tags: ["ObjectRelationship"]
+    "/object-views/{objectViewId}":
+        delete:
+            operationId: deleteObjectView
+            parameters:
+                - in: path
+                  name: objectViewId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["ObjectView"]
+        get:
+            operationId: getObjectView
+            parameters:
+                - in: path
+                  name: objectViewId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ObjectView"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ObjectView"
+            tags: ["ObjectView"]
+        put:
+            operationId: putObjectView
+            parameters:
+                - in: path
+                  name: objectViewId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ObjectView"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/ObjectView"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ObjectView"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ObjectView"
+            tags: ["ObjectView"]

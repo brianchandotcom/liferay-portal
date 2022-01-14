@@ -61,12 +61,17 @@ if (selectAccountEntryManagementToolbarDisplayContext.isSingleSelect()) {
 		>
 
 			<%
-			row.setData(
-				HashMapBuilder.<String, Object>put(
-					"entityid", accountEntryDisplay.getAccountEntryId()
-				).put(
-					"entityname", accountEntryDisplay.getName()
-				).build());
+			Map<String, Object> data = HashMapBuilder.<String, Object>put(
+				"accountentryid", accountEntryDisplay.getAccountEntryId()
+			).put(
+				"entityid", accountEntryDisplay.getAccountEntryId()
+			).put(
+				"entityname", accountEntryDisplay.getName()
+			).put(
+				"type", LanguageUtil.get(request, accountEntryDisplay.getType())
+			).build();
+
+			row.setData(data);
 
 			String cssClass = "table-cell-expand";
 
@@ -94,20 +99,7 @@ if (selectAccountEntryManagementToolbarDisplayContext.isSingleSelect()) {
 
 			<c:if test="<%= selectAccountEntryManagementToolbarDisplayContext.isSingleSelect() %>">
 				<liferay-ui:search-container-column-text>
-					<aui:button
-						cssClass="choose-account selector-button"
-						data='<%=
-							HashMapBuilder.<String, Object>put(
-								"accountentryid", accountEntryDisplay.getAccountEntryId()
-							).put(
-								"entityid", accountEntryDisplay.getAccountEntryId()
-							).put(
-								"entityname", accountEntryDisplay.getName()
-							).build()
-						%>'
-						disabled="<%= disabled %>"
-						value="choose"
-					/>
+					<aui:button cssClass="choose-account selector-button" data="<%= data %>" disabled="<%= disabled %>" value="choose" />
 				</liferay-ui:search-container-column-text>
 			</c:if>
 		</liferay-ui:search-container-row>

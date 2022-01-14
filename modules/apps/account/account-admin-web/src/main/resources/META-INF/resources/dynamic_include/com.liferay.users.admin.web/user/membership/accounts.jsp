@@ -75,7 +75,7 @@ accountEntryDisplaySearchContainer.setRowChecker(null);
 <liferay-ui:search-container
 	compactEmptyResultsMessage="<%= true %>"
 	emptyResultsMessage="this-user-does-not-belong-to-any-accounts"
-	headerNames="name,roles,null"
+	headerNames="name,type,null"
 	searchContainer="<%= accountEntryDisplaySearchContainer %>"
 >
 	<liferay-ui:search-container-row
@@ -182,8 +182,7 @@ accountEntryDisplaySearchContainer.setRowChecker(null);
 						var rowColumns = [];
 
 						rowColumns.push(selectedItem.entityname);
-						rowColumns.push(selectedItem.organizationname);
-						rowColumns.push(<%= StringPool.BLANK %>);
+						rowColumns.push(selectedItem.type);
 						rowColumns.push(
 							'<a class="modify-link" data-rowId="' +
 								entityId +

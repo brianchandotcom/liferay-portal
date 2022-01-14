@@ -41,7 +41,6 @@ public class CIJobSummaryReportUtil {
 			"href=\"css/main.css\"",
 			JenkinsResultsParserUtil.combine(
 				"href=\"", _JOB_SUMMARY_RESOURCE_URL, "/css/main.css\""));
-
 		indexHTMLContent = indexHTMLContent.replace(
 			"src=\"js/main.js\"",
 			JenkinsResultsParserUtil.combine(

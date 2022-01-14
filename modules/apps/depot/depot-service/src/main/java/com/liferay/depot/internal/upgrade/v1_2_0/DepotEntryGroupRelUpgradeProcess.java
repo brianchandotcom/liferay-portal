@@ -32,10 +32,10 @@ public class DepotEntryGroupRelUpgradeProcess extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		alter(
 			DepotEntryGroupRelTable.class,
+			new AlterTableAddColumn("uuid_", "VARCHAR(75) null"),
 			new AlterTableAddColumn("groupId", "LONG"),
 			new AlterTableAddColumn("createDate", "DATE null"),
-			new AlterTableAddColumn("modifiedDate", "DATE null"),
-			new AlterTableAddColumn("uuid_", "VARCHAR(75) null"));
+			new AlterTableAddColumn("modifiedDate", "DATE null"));
 
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			try (PreparedStatement preparedStatement1 =

@@ -6,4 +6,4 @@ Provide-Capability:\
 		osgi.extender="jsp.taglib";\
 		uri="http://liferay.com/tld/frontend-data-set";\
 		version:Version="${Bundle-Version}"
-Web-ContextPath: /frontend.data.set.taglib
+Web-ContextPath: /frontend-data-set-taglib

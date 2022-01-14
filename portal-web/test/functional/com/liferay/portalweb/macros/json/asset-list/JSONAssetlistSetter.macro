@@ -69,7 +69,7 @@ definition {
 		for (var value : list "${values}") {
 			var classNameId = JSONClassname._getClassNameId(value = "${value}");
 
-			if ("${value}" != "") {
+			if ("${classNameId}" != "") {
 				ListUtil.add("${list}", "${classNameId}");
 			}
 		}

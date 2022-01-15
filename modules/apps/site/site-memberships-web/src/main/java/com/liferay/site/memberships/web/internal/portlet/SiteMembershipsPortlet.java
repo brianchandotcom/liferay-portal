@@ -258,7 +258,6 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 
 		long[] availableRoleIds = ParamUtil.getLongValues(
 			actionRequest, "availableRowIds");
-
 		long[] roleIds = ParamUtil.getLongValues(actionRequest, "rowIds");
 
 		List<UserGroupRole> userGroupRoles =

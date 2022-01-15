@@ -16,17 +16,20 @@ package com.liferay.commerce.change.tracking.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.change.tracking.test.util.BaseTableReferenceDefinitionTestCase;
+import com.liferay.commerce.constants.CPDefinitionInventoryConstants;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CommerceCatalogLocalServiceUtil;
 import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.commerce.product.type.simple.constants.SimpleCPTypeConstants;
-import com.liferay.commerce.service.CPDefinitionInventoryLocalServiceUtil;
+import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
@@ -58,19 +61,25 @@ public class CPDefinitionInventoryTableReferenceDefinitionTest
 			null, RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			LocaleUtil.US.getDisplayLanguage(),
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
+
+		_cpDefinition = CPTestUtil.addCPDefinitionFromCatalog(
+			_commerceCatalog.getGroupId(), SimpleCPTypeConstants.NAME, true,
+			false);
 	}
 
 	@Override
 	protected CTModel<?> addCTModel() throws Exception {
-		CPDefinition cpDefinition = CPTestUtil.addCPDefinitionFromCatalog(
-			_commerceCatalog.getGroupId(), SimpleCPTypeConstants.NAME, true,
-			false);
-
-		return CPDefinitionInventoryLocalServiceUtil.
-			fetchCPDefinitionInventoryByCPDefinitionId(
-				cpDefinition.getCPDefinitionId());
+		return _cpDefinitionInventoryLocalService.addCPDefinitionInventory(
+			TestPropsValues.getUserId(), _cpDefinition.getCPDefinitionId(),
+			"default", "default", false, false, 1, false, 0,
+			CPDefinitionInventoryConstants.DEFAULT_MAX_ORDER_QUANTITY, null, 1);
 	}
 
+	@Inject
+	private static CPDefinitionInventoryLocalService
+		_cpDefinitionInventoryLocalService;
+
 	private CommerceCatalog _commerceCatalog;
+	private CPDefinition _cpDefinition;
 
 }

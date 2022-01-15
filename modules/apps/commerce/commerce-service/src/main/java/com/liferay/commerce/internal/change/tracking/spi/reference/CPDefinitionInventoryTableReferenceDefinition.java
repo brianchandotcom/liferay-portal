@@ -36,10 +36,6 @@ public class CPDefinitionInventoryTableReferenceDefinition
 	public void defineChildTableReferences(
 		ChildTableReferenceInfoBuilder<CPDefinitionInventoryTable>
 			childTableReferenceInfoBuilder) {
-
-		childTableReferenceInfoBuilder.singleColumnReference(
-			CPDefinitionInventoryTable.INSTANCE.CPDefinitionId,
-			CPDefinitionTable.INSTANCE.CPDefinitionId);
 	}
 
 	@Override
@@ -48,7 +44,11 @@ public class CPDefinitionInventoryTableReferenceDefinition
 			parentTableReferenceInfoBuilder) {
 
 		parentTableReferenceInfoBuilder.groupedModel(
-			CPDefinitionInventoryTable.INSTANCE);
+			CPDefinitionInventoryTable.INSTANCE
+		).singleColumnReference(
+			CPDefinitionInventoryTable.INSTANCE.CPDefinitionId,
+			CPDefinitionTable.INSTANCE.CPDefinitionId
+		);
 	}
 
 	@Override

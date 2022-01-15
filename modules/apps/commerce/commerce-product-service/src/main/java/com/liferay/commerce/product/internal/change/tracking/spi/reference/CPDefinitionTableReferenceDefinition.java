@@ -81,11 +81,7 @@ public class CPDefinitionTableReferenceDefinition
 			parentTableReferenceInfoBuilder) {
 
 		parentTableReferenceInfoBuilder.groupedModel(
-			CPDefinitionTable.INSTANCE
-		).singleColumnReference(
-			CPDefinitionTable.INSTANCE.CProductId,
-			CProductTable.INSTANCE.CProductId
-		);
+			CPDefinitionTable.INSTANCE);
 	}
 
 	@Override

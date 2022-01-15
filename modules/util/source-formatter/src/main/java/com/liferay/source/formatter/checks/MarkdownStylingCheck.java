@@ -38,7 +38,7 @@ public class MarkdownStylingCheck extends BaseFileCheck {
 
 		if (matcher.find()) {
 			return StringUtil.replaceFirst(
-				content, "```", "`", matcher.start());
+				content, matcher.group(), "`" + matcher.group(1) + "`");
 		}
 
 		return content;
@@ -57,7 +57,7 @@ public class MarkdownStylingCheck extends BaseFileCheck {
 	private static final Pattern _boldHeaderPattern = Pattern.compile(
 		"(\\A|\n)(#+ ?)(\\*+)([^\\*\n]+)(\\*+)(\n)");
 	private static final Pattern _incorrectCodeSyntaxPattern = Pattern.compile(
-		"\\S.*```|```.* ");
+		"```(.+?)```");
 	private static final Pattern _incorrectHeaderNotationPattern =
 		Pattern.compile("(\\A|\n)(#+[^#\n]+)(#+)(\n)");
 

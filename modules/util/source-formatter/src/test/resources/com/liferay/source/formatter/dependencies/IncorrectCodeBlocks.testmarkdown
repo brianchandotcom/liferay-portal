@@ -1,0 +1,11 @@
+```bnd.bnd``` should always contain the following headers:
+```Bundle-Version```, ```Bundle-Name``` and
+```Bundle-SymbolicName```
+
+``` json
+{
+  "firstName": "John",
+  "lastName": "Smith",
+  "age": 25
+}
+```

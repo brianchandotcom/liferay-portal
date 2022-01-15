@@ -22,6 +22,11 @@ import org.junit.Test;
 public class MarkdownSourceProcessorTest extends BaseSourceProcessorTestCase {
 
 	@Test
+	public void testIncrrectCodeBlocks() throws Exception {
+		test("IncorrectCodeBlocks.testmarkdown");
+	}
+
+	@Test
 	public void testMissingEmptyLines() throws Exception {
 		test("MissingEmptyLines.testmarkdown");
 	}

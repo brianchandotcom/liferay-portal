@@ -97,7 +97,7 @@ Checks are configured in the following files:
    - [Upgrade](src/main/resources/documentation/upgrade_checks.markdown#upgrade-checks)
 
 - ### By File Extensions:
-   - [.action, .function, .jrxml, .macro, .pom, .project, .properties, .svg, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd](src/main/resources/documentation/xml_source_processor_checks.markdown#checks-for-action-function-jrxml-macro-pom-project-properties-svg-testcase-toggle-tpl-wsdl-xml-or-xsd)
+   - [.action, .function, .jrxml, .macro, .pom, .project, .properties, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd](src/main/resources/documentation/xml_source_processor_checks.markdown#checks-for-action-function-jrxml-macro-pom-project-properties-testcase-toggle-tpl-wsdl-xml-or-xsd)
    - [.bnd](src/main/resources/documentation/bnd_source_processor_checks.markdown#checks-for-bnd)
    - [.bndrun](src/main/resources/documentation/bnd_run_source_processor_checks.markdown#checks-for-bndrun)
    - [.cfg or .config](src/main/resources/documentation/config_source_processor_checks.markdown#checks-for-cfg-or-config)

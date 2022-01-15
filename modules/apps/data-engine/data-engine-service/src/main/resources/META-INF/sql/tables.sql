@@ -10,7 +10,7 @@ create table DEDataDefinitionFieldLink (
 	classNameId LONG,
 	classPK LONG,
 	ddmStructureId LONG,
-	fieldName VARCHAR(255) null,
+	fieldName VARCHAR(75) null,
 	lastPublishDate DATE null,
 	primary key (deDataDefinitionFieldLinkId, ctCollectionId)
 );

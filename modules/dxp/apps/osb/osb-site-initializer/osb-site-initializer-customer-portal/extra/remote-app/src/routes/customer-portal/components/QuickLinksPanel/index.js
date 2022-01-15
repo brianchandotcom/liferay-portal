@@ -106,13 +106,11 @@ const QuickLinksPanel = ({accountKey}) => {
 							}}
 						>
 							<ClayIcon
-								className="mr-1"
-								symbol={
-									expandedPanel ? 'hr' : 'order-arrow-left'
-								}
+								className="mr-2"
+								symbol={expandedPanel ? 'hr' : 'plus'}
 							/>
 
-							{expandedPanel ? 'Hide' : 'Show'}
+							{expandedPanel ? 'Hide' : ''}
 						</a>
 					</div>
 
@@ -120,7 +118,7 @@ const QuickLinksPanel = ({accountKey}) => {
 						<div>
 							{quickLinksContents.map((quickLinkContent) => (
 								<div
-									className="bg-white link-body my-3 p-3 rounded-lg"
+									className="bg-white link-body my-3 p-3 quick-links-card rounded-lg"
 									dangerouslySetInnerHTML={{
 										__html: DOMPurify.sanitize(
 											quickLinkContent,

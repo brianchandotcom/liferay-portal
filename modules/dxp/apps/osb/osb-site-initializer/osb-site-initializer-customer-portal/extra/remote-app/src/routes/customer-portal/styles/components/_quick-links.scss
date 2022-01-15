@@ -3,8 +3,20 @@
 	border: 1px solid rgba(0, 74, 215, 0.1);
 }
 
+.quick-links-card {
+	transition: all 200ms ease-in-out;
+	&:hover {
+		box-shadow: $elevation-fluffy-3;
+
+		h5 {
+			color: var(--color-action-primary-hover) !important;
+		}
+	}
+	a {
+		text-decoration: none;
+	}
+}
+
 .quick-links-container {
-	min-width: 343px;
 	right: 0;
-	width: 343px;
 }

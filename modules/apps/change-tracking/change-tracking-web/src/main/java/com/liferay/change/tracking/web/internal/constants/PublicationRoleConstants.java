@@ -56,13 +56,13 @@ public class PublicationRoleConstants {
 		}
 		else if (role == ROLE_INVITER) {
 			return new String[] {
-				ActionKeys.PERMISSIONS, ActionKeys.UPDATE, ActionKeys.VIEW
+				ActionKeys.PERMISSIONS, ActionKeys.UPDATE, ActionKeys.VIEW,
+				CTActionKeys.PUBLISH
 			};
 		}
 		else if (role == ROLE_PUBLISHER) {
 			return new String[] {
-				ActionKeys.PERMISSIONS, ActionKeys.UPDATE, ActionKeys.VIEW,
-				CTActionKeys.PUBLISH
+				ActionKeys.UPDATE, ActionKeys.VIEW, CTActionKeys.PUBLISH
 			};
 		}
 

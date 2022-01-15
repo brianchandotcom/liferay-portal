@@ -47,20 +47,23 @@ public class DLFolderUtil {
 			long folderId, long groupId, long scopeGroupId)
 		throws PortalException {
 
-		if (groupId != scopeGroupId) {
-			Group group = GroupLocalServiceUtil.getGroup(groupId);
+		if (groupId == scopeGroupId) {
+			return;
+		}
 
-			if (group.isDepot()) {
-				List<Long> groupConnectedDepotEntries = ListUtil.toList(
-					DepotEntryServiceUtil.getGroupConnectedDepotEntries(
-						scopeGroupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS),
-					DepotEntry::getGroupId);
+		Group group = GroupLocalServiceUtil.getGroup(groupId);
 
-				if (!groupConnectedDepotEntries.contains(groupId)) {
-					throw new NoSuchFolderException(
-						"{folderId=" + folderId + "}");
-				}
-			}
+		if (!group.isDepot()) {
+			return;
+		}
+
+		List<Long> groupConnectedDepotEntries = ListUtil.toList(
+			DepotEntryServiceUtil.getGroupConnectedDepotEntries(
+				scopeGroupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+			DepotEntry::getGroupId);
+
+		if (!groupConnectedDepotEntries.contains(groupId)) {
+			throw new NoSuchFolderException("{folderId=" + folderId + "}");
 		}
 	}
 

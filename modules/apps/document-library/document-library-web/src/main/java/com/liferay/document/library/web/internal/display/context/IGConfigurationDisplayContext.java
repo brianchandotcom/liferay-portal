@@ -25,7 +25,6 @@ import com.liferay.document.library.web.internal.util.DLFolderUtil;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.FolderItemSelectorReturnType;
 import com.liferay.item.selector.criteria.folder.criterion.FolderItemSelectorCriterion;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -280,10 +279,7 @@ public class IGConfigurationDisplayContext {
 		}
 		catch (NoSuchFolderException noSuchFolderException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(
-					StringBundler.concat(
-						"Could not find folder {folderId=", _folderId, "}"),
-					noSuchFolderException);
+				_log.warn(noSuchFolderException);
 			}
 
 			_folderNotFound = true;

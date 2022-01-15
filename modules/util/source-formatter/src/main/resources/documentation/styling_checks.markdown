@@ -146,31 +146,31 @@ UnnecessaryMethodCallCheck | .java | Finds unnecessary method calls. |
 [WhitespaceAfterCheck](https://checkstyle.sourceforge.io/config_whitespace.html#WhitespaceAfter) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks that a token is followed by whitespace, with the exception that it does not check for whitespace after the semicolon of an empty for iterator. |
 [WhitespaceAroundCheck](https://checkstyle.sourceforge.io/config_whitespace.html#WhitespaceAround) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks that a token is surrounded by whitespace. |
 WhitespaceCheck | .cfg, .config, .cql, .css, .dtd, .expect, .gradle, .groovy, .scss, .sh, .soy, .sql, .tld, .ts, .tsx, Dockerfile or packageinfo | Finds missing and unnecessary whitespace. |
-XMLCustomSQLOrderCheck | .action, .function, .jrxml, .macro, .pom, .project, .properties, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Checks the order of attributes in `custom-sql` file. |
-XMLCustomSQLStylingCheck | .action, .function, .jrxml, .macro, .pom, .project, .properties, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Applies rules to enforce consisteny in code style for `.xml` files in directory `custom-sql`. |
-XMLDDLStructuresFileCheck | .action, .function, .jrxml, .macro, .pom, .project, .properties, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Checks the order of attributes in `-structures.xml` file. |
-XMLDTDVersionCheck | .action, .function, .jrxml, .macro, .pom, .project, .properties, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Checks the DTD version in `*.xml` file. |
-XMLEmptyLinesCheck | .action, .function, .jrxml, .macro, .pom, .project, .properties, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Finds missing and unnecessary empty lines. |
-XMLFSBExcludeFileCheck | .action, .function, .jrxml, .macro, .pom, .project, .properties, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Checks the order of attributes in `fsb-exclude.xml` file. |
-XMLFriendlyURLRoutesFileCheck | .action, .function, .jrxml, .macro, .pom, .project, .properties, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Performs several checks on `*-routes.xml` file. |
-XMLHBMFileCheck | .action, .function, .jrxml, .macro, .pom, .project, .properties, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Checks the order of imports in `*-hbm.xml` file. |
-XMLImportsCheck | .action, .function, .jrxml, .macro, .pom, .project, .properties, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Sorts and groups imports in `.xml` files. |
-XMLIndentationCheck | .action, .function, .jrxml, .macro, .pom, .project, .properties, .testcase, .tld, .toggle, .tpl, .wsdl, .xml or .xsd | Finds incorrect indentation in `.xml` files. |
-XMLIvyFileCheck | .action, .function, .jrxml, .macro, .pom, .project, .properties, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Checks the order of dependcies in `ivy.xml` file. |
-XMLLog4jFileCheck | .action, .function, .jrxml, .macro, .pom, .project, .properties, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Checks the order of categories in `*-log4j.xml` file. |
-XMLLookAndFeelFileCheck | .action, .function, .jrxml, .macro, .pom, .project, .properties, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Checks the order of attributes in `*--look-and-feel.xml` file. |
-XMLModelHintsFileCheck | .action, .function, .jrxml, .macro, .pom, .project, .properties, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Checks the order of attributes in `*-model-hints.xml` file. |
-XMLPomFileCheck | .action, .function, .jrxml, .macro, .pom, .project, .properties, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Checks the order of dependencies in `pom.xml` file. |
-XMLPortletPreferencesFileCheck | .action, .function, .jrxml, .macro, .pom, .project, .properties, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Checks the order of elements in files in directory `resource-actions`. |
-XMLResourceActionsFileCheck | .action, .function, .jrxml, .macro, .pom, .project, .properties, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Checks the order of elements in files in directory `resource-actions`. |
-XMLSpringFileCheck | .action, .function, .jrxml, .macro, .pom, .project, .properties, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Checks the order of elements in `*-spring.xml` file. |
-XMLStrutsConfigFileCheck | .action, .function, .jrxml, .macro, .pom, .project, .properties, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Checks the order of elements in `struts-config.xml` file. |
-XMLStylingCheck | .action, .function, .jrxml, .macro, .pom, .project, .properties, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Applies rules to enforce consisteny in code style. |
-XMLTestIgnorableErrorLinesFileCheck | .action, .function, .jrxml, .macro, .pom, .project, .properties, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Checks the order of elements in `test-ignorable-error-lines.xml` file. |
-XMLTilesDefsFileCheck | .action, .function, .jrxml, .macro, .pom, .project, .properties, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Checks the order of elements in `tiles-defs.xml` file. |
-XMLToggleFileCheck | .action, .function, .jrxml, .macro, .pom, .project, .properties, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Checks the order of elements in `.toggle` file. |
-XMLWhitespaceCheck | .action, .function, .jrxml, .macro, .pom, .project, .properties, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Finds missing and unnecessary whitespace in `.xml` files. |
-XMLWorkflowDefinitionFileNameCheck | .action, .function, .jrxml, .macro, .pom, .project, .properties, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Checks the file name of workflow definition files. |
+XMLCustomSQLOrderCheck | .action, .function, .jrxml, .macro, .pom, .project, .properties, .svg, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Checks the order of attributes in `custom-sql` file. |
+XMLCustomSQLStylingCheck | .action, .function, .jrxml, .macro, .pom, .project, .properties, .svg, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Applies rules to enforce consisteny in code style for `.xml` files in directory `custom-sql`. |
+XMLDDLStructuresFileCheck | .action, .function, .jrxml, .macro, .pom, .project, .properties, .svg, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Checks the order of attributes in `-structures.xml` file. |
+XMLDTDVersionCheck | .action, .function, .jrxml, .macro, .pom, .project, .properties, .svg, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Checks the DTD version in `*.xml` file. |
+XMLEmptyLinesCheck | .action, .function, .jrxml, .macro, .pom, .project, .properties, .svg, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Finds missing and unnecessary empty lines. |
+XMLFSBExcludeFileCheck | .action, .function, .jrxml, .macro, .pom, .project, .properties, .svg, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Checks the order of attributes in `fsb-exclude.xml` file. |
+XMLFriendlyURLRoutesFileCheck | .action, .function, .jrxml, .macro, .pom, .project, .properties, .svg, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Performs several checks on `*-routes.xml` file. |
+XMLHBMFileCheck | .action, .function, .jrxml, .macro, .pom, .project, .properties, .svg, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Checks the order of imports in `*-hbm.xml` file. |
+XMLImportsCheck | .action, .function, .jrxml, .macro, .pom, .project, .properties, .svg, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Sorts and groups imports in `.xml` files. |
+XMLIndentationCheck | .action, .function, .jrxml, .macro, .pom, .project, .properties, .svg, .testcase, .tld, .toggle, .tpl, .wsdl, .xml or .xsd | Finds incorrect indentation in `.xml` files. |
+XMLIvyFileCheck | .action, .function, .jrxml, .macro, .pom, .project, .properties, .svg, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Checks the order of dependcies in `ivy.xml` file. |
+XMLLog4jFileCheck | .action, .function, .jrxml, .macro, .pom, .project, .properties, .svg, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Checks the order of categories in `*-log4j.xml` file. |
+XMLLookAndFeelFileCheck | .action, .function, .jrxml, .macro, .pom, .project, .properties, .svg, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Checks the order of attributes in `*--look-and-feel.xml` file. |
+XMLModelHintsFileCheck | .action, .function, .jrxml, .macro, .pom, .project, .properties, .svg, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Checks the order of attributes in `*-model-hints.xml` file. |
+XMLPomFileCheck | .action, .function, .jrxml, .macro, .pom, .project, .properties, .svg, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Checks the order of dependencies in `pom.xml` file. |
+XMLPortletPreferencesFileCheck | .action, .function, .jrxml, .macro, .pom, .project, .properties, .svg, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Checks the order of elements in files in directory `resource-actions`. |
+XMLResourceActionsFileCheck | .action, .function, .jrxml, .macro, .pom, .project, .properties, .svg, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Checks the order of elements in files in directory `resource-actions`. |
+XMLSpringFileCheck | .action, .function, .jrxml, .macro, .pom, .project, .properties, .svg, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Checks the order of elements in `*-spring.xml` file. |
+XMLStrutsConfigFileCheck | .action, .function, .jrxml, .macro, .pom, .project, .properties, .svg, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Checks the order of elements in `struts-config.xml` file. |
+XMLStylingCheck | .action, .function, .jrxml, .macro, .pom, .project, .properties, .svg, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Applies rules to enforce consisteny in code style. |
+XMLTestIgnorableErrorLinesFileCheck | .action, .function, .jrxml, .macro, .pom, .project, .properties, .svg, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Checks the order of elements in `test-ignorable-error-lines.xml` file. |
+XMLTilesDefsFileCheck | .action, .function, .jrxml, .macro, .pom, .project, .properties, .svg, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Checks the order of elements in `tiles-defs.xml` file. |
+XMLToggleFileCheck | .action, .function, .jrxml, .macro, .pom, .project, .properties, .svg, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Checks the order of elements in `.toggle` file. |
+XMLWhitespaceCheck | .action, .function, .jrxml, .macro, .pom, .project, .properties, .svg, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Finds missing and unnecessary whitespace in `.xml` files. |
+XMLWorkflowDefinitionFileNameCheck | .action, .function, .jrxml, .macro, .pom, .project, .properties, .svg, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Checks the file name of workflow definition files. |
 YMLDefinitionOrderCheck | .yaml or .yml | Sorts definitions alphabetically in `.yml` files. |
 YMLEmptyLinesCheck | .yaml or .yml | Finds missing and unnecessary empty lines. |
 YMLLongLinesCheck | .yaml or .yml | Finds lines that are longer than the specified maximum line length. |

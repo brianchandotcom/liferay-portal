@@ -24,13 +24,9 @@ public class DEDataDefinitionFieldLinkUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (hasColumnType(
-				"DEDataDefinitionFieldLink", "fieldName", "VARCHAR(75)")) {
-
-			alter(
-				DEDataDefinitionFieldLinkTable.class,
-				new AlterColumnType("fieldName", "VARCHAR(255) null"));
-		}
+		alter(
+			DEDataDefinitionFieldLinkTable.class,
+			new AlterColumnType("fieldName", "VARCHAR(255) null"));
 	}
 
 }

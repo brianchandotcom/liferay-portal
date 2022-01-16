@@ -1176,10 +1176,6 @@
 		</check>
 	</source-processor>
 	<source-processor name="MarkdownSourceProcessor">
-		<check name="MarkdownEmptyLinesCheck">
-			<category name="Styling" />
-			<description name="Finds missing and unnecessary empty lines." />
-		</check>
 		<check name="MarkdownFileExtensionCheck">
 			<category name="Styling" />
 			<description name="Finds `markdown` files with `.md` extension (use `.markdown`)." />

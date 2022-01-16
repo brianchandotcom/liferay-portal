@@ -30,6 +30,8 @@ public class MarkdownStylingCheck extends BaseFileCheck {
 
 		content = _formatCodeSyntax(content);
 
+		content = _formatNumberedList(content);
+
 		return _formatHeaders(content);
 	}
 
@@ -52,6 +54,10 @@ public class MarkdownStylingCheck extends BaseFileCheck {
 		matcher = _boldHeaderPattern.matcher(content);
 
 		return matcher.replaceAll("$1$2$4$6");
+	}
+
+	private String _formatNumberedList(String content) {
+		return content.replaceAll("(?<!\n)(\n *\\d+\\. )", "\n$1");
 	}
 
 	private static final Pattern _boldHeaderPattern = Pattern.compile(

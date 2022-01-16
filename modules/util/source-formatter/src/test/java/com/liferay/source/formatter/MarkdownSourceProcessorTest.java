@@ -27,8 +27,8 @@ public class MarkdownSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
-	public void testMissingEmptyLines() throws Exception {
-		test("MissingEmptyLines.testmarkdown");
+	public void testIncrrectNumberedList() throws Exception {
+		test("IncrrectNumberedList.testmarkdown");
 	}
 
 }

@@ -449,6 +449,12 @@ components:
             type: object
         SearchResponse:
             properties:
+                errors:
+                    items:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    type: array
                 page:
                     type: integer
                 pageSize:

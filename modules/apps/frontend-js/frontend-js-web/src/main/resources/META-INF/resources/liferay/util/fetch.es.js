@@ -12,10 +12,6 @@
  * details.
  */
 
-const DEFAULT_INIT = {
-	credentials: 'include',
-};
-
 /**
  * Fetches a resource. A thin wrapper around ES6 Fetch API, with standardized
  * default configuration.
@@ -26,19 +22,26 @@ const DEFAULT_INIT = {
  */
 
 export default function defaultFetch(resource, init = {}) {
-	const headers = new Headers({'x-csrf-token': Liferay.authToken});
+	let resourceLocation = resource.url ? resource.url : resource.toString();
+
+	if (resourceLocation.startsWith('/')) {
+		resourceLocation = window.location.origin + resourceLocation;
+	}
+
+	const resourceURL = new URL(resourceLocation);
+
+	const headers = new Headers({});
+	const config = {};
+
+	if (resourceURL.origin === window.location.origin) {
+		headers.set('x-csrf-token', Liferay.authToken);
+		config.credentials = 'include';
+	}
 
 	new Headers(init.headers || {}).forEach((value, key) => {
 		headers.set(key, value);
 	});
 
-	const mergedInit = {
-		...DEFAULT_INIT,
-		...init,
-	};
-
-	mergedInit.headers = headers;
-
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
-	return fetch(resource, mergedInit);
+	return fetch(resource, {...config, ...init, headers});
 }

@@ -57,7 +57,7 @@ public class MarkdownStylingCheck extends BaseFileCheck {
 	}
 
 	private String _formatNumberedList(String content) {
-		return content.replaceAll("(?<!\n)(\n *\\d+\\. )", "\n$1");
+		return content.replaceAll("(?<!\n)(\n[ \t]*\\d+\\. )", "\n$1");
 	}
 
 	private static final Pattern _boldHeaderPattern = Pattern.compile(

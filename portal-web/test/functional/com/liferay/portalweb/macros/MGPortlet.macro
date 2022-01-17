@@ -23,60 +23,72 @@ definition {
 
 		SelectFrame(locator1 = "DocumentsAndMedia#CONFIGURATION_IFRAME");
 
-		Panel.expandPanel(panel = "Folders Listing");
+		if (isSet(invalidRootFolder)) {
+			AssertTextEquals(
+				locator1 = "DocumentsAndMediaConfiguration#DISPLAY_SETTINGS_ROOT_FOLDER_FIELD",
+				value1 = "${dmRootFolderName}");
 
-		AssertClick(
-			locator1 = "Button#SELECT",
-			value1 = "Select");
-
-		SelectFrame.selectSecondFrame(
-			key_title = "Select Folder",
-			locator1 = "IFrame#MODAL_ANY");
-
-		if (isSet(depotName)) {
-			AssertClick(
-				key_breadcrumbName = "Sites and Libraries",
-				locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
-				value1 = "Sites and Libraries");
-
-			AssertClick(
-				key_groupTab = "Asset Library",
-				locator1 = "ItemSelector#NAVIGATION_GROUP_TAB",
-				value1 = "Asset Library");
-
-			LexiconCard.clickCard(card = "${depotName}");
+			AssertTextEquals.assertPartialText(
+				key_warningMessage = "The selected root folder cannot be found. Please select another one",
+				locator1 = "Message#WARNING_SPECIFIC",
+				value1 = "The selected root folder cannot be found. Please select another one");
 		}
+		else {
+			Panel.expandPanel(panel = "Folders Listing");
 
-		if ("${selectHomeFolder}" == "true") {
-			if (IsElementPresent(key_breadcrumbName = "Home", locator1 = "BreadcrumbPortlet#BREADCRUMB_FOLDER")) {
-				AssertVisible(
-					key_text = "Select This Folder",
-					locator1 = "Button#ANY_DISABLED");
+			AssertClick(
+				locator1 = "Button#SELECT",
+				value1 = "Select");
+
+			SelectFrame.selectSecondFrame(
+				key_title = "Select Folder",
+				locator1 = "IFrame#MODAL_ANY");
+
+			if (isSet(depotName)) {
+				AssertClick(
+					key_breadcrumbName = "Sites and Libraries",
+					locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
+					value1 = "Sites and Libraries");
 
 				AssertClick(
-					key_breadcrumbName = "Home",
-					locator1 = "BreadcrumbPortlet#BREADCRUMB_FOLDER",
-					value1 = "Home");
+					key_groupTab = "Asset Library",
+					locator1 = "ItemSelector#NAVIGATION_GROUP_TAB",
+					value1 = "Asset Library");
+
+				LexiconCard.clickCard(card = "${depotName}");
 			}
-		}
 
-		if ("${selectSubfolder}" == "true") {
+			if ("${selectHomeFolder}" == "true") {
+				if (IsElementPresent(key_breadcrumbName = "Home", locator1 = "BreadcrumbPortlet#BREADCRUMB_FOLDER")) {
+					AssertVisible(
+						key_text = "Select This Folder",
+						locator1 = "Button#ANY_DISABLED");
+
+					AssertClick(
+						key_breadcrumbName = "Home",
+						locator1 = "BreadcrumbPortlet#BREADCRUMB_FOLDER",
+						value1 = "Home");
+				}
+			}
+
+			if ("${selectSubfolder}" == "true") {
+				AssertClick(
+					key_dmFolderName = "${dmFolderName}",
+					locator1 = "DocumentsAndMediaSelectFolder#FOLDER",
+					value1 = "${dmFolderName}");
+			}
+
 			AssertClick(
-				key_dmFolderName = "${dmFolderName}",
-				locator1 = "DocumentsAndMediaSelectFolder#FOLDER",
-				value1 = "${dmFolderName}");
+				key_dmFolderName = "${dmRootFolderName}",
+				locator1 = "DocumentsAndMedia#SELECT_FOLDER_BUTTON",
+				value1 = "Select");
+
+			SelectFrame(locator1 = "relative=top");
+
+			SelectFrame(locator1 = "DocumentsAndMedia#CONFIGURATION_IFRAME");
+
+			PortletEntry.save();
 		}
-
-		AssertClick(
-			key_dmFolderName = "${dmRootFolderName}",
-			locator1 = "DocumentsAndMedia#SELECT_FOLDER_BUTTON",
-			value1 = "Select");
-
-		SelectFrame(locator1 = "relative=top");
-
-		SelectFrame(locator1 = "DocumentsAndMedia#CONFIGURATION_IFRAME");
-
-		PortletEntry.save();
 
 		IFrame.closeFrame();
 	}

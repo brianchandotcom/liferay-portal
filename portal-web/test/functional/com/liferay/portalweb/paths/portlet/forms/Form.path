@@ -362,6 +362,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MODULE_DEFINITION_TIMEOUT_JAVASCRIPT_LOADER</td>
+	<td>//div[@data-field-name="waitTimeout"]//input[@type="text"]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

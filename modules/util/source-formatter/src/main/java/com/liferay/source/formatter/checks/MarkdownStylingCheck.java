@@ -60,7 +60,7 @@ public class MarkdownStylingCheck extends BaseFileCheck {
 
 	private String _formatNumberedList(String content) {
 		int[] multiLineStringsPositions = SourceUtil.getMultiLinePositions(
-			content, _multiLineStringsPattern);
+			content, _codeBlockPattern);
 		Matcher matcher = _numberedListPattern.matcher(content);
 
 		StringBuffer sb = new StringBuffer();
@@ -97,12 +97,12 @@ public class MarkdownStylingCheck extends BaseFileCheck {
 
 	private static final Pattern _boldHeaderPattern = Pattern.compile(
 		"(\\A|\n)(#+ ?)(\\*+)([^\\*\n]+)(\\*+)(\n)");
+	private static final Pattern _codeBlockPattern = Pattern.compile(
+		"```.+?```", Pattern.DOTALL);
 	private static final Pattern _incorrectCodeSyntaxPattern = Pattern.compile(
 		"```(.+?)```");
 	private static final Pattern _incorrectHeaderNotationPattern =
 		Pattern.compile("(\\A|\n)(#+[^#\n]+)(#+)(\n)");
-	private static final Pattern _multiLineStringsPattern = Pattern.compile(
-		"```.+?```", Pattern.DOTALL);
 	private static final Pattern _numberedListPattern = Pattern.compile(
 		"\n[ \t]*(\\d+)\\. ");
 

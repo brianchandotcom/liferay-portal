@@ -14,7 +14,9 @@
 
 package com.liferay.source.formatter.checks;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.source.formatter.checks.util.SourceUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -57,9 +59,40 @@ public class MarkdownStylingCheck extends BaseFileCheck {
 	}
 
 	private String _formatNumberedList(String content) {
-		content = content.replaceAll("(?<!\n)(\n[ \t]*\\d+\\. )", "\n$1");
+		int[] multiLineStringsPositions = SourceUtil.getMultiLinePositions(
+			content, _multiLineStringsPattern);
+		Matcher matcher = _numberedListPattern.matcher(content);
 
-		return content.replaceAll("(\n[ \t]*)(\\d+)(\\. )", "$11$3");
+		StringBuffer sb = new StringBuffer();
+
+		while (matcher.find()) {
+			if (!SourceUtil.isInsideMultiLines(
+					SourceUtil.getLineNumber(content, matcher.start()),
+					multiLineStringsPositions)) {
+
+				String replacement = matcher.group();
+
+				if (content.charAt(matcher.start() - 1) != CharPool.NEW_LINE) {
+					replacement = "\n" + replacement;
+				}
+
+				String number = matcher.group(1);
+
+				if (!number.equals("1")) {
+					replacement = replacement.replaceFirst("\\d+", "1");
+				}
+
+				matcher.appendReplacement(sb, replacement);
+			}
+		}
+
+		if (sb.length() > 0) {
+			matcher.appendTail(sb);
+
+			return sb.toString();
+		}
+
+		return content;
 	}
 
 	private static final Pattern _boldHeaderPattern = Pattern.compile(
@@ -68,5 +101,9 @@ public class MarkdownStylingCheck extends BaseFileCheck {
 		"```(.+?)```");
 	private static final Pattern _incorrectHeaderNotationPattern =
 		Pattern.compile("(\\A|\n)(#+[^#\n]+)(#+)(\n)");
+	private static final Pattern _multiLineStringsPattern = Pattern.compile(
+		"```.+?```", Pattern.DOTALL);
+	private static final Pattern _numberedListPattern = Pattern.compile(
+		"\n[ \t]*(\\d+)\\. ");
 
 }

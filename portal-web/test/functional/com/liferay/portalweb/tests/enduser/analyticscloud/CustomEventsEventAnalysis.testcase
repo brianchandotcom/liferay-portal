@@ -193,6 +193,12 @@ definition {
 				timeToSendCustomEvent = "3");
 		}
 
+		task ("Sign in as new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "test test");
+		}
+
 		task ("Create new pages and place custom event fields") {
 			for (var layoutName : list "${layoutNameList}") {
 				ACUtils.addPage(layoutName = "${layoutName}");

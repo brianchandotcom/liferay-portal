@@ -13,7 +13,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {cleanup, fireEvent, render} from '@testing-library/react';
+import {fireEvent, render} from '@testing-library/react';
 import React from 'react';
 
 import {
@@ -119,7 +119,6 @@ const renderPreviewSelector = (layoutType = LAYOUT_TYPES.page) => {
 
 describe('PreviewSelector', () => {
 	afterEach(() => {
-		cleanup();
 		openItemSelector.mockClear();
 	});
 

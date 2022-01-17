@@ -463,6 +463,12 @@ definition {
 			value1 = "${description}");
 	}
 
+	macro assertRelationshipTabNotPresent {
+		AssertElementNotPresent(
+			key_tabName = "Relationship Tab",
+			locator1 = "ObjectAdmin#ENTRY_RELATIONSHIP_TAB");
+	}
+
 	macro assertRelationshipTabPresent {
 		AssertElementPresent(
 			key_tabName = "Relationship Tab",

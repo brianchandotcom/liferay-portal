@@ -115,6 +115,7 @@ function loadOverlay(iframeRef) {
 		position: 'fixed',
 		top: 0,
 		width: '100%',
+		zIndex: 100000,
 	};
 
 	if (iframeRef.current) {

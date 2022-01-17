@@ -1,0 +1,19 @@
+.subscription-navbar {
+    border: 1px solid #C3C5C9;
+    height: 36px;
+
+    button {
+        padding: 0;
+    }
+}
+
+.btn-subscription-group-selected {
+    color: #004AD7 !important;
+    background-color: #fff;
+
+    &:focus {
+    background-color: #fff;
+    box-shadow: none;
+    border: 1px solid #004AD7;
+    }
+}

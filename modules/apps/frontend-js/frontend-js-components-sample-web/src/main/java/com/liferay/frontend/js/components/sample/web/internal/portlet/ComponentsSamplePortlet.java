@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"com.liferay.portlet.display-category=category.sample",
 		"com.liferay.portlet.header-portlet-css=/css/main.css",
-		"javax.portlet.display-name=JS Components Sample Web",
+		"javax.portlet.display-name=JS Components Sample",
 		"javax.portlet.init-param.template-path=/META-INF/resources/",
 		"javax.portlet.init-param.view-template=/view.jsp",
 		"javax.portlet.name=" + ComponentsSamplePortletKeys.COMPONENTS_SAMPLE,
@@ -47,7 +47,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = Portlet.class
 )
-public class ComponentsSampleWebPortlet extends MVCPortlet {
+public class ComponentsSamplePortlet extends MVCPortlet {
 
 	@Override
 	public void doDispatch(

@@ -20,6 +20,7 @@ package com.liferay.frontend.js.components.sample.web.internal.constants;
 public class ComponentsSamplePortletKeys {
 
 	public static final String COMPONENTS_SAMPLE =
-		"com_liferay_components_sample_web_portlet_ComponentsSamplePortlet";
+		"com_liferay_frontend_js_components_sample_web_portlet_" +
+			"ComponentsSamplePortlet";
 
 }

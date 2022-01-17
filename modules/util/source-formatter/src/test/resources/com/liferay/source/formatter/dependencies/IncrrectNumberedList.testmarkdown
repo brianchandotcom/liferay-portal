@@ -4,3 +4,18 @@
 2. aa
     1. bbb
     2. ccc
+
+## The while and do-while Statements (Do not format list in code block)
+
+```
+1. while and do-while Statements:
+
+while (expression) {
+     statement(s)
+}
+2. do-while Statements:
+
+do {
+     statement(s)
+} while (expression);
+```

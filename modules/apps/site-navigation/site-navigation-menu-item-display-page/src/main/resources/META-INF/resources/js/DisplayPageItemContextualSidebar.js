@@ -18,7 +18,7 @@ import ClayIcon from '@clayui/icon';
 import {TranslationAdminSelector} from 'frontend-js-components-web';
 import {fetch, objectToFormData, openSelectionModal} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
 
 function DisplayPageItemContextualSidebar({
 	chooseItemProps,
@@ -39,6 +39,18 @@ function DisplayPageItemContextualSidebar({
 	const [type, setType] = useState(itemType);
 	const [subtype, setSubtype] = useState(itemSubtype);
 	const [itemData, setItemData] = useState(item.data);
+
+	const normalizedTranslations = useMemo(
+		() =>
+			Object.entries(translations).reduce((acc, [id, val]) => {
+				const label = locales.find((locale) => locale.id === id).label;
+
+				acc[label] = val;
+
+				return acc;
+			}, {}),
+		[locales, translations]
+	);
 
 	const {
 		eventName,
@@ -148,7 +160,7 @@ function DisplayPageItemContextualSidebar({
 							defaultLanguageId={defaultLanguageId}
 							onSelectedLanguageIdChange={setSelectedLocaleId}
 							selectedLanguageId={selectedLocaleId}
-							translations={translations}
+							translations={normalizedTranslations}
 						/>
 					</ClayInput.GroupItem>
 				</ClayInput.Group>

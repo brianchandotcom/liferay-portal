@@ -420,12 +420,70 @@ definition {
 	}
 
 	@description = "LPS-138495 - Verify it is possible to map a Picklist for a Select From List field and view its entries"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanMapPicklistTypeAndViewEntries {
+		Picklist.addPicklistViaAPI(picklistName = "Custom Picklist");
 
-		// TODO LPS-141821 CanMapPicklistTypeAndViewEntries pending implementation
+		for (var itemsName : list "1,2") {
+			Picklist.addPicklistItemViaAPI(
+				itemKey = "${itemsName}",
+				itemName = "Item Test ${itemsName}",
+				picklistName = "Custom Picklist");
+		}
 
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+		ObjectAdmin.goToFieldsTab();
+
+		ObjectAdmin.addObjectFieldViaUI(
+			fieldLabel = "Field Picklist",
+			fieldPicklist = "Custom Picklist",
+			fieldType = "Picklist");
+
+		Navigator.openURL();
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		PopulateObjectFormsConfiguration.openForm();
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		PopulateObjectFormsConfiguration.openFormSettings();
+
+		PopulateObjectFormsConfiguration.selectObject(label = "Object");
+
+		PopulateObjectFormsConfiguration.selectCustomObject(label = "Custom Object");
+
+		Form.gotoAddField(fieldType = "Select from List");
+
+		PopulateObjectFormsConfiguration.mapFormObjectField(
+			fieldLabelName = "Field Picklist",
+			formObjectField = "Choose an Option");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		PopulateObjectFormsConfiguration.selectPicklistObject(picklistItem = "Item Test 1");
+
+		FormPortlet.submitSuccessfully();
+
+		Navigator.openURL();
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+		ObjectPortlet.viewEntry(entry = "Item Test 1");
 	}
 
 	@description = "LPS-133365 - Verify if it's possible to map an Object field of String type and view its entries"

@@ -26,6 +26,21 @@ definition {
 		WaitForPageLoad();
 	}
 
+	macro mapFormObjectField {
+		Click(locator1 = "PopulateObjectFormsConfiguration#ADVANCED_TAB");
+
+		AssertClick(
+			key_formObjectField = "${formObjectField}",
+			locator1 = "PopulateObjectFormsConfiguration#FORM_OBJECT_FIELD",
+			value1 = "${formObjectField}");
+
+		Click(
+			key_fieldLabelName = "${fieldLabelName}",
+			locator1 = "PopulateObjectFormsConfiguration#MAP_OBJECT_FIELD");
+
+		WaitForPageLoad();
+	}
+
 	macro openForm {
 		Navigator.openSpecificURL(url = "/group/guest/~/control_panel/manage?p_p_id=com_liferay_dynamic_data_mapping_form_web_portlet_DDMFormAdminPortlet");
 	}
@@ -60,6 +75,16 @@ definition {
 			locator1 = "PopulateObjectFormsConfiguration#DISPLAY_SELECT_OBJECT");
 
 		Click(locator1 = "PopulateObjectFormsConfiguration#DEFAULT_SELECT_OBJECT");
+	}
+
+	macro selectPicklistObject {
+		Click(locator1 = "PopulateObjectFormsConfiguration#OBJECT_FIELD_TAB");
+
+		Click(
+			key_label = "${picklistItem}",
+			locator1 = "PopulateObjectFormsConfiguration#DISPLAY_SELECT_OBJECT");
+
+		IFrame.selectTopFrame();
 	}
 
 	macro viewDisplaySelectOption {

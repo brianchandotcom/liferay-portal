@@ -102,7 +102,8 @@ const InvitesPage = ({
 			if (!error) {
 				handlePage();
 			}
-		} else {
+		}
+		else {
 			setInitialError(true);
 			setBaseButtonDisabled(true);
 			setTouched({
@@ -231,7 +232,8 @@ const InvitesPage = ({
 			const sucessfullyEmails = totalEmails - failedEmails;
 			setInitialError(false);
 			setBaseButtonDisabled(sucessfullyEmails !== totalEmails);
-		} else if (touched['invites']?.some((field) => field.email)) {
+		}
+		else if (touched['invites']?.some((field) => field.email)) {
 			setInitialError(true);
 			setBaseButtonDisabled(true);
 		}

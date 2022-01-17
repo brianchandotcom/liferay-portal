@@ -80,7 +80,8 @@
 													}
 												},
 												"fragmentLink": {
-													"value_i18n": {}
+													"value_i18n": {
+													}
 												}
 											}
 										}
@@ -117,7 +118,8 @@
 							{
 								"definition": {
 									"fragmentSettings": {
-										"unallowedFragments": []
+										"unallowedFragments": [
+										]
 									}
 								},
 								"type": "DropZone"

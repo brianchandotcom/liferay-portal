@@ -31,7 +31,8 @@ const Pages = () => {
 				payload: steps.dxpCloud,
 				type: actionTypes.CHANGE_STEP,
 			});
-		} else {
+		}
+		else {
 			window.location.href = `${API_BASE_URL}/${getLiferaySiteName()}/overview?${
 				PARAMS_KEYS.PROJECT_APPLICATION_EXTERNAL_REFERENCE_CODE
 			}=${project.accountKey}`;

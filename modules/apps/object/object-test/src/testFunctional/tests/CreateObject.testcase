@@ -6638,12 +6638,90 @@ definition {
 	}
 
 	@description = "LPS-139005 - Verify that the Relationship field will not be displayed on a Collection Display with List Style set as Table when the parent object is inactivated"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test RelationshipFieldCannotBeDisplayedForCollectionDisplayTableWhenInactivated {
+		for (var letter : list "A,B") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object ${letter}",
+				objectName = "CustomObject${letter}",
+				pluralLabelName = "Custom Objects ${letter}");
+		}
 
-		// TODO LPS-140871 RelationshipFieldCannotBeDisplayedForCollectionDisplayTableWhenInactivated pending implementation
+		for (var letter : list "A,B") {
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldLabelName = "Custom Field ${letter}",
+				fieldName = "customObjectField${letter}",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject${letter}");
+		}
 
+		ObjectAdmin.addObjectRelationshipViaAPI(
+			objectName_1 = "CustomObjectA",
+			objectName_2 = "CustomObjectB",
+			relationshipLabel = "Relationship",
+			relationshipName = "relationship",
+			relationshipType = "oneToMany");
+
+		for (var letter : list "A,B") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object ${letter}");
+
+			CreateObject.selectTitleField(fieldLabel = "Custom Field ${letter}");
+
+			CreateObject.saveObject();
+		}
+
+		Navigator.openURL();
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObjectA");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObjectB");
+
+		for (var fieldEntry : list "A,B") {
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customObjectField${fieldEntry}",
+				objectName = "CustomObject${fieldEntry}",
+				value = "Entry ${fieldEntry}");
+		}
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObjectB");
+
+		ObjectPortlet.viewEntryDetails(entry = "Entry B");
+
+		ObjectPortlet.chooseEntryOnRelationshipField(entryOption = "Entry A");
+
+		Button.clickSave();
+
+		ObjectAdmin.openObjectAdmin();
+
+		CreateObject.inactiveCustomObject(objectName = "Custom Object A");
+
+		Navigator.openURL();
+
+		ContentPages.addPage(pageName = "Blank Display Page");
+
+		PageEditor.addFragment(
+			collectionName = "Content Display",
+			fragmentName = "Collection Display");
+
+		PageEditor.editCollectionDisplay(
+			fragmentName = "Collection Display",
+			infoListProviderName = "Custom Objects B");
+
+		PageEditor.editCollectionDisplay(
+			fragmentName = "Collection Display",
+			listStyle = "Table",
+			selectedName = "Custom Objects B");
+
+		PageEditor.clickPublish();
+
+		PagesAdmin.gotoPageEllipsisMenuItem(
+			menuItem = "View",
+			pageName = "Blank Display Page");
+
+		ObjectAdmin.assertEntryOnPageNotPresent(entryName = "Entry A");
 	}
 
 	@description = "LPS-139005 - Verify that the Relationship field will not be displayed to be selected for a Page fragment when the parent object is inactivated"

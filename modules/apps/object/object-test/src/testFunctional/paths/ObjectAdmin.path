@@ -485,6 +485,11 @@
 		<td>//div[@class='table-list-title']/../../../*[contains(.,'${key_value}')]//*[name()='svg'][contains(@class,'icon-ellipsis')]</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>VIEW_ENTRY_NAME_ON_PAGE</td>
+		<td>//span[(@class='text-truncate') and contains(text(),'${key_entryName}')]</td>
+		<td></td>
+</tr>
 </tbody>
 </table>
 </body>

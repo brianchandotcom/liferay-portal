@@ -82,13 +82,14 @@ const QuickLinksPanel = ({accountKey}) => {
 	}, [quickLinks, fetchQuickLinksPanelContent]);
 
 	return (
-		<div>
+		<>
 			{quickLinksContents.length ? (
 				<div
 					className={classNames(
-						'link-body p-4 quick-links-container rounded',
+						'link-body quick-links-container rounded',
 						{
-							'position-absolute': !expandedPanel,
+							'p-4': expandedPanel,
+							'position-absolute px-3 py-4': !expandedPanel,
 						}
 					)}
 				>
@@ -96,7 +97,12 @@ const QuickLinksPanel = ({accountKey}) => {
 						<h5 className="m-0 text-neutral-10">Quick Links</h5>
 
 						<a
-							className="btn p-2 text-neutral-8 text-paragraph-sm"
+							className={classNames(
+								'btn font-weight-bold p-2 text-neutral-8 text-paragraph-sm',
+								{
+									'pl-3': !expandedPanel,
+								}
+							)}
 							onClick={() => {
 								setExpandedPanel(!expandedPanel);
 								Storage.setItem(
@@ -106,7 +112,7 @@ const QuickLinksPanel = ({accountKey}) => {
 							}}
 						>
 							<ClayIcon
-								className="mr-2"
+								className="mr-1"
 								symbol={expandedPanel ? 'hr' : 'plus'}
 							/>
 
@@ -136,7 +142,7 @@ const QuickLinksPanel = ({accountKey}) => {
 			) : (
 				<QuickLinksSkeleton />
 			)}
-		</div>
+		</>
 	);
 };
 

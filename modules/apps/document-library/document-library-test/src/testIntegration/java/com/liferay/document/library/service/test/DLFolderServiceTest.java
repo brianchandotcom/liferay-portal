@@ -23,6 +23,7 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeService;
 import com.liferay.document.library.kernel.service.DLFolderService;
+import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.document.library.kernel.util.comparator.RepositoryModelReadCountComparator;
 import com.liferay.document.library.kernel.util.comparator.RepositoryModelTitleComparator;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -41,6 +42,8 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.view.count.ViewCountManager;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -91,6 +94,63 @@ public class DLFolderServiceTest {
 			StringUtil.randomString(),
 			new long[] {_ddmStructure.getStructureId()},
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+	}
+
+	@Test
+	public void testShouldReturnOnlyAcceptedMimeTypes() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		serviceContext.setAttribute(
+			"fileEntryTypeId", _dlFileEntryType.getFileEntryTypeId());
+
+		List<FileEntry> expectedFileEntries = new ArrayList<>();
+
+		_dlAppService.addFileEntry(
+			null, _group.getGroupId(), _parentFolder.getFolderId(),
+			StringUtil.randomString(), MimeTypes.MIME_APPLICATION_OCTET_STREAM,
+			"title2", StringUtil.randomString(), StringPool.BLANK, (byte[])null,
+			null, null, serviceContext);
+
+		_dlAppService.addFileEntry(
+			null, _group.getGroupId(), _parentFolder.getFolderId(),
+			StringUtil.randomString(), MimeTypes.MIME_APPLICATION_OCTET_STREAM,
+			"title1", StringUtil.randomString(), StringPool.BLANK, (byte[])null,
+			null, null, serviceContext);
+
+		FileEntry fileEntry = _dlAppService.addFileEntry(
+			null, _group.getGroupId(), _parentFolder.getFolderId(),
+			StringUtil.randomString() + ".jpg", ContentTypes.IMAGE_JPEG,
+			"title3", StringUtil.randomString(), StringPool.BLANK, (byte[])null,
+			null, null, serviceContext);
+
+		expectedFileEntries.add(fileEntry);
+
+		List<Object> actualFoldersAndFileEntriesAndFileShortcuts =
+			_dlFolderService.getFoldersAndFileEntriesAndFileShortcuts(
+				_group.getGroupId(), _parentFolder.getFolderId(),
+				ArrayUtil.toStringArray(DLUtil.getAllMediaGalleryMimeTypes()),
+				_dlFileEntryType.getFileEntryTypeId(), false,
+				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS,
+				new RepositoryModelTitleComparator<FileEntry>(true));
+
+		Assert.assertEquals(
+			actualFoldersAndFileEntriesAndFileShortcuts.toString(), 1,
+			actualFoldersAndFileEntriesAndFileShortcuts.size());
+
+		Assert.assertEquals(
+			actualFoldersAndFileEntriesAndFileShortcuts.toString(),
+			expectedFileEntries.size(),
+			actualFoldersAndFileEntriesAndFileShortcuts.size());
+
+		FileEntry expectedFileEntry = expectedFileEntries.get(0);
+		DLFileEntry actualDLFileEntry =
+			(DLFileEntry)actualFoldersAndFileEntriesAndFileShortcuts.get(0);
+
+		Assert.assertEquals(
+			expectedFileEntry.getFileEntryId(),
+			actualDLFileEntry.getFileEntryId());
 	}
 
 	@Test

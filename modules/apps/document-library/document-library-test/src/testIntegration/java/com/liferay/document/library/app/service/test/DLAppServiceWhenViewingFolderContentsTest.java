@@ -17,6 +17,7 @@ package com.liferay.document.library.app.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.document.library.kernel.util.comparator.RepositoryModelReadCountComparator;
 import com.liferay.document.library.kernel.util.comparator.RepositoryModelTitleComparator;
 import com.liferay.document.library.test.util.BaseDLAppTestCase;
@@ -29,8 +30,11 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.context.ContextUserReplace;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.view.count.ViewCountManager;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -160,6 +164,37 @@ public class DLAppServiceWhenViewingFolderContentsTest
 		finally {
 			_userLocalService.deleteUser(user.getUserId());
 		}
+	}
+
+	@Test
+	public void testShouldNotReturnNotAcceptedMimeTypes() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		_dlAppService.addFolder(
+			group.getGroupId(), parentFolder.getFolderId(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
+
+		_dlAppService.addFileEntry(
+			null, group.getGroupId(), parentFolder.getFolderId(),
+			StringUtil.randomString() + ".jpg", ContentTypes.IMAGE_JPEG,
+			"title1", StringUtil.randomString(), StringPool.BLANK, (byte[])null,
+			null, null, serviceContext);
+
+		_dlAppService.addFileEntry(
+			null, group.getGroupId(), parentFolder.getFolderId(),
+			StringUtil.randomString(), MimeTypes.MIME_APPLICATION_OCTET_STREAM,
+			"title2", StringUtil.randomString(), StringPool.BLANK, (byte[])null,
+			null, null, serviceContext);
+
+		Assert.assertEquals(
+			2,
+			_dlAppService.getFoldersAndFileEntriesAndFileShortcutsCount(
+				group.getGroupId(), parentFolder.getFolderId(),
+				WorkflowConstants.STATUS_APPROVED,
+				ArrayUtil.toStringArray(DLUtil.getAllMediaGalleryMimeTypes()),
+				false));
 	}
 
 	@Test

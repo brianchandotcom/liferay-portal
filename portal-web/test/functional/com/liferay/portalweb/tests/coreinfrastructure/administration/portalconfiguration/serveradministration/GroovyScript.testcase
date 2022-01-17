@@ -83,6 +83,38 @@ definition {
 			value1 = "Test Fragment Collection Name");
 	}
 
+	@description = "This is a use case for LPS-102832. Check returns property value without leading spaces."
+	@priority = "4"
+	test ExecuteScriptWithPredefinedProperty {
+		property custom.properties = "partnerstamm-api-user = his_user";
+		property test.name.skip.portal.instance = "GroovyScript#ExecuteScriptWithPredefinedProperty";
+
+		ServerAdministration.openServerAdmin();
+
+		var script = '''
+			import com.liferay.portal.util.PropsUtil;
+			import com.liferay.portal.kernel.util.PropsUtil;
+			import com.liferay.portal.kernel.configuration.Configuration;
+			import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
+			import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
+
+			println("com.liferay.portal.util.PropsUtil:" + com.liferay.portal.util.PropsUtil.get("partnerstamm-api-user"))
+
+			println("com.liferay.portal.kernel.util.PropsUtil:" + com.liferay.portal.kernel.util.PropsUtil.get("partnerstamm-api-user"))
+
+			Configuration configuration = ConfigurationFactoryUtil.getConfiguration(PortalClassLoaderUtil.getClassLoader(), "portal");
+			println("ConfigurationFactoryUtil:" + configuration.get("partnerstamm-api-user"));
+		''';
+
+		ServerAdministration.executeScript(
+			language = "Groovy",
+			script = "${script}");
+
+		AssertTextEquals(
+			locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
+			value1 = "com.liferay.portal.util.PropsUtil:his_user com.liferay.portal.kernel.util.PropsUtil:his_user ConfigurationFactoryUtil:his_user");
+	}
+
 	@priority = "4"
 	test ExecuteScriptWithPredefinedVariables {
 		property test.name.skip.portal.instance = "GroovyScript#ExecuteScriptWithPredefinedVariables";

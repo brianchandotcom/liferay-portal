@@ -40,6 +40,10 @@ definition {
 			locator1 = "OpenIDConnect#LOGIN_USERNAME_FIELD",
 			value1 = "${userEmailAddress}");
 
+		if (IsElementPresent(locator1 = "GoogleLogin#LOGIN_NEXT_BUTTON")) {
+			Click(locator1 = "GoogleLogin#LOGIN_NEXT_BUTTON");
+		}
+
 		Type(
 			locator1 = "OpenIDConnect#LOGIN_PASSWORD_FIELD",
 			value1 = "${userPassword}");

@@ -33,6 +33,7 @@ export default function NavigationMenuItemsTree({
 					open: <ClayIcon symbol="plus" />,
 				}}
 				items={siteNavigationMenuItems}
+				showExpanderOnHover={false}
 			>
 				{(item) => {
 					const hasUrl = item.url && item.url !== '#';

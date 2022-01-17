@@ -1,3 +1,44 @@
 Bundle-Name: Liferay Translation Translator AWS
 Bundle-SymbolicName: com.liferay.translation.translator.aws
 Bundle-Version: 1.0.0
+Import-Package:\
+	!com.aayushatharva.*,\
+	\
+	!com.github.luben.*,\
+	\
+	!com.google.protobuf.*,\
+	\
+	!com.jcraft.jzlib.*,\
+	\
+	!com.ning.compress.*,\
+	\
+	!com.oracle.svm.core.annotate.*,\
+	\
+	!lzma.sdk.*,\
+	\
+	!net.jpountz.lz4.*,\
+	!net.jpountz.xxhash.*,\
+	\
+	!org.apache.avalon.framework.logger.*,\
+	!org.apache.log.*,\
+	\
+	!org.bouncycastle.asn1.x500.*,\
+	!org.bouncycastle.cert.*,\
+	!org.bouncycastle.jce.provider.*,\
+	!org.bouncycastle.operator.*,\
+	\
+	!org.conscrypt.*,\
+	\
+	!org.eclipse.jetty.alpn.*,\
+	!org.eclipse.jetty.npn.*,\
+	\
+	!org.jboss.marshalling.*,\
+	\
+	!org.slf4j.impl.*,\
+	\
+	!reactor.blockhound.*,\
+	\
+	!sun.security.x509.*,\
+	\
+	*
+-fixupmessages "Classes found in the wrong directory"; restrict:=error; is:=warning

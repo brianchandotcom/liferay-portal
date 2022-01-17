@@ -27,14 +27,20 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import javax.portlet.PortletURL;
 
@@ -68,7 +74,10 @@ public class BlogsContentEditorConfigContributor
 				"a[*](*); ", _getAllowedContentText(),
 				" div[*](*); figcaption; figure; iframe[*](*); img[*](*){*}; ",
 				_getAllowedContentLists(), " p[*](*){text-align}; ",
-				_getAllowedContentTable(), " video[*](*);"));
+				_getAllowedContentTable(), " video[*](*);")
+		).put(
+			"stylesSet", getStyleFormatsJSONArray(themeDisplay.getLocale())
+		);
 
 		String namespace = GetterUtil.getString(
 			inputEditorTaglibAttributes.get(
@@ -94,6 +103,64 @@ public class BlogsContentEditorConfigContributor
 					"/blogs/upload_temp_image"
 				).buildString());
 		}
+	}
+
+	protected JSONObject getStyleFormatJSONObject(
+		String styleFormatName, String element, String cssClass) {
+
+		JSONObject styleJSONObject = JSONFactoryUtil.createJSONObject();
+
+		if (Validator.isNotNull(cssClass)) {
+			JSONObject attributesJSONObject = JSONUtil.put("class", cssClass);
+
+			styleJSONObject.put("attributes", attributesJSONObject);
+		}
+
+		styleJSONObject.put(
+			"element", element
+		).put(
+			"name", styleFormatName
+		);
+
+		return styleJSONObject;
+	}
+
+	protected JSONArray getStyleFormatsJSONArray(Locale locale) {
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			locale, "com.liferay.frontend.editor.lang");
+
+		return JSONUtil.putAll(
+			getStyleFormatJSONObject(
+				LanguageUtil.get(resourceBundle, "normal"), "p", null),
+			getStyleFormatJSONObject(
+				LanguageUtil.format(resourceBundle, "heading-x", "1"), "h1",
+				null),
+			getStyleFormatJSONObject(
+				LanguageUtil.format(resourceBundle, "heading-x", "2"), "h2",
+				null),
+			getStyleFormatJSONObject(
+				LanguageUtil.format(resourceBundle, "heading-x", "3"), "h3",
+				null),
+			getStyleFormatJSONObject(
+				LanguageUtil.format(resourceBundle, "heading-x", "4"), "h4",
+				null),
+			getStyleFormatJSONObject(
+				LanguageUtil.get(resourceBundle, "preformatted-text"), "pre",
+				null),
+			getStyleFormatJSONObject(
+				LanguageUtil.get(resourceBundle, "cited-work"), "cite", null),
+			getStyleFormatJSONObject(
+				LanguageUtil.get(resourceBundle, "computer-code"), "code",
+				null),
+			getStyleFormatJSONObject(
+				LanguageUtil.get(resourceBundle, "info-message"), "div",
+				"overflow-auto portlet-msg-info"),
+			getStyleFormatJSONObject(
+				LanguageUtil.get(resourceBundle, "alert-message"), "div",
+				"overflow-auto portlet-msg-alert"),
+			getStyleFormatJSONObject(
+				LanguageUtil.get(resourceBundle, "error-message"), "div",
+				"overflow-auto portlet-msg-error"));
 	}
 
 	private String _getAllowedContentLists() {

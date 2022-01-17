@@ -17,6 +17,7 @@ package com.liferay.search.experiences.rest.internal.resource.v1_0;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -110,6 +111,8 @@ public class SearchResponseResourceImpl extends BaseSearchResponseResourceImpl {
 				pagination.getPageSize()
 			).withSearchContext(
 				searchContext -> {
+					searchContext.setAttribute(
+						"search.experiences.current.group.id", _getGroupId());
 					searchContext.setAttribute(
 						"search.experiences.ip.address",
 						contextHttpServletRequest.getRemoteAddr());
@@ -212,6 +215,15 @@ public class SearchResponseResourceImpl extends BaseSearchResponseResourceImpl {
 		}
 
 		return null;
+	}
+
+	private long _getGroupId() {
+		try {
+			return contextCompany.getGroupId();
+		}
+		catch (PortalException portalException) {
+			throw new RuntimeException(portalException);
+		}
 	}
 
 	private Locale _getLocale(

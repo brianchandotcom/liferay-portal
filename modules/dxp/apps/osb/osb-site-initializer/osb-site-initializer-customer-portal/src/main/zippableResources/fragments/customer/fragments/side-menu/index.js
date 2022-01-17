@@ -19,8 +19,12 @@ const {pathname} = new URL(Liferay.ThemeDisplay.getCanonicalURL());
 const pathSplit = pathname.split('/').filter(Boolean);
 
 const htmlElement = (name, key) => {
-	return `<li><button class="align-items-center btn btn-sm btn-menu customer-portal-side-menu-button" value="${key}" type="button">
-    <img class="mr-2" width="16" src="${window.location.origin}/webdav/${pathSplit[1]}/document_library/assets/navigation-menu/${key}_icon_gray.svg" alt="" />
+	return `<li><button class="align-items-center btn btn-sm btn-menu customer-portal-side-menu-button" value="${name
+		.toLowerCase()
+		.replace(' ', '_')}" type="button">
+    <img class="mr-2" width="16" src="${window.location.origin}/webdav/${
+		pathSplit[1]
+	}/document_library/assets/navigation-menu/${key}_icon_gray.svg" alt="" />
     ${name}
   </button></li>`;
 };
@@ -35,6 +39,8 @@ const setSrcIcon = (keybutton) => {
 
 	return srcIcon;
 };
+
+const eventMenuSelected = Liferay.publish('customer-portal-menu-selected');
 
 const arrowToggleElementKey = 'customer-portal-arrow';
 const productsElementKey = '#customer-portal-products';
@@ -60,15 +66,11 @@ let expandedHeightProducts;
 					) || [];
 
 				buttons.forEach((button) =>
-					button.addEventListener('click', () => {
-						window.dispatchEvent(
-							new CustomEvent('customer-portal-menu-selected', {
-								bubbles: true,
-								composed: true,
-								detail: button.value,
-							})
-						);
-					})
+					button.addEventListener('click', () =>
+						eventMenuSelected.fire({
+							detail: button.value,
+						})
+					)
 				);
 			}
 		);

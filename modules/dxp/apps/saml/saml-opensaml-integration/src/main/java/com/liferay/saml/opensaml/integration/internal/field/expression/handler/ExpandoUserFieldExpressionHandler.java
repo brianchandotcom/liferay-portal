@@ -23,7 +23,6 @@ import com.liferay.expando.kernel.model.ExpandoValue;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.expando.kernel.service.ExpandoValueLocalService;
-import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -259,6 +258,14 @@ public class ExpandoUserFieldExpressionHandler
 		return true;
 	}
 
+	@FunctionalInterface
+	public interface UnsafeValueConsumer<T> {
+
+		public void accept(ExpandoValue expandoValue, T value)
+			throws PortalException;
+
+	}
+
 	@Activate
 	protected void activate(Map<String, Object> properties) {
 		_processingIndex = GetterUtil.getInteger(
@@ -314,13 +321,11 @@ public class ExpandoUserFieldExpressionHandler
 		return shortValues;
 	}
 
-	private static <V> UnsafeBiConsumer<ExpandoValue, String[], PortalException>
-		_getUnsafeBiConsumer(
-			Function<String[], V> function,
-			UnsafeBiConsumer<ExpandoValue, V, PortalException>
-				unsafeBiConsumer) {
+	private static <V> UnsafeValueConsumer<String[]> _getUnsafeValueConsumer(
+		Function<String[], V> function,
+		UnsafeValueConsumer<V> unsafeValueConsumer) {
 
-		return (expandoValue, value) -> unsafeBiConsumer.accept(
+		return (expandoValue, value) -> unsafeValueConsumer.accept(
 			expandoValue, function.apply(value));
 	}
 
@@ -518,12 +523,10 @@ public class ExpandoUserFieldExpressionHandler
 
 	private void _setExpandoValueData(
 			ExpandoValue expandoValue,
-			UnsafeBiConsumer<ExpandoValue, String[], PortalException>
-				unsafeBiConsumer,
-			String[] values)
+			UnsafeValueConsumer<String[]> unsafeValueConsumer, String[] values)
 		throws PortalException {
 
-		if (unsafeBiConsumer == null) {
+		if (unsafeValueConsumer == null) {
 			ExpandoColumn expandoColumn = expandoValue.getColumn();
 
 			throw new ValueDataException(
@@ -534,7 +537,7 @@ public class ExpandoUserFieldExpressionHandler
 					" and this is not a supported mapping"));
 		}
 
-		unsafeBiConsumer.accept(expandoValue, values);
+		unsafeValueConsumer.accept(expandoValue, values);
 	}
 
 	private ExpandoValue _update(
@@ -559,96 +562,84 @@ public class ExpandoUserFieldExpressionHandler
 	private static final Log _log = LogFactoryUtil.getLog(
 		ExpandoUserFieldExpressionHandler.class);
 
-	private static final HashMap
-		<Integer, UnsafeBiConsumer<ExpandoValue, String[], PortalException>>
-			_unsafeBiConsumers =
-				HashMapBuilder.
-					<Integer,
-					 UnsafeBiConsumer<ExpandoValue, String[], PortalException>>
-						put(
-							ExpandoColumnConstants.BOOLEAN,
-							_getUnsafeBiConsumer(
-								values -> GetterUtil.getBoolean(_head(values)),
-								ExpandoValue::setBoolean)
-					).put(
-						ExpandoColumnConstants.BOOLEAN_ARRAY,
-						_getUnsafeBiConsumer(
-							GetterUtil::getBooleanValues,
-							ExpandoValue::setBooleanArray)
-					).put(
-						ExpandoColumnConstants.DOUBLE,
-						_getUnsafeBiConsumer(
-							values -> GetterUtil.getDouble(_head(values)),
-							ExpandoValue::setDouble)
-					).put(
-						ExpandoColumnConstants.DOUBLE_ARRAY,
-						_getUnsafeBiConsumer(
-							GetterUtil::getDoubleValues,
-							ExpandoValue::setDoubleArray)
-					).put(
-						ExpandoColumnConstants.FLOAT,
-						_getUnsafeBiConsumer(
-							values -> GetterUtil.getFloat(_head(values)),
-							ExpandoValue::setFloat)
-					).put(
-						ExpandoColumnConstants.FLOAT_ARRAY,
-						_getUnsafeBiConsumer(
-							GetterUtil::getLongValues,
-							ExpandoValue::setLongArray)
-					).put(
-						ExpandoColumnConstants.LONG,
-						_getUnsafeBiConsumer(
-							values -> GetterUtil.getLongStrict(_head(values)),
-							ExpandoValue::setLong)
-					).put(
-						ExpandoColumnConstants.LONG_ARRAY,
-						_getUnsafeBiConsumer(
-							ExpandoUserFieldExpressionHandler::
-								_getLongValuesStrict,
-							ExpandoValue::setLongArray)
-					).put(
-						ExpandoColumnConstants.INTEGER,
-						_getUnsafeBiConsumer(
-							values -> GetterUtil.getIntegerStrict(
-								_head(values)),
-							ExpandoValue::setInteger)
-					).put(
-						ExpandoColumnConstants.INTEGER_ARRAY,
-						_getUnsafeBiConsumer(
-							ExpandoUserFieldExpressionHandler::
-								_getIntegerValuesStrict,
-							ExpandoValue::setIntegerArray)
-					).put(
-						ExpandoColumnConstants.NUMBER,
-						_getUnsafeBiConsumer(
-							values -> GetterUtil.getNumber(_head(values)),
-							ExpandoValue::setNumber)
-					).put(
-						ExpandoColumnConstants.NUMBER_ARRAY,
-						_getUnsafeBiConsumer(
-							GetterUtil::getNumberValues,
-							ExpandoValue::setNumberArray)
-					).put(
-						ExpandoColumnConstants.SHORT,
-						_getUnsafeBiConsumer(
-							values -> GetterUtil.getShortStrict(_head(values)),
-							ExpandoValue::setShort)
-					).put(
-						ExpandoColumnConstants.SHORT_ARRAY,
-						_getUnsafeBiConsumer(
-							ExpandoUserFieldExpressionHandler::
-								_getShortValuesStrict,
-							ExpandoValue::setShortArray)
-					).put(
-						ExpandoColumnConstants.STRING,
-						_getUnsafeBiConsumer(
-							ExpandoUserFieldExpressionHandler::_head,
-							ExpandoValue::setString)
-					).put(
-						ExpandoColumnConstants.STRING_ARRAY,
-						_getUnsafeBiConsumer(
-							Function.identity(), ExpandoValue::setStringArray)
-					).build();
+	private static final HashMap<Integer, UnsafeValueConsumer<String[]>>
+		_unsafeBiConsumers =
+			HashMapBuilder.<Integer, UnsafeValueConsumer<String[]>>put(
+				ExpandoColumnConstants.BOOLEAN,
+				_getUnsafeValueConsumer(
+					values -> GetterUtil.getBoolean(_head(values)),
+					ExpandoValue::setBoolean)
+			).put(
+				ExpandoColumnConstants.BOOLEAN_ARRAY,
+				_getUnsafeValueConsumer(
+					GetterUtil::getBooleanValues, ExpandoValue::setBooleanArray)
+			).put(
+				ExpandoColumnConstants.DOUBLE,
+				_getUnsafeValueConsumer(
+					values -> GetterUtil.getDouble(_head(values)),
+					ExpandoValue::setDouble)
+			).put(
+				ExpandoColumnConstants.DOUBLE_ARRAY,
+				_getUnsafeValueConsumer(
+					GetterUtil::getDoubleValues, ExpandoValue::setDoubleArray)
+			).put(
+				ExpandoColumnConstants.FLOAT,
+				_getUnsafeValueConsumer(
+					values -> GetterUtil.getFloat(_head(values)),
+					ExpandoValue::setFloat)
+			).put(
+				ExpandoColumnConstants.FLOAT_ARRAY,
+				_getUnsafeValueConsumer(
+					GetterUtil::getLongValues, ExpandoValue::setLongArray)
+			).put(
+				ExpandoColumnConstants.INTEGER,
+				_getUnsafeValueConsumer(
+					values -> GetterUtil.getIntegerStrict(_head(values)),
+					ExpandoValue::setInteger)
+			).put(
+				ExpandoColumnConstants.INTEGER_ARRAY,
+				_getUnsafeValueConsumer(
+					ExpandoUserFieldExpressionHandler::_getIntegerValuesStrict,
+					ExpandoValue::setIntegerArray)
+			).put(
+				ExpandoColumnConstants.LONG,
+				_getUnsafeValueConsumer(
+					values -> GetterUtil.getLongStrict(_head(values)),
+					ExpandoValue::setLong)
+			).put(
+				ExpandoColumnConstants.LONG_ARRAY,
+				_getUnsafeValueConsumer(
+					ExpandoUserFieldExpressionHandler::_getLongValuesStrict,
+					ExpandoValue::setLongArray)
+			).put(
+				ExpandoColumnConstants.NUMBER,
+				_getUnsafeValueConsumer(
+					values -> GetterUtil.getNumber(_head(values)),
+					ExpandoValue::setNumber)
+			).put(
+				ExpandoColumnConstants.NUMBER_ARRAY,
+				_getUnsafeValueConsumer(
+					GetterUtil::getNumberValues, ExpandoValue::setNumberArray)
+			).put(
+				ExpandoColumnConstants.SHORT,
+				_getUnsafeValueConsumer(
+					values -> GetterUtil.getShortStrict(_head(values)),
+					ExpandoValue::setShort)
+			).put(
+				ExpandoColumnConstants.SHORT_ARRAY,
+				_getUnsafeValueConsumer(
+					ExpandoUserFieldExpressionHandler::_getShortValuesStrict,
+					ExpandoValue::setShortArray)
+			).put(
+				ExpandoColumnConstants.STRING,
+				_getUnsafeValueConsumer(
+					ExpandoUserFieldExpressionHandler::_head,
+					ExpandoValue::setString)
+			).put(
+				ExpandoColumnConstants.STRING_ARRAY,
+				_getUnsafeValueConsumer(
+					Function.identity(), ExpandoValue::setStringArray)
+			).build();
 
 	@Reference
 	private ExpandoColumnLocalService _expandoColumnLocalService;

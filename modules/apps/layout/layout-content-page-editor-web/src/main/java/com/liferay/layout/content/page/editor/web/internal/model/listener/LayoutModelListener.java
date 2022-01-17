@@ -116,6 +116,17 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 
 			unicodeProperties.put("siteNavigationMenuId", siteNavigationMenuId);
 		}
+
+		if (typeSettingsUnicodeProperties.containsKey(
+				"siteNavigationMenuName")) {
+
+			String siteNavigationMenuName =
+				typeSettingsUnicodeProperties.getProperty(
+					"siteNavigationMenuName");
+
+			unicodeProperties.put(
+				"siteNavigationMenuName", siteNavigationMenuName);
+		}
 	}
 
 	private Void _copyStructure(

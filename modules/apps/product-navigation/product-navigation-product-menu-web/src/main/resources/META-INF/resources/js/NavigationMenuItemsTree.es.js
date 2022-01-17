@@ -15,29 +15,13 @@
 import {TreeView as ClayTreeView} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
-import React, {useEffect} from 'react';
+import React from 'react';
 
 export default function NavigationMenuItemsTree({
 	selectedSiteNavigationMenuItemId,
 	siteNavigationMenuItems,
 }) {
 	const selectedKeys = new Set([selectedSiteNavigationMenuItemId]);
-
-	const removeEmptyChildren = (item) => {
-		if (item.children.length === 0) {
-			delete item.children;
-		}
-		else {
-			item.children.forEach(removeEmptyChildren);
-		}
-	};
-
-	useEffect(() => {
-		siteNavigationMenuItems.forEach((siteNavigationMenuItem) => {
-			removeEmptyChildren(siteNavigationMenuItem);
-		});
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
 
 	return (
 		<div className="navigation-menu-items-tree">

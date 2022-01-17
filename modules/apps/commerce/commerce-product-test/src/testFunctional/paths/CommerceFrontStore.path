@@ -91,6 +91,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PRODUCT_DETAILS_IN_STOCK_QUANTITY</td>
+	<td>//span[(@data-qa-id='in-stock-quantity') and (contains(text(),'${key_inStockQuantity}'))]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MINI_COMPARE_ITEM_ACTIVE_N</td>
 	<td>//div[@class='mini-compare-item active'][${key_value}]//div[@class='mini-compare-thumbnail']</td>
 	<td></td>

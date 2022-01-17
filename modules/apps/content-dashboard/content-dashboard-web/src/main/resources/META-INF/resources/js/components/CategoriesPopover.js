@@ -17,19 +17,14 @@ import ClayPopover from '@clayui/popover';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
-import useOnClickOutside from '../hooks/useOnClickOutside';
-
 const CategoriesPopover = ({categories, vocabulary}) => {
 	const [openPopover, setOpenPopover] = useState(false);
-
-	useOnClickOutside(['.categories-popover', '.category-label-see-more'], () =>
-		setOpenPopover(false)
-	);
 
 	return (
 		<ClayPopover
 			alignPosition="top"
 			className="categories-popover"
+			closeOnClickOutside={true}
 			disableScroll={true}
 			header={`${categories.length} ${vocabulary} ${Liferay.Language.get(
 				'categories'

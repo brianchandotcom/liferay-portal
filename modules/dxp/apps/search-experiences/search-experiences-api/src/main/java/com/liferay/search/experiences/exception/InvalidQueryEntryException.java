@@ -14,32 +14,28 @@
 
 package com.liferay.search.experiences.exception;
 
-import com.liferay.portal.kernel.util.Validator;
-
 /**
  * @author André de Oliveira
- * @author Wade Cao
  */
-public class SXPExceptionUtil {
+public class InvalidQueryEntryException extends RuntimeException {
 
-	public static boolean hasErrors(Throwable throwable) {
-		if (throwable instanceof InvalidElementInstanceException) {
-			return false;
-		}
+	public static InvalidQueryEntryException at(int index) {
+		InvalidQueryEntryException invalidQueryEntryException =
+			new InvalidQueryEntryException("Invalid query entry at: " + index);
 
-		if ((throwable.getClass() == RuntimeException.class) &&
-			Validator.isBlank(throwable.getMessage())) {
+		invalidQueryEntryException._index = index;
 
-			for (Throwable curThrowable : throwable.getSuppressed()) {
-				if (hasErrors(curThrowable)) {
-					return true;
-				}
-			}
-
-			return false;
-		}
-
-		return true;
+		return invalidQueryEntryException;
 	}
+
+	public int getIndex() {
+		return _index;
+	}
+
+	private InvalidQueryEntryException(String message) {
+		super(message);
+	}
+
+	private int _index;
 
 }

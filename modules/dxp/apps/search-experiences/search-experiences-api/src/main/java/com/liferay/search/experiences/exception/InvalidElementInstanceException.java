@@ -14,32 +14,29 @@
 
 package com.liferay.search.experiences.exception;
 
-import com.liferay.portal.kernel.util.Validator;
-
 /**
  * @author André de Oliveira
- * @author Wade Cao
  */
-public class SXPExceptionUtil {
+public class InvalidElementInstanceException extends RuntimeException {
 
-	public static boolean hasErrors(Throwable throwable) {
-		if (throwable instanceof InvalidElementInstanceException) {
-			return false;
-		}
+	public static InvalidElementInstanceException at(int index) {
+		InvalidElementInstanceException invalidElementInstanceException =
+			new InvalidElementInstanceException(
+				"Invalid element instance at: " + index);
 
-		if ((throwable.getClass() == RuntimeException.class) &&
-			Validator.isBlank(throwable.getMessage())) {
+		invalidElementInstanceException._index = index;
 
-			for (Throwable curThrowable : throwable.getSuppressed()) {
-				if (hasErrors(curThrowable)) {
-					return true;
-				}
-			}
-
-			return false;
-		}
-
-		return true;
+		return invalidElementInstanceException;
 	}
+
+	public int getIndex() {
+		return _index;
+	}
+
+	private InvalidElementInstanceException(String message) {
+		super(message);
+	}
+
+	private int _index;
 
 }

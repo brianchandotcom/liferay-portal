@@ -14,32 +14,28 @@
 
 package com.liferay.search.experiences.exception;
 
-import com.liferay.portal.kernel.util.Validator;
-
 /**
  * @author André de Oliveira
- * @author Wade Cao
  */
-public class SXPExceptionUtil {
+public class InvalidParameterException extends RuntimeException {
 
-	public static boolean hasErrors(Throwable throwable) {
-		if (throwable instanceof InvalidElementInstanceException) {
-			return false;
-		}
+	public static InvalidParameterException with(String name) {
+		InvalidParameterException invalidParameterException =
+			new InvalidParameterException("Invalid parameter name: " + name);
 
-		if ((throwable.getClass() == RuntimeException.class) &&
-			Validator.isBlank(throwable.getMessage())) {
+		invalidParameterException._name = name;
 
-			for (Throwable curThrowable : throwable.getSuppressed()) {
-				if (hasErrors(curThrowable)) {
-					return true;
-				}
-			}
-
-			return false;
-		}
-
-		return true;
+		return invalidParameterException;
 	}
+
+	public String getName() {
+		return _name;
+	}
+
+	private InvalidParameterException(String message) {
+		super(message);
+	}
+
+	private String _name;
 
 }

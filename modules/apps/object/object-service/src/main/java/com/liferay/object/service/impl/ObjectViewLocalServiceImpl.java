@@ -25,6 +25,8 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.vulcan.util.TransformUtil;
@@ -45,6 +47,7 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class ObjectViewLocalServiceImpl extends ObjectViewLocalServiceBaseImpl {
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public ObjectView addObjectView(
 			long userId, long objectDefinitionId, boolean defaultObjectView,
@@ -82,6 +85,7 @@ public class ObjectViewLocalServiceImpl extends ObjectViewLocalServiceBaseImpl {
 		return objectView;
 	}
 
+	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public ObjectView deleteObjectView(long objectViewId)
 		throws PortalException {
@@ -90,6 +94,7 @@ public class ObjectViewLocalServiceImpl extends ObjectViewLocalServiceBaseImpl {
 			objectViewPersistence.findByPrimaryKey(objectViewId));
 	}
 
+	@Indexable(type = IndexableType.DELETE)
 	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public ObjectView deleteObjectView(ObjectView objectView) {
@@ -111,6 +116,7 @@ public class ObjectViewLocalServiceImpl extends ObjectViewLocalServiceBaseImpl {
 		return objectView;
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public ObjectView updateObjectView(
 			long objectViewId, boolean defaultObjectView,

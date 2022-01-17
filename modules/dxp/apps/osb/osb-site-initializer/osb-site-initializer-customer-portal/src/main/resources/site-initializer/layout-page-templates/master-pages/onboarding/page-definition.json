@@ -3,6 +3,9 @@
 		"pageElements": [
 			{
 				"definition": {
+					"fragmentStyle": {
+						"borderWidth": "0"
+					},
 					"layout": {
 						"borderWidth": 0,
 						"marginBottom": 0,
@@ -20,11 +23,13 @@
 					{
 						"definition": {
 							"fragmentStyle": {
+								"borderWidth": "0",
 								"height": "72px",
 								"paddingBottom": "3",
 								"paddingLeft": "3",
 								"paddingRight": "3",
-								"paddingTop": "3"
+								"paddingTop": "3",
+								"textAlign": ""
 							},
 							"layout": {
 								"borderWidth": 0,
@@ -53,13 +58,22 @@
 											"id": "image-square",
 											"value": {
 												"fragmentImage": {
-													"url": {
-														"mapping": {
-															"fieldKey": "previewImage",
-															"itemReference": {
+													"description": {
+														"value_i18n": {
+															"en_US": ""
+														}
+													},
+													"fragmentImageClassPKReference": {
+														"classPKReferences": {
+															"en_US": {
 																"className": "com.liferay.portal.kernel.repository.model.FileEntry",
 																"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/assets/liferay_brand.svg$]"
 															}
+														},
+														"fragmentImageConfiguration": {
+															"landscapeMobile": "auto",
+															"portraitMobile": "auto",
+															"tablet": "auto"
 														}
 													}
 												},
@@ -71,6 +85,7 @@
 										}
 									],
 									"fragmentStyle": {
+										"textAlign": "",
 										"width": "126px"
 									}
 								},

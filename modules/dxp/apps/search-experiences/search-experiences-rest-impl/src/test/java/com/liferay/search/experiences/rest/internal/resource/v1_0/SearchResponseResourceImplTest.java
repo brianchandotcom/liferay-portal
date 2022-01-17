@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.search.document.DocumentBuilderFactory;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHitBuilder;
@@ -35,11 +36,14 @@ import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchResponseBuilder;
 import com.liferay.portal.search.searcher.Searcher;
+import com.liferay.portal.search.test.util.AssertUtils;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.search.experiences.blueprint.exception.InvalidElementInstanceException;
+import com.liferay.search.experiences.blueprint.exception.InvalidParameterException;
+import com.liferay.search.experiences.blueprint.exception.InvalidQueryEntryException;
+import com.liferay.search.experiences.blueprint.exception.UnresolvedTemplateVariableException;
 import com.liferay.search.experiences.blueprint.search.request.enhancer.SXPBlueprintSearchRequestEnhancer;
-import com.liferay.search.experiences.internal.blueprint.exception.InvalidElementInstanceException;
-import com.liferay.search.experiences.internal.blueprint.exception.InvalidQueryEntryException;
 import com.liferay.search.experiences.rest.dto.v1_0.Hit;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
 import com.liferay.search.experiences.rest.dto.v1_0.SearchHits;
@@ -47,6 +51,9 @@ import com.liferay.search.experiences.rest.dto.v1_0.SearchResponse;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -87,22 +94,34 @@ public class SearchResponseResourceImplTest {
 		SearchResponseResourceImpl searchResponseResourceImpl =
 			_createSearchResponseResourceImpl();
 
-		try {
-			searchResponseResourceImpl.search(
-				Mockito.mock(Pagination.class), null, new SXPBlueprint());
+		SearchResponse searchResponse = searchResponseResourceImpl.search(
+			Mockito.mock(Pagination.class), null, new SXPBlueprint());
 
-			Assert.fail();
-		}
-		catch (Exception exception) {
-			Throwable throwable = exception.getSuppressed()[0];
+		Map[] errorMaps = searchResponse.getErrors();
 
-			Assert.assertTrue(
-				throwable.getSuppressed()[0] instanceof
-					InvalidQueryEntryException);
-			Assert.assertTrue(
-				throwable.getSuppressed()[1] instanceof
-					InvalidQueryEntryException);
-		}
+		_assertEquals(
+			HashMapBuilder.put(
+				"exceptionClass", InvalidQueryEntryException.class.getName()
+			).put(
+				"localizedMessage", "Error"
+			).put(
+				"msg", "Invalid query entry at: 0"
+			).put(
+				"severity", "ERROR"
+			).build(),
+			errorMaps[0]);
+
+		_assertEquals(
+			HashMapBuilder.put(
+				"exceptionClass", InvalidQueryEntryException.class.getName()
+			).put(
+				"localizedMessage", "Error"
+			).put(
+				"msg", "Invalid query entry at: 2"
+			).put(
+				"severity", "ERROR"
+			).build(),
+			errorMaps[1]);
 	}
 
 	@Test
@@ -111,8 +130,24 @@ public class SearchResponseResourceImplTest {
 
 		RuntimeException runtimeException = new RuntimeException();
 
-		runtimeException.addSuppressed(InvalidElementInstanceException.at(1));
-		runtimeException.addSuppressed(InvalidElementInstanceException.at(5));
+		Throwable throwable1 = InvalidElementInstanceException.at(1);
+
+		Throwable throwable2 = InvalidQueryEntryException.at(2);
+
+		throwable2.addSuppressed(
+			UnresolvedTemplateVariableException.with(
+				RandomTestUtil.randomString()));
+
+		throwable1.addSuppressed(throwable2);
+
+		runtimeException.addSuppressed(throwable1);
+
+		Throwable throwable3 = InvalidElementInstanceException.at(3);
+
+		throwable3.addSuppressed(
+			InvalidParameterException.with(RandomTestUtil.randomString()));
+
+		runtimeException.addSuppressed(throwable3);
 
 		Mockito.doThrow(
 			runtimeException
@@ -128,9 +163,76 @@ public class SearchResponseResourceImplTest {
 		SearchResponse searchResponse = searchResponseResourceImpl.search(
 			Mockito.mock(Pagination.class), null, new SXPBlueprint());
 
-		// TODO Add warnings to search response DTO and assert them
+		Map[] errorMaps = searchResponse.getErrors();
 
-		Assert.assertNotNull(searchResponse);
+		_assertEquals(
+			HashMapBuilder.put(
+				"exceptionClass",
+				InvalidElementInstanceException.class.getName()
+			).put(
+				"localizedMessage", "Element skipped"
+			).put(
+				"msg", "Invalid element instance at: 1"
+			).put(
+				"severity", "WARN"
+			).put(
+				"sxpElementId", "querySXPElement-1"
+			).build(),
+			errorMaps[0]);
+
+		_assertEquals(
+			HashMapBuilder.put(
+				"exceptionClass", InvalidQueryEntryException.class.getName()
+			).put(
+				"localizedMessage", "Error"
+			).put(
+				"msg", "Invalid query entry at: 2"
+			).put(
+				"severity", "ERROR"
+			).put(
+				"sxpElementId", "querySXPElement-1"
+			).build(),
+			errorMaps[1]);
+
+		_assertEquals(
+			HashMapBuilder.put(
+				"exceptionClass",
+				UnresolvedTemplateVariableException.class.getName()
+			).put(
+				"localizedMessage", "Error"
+			).put(
+				"severity", "ERROR"
+			).put(
+				"sxpElementId", "querySXPElement-1"
+			).build(),
+			errorMaps[2]);
+
+		_assertEquals(
+			HashMapBuilder.put(
+				"exceptionClass",
+				InvalidElementInstanceException.class.getName()
+			).put(
+				"localizedMessage", "Element skipped"
+			).put(
+				"msg", "Invalid element instance at: 3"
+			).put(
+				"severity", "WARN"
+			).put(
+				"sxpElementId", "querySXPElement-3"
+			).build(),
+			errorMaps[3]);
+
+		_assertEquals(
+			HashMapBuilder.put(
+				"exceptionClass", InvalidParameterException.class.getName()
+			).put(
+				"localizedMessage", "Error"
+			).put(
+				"severity", "ERROR"
+			).put(
+				"sxpElementId", "querySXPElement-3"
+			).build(),
+			errorMaps[4]);
 	}
 
 	@Test
@@ -227,6 +329,22 @@ public class SearchResponseResourceImplTest {
 		Assert.assertEquals(requestString, searchResponse.getRequestString());
 		Assert.assertTrue(searchResponse.getResponse() instanceof Map);
 		Assert.assertEquals(responseString, searchResponse.getResponseString());
+	}
+
+	private void _assertEquals(
+		Map<String, String> expectedMap, Map<String, String> actualMap) {
+
+		Set<Map.Entry<String, String>> entries = actualMap.entrySet();
+
+		Stream<Map.Entry<String, String>> stream = entries.stream();
+
+		AssertUtils.assertEquals(
+			() -> String.valueOf(actualMap), expectedMap,
+			stream.filter(
+				entry -> expectedMap.containsKey(entry.getKey())
+			).collect(
+				Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)
+			));
 	}
 
 	private SearchResponseResourceImpl _createSearchResponseResourceImpl() {

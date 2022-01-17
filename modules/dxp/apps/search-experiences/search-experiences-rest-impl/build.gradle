@@ -23,5 +23,6 @@ dependencies {
 
 	testCompile group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.12.4"
 	testCompile project(":apps:portal-search:portal-search")
+	testCompile project(":apps:portal-search:portal-search-test-util")
 	testCompile project(":dxp:apps:search-experiences:search-experiences-service")
 }

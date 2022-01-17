@@ -2767,11 +2767,26 @@ definition {
 				var webContentDateFieldLabel = "Date";
 			}
 
-			AssertAttributeValue(
-				attribute1 = "value",
-				key_fieldFieldLabel = "${webContentDateFieldLabel}",
-				locator1 = "WCEditWebContent#DATE_INPUT",
-				value1 = "${webContentDate}");
+			if ("${webContentDate}" == "__/__/____") {
+				AssertAttributeValue(
+					attribute1 = "placeholder",
+					key_fieldFieldLabel = "${webContentDateFieldLabel}",
+					locator1 = "WCEditWebContent#DATE_INPUT",
+					value1 = "${webContentDate}");
+
+				AssertAttributeValue(
+					attribute1 = "value",
+					key_fieldFieldLabel = "${webContentDateFieldLabel}",
+					locator1 = "WCEditWebContent#DATE_INPUT",
+					value1 = "");
+			}
+			else {
+				AssertAttributeValue(
+					attribute1 = "value",
+					key_fieldFieldLabel = "${webContentDateFieldLabel}",
+					locator1 = "WCEditWebContent#DATE_INPUT",
+					value1 = "${webContentDate}");
+			}
 		}
 
 		if (isSet(webContentGeolocation)) {

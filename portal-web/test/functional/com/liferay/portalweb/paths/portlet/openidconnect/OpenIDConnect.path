@@ -19,12 +19,12 @@
 <!--KEYCLOAK LOGIN-->
 <tr>
 	<td>LOGIN_USERNAME_FIELD</td>
-	<td>//input[contains(@id,'username')]</td>
+	<td>//input[contains(@id,'username') or contains(@id,'identifierId')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LOGIN_PASSWORD_FIELD</td>
-	<td>//input[contains(@id,'password')]</td>
+	<td>//input[contains(@id,'password') or contains(@type,'password')]</td>
 	<td></td>
 </tr>
 <tr>

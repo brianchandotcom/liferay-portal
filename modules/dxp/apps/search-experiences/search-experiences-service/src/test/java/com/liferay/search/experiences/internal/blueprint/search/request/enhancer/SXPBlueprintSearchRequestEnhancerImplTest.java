@@ -50,9 +50,10 @@ import com.liferay.portal.search.sort.FieldSort;
 import com.liferay.portal.search.sort.Sort;
 import com.liferay.portal.search.sort.SortOrder;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-import com.liferay.search.experiences.internal.blueprint.exception.InvalidElementInstanceException;
-import com.liferay.search.experiences.internal.blueprint.exception.InvalidQueryEntryException;
-import com.liferay.search.experiences.internal.blueprint.exception.UnresolvedTemplateVariableException;
+import com.liferay.search.experiences.blueprint.exception.InvalidElementInstanceException;
+import com.liferay.search.experiences.blueprint.exception.InvalidParameterException;
+import com.liferay.search.experiences.blueprint.exception.InvalidQueryEntryException;
+import com.liferay.search.experiences.blueprint.exception.UnresolvedTemplateVariableException;
 import com.liferay.search.experiences.internal.blueprint.parameter.SXPParameterDataCreator;
 import com.liferay.search.experiences.internal.blueprint.parameter.contributor.ContextSXPParameterContributor;
 import com.liferay.search.experiences.internal.blueprint.parameter.contributor.SXPParameterContributor;
@@ -393,13 +394,12 @@ public class SXPBlueprintSearchRequestEnhancerImplTest {
 
 			Assert.assertEquals(1, invalidQueryEntryException2.getIndex());
 
-			IllegalArgumentException illegalArgumentException =
-				(IllegalArgumentException)
+			InvalidParameterException invalidParameterException =
+				(InvalidParameterException)
 					invalidQueryEntryException2.getSuppressed()[0];
 
 			Assert.assertEquals(
-				"Invalid parameter name product.code",
-				illegalArgumentException.getMessage());
+				"product.code", invalidParameterException.getName());
 
 			InvalidQueryEntryException invalidQueryEntryException3 =
 				(InvalidQueryEntryException)throwable.getSuppressed()[2];

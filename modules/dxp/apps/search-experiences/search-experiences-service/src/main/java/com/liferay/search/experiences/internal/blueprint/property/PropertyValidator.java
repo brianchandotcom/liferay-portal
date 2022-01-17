@@ -16,7 +16,7 @@ package com.liferay.search.experiences.internal.blueprint.property;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.search.experiences.internal.blueprint.exception.UnresolvedTemplateVariableException;
+import com.liferay.search.experiences.blueprint.exception.UnresolvedTemplateVariableException;
 
 import org.apache.commons.lang.StringUtils;
 

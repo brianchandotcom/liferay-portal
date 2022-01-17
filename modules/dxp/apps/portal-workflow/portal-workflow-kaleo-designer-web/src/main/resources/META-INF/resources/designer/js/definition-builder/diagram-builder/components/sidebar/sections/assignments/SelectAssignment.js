@@ -12,8 +12,8 @@
 import ClayForm, {ClaySelect} from '@clayui/form';
 import React, {useState} from 'react';
 
-import SidebarPanel from '../SidebarPanel';
-import ResourceActions from './select-assignment/ResourceActions';
+import SidebarPanel from '../../SidebarPanel';
+import ResourceActions from '../assignments/select-assignment/ResourceActions';
 
 const options = [
 	{

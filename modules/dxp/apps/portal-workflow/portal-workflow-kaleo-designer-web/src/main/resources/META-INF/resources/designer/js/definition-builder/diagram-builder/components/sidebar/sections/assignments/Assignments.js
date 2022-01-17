@@ -9,23 +9,26 @@
  * distribution rights of the Software.
  */
 
-import ClayForm, {ClayInput} from '@clayui/form';
+import ClayButton from '@clayui/button';
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import SidebarPanel from '../../SidebarPanel';
 
-const ResourceActions = () => (
-	<SidebarPanel panelTitle={Liferay.Language.get('resource-actions')}>
-		<ClayForm.Group>
-			<label htmlFor="resource-actions">
-				{Liferay.Language.get('resource-actions')}
-
-				<span className="ml-1 mr-1 text-warning">*</span>
-			</label>
-
-			<ClayInput component="textarea" id="resource-actions" type="text" />
-		</ClayForm.Group>
+const Assignments = ({setContentName}) => (
+	<SidebarPanel panelTitle={Liferay.Language.get('assignments')}>
+		<ClayButton
+			className="mr-3"
+			displayType="secondary"
+			onClick={() => setContentName('assignments')}
+		>
+			{Liferay.Language.get('new')}
+		</ClayButton>
 	</SidebarPanel>
 );
 
-export default ResourceActions;
+Assignments.propTypes = {
+	setContentName: PropTypes.func.isRequired,
+};
+
+export default Assignments;

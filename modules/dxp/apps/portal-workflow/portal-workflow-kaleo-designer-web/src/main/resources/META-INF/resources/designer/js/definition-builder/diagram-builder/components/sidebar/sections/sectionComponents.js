@@ -9,10 +9,10 @@
  * distribution rights of the Software.
  */
 
-import Assignments from './Assignments';
 import EdgeInformation from './EdgeInformation';
 import NodeInformation from './NodeInformation';
-import SelectAssignment from './SelectAssignment';
+import Assignments from './assignments/Assignments';
+import SelectAssignment from './assignments/SelectAssignment';
 
 const sectionComponents = {
 	assignments: Assignments,

@@ -12,11 +12,11 @@
 import {useLazyQuery} from '@apollo/client';
 import {ClayInput} from '@clayui/form';
 import {useEffect, useState} from 'react';
-import Input from '../../../../common/components/Input';
-import Select from '../../../../common/components/Select';
-import useDebounce from '../../../../common/hooks/useDebounce';
-import {getBannedEmailDomains} from '../../../../common/services/liferay/graphql/queries';
-import {isValidEmail} from '../../../../common/utils/validations.form';
+import useDebounce from '../../../../hooks/useDebounce';
+import {getBannedEmailDomains} from '../../../../services/liferay/graphql/queries';
+import {isValidEmail} from '../../../../utils/validations.form';
+import Input from '../../../Input';
+import Select from '../../../Select';
 
 const InvitesInputs = ({
 	disableError,

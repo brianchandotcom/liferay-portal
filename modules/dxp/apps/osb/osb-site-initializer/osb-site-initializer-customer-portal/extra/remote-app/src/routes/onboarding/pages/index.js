@@ -9,23 +9,53 @@
  * distribution rights of the Software.
  */
 
-import {useContext} from 'react';
-import {AppContext} from '../context';
+import Invites from '../../../common/components/onboarding/Invites';
+import SetupDXPCloud from '../../../common/components/onboarding/SetupDXPCloud';
+import {PARAMS_KEYS} from '../../../common/services/liferay/search-params';
+import {getLiferaySiteName} from '../../../common/services/liferay/utils';
+import {API_BASE_URL} from '../../../common/utils';
+import {useOnboarding} from '../context';
+import {actionTypes} from '../context/reducer';
 import {steps} from '../utils/constants';
-import Invites from './Invites';
-import SetupDXPCloud from './SetupDXPCloud';
 import SuccessDXPCloud from './SuccessDXPCloud';
 import Welcome from './Welcome';
 
 const Pages = () => {
-	const [{project, step}] = useContext(AppContext);
+	const [{project, step, subscriptionGroups}, dispatch] = useOnboarding();
+
+	const invitesPageHandle = () => {
+		const hasSubscriptionsDXPCloud = !!subscriptionGroups?.length;
+
+		if (hasSubscriptionsDXPCloud) {
+			dispatch({
+				payload: steps.dxpCloud,
+				type: actionTypes.CHANGE_STEP,
+			});
+		} else {
+			window.location.href = `${API_BASE_URL}/${getLiferaySiteName()}/overview?${
+				PARAMS_KEYS.PROJECT_APPLICATION_EXTERNAL_REFERENCE_CODE
+			}=${project.accountKey}`;
+		}
+	};
 
 	const StepsLayout = {
 		[steps.invites]: {
-			Component: <Invites project={project} />,
+			Component: (
+				<Invites handlePage={invitesPageHandle} project={project} />
+			),
 		},
 		[steps.dxpCloud]: {
-			Component: <SetupDXPCloud project={project} />,
+			Component: (
+				<SetupDXPCloud
+					handlePage={() =>
+						dispatch({
+							payload: steps.successDxpCloud,
+							type: actionTypes.CHANGE_STEP,
+						})
+					}
+					project={project}
+				/>
+			),
 		},
 		[steps.successDxpCloud]: {
 			Component: <SuccessDXPCloud project={project} />,

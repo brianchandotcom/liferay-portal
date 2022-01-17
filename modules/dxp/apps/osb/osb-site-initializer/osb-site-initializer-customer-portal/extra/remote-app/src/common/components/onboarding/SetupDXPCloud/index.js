@@ -11,11 +11,8 @@
 
 import {useMutation, useQuery} from '@apollo/client';
 import ClayForm from '@clayui/form';
-import {useFormikContext} from 'formik';
+import {Formik} from 'formik';
 import {useEffect, useMemo, useState} from 'react';
-import BaseButton from '../../../../common/components/BaseButton';
-import Input from '../../../../common/components/Input';
-import Select from '../../../../common/components/Select';
 import {
 	addSetupDXPCloud,
 	getSetupDXPCloudInfo,
@@ -24,15 +21,21 @@ import {PARAMS_KEYS} from '../../../../common/services/liferay/search-params';
 import {getLiferaySiteName} from '../../../../common/services/liferay/utils';
 import {API_BASE_URL} from '../../../../common/utils';
 import {isLowercaseAndNumbers} from '../../../../common/utils/validations.form';
-import {useOnboarding} from '../../../../routes/onboarding/context';
-import AdminInputs from '../../components/AdminInputs';
-import Layout from '../../components/Layout';
-import {actionTypes} from '../../context/reducer';
-import {getInitialDxpAdmin, steps} from '../../utils/constants';
+import {getInitialDxpAdmin} from '../../../utils/constants';
+import BaseButton from '../../BaseButton';
+import Input from '../../Input';
+import Select from '../../Select';
+import AdminInputs from '../components/AdminInputs';
+import Layout from '../components/Layout';
 
-const SetupDXPCloud = ({project}) => {
-	const [, dispatch] = useOnboarding();
-	const {errors, setFieldValue, touched, values} = useFormikContext();
+const SetupDXPCloudPage = ({
+	errors,
+	handlePage,
+	project,
+	setFieldValue,
+	touched,
+	values,
+}) => {
 	const [baseButtonDisabled, setBaseButtonDisabled] = useState(true);
 
 	const {data} = useQuery(getSetupDXPCloudInfo, {
@@ -102,10 +105,7 @@ const SetupDXPCloud = ({project}) => {
 			});
 
 			if (!error) {
-				dispatch({
-					payload: steps.successDxpCloud,
-					type: actionTypes.CHANGE_STEP,
-				});
+				handlePage();
 			}
 		}
 	};
@@ -209,6 +209,24 @@ const SetupDXPCloud = ({project}) => {
 				Add Another Admin
 			</BaseButton>
 		</Layout>
+	);
+};
+
+const SetupDXPCloud = (props) => {
+	return (
+		<Formik
+			initialValues={{
+				dxp: {
+					admins: [getInitialDxpAdmin()],
+					dataCenterRegion: {},
+					disasterDataCenterRegion: {},
+					projectId: '',
+				},
+			}}
+			validateOnChange
+		>
+			{(formikProps) => <SetupDXPCloudPage {...props} {...formikProps} />}
+		</Formik>
 	);
 };
 

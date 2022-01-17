@@ -10,7 +10,7 @@
  */
 
 import Skeleton from '../../../../common/components/Skeleton';
-import Layout from '../../components/Layout';
+import Layout from '../../../../common/components/onboarding/components/Layout';
 
 const WelcomeSkeleton = () => {
 	return (

@@ -10,10 +10,10 @@
  */
 
 import BaseButton from '../../../../common/components/BaseButton';
+import Layout from '../../../../common/components/onboarding/components/Layout';
 import {PARAMS_KEYS} from '../../../../common/services/liferay/search-params';
 import {getLiferaySiteName} from '../../../../common/services/liferay/utils';
 import {API_BASE_URL} from '../../../../common/utils';
-import Layout from '../../components/Layout';
 
 const SuccessDXPCloud = ({project}) => {
 	const onClickDone = () => {

@@ -11,7 +11,6 @@
 
 import {createContext, useContext, useEffect, useReducer} from 'react';
 import client from '../../../apolloClient';
-import FormProvider from '../../../common/providers/FormProvider';
 import {Liferay} from '../../../common/services/liferay';
 import {
 	addAccountFlag,
@@ -24,29 +23,12 @@ import {
 	SearchParams,
 } from '../../../common/services/liferay/search-params';
 import {ROUTES} from '../../../common/utils/constants';
-import {isValidPage} from '../../../common/utils/page.validation';
-import {PRODUCTS} from '../../customer-portal/utils/constants';
-import {
-	getInitialDxpAdmin,
-	getInitialInvite,
-	roles,
-	steps,
-} from '../utils/constants';
-import reducer, {actionTypes} from './reducer';
 
-const initialForm = {
-	dxp: {
-		admins: [getInitialDxpAdmin()],
-		dataCenterRegion: {},
-		disasterDataCenterRegion: {},
-		projectId: '',
-	},
-	invites: [
-		getInitialInvite(),
-		getInitialInvite(roles.MEMBER.key),
-		getInitialInvite(roles.MEMBER.key),
-	],
-};
+// import {isValidPage} from '../../../common/utils/page.validation';
+
+import {PRODUCTS} from '../../customer-portal/utils/constants';
+import {steps} from '../utils/constants';
+import reducer, {actionTypes} from './reducer';
 
 const AppContext = createContext();
 
@@ -127,13 +109,13 @@ const AppContextProvider = ({assetsPath, children}) => {
 				return;
 			}
 
-			const isValid = await isValidPage(
-				user,
-				projectExternalReferenceCode,
-				ROUTES.ONBOARDING
-			);
+			// const isValid = await isValidPage(
+			// 	user,
+			// 	projectExternalReferenceCode,
+			// 	ROUTES.ONBOARDING
+			// );
 
-			if (user && isValid) {
+			if (user) {
 				const accountBrief = user.accountBriefs?.find(
 					(accountBrief) =>
 						accountBrief.externalReferenceCode ===
@@ -163,7 +145,7 @@ const AppContextProvider = ({assetsPath, children}) => {
 
 	return (
 		<AppContext.Provider value={[state, dispatch]}>
-			<FormProvider initialValues={initialForm}>{children}</FormProvider>
+			{children}
 		</AppContext.Provider>
 	);
 };

@@ -10,7 +10,7 @@
  */
 
 import BaseButton from '../../../../common/components/BaseButton';
-import Layout from '../../components/Layout';
+import Layout from '../../../../common/components/onboarding/components/Layout';
 import {useOnboarding} from '../../context';
 import {actionTypes} from '../../context/reducer';
 import {steps} from '../../utils/constants';

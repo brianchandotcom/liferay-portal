@@ -11,25 +11,20 @@
 
 import {useMutation} from '@apollo/client';
 import ClayForm from '@clayui/form';
-import {useFormikContext} from 'formik';
+import {Formik} from 'formik';
 import {useEffect, useState} from 'react';
 import client from '../../../../apolloClient';
-import BaseButton from '../../../../common/components/BaseButton';
-import WarningBadge from '../../../../common/components/WarningBadge';
-import {useApplicationProvider} from '../../../../common/context/ApplicationPropertiesProvider';
-import {Liferay} from '../../../../common/services/liferay';
+import {useApplicationProvider} from '../../../context/ApplicationPropertiesProvider';
+import {Liferay} from '../../../services/liferay';
 import {
 	addTeamMembersInvitation,
 	getAccountRoles,
-} from '../../../../common/services/liferay/graphql/queries';
-import {PARAMS_KEYS} from '../../../../common/services/liferay/search-params';
-import {getLiferaySiteName} from '../../../../common/services/liferay/utils';
-import {API_BASE_URL} from '../../../../common/utils';
-import InvitesInputs from '../../components/InvitesInputs';
-import Layout from '../../components/Layout';
-import {useOnboarding} from '../../context';
-import {actionTypes} from '../../context/reducer';
-import {getInitialInvite, roles, steps} from '../../utils/constants';
+} from '../../../services/liferay/graphql/queries';
+import {getInitialInvite, roles} from '../../../utils/constants';
+import BaseButton from '../../BaseButton';
+import WarningBadge from '../../WarningBadge';
+import InvitesInputs from '../components/InvitesInputs';
+import Layout from '../components/Layout';
 
 const MAXIMUM_INVITES_COUNT = 10;
 
@@ -38,16 +33,17 @@ const SLA = {
 	platinum: 'Platinum',
 };
 
-const Invites = ({project}) => {
+const InvitesPage = ({
+	errors,
+	handlePage,
+	project,
+	setFieldValue,
+	setTouched,
+	touched,
+	values,
+}) => {
 	const {supportLink} = useApplicationProvider();
-	const [{subscriptionGroups}, dispatch] = useOnboarding();
-	const {
-		errors,
-		setFieldValue,
-		setTouched,
-		touched,
-		values,
-	} = useFormikContext();
+
 	const [rolesData, setRolesData] = useState();
 
 	const [AddTeamMemberInvitation, {called, error}] = useMutation(
@@ -82,22 +78,6 @@ const Invites = ({project}) => {
 	const filledEmails = values?.invites?.filter(({email}) => email).length;
 	const maxRequestors = project.maxRequestors < 1 ? 1 : project.maxRequestors;
 
-	const hasSubscriptionsDXPCloud = !!subscriptionGroups?.length;
-
-	const nextPage = () => {
-		if (hasSubscriptionsDXPCloud) {
-			dispatch({
-				payload: steps.dxpCloud,
-				type: actionTypes.CHANGE_STEP,
-			});
-		}
-		else {
-			window.location.href = `${API_BASE_URL}/${getLiferaySiteName()}/overview?${
-				PARAMS_KEYS.PROJECT_APPLICATION_EXTERNAL_REFERENCE_CODE
-			}=${project.accountKey}`;
-		}
-	};
-
 	const handleSubmit = async () => {
 		const invites = values?.invites || [];
 
@@ -119,10 +99,9 @@ const Invites = ({project}) => {
 			);
 
 			if (!error) {
-				nextPage();
+				handlePage();
 			}
-		}
-		else {
+		} else {
 			setInitialError(true);
 			setBaseButtonDisabled(true);
 			setTouched({
@@ -251,8 +230,7 @@ const Invites = ({project}) => {
 			const sucessfullyEmails = totalEmails - failedEmails;
 			setInitialError(false);
 			setBaseButtonDisabled(sucessfullyEmails !== totalEmails);
-		}
-		else if (touched['invites']?.some((field) => field.email)) {
+		} else if (touched['invites']?.some((field) => field.email)) {
 			setInitialError(true);
 			setBaseButtonDisabled(true);
 		}
@@ -262,7 +240,7 @@ const Invites = ({project}) => {
 		<Layout
 			footerProps={{
 				leftButton: (
-					<BaseButton borderless onClick={nextPage}>
+					<BaseButton borderless onClick={handlePage}>
 						Skip for now
 					</BaseButton>
 				),
@@ -364,6 +342,23 @@ const Invites = ({project}) => {
 				</div>
 			</div>
 		</Layout>
+	);
+};
+
+const Invites = (props) => {
+	return (
+		<Formik
+			initialValues={{
+				invites: [
+					getInitialInvite(),
+					getInitialInvite(roles.MEMBER.key),
+					getInitialInvite(roles.MEMBER.key),
+				],
+			}}
+			validateOnChange
+		>
+			{(formikProps) => <InvitesPage {...props} {...formikProps} />}
+		</Formik>
 	);
 };
 

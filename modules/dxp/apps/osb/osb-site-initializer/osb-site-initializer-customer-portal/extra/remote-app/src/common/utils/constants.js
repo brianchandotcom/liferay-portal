@@ -17,3 +17,42 @@ export const ROUTES = {
 export const ROLES_PERMISSIONS = {
 	ACCOUNT_ADMINISTRATOR: 'Account Administrator',
 };
+
+export const roles = {
+	ADMIN: {
+		key: 'Account Administrator',
+		name: 'Administrator',
+	},
+	MEMBER: {
+		key: 'Account Member',
+		name: 'User',
+	},
+	PARTNER_MANAGER: {
+		key: 'Partner Manager',
+		name: 'Partner Manager',
+	},
+	PARTNER_MEMBER: {
+		key: 'Partner Member',
+		name: 'Partner Member',
+	},
+	REQUESTOR: {
+		key: 'Requestor',
+		name: 'Requestor',
+	},
+};
+
+export function getInitialDxpAdmin() {
+	return {
+		email: '',
+		firstName: '',
+		github: '',
+		lastName: '',
+	};
+}
+
+export function getInitialInvite(roleId = '') {
+	return {
+		email: '',
+		roleId,
+	};
+}

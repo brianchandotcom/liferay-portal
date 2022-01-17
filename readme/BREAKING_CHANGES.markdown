@@ -969,3 +969,22 @@ Use `getSegmentsEntryIds` in `FragmentEntryProcessorContext`, `DefaultFragmentEn
 This change was made so that a collection's variations can be retrieved when using collections in a fragment.
 
 ---------------------------------------
+
+## Renamed Google Cloud autotranslation module
+
+- **Date:** 2022-Jan-17
+- **JIRA Ticket:** [LPS-145450](http://issues.liferay.com/browse/LPS-145450)
+
+### What changed?
+
+The `translation-google-cloud-translator` module and its packages were renamed. Although these packages are internal, the rename is not backwards compatible, as it changes the PID of the service configuration.
+
+### Who is affected?
+
+Any installation that has configured the Google Cloud autotranslator service.
+
+### How should I update my code?
+
+No code changes are necessary. Administrators may need to reconfigure the Google Could autotranslator service.
+
+---------------------------------------

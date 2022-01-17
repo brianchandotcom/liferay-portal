@@ -168,68 +168,68 @@ public String[] getPreferencesValues(
 1.  If you're new to Javadoc, familiarize yourself with the
     [official Javadoc style guide](http://www.oracle.com/technetwork/java/javase/documentation/index-137868.html).
 
-2.  Starting with an *action word*, describe what each [class](#class-comments)
+1.  Starting with an *action word*, describe what each [class](#class-comments)
     and [method](#method-comments) does.
 
-3.  Avoid just restating the class or method name (e.g., Avoid
+1.  Avoid just restating the class or method name (e.g., Avoid
     *updateLocalization(...)* &rarr; *Updates the localization* **OR** *@param
     key the key*).
 
-4.  Describe the most important details in the first sentence, because it is the
+1.  Describe the most important details in the first sentence, because it is the
     only one shown in the class/method summary.
 
-5.  Include all relevant tags
+1.  Include all relevant tags
     ([@param](ADVANCED_JAVADOC_GUIDELINES.markdown#param-tags),
     [@return](ADVANCED_JAVADOC_GUIDELINES.markdown#return-tags), etc.) for
     each method; without them, the method Javadoc is incomplete.
 
-6.  Start a method description with *Returns*, if the method returns a value.
+1.  Start a method description with *Returns*, if the method returns a value.
 
-7.  Don't explicitly refer to collections in descriptions (e.g.,
+1.  Don't explicitly refer to collections in descriptions (e.g.,
     *list of articles*). Use, instead, the plural (e.g., *the articles*) or *all
     the* (e.g., *all the articles*).
 
-8.  When referring to another class, try to either link using *{@link entity}*
+1.  When referring to another class, try to either link using *{@link entity}*
     (e.g., *{@link com.liferay.osb.lcs.model.LCSClusterNode}*) or refer to the
     class in common terms (e.g., *LCS cluster node*). The first alternative
     provides direct access to the class's Javadoc, the second alternative makes
     for smooth reading.
 
-9.  Avoid referring explicitly to parameters by name; instead, refer to them in
+1.  Avoid referring explicitly to parameters by name; instead, refer to them in
     general terms (e.g., *class name ID* instead of *<code>classNameId</code>*).
 
-10. Refer to primary keys explicitly, even when the parameter is an ID. For
+1. Refer to primary keys explicitly, even when the parameter is an ID. For
     example, use *the primary key of the something* instead of *the ID of the
     something*.
 
-11. Begin
+1. Begin
     [boolean parameter](ADVANCED_JAVADOC_GUIDELINES.markdown#parameter-boolean)
     descriptions with *whether*.
 
-12. Punctuate every class and method description (sentence or phrase) with a
+1. Punctuate every class and method description (sentence or phrase) with a
     period.
 
-13. Only punctuate an initial description (sentence or phrase) for a method tag
+1. Only punctuate an initial description (sentence or phrase) for a method tag
     [@param](ADVANCED_JAVADOC_GUIDELINES.markdown#param-tags),
     [@return](ADVANCED_JAVADOC_GUIDELINES.markdown#return-tags), or
     [@throws](ADVANCED_JAVADOC_GUIDELINES.markdown#throws-tags) if it's
     followed by a sentence(s). Write followup text in complete sentences.
 
-14. Describe exceptions (e.g.,
+1. Describe exceptions (e.g.,
 	  [@throws](ADVANCED_JAVADOC_GUIDELINES.markdown#throws-tags)) in past
     tense.
 
-15. Only include a class's package in an *@see* and *@link* tag if the class is
+1. Only include a class's package in an *@see* and *@link* tag if the class is
     in another package. Refer to the
     [Javadoc Linking](ADVANCED_JAVADOC_GUIDELINES.markdown#javadoc-linking)
     subsection for comprehensive rules and examples on linking to other
     methods/classes.
 
-16. Don't wrap the first paragraph of a Javadoc comment with paragraph tags. Do
+1. Don't wrap the first paragraph of a Javadoc comment with paragraph tags. Do
     wrap subsequent paragraphs with paragraph tags (e.g.,
     `<p>second paragraph</p>`).
 
-17. Conform Javadoc to 80 columns, if possible.
+1. Conform Javadoc to 80 columns, if possible.
 
 Terrific! You're off to a great start to writing Javadoc. The following sections
 describe the most important aspects of writing class comments and method
@@ -253,7 +253,7 @@ your Javadoc changes to the JSON interface for the class.
     ant compile compile-test
     ```
 
-2. Run the Javadoc Formatter.
+1. Run the Javadoc Formatter.
 
     To format Javadoc in a module under `liferay-portal/modules/`, execute this
     in the module's root folder:
@@ -293,7 +293,7 @@ your Javadoc changes to the JSON interface for the class.
     will add comment placeholders for parameters that are in method signatures
     but not present in the Javadoc comments for those methods.
 
-3. Building Javadoc (optional)
+1. Building Javadoc (optional)
 
     To optionally build a module's Javadoc HTML to the module's `build/docs/`
     folder to see what it looks like, execute this:

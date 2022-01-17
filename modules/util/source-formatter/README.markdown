@@ -26,7 +26,7 @@ Checks are configured in the following files:
    </suppressions>
    ```
 
-2. Exclude a **single file** from **all checks**
+1. Exclude a **single file** from **all checks**
 
    Use `source-formatter.properties#source.formatter.excludes`:
 
@@ -34,7 +34,7 @@ Checks are configured in the following files:
    source.formatter.excludes=portal-kernel/src/com/liferay/portal/kernel/util/PortalUtil.java
    ```
 
-3. Exclude **all files in a directory** from **one specific check**
+1. Exclude **all files in a directory** from **one specific check**
 
    Use `checkstyle-suppressions.xml`:
 
@@ -49,7 +49,7 @@ Checks are configured in the following files:
    </suppressions>
    ```
 
-4. Exclude a **all files in a directory** from **all checks**
+1. Exclude a **all files in a directory** from **all checks**
 
    - Use `source-formatter.properties#source.formatter.excludes`:
 
@@ -59,7 +59,7 @@ Checks are configured in the following files:
 
    - Add (empty) file `source_formatter.ignore` in the directory
 
-5. Exclude **all files in the project** from **one specific check**
+1. Exclude **all files in the project** from **one specific check**
 
    - Use `checkstyle-suppressions.xml`:
 

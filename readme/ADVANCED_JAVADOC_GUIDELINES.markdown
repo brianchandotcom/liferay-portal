@@ -4,19 +4,19 @@
 
 1. [Class Descriptions](#class-descriptions)
 
-2. [Class Javadoc Tags](#class-javadoc-tags)
+1. [Class Javadoc Tags](#class-javadoc-tags)
     - [@author tags](#author-tags)
     - [@param tags](#param-tags)
     - [@see tags](#see-tags)
     - [@since tags](#since-tags)
     - [@deprecated tags](#deprecated-tags)
 
-3. [Method Descriptions](#method-descriptions)
+1. [Method Descriptions](#method-descriptions)
     - [Initial Method Descriptions](#initial-method-descriptions)
     - [Detailed Method Descriptions](#detailed-method-descriptions)
     - [More on Method Descriptions](#more-on-method-descriptions)
 
-4. [Method Javadoc Tags](#method-javadoc-tags)
+1. [Method Javadoc Tags](#method-javadoc-tags)
     - [@param tags](#param-tags)
     - [@return tags](#return-tags)
     - [@throws tags](#throws-tags)
@@ -24,11 +24,11 @@
     - [@since tags for methods](#since-tags-for-methods)
     - [@deprecated tags for methods](#deprecated-tags-for-methods)
 
-5. [Javadoc Linking](#javadoc-linking)
+1. [Javadoc Linking](#javadoc-linking)
 
-6. [Formatting Tags](#formatting-tags)
+1. [Formatting Tags](#formatting-tags)
 
-7. [Examples](#examples)
+1. [Examples](#examples)
     - [Class: Initial and detailed description](#class-initial-and-detailed-description)
     - [Constructor: with parameters](#constructor-with-parameters)
     - [Method: Get by primary key](#method-get-by-primary-key)
@@ -255,7 +255,7 @@ There are two general rules for method descriptions:
 
     Example: `Returns <code>true</code> if this person is an administrator.`
 
-2. When referring to parameters, use "the" instead of "a".
+1. When referring to parameters, use "the" instead of "a".
 
     Example: `Returns the localized preferences value for the key.`
 
@@ -1388,16 +1388,16 @@ Here are the rules to follow:
 1.  Provide a simple description of the service context. If it can optionally be
     `null`, include that information in this first sentence.
 
-2.  In the next sentence, start with "Must set" and describe any service context
+1.  In the next sentence, start with "Must set" and describe any service context
     fields which are mandatory.
 
-3.  In the next sentence, start with "Can set" or "Can merge" and describe any
+1.  In the next sentence, start with "Can set" or "Can merge" and describe any
     service context fields which, if specified, can be used by the underlying
     implementation. If there are a combination of fields that can be *set* and
     fields that can be *merged*, mention the fields that can be set *before* the
     fields that can be merged.
 
-4.  Any service context attribute specifically named should be wrapped in
+1.  Any service context attribute specifically named should be wrapped in
     `<code></code>` tags (e.g., `a service context's
     <code>fieldEntryTypeId</code>`).
 

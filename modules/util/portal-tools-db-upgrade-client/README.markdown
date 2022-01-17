@@ -12,20 +12,20 @@ follow.
 
 1. Deploy Liferay to an application server.
 
-2. Download the latest version of the DB Upgrade Client.
+1. Download the latest version of the DB Upgrade Client.
 
-3. Unzip the client into your Liferay instance
+1. Unzip the client into your Liferay instance
    (e.g., `${liferayHome}/tools/portal-tools-db-upgrade-client`).
 
-4. Run `db_upgrade.bat` in Windows or `db_upgrade.sh` in Unix environments.
+1. Run `db_upgrade.bat` in Windows or `db_upgrade.sh` in Unix environments.
 
 ### Using JPM
 
 1. Install [JPM](https://jpm4j.org).
 
-2. Run `jpm install com.liferay.portal.tools.db.upgrade.client`.
+1. Run `jpm install com.liferay.portal.tools.db.upgrade.client`.
 
-3. Run `liferay-upgrade-db`.
+1. Run `liferay-upgrade-db`.
 
 Both methods have separate ways of executing the tool. The command line options
 listed in the next section, however, can be appended the same way for both

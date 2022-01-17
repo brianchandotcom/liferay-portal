@@ -42,7 +42,7 @@ Bundle-SymbolicName: com.liferay.blogs.test
 The package name for all files inside the module should start with
 `com.liferay.blogs`.
 
-2. Bundle-SymbolicName ending with `.impl`
+1. Bundle-SymbolicName ending with `.impl`
 
 ```
 Bundle-SymbolicName: com.liferay.blogs.demo.data.creator.impl

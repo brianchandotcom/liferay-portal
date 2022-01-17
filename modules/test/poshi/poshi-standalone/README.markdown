@@ -5,7 +5,7 @@ This repository contains the minimal configuration to begin writing and running 
 
  1. Java JDK 8
 
- 2. [Gradle](https://gradle.org/install/) 6.6.1 or a [Gradle Wrapper](https://docs.gradle.org/current/userguide/gradle_wrapper.html#sec:adding_wrapper) binary
+ 1. [Gradle](https://gradle.org/install/) 6.6.1 or a [Gradle Wrapper](https://docs.gradle.org/current/userguide/gradle_wrapper.html#sec:adding_wrapper) binary
 
 ## Configuration
 

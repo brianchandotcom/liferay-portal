@@ -15,14 +15,14 @@ flows which demonstrate the basic usage of Liferay Connector.
 	* For project root select **liferay-connector-demo** folder,
 	check **Copy project into workspace** checkbox and click **Finish**
 
-2. Run the application, make sure Liferay instance with Commerce Minium
+1. Run the application, make sure Liferay instance with Commerce Minium
 accelerator is running too
 
-3. Configure demo project, fill out
+1. Configure demo project, fill out
 ${app.home}/src/main/mule/automation-credentials.properties with parameters from
 your Liferay instance
 
-4. There are 8 flows you can trigger to observe basic functionality of the
+1. There are 8 flows you can trigger to observe basic functionality of the
 	Liferay connector
 
 	* batch-delete-flow: trigger with **curl 0.0.0.0:8081/batch-delete** to

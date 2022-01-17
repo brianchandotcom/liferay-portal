@@ -39,20 +39,27 @@ by default.
 The logic that chooses the default deploy directory is as follows:
 
 - For OSGi modules:
+
 	1. If the project directory contains a `.lfrbuild-app-server-lib` marker
 	file, the module is deployed to `${app.server.portal.dir}/WEB-INF/lib`.
-	2. If the project directory contains a `.lfrbuild-tool` marker file, the
+
+	1. If the project directory contains a `.lfrbuild-tool` marker file, the
 	module is deployed to `${liferay.home}/tools/${module.dir.name}`.
-	3. If the project directory contains a `.lfrbuild-static` marker file, the
+
+	1. If the project directory contains a `.lfrbuild-static` marker file, the
 	module is deployed to `${liferay home}/osgi/static`.
-	4. If the module symbolic name starts with `com.liferay.portal.`, the module
+
+	1. If the module symbolic name starts with `com.liferay.portal.`, the module
 	is deployed to `${liferay home}/osgi/portal`.
-	5. Otherwise, the module is deployed to `${liferay home}/osgi/modules`.
+
+	1. Otherwise, the module is deployed to `${liferay home}/osgi/modules`.
 - For themes:
+
 	1. If the `required-for-startup` property in the
   `src/WEB-INF/liferay-plugin-package.properties` file is `true`, the theme is
 	deployed to `${liferay home}/osgi/war`.
-	2. Otherwise, the theme is deployed to `${liferay home}/deploy`.
+
+	1. Otherwise, the theme is deployed to `${liferay home}/deploy`.
 
 If possible, you should always use these marker files to specify the deploy
 directory of your modules. If none of these cases apply to you, then add
@@ -157,17 +164,26 @@ closure arguments.
 	* Always sort dependencies alphabetically.
 	* Separate dependencies of different configurations with an empty line.
 * Ordering inside Gradle files:
+
 	1. Class imports, sorted and separated in groups (same logic used in Java).
-	2. `buildscript { ... }` block.
-	3. `apply plugin` logic, sorted alphabetically.
-	4. `ext { ... }` block.
-	5. Initialization logic.
-	6. Task creation: `task taskName(type: TaskType)` or simply `task taskName`
+
+	1. `buildscript { ... }` block.
+
+	1. `apply plugin` logic, sorted alphabetically.
+
+	1. `ext { ... }` block.
+
+	1. Initialization logic.
+
+	1. Task creation: `task taskName(type: TaskType)` or simply `task taskName`
 	for default tasks. Don't declare the task dependencies here.
-	7. Project property assignments (e.g., `sourceCompatibility`).
-	8. Variables used globally by the whole script, like a URL or a relative
+
+	1. Project property assignments (e.g., `sourceCompatibility`).
+
+	1. Variables used globally by the whole script, like a URL or a relative
 	path.
-	9. Blocks `{ ... }` to configure tasks, extension objects, etc.
+
+	1. Blocks `{ ... }` to configure tasks, extension objects, etc.
 * Inside a block `{ ... }`:
 	* If variables are needed, declare them inside the block at the beginning.
 	* If setting a property, use the `=` assignment, even if Gradle doesn't

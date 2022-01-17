@@ -11692,15 +11692,18 @@ the `.gitrepo` file with the following values:
 	- `com.liferay.foo.bar=[new packageinfo version for com.liferay.foo.bar package]`
 - [LPS-67863] Execute the following actions when running `gradlew baseline
 -PsyncRelease` on an OSGi project:
+
 	1. Bump up the `Bundle-Version` and `packageinfo` versions based on the same
 	module found in the branch defined in the `release.versions.test.other.dir`
 	project property. The changes are either saved directly in the project
 	files, or in the `.version-overrides-${project.name}.properties` file if the
 	`.gitrepo` file contains the string `"mode = pull"`, which denotes a
 	read-only sub-repository.
-	2. Execute the `baseline` task, automatically ignoring any semantic
+
+	1. Execute the `baseline` task, automatically ignoring any semantic
 	versioning errors.
-	3. Commit the project file changes caused by steps 1 and 2.
+
+	1. Commit the project file changes caused by steps 1 and 2.
 
 ## 1.1.14 - 2016-08-31
 

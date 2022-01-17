@@ -31,7 +31,7 @@ Requirements: [Liferay Portal 7.1 GA1](https://github.com/liferay/liferay-portal
     a path to Liferay Home in your `gradle.properties` file. For example:
     `app.server.parent.dir=/home/computer/Documents/liferay-ce-7.1.0-ga1/`
 
-2.  Start Liferay Portal 7.1.
+1.  Start Liferay Portal 7.1.
 
     In the terminal, navigate to the source code folder
     (`com-liferay-commerce`).
@@ -42,7 +42,7 @@ Requirements: [Liferay Portal 7.1 GA1](https://github.com/liferay/liferay-portal
 
    This takes a few minutes.
 
-3.  When the build is complete, run a full reindex of all search indexes. Go
+1.  When the build is complete, run a full reindex of all search indexes. Go
     to--or refresh-- http://localhost:8080 in your browser. In the left-hand
     menu, go to *Control Panel* &rarr; *Configuration* &rarr; *Search* and
     click *Execute* next to *Reindex all search indexes*.

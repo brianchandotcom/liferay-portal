@@ -118,7 +118,7 @@ Here is a brief summary:
 1. From the root folder of the project, (`liferay-portal/modules/etl/talend/`),
    execute `mvn clean install` to build the component.
 
-2. Assuming that Studio has been extracted like this:
+1. Assuming that Studio has been extracted like this:
 
     ```sh
     $ cd $HOME/tmp
@@ -134,7 +134,7 @@ Here is a brief summary:
          $STUDIO_ROOT/plugins
     ```
 
-4. Edit `$STUDIO_ROOT/configuration/config.ini` as described in wiki page above.
+1. Edit `$STUDIO_ROOT/configuration/config.ini` as described in wiki page above.
     The diff should look like this:
 
     ```diff
@@ -151,16 +151,16 @@ Here is a brief summary:
      osgi.framework.extensions=org.talend.osgi.lib.loader
      ```
 
-5. Copy the `com.liferay.talend`, `com.liferay.talend.common`, and
+1. Copy the `com.liferay.talend`, `com.liferay.talend.common`, and
 `com.liferay.talend.runtime` folders from your local
 
     `$USER_HOME/.m2/repository/com/liferay/` to
 
     `$STUDIO_ROOT/configuration/.m2/repository/com/liferay/`
 
-6. Start Studio, and you'll see new components on the palette under `Business/Liferay` category.
+1. Start Studio, and you'll see new components on the palette under `Business/Liferay` category.
 
-7. There is a bug in Talend Open Studio which requires you to add
+1. There is a bug in Talend Open Studio which requires you to add
    the component dependency and runtime artifacts manually to the job's classpath so you can run the job with a custom component.
 
     See bug report: https://community.talend.com/t5/Design-and-Development/Component-definition-is-not-added-to-the-job-s-classpath-in/m-p/49285/highlight/true#M15736
@@ -170,9 +170,9 @@ Here is a brief summary:
     1. Right mouse click on `.Java` project or if you use TOS 7.0.1+ the project
         called `LOCAL_PROJECT_$ActualJobName$` in `Navigator` view
 
-    2. Maven -> Update Project
+    1. Maven -> Update Project
 
-    3. Uncheck "Offline" and run Update
+    1. Uncheck "Offline" and run Update
 
 ## Reloading components in Talend Studio after codebase changed
 
@@ -182,13 +182,13 @@ registration:
 
 1. Shut down Talend Studio.
 
-2. In the `configuration` folder, remove any folders with names starting
+1. In the `configuration` folder, remove any folders with names starting
    with `org.eclipse`.
 
-3. From the root folder of the project, `liferay-portal/modules/etl/talend/`, execute
+1. From the root folder of the project, `liferay-portal/modules/etl/talend/`, execute
    `mvn clean install` to rebuild and publish the components to Maven repo.
 
-4. Copy the new version of the component definition bundle into `$STUDIO_ROOT/plugins`.
+1. Copy the new version of the component definition bundle into `$STUDIO_ROOT/plugins`.
 
 	```sh
 	$ cp [liferay-portal/modules/etl/talend]/talend-definition/target/com.liferay.talend.definition-x.y.z-SNAPSHOT.jar \
@@ -196,14 +196,14 @@ registration:
 	```
     TIP: **Please make sure you remove old jar version.**
 
-5. Copy the `com.liferay.talend`, `com.liferay.talend.common` and
+1. Copy the `com.liferay.talend`, `com.liferay.talend.common` and
 `com.liferay.talend.runtime` folders from your local
 `$USER_HOME/.m2/repository/com/liferay/` to
 `$STUDIO_ROOT/configuration/.m2/repository/com/liferay/`
 
-6. Start Talend Studio.
+1. Start Talend Studio.
 
-7. Update existing Talend jobs to use the latest component version.
+1. Update existing Talend jobs to use the latest component version.
    This must be done manually. In Talend Studio workspace, open a job that uses Liferay components.
    Remove the components. Pick back the components from the Palette view and configure them as before.
 
@@ -214,7 +214,7 @@ OSX and Linux users may use these 2 scripts to automatize the process:
 
 1. Install component: https://gist.github.com/igorbeslic/1bc7aeb76445e8d72908157ff40a466a
 
-2. Redeploy component: https://gist.github.com/igorbeslic/6ddccd61c7fbc20c3fd65b303c46caa7
+1. Redeploy component: https://gist.github.com/igorbeslic/6ddccd61c7fbc20c3fd65b303c46caa7
 
 ## Running Talend studio in OS with multiple java versions
 

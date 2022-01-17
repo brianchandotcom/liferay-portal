@@ -24,7 +24,7 @@ Developers can submit JSDoc **with** code if certain precautions are followed
     follow the [JSDoc Guidelines](JSDOC_GUIDELINES.markdown) when writing JSDoc
     to ensure comprehensive descriptions and consistent style.
 
-2.  Insert an `@review` tag below each new JSDoc entry. This will be searched
+1.  Insert an `@review` tag below each new JSDoc entry. This will be searched
     for by the Knowledge Management (KM) team after it's merged to ensure that
     all JSDoc submissions follow the correct format and make sense. This
     should look like this:
@@ -42,7 +42,7 @@ Developers can submit JSDoc **with** code if certain precautions are followed
 
     Submit your JSDoc following your typical code review process.
 
-3.  Notify your team's tech writer (a KM team member) that JSDoc is waiting
+1.  Notify your team's tech writer (a KM team member) that JSDoc is waiting
     for review. If you're not sure whom to notify, contact Cody Hoag
     (cody.hoag@liferay.com).
 
@@ -57,7 +57,7 @@ published:
     follow the [JSDoc Guidelines](JSDOC_GUIDELINES.markdown) when
     writing JSDoc to ensure comprehensive descriptions and consistent style.
 
-2.  Send a pull request containing the new JSDoc to your team's tech writer
+1.  Send a pull request containing the new JSDoc to your team's tech writer
     (a KM team member). If you're unsure who should receive the pull request,
     send it to Cody Hoag (Github handle:
     [`codyhoag`](https://github.com/codyhoag)).

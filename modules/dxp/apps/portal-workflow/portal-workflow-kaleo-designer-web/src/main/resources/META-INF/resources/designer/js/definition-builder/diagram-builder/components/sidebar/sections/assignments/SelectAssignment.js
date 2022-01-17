@@ -13,6 +13,7 @@ import ClayForm, {ClaySelect} from '@clayui/form';
 import React, {useState} from 'react';
 
 import SidebarPanel from '../../SidebarPanel';
+import AssetCreator from '../assignments/select-assignment/AssetCreator';
 import ResourceActions from '../assignments/select-assignment/ResourceActions';
 
 const options = [
@@ -21,7 +22,6 @@ const options = [
 		value: '',
 	},
 	{
-		disabled: true,
 		label: Liferay.Language.get('asset-creator'),
 		value: 'assetCreator',
 	},
@@ -47,11 +47,12 @@ const options = [
 	{
 		disabled: true,
 		label: Liferay.Language.get('scripted-assignment'),
-		value: 'scriptedAssignmen',
+		value: 'scriptedAssignment',
 	},
 ];
 
 const AssignmentSectionComponents = {
+	assetCreator: AssetCreator,
 	resourceActions: ResourceActions,
 };
 
@@ -75,7 +76,9 @@ const Assignments = (props) => {
 					<ClaySelect
 						aria-label="Select"
 						id="assignment-type"
-						onChange={(event) => setSection(event.target.value)}
+						onChange={(event) => {
+							setSection(event.target.value);
+						}}
 					>
 						{options.map((item) => (
 							<ClaySelect.Option

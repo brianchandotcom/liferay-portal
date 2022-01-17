@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.4.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_4_0.dtd">
+
+<service-builder auto-namespace-tables="false" mvcc-enabled="true" package-path="com.liferay.commerce.term">
+	<author>Luca Pellizzon</author>
+	<namespace>Commerce</namespace>
+	<entity external-reference-code="true" local-service="true" name="CommerceTermEntry" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="commerceTermEntryId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="active" type="boolean" />
+		<column name="description" type="String" />
+		<column name="displayDate" type="Date" />
+		<column name="expirationDate" type="Date" />
+		<column localized="true" name="label" type="String" />
+		<column name="name" type="String" />
+		<column name="priority" type="double" />
+		<column name="type" type="String" />
+		<column name="typeSettings" type="String" />
+		<column name="lastPublishDate" type="Date" />
+		<column name="status" type="int" />
+		<column name="statusByUserId" type="long" />
+		<column name="statusByUserName" type="String" />
+		<column name="statusDate" type="Date" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="priority" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="C_A" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="active" />
+		</finder>
+		<finder name="C_LikeType" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column comparator="LIKE" name="type" />
+		</finder>
+		<finder name="LtD_S" return-type="Collection">
+			<finder-column comparator="&lt;" name="displayDate" />
+			<finder-column name="status" />
+		</finder>
+		<finder name="LtE_S" return-type="Collection">
+			<finder-column comparator="&lt;" name="expirationDate" />
+			<finder-column name="status" />
+		</finder>
+		<finder name="C_A_LikeType" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="active" />
+			<finder-column comparator="LIKE" name="type" />
+		</finder>
+	</entity>
+	<exceptions>
+		<exception>CommerceTermEntryDisplayDate</exception>
+		<exception>CommerceTermEntryExpirationDate</exception>
+	</exceptions>
+</service-builder>

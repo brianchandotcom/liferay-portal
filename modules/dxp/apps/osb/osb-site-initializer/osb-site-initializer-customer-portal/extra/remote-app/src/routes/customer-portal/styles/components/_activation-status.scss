@@ -1,0 +1,20 @@
+.img-activation-status-not-active {
+	filter: opacity(0.5) saturate(0);
+}
+
+.img-activation-status-in-progress {
+	filter: opacity(0.5) saturate(1);
+}
+
+.label-activation-status {
+	position: absolute;
+	right: 0;
+	top: 0;
+}
+
+.activation-status-container {
+	border: 2px solid;
+	border-color: var(--color-neutral-2);
+	box-shadow: none;
+	max-width: 528.5px;
+}

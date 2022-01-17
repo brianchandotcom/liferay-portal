@@ -8,9 +8,10 @@
  * permissions and limitations under the License, including but not limited to
  * distribution rights of the Software.
  */
+import ActivationStatus from '../../components/ActivationStatus/index';
 
 const DXPCloud = () => {
-	return <div>DXP Cloud page</div>;
+	return <ActivationStatus />;
 };
 
 export default DXPCloud;

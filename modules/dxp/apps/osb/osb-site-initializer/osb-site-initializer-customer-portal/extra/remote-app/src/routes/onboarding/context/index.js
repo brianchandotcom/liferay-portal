@@ -23,9 +23,7 @@ import {
 	SearchParams,
 } from '../../../common/services/liferay/search-params';
 import {ROUTES} from '../../../common/utils/constants';
-
-// import {isValidPage} from '../../../common/utils/page.validation';
-
+import {isValidPage} from '../../../common/utils/page.validation';
 import {PRODUCTS} from '../../customer-portal/utils/constants';
 import {steps} from '../utils/constants';
 import reducer, {actionTypes} from './reducer';
@@ -109,13 +107,13 @@ const AppContextProvider = ({assetsPath, children}) => {
 				return;
 			}
 
-			// const isValid = await isValidPage(
-			// 	user,
-			// 	projectExternalReferenceCode,
-			// 	ROUTES.ONBOARDING
-			// );
+			const isValid = await isValidPage(
+				user,
+				projectExternalReferenceCode,
+				ROUTES.ONBOARDING
+			);
 
-			if (user) {
+			if (user && isValid) {
 				const accountBrief = user.accountBriefs?.find(
 					(accountBrief) =>
 						accountBrief.externalReferenceCode ===

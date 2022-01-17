@@ -39,6 +39,7 @@ const chartFactory = ({
 		case 'color':
 		case 'country':
 		case 'date':
+		case 'date_time':
 		case 'place':
 		case 'postal-code':
 		case 'state':

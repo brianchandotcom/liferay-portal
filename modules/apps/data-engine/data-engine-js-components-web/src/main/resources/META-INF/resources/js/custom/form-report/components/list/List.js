@@ -23,10 +23,17 @@ import {SidebarContext} from '../sidebar/SidebarContext';
 export default function List({data, field, summary, totalEntries, type}) {
 	const {portletNamespace, toggleSidebar} = useContext(SidebarContext);
 
-	const formatDate = (field) => {
+	const formatDate = (field, isDateTime) => {
 		const locale = themeDisplay.getLanguageId().split('_', 1).join('');
+		const date = moment(field).locale(locale).format('L');
 
-		return moment(field).locale(locale).format('L');
+		if (!isDateTime) {
+			return date;
+		}
+
+		const time = moment(field).locale(locale).format('LT');
+
+		return `${date} ${time}`;
 	};
 
 	const checkType = (field, type) => {
@@ -35,6 +42,8 @@ export default function List({data, field, summary, totalEntries, type}) {
 				return <Color hexColor={field} />;
 			case 'date':
 				return formatDate(field);
+			case 'date_time':
+				return formatDate(field, true);
 			default:
 				return field;
 		}

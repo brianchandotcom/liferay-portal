@@ -28,6 +28,81 @@ definition {
 		}
 	}
 
+	@description = "Add a localized web content via Web Content Display widget."
+	@priority = "4"
+	test AddLocalizedWebContent {
+		property testray.component.names = "Localization";
+
+		task ("Add a Web Content Display widget to page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				widgetName = "Web Content Display");
+		}
+
+		task ("Add a Language Selector widget to page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				widgetName = "Language Selector");
+		}
+
+		task ("Add a web content") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+		}
+
+		task ("Select the web content in Web Content Display") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			WebContentDisplayPortlet.selectWebContent(webContentTitle = "Web Content Title");
+
+			IFrame.closeFrame();
+		}
+
+		task ("View web content is shown in Web Content Display") {
+			WebContentDisplayPortlet.viewContent(
+				webContentContent = "Web Content Content",
+				webContentTitle = "Web Content Title");
+		}
+
+		task ("Translate the web content to Chinese") {
+			WebContentDisplayPortletNavigator.gotoEdit(
+				menuItem = "Edit Web Content",
+				webContentTitle = "Web Content Title");
+
+			PortletEntry.changeLocale(locale = "zh-CN");
+
+			WebContent.addCP(
+				webContentContent = "世界您好 Content",
+				webContentTitle = "世界您好 Title");
+
+			PortletEntry.publish();
+		}
+
+		task ("View web content is shwon in Chinese") {
+			LanguagePortlet.selectLanguagePG(
+				locale = "zh-CN",
+				textIcon = "中文-中国");
+
+			WebContentDisplayPortlet.viewContent(
+				webContentContent = "世界您好 Content",
+				webContentTitle = "世界您好 Title");
+		}
+
+		task ("View web content is shown in English") {
+			LanguagePortlet.tearDownLanguagePG();
+
+			WebContentDisplayPortlet.viewContent(
+				webContentContent = "Web Content Content",
+				webContentTitle = "Web Content Title");
+		}
+	}
+
 	@description = "LPS-100416 - Non-Repeatable text fields show incorrect translation on label at first load."
 	@priority = "4"
 	test AddNonRepeatableTextFieldWithTranslation {
@@ -373,6 +448,83 @@ definition {
 				webContentTitle = "Título del contenido web");
 
 			WebContent.viewDefaultLanguage(defaultLanguage = "Spanish (ES)");
+		}
+	}
+
+	@description = "View available locales in Web Content Display with translation tools."
+	@priority = "4"
+	test ViewAvailableTranslations {
+		property testray.component.names = "Localization";
+
+		task ("Add a web content") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+		}
+
+		task ("Select the web content in Web Content Display") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			WebContentDisplayPortlet.selectWebContent(webContentTitle = "Web Content Title");
+
+			IFrame.closeFrame();
+		}
+
+		task ("View web content is shown in Web Content Display") {
+			WebContentDisplayPortlet.viewContent(
+				webContentContent = "Web Content Content",
+				webContentTitle = "Web Content Title");
+		}
+
+		task ("Add a Chinese localized name to web content via Web Content Display") {
+			WebContentDisplayPortletNavigator.gotoEdit(
+				menuItem = "Edit Web Content",
+				webContentTitle = "Web Content Title");
+
+			PortletEntry.changeLocale(locale = "zh-CN");
+
+			WebContent.addCP(
+				webContentContent = "世界您好 Content",
+				webContentTitle = "世界您好 Title");
+
+			PortletEntry.publish();
+		}
+
+		task ("Enable translations tools in Web Content Display") {
+			Portlet.gotoPortletOptions(
+				portletName = "Web Content Display",
+				portletOption = "Configuration");
+
+			WebContentDisplayPortlet.configureSetupPG(userToolNameList = "Translations");
+
+			WebContentDisplayPortlet.saveConfiguration();
+
+			IFrame.closeFrame();
+		}
+
+		task ("View web content is shown in Chinese") {
+			LanguagePortlet.selectLanguagePG(
+				locale = "zh-cn",
+				portletName = "JournalContentPortlet",
+				textIcon = "中文-中国");
+
+			WebContentDisplayPortlet.viewContent(
+				webContentContent = "世界您好 Content",
+				webContentTitle = "世界您好 Title");
+		}
+
+		task ("View web content is shown in English") {
+			LanguagePortlet.selectLanguagePG(
+				locale = "en_US",
+				portletName = "JournalContentPortlet",
+				textIcon = "english-United States");
+
+			WebContentDisplayPortlet.viewContent(
+				webContentContent = "Web Content Content",
+				webContentTitle = "Web Content Title");
 		}
 	}
 

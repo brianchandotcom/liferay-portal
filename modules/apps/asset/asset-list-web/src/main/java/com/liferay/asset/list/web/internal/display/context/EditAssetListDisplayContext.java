@@ -705,6 +705,12 @@ public class EditAssetListDisplayContext {
 				AssetRendererFactoryRegistryUtil.
 					getAssetRendererFactoryByClassNameId(classNameId);
 
+			if (!assetRendererFactory.isActive(_themeDisplay.getCompanyId()) ||
+				!assetRendererFactory.isSelectable()) {
+
+				continue;
+			}
+
 			if (!Objects.equals(
 					assetListEntry.getAssetEntryType(),
 					AssetEntry.class.getName()) &&

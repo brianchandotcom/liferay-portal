@@ -336,8 +336,12 @@ public class DDMFormDisplayContext {
 				DDMFormInstanceVersion latestApprovedDDMFormInstanceVersion =
 					_getLatestApprovedDDMFormInstanceVersion();
 
-				_ddmFormInstance.setSettings(
-					latestApprovedDDMFormInstanceVersion.getSettings());
+				if (Validator.isNotNull(
+						latestApprovedDDMFormInstanceVersion.getSettings())) {
+
+					_ddmFormInstance.setSettings(
+						latestApprovedDDMFormInstanceVersion.getSettings());
+				}
 			}
 		}
 		catch (PortalException portalException) {

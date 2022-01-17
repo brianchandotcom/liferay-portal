@@ -18,6 +18,7 @@ import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTy
 import com.liferay.layout.dynamic.data.mapping.form.field.type.constants.LayoutDDMFormFieldTypeConstants;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.templateparser.TemplateNode;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.ArrayList;
@@ -53,6 +54,23 @@ public class JournalTransformerTest {
 	}
 
 	@Test
+	public void testIncludeBackwardsCompatibilityTemplateNodesFirstChildWithSiblings() {
+		JournalTransformer journalTransformer = new JournalTransformer();
+
+		List<TemplateNode> includeBackwardsCompatibilityTemplateNodes =
+			journalTransformer.includeBackwardsCompatibilityTemplateNodes(
+				_getInitTemplateNodesFirstChildWithSiblings(), 0);
+
+		Assert.assertEquals(
+			includeBackwardsCompatibilityTemplateNodes.toString(), 1,
+			includeBackwardsCompatibilityTemplateNodes.size());
+
+		Assert.assertEquals(
+			_getExpectedTemplateNodesFirstChildWithSiblings(),
+			includeBackwardsCompatibilityTemplateNodes);
+	}
+
+	@Test
 	public void testIncludeBackwardsCompatibilityTemplateNodesWithSiblings() {
 		JournalTransformer journalTransformer = new JournalTransformer();
 
@@ -81,8 +99,14 @@ public class JournalTransformerTest {
 	}
 
 	private TemplateNode _createTemplateNode(String name, String type) {
+		return _createTemplateNode(name, type, StringPool.BLANK);
+	}
+
+	private TemplateNode _createTemplateNode(
+		String name, String type, String value) {
+
 		return new TemplateNode(
-			null, name, StringPool.BLANK, type, Collections.emptyMap());
+			null, name, value, type, Collections.emptyMap());
 	}
 
 	private List<TemplateNode> _getExpectedSiblingsTemplateNodes() {
@@ -165,6 +189,52 @@ public class JournalTransformerTest {
 		return expectedTemplateNodes;
 	}
 
+	private List<TemplateNode>
+		_getExpectedTemplateNodesFirstChildWithSiblings() {
+
+		TemplateNode repeatableTextTemplateNode1 = _createTemplateNode(
+			_REPEATABLE_TEXT_FIELD_NAME, DDMFormFieldTypeConstants.TEXT,
+			"RepeatableTextField1");
+
+		repeatableTextTemplateNode1.appendSibling(repeatableTextTemplateNode1);
+
+		TemplateNode repeatableTextTemplateNode2 = _createTemplateNode(
+			_REPEATABLE_TEXT_FIELD_NAME, DDMFormFieldTypeConstants.TEXT,
+			"RepeatableTextField2");
+
+		repeatableTextTemplateNode1.appendSibling(repeatableTextTemplateNode2);
+
+		TemplateNode repeatableTextTemplateNode3 = _createTemplateNode(
+			_REPEATABLE_TEXT_FIELD_NAME, DDMFormFieldTypeConstants.TEXT,
+			"RepeatableTextField3");
+
+		repeatableTextTemplateNode1.appendSibling(repeatableTextTemplateNode3);
+
+		TemplateNode repeatableTextTemplateNode4 = _createTemplateNode(
+			_REPEATABLE_TEXT_FIELD_NAME, DDMFormFieldTypeConstants.TEXT,
+			"RepeatableTextField4");
+
+		repeatableTextTemplateNode1.appendSibling(repeatableTextTemplateNode4);
+
+		TemplateNode repeatableTextTemplateNode5 = _createTemplateNode(
+			_REPEATABLE_TEXT_FIELD_NAME, DDMFormFieldTypeConstants.TEXT,
+			"RepeatableTextField5");
+
+		repeatableTextTemplateNode1.appendSibling(repeatableTextTemplateNode5);
+
+		TemplateNode textTemplateNode1 = _createTemplateNode(
+			_TEXT_FIELD_NAME, DDMFormFieldTypeConstants.TEXT, "TextField1");
+
+		repeatableTextTemplateNode1.appendChild(textTemplateNode1);
+
+		TemplateNode textTemplateNode2 = _createTemplateNode(
+			_TEXT_FIELD_NAME, DDMFormFieldTypeConstants.TEXT, "TextField2");
+
+		textTemplateNode1.appendSibling(textTemplateNode2);
+
+		return ListUtil.fromArray(repeatableTextTemplateNode1);
+	}
+
 	private List<TemplateNode> _getInitTemplateNodes() {
 		List<TemplateNode> templateNodes = new ArrayList<>();
 
@@ -238,6 +308,64 @@ public class JournalTransformerTest {
 		return templateNodes;
 	}
 
+	private List<TemplateNode> _getInitTemplateNodesFirstChildWithSiblings() {
+		TemplateNode textFieldSetTemplateNode1 = _createTemplateNode(
+			_TEXT_FIELD_SET_NAME, DDMFormFieldTypeConstants.FIELDSET);
+
+		textFieldSetTemplateNode1.appendSibling(textFieldSetTemplateNode1);
+
+		TemplateNode repeatableTextTemplateNode1 = _createTemplateNode(
+			_REPEATABLE_TEXT_FIELD_NAME, DDMFormFieldTypeConstants.TEXT,
+			"RepeatableTextField1");
+
+		repeatableTextTemplateNode1.appendSibling(repeatableTextTemplateNode1);
+
+		TemplateNode repeatableTextTemplateNode2 = _createTemplateNode(
+			_REPEATABLE_TEXT_FIELD_NAME, DDMFormFieldTypeConstants.TEXT,
+			"RepeatableTextField2");
+
+		repeatableTextTemplateNode1.appendSibling(repeatableTextTemplateNode2);
+
+		TemplateNode repeatableTextTemplateNode3 = _createTemplateNode(
+			_REPEATABLE_TEXT_FIELD_NAME, DDMFormFieldTypeConstants.TEXT,
+			"RepeatableTextField3");
+
+		repeatableTextTemplateNode1.appendSibling(repeatableTextTemplateNode3);
+
+		textFieldSetTemplateNode1.appendChild(repeatableTextTemplateNode1);
+
+		TemplateNode textTemplateNode1 = _createTemplateNode(
+			_TEXT_FIELD_NAME, DDMFormFieldTypeConstants.TEXT, "TextField1");
+
+		textFieldSetTemplateNode1.appendChild(textTemplateNode1);
+
+		TemplateNode textFieldSetTemplateNode2 = _createTemplateNode(
+			_TEXT_FIELD_SET_NAME, DDMFormFieldTypeConstants.FIELDSET);
+
+		textFieldSetTemplateNode1.appendSibling(textFieldSetTemplateNode2);
+
+		TemplateNode repeatableTextTemplateNode4 = _createTemplateNode(
+			_REPEATABLE_TEXT_FIELD_NAME, DDMFormFieldTypeConstants.TEXT,
+			"RepeatableTextField4");
+
+		repeatableTextTemplateNode4.appendSibling(repeatableTextTemplateNode4);
+
+		textFieldSetTemplateNode2.appendChild(repeatableTextTemplateNode4);
+
+		TemplateNode repeatableTextTemplateNode5 = _createTemplateNode(
+			_REPEATABLE_TEXT_FIELD_NAME, DDMFormFieldTypeConstants.TEXT,
+			"RepeatableTextField5");
+
+		repeatableTextTemplateNode4.appendSibling(repeatableTextTemplateNode5);
+
+		TemplateNode textTemplateNode2 = _createTemplateNode(
+			_TEXT_FIELD_NAME, DDMFormFieldTypeConstants.TEXT, "TextField2");
+
+		textFieldSetTemplateNode2.appendChild(textTemplateNode2);
+
+		return ListUtil.fromArray(textFieldSetTemplateNode1);
+	}
+
 	private List<TemplateNode> _getInitTemplateNodesWithSiblings() {
 		List<TemplateNode> templateNodes = new ArrayList<>();
 
@@ -267,7 +395,7 @@ public class JournalTransformerTest {
 			bookmarksTitleFieldSetTemplateNode1);
 
 		TemplateNode bookmarksTitleFieldSetTemplateNode2 = _createTemplateNode(
-			"BookmarksTitleFieldSet2", DDMFormFieldTypeConstants.FIELDSET);
+			"BookmarksTitleFieldSet", DDMFormFieldTypeConstants.FIELDSET);
 
 		TemplateNode bookmarksTitleTemplateNode2 = _createTemplateNode(
 			"BookmarksTitle2", DDMFormFieldTypeConstants.TEXT);
@@ -307,5 +435,12 @@ public class JournalTransformerTest {
 
 		return templateNodes;
 	}
+
+	private static final String _REPEATABLE_TEXT_FIELD_NAME =
+		"RepeatableTextField";
+
+	private static final String _TEXT_FIELD_NAME = "TextField";
+
+	private static final String _TEXT_FIELD_SET_NAME = "TextFieldSet";
 
 }

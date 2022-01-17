@@ -66,24 +66,26 @@ public class MarkdownStylingCheck extends BaseFileCheck {
 		StringBuffer sb = new StringBuffer();
 
 		while (matcher.find()) {
-			if (!SourceUtil.isInsideMultiLines(
+			if (SourceUtil.isInsideMultiLines(
 					SourceUtil.getLineNumber(content, matcher.start()),
 					multiLineStringsPositions)) {
 
-				String replacement = matcher.group();
-
-				if (content.charAt(matcher.start() - 1) != CharPool.NEW_LINE) {
-					replacement = "\n" + replacement;
-				}
-
-				String number = matcher.group(1);
-
-				if (!number.equals("1")) {
-					replacement = replacement.replaceFirst("\\d+", "1");
-				}
-
-				matcher.appendReplacement(sb, replacement);
+				continue;
 			}
+
+			String replacement = matcher.group();
+
+			if (content.charAt(matcher.start() - 1) != CharPool.NEW_LINE) {
+				replacement = "\n" + replacement;
+			}
+
+			String number = matcher.group(1);
+
+			if (!number.equals("1")) {
+				replacement = replacement.replaceFirst("\\d+", "1");
+			}
+
+			matcher.appendReplacement(sb, replacement);
 		}
 
 		if (sb.length() > 0) {

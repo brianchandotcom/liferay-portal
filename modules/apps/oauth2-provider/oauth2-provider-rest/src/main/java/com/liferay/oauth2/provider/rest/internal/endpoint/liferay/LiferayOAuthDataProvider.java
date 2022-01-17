@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -907,6 +908,36 @@ public class LiferayOAuthDataProvider
 			httpServletRequest.getRemoteHost();
 	}
 
+	private User _getUser(UserSubject userSubject) throws Exception {
+		Map<String, String> properties = userSubject.getProperties();
+
+		long companyId = GetterUtil.getLong(
+			properties.get(
+				OAuth2ProviderRESTEndpointConstants.PROPERTY_KEY_COMPANY_ID));
+
+		String subject = properties.get("UUID");
+
+		if (subject != null) {
+			return _userLocalService.getUserByUuidAndCompanyId(
+				subject, companyId);
+		}
+
+		subject = properties.get(CompanyConstants.AUTH_TYPE_EA);
+
+		if (subject != null) {
+			return _userLocalService.getUserByEmailAddress(companyId, subject);
+		}
+
+		subject = properties.get(CompanyConstants.AUTH_TYPE_SN);
+
+		if (subject != null) {
+			return _userLocalService.getUserByScreenName(companyId, subject);
+		}
+
+		return _userLocalService.getUser(
+			GetterUtil.getLong(userSubject.getId()));
+	}
+
 	private void _invokeTransactionally(Runnable runnable) throws Throwable {
 		TransactionInvokerUtil.invoke(
 			TransactionConfig.Factory.create(
@@ -1131,20 +1162,15 @@ public class LiferayOAuthDataProvider
 		long userId = 0;
 		String userName = StringPool.BLANK;
 
-		UserSubject userSubject = serverAccessToken.getSubject();
-
-		if (userSubject != null) {
+		if (serverAccessToken.getSubject() != null) {
 			try {
-				userId = GetterUtil.getLong(userSubject.getId());
+				User user = _getUser(serverAccessToken.getSubject());
 
-				User user = _userLocalService.getUser(userId);
+				userId = user.getUserId();
 
 				userName = user.getFullName();
 			}
 			catch (Exception exception) {
-				_log.error(
-					"Unable to load user " + userSubject.getId(), exception);
-
 				throw new RuntimeException(exception);
 			}
 		}

@@ -466,7 +466,7 @@ definition {
 				item = "Edit",
 				pageTemplateName = "Department Landing Page");
 
-			for (var portletName : list "Media Gallery,Web Content Display,Web Content Display,Navigation Menu,Members,Asset Publisher") {
+			for (var portletName : list "Media Gallery,Web Content Display,Web Content Display,Menu Display Widget,Members,Asset Publisher") {
 				Portlet.addPG(portletName = "${portletName}");
 			}
 		}

@@ -9,8 +9,54 @@
  * distribution rights of the Software.
  */
 
-const TeamMembers = () => {
-	return <div>Team Members page</div>;
+import ClayModal, {useModal} from '@clayui/modal';
+import {useState} from 'react';
+import BaseButton from '../../../../common/components/BaseButton';
+import Invites from '../../../../common/components/onboarding/Invites';
+
+const InvitesModal = ({observer, onClose, project}) => {
+	return (
+		<ClayModal center observer={observer}>
+			<Invites
+				handlePage={onClose}
+				leftButton="Cancel"
+				project={project}
+			/>
+		</ClayModal>
+	);
+};
+
+const TeamMembers = ({project}) => {
+	const [visible, setVisible] = useState(false);
+	const modalProps = useModal({
+		onClose: () => setVisible(false),
+	});
+
+	return (
+		<>
+			{visible && <InvitesModal {...modalProps} project={project} />}
+			<div className="mr-8 team-members-overview">
+				<div className="align-items-center d-flex justify-content-between">
+					<div>
+						<h1 className="m-0">Team Members</h1>
+
+						<p className="mb-0 mt-1 text-neutral-7 text-paragraph-sm">
+							Team members have access to this project in Customer
+							Portal.
+						</p>
+					</div>
+
+					<BaseButton
+						className="btn-outline-primary invite-button"
+						onClick={() => setVisible(true)}
+						prependIcon="plus"
+					>
+						Invite
+					</BaseButton>
+				</div>
+			</div>
+		</>
+	);
 };
 
 export default TeamMembers;

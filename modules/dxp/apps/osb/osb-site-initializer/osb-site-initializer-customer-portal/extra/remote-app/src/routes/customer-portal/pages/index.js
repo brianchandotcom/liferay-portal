@@ -60,7 +60,7 @@ const Pages = () => {
 			Skeleton: <Overview.Skeleton />,
 		},
 		[pages.TEAM_MEMBERS]: {
-			Component: <TeamMembers />,
+			Component: <TeamMembers project={project} />,
 			Skeleton: <ActivationKeys.Skeleton />,
 		},
 	};

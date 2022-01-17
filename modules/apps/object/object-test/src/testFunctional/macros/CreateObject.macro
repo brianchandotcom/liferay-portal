@@ -318,6 +318,14 @@ definition {
 		Select(
 			locator1 = "CreateObject#PANEL_CATEGORY_KEY",
 			value1 = "${panelCategoryKey}");
+
+		if (isSet(entryOption)) {
+			Click(locator1 = "ObjectPortlet#SEARCH_RELATIONSHIP_ENTRY");
+
+			Click(
+				key_picklistOption = "${entryOption}",
+				locator1 = "ObjectAdmin#ENTRY_PICKLIST_OPTION");
+		}
 	}
 
 	macro selectTitleField {

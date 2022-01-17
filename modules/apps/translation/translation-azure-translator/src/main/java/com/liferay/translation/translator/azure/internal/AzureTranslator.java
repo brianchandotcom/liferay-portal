@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.translation.azure.translator.internal;
+package com.liferay.translation.translator.azure.internal;
 
 import com.liferay.petra.apache.http.components.URIBuilder;
 import com.liferay.petra.io.StreamUtil;
@@ -29,9 +29,9 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.translation.azure.translator.internal.configuration.AzureTranslatorConfiguration;
 import com.liferay.translation.translator.Translator;
 import com.liferay.translation.translator.TranslatorPacket;
+import com.liferay.translation.translator.azure.internal.configuration.AzureTranslatorConfiguration;
 
 import java.io.IOException;
 
@@ -59,7 +59,7 @@ import org.osgi.service.component.annotations.Modified;
  * @author Adolfo Pérez
  */
 @Component(
-	configurationPid = "com.liferay.translation.azure.translator.internal.configuration.AzureTranslatorConfiguration",
+	configurationPid = "com.liferay.translation.translator.azure.internal.configuration.AzureTranslatorConfiguration",
 	service = Translator.class
 )
 public class AzureTranslator implements Translator {

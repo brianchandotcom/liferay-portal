@@ -41,6 +41,8 @@ export const status = {
 	active: 1,
 	expired: 2,
 	future: 3,
+	inProgress: 4,
+	notActivated: 5,
 };
 
 export const STATUS_CODE = {

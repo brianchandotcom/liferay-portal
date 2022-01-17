@@ -25,6 +25,14 @@ const labelProps = {
 		displayType: 'info',
 		label: 'Future',
 	},
+	[status.inProgress]: {
+		displayType: 'warning',
+		label: 'In Progress',
+	},
+	[status.notActivated]: {
+		displayType: 'dark',
+		label: 'Not Activated',
+	},
 };
 
 const StatusTag = ({currentStatus}) => {

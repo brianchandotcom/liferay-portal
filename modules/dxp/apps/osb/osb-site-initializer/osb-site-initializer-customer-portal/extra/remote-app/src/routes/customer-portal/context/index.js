@@ -9,16 +9,9 @@
  * distribution rights of the Software.
  */
 
-import {
-	createContext,
-	useCallback,
-	useContext,
-	useEffect,
-	useReducer,
-} from 'react';
+import {createContext, useContext, useEffect, useReducer} from 'react';
 import client from '../../../apolloClient';
 import {useApplicationProvider} from '../../../common/context/ApplicationPropertiesProvider';
-import {useCustomEvent} from '../../../common/hooks/useCustomEvent';
 import {Liferay} from '../../../common/services/liferay';
 import {fetchSession} from '../../../common/services/liferay/api';
 import {
@@ -44,11 +37,20 @@ const getCurrentPageName = () => {
 	return pathSplit.length > 2 ? pathSplit[2] : '';
 };
 
+const EVENT_OPTION = {
+	async: true,
+	fireOnce: true,
+};
+
 const AppContextProvider = ({assetsPath, children, page}) => {
 	const {oktaSessionURL} = useApplicationProvider();
-	const dispatchEventUserAccount = useCustomEvent(CUSTOM_EVENTS.USER_ACCOUNT);
-	const dispatchEventSubscriptionGroups = useCustomEvent(
-		CUSTOM_EVENTS.SUBSCRIPTION_GROUPS
+	const eventUserAccount = Liferay.publish(
+		CUSTOM_EVENTS.USER_ACCOUNT,
+		EVENT_OPTION
+	);
+	const eventSubscriptionGroups = Liferay.publish(
+		CUSTOM_EVENTS.SUBSCRIPTION_GROUPS,
+		EVENT_OPTION
 	);
 
 	const [state, dispatch] = useReducer(reducer, {
@@ -56,29 +58,23 @@ const AppContextProvider = ({assetsPath, children, page}) => {
 		page,
 		project: undefined,
 		quickLinks: undefined,
-		sessionId: '',
+		sessionId: ' ',
 		structuredContents: undefined,
 		subscriptionGroups: undefined,
 		userAccount: undefined,
 	});
 
-	const onPageMenuChange = useCallback(({detail}) => {
-		dispatch({
-			payload: detail,
-			type: actionTypes.UPDATE_PAGE,
-		});
-	}, []);
-
 	useEffect(() => {
-		window.addEventListener(CUSTOM_EVENTS.MENU_PAGE, onPageMenuChange);
+		const handler = ({detail}) =>
+			dispatch({
+				payload: detail,
+				type: actionTypes.UPDATE_PAGE,
+			});
 
-		return () => {
-			window.removeEventListener(
-				CUSTOM_EVENTS.MENU_PAGE,
-				onPageMenuChange
-			);
-		};
-	}, [onPageMenuChange]);
+		Liferay.on(CUSTOM_EVENTS.MENU_PAGE, handler);
+
+		return () => Liferay.detach(CUSTOM_EVENTS.MENU_PAGE, handler);
+	}, []);
 
 	useEffect(() => {
 		const getUser = async () => {
@@ -95,7 +91,9 @@ const AppContextProvider = ({assetsPath, children, page}) => {
 					type: actionTypes.UPDATE_USER_ACCOUNT,
 				});
 
-				dispatchEventUserAccount(data.userAccount);
+				eventUserAccount.fire({
+					detail: data.userAccount,
+				});
 
 				return data.userAccount;
 			}
@@ -136,7 +134,9 @@ const AppContextProvider = ({assetsPath, children, page}) => {
 					type: actionTypes.UPDATE_SUBSCRIPTION_GROUPS,
 				});
 
-				dispatchEventSubscriptionGroups(items);
+				eventSubscriptionGroups.fire({
+					detail: items,
+				});
 			}
 		};
 

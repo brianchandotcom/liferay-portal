@@ -23,4 +23,22 @@ export const Liferay = window.Liferay || {
 		getUserId: () => 0,
 	},
 	authToken: '',
+	detach: (type, callback) => window.removeEventListener(type, callback),
+	on: (type, callback) => window.addEventListener(type, callback),
+	once: (type, callback) =>
+		window.addEventListener(type, function handler() {
+			this.removeEventListener(type, handler);
+
+			callback();
+		}),
+	publish: (name) => ({
+		fire: (data) =>
+			window.dispatchEvent(
+				new CustomEvent(name, {
+					bubbles: true,
+					composed: true,
+					...data,
+				})
+			),
+	}),
 };

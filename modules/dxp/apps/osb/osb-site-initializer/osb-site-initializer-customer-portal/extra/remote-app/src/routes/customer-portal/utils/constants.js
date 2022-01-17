@@ -57,11 +57,12 @@ export const WEB_CONTENTS_BY_LIFERAY_VERSION = {
 
 export const pages = {
 	COMMERCE: 'commerce',
-	DXP_CLOUD: 'dxp',
-	ENTERPRISE_SEARCH: 'enterprise',
+	DXP: 'dxp',
+	DXP_CLOUD: 'dxp_cloud',
+	ENTERPRISE_SEARCH: 'enterprise_search',
 	HOME: 'home',
 	OVERVIEW: 'overview',
-	TEAM_MEMBERS: 'team',
+	TEAM_MEMBERS: 'team_members',
 };
 
 export const PRODUCTS = {

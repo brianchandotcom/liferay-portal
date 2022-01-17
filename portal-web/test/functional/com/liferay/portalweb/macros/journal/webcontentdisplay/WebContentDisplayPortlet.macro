@@ -1,50 +1,5 @@
 definition {
 
-	macro changeWebContent {
-		Portlet.gotoPortletOptions(
-			portletName = "Web Content Display",
-			portletOption = "Configuration");
-
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		Pause(locator1 = "3000");
-
-		Click(locator1 = "Button#CHANGE");
-
-		WaitForElementPresent(locator1 = "IFrame#MODAL_BODY");
-
-		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
-
-		if (isSet(depotName)) {
-			var key_rowEntry = "${webContentTitle}";
-
-			AssertClick(
-				key_breadcrumbName = "Sites and Libraries",
-				locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
-				value1 = "Sites and Libraries");
-
-			AssertClick(
-				key_groupTab = "Asset Library",
-				locator1 = "ItemSelector#NAVIGATION_GROUP_TAB",
-				value1 = "Asset Library");
-
-			Click(
-				key_card = "${depotName}",
-				locator1 = "Card#CARD_TITLE");
-
-			Click(locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
-
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-			AssertTextEquals(
-				key_card = "${webContentTitle} (${depotName})",
-				locator1 = "Card#CARD_TITLE",
-				value1 = "${webContentTitle} (${depotName})");
-		}
-
-		PortletEntry.save();
-	}
-
 	macro configureScopePG {
 		Portlet.gotoPortletOptions(
 			portletName = "${portletName}",
@@ -306,19 +261,24 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		Pause(locator1 = "3000");
+		if (IsElementPresent(key_text = "Change", locator1 = "Button#ANY")) {
+			Click(
+				key_text = "Change",
+				locator1 = "Button#ANY");
+		}
+		else {
+			Click(
+				key_text = "Select",
+				locator1 = "Button#ANY");
+		}
 
-		AssertClick(
-			locator1 = "WCDConfiguration#SELECT_WEB_CONTENT_BUTTON",
-			value1 = "Select");
-
-		Pause(locator1 = "5000");
+		WaitForElementPresent(
+			key_title = "Select Web Content",
+			locator1 = "IFrame#MODAL_ANY");
 
 		SelectFrame.selectSecondFrame(locator1 = "IFrame#MODAL_BODY");
 
 		if (isSet(depotName)) {
-			var key_rowEntry = "${webContentTitle}";
-
 			AssertClick(
 				key_breadcrumbName = "Sites and Libraries",
 				locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
@@ -333,7 +293,9 @@ definition {
 				key_card = "${depotName}",
 				locator1 = "Card#CARD_TITLE");
 
-			Click(locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
+			Click(
+				key_rowEntry = "${webContentTitle}",
+				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
 
 			SelectFrame(value1 = "relative=top");
 
@@ -345,16 +307,15 @@ definition {
 				value1 = "${webContentTitle} (${depotName})");
 		}
 		else {
-			var key_listEntry = "${webContentTitle}";
-			var key_webContentTitle = "${webContentTitle}";
+			if (isSet(searchTerm)) {
+				Search.searchCP(searchTerm = "${searchTerm}");
+			}
 
 			LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
-			if (IsElementPresent.pauseIsElementPresent(locator1 = "LexiconList#LIST_ENTRY_TITLE_LINK")) {
-				AssertClick(
-					locator1 = "LexiconList#LIST_ENTRY_TITLE_LINK",
-					value1 = "${webContentTitle}");
-			}
+			Click(
+				key_listEntry = "${webContentTitle}",
+				locator1 = "LexiconList#LIST_ENTRY_TITLE_LINK");
 
 			SelectFrame(value1 = "relative=top");
 
@@ -369,10 +330,6 @@ definition {
 		PortletEntry.save();
 
 		SelectFrame(value1 = "relative=top");
-
-		if ("${contentPage}" == "true") {
-			Click(locator1 = "Icon#CLOSE");
-		}
 	}
 
 	macro undoMoveToRecycleBin {

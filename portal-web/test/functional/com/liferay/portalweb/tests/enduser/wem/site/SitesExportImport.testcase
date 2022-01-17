@@ -86,9 +86,9 @@ definition {
 		}
 
 		task ("Set the created Web Content to be displayed in the Web Content Display and publish the page") {
-			WebContentDisplayPortlet.selectWebContent(
-				contentPage = "true",
-				webContentTitle = "WC WebContent Title");
+			WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title");
+
+			IFrame.closeFrame();
 
 			PageEditor.clickPublish();
 		}

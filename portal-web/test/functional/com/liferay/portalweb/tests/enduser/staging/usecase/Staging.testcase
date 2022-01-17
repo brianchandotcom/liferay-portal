@@ -194,9 +194,9 @@ definition {
 			collectionName = "Collection Name",
 			fragmentName = "Fragment Name");
 
-		WebContentDisplayPortlet.selectWebContent(
-			contentPage = "true",
-			webContentTitle = "WC WebContent Title");
+		WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title");
+
+		IFrame.closeFrame();
 
 		PageEditor.clickPublish();
 
@@ -714,9 +714,9 @@ definition {
 
 		PageEditor.addWidget(portletName = "Web Content Display");
 
-		WebContentDisplayPortlet.selectWebContent(
-			contentPage = "true",
-			webContentTitle = "WC WebContent Title");
+		WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title");
+
+		IFrame.closeFrame();
 
 		PageEditor.clickPublish();
 

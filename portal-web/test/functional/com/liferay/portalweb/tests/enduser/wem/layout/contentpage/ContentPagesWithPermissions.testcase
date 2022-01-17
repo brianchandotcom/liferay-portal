@@ -137,9 +137,9 @@ definition {
 		}
 
 		task ("Select the second web content in Web Content Display") {
-			WebContentDisplayPortlet.selectWebContent(
-				contentPage = "true",
-				webContentTitle = "WC WebContent Title 2");
+			WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title 2");
+
+			IFrame.closeFrame();
 		}
 
 		task ("Add an Asset Publisher to page") {

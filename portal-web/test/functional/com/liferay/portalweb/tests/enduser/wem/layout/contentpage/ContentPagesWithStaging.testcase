@@ -413,11 +413,9 @@ definition {
 		}
 
 		task ("Select the web content in Web Content Display") {
-			WebContentDisplayPortlet.selectWebContent(
-				contentPage = "true",
-				webContentTitle = "Web Content Title");
+			WebContentDisplayPortlet.selectWebContent(webContentTitle = "Web Content Title");
 
-			Refresh();
+			IFrame.closeFrame();
 		}
 
 		task ("Assert the web content is shown in Web Content Display") {

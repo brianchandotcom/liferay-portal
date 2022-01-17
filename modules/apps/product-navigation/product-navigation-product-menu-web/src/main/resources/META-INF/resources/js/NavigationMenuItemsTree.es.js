@@ -53,9 +53,6 @@ export default function NavigationMenuItemsTree({
 									<a
 										className="d-block h-100 w-100"
 										href={item.url}
-										onMouseDownCapture={() => {
-											Liferay.Util.navigate(item.url);
-										}}
 									>
 										{item.name}
 									</a>
@@ -77,11 +74,6 @@ export default function NavigationMenuItemsTree({
 											<a
 												className="d-block h-100 w-100"
 												href={item.url}
-												onMouseDownCapture={() => {
-													Liferay.Util.navigate(
-														item.url
-													);
-												}}
 											>
 												{item.name}
 											</a>

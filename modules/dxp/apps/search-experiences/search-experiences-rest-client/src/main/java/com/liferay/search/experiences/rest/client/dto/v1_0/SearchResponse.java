@@ -19,6 +19,7 @@ import com.liferay.search.experiences.rest.client.serdes.v1_0.SearchResponseSerD
 
 import java.io.Serializable;
 
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -33,6 +34,27 @@ public class SearchResponse implements Cloneable, Serializable {
 	public static SearchResponse toDTO(String json) {
 		return SearchResponseSerDes.toDTO(json);
 	}
+
+	public Map[] getErrors() {
+		return errors;
+	}
+
+	public void setErrors(Map[] errors) {
+		this.errors = errors;
+	}
+
+	public void setErrors(
+		UnsafeSupplier<Map[], Exception> errorsUnsafeSupplier) {
+
+		try {
+			errors = errorsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Map[] errors;
 
 	public Integer getPage() {
 		return page;

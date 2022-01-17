@@ -241,4 +241,45 @@ definition {
 		DMDocument.viewDefault();
 	}
 
+	@description = "This ensures that a folder stored in asset library cannot be selected via MG once the site is disconnected."
+	@priority = "4"
+	test CannotViewImageFromDisconnectedSite {
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Test Depot Name");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Image Description",
+			dmDocumentTitle = "Document_2.jpg",
+			folderName = "DM Folder Name",
+			groupName = "Test Depot Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_2.jpg");
+
+		JSONDepot.connectSite(
+			depotName = "Test Depot Name",
+			groupName = "Site Name");
+
+		Navigator.openSitePage(
+			pageName = "Media Gallery Page",
+			siteName = "Site Name");
+
+		MGPortlet.setRootFolder(
+			depotName = "Test Depot Name",
+			dmRootFolderName = "DM Folder Name");
+
+		JSONDepot.disconnectSite(groupName = "Site Name");
+
+		Navigator.openSitePage(
+			pageName = "Media Gallery Page",
+			siteName = "Site Name");
+
+		Alert.viewErrorMessage(errorMessage = "The folder could not be found.");
+
+		MGPortlet.setRootFolder(
+			dmRootFolderName = "DM Folder Name",
+			invalidRootFolder = "true");
+	}
+
 }

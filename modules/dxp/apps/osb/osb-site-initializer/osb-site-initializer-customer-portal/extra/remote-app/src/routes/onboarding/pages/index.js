@@ -41,7 +41,11 @@ const Pages = () => {
 	const StepsLayout = {
 		[steps.invites]: {
 			Component: (
-				<Invites handlePage={invitesPageHandle} project={project} />
+				<Invites
+					handlePage={invitesPageHandle}
+					leftButton="Skip for now"
+					project={project}
+				/>
 			),
 		},
 		[steps.dxpCloud]: {
@@ -53,6 +57,7 @@ const Pages = () => {
 							type: actionTypes.CHANGE_STEP,
 						})
 					}
+					leftButton="Skip for now"
 					project={project}
 				/>
 			),

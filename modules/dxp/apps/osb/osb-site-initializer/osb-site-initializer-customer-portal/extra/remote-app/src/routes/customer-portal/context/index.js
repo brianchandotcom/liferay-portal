@@ -101,7 +101,10 @@ const AppContextProvider = ({assetsPath, children, page}) => {
 			}
 		};
 
-		const getProject = async (projectExternalReferenceCode) => {
+		const getProject = async (
+			projectExternalReferenceCode,
+			accountBrief
+		) => {
 			const {data: projects} = await client.query({
 				query: getKoroneikiAccounts,
 				variables: {
@@ -110,13 +113,14 @@ const AppContextProvider = ({assetsPath, children, page}) => {
 			});
 
 			if (projects) {
-				const project = projects?.c?.koroneikiAccounts?.items[0];
 				dispatch({
-					payload: project,
+					payload: {
+						...projects.c.koroneikiAccounts.items[0],
+						id: accountBrief.id,
+						name: accountBrief.name,
+					},
 					type: actionTypes.UPDATE_PROJECT,
 				});
-
-				return project;
 			}
 		};
 
@@ -184,7 +188,13 @@ const AppContextProvider = ({assetsPath, children, page}) => {
 				);
 
 				if (isValid) {
-					getProject(projectExternalReferenceCode);
+					const accountBrief = user.accountBriefs?.find(
+						(accountBrief) =>
+							accountBrief.externalReferenceCode ===
+							projectExternalReferenceCode
+					);
+
+					getProject(projectExternalReferenceCode, accountBrief);
 					getSubscriptionGroups(projectExternalReferenceCode);
 					getStructuredContents();
 					getSessionId();

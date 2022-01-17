@@ -31,6 +31,7 @@ import Layout from '../components/Layout';
 const SetupDXPCloudPage = ({
 	errors,
 	handlePage,
+	leftButton,
 	project,
 	setFieldValue,
 	touched,
@@ -116,7 +117,7 @@ const SetupDXPCloudPage = ({
 			footerProps={{
 				leftButton: (
 					<BaseButton borderless onClick={handleSkip}>
-						Skip for now
+						{leftButton}
 					</BaseButton>
 				),
 				middleButton: (

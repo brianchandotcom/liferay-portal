@@ -36,6 +36,7 @@ const SLA = {
 const InvitesPage = ({
 	errors,
 	handlePage,
+	leftButton,
 	project,
 	setFieldValue,
 	setTouched,
@@ -241,7 +242,7 @@ const InvitesPage = ({
 			footerProps={{
 				leftButton: (
 					<BaseButton borderless onClick={handlePage}>
-						Skip for now
+						{leftButton}
 					</BaseButton>
 				),
 				middleButton: (

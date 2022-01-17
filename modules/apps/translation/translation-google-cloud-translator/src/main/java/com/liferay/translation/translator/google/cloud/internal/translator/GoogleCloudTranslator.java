@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.translation.google.cloud.translator.internal.translator;
+package com.liferay.translation.translator.google.cloud.internal.translator;
 
 import com.google.auth.oauth2.ServiceAccountCredentials;
 import com.google.cloud.translate.Language;
@@ -31,9 +31,9 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.translation.exception.TranslatorException;
-import com.liferay.translation.google.cloud.translator.internal.configuration.GoogleCloudTranslatorConfiguration;
 import com.liferay.translation.translator.Translator;
 import com.liferay.translation.translator.TranslatorPacket;
+import com.liferay.translation.translator.google.cloud.internal.configuration.GoogleCloudTranslatorConfiguration;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -55,7 +55,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Adolfo Pérez
  */
 @Component(
-	configurationPid = "com.liferay.translation.google.cloud.translator.internal.configuration.GoogleCloudTranslatorConfiguration",
+	configurationPid = "com.liferay.translation.translator.google.cloud.internal.configuration.GoogleCloudTranslatorConfiguration",
 	service = Translator.class
 )
 public class GoogleCloudTranslator implements Translator {

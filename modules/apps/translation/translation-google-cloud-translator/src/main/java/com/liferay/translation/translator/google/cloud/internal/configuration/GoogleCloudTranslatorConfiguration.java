@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.translation.google.cloud.translator.internal.configuration;
+package com.liferay.translation.translator.google.cloud.internal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
@@ -26,7 +26,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 	scope = ExtendedObjectClassDefinition.Scope.COMPANY
 )
 @Meta.OCD(
-	id = "com.liferay.translation.google.cloud.translator.internal.configuration.GoogleCloudTranslatorConfiguration",
+	id = "com.liferay.translation.translator.google.cloud.internal.configuration.GoogleCloudTranslatorConfiguration",
 	localization = "content/Language",
 	name = "google-cloud-translator-configuration-name"
 )

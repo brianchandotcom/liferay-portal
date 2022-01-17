@@ -90,7 +90,7 @@ definition {
 				categoryName = "Roles",
 				locator1 = "ContentDashboard#CATEGORY_NAME_ELEMENT");
 
-			for (var categoryName : list "Back End,Front End,Quality Assurance") {
+			for (var categoryName : list "Product Management,Marketing,Product Design") {
 				Category.viewCP(
 					categoryName = "${categoryName}",
 					vocabularyName = "Roles");
@@ -102,11 +102,7 @@ definition {
 	@priority = "3"
 	test ViewTeamExtranetCollections {
 		task ("Go to Team Extranet Collections") {
-			ApplicationsMenu.gotoSite(site = "Test Site Team Extranet");
-
-			ProductMenu.gotoPortlet(
-				category = "Site Builder",
-				portlet = "Collections");
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-team-extranet");
 		}
 
 		task ("Assert the Collections are present") {
@@ -128,7 +124,7 @@ definition {
 		task ("Assert the 22 Documents are present") {
 			Pagination.changePagination(itemsPerPage = "40");
 
-			for (var key_card : list "site_logo_i.svg,member_peter_doe.jpg,member_kristin_watson.jpg,member_jerome_bell.jpg,member_jacob_jones.jpg,member_esther_howard.jpg,member_brooklyn_simmons.jpg,member_arlene_maccoy.jpg,member_albert_frank.jpg,home_video.mp4,home_map.png,entry_10.jpg,entry_09.jpg,entry_08.jpg,entry_07.jpg,entry_06.jpg,entry_05.jpg,entry_04.jpg,entry_03.jpg,entry_02.jpg,entry_01.jpg,arrow_down.svg") {
+			for (var key_card : list "site_logo_i.svg,member_peter_doe.jpg,member_kristin_watson.jpg,member_jerome_bell.jpg,member_jacob_jones.jpg,member_esther_howard.jpg,member_brooklyn_simmons.jpg,member_arlene_maccoy.jpg,member_albert_frank.jpg,home_video.mp4,entry_10.jpg,entry_09.jpg,entry_08.jpg,entry_07.jpg,entry_06.jpg,entry_05.jpg,entry_04.jpg,entry_03.jpg,entry_02.jpg,entry_01.jpg,arrow_down.svg") {
 				AssertElementPresent(
 					key_card = "${key_card}",
 					locator1 = "Card#CARD_TITLE");
@@ -216,7 +212,7 @@ definition {
 				folderName = "Job Positions",
 				webContentTitle = "Job Positions");
 
-			for (var webContentTitle : list "Junior Front End Developer,Associate Test Engineer,Senior Front End Developer,Junior Back End Developer,Senior Software Architect,Associate Test Engineer,Senior Front End Developer,Junior Back End Developer,Senior Software Architect") {
+			for (var webContentTitle : list "Senior Design Manager,SEO Specialist,Banking Product Manager,Junior Visual Designer,Marketing Lead,Principal Product Manager,Senior Product Designer,E-Commerce Marketing Specialist,Growth Product Manager") {
 				WebContent.viewTitle(webContentTitle = "${webContentTitle}");
 			}
 		}
@@ -228,13 +224,13 @@ definition {
 				folderName = "Blog Entries",
 				webContentTitle = "Blog Entries");
 
-			for (var webContentTitle : list "25 management tips from top industry experts,00 20 gifts you can give to your marketing boss,What the best Management pros do (and you should too),Great people doing a great job in the design industry,When professionals run into problems with design,5 tools everyone in the design industry should be using,Meet the Steve Jobs of the marketing industry") {
+			for (var webContentTitle : list "25 management tips from top industry experts,00 20 gifts you can give to your marketing boss,What the best Management pros do (and you should too),Great people doing a great job in the design industry,When professionals run into problems with marketing,5 tools everyone in the design industry should be using,Meet the Steve Jobs of the marketing industry") {
 				WebContent.viewTitle(webContentTitle = "${webContentTitle}");
 			}
 
 			WebContent.viewTitle(
-				webContentTitle = '''The worst advice we've ever heard about marketing''',
-				webContentTitleEscapeCharacter = '''The worst advice we&#39;ve ever heard about marketing''');
+				webContentTitle = '''The worst advice we've ever heard about management''',
+				webContentTitleEscapeCharacter = '''The worst advice we&#39;ve ever heard about management''');
 
 			WebContent.viewTitle(
 				webContentTitle = '''Think you're cut out for doing management?''',

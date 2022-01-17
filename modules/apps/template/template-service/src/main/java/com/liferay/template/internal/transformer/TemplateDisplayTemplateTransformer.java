@@ -40,6 +40,7 @@ import com.liferay.portlet.display.template.PortletDisplayTemplate;
 import com.liferay.portlet.display.template.constants.PortletDisplayTemplateConstants;
 import com.liferay.template.model.TemplateEntry;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -167,6 +168,35 @@ public class TemplateDisplayTemplateTransformer {
 							"label",
 							siblingCategory.getLabel(themeDisplay.getLocale())
 						).build()));
+			}
+
+			return templateNode;
+		}
+		else if (data instanceof List) {
+			List<Object> list = (List<Object>)data;
+
+			if (list.isEmpty()) {
+				return new TemplateNode(
+					themeDisplay, infoField.getName(), StringPool.BLANK,
+					StringPool.BLANK, new HashMap<>());
+			}
+
+			Object firstItem = list.get(0);
+
+			TemplateNode templateNode = new TemplateNode(
+				themeDisplay, infoField.getName(), String.valueOf(firstItem),
+				infoFieldType.getName(), Collections.emptyMap());
+
+			templateNode.appendSibling(templateNode);
+
+			for (int i = 1; i < list.size(); i++) {
+				Object siblingItem = list.get(i);
+
+				templateNode.appendSibling(
+					new TemplateNode(
+						themeDisplay, infoField.getName(),
+						String.valueOf(siblingItem), infoFieldType.getName(),
+						Collections.emptyMap()));
 			}
 
 			return templateNode;

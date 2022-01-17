@@ -254,6 +254,21 @@ if (commerceOrder != null) {
 	<div class="col-md-9">
 	</div>
 
+	<liferay-ui:icon-menu
+		direction="right"
+		icon="<%= StringPool.BLANK %>"
+		markupView="lexicon"
+		message="<%= StringPool.BLANK %>"
+		showWhenSingleIcon="<%= true %>"
+		triggerCssClass="btn btn-lg btn-monospaced btn-primary position-fixed thumb-menu"
+	>
+		<liferay-ui:icon
+			icon="print"
+			message="print"
+			url="<%= commerceOrderContentDisplayContext.getExportCommerceOrderReportURL() %>"
+		/>
+	</liferay-ui:icon-menu>
+
 	<div class="col-md-3">
 		<div class="commerce-panel">
 			<div class="commerce-panel__content">

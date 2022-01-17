@@ -14,10 +14,13 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
+import ClayIcon from '@clayui/icon';
 import ClayManagementToolbar from '@clayui/management-toolbar';
-import React, {useMemo} from 'react';
+import classNames from 'classnames';
+import React, {useContext, useMemo} from 'react';
 
 import normalizeDropdownItems from '../normalize_dropdown_items';
+import FeatureFlagContext from './FeatureFlagContext';
 import LinkOrButton from './LinkOrButton';
 
 function addAction(item, onActionButtonClick) {
@@ -47,6 +50,8 @@ const ActionControls = ({
 	disabled,
 	onActionButtonClick,
 }) => {
+	const {showDesignImprovements} = useContext(FeatureFlagContext);
+
 	const items = useMemo(
 		() =>
 			normalizeDropdownItems(
@@ -68,11 +73,14 @@ const ActionControls = ({
 						.filter((item) => item.quickAction && item.icon)
 						.map((item, index) => (
 							<ClayManagementToolbar.Item
-								className="navbar-breakpoint-down-d-none"
+								className="d-md-flex d-none"
 								key={index}
 							>
 								<LinkOrButton
-									className="nav-link nav-link-monospaced"
+									className={classNames(
+										{'d-lg-none': showDesignImprovements},
+										'nav-link nav-link-monospaced'
+									)}
 									disabled={disabled || item.disabled}
 									displayType="unstyled"
 									href={item.href}
@@ -84,6 +92,27 @@ const ActionControls = ({
 									symbol={item.icon}
 									title={item.label}
 								/>
+
+								{showDesignImprovements && (
+									<LinkOrButton
+										className="align-items-center d-lg-inline d-none mr-2 nav-link"
+										disabled={disabled || item.disabled}
+										displayType="unstyled"
+										href={item.href}
+										onClick={(event) => {
+											onActionButtonClick(event, {
+												item,
+											});
+										}}
+										title={item.label}
+									>
+										<span className="inline-item inline-item-before">
+											<ClayIcon symbol={item.icon} />
+										</span>
+
+										<span>{item.label}</span>
+									</LinkOrButton>
+								)}
 							</ClayManagementToolbar.Item>
 						))}
 

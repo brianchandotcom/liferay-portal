@@ -26,6 +26,7 @@ AddGroupDisplayContext addGroupDisplayContext = new AddGroupDisplayContext(reque
 		method="post"
 		name="fm"
 		onSubmit="event.preventDefault();"
+		validateOnBlur="<%= false %>"
 	>
 		<liferay-frontend:edit-form-body>
 			<aui:input autoFocus="<%= true %>" label="name" name="name" required="<%= true %>" />

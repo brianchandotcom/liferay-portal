@@ -6282,12 +6282,27 @@ definition {
 	}
 
 	@description = "LPS-135401 - Verify that by default the Prevent deletion type of Relationship is selected"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test PreventDeletionIsDefault {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-		// TODO LPS-141664 PreventDeletionIsDefault pending implementation
+		ObjectAdmin.openObjectAdmin();
 
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+		ObjectAdmin.gotoRelationshipsTab();
+
+		ObjectAdmin.addObjectRelationshipViaUI(
+			label = "Relationship",
+			object = "CustomObject",
+			type = "One to Many");
+
+		ObjectAdmin.goToRelationshipsDetails(fieldName = "Relationship");
+
+		CreateObject.assertSelectedValueInDeletionType(deletionType = "Prevent");
 	}
 
 	@description = "LPS-135401 - Verify if Prevent deletion type of Relationship Many to Many won't allow the user to delete an entry with relation"

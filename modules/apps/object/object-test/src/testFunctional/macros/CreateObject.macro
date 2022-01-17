@@ -196,6 +196,17 @@ definition {
 			locator1 = "ObjectAdmin#FIELDS_RADIO_OPTION");
 	}
 
+	macro assertSelectedValueInDeletionType {
+		WaitForSPARefresh();
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		AssertElementPresent(
+			key_fieldLabel = "Deletion Type",
+			key_value = "${deletionType}",
+			locator1 = "CreateObject#ASSERT_SELECTED_VALUE");
+	}
+
 	macro assertTitleFieldIsSelected {
 		AssertElementPresent(
 			locator1 = "CreateObject#TITLE_FIELD",

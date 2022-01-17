@@ -180,6 +180,11 @@
 		<td>//input[contains(@class,'${key_fieldType}') and @value='${fieldLabel}']</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>ASSERT_SELECTED_VALUE</td>
+		<td>//label[contains(.,'${key_fieldLabel}')]/../select/option[@selected and contains(.,'${key_value}')]</td>
+		<td></td>
+</tr>
 </tbody>
 </table>
 </body>

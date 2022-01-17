@@ -146,6 +146,14 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 
 		_validateFragmentEntryHTMLDocument(document);
 
+		HttpServletRequest httpServletRequest =
+			fragmentEntryProcessorContext.getHttpServletRequest();
+
+		if (httpServletRequest != null) {
+			httpServletRequest.setAttribute(
+				FragmentWebKeys.FRAGMENT_ENTRY_LINK, fragmentEntryLink);
+		}
+
 		String editableValues = fragmentEntryLink.getEditableValues();
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
@@ -153,8 +161,7 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 
 		if (Validator.isNotNull(jsonObject.getString("portletId"))) {
 			return _renderWidgetHTML(
-				editableValues, fragmentEntryLink,
-				fragmentEntryProcessorContext);
+				editableValues, fragmentEntryProcessorContext);
 		}
 
 		FragmentEntryLink originalFragmentEntryLink = null;
@@ -396,7 +403,7 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 	}
 
 	private String _renderWidgetHTML(
-			String editableValues, FragmentEntryLink fragmentEntryLink,
+			String editableValues,
 			FragmentEntryProcessorContext fragmentEntryProcessorContext)
 		throws PortalException {
 
@@ -409,12 +416,6 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 			return StringPool.BLANK;
 		}
 
-		HttpServletRequest httpServletRequest =
-			fragmentEntryProcessorContext.getHttpServletRequest();
-
-		httpServletRequest.setAttribute(
-			FragmentWebKeys.FRAGMENT_ENTRY_LINK, fragmentEntryLink);
-
 		String instanceId = jsonObject.getString("instanceId");
 
 		PortletPreferences portletPreferences =
@@ -423,7 +424,7 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 				PortletIdCodec.encode(portletId, instanceId));
 
 		return _fragmentPortletRenderer.renderPortlet(
-			httpServletRequest,
+			fragmentEntryProcessorContext.getHttpServletRequest(),
 			fragmentEntryProcessorContext.getHttpServletResponse(), portletId,
 			instanceId,
 			PortletPreferencesFactoryUtil.toXML(portletPreferences));

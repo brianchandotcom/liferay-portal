@@ -166,13 +166,13 @@
 
 			tableToolbar.hide();
 
-			setTimeout(() => {
+			requestAnimationFrame(() => {
 				const range = editor.createRange();
 
 				range.selectNodeContents(tableElement);
 
 				range.select();
-			}, 0);
+			});
 		},
 
 		_focusedEditorName: null,
@@ -255,7 +255,7 @@
 			};
 
 			const onFocusLoss = () => {
-				setTimeout(() => {
+				requestAnimationFrame(() => {
 					if (this._focusedEditorName !== editor.name) {
 						hide();
 					}
@@ -293,7 +293,7 @@
 					const target = event.data.getTarget();
 
 					if (
-						!editor.element.contains(target) &&
+						!target.$.closest('.lfr-balloon-editor') &&
 						!target.equals(button)
 					) {
 						hide();

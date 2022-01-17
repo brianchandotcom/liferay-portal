@@ -18,6 +18,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -25,22 +26,28 @@ import com.liferay.portal.kernel.webcache.WebCacheItem;
 import com.liferay.portal.kernel.webcache.WebCachePoolUtil;
 import com.liferay.search.experiences.internal.configuration.IpstackConfiguration;
 
+import java.beans.ExceptionListener;
+
 /**
  * @author Brian Wing Shun Chan
  */
 public class IpstackWebCacheItem implements WebCacheItem {
 
 	public static JSONObject get(
-		String ipAddress, IpstackConfiguration ipstackConfiguration) {
+		ExceptionListener exceptionListener, String ipAddress,
+		IpstackConfiguration ipstackConfiguration) {
 
 		return (JSONObject)WebCachePoolUtil.get(
 			IpstackWebCacheItem.class.getName() + StringPool.POUND + ipAddress,
-			new IpstackWebCacheItem(ipAddress, ipstackConfiguration));
+			new IpstackWebCacheItem(
+				exceptionListener, ipAddress, ipstackConfiguration));
 	}
 
 	public IpstackWebCacheItem(
-		String ipAddress, IpstackConfiguration ipstackConfiguration) {
+		ExceptionListener exceptionListener, String ipAddress,
+		IpstackConfiguration ipstackConfiguration) {
 
+		_exceptionListener = exceptionListener;
 		_ipAddress = ipAddress;
 		_ipstackConfiguration = ipstackConfiguration;
 	}
@@ -66,9 +73,16 @@ public class IpstackWebCacheItem implements WebCacheItem {
 				_log.debug("Reading " + url);
 			}
 
-			return JSONFactoryUtil.createJSONObject(HttpUtil.URLtoString(url));
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+				HttpUtil.URLtoString(url));
+
+			_validateResponse(jsonObject);
+
+			return jsonObject;
 		}
 		catch (Exception exception) {
+			_exceptionListener.exceptionThrown(exception);
+
 			if (_log.isDebugEnabled()) {
 				_log.debug(exception, exception);
 			}
@@ -86,9 +100,29 @@ public class IpstackWebCacheItem implements WebCacheItem {
 		return 0;
 	}
 
+	private void _validateResponse(JSONObject jsonObject) {
+		boolean success = jsonObject.getBoolean("success", true);
+
+		if (success) {
+			return;
+		}
+
+		_exceptionListener.exceptionThrown(
+			new RuntimeException(
+				StringBundler.concat(
+					"IPStack: ",
+					JSONUtil.getValueAsString(
+						jsonObject, "JSONObject/error", "Object/info"),
+					" (",
+					JSONUtil.getValueAsString(
+						jsonObject, "JSONObject/error", "Object/code"),
+					")")));
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		IpstackWebCacheItem.class);
 
+	private final ExceptionListener _exceptionListener;
 	private final String _ipAddress;
 	private final IpstackConfiguration _ipstackConfiguration;
 

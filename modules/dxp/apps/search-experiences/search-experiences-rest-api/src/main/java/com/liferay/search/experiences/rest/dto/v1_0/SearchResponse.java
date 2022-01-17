@@ -60,6 +60,35 @@ public class SearchResponse implements Serializable {
 	}
 
 	@Schema
+	@Valid
+	public Map[] getErrors() {
+		return errors;
+	}
+
+	public void setErrors(Map[] errors) {
+		this.errors = errors;
+	}
+
+	@JsonIgnore
+	public void setErrors(
+		UnsafeSupplier<Map[], Exception> errorsUnsafeSupplier) {
+
+		try {
+			errors = errorsUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Map[] errors;
+
+	@Schema
 	public Integer getPage() {
 		return page;
 	}
@@ -311,6 +340,26 @@ public class SearchResponse implements Serializable {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		if (errors != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"errors\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < errors.length; i++) {
+				sb.append(errors[i]);
+
+				if ((i + 1) < errors.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
 
 		if (page != null) {
 			if (sb.length() > 1) {

@@ -55,6 +55,26 @@ public class SearchResponseSerDes {
 
 		sb.append("{");
 
+		if (searchResponse.getErrors() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"errors\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < searchResponse.getErrors().length; i++) {
+				sb.append(searchResponse.getErrors()[i]);
+
+				if ((i + 1) < searchResponse.getErrors().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (searchResponse.getPage() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -176,6 +196,13 @@ public class SearchResponseSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
+		if (searchResponse.getErrors() == null) {
+			map.put("errors", null);
+		}
+		else {
+			map.put("errors", String.valueOf(searchResponse.getErrors()));
+		}
+
 		if (searchResponse.getPage() == null) {
 			map.put("page", null);
 		}
@@ -260,7 +287,12 @@ public class SearchResponseSerDes {
 			SearchResponse searchResponse, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "page")) {
+			if (Objects.equals(jsonParserFieldName, "errors")) {
+				if (jsonParserFieldValue != null) {
+					searchResponse.setErrors((Map[])jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "page")) {
 				if (jsonParserFieldValue != null) {
 					searchResponse.setPage(
 						Integer.valueOf((String)jsonParserFieldValue));

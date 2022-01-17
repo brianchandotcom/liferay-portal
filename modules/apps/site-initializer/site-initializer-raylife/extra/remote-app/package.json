@@ -31,16 +31,11 @@
 		"react-number-format": "^4.6.3",
 		"react-scripts": "4.0.3"
 	},
-	"devDependencies": {
-		"json-server": "^0.16.3"
-	},
 	"name": "@liferay/site-initializer-raylife-d2c",
 	"private": true,
 	"scripts": {
 		"build": "react-scripts build",
-		"mock": "json-server -p 3333 -d 200 ./mock/db.json --routes ./mock/routes.json",
-		"run": "yarn build && npx serve ./build",
-		"serve": "npx serve ./build",
+		"format": "eslint src --ext js --fix",
 		"start": "react-scripts start"
 	},
 	"version": "1.0.0"

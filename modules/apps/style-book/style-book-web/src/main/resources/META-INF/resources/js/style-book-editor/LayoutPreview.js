@@ -90,7 +90,13 @@ export default function LayoutPreview() {
 								loadFrontendTokenValues();
 							}}
 							ref={iframeRef}
-							src={previewLayout?.url}
+							src={
+								config.templatesPreviewEnabled
+									? previewLayout?.url
+									: urlWithPreviewParameter(
+											previewLayout?.url
+									  )
+							}
 						/>
 					</>
 				) : (
@@ -105,6 +111,15 @@ export default function LayoutPreview() {
 			</div>
 		</>
 	);
+}
+
+function urlWithPreviewParameter(url) {
+	const nextURL = new URL(url);
+
+	nextURL.searchParams.set('p_l_mode', 'preview');
+	nextURL.searchParams.set('styleBookEntryPreview', true);
+
+	return nextURL.href;
 }
 
 function loadOverlay(iframeRef) {

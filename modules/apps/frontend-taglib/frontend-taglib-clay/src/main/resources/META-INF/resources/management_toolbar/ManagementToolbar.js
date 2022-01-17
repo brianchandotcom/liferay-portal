@@ -17,7 +17,7 @@ import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayManagementToolbar from '@clayui/management-toolbar';
 import PropTypes from 'prop-types';
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
 
 import ActionControls from './ActionControls';
 import CreationMenu from './CreationMenu';
@@ -75,6 +75,10 @@ function ManagementToolbar({
 	);
 	const [active, setActive] = useState(initialCheckboxStatus !== 'unchecked');
 	const [searchMobile, setSearchMobile] = useState(false);
+	const viewTypeIcon = useMemo(
+		() => viewTypeItems.find((item) => item.active)?.icon,
+		[viewTypeItems]
+	);
 
 	return (
 		<FeatureFlagContext.Provider
@@ -177,14 +181,13 @@ function ManagementToolbar({
 														'show-view-options'
 													)}
 												>
-													<ClayIcon
-														symbol={
-															viewTypeItems.find(
-																(item) =>
-																	item.active
-															)?.icon || ''
-														}
-													/>
+													{viewTypeIcon && (
+														<ClayIcon
+															symbol={
+																viewTypeIcon
+															}
+														/>
+													)}
 
 													<ClayIcon
 														className="inline-item inline-item-after"
@@ -195,12 +198,7 @@ function ManagementToolbar({
 												<ClayButtonWithIcon
 													className="nav-link nav-link-monospaced"
 													displayType="unstyled"
-													symbol={
-														viewTypeItems.find(
-															(item) =>
-																item.active
-														)?.icon || ''
-													}
+													symbol={viewTypeIcon}
 												/>
 											)
 										}

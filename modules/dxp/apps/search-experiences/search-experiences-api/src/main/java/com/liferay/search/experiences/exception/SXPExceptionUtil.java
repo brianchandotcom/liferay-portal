@@ -15,6 +15,7 @@
 package com.liferay.search.experiences.exception;
 
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.search.experiences.blueprint.exception.InvalidElementInstanceException;
 
 /**
  * @author André de Oliveira
@@ -23,11 +24,7 @@ import com.liferay.portal.kernel.util.Validator;
 public class SXPExceptionUtil {
 
 	public static boolean hasErrors(Throwable throwable) {
-		Class<? extends Throwable> clazz = throwable.getClass();
-
-		String simpleName = clazz.getSimpleName();
-
-		if (simpleName.equals("InvalidElementInstanceException")) {
+		if (throwable instanceof InvalidElementInstanceException) {
 			return false;
 		}
 

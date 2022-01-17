@@ -172,6 +172,12 @@ definition {
 			locator1 = "ObjectAdmin#ANY_TAB_ON_ENTRY");
 	}
 
+	macro assertObjectNotPresentInSubmissions {
+		AssertElementNotPresent(
+			key_submissionName = "${objectName}",
+			locator1 = "WorkflowSubmissions#SUBMISSION_BY_NAME");
+	}
+
 	macro assertObjectPluralLabel {
 		AssertTextEquals(
 			locator1 = "CreateObject#OBJECT_PLURAL_LABEL",

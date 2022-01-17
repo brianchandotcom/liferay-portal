@@ -5424,12 +5424,51 @@ definition {
 	}
 
 	@description = "LPS-135649 - Verify that pending and completed Object entries disappears from Workflow pages (My Workflow Tasks, Submissions, and My Submissions) when they are deleted"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test ObjectEntriesDisappearsWorkflowPagesWhenDeleted {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-		// TODO LPS-141635 ObjectEntriesDisappearsWorkflowPagesWhenDeleted pending implementation
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "Custom Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject");
 
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		ObjectAdmin.openWorkflowProcessBuilderConfiguration();
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Custom Object");
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+		ObjectPortlet.addSingleFieldEntryViaUI(entry = "Entry Test");
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+		ObjectPortlet.deleteEntry(entry = "Entry Test");
+
+		Navigator.openURL();
+
+		ObjectAdmin.openMyWorkflowTasks();
+
+		Navigator.gotoNavTab(navTab = "Assigned to My Roles");
+
+		Workflow.viewCompletedTasksTaskNotPresentCP(workflowAssetTitle = "Custom Object");
+
+		ObjectAdmin.openMySubmissions();
+
+		CreateObject.assertObjectNotPresentInSubmissions(objectName = "Custom Object");
+
+		ObjectAdmin.openSubmissions();
+
+		CreateObject.assertObjectNotPresentInSubmissions(objectName = "Custom Object");
 	}
 
 	@description = "LPS-139005 - Verify that pending and completed Object entries with workflow are not displayed on the workflow pages (My Workflow Tasks, My Submissions, and Submissions) when inactivated"

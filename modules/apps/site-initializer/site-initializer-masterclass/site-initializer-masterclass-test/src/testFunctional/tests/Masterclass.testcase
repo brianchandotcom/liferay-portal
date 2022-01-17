@@ -1,7 +1,6 @@
 @component-name = "portal-lol"
 definition {
 
-	property database.types = "mysql";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Masterclass";
@@ -1113,7 +1112,7 @@ definition {
 		}
 
 		task ("Go to Courses Page") {
-			Navigator.gotoSitePage(
+			ContentPagesNavigator.openViewContentPage(
 				pageName = "Courses",
 				siteName = "Test Masterclass Name");
 		}
@@ -1130,7 +1129,7 @@ definition {
 		}
 
 		task ("Assert the Read More link of the second course redirects to the course display page") {
-			Navigator.gotoSitePage(
+			ContentPagesNavigator.openViewContentPage(
 				pageName = "Courses",
 				siteName = "Test Masterclass Name");
 
@@ -1145,7 +1144,7 @@ definition {
 		}
 
 		task ("Assert the Read More link of the third course redirects to the course display page") {
-			Navigator.gotoSitePage(
+			ContentPagesNavigator.openViewContentPage(
 				pageName = "Courses",
 				siteName = "Test Masterclass Name");
 
@@ -1370,7 +1369,7 @@ definition {
 		}
 
 		task ("Go to Courses Page") {
-			Navigator.gotoSitePage(
+			ContentPagesNavigator.openViewContentPage(
 				pageName = "Courses",
 				siteName = "Test Masterclass Name");
 		}
@@ -1644,7 +1643,7 @@ definition {
 		}
 
 		task ("Go to Courses Page") {
-			Navigator.gotoSitePage(
+			ContentPagesNavigator.openViewContentPage(
 				pageName = "Courses",
 				siteName = "Test Masterclass Name");
 		}
@@ -1660,7 +1659,7 @@ definition {
 		}
 
 		task ("Assert the title of the second course redirects to the course display page") {
-			Navigator.gotoSitePage(
+			ContentPagesNavigator.openViewContentPage(
 				pageName = "Courses",
 				siteName = "Test Masterclass Name");
 
@@ -1674,7 +1673,7 @@ definition {
 		}
 
 		task ("Assert the title of the third course redirects to the course display page") {
-			Navigator.gotoSitePage(
+			ContentPagesNavigator.openViewContentPage(
 				pageName = "Courses",
 				siteName = "Test Masterclass Name");
 

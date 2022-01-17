@@ -73,7 +73,11 @@ export default function DatePicker({
 			'';
 
 		if (rawDate !== '') {
-			const date = moment(rawDate, SEVER_DATE_FORMAT, true);
+			const date = moment(
+				rawDate,
+				[SEVER_DATE_FORMAT, momentFormat],
+				true
+			);
 			formattedDate = date
 				.locale(locale ?? defaultLanguageId)
 				.format(momentFormat);

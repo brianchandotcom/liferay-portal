@@ -1,10 +1,34 @@
+@import 'cadmin-variables';
+
 html#{$cadmin-selector} {
 	.cadmin {
 		.navigation-menu-items-tree {
 			color: $cadmin-white;
 			font-size: 14px;
-			margin-left: 4px;
-			margin-top: 16px;
+			padding-left: 2rem;
+			padding-top: 1rem;
+
+			.component-expander {
+				&:hover {
+					color: $cadmin-secondary-l1;
+				}
+				.lexicon-icon {
+					background-color: $cadmin-dark-l2;
+					border-radius: 2px;
+					height: 12px;
+					padding: 3px;
+					width: 12px;
+				}
+			}
+
+			.treeview-link {
+				padding-left: 3rem;
+
+				&:hover {
+					background-color: transparent;
+					text-decoration: underline;
+				}
+			}
 
 			.lfr-treeview-node-list {
 				border-left: none;

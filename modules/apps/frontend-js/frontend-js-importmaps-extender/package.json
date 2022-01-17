@@ -1,0 +1,7 @@
+{
+	"dependencies": {
+		"es-module-shims": "1.4.1"
+	},
+	"name": "frontend-js-importmaps-extender",
+	"version": "1.0.0"
+}

@@ -201,6 +201,32 @@ definition {
 		JSONCurlUtil.post("${curl}");
 	}
 
+	@summary = "This calls the JSON WS API to add a single field numeric and boolean entry in an object"
+	macro addObjectSingleFieldNumericAndBooleanEntry {
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(userPassword))) {
+			var userPassword = "test";
+		}
+
+		var objectName = StringUtil.toLowerCase("${objectName}");
+
+		var curl = '''
+			${portalURL}/o/c/${objectName}s \
+			-H 'Content-Type: application/json' \
+			-u ${userEmailAddress}:${userPassword} \
+			-d '{
+			"${fieldName}": "${value}"
+			}'
+		''';
+
+		JSONCurlUtil.post("${curl}");
+	}
+
 	@summary = "This calls the JSON WS API to add a picklist"
 	macro addPicklist {
 		var portalURL = JSONCompany.getPortalURL();

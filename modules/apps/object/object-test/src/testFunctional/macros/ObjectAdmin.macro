@@ -187,6 +187,15 @@ definition {
 			value = "${value}");
 	}
 
+	macro addObjectSingleFieldNumericAndBooleanEntryViaAPI {
+		JSONObject.addObjectSingleFieldNumericAndBooleanEntry(
+			fieldName = "${fieldName}",
+			objectName = "${objectName}",
+			userEmailAddress = "${userEmailAddress}",
+			userPassword = "${userPassword}",
+			value = "${value}");
+	}
+
 	macro addObjectStringFieldEntryViaUI {
 		LexiconEntry.gotoAdd();
 

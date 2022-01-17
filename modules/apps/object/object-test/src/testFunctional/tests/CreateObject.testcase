@@ -3844,7 +3844,7 @@ definition {
 
 		Button.clickSave();
 
-		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+		ObjectAdmin.addObjectSingleFieldNumericAndBooleanEntryViaAPI(
 			fieldName = "customObjectField",
 			objectName = "CustomObject",
 			value = "true");
@@ -3928,7 +3928,7 @@ definition {
 
 		Button.clickSave();
 
-		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+		ObjectAdmin.addObjectSingleFieldNumericAndBooleanEntryViaAPI(
 			fieldName = "customObjectField",
 			objectName = "CustomObject",
 			value = "12.34");
@@ -3970,7 +3970,7 @@ definition {
 
 		Button.clickSave();
 
-		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+		ObjectAdmin.addObjectSingleFieldNumericAndBooleanEntryViaAPI(
 			fieldName = "customObjectField",
 			objectName = "CustomObject",
 			value = "123");
@@ -4012,7 +4012,7 @@ definition {
 
 		Button.clickSave();
 
-		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+		ObjectAdmin.addObjectSingleFieldNumericAndBooleanEntryViaAPI(
 			fieldName = "customObjectField",
 			objectName = "CustomObject",
 			value = "12345678912345678");

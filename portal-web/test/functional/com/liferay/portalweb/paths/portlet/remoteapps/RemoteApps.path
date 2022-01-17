@@ -26,6 +26,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>REMOTE_APP_PROPERTY_HTML</td>
+	<td>//vanilla-counter[contains(@test-data-user,'QAuser')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>REMOTE_TABLE_DELETE</td>
 	<td>//a[contains(@class,'dropdown-item') and contains(.,'Delete')]</td>
 	<td></td>

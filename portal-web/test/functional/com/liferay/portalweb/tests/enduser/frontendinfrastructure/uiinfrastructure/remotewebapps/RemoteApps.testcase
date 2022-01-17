@@ -396,6 +396,46 @@ definition {
 		}
 	}
 
+	@description = "Verify that remote app of type Custom Element can displayed properties in HTML"
+	@priority = "3"
+	test CustomElementCanInjectHTMLProperties {
+		property portal.acceptance = "true";
+
+		task ("Add a public page with JSON") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Test Page",
+				type = "content");
+		}
+
+		task ("Create Vanilla Counter as a Custom Element") {
+			JSONRemoteApp.addCustomElementRemoteAppAllFields(
+				customElementCSSURL = "http://remote-component-test.wincent.com/index.css",
+				customElementHTMLName = "vanilla-counter",
+				customElementName = "Vanilla Counter",
+				customElementProperties = "test-data-user=QAuser",
+				customElementURL = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js");
+		}
+
+		task ("Add Vanilla Counter to Test Page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page",
+				siteName = "Guest");
+
+			PageEditor.addWidget(portletName = "Vanilla Counter");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Assert Vanilla Counter's property is present") {
+			Navigator.gotoPage(pageName = "Test Page");
+
+			AssertElementPresent(locator1 = "RemoteApps#VANILLA_COUNTER_REMOTE_APP");
+
+			AssertElementPresent(locator1 = "RemoteApps#REMOTE_APP_PROPERTY_HTML");
+		}
+	}
+
 	@description = "Verify that remote app of type Custom Element can save multiple URLs"
 	@priority = "4"
 	test CustomElementCanSaveMultipleURLs {

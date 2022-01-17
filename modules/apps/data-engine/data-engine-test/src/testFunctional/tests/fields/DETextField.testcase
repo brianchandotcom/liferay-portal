@@ -83,6 +83,8 @@ definition {
 	@description = "This is a test for LRQA-68539. This test verifies that Text field can be set as Single line or Multiple line."
 	@priority = "3"
 	test CanBeSingleOrMultipleLine {
+		property test.name.skip.portal.instance = "DETextField#CanBeSingleOrMultipleLine";
+
 		NavItem.gotoStructures();
 
 		WebContentStructures.addCP(structureName = "WC Structure Title");

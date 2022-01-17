@@ -14,8 +14,8 @@
 
 package com.liferay.frontend.js.components.sample.web.internal.portlet;
 
-import com.liferay.frontend.js.components.sample.web.internal.constants.ComponentsSamplePortletKeys;
-import com.liferay.frontend.js.components.sample.web.internal.constants.ComponentsSampleWebKeys;
+import com.liferay.frontend.js.components.sample.web.internal.constants.FrontendJSComponentsSampleWebKeys;
+import com.liferay.frontend.js.components.sample.web.internal.constants.FrontendJSComponentsSampleWebPortletKeys;
 import com.liferay.frontend.js.components.sample.web.internal.display.context.TranslationManagerDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.Portal;
@@ -41,13 +41,13 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.display-name=JS Components Sample Web",
 		"javax.portlet.init-param.template-path=/META-INF/resources/",
 		"javax.portlet.init-param.view-template=/view.jsp",
-		"javax.portlet.name=" + ComponentsSamplePortletKeys.COMPONENTS_SAMPLE,
+		"javax.portlet.name=" + FrontendJSComponentsSampleWebPortletKeys.COMPONENTS_SAMPLE,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=power-user,user"
 	},
 	service = Portlet.class
 )
-public class ComponentsSampleWebPortlet extends MVCPortlet {
+public class FrontendJSComponentsSampleWebPortlet extends MVCPortlet {
 
 	@Override
 	public void doDispatch(
@@ -55,7 +55,8 @@ public class ComponentsSampleWebPortlet extends MVCPortlet {
 		throws IOException, PortletException {
 
 		renderRequest.setAttribute(
-			ComponentsSampleWebKeys.TRANSLATION_MANAGER_DISPLAY_CONTEXT,
+			FrontendJSComponentsSampleWebKeys.
+				TRANSLATION_MANAGER_DISPLAY_CONTEXT,
 			new TranslationManagerDisplayContext());
 
 		super.doDispatch(renderRequest, renderResponse);

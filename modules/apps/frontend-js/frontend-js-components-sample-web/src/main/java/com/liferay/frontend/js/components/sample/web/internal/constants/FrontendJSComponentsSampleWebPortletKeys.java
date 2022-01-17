@@ -17,9 +17,10 @@ package com.liferay.frontend.js.components.sample.web.internal.constants;
 /**
  * @author Carlos Lancha
  */
-public class ComponentsSampleWebKeys {
+public class FrontendJSComponentsSampleWebPortletKeys {
 
-	public static final String TRANSLATION_MANAGER_DISPLAY_CONTEXT =
-		"TRANSLATION_MANAGER_DISPLAY_CONTEXT";
+	public static final String COMPONENTS_SAMPLE =
+		"com_liferay_frontend_js_components_sample_web_portlet_" +
+			"FrontendJSComponentsSampleWebPortlet";
 
 }

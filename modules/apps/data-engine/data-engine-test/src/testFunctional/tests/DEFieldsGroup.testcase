@@ -931,7 +931,7 @@ definition {
 
 		DERenderer.assertDataInDateField(
 			fieldLabel = "Date",
-			value = "__/__/____");
+			value = "");
 	}
 
 	@description = "This is a test for LRQA-71711. This test verifies that is possible to remove duplicated repeatable Fields Group"

@@ -373,7 +373,7 @@ definition {
 
 		DERenderer.assertDataInDateField(
 			fieldLabel = "Date",
-			value = "__/__/____");
+			value = "");
 	}
 
 	@description = "This is a test for LRQA-68598. This test verifies that Default Searchable property is Disable when System Setting is left unchecked."

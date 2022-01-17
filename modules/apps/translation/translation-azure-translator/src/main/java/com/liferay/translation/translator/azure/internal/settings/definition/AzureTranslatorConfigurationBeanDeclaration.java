@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.translation.azure.translator.internal.settings.definition;
+package com.liferay.translation.translator.azure.internal.settings.definition;
 
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
-import com.liferay.translation.azure.translator.internal.configuration.AzureTranslatorConfiguration;
+import com.liferay.translation.translator.azure.internal.configuration.AzureTranslatorConfiguration;
 
 import org.osgi.service.component.annotations.Component;
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.translation.azure.translator.internal.configuration.persistence.listener;
+package com.liferay.translation.translator.azure.internal.configuration.persistence.listener;
 
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException;
@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.translation.azure.translator.internal.configuration.AzureTranslatorConfiguration;
+import com.liferay.translation.translator.azure.internal.configuration.AzureTranslatorConfiguration;
 
 import java.util.Dictionary;
 
@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = "model.class.name=com.liferay.translation.azure.translator.internal.configuration.AzureTranslatorConfiguration",
+	property = "model.class.name=com.liferay.translation.translator.azure.internal.configuration.AzureTranslatorConfiguration",
 	service = ConfigurationModelListener.class
 )
 public class AzureTranslatorConfigurationModelListener

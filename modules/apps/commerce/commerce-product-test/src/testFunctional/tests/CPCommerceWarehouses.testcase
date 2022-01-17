@@ -801,8 +801,8 @@ definition {
 			locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
 
 		AssertElementPresent(
-			key_FilterOption = "${quantity} in Stock",
-			locator1 = "AppBuilder#CHOOSE_APP_SEARCH_FILTER_BY_OPTION");
+			key_inStockQuantity = "${quantity} in Stock",
+			locator1 = "CommerceFrontStore#PRODUCT_DETAILS_IN_STOCK_QUANTITY");
 	}
 
 	@description = "This is a test for COMMERCE-6204. Get stock quantity of a SKU for specific channel"

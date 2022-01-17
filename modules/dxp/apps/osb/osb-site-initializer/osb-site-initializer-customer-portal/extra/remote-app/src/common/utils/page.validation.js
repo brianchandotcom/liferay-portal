@@ -11,10 +11,10 @@
 
 import {API_BASE_URL} from '.';
 import client from '../../apolloClient';
-import {getAccountRolesAndAccountFlags} from '../services/liferay/graphql/queries';
+import {getAccountFlags} from '../services/liferay/graphql/queries';
 import {PARAMS_KEYS} from '../services/liferay/search-params';
 import {getLiferaySiteName} from '../services/liferay/utils';
-import {ROLES_PERMISSIONS, ROUTES} from './constants';
+import {ROUTES} from './constants';
 
 const {PROJECT_APPLICATION_EXTERNAL_REFERENCE_CODE} = PARAMS_KEYS;
 
@@ -43,10 +43,9 @@ const isValidPage = async (userAccount, externalReferenceCode, pageKey) => {
 	};
 
 	const {data} = await client.query({
-		query: getAccountRolesAndAccountFlags,
+		query: getAccountFlags,
 		variables: {
-			accountFlagsFilter: `accountKey eq '${externalReferenceCode}' and name eq '${ROUTES.ONBOARDING}' and finished eq true`,
-			accountId: userAccount.id,
+			filter: `accountKey eq '${externalReferenceCode}' and name eq '${ROUTES.ONBOARDING}' and finished eq true`,
 		},
 	});
 
@@ -58,9 +57,7 @@ const isValidPage = async (userAccount, externalReferenceCode, pageKey) => {
 		const hasAccountFlags = !!data.c?.accountFlags?.items?.length;
 
 		if (pageKey === ROUTES.ONBOARDING) {
-			const isAccountAdministrator = !!data.accountAccountRoles?.items?.find(
-				({name}) => name === ROLES_PERMISSIONS.ACCOUNT_ADMINISTRATOR
-			);
+			const isAccountAdministrator = userAccount.isAdmin;
 
 			if (
 				!(
@@ -87,8 +84,7 @@ const isValidPage = async (userAccount, externalReferenceCode, pageKey) => {
 		if (pageKey === ROUTES.OVERVIEW) {
 			if (!isValidExternalReferenceCode) {
 				window.location.href = getHomeLocation();
-			}
-			else if (!hasAccountFlags) {
+			} else if (!hasAccountFlags) {
 				window.location.href = getOnboardingLocation(
 					externalReferenceCode
 				);

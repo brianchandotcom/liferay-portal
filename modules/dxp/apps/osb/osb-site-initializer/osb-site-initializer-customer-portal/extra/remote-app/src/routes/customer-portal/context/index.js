@@ -15,6 +15,7 @@ import {useApplicationProvider} from '../../../common/context/ApplicationPropert
 import {Liferay} from '../../../common/services/liferay';
 import {fetchSession} from '../../../common/services/liferay/api';
 import {
+	getAccountRoles,
 	getAccountSubscriptionGroups,
 	getKoroneikiAccounts,
 	getStructuredContentFolders,
@@ -24,6 +25,7 @@ import {
 	PARAMS_KEYS,
 	SearchParams,
 } from '../../../common/services/liferay/search-params';
+import {ROLES_PERMISSIONS} from '../../../common/utils/constants';
 import {isValidPage} from '../../../common/utils/page.validation';
 import {CUSTOM_EVENTS} from '../utils/constants';
 import reducer, {actionTypes} from './reducer';
@@ -86,8 +88,24 @@ const AppContextProvider = ({assetsPath, children, page}) => {
 			});
 
 			if (data) {
+				const {data: accountRolesData} = await client.query({
+					query: getAccountRoles,
+					variables: {
+						filter: data.userAccount.id,
+					},
+				});
+
+				const isAccountAdministrator = !!accountRolesData.accountAccountRoles?.items?.find(
+					({name}) => name === ROLES_PERMISSIONS.ACCOUNT_ADMINISTRATOR
+				);
+
+				const userAccount = {
+					...data.userAccount,
+					isAdmin: isAccountAdministrator,
+				};
+
 				dispatch({
-					payload: data.userAccount,
+					payload: userAccount,
 					type: actionTypes.UPDATE_USER_ACCOUNT,
 				});
 
@@ -95,18 +113,15 @@ const AppContextProvider = ({assetsPath, children, page}) => {
 					detail: data.userAccount,
 				});
 
-				return data.userAccount;
+				return userAccount;
 			}
 		};
 
-		const getProject = async (
-			projectExternalReferenceCode,
-			accountBrief
-		) => {
+		const getProject = async (externalReferenceCode, accountBrief) => {
 			const {data: projects} = await client.query({
 				query: getKoroneikiAccounts,
 				variables: {
-					filter: `accountKey eq '${projectExternalReferenceCode}'`,
+					filter: `accountKey eq '${externalReferenceCode}'`,
 				},
 			});
 
@@ -194,10 +209,12 @@ const AppContextProvider = ({assetsPath, children, page}) => {
 							projectExternalReferenceCode
 					);
 
-					getProject(projectExternalReferenceCode, accountBrief);
-					getSubscriptionGroups(projectExternalReferenceCode);
-					getStructuredContents();
-					getSessionId();
+					if (accountBrief) {
+						getProject(projectExternalReferenceCode, accountBrief);
+						getSubscriptionGroups(projectExternalReferenceCode);
+						getStructuredContents();
+						getSessionId();
+					}
 				}
 			}
 		};

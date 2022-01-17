@@ -177,19 +177,10 @@ export const addTeamMembersInvitation = gql`
 	}
 `;
 
-export const getAccountRolesAndAccountFlags = gql`
-	query getAccountRolesAndAccountFlags(
-		$accountFlagsFilter: String
-		$accountId: Long!
-	) {
-		accountAccountRoles(accountId: $accountId) {
-			items {
-				id
-				name
-			}
-		}
+export const getAccountFlags = gql`
+	query getAccountFlags($filter: String) {
 		c {
-			accountFlags(filter: $accountFlagsFilter) {
+			accountFlags(filter: $filter) {
 				items {
 					accountKey
 					name
@@ -201,8 +192,8 @@ export const getAccountRolesAndAccountFlags = gql`
 `;
 
 export const getAccountRoles = gql`
-	query getAccountRoles($accountId: Long!) {
-		accountAccountRoles(accountId: $accountId) {
+	query getAccountRoles($filter: Long!) {
+		accountAccountRoles(accountId: $filter) {
 			items {
 				id
 				name
@@ -231,6 +222,7 @@ export const getAccountSubscriptionGroups = gql`
 			) {
 				items {
 					accountKey
+					activationStatus
 					name
 				}
 			}

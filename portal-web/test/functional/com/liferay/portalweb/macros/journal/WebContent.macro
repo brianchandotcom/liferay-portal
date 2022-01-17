@@ -112,6 +112,8 @@ definition {
 			webContentTitle = "${webContentTitle}");
 
 		Button.clickSaveAsDraft();
+
+		Alert.viewSuccessMessage();
 	}
 
 	macro addDraftPGViaAP {
@@ -2324,16 +2326,6 @@ definition {
 			key_assetContent = "${webContentContent}",
 			locator1 = "APAsset#ASSET_CONTENT",
 			value1 = "${webContentContent}");
-	}
-
-	macro viewNoContentAsGuestPGViaWCD {
-		AssertTextNotPresent(
-			locator1 = "Message#ERROR",
-			value1 = "The selected web content no longer exists.");
-
-		AssertElementNotPresent(
-			key_portletName = "Web Content Display",
-			locator1 = "Portlet#BODY");
 	}
 
 	macro viewNoConversionLinksPGViaAP {

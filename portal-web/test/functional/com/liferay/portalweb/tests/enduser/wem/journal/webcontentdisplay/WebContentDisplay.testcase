@@ -1399,7 +1399,7 @@ ${runtimeInstance}
 			pageName = "Web Content Display Page",
 			siteName = "Test Site Name");
 
-		WebContent.viewNoContentAsGuestPGViaWCD();
+		WebContentDisplayPortlet.viewContentNotVisibleToGuest();
 
 		User.loginPG(
 			password = "test",
@@ -1534,7 +1534,7 @@ ${runtimeInstance}
 				pageName = "Web Content Display Page",
 				siteName = "Test Site Name");
 
-			WebContent.viewNoContentAsGuestPGViaWCD(portletName = "Web Content Display");
+			WebContentDisplayPortlet.viewContentNotVisibleToGuest();
 		}
 	}
 

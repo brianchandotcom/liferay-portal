@@ -1,0 +1,13 @@
+dependencies {
+	compileIncludePlatform group: "software.amazon.awssdk", name: "translate"
+	compileIncludePlatform platform("software.amazon.awssdk:bom:2.17.112")
+
+	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bnd.annotation", version: "4.2.0"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
+	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
+	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")
+	compileOnly project(":apps:static:portal-configuration:portal-configuration-persistence-api")
+	compileOnly project(":apps:translation:translation-api")
+	compileOnly project(":core:petra:petra-string")
+}

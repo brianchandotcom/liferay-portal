@@ -56,6 +56,10 @@ public class JsImportmapsExtenderTopHeadDynamicInclude
 			HttpServletResponse httpServletResponse, String key)
 		throws IOException {
 
+		if (_globalImportmaps.isEmpty() && _scopedImportmaps.isEmpty()) {
+			return;
+		}
+
 		PrintWriter printWriter = httpServletResponse.getWriter();
 
 		printWriter.println("<script type=\"importmap\">");
@@ -121,6 +125,8 @@ public class JsImportmapsExtenderTopHeadDynamicInclude
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
+
+		_rebuildImportmaps();
 	}
 
 	private JSONObject _getGlobalJSONObject() {
@@ -147,7 +153,7 @@ public class JsImportmapsExtenderTopHeadDynamicInclude
 		return scopesJSONObject;
 	}
 
-	private void _rebuildImportmaps() {
+	private synchronized void _rebuildImportmaps() {
 		JSONObject globalJSONObject = _getGlobalJSONObject();
 
 		globalJSONObject.put("scopes", _getScopesJSONObject());
@@ -165,8 +171,7 @@ public class JsImportmapsExtenderTopHeadDynamicInclude
 	private BundleContext _bundleContext;
 	private final ConcurrentMap<Long, JSONObject> _globalImportmaps =
 		new ConcurrentHashMap<>();
-	private final AtomicReference<String> _importmaps = new AtomicReference<>(
-		"{}");
+	private final AtomicReference<String> _importmaps = new AtomicReference<>();
 
 	@Reference
 	private JSONFactory _jsonFactory;

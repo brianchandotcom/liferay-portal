@@ -1191,6 +1191,7 @@ definition {
 	@priority = "5"
 	test AddListRecordWithLinkToPageField {
 		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",

@@ -33,6 +33,7 @@ export default function NavigationMenuItemsTree({
 					open: <ClayIcon symbol="plus" />,
 				}}
 				items={siteNavigationMenuItems}
+				nestedKey="children"
 				showExpanderOnHover={false}
 			>
 				{(item) => {

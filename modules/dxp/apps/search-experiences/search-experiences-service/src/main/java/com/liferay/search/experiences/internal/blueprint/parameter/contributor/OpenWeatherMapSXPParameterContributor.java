@@ -32,6 +32,8 @@ import com.liferay.search.experiences.internal.web.cache.IpstackWebCacheItem;
 import com.liferay.search.experiences.internal.web.cache.OpenWeatherMapWebCacheItem;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
 
+import java.beans.ExceptionListener;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -51,8 +53,8 @@ public class OpenWeatherMapSXPParameterContributor
 
 	@Override
 	public void contribute(
-		SearchContext searchContext, SXPBlueprint sxpBlueprint,
-		Set<SXPParameter> sxpParameters) {
+		ExceptionListener exceptionListener, SearchContext searchContext,
+		SXPBlueprint sxpBlueprint, Set<SXPParameter> sxpParameters) {
 
 		OpenWeatherMapConfiguration openWeatherMapConfiguration =
 			_getOpenWeatherMapConfiguration(searchContext.getCompanyId());
@@ -69,7 +71,8 @@ public class OpenWeatherMapSXPParameterContributor
 		}
 
 		JSONObject jsonObject = IpstackWebCacheItem.get(
-			ipAddress, _getIpstackConfiguration(searchContext.getCompanyId()));
+			exceptionListener, ipAddress,
+			_getIpstackConfiguration(searchContext.getCompanyId()));
 
 		if (jsonObject.length() == 0) {
 			return;
@@ -79,7 +82,8 @@ public class OpenWeatherMapSXPParameterContributor
 		String longitude = jsonObject.getString("longitude");
 
 		jsonObject = OpenWeatherMapWebCacheItem.get(
-			latitude, longitude, openWeatherMapConfiguration);
+			exceptionListener, latitude, longitude,
+			openWeatherMapConfiguration);
 
 		if (jsonObject.length() == 0) {
 			return;

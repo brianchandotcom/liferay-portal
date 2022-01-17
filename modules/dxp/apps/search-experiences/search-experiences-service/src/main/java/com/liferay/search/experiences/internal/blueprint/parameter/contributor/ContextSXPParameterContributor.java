@@ -29,6 +29,8 @@ import com.liferay.search.experiences.internal.blueprint.parameter.LongSXPParame
 import com.liferay.search.experiences.internal.blueprint.parameter.StringSXPParameter;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
 
+import java.beans.ExceptionListener;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
@@ -48,8 +50,8 @@ public class ContextSXPParameterContributor implements SXPParameterContributor {
 
 	@Override
 	public void contribute(
-		SearchContext searchContext, SXPBlueprint sxpBlueprint,
-		Set<SXPParameter> sxpParameters) {
+		ExceptionListener exceptionListener, SearchContext searchContext,
+		SXPBlueprint sxpBlueprint, Set<SXPParameter> sxpParameters) {
 
 		long[] commerceAccountGroupIds = (long[])searchContext.getAttribute(
 			"commerceAccountGroupIds");

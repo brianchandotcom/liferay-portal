@@ -44,6 +44,8 @@ import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
 import com.liferay.segments.SegmentsEntryRetriever;
 import com.liferay.segments.context.Context;
 
+import java.beans.ExceptionListener;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
@@ -78,13 +80,15 @@ public class UserSXPParameterContributor implements SXPParameterContributor {
 
 	@Override
 	public void contribute(
-		SearchContext searchContext, SXPBlueprint sxpBlueprint,
-		Set<SXPParameter> sxpParameters) {
+		ExceptionListener exceptionListener, SearchContext searchContext,
+		SXPBlueprint sxpBlueprint, Set<SXPParameter> sxpParameters) {
 
 		try {
 			_contribute(searchContext, sxpParameters);
 		}
 		catch (PortalException portalException) {
+			exceptionListener.exceptionThrown(portalException);
+
 			_log.error(portalException, portalException);
 		}
 	}

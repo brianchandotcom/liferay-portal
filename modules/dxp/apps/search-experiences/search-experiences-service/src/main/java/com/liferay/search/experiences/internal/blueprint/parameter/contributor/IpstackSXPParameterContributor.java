@@ -28,6 +28,8 @@ import com.liferay.search.experiences.internal.configuration.IpstackConfiguratio
 import com.liferay.search.experiences.internal.web.cache.IpstackWebCacheItem;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
 
+import java.beans.ExceptionListener;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -46,8 +48,8 @@ public class IpstackSXPParameterContributor implements SXPParameterContributor {
 
 	@Override
 	public void contribute(
-		SearchContext searchContext, SXPBlueprint sxpBlueprint,
-		Set<SXPParameter> sxpParameters) {
+		ExceptionListener exceptionListener, SearchContext searchContext,
+		SXPBlueprint sxpBlueprint, Set<SXPParameter> sxpParameters) {
 
 		IpstackConfiguration ipstackConfiguration = _getIpstackConfiguration(
 			searchContext.getCompanyId());
@@ -64,7 +66,7 @@ public class IpstackSXPParameterContributor implements SXPParameterContributor {
 		}
 
 		JSONObject jsonObject = IpstackWebCacheItem.get(
-			ipAddress, ipstackConfiguration);
+			exceptionListener, ipAddress, ipstackConfiguration);
 
 		if (jsonObject.length() == 0) {
 			return;

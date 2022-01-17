@@ -202,12 +202,13 @@ public class SXPBlueprintSearchRequestEnhancerImpl
 						key, (Serializable)value)));
 		}
 
+		RuntimeException runtimeException = new RuntimeException();
+
 		SXPParameterData sxpParameterData = _sxpParameterDataCreator.create(
+			runtimeException::addSuppressed,
 			searchRequestBuilder.withSearchContextGet(
 				searchContext -> searchContext),
 			sxpBlueprint);
-
-		RuntimeException runtimeException = new RuntimeException();
 
 		if (configuration != null) {
 			_contributeSXPSearchRequestBodyContributors(

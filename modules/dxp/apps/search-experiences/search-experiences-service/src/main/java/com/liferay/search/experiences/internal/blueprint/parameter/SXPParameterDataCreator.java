@@ -46,6 +46,8 @@ import com.liferay.search.experiences.rest.dto.v1_0.ParameterConfiguration;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
 import com.liferay.segments.SegmentsEntryRetriever;
 
+import java.beans.ExceptionListener;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -81,7 +83,8 @@ public class SXPParameterDataCreator
 	implements SXPParameterContributorDefinitionProvider {
 
 	public SXPParameterData create(
-		SearchContext searchContext, SXPBlueprint sxpBlueprint) {
+		ExceptionListener exceptionListener, SearchContext searchContext,
+		SXPBlueprint sxpBlueprint) {
 
 		Map<String, SXPParameter> sxpParameters = new LinkedHashMap<>();
 
@@ -96,7 +99,8 @@ public class SXPParameterDataCreator
 				sxpParameters);
 		}
 
-		_contribute(searchContext, sxpBlueprint, sxpParameters);
+		_contribute(
+			exceptionListener, searchContext, sxpBlueprint, sxpParameters);
 
 		return new SXPParameterData(keywords, sxpParameters);
 	}
@@ -230,8 +234,8 @@ public class SXPParameterDataCreator
 	}
 
 	private void _contribute(
-		SearchContext searchContext, SXPBlueprint sxpBlueprint,
-		Map<String, SXPParameter> sxpParameters) {
+		ExceptionListener exceptionListener, SearchContext searchContext,
+		SXPBlueprint sxpBlueprint, Map<String, SXPParameter> sxpParameters) {
 
 		if (ArrayUtil.isEmpty(_sxpParameterContributors)) {
 			return;
@@ -243,7 +247,7 @@ public class SXPParameterDataCreator
 			Set<SXPParameter> set = new LinkedHashSet<>();
 
 			sxpParameterContributor.contribute(
-				searchContext, sxpBlueprint, set);
+				exceptionListener, searchContext, sxpBlueprint, set);
 
 			for (SXPParameter sxpParameter : set) {
 				_add(sxpParameter, sxpParameters);

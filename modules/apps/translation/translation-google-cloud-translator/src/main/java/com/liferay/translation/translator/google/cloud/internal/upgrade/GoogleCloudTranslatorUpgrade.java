@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.translation.google.cloud.translator.internal.upgrade;
+package com.liferay.translation.translator.google.cloud.internal.upgrade;
 
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
-import com.liferay.translation.google.cloud.translator.internal.upgrade.v1_0_0.GoogleCloudTranslatorConfigurationUpgradeProcess;
+import com.liferay.translation.translator.google.cloud.internal.upgrade.v1_0_0.GoogleCloudTranslatorConfigurationUpgradeProcess;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;

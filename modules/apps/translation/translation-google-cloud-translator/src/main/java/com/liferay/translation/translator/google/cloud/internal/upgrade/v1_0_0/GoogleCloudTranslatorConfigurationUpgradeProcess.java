@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.translation.google.cloud.translator.internal.upgrade.v1_0_0;
+package com.liferay.translation.translator.google.cloud.internal.upgrade.v1_0_0;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.HashMapDictionary;
-import com.liferay.translation.google.cloud.translator.internal.configuration.GoogleCloudTranslatorConfiguration;
+import com.liferay.translation.translator.google.cloud.internal.configuration.GoogleCloudTranslatorConfiguration;
 
 import java.util.Dictionary;
 import java.util.Hashtable;

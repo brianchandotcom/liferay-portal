@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.translation.google.cloud.translator.internal.settings.definition;
+package com.liferay.translation.translator.google.cloud.internal.settings.definition;
 
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
-import com.liferay.translation.google.cloud.translator.internal.configuration.GoogleCloudTranslatorConfiguration;
+import com.liferay.translation.translator.google.cloud.internal.configuration.GoogleCloudTranslatorConfiguration;
 
 import org.osgi.service.component.annotations.Component;
 

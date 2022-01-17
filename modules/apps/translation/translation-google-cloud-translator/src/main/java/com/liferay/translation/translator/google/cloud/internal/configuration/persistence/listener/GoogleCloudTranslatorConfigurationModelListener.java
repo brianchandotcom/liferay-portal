@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.translation.google.cloud.translator.internal.configuration.persistence.listener;
+package com.liferay.translation.translator.google.cloud.internal.configuration.persistence.listener;
 
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException;
@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.translation.google.cloud.translator.internal.configuration.GoogleCloudTranslatorConfiguration;
+import com.liferay.translation.translator.google.cloud.internal.configuration.GoogleCloudTranslatorConfiguration;
 
 import java.util.Dictionary;
 
@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = "model.class.name=com.liferay.translation.google.cloud.translator.internal.configuration.GoogleCloudTranslatorConfiguration",
+	property = "model.class.name=com.liferay.translation.translator.google.cloud.internal.configuration.GoogleCloudTranslatorConfiguration",
 	service = ConfigurationModelListener.class
 )
 public class GoogleCloudTranslatorConfigurationModelListener

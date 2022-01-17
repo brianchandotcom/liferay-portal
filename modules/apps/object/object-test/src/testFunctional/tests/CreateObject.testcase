@@ -6591,13 +6591,39 @@ definition {
 	}
 
 	@description = "LPS-135401 - Verify that the Relationship is created on both objects for a Many to Many Relationship"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test RelationshipCreatedBothObjectsManyToMany {
 		property portal.acceptance = "true";
 
-		// TODO LPS-145353 RelationshipCreatedBothObjectsManyToMany pending implementation
+		for (var letter : list "A,B") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object ${letter}",
+				objectName = "CustomObject${letter}",
+				pluralLabelName = "Custom Objects ${letter}");
+		}
 
+		ObjectAdmin.addObjectRelationshipViaAPI(
+			objectName_1 = "CustomObjectA",
+			objectName_2 = "CustomObjectB",
+			relationshipLabel = "Relationship",
+			relationshipName = "relationship",
+			relationshipType = "manyToMany");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object A");
+
+		ObjectAdmin.gotoRelationshipsTab();
+
+		CreateObject.assertRelatedObject(relatedObject = "CustomObjectB");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object B");
+
+		ObjectAdmin.gotoRelationshipsTab();
+
+		CreateObject.assertRelatedObject(relatedObject = "CustomObjectA");
 	}
 
 	@description = "LPS-135400 - Verify that relationship field is automatically created"

@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
 import com.liferay.site.navigation.constants.SiteNavigationConstants;
@@ -443,11 +444,17 @@ public class SiteNavigationMenuDisplayContext {
 		long siteNavigationMenuId =
 			_siteNavigationMenuPortletInstanceConfiguration.
 				siteNavigationMenuId();
+		String siteNavigationMenuName =
+			_siteNavigationMenuPortletInstanceConfiguration.
+				siteNavigationMenuName();
 		int siteNavigationMenuType =
 			_siteNavigationMenuPortletInstanceConfiguration.
 				siteNavigationMenuType();
 
-		if ((siteNavigationMenuId > 0) && (siteNavigationMenuType == -1)) {
+		if (((siteNavigationMenuId > 0) ||
+			 Validator.isNotNull(siteNavigationMenuName)) &&
+			(siteNavigationMenuType == -1)) {
+
 			return true;
 		}
 

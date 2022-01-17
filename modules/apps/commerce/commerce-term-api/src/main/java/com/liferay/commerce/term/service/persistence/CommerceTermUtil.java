@@ -1,0 +1,1290 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.commerce.term.service.persistence;
+
+import com.liferay.commerce.term.model.CommerceTerm;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+/**
+ * The persistence utility for the commerce term service. This utility wraps <code>com.liferay.commerce.term.service.persistence.impl.CommerceTermPersistenceImpl</code> and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
+ *
+ * <p>
+ * Caching information and settings can be found in <code>portal.properties</code>
+ * </p>
+ *
+ * @author Luca Pellizzon
+ * @see CommerceTermPersistence
+ * @generated
+ */
+public class CommerceTermUtil {
+
+	/*
+	 * NOTE FOR DEVELOPERS:
+	 *
+	 * Never modify this class directly. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
+	 */
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
+	 */
+	public static void clearCache() {
+		getPersistence().clearCache();
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void clearCache(CommerceTerm commerceTerm) {
+		getPersistence().clearCache(commerceTerm);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#countWithDynamicQuery(DynamicQuery)
+	 */
+	public static long countWithDynamicQuery(DynamicQuery dynamicQuery) {
+		return getPersistence().countWithDynamicQuery(dynamicQuery);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#fetchByPrimaryKeys(Set)
+	 */
+	public static Map<Serializable, CommerceTerm> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys) {
+
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery)
+	 */
+	public static List<CommerceTerm> findWithDynamicQuery(
+		DynamicQuery dynamicQuery) {
+
+		return getPersistence().findWithDynamicQuery(dynamicQuery);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int)
+	 */
+	public static List<CommerceTerm> findWithDynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
+
+		return getPersistence().findWithDynamicQuery(dynamicQuery, start, end);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int, OrderByComparator)
+	 */
+	public static List<CommerceTerm> findWithDynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<CommerceTerm> orderByComparator) {
+
+		return getPersistence().findWithDynamicQuery(
+			dynamicQuery, start, end, orderByComparator);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#update(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static CommerceTerm update(CommerceTerm commerceTerm) {
+		return getPersistence().update(commerceTerm);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#update(com.liferay.portal.kernel.model.BaseModel, ServiceContext)
+	 */
+	public static CommerceTerm update(
+		CommerceTerm commerceTerm, ServiceContext serviceContext) {
+
+		return getPersistence().update(commerceTerm, serviceContext);
+	}
+
+	/**
+	 * Returns all the commerce terms where companyId = &#63; and active = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @return the matching commerce terms
+	 */
+	public static List<CommerceTerm> findByC_A(long companyId, boolean active) {
+		return getPersistence().findByC_A(companyId, active);
+	}
+
+	/**
+	 * Returns a range of all the commerce terms where companyId = &#63; and active = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceTermModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param start the lower bound of the range of commerce terms
+	 * @param end the upper bound of the range of commerce terms (not inclusive)
+	 * @return the range of matching commerce terms
+	 */
+	public static List<CommerceTerm> findByC_A(
+		long companyId, boolean active, int start, int end) {
+
+		return getPersistence().findByC_A(companyId, active, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce terms where companyId = &#63; and active = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceTermModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param start the lower bound of the range of commerce terms
+	 * @param end the upper bound of the range of commerce terms (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce terms
+	 */
+	public static List<CommerceTerm> findByC_A(
+		long companyId, boolean active, int start, int end,
+		OrderByComparator<CommerceTerm> orderByComparator) {
+
+		return getPersistence().findByC_A(
+			companyId, active, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce terms where companyId = &#63; and active = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceTermModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param start the lower bound of the range of commerce terms
+	 * @param end the upper bound of the range of commerce terms (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching commerce terms
+	 */
+	public static List<CommerceTerm> findByC_A(
+		long companyId, boolean active, int start, int end,
+		OrderByComparator<CommerceTerm> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByC_A(
+			companyId, active, start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first commerce term in the ordered set where companyId = &#63; and active = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce term
+	 * @throws NoSuchTermException if a matching commerce term could not be found
+	 */
+	public static CommerceTerm findByC_A_First(
+			long companyId, boolean active,
+			OrderByComparator<CommerceTerm> orderByComparator)
+		throws com.liferay.commerce.term.exception.NoSuchTermException {
+
+		return getPersistence().findByC_A_First(
+			companyId, active, orderByComparator);
+	}
+
+	/**
+	 * Returns the first commerce term in the ordered set where companyId = &#63; and active = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce term, or <code>null</code> if a matching commerce term could not be found
+	 */
+	public static CommerceTerm fetchByC_A_First(
+		long companyId, boolean active,
+		OrderByComparator<CommerceTerm> orderByComparator) {
+
+		return getPersistence().fetchByC_A_First(
+			companyId, active, orderByComparator);
+	}
+
+	/**
+	 * Returns the last commerce term in the ordered set where companyId = &#63; and active = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce term
+	 * @throws NoSuchTermException if a matching commerce term could not be found
+	 */
+	public static CommerceTerm findByC_A_Last(
+			long companyId, boolean active,
+			OrderByComparator<CommerceTerm> orderByComparator)
+		throws com.liferay.commerce.term.exception.NoSuchTermException {
+
+		return getPersistence().findByC_A_Last(
+			companyId, active, orderByComparator);
+	}
+
+	/**
+	 * Returns the last commerce term in the ordered set where companyId = &#63; and active = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce term, or <code>null</code> if a matching commerce term could not be found
+	 */
+	public static CommerceTerm fetchByC_A_Last(
+		long companyId, boolean active,
+		OrderByComparator<CommerceTerm> orderByComparator) {
+
+		return getPersistence().fetchByC_A_Last(
+			companyId, active, orderByComparator);
+	}
+
+	/**
+	 * Returns the commerce terms before and after the current commerce term in the ordered set where companyId = &#63; and active = &#63;.
+	 *
+	 * @param commerceTermId the primary key of the current commerce term
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce term
+	 * @throws NoSuchTermException if a commerce term with the primary key could not be found
+	 */
+	public static CommerceTerm[] findByC_A_PrevAndNext(
+			long commerceTermId, long companyId, boolean active,
+			OrderByComparator<CommerceTerm> orderByComparator)
+		throws com.liferay.commerce.term.exception.NoSuchTermException {
+
+		return getPersistence().findByC_A_PrevAndNext(
+			commerceTermId, companyId, active, orderByComparator);
+	}
+
+	/**
+	 * Removes all the commerce terms where companyId = &#63; and active = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 */
+	public static void removeByC_A(long companyId, boolean active) {
+		getPersistence().removeByC_A(companyId, active);
+	}
+
+	/**
+	 * Returns the number of commerce terms where companyId = &#63; and active = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @return the number of matching commerce terms
+	 */
+	public static int countByC_A(long companyId, boolean active) {
+		return getPersistence().countByC_A(companyId, active);
+	}
+
+	/**
+	 * Returns all the commerce terms where companyId = &#63; and type LIKE &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param type the type
+	 * @return the matching commerce terms
+	 */
+	public static List<CommerceTerm> findByC_LikeType(
+		long companyId, String type) {
+
+		return getPersistence().findByC_LikeType(companyId, type);
+	}
+
+	/**
+	 * Returns a range of all the commerce terms where companyId = &#63; and type LIKE &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceTermModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param type the type
+	 * @param start the lower bound of the range of commerce terms
+	 * @param end the upper bound of the range of commerce terms (not inclusive)
+	 * @return the range of matching commerce terms
+	 */
+	public static List<CommerceTerm> findByC_LikeType(
+		long companyId, String type, int start, int end) {
+
+		return getPersistence().findByC_LikeType(companyId, type, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce terms where companyId = &#63; and type LIKE &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceTermModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param type the type
+	 * @param start the lower bound of the range of commerce terms
+	 * @param end the upper bound of the range of commerce terms (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce terms
+	 */
+	public static List<CommerceTerm> findByC_LikeType(
+		long companyId, String type, int start, int end,
+		OrderByComparator<CommerceTerm> orderByComparator) {
+
+		return getPersistence().findByC_LikeType(
+			companyId, type, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce terms where companyId = &#63; and type LIKE &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceTermModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param type the type
+	 * @param start the lower bound of the range of commerce terms
+	 * @param end the upper bound of the range of commerce terms (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching commerce terms
+	 */
+	public static List<CommerceTerm> findByC_LikeType(
+		long companyId, String type, int start, int end,
+		OrderByComparator<CommerceTerm> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByC_LikeType(
+			companyId, type, start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first commerce term in the ordered set where companyId = &#63; and type LIKE &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce term
+	 * @throws NoSuchTermException if a matching commerce term could not be found
+	 */
+	public static CommerceTerm findByC_LikeType_First(
+			long companyId, String type,
+			OrderByComparator<CommerceTerm> orderByComparator)
+		throws com.liferay.commerce.term.exception.NoSuchTermException {
+
+		return getPersistence().findByC_LikeType_First(
+			companyId, type, orderByComparator);
+	}
+
+	/**
+	 * Returns the first commerce term in the ordered set where companyId = &#63; and type LIKE &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce term, or <code>null</code> if a matching commerce term could not be found
+	 */
+	public static CommerceTerm fetchByC_LikeType_First(
+		long companyId, String type,
+		OrderByComparator<CommerceTerm> orderByComparator) {
+
+		return getPersistence().fetchByC_LikeType_First(
+			companyId, type, orderByComparator);
+	}
+
+	/**
+	 * Returns the last commerce term in the ordered set where companyId = &#63; and type LIKE &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce term
+	 * @throws NoSuchTermException if a matching commerce term could not be found
+	 */
+	public static CommerceTerm findByC_LikeType_Last(
+			long companyId, String type,
+			OrderByComparator<CommerceTerm> orderByComparator)
+		throws com.liferay.commerce.term.exception.NoSuchTermException {
+
+		return getPersistence().findByC_LikeType_Last(
+			companyId, type, orderByComparator);
+	}
+
+	/**
+	 * Returns the last commerce term in the ordered set where companyId = &#63; and type LIKE &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce term, or <code>null</code> if a matching commerce term could not be found
+	 */
+	public static CommerceTerm fetchByC_LikeType_Last(
+		long companyId, String type,
+		OrderByComparator<CommerceTerm> orderByComparator) {
+
+		return getPersistence().fetchByC_LikeType_Last(
+			companyId, type, orderByComparator);
+	}
+
+	/**
+	 * Returns the commerce terms before and after the current commerce term in the ordered set where companyId = &#63; and type LIKE &#63;.
+	 *
+	 * @param commerceTermId the primary key of the current commerce term
+	 * @param companyId the company ID
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce term
+	 * @throws NoSuchTermException if a commerce term with the primary key could not be found
+	 */
+	public static CommerceTerm[] findByC_LikeType_PrevAndNext(
+			long commerceTermId, long companyId, String type,
+			OrderByComparator<CommerceTerm> orderByComparator)
+		throws com.liferay.commerce.term.exception.NoSuchTermException {
+
+		return getPersistence().findByC_LikeType_PrevAndNext(
+			commerceTermId, companyId, type, orderByComparator);
+	}
+
+	/**
+	 * Removes all the commerce terms where companyId = &#63; and type LIKE &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param type the type
+	 */
+	public static void removeByC_LikeType(long companyId, String type) {
+		getPersistence().removeByC_LikeType(companyId, type);
+	}
+
+	/**
+	 * Returns the number of commerce terms where companyId = &#63; and type LIKE &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param type the type
+	 * @return the number of matching commerce terms
+	 */
+	public static int countByC_LikeType(long companyId, String type) {
+		return getPersistence().countByC_LikeType(companyId, type);
+	}
+
+	/**
+	 * Returns all the commerce terms where displayDate &lt; &#63; and status = &#63;.
+	 *
+	 * @param displayDate the display date
+	 * @param status the status
+	 * @return the matching commerce terms
+	 */
+	public static List<CommerceTerm> findByLtD_S(Date displayDate, int status) {
+		return getPersistence().findByLtD_S(displayDate, status);
+	}
+
+	/**
+	 * Returns a range of all the commerce terms where displayDate &lt; &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceTermModelImpl</code>.
+	 * </p>
+	 *
+	 * @param displayDate the display date
+	 * @param status the status
+	 * @param start the lower bound of the range of commerce terms
+	 * @param end the upper bound of the range of commerce terms (not inclusive)
+	 * @return the range of matching commerce terms
+	 */
+	public static List<CommerceTerm> findByLtD_S(
+		Date displayDate, int status, int start, int end) {
+
+		return getPersistence().findByLtD_S(displayDate, status, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce terms where displayDate &lt; &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceTermModelImpl</code>.
+	 * </p>
+	 *
+	 * @param displayDate the display date
+	 * @param status the status
+	 * @param start the lower bound of the range of commerce terms
+	 * @param end the upper bound of the range of commerce terms (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce terms
+	 */
+	public static List<CommerceTerm> findByLtD_S(
+		Date displayDate, int status, int start, int end,
+		OrderByComparator<CommerceTerm> orderByComparator) {
+
+		return getPersistence().findByLtD_S(
+			displayDate, status, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce terms where displayDate &lt; &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceTermModelImpl</code>.
+	 * </p>
+	 *
+	 * @param displayDate the display date
+	 * @param status the status
+	 * @param start the lower bound of the range of commerce terms
+	 * @param end the upper bound of the range of commerce terms (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching commerce terms
+	 */
+	public static List<CommerceTerm> findByLtD_S(
+		Date displayDate, int status, int start, int end,
+		OrderByComparator<CommerceTerm> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByLtD_S(
+			displayDate, status, start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first commerce term in the ordered set where displayDate &lt; &#63; and status = &#63;.
+	 *
+	 * @param displayDate the display date
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce term
+	 * @throws NoSuchTermException if a matching commerce term could not be found
+	 */
+	public static CommerceTerm findByLtD_S_First(
+			Date displayDate, int status,
+			OrderByComparator<CommerceTerm> orderByComparator)
+		throws com.liferay.commerce.term.exception.NoSuchTermException {
+
+		return getPersistence().findByLtD_S_First(
+			displayDate, status, orderByComparator);
+	}
+
+	/**
+	 * Returns the first commerce term in the ordered set where displayDate &lt; &#63; and status = &#63;.
+	 *
+	 * @param displayDate the display date
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce term, or <code>null</code> if a matching commerce term could not be found
+	 */
+	public static CommerceTerm fetchByLtD_S_First(
+		Date displayDate, int status,
+		OrderByComparator<CommerceTerm> orderByComparator) {
+
+		return getPersistence().fetchByLtD_S_First(
+			displayDate, status, orderByComparator);
+	}
+
+	/**
+	 * Returns the last commerce term in the ordered set where displayDate &lt; &#63; and status = &#63;.
+	 *
+	 * @param displayDate the display date
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce term
+	 * @throws NoSuchTermException if a matching commerce term could not be found
+	 */
+	public static CommerceTerm findByLtD_S_Last(
+			Date displayDate, int status,
+			OrderByComparator<CommerceTerm> orderByComparator)
+		throws com.liferay.commerce.term.exception.NoSuchTermException {
+
+		return getPersistence().findByLtD_S_Last(
+			displayDate, status, orderByComparator);
+	}
+
+	/**
+	 * Returns the last commerce term in the ordered set where displayDate &lt; &#63; and status = &#63;.
+	 *
+	 * @param displayDate the display date
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce term, or <code>null</code> if a matching commerce term could not be found
+	 */
+	public static CommerceTerm fetchByLtD_S_Last(
+		Date displayDate, int status,
+		OrderByComparator<CommerceTerm> orderByComparator) {
+
+		return getPersistence().fetchByLtD_S_Last(
+			displayDate, status, orderByComparator);
+	}
+
+	/**
+	 * Returns the commerce terms before and after the current commerce term in the ordered set where displayDate &lt; &#63; and status = &#63;.
+	 *
+	 * @param commerceTermId the primary key of the current commerce term
+	 * @param displayDate the display date
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce term
+	 * @throws NoSuchTermException if a commerce term with the primary key could not be found
+	 */
+	public static CommerceTerm[] findByLtD_S_PrevAndNext(
+			long commerceTermId, Date displayDate, int status,
+			OrderByComparator<CommerceTerm> orderByComparator)
+		throws com.liferay.commerce.term.exception.NoSuchTermException {
+
+		return getPersistence().findByLtD_S_PrevAndNext(
+			commerceTermId, displayDate, status, orderByComparator);
+	}
+
+	/**
+	 * Removes all the commerce terms where displayDate &lt; &#63; and status = &#63; from the database.
+	 *
+	 * @param displayDate the display date
+	 * @param status the status
+	 */
+	public static void removeByLtD_S(Date displayDate, int status) {
+		getPersistence().removeByLtD_S(displayDate, status);
+	}
+
+	/**
+	 * Returns the number of commerce terms where displayDate &lt; &#63; and status = &#63;.
+	 *
+	 * @param displayDate the display date
+	 * @param status the status
+	 * @return the number of matching commerce terms
+	 */
+	public static int countByLtD_S(Date displayDate, int status) {
+		return getPersistence().countByLtD_S(displayDate, status);
+	}
+
+	/**
+	 * Returns all the commerce terms where expirationDate &lt; &#63; and status = &#63;.
+	 *
+	 * @param expirationDate the expiration date
+	 * @param status the status
+	 * @return the matching commerce terms
+	 */
+	public static List<CommerceTerm> findByLtE_S(
+		Date expirationDate, int status) {
+
+		return getPersistence().findByLtE_S(expirationDate, status);
+	}
+
+	/**
+	 * Returns a range of all the commerce terms where expirationDate &lt; &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceTermModelImpl</code>.
+	 * </p>
+	 *
+	 * @param expirationDate the expiration date
+	 * @param status the status
+	 * @param start the lower bound of the range of commerce terms
+	 * @param end the upper bound of the range of commerce terms (not inclusive)
+	 * @return the range of matching commerce terms
+	 */
+	public static List<CommerceTerm> findByLtE_S(
+		Date expirationDate, int status, int start, int end) {
+
+		return getPersistence().findByLtE_S(expirationDate, status, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce terms where expirationDate &lt; &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceTermModelImpl</code>.
+	 * </p>
+	 *
+	 * @param expirationDate the expiration date
+	 * @param status the status
+	 * @param start the lower bound of the range of commerce terms
+	 * @param end the upper bound of the range of commerce terms (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce terms
+	 */
+	public static List<CommerceTerm> findByLtE_S(
+		Date expirationDate, int status, int start, int end,
+		OrderByComparator<CommerceTerm> orderByComparator) {
+
+		return getPersistence().findByLtE_S(
+			expirationDate, status, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce terms where expirationDate &lt; &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceTermModelImpl</code>.
+	 * </p>
+	 *
+	 * @param expirationDate the expiration date
+	 * @param status the status
+	 * @param start the lower bound of the range of commerce terms
+	 * @param end the upper bound of the range of commerce terms (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching commerce terms
+	 */
+	public static List<CommerceTerm> findByLtE_S(
+		Date expirationDate, int status, int start, int end,
+		OrderByComparator<CommerceTerm> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByLtE_S(
+			expirationDate, status, start, end, orderByComparator,
+			useFinderCache);
+	}
+
+	/**
+	 * Returns the first commerce term in the ordered set where expirationDate &lt; &#63; and status = &#63;.
+	 *
+	 * @param expirationDate the expiration date
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce term
+	 * @throws NoSuchTermException if a matching commerce term could not be found
+	 */
+	public static CommerceTerm findByLtE_S_First(
+			Date expirationDate, int status,
+			OrderByComparator<CommerceTerm> orderByComparator)
+		throws com.liferay.commerce.term.exception.NoSuchTermException {
+
+		return getPersistence().findByLtE_S_First(
+			expirationDate, status, orderByComparator);
+	}
+
+	/**
+	 * Returns the first commerce term in the ordered set where expirationDate &lt; &#63; and status = &#63;.
+	 *
+	 * @param expirationDate the expiration date
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce term, or <code>null</code> if a matching commerce term could not be found
+	 */
+	public static CommerceTerm fetchByLtE_S_First(
+		Date expirationDate, int status,
+		OrderByComparator<CommerceTerm> orderByComparator) {
+
+		return getPersistence().fetchByLtE_S_First(
+			expirationDate, status, orderByComparator);
+	}
+
+	/**
+	 * Returns the last commerce term in the ordered set where expirationDate &lt; &#63; and status = &#63;.
+	 *
+	 * @param expirationDate the expiration date
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce term
+	 * @throws NoSuchTermException if a matching commerce term could not be found
+	 */
+	public static CommerceTerm findByLtE_S_Last(
+			Date expirationDate, int status,
+			OrderByComparator<CommerceTerm> orderByComparator)
+		throws com.liferay.commerce.term.exception.NoSuchTermException {
+
+		return getPersistence().findByLtE_S_Last(
+			expirationDate, status, orderByComparator);
+	}
+
+	/**
+	 * Returns the last commerce term in the ordered set where expirationDate &lt; &#63; and status = &#63;.
+	 *
+	 * @param expirationDate the expiration date
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce term, or <code>null</code> if a matching commerce term could not be found
+	 */
+	public static CommerceTerm fetchByLtE_S_Last(
+		Date expirationDate, int status,
+		OrderByComparator<CommerceTerm> orderByComparator) {
+
+		return getPersistence().fetchByLtE_S_Last(
+			expirationDate, status, orderByComparator);
+	}
+
+	/**
+	 * Returns the commerce terms before and after the current commerce term in the ordered set where expirationDate &lt; &#63; and status = &#63;.
+	 *
+	 * @param commerceTermId the primary key of the current commerce term
+	 * @param expirationDate the expiration date
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce term
+	 * @throws NoSuchTermException if a commerce term with the primary key could not be found
+	 */
+	public static CommerceTerm[] findByLtE_S_PrevAndNext(
+			long commerceTermId, Date expirationDate, int status,
+			OrderByComparator<CommerceTerm> orderByComparator)
+		throws com.liferay.commerce.term.exception.NoSuchTermException {
+
+		return getPersistence().findByLtE_S_PrevAndNext(
+			commerceTermId, expirationDate, status, orderByComparator);
+	}
+
+	/**
+	 * Removes all the commerce terms where expirationDate &lt; &#63; and status = &#63; from the database.
+	 *
+	 * @param expirationDate the expiration date
+	 * @param status the status
+	 */
+	public static void removeByLtE_S(Date expirationDate, int status) {
+		getPersistence().removeByLtE_S(expirationDate, status);
+	}
+
+	/**
+	 * Returns the number of commerce terms where expirationDate &lt; &#63; and status = &#63;.
+	 *
+	 * @param expirationDate the expiration date
+	 * @param status the status
+	 * @return the number of matching commerce terms
+	 */
+	public static int countByLtE_S(Date expirationDate, int status) {
+		return getPersistence().countByLtE_S(expirationDate, status);
+	}
+
+	/**
+	 * Returns all the commerce terms where companyId = &#63; and active = &#63; and type LIKE &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param type the type
+	 * @return the matching commerce terms
+	 */
+	public static List<CommerceTerm> findByC_A_LikeType(
+		long companyId, boolean active, String type) {
+
+		return getPersistence().findByC_A_LikeType(companyId, active, type);
+	}
+
+	/**
+	 * Returns a range of all the commerce terms where companyId = &#63; and active = &#63; and type LIKE &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceTermModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param type the type
+	 * @param start the lower bound of the range of commerce terms
+	 * @param end the upper bound of the range of commerce terms (not inclusive)
+	 * @return the range of matching commerce terms
+	 */
+	public static List<CommerceTerm> findByC_A_LikeType(
+		long companyId, boolean active, String type, int start, int end) {
+
+		return getPersistence().findByC_A_LikeType(
+			companyId, active, type, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce terms where companyId = &#63; and active = &#63; and type LIKE &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceTermModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param type the type
+	 * @param start the lower bound of the range of commerce terms
+	 * @param end the upper bound of the range of commerce terms (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce terms
+	 */
+	public static List<CommerceTerm> findByC_A_LikeType(
+		long companyId, boolean active, String type, int start, int end,
+		OrderByComparator<CommerceTerm> orderByComparator) {
+
+		return getPersistence().findByC_A_LikeType(
+			companyId, active, type, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce terms where companyId = &#63; and active = &#63; and type LIKE &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceTermModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param type the type
+	 * @param start the lower bound of the range of commerce terms
+	 * @param end the upper bound of the range of commerce terms (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching commerce terms
+	 */
+	public static List<CommerceTerm> findByC_A_LikeType(
+		long companyId, boolean active, String type, int start, int end,
+		OrderByComparator<CommerceTerm> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByC_A_LikeType(
+			companyId, active, type, start, end, orderByComparator,
+			useFinderCache);
+	}
+
+	/**
+	 * Returns the first commerce term in the ordered set where companyId = &#63; and active = &#63; and type LIKE &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce term
+	 * @throws NoSuchTermException if a matching commerce term could not be found
+	 */
+	public static CommerceTerm findByC_A_LikeType_First(
+			long companyId, boolean active, String type,
+			OrderByComparator<CommerceTerm> orderByComparator)
+		throws com.liferay.commerce.term.exception.NoSuchTermException {
+
+		return getPersistence().findByC_A_LikeType_First(
+			companyId, active, type, orderByComparator);
+	}
+
+	/**
+	 * Returns the first commerce term in the ordered set where companyId = &#63; and active = &#63; and type LIKE &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce term, or <code>null</code> if a matching commerce term could not be found
+	 */
+	public static CommerceTerm fetchByC_A_LikeType_First(
+		long companyId, boolean active, String type,
+		OrderByComparator<CommerceTerm> orderByComparator) {
+
+		return getPersistence().fetchByC_A_LikeType_First(
+			companyId, active, type, orderByComparator);
+	}
+
+	/**
+	 * Returns the last commerce term in the ordered set where companyId = &#63; and active = &#63; and type LIKE &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce term
+	 * @throws NoSuchTermException if a matching commerce term could not be found
+	 */
+	public static CommerceTerm findByC_A_LikeType_Last(
+			long companyId, boolean active, String type,
+			OrderByComparator<CommerceTerm> orderByComparator)
+		throws com.liferay.commerce.term.exception.NoSuchTermException {
+
+		return getPersistence().findByC_A_LikeType_Last(
+			companyId, active, type, orderByComparator);
+	}
+
+	/**
+	 * Returns the last commerce term in the ordered set where companyId = &#63; and active = &#63; and type LIKE &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce term, or <code>null</code> if a matching commerce term could not be found
+	 */
+	public static CommerceTerm fetchByC_A_LikeType_Last(
+		long companyId, boolean active, String type,
+		OrderByComparator<CommerceTerm> orderByComparator) {
+
+		return getPersistence().fetchByC_A_LikeType_Last(
+			companyId, active, type, orderByComparator);
+	}
+
+	/**
+	 * Returns the commerce terms before and after the current commerce term in the ordered set where companyId = &#63; and active = &#63; and type LIKE &#63;.
+	 *
+	 * @param commerceTermId the primary key of the current commerce term
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce term
+	 * @throws NoSuchTermException if a commerce term with the primary key could not be found
+	 */
+	public static CommerceTerm[] findByC_A_LikeType_PrevAndNext(
+			long commerceTermId, long companyId, boolean active, String type,
+			OrderByComparator<CommerceTerm> orderByComparator)
+		throws com.liferay.commerce.term.exception.NoSuchTermException {
+
+		return getPersistence().findByC_A_LikeType_PrevAndNext(
+			commerceTermId, companyId, active, type, orderByComparator);
+	}
+
+	/**
+	 * Removes all the commerce terms where companyId = &#63; and active = &#63; and type LIKE &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param type the type
+	 */
+	public static void removeByC_A_LikeType(
+		long companyId, boolean active, String type) {
+
+		getPersistence().removeByC_A_LikeType(companyId, active, type);
+	}
+
+	/**
+	 * Returns the number of commerce terms where companyId = &#63; and active = &#63; and type LIKE &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param type the type
+	 * @return the number of matching commerce terms
+	 */
+	public static int countByC_A_LikeType(
+		long companyId, boolean active, String type) {
+
+		return getPersistence().countByC_A_LikeType(companyId, active, type);
+	}
+
+	/**
+	 * Returns the commerce term where companyId = &#63; and externalReferenceCode = &#63; or throws a <code>NoSuchTermException</code> if it could not be found.
+	 *
+	 * @param companyId the company ID
+	 * @param externalReferenceCode the external reference code
+	 * @return the matching commerce term
+	 * @throws NoSuchTermException if a matching commerce term could not be found
+	 */
+	public static CommerceTerm findByC_ERC(
+			long companyId, String externalReferenceCode)
+		throws com.liferay.commerce.term.exception.NoSuchTermException {
+
+		return getPersistence().findByC_ERC(companyId, externalReferenceCode);
+	}
+
+	/**
+	 * Returns the commerce term where companyId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param externalReferenceCode the external reference code
+	 * @return the matching commerce term, or <code>null</code> if a matching commerce term could not be found
+	 */
+	public static CommerceTerm fetchByC_ERC(
+		long companyId, String externalReferenceCode) {
+
+		return getPersistence().fetchByC_ERC(companyId, externalReferenceCode);
+	}
+
+	/**
+	 * Returns the commerce term where companyId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param externalReferenceCode the external reference code
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching commerce term, or <code>null</code> if a matching commerce term could not be found
+	 */
+	public static CommerceTerm fetchByC_ERC(
+		long companyId, String externalReferenceCode, boolean useFinderCache) {
+
+		return getPersistence().fetchByC_ERC(
+			companyId, externalReferenceCode, useFinderCache);
+	}
+
+	/**
+	 * Removes the commerce term where companyId = &#63; and externalReferenceCode = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param externalReferenceCode the external reference code
+	 * @return the commerce term that was removed
+	 */
+	public static CommerceTerm removeByC_ERC(
+			long companyId, String externalReferenceCode)
+		throws com.liferay.commerce.term.exception.NoSuchTermException {
+
+		return getPersistence().removeByC_ERC(companyId, externalReferenceCode);
+	}
+
+	/**
+	 * Returns the number of commerce terms where companyId = &#63; and externalReferenceCode = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param externalReferenceCode the external reference code
+	 * @return the number of matching commerce terms
+	 */
+	public static int countByC_ERC(
+		long companyId, String externalReferenceCode) {
+
+		return getPersistence().countByC_ERC(companyId, externalReferenceCode);
+	}
+
+	/**
+	 * Caches the commerce term in the entity cache if it is enabled.
+	 *
+	 * @param commerceTerm the commerce term
+	 */
+	public static void cacheResult(CommerceTerm commerceTerm) {
+		getPersistence().cacheResult(commerceTerm);
+	}
+
+	/**
+	 * Caches the commerce terms in the entity cache if it is enabled.
+	 *
+	 * @param commerceTerms the commerce terms
+	 */
+	public static void cacheResult(List<CommerceTerm> commerceTerms) {
+		getPersistence().cacheResult(commerceTerms);
+	}
+
+	/**
+	 * Creates a new commerce term with the primary key. Does not add the commerce term to the database.
+	 *
+	 * @param commerceTermId the primary key for the new commerce term
+	 * @return the new commerce term
+	 */
+	public static CommerceTerm create(long commerceTermId) {
+		return getPersistence().create(commerceTermId);
+	}
+
+	/**
+	 * Removes the commerce term with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param commerceTermId the primary key of the commerce term
+	 * @return the commerce term that was removed
+	 * @throws NoSuchTermException if a commerce term with the primary key could not be found
+	 */
+	public static CommerceTerm remove(long commerceTermId)
+		throws com.liferay.commerce.term.exception.NoSuchTermException {
+
+		return getPersistence().remove(commerceTermId);
+	}
+
+	public static CommerceTerm updateImpl(CommerceTerm commerceTerm) {
+		return getPersistence().updateImpl(commerceTerm);
+	}
+
+	/**
+	 * Returns the commerce term with the primary key or throws a <code>NoSuchTermException</code> if it could not be found.
+	 *
+	 * @param commerceTermId the primary key of the commerce term
+	 * @return the commerce term
+	 * @throws NoSuchTermException if a commerce term with the primary key could not be found
+	 */
+	public static CommerceTerm findByPrimaryKey(long commerceTermId)
+		throws com.liferay.commerce.term.exception.NoSuchTermException {
+
+		return getPersistence().findByPrimaryKey(commerceTermId);
+	}
+
+	/**
+	 * Returns the commerce term with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param commerceTermId the primary key of the commerce term
+	 * @return the commerce term, or <code>null</code> if a commerce term with the primary key could not be found
+	 */
+	public static CommerceTerm fetchByPrimaryKey(long commerceTermId) {
+		return getPersistence().fetchByPrimaryKey(commerceTermId);
+	}
+
+	/**
+	 * Returns all the commerce terms.
+	 *
+	 * @return the commerce terms
+	 */
+	public static List<CommerceTerm> findAll() {
+		return getPersistence().findAll();
+	}
+
+	/**
+	 * Returns a range of all the commerce terms.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceTermModelImpl</code>.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of commerce terms
+	 * @param end the upper bound of the range of commerce terms (not inclusive)
+	 * @return the range of commerce terms
+	 */
+	public static List<CommerceTerm> findAll(int start, int end) {
+		return getPersistence().findAll(start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce terms.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceTermModelImpl</code>.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of commerce terms
+	 * @param end the upper bound of the range of commerce terms (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of commerce terms
+	 */
+	public static List<CommerceTerm> findAll(
+		int start, int end, OrderByComparator<CommerceTerm> orderByComparator) {
+
+		return getPersistence().findAll(start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce terms.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceTermModelImpl</code>.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of commerce terms
+	 * @param end the upper bound of the range of commerce terms (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of commerce terms
+	 */
+	public static List<CommerceTerm> findAll(
+		int start, int end, OrderByComparator<CommerceTerm> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findAll(
+			start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Removes all the commerce terms from the database.
+	 */
+	public static void removeAll() {
+		getPersistence().removeAll();
+	}
+
+	/**
+	 * Returns the number of commerce terms.
+	 *
+	 * @return the number of commerce terms
+	 */
+	public static int countAll() {
+		return getPersistence().countAll();
+	}
+
+	public static CommerceTermPersistence getPersistence() {
+		return _persistence;
+	}
+
+	private static volatile CommerceTermPersistence _persistence;
+
+}

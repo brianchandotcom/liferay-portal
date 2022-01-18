@@ -17,6 +17,8 @@ package com.liferay.template.info.item.provider.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.service.AssetCategoryLocalService;
+import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.asset.test.util.AssetTestUtil;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.Value;
@@ -31,6 +33,7 @@ import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
@@ -59,6 +62,7 @@ import com.liferay.template.model.TemplateEntry;
 import com.liferay.template.test.util.TemplateTestUtil;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import org.junit.Assert;
@@ -298,6 +302,70 @@ public class TemplateInfoItemFieldSetProviderTest {
 				_portal.getSiteDefaultLocale(_group.getGroupId())));
 	}
 
+	@Test
+	public void testGetInfoFieldValuesRenderingCategoriesInfoFieldType()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		AssetVocabulary assetVocabulary =
+			_assetVocabularyLocalService.addVocabulary(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), serviceContext);
+
+		AssetCategory assetCategory1 = _assetCategoryLocalService.addCategory(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			RandomTestUtil.randomString(), assetVocabulary.getVocabularyId(),
+			serviceContext);
+		AssetCategory assetCategory2 = _assetCategoryLocalService.addCategory(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			RandomTestUtil.randomString(), assetVocabulary.getVocabularyId(),
+			serviceContext);
+
+		serviceContext.setAssetCategoryIds(
+			new long[] {
+				assetCategory1.getCategoryId(), assetCategory2.getCategoryId()
+			});
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, serviceContext);
+
+		TemplateEntry articleTemplateEntry = TemplateTestUtil.addTemplateEntry(
+			JournalArticle.class.getName(), journalArticle.getDDMStructureKey(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			TemplateTestUtil.getRepeatableFieldSampleScriptFTL("categories"),
+			_serviceContext);
+
+		List<InfoFieldValue<Object>> infoFieldValues =
+			_templateInfoItemFieldSetProvider.getInfoFieldValues(
+				JournalArticle.class.getName(),
+				journalArticle.getDDMStructureKey(), journalArticle);
+
+		Assert.assertEquals(
+			infoFieldValues.toString(), 1, infoFieldValues.size());
+
+		InfoFieldValue<Object> infoFieldValue = infoFieldValues.get(0);
+
+		InfoField infoField = infoFieldValue.getInfoField();
+
+		Assert.assertEquals(
+			infoField.toString(),
+			PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
+				articleTemplateEntry.getTemplateEntryId(),
+			infoField.getName());
+
+		Locale locale = _portal.getSiteDefaultLocale(_group.getGroupId());
+
+		Assert.assertEquals(
+			StringBundler.concat(
+				assetCategory2.getTitle(locale), StringPool.COMMA,
+				assetCategory1.getTitle(locale), StringPool.COMMA),
+			infoFieldValue.getValue(locale));
+	}
+
 	private MockHttpServletRequest _getMockHttpServletRequest(
 			ThemeDisplay themeDisplay)
 		throws Exception {
@@ -336,7 +404,15 @@ public class TemplateInfoItemFieldSetProviderTest {
 	}
 
 	private AssetCategory _assetCategory;
+
+	@Inject
+	private AssetCategoryLocalService _assetCategoryLocalService;
+
 	private AssetVocabulary _assetVocabulary;
+
+	@Inject
+	private AssetVocabularyLocalService _assetVocabularyLocalService;
+
 	private Company _company;
 
 	@Inject

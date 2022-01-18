@@ -26,14 +26,10 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
-import com.liferay.search.experiences.exception.SXPBlueprintConfigurationJSONException;
-import com.liferay.search.experiences.exception.SXPBlueprintTitleException;
 import com.liferay.search.experiences.model.SXPBlueprint;
 import com.liferay.search.experiences.service.base.SXPBlueprintLocalServiceBaseImpl;
-import com.liferay.search.experiences.validator.SXPBlueprintValidator;
 
 import java.util.List;
 import java.util.Locale;
@@ -62,8 +58,6 @@ public class SXPBlueprintLocalServiceImpl
 			String schemaVersion, Map<Locale, String> titleMap,
 			ServiceContext serviceContext)
 		throws PortalException {
-
-		_validate(configurationJSON, titleMap, serviceContext);
 
 		SXPBlueprint sxpBlueprint = sxpBlueprintPersistence.create(
 			counterLocalService.increment());
@@ -174,8 +168,6 @@ public class SXPBlueprintLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		_validate(configurationJSON, titleMap, serviceContext);
-
 		SXPBlueprint sxpBlueprint = sxpBlueprintPersistence.findByPrimaryKey(
 			sxpBlueprintId);
 
@@ -198,29 +190,8 @@ public class SXPBlueprintLocalServiceImpl
 			sxpBlueprint, serviceContext);
 	}
 
-	private void _validate(
-			String configurationJSON, Map<Locale, String> titleMap,
-			ServiceContext serviceContext)
-		throws SXPBlueprintConfigurationJSONException,
-			   SXPBlueprintTitleException {
-
-		if (!GetterUtil.getBoolean(
-				serviceContext.getAttribute(
-					SXPBlueprintLocalServiceImpl.class.getName() +
-						"#_validate"),
-				true)) {
-
-			return;
-		}
-
-		_sxpBlueprintValidator.validate(configurationJSON, titleMap);
-	}
-
 	@Reference
 	private ResourceLocalService _resourceLocalService;
-
-	@Reference
-	private SXPBlueprintValidator _sxpBlueprintValidator;
 
 	@Reference
 	private UserLocalService _userLocalService;

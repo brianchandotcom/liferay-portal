@@ -25,13 +25,9 @@ import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.search.experiences.exception.SXPElementElementDefinitionJSONException;
-import com.liferay.search.experiences.exception.SXPElementTitleException;
 import com.liferay.search.experiences.model.SXPElement;
 import com.liferay.search.experiences.service.base.SXPElementLocalServiceBaseImpl;
-import com.liferay.search.experiences.validator.SXPElementValidator;
 
 import java.util.List;
 import java.util.Locale;
@@ -58,8 +54,6 @@ public class SXPElementLocalServiceImpl extends SXPElementLocalServiceBaseImpl {
 			String schemaVersion, Map<Locale, String> titleMap, int type,
 			ServiceContext serviceContext)
 		throws PortalException {
-
-		_validate(elementDefinitionJSON, titleMap, type, serviceContext);
 
 		SXPElement sxpElement = createSXPElement(
 			counterLocalService.increment(SXPElement.class.getName()));
@@ -154,10 +148,6 @@ public class SXPElementLocalServiceImpl extends SXPElementLocalServiceBaseImpl {
 
 		SXPElement sxpElement = getSXPElement(sxpElementId);
 
-		_validate(
-			elementDefinitionJSON, titleMap, sxpElement.getType(),
-			serviceContext);
-
 		sxpElement.setDescriptionMap(descriptionMap);
 		sxpElement.setElementDefinitionJSON(elementDefinitionJSON);
 		sxpElement.setHidden(hidden);
@@ -167,27 +157,8 @@ public class SXPElementLocalServiceImpl extends SXPElementLocalServiceBaseImpl {
 		return updateSXPElement(sxpElement);
 	}
 
-	private void _validate(
-			String elementDefinitionJSON, Map<Locale, String> titleMap,
-			int type, ServiceContext serviceContext)
-		throws SXPElementElementDefinitionJSONException,
-			   SXPElementTitleException {
-
-		if (!GetterUtil.getBoolean(
-				serviceContext.getAttribute(
-					SXPElementLocalServiceImpl.class.getName() + "#_validate"),
-				true)) {
-
-			_sxpElementValidator.validate(
-				elementDefinitionJSON, titleMap, type);
-		}
-	}
-
 	@Reference
 	private ResourceLocalService _resourceLocalService;
-
-	@Reference
-	private SXPElementValidator _sxpElementValidator;
 
 	@Reference
 	private UserLocalService _userLocalService;

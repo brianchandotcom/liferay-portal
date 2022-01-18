@@ -22,8 +22,10 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -93,8 +95,9 @@ public class ExportTranslationMVCResourceCommand implements MVCResourceCommand {
 			ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
 
 			for (long classPK :
-					translationRequestHelper.getClassPKs(
-						segmentsExperienceIds)) {
+					_getClassPKs(
+						className, segmentsExperienceIds,
+						translationRequestHelper)) {
 
 				if ((classPK == SegmentsExperienceConstants.ID_DEFAULT) &&
 					className.equals(SegmentsExperience.class.getName())) {
@@ -184,6 +187,43 @@ public class ExportTranslationMVCResourceCommand implements MVCResourceCommand {
 		}
 	}
 
+	private long[] _getClassPKs(
+			String className, long[] segmentsExperienceIds,
+			TranslationRequestHelper translationRequestHelper)
+		throws PortalException {
+
+		if (!className.equals(Layout.class.getName())) {
+			return translationRequestHelper.getClassPKs(segmentsExperienceIds);
+		}
+
+		long[] classPKs = translationRequestHelper.getClassPKs(
+			segmentsExperienceIds);
+
+		long[] replacementClassPKs = new long[classPKs.length];
+
+		for (int i = 0; i < classPKs.length; i++) {
+			replacementClassPKs[i] = _getDraftLayoutPlid(classPKs[i]);
+		}
+
+		return replacementClassPKs;
+	}
+
+	private long _getDraftLayoutPlid(long plid) {
+		Layout layout = _layoutLocalService.fetchLayout(plid);
+
+		if ((layout == null) || layout.isDraftLayout()) {
+			return plid;
+		}
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		if (draftLayout == null) {
+			return plid;
+		}
+
+		return draftLayout.getPlid();
+	}
+
 	private String _getXLIFFFileName(
 			String title, String sourceLanguageId, String targetLanguageId)
 		throws PortalException {
@@ -220,6 +260,9 @@ public class ExportTranslationMVCResourceCommand implements MVCResourceCommand {
 
 	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private Portal _portal;

@@ -342,7 +342,7 @@ public class CSVBatchEngineImportTaskItemReaderImplTest
 		return new CSVBatchEngineImportTaskItemReaderImpl(
 			delimiter,
 			HashMapBuilder.<String, Serializable>put(
-				"delimiter", StringPool.COMMA
+				"delimiter", delimiter
 			).build(),
 			new ByteArrayInputStream(
 				_getContent(cellNames, delimiter, rowValues)));

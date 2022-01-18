@@ -32,6 +32,8 @@ public class ObjectDefinitionsScreenNavigationEntryConstants {
 
 	public static final String CATEGORY_KEY_RELATIONSHIPS = "relationships";
 
+	public static final String CATEGORY_KEY_VIEWS = "views";
+
 	public static final String ENTRY_KEY_ACTIONS = "actions";
 
 	public static final String ENTRY_KEY_DETAILS = "details";
@@ -43,6 +45,8 @@ public class ObjectDefinitionsScreenNavigationEntryConstants {
 	public static final String ENTRY_KEY_OBJECTS = "objects";
 
 	public static final String ENTRY_KEY_RELATIONSHIPS = "relationships";
+
+	public static final String ENTRY_KEY_VIEWS = "views";
 
 	public static final String SCREEN_NAVIGATION_KEY_OBJECT_DEFINITION =
 		"edit.object.definition.form";

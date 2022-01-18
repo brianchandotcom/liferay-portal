@@ -29,4 +29,6 @@ public class ObjectDefinitionsFDSNames {
 
 	public static final String OBJECT_RELATIONSHIPS = "objectRelationships";
 
+	public static final String OBJECT_VIEWS = "objectViews";
+
 }

@@ -229,7 +229,6 @@ Export-Package:\
 	org.apache.logging.log4j.message;version='2.17.1',\
 	org.apache.logging.log4j.spi;version='2.17.1',\
 	org.apache.naming.java,\
-	org.apache.regexp;version='2.7.1',\
 	org.apache.tika.*;version='1.26.0',\
 	org.apache.tools.ant.*;version='1.9.15',\
 	org.apache.xalan.*;version='2.7.2',\

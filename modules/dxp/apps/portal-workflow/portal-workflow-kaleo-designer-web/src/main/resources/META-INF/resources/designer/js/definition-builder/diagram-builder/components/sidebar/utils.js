@@ -37,56 +37,64 @@ function getModalInfo(itemType) {
 			),
 			title: Liferay.Language.get('delete-end-node'),
 		};
-	} else if (itemType === 'fork') {
+	}
+	else if (itemType === 'fork') {
 		return {
 			message: Liferay.Language.get(
 				'are-you-sure-you-want-to-delete-the-selected-fork-node'
 			),
 			title: Liferay.Language.get('delete-fork-node'),
 		};
-	} else if (itemType === 'join') {
+	}
+	else if (itemType === 'join') {
 		return {
 			message: Liferay.Language.get(
 				'are-you-sure-you-want-to-delete-the-selected-join-node'
 			),
 			title: Liferay.Language.get('delete-join-node'),
 		};
-	} else if (itemType === 'join-xor') {
+	}
+	else if (itemType === 'join-xor') {
 		return {
 			message: Liferay.Language.get(
 				'are-you-sure-you-want-to-delete-the-selected-join-xor-node'
 			),
 			title: Liferay.Language.get('delete-join-xor-node'),
 		};
-	} else if (itemType === 'start') {
+	}
+	else if (itemType === 'start') {
 		return {
 			message: Liferay.Language.get(
 				'are-you-sure-you-want-to-delete-the-selected-start-node'
 			),
 			title: Liferay.Language.get('delete-start-node'),
 		};
-	} else if (itemType === 'state') {
+	}
+	else if (itemType === 'state') {
 		return {
 			message: Liferay.Language.get(
 				'are-you-sure-you-want-to-delete-the-selected-state-node'
 			),
 			title: Liferay.Language.get('delete-state-node'),
 		};
-	} else if (itemType === 'task') {
+	}
+	else if (itemType === 'task') {
 		return {
 			message: Liferay.Language.get(
 				'are-you-sure-you-want-to-delete-the-selected-task-node'
 			),
 			title: Liferay.Language.get('delete-task-node'),
 		};
-	} else if (itemType === 'transition') {
+	}
+	else if (itemType === 'transition') {
 		return {
 			message: Liferay.Language.get(
 				'are-you-sure-you-want-to-delete-the-selected-transition'
 			),
 			title: Liferay.Language.get('delete-transition'),
 		};
-	} else {
+	}
+	else {
 		return {};
 	}
 }

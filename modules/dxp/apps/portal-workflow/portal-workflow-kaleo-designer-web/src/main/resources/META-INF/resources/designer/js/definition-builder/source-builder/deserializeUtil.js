@@ -83,12 +83,6 @@ DeserializeUtil.prototype = {
 					return;
 				}
 
-				// To be removed after next stories
-
-				if (type === 'condition') {
-					type = 'state';
-				}
-
 				elements.push({
 					data,
 					id: nodeId,

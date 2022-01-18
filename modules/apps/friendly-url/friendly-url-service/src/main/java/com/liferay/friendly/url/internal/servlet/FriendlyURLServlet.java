@@ -180,14 +180,16 @@ public class FriendlyURLServlet extends HttpServlet {
 
 			Layout layout = layoutFriendlyURLSeparatorComposite.getLayout();
 
-			PermissionChecker permissionChecker =
-				PermissionCheckerFactoryUtil.create(
-					_getUser(httpServletRequest));
+			if (layout != null) {
+				PermissionChecker permissionChecker =
+					PermissionCheckerFactoryUtil.create(
+						_getUser(httpServletRequest));
 
-			if (!LayoutPermissionUtil.contains(
-					permissionChecker, layout, ActionKeys.VIEW)) {
+				if (!LayoutPermissionUtil.contains(
+						permissionChecker, layout, ActionKeys.VIEW)) {
 
-				throw new NoSuchLayoutException();
+					throw new NoSuchLayoutException();
+				}
 			}
 
 			defaultLayout = layout;

@@ -19,6 +19,8 @@ import {unmountComponentAtNode} from 'react-dom';
 
 import buildFragment from '../../util/build_fragment';
 
+import '../../../css/notification.scss';
+
 const DEFAULT_ALERT_CONTAINER_ID = 'ToastAlertContainer';
 
 const DEFAULT_RENDER_DATA = {

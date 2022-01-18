@@ -1,0 +1,11 @@
+@import 'atlas-variables';
+
+.alert-notifications.alert-notifications-fixed {
+	@include media-breakpoint-down(sm) {
+		top: inherit;
+
+		.alert {
+			max-width: none;
+		}
+	}
+}

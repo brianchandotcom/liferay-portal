@@ -76,6 +76,7 @@ function getPreviewProps({
 			{
 				fileEntryId: itemFile.fileEntryId,
 				metadata: JSON.stringify(getUploadFileMetadata(file)),
+				mimeType: itemFile.mimeType,
 				returntype: uploadItemReturnType,
 				title: itemFile.title,
 				url: itemFileUrl,

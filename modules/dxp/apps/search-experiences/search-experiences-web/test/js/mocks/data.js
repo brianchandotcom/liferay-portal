@@ -187,8 +187,8 @@ export function mockSearchResults(itemsPerPage = 10) {
 
 		documentFields['assetTitle'] = {values: [`Article Number ${i}`]};
 
-		Object.keys(fields).forEach((field) => {
-			documentFields[field] = {values: fields[field]};
+		Object.entries(fields).forEach(([key, value]) => {
+			documentFields[key] = {values: value};
 		});
 
 		hits.push({
@@ -200,7 +200,12 @@ export function mockSearchResults(itemsPerPage = 10) {
 			fields,
 		});
 
-		documents.push({documentFields});
+		documents.push({
+			documentFields,
+			explanation: '',
+			id: `com.liferay.journal.model.JournalArticle_PORTLET_${i}`,
+			score,
+		});
 	}
 
 	const response = {

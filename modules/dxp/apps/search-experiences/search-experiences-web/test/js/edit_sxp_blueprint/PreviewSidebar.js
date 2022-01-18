@@ -13,6 +13,7 @@ import {fireEvent, render} from '@testing-library/react';
 import React from 'react';
 
 import PreviewSidebar from '../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/edit_sxp_blueprint/PreviewSidebar';
+import {transformToSearchPreviewHits} from '../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/utils/utils';
 import {mockSearchResults} from '../mocks/data';
 
 import '@testing-library/jest-dom/extend-expect';
@@ -26,7 +27,8 @@ jest.mock(
 
 Liferay.ThemeDisplay.getDefaultLanguageId = () => 'en_US';
 
-const {response, responseString, searchHits} = mockSearchResults();
+const SEARCH_RESULTS = mockSearchResults();
+const SEARCH_HITS = transformToSearchPreviewHits(SEARCH_RESULTS);
 
 function renderPreviewSidebar(props) {
 	return render(
@@ -56,10 +58,10 @@ describe('PreviewSidebar', () => {
 
 	it('renders the loading icon', () => {
 		const {container} = renderPreviewSidebar({
+			hits: SEARCH_HITS,
 			loading: true,
-			response,
-			responseString,
-			searchHits,
+			responseString: SEARCH_RESULTS.responseString,
+			totalHits: SEARCH_RESULTS.searchHits.totalHits,
 		});
 
 		container.querySelector('.loading-animation');
@@ -67,29 +69,27 @@ describe('PreviewSidebar', () => {
 
 	it('renders the titles for the search results', () => {
 		const {getByText} = renderPreviewSidebar({
-			response,
-			responseString,
-			searchHits,
+			hits: SEARCH_HITS,
+			responseString: SEARCH_RESULTS.responseString,
+			totalHits: SEARCH_RESULTS.searchHits.totalHits,
 		});
 
-		searchHits.hits.forEach(({documentFields}) => {
-			getByText(documentFields.assetTitle.values);
+		SEARCH_HITS.forEach(({documentFields}) => {
+			getByText(documentFields.assetTitle);
 		});
 	});
 
 	it('expands the result when clicked on', () => {
 		const {getAllByLabelText, queryAllByText} = renderPreviewSidebar({
-			response,
-			responseString,
-			searchHits,
+			hits: SEARCH_HITS,
+			responseString: SEARCH_RESULTS.responseString,
+			totalHits: SEARCH_RESULTS.searchHits.totalHits,
 		});
 
 		fireEvent.click(getAllByLabelText('expand')[0]);
 
-		const firstHitDocumentFields = searchHits.hits[0].documentFields;
-
-		Object.keys(firstHitDocumentFields).forEach((key) => {
-			queryAllByText(`${firstHitDocumentFields[key].values}`);
+		Object.entries(SEARCH_HITS[0].documentFields).forEach(([, value]) => {
+			queryAllByText(value);
 		});
 	});
 

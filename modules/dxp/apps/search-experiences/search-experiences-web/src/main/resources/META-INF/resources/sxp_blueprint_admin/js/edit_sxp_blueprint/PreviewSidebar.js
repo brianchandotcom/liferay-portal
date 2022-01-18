@@ -36,18 +36,16 @@ const DELTAS = [10, 20, 30, 50];
 
 function PreviewSidebar({
 	errors = [],
+	hits = [],
 	loading,
 	onClose,
 	onFetchResults,
 	onFocusSXPElement,
-	response = {},
 	responseString = '',
-	searchHits = {},
+	totalHits,
 	visible,
 	warnings = [],
 }) {
-	const {hits, totalHits} = searchHits;
-
 	const [activeDelta, setActiveDelta] = useState(10);
 	const [activePage, setActivePage] = useState(1);
 	const [attributes, setAttributes] = useState([]);
@@ -85,19 +83,15 @@ function PreviewSidebar({
 	const _renderHits = () => (
 		<div className="preview-results-list sidebar-body">
 			<ClayList>
-				{hits.map((result, index) => {
-					const responseHit = response.hits?.hits?.[index] || {};
-
-					return (
-						<ResultListItem
-							explanation={responseHit._explanation}
-							fields={result.documentFields}
-							id={responseHit._id}
-							key={responseHit._id}
-							score={responseHit._score}
-						/>
-					);
-				})}
+				{hits.map((result) => (
+					<ResultListItem
+						explanation={result.explanation}
+						fields={result.documentFields}
+						id={result.id}
+						key={result.id}
+						score={result.score}
+					/>
+				))}
 			</ClayList>
 
 			<ClayPaginationBar>
@@ -282,13 +276,13 @@ function PreviewSidebar({
 
 PreviewSidebar.propTypes = {
 	errors: PropTypes.arrayOf(PropTypes.object),
+	hits: PropTypes.arrayOf(PropTypes.object),
 	loading: PropTypes.bool,
 	onClose: PropTypes.func,
 	onFetchResults: PropTypes.func,
 	onFocusSXPElement: PropTypes.func,
-	response: PropTypes.object,
 	responseString: PropTypes.string,
-	searchHits: PropTypes.object,
+	totalHits: PropTypes.number,
 	visible: PropTypes.bool,
 	warnings: PropTypes.arrayOf(PropTypes.object),
 };

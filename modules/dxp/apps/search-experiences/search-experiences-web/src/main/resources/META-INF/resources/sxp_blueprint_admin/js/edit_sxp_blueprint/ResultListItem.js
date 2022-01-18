@@ -36,7 +36,6 @@ const TRUNCATE_LENGTH = 700;
 const sxpBlueprintFieldPrefixRegex = new RegExp(
 	`^(${SXP_BLUEPRINT_FIELD_PREFIX})`
 );
-const bracketsQuotesRegex = new RegExp(/[[\]"]/, 'g');
 
 function localizeDate(property, value) {
 	if (DATE_KEYS.includes(property)) {
@@ -52,23 +51,19 @@ function removeSXPBlueprintFieldPrefix(value) {
 	return value.replace(sxpBlueprintFieldPrefixRegex, '');
 }
 
-function removeBrackets(value) {
-	return value.replace(bracketsQuotesRegex, '');
-}
-
 function truncateString(value) {
 	return value.length > TRUNCATE_LENGTH
 		? value.substring(0, TRUNCATE_LENGTH).concat('...')
 		: value;
 }
 
-function ResultListItem({explanation = {}, fields, id, score = 0}) {
+function ResultListItem({explanation = '', fields, id, score = 0}) {
 	const {locale} = useContext(ThemeContext);
 
 	const [collapse, setCollapse] = useState(true);
 
 	const _renderListRow = (property, value) =>
-		value?.values && (
+		value && (
 			<ClayLayout.Row justify="start" key={property}>
 				<ClayLayout.Col className="semibold" size={4}>
 					{removeSXPBlueprintFieldPrefix(property)}
@@ -78,14 +73,7 @@ function ResultListItem({explanation = {}, fields, id, score = 0}) {
 					className={getCN({'text-truncate': collapse})}
 					size={8}
 				>
-					{truncateString(
-						typeof value === 'object'
-							? localizeDate(
-									property,
-									removeBrackets(JSON.stringify(value.values))
-							  )
-							: localizeDate(property, value.values)
-					)}
+					{truncateString(localizeDate(property, value))}
 				</ClayLayout.Col>
 			</ClayLayout.Row>
 		);
@@ -96,7 +84,7 @@ function ResultListItem({explanation = {}, fields, id, score = 0}) {
 				<PreviewModalWithCopyDownload
 					fileName="score_explanation.json"
 					size="lg"
-					text={JSON.stringify(explanation.details || [], null, 2)}
+					text={explanation}
 					title={Liferay.Language.get('score-explanation')}
 				>
 					<ClayButton className="score" displayType="unstyled" small>
@@ -106,9 +94,7 @@ function ResultListItem({explanation = {}, fields, id, score = 0}) {
 			</ClayList.ItemField>
 
 			<ClayList.ItemField expand>
-				<ClayList.ItemTitle>
-					{fields.assetTitle.values}
-				</ClayList.ItemTitle>
+				<ClayList.ItemTitle>{fields.assetTitle}</ClayList.ItemTitle>
 
 				{getResultDefaultKeys(locale).map((property) =>
 					_renderListRow(property, fields[property])

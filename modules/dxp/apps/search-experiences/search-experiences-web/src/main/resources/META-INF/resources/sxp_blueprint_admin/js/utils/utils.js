@@ -96,6 +96,18 @@ export function parseAndPrettifyJSON(json) {
 	}
 }
 
+const BRACKETS_QUOTES_REGEX = new RegExp(/[[\]"]/, 'g');
+
+/**
+ * Function to remove brackets and quotations from a string.
+ *
+ * @param {String} value String with brackets and quotes
+ * @return {String}
+ */
+export function removeBrackets(value) {
+	return value.replace(BRACKETS_QUOTES_REGEX, '');
+}
+
 /**
  * Function to remove duplicates in an array.
  *
@@ -598,4 +610,34 @@ export function transformToSearchContextAttributes(attributes) {
 			}),
 			{}
 		);
+}
+
+/**
+ * Converts the results from search preview into the format expected
+ * for `hits` property inside PreviewSidebar.
+ *
+ * @param {object} results Contains search hits
+ * @returns {Array}
+ */
+export function transformToSearchPreviewHits(results) {
+	const searchHits = results.searchHits?.hits || [];
+
+	const finalHits = [];
+
+	searchHits.forEach((hit) => {
+		const documentFields = {};
+
+		Object.entries(hit.documentFields).forEach(([key, value]) => {
+			documentFields[key] = removeBrackets(
+				JSON.stringify(value.values || [])
+			);
+		});
+
+		finalHits.push({
+			...hit,
+			documentFields,
+		});
+	});
+
+	return finalHits;
 }

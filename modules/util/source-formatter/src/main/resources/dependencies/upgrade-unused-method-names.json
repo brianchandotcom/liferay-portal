@@ -1,12 +1,12 @@
 {
 	"upgradUnusedMethodNames": [
 		{
-			"branch": "7.0.x",
 			"className": "com.liferay.portlet.asset.model.AssetRenderer",
 			"methodName": "getPreviewPath",
 			"parameterNames": [
 				"javax.portlet.PortletRequest javax.portlet.PortletResponse"
-			]
+			],
+			"version": "7.0.x"
 		}
 	]
 }

@@ -14,15 +14,22 @@
 
 package com.liferay.source.formatter.checkstyle.checks;
 
-import com.liferay.petra.string.StringUtil;
+import com.beust.jcommander.internal.Lists;
+
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Tuple;
+import com.liferay.source.formatter.util.SourceFormatterUpgradeUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import org.osgi.framework.Version;
 
@@ -57,19 +64,18 @@ public class UpgradeUnusedAPICheck extends BaseAPICheck {
 			return;
 		}
 
-		String targetVersion = getAttributeValue(_TARGET_VERSION);
-
-		if (targetVersion.equals(upgradeToVersion)) {
-			return;
-		}
-
-		List<String> unusedMethodNameList = getAttributeValues(
-			_UNUSED_CLASS_METHODS_KEY);
-
-		List<UnusedClassMethod> unusedClassMethods = _getUnusedClassMethod(
-			unusedMethodNameList);
+		List<UnusedClassMethod> unusedClassMethods =
+			_getUpgradUnusedMethodNamesMap();
 
 		for (UnusedClassMethod unusedClassMethod : unusedClassMethods) {
+			String targetVersion = unusedClassMethod.getVersion();
+
+			Version targetOsgiVersion = Version.parseVersion(targetVersion);
+
+			if (upgradeToOsgiVersion.compareTo(targetOsgiVersion) < 0) {
+				continue;
+			}
+
 			String qualifiedPackageClassName =
 				unusedClassMethod.getQualifiedPackageClassName();
 			String methodName = unusedClassMethod.getMethodName();
@@ -97,64 +103,91 @@ public class UpgradeUnusedAPICheck extends BaseAPICheck {
 		}
 	}
 
-	private List<UnusedClassMethod> _getUnusedClassMethod(
-		List<String> unusedMethodNameList) {
-
-		if (unusedMethodNameList.isEmpty()) {
-			return Collections.emptyList();
+	private synchronized Tuple _getUpgradeUnusedMethodNamesTuple() {
+		if (_upgradUnusedMethodNamesTuple != null) {
+			return _upgradUnusedMethodNamesTuple;
 		}
 
-		List<UnusedClassMethod> unusedClassMethodList = new ArrayList<>();
+		_upgradUnusedMethodNamesTuple =
+			SourceFormatterUpgradeUtil.getTypeNamesTuple(
+				_UPGRADE_UNUSED_METHOD_NAME, _UPGRADE_UNUSED_METHOD_CATEGORY);
 
-		for (String unusedMethodName : unusedMethodNameList) {
-			String[] unusedMethod = unusedMethodName.split("\\|");
+		return _upgradUnusedMethodNamesTuple;
+	}
 
-			if (unusedMethod.length < 2) {
-				continue;
-			}
+	private synchronized List<UnusedClassMethod>
+		_getUpgradUnusedMethodNamesMap() {
 
-			String qualifiedPackageClassName = unusedMethod[0];
+		if (_upgradUnusedMethodNames != null) {
+			return _upgradUnusedMethodNames;
+		}
 
-			String methodName = unusedMethod[1];
+		Tuple upgradUnusedMethodNamesTuple =
+			_getUpgradeUnusedMethodNamesTuple();
 
-			if (unusedMethod.length == 2) {
-				unusedClassMethodList.add(
+		JSONObject jsonObject =
+			(JSONObject)upgradUnusedMethodNamesTuple.getObject(0);
+
+		JSONArray jsonArray = (JSONArray)jsonObject.get(
+			_UPGRADE_UNUSED_METHOD_CATEGORY);
+
+		_upgradUnusedMethodNames = new ArrayList<>();
+
+		for (Object object : JSONUtil.toObjectList(jsonArray)) {
+			jsonObject = (JSONObject)object;
+
+			String parameterNamesString = jsonObject.getString(
+				"parameterNames");
+
+			if (Objects.isNull(parameterNamesString)) {
+				_upgradUnusedMethodNames.add(
 					new UnusedClassMethod(
-						qualifiedPackageClassName, methodName));
+						jsonObject.getString("version"),
+						jsonObject.getString("className"),
+						jsonObject.getString("methodName")));
 			}
 			else {
-				List<String> parameters = StringUtil.split(
-					unusedMethod[2], ' ');
+				List<String> parameters = Lists.newArrayList(
+					StringUtil.split(parameterNamesString, ' '));
 
-				unusedClassMethodList.add(
+				_upgradUnusedMethodNames.add(
 					new UnusedClassMethod(
-						qualifiedPackageClassName, methodName, parameters));
+						jsonObject.getString("version"),
+						jsonObject.getString("className"),
+						jsonObject.getString("methodName"), parameters));
 			}
 		}
 
-		return unusedClassMethodList;
+		return _upgradUnusedMethodNames;
 	}
 
 	private static final String _MSG_UNUSED_METHOD = "method.unused";
 
-	private static final String _TARGET_VERSION = "targetVersion";
+	private static final String _UPGRADE_UNUSED_METHOD_CATEGORY =
+		"upgradUnusedMethodNames";
 
-	private static final String _UNUSED_CLASS_METHODS_KEY =
-		"unusedClassMethods";
+	private static final String _UPGRADE_UNUSED_METHOD_NAME =
+		"upgrade-unused-method-names.json";
+
+	private List<UnusedClassMethod> _upgradUnusedMethodNames;
+	private Tuple _upgradUnusedMethodNamesTuple;
 
 	private class UnusedClassMethod {
 
 		public UnusedClassMethod(
-			String qualifiedPackageClassName, String methodName) {
+			String version, String qualifiedPackageClassName,
+			String methodName) {
 
+			_version = version;
 			_qualifiedPackageClassName = qualifiedPackageClassName;
 			_methodName = methodName;
 		}
 
 		public UnusedClassMethod(
-			String qualifiedPackageClassName, String methodName,
+			String version, String qualifiedPackageClassName, String methodName,
 			List<String> parameterNames) {
 
+			_version = version;
 			_qualifiedPackageClassName = qualifiedPackageClassName;
 			_methodName = methodName;
 			_parameterNames = parameterNames;
@@ -172,9 +205,14 @@ public class UpgradeUnusedAPICheck extends BaseAPICheck {
 			return _qualifiedPackageClassName;
 		}
 
+		public String getVersion() {
+			return _version;
+		}
+
 		private final String _methodName;
 		private List<String> _parameterNames;
 		private final String _qualifiedPackageClassName;
+		private final String _version;
 
 	}
 

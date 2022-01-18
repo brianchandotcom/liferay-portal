@@ -22,6 +22,7 @@ import React, {useEffect, useState} from 'react';
 import useForm from '../hooks/useForm';
 import {ERRORS} from '../utils/errors';
 import {toCamelCase} from '../utils/string';
+import CustomSelect from './form/CustomSelect/CustomSelect';
 import Input from './form/Input';
 import Select from './form/Select';
 
@@ -44,27 +45,49 @@ const headers = new Headers({
 	'Content-Type': 'application/json',
 });
 
-const ModalAddObjectField: React.FC<IProps> = ({apiURL, observer, onClose}) => {
+const ModalAddObjectField: React.FC<IProps> = ({
+	apiURL,
+	ffObjectFieldBusinessTypeConfigurationEnabled,
+	objectFieldBusinessTypes,
+	observer,
+	onClose,
+}) => {
 	const [error, setError] = useState<string>('');
 	const [picklist, setPicklist] = useState<TPicklist[]>([]);
 	const initialValues: TInitialValues = {
+		businessType: '',
+		dbType: '',
 		label: '',
 		listTypeDefinitionId: 0,
 		name: undefined,
 		required: false,
-		type: '',
+	};
+
+	const getObjectFieldType = (
+		key: keyof IObjectFieldBusinessType,
+		value: string
+	) => {
+		return objectFieldBusinessTypes.find(
+			(objectFieldType) => objectFieldType[key] === value
+		) as IObjectFieldBusinessType;
 	};
 
 	const onSubmit = async ({
+		businessType,
 		label,
 		listTypeDefinitionId,
 		name,
 		required,
-		type,
 	}: TInitialValues) => {
+		const objectFieldType = getObjectFieldType(
+			'businessType',
+			businessType
+		);
+
 		const response = await fetch(apiURL, {
 			body: JSON.stringify({
-				DBType: type === 'Picklist' ? 'String' : type,
+				DBType: objectFieldType.dbType,
+				businessType: objectFieldType.businessType,
 				indexed: true,
 				indexedAsKeyword: false,
 				indexedLanguageId: null,
@@ -109,11 +132,14 @@ const ModalAddObjectField: React.FC<IProps> = ({apiURL, observer, onClose}) => {
 			errors.name = Liferay.Language.get('required');
 		}
 
-		if (!values.type) {
+		if (!values.businessType) {
 			errors.type = Liferay.Language.get('required');
 		}
 
-		if (values.type === 'Picklist' && !values.listTypeDefinitionId) {
+		if (
+			values.businessType === 'Picklist' &&
+			!values.listTypeDefinitionId
+		) {
 			errors.listTypeDefinitionId = Liferay.Language.get('required');
 		}
 
@@ -158,47 +184,114 @@ const ModalAddObjectField: React.FC<IProps> = ({apiURL, observer, onClose}) => {
 						value={values.name ?? toCamelCase(values.label)}
 					/>
 
-					<Select
-						error={errors.type}
-						id="objectFieldType"
-						label={Liferay.Language.get('type')}
-						onChange={async ({target: {value}}: any) => {
-							const selectedType =
-								objectFieldTypes[Number(value) - 1];
+					{ffObjectFieldBusinessTypeConfigurationEnabled ? (
+						<CustomSelect
+							error={errors.type}
+							label={Liferay.Language.get('type')}
+							onChange={async (type: any) => {
+								if (type.businessType === 'Picklist') {
+									const result = await fetch(
+										'/o/headless-admin-list-type/v1.0/list-type-definitions',
+										{
+											headers,
+											method: 'GET',
+										}
+									);
 
-							if (selectedType === 'Picklist') {
-								const result = await fetch(
-									'/o/headless-admin-list-type/v1.0/list-type-definitions',
-									{
-										headers,
-										method: 'GET',
-									}
-								);
+									const {
+										items = [],
+									} = (await result.json()) as {
+										items: [];
+									};
 
-								const {items = []} = (await result.json()) as {
-									items: [];
-								};
+									setPicklist(
+										items.map(({id, name}: TPicklist) => ({
+											id,
+											name,
+										}))
+									);
+								}
 
-								setPicklist(
-									items.map(({id, name}: TPicklist) => ({
-										id,
-										name,
-									}))
-								);
-							}
+								handleChange({
+									target: {
+										name: 'businessType',
+										value: type.businessType,
+									},
+								} as any);
+							}}
+							options={objectFieldBusinessTypes}
+							required
+							value={values.businessType}
+						>
+							{({description, label}) => (
+								<>
+									<div>{label}</div>
+									<span className="text-small">
+										{description}
+									</span>
+								</>
+							)}
+						</CustomSelect>
+					) : (
+						<Select
+							error={errors.type}
+							id="objectFieldType"
+							label={Liferay.Language.get('type')}
+							onChange={async ({target: {value}}: any) => {
+								const selectedObjectFieldType =
+									objectFieldTypes[Number(value) - 1];
 
-							handleChange({
-								target: {
-									name: 'type',
-									value: selectedType,
-								},
-							} as any);
-						}}
-						options={objectFieldTypes}
-						required
-					/>
+								let selectedBusinessType = selectedObjectFieldType;
 
-					{values.type === 'Picklist' && (
+								if (selectedObjectFieldType === 'Picklist') {
+									const result = await fetch(
+										'/o/headless-admin-list-type/v1.0/list-type-definitions',
+										{
+											headers,
+											method: 'GET',
+										}
+									);
+
+									const {
+										items = [],
+									} = (await result.json()) as {
+										items: [];
+									};
+
+									setPicklist(
+										items.map(({id, name}: TPicklist) => ({
+											id,
+											name,
+										}))
+									);
+								}
+								else if (
+									selectedObjectFieldType === 'String'
+								) {
+									selectedBusinessType = 'Text';
+								}
+								else {
+									const objectFieldType = getObjectFieldType(
+										'dbType',
+										selectedObjectFieldType
+									);
+									selectedBusinessType =
+										objectFieldType.businessType;
+								}
+
+								handleChange({
+									target: {
+										name: 'businessType',
+										value: selectedBusinessType,
+									},
+								} as any);
+							}}
+							options={objectFieldTypes}
+							required
+						/>
+					)}
+
+					{values.businessType === 'Picklist' && (
 						<Select
 							error={errors.listTypeDefinitionId}
 							label={Liferay.Language.get('picklist')}
@@ -252,8 +345,17 @@ const ModalAddObjectField: React.FC<IProps> = ({apiURL, observer, onClose}) => {
 
 interface IProps extends React.HTMLAttributes<HTMLElement> {
 	apiURL: string;
+	ffObjectFieldBusinessTypeConfigurationEnabled: boolean;
+	objectFieldBusinessTypes: IObjectFieldBusinessType[];
 	observer: any;
 	onClose: () => void;
+}
+
+interface IObjectFieldBusinessType {
+	businessType: string;
+	dbType: string;
+	description: string;
+	label: string;
 }
 
 type TPicklist = {
@@ -262,14 +364,19 @@ type TPicklist = {
 };
 
 type TInitialValues = {
+	businessType: string;
+	dbType: string;
 	label: string;
 	listTypeDefinitionId: number;
 	name?: string;
 	required: boolean;
-	type: string;
 };
 
-const ModalWithProvider: React.FC<IProps> = ({apiURL}) => {
+const ModalWithProvider: React.FC<IProps> = ({
+	apiURL,
+	ffObjectFieldBusinessTypeConfigurationEnabled,
+	objectFieldBusinessTypes,
+}) => {
 	const [visibleModal, setVisibleModal] = useState<boolean>(false);
 	const {observer, onClose} = useModal({
 		onClose: () => setVisibleModal(false),
@@ -288,6 +395,10 @@ const ModalWithProvider: React.FC<IProps> = ({apiURL}) => {
 			{visibleModal && (
 				<ModalAddObjectField
 					apiURL={apiURL}
+					ffObjectFieldBusinessTypeConfigurationEnabled={
+						ffObjectFieldBusinessTypeConfigurationEnabled
+					}
+					objectFieldBusinessTypes={objectFieldBusinessTypes}
 					observer={observer}
 					onClose={onClose}
 				/>

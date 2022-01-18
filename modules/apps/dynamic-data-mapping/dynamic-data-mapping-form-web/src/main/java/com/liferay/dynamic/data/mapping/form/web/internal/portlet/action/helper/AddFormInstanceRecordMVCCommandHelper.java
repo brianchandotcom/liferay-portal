@@ -15,12 +15,14 @@
 package com.liferay.dynamic.data.mapping.form.web.internal.portlet.action.helper;
 
 import com.liferay.dynamic.data.mapping.exception.FormInstanceExpiredException;
+import com.liferay.dynamic.data.mapping.exception.FormInstanceSubmissionLimitException;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluator;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluatorEvaluateRequest;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluatorEvaluateResponse;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluatorFieldContextKey;
 import com.liferay.dynamic.data.mapping.form.web.internal.configuration.activator.FFSubmissionsSettingsConfigurationActivator;
 import com.liferay.dynamic.data.mapping.form.web.internal.display.context.util.DDMFormInstanceExpirationStatusUtil;
+import com.liferay.dynamic.data.mapping.form.web.internal.display.context.util.DDMFormInstanceSubmissionLimitStatusUtil;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
@@ -32,10 +34,12 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
+import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordVersionLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
@@ -118,6 +122,28 @@ public class AddFormInstanceRecordMVCCommandHelper {
 			throw new FormInstanceExpiredException(
 				"Form instance " + ddmFormInstance.getFormInstanceId() +
 					" is expired");
+		}
+	}
+
+	public void validateSubmissionLimitStatus(
+			DDMFormInstance ddmFormInstance,
+			DDMFormInstanceRecordVersionLocalService
+				ddmFormInstanceRecordVersionLocalService,
+			PortletRequest portletRequest)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if (DDMFormInstanceSubmissionLimitStatusUtil.isSubmissionLimitReached(
+				ddmFormInstance, ddmFormInstanceRecordVersionLocalService,
+				themeDisplay.getUser())) {
+
+			throw new FormInstanceSubmissionLimitException(
+				StringBundler.concat(
+					"User ", themeDisplay.getUserId(),
+					" has already submitted an entry in form instance ",
+					ddmFormInstance.getFormInstanceId()));
 		}
 	}
 

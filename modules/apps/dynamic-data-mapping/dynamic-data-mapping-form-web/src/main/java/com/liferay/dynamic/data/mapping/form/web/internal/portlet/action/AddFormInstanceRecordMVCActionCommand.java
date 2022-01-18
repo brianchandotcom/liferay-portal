@@ -100,6 +100,9 @@ public class AddFormInstanceRecordMVCActionCommand
 
 		_addFormInstanceMVCCommandHelper.validateExpirationStatus(
 			ddmFormInstance, actionRequest);
+		_addFormInstanceMVCCommandHelper.validateSubmissionLimitStatus(
+			ddmFormInstance, _ddmFormInstanceRecordVersionLocalService,
+			actionRequest);
 
 		_validatePublishStatus(actionRequest, ddmFormInstance);
 

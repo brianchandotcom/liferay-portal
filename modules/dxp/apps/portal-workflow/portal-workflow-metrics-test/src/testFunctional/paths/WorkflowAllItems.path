@@ -495,6 +495,11 @@
 	<td>//div[contains(@class, 'modal-title') and contains(.,'Track Workflow')]//..//..//div[contains(@class,'modal-body')]</td>
 	<td></td>
 </tr>
+<tr>
+    <td>TRACK_WORKFLOW_DROPDOWN</td>
+    <td>//div[@class='dropdown-menu show']//button[@class='dropdown-item'][contains(text(),'Track Workflow')]</td>
+    <td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -774,11 +774,37 @@ definition {
 	}
 
 	@description = "Verify that the component displays the entire workflow that the instance is in"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test DisplaysEntireWorkflow {
 
-		// TODO LRQA-72389 DisplaysEntireWorkflow pending implementation
+		 ApplicationsMenu.gotoPortlet(
+            category = "Workflow",
+            panel = "Applications",
+            portlet = "Process Builder");
+
+        Navigator.gotoNavItem(navItem = "Configuration");
+
+        Workflow.configureWorkflow(
+            workflowDefinition = "Single Approver",
+            workflowResourceValue = "Blogs Entry");
+
+        JSONBlog.addEntry(
+            entryContent = "Test Content",
+            entryTitle = "Test Blog");
+
+        ApplicationsMenu.gotoPortlet(
+            category = "Workflow",
+            panel = "Applications",
+            portlet = "Metrics");
+
+        WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Single Approver");
+
+        WorkflowMetrics.gotoKebabMenu3Options(dropdownItem = "Track Workflow");
+
+		WorkflowMetrics.viewTrackWorkflowModal();
+
+        WorkflowMetrics.viewNodes();
+
 
 	}
 

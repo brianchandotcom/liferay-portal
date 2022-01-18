@@ -1895,4 +1895,33 @@ definition {
 		}
 	}
 
+		macro viewNodes {
+		AssertElementPresent(
+			locator1 = "WorkflowAllItems#TRACK_APPROVAL_NODE",
+			value1 = "${node}");
+	}
+
+	macro gotoKebabMenu3Options {
+		Click(locator1 = "Icon#SVG_ELLIPSIS");
+		var dropdownItem = "${dropdownItem}";
+		if ("${dropdownItem}" == "Reassign Task") {
+			Click(locator1 = "WorkflowAllItems#REASSIGN_TASK_DROPDOWN");
+		}
+		if ("${dropdownItem}" == "Update Due Date") {
+			Click(locator1 = "WorkflowAllItems#UPDATE_DUE_DATE_DROPDOWN");
+		}
+		if ("${dropdownItem}" == "Track Workflow") {
+			Click(locator1 = "WorkflowAllItems#TRACK_WORKFLOW_DROPDOWN");
+		}
+	}
+	macro viewTrackWorkflowModal {
+
+		SelectFrame(locator1 = "WorkflowAllItems#TRACK_APPROVAL_BODY");
+	
+		AssertElementPresent(locator1 = "WorkflowAllItems#TRACK_APPROVAL_BODY");
+
+	}
+
+	
+
 }

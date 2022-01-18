@@ -1,0 +1,10 @@
+[
+	{
+		"alternateName": "testAlternateName",
+		"emailAddress": "test.user@liferay.com",
+		"externalReferenceCode": "TESTACC0001",
+		"familyName": "User",
+		"givenName": "Test",
+		"name": "Test User"
+	}
+]

@@ -356,7 +356,7 @@ definition {
 		}
 
 		if ("${portlet}" == "Google Cloud Translator") {
-			var portletId = "com.liferay.translation.google.cloud.translator.internal.configuration.GoogleCloudTranslatorConfiguration";
+			var portletId = "com.liferay.translation.translator.google.cloud.internal.configuration.GoogleCloudTranslatorConfiguration";
 		}
 
 		if ("${portlet}" == "Service") {

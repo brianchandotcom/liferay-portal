@@ -194,7 +194,7 @@ function main() {
 
 	try {
 		let matched = false;
-		const url = new URL(configuration.url);
+		const url = new URL(configuration.url, window.location.origin);
 		const providers = [youtubeProvider, rawProvider];
 
 		for (let i = 0; i < providers.length && !matched; i++) {

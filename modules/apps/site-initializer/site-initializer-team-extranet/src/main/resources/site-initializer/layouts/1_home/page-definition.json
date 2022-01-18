@@ -693,7 +693,7 @@
 								"hideControls": true,
 								"loop": true,
 								"mute": true,
-								"url": "http://localhost:8080/webdav/t9/document_library/home_video.mp4",
+								"url": "[$DOCUMENT_URL:/site-initializer/documents/group/home_video.mp4$]",
 								"videoHeight": "",
 								"videoWidth": ""
 							},

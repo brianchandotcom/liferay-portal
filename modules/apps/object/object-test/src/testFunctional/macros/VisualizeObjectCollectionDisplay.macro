@@ -40,6 +40,12 @@ definition {
 			locator1 = "VisualizeObjectCollectionDisplay#ENTRIES_FRAGMENT");
 	}
 
+	macro viewEntriesTable {
+		AssertElementPresent(
+			key_entries = "${entries}",
+			locator1 = "VisualizeObjectCollectionDisplay#ENTRIES_TABLE");
+	}
+
 	macro viewEntryPreviewOnPageTemplate {
 		Click(locator1 = "ControlMenu#DISPLAY_PAGE_PREVIEW_ITEM_SELECTOR");
 
@@ -60,12 +66,6 @@ definition {
 		AssertElementPresent(
 			key_labelName = "${labelName}",
 			locator1 = "VisualizeObjectCollectionDisplay#VIEW_OBJECT_COLLECTION_DISPLAY");
-	}
-
-	macro viewEntriesTable {
-		AssertElementPresent(
-			key_entries = "${entries}",
-			locator1 = "VisualizeObjectCollectionDisplay#ENTRIES_TABLE");
 	}
 
 }

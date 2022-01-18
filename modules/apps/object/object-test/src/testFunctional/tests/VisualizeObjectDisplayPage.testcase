@@ -106,12 +106,75 @@ definition {
 	}
 
 	@description = "LPS-133867|LPS-135004 - Verify it is possible to define a fixed filters with Picklist type for table view on the Display Page"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanDefineFixedFilterForPicklistType {
+		Picklist.addPicklistViaAPI(picklistName = "Custom Picklist");
 
-		// TODO LPS-139040 CanDefineFixedFilterForPicklistType pending implementation
+		for (var itemsName : list "1,2") {
+			Picklist.addPicklistItemViaAPI(
+				itemKey = "${itemsName}",
+				itemName = "Item Test ${itemsName}",
+				picklistName = "Custom Picklist");
+		}
 
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+		ObjectAdmin.goToFieldsTab();
+
+		ObjectAdmin.addObjectFieldViaUI(
+			fieldLabel = "Field Picklist",
+			fieldPicklist = "Custom Picklist",
+			fieldType = "Picklist");
+
+		Navigator.openURL();
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		for (var entryName : list "1,2") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+			ObjectAdmin.addObjectPicklistFieldEntryViaUI(picklistOption = "Item Test ${entryName}");
+		}
+
+		Navigator.openURL();
+
+		ContentPages.addPage(pageName = "Blank Display Page");
+
+		PageEditor.addFragment(
+			collectionName = "Content Display",
+			fragmentName = "Collection Display");
+
+		PageEditor.editCollectionDisplay(
+			fragmentName = "Collection Display",
+			infoListProviderName = "Custom Objects");
+
+		PageEditor.editCollectionDisplay(
+			fragmentName = "Collection Display",
+			listStyle = "Table",
+			selectedName = "Custom Objects");
+
+		PageEditor.gotoEllipsisMenuItemInItemSelector(
+			fieldLabel = "Collection",
+			menuItem = "Filter Collection");
+
+		VisualizeObjectDisplayPage.selectFilterCollection(
+			fieldLabel = "Field Picklist",
+			itemName = "Item Test 1");
+
+		PageEditor.clickPublish();
+
+		PagesAdmin.gotoPageEllipsisMenuItem(
+			menuItem = "View",
+			pageName = "Blank Display Page");
+
+		VisualizeObjectCollectionDisplay.viewEntriesTable(entries = "Item Test 1");
 	}
 
 	@description = "LPS-133867|LPS-135004 - Verify it is possible to set the pagination as Numeric"

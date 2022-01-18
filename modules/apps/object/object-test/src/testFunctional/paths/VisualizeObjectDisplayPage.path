@@ -60,6 +60,16 @@
 		<td>//a[@class = 'text-truncate' and contains(text(),'${key_pageName}')]</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>SELECT_CHOOSE_AN_OPTION_FIELD</td>
+		<td>//label[contains(.,'${key_fieldLabel}')]/../select[contains(@class,'form-control')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>SELECT_ITEM_IN_FILTER_COLLECTION</td>
+		<td>//label[contains(.,'${key_fieldLabel}')]/../select[contains(.,'${itemName}')]</td>
+		<td></td>
+</tr>
 </tbody>
 </table>
 </body>

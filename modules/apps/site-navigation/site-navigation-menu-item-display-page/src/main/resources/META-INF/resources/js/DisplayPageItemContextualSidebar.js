@@ -196,7 +196,7 @@ function DisplayPageItemContextualSidebar({
 				</ClayInput.Group>
 			</ClayForm.Group>
 
-			<ClayForm.Group>
+			<ClayForm.Group className="pt-2">
 				<div className="list-group">
 					<p className="list-group-title">
 						{Liferay.Language.get('type')}

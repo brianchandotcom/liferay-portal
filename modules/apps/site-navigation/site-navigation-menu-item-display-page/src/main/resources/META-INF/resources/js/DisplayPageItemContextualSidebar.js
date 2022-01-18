@@ -175,9 +175,10 @@ function DisplayPageItemContextualSidebar({
 					<ClayInput.GroupItem>
 						<ClayInput
 							className="text-secondary"
-							disabled={!customNameEnabled}
 							id={`${namespace}_itemInput`}
+							onClick={openChooseItemModal}
 							readOnly
+							style={{cursor: 'pointer'}}
 							type="text"
 							value={selectedItem.title}
 						/>

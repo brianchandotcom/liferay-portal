@@ -49,7 +49,7 @@
 
 		<@liferay.silently geometryJSONObject.put("type", "Point") />
 
-		<#assign coordinatesJSONArray = [coordinatesJSONObject.getDouble("longitude"), coordinatesJSONObject.getDouble("latitude")] />
+		<#assign coordinatesJSONArray = [coordinatesJSONObject.getDouble("lng"), coordinatesJSONObject.getDouble("lat")] />
 
 		<@liferay.silently geometryJSONObject.put("coordinates", coordinatesJSONArray) />
 

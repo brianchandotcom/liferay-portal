@@ -22,7 +22,6 @@ import com.liferay.info.type.WebImage;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -32,9 +31,7 @@ import java.util.Map;
 @ProviderType
 public interface FragmentEntryProcessorHelper {
 
-	public default String formatMappedValue(Object value, Locale locale) {
-		return value.toString();
-	}
+	public String formatMappedValue(Object value, Locale locale);
 
 	public String getEditableValue(JSONObject jsonObject, Locale locale);
 
@@ -54,54 +51,18 @@ public interface FragmentEntryProcessorHelper {
 			FragmentEntryProcessorContext fragmentEntryProcessorContext)
 		throws PortalException;
 
-	public default Object getMappedInfoItemFieldValue(
+	public Object getMappedInfoItemFieldValue(
 			JSONObject jsonObject,
 			Map<Long, InfoItemFieldValues> infoItemFieldValuesMap,
 			FragmentEntryProcessorContext fragmentEntryProcessorContext)
-		throws PortalException {
+		throws PortalException;
 
-		Map<Long, Map<String, Object>> infoDisplaysFieldValuesMap =
-			new HashMap<>();
-
-		for (Map.Entry<Long, InfoItemFieldValues> entry :
-				infoItemFieldValuesMap.entrySet()) {
-
-			InfoItemFieldValues infoItemFieldValues = entry.getValue();
-
-			infoDisplaysFieldValuesMap.put(
-				entry.getKey(),
-				infoItemFieldValues.getMap(
-					fragmentEntryProcessorContext.getLocale()));
-		}
-
-		return getMappedValue(
-			jsonObject, infoDisplaysFieldValuesMap,
-			fragmentEntryProcessorContext);
-	}
-
-	public default Object getMappedInfoItemFieldValue(
+	public Object getMappedInfoItemFieldValue(
 			JSONObject jsonObject,
 			Map<Long, InfoItemFieldValues> infoItemFieldValuesMap, String mode,
 			Locale locale, long previewClassPK, long previewClassNameId,
 			int previewType)
-		throws PortalException {
-
-		Map<Long, Map<String, Object>> infoDisplaysFieldValuesMap =
-			new HashMap<>();
-
-		for (Map.Entry<Long, InfoItemFieldValues> entry :
-				infoItemFieldValuesMap.entrySet()) {
-
-			InfoItemFieldValues infoItemFieldValues = entry.getValue();
-
-			infoDisplaysFieldValuesMap.put(
-				entry.getKey(), infoItemFieldValues.getMap(locale));
-		}
-
-		return getMappedValue(
-			jsonObject, infoDisplaysFieldValuesMap, mode, locale,
-			previewClassPK, previewClassNameId, previewType);
-	}
+		throws PortalException;
 
 	public Object getMappedLayoutValue(
 			JSONObject jsonObject,

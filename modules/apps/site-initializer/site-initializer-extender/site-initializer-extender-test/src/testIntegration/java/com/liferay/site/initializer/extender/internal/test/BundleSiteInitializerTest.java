@@ -47,6 +47,8 @@ import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.headless.admin.list.type.dto.v1_0.ListTypeDefinition;
 import com.liferay.headless.admin.list.type.dto.v1_0.ListTypeEntry;
 import com.liferay.headless.admin.list.type.resource.v1_0.ListTypeDefinitionResource;
+import com.liferay.headless.admin.user.dto.v1_0.Account;
+import com.liferay.headless.admin.user.resource.v1_0.AccountResource;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalArticleLocalService;
@@ -154,6 +156,7 @@ public class BundleSiteInitializerTest {
 
 		try {
 			siteInitializer.initialize(group.getGroupId());
+			_assertAccounts(serviceContext);
 			_assertAssetListEntries(group);
 			_assertAssetVocabularies(group);
 			_assertCommerceCatalogs(group);
@@ -214,6 +217,24 @@ public class BundleSiteInitializerTest {
 
 			bundle.uninstall();
 		}
+	}
+
+	private void _assertAccounts(ServiceContext serviceContext)
+		throws Exception {
+
+		AccountResource.Builder accountResourceBuilder =
+			_accountResourceFactory.create();
+
+		AccountResource accountResource = accountResourceBuilder.user(
+			serviceContext.fetchUser()
+		).build();
+
+		Account account = accountResource.getAccountByExternalReferenceCode(
+			"TESTACC0001");
+
+		Assert.assertNotNull(account);
+
+		Assert.assertEquals("Test Account", account.getName());
 	}
 
 	private void _assertAssetCategories(Group group) throws Exception {
@@ -866,6 +887,9 @@ public class BundleSiteInitializerTest {
 			return bundleContext.installBundle(location, inputStream);
 		}
 	}
+
+	@Inject
+	private AccountResource.Factory _accountResourceFactory;
 
 	@Inject
 	private AssetCategoryLocalService _assetCategoryLocalService;

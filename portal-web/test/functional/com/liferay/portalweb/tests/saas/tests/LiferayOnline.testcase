@@ -37,12 +37,10 @@ definition {
 		property test.name.skip.portal.instance = "LiferayOnline#AddVirtualInstanceWithDefaultInitializer";
 
 		task ("Add virtual instance able.com with a blank Initializer") {
-			PortalInstances.openVirtualInstancesAdmin();
-
-			LiferayOnline.addVirtualInstanceWithInitializer(
-				mailDomain = "www.baker.com",
-				virtualHost = "www.baker.com",
-				webId = "www.baker.com");
+			HeadlessPortalInstanceAPI.addPortalInstance(
+				domain = "www.baker.com",
+				portalInstanceId = "www.baker.com",
+				virtualHost = "www.baker.com");
 		}
 
 		task ("Go to the new Virtual Instance") {
@@ -64,13 +62,11 @@ definition {
 		property test.name.skip.portal.instance = "LiferayOnline#AddVirtualInstanceWithInitializer";
 
 		task ("Add virtual instance raylife.com with the Raylife Initializer") {
-			PortalInstances.openVirtualInstancesAdmin();
-
-			LiferayOnline.addVirtualInstanceWithInitializer(
-				initializerName = "Raylife",
-				mailDomain = "www.able.com",
+			HeadlessPortalInstanceAPI.addPortalInstanceWithVirtualInstanceInitializer(
+				domain = "www.able.com",
+				portalInstanceId = "www.able.com",
 				virtualHost = "www.able.com",
-				webId = "www.able.com");
+				siteInitializerKey = "com.liferay.site.initializer.raylife");
 		}
 
 		task ("Go to the new Virtual Instance") {

@@ -1,20 +1,31 @@
 [
 	{
 		"cpDefinitionExternalReferenceCode": "RAY004",
-		"cpInstanceSku": "INSTALLMENT",
-		"deliveryMaxSubscriptionCycles": 0,
-		"deliverySubscriptionEnabled": false,
-		"deliverySubscriptionLength": 1,
-		"deliverySubscriptionType": "daily",
-		"maxSubscriptionCycles": 2,
 		"optionName": "Raylife Option",
-		"overrideSubscriptionInfo": true,
-		"subscriptionEnabled": true,
-		"subscriptionLength": 2,
-		"subscriptionType": "monthly",
-		"subscriptionTypeSettings": {
-			"monthDay": "1",
-			"monthlyMode": "0"
-		}
+		"cpInstanceProperties": [
+			{
+				"cpInstanceSKu": "PAY IN FULL",
+				"propertyType": "UPDATE_PRICE",
+				"skuPrice": 60,
+				"skuPromoPrice": 25
+			},
+			{
+				"cpInstanceSKu": "INSTALLMENT",
+				"deliveryMaxSubscriptionCycles": 0,
+				"deliverySubscriptionEnabled": false,
+				"deliverySubscriptionLength": 1,
+				"deliverySubscriptionType": "daily",
+				"maxSubscriptionCycles": 2,
+				"overrideSubscriptionInfo": true,
+				"propertyType": "CREATE_SUBSCRIPTION",
+				"subscriptionEnabled": true,
+				"subscriptionLength": 2,
+				"subscriptionType": "monthly",
+				"subscriptionTypeSettings": {
+					"monthDay": "1",
+					"monthlyMode": "0"
+				}
+			}
+		]
 	}
 ]

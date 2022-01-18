@@ -10,6 +10,7 @@
  */
 
 import {defaultLanguageId} from '../../../constants';
+import ConditionNode from './ConditionNode';
 import ForkNode from './ForkNode';
 import JoinNode from './JoinNode';
 import JoinXorNode from './JoinXorNode';
@@ -40,6 +41,7 @@ const defaultNodes = [
 ];
 
 const nodeDescription = {
+	'condition': Liferay.Language.get('execute-conditional-logic'),
 	'end': Liferay.Language.get('conclude-the-workflow'),
 	'fork': Liferay.Language.get('split-the-workflow-into-multiple-paths'),
 	'join': Liferay.Language.get('all-interactions-need-to-be-closed'),
@@ -50,6 +52,7 @@ const nodeDescription = {
 };
 
 const nodeTypes = {
+	'condition': ConditionNode,
 	'end': EndNode,
 	'fork': ForkNode,
 	'join': JoinNode,

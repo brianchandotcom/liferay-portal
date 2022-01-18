@@ -23,6 +23,10 @@ const contents = {
 		sections: ['selectAssignment'],
 		title: Liferay.Language.get('assignments'),
 	},
+	'condition': {
+		sections: ['nodeInformation'],
+		title: Liferay.Language.get('condition-node'),
+	},
 	'end': {
 		sections: ['nodeInformation'],
 		title: Liferay.Language.get('end'),

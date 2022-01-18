@@ -272,7 +272,7 @@ public class FragmentEntryProcessorHelperImpl
 			return null;
 		}
 
-		return _getMappedInfoItemFieldValue(
+		return getMappedInfoItemFieldValue(
 			jsonObject.getString("collectionFieldId"),
 			infoItemFieldValuesProvider,
 			fragmentEntryProcessorContext.getLocale(),
@@ -360,7 +360,7 @@ public class FragmentEntryProcessorHelperImpl
 			infoItemFieldValuesMap.put(classPK, infoItemFieldValues);
 		}
 
-		return _getMappedInfoItemFieldValue(
+		return getMappedInfoItemFieldValue(
 			jsonObject.getString("fieldId"), infoItemFieldValuesProvider,
 			fragmentEntryProcessorContext.getLocale(), object);
 	}
@@ -386,6 +386,34 @@ public class FragmentEntryProcessorHelperImpl
 		return getMappedInfoItemFieldValue(
 			jsonObject, infoDisplaysFieldValues,
 			defaultFragmentEntryProcessorContext);
+	}
+
+	@Override
+	public Object getMappedInfoItemFieldValue(
+		String fieldId, InfoItemFieldValuesProvider infoItemFieldValuesProvider,
+		Locale locale, Object object) {
+
+		InfoFieldValue<Object> infoFieldValue =
+			infoItemFieldValuesProvider.getInfoFieldValue(object, fieldId);
+
+		if (infoFieldValue == null) {
+			return null;
+		}
+
+		Object value = infoFieldValue.getValue(locale);
+
+		if (value instanceof ContentAccessor) {
+			ContentAccessor contentAccessor = (ContentAccessor)infoFieldValue;
+
+			value = contentAccessor.getContent();
+		}
+		else if (value instanceof WebImage) {
+			WebImage webImage = (WebImage)value;
+
+			return webImage.toJSONObject();
+		}
+
+		return formatMappedValue(value, locale);
 	}
 
 	@Override
@@ -613,33 +641,6 @@ public class FragmentEntryProcessorHelperImpl
 		}
 
 		return infoCollectionTextFormatter;
-	}
-
-	private Object _getMappedInfoItemFieldValue(
-		String fieldId, InfoItemFieldValuesProvider infoItemFieldValuesProvider,
-		Locale locale, Object object) {
-
-		InfoFieldValue<Object> infoFieldValue =
-			infoItemFieldValuesProvider.getInfoFieldValue(object, fieldId);
-
-		if (infoFieldValue == null) {
-			return null;
-		}
-
-		Object value = infoFieldValue.getValue(locale);
-
-		if (value instanceof ContentAccessor) {
-			ContentAccessor contentAccessor = (ContentAccessor)infoFieldValue;
-
-			value = contentAccessor.getContent();
-		}
-		else if (value instanceof WebImage) {
-			WebImage webImage = (WebImage)value;
-
-			return webImage.toJSONObject();
-		}
-
-		return formatMappedValue(value, locale);
 	}
 
 	private static final InfoCollectionTextFormatter<Object>

@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.fragment.processor.FragmentEntryProcessorContext;
 import com.liferay.info.item.InfoItemFieldValues;
+import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.type.WebImage;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -63,6 +64,10 @@ public interface FragmentEntryProcessorHelper {
 			Locale locale, long previewClassPK, long previewClassNameId,
 			int previewType)
 		throws PortalException;
+
+	public Object getMappedInfoItemFieldValue(
+		String fieldId, InfoItemFieldValuesProvider infoItemFieldValuesProvider,
+		Locale locale, Object object);
 
 	public Object getMappedLayoutValue(
 			JSONObject jsonObject,

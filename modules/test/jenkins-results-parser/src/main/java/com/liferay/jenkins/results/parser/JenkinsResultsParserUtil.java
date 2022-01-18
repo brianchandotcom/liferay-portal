@@ -3593,6 +3593,9 @@ public class JenkinsResultsParserUtil {
 			TarArchiveOutputStream tarArchiveOutputStream =
 				new TarArchiveOutputStream(gzipCompressorOutputStream)) {
 
+			tarArchiveOutputStream.setLongFileMode(
+				TarArchiveOutputStream.LONGFILE_POSIX);
+
 			for (File file : findFiles(sourceDir, ".*")) {
 				TarArchiveEntry tarArchiveEntry = new TarArchiveEntry(
 					file, getPathRelativeTo(file, sourceDir));

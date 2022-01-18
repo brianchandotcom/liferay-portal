@@ -127,6 +127,29 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-143786. Create a Team Extranet Virtual Instance by API"
+	@priority = "4"
+	test CreateTeamExtranetVirtualInstanceByAPI {
+		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.team-extranet.com";
+		property test.name.skip.portal.instance = "LiferayOnline#CreateTeamExtranetVirtualInstanceByAPI";
+
+		task ("Create Virtual Instance by Json") {
+			HeadlessPortalInstanceAPI.addPortalInstanceWithVirtualInstanceInitializer(
+				domain = "team-extranet.com",
+				portalInstanceId = "teamextranet",
+				siteInitializerKey = "com.liferay.site.initializer.team.extranet",
+				virtualHost = "www.team-extranet.com");
+		}
+
+		task ("Go to the Virtual Instance Created and Assert the Team Extranet Logo") {
+			Navigator.openSpecificURL(url = "http://www.team-extranet.com:8080");
+
+			AssertElementPresent(
+				key_title = "Welcome to the team!",
+				locator1 = "TeamExtranet#FRAGMENT_HEADER");
+		}
+	}
+
 	@description = "This is a test for LPS-143786. Verify Remote Apps can be created in Liferay Online"
 	@priority = "4"
 	test RemoteAppsCanBeCreatedInLiferayOnline {
@@ -341,30 +364,6 @@ definition {
 				key_header = "Remote Apps",
 				locator1 = "WorkflowSubmissions#DETAIL_PAGE_HEADER");
 		}
-	}
-
-	@description = "This is a test for LPS-143786. Create a Team Extranet Virtual Instance by API"
-	@priority = "4"
-	test CreateTeamExtranetVirtualInstanceByAPI {
-		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.team-extranet.com";
-		property test.name.skip.portal.instance = "LiferayOnline#CreateTeamExtranetVirtualInstanceByAPI";
-
-		task ("Create Virtual Instance by Json") {
-			HeadlessPortalInstanceAPI.addPortalInstanceWithVirtualInstanceInitializer(
-					domain = "team-extranet.com",
-					portalInstanceId = "teamextranet",
-					virtualHost = "www.team-extranet.com",
-					siteInitializerKey = "com.liferay.site.initializer.team.extranet");
-		}
-		
-		task ("Go to the Virtual Instance Created and Assert the Team Extranet Logo") {
-			Navigator.openSpecificURL(url = "http://www.team-extranet.com:8080");
-
-			AssertElementPresent(
-				key_title = "Welcome to the team!",
-				locator1 = "TeamExtranet#FRAGMENT_HEADER");
-		}
-
 	}
 
 }

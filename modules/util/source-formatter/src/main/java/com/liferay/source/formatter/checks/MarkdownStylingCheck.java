@@ -31,7 +31,6 @@ public class MarkdownStylingCheck extends BaseFileCheck {
 		String fileName, String absolutePath, String content) {
 
 		content = _formatCodeSyntax(content);
-
 		content = _formatNumberedList(content);
 
 		return _formatHeaders(content);

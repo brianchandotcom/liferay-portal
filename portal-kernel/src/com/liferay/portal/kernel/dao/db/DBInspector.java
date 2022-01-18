@@ -31,6 +31,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import java.util.Objects;
+import java.util.function.BiFunction;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -122,7 +123,8 @@ public class DBInspector {
 				return false;
 			}
 
-			Integer expectedColumnDataType = _getColumnDataType(columnType);
+			Integer expectedColumnDataType = _getByColumnType(
+				columnType, DB::getSQLType);
 
 			int actualColumnDataType = resultSet.getInt("DATA_TYPE");
 
@@ -262,16 +264,16 @@ public class DBInspector {
 		return name;
 	}
 
-	private Integer _getColumnDataType(String columnType) {
+	private Integer _getByColumnType(
+		String columnType, BiFunction<DB, String, Integer> biFunction) {
+
 		Matcher matcher = _columnTypePattern.matcher(columnType);
 
 		if (!matcher.lookingAt()) {
 			return null;
 		}
 
-		DB db = DBManagerUtil.getDB();
-
-		return db.getSQLType(matcher.group(1));
+		return biFunction.apply(DBManagerUtil.getDB(), matcher.group(1));
 	}
 
 	private int _getColumnSize(String columnType) throws UpgradeException {
@@ -296,25 +298,14 @@ public class DBInspector {
 			}
 		}
 
-		Integer dataTypeSize = _getSQLVarcharSize(columnType);
+		Integer dataTypeSize = _getByColumnType(
+			columnType, DB::getSQLVarcharSize);
 
 		if (dataTypeSize != null) {
 			return dataTypeSize;
 		}
 
 		return -1;
-	}
-
-	private Integer _getSQLVarcharSize(String columnType) {
-		Matcher matcher = _columnTypePattern.matcher(columnType);
-
-		if (!matcher.lookingAt()) {
-			return null;
-		}
-
-		DB db = DBManagerUtil.getDB();
-
-		return db.getSQLVarcharSize(matcher.group(1));
 	}
 
 	private boolean _hasTable(String tableName) throws Exception {

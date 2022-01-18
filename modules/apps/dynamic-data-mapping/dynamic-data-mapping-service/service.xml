@@ -809,6 +809,7 @@
 		<exception>FormInstanceSettingsRedirectURL</exception>
 		<exception>FormInstanceSettingsStorageType</exception>
 		<exception>FormInstanceStructureId</exception>
+		<exception>FormInstanceSubmissionLimit</exception>
 		<exception>InvalidParentStructure</exception>
 		<exception>InvalidStructureVersion</exception>
 		<exception>InvalidTemplateVersion</exception>

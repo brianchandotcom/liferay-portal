@@ -23,6 +23,7 @@ import com.liferay.dynamic.data.mapping.form.web.internal.configuration.DDMFormW
 import com.liferay.dynamic.data.mapping.form.web.internal.configuration.activator.FFSubmissionsSettingsConfigurationActivator;
 import com.liferay.dynamic.data.mapping.form.web.internal.display.context.util.DDMFormGuestUploadFieldUtil;
 import com.liferay.dynamic.data.mapping.form.web.internal.display.context.util.DDMFormInstanceStagingUtil;
+import com.liferay.dynamic.data.mapping.form.web.internal.display.context.util.DDMFormInstanceSubmissionLimitStatusUtil;
 import com.liferay.dynamic.data.mapping.form.web.internal.security.permission.resource.DDMFormInstancePermission;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
@@ -96,7 +97,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.stream.Stream;
@@ -501,33 +501,6 @@ public class DDMFormDisplayContext {
 		return _hasAddFormInstanceRecordPermission;
 	}
 
-	public boolean hasSubmittedAnEntry() throws PortalException {
-		if (isDefaultUser() || !isLimitToOneSubmissionPerUserEnabled()) {
-			return false;
-		}
-
-		List<DDMFormInstanceRecordVersion> ddmFormInstanceRecordVersions =
-			_ddmFormInstanceRecordVersionLocalService.
-				getFormInstanceRecordVersions(
-					_getUserId(), getFormInstanceId());
-
-		Stream<DDMFormInstanceRecordVersion> stream =
-			ddmFormInstanceRecordVersions.stream();
-
-		Optional<DDMFormInstanceRecordVersion>
-			ddmFormInstanceRecordVersionOptional = stream.filter(
-				ddmFormInstanceRecordVersion ->
-					ddmFormInstanceRecordVersion.getStatus() !=
-						WorkflowConstants.STATUS_DRAFT
-			).findFirst();
-
-		if (ddmFormInstanceRecordVersionOptional.isPresent()) {
-			return true;
-		}
-
-		return false;
-	}
-
 	public boolean hasValidStorageType(DDMFormInstance ddmFormInstance) {
 		try {
 			DDMStorageAdapter ddmStorageAdapter =
@@ -658,21 +631,6 @@ public class DDMFormDisplayContext {
 		return ParamUtil.getBoolean(_renderRequest, "shared");
 	}
 
-	public boolean isLimitToOneSubmissionPerUserEnabled()
-		throws PortalException {
-
-		DDMFormInstance ddmFormInstance = getFormInstance();
-
-		if (ddmFormInstance == null) {
-			return false;
-		}
-
-		DDMFormInstanceSettings ddmFormInstanceSettings =
-			ddmFormInstance.getSettingsModel();
-
-		return ddmFormInstanceSettings.limitToOneSubmissionPerUser();
-	}
-
 	public boolean isLoggedUser() {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -796,6 +754,13 @@ public class DDMFormDisplayContext {
 			getDDMFormSuccessPageSettings();
 
 		return ddmFormSuccessPageSettings.isEnabled();
+	}
+
+	public boolean isSubmissionLimitReached() throws PortalException {
+		return DDMFormInstanceSubmissionLimitStatusUtil.
+			isSubmissionLimitReached(
+				getFormInstance(), _ddmFormInstanceRecordVersionLocalService,
+				getUser());
 	}
 
 	protected DDMFormRenderingContext createDDMFormRenderingContext(

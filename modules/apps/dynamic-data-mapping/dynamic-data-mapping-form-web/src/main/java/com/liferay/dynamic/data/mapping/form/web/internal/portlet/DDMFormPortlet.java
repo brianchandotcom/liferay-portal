@@ -22,6 +22,7 @@ import com.liferay.dynamic.data.mapping.form.web.internal.configuration.activato
 import com.liferay.dynamic.data.mapping.form.web.internal.configuration.activator.FFSubmissionsSettingsConfigurationActivator;
 import com.liferay.dynamic.data.mapping.form.web.internal.constants.DDMFormWebKeys;
 import com.liferay.dynamic.data.mapping.form.web.internal.display.context.DDMFormDisplayContext;
+import com.liferay.dynamic.data.mapping.form.web.internal.display.context.util.DDMFormInstanceSubmissionLimitStatusUtil;
 import com.liferay.dynamic.data.mapping.form.web.internal.instance.lifecycle.AddDefaultSharedFormLayoutPortalInstanceLifecycleListener;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalService;
@@ -165,7 +166,9 @@ public class DDMFormPortlet extends MVCPortlet {
 					renderRequest, ddmFormDisplayContext);
 			}
 
-			if ((ddmFormDisplayContext.isLimitToOneSubmissionPerUserEnabled() &&
+			if ((DDMFormInstanceSubmissionLimitStatusUtil.
+					isLimitToOneSubmissionPerUser(
+						ddmFormDisplayContext.getFormInstance()) &&
 				 !ddmFormDisplayContext.isLoggedUser()) ||
 				(ddmFormDisplayContext.isRequireAuthentication() &&
 				 ddmFormDisplayContext.isSharedURL())) {

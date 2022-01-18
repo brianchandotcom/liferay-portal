@@ -18,6 +18,8 @@
 
 <%
 long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
+
+boolean limitToOneSubmissionPerUser = DDMFormInstanceSubmissionLimitStatusUtil.isLimitToOneSubmissionPerUser(ddmFormDisplayContext.getFormInstance());
 %>
 
 <c:choose>
@@ -46,7 +48,7 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 			</clay:container-fluid>
 		</div>
 	</c:when>
-	<c:when test="<%= (ddmFormDisplayContext.isLimitToOneSubmissionPerUserEnabled() && !ddmFormDisplayContext.isLoggedUser()) || ddmFormDisplayContext.isRequireAuthentication() %>">
+	<c:when test="<%= (!ddmFormDisplayContext.isLoggedUser() && limitToOneSubmissionPerUser) || ddmFormDisplayContext.isRequireAuthentication() %>">
 		<div class="ddm-form-basic-info">
 			<clay:container-fluid>
 				<clay:alert
@@ -79,7 +81,7 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 		%>
 
 		<c:choose>
-			<c:when test="<%= !preview && (expired || showSuccessPage || ddmFormDisplayContext.hasSubmittedAnEntry()) %>">
+			<c:when test="<%= !preview && (ddmFormDisplayContext.isSubmissionLimitReached() || expired || showSuccessPage) %>">
 
 				<%
 				String pageDescription = null;
@@ -115,7 +117,7 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 						).put(
 							"showPartialResultsToRespondents", ddmFormDisplayContext.isShowPartialResultsToRespondents()
 						).put(
-							"showSubmitAgainButton", !ddmFormDisplayContext.isLimitToOneSubmissionPerUserEnabled() && !expired
+							"showSubmitAgainButton", !expired && !limitToOneSubmissionPerUser
 						).build()
 					%>'
 				/>

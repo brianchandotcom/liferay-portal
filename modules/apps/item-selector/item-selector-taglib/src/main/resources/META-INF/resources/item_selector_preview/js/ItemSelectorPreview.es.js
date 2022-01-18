@@ -32,6 +32,9 @@ const KEY_CODE = {
 
 const noop = () => {};
 
+const itemIsImage = ({mimeType, type}) =>
+	type === 'image' || Boolean(mimeType?.match(/image.*/));
+
 const ItemSelectorPreview = ({
 	container,
 	currentIndex = 0,
@@ -45,6 +48,7 @@ const ItemSelectorPreview = ({
 }) => {
 	const [currentItemIndex, setCurrentItemIndex] = useState(currentIndex);
 	const [isEditing, setIsEditing] = useState();
+	const [isImage, setIsImage] = useState(false);
 	const [itemList, setItemList] = useState(items);
 	const [reloadOnHide, setReloadOnHide] = useState(initialReloadOnHide);
 
@@ -217,6 +221,10 @@ const ItemSelectorPreview = ({
 		}
 	}, [infoButtonRef]);
 
+	useEffect(() => {
+		setIsImage(itemIsImage(currentItem));
+	}, [currentItem]);
+
 	return (
 		<div className="fullscreen item-selector-preview">
 			<Header
@@ -246,6 +254,7 @@ const ItemSelectorPreview = ({
 						currentItem={currentItem}
 						handleClickNext={handleClickNext}
 						handleClickPrevious={handleClickPrevious}
+						isImage={isImage}
 						showArrows={itemList.length > 1}
 					/>
 

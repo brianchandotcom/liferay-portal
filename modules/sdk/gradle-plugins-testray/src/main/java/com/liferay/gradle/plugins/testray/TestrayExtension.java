@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.gradle.plugins.jenkins.results.parser;
+package com.liferay.gradle.plugins.testray;
 
 import com.liferay.gradle.util.GradleUtil;
 
@@ -23,30 +23,32 @@ import org.gradle.api.Project;
 /**
  * @author Andrea Di Giorgi
  */
-public class JenkinsResultsParserExtension {
+public class TestrayExtension {
 
-	public JenkinsResultsParserExtension(Project project) {
+	public TestrayExtension(Project project) {
 		_project = project;
+	}
+
+	public String getJenkinsResultsParserVersion() {
+		return GradleUtil.toString(_jenkinsResultsParserVersion);
 	}
 
 	public File getTestrayPropertiesFile() {
 		return GradleUtil.toFile(_project, _testrayPropertiesFile);
 	}
 
-	public String getVersion() {
-		return GradleUtil.toString(_version);
+	public void setJenkinsResultsParserVersion(
+		Object jenkinsResultsParserVersion) {
+
+		_jenkinsResultsParserVersion = jenkinsResultsParserVersion;
 	}
 
 	public void setTestrayPropertiesFile(Object testrayPropertiesFile) {
 		_testrayPropertiesFile = testrayPropertiesFile;
 	}
 
-	public void setVersion(Object version) {
-		_version = version;
-	}
-
+	private Object _jenkinsResultsParserVersion = "1.0.970";
 	private final Project _project;
 	private Object _testrayPropertiesFile = "testray.properties";
-	private Object _version = "1.0.970";
 
 }

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.gradle.plugins.jenkins.results.parser;
+package com.liferay.gradle.plugins.testray;
 
 import com.liferay.gradle.util.GradleUtil;
 
@@ -35,25 +35,21 @@ import org.gradle.util.GUtil;
 /**
  * @author Andrea Di Giorgi
  */
-public class JenkinsResultsParserPlugin implements Plugin<Project> {
+public class TestrayPlugin implements Plugin<Project> {
 
 	public static final String EXPORT_TESTRAY_RESULTS_TASK_NAME =
 		"exportTestrayResults";
 
-	public static final String JENKINS_RESULTS_PARSER_CONFIGURATION_NAME =
-		"jenkinsResultsParser";
+	public static final String TESTRAY_CONFIGURATION_NAME = "testray";
 
 	@Override
 	public void apply(Project project) {
 		GradleUtil.applyPlugin(project, BasePlugin.class);
 
-		final JenkinsResultsParserExtension jenkinsResultsParserExtension =
-			GradleUtil.addExtension(
-				project, "jenkinsResultsParser",
-				JenkinsResultsParserExtension.class);
+		final TestrayExtension testrayExtension = GradleUtil.addExtension(
+			project, "testray", TestrayExtension.class);
 
-		_addConfigurationJenkinsResultsParser(
-			project, jenkinsResultsParserExtension);
+		_addConfigurationTestray(project, testrayExtension);
 
 		final JavaExec exportTestrayResultsTask = _addTaskExportTestrayResults(
 			project);
@@ -64,53 +60,48 @@ public class JenkinsResultsParserPlugin implements Plugin<Project> {
 				@Override
 				public void execute(Project project) {
 					_configureTaskExportTestrayResults(
-						exportTestrayResultsTask,
-						jenkinsResultsParserExtension);
+						exportTestrayResultsTask, testrayExtension);
 				}
 
 			});
 	}
 
-	private Configuration _addConfigurationJenkinsResultsParser(
-		final Project project,
-		final JenkinsResultsParserExtension jenkinsResultsParserExtension) {
+	private Configuration _addConfigurationTestray(
+		final Project project, final TestrayExtension testrayExtension) {
 
 		Configuration configuration = GradleUtil.addConfiguration(
-			project, JENKINS_RESULTS_PARSER_CONFIGURATION_NAME);
+			project, TESTRAY_CONFIGURATION_NAME);
 
 		configuration.defaultDependencies(
 			new Action<DependencySet>() {
 
 				@Override
 				public void execute(DependencySet dependencySet) {
-					_addDependenciesJenkinsResultsParser(
-						project, jenkinsResultsParserExtension);
+					_addDependenciesTestray(project, testrayExtension);
 				}
 
 			});
 
-		configuration.setDescription(
-			"Configures Jenkins Results Parser for this project.");
+		configuration.setDescription("Configures Testray for this project.");
 		configuration.setVisible(false);
 
 		return configuration;
 	}
 
-	private void _addDependenciesJenkinsResultsParser(
-		Project project,
-		JenkinsResultsParserExtension jenkinsResultsParserExtension) {
+	private void _addDependenciesTestray(
+		Project project, TestrayExtension testrayExtension) {
 
 		GradleUtil.addDependency(
-			project, JENKINS_RESULTS_PARSER_CONFIGURATION_NAME, "com.liferay",
+			project, TESTRAY_CONFIGURATION_NAME, "com.liferay",
 			"com.liferay.jenkins.results.parser",
-			jenkinsResultsParserExtension.getVersion());
+			testrayExtension.getJenkinsResultsParserVersion());
 	}
 
 	private JavaExec _addTaskExportTestrayResults(Project project) {
 		JavaExec javaExec = GradleUtil.addTask(
 			project, EXPORT_TESTRAY_RESULTS_TASK_NAME, JavaExec.class);
 
-		javaExec.setClasspath(_getJenkinsResultsParserClasspath(project));
+		javaExec.setClasspath(_getTestrayClasspath(project));
 		javaExec.setDescription("Export Testray results.");
 		javaExec.setGroup("testray");
 		javaExec.setMain(
@@ -121,14 +112,11 @@ public class JenkinsResultsParserPlugin implements Plugin<Project> {
 	}
 
 	private void _configureTaskExportTestrayResults(
-		JavaExec javaExec,
-		JenkinsResultsParserExtension jenkinsResultsParserExtension) {
-
-		Properties testrayProperties = _getTestrayProperties(
-			jenkinsResultsParserExtension);
+		JavaExec javaExec, TestrayExtension testrayExtension) {
 
 		_populateSystemProperties(
-			javaExec.getSystemProperties(), testrayProperties);
+			javaExec.getSystemProperties(),
+			_getTestrayProperties(testrayExtension));
 	}
 
 	private File _getExtPropertiesFile(File propertiesFile) {
@@ -150,21 +138,20 @@ public class JenkinsResultsParserPlugin implements Plugin<Project> {
 			shortFileName + "-ext." + extension);
 	}
 
-	private FileCollection _getJenkinsResultsParserClasspath(Project project) {
-		Configuration jenkinsResultsParserConfiguration =
-			GradleUtil.getConfiguration(
-				project, JENKINS_RESULTS_PARSER_CONFIGURATION_NAME);
+	private FileCollection _getTestrayClasspath(Project project) {
+		Configuration testrayConfiguration = GradleUtil.getConfiguration(
+			project, TESTRAY_CONFIGURATION_NAME);
 
-		return project.files(jenkinsResultsParserConfiguration);
+		return project.files(testrayConfiguration);
 	}
 
 	private Properties _getTestrayProperties(
-		JenkinsResultsParserExtension jenkinsResultsParserExtension) {
+		TestrayExtension testrayExtension) {
 
 		Properties testrayProperties = new Properties();
 
 		File testrayPropertiesFile =
-			jenkinsResultsParserExtension.getTestrayPropertiesFile();
+			testrayExtension.getTestrayPropertiesFile();
 
 		if ((testrayPropertiesFile == null) ||
 			!testrayPropertiesFile.exists()) {

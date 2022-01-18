@@ -1047,8 +1047,6 @@ public class PoshiValidation {
 					}
 
 					for (String parameter : parameterList) {
-						System.out.println(parameter);
-
 						Matcher exceptionMatcher =
 							_seleniumErrorPattern.matcher(parameter);
 

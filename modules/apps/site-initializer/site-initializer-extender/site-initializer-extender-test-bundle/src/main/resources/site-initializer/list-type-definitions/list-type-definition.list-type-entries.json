@@ -1,0 +1,18 @@
+[
+	{
+		"key": "Key1",
+		"name": "Test Integration Entry",
+		"name_i18n": {
+			"en-US": "Test Integration Entry"
+		},
+		"type": "string"
+	},
+	{
+		"key": "Key2",
+		"name": "Test Integration Entry",
+		"name_i18n": {
+			"en-US": "Test Integration Entry"
+		},
+		"type": "string"
+	}
+]

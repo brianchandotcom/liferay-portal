@@ -1291,8 +1291,6 @@ AUI.add(
 					var value = instance.getValue();
 
 					if (instance.get('localizable')) {
-						var defaultLocale = instance.getDefaultLocale();
-
 						if (
 							!(locale in localizationMap) ||
 							(localizationMap[locale] !== undefined &&

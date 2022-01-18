@@ -701,20 +701,14 @@ public class DDMFormDisplayContextTest extends PowerMockito {
 			_mockDDMFormInstanceVersionLocalService()
 		throws PortalException {
 
-		DDMFormInstanceVersionLocalService ddmFormInstanceVersionLocalService =
-			mock(DDMFormInstanceVersionLocalService.class);
-
-		DDMFormInstanceVersion ddmFormInstanceVersion = mock(
-			DDMFormInstanceVersion.class);
-
 		when(
-			ddmFormInstanceVersionLocalService.getLatestFormInstanceVersion(
+			_ddmFormInstanceVersionLocalService.getLatestFormInstanceVersion(
 				Matchers.anyLong(), Matchers.anyInt())
 		).thenReturn(
-			ddmFormInstanceVersion
+			_ddmFormInstanceVersion
 		);
 
-		return ddmFormInstanceVersionLocalService;
+		return _ddmFormInstanceVersionLocalService;
 	}
 
 	private DDMStructure _mockDDMStructure() throws Exception {
@@ -908,6 +902,13 @@ public class DDMFormDisplayContextTest extends PowerMockito {
 
 	@Mock
 	private DDMFormInstanceService _ddmFormInstanceService;
+
+	@Mock
+	private DDMFormInstanceVersion _ddmFormInstanceVersion;
+
+	@Mock
+	private DDMFormInstanceVersionLocalService
+		_ddmFormInstanceVersionLocalService;
 
 	@Mock
 	private DDMFormWebConfiguration _ddmFormWebConfiguration;

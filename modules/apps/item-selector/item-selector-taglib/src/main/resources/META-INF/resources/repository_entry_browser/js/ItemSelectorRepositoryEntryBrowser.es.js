@@ -450,6 +450,7 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 		const item = {
 			base64: preview,
 			metadata: JSON.stringify(this._getUploadFileMetadata(file)),
+			mimeType: file.type,
 			returntype: this.uploadItemReturnType,
 			title: file.name,
 			value: preview,

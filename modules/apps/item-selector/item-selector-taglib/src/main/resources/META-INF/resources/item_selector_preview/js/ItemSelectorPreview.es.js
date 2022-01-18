@@ -234,7 +234,7 @@ const ItemSelectorPreview = ({
 				handleClickEdit={handleClickEdit}
 				headerTitle={headerTitle}
 				infoButtonRef={infoButtonRef}
-				showEditIcon={true}
+				showEditIcon={isImage}
 				showInfoIcon={!!currentItem.metadata}
 				showNavbar={!isEditing}
 			/>

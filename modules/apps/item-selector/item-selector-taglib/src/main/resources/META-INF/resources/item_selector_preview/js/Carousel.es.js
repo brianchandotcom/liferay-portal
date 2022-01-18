@@ -17,6 +17,7 @@ import ClayIcon from '@clayui/icon';
 import ClayTabs from '@clayui/tabs';
 import React, {useState} from 'react';
 
+import NoPreview from './NoPreview.es';
 import PreviewImage from './PreviewImage.es';
 import PreviewVideo from './PreviewVideo.es';
 
@@ -91,6 +92,7 @@ const Carousel = ({
 	currentItem,
 	handleClickNext,
 	handleClickPrevious,
+	isImage,
 	showArrows = true,
 }) => {
 	const isVideo = currentItem.type === 'video';
@@ -111,11 +113,13 @@ const Carousel = ({
 
 				{isVideo ? (
 					<PreviewVideo html={videoHtml} />
-				) : (
+				) : isImage ? (
 					<PreviewImage
 						src={currentItem.url || currentItem.base64}
 						title={currentItem.title}
 					/>
+				) : (
+					<NoPreview />
 				)}
 
 				{showArrows && (

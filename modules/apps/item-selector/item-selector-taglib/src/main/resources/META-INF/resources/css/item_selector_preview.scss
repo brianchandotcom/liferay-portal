@@ -86,6 +86,7 @@ html#{$cadmin-selector}:not(._) {
 
 			&:not(.open) {
 				img,
+				.no-preview-container,
 				.video-preview {
 					left: 50%;
 					position: absolute;

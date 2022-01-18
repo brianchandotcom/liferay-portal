@@ -33,7 +33,6 @@ import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
@@ -65,6 +64,8 @@ import com.liferay.template.test.util.TemplateTestUtil;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+
+import jodd.util.ArraysUtil;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -360,11 +361,9 @@ public class TemplateInfoItemFieldSetProviderTest {
 
 		Locale locale = _portal.getSiteDefaultLocale(_group.getGroupId());
 
-		Assert.assertEquals(
-			StringBundler.concat(
-				assetCategory2.getTitle(locale), StringPool.COMMA,
-				assetCategory1.getTitle(locale), StringPool.COMMA),
-			infoFieldValue.getValue(locale));
+		_assertExpectedNames(
+			(String)infoFieldValue.getValue(locale),
+			assetCategory1.getTitle(locale), assetCategory2.getTitle(locale));
 	}
 
 	@Test
@@ -408,13 +407,23 @@ public class TemplateInfoItemFieldSetProviderTest {
 				articleTemplateEntry.getTemplateEntryId(),
 			infoField.getName());
 
-		Locale locale = _portal.getSiteDefaultLocale(_group.getGroupId());
+		_assertExpectedNames(
+			(String)infoFieldValue.getValue(
+				_portal.getSiteDefaultLocale(_group.getGroupId())),
+			StringUtil.toLowerCase(tagName1), StringUtil.toLowerCase(tagName2));
+	}
+
+	private void _assertExpectedNames(String current, String... expectedNames) {
+		Assert.assertNotNull(current);
+
+		String[] currentNames = current.split(StringPool.COMMA);
 
 		Assert.assertEquals(
-			StringBundler.concat(
-				StringUtil.toLowerCase(tagName1), StringPool.COMMA,
-				StringUtil.toLowerCase(tagName2), StringPool.COMMA),
-			infoFieldValue.getValue(locale));
+			currentNames.toString(), expectedNames.length, currentNames.length);
+
+		for (String expectedName : expectedNames) {
+			Assert.assertTrue(ArraysUtil.contains(currentNames, expectedName));
+		}
 	}
 
 	private MockHttpServletRequest _getMockHttpServletRequest(

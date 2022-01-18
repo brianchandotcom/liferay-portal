@@ -36,14 +36,14 @@ definition {
 	@description = "LPS-118006: When the DXP is connected to AC after the user has clicked the Don't show me this again button, the Metrics option is shown again, and the sidebar panel with instructions to sync, and without the Dont show me this again button shows up when the user clicks on it"
 	@priority = "4"
 	test MetricsInContentDashboardACEnabled {
-		task ("Create a Web Content and set a Display Page") {
+		task ("Create a Web Content via JSONWS") {
 			JSONWebcontent.addWebContent(
 				content = "Webcontent Content",
 				groupName = "Test Site Name",
 				title = "WC Content");
 		}
 
-		task ("Create and Publish a Display Page Template with Fragment") {
+		task ("Create and Publish a Display Page Template") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Web Content Article",
 				displayPageTemplateEntryName = "Display Page Name",
@@ -56,110 +56,65 @@ definition {
 
 			Button.clickPublish();
 
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
 			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
 		}
 
 		task ("Check in Content Dashboard and open Content Performance Panel") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
+			ContentDashboard.goToContentDashboard();
 
-			Click(locator1 = "ContentDashboard#ROW_PANEL_WC");
+			Click.clickNoMouseOver(locator1 = "ContentDashboard#ROW_PANEL_WC");
 
 			Click(locator1 = "ContentPerformance#ICON_VIEW_METRICS");
 		}
 
-		task ("Check if elements present") {
-			AssertElementPresent(
-				locator1 = "ContentPerformance#CONTENT_PERFORMANCE_START_FREE_TRIAL",
-				value1 = "Start Free Trial");
+		task ("Check at panel that DXP is not connected to AC") {
+			AssertVisible(
+				key_text = "Start Free Trial",
+				locator1 = "Link#ANY");
 
-			AssertElementPresent(
-				locator1 = "ContentPerformance#CONTENT_PERFORMANCE_DO_NOT_SHOW_AGAIN",
-				value1 = "Do not show me this again.");
+			AssertVisible(
+				key_text = "Do not show me this again",
+				locator1 = "Link#ANY");
 		}
 
 		task ("Click on the button for do not show again") {
-			Click(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_DO_NOT_SHOW_AGAIN");
+			ContentPerformance.clickDoNotShowMeThisAgain();
 		}
 
-		task ("Assert the Metrics button is not shown") {
+		task ("Assert the Metrics button is not shown anymore") {
 			Click.clickNoMouseOver(locator1 = "ContentDashboard#ROW_PANEL_WC");
 
 			AssertElementNotPresent(locator1 = "ContentPerformance#ICON_VIEW_METRICS");
 		}
 
-		task ("Open Analytics Cloud") {
-			var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
+		task ("Launch AC and get Token") {
+			ACUtils.launchAC();
 
-			Navigator.openURL(baseURL = "${analyticsCloudURL}");
+			ACSettings.takeTokenFromAnalyticsCloud();
 		}
 
-		task ("Take token from Analytics Cloud") {
-			AnalyticsCloud.loginAnalyticsCloud(
-				emailAddress = "test@liferay.com",
-				password = "test");
-
-			AnalyticsCloud.takeTokenFromAnalyticsCloud();
-		}
-
-		task ("Go to DXP portal, login and create site") {
-			TestCase.setUpPortalInstance();
-
-			User.firstLoginPG();
-
+		task ("Navigate to DXP and connect with AC") {
 			Navigator.openURL();
-		}
 
-		task ("Connect with Analytics Cloud and back to Home Page") {
-			ContentPerformance.onlyConectWithAnalyticsCloud();
+			User.loginPG(
+				password = "test",
+				userEmailAddress = "test@liferay.com");
 
-			Navigator.openURL();
-		}
-
-		task ("Create a Web Content and set a Display Page") {
-			JSONWebcontent.addWebContent(
-				content = "Webcontent Content",
-				groupName = "Test Site Name",
-				title = "WC Content");
-		}
-
-		task ("Create and Publish a Display Page Template with Fragment") {
-			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
-				contentType = "Web Content Article",
-				displayPageTemplateEntryName = "Display Page Name",
-				groupName = "Test Site Name",
-				subType = "Basic Web Content");
-
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
-
-			Button.clickPublish();
-
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+			ContentPerformance.connectDXPtoAnalyticsCloudNoSync();
 		}
 
 		task ("Check in Content Dashboard and open Content Performance Panel") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
+			ContentDashboard.goToContentDashboard();
 
-			Click(locator1 = "ContentDashboard#ROW_PANEL_WC");
+			Click.clickNoMouseOver(locator1 = "ContentDashboard#ROW_PANEL_WC");
 
 			Click(locator1 = "ContentPerformance#ICON_VIEW_METRICS");
 		}
 
 		task ("Assert the button is not present and the message are present") {
 			AssertElementNotPresent(
-				locator1 = "ContentPerformance#CONTENT_PERFORMANCE_DO_NOT_SHOW_AGAIN",
-				value1 = "Do not show me this again.");
+				key_text = "Do not show me this again",
+				locator1 = "Link#ANY");
 
 			AssertElementPresent(
 				locator1 = "ContentPerformance#INSTRUCTIONS_SYNC_AC",

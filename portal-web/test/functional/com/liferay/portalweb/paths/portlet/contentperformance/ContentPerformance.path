@@ -80,6 +80,11 @@
 	<td>//button[contains(@label,'View Metrics')]</td>
 	<td></td>
 </tr>
+<tr>
+    <td>SIDEBAR</td>
+    <td>//div[contains(@class,'lfr-analytics-reports-panel')]</td>
+    <td></td>
+</tr>
 </tbody>
 </table>
 </body>

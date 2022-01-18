@@ -1,26 +1,23 @@
 definition {
 
-	macro onlyConectWithAnalyticsCloud {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
+	macro clickDoNotShowMeThisAgain {
+		Click(
+			key_text = "Do not show me this again",
+			locator1 = "Link#ANY");
+	}
 
-		Click(locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_DXP_BUTTON");
+	macro connectDXPtoAnalyticsCloudNoSync {
+		ACDXPSettings.goToInstanceSettingsAC();
 
-		Click(locator1 = "AnalyticsCloudConnection#DXP_TOKEN_INPUT");
+		ACDXPSettings.connectAnalyticsCloud();
 
-		Paste(locator1 = "AnalyticsCloudConnection#DXP_TOKEN_INPUT");
-
-		Click(locator1 = "AnalyticsCloudConnection#CONNECT_ANALYTICS_CLOUD_BUTTON");
-
-		AssertTextEquals(
-			locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_CONNECTED_CONFIRMATION_MESSAGE",
-			value1 = "Your DXP instance is connected to Analytics Cloud.");
+		ACDXPSettings.assertSuccessfulConnection();
 	}
 
 	macro openContentPerformance {
-		Click(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_BUTTON");
+		if (!(IsVisible(locator1 = "ContentPerformance#SIDEBAR"))) {
+            Click(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_BUTTON");
+        }
 	}
 
 	macro showMetricsButton {

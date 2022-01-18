@@ -42,6 +42,7 @@ const headerTitle = 'Images';
 const items = [
 	{
 		metadata: JSON.stringify(basicMetadata),
+		mimeType: 'image/jpeg',
 		returntype: 'returntype',
 		title: item1Title,
 		url: itemUrl,
@@ -49,6 +50,7 @@ const items = [
 	},
 	{
 		metadata: JSON.stringify(basicMetadata),
+		mimeType: 'image/jpeg',
 		returntype: 'returntype',
 		title: item2Title,
 		url: itemUrl,

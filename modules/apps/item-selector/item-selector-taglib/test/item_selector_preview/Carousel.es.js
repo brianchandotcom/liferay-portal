@@ -48,6 +48,7 @@ const carouselProps = {
 	},
 	handleClickNext: jest.fn(),
 	handleClickPrevious: jest.fn(),
+	isImage: true,
 };
 
 const renderCarouselComponent = (props) => render(<Carousel {...props} />);

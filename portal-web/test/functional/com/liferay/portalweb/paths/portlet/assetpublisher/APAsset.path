@@ -11,11 +11,6 @@
 
 <tbody>
 <tr>
-	<td>ASSET_BACK_TO_ICON</td>
-	<td>//span[@class='header-back-to']/a</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ASSET_CONTENT</td>
 	<td>//div[contains(@class,'asset-content')]/div[contains(.,'${key_assetContent}')]</td>
 	<td></td>

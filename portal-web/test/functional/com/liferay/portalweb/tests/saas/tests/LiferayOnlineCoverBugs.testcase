@@ -18,8 +18,8 @@ definition {
 			HeadlessPortalInstanceAPI.addPortalInstanceWithVirtualInstanceInitializer(
 				domain = "www.raylife.com",
 				portalInstanceId = "www.raylife.com",
-				virtualHost = "www.raylife.com",
-				siteInitializerKey = "com.liferay.site.initializer.raylife");
+				siteInitializerKey = "com.liferay.site.initializer.raylife",
+				virtualHost = "www.raylife.com");
 
 			User.firstLoginUI(
 				password = "test",

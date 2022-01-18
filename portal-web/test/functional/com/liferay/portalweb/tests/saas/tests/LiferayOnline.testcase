@@ -65,8 +65,8 @@ definition {
 			HeadlessPortalInstanceAPI.addPortalInstanceWithVirtualInstanceInitializer(
 				domain = "www.able.com",
 				portalInstanceId = "www.able.com",
-				virtualHost = "www.able.com",
-				siteInitializerKey = "com.liferay.site.initializer.raylife");
+				siteInitializerKey = "com.liferay.site.initializer.raylife",
+				virtualHost = "www.able.com");
 		}
 
 		task ("Go to the new Virtual Instance") {

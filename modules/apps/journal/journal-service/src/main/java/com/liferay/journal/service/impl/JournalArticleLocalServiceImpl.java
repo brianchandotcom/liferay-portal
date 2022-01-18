@@ -5783,8 +5783,8 @@ public class JournalArticleLocalServiceImpl
 			article.setResourcePrimKey(latestArticle.getResourcePrimKey());
 			article.setGroupId(latestArticle.getGroupId());
 			article.setCompanyId(latestArticle.getCompanyId());
-			article.setUserId(user.getUserId());
-			article.setUserName(user.getFullName());
+			article.setUserId(latestArticle.getUserId());
+			article.setUserName(latestArticle.getUserName());
 			article.setCreateDate(latestArticle.getCreateDate());
 			article.setModifiedDate(serviceContext.getModifiedDate(date));
 			article.setExternalReferenceCode(

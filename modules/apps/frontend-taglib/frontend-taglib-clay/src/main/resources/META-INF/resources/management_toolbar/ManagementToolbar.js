@@ -76,7 +76,7 @@ function ManagementToolbar({
 	const [active, setActive] = useState(initialCheckboxStatus !== 'unchecked');
 	const [searchMobile, setSearchMobile] = useState(false);
 	const viewTypeIcon = useMemo(
-		() => viewTypeItems.find((item) => item.active)?.icon,
+		() => viewTypeItems?.find((item) => item.active)?.icon,
 		[viewTypeItems]
 	);
 

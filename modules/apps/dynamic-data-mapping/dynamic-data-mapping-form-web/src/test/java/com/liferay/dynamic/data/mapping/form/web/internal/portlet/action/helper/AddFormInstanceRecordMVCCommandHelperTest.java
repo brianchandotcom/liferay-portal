@@ -15,6 +15,7 @@
 package com.liferay.dynamic.data.mapping.form.web.internal.portlet.action.helper;
 
 import com.liferay.dynamic.data.mapping.exception.FormInstanceExpiredException;
+import com.liferay.dynamic.data.mapping.exception.FormInstanceSubmissionLimitException;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluator;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluatorEvaluateRequest;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluatorEvaluateResponse;
@@ -23,11 +24,13 @@ import com.liferay.dynamic.data.mapping.form.web.internal.configuration.activato
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
+import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceSettings;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
+import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordVersionLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
@@ -37,6 +40,7 @@ import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -257,6 +261,21 @@ public class AddFormInstanceRecordMVCCommandHelperTest extends PowerMockito {
 			_mockDDMFormInstance(), _actionRequest);
 	}
 
+	@Test(expected = FormInstanceSubmissionLimitException.class)
+	public void testValidateSubmissionLimitStatus() throws Exception {
+		ThemeDisplay themeDisplay = _mockThemeDisplay();
+
+		when(
+			_actionRequest.getAttribute(Matchers.eq(WebKeys.THEME_DISPLAY))
+		).thenReturn(
+			themeDisplay
+		);
+
+		_addRecordMVCCommandHelper.validateSubmissionLimitStatus(
+			_mockDDMFormInstance(),
+			_mockDDMFormInstanceRecordVersionLocalService(), _actionRequest);
+	}
+
 	private Value _getFieldValue(String fieldName) {
 		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
 			_ddmFormValues.getDDMFormFieldValuesMap(true);
@@ -354,6 +373,24 @@ public class AddFormInstanceRecordMVCCommandHelperTest extends PowerMockito {
 		return ddmFormInstance;
 	}
 
+	private DDMFormInstanceRecordVersionLocalService
+		_mockDDMFormInstanceRecordVersionLocalService() {
+
+		DDMFormInstanceRecordVersionLocalService
+			ddmFormInstanceRecordVersionLocalService = mock(
+				DDMFormInstanceRecordVersionLocalService.class);
+
+		when(
+			ddmFormInstanceRecordVersionLocalService.
+				getFormInstanceRecordVersions(
+					Matchers.anyLong(), Matchers.anyLong())
+		).thenReturn(
+			Collections.singletonList(mock(DDMFormInstanceRecordVersion.class))
+		);
+
+		return ddmFormInstanceRecordVersionLocalService;
+	}
+
 	private DDMFormInstanceSettings _mockDDMFormInstanceSettings() {
 		DDMFormInstanceSettings ddmFormInstanceSettings = mock(
 			DDMFormInstanceSettings.class);
@@ -362,6 +399,12 @@ public class AddFormInstanceRecordMVCCommandHelperTest extends PowerMockito {
 			ddmFormInstanceSettings.expirationDate()
 		).thenReturn(
 			"1987-09-22"
+		);
+
+		when(
+			ddmFormInstanceSettings.limitToOneSubmissionPerUser()
+		).thenReturn(
+			true
 		);
 
 		return ddmFormInstanceSettings;
@@ -416,6 +459,12 @@ public class AddFormInstanceRecordMVCCommandHelperTest extends PowerMockito {
 			TimeZone.getDefault()
 		);
 
+		when(
+			themeDisplay.getUser()
+		).thenReturn(
+			mock(User.class)
+		);
+
 		return themeDisplay;
 	}
 
@@ -424,16 +473,16 @@ public class AddFormInstanceRecordMVCCommandHelperTest extends PowerMockito {
 			new AddFormInstanceRecordMVCCommandHelper();
 
 		field(
+			AddFormInstanceRecordMVCCommandHelper.class, "_ddmFormEvaluator"
+		).set(
+			_addRecordMVCCommandHelper, _ddmFormEvaluator
+		);
+
+		field(
 			AddFormInstanceRecordMVCCommandHelper.class,
 			"_ddmFormInstanceService"
 		).set(
 			_addRecordMVCCommandHelper, _ddmFormInstanceService
-		);
-
-		field(
-			AddFormInstanceRecordMVCCommandHelper.class, "_ddmFormEvaluator"
-		).set(
-			_addRecordMVCCommandHelper, _ddmFormEvaluator
 		);
 
 		field(

@@ -462,39 +462,6 @@ public class FragmentEntryProcessorHelperImpl
 		return _portal.getLayoutRelativeURL(layout, themeDisplay);
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #getMappedInfoItemFieldValue(JSONObject, Map, FragmentEntryProcessorContext)}
-	 */
-	@Deprecated
-	@Override
-	public Object getMappedValue(
-		JSONObject jsonObject,
-		Map<Long, Map<String, Object>> infoDisplaysFieldValues,
-		FragmentEntryProcessorContext fragmentEntryProcessorContext) {
-
-		throw new UnsupportedOperationException(
-			"This method is deprecated and replaced by " +
-				"com.liferay.fragment.entry.processor.helper." +
-					"FragmentEntryProcessorHelper.getMappedInfoItemFieldValue");
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #getMappedInfoItemFieldValue(JSONObject, Map, String, Locale, long, long, int)}
-	 */
-	@Deprecated
-	@Override
-	public Object getMappedValue(
-		JSONObject jsonObject,
-		Map<Long, Map<String, Object>> infoDisplaysFieldValues, String mode,
-		Locale locale, long previewClassPK, long previewClassNameId,
-		int previewType) {
-
-		throw new UnsupportedOperationException(
-			"This method is deprecated and replaced by " +
-				"com.liferay.fragment.entry.processor.helper." +
-					"FragmentEntryProcessorHelper.getMappedInfoItemFieldValue");
-	}
-
 	@Override
 	public boolean isAssetDisplayPage(String mode) {
 		if (Objects.equals(

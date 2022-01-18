@@ -74,38 +74,6 @@ public interface FragmentEntryProcessorHelper {
 			FragmentEntryProcessorContext fragmentEntryProcessorContext)
 		throws PortalException;
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #getMappedInfoItemFieldValue(JSONObject, Map, FragmentEntryProcessorContext)}
-	 */
-	@Deprecated
-	public Object getMappedValue(
-			JSONObject jsonObject,
-			Map<Long, Map<String, Object>> infoDisplaysFieldValues,
-			FragmentEntryProcessorContext fragmentEntryProcessorContext)
-		throws PortalException;
-
-	public default Object getMappedValue(
-			JSONObject jsonObject,
-			Map<Long, Map<String, Object>> infoDisplaysFieldValues, String mode,
-			Locale locale, long previewClassPK, int previewType)
-		throws PortalException {
-
-		return getMappedValue(
-			jsonObject, infoDisplaysFieldValues, mode, locale, previewClassPK,
-			0, previewType);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #getMappedInfoItemFieldValue(JSONObject, Map, String, Locale, long, long, int)}
-	 */
-	@Deprecated
-	public Object getMappedValue(
-			JSONObject jsonObject,
-			Map<Long, Map<String, Object>> infoDisplaysFieldValues, String mode,
-			Locale locale, long previewClassPK, long previewClassNameId,
-			int previewType)
-		throws PortalException;
-
 	public boolean isAssetDisplayPage(String mode);
 
 	public boolean isMapped(JSONObject jsonObject);

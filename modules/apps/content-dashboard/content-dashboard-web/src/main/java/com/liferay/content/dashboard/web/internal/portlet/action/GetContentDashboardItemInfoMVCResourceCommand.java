@@ -16,13 +16,18 @@ package com.liferay.content.dashboard.web.internal.portlet.action;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetTag;
+import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.model.AssetVocabularyConstants;
+import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.content.dashboard.item.action.ContentDashboardItemAction;
 import com.liferay.content.dashboard.web.internal.constants.ContentDashboardPortletKeys;
 import com.liferay.content.dashboard.web.internal.item.ContentDashboardItem;
 import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFactory;
 import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFactoryTracker;
 import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemSubtype;
+import com.liferay.content.dashboard.web.internal.util.ContentDashboardGroupUtil;
 import com.liferay.info.item.InfoItemReference;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -34,9 +39,11 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -52,12 +59,14 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collector;
 import java.util.stream.Stream;
 
 import javax.portlet.ResourceRequest;
@@ -119,9 +128,6 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 				}
 			).map(
 				contentDashboardItem -> JSONUtil.put(
-					"categories",
-					_getAssetCategoriesJSONArray(contentDashboardItem, locale)
-				).put(
 					"className", _getClassName(contentDashboardItem)
 				).put(
 					"classPK", _getClassPK(contentDashboardItem)
@@ -157,6 +163,10 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 					"viewURLs",
 					_getViewURLsJSONArray(
 						contentDashboardItem, httpServletRequest)
+				).put(
+					"vocabularies",
+					_getAssetVocabulariesJSONObject(
+						contentDashboardItem, locale)
 				)
 			).orElseGet(
 				JSONFactoryUtil::createJSONObject
@@ -180,20 +190,6 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 		}
 	}
 
-	private JSONArray _getAssetCategoriesJSONArray(
-		ContentDashboardItem contentDashboardItem, Locale locale) {
-
-		List<AssetCategory> assetCategories =
-			contentDashboardItem.getAssetCategories();
-
-		Stream<AssetCategory> stream = assetCategories.stream();
-
-		return JSONUtil.putAll(
-			stream.map(
-				assetCategory -> assetCategory.getTitle(locale)
-			).toArray());
-	}
-
 	private JSONArray _getAssetTagsJSONArray(
 		ContentDashboardItem contentDashboardItem) {
 
@@ -205,6 +201,41 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 			stream.map(
 				AssetTag::getName
 			).toArray());
+	}
+
+	private JSONObject _getAssetVocabulariesJSONObject(
+		ContentDashboardItem contentDashboardItem, Locale locale) {
+
+		List<AssetCategory> assetCategories =
+			contentDashboardItem.getAssetCategories();
+
+		Stream<AssetCategory> stream = assetCategories.stream();
+
+		return JSONFactoryUtil.createJSONObject(
+			stream.collect(_getCollector(locale)));
+	}
+
+	private Map<String, Object> _getAssetVocabularyData(
+		Locale locale, AssetVocabulary assetVocabulary) {
+
+		return HashMapBuilder.<String, Object>put(
+			"categories", ListUtil.fromArray()
+		).put(
+			"groupName",
+			Optional.ofNullable(
+				_groupLocalService.fetchGroup(assetVocabulary.getGroupId())
+			).map(
+				group -> ContentDashboardGroupUtil.getGroupName(group, locale)
+			).orElse(
+				StringPool.BLANK
+			)
+		).put(
+			"isPublic",
+			assetVocabulary.getVisibilityType() ==
+				AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC
+		).put(
+			"vocabularyName", assetVocabulary.getTitle(locale)
+		).build();
 	}
 
 	private String _getClassName(ContentDashboardItem<?> contentDashboardItem) {
@@ -219,6 +250,34 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 			contentDashboardItem.getInfoItemReference();
 
 		return infoItemReference.getClassPK();
+	}
+
+	private Collector<AssetCategory, ?, Map<Long, Map<String, Object>>>
+		_getCollector(Locale locale) {
+
+		return Collector.of(
+			() -> new HashMap<>(),
+			(assetVocabulariesData, assetCategory) -> {
+				assetVocabulariesData.computeIfAbsent(
+					assetCategory.getVocabularyId(),
+					vocabularyId -> _getAssetVocabularyData(
+						locale,
+						_assetVocabularyLocalService.fetchAssetVocabulary(
+							vocabularyId)));
+
+				Map<String, Object> assetVocabularyData =
+					assetVocabulariesData.get(assetCategory.getVocabularyId());
+
+				List<String> assetCategories =
+					(List<String>)assetVocabularyData.get("categories");
+
+				assetCategories.add(assetCategory.getTitle(locale));
+			},
+			(first, second) -> {
+				first.putAll(second);
+
+				return first;
+			});
 	}
 
 	private JSONObject _getDataJSONObject(
@@ -365,8 +424,14 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 		GetContentDashboardItemInfoMVCResourceCommand.class);
 
 	@Reference
+	private AssetVocabularyLocalService _assetVocabularyLocalService;
+
+	@Reference
 	private ContentDashboardItemFactoryTracker
 		_contentDashboardItemFactoryTracker;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private Http _http;

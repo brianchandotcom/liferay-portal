@@ -48,7 +48,9 @@ import com.liferay.headless.admin.list.type.dto.v1_0.ListTypeDefinition;
 import com.liferay.headless.admin.list.type.dto.v1_0.ListTypeEntry;
 import com.liferay.headless.admin.list.type.resource.v1_0.ListTypeDefinitionResource;
 import com.liferay.headless.admin.user.dto.v1_0.Account;
+import com.liferay.headless.admin.user.dto.v1_0.UserAccount;
 import com.liferay.headless.admin.user.resource.v1_0.AccountResource;
+import com.liferay.headless.admin.user.resource.v1_0.UserAccountResource;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalArticleLocalService;
@@ -249,6 +251,8 @@ public class BundleSiteInitializerTest {
 		Assert.assertNotNull(account3);
 		Assert.assertEquals("Test Account 3", account3.getName());
 		Assert.assertEquals("person", account3.getType());
+
+		_assertUserAccounts(account.getId(), serviceContext);
 	}
 
 	private void _assertAssetCategories(Group group) throws Exception {
@@ -892,6 +896,29 @@ public class BundleSiteInitializerTest {
 			frontendTokensValues.contains("blockquote-small-color"));
 	}
 
+	private void _assertUserAccounts(
+			Long accountId, ServiceContext serviceContext)
+		throws Exception {
+
+		UserAccountResource.Builder userAccountResourceBuilder =
+			_userAccountResourceFactory.create();
+
+		UserAccountResource userAccountResource =
+			userAccountResourceBuilder.user(
+				serviceContext.fetchUser()
+			).build();
+
+		Page<UserAccount> userAccountsPage =
+			userAccountResource.getAccountUserAccountsPage(
+				accountId, null,
+				userAccountResource.toFilter("name eq 'Test User'"), null,
+				null);
+
+		UserAccount userAccount = userAccountsPage.fetchFirstItem();
+
+		Assert.assertNotNull(userAccount);
+	}
+
 	private Bundle _installBundle(BundleContext bundleContext, String location)
 		throws Exception {
 
@@ -1003,6 +1030,9 @@ public class BundleSiteInitializerTest {
 
 	@Inject
 	private StyleBookEntryLocalService _styleBookEntryLocalService;
+
+	@Inject
+	private UserAccountResource.Factory _userAccountResourceFactory;
 
 	@Inject
 	private UserLocalService _userLocalService;

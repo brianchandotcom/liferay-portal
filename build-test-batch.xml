@@ -4009,6 +4009,22 @@ log.sanitizer.enabled=false</echo>
 		/>
 	</target>
 
+	<target name="functional-bundle-jboss-db2115-jdk8">
+		<run-functional-test
+			app.server.type="jboss"
+			database.type="db2"
+			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
+			test.fix.pack.base.url="${test.fix.pack.base.url}"
+			test.license.xml.url="${test.license.xml.url}"
+			test.plugin.zip.url="${test.plugin.zip.url}"
+			test.plugins.war.zip.url="${test.plugins.war.zip.url}"
+			test.portal.bundle.version="${test.portal.bundle.version}"
+			test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
+			test.portal.lpkg.name="${test.portal.lpkg.name}"
+			test.sql.zip.url="${test.sql.zip.url}"
+		/>
+	</target>
+
 	<target name="functional-bundle-jboss-mysql56-jdk8">
 		<run-functional-test
 			app.server.type="jboss"
@@ -4248,6 +4264,25 @@ log.sanitizer.enabled=false</echo>
 	</target>
 
 	<target name="functional-bundle-tomcat-db2111-jdk8">
+		<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
+
+		<run-functional-test
+			app.server.type="tomcat"
+			database.type="db2"
+			setup.proxy="false"
+			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
+			test.fix.pack.base.url="${test.fix.pack.base.url}"
+			test.license.xml.url="${test.license.xml.url}"
+			test.plugin.zip.url="${test.plugin.zip.url}"
+			test.plugins.war.zip.url="${test.plugins.war.zip.url}"
+			test.portal.bundle.version="${test.portal.bundle.version}"
+			test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
+			test.portal.lpkg.name="${test.portal.lpkg.name}"
+			test.sql.zip.url="${test.sql.zip.url}"
+		/>
+	</target>
+
+	<target name="functional-bundle-tomcat-db2115-jdk8">
 		<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
 
 		<run-functional-test
@@ -4931,6 +4966,10 @@ log.sanitizer.enabled=false</echo>
 		<antcall target="functional-bundle-tomcat-db2111-jdk8" />
 	</target>
 
+	<target name="functional-smoke-bundle-tomcat-db2115-jdk8">
+		<antcall target="functional-bundle-tomcat-db2115-jdk8" />
+	</target>
+
 	<target name="functional-smoke-bundle-tomcat-hypersonic20-jdk8">
 		<antcall target="functional-bundle-tomcat-hypersonic20-jdk8" />
 	</target>
@@ -5073,6 +5112,14 @@ log.sanitizer.enabled=false</echo>
 		<run-functional-test app.server.type="tomcat" database.type="db2" test.portal.log.assert="true" />
 	</target>
 
+	<target name="functional-smoke-tomcat90-db2115-jdk8">
+		<run-functional-test app.server.type="tomcat" database.type="db2" test.portal.log.assert="true" />
+	</target>
+
+	<target name="functional-smoke-tomcat90-db2115-jdk11_open">
+		<run-functional-test app.server.type="tomcat" database.type="db2" test.portal.log.assert="true" />
+	</target>
+
 	<target name="functional-smoke-tomcat90-mariadb102-jdk8">
 		<run-functional-test app.server.type="tomcat" database.type="mariadb" test.portal.log.assert="true" />
 	</target>
@@ -5210,6 +5257,14 @@ log.sanitizer.enabled=false</echo>
 	</target>
 
 	<target name="functional-tomcat90-db2111-jdk11_open">
+		<run-functional-test app.server.type="tomcat" database.type="db2" />
+	</target>
+
+	<target name="functional-tomcat90-db2115-jdk8">
+		<run-functional-test app.server.type="tomcat" database.type="db2" />
+	</target>
+
+	<target name="functional-tomcat90-db2115-jdk11_open">
 		<run-functional-test app.server.type="tomcat" database.type="db2" />
 	</target>
 
@@ -5370,6 +5425,14 @@ log.sanitizer.enabled=false</echo>
 	</target>
 
 	<target name="functional-upgrade-tomcat90-db2111-jdk11_open">
+		<run-functional-test app.server.type="tomcat" database.type="db2" />
+	</target>
+
+	<target name="functional-upgrade-tomcat90-db2115-jdk8">
+		<run-functional-test app.server.type="tomcat" database.type="db2" />
+	</target>
+
+	<target name="functional-upgrade-tomcat90-db2115-jdk11_open">
 		<run-functional-test app.server.type="tomcat" database.type="db2" />
 	</target>
 
@@ -5663,6 +5726,10 @@ log.sanitizer.enabled=false</echo>
 		<run-legacy-database-dump database.type="db2" />
 	</target>
 
+	<target name="legacy-functional-bundle-tomcat-db2115">
+		<run-legacy-database-dump database.type="db2" />
+	</target>
+
 	<target name="legacy-functional-bundle-tomcat-mariadb102">
 		<run-legacy-database-dump database.type="mariadb" />
 	</target>
@@ -5863,6 +5930,42 @@ log.sanitizer.enabled=false</echo>
 	</target>
 
 	<target name="modules-integration-bundle-db2111-jdk11_open">
+		<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
+
+		<run-modules-integration-test
+			database.type="db2"
+			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
+			test.fix.pack.base.url="${test.fix.pack.base.url}"
+			test.license.xml.url="${test.license.xml.url}"
+			test.portal.bundle.dependencies.zip.url="${test.portal.bundle.dependencies.zip.url}"
+			test.portal.bundle.osgi.zip.url="${test.portal.bundle.osgi.zip.url}"
+			test.portal.bundle.tools.zip.url="${test.portal.bundle.tools.zip.url}"
+			test.portal.bundle.version="${test.portal.bundle.version}"
+			test.portal.bundle.war.url="${test.portal.bundle.war.url}"
+			test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
+			test.sql.zip.url="${test.sql.zip.url}"
+		/>
+	</target>
+
+	<target name="modules-integration-bundle-db2115-jdk8">
+		<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
+
+		<run-modules-integration-test
+			database.type="db2"
+			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
+			test.fix.pack.base.url="${test.fix.pack.base.url}"
+			test.license.xml.url="${test.license.xml.url}"
+			test.portal.bundle.dependencies.zip.url="${test.portal.bundle.dependencies.zip.url}"
+			test.portal.bundle.osgi.zip.url="${test.portal.bundle.osgi.zip.url}"
+			test.portal.bundle.tools.zip.url="${test.portal.bundle.tools.zip.url}"
+			test.portal.bundle.version="${test.portal.bundle.version}"
+			test.portal.bundle.war.url="${test.portal.bundle.war.url}"
+			test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
+			test.sql.zip.url="${test.sql.zip.url}"
+		/>
+	</target>
+
+	<target name="modules-integration-bundle-db2115-jdk11_open">
 		<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
 
 		<run-modules-integration-test
@@ -6200,6 +6303,14 @@ log.sanitizer.enabled=false</echo>
 	</target>
 
 	<target name="modules-integration-db2111-jdk11_open">
+		<run-modules-integration-test database.type="db2" />
+	</target>
+
+	<target name="modules-integration-db2115-jdk8">
+		<run-modules-integration-test database.type="db2" />
+	</target>
+
+	<target name="modules-integration-db2115-jdk11_open">
 		<run-modules-integration-test database.type="db2" />
 	</target>
 

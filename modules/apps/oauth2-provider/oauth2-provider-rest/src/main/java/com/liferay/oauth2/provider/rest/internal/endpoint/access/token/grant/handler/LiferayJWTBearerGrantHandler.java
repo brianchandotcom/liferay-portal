@@ -16,6 +16,7 @@ package com.liferay.oauth2.provider.rest.internal.endpoint.access.token.grant.ha
 
 import com.liferay.oauth2.provider.configuration.OAuth2ProviderConfiguration;
 import com.liferay.oauth2.provider.rest.internal.configuration.OAuth2InAssertionConfiguration;
+import com.liferay.oauth2.provider.rest.internal.endpoint.constants.OAuth2ProviderRESTEndpointConstants;
 import com.liferay.oauth2.provider.rest.internal.endpoint.liferay.LiferayOAuthDataProvider;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -24,28 +25,42 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.util.GetterUtil;
-import org.apache.cxf.rs.security.jose.jwk.JsonWebKey;
-import org.apache.cxf.rs.security.jose.jwk.JsonWebKeys;
-import org.apache.cxf.rs.security.jose.jwk.JwkUtils;
-import org.apache.cxf.rs.security.jose.jwk.PublicKeyUse;
-import org.apache.cxf.rs.security.jose.jws.JwsSignatureVerifier;
-import org.apache.cxf.rs.security.jose.jws.JwsUtils;
-import org.apache.cxf.rs.security.oauth2.common.Client;
-import org.apache.cxf.rs.security.oauth2.grants.jwt.Constants;
-import org.apache.cxf.rs.security.oauth2.grants.jwt.JwtBearerGrantHandler;
-import org.apache.cxf.rs.security.oauth2.provider.AccessTokenGrantHandler;
-import org.osgi.service.cm.ConfigurationException;
-import org.osgi.service.cm.ManagedServiceFactory;
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
-import javax.ws.rs.core.MultivaluedMap;
 import java.util.Collections;
 import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+
+import javax.ws.rs.core.MultivaluedMap;
+
+import org.apache.cxf.jaxrs.utils.JAXRSUtils;
+import org.apache.cxf.message.Message;
+import org.apache.cxf.rs.security.jose.jwk.JsonWebKey;
+import org.apache.cxf.rs.security.jose.jwk.JsonWebKeys;
+import org.apache.cxf.rs.security.jose.jwk.JwkUtils;
+import org.apache.cxf.rs.security.jose.jwk.PublicKeyUse;
+import org.apache.cxf.rs.security.jose.jws.JwsHeaders;
+import org.apache.cxf.rs.security.jose.jws.JwsJwtCompactConsumer;
+import org.apache.cxf.rs.security.jose.jws.JwsSignatureVerifier;
+import org.apache.cxf.rs.security.jose.jws.JwsUtils;
+import org.apache.cxf.rs.security.jose.jwt.JwtClaims;
+import org.apache.cxf.rs.security.jose.jwt.JwtToken;
+import org.apache.cxf.rs.security.oauth2.common.Client;
+import org.apache.cxf.rs.security.oauth2.common.ServerAccessToken;
+import org.apache.cxf.rs.security.oauth2.common.UserSubject;
+import org.apache.cxf.rs.security.oauth2.grants.jwt.Constants;
+import org.apache.cxf.rs.security.oauth2.grants.jwt.JwtBearerGrantHandler;
+import org.apache.cxf.rs.security.oauth2.provider.AccessTokenGrantHandler;
+import org.apache.cxf.rs.security.oauth2.provider.OAuthServiceException;
+import org.apache.cxf.rs.security.oauth2.utils.OAuthConstants;
+import org.apache.cxf.rs.security.oauth2.utils.OAuthUtils;
+
+import org.osgi.service.cm.ConfigurationException;
+import org.osgi.service.cm.ManagedServiceFactory;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Arthur Chan
@@ -114,7 +129,7 @@ public class LiferayJWTBearerGrantHandler
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		_jwtBearerGrantHandler = new JwtBearerGrantHandler();
+		_jwtBearerGrantHandler = new CustomJWTBearerGrantHandler();
 
 		_jwtBearerGrantHandler.setDataProvider(_liferayOAuthDataProvider);
 
@@ -291,7 +306,7 @@ public class LiferayJWTBearerGrantHandler
 	private final Map<Long, Map<String, Map<String, JwsSignatureVerifier>>>
 		_jwsSignatureVerifiers = Collections.synchronizedMap(
 			new LinkedHashMap<>());
-	private JwtBearerGrantHandler _jwtBearerGrantHandler;
+	private CustomJWTBearerGrantHandler _jwtBearerGrantHandler;
 
 	@Reference
 	private LiferayOAuthDataProvider _liferayOAuthDataProvider;
@@ -299,5 +314,125 @@ public class LiferayJWTBearerGrantHandler
 	private OAuth2ProviderConfiguration _oAuth2ProviderConfiguration;
 	private final Map<Long, Map<String, String>> _userAuthTypes =
 		Collections.synchronizedMap(new LinkedHashMap<>());
+
+	private class CustomJWTBearerGrantHandler extends JwtBearerGrantHandler {
+
+		@Override
+		public ServerAccessToken createAccessToken(
+				Client client, MultivaluedMap<String, String> params)
+			throws OAuthServiceException {
+
+			String assertion = params.getFirst(
+				Constants.CLIENT_GRANT_ASSERTION_PARAM);
+
+			Map<String, String> clientProperties = client.getProperties();
+
+			long companyId = GetterUtil.getLong(
+				clientProperties.get(
+					OAuth2ProviderRESTEndpointConstants.
+						PROPERTY_KEY_COMPANY_ID));
+
+			try {
+				JwsJwtCompactConsumer jwsReader = getJwsReader(assertion);
+
+				JwtToken jwtToken = jwsReader.getJwtToken();
+
+				JwsHeaders jwsHeaders = jwtToken.getJwsHeaders();
+
+				JwtClaims jwtClaims = jwtToken.getClaims();
+
+				setJwsSignatureVerifier(companyId, jwsHeaders, jwtClaims);
+
+				validateSignature(
+					new JwsHeaders(jwsHeaders),
+					jwsReader.getUnsignedEncodedSequence(),
+					jwsReader.getDecodedSignature());
+
+				validateClaims(client, jwtClaims);
+
+				return doCreateAccessToken(
+					client,
+					createUserSubject(
+						companyId, jwtClaims.getIssuer(),
+						jwtClaims.getSubject()),
+					Constants.JWT_BEARER_GRANT,
+					OAuthUtils.parseScope(
+						params.getFirst(OAuthConstants.SCOPE)));
+			}
+			catch (Exception exception) {
+				throw new OAuthServiceException(exception);
+			}
+		}
+
+		public UserSubject createUserSubject(
+			long companyId, String issuer, String subject) {
+
+			Map<String, String> userAuthTypes = _userAuthTypes.get(companyId);
+
+			if (userAuthTypes == null) {
+				userAuthTypes = _userAuthTypes.get(CompanyConstants.SYSTEM);
+			}
+
+			String userAuthType = userAuthTypes.get(issuer);
+
+			UserSubject userSubject = new UserSubject(StringPool.BLANK);
+
+			if (userAuthType.equals(CompanyConstants.AUTH_TYPE_ID)) {
+
+				// To be compatible with existing design
+
+				userSubject.setId(subject);
+
+				return userSubject;
+			}
+
+			Map<String, String> properties = userSubject.getProperties();
+
+			properties.put(
+				OAuth2ProviderRESTEndpointConstants.PROPERTY_KEY_COMPANY_ID,
+				String.valueOf(companyId));
+
+			properties.put(userAuthType, subject);
+
+			return userSubject;
+		}
+
+		public void setJwsSignatureVerifier(
+			long companyId, JwsHeaders jwsHeaders, JwtClaims jwtClaims) {
+
+			Map<String, Map<String, JwsSignatureVerifier>>
+				jwsSignatureVerifiers = _jwsSignatureVerifiers.get(companyId);
+
+			if (jwsSignatureVerifiers == null) {
+				jwsSignatureVerifiers = _jwsSignatureVerifiers.get(
+					CompanyConstants.SYSTEM);
+			}
+
+			Map<String, JwsSignatureVerifier> kidsJWSSignatureVerifiers =
+				jwsSignatureVerifiers.get(jwtClaims.getIssuer());
+
+			if ((kidsJWSSignatureVerifiers == null) ||
+				!kidsJWSSignatureVerifiers.containsKey(jwsHeaders.getKeyId())) {
+
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						StringBundler.concat(
+							"No such In assertion configuration for: ",
+							jwtClaims.getIssuer(), " with Key Id ",
+							jwsHeaders.getKeyId()));
+				}
+
+				throw new OAuthServiceException(OAuthConstants.INVALID_GRANT);
+			}
+
+			setJwsVerifier(
+				kidsJWSSignatureVerifiers.get(jwsHeaders.getKeyId()));
+
+			Message message = JAXRSUtils.getCurrentMessage();
+
+			setAudience((String)message.get(Message.REQUEST_URL));
+		}
+
+	}
 
 }

@@ -4589,12 +4589,102 @@ definition {
 	}
 
 	@description = "LPS-135401 - Verify that when adding an entry that was already related to another it will keep related to both entries"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test ChoosingAlreadyRelatedEntryWillKeepOnBothEntries {
+		for (var letter : list "A,B") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object ${letter}",
+				objectName = "CustomObject${letter}",
+				pluralLabelName = "Custom Objects ${letter}");
+		}
 
-		// TODO LPS-141663 ChoosingAlreadyRelatedEntryWillKeepOnBothEntries pending implementation
+		for (var letter : list "A,B") {
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldLabelName = "Custom Field ${letter}",
+				fieldName = "customObjectField${letter}",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject${letter}");
 
+			ObjectAdmin.addObjectLayoutViaAPI(
+				layoutName = "Layout Name",
+				objectName = "CustomObject${letter}");
+		}
+
+		ObjectAdmin.addObjectRelationshipViaAPI(
+			objectName_1 = "CustomObjectA",
+			objectName_2 = "CustomObjectB",
+			relationshipLabel = "Relationship",
+			relationshipName = "relationship",
+			relationshipType = "manyToMany");
+
+		for (var letter : list "A,B") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object ${letter}");
+
+			CreateObject.selectTitleField(fieldLabel = "Custom Field ${letter}");
+
+			CreateObject.saveObject();
+
+			ObjectAdmin.goToLayoutsTab();
+
+			ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
+
+			ObjectAdmin.markLayoutAsDefault();
+
+			ObjectAdmin.goToLayoutTabOnLayouts();
+
+			ObjectAdmin.addTabFieldsOnLayout(
+				blockName = "Block 1",
+				columnsNumber = "1",
+				fieldLabelName = "Custom Field ${letter}",
+				tabName = "Field Tab");
+
+			ObjectAdmin.addTabRelationshipsOnLayout(
+				relationshipsLabelName = "Relationship",
+				tabName = "Relationship Tab");
+
+			Button.clickSave();
+		}
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObjectA");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObjectB");
+
+		for (var nameEntry : list "A,B") {
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customObjectFieldA",
+				objectName = "CustomObjectA",
+				value = "Entry ${nameEntry}");
+		}
+
+		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+			fieldName = "customObjectFieldB",
+			objectName = "CustomObjectB",
+			value = "Entry C");
+
+		for (var nameEntry : list "A,B") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObjectA");
+
+			ObjectPortlet.viewEntryDetails(entry = "Entry ${nameEntry}");
+
+			ObjectAdmin.gotoRelationshipsTab();
+
+			CreateObject.addRelationshipAndSelectEntry(titleFieldName = "Entry C");
+
+			Refresh();
+
+			ObjectPortlet.viewEntry(entry = "Entry C");
+		}
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObjectA");
+
+		ObjectPortlet.viewEntryDetails(entry = "Entry A");
+
+		ObjectAdmin.gotoRelationshipsTab();
+
+		ObjectPortlet.viewEntry(entry = "Entry C");
 	}
 
 	@description = "LPS-135549 - Verify that the columns Name and Type are displayed for the Fields table"

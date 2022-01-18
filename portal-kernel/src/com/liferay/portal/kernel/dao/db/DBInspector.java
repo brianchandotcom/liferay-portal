@@ -298,8 +298,8 @@ public class DBInspector {
 
 		Integer dataTypeSize = _getSQLVarcharSize(columnType);
 
-		if ((dataTypeSize != null) && (dataTypeSize.intValue() != -1)) {
-			return dataTypeSize.intValue();
+		if ((dataTypeSize != null) && (dataTypeSize != -1)) {
+			return dataTypeSize;
 		}
 
 		return -1;

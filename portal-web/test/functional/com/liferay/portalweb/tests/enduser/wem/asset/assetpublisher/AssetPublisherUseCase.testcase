@@ -1427,7 +1427,9 @@ definition {
 				key_assetTitle = "Web Content Title",
 				locator1 = "AP#ASSET_DETAILS_LINK");
 
-			Click(locator1 = "APAsset#ASSET_BACK_TO_ICON");
+			Click(
+				key_text = "angle-left",
+				locator1 = "Icon#ANY");
 		}
 
 		task ("Change the display template of Asset Publisher to Full Content") {

@@ -600,7 +600,8 @@ public class LayoutsTreeDisplayContext {
 				ProductNavigationProductMenuWebKeys.PUBLIC_LAYOUT)) {
 
 			if (!isPrivateLayoutsEnabled()) {
-				return LanguageUtil.get(_themeDisplay.getLocale(), "pages");
+				return LanguageUtil.get(
+					_themeDisplay.getLocale(), "pages-hierarchy");
 			}
 
 			return LanguageUtil.get(

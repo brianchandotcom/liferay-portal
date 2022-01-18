@@ -76,9 +76,9 @@ definition {
 
 		VisualizeObjectDisplayPage.openDisplayPage(displayPageName = "Blank Display Page");
 
-		VisualizeObjectCollectionDisplay.viwEntriesTable(entries = "Test Text 1");
+		VisualizeObjectCollectionDisplay.viewEntriesTable(entries = "Test Text 1");
 
-		VisualizeObjectCollectionDisplay.viwEntriesTable(entries = "Test Text 2");
+		VisualizeObjectCollectionDisplay.viewEntriesTable(entries = "Test Text 2");
 	}
 
 	@description = "LPS-133865 - Verify if the fields from an Object are displayed to be mapped on a fragment"

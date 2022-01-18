@@ -42,20 +42,8 @@ public class DiffVersionsInfo {
 		return _previousVersion;
 	}
 
-	public void setDiffVersions(List<DiffVersion> diffVersions) {
-		_diffVersions = diffVersions;
-	}
-
-	public void setNextVersion(double nextVersion) {
-		_nextVersion = nextVersion;
-	}
-
-	public void setPreviousVersion(double previousVersion) {
-		_previousVersion = previousVersion;
-	}
-
-	private List<DiffVersion> _diffVersions;
-	private double _nextVersion;
-	private double _previousVersion;
+	private final List<DiffVersion> _diffVersions;
+	private final double _nextVersion;
+	private final double _previousVersion;
 
 }

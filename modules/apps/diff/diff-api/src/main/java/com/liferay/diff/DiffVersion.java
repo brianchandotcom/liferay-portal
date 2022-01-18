@@ -22,9 +22,7 @@ import java.util.Date;
 public class DiffVersion {
 
 	public DiffVersion(long userId, double version, Date modifiedDate) {
-		_userId = userId;
-		_version = version;
-		_modifiedDate = modifiedDate;
+		this(userId, version, modifiedDate, null, null);
 	}
 
 	public DiffVersion(
@@ -58,30 +56,10 @@ public class DiffVersion {
 		return _version;
 	}
 
-	public void setExtraInfo(String extraInfo) {
-		_extraInfo = extraInfo;
-	}
-
-	public void setModifiedDate(Date modifiedDate) {
-		_modifiedDate = modifiedDate;
-	}
-
-	public void setSummary(String summary) {
-		_summary = summary;
-	}
-
-	public void setUserId(long userId) {
-		_userId = userId;
-	}
-
-	public void setVersion(double version) {
-		_version = version;
-	}
-
-	private String _extraInfo;
-	private Date _modifiedDate;
-	private String _summary;
-	private long _userId;
-	private double _version;
+	private final String _extraInfo;
+	private final Date _modifiedDate;
+	private final String _summary;
+	private final long _userId;
+	private final double _version;
 
 }

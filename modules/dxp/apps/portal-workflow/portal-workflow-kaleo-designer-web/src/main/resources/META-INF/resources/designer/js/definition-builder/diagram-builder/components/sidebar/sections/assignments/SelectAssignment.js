@@ -13,8 +13,8 @@ import ClayForm, {ClaySelect} from '@clayui/form';
 import React, {useState} from 'react';
 
 import SidebarPanel from '../../SidebarPanel';
-import AssetCreator from '../assignments/select-assignment/AssetCreator';
-import ResourceActions from '../assignments/select-assignment/ResourceActions';
+import AssetCreator from './select-assignment/AssetCreator';
+import ResourceActions from './select-assignment/ResourceActions';
 
 const options = [
 	{

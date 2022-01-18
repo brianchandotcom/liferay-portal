@@ -10,22 +10,49 @@
  */
 
 import ClayForm, {ClayInput} from '@clayui/form';
-import React from 'react';
+import React, {useContext, useState} from 'react';
 
+import {DiagramBuilderContext} from '../../../../../DiagramBuilderContext';
 import SidebarPanel from '../../../SidebarPanel';
 
-const ResourceActions = () => (
-	<SidebarPanel panelTitle={Liferay.Language.get('resource-actions')}>
-		<ClayForm.Group>
-			<label htmlFor="resource-actions">
-				{Liferay.Language.get('resource-actions')}
+const ResourceActions = () => {
+	const {setSelectedItem} = useContext(DiagramBuilderContext);
+	const [resourceActions, setResourceActions] = useState('');
 
-				<span className="ml-1 mr-1 text-warning">*</span>
-			</label>
+	const onChange = ({target: {value}}) => {
+		setSelectedItem((previousValue) => ({
+			...previousValue,
+			data: {
+				...previousValue.data,
+				assignments: {
+					assignmentType: ['resourceActions'],
+					resourceAction: value,
+				},
+			},
+		}));
 
-			<ClayInput component="textarea" id="resource-actions" type="text" />
-		</ClayForm.Group>
-	</SidebarPanel>
-);
+		setResourceActions(value);
+	};
+
+	return (
+		<SidebarPanel panelTitle={Liferay.Language.get('resource-actions')}>
+			<ClayForm.Group>
+				<label htmlFor="resource-actions">
+					{Liferay.Language.get('resource-actions')}
+
+					<span className="ml-1 mr-1 text-warning">*</span>
+				</label>
+
+				<ClayInput
+					component="textarea"
+					id="resource-actions"
+					onChange={onChange}
+					type="text"
+					value={resourceActions}
+				/>
+			</ClayForm.Group>
+		</SidebarPanel>
+	);
+};
 
 export default ResourceActions;

@@ -40,7 +40,7 @@ const SubscriptionsFilterByStatus = ({selectedStatus, setSelectedStatus}) => {
 	};
 
 	return (
-		<div className="d-flex ml-3">
+		<div className="d-flex mr-5 mt-4">
 			<h6 className="mr-2 my-auto">Status:</h6>
 
 			<DropDown

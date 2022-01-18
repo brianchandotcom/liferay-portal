@@ -116,15 +116,18 @@ const Overview = ({project, subscriptionGroups}) => {
 		<div className="d-flex flex-column">
 			<h3>Subscriptions</h3>
 
-			<SubscriptionsNavbar
-				setSelectedSubscriptionGroup={setSelectedSubscriptionGroup}
-				subscriptionGroups={subscriptionGroups}
-			/>
+			<div className={subscriptionGroups.length <= 5 ? "align-items-center d-flex justify-content-between" : "align-items-center d-flex justify-content-evenly"}>
+				<SubscriptionsNavbar
+					selectedSubscriptionGroup={selectedSubscriptionGroup}
+					setSelectedSubscriptionGroup={setSelectedSubscriptionGroup}
+					subscriptionGroups={subscriptionGroups}
+				/>
 
-			<SubscriptionsFilterByStatus
-				selectedStatus={selectedStatus}
-				setSelectedStatus={setSelectedStatus}
-			/>
+				<SubscriptionsFilterByStatus
+					selectedStatus={selectedStatus}
+					setSelectedStatus={setSelectedStatus}
+				/>
+			</div>
 
 			<div className="d-flex flex-wrap mt-4">
 				{accountSubscriptions.length ? (

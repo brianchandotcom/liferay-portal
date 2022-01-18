@@ -28,7 +28,9 @@ const ProjectCard = ({code, isSmall, onClick, region, sla, status, title}) => {
 
 		return 'Starts on ';
 	};
-
+	// eslint-disable-next-line no-console
+	console.log(status);
+	
 	return (
 		<ClayCard
 			className={classNames('m-0', {

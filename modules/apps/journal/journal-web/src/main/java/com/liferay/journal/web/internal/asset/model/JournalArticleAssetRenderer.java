@@ -207,41 +207,10 @@ public class JournalArticleAssetRenderer
 	public String getSummary(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		Locale locale = getLocale(portletRequest);
-
-		String summary = _article.getDescription(locale);
+		String summary = _article.getDescription(getLocale(portletRequest));
 
 		if (Validator.isNotNull(summary)) {
 			return HtmlUtil.render(HtmlUtil.stripHtml(summary));
-		}
-
-		try {
-			PortletRequestModel portletRequestModel = null;
-			ThemeDisplay themeDisplay = null;
-
-			if ((portletRequest != null) && (portletResponse != null)) {
-				portletRequestModel = new PortletRequestModel(
-					portletRequest, portletResponse);
-				themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-			}
-
-			String ddmTemplateKey = ParamUtil.getString(
-				portletRequest, "ddmTemplateKey");
-
-			JournalArticleDisplay articleDisplay =
-				JournalArticleLocalServiceUtil.getArticleDisplay(
-					_article, ddmTemplateKey, null,
-					LanguageUtil.getLanguageId(locale), 1, portletRequestModel,
-					themeDisplay);
-
-			summary = HtmlUtil.render(
-				HtmlUtil.stripHtml(articleDisplay.getContent()));
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
-			}
 		}
 
 		return summary;

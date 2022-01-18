@@ -26,8 +26,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
-import java.util.List;
-
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -79,20 +77,14 @@ public class FragmentCollectionResourcesDisplayContext {
 		searchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(_renderResponse));
 
-		int fileEntriesCount =
-			PortletFileRepositoryUtil.getPortletFileEntriesCount(
-				_themeDisplay.getScopeGroupId(), _getFolderId());
-
-		searchContainer.setTotal(fileEntriesCount);
-
-		List<FileEntry> fileEntries =
-			PortletFileRepositoryUtil.getPortletFileEntries(
+		searchContainer.setResultsAndTotal(
+			() -> PortletFileRepositoryUtil.getPortletFileEntries(
 				_themeDisplay.getScopeGroupId(), _getFolderId(),
 				WorkflowConstants.STATUS_ANY, searchContainer.getStart(),
 				searchContainer.getEnd(),
-				searchContainer.getOrderByComparator());
-
-		searchContainer.setResults(fileEntries);
+				searchContainer.getOrderByComparator()),
+			PortletFileRepositoryUtil.getPortletFileEntriesCount(
+				_themeDisplay.getScopeGroupId(), _getFolderId()));
 
 		_searchContainer = searchContainer;
 

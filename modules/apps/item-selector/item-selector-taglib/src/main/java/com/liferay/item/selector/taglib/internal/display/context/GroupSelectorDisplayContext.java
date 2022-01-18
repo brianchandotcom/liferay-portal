@@ -99,17 +99,12 @@ public class GroupSelectorDisplayContext {
 			_liferayPortletRequest, _getIteratorURL());
 
 		searchContainer.setEmptyResultsMessage(_getEmptyResultsMessage());
-
-		List<Group> groups = (List<Group>)_liferayPortletRequest.getAttribute(
-			"liferay-item-selector:group-selector:groups");
-
-		searchContainer.setResults(groups);
-
-		int groupsCount = GetterUtil.getInteger(
-			_liferayPortletRequest.getAttribute(
-				"liferay-item-selector:group-selector:groupsCount"));
-
-		searchContainer.setTotal(groupsCount);
+		searchContainer.setResultsAndTotal(
+			() -> (List<Group>)_liferayPortletRequest.getAttribute(
+				"liferay-item-selector:group-selector:groups"),
+			GetterUtil.getInteger(
+				_liferayPortletRequest.getAttribute(
+					"liferay-item-selector:group-selector:groupsCount")));
 
 		return searchContainer;
 	}

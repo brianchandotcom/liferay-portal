@@ -169,9 +169,8 @@ public class GroupFragmentEntryLinkDisplayContext {
 
 		Collections.sort(groups, groupsSearchContainer.getOrderByComparator());
 
-		groupsSearchContainer.setResults(groups);
-
-		groupsSearchContainer.setTotal(groupFragmentEntryUsages.size());
+		groupsSearchContainer.setResultsAndTotal(
+			() -> groups, groupFragmentEntryUsages.size());
 
 		_searchContainer = groupsSearchContainer;
 

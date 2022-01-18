@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PortalInstances;
 
-import java.util.List;
 import java.util.Objects;
 
 import javax.portlet.PortletURL;
@@ -87,9 +86,6 @@ public class SelectFragmentCollectionDisplayContext {
 			_getFragmentCollectionOrderByComparator());
 		fragmentCollectionsSearchContainer.setOrderByType(_getOrderByType());
 
-		List<FragmentCollection> fragmentCollections = null;
-		int fragmentCollectionsCount = 0;
-
 		boolean includeSystem = false;
 
 		Group scopeGroup = themeDisplay.getScopeGroup();
@@ -101,37 +97,35 @@ public class SelectFragmentCollectionDisplayContext {
 			includeSystem = true;
 		}
 
+		boolean includeSystemFragmentCollections = includeSystem;
+
 		if (_isSearch()) {
-			fragmentCollections =
-				FragmentCollectionServiceUtil.getFragmentCollections(
+			fragmentCollectionsSearchContainer.setResultsAndTotal(
+				() -> FragmentCollectionServiceUtil.getFragmentCollections(
 					themeDisplay.getScopeGroupId(), _getKeywords(),
-					includeSystem,
+					includeSystemFragmentCollections,
 					fragmentCollectionsSearchContainer.getStart(),
 					fragmentCollectionsSearchContainer.getEnd(),
-					fragmentCollectionsSearchContainer.getOrderByComparator());
-
-			fragmentCollectionsCount =
+					fragmentCollectionsSearchContainer.getOrderByComparator()),
 				FragmentCollectionServiceUtil.getFragmentCollectionsCount(
 					themeDisplay.getScopeGroupId(), _getKeywords(),
-					includeSystem);
+					includeSystemFragmentCollections));
 		}
 		else {
-			fragmentCollections =
-				FragmentCollectionServiceUtil.getFragmentCollections(
-					themeDisplay.getScopeGroupId(), includeSystem,
+			fragmentCollectionsSearchContainer.setResultsAndTotal(
+				() -> FragmentCollectionServiceUtil.getFragmentCollections(
+					themeDisplay.getScopeGroupId(),
+					includeSystemFragmentCollections,
 					fragmentCollectionsSearchContainer.getStart(),
 					fragmentCollectionsSearchContainer.getEnd(),
-					fragmentCollectionsSearchContainer.getOrderByComparator());
-
-			fragmentCollectionsCount =
+					fragmentCollectionsSearchContainer.getOrderByComparator()),
 				FragmentCollectionServiceUtil.getFragmentCollectionsCount(
-					themeDisplay.getScopeGroupId(), includeSystem);
+					themeDisplay.getScopeGroupId(),
+					includeSystemFragmentCollections));
 		}
 
-		fragmentCollectionsSearchContainer.setResults(fragmentCollections);
 		fragmentCollectionsSearchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(_renderResponse));
-		fragmentCollectionsSearchContainer.setTotal(fragmentCollectionsCount);
 
 		_fragmentCollectionsSearchContainer =
 			fragmentCollectionsSearchContainer;

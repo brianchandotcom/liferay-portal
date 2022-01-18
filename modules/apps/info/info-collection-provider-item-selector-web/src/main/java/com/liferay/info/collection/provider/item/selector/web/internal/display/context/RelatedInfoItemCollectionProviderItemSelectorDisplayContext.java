@@ -193,11 +193,15 @@ public class RelatedInfoItemCollectionProviderItemSelectorDisplayContext {
 				});
 		}
 
-		searchContainer.setResults(
-			ListUtil.subList(
-				relatedInfoItemCollectionProviders, searchContainer.getStart(),
-				searchContainer.getEnd()));
-		searchContainer.setTotal(relatedInfoItemCollectionProviders.size());
+		List<RelatedInfoItemCollectionProvider<?, ?>>
+			filteredRelatedInfoItemCollectionProviders =
+				relatedInfoItemCollectionProviders;
+
+		searchContainer.setResultsAndTotal(
+			() -> ListUtil.subList(
+				filteredRelatedInfoItemCollectionProviders,
+				searchContainer.getStart(), searchContainer.getEnd()),
+			filteredRelatedInfoItemCollectionProviders.size());
 
 		return searchContainer;
 	}

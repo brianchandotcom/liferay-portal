@@ -381,8 +381,25 @@ public class DDMFormAdminFieldSetDisplayContext
 
 		fieldSetSearch.setRowChecker(new FieldSetRowChecker(renderResponse));
 
-		_setFieldSetsSearchResults(fieldSetSearch);
-		_setFieldSetsSearchTotal(fieldSetSearch);
+		FieldSetSearchTerms fieldSetSearchTerms =
+			(FieldSetSearchTerms)fieldSetSearch.getSearchTerms();
+
+		DDMStructureService ddmStructureService = getStructureService();
+
+		fieldSetSearch.setResultsAndTotal(
+			() -> ddmStructureService.search(
+				getCompanyId(), new long[] {getScopeGroupId()},
+				PortalUtil.getClassNameId(DDMFormInstance.class),
+				fieldSetSearchTerms.getKeywords(),
+				DDMStructureConstants.TYPE_FRAGMENT,
+				WorkflowConstants.STATUS_ANY, fieldSetSearch.getStart(),
+				fieldSetSearch.getEnd(), fieldSetSearch.getOrderByComparator()),
+			ddmStructureService.searchCount(
+				getCompanyId(), new long[] {getScopeGroupId()},
+				PortalUtil.getClassNameId(DDMFormInstance.class),
+				fieldSetSearchTerms.getKeywords(),
+				DDMStructureConstants.TYPE_FRAGMENT,
+				WorkflowConstants.STATUS_ANY));
 
 		return fieldSetSearch;
 	}
@@ -449,38 +466,6 @@ public class DDMFormAdminFieldSetDisplayContext
 		}
 
 		return orderByComparator;
-	}
-
-	private void _setFieldSetsSearchResults(FieldSetSearch fieldSetSearch) {
-		FieldSetSearchTerms fieldSetSearchTerms =
-			(FieldSetSearchTerms)fieldSetSearch.getSearchTerms();
-
-		DDMStructureService ddmStructureService = getStructureService();
-
-		List<DDMStructure> results = ddmStructureService.search(
-			getCompanyId(), new long[] {getScopeGroupId()},
-			PortalUtil.getClassNameId(DDMFormInstance.class),
-			fieldSetSearchTerms.getKeywords(),
-			DDMStructureConstants.TYPE_FRAGMENT, WorkflowConstants.STATUS_ANY,
-			fieldSetSearch.getStart(), fieldSetSearch.getEnd(),
-			fieldSetSearch.getOrderByComparator());
-
-		fieldSetSearch.setResults(results);
-	}
-
-	private void _setFieldSetsSearchTotal(FieldSetSearch fieldSetSearch) {
-		FieldSetSearchTerms fieldSetSearchTerms =
-			(FieldSetSearchTerms)fieldSetSearch.getSearchTerms();
-
-		DDMStructureService ddmStructureService = getStructureService();
-
-		int total = ddmStructureService.searchCount(
-			getCompanyId(), new long[] {getScopeGroupId()},
-			PortalUtil.getClassNameId(DDMFormInstance.class),
-			fieldSetSearchTerms.getKeywords(),
-			DDMStructureConstants.TYPE_FRAGMENT, WorkflowConstants.STATUS_ANY);
-
-		fieldSetSearch.setTotal(total);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

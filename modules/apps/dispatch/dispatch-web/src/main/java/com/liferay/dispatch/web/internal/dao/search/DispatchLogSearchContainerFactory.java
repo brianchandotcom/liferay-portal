@@ -62,19 +62,17 @@ public class DispatchLogSearchContainerFactory {
 		long dispatchTriggerId = ParamUtil.getLong(
 			liferayPortletRequest, "dispatchTriggerId");
 
-		dispatchLogSearchContainer.setResults(
-			DispatchLogServiceUtil.getDispatchLogs(
+		dispatchLogSearchContainer.setResultsAndTotal(
+			() -> DispatchLogServiceUtil.getDispatchLogs(
 				dispatchTriggerId, dispatchLogSearchContainer.getStart(),
 				dispatchLogSearchContainer.getEnd(),
 				_getOrderByComparator(
 					dispatchLogSearchContainer.getOrderByCol(),
-					_isAscending(
-						dispatchLogSearchContainer.getOrderByType()))));
+					_isAscending(dispatchLogSearchContainer.getOrderByType()))),
+			DispatchLogServiceUtil.getDispatchLogsCount(dispatchTriggerId));
 
 		dispatchLogSearchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(liferayPortletResponse));
-		dispatchLogSearchContainer.setTotal(
-			DispatchLogServiceUtil.getDispatchLogsCount(dispatchTriggerId));
 
 		return dispatchLogSearchContainer;
 	}

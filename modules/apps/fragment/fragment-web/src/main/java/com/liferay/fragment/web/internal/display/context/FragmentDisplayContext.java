@@ -213,15 +213,15 @@ public class FragmentDisplayContext {
 		contributedEntries.sort(
 			new FragmentCompositionFragmentEntryNameComparator(true));
 
-		contributedEntriesSearchContainer.setResults(
-			ListUtil.subList(
+		contributedEntriesSearchContainer.setResultsAndTotal(
+			() -> ListUtil.subList(
 				contributedEntries,
 				contributedEntriesSearchContainer.getStart(),
-				contributedEntriesSearchContainer.getEnd()));
+				contributedEntriesSearchContainer.getEnd()),
+			contributedEntries.size());
 
 		contributedEntriesSearchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(_renderResponse));
-		contributedEntriesSearchContainer.setTotal(contributedEntries.size());
 
 		_contributedEntriesSearchContainer = contributedEntriesSearchContainer;
 
@@ -398,9 +398,6 @@ public class FragmentDisplayContext {
 				_getOrderByCol(), getOrderByType()));
 		fragmentEntriesSearchContainer.setOrderByType(getOrderByType());
 
-		List<Object> fragmentCompositionsAndEntries = null;
-		int fragmentCompositionsAndEntriesCount = 0;
-
 		FragmentCollection fragmentCollection = getFragmentCollection();
 
 		int status = WorkflowConstants.STATUS_ANY;
@@ -411,47 +408,47 @@ public class FragmentDisplayContext {
 			status = WorkflowConstants.STATUS_APPROVED;
 		}
 
-		if (isSearch()) {
-			fragmentCompositionsAndEntries =
-				FragmentEntryServiceUtil.
-					getFragmentCompositionsAndFragmentEntries(
-						fragmentCollection.getGroupId(),
-						fragmentCollection.getFragmentCollectionId(),
-						_getKeywords(), status,
-						fragmentEntriesSearchContainer.getStart(),
-						fragmentEntriesSearchContainer.getEnd(),
-						fragmentEntriesSearchContainer.getOrderByComparator());
+		int fragmentEntryStatus = status;
 
-			fragmentCompositionsAndEntriesCount =
+		if (isSearch()) {
+			fragmentEntriesSearchContainer.setResultsAndTotal(
+				() ->
+					FragmentEntryServiceUtil.
+						getFragmentCompositionsAndFragmentEntries(
+							fragmentCollection.getGroupId(),
+							fragmentCollection.getFragmentCollectionId(),
+							_getKeywords(), fragmentEntryStatus,
+							fragmentEntriesSearchContainer.getStart(),
+							fragmentEntriesSearchContainer.getEnd(),
+							fragmentEntriesSearchContainer.
+								getOrderByComparator()),
 				FragmentEntryServiceUtil.
 					getFragmentCompositionsAndFragmentEntriesCount(
 						fragmentCollection.getGroupId(),
 						fragmentCollection.getFragmentCollectionId(),
-						_getKeywords(), status);
+						_getKeywords(), fragmentEntryStatus));
 		}
 		else {
-			fragmentCompositionsAndEntries =
-				FragmentEntryServiceUtil.
-					getFragmentCompositionsAndFragmentEntries(
-						fragmentCollection.getGroupId(),
-						fragmentCollection.getFragmentCollectionId(), status,
-						fragmentEntriesSearchContainer.getStart(),
-						fragmentEntriesSearchContainer.getEnd(),
-						fragmentEntriesSearchContainer.getOrderByComparator());
-
-			fragmentCompositionsAndEntriesCount =
+			fragmentEntriesSearchContainer.setResultsAndTotal(
+				() ->
+					FragmentEntryServiceUtil.
+						getFragmentCompositionsAndFragmentEntries(
+							fragmentCollection.getGroupId(),
+							fragmentCollection.getFragmentCollectionId(),
+							fragmentEntryStatus,
+							fragmentEntriesSearchContainer.getStart(),
+							fragmentEntriesSearchContainer.getEnd(),
+							fragmentEntriesSearchContainer.
+								getOrderByComparator()),
 				FragmentEntryServiceUtil.
 					getFragmentCompositionsAndFragmentEntriesCount(
 						fragmentCollection.getGroupId(),
-						fragmentCollection.getFragmentCollectionId(), status);
+						fragmentCollection.getFragmentCollectionId(),
+						fragmentEntryStatus));
 		}
 
-		fragmentEntriesSearchContainer.setResults(
-			fragmentCompositionsAndEntries);
 		fragmentEntriesSearchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(_renderResponse));
-		fragmentEntriesSearchContainer.setTotal(
-			fragmentCompositionsAndEntriesCount);
 
 		_fragmentEntriesSearchContainer = fragmentEntriesSearchContainer;
 

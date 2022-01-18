@@ -186,11 +186,14 @@ public class InfoCollectionProviderItemSelectorDisplayContext {
 				});
 		}
 
-		searchContainer.setResults(
-			ListUtil.subList(
-				infoCollectionProviders, searchContainer.getStart(),
-				searchContainer.getEnd()));
-		searchContainer.setTotal(infoCollectionProviders.size());
+		List<InfoCollectionProvider<?>> filteredInfoCollectionProviders =
+			infoCollectionProviders;
+
+		searchContainer.setResultsAndTotal(
+			() -> ListUtil.subList(
+				filteredInfoCollectionProviders, searchContainer.getStart(),
+				searchContainer.getEnd()),
+			filteredInfoCollectionProviders.size());
 
 		return searchContainer;
 	}

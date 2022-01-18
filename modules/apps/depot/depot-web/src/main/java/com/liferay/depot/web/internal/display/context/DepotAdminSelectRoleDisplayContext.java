@@ -186,11 +186,10 @@ public class DepotAdminSelectRoleDisplayContext {
 
 			List<Group> groups = _getDepotGroups(groupSearchTerms);
 
-			groupSearch.setTotal(groups.size());
-
-			groupSearch.setResults(
-				ListUtil.subList(
-					groups, groupSearch.getStart(), groupSearch.getEnd()));
+			groupSearch.setResultsAndTotal(
+				() -> ListUtil.subList(
+					groups, groupSearch.getStart(), groupSearch.getEnd()),
+				groups.size());
 
 			_groupSearch = groupSearch;
 
@@ -340,13 +339,12 @@ public class DepotAdminSelectRoleDisplayContext {
 				roles = _filterGroupRoles(roles);
 			}
 
-			int rolesCount = roles.size();
+			List<Role> filteredRoles = roles;
 
-			roleSearch.setTotal(rolesCount);
-
-			roleSearch.setResults(
-				ListUtil.subList(
-					roles, roleSearch.getStart(), roleSearch.getEnd()));
+			roleSearch.setResultsAndTotal(
+				() -> ListUtil.subList(
+					filteredRoles, roleSearch.getStart(), roleSearch.getEnd()),
+				filteredRoles.size());
 
 			_roleSearch = roleSearch;
 

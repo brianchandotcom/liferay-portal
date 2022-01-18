@@ -150,17 +150,15 @@ public class DLViewMoreMenuItemsDisplayContext {
 		boolean includeBasicFileEntryType = ParamUtil.getBoolean(
 			_renderRequest, "includeBasicFileEntryType");
 
-		searchContainer.setResults(
-			DLFileEntryTypeServiceUtil.search(
+		searchContainer.setResultsAndTotal(
+			() -> DLFileEntryTypeServiceUtil.search(
 				themeDisplay.getCompanyId(), folderId,
 				SiteConnectedGroupGroupProviderUtil.
 					getCurrentAndAncestorSiteAndDepotGroupIds(
 						themeDisplay.getScopeGroupId(), true),
 				displayTerms.getKeywords(), includeBasicFileEntryType,
 				_inherited, searchContainer.getStart(),
-				searchContainer.getEnd()));
-
-		searchContainer.setTotal(
+				searchContainer.getEnd()),
 			DLFileEntryTypeServiceUtil.searchCount(
 				themeDisplay.getCompanyId(), folderId,
 				SiteConnectedGroupGroupProviderUtil.

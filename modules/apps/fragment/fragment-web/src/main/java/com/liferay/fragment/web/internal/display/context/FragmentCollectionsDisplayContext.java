@@ -31,8 +31,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PortalInstances;
 
-import java.util.List;
-
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -97,9 +95,6 @@ public class FragmentCollectionsDisplayContext {
 				_getOrderByCol(), getOrderByType()));
 		searchContainer.setOrderByType(getOrderByType());
 
-		List<FragmentCollection> fragmentCollections = null;
-		int fragmentCollectionsCount = 0;
-
 		long[] groupIds = {themeDisplay.getScopeGroupId()};
 
 		if (_isIncludeGlobalFragmentCollections()) {
@@ -117,33 +112,29 @@ public class FragmentCollectionsDisplayContext {
 			groupIds = ArrayUtil.append(groupIds, CompanyConstants.SYSTEM);
 		}
 
-		if (_isSearch()) {
-			fragmentCollections =
-				FragmentCollectionServiceUtil.getFragmentCollections(
-					groupIds, _getKeywords(), searchContainer.getStart(),
-					searchContainer.getEnd(),
-					searchContainer.getOrderByComparator());
+		long[] allGroupIds = groupIds;
 
-			fragmentCollectionsCount =
+		if (_isSearch()) {
+			searchContainer.setResultsAndTotal(
+				() -> FragmentCollectionServiceUtil.getFragmentCollections(
+					allGroupIds, _getKeywords(), searchContainer.getStart(),
+					searchContainer.getEnd(),
+					searchContainer.getOrderByComparator()),
 				FragmentCollectionServiceUtil.getFragmentCollectionsCount(
-					groupIds, _getKeywords());
+					allGroupIds, _getKeywords()));
 		}
 		else {
-			fragmentCollections =
-				FragmentCollectionServiceUtil.getFragmentCollections(
-					groupIds, searchContainer.getStart(),
+			searchContainer.setResultsAndTotal(
+				() -> FragmentCollectionServiceUtil.getFragmentCollections(
+					allGroupIds, searchContainer.getStart(),
 					searchContainer.getEnd(),
-					searchContainer.getOrderByComparator());
-
-			fragmentCollectionsCount =
+					searchContainer.getOrderByComparator()),
 				FragmentCollectionServiceUtil.getFragmentCollectionsCount(
-					groupIds);
+					allGroupIds));
 		}
 
-		searchContainer.setResults(fragmentCollections);
 		searchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(_renderResponse));
-		searchContainer.setTotal(fragmentCollectionsCount);
 
 		_searchContainer = searchContainer;
 

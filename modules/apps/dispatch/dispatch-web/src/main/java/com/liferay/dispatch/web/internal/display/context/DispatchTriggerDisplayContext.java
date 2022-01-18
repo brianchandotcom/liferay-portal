@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
@@ -141,17 +140,12 @@ public class DispatchTriggerDisplayContext extends BaseDisplayContext {
 		_searchContainer.setOrderByType(getOrderByType());
 		_searchContainer.setRowChecker(getRowChecker());
 
-		int total = _dispatchTriggerLocalService.getDispatchTriggersCount(
-			dispatchRequestHelper.getCompanyId());
-
-		_searchContainer.setTotal(total);
-
-		List<DispatchTrigger> results =
-			_dispatchTriggerLocalService.getDispatchTriggers(
+		_searchContainer.setResultsAndTotal(
+			() -> _dispatchTriggerLocalService.getDispatchTriggers(
 				dispatchRequestHelper.getCompanyId(),
-				_searchContainer.getStart(), _searchContainer.getEnd());
-
-		_searchContainer.setResults(results);
+				_searchContainer.getStart(), _searchContainer.getEnd()),
+			_dispatchTriggerLocalService.getDispatchTriggersCount(
+				dispatchRequestHelper.getCompanyId()));
 
 		return _searchContainer;
 	}

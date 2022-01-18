@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portlet.layoutsadmin.display.context.GroupDisplayContextHelper;
 
-import java.util.List;
 import java.util.Objects;
 
 import javax.portlet.PortletURL;
@@ -139,23 +138,20 @@ public class ExportTemplatesToolbarDisplayContext
 		int exportImportConfigurationType =
 			ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT;
 
-		List<ExportImportConfiguration> results =
-			ExportImportConfigurationLocalServiceUtil.
-				getExportImportConfigurations(
-					company.getCompanyId(), liveGroupId,
-					exportImportConfigurationSearchTerms.getKeywords(),
-					exportImportConfigurationType, searchContainer.getStart(),
-					searchContainer.getEnd(),
-					searchContainer.getOrderByComparator());
-		int total =
+		searchContainer.setResultsAndTotal(
+			() ->
+				ExportImportConfigurationLocalServiceUtil.
+					getExportImportConfigurations(
+						company.getCompanyId(), liveGroupId,
+						exportImportConfigurationSearchTerms.getKeywords(),
+						exportImportConfigurationType,
+						searchContainer.getStart(), searchContainer.getEnd(),
+						searchContainer.getOrderByComparator()),
 			ExportImportConfigurationLocalServiceUtil.
 				getExportImportConfigurationsCount(
 					company.getCompanyId(), liveGroupId,
 					exportImportConfigurationSearchTerms.getKeywords(),
-					exportImportConfigurationType);
-
-		searchContainer.setResults(results);
-		searchContainer.setTotal(total);
+					exportImportConfigurationType));
 
 		return searchContainer;
 	}

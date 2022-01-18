@@ -100,14 +100,14 @@ public class DDMFormBrowserDisplayContext {
 		ddmFormInstanceSearch.setOrderByComparator(
 			_getDDMFormInstanceOrderByComparator(getOrderByType()));
 		ddmFormInstanceSearch.setOrderByType(getOrderByType());
-		ddmFormInstanceSearch.setResults(
-			_ddmFormInstanceService.search(
+		ddmFormInstanceSearch.setResultsAndTotal(
+			() -> _ddmFormInstanceService.search(
 				_formWebRequestHelper.getCompanyId(),
 				_formWebRequestHelper.getScopeGroupId(), getKeywords(),
 				ddmFormInstanceSearch.getStart(),
 				ddmFormInstanceSearch.getEnd(),
-				ddmFormInstanceSearch.getOrderByComparator()));
-		ddmFormInstanceSearch.setTotal(getTotalItems());
+				ddmFormInstanceSearch.getOrderByComparator()),
+			getTotalItems());
 
 		_ddmFormInstanceSearch = ddmFormInstanceSearch;
 

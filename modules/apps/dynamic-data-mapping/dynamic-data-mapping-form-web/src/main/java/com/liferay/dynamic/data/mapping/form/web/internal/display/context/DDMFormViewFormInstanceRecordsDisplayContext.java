@@ -44,7 +44,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
-import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchContextFactory;
@@ -63,6 +62,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -407,8 +407,27 @@ public class DDMFormViewFormInstanceRecordsDisplayContext {
 					getOrderByCol(), getOrderByType()));
 		ddmFormInstanceRecordSearch.setOrderByType(getOrderByType());
 
-		_setDDMFormInstanceRecordSearchResults(ddmFormInstanceRecordSearch);
-		_setDDMFormInstanceRecordSearchTotal(ddmFormInstanceRecordSearch);
+		if (_ddmFormInstance == null) {
+			ddmFormInstanceRecordSearch.setResultsAndTotal(
+				Collections::emptyList, 0);
+		}
+		else if (Validator.isNull(getKeywords())) {
+			ddmFormInstanceRecordSearch.setResultsAndTotal(
+				() -> _ddmFormInstanceRecordLocalService.getFormInstanceRecords(
+					_ddmFormInstance.getFormInstanceId(),
+					WorkflowConstants.STATUS_ANY,
+					ddmFormInstanceRecordSearch.getStart(),
+					ddmFormInstanceRecordSearch.getEnd(),
+					ddmFormInstanceRecordSearch.getOrderByComparator()),
+				_ddmFormInstanceRecordLocalService.getFormInstanceRecordsCount(
+					_ddmFormInstance.getFormInstanceId(),
+					WorkflowConstants.STATUS_ANY));
+		}
+		else {
+			ddmFormInstanceRecordSearch.setResultsAndTotal(
+				_ddmFormInstanceRecordLocalService.searchFormInstanceRecords(
+					_getSearchContext(WorkflowConstants.STATUS_ANY)));
+		}
 
 		return ddmFormInstanceRecordSearch;
 	}
@@ -645,60 +664,6 @@ public class DDMFormViewFormInstanceRecordsDisplayContext {
 		for (DDMFormField ddmFormField : ddmFormFields) {
 			_ddmFormFields.add(ddmFormField);
 		}
-	}
-
-	private void _setDDMFormInstanceRecordSearchResults(
-		DDMFormInstanceRecordSearch ddmFormInstanceRecordSearch) {
-
-		List<DDMFormInstanceRecord> results;
-
-		int status = WorkflowConstants.STATUS_ANY;
-
-		if (_ddmFormInstance == null) {
-			results = new ArrayList<>();
-		}
-		else if (Validator.isNull(getKeywords())) {
-			results = _ddmFormInstanceRecordLocalService.getFormInstanceRecords(
-				_ddmFormInstance.getFormInstanceId(), status,
-				ddmFormInstanceRecordSearch.getStart(),
-				ddmFormInstanceRecordSearch.getEnd(),
-				ddmFormInstanceRecordSearch.getOrderByComparator());
-		}
-		else {
-			BaseModelSearchResult<DDMFormInstanceRecord> baseModelSearchResult =
-				_ddmFormInstanceRecordLocalService.searchFormInstanceRecords(
-					_getSearchContext(status));
-
-			results = baseModelSearchResult.getBaseModels();
-		}
-
-		ddmFormInstanceRecordSearch.setResults(results);
-	}
-
-	private void _setDDMFormInstanceRecordSearchTotal(
-		DDMFormInstanceRecordSearch ddmFormInstanceRecordSearch) {
-
-		int total;
-
-		int status = WorkflowConstants.STATUS_ANY;
-
-		if (_ddmFormInstance == null) {
-			total = 0;
-		}
-		else if (Validator.isNull(getKeywords())) {
-			total =
-				_ddmFormInstanceRecordLocalService.getFormInstanceRecordsCount(
-					_ddmFormInstance.getFormInstanceId(), status);
-		}
-		else {
-			BaseModelSearchResult<DDMFormInstanceRecord> baseModelSearchResult =
-				_ddmFormInstanceRecordLocalService.searchFormInstanceRecords(
-					_getSearchContext(status));
-
-			total = baseModelSearchResult.getLength();
-		}
-
-		ddmFormInstanceRecordSearch.setTotal(total);
 	}
 
 	private static final int _MAX_COLUMNS = 5;

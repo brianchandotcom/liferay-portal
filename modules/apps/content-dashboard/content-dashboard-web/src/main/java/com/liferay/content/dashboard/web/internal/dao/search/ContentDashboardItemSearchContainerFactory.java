@@ -119,9 +119,9 @@ public class ContentDashboardItemSearchContainerFactory {
 
 		SearchResponse searchResponse = _getSearchResponse(end, start);
 
-		searchContainer.setResults(
-			_getContentDashboardItems(searchResponse.getDocuments71()));
-		searchContainer.setTotal(searchResponse.getTotalHits());
+		searchContainer.setResultsAndTotal(
+			() -> _getContentDashboardItems(searchResponse.getDocuments71()),
+			searchResponse.getTotalHits());
 
 		return searchContainer;
 	}

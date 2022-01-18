@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.util.Validator;
 import java.text.Format;
 
 import java.util.Date;
-import java.util.List;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -121,14 +120,11 @@ public class SchedulerResponseDisplayContext extends BaseDisplayContext {
 		_searchContainer.setOrderByCol(getOrderByCol());
 		_searchContainer.setOrderByComparator(null);
 		_searchContainer.setOrderByType(getOrderByType());
-		_searchContainer.setTotal(
+
+		_searchContainer.setResultsAndTotal(
+			() -> _schedulerResponseManager.getSchedulerResponses(
+				_searchContainer.getStart(), _searchContainer.getEnd()),
 			_schedulerResponseManager.getSchedulerResponsesCount());
-
-		List<SchedulerResponse> results =
-			_schedulerResponseManager.getSchedulerResponses(
-				_searchContainer.getStart(), _searchContainer.getEnd());
-
-		_searchContainer.setResults(results);
 
 		return _searchContainer;
 	}

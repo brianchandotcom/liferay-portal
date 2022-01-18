@@ -18,6 +18,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.io.ByteArrayInputStream;
@@ -26,6 +27,7 @@ import java.io.Serializable;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -189,7 +191,7 @@ public class CSVBatchEngineImportTaskItemReaderImplTest
 		try (CSVBatchEngineImportTaskItemReaderImpl
 				csvBatchEngineImportTaskItemReaderImpl =
 					_getCSVBatchEngineImportTaskItemReader(
-						FIELD_NAMES, StringPool.COMMA,
+						FIELD_NAMES, null,
 						new Object[][] {
 							{
 								"", "sample description", 1, "sample name",
@@ -213,7 +215,7 @@ public class CSVBatchEngineImportTaskItemReaderImplTest
 		try (CSVBatchEngineImportTaskItemReaderImpl
 				csvBatchEngineImportTaskItemReaderImpl =
 					_getCSVBatchEngineImportTaskItemReader(
-						FIELD_NAMES, StringPool.COMMA,
+						FIELD_NAMES, null,
 						new Object[][] {
 							{
 								createDateString, "sample description 1", 1,
@@ -271,8 +273,7 @@ public class CSVBatchEngineImportTaskItemReaderImplTest
 		try (CSVBatchEngineImportTaskItemReaderImpl
 				csvBatchEngineImportTaskItemReaderImpl =
 					_getCSVBatchEngineImportTaskItemReader(
-						FIELD_NAMES, StringPool.COMMA,
-						new Object[][] {{"", "", 1}})) {
+						FIELD_NAMES, null, new Object[][] {{"", "", 1}})) {
 
 			validate(
 				null, null, 1L, Collections.emptyMap(),
@@ -285,7 +286,7 @@ public class CSVBatchEngineImportTaskItemReaderImplTest
 		try (CSVBatchEngineImportTaskItemReaderImpl
 				csvBatchEngineImportTaskItemReaderImpl =
 					_getCSVBatchEngineImportTaskItemReader(
-						FIELD_NAMES, StringPool.COMMA,
+						FIELD_NAMES, null,
 						new Object[][] {
 							{createDateString, "", 1, "", "naziv 1"},
 							{
@@ -340,12 +341,19 @@ public class CSVBatchEngineImportTaskItemReaderImplTest
 		throws IOException {
 
 		return new CSVBatchEngineImportTaskItemReaderImpl(
-			delimiter,
-			HashMapBuilder.<String, Serializable>put(
-				"delimiter", delimiter
-			).build(),
+			StringPool.COMMA, _getProperties(delimiter),
 			new ByteArrayInputStream(
 				_getContent(cellNames, delimiter, rowValues)));
+	}
+
+	private Map<String, Serializable> _getProperties(String delimiter) {
+		if (Validator.isNull(delimiter)) {
+			return Collections.emptyMap();
+		}
+
+		return HashMapBuilder.<String, Serializable>put(
+			"delimiter", delimiter
+		).build();
 	}
 
 }

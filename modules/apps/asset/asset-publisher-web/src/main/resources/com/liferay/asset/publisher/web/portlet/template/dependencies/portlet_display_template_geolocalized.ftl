@@ -1,7 +1,4 @@
 <#assign
-	defaultLatitude = -3.6833
-	defaultLongitude = 40.40
-
 	group = themeDisplay.getScopeGroup()
 
 	mapsAPIProvider = group.getLiveParentTypeSettingsProperty("mapsAPIProvider")!""

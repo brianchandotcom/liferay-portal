@@ -192,8 +192,8 @@ export const getAccountFlags = gql`
 `;
 
 export const getAccountRoles = gql`
-	query getAccountRoles($filter: Long!) {
-		accountAccountRoles(accountId: $filter) {
+	query getAccountRoles($accountId: Long!) {
+		accountAccountRoles(accountId: $accountId) {
 			items {
 				id
 				name

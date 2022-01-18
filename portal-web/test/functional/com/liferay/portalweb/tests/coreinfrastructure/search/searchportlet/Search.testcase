@@ -446,6 +446,40 @@ definition {
 		AssertElementNotPresent(locator1 = "Modal#MODAL");
 	}
 
+	@priority = "4"
+	test DisableEnterpriseSearch {
+		property license.required = "true";
+		property portal.upstream = "false";
+		property test.name.skip.portal.instance = "Search#DisableEnterpriseSearch";
+		property test.run.environment = "EE";
+
+		SystemSettings.openToConfigInSystemSettings(portletId = "com.liferay.portal.search.configuration.DefaultKeywordQueryConfiguration");
+
+		for (var configurationName : list "Cross-Cluster Replication,Elasticsearch Monitoring,Learning to Rank") {
+			AssertElementPresent(
+				key_configurationName = "${configurationName}",
+				key_configurationScope = "System Scope",
+				locator1 = "SystemSettings#SCOPED_CONFIGURATION_NAME");
+		}
+
+		Portlet.shutdownServer();
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "portal-ext-properties-update -Dadd.new.properties=true -Dupdate.properties=enterprise.product.enterprise.search.enabled=false");
+
+		Portlet.startServer(deleteLiferayHome = "false");
+
+		SystemSettings.openToConfigInSystemSettings(portletId = "com.liferay.portal.search.configuration.DefaultKeywordQueryConfiguration");
+
+		for (var configurationName : list "Cross-Cluster Replication,Elasticsearch Monitoring,Learning to Rank") {
+			AssertElementNotPresent(
+				key_configurationName = "${configurationName}",
+				key_configurationScope = "System Scope",
+				locator1 = "SystemSettings#SCOPED_CONFIGURATION_NAME");
+		}
+	}
+
 	@description = "This is a use case for LPS-140643."
 	@priority = "4"
 	test FederatedSearchPopulatesWidgetsWithRespectiveKey {

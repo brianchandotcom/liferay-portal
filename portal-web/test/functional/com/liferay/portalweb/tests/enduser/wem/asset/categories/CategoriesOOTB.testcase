@@ -457,7 +457,7 @@ definition {
 			JSONLayout.addWidgetToPublicLayout(
 				groupName = "Test Site Name",
 				layoutName = "Asset Publisher Page",
-				widgetName = "Category filter");
+				widgetName = "Category Filter");
 		}
 
 		task ("Check if only Topic Categories are shown") {

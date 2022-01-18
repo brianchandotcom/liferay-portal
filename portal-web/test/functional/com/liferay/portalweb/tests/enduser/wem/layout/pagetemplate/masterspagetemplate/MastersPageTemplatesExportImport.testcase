@@ -493,17 +493,17 @@ definition {
 
 			PageEditor.addWidget(
 				dropTarget = "Header",
-				portletName = "Category filter",
+				portletName = "Category Filter",
 				scope = "Master");
 		}
 
 		task ("Configure Organization Role permission settings of Categories Navigation") {
 			MouseOver.mouseOverNotVisible(
-				key_portletName = "Category filter",
+				key_portletName = "Category Filter",
 				locator1 = "Portlet#SPECIFIC_BORDERLESS_ELLIPSIS_ICON");
 
 			Click.waitForMenuToggleJSClick(
-				key_portletName = "Category filter",
+				key_portletName = "Category Filter",
 				locator1 = "Portlet#SPECIFIC_BORDERLESS_ELLIPSIS_ICON");
 
 			WaitForLiferayEvent.initializeLiferayEventLog();
@@ -554,14 +554,14 @@ definition {
 
 			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
 
-			PageEditor.viewFragment(fragmentName = "Category filter");
+			PageEditor.viewFragment(fragmentName = "Category Filter");
 
 			MouseOver.mouseOverNotVisible(
-				key_portletName = "Category filter",
+				key_portletName = "Category Filter",
 				locator1 = "Portlet#SPECIFIC_BORDERLESS_ELLIPSIS_ICON");
 
 			Click.waitForMenuToggleJSClick(
-				key_portletName = "Category filter",
+				key_portletName = "Category Filter",
 				locator1 = "Portlet#SPECIFIC_BORDERLESS_ELLIPSIS_ICON");
 
 			WaitForLiferayEvent.initializeLiferayEventLog();

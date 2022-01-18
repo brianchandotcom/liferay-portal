@@ -81,9 +81,9 @@ definition {
 
 		Portlet.viewTitle(portletName = "Wiki");
 
-		Portlet.viewTitle(portletName = "Category filter");
+		Portlet.viewTitle(portletName = "Category Filter");
 
-		Portlet.viewTitle(portletName = "Tag filter");
+		Portlet.viewTitle(portletName = "Tag Filter");
 
 		Navigator.openPrivateSitePageURL(
 			pageName = "Global Private Private",
@@ -91,9 +91,9 @@ definition {
 
 		Portlet.viewTitle(portletName = "Wiki");
 
-		Portlet.viewTitle(portletName = "Category filter");
+		Portlet.viewTitle(portletName = "Category Filter");
 
-		Portlet.viewTitle(portletName = "Tag filter");
+		Portlet.viewTitle(portletName = "Tag Filter");
 
 		Navigator.gotoSitePage(
 			pageName = "Public Custom Widget Page",
@@ -180,9 +180,9 @@ definition {
 
 		Portlet.viewTitle(portletName = "Wiki");
 
-		Portlet.viewTitle(portletName = "Category filter");
+		Portlet.viewTitle(portletName = "Category Filter");
 
-		Portlet.viewTitle(portletName = "Tag filter");
+		Portlet.viewTitle(portletName = "Tag Filter");
 
 		Navigator.openPrivateSitePageURL(
 			pageName = "Global Private Page",
@@ -190,9 +190,9 @@ definition {
 
 		Portlet.viewTitle(portletName = "Wiki");
 
-		Portlet.viewTitle(portletName = "Category filter");
+		Portlet.viewTitle(portletName = "Category Filter");
 
-		Portlet.viewTitle(portletName = "Tag filter");
+		Portlet.viewTitle(portletName = "Tag Filter");
 
 		Navigator.gotoSitePage(
 			pageName = "Public Custom Widget Page",
@@ -304,9 +304,9 @@ definition {
 
 		Portlet.viewTitle(portletName = "Wiki");
 
-		Portlet.viewTitle(portletName = "Category filter");
+		Portlet.viewTitle(portletName = "Category Filter");
 
-		Portlet.viewTitle(portletName = "Tag filter");
+		Portlet.viewTitle(portletName = "Tag Filter");
 
 		Navigator.openPrivateSitePageURL(
 			pageName = "Global Private Private",
@@ -314,9 +314,9 @@ definition {
 
 		Portlet.viewTitle(portletName = "Wiki");
 
-		Portlet.viewTitle(portletName = "Category filter");
+		Portlet.viewTitle(portletName = "Category Filter");
 
-		Portlet.viewTitle(portletName = "Tag filter");
+		Portlet.viewTitle(portletName = "Tag Filter");
 
 		Navigator.gotoSitePage(
 			pageName = "Public Custom Widget Page",
@@ -403,9 +403,9 @@ definition {
 
 		Portlet.viewTitle(portletName = "Wiki");
 
-		Portlet.viewTitle(portletName = "Category filter");
+		Portlet.viewTitle(portletName = "Category Filter");
 
-		Portlet.viewTitle(portletName = "Tag filter");
+		Portlet.viewTitle(portletName = "Tag Filter");
 
 		Navigator.openPrivateSitePageURL(
 			pageName = "Global Private Page",
@@ -413,9 +413,9 @@ definition {
 
 		Portlet.viewTitle(portletName = "Wiki");
 
-		Portlet.viewTitle(portletName = "Category filter");
+		Portlet.viewTitle(portletName = "Category Filter");
 
-		Portlet.viewTitle(portletName = "Tag filter");
+		Portlet.viewTitle(portletName = "Tag Filter");
 
 		Navigator.gotoSitePage(
 			pageName = "Public Custom Widget Page",

@@ -31,6 +31,10 @@ Long selPlid = (Long)request.getAttribute("liferay-layout:layouts-tree:selPlid")
 String treeId = (String)request.getAttribute("liferay-layout:layouts-tree:treeId");
 %>
 
+<liferay-util:html-top>
+	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/layouts_tree/css/layouts_tree.css") %>" rel="stylesheet" type="text/css" />
+</liferay-util:html-top>
+
 <aui:script position='<%= (String)request.getAttribute("liferay-layout:layouts-tree:scriptPosition") %>' use='<%= (String)request.getAttribute("liferay-layout:layouts-tree:modules") %>'>
 	var plugins = [];
 

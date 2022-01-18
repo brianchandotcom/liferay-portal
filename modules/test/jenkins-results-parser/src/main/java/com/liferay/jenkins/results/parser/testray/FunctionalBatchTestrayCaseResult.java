@@ -22,6 +22,8 @@ import com.liferay.jenkins.results.parser.Job;
 import com.liferay.jenkins.results.parser.TestClassResult;
 import com.liferay.jenkins.results.parser.TestResult;
 import com.liferay.jenkins.results.parser.TopLevelBuild;
+import com.liferay.jenkins.results.parser.job.property.JobProperty;
+import com.liferay.jenkins.results.parser.job.property.JobPropertyFactory;
 import com.liferay.jenkins.results.parser.test.clazz.FunctionalTestClass;
 import com.liferay.jenkins.results.parser.test.clazz.TestClass;
 import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
@@ -30,7 +32,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.Properties;
 
 import org.apache.commons.lang.WordUtils;
 
@@ -175,36 +176,34 @@ public class FunctionalBatchTestrayCaseResult extends BatchTestrayCaseResult {
 
 		Job job = topLevelBuild.getJob();
 
-		Properties jobProperties = job.getJobProperties();
+		JobProperty teamNamesJobProperty = JobPropertyFactory.newJobProperty(
+			job, "testray.team.names");
 
-		String testrayTeamNames = JenkinsResultsParserUtil.getProperty(
-			jobProperties, "testray.team.names");
+		String teamNames = teamNamesJobProperty.getValue();
 
-		if (JenkinsResultsParserUtil.isNullOrEmpty(testrayTeamNames)) {
+		if (JenkinsResultsParserUtil.isNullOrEmpty(teamNames)) {
 			return super.getTeamName();
 		}
 
 		String componentName = getComponentName();
 
-		for (String testrayTeamName : testrayTeamNames.split(",")) {
-			String testrayTeamComponentNames =
-				JenkinsResultsParserUtil.getProperty(
-					jobProperties,
-					"testray.team." + testrayTeamName + ".component.names");
+		for (String teamName : teamNames.split(",")) {
+			JobProperty teamComponentNamesJobProperty =
+				JobPropertyFactory.newJobProperty(
+					job, "testray.team." + teamName + ".component.names");
 
-			if (JenkinsResultsParserUtil.isNullOrEmpty(
-					testrayTeamComponentNames)) {
+			String teamComponentNames =
+				teamComponentNamesJobProperty.getValue();
 
+			if (JenkinsResultsParserUtil.isNullOrEmpty(teamComponentNames)) {
 				continue;
 			}
 
-			for (String testrayTeamComponentName :
-					testrayTeamComponentNames.split(",")) {
+			for (String teamComponentName : teamComponentNames.split(",")) {
+				if (teamComponentName.equals(componentName)) {
+					teamName = teamName.replace("-", " ");
 
-				if (testrayTeamComponentName.equals(componentName)) {
-					testrayTeamName = testrayTeamName.replace("-", " ");
-
-					return WordUtils.capitalize(testrayTeamName);
+					return WordUtils.capitalize(teamName);
 				}
 			}
 		}

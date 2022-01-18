@@ -203,42 +203,26 @@ definition {
 	@description = "LPS-108856: When user opens Content Performance panel and AC is connected but not synced, the Content Performance panel displays instructions to sync to AC (Dont show me this again button and the message is not displayed)"
 	@priority = "3"
 	test NotSyncedPanel {
-		task ("Open Analytics Cloud") {
-			var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
+		task ("Launch AC and get Token") {
+			ACUtils.launchAC();
 
-			Navigator.openURL(baseURL = "${analyticsCloudURL}");
+			ACSettings.takeTokenFromAnalyticsCloud();
 		}
 
-		task ("Take token from Analytics Cloud") {
-			AnalyticsCloud.loginAnalyticsCloud(
-				emailAddress = "test@liferay.com",
-				password = "test");
-
-			AnalyticsCloud.takeTokenFromAnalyticsCloud();
-		}
-
-		task ("Go to DXP portal, login and create site") {
-			TestCase.setUpPortalInstance();
-
-			User.firstLoginPG();
-
+		task ("Navigate to DXP and connect with AC") {
 			Navigator.openURL();
-		}
 
-		task ("Connect with Analytics Cloud and back to Home Page") {
-			ContentPerformance.onlyConectWithAnalyticsCloud();
+			User.loginPG(
+				password = "test",
+				userEmailAddress = "test@liferay.com");
 
-			Navigator.openURL();
+			ContentPerformance.connectDXPtoAnalyticsCloudNoSync();
 		}
 
 		task ("Open Content Performance") {
+			Navigator.openURL();
+
 			ContentPerformance.openContentPerformance();
-
-			if (IsVisible(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_PANEL")) {
-				Click(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_BUTTON");
-			}
-
-			Click(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_BUTTON");
 		}
 
 		task ("Assert if button is not present and instructions are present") {
@@ -252,17 +236,7 @@ definition {
 		}
 
 		task ("End connection with Analytics Cloud") {
-			var testPortalInstance = PropsUtil.get("test.portal.instance");
-
-			Navigator.openURL();
-
 			AnalyticsCloud.teardownAnalyticsCloud();
-
-			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
-
-			if ("${testPortalInstance}" == "true") {
-				PortalInstances.tearDownCP();
-			}
 		}
 	}
 

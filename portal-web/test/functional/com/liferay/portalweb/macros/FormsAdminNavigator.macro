@@ -204,9 +204,9 @@ definition {
 	}
 
 	macro gotoViewEntries {
-		AssertElementPresent(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
+		AssertElementPresent(locator1 = "Icon#VERTICAL_ELLIPSIS_BUTTON");
 
-		LexiconEntry.gotoEllipsisMenuItem(menuItem = "View Entries");
+		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "View Entries");
 	}
 
 	macro openPublishURL {

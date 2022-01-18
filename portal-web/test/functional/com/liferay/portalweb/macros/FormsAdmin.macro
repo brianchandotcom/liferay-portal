@@ -20,7 +20,7 @@ definition {
 			formDescription = "",
 			formName = "${formName}");
 
-		LexiconEntry.gotoEllipsisMenuItemNoError(menuItem = "Delete");
+		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Delete");
 
 		AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
 
@@ -239,8 +239,8 @@ definition {
 	}
 
 	macro teardownForms {
-		while (IsElementPresent(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS")) {
-			LexiconEntry.gotoEllipsisMenuItemNoError(menuItem = "Delete");
+		while (IsElementPresent(locator1 = "Icon#VERTICAL_ELLIPSIS_BUTTON")) {
+			LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Delete");
 
 			AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
 

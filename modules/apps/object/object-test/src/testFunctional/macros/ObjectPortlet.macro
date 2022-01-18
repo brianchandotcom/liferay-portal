@@ -58,6 +58,12 @@ definition {
 			locator1 = "ObjectPortlet#VIEW_ENTRY_DETAILS_VALUE");
 	}
 
+	macro assertEntryDetailsValueSelected {
+		AssertElementPresent(
+			key_entrySelected = "${entrySelected}",
+			locator1 = "ObjectPortlet#OBJECT_FIELD_SELECTED");
+	}
+
 	macro assertEntryNotPresent {
 		AssertElementNotPresent(
 			key_entry = "${entry}",

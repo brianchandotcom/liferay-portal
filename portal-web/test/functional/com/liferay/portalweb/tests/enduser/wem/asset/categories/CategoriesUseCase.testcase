@@ -1281,14 +1281,14 @@ definition {
 			Vocabulary.addWithAssociatedAssetTypeCP(
 				assetType = "Site",
 				required = "true",
-				vocabularyName = "Vocabulary Name 1");
+				vocabularyName = "Vocabulary Name");
 		}
 
 		task ("Add a category") {
 			JSONCategory.addCategory(
 				groupName = "Test Site Name",
 				title = "Category Name",
-				vocabularyName = "Vocabulary Name 1");
+				vocabularyName = "Vocabulary Name");
 		}
 
 		task ("Go to Categorization settings") {
@@ -1299,11 +1299,11 @@ definition {
 				locator1 = "ListGroupItem#ITEM_TEXT");
 
 			Navigator.gotoNavTab(navTab = "Categorization");
-
-			Button.click(button = "Save");
 		}
 
-		task ("Assert error message is shown") {
+		task ("View error message is shown when save site settings") {
+			Button.click(button = "Save");
+
 			Alert.viewErrorMessage(errorMessage = "Error: Please select at least one category for Vocabulary Name 1.");
 		}
 	}

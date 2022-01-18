@@ -66,10 +66,6 @@ definition {
 
 		var emailList = "user1@liferay.com,user2@liferay.com";
 
-		task ("Get site assigned property name") {
-			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
-		}
-
 		task ("View the page as different users") {
 			ACUtils.navigateToSitePageWithUser(
 				emailList = "${emailList}",
@@ -82,7 +78,7 @@ definition {
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
 		}
 
 		task ("Add 2 new Static Segments") {
@@ -133,10 +129,6 @@ definition {
 	test AssertIndividualsSegmentSelected {
 		var emailList = "user1@liferay.com,user2@liferay.com";
 
-		task ("Get site assigned property name") {
-			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
-		}
-
 		task ("View the page as different users") {
 			ACUtils.navigateToSitePageWithUser(
 				emailList = "${emailList}",
@@ -149,7 +141,7 @@ definition {
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
 		}
 
 		task ("Add 2 new Static Segments") {
@@ -202,10 +194,6 @@ definition {
 
 		var emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com";
 
-		task ("Get site assigned property name") {
-			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
-		}
-
 		task ("Add one more new user") {
 			JSONUser.addUser(
 				userEmailAddress = "user3@liferay.com",
@@ -230,7 +218,7 @@ definition {
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
 		}
 
 		task ("Add 3 new Static Segments") {
@@ -349,10 +337,6 @@ definition {
 	test PaginateIndividualsSegmentList {
 		property portal.upstream = "quarantine";
 
-		task ("Get site assigned property name") {
-			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
-		}
-
 		task ("View the page as the new user") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "user1@liferay.com",
@@ -368,7 +352,7 @@ definition {
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
 		}
 
 		task ("Add 6 new Static Segments") {
@@ -445,10 +429,6 @@ definition {
 
 		var emailList = "user1@liferay.com,user2@liferay.com";
 
-		task ("Get site assigned property name") {
-			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
-		}
-
 		task ("View the page as different users") {
 			ACUtils.navigateToSitePageWithUser(
 				emailList = "${emailList}",
@@ -461,7 +441,7 @@ definition {
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
 		}
 
 		task ("Add 2 new Static Segments") {

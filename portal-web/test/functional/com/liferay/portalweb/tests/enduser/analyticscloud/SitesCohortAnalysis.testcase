@@ -54,10 +54,6 @@ definition {
 	test AssertSitesCohortAnalysisSortAnonymousVisitors {
 		property portal.upstream = "quarantine";
 
-		task ("Get site assigned property name") {
-			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
-		}
-
 		task ("Logout from DXP") {
 			User.logoutPG();
 		}
@@ -75,7 +71,7 @@ definition {
 		task ("Switch the property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
 		}
 
 		task ("Assert that the cohort analysis card shows anonymous visitors after their first views") {
@@ -93,10 +89,6 @@ definition {
 	@priority = "5"
 	test ShowsIndividualsReturningAfterFirstViews {
 		property portal.upstream = "quarantine";
-
-		task ("Get site assigned property name") {
-			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
-		}
 
 		task ("Add a new user") {
 			JSONUser.addUser(
@@ -127,7 +119,7 @@ definition {
 		task ("Switch the property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
 		}
 
 		task ("Assert that the cohort analysis card shows which individuals are returning after their first views") {

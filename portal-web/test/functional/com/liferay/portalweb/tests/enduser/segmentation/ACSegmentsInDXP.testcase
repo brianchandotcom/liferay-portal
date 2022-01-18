@@ -25,7 +25,7 @@ definition {
 		}
 
 		task ("Conect DXP to AC") {
-			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Test Site Name");
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Test Site Name");
 		}
 
 		task ("Navigate to Page and Blog") {
@@ -39,7 +39,7 @@ definition {
 		task ("Launch AC and Switch Property") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
 		}
 
 		task ("Go to Segments and add a new segment") {
@@ -252,10 +252,6 @@ definition {
 	test RedirectToSegmentPageErrorAC {
 		property portal.acceptance = "true";
 
-		task ("Get site assigned property name") {
-			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Test Site Name");
-		}
-
 		task ("Update Segments Analytics Cloud in System Settings") {
 			Segmentation.updateACSegmentSystemSettings();
 		}
@@ -277,7 +273,7 @@ definition {
 
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
 
 			ACNavigation.goToSegments();
 
@@ -356,7 +352,7 @@ definition {
 		}
 
 		task ("Conect DXP to AC and navigate to Page") {
-			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Test Site Name");
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Test Site Name");
 
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 		}

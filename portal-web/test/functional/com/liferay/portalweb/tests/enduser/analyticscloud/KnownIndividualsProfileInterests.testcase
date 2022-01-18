@@ -52,10 +52,6 @@ definition {
 		// AC Refactor: data doesn't appear on time
 		// AC Refactor ticket: LRAC-9152
 
-		task ("Get site assigned property name") {
-			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
-		}
-
 		task ("View the site page") {
 			ACUtils.navigateToSitePage(
 				pageName = "AC Page",
@@ -69,7 +65,7 @@ definition {
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
 		}
 
 		task ("Go to the Individual > KnownIndividual > Interests") {
@@ -104,10 +100,6 @@ definition {
 		// AC Refactor: data doesn't appear on time
 		// AC Refactor ticket: LRAC-9151
 
-		task ("Get site assigned property name") {
-			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
-		}
-
 		task ("View the site page") {
 			ACUtils.navigateToSitePage(
 				pageName = "AC Page",
@@ -121,7 +113,7 @@ definition {
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
 		}
 
 		task ("Go to the Individual > KnownIndividual > Interests") {
@@ -151,10 +143,6 @@ definition {
 
 		// AC Refactor: data doesn't appear on time
 		// AC Refactor ticket: LRAC-9151
-
-		task ("Get site assigned property name") {
-			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
-		}
 
 		task ("Add specific pages to Site as interest topics") {
 			Navigator.openSiteURL(siteName = "Site Name");
@@ -193,7 +181,7 @@ definition {
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
 		}
 
 		task ("Go to the Individual > KnownIndividual > Interests") {

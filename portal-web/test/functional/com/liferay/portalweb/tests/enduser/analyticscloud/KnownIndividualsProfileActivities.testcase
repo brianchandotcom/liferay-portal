@@ -23,7 +23,7 @@ definition {
 			userLastName = "ac",
 			userScreenName = "ac");
 
-		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 	}
 
 	tearDown {
@@ -46,10 +46,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8942 | Test Summary: Assert that a User can't create a Custom Range past 365 days max for Individuals"
 	@priority = "2"
 	test AssertIndividualsTimeFIlterInvalidCustom {
-		task ("Get site assigned property name") {
-			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
-		}
-
 		task ("Sign in as new user to view the site page") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "ac@liferay.com",
@@ -67,7 +63,7 @@ definition {
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
 		}
 
 		task ("Go to the Individual > KnownIndividual > Overview") {
@@ -99,10 +95,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LLRAC-8940 | Test Summary: Assert Chart ticks for Individuals Metrics standardized"
 	@priority = "3"
 	test AssertIndividualTicksDateFormat {
-		task ("Get site assigned property name") {
-			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
-		}
-
 		task ("Sign in as new user to view the site page") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "ac@liferay.com",
@@ -120,7 +112,7 @@ definition {
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
 		}
 
 		task ("Go to the Individual > KnownIndividual > Details") {
@@ -212,10 +204,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8941 | Test Summary: Assert Known Individual Chart Popover follows format"
 	@priority = "3"
 	test AssertKnownIndividualChartPopover {
-		task ("Get site assigned property name") {
-			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
-		}
-
 		task ("Sign in as new user to view the site page") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "ac@liferay.com",
@@ -233,7 +221,7 @@ definition {
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
 		}
 
 		task ("Go to the Individual > KnownIndividual > Overview") {
@@ -256,10 +244,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8124 | Test Summary: Individual activities graph shows activities from today when switched to 24 hour view"
 	@priority = "5"
 	test GraphShowsIndividualActivitiesFromTodayWhenSwitchedTo24HourView {
-		task ("Get site assigned property name") {
-			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
-		}
-
 		task ("Create a Document And Media") {
 			ACUtils.createDMAndAddToPage();
 		}
@@ -285,7 +269,7 @@ definition {
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
 		}
 
 		task ("Go to the Individual and KnownIndividuals tab") {

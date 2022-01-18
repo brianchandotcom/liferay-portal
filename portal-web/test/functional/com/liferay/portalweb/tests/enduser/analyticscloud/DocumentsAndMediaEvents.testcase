@@ -58,20 +58,16 @@ definition {
 		property portal.upstream = "quarantine";
 		property proxy.server.enabled = "true";
 
-		task ("Get site assigned property name") {
-			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
-		}
-
 		task ("Get the Property ID in AC") {
 			ACUtils.launchAC();
 
 			ACNavigation.goToSettings();
 
-			var expectedChannelId = ACSettings.getPropertyId(propertyName = "${propertyName}");
+			var expectedChannelId = ACSettings.getPropertyId(propertyName = "${assignedPropertyName}");
 		}
 
 		task ("Get the DXP Instance ID in AC") {
-			var dataSourceName = StringUtil.extractFirst("${propertyName}", "Combined");
+			var dataSourceName = StringUtil.extractFirst("${assignedPropertyName}", "Combined");
 			var dataSourceName = StringUtil.trim("${dataSourceName}");
 
 			var expectedDataSourceId = ACSettings.getDXPInstanceId(dataSourceName = "${dataSourceName}");
@@ -154,10 +150,6 @@ definition {
 		property portal.upstream = "quarantine";
 		property proxy.server.enabled = "true";
 
-		task ("Get site assigned property name") {
-			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
-		}
-
 		task ("Get the Property ID in AC") {
 			ACUtils.launchAC();
 
@@ -165,11 +157,11 @@ definition {
 
 			Pause(locator1 = "10000");
 
-			var expectedChannelId = ACSettings.getPropertyId(propertyName = "${propertyName}");
+			var expectedChannelId = ACSettings.getPropertyId(propertyName = "${assignedPropertyName}");
 		}
 
 		task ("Get the DXP Instance ID in AC") {
-			var dataSourceName = StringUtil.extractFirst("${propertyName}", "Combined");
+			var dataSourceName = StringUtil.extractFirst("${assignedPropertyName}", "Combined");
 			var dataSourceName = StringUtil.trim("${dataSourceName}");
 
 			var expectedDataSourceId = ACSettings.getDXPInstanceId(dataSourceName = "${dataSourceName}");

@@ -86,10 +86,6 @@ definition {
 		var usernameList = "ac";
 		var pageNameList = "sports,technology,science";
 
-		task ("Get site assigned property name") {
-			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
-		}
-
 		task ("View new pages in site as new user") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "${usernameList}@liferay.com",
@@ -107,7 +103,7 @@ definition {
 
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
 		}
 
 		task ("Add a new static segment") {
@@ -172,10 +168,6 @@ definition {
 			ACDXPSettings.syncNewContactData();
 		}
 
-		task ("Get site assigned property name") {
-			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
-		}
-
 		task ("View new pages in site as different users") {
 			ACUtils.navigateToSitePageWithUser(
 				emailList = "ac@liferay.com",
@@ -198,7 +190,7 @@ definition {
 
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
 		}
 
 		task ("Add a new static segment") {
@@ -271,10 +263,6 @@ definition {
 			ACDXPSettings.syncNewContactData();
 		}
 
-		task ("Get site assigned property name") {
-			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
-		}
-
 		task ("View new pages in site as new user") {
 			ACUtils.navigateToSitePageWithUser(
 				emailList = "${emailList}",
@@ -297,7 +285,7 @@ definition {
 
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
 		}
 
 		task ("Add a new static segment") {

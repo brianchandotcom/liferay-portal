@@ -54,10 +54,6 @@ definition {
 		// AC Refactor: data doesn't appear on time
 		// AC Refactor ticket: LRAC-9016
 
-		task ("Get site assigned property name") {
-			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
-		}
-
 		task ("Sign out then sign in as Test Test") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "test@liferay.com",
@@ -117,7 +113,7 @@ definition {
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
 		}
 
 		task ("Navigate to the Overview in Sites dashboard") {
@@ -216,10 +212,6 @@ definition {
 	test AssertSitesAcquisitionCardChannelsHighestSession {
 		property portal.upstream = "quarantine";
 
-		task ("Get site assigned property name") {
-			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
-		}
-
 		task ("View the site page") {
 			ACUtils.navigateToSitePage(
 				pageName = "AC Page",
@@ -233,7 +225,7 @@ definition {
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
 		}
 
 		task ("Navigate to the Overview in Sites dashboard") {
@@ -276,10 +268,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8347 | Test Summary: Assert Sites Acquisition card Referrers highest session"
 	@priority = "3"
 	test AssertSitesAcquisitionCardReferrersHighestSession {
-		task ("Get site assigned property name") {
-			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
-		}
-
 		task ("Get the portal URL") {
 			var portalURL = PropsUtil.get("portal.url");
 			var portalURL = StringUtil.replace("${portalURL}", "http://", "");
@@ -311,7 +299,7 @@ definition {
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
 		}
 
 		task ("Navigate to the Overview in Sites dashboard") {
@@ -356,10 +344,6 @@ definition {
 	test AssertSitesAcquisitionCardSourceAndMediumHighestSession {
 		property portal.upstream = "quarantine";
 
-		task ("Get site assigned property name") {
-			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
-		}
-
 		task ("Get the portal URL") {
 			var portalURL = PropsUtil.get("portal.url");
 			var portalURL = StringUtil.replace("${portalURL}", "http://", "");
@@ -391,7 +375,7 @@ definition {
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
 		}
 
 		task ("Navigate to the Overview in Sites dashboard") {

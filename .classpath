@@ -185,7 +185,6 @@
 	<classpathentry kind="lib" path="lib/portal/jaxws-rt.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jazzy.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jbig2-imageio.jar"/>
-	<classpathentry kind="lib" path="lib/portal/jcifs.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jcl-over-slf4j.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jdom2.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jempbox.jar"/>

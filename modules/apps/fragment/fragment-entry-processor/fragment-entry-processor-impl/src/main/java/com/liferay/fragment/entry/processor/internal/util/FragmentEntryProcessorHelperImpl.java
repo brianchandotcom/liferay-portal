@@ -272,31 +272,11 @@ public class FragmentEntryProcessorHelperImpl
 			return null;
 		}
 
-		InfoFieldValue<Object> infoFieldValue =
-			infoItemFieldValuesProvider.getInfoFieldValue(
-				displayObjectOptional.get(),
-				jsonObject.getString("collectionFieldId"));
-
-		if (infoFieldValue == null) {
-			return null;
-		}
-
-		Object value = infoFieldValue.getValue(
-			fragmentEntryProcessorContext.getLocale());
-
-		if (value instanceof ContentAccessor) {
-			ContentAccessor contentAccessor = (ContentAccessor)infoFieldValue;
-
-			value = contentAccessor.getContent();
-		}
-		else if (value instanceof WebImage) {
-			WebImage webImage = (WebImage)value;
-
-			return webImage.toJSONObject();
-		}
-
-		return formatMappedValue(
-			value, fragmentEntryProcessorContext.getLocale());
+		return _getMappedInfoItemFieldValue(
+			jsonObject.getString("collectionFieldId"),
+			infoItemFieldValuesProvider,
+			fragmentEntryProcessorContext.getLocale(),
+			displayObjectOptional.get());
 	}
 
 	@Override
@@ -380,39 +360,9 @@ public class FragmentEntryProcessorHelperImpl
 			infoItemFieldValuesMap.put(classPK, infoItemFieldValues);
 		}
 
-		String fieldId = jsonObject.getString("fieldId");
-
-		InfoFieldValue<Object> infoFieldValue =
-			infoItemFieldValues.getInfoFieldValue(fieldId);
-
-		if (infoFieldValue == null) {
-			return null;
-		}
-
-		Object fieldValue = infoFieldValue.getValue(
-			fragmentEntryProcessorContext.getLocale());
-
-		if (fieldValue == null) {
-			return null;
-		}
-
-		if (fieldValue instanceof ContentAccessor) {
-			ContentAccessor contentAccessor = (ContentAccessor)fieldValue;
-
-			fieldValue = contentAccessor.getContent();
-		}
-
-		if (fieldValue instanceof WebImage) {
-			WebImage webImage = (WebImage)fieldValue;
-
-			fieldValue = webImage.toJSONObject();
-		}
-		else {
-			fieldValue = formatMappedValue(
-				fieldValue, fragmentEntryProcessorContext.getLocale());
-		}
-
-		return fieldValue;
+		return _getMappedInfoItemFieldValue(
+			jsonObject.getString("fieldId"), infoItemFieldValuesProvider,
+			fragmentEntryProcessorContext.getLocale(), object);
 	}
 
 	@Override
@@ -663,6 +613,33 @@ public class FragmentEntryProcessorHelperImpl
 		}
 
 		return infoCollectionTextFormatter;
+	}
+
+	private Object _getMappedInfoItemFieldValue(
+		String fieldId, InfoItemFieldValuesProvider infoItemFieldValuesProvider,
+		Locale locale, Object object) {
+
+		InfoFieldValue<Object> infoFieldValue =
+			infoItemFieldValuesProvider.getInfoFieldValue(object, fieldId);
+
+		if (infoFieldValue == null) {
+			return null;
+		}
+
+		Object value = infoFieldValue.getValue(locale);
+
+		if (value instanceof ContentAccessor) {
+			ContentAccessor contentAccessor = (ContentAccessor)infoFieldValue;
+
+			value = contentAccessor.getContent();
+		}
+		else if (value instanceof WebImage) {
+			WebImage webImage = (WebImage)value;
+
+			return webImage.toJSONObject();
+		}
+
+		return formatMappedValue(value, locale);
 	}
 
 	private static final InfoCollectionTextFormatter<Object>

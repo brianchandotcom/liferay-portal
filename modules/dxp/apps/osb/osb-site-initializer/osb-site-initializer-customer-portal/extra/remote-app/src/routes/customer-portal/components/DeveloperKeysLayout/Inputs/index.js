@@ -14,21 +14,33 @@ import ClayIcon from '@clayui/icon';
 import {useEffect, useState} from 'react';
 import client from '../../../../../apolloClient';
 import BaseButton from '../../../../../common/components/BaseButton';
+import {useApplicationProvider} from '../../../../../common/context/ApplicationPropertiesProvider';
 import {getListTypeDefinitions} from '../../../../../common/services/liferay/graphql/queries';
+import {fetchDeveloperKeysLicense} from '../../../../../common/services/liferay/raysource-api';
+import {downloadFromBlob} from '../../../../../common/utils';
+import {EXTENSIONS_FILE_TYPE, STATUS_CODE} from '../../../utils/constants';
 
-const TEXT = {
-	'dxp':
+const DeveloperKeysText = {
+	'DXP':
 		'Select the Liferay DXP version for which you want to download a developer key.',
-	'dxp-cloud':
+	'DXP Cloud':
 		'To activate a local instance of Liferay DXP, download a developer key for your Liferay DXP version.',
 };
 
-const DevelopersKeysInputs = ({accountKey, dxpVersion, page}) => {
+const DevelopersKeysInputs = ({
+	accountKey,
+	dxpVersion,
+	productTitle,
+	sessionId,
+}) => {
+	const {licenseKeyDownloadURL} = useApplicationProvider();
 	const [dxpVersions, setDxpVersions] = useState([]);
 
 	const [selectedVersion, setSelectedVersion] = useState(dxpVersion);
 
-	const downloadText = TEXT[page];
+	const [hasLicenseDownloadError, setLicenseDownloadError] = useState(false);
+
+	const downloadText = DeveloperKeysText[productTitle];
 
 	useEffect(() => {
 		const fetchListTypeDefinitions = async () => {
@@ -44,8 +56,6 @@ const DevelopersKeysInputs = ({accountKey, dxpVersion, page}) => {
 				const orderedItems = [...items].sort((a, b) => b.name - a.name);
 
 				setDxpVersions(orderedItems);
-				// eslint-disable-next-line no-console
-				console.log(orderedItems[0].name);
 
 				setSelectedVersion(
 					orderedItems.find((item) => item.name === dxpVersion)
@@ -57,7 +67,25 @@ const DevelopersKeysInputs = ({accountKey, dxpVersion, page}) => {
 		fetchListTypeDefinitions();
 	}, [dxpVersion]);
 
-	const downloadLink = `https://webserver-lrprovisioning-uat.lfr.cloud/o/provisioning-rest/v1.0/accounts/${accountKey}/product-groups/DXP/product-version/${selectedVersion}/development-license-key`;
+	const handleClick = async () => {
+		const license = await fetchDeveloperKeysLicense(
+			accountKey,
+			encodeURI(productTitle),
+			licenseKeyDownloadURL,
+			sessionId,
+			selectedVersion
+		);
+
+		if (license.status === STATUS_CODE.SUCCESS) {
+			const contentType = license.headers.get('content-type');
+			const extensionFile = EXTENSIONS_FILE_TYPE[contentType] || '.txt';
+			const licenseBlob = await license.blob();
+
+			setLicenseDownloadError(true);
+
+			return downloadFromBlob(licenseBlob, `license${extensionFile}`);
+		}
+	};
 
 	return (
 		<div>
@@ -95,17 +123,23 @@ const DevelopersKeysInputs = ({accountKey, dxpVersion, page}) => {
 					</div>
 				</label>
 
-				<BaseButton className="btn btn-outline-primary">
-					<a
-						download
-						href={downloadLink}
-						rel="noreferrer noopener"
-						target="_blank"
-					>
-						<ClayIcon className="mr-1" symbol="download" />
-						Download Key
-					</a>
+				<BaseButton
+					className="btn btn-outline-primary developer-keys-button"
+					disabled={hasLicenseDownloadError}
+					onClick={handleClick}
+					prependIcon="download"
+					type="button"
+				>
+					Download Key
 				</BaseButton>
+
+				{hasLicenseDownloadError && (
+					<p className="mt-3 text-neutral-7 text-paragraph">
+						{`The requested activation key is not yet available. For more
+					information about the availability of your Enterprise Search
+					activation keys, please `}{' '}
+					</p>
+				)}
 			</div>
 
 			<p className="text-neutral-7">

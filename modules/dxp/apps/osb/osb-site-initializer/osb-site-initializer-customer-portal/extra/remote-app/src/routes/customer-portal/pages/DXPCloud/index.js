@@ -11,7 +11,7 @@
 import ActivationStatus from '../../components/ActivationStatus/index';
 import DeveloperKeysLayouts from '../../components/DeveloperKeysLayout';
 
-const DXPCloud = ({project, subscriptionGroups, userAccount}) => {
+const DXPCloud = ({project, sessionId, subscriptionGroups, userAccount}) => {
 	return (
 		<div>
 			<ActivationStatus
@@ -24,7 +24,8 @@ const DXPCloud = ({project, subscriptionGroups, userAccount}) => {
 				<DeveloperKeysLayouts.Inputs
 					accountKey={project.accountKey}
 					dxpVersion={project.dxpVersion}
-					page="dxp-cloud"
+					productTitle="DXP Cloud"
+					sessionId={sessionId}
 				></DeveloperKeysLayouts.Inputs>
 			</DeveloperKeysLayouts>
 		</div>

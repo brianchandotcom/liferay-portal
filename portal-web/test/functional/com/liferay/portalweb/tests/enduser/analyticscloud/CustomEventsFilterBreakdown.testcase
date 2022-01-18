@@ -1044,7 +1044,7 @@ definition {
 	@description = "Feature ID: LRAC-7868 | Automation ID: LRAC-10272 | Test Summary: Sorting the analysis result after rearranging the breakdowns"
 	@priority = "3"
 	test SortTheResultsAnalysisAfterRearrangingBreakdowns {
-		var attributeNameList = "pageTitle,url,category";
+		var attributeNameList = "pageTitle,category";
 		var layoutNameList = "Custom 1,Custom 2";
 		var dataSource = StringUtil.extractFirst("${assignedPropertyName}", " ");
 
@@ -1086,11 +1086,9 @@ definition {
 				timeToSendCustomEvent = "1");
 		}
 
-		Pause(locator1 = "30000");
-
-		//task ("Close sessions") {
-		//	ACUtils.closeAllSessionsAndWait();
-		//}
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
 
 		task ("Switch the property in AC and go to event analysis") {
 			ACUtils.launchAC();
@@ -1117,7 +1115,7 @@ definition {
 		task ("Change the breakdown position order") {
 			ACEventAnalysis.changeBreakdownPosition(
 				indexEnd = "1",
-				indexStart = "3");
+				indexStart = "2");
 		}
 
 		task ("Sort the analysis list and check the positions") {
@@ -1142,7 +1140,7 @@ definition {
 		task ("Change the breakdown position order") {
 			ACEventAnalysis.changeBreakdownPosition(
 				indexEnd = "1",
-				indexStart = "3");
+				indexStart = "2");
 		}
 
 		task ("Sort the analysis list and check the positions") {

@@ -44,6 +44,9 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentEntryLocalService;
+import com.liferay.headless.admin.list.type.dto.v1_0.ListTypeDefinition;
+import com.liferay.headless.admin.list.type.dto.v1_0.ListTypeEntry;
+import com.liferay.headless.admin.list.type.resource.v1_0.ListTypeDefinitionResource;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalArticleLocalService;
@@ -165,6 +168,7 @@ public class BundleSiteInitializerTest {
 			_assertLayoutPageTemplateEntry(group);
 			_assertLayouts(group);
 			_assertLayoutSets(group);
+			_assertListTypeDefinitions(serviceContext);
 			_assertObjectDefinitions(group, serviceContext);
 			_assertPermissions(group);
 			_assertSiteNavigationMenu(group);
@@ -594,6 +598,43 @@ public class BundleSiteInitializerTest {
 					"lfr-theme:regular:show-header")));
 	}
 
+	private void _assertListTypeDefinitions(ServiceContext serviceContext)
+		throws Exception {
+
+		ListTypeDefinitionResource.Builder listTypeDefinitionResourceBuilder =
+			_listTypeDefinitionResourceFactory.create();
+
+		ListTypeDefinitionResource listTypeDefinitionResource =
+			listTypeDefinitionResourceBuilder.user(
+				serviceContext.fetchUser()
+			).build();
+
+		Page<ListTypeDefinition> listTypeDefinitionsPage =
+			listTypeDefinitionResource.getListTypeDefinitionsPage(
+				null, null,
+				listTypeDefinitionResource.toFilter(
+					"name eq 'Test Integration'"),
+				null, null);
+
+		ListTypeDefinition listTypeDefinition =
+			listTypeDefinitionsPage.fetchFirstItem();
+
+		Assert.assertNotNull(listTypeDefinition);
+
+		ListTypeEntry[] listTypeEntries =
+			listTypeDefinition.getListTypeEntries();
+
+		ListTypeEntry listTypeEntry1 = listTypeEntries[0];
+		ListTypeEntry listTypeEntry2 = listTypeEntries[1];
+
+		Assert.assertNotNull(listTypeEntry1);
+		Assert.assertNotNull(listTypeEntry2);
+
+		Assert.assertEquals("Key1", listTypeEntry1.getKey());
+
+		Assert.assertEquals("Key2", listTypeEntry2.getKey());
+	}
+
 	private void _assertObjectDefinitions(
 			Group group, ServiceContext serviceContext)
 		throws Exception {
@@ -885,6 +926,10 @@ public class BundleSiteInitializerTest {
 
 	@Inject
 	private LayoutSetLocalService _layoutSetLocalService;
+
+	@Inject
+	private ListTypeDefinitionResource.Factory
+		_listTypeDefinitionResourceFactory;
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

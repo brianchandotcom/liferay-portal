@@ -54,7 +54,7 @@ public class CSVBatchEngineImportTaskItemReaderImplTest
 							"createDate1", "description1", "id1", "name1_en",
 							"name1_hr"
 						},
-						StringPool.SEMICOLON,
+						StringPool.SEMICOLON, null,
 						new Object[][] {
 							{
 								createDateString, "sample description", 1,
@@ -91,7 +91,7 @@ public class CSVBatchEngineImportTaskItemReaderImplTest
 							"createDate1", "description1", "id1", "name1_en",
 							"name1_hr"
 						},
-						StringPool.SEMICOLON,
+						StringPool.SEMICOLON, null,
 						new Object[][] {
 							{
 								createDateString, "sample description", 1,
@@ -121,7 +121,7 @@ public class CSVBatchEngineImportTaskItemReaderImplTest
 							"createDate1", "description1", "id1", "name1_en",
 							"name1_hr"
 						},
-						StringPool.SEMICOLON,
+						StringPool.SEMICOLON, null,
 						new Object[][] {
 							{
 								createDateString, "sample description", 1,
@@ -152,7 +152,7 @@ public class CSVBatchEngineImportTaskItemReaderImplTest
 							"createDate1", "description1", "id1", "name1_en",
 							"name1_hr"
 						},
-						StringPool.SEMICOLON,
+						StringPool.SEMICOLON, null,
 						new Object[][] {
 							{
 								createDateString, "sample description", 1,
@@ -191,7 +191,7 @@ public class CSVBatchEngineImportTaskItemReaderImplTest
 		try (CSVBatchEngineImportTaskItemReaderImpl
 				csvBatchEngineImportTaskItemReaderImpl =
 					_getCSVBatchEngineImportTaskItemReader(
-						FIELD_NAMES, null,
+						FIELD_NAMES, null, null,
 						new Object[][] {
 							{
 								"", "sample description", 1, "sample name",
@@ -215,7 +215,7 @@ public class CSVBatchEngineImportTaskItemReaderImplTest
 		try (CSVBatchEngineImportTaskItemReaderImpl
 				csvBatchEngineImportTaskItemReaderImpl =
 					_getCSVBatchEngineImportTaskItemReader(
-						FIELD_NAMES, null,
+						FIELD_NAMES, null, null,
 						new Object[][] {
 							{
 								createDateString, "sample description 1", 1,
@@ -248,7 +248,32 @@ public class CSVBatchEngineImportTaskItemReaderImplTest
 		try (CSVBatchEngineImportTaskItemReaderImpl
 				csvBatchEngineImportTaskItemReaderImpl =
 					_getCSVBatchEngineImportTaskItemReader(
-						FIELD_NAMES, StringPool.SEMICOLON,
+						FIELD_NAMES, StringPool.SEMICOLON, null,
+						new Object[][] {
+							{
+								createDateString, "hey, here is comma inside",
+								1, "sample name", "naziv"
+							}
+						})) {
+
+			validate(
+				createDateString, "hey, here is comma inside", 1L,
+				Collections.emptyMap(),
+				csvBatchEngineImportTaskItemReaderImpl.read(),
+				HashMapBuilder.put(
+					"en", "sample name"
+				).put(
+					"hr", "naziv"
+				).build());
+		}
+	}
+
+	@Test
+	public void testReadRowsWithEnclosingCharacter() throws Exception {
+		try (CSVBatchEngineImportTaskItemReaderImpl
+				csvBatchEngineImportTaskItemReaderImpl =
+					_getCSVBatchEngineImportTaskItemReader(
+						FIELD_NAMES, null, StringPool.QUOTE,
 						new Object[][] {
 							{
 								createDateString, "hey, here is comma inside",
@@ -273,7 +298,8 @@ public class CSVBatchEngineImportTaskItemReaderImplTest
 		try (CSVBatchEngineImportTaskItemReaderImpl
 				csvBatchEngineImportTaskItemReaderImpl =
 					_getCSVBatchEngineImportTaskItemReader(
-						FIELD_NAMES, null, new Object[][] {{"", "", 1}})) {
+						FIELD_NAMES, null, null,
+						new Object[][] {{"", "", 1}})) {
 
 			validate(
 				null, null, 1L, Collections.emptyMap(),
@@ -286,7 +312,7 @@ public class CSVBatchEngineImportTaskItemReaderImplTest
 		try (CSVBatchEngineImportTaskItemReaderImpl
 				csvBatchEngineImportTaskItemReaderImpl =
 					_getCSVBatchEngineImportTaskItemReader(
-						FIELD_NAMES, null,
+						FIELD_NAMES, null, null,
 						new Object[][] {
 							{createDateString, "", 1, "", "naziv 1"},
 							{
@@ -317,16 +343,39 @@ public class CSVBatchEngineImportTaskItemReaderImplTest
 		}
 	}
 
+	private Object[] _encloseWithCharacter(
+		Object[] cellValues, String enclosingCharacter) {
+
+		if (Validator.isNull(enclosingCharacter)) {
+			return cellValues;
+		}
+
+		for (int i = 0; i < cellValues.length; i++) {
+			cellValues[i] =
+				enclosingCharacter + cellValues[i] + enclosingCharacter;
+		}
+
+		return cellValues;
+	}
+
 	private byte[] _getContent(
-		String[] cellNames, String delimiter, Object[][] rowValues) {
+		String[] cellNames, String delimiter, String enclosingCharacter,
+		Object[][] rowValues) {
 
 		StringBundler sb = new StringBundler();
+
+		if (Validator.isNull(delimiter)) {
+			delimiter = StringPool.COMMA;
+		}
 
 		sb.append(StringUtil.merge(cellNames, delimiter));
 		sb.append("\n");
 
 		for (Object[] cellValues : rowValues) {
-			sb.append(StringUtil.merge(cellValues, delimiter));
+			sb.append(
+				StringUtil.merge(
+					_encloseWithCharacter(cellValues, enclosingCharacter),
+					delimiter));
 			sb.append("\n");
 		}
 
@@ -337,23 +386,31 @@ public class CSVBatchEngineImportTaskItemReaderImplTest
 
 	private CSVBatchEngineImportTaskItemReaderImpl
 			_getCSVBatchEngineImportTaskItemReader(
-				String[] cellNames, String delimiter, Object[][] rowValues)
+				String[] cellNames, String delimiter, String enclosingCharacter,
+				Object[][] rowValues)
 		throws IOException {
 
 		return new CSVBatchEngineImportTaskItemReaderImpl(
-			StringPool.COMMA, _getProperties(delimiter),
+			StringPool.COMMA, _getProperties(delimiter, enclosingCharacter),
 			new ByteArrayInputStream(
-				_getContent(cellNames, delimiter, rowValues)));
+				_getContent(
+					cellNames, delimiter, enclosingCharacter, rowValues)));
 	}
 
-	private Map<String, Serializable> _getProperties(String delimiter) {
-		if (Validator.isNull(delimiter)) {
-			return Collections.emptyMap();
+	private Map<String, Serializable> _getProperties(
+		String delimiter, String enclosingCharacter) {
+
+		Map<String, Serializable> map = new HashMap<>();
+
+		if (Validator.isNotNull(delimiter)) {
+			map.put("delimiter", delimiter);
 		}
 
-		return HashMapBuilder.<String, Serializable>put(
-			"delimiter", delimiter
-		).build();
+		if (Validator.isNotNull(enclosingCharacter)) {
+			map.put("enclosingCharacter", enclosingCharacter);
+		}
+
+		return map;
 	}
 
 }

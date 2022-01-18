@@ -21,6 +21,7 @@ import com.liferay.info.item.InfoItemClassDetails;
 import com.liferay.info.item.InfoItemFormVariation;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -188,6 +189,13 @@ public class TemplateTestUtil {
 		}
 
 		return null;
+	}
+
+	public static String getRepeatableFieldSampleScriptFTL(String fieldName) {
+		return StringBundler.concat(
+			"<#if ", fieldName, ".getSiblings()?has_content><#list ", fieldName,
+			".getSiblings() as cur_item><#if (cur_item.getData())??>",
+			"${cur_item.getData()},</#if></#list></#if>");
 	}
 
 }

@@ -25,7 +25,7 @@
 
 		ddmFormValuesReader = assetRenderer.getDDMFormValuesReader()
 
-		ddmFormFieldValues = ddmFormValuesReader.getDDMFormFieldValues("ddm-geolocation")
+		ddmFormFieldValues = ddmFormValuesReader.getDDMFormFieldValues("geolocation")
 
 		coordinatesJSONObjects = []
 	/>

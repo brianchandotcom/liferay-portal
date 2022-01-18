@@ -81,9 +81,9 @@
 	<td></td>
 </tr>
 <tr>
-    <td>SIDEBAR</td>
-    <td>//div[contains(@class,'lfr-analytics-reports-panel')]</td>
-    <td></td>
+	<td>SIDEBAR</td>
+	<td>//div[contains(@class,'lfr-analytics-reports-panel')]</td>
+	<td></td>
 </tr>
 </tbody>
 </table>

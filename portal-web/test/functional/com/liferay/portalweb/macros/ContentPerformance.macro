@@ -16,8 +16,8 @@ definition {
 
 	macro openContentPerformance {
 		if (!(IsVisible(locator1 = "ContentPerformance#SIDEBAR"))) {
-            Click(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_BUTTON");
-        }
+			Click(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_BUTTON");
+		}
 	}
 
 	macro showMetricsButton {

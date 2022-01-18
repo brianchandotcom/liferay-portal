@@ -155,22 +155,22 @@ public class LinkEditableElementMapper implements EditableElementMapper {
 			linkElement.attr("target", target);
 		}
 
-		if (Validator.isNotNull(href)) {
-			linkElement.attr("href", href);
+		if (Validator.isNull(href)) {
+			return;
+		}
 
-			_replaceLinkContent(
-				element, firstChildElement, linkElement, replaceLink);
+		linkElement.attr("href", href);
 
-			if (((linkElement != element) || processEditableTag) &&
-				Validator.isNotNull(element.html())) {
+		_replaceLinkContent(
+			element, firstChildElement, linkElement, replaceLink);
 
-				element.html(linkElement.outerHtml());
-			}
-			else if ((linkElement != element) &&
-					 Validator.isNull(element.html())) {
+		if (((linkElement != element) || processEditableTag) &&
+			Validator.isNotNull(element.html())) {
 
-				element.replaceWith(linkElement);
-			}
+			element.html(linkElement.outerHtml());
+		}
+		else if ((linkElement != element) && Validator.isNull(element.html())) {
+			element.replaceWith(linkElement);
 		}
 	}
 

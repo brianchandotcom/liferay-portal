@@ -24,6 +24,7 @@ const DXPCloud = ({project, subscriptionGroups, userAccount}) => {
 				<DeveloperKeysLayouts.Inputs
 					accountKey={project.accountKey}
 					dxpVersion={project.dxpVersion}
+					page="dxp-cloud"
 				></DeveloperKeysLayouts.Inputs>
 			</DeveloperKeysLayouts>
 		</div>

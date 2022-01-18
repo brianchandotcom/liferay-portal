@@ -52,6 +52,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -363,6 +364,56 @@ public class TemplateInfoItemFieldSetProviderTest {
 			StringBundler.concat(
 				assetCategory2.getTitle(locale), StringPool.COMMA,
 				assetCategory1.getTitle(locale), StringPool.COMMA),
+			infoFieldValue.getValue(locale));
+	}
+
+	@Test
+	public void testGetInfoFieldValuesRenderingOtherListInfoFieldType()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		String tagName1 = RandomTestUtil.randomString();
+		String tagName2 = RandomTestUtil.randomString();
+
+		serviceContext.setAssetTagNames(new String[] {tagName1, tagName2});
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, serviceContext);
+
+		TemplateEntry articleTemplateEntry = TemplateTestUtil.addTemplateEntry(
+			JournalArticle.class.getName(), journalArticle.getDDMStructureKey(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			TemplateTestUtil.getRepeatableFieldSampleScriptFTL("tagNames"),
+			_serviceContext);
+
+		List<InfoFieldValue<Object>> infoFieldValues =
+			_templateInfoItemFieldSetProvider.getInfoFieldValues(
+				JournalArticle.class.getName(),
+				journalArticle.getDDMStructureKey(), journalArticle);
+
+		Assert.assertEquals(
+			infoFieldValues.toString(), 1, infoFieldValues.size());
+
+		InfoFieldValue<Object> infoFieldValue = infoFieldValues.get(0);
+
+		InfoField infoField = infoFieldValue.getInfoField();
+
+		Assert.assertEquals(
+			infoField.toString(),
+			PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
+				articleTemplateEntry.getTemplateEntryId(),
+			infoField.getName());
+
+		Locale locale = _portal.getSiteDefaultLocale(_group.getGroupId());
+
+		Assert.assertEquals(
+			StringBundler.concat(
+				StringUtil.toLowerCase(tagName1), StringPool.COMMA,
+				StringUtil.toLowerCase(tagName2), StringPool.COMMA),
 			infoFieldValue.getValue(locale));
 	}
 

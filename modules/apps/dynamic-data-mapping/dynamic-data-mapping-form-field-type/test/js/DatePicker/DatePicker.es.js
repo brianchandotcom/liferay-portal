@@ -13,7 +13,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {render, screen} from '@testing-library/react';
+import {fireEvent, render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import moment from 'moment';
 import React from 'react';
@@ -125,5 +125,52 @@ describe('DatePicker', () => {
 		userEvent.type(input, '٠١/٠١/٢٠٢١');
 
 		expect(onChange).toHaveBeenLastCalledWith('');
+	});
+
+	it('fills the input date and time according to the locale', () => {
+		const {container} = render(
+			<DatePicker locale="pt_BR" onChange={() => {}} type="date_time" />
+		);
+
+		userEvent.click(screen.getByLabelText('Choose date'));
+
+		const hours = screen.getByLabelText('Enter the hour in 00:00 format');
+		const minutes = screen.getByLabelText(
+			'Enter the minutes in 00:00 format'
+		);
+		userEvent.type(hours, '23');
+		userEvent.type(minutes, '30');
+
+		userEvent.click(screen.getByLabelText('Select current date'));
+
+		expect(container.querySelector('[type=text]')).toHaveValue(
+			moment().format('DD/MM/YYYY [23:30]')
+		);
+	});
+
+	it('calls the onChange callback with a valid date and time', () => {
+		const onChange = jest.fn();
+
+		render(<DatePicker onChange={onChange} type="date_time" />);
+
+		userEvent.click(screen.getByLabelText('Choose date'));
+
+		const hours = screen.getByLabelText('Enter the hour in 00:00 format');
+		const minutes = screen.getByLabelText(
+			'Enter the minutes in 00:00 format'
+		);
+		const sufix = screen.getByLabelText(
+			'Select time of day (AM/PM) using up (PM) and down (AM) arrow keys'
+		);
+
+		userEvent.type(hours, '11');
+		userEvent.type(minutes, '30');
+		fireEvent.keyDown(sufix, {code: 'ArrowUp', key: 'ArrowUp'}); // PM
+		userEvent.click(screen.getByLabelText('Select current date'));
+
+		expect(onChange).toHaveBeenCalledWith(
+			{},
+			moment().format('YYYY-MM-DD [23:30]')
+		);
 	});
 });

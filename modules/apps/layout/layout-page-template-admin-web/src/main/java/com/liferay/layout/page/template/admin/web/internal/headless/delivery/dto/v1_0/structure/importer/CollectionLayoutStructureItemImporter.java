@@ -20,6 +20,7 @@ import com.liferay.headless.delivery.dto.v1_0.CollectionConfig;
 import com.liferay.headless.delivery.dto.v1_0.PageCollectionDefinition;
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
 import com.liferay.info.collection.provider.InfoCollectionProvider;
+import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
 import com.liferay.info.collection.provider.SingleFormVariationInfoCollectionProvider;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
@@ -211,26 +212,16 @@ public class CollectionLayoutStructureItemImporter
 				InfoCollectionProvider.class, className);
 
 		if (infoCollectionProvider == null) {
+			infoCollectionProvider = _infoItemServiceTracker.getInfoItemService(
+				RelatedInfoItemCollectionProvider.class, className);
+		}
+
+		if (infoCollectionProvider == null) {
 			return null;
 		}
 
 		return JSONUtil.put(
-			"itemSubtype",
-			() -> {
-				if (infoCollectionProvider instanceof
-						SingleFormVariationInfoCollectionProvider) {
-
-					SingleFormVariationInfoCollectionProvider<?>
-						singleFormVariationInfoCollectionProvider =
-							(SingleFormVariationInfoCollectionProvider<?>)
-								infoCollectionProvider;
-
-					return singleFormVariationInfoCollectionProvider.
-						getFormVariationKey();
-				}
-
-				return null;
-			}
+			"itemSubtype", _getItemSubtype(infoCollectionProvider)
 		).put(
 			"itemType", infoCollectionProvider.getCollectionItemClassName()
 		).put(
@@ -240,6 +231,24 @@ public class CollectionLayoutStructureItemImporter
 		).put(
 			"type", InfoListProviderItemSelectorReturnType.class.getName()
 		);
+	}
+
+	private String _getItemSubtype(
+		InfoCollectionProvider<?> infoCollectionProvider) {
+
+		if (infoCollectionProvider instanceof
+				SingleFormVariationInfoCollectionProvider) {
+
+			SingleFormVariationInfoCollectionProvider<?>
+				singleFormVariationInfoCollectionProvider =
+					(SingleFormVariationInfoCollectionProvider<?>)
+						infoCollectionProvider;
+
+			return singleFormVariationInfoCollectionProvider.
+				getFormVariationKey();
+		}
+
+		return null;
 	}
 
 	private Long _toClassPK(String classPKString) {

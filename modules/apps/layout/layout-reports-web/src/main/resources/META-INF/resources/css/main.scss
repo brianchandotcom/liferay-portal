@@ -1,7 +1,5 @@
 @import 'cadmin-variables';
 
-$header-height: 64px;
-
 html#{$cadmin-selector} {
 	.cadmin {
 		&.lfr-layout-reports-panel {
@@ -44,24 +42,19 @@ html#{$cadmin-selector} {
 			}
 
 			.sidebar-header {
-				height: $header-height;
 				line-height: 32px;
-			}
 
-			@include media-breakpoint-up(sm, $cadmin-grid-breakpoints) {
-				.sidebar-header {
-					padding-bottom: 12px;
-					padding-top: 12px;
+				.sidenav-back {
+					align-items: flex-start;
+					width: 24px;
+				}
+
+				.issue-detail-title {
+					line-height: 17.5px;
 				}
 			}
 
 			.sidebar-body {
-				bottom: 0;
-				left: 0;
-				position: absolute;
-				right: 0;
-				top: $header-height;
-
 				.chart-loading-indicator {
 					position: absolute;
 					transform: translate(80%, 100%);

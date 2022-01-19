@@ -84,10 +84,10 @@ const IssueDetailSidebarHeader = () => {
 	const dispatch = useContext(StoreDispatchContext);
 
 	return (
-		<div className="d-flex justify-content-between sidebar-header">
-			<div>
+		<div className="d-flex justify-content-between p-3 sidebar-header">
+			<div className="d-flex">
 				<ClayButtonWithIcon
-					className="sidenav-back text-secondary"
+					className="flex-shrink-0 sidenav-back text-secondary"
 					displayType="unstyled"
 					onClick={() => {
 						dispatch({
@@ -99,11 +99,13 @@ const IssueDetailSidebarHeader = () => {
 					title={Liferay.Language.get('go-back')}
 				/>
 
-				<span className="font-weight-bold">{selectedIssue.title}</span>
+				<span className="align-self-center font-weight-bold issue-detail-title">
+					{selectedIssue.title}
+				</span>
 			</div>
 
 			<ClayButtonWithIcon
-				className="sidenav-close text-secondary"
+				className="flex-shrink-0 sidenav-close text-secondary"
 				displayType="unstyled"
 				symbol="times"
 				title={Liferay.Language.get('close')}

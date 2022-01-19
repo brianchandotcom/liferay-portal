@@ -267,8 +267,8 @@ definition {
 			ACDefinitions.viewUnhideEvent(customEventNameList = "${defaultEventName}");
 		}
 
-		task ("Hide default event") {
-			ACCustomEvents.hideCustomEvent(customEventName = "${defaultEventName}");
+		task ("Unhide all default events") {
+			ACDefinitions.hideAllEvents();
 		}
 
 		task ("Unhide all default events") {

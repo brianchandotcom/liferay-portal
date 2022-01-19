@@ -62,7 +62,7 @@ public class RedirectOptionsJSPDynamicInclude implements DynamicInclude {
 		}
 
 		boolean showRedirectMessage = ParamUtil.getBoolean(
-			httpServletRequest, "p_l_skip_redirect");
+			httpServletRequest, "skipRedirect");
 
 		if (!showRedirectMessage) {
 			return;

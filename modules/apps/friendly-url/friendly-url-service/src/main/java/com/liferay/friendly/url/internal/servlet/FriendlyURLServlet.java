@@ -132,7 +132,7 @@ public class FriendlyURLServlet extends HttpServlet {
 		String layoutFriendlyURL = null;
 
 		boolean skipRedirect = ParamUtil.getBoolean(
-			httpServletRequest, "p_l_skip_redirect");
+			httpServletRequest, "skipRedirect");
 
 		Redirect skippedRedirect = null;
 

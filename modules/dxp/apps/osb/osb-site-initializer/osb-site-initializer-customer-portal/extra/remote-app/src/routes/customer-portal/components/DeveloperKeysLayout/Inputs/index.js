@@ -18,9 +18,13 @@ import {useApplicationProvider} from '../../../../../common/context/ApplicationP
 import {getListTypeDefinitions} from '../../../../../common/services/liferay/graphql/queries';
 import {fetchDeveloperKeysLicense} from '../../../../../common/services/liferay/raysource-api';
 import {downloadFromBlob} from '../../../../../common/utils';
-import {EXTENSIONS_FILE_TYPE, STATUS_CODE} from '../../../utils/constants';
+import {
+	EXTENSIONS_FILE_TYPE,
+	LIST_TYPES,
+	STATUS_CODE,
+} from '../../../utils/constants';
 
-const DeveloperKeysText = {
+const DEVELOPER_KEYS_HELPER = {
 	'DXP':
 		'Select the Liferay DXP version for which you want to download a developer key.',
 	'DXP Cloud':
@@ -33,21 +37,20 @@ const DevelopersKeysInputs = ({
 	productTitle,
 	sessionId,
 }) => {
-	const {licenseKeyDownloadURL} = useApplicationProvider();
+	const {
+		deployingActivationKeysURL,
+		licenseKeyDownloadURL,
+	} = useApplicationProvider();
 	const [dxpVersions, setDxpVersions] = useState([]);
-
 	const [selectedVersion, setSelectedVersion] = useState(dxpVersion);
-
-	const [hasLicenseDownloadError, setLicenseDownloadError] = useState(false);
-
-	const downloadText = DeveloperKeysText[productTitle];
+	const downloadTextHelper = DEVELOPER_KEYS_HELPER[productTitle];
 
 	useEffect(() => {
 		const fetchListTypeDefinitions = async () => {
 			const {data} = await client.query({
 				query: getListTypeDefinitions,
 				variables: {
-					filter: `name eq 'DXP Version'`,
+					filter: `name eq '${LIST_TYPES.dxpVersion}'`,
 				},
 			});
 
@@ -59,7 +62,7 @@ const DevelopersKeysInputs = ({
 
 				setSelectedVersion(
 					orderedItems.find((item) => item.name === dxpVersion)
-						?.name || orderedItems[0].name
+						?.name || orderedItems[0]?.name
 				);
 			}
 		};
@@ -81,15 +84,15 @@ const DevelopersKeysInputs = ({
 			const extensionFile = EXTENSIONS_FILE_TYPE[contentType] || '.txt';
 			const licenseBlob = await license.blob();
 
-			setLicenseDownloadError(true);
-
 			return downloadFromBlob(licenseBlob, `license${extensionFile}`);
 		}
 	};
 
 	return (
 		<div>
-			<p className="text-neutral-7 text-paragraph">{downloadText}</p>
+			<p className="text-neutral-7 text-paragraph">
+				{downloadTextHelper}
+			</p>
 
 			<div className="align-items-start d-flex">
 				<label
@@ -125,33 +128,24 @@ const DevelopersKeysInputs = ({
 
 				<BaseButton
 					className="btn btn-outline-primary developer-keys-button"
-					disabled={hasLicenseDownloadError}
 					onClick={handleClick}
 					prependIcon="download"
 					type="button"
 				>
 					Download Key
 				</BaseButton>
-
-				{hasLicenseDownloadError && (
-					<p className="mt-3 text-neutral-7 text-paragraph">
-						{`The requested activation key is not yet available. For more
-					information about the availability of your Enterprise Search
-					activation keys, please `}{' '}
-					</p>
-				)}
 			</div>
 
 			<p className="text-neutral-7">
-				For instructions on how to activate your Liferay DXP or Liferay
-				Portal instance, please read the
+				{`For instructions on how to activate your Liferay DXP or Liferay
+				Portal instance, please read the `}
+
 				<a
-					href="https://help.liferay.com/hc/en-us/articles/360018163571-Deploying-Activation-Keys "
+					href={deployingActivationKeysURL}
 					rel="noreferrer noopener"
 					target="_blank"
 				>
 					<u className="font-weight-semi-bold text-neutral-7">
-						{' '}
 						Deploying Activation Keys article.
 					</u>
 				</a>

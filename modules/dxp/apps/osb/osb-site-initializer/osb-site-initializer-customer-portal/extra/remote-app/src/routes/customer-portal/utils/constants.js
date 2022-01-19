@@ -59,6 +59,10 @@ export const WEB_CONTENTS_BY_LIFERAY_VERSION = {
 	'7.4': 'WEB-CONTENT-ACTION-08',
 };
 
+export const LIST_TYPES = {
+	dxpVersion: 'DXP Version',
+};
+
 export const pages = {
 	COMMERCE: 'commerce',
 	DXP: 'dxp',

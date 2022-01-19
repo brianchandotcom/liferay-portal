@@ -24,9 +24,13 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.webcache.WebCacheItem;
 import com.liferay.portal.kernel.webcache.WebCachePoolUtil;
+import com.liferay.search.experiences.exception.NonPublicIPAddressException;
 import com.liferay.search.experiences.internal.configuration.IpstackConfiguration;
 
 import java.beans.ExceptionListener;
+
+import java.net.Inet4Address;
+import java.net.InetAddress;
 
 /**
  * @author Brian Wing Shun Chan
@@ -55,7 +59,7 @@ public class IpstackWebCacheItem implements WebCacheItem {
 	@Override
 	public JSONObject convert(String key) {
 		try {
-			if (!_ipstackConfiguration.enabled()) {
+			if (!_ipstackConfiguration.enabled() || !_isPublicIPAddress()) {
 				return JSONFactoryUtil.createJSONObject();
 			}
 
@@ -98,6 +102,30 @@ public class IpstackWebCacheItem implements WebCacheItem {
 		}
 
 		return 0;
+	}
+
+	private boolean _isPublicIPAddress() throws Exception {
+		Inet4Address inet4Address = (Inet4Address)InetAddress.getByName(
+			_ipAddress);
+
+		if (inet4Address.isSiteLocalAddress() ||
+			inet4Address.isAnyLocalAddress() ||
+			inet4Address.isLinkLocalAddress() ||
+			inet4Address.isLoopbackAddress() ||
+			inet4Address.isMulticastAddress()) {
+
+			_exceptionListener.exceptionThrown(
+				new NonPublicIPAddressException(
+					StringBundler.concat(
+						"IPStack is enabled but geolocation could not be ",
+						"resolved for a non public IP address ", _ipAddress,
+						". Search context attribute 'search.experiences.ip.",
+						"address' can be used to test a public address")));
+
+			return false;
+		}
+
+		return true;
 	}
 
 	private void _validateResponse(JSONObject jsonObject) {

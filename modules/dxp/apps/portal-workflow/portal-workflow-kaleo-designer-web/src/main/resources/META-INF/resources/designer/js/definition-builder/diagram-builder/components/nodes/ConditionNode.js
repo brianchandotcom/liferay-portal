@@ -46,5 +46,5 @@ export default function ConditionNode({
 ConditionNode.propTypes = {
 	data: PropTypes.object,
 	descriptionSidebar: PropTypes.string,
-	id: PropTypes.string.isRequired,
+	id: PropTypes.string,
 };

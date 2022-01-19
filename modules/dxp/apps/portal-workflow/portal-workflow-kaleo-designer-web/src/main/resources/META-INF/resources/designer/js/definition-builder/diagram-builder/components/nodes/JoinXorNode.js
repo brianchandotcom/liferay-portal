@@ -45,5 +45,5 @@ export default function JoinXorNode({
 JoinXorNode.propTypes = {
 	data: PropTypes.object,
 	descriptionSidebar: PropTypes.string,
-	id: PropTypes.string.isRequired,
+	id: PropTypes.string,
 };

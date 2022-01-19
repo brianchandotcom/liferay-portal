@@ -1661,6 +1661,69 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-141570. The user could view non-searchable web content in Asset Publisher after disable search with index."
+	@priority = "4"
+	test ViewNonSearchableWebContentAfterDisableSearchWithIndex {
+		property test.name.skip.portal.instance = "AssetPublisherUseCase#ViewNonSearchableWebContentAfterDisableSearchWithIndex";
+
+		task ("Add a normal web content") {
+			JSONWebcontent.addWebContent(
+				content = "WC WebContent Content 1",
+				groupName = "Test Site Name",
+				title = "WC WebContent Title 1");
+		}
+
+		task ("Add a non-searchable web content") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoAddCP();
+
+			WebContent.addCP(
+				webContentContent = "WC WebContent Content 2",
+				webContentTitle = "WC WebContent Title 2");
+
+			Panel.expandPanel(panel = "Search");
+
+			Uncheck.uncheckToggleSwitch(
+				key_toggleSwitchLabel = "Searchable",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+			PortletEntry.publish();
+		}
+
+		task ("Assert both Web Content are present in AP") {
+			Navigator.gotoSitePage(
+				pageName = "Asset Publisher Page",
+				siteName = "Test Site Name");
+
+			for (var text : list "1,2") {
+				AssetPublisherPortlet.viewAssetPG(
+					assetContent = "WC WebContent Content ${text}",
+					assetTitle = "WC WebContent Title ${text}");
+			}
+		}
+
+		task ("Uncheck Search with Index Configuration") {
+			APNavigator.openToConfigInSystemSettings(portlet = "Asset Publisher");
+
+			FormFields.disableCheckbox(fieldName = "searchWithIndex");
+
+			SystemSettings.saveConfiguration();
+		}
+
+		task ("Assert both Web Content are present in AP") {
+			Navigator.gotoSitePage(
+				pageName = "Asset Publisher Page",
+				siteName = "Test Site Name");
+
+			for (var text : list "1,2") {
+				AssetPublisherPortlet.viewAssetPG(
+					assetContent = "WC WebContent Content ${text}",
+					assetTitle = "WC WebContent Title ${text}");
+			}
+		}
+	}
+
 	@description = "This is a test for LPS-126190. The user could receive a notification email when the Dynamic Subscription Limit is set to 0 in Asset Publisher."
 	@priority = "4"
 	test ViewNotificationEmailWhenSetDynamicSubscriptionLimitToZero {

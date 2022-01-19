@@ -52,6 +52,8 @@ if (commercePaymentMethodKey != null) {
 
 String commerceShippingOptionName = commerceOrder.getShippingOptionName();
 
+Date requestedDeliveryDate = commerceOrder.getRequestedDeliveryDate();
+
 Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultMap = orderSummaryCheckoutStepDisplayContext.getCommerceOrderValidatorResults();
 %>
 
@@ -390,7 +392,7 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultMap = 
 			<c:if test="<%= shippingAddress != null %>">
 				<address class="shipping-address">
 					<h5>
-						<liferay-ui:message key="shipping-address" />
+						<liferay-ui:message key="shipping-address-and-date" />
 					</h5>
 
 					<%
@@ -417,11 +419,47 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultMap = 
 					<c:if test="<%= country != null %>">
 						<%= HtmlUtil.escape(country.getTitle(locale)) %><br />
 					</c:if>
+
+					<br />
+
+					<c:if test="<%= orderSummaryCheckoutStepDisplayContext.isCheckoutRequestedDeliveryDateEnabled() %>">
+
+						<%
+						int requestedDeliveryDay = 0;
+						int requestedDeliveryMonth = -1;
+						int requestedDeliveryYear = 0;
+
+						if (requestedDeliveryDate != null) {
+							Calendar calendar = CalendarFactoryUtil.getCalendar(requestedDeliveryDate.getTime());
+
+							requestedDeliveryDay = calendar.get(Calendar.DAY_OF_MONTH);
+							requestedDeliveryMonth = calendar.get(Calendar.MONTH);
+							requestedDeliveryYear = calendar.get(Calendar.YEAR);
+						}
+						%>
+
+						<div class="form-group input-date-wrapper">
+							<label for="requestedDeliveryDate"><liferay-ui:message key="requested-delivery-date" /></label>
+
+							<liferay-ui:input-date
+								dayParam="requestedDeliveryDateDay"
+								dayValue="<%= requestedDeliveryDay %>"
+								disabled="<%= false %>"
+								monthParam="requestedDeliveryDateMonth"
+								monthValue="<%= requestedDeliveryMonth %>"
+								name="requestedDeliveryDate"
+								nullable="<%= true %>"
+								showDisableCheckbox="<%= false %>"
+								yearParam="requestedDeliveryDateYear"
+								yearValue="<%= requestedDeliveryYear %>"
+							/>
+						</div>
+					</c:if>
 				</address>
 			</c:if>
 
 			<c:if test="<%= Validator.isNotNull(commerceShippingOptionName) %>">
-				<div class="shipping-method">
+				<div class="panel-body shipping-method">
 					<h5>
 						<liferay-ui:message key="method" />
 					</h5>
@@ -437,7 +475,7 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultMap = 
 			</c:if>
 
 			<c:if test="<%= Validator.isNotNull(commercePaymentMethodName) %>">
-				<div class="payment-method">
+				<div class="panel-body payment-method">
 					<h5>
 						<liferay-ui:message key="payment" />
 					</h5>

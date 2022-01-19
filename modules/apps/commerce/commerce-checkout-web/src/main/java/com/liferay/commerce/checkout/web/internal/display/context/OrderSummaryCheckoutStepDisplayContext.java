@@ -14,7 +14,9 @@
 
 package com.liferay.commerce.checkout.web.internal.display.context;
 
+import com.liferay.commerce.configuration.CommerceOrderCheckoutConfiguration;
 import com.liferay.commerce.constants.CommerceCheckoutWebKeys;
+import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceCurrency;
@@ -43,7 +45,9 @@ import com.liferay.commerce.util.CommerceBigDecimalUtil;
 import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -188,6 +192,26 @@ public class OrderSummaryCheckoutStepDisplayContext {
 
 		return _commercePaymentEngine.getPaymentMethodName(
 			paymentMethodKey, locale);
+	}
+
+	public boolean isCheckoutRequestedDeliveryDateEnabled()
+		throws PortalException {
+
+		CommerceOrder commerceOrder = getCommerceOrder();
+
+		CommerceChannel commerceChannel =
+			_commerceChannelLocalService.getCommerceChannelByOrderGroupId(
+				commerceOrder.getGroupId());
+
+		CommerceOrderCheckoutConfiguration commerceOrderCheckoutConfiguration =
+			ConfigurationProviderUtil.getConfiguration(
+				CommerceOrderCheckoutConfiguration.class,
+				new GroupServiceSettingsLocator(
+					commerceChannel.getGroupId(),
+					CommerceConstants.SERVICE_NAME_COMMERCE_ORDER));
+
+		return commerceOrderCheckoutConfiguration.
+			checkoutRequestedDeliveryDateEnabled();
 	}
 
 	private CommerceProductPrice _getCommerceProductPrice(

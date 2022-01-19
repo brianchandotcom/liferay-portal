@@ -16,7 +16,9 @@ package com.liferay.commerce.checkout.web.internal.util;
 
 import com.liferay.commerce.checkout.helper.CommerceCheckoutStepHttpHelper;
 import com.liferay.commerce.checkout.web.internal.display.context.OrderSummaryCheckoutStepDisplayContext;
+import com.liferay.commerce.configuration.CommerceOrderCheckoutConfiguration;
 import com.liferay.commerce.constants.CommerceCheckoutWebKeys;
+import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.discount.exception.CommerceDiscountLimitationTimesException;
 import com.liferay.commerce.discount.exception.NoSuchDiscountException;
 import com.liferay.commerce.exception.CommerceOrderBillingAddressException;
@@ -34,6 +36,7 @@ import com.liferay.commerce.payment.util.CommercePaymentUtils;
 import com.liferay.commerce.percentage.PercentageFormatter;
 import com.liferay.commerce.price.CommerceOrderPriceCalculation;
 import com.liferay.commerce.price.CommerceProductPriceCalculation;
+import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.option.CommerceOptionValueHelper;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
@@ -47,7 +50,11 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -57,6 +64,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.math.BigDecimal;
+
+import java.util.Calendar;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -107,9 +116,7 @@ public class OrderSummaryCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 
 			_validateCommerceOrder(actionRequest, commerceOrderUuid);
 
-			_checkoutCommerceOrder(
-				_portal.getHttpServletRequest(actionRequest),
-				_portal.getHttpServletResponse(actionResponse));
+			_checkoutCommerceOrder(actionRequest, actionResponse);
 		}
 		catch (Exception exception) {
 			Throwable throwable = exception.getCause();
@@ -217,22 +224,55 @@ public class OrderSummaryCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 	}
 
 	private void _checkoutCommerceOrder(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
+
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
+			actionRequest);
 
 		CommerceOrder commerceOrder =
 			(CommerceOrder)httpServletRequest.getAttribute(
 				CommerceCheckoutWebKeys.COMMERCE_ORDER);
 
 		if (commerceOrder.isOpen()) {
+			if (_isCheckoutRequestedDeliveryDateEnabled(commerceOrder)) {
+				int requestedDeliveryDateMonth = ParamUtil.getInteger(
+					actionRequest, "requestedDeliveryDateMonth");
+				int requestedDeliveryDateDay = ParamUtil.getInteger(
+					actionRequest, "requestedDeliveryDateDay");
+				int requestedDeliveryDateYear = ParamUtil.getInteger(
+					actionRequest, "requestedDeliveryDateYear");
+				int requestedDeliveryDateHour = ParamUtil.getInteger(
+					actionRequest, "requestedDeliveryDateHour");
+				int requestedDeliveryDateMinute = ParamUtil.getInteger(
+					actionRequest, "requestedDeliveryDateMinute");
+				int requestedDeliveryDateAmPm = ParamUtil.getInteger(
+					actionRequest, "requestedDeliveryDateAmPm");
+
+				if (requestedDeliveryDateAmPm == Calendar.PM) {
+					requestedDeliveryDateHour += 12;
+				}
+
+				ServiceContext serviceContext =
+					ServiceContextFactory.getInstance(
+						CommerceOrder.class.getName(), actionRequest);
+
+				_commerceOrderService.updateInfo(
+					commerceOrder.getCommerceOrderId(),
+					commerceOrder.getPrintedNote(), requestedDeliveryDateMonth,
+					requestedDeliveryDateDay, requestedDeliveryDateYear,
+					requestedDeliveryDateHour, requestedDeliveryDateMinute,
+					serviceContext);
+			}
+
 			CommerceOrder checkedOutCommerceOrder =
 				_commerceOrderEngine.checkoutCommerceOrder(
 					commerceOrder, _portal.getUserId(httpServletRequest));
 
 			if (!checkedOutCommerceOrder.isOpen()) {
 				CookieKeys.deleteCookies(
-					httpServletRequest, httpServletResponse,
+					httpServletRequest,
+					_portal.getHttpServletResponse(actionResponse),
 					CookieKeys.getDomain(httpServletRequest),
 					CommerceOrder.class.getName() + StringPool.POUND +
 						commerceOrder.getGroupId());
@@ -248,6 +288,25 @@ public class OrderSummaryCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 						commerceOrder.getGroupId());
 			}
 		}
+	}
+
+	private boolean _isCheckoutRequestedDeliveryDateEnabled(
+			CommerceOrder commerceOrder)
+		throws Exception {
+
+		CommerceChannel commerceChannel =
+			_commerceChannelLocalService.getCommerceChannelByOrderGroupId(
+				commerceOrder.getGroupId());
+
+		CommerceOrderCheckoutConfiguration commerceOrderCheckoutConfiguration =
+			_configurationProvider.getConfiguration(
+				CommerceOrderCheckoutConfiguration.class,
+				new GroupServiceSettingsLocator(
+					commerceChannel.getGroupId(),
+					CommerceConstants.SERVICE_NAME_COMMERCE_ORDER));
+
+		return commerceOrderCheckoutConfiguration.
+			checkoutRequestedDeliveryDateEnabled();
 	}
 
 	private void _validateCommerceOrder(
@@ -365,6 +424,9 @@ public class OrderSummaryCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 
 	@Reference
 	private CommerceShippingHelper _commerceShippingHelper;
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private CPInstanceHelper _cpInstanceHelper;

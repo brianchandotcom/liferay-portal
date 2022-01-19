@@ -470,7 +470,7 @@ definition {
 
 		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
-		Translations.gotoExportTranslation(webContentTitle = "LongInputsForWebContentTitleToCheckTheTranslationsExportingAndImportingProcess");
+		Translations.gotoBulkExportTranslation(exportTranslationEntry = "LongInputsForWebContentTitleToCheckTheTranslationsExportingAndImportingProcess");
 
 		Translations.exportTranslation(
 			defaultLanguage = "English (United States)",

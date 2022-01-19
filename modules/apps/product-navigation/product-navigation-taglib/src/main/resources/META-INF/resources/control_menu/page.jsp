@@ -36,7 +36,7 @@ for (ProductNavigationControlMenuCategory productNavigationControlMenuCategory :
 
 	if (!productNavigationControlMenuEntries.isEmpty()) {
 		for (ProductNavigationControlMenuEntry productNavigationControlMenuEntry : productNavigationControlMenuEntries) {
-			if (productNavigationControlMenuEntry.isRelevant()) {
+			if (productNavigationControlMenuEntry.isRelevant(request)) {
 				hasControlMenuEntries = true;
 
 				break;

@@ -118,7 +118,14 @@ public class LayoutHeaderProductNavigationControlMenuEntry
 	}
 
 	@Override
-	public boolean isRelevant() {
+	public boolean isRelevant(HttpServletRequest httpServletRequest) {
+		String layoutMode = ParamUtil.getString(
+			httpServletRequest, "p_l_mode", Constants.VIEW);
+
+		if (layoutMode.equals(Constants.EDIT)) {
+			return true;
+		}
+
 		return false;
 	}
 

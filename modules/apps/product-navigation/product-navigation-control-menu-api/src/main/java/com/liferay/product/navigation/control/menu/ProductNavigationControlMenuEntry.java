@@ -170,7 +170,7 @@ public interface ProductNavigationControlMenuEntry {
 			HttpServletResponse httpServletResponse)
 		throws IOException;
 
-	public default boolean isRelevant() {
+	public default boolean isRelevant(HttpServletRequest httpServletRequest) {
 		return true;
 	}
 

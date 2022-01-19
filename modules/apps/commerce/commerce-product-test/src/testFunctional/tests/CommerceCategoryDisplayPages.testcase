@@ -1,0 +1,78 @@
+@component-name = "portal-commerce"
+definition {
+
+	property portal.release = "quarantine";
+	property portal.upstream = "quarantine";
+	property testray.main.component.name = "Shopping Experience";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		Navigator.openURL();
+
+		if (IsElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE")) {
+			User.logoutPG();
+		}
+
+		User.firstLoginPG();
+
+		CommerceConfiguration.commerceAdminTearDown();
+
+		CommerceConfiguration.commerceInitializersTearDown();
+	}
+
+	@description = "This is a test for COMMERCE-7843. Verify when a default page for categories is not set, the old logic is still applied"
+	@priority = "3"
+	test AssertOldLogicIsAppliedIfDefaultCategoryDisplayPageIsNotSet {
+		task ("Given a Minium site") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And given a Private Category Navigation page") {
+			JSONLayout.addPrivateLayout(
+				groupName = "Minium",
+				layoutName = "Categories Navigation");
+
+			JSONLayout.addWidgetToPrivateLayout(
+				groupName = "Minium",
+				layoutName = "Categories Navigation",
+				widgetName = "Commerce Categories Navigation");
+
+			ApplicationsMenu.gotoSite(site = "Minium");
+
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Categories Navigation");
+
+			Portlet.gotoPortletOptions(
+				portletName = "Commerce Categories Navigation",
+				portletOption = "Configuration");
+
+			CommerceNavigator.changeVocabulary(newVocabularyName = "Minium");
+
+			JSONLayout.addWidgetToPrivateLayout(
+				groupName = "Minium",
+				layoutName = "Categories Navigation",
+				widgetName = "Category Content");
+		}
+
+		task ("When a user navigates to the page and clicks on a category") {
+			Refresh();
+
+			CommerceNavigator.selectItemFromTreeNode(itemName = "Engine");
+		}
+
+		task ("Then the user should be redirected to the Categories Navigation Widget") {
+			ControlMenu.viewHeaderTitle(headerTitle = "Categories Navigation");
+
+			AssertLocation.assertPartialLocation(value1 = "group/minium/g/engine");
+
+			Portlet.viewBody(
+				portletBody = "Engine",
+				portletName = "Category Content");
+		}
+	}
+
+}

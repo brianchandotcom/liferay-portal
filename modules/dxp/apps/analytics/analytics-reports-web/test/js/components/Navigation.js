@@ -20,11 +20,11 @@ import {StoreContextProvider} from '../../../src/main/resources/META-INF/resourc
 import '@testing-library/jest-dom/extend-expect';
 
 const mockEndpoints = {
-	analyticsReportsHistoricalReadsURL: 'analyticsReportsHistoricalReadsURL',
-	analyticsReportsHistoricalViewsURL: 'analyticsReportsHistoricalViewsURL',
-	analyticsReportsTotalReadsURL: 'analyticsReportsTotalReadsURL',
-	analyticsReportsTotalViewsURL: 'analyticsReportsTotalViewsURL',
-	analyticsReportsTrafficSourcesURL: 'analyticsReportsTrafficSourcesURL',
+	analyticsReportsHistoricalReadsURL: '/o/analyticsReportsHistoricalReadsURL',
+	analyticsReportsHistoricalViewsURL: '/o/analyticsReportsHistoricalViewsURL',
+	analyticsReportsTotalReadsURL: '/o/analyticsReportsTotalReadsURL',
+	analyticsReportsTotalViewsURL: '/o/analyticsReportsTotalViewsURL',
+	analyticsReportsTrafficSourcesURL: '/o/analyticsReportsTrafficSourcesURL',
 };
 
 const mockLanguageTag = 'en-US';

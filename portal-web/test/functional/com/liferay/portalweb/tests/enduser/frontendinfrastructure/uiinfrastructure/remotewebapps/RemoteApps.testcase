@@ -430,6 +430,7 @@ definition {
 			Navigator.gotoPage(pageName = "Test Page");
 
 			AssertElementPresent(
+				key_customElementHTMLName = "vanilla-counter",
 				key_customElementProperty = "QAuser",
 				locator1 = "RemoteApps#REMOTE_APP_PROPERTY_HTML");
 		}

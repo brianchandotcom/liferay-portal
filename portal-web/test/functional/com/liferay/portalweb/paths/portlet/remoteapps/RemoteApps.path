@@ -27,7 +27,7 @@
 </tr>
 <tr>
 	<td>REMOTE_APP_PROPERTY_HTML</td>
-	<td>//vanilla-counter[contains(@test-data-user,'${key_customElementProperty}')]</td>
+	<td>//${key_customElementHTMLName}[contains(@test-data-user,'${key_customElementProperty}')]</td>
 	<td></td>
 </tr>
 <tr>

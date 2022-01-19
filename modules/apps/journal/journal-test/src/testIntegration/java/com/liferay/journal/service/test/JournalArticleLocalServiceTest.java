@@ -49,10 +49,20 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionService;
+import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -62,6 +72,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -436,6 +447,104 @@ public class JournalArticleLocalServiceTest {
 	}
 
 	@Test
+	public void testUpdateArticleByNonownerUser() throws Exception {
+		User ownerUser = UserTestUtil.addGroupUser(
+			_group, RoleConstants.ADMINISTRATOR);
+
+		PermissionChecker ownerPermissionChecker =
+			PermissionCheckerFactoryUtil.create(ownerUser);
+
+		PermissionChecker originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		try {
+			PermissionThreadLocal.setPermissionChecker(ownerPermissionChecker);
+
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext(
+					_group.getCompanyId(), _group.getGroupId(),
+					ownerUser.getUserId());
+
+			JournalArticle journalArticle =
+				JournalTestUtil.addArticleWithWorkflow(
+					_group.getGroupId(), 0, RandomTestUtil.randomString(),
+					RandomTestUtil.randomString(), true, serviceContext);
+
+			_assertArticleUser(journalArticle, ownerUser, ownerUser);
+
+			Role siteMemberRole = RoleLocalServiceUtil.getRole(
+				_group.getCompanyId(), RoleConstants.SITE_MEMBER);
+
+			_resourcePermissionLocalService.setResourcePermissions(
+				_group.getCompanyId(), JournalArticle.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(journalArticle.getResourcePrimKey()),
+				siteMemberRole.getRoleId(),
+				new String[] {
+					ActionKeys.ADD_DISCUSSION, ActionKeys.VIEW,
+					ActionKeys.UPDATE
+				});
+
+			User nonownerUser = UserTestUtil.addGroupUser(
+				_group, RoleConstants.SITE_MEMBER);
+
+			PermissionChecker nonownerPermissionChecker =
+				PermissionCheckerFactoryUtil.create(nonownerUser);
+
+			Assert.assertFalse(
+				nonownerPermissionChecker.hasPermission(
+					_group.getGroupId(), JournalArticle.class.getName(),
+					String.valueOf(journalArticle.getResourcePrimKey()),
+					ActionKeys.PERMISSIONS));
+
+			Assert.assertTrue(
+				nonownerPermissionChecker.hasPermission(
+					_group.getGroupId(), JournalArticle.class.getName(),
+					String.valueOf(journalArticle.getResourcePrimKey()),
+					ActionKeys.UPDATE));
+
+			PermissionThreadLocal.setPermissionChecker(
+				nonownerPermissionChecker);
+
+			serviceContext = ServiceContextTestUtil.getServiceContext(
+				_group.getCompanyId(), _group.getGroupId(),
+				nonownerPermissionChecker.getUserId());
+
+			Double originalArticleVersion = journalArticle.getVersion();
+
+			journalArticle = _journalArticleLocalService.updateArticle(
+				nonownerUser.getUserId(), journalArticle.getGroupId(),
+				journalArticle.getFolderId(), journalArticle.getArticleId(),
+				journalArticle.getVersion(), journalArticle.getTitleMap(),
+				journalArticle.getDescriptionMap(), journalArticle.getContent(),
+				journalArticle.getLayoutUuid(), serviceContext);
+
+			int versionComparison = Double.compare(
+				originalArticleVersion, journalArticle.getVersion());
+
+			Assert.assertTrue(versionComparison < 0);
+
+			_assertArticleUser(journalArticle, ownerUser, nonownerUser);
+
+			Assert.assertFalse(
+				nonownerPermissionChecker.hasPermission(
+					_group.getGroupId(), JournalArticle.class.getName(),
+					String.valueOf(journalArticle.getResourcePrimKey()),
+					ActionKeys.PERMISSIONS));
+
+			Assert.assertTrue(
+				nonownerPermissionChecker.hasPermission(
+					_group.getGroupId(), JournalArticle.class.getName(),
+					String.valueOf(journalArticle.getResourcePrimKey()),
+					ActionKeys.UPDATE));
+		}
+		finally {
+			PermissionThreadLocal.setPermissionChecker(
+				originalPermissionChecker);
+		}
+	}
+
+	@Test
 	public void testUpdateDDMStructurePredefinedValues() throws Exception {
 		Tuple tuple = _createJournalArticleWithPredefinedValues("Test Article");
 
@@ -461,6 +570,23 @@ public class JournalArticleLocalServiceTest {
 		Assert.assertEquals(
 			"Valore Predefinito", field.getValue(LocaleUtil.ITALY));
 		Assert.assertEquals("Predefined Value", field.getValue(LocaleUtil.US));
+	}
+
+	private void _assertArticleUser(
+		JournalArticle journalArticle, User expectedOwnerUser,
+		User expectedStatusByUser) {
+
+		Assert.assertEquals(
+			expectedOwnerUser.getUserId(), journalArticle.getUserId());
+		Assert.assertEquals(
+			expectedOwnerUser.getFullName(), journalArticle.getUserName());
+
+		Assert.assertEquals(
+			expectedStatusByUser.getUserId(),
+			journalArticle.getStatusByUserId());
+		Assert.assertEquals(
+			expectedStatusByUser.getFullName(),
+			journalArticle.getStatusByUserName());
 	}
 
 	private Tuple _createJournalArticleWithPredefinedValues(String title)
@@ -526,6 +652,12 @@ public class JournalArticleLocalServiceTest {
 		return new Tuple(article, ddmStructure);
 	}
 
+	@Inject(
+		filter = "model.class.name=com.liferay.journal.model.JournalArticle"
+	)
+	private static ModelResourcePermission<JournalArticle>
+		_journalArticleModelResourcePermission;
+
 	@Inject
 	private AssetDisplayPageEntryLocalService
 		_assetDisplayPageEntryLocalService;
@@ -563,6 +695,12 @@ public class JournalArticleLocalServiceTest {
 
 	@Inject
 	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Inject
+	private ResourcePermissionService _resourcePermissionService;
+
+	@Inject
+	private RoleLocalService _roleLocalService;
 
 	private ThemeDisplay _themeDisplay;
 

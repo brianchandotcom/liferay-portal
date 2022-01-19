@@ -74,15 +74,22 @@ describe('SidebarPanelInfoView', () => {
 		expect(getByText('tag1')).toBeInTheDocument();
 		expect(getByText('tag2')).toBeInTheDocument();
 
-		expect(getByText('categories')).toBeInTheDocument();
-		expect(getByText('Crime')).toBeInTheDocument();
-		expect(getByText('Romantic')).toBeInTheDocument();
-		expect(getByText('Classics')).toBeInTheDocument();
-		expect(getByText('Fantasy')).toBeInTheDocument();
-		expect(getByText('Science Fiction')).toBeInTheDocument();
-		expect(getByText('Advanced')).toBeInTheDocument();
-		expect(getByText('Education')).toBeInTheDocument();
-		expect(getByText('Decision')).toBeInTheDocument();
+		expect(getByText('public-categories')).toBeInTheDocument();
+		expect(getByText('internal-categories')).toBeInTheDocument();
+
+		expect(getByText('Topic (Global)')).toBeInTheDocument();
+		expect(getByText('Topic 1')).toBeInTheDocument();
+		expect(getByText('Topic 7')).toBeInTheDocument();
+
+		expect(getByText('Developers (Liferay)')).toBeInTheDocument();
+		expect(getByText('QA')).toBeInTheDocument();
+		expect(getByText('Design')).toBeInTheDocument();
+
+		expect(
+			getByText('Internal categorization (Liferay)')
+		).toBeInTheDocument();
+		expect(getByText('Internal 1')).toBeInTheDocument();
+		expect(getByText('Internal 6')).toBeInTheDocument();
 
 		expect(getByText('display-date')).toBeInTheDocument();
 		expect(getByText('Jul 27, 2020, 10:53 AM')).toBeInTheDocument();

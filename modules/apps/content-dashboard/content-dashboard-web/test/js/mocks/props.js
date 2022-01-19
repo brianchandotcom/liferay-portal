@@ -13,16 +13,6 @@
  */
 
 export const mockedProps = {
-	categories: [
-		'Crime',
-		'Romantic',
-		'Classics',
-		'Fantasy',
-		'Science Fiction',
-		'Advanced',
-		'Education',
-		'Decision',
-	],
 	classPK: 38070,
 	createDate: '2020-07-27T10:50:55.19',
 	data: {
@@ -88,11 +78,53 @@ export const mockedProps = {
 				'http://localhost:8080/pt-BR/web/guest/-/basic-web-content-title',
 		},
 	],
+	vocabularies: {
+		2000: {
+			categories: [
+				'Topic 1',
+				'Topic 2',
+				'Topic 3',
+				'Topic 4',
+				'Topic 5',
+				'Topic 6',
+				'Topic 7',
+			],
+			groupName: 'Global',
+			isPublic: true,
+			vocabularyName: 'Topic',
+		},
+		3000: {
+			categories: [
+				'QA',
+				'Frontend',
+				'Backend',
+				'Data Scientist',
+				'Devops',
+				'Design',
+			],
+			groupName: 'Liferay',
+			isPublic: true,
+			vocabularyName: 'Developers',
+		},
+		4000: {
+			categories: [
+				'Internal 1',
+				'Internal 2',
+				'Internal 3',
+				'Internal 4',
+				'Internal 5',
+				'Internal 6',
+			],
+			groupName: 'Liferay',
+			isPublic: false,
+			vocabularyName: 'Internal categorization',
+		},
+	},
 };
 
 export const mockedNoTaxonomies = {
-	categories: [],
 	tags: [],
+	vocabularies: {},
 };
 
 export const mockedUser = {

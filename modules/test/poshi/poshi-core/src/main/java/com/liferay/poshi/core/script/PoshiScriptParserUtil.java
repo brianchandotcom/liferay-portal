@@ -14,9 +14,6 @@
 
 package com.liferay.poshi.core.script;
 
-import com.liferay.poshi.core.script.PoshiScriptParserException;
-import com.liferay.poshi.core.script.UnbalancedCodeException;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

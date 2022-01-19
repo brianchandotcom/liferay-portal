@@ -16,10 +16,10 @@ package com.liferay.poshi.core.elements;
 
 import com.liferay.poshi.core.PoshiContext;
 import com.liferay.poshi.core.script.PoshiScriptParserException;
+import com.liferay.poshi.core.script.PoshiScriptParserUtil;
 import com.liferay.poshi.core.util.CharPool;
 import com.liferay.poshi.core.util.ListUtil;
 import com.liferay.poshi.core.util.NaturalOrderStringComparator;
-import com.liferay.poshi.core.script.PoshiScriptParserUtil;
 import com.liferay.poshi.core.util.RegexUtil;
 import com.liferay.poshi.core.util.StringUtil;
 import com.liferay.poshi.core.util.Validator;
@@ -77,8 +77,9 @@ public class ExecutePoshiElement extends PoshiElement {
 
 			addAttribute("selenium", getCommandName(poshiScript));
 
-			List<String> methodParameters = PoshiScriptParserUtil.getMethodParameters(
-				poshiScriptParentheticalContent);
+			List<String> methodParameters =
+				PoshiScriptParserUtil.getMethodParameters(
+					poshiScriptParentheticalContent);
 
 			for (int i = 0; i < methodParameters.size(); i++) {
 				String methodParameter = methodParameters.get(i);
@@ -141,8 +142,9 @@ public class ExecutePoshiElement extends PoshiElement {
 			addAttribute("class", getClassName(poshiScript));
 			addAttribute("method", getCommandName(poshiScript));
 
-			List<String> methodParameters = PoshiScriptParserUtil.getMethodParameters(
-				poshiScriptParentheticalContent);
+			List<String> methodParameters =
+				PoshiScriptParserUtil.getMethodParameters(
+					poshiScriptParentheticalContent);
 
 			for (String methodParameter : methodParameters) {
 				add(PoshiNodeFactory.newPoshiNode(this, methodParameter));

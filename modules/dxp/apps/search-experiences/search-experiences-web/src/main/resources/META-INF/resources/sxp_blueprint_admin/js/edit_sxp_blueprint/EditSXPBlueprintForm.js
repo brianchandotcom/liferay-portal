@@ -34,6 +34,7 @@ import {
 	cleanUIConfiguration,
 	filterAndSortClassNames,
 	getConfigurationEntry,
+	getResultsError,
 	getUIConfigurationValues,
 	isCustomJSONSXPElement,
 	isDefined,
@@ -609,70 +610,37 @@ function EditSXPBlueprintForm({
 
 			let exceptionClass;
 
-			const idx1 = responseContent.responseString.indexOf(
+			const exceptionKeyIndex = responseContent.responseString.indexOf(
 				':',
 				exceptionKey.length + 1
 			);
 
-			if (idx1 !== -1) {
+			if (exceptionKeyIndex !== -1) {
 				exceptionClass = responseContent.responseString.substring(
 					exceptionKey.length + 1,
-					idx1
+					exceptionKeyIndex
 				);
 			}
 
 			let msg;
 
-			const idx2 = responseContent.responseString.indexOf('{"error":{');
+			const errorObjectIndex = responseContent.responseString.indexOf(
+				'{"error":{'
+			);
 
-			if (idx2 > 0) {
+			if (errorObjectIndex > 0) {
 				const errorJSONObject = JSON.parse(
-					responseContent.responseString.substring(idx2)
+					responseContent.responseString.substring(errorObjectIndex)
 				);
 
 				msg = errorJSONObject.error.root_cause[0]?.reason;
 			}
 
-			return resultsError(
+			return getResultsError({
 				exceptionClass,
-				responseContent.responseString,
-				msg
-			);
-		};
-
-		const resultsError = (
-			exceptionClass = null,
-			exceptionTrace = null,
-			msg = null,
-			severity = null
-		) => {
-			const error = {};
-
-			if (exceptionClass) {
-				error.exceptionClass = exceptionClass;
-			}
-
-			if (exceptionTrace) {
-				error.exceptionTrace = exceptionTrace;
-			}
-
-			if (msg) {
-				error.msg = msg;
-			}
-			else {
-				error.msg = DEFAULT_ERROR;
-			}
-
-			if (severity) {
-				error.severity = severity;
-			}
-			else {
-				error.severity = Liferay.Language.get('error');
-			}
-
-			return {
-				errors: [error],
-			};
+				exceptionTrace: responseContent.responseString,
+				msg,
+			});
 		};
 
 		return fetch(
@@ -708,7 +676,7 @@ function EditSXPBlueprintForm({
 				if (!response.ok) {
 					if (response.status === 400) {
 						return response.json().then((json) => {
-							return resultsError(null, null, json.title);
+							return getResultsError({msg: json.title});
 						});
 					}
 				}
@@ -725,7 +693,7 @@ function EditSXPBlueprintForm({
 				setTimeout(() => {
 					setPreviewInfo({
 						loading: false,
-						results: resultsError(),
+						results: getResultsError(),
 					});
 				}, 100);
 			});

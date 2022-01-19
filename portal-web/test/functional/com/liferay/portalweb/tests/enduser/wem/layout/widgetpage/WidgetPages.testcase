@@ -75,7 +75,7 @@ definition {
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
-			for (var portletName : list "Tag filter,Category filter,Wiki") {
+			for (var portletName : list "Tag Filter,Category Filter,Wiki") {
 				Portlet.viewSpecificPG(portletName = "${portletName}");
 			}
 		}

@@ -185,7 +185,7 @@ definition {
 				pageName = "ADT Test Page",
 				siteName = "Test Site Name");
 
-			ApplicationDisplayTemplates.selectPortletADT(templateName = "Category filter Test ADT");
+			ApplicationDisplayTemplates.selectPortletADT(templateName = "Category Filter Test ADT");
 		}
 
 		task ("View the widget template applied to Categories Navigation in staging site") {

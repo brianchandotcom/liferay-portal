@@ -176,6 +176,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EXPORT_FOR_TRANSLATION</td>
+	<td>//*[*[name()='svg'][contains(@class,'import-export')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EXPORT_DISABLED</td>
 	<td>//button[*[name()='svg'][contains(@class,'icon-download')] and @disabled]</td>
 	<td></td>

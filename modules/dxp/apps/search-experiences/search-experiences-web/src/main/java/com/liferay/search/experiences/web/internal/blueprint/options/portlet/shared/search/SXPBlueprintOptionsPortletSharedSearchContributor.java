@@ -77,7 +77,7 @@ public class SXPBlueprintOptionsPortletSharedSearchContributor
 					portletSharedSearchSettings.getThemeDisplay();
 
 				searchContext.setAttribute(
-					"search.experiences.current.group.id",
+					"search.experiences.scope.group.id",
 					themeDisplay.getScopeGroupId());
 
 				HttpServletRequest httpServletRequest =

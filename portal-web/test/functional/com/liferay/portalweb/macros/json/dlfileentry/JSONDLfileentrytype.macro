@@ -7,7 +7,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalURL}/api/jsonws/dlfileentrytype/get-file-entry-types \
+			${portalUrl}/api/jsonws/dlfileentrytype/get-file-entry-types \
 			  -u test@liferay.com:test \
 			  -d groupIds=[${groupId}]
 		''';
@@ -27,7 +27,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalURL}/api/jsonws/dlfileentrytype/get-file-entry-types \
+			${portalUrl}/api/jsonws/dlfileentrytype/get-file-entry-types \
 			  -u test@liferay.com:test \
 			  -d groupIds=[${groupId}]
 		''';

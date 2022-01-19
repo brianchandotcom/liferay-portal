@@ -113,7 +113,7 @@ definition {
 		}
 
 		task ("Add a Data Definition entry") {
-			DDLList.openDynamicDataListsAdmin(siteURLKey = "test-site-name");
+			DDLList.openDynamicDataListsAdmin(siteUrlKey = "test-site-name");
 
 			DDLDataDefinition.addCP(ddlDataDefinitionName = "Data Definition");
 
@@ -126,7 +126,7 @@ definition {
 		}
 
 		task ("Add a Dynamic Data Lists entry") {
-			DDLList.openDynamicDataListsAdmin(siteURLKey = "test-site-name");
+			DDLList.openDynamicDataListsAdmin(siteUrlKey = "test-site-name");
 
 			DDLList.addCP(ddlListName = "List Name");
 
@@ -214,7 +214,7 @@ definition {
 			Bookmark.addBookmarkViaAP(
 				bookmarkDescription = "Test Bookmark Description",
 				bookmarkName = "Test Bookmark Name",
-				bookmarkURL = "https://www.liferay.com");
+				bookmarkUrl = "https://www.liferay.com");
 		}
 
 		task ("View the bookmarks entry shown in Asset Publisher") {
@@ -535,7 +535,7 @@ definition {
 	test OrderWebContentsByPriority {
 		task ("Add three web contents with different priority") {
 			for (var i : list "1,5,3") {
-				WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+				WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 				WebContentNavigator.gotoAddCP();
 

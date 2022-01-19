@@ -156,11 +156,11 @@ definition {
 	macro addFieldViaJSON {
 		Navigator.gotoNavTab(navTab = "Source");
 
-		var sourceJSON = JSONUtil.formatJSONString("${sourceJSON}");
+		var sourceJson = JSONUtil.formatJSONString("${sourceJson}");
 
 		Type.typeNotVisibleNoMouseOver(
 			locator1 = "DDMEditStructure#SOURCE_EDITOR_CONTENT",
-			value1 = "${sourceJSON} ");
+			value1 = "${sourceJson} ");
 	}
 
 	macro addFieldWithoutRename {

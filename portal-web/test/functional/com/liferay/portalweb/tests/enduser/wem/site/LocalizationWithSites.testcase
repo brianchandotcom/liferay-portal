@@ -40,7 +40,7 @@ definition {
 		property testray.component.names = "Localization,Site Administration";
 
 		task ("Add two localized site names") {
-			Site.openSiteSettingsAdmin(siteURLKey = "test-site-name-1");
+			Site.openSiteSettingsAdmin(siteUrlKey = "test-site-name-1");
 
 			Site.addLocalizedName(
 				localeList = "es-ES,zh-CN",
@@ -86,7 +86,7 @@ definition {
 		}
 
 		task ("Configure site languages") {
-			Site.openSiteSettingsAdmin(siteURLKey = "test-site-name-1");
+			Site.openSiteSettingsAdmin(siteUrlKey = "test-site-name-1");
 
 			Site.configureCurrentLanguagesCP(
 				currentSiteLanguages = "English (United States),German (Germany),Spanish (Spain)",
@@ -138,7 +138,7 @@ definition {
 		}
 
 		task ("Define English, Germand and Spanish as current site language") {
-			Site.openSiteSettingsAdmin(siteURLKey = "test-site-name");
+			Site.openSiteSettingsAdmin(siteUrlKey = "test-site-name");
 
 			Site.configureCurrentLanguagesCP(
 				currentSiteLanguages = "English (United States),German (Germany),Spanish (Spain)",
@@ -147,7 +147,7 @@ definition {
 		}
 
 		task ("View site is cloned from site template") {
-			Site.openSiteSettingsAdmin(siteURLKey = "test-site-name");
+			Site.openSiteSettingsAdmin(siteUrlKey = "test-site-name");
 
 			Site.viewSiteClonedFromSiteTemplateCP(
 				clonedFromTemplate = "true",
@@ -171,7 +171,7 @@ definition {
 		}
 
 		task ("Define Portuguese and Spanish as current site languages") {
-			Site.openSiteSettingsAdmin(siteURLKey = "test-site-name-1");
+			Site.openSiteSettingsAdmin(siteUrlKey = "test-site-name-1");
 
 			Site.configureCurrentLanguagesCP(
 				currentSiteLanguages = "Portuguese (Brazil),Spanish (Spain)",
@@ -275,7 +275,7 @@ definition {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
 		task ("Get portal URL") {
-			var portalURL = PropsUtil.get("portal.url");
+			var portalUrl = PropsUtil.get("portal.url");
 		}
 
 		task ("Add a widget page to each site") {
@@ -290,7 +290,7 @@ definition {
 			var i = "1";
 
 			for (var language : list "English (United States),Spanish (Spain)") {
-				Site.openSiteSettingsAdmin(siteURLKey = "test-site-name-${i}");
+				Site.openSiteSettingsAdmin(siteUrlKey = "test-site-name-${i}");
 
 				Site.configureCurrentLanguagesCP(defaultSiteLanguage = "${language}");
 
@@ -326,9 +326,9 @@ definition {
 
 		task ("View locale is not shown in URL when it matches with user's preferred locale") {
 			for (var i : list "1,2") {
-				Page.openURLLocale(localizationPageURL = "${portalURL}/web/test-site-name-${i}");
+				Page.openURLLocale(localizationPageUrl = "${portalUrl}/web/test-site-name-${i}");
 
-				Page.viewURLLocale(localizationPageURL = "${portalURL}/web/test-site-name-${i}");
+				Page.viewURLLocale(localizationPageUrl = "${portalUrl}/web/test-site-name-${i}");
 			}
 		}
 
@@ -337,11 +337,11 @@ definition {
 		}
 
 		task ("View locale is shown in URL when it doesn't match with user's preferred locale") {
-			Page.openURLLocale(localizationPageURL = "${portalURL}/es/web/test-site-name-2");
+			Page.openURLLocale(localizationPageUrl = "${portalUrl}/es/web/test-site-name-2");
 
 			Page.viewURLLocale(
 				localizationOption = "Display the page in English (United States).",
-				localizationPageURL = "${portalURL}/web/test-site-name-2/");
+				localizationPageUrl = "${portalUrl}/web/test-site-name-2/");
 		}
 	}
 
@@ -349,11 +349,11 @@ definition {
 	@priority = "4"
 	test RedirectLocalizedFriendlyURL {
 		task ("Get portal url") {
-			var portalURL = PropsUtil.get("portal.url");
+			var portalUrl = PropsUtil.get("portal.url");
 		}
 
 		task ("Define English and Hungarian as current site languages") {
-			Site.openSiteSettingsAdmin(siteURLKey = "test-site-name-1");
+			Site.openSiteSettingsAdmin(siteUrlKey = "test-site-name-1");
 
 			Site.configureCurrentLanguagesCP(
 				currentSiteLanguages = "English (United States),Hungarian (Hungary)",
@@ -367,7 +367,7 @@ definition {
 		}
 
 		task ("Add new friendly url") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name 1");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "Test Site Name 1");
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Configure",
@@ -375,18 +375,18 @@ definition {
 
 			PagesAdmin.addLocalizedFriendlyURL(
 				friendlyUrlLocalizedList = "hu-HU,en-US",
-				localizedFriendlyURLList = "/friendlyhu,/friendlyen",
+				localizedFriendlyUrlList = "/friendlyhu,/friendlyen",
 				localizedNameList = "-,-");
 		}
 
 		task ("View non logged user will be redirected to friendly url") {
 			User.logoutPG();
 
-			Navigator.openSpecificURL(url = "${portalURL}/hu/web/test-site-name-1/friendlyen");
+			Navigator.openSpecificURL(url = "${portalUrl}/hu/web/test-site-name-1/friendlyen");
 
 			Alert.closePortalLocalizationWarning();
 
-			AssertLocation(value1 = "${portalURL}/hu/web/test-site-name-1/friendlyhu");
+			AssertLocation(value1 = "${portalUrl}/hu/web/test-site-name-1/friendlyhu");
 		}
 	}
 
@@ -410,7 +410,7 @@ definition {
 		}
 
 		task ("Define English as current site languages") {
-			Site.openSiteSettingsAdmin(siteURLKey = "test-site-name-1");
+			Site.openSiteSettingsAdmin(siteUrlKey = "test-site-name-1");
 
 			Site.configureCurrentLanguagesCP(
 				currentSiteLanguages = "English (United States)",
@@ -445,12 +445,12 @@ definition {
 		property custom.properties = "locale.use.default.if.not.available=true";
 
 		task ("Get portal url") {
-			var portalURL = PropsUtil.get("portal.url");
+			var portalUrl = PropsUtil.get("portal.url");
 		}
 
 		task ("Define English and Hungarian as current language for both sites") {
 			for (var i : list "1,2") {
-				Site.openSiteSettingsAdmin(siteURLKey = "test-site-name-${i}");
+				Site.openSiteSettingsAdmin(siteUrlKey = "test-site-name-${i}");
 
 				Site.configureCurrentLanguagesCP(
 					currentSiteLanguages = "English (United States),Hungarian (Hungary)",
@@ -469,15 +469,15 @@ definition {
 		task ("View pages are shown in fr-FR to guest") {
 			User.logoutPG();
 
-			Navigator.openSpecificURL(url = "${portalURL}/fr/web/test-site-name-2/test-page-name-2");
+			Navigator.openSpecificURL(url = "${portalUrl}/fr/web/test-site-name-2/test-page-name-2");
 
-			AssertLocation(value1 = "${portalURL}/fr/web/test-site-name-2/test-page-name-2");
+			AssertLocation(value1 = "${portalUrl}/fr/web/test-site-name-2/test-page-name-2");
 
 			AssertTextNotPresent(value1 = "The requested resource could not be found.");
 
 			Page.viewSpecificPG(pageNameList = "Test Page Name 2");
 
-			Navigator.openSpecificURL(url = "${portalURL}/fr/web/test-site-name-1");
+			Navigator.openSpecificURL(url = "${portalUrl}/fr/web/test-site-name-1");
 
 			AssertTextNotPresent(value1 = "The requested resource could not be found.");
 
@@ -487,17 +487,17 @@ definition {
 		task ("Sign in as Test Test") {
 			User.firstLoginUI(
 				password = "test",
-				specificURL = "${portalURL}/fr/web/test-site-name-1",
+				specificUrl = "${portalUrl}/fr/web/test-site-name-1",
 				userEmailAddress = "test@liferay.com");
 
-			AssertLocation(value1 = "${portalURL}/web/test-site-name-1");
+			AssertLocation(value1 = "${portalUrl}/web/test-site-name-1");
 		}
 
 		task ("Add a virtual host for the second site") {
-			Site.openSiteSettingsAdmin(siteURLKey = "test-site-name-2");
+			Site.openSiteSettingsAdmin(siteUrlKey = "test-site-name-2");
 
 			Site.addVirtualHostsURLCP(
-				publicPageVirtualHostURL = "www.able.com",
+				publicPageVirtualHostUrl = "www.able.com",
 				publicVirtualHosts = "true");
 		}
 
@@ -507,7 +507,7 @@ definition {
 			Site.viewVirtualHostsURLPG(
 				pageName = "Test Page Name 2",
 				siteName = "Test Site Name 2",
-				sitePageURL = "http://www.able.com:8080/fr/");
+				sitePageUrl = "http://www.able.com:8080/fr/");
 
 			AssertTextNotPresent(value1 = "The requested resource could not be found.");
 
@@ -519,7 +519,7 @@ definition {
 	@priority = "4"
 	test ViewPortletInteractWithLocalization {
 		task ("Add a localized site") {
-			Site.openSiteSettingsAdmin(siteURLKey = "test-site-name-1");
+			Site.openSiteSettingsAdmin(siteUrlKey = "test-site-name-1");
 
 			Site.addLocalizedName(
 				localeList = "es-ES",
@@ -544,7 +544,7 @@ definition {
 		}
 
 		task ("Define Spanish and German as current site languages") {
-			Site.openSiteSettingsAdmin(siteURLKey = "test-site-name-1");
+			Site.openSiteSettingsAdmin(siteUrlKey = "test-site-name-1");
 
 			Site.configureCurrentLanguagesCP(
 				currentSiteLanguages = "Spanish (Spain),German (Germany)",
@@ -632,7 +632,7 @@ definition {
 		}
 
 		task ("Define Spanish and German as current site languages") {
-			Site.openSiteSettingsAdmin(siteURLKey = "test-site-name-1");
+			Site.openSiteSettingsAdmin(siteUrlKey = "test-site-name-1");
 
 			Site.configureCurrentLanguagesCP(
 				category = "Localización",
@@ -667,7 +667,7 @@ definition {
 		property custom.properties = "locale.prepend.friendly.url.style=0";
 
 		task ("Get portal URL") {
-			var portalURL = PropsUtil.get("portal.url");
+			var portalUrl = PropsUtil.get("portal.url");
 		}
 
 		task ("Add a widget page") {
@@ -692,7 +692,7 @@ definition {
 				locale = "es_ES",
 				textIcon = "español-España");
 
-			AssertLocation(value1 = "${portalURL}/web/test-site-name-1/");
+			AssertLocation(value1 = "${portalUrl}/web/test-site-name-1/");
 		}
 
 		task ("View site's URL after switch to ja-JP via Language Selector") {
@@ -704,7 +704,7 @@ definition {
 				locale = "ja_JP",
 				textIcon = "日本語-日本");
 
-			AssertLocation(value1 = "${portalURL}/web/test-site-name-1/");
+			AssertLocation(value1 = "${portalUrl}/web/test-site-name-1/");
 		}
 	}
 
@@ -714,7 +714,7 @@ definition {
 		property custom.properties = "locale.prepend.friendly.url.style=1";
 
 		task ("Get portal URL") {
-			var portalURL = PropsUtil.get("portal.url");
+			var portalUrl = PropsUtil.get("portal.url");
 		}
 
 		task ("Add a widget page") {
@@ -739,7 +739,7 @@ definition {
 				locale = "es_ES",
 				textIcon = "español-España");
 
-			AssertLocation(value1 = "${portalURL}/es/web/test-site-name-1/");
+			AssertLocation(value1 = "${portalUrl}/es/web/test-site-name-1/");
 		}
 
 		task ("View site's URL after switch to ja-JP via Language Selector") {
@@ -751,7 +751,7 @@ definition {
 				locale = "ja_JP",
 				textIcon = "日本語-日本");
 
-			AssertLocation(value1 = "${portalURL}/ja/web/test-site-name-1/");
+			AssertLocation(value1 = "${portalUrl}/ja/web/test-site-name-1/");
 		}
 	}
 
@@ -761,7 +761,7 @@ definition {
 		property custom.properties = "locale.prepend.friendly.url.style=2";
 
 		task ("Get portal URL") {
-			var portalURL = PropsUtil.get("portal.url");
+			var portalUrl = PropsUtil.get("portal.url");
 		}
 
 		task ("Add a widget page") {
@@ -786,7 +786,7 @@ definition {
 				locale = "es_ES",
 				textIcon = "español-España");
 
-			AssertLocation(value1 = "${portalURL}/es/web/test-site-name-1/");
+			AssertLocation(value1 = "${portalUrl}/es/web/test-site-name-1/");
 		}
 
 		task ("View site's URL after switch to ja-JP via Language Selector") {
@@ -798,7 +798,7 @@ definition {
 				locale = "ja_JP",
 				textIcon = "日本語-日本");
 
-			AssertLocation(value1 = "${portalURL}/ja/web/test-site-name-1/");
+			AssertLocation(value1 = "${portalUrl}/ja/web/test-site-name-1/");
 		}
 	}
 

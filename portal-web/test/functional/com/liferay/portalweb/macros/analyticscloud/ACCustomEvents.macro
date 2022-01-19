@@ -83,22 +83,22 @@ definition {
 		}
 
 		Type(
-			key_inputID = "name-custom",
+			key_inputId = "name-custom",
 			locator1 = "ACCustomEvents#INPUT_CUSTOM_EVENT",
 			value1 = "${customEventName}");
 
 		Type(
-			key_inputID = "times-custom",
+			key_inputId = "times-custom",
 			locator1 = "ACCustomEvents#INPUT_CUSTOM_EVENT",
 			value1 = "${timeToSendCustomEvent}");
 
 		Type(
-			key_textareaID = "placements",
+			key_textareaId = "placements",
 			locator1 = "ACCustomEvents#TEXTAREA_CUSTOM_EVENT",
 			value1 = "${attributesName}");
 
 		Type(
-			key_textareaID = "expected",
+			key_textareaId = "expected",
 			locator1 = "ACCustomEvents#TEXTAREA_CUSTOM_EVENT",
 			value1 = "${attributesValue}");
 

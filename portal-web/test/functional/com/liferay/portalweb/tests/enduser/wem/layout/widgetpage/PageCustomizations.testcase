@@ -47,7 +47,7 @@ definition {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
 		task ("Enable customizable to page then select the first column") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
 
 			PageCustomizations.enableSectionCustomizableCP(
 				columnId = "1",
@@ -123,7 +123,7 @@ definition {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
 		task ("Enable customizable to page then select the first column") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
 
 			PageCustomizations.enableSectionCustomizableCP(
 				columnId = "1",
@@ -186,7 +186,7 @@ definition {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
 		task ("Enable customizable to page then select the first column") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
 
 			PageCustomizations.enableSectionCustomizableCP(
 				columnId = "1",
@@ -278,7 +278,7 @@ definition {
 		}
 
 		task ("Enable customizable to page then select the first column") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
 
 			PageCustomizations.enableSectionCustomizableCP(
 				columnId = "1",

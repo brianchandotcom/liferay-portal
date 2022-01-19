@@ -50,13 +50,13 @@ definition {
 
 		Alert.viewSuccessMessageText(successMessage = "Your envelope was created successfully.");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		DMDocument.deleteCP(dmDocumentTitle = "Document_2");
 
 		DMDocument.deleteCP(dmDocumentTitle = "Document_3");
 
-		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
+		RecycleBin.openRecycleBinAdmin(siteUrlKey = "guest");
 
 		RecycleBin.emptyCP();
 
@@ -116,7 +116,7 @@ definition {
 	test CanInvalidDocumentPreventCollectingDS {
 		DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		DMDocument.addMultipleCP(dmDocumentFileList = "Document_1.doc,Document_2.png,Document_3.odt");
 
@@ -130,7 +130,7 @@ definition {
 			locator1 = "DigitalSignatureDM#DIGITAL_SIGNATURE_MODAL_TITLE",
 			value1 = "${modalTitle}");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		PortletEntry.selectAll();
 
@@ -138,7 +138,7 @@ definition {
 
 		VerifyElementPresent(locator1 = "Message#SUCCESS");
 
-		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
+		RecycleBin.openRecycleBinAdmin(siteUrlKey = "guest");
 
 		RecycleBin.emptyCP();
 	}
@@ -160,11 +160,11 @@ definition {
 
 		AssertElementPresent(locator1 = "DigitalSignatureEnvelopeSettings#DIGITAL_SIGNATURE_UNSUPORTTED_FILE");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		DMDocument.deleteCP(dmDocumentTitle = "DM Document Title");
 
-		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
+		RecycleBin.openRecycleBinAdmin(siteUrlKey = "guest");
 
 		RecycleBin.emptyCP();
 	}
@@ -186,11 +186,11 @@ definition {
 
 		Alert.viewSuccessMessageText(successMessage = "Your envelope was created successfully.");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		DMDocument.deleteCP(dmDocumentTitle = "DM Document Title");
 
-		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
+		RecycleBin.openRecycleBinAdmin(siteUrlKey = "guest");
 
 		RecycleBin.emptyCP();
 

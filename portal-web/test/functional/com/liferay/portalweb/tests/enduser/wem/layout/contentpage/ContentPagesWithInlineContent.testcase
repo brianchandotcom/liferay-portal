@@ -132,7 +132,7 @@ definition {
 		}
 
 		task ("Add a new fragment with the following codes") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "test-site-name");
 
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 
@@ -414,7 +414,7 @@ definition {
 			PageEditor.editFragmentImage(
 				fragmentName = "Image",
 				id = "image-square",
-				imageSourceURL = "https://raw.githubusercontent.com/liferay/liferay-portal/master/portal-web/test/functional/com/liferay/portalweb/dependencies/Document_1.jpg");
+				imageSourceUrl = "https://raw.githubusercontent.com/liferay/liferay-portal/master/portal-web/test/functional/com/liferay/portalweb/dependencies/Document_1.jpg");
 		}
 
 		task ("Assert the selected image is shown in Image fragment") {

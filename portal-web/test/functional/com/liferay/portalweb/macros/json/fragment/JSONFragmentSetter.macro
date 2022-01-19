@@ -20,8 +20,8 @@ definition {
 
 	macro setGroupId {
 		JSONUtil2._exclusiveOrCheck(
-			A = "${groupName}",
-			B = "${groupKey}",
+			a = "${groupName}",
+			b = "${groupKey}",
 			failMessage = "Please only set 'groupName' or 'groupKey' but not both or none.");
 
 		if (isSet(groupName)) {

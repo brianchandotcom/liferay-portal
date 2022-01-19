@@ -34,7 +34,7 @@ definition {
 			Type(
 				key_fieldLabel = "Site Absolute URL",
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "${dmRepositorySiteAbsoluteURL}");
+				value1 = "${dmRepositorySiteAbsoluteUrl}");
 
 			Type(
 				key_fieldLabel = "Library Path",
@@ -44,7 +44,7 @@ definition {
 		else {
 			Type(
 				locator1 = "DocumentsAndMediaEditRepository#SITE_URL_FIELD",
-				value1 = "${dmRepositorySiteURL}");
+				value1 = "${dmRepositorySiteUrl}");
 
 			Type(
 				locator1 = "DocumentsAndMediaEditRepository#LIBRARY_NAME_FIELD",

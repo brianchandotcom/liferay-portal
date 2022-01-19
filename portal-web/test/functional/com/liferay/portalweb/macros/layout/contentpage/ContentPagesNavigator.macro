@@ -16,7 +16,7 @@ definition {
 	}
 
 	macro openEditContentPage {
-		if (!(isSet(siteURLKey))) {
+		if (!(isSet(siteUrlKey))) {
 			var siteURLKey = ContentPagesNavigator._convertNameToKey(name = "${siteName}");
 		}
 
@@ -31,13 +31,13 @@ definition {
 			var type = "web";
 		}
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "${type}/${siteURLKey}/${pageFriendlyUrl}?p_l_mode=edit");
+		Navigator.openWithAppendToBaseURL(urlAppend = "${type}/${siteUrlKey}/${pageFriendlyUrl}?p_l_mode=edit");
 
 		PageEditor.assertFragmentSidebarLoaded();
 	}
 
 	macro openViewContentPage {
-		if (!(isSet(siteURLKey))) {
+		if (!(isSet(siteUrlKey))) {
 			var siteURLKey = ContentPagesNavigator._convertNameToKey(name = "${siteName}");
 		}
 
@@ -53,10 +53,10 @@ definition {
 		}
 
 		if (isSet(locale)) {
-			Navigator.openWithAppendToBaseURL(urlAppend = "${locale}/${type}/${siteURLKey}/${pageFriendlyUrl}");
+			Navigator.openWithAppendToBaseURL(urlAppend = "${locale}/${type}/${siteUrlKey}/${pageFriendlyUrl}");
 		}
 		else {
-			Navigator.openWithAppendToBaseURL(urlAppend = "${type}/${siteURLKey}/${pageFriendlyUrl}");
+			Navigator.openWithAppendToBaseURL(urlAppend = "${type}/${siteUrlKey}/${pageFriendlyUrl}");
 		}
 	}
 

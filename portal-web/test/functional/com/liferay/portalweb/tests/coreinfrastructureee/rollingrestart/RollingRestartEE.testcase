@@ -10,8 +10,8 @@ definition {
 	property test.run.environment = "EE";
 	property testray.main.component.name = "Rolling Restart";
 
-	var testBuildFixPackZipURL = PropsUtil.get("test.build.fix.pack.zip.url");
-	var testBuildFixPackZipURLPrevious = PropsUtil.get("test.build.fix.pack.zip.url.previous");
+	var testBuildFixPackZipUrl = PropsUtil.get("test.build.fix.pack.zip.url");
+	var testBuildFixPackZipUrlPrevious = PropsUtil.get("test.build.fix.pack.zip.url.previous");
 
 	setUp {
 		User.firstLoginPG();
@@ -69,7 +69,7 @@ definition {
 
 		PatchingTool.installPatchOnSpecificServer(
 			nodePort = "8080",
-			patchFileZipURL = "${testBuildFixPackZipURL}");
+			patchFileZipUrl = "${testBuildFixPackZipUrl}");
 
 		Clustering.startSpecificServer(
 			deleteLiferayHome = "true",
@@ -115,7 +115,7 @@ definition {
 
 		PatchingTool.installPatchOnSpecificServer(
 			nodePort = "9080",
-			patchFileZipURL = "${testBuildFixPackZipURL}");
+			patchFileZipUrl = "${testBuildFixPackZipUrl}");
 
 		Clustering.startSpecificServer(
 			deleteLiferayHome = "true",
@@ -179,7 +179,7 @@ definition {
 
 		Page.assertNodePortPG(nodePort = "9080");
 
-		User.logoutPG(specificURL = "http://localhost:9080");
+		User.logoutPG(specificUrl = "http://localhost:9080");
 
 		User.loginPG(
 			nodePort = "10080",
@@ -192,14 +192,14 @@ definition {
 
 		PatchingTool.installPatchOnSpecificServer(
 			nodePort = "9080",
-			patchFileZipURL = "${testBuildFixPackZipURL}");
+			patchFileZipUrl = "${testBuildFixPackZipUrl}");
 
 		Clustering.startSpecificServer(
 			deleteLiferayHome = "true",
 			keepCachedAppServerData = "true",
 			nodePort = "9080");
 
-		User.logoutPG(specificURL = "http://localhost:10080");
+		User.logoutPG(specificUrl = "http://localhost:10080");
 
 		User.loginPG(
 			nodePort = "9080",
@@ -260,7 +260,7 @@ definition {
 
 		PatchingTool.installPatchOnSpecificServer(
 			nodePort = "8080",
-			patchFileZipURL = "${testBuildFixPackZipURL}");
+			patchFileZipUrl = "${testBuildFixPackZipUrl}");
 
 		Clustering.startSpecificServer(
 			deleteLiferayHome = "true",
@@ -269,7 +269,7 @@ definition {
 
 		AssertConsoleTextNotPresent(value1 = "java.lang.ClassNotFoundException: Unable to load class com.liferay.portal.scheduler.quartz.internal.QuartzTrigger");
 
-		User.logoutPG(specificURL = "http://localhost:10080");
+		User.logoutPG(specificUrl = "http://localhost:10080");
 
 		User.loginPG(
 			password = "test",
@@ -335,7 +335,7 @@ definition {
 
 		PatchingTool.installPatchOnSpecificServer(
 			nodePort = "10080",
-			patchFileZipURL = "${testBuildFixPackZipURL}");
+			patchFileZipUrl = "${testBuildFixPackZipUrl}");
 
 		Clustering.startSpecificServer(
 			deleteLiferayHome = "true",
@@ -451,7 +451,7 @@ definition {
 			locator1 = "FormFields#USER_NOTIFICATION_TIMEOUT",
 			value1 = "30000");
 
-		User.logoutPG(specificURL = "http://localhost:9080");
+		User.logoutPG(specificUrl = "http://localhost:9080");
 
 		User.loginPG(
 			nodePort = "10080",
@@ -485,7 +485,7 @@ definition {
 			keepCachedAppServerData = "true",
 			nodePort = "8080");
 
-		User.logoutPG(specificURL = "http://localhost:10080");
+		User.logoutPG(specificUrl = "http://localhost:10080");
 
 		User.loginPG(
 			password = "test",
@@ -552,7 +552,7 @@ definition {
 
 		WebContent.viewTitle(webContentTitle = "WC WebContent Title Cluster1");
 
-		User.logoutPG(specificURL = "http://localhost:9080");
+		User.logoutPG(specificUrl = "http://localhost:9080");
 
 		User.loginPG(
 			nodePort = "10080",
@@ -629,7 +629,7 @@ definition {
 
 			PatchingTool.installPatchOnSpecificServer(
 				nodePort = "${nodePort}",
-				patchFileZipURL = "${testBuildFixPackZipURL}");
+				patchFileZipUrl = "${testBuildFixPackZipUrl}");
 
 			Clustering.startSpecificServer(
 				deleteLiferayHome = "true",
@@ -657,7 +657,7 @@ definition {
 
 		PatchingTool.installPatchOnSpecificServer(
 			nodePort = "9080",
-			patchFileZipURL = "${testBuildFixPackZipURLPrevious}");
+			patchFileZipUrl = "${testBuildFixPackZipUrlPrevious}");
 
 		Clustering.startSpecificServer(
 			deleteLiferayHome = "true",
@@ -728,7 +728,7 @@ definition {
 
 		PatchingTool.installPatchOnSpecificServer(
 			nodePort = "8080",
-			patchFileZipURL = "${testBuildFixPackZipURLPrevious}");
+			patchFileZipUrl = "${testBuildFixPackZipUrlPrevious}");
 
 		Clustering.startSpecificServer(
 			deleteLiferayHome = "true",
@@ -803,7 +803,7 @@ definition {
 
 		PatchingTool.installPatchOnSpecificServer(
 			nodePort = "10080",
-			patchFileZipURL = "${testBuildFixPackZipURLPrevious}");
+			patchFileZipUrl = "${testBuildFixPackZipUrlPrevious}");
 
 		Clustering.startSpecificServer(
 			deleteLiferayHome = "true",
@@ -885,7 +885,7 @@ definition {
 
 		Page.assertNodePortPG(nodePort = "9080");
 
-		User.logoutPG(specificURL = "http://localhost:9080");
+		User.logoutPG(specificUrl = "http://localhost:9080");
 
 		User.loginPG(
 			nodePort = "10080",
@@ -894,7 +894,7 @@ definition {
 
 		Page.assertNodePortPG(nodePort = "10080");
 
-		User.logoutPG(specificURL = "http://localhost:10080");
+		User.logoutPG(specificUrl = "http://localhost:10080");
 
 		// Take down cluster2, update portal-ext.properties
 
@@ -912,7 +912,7 @@ definition {
 		User.firstLoginUI(
 			authenticationMethod = "By Screen Name",
 			password = "test",
-			specificURL = "http://localhost:9080",
+			specificUrl = "http://localhost:9080",
 			userScreenName = "test");
 
 		Page.assertNodePortPG(nodePort = "9080");
@@ -931,12 +931,12 @@ definition {
 
 		WebContent.viewTitle(webContentTitle = "WC WebContent Title Cluster2");
 
-		User.logoutPG(specificURL = "http://localhost:9080");
+		User.logoutPG(specificUrl = "http://localhost:9080");
 
 		for (var nodePort : list "8080,10080") {
 			User.firstLoginUI(
 				password = "test",
-				specificURL = "http://localhost:${nodePort}",
+				specificUrl = "http://localhost:${nodePort}",
 				userEmailAddress = "test@liferay.com");
 
 			Page.assertNodePortPG(nodePort = "${nodePort}");
@@ -947,7 +947,7 @@ definition {
 
 			WebContent.viewTitle(webContentTitle = "WC WebContent Title Cluster2");
 
-			User.logoutPG(specificURL = "http://localhost:${nodePort}");
+			User.logoutPG(specificUrl = "http://localhost:${nodePort}");
 		}
 
 		// Take down cluster1, update portal-ext.properties
@@ -996,7 +996,7 @@ definition {
 		User.firstLoginUI(
 			authenticationMethod = "By Screen Name",
 			password = "test",
-			specificURL = "http://localhost:9080",
+			specificUrl = "http://localhost:9080",
 			userScreenName = "test");
 
 		Page.assertNodePortPG(nodePort = "9080");
@@ -1007,11 +1007,11 @@ definition {
 
 		Portlet.viewPG(portletName = "Documents and Media");
 
-		User.logoutPG(specificURL = "http://localhost:9080");
+		User.logoutPG(specificUrl = "http://localhost:9080");
 
 		User.firstLoginUI(
 			password = "test",
-			specificURL = "http://localhost:10080",
+			specificUrl = "http://localhost:10080",
 			userEmailAddress = "test@liferay.com");
 
 		Page.assertNodePortPG(nodePort = "10080");
@@ -1022,7 +1022,7 @@ definition {
 
 		Portlet.viewPG(portletName = "Documents and Media");
 
-		User.logoutPG(specificURL = "http://localhost:10080");
+		User.logoutPG(specificUrl = "http://localhost:10080");
 
 		// Take down cluster3, update portal-ext.properties
 
@@ -1040,7 +1040,7 @@ definition {
 		User.firstLoginUI(
 			authenticationMethod = "By Screen Name",
 			password = "test",
-			specificURL = "http://localhost:10080",
+			specificUrl = "http://localhost:10080",
 			userScreenName = "test");
 
 		Page.assertNodePortPG(nodePort = "10080");
@@ -1056,13 +1056,13 @@ definition {
 
 		DMDocument.viewPG(dmDocumentTitle = "DM Document Title Cluster3");
 
-		User.logoutPG(specificURL = "http://localhost:10080");
+		User.logoutPG(specificUrl = "http://localhost:10080");
 
 		for (var nodePort : list "8080,9080") {
 			User.firstLoginUI(
 				authenticationMethod = "By Screen Name",
 				password = "test",
-				specificURL = "http://localhost:${nodePort}",
+				specificUrl = "http://localhost:${nodePort}",
 				userScreenName = "test");
 
 			Page.assertNodePortPG(nodePort = "${nodePort}");
@@ -1073,7 +1073,7 @@ definition {
 
 			DMDocument.viewPG(dmDocumentTitle = "DM Document Title Cluster3");
 
-			User.logoutPG(specificURL = "http://localhost:${nodePort}");
+			User.logoutPG(specificUrl = "http://localhost:${nodePort}");
 		}
 	}
 

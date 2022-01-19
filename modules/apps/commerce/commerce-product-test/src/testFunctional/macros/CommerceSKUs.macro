@@ -28,7 +28,7 @@ definition {
 			CommerceEntry.addSKUsEntry(
 				noOption = "${noOption}",
 				optionValue = "${optionValue}",
-				productSKU = "${optionValueUppercase}SKU");
+				productSku = "${optionValueUppercase}SKU");
 
 			WaitForElementNotPresent(locator1 = "TextInput#REQUIRED_ALERT");
 

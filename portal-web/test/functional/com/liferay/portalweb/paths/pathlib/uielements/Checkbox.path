@@ -72,7 +72,7 @@
 </tr>
 <tr>
 	<td>ADD_SHIPMENT_ITEMS_CHECKBOX</td>
-	<td>//div[contains(text(), '${key_productSKU}')]/preceding-sibling::div[@class='dnd-td item-selector']//input[@type='checkbox']</td>
+	<td>//div[contains(text(), '${key_productSku}')]/preceding-sibling::div[@class='dnd-td item-selector']//input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>

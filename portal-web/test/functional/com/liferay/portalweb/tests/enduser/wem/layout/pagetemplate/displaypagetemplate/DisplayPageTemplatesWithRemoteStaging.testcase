@@ -45,7 +45,7 @@ definition {
 		property test.name.skip.portal.instance = "DisplayPageTemplatesWithRemoteStaging#PublishDisplayPageTemplateWithAssetPublisherToLive";
 
 		task ("Add a web content and select the display page template") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 			WebContentNavigator.gotoAddCP();
 
@@ -57,13 +57,13 @@ definition {
 		}
 
 		task ("Publish to live") {
-			Staging.openStagingAdmin(siteURLKey = "test-site-name");
+			Staging.openStagingAdmin(siteUrlKey = "test-site-name");
 
 			Staging.publishCustomPublication(remoteStaging = "true");
 		}
 
 		task ("Add a display page template for Web Content Article and Basic Web Content") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.addDisplayPage(
 				contentType = "Web Content Article",
@@ -78,7 +78,7 @@ definition {
 		}
 
 		task ("Select the display page template in web content") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title");
 
@@ -90,7 +90,7 @@ definition {
 		}
 
 		task ("Publish to live") {
-			Staging.openStagingAdmin(siteURLKey = "test-site-name");
+			Staging.openStagingAdmin(siteUrlKey = "test-site-name");
 
 			Staging.publishCustomPublication(remoteStaging = "true");
 		}

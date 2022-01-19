@@ -578,7 +578,7 @@ definition {
 		CommerceOrders.createShipment(
 			carrierDetail = "Test Carrier",
 			complement = "Deliver",
-			productSKUList = "MIN55861",
+			productSkuList = "MIN55861",
 			warehouseName = "Italy");
 
 		ApplicationsMenu.gotoSite(site = "Minium");

@@ -36,7 +36,7 @@ definition {
 		}
 
 		task ("Add three categories") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 
 			for (var n : list "1,2,3") {
 				Category.addCP(
@@ -74,7 +74,7 @@ definition {
 		}
 
 		task ("Add one subcategory in each category") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 
 			for (var n : list "1,2,3") {
 				Subcategory.addCP(
@@ -167,7 +167,7 @@ definition {
 		}
 
 		task ("Add the third category") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 
 			Navigator.gotoNavNested(navNested = "Vocabulary Name");
 
@@ -231,7 +231,7 @@ definition {
 		}
 
 		task ("Navigate to the Categories admin") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 		}
 
 		task ("View the Maximum Number of categories of existing vocabularies is 300") {
@@ -277,7 +277,7 @@ definition {
 		}
 
 		task ("Delete the new category by icon") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 
 			Category.deleteByIconCP(
 				categoryName = "Category Name",
@@ -303,7 +303,7 @@ definition {
 		}
 
 		task ("Delete the new category by menu") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 
 			Category.deleteCategoryByMenuCP(
 				categoryName = "Category Name",
@@ -337,7 +337,7 @@ definition {
 		}
 
 		task ("Delete the new subcategory by icon") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 
 			Subcategory.deleteViaIconCP(
 				categoryName = "Category Name",
@@ -374,7 +374,7 @@ definition {
 		}
 
 		task ("Delete the new subcategory by menu") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 
 			Subcategory.deleteViaMenuCP(
 				categoryName = "Category Name",
@@ -396,7 +396,7 @@ definition {
 		}
 
 		task ("Delete the vocabulary by icon") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 
 			Vocabulary.deleteByIconCP(vocabularyName = "Vocabulary Name");
 		}
@@ -413,7 +413,7 @@ definition {
 		}
 
 		task ("Delete the vocabulary by menu") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 
 			Vocabulary.deleteByMenuCP(vocabularyName = "Vocabulary Name");
 		}
@@ -439,7 +439,7 @@ definition {
 		}
 
 		task ("Edit the new category") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 
 			Category.editCP(
 				categoryName = "Category Name",
@@ -482,7 +482,7 @@ definition {
 		}
 
 		task ("Edit the new subcategory") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 
 			Subcategory.editCP(
 				categoryName = "Category Name",
@@ -512,7 +512,7 @@ definition {
 		}
 
 		task ("Edit the new vocabulary") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 
 			Vocabulary.editCP(
 				vocabularyName = "Vocabulary Name",
@@ -534,7 +534,7 @@ definition {
 		}
 
 		task ("Edit the new vocabulary") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 
 			Vocabulary.goToVocabulary(vocabularyName = "Audience");
 
@@ -547,7 +547,7 @@ definition {
 	@uitest
 	test ViewDefaultMaximumNumberOfCategoriesPerVocabulary {
 		task ("Navigate to the Categories admin") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 		}
 
 		task ("View the default Maximum Number of categories of existing vocabularies") {
@@ -578,7 +578,7 @@ definition {
 	@uitest
 	test ViewDescriptionOfVocabulary {
 		task ("Navigate to the Categories admin") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 		}
 
 		task ("Add the first vocabulary with a short description") {

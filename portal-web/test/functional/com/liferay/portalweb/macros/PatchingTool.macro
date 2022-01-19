@@ -1,26 +1,26 @@
 definition {
 
-	@summary = "Install the following patch onto Liferay Portal. ${patchFileZipURL}"
+	@summary = "Install the following patch onto Liferay Portal. ${patchFileZipUrl}"
 	macro installPatch {
-		if (!(contains("${patchFileZipURL}", "dxp-0-"))) {
+		if (!(contains("${patchFileZipUrl}", "dxp-0-"))) {
 			AntCommand(
 				locator1 = "build-test.xml",
-				value1 = "install-patch -Dpatch.file.zip.url=${patchFileZipURL}");
+				value1 = "install-patch -Dpatch.file.zip.url=${patchFileZipUrl}");
 		}
 		else {
 			echo("No previous fix pack available to install");
 		}
 	}
 
-	@summary = "Install the following patch onto Liferay Portal server with port ${nodePort}: ${patchFileZipURL}"
+	@summary = "Install the following patch onto Liferay Portal server with port ${nodePort}: ${patchFileZipUrl}"
 	macro installPatchOnSpecificServer {
 		var leadingPortNumber = StringUtil.replace("${nodePort}", "080", "");
 		var bundleIndex = ${leadingPortNumber} - 8;
 
-		if (!(contains("${patchFileZipURL}", "dxp-0-"))) {
+		if (!(contains("${patchFileZipUrl}", "dxp-0-"))) {
 			AntCommand(
 				locator1 = "build-test.xml",
-				value1 = "install-patch -Dpatch.file.zip.url=${patchFileZipURL} -Dinstall.patch.cluster.node.index=${bundleIndex}");
+				value1 = "install-patch -Dpatch.file.zip.url=${patchFileZipUrl} -Dinstall.patch.cluster.node.index=${bundleIndex}");
 		}
 		else {
 			echo("No previous fix pack available to install");

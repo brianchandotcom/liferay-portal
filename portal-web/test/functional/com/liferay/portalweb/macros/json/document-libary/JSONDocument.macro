@@ -6,7 +6,7 @@ definition {
 			dmDocumentTitle = "${dmDocumentTitle}",
 			folderId = "${folderId}",
 			groupName = "${groupName}",
-			portalURL = "${baseURL}");
+			portalUrl = "${baseUrl}");
 
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -15,7 +15,7 @@ definition {
 		}
 
 		var curl = '''
-			${portalURL}/o/headless-delivery/v1.0/documents/${fileEntryId}/comments \
+			${portalUrl}/o/headless-delivery/v1.0/documents/${fileEntryId}/comments \
 			-H 'Content-Type: application/json' \
 			-u 'test@liferay.com:test'
 			-d '{
@@ -72,7 +72,7 @@ definition {
 			workflowAction = "${workflowAction}");
 
 		var curl = '''
-			${portalURL}/api/jsonws/dlapp/add-file-entry \
+			${portalUrl}/api/jsonws/dlapp/add-file-entry \
 			-u test@liferay.com:test \
 			-d repositoryId=${repositoryId} \
 			-d folderId=${folderId} \
@@ -174,7 +174,7 @@ definition {
 
 		if (isSet(reviewDate)) {
 			var curl = '''
-				${portalURL}/api/jsonws/dlapp/add-file-entry \
+				${portalUrl}/api/jsonws/dlapp/add-file-entry \
 				-u test@liferay.com:test \
 				-F externalReferenceCode= \
 				-F repositoryId=${repositoryId} \
@@ -192,7 +192,7 @@ definition {
 		}
 		else {
 			var curl = '''
-				${portalURL}/api/jsonws/dlapp/add-file-entry \
+				${portalUrl}/api/jsonws/dlapp/add-file-entry \
 				-u test@liferay.com:test \
 				-F externalReferenceCode= \
 				-F repositoryId=${repositoryId} \
@@ -240,7 +240,7 @@ definition {
 		}
 
 		var curl = '''
-			${portalURL}/api/jsonws/dlfileentry/delete-file-entry \
+			${portalUrl}/api/jsonws/dlfileentry/delete-file-entry \
 			-u test@liferay.com:test \
 			-d groupId=${groupId} \
 			-d folderId=${folderId} \
@@ -261,7 +261,7 @@ definition {
 
 		var groupId = JSONGroupAPI._getGroupIdByName(
 			groupName = "${groupName}",
-			portalURL = "${portalURL}",
+			portalUrl = "${portalUrl}",
 			site = "${site}");
 
 		if (!(isSet(folderId))) {
@@ -269,7 +269,7 @@ definition {
 		}
 
 		var curl = '''
-			${portalURL}/api/jsonws/dlfileentry/get-file-entry \
+			${portalUrl}/api/jsonws/dlfileentry/get-file-entry \
 			  -u test@liferay.com:test \
 			  -d groupId=${groupId} \
 			  -d folderId=${folderId} \
@@ -293,7 +293,7 @@ definition {
 
 		var groupId = JSONGroupAPI._getGroupIdByName(
 			groupName = "${groupName}",
-			portalURL = "${portalURL}",
+			portalUrl = "${portalUrl}",
 			site = "${site}");
 
 		if (!(isSet(folderId))) {
@@ -301,15 +301,15 @@ definition {
 		}
 
 		var curl = '''
-			${portalURL}/api/jsonws/dlfileentry/get-file-entry \
+			${portalUrl}/api/jsonws/dlfileentry/get-file-entry \
 			  -u test@liferay.com:test \
 			  -d groupId=${groupId} \
 			  -d folderId=${folderId} \
 			  -d title=${dmDocumentTitle}
 		''';
-		var fileEntryUUID = JSONCurlUtil.post("${curl}", "$.[?(@['title'] == '${dmDocumentTitle}')]['uuid']");
+		var fileEntryUuid = JSONCurlUtil.post("${curl}", "$.[?(@['title'] == '${dmDocumentTitle}')]['uuid']");
 
-		return "${fileEntryUUID}";
+		return "${fileEntryUuid}";
 	}
 
 	@summary = "This calls the JSON WS API to move a document to a folder"
@@ -318,7 +318,7 @@ definition {
 			dmDocumentTitle = "${dmDocumentTitle}",
 			folderId = "${folderId}",
 			groupName = "${groupName}",
-			portalURL = "${baseURL}");
+			portalUrl = "${baseUrl}");
 
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -327,7 +327,7 @@ definition {
 			name = "${folderName}");
 
 		var curl = '''
-			${portalURL}/api/jsonws/dlapp/move-file-entry \
+			${portalUrl}/api/jsonws/dlapp/move-file-entry \
 			-u test@liferay.com:test \
 			-d fileEntryId=${fileEntryId} \
 			-d newFolderId=${newFolderId}
@@ -353,12 +353,12 @@ definition {
 			dmDocumentTitle = "${dmDocumentTitle}",
 			folderId = "${folderId}",
 			groupName = "${groupName}",
-			portalURL = "${baseURL}");
+			portalUrl = "${baseUrl}");
 
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalURL}/api/jsonws/dltrash/move-file-entry-to-trash \
+			${portalUrl}/api/jsonws/dltrash/move-file-entry-to-trash \
 			-u test@liferay.com:test \
 			-d fileEntryId=${fileEntryId}
 		''';
@@ -382,11 +382,11 @@ definition {
 
 		var groupId = JSONGroupAPI._getGroupIdByName(
 			groupName = "${groupName}",
-			portalURL = "${portalURL}",
+			portalUrl = "${portalUrl}",
 			site = "${site}");
 
 		var curl = '''
-			${portalURL}/api/jsonws/dlapp/subscribe-folder \
+			${portalUrl}/api/jsonws/dlapp/subscribe-folder \
 			-u test@liferay.com:test \
 			-d groupId=${groupId} \
 			-d folderId=${folderId} \

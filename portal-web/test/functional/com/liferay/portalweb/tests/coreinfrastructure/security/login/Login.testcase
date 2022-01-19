@@ -17,10 +17,10 @@ definition {
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.sso.openid.connect.configuration.OpenIdConnectConfiguration.config";
 		property osgi.module.configurations = "enabled=&quot;true&quot;";
 
-		var openIDConnectClientID = PropsUtil.get("google.client.id.2");
-		var openIDConnectClientSecret = PropsUtil.get("google.client.secret.2");
-		var openIDConnectClientID1 = PropsUtil.get("google.client.id.3");
-		var openIDConnectClientSecret1 = PropsUtil.get("google.client.secret.3");
+		var openIdConnectClientId = PropsUtil.get("google.client.id.2");
+		var openIdConnectClientSecret = PropsUtil.get("google.client.secret.2");
+		var openIdConnectClientId1 = PropsUtil.get("google.client.id.3");
+		var openIdConnectClientSecret1 = PropsUtil.get("google.client.secret.3");
 		var userEmailAddress = PropsUtil.get("email.address.2");
 		var userPassword = PropsUtil.get("email.password.2");
 
@@ -49,8 +49,8 @@ definition {
 				configurationScope = "Virtual Instance Scope");
 
 			OpenIDConnect.addProvider(
-				openIDConnectClientID = "${openIDConnectClientID}",
-				openIDConnectClientSecret = "${openIDConnectClientSecret}",
+				openIdConnectClientId = "${openIdConnectClientId}",
+				openIdConnectClientSecret = "${openIdConnectClientSecret}",
 				providerName = "Google");
 		}
 
@@ -58,9 +58,9 @@ definition {
 			User.firstLoginPG(
 				password = "test",
 				userEmailAddress = "test@www.able.com",
-				virtualHostsURL = "http://www.able.com:8080");
+				virtualHostsUrl = "http://www.able.com:8080");
 
-			PortalSettings.openInstanceSettingsAdmin(baseURL = "http://www.able.com:8080");
+			PortalSettings.openInstanceSettingsAdmin(baseUrl = "http://www.able.com:8080");
 
 			SystemSettings.gotoConfiguration(
 				configurationCategory = "SSO",
@@ -68,8 +68,8 @@ definition {
 				configurationScope = "Virtual Instance Scope");
 
 			OpenIDConnect.addProvider(
-				openIDConnectClientID = "${openIDConnectClientID1}",
-				openIDConnectClientSecret = "${openIDConnectClientSecret1}",
+				openIdConnectClientId = "${openIdConnectClientId1}",
+				openIdConnectClientSecret = "${openIdConnectClientSecret1}",
 				providerName = "Test Google");
 		}
 
@@ -91,7 +91,7 @@ definition {
 			User.firstLoginPG(
 				password = "test",
 				userEmailAddress = "test@www.baker.com",
-				virtualHostsURL = "http://www.baker.com:8080");
+				virtualHostsUrl = "http://www.baker.com:8080");
 
 			UserBar.signOut();
 
@@ -138,8 +138,8 @@ definition {
 		property dummy.socket.proxy.disabled = "true";
 		property test.name.skip.portal.instance = "Login#EnabledOpenIDConnectOnSystemLevel";
 
-		var openIDConnectClientID = PropsUtil.get("google.client.id.2");
-		var openIDConnectClientSecret = PropsUtil.get("google.client.secret.2");
+		var openIdConnectClientId = PropsUtil.get("google.client.id.2");
+		var openIdConnectClientSecret = PropsUtil.get("google.client.secret.2");
 		var userEmailAddress = PropsUtil.get("email.address.2");
 		var userPassword = PropsUtil.get("email.password.2");
 
@@ -180,8 +180,8 @@ definition {
 				configurationScope = "Virtual Instance Scope");
 
 			OpenIDConnect.addProvider(
-				openIDConnectClientID = "${openIDConnectClientID}",
-				openIDConnectClientSecret = "${openIDConnectClientSecret}",
+				openIdConnectClientId = "${openIdConnectClientId}",
+				openIdConnectClientSecret = "${openIdConnectClientSecret}",
 				providerName = "Google");
 		}
 
@@ -198,7 +198,7 @@ definition {
 		property portal.ssl.enabled = "true";
 		property test.name.skip.portal.instance = "Login#FacebookSSOSmoke";
 
-		var facebookApplicationID = PropsUtil.get("facebook.application.id");
+		var facebookApplicationId = PropsUtil.get("facebook.application.id");
 		var facebookApplicationSecret = PropsUtil.get("facebook.application.secret");
 		var facebookEmail = PropsUtil.get("facebook.email");
 		var facebookPassword = PropsUtil.get("facebook.password");
@@ -209,13 +209,13 @@ definition {
 			var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 			PortalSettings.gotoConfiguration(
-				baseURL = "http://localhost:8080",
+				baseUrl = "http://localhost:8080",
 				configurationCategory = "SSO",
 				configurationName = "Facebook Connect",
 				configurationScope = "Virtual Instance Scope");
 
 			PortalSettings.editConfigurationAuthenticationFacebook(
-				facebookApplicationID = "${facebookApplicationID}",
+				facebookApplicationId = "${facebookApplicationId}",
 				facebookApplicationSecret = "${facebookApplicationSecret}");
 		}
 
@@ -243,7 +243,7 @@ definition {
 		task ("Login and configure spanish as default and current portal language") {
 			User.firstLoginPG();
 
-			var portalURL = PropsUtil.get("portal.url");
+			var portalUrl = PropsUtil.get("portal.url");
 
 			PortalSettings.gotoConfiguration(
 				configurationCategory = "Localization",
@@ -267,7 +267,7 @@ definition {
 			User.firstLoginUI(
 				localization = "ES",
 				password = "test",
-				specificURL = "${portalURL}/es",
+				specificUrl = "${portalUrl}/es",
 				userEmailAddress = "test@liferay.com");
 		}
 	}
@@ -297,8 +297,8 @@ definition {
 		property dummy.socket.proxy.disabled = "true";
 		property test.name.skip.portal.instance = "Login#OpenIDConnectOnInstanceLevelSmoke";
 
-		var openIDConnectClientID = PropsUtil.get("google.client.id.1");
-		var openIDConnectClientSecret = PropsUtil.get("google.client.secret.1");
+		var openIdConnectClientId = PropsUtil.get("google.client.id.1");
+		var openIdConnectClientSecret = PropsUtil.get("google.client.secret.1");
 		var userEmailAddress = PropsUtil.get("email.address.2");
 		var userPassword = PropsUtil.get("email.password.2");
 
@@ -314,11 +314,11 @@ definition {
 		task ("Login at able.com and enable OpenId connect CP") {
 			User.firstLoginUI(
 				password = "test",
-				specificURL = "http://www.able.com:8080",
+				specificUrl = "http://www.able.com:8080",
 				userEmailAddress = "test@www.able.com");
 
 			PortalSettings.gotoConfiguration(
-				baseURL = "http://www.able.com:8080",
+				baseUrl = "http://www.able.com:8080",
 				configurationCategory = "SSO",
 				configurationName = "OpenID Connect",
 				configurationScope = "Virtual Instance Scope");
@@ -327,7 +327,7 @@ definition {
 		}
 
 		task ("Add SSO openID connect provider") {
-			PortalSettings.openInstanceSettingsAdmin(baseURL = "http://www.able.com:8080");
+			PortalSettings.openInstanceSettingsAdmin(baseUrl = "http://www.able.com:8080");
 
 			SystemSettings.gotoConfiguration(
 				configurationCategory = "SSO",
@@ -335,8 +335,8 @@ definition {
 				configurationScope = "Virtual Instance Scope");
 
 			OpenIDConnect.addProvider(
-				openIDConnectClientID = "${openIDConnectClientID}",
-				openIDConnectClientSecret = "${openIDConnectClientSecret}",
+				openIdConnectClientId = "${openIdConnectClientId}",
+				openIdConnectClientSecret = "${openIdConnectClientSecret}",
 				providerName = "Google");
 		}
 
@@ -344,7 +344,7 @@ definition {
 			UserBar.signOut();
 
 			User.loginUserWithOpenIDConnectEnabledPG(
-				specificURL = "http://www.able.com:8080",
+				specificUrl = "http://www.able.com:8080",
 				userEmailAddress = "${userEmailAddress}",
 				userPassword = "${userPassword}");
 		}
@@ -354,7 +354,7 @@ definition {
 
 			User.firstLoginUI(
 				password = "test",
-				specificURL = "http://www.able.com:8080",
+				specificUrl = "http://www.able.com:8080",
 				userEmailAddress = "test@www.able.com");
 		}
 	}
@@ -365,8 +365,8 @@ definition {
 		property dummy.socket.proxy.disabled = "true";
 		property test.name.skip.portal.instance = "Login#OpenIDConnectSmoke";
 
-		var openIDConnectClientID = PropsUtil.get("google.client.id.3");
-		var openIDConnectClientSecret = PropsUtil.get("google.client.secret.3");
+		var openIdConnectClientId = PropsUtil.get("google.client.id.3");
+		var openIdConnectClientSecret = PropsUtil.get("google.client.secret.3");
 		var userEmailAddress = PropsUtil.get("email.address.2");
 		var userPassword = PropsUtil.get("email.password.2");
 
@@ -374,7 +374,7 @@ definition {
 			User.firstLoginPG();
 
 			PortalSettings.gotoConfiguration(
-				baseURL = "http://localhost:8080",
+				baseUrl = "http://localhost:8080",
 				configurationCategory = "SSO",
 				configurationName = "OpenID Connect",
 				configurationScope = "Virtual Instance Scope");
@@ -389,8 +389,8 @@ definition {
 				configurationScope = "Virtual Instance Scope");
 
 			OpenIDConnect.addProvider(
-				openIDConnectClientID = "${openIDConnectClientID}",
-				openIDConnectClientSecret = "${openIDConnectClientSecret}",
+				openIdConnectClientId = "${openIdConnectClientId}",
+				openIdConnectClientSecret = "${openIdConnectClientSecret}",
 				providerName = "Google");
 		}
 
@@ -447,20 +447,20 @@ definition {
 			Pause(locator1 = "30000");
 
 			PortalSettings.gotoConfiguration(
-				baseURL = "http://localhost:8080",
+				baseUrl = "http://localhost:8080",
 				configurationCategory = "SSO",
 				configurationName = "OpenSSO",
 				configurationScope = "Virtual Instance Scope");
 
 			PortalSettings.configureOpenSSO(
-				OpenSSOLoginURL = "http://test.able.com:8080/openam/UI/Login?goto=http://www.able.com:8080/c/portal/login",
-				OpenSSOLogoutURL = "http://test.able.com:8080/openam/UI/Logout?goto=http://www.able.com:8080/web/guest/home",
-				OpenSSOServiceURL = "http://test.able.com:8080/openam");
+				openSsoLoginUrl = "http://test.able.com:8080/openam/UI/Login?goto=http://www.able.com:8080/c/portal/login",
+				openSsoLogoutUrl = "http://test.able.com:8080/openam/UI/Logout?goto=http://www.able.com:8080/web/guest/home",
+				openSsoServiceUrl = "http://test.able.com:8080/openam");
 		}
 
 		task ("Test SSO connection") {
 			PortalSettings.gotoConfiguration(
-				baseURL = "http://localhost:8080",
+				baseUrl = "http://localhost:8080",
 				configurationCategory = "SSO",
 				configurationName = "OpenSSO",
 				configurationScope = "Virtual Instance Scope");
@@ -472,7 +472,7 @@ definition {
 			User.logoutPG();
 
 			User.loginUserWithOpenSSOEnabledPG(
-				hostsURL = "http://www.able.com:8080",
+				hostsUrl = "http://www.able.com:8080",
 				password = "password",
 				userScreenName = "test");
 		}
@@ -487,7 +487,7 @@ definition {
 			User.firstLoginPG();
 
 			PortalSettings.gotoConfiguration(
-				baseURL = "http://localhost:8080",
+				baseUrl = "http://localhost:8080",
 				configurationCategory = "Instance Configuration",
 				configurationName = "General",
 				configurationScope = "Virtual Instance Scope");
@@ -560,10 +560,10 @@ definition {
 		task ("Login at able.com and enable token based SSO") {
 			User.firstLoginUI(
 				password = "test",
-				specificURL = "http://www.able.com:8080",
+				specificUrl = "http://www.able.com:8080",
 				userEmailAddress = "test@www.able.com");
 
-			PortalSettings.openInstanceSettingsAdmin(baseURL = "http://www.able.com:8080");
+			PortalSettings.openInstanceSettingsAdmin(baseUrl = "http://www.able.com:8080");
 
 			SystemSettings.gotoConfiguration(
 				configurationCategory = "SSO",

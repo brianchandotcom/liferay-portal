@@ -34,7 +34,7 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanChangeImageTag {
-		var portalURL = PropsUtil.get("portal.url");
+		var portalUrl = PropsUtil.get("portal.url");
 
 		var siteID = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
 
@@ -42,7 +42,7 @@ definition {
 			groupName = "Test Site Name",
 			layoutName = "Test Page Name",
 			portlet = "Open Graph",
-			siteURLKey = "test-site-name");
+			siteUrlKey = "test-site-name");
 
 		OpenGraph.configureOpenGraph(
 			customImage = "true",
@@ -54,11 +54,11 @@ definition {
 			customImage = "true",
 			uploadFileName = "Document_2.jpg");
 
-		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
+		Navigator.openSpecificURL(url = "${portalUrl}/c/portal/logout");
 
-		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page-name");
+		Navigator.openSpecificURL(url = "${portalUrl}/web/test-site-name/test-page-name");
 
-		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:image" content="${portalURL}/documents/${siteID}/0/Document_2.jpg''');
+		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:image" content="${portalUrl}/documents/${siteId}/0/Document_2.jpg''');
 	}
 
 	@description = "This makes sure that the user can change the default image for OpenGraph at the site level."
@@ -67,14 +67,14 @@ definition {
 	test CanChangeSiteImage {
 		property portal.acceptance = "true";
 
-		var portalURL = PropsUtil.get("portal.url");
+		var portalUrl = PropsUtil.get("portal.url");
 
 		var siteID = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
 
 		for (var imageNumber : list "1,2") {
 			Site.openToSiteSettingsPages(
 				portlet = "Open Graph",
-				siteURLKey = "test-site-name");
+				siteUrlKey = "test-site-name");
 
 			OpenGraph.configureOpenGraph(
 				customImage = "true",
@@ -87,28 +87,28 @@ definition {
 			groupName = "Test Site Name",
 			layoutName = "Test Page Name",
 			portlet = "Open Graph",
-			siteURLKey = "test-site-name");
+			siteUrlKey = "test-site-name");
 
 		OpenGraph.viewPreviewImage(imageName = "Document_2.jpg");
 
-		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
+		Navigator.openSpecificURL(url = "${portalUrl}/c/portal/logout");
 
-		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page-name");
+		Navigator.openSpecificURL(url = "${portalUrl}/web/test-site-name/test-page-name");
 
-		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:image" content="${portalURL}/documents/${siteID}/0/Document_2.jpg''');
+		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:image" content="${portalUrl}/documents/${siteId}/0/Document_2.jpg''');
 	}
 
 	@description = "This makes sure that the previously added image can be cleared at the page level."
 	@priority = "5"
 	@refactordone
 	test CanClearImageAtPageLevel {
-		var portalURL = PropsUtil.get("portal.url");
+		var portalUrl = PropsUtil.get("portal.url");
 
 		var siteID = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
 
 		Site.openToSiteSettingsPages(
 			portlet = "Open Graph",
-			siteURLKey = "test-site-name");
+			siteUrlKey = "test-site-name");
 
 		OpenGraph.viewImageFieldDefault();
 
@@ -122,7 +122,7 @@ definition {
 			groupName = "Test Site Name",
 			layoutName = "Test Page Name",
 			portlet = "Open Graph",
-			siteURLKey = "test-site-name");
+			siteUrlKey = "test-site-name");
 
 		OpenGraph.configureOpenGraph(
 			customImage = "true",
@@ -134,24 +134,24 @@ definition {
 
 		OpenGraph.viewPreviewImage(imageName = "Document_1.jpg");
 
-		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
+		Navigator.openSpecificURL(url = "${portalUrl}/c/portal/logout");
 
-		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page-name");
+		Navigator.openSpecificURL(url = "${portalUrl}/web/test-site-name/test-page-name");
 
-		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:image" content="${portalURL}/documents/${siteID}/0/Document_1.jpg''');
+		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:image" content="${portalUrl}/documents/${siteId}/0/Document_1.jpg''');
 	}
 
 	@description = "This makes sure that it will apply the OG image of the page when images are set at both the site level and the page level."
 	@priority = "5"
 	@refactordone
 	test CanClearImageAtSiteLevel {
-		var portalURL = PropsUtil.get("portal.url");
+		var portalUrl = PropsUtil.get("portal.url");
 
 		var siteID = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
 
 		Site.openToSiteSettingsPages(
 			portlet = "Open Graph",
-			siteURLKey = "test-site-name");
+			siteUrlKey = "test-site-name");
 
 		OpenGraph.configureOpenGraph(
 			customImage = "true",
@@ -161,13 +161,13 @@ definition {
 			groupName = "Test Site Name",
 			layoutName = "Test Page Name",
 			portlet = "Open Graph",
-			siteURLKey = "test-site-name");
+			siteUrlKey = "test-site-name");
 
 		OpenGraph.viewPreviewImage(imageName = "Document_1.jpg");
 
 		Site.openToSiteSettingsPages(
 			portlet = "Open Graph",
-			siteURLKey = "test-site-name");
+			siteUrlKey = "test-site-name");
 
 		OpenGraph.clearImage();
 
@@ -179,13 +179,13 @@ definition {
 			groupName = "Test Site Name",
 			layoutName = "Test Page Name",
 			portlet = "Open Graph",
-			siteURLKey = "test-site-name");
+			siteUrlKey = "test-site-name");
 
 		OpenGraph.viewNoPreviewImage(imageName = "Document_1.jpg");
 
-		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
+		Navigator.openSpecificURL(url = "${portalUrl}/c/portal/logout");
 
-		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page-name");
+		Navigator.openSpecificURL(url = "${portalUrl}/web/test-site-name/test-page-name");
 
 		OpenGraph.viewNoOpenGraphProperties(ogPropertyList = '''property="og:image"''');
 	}
@@ -194,20 +194,20 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanConfigurePageSpecificAltDescription {
-		var portalURL = PropsUtil.get("portal.url");
+		var portalUrl = PropsUtil.get("portal.url");
 
 		Site.openToSiteSettingsPages(
 			portlet = "Open Graph",
-			siteURLKey = "test-site-name");
+			siteUrlKey = "test-site-name");
 
 		OpenGraph.configureOpenGraph(
 			altDescription = "This is image alternative description",
 			customImage = "true",
 			uploadFileName = "Document_1.jpg");
 
-		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
+		Navigator.openSpecificURL(url = "${portalUrl}/c/portal/logout");
 
-		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page-name");
+		Navigator.openSpecificURL(url = "${portalUrl}/web/test-site-name/test-page-name");
 
 		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''property="og:image:alt" content="This is image alternative description"''');
 
@@ -217,16 +217,16 @@ definition {
 			groupName = "Test Site Name",
 			layoutName = "Test Page Name",
 			portlet = "Open Graph",
-			siteURLKey = "test-site-name");
+			siteUrlKey = "test-site-name");
 
 		OpenGraph.configureOpenGraph(
 			altDescription = "This is new image alternative description",
 			customImage = "true",
 			uploadFileName = "Document_2.jpg");
 
-		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
+		Navigator.openSpecificURL(url = "${portalUrl}/c/portal/logout");
 
-		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page-name");
+		Navigator.openSpecificURL(url = "${portalUrl}/web/test-site-name/test-page-name");
 
 		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''property="og:image:alt" content="This is new image alternative description"''');
 	}
@@ -235,13 +235,13 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanConfigurePageSpecificImage {
-		var portalURL = PropsUtil.get("portal.url");
+		var portalUrl = PropsUtil.get("portal.url");
 
 		var siteID = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
 
 		Site.openToSiteSettingsPages(
 			portlet = "Open Graph",
-			siteURLKey = "test-site-name");
+			siteUrlKey = "test-site-name");
 
 		OpenGraph.configureOpenGraph(
 			customImage = "true",
@@ -251,7 +251,7 @@ definition {
 			groupName = "Test Site Name",
 			layoutName = "Test Page Name",
 			portlet = "Open Graph",
-			siteURLKey = "test-site-name");
+			siteUrlKey = "test-site-name");
 
 		OpenGraph.configureOpenGraph(
 			customImage = "true",
@@ -261,15 +261,15 @@ definition {
 
 		Site.openToSiteSettingsPages(
 			portlet = "Open Graph",
-			siteURLKey = "test-site-name");
+			siteUrlKey = "test-site-name");
 
 		OpenGraph.viewPreviewImage(imageName = "Document_1.jpg");
 
-		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
+		Navigator.openSpecificURL(url = "${portalUrl}/c/portal/logout");
 
-		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page-name");
+		Navigator.openSpecificURL(url = "${portalUrl}/web/test-site-name/test-page-name");
 
-		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:image" content="${portalURL}/documents/${siteID}/0/Document_2.jpg''');
+		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:image" content="${portalUrl}/documents/${siteId}/0/Document_2.jpg''');
 	}
 
 	@description = "This ensures that the OG image tags will not appear when the HTTPS user disables Open Graph."
@@ -308,13 +308,13 @@ definition {
 	test CanEditAltDescription {
 		property portal.acceptance = "true";
 
-		var portalURL = PropsUtil.get("portal.url");
+		var portalUrl = PropsUtil.get("portal.url");
 
 		Navigator.openToGroupPagesPortlet(
 			groupName = "Test Site Name",
 			layoutName = "Test Page Name",
 			portlet = "Open Graph",
-			siteURLKey = "test-site-name");
+			siteUrlKey = "test-site-name");
 
 		OpenGraph.viewImageAltDescriptionDefault();
 
@@ -329,9 +329,9 @@ definition {
 
 		Button.click(button = "Save");
 
-		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
+		Navigator.openSpecificURL(url = "${portalUrl}/c/portal/logout");
 
-		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page-name");
+		Navigator.openSpecificURL(url = "${portalUrl}/web/test-site-name/test-page-name");
 
 		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''property="og:image:alt" content="This is new image alternative description"''');
 	}
@@ -365,13 +365,13 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanViewTranslatedAltDescription {
-		var portalURL = PropsUtil.get("portal.url");
+		var portalUrl = PropsUtil.get("portal.url");
 
 		Navigator.openToGroupPagesPortlet(
 			groupName = "Test Site Name",
 			layoutName = "Test Page Name",
 			portlet = "Open Graph",
-			siteURLKey = "test-site-name");
+			siteUrlKey = "test-site-name");
 
 		OpenGraph.configureOpenGraph(
 			altDescription = "This is image alternative description",
@@ -388,9 +388,9 @@ definition {
 
 		Button.click(button = "Save");
 
-		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
+		Navigator.openSpecificURL(url = "${portalUrl}/c/portal/logout");
 
-		Navigator.openSpecificURL(url = "${portalURL}/ca/web/test-site-name/test-page-name");
+		Navigator.openSpecificURL(url = "${portalUrl}/ca/web/test-site-name/test-page-name");
 
 		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''property="og:image:alt" content="Esta es una descripción de imagen alternativa"''');
 	}

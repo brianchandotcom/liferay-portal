@@ -9,7 +9,7 @@ definition {
 		}
 
 		var curl = '''
-			${portalURL}/api/jsonws/group/add-group \
+			${portalUrl}/api/jsonws/group/add-group \
 				-u test@liferay.com:test \
 				-d parentGroupId=${parentGroupId} \
 				-d liveGroupId=0 \
@@ -34,7 +34,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalURL}/api/jsonws/usergrouprole/add-user-group-roles \
+			${portalUrl}/api/jsonws/usergrouprole/add-user-group-roles \
 				-u test@liferay.com:test \
 				-d roleId=${roleId} \
 				-d groupId=${groupId} \
@@ -51,7 +51,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalURL}/api/jsonws/usergroup/add-group-user-groups/group-id/${groupId}/user-group-ids/${userGroupId} \
+			${portalUrl}/api/jsonws/usergroup/add-group-user-groups/group-id/${groupId}/user-group-ids/${userGroupId} \
 				-u test@liferay.com:test
 		''';
 
@@ -65,7 +65,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalURL}/api/jsonws/user/add-group-users \
+			${portalUrl}/api/jsonws/user/add-group-users \
 				-u test@liferay.com:test \
 				-d groupId=${groupId} \
 				-d userIds=${userId}
@@ -83,7 +83,7 @@ definition {
 		}
 
 		var curl = '''
-			${portalURL}/api/jsonws/group/delete-group \
+			${portalUrl}/api/jsonws/group/delete-group \
 				-u test@liferay.com:test \
 				-d groupId=${groupId}
 		''';
@@ -104,7 +104,7 @@ definition {
 			site = "${site}");
 
 		var curl = '''
-			${portalURL}/api/jsonws/depot.depotentrygrouprel/get-depot-entry-group-rels \
+			${portalUrl}/api/jsonws/depot.depotentrygrouprel/get-depot-entry-group-rels \
 				-u test@liferay.com:test \
 				-d groupId=${groupId} \
 				-d "start=-1" \
@@ -137,7 +137,7 @@ definition {
 		var locale = '''default-locale=\"${defaultLocale}\"''';
 
 		var curl = '''
-			${portalURL}/api/jsonws/group/get-groups/company-id/${companyId}/parent-group-id/0/site/false \
+			${portalUrl}/api/jsonws/group/get-groups/company-id/${companyId}/parent-group-id/0/site/false \
 				-u test@liferay.com:test
 		''';
 		var depotId = JSONCurlUtil.get("${curl}", "$.[?(@['nameCurrentValue'] == '${depotName}' && @['name'] contains '${locale}')]['classPK']");
@@ -162,7 +162,7 @@ definition {
 		}
 
 		var curl = '''
-			${portalURL}/api/jsonws/group/get-groups \
+			${portalUrl}/api/jsonws/group/get-groups \
 				-u test@liferay.com:test \
 				-d companyId=${companyId} \
 				-d parentGroupId=0 \
@@ -190,7 +190,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalURL}/api/jsonws/group/get-groups/company-id/${companyId}/parent-group-id/${parentGroupId}/site/${site} \
+			${portalUrl}/api/jsonws/group/get-groups/company-id/${companyId}/parent-group-id/${parentGroupId}/site/${site} \
 				-u test@liferay.com:test
 		''';
 		var groupId = JSONCurlUtil.get("${curl}", "$.[?(@['groupKey'] == '${groupKey}')]['groupId']");
@@ -210,14 +210,14 @@ definition {
 			var portalURL = JSONCompany.getPortalURL();
 		}
 
-		var companyId = JSONCompany.getCompanyId(portalURL = "${portalURL}");
+		var companyId = JSONCompany.getCompanyId(portalUrl = "${portalUrl}");
 
 		var parentGroupId = JSONGroupSetter.setParentGroupId(
 			grandParentGroupName = "${grandParentGroupName}",
 			parentGroupName = "${parentGroupName}");
 
 		var curl = '''
-			${portalURL}/api/jsonws/group/get-groups/company-id/${companyId}/parent-group-id/${parentGroupId}/site/${site} \
+			${portalUrl}/api/jsonws/group/get-groups/company-id/${companyId}/parent-group-id/${parentGroupId}/site/${site} \
 				-u test@liferay.com:test
 		''';
 		var groupId = JSONCurlUtil.get("${curl}", "$.[?(@['nameCurrentValue'] == '${groupName}')]['groupId']");
@@ -240,7 +240,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalURL}/api/jsonws/group/get-group/group-id/${groupId} \
+			${portalUrl}/api/jsonws/group/get-group/group-id/${groupId} \
 				-u test@liferay.com:test
 		''';
 		var groupName = JSONCurlUtil.get("${curl}", "$['nameCurrentValue']");
@@ -259,7 +259,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalURL}/api/jsonws/group/get-groups/company-id/${companyId}/parent-group-id/${grandParentGroupId}/site/true \
+			${portalUrl}/api/jsonws/group/get-groups/company-id/${companyId}/parent-group-id/${grandParentGroupId}/site/true \
 				-u test@liferay.com:test
 		''';
 		var groupId = JSONCurlUtil.get("${curl}", "$.[?(@['nameCurrentValue'] == '${groupName}')]['groupId']");
@@ -279,10 +279,10 @@ definition {
 			var portalURL = JSONCompany.getPortalURL();
 		}
 
-		var companyId = JSONCompany.getCompanyId(portalURL = "${portalURL}");
+		var companyId = JSONCompany.getCompanyId(portalUrl = "${portalUrl}");
 
 		var curl = '''
-			${portalURL}/api/jsonws/group/get-group \
+			${portalUrl}/api/jsonws/group/get-group \
 				-u test@liferay.com:test \
 				-d companyId=${companyId} \
 				-d groupKey=${groupName}

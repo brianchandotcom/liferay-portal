@@ -57,7 +57,7 @@ definition {
 		}
 
 		task ("View current page type before conversion") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "Test Site Name");
 
 			PagesAdmin.viewPageType(
 				pageName = "Test Page Name",
@@ -161,7 +161,7 @@ definition {
 		}
 
 		task ("View current page type before conversion") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "Test Site Name");
 
 			for (var i : list "1,2,3,4,5,6,7,8,9,10") {
 				PagesAdmin.viewPageType(
@@ -239,7 +239,7 @@ definition {
 		}
 
 		task ("View current page type after conversion") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "Test Site Name");
 
 			for (var i : list "1,2,3,4,5,6,7,8,9,10") {
 				PagesAdmin.viewPageType(
@@ -340,7 +340,7 @@ definition {
 		}
 
 		task ("View current page type before conversion") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "Test Site Name");
 
 			for (var i : list "1,2,3,4,5,6,7,8,9,10") {
 				PagesAdmin.viewPageType(
@@ -362,7 +362,7 @@ definition {
 		}
 
 		task ("View current page type after conversion") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "Test Site Name");
 
 			for (var i : list "1,2,3,4,5,6,7,8,9,10") {
 				PagesAdmin.viewPageType(
@@ -400,7 +400,7 @@ definition {
 		}
 
 		task ("Enable customization in Pages admin") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "Test Site Name");
 
 			PageCustomizations.enableSectionCustomizableCP(
 				columnId = "1",
@@ -420,7 +420,7 @@ definition {
 		}
 
 		task ("View current page type after conversion") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "Test Site Name");
 
 			for (var i : list "1,2,3") {
 				PagesAdmin.viewPageType(
@@ -466,7 +466,7 @@ definition {
 		}
 
 		task ("Convert widget page to content page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "Test Site Name");
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Convert to content page...",
@@ -518,7 +518,7 @@ definition {
 		}
 
 		task ("Enable customization in Pages admin") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "Test Site Name");
 
 			PageCustomizations.enableSectionCustomizableCP(
 				columnId = "1",
@@ -538,7 +538,7 @@ definition {
 		}
 
 		task ("Convert widget page to content page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "Test Site Name");
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Convert to content page...",
@@ -594,7 +594,7 @@ definition {
 		}
 
 		task ("Define the custom layout for widget page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
 
 			PagesAdmin.configurePage(
 				columnName = "Custom Layout",
@@ -637,7 +637,7 @@ definition {
 		}
 
 		task ("Convert widget page to content page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "Test Site Name");
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Convert to content page...",
@@ -706,7 +706,7 @@ definition {
 		}
 
 		task ("Define the custom layout for widget page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
 
 			PagesAdmin.configurePage(
 				columnName = "Custom Layout",
@@ -716,7 +716,7 @@ definition {
 		}
 
 		task ("Enable customization to page then check both columns") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
 
 			PageCustomizations.enableSectionCustomizableCP(
 				columnIdList = "1,2",
@@ -757,7 +757,7 @@ definition {
 		}
 
 		task ("Convert widget page to content page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "Test Site Name");
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Convert to content page...",
@@ -826,7 +826,7 @@ definition {
 		}
 
 		task ("Define the custom layout for widget page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
 
 			PagesAdmin.configurePage(
 				columnName = "Custom Layout",
@@ -889,7 +889,7 @@ definition {
 		}
 
 		task ("Convert widget page to content page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "Test Site Name");
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Convert to content page...",
@@ -1004,7 +1004,7 @@ definition {
 		}
 
 		task ("Convert the widget page to content page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "Test Site Name");
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Convert to content page...",
@@ -1026,7 +1026,7 @@ definition {
 		}
 
 		task ("View the widget page is converted to content page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "Test Site Name");
 
 			PagesAdmin.viewPageType(
 				pageName = "Test Page Name",
@@ -1082,7 +1082,7 @@ definition {
 		}
 
 		task ("Convert widget page to content page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "Test Site Name");
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Convert to content page...",
@@ -1208,7 +1208,7 @@ definition {
 		}
 
 		task ("Convert widget page to content page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "Test Site Name");
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Convert to content page...",
@@ -1248,7 +1248,7 @@ definition {
 		}
 
 		task ("Add a Web Content Display to conversion draft page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "Test Site Name");
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Edit Conversion Draft",
@@ -1268,7 +1268,7 @@ definition {
 		}
 
 		task ("Edit conversion page via Pages admin") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "Test Site Name");
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Edit Conversion Draft",
@@ -1336,7 +1336,7 @@ definition {
 		}
 
 		task ("Convert widget page to content page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "Test Site Name");
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Convert to content page...",

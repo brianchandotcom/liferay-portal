@@ -56,13 +56,13 @@ definition {
 			password = "test",
 			userEmailAddress = "userea@liferay.com");
 
-		Workflow.openWorkflowAdmin(siteURLKey = "guest");
+		Workflow.openWorkflowAdmin(siteUrlKey = "guest");
 
 		Workflow.configureWorkflow(
 			workflowDefinition = "Single Approver",
 			workflowResourceValue = "Translation");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		Translations.gotoTranslate(webContentTitle = "WC WebContent Title");
 
@@ -117,7 +117,7 @@ definition {
 
 		WebContentNavigator.openToEditWCInSite(
 			groupName = "Guest",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			version = "1.1",
 			webContentTitle = "WC WebContent Title");
 
@@ -139,13 +139,13 @@ definition {
 			groupName = "Guest",
 			title = "WebContentTitle");
 
-		Workflow.openWorkflowAdmin(siteURLKey = "guest");
+		Workflow.openWorkflowAdmin(siteUrlKey = "guest");
 
 		Workflow.configureWorkflow(
 			workflowDefinition = "Single Approver",
 			workflowResourceValue = "Translation");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		Translations.gotoExportTranslation(webContentTitle = "WebContentTitle");
 
@@ -182,7 +182,7 @@ definition {
 			webContentDescription = "Description",
 			webContentTitle = "WebContentTitle");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		Translations.importTranslation(
 			errorMessage = "1 Error: Some files could not be published, check them and upload another file.",
@@ -195,7 +195,7 @@ definition {
 			webContentTitle = "WebContentTitle",
 			workflow = "true");
 
-		Translations.openTranslationAdmin(siteURLKey = "guest");
+		Translations.openTranslationAdmin(siteUrlKey = "guest");
 
 		Translations.viewNoTranslationEntry(title = "Translation of WebContentTitle to de_DE");
 
@@ -224,7 +224,7 @@ definition {
 			workflowAssetType = "Translation",
 			workflowTask = "Review");
 
-		Translations.openTranslationAdmin(siteURLKey = "guest");
+		Translations.openTranslationAdmin(siteUrlKey = "guest");
 
 		Translations.viewTranslationEntry(
 			language = "es-ES",
@@ -233,7 +233,7 @@ definition {
 
 		WebContentNavigator.openToEditWCInSite(
 			groupName = "Guest",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			version = "1.1",
 			webContentTitle = "WebContentTitle");
 
@@ -267,13 +267,13 @@ definition {
 			groupName = "Guest",
 			title = "WebContentTitle");
 
-		Workflow.openWorkflowAdmin(siteURLKey = "guest");
+		Workflow.openWorkflowAdmin(siteUrlKey = "guest");
 
 		Workflow.configureWorkflow(
 			workflowDefinition = "Single Approver",
 			workflowResourceValue = "Translation");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		Translations.gotoExportTranslation(webContentTitle = "WebContentTitle");
 
@@ -293,7 +293,7 @@ definition {
 			webContentDescription = "Description",
 			webContentTitle = "WebContentTitle");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		Translations.importTranslation(
 			fileName = "WebContentTitle-en_US-es_ES.xlf",
@@ -301,7 +301,7 @@ definition {
 			webContentTitle = "WebContentTitle",
 			workflow = "true");
 
-		Translations.openTranslationAdmin(siteURLKey = "guest");
+		Translations.openTranslationAdmin(siteUrlKey = "guest");
 
 		Translations.viewTranslationEntry(
 			language = "es-ES",
@@ -324,7 +324,7 @@ definition {
 
 		WebContentNavigator.openToEditWCInSite(
 			groupName = "Guest",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			version = "1.1",
 			webContentTitle = "WebContentTitle");
 
@@ -355,7 +355,7 @@ definition {
 			groupName = "Guest",
 			title = "WC WebContent Title");
 
-		Workflow.openWorkflowAdmin(siteURLKey = "guest");
+		Workflow.openWorkflowAdmin(siteUrlKey = "guest");
 
 		Workflow.configureWorkflow(
 			workflowDefinition = "Single Approver",
@@ -382,7 +382,7 @@ definition {
 			password = "test",
 			userEmailAddress = "userea@liferay.com");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		Translations.gotoTranslate(webContentTitle = "WC WebContent Title");
 
@@ -402,7 +402,7 @@ definition {
 
 		WebContentNavigator.openToEditWCInSite(
 			groupName = "Guest",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			version = "1.1",
 			webContentTitle = "WC WebContent Title");
 
@@ -434,7 +434,7 @@ definition {
 
 		WebContentNavigator.openToEditWCInSite(
 			groupName = "Guest",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			version = "1.1",
 			webContentTitle = "WC WebContent Title");
 
@@ -455,13 +455,13 @@ definition {
 			groupName = "Guest",
 			title = "WC WebContent Title");
 
-		Workflow.openWorkflowAdmin(siteURLKey = "guest");
+		Workflow.openWorkflowAdmin(siteUrlKey = "guest");
 
 		Workflow.configureWorkflow(
 			workflowDefinition = "Single Approver",
 			workflowResourceValue = "Translation");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		Translations.gotoTranslate(webContentTitle = "WC WebContent Title");
 
@@ -484,7 +484,7 @@ definition {
 
 		Alert.viewSuccessMessage();
 
-		Translations.openTranslationAdmin(siteURLKey = "guest");
+		Translations.openTranslationAdmin(siteUrlKey = "guest");
 
 		Translations.viewTranslationEntry(
 			language = "es-ES",
@@ -499,7 +499,7 @@ definition {
 
 		WebContentNavigator.openToEditWCInSite(
 			groupName = "Guest",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			version = "1.1",
 			webContentTitle = "WC WebContent Title");
 
@@ -516,13 +516,13 @@ definition {
 			groupName = "Guest",
 			title = "WebContentTitle");
 
-		Workflow.openWorkflowAdmin(siteURLKey = "guest");
+		Workflow.openWorkflowAdmin(siteUrlKey = "guest");
 
 		Workflow.configureWorkflow(
 			workflowDefinition = "Single Approver",
 			workflowResourceValue = "Translation");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		Translations.gotoExportTranslation(webContentTitle = "WebContentTitle");
 
@@ -542,7 +542,7 @@ definition {
 			webContentDescription = "Description",
 			webContentTitle = "WebContentTitle");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		Translations.importTranslation(
 			fileName = "WebContentTitle-en_US-fr_FR.xlf",
@@ -550,7 +550,7 @@ definition {
 			webContentTitle = "WebContentTitle",
 			workflow = "true");
 
-		Translations.openTranslationAdmin(siteURLKey = "guest");
+		Translations.openTranslationAdmin(siteUrlKey = "guest");
 
 		Translations.viewTranslationEntry(
 			language = "fr-FR",
@@ -573,14 +573,14 @@ definition {
 			workflowAssetType = "Translation",
 			workflowTask = "Review");
 
-		Translations.openTranslationAdmin(siteURLKey = "guest");
+		Translations.openTranslationAdmin(siteUrlKey = "guest");
 
 		Translations.viewTranslationEntry(
 			language = "fr-FR",
 			status = "Pending",
 			title = "Translation of WebContentTitle to fr-FR");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		Translations.importTranslation(
 			fileName = "WebContentTitle-en_US-fr_FR.xlf",
@@ -607,7 +607,7 @@ definition {
 			workflowAssetType = "Translation",
 			workflowTask = "Review");
 
-		Translations.openTranslationAdmin(siteURLKey = "guest");
+		Translations.openTranslationAdmin(siteUrlKey = "guest");
 
 		Translations.viewTranslationEntry(
 			language = "fr-FR",
@@ -616,7 +616,7 @@ definition {
 
 		WebContentNavigator.openToEditWCInSite(
 			groupName = "Guest",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			version = "1.1",
 			webContentTitle = "WebContentTitle");
 
@@ -633,14 +633,14 @@ definition {
 	@refactordone
 	test CanRejectTranslationsForDraftAndApprovedWC {
 		for (var resourceValue : list "Translation,Web Content Article") {
-			Workflow.openWorkflowAdmin(siteURLKey = "guest");
+			Workflow.openWorkflowAdmin(siteUrlKey = "guest");
 
 			Workflow.configureWorkflow(
 				workflowDefinition = "Single Approver",
 				workflowResourceValue = "${resourceValue}");
 		}
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -648,7 +648,7 @@ definition {
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WC WebContent Title");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		Translations.gotoTranslate(webContentTitle = "WC WebContent Title");
 
@@ -684,7 +684,7 @@ definition {
 
 		WebContentNavigator.openToEditWCInSite(
 			groupName = "Guest",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			version = "1.1",
 			webContentTitle = "WC WebContent Title");
 
@@ -712,7 +712,7 @@ definition {
 			workflowAssetType = "Web Content Article",
 			workflowTask = "Review");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		Translations.gotoTranslate(webContentTitle = "WC WebContent Title");
 
@@ -750,7 +750,7 @@ definition {
 
 		WebContentNavigator.openToEditWCInSite(
 			groupName = "Guest",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			version = "1.1",
 			webContentTitle = "WC WebContent Title");
 
@@ -771,13 +771,13 @@ definition {
 			groupName = "Guest",
 			title = "WebContentTitle");
 
-		Workflow.openWorkflowAdmin(siteURLKey = "guest");
+		Workflow.openWorkflowAdmin(siteUrlKey = "guest");
 
 		Workflow.configureWorkflow(
 			workflowDefinition = "Single Approver",
 			workflowResourceValue = "Translation");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		Translations.gotoExportTranslation(webContentTitle = "WebContentTitle");
 
@@ -809,7 +809,7 @@ definition {
 			webContentDescription = "Description",
 			webContentTitle = "WebContentTitle");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		Translations.importTranslation(
 			fileName = "WebContentTitle-en_US_translated.zip",
@@ -817,7 +817,7 @@ definition {
 			webContentTitle = "WebContentTitle",
 			workflow = "true");
 
-		Translations.openTranslationAdmin(siteURLKey = "guest");
+		Translations.openTranslationAdmin(siteUrlKey = "guest");
 
 		for (var language : list "de-DE,es-ES") {
 			Translations.viewTranslationEntry(
@@ -861,7 +861,7 @@ definition {
 				workflowTask = "Review");
 		}
 
-		Translations.openTranslationAdmin(siteURLKey = "guest");
+		Translations.openTranslationAdmin(siteUrlKey = "guest");
 
 		for (var language : list "de-DE,es-ES") {
 			Translations.viewTranslationEntry(
@@ -872,7 +872,7 @@ definition {
 
 		WebContentNavigator.openToEditWCInSite(
 			groupName = "Guest",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			version = "1.1",
 			webContentTitle = "WebContentTitle");
 
@@ -932,13 +932,13 @@ definition {
 			password = "test",
 			userEmailAddress = "userea@liferay.com");
 
-		Workflow.openWorkflowAdmin(siteURLKey = "guest");
+		Workflow.openWorkflowAdmin(siteUrlKey = "guest");
 
 		Workflow.configureWorkflow(
 			workflowDefinition = "Single Approver",
 			workflowResourceValue = "Translation");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		Translations.gotoTranslate(webContentTitle = "WC WebContent Title");
 
@@ -957,7 +957,7 @@ definition {
 
 		Alert.viewSuccessMessage();
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		Translations.gotoTranslate(webContentTitle = "WC WebContent Title");
 
@@ -1111,13 +1111,13 @@ definition {
 			groupName = "Guest",
 			title = "WC WebContent Title");
 
-		Workflow.openWorkflowAdmin(siteURLKey = "guest");
+		Workflow.openWorkflowAdmin(siteUrlKey = "guest");
 
 		Workflow.configureWorkflow(
 			workflowDefinition = "Single Approver",
 			workflowResourceValue = "Translation");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		Translations.gotoTranslate(webContentTitle = "WC WebContent Title");
 
@@ -1156,7 +1156,7 @@ definition {
 			password = "test",
 			userEmailAddress = "userea@liferay.com");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		Translations.gotoTranslate(webContentTitle = "WC WebContent Title");
 
@@ -1174,7 +1174,7 @@ definition {
 
 		Alert.viewSuccessMessage();
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		Translations.gotoTranslate(webContentTitle = "WC WebContent Title");
 
@@ -1190,14 +1190,14 @@ definition {
 	@refactordone
 	test CanViewUpdatedWCSubmissionAfterApprovedTranslation {
 		for (var resourceValue : list "Translation,Web Content Article") {
-			Workflow.openWorkflowAdmin(siteURLKey = "guest");
+			Workflow.openWorkflowAdmin(siteUrlKey = "guest");
 
 			Workflow.configureWorkflow(
 				workflowDefinition = "Single Approver",
 				workflowResourceValue = "${resourceValue}");
 		}
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -1205,7 +1205,7 @@ definition {
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WC WebContent Title");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		Translations.gotoTranslate(webContentTitle = "WC WebContent Title");
 
@@ -1239,7 +1239,7 @@ definition {
 
 		WebContentNavigator.openToEditWCInSite(
 			groupName = "Guest",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			version = "1.1",
 			webContentTitle = "WC WebContent Title");
 

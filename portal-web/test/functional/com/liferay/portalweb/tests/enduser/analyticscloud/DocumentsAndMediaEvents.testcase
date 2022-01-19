@@ -220,7 +220,7 @@ definition {
 				applicationId = "Document",
 				eventId = "documentPreviewed",
 				property = "fileEntryUUID",
-				value = "${fileEntryUUID}");
+				value = "${fileEntryUuid}");
 
 			ACUtils.assertEventPropertyValue(
 				applicationId = "Document",

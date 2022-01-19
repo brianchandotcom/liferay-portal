@@ -7,7 +7,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalURL}/api/jsonws/classname/fetch-class-name \
+			${portalUrl}/api/jsonws/classname/fetch-class-name \
 			  -u test@liferay.com:test \
 			  -d value=${value}
 		''';

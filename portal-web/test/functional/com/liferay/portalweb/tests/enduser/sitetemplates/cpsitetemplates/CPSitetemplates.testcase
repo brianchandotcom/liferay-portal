@@ -506,15 +506,15 @@ definition {
 		User.firstLoginPG(
 			password = "test",
 			userEmailAddress = "test@www.able.com",
-			virtualHostsURL = "http://www.able.com:8080");
+			virtualHostsUrl = "http://www.able.com:8080");
 
-		SiteTemplatesNavigator.openSiteTemplatesAdmin(baseURL = "http://www.able.com:8080");
+		SiteTemplatesNavigator.openSiteTemplatesAdmin(baseUrl = "http://www.able.com:8080");
 
 		LAR.importPortlet(larFileName = "site-template-name.lar");
 
 		SiteTemplates.viewCP(siteTemplateName = "Site Template Name");
 
-		SiteTemplatesNavigator.openSiteTemplatesAdmin(baseURL = "http://www.able.com:8080");
+		SiteTemplatesNavigator.openSiteTemplatesAdmin(baseUrl = "http://www.able.com:8080");
 
 		SiteTemplates.deleteCP(siteTemplateName = "Site Template Name");
 
@@ -783,7 +783,7 @@ definition {
 			siteType = "Site Template",
 			uncheckPropagation = "true");
 
-		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
+		Site.openSiteSettingsAdmin(siteUrlKey = "site-name");
 
 		Click(
 			key_itemName = "Pages",

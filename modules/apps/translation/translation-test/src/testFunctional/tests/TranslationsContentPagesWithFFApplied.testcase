@@ -78,7 +78,7 @@ definition {
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+		PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
 
 		WaitForPageLoad();
 
@@ -105,7 +105,7 @@ definition {
 
 		PageEditor.clickPublish();
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+		PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
 
 		WaitForPageLoad();
 
@@ -154,7 +154,7 @@ definition {
 
 		PageEditor.clickPublish();
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+		PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
 
 		WaitForPageLoad();
 
@@ -176,7 +176,7 @@ definition {
 
 		PageEditor.clickPublish();
 
-		var portalURL = PropsUtil.get("portal.url");
+		var portalUrl = PropsUtil.get("portal.url");
 
 		ContentPagesNavigator.openViewContentPage(
 			locale = "es",

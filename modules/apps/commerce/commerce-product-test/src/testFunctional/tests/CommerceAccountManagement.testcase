@@ -225,7 +225,7 @@ definition {
 		Refresh();
 
 		Click(
-			key_FilterOption = "Edit Account",
+			key_filterOption = "Edit Account",
 			locator1 = "AppBuilder#CHOOSE_APP_SEARCH_FILTER_BY_OPTION");
 
 		Type(
@@ -254,7 +254,7 @@ definition {
 			value1 = "Test Address");
 
 		Click(
-			key_FilterOption = "Change",
+			key_filterOption = "Change",
 			locator1 = "AppBuilder#CHOOSE_APP_SEARCH_FILTER_BY_OPTION");
 
 		SelectFrame.selectFrameNoLoading(
@@ -278,11 +278,11 @@ definition {
 			locator1 = "CommerceAccelerators#ACCOUNT_MANAGEMENT_EMAIL");
 
 		AssertElementPresent(
-			key_FilterOption = "Commerce Account 2",
+			key_filterOption = "Commerce Account 2",
 			locator1 = "AppBuilder#CHOOSE_APP_SEARCH_FILTER_BY_OPTION");
 
 		AssertElementPresent(
-			key_FilterOption = "12345",
+			key_filterOption = "12345",
 			locator1 = "AppBuilder#CHOOSE_APP_SEARCH_FILTER_BY_OPTION");
 
 		AssertElementPresent(

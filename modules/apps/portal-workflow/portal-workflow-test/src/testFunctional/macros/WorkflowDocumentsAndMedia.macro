@@ -6,7 +6,7 @@ definition {
 		WorkflowDocumentsAndMedia.editImageFileDocument(
 			dmDocumentDescription = "${dmDocumentDescription}",
 			dmDocumentTitle = "${dmDocumentTitle}",
-			workflowPNGFile = "${workflowPNGFile}");
+			workflowPngFile = "${workflowPngFile}");
 
 		ScrollWebElementIntoView(locator1 = "Button#SUBMIT_FOR_PUBLICATION");
 
@@ -90,7 +90,7 @@ definition {
 	macro editImageFileDocument {
 		var projectDir = PropsUtil.get("project.dir");
 
-		UploadDependencyFile.uploadFile(fileName = "${workflowPNGFile}");
+		UploadDependencyFile.uploadFile(fileName = "${workflowPngFile}");
 
 		if (isSet(useCurrentTitle)) {
 			echo("Use the title automatically added after uploading a file.");
@@ -112,7 +112,7 @@ definition {
 		Type(
 			key_text = "Video URL",
 			locator1 = "TextInput#ANY",
-			value1 = "${videoURL}");
+			value1 = "${videoUrl}");
 
 		Pause(locator1 = "5000");
 

@@ -19,7 +19,7 @@ definition {
 		}
 
 		var curl = '''
-			${portalURL}/o/headless-delivery/v1.0/message-board-sections/${categoryId}/message-board-threads \
+			${portalUrl}/o/headless-delivery/v1.0/message-board-sections/${categoryId}/message-board-threads \
 			-H 'Content-Type: application/json' \
 			-u '${userEmailAddress}:${userPassword}' \
 			-d '{
@@ -56,7 +56,7 @@ definition {
 		}
 
 		var curl = '''
-			${portalURL}/o/headless-delivery/v1.0/message-board-sections/${categoryId}/message-board-threads \
+			${portalUrl}/o/headless-delivery/v1.0/message-board-sections/${categoryId}/message-board-threads \
 			-H 'Content-Type: application/json' \
 			-u '${userEmailAddress}:${userPassword}' \
 			-d '{

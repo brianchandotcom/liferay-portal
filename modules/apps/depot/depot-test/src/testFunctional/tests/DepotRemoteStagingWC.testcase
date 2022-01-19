@@ -76,7 +76,7 @@ definition {
 
 		Staging.publishToLive(remoteStaging = "true");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -104,12 +104,12 @@ definition {
 
 		User.firstLoginUI(
 			password = "test",
-			specificURL = "http://localhost:9080",
+			specificUrl = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
 		WebContentNavigator.openWebContentAdmin(
-			baseURL = "http://localhost:9080",
-			siteURLKey = "remote-site");
+			baseUrl = "http://localhost:9080",
+			siteUrlKey = "remote-site");
 
 		WebContentNavigator.gotoPreviewEntryCP(
 			liveSite = "true",
@@ -142,7 +142,7 @@ definition {
 
 		WebContentNavigator.openToEditWCInSite(
 			groupName = "Site Name",
-			siteURLKey = "site-name",
+			siteUrlKey = "site-name",
 			webContentTitle = "WC WebContent Title");
 
 		CKEditor.addSourceContent(content = " ");
@@ -151,7 +151,7 @@ definition {
 
 		PortletEntry.publish();
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
 
 		Staging.publishViaSAP(
 			confirmMessage = "Are you sure you want to publish the selected web content?",
@@ -161,12 +161,12 @@ definition {
 
 		User.firstLoginUI(
 			password = "test",
-			specificURL = "http://localhost:9080",
+			specificUrl = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
 		WebContentNavigator.openWebContentAdmin(
-			baseURL = "http://localhost:9080",
-			siteURLKey = "remote-site");
+			baseUrl = "http://localhost:9080",
+			siteUrlKey = "remote-site");
 
 		WebContentNavigator.gotoPreviewEntryCP(
 			liveSite = "true",
@@ -238,11 +238,11 @@ definition {
 
 		User.firstLoginUI(
 			password = "test",
-			specificURL = "http://localhost:9080",
+			specificUrl = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
 		Navigator.openSitePage(
-			baseURL = "http://localhost:9080",
+			baseUrl = "http://localhost:9080",
 			pageName = "Test Page",
 			siteName = "Remote Site");
 
@@ -259,7 +259,7 @@ definition {
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
-		WebContent.editFriendlyURL(webContentFriendlyURL = "friendlyUrledit");
+		WebContent.editFriendlyURL(webContentFriendlyUrl = "friendlyUrledit");
 
 		PortletEntry.publish();
 
@@ -294,11 +294,11 @@ definition {
 
 		User.firstLoginUI(
 			password = "test",
-			specificURL = "http://localhost:9080",
+			specificUrl = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
 		Navigator.openSitePage(
-			baseURL = "http://localhost:9080",
+			baseUrl = "http://localhost:9080",
 			pageName = "Test Page",
 			siteName = "Remote Site");
 
@@ -327,7 +327,7 @@ definition {
 
 		Staging.publishToLive(remoteStaging = "true");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -355,12 +355,12 @@ definition {
 
 		User.firstLoginUI(
 			password = "test",
-			specificURL = "http://localhost:9080",
+			specificUrl = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
 		WebContentNavigator.openWebContentAdmin(
-			baseURL = "http://localhost:9080",
-			siteURLKey = "remote-site");
+			baseUrl = "http://localhost:9080",
+			siteUrlKey = "remote-site");
 
 		WebContentNavigator.gotoPreviewEntryCP(
 			liveSite = "true",
@@ -389,7 +389,7 @@ definition {
 
 		Staging.publishToLive(remoteStaging = "true");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
 
 		Staging.publishViaSAP(
 			confirmMessage = "Are you sure you want to publish the selected web content?",
@@ -399,12 +399,12 @@ definition {
 
 		User.firstLoginUI(
 			password = "test",
-			specificURL = "http://localhost:9080",
+			specificUrl = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
 		WebContentNavigator.openWebContentAdmin(
-			baseURL = "http://localhost:9080",
-			siteURLKey = "remote-site");
+			baseUrl = "http://localhost:9080",
+			siteUrlKey = "remote-site");
 
 		WebContentNavigator.gotoPreviewEntryCP(
 			liveSite = "true",
@@ -460,7 +460,7 @@ definition {
 
 		Staging.publishToLive(remoteStaging = "true");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
@@ -480,10 +480,10 @@ definition {
 
 		Staging.publishToLive(remoteStaging = "true");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
 
 		WebContent.deleteCP(
-			siteURLKey = "site-name",
+			siteUrlKey = "site-name",
 			webContentTitle = "Web Content Title");
 
 		Navigator.openSitePage(
@@ -498,12 +498,12 @@ definition {
 
 		User.firstLoginUI(
 			password = "test",
-			specificURL = "http://localhost:9080",
+			specificUrl = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
 		WebContentNavigator.openWebContentAdmin(
-			baseURL = "http://localhost:9080",
-			siteURLKey = "remote-site");
+			baseUrl = "http://localhost:9080",
+			siteUrlKey = "remote-site");
 
 		WebContent.viewNotPresentCP(webContentTitle = "Web Content Title");
 	}
@@ -552,7 +552,7 @@ definition {
 
 		Staging.publishToLive(remoteStaging = "true");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
@@ -576,12 +576,12 @@ definition {
 
 		User.firstLoginUI(
 			password = "test",
-			specificURL = "http://localhost:9080",
+			specificUrl = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
 		WebContentNavigator.openWebContentAdmin(
-			baseURL = "http://localhost:9080",
-			siteURLKey = "remote-site");
+			baseUrl = "http://localhost:9080",
+			siteUrlKey = "remote-site");
 
 		WebContent.viewTitle(
 			onLive = "true",
@@ -594,14 +594,14 @@ definition {
 
 		WebContentNavigator.openToEditWCInSite(
 			groupName = "Site Name",
-			siteURLKey = "site-name",
+			siteUrlKey = "site-name",
 			webContentTitle = "Web Content Title");
 
 		WebContent.editCP(
 			webContentTitle = "Web Content Title",
 			webContentTitleEdit = "Web Content Title Edit");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
 
 		Staging.publishViaSAP(
 			confirmMessage = "Are you sure you want to publish the selected web content?",
@@ -611,12 +611,12 @@ definition {
 
 		User.firstLoginUI(
 			password = "test",
-			specificURL = "http://localhost:9080",
+			specificUrl = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
 		WebContentNavigator.openWebContentAdmin(
-			baseURL = "http://localhost:9080",
-			siteURLKey = "remote-site");
+			baseUrl = "http://localhost:9080",
+			siteUrlKey = "remote-site");
 
 		WebContent.viewTitle(
 			onLive = "true",
@@ -683,11 +683,11 @@ definition {
 
 		User.firstLoginUI(
 			password = "test",
-			specificURL = "http://localhost:9080",
+			specificUrl = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
 		Navigator.openSitePage(
-			baseURL = "http://localhost:9080",
+			baseUrl = "http://localhost:9080",
 			pageName = "Test Page",
 			siteName = "Remote Site");
 
@@ -754,11 +754,11 @@ definition {
 
 		User.firstLoginUI(
 			password = "test",
-			specificURL = "http://localhost:9080",
+			specificUrl = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
 		Navigator.openSitePage(
-			baseURL = "http://localhost:9080",
+			baseUrl = "http://localhost:9080",
 			pageName = "Test Page",
 			siteName = "Remote Site");
 
@@ -783,7 +783,7 @@ definition {
 			videoShortcutDescription = "Video Shortcut Description",
 			videoShortcutPreview = "https://www.youtube.com",
 			videoShortcutTitle = "Test YouTube Video",
-			videoURL = "https://youtu.be/HOdbzGCI5ME",
+			videoUrl = "https://youtu.be/HOdbzGCI5ME",
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WC WebContent Title");
 
@@ -822,11 +822,11 @@ definition {
 
 		User.firstLoginUI(
 			password = "test",
-			specificURL = "http://localhost:9080",
+			specificUrl = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
 		Navigator.openSitePage(
-			baseURL = "http://localhost:9080",
+			baseUrl = "http://localhost:9080",
 			pageName = "Test Page",
 			siteName = "Remote Site");
 

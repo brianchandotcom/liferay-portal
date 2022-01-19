@@ -396,10 +396,10 @@ definition {
 	}
 
 	macro closeAllSessions {
-		var analyticsCloudAsahCuratorBatchURL = PropsUtil.get("analytics.cloud.asah.curator.batch.url");
+		var analyticsCloudAsahCuratorBatchUrl = PropsUtil.get("analytics.cloud.asah.curator.batch.url");
 
 		var cleanCurl = '''
-			${analyticsCloudAsahCuratorBatchURL}/admin/sessions/close \
+			${analyticsCloudAsahCuratorBatchUrl}/admin/sessions/close \
 			-H 'Content-Type: application/json' \
 			-H 'osb-asah-project-id: osbasah'
 		''';
@@ -476,8 +476,8 @@ definition {
 	}
 
 	macro createFormAndAddToPage {
-		if (!(isSet(formACTitle))) {
-			var formACTitle = "Created Form Name";
+		if (!(isSet(formAcTitle))) {
+			var formAcTitle = "Created Form Name";
 		}
 
 		if (!(isSet(layoutName))) {
@@ -488,11 +488,11 @@ definition {
 			layoutName = "${layoutName}",
 			widgetName = "Form");
 
-		FormsAdmin.openFormsAdmin(siteURLKey = "site-name");
+		FormsAdmin.openFormsAdmin(siteUrlKey = "site-name");
 
 		FormsAdminNavigator.gotoAddForm();
 
-		Form.editName(formTitle = "${formACTitle}");
+		Form.editName(formTitle = "${formAcTitle}");
 
 		Form.addTextField(fieldPositionNumber = "0");
 
@@ -506,7 +506,7 @@ definition {
 
 		FormPortletNavigator.gotoSelectForm();
 
-		FormPortletConfiguration.selectForm(formTitle = "${formACTitle}");
+		FormPortletConfiguration.selectForm(formTitle = "${formAcTitle}");
 
 		PortletEntry.save();
 	}
@@ -607,9 +607,9 @@ definition {
 	}
 
 	macro launchAC {
-		var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
+		var analyticsCloudUrl = PropsUtil.get("analytics.cloud.url");
 
-		Open(locator1 = "${analyticsCloudURL}");
+		Open(locator1 = "${analyticsCloudUrl}");
 
 		if (!(isSet(emailAddress))) {
 			var emailAddress = "test@liferay.com";

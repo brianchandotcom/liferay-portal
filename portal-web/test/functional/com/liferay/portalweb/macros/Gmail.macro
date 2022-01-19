@@ -136,8 +136,8 @@ definition {
 	}
 
 	macro openMessageContinueReadingButton {
-		var pageNameURL = StringUtil.replace("${pageName}", " ", "-");
-		var pageNameURL = StringUtil.lowerCase("/${pageNameURL}");
+		var pageNameUrl = StringUtil.replace("${pageName}", " ", "-");
+		var pageNameUrl = StringUtil.lowerCase("/${pageNameUrl}");
 
 		AssertClick(
 			locator1 = "Gmail#GMAIL_HTML_MODE_MESSAGE_BODY_CONTINUE_READING_BUTTON",
@@ -153,13 +153,13 @@ definition {
 
 	macro openMessageLink {
 		var key_gmailAssetType = "${gmailAssetType}";
-		var pageNameURL = StringUtil.replace("${pageName}", " ", "-");
-		var pageNameURL = StringUtil.lowerCase("/${pageNameURL}");
-		var key_pageNameURL = "${pageNameURL}";
+		var pageNameUrl = StringUtil.replace("${pageName}", " ", "-");
+		var pageNameUrl = StringUtil.lowerCase("/${pageNameUrl}");
+		var key_pageNameUrl = "${pageNameUrl}";
 
 		AssertClick.assertPartialTextClickAt(
 			locator1 = "Gmail#GMAIL_HTML_MODE_MESSAGE_BODY_LINK",
-			value1 = "${pageNameURL}");
+			value1 = "${pageNameUrl}");
 
 		if (isSet(contentTitle)) {
 			SelectWindow(locator1 = "title=${contentTitle} - ${pageName} - ${siteName}");

@@ -67,8 +67,8 @@ definition {
 
 	macro setTitleMap {
 		JSONUtil2._exclusiveOrCheck(
-			A = "${title}",
-			B = "${titleMap}",
+			a = "${title}",
+			b = "${titleMap}",
 			failMessage = "Please only set 'title' or only 'titleMap' but not both or none.");
 
 		if (isSet(titleMap)) {

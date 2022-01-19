@@ -6,7 +6,7 @@ definition {
 
 	macro addLDAPServer {
 		PortalSettings.gotoConfiguration(
-			baseURL = "${baseURL}",
+			baseUrl = "${baseUrl}",
 			configurationCategory = "LDAP",
 			configurationName = "Servers",
 			configurationScope = "Virtual Instance Scope");
@@ -17,7 +17,7 @@ definition {
 
 		Type(
 			locator1 = "PortalSettingsAuthentication#LDAP_SERVER_SERVER_NAME",
-			value1 = "${LDAPServerName}");
+			value1 = "${ldapServerName}");
 
 		Click(locator1 = "PortalSettingsAuthentication#LDAP_SERVER_DEFAULT_VALUES_APACHE_DIRECTORY_SERVER_RADIO");
 
@@ -156,18 +156,18 @@ definition {
 		Type(
 			key_text = "clientId",
 			locator1 = "TextArea#ANY",
-			value1 = "${googleClientID}");
+			value1 = "${googleClientId}");
 
 		Type(
 			key_text = "clientSecret",
 			locator1 = "TextArea#ANY",
 			value1 = "${googleClientSecret}");
 
-		if (isSet(googlePickerAPIKey)) {
+		if (isSet(googlePickerApiKey)) {
 			Type(
 				key_text = "pickerAPIKey",
 				locator1 = "TextArea#ANY",
-				value1 = "${googlePickerAPIKey}");
+				value1 = "${googlePickerApiKey}");
 		}
 
 		AssertClick(
@@ -211,15 +211,15 @@ definition {
 
 		FormFields.editText(
 			fieldName = "loginURL",
-			fieldValue = "${OpenSSOLoginURL}");
+			fieldValue = "${openSsoLoginUrl}");
 
 		FormFields.editText(
 			fieldName = "logoutURL",
-			fieldValue = "${OpenSSOLogoutURL}");
+			fieldValue = "${openSsoLogoutUrl}");
 
 		FormFields.editText(
 			fieldName = "serviceURL",
-			fieldValue = "${OpenSSOServiceURL}");
+			fieldValue = "${openSsoServiceUrl}");
 
 		PortletEntry.save();
 	}
@@ -231,7 +231,7 @@ definition {
 				value1 = "${ratingType}");
 		}
 
-		if ("${configureKBRatingType}" == "true") {
+		if ("${configureKbRatingType}" == "true") {
 			Select(
 				locator1 = "Select#KNOWLEDGE_BASE_RATING",
 				value1 = "${ratingType}");
@@ -295,7 +295,7 @@ definition {
 
 		Type(
 			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_FACEBOOK_APPLICATION_ID",
-			value1 = "${facebookApplicationID}");
+			value1 = "${facebookApplicationId}");
 
 		Type(
 			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_FACEBOOK_APPLICATION_SECRET",
@@ -461,12 +461,12 @@ definition {
 
 	macro editLDAPServer {
 		PortalSettings.gotoConfiguration(
-			baseURL = "${baseURL}",
+			baseUrl = "${baseUrl}",
 			configurationCategory = "LDAP",
 			configurationName = "Servers",
 			configurationScope = "Virtual Instance Scope");
 
-		var key_LDAPServerName = "${LDAPServerName}";
+		var key_ldapServerName = "${ldapServerName}";
 
 		Click(locator1 = "PortalSettingsAuthentication#LDAP_SERVERS_TABLE_EDIT");
 	}
@@ -523,7 +523,7 @@ definition {
 
 		FormFields.editText(
 			fieldName = "clientId",
-			fieldValue = "${googleClientID}");
+			fieldValue = "${googleClientId}");
 
 		FormFields.editText(
 			fieldName = "clientSecret",
@@ -602,7 +602,7 @@ definition {
 	}
 
 	macro gotoConfiguration {
-		PortalSettings.openInstanceSettingsAdmin(baseURL = "${baseURL}");
+		PortalSettings.openInstanceSettingsAdmin(baseUrl = "${baseUrl}");
 
 		SystemSettings.gotoConfiguration(
 			configurationCategory = "${configurationCategory}",
@@ -624,7 +624,7 @@ definition {
 
 	macro openInstanceSettingsAdmin {
 		Navigator.openWithAppendToBaseURL(
-			baseURL = "${baseURL}",
+			baseUrl = "${baseUrl}",
 			urlAppend = "group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_InstanceSettingsPortlet");
 	}
 

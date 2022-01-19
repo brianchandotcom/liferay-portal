@@ -46,7 +46,7 @@ definition {
 			layoutName = "Knowledge Base Display Page",
 			widgetName = "Knowledge Base Display");
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 		KBArticle.importCP(
 			applyNumericalPrefix = "true",
@@ -62,7 +62,7 @@ definition {
 
 		KBArticle.viewChildArticleHierarchyViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Parent Title 2");
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 		KBArticle.selectAllCP();
 
@@ -93,7 +93,7 @@ definition {
 			layoutName = "Knowledge Base Page",
 			widgetName = "Knowledge Base Display");
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 		KBArticle.addCPWithTextFieldCustomField(
 			customFieldText = "KB Article Custom Field",
@@ -108,7 +108,7 @@ definition {
 			kbArticleContent = "KB Article Content",
 			kbArticleTitle = "KB Article Title");
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 		KBArticle.editCP(
 			customFieldTextEdit = "KB Article Custom Field Edited",
@@ -149,7 +149,7 @@ definition {
 			layoutName = "Knowledge Base Page",
 			widgetName = "Knowledge Base Display");
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 		KBFolder.addCP(
 			customField = "01/01/2017",
@@ -167,7 +167,7 @@ definition {
 			kbArticleContent = "Knowledge Base 2017 Article Content",
 			kbArticleTitle = "Knowledge Base 2017 Article Title");
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 		KBFolder.gotoCP(kbFolderName = "KB Folder 2010 Name");
 
@@ -193,12 +193,12 @@ definition {
 			kbArticleContent = "Knowledge Base 2010 Article Content",
 			kbArticleTitle = "Knowledge Base 2010 Article Title");
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 		var entries = "2010,2017";
 
 		for (var kbEntry : list "${entries}") {
-			KBAdmin.openKBAdmin(siteURLKey = "guest");
+			KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 			LexiconEntry.gotoEntryMenuItem(
 				menuItem = "Edit",
@@ -251,7 +251,7 @@ definition {
 			layoutName = "Knowledge Base Display Page",
 			widgetName = "Knowledge Base Display");
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 		KBFolder.addCP(
 			kbFolderDescription = "KB Folder Description",
@@ -286,7 +286,7 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test SearchKBArticleViaSearchPortlet {
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 		KBArticle.addCP(
 			kbArticleContent = "Knowledge Base Article Content",
@@ -309,11 +309,11 @@ definition {
 	@priority = "3"
 	@refactorneeded
 	test SearchKBArticleWithSpecialCharactersViaSearchPortletPG {
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 		KBArticle.addCP(
 			kbArticleContent = "Knowledge Base Article's Content",
-			kbArticleFriendlyURL = "knowledge-base-article-s-title",
+			kbArticleFriendlyUrl = "knowledge-base-article-s-title",
 			kbArticleTitle = "Knowledge Base Article's Title");
 
 		JSONLayout.addPublicLayout(
@@ -351,15 +351,15 @@ definition {
 
 		SystemSettings.saveConfiguration();
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 		KBArticle.addCP(
 			kbArticleContent = "Knowledge Base Article Content",
-			kbArticleSourceURL = "http://www.google.com",
+			kbArticleSourceUrl = "http://www.google.com",
 			kbArticleTitle = "Knowledge Base Article Title");
 
 		KBArticle.viewSourceURLCP(
-			kbArticleSourceURL = "http://www.google.com",
+			kbArticleSourceUrl = "http://www.google.com",
 			kbArticleTitle = "Knowledge Base Article Title");
 
 		JSONLayout.addPublicLayout(
@@ -377,7 +377,7 @@ definition {
 		KBArticle.viewKBDisplayPG(
 			history = "true",
 			print = "true",
-			sourceURL = "true",
+			sourceUrl = "true",
 			subscribe = "true");
 	}
 
@@ -394,7 +394,7 @@ definition {
 			layoutName = "Knowledge Base Page",
 			widgetName = "Knowledge Base Display");
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 		KBFolder.addCP(
 			kbFolderDescription = "KB Folder 1 Description",
@@ -542,7 +542,7 @@ definition {
 			layoutName = "Knowledge Base Display Page",
 			widgetName = "Knowledge Base Display");
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 		KBArticle.addCP(
 			kbArticleContent = "Knowledge Base Article Parent Content 1",
@@ -569,7 +569,7 @@ definition {
 
 		KBArticle.viewChildArticleHierarchyViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Parent Title 1");
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 		KBArticle.gotoChildArticleDescriptiveDetails(kbArticleTitle = "Knowledge Base Article Parent Title 1");
 

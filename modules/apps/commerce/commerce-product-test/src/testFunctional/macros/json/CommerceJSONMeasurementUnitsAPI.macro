@@ -1,10 +1,10 @@
 definition {
 
 	macro _deleteCommerceMeasurementUnits {
-		var baseURL = "${baseURL}";
+		var baseUrl = "${baseUrl}";
 
 		if (!(isSet(baseURL))) {
-			var baseURL = PropsUtil.get("portal.url");
+			var baseUrl = PropsUtil.get("portal.url");
 		}
 
 		var commerceMeasurementUnitsIds = CommerceJSONMeasurementUnitsAPI._getCommerceMeasurementUnits();
@@ -14,7 +14,7 @@ definition {
 				echo("Deleting Commerce Measurement Units with id: ${commerceMeasurementUnitsId}");
 
 				var curl = '''
-					${baseURL}/api/jsonws/commerce.cpmeasurementunit/delete-cp-measurement-unit \
+					${baseUrl}/api/jsonws/commerce.cpmeasurementunit/delete-cp-measurement-unit \
 						-u test@liferay.com:test \
 						-d cpMeasurementUnitId=${commerceMeasurementUnitsId}
 				''';
@@ -28,16 +28,16 @@ definition {
 	}
 
 	macro _getCommerceMeasurementUnits {
-		var baseURL = "${baseURL}";
+		var baseUrl = "${baseUrl}";
 
 		if (!(isSet(baseURL))) {
-			var baseURL = PropsUtil.get("portal.url");
+			var baseUrl = PropsUtil.get("portal.url");
 		}
 
 		var companyId = JSONCompany.getCompanyId();
 
 		var curl = '''
-			  ${baseURL}/api/jsonws/commerce.cpmeasurementunit/get-cp-measurement-units \
+			  ${baseUrl}/api/jsonws/commerce.cpmeasurementunit/get-cp-measurement-units \
 				  -u test@liferay.com:test \
 				  -d companyId=${companyId} \
 				  -d "start=-1" \

@@ -413,15 +413,15 @@ definition {
 
 			var propertyID3 = ACSettings.getPropertyId(propertyName = "Name of property 3");
 
-			var differenceID2 = ${propertyID2} - ${propertyID1};
-			var differenceID3 = ${propertyID3} - ${propertyID2};
+			var differenceId2 = ${propertyId2} - ${propertyId1};
+			var differenceId3 = ${propertyId3} - ${propertyId2};
 
 			TestUtils.assertNotEquals(
-				actual = "${differenceID2}",
+				actual = "${differenceId2}",
 				expected = "1");
 
 			TestUtils.assertNotEquals(
-				actual = "${differenceID3}",
+				actual = "${differenceId3}",
 				expected = "1");
 		}
 	}
@@ -528,7 +528,7 @@ definition {
 		}
 
 		task ("Go to property via URL") {
-			Open(locator1 = "${propertyURL}");
+			Open(locator1 = "${propertyUrl}");
 
 			ACProperties.assertNewCreatedProperty(propertyName = "${myProperty}");
 		}

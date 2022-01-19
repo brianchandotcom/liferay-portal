@@ -49,7 +49,7 @@ definition {
 
 		Audit.viewAuditDetails(
 			additionalInformation = "User Group1",
-			clientIP = "127.0.0.1",
+			clientIp = "127.0.0.1",
 			key_resourceAction = "ASSIGN",
 			key_resourceName = "User",
 			resourceAction = "ASSIGN",
@@ -72,7 +72,7 @@ definition {
 
 		Audit.viewAuditDetails(
 			additionalInformation = "User Group1",
-			clientIP = "127.0.0.1",
+			clientIp = "127.0.0.1",
 			key_resourceAction = "UNASSIGN",
 			key_resourceName = "User",
 			resourceAction = "UNASSIGN",
@@ -103,7 +103,7 @@ definition {
 
 		Audit.viewAuditDetails(
 			additionalInformation = "Role1 Name",
-			clientIP = "127.0.0.1",
+			clientIp = "127.0.0.1",
 			key_resourceAction = "ASSIGN",
 			key_resourceName = "User",
 			resourceAction = "ASSIGN",
@@ -127,7 +127,7 @@ definition {
 
 		Audit.viewAuditDetails(
 			additionalInformation = "Role1 Name",
-			clientIP = "127.0.0.1",
+			clientIp = "127.0.0.1",
 			key_resourceAction = "UNASSIGN",
 			key_resourceName = "User",
 			resourceAction = "UNASSIGN",
@@ -159,7 +159,7 @@ definition {
 
 		Audit.viewAuditDetails(
 			additionalInformation = "test1@liferay.com",
-			clientIP = "127.0.0.1",
+			clientIp = "127.0.0.1",
 			key_resourceAction = "ADD",
 			key_resourceName = "User",
 			resourceAction = "ADD",
@@ -182,7 +182,7 @@ definition {
 
 		Audit.viewAuditDetails(
 			additionalInformation = "middleName",
-			clientIP = "127.0.0.1",
+			clientIp = "127.0.0.1",
 			key_resourceAction = "UPDATE",
 			key_resourceName = "User",
 			resourceAction = "UPDATE",
@@ -209,7 +209,7 @@ definition {
 
 		Audit.viewAuditDetails(
 			additionalInformation = "test1 test1 test1",
-			clientIP = "127.0.0.1",
+			clientIp = "127.0.0.1",
 			key_resourceAction = "IMPERSONATE",
 			key_resourceName = "User",
 			resourceAction = "IMPERSONATE",
@@ -236,7 +236,7 @@ definition {
 
 		Audit.viewAuditDetails(
 			additionalInformation = "test1@liferay.com",
-			clientIP = "127.0.0.1",
+			clientIp = "127.0.0.1",
 			key_resourceAction = "DELETE",
 			key_resourceName = "User",
 			resourceAction = "DELETE",
@@ -263,7 +263,7 @@ definition {
 
 		Audit.viewAuditDetails(
 			additionalInformation = "",
-			clientIP = "127.0.0.1",
+			clientIp = "127.0.0.1",
 			key_resourceAction = "ADD",
 			key_resourceName = "UserGroup",
 			resourceAction = "ADD",
@@ -286,7 +286,7 @@ definition {
 
 		Audit.viewAuditDetails(
 			additionalInformation = "This is only for test",
-			clientIP = "127.0.0.1",
+			clientIp = "127.0.0.1",
 			key_resourceAction = "UPDATE",
 			key_resourceName = "UserGroup",
 			resourceAction = "UPDATE",
@@ -307,7 +307,7 @@ definition {
 
 		Audit.viewAuditDetails(
 			additionalInformation = "",
-			clientIP = "127.0.0.1",
+			clientIp = "127.0.0.1",
 			key_resourceAction = "DELETE",
 			key_resourceName = "UserGroup",
 			resourceAction = "DELETE",
@@ -328,7 +328,7 @@ definition {
 
 		Audit.viewAuditDetails(
 			additionalInformation = "",
-			clientIP = "127.0.0.1",
+			clientIp = "127.0.0.1",
 			key_resourceAction = "ADD",
 			key_resourceName = "Role",
 			resourceAction = "ADD",
@@ -361,7 +361,7 @@ definition {
 
 		Audit.viewAuditDetails(
 			additionalInformation = "Role2 Name",
-			clientIP = "127.0.0.1",
+			clientIp = "127.0.0.1",
 			key_resourceAction = "UPDATE",
 			key_resourceName = "Role",
 			resourceAction = "UPDATE",
@@ -382,7 +382,7 @@ definition {
 
 		Audit.viewAuditDetails(
 			additionalInformation = "",
-			clientIP = "127.0.0.1",
+			clientIp = "127.0.0.1",
 			key_resourceAction = "DELETE",
 			key_resourceName = "Role",
 			resourceAction = "DELETE",
@@ -403,7 +403,7 @@ definition {
 
 		Audit.viewAuditDetails(
 			additionalInformation = "None",
-			clientIP = "127.0.0.1",
+			clientIp = "127.0.0.1",
 			key_resourceAction = "LOGIN",
 			key_resourceName = "User",
 			resourceAction = "LOGIN",
@@ -419,7 +419,7 @@ definition {
 
 		Audit.viewAuditDetails(
 			additionalInformation = "None",
-			clientIP = "127.0.0.1",
+			clientIp = "127.0.0.1",
 			key_resourceAction = "VIEW",
 			key_resourceName = "Layout",
 			resourceAction = "VIEW",
@@ -439,7 +439,7 @@ definition {
 
 		Audit.viewAuditDetails(
 			additionalInformation = "None",
-			clientIP = "127.0.0.1",
+			clientIp = "127.0.0.1",
 			key_resourceAction = "LOGOUT",
 			key_resourceName = "User",
 			resourceAction = "LOGOUT",
@@ -463,7 +463,7 @@ definition {
 
 		Audit.viewAuditDetails(
 			additionalInformation = "Failed to authenticate by email address",
-			clientIP = "127.0.0.1",
+			clientIp = "127.0.0.1",
 			key_resourceAction = "LOGIN_FAILURE",
 			key_resourceName = "User",
 			resourceAction = "LOGIN_FAILURE",

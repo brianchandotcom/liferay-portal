@@ -155,8 +155,8 @@ definition {
 	}
 
 	macro getCommentId {
-		var currentURL = selenium.getCurrentUrl();
-		var commentId = StringUtil.extractLast("${currentURL}", "message_");
+		var currentUrl = selenium.getCurrentUrl();
+		var commentId = StringUtil.extractLast("${currentUrl}", "message_");
 
 		echo("commentId: ${commentId}");
 

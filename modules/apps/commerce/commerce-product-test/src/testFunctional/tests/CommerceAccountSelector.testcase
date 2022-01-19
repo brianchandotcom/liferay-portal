@@ -91,7 +91,7 @@ definition {
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
 
 		AssertElementPresent(
-			key_FilterOption = "Commerce Account",
+			key_filterOption = "Commerce Account",
 			locator1 = "AppBuilder#CHOOSE_APP_SEARCH_FILTER_BY_OPTION");
 	}
 
@@ -151,7 +151,7 @@ definition {
 			locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_ACCOUNT_LIST_ITEM");
 
 		AssertVisible(
-			key_FilterOption = "Commerce Account 2",
+			key_filterOption = "Commerce Account 2",
 			locator1 = "AppBuilder#CHOOSE_APP_SEARCH_FILTER_BY_OPTION");
 
 		Click.clickNoMouseOver(locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_DROPDOWN");
@@ -181,13 +181,13 @@ definition {
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Pending Orders");
 
 		Click(
-			key_FilterOption = "Add Order",
+			key_filterOption = "Add Order",
 			locator1 = "AppBuilder#CHOOSE_SEARCH_FILTER_BY_OPTION");
 
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Pending Orders");
 
 		Click(
-			key_FilterOption = "Add Order",
+			key_filterOption = "Add Order",
 			locator1 = "AppBuilder#CHOOSE_SEARCH_FILTER_BY_OPTION");
 
 		ApplicationsMenu.gotoSite(site = "Minium");
@@ -211,11 +211,11 @@ definition {
 		Click(locator1 = "CommerceEntry#ORDER_ID_FROM_ACCOUNT_SELECTOR");
 
 		AssertElementNotPresent(
-			key_FilterOption = "${getFirstId}",
+			key_filterOption = "${getFirstId}",
 			locator1 = "AppBuilder#CHOOSE_APP_SEARCH_FILTER_BY_OPTION");
 
 		AssertElementPresent(
-			key_FilterOption = "${getSecondId}",
+			key_filterOption = "${getSecondId}",
 			locator1 = "AppBuilder#CHOOSE_APP_SEARCH_FILTER_BY_OPTION");
 
 		Click(locator1 = "CommerceAccelerators#MINI_CART_BUTTON");
@@ -253,7 +253,7 @@ definition {
 		Button.click(button = "Create New Order");
 
 		AssertElementNotPresent(
-			key_FilterOption = "${getOrderId}",
+			key_filterOption = "${getOrderId}",
 			locator1 = "AppBuilder#CHOOSE_APP_SEARCH_FILTER_BY_OPTION");
 	}
 
@@ -417,11 +417,11 @@ definition {
 		Click.clickNoMouseOver(locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_DROPDOWN");
 
 		AssertElementPresent(
-			key_RowNumber = "1",
+			key_rowNumber = "1",
 			locator1 = "AppBuilder#VALIDATE_LIST_TITLE_NAME_AT_ROW");
 
 		AssertElementPresent(
-			key_RowNumber = "2",
+			key_rowNumber = "2",
 			locator1 = "AppBuilder#VALIDATE_LIST_TITLE_NAME_AT_ROW");
 	}
 

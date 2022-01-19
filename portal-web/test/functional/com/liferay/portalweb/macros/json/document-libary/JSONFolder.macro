@@ -36,7 +36,7 @@ definition {
 			addGuestPermissions = "${guestPermissions}");
 
 		var curl = '''
-			${portalURL}/api/jsonws/dlapp/add-folder \
+			${portalUrl}/api/jsonws/dlapp/add-folder \
 			-u test@liferay.com:test \
 			-d repositoryId=${repositoryId} \
 			-d parentFolderId=${parentFolderId} \
@@ -63,7 +63,7 @@ definition {
 			name = "${folderName}");
 
 		var curl = '''
-			${portalURL}/api/jsonws/dlfolder/delete-folder \
+			${portalUrl}/api/jsonws/dlfolder/delete-folder \
 			-u test@liferay.com:test \
 			-d folderId=${folderId}
 		''';
@@ -78,7 +78,7 @@ definition {
 			name = "${folderName}");
 
 		var curl = '''
-			${portalURL}/api/jsonws/dltrash/move-folder-to-trash \
+			${portalUrl}/api/jsonws/dltrash/move-folder-to-trash \
 			-u test@liferay.com:test \
 			-d folderId=${folderId}
 		''';

@@ -25,7 +25,7 @@ definition {
 		}
 
 		var curl = '''
-			${portalURL}/api/jsonws/kb.kbarticle/get-kb-articles \
+			${portalUrl}/api/jsonws/kb.kbarticle/get-kb-articles \
 				-u test@liferay.com:test \
 				-d groupId=${groupId} \
 				-d parentResourcePrimKey=${parentResourcePrimKey} \
@@ -66,7 +66,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalURL}/api/jsonws/kb.kbarticle/get-kb-articles \
+			${portalUrl}/api/jsonws/kb.kbarticle/get-kb-articles \
 				-u test@liferay.com:test \
 				-d groupId=${groupId} \
 				-d parentResourcePrimKey=${folderId} \
@@ -114,7 +114,7 @@ definition {
 		var parentResourceClassNameId = JSONClassname._getClassNameId(value = "com.liferay.knowledge.base.model.KBFolder");
 
 		var curl = '''
-			${portalURL}/api/jsonws/kb.kbarticle/add-kb-article \
+			${portalUrl}/api/jsonws/kb.kbarticle/add-kb-article \
 				-u test@liferay.com:test \
 				-d externalReferenceCode= \
 				-d portletId=0 \
@@ -158,7 +158,7 @@ definition {
 		}
 
 		var curl = '''
-			${portalURL}/api/jsonws/kb.kbarticle/add-kb-article \
+			${portalUrl}/api/jsonws/kb.kbarticle/add-kb-article \
 				-u test@liferay.com:test \
 				-d externalReferenceCode= \
 				-d portletId=0 \
@@ -212,7 +212,7 @@ definition {
 		var parentResourceClassNameId = JSONClassname._getClassNameId(value = "com.liferay.knowledge.base.model.KBFolder");
 
 		var curl = '''
-			${portalURL}/api/jsonws/kb.kbfolder/add-kb-folder \
+			${portalUrl}/api/jsonws/kb.kbfolder/add-kb-folder \
 				-d externalReferenceCode= \
 				-u test@liferay.com:test \
 				-d groupId=${groupId} \
@@ -252,7 +252,7 @@ definition {
 		}
 
 		var curl = '''
-			${portalURL}/api/jsonws/kb.kbarticle/add-kb-article \
+			${portalUrl}/api/jsonws/kb.kbarticle/add-kb-article \
 				-u test@liferay.com:test \
 				-d externalReferenceCode= \
 				-d portletId=0 \
@@ -281,7 +281,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalURL}/api/jsonws/kb.kbtemplate/add-kb-template \
+			${portalUrl}/api/jsonws/kb.kbtemplate/add-kb-template \
 				-u test@liferay.com:test \
 				-d portletId=0 \
 				-d title=${kbTemplateTitle} \
@@ -310,7 +310,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalURL}/api/jsonws/kb.kbfolder/get-kb-folders \
+			${portalUrl}/api/jsonws/kb.kbfolder/get-kb-folders \
 				-u test@liferay.com:test \
 				-d groupId=${groupId} \
 				-d parentKBFolderId=0 \

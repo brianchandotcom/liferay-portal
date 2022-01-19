@@ -80,12 +80,12 @@ definition {
 
 			// This data takes too long to appear
 
-			var portalURL = PropsUtil.get("portal.url");
+			var portalUrl = PropsUtil.get("portal.url");
 
 			var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 			ACAssets.viewAssetAppearsOnMetric(
-				canonicalURL = "${portalURL}/web/site-name",
+				canonicalUrl = "${portalUrl}/web/site-name",
 				cardTitle = "Asset Appears On",
 				pageNmae = "AC Page - Site Name - ${siteName}");
 		}
@@ -264,7 +264,7 @@ definition {
 		ACUtils.addPage(layoutName = "AC Page 1");
 
 		ACUtils.createFormAndAddToPage(
-			formACTitle = "Created Form Name 1",
+			formAcTitle = "Created Form Name 1",
 			layoutName = "AC Page 1");
 
 		Refresh();
@@ -699,7 +699,7 @@ definition {
 
 		for (var n : list "1,2,3") {
 			ACUtils.createFormAndAddToPage(
-				formACTitle = "Created Form Name ${n}",
+				formAcTitle = "Created Form Name ${n}",
 				layoutName = "AC Page ${n}");
 		}
 

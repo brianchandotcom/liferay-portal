@@ -20,7 +20,7 @@ definition {
 		}
 
 		var curl = '''
-			${portalURL}/api/jsonws/mb.mbmessage/add-message \
+			${portalUrl}/api/jsonws/mb.mbmessage/add-message \
 				-u ${userEmailAddress}:${userPassword} \
 				-d parentMessageId=${messageId} \
 				-d subject=RE: ${threadSubject} \
@@ -92,7 +92,7 @@ definition {
 		var groupId = JSONGroupSetter.setGroupId(groupName = "${groupName}");
 
 		var curl = '''
-			${portalURL}/api/jsonws/mb.mbmessage/get-thread-messages \
+			${portalUrl}/api/jsonws/mb.mbmessage/get-thread-messages \
 			-u test@liferay.com:test \
 			-d groupId=${groupId} \
 			-d categoryId=${categoryId} \
@@ -124,7 +124,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalURL}/o/headless-delivery/v1.0/message-board-threads/${questionId} \
+			${portalUrl}/o/headless-delivery/v1.0/message-board-threads/${questionId} \
 			-H 'Content-Type: application/json' \
 			-u 'test@liferay.com:test'
 		''';
@@ -151,7 +151,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalURL}/o/headless-delivery/v1.0/message-board-threads/${questionId} \
+			${portalUrl}/o/headless-delivery/v1.0/message-board-threads/${questionId} \
 			-H 'Content-Type: application/json' \
 			-u 'test@liferay.com:test'
 		''';
@@ -180,7 +180,7 @@ definition {
 		var groupId = JSONGroupSetter.setGroupId(groupName = "${groupName}");
 
 		var curl = '''
-			${portalURL}/api/jsonws/mb.mbthread/get-threads \
+			${portalUrl}/api/jsonws/mb.mbthread/get-threads \
 			-u test@liferay.com:test \
 			-d groupId=${groupId} \
 			-d categoryId=${categoryId} \
@@ -218,7 +218,7 @@ definition {
 		}
 
 		var curl = '''
-			${portalURL}/api/jsonws/mb.mbthread/get-threads \
+			${portalUrl}/api/jsonws/mb.mbthread/get-threads \
 			-u test@liferay.com:test \
 			-d groupId=${groupId} \
 			-d categoryId=${categoryId} \

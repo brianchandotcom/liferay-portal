@@ -14,7 +14,7 @@ definition {
 		}
 
 		var curl = '''
-			${portalURL}/api/jsonws/bookmarks.bookmarksentry/add-entry \
+			${portalUrl}/api/jsonws/bookmarks.bookmarksentry/add-entry \
 				-u test@liferay.com:test \
 				-d groupId=${groupId} \
 				-d folderId=${folderId} \
@@ -42,7 +42,7 @@ definition {
 		}
 
 		var curl = '''
-			${portalURL}/api/jsonws/bookmarks.bookmarksfolder/add-folder \
+			${portalUrl}/api/jsonws/bookmarks.bookmarksfolder/add-folder \
 				-u test@liferay.com:test \
 				-d parentFolderId=${parentFolderId} \
 				-d name=${folderName} \
@@ -60,7 +60,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalURL}/api/jsonws/bookmarks.bookmarksfolder/get-folders \
+			${portalUrl}/api/jsonws/bookmarks.bookmarksfolder/get-folders \
 				-u test@liferay.com:test \
 				-d groupId=${groupId}
 		''';

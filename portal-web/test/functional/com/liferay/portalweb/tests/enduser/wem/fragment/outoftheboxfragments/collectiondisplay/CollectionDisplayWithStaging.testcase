@@ -233,7 +233,7 @@ definition {
 		}
 
 		task ("Add the first collection page based on dynamic collection") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name-staging");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name-staging");
 
 			ContentPages.addPublicCollectionPage(
 				collectionName = "Dynamic Collection",
@@ -271,7 +271,7 @@ definition {
 		}
 
 		task ("Add the second collection page based on Most Viewed Assets collection provider") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name-staging");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name-staging");
 
 			ContentPages.addPublicCollectionPage(
 				collectionName = "Most Viewed Assets",
@@ -324,7 +324,7 @@ definition {
 		}
 
 		task ("Add a Collection Display to display page template") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name-staging");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name-staging");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
@@ -341,7 +341,7 @@ definition {
 		}
 
 		task ("Export display page template") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name-staging");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name-staging");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
 				displayPageName = "Display Page Name",
@@ -353,11 +353,11 @@ definition {
 		task ("Import display page template in a new staging site") {
 			JSONGroup.addGroup(groupName = "Site Name");
 
-			Staging.openStagingAdmin(siteURLKey = "site-name");
+			Staging.openStagingAdmin(siteUrlKey = "site-name");
 
 			Staging.activateStagingCP(siteName = "Site Name");
 
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "site-name-staging");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "site-name-staging");
 
 			DisplayPageTemplatesAdmin.importDisplayPageTemplateFromTempFolder();
 

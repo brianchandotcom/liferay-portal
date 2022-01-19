@@ -30,7 +30,7 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
+			RecycleBin.openRecycleBinAdmin(siteUrlKey = "guest");
 
 			RecycleBin.emptyCP();
 
@@ -43,7 +43,7 @@ definition {
 	test CanCollectDigitalSignatureByButton {
 		DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
@@ -58,7 +58,7 @@ definition {
 
 		AssertElementPresent(locator1 = "DigitalSignatureDM#DIGITAL_SIGNATURE_COLLECT_BUTTON");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		DMDocument.deleteCP(dmDocumentTitle = "DM Document PDF");
 	}
@@ -68,7 +68,7 @@ definition {
 	test CanCollectDigitalSignatureByVerticalEllipsis {
 		DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
@@ -83,7 +83,7 @@ definition {
 
 		AssertElementPresent(locator1 = "DigitalSignatureDM#DIGITAL_SIGNATURE_ELLIPSIS_COLLECT_BUTTON");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		DMDocument.deleteCP(dmDocumentTitle = "DM Document PDF");
 	}
@@ -93,7 +93,7 @@ definition {
 	test CanGetMultipleSignaturesByButton {
 		DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		DMDocument.addMultipleCP(dmDocumentFileList = "Document_1.doc,Document_2.jpg");
 
@@ -109,7 +109,7 @@ definition {
 
 		AssertElementPresent(locator1 = "DigitalSignatureDM#DIGITAL_SIGNATURE_SEND_BUTTON");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		DMDocument.deleteCP(dmDocumentTitle = "Document_1");
 
@@ -121,7 +121,7 @@ definition {
 	test CanViewWarningMessageForMoreThan10Documents {
 		DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		DMDocument.addMultipleCP(dmDocumentFileList = "Document_1.jpg,Document_2.pdf,Document_3.png,Document_4.jpg,Document_5.txt,Commerce_Black.jpg,Commerce_Blue.jpg,Commerce_White.jpg,Spaceport.jpg,analytics-cloud-hero-image.png,marketplace_icon.png");
 
@@ -135,7 +135,7 @@ definition {
 			locator1 = "DigitalSignatureDM#DIGITAL_SIGNATURE_MODAL_TITLE",
 			value1 = "${modalTitle}");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		PortletEntry.selectAll();
 

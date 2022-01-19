@@ -56,23 +56,23 @@ definition {
 		}
 
 		task ("Move them to recycle bin") {
-			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+			DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name");
 
 			DMDocument.moveToRecycleBinCP(dmDocumentTitle = "Document_1.png");
 
-			BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
+			BlogsNavigator.openBlogsAdmin(siteUrlKey = "site-name");
 
 			BlogsEntry.moveToRecycleBinCP(
 				entryContent = "Blogs Entry Content",
 				entryTitle = "Blogs Entry Title");
 
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
 
 			WebContent.moveToRecycleBinCP(webContentTitle = "Web Content Title");
 		}
 
 		task ("Bulk restore them from recycle bin") {
-			RecycleBin.openRecycleBinAdmin(siteURLKey = "site-name");
+			RecycleBin.openRecycleBinAdmin(siteUrlKey = "site-name");
 
 			RecycleBin.viewCP(
 				assetName = "Document_1.png",
@@ -93,15 +93,15 @@ definition {
 		}
 
 		task ("Assert they are restored") {
-			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+			DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name");
 
 			DMDocument.viewCardTitle(dmDocumentTitle = "Document_1.png");
 
-			BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
+			BlogsNavigator.openBlogsAdmin(siteUrlKey = "site-name");
 
 			Blogs.viewEntryPresent(entryTitle = "Blogs Entry Title");
 
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
 
 			WebContentAdmin.viewEntryTitle(entry = "Web Content Title");
 		}
@@ -134,7 +134,7 @@ definition {
 		}
 
 		task ("Go to recycle bin to view entry and restore") {
-			RecycleBin.openRecycleBinAdmin(siteURLKey = "site-name");
+			RecycleBin.openRecycleBinAdmin(siteUrlKey = "site-name");
 
 			RecycleBin.viewCP(
 				assetName = "Blogs Entry Title",
@@ -207,7 +207,7 @@ definition {
 		}
 
 		task ("View and restore subfolder") {
-			RecycleBin.openRecycleBinAdmin(siteURLKey = "site-name");
+			RecycleBin.openRecycleBinAdmin(siteUrlKey = "site-name");
 
 			RecycleBin.viewCP(
 				assetName = "Subfolder Name",
@@ -229,7 +229,7 @@ definition {
 
 			Bookmark.viewBookmark(
 				bookmarkName = "Bookmark Name",
-				bookmarkURL = "https://www.liferay.com");
+				bookmarkUrl = "https://www.liferay.com");
 		}
 
 		task ("Move the bookmark in subfolder to recycle bin") {
@@ -243,7 +243,7 @@ definition {
 		}
 
 		task ("Restore the bookmark in recycle bin") {
-			RecycleBin.openRecycleBinAdmin(siteURLKey = "site-name");
+			RecycleBin.openRecycleBinAdmin(siteUrlKey = "site-name");
 
 			RecycleBin.viewCP(
 				assetName = "Bookmark Name",
@@ -265,7 +265,7 @@ definition {
 
 			Bookmark.viewBookmark(
 				bookmarkName = "Bookmark Name",
-				bookmarkURL = "https://www.liferay.com");
+				bookmarkUrl = "https://www.liferay.com");
 		}
 	}
 
@@ -286,7 +286,7 @@ definition {
 		}
 
 		task ("Remove the attachement in mb") {
-			MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "site-name");
+			MessageBoardsAdmin.openMessageBoardsAdmin(siteUrlKey = "site-name");
 
 			MessageboardsThread.editCP(
 				mbAttachmentFile = "Document_1.doc",
@@ -297,7 +297,7 @@ definition {
 		}
 
 		task ("View attachement is removed") {
-			MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "site-name");
+			MessageBoardsAdmin.openMessageBoardsAdmin(siteUrlKey = "site-name");
 
 			MessageboardsThread.viewCP(
 				replyCount = "0",
@@ -313,7 +313,7 @@ definition {
 
 			MessageboardsThread.restoreMBAttachmentCP(mbAttachmentFile = "Document_1.doc");
 
-			MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "site-name");
+			MessageBoardsAdmin.openMessageBoardsAdmin(siteUrlKey = "site-name");
 
 			MessageboardsThread.viewCP(
 				mbAttachmentFile = "Document_1.doc",
@@ -353,7 +353,7 @@ definition {
 		}
 
 		task ("Go to recycle bin and wait 2 minutes") {
-			RecycleBin.openRecycleBinAdmin(siteURLKey = "site-name");
+			RecycleBin.openRecycleBinAdmin(siteUrlKey = "site-name");
 
 			RecycleBin.viewCP(
 				assetName = "Blogs Entry Title",
@@ -402,7 +402,7 @@ definition {
 		}
 
 		task ("View 3 blog entries in recycle bin") {
-			RecycleBin.openRecycleBinAdmin(siteURLKey = "site-name");
+			RecycleBin.openRecycleBinAdmin(siteUrlKey = "site-name");
 
 			for (var n : list "1,2,3") {
 				Search.searchCP(searchTerm = "${n}");
@@ -480,7 +480,7 @@ definition {
 		}
 
 		task ("Assert 2 documents are moved to recycle bin") {
-			RecycleBin.openRecycleBinAdmin(siteURLKey = "site-name");
+			RecycleBin.openRecycleBinAdmin(siteUrlKey = "site-name");
 
 			Search.searchCP(searchTerm = "1");
 
@@ -489,7 +489,7 @@ definition {
 				assetType = "Document",
 				deleteUser = "test test");
 
-			RecycleBin.openRecycleBinAdmin(siteURLKey = "site-name");
+			RecycleBin.openRecycleBinAdmin(siteUrlKey = "site-name");
 
 			Search.searchCP(searchTerm = "2");
 
@@ -520,7 +520,7 @@ definition {
 		}
 
 		task ("Delete wiki page and a wiki node") {
-			WikiNavigator.openWikiAdmin(siteURLKey = "site-name");
+			WikiNavigator.openWikiAdmin(siteUrlKey = "site-name");
 
 			WikiNavigator.gotoNode(wikiNodeName = "Wiki Node Name");
 
@@ -531,7 +531,7 @@ definition {
 				wikiNodeName = "Wiki Node Name",
 				wikiPageTitle = "Wiki Page Title");
 
-			WikiNavigator.openWikiAdmin(siteURLKey = "site-name");
+			WikiNavigator.openWikiAdmin(siteUrlKey = "site-name");
 
 			WikiNode.deleteCP(
 				assetType = "Wiki Node",
@@ -539,7 +539,7 @@ definition {
 		}
 
 		task ("View wiki page and wiki node and restore them") {
-			RecycleBin.openRecycleBinAdmin(siteURLKey = "site-name");
+			RecycleBin.openRecycleBinAdmin(siteUrlKey = "site-name");
 
 			RecycleBin.viewCP(
 				assetName = "Wiki Page Title",
@@ -568,7 +568,7 @@ definition {
 		}
 
 		task ("Assert wiki page and wiki node are restored") {
-			WikiNavigator.openWikiAdmin(siteURLKey = "site-name");
+			WikiNavigator.openWikiAdmin(siteUrlKey = "site-name");
 
 			WikiNode.viewCP(
 				numberOfWikiPages = "2",
@@ -605,7 +605,7 @@ definition {
 		}
 
 		task ("Move all items to recycle bin") {
-			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+			DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name");
 
 			DMDocument.moveAllToRecycleBinCP();
 		}
@@ -625,7 +625,7 @@ definition {
 		}
 
 		task ("Bulk restore all documents in recycle bin") {
-			RecycleBin.openRecycleBinAdmin(siteURLKey = "site-name");
+			RecycleBin.openRecycleBinAdmin(siteUrlKey = "site-name");
 
 			for (var entryName : list "Document_1.png,Document_1.txt") {
 				RecycleBin.viewCP(
@@ -638,7 +638,7 @@ definition {
 		}
 
 		task ("Assert restored documents are renamed") {
-			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+			DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name");
 
 			for (var assetName : list "Document_1.png,Document_1.txt,Document_1 (1).png,Document_1 (1).txt") {
 				DMDocument.viewCardTitle(dmDocumentTitle = "${assetName}");
@@ -667,13 +667,13 @@ definition {
 		}
 
 		task ("Move document to recycle bin and restore") {
-			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+			DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name");
 
 			DMFolder.moveToRecycleBinCP(
 				assetType = "Documents Folder",
 				dmFolderName = "DM Folder Name");
 
-			RecycleBin.openRecycleBinAdmin(siteURLKey = "site-name");
+			RecycleBin.openRecycleBinAdmin(siteUrlKey = "site-name");
 
 			RecycleBin.restoreContentFromFolderCP(
 				assetName = "DM Folder Name",
@@ -684,7 +684,7 @@ definition {
 		}
 
 		task ("View document is restored") {
-			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+			DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name");
 
 			DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title 2");
 
@@ -738,7 +738,7 @@ definition {
 		}
 
 		task ("Search by comments in Blogs admin") {
-			BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
+			BlogsNavigator.openBlogsAdmin(siteUrlKey = "site-name");
 
 			LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
@@ -754,7 +754,7 @@ definition {
 		}
 
 		task ("Move one of blogs entries to the recycle bin") {
-			BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
+			BlogsNavigator.openBlogsAdmin(siteUrlKey = "site-name");
 
 			BlogsNavigator.moveToRecycleBinCP(entryTitle = "Blogs Entry Title 1");
 		}
@@ -784,7 +784,7 @@ definition {
 		}
 
 		task ("Remove the document to the recycle bin") {
-			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+			DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name");
 
 			DMDocument.moveToRecycleBinCP(dmDocumentTitle = "DM Document Title");
 		}
@@ -798,7 +798,7 @@ definition {
 		}
 
 		task ("Keep both entries and rename the entry from the Recycle Bin") {
-			RecycleBin.openRecycleBinAdmin(siteURLKey = "site-name");
+			RecycleBin.openRecycleBinAdmin(siteUrlKey = "site-name");
 
 			RecycleBin.viewCP(
 				assetName = "DM Document Title",
@@ -811,7 +811,7 @@ definition {
 		}
 
 		task ("View documents in Documents admin") {
-			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+			DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name");
 
 			for (var assetName : list "DM Document Title,Previous Document Title") {
 				DMDocument.viewCardTitle(dmDocumentTitle = "${assetName}");
@@ -846,7 +846,7 @@ definition {
 		}
 
 		task ("Move the dm folder to the Recycle Bin") {
-			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+			DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name");
 
 			DMFolder.moveToRecycleBinCP(
 				assetType = "Documents Folder",
@@ -854,7 +854,7 @@ definition {
 		}
 
 		task ("Restore the dm folder from the Recycle Bin") {
-			RecycleBin.openRecycleBinAdmin(siteURLKey = "site-name");
+			RecycleBin.openRecycleBinAdmin(siteUrlKey = "site-name");
 
 			RecycleBin.restoreCP(
 				assetName = "DM Folder Name",
@@ -862,7 +862,7 @@ definition {
 		}
 
 		task ("View the restored document in subfolder") {
-			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+			DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name");
 
 			for (var folderName : list "DM Folder Name,DM Subfolder Name") {
 				DMFolder.gotoEntry(dmFolderName = "${folderName}");

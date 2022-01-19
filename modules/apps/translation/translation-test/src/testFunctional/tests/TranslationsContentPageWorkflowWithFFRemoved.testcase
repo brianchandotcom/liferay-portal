@@ -34,7 +34,7 @@ definition {
 			layoutName = "TranslationContentPage",
 			type = "content");
 
-		Workflow.openWorkflowAdmin(siteURLKey = "guest");
+		Workflow.openWorkflowAdmin(siteUrlKey = "guest");
 
 		Workflow.configureWorkflow(
 			workflowDefinition = "Single Approver",
@@ -55,7 +55,7 @@ definition {
 
 		PageEditor.clickPublish();
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
+		PagesAdmin.openPagesAdmin(siteUrlKey = "guest");
 
 		Translations.gotoExportTranslation(pageName = "TranslationContentPage");
 
@@ -74,7 +74,7 @@ definition {
 			translationFileName = "TranslationContentPage-en_US-es_ES",
 			translationZipFileName = "TranslationContentPage-en_US");
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
+		PagesAdmin.openPagesAdmin(siteUrlKey = "guest");
 
 		Translations.importTranslation(
 			contentPageTranslation = "true",
@@ -83,7 +83,7 @@ definition {
 			pageName = "TranslationContentPage",
 			workflow = "true");
 
-		Translations.openTranslationAdmin(siteURLKey = "guest");
+		Translations.openTranslationAdmin(siteUrlKey = "guest");
 
 		Translations.viewTranslationEntry(
 			language = "es-ES",
@@ -104,7 +104,7 @@ definition {
 			workflowAssetType = "Translation",
 			workflowTask = "Review");
 
-		Translations.openTranslationAdmin(siteURLKey = "guest");
+		Translations.openTranslationAdmin(siteUrlKey = "guest");
 
 		Translations.viewTranslationEntry(
 			language = "es-ES",
@@ -153,7 +153,7 @@ definition {
 			layoutName = "TranslationContentPage",
 			type = "content");
 
-		Workflow.openWorkflowAdmin(siteURLKey = "guest");
+		Workflow.openWorkflowAdmin(siteUrlKey = "guest");
 
 		Workflow.configureWorkflow(
 			workflowDefinition = "Single Approver",
@@ -180,7 +180,7 @@ definition {
 
 		PageEditor.clickPublish();
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
+		PagesAdmin.openPagesAdmin(siteUrlKey = "guest");
 
 		Translations.gotoExportTranslation(pageName = "TranslationContentPage");
 
@@ -257,7 +257,7 @@ definition {
 			layoutName = "TranslationContentPage",
 			type = "content");
 
-		Workflow.openWorkflowAdmin(siteURLKey = "guest");
+		Workflow.openWorkflowAdmin(siteUrlKey = "guest");
 
 		Workflow.configureWorkflow(
 			workflowDefinition = "Single Approver",
@@ -278,7 +278,7 @@ definition {
 
 		PageEditor.clickPublish();
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
+		PagesAdmin.openPagesAdmin(siteUrlKey = "guest");
 
 		Translations.gotoExportTranslation(pageName = "TranslationContentPage");
 
@@ -295,7 +295,7 @@ definition {
 			translationFileName = "TranslationContentPage-en_US-es_ES",
 			translationZipFileName = "TranslationContentPage-en_US");
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
+		PagesAdmin.openPagesAdmin(siteUrlKey = "guest");
 
 		Translations.importTranslation(
 			contentPageTranslation = "true",
@@ -305,7 +305,7 @@ definition {
 			successMessage = "1 File Saved",
 			workflowSave = "true");
 
-		Translations.openTranslationAdmin(siteURLKey = "guest");
+		Translations.openTranslationAdmin(siteUrlKey = "guest");
 
 		Translations.viewTranslationEntry(
 			language = "es-ES",
@@ -335,7 +335,7 @@ definition {
 			workflowAssetType = "Translation",
 			workflowTask = "Review");
 
-		Translations.openTranslationAdmin(siteURLKey = "guest");
+		Translations.openTranslationAdmin(siteUrlKey = "guest");
 
 		Translations.viewTranslationEntry(
 			language = "es-ES",
@@ -385,13 +385,13 @@ definition {
 
 		PageEditor.clickPublish();
 
-		Workflow.openWorkflowAdmin(siteURLKey = "test-site-name");
+		Workflow.openWorkflowAdmin(siteUrlKey = "test-site-name");
 
 		Workflow.configureWorkflow(
 			workflowDefinition = "Single Approver",
 			workflowResourceValue = "Translation");
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+		PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
 
 		WaitForPageLoad();
 
@@ -464,7 +464,7 @@ definition {
 			layoutName = "ContentPage",
 			type = "content");
 
-		Workflow.openWorkflowAdmin(siteURLKey = "guest");
+		Workflow.openWorkflowAdmin(siteUrlKey = "guest");
 
 		Workflow.configureWorkflow(
 			workflowDefinition = "Single Approver",
@@ -485,7 +485,7 @@ definition {
 
 		PageEditor.clickPublish();
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
+		PagesAdmin.openPagesAdmin(siteUrlKey = "guest");
 
 		Translations.gotoExportTranslation(pageName = "ContentPage");
 
@@ -515,7 +515,7 @@ definition {
 			translationFileName = "ContentPage-en_US-zh_CN",
 			translationZipFileName = "ContentPage-en_US");
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
+		PagesAdmin.openPagesAdmin(siteUrlKey = "guest");
 
 		Translations.importTranslation(
 			fileName = "ContentPage-en_US_translated.zip",
@@ -526,7 +526,7 @@ definition {
 			successFileNumber = "All Files Published",
 			workflow = "true");
 
-		Translations.openTranslationAdmin(siteURLKey = "guest");
+		Translations.openTranslationAdmin(siteUrlKey = "guest");
 
 		for (var language : list "es-ES,zh-CN") {
 			Translations.viewTranslationEntry(
@@ -548,7 +548,7 @@ definition {
 				workflowAssetType = "Translation",
 				workflowTask = "Review");
 
-			Translations.openTranslationAdmin(siteURLKey = "guest");
+			Translations.openTranslationAdmin(siteUrlKey = "guest");
 
 			Translations.viewTranslationEntry(
 				language = "${language}",
@@ -575,7 +575,7 @@ definition {
 				workflowTask = "Review");
 		}
 
-		Translations.openTranslationAdmin(siteURLKey = "guest");
+		Translations.openTranslationAdmin(siteUrlKey = "guest");
 
 		for (var language : list "es-ES,zh-CN") {
 			Translations.viewTranslationEntry(
@@ -629,7 +629,7 @@ definition {
 			layoutName = "TranslationContentPage",
 			type = "content");
 
-		Workflow.openWorkflowAdmin(siteURLKey = "guest");
+		Workflow.openWorkflowAdmin(siteUrlKey = "guest");
 
 		Workflow.configureWorkflow(
 			workflowDefinition = "Single Approver",
@@ -650,7 +650,7 @@ definition {
 
 		PageEditor.clickPublish();
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
+		PagesAdmin.openPagesAdmin(siteUrlKey = "guest");
 
 		Translations.gotoExportTranslation(pageName = "TranslationContentPage");
 
@@ -669,7 +669,7 @@ definition {
 			translationFileName = "TranslationContentPage-en_US-es_ES",
 			translationZipFileName = "TranslationContentPage-en_US");
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
+		PagesAdmin.openPagesAdmin(siteUrlKey = "guest");
 
 		Translations.importTranslation(
 			contentPageTranslation = "true",
@@ -692,7 +692,7 @@ definition {
 			workflowAssetType = "Translation",
 			workflowTask = "Review");
 
-		Translations.openTranslationAdmin(siteURLKey = "guest");
+		Translations.openTranslationAdmin(siteUrlKey = "guest");
 
 		Translations.viewTranslationEntry(
 			language = "es-ES",
@@ -718,7 +718,7 @@ definition {
 			workflowAssetType = "Translation",
 			workflowTask = "Review");
 
-		Translations.openTranslationAdmin(siteURLKey = "guest");
+		Translations.openTranslationAdmin(siteUrlKey = "guest");
 
 		Translations.viewTranslationEntry(
 			language = "es-ES",
@@ -758,7 +758,7 @@ definition {
 			layoutName = "Test Content Page Name",
 			type = "content");
 
-		Workflow.openWorkflowAdmin(siteURLKey = "guest");
+		Workflow.openWorkflowAdmin(siteUrlKey = "guest");
 
 		Workflow.configureWorkflow(
 			workflowDefinition = "Single Approver",
@@ -785,7 +785,7 @@ definition {
 
 		PageEditor.clickPublish();
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
+		PagesAdmin.openPagesAdmin(siteUrlKey = "guest");
 
 		WaitForPageLoad();
 
@@ -821,7 +821,7 @@ definition {
 			workflowAssetType = "Translation",
 			workflowTask = "Review");
 
-		Translations.openTranslationAdmin(siteURLKey = "guest");
+		Translations.openTranslationAdmin(siteUrlKey = "guest");
 
 		Translations.viewTranslationEntry(
 			language = "es-ES",
@@ -881,7 +881,7 @@ definition {
 			layoutName = "Test Content Page Name",
 			type = "content");
 
-		Workflow.openWorkflowAdmin(siteURLKey = "guest");
+		Workflow.openWorkflowAdmin(siteUrlKey = "guest");
 
 		Workflow.configureWorkflow(
 			workflowDefinition = "Single Approver",
@@ -908,7 +908,7 @@ definition {
 
 		PageEditor.clickPublish();
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
+		PagesAdmin.openPagesAdmin(siteUrlKey = "guest");
 
 		WaitForPageLoad();
 
@@ -959,7 +959,7 @@ definition {
 			workflowAssetType = "Translation",
 			workflowTask = "Review");
 
-		Translations.openTranslationAdmin(siteURLKey = "guest");
+		Translations.openTranslationAdmin(siteUrlKey = "guest");
 
 		Translations.viewTranslationEntry(
 			language = "es-ES",
@@ -1000,7 +1000,7 @@ definition {
 			layoutName = "TranslationContentPage",
 			type = "content");
 
-		Workflow.openWorkflowAdmin(siteURLKey = "guest");
+		Workflow.openWorkflowAdmin(siteUrlKey = "guest");
 
 		Workflow.configureWorkflow(
 			workflowDefinition = "Single Approver",
@@ -1027,7 +1027,7 @@ definition {
 
 		PageEditor.clickPublish();
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
+		PagesAdmin.openPagesAdmin(siteUrlKey = "guest");
 
 		Translations.gotoExportTranslation(pageName = "TranslationContentPage");
 

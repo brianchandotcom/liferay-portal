@@ -30,7 +30,7 @@ definition {
 	test FieldsetSetAsCollapsible {
 		property portal.upstream = "quarantine";
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		DMNavigator.gotoDocumentType();
 
@@ -42,7 +42,7 @@ definition {
 
 		DDLDataDefinition.save();
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		DMNavigator.gotoDocumentType();
 
@@ -71,7 +71,7 @@ definition {
 	test FieldsetSetAsRepeatable {
 		property portal.upstream = "quarantine";
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		DMNavigator.gotoDocumentType();
 
@@ -83,7 +83,7 @@ definition {
 
 		DDLDataDefinition.save();
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		DMNavigator.gotoDocumentType();
 
@@ -99,7 +99,7 @@ definition {
 
 		DMDocumentType.viewCP(dmDocumentTypeName = "RepeatableTest1");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "RepeatableTest1");
 
@@ -166,7 +166,7 @@ definition {
 	test ShowAndHideFieldsetLabel {
 		property portal.upstream = "quarantine";
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		DMNavigator.gotoDocumentType();
 
@@ -178,7 +178,7 @@ definition {
 
 		DDLDataDefinition.save();
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		DMNavigator.gotoDocumentType();
 

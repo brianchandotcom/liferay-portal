@@ -67,7 +67,7 @@ definition {
 			groupName = "Test Site Name",
 			subType = "DM Document Type Name");
 
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
 
 		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
@@ -140,7 +140,7 @@ definition {
 			depotName = "Test Depot Name",
 			groupName = "Test Site Name");
 
-		DMNavigator.openDocumentTypesAdmin(siteURLKey = "global");
+		DMNavigator.openDocumentTypesAdmin(siteUrlKey = "global");
 
 		DMDocumentType.add(
 			dmDocumentTypeDescription = "DM Document Type Description",
@@ -154,7 +154,7 @@ definition {
 			groupName = "Test Site Name",
 			subType = "DM Document Type Name");
 
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
 
 		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
@@ -251,7 +251,7 @@ definition {
 			groupName = "Test Site Name",
 			subType = "WC Structure Name");
 
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
 
 		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
@@ -324,7 +324,7 @@ definition {
 			depotName = "Test Depot Name",
 			groupName = "Test Site Name");
 
-		WebContentNavigator.openWebContentStructuresAdmin(siteURLKey = "global");
+		WebContentNavigator.openWebContentStructuresAdmin(siteUrlKey = "global");
 
 		WebContentStructures.addCP(
 			structureDescription = "WC Structure Description",
@@ -343,7 +343,7 @@ definition {
 			groupName = "Test Site Name",
 			subType = "WC Structure Name");
 
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
 
 		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
@@ -435,7 +435,7 @@ definition {
 			groupName = "Test Site Name",
 			subType = "DM Document Type Name");
 
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
 
 		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
@@ -466,7 +466,7 @@ definition {
 
 		DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "test-site-name");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
@@ -532,7 +532,7 @@ definition {
 			groupName = "Test Site Name",
 			subType = "WC Structure Name");
 
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
 
 		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
@@ -563,7 +563,7 @@ definition {
 
 		DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
@@ -587,7 +587,7 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test MapDMWithOpenGraph {
-		var portalURL = PropsUtil.get("portal.url");
+		var portalUrl = PropsUtil.get("portal.url");
 
 		DepotNavigator.openDepotDocumentTypeAdmin(depotName = "Test Depot Name");
 
@@ -607,7 +607,7 @@ definition {
 			siteName = "Test Site Name",
 			tableEntryText = "Yes");
 
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
 
 		DisplayPageTemplatesAdmin.addDisplayPage(
 			contentType = "Document",
@@ -618,9 +618,9 @@ definition {
 			collectionName = "Content Display",
 			displayPageName = "Display Page Template Name",
 			fragmentName = "Display Page Content",
-			siteURLKey = "test-site-name");
+			siteUrlKey = "test-site-name");
 
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
 
 		PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
 			item = "Configure",
@@ -672,7 +672,7 @@ definition {
 			mappedFieldValue = "Image Alt is Author Name: ${authorName:Author Name}",
 			textType = "TextArea");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "test-site-name");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
@@ -686,7 +686,7 @@ definition {
 			entryTitle = "Document_1.jpg",
 			groupName = "Test Site Name",
 			pageName = "Display Page Template Name",
-			siteURLKey = "test-site-name");
+			siteUrlKey = "test-site-name");
 
 		var dmFileEntryID = JSONDocument.getFileEntryId(
 			dmDocumentTitle = "Document_1.jpg",
@@ -698,11 +698,11 @@ definition {
 
 		User.logoutPG();
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/d/${dmFileEntryID}");
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/d/${dmFileEntryId}");
 
 		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:title" content="Title is File Name: Document_1.jpg","og:description" content="Description is MIME Type: image/jpeg"''');
 
-		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:image:alt" content="Image Alt is Author Name: Test Test","og:image" content="${portalURL}/documents/${siteID}/0/Document_1.jpg''');
+		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:image:alt" content="Image Alt is Author Name: Test Test","og:image" content="${portalUrl}/documents/${siteId}/0/Document_1.jpg''');
 	}
 
 	@description = "This test ensures that a user can map the display page with SEO when using the DM type from AL on a connect site."
@@ -727,14 +727,14 @@ definition {
 			siteName = "Test Site Name",
 			tableEntryText = "Yes");
 
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
 
 		DisplayPageTemplatesAdmin.addDisplayPage(
 			contentType = "Document",
 			displayPageName = "Display Page Template Name",
 			subType = "DM Document Type Name");
 
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
 
 		PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
 			item = "Configure",
@@ -770,7 +770,7 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test MapWCWithOpenGraph {
-		var portalURL = PropsUtil.get("portal.url");
+		var portalUrl = PropsUtil.get("portal.url");
 
 		DepotNavigator.openDepotWebContentStructuresAdmin(depotName = "Test Depot Name");
 
@@ -804,7 +804,7 @@ definition {
 			siteName = "Test Site Name",
 			tableEntryText = "Yes");
 
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
 
 		DisplayPageTemplatesAdmin.addDisplayPage(
 			contentType = "Web Content Article",
@@ -815,9 +815,9 @@ definition {
 			collectionName = "Content Display",
 			displayPageName = "Display Page Template Name",
 			fragmentName = "Display Page Content",
-			siteURLKey = "test-site-name");
+			siteUrlKey = "test-site-name");
 
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
 
 		PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
 			item = "Configure",
@@ -878,7 +878,7 @@ definition {
 			mappedFieldValue = "${mappedFieldValue}",
 			textType = "TextArea");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
@@ -892,16 +892,16 @@ definition {
 
 		WebContentNavigator.openToEditWCInSite(
 			groupName = "Test Site Name",
-			siteURLKey = "test-site-name",
+			siteUrlKey = "test-site-name",
 			webContentTitle = "Web Content Title");
 
 		WebContent.editDisplayPage(pageName = "Display Page Template Name");
 
-		WebContent.addFeaturedImageFromURL(imageSourceURL = "https://dummyimage.com/600x400/000/fff.jpg");
+		WebContent.addFeaturedImageFromURL(imageSourceUrl = "https://dummyimage.com/600x400/000/fff.jpg");
 
 		PortletEntry.publish();
 
-		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
+		Navigator.openSpecificURL(url = "${portalUrl}/c/portal/logout");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/w/web-content-title");
 
@@ -946,14 +946,14 @@ definition {
 			siteName = "Test Site Name",
 			tableEntryText = "Yes");
 
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
 
 		DisplayPageTemplatesAdmin.addDisplayPage(
 			contentType = "Web Content Article",
 			displayPageName = "Display Page Template Name",
 			subType = "WC Structure Name");
 
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
 
 		PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
 			item = "Configure",
@@ -997,7 +997,7 @@ definition {
 	test ViewImage {
 		property portal.acceptance = "true";
 
-		var portalURL = PropsUtil.get("portal.url");
+		var portalUrl = PropsUtil.get("portal.url");
 
 		DepotNavigator.openDepotDocumentTypeAdmin(depotName = "Test Depot Name");
 
@@ -1017,7 +1017,7 @@ definition {
 			siteName = "Test Site Name",
 			tableEntryText = "Yes");
 
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
 
 		DisplayPageTemplatesAdmin.addDisplayPage(
 			contentType = "Document",
@@ -1028,9 +1028,9 @@ definition {
 			collectionName = "Content Display",
 			displayPageName = "Display Page Template Name",
 			fragmentName = "Display Page Content",
-			siteURLKey = "test-site-name");
+			siteUrlKey = "test-site-name");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "test-site-name");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
@@ -1044,13 +1044,13 @@ definition {
 			entryTitle = "Document_1.jpg",
 			groupName = "Test Site Name",
 			pageName = "Display Page Template Name",
-			siteURLKey = "test-site-name");
+			siteUrlKey = "test-site-name");
 
 		var dmFileEntryID = JSONDocument.getFileEntryId(
 			dmDocumentTitle = "Document_1.jpg",
 			groupName = "Test Site Name");
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/d/${dmFileEntryID}");
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/d/${dmFileEntryId}");
 
 		AssertVisible(
 			key_imageFileName = "Document_1.jpg",
@@ -1063,7 +1063,7 @@ definition {
 	test ViewWC {
 		property portal.acceptance = "true";
 
-		var portalURL = PropsUtil.get("portal.url");
+		var portalUrl = PropsUtil.get("portal.url");
 
 		DepotNavigator.openDepotWebContentStructuresAdmin(depotName = "Test Depot Name");
 
@@ -1096,7 +1096,7 @@ definition {
 			siteName = "Test Site Name",
 			tableEntryText = "Yes");
 
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
 
 		DisplayPageTemplatesAdmin.addDisplayPage(
 			contentType = "Web Content Article",
@@ -1107,9 +1107,9 @@ definition {
 			collectionName = "Content Display",
 			displayPageName = "Display Page Template Name",
 			fragmentName = "Display Page Content",
-			siteURLKey = "test-site-name");
+			siteUrlKey = "test-site-name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
@@ -1126,7 +1126,7 @@ definition {
 			entryTitle = "Web Content Title",
 			groupName = "Test Site Name",
 			pageName = "Display Page Template Name",
-			siteURLKey = "test-site-name");
+			siteUrlKey = "test-site-name");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/w/web-content-title");
 

@@ -64,7 +64,7 @@ definition {
 	macro editViaSharedwithMe {
 		Asset.openTosharedContent(
 			navTab = "Shared with Me",
-			siteURLKey = "guest");
+			siteUrlKey = "guest");
 
 		if (isSet(dmDocumentTitle)) {
 			DMDocument.editCP(

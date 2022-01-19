@@ -34,7 +34,7 @@ definition {
 		property environment.acceptance = "true";
 		property portal.acceptance = "true";
 
-		var portalURL = PropsUtil.get("portal.url");
+		var portalUrl = PropsUtil.get("portal.url");
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
@@ -46,7 +46,7 @@ definition {
 			groupName = "Guest",
 			layoutName = "Test Page",
 			portlet = "SEO",
-			siteURLKey = "guest");
+			siteUrlKey = "guest");
 
 		SERPPreview.viewPreviewDefault();
 
@@ -58,7 +58,7 @@ definition {
 			description = "Description",
 			htmlTitle = "Page HTML Title - ${siteName}",
 			pageName = "Test Page",
-			portalURL = "${portalURL}");
+			portalUrl = "${portalUrl}");
 
 		Button.clickSave();
 
@@ -68,14 +68,14 @@ definition {
 			description = "Description",
 			htmlTitle = "Page HTML Title - ${siteName}",
 			pageName = "Test Page",
-			portalURL = "${portalURL}");
+			portalUrl = "${portalUrl}");
 	}
 
 	@description = "This test ensures that a SERP preview is refreshed when switching translations."
 	@priority = "4"
 	@refactordone
 	test CanViewPreviewWhenSwitchingTranslations {
-		var portalURL = PropsUtil.get("portal.url");
+		var portalUrl = PropsUtil.get("portal.url");
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
@@ -87,7 +87,7 @@ definition {
 			groupName = "Guest",
 			layoutName = "Test Page",
 			portlet = "SEO",
-			siteURLKey = "guest");
+			siteUrlKey = "guest");
 
 		SERPPreview.addGeneralSettings(
 			description = "Page Description",
@@ -106,7 +106,7 @@ definition {
 			htmlTitle = "中文标题 - ${siteName}",
 			locale = "zh-CN",
 			pageName = "Test Page",
-			portalURL = "${portalURL}");
+			portalUrl = "${portalUrl}");
 
 		PortletEntry.changeLocale(
 			fieldName = "HTML Title",
@@ -116,7 +116,7 @@ definition {
 			description = "Page Description",
 			htmlTitle = "Page HTML Title - ${siteName}",
 			pageName = "Test Page",
-			portalURL = "${portalURL}");
+			portalUrl = "${portalUrl}");
 
 		Button.clickSave();
 
@@ -126,7 +126,7 @@ definition {
 			description = "Page Description",
 			htmlTitle = "Page HTML Title - ${siteName}",
 			pageName = "Test Page",
-			portalURL = "${portalURL}");
+			portalUrl = "${portalUrl}");
 
 		PortletEntry.changeLocale(
 			fieldName = "HTML Title",
@@ -137,14 +137,14 @@ definition {
 			htmlTitle = "中文标题 - ${siteName}",
 			locale = "zh-CN",
 			pageName = "Test Page",
-			portalURL = "${portalURL}");
+			portalUrl = "${portalUrl}");
 	}
 
 	@description = "This test ensures that ellipses are shown in the preview when the text limit is reached."
 	@priority = "5"
 	@refactordone
 	test CanViewPreviewWithLongInputs {
-		var portalURL = PropsUtil.get("portal.url");
+		var portalUrl = PropsUtil.get("portal.url");
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
@@ -156,7 +156,7 @@ definition {
 			groupName = "Guest",
 			layoutName = "Long Test Page Name To Check The Display Style Of The URL In The SERP Preview",
 			portlet = "SEO",
-			siteURLKey = "guest");
+			siteUrlKey = "guest");
 
 		SERPPreview.addGeneralSettings(
 			description = "Liferay Portal provides an excellent platform for building web applications, websites, and portals, but it can additionally be used for a new category of web applications called social applications",
@@ -166,9 +166,9 @@ definition {
 			description = "Liferay Portal provides an excellent platform for building web applications, websites, and portals, but it can additionally be used for a new category of web ap…",
 			htmlTitle = "Liferay Portal provides an excellent platform for building web applications - ${siteName}",
 			pageName = "Long Test Page Name To Check The Display Style Of The URL In The SERP Preview",
-			portalURL = "${portalURL}",
-			truncatedHTMLTitle = "true",
-			truncatedURL = "true");
+			portalUrl = "${portalUrl}",
+			truncatedHtmlTitle = "true",
+			truncatedUrl = "true");
 
 		Button.clickSave();
 
@@ -178,16 +178,16 @@ definition {
 			description = "Liferay Portal provides an excellent platform for building web applications, websites, and portals, but it can additionally be used for a new category of web ap…",
 			htmlTitle = "Liferay Portal provides an excellent platform for building web applications - ${siteName}",
 			pageName = "Long Test Page Name To Check The Display Style Of The URL In The SERP Preview",
-			portalURL = "${portalURL}",
-			truncatedHTMLTitle = "true",
-			truncatedURL = "true");
+			portalUrl = "${portalUrl}",
+			truncatedHtmlTitle = "true",
+			truncatedUrl = "true");
 	}
 
 	@description = "This test ensures that a user can preview SEO tags with different languages."
 	@priority = "5"
 	@refactordone
 	test CanViewTranslatedLanguages {
-		var portalURL = PropsUtil.get("portal.url");
+		var portalUrl = PropsUtil.get("portal.url");
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
@@ -201,7 +201,7 @@ definition {
 			groupName = "Test Site Name",
 			layoutName = "Test Page",
 			portlet = "SEO",
-			siteURLKey = "test-site-name");
+			siteUrlKey = "test-site-name");
 
 		PortletEntry.changeLocale(
 			fieldName = "HTML Title",
@@ -215,8 +215,8 @@ definition {
 			description = "وصف الاختبار",
 			htmlTitle = "عنوان الاختبار - Test Site Name - ${siteName}",
 			locale = "ar-SA",
-			portalURL = "${portalURL}",
-			siteNameURL = "test-site-name");
+			portalUrl = "${portalUrl}",
+			siteNameUrl = "test-site-name");
 
 		Button.clickSave();
 
@@ -232,8 +232,8 @@ definition {
 			description = "Descripción de la Prueba",
 			htmlTitle = "Título de la Prueba - Test Site Name - ${siteName}",
 			locale = "ca-ES",
-			portalURL = "${portalURL}",
-			siteNameURL = "test-site-name");
+			portalUrl = "${portalUrl}",
+			siteNameUrl = "test-site-name");
 
 		Button.clickSave();
 
@@ -245,8 +245,8 @@ definition {
 			description = "وصف الاختبار",
 			htmlTitle = "عنوان الاختبار - Test Site Name - ${siteName}",
 			locale = "ar-SA",
-			portalURL = "${portalURL}",
-			siteNameURL = "test-site-name");
+			portalUrl = "${portalUrl}",
+			siteNameUrl = "test-site-name");
 
 		OpenGraph.changeLocale(
 			fieldName = "titleBoundingBox",
@@ -256,8 +256,8 @@ definition {
 			description = "Descripción de la Prueba",
 			htmlTitle = "Título de la Prueba - Test Site Name - ${siteName}",
 			locale = "ca-ES",
-			portalURL = "${portalURL}",
-			siteNameURL = "test-site-name");
+			portalUrl = "${portalUrl}",
+			siteNameUrl = "test-site-name");
 	}
 
 }

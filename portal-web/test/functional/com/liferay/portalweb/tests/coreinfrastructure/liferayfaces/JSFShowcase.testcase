@@ -151,7 +151,7 @@ definition {
 		for (var link : list "JSR 362,JSR 378") {
 			JSFShowcase.viewLink(
 				link = "${link}",
-				linkURL = "jcp.org");
+				linkUrl = "jcp.org");
 		}
 	}
 
@@ -658,7 +658,7 @@ definition {
 		JSFShowcase.viewLink(
 			image = "false",
 			link = "United+States",
-			linkURL = "maps/place");
+			linkUrl = "maps/place");
 
 		// OutputLinkGeneral
 
@@ -667,12 +667,12 @@ definition {
 		JSFShowcase.viewLink(
 			image = "false",
 			link = "liferay-projects/liferay-faces",
-			linkURL = "liferay-projects/liferay-faces");
+			linkUrl = "liferay-projects/liferay-faces");
 
 		for (var link : list "liferay-projects/liferay-faces,liferay+faces") {
 			JSFShowcase.viewLink(
 				link = "${link}",
-				linkURL = "${link}");
+				linkUrl = "${link}");
 		}
 
 		// OutputScriptResource
@@ -765,7 +765,7 @@ definition {
 		JSFShowcase.viewLink(
 			image = "false",
 			link = "web/guest/jsf-showcase",
-			linkURL = "web/guest/jsf-showcase",
+			linkUrl = "web/guest/jsf-showcase",
 			newTab = "false");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/portlet/resourceurl/general");

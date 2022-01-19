@@ -48,7 +48,7 @@ definition {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "VideoPreview#AddBlogEntryWithEmbeddedVideo";
 
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "Site Name");
+		BlogsNavigator.openBlogsAdmin(siteUrlKey = "Site Name");
 
 		Blogs.addEntry(
 			embedVideo = "true",
@@ -59,7 +59,7 @@ definition {
 			videoShortcutTitle = "DM Video Title In Site",
 			viewInternalVideoPreview = "true");
 
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "Site Name");
+		BlogsNavigator.openBlogsAdmin(siteUrlKey = "Site Name");
 
 		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry Title");
 
@@ -78,7 +78,7 @@ definition {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "VideoPreview#AddKBArticleWithEmbeddedVideo";
 
-		KBAdmin.openKBAdmin(siteURLKey = "Site Name");
+		KBAdmin.openKBAdmin(siteUrlKey = "Site Name");
 
 		KBArticle.addCP(
 			embedVideo = "true",
@@ -89,7 +89,7 @@ definition {
 			videoShortcutTitle = "DM Video Title In Site",
 			viewInternalVideoPreview = "true");
 
-		KBAdmin.openKBAdmin(siteURLKey = "Site Name");
+		KBAdmin.openKBAdmin(siteUrlKey = "Site Name");
 
 		KBArticle.viewCP(
 			embedVideo = "true",
@@ -120,7 +120,7 @@ definition {
 			mimeType = "video/mp4",
 			sourceFileName = "Document_1.mp4");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "Site Name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "Site Name");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -140,7 +140,7 @@ definition {
 
 		PortletEntry.publish();
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "Site Name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "Site Name");
 
 		WebContentNavigator.gotoPreviewEntryCP(webContentTitle = "WC WebContent Title");
 
@@ -169,7 +169,7 @@ definition {
 
 		PortletEntry.publish();
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "Site Name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "Site Name");
 
 		WebContentNavigator.gotoPreviewEntryCP(webContentTitle = "WC WebContent Title");
 
@@ -192,7 +192,7 @@ definition {
 
 		PortletEntry.update();
 
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
+		BlogsNavigator.openBlogsAdmin(siteUrlKey = "site-name");
 
 		BlogsNavigator.gotoAddEntry();
 
@@ -291,7 +291,7 @@ definition {
 	test ImportExportedBlogWithEmbeddedVideo {
 		property test.name.skip.portal.instance = "VideoPreview#ImportExportedBlogWithEmbeddedVideo";
 
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "Site Name");
+		BlogsNavigator.openBlogsAdmin(siteUrlKey = "Site Name");
 
 		Blogs.addEntry(
 			embedVideo = "true",
@@ -302,7 +302,7 @@ definition {
 			videoShortcutTitle = "DM Video Title In Site",
 			viewInternalVideoPreview = "true");
 
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "Site Name");
+		BlogsNavigator.openBlogsAdmin(siteUrlKey = "Site Name");
 
 		LAR.exportPortlet(larFileName = "Blog_portlet.lar");
 
@@ -310,11 +310,11 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Site Name");
 
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "Site Name");
+		BlogsNavigator.openBlogsAdmin(siteUrlKey = "Site Name");
 
 		LAR.importPortlet(larFileName = "Blog_portlet.lar");
 
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "Site Name");
+		BlogsNavigator.openBlogsAdmin(siteUrlKey = "Site Name");
 
 		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry Title");
 
@@ -348,7 +348,7 @@ definition {
 			depotName = "Test Depot Name",
 			groupName = "Site Name");
 
-		KBAdmin.openKBAdmin(siteURLKey = "Site Name");
+		KBAdmin.openKBAdmin(siteUrlKey = "Site Name");
 
 		KBArticle.addCP(
 			depotName = "Test Depot Name",
@@ -360,7 +360,7 @@ definition {
 			videoShortcutTitle = "DM Video Title In Depot",
 			viewInternalVideoPreview = "true");
 
-		KBAdmin.openKBAdmin(siteURLKey = "Site Name");
+		KBAdmin.openKBAdmin(siteUrlKey = "Site Name");
 
 		LAR.exportPortlet(larFileName = "KB_portlet.lar");
 
@@ -368,11 +368,11 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Site Name");
 
-		KBAdmin.openKBAdmin(siteURLKey = "Site Name");
+		KBAdmin.openKBAdmin(siteUrlKey = "Site Name");
 
 		LAR.importPortlet(larFileName = "KB_portlet.lar");
 
-		KBAdmin.openKBAdmin(siteURLKey = "Site Name");
+		KBAdmin.openKBAdmin(siteUrlKey = "Site Name");
 
 		KBArticle.viewCP(
 			embedVideo = "true",
@@ -453,7 +453,7 @@ definition {
 		DMNavigator.openToEntryInAdmin(
 			dmDocumentTitle = "DM Video Title In Site",
 			groupName = "Site Name",
-			siteURLKey = "site-name");
+			siteUrlKey = "site-name");
 
 		DMDocument.viewVideoPreviewGeneratingInfo();
 
@@ -470,7 +470,7 @@ definition {
 		DMNavigator.openToEntryInAdmin(
 			dmDocumentTitle = "DM Video Title In Site",
 			groupName = "Site Name",
-			siteURLKey = "site-name");
+			siteUrlKey = "site-name");
 
 		DMDocument.viewInternalVideoPreview(videoName = "Document_1.mp4");
 	}
@@ -497,7 +497,7 @@ definition {
 			mimeType = "video/mp4",
 			sourceFileName = "Document_1.mp4");
 
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
+		BlogsNavigator.openBlogsAdmin(siteUrlKey = "site-name");
 
 		BlogsNavigator.gotoAddEntry();
 
@@ -515,7 +515,7 @@ definition {
 
 		JSONDepot.disconnectSite(groupName = "Site Name");
 
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
+		BlogsNavigator.openBlogsAdmin(siteUrlKey = "site-name");
 
 		BlogsNavigator.gotoAddEntry();
 

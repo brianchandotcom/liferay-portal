@@ -33,7 +33,7 @@ definition {
 			groupName = "Guest",
 			title = "WC WebContent Title");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		Translations.gotoTranslate(webContentTitle = "WC WebContent Title");
 
@@ -52,7 +52,7 @@ definition {
 
 		PortletEntry.saveAsDraft();
 
-		Translations.openTranslationAdmin(siteURLKey = "guest");
+		Translations.openTranslationAdmin(siteUrlKey = "guest");
 
 		Translations.viewTranslationEntry(
 			language = "es-ES",
@@ -67,7 +67,7 @@ definition {
 
 		WebContentNavigator.openToEditWCInSite(
 			groupName = "Guest",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			webContentTitle = "WC WebContent Title");
 
 		Translations.viewUntranslatedStatus(locale = "es-ES");
@@ -83,7 +83,7 @@ definition {
 			groupName = "Guest",
 			title = "WC WebContent Title");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		Translations.gotoTranslate(webContentTitle = "WC WebContent Title");
 
@@ -102,7 +102,7 @@ definition {
 
 		PortletEntry.publish();
 
-		Translations.openTranslationAdmin(siteURLKey = "guest");
+		Translations.openTranslationAdmin(siteUrlKey = "guest");
 
 		Translations.viewTranslationEntry(
 			language = "es-ES",
@@ -117,7 +117,7 @@ definition {
 
 		WebContentNavigator.openToEditWCInSite(
 			groupName = "Guest",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			version = "1.1",
 			webContentTitle = "WC WebContent Title");
 
@@ -139,7 +139,7 @@ definition {
 			groupName = "Guest",
 			title = "WC WebContent Title");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		Translations.gotoTranslate(webContentTitle = "WC WebContent Title");
 
@@ -162,7 +162,7 @@ definition {
 
 		PortletEntry.publish();
 
-		Translations.openTranslationAdmin(siteURLKey = "guest");
+		Translations.openTranslationAdmin(siteUrlKey = "guest");
 
 		Translations.viewTranslationEntry(
 			language = "es-ES",
@@ -194,7 +194,7 @@ definition {
 
 		WebContentNavigator.openToEditWCInSite(
 			groupName = "Guest",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			version = "1.1",
 			webContentTitle = "WC WebContent Title");
 
@@ -216,7 +216,7 @@ definition {
 			groupName = "Guest",
 			title = "WC WebContent Title");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		Translations.gotoTranslate(webContentTitle = "WC WebContent Title");
 
@@ -235,7 +235,7 @@ definition {
 
 		PortletEntry.publish();
 
-		Translations.openTranslationAdmin(siteURLKey = "guest");
+		Translations.openTranslationAdmin(siteUrlKey = "guest");
 
 		Translations.viewTranslationEntry(
 			language = "es-ES",
@@ -271,7 +271,7 @@ definition {
 
 		WebContentNavigator.openToEditWCInSite(
 			groupName = "Guest",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			version = "1.1",
 			webContentTitle = "WC WebContent Title");
 
@@ -294,7 +294,7 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanTranslateWCAfterEditingStructure {
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		NavItem.gotoStructures();
 
@@ -308,7 +308,7 @@ definition {
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		NavItem.gotoTemplates();
 
@@ -317,7 +317,7 @@ definition {
 			templateDescription = "WC Template Description",
 			templateName = "WC Template Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
@@ -355,7 +355,7 @@ definition {
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		Translations.gotoTranslate(webContentTitle = "WC WebContent Title");
 
@@ -371,7 +371,7 @@ definition {
 
 		PortletEntry.publish();
 
-		Translations.openTranslationAdmin(siteURLKey = "guest");
+		Translations.openTranslationAdmin(siteUrlKey = "guest");
 
 		Translations.editTranslationEntry(translationEntry = "Translation of WC WebContent Title to es-ES");
 
@@ -391,7 +391,7 @@ definition {
 			groupName = "Guest",
 			title = "WC WebContent Title");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		Translations.gotoTranslate(webContentTitle = "WC WebContent Title");
 
@@ -426,7 +426,7 @@ definition {
 			status = "Approved",
 			title = "Translation of WC WebContent Title to es-ES");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		Translations.gotoTranslate(webContentTitle = "WC WebContent Title");
 
@@ -483,7 +483,7 @@ definition {
 
 		PageEditor.clickPublish();
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+		PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
 
 		WaitForPageLoad();
 
@@ -505,7 +505,7 @@ definition {
 			groupName = "Test Site Name",
 			layoutName = "Test Content Page Name");
 
-		Translations.openTranslationAdmin(siteURLKey = "test-site-name");
+		Translations.openTranslationAdmin(siteUrlKey = "test-site-name");
 
 		Translations.viewEmptyState();
 	}
@@ -519,7 +519,7 @@ definition {
 			groupName = "Guest",
 			title = "WC WebContent Title");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		Translations.gotoTranslate(webContentTitle = "WC WebContent Title");
 
@@ -542,7 +542,7 @@ definition {
 			groupName = "Guest",
 			title = "WC WebContent Title");
 
-		Translations.openTranslationAdmin(siteURLKey = "guest");
+		Translations.openTranslationAdmin(siteUrlKey = "guest");
 
 		AssertConsoleTextNotPresent(value1 = "com.liferay.journal.exception.NoSuchArticleException");
 
@@ -560,13 +560,13 @@ definition {
 			locator1 = "Message#INFO",
 			value1 = "Info:You do not have permissions to translate to any of the available languages.");
 
-		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
+		RecycleBin.openRecycleBinAdmin(siteUrlKey = "guest");
 
 		RecycleBin.deleteCP(
 			assetName = "WC WebContent Title",
 			assetType = "Web Content Article");
 
-		Translations.openTranslationAdmin(siteURLKey = "guest");
+		Translations.openTranslationAdmin(siteUrlKey = "guest");
 
 		Translations.viewEmptyState();
 	}

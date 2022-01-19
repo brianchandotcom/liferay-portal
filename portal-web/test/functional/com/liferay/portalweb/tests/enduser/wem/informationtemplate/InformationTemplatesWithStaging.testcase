@@ -36,7 +36,7 @@ definition {
 		}
 
 		task ("Add an information template in staging site") {
-			InformationTemplates.openInformationTemplatesAdmin(siteURLKey = "test-site-name-staging");
+			InformationTemplates.openInformationTemplatesAdmin(siteUrlKey = "test-site-name-staging");
 
 			InformationTemplates.addCP(
 				informationTemplateName = "Test Information Template",
@@ -60,19 +60,19 @@ definition {
 		}
 
 		task ("View the information template is not shown in live site") {
-			InformationTemplates.openInformationTemplatesAdmin(siteURLKey = "test-site-name");
+			InformationTemplates.openInformationTemplatesAdmin(siteUrlKey = "test-site-name");
 
 			InformationTemplates.viewTemplateNotPresent(informationTemplateName = "Test Information Template");
 		}
 
 		task ("Publish the staged information template to Live") {
-			Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
+			Staging.openStagingAdmin(siteUrlKey = "test-site-name-staging");
 
 			Staging.publishCustomPublication(checkContentNameList = "Template");
 		}
 
 		task ("View the information template in live site") {
-			InformationTemplates.openInformationTemplatesAdmin(siteURLKey = "test-site-name");
+			InformationTemplates.openInformationTemplatesAdmin(siteUrlKey = "test-site-name");
 
 			InformationTemplates.viewTemplate(
 				informationTemplateName = "Test Information Template",
@@ -107,7 +107,7 @@ definition {
 		}
 
 		task ("View warning message is shown in Information Templates admin") {
-			InformationTemplates.openInformationTemplatesAdmin(siteURLKey = "test-site-name-staging");
+			InformationTemplates.openInformationTemplatesAdmin(siteUrlKey = "test-site-name-staging");
 
 			Alert.viewWarningSpecific(warningMessage = "The data of this portlet is not staged. Any data changes are immediately available to the Local Live site.");
 		}
@@ -135,7 +135,7 @@ definition {
 		}
 
 		task ("View the information template in live site") {
-			InformationTemplates.openInformationTemplatesAdmin(siteURLKey = "test-site-name");
+			InformationTemplates.openInformationTemplatesAdmin(siteUrlKey = "test-site-name");
 
 			InformationTemplates.viewTemplate(
 				informationTemplateName = "Test Information Template",

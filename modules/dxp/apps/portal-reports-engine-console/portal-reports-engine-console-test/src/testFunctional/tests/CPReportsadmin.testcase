@@ -250,7 +250,7 @@ definition {
 		property test.assert.javascript.errors = "false";
 		property test.smtp.server.enabled = "true";
 
-		var portalURL = PropsUtil.get("portal.url");
+		var portalUrl = PropsUtil.get("portal.url");
 
 		Navigator.openURL();
 
@@ -292,7 +292,7 @@ definition {
 			sender = "Joe Bloggs",
 			subject = "New Report: reports_admin_template_source_sample_class_name.pdf");
 
-		Navigator.openSpecificURL(url = "${portalURL}");
+		Navigator.openSpecificURL(url = "${portalUrl}");
 	}
 
 	@priority = "4"
@@ -541,7 +541,7 @@ definition {
 		property database.types = "mysql";
 
 		var databasePassword = PropsUtil.get("database.mysql.password");
-		var databaseURL = PropsUtil.get("database.mysql.url");
+		var databaseUrl = PropsUtil.get("database.mysql.url");
 		var databaseUsername = PropsUtil.get("database.mysql.username");
 
 		Navigator.openURL();
@@ -556,7 +556,7 @@ definition {
 			reportsDataSourceClass = "com.mysql.cj.jdbc.Driver",
 			reportsDataSourceName = "Reports Data Source Name",
 			reportsDataSourcePassword = "${databasePassword}",
-			reportsDataSourceURL = "${databaseURL}",
+			reportsDataSourceUrl = "${databaseUrl}",
 			reportsDataSourceUser = "${databaseUsername}");
 
 		ReportsAdmin.testDatabaseConnection();
@@ -569,7 +569,7 @@ definition {
 		property test.assert.javascript.errors = "false";
 		property test.name.skip.portal.instance = "CPReportsadmin#ViewEmailNotificationDelivery";
 
-		var portalURL = PropsUtil.get("portal.url");
+		var portalUrl = PropsUtil.get("portal.url");
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
@@ -618,7 +618,7 @@ definition {
 			gmailMessageTitle = "New Report: Custom Report Name.pdf");
 
 		var key_gmailAssetType = "New Report: Custom Report Name.pdf";
-		var key_pageNameURL = "report";
+		var key_pageNameUrl = "report";
 
 		AssertClick.assertPartialTextClickAt(
 			locator1 = "Gmail#GMAIL_HTML_MODE_MESSAGE_BODY_LINK",
@@ -639,7 +639,7 @@ definition {
 
 		Gmail.deleteSpecificMail(gmailMessageTitleList = "New Report: Custom Report Name.pdf,Your New Account,Your New Password");
 
-		Navigator.openSpecificURL(url = "${portalURL}");
+		Navigator.openSpecificURL(url = "${portalUrl}");
 	}
 
 	@priority = "4"
@@ -647,7 +647,7 @@ definition {
 		property test.assert.javascript.errors = "false";
 		property test.name.skip.portal.instance = "CPReportsadmin#ViewEmailRecipientDelivery";
 
-		var portalURL = PropsUtil.get("portal.url");
+		var portalUrl = PropsUtil.get("portal.url");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
@@ -694,7 +694,7 @@ definition {
 			gmailMessageTitle = "New Report: reports_admin_template_source_sample_class_name.pdf");
 
 		var key_gmailAssetType = "New Report: reports_admin_template_source_sample_class_name.pdf";
-		var key_pageNameURL = "report";
+		var key_pageNameUrl = "report";
 
 		AssertElementNotPresent(locator1 = "Gmail#GMAIL_HTML_MODE_MESSAGE_BODY_LINK");
 
@@ -702,7 +702,7 @@ definition {
 
 		Gmail.deleteSpecificMail(gmailMessageTitleList = "New Report: reports_admin_template_source_sample_class_name.pdf,Your New Account,Your New Password");
 
-		Navigator.openSpecificURL(url = "${portalURL}");
+		Navigator.openSpecificURL(url = "${portalUrl}");
 	}
 
 	@priority = "3"

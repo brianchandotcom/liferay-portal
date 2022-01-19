@@ -113,7 +113,7 @@ definition {
 		}
 
 		task ("Get published form URL") {
-			FormsAdmin.openFormsAdmin(siteURLKey = "site-name");
+			FormsAdmin.openFormsAdmin(siteUrlKey = "site-name");
 
 			FormsAdminNavigator.gotoEditFormByName(formName = "Created Form Name");
 
@@ -329,7 +329,7 @@ definition {
 				applicationId = "Document",
 				eventId = "documentPreviewed",
 				property = "fileEntryUUID",
-				value = "${fileEntryUUID}");
+				value = "${fileEntryUuid}");
 
 			ACUtils.assertEventPropertyValue(
 				applicationId = "Document",
@@ -381,7 +381,7 @@ definition {
 		}
 
 		task ("View the Form page as guest") {
-			Navigator.openSpecificURL(url = "${publishedFormURL}");
+			Navigator.openSpecificURL(url = "${publishedFormUrl}");
 		}
 
 		task ("View the Form events triggered for guest") {
@@ -520,7 +520,7 @@ definition {
 		}
 
 		task ("View the SocialBookmarks events triggered for guest") {
-			var portalURL = PropsUtil.get("portal.url");
+			var portalUrl = PropsUtil.get("portal.url");
 
 			ACUtils.assertEventPropertyValue(
 				applicationId = "SocialBookmarks",
@@ -544,7 +544,7 @@ definition {
 				applicationId = "SocialBookmarks",
 				eventId = "shared",
 				property = "url",
-				value = "${portalURL}/web/site-name/blog/-/blogs/blogs-ac-title");
+				value = "${portalUrl}/web/site-name/blog/-/blogs/blogs-ac-title");
 		}
 	}
 

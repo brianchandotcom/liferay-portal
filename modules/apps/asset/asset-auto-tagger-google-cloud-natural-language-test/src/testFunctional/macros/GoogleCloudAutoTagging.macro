@@ -1,12 +1,12 @@
 definition {
 
 	macro enableImageAutoTagging {
-		var googleAPIKey = PropsUtil.get("google.cloud.autotagging.service.key");
+		var googleApiKey = PropsUtil.get("google.cloud.autotagging.service.key");
 
 		Type(
 			key_text = "apiKey",
 			locator1 = "TextArea#ANY",
-			value1 = "${googleAPIKey}");
+			value1 = "${googleApiKey}");
 
 		FormFields.enableCheckbox(fieldName = "enabled");
 
@@ -19,12 +19,12 @@ definition {
 	}
 
 	macro enableTextAutoTagging {
-		var googleAPIKey = PropsUtil.get("google.cloud.autotagging.service.key");
+		var googleApiKey = PropsUtil.get("google.cloud.autotagging.service.key");
 
 		Type(
 			key_text = "apiKey",
 			locator1 = "TextArea#ANY",
-			value1 = "${googleAPIKey}");
+			value1 = "${googleApiKey}");
 
 		if (isSet(enableClassificationEndpoint)) {
 			FormFields.enableCheckbox(fieldName = "Classification Endpoint Enabled");
@@ -59,7 +59,7 @@ definition {
 	}
 
 	macro openToImageConfiguration {
-		var baseURL = PropsUtil.get("portal.url");
+		var baseUrl = PropsUtil.get("portal.url");
 
 		if ("${configurationScope}" == "Instance Settings") {
 			var portlet = "InstanceSettingsPortlet";
@@ -68,11 +68,11 @@ definition {
 			var portlet = "SystemSettingsPortlet";
 		}
 
-		Open(locator1 = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_${portlet}&_com_liferay_configuration_admin_web_portlet_${portlet}_factoryPid=com.liferay.document.library.asset.auto.tagger.google.cloud.vision.internal.configuration.GCloudVisionAssetAutoTagProviderCompanyConfiguration&_com_liferay_configuration_admin_web_portlet_${portlet}_mvcRenderCommandName=%2Fconfiguration_admin%2Fedit_configuration&_com_liferay_configuration_admin_web_portlet_${portlet}_pid=com.liferay.document.library.asset.auto.tagger.google.cloud.vision.internal.configuration.GCloudVisionAssetAutoTagProviderCompanyConfiguration");
+		Open(locator1 = "${baseUrl}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_${portlet}&_com_liferay_configuration_admin_web_portlet_${portlet}_factoryPid=com.liferay.document.library.asset.auto.tagger.google.cloud.vision.internal.configuration.GCloudVisionAssetAutoTagProviderCompanyConfiguration&_com_liferay_configuration_admin_web_portlet_${portlet}_mvcRenderCommandName=%2Fconfiguration_admin%2Fedit_configuration&_com_liferay_configuration_admin_web_portlet_${portlet}_pid=com.liferay.document.library.asset.auto.tagger.google.cloud.vision.internal.configuration.GCloudVisionAssetAutoTagProviderCompanyConfiguration");
 	}
 
 	macro openToTextConfiguration {
-		var baseURL = PropsUtil.get("portal.url");
+		var baseUrl = PropsUtil.get("portal.url");
 
 		if ("${configurationScope}" == "Instance Settings") {
 			var portlet = "InstanceSettingsPortlet";
@@ -81,7 +81,7 @@ definition {
 			var portlet = "SystemSettingsPortlet";
 		}
 
-		Open(locator1 = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_${portlet}&_com_liferay_configuration_admin_web_portlet_${portlet}_factoryPid=com.liferay.asset.auto.tagger.google.cloud.natural.language.internal.configuration.GCloudNaturalLanguageAssetAutoTaggerCompanyConfiguration&_com_liferay_configuration_admin_web_portlet_${portlet}_mvcRenderCommandName=%2Fconfiguration_admin%2Fedit_configuration&_com_liferay_configuration_admin_web_portlet_${portlet}_pid=com.liferay.asset.auto.tagger.google.cloud.natural.language.internal.configuration.GCloudNaturalLanguageAssetAutoTaggerCompanyConfiguration");
+		Open(locator1 = "${baseUrl}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_${portlet}&_com_liferay_configuration_admin_web_portlet_${portlet}_factoryPid=com.liferay.asset.auto.tagger.google.cloud.natural.language.internal.configuration.GCloudNaturalLanguageAssetAutoTaggerCompanyConfiguration&_com_liferay_configuration_admin_web_portlet_${portlet}_mvcRenderCommandName=%2Fconfiguration_admin%2Fedit_configuration&_com_liferay_configuration_admin_web_portlet_${portlet}_pid=com.liferay.asset.auto.tagger.google.cloud.natural.language.internal.configuration.GCloudNaturalLanguageAssetAutoTaggerCompanyConfiguration");
 	}
 
 }

@@ -98,7 +98,7 @@ definition {
 			ACSegments.viewSegmentCriteriaIndividualAttributes(attributeName = "createDate");
 
 			AssertElementNotPresent(
-				key_CriteriaName = "birthDate",
+				key_criteriaName = "birthDate",
 				locator1 = "ACSegments#CRITERIA_ROW");
 		}
 	}

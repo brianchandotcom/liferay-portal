@@ -15,7 +15,7 @@ definition {
 		}
 
 		var curl = '''
-			${portalURL}/api/jsonws/user/get-user-by-id/user-id/${userId} \
+			${portalUrl}/api/jsonws/user/get-user-by-id/user-id/${userId} \
 				-u ${userName}:test \
 		''';
 

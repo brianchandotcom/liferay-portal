@@ -146,8 +146,8 @@ definition {
 			userFullName = "Test Test (You)");
 
 		OSGiConfig.deployOSGiConfigFile(
-			OSGiConfigFileName = "com.liferay.journal.configuration.JournalServiceConfiguration.config",
-			OSGiConfigs = "articleCommentsEnabled=B&quot;false&quot;");
+			osgiConfigFileName = "com.liferay.journal.configuration.JournalServiceConfiguration.config",
+			osgiConfigs = "articleCommentsEnabled=B&quot;false&quot;");
 
 		Pause(locator1 = "10000");
 

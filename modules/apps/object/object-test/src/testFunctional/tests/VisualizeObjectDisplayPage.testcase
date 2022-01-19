@@ -648,7 +648,7 @@ definition {
 
 		Navigator.openURL();
 
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "guest");
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "guest");
 
 		DisplayPageTemplatesAdmin.addDisplayPage(
 			contentType = "Custom Object",

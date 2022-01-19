@@ -237,7 +237,7 @@ definition {
 
 		CommerceOrders.editOrderItemDetails(
 			orderItemQuantity = "4",
-			orderItemSKU = "MIN93015");
+			orderItemSku = "MIN93015");
 
 		CommerceNavigator.gotoPortlet(
 			category = "Order Management",
@@ -253,7 +253,7 @@ definition {
 			productListPrice = "50.00",
 			productName = "ABS Sensor",
 			productQuantity = "4",
-			productSKU = "MIN93015",
+			productSku = "MIN93015",
 			productTotalPrice = "100.00");
 	}
 
@@ -315,7 +315,7 @@ definition {
 
 		CommerceOrders.editOrderItemDetails(
 			orderItemQuantity = "4",
-			orderItemSKU = "MIN93015");
+			orderItemSku = "MIN93015");
 
 		CommerceNavigator.gotoPortlet(
 			category = "Order Management",
@@ -331,7 +331,7 @@ definition {
 			productListPrice = "50.00",
 			productName = "ABS Sensor",
 			productQuantity = "4.00",
-			productSKU = "MIN93015",
+			productSku = "MIN93015",
 			productTotalPrice = "100.00");
 	}
 

@@ -2,12 +2,12 @@ definition {
 
 	@summary = "Directly calls the JSON WS API to add a layout"
 	macro _addLayout {
-		Variables.assertDefined(parameterList = "${friendlyURL},${groupId},${privateLayout},${parentLayoutId},${layoutName},${serviceContext}");
+		Variables.assertDefined(parameterList = "${friendlyUrl},${groupId},${privateLayout},${parentLayoutId},${layoutName},${serviceContext}");
 
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalURL}/api/jsonws/layout/add-layout \
+			${portalUrl}/api/jsonws/layout/add-layout \
 				-u test@liferay.com:test \
 				-d groupId=${groupId} \
 				-d privateLayout=${privateLayout} \
@@ -17,7 +17,7 @@ definition {
 				-d description= \
 				-d type=${type} \
 				-d hidden=false \
-				-d friendlyURL=${friendlyURL} \
+				-d friendlyURL=${friendlyUrl} \
 				-d serviceContext=${serviceContext}
 		''';
 		var plid = JSONCurlUtil.post("${curl}", "$['plid']");
@@ -32,7 +32,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalURL}/api/jsonws/layout/delete-layout \
+			${portalUrl}/api/jsonws/layout/delete-layout \
 				-u test@liferay.com:test \
 				-d groupId=${groupId} \
 				-d privateLayout=${privateLayout} \
@@ -50,7 +50,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalURL}/api/jsonws/layout/get-default-plid \
+			${portalUrl}/api/jsonws/layout/get-default-plid \
 				-u test@liferay.com:test \
 				-d groupId=${groupId} \
 				-d privateLayout=${privateLayout}
@@ -72,7 +72,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalURL}/api/jsonws/layout/get-layouts \
+			${portalUrl}/api/jsonws/layout/get-layouts \
 				-u test@liferay.com:test \
 				-d groupId=${groupId} \
 				-d privateLayout=${privateLayout}
@@ -95,7 +95,7 @@ definition {
 		}
 
 		var curl = '''
-			${portalURL}/api/jsonws/layout/get-layouts \
+			${portalUrl}/api/jsonws/layout/get-layouts \
 				-u test@liferay.com:test \
 				-d groupId=${groupId} \
 				-d privateLayout=${privateLayout}
@@ -116,7 +116,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalURL}/api/jsonws/layout/get-layouts \
+			${portalUrl}/api/jsonws/layout/get-layouts \
 				-u test@liferay.com:test \
 				-d groupId=${groupId} \
 				-d privateLayout=${privateLayout}
@@ -137,7 +137,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalURL}/api/jsonws/layout/get-layouts \
+			${portalUrl}/api/jsonws/layout/get-layouts \
 				-u test@liferay.com:test \
 				-d groupId=${groupId} \
 				-d privateLayout=${privateLayout}
@@ -158,7 +158,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalURL}/api/jsonws/layout/publish-layout \
+			${portalUrl}/api/jsonws/layout/publish-layout \
 				-u test@liferay.com:test \
 				-d plid=${plid}
 		''';
@@ -173,7 +173,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalURL}/api/jsonws/layout/update-layout \
+			${portalUrl}/api/jsonws/layout/update-layout \
 				-u test@liferay.com:test \
 				-d groupId=${groupId} \
 				-d privateLayout=${privateLayout} \

@@ -116,7 +116,7 @@ definition {
 		}
 
 		task ("Go to segments portlet") {
-			Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+			Segmentation.openSegmentsAdmin(siteUrlKey = "test-site-name");
 		}
 
 		task ("Open segment's options and assert the option Assign site roles is disabled") {
@@ -142,7 +142,7 @@ definition {
 		}
 
 		task ("Go to segments portlet") {
-			Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+			Segmentation.openSegmentsAdmin(siteUrlKey = "test-site-name");
 		}
 
 		task ("Open segment's options and assert the option Assign site roles is enabled") {

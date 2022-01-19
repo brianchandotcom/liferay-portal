@@ -485,7 +485,7 @@ definition {
 			ACUtils.searchBar(searchItem = "${customEventName}");
 
 			AssertElementPresent(
-				key_SegmentField = "No results were found.",
+				key_segmentField = "No results were found.",
 				locator1 = "ACSegments#SEGMENT_CRITERION_ITEM");
 		}
 	}

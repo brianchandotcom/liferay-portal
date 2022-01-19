@@ -29,7 +29,7 @@ definition {
 	@description = "This test deletes a document using a custom document type with all fields and a related metadataset with all fields."
 	@priority = "5"
 	test DeleteDocumentWithFieldsFromCustomDocTypeAndMetadataSet {
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "test-site-name");
 
 		DMNavigator.gotoMetadataSets();
 
@@ -39,7 +39,7 @@ definition {
 
 		DDLDataDefinition.save();
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "test-site-name");
 
 		DMNavigator.gotoDocumentType();
 
@@ -57,14 +57,14 @@ definition {
 
 		DDLDataDefinition.save();
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "test-site-name");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "Document With Custom Metadata Set",
 			dmDocumentTitle = "DM Document Title",
 			dmDocumentTypeName = "DM Document Type Name");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "test-site-name");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
 
@@ -72,7 +72,7 @@ definition {
 
 		DMDocument.viewFieldLabels(labels = "Text,Select from List,Single Selection,Multiple Selection,Grid,Date,Numeric,Image,Rich Text,Upload,Color,Geolocation,Link to Page,Separator");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "test-site-name");
 
 		DMDocument.deleteCP(dmDocumentTitle = "DM Document Title");
 

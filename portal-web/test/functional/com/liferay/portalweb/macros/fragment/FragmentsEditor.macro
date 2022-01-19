@@ -29,7 +29,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "FragmentEditor#HTML_EDITOR_CONTENT",
-			value1 = "${fragmentHTML}");
+			value1 = "${fragmentHtml}");
 	}
 
 	macro gotoCodeTab {

@@ -67,7 +67,7 @@ definition {
 
 		Staging.publishToLive();
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name-staging");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -91,7 +91,7 @@ definition {
 
 		Staging.publishToLive();
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
 
 		WebContentNavigator.gotoPreviewEntryCP(
 			liveSite = "true",
@@ -120,7 +120,7 @@ definition {
 		WebContentNavigator.openToEditWCInSite(
 			groupName = "Site Name (Staging)",
 			site = "false",
-			siteURLKey = "site-name",
+			siteUrlKey = "site-name",
 			staging = "true",
 			webContentTitle = "WC WebContent Title");
 
@@ -130,13 +130,13 @@ definition {
 
 		PortletEntry.publish();
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name-staging");
 
 		Staging.publishViaSAP(
 			confirmMessage = "Are you sure you want to publish the selected web content?",
 			entry = "WC WebContent Title");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
 
 		WebContentNavigator.gotoPreviewEntryCP(
 			liveSite = "true",
@@ -215,7 +215,7 @@ definition {
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
-		WebContent.editFriendlyURL(webContentFriendlyURL = "friendlyUrledit");
+		WebContent.editFriendlyURL(webContentFriendlyUrl = "friendlyUrledit");
 
 		PortletEntry.publish();
 
@@ -284,7 +284,7 @@ definition {
 
 		Staging.publishToLive();
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name-staging");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -308,7 +308,7 @@ definition {
 
 		Staging.publishToLive();
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
 
 		WebContentNavigator.gotoPreviewEntryCP(
 			liveSite = "true",
@@ -332,13 +332,13 @@ definition {
 
 		Staging.publishToLive();
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name-staging");
 
 		Staging.publishViaSAP(
 			confirmMessage = "Are you sure you want to publish the selected web content?",
 			entry = "WC WebContent Title");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
 
 		WebContentNavigator.gotoPreviewEntryCP(
 			liveSite = "true",
@@ -392,7 +392,7 @@ definition {
 
 		Staging.publishToLive();
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name-staging");
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
@@ -412,7 +412,7 @@ definition {
 
 		Staging.publishToLive();
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name-staging");
 
 		WebContent.deleteStagedCP(
 			pageName = "Test Page",
@@ -427,7 +427,7 @@ definition {
 
 		Staging.publishToLive();
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
 
 		WebContent.viewNotPresentCP(webContentTitle = "Web Content Title");
 	}
@@ -474,7 +474,7 @@ definition {
 
 		Staging.publishToLive();
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name-staging");
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
@@ -494,7 +494,7 @@ definition {
 
 		Staging.publishToLive();
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
 
 		WebContent.viewTitle(
 			onLive = "true",
@@ -503,7 +503,7 @@ definition {
 		WebContentNavigator.openToEditWCInSite(
 			groupName = "Site Name (Staging)",
 			site = "false",
-			siteURLKey = "site-name",
+			siteUrlKey = "site-name",
 			staging = "true",
 			webContentTitle = "Web Content Title");
 
@@ -511,13 +511,13 @@ definition {
 			webContentTitle = "Web Content Title",
 			webContentTitleEdit = "Web Content Title Edit");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name-staging");
 
 		Staging.publishViaSAP(
 			confirmMessage = "Are you sure you want to publish the selected web content?",
 			entry = "Web Content Title Edit");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
 
 		WebContent.viewTitle(
 			onLive = "true",
@@ -710,7 +710,7 @@ definition {
 			videoShortcutDescription = "Video Shortcut Description",
 			videoShortcutPreview = "https://www.youtube.com",
 			videoShortcutTitle = "Test YouTube Video",
-			videoURL = "https://youtu.be/HOdbzGCI5ME",
+			videoUrl = "https://youtu.be/HOdbzGCI5ME",
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WC WebContent Title");
 

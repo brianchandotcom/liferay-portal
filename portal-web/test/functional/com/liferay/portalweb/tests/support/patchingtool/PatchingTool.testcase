@@ -6,9 +6,9 @@ definition {
 	property test.ignore.tomcat.ext.environment = "true";
 	property testray.main.component.name = "Patching Tool";
 
-	var testBuildFixPackZipURL = PropsUtil.get("test.build.fix.pack.zip.url");
-	var testBuildFixPackZipURLPrevious = PropsUtil.get("test.build.fix.pack.zip.url.previous");
-	var testBuildFixPackZipURLLatestHeavy = PropsUtil.get("test.build.fix.pack.zip.url.latest.heavy");
+	var testBuildFixPackZipUrl = PropsUtil.get("test.build.fix.pack.zip.url");
+	var testBuildFixPackZipUrlPrevious = PropsUtil.get("test.build.fix.pack.zip.url.previous");
+	var testBuildFixPackZipUrlLatestHeavy = PropsUtil.get("test.build.fix.pack.zip.url.latest.heavy");
 
 	setUp {
 		SignIn.signInTestSetup();
@@ -34,7 +34,7 @@ definition {
 
 		Portlet.shutdownServer();
 
-		PatchingTool.installPatch(patchFileZipURL = "${testBuildFixPackZipURL}");
+		PatchingTool.installPatch(patchFileZipUrl = "${testBuildFixPackZipUrl}");
 
 		Portlet.startServer(
 			deleteLiferayHome = "true",
@@ -42,13 +42,13 @@ definition {
 
 		SignIn.signIn();
 
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+		BlogsNavigator.openBlogsAdmin(siteUrlKey = "guest");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
 		BlogsEntry.viewEntryTable(entryTitle = "Blogs Entry Title");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
 
@@ -58,7 +58,7 @@ definition {
 
 		PatchingTool.uninstallPatches();
 
-		PatchingTool.installPatch(patchFileZipURL = "${testBuildFixPackZipURLPrevious}");
+		PatchingTool.installPatch(patchFileZipUrl = "${testBuildFixPackZipUrlPrevious}");
 
 		Portlet.startServer(
 			deleteLiferayHome = "true",
@@ -104,13 +104,13 @@ definition {
 
 		SignIn.signIn();
 
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+		BlogsNavigator.openBlogsAdmin(siteUrlKey = "guest");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
 		BlogsEntry.viewEntryTable(entryTitle = "Blogs Entry Title");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
 
@@ -130,7 +130,7 @@ definition {
 		property test.assert.warning.exceptions = "true";
 		property test.name.skip.portal.instance = "PatchingTool#RevertToLatestHeavyFixPack";
 
-		if ("${testBuildFixPackZipURLPrevious}" == "${testBuildFixPackZipURLLatestHeavy}") {
+		if ("${testBuildFixPackZipUrlPrevious}" == "${testBuildFixPackZipUrlLatestHeavy}") {
 			echo("Skip test since the heavey fixpack equal to previous fixpack");
 		}
 		else {
@@ -138,7 +138,7 @@ definition {
 
 			Portlet.shutdownServer();
 
-			PatchingTool.installPatch(patchFileZipURL = "${testBuildFixPackZipURL}");
+			PatchingTool.installPatch(patchFileZipUrl = "${testBuildFixPackZipUrl}");
 
 			Portlet.startServer(
 				deleteLiferayHome = "true",
@@ -164,7 +164,7 @@ definition {
 
 			PatchingTool.uninstallPatches();
 
-			PatchingTool.installPatch(patchFileZipURL = "${testBuildFixPackZipURLLatestHeavy}");
+			PatchingTool.installPatch(patchFileZipUrl = "${testBuildFixPackZipUrlLatestHeavy}");
 
 			Portlet.startServer(
 				deleteLiferayHome = "true",
@@ -172,17 +172,17 @@ definition {
 
 			SignIn.signIn();
 
-			BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+			BlogsNavigator.openBlogsAdmin(siteUrlKey = "guest");
 
 			LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
 			BlogsEntry.viewEntryTable(entryTitle = "Blogs Entry Title");
 
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 			WebContent.viewTitle(webContentTitle = "WC WebContent Title");
 
-			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+			DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 			LexiconEntry.changeDisplayStyle(displayStyle = "list");
 

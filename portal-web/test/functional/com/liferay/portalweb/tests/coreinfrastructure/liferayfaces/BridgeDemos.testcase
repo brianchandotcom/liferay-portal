@@ -14,7 +14,7 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Bridge Demos");
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "Bridge Demos");
+		PagesAdmin.openPagesAdmin(siteUrlKey = "Bridge Demos");
 	}
 
 	tearDown {

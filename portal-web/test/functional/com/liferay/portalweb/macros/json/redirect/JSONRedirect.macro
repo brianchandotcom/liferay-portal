@@ -2,7 +2,7 @@ definition {
 
 	@summary = "This calls the JSON WS API to add a redirect entry"
 	macro addRedirect {
-		Variables.assertDefined(parameterList = "${sourceURL},${destinationURL}");
+		Variables.assertDefined(parameterList = "${sourceUrl},${destinationUrl}");
 
 		if (!(isSet(site))) {
 			var site = "true";
@@ -14,7 +14,7 @@ definition {
 
 		var portalURL = JSONCompany.getPortalURL();
 
-		var destinationURL = StringUtil.replace("${destinationURL}", ":", "%3A");
+		var destinationUrl = StringUtil.replace("${destinationUrl}", ":", "%3A");
 
 		if (!(isSet(expirationDate))) {
 			var expirationDate = "2100-01-01";
@@ -33,20 +33,20 @@ definition {
 		}
 
 		var curl = '''
-			${portalURL}/api/jsonws/redirect.redirectentry/add-redirect-entry \
+			${portalUrl}/api/jsonws/redirect.redirectentry/add-redirect-entry \
 			-u ${userEmailAddress}:${userPassword} \
 			-d groupId=${groupId} \
-			-d destinationURL=${destinationURL} \
+			-d destinationURL=${destinationUrl} \
 			-d expirationDate=${expirationDate} \
 			-d permanent=${permanent} \
-			-d sourceURL=${sourceURL}
+			-d sourceURL=${sourceUrl}
 		''';
 
 		echo("## Adding a 'Redirection' with the following info using JSONWS:");
 
-		echo("## * SourceURL: ${sourceURL}");
+		echo("## * SourceURL: ${sourceUrl}");
 
-		echo("## * DestinationURL: ${destinationURL}");
+		echo("## * DestinationURL: ${destinationUrl}");
 
 		var messageId = JSONCurlUtil.post("${curl}");
 	}
@@ -54,7 +54,7 @@ definition {
 	@summary = "This calls the JSON WS API to delete an entry"
 	macro deleteEntry {
 		var redirectEntryId = JSONRedirect.getRedirectEntryId(
-			destinationURL = "${destinationURL}",
+			destinationUrl = "${destinationUrl}",
 			groupName = "${groupName}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -68,7 +68,7 @@ definition {
 		}
 
 		var curl = '''
-			${portalURL}/api/jsonws/redirect.redirectentry/delete-redirect-entry \
+			${portalUrl}/api/jsonws/redirect.redirectentry/delete-redirect-entry \
 				-u ${userEmailAddress}:${userPassword} \
 				-d redirectEntryId=${redirectEntryId} \
 		''';
@@ -78,21 +78,21 @@ definition {
 
 	@summary = "This calls the JSON WS API to get the redirectEntryId"
 	macro getRedirectEntryId {
-		Variables.assertDefined(parameterList = "${destinationURL},${groupName}");
+		Variables.assertDefined(parameterList = "${destinationUrl},${groupName}");
 
 		var portalURL = JSONCompany.getPortalURL();
 
 		var groupId = JSONGroupSetter.setGroupId(groupName = "${groupName}");
 
 		var curl = '''
-			${portalURL}/api/jsonws/redirect.redirectentry/get-redirect-entries \
+			${portalUrl}/api/jsonws/redirect.redirectentry/get-redirect-entries \
 			-u test@liferay.com:test \
 			-d groupId=${groupId} \
 			-d "start=-1" \
 			-d "end=-1" \
 			-d -orderByComparator=
 		''';
-		var redirectEntryId = JSONCurlUtil.post("${curl}", "$.[?(@['destinationURL'] == '${destinationURL}')]['redirectEntryId']");
+		var redirectEntryId = JSONCurlUtil.post("${curl}", "$.[?(@['destinationURL'] == '${destinationUrl}')]['redirectEntryId']");
 
 		if ("${redirectEntryId}" == "") {
 			fail("FAIL. Cannot find category.");
@@ -104,12 +104,12 @@ definition {
 	@summary = "This calls the JSON WS API to update an entry"
 	macro updateEntry {
 		var redirectEntryId = JSONRedirect.getRedirectEntryId(
-			destinationURL = "${destinationURL}",
+			destinationUrl = "${destinationUrl}",
 			groupName = "${groupName}");
 
 		var portalURL = JSONCompany.getPortalURL();
 
-		var destinationURL = StringUtil.replace("${destinationURL}", ":", "%3A");
+		var destinationUrl = StringUtil.replace("${destinationUrl}", ":", "%3A");
 
 		if (!(isSet(expirationDate))) {
 			var expirationDate = "2100-01-01";
@@ -128,13 +128,13 @@ definition {
 		}
 
 		var curl = '''
-			${portalURL}/api/jsonws/redirect.redirectentry/update-redirect-entry \
+			${portalUrl}/api/jsonws/redirect.redirectentry/update-redirect-entry \
 				-u ${userEmailAddress}:${userPassword} \
 				-d redirectEntryId=${redirectEntryId} \
-				-d destinationURL=${destinationURL} \
+				-d destinationURL=${destinationUrl} \
 				-d expirationDate=${expirationDate} \
 				-d permanent=${permanent} \
-				-d sourceURL=${sourceURL}
+				-d sourceURL=${sourceUrl}
 
 		''';
 

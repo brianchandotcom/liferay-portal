@@ -34,7 +34,7 @@ definition {
 	@priority = "3"
 	test ExportImportStyleBook {
 		task ("Add a style book with times as Font Family Base") {
-			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-site-name");
+			StyleBooksAdmin.openStyleBooksAdmin(siteUrlKey = "test-site-name");
 
 			StyleBooksAdmin.addStyleBooks(styleBookName = "Test Style Book Name");
 
@@ -62,7 +62,7 @@ definition {
 		task ("Import the style book into a new site") {
 			JSONGroup.addGroup(groupName = "New Site Name");
 
-			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "new-site-name");
+			StyleBooksAdmin.openStyleBooksAdmin(siteUrlKey = "new-site-name");
 
 			StyleBooksAdmin.importStyleBookFromTempFolder();
 		}

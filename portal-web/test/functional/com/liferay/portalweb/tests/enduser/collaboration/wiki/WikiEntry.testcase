@@ -43,7 +43,7 @@ definition {
 	test CanAccessExternalLink {
 		WikiNavigator.openToAddPage(
 			groupName = "Guest",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			wikiNodeName = "Main");
 
 		WikiEntry.addPageTitle(wikiPageTitle = "Wiki Page Title");
@@ -53,8 +53,8 @@ definition {
 		PortletEntry.publish();
 
 		WikiNavigator.openToWikiPage(
-			layoutURLKey = "wiki-test-page",
-			siteURLKey = "guest",
+			layoutUrlKey = "wiki-test-page",
+			siteUrlKey = "guest",
 			wikiNodeName = "Main",
 			wikiPageTitle = "Wiki Page Title");
 
@@ -81,8 +81,8 @@ definition {
 
 		WikiNavigator.openToEditPage(
 			groupName = "Guest",
-			layoutURLKey = "wiki-test-page",
-			siteURLKey = "guest",
+			layoutUrlKey = "wiki-test-page",
+			siteUrlKey = "guest",
 			wikiNodeName = "Main",
 			wikiPageTitle = "Wiki Page Title");
 
@@ -93,8 +93,8 @@ definition {
 		Button.clickPublish();
 
 		WikiNavigator.openToWikiPage(
-			layoutURLKey = "wiki-test-page",
-			siteURLKey = "guest",
+			layoutUrlKey = "wiki-test-page",
+			siteUrlKey = "guest",
 			wikiNodeName = "Main",
 			wikiPageTitle = "Wiki Page Title");
 
@@ -112,16 +112,16 @@ definition {
 
 		WikiNavigator.openToEditPage(
 			groupName = "Guest",
-			layoutURLKey = "wiki-test-page",
-			siteURLKey = "guest",
+			layoutUrlKey = "wiki-test-page",
+			siteUrlKey = "guest",
 			wikiNodeName = "Main",
 			wikiPageTitle = "Wiki Page Title");
 
 		WikiEntry.addPageSummary(wikiPageSummary = "Wiki Page Summary");
 
 		WikiNavigator.openToWikiPage(
-			layoutURLKey = "wiki-test-page",
-			siteURLKey = "guest",
+			layoutUrlKey = "wiki-test-page",
+			siteUrlKey = "guest",
 			wikiNodeName = "Main",
 			wikiPageTitle = "Wiki Page Title");
 
@@ -136,8 +136,8 @@ definition {
 	test CanAddTableOfContents {
 		WikiNavigator.openToAddPage(
 			groupName = "Guest",
-			layoutURLKey = "wiki-test-page",
-			siteURLKey = "guest",
+			layoutUrlKey = "wiki-test-page",
+			siteUrlKey = "guest",
 			wikiNodeName = "Main");
 
 		WikiEntry.addPageTitle(wikiPageTitle = "Wiki Page Title");
@@ -147,8 +147,8 @@ definition {
 		Button.clickPublish();
 
 		WikiNavigator.openToWikiPage(
-			layoutURLKey = "wiki-test-page",
-			siteURLKey = "guest",
+			layoutUrlKey = "wiki-test-page",
+			siteUrlKey = "guest",
 			wikiNodeName = "Main",
 			wikiPageTitle = "Wiki Page Title");
 
@@ -178,18 +178,18 @@ definition {
 
 		WikiPage.editPagePG(
 			groupName = "Guest",
-			layoutURLKey = "wiki-test-page",
+			layoutUrlKey = "wiki-test-page",
 			minorEdit = "true",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			wikiNodeName = "Main",
 			wikiPageContent = "Wiki Page Content",
 			wikiPageContentEdit = "Wiki Page Content Edit",
 			wikiPageTitle = "Wiki Page Title");
 
 		WikiNavigator.gotoWidgetSpecificTabByURL(
-			layoutURLKey = "wiki-test-page",
-			siteURLKey = "guest",
-			tabURLKey = "all_pages",
+			layoutUrlKey = "wiki-test-page",
+			siteUrlKey = "guest",
+			tabUrlKey = "all_pages",
 			wikiNodeName = "Main");
 
 		WikiTable.viewEntry(
@@ -206,14 +206,14 @@ definition {
 			wikiNodeDescription = "Wiki Node Description",
 			wikiNodeName = "Wiki Node Name");
 
-		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
+		WikiNavigator.openWikiAdmin(siteUrlKey = "guest");
 
 		WikiNode.importWikiPage(
 			fileName = "Liferay-sample2.xml",
 			wikiNodeName = "Wiki Node Name");
 
 		WikiNavigator.openToWikiPage(
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			wikiNodeName = "Wiki Node Name",
 			wikiPageTitle = "Liferay");
 
@@ -227,8 +227,8 @@ definition {
 	test TitleWillNotExecuteXSS {
 		WikiPage.addPG(
 			groupName = "Guest",
-			layoutURLKey = "wiki-test-page",
-			siteURLKey = "guest",
+			layoutUrlKey = "wiki-test-page",
+			siteUrlKey = "guest",
 			wikiNodeName = "Main",
 			wikiPageContent = "Wiki Page Content",
 			wikiPageTitle = '''<script>alert(123);</script>''',

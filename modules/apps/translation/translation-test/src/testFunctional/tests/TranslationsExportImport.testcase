@@ -32,7 +32,7 @@ definition {
 			groupName = "Guest",
 			title = "Web Content Title");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		Translations.gotoExportTranslation(webContentTitle = "Web Content Title");
 
@@ -54,7 +54,7 @@ definition {
 			groupName = "Guest",
 			title = "Web Content Title");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		Translations.gotoExportTranslation(webContentTitle = "Web Content Title");
 
@@ -73,7 +73,7 @@ definition {
 			groupName = "Guest",
 			title = "Long Inputs For Web Content Title To Check The Translations Exporting Process");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		Translations.gotoExportTranslation(webContentTitle = "Long Inputs For Web Content Title To Check The Translations Exporting Process");
 
@@ -89,7 +89,7 @@ definition {
 	test CanExportWithSpecialCharacters {
 		WebContentNavigator.openToAddBasicArticle(
 			groupName = "Guest",
-			siteURLKey = "guest");
+			siteUrlKey = "guest");
 
 		WebContent.addCP(
 			webContentContent = '''Web Content Content &gt;!&#<>''',
@@ -116,7 +116,7 @@ definition {
 			groupName = "Guest",
 			title = "WebContentTitle");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		Translations.gotoExportTranslation(webContentTitle = "WebContentTitle");
 
@@ -137,7 +137,7 @@ definition {
 			webContentDescription = "Description",
 			webContentTitle = "WebContentTitle");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		Translations.importTranslation(
 			fileName = "WebContentTitle-en_US-es_ES.xlf",
@@ -164,7 +164,7 @@ definition {
 			groupName = "Guest",
 			title = "WebContentTitle");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		Translations.gotoExportTranslation(webContentTitle = "WebContentTitle");
 
@@ -196,7 +196,7 @@ definition {
 			webContentDescription = "Description",
 			webContentTitle = "WebContentTitle");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		Translations.importTranslation(
 			fileName = "WebContentTitle-en_US_translated.zip",
@@ -232,7 +232,7 @@ definition {
 			groupName = "Guest",
 			title = "WebContentTitle");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		Translations.gotoExportTranslation(webContentTitle = "WebContentTitle");
 
@@ -277,7 +277,7 @@ definition {
 			groupName = "Guest",
 			title = "WebContentTitle");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		Translations.gotoExportTranslation(webContentTitle = "WebContentTitle");
 
@@ -297,7 +297,7 @@ definition {
 			webContentDescription = "Description",
 			webContentTitle = "WebContentTitle");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		Translations.importTranslation(
 			fileName = "WebContentTitle-en_US-ja_JP_utf8.xlf",
@@ -326,7 +326,7 @@ definition {
 			groupName = "Guest",
 			title = "WebContentTitle");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		Translations.gotoExportTranslation(webContentTitle = "WebContentTitle");
 
@@ -347,7 +347,7 @@ definition {
 			webContentDescription = "Description",
 			webContentTitle = "WebContentTitle");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		Translations.importTranslation(
 			fileName = "WebContentTitle-en_US-de_DE.xliff",
@@ -373,7 +373,7 @@ definition {
 			groupName = "Guest",
 			title = "LongInputsForWebContentTitleToCheckTheTranslationsExportingAndImportingProcess");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		Translations.gotoExportTranslation(webContentTitle = "LongInputsForWebContentTitleToCheckTheTranslationsExportingAndImportingProcess");
 
@@ -413,7 +413,7 @@ definition {
 	test CanImportWithSpecialCharacters {
 		WebContentNavigator.openToAddBasicArticle(
 			groupName = "Guest",
-			siteURLKey = "guest");
+			siteUrlKey = "guest");
 
 		WebContent.addCP(
 			webContentContent = "WebContentContent@!#",

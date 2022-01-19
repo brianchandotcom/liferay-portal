@@ -1,8 +1,6 @@
 definition {
 
-	@summary = "Asserts that the currently selected Time Filter range matches the specified range \
-	@param cardName optional argument that is supplied when you want to assert the Time Filter within a specific card \
-	@param timeFilterRange the currently set range of the Time Filter, as displayed on the Time Filter dropdown button"
+	@summary = "Asserts that the currently selected Time Filter range matches the specified range \  @param cardName optional argument that is supplied when you want to assert the Time Filter within a specific card \  @param timeFilterRange the currently set range of the Time Filter, as displayed on the Time Filter dropdown button"
 	macro assertCurrentTimeFilterRange {
 		if (isSet(cardName)) {
 			var key_cardName = "${cardName}";
@@ -30,8 +28,7 @@ definition {
 		Click(locator1 = "ACTimeFilter#TIME_FILTER_DROPDOWN_OPTION");
 	}
 
-	@summary = "Clicks the Time Filter dropdown button. If `cardName` argument is provided, it clicks the TimeFilter within a card specified by name \
-	@param cardName name of the card who's Time Filter you want to click"
+	@summary = "Clicks the Time Filter dropdown button. If `cardName` argument is provided, it clicks the TimeFilter within a card specified by name \  @param cardName name of the card who's Time Filter you want to click"
 	macro clickTimeFilterButton {
 		if (isSet(cardName)) {
 			var key_cardName = "${cardName}";
@@ -43,13 +40,7 @@ definition {
 		}
 	}
 
-	@summary = "Filters the card or table by a Custom Date range \
-	@param startDay \
-	@param startMonth Full name of the start month \
-	@param startYear \
-	@param endDay \
-	@param endMonth Full name of the end month \
-	@param endYear"
+	@summary = "Filters the card or table by a Custom Date range \  @param startDay \  @param startMonth Full name of the start month \  @param startYear \  @param endDay \  @param endMonth Full name of the end month \  @param endYear"
 	macro setCustomRange {
 		var key_dropdownOption = "Custom Range";
 

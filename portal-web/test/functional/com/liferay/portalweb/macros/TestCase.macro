@@ -80,11 +80,11 @@ definition {
 
 		if (("${siteName}" == "Liferay") || !(isSet(siteName))) {
 			if (("${testPortalInstance}" == "true") && !(IsTestName(locator1 = "", value1 = "${testNameSkipPortalInstance}"))) {
-				var portalURL = PropsUtil.get("portal.url");
-				var portalURL = StringUtil.replace("${portalURL}", "http://", "");
-				var portalURL = StringUtil.replace("${portalURL}", ":8080", "");
+				var portalUrl = PropsUtil.get("portal.url");
+				var portalUrl = StringUtil.replace("${portalUrl}", "http://", "");
+				var portalUrl = StringUtil.replace("${portalUrl}", ":8080", "");
 
-				return "${portalURL}";
+				return "${portalUrl}";
 			}
 			else {
 				var testRunEnvironment = PropsUtil.get("test.run.environment");

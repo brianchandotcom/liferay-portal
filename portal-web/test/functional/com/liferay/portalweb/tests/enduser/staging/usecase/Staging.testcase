@@ -53,7 +53,7 @@ definition {
 	@description = "This is a use case for LPS-88197."
 	@priority = "3"
 	test ActivateStagingOnGlobalSiteWithDDMStructure {
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "global");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "global");
 
 		NavItem.gotoStructures();
 
@@ -73,7 +73,7 @@ definition {
 
 		JSONStaging.enableLocalStaging(groupName = "Global");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "global");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "global");
 
 		NavItem.gotoStructures();
 
@@ -90,7 +90,7 @@ definition {
 			groupName = "Site Name",
 			layoutName = "Private Staging Page");
 
-		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
+		Site.openSiteSettingsAdmin(siteUrlKey = "site-name");
 
 		Site.configureCurrentLanguagesCP(
 			currentSiteLanguages = "English (United States)",
@@ -127,7 +127,7 @@ definition {
 
 		echo("Page Scope ID is: ${pageScopeId}");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "${pageScopeId}");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "${pageScopeId}");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -143,7 +143,7 @@ definition {
 
 		AssertConsoleTextNotPresent(value1 = "SystemException");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "${pageScopeId}");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "${pageScopeId}");
 
 		var key_webContentTitle = "WC WebContent Title";
 
@@ -159,24 +159,24 @@ definition {
 			groupName = "Site Name",
 			name = "Collection Name");
 
-		FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "site-name");
+		FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "site-name");
 
 		FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 
 		FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
 
-		var fragmentHTML = '''<lfr-widget-web-content>''';
+		var fragmentHtml = '''<lfr-widget-web-content>''';
 
 		var htmlSnippet = '''<lfr-''';
 
 		FragmentsEditor.autocompleteFragmentHTML(
 			autocompleteField = "lfr-widget-web-content",
-			fragmentHTML = "${fragmentHTML}",
+			fragmentHtml = "${fragmentHtml}",
 			htmlSnippet = "${htmlSnippet}");
 
 		PortletEntry.publish();
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -186,7 +186,7 @@ definition {
 
 		PortletEntry.publish();
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
+		PagesAdmin.openPagesAdmin(siteUrlKey = "site-name");
 
 		ContentPages.addPage(pageName = "Test Content Page Name");
 
@@ -235,17 +235,17 @@ definition {
 
 		Portlet.addPG(portletName = "Asset Publisher");
 
-		Staging.openStagingAdmin(siteURLKey = "site-name");
+		Staging.openStagingAdmin(siteUrlKey = "site-name");
 
 		Staging.activateStagingCP(
 			noContent = "true",
 			siteName = "Site Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name-staging");
 
 		Staging.viewNotStagedAssetMessageOnStaging();
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
 
 		NavItem.gotoStructures();
 
@@ -257,7 +257,7 @@ definition {
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
 
 		NavItem.gotoTemplates();
 
@@ -280,11 +280,11 @@ definition {
 	@priority = "3"
 	@uitest
 	test CreateWidgetTemplateWhenNotStagedADT {
-		ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "site-name");
+		ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteUrlKey = "site-name");
 
 		AssertVisible(locator1 = "Button#PLUS");
 
-		Staging.openStagingAdmin(siteURLKey = "site-name");
+		Staging.openStagingAdmin(siteUrlKey = "site-name");
 
 		Staging.activateStagingCP(
 			siteName = "Site Name",
@@ -294,7 +294,7 @@ definition {
 			pageName = "Staging Test Page",
 			siteName = "Site Name");
 
-		ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "site-name-staging");
+		ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteUrlKey = "site-name-staging");
 
 		ApplicationDisplayTemplates.addADTWithFieldEntryCP(
 			fieldName = "Asset Entry",
@@ -304,7 +304,7 @@ definition {
 			key_tableEntry = "Asset Publisher Test ADT",
 			locator1 = "LexiconTable#TABLE_ENTRY_TITLE");
 
-		ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "site-name");
+		ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteUrlKey = "site-name");
 
 		ApplicationDisplayTemplates.addADTWithFieldEntryCP(
 			fieldName = "Blog Entries",
@@ -317,13 +317,13 @@ definition {
 
 	@priority = "4"
 	test DeletePublishTemplate {
-		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
+		Site.openSiteSettingsAdmin(siteUrlKey = "site-name");
 
 		Site.disableRecycleBinCP();
 
 		JSONStaging.enableLocalStaging(groupName = "Site Name");
 
-		Staging.openStagingAdmin(siteURLKey = "site-name-staging");
+		Staging.openStagingAdmin(siteUrlKey = "site-name-staging");
 
 		Staging.addPublishTemplate(
 			publishTemplateDescription = "Publish Template Description",
@@ -333,7 +333,7 @@ definition {
 			publishTemplateDescription = "Publish Template Description",
 			publishTemplateName = "Publish Template Name");
 
-		Staging.openStagingAdmin(siteURLKey = "site-name-staging");
+		Staging.openStagingAdmin(siteUrlKey = "site-name-staging");
 
 		Staging.deletePublishTemplate(publishTemplateName = "Publish Template Name");
 	}
@@ -355,7 +355,7 @@ definition {
 			wikiPageContent = "Wiki Page Content",
 			wikiPageTitle = "Wiki Page Title");
 
-		Staging.openStagingAdmin(siteURLKey = "site-name");
+		Staging.openStagingAdmin(siteUrlKey = "site-name");
 
 		Staging.activateStagingCP(
 			siteName = "Site Name",
@@ -433,7 +433,7 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Site B");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-b");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-b");
 
 		NavItem.gotoStructures();
 
@@ -447,7 +447,7 @@ definition {
 
 		WebContentStructures.saveCP(structureName = "Structure Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-b");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-b");
 
 		NavItem.gotoTemplates();
 
@@ -457,7 +457,7 @@ definition {
 			templateFieldNames = "Web Content",
 			templateName = "Template Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-b");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-b");
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure Name");
 
@@ -479,7 +479,7 @@ definition {
 	test ImportLarFrom70ToCurrent {
 		property portal.acceptance = "true";
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		LAR.importPortlet(
 			importSchemaVersionMismatching = "true",
@@ -493,7 +493,7 @@ definition {
 	test NotStagedAssets {
 		property portal.acceptance = "true";
 
-		Staging.openStagingAdmin(siteURLKey = "site-name");
+		Staging.openStagingAdmin(siteUrlKey = "site-name");
 
 		Staging.activateStagingCP(
 			noContent = "true",
@@ -562,7 +562,7 @@ definition {
 
 		Staging.publishToLive(publicationName = "summCheck");
 
-		Staging.openStagingAdmin(siteURLKey = "site-name-staging");
+		Staging.openStagingAdmin(siteUrlKey = "site-name-staging");
 
 		Staging.viewPublicationSummary(
 			pagesNotToPublish = '''<div>Staging Test Page</div>''',
@@ -603,7 +603,7 @@ definition {
 			parentGroupName = "Site Name",
 			remotePort = "9080");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
 
 		NavItem.gotoStructures();
 
@@ -615,7 +615,7 @@ definition {
 
 		WebContentStructures.saveCP(structureName = "Structure Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
 
 		NavItem.gotoTemplates();
 
@@ -625,7 +625,7 @@ definition {
 			templateFieldNames = "Text,Select from List,Single Selection,Multiple Selection,Grid,Date,Numeric,Image,Rich Text,Upload,Color,Web Content,Geolocation,Link to Page",
 			templateName = "Template Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "child-siteName");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "child-siteName");
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure Name");
 
@@ -658,7 +658,7 @@ definition {
 
 		WebContent.viewTitle(webContentTitle = "Web Content Title");
 
-		Staging.openStagingAdmin(siteURLKey = "child-sitename");
+		Staging.openStagingAdmin(siteUrlKey = "child-sitename");
 
 		Staging.publishCustomPublication(
 			failureExpected = "true",
@@ -678,27 +678,27 @@ definition {
 
 		JSONStaging.enableLocalStaging(groupName = "Site Name");
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "site-name-staging");
+		PagesAdmin.openPagesAdmin(siteUrlKey = "site-name-staging");
 
 		ContentPages.addPage(pageName = "Test Content Page");
 
-		Staging.openStagingAdmin(siteURLKey = "site-name-staging");
+		Staging.openStagingAdmin(siteUrlKey = "site-name-staging");
 
 		Staging.publishCustomPublication();
 
-		Category.openCategoriesAdmin(siteURLKey = "site-name-staging");
+		Category.openCategoriesAdmin(siteUrlKey = "site-name-staging");
 
 		Vocabulary.addCP(
 			vocabularyDescription = "Vocabulary Description",
 			vocabularyName = "Vocabulary Name");
 
-		Category.openCategoriesAdmin(siteURLKey = "site-name-staging");
+		Category.openCategoriesAdmin(siteUrlKey = "site-name-staging");
 
 		Category.addCP(
 			categoryName = "Category Name",
 			vocabularyName = "Vocabulary Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name-staging");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -728,7 +728,7 @@ definition {
 			searchAssetTitle = "WC WebContent Title",
 			searchAssetType = "Web Content");
 
-		Staging.openStagingAdmin(siteURLKey = "site-name-staging");
+		Staging.openStagingAdmin(siteUrlKey = "site-name-staging");
 
 		Staging.publishCustomPublication();
 
@@ -752,7 +752,7 @@ definition {
 
 		JSONStaging.enableLocalStaging(groupName = "Site Name");
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "site-name-staging");
+		PagesAdmin.openPagesAdmin(siteUrlKey = "site-name-staging");
 
 		PagesAdmin.deletePage(pageName = "Staging Test Page");
 
@@ -882,7 +882,7 @@ definition {
 			branchingPublic = "true",
 			groupName = "Site Name");
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
+		PagesAdmin.openPagesAdmin(siteUrlKey = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
@@ -1069,7 +1069,7 @@ definition {
 
 		JSONStaging.enableLocalStaging(groupName = "Site Name");
 
-		Staging.openStagingAdmin(siteURLKey = "site-name-staging");
+		Staging.openStagingAdmin(siteUrlKey = "site-name-staging");
 
 		Staging.addPublishTemplate(
 			publishTemplateDescription = "Publish Template Description",
@@ -1093,19 +1093,19 @@ definition {
 		property databases.size = "1";
 		property test.name.skip.portal.instance = "Staging#PublishVocabularyDeletionViaRemoteStagingOnGlobalSite";
 
-		var companyId = JSONCompany.getCompanyId(portalURL = "http://localhost:9080");
+		var companyId = JSONCompany.getCompanyId(portalUrl = "http://localhost:9080");
 
 		var siteID = JSONGroupAPI._getSiteIdByGroupKey(groupName = "${companyId}");
 
-		Staging.openStagingAdmin(siteURLKey = "global");
+		Staging.openStagingAdmin(siteUrlKey = "global");
 
 		Staging.activateStagingCP(
 			remotePort = "9080",
 			remoteStaging = "true",
-			siteID = "${siteID}",
+			siteId = "${siteId}",
 			siteName = "Global");
 
-		Category.openCategoriesAdmin(siteURLKey = "global");
+		Category.openCategoriesAdmin(siteUrlKey = "global");
 
 		Vocabulary.addCP(vocabularyName = "Vocabulary Name");
 
@@ -1115,22 +1115,22 @@ definition {
 
 		User.firstLoginUI(
 			password = "test",
-			specificURL = "http://localhost:9080",
+			specificUrl = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
 		Category.openCategoriesAdmin(
-			baseURL = "http://localhost:9080",
-			siteURLKey = "global");
+			baseUrl = "http://localhost:9080",
+			siteUrlKey = "global");
 
 		Vocabulary.viewCP(vocabularyName = "Vocabulary Name");
 
-		User.logoutPG(specificURL = "http://localhost:9080");
+		User.logoutPG(specificUrl = "http://localhost:9080");
 
 		User.loginPG(
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		Category.openCategoriesAdmin(siteURLKey = "global");
+		Category.openCategoriesAdmin(siteUrlKey = "global");
 
 		Vocabulary.deleteByIconCP(vocabularyName = "Vocabulary Name");
 
@@ -1140,12 +1140,12 @@ definition {
 
 		User.firstLoginUI(
 			password = "test",
-			specificURL = "http://localhost:9080",
+			specificUrl = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
 		Category.openCategoriesAdmin(
-			baseURL = "http://localhost:9080",
-			siteURLKey = "global");
+			baseUrl = "http://localhost:9080",
+			siteUrlKey = "global");
 
 		AssertTextNotPresent(
 			key_navNested = "Vocabulary Name",
@@ -1155,7 +1155,7 @@ definition {
 
 	@priority = "4"
 	test PublishWCFriendlyURL {
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -1166,11 +1166,11 @@ definition {
 
 		JSONStaging.enableLocalStaging(groupName = "Site Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name-staging");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
-		WebContent.editFriendlyURL(webContentFriendlyURL = "juan");
+		WebContent.editFriendlyURL(webContentFriendlyUrl = "juan");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",
@@ -1180,7 +1180,7 @@ definition {
 
 		Staging.publishToLive();
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name-staging");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -1208,7 +1208,7 @@ definition {
 			layoutName = "Staging Test Page",
 			widgetName = "Web Content Display");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
@@ -1219,9 +1219,9 @@ definition {
 
 		DMNavigator.gotoURLDetail();
 
-		var dmDocumentURL = selenium.getElementValue("//input[contains(@id,'url')]");
+		var dmDocumentUrl = selenium.getElementValue("//input[contains(@id,'url')]");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -1232,7 +1232,7 @@ definition {
 		ItemSelector.gotoItemSelectorViaCKEditor();
 
 		ItemSelector.addImageFromURL(
-			imageSourceURL = "${dmDocumentURL}",
+			imageSourceUrl = "${dmDocumentUrl}",
 			navTab = "URL");
 
 		PortletEntry.publish();
@@ -1245,19 +1245,19 @@ definition {
 
 		JSONStaging.enableLocalStaging(groupName = "Site Name");
 
-		Staging.openStagingAdmin(siteURLKey = "site-name-staging");
+		Staging.openStagingAdmin(siteUrlKey = "site-name-staging");
 
 		Staging.addCustomPublication();
 
 		Staging.publishToLive(publicationName = "summCheck");
 
-		Staging.openStagingAdmin(siteURLKey = "site-name-staging");
+		Staging.openStagingAdmin(siteUrlKey = "site-name-staging");
 
 		Staging.viewPublicationSummary(
 			contentList = "Documents and Media,Web Content",
 			publicationTitle = "summCheck");
 
-		Staging.openStagingAdmin(siteURLKey = "site-name-staging");
+		Staging.openStagingAdmin(siteUrlKey = "site-name-staging");
 
 		Staging.addPublishTemplate(
 			publishTemplateDescription = "Publish Template Description",
@@ -1272,19 +1272,19 @@ definition {
 			publishTemplateDescription = "Publish Template Description",
 			publishTemplateName = "Publish Template Name");
 
-		Staging.openStagingAdmin(siteURLKey = "site-name-staging");
+		Staging.openStagingAdmin(siteUrlKey = "site-name-staging");
 
 		Staging.addCustomPublication(publishTemplateName = "Publish Template Name");
 
 		Staging.publishToLive(publicationName = "No Content Update");
 
-		Staging.openStagingAdmin(siteURLKey = "site-name-staging");
+		Staging.openStagingAdmin(siteUrlKey = "site-name-staging");
 
 		Staging.viewPublicationSummary(
 			noContentList = "Documents and Media,Web Content",
 			publicationTitle = "No Content Update");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name-staging");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
@@ -1292,13 +1292,13 @@ definition {
 			webContentTitle = "Web Content Title",
 			webContentTitleEdit = "Web Content Title Edit");
 
-		Staging.openStagingAdmin(siteURLKey = "site-name-staging");
+		Staging.openStagingAdmin(siteUrlKey = "site-name-staging");
 
 		Staging.addCustomPublication(publishTemplateName = "Publish Template Name");
 
 		Staging.publishToLive(publicationName = "Content Update");
 
-		Staging.openStagingAdmin(siteURLKey = "site-name-staging");
+		Staging.openStagingAdmin(siteUrlKey = "site-name-staging");
 
 		Staging.viewPublicationSummary(
 			contentList = "Documents and Media,Web Content",
@@ -1326,7 +1326,7 @@ definition {
 
 		AssetPublisherPortlet.viewAssetTypeNotAvailable(assetType = "Page Revision");
 
-		Staging.openStagingAdmin(siteURLKey = "site-name-staging");
+		Staging.openStagingAdmin(siteUrlKey = "site-name-staging");
 
 		Staging.deactivateStagingCP(siteName = "Site Name");
 
@@ -1353,7 +1353,7 @@ definition {
 			workflowDefinition = "Single Approver",
 			workflowResourceValue = "Page Revision");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
 
 		Workflow.configureWCWorkflowViaFolderInfo(workflowDefinition = "Single Approver");
 
@@ -1432,7 +1432,7 @@ definition {
 
 		DMDocument.enableActionsMenuOnPortlet();
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
+		PagesAdmin.openPagesAdmin(siteUrlKey = "site-name");
 
 		PagesAdmin.configurePage(
 			columnName = "1 Column",
@@ -1491,7 +1491,7 @@ definition {
 			layoutName = "Staging Test Page 2",
 			widgetName = "Web Content Display");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
 
 		Workflow.configureWCWorkflowViaFolderInfo(workflowDefinition = "Single Approver");
 
@@ -1614,7 +1614,7 @@ definition {
 			locator1 = "WCD#WEB_CONTENT_CONTENT",
 			value1 = "Web Content Content 2");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name-staging");
 
 		WebContent.moveToRecycleBinCP(
 			assetType = "Web Content Article",
@@ -1690,7 +1690,7 @@ definition {
 			assetContent = "Blogs Entry2 Content",
 			assetTitle = "Blogs Entry2 Title");
 
-		Staging.openStagingAdmin(siteURLKey = "site-name");
+		Staging.openStagingAdmin(siteUrlKey = "site-name");
 
 		Staging.publishToRemoteUncheckContentViaCustomPublication(contentName = "Blogs");
 
@@ -1698,11 +1698,11 @@ definition {
 
 		User.firstLoginUI(
 			password = "test",
-			specificURL = "http://localhost:9080",
+			specificUrl = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
 		Navigator.gotoSitePage(
-			baseURL = "http://localhost:9080",
+			baseUrl = "http://localhost:9080",
 			pageName = "Staging Test Page",
 			siteName = "Remote Site");
 
@@ -1796,7 +1796,7 @@ definition {
 			webContentContent = "Web Content Content",
 			webContentTitle = "Web Content Title");
 
-		Staging.openStagingAdmin(siteURLKey = "site-name-staging");
+		Staging.openStagingAdmin(siteUrlKey = "site-name-staging");
 
 		Staging.addPublishTemplate(
 			publishTemplateDescription = "Publish Template Description",
@@ -1877,7 +1877,7 @@ definition {
 			enableSetting = "true",
 			settingFieldName = "Publish Permissions by Default");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -1897,13 +1897,13 @@ definition {
 
 		JSONStaging.enableLocalStaging(groupName = "Site Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name-staging");
 
 		WebContent.deleteCP(
-			siteURLKey = "site-name-staging",
+			siteUrlKey = "site-name-staging",
 			webContentTitle = "Web Content Title 1");
 
-		Staging.openStagingAdmin(siteURLKey = "site-name-staging");
+		Staging.openStagingAdmin(siteUrlKey = "site-name-staging");
 
 		Staging.addCustomPublication();
 
@@ -1911,7 +1911,7 @@ definition {
 
 		Staging.publishToLive();
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
 
 		WebContent.viewNotPresentCP(webContentTitle = "Web Content Title 1");
 
@@ -1923,7 +1923,7 @@ definition {
 	@description = "This is a use case for LPS-89116."
 	@priority = "3"
 	test ValidateFriendlyURLWithSpecialCharacters {
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -1939,7 +1939,7 @@ definition {
 
 		WebContent.viewFriendlyURLCP(friendlyUrl = '''special-char-aŐb''');
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -1995,7 +1995,7 @@ definition {
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "site-name-staging");
+		PagesAdmin.openPagesAdmin(siteUrlKey = "site-name-staging");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",
@@ -2050,7 +2050,7 @@ definition {
 
 		JSONStaging.enableLocalStaging(groupName = "Site Name");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name-staging");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
@@ -2082,21 +2082,21 @@ definition {
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
 
 		WebContent.viewTitle(
 			onLive = "true",
 			webContentTitle = "Web Content Title");
 
-		Staging.openStagingAdmin(siteURLKey = "site-name-staging");
+		Staging.openStagingAdmin(siteUrlKey = "site-name-staging");
 
 		Staging.deactivateStagingCP(siteName = "Site Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
 
 		WebContent.viewTitle(webContentTitle = "Web Content Title");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
 
@@ -2113,7 +2113,7 @@ definition {
 		Bookmark.addCP(
 			bookmarkDescription = "This is a test bookmark!",
 			bookmarkName = "Test Bookmark",
-			bookmarkURL = "https://www.liferay.com");
+			bookmarkUrl = "https://www.liferay.com");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",
@@ -2143,7 +2143,7 @@ definition {
 
 		Bookmark.viewBookmark(
 			bookmarkName = "Test Bookmark",
-			bookmarkURL = "https://www.liferay.com");
+			bookmarkUrl = "https://www.liferay.com");
 	}
 
 	@priority = "4"
@@ -2162,7 +2162,7 @@ definition {
 
 		JSONStaging.enableLocalStaging(groupName = "Site Name");
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
+		PagesAdmin.openPagesAdmin(siteUrlKey = "site-name");
 
 		PagesAdmin.viewPagesOrder(
 			depth = "2",
@@ -2192,7 +2192,7 @@ definition {
 			branchingPublic = "true",
 			groupName = "Site Name");
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "site-name-staging");
+		PagesAdmin.openPagesAdmin(siteUrlKey = "site-name-staging");
 
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "Configure",
@@ -2354,7 +2354,7 @@ definition {
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document Title");
 
-		DMNavigator.openDocumentTypesAdmin(siteURLKey = "site-name-staging");
+		DMNavigator.openDocumentTypesAdmin(siteUrlKey = "site-name-staging");
 
 		DMDocumentType.add(
 			dmDocumentTypeDescription = "DM Document Type Description",
@@ -2379,7 +2379,7 @@ definition {
 
 		Staging.publishToLive();
 
-		DMNavigator.openDocumentTypesAdmin(siteURLKey = "site-name");
+		DMNavigator.openDocumentTypesAdmin(siteUrlKey = "site-name");
 
 		DMDocumentType.viewCP(dmDocumentTypeName = "DM Document Type Name");
 
@@ -2404,7 +2404,7 @@ definition {
 
 		JSONStaging.enableLocalStaging(groupName = "Site Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name-staging");
 
 		WebContent.addArticleCP(
 			webContentContent = "Web Content Without Category",
@@ -2440,7 +2440,7 @@ definition {
 			categoryName = "Category Name",
 			vocabularyName = "Vocabulary Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name-staging");
 
 		WebContent.addArticleCP(
 			webContentContent = "Web Content With Category",
@@ -2500,7 +2500,7 @@ definition {
 	@description = "This is a use case for LPS-77935."
 	@priority = "4"
 	test ViewSimplePublicationAfterDeleteDocumentInGlobal {
-		PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "global");
+		PageTemplatesAdmin.openPageTemplatesAdmin(siteUrlKey = "global");
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -2511,7 +2511,7 @@ definition {
 			dmDocumentFile = "Document_2.jpg",
 			dmDocumentTitle = "Document_2.jpg");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -2522,7 +2522,7 @@ definition {
 
 		JSONStaging.enableLocalStaging(groupName = "Site Name");
 
-		PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "global");
+		PageTemplatesAdmin.openPageTemplatesAdmin(siteUrlKey = "global");
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",

@@ -621,7 +621,7 @@ definition {
 
 		SelectWindow.selectPopUp(locator1 = "null");
 
-		AssertLocation.assertPartialLocation(value1 = "${linkURL}");
+		AssertLocation.assertPartialLocation(value1 = "${linkUrl}");
 
 		if ("${newTab}" != "false") {
 			Navigator.closeWindow();

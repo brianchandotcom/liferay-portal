@@ -571,7 +571,7 @@ definition {
 	}
 
 	macro tearDown {
-		Category.openCategoriesAdmin(siteURLKey = "global");
+		Category.openCategoriesAdmin(siteUrlKey = "global");
 
 		Navigator.gotoNavNested(navNested = "Audience");
 

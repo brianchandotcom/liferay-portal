@@ -575,7 +575,7 @@ definition {
 				userScreenName = "usersn");
 		}
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "Site A");
+		PagesAdmin.openPagesAdmin(siteUrlKey = "Site A");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
@@ -587,7 +587,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "Site C");
+		PagesAdmin.openPagesAdmin(siteUrlKey = "Site C");
 
 		ProductMenu.gotoPortlet(
 			category = "People",

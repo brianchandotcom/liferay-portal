@@ -11,7 +11,7 @@ definition {
 		var filePath = "${baseDir}${dependenciesDir}/${fileName}";
 
 		var curl = '''
-			${portalURL}/api/jsonws/wiki.wikipage/add-page-attachment \
+			${portalUrl}/api/jsonws/wiki.wikipage/add-page-attachment \
 			-u test@liferay.com:test \
 			-F nodeId=${nodeId} \
 			-F fileName=${fileName} \
@@ -64,7 +64,7 @@ definition {
 		}
 
 		var curl = '''
-			${portalURL}/o/headless-delivery/v1.0/wiki-pages/${parentResourcePrimKey}/wiki-pages \
+			${portalUrl}/o/headless-delivery/v1.0/wiki-pages/${parentResourcePrimKey}/wiki-pages \
 			-H 'Content-Type: application/json' \
 			-u 'test@liferay.com:test' \
 			-d '{
@@ -95,7 +95,7 @@ definition {
 		}
 
 		var curl = '''
-			${portalURL}/api/jsonws/wiki.wikinode/add-node \
+			${portalUrl}/api/jsonws/wiki.wikinode/add-node \
 				-u test@liferay.com:test \
 				-d name=${name} \
 				-d description=${description} \
@@ -140,7 +140,7 @@ definition {
 		}
 
 		var curl = '''
-			${portalURL}/o/headless-delivery/v1.0/wiki-nodes/${nodeId}/wiki-pages \
+			${portalUrl}/o/headless-delivery/v1.0/wiki-nodes/${nodeId}/wiki-pages \
 			-H 'Content-Type: application/json' \
 			-u 'test@liferay.com:test' \
 			-d '{
@@ -165,7 +165,7 @@ definition {
 		}
 
 		var curl = '''
-			${portalURL}/api/jsonws/wiki.wikinode/get-nodes/group-id/${groupId} \
+			${portalUrl}/api/jsonws/wiki.wikinode/get-nodes/group-id/${groupId} \
 				-u test@liferay.com:test
 		''';
 		var nodeId = JSONCurlUtil.get("${curl}", "$.[?(@['name'] == '${name}')]['nodeId']");
@@ -188,7 +188,7 @@ definition {
 		}
 
 		var curl = '''
-			${portalURL}/api/jsonws/wiki.wikipage/get-page \
+			${portalUrl}/api/jsonws/wiki.wikipage/get-page \
 				-u test@liferay.com:test \
 				-d nodeId=${nodeId} \
 				-d title=${title}
@@ -213,7 +213,7 @@ definition {
 		}
 
 		var curl = '''
-			${portalURL}/api/jsonws/wiki.wikipage/get-page \
+			${portalUrl}/api/jsonws/wiki.wikipage/get-page \
 				-u test@liferay.com:test \
 				-d nodeId=${nodeId} \
 				-d title=${title}
@@ -236,7 +236,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalURL}/api/jsonws/wiki.wikipage/move-page-to-trash \
+			${portalUrl}/api/jsonws/wiki.wikipage/move-page-to-trash \
 				-u test@liferay.com:test \
 				-d nodeId=${nodeId} \
 				-d title=${title}
@@ -279,7 +279,7 @@ definition {
 		}
 
 		var curl = '''
-			${portalURL}/o/headless-delivery/v1.0/wiki-pages/${resourcePrimKey} \
+			${portalUrl}/o/headless-delivery/v1.0/wiki-pages/${resourcePrimKey} \
 			-H 'Content-Type: application/json' \
 			-u 'test@liferay.com:test' \
 			-d '{

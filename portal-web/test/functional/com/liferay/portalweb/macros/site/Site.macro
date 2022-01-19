@@ -209,14 +209,14 @@ definition {
 			Type(
 				key_text = "Public Pages Virtual Host",
 				locator1 = "TextInput#ANY",
-				value1 = "${publicPageVirtualHostURL}");
+				value1 = "${publicPageVirtualHostUrl}");
 		}
 
 		if (isSet(privateVirtualHosts)) {
 			Type(
 				key_text = "Private Pages Virtual Host",
 				locator1 = "TextInput#ANY",
-				value1 = "${privatePageVirtualHostURL}");
+				value1 = "${privatePageVirtualHostUrl}");
 		}
 
 		if (isSet(stagingPublicPages)) {
@@ -736,11 +736,11 @@ definition {
 
 		Type(
 			locator1 = "TextInput#FRIENDLY_URL_SITE_SETTINGS",
-			value1 = "${siteFriendlyURLEdit}");
+			value1 = "${siteFriendlyUrlEdit}");
 
 		Button.clickSave();
 
-		if ("${friendlyURLInvalid}" == "true") {
+		if ("${friendlyUrlInvalid}" == "true") {
 			Alert.viewRequestFailedToComplete();
 
 			AssertTextEquals.assertPartialText(
@@ -749,7 +749,7 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "TextInput#FRIENDLY_URL_SITE_SETTINGS",
-				value1 = "${siteFriendlyURLEdit}");
+				value1 = "${siteFriendlyUrlEdit}");
 		}
 		else {
 			Alert.viewSuccessMessage();
@@ -763,7 +763,7 @@ definition {
 
 		Type(
 			locator1 = "TextInput#GOOGLE_ANALYTICS_ID",
-			value1 = "${googleAnalyticsID}");
+			value1 = "${googleAnalyticsId}");
 
 		PortletEntry.save();
 	}
@@ -813,7 +813,7 @@ definition {
 
 		UploadTempFile.uploadTempFileHiddenNoMouseOver(
 			locator1 = "TextInput#FILE",
-			value1 = "${siteLARFileName}");
+			value1 = "${siteLarFileName}");
 
 		Button.click(button = "Continue");
 
@@ -996,7 +996,7 @@ definition {
 	}
 
 	macro openSiteMembershipsAdmin {
-		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage/-/site_memberships");
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteUrlKey}/~/control_panel/manage/-/site_memberships");
 	}
 
 	macro openSitesAdmin {
@@ -1004,11 +1004,11 @@ definition {
 	}
 
 	macro openSiteSettingsAdmin {
-		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage/-/site/settings");
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteUrlKey}/~/control_panel/manage/-/site/settings");
 	}
 
 	macro openSiteTeamsAdmin {
-		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage/-/site_teams");
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteUrlKey}/~/control_panel/manage/-/site_teams");
 	}
 
 	macro openToSiteSettingsPages {
@@ -1020,7 +1020,7 @@ definition {
 			var configurationScreenKey = "site-configuration-pages";
 		}
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage/-/site/settings?_com_liferay_site_admin_web_portlet_SiteSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fview_configuration_screen&_com_liferay_site_admin_web_portlet_SiteSettingsPortlet_configurationScreenKey=${configurationScreenKey}");
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteUrlKey}/~/control_panel/manage/-/site/settings?_com_liferay_site_admin_web_portlet_SiteSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fview_configuration_screen&_com_liferay_site_admin_web_portlet_SiteSettingsPortlet_configurationScreenKey=${configurationScreenKey}");
 	}
 
 	macro removeMemberCP {
@@ -1562,7 +1562,7 @@ definition {
 			locator1 = "Home#SITE_NAME",
 			value1 = "${siteName}");
 
-		AssertLocation(value1 = "${sitePageURL}");
+		AssertLocation(value1 = "${sitePageUrl}");
 	}
 
 	macro viewSiteMembershipsRequest {
@@ -1620,7 +1620,7 @@ definition {
 			locator1 = "Home#PAGE",
 			value1 = "${pageName}");
 
-		AssertLocation(value1 = "${sitePageURL}");
+		AssertLocation(value1 = "${sitePageUrl}");
 	}
 
 }

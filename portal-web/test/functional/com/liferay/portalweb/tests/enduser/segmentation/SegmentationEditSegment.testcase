@@ -43,7 +43,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Go to segments portlet") {
-			Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+			Segmentation.openSegmentsAdmin(siteUrlKey = "test-site-name");
 		}
 
 		task ("Edit the segment") {
@@ -80,7 +80,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Go to segments portlet") {
-			Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+			Segmentation.openSegmentsAdmin(siteUrlKey = "test-site-name");
 		}
 
 		task ("Edit the segment") {
@@ -117,7 +117,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Go to segments portlet") {
-			Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+			Segmentation.openSegmentsAdmin(siteUrlKey = "test-site-name");
 		}
 
 		task ("Edit the segment") {
@@ -159,7 +159,7 @@ definition {
 		}
 
 		task ("Go to segments portlet") {
-			Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+			Segmentation.openSegmentsAdmin(siteUrlKey = "test-site-name");
 		}
 
 		task ("Edit the segment") {
@@ -194,7 +194,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Go to segments portlet") {
-			Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+			Segmentation.openSegmentsAdmin(siteUrlKey = "test-site-name");
 		}
 
 		task ("Edit the segment") {

@@ -22,7 +22,7 @@ definition {
 		}
 
 		var curl = '''
-			${portalURL}/api/jsonws/journal.journalfolder/add-folder \
+			${portalUrl}/api/jsonws/journal.journalfolder/add-folder \
 				-u ${userEmailAddress}:${userPassword} \
 				-d groupId=${groupId} \
 				-d parentFolderId=${parentFolderId} \
@@ -35,7 +35,7 @@ definition {
 
 	@summary = "Helper function to add a WC Article via JSON"
 	macro _addWebContent {
-		Variables.assertDefined(parameterList = "${groupId},${folderId},${titleMap},${descriptionMap},${contentXML},${serviceContext}");
+		Variables.assertDefined(parameterList = "${groupId},${folderId},${titleMap},${descriptionMap},${contentXml},${serviceContext}");
 
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -48,14 +48,14 @@ definition {
 		}
 
 		var curl = '''
-			${portalURL}/api/jsonws/journal.journalarticle/add-article \
+			${portalUrl}/api/jsonws/journal.journalarticle/add-article \
 				-u ${userEmailAddress}:${userPassword} \
 				-d externalReferenceCode= \
 				-d groupId=${groupId} \
 				-d folderId=${folderId} \
 				-d titleMap=${titleMap} \
 				-d descriptionMap=${descriptionMap} \
-				-d content=${contentXML} \
+				-d content=${contentXml} \
 				-d ddmStructureKey=BASIC-WEB-CONTENT \
 				-d ddmTemplateKey=BASIC-WEB-CONTENT \
 				-d serviceContext=${serviceContext}
@@ -71,7 +71,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalURL}/api/jsonws/journal.journalarticle/delete-article \
+			${portalUrl}/api/jsonws/journal.journalarticle/delete-article \
 				-u test@liferay.com:test \
 				-d groupId=${groupId} \
 				-d articleId=${articleId} \
@@ -91,7 +91,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalURL}/api/jsonws/journal.journalarticle/get-article-by-url-title \
+			${portalUrl}/api/jsonws/journal.journalarticle/get-article-by-url-title \
 				-u test@liferay.com:test \
 				-d groupId=${groupId} \
 				-d "urlTitle=${urlTitle}"
@@ -108,7 +108,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalURL}/api/jsonws/journal.journalfolder/get-folders \
+			${portalUrl}/api/jsonws/journal.journalfolder/get-folders \
 				-u test@liferay.com:test \
 				-d groupId=${groupId}
 		''';
@@ -130,7 +130,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalURL}/api/jsonws/journal.journalarticle/get-display-article-by-url-title \
+			${portalUrl}/api/jsonws/journal.journalarticle/get-display-article-by-url-title \
 				-u test@liferay.com:test \
 				-d groupId=${groupId} \
 				-d urlTitle=${urlTitle}
@@ -147,7 +147,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalURL}/api/jsonws/journal.journalarticle/move-article-to-trash \
+			${portalUrl}/api/jsonws/journal.journalarticle/move-article-to-trash \
 				-u test@liferay.com:test \
 				-d groupId=${groupId} \
 				-d articleId=${articleId}
@@ -163,7 +163,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalURL}/api/jsonws/journal.journalarticle/update-status \
+			${portalUrl}/api/jsonws/journal.journalarticle/update-status \
 				-u test@liferay.com:test \
 				-d groupId=${groupId} \
 				-d articleId=${articleId} \

@@ -24,7 +24,7 @@ definition {
 			databaseType = "MySQL",
 			databaseUserName = PropsUtil.get("database.mysql.username"),
 			jdbcDriverClassName = PropsUtil.get("database.mysql.driver"),
-			jdbcURL = PropsUtil.get("database.mysql.url"));
+			jdbcUrl = PropsUtil.get("database.mysql.url"));
 
 		SetupWizard.finishConfigurationPG();
 
@@ -39,7 +39,7 @@ definition {
 		SetupWizard.viewConfiguredDatabaseInConsole(databaseType = "${databaseType}");
 
 		if (isSet(virtualHostsURL)) {
-			Navigator.openSpecificURL(url = "${virtualHostsURL}");
+			Navigator.openSpecificURL(url = "${virtualHostsUrl}");
 		}
 		else {
 			Navigator.openURL();

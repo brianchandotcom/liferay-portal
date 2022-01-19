@@ -43,7 +43,7 @@ definition {
 		}
 
 		task ("Add a web content structure with all fields") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 			NavItem.gotoStructures();
 
@@ -67,7 +67,7 @@ definition {
 		}
 
 		task ("Add a web content based on new structure and template") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
@@ -121,10 +121,10 @@ definition {
 		}
 
 		task ("Delete web content") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 			WebContent.deleteCP(
-				siteURLKey = "test-site-name",
+				siteUrlKey = "test-site-name",
 				webContentTitle = "Web Content Title");
 		}
 	}

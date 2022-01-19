@@ -53,7 +53,7 @@ definition {
 
 	macro openWorkspace {
 		if (isSet(workspaceName)) {
-			var key_WorkspaceName = "${workspaceName}";
+			var key_workspaceName = "${workspaceName}";
 
 			Click(locator1 = "ACWorkspace#WORKSPACE_NAME");
 		}

@@ -58,8 +58,8 @@ definition {
 
 	macro openFragmentsAdmin {
 		Navigator.openWithAppendToBaseURL(
-			baseURL = "${baseURL}",
-			urlAppend = "group/${siteURLKey}/~/control_panel/manage/-/fragments");
+			baseUrl = "${baseUrl}",
+			urlAppend = "group/${siteUrlKey}/~/control_panel/manage/-/fragments");
 	}
 
 }

@@ -69,7 +69,7 @@ definition {
 			depotName = "Test Depot Name",
 			imageFileName = "Document_2.jpeg",
 			layoutName = "questions-page",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			titleField = "Title AddQuestionWithTheALImage",
 			topicName = "questions-test-category");
 
@@ -132,7 +132,7 @@ definition {
 
 		Questions.openToQuestionsTopic(
 			layoutName = "questions-page",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			topicName = "questions-test-category");
 
 		AssertElementNotPresent(
@@ -149,7 +149,7 @@ definition {
 
 		Questions.openToQuestionsTopic(
 			layoutName = "questions-page",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			topicName = "questions-test-category");
 
 		Click(locator1 = "Questions#ASK_QUESTION_BUTTON");
@@ -191,7 +191,7 @@ definition {
 
 		Questions.openToQuestionsTopic(
 			layoutName = "questions-page",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			topicName = "questions-test-category");
 
 		Click(locator1 = "Questions#ASK_QUESTION_BUTTON");
@@ -264,7 +264,7 @@ definition {
 		Questions.openToQuestionDetails(
 			layoutName = "questions-page",
 			questionsTitle = "title-addquestion",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			topicName = "questions-test-category");
 
 		Questions.answerQuestion(contentField = "This is my answer");
@@ -339,7 +339,7 @@ definition {
 
 		Questions.openToQuestionsTopic(
 			layoutName = "questions-page",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			topicName = "questions-test-category2");
 
 		Questions.changeTopic(
@@ -446,7 +446,7 @@ definition {
 		Questions.openToQuestionDetails(
 			layoutName = "questions-page",
 			questionsTitle = "title-addquestion",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			topicName = "questions-test-category");
 
 		Questions.deleteAnswer(contentField = "This is my answer");
@@ -477,7 +477,7 @@ definition {
 		Questions.openToQuestionDetails(
 			layoutName = "questions-page",
 			questionsTitle = "title-addquestion",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			topicName = "questions-test-category");
 
 		Questions.replyToComment(commentReply = "This is my reply");
@@ -510,7 +510,7 @@ definition {
 		Questions.openToQuestionDetails(
 			layoutName = "questions-page",
 			questionsTitle = "title-addquestion",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			topicName = "questions-test-category");
 
 		Questions.deleteQuestion();
@@ -573,7 +573,7 @@ definition {
 		Questions.openToQuestionDetails(
 			layoutName = "questions-page",
 			questionsTitle = "title-addquestion",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			topicName = "questions-test-category");
 
 		Questions.answerQuestion(contentField = "This is my answer");
@@ -605,7 +605,7 @@ definition {
 
 		Questions.openToQuestionsTopic(
 			layoutName = "questions-page",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			topicName = "questions-test-category");
 
 		Questions.gotoDetails(
@@ -619,7 +619,7 @@ definition {
 		MessageboardsCategory.openToCategory(
 			categoryName = "Questions Test Category",
 			groupName = "Guest",
-			siteURLKey = "guest");
+			siteUrlKey = "guest");
 
 		LexiconEntry.openEntryMenu(rowEntry = "Question1");
 
@@ -627,7 +627,7 @@ definition {
 
 		Questions.openToQuestionsTopic(
 			layoutName = "questions-page",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			topicName = "questions-test-category");
 
 		AssertElementPresent(
@@ -649,7 +649,7 @@ definition {
 		MessageboardsCategory.openToCategory(
 			categoryName = "Questions Test Category",
 			groupName = "Guest",
-			siteURLKey = "guest");
+			siteUrlKey = "guest");
 
 		LexiconEntry.openEntryMenu(rowEntry = "Question1");
 
@@ -657,7 +657,7 @@ definition {
 
 		Questions.openToQuestionsTopic(
 			layoutName = "questions-page",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			topicName = "questions-test-category");
 
 		AssertElementNotPresent(
@@ -691,7 +691,7 @@ definition {
 		Questions.openToQuestionDetails(
 			layoutName = "questions-page",
 			questionsTitle = "title-addquestion",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			topicName = "questions-test-category");
 
 		Questions.answerQuestion(
@@ -776,7 +776,7 @@ definition {
 
 		Questions.openToQuestionsTopic(
 			layoutName = "questions-page",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			topicName = "questions-test-category");
 
 		Questions.search(
@@ -875,7 +875,7 @@ definition {
 		Questions.openToQuestionDetails(
 			layoutName = "questions-page",
 			questionsTitle = "title-addquestion",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			topicName = "questions-test-category");
 
 		Questions.subscribeQuestion();
@@ -895,7 +895,7 @@ definition {
 		Questions.openToQuestionDetails(
 			layoutName = "questions-page",
 			questionsTitle = "title-addquestion",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			topicName = "questions-test-category");
 
 		Questions.subscribeQuestion();
@@ -907,7 +907,7 @@ definition {
 		Questions.openToQuestionDetails(
 			layoutName = "questions-page",
 			questionsTitle = "title-addquestion",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			topicName = "questions-test-category");
 
 		Questions.answerQuestion(contentField = "This is my answer");
@@ -953,7 +953,7 @@ definition {
 
 		Questions.openToQuestionsTopic(
 			layoutName = "questions-page",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			topicName = "questions-test-category");
 
 		Questions.gotoTab(questionTabField = "My Subscriptions");
@@ -983,7 +983,7 @@ definition {
 		Questions.askQuestionFillingTheMandatoryFields(
 			contentField = "Content AddQuestion",
 			layoutName = "questions-page",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			titleField = "Title AddQuestion",
 			topicName = "questions-test-category");
 
@@ -1010,7 +1010,7 @@ definition {
 		Questions.askQuestionFillingTheMandatoryFields(
 			contentField = "Question Body Text",
 			layoutName = "questions-page",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			titleField = "Questions Title",
 			topicName = "questions-test-category");
 
@@ -1023,7 +1023,7 @@ definition {
 		Questions.openToQuestionDetails(
 			layoutName = "questions-page",
 			questionsTitle = "questions-title",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			topicName = "questions-test-category");
 
 		Questions.viewSubscriptionStatusFromDetails(noSubscribedQuestion = "Questions Title");
@@ -1034,7 +1034,7 @@ definition {
 	test CanViewCanonicalURL {
 		property test.name.skip.portal.instance = "QuestionsEntry#CanViewCanonicalURL";
 
-		var portalURL = PropsUtil.get("portal.url");
+		var portalUrl = PropsUtil.get("portal.url");
 
 		JSONMBMessage.addCategory(
 			categoryDescription = "Description",
@@ -1070,7 +1070,7 @@ definition {
 		Questions.assertCanonicalURL(
 			category = "category",
 			pageName = "Questions Page",
-			portalURL = "${portalURL}",
+			portalUrl = "${portalUrl}",
 			title = "question");
 	}
 
@@ -1079,7 +1079,7 @@ definition {
 	test CanViewCanonicalURLForDuplicatedQuestions {
 		property test.name.skip.portal.instance = "QuestionsEntry#CanViewCanonicalURLForDuplicatedQuestions";
 
-		var portalURL = PropsUtil.get("portal.url");
+		var portalUrl = PropsUtil.get("portal.url");
 
 		Questions.openToConfigInSystemSettings(portlet = "Questions");
 
@@ -1122,10 +1122,10 @@ definition {
 		Questions.assertCanonicalURL(
 			category = "category",
 			pageName = "Questions Page",
-			portalURL = "${portalURL}",
+			portalUrl = "${portalUrl}",
 			title = "question");
 
-		Navigator.openSpecificURL(url = "${portalURL}/web/guest/questions-page");
+		Navigator.openSpecificURL(url = "${portalUrl}/web/guest/questions-page");
 
 		Questions.gotoCategory(categoryName = "Category");
 
@@ -1136,7 +1136,7 @@ definition {
 		Questions.assertCanonicalURL(
 			category = "category",
 			pageName = "Questions Page",
-			portalURL = "${portalURL}",
+			portalUrl = "${portalUrl}",
 			title = "question-1");
 	}
 
@@ -1145,7 +1145,7 @@ definition {
 	test CanViewCanonicalURLWithSpecialCharacters {
 		property test.name.skip.portal.instance = "QuestionsEntry#CanViewCanonicalURLWithSpecialCharacters";
 
-		var portalURL = PropsUtil.get("portal.url");
+		var portalUrl = PropsUtil.get("portal.url");
 
 		Questions.openToConfigInSystemSettings(portlet = "Questions");
 
@@ -1181,7 +1181,7 @@ definition {
 		Questions.assertCanonicalURL(
 			category = "category",
 			pageName = "Questions Page",
-			portalURL = "${portalURL}",
+			portalUrl = "${portalUrl}",
 			title = "question-");
 	}
 
@@ -1195,7 +1195,7 @@ definition {
 
 		Questions.openToQuestionsTopic(
 			layoutName = "questions-page",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			topicName = "questions-test-category");
 
 		Questions.viewSearchField(noQuestion = "true");
@@ -1210,7 +1210,7 @@ definition {
 
 		Questions.openToQuestionsTopic(
 			layoutName = "questions-page",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			topicName = "questions-test-category");
 
 		Questions.viewSearchField();
@@ -1243,7 +1243,7 @@ definition {
 		Questions.openToQuestionDetails(
 			layoutName = "questions-page",
 			questionsTitle = "title-addquestion",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			topicName = "questions-test-category");
 
 		Questions.replyToComment(commentReply = "Body AddCommentText");
@@ -1261,7 +1261,7 @@ definition {
 		Questions.openToQuestionDetails(
 			layoutName = "questions-page",
 			questionsTitle = "title-addquestion",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			topicName = "questions-test-category");
 
 		Questions.deleteAnswer(contentField = "Body AddAnswerText");
@@ -1277,7 +1277,7 @@ definition {
 		Questions.openToQuestionDetails(
 			layoutName = "questions-page",
 			questionsTitle = "title-addquestion",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			topicName = "questions-test-category");
 
 		Questions.deleteQuestion();
@@ -1306,7 +1306,7 @@ definition {
 
 		Questions.openToQuestionsTopic(
 			layoutName = "questions-page",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			topicName = "questions-test-category");
 
 		Questions.editQuestion(
@@ -1323,7 +1323,7 @@ definition {
 
 		Questions.openToQuestionsTopic(
 			layoutName = "questions-page",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			topicName = "questions-test-category");
 
 		Questions.gotoDetails(
@@ -1374,14 +1374,14 @@ definition {
 		Questions.openToQuestionDetails(
 			layoutName = "questions-page",
 			questionsTitle = "title-addquestion",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			topicName = "questions-test-category");
 
 		Questions.replyToComment(commentReply = "Body AddCommentText");
 
 		Questions.openToQuestionsTopic(
 			layoutName = "questions-page",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			topicName = "questions-test-category");
 
 		Questions.gotoTab(questionTabField = "My Activity");
@@ -1438,7 +1438,7 @@ definition {
 
 		Questions.openToQuestionsTopic(
 			layoutName = "questions-page",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			topicName = "questions-test-category1");
 
 		Questions.changeTopic(
@@ -1495,7 +1495,7 @@ definition {
 		Questions.openToQuestionDetails(
 			layoutName = "questions-page",
 			questionsTitle = "question-1",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			topicName = "questions-test-category");
 
 		Questions.voteQuestion(
@@ -1521,7 +1521,7 @@ definition {
 		Questions.openToQuestionDetails(
 			layoutName = "questions-page",
 			questionsTitle = "question-2",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			topicName = "questions-test-category");
 
 		Questions.voteQuestion(
@@ -1568,7 +1568,7 @@ definition {
 
 		Questions.openToQuestionsTopic(
 			layoutName = "questions-page",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			topicName = "questions-test-category");
 
 		Questions.viewNoTopicDropdownToggle(topicName = "Questions Test Category");
@@ -1596,7 +1596,7 @@ definition {
 
 		Questions.openToQuestionsTopic(
 			layoutName = "questions-page",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			topicName = "questions-test-category");
 
 		Questions.viewList(listedQuestions = "Question 1,Question 2,Question 3");
@@ -1642,7 +1642,7 @@ definition {
 		MessageboardsThread.openToEditThread(
 			categoryName = "Questions Test Category",
 			groupName = "Guest",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			threadSubject = "Question 1");
 
 		MessageboardsThread.editCP(
@@ -1654,7 +1654,7 @@ definition {
 
 		Questions.openToQuestionsTopic(
 			layoutName = "questions-page",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			topicName = "questions-test-category");
 
 		Questions.configureFilter(filterBy = "Latest Edited");
@@ -1703,7 +1703,7 @@ definition {
 		Questions.openToQuestionDetails(
 			layoutName = "questions-page",
 			questionsTitle = "questions-addquestion",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			topicName = "questions-test-category");
 
 		Questions.replyToComment(commentReply = "This is my reply text");
@@ -1740,7 +1740,7 @@ definition {
 
 		Questions.openToQuestionsTopic(
 			layoutName = "questions-page",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			topicName = "questions-test-category");
 
 		Questions.viewTopicOnHomePage(topicNameList = "Questions Test Category");
@@ -1753,7 +1753,7 @@ definition {
 
 		Questions.openToQuestionsTopic(
 			layoutName = "questions-page",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			topicName = "questions-test-category");
 
 		Questions.viewTopicOnHomePage(topicNameList = "Questions Test Category");
@@ -1777,7 +1777,7 @@ definition {
 		Questions.openToQuestionDetails(
 			layoutName = "questions-page",
 			questionsTitle = "title-addquestion",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			topicName = "questions-test-category");
 
 		Questions.answerQuestion(contentField = "This is my answer for voting");
@@ -1788,7 +1788,7 @@ definition {
 
 		Questions.openToQuestionsTopic(
 			layoutName = "questions-page",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			topicName = "questions-test-category");
 
 		Questions.gotoDetails(
@@ -1805,7 +1805,7 @@ definition {
 
 		Questions.openToQuestionsTopic(
 			layoutName = "questions-page",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			topicName = "questions-test-category");
 
 		Questions.gotoDetails(
@@ -1818,7 +1818,7 @@ definition {
 
 		Questions.openToQuestionsTopic(
 			layoutName = "questions-page",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			topicName = "questions-test-category");
 
 		Questions.gotoDetails(
@@ -1848,7 +1848,7 @@ definition {
 		Questions.openToQuestionDetails(
 			layoutName = "questions-page",
 			questionsTitle = "title-addquestion",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			topicName = "questions-test-category");
 
 		Questions.voteQuestion(
@@ -1857,7 +1857,7 @@ definition {
 
 		Questions.openToQuestionsTopic(
 			layoutName = "questions-page",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			topicName = "questions-test-category");
 
 		Questions.viewVotedResult(
@@ -1919,7 +1919,7 @@ definition {
 		Questions.openToQuestionDetails(
 			layoutName = "questions-page",
 			questionsTitle = "question-title",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			topicName = "questions-test-category");
 
 		Questions.viewStatistics(
@@ -1974,7 +1974,7 @@ definition {
 
 		Questions.openToQuestionsTopic(
 			layoutName = "questions-page",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			topicName = "questions-test-category");
 
 		AssertElementPresent(
@@ -2001,12 +2001,12 @@ definition {
 			categoryName = "Questions Test Category",
 			categoryNameEdit = "Edit Questions Test Category",
 			groupName = "Guest",
-			siteURLKey = "guest");
+			siteUrlKey = "guest");
 
 		Questions.openToQuestionDetails(
 			layoutName = "questions-page",
 			questionsTitle = "question-title",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			topicName = "edit-questions-test-category");
 	}
 
@@ -2029,7 +2029,7 @@ definition {
 
 		Questions.openToQuestionsTopic(
 			layoutName = "questions-page",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			topicName = "questions-test-category");
 
 		Questions.viewPaginationResults(results = "Showing 1 to 10 of 10");

@@ -13,7 +13,7 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Bridge Issues");
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "Bridge Issues");
+		PagesAdmin.openPagesAdmin(siteUrlKey = "Bridge Issues");
 	}
 
 	tearDown {
@@ -33,7 +33,7 @@ definition {
 		// FACES_1470
 
 		BridgeIssues.addPageAndPortlet(
-			pageURL = "faces-1470",
+			pageUrl = "faces-1470",
 			portletName = "FACES-1470");
 
 		BridgeIssues.navigateToDo(
@@ -55,7 +55,7 @@ definition {
 			urlAppend = "web/bridge-issues/faces-1470?p_p_id=FACES1470_WAR_comliferayfacesissuejsfportlet&p_p_lifecycle=0&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1&_FACES1470_WAR_comliferayfacesissuejsfportlet__facesViewIdRender=%2FWEB-INF%2Fviews%2FFACES-1470%2Fview1.xhtml");
 
 		Click(
-			key_PageLink = "Click me to navigate to view1.xhtml via Ajax",
+			key_pageLink = "Click me to navigate to view1.xhtml via Ajax",
 			locator1 = "BridgeIssues#NAVIGATE_TO_VIEW");
 
 		BridgeIssues.navigateToDo(
@@ -69,7 +69,7 @@ definition {
 			urlAppend = "web/bridge-issues/faces-1470?p_p_id=FACES1470_WAR_comliferayfacesissuejsfportlet&p_p_lifecycle=0&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1&_FACES1470_WAR_comliferayfacesissuejsfportlet__facesViewIdRender=%2FWEB-INF%2Fviews%2FFACES-1470%2Fview1.xhtml");
 
 		Click(
-			key_PageLink = "Click me to navigate to view1.xhtml via non-Ajax (full postback)",
+			key_pageLink = "Click me to navigate to view1.xhtml via non-Ajax (full postback)",
 			locator1 = "BridgeIssues#NAVIGATE_TO_VIEW");
 
 		BridgeIssues.navigateToDo(
@@ -83,7 +83,7 @@ definition {
 			urlAppend = "web/bridge-issues/faces-1470?p_p_id=FACES1470_WAR_comliferayfacesissuejsfportlet&p_p_lifecycle=0&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1&_FACES1470_WAR_comliferayfacesissuejsfportlet__facesViewIdRender=%2FWEB-INF%2Fviews%2FFACES-1470%2Fview1.xhtml");
 
 		Click(
-			key_PageLink = "Click me to navigate to view1.xhtml via non-Ajax (full postback)",
+			key_pageLink = "Click me to navigate to view1.xhtml via non-Ajax (full postback)",
 			locator1 = "BridgeIssues#NAVIGATE_TO_VIEW");
 
 		BridgeIssues.navigateToDo(
@@ -110,25 +110,25 @@ definition {
 
 		// FACES-1478
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "Bridge Issues");
+		PagesAdmin.openPagesAdmin(siteUrlKey = "Bridge Issues");
 
 		BridgeIssues.addPageAndPortlet(
-			pageURL = "faces-1478",
+			pageUrl = "faces-1478",
 			portletName = "FACES-1478");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-1478");
 
-		var portalURL = PropsUtil.get("portal.url");
+		var portalUrl = PropsUtil.get("portal.url");
 
 		AssertTextEquals(
 			locator1 = "BridgeIssues#URL_MESSAGE",
-			value1 = "${portalURL}/web/bridge-issues/faces-1478?p_p_id=FACES1478_WAR_comliferayfacesissuejsfportlet&p_p_lifecycle=0&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1&_FACES1478_WAR_comliferayfacesissuejsfportlet_testParam=foo&_FACES1478_WAR_comliferayfacesissuejsfportlet_testParam=bar");
+			value1 = "${portalUrl}/web/bridge-issues/faces-1478?p_p_id=FACES1478_WAR_comliferayfacesissuejsfportlet&p_p_lifecycle=0&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1&_FACES1478_WAR_comliferayfacesissuejsfportlet_testParam=foo&_FACES1478_WAR_comliferayfacesissuejsfportlet_testParam=bar");
 
 		Click(
-			key_PageLink = "should be the same as the href attribute of this link",
+			key_pageLink = "should be the same as the href attribute of this link",
 			locator1 = "BridgeIssues#NAVIGATE_TO_VIEW");
 
-		AssertLocation(value1 = "${portalURL}/web/bridge-issues/faces-1478?p_p_id=FACES1478_WAR_comliferayfacesissuejsfportlet&p_p_lifecycle=0&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1&_FACES1478_WAR_comliferayfacesissuejsfportlet_testParam=foo&_FACES1478_WAR_comliferayfacesissuejsfportlet_testParam=bar");
+		AssertLocation(value1 = "${portalUrl}/web/bridge-issues/faces-1478?p_p_id=FACES1478_WAR_comliferayfacesissuejsfportlet&p_p_lifecycle=0&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1&_FACES1478_WAR_comliferayfacesissuejsfportlet_testParam=foo&_FACES1478_WAR_comliferayfacesissuejsfportlet_testParam=bar");
 
 		AssertTextEquals(
 			locator1 = "BridgeIssues#PARAM_URL1",
@@ -149,7 +149,7 @@ definition {
 		// FACES-1618
 
 		BridgeIssues.addPageAndPortlet(
-			pageURL = "faces-1618",
+			pageUrl = "faces-1618",
 			portletName = "FACES-1618");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-1618");
@@ -167,7 +167,7 @@ definition {
 			value1 = "javax.faces:jsf.js");
 
 		Click(
-			key_PageLink = "go to next view with immediate=",
+			key_pageLink = "go to next view with immediate=",
 			locator1 = "BridgeIssues#NAVIGATE_TO_VIEW");
 
 		AssertTextEquals(
@@ -187,7 +187,7 @@ definition {
 			value1 = "javax.faces:jsf.js");
 
 		Click(
-			key_PageLink = "go to previous view with immediate=",
+			key_pageLink = "go to previous view with immediate=",
 			locator1 = "BridgeIssues#NAVIGATE_TO_VIEW");
 
 		AssertTextEquals(
@@ -203,45 +203,45 @@ definition {
 		// FACES-1638
 
 		BridgeIssues.addPageAndPortlet(
-			pageURL = "faces-1638",
+			pageUrl = "faces-1638",
 			portletName = "FACES-1638");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-1638");
 
-		for (var Index : list "1,2") {
+		for (var index : list "1,2") {
 			BridgeIssues.verifyParam(
 				liIndex = "1",
 				paramLink = "First-Item",
-				ulIndex = "${Index}");
+				ulIndex = "${index}");
 
 			BridgeIssues.verifyParam(
 				liIndex = "1",
 				paramValue = "1",
-				ulIndex = "${Index}");
+				ulIndex = "${index}");
 		}
 
-		for (var Index : list "1,2") {
+		for (var index : list "1,2") {
 			BridgeIssues.verifyParam(
 				liIndex = "2",
 				paramLink = "Second-Item",
-				ulIndex = "${Index}");
+				ulIndex = "${index}");
 
 			BridgeIssues.verifyParam(
 				liIndex = "2",
 				paramValue = "2",
-				ulIndex = "${Index}");
+				ulIndex = "${index}");
 		}
 
-		for (var Index : list "1,2") {
+		for (var index : list "1,2") {
 			BridgeIssues.verifyParam(
 				liIndex = "3",
 				paramLink = "Third-Item",
-				ulIndex = "${Index}");
+				ulIndex = "${index}");
 
 			BridgeIssues.verifyParam(
 				liIndex = "3",
 				paramValue = "3",
-				ulIndex = "${Index}");
+				ulIndex = "${index}");
 		}
 	}
 
@@ -251,7 +251,7 @@ definition {
 		// FACES_1635Resources
 
 		BridgeIssues.addPageAndPortlet(
-			pageURL = "jsf-applicant?p_p_parallel=0",
+			pageUrl = "jsf-applicant?p_p_parallel=0",
 			portletName = "jsf-applicant");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/jsf-applicant?p_p_parallel=0");
@@ -304,13 +304,13 @@ definition {
 		// JSFSPEC-1433
 
 		BridgeIssues.addPageAndPortlet(
-			pageURL = "jsfspec-1433",
+			pageUrl = "jsfspec-1433",
 			portletName = "JSFSPEC-1433");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/jsfspec-1433");
 
 		Click(
-			key_PageLink = "Run Test",
+			key_pageLink = "Run Test",
 			locator1 = "BridgeIssues#RUN_TEST_BUTTON");
 
 		for (var key_field : list "1,2,3,4,5,6,7,8,9,10,11") {
@@ -324,7 +324,7 @@ definition {
 		// FACES_224
 
 		BridgeIssues.addPageAndPortlet(
-			pageURL = "faces-224",
+			pageUrl = "faces-224",
 			portletName = "FACES-224");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-224");
@@ -358,7 +358,7 @@ definition {
 		// FACES_257
 
 		BridgeIssues.addPageAndPortlet(
-			pageURL = "faces-257",
+			pageUrl = "faces-257",
 			portletName = "FACES-257");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-257");
@@ -396,7 +396,7 @@ definition {
 		// FACES_2958
 
 		BridgeIssues.addPageAndPortlet(
-			pageURL = "faces-2958",
+			pageUrl = "faces-2958",
 			portletName = "FACES-2958");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-2958");
@@ -426,7 +426,7 @@ definition {
 		// FACES_3231
 
 		BridgeIssues.addPageAndPortlet(
-			pageURL = "faces-3231",
+			pageUrl = "faces-3231",
 			portletName = "FACES-3231");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-3231");
@@ -441,7 +441,7 @@ definition {
 		// FACES_3300
 
 		BridgeIssues.addPageAndPortlet(
-			pageURL = "faces-3300",
+			pageUrl = "faces-3300",
 			portletName = "FACES-3300");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-3300");
@@ -451,13 +451,13 @@ definition {
 				detailValue = "Successfully navigated to",
 				statusValue = "SUCCESS",
 				textValue = "FACES-3300",
-				validURL = "${resourceActionIndex}");
+				validUrl = "${resourceActionIndex}");
 
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-3300");
 		}
 
 		for (var resourceActionIndex : list "1,2,3,4,5,6") {
-			BridgeIssues.verifyValue(inValidURL = "${resourceActionIndex}");
+			BridgeIssues.verifyValue(inValidUrl = "${resourceActionIndex}");
 
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-3300");
 		}
@@ -465,7 +465,7 @@ definition {
 		// FACES_3356
 
 		BridgeIssues.addPageAndPortlet(
-			pageURL = "faces-3356",
+			pageUrl = "faces-3356",
 			portletName = "FACES-3356");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-3356");
@@ -480,7 +480,7 @@ definition {
 		// FACES_3404
 
 		BridgeIssues.addPageAndPortlet(
-			pageURL = "faces-3404",
+			pageUrl = "faces-3404",
 			portletName = "FACES-3404");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-3404");
@@ -499,7 +499,7 @@ definition {
 		// FACES_4340-workaround
 
 		BridgeIssues.addPageAndPortlet(
-			pageURL = "mojarra-4340-workaround",
+			pageUrl = "mojarra-4340-workaround",
 			portletName = "MOJARRA-4340-workaround");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/mojarra-4340-workaround");
@@ -514,7 +514,7 @@ definition {
 		// FACES_4345-workaround
 
 		BridgeIssues.addPageAndPortlet(
-			pageURL = "mojarra-4345-workaround",
+			pageUrl = "mojarra-4345-workaround",
 			portletName = "MOJARRA-4345-workaround");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/mojarra-4345-workaround");
@@ -533,7 +533,7 @@ definition {
 		// FACES_1513_2185
 
 		BridgeIssues.addPageAndPortlet(
-			pageURL = "faces-1513-2185",
+			pageUrl = "faces-1513-2185",
 			portletName = "FACES-1513-2185");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-1513-2185");
@@ -549,7 +549,7 @@ definition {
 		// FACES_2921
 
 		BridgeIssues.addPageAndPortlet(
-			pageURL = "faces-2921",
+			pageUrl = "faces-2921",
 			portletName = "FACES-2921");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-2921");
@@ -563,7 +563,7 @@ definition {
 		// FACES_3031
 
 		BridgeIssues.addPageAndPortlet(
-			pageURL = "faces-3031",
+			pageUrl = "faces-3031",
 			portletName = "FACES-3031");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-3031");
@@ -577,7 +577,7 @@ definition {
 		// FACES_3250
 
 		BridgeIssues.addPageAndPortlet(
-			pageURL = "faces-3250",
+			pageUrl = "faces-3250",
 			portletName = "FACES-3250");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-3250");
@@ -607,7 +607,7 @@ definition {
 		// FACES_3327
 
 		BridgeIssues.addPageAndPortlet(
-			pageURL = "faces-3327",
+			pageUrl = "faces-3327",
 			portletName = "FACES-3327");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-3327");
@@ -639,14 +639,14 @@ definition {
 			layoutName = "FACES-3328-end");
 
 		BridgeIssues.addPageAndPortlet(
-			pageURL = "faces-3328",
+			pageUrl = "faces-3328",
 			portletName = "FACES-3328");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-3328-start");
 
-		var portalURL = PropsUtil.get("portal.url");
+		var portalUrl = PropsUtil.get("portal.url");
 
-		Click(locator1 = "//a[@href='${portalURL}/web/bridge-issues/faces-3328']");
+		Click(locator1 = "//a[@href='${portalUrl}/web/bridge-issues/faces-3328']");
 
 		Click(locator1 = "BridgeIssues#CALENDA_TRIGGER_BUTTON");
 
@@ -660,7 +660,7 @@ definition {
 
 		BridgeIssues.select(textValue = "Item 2");
 
-		Click(locator1 = "//a[@href='${portalURL}/web/bridge-issues/faces-3328-end']");
+		Click(locator1 = "//a[@href='${portalUrl}/web/bridge-issues/faces-3328-end']");
 
 		AssertNotVisible(locator1 = "//table[contains(@class, 'ui-datepicker-calendar')]");
 

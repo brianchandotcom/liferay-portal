@@ -40,7 +40,7 @@ definition {
 	@priority = "4"
 	test ViewVisualStyleOfMappedEditableFieldItems {
 		task ("Add a Heading fragment to display page template") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 

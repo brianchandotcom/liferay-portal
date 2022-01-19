@@ -27,7 +27,7 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanViewOptionsWithAllLanguages {
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		NavItem.gotoStructures();
 
@@ -41,7 +41,7 @@ definition {
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		NavItem.gotoTemplates();
 
@@ -50,7 +50,7 @@ definition {
 			templateFieldNames = "Text",
 			templateName = "WC Template Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
@@ -62,25 +62,25 @@ definition {
 
 		PortletEntry.publish();
 
-		Site.openSiteSettingsAdmin(siteURLKey = "guest");
+		Site.openSiteSettingsAdmin(siteUrlKey = "guest");
 
 		Site.configureCurrentLanguagesCP(
 			currentSiteLanguages = "Spanish (Spain)",
 			defaultSiteLanguage = "Spanish (Spain)");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		Translations.viewTranslationOptions(
 			noOptions = "true",
 			webContentTitle = "Web Content Title");
 
-		Site.openSiteSettingsAdmin(siteURLKey = "guest");
+		Site.openSiteSettingsAdmin(siteUrlKey = "guest");
 
 		Site.configureCurrentLanguagesCP(
 			currentSiteLanguages = "English (United States),Spanish (Spain),Arabic (Saudi Arabia),Catalan (Spain),Chinese (China),Dutch (Netherlands),Finnish (Finland),French (France),German (Germany),Hungarian (Hungary),Japanese (Japan),Portuguese (Brazil),Swedish (Sweden)",
 			defaultSiteLanguage = "Spanish (Spain)");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		Translations.viewTranslationOptions(webContentTitle = "Web Content Title");
 	}
@@ -94,25 +94,25 @@ definition {
 			groupName = "Guest",
 			title = "Web Content Title");
 
-		Site.openSiteSettingsAdmin(siteURLKey = "guest");
+		Site.openSiteSettingsAdmin(siteUrlKey = "guest");
 
 		Site.configureCurrentLanguagesCP(
 			currentSiteLanguages = "English (United States)",
 			defaultSiteLanguage = "English (United States)");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		Translations.viewTranslationOptions(
 			noOptions = "true",
 			webContentTitle = "Web Content Title");
 
-		Site.openSiteSettingsAdmin(siteURLKey = "guest");
+		Site.openSiteSettingsAdmin(siteUrlKey = "guest");
 
 		Site.configureCurrentLanguagesCP(
 			currentSiteLanguages = "English (United States),Spanish (Spain)",
 			defaultSiteLanguage = "English (United States)");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		Translations.viewTranslationOptions(webContentTitle = "Web Content Title");
 	}
@@ -121,7 +121,7 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanViewTranslatedFieldContentAfterEditing {
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		NavItem.gotoStructures();
 
@@ -133,7 +133,7 @@ definition {
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
@@ -146,7 +146,7 @@ definition {
 
 		PortletEntry.publish();
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		WebContent.editWithStructureCP(
 			locale = "pt-BR",
@@ -155,7 +155,7 @@ definition {
 			webContentTitle = "WC WebContent Title EN",
 			webContentTitleEdit = "WC WebContent Title PT");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		Translations.gotoTranslate(webContentTitle = "WC WebContent Title EN");
 
@@ -164,18 +164,18 @@ definition {
 			newTargetLocale = "pt-BR");
 
 		Translations.viewTargetFields(
-			webContentHTML = "Rich Text PT",
+			webContentHtml = "Rich Text PT",
 			webContentText = "Text PT",
 			webContentTitle = "WC WebContent Title PT");
 
 		Translations.translateFields(
-			webContentSourceHTML = "Rich Text PT Edit",
+			webContentSourceHtml = "Rich Text PT Edit",
 			webContentText = "Text PT Edit",
 			webContentTitle = "WC WebContent Title PT Edit");
 
 		PortletEntry.publish();
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		WebContent.viewWithStructureCP(
 			webContentLocaleFieldLabel = "pt-BR",
@@ -184,7 +184,7 @@ definition {
 			webContentTitle = "WC WebContent Title EN",
 			webContentTitleTranslated = "WC WebContent Title PT Edit");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		WebContent.editWithStructureCP(
 			locale = "pt-BR",
@@ -193,7 +193,7 @@ definition {
 			webContentTitle = "WC WebContent Title EN",
 			webContentTitleEdit = "WC WebContent Title PT Again");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		Translations.gotoTranslate(webContentTitle = "WC WebContent Title EN");
 
@@ -202,7 +202,7 @@ definition {
 			newTargetLocale = "pt-BR");
 
 		Translations.viewTargetFields(
-			webContentHTML = "Rich Text PT Edit Again",
+			webContentHtml = "Rich Text PT Edit Again",
 			webContentText = "Text PT Again",
 			webContentTitle = "WC WebContent Title PT Again");
 	}

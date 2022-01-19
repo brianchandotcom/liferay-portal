@@ -27,7 +27,7 @@ definition {
 			titleMap = "${titleMap}");
 
 		JSONWebcontentAPI._addWebContent(
-			contentXML = "${contentXML}",
+			contentXml = "${contentXml}",
 			descriptionMap = "${descriptionMap}",
 			folderId = "${folderId}",
 			groupId = "${groupId}",
@@ -85,7 +85,7 @@ definition {
 		var titleMap = JSONWebcontentSetter.setTitleMap(title = "${title}");
 
 		JSONWebcontentAPI._addWebContent(
-			contentXML = "${contentXML}",
+			contentXml = "${contentXml}",
 			descriptionMap = "${descriptionMap}",
 			folderId = "${folderId}",
 			groupId = "${groupId}",
@@ -162,7 +162,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalURL}/api/jsonws/journal.journalarticle/restore-article-from-trash \
+			${portalUrl}/api/jsonws/journal.journalarticle/restore-article-from-trash \
 				-u test@liferay.com:test \
 				-d resourcePrimKey=${resourcePrimKey}
 		''';

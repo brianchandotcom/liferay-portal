@@ -667,7 +667,7 @@ definition {
 	}
 
 	macro viewNoRSS {
-		Navigator.openSpecificURL(url = "${rssURL}");
+		Navigator.openSpecificURL(url = "${rssUrl}");
 
 		SelectWindow.selectPopUp(locator1 = "null");
 

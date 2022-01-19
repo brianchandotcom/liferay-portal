@@ -84,20 +84,20 @@ definition {
 
 		var classTypeIdsDLFileEntry = JSONDLfileentrytype._getFileEntryTypeIds(groupId = "${groupId}");
 
-		if ("${classTypeIdsDLFileEntry}" == "") {
+		if ("${classTypeIdsDlFileEntry}" == "") {
 			if ("${googleDriveShortcutClassTypeId}" != "") {
-				var classTypeIdsDLFileEntry = '''${basicDocumentClassTypeId},${googleDriveShortcutClassTypeId}''';
+				var classTypeIdsDlFileEntry = '''${basicDocumentClassTypeId},${googleDriveShortcutClassTypeId}''';
 			}
 			else {
-				var classTypeIdsDLFileEntry = '''${basicDocumentClassTypeId}''';
+				var classTypeIdsDlFileEntry = '''${basicDocumentClassTypeId}''';
 			}
 		}
 		else {
 			if ("${googleDriveShortcutClassTypeId}" != "") {
-				var classTypeIdsDLFileEntry = '''${basicDocumentClassTypeId},${googleDriveShortcutClassTypeId},${classTypeIdsDLFileEntry}''';
+				var classTypeIdsDlFileEntry = '''${basicDocumentClassTypeId},${googleDriveShortcutClassTypeId},${classTypeIdsDlFileEntry}''';
 			}
 			else {
-				var classTypeIdsDLFileEntry = '''${basicDocumentClassTypeId},${classTypeIdsDLFileEntry}''';
+				var classTypeIdsDlFileEntry = '''${basicDocumentClassTypeId},${classTypeIdsDlFileEntry}''';
 			}
 		}
 
@@ -112,11 +112,11 @@ definition {
 			classNameId = "${classNameId}",
 			groupId = "${groupId}");
 
-		if ("${classTypeIdsDDMStructure}" == "") {
-			var classTypeIdsDDMStructure = '''${basicWebContentClassTypeId}''';
+		if ("${classTypeIdsDdmStructure}" == "") {
+			var classTypeIdsDdmStructure = '''${basicWebContentClassTypeId}''';
 		}
 		else {
-			var classTypeIdsDDMStructure = '''${basicWebContentClassTypeId},${classTypeIdsDDMStructure}''';
+			var classTypeIdsDdmStructure = '''${basicWebContentClassTypeId},${classTypeIdsDdmStructure}''';
 		}
 
 		if ("${itemType}" == "All Types") {
@@ -124,8 +124,8 @@ definition {
 				var typeSettings = '''
 anyAssetType=true
 classNameIds=${classNameIds}
-classTypeIdsDLFileEntryAssetRendererFactory=${classTypeIdsDLFileEntry}
-classTypeIdsJournalArticleAssetRendererFactory=${classTypeIdsDDMStructure}
+classTypeIdsDLFileEntryAssetRendererFactory=${classTypeIdsDlFileEntry}
+classTypeIdsJournalArticleAssetRendererFactory=${classTypeIdsDdmStructure}
 groupIds=${groupId}
 orderByColumn1=modifiedDate
 orderByColumn2=title
@@ -142,8 +142,8 @@ subtypeFieldsFilterEnabledJournalArticleAssetRendererFactory=false
 				var typeSettings = '''
 anyAssetType=true
 classNameIds=${classNameIds}
-classTypeIdsDLFileEntryAssetRendererFactory=${classTypeIdsDLFileEntry}
-classTypeIdsJournalArticleAssetRendererFactory=${classTypeIdsDDMStructure}
+classTypeIdsDLFileEntryAssetRendererFactory=${classTypeIdsDlFileEntry}
+classTypeIdsJournalArticleAssetRendererFactory=${classTypeIdsDdmStructure}
 ''';
 			}
 		}
@@ -156,8 +156,8 @@ classTypeIdsJournalArticleAssetRendererFactory=${classTypeIdsDDMStructure}
 anyAssetType=${itemType}
 anyClassTypeJournalArticleAssetRendererFactory=true
 classNameIds=${classNameIds}
-classTypeIdsDLFileEntryAssetRendererFactory=${classTypeIdsDLFileEntry}
-classTypeIdsJournalArticleAssetRendererFactory=${classTypeIdsDDMStructure}
+classTypeIdsDLFileEntryAssetRendererFactory=${classTypeIdsDlFileEntry}
+classTypeIdsJournalArticleAssetRendererFactory=${classTypeIdsDdmStructure}
 groupIds=${groupId}
 orderByColumn1=modifiedDate
 orderByColumn2=title
@@ -175,8 +175,8 @@ subtypeFieldsFilterEnabledJournalArticleAssetRendererFactory=false
 anyAssetType=${itemType}
 anyClassTypeJournalArticleAssetRendererFactory=true
 classNameIds=${classNameIds}
-classTypeIdsDLFileEntryAssetRendererFactory=${classTypeIdsDLFileEntry}
-classTypeIdsJournalArticleAssetRendererFactory=${classTypeIdsDDMStructure}
+classTypeIdsDLFileEntryAssetRendererFactory=${classTypeIdsDlFileEntry}
+classTypeIdsJournalArticleAssetRendererFactory=${classTypeIdsDdmStructure}
 ''';
 				}
 			}
@@ -196,8 +196,8 @@ classTypeIdsJournalArticleAssetRendererFactory=${classTypeIdsDDMStructure}
 anyAssetType=${itemType}
 anyClassTypeJournalArticleAssetRendererFactory=${classTypeId}
 classNameIds=${classNameIds}
-classTypeIdsDLFileEntryAssetRendererFactory=${classTypeIdsDLFileEntry}
-classTypeIdsJournalArticleAssetRendererFactory=${classTypeIdsDDMStructure}
+classTypeIdsDLFileEntryAssetRendererFactory=${classTypeIdsDlFileEntry}
+classTypeIdsJournalArticleAssetRendererFactory=${classTypeIdsDdmStructure}
 groupIds=${groupId}
 orderByColumn1=modifiedDate
 orderByColumn2=title
@@ -215,8 +215,8 @@ subtypeFieldsFilterEnabledJournalArticleAssetRendererFactory=false
 anyAssetType=${itemType}
 anyClassTypeJournalArticleAssetRendererFactory=${classTypeId}
 classNameIds=${classNameIds}
-classTypeIdsDLFileEntryAssetRendererFactory=${classTypeIdsDLFileEntry}
-classTypeIdsJournalArticleAssetRendererFactory=${classTypeIdsDDMStructure}
+classTypeIdsDLFileEntryAssetRendererFactory=${classTypeIdsDlFileEntry}
+classTypeIdsJournalArticleAssetRendererFactory=${classTypeIdsDdmStructure}
 ''';
 				}
 			}
@@ -238,8 +238,8 @@ classTypeIdsJournalArticleAssetRendererFactory=${classTypeIdsDDMStructure}
 				var typeSettings = '''
 anyAssetType=${itemType}
 classNameIds=${classNameIds}
-classTypeIdsDLFileEntryAssetRendererFactory=${classTypeIdsDLFileEntry}
-classTypeIdsJournalArticleAssetRendererFactory=${classTypeIdsDDMStructure}
+classTypeIdsDLFileEntryAssetRendererFactory=${classTypeIdsDlFileEntry}
+classTypeIdsJournalArticleAssetRendererFactory=${classTypeIdsDdmStructure}
 groupIds=${groupId}
 orderByColumn1=modifiedDate
 orderByColumn2=title
@@ -256,8 +256,8 @@ subtypeFieldsFilterEnabledJournalArticleAssetRendererFactory=false
 				var typeSettings = '''
 anyAssetType=${itemType}
 classNameIds=${classNameIds}
-classTypeIdsDLFileEntryAssetRendererFactory=${classTypeIdsDLFileEntry}
-classTypeIdsJournalArticleAssetRendererFactory=${classTypeIdsDDMStructure}
+classTypeIdsDLFileEntryAssetRendererFactory=${classTypeIdsDlFileEntry}
+classTypeIdsJournalArticleAssetRendererFactory=${classTypeIdsDdmStructure}
 ''';
 			}
 		}
@@ -270,8 +270,8 @@ classTypeIdsJournalArticleAssetRendererFactory=${classTypeIdsDDMStructure}
 anyAssetType=${itemType}
 anyClassTypeDLFileEntryAssetRendererFactory=true
 classNameIds=${classNameIds}
-classTypeIdsDLFileEntryAssetRendererFactory=${classTypeIdsDLFileEntry}
-classTypeIdsJournalArticleAssetRendererFactory=${classTypeIdsDDMStructure}
+classTypeIdsDLFileEntryAssetRendererFactory=${classTypeIdsDlFileEntry}
+classTypeIdsJournalArticleAssetRendererFactory=${classTypeIdsDdmStructure}
 groupIds=${groupId}
 orderByColumn1=modifiedDate
 orderByColumn2=title
@@ -289,8 +289,8 @@ subtypeFieldsFilterEnabledJournalArticleAssetRendererFactory=false
 anyAssetType=${itemType}
 anyClassTypeDLFileEntryAssetRendererFactory=true
 classNameIds=${classNameIds}
-classTypeIdsDLFileEntryAssetRendererFactory=${classTypeIdsDLFileEntry}
-classTypeIdsJournalArticleAssetRendererFactory=${classTypeIdsDDMStructure}
+classTypeIdsDLFileEntryAssetRendererFactory=${classTypeIdsDlFileEntry}
+classTypeIdsJournalArticleAssetRendererFactory=${classTypeIdsDdmStructure}
 ''';
 				}
 			}
@@ -312,8 +312,8 @@ classTypeIdsJournalArticleAssetRendererFactory=${classTypeIdsDDMStructure}
 anyAssetType=${itemType}
 anyClassTypeDLFileEntryAssetRendererFactory=${classTypeId}
 classNameIds=${classNameIds}
-classTypeIdsDLFileEntryAssetRendererFactory=${classTypeIdsDLFileEntry}
-classTypeIdsJournalArticleAssetRendererFactory=${classTypeIdsDDMStructure}
+classTypeIdsDLFileEntryAssetRendererFactory=${classTypeIdsDlFileEntry}
+classTypeIdsJournalArticleAssetRendererFactory=${classTypeIdsDdmStructure}
 groupIds=${groupId}
 orderByColumn1=modifiedDate
 orderByColumn2=title
@@ -331,8 +331,8 @@ subtypeFieldsFilterEnabledJournalArticleAssetRendererFactory=false
 anyAssetType=${itemType}
 anyClassTypeDLFileEntryAssetRendererFactory=${classTypeId}
 classNameIds=${classNameIds}
-classTypeIdsDLFileEntryAssetRendererFactory=${classTypeIdsDLFileEntry}
-classTypeIdsJournalArticleAssetRendererFactory=${classTypeIdsDDMStructure}
+classTypeIdsDLFileEntryAssetRendererFactory=${classTypeIdsDlFileEntry}
+classTypeIdsJournalArticleAssetRendererFactory=${classTypeIdsDdmStructure}
 ''';
 				}
 			}

@@ -94,7 +94,7 @@ definition {
 
 		WebContentTemplates.inputTemplateAddScreenFields(
 			generalVariables = "${generalVariables}",
-			imageSourceURL = "${imageSourceURL}",
+			imageSourceUrl = "${imageSourceUrl}",
 			structureName = "${structureName}",
 			templateDescription = "${templateDescription}",
 			templateFieldNames = "${templateFieldNames}",
@@ -214,7 +214,7 @@ definition {
 		if (isSet(imageSourceURL)) {
 			Navigator.gotoSidebarTab(tabName = "Properties");
 
-			WebContent.addFeaturedImageFromURL(imageSourceURL = "${imageSourceURL}");
+			WebContent.addFeaturedImageFromURL(imageSourceUrl = "${imageSourceUrl}");
 		}
 
 		WebContentTemplates.inputScript(templateScript = "${templateScript}");
@@ -264,7 +264,7 @@ definition {
 		WaitForVisible(locator1 = "Sidebar#PANEL_OPEN");
 
 		WebContentTemplates.inputTemplateAddScreenFields(
-			imageSourceURL = "${imageSourceURL}",
+			imageSourceUrl = "${imageSourceUrl}",
 			templateDescription = "${templateDescription}",
 			templateFieldNames = "${templateFieldNames}",
 			templateFile = "${templateFile}",
@@ -274,9 +274,9 @@ definition {
 		DDLDataDefinition.save(publicationsEnabled = "${publicationsEnabled}");
 	}
 
-	@summary = "Open Web Content Templates admin page for the site '${siteURLKey}'"
+	@summary = "Open Web Content Templates admin page for the site '${siteUrlKey}'"
 	macro openWebContentTemplatesAdmin {
-		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_journal_web_portlet_JournalPortlet&_com_liferay_journal_web_portlet_JournalPortlet_mvcPath=%2Fview_ddm_templates.jsp");
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteUrlKey}/~/control_panel/manage?p_p_id=com_liferay_journal_web_portlet_JournalPortlet&_com_liferay_journal_web_portlet_JournalPortlet_mvcPath=%2Fview_ddm_templates.jsp");
 	}
 
 	@summary = "Teardown templates in the guest site"

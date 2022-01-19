@@ -53,7 +53,7 @@ definition {
 		}
 
 		task ("Then I should be redirected to the product detail page") {
-			FrontStore.viewProductDetail(FSProductName = "U-Joint");
+			FrontStore.viewProductDetail(fsProductName = "U-Joint");
 		}
 	}
 
@@ -226,7 +226,7 @@ definition {
 		}
 
 		task ("Then I should be redirected to the widget page with the Product Details widget showing the product details") {
-			FrontStore.viewProductDetail(FSProductName = "U-Joint");
+			FrontStore.viewProductDetail(fsProductName = "U-Joint");
 
 			ControlMenu.viewHeaderTitle(headerTitle = "Test Public Widget Page");
 

@@ -57,7 +57,7 @@
 </tr>
 <tr>
 	<td>FS_PRODUCT_IMAGE</td>
-	<td>//div[@class='product-gallery']//img[contains(@src, '${key_FSProductImage}')]</td>
+	<td>//div[@class='product-gallery']//img[contains(@src, '${key_fsProductImage}')]</td>
 	<td></td>
 </tr>
 <tr>

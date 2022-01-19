@@ -238,7 +238,7 @@ definition {
 
 		AssertElementNotPresent(
 			key_productName = "Bundled Product",
-			key_productSKU = "BLACKSKU",
+			key_productSku = "BLACKSKU",
 			locator1 = "CommerceEntry#PRODUCT_CARD_SKU");
 	}
 
@@ -268,7 +268,7 @@ definition {
 			locator1 = "CommerceAccelerators#PRODUCT_CARD_AVAILABILITY_LABEL");
 
 		AssertElementNotPresent(
-			key_productSKU = "MIN93016A",
+			key_productSku = "MIN93016A",
 			locator1 = "CommerceEntry#PRODUCT_CARD_SKU");
 	}
 
@@ -961,7 +961,7 @@ definition {
 
 		AssertElementNotPresent(
 			key_productName = "Bundled Product",
-			key_productSKU = "BLACKSKU",
+			key_productSku = "BLACKSKU",
 			locator1 = "CommerceEntry#PRODUCT_CARD_SKU");
 	}
 
@@ -1250,7 +1250,7 @@ definition {
 
 		AssertElementPresent(
 			key_productName = "U-Joint",
-			key_productSKU = "MIN55861",
+			key_productSku = "MIN55861",
 			locator1 = "CommerceEntry#PRODUCT_CARD_SKU");
 	}
 

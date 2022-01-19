@@ -12,7 +12,7 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Test Site Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 	}
 
 	tearDown {
@@ -308,7 +308,7 @@ definition {
 		var newStructureName = "WC Structure Name";
 
 		task ("Open sidebar, go to Web Content > Structure") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 			NavItem.gotoStructures();
 		}
@@ -414,7 +414,7 @@ definition {
 				webContentTitle = "Web Content Title");
 
 			WebContent.viewWithStructureCP(
-				skipGotoEditCP = "true",
+				skipGotoEditCp = "true",
 				webContentDate = "23/02/2021",
 				webContentDateFieldLabel = "Date pt-BR",
 				webContentLocaleFieldLabel = "pt-BR",
@@ -522,7 +522,7 @@ definition {
 	@description = "This test checks when user translates the title, the default language title persists"
 	@priority = "4"
 	test DefaultTitlePersistsAfterTranslatingForAnotherLocale {
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 		NavItem.gotoStructures();
 
@@ -631,7 +631,7 @@ definition {
 
 		PortalSettings.configureCurrentLanguagesCP(defaultPortalLanguage = "Portuguese (Brazil)");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 		NavItem.gotoStructures();
 

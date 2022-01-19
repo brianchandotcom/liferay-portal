@@ -266,7 +266,7 @@
 </tr>
 <tr>
 	<td>VALIDATE_LIST_TITLE_NAME_AT_ROW</td>
-	<td>//tr[${key_RowNumber}]//a</td>
+	<td>//tr[${key_rowNumber}]//a</td>
 	<td></td>
 </tr>
 <tr>
@@ -276,7 +276,7 @@
 </tr>
 <tr>
 	<td>CHOOSE_SEARCH_FILTER_BY_OPTION</td>
-	<td>//button[contains(text(),'${key_FilterOption}')]</td>
+	<td>//button[contains(text(),'${key_filterOption}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -286,12 +286,12 @@
 </tr>
 <tr>
 	<td>CHOOSE_APP_SEARCH_FILTER_BY_OPTION</td>
-	<td>//span[contains(text(),'${key_FilterOption}')]</td>
+	<td>//span[contains(text(),'${key_filterOption}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CHOOSE_APP_SEARCH_FILTER_BY_STATUS</td>
-	<td>//span[contains(text(),'${key_FilterOption}')]//ancestor::label//input</td>
+	<td>//span[contains(text(),'${key_filterOption}')]//ancestor::label//input</td>
 	<td></td>
 </tr>
 <tr>

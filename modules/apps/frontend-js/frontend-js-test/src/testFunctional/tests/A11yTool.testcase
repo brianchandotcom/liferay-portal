@@ -58,8 +58,8 @@ definition {
 
 		task ("Modify the config file to be set to false") {
 			OSGiConfig.deployOSGiConfigFile(
-				OSGiConfigFileName = "com.liferay.frontend.js.a11y.web.internal.configuration.FFA11yConfiguration.config",
-				OSGiConfigs = "enable=B&quot;false&quot;");
+				osgiConfigFileName = "com.liferay.frontend.js.a11y.web.internal.configuration.FFA11yConfiguration.config",
+				osgiConfigs = "enable=B&quot;false&quot;");
 		}
 
 		task ("Restart portal") {

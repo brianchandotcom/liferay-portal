@@ -112,7 +112,7 @@ definition {
 			requireReset = "false",
 			userEmailAddress = "user2@liferay.com");
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 		KBArticle.addCP(
 			kbArticleContent = "Knowledge Base Article Content",

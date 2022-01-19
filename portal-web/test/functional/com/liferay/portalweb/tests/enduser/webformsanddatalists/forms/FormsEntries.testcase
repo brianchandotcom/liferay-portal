@@ -749,7 +749,7 @@ definition {
 
 		FormsAdminNavigator.gotoPublishCopyURLLink();
 
-		var publishedFormURL = Form.getPublishedFormPublicURL(publishedFormPublicURL = "${publishedFormPublicURL}");
+		var publishedFormURL = Form.getPublishedFormPublicURL(publishedFormPublicUrl = "${publishedFormPublicUrl}");
 
 		JSONUser.addUser(
 			userEmailAddress = "user1@liferay.com",
@@ -782,7 +782,7 @@ definition {
 
 		Navigator.openURL();
 
-		Navigator.openSpecificURL(url = "${publishedFormURL}");
+		Navigator.openSpecificURL(url = "${publishedFormUrl}");
 
 		FormViewBuilder.editText(
 			fieldName = "Text",
@@ -874,7 +874,7 @@ definition {
 
 		Form.publishForm();
 
-		FormsAdminNavigator.openPublishURL(publishFormURL = "${publishedFormPublicURL}");
+		FormsAdminNavigator.openPublishURL(publishFormUrl = "${publishedFormPublicUrl}");
 
 		FormFields.editText(
 			fieldName = "Text",

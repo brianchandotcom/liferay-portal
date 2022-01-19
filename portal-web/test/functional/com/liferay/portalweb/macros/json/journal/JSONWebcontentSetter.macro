@@ -20,8 +20,8 @@ definition {
 
 	macro setContentXML {
 		JSONUtil2._exclusiveOrCheck(
-			A = "${content}",
-			B = "${contentMap}",
+			a = "${content}",
+			b = "${contentMap}",
 			failMessage = "Please only set 'content' or only 'contentMap' but not both or none.");
 
 		if (isSet(contentMap)) {
@@ -33,7 +33,7 @@ definition {
 				source = "${source}");
 		}
 
-		return "${contentXML}";
+		return "${contentXml}";
 	}
 
 	macro setDescriptionMap {
@@ -109,8 +109,8 @@ definition {
 
 	macro setTitleMap {
 		JSONUtil2._exclusiveOrCheck(
-			A = "${title}",
-			B = "${titleMap}",
+			a = "${title}",
+			b = "${titleMap}",
 			failMessage = "Please only set 'title' or only 'titleMap' but not both or none.");
 
 		if (isSet(titleMap)) {

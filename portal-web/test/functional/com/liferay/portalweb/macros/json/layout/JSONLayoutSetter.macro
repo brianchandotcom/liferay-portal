@@ -10,10 +10,10 @@ definition {
 
 	macro setFriendlyURL {
 		if (!(isSet(friendlyURL))) {
-			var friendlyURL = "";
+			var friendlyUrl = "";
 		}
 
-		return "${friendlyURL}";
+		return "${friendlyUrl}";
 	}
 
 	macro setGroupId {
@@ -25,7 +25,7 @@ definition {
 			grandParentGroupName = "${grandParentGroupName}",
 			groupName = "${groupName}",
 			parentGroupName = "${parentGroupName}",
-			portalURL = "${portalURL}",
+			portalUrl = "${portalUrl}",
 			site = "${site}");
 
 		return "${groupId}";

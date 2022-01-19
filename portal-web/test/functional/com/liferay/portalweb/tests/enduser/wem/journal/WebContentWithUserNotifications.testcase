@@ -57,7 +57,7 @@ definition {
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		WebContent.subscribeToCurrentFolderCP();
 
@@ -67,7 +67,7 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		WebContent.addArticleCP(
 			webContentContent = "WC WebContent Content",
@@ -95,7 +95,7 @@ definition {
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		WebContent.subscribeToSpecificArticle(webContentTitle = "WC WebContent Title");
 
@@ -105,7 +105,7 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
 
@@ -135,7 +135,7 @@ definition {
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		WebContent.subscribeToSpecificArticle(webContentTitle = "WC WebContent Title");
 
@@ -150,7 +150,7 @@ definition {
 			folderName = "WC Folder Name",
 			groupName = "Guest");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		WebContent.moveToFolderCP(
 			folderName = "WC Folder Name",

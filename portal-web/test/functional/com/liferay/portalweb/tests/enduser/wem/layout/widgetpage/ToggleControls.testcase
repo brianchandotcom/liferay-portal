@@ -284,7 +284,7 @@ definition {
 			User.firstLoginPG(
 				password = "test",
 				userEmailAddress = "test@www.able.com",
-				virtualHostsURL = "http://www.able.com:8080");
+				virtualHostsUrl = "http://www.able.com:8080");
 
 			ProductMenu.gotoPortlet(
 				category = "Site Builder",

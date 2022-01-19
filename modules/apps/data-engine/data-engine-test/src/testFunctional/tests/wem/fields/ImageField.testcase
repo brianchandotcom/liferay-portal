@@ -12,7 +12,7 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Test Site Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 		NavItem.gotoStructures();
 	}
@@ -149,16 +149,16 @@ definition {
 		property portal.acceptance = "false";
 
 		var structureTitle = "Test";
-		var structureTitlePT = "Teste";
-		var fieldLabelEN = "Text EN";
-		var fieldLabelPT = "Text PT";
+		var structureTitlePt = "Teste";
+		var fieldLabelEn = "Text EN";
+		var fieldLabelPt = "Text PT";
 
 		WebContentStructures.addCP(
 			structureDescription = "I'm a test",
 			structureName = "${structureTitle}");
 
 		DataEngine.addField(
-			fieldFieldLabel = "${fieldLabelEN}",
+			fieldFieldLabel = "${fieldLabelEn}",
 			fieldName = "Image");
 
 		Button.clickSave();
@@ -169,11 +169,11 @@ definition {
 
 		PortletEntry.changeLocale(locale = "pt-BR");
 
-		WebContentStructures.addName(structureName = "${structureTitlePT}");
+		WebContentStructures.addName(structureName = "${structureTitlePt}");
 
 		FormViewBuilder.editFieldLabel(
-			fieldLabel = "${fieldLabelEN}",
-			label = "${fieldLabelPT}");
+			fieldLabel = "${fieldLabelEn}",
+			label = "${fieldLabelPt}");
 
 		Button.clickSave();
 
@@ -183,7 +183,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "TextInput#NAME",
-			value1 = "${structureTitlePT}");
+			value1 = "${structureTitlePt}");
 	}
 
 	@description = "This test aims to verify if the user is required to define a description for an uploaded image."

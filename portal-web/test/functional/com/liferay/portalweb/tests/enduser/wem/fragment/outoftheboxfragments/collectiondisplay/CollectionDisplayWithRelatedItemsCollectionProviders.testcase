@@ -324,7 +324,7 @@ definition {
 		}
 
 		task ("Add a Grid to display page template") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
@@ -414,7 +414,7 @@ definition {
 		}
 
 		task ("Select the display page template in web content") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
@@ -480,7 +480,7 @@ definition {
 		}
 
 		task ("Select the web content as related assets in blogs entry") {
-			BlogsNavigator.openBlogsAdmin(siteURLKey = "test-site-name");
+			BlogsNavigator.openBlogsAdmin(siteUrlKey = "test-site-name");
 
 			BlogsNavigator.gotoEditCP(entryTitle = "Blogs Entry Title");
 
@@ -492,7 +492,7 @@ definition {
 		}
 
 		task ("Select the web content and blogs entry as related assets in document") {
-			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
+			DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "test-site-name");
 
 			LexiconEntry.gotoEntryMenuItem(
 				menuItem = "Edit",
@@ -705,7 +705,7 @@ definition {
 		}
 
 		task ("Add a Grid to display page template") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
@@ -831,7 +831,7 @@ definition {
 		}
 
 		task ("Select the display page template in category") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 
 			Category.editCP(
 				categoryName = "Category Name",
@@ -841,7 +841,7 @@ definition {
 		}
 
 		task ("Select the web content as related assets in blogs entry") {
-			BlogsNavigator.openBlogsAdmin(siteURLKey = "test-site-name");
+			BlogsNavigator.openBlogsAdmin(siteUrlKey = "test-site-name");
 
 			BlogsNavigator.gotoEditCP(entryTitle = "Blogs Entry Title");
 
@@ -853,7 +853,7 @@ definition {
 		}
 
 		task ("Select the web content as related assets in document") {
-			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
+			DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "test-site-name");
 
 			LexiconEntry.gotoEntryMenuItem(
 				menuItem = "Edit",
@@ -867,7 +867,7 @@ definition {
 		}
 
 		task ("Navigate to associated display page template via View Display Page") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 
 			LexiconEntry.gotoEntryMenuItem(
 				menuItem = "View Display Page",
@@ -963,7 +963,7 @@ definition {
 		}
 
 		task ("Add a Collection display fragment to the first display Page Template") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name 1");
 
@@ -1006,7 +1006,7 @@ definition {
 		}
 
 		task ("Add a Collection display fragment to the second display Page Template") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name 2");
 
@@ -1049,7 +1049,7 @@ definition {
 		}
 
 		task ("Add a Collection display fragment to the third display Page Template") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name 3");
 
@@ -1122,7 +1122,7 @@ definition {
 		}
 
 		task ("Add a web content structure with a Text field") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 			NavItem.gotoStructures();
 
@@ -1136,7 +1136,7 @@ definition {
 		}
 
 		task ("Add a custom document type with a Text field") {
-			DMNavigator.openDocumentTypesAdmin(siteURLKey = "test-site-name");
+			DMNavigator.openDocumentTypesAdmin(siteUrlKey = "test-site-name");
 
 			DMDocumentType.add(
 				dmDocumentTypeFieldNames = "Text",
@@ -1153,7 +1153,7 @@ definition {
 		}
 
 		task ("Add a Collection display fragment to the first display Page Template") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name 1");
 
@@ -1224,7 +1224,7 @@ definition {
 		}
 
 		task ("Add a Collection display fragment to the second display Page Template") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name 2");
 
@@ -1293,7 +1293,7 @@ definition {
 		}
 
 		task ("Add a Collection display fragment to the third display Page Template") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name 3");
 
@@ -1352,7 +1352,7 @@ definition {
 		}
 
 		task ("Add a Collection display fragment to the fourth display Page Template") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name 4");
 
@@ -1417,7 +1417,7 @@ definition {
 		}
 
 		task ("Add a Collection display fragment to the fifth display Page Template") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name 5");
 
@@ -1553,7 +1553,7 @@ definition {
 		}
 
 		task ("Add a Collection display fragment to display Page Template") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
@@ -1578,7 +1578,7 @@ definition {
 		}
 
 		task ("Associate the display page template to category") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 
 			Category.editCP(
 				categoryName = "Category Name",
@@ -1672,7 +1672,7 @@ definition {
 		}
 
 		task ("Add a Collection display fragment to display Page Template") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
@@ -1691,7 +1691,7 @@ definition {
 		}
 
 		task ("Associate the display page template to category") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 
 			Category.editCP(
 				categoryName = "Category Name",
@@ -1776,7 +1776,7 @@ definition {
 		}
 
 		task ("Add a Collection display fragment to display Page Template") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
@@ -1808,7 +1808,7 @@ definition {
 		}
 
 		task ("Associate the display page template to category") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 
 			Category.editCP(
 				categoryName = "Category Name",
@@ -1889,7 +1889,7 @@ definition {
 		}
 
 		task ("Add a custom document type with a Text field") {
-			DMNavigator.openDocumentTypesAdmin(siteURLKey = "test-site-name");
+			DMNavigator.openDocumentTypesAdmin(siteUrlKey = "test-site-name");
 
 			DMDocumentType.add(
 				dmDocumentTypeFieldNames = "Text",
@@ -1897,7 +1897,7 @@ definition {
 		}
 
 		task ("Add a document based on new document type with category") {
-			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
+			DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "test-site-name");
 
 			DMDocument.addCP(
 				categoryNameList = "Category Name",
@@ -1915,7 +1915,7 @@ definition {
 		}
 
 		task ("Add a Collection display fragment to display Page Template") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
@@ -1934,7 +1934,7 @@ definition {
 		}
 
 		task ("Associate the display page template to category") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 
 			Category.editCP(
 				categoryName = "Category Name",
@@ -2022,7 +2022,7 @@ definition {
 		}
 
 		task ("Add a web content structure with a Text field") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 			NavItem.gotoStructures();
 
@@ -2036,7 +2036,7 @@ definition {
 		}
 
 		task ("Add a web content based on new structure with category") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
@@ -2059,7 +2059,7 @@ definition {
 		}
 
 		task ("Add a Collection display fragment to display Page Template") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
@@ -2078,7 +2078,7 @@ definition {
 		}
 
 		task ("Associate the display page template to category") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 
 			Category.editCP(
 				categoryName = "Category Name",
@@ -2146,7 +2146,7 @@ definition {
 		}
 
 		task ("Add a Collection Display to Web Content DPT and Select Related Assets in Related Items Collection Providers") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Web Content DPT");
 
@@ -2192,7 +2192,7 @@ definition {
 		}
 
 		task ("Edit the web content, Select display page template and Select related assets") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
@@ -2250,7 +2250,7 @@ definition {
 		}
 
 		task ("Add a Collection Display to Blogs Entry DPT") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Blogs Entry DPT");
 
@@ -2269,7 +2269,7 @@ definition {
 		}
 
 		task ("Edit the blogs entry, Select display page template and Select related assets") {
-			BlogsNavigator.openBlogsAdmin(siteURLKey = "test-site-name");
+			BlogsNavigator.openBlogsAdmin(siteUrlKey = "test-site-name");
 
 			BlogsNavigator.gotoEditCP(entryTitle = "Blogs Entry Title");
 
@@ -2309,7 +2309,7 @@ definition {
 		}
 
 		task ("Add a Collection Display to Document DPT and Select Related Assets in Related Items Collection Providers") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Document DPT");
 
@@ -2332,7 +2332,7 @@ definition {
 		}
 
 		task ("Edit the document, Select display page template") {
-			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
+			DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "test-site-name");
 
 			LexiconEntry.gotoEntryMenuItem(
 				menuItem = "Edit",
@@ -2395,7 +2395,7 @@ definition {
 		}
 
 		task ("Add a Collection Display with Categories for This Item then map the Name field to Heading inside Collection Display in each display page template") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
 
 			for (var displayPageName : list "Web Content DPT,Blogs Entry DPT,Document DPT") {
 				DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "${displayPageName}");
@@ -2454,7 +2454,7 @@ definition {
 		}
 
 		task ("Select the display page template in web content") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
@@ -2474,7 +2474,7 @@ definition {
 		}
 
 		task ("Select the display page template in blogs entry") {
-			BlogsNavigator.openBlogsAdmin(siteURLKey = "test-site-name");
+			BlogsNavigator.openBlogsAdmin(siteUrlKey = "test-site-name");
 
 			BlogsNavigator.gotoEditCP(entryTitle = "Blogs Entry Title");
 
@@ -2495,7 +2495,7 @@ definition {
 		}
 
 		task ("Select the display page template in document") {
-			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
+			DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "test-site-name");
 
 			LexiconEntry.gotoEntryMenuItem(
 				menuItem = "Edit",

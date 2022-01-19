@@ -42,13 +42,13 @@ definition {
 			copySitePagesVariationName = "Main Variation",
 			sitePagesVariationName = "Summer");
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "site-name-staging");
+		PagesAdmin.openPagesAdmin(siteUrlKey = "site-name-staging");
 
 		Staging.viewSitePagesVariationActiveCP(sitePagesVariationName = "Summer");
 
 		PagesAdmin.addPublicPageUnderSitePagesVariation(pageName = "Test Page Name");
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "site-name-staging");
+		PagesAdmin.openPagesAdmin(siteUrlKey = "site-name-staging");
 
 		Staging.changeSitePageVariationCP(sitePagesVariationName = "Main Variation");
 
@@ -79,7 +79,7 @@ definition {
 			copySitePagesVariationName = "Main Variation",
 			sitePagesVariationName = "Summer");
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "site-name-staging");
+		PagesAdmin.openPagesAdmin(siteUrlKey = "site-name-staging");
 
 		PagesAdmin.addPublicChildPage(
 			childPageName = "Page 1",
@@ -110,7 +110,7 @@ definition {
 	@description = "This is a use case for LPS-89546"
 	@priority = "3"
 	test EditPageCreatedBasedOnPageTemplateWithPageVersioning {
-		PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "site-name-staging");
+		PageTemplatesAdmin.openPageTemplatesAdmin(siteUrlKey = "site-name-staging");
 
 		PageTemplatesAdmin.addCollection(collectionName = "Page Template Collection");
 
@@ -118,14 +118,14 @@ definition {
 			pageTemplateName = "Page Template Name",
 			pageTemplateType = "Widget Page Template");
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "site-name-staging");
+		PagesAdmin.openPagesAdmin(siteUrlKey = "site-name-staging");
 
 		PagesAdmin.addPublicPage(
 			collectionName = "Page Template Collection",
 			pageName = "Test Page Name",
 			pageTemplateName = "Page Template Name");
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "site-name-staging");
+		PagesAdmin.openPagesAdmin(siteUrlKey = "site-name-staging");
 
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "Configure",
@@ -148,7 +148,7 @@ definition {
 			copySitePagesVariationName = "Main Variation",
 			sitePagesVariationName = "Test Site Pages Variation");
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "site-name-staging");
+		PagesAdmin.openPagesAdmin(siteUrlKey = "site-name-staging");
 
 		PagesAdmin.addPublicPage(pageName = "Test Page Name");
 
@@ -167,7 +167,7 @@ definition {
 			privacy = "Public Pages",
 			sitePagesVariationName = "Main Variation");
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "site-name-staging");
+		PagesAdmin.openPagesAdmin(siteUrlKey = "site-name-staging");
 
 		PagesAdmin.deletePage(pageName = "Test Page Name");
 
@@ -183,7 +183,7 @@ definition {
 	@description = "This is a use case for LPS-78292."
 	@priority = "4"
 	test PublicationWithoutReadyForPublication {
-		PagesAdmin.openPagesAdmin(siteURLKey = "site-name-staging");
+		PagesAdmin.openPagesAdmin(siteUrlKey = "site-name-staging");
 
 		PagesAdmin.addPublicPage(pageName = "Staging Test Page 2");
 
@@ -328,7 +328,7 @@ definition {
 			workflowDefinition = "Single Approver",
 			workflowResourceValue = "Page Revision");
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "site-name-staging");
+		PagesAdmin.openPagesAdmin(siteUrlKey = "site-name-staging");
 
 		PagesAdmin.addPublicPage(pageName = "Page Revision Page");
 
@@ -610,7 +610,7 @@ definition {
 			sitePagesVariationMenulistName = "Main Variation",
 			sitePagesVariationName = "Summer");
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "site-name-staging");
+		PagesAdmin.openPagesAdmin(siteUrlKey = "site-name-staging");
 
 		PagesAdmin.addPublicPage(pageName = "Page 2");
 
@@ -667,7 +667,7 @@ definition {
 			sitePagesVariationMenulistName = "Main Variation",
 			sitePagesVariationName = "Summer");
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "site-name-staging");
+		PagesAdmin.openPagesAdmin(siteUrlKey = "site-name-staging");
 
 		PagesAdmin.addPublicPage(pageName = "Page 2");
 
@@ -788,7 +788,7 @@ definition {
 
 	@priority = "4"
 	test StagingPortletPublishContentCount {
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name-staging");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -800,18 +800,18 @@ definition {
 
 		WebContent.viewTitle(webContentTitle = "Web Content Title");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name-staging");
 
 		Staging.viewPublishContentCountViaPortletStagingCP(
 			contentCount = "1",
 			contentInformation = "Web Content (1)",
 			stagingDateRange = "From Last Publish Date");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name-staging");
 
 		Staging.publishToLiveNowViaPortletCP();
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name-staging");
 
 		Staging.viewNoPublishContentCountViaPortletStagingCP(stagingDateRange = "From Last Publish Date");
 	}
@@ -831,7 +831,7 @@ definition {
 
 		Staging.viewSitePagesVariationPG(sitePagesVariationName = "Main Variation");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name-staging");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -856,7 +856,7 @@ definition {
 
 		Staging.publishToLive();
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
 
 		WebContent.viewTitle(
 			onLive = "true",
@@ -918,7 +918,7 @@ definition {
 
 		Staging.addSitePagesVariationPG(sitePagesVariationName = "Site Pages Variation Name");
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "site-name-staging");
+		PagesAdmin.openPagesAdmin(siteUrlKey = "site-name-staging");
 
 		PagesAdmin.addPublicPage(pageName = "Test Page Name");
 
@@ -941,7 +941,7 @@ definition {
 	@description = "This is a use case for LPS-87030."
 	@priority = "3"
 	test StagingTurnOffPageTemplatePropagation {
-		PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "site-name-staging");
+		PageTemplatesAdmin.openPageTemplatesAdmin(siteUrlKey = "site-name-staging");
 
 		PageTemplatesAdmin.addCollection(collectionName = "Page Template Collection");
 
@@ -951,7 +951,7 @@ definition {
 
 		PageTemplatesAdmin.configureWidgetPageTemplateLayout(columnName = "1 Column");
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "site-name-staging");
+		PagesAdmin.openPagesAdmin(siteUrlKey = "site-name-staging");
 
 		PagesAdmin.addPublicPage(
 			collectionName = "Page Template Collection",
@@ -1042,7 +1042,7 @@ definition {
 	test ViewChildPageNameViaLocalizedPage {
 		property test.name.skip.portal.instance = "StagingUsecaseWithVersioning#ViewChildPageNameViaLocalizedPage";
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "site-name-staging");
+		PagesAdmin.openPagesAdmin(siteUrlKey = "site-name-staging");
 
 		PagesAdmin.addPublicPage(pageName = "Page1");
 
@@ -1058,7 +1058,7 @@ definition {
 			localeList = "es-ES",
 			localizedNameList = "Página1");
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "site-name-staging");
+		PagesAdmin.openPagesAdmin(siteUrlKey = "site-name-staging");
 
 		PagesAdmin.addPublicChildPage(
 			childPageName = "Page2",
@@ -1079,13 +1079,13 @@ definition {
 
 		Navigator.openStagingSiteURL(siteName = "Site Name");
 
-		var portalURL = PropsUtil.get("portal.url");
+		var portalUrl = PropsUtil.get("portal.url");
 
 		Page.viewTranslationsPG(
 			defaultLanguageLocalizationMessage = "Display the page in English (United States).",
 			pageName = "Página2",
 			preferredLanguageLocalizationMessage = "Establecer español (España) como su idioma preferido.",
-			sitePageURL = "${portalURL}/es/web/site-name-staging/page2",
+			sitePageUrl = "${portalUrl}/es/web/site-name-staging/page2",
 			translationLanguageLocalizationMessage = "This page is displayed in Spanish (Spain).");
 	}
 
@@ -1141,7 +1141,7 @@ definition {
 
 		var currentURL = Navigator.getCurrentURL();
 
-		var keywordsParameterName = StringUtil.extractLast("${currentURL}", "?");
+		var keywordsParameterName = StringUtil.extractLast("${currentUrl}", "?");
 		var keywordsParameter = StringUtil.extractFirst("${keywordsParameterName}", "=");
 
 		echo("## Keywords Parameter: ${keywordsParameter}");
@@ -1154,7 +1154,7 @@ definition {
 	@description = "This is a use case for LPS-98894."
 	@priority = "4"
 	test ViewSummaryScreenWithDraftPage {
-		PagesAdmin.openPagesAdmin(siteURLKey = "site-name-staging");
+		PagesAdmin.openPagesAdmin(siteUrlKey = "site-name-staging");
 
 		PagesAdmin.addPublicPage(pageName = "Draft Page");
 

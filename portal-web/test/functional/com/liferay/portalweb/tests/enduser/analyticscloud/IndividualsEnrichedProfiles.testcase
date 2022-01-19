@@ -93,11 +93,11 @@ definition {
 		}
 
 		task ("Sign in as Test Test") {
-			var portalURL = PropsUtil.get("portal.url");
+			var portalUrl = PropsUtil.get("portal.url");
 
 			User.firstLoginUI(
 				password = "test",
-				specificURL = "${portalURL}/web/site-name/ac-page",
+				specificUrl = "${portalUrl}/web/site-name/ac-page",
 				userEmailAddress = "test@liferay.com");
 		}
 

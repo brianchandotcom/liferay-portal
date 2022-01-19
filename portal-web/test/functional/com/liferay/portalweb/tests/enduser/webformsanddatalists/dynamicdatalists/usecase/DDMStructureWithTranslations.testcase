@@ -20,7 +20,7 @@ definition {
 
 		var sourceJSON = TestCase.getFileContent(fileName = "complexDDMStructure.json");
 
-		DynamicDataMapping.addFieldViaJSON(sourceJSON = "${sourceJSON}");
+		DynamicDataMapping.addFieldViaJSON(sourceJson = "${sourceJson}");
 
 		DDLDataDefinition.setInputFieldLocalization(languageValue = "pt_BR");
 

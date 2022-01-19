@@ -178,7 +178,7 @@ definition {
 			pageName = "Staging Test Page",
 			pageStaging = "true",
 			siteName = "Site Name",
-			siteURL = "true",
+			siteUrl = "true",
 			specificOptionSetValue = "Test Test",
 			user = "Test Test",
 			workflow = "true");
@@ -250,7 +250,7 @@ definition {
 			pageName = "Staging Test Page",
 			pageStaging = "true",
 			siteName = "Site Name",
-			siteURL = "true");
+			siteUrl = "true");
 
 		CalendarEvent.viewToday(eventTitle = "Site Name Staged Event");
 
@@ -263,7 +263,7 @@ definition {
 			pageName = "Staging Test Page",
 			pageStaging = "true",
 			siteName = "Site Name",
-			siteURL = "true");
+			siteUrl = "true");
 
 		CalendarEvent.viewToday(eventTitle = "Test Test Live Event");
 

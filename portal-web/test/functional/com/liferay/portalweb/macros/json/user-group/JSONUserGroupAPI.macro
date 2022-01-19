@@ -6,7 +6,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalURL}/api/jsonws/usergroup/add-user-group \
+			${portalUrl}/api/jsonws/usergroup/add-user-group \
 				-u test@liferay.com:test \
 				-d name=${userGroupName} \
 				-d description=${userGroupDescription}
@@ -22,7 +22,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalURL}/api/jsonws/usergroupgrouprole/add-user-group-group-roles \
+			${portalUrl}/api/jsonws/usergroupgrouprole/add-user-group-group-roles \
 				-u test@liferay.com:test \
 				-d roleId=${roleId} \
 				-d groupId=${groupId} \
@@ -39,7 +39,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalURL}/api/jsonws/usergroup/get-user-group \
+			${portalUrl}/api/jsonws/usergroup/get-user-group \
 				-u test@liferay.com:test \
 				-d name=${userGroupName}
 		''';

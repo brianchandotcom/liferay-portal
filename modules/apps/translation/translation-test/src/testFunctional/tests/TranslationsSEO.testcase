@@ -32,7 +32,7 @@ definition {
 	test CanViewAllHreflangTagsAfterDisabling {
 		property test.name.skip.portal.instance = "TranslationsSEO#CanViewAllHreflangTagsAfterDisabling";
 
-		var portalURL = PropsUtil.get("portal.url");
+		var portalUrl = PropsUtil.get("portal.url");
 
 		TranslationsSEO.enableOnlyTranslatedHreflangs(configurationScope = "System Settings");
 
@@ -44,7 +44,7 @@ definition {
 			groupName = "Test Site Name",
 			layoutName = "Translation Widget Page",
 			portlet = "General",
-			siteURLKey = "test-site-name");
+			siteUrlKey = "test-site-name");
 
 		PagesAdmin.addLocalizedName(
 			localeList = "es-ES",
@@ -52,9 +52,9 @@ definition {
 
 		TranslationsSEO.disableOnlyTranslatedHreflangs(configurationScope = "System Settings");
 
-		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
+		Navigator.openSpecificURL(url = "${portalUrl}/c/portal/logout");
 
-		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/translation-widget-page");
+		Navigator.openSpecificURL(url = "${portalUrl}/web/test-site-name/translation-widget-page");
 
 		TranslationsSEO.viewHreflangTags(localeList = "en_US,ar_SA,ca_ES,zh_CN,nl_NL,fi_FI,fr_FR,de_DE,hu_HU,ja_JP,pt_BR,es_ES,sv_SE");
 	}
@@ -62,7 +62,7 @@ definition {
 	@description = "This ensures that all languages hreflang tag of an untranslated page can be viewed when the OTH is disabled."
 	@priority = "4"
 	test CanViewPageDefaultHreflangTags {
-		var portalURL = PropsUtil.get("portal.url");
+		var portalUrl = PropsUtil.get("portal.url");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
@@ -73,13 +73,13 @@ definition {
 			layoutName = "Translation Content Page",
 			type = "content");
 
-		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
+		Navigator.openSpecificURL(url = "${portalUrl}/c/portal/logout");
 
-		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/translation-widget-page");
+		Navigator.openSpecificURL(url = "${portalUrl}/web/test-site-name/translation-widget-page");
 
 		TranslationsSEO.viewHreflangTags(localeList = "en_US,ar_SA,ca_ES,zh_CN,nl_NL,fi_FI,fr_FR,de_DE,hu_HU,ja_JP,pt_BR,es_ES,sv_SE");
 
-		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/translation-content-page");
+		Navigator.openSpecificURL(url = "${portalUrl}/web/test-site-name/translation-content-page");
 
 		TranslationsSEO.viewHreflangTags(localeList = "en_US,ar_SA,ca_ES,zh_CN,nl_NL,fi_FI,fr_FR,de_DE,hu_HU,ja_JP,pt_BR,es_ES,sv_SE");
 	}
@@ -89,7 +89,7 @@ definition {
 	test CanViewTranslatedLanguageHreflangTagOnContentPage {
 		property test.name.skip.portal.instance = "TranslationsSEO#CanViewTranslatedLanguageHreflangTagOnContentPage";
 
-		var portalURL = PropsUtil.get("portal.url");
+		var portalUrl = PropsUtil.get("portal.url");
 
 		TranslationsSEO.enableOnlyTranslatedHreflangs(configurationScope = "Instance Settings");
 
@@ -117,19 +117,19 @@ definition {
 
 		PageEditor.clickPublish();
 
-		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
+		Navigator.openSpecificURL(url = "${portalUrl}/c/portal/logout");
 
-		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/translation-content-page");
+		Navigator.openSpecificURL(url = "${portalUrl}/web/test-site-name/translation-content-page");
 
 		TranslationsSEO.viewHreflangTags(localeList = "en_US,es_ES");
 
 		TranslationsSEO.viewNoHreflangTags(localeList = "ar_SA,ca_ES,zh_CN,nl_NL,fi_FI,fr_FR,de_DE,hu_HU,ja_JP,pt_BR,sv_SE");
 
-		Navigator.openSpecificURL(url = "${portalURL}/zh/web/test-site-name/translation-content-page");
+		Navigator.openSpecificURL(url = "${portalUrl}/zh/web/test-site-name/translation-content-page");
 
-		Page.assertCanonicalURL(customCanonicalURL = "${portalURL}/web/test-site-name");
+		Page.assertCanonicalURL(customCanonicalUrl = "${portalUrl}/web/test-site-name");
 
-		Page.assertDefaultAlternateURL(portalURL = "${portalURL}/web/test-site-name");
+		Page.assertDefaultAlternateURL(portalUrl = "${portalUrl}/web/test-site-name");
 
 		TranslationsSEO.viewHreflangTags(localeList = "en_US,es_ES");
 
@@ -141,11 +141,11 @@ definition {
 	test CanViewTranslatedLanguageHreflangTagOnDisplayPage {
 		property test.name.skip.portal.instance = "TranslationsSEO#CanViewTranslatedLanguageHreflangTagOnDisplayPage";
 
-		var portalURL = PropsUtil.get("portal.url");
+		var portalUrl = PropsUtil.get("portal.url");
 
 		TranslationsSEO.enableOnlyTranslatedHreflangs(
 			configurationScope = "Site Settings",
-			siteURLKey = "test-site-name");
+			siteUrlKey = "test-site-name");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
@@ -167,7 +167,7 @@ definition {
 			groupName = "Test Site Name",
 			title = "Webcontent Title");
 
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
 
 		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
@@ -188,9 +188,9 @@ definition {
 
 		DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
 
-		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
+		Navigator.openSpecificURL(url = "${portalUrl}/c/portal/logout");
 
-		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/translation-widget-page");
+		Navigator.openSpecificURL(url = "${portalUrl}/web/test-site-name/translation-widget-page");
 
 		AssetPublisherPortlet.clickAssetTitle(assetTitle = "Webcontent Title");
 
@@ -198,13 +198,13 @@ definition {
 
 		TranslationsSEO.viewNoHreflangTags(localeList = "ar_SA,ca_ES,zh_CN,nl_NL,fi_FI,fr_FR,de_DE,hu_HU,es_ES,pt_BR,sv_SE");
 
-		Navigator.openSpecificURL(url = "${portalURL}/es/web/test-site-name/translation-widget-page");
+		Navigator.openSpecificURL(url = "${portalUrl}/es/web/test-site-name/translation-widget-page");
 
 		AssetPublisherPortlet.clickAssetTitle(assetTitle = "Webcontent Title");
 
-		Page.assertCanonicalURL(customCanonicalURL = "${portalURL}/web/test-site-name/w/webcontent-title");
+		Page.assertCanonicalURL(customCanonicalUrl = "${portalUrl}/web/test-site-name/w/webcontent-title");
 
-		Page.assertDefaultAlternateURL(portalURL = "${portalURL}/web/test-site-name/w/webcontent-title");
+		Page.assertDefaultAlternateURL(portalUrl = "${portalUrl}/web/test-site-name/w/webcontent-title");
 
 		TranslationsSEO.viewHreflangTags(localeList = "en_US,ja_JP");
 
@@ -216,7 +216,7 @@ definition {
 	test CanViewTranslatedLanguageHreflangTagOnWidgetPage {
 		property test.name.skip.portal.instance = "TranslationsSEO#CanViewTranslatedLanguageHreflangTagOnWidgetPage";
 
-		var portalURL = PropsUtil.get("portal.url");
+		var portalUrl = PropsUtil.get("portal.url");
 
 		TranslationsSEO.enableOnlyTranslatedHreflangs(configurationScope = "System Settings");
 
@@ -228,25 +228,25 @@ definition {
 			groupName = "Test Site Name",
 			layoutName = "Translation Widget Page",
 			portlet = "General",
-			siteURLKey = "test-site-name");
+			siteUrlKey = "test-site-name");
 
 		PagesAdmin.addLocalizedName(
 			localeList = "es-ES",
 			localizedNameList = "Página de traducción");
 
-		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
+		Navigator.openSpecificURL(url = "${portalUrl}/c/portal/logout");
 
-		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/translation-widget-page");
+		Navigator.openSpecificURL(url = "${portalUrl}/web/test-site-name/translation-widget-page");
 
 		TranslationsSEO.viewHreflangTags(localeList = "en_US,es_ES");
 
 		TranslationsSEO.viewNoHreflangTags(localeList = "ar_SA,ca_ES,zh_CN,nl_NL,fi_FI,fr_FR,de_DE,hu_HU,ja_JP,pt_BR,sv_SE");
 
-		Navigator.openSpecificURL(url = "${portalURL}/ja/web/test-site-name/translation-widget-page");
+		Navigator.openSpecificURL(url = "${portalUrl}/ja/web/test-site-name/translation-widget-page");
 
-		Page.assertCanonicalURL(customCanonicalURL = "${portalURL}/web/test-site-name");
+		Page.assertCanonicalURL(customCanonicalUrl = "${portalUrl}/web/test-site-name");
 
-		Page.assertDefaultAlternateURL(portalURL = "${portalURL}/web/test-site-name");
+		Page.assertDefaultAlternateURL(portalUrl = "${portalUrl}/web/test-site-name");
 
 		TranslationsSEO.viewHreflangTags(localeList = "en_US,es_ES");
 

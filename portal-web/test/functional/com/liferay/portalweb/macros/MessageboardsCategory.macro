@@ -17,10 +17,10 @@ definition {
 	}
 
 	macro addPG {
-		if (isSet(siteURLKey)) {
+		if (isSet(siteUrlKey)) {
 			MessageboardsCategory.openToAddCategory(
 				layoutName = "${layoutName}",
-				siteURLKey = "${siteURLKey}");
+				siteUrlKey = "${siteUrlKey}");
 		}
 		else {
 			AssertClick(
@@ -84,12 +84,12 @@ definition {
 	}
 
 	macro editPG {
-		if (isSet(siteURLKey)) {
+		if (isSet(siteUrlKey)) {
 			MessageboardsCategory.openToEditCategory(
 				categoryName = "${categoryName}",
 				groupName = "${groupName}",
 				layoutName = "${layoutName}",
-				siteURLKey = "${siteURLKey}");
+				siteUrlKey = "${siteUrlKey}");
 		}
 		else {
 			LexiconEntry.openEntryMenu(rowEntry = "${categoryName}");
@@ -149,13 +149,13 @@ definition {
 	}
 
 	macro openToAddCategory {
-		var baseURL = "${baseURL}";
+		var baseUrl = "${baseUrl}";
 
 		if (!(isSet(baseURL))) {
-			var baseURL = PropsUtil.get("portal.url");
+			var baseUrl = PropsUtil.get("portal.url");
 		}
 
-		Open(locator1 = "${baseURL}/web/${siteURLKey}/${layoutName}?p_p_id=com_liferay_message_boards_web_portlet_MBPortlet&p_p_lifecycle=0&p_p_state=normal&p_p_mode=view&_com_liferay_message_boards_web_portlet_MBPortlet_javax.portlet.action=%2Fmessage_boards%2Fedit_category&_com_liferay_message_boards_web_portlet_MBPortlet_mvcRenderCommandName=%2Fmessage_boards%2Fedit_category");
+		Open(locator1 = "${baseUrl}/web/${siteUrlKey}/${layoutName}?p_p_id=com_liferay_message_boards_web_portlet_MBPortlet&p_p_lifecycle=0&p_p_state=normal&p_p_mode=view&_com_liferay_message_boards_web_portlet_MBPortlet_javax.portlet.action=%2Fmessage_boards%2Fedit_category&_com_liferay_message_boards_web_portlet_MBPortlet_mvcRenderCommandName=%2Fmessage_boards%2Fedit_category");
 	}
 
 	macro openToCategory {
@@ -163,17 +163,17 @@ definition {
 			categoryName = "${categoryName}",
 			groupName = "${groupName}");
 
-		var baseURL = "${baseURL}";
+		var baseUrl = "${baseUrl}";
 
 		if (!(isSet(baseURL))) {
-			var baseURL = PropsUtil.get("portal.url");
+			var baseUrl = PropsUtil.get("portal.url");
 		}
 
 		if (isSet(layoutName)) {
-			Open(locator1 = "${baseURL}/web/${siteURLKey}/${layoutName}/-/message_boards/category/${categoryId}");
+			Open(locator1 = "${baseUrl}/web/${siteUrlKey}/${layoutName}/-/message_boards/category/${categoryId}");
 		}
 		else {
-			Open(locator1 = "${baseURL}/group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_message_boards_web_portlet_MBAdminPortlet&_com_liferay_message_boards_web_portlet_MBAdminPortlet_mvcRenderCommandName=%2Fmessage_boards%2Fview_category&_com_liferay_message_boards_web_portlet_MBAdminPortlet_mbCategoryId=${categoryId}");
+			Open(locator1 = "${baseUrl}/group/${siteUrlKey}/~/control_panel/manage?p_p_id=com_liferay_message_boards_web_portlet_MBAdminPortlet&_com_liferay_message_boards_web_portlet_MBAdminPortlet_mvcRenderCommandName=%2Fmessage_boards%2Fview_category&_com_liferay_message_boards_web_portlet_MBAdminPortlet_mbCategoryId=${categoryId}");
 		}
 	}
 
@@ -182,17 +182,17 @@ definition {
 			categoryName = "${categoryName}",
 			groupName = "${groupName}");
 
-		var baseURL = "${baseURL}";
+		var baseUrl = "${baseUrl}";
 
 		if (!(isSet(baseURL))) {
-			var baseURL = PropsUtil.get("portal.url");
+			var baseUrl = PropsUtil.get("portal.url");
 		}
 
 		if (isSet(layoutName)) {
-			Open(locator1 = "${baseURL}/web/${siteURLKey}/${layoutName}?p_p_id=com_liferay_message_boards_web_portlet_MBPortlet&_com_liferay_message_boards_web_portlet_MBPortlet_mvcRenderCommandName=%2Fmessage_boards%2Fedit_category&_com_liferay_message_boards_web_portlet_MBPortlet_mbCategoryId=${categoryId}");
+			Open(locator1 = "${baseUrl}/web/${siteUrlKey}/${layoutName}?p_p_id=com_liferay_message_boards_web_portlet_MBPortlet&_com_liferay_message_boards_web_portlet_MBPortlet_mvcRenderCommandName=%2Fmessage_boards%2Fedit_category&_com_liferay_message_boards_web_portlet_MBPortlet_mbCategoryId=${categoryId}");
 		}
 		else {
-			Open(locator1 = "${baseURL}/group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_message_boards_web_portlet_MBAdminPortlet&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_com_liferay_message_boards_web_portlet_MBAdminPortlet_mvcRenderCommandName=%2Fmessage_boards%2Fedit_category&_com_liferay_message_boards_web_portlet_MBAdminPortlet_mbCategoryId=${categoryId}");
+			Open(locator1 = "${baseUrl}/group/${siteUrlKey}/~/control_panel/manage?p_p_id=com_liferay_message_boards_web_portlet_MBAdminPortlet&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_com_liferay_message_boards_web_portlet_MBAdminPortlet_mvcRenderCommandName=%2Fmessage_boards%2Fedit_category&_com_liferay_message_boards_web_portlet_MBAdminPortlet_mbCategoryId=${categoryId}");
 		}
 	}
 

@@ -12,7 +12,7 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Test Site Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 		NavItem.gotoStructures();
 	}
@@ -63,7 +63,7 @@ definition {
 	@description = "This test ensures default title is carried to a new locale on the fieldsets modal."
 	@priority = "4"
 	test DefaultTitleIsDisplayedUponLocaleChange {
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 		NavItem.gotoStructures();
 
@@ -170,22 +170,22 @@ definition {
 	@description = "This test ensures its possible to translate the Fieldset to N languages."
 	@priority = "5"
 	test TranslateFieldsetToNLanguages {
-		var fieldsetNameEN = "Fieldset Name";
+		var fieldsetNameEn = "Fieldset Name";
 
 		WebContentStructures.addCP(structureName = "WC Structure Name");
 
 		DataEngine.createNewFieldset(
 			fieldNameList = "Text,Numeric",
-			fieldsetName = "${fieldsetNameEN}");
+			fieldsetName = "${fieldsetNameEn}");
 
-		DataEngine.addFieldsetToBuilder(fieldsetName = "${fieldsetNameEN}");
+		DataEngine.addFieldsetToBuilder(fieldsetName = "${fieldsetNameEn}");
 
 		Translations.addLanguageManageTranslations(key_language = "pt-BR");
 
 		PortletEntry.changeLocale(locale = "pt-BR");
 
 		DataEngine.editFieldsetsLabel(
-			fieldsetLabel = "${fieldsetNameEN}",
+			fieldsetLabel = "${fieldsetNameEn}",
 			fieldsetLabelEdit = "Fieldset Name pt-BR");
 
 		Translations.addLanguageManageTranslations(key_language = "de-DE");
@@ -193,7 +193,7 @@ definition {
 		PortletEntry.changeLocale(locale = "de-DE");
 
 		DataEngine.editFieldsetsLabel(
-			fieldsetLabel = "${fieldsetNameEN}",
+			fieldsetLabel = "${fieldsetNameEn}",
 			fieldsetLabelEdit = "Fieldset Name de-DE");
 
 		Translations.addLanguageManageTranslations(key_language = "es-ES");
@@ -201,12 +201,12 @@ definition {
 		PortletEntry.changeLocale(locale = "es-ES");
 
 		DataEngine.editFieldsetsLabel(
-			fieldsetLabel = "${fieldsetNameEN}",
+			fieldsetLabel = "${fieldsetNameEn}",
 			fieldsetLabelEdit = "Fieldset Name es-ES");
 
 		DataEngine.addTranslationToFieldset(
 			fieldNameList = "Text,Numeric",
-			fieldsetName = "${fieldsetNameEN}",
+			fieldsetName = "${fieldsetNameEn}",
 			localeList = "pt-BR,de-DE,es-ES");
 
 		WebContentStructures.saveCP();
@@ -215,7 +215,7 @@ definition {
 
 		DataEngine.viewFieldsetTranslation(
 			fieldNameList = "Text,Numeric",
-			fieldsetName = "${fieldsetNameEN}",
+			fieldsetName = "${fieldsetNameEn}",
 			localeList = "pt-BR,de-DE,es-ES");
 	}
 
@@ -746,7 +746,7 @@ definition {
 	test TranslateStructureWithFieldsetAndNested {
 		property portal.acceptance = "true";
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 		NavItem.gotoStructures();
 
@@ -1086,7 +1086,7 @@ definition {
 	@description = "This test ensures that the default language is the first show on the fieldset modal."
 	@priority = "5"
 	test VerifyDefaultLanguageIsFirstShown {
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 		NavItem.gotoStructures();
 

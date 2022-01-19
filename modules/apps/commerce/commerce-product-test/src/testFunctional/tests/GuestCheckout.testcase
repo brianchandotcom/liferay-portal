@@ -107,7 +107,7 @@ definition {
 			cartItemNames = "U-Joint,",
 			cartItemPriceValues = "24,",
 			cartItemQuantities = "1,",
-			cartItemSKUs = "SPEED55861,");
+			cartItemSkUs = "SPEED55861,");
 
 		Click(locator1 = "CommerceAccelerators#MINI_CART_CLOSE");
 
@@ -127,7 +127,7 @@ definition {
 			cartItemNames = "U-Joint,",
 			cartItemPriceValues = "24,",
 			cartItemQuantities = "1,",
-			cartItemSKUs = "SPEED55861,");
+			cartItemSkUs = "SPEED55861,");
 
 		Click(locator1 = "CommerceAccelerators#MINI_CART_CLOSE");
 	}
@@ -209,7 +209,7 @@ definition {
 			cartItemNames = "U-Joint,",
 			cartItemPriceValues = "24,",
 			cartItemQuantities = "1,",
-			cartItemSKUs = "SPEED55861,",
+			cartItemSkUs = "SPEED55861,",
 			cartSummaryQuantity = "1",
 			cartSummarySubtotal = "24",
 			cartSummaryTotal = "${cartSummarySubtotal}");
@@ -234,7 +234,7 @@ definition {
 			cartItemNames = "U-Joint,",
 			cartItemPriceValues = "24,",
 			cartItemQuantities = "5,",
-			cartItemSKUs = "SPEED55861,",
+			cartItemSkUs = "SPEED55861,",
 			cartSummaryQuantity = "5",
 			cartSummarySubtotal = "120",
 			cartSummaryTotal = "${cartSummarySubtotal}");
@@ -254,7 +254,7 @@ definition {
 			cartItemNames = "U-Joint,",
 			cartItemPriceValues = "24,",
 			cartItemQuantities = "1,",
-			cartItemSKUs = "SPEED55861,",
+			cartItemSkUs = "SPEED55861,",
 			cartSummaryQuantity = "1",
 			cartSummarySubtotal = "24",
 			cartSummaryTotal = "${cartSummarySubtotal}");
@@ -337,7 +337,7 @@ definition {
 			cartItemNames = "U-Joint,",
 			cartItemPriceValues = "24,",
 			cartItemQuantities = "1,",
-			cartItemSKUs = "SPEED55861,",
+			cartItemSkUs = "SPEED55861,",
 			cartSummaryQuantity = "1",
 			cartSummarySubtotal = "24",
 			cartSummaryTotal = "${cartSummarySubtotal}");
@@ -362,7 +362,7 @@ definition {
 			cartItemNames = "Transmission Cooler Line Assembly,",
 			cartItemPriceValues = "15,",
 			cartItemQuantities = "5,",
-			cartItemSKUs = "SPEED55860,",
+			cartItemSkUs = "SPEED55860,",
 			cartSummaryQuantity = "5",
 			cartSummarySubtotal = "75",
 			cartSummaryTotal = "${cartSummarySubtotal}");
@@ -382,7 +382,7 @@ definition {
 			cartItemNames = "U-Joint,Transmission Cooler Line Assembly,",
 			cartItemPriceValues = "24,15,",
 			cartItemQuantities = "1,5,",
-			cartItemSKUs = "SPEED55861,SPEED55860,",
+			cartItemSkUs = "SPEED55861,SPEED55860,",
 			cartSummaryQuantity = "6",
 			cartSummarySubtotal = "99",
 			cartSummaryTotal = "${cartSummarySubtotal}");

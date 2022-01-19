@@ -123,7 +123,7 @@ definition {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		Check.checkToggleSwitch(
-			key_productSKU = "MIN55861",
+			key_productSku = "MIN55861",
 			locator1 = "Checkbox#ADD_SHIPMENT_ITEMS_CHECKBOX");
 
 		Button.clickSubmitButton();
@@ -321,7 +321,7 @@ definition {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		Check.checkToggleSwitch(
-			key_productSKU = "MIN55861",
+			key_productSku = "MIN55861",
 			locator1 = "Checkbox#ADD_SHIPMENT_ITEMS_CHECKBOX");
 
 		Button.clickSubmitButton();
@@ -456,7 +456,7 @@ definition {
 			locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
 
 		CommerceOrders.createShipment(
-			productSKUList = "MIN55861",
+			productSkuList = "MIN55861",
 			warehouseName = "Italy");
 
 		AssertElementNotPresent(
@@ -545,7 +545,7 @@ definition {
 			locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
 
 		CommerceOrders.createShipment(
-			productSKUList = "MIN55857,MIN55858,MIN55859",
+			productSkuList = "MIN55857,MIN55858,MIN55859",
 			warehouseName = "Italy");
 
 		Click(locator1 = "Icon#BACK");
@@ -561,7 +561,7 @@ definition {
 		CommerceEntry.clickNoError(menuItem = "View");
 
 		CommerceOrders.createShipment(
-			productSKUList = "MIN55860,MIN55861",
+			productSkuList = "MIN55860,MIN55861",
 			warehouseName = "Italy");
 
 		Click(
@@ -644,7 +644,7 @@ definition {
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
 		Check.checkToggleSwitch(
-			key_productSKU = "MIN55861",
+			key_productSku = "MIN55861",
 			locator1 = "Checkbox#ADD_SHIPMENT_ITEMS_CHECKBOX");
 
 		Button.clickSubmitButton();
@@ -731,7 +731,7 @@ definition {
 
 		CommerceOrders.createShipment(
 			complement = "Deliver",
-			productSKUList = "MIN55861",
+			productSkuList = "MIN55861",
 			warehouseName = "Italy");
 
 		CommerceNavigator.gotoPortlet(
@@ -875,7 +875,7 @@ definition {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		Check.checkToggleSwitch(
-			key_productSKU = "MIN55861",
+			key_productSku = "MIN55861",
 			locator1 = "Checkbox#ADD_SHIPMENT_ITEMS_CHECKBOX");
 
 		Button.clickSubmitButton();
@@ -1014,16 +1014,16 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		for (var productSKU : list "MIN55860,MIN55861") {
+		for (var productSku : list "MIN55860,MIN55861") {
 			Check.checkToggleSwitch(
-				key_productSKU = "${productSKU}",
+				key_productSku = "${productSku}",
 				locator1 = "Checkbox#ADD_SHIPMENT_ITEMS_CHECKBOX");
 		}
 
 		Button.clickSubmitButton();
 
-		for (var productSKU : list "MIN55860,MIN55861") {
-			CommerceNavigator.gotoEntry(entryName = "${productSKU}");
+		for (var productSku : list "MIN55860,MIN55861") {
+			CommerceNavigator.gotoEntry(entryName = "${productSku}");
 
 			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
@@ -1050,7 +1050,7 @@ definition {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		Click(
-			key_FilterOption = "Submit",
+			key_filterOption = "Submit",
 			locator1 = "AppBuilder#CHOOSE_SEARCH_FILTER_BY_OPTION");
 
 		Refresh();
@@ -1137,7 +1137,7 @@ definition {
 			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
 			Check.checkToggleSwitch(
-				key_productSKU = "MIN55861",
+				key_productSku = "MIN55861",
 				locator1 = "Checkbox#ADD_SHIPMENT_ITEMS_CHECKBOX");
 
 			Button.clickSubmitButton();
@@ -1447,7 +1447,7 @@ definition {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		Check.checkToggleSwitch(
-			key_productSKU = "MIN55861",
+			key_productSku = "MIN55861",
 			locator1 = "Checkbox#ADD_SHIPMENT_ITEMS_CHECKBOX");
 
 		Button.clickSubmitButton();
@@ -1711,7 +1711,7 @@ definition {
 			shippingMethod = "Standard");
 
 		Click(
-			key_FilterOption = "Go to Order Details",
+			key_filterOption = "Go to Order Details",
 			locator1 = "AppBuilder#CHOOSE_APP_SEARCH_FILTER_BY_OPTION");
 
 		AssertTextEquals.assertPartialText(
@@ -1844,7 +1844,7 @@ definition {
 		Click(locator1 = "Button#CONTINUE");
 
 		Click(
-			key_FilterOption = "Go to Order Details",
+			key_filterOption = "Go to Order Details",
 			locator1 = "AppBuilder#CHOOSE_APP_SEARCH_FILTER_BY_OPTION");
 
 		AssertTextEquals.assertPartialText(

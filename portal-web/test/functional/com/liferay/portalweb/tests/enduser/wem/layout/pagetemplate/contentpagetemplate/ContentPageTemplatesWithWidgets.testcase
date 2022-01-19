@@ -43,7 +43,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Add an asset publisher widget to the content page template") {
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteUrlKey = "test-site-name");
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 

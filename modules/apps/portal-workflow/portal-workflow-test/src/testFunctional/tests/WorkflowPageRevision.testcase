@@ -24,7 +24,7 @@ definition {
 			siteName = "Site Name",
 			siteType = "Blank");
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
+		PagesAdmin.openPagesAdmin(siteUrlKey = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
@@ -42,7 +42,7 @@ definition {
 			pageVersioningEnabled = "true",
 			siteName = "Site Name");
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
+		PagesAdmin.openPagesAdmin(siteUrlKey = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",

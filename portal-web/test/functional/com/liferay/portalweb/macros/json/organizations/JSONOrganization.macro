@@ -99,7 +99,7 @@ definition {
 		}
 
 		var curl = '''
-			${portalURL}/api/jsonws/organization/get-organizations/company-id/${companyId}/parent-organization-id/${parentOrganizationId} \
+			${portalUrl}/api/jsonws/organization/get-organizations/company-id/${companyId}/parent-organization-id/${parentOrganizationId} \
 				-u test@liferay.com:test
 		''';
 		var organizationId = JSONCurlUtil.get("${curl}", "$.[?(@['name'] == '${organizationName}')]['organizationId']");
@@ -113,7 +113,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalURL}/api/jsonws/organization/get-organization/organization-id/${organizationId} \
+			${portalUrl}/api/jsonws/organization/get-organization/organization-id/${organizationId} \
 				-u test@liferay.com:test
 		''';
 		var organizationName = JSONCurlUtil.get("${curl}", "$['name']");

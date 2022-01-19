@@ -26,7 +26,7 @@ definition {
 	test ToastMessageCanBeClosedManually {
 		property test.name.skip.portal.instance = "ClayAlert#ToastMessageCanBeClosedManually";
 
-		var portalURL = PropsUtil.get("portal.url");
+		var portalUrl = PropsUtil.get("portal.url");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -49,7 +49,7 @@ definition {
 	test ToastMessageCanCloseAutomatically {
 		property test.name.skip.portal.instance = "ClayAlert#ToastMessageCanCloseAutomatically";
 
-		var portalURL = PropsUtil.get("portal.url");
+		var portalUrl = PropsUtil.get("portal.url");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",

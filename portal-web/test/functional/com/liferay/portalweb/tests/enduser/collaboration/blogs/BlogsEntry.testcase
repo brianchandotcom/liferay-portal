@@ -30,7 +30,7 @@ definition {
 
 		BlogsNavigator.openToAddEntry(
 			layoutName = "Blogs Page",
-			siteURLKey = "guest");
+			siteUrlKey = "guest");
 
 		BlogsEntry.addTitle(entryTitle = "Blogs Entry Title");
 
@@ -59,11 +59,11 @@ definition {
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_1.jpg");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		var dmDocument1URL = DMDocument.getDMLatestVersionURL(
 			dmDocumentTitle = "Document_1.jpg",
-			siteURLKey = "guest");
+			siteUrlKey = "guest");
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentTitle = "Document_2.jpg",
@@ -73,9 +73,9 @@ definition {
 
 		var dmDocument2URL = DMDocument.getDMLatestVersionURL(
 			dmDocumentTitle = "Document_2.jpg",
-			siteURLKey = "guest");
+			siteUrlKey = "guest");
 
-		BlogsNavigator.openToAddEntry(siteURLKey = "guest");
+		BlogsNavigator.openToAddEntry(siteUrlKey = "guest");
 
 		BlogsEntry.addEntryContent(
 			entryContent = "Blogs Entry Content",
@@ -87,7 +87,7 @@ definition {
 
 		BlogsEntry.viewEntryExternalURL(
 			entryContent = "Blogs Entry Content",
-			entryExternalURL = "${dmDocument1URL}",
+			entryExternalUrl = "${dmDocument1Url}",
 			entryTitle = "Blogs Entry Title");
 
 		BlogsEntry.addEntryExternalLinkViaBrowseButton(
@@ -97,7 +97,7 @@ definition {
 
 		BlogsEntry.viewEntryExternalURL(
 			entryContent = "Blogs Entry Content",
-			entryExternalURL = "${dmDocument2URL}",
+			entryExternalUrl = "${dmDocument2Url}",
 			entryTitle = "Blogs Entry Title");
 	}
 
@@ -106,7 +106,7 @@ definition {
 	test AddBlogWithFormatting {
 		property testray.component.names = "Training,WYSIWYG";
 
-		BlogsNavigator.openToAddEntry(siteURLKey = "guest");
+		BlogsNavigator.openToAddEntry(siteUrlKey = "guest");
 
 		BlogsNavigator.gotoSelectFile();
 
@@ -138,7 +138,7 @@ definition {
 
 		BlogsNavigator.openToAddEntry(
 			layoutName = "Blogs Page",
-			siteURLKey = "guest");
+			siteUrlKey = "guest");
 
 		Blogs.addEntryWithHTML(
 			entryContent = '''<h2>Blogs Entry Content</h2>''',
@@ -149,10 +149,10 @@ definition {
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
 			layoutName = "Blogs Page",
-			siteURLKey = "guest");
+			siteUrlKey = "guest");
 
 		BlogsEntry.viewEntryPG(
-			entryContentHTML = "Blogs Entry Content",
+			entryContentHtml = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 	}
 
@@ -170,7 +170,7 @@ definition {
 
 		BlogsNavigator.openToAddEntry(
 			layoutName = "Blogs Page",
-			siteURLKey = "guest");
+			siteUrlKey = "guest");
 
 		BlogsEntry.addTitle(entryTitle = "Blogs Entry Title");
 
@@ -235,7 +235,7 @@ definition {
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
 			layoutName = "Blogs Page",
-			siteURLKey = "guest");
+			siteUrlKey = "guest");
 
 		BlogsEntry.viewEntryPG(
 			entryContentBold = "Bold Type",
@@ -258,7 +258,7 @@ definition {
 
 		BlogsNavigator.openToAddEntry(
 			layoutName = "Blogs Page",
-			siteURLKey = "guest");
+			siteUrlKey = "guest");
 
 		BlogsEntry.addTitle(entryTitle = "Blogs Entry Title");
 
@@ -282,13 +282,13 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanAddTitleWithoutEscapingCharacters {
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+		BlogsNavigator.openBlogsAdmin(siteUrlKey = "guest");
 
 		Blogs.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = '''&amp; &lt; &gt; &quot; > <''');
 
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+		BlogsNavigator.openBlogsAdmin(siteUrlKey = "guest");
 
 		BlogsNavigator.gotoEntryCP(entryTitle = '''&amp; &lt; &gt; &quot; > <''');
 
@@ -313,7 +313,7 @@ definition {
 
 		BlogsNavigator.openToAddEntry(
 			layoutName = "Blogs Page",
-			siteURLKey = "guest");
+			siteUrlKey = "guest");
 
 		BlogsEntry.addEntryContent(
 			entryContent = "Blogs Entry Content",
@@ -338,9 +338,9 @@ definition {
 
 		PortletEntry.publish();
 
-		var portalURL = PropsUtil.get("portal.url");
+		var portalUrl = PropsUtil.get("portal.url");
 
-		Navigator.openSpecificURL(url = "${portalURL}/web/guest/blogs-page/-/blogs/custom-url-here");
+		Navigator.openSpecificURL(url = "${portalUrl}/web/guest/blogs-page/-/blogs/custom-url-here");
 
 		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content",
@@ -376,7 +376,7 @@ definition {
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
 			layoutName = "Blogs Page",
-			siteURLKey = "guest");
+			siteUrlKey = "guest");
 
 		BlogsEntry.viewEntryPG(
 			embedVideo = "true",
@@ -388,7 +388,7 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test CanAddWithStaticGif {
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+		BlogsNavigator.openBlogsAdmin(siteUrlKey = "guest");
 
 		Blogs.addEntryWithUploadedCoverImage(
 			coverImageName = "static",
@@ -459,7 +459,7 @@ definition {
 
 		BlogsNavigator.openToAddEntry(
 			layoutName = "Blogs Page",
-			siteURLKey = "guest");
+			siteUrlKey = "guest");
 
 		BlogsEntry.addEntryContent(
 			entryContent = "Blogs Entry1 Content",
@@ -489,14 +489,14 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanAutomaticallySaveEntryAsDraft {
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+		BlogsNavigator.openBlogsAdmin(siteUrlKey = "guest");
 
 		Blogs.addDraftViaAutoSave(
 			entryContent = "Blogs Entry Content",
 			entrySubtitle = "Blogs Entry Subtitle",
 			entryTitle = "Blogs Entry Title");
 
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+		BlogsNavigator.openBlogsAdmin(siteUrlKey = "guest");
 
 		BlogsNavigator.gotoEntryCP(
 			entryStatus = "Draft",
@@ -527,7 +527,7 @@ definition {
 
 		BlogsNavigator.openToAddEntry(
 			layoutName = "Blogs Page",
-			siteURLKey = "guest");
+			siteUrlKey = "guest");
 
 		BlogsEntry.addEntryContent(
 			entryContent = "Blogs Entry Content",
@@ -585,7 +585,7 @@ definition {
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
 			layoutName = "Blogs Page",
-			siteURLKey = "guest");
+			siteUrlKey = "guest");
 
 		AssertTextEquals(
 			locator1 = "BlogsEntry#ENTRY_COVER_IMAGE_CAPTION",
@@ -594,7 +594,7 @@ definition {
 		BlogsNavigator.openToEditEntryInSite(
 			entryTitle = "Blogs Entry Title",
 			groupName = "Guest",
-			siteURLKey = "guest");
+			siteUrlKey = "guest");
 
 		BlogsEntry.editCoverImageCaption(captionField = "");
 
@@ -603,7 +603,7 @@ definition {
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
 			layoutName = "Blogs Page",
-			siteURLKey = "guest");
+			siteUrlKey = "guest");
 
 		AssertElementNotPresent(locator1 = "BlogsEntry#ENTRY_COVER_IMAGE_CAPTION");
 	}
@@ -612,14 +612,14 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test CanDeleteDraft {
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+		BlogsNavigator.openBlogsAdmin(siteUrlKey = "guest");
 
 		Blogs.addDraft(
 			entryContent = "Blogs Entry Content",
 			entrySubtitle = "Blogs Entry Subtitle",
 			entryTitle = "Blogs Entry Title");
 
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+		BlogsNavigator.openBlogsAdmin(siteUrlKey = "guest");
 
 		BlogsNavigator.gotoEntryCP(
 			entryStatus = "Draft",
@@ -630,7 +630,7 @@ definition {
 			entrySubtitle = "Blogs Entry Subtitle",
 			entryTitle = "Blogs Entry Title");
 
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+		BlogsNavigator.openBlogsAdmin(siteUrlKey = "guest");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
@@ -638,7 +638,7 @@ definition {
 			assetType = "Blogs Entry",
 			entryTitle = "Blogs Entry Title");
 
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+		BlogsNavigator.openBlogsAdmin(siteUrlKey = "guest");
 
 		BlogsEntry.viewDefaultCP(entryTitle = "Blogs Entry Title");
 	}
@@ -658,14 +658,14 @@ definition {
 			entryTitle = "Blogs Entry2 Title");
 
 		for (var entryCount : list "1,2") {
-			BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+			BlogsNavigator.openBlogsAdmin(siteUrlKey = "guest");
 
 			BlogsNavigator.moveToRecycleBinCP(
 				assetType = "Blogs Entry",
 				entryTitle = "Blogs Entry${entryCount} Title");
 		}
 
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+		BlogsNavigator.openBlogsAdmin(siteUrlKey = "guest");
 
 		for (var entryCount : list "1,2") {
 			BlogsEntry.viewNoCP(entryTitle = "Blogs Entry${entryCount} Title");
@@ -699,7 +699,7 @@ definition {
 		BlogsNavigator.openToEditEntryInSite(
 			entryTitle = "Blogs Entry Title",
 			groupName = "Guest",
-			siteURLKey = "guest");
+			siteUrlKey = "guest");
 
 		BlogsEntry.editCoverImageCaption(captionField = "!@#$%^&*()");
 
@@ -708,7 +708,7 @@ definition {
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
 			layoutName = "Blogs Page",
-			siteURLKey = "guest");
+			siteUrlKey = "guest");
 
 		BlogsEntry.viewEntryPG(
 			entryCaption = "!@#$%^&*()",
@@ -732,7 +732,7 @@ definition {
 			layoutName = "Blogs Page",
 			widgetName = "Blogs");
 
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+		BlogsNavigator.openBlogsAdmin(siteUrlKey = "guest");
 
 		Blogs.addWithCustomAbstract(
 			entryAbstractDescription = "Blogs Entry Custom Abstract",
@@ -754,7 +754,7 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+		BlogsNavigator.openBlogsAdmin(siteUrlKey = "guest");
 
 		BlogsNavigator.gotoEditCP(entryTitle = "Blogs Entry Title");
 
@@ -799,7 +799,7 @@ definition {
 			entryTitleEdit = "Blogs Entry Title Edit",
 			searchAssetTitle = "Blogs Entry Title");
 
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+		BlogsNavigator.openBlogsAdmin(siteUrlKey = "guest");
 
 		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry Title Edit");
 
@@ -814,14 +814,14 @@ definition {
 	test CanManuallySaveAsDraft {
 		property portal.acceptance = "true";
 
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+		BlogsNavigator.openBlogsAdmin(siteUrlKey = "guest");
 
 		Blogs.addDraft(
 			entryContent = "Blogs Entry Content",
 			entrySubtitle = "Blogs Entry Subtitle",
 			entryTitle = "Blogs Entry Title");
 
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+		BlogsNavigator.openBlogsAdmin(siteUrlKey = "guest");
 
 		BlogsNavigator.gotoEntryCP(
 			entryStatus = "Draft",
@@ -844,7 +844,7 @@ definition {
 
 		BlogsNavigator.openToAddEntry(
 			layoutName = "Blogs Page",
-			siteURLKey = "guest");
+			siteUrlKey = "guest");
 
 		BlogsEntry.addEntryContent(
 			entryContent = "Blogs Entry Content",
@@ -874,7 +874,7 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test CannotAddWhenCustomAbstractIsSelectedButEmpty {
-		BlogsNavigator.openToAddEntry(siteURLKey = "guest");
+		BlogsNavigator.openToAddEntry(siteUrlKey = "guest");
 
 		BlogsEntry.addTitle(entryTitle = "Blogs Title");
 
@@ -891,13 +891,13 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CannotAddWithEmptyContent {
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+		BlogsNavigator.openBlogsAdmin(siteUrlKey = "guest");
 
 		Blogs.addWithInvalidContent(
 			entryInvalidContent = "",
 			entryTitle = "Blogs Entry Title");
 
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+		BlogsNavigator.openBlogsAdmin(siteUrlKey = "guest");
 
 		BlogsEntry.viewDefaultCP(entryTitle = "Blogs Entry Title");
 	}
@@ -906,13 +906,13 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CannotAddWithEmptyTitle {
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+		BlogsNavigator.openBlogsAdmin(siteUrlKey = "guest");
 
 		Blogs.addWithInvalidTitle(
 			entryContent = "Blogs Entry Content",
 			entryInvalidTitle = "");
 
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+		BlogsNavigator.openBlogsAdmin(siteUrlKey = "guest");
 
 		BlogsEntry.viewDefaultCP(entryTitle = "");
 	}
@@ -931,7 +931,7 @@ definition {
 
 		BlogsNavigator.openToAddEntry(
 			layoutName = "Blogs Page",
-			siteURLKey = "guest");
+			siteUrlKey = "guest");
 
 		BlogsEntry.addTitle(entryTitle = "Blogs Entry Title");
 
@@ -997,7 +997,7 @@ definition {
 			layoutName = "Blogs Page",
 			widgetName = "Blogs");
 
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+		BlogsNavigator.openBlogsAdmin(siteUrlKey = "guest");
 
 		Blogs.addWithCustomAbstract(
 			entryAbstractDescription = '''<script>alert(123);</script>''',
@@ -1045,7 +1045,7 @@ definition {
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
 			layoutName = "Blogs Page",
-			siteURLKey = "guest");
+			siteUrlKey = "guest");
 
 		for (var keyText : list "thumbs-up,thumbs-down") {
 			AssertElementNotPresent(locator1 = "Icon#ANY");
@@ -1056,21 +1056,21 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanPublishDraft {
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+		BlogsNavigator.openBlogsAdmin(siteUrlKey = "guest");
 
 		Blogs.addDraft(
 			entryContent = "Blogs Entry Content",
 			entrySubtitle = "Blogs Entry Subtitle",
 			entryTitle = "Blogs Entry Title");
 
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+		BlogsNavigator.openBlogsAdmin(siteUrlKey = "guest");
 
 		Blogs.publishDraftCP(
 			entryContent = "Blogs Entry Content",
 			entrySubtitle = "Blogs Entry Subtitle",
 			entryTitle = "Blogs Entry Title");
 
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+		BlogsNavigator.openBlogsAdmin(siteUrlKey = "guest");
 
 		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry Title");
 
@@ -1096,7 +1096,7 @@ definition {
 
 		BlogsNavigator.openToAddEntry(
 			layoutName = "Blogs Page",
-			siteURLKey = "guest");
+			siteUrlKey = "guest");
 
 		BlogsEntry.addEntryContent(
 			entryContent = "Blogs Entry Content",
@@ -1168,7 +1168,7 @@ definition {
 	test CanViewDefaultAbstract {
 		property test.name.skip.portal.instance = "BlogsEntry#CanViewDefaultAbstract";
 
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+		BlogsNavigator.openBlogsAdmin(siteUrlKey = "guest");
 
 		Blogs.addWithDefaultAbstract(
 			entryAbstractDescription = "Blogs Entry Custom Abstract",
@@ -1205,7 +1205,7 @@ definition {
 	@priority = "4"
 	@refactordone
 	test ShouldHaveUniqueURLForDuplicate {
-		var portalURL = PropsUtil.get("portal.url");
+		var portalUrl = PropsUtil.get("portal.url");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -1227,13 +1227,13 @@ definition {
 			entrySubtitle = "Blogs Entry Subtitle",
 			entryTitle = "Blogs Entry Title");
 
-		Navigator.openSpecificURL(url = "${portalURL}/web/guest/blogs-page/-/blogs/blogs-entry-title");
+		Navigator.openSpecificURL(url = "${portalUrl}/web/guest/blogs-page/-/blogs/blogs-entry-title");
 
 		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
-		Navigator.openSpecificURL(url = "${portalURL}/web/guest/blogs-page/-/blogs/blogs-entry-title-1");
+		Navigator.openSpecificURL(url = "${portalUrl}/web/guest/blogs-page/-/blogs/blogs-entry-title-1");
 
 		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content",
@@ -1263,7 +1263,7 @@ definition {
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "-1-2-3-4-5-6-7-8-9-10-11-12-13-14-15-16-17-18-19-20-21-22-23-24-25-x",
 			layoutName = "Blogs Page",
-			siteURLKey = "guest");
+			siteUrlKey = "guest");
 
 		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content",
@@ -1274,7 +1274,7 @@ definition {
 	@priority = "4"
 	@refactordone
 	test TitleWillNotExecuteXSS {
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+		BlogsNavigator.openBlogsAdmin(siteUrlKey = "guest");
 
 		Blogs.addEntry(
 			entryContent = "Blogs Entry Content",
@@ -1307,7 +1307,7 @@ definition {
 	@description = "This is a test for LPS-136769. It checks that a friendly URL can be added with escape characters."
 	@priority = "3"
 	test URLWithEscapeCharactersWillBeNormalized {
-		var portalURL = PropsUtil.get("portal.url");
+		var portalUrl = PropsUtil.get("portal.url");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -1320,12 +1320,12 @@ definition {
 			widgetName = "Blogs");
 
 		Blogs.addEntryWithCustomURL(
-			customURL = "blog&entry",
+			customUrl = "blog&entry",
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title",
-			siteURLKey = "guest");
+			siteUrlKey = "guest");
 
-		Navigator.openSpecificURL(url = "${portalURL}/web/guest/blogs-page/-/blogs/blog-entry");
+		Navigator.openSpecificURL(url = "${portalUrl}/web/guest/blogs-page/-/blogs/blog-entry");
 
 		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content",

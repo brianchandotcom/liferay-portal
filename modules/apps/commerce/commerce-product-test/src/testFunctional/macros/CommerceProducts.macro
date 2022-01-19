@@ -45,7 +45,7 @@ definition {
 
 	macro openProductsAdmin {
 		Navigator.openWithAppendToBaseURL(
-			baseURL = "${baseURL}",
+			baseUrl = "${baseUrl}",
 			urlAppend = "group/guest/~/control_panel/manage?p_p_id=com_liferay_commerce_product_definitions_web_internal_portlet_CPDefinitionsPortlet");
 
 		WaitForVisible(locator1 = "Button#PLUS");

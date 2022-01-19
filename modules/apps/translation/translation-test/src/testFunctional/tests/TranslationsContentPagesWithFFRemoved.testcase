@@ -79,7 +79,7 @@ definition {
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+		PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
 
 		WaitForPageLoad();
 
@@ -153,7 +153,7 @@ definition {
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+		PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
 
 		WaitForPageLoad();
 
@@ -224,7 +224,7 @@ definition {
 			collectionName = "Basic Components",
 			fragmentName = "Heading");
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+		PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
 
 		WaitForPageLoad();
 
@@ -242,7 +242,7 @@ definition {
 
 		PortletEntry.publish();
 
-		Translations.openTranslationAdmin(siteURLKey = "test-site-name");
+		Translations.openTranslationAdmin(siteUrlKey = "test-site-name");
 
 		Translations.viewTranslationEntry(
 			language = "ja-JP",
@@ -290,7 +290,7 @@ definition {
 
 		PageEditor.clickPublish();
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+		PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
 
 		WaitForPageLoad();
 
@@ -340,7 +340,7 @@ definition {
 
 		PageEditor.clickPublish();
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+		PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
 
 		WaitForPageLoad();
 
@@ -363,7 +363,7 @@ definition {
 
 		PageEditor.clickPublish();
 
-		var portalURL = PropsUtil.get("portal.url");
+		var portalUrl = PropsUtil.get("portal.url");
 
 		ContentPagesNavigator.openViewContentPage(
 			locale = "es",
@@ -394,7 +394,7 @@ definition {
 			experienceName = "Segment Email Experience",
 			segmentName = "Segment Email Address");
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+		PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
 
 		WaitForPageLoad();
 

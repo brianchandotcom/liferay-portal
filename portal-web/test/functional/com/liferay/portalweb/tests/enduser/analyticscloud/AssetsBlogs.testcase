@@ -78,12 +78,12 @@ definition {
 		}
 
 		task ("Assert appears on metric") {
-			var portalURL = PropsUtil.get("portal.url");
+			var portalUrl = PropsUtil.get("portal.url");
 
 			var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 			ACAssets.viewAssetAppearsOnMetric(
-				canonicalURL = "${portalURL}/web/site-name/ac-page/-/blogs/blogs-ac-title",
+				canonicalUrl = "${portalUrl}/web/site-name/ac-page/-/blogs/blogs-ac-title",
 				cardTitle = "Asset Appears On",
 				pageNmae = "AC Page - Site Name - ${siteName}");
 

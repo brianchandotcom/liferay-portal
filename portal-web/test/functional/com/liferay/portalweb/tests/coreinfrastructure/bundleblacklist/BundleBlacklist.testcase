@@ -128,7 +128,7 @@ definition {
 
 		AssertConsoleTextPresent(value1 = "STOPPED classic-theme");
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
+		PagesAdmin.openPagesAdmin(siteUrlKey = "guest");
 
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "Configure",
@@ -166,7 +166,7 @@ definition {
 
 		Portlet.shutdownServer();
 
-		Portlet.startServer(keepOSGiState = "true");
+		Portlet.startServer(keepOsGiState = "true");
 
 		AssertConsoleTextPresent(value1 = "STARTED com.liferay.gogo.shell.web");
 
@@ -193,8 +193,8 @@ definition {
 		}
 
 		OSGiConfig.deployOSGiConfigFile(
-			OSGiConfigFileName = "com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config",
-			OSGiConfigs = "blacklistBundleSymbolicNames=[&quot;${symbolicName}&quot; ]");
+			osgiConfigFileName = "com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config",
+			osgiConfigs = "blacklistBundleSymbolicNames=[&quot;${symbolicName}&quot; ]");
 
 		Pause(locator1 = "10000");
 
@@ -220,7 +220,7 @@ definition {
 
 		Portlet.shutdownServer();
 
-		Portlet.startServer(keepOSGiState = "true");
+		Portlet.startServer(keepOsGiState = "true");
 
 		AssertConsoleTextPresent(value1 = "STARTED ${symbolicName}");
 
@@ -255,11 +255,11 @@ definition {
 
 		Portlet.shutdownServer();
 
-		Portlet.startServer(keepOSGiState = "true");
+		Portlet.startServer(keepOsGiState = "true");
 
 		AssertConsoleTextPresent(value1 = "STARTED minium-theme");
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
+		PagesAdmin.openPagesAdmin(siteUrlKey = "guest");
 
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "Configure",
@@ -296,8 +296,8 @@ definition {
 		}
 
 		OSGiConfig.deployOSGiConfigFile(
-			OSGiConfigFileName = "com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config",
-			OSGiConfigs = "blacklistBundleSymbolicNames=[&quot;${symbolicName}&quot; ]");
+			osgiConfigFileName = "com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config",
+			osgiConfigs = "blacklistBundleSymbolicNames=[&quot;${symbolicName}&quot; ]");
 
 		Pause(locator1 = "10000");
 
@@ -333,7 +333,7 @@ definition {
 
 		AssertConsoleTextPresent(value1 = "Stopping blacklisted bundle minium-theme");
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
+		PagesAdmin.openPagesAdmin(siteUrlKey = "guest");
 
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "Configure",
@@ -372,7 +372,7 @@ definition {
 
 		AssertConsoleTextPresent(value1 = "Reinstalling bundle minium-theme");
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
+		PagesAdmin.openPagesAdmin(siteUrlKey = "guest");
 
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "Configure",
@@ -407,11 +407,11 @@ definition {
 
 		Portlet.shutdownServer();
 
-		OSGiConfig.deleteOSGiConfigFile(OSGiConfigFileName = "com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config");
+		OSGiConfig.deleteOSGiConfigFile(osgiConfigFileName = "com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config");
 
 		Portlet.startServer(
 			deleteLiferayHome = "false",
-			keepOSGiState = "true");
+			keepOsGiState = "true");
 
 		AssertConsoleTextPresent(value1 = "STARTED com.liferay.gogo.shell.web");
 
@@ -446,8 +446,8 @@ definition {
 		var tempFileDirectory = selenium.getOutputDirName();
 
 		OSGiConfig.copyOSGiConfigFile(
-			OSGiConfigFileBaseDir = "${tempFileDirectory}",
-			OSGiConfigFileName = "com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config");
+			osgiConfigFileBaseDir = "${tempFileDirectory}",
+			osgiConfigFileName = "com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config");
 
 		AssertConsoleTextNotPresent(value1 = "Reinstalling bundle com.liferay.gogo.shell.web");
 	}
@@ -478,7 +478,7 @@ definition {
 
 		Portlet.shutdownServer();
 
-		Portlet.startServer(keepOSGiState = "true");
+		Portlet.startServer(keepOsGiState = "true");
 
 		Navigator.openURL();
 
@@ -527,7 +527,7 @@ definition {
 
 		Portlet.shutdownServer();
 
-		Portlet.startServer(keepOSGiState = "true");
+		Portlet.startServer(keepOsGiState = "true");
 
 		Navigator.openURL();
 
@@ -560,9 +560,9 @@ definition {
 
 		Portlet.shutdownServer();
 
-		Portlet.startServer(keepOSGiState = "true");
+		Portlet.startServer(keepOsGiState = "true");
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
+		PagesAdmin.openPagesAdmin(siteUrlKey = "guest");
 
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "Configure",

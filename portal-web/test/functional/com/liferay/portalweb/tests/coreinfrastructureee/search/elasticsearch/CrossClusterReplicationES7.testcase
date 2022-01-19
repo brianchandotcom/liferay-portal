@@ -523,7 +523,7 @@ definition {
 		User.firstLoginPG(
 			password = "test",
 			userEmailAddress = "test@www.able.com",
-			virtualHostsURL = "http://www.able.com:8080");
+			virtualHostsUrl = "http://www.able.com:8080");
 
 		Navigator.openSpecificURL(url = "http://www.able.com:8080");
 
@@ -570,12 +570,12 @@ definition {
 			value1 = "Search");
 
 		AssertTextEquals.assertPartialText(
-			key_connectionID = "__REMOTE__",
+			key_connectionId = "__REMOTE__",
 			locator1 = "SearchAdmin#CLUSTER_NAME",
 			value1 = "LiferayElasticsearchCluster");
 
 		AssertTextEquals.assertPartialText(
-			key_connectionID = "localcluster",
+			key_connectionId = "localcluster",
 			locator1 = "SearchAdmin#CLUSTER_NAME",
 			value1 = "LiferayElasticsearchClusterTwo");
 
@@ -598,7 +598,7 @@ definition {
 			value1 = "Search");
 
 		AssertTextEquals.assertPartialText(
-			key_connectionID = "localcluster",
+			key_connectionId = "localcluster",
 			locator1 = "SearchAdmin#CLUSTER_NAME",
 			value1 = "LiferayElasticsearchClusterTwo");
 
@@ -607,7 +607,7 @@ definition {
 			value1 = "Connection refused");
 
 		AssertElementNotPresent(
-			key_connectionID = "__REMOTE__",
+			key_connectionId = "__REMOTE__",
 			locator1 = "SearchAdmin#CLUSTER_NAME");
 
 		Navigator.openURL();
@@ -633,7 +633,7 @@ definition {
 			value1 = "Search");
 
 		AssertTextEquals.assertPartialText(
-			key_connectionID = "__REMOTE__",
+			key_connectionId = "__REMOTE__",
 			locator1 = "SearchAdmin#CLUSTER_NAME",
 			value1 = "LiferayElasticsearchCluster");
 
@@ -642,7 +642,7 @@ definition {
 			value1 = "Connection refused");
 
 		AssertElementNotPresent(
-			key_connectionID = "localcluster",
+			key_connectionId = "localcluster",
 			locator1 = "SearchAdmin#CLUSTER_NAME");
 
 		Navigator.openURL();

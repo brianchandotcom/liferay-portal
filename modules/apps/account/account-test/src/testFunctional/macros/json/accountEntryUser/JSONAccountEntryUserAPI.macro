@@ -10,7 +10,7 @@ definition {
 		var userId = JSONUserSetter.setUserId(userEmailAddress = "${creatorEmailAddress}");
 
 		var curl = '''
-			${portalURL}/api/jsonws/account.accountentryuserrel/add-account-entry-user-rel \
+			${portalUrl}/api/jsonws/account.accountentryuserrel/add-account-entry-user-rel \
 				-u ${creatorEmailAddress}:${creatorPassword} \
 				-d accountEntryId=${accountEntryId} \
 				-d creatorUserId=${userId} \

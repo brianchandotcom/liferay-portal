@@ -63,7 +63,7 @@ definition {
 	}
 
 	macro goToSidebarOption {
-		var key_SidebarOption = "${sidebarOption}";
+		var key_sidebarOption = "${sidebarOption}";
 
 		Click(locator1 = "ACNavigation#GENERIC_SIDEBAR_OPTION");
 	}

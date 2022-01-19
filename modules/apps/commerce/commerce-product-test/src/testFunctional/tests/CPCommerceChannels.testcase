@@ -346,7 +346,7 @@ definition {
 			key_region = "Roma",
 			key_shippingOption = "Standard",
 			key_subtotal = "1",
-			key_Warehouse = "Italy",
+			key_warehouse = "Italy",
 			key_weightFrom = "1",
 			key_weightTo = "1",
 			key_zip = "0100");
@@ -984,7 +984,7 @@ definition {
 
 		AssertElementPresent(
 			key_productName = "Brake System",
-			key_Value = "Catalog",
+			key_value = "Catalog",
 			locator1 = "CommerceEntry#VALUE_PRODUCT_RELATIONS");
 	}
 
@@ -1863,7 +1863,7 @@ definition {
 			key_region = "Roma",
 			key_shippingOption = "Standard",
 			key_subtotal = "1",
-			key_Warehouse = "Italy",
+			key_warehouse = "Italy",
 			key_weightFrom = "1",
 			key_weightTo = "1",
 			key_zip = "0100");

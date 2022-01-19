@@ -296,7 +296,7 @@ definition {
 	}
 
 	macro deleteDisabledFieldSetEntry {
-		var key_RowNumber = "${rowNumber}";
+		var key_rowNumber = "${rowNumber}";
 
 		Click(locator1 = "FormViewBuilder#FIELD_SET_DISABLED_ELLIPSIS_ACTION");
 
@@ -310,7 +310,7 @@ definition {
 	}
 
 	macro deleteFieldSetEntry {
-		var key_RowNumber = "${rowNumber}";
+		var key_rowNumber = "${rowNumber}";
 
 		Click(locator1 = "FormViewBuilder#FIELD_SET_ELLIPSIS_ACTION");
 
@@ -408,7 +408,7 @@ definition {
 	}
 
 	macro editDisabledFieldSetEntry {
-		var key_RowNumber = "${rowNumber}";
+		var key_rowNumber = "${rowNumber}";
 
 		Click(locator1 = "FormViewBuilder#FIELD_SET_DISABLED_ELLIPSIS_ACTION");
 
@@ -436,7 +436,7 @@ definition {
 	}
 
 	macro editFieldSetEntry {
-		var key_RowNumber = "${rowNumber}";
+		var key_rowNumber = "${rowNumber}";
 
 		Click(locator1 = "FormViewBuilder#FIELD_SET_ELLIPSIS_ACTION");
 

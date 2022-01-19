@@ -33,7 +33,7 @@ definition {
 	test CanAddCategory {
 		property portal.acceptance = "true";
 
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteUrlKey = "guest");
 
 		MessageboardsCategory.addCP(categoryName = "MB Category Name");
 
@@ -65,7 +65,7 @@ definition {
 		MessageboardsCategory.openToCategory(
 			categoryName = "MB Category Name",
 			groupName = "Guest",
-			siteURLKey = "guest");
+			siteUrlKey = "guest");
 
 		MessageboardsCategory.viewCP(
 			categoryCount = "0 Categories",
@@ -82,13 +82,13 @@ definition {
 		property environment.acceptance = "true";
 		property portal.acceptance = "true";
 
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteUrlKey = "guest");
 
 		MessageboardsThread.addCP(
 			threadBody = "MB Thread Message Body",
 			threadSubject = "MB Thread Message Subject");
 
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteUrlKey = "guest");
 
 		MessageboardsThread.viewCP(
 			replyCount = "0",
@@ -155,7 +155,7 @@ definition {
 		MessageboardsThread.openToThread(
 			groupName = "Guest",
 			layoutName = "message-boards-page",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			threadSubject = "MB Thread Message Subject");
 
 		MessageboardsThread.banUser(
@@ -164,7 +164,7 @@ definition {
 
 		MessageboardsPortlet.viewBannedUserCP(
 			disableAutoExpire = "true",
-			siteURLKey = "Guest",
+			siteUrlKey = "Guest",
 			userScreenName = "userfn1 userln1");
 	}
 
@@ -178,7 +178,7 @@ definition {
 				userEmailAddress = "test@liferay.com");
 		}
 
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteUrlKey = "guest");
 
 		MessageboardsCategory.deleteCP();
 
@@ -199,7 +199,7 @@ definition {
 			threadSubject = "MB Thread Message Subject",
 			threadSubjectEdit = "MB Thread Message Subject Edit");
 
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteUrlKey = "guest");
 
 		MessageboardsThread.viewCP(
 			replyCount = "0",
@@ -215,7 +215,7 @@ definition {
 			categoryName = "MB Category Name",
 			userEmailAddress = "test@liferay.com");
 
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteUrlKey = "guest");
 
 		LAR.exportPortlet(larFileName = "MB_portlet.lar");
 
@@ -225,14 +225,14 @@ definition {
 	@description = "This is a test for LPS-136917. It checks that a category can be imported."
 	@priority = "3"
 	test CanImportCategory {
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteUrlKey = "guest");
 
 		LAR.importPortlet(
 			initializeLiferayEvent = "true",
 			larFileName = "message-boards-category.lar",
 			uploadFrom = "dependencies");
 
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteUrlKey = "guest");
 
 		MessageboardsCategory.viewCP(
 			categoryCount = "0 Categories",
@@ -296,7 +296,7 @@ definition {
 		MessageboardsThread.openToThread(
 			groupName = "Guest",
 			layoutName = "message-boards-page",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			threadSubject = "MB Thread Message Subject");
 
 		MessageboardsThread.banUser(
@@ -304,7 +304,7 @@ definition {
 			userName = "userfn userln");
 
 		MessageboardsThread.unbanUser(
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			userScreenName = "userfn userln");
 
 		MessageboardsThread.viewNoBannedUsers();

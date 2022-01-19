@@ -16,14 +16,14 @@ definition {
 			configurationName = "Google Drive",
 			configurationScope = "Virtual Instance Scope");
 
-		var googleClientID = PropsUtil.get("google.client.id.4");
+		var googleClientId = PropsUtil.get("google.client.id.4");
 		var googleClientSecret = PropsUtil.get("google.client.secret.4");
-		var googlePickerAPIKey = PropsUtil.get("google.api.key.4");
+		var googlePickerApiKey = PropsUtil.get("google.api.key.4");
 
 		PortalSettings.configureGoogleDrive(
-			googleClientID = "${googleClientID}",
+			googleClientId = "${googleClientId}",
 			googleClientSecret = "${googleClientSecret}",
-			googlePickerAPIKey = "${googlePickerAPIKey}");
+			googlePickerApiKey = "${googlePickerApiKey}");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",

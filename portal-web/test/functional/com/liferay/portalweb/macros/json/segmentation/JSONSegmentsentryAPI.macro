@@ -7,7 +7,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalURL}/api/jsonws/segments.segmentsentry/add-segments-entry \
+			${portalUrl}/api/jsonws/segments.segmentsentry/add-segments-entry \
 				-u test@liferay.com:test \
 				-d segmentsEntryKey= \
 				-d nameMap=${nameMap} \

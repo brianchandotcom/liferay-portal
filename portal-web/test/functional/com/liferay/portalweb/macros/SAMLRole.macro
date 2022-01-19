@@ -7,7 +7,7 @@ definition {
 
 		Type(
 			locator1 = "CPSAMLAdmin#SAML_ENTITY_ID_FIELD",
-			value1 = "${samlEntityID}");
+			value1 = "${samlEntityId}");
 
 		AssertClick(
 			locator1 = "Button#SAVE",
@@ -112,7 +112,7 @@ definition {
 	macro enable {
 		AssertTextEquals(
 			locator1 = "CPSAMLAdmin#SAML_ENTITY_ID_FIELD",
-			value1 = "${samlEntityID}");
+			value1 = "${samlEntityId}");
 
 		Check(locator1 = "CPSAMLAdmin#SAML_ENABLED_CHECKBOX");
 

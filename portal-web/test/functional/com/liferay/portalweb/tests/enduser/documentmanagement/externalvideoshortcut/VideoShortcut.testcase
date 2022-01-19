@@ -58,11 +58,11 @@ definition {
 			layoutName = "Blog Page",
 			widgetName = "Blogs");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		VideoShortcut.addCP(
 			videoShortcutTitle = "Test Twitch Twitch live stream",
-			videoURL = "https://www.twitch.tv/esl_csgo");
+			videoUrl = "https://www.twitch.tv/esl_csgo");
 
 		Navigator.gotoSitePage(
 			pageName = "Blog Page",
@@ -96,14 +96,14 @@ definition {
 	test AddFacebookCP {
 		property portal.acceptance = "true";
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		VideoShortcut.addCP(
 			videoShortcutPreview = "https://www.facebook.com",
 			videoShortcutTitle = "Test Facebook Video Name",
-			videoURL = "https://www.facebook.com/Cristiano/videos/1710977485745946");
+			videoUrl = "https://www.facebook.com/Cristiano/videos/1710977485745946");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		VideoShortcut.viewCP(videoShortcutTitle = "Test Facebook Video Name");
 	}
@@ -112,7 +112,7 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test AddFacebookToKBViaItemSelector {
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 		KBArticle.addCP(
 			embedVideo = "true",
@@ -121,9 +121,9 @@ definition {
 			videoShortcutDescription = "Video Shortcut Description",
 			videoShortcutPreview = "https://www.facebook.com",
 			videoShortcutTitle = "Test Facebook Video",
-			videoURL = "https://www.facebook.com/Cristiano/videos/1710977485745946");
+			videoUrl = "https://www.facebook.com/Cristiano/videos/1710977485745946");
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 		KBArticle.viewCP(
 			embedVideo = "true",
@@ -136,13 +136,13 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test AddKBArticleWithEmbeddedVideo {
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		VideoShortcut.addCP(
 			videoShortcutTitle = "Test Twitch Video Name",
-			videoURL = "https://www.twitch.tv/videos/806178790");
+			videoUrl = "https://www.twitch.tv/videos/806178790");
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 		KBArticle.addCP(
 			embedVideo = "true",
@@ -151,7 +151,7 @@ definition {
 			navTab = "Documents and Media",
 			videoShortcutTitle = "Test Twitch Video Name");
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 		KBArticle.viewCP(
 			embedVideo = "true",
@@ -166,13 +166,13 @@ definition {
 	test AddKBArticleWithTwitchStream {
 		property portal.acceptance = "true";
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		VideoShortcut.addCP(
 			videoShortcutTitle = "Test Twitch Twitch live stream",
-			videoURL = "https://www.twitch.tv/esl_csgo");
+			videoUrl = "https://www.twitch.tv/esl_csgo");
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 		KBArticle.addCP(
 			embedVideo = "true",
@@ -182,7 +182,7 @@ definition {
 			videoShortcutPreview = "https://player.twitch.tv",
 			videoShortcutTitle = "Test Twitch Twitch live stream");
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 		KBArticle.viewCP(
 			embedVideo = "true",
@@ -197,13 +197,13 @@ definition {
 	test AddTwitchLiveStreamCP {
 		property portal.acceptance = "true";
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		VideoShortcut.addCP(
 			videoShortcutDescription = "Video Shortcut Description",
 			videoShortcutPreview = "https://player.twitch.tv",
 			videoShortcutTitle = "Test Twitch Twitch live stream",
-			videoURL = "https://www.twitch.tv/esl_csgo");
+			videoUrl = "https://www.twitch.tv/esl_csgo");
 
 		VideoShortcut.viewCP(videoShortcutTitle = "Test Twitch Twitch live stream");
 
@@ -221,7 +221,7 @@ definition {
 		VideoShortcut.addPG(
 			videoShortcutPreview = "https://player.twitch.tv",
 			videoShortcutTitle = "Test Twitch Video Name",
-			videoURL = "https://www.twitch.tv/videos/806178790");
+			videoUrl = "https://www.twitch.tv/videos/806178790");
 
 		VideoShortcut.viewPG(videoShortcutTitle = "Test Twitch Video Name");
 	}
@@ -243,7 +243,7 @@ definition {
 			videoShortcutDescription = "Video Shortcut Description",
 			videoShortcutPreview = "https://player.twitch.tv",
 			videoShortcutTitle = "Test Twitch Video Name",
-			videoURL = "https://www.twitch.tv/videos/806178790",
+			videoUrl = "https://www.twitch.tv/videos/806178790",
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WC WebContent Title");
 
@@ -262,16 +262,16 @@ definition {
 	test AddVimeoCP {
 		property portal.acceptance = "true";
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		VideoShortcut.addCP(
 			extractedVideoShortcutTitle = "Air",
 			videoShortcutDescription = "Video Shortcut Description",
 			videoShortcutPreview = "https://player.vimeo.com",
 			videoShortcutTitle = "Test Vimeo Video Name",
-			videoURL = "https://vimeo.com/483035084");
+			videoUrl = "https://vimeo.com/483035084");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		VideoShortcut.viewCP(videoShortcutTitle = "Test Vimeo Video Name");
 	}
@@ -302,7 +302,7 @@ definition {
 			videoShortcutDescription = "Video Shortcut Description",
 			videoShortcutPreview = "https://player.vimeo.com",
 			videoShortcutTitle = "Test Vimeo Video",
-			videoURL = "https://vimeo.com/483035084");
+			videoUrl = "https://vimeo.com/483035084");
 
 		Navigator.gotoSitePage(
 			pageName = "Blog Page",
@@ -322,13 +322,13 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test AddWCWithEmbeddedTwitchVideo {
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		VideoShortcut.addCP(
 			videoShortcutTitle = "Test Twitch Video Name",
-			videoURL = "https://www.twitch.tv/videos/806178790");
+			videoUrl = "https://www.twitch.tv/videos/806178790");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -341,7 +341,7 @@ definition {
 
 		PortletEntry.publish();
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		WebContentNavigator.gotoPreviewEntryCP(webContentTitle = "WC WebContent Title");
 
@@ -358,13 +358,13 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test AddWCWithEmbeddedVideo {
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		VideoShortcut.addCP(
 			videoShortcutTitle = "Test YouTube Video Name",
-			videoURL = "https://www.youtube.com/watch?v=HOdbzGCI5ME");
+			videoUrl = "https://www.youtube.com/watch?v=HOdbzGCI5ME");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -377,7 +377,7 @@ definition {
 
 		PortletEntry.publish();
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		WebContent.viewVideoPreview(
 			service = "https://www.youtube.com",
@@ -394,14 +394,14 @@ definition {
 
 		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "External Video Shortcut");
 
-		VideoShortcut.validateURL(invalidURL = "https://www.test.com/watch?v=8TnGFvSY-08");
+		VideoShortcut.validateURL(invalidUrl = "https://www.test.com/watch?v=8TnGFvSY-08");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "External Video Shortcut");
 
 		VideoShortcut.validateURL(
-			invalidURL = "https://www.youtube.com/watch?v=test",
+			invalidUrl = "https://www.youtube.com/watch?v=test",
 			youtube = "true");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
@@ -409,7 +409,7 @@ definition {
 		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "External Video Shortcut");
 
 		VideoShortcut.validateURL(
-			invalidURL = "https://youtu.be/IxNczRyywXYtest",
+			invalidUrl = "https://youtu.be/IxNczRyywXYtest",
 			youtube = "true");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
@@ -418,14 +418,14 @@ definition {
 
 		VideoShortcut.validateURL(
 			facebook = "true",
-			invalidURL = "https://www.facebook.com/Cristiano/videos/test");
+			invalidUrl = "https://www.facebook.com/Cristiano/videos/test");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "External Video Shortcut");
 
 		VideoShortcut.validateURL(
-			invalidURL = "https://vimeo.com/test",
+			invalidUrl = "https://vimeo.com/test",
 			vimeo = "true");
 	}
 
@@ -464,7 +464,7 @@ definition {
 			videoShortcutDescription = "Video Shortcut Description",
 			videoShortcutPreview = "https://www.youtube.com",
 			videoShortcutTitle = "Test YouTube Video Shortened URL",
-			videoURL = "https://youtu.be/HOdbzGCI5ME");
+			videoUrl = "https://youtu.be/HOdbzGCI5ME");
 
 		VideoShortcut.viewPG(
 			videoShortcutDescription = "Video Shortcut Description",
@@ -484,7 +484,7 @@ definition {
 			videoShortcutDescription = "Video Shortcut Description",
 			videoShortcutPreview = "https://www.youtube.com",
 			videoShortcutTitle = "Test YouTube Video Adding",
-			videoURL = "https://www.youtube.com/watch?v=HOdbzGCI5ME");
+			videoUrl = "https://www.youtube.com/watch?v=HOdbzGCI5ME");
 
 		VideoShortcut.viewPG(
 			videoShortcutDescription = "Video Shortcut Description",
@@ -497,7 +497,7 @@ definition {
 	test AddYouTubeToWCViaItemSelector {
 		property portal.acceptance = "true";
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -507,13 +507,13 @@ definition {
 			videoShortcutDescription = "Video Shortcut Description",
 			videoShortcutPreview = "https://www.youtube.com",
 			videoShortcutTitle = "Test YouTube Video",
-			videoURL = "https://www.youtube.com/watch?v=HOdbzGCI5ME",
+			videoUrl = "https://www.youtube.com/watch?v=HOdbzGCI5ME",
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WC WebContent Title");
 
 		PortletEntry.publish();
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		WebContent.viewVideoPreview(
 			service = "https://www.youtube.com",
@@ -526,25 +526,25 @@ definition {
 	test ChangeViewsInItemSelector {
 		property portal.acceptance = "true";
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		VideoShortcut.addCP(
 			videoShortcutTitle = "Test Facebook Video",
-			videoURL = "https://www.facebook.com/Cristiano/videos/1710977485745946");
+			videoUrl = "https://www.facebook.com/Cristiano/videos/1710977485745946");
 
 		VideoShortcut.addCP(
 			videoShortcutTitle = "Test Vimeo Video",
-			videoURL = "https://vimeo.com/483035084");
+			videoUrl = "https://vimeo.com/483035084");
 
 		VideoShortcut.addCP(
 			videoShortcutTitle = "Test YouTube Video",
-			videoURL = "https://www.youtube.com/watch?v=2EPZxIC5ogU");
+			videoUrl = "https://www.youtube.com/watch?v=2EPZxIC5ogU");
 
 		VideoShortcut.addCP(
 			videoShortcutTitle = "Test Twitch Video",
-			videoURL = "https://www.twitch.tv/videos/806178790");
+			videoUrl = "https://www.twitch.tv/videos/806178790");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
@@ -552,7 +552,7 @@ definition {
 			LexiconList.viewListEntryTitle(listEntry = "${videoShortcutTitle}");
 		}
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 		LexiconEntry.gotoAddMenuItem(menuItem = "Basic Article");
 
@@ -569,14 +569,14 @@ definition {
 	test EditWithShortenedURL {
 		property portal.acceptance = "true";
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		VideoShortcut.addCP(
 			videoShortcutDescription = "Video Shortcut Description",
 			videoShortcutTitle = "Test YouTube Video Name",
-			videoURL = "https://www.youtube.com/watch?v=HOdbzGCI5ME");
+			videoUrl = "https://www.youtube.com/watch?v=HOdbzGCI5ME");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		VideoShortcut.editCP(
 			videoShortcutDescriptionEdit = "Video Shortcut Description Edit",
@@ -585,9 +585,9 @@ definition {
 			videoShortcutPreviousTitle = "Test YouTube Video Name",
 			videoShortcutTitle = "Test YouTube Video Name",
 			videoShortcutTitleEdit = "Test YouTube Video Name Edit",
-			videoURLEdit = "https://youtu.be/HOdbzGCI5ME");
+			videoUrlEdit = "https://youtu.be/HOdbzGCI5ME");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		VideoShortcut.viewCP(
 			videoShortcutDescription = "Video Shortcut Description Edit",
@@ -621,34 +621,34 @@ definition {
 			title = "Category Name",
 			vocabularyName = "Vocabulary Name");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		VideoShortcut.addCP(
 			videoShortcutTitle = "Test Facebook Video",
-			videoURL = "https://www.facebook.com/Cristiano/videos/1710977485745946");
+			videoUrl = "https://www.facebook.com/Cristiano/videos/1710977485745946");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		VideoShortcut.addCP(
 			categoryName = "Category Name",
 			videoShortcutTitle = "Test YouTube Video",
-			videoURL = "https://www.youtube.com/watch?v=HOdbzGCI5ME",
+			videoUrl = "https://www.youtube.com/watch?v=HOdbzGCI5ME",
 			vocabularyName = "Vocabulary Name");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		VideoShortcut.addCP(
 			categoryName = "Category Name",
 			videoShortcutTitle = "Test Vimeo Video",
-			videoURL = "https://vimeo.com/483035084",
+			videoUrl = "https://vimeo.com/483035084",
 			vocabularyName = "Vocabulary Name");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		VideoShortcut.addCP(
 			categoryName = "Category Name",
 			videoShortcutTitle = "Test Twitch Video",
-			videoURL = "https://www.twitch.tv/videos/806178790",
+			videoUrl = "https://www.twitch.tv/videos/806178790",
 			vocabularyName = "Vocabulary Name");
 
 		Navigator.gotoSitePage(
@@ -710,32 +710,32 @@ definition {
 			layoutName = "Page Name",
 			widgetName = "Search Results");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		VideoShortcut.addCP(
 			videoShortcutTitle = "Test Facebook Video",
-			videoURL = "https://www.facebook.com/Cristiano/videos/1710977485745946");
+			videoUrl = "https://www.facebook.com/Cristiano/videos/1710977485745946");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		VideoShortcut.addCP(
 			tagNameList = "tag name",
 			videoShortcutTitle = "Test YouTube Video",
-			videoURL = "https://www.youtube.com/watch?v=HOdbzGCI5ME");
+			videoUrl = "https://www.youtube.com/watch?v=HOdbzGCI5ME");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		VideoShortcut.addCP(
 			tagNameList = "tag name",
 			videoShortcutTitle = "Test Vimeo Video",
-			videoURL = "https://vimeo.com/483035084");
+			videoUrl = "https://vimeo.com/483035084");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		VideoShortcut.addCP(
 			tagNameList = "tag name",
 			videoShortcutTitle = "Test Twitch Video",
-			videoURL = "https://www.twitch.tv/videos/806178790");
+			videoUrl = "https://www.twitch.tv/videos/806178790");
 
 		Navigator.gotoSitePage(
 			pageName = "Page Name",
@@ -782,15 +782,15 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test ViewSearchResult {
-		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
+		PagesAdmin.openPagesAdmin(siteUrlKey = "guest");
 
 		PagesAdmin.deletePage(pageName = "Documents and Media");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		VideoShortcut.addCP(
 			videoShortcutTitle = "Test YouTube Video",
-			videoURL = "https://www.youtube.com/watch?v=HOdbzGCI5ME");
+			videoUrl = "https://www.youtube.com/watch?v=HOdbzGCI5ME");
 
 		Navigator.gotoSitePage(
 			pageName = "Home",
@@ -836,7 +836,7 @@ definition {
 			extractedVideoShortcutTitle = "RONALDINHO vs NEYMAR. ¿A quién eliges? Los disfrutamos. #MundoMaldini",
 			videoShortcutDescription = "Video Shortcut Description",
 			videoShortcutPreview = "https://www.youtube.com",
-			videoURL = "https://www.youtube.com/watch?v=2ewB-7_VMGU");
+			videoUrl = "https://www.youtube.com/watch?v=2ewB-7_VMGU");
 
 		VideoShortcut.viewPG(
 			videoShortcutDescription = "Video Shortcut Description",
@@ -857,7 +857,7 @@ definition {
 
 		VideoShortcut.addPG(
 			videoShortcutTitle = "Test Vimeo Video",
-			videoURL = "https://vimeo.com/483035084");
+			videoUrl = "https://vimeo.com/483035084");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
 
@@ -874,13 +874,13 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test ViewYouTubeThumbnail {
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		VideoShortcut.addCP(
 			videoShortcutTitle = "Test YouTube Video",
-			videoURL = "https://youtu.be/HOdbzGCI5ME");
+			videoUrl = "https://youtu.be/HOdbzGCI5ME");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
@@ -892,12 +892,12 @@ definition {
 
 		LexiconCard.viewCardThumbnail(card = "Test YouTube Video");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		VideoShortcut.editCP(
 			videoShortcutTitle = "Test YouTube Video",
 			videoShortcutTitleEdit = "Test YouTube Video Edit",
-			videoURLEdit = "https://www.youtube.com/watch?v=HOdbzGCI5ME");
+			videoUrlEdit = "https://www.youtube.com/watch?v=HOdbzGCI5ME");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 

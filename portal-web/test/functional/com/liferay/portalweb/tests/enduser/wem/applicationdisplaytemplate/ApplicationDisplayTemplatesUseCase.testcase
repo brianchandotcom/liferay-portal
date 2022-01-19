@@ -54,7 +54,7 @@ definition {
 		}
 
 		task ("Add a widget template for Asset Publisher") {
-			ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "test-site-name");
+			ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteUrlKey = "test-site-name");
 
 			ApplicationDisplayTemplates.addCP(
 				adtFile = "adt_asset_publisher_rich_summary.ftl",
@@ -118,7 +118,7 @@ definition {
 				portletName = "Breadcrumb",
 				portletOption = "Configuration");
 
-			Breadcrumb.configureBreadcrumb(selectADTType = "Arrows");
+			Breadcrumb.configureBreadcrumb(selectAdtType = "Arrows");
 		}
 
 		task ("View the widget template applied to Breadcrumb") {
@@ -126,7 +126,7 @@ definition {
 				pageName = "ADT Test Page",
 				siteName = "Test Site Name");
 
-			Breadcrumb.viewADTApplied(breadcrumbADTType = "arrows");
+			Breadcrumb.viewADTApplied(breadcrumbAdtType = "arrows");
 		}
 	}
 
@@ -175,7 +175,7 @@ definition {
 		}
 
 		task ("Add a widget template for Categories Navigation") {
-			ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "test-site-name");
+			ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteUrlKey = "test-site-name");
 
 			ApplicationDisplayTemplates.addCP(
 				adtFile = "adt_categories_navigation_multi_column.ftl",
@@ -228,7 +228,7 @@ definition {
 		}
 
 		task ("Add a widget template for RSS Publisher") {
-			ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "test-site-name");
+			ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteUrlKey = "test-site-name");
 
 			ApplicationDisplayTemplates.addCP(
 				adtType = "RSS Publisher",
@@ -294,7 +294,7 @@ definition {
 		}
 
 		task ("Add a widget template for Site Map") {
-			ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "test-site-name");
+			ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteUrlKey = "test-site-name");
 
 			ApplicationDisplayTemplates.addCP(
 				adtFile = "adt_sitemap_multi_column.ftl",
@@ -375,7 +375,7 @@ definition {
 		}
 
 		task ("Add a widget template for Tags Navigation") {
-			ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "test-site-name");
+			ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteUrlKey = "test-site-name");
 
 			ApplicationDisplayTemplates.addCP(
 				adtFile = "adt_tags_color.ftl",
@@ -435,7 +435,7 @@ definition {
 		}
 
 		task ("Add a Wiki type widget template") {
-			ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "test-site-name");
+			ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteUrlKey = "test-site-name");
 
 			ApplicationDisplayTemplates.addCP(
 				adtFile = "adt_wiki_social.ftl",
@@ -486,7 +486,7 @@ definition {
 		}
 
 		task ("Add a widget template based on script file for RSS Publisher") {
-			ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "test-site-name");
+			ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteUrlKey = "test-site-name");
 
 			ApplicationDisplayTemplates.addCP(
 				adtFile = "adt_rss_navigation.ftl",
@@ -508,7 +508,7 @@ definition {
 
 			RSSPortlet.viewNavigationDisplayFeedTitle(
 				feedTitle = "Technology",
-				navigationNullADT = "true");
+				navigationNullAdt = "true");
 		}
 	}
 
@@ -523,7 +523,7 @@ definition {
 		}
 
 		task ("Edit Rich Summary widget template") {
-			ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "global");
+			ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteUrlKey = "global");
 
 			ApplicationDisplayTemplates.searchGlobalADT(templateName = "Rich Summary");
 
@@ -599,7 +599,7 @@ definition {
 		}
 
 		task ("Add a widget template for RSS Publisher") {
-			ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "test-site-name");
+			ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteUrlKey = "test-site-name");
 
 			ApplicationDisplayTemplates.addCP(
 				adtFile = "adt_rss_navigation_corrupt.ftl",

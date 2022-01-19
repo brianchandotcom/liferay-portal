@@ -73,7 +73,7 @@ definition {
 		var remoteAppName = "My New Remote App To Delete";
 
 		JSONRemoteApp.addIFrameRemoteAppEntry(
-			iFrameURL = "http://www.liferay.com/my_new_remote_app",
+			iFrameUrl = "http://www.liferay.com/my_new_remote_app",
 			name = "${remoteAppName}");
 
 		RemoteApps.goToRemoteAppsPortlet();
@@ -92,11 +92,11 @@ definition {
 			RemoteApps.goToRemoteAppsPortlet();
 
 			RemoteApps.addCustomElementAllFields(
-				entryCSSURL = "https://liferay.github.io/liferay-frontend-projects/index.css",
-				entryHTMLName = "vanilla-counter",
+				entryCssurl = "https://liferay.github.io/liferay-frontend-projects/index.css",
+				entryHtmlName = "vanilla-counter",
 				entryName = "Vanilla Counter",
 				entryProperties = "test-data-user=QAuser",
-				entryURL = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js");
+				entryUrl = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js");
 		}
 
 		task ("Assert that the Vanilla Counter is listed") {
@@ -111,11 +111,11 @@ definition {
 				locator1 = "RemoteApps#TABLE_ENTRY_NAME_REMOTE_TABLE");
 
 			RemoteApps.assertCustomElementFields(
-				entryCSSURL = "https://liferay.github.io/liferay-frontend-projects/index.css",
-				entryHTMLName = "vanilla-counter",
+				entryCssurl = "https://liferay.github.io/liferay-frontend-projects/index.css",
+				entryHtmlName = "vanilla-counter",
 				entryName = "Vanilla Counter",
 				entryProperties = "test-data-user=QAuser",
-				entryURL = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js");
+				entryUrl = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js");
 		}
 	}
 
@@ -126,9 +126,9 @@ definition {
 
 		task ("Create Vanilla Counter as a Custom Element") {
 			JSONRemoteApp.addCustomElementRemoteAppEntry(
-				customElementHTMLName = "vanilla-counter",
+				customElementHtmlName = "vanilla-counter",
 				customElementName = "Vanilla Counter",
-				customElementURL = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js");
+				customElementUrl = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js");
 		}
 
 		task ("Delete Vanilla Counter") {
@@ -160,7 +160,7 @@ definition {
 		task ("Navigate to virtual instance") {
 			User.firstLoginUI(
 				password = "test",
-				specificURL = "http://www.able.com:8080",
+				specificUrl = "http://www.able.com:8080",
 				userEmailAddress = "test@www.able.com");
 		}
 
@@ -183,8 +183,8 @@ definition {
 		property portal.acceptance = "true";
 
 		var customElementName = "Vanilla Counter";
-		var customElementHTMLName = "vanilla-counter";
-		var customElementURL = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js";
+		var customElementHtmlName = "vanilla-counter";
+		var customElementUrl = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js";
 
 		task ("Add a public page with JSON") {
 			JSONLayout.addPublicLayout(
@@ -197,9 +197,9 @@ definition {
 			RemoteApps.goToRemoteAppsPortlet();
 
 			RemoteApps.addCustomElement(
-				entryHTMLName = "${customElementHTMLName}",
+				entryHtmlName = "${customElementHtmlName}",
 				entryName = "${customElementName}",
-				entryURL = "${customElementURL}");
+				entryUrl = "${customElementUrl}");
 		}
 
 		task ("Add Vanilla Counter to Test Page") {
@@ -228,9 +228,9 @@ definition {
 
 		task ("Create a Custom Element") {
 			JSONRemoteApp.addCustomElementRemoteAppEntry(
-				customElementHTMLName = "new-counter",
+				customElementHtmlName = "new-counter",
 				customElementName = "New Counter",
-				customElementURL = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js");
+				customElementUrl = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js");
 		}
 
 		task ("Edit the fields of the Custom Element") {
@@ -241,8 +241,8 @@ definition {
 				locator1 = "RemoteApps#TABLE_ENTRY_NAME_REMOTE_TABLE");
 
 			RemoteApps.editCustomElement(
-				entryCSSURL = "https://liferay.github.io/liferay-frontend-projects/index.css",
-				entryHTMLName = "vanilla-counter-edited",
+				entryCssurl = "https://liferay.github.io/liferay-frontend-projects/index.css",
+				entryHtmlName = "vanilla-counter-edited",
 				entryName = "Vanilla Counter Edited",
 				entryProperties = "test-data-user=QAuser");
 		}
@@ -257,11 +257,11 @@ definition {
 				locator1 = "RemoteApps#TABLE_ENTRY_NAME_REMOTE_TABLE");
 
 			RemoteApps.assertCustomElementFields(
-				entryCSSURL = "https://liferay.github.io/liferay-frontend-projects/index.css",
-				entryHTMLName = "vanilla-counter-edited",
+				entryCssurl = "https://liferay.github.io/liferay-frontend-projects/index.css",
+				entryHtmlName = "vanilla-counter-edited",
 				entryName = "Vanilla Counter Edited",
 				entryProperties = "test-data-user=QAuser",
-				entryURL = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js");
+				entryUrl = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js");
 		}
 	}
 
@@ -283,9 +283,9 @@ definition {
 
 		task ("Create Vanilla Counter as a Custom Element") {
 			JSONRemoteApp.addCustomElementRemoteAppEntry(
-				customElementHTMLName = "vanilla-counter",
+				customElementHtmlName = "vanilla-counter",
 				customElementName = "Vanilla Counter",
-				customElementURL = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js");
+				customElementUrl = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js");
 		}
 
 		task ("Add a Grid to page") {
@@ -339,9 +339,9 @@ definition {
 
 		task ("Create Vanilla Counter as a Custom Element") {
 			JSONRemoteApp.addCustomElementRemoteAppEntry(
-				customElementHTMLName = "vanilla-counter",
+				customElementHtmlName = "vanilla-counter",
 				customElementName = "Vanilla Counter",
-				customElementURL = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js");
+				customElementUrl = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js");
 		}
 
 		task ("Obtain Vanilla Counter's remoteAppEntryId") {
@@ -469,7 +469,7 @@ definition {
 
 		RemoteApps.addApp(
 			entryName = "${remoteAppName}",
-			entryURL = "http://www.liferay.com");
+			entryUrl = "http://www.liferay.com");
 
 		RemoteApps.viewTableEntryName(entryName = "${remoteAppName}");
 	}

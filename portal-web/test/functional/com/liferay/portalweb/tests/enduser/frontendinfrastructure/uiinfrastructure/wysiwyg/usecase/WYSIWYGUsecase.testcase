@@ -90,14 +90,14 @@ definition {
 			groupName = "WYSIWYG Site Name",
 			title = "Test Web Content");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "wysiwyg-site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "wysiwyg-site-name");
 
 		WebContent.viewTitle(webContentTitle = "Test Web Content");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Test Web Content");
 
 		CKEditor.addEntryExternalURLToExistingText(
-			entryExternalURL = "/web/guest/home",
+			entryExternalUrl = "/web/guest/home",
 			fieldLabel = "content");
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");
@@ -123,16 +123,16 @@ definition {
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_1.jpg");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "wysiwyg-site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "wysiwyg-site-name");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
 		ItemSelector.gotoItemSelectorViaCKEditor();
 
-		var portalURL = PropsUtil.get("portal.url");
+		var portalUrl = PropsUtil.get("portal.url");
 
 		ItemSelector.addImageFromURL(
-			imageSourceURL = "${portalURL}/webdav/guest/document_library/Document_1.jpg",
+			imageSourceUrl = "${portalUrl}/webdav/guest/document_library/Document_1.jpg",
 			navTab = "URL");
 
 		PortletEntry.publish();
@@ -268,7 +268,7 @@ definition {
 			groupName = "WYSIWYG Site Name",
 			title = "Web Content Title");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "wysiwyg-site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "wysiwyg-site-name");
 
 		VerifyElementPresent(
 			key_assetTitle = "Web Content Title",
@@ -344,7 +344,7 @@ definition {
 
 		Navigator.openURL();
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "wysiwyg-site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "wysiwyg-site-name");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
@@ -384,7 +384,7 @@ definition {
 			groupName = "WYSIWYG Site Name",
 			title = "Web Content Title");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "wysiwyg-site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "wysiwyg-site-name");
 
 		VerifyElementPresent(
 			key_assetTitle = "Web Content Title",
@@ -439,7 +439,7 @@ definition {
 			groupName = "WYSIWYG Site Name",
 			title = "Web Content Title");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "wysiwyg-site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "wysiwyg-site-name");
 
 		VerifyElementPresent(
 			key_assetTitle = "Web Content Title",
@@ -466,14 +466,14 @@ definition {
 	@priority = "3"
 	@refactorneeded
 	test DMCanFormatTextWithEditorToolbar {
-		DMNavigator.openDocumentTypesAdmin(siteURLKey = "wysiwyg-site-name");
+		DMNavigator.openDocumentTypesAdmin(siteUrlKey = "wysiwyg-site-name");
 
 		DMDocumentType.add(
 			dmDocumentTypeDescription = "DM Document Type Description",
 			dmDocumentTypeFieldNames = "Rich Text",
 			dmDocumentTypeName = "DM Document Type Name");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "wysiwyg-site-name");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "wysiwyg-site-name");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",

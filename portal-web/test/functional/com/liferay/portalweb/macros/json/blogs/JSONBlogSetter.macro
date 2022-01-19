@@ -3,7 +3,7 @@ definition {
 	macro setContentXML {
 		var contentXML = JSONBlogUtil._convertToXML(content = "${content}");
 
-		return "${contentXML}";
+		return "${contentXml}";
 	}
 
 	macro setServiceContext {

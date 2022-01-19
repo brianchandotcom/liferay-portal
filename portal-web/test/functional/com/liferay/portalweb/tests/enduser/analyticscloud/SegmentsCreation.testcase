@@ -117,7 +117,7 @@ definition {
 
 		task ("Add the user1 user1 as member") {
 			Click(
-				key_TableMember = "user1 user1",
+				key_tableMember = "user1 user1",
 				locator1 = "ACSegments#TABLE_CHECKBOX");
 
 			Click(locator1 = "ACSegments#ADD_BUTTON");
@@ -135,7 +135,7 @@ definition {
 
 		task ("Add the userfn userln as member") {
 			Click(
-				key_TableMember = "userfn userln",
+				key_tableMember = "userfn userln",
 				locator1 = "ACSegments#TABLE_CHECKBOX");
 
 			Click(locator1 = "ACSegments#ADD_BUTTON");
@@ -1315,7 +1315,7 @@ definition {
 			ACUtils.viewNameList(nameList = "${nameList}");
 
 			AssertElementNotPresent(
-				key_TableMember = "userfn userln",
+				key_tableMember = "userfn userln",
 				locator1 = "ACSegments#TABLE_CHECKBOX");
 		}
 
@@ -1511,7 +1511,7 @@ definition {
 			var getFirst = StringUtil.upperCase("${getFirst}");
 
 			AssertTextEquals(
-				key_SegmentType = "${getFirst}",
+				key_segmentType = "${getFirst}",
 				locator1 = "ACSegments#SELECT_SEGMENT_TYPE",
 				value1 = "${segmentType}");
 		}

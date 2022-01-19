@@ -129,7 +129,7 @@ definition {
 			siteCalendarName = "${siteName}",
 			siteName = "${siteName}");
 
-		var rssURL = selenium.getLocation();
+		var rssUrl = selenium.getLocation();
 
 		Navigator.closeWindow();
 
@@ -148,7 +148,7 @@ definition {
 			siteCalendarName = "${siteName}",
 			siteName = "${siteName}");
 
-		Calendar.viewNoRSS(rssURL = "${rssURL}");
+		Calendar.viewNoRSS(rssUrl = "${rssUrl}");
 	}
 
 	@description = "This is a use case for LPS-67928."

@@ -225,7 +225,7 @@
 </tr>
 <tr>
 	<td>URL_IMAGE_SOURCE</td>
-	<td>//div[contains(@class,'aspect-ratio')]//img[contains(@src,'${imageSourceURL}')]</td>
+	<td>//div[contains(@class,'aspect-ratio')]//img[contains(@src,'${imageSourceUrl}')]</td>
 	<td></td>
 </tr>
 </tbody>

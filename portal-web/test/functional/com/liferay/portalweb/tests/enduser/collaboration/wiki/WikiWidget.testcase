@@ -20,7 +20,7 @@ definition {
 			layoutName = "Wiki Test Page",
 			widgetName = "Wiki");
 
-		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
+		WikiNavigator.openWikiAdmin(siteUrlKey = "guest");
 	}
 
 	tearDown {

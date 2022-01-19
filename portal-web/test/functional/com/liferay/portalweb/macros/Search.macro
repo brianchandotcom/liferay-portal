@@ -14,11 +14,11 @@ definition {
 	}
 
 	macro openSearchPage {
-		if (!(isSet(siteURLKey))) {
-			var siteURLKey = "guest";
+		if (!(isSet(siteUrlKey))) {
+			var siteUrlKey = "guest";
 		}
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/${siteURLKey}/search");
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/${siteUrlKey}/search");
 	}
 
 	macro searchCP {

@@ -2,10 +2,10 @@ definition {
 
 	macro openAuditAdmin {
 		if (!(isSet(baseURL))) {
-			var baseURL = PropsUtil.get("portal.url");
+			var baseUrl = PropsUtil.get("portal.url");
 		}
 
-		Open(locator1 = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_portal_security_audit_web_portlet_AuditPortlet");
+		Open(locator1 = "${baseUrl}/group/control_panel/manage?p_p_id=com_liferay_portal_security_audit_web_portlet_AuditPortlet");
 	}
 
 	macro searchCP {
@@ -88,7 +88,7 @@ definition {
 		if (isSet(clientIP)) {
 			AssertTextEquals.assertPartialText(
 				locator1 = "AuditReports#REPORTS_DETAIL_CLIENT_IP",
-				value1 = "${clientIP}");
+				value1 = "${clientIp}");
 		}
 	}
 

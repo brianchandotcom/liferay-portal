@@ -196,7 +196,7 @@ definition {
 			mgDocumentTitle = "DM Document Title 2",
 			mgFolderName = "DM Folder Name");
 
-		ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "guest");
+		ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteUrlKey = "guest");
 
 		ApplicationDisplayTemplates.addCP(
 			adtFile = "adt_media_gallery_carousel.ftl",
@@ -227,7 +227,7 @@ definition {
 			mgDocumentDescription = "DM Document Description",
 			mgDocumentFile = "Document_2.jpeg",
 			mgDocumentTitle = "Document_2.jpeg",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			warningFeedback = "Please enter a file with a valid file size no larger than 2 KB.");
 
 		Navigator.gotoPage(pageName = "Media Gallery Page");
@@ -256,7 +256,7 @@ definition {
 			mgDocumentDescription = "DM Document Description",
 			mgDocumentFile = "Document_1.jpeg",
 			mgDocumentTitle = "Document_1.jpeg",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			validationError = "Document names must end with one of the following extensions: .jpg");
 
 		Navigator.gotoPage(pageName = "Media Gallery Page");

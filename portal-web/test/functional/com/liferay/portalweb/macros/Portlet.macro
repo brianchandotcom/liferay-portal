@@ -475,7 +475,7 @@ definition {
 				locator1 = "build-test.xml",
 				value1 = "start-app-server -Dkeep.cached.app.server.data=true");
 		}
-		else if ("${keepOSGiState}" == "true") {
+		else if ("${keepOsGiState}" == "true") {
 			AntCommand(
 				locator1 = "build-test.xml",
 				value1 = "start-app-server -Dkeep.osgi.state=true");
@@ -668,9 +668,9 @@ definition {
 		Click(locator1 = "Portlet#OPTIONS_ICON");
 
 		AssertTextEquals(
-			key_menuItem = "${OptionsName}",
+			key_menuItem = "${optionsName}",
 			locator1 = "MenuItem#ANY_MENU_ITEM",
-			value1 = "${OptionsName}");
+			value1 = "${optionsName}");
 	}
 
 	macro viewPortletOptionsMenulist {

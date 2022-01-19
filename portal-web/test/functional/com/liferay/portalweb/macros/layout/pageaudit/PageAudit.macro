@@ -348,7 +348,7 @@ definition {
 
 		Type(
 			locator1 = "TextInput#CUSTOM_CANONICAL_URL",
-			value1 = "${URL}");
+			value1 = "${url}");
 
 		PortletEntry.save();
 	}

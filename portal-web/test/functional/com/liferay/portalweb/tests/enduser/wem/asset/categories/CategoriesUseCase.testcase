@@ -103,7 +103,7 @@ definition {
 		}
 
 		task ("Add a category as site role") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 
 			Vocabulary.addCP(vocabularyName = "Vocabulary Name");
 
@@ -130,7 +130,7 @@ definition {
 		}
 
 		task ("Create internal vocabulary") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 
 			Vocabulary.addInternalVocabulary(vocabularyName = "Internal Vocabulary Name");
 		}
@@ -150,7 +150,7 @@ definition {
 		}
 
 		task ("Add public and internal categories to Blogs") {
-			BlogsNavigator.openBlogsAdmin(siteURLKey = "test-site-name");
+			BlogsNavigator.openBlogsAdmin(siteUrlKey = "test-site-name");
 
 			BlogsNavigator.gotoEditCP(entryTitle = "Blogs Entry Title");
 
@@ -185,7 +185,7 @@ definition {
 		}
 
 		task ("Create internal vocabulary") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 
 			Vocabulary.addInternalVocabulary(vocabularyName = "Internal Vocabulary Name");
 		}
@@ -205,7 +205,7 @@ definition {
 		}
 
 		task ("Add public and internal categories to Document") {
-			DMDocument.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
+			DMDocument.openDocumentsAndMediaAdmin(siteUrlKey = "test-site-name");
 
 			LexiconEntry.gotoEntryMenuItem(
 				menuItem = "Edit",
@@ -242,7 +242,7 @@ definition {
 		}
 
 		task ("Create internal vocabulary") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 
 			Vocabulary.addInternalVocabulary(vocabularyName = "Internal Vocabulary Name");
 		}
@@ -262,7 +262,7 @@ definition {
 		}
 
 		task ("Add public and internal categories to web content") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
@@ -301,7 +301,7 @@ definition {
 		}
 
 		task ("Add a web content with category from parent site") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "child-sitename");
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "child-sitename");
 
 			WebContentNavigator.gotoAddCP();
 
@@ -313,7 +313,7 @@ definition {
 		}
 
 		task ("View the category is assigned to the web content") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "child-sitename");
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "child-sitename");
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "WC Content Title");
 
@@ -325,7 +325,7 @@ definition {
 	@priority = "3"
 	test AddWebContentWithRequiredCategory {
 		task ("Add a vocabulary for Web Content Article") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 
 			Vocabulary.addWithAssociatedAssetTypeCP(
 				assetType = "Web Content Article",
@@ -341,7 +341,7 @@ definition {
 		}
 
 		task ("Cannot add a web content without required category") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 			WebContentNavigator.gotoAddCP();
 
@@ -349,7 +349,7 @@ definition {
 		}
 
 		task ("View add a web content with required category") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 			WebContentNavigator.gotoAddCP();
 
@@ -373,7 +373,7 @@ definition {
 	@priority = "3"
 	test AddWebContentWithSpecificTypeCategory {
 		task ("Add a vocabulary for Web Content Article") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 
 			Vocabulary.addWithAssociatedAssetTypeCP(
 				assetType = "Web Content Article",
@@ -388,7 +388,7 @@ definition {
 		}
 
 		task ("Add a web content with the category") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 			WebContentNavigator.gotoAddCP();
 
@@ -412,7 +412,7 @@ definition {
 	@priority = "4"
 	test CannotAddMultipleCategoriesWhenDisallowMultipleCategories {
 		task ("Add a vocabulary disallow multiple categories") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 
 			Vocabulary.addCP(
 				allowMultipleCategories = "false",
@@ -429,7 +429,7 @@ definition {
 		}
 
 		task ("Cannot add multiple categories") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 			WebContentNavigator.gotoAddCP();
 
@@ -553,13 +553,13 @@ definition {
 		}
 
 		task ("Cannot delete the category") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 
 			Category.deleteCategoryNoPermissionCP(
 				rowEntry = "Category Name",
 				vocabularyName = "Vocabulary Name");
 
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 
 			Category.viewCP(
 				categoryName = "Category Name",
@@ -592,7 +592,7 @@ definition {
 		}
 
 		task ("Copy the web content") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 			WebContent.copyCP(webContentTitle = "Web Content Title");
 		}
@@ -623,19 +623,19 @@ definition {
 			for (var title : list "Unit 2 - Moon Minerals,Unit 3 - Ingeneous Moon Rocks,Unit 4 - Metamorphic Moon Rocks,Unit 5 - Sedimentary Moon Rocks,Unit 6 - Moon Rock Structure and Deformation,Unit 7 - Geological Structures on the Moon,Unit 8 - Moon Tectonics,Unit 9 - Nova Rocks,Unit 10 - Moon Crust Formation,Unit 11 - Evidence of Moon Rivers,Unit 12 - Geological Mapping,Unit 13 - Moon Topography,Unit 14 - Field Techniques,Unit 15 - Climate Through Moon History") {
 				JSONCategory.addVocabulary(
 					groupName = "Site Name 2",
-					siteURLKey = "site-name-2",
+					siteUrlKey = "site-name-2",
 					title = "${title}");
 			}
 		}
 
 		task ("Export the vocabularies") {
-			Category.openCategoriesAdmin(siteURLKey = "site-name-2");
+			Category.openCategoriesAdmin(siteUrlKey = "site-name-2");
 
 			LAR.exportPortlet(larFileName = "Moon-Rocks-Unit-Category-Hierarchy.lar");
 		}
 
 		task ("Import the vocabularies to another site") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 
 			LAR.importPortlet(larFileName = "Moon-Rocks-Unit-Category-Hierarchy.lar");
 		}
@@ -751,7 +751,7 @@ definition {
 		}
 
 		task ("View the category or subcategory are assigned to web contents") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "import-site-name");
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "import-site-name");
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
@@ -759,7 +759,7 @@ definition {
 				categoryNameList = "Category Name",
 				webContentTitle = "Web Content Title");
 
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "import-site-name");
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "import-site-name");
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "Subcategory WC Title");
 
@@ -794,7 +794,7 @@ definition {
 
 		task ("Search categories by name") {
 			for (var categoryName : list "llama,panda") {
-				Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+				Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 
 				Category.searchCP(
 					categorySearchEntry = "${categoryName}",
@@ -806,7 +806,7 @@ definition {
 
 		task ("Search categories by description") {
 			for (var categoryDescription : list "brown,black") {
-				Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+				Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 
 				Category.searchCP(
 					categorySearchEntry = "${categoryDescription}",
@@ -815,7 +815,7 @@ definition {
 				Category.viewSearchResultsCP(categoryDefinitionList = "${categoryDescription}");
 			}
 
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 
 			Category.searchCP(
 				categorySearchEntry = "white",
@@ -839,7 +839,7 @@ definition {
 		}
 
 		task ("Add a category with localization") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 
 			Category.addCategoryLocalizationCP(
 				categoryName = "Category Name",
@@ -875,7 +875,7 @@ definition {
 		}
 
 		task ("Change the user language to Deutsch") {
-			User.openUsersAdmin(siteURLKey = "test-site-name");
+			User.openUsersAdmin(siteUrlKey = "test-site-name");
 
 			User.editDisplaySettingsCP(
 				languageName = "Deutsch (Deutschland)",
@@ -986,7 +986,7 @@ definition {
 
 		task ("Search subcategory by name") {
 			for (var categoryName : list "beard,mustache") {
-				Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+				Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 
 				Subcategory.searchCP(
 					categoryName = "Category Name",
@@ -999,7 +999,7 @@ definition {
 
 		task ("Search subcategory by description") {
 			for (var categoryDescription : list "friendly chops,handlebar") {
-				Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+				Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 
 				Subcategory.searchCP(
 					categoryName = "Category Name",
@@ -1009,7 +1009,7 @@ definition {
 				Subcategory.viewSearchResultsCP(subcategoryDefinitionList = "${subcategoryDescription}");
 			}
 
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 
 			Subcategory.searchCP(
 				categoryName = "Category Name",
@@ -1088,7 +1088,7 @@ definition {
 	@priority = "4"
 	test SelectMultipleRequiredCategoriesInContentPageCreation {
 		task ("Add a vocabulary with required for page") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 
 			Vocabulary.addWithAssociatedAssetTypeCP(
 				assetType = "Page",
@@ -1106,7 +1106,7 @@ definition {
 		}
 
 		task ("Select all categories in content page creation") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
 
 			ContentPages.addPage(
 				categoryNameList = "Category Name 1,Category Name 2,Category Name 3",
@@ -1117,7 +1117,7 @@ definition {
 		}
 
 		task ("View the new page in Pages admin") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
 
 			AssertVisible(
 				key_itemName = "Test Content Page Name",
@@ -1131,7 +1131,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Add a vocabulary with required for page") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 
 			Vocabulary.addWithAssociatedAssetTypeCP(
 				assetType = "Page",
@@ -1147,7 +1147,7 @@ definition {
 		}
 
 		task ("Add a content page and select a required category") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
 
 			ContentPages.addPage(
 				categoryName = "Category Name",
@@ -1158,7 +1158,7 @@ definition {
 		}
 
 		task ("View the new page in Pages admin") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
 
 			AssertVisible(
 				key_itemName = "Test Content Page Name",
@@ -1172,7 +1172,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Add a vocabulary with required for page") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 
 			Vocabulary.addWithAssociatedAssetTypeCP(
 				assetType = "Page",
@@ -1188,7 +1188,7 @@ definition {
 		}
 
 		task ("Add a widget page and select a required category") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
 
 			PagesAdmin.addPublicPage(
 				categoryName = "Category Name",
@@ -1199,7 +1199,7 @@ definition {
 		}
 
 		task ("View the new page in Pages admin") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
 
 			AssertVisible(
 				key_itemName = "Test Widget Page Name",
@@ -1214,7 +1214,7 @@ definition {
 		}
 
 		task ("View the new page in Pages admin") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
 
 			AssertVisible(
 				key_itemName = "Test Page Name 2",
@@ -1247,7 +1247,7 @@ definition {
 		}
 
 		task ("Search an unrelated keyword in vocabulary") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 
 			Category.searchCP(
 				categorySearchEntry = "Null",
@@ -1259,7 +1259,7 @@ definition {
 		}
 
 		task ("Search an unrelated keyword in category") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 
 			Subcategory.searchCP(
 				categoryName = "Category Name",
@@ -1276,7 +1276,7 @@ definition {
 	@priority = "4"
 	test ViewErrorMessageWhenSaveSiteSettingsWithoutRequiredCategory {
 		task ("Add a vocabulary with associated asset type") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 
 			Vocabulary.addWithAssociatedAssetTypeCP(
 				assetType = "Site",
@@ -1292,7 +1292,7 @@ definition {
 		}
 
 		task ("Go to Categorization settings") {
-			Site.openSiteSettingsAdmin(siteURLKey = "test-site-name");
+			Site.openSiteSettingsAdmin(siteUrlKey = "test-site-name");
 
 			Click(
 				key_itemName = "Assets",
@@ -1312,7 +1312,7 @@ definition {
 	@priority = "3"
 	test ViewVocabularyForAssetSubtypeInWebContentEditor {
 		task ("Add a web content structure with a Text field") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 			NavItem.gotoStructures();
 
@@ -1326,7 +1326,7 @@ definition {
 		}
 
 		task ("Add a vocabulary for Web Content Article and Basic Web Content") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 
 			Vocabulary.addWithAssociatedAssetTypeCP(
 				assetSubtype = "Basic Web Content",
@@ -1342,7 +1342,7 @@ definition {
 		}
 
 		task ("View vocabulary for asset subtype in web content editor") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 			WebContentNavigator.gotoAddCP();
 
@@ -1370,7 +1370,7 @@ definition {
 	@priority = "4"
 	test ViewVocabularyForSpecificAssetTypesInAssetEditor {
 		task ("Add a vocabulary for specific assets types") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 
 			Vocabulary.gotoAddVocabulary();
 
@@ -1407,7 +1407,7 @@ definition {
 		}
 
 		task ("View the vocabulary in web content editor") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 			WebContentNavigator.gotoAddCP();
 
@@ -1425,7 +1425,7 @@ definition {
 		}
 
 		task ("View the vocabulary not shown in page editor") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Configure",

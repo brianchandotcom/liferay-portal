@@ -432,7 +432,7 @@
 </tr>
 <tr>
 	<td>OPEN_GRAPH_CUSTOM_IMAGE_INPUT</td>
-	<td>//div[label[contains(.,'Image')]]//input[contains(@value,'${key_dmDocumentURL}') and @readonly]</td>
+	<td>//div[label[contains(.,'Image')]]//input[contains(@value,'${key_dmDocumentUrl}') and @readonly]</td>
 	<td></td>
 </tr>
 <tr>

@@ -39,7 +39,7 @@ definition {
 				layoutPageTemplateStatus = "Draft",
 				layoutPageTemplateType = "Content Page Template");
 
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteUrlKey = "test-site-name");
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
@@ -66,7 +66,7 @@ definition {
 		}
 
 		task ("Assert workflow status of both and select them") {
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteUrlKey = "test-site-name");
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
@@ -99,7 +99,7 @@ definition {
 				layoutPageTemplateStatus = "Draft",
 				layoutPageTemplateType = "Content Page Template");
 
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteUrlKey = "test-site-name");
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
@@ -124,7 +124,7 @@ definition {
 				layoutPageTemplateStatus = "Draft",
 				layoutPageTemplateType = "Content Page Template");
 
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteUrlKey = "test-site-name");
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
@@ -138,7 +138,7 @@ definition {
 		}
 
 		task ("Assert workflow status of both and select them") {
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteUrlKey = "test-site-name");
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
@@ -165,7 +165,7 @@ definition {
 	@uitest
 	test ExportImportContentPageTemplateBasedOnCustomMaster {
 		task ("Add a custom master with Heading then Publish") {
-			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
+			MastersPageTemplatesAdmin.openMastersAdmin(siteUrlKey = "test-site-name");
 
 			MastersPageTemplatesAdmin.addMasters(masterLayoutName = "Custom Masters Page Template");
 
@@ -193,7 +193,7 @@ definition {
 				layoutPageTemplateType = "Content Page Template",
 				masterLayoutEntryName = "Custom Masters Page Template");
 
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteUrlKey = "test-site-name");
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
@@ -209,7 +209,7 @@ definition {
 		}
 
 		task ("Export content page template") {
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteUrlKey = "test-site-name");
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
@@ -231,7 +231,7 @@ definition {
 				groupName = "Site Name",
 				masterPageTemplateEntryName = "Custom Masters Page Template");
 
-			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "site-name");
+			MastersPageTemplatesAdmin.openMastersAdmin(siteUrlKey = "site-name");
 
 			MastersPageTemplatesAdmin.gotoMastersEllipsisItem(
 				item = "Edit",
@@ -249,7 +249,7 @@ definition {
 		}
 
 		task ("Import content page template in new site") {
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "site-name");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteUrlKey = "site-name");
 
 			PageTemplatesAdmin.importPageTemplatesFromTempFolder();
 		}
@@ -295,7 +295,7 @@ definition {
 		}
 
 		task ("Edit content of new fragment") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "test-site-name");
 
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 
@@ -322,7 +322,7 @@ definition {
 				layoutPageTemplateStatus = "Draft",
 				layoutPageTemplateType = "Content Page Template");
 
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteUrlKey = "test-site-name");
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
@@ -345,7 +345,7 @@ definition {
 		}
 
 		task ("Export content page template") {
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteUrlKey = "test-site-name");
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
@@ -357,7 +357,7 @@ definition {
 		}
 
 		task ("Export new fragment") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "test-site-name");
 
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 
@@ -369,11 +369,11 @@ definition {
 		task ("Import new fragment to a new site") {
 			JSONGroup.addGroup(groupName = "Site Name");
 
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "site-name");
 
 			FragmentsAdmin.importCollectionFromTempFolder();
 
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "site-name");
 
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 
@@ -381,7 +381,7 @@ definition {
 		}
 
 		task ("Import content page template to the new site") {
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "site-name");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteUrlKey = "site-name");
 
 			PageTemplatesAdmin.importPageTemplatesFromTempFolder();
 
@@ -415,7 +415,7 @@ definition {
 				layoutPageTemplateStatus = "Draft",
 				layoutPageTemplateType = "Content Page Template");
 
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteUrlKey = "test-site-name");
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
@@ -451,7 +451,7 @@ definition {
 		}
 
 		task ("Export content page template") {
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteUrlKey = "test-site-name");
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
@@ -469,7 +469,7 @@ definition {
 		task ("Import content page template in a new site") {
 			JSONGroup.addGroup(groupName = "Site Name");
 
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "site-name");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteUrlKey = "site-name");
 
 			PageTemplatesAdmin.importPageTemplatesFromTempFolder();
 		}
@@ -513,7 +513,7 @@ definition {
 	@priority = "4"
 	test ExportImportContentPageTemplateWithTeamRolePermissionSettingsOfWidgets {
 		task ("Add a Team in site") {
-			Site.openSiteTeamsAdmin(siteURLKey = "test-site-name");
+			Site.openSiteTeamsAdmin(siteUrlKey = "test-site-name");
 
 			Team.addCP(
 				teamDescription = "Site Team Description",
@@ -532,7 +532,7 @@ definition {
 				layoutPageTemplateStatus = "Draft",
 				layoutPageTemplateType = "Content Page Template");
 
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteUrlKey = "test-site-name");
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
@@ -574,7 +574,7 @@ definition {
 		}
 
 		task ("Export content page template") {
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteUrlKey = "test-site-name");
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
@@ -586,7 +586,7 @@ definition {
 		}
 
 		task ("Export Team") {
-			Site.openSiteTeamsAdmin(siteURLKey = "test-site-name");
+			Site.openSiteTeamsAdmin(siteUrlKey = "test-site-name");
 
 			LAR.exportTeam(larFileName = "Site Team Name");
 		}
@@ -594,13 +594,13 @@ definition {
 		task ("Import Team in a new site") {
 			JSONGroup.addGroup(groupName = "Site Name");
 
-			Site.openSiteTeamsAdmin(siteURLKey = "site-name");
+			Site.openSiteTeamsAdmin(siteUrlKey = "site-name");
 
 			LAR.importTeam(larFileName = "Site Team Name");
 		}
 
 		task ("Import content page template") {
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "site-name");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteUrlKey = "site-name");
 
 			PageTemplatesAdmin.importPageTemplatesFromTempFolder();
 		}
@@ -632,7 +632,7 @@ definition {
 	@priority = "4"
 	test ExportImportPageTemplateWithStylebook {
 		task ("Add a style book") {
-			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-site-name");
+			StyleBooksAdmin.openStyleBooksAdmin(siteUrlKey = "test-site-name");
 
 			StyleBooksAdmin.addStyleBooks(styleBookName = "Test Style Book Name");
 		}
@@ -649,7 +649,7 @@ definition {
 				layoutPageTemplateStatus = "Draft",
 				layoutPageTemplateType = "Content Page Template");
 
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteUrlKey = "test-site-name");
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
@@ -667,7 +667,7 @@ definition {
 		}
 
 		task ("Export content page template") {
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteUrlKey = "test-site-name");
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
@@ -679,13 +679,13 @@ definition {
 		}
 
 		task ("Delete the page template collection") {
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteUrlKey = "test-site-name");
 
 			Collection.deleteCollection(collectionName = "Page Template Collection");
 		}
 
 		task ("Import the previously exported page template") {
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteUrlKey = "test-site-name");
 
 			Click.waitForMenuToggleJSClick(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
 
@@ -705,7 +705,7 @@ definition {
 		}
 
 		task ("Edit the page template to check whether the stylebook is still applied") {
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteUrlKey = "test-site-name");
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
@@ -738,7 +738,7 @@ definition {
 		}
 
 		task ("Edit content of new fragment") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "test-site-name");
 
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 
@@ -765,7 +765,7 @@ definition {
 				layoutPageTemplateStatus = "Draft",
 				layoutPageTemplateType = "Content Page Template");
 
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteUrlKey = "test-site-name");
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
@@ -788,7 +788,7 @@ definition {
 		}
 
 		task ("Export content page template") {
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteUrlKey = "test-site-name");
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
@@ -800,7 +800,7 @@ definition {
 		}
 
 		task ("Export new fragment") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "test-site-name");
 
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 
@@ -812,7 +812,7 @@ definition {
 		task ("Import content page template to the new site") {
 			JSONGroup.addGroup(groupName = "Site Name");
 
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "site-name");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteUrlKey = "site-name");
 
 			Click.waitForMenuToggleJSClick(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
 
@@ -852,11 +852,11 @@ definition {
 		}
 
 		task ("Import new fragment to a new site") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "site-name");
 
 			FragmentsAdmin.importCollectionFromTempFolder();
 
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "site-name");
 
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 
@@ -864,7 +864,7 @@ definition {
 		}
 
 		task ("Assert new fragment is not shown in content page template") {
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "site-name");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteUrlKey = "site-name");
 
 			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");
 
@@ -903,7 +903,7 @@ definition {
 		}
 
 		task ("Add the test page fragment and 2 heading to the page template.") {
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteUrlKey = "test-site-name");
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
@@ -922,7 +922,7 @@ definition {
 		}
 
 		task ("Export the template.") {
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteUrlKey = "test-site-name");
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
@@ -934,7 +934,7 @@ definition {
 		}
 
 		task ("Delete the template.") {
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteUrlKey = "test-site-name");
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
@@ -942,7 +942,7 @@ definition {
 		}
 
 		task ("Delete the test page fragment.") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "test-site-name");
 
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 
@@ -950,7 +950,7 @@ definition {
 		}
 
 		task ("Import the exported page template.") {
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteUrlKey = "test-site-name");
 
 			Click.waitForMenuToggleJSClick(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
 
@@ -972,7 +972,7 @@ definition {
 		}
 
 		task ("Assert Template has been imported without the deleted fragment.") {
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteUrlKey = "test-site-name");
 
 			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");
 
@@ -999,7 +999,7 @@ definition {
 				layoutPageTemplateStatus = "Draft",
 				layoutPageTemplateType = "Content Page Template");
 
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteUrlKey = "test-site-name");
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
@@ -1022,7 +1022,7 @@ definition {
 		}
 
 		task ("Assert content page template has Approved label") {
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteUrlKey = "test-site-name");
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
@@ -1041,7 +1041,7 @@ definition {
 		}
 
 		task ("Assert content page template has Draft label") {
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteUrlKey = "test-site-name");
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
@@ -1061,7 +1061,7 @@ definition {
 		task ("Import content page template in a new site") {
 			JSONGroup.addGroup(groupName = "Site Name");
 
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "site-name");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteUrlKey = "site-name");
 
 			PageTemplatesAdmin.importPageTemplatesFromTempFolder();
 		}
@@ -1099,7 +1099,7 @@ definition {
 				layoutPageTemplateStatus = "Draft",
 				layoutPageTemplateType = "Content Page Template");
 
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "organization-name");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteUrlKey = "organization-name");
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
@@ -1141,7 +1141,7 @@ definition {
 		}
 
 		task ("Export content page template") {
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "organization-name");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteUrlKey = "organization-name");
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
@@ -1153,7 +1153,7 @@ definition {
 		}
 
 		task ("Import content page template in a normal site") {
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteUrlKey = "test-site-name");
 
 			Click.waitForMenuToggleJSClick(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
 
@@ -1183,7 +1183,7 @@ definition {
 		task ("Assert Account Manager is not shown in permissions panel of RSS Publisher") {
 			IFrame.closeFrame();
 
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteUrlKey = "test-site-name");
 
 			PageTemplatesAdmin.viewPageTemplatePresent(pageTemplateName = "Page Template Name");
 

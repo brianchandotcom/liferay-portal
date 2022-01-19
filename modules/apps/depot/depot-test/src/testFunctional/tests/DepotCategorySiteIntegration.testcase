@@ -318,7 +318,7 @@ definition {
 		DMNavigator.openToEntryInAdmin(
 			dmDocumentTitle = "Document_1.txt",
 			groupName = "Site Name",
-			siteURLKey = "site-name");
+			siteUrlKey = "site-name");
 
 		DMDocument.viewCategoriesInfo(categoryName = "apple");
 	}
@@ -338,7 +338,7 @@ definition {
 
 		DMNavigator.openToAddEntry(
 			groupName = "Site Name",
-			siteURLKey = "site-name");
+			siteUrlKey = "site-name");
 
 		AssetCategorization.viewNoAddPermissions(vocabularyName = "Vocabulary Name");
 	}
@@ -358,35 +358,35 @@ definition {
 
 		JSONDepot.disconnectSite(groupName = "Site Name");
 
-		BlogsNavigator.openToAddEntry(siteURLKey = "site-name");
+		BlogsNavigator.openToAddEntry(siteUrlKey = "site-name");
 
 		AssetCategorization.viewNoVocabularyField(vocabularyName = "Vocabulary Name");
 
 		DMNavigator.openToAddEntry(
 			groupName = "Site Name",
-			siteURLKey = "site-name");
+			siteUrlKey = "site-name");
 
 		AssetCategorization.viewNoVocabularyField(vocabularyName = "Vocabulary Name");
 
 		WebContentNavigator.openToAddBasicArticle(
 			groupName = "Site Name",
-			siteURLKey = "site-name");
+			siteUrlKey = "site-name");
 
 		AssetCategorization.viewNoVocabularyField(vocabularyName = "Vocabulary Name");
 
 		KBArticle.openToAddKBArticle(
 			groupName = "Site Name",
-			siteURLKey = "site-name");
+			siteUrlKey = "site-name");
 
 		AssetCategorization.viewNoVocabularyField(vocabularyName = "Vocabulary Name");
 
-		MessageboardsThread.openToAddThread(siteURLKey = "site-name");
+		MessageboardsThread.openToAddThread(siteUrlKey = "site-name");
 
 		AssetCategorization.viewNoVocabularyField(vocabularyName = "Vocabulary Name");
 
 		WikiNavigator.openToAddPage(
 			groupName = "Site Name",
-			siteURLKey = "site-name",
+			siteUrlKey = "site-name",
 			wikiNodeName = "Main");
 
 		AssetCategorization.viewNoVocabularyField(vocabularyName = "Vocabulary Name");

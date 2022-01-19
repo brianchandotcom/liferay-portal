@@ -10,7 +10,7 @@ definition {
 		var userId = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = "test@liferay.com");
 
 		var curl = '''
-			${portalURL}/api/jsonws/ct.ctcollection/add-ct-collection \
+			${portalUrl}/api/jsonws/ct.ctcollection/add-ct-collection \
 				-u test@liferay.com:test \
 				-d companyId=${companyId} \
 				-d userId=${userId} \
@@ -27,7 +27,7 @@ definition {
 		var companyId = JSONCompany.getCompanyId();
 
 		var curl = '''
-			${portalURL}/api/jsonws/ct.ctpreferences/checkout-ct-collection \
+			${portalUrl}/api/jsonws/ct.ctpreferences/checkout-ct-collection \
 				-u test@liferay.com:test \
 				-d companyId=${companyId} \
 				-d ctCollectionId=0 \
@@ -45,7 +45,7 @@ definition {
 		var companyId = JSONCompany.getCompanyId();
 
 		var curl = '''
-			${portalURL}/api/jsonws/ct.ctcollection/get-ct-collections \
+			${portalUrl}/api/jsonws/ct.ctcollection/get-ct-collections \
 			-u test@liferay.com:test \
 			-d companyId=${companyId} \
 			-d statuses=[2] \
@@ -72,7 +72,7 @@ definition {
 		var userId = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = "test@liferay.com");
 
 		var curl = '''
-			${portalURL}/api/jsonws/ct.ctcollection/publish-ct-collection \
+			${portalUrl}/api/jsonws/ct.ctcollection/publish-ct-collection \
 				-u test@liferay.com:test \
 				-d ctCollectionId=${ctCollectionId} \
 				-d userId=${userId}
@@ -91,7 +91,7 @@ definition {
 		var userId = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = "test@liferay.com");
 
 		var curl = '''
-			${portalURL}/api/jsonws/ct.ctpreferences/checkout-ct-collection \
+			${portalUrl}/api/jsonws/ct.ctpreferences/checkout-ct-collection \
 				-u test@liferay.com:test \
 				-d companyId=${companyId} \
 				-d ctCollectionId=${ctCollectionId} \

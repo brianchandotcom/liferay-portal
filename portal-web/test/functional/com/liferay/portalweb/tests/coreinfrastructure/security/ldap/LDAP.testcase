@@ -31,11 +31,11 @@ definition {
 		property test.name.skip.portal.instance = "LDAP#AssertLDAPCredentialsDoesNotExposeInURL";
 
 		task ("Add LDAP server and test connection") {
-			LDAP.addLDAPServerAndTestConnection(LDAPServerName = "ApacheDS Server");
+			LDAP.addLDAPServerAndTestConnection(ldapServerName = "ApacheDS Server");
 		}
 
 		task ("Assert no pagination display in the page") {
-			LDAP.assertNoPagination(LDAPServerName = "ApacheDS Server");
+			LDAP.assertNoPagination(ldapServerName = "ApacheDS Server");
 		}
 
 		task ("Assert LDAP security credentials are obscured") {
@@ -55,9 +55,9 @@ definition {
 		property test.name.skip.portal.instance = "LDAP#ImportLDAPUserWithBlankPassword";
 
 		task ("Add LDAP server and test connection") {
-			PortalSettings.addLDAPServer(LDAPServerName = "ApacheDS Server");
+			PortalSettings.addLDAPServer(ldapServerName = "ApacheDS Server");
 
-			PortalSettings.editLDAPServer(LDAPServerName = "ApacheDS Server");
+			PortalSettings.editLDAPServer(ldapServerName = "ApacheDS Server");
 
 			PortalSettings.testLDAPConnection();
 		}
@@ -103,9 +103,9 @@ definition {
 		property test.name.skip.portal.instance = "LDAP#ResetFieldsValueForImportedLDAPUser";
 
 		task ("Add LDAP server and test connection") {
-			PortalSettings.addLDAPServer(LDAPServerName = "ApacheDS Server");
+			PortalSettings.addLDAPServer(ldapServerName = "ApacheDS Server");
 
-			PortalSettings.editLDAPServer(LDAPServerName = "ApacheDS Server");
+			PortalSettings.editLDAPServer(ldapServerName = "ApacheDS Server");
 
 			PortalSettings.testLDAPConnection();
 		}

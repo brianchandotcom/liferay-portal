@@ -42,7 +42,7 @@
 </tr>
 <tr>
 	<td>SAML_CONNECTION_ACTION_BUTTON</td>
-	<td>//tr[contains(.,'${key_samlEntityID}')]//a[contains(@id,'ConnectionsSearchContainer')]</td>
+	<td>//tr[contains(.,'${key_samlEntityId}')]//a[contains(@id,'ConnectionsSearchContainer')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -53,7 +53,7 @@ definition {
 
 		User.firstLoginUI(
 			password = "test",
-			specificURL = "http://localhost:9080",
+			specificUrl = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
 		Page.assertNodePortPG(nodePort = "9080");
@@ -79,8 +79,8 @@ definition {
 			locator1 = "Message#INFO_SPECIFIC");
 
 		DMNavigator.openDocumentsAndMediaAdmin(
-			baseURL = "http://localhost:9080",
-			siteURLKey = "guest");
+			baseUrl = "http://localhost:9080",
+			siteUrlKey = "guest");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "Document Description",
@@ -105,13 +105,13 @@ definition {
 		DMNavigator.openToEntryInAdmin(
 			dmDocumentTitle = "DM Document JPG Node2",
 			groupName = "Guest",
-			siteURLKey = "guest");
+			siteUrlKey = "guest");
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document JPG Node2");
 
 		DMDocument.viewTagInfo(tagName = "carton");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "Document Description",
@@ -123,7 +123,7 @@ definition {
 		DMNavigator.openToEntryInAdmin(
 			dmDocumentTitle = "DM Document JPG Node1",
 			groupName = "Guest",
-			siteURLKey = "guest");
+			siteUrlKey = "guest");
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document JPG Node1");
 
@@ -139,10 +139,10 @@ definition {
 			userEmailAddress = "test@liferay.com");
 
 		DMNavigator.openToEntryInAdmin(
-			baseURL = "http://localhost:9080",
+			baseUrl = "http://localhost:9080",
 			dmDocumentTitle = "DM Document JPG Node1",
 			groupName = "Guest",
-			siteURLKey = "guest");
+			siteUrlKey = "guest");
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document JPG Node1");
 
@@ -176,7 +176,7 @@ definition {
 		DMNavigator.openToEntryInAdmin(
 			dmDocumentTitle = "DM Document JPG",
 			groupName = "Guest",
-			siteURLKey = "guest");
+			siteUrlKey = "guest");
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document JPG");
 
@@ -191,7 +191,7 @@ definition {
 		DMNavigator.openToEntryInAdmin(
 			dmDocumentTitle = "DM Document JPG",
 			groupName = "Guest",
-			siteURLKey = "guest");
+			siteUrlKey = "guest");
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document JPG");
 
@@ -206,7 +206,7 @@ definition {
 		DMNavigator.openToEntryInAdmin(
 			dmDocumentTitle = "DM Document JPG",
 			groupName = "Guest",
-			siteURLKey = "guest");
+			siteUrlKey = "guest");
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document JPG");
 
@@ -231,12 +231,12 @@ definition {
 			dmDocumentFile = "Alice's Adventures in Wonderland.docx",
 			dmDocumentTitle = "DM Document DOCX",
 			groupName = "Guest",
-			siteURLKey = "guest");
+			siteUrlKey = "guest");
 
 		DMNavigator.openToEntryInAdmin(
 			dmDocumentTitle = "DM Document DOCX",
 			groupName = "Guest",
-			siteURLKey = "guest");
+			siteUrlKey = "guest");
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document DOCX");
 
@@ -281,7 +281,7 @@ definition {
 
 		AutoTagging.disableAutoTagging(
 			disableAutoTaggingFor = "Site Settings",
-			siteURLKey = "site-name-autotag-disabled");
+			siteUrlKey = "site-name-autotag-disabled");
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -293,7 +293,7 @@ definition {
 		DMNavigator.openToEntryInAdmin(
 			dmDocumentTitle = "DM Document JPG",
 			groupName = "Site Name AutoTag Enabled",
-			siteURLKey = "site-name-autotag-enabled");
+			siteUrlKey = "site-name-autotag-enabled");
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document JPG");
 
@@ -309,7 +309,7 @@ definition {
 		DMNavigator.openToEntryInAdmin(
 			dmDocumentTitle = "DM Document JPG",
 			groupName = "Site Name AutoTag Disabled",
-			siteURLKey = "site-name-autotag-disabled");
+			siteUrlKey = "site-name-autotag-disabled");
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document JPG");
 

@@ -15,7 +15,7 @@ definition {
 		}
 
 		if (!(isSet(announcementURL))) {
-			var announcementURL = "";
+			var announcementUrl = "";
 		}
 
 		if (!(isSet(announcementType))) {
@@ -53,7 +53,7 @@ definition {
 			announcementContent = "${announcementContent}",
 			announcementTitle = "${announcementTitle}",
 			announcementType = "${announcementType}",
-			announcementURL = "${announcementURL}",
+			announcementUrl = "${announcementUrl}",
 			displayDate = "${displayDate}",
 			expirationDate = "${expirationDate}",
 			priority = "${priority}",
@@ -65,12 +65,12 @@ definition {
 	macro deleteAnnouncement {
 		var entryId = JSONAnnouncementAPI._getEntryId(
 			groupName = "${groupName}",
-			siteURLKey = "${siteURLKey}");
+			siteUrlKey = "${siteUrlKey}");
 
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalURL}/api/jsonws/announcementsentry/delete-entry \
+			${portalUrl}/api/jsonws/announcementsentry/delete-entry \
 				-u test@liferay.com:test \
 				-d entryId=${entryId} \
 		''';

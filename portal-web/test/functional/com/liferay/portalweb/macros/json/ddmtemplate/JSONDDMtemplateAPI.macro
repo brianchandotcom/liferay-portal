@@ -1,7 +1,7 @@
 definition {
 
 	macro _addInformationTemplate {
-		Variables.assertDefined(parameterList = "${classNameId},${classPK},${groupId},${nameMap}");
+		Variables.assertDefined(parameterList = "${classNameId},${classPk},${groupId},${nameMap}");
 
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -12,11 +12,11 @@ definition {
 		var resourceClassNameId = JSONClassname._getClassNameId(value = "com.liferay.info.item.provider.InfoItemFormProvider");
 
 		var curl = '''
-			${portalURL}/api/jsonws/ddm.ddmtemplate/add-template \
+			${portalUrl}/api/jsonws/ddm.ddmtemplate/add-template \
 				-u test@liferay.com:test \
 				-d groupId=${groupId}
 				-d classNameId=${classNameId} \
-				-d classPK=${classPK} \
+				-d classPK=${classPk} \
 				-d resourceClassNameId=${resourceClassNameId} \
 				-d nameMap=${nameMap} \
 				-d descriptionMap=${descriptionMap} \

@@ -3,7 +3,7 @@ definition {
 	macro _deleteRemoteAppAPI {
 		var currentURL = Navigator.getCurrentURL();
 
-		var findWhereIdBegins = StringUtil.extractLast("${currentURL}", "remoteAppEntryId=");
+		var findWhereIdBegins = StringUtil.extractLast("${currentUrl}", "remoteAppEntryId=");
 		var remoteAppEntryIdValue = StringUtil.extractFirst("${findWhereIdBegins}", "&_com_liferay_remote_app_admin_web_portlet_RemoteAppAdminPortlet_redirect");
 
 		JSONRemoteApp.deleteIFrameRemoteAppEntry(remoteAppEntryId = "${remoteAppEntryIdValue}");
@@ -14,7 +14,7 @@ definition {
 
 		RemoteAppsEntry.addEntry(
 			entryName = "${entryName}",
-			entryURL = "${entryURL}");
+			entryUrl = "${entryUrl}");
 
 		PortletEntry.publish();
 	}
@@ -27,9 +27,9 @@ definition {
 			value1 = "Custom Element");
 
 		RemoteAppsEntry.addCustomElement(
-			entryHTMLName = "${entryHTMLName}",
+			entryHtmlName = "${entryHtmlName}",
 			entryName = "${entryName}",
-			entryURL = "${entryURL}");
+			entryUrl = "${entryUrl}");
 
 		PortletEntry.publish();
 	}
@@ -42,11 +42,11 @@ definition {
 			value1 = "Custom Element");
 
 		RemoteAppsEntry.addCustomElementAllFields(
-			entryCSSURL = "${entryCSSURL}",
-			entryHTMLName = "${entryHTMLName}",
+			entryCssurl = "${entryCssurl}",
+			entryHtmlName = "${entryHtmlName}",
 			entryName = "${entryName}",
 			entryProperties = "${entryProperties}",
-			entryURL = "${entryURL}");
+			entryUrl = "${entryUrl}");
 
 		Click(locator1 = "RemoteAppsEntry#REMOTE_APPS_INSTANCEABLE");
 
@@ -61,12 +61,12 @@ definition {
 			value1 = "Custom Element");
 
 		RemoteAppsEntry.addCustomElementMultipleURLs(
-			entryCSSURL1 = "https://liferay.github.io/liferay-frontend-projects/index1.css",
-			entryCSSURL2 = "https://liferay.github.io/liferay-frontend-projects/index2.css",
-			entryHTMLName = "vanilla-counter",
+			entryCssurl1 = "https://liferay.github.io/liferay-frontend-projects/index1.css",
+			entryCssurl2 = "https://liferay.github.io/liferay-frontend-projects/index2.css",
+			entryHtmlName = "vanilla-counter",
 			entryName = "Vanilla Counter",
-			entryURL1 = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index1.js",
-			entryURL2 = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index2.js");
+			entryUrl1 = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index1.js",
+			entryUrl2 = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index2.js");
 
 		PortletEntry.publish();
 	}
@@ -76,7 +76,7 @@ definition {
 
 		RemoteAppsEntry.addEntry(
 			entryName = "Test Remote App",
-			entryURL = "http://www.liferay.com");
+			entryUrl = "http://www.liferay.com");
 
 		RemoteAppsEntry.addPortletCategory(categoryName = "Collaboration");
 
@@ -91,22 +91,22 @@ definition {
 			value1 = "${entryName}");
 
 		AssertTextEquals(
-			custom_entryHTMLName = "${entryHTMLName}",
+			custom_entryHtmlName = "${entryHtmlName}",
 			key_text = "HTML Element Name",
 			locator1 = "TextInput#ANY",
-			value1 = "${entryHTMLName}");
+			value1 = "${entryHtmlName}");
 
 		AssertTextEquals(
-			custom_entryURL = "${entryURL}",
+			custom_entryUrl = "${entryUrl}",
 			key_id = "customElementURLs",
 			locator1 = "RemoteAppsEntry#URL",
-			value1 = "${entryURL}");
+			value1 = "${entryUrl}");
 
 		AssertTextEquals(
-			custom_entryCSSURL = "${entryCSSURL}",
+			custom_entryCssurl = "${entryCssurl}",
 			key_text = "CSS URL",
 			locator1 = "TextInput#ANY",
-			value1 = "${entryCSSURL}");
+			value1 = "${entryCssurl}");
 
 		AssertTextEquals(
 			custom_entryProperties = "${entryProperties}",
@@ -123,7 +123,7 @@ definition {
 			value1 = "Vanilla Counter");
 
 		AssertTextEquals(
-			custom_entryHTMLName = "vanilla-counter",
+			custom_entryHtmlName = "vanilla-counter",
 			key_text = "HTML Element Name",
 			locator1 = "TextInput#ANY",
 			value1 = "vanilla-counter");
@@ -187,12 +187,12 @@ definition {
 		Type(
 			key_text = "HTML Element Name",
 			locator1 = "TextInput#ANY",
-			value1 = "${entryHTMLName}");
+			value1 = "${entryHtmlName}");
 
 		Type(
 			key_text = "CSS URL",
 			locator1 = "TextInput#ANY",
-			value1 = "${entryCSSURL}");
+			value1 = "${entryCssurl}");
 
 		Type(
 			key_text = "Properties",
@@ -213,7 +213,7 @@ definition {
 
 		var currentURL = Navigator.getCurrentURL();
 
-		var findWhereIdBegins = StringUtil.extractLast("${currentURL}", "remoteAppEntryId=");
+		var findWhereIdBegins = StringUtil.extractLast("${currentUrl}", "remoteAppEntryId=");
 		var remoteAppEntryIdValue = StringUtil.extractFirst("${findWhereIdBegins}", "&_com_liferay_remote_app_admin_web_portlet_RemoteAppAdminPortlet_redirect");
 
 		return "${remoteAppEntryIdValue}";
@@ -278,9 +278,9 @@ definition {
 
 	macro viewTableEntryURL {
 		AssertTextEquals(
-			key_tableEntryURL = "${entryURL}",
+			key_tableEntryUrl = "${entryUrl}",
 			locator1 = "RemoteApps#TABLE_ENTRY_URL_REMOTE_TABLE",
-			value1 = "${entryURL}");
+			value1 = "${entryUrl}");
 	}
 
 }

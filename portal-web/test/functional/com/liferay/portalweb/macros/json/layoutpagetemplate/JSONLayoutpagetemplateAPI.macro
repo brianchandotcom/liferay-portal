@@ -7,7 +7,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalURL}/api/jsonws/layout.layoutpagetemplateentry/add-layout-page-template-entry \
+			${portalUrl}/api/jsonws/layout.layoutpagetemplateentry/add-layout-page-template-entry \
 			  -u test@liferay.com:test \
 			  -d groupId=${groupId} \
 			  -d layoutPageTemplateCollectionId=0 \
@@ -29,7 +29,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalURL}/api/jsonws/layoutprototype/add-layout-prototype \
+			${portalUrl}/api/jsonws/layoutprototype/add-layout-prototype \
 			  -u test@liferay.com:test \
 			  -d nameMap=${nameMap} \
 			  -d descriptionMap=${descriptionMap} \
@@ -47,7 +47,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalURL}/api/jsonws/layout.layoutpagetemplatecollection/add-layout-page-template-collection \
+			${portalUrl}/api/jsonws/layout.layoutpagetemplatecollection/add-layout-page-template-collection \
 			  -u test@liferay.com:test \
 			  -d groupId=${groupId} \
 			  -d name=${layoutPageTemplateCollectionName} \
@@ -65,7 +65,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalURL}/api/jsonws/layout.layoutpagetemplateentry/add-layout-page-template-entry \
+			${portalUrl}/api/jsonws/layout.layoutpagetemplateentry/add-layout-page-template-entry \
 			  -u test@liferay.com:test \
 			  -d groupId=${groupId} \
 			  -d layoutPageTemplateCollectionId=${layoutPageTemplateCollectionId} \
@@ -86,7 +86,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalURL}/api/jsonws/layout.layoutpagetemplateentry/add-layout-page-template-entry \
+			${portalUrl}/api/jsonws/layout.layoutpagetemplateentry/add-layout-page-template-entry \
 			  -u test@liferay.com:test \
 			  -d groupId=${groupId} \
 			  -d layoutPageTemplateCollectionId=0 \
@@ -106,7 +106,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalURL}/api/jsonws/layout.layoutpagetemplateentry/delete-layout-page-template-entry \
+			${portalUrl}/api/jsonws/layout.layoutpagetemplateentry/delete-layout-page-template-entry \
 			  -u test@liferay.com:test \
 			  -d layoutPageTemplateEntryId=${layoutPageTemplateEntryId}
 		''';
@@ -121,7 +121,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalURL}/api/jsonws/layout.layoutpagetemplatecollection/get-layout-page-template-collections \
+			${portalUrl}/api/jsonws/layout.layoutpagetemplatecollection/get-layout-page-template-collections \
 				-u test@liferay.com:test \
 				-d groupId=${groupId}
 		''';
@@ -141,7 +141,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalURL}/api/jsonws/layout.layoutpagetemplateentry/get-layout-page-template-entries \
+			${portalUrl}/api/jsonws/layout.layoutpagetemplateentry/get-layout-page-template-entries \
 			  -u test@liferay.com:test \
 			  -d groupId=${groupId} \
 			  -d type=${type} \
@@ -165,7 +165,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalURL}/api/jsonws/layout.layoutpagetemplateentry/get-layout-page-template-entries \
+			${portalUrl}/api/jsonws/layout.layoutpagetemplateentry/get-layout-page-template-entries \
 			  -u test@liferay.com:test \
 			  -d groupId=${groupId} \
 			  -d type=3 \

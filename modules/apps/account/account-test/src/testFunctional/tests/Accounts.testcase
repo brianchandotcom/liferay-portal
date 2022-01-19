@@ -380,7 +380,7 @@ definition {
 
 			User.firstLoginUI(
 				password = "test",
-				specificURL = "http://www.able.com:8080",
+				specificUrl = "http://www.able.com:8080",
 				userEmailAddress = "test@www.able.com");
 
 			Navigator.openSpecificURL(url = "http://www.able.com:8080/group/guest/~/control_panel/manage?p_p_id=com_liferay_account_admin_web_internal_portlet_AccountEntriesAdminPortlet");
@@ -3318,7 +3318,7 @@ definition {
 
 		Accounts.addBusinessAccount(
 			accountName = "Accounts Name for Test",
-			accountTaxID = "Z9870654786390342199899Y");
+			accountTaxId = "Z9870654786390342199899Y");
 
 		Accounts.openAccountsAdmin();
 
@@ -3332,7 +3332,7 @@ definition {
 
 		Accounts.viewAccountDetails(
 			accountName = "Accounts Name for Test",
-			accountTaxID = "Z9870654786390342199899Y");
+			accountTaxId = "Z9870654786390342199899Y");
 	}
 
 	@description = "This test assigns a user to an account with valid domain set. Manager can filter valid domain users and all users when assigning."

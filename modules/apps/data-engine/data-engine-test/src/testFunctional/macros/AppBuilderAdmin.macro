@@ -108,7 +108,7 @@ definition {
 		Click(locator1 = "AppBuilder#SEARCH_FILTER_AND_ORDER_MENU");
 
 		Click(
-			key_FilterOption = "${filterOption}",
+			key_filterOption = "${filterOption}",
 			locator1 = "AppBuilder#CHOOSE_APP_SEARCH_FILTER_BY_OPTION");
 
 		Button.clickDone();
@@ -118,7 +118,7 @@ definition {
 		Click(locator1 = "AppBuilder#SEARCH_FILTER_AND_ORDER_MENU");
 
 		Click.clickAtNotVisible(
-			key_FilterOption = "${statusFilterOption}",
+			key_filterOption = "${statusFilterOption}",
 			locator1 = "AppBuilder#CHOOSE_APP_SEARCH_FILTER_BY_STATUS");
 
 		Button.clickDone();
@@ -136,7 +136,7 @@ definition {
 		Click(locator1 = "AppBuilder#SEARCH_FILTER_AND_ORDER_MENU");
 
 		Click(
-			key_FilterOption = "${filterOption}",
+			key_filterOption = "${filterOption}",
 			locator1 = "AppBuilder#CHOOSE_SEARCH_FILTER_BY_OPTION");
 	}
 
@@ -533,7 +533,7 @@ definition {
 
 	macro validateListTitleAtRow {
 		AssertTextEquals(
-			key_RowNumber = "${rowNumber}",
+			key_rowNumber = "${rowNumber}",
 			locator1 = "AppBuilder#VALIDATE_LIST_TITLE_NAME_AT_ROW",
 			value1 = "${title}");
 	}

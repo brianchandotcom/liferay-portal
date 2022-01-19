@@ -191,7 +191,7 @@ definition {
 
 			ACSegments.selectOperator(operator = "is");
 
-			ACSegments.editTextCriterion(textInput = "${myURL}");
+			ACSegments.editTextCriterion(textInput = "${myUrl}");
 
 			ACSegments.editWebBehaviorCriterion(
 				indexField = "1",
@@ -205,7 +205,7 @@ definition {
 		task ("View criteria in Segment Criteria card") {
 			ACSegments.viewSegmentCriteriaSessionAttributes(
 				attributeName = "Referrer",
-				attributeValue = '''"${myURL}"''',
+				attributeValue = '''"${myUrl}"''',
 				condition = "is",
 				preposition = "ever");
 		}
@@ -281,7 +281,7 @@ definition {
 
 			ACSegments.selectOperator(operator = "is");
 
-			ACSegments.editTextCriterion(textInput = "${myURL}");
+			ACSegments.editTextCriterion(textInput = "${myUrl}");
 
 			ACSegments.editWebBehaviorCriterion(
 				indexField = "1",
@@ -295,7 +295,7 @@ definition {
 		task ("View criteria in Segment Criteria card") {
 			ACSegments.viewSegmentCriteriaSessionAttributes(
 				attributeName = "URL",
-				attributeValue = '''"${myURL}"''',
+				attributeValue = '''"${myUrl}"''',
 				condition = "is",
 				preposition = "ever");
 		}

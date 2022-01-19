@@ -61,7 +61,7 @@
 <!-- SYNCS SITES TO PROPERTY SCREEN -->
 <tr>
 	<td>AVAILABLE_PROPERTY_NAME</td>
-	<td>//td[contains(., '${key_AvailablePropertyName}')]</td>
+	<td>//td[contains(., '${key_availablePropertyName}')]</td>
 	<td></td>
 </tr>
 <tr>

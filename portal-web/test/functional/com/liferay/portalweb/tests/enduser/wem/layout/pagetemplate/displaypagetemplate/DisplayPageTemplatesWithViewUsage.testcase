@@ -36,7 +36,7 @@ definition {
 		}
 
 		task ("Publish the display page template") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
@@ -51,7 +51,7 @@ definition {
 					mimeType = "text/plain",
 					sourceFileName = "Document_${i}.txt");
 
-				DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
+				DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "test-site-name");
 
 				LexiconEntry.gotoEntryMenuItem(
 					menuItem = "Edit",
@@ -66,7 +66,7 @@ definition {
 		}
 
 		task ("Assign two usages to default") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
 				displayPageName = "Display Page Name",
@@ -110,7 +110,7 @@ definition {
 		}
 
 		task ("Publish the first display page template") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name 1");
 
@@ -130,7 +130,7 @@ definition {
 		}
 
 		task ("Publish the second display page template") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name 2");
 
@@ -145,7 +145,7 @@ definition {
 		}
 
 		task ("Select the display page template in web content") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title");
 
@@ -157,7 +157,7 @@ definition {
 		}
 
 		task ("Assign the usage to default") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
 				displayPageName = "Display Page Name 2",
@@ -177,7 +177,7 @@ definition {
 		}
 
 		task ("View the first display page template is selected in web content") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title");
 
@@ -198,7 +198,7 @@ definition {
 		}
 
 		task ("Publish the display page template") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
@@ -213,7 +213,7 @@ definition {
 		}
 
 		task ("Select the display page template in blogs entry") {
-			BlogsNavigator.openBlogsAdmin(siteURLKey = "test-site-name");
+			BlogsNavigator.openBlogsAdmin(siteUrlKey = "test-site-name");
 
 			BlogsNavigator.gotoEditCP(entryTitle = "Blogs Entry Title");
 
@@ -225,7 +225,7 @@ definition {
 		}
 
 		task ("Navigate to View Usages of display page template") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
 				displayPageName = "Display Page Name",
@@ -249,7 +249,7 @@ definition {
 		}
 
 		task ("View the No Default Display Page Template is selected in blogs entry") {
-			BlogsNavigator.openBlogsAdmin(siteURLKey = "test-site-name");
+			BlogsNavigator.openBlogsAdmin(siteUrlKey = "test-site-name");
 
 			BlogsNavigator.gotoEditCP(entryTitle = "Blogs Entry Title");
 
@@ -273,7 +273,7 @@ definition {
 		}
 
 		task ("Publish the display page template") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
@@ -288,7 +288,7 @@ definition {
 		}
 
 		task ("Select the display page template in web content") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title");
 
@@ -300,7 +300,7 @@ definition {
 		}
 
 		task ("Assign the usage to default") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
 				displayPageName = "Display Page Name",
@@ -346,7 +346,7 @@ definition {
 		}
 
 		task ("Publish the display page template") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
@@ -361,7 +361,7 @@ definition {
 		}
 
 		task ("Select the display page template in web content") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title");
 
@@ -373,7 +373,7 @@ definition {
 		}
 
 		task ("Unassign the usages") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
 				displayPageName = "Display Page Name",
@@ -419,7 +419,7 @@ definition {
 		}
 
 		task ("Publish the display page template") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
@@ -433,7 +433,7 @@ definition {
 					groupName = "Test Site Name",
 					title = "Webcontent Title ${i}");
 
-				WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+				WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 				WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title ${i}");
 
@@ -446,7 +446,7 @@ definition {
 		}
 
 		task ("Unassign usage") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
 				displayPageName = "Display Page Name",
@@ -481,7 +481,7 @@ definition {
 
 		task ("View the None is selected in web content") {
 			for (var i : list "1,2,3") {
-				WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+				WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 				WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title ${i}");
 
@@ -502,7 +502,7 @@ definition {
 				groupName = "Test Site Name",
 				subType = "Basic Web Content");
 
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Web Content Display Page");
 
@@ -520,7 +520,7 @@ definition {
 					groupName = "Test Site Name",
 					title = "${webContentTitle}");
 
-				WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+				WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 				WebContentNavigator.gotoEditCP(webContentTitle = "${webContentTitle}");
 
@@ -533,7 +533,7 @@ definition {
 		}
 
 		task ("View assets order in view usages of display page template") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
 				displayPageName = "Web Content Display Page",
@@ -583,7 +583,7 @@ definition {
 				groupName = "Test Site Name",
 				subType = "Basic Web Content");
 
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Web Content Display Page");
 
@@ -601,7 +601,7 @@ definition {
 				groupName = "Test Site Name",
 				subType = "Basic Document");
 
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Document Display Page");
 
@@ -618,7 +618,7 @@ definition {
 				displayPageTemplateEntryName = "Blogs Entry Display Page",
 				groupName = "Test Site Name");
 
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Blogs Entry Display Page");
 
@@ -635,7 +635,7 @@ definition {
 				groupName = "Test Site Name",
 				title = "Web Content Title");
 
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
@@ -653,7 +653,7 @@ definition {
 				mimeType = "image/jpeg",
 				sourceFileName = "Document_1.jpg");
 
-			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
+			DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "test-site-name");
 
 			LexiconCard.clickEllipsisItem(
 				card = "Document Title",
@@ -672,7 +672,7 @@ definition {
 				groupName = "Test Site Name",
 				title = "Blogs Entry Title");
 
-			BlogsNavigator.openBlogsAdmin(siteURLKey = "test-site-name");
+			BlogsNavigator.openBlogsAdmin(siteUrlKey = "test-site-name");
 
 			BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry Title");
 
@@ -685,7 +685,7 @@ definition {
 
 		task ("View usage of display page templates") {
 			for (var assetType : list "Web Content,Document,Blogs Entry") {
-				DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+				DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
 
 				DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
 					displayPageName = "${assetType} Display Page",

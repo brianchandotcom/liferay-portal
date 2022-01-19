@@ -45,7 +45,7 @@ definition {
 		}
 
 		task ("Change template to draft") {
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteUrlKey = "test-site-name");
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
@@ -59,7 +59,7 @@ definition {
 		}
 
 		task ("Change thumbnail of template") {
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteUrlKey = "test-site-name");
 
 			PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
 				item = "Change Thumbnail",

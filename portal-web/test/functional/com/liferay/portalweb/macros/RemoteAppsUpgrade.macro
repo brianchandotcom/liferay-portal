@@ -50,10 +50,10 @@ definition {
 			value1 = "${upgradeName}");
 
 		AssertTextEquals(
-			custom_entryURL = "${upgradeURL}",
+			custom_entryUrl = "${upgradeUrl}",
 			key_id = "iFrameURL",
 			locator1 = "RemoteAppsEntry#URL",
-			value1 = "${upgradeURL}");
+			value1 = "${upgradeUrl}");
 	}
 
 }

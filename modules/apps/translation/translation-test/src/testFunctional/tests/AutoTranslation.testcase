@@ -57,7 +57,7 @@ definition {
 
 		Translations.openToTranslateEntry(
 			groupName = "Site Name",
-			siteURLKey = "site-name",
+			siteUrlKey = "site-name",
 			sourceLanguageId = "en_US",
 			targetLanguageId = "ja_JP",
 			webContentTitle = "This is the title of a web article in English");
@@ -76,7 +76,7 @@ definition {
 
 			Translations.openToTranslateEntry(
 				groupName = "Site Name",
-				siteURLKey = "site-name",
+				siteUrlKey = "site-name",
 				sourceLanguageId = "en_US",
 				targetLanguageId = "ja_JP",
 				webContentTitle = "This is the title of a web article in English");
@@ -98,7 +98,7 @@ definition {
 
 		Translations.openToTranslateEntry(
 			groupName = "Site Name",
-			siteURLKey = "site-name",
+			siteUrlKey = "site-name",
 			sourceLanguageId = "en_US",
 			targetLanguageId = "es_ES",
 			webContentTitle = "This is the title of a web article in English");
@@ -117,7 +117,7 @@ definition {
 
 			Translations.openToTranslateEntry(
 				groupName = "Site Name",
-				siteURLKey = "site-name",
+				siteUrlKey = "site-name",
 				sourceLanguageId = "en_US",
 				targetLanguageId = "es_ES",
 				webContentTitle = "This is the title of a web article in English");
@@ -137,7 +137,7 @@ definition {
 	test CanTranslateNumericAndDecimalFieldsIndependently {
 		property test.name.skip.portal.instance = "AutoTranslation#CanTranslateNumericAndDecimalFieldsIndependently";
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
 
 		NavItem.gotoStructures();
 
@@ -156,7 +156,7 @@ definition {
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
@@ -173,7 +173,7 @@ definition {
 
 		Translations.openToTranslateEntry(
 			groupName = "Site Name",
-			siteURLKey = "site-name",
+			siteUrlKey = "site-name",
 			sourceLanguageId = "en_US",
 			targetLanguageId = "es_ES",
 			webContentTitle = "This is the title of the numeric field in English");
@@ -202,7 +202,7 @@ definition {
 
 			Translations.openToTranslateEntry(
 				groupName = "Site Name",
-				siteURLKey = "site-name",
+				siteUrlKey = "site-name",
 				sourceLanguageId = "en_US",
 				targetLanguageId = "es_ES",
 				webContentTitle = "This is the title of the numeric field in English");
@@ -221,7 +221,7 @@ definition {
 	test CanTranslateRichTextFieldIndependently {
 		property test.name.skip.portal.instance = "AutoTranslation#CanTranslateRichTextFieldIndependently";
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
 
 		NavItem.gotoStructures();
 
@@ -235,7 +235,7 @@ definition {
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
@@ -247,7 +247,7 @@ definition {
 
 		Translations.openToTranslateEntry(
 			groupName = "Site Name",
-			siteURLKey = "site-name",
+			siteUrlKey = "site-name",
 			sourceLanguageId = "en_US",
 			targetLanguageId = "ja_JP",
 			webContentTitle = "This is the title of the rich text field in English");
@@ -258,26 +258,26 @@ definition {
 
 		if (IsTextEqual.isPartialText(key_fieldName = "Title", locator1 = "Message#SUCCESS_SPECIFIC_FORM_FIELD_REQUIRED", value1 = "Field Translated")) {
 			Translations.viewTargetFields(
-				webContentSourceHTML = "This is the content of the rich text field in English",
+				webContentSourceHtml = "This is the content of the rich text field in English",
 				webContentTitle = "これは英語のリッチテキストフィールドのタイトルです");
 
 			Translations.translateSpecificFieldWithGoogle(fieldName = "Rich Text");
 
 			Translations.viewTargetFields(
-				webContentSourceHTML = "これは英語のリッチ テキスト フィールドの内容です",
+				webContentSourceHtml = "これは英語のリッチ テキスト フィールドの内容です",
 				webContentTitle = "これは英語のリッチテキストフィールドのタイトルです");
 
 			PortletEntry.publish();
 
 			Translations.openToTranslateEntry(
 				groupName = "Site Name",
-				siteURLKey = "site-name",
+				siteUrlKey = "site-name",
 				sourceLanguageId = "en_US",
 				targetLanguageId = "ja_JP",
 				webContentTitle = "This is the title of the rich text field in English");
 
 			Translations.viewTargetFields(
-				webContentSourceHTML = "これは英語のリッチ テキスト フィールドの内容です",
+				webContentSourceHtml = "これは英語のリッチ テキスト フィールドの内容です",
 				webContentTitle = "これは英語のリッチテキストフィールドのタイトルです");
 		}
 		else if (IsTextEqual.isPartialText(key_fieldName = "Title", locator1 = "Message#SUCCESS_SPECIFIC_FORM_FIELD_REQUIRED", value1 = "There is a problem with the translation service. Please contact your administrator.")) {
@@ -294,7 +294,7 @@ definition {
 			groupName = "Site Name",
 			title = "This is the title of a web article in English");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
 
 		NavItem.gotoStructures();
 
@@ -309,7 +309,7 @@ definition {
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
@@ -323,7 +323,7 @@ definition {
 
 		Translations.openToTranslateEntry(
 			groupName = "Site Name",
-			siteURLKey = "site-name",
+			siteUrlKey = "site-name",
 			sourceLanguageId = "en_US",
 			targetLanguageId = "ja_JP",
 			webContentTitle = "This is the title of a web article in English");
@@ -347,7 +347,7 @@ definition {
 
 			Translations.openToTranslateEntry(
 				groupName = "Site Name",
-				siteURLKey = "site-name",
+				siteUrlKey = "site-name",
 				sourceLanguageId = "en_US",
 				targetLanguageId = "ja_JP",
 				webContentTitle = "This is the title of a web article in English");
@@ -370,7 +370,7 @@ definition {
 			groupName = "Site Name",
 			title = "This is the title of a web article in English");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
 
 		NavItem.gotoStructures();
 
@@ -384,7 +384,7 @@ definition {
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
@@ -396,7 +396,7 @@ definition {
 
 		Translations.openToTranslateEntry(
 			groupName = "Site Name",
-			siteURLKey = "site-name",
+			siteUrlKey = "site-name",
 			sourceLanguageId = "en_US",
 			targetLanguageId = "ja_JP",
 			webContentTitle = "This is the title of a web article in English");
@@ -420,7 +420,7 @@ definition {
 
 			Translations.openToTranslateEntry(
 				groupName = "Site Name",
-				siteURLKey = "site-name",
+				siteUrlKey = "site-name",
 				sourceLanguageId = "en_US",
 				targetLanguageId = "ja_JP",
 				webContentTitle = "This is the title of a web article in English");
@@ -441,7 +441,7 @@ definition {
 
 		Translations.openToTranslateEntry(
 			groupName = "Site Name",
-			siteURLKey = "site-name",
+			siteUrlKey = "site-name",
 			sourceLanguageId = "en_US",
 			targetLanguageId = "ja_JP",
 			webContentTitle = "This is the title of a web article in English");
@@ -460,7 +460,7 @@ definition {
 
 			Translations.openToTranslateEntry(
 				groupName = "Site Name",
-				siteURLKey = "site-name",
+				siteUrlKey = "site-name",
 				sourceLanguageId = "en_US",
 				targetLanguageId = "ja_JP",
 				webContentTitle = "This is the title of a web article in English");
@@ -481,7 +481,7 @@ definition {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "AutoTranslation#CanTranslateWCToJapaneseWithGoogle";
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
 
 		Translations.gotoTranslate(webContentTitle = "This is the title of a web article in English");
 
@@ -501,7 +501,7 @@ definition {
 
 			PortletEntry.publish();
 
-			Translations.openTranslationAdmin(siteURLKey = "site-name");
+			Translations.openTranslationAdmin(siteUrlKey = "site-name");
 
 			Translations.viewTranslationEntry(
 				language = "ja-JP",
@@ -518,7 +518,7 @@ definition {
 	test CanViewTranslationAfterDisablingGoogleConfiguration {
 		property test.name.skip.portal.instance = "AutoTranslation#CanViewTranslationAfterDisablingGoogleConfiguration";
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
 
 		Translations.gotoTranslate(webContentTitle = "This is the title of a web article in English");
 
@@ -541,7 +541,7 @@ definition {
 
 			SystemSettings.saveConfiguration();
 
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
 
 			Translations.gotoTranslate(webContentTitle = "This is the title of a web article in English");
 
@@ -575,7 +575,7 @@ definition {
 
 		Translations.openToTranslateEntry(
 			groupName = "Site Name",
-			siteURLKey = "site-name",
+			siteUrlKey = "site-name",
 			sourceLanguageId = "en_US",
 			targetLanguageId = "es_ES",
 			webContentTitle = "Title Translate Button is Disabled When Field is Null");

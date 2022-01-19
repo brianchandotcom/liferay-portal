@@ -399,11 +399,11 @@ definition {
 		}
 
 		var searchPage = StringUtil.toLowerCase("${searchPage}");
-		var portalURL = PropsUtil.get("portal.url");
-		var searchURL = "${portalURL}/web/guest/${searchPage}?q=";
-		var searchURL = "${searchURL}${searchTerm}";
+		var portalUrl = PropsUtil.get("portal.url");
+		var searchUrl = "${portalUrl}/web/guest/${searchPage}?q=";
+		var searchUrl = "${searchUrl}${searchTerm}";
 
-		return "${searchURL}";
+		return "${searchUrl}";
 	}
 
 	macro gotoConfigureSuggestionsOptions {

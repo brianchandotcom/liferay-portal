@@ -42,7 +42,7 @@
 </tr>
 <tr>
 	<td>OPTIONS_ENTRY_NAME</td>
-	<td>//div[@class='form-container']//td[contains(.,'${key_OptionEntryName}')]</td>
+	<td>//div[@class='form-container']//td[contains(.,'${key_optionEntryName}')]</td>
 	<td></td>
 </tr>
 <tr>

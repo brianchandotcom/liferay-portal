@@ -419,7 +419,7 @@ definition {
 		Select(
 			key_fieldLabel = "Warehouse",
 			locator1 = "Select#GENERIC_SELECT_FIELD",
-			value1 = "${key_Warehouse}");
+			value1 = "${key_warehouse}");
 
 		Select(
 			key_fieldLabel = "Country",
@@ -490,7 +490,7 @@ definition {
 	macro addSKUsEntry {
 		Type(
 			locator1 = "CommerceEntry#SKU_FIELD",
-			value1 = "${productSKU}");
+			value1 = "${productSku}");
 
 		CommerceEntry.selectAssociatedOptionsValue(
 			noOption = "${noOption}",
@@ -992,11 +992,11 @@ definition {
 			locator1 = "TextInput#TYPE",
 			value1 = "${accountType}");
 
-		if (isSet(accountVATNumber)) {
+		if (isSet(accountVatNumber)) {
 			AssertTextEquals(
 				key_fieldLabel = "VAT Number",
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "${accountVATNumber}");
+				value1 = "${accountVatNumber}");
 		}
 
 		if (isSet(accountDefaultBilling)) {

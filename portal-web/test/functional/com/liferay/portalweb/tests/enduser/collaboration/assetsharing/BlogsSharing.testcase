@@ -28,7 +28,7 @@ definition {
 			entryTitle = "Blogs Entry Title",
 			guestPermissions = "false");
 
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+		BlogsNavigator.openBlogsAdmin(siteUrlKey = "guest");
 	}
 
 	tearDown {
@@ -56,7 +56,7 @@ definition {
 
 		Asset.openTosharedContent(
 			navTab = "Shared by Me",
-			siteURLKey = "guest");
+			siteUrlKey = "guest");
 
 		Asset.gotoManageCollaboratorsViaSharedByMe(contentTitle = "Blogs Entry Title");
 

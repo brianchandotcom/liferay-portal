@@ -53,12 +53,12 @@
 <!-- FILL_CUSTOM_EVENT_FIELDS -->
 <tr>
 	<td>INPUT_CUSTOM_EVENT</td>
-	<td>//input[@id='${key_inputID}']</td>
+	<td>//input[@id='${key_inputId}']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TEXTAREA_CUSTOM_EVENT</td>
-	<td>//textarea[@id='${key_textareaID}']</td>
+	<td>//textarea[@id='${key_textareaId}']</td>
 	<td></td>
 </tr>
 <tr>

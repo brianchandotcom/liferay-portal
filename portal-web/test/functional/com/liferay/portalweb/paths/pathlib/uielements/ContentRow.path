@@ -130,7 +130,7 @@
 <!--ENTRY_CONTENT_REDIRECT-->
 <tr>
 	<td>ENTRY_CONTENT_REDIRECT_DESTINATION_URL_COLUMN</td>
-	<td>//td[contains(@class,'lfr-destination-url-column')][contains(.,'${key_destinationURL}')]</td>
+	<td>//td[contains(@class,'lfr-destination-url-column')][contains(.,'${key_destinationUrl}')]</td>
 	<td></td>
 </tr>
 <tr>

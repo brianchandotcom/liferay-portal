@@ -61,7 +61,7 @@ definition {
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+		BlogsNavigator.openBlogsAdmin(siteUrlKey = "guest");
 
 		BlogsConfiguration.viewNoPermissionCP();
 	}
@@ -98,7 +98,7 @@ definition {
 			roleTitle = "Roles Siterole Name",
 			roleType = "site");
 
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
+		BlogsNavigator.openBlogsAdmin(siteUrlKey = "site-name");
 
 		BlogsConfiguration.viewNoPermissionCP();
 	}
@@ -137,7 +137,7 @@ definition {
 			roleTitle = "Roles Orgrole Name",
 			roleType = "Organization",
 			siteName = "Organization Name",
-			siteURL = "true",
+			siteUrl = "true",
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
@@ -484,7 +484,7 @@ definition {
 			BlogsNavigator.openToBlogEntry(
 				entryTitle = "Blogs Entry Title",
 				layoutName = "Blogs Page",
-				siteURLKey = "guest");
+				siteUrlKey = "guest");
 
 			Comments.viewPG(
 				commentCount = "1",
@@ -520,7 +520,7 @@ definition {
 			BlogsNavigator.openToBlogEntry(
 				entryTitle = "Blogs Entry Title",
 				layoutName = "Blogs Page",
-				siteURLKey = "guest");
+				siteUrlKey = "guest");
 
 			Comments.viewPG(
 				commentCount = "1",
@@ -572,7 +572,7 @@ definition {
 			roleTitle = "Roles Orgrole Name",
 			roleType = "Organization",
 			siteName = "Organization Name",
-			siteURL = "true",
+			siteUrl = "true",
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
@@ -585,7 +585,7 @@ definition {
 			entryTitle = "Blogs Entry Title",
 			pageName = "Blogs Page",
 			siteName = "Organization Name",
-			siteURLTemp = "true",
+			siteUrlTemp = "true",
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
@@ -627,7 +627,7 @@ definition {
 			entryTitle = "Blogs Entry Title",
 			pageName = "Blogs Page",
 			siteName = "Organization Name",
-			siteURLTemp = "true",
+			siteUrlTemp = "true",
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "Test Test");
 
@@ -831,7 +831,7 @@ definition {
 			entryTitle = "Blogs Entry Title",
 			pageName = "Blogs Page",
 			siteName = "Site Name",
-			siteURLTemp = "true",
+			siteUrlTemp = "true",
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
@@ -873,7 +873,7 @@ definition {
 			entryTitle = "Blogs Entry Title",
 			pageName = "Blogs Page",
 			siteName = "Site Name",
-			siteURLTemp = "true",
+			siteUrlTemp = "true",
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "Test Test");
 
@@ -924,7 +924,7 @@ definition {
 			entryTitle = "Blogs Entry Title",
 			pageName = "Blogs Page",
 			siteName = "Site Name",
-			siteURLTemp = "true",
+			siteUrlTemp = "true",
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
@@ -966,7 +966,7 @@ definition {
 			entryTitle = "Blogs Entry Title",
 			pageName = "Blogs Page",
 			siteName = "Site Name",
-			siteURLTemp = "true",
+			siteUrlTemp = "true",
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "Test Test");
 
@@ -1005,7 +1005,7 @@ definition {
 			roleTitle = "Roles Orgrole Name",
 			roleType = "Organization",
 			siteName = "Organization Name",
-			siteURL = "true",
+			siteUrl = "true",
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
@@ -1018,7 +1018,7 @@ definition {
 			entryTitle = "Blogs Entry Title",
 			pageName = "Blogs Page",
 			siteName = "Organization Name",
-			siteURLTemp = "true",
+			siteUrlTemp = "true",
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
@@ -1200,7 +1200,7 @@ definition {
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
 			layoutName = "Blogs Page",
-			siteURLKey = "guest");
+			siteUrlKey = "guest");
 
 		AssertElementNotPresent(locator1 = "Comments#COMMENT_ACTIONS");
 	}
@@ -1231,7 +1231,7 @@ definition {
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
 			layoutName = "Blogs Page",
-			siteURLKey = "guest");
+			siteUrlKey = "guest");
 
 		Ratings.viewDisabledRatings(ratingTypes = "thumbs-up,thumbs-down");
 	}
@@ -1286,7 +1286,7 @@ definition {
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
 			layoutName = "Blogs Page",
-			siteURLKey = "guest");
+			siteUrlKey = "guest");
 
 		AssertNotVisible(locator1 = "Button#REPLY");
 	}
@@ -1336,7 +1336,7 @@ definition {
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
 			layoutName = "Blogs Page",
-			siteURLKey = "guest");
+			siteUrlKey = "guest");
 
 		AssertElementNotPresent(locator1 = "Button#SUBSCRIBE");
 	}
@@ -1401,7 +1401,7 @@ definition {
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "Test Test");
 
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+		BlogsNavigator.openBlogsAdmin(siteUrlKey = "guest");
 
 		BlogsNavigator.gotoBlogsEntryPermissionsCP(entryTitle = "Blogs Entry Title");
 

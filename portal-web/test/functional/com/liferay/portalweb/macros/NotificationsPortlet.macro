@@ -41,7 +41,7 @@ definition {
 	macro gotoNotificationDelivery {
 		Navigator.gotoNotifications();
 
-		if ("${notificationPG}" == "true") {
+		if ("${notificationPg}" == "true") {
 			NotificationsPortlet.configureNotificationPG(menuItem = "Configuration");
 		}
 		else {

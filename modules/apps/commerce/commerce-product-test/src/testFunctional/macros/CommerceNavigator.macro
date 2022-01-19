@@ -19,7 +19,7 @@ definition {
 
 	macro editMiniCartItemQuantity {
 		Type(
-			key_cartItemSKU = "${cartItemSKU}",
+			key_cartItemSku = "${cartItemSku}",
 			locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY",
 			value1 = "${productQuantity}");
 	}
@@ -55,7 +55,7 @@ definition {
 
 	macro gotoMiniCartEntry {
 		AssertClickNoError(
-			key_cartItemSKU = "${cartItemSKU}",
+			key_cartItemSku = "${cartItemSku}",
 			locator1 = "CommerceAccelerators#MINI_CART_ITEM_NAME_USING_SKU",
 			value1 = "${entryName}");
 	}
@@ -163,7 +163,7 @@ definition {
 
 	macro validateMiniCartItemQuantity {
 		AssertTextEquals(
-			key_cartItemSKU = "${cartItemSKU}",
+			key_cartItemSku = "${cartItemSku}",
 			locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY",
 			value1 = "${productQuantity}");
 	}

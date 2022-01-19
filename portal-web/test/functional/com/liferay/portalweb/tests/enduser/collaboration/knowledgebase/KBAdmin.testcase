@@ -10,7 +10,7 @@ definition {
 
 		User.firstLoginPG();
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 		Refresh();
 	}
@@ -46,7 +46,7 @@ definition {
 			kbArticleTitle = "Knowledge Base Article Title",
 			saveAsDraft = "true");
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 		KBArticle.viewCP(
 			kbArticleContent = "Knowledge Base Article Content",
@@ -62,7 +62,7 @@ definition {
 			kbArticleContent = "Knowledge Base Article Content",
 			kbArticleTitle = "Knowledge Base Article Title");
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 		KBArticle.viewKBArticleWithAttachmentCP(
 			kbArticleAttachment = "Document_1.txt (259 B) Delete",
@@ -73,7 +73,7 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanAddArticleWithCategory {
-		Category.openCategoriesAdmin(siteURLKey = "guest");
+		Category.openCategoriesAdmin(siteUrlKey = "guest");
 
 		Vocabulary.addWithAssociatedAssetTypeCP(
 			assetType = "Knowledge Base Article",
@@ -85,7 +85,7 @@ definition {
 			title = "Category Name",
 			vocabularyName = "Vocabulary Name");
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 		KBArticle.addCP(
 			categoryName = "Category Name",
@@ -122,7 +122,7 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 		KBArticle.addCP(
 			assetTitle = "Blogs Entry Title",
@@ -130,7 +130,7 @@ definition {
 			kbArticleContent = "Knowledge Base Article Content",
 			kbArticleTitle = "Knowledge Base Article Title");
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 		KBArticle.viewCP(
 			kbArticleContent = "Knowledge Base Article Content",
@@ -150,7 +150,7 @@ definition {
 			kbTemplateContent = "Knowledge Base Template Content",
 			kbTemplateTitle = "Knowledge Base Template Title");
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 		KBArticle.addCP(
 			kbArticleAddViaTemplate = "true",
@@ -158,7 +158,7 @@ definition {
 			kbArticleTitle = "Knowledge Base Article Title",
 			kbTemplateTitle = "Knowledge Base Template Title");
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 		KBArticle.viewCP(
 			kbArticleContent = "Knowledge Base Article Content",
@@ -173,14 +173,14 @@ definition {
 			kbArticleContent = "Knowledge Base Article Content",
 			kbArticleTitle = "Knowledge Base Article Title");
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 		KBArticle.addChildArticleViaKBAdmin(
 			kbArticleTitle = "Knowledge Base Article Title",
 			kbChildArticleContent = "Knowledge Base Child Article Content",
 			kbChildArticleTitle = "Knowledge Base Child Article Title");
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 		KBArticle.gotoViaKBAdminCP(
 			hasChildArticle = "true",
@@ -216,7 +216,7 @@ definition {
 		}
 
 		for (var kbCount : list "1,2,3") {
-			KBAdmin.openKBAdmin(siteURLKey = "guest");
+			KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 			KBArticle.viewCP(
 				kbArticleContent = "Knowledge Base Article Content ${kbCount}",
@@ -230,13 +230,13 @@ definition {
 	test CanAddTemplate {
 		property test.name.skip.portal.instance = "KBAdmin#CanAddTemplate";
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 		KBTemplate.addCP(
 			kbTemplateContent = "Knowledge Base Template Content",
 			kbTemplateTitle = "Knowledge Base Template Title");
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 		KBTemplate.viewCPViaAddTemplate(
 			kbTemplateContent = "Knowledge Base Template Content",
@@ -248,7 +248,7 @@ definition {
 	test CanCancelAddingArticle {
 		property test.name.skip.portal.instance = "KBAdmin#CanCancelAddingArticle";
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 		KBArticle.cancelAddKBArticle(
 			kbArticleContent = "Knowledge Base Article Content",
@@ -267,7 +267,7 @@ definition {
 			kbArticleContent = "Knowledge Base Article Content",
 			kbArticleTitle = "Knowledge Base Article Title");
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 		KBArticle.editCP(
 			cancel = "true",
@@ -275,7 +275,7 @@ definition {
 			kbArticleTitle = "Knowledge Base Article Title",
 			kbArticleTitleEdit = "Knowledge Base Article Title Edit");
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 		KBArticle.viewCP(
 			kbArticleContent = "Knowledge Base Article Content",
@@ -290,13 +290,13 @@ definition {
 			kbArticleContent = "Knowledge Base Article Content",
 			kbArticleTitle = "Knowledge Base Article Title");
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 		KBArticle.selectArticleCP(kbArticleTitle = "Knowledge Base Article Title");
 
 		KBArticle.deleteCP();
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 		KBArticle.viewDefaultCP();
 	}
@@ -309,7 +309,7 @@ definition {
 			kbFolderDescription = "KB Folder 1 Description",
 			kbFolderName = "KB Folder 1");
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 		KBFolder.deleteCP(kbFolderName = "KB Folder 1");
 	}
@@ -322,7 +322,7 @@ definition {
 			kbArticleContent = "Knowledge Base Article Content",
 			kbArticleTitle = "Knowledge Base Article Title");
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 		KBArticle.editCP(
 			kbArticleAttachment = "Document_1.txt",
@@ -330,7 +330,7 @@ definition {
 			kbArticleTitle = "Knowledge Base Article Title",
 			kbArticleTitleEdit = "Knowledge Base Article Title Edit");
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 		KBArticle.viewKBArticleWithAttachmentCP(
 			kbArticleAttachment = "Document_1.txt (259 B) Delete",
@@ -346,7 +346,7 @@ definition {
 			kbFolderDescription = "KB Folder 1 Description",
 			kbFolderName = "KB Folder 1");
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 		KBFolder.editCP(
 			kbFolderDescription = "KB Folder 1 Description Edited",
@@ -364,7 +364,7 @@ definition {
 			kbArticleContent = "Knowledge Base Article Content",
 			kbArticleTitle = "Knowledge Base Article Title");
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 		KBArticle.addCP(
 			kbArticleContent = "Knowledge Base Article Content",
@@ -372,15 +372,15 @@ definition {
 
 		KBArticle.viewFriendlyURLCP(
 			kbArticleContent = "Knowledge Base Article Content",
-			kbArticleFriendlyURL = "knowledge-base-article-title-1",
+			kbArticleFriendlyUrl = "knowledge-base-article-title-1",
 			kbArticleTitle = "Knowledge Base Article Title");
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 		KBArticle.addCP(
 			kbArticleContent = "Knowledge Base Article Content",
-			kbArticleDuplicateFriendlyURL = "true",
-			kbArticleFriendlyURL = "knowledge-base-article-title",
+			kbArticleDuplicateFriendlyUrl = "true",
+			kbArticleFriendlyUrl = "knowledge-base-article-title",
 			kbArticleTitle = "Knowledge Base Article Title");
 	}
 
@@ -398,7 +398,7 @@ definition {
 
 		ServerAdministration.configureFileUploadOverallMaximumFileSize(maxFileSize = "102400");
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 		KBArticle.addCPWithInvalidAttachmentSize(
 			kbArticleAttachment = "Document_1.ppt",
@@ -406,7 +406,7 @@ definition {
 			kbArticleTitle = "Knowledge Base Article Title",
 			maxFileSize = "100");
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 		KBArticle.viewCP(
 			kbArticleContent = "Knowledge Base Article Content",
@@ -422,7 +422,7 @@ definition {
 			kbArticleInvalidContent = "true",
 			kbArticleTitle = "Knowledge Base Article Title");
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 		KBArticle.viewDefaultCP();
 	}
@@ -432,7 +432,7 @@ definition {
 	test CannotAddArticleWithoutRequiredCategory {
 		property test.name.skip.portal.instance = "KBAdmin#CannotAddArticleWithoutRequiredCategory";
 
-		Category.openCategoriesAdmin(siteURLKey = "guest");
+		Category.openCategoriesAdmin(siteUrlKey = "guest");
 
 		Vocabulary.addWithAssociatedAssetTypeCP(
 			assetType = "Knowledge Base Article",
@@ -444,7 +444,7 @@ definition {
 			title = "Category Name",
 			vocabularyName = "Vocabulary Name");
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 		KBArticle.addCP(
 			kbArticleContent = "Knowledge Base Article Content",
@@ -460,7 +460,7 @@ definition {
 			kbArticleContent = "Knowledge Base Article Content",
 			kbArticleTitle = "");
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 		KBArticle.viewDefaultCP();
 	}
@@ -494,7 +494,7 @@ definition {
 			kbArticleContent = "Knowledge Base Article Content Child",
 			kbArticleTitle = "Knowledge Base Article Title Child");
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 		KBArticle.moveArticleCP(
 			kbArticleCurrentParent = "Home",
@@ -516,7 +516,7 @@ definition {
 
 		KBFolder.selectParentCP(kbFolderName = "Home");
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 		KBArticle.viewCP(
 			kbArticleContent = "Knowledge Base Article Content Child",
@@ -531,7 +531,7 @@ definition {
 			kbArticleContent = "Knowledge Base Article Content",
 			kbArticleTitle = "Knowledge Base Article Title");
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 		KBArticle.editCP(
 			kbArticleContentEdit = "Knowledge Base Article Content Edit",
@@ -539,7 +539,7 @@ definition {
 			kbArticleTitleEdit = "Knowledge Base Article Title Edit",
 			saveAsDraft = "true");
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 		KBArticle.viewCP(
 			kbArticleContent = "Knowledge Base Article Content Edit",
@@ -560,7 +560,7 @@ definition {
 			kbArticleContent = "Knowledge Base Article Content Child",
 			kbArticleTitle = "Knowledge Base Article Title Child");
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 		KBArticle.moveArticleCP(
 			kbArticleCurrentParent = "Home",
@@ -585,7 +585,7 @@ definition {
 			kbArticleContent = "Knowledge Base Article Content 1",
 			kbArticleTitle = "Knowledge Base Article Title 1");
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 		KBArticle.viewKBArticlePriorityCP(
 			kbArticleTitle = "Knowledge Base Article Title 1",
@@ -602,14 +602,14 @@ definition {
 			kbArticleContent = "Knowledge Base Article Content",
 			kbArticleTitle = "Knowledge Base Article Title");
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 		KBArticle.addChildArticleViaKBAdmin(
 			kbArticleTitle = "Knowledge Base Article Title",
 			kbChildArticleContent = "Knowledge Base Child Article Content",
 			kbChildArticleTitle = "Knowledge Base Child Article Title");
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 		KBArticle.gotoViaKBAdminCP(
 			hasChildArticle = "true",
@@ -624,7 +624,7 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanViewEmbeddedVideo {
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 		KBArticle.addCP(
 			embedVideo = "https://www.youtube.com/watch?v=2EPZxIC5ogU",
@@ -632,7 +632,7 @@ definition {
 			kbArticleTitle = "Knowledge Base Article Title",
 			navTab = "URL");
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 		KBArticle.viewCP(
 			embedVideo = "true",
@@ -656,7 +656,7 @@ definition {
 			workflowDefinition = "Single Approver",
 			workflowResourceValue = "Knowledge Base Article");
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 		KBArticle.addCP(
 			kbArticleContent = "Knowledge Base Article Content",
@@ -704,7 +704,7 @@ definition {
 			kbChildArticleContent = "In the last learning path, you built an application using the Model-View-Controller portlet framework.",
 			kbChildArticleTitle = "Knowledge Base Article Parent Title 4 Child 1");
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 		KBArticle.gotoViaKBAdminCP(
 			hasChildArticle = "true",
@@ -714,7 +714,7 @@ definition {
 			kbChildArticleContent = "Adding methods to the service layer.",
 			kbChildArticleTitle = "Knowledge Base Article Parent Title 5 Child 1");
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 		KBArticle.importCP(
 			applyNumericalPrefix = "true",
@@ -728,7 +728,7 @@ definition {
 			kbChildArticleContent = "Liferay permissions system is composed of several components.",
 			kbChildArticleTitle = "Knowledge Base Article Parent Title 4 Child 1");
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 		KBArticle.gotoViaKBAdminCP(
 			hasChildArticle = "true",
@@ -738,7 +738,7 @@ definition {
 			kbChildArticleContent = "Adding methods to the service layer.",
 			kbChildArticleTitle = "Knowledge Base Article Parent Title 5 Child 1");
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 		KBArticle.selectAllCP();
 

@@ -51,7 +51,7 @@ definition {
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_1.jpg");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		DMDocument.deleteCP(dmDocumentTitle = "DM Document Title");
 
@@ -71,7 +71,7 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Test Site Name");
 
-		var bucketID = PropsUtil.get("aws.bucket.id");
+		var bucketId = PropsUtil.get("aws.bucket.id");
 
 		var companyId = JSONCompany.getCompanyId();
 
@@ -81,7 +81,7 @@ definition {
 
 		AntCommand(
 			locator1 = "build-test-aws-s3.xml",
-			value1 = "assert-no-document-in-bucket -Daws.bucket.id=${bucketID} -DcompanyId=${companyId} -DgroupId=${groupId}");
+			value1 = "assert-no-document-in-bucket -Daws.bucket.id=${bucketId} -DcompanyId=${companyId} -DgroupId=${groupId}");
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -92,13 +92,13 @@ definition {
 
 		AntCommand(
 			locator1 = "build-test-aws-s3.xml",
-			value1 = "assert-document-in-bucket -Daws.bucket.id=${bucketID} -DcompanyId=${companyId} -DgroupId=${groupId}");
+			value1 = "assert-document-in-bucket -Daws.bucket.id=${bucketId} -DcompanyId=${companyId} -DgroupId=${groupId}");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "test-site-name");
 
 		DMDocument.deleteCP(dmDocumentTitle = "DM Document Title");
 
-		RecycleBin.openRecycleBinAdmin(siteURLKey = "test-site-name");
+		RecycleBin.openRecycleBinAdmin(siteUrlKey = "test-site-name");
 
 		ProductMenu.gotoPortlet(
 			category = "Recycle Bin",
@@ -108,7 +108,7 @@ definition {
 
 		AntCommand(
 			locator1 = "build-test-aws-s3.xml",
-			value1 = "assert-no-document-in-bucket -Daws.bucket.id=${bucketID} -DcompanyId=${companyId} -DgroupId=${groupId}");
+			value1 = "assert-no-document-in-bucket -Daws.bucket.id=${bucketId} -DcompanyId=${companyId} -DgroupId=${groupId}");
 	}
 
 	@priority = "5"
@@ -127,7 +127,7 @@ definition {
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_1.jpg");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		DMDocument.deleteCP(dmDocumentTitle = "DM Document Title");
 
@@ -154,7 +154,7 @@ definition {
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_1.jpg");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		DMDocument.deleteCP(dmDocumentTitle = "DM Document Title");
 

@@ -261,7 +261,7 @@
 </tr>
 <tr>
 	<td>ROLES_SELECT_LINK</td>
-	<td>//a[contains(@id,'select${key_RoleType}Link')]/span</td>
+	<td>//a[contains(@id,'select${key_roleType}Link')]/span</td>
 	<td></td>
 </tr>
 <tr>

@@ -51,7 +51,7 @@ definition {
 		}
 
 		task ("Grand all permissions to Power User for that page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
 
 			PermissionsInline.gotoSitePageCP(
 				pageName = "Test Page Name",
@@ -115,7 +115,7 @@ definition {
 		}
 
 		task ("Remove the View permission of Guests from Global navigation menu") {
-			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "global");
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteUrlKey = "global");
 
 			LexiconEntry.gotoEntryMenuItem(
 				menuItem = "Permissions",
@@ -195,7 +195,7 @@ definition {
 		}
 
 		task ("Add the second page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "Test Site Name");
 
 			PagesAdmin.addPublicPage(pageName = "Test Page Name 2");
 		}
@@ -219,7 +219,7 @@ definition {
 		}
 
 		task ("Changes the order of pages") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "Test Site Name");
 
 			PagesAdmin.movePageItemUp(
 				pageName = "Test Page Name 2 Edit",
@@ -271,9 +271,9 @@ definition {
 
 			ControlMenu.viewHeaderTitle(headerTitle = "Global Navigation Menu Name");
 
-			var portalURL = PropsUtil.get("portal.url");
+			var portalUrl = PropsUtil.get("portal.url");
 
-			AssertLocation.assertPartialLocation(value1 = "${portalURL}/group/global/~/control_panel/manage?p_p_id=com_liferay_site_navigation_admin_web_portlet_SiteNavigationAdminPortlet");
+			AssertLocation.assertPartialLocation(value1 = "${portalUrl}/group/global/~/control_panel/manage?p_p_id=com_liferay_site_navigation_admin_web_portlet_SiteNavigationAdminPortlet");
 		}
 	}
 
@@ -289,7 +289,7 @@ definition {
 		}
 
 		task ("Hide the second page from Navigation Menu widget") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Configure",
@@ -778,7 +778,7 @@ definition {
 		}
 
 		task ("Type content in custom field of navigation menu items") {
-			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteUrlKey = "test-site-name");
 
 			LexiconEntry.gotoEntry(rowEntry = "Navigation Menu Name");
 
@@ -808,7 +808,7 @@ definition {
 </#if>
 			''';
 
-			ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "test-site-name");
+			ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteUrlKey = "test-site-name");
 
 			ApplicationDisplayTemplates.addCP(
 				adtType = "Menu Display Widget",

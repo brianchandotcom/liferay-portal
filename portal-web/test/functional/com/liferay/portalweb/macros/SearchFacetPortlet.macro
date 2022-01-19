@@ -13,11 +13,11 @@ definition {
 			facetValueName = "${facetValueName}",
 			searchPage = "${searchPage}",
 			searchTerm = "${searchTerm}",
-			searchURL = "${searchURL}");
+			searchUrl = "${searchUrl}");
 
-		AssertLocation(value1 = "${searchURL}");
+		AssertLocation(value1 = "${searchUrl}");
 
-		return "${searchURL}";
+		return "${searchUrl}";
 	}
 
 	macro clearAllFacetsAndViewURL {
@@ -26,10 +26,10 @@ definition {
 
 			var searchURL = SearchFacetPortlet.clearFacetAndViewURL(
 				facetClass = "${facetClearClass}",
-				searchURL = "${searchURL}");
+				searchUrl = "${searchUrl}");
 		}
 
-		return "${searchURL}";
+		return "${searchUrl}";
 	}
 
 	macro clearFacet {
@@ -55,11 +55,11 @@ definition {
 
 			var searchURL = SearchFacetPortlet.generateFacetClearedURL(
 				facetClass = "${facetClass}",
-				searchURL = "${searchURL}");
+				searchUrl = "${searchUrl}");
 
-			AssertLocation(value1 = "${searchURL}");
+			AssertLocation(value1 = "${searchUrl}");
 
-			return "${searchURL}";
+			return "${searchUrl}";
 		}
 		else {
 			SearchFacetPortlet.clearFacet();
@@ -98,15 +98,15 @@ definition {
 			var facetValue = "${facetValueName}";
 		}
 
-		var searchURLList = StringUtil.replace("${searchURL}", "&", ",");
+		var searchUrlList = StringUtil.replace("${searchUrl}", "&", ",");
 		var facetValue = StringUtil.replace("${facetValue}", " ", "%20");
 		var facetValueList = "${facetValue}";
 
-		for (var facetKeyValuePair : list "${searchURLList}") {
+		for (var facetKeyValuePair : list "${searchUrlList}") {
 			if (contains("${facetKeyValuePair}", "${facetClass}")) {
 				var facetKeyValue = StringUtil.stripBetween("${facetKeyValuePair}", "${facetClass}", "=");
 				var facetValueList = StringUtil.add("${facetValueList}", "${facetKeyValue}");
-				var searchURL = StringUtil.stripBetween("${searchURL}", "&${facetClass}", "${facetKeyValue}");
+				var searchUrl = StringUtil.stripBetween("${searchUrl}", "&${facetClass}", "${facetKeyValue}");
 				var facetClassFound = "true";
 			}
 		}
@@ -116,23 +116,23 @@ definition {
 			var facetValueList = ListUtil.sort("${facetValueList}");
 
 			for (var facetValueListValue : list "${facetValueList}") {
-				var searchURL = "${searchURL}&${facetClass}=${facetValueListValue}";
+				var searchUrl = "${searchUrl}&${facetClass}=${facetValueListValue}";
 			}
 		}
 		else {
-			var searchURL = "${searchURL}&${facetClass}=${facetValue}";
+			var searchUrl = "${searchUrl}&${facetClass}=${facetValue}";
 		}
 
-		return "${searchURL}";
+		return "${searchUrl}";
 	}
 
 	macro generateFacetClearedURL {
 		var facetClass = StringUtil.toLowerCase("${facetClass}");
-		var beforeFacetGroup = RegexUtil.replace("${searchURL}", "^(.*?)((?:&${facetClass}[^&]+)+)(.*)", "1");
-		var afterFacetGroup = RegexUtil.replace("${searchURL}", "^(.*?)((?:&${facetClass}[^&]+)+)(.*)", "3");
-		var searchURL = "${beforeFacetGroup}${afterFacetGroup}";
+		var beforeFacetGroup = RegexUtil.replace("${searchUrl}", "^(.*?)((?:&${facetClass}[^&]+)+)(.*)", "1");
+		var afterFacetGroup = RegexUtil.replace("${searchUrl}", "^(.*?)((?:&${facetClass}[^&]+)+)(.*)", "3");
+		var searchUrl = "${beforeFacetGroup}${afterFacetGroup}";
 
-		return "${searchURL}";
+		return "${searchUrl}";
 	}
 
 	macro generateFacetUncheckedURL {
@@ -143,9 +143,9 @@ definition {
 			var facetValue = "${facetValueName}";
 		}
 
-		var beforeFacetGroup = RegexUtil.replace("${searchURL}", "^(.*?)((?:&${facetClass}[^&]+)+)(.*)", "1");
-		var facetGroup = RegexUtil.replace("${searchURL}", "^(.*?)((?:&${facetClass}[^&]+)+)(.*)", "2");
-		var afterFacetGroup = RegexUtil.replace("${searchURL}", "^(.*?)((?:&${facetClass}[^&]+)+)(.*)", "3");
+		var beforeFacetGroup = RegexUtil.replace("${searchUrl}", "^(.*?)((?:&${facetClass}[^&]+)+)(.*)", "1");
+		var facetGroup = RegexUtil.replace("${searchUrl}", "^(.*?)((?:&${facetClass}[^&]+)+)(.*)", "2");
+		var afterFacetGroup = RegexUtil.replace("${searchUrl}", "^(.*?)((?:&${facetClass}[^&]+)+)(.*)", "3");
 		var facetValue = StringUtil.replace("${facetValue}", " ", "%20");
 		var facetGroupList = "${facetGroup}";
 
@@ -161,9 +161,9 @@ definition {
 			}
 		}
 
-		var searchURL = "${beforeFacetGroup}${afterFacetGroup}${facetGroup}";
+		var searchUrl = "${beforeFacetGroup}${afterFacetGroup}${facetGroup}";
 
-		return "${searchURL}";
+		return "${searchUrl}";
 	}
 
 	macro getFacetTypeValue {
@@ -229,11 +229,11 @@ definition {
 			facetClass = "${facetClass}",
 			facetValue = "${facetValue}",
 			facetValueName = "${facetValueName}",
-			searchURL = "${searchURL}");
+			searchUrl = "${searchUrl}");
 
-		AssertLocation(value1 = "${searchURL}");
+		AssertLocation(value1 = "${searchUrl}");
 
-		return "${searchURL}";
+		return "${searchUrl}";
 	}
 
 	macro updateFacetConfiguration {

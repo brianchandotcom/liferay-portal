@@ -99,7 +99,7 @@ definition {
 		DMRepository.addSharepoint(
 			dmRepositoryLibraryPath = "Documentos compartidos",
 			dmRepositoryName = "Sharepoint (${configurationName})",
-			dmRepositorySiteAbsoluteURL = "https://liferaycolab.sharepoint.com",
+			dmRepositorySiteAbsoluteUrl = "https://liferaycolab.sharepoint.com",
 			permissionDefinitionKey = "ACCESS",
 			roleTitle = "Guest");
 
@@ -667,7 +667,7 @@ definition {
 		DMRepository.addSharepoint(
 			dmRepositoryLibraryPath = "Documentos compartidos",
 			dmRepositoryName = "Sharepoint (CollabQA)",
-			dmRepositorySiteAbsoluteURL = "https://liferaycolab.sharepoint.com",
+			dmRepositorySiteAbsoluteUrl = "https://liferaycolab.sharepoint.com",
 			permissionDefinitionKey = "ACCESS",
 			roleTitle = "Guest");
 

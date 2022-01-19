@@ -161,7 +161,7 @@ definition {
 			locator1 = "CommerceEntry#TABLE_LIST_TITLE");
 
 		AssertElementPresent(
-			key_tableEntryURL = "Grouped",
+			key_tableEntryUrl = "Grouped",
 			locator1 = "RemoteApps#TABLE_ENTRY_URL_REMOTE_TABLE");
 	}
 
@@ -409,7 +409,7 @@ definition {
 			value1 = "Commerce_Black.jpg");
 
 		Click(
-			key_FilterOption = "Add",
+			key_filterOption = "Add",
 			locator1 = "AppBuilder#CHOOSE_SEARCH_FILTER_BY_OPTION");
 
 		Pause(locator1 = "3000");
@@ -448,7 +448,7 @@ definition {
 			value1 = "Commerce_Black.jpg");
 
 		Click(
-			key_FilterOption = "Add",
+			key_filterOption = "Add",
 			locator1 = "AppBuilder#CHOOSE_SEARCH_FILTER_BY_OPTION");
 
 		Button.clickSave();
@@ -1038,9 +1038,9 @@ definition {
 			productName = "Orange",
 			productType = "Simple");
 
-		var baseURL = PropsUtil.get("portal.url");
+		var baseUrl = PropsUtil.get("portal.url");
 
-		Navigator.openSpecificURL(url = "${baseURL}/web/guest/p/orange");
+		Navigator.openSpecificURL(url = "${baseUrl}/web/guest/p/orange");
 
 		AssertTextEquals(
 			locator1 = "CommerceFrontStore#FS_PRODUCT_NAME",

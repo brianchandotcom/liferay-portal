@@ -7,7 +7,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalURL}/api/jsonws/stylebook.stylebookentry/add-style-book-entry \
+			${portalUrl}/api/jsonws/stylebook.stylebookentry/add-style-book-entry \
 			  -u test@liferay.com:test \
 			  -d groupId=${groupId} \
 			  -d name=${styleBookEntryName} \

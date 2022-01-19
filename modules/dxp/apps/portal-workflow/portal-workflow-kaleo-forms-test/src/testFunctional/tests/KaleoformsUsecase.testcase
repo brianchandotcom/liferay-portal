@@ -330,7 +330,7 @@ definition {
 			fieldName = "Text1",
 			kfProcessFieldData = "Test 1 EDIT");
 
-		var key_fieldName = "${Text2}";
+		var key_fieldName = "${text2}";
 
 		AssertElementNotPresent(locator1 = "TextInput#DDM");
 

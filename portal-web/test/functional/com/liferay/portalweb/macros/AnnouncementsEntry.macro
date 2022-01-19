@@ -27,7 +27,7 @@ definition {
 
 		Type(
 			locator1 = "TextInput#URL",
-			value1 = "${entryURL}");
+			value1 = "${entryUrl}");
 
 		ScrollWebElementIntoView(locator1 = "Button#SAVE");
 
@@ -40,9 +40,9 @@ definition {
 			var displayDateHour = "0${displayDateHour}";
 		}
 
-		var displayDateAMPM = selenium.getAttribute("//input[contains(@id,'displayDateAmPm')]@value");
-		var displayDateAMPM = StringUtil.replace("${displayDateAMPM}", "0", "AM");
-		var displayDateAMPM = StringUtil.replace("${displayDateAMPM}", "1", "PM");
+		var displayDateAmpm = selenium.getAttribute("//input[contains(@id,'displayDateAmPm')]@value");
+		var displayDateAmpm = StringUtil.replace("${displayDateAmpm}", "0", "AM");
+		var displayDateAmpm = StringUtil.replace("${displayDateAmpm}", "1", "PM");
 		var displayDateMinute = selenium.getAttribute("//input[contains(@id,'displayDateMinute')]@value");
 		var displayDateMinuteFuture = ${displayDateMinute} + 2;
 		var displayDateMinuteFutureLength = StringUtil.length("${displayDateMinuteFuture}");
@@ -51,7 +51,7 @@ definition {
 			var displayDateMinuteFuture = "0${displayDateMinuteFuture}";
 		}
 
-		var displayDate = "${displayDateHour}:${displayDateMinuteFuture} ${displayDateAMPM}";
+		var displayDate = "${displayDateHour}:${displayDateMinuteFuture} ${displayDateAmpm}";
 
 		Type(
 			locator1 = "TextInput#DISPLAY_DATE_TIME",
@@ -81,7 +81,7 @@ definition {
 
 		Type(
 			locator1 = "TextInput#URL",
-			value1 = "${entryURL}");
+			value1 = "${entryUrl}");
 
 		if (isSet(priority)) {
 			Select(
@@ -157,7 +157,7 @@ definition {
 
 		Type(
 			locator1 = "TextInput#URL",
-			value1 = "${entryURLEdit}");
+			value1 = "${entryUrlEdit}");
 
 		Button.clickSave();
 	}
@@ -167,7 +167,7 @@ definition {
 
 		AnnouncementsNavigator.openToEntriesTab(
 			layoutName = "${layoutName}",
-			siteURLKey = "${siteURLKey}",
+			siteUrlKey = "${siteUrlKey}",
 			tabName = "${tabName}");
 
 		AssertVisible(locator1 = "Announcements#CARD_VIEW_ENTRY_CONTENT");
@@ -180,7 +180,7 @@ definition {
 	macro tearDownCP {
 		AnnouncementsNavigator.opentoAdmin(
 			groupName = "Guest",
-			siteURLKey = "guest");
+			siteUrlKey = "guest");
 
 		while (IsElementNotPresent(locator1 = "Message#EMPTY_INFO")) {
 			PortletEntry.selectAll();

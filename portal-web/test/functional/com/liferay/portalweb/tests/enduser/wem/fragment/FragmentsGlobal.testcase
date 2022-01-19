@@ -109,7 +109,7 @@ definition {
 		}
 
 		task ("Navigate to Fragments admin in normal site") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "test-site-name");
 		}
 
 		task ("Copy the global fragment to collection in normal site") {
@@ -225,7 +225,7 @@ definition {
 		}
 
 		task ("Edit the global fragment") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "global");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "global");
 
 			FragmentsAdminNavigator.gotoEntryEllipsisItem(
 				entry = "Global Fragment Name",
@@ -239,7 +239,7 @@ definition {
 		}
 
 		task ("Propagate the changes") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "global");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "global");
 
 			FragmentsAdminNavigator.gotoEntryEllipsisItem(
 				entry = "Global Fragment Name",
@@ -273,7 +273,7 @@ definition {
 	@priority = "4"
 	test ViewGlobalFragmentResourceCopiedToCollectionInNormalSite {
 		task ("Upload an image as fragment resource") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "global");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "global");
 
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Global Collection Name");
 
@@ -347,7 +347,7 @@ definition {
 		}
 
 		task ("Navigate to Fragments admin in normal site") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "test-site-name");
 		}
 
 		task ("Copy the global fragment to collection in normal site") {
@@ -376,7 +376,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Add the first global fragment") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "global");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "global");
 
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Global Collection Name");
 
@@ -416,7 +416,7 @@ definition {
 		}
 
 		task ("View both fragments shown in normal site") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "test-site-name");
 
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Global Collection Name");
 
@@ -506,7 +506,7 @@ definition {
 		}
 
 		task ("View site usages of the first global fragment") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "global");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "global");
 
 			FragmentsAdminNavigator.gotoEntryEllipsisItem(
 				entry = "Global Fragment Name 1",
@@ -522,7 +522,7 @@ definition {
 		}
 
 		task ("View site usages of the second global fragment") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "global");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "global");
 
 			FragmentsAdminNavigator.gotoEntryEllipsisItem(
 				entry = "Global Fragment Name 2",

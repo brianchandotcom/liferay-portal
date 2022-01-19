@@ -74,7 +74,7 @@ definition {
 		}
 
 		task ("Add a Heading fragment to display Page Template") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name-staging");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name-staging");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Category DPT");
 
@@ -93,7 +93,7 @@ definition {
 		}
 
 		task ("Navigate to the new vocabulary in Categories admin") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name-staging");
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name-staging");
 
 			Vocabulary.goToVocabulary(vocabularyName = "Vocabulary Name");
 		}
@@ -129,18 +129,18 @@ definition {
 					id = "element-text",
 					text = "Category Name ${n}");
 
-				Category.openCategoriesAdmin(siteURLKey = "test-site-name-staging");
+				Category.openCategoriesAdmin(siteUrlKey = "test-site-name-staging");
 			}
 		}
 
 		task ("Publish to Live") {
-			Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
+			Staging.openStagingAdmin(siteUrlKey = "test-site-name-staging");
 
 			Staging.publishCustomPublication();
 		}
 
 		task ("Navigate to the new vocabulary in Categories admin of live site") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 
 			Vocabulary.goToVocabulary(vocabularyName = "Vocabulary Name");
 		}
@@ -162,7 +162,7 @@ definition {
 					id = "element-text",
 					text = "Category Name ${n}");
 
-				Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+				Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 			}
 		}
 
@@ -183,7 +183,7 @@ definition {
 		}
 
 		task ("Navigate to the new vocabulary in Categories admin of staging site") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name-staging");
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name-staging");
 
 			Vocabulary.goToVocabulary(vocabularyName = "Vocabulary Name");
 		}
@@ -242,7 +242,7 @@ definition {
 		}
 
 		task ("Navigate to the new vocabulary in Categories admin of live site") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 
 			Vocabulary.goToVocabulary(vocabularyName = "Vocabulary Name");
 		}
@@ -280,7 +280,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("View can edit display page template in the staging site") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name-staging");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name-staging");
 
 			AssertVisible(
 				key_card = "Display Page Name",
@@ -294,7 +294,7 @@ definition {
 		}
 
 		task ("Publish to live") {
-			Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
+			Staging.openStagingAdmin(siteUrlKey = "test-site-name-staging");
 
 			Staging.publishCustomPublication();
 		}
@@ -316,7 +316,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Add a Banner Center to display page template") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name-staging");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name-staging");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
@@ -343,7 +343,7 @@ definition {
 		}
 
 		task ("Add a web content and select the display page template") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name-staging");
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name-staging");
 
 			WebContentNavigator.gotoAddCP();
 
@@ -359,13 +359,13 @@ definition {
 		}
 
 		task ("Publish to live") {
-			Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
+			Staging.openStagingAdmin(siteUrlKey = "test-site-name-staging");
 
 			Staging.publishCustomPublication();
 		}
 
 		task ("Map the Author Name field to subtitle editable field") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name-staging");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name-staging");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
 				displayPageName = "Display Page Name",
@@ -412,7 +412,7 @@ definition {
 		}
 
 		task ("Publish to live") {
-			Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
+			Staging.openStagingAdmin(siteUrlKey = "test-site-name-staging");
 
 			Staging.publishCustomPublication();
 		}
@@ -440,7 +440,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Add a Banner Center to display page template") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name-staging");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name-staging");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
@@ -503,7 +503,7 @@ definition {
 		}
 
 		task ("Publish to live") {
-			Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
+			Staging.openStagingAdmin(siteUrlKey = "test-site-name-staging");
 
 			Staging.publishCustomPublication();
 		}
@@ -531,7 +531,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Add a Banner Center to display page template") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name-staging");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name-staging");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
@@ -558,7 +558,7 @@ definition {
 		}
 
 		task ("Add a web content and select the display page template") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name-staging");
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name-staging");
 
 			WebContentNavigator.gotoAddCP();
 
@@ -598,7 +598,7 @@ definition {
 		}
 
 		task ("Publish to live") {
-			Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
+			Staging.openStagingAdmin(siteUrlKey = "test-site-name-staging");
 
 			Staging.publishCustomPublication();
 		}
@@ -624,7 +624,7 @@ definition {
 	@priority = "4"
 	test ViewMappedContentInDisplayPageTemplateAfterDeactivateStaging {
 		task ("Add a Banner Center to display page template") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name-staging");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name-staging");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
@@ -651,7 +651,7 @@ definition {
 		}
 
 		task ("Add a web content and select the display page template") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name-staging");
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name-staging");
 
 			WebContentNavigator.gotoAddCP();
 
@@ -667,7 +667,7 @@ definition {
 		}
 
 		task ("Publish to live") {
-			Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
+			Staging.openStagingAdmin(siteUrlKey = "test-site-name-staging");
 
 			Staging.publishCustomPublication();
 		}
@@ -693,7 +693,7 @@ definition {
 		}
 
 		task ("View the display page template is shown in Display Page Template admin") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.viewDisplayPagePresent(displayPageName = "Display Page Name");
 		}

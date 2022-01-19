@@ -14,7 +14,7 @@ definition {
 		var filePath = "${baseDir}${dependenciesDir}/${fileName}";
 
 		var curl = '''
-			${portalURL}/api/jsonws/mb.mbmessage/add-message-attachment \
+			${portalUrl}/api/jsonws/mb.mbmessage/add-message-attachment \
 			-u test@liferay.com:test \
 			-F messageId=${messageId} \
 			-F fileName=${fileName} \
@@ -61,7 +61,7 @@ definition {
 		}
 
 		var curl = '''
-			${portalURL}/api/jsonws/mb.mbcategory/add-category \
+			${portalUrl}/api/jsonws/mb.mbcategory/add-category \
 			-u test@liferay.com:test \
 			-d userId=${userId} \
 			-d parentCategoryId=${parentCategoryId} \
@@ -124,7 +124,7 @@ definition {
 		}
 
 		var curl = '''
-			${portalURL}/api/jsonws/mb.mbmessage/add-message \
+			${portalUrl}/api/jsonws/mb.mbmessage/add-message \
 			-u ${userEmailAddress}:${userPassword} \
 			-d groupId=${groupId} \
 			-d categoryId=${categoryId} \
@@ -177,7 +177,7 @@ definition {
 			addGuestPermissions = "${addGuestPermissions}");
 
 		var curl = '''
-			${portalURL}/api/jsonws/mb.mbmessage/add-message \
+			${portalUrl}/api/jsonws/mb.mbmessage/add-message \
 				-u test@liferay.com:test \
 				-d parentMessageId=${messageId} \
 				-d subject=RE: ${threadSubject} \
@@ -214,7 +214,7 @@ definition {
 		var groupId = JSONGroupSetter.setGroupId(groupName = "${groupName}");
 
 		var curl = '''
-			${portalURL}/api/jsonws/mb.mbcategory/delete-category \
+			${portalUrl}/api/jsonws/mb.mbcategory/delete-category \
 				-u test@liferay.com:test \
 				-d categoryId=${categoryId} \
 				-d groupId=${groupId}
@@ -233,7 +233,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalURL}/api/jsonws/mb.mbmessage/delete-message \
+			${portalUrl}/api/jsonws/mb.mbmessage/delete-message \
 				-u test@liferay.com:test \
 				-d messageId=${messageId} \
 		''';
@@ -243,9 +243,9 @@ definition {
 
 	@summary = "This calls the JSON WS API to get the ID of a MB category through the URL"
 	macro getCategoryId {
-		var messageBoardsCategoryURL = selenium.getLocation();
-		var portalURL = PropsUtil.get("portal.url");
-		var categoryId = StringUtil.replace("${messageBoardsCategoryURL}", "${portalURL}/web/guest/message-boards-page/-/message_boards/category/", "");
+		var messageBoardsCategoryUrl = selenium.getLocation();
+		var portalUrl = PropsUtil.get("portal.url");
+		var categoryId = StringUtil.replace("${messageBoardsCategoryUrl}", "${portalUrl}/web/guest/message-boards-page/-/message_boards/category/", "");
 
 		return "${categoryId}";
 	}
@@ -259,7 +259,7 @@ definition {
 		var groupId = JSONGroupSetter.setGroupId(groupName = "${groupName}");
 
 		var curl = '''
-			${portalURL}/api/jsonws/mb.mbcategory/get-categories \
+			${portalUrl}/api/jsonws/mb.mbcategory/get-categories \
 			-u test@liferay.com:test \
 			-d groupId=${groupId}
 		''';
@@ -274,9 +274,9 @@ definition {
 
 	@summary = "This calls the JSON WS API to get the ID of a MB thread through the URL"
 	macro getmessageId {
-		var messageBoardsThreadURL = selenium.getLocation();
-		var portalURL = PropsUtil.get("portal.url");
-		var messageId = StringUtil.replace("${messageBoardsThreadURL}", "${portalURL}/web/guest/message-boards-page/-/message_boards/message/", "");
+		var messageBoardsThreadUrl = selenium.getLocation();
+		var portalUrl = PropsUtil.get("portal.url");
+		var messageId = StringUtil.replace("${messageBoardsThreadUrl}", "${portalUrl}/web/guest/message-boards-page/-/message_boards/message/", "");
 
 		return "${messageId}";
 	}
@@ -297,7 +297,7 @@ definition {
 		var groupId = JSONGroupSetter.setGroupId(groupName = "${groupName}");
 
 		var curl = '''
-			${portalURL}/api/jsonws/mb.mbthread/get-threads \
+			${portalUrl}/api/jsonws/mb.mbthread/get-threads \
 			-u test@liferay.com:test \
 			-d groupId=${groupId} \
 			-d categoryId=${categoryId} \
@@ -331,7 +331,7 @@ definition {
 		var groupId = JSONGroupSetter.setGroupId(groupName = "${groupName}");
 
 		var curl = '''
-			${portalURL}/api/jsonws/mb.mbthread/get-threads \
+			${portalUrl}/api/jsonws/mb.mbthread/get-threads \
 			-u test@liferay.com:test \
 			-d groupId=${groupId} \
 			-d categoryId=${categoryId} \
@@ -358,7 +358,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalURL}/api/jsonws/mb.mbcategory/move-category-to-trash \
+			${portalUrl}/api/jsonws/mb.mbcategory/move-category-to-trash \
 				-u test@liferay.com:test \
 				-d categoryId=${categoryId} \
 		''';
@@ -376,7 +376,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalURL}/api/jsonws/mb.mbthread/move-thread-to-trash \
+			${portalUrl}/api/jsonws/mb.mbthread/move-thread-to-trash \
 				-u test@liferay.com:test \
 				-d threadId=${threadId} \
 		''';
@@ -394,7 +394,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalURL}/api/jsonws/mb.mbthread/split-thread \
+			${portalUrl}/api/jsonws/mb.mbthread/split-thread \
 				-u test@liferay.com:test \
 				-d messageId=${messageId} \
 				-d subject=${threadSplitSubject}
@@ -423,7 +423,7 @@ definition {
 		}
 
 		var curl = '''
-			${portalURL}/api/jsonws/mb.mbmessage/subscribe-message \
+			${portalUrl}/api/jsonws/mb.mbmessage/subscribe-message \
 				-u ${userEmailAddress}:${userPassword} \
 				-d messageId=${messageId} \
 		''';
@@ -441,7 +441,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalURL}/api/jsonws/mb.mbmessage/update-message \
+			${portalUrl}/api/jsonws/mb.mbmessage/update-message \
 				-u test@liferay.com:test \
 				-d messageId=${messageId} \
 				-d subject=${threadSubjectEdit} \

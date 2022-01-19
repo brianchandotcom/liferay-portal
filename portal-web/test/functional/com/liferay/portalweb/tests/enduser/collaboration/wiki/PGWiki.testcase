@@ -53,8 +53,8 @@ definition {
 			WikiPage.addAttachmentViaPageEdit(
 				attachmentFileName = "${attachmentFileName}",
 				groupName = "Guest",
-				layoutURLKey = "wiki-test-page",
-				siteURLKey = "guest",
+				layoutUrlKey = "wiki-test-page",
+				siteUrlKey = "guest",
 				wikiNodeName = "Main",
 				wikiPageTitle = "FrontPage");
 		}
@@ -63,9 +63,9 @@ definition {
 			attachmentFileName = "Document_1.jpg",
 			attachmentFileSize = "13 KB",
 			groupName = "Guest",
-			layoutURLKey = "wiki-test-page",
+			layoutUrlKey = "wiki-test-page",
 			numberOfAttachments = "3",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			wikiNodeName = "Main",
 			wikiPageTitle = "FrontPage");
 
@@ -73,9 +73,9 @@ definition {
 			attachmentFileName = "Document_2.mp3",
 			attachmentFileSize = "864 B",
 			groupName = "Guest",
-			layoutURLKey = "wiki-test-page",
+			layoutUrlKey = "wiki-test-page",
 			numberOfAttachments = "3",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			wikiNodeName = "Main",
 			wikiPageTitle = "FrontPage");
 
@@ -83,9 +83,9 @@ definition {
 			attachmentFileName = "Document_3.doc",
 			attachmentFileSize = "24 KB",
 			groupName = "Guest",
-			layoutURLKey = "wiki-test-page",
+			layoutUrlKey = "wiki-test-page",
 			numberOfAttachments = "3",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			wikiNodeName = "Main",
 			wikiPageTitle = "FrontPage");
 	}
@@ -95,9 +95,9 @@ definition {
 	@refactordone
 	test CanAddChildPage {
 		WikiNavigator.gotoWidgetSpecificTabByURL(
-			layoutURLKey = "wiki-test-page",
-			siteURLKey = "guest",
-			tabURLKey = "all_pages",
+			layoutUrlKey = "wiki-test-page",
+			siteUrlKey = "guest",
+			tabUrlKey = "all_pages",
 			wikiNodeName = "Main");
 
 		WikiPage.addPG(
@@ -105,8 +105,8 @@ definition {
 			wikiPageTitle = "Wiki Page Title");
 
 		WikiNavigator.openToWikiPage(
-			layoutURLKey = "wiki-test-page",
-			siteURLKey = "guest",
+			layoutUrlKey = "wiki-test-page",
+			siteUrlKey = "guest",
 			wikiNodeName = "Main",
 			wikiPageTitle = "Wiki Page Title");
 
@@ -115,8 +115,8 @@ definition {
 			wikiChildPageTitle = "Wiki Child Page Title");
 
 		WikiNavigator.openToWikiPage(
-			layoutURLKey = "wiki-test-page",
-			siteURLKey = "guest",
+			layoutUrlKey = "wiki-test-page",
+			siteUrlKey = "guest",
 			wikiNodeName = "Main",
 			wikiPageTitle = "Wiki Page Title");
 
@@ -139,8 +139,8 @@ definition {
 
 		for (var childPageCount : list "1,2") {
 			WikiNavigator.openToWikiPage(
-				layoutURLKey = "wiki-test-page",
-				siteURLKey = "guest",
+				layoutUrlKey = "wiki-test-page",
+				siteUrlKey = "guest",
 				wikiNodeName = "Main",
 				wikiPageTitle = "FrontPage");
 
@@ -151,8 +151,8 @@ definition {
 
 		for (var childPageCount : list "1,2") {
 			WikiNavigator.openToWikiPage(
-				layoutURLKey = "wiki-test-page",
-				siteURLKey = "guest",
+				layoutUrlKey = "wiki-test-page",
+				siteUrlKey = "guest",
 				wikiNodeName = "Main",
 				wikiPageTitle = "FrontPage");
 
@@ -171,16 +171,16 @@ definition {
 		WikiPage.addFrontPagePG(
 			creoleSource = "true",
 			groupName = "Guest",
-			layoutURLKey = "wiki-test-page",
-			siteURLKey = "guest",
+			layoutUrlKey = "wiki-test-page",
+			siteUrlKey = "guest",
 			wikiNodeName = "Main",
 			wikiPageContent = "**Wiki FrontPage Content**",
 			wikiPageText = "Wiki FrontPage Content",
 			wikiPageTitle = "FrontPage");
 
 		WikiNavigator.openToWikiPage(
-			layoutURLKey = "wiki-test-page",
-			siteURLKey = "guest",
+			layoutUrlKey = "wiki-test-page",
+			siteUrlKey = "guest",
 			wikiNodeName = "Main",
 			wikiPageTitle = "FrontPage");
 
@@ -220,9 +220,9 @@ definition {
 	@refactordone
 	test CanAddPageWithHTMLFormat {
 		WikiNavigator.gotoWidgetSpecificTabByURL(
-			layoutURLKey = "wiki-test-page",
-			siteURLKey = "guest",
-			tabURLKey = "all_pages",
+			layoutUrlKey = "wiki-test-page",
+			siteUrlKey = "guest",
+			tabUrlKey = "all_pages",
 			wikiNodeName = "Main");
 
 		var welcomeToLiferay = '''
@@ -235,8 +235,8 @@ definition {
 			wikiPageTitle = "Wiki Page Title");
 
 		WikiNavigator.openToWikiPage(
-			layoutURLKey = "wiki-test-page",
-			siteURLKey = "guest",
+			layoutUrlKey = "wiki-test-page",
+			siteUrlKey = "guest",
 			wikiNodeName = "Main",
 			wikiPageTitle = "Wiki Page Title");
 
@@ -260,14 +260,14 @@ definition {
 
 		WikiNavigator.openToEditPage(
 			groupName = "Guest",
-			layoutURLKey = "wiki-test-page",
-			siteURLKey = "guest",
+			layoutUrlKey = "wiki-test-page",
+			siteUrlKey = "guest",
 			wikiNodeName = "Main",
 			wikiPageTitle = "FrontPage");
 
 		WikiPage.addInlineImage(
 			contentImageName = "Document_2.jpg",
-			imageSourceURL = "http://localhost:8080/webdav/guest/document_library/Document_2.jpg",
+			imageSourceUrl = "http://localhost:8080/webdav/guest/document_library/Document_2.jpg",
 			navTab = "URL");
 
 		PortletEntry.publish();
@@ -292,8 +292,8 @@ definition {
 
 		WikiNavigator.openToEditPage(
 			groupName = "Guest",
-			layoutURLKey = "wiki-test-page",
-			siteURLKey = "guest",
+			layoutUrlKey = "wiki-test-page",
+			siteUrlKey = "guest",
 			wikiNodeName = "Main",
 			wikiPageTitle = "Wiki Page Title");
 
@@ -304,8 +304,8 @@ definition {
 		PortletEntry.publish();
 
 		WikiNavigator.openToWikiPage(
-			layoutURLKey = "wiki-test-page",
-			siteURLKey = "guest",
+			layoutUrlKey = "wiki-test-page",
+			siteUrlKey = "guest",
 			wikiNodeName = "Main",
 			wikiPageTitle = "Wiki Page Title");
 
@@ -352,8 +352,8 @@ definition {
 	test CanCancelAddingAPage {
 		WikiNavigator.openToAddPage(
 			groupName = "Guest",
-			layoutURLKey = "wiki-test-page",
-			siteURLKey = "guest",
+			layoutUrlKey = "wiki-test-page",
+			siteUrlKey = "guest",
 			wikiNodeName = "Main");
 
 		WikiEntry.addPageTitle(wikiPageTitle = "Wiki Page Title");
@@ -379,8 +379,8 @@ definition {
 
 		WikiNavigator.openToEditPage(
 			groupName = "Guest",
-			layoutURLKey = "wiki-test-page",
-			siteURLKey = "guest",
+			layoutUrlKey = "wiki-test-page",
+			siteUrlKey = "guest",
 			wikiNodeName = "Main",
 			wikiPageTitle = "Wiki Page Title");
 
@@ -391,8 +391,8 @@ definition {
 		WikiEntry.cancel();
 
 		WikiNavigator.openToWikiPage(
-			layoutURLKey = "wiki-test-page",
-			siteURLKey = "guest",
+			layoutUrlKey = "wiki-test-page",
+			siteUrlKey = "guest",
 			wikiNodeName = "Main",
 			wikiPageTitle = "Wiki Page Title");
 
@@ -414,8 +414,8 @@ definition {
 		}
 
 		WikiNavigator.openToWikiPage(
-			layoutURLKey = "wiki-test-page",
-			siteURLKey = "guest",
+			layoutUrlKey = "wiki-test-page",
+			siteUrlKey = "guest",
 			wikiNodeName = "Main",
 			wikiPageTitle = "FrontPage");
 
@@ -442,9 +442,9 @@ definition {
 			wikiPageName = "Wiki Page Title");
 
 		WikiNavigator.gotoWidgetSpecificTabByURL(
-			layoutURLKey = "wiki-test-page",
-			siteURLKey = "guest",
-			tabURLKey = "all_pages",
+			layoutUrlKey = "wiki-test-page",
+			siteUrlKey = "guest",
+			tabUrlKey = "all_pages",
 			wikiNodeName = "Main");
 
 		WikiNavigator.gotoEntryCopyViaPGTable(wikiPageTitle = "Wiki Page Title");
@@ -464,8 +464,8 @@ definition {
 		}
 
 		WikiNavigator.openToWikiPage(
-			layoutURLKey = "wiki-test-page",
-			siteURLKey = "guest",
+			layoutUrlKey = "wiki-test-page",
+			siteUrlKey = "guest",
 			wikiNodeName = "Main",
 			wikiPageTitle = "Copied Wiki Page Title");
 
@@ -485,9 +485,9 @@ definition {
 			wikiPageName = "FrontPage");
 
 		WikiNavigator.gotoWidgetSpecificTabByURL(
-			layoutURLKey = "wiki-test-page",
-			siteURLKey = "guest",
-			tabURLKey = "all_pages",
+			layoutUrlKey = "wiki-test-page",
+			siteUrlKey = "guest",
+			tabUrlKey = "all_pages",
 			wikiNodeName = "Main");
 
 		WikiPage.deletePG(wikiPageTitle = "FrontPage");
@@ -504,9 +504,9 @@ definition {
 			wikiPageName = "Wiki Page Title");
 
 		WikiNavigator.gotoWidgetSpecificTabByURL(
-			layoutURLKey = "wiki-test-page",
-			siteURLKey = "guest",
-			tabURLKey = "all_pages",
+			layoutUrlKey = "wiki-test-page",
+			siteUrlKey = "guest",
+			tabUrlKey = "all_pages",
 			wikiNodeName = "Main");
 
 		WikiPage.deletePG(wikiPageTitle = "Wiki Page Title");
@@ -519,9 +519,9 @@ definition {
 	@refactordone
 	test CanEditDraftPage {
 		WikiNavigator.gotoWidgetSpecificTabByURL(
-			layoutURLKey = "wiki-test-page",
-			siteURLKey = "guest",
-			tabURLKey = "all_pages",
+			layoutUrlKey = "wiki-test-page",
+			siteUrlKey = "guest",
+			tabUrlKey = "all_pages",
 			wikiNodeName = "Main");
 
 		WikiPage.addPG(
@@ -542,9 +542,9 @@ definition {
 		PortletEntry.publish();
 
 		WikiNavigator.gotoWidgetSpecificTabByURL(
-			layoutURLKey = "wiki-test-page",
-			siteURLKey = "guest",
-			tabURLKey = "all_pages",
+			layoutUrlKey = "wiki-test-page",
+			siteUrlKey = "guest",
+			tabUrlKey = "all_pages",
 			wikiNodeName = "Main");
 
 		WikiTable.viewEntry(
@@ -552,8 +552,8 @@ definition {
 			wikiPageTitle = "Wiki Page Title");
 
 		WikiNavigator.openToWikiPage(
-			layoutURLKey = "wiki-test-page",
-			siteURLKey = "guest",
+			layoutUrlKey = "wiki-test-page",
+			siteUrlKey = "guest",
 			wikiNodeName = "Main",
 			wikiPageTitle = "Wiki Page Title");
 
@@ -573,8 +573,8 @@ definition {
 			wikiPageName = "FrontPage");
 
 		WikiNavigator.openToWikiPage(
-			layoutURLKey = "wiki-test-page",
-			siteURLKey = "guest",
+			layoutUrlKey = "wiki-test-page",
+			siteUrlKey = "guest",
 			wikiNodeName = "Main",
 			wikiPageTitle = "FrontPage");
 
@@ -606,8 +606,8 @@ definition {
 		}
 
 		WikiNavigator.openToWikiPage(
-			layoutURLKey = "wiki-test-page",
-			siteURLKey = "guest",
+			layoutUrlKey = "wiki-test-page",
+			siteUrlKey = "guest",
 			wikiNodeName = "Main",
 			wikiPageTitle = "Wiki Page Title1");
 
@@ -619,8 +619,8 @@ definition {
 			wikiPage2Title = "Wiki Page Title2");
 
 		WikiNavigator.openToWikiPage(
-			layoutURLKey = "wiki-test-page",
-			siteURLKey = "guest",
+			layoutUrlKey = "wiki-test-page",
+			siteUrlKey = "guest",
 			wikiNodeName = "Main",
 			wikiPageTitle = "Wiki Page Title1");
 
@@ -644,8 +644,8 @@ definition {
 		for (var invalidCharacter : list "\,],[,;,:,|,&lt;,&gt;") {
 			WikiPage.addFrontPageChildPageInvalidTitle(
 				groupName = "Guest",
-				layoutURLKey = "wiki-test-page",
-				siteURLKey = "guest",
+				layoutUrlKey = "wiki-test-page",
+				siteUrlKey = "guest",
 				wikiChildPageContent = "Wiki FrontPage Child Page Content",
 				wikiChildPageInvalidTitle = "true",
 				wikiChildPageTitle = "Wiki${invalidCharacter} Front${invalidCharacter} Page${invalidCharacter} Child${invalidCharacter} Page${invalidCharacter} Title${invalidCharacter}",
@@ -654,8 +654,8 @@ definition {
 		}
 
 		WikiNavigator.openToWikiPage(
-			layoutURLKey = "wiki-test-page",
-			siteURLKey = "guest",
+			layoutUrlKey = "wiki-test-page",
+			siteUrlKey = "guest",
 			wikiNodeName = "Main",
 			wikiPageTitle = "FrontPage");
 
@@ -664,9 +664,9 @@ definition {
 			wikiPageTitle = "FrontPage");
 
 		WikiNavigator.gotoWidgetSpecificTabByURL(
-			layoutURLKey = "wiki-test-page",
-			siteURLKey = "guest",
-			tabURLKey = "all_pages",
+			layoutUrlKey = "wiki-test-page",
+			siteUrlKey = "guest",
+			tabUrlKey = "all_pages",
 			wikiNodeName = "Main");
 
 		WikiPage.viewNoChildPagePGViaAllPages(
@@ -683,8 +683,8 @@ definition {
 		var wikiPageContent = '''<p id='demo'>PASS</p> <script type='text/javascript'>document.getElementById('demo').innerHTML = 'this code should not be read by the client';</script>''';
 
 		WikiNavigator.openToWikiPage(
-			layoutURLKey = "wiki-test-page",
-			siteURLKey = "guest",
+			layoutUrlKey = "wiki-test-page",
+			siteUrlKey = "guest",
 			wikiNodeName = "Main",
 			wikiPageTitle = "FrontPage");
 
@@ -693,8 +693,8 @@ definition {
 			wikiPageContent = "${wikiPageContent}");
 
 		WikiNavigator.openToWikiPage(
-			layoutURLKey = "wiki-test-page",
-			siteURLKey = "guest",
+			layoutUrlKey = "wiki-test-page",
+			siteUrlKey = "guest",
 			wikiNodeName = "Main",
 			wikiPageTitle = "FrontPage");
 
@@ -717,8 +717,8 @@ definition {
 			wikiPageName = "Wiki Page Title");
 
 		WikiNavigator.openToWikiPage(
-			layoutURLKey = "wiki-test-page",
-			siteURLKey = "guest",
+			layoutUrlKey = "wiki-test-page",
+			siteUrlKey = "guest",
 			wikiNodeName = "Main",
 			wikiPageTitle = "Wiki Page Title");
 
@@ -727,8 +727,8 @@ definition {
 			wikiPageTitleRename = "Wiki Page Rename");
 
 		WikiNavigator.openToWikiPage(
-			layoutURLKey = "wiki-test-page",
-			siteURLKey = "guest",
+			layoutUrlKey = "wiki-test-page",
+			siteUrlKey = "guest",
 			wikiNodeName = "Main",
 			wikiPageTitle = "Wiki Page Title");
 
@@ -738,8 +738,8 @@ definition {
 			wikiPageTitleRename = "Wiki Page Rename");
 
 		WikiNavigator.openToWikiPage(
-			layoutURLKey = "wiki-test-page",
-			siteURLKey = "guest",
+			layoutUrlKey = "wiki-test-page",
+			siteUrlKey = "guest",
 			wikiNodeName = "Main",
 			wikiPageTitle = "Wiki Page Title");
 
@@ -750,8 +750,8 @@ definition {
 			wikiPageTitle = "Wiki Page Title");
 
 		WikiNavigator.openToWikiPage(
-			layoutURLKey = "wiki-test-page",
-			siteURLKey = "guest",
+			layoutUrlKey = "wiki-test-page",
+			siteUrlKey = "guest",
 			wikiNodeName = "Main",
 			wikiPageTitle = "Wiki Page Rename");
 
@@ -773,8 +773,8 @@ definition {
 			wikiPageName = "Wiki Page Title");
 
 		WikiNavigator.openToWikiPage(
-			layoutURLKey = "wiki-test-page",
-			siteURLKey = "guest",
+			layoutUrlKey = "wiki-test-page",
+			siteUrlKey = "guest",
 			wikiNodeName = "Main",
 			wikiPageTitle = "Wiki Page Title");
 
@@ -783,8 +783,8 @@ definition {
 			wikiPageTitleRename = "Wiki Page Rename");
 
 		WikiNavigator.openToWikiPage(
-			layoutURLKey = "wiki-test-page",
-			siteURLKey = "guest",
+			layoutUrlKey = "wiki-test-page",
+			siteUrlKey = "guest",
 			wikiNodeName = "Main",
 			wikiPageTitle = "Wiki Page Title");
 
@@ -795,8 +795,8 @@ definition {
 			wikiPageTitle = "Wiki Page Rename");
 
 		WikiNavigator.openToWikiPage(
-			layoutURLKey = "wiki-test-page",
-			siteURLKey = "guest",
+			layoutUrlKey = "wiki-test-page",
+			siteUrlKey = "guest",
 			wikiNodeName = "Main",
 			wikiPageTitle = "Wiki Page Rename");
 
@@ -820,8 +820,8 @@ definition {
 		}
 
 		WikiNavigator.openToWikiPage(
-			layoutURLKey = "wiki-test-page",
-			siteURLKey = "guest",
+			layoutUrlKey = "wiki-test-page",
+			siteUrlKey = "guest",
 			wikiNodeName = "Main",
 			wikiPageTitle = "Wiki Page Title2");
 
@@ -832,8 +832,8 @@ definition {
 			wikiPageContent = "Wiki Page Content2");
 
 		WikiNavigator.openToWikiPage(
-			layoutURLKey = "wiki-test-page",
-			siteURLKey = "guest",
+			layoutUrlKey = "wiki-test-page",
+			siteUrlKey = "guest",
 			wikiNodeName = "Main",
 			wikiPageTitle = "Wiki Page Title2");
 
@@ -845,8 +845,8 @@ definition {
 			wikiVersion2Summary = "Reverted to 1.0");
 
 		WikiNavigator.openToWikiPage(
-			layoutURLKey = "wiki-test-page",
-			siteURLKey = "guest",
+			layoutUrlKey = "wiki-test-page",
+			siteUrlKey = "guest",
 			wikiNodeName = "Main",
 			wikiPageTitle = "Wiki Page Title1");
 
@@ -855,8 +855,8 @@ definition {
 			wikiPageTitle = "Wiki Page Title1");
 
 		WikiNavigator.openToWikiPage(
-			layoutURLKey = "wiki-test-page",
-			siteURLKey = "guest",
+			layoutUrlKey = "wiki-test-page",
+			siteUrlKey = "guest",
 			wikiNodeName = "Main",
 			wikiPageTitle = "Wiki Page Title2");
 
@@ -883,8 +883,8 @@ definition {
 			wikiPageName = "FrontPage");
 
 		WikiNavigator.openToWikiPage(
-			layoutURLKey = "wiki-test-page",
-			siteURLKey = "guest",
+			layoutUrlKey = "wiki-test-page",
+			siteUrlKey = "guest",
 			wikiNodeName = "Main",
 			wikiPageTitle = "FrontPage");
 
@@ -924,8 +924,8 @@ definition {
 
 		WikiNavigator.openToEditPage(
 			groupName = "Guest",
-			layoutURLKey = "wiki-test-page",
-			siteURLKey = "guest",
+			layoutUrlKey = "wiki-test-page",
+			siteUrlKey = "guest",
 			wikiNodeName = "Main",
 			wikiPageTitle = "Wiki Page Title");
 
@@ -936,9 +936,9 @@ definition {
 		WikiEntry.saveAsDraft();
 
 		WikiNavigator.gotoWidgetSpecificTabByURL(
-			layoutURLKey = "wiki-test-page",
-			siteURLKey = "guest",
-			tabURLKey = "draft_pages",
+			layoutUrlKey = "wiki-test-page",
+			siteUrlKey = "guest",
+			tabUrlKey = "draft_pages",
 			wikiNodeName = "Main");
 
 		WikiTable.viewEntry(
@@ -946,8 +946,8 @@ definition {
 			wikiPageTitle = "Wiki Page Title");
 
 		WikiNavigator.openToWikiPage(
-			layoutURLKey = "wiki-test-page",
-			siteURLKey = "guest",
+			layoutUrlKey = "wiki-test-page",
+			siteUrlKey = "guest",
 			wikiNodeName = "Main",
 			wikiPageTitle = "Wiki Page Title");
 

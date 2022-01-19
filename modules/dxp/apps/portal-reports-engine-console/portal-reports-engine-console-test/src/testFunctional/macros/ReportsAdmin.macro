@@ -120,7 +120,7 @@ definition {
 
 		Type(
 			locator1 = "ReportsAdminEditSource#JDBC_URL_FIELD",
-			value1 = "${reportsDataSourceURL}");
+			value1 = "${reportsDataSourceUrl}");
 
 		Type(
 			locator1 = "ReportsAdminEditSource#JDBC_USER_NAME_FIELD",

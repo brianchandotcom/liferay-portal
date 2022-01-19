@@ -13,11 +13,11 @@ definition {
 
 		Type(
 			locator1 = "TextInput#URL",
-			value1 = "${audioSourceURL}");
+			value1 = "${audioSourceUrl}");
 
 		AssertTextEquals(
 			locator1 = "TextInput#URL",
-			value1 = "${audioSourceURL}");
+			value1 = "${audioSourceUrl}");
 
 		Pause(locator1 = "3000");
 
@@ -31,7 +31,7 @@ definition {
 	}
 
 	macro addImageFromURL {
-		var key_imageSourceURL = "${imageSourceURL}";
+		var key_imageSourceUrl = "${imageSourceUrl}";
 		var key_navTab = "${navTab}";
 
 		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
@@ -55,13 +55,13 @@ definition {
 
 		Click(locator1 = "TextInput#URL");
 
-		RobotType(locator1 = "${imageSourceURL}");
+		RobotType(locator1 = "${imageSourceUrl}");
 
 		AssertTextEquals(
 			locator1 = "TextInput#URL",
-			value1 = "${imageSourceURL}");
+			value1 = "${imageSourceUrl}");
 
-		if (contains("${imageSourceURL}", "/documents/")) {
+		if (contains("${imageSourceUrl}", "/documents/")) {
 			AssertElementPresent.pauseAssertVisible(locator1 = "ItemSelector#URL_IMAGE_SOURCE");
 
 			if (IsElementPresent(locator1 = "ItemSelector#URL_IMAGE_EXAMPLE")) {
@@ -91,7 +91,7 @@ definition {
 			videoShortcutDescription = "${videoShortcutDescription}",
 			videoShortcutPreview = "${videoShortcutPreview}",
 			videoShortcutTitle = "${videoShortcutTitle}",
-			videoURL = "${videoURL}");
+			videoUrl = "${videoUrl}");
 
 		Click(
 			key_imageFileName = "${videoShortcutTitle}",
@@ -164,7 +164,7 @@ definition {
 
 		Type(
 			locator1 = "TextInput#VIDEO_URL",
-			value1 = "${videoSourceURL}");
+			value1 = "${videoSourceUrl}");
 
 		Pause(locator1 = "3000");
 
@@ -288,7 +288,7 @@ definition {
 		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
 
 		if (isSet(invalidURL)) {
-			if (contains("${invalidURL}", "youtube")) {
+			if (contains("${invalidUrl}", "youtube")) {
 				SelectFrame.selectFrameNoLoading(locator1 = "IFrame#EXTERNAL_VIDEO_IFRAME");
 
 				Click(locator1 = "Button#YOUTUBE_PLAY");
@@ -297,14 +297,14 @@ definition {
 					locator1 = "Message#ERROR_INVALID_YOUTUBE_VIDEO",
 					value1 = "An error occurred. Please try again later.");
 			}
-			else if (contains("${invalidURL}", "facebook")) {
+			else if (contains("${invalidUrl}", "facebook")) {
 				SelectFrame.selectFrameNoLoading(locator1 = "IFrame#EXTERNAL_VIDEO_IFRAME");
 
 				AssertTextEquals.assertPartialText(
 					locator1 = "Message#ERROR_INVALID_FACEBOOK_VIDEO",
 					value1 = "Video Unavailable");
 			}
-			else if (contains("${invalidURL}", "vimeo")) {
+			else if (contains("${invalidUrl}", "vimeo")) {
 				SelectFrame.selectFrameNoLoading(locator1 = "IFrame#EXTERNAL_VIDEO_IFRAME");
 
 				AssertTextEquals.assertPartialText(
@@ -323,7 +323,7 @@ definition {
 				locator1 = "Button#ANY_ENABLED");
 
 			AssertVisible(
-				key_videoShortcutPreview = "${validURL}",
+				key_videoShortcutPreview = "${validUrl}",
 				locator1 = "DocumentsAndMediaDocument#VIDEO_SHORTCUT_PREVIEW");
 		}
 
@@ -357,7 +357,7 @@ definition {
 			locator1 = "Icon#EYE_PREVIEW_SPECIFIC");
 
 		AssertVisible(
-			key_videoShortcutPreview = "${validURL}",
+			key_videoShortcutPreview = "${validUrl}",
 			locator1 = "DocumentsAndMediaDocument#VIDEO_SHORTCUT_PREVIEW");
 
 		AssertTextEquals(

@@ -45,7 +45,7 @@ definition {
 		}
 
 		task ("Add a Banner Center fragment to display page template") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
@@ -79,7 +79,7 @@ definition {
 		}
 
 		task ("Select the display page template in blogs entry") {
-			BlogsNavigator.openBlogsAdmin(siteURLKey = "test-site-name");
+			BlogsNavigator.openBlogsAdmin(siteUrlKey = "test-site-name");
 
 			BlogsNavigator.gotoEditCP(entryTitle = "Blogs Entry Title");
 

@@ -50,7 +50,7 @@ definition {
 
 		VideoShortcut.addCP(
 			videoShortcutTitle = "Test YouTube Video",
-			videoURL = "https://www.youtube.com/watch?v=HOdbzGCI5ME");
+			videoUrl = "https://www.youtube.com/watch?v=HOdbzGCI5ME");
 
 		JSONDepot.connectSite(
 			depotName = "Test Depot Name",
@@ -70,7 +70,7 @@ definition {
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
 			layoutName = "Page Name",
-			siteURLKey = "site-name");
+			siteUrlKey = "site-name");
 
 		BlogsEntry.viewEntryPG(
 			embedVideo = "true",
@@ -96,7 +96,7 @@ definition {
 			videoShortcutDescription = "Video Shortcut Description",
 			videoShortcutPreview = "https://www.youtube.com",
 			videoShortcutTitle = "Test YouTube Video",
-			videoURL = "https://youtu.be/HOdbzGCI5ME",
+			videoUrl = "https://youtu.be/HOdbzGCI5ME",
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WC WebContent Title");
 
@@ -130,7 +130,7 @@ definition {
 		VideoShortcut.addCP(
 			tagNameList = "depot",
 			videoShortcutTitle = "Test YouTube Video",
-			videoURL = "https://www.youtube.com/watch?v=HOdbzGCI5ME");
+			videoUrl = "https://www.youtube.com/watch?v=HOdbzGCI5ME");
 
 		JSONDepot.connectSite(
 			depotName = "Test Depot Name",
@@ -168,7 +168,7 @@ definition {
 		VideoShortcut.addCP(
 			tagNameList = "depot",
 			videoShortcutTitle = "Test Vimeo Video",
-			videoURL = "https://vimeo.com/483035084");
+			videoUrl = "https://vimeo.com/483035084");
 
 		JSONDepot.connectSite(
 			depotName = "Test Depot Name",
@@ -199,7 +199,7 @@ definition {
 
 		VideoShortcut.addCP(
 			videoShortcutTitle = "Test YouTube Video",
-			videoURL = "https://www.youtube.com/watch?v=HOdbzGCI5ME");
+			videoUrl = "https://www.youtube.com/watch?v=HOdbzGCI5ME");
 
 		JSONDepot.connectSite(
 			depotName = "Test Depot Name",
@@ -207,7 +207,7 @@ definition {
 
 		JSONDepot.disconnectSite(groupName = "Site Name");
 
-		BlogsNavigator.openToAddEntry(siteURLKey = "site-name");
+		BlogsNavigator.openToAddEntry(siteUrlKey = "site-name");
 
 		BlogsEntry.addTitle(entryTitle = "Blogs Entry Title");
 
@@ -237,13 +237,13 @@ definition {
 
 		VideoShortcut.addCP(
 			videoShortcutTitle = "Test YouTube Video",
-			videoURL = "https://www.youtube.com/watch?v=HOdbzGCI5ME");
+			videoUrl = "https://www.youtube.com/watch?v=HOdbzGCI5ME");
 
 		JSONDepot.connectSite(
 			depotName = "Test Depot Name",
 			groupName = "Site Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
 
 		WebContentNavigator.gotoAddCP();
 

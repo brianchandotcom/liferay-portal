@@ -44,7 +44,7 @@ definition {
 		Type(
 			key_text = "URL",
 			locator1 = "TextInput#ANY",
-			value1 = "${entryExternalURL}");
+			value1 = "${entryExternalUrl}");
 
 		Click(locator1 = "CKEditor#OK_BUTTON");
 	}
@@ -59,7 +59,7 @@ definition {
 		SelectFrame(value1 = "relative=top");
 
 		CKEditor.addEntryExternalURL(
-			entryExternalURL = "${entryExternalURL}",
+			entryExternalUrl = "${entryExternalUrl}",
 			fieldLabel = "${fieldLabel}");
 
 		SelectFrame(value1 = "relative=top");
@@ -84,9 +84,9 @@ definition {
 
 		SelectFieldText(locator1 = "CKEditor#BODY");
 
-		var windowID = selenium.getTitle();
+		var windowId = selenium.getTitle();
 
-		SelectWindow(locator1 = "title=${windowID}");
+		SelectWindow(locator1 = "title=${windowId}");
 
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
@@ -120,7 +120,7 @@ definition {
 			AssertTextEquals(
 				key_text = "URL",
 				locator1 = "TextInput#ANY",
-				value1 = "${entryExternalURL}");
+				value1 = "${entryExternalUrl}");
 		}
 
 		Click(locator1 = "CKEditor#OK_BUTTON");

@@ -36,7 +36,7 @@ definition {
 			categoryName = "MB Category Name",
 			userEmailAddress = "test@liferay.com");
 
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteUrlKey = "guest");
 
 		MessageboardsCategory.gotoCP(categoryName = "MB Category Name");
 
@@ -58,7 +58,7 @@ definition {
 
 		Publications.viewPublicationPublished(publicationName = "Publication Name");
 
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteUrlKey = "guest");
 
 		MessageboardsCategory.gotoCP(categoryName = "MB Category Name");
 
@@ -182,7 +182,7 @@ definition {
 
 		Publications.viewPublicationPublished(publicationName = "Publication Name");
 
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteUrlKey = "guest");
 
 		MessageboardsThread.viewCP(
 			replyCount = "1",
@@ -298,7 +298,7 @@ definition {
 
 		JSONPublications.selectPublication(publicationName = "Publication Name 1");
 
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteUrlKey = "guest");
 
 		MessageboardsThread.editCP(
 			threadBodyEdit = "MB Thread Message Body Edit",
@@ -314,7 +314,7 @@ definition {
 			groupName = "Guest",
 			threadSubject = "MB Thread Message Subject");
 
-		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
+		RecycleBin.openRecycleBinAdmin(siteUrlKey = "guest");
 
 		RecycleBin.deleteCP(
 			assetName = "MB Thread Message Subject",
@@ -326,7 +326,7 @@ definition {
 
 		Publications.viewPublicationPublished(publicationName = "Publication Name 1");
 
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteUrlKey = "guest");
 
 		MessageboardsThread.viewCP(
 			replyCount = "0",
@@ -336,7 +336,7 @@ definition {
 
 		JSONPublications.selectPublication(publicationName = "Publication Name 2");
 
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteUrlKey = "guest");
 
 		MessageboardsThread.viewDefaultCP(threadSubject = "MB Thread Message Subject");
 
@@ -364,7 +364,7 @@ definition {
 
 		Publications.publishPublication(publicationName = "Publication Name 2");
 
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteUrlKey = "guest");
 
 		MessageboardsThread.viewCP(
 			replyCount = "0",

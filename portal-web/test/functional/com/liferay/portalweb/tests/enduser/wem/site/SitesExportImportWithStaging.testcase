@@ -28,13 +28,13 @@ definition {
 		}
 
 		task ("Import test fragments from dependencies folder to the first site") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name-1-staging");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "test-site-name-1-staging");
 
 			FragmentsAdmin.importCollectionFromDependenciesFolder(collectionZipFile = "fragment-collection.zip");
 		}
 
 		task ("Add a page template collection and content page template to the first site") {
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name-1-staging");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteUrlKey = "test-site-name-1-staging");
 
 			PageTemplatesAdmin.addCollection(collectionName = "Page Template Collection");
 
@@ -50,7 +50,7 @@ definition {
 		}
 
 		task ("Add a content page from the page template to the first site") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name-1-staging");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name-1-staging");
 
 			ContentPages.addPage(
 				collectionName = "Page Template Collection",
@@ -63,7 +63,7 @@ definition {
 		}
 
 		task ("Add a content page with a Title fragment to the first site") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name-1-staging");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name-1-staging");
 
 			ContentPages.addPage(pageName = "Test Regular Content Page");
 
@@ -77,7 +77,7 @@ definition {
 		}
 
 		task ("Add a navigation menu to the first site") {
-			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name-1-staging");
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteUrlKey = "test-site-name-1-staging");
 
 			NavigationMenusAdmin.addMenu(menuName = "Test Navigation Menu Name");
 		}
@@ -108,7 +108,7 @@ definition {
 		}
 
 		task ("Add a display page to the first site") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name-1-staging");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name-1-staging");
 
 			DisplayPageTemplatesAdmin.addDisplayPage(
 				contentType = "Web Content Article",
@@ -150,7 +150,7 @@ definition {
 		}
 
 		task ("Add a web content article that uses the display page to the first site") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name-1-staging");
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name-1-staging");
 
 			WebContentNavigator.gotoAddCP();
 
@@ -166,7 +166,7 @@ definition {
 		}
 
 		task ("Publish the first site to live") {
-			Staging.openStagingAdmin(siteURLKey = "test-site-name-1-staging");
+			Staging.openStagingAdmin(siteUrlKey = "test-site-name-1-staging");
 
 			Staging.publishCustomPublication();
 		}
@@ -210,7 +210,7 @@ definition {
 		}
 
 		task ("Assert the fragments from the first site survived the import") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name-2-staging");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "test-site-name-2-staging");
 
 			FragmentsAdmin.viewEntryPresent(entry = "Content");
 
@@ -244,7 +244,7 @@ definition {
 		}
 
 		task ("Assert the content page template survived the import") {
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name-2-staging");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteUrlKey = "test-site-name-2-staging");
 
 			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");
 
@@ -296,7 +296,7 @@ definition {
 		}
 
 		task ("Assert the navigation menu survived the import") {
-			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name-2-staging");
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteUrlKey = "test-site-name-2-staging");
 
 			AssertVisible(
 				key_rowEntry = "Test Navigation Menu Name",
@@ -304,7 +304,7 @@ definition {
 		}
 
 		task ("Assert the display page survived the import") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name-2-staging");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name-2-staging");
 
 			DisplayPageTemplatesAdmin.viewDisplayPagePresent(displayPageName = "Display Page Name");
 		}

@@ -21,10 +21,10 @@ definition {
 			}
 		}
 
-		if (isSet(selectADTType)) {
+		if (isSet(selectAdtType)) {
 			Select(
 				locator1 = "Select#DISPLAY_TEMPLATE",
-				value1 = "${selectADTType}");
+				value1 = "${selectAdtType}");
 		}
 
 		Pause(locator1 = "3000");
@@ -64,7 +64,7 @@ definition {
 	}
 
 	macro viewADTApplied {
-		var key_breadcrumbADTType = "${breadcrumbADTType}";
+		var key_breadcrumbAdtType = "${breadcrumbAdtType}";
 
 		AssertElementPresent(locator1 = "BreadcrumbPortlet#BREADCRUMB_ADT");
 	}

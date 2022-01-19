@@ -14,7 +14,7 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Site Name");
 
-		Staging.openStagingAdmin(siteURLKey = "test-site-name");
+		Staging.openStagingAdmin(siteUrlKey = "test-site-name");
 
 		Staging.activateStagingCP(siteName = "Test Site Name");
 	}
@@ -138,7 +138,7 @@ definition {
 		}
 
 		task ("Enable Local Live in Site Name") {
-			Staging.openStagingAdmin(siteURLKey = "site-name");
+			Staging.openStagingAdmin(siteUrlKey = "site-name");
 
 			Staging.activateStagingCP(siteName = "Site Name");
 		}

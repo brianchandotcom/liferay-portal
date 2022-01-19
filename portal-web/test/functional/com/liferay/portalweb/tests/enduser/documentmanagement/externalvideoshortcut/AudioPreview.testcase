@@ -55,7 +55,7 @@ definition {
 		DMNavigator.openToEntryInAdmin(
 			dmDocumentTitle = "DM Audio Title In Site",
 			groupName = "Site Name",
-			siteURLKey = "site-name");
+			siteUrlKey = "site-name");
 
 		DMDocument.viewAudioPreviewGeneratingInfo(disabled = "true");
 	}
@@ -69,7 +69,7 @@ definition {
 		DMNavigator.openToEntryInAdmin(
 			dmDocumentTitle = "DM Audio Title In Site",
 			groupName = "Site Name",
-			siteURLKey = "site-name");
+			siteUrlKey = "site-name");
 
 		DMDocument.viewAudioPreviewGeneratingInfo();
 
@@ -86,7 +86,7 @@ definition {
 		DMNavigator.openToEntryInAdmin(
 			dmDocumentTitle = "DM Audio Title In Site",
 			groupName = "Site Name",
-			siteURLKey = "site-name");
+			siteUrlKey = "site-name");
 
 		DMDocument.viewAudioPreview(audioName = "Document_1.mp3");
 	}

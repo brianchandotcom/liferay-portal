@@ -82,7 +82,7 @@ definition {
 			locator1 = "build-test.xml",
 			value1 = "delete-static-impl-license-jar -DliferayHome=${liferayHome}");
 
-		Portlet.startServer(keepOSGiState = "false");
+		Portlet.startServer(keepOsGiState = "false");
 
 		User.firstLoginPG();
 

@@ -16,7 +16,7 @@ definition {
 			groupName = "Test Site Name",
 			layoutName = "Staging Test Page");
 
-		Staging.openStagingAdmin(siteURLKey = "test-site-name");
+		Staging.openStagingAdmin(siteUrlKey = "test-site-name");
 
 		Staging.activateStagingCP(siteName = "Test Site Name");
 	}

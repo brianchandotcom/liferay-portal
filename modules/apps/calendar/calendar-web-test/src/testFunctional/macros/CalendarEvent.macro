@@ -88,7 +88,7 @@ definition {
 		if ("${eventType}" == "Regular") {
 			CalendarEvent.addRegular(
 				calendarName = "${calendarName}",
-				defaultURL = "${defaultURL}",
+				defaultUrl = "${defaultUrl}",
 				duration1 = "${duration1}",
 				duration2 = "${duration2}",
 				eventTitle = "${eventTitle}",
@@ -102,14 +102,14 @@ definition {
 				reminders = "${reminders}",
 				resourcesAvailability = "${resourcesAvailability}",
 				siteName = "${siteName}",
-				siteURL = "${siteURL}",
+				siteUrl = "${siteUrl}",
 				specificOptionSetValue = "${specificOptionSetValue}",
 				workflow = "${workflow}");
 		}
 		else if ("${eventType}" == "All Day") {
 			CalendarEvent.addAllDay(
 				calendarName = "${calendarName}",
-				defaultURL = "${defaultURL}",
+				defaultUrl = "${defaultUrl}",
 				duration1 = "${duration1}",
 				duration2 = "${duration2}",
 				eventTitle = "${eventTitle}",
@@ -123,14 +123,14 @@ definition {
 				reminders = "${reminders}",
 				resourcesAvailability = "${resourcesAvailability}",
 				siteName = "${siteName}",
-				siteURL = "${siteURL}",
+				siteUrl = "${siteUrl}",
 				specificOptionSetValue = "${specificOptionSetValue}",
 				workflow = "${workflow}");
 		}
 		else if ("${eventType}" == "Repeating") {
 			CalendarEvent.addRepeating(
 				calendarName = "${calendarName}",
-				defaultURL = "${defaultURL}",
+				defaultUrl = "${defaultUrl}",
 				duration1 = "${duration1}",
 				duration2 = "${duration2}",
 				eventTitle = "${eventTitle}",
@@ -146,7 +146,7 @@ definition {
 				reminders = "${reminders}",
 				resourcesAvailability = "${resourcesAvailability}",
 				siteName = "${siteName}",
-				siteURL = "${siteURL}",
+				siteUrl = "${siteUrl}",
 				specificOptionSetValue = "${specificOptionSetValue}",
 				workflow = "${workflow}");
 		}
@@ -215,7 +215,7 @@ definition {
 				pageName = "${pageName}",
 				siteName = "${siteName}");
 		}
-		else if ("${siteURL}" == "true") {
+		else if ("${siteUrl}" == "true") {
 			Navigator.gotoSitePage(
 				pageName = "${pageName}",
 				siteName = "${siteName}");
@@ -355,7 +355,7 @@ definition {
 				pageName = "${pageName}",
 				siteName = "${siteName}");
 		}
-		else if ("${siteURL}" == "true") {
+		else if ("${siteUrl}" == "true") {
 			Navigator.gotoSitePage(
 				pageName = "${pageName}",
 				siteName = "${siteName}");
@@ -452,7 +452,7 @@ definition {
 				pageName = "${pageName}",
 				siteName = "${siteName}");
 		}
-		else if ("${siteURL}" == "true") {
+		else if ("${siteUrl}" == "true") {
 			Navigator.gotoSitePage(
 				pageName = "${pageName}",
 				siteName = "${siteName}");

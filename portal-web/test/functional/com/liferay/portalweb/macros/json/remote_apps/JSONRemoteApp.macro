@@ -1,34 +1,34 @@
 definition {
 
 	macro addCustomElementRemoteAppAllFields {
-		Variables.assertDefined(parameterList = "${customElementCSSURL},${customElementHTMLName},${customElementName},${customElementProperties},${customElementURL}");
+		Variables.assertDefined(parameterList = "${customElementCssurl},${customElementHtmlName},${customElementName},${customElementProperties},${customElementUrl}");
 
 		var response = JSONRemoteAppAPI._addCustomElementRemoteAppAllFields(
-			customElementCSSURL = "${customElementCSSURL}",
-			customElementHTMLName = "${customElementHTMLName}",
+			customElementCssurl = "${customElementCssurl}",
+			customElementHtmlName = "${customElementHtmlName}",
 			customElementName = "${customElementName}",
 			customElementProperties = "${customElementProperties}",
-			customElementURL = "${customElementURL}");
+			customElementUrl = "${customElementUrl}");
 
 		return "{response}";
 	}
 
 	macro addCustomElementRemoteAppEntry {
-		Variables.assertDefined(parameterList = "${customElementName},${customElementHTMLName},${customElementURL}");
+		Variables.assertDefined(parameterList = "${customElementName},${customElementHtmlName},${customElementUrl}");
 
 		var response = JSONRemoteAppAPI._addCustomElementRemoteAppEntry(
-			customElementHTMLName = "${customElementHTMLName}",
+			customElementHtmlName = "${customElementHtmlName}",
 			customElementName = "${customElementName}",
-			customElementURL = "${customElementURL}");
+			customElementUrl = "${customElementUrl}");
 
 		return "{response}";
 	}
 
 	macro addIFrameRemoteAppEntry {
-		Variables.assertDefined(parameterList = "${iFrameURL},${name}");
+		Variables.assertDefined(parameterList = "${iFrameUrl},${name}");
 
 		var response = JSONRemoteAppAPI._addIFrameRemoteAppEntry(
-			iFrameURL = "${iFrameURL}",
+			iFrameUrl = "${iFrameUrl}",
 			name = "${name}");
 
 		return "${response}";

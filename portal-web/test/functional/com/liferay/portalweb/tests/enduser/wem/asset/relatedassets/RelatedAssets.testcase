@@ -187,7 +187,7 @@ definition {
 		}
 
 		task ("Add existing related assets to Web Content 2") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name-staging");
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title 2");
 
@@ -288,7 +288,7 @@ definition {
 		}
 
 		task ("Assert added category is shown in web content") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name-staging");
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title 2");
 
@@ -298,7 +298,7 @@ definition {
 		}
 
 		task ("Add Web Content 1 as related asset for Web Contetn 2") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name-staging");
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title 2");
 
@@ -309,7 +309,7 @@ definition {
 		}
 
 		task ("Add a private page with an Asset Publisher that shows Web Content 1") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "site-name-staging");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "site-name-staging");
 
 			PagesAdmin.addPrivatePage(pageName = "Private Page Name");
 
@@ -389,7 +389,7 @@ definition {
 		}
 
 		task ("Add a blogs entry and select the web content as related assets") {
-			BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
+			BlogsNavigator.openBlogsAdmin(siteUrlKey = "site-name");
 
 			BlogsNavigator.gotoAddEntry();
 

@@ -60,7 +60,7 @@ definition {
 			mimeType = "text/plain",
 			sourceFileName = "Document_1.txt");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
@@ -121,14 +121,14 @@ definition {
 			mimeType = "application/msword",
 			sourceFileName = "Document_1.doc");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
 
 		for (var dmDocumentTitle : list "Document_1.docx,Document_1.jpeg") {
-			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+			DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 			DMDocument.addCP(
 				dmDocumentFile = "${dmDocumentTitle}",
@@ -156,7 +156,7 @@ definition {
 
 		SystemSettings.saveConfiguration();
 
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+		BlogsNavigator.openBlogsAdmin(siteUrlKey = "guest");
 
 		BlogsNavigator.gotoAddEntry();
 
@@ -169,7 +169,7 @@ definition {
 
 		PortletEntry.publish();
 
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+		BlogsNavigator.openBlogsAdmin(siteUrlKey = "guest");
 
 		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry Title");
 
@@ -191,17 +191,17 @@ definition {
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_1.jpg");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		LAR.exportPortlet(larFileName = "DM_Test_DB_Store.lar");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name");
 
 		LAR.importPortlet(larFileName = "DM_Test_DB_Store.lar");
 
 		Navigator.openURL();
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
 
@@ -242,7 +242,7 @@ definition {
 			mimeType = "audio/x-mpeg",
 			sourceFileName = "Document_1.mp3");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		LAR.exportPortlet(larFileName = "DM.portlet.lar");
 
@@ -250,7 +250,7 @@ definition {
 
 		VerifyElementPresent(locator1 = "Message#SUCCESS");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		LAR._gotoExportImport();
 
@@ -267,7 +267,7 @@ definition {
 	test ValidateFileNameRestrictions {
 		property portal.acceptance = "true";
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
@@ -276,7 +276,7 @@ definition {
 			dmDocumentTitle = "DM Document Title",
 			emptyFileNameRestriction = "true");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
@@ -285,7 +285,7 @@ definition {
 			dmDocumentTitle = "DM Document Title",
 			emptyFileNameRestriction = "true");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
@@ -294,7 +294,7 @@ definition {
 			dmDocumentTitle = "DM Document Title",
 			validateFileNameRestriction = "true");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
@@ -303,7 +303,7 @@ definition {
 			dmDocumentTitle = "DM Document Title",
 			validateFileNameRestriction = "true");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
@@ -339,7 +339,7 @@ definition {
 			layoutName = "Documents and Media Page - Global",
 			widgetName = "Documents and Media");
 
-		PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "global");
+		PageTemplatesAdmin.openPageTemplatesAdmin(siteUrlKey = "global");
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -355,7 +355,7 @@ definition {
 			dmFolderDescription = "DM SubFolder Description",
 			dmFolderName = "DM SubFolder Name");
 
-		PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "global");
+		PageTemplatesAdmin.openPageTemplatesAdmin(siteUrlKey = "global");
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -428,7 +428,7 @@ definition {
 			siteName = "DM Site Name",
 			siteTemplateName = "Site Template Name");
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "DM Site Name");
+		PagesAdmin.openPagesAdmin(siteUrlKey = "DM Site Name");
 
 		Navigator.gotoSitePage(
 			pageName = "DM Site Page Name - Global",
@@ -601,7 +601,7 @@ definition {
 				sourceFileName = "${documentName}");
 		}
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		DMFolder.gotoEntry(dmFolderName = "DM Folder Name");
 
@@ -613,7 +613,7 @@ definition {
 			dmFolderName = "Home",
 			selectAll = "true");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		Pagination.changePagination(itemsPerPage = "20");
 

@@ -39,7 +39,7 @@ definition {
 	@priority = "4"
 	test ApplyWidgetTemplateToNavigationMenuOnContentPage {
 		task ("Add a content page") {
-			Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
+			Staging.openStagingAdmin(siteUrlKey = "test-site-name-staging");
 
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name (Staging)",

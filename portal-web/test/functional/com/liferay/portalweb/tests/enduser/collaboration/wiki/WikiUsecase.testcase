@@ -71,7 +71,7 @@ definition {
 			layoutName = "Research Projects",
 			widgetName = "Wiki");
 
-		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
+		WikiNavigator.openWikiAdmin(siteUrlKey = "guest");
 
 		LAR.importPortlet(
 			larFileName = "research-projects-update-node.lar",
@@ -79,7 +79,7 @@ definition {
 			uploadFrom = "dependencies");
 
 		WikiNavigator.openToWikiPage(
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			wikiNodeName = "Organic Research Projects",
 			wikiPageTitle = "FrontPage");
 
@@ -96,7 +96,7 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanSearchOutPageByAttachmentName {
-		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
+		WikiNavigator.openWikiAdmin(siteUrlKey = "guest");
 
 		JSONWiki.updateWikiPage(
 			groupName = "Guest",
@@ -125,7 +125,7 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanSearchOutPageByComment {
-		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
+		WikiNavigator.openWikiAdmin(siteUrlKey = "guest");
 
 		JSONWiki.updateWikiPage(
 			groupName = "Guest",
@@ -141,8 +141,8 @@ definition {
 			wikiParentPageName = "FrontPage");
 
 		WikiNavigator.openToWikiPage(
-			layoutURLKey = "wiki-test-page",
-			siteURLKey = "guest",
+			layoutUrlKey = "wiki-test-page",
+			siteUrlKey = "guest",
 			wikiNodeName = "Main",
 			wikiPageTitle = "Wiki FrontPage Child Page Title");
 
@@ -169,25 +169,25 @@ definition {
 			widgetName = "Breadcrumb");
 
 		WikiNavigator.gotoWidgetSpecificTabByURL(
-			layoutURLKey = "wiki-test-page",
-			siteURLKey = "guest",
-			tabURLKey = "recent_changes",
+			layoutUrlKey = "wiki-test-page",
+			siteUrlKey = "guest",
+			tabUrlKey = "recent_changes",
 			wikiNodeName = "Main");
 
 		Breadcrumb.viewPG(breadcrumbListVisible = "Wiki Test Page,Recent Changes");
 
 		WikiNavigator.gotoWidgetSpecificTabByURL(
-			layoutURLKey = "wiki-test-page",
-			siteURLKey = "guest",
-			tabURLKey = "all_pages",
+			layoutUrlKey = "wiki-test-page",
+			siteUrlKey = "guest",
+			tabUrlKey = "all_pages",
 			wikiNodeName = "Main");
 
 		Breadcrumb.viewPG(breadcrumbListVisible = "Wiki Test Page,All Pages");
 
 		WikiNavigator.gotoWidgetSpecificTabByURL(
-			layoutURLKey = "wiki-test-page",
-			siteURLKey = "guest",
-			tabURLKey = "draft_pages",
+			layoutUrlKey = "wiki-test-page",
+			siteUrlKey = "guest",
+			tabUrlKey = "draft_pages",
 			wikiNodeName = "Main");
 
 		Breadcrumb.viewPG(breadcrumbListVisible = "Wiki Test Page,Draft Pages");
@@ -199,13 +199,13 @@ definition {
 	test CanViewConfiguredEmailContent {
 		property portal.acceptance = "false";
 
-		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
+		WikiNavigator.openWikiAdmin(siteUrlKey = "guest");
 
 		WikiPortlet.configureEmailCP(
 			bodyContent = "[$TO_NAME$], [$PAGE_CONTENT$] This is an edited wiki email. [$FROM_NAME$]",
 			pageAddedEmail = "true");
 
-		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
+		WikiNavigator.openWikiAdmin(siteUrlKey = "guest");
 
 		WikiPortlet.viewEmailCP(
 			bodyContent = "[$TO_NAME$], [$PAGE_CONTENT$] This is an edited wiki email. [$FROM_NAME$]",
@@ -219,8 +219,8 @@ definition {
 		property portal.acceptance = "false";
 
 		WikiNavigator.openToWikiPage(
-			layoutURLKey = "wiki-test-page",
-			siteURLKey = "guest",
+			layoutUrlKey = "wiki-test-page",
+			siteUrlKey = "guest",
 			wikiNodeName = "Main",
 			wikiPageTitle = "FrontPage");
 

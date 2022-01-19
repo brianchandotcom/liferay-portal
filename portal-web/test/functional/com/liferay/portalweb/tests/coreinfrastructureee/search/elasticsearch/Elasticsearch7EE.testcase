@@ -55,12 +55,12 @@ definition {
 
 		SearchPortlets.searchEmbedded(searchTerm = "alien");
 
-		var assetEntryTitleListNoLTR = "";
+		var assetEntryTitleListNoLtr = "";
 		var iterator = "1";
 
 		while ("${iterator}" != "21" && (maxIterations = "20")) {
 			var assetEntryTitle = selenium.getText("//div[contains(@id,'SearchResultsPortlet')]//li[${iterator}]/div//a");
-			var assetEntryTitleListNoLTR = StringUtil.add("${assetEntryTitleListNoLTR}", "${assetEntryTitle}");
+			var assetEntryTitleListNoLtr = StringUtil.add("${assetEntryTitleListNoLtr}", "${assetEntryTitle}");
 			var iterator = ${iterator} + 1;
 		}
 
@@ -86,21 +86,21 @@ definition {
 
 		SearchPortlets.searchEmbedded(searchTerm = "alien");
 
-		var assetEntryTitleListLTR = "";
+		var assetEntryTitleListLtr = "";
 		var iterator = "1";
 
 		while ("${iterator}" != "21" && (maxIterations = "20")) {
 			var assetEntryTitle = selenium.getText("//div[contains(@id,'SearchResultsPortlet')]//li[${iterator}]/div//a");
-			var assetEntryTitleListLTR = StringUtil.add("${assetEntryTitleListLTR}", "${assetEntryTitle}");
+			var assetEntryTitleListLtr = StringUtil.add("${assetEntryTitleListLtr}", "${assetEntryTitle}");
 			var iterator = ${iterator} + 1;
 		}
 
-		if ("${assetEntryTitleListNoLTR}" != "${assetEntryTitleListLTR}") {
+		if ("${assetEntryTitleListNoLtr}" != "${assetEntryTitleListLtr}") {
 			echo("Assertion succeeded: Search result rankings were different with and without LTR");
 
-			echo("Rankings without LTR: ${assetEntryTitleListNoLTR}");
+			echo("Rankings without LTR: ${assetEntryTitleListNoLtr}");
 
-			echo("Rankings with LTR: ${assetEntryTitleListLTR}");
+			echo("Rankings with LTR: ${assetEntryTitleListLtr}");
 		}
 		else {
 			fail("Assertion failed: Search result rankings were the same with and without LTR");
@@ -171,7 +171,7 @@ definition {
 
 		User.firstLoginUI(
 			password = "test",
-			specificURL = "http://localhost:9080",
+			specificUrl = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
 		Clustering.shutdownSpecificServer(nodePort = "8080");

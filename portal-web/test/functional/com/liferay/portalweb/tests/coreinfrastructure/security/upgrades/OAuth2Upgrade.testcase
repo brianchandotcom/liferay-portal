@@ -24,11 +24,11 @@ definition {
 			User.firstLoginPG(
 				password = "test",
 				userEmailAddress = "test@www.able.com",
-				virtualHostsURL = "http://www.able.com:8080");
+				virtualHostsUrl = "http://www.able.com:8080");
 		}
 
 		task ("View OAuth2 application information") {
-			OAuth2.openOAuth2Admin(baseURL = "http://www.able.com:8080");
+			OAuth2.openOAuth2Admin(baseUrl = "http://www.able.com:8080");
 
 			OAuth2.viewApplicationInTable(
 				applicationName = "OAuth Instance Application",
@@ -36,13 +36,13 @@ definition {
 
 			OAuth2.viewApplication(
 				applicationName = "OAuth Instance Application",
-				callbackURI = "http://www.liferay.com",
+				callbackUri = "http://www.liferay.com",
 				checkboxCheckList = "Authorization Code,Client Credentials,Refresh Token,Resource Owner Password Credentials",
 				clientProfile = "Web Application",
 				clientSecret = "${generatedClientSecret}",
 				description = "Registering a new application",
-				privacyPolicyURL = "http://www.liferay.com",
-				websiteURL = "http://www.liferay.com");
+				privacyPolicyUrl = "http://www.liferay.com",
+				websiteUrl = "http://www.liferay.com");
 		}
 	}
 
@@ -57,11 +57,11 @@ definition {
 			User.firstLoginPG(
 				password = "test",
 				userEmailAddress = "test@www.able.com",
-				virtualHostsURL = "http://www.able.com:8080");
+				virtualHostsUrl = "http://www.able.com:8080");
 		}
 
 		task ("View OAuth2 application information") {
-			OAuth2.openOAuth2Admin(baseURL = "http://www.able.com:8080");
+			OAuth2.openOAuth2Admin(baseUrl = "http://www.able.com:8080");
 
 			OAuth2.viewApplicationInTable(
 				applicationName = "OAuth Instance Application",
@@ -69,13 +69,13 @@ definition {
 
 			OAuth2.viewApplication(
 				applicationName = "OAuth Instance Application",
-				callbackURI = "http://www.liferay.com",
+				callbackUri = "http://www.liferay.com",
 				checkboxCheckList = "Authorization Code,Client Credentials,Refresh Token,Resource Owner Password Credentials",
 				clientProfile = "Web Application",
 				clientSecret = "${generatedClientSecret}",
 				description = "Registering a new application",
-				privacyPolicyURL = "http://www.liferay.com",
-				websiteURL = "http://www.liferay.com");
+				privacyPolicyUrl = "http://www.liferay.com",
+				websiteUrl = "http://www.liferay.com");
 		}
 	}
 
@@ -89,11 +89,11 @@ definition {
 			User.firstLoginPG(
 				password = "test",
 				userEmailAddress = "test@www.able.com",
-				virtualHostsURL = "http://www.able.com:8080");
+				virtualHostsUrl = "http://www.able.com:8080");
 		}
 
 		task ("View OAuth2 application information") {
-			OAuth2.openOAuth2Admin(baseURL = "http://www.able.com:8080");
+			OAuth2.openOAuth2Admin(baseUrl = "http://www.able.com:8080");
 
 			OAuth2.viewApplicationInTable(
 				applicationName = "OAuth Instance Application",
@@ -101,13 +101,13 @@ definition {
 
 			OAuth2.viewApplication(
 				applicationName = "OAuth Instance Application",
-				callbackURI = "http://www.liferay.com",
+				callbackUri = "http://www.liferay.com",
 				checkboxCheckList = "Authorization Code,Client Credentials,Refresh Token,Resource Owner Password Credentials",
 				clientProfile = "Web Application",
 				clientSecret = "${generatedClientSecret}",
 				description = "Registering a new application",
-				privacyPolicyURL = "http://www.liferay.com",
-				websiteURL = "http://www.liferay.com");
+				privacyPolicyUrl = "http://www.liferay.com",
+				websiteUrl = "http://www.liferay.com");
 		}
 	}
 
@@ -121,11 +121,11 @@ definition {
 			User.firstLoginPG(
 				password = "test",
 				userEmailAddress = "test@www.able.com",
-				virtualHostsURL = "http://www.able.com:8080");
+				virtualHostsUrl = "http://www.able.com:8080");
 		}
 
 		task ("View OAuth2 application information") {
-			OAuth2.openOAuth2Admin(baseURL = "http://www.able.com:8080");
+			OAuth2.openOAuth2Admin(baseUrl = "http://www.able.com:8080");
 
 			OAuth2.viewApplicationInTable(
 				applicationName = "OAuth Instance Application",
@@ -133,13 +133,13 @@ definition {
 
 			OAuth2.viewApplication(
 				applicationName = "OAuth Instance Application",
-				callbackURI = "http://www.liferay.com",
+				callbackUri = "http://www.liferay.com",
 				checkboxCheckList = "Authorization Code,Client Credentials,Refresh Token,Resource Owner Password Credentials",
 				clientProfile = "Web Application",
 				clientSecret = "${generatedClientSecret}",
 				description = "Registering a new application",
-				privacyPolicyURL = "http://www.liferay.com",
-				websiteURL = "http://www.liferay.com");
+				privacyPolicyUrl = "http://www.liferay.com",
+				websiteUrl = "http://www.liferay.com");
 		}
 	}
 
@@ -159,13 +159,13 @@ definition {
 
 			OAuth2.viewApplication(
 				applicationName = "OAuth Application",
-				callbackURI = "http://www.liferay.com",
+				callbackUri = "http://www.liferay.com",
 				checkboxCheckList = "Authorization Code,Client Credentials,Refresh Token,Resource Owner Password Credentials",
 				clientProfile = "Web Application",
 				clientSecret = "${generatedClientSecret}",
 				description = "Registering a new application",
-				privacyPolicyURL = "http://www.liferay.com",
-				websiteURL = "http://www.liferay.com");
+				privacyPolicyUrl = "http://www.liferay.com",
+				websiteUrl = "http://www.liferay.com");
 		}
 	}
 
@@ -185,13 +185,13 @@ definition {
 
 			OAuth2.viewApplication(
 				applicationName = "OAuth Application",
-				callbackURI = "http://www.liferay.com",
+				callbackUri = "http://www.liferay.com",
 				checkboxCheckList = "Authorization Code,Client Credentials,Refresh Token,Resource Owner Password Credentials",
 				clientProfile = "Web Application",
 				clientSecret = "${generatedClientSecret}",
 				description = "Registering a new application",
-				privacyPolicyURL = "http://www.liferay.com",
-				websiteURL = "http://www.liferay.com");
+				privacyPolicyUrl = "http://www.liferay.com",
+				websiteUrl = "http://www.liferay.com");
 		}
 	}
 
@@ -210,13 +210,13 @@ definition {
 
 			OAuth2.viewApplication(
 				applicationName = "OAuth Application",
-				callbackURI = "http://www.liferay.com",
+				callbackUri = "http://www.liferay.com",
 				checkboxCheckList = "Authorization Code,Client Credentials,Refresh Token,Resource Owner Password Credentials",
 				clientProfile = "Web Application",
 				clientSecret = "${generatedClientSecret}",
 				description = "Registering a new application",
-				privacyPolicyURL = "http://www.liferay.com",
-				websiteURL = "http://www.liferay.com");
+				privacyPolicyUrl = "http://www.liferay.com",
+				websiteUrl = "http://www.liferay.com");
 		}
 	}
 
@@ -235,13 +235,13 @@ definition {
 
 			OAuth2.viewApplication(
 				applicationName = "OAuth Application",
-				callbackURI = "http://www.liferay.com",
+				callbackUri = "http://www.liferay.com",
 				checkboxCheckList = "Authorization Code,Client Credentials,Refresh Token,Resource Owner Password Credentials",
 				clientProfile = "Web Application",
 				clientSecret = "${generatedClientSecret}",
 				description = "Registering a new application",
-				privacyPolicyURL = "http://www.liferay.com",
-				websiteURL = "http://www.liferay.com");
+				privacyPolicyUrl = "http://www.liferay.com",
+				websiteUrl = "http://www.liferay.com");
 		}
 	}
 

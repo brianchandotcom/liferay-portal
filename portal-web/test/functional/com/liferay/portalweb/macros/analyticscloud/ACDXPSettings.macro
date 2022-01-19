@@ -165,7 +165,7 @@ definition {
 	}
 
 	macro selectAvailableProperties {
-		var key_AvailablePropertyName = "${availablePropertyName}";
+		var key_availablePropertyName = "${availablePropertyName}";
 
 		Click(locator1 = "ACDXPSettings#AVAILABLE_PROPERTY_NAME");
 

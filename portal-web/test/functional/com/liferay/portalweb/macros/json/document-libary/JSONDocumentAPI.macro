@@ -13,7 +13,7 @@ definition {
 		}
 
 		var curl = '''
-			${portalURL}/api/jsonws/dlapp/get-folder \
+			${portalUrl}/api/jsonws/dlapp/get-folder \
 				-u test@liferay.com:test \
 				-d repositoryId=${repositoryId} \
 				-d parentFolderId=${parentFolderId} \
@@ -44,7 +44,7 @@ definition {
 			site = "${site}");
 
 		var curl = '''
-			${portalURL}/api/jsonws/dlfileentrytype/get-file-entry-types \
+			${portalUrl}/api/jsonws/dlfileentrytype/get-file-entry-types \
 				-u test@liferay.com:test \
 				-d groupIds=${groupId}
 		''';

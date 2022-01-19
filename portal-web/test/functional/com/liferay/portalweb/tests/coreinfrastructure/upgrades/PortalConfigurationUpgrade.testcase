@@ -7,9 +7,9 @@ definition {
 	property testray.main.component.name = "Upgrades User and System Management";
 
 	setUp {
-		var portalURL = PropsUtil.get("portal.url");
+		var portalUrl = PropsUtil.get("portal.url");
 
-		Navigator.openSpecificURL(url = "${portalURL}/web/test/home");
+		Navigator.openSpecificURL(url = "${portalUrl}/web/test/home");
 
 		if (IsElementNotPresent(locator1 = "TextInput#SCREEN_NAME")) {
 			AssertClick(
@@ -27,7 +27,7 @@ definition {
 
 		Button.click(button = "Sign In");
 
-		AssertLocation(value1 = "${portalURL}/web/test/home");
+		AssertLocation(value1 = "${portalUrl}/web/test/home");
 
 		SearchAdministration.executeReindex();
 	}

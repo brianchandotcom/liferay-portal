@@ -55,7 +55,7 @@ definition {
 		task ("Add a site and page basing on the created page template") {
 			JSONGroup.addGroup(groupName = "Site Name");
 
-			PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "site-name");
 
 			PagesAdmin.addPublicPage(
 				pageName = "Site Page",
@@ -87,7 +87,7 @@ definition {
 		}
 
 		task ("Disable inherit changes") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "site-name");
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Configure",
@@ -131,7 +131,7 @@ definition {
 		}
 
 		task ("Add a widget page template") {
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "site-name");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteUrlKey = "site-name");
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
@@ -174,7 +174,7 @@ definition {
 				layoutPageTemplateStatus = "Approved",
 				layoutPageTemplateType = "Widget Page Template");
 
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "site-name");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteUrlKey = "site-name");
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
@@ -190,7 +190,7 @@ definition {
 		}
 
 		task ("Add a page based on the widget page template") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "site-name");
 
 			PagesAdmin.addPublicPage(
 				collectionName = "Page Template Collection",
@@ -207,7 +207,7 @@ definition {
 		}
 
 		task ("Assert can not delete the widget page template") {
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "site-name");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteUrlKey = "site-name");
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
@@ -243,7 +243,7 @@ definition {
 		}
 
 		task ("View inactive page template doesn't display") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "site-name");
 
 			LexiconEntry.gotoAddMenuItem(menuItem = "Public Page");
 
@@ -265,7 +265,7 @@ definition {
 		}
 
 		task ("View active page template displays") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "site-name");
 
 			LexiconEntry.gotoAddMenuItem(menuItem = "Public Page");
 
@@ -322,7 +322,7 @@ definition {
 		}
 
 		task ("Delete the widget page template") {
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "site-name");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteUrlKey = "site-name");
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
@@ -416,7 +416,7 @@ definition {
 		}
 
 		task ("Edit the widget page template") {
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "site-name");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteUrlKey = "site-name");
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 

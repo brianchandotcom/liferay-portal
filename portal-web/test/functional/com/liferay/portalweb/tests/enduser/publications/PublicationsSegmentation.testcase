@@ -27,7 +27,7 @@ definition {
 	@description = "Assert we can publish a publication with an edited Segment."
 	@priority = "4"
 	test CanPublishEditedSegment {
-		Segmentation.openSegmentsAdmin(siteURLKey = "guest");
+		Segmentation.openSegmentsAdmin(siteUrlKey = "guest");
 
 		LexiconEntry.gotoAdd();
 
@@ -55,7 +55,7 @@ definition {
 
 		Publications.viewPublicationPublished(publicationName = "Publication Name");
 
-		Segmentation.openSegmentsAdmin(siteURLKey = "guest");
+		Segmentation.openSegmentsAdmin(siteUrlKey = "guest");
 
 		AssertElementPresent(
 			key_tableEntry = "Edited Segment Title",
@@ -91,7 +91,7 @@ definition {
 			layoutName = "Experience Content Page",
 			type = "content");
 
-		Segmentation.openSegmentsAdmin(siteURLKey = "guest");
+		Segmentation.openSegmentsAdmin(siteUrlKey = "guest");
 
 		LexiconEntry.gotoAdd();
 
@@ -150,7 +150,7 @@ definition {
 	@description = "Assert we can resolve conflicting Segment changes by discarding."
 	@priority = "4"
 	test CanResolveConflictingPublicationsByDiscarding {
-		Segmentation.openSegmentsAdmin(siteURLKey = "guest");
+		Segmentation.openSegmentsAdmin(siteUrlKey = "guest");
 
 		LexiconEntry.gotoAdd();
 

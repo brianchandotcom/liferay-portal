@@ -32,7 +32,7 @@ definition {
 			groupName = "Site Name",
 			layoutName = "Canonical URL Test Page");
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
+		PagesAdmin.openPagesAdmin(siteUrlKey = "site-name");
 
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "Configure",
@@ -60,7 +60,7 @@ definition {
 	test SetCustomURLAtPageLevel {
 		property test.name.skip.portal.instance = "CanonicalURL#SetCustomURLAtPageLevel";
 
-		var portalURL = PropsUtil.get("portal.url");
+		var portalUrl = PropsUtil.get("portal.url");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -72,7 +72,7 @@ definition {
 
 		Page.assertCanonicalURL(
 			pageName = "Canonical URL Test Page",
-			portalURL = "${portalURL}");
+			portalUrl = "${portalUrl}");
 
 		User.loginPG(
 			password = "test",
@@ -110,7 +110,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Canonical URL Test Page");
 
-		Page.assertCanonicalURL(customCanonicalURL = "http://mycustomizedurl.com/mydesiredurl");
+		Page.assertCanonicalURL(customCanonicalUrl = "http://mycustomizedurl.com/mydesiredurl");
 	}
 
 	@description = "This ensures that canonical URLs can be set for each active language during page creation."
@@ -118,11 +118,11 @@ definition {
 	test SetCustomURLAtPageLevelForEachActiveLanguage {
 		property test.name.skip.portal.instance = "CanonicalURL#SetCustomURLAtPageLevelForEachActiveLanguage";
 
-		var portalURL = PropsUtil.get("portal.url");
+		var portalUrl = PropsUtil.get("portal.url");
 
 		JSONGroup.addGroup(groupName = "Site Name");
 
-		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
+		Site.openSiteSettingsAdmin(siteUrlKey = "site-name");
 
 		Site.configureCurrentLanguagesCP(
 			currentSiteLanguages = "English (United States),Spanish (Spain),Chinese (China)",
@@ -132,7 +132,7 @@ definition {
 			groupName = "Site Name",
 			layoutName = "Test Page");
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
+		PagesAdmin.openPagesAdmin(siteUrlKey = "site-name");
 
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "Configure",
@@ -144,17 +144,17 @@ definition {
 
 		User.logoutPG();
 
-		Navigator.openSpecificURL(url = "${portalURL}/en/web/site-name/test-page");
+		Navigator.openSpecificURL(url = "${portalUrl}/en/web/site-name/test-page");
 
-		Page.assertCanonicalURL(customCanonicalURL = "localhost:8080/english-canonical-url");
+		Page.assertCanonicalURL(customCanonicalUrl = "localhost:8080/english-canonical-url");
 
-		Navigator.openSpecificURL(url = "${portalURL}/es/web/site-name/test-page");
+		Navigator.openSpecificURL(url = "${portalUrl}/es/web/site-name/test-page");
 
-		Page.assertCanonicalURL(customCanonicalURL = "localhost:8080/spain-canonical-url");
+		Page.assertCanonicalURL(customCanonicalUrl = "localhost:8080/spain-canonical-url");
 
-		Navigator.openSpecificURL(url = "${portalURL}/zh/web/site-name/test-page");
+		Navigator.openSpecificURL(url = "${portalUrl}/zh/web/site-name/test-page");
 
-		Page.assertCanonicalURL(customCanonicalURL = "localhost:8080/chinese-canonical-url");
+		Page.assertCanonicalURL(customCanonicalUrl = "localhost:8080/chinese-canonical-url");
 	}
 
 	@description = "This test covers LPS-122797. It ensures that the Canonical URL does not have a limit of 75 characters."
@@ -166,7 +166,7 @@ definition {
 			groupName = "Site Name",
 			layoutName = "Canonical URL Test Page");
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
+		PagesAdmin.openPagesAdmin(siteUrlKey = "site-name");
 
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "Configure",
@@ -193,11 +193,11 @@ definition {
 	test SetDefaultURLAtSystemLevel {
 		property test.name.skip.portal.instance = "CanonicalURL#SetDefaultURLAtSystemLevel";
 
-		var portalURL = PropsUtil.get("portal.url");
+		var portalUrl = PropsUtil.get("portal.url");
 
 		User.logoutPG();
 
-		Page.assertCanonicalURL(portalURL = "${portalURL}");
+		Page.assertCanonicalURL(portalUrl = "${portalUrl}");
 
 		User.loginPG(
 			password = "test",
@@ -218,28 +218,28 @@ definition {
 
 		User.logoutPG();
 
-		Navigator.openSpecificURL(url = "${portalURL}/es/");
+		Navigator.openSpecificURL(url = "${portalUrl}/es/");
 
-		Page.assertCanonicalURL(portalURL = "${portalURL}");
+		Page.assertCanonicalURL(portalUrl = "${portalUrl}");
 
 		Page.assertAlternateURL(
 			locale = "es",
-			portalURL = "${portalURL}");
+			portalUrl = "${portalUrl}");
 
 		Page.assertAlternateURL(
 			locale = "zh",
-			portalURL = "${portalURL}");
+			portalUrl = "${portalUrl}");
 	}
 
 	@priority = "5"
 	test SetLocalizedURLAtSystemLevel {
 		property test.name.skip.portal.instance = "CanonicalURL#SetLocalizedURLAtSystemLevel";
 
-		var portalURL = PropsUtil.get("portal.url");
+		var portalUrl = PropsUtil.get("portal.url");
 
 		User.logoutPG();
 
-		Page.assertCanonicalURL(portalURL = "${portalURL}");
+		Page.assertCanonicalURL(portalUrl = "${portalUrl}");
 
 		User.loginPG(
 			password = "test",
@@ -260,17 +260,17 @@ definition {
 
 		User.logoutPG();
 
-		Page.assertCanonicalURL(portalURL = "${portalURL}");
+		Page.assertCanonicalURL(portalUrl = "${portalUrl}");
 
-		Navigator.openSpecificURL(url = "${portalURL}/zh/");
+		Navigator.openSpecificURL(url = "${portalUrl}/zh/");
 
 		Page.assertCanonicalURL(
 			locale = "zh",
-			portalURL = "${portalURL}");
+			portalUrl = "${portalUrl}");
 
 		Page.assertAlternateURL(
 			locale = "es",
-			portalURL = "${portalURL}");
+			portalUrl = "${portalUrl}");
 	}
 
 	@description = "This test covers LPS-127840. It ensures that the Canonical URL has page name."
@@ -287,17 +287,17 @@ definition {
 
 		PagesAdmin.addPublicPage(pageName = "Page2");
 
-		Site.openSiteSettingsAdmin(siteURLKey = "guest");
+		Site.openSiteSettingsAdmin(siteUrlKey = "guest");
 
 		Site.addVirtualHostsURLCP(
-			publicPageVirtualHostURL = "www.able.com",
+			publicPageVirtualHostUrl = "www.able.com",
 			publicVirtualHosts = "true");
 
 		User.logoutPG();
 
 		Navigator.openSpecificURL(url = "http://www.able.com:8080/page2");
 
-		Page.assertCanonicalURL(customCanonicalURL = "http://www.able.com:8080/page2");
+		Page.assertCanonicalURL(customCanonicalUrl = "http://www.able.com:8080/page2");
 	}
 
 }

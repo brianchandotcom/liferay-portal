@@ -75,16 +75,16 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		for (var productSKU : list "${productSKUList}") {
+		for (var productSku : list "${productSkuList}") {
 			Check.checkToggleSwitch(
-				key_productSKU = "${productSKU}",
+				key_productSku = "${productSku}",
 				locator1 = "Checkbox#ADD_SHIPMENT_ITEMS_CHECKBOX");
 		}
 
 		Button.clickSubmitButton();
 
-		for (var productSKU : list "${productSKUList}") {
-			CommerceNavigator.gotoEntry(entryName = "${productSKU}");
+		for (var productSku : list "${productSkuList}") {
+			CommerceNavigator.gotoEntry(entryName = "${productSku}");
 
 			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
@@ -133,7 +133,7 @@ definition {
 	}
 
 	macro editOrderItemDetails {
-		CommerceNavigator.gotoEntry(entryName = "${orderItemSKU}");
+		CommerceNavigator.gotoEntry(entryName = "${orderItemSku}");
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
@@ -200,7 +200,7 @@ definition {
 
 	macro openOrderTypesAdmin {
 		Navigator.openWithAppendToBaseURL(
-			baseURL = "${baseURL}",
+			baseUrl = "${baseUrl}",
 			urlAppend = "group/control_panel/manage?p_p_id=com_liferay_commerce_order_web_internal_portlet_CommerceOrderTypePortlet");
 	}
 
@@ -238,9 +238,9 @@ definition {
 		}
 
 		AssertTextEquals(
-			key_productSKU = "${productSKU}",
+			key_productSku = "${productSku}",
 			locator1 = "CommerceOrders#ORDER_DETAILS_PRODUCT_SKU",
-			value1 = "${productSKU}");
+			value1 = "${productSku}");
 
 		AssertTextEquals(
 			key_productName = "${productName}",

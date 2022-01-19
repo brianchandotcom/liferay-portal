@@ -4,9 +4,9 @@ definition {
 	macro _convertToXML {
 		Variables.assertDefined(parameterList = "${content}");
 
-		var contentXML = '''<p>${content}</p> ''';
+		var contentXml = '''<p>${content}</p> ''';
 
-		return "${contentXML}";
+		return "${contentXml}";
 	}
 
 }

@@ -477,7 +477,7 @@ definition {
 			dmDocumentTypeFieldNames = "Text",
 			dmDocumentTypeName = "DM Document Type Name");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		DMFolder.configureWorkflowCP(
 			dmDocumentTypeName = "DM Document Type Name",
@@ -547,7 +547,7 @@ definition {
 
 		Workflow.confirmWorkflowAction();
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 
@@ -811,7 +811,7 @@ definition {
 
 		WorkflowDocumentsAndMedia.addFileWithWorkflow(
 			dmDocumentTitle = "DM Document Title",
-			workflowPNGFile = "workflow.png");
+			workflowPngFile = "workflow.png");
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -854,7 +854,7 @@ definition {
 
 		WorkflowDocumentsAndMedia.videoShortcutAddCP(
 			videoShortcutTitle = "test",
-			videoURL = "Test");
+			videoUrl = "Test");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 

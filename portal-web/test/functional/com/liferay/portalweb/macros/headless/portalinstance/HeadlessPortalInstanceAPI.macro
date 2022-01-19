@@ -12,13 +12,13 @@ definition {
 		}
 
 		var curl = '''
-			${portalURL}/o/headless-portal-instances/v1.0/portal-instances \
+			${portalUrl}/o/headless-portal-instances/v1.0/portal-instances \
 			-u ${userName}:test \
 			-H Content-Type: application/json
 		''';
-		var JSON = JSONCurlUtil.get("${curl}");
+		var json = JSONCurlUtil.get("${curl}");
 
-		return "${JSON}";
+		return "${json}";
 	}
 
 	@summary = "Creates a new Portal Instance with domain = mailDomain, virtualHost = virtualHost, and portalInstanceId = webId"
@@ -28,17 +28,17 @@ definition {
 		var portalURL = JSONCompany.getDefaultPortalURL();
 
 		var parameters = JSONUtil2._addJSONObject(
-			JSON = "{}",
+			json = "{}",
 			key = "domain",
 			value = "&quot;${domain}&quot;");
 
 		var parameters = JSONUtil2._addJSONObject(
-			JSON = "${parameters}",
+			json = "${parameters}",
 			key = "virtualHost",
 			value = "&quot;${virtualHost}&quot;");
 
 		var parameters = JSONUtil2._addJSONObject(
-			JSON = "${parameters}",
+			json = "${parameters}",
 			key = "portalInstanceId",
 			value = "&quot;${portalInstanceId}&quot;");
 
@@ -50,7 +50,7 @@ definition {
 		}
 
 		var curl = '''
-			${portalURL}/o/headless-portal-instances/v1.0/portal-instances \
+			${portalUrl}/o/headless-portal-instances/v1.0/portal-instances \
 			-u ${userName}:test \
 			-d ${parameters} \
 			-H Content-Type: application/json
@@ -66,22 +66,22 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var parameters = JSONUtil2._addJSONObject(
-			JSON = "{}",
+			json = "{}",
 			key = "domain",
 			value = "&quot;${domain}&quot;");
 
 		var parameters = JSONUtil2._addJSONObject(
-			JSON = "${parameters}",
+			json = "${parameters}",
 			key = "virtualHost",
 			value = "&quot;${virtualHost}&quot;");
 
 		var parameters = JSONUtil2._addJSONObject(
-			JSON = "${parameters}",
+			json = "${parameters}",
 			key = "portalInstanceId",
 			value = "&quot;${portalInstanceId}&quot;");
 
 		var parameters = JSONUtil2._addJSONObject(
-			JSON = "${parameters}",
+			json = "${parameters}",
 			key = "siteInitializerKey",
 			value = "&quot;${siteInitializerKey}&quot;");
 
@@ -93,7 +93,7 @@ definition {
 		}
 
 		var curl = '''
-			${portalURL}/o/headless-portal-instances/v1.0/portal-instances \
+			${portalUrl}/o/headless-portal-instances/v1.0/portal-instances \
 			-u ${userName}:test \
 			-d ${parameters} \
 			-H Content-Type: application/json
@@ -106,7 +106,7 @@ definition {
 	macro cleanAllPortalInstances {
 		var portalInstanceJSON = HeadlessPortalInstanceAPI._getPortalInstances(authenticationMethod = "${authenticationMethod}");
 
-		var portalInstanceIds = JSONUtil.getWithJSONPath("${portalInstanceJSON}", "$.items..portalInstanceId");
+		var portalInstanceIds = JSONUtil.getWithJSONPath("${portalInstanceJson}", "$.items..portalInstanceId");
 
 		for (var portalInstanceId : list "${portalInstanceIds}") {
 			if ("${portalInstanceId}" != "liferay.com") {
@@ -133,7 +133,7 @@ definition {
 		}
 
 		var curl = '''
-			${portalURL}/o/headless-portal-instances/v1.0/portal-instances/${portalInstanceId} \
+			${portalUrl}/o/headless-portal-instances/v1.0/portal-instances/${portalInstanceId} \
 			-u ${userName}:test \
 			-H Content-Type: application/json
 		''';

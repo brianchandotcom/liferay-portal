@@ -6,13 +6,13 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalURL}/api/jsonws/announcementsentry/add-entry \
+			${portalUrl}/api/jsonws/announcementsentry/add-entry \
 			-u ${userEmailAddress}:${userPassword} \
 			-d classNameId=0 \
 			-d classPK=0 \
 			-d title=${announcementTitle} \
 			-d content=${announcementContent} \
-			-d url=${announcementURL} \
+			-d url=${announcementUrl} \
 			-d type=${announcementType} \
 			-d displayDate=${displayDate} \
 			-d expirationDate=${expirationDate} \
@@ -27,8 +27,8 @@ definition {
 		var groupId = JSONGroupSetter.setGroupId(groupName = "${groupName}");
 
 		Navigator.openWithAppendToBaseURL(
-			baseURL = "${baseURL}",
-			urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_announcements_web_portlet_AnnouncementsAdminPortlet&p_p_lifecycle=0&p_p_state=maximized&p_v_l_s_g_id=${groupId}");
+			baseUrl = "${baseUrl}",
+			urlAppend = "group/${siteUrlKey}/~/control_panel/manage?p_p_id=com_liferay_announcements_web_portlet_AnnouncementsAdminPortlet&p_p_lifecycle=0&p_p_state=maximized&p_v_l_s_g_id=${groupId}");
 
 		if (!(isSet(position))) {
 			var position = "1";

@@ -27,7 +27,7 @@ definition {
 				masterPageTemplateEntryName = "Custom Masters Page Template",
 				site = "false");
 
-			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name-staging");
+			MastersPageTemplatesAdmin.openMastersAdmin(siteUrlKey = "test-site-name-staging");
 
 			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
 		}
@@ -287,7 +287,7 @@ definition {
 		}
 
 		task ("Add a content page based on custom master") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name-staging");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name-staging");
 
 			ContentPages.addPage(
 				masterLayoutName = "Custom Masters Page Template",

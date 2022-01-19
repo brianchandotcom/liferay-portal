@@ -248,7 +248,7 @@ definition {
 		if (isSet(accountTaxID)) {
 			PortletEntry.inputText(
 				fieldLabel = "Tax ID",
-				text = "${accountTaxID}");
+				text = "${accountTaxId}");
 		}
 
 		if (isSet(externalReferenceCode)) {
@@ -590,7 +590,7 @@ definition {
 		if (isSet(accountTaxID)) {
 			PortletEntry.inputText(
 				fieldLabel = "Tax ID",
-				text = "${accountTaxID}");
+				text = "${accountTaxId}");
 		}
 
 		Button.clickSave();
@@ -1277,7 +1277,7 @@ definition {
 			AssertTextEquals(
 				key_fieldLabel = "Tax ID",
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "${accountTaxID}");
+				value1 = "${accountTaxId}");
 		}
 
 		AssertTextEquals(

@@ -252,7 +252,7 @@
 </tr>
 <tr>
 	<td>GMAIL_HTML_MODE_MESSAGE_BODY_ARTICLE_DATE</td>
-	<td>//tr//td//div[contains(.,'${gmailKBArticleDate}')]</td>
+	<td>//tr//td//div[contains(.,'${gmailKbArticleDate}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -287,7 +287,7 @@
 </tr>
 <tr>
 	<td>GMAIL_HTML_MODE_MESSAGE_BODY_LINK</td>
-	<td>//tr[contains(.,'${key_gmailAssetType}')]//td[div[@class='msg']]//a[contains(.,'${key_pageNameURL}')]</td>
+	<td>//tr[contains(.,'${key_gmailAssetType}')]//td[div[@class='msg']]//a[contains(.,'${key_pageNameUrl}')]</td>
 	<td></td>
 </tr>
 <tr>

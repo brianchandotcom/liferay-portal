@@ -135,19 +135,19 @@ definition {
 
 		for (var quantity : list "1,2,3,4,6,9,12,15,18") {
 			Type(
-				key_cartItemSKU = "${sku}",
+				key_cartItemSku = "${sku}",
 				locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY",
 				value1 = "${quantity}");
 
 			if (("${quantity}" == "1") || ("${quantity}" == "2") || ("${quantity}" == "4")) {
 				AssertTextEquals(
-					key_cartItemSKU = "${sku}",
+					key_cartItemSku = "${sku}",
 					locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY",
 					value1 = "3");
 			}
 			else {
 				AssertTextEquals(
-					key_cartItemSKU = "${sku}",
+					key_cartItemSku = "${sku}",
 					locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY",
 					value1 = "${quantity}");
 			}
@@ -196,7 +196,7 @@ definition {
 
 		for (var iterator : list "1,2,3,4,5") {
 			Type(
-				key_cartItemSKU = "MIN55861",
+				key_cartItemSku = "MIN55861",
 				locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY",
 				value1 = "${iterator}");
 
@@ -257,7 +257,7 @@ definition {
 
 		for (var iterator : list "1,2,3") {
 			Type(
-				key_cartItemSKU = "MIN55861",
+				key_cartItemSku = "MIN55861",
 				locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY",
 				value1 = "${iterator}");
 
@@ -305,17 +305,17 @@ definition {
 			FrontStore.viewMiniCartItem(
 				cartItemName = "U-Joint",
 				cartItemQuantity = "3",
-				cartItemSKU = "MIN55861");
+				cartItemSku = "MIN55861");
 		}
 
 		task ("When the item in the minicart is selected") {
 			CommerceNavigator.gotoMiniCartEntry(
-				cartItemSKU = "MIN55861",
+				cartItemSku = "MIN55861",
 				entryName = "U-Joint");
 		}
 
 		task ("Then the user is navigated to the product detail page") {
-			FrontStore.viewProductDetail(FSProductName = "U-Joint");
+			FrontStore.viewProductDetail(fsProductName = "U-Joint");
 		}
 
 		task ("And When the product in the minicart has the number in the quantity box changed") {
@@ -324,16 +324,16 @@ definition {
 			FrontStore.viewMiniCartItem(
 				cartItemName = "U-Joint",
 				cartItemQuantity = "3",
-				cartItemSKU = "MIN55861");
+				cartItemSku = "MIN55861");
 
 			CommerceNavigator.editMiniCartItemQuantity(
-				cartItemSKU = "MIN55861",
+				cartItemSku = "MIN55861",
 				productQuantity = "5");
 		}
 
 		task ("Then the item quantity will be changed to the new number") {
 			CommerceNavigator.validateMiniCartItemQuantity(
-				cartItemSKU = "MIN55861",
+				cartItemSku = "MIN55861",
 				productQuantity = "5");
 		}
 	}
@@ -372,7 +372,7 @@ definition {
 		task ("Then clicking on product in cart widget navigates to product detail page") {
 			CommerceNavigator.viewCartPortletEntry(productName = "U-Joint");
 
-			FrontStore.viewProductDetail(FSProductName = "U-Joint");
+			FrontStore.viewProductDetail(fsProductName = "U-Joint");
 
 			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Pending Orders");
 
@@ -536,12 +536,12 @@ definition {
 		CommerceNavigator.gotoMiniCart();
 
 		Type(
-			key_cartItemSKU = "BLACKSKU",
+			key_cartItemSku = "BLACKSKU",
 			locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY",
 			value1 = "3");
 
 		AssertElementPresent(
-			key_cartItemSKU = "BLACKSKU",
+			key_cartItemSku = "BLACKSKU",
 			locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY",
 			value1 = "3");
 	}
@@ -570,7 +570,7 @@ definition {
 		CommerceNavigator.gotoMiniCart();
 
 		Type(
-			key_cartItemSKU = "MIN55861",
+			key_cartItemSku = "MIN55861",
 			locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY",
 			value1 = "3");
 
@@ -626,12 +626,12 @@ definition {
 		Button.click(button = "No");
 
 		AssertElementPresent(
-			key_cartItemSKU = "MIN55861",
+			key_cartItemSku = "MIN55861",
 			locator1 = "CommerceAccelerators#MINI_CART_ITEM_NAME_USING_SKU",
 			value1 = "U-Joint");
 
 		AssertElementPresent(
-			key_cartItemSKU = "MIN55859",
+			key_cartItemSku = "MIN55859",
 			locator1 = "CommerceAccelerators#MINI_CART_ITEM_NAME_USING_SKU",
 			value1 = "Torque Converters");
 
@@ -640,12 +640,12 @@ definition {
 		Button.click(button = "Yes");
 
 		AssertElementNotPresent(
-			key_cartItemSKU = "MIN55861",
+			key_cartItemSku = "MIN55861",
 			locator1 = "CommerceAccelerators#MINI_CART_ITEM_NAME_USING_SKU",
 			value1 = "U-Joint");
 
 		AssertElementNotPresent(
-			key_cartItemSKU = "MIN55859",
+			key_cartItemSku = "MIN55859",
 			locator1 = "CommerceAccelerators#MINI_CART_ITEM_NAME_USING_SKU",
 			value1 = "Torque Converters");
 	}
@@ -678,11 +678,11 @@ definition {
 		CommerceNavigator.gotoMiniCart();
 
 		Click(
-			key_cartItemSKU = "MIN55859",
+			key_cartItemSku = "MIN55859",
 			locator1 = "CommerceAccelerators#MINI_CART_REMOVE_ITEM");
 
 		AssertElementNotPresent(
-			key_cartItemSKU = "MIN55859",
+			key_cartItemSku = "MIN55859",
 			locator1 = "CommerceAccelerators#MINI_CART_ITEM_NAME_USING_SKU",
 			value1 = "Torque Converters");
 	}
@@ -726,28 +726,28 @@ definition {
 			FrontStore.viewMiniCartItem(
 				cartItemName = "U-Joint",
 				cartItemQuantity = "3",
-				cartItemSKU = "MIN55861");
+				cartItemSku = "MIN55861");
 
 			FrontStore.viewMiniCartItem(
 				cartItemName = "ABS Sensor",
 				cartItemQuantity = "1",
-				cartItemSKU = "MIN93015");
+				cartItemSku = "MIN93015");
 
 			CommerceNavigator.gotoMiniCartEntry(
-				cartItemSKU = "MIN55861",
+				cartItemSku = "MIN55861",
 				entryName = "U-Joint");
 		}
 
 		task ("Then the user will be navigated to the product detail page") {
-			FrontStore.viewProductDetail(FSProductName = "U-Joint");
+			FrontStore.viewProductDetail(fsProductName = "U-Joint");
 
 			CommerceNavigator.gotoMiniCart();
 
 			CommerceNavigator.gotoMiniCartEntry(
-				cartItemSKU = "MIN93015",
+				cartItemSku = "MIN93015",
 				entryName = "ABS Sensor");
 
-			FrontStore.viewProductDetail(FSProductName = "ABS Sensor");
+			FrontStore.viewProductDetail(fsProductName = "ABS Sensor");
 		}
 	}
 
@@ -800,12 +800,12 @@ definition {
 
 		for (var quantity : list "1,5,10") {
 			Type(
-				key_cartItemSKU = "${sku}",
+				key_cartItemSku = "${sku}",
 				locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY",
 				value1 = "${quantity}");
 
 			AssertTextEquals(
-				key_cartItemSKU = "${sku}",
+				key_cartItemSku = "${sku}",
 				locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY",
 				value1 = "10");
 		}
@@ -860,12 +860,12 @@ definition {
 
 		for (var quantity : list "1,3,5") {
 			Type(
-				key_cartItemSKU = "${sku}",
+				key_cartItemSku = "${sku}",
 				locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY",
 				value1 = "${quantity}");
 
 			AssertTextEquals(
-				key_cartItemSKU = "${sku}",
+				key_cartItemSku = "${sku}",
 				locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY",
 				value1 = "5");
 		}
@@ -1030,7 +1030,7 @@ definition {
 			cartItemName = "Bundled Product",
 			cartItemOption = "black",
 			cartItemQuantity = "1",
-			cartItemSKU = "BLACKSKU");
+			cartItemSku = "BLACKSKU");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "CommerceAccelerators#MINI_CART_ITEM_BUNDLED_ITEMS",
@@ -1041,7 +1041,7 @@ definition {
 			value1 = "70.00");
 
 		AssertElementPresent(
-			key_cartItemSKU = "BLACKSKU",
+			key_cartItemSku = "BLACKSKU",
 			locator1 = "CommerceAccelerators#MINI_CART_ITEM_DEFAULT_THUMBNAIL");
 	}
 
@@ -1101,13 +1101,13 @@ definition {
 			cartItemOption = "24",
 			cartItemPriceValues = "120",
 			cartItemQuantities = "1",
-			cartItemSKUs = "MIN93022B");
+			cartItemSkUs = "MIN93022B");
 
 		FrontStore.viewMiniCart(
 			cartItemNames = "U-Joint",
 			cartItemPriceValues = "24",
 			cartItemQuantities = "3",
-			cartItemSKUs = "MIN55861");
+			cartItemSkUs = "MIN55861");
 	}
 
 	@description = "COMMERCE-6653. As a buyer, I want to see the list price updating on the mini-cart item when changing product quantity, if bulk price is set"
@@ -1584,17 +1584,17 @@ definition {
 		CommerceNavigator.gotoMiniCart();
 
 		AssertTextEquals(
-			key_cartItemSKU = "${sku}",
+			key_cartItemSku = "${sku}",
 			locator1 = "CommerceAccelerators#MINI_CART_ITEM_PRICE_VALUE",
 			value1 = "$ 50.00");
 
 		Type(
-			key_cartItemSKU = "${sku}",
+			key_cartItemSku = "${sku}",
 			locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY",
 			value1 = "2");
 
 		AssertTextEquals(
-			key_cartItemSKU = "${sku}",
+			key_cartItemSku = "${sku}",
 			locator1 = "CommerceAccelerators#MINI_CART_ITEM_PRICE_VALUE",
 			value1 = "$ 47.50");
 

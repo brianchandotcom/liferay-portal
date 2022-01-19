@@ -242,18 +242,18 @@ definition {
 			larFileName = "${larFileName}",
 			siteName = "New Site");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "new-site");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "new-site");
 
 		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
 
 		DMNavigator.openToEntryInAdmin(
 			dmDocumentTitle = "DM Document Title",
 			groupName = "New Site",
-			siteURLKey = "new-site");
+			siteUrlKey = "new-site");
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
 
-		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "new-site");
+		AssetListsAdmin.openAssetListsAdmin(siteUrlKey = "new-site");
 
 		AssetListsAdmin.viewAssetList(
 			assetListTitle = "Depot Manual Asset List",
@@ -271,7 +271,7 @@ definition {
 			groupName = "Site Name",
 			title = "WC WebContent Title");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
 
 		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
 
@@ -283,7 +283,7 @@ definition {
 		DMNavigator.openToEntryInAdmin(
 			dmDocumentTitle = "DM Document Title",
 			groupName = "Site Name",
-			siteURLKey = "site-name");
+			siteUrlKey = "site-name");
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
 
@@ -291,7 +291,7 @@ definition {
 			groupName = "Site Name",
 			title = "Depot Manual Asset List");
 
-		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "site-name");
+		AssetListsAdmin.openAssetListsAdmin(siteUrlKey = "site-name");
 
 		AssetListsAdmin.viewAssetList(
 			assetListTitle = "Depot Manual Asset List",

@@ -45,7 +45,7 @@ definition {
 			for (var pageType : list "Embedded,Link to URL") {
 				PagesFinder.addPublicPage(
 					pageName = "Test ${pageType}",
-					pageTypeURL = "https://www.google.com",
+					pageTypeUrl = "https://www.google.com",
 					sitePageType = "${pageType}");
 			}
 
@@ -622,7 +622,7 @@ definition {
 		}
 
 		task ("Discard the draft in Pages admin") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
 
 			PageEditor.clickDiscardDraft(pageName = "Test Page Name");
 		}

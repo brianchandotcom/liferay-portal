@@ -515,7 +515,7 @@ definition {
 
 		Type(
 			locator1 = "AlloyEditor#TEXT_FORMATTING_LINK_INPUT",
-			value1 = "${entryExternalURL}");
+			value1 = "${entryExternalUrl}");
 
 		Click(locator1 = "AlloyEditor#TEXT_FORMATTING_LINK_INPUT_CONFIRM");
 
@@ -2131,7 +2131,7 @@ definition {
 		}
 		else if (isSet(imageSourceURL)) {
 			ItemSelector.addImageFromURL(
-				imageSourceURL = "${imageSourceURL}",
+				imageSourceUrl = "${imageSourceUrl}",
 				navTab = "URL");
 		}
 		else {
@@ -2340,7 +2340,7 @@ definition {
 						}
 						else if (isSet(imageSourceURL)) {
 							ItemSelector.addImageFromURL(
-								imageSourceURL = "${imageSourceURL}",
+								imageSourceUrl = "${imageSourceUrl}",
 								navTab = "URL");
 						}
 						else {

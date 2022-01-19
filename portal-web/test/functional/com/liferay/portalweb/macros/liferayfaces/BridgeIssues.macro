@@ -15,7 +15,7 @@ definition {
 			privacy = "Public Pages",
 			sitePageType = "Widget Page");
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/${pageURL}");
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/${pageUrl}");
 
 		Portlet.addPG(portletName = "${portletName}");
 	}
@@ -25,7 +25,7 @@ definition {
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "${key_urlAppend}");
 
-		var key_PageLink = "${pageLink}";
+		var key_pageLink = "${pageLink}";
 
 		Click(locator1 = "BridgeIssues#NAVIGATE_TO_VIEW");
 	}
@@ -94,7 +94,7 @@ definition {
 	macro verifyValue {
 		if ("${restoreState}" == "true") {
 			Click(
-				key_PageLink = "${link}",
+				key_pageLink = "${link}",
 				locator1 = "BridgeIssues#PAGE_LINK");
 
 			AssertElementPresent(
@@ -112,7 +112,7 @@ definition {
 
 		if (isSet(toPageLink)) {
 			Click(
-				key_PageLink = "${link}",
+				key_pageLink = "${link}",
 				locator1 = "BridgeIssues#PAGE_LINK");
 
 			Click(
@@ -134,7 +134,7 @@ definition {
 
 		if (isSet(validURL)) {
 			Click(
-				key_validURL = "${validURL}",
+				key_validUrl = "${validUrl}",
 				locator1 = "BridgeIssues#VALID_URL");
 
 			AssertElementPresent(
@@ -152,7 +152,7 @@ definition {
 
 		if (isSet(inValidURL)) {
 			Click(
-				key_inValidURL = "${inValidURL}",
+				key_inValidUrl = "${inValidUrl}",
 				locator1 = "BridgeIssues#INVALID_URL");
 
 			AssertElementPresent(locator1 = "BridgeIssues#ERROR_MESSAGE");

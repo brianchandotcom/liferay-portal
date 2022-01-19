@@ -63,15 +63,15 @@ definition {
 			mimeType = "audio/mpeg",
 			sourceFileName = "Document_1.mp3");
 
-		DMDocument.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
+		DMDocument.openDocumentsAndMediaAdmin(siteUrlKey = "test-site-name");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1.mp3");
 
 		DMNavigator.gotoURLDetail();
 
-		var dmDocumentURL = selenium.getElementValue("//input[contains(@id,'url')]");
+		var dmDocumentUrl = selenium.getElementValue("//input[contains(@id,'url')]");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -80,7 +80,7 @@ definition {
 			webContentTitle = "WC WebContent Title");
 
 		WebContent.uploadAudio(
-			dmDocumentURL = "${dmDocumentURL}",
+			dmDocumentUrl = "${dmDocumentUrl}",
 			navTab = "URL");
 
 		PortletEntry.publish();
@@ -144,7 +144,7 @@ definition {
 			groupName = "Test Site Name",
 			title = "Web Content Title");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
@@ -173,7 +173,7 @@ definition {
 			groupName = "Test Site Name",
 			layoutName = "Web Content Image Page");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -244,14 +244,14 @@ definition {
 		property testray.component.names = "Web Content Administration,Web Content Display";
 
 		task ("Add an external video shortcut") {
-			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
+			DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "test-site-name");
 
 			VideoShortcut.addCP(
 				videoShortcutTitle = "Liferay Digital Experience Platform",
-				videoURL = "https://www.youtube.com/watch?v=HOdbzGCI5ME");
+				videoUrl = "https://www.youtube.com/watch?v=HOdbzGCI5ME");
 		}
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -414,15 +414,15 @@ definition {
 			groupName = "Test Site Name",
 			layoutName = "Site Page Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 		WebContentNavigator.gotoAddCP();
 
 		WebContent.addCP(webContentTitle = "Web Content Title");
 
-		var portalURL = PropsUtil.get("portal.url");
+		var portalUrl = PropsUtil.get("portal.url");
 
-		CKEditor.addSourceContent(content = '''<p><span><a href="${portalURL}/web/test-site-name/site-page-name/-/testportlet">text</a></span></p>''');
+		CKEditor.addSourceContent(content = '''<p><span><a href="${portalUrl}/web/test-site-name/site-page-name/-/testportlet">text</a></span></p>''');
 
 		PortletEntry.publish();
 
@@ -456,7 +456,7 @@ definition {
 		property testray.component.names = "Web Content Display,Training";
 
 		task ("Add a web content structure with a single line Text field and a multiple lines Text field") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 			NavItem.gotoStructures();
 
@@ -511,7 +511,7 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 		}
 
 		task ("View defined contents in web content editor") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 			WebContent.viewWithStructureCP(
 				webContentText = "WC WebContent Text",
@@ -548,7 +548,7 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WC WebContent Title");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 		WebContent.expireSpecificVersionCP(webContentTitle = "WC WebContent Title");
 
@@ -562,7 +562,7 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 	@description = "This is a test for LPS-83798. Validate File system can't access using Journal/DDM templates."
 	@priority = "5"
 	test AssertNoFileSystemAccessViaJournalTemplates {
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 		NavItem.gotoStructures();
 
@@ -620,7 +620,7 @@ ${httpUtil.URLtoString(request.getAttribute("CTX").getResource(".").toURI().crea
 
 		SearchAdministration.executeReindex();
 
-		WebContentTemplates.openWebContentTemplatesAdmin(siteURLKey = "test-site-name");
+		WebContentTemplates.openWebContentTemplatesAdmin(siteUrlKey = "test-site-name");
 
 		WebContentTemplates.addCP(
 			structureName = "Basic Web Content",
@@ -732,7 +732,7 @@ ${httpUtil.URLtoString(request.getAttribute("CTX").getResource(".").toURI().crea
 	@priority = "4"
 	test ConfigureWCDWhenSelectedWebContentBasedOnTemplateWithEmbeddedWidget {
 		task ("Add a web content structure") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 			NavItem.gotoStructures();
 
@@ -809,7 +809,7 @@ ${httpUtil.URLtoString(request.getAttribute("CTX").getResource(".").toURI().crea
 	@priority = "4"
 	test DisplayWebContentWithGeolocationField {
 		task ("Add a web content structure with a Geolocation field") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 			NavItem.gotoStructures();
 
@@ -823,7 +823,7 @@ ${httpUtil.URLtoString(request.getAttribute("CTX").getResource(".").toURI().crea
 		}
 
 		task ("Add a web content based on new structure") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
@@ -1048,7 +1048,7 @@ ${httpUtil.URLtoString(request.getAttribute("CTX").getResource(".").toURI().crea
 
 		var moduleID = GogoShell.getModuleID(moduleName = "com.liferay.journal.content.web");
 
-		GogoShell.stopModule(moduleID = "${moduleID}");
+		GogoShell.stopModule(moduleId = "${moduleId}");
 
 		GogoShell.viewModuleStatus(
 			moduleName = "com.liferay.journal.content.web",
@@ -1066,7 +1066,7 @@ ${httpUtil.URLtoString(request.getAttribute("CTX").getResource(".").toURI().crea
 
 		GogoShell.openGogoShellAdmin();
 
-		GogoShell.startModule(moduleID = "${moduleID}");
+		GogoShell.startModule(moduleId = "${moduleId}");
 
 		GogoShell.viewModuleStatus(
 			moduleName = "com.liferay.journal.content.web",
@@ -1082,7 +1082,7 @@ ${httpUtil.URLtoString(request.getAttribute("CTX").getResource(".").toURI().crea
 	@description = "This is a test for LPS-64814. Validate remote code execution via untrusted Java Deserialization in templates cannot cause out of memory errors."
 	@priority = "5"
 	test ValidateRemoteCodeViaTemplatesCannotCauseOutOfMemoryErrors {
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 		NavItem.gotoStructures();
 
@@ -1131,7 +1131,7 @@ ${company.getKeyObj()}
 	@description = "This is a test for LPS-58698. Validate remote code execution can't privilege escalation in templates."
 	@priority = "5"
 	test ValidateTemplateRCEReturnsNoRuntimeClasses {
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 		NavItem.gotoStructures();
 
@@ -1246,7 +1246,7 @@ ${runtimeInstance}
 		property test.name.skip.portal.instance = "WebContentDisplay#ViewAllSettingsEnabledWCDConfiguration";
 		property testray.component.names = "Web Content Display";
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -1269,7 +1269,7 @@ ${runtimeInstance}
 			groupName = "Test Site Name",
 			title = "Web Content Title 2");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title 1");
 
@@ -1382,7 +1382,7 @@ ${runtimeInstance}
 			permissionDefinitionKey = "CONTENT_PERMISSIONS_VIEW_CHECKBOX",
 			roleTitle = "guest");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 		WebContentNavigator.gotoEntryMenuItem(
 			entry = "WC WebContent Title",
@@ -1492,7 +1492,7 @@ ${runtimeInstance}
 		}
 
 		task ("Move the web content to Recycle Bin") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 			WebContent.moveToRecycleBinCP(
 				assetType = "Web Content Article",
@@ -1518,10 +1518,10 @@ ${runtimeInstance}
 		}
 
 		task ("Delete the web content") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 			WebContent.deleteCP(
-				siteURLKey = "test-site-name",
+				siteUrlKey = "test-site-name",
 				webContentTitle = "WC WebContent Title");
 		}
 

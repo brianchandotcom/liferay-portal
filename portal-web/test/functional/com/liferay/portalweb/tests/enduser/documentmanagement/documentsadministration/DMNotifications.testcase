@@ -151,7 +151,7 @@ definition {
 The DM file [$DOCUMENT_TITLE$] has been added to Home folder.
 [$FROM_ADDRESS$]''',
 			navTab = "Document Added Email",
-			siteURLKey = "guest");
+			siteUrlKey = "guest");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
@@ -314,7 +314,7 @@ The DM file [$DOCUMENT_TITLE$] has been added to Home folder.
 		DMNavigator.openToAddEntry(
 			folderName = "DM Folder Name",
 			groupName = "Guest",
-			siteURLKey = "guest");
+			siteUrlKey = "guest");
 
 		DMDocument.editDocument(
 			dmDocumentDescription = "DM Document Description",
@@ -374,7 +374,7 @@ The DM file [$DOCUMENT_TITLE$] has been added to Home folder.
 			dmDocumentTitleEdit = "DM Document Title Edit",
 			folderName = "DM Folder Name",
 			groupName = "Guest",
-			siteURLKey = "guest");
+			siteUrlKey = "guest");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
@@ -428,7 +428,7 @@ The DM file [$DOCUMENT_TITLE$] has been added to Home folder.
 		DMNavigator.openToAddEntry(
 			folderName = "DM Folder Name",
 			groupName = "Guest",
-			siteURLKey = "guest");
+			siteUrlKey = "guest");
 
 		DMDocument.editDocument(
 			dmDocumentDescription = "DM Document Description",
@@ -488,7 +488,7 @@ The DM file [$DOCUMENT_TITLE$] has been added to Home folder.
 			dmDocumentTitleEdit = "DM Document Title Edit",
 			folderName = "DM Folder Name",
 			groupName = "Guest",
-			siteURLKey = "guest");
+			siteUrlKey = "guest");
 
 		Notifications.viewBadgeCount(notificationCount = "0");
 

@@ -22,12 +22,12 @@ definition {
 			configurationName = "OneDrive",
 			configurationScope = "Virtual Instance Scope");
 
-		var oneDriveClientID = PropsUtil.get("onedrive.client.id");
+		var oneDriveClientId = PropsUtil.get("onedrive.client.id");
 
 		Type(
 			key_text = "clientId",
 			locator1 = "TextArea#ANY",
-			value1 = "${oneDriveClientID}");
+			value1 = "${oneDriveClientId}");
 
 		var oneDriveClientSecret = PropsUtil.get("onedrive.client.secret");
 
@@ -454,7 +454,7 @@ definition {
 			dmDocumentTitle = "Cancel Checkout Excel Sheet Title",
 			dmDocumentTypeName = "Excel");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		DMDocument.cancelCheckoutCP(dmDocumentTitle = "Cancel Checkout Excel Sheet Title");
 
@@ -716,7 +716,7 @@ definition {
 		DMNavigator.openToEditEntryInSite(
 			dmDocumentTitle = "これは日本語のファイルです",
 			groupName = "Guest",
-			siteURLKey = "guest");
+			siteUrlKey = "guest");
 
 		DMDocument.viewEntryInEdit(
 			dmDocumentFileName = "これは日本語のファイルです.docx",

@@ -85,8 +85,8 @@ definition {
 		CommerceNavigator.gotoFrontStoreProductPage(productName = "Simple T-Shirt");
 
 		FrontStore.viewProductDetail(
-			FSOptionValuesList = "Black:10.0,Blue:20.0,White:30.0",
-			FSProductName = "Simple T-Shirt");
+			fsOptionValuesList = "Black:10.0,Blue:20.0,White:30.0",
+			fsProductName = "Simple T-Shirt");
 	}
 
 }

@@ -62,7 +62,7 @@ definition {
 		}
 
 		var curl = '''
-				${portalURL}/o/headless-delivery/v1.0/sites/${groupId}/blog-postings \
+				${portalUrl}/o/headless-delivery/v1.0/sites/${groupId}/blog-postings \
 				-H accept: application/json \
 				-H Content-Type: application/json \
 				-u ${userEmailAddress}:${userPassword} \

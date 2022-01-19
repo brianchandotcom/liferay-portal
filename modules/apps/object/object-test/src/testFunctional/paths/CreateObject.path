@@ -157,7 +157,7 @@
 	</tr>
 	<tr>
 		<td>VIEW_RELATED_OBJECT_ON_RELATIONSHIP_FIELD</td>
-		<td>//div[contains(@class,'dnd-tbody')]//div[contains(text(),'${key_RelatedObject}')][1]</td>
+		<td>//div[contains(@class,'dnd-tbody')]//div[contains(text(),'${key_relatedObject}')][1]</td>
 		<td></td>
 	</tr>
 	<tr>

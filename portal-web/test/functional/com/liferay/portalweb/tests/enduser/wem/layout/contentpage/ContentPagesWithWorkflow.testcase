@@ -95,7 +95,7 @@ definition {
 		}
 
 		task ("Enable Single Approver for Content Page") {
-			Workflow.openWorkflowAdmin(siteURLKey = "test-site-name");
+			Workflow.openWorkflowAdmin(siteUrlKey = "test-site-name");
 
 			Workflow.configureWorkflow(
 				workflowDefinition = "Single Approver",
@@ -122,7 +122,7 @@ definition {
 		}
 
 		task ("View pending status is shown") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "Test Site Name");
 
 			PagesAdmin.viewPageStatus(
 				index = "2",
@@ -181,7 +181,7 @@ definition {
 		}
 
 		task ("View pending status is not shown") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "Test Site Name");
 
 			AssertElementNotPresent(
 				index = "2",
@@ -238,7 +238,7 @@ definition {
 		}
 
 		task ("View pending status is shown") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "Test Site Name");
 
 			PagesAdmin.viewPageStatus(
 				index = "2",
@@ -262,7 +262,7 @@ definition {
 		}
 
 		task ("View page author can preview the modification") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "Test Site Name");
 
 			PagesAdmin.viewPageStatus(
 				index = "2",
@@ -293,7 +293,7 @@ definition {
 		task ("View reviewer can preview the modification") {
 			User.logoutAndLoginPG(userLoginEmailAddress = "test@liferay.com");
 
-			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "Test Site Name");
 
 			PagesAdmin.viewPageStatus(
 				index = "2",
@@ -329,7 +329,7 @@ definition {
 		task ("View peding status is not shown as page author") {
 			User.logoutAndLoginPG(userLoginEmailAddress = "userea@liferay.com");
 
-			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "Test Site Name");
 
 			AssertElementNotPresent(
 				index = "2",
@@ -376,7 +376,7 @@ definition {
 		task ("View reviewer can preview modification of content page") {
 			User.logoutAndLoginPG(userLoginEmailAddress = "test@liferay.com");
 
-			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "Test Site Name");
 
 			PagesAdmin.viewPageStatus(
 				index = "2",
@@ -398,7 +398,7 @@ definition {
 		task ("View reviewer can edit after submit") {
 			AssertVisible(locator1 = "Icon#EDIT_PENCIL");
 
-			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "Test Site Name");
 
 			PagesAdmin.openPageEllipsisMenu(pageName = "Test Page Name");
 
@@ -411,7 +411,7 @@ definition {
 				id = "text",
 				text = "Modified text");
 
-			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "Test Site Name");
 
 			PagesAdmin.viewPageStatus(
 				index = "2",
@@ -448,7 +448,7 @@ definition {
 		task ("View page author can not edit again after submit") {
 			AssertElementNotPresent(locator1 = "Icon#EDIT_PENCIL");
 
-			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "Test Site Name");
 
 			PagesAdmin.viewPageStatus(
 				index = "2",

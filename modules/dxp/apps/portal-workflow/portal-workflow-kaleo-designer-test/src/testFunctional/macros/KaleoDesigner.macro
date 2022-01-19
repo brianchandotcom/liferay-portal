@@ -78,7 +78,7 @@ definition {
 
 	macro addNodeViaSourceXML {
 		if ("${nodeType}" == "task") {
-			var sourceXML = '''
+			var sourceXml = '''
 <?xml version="1.0"?>
 <workflow-definition xmlns="urn:liferay.com:liferay-workflow_6.2.0"${line.separator} xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"${line.separator} xsi:schemaLocation="urn:liferay.com:liferay-workflow_6.2.0 http://www.liferay.com/dtd/liferay-workflow-definition_6_2_0.xsd">${line.separator}
 	<name>Task</name>${line.separator}
@@ -105,7 +105,7 @@ definition {
 
 		Type.typeAceEditorNoMouseOver(
 			locator1 = "KaleoDesignerEditWorkflow#SOURCE_KALEO_XML_CONTENT",
-			value1 = "${sourceXML}");
+			value1 = "${sourceXml}");
 
 		Pause(locator1 = "1000");
 
@@ -139,7 +139,7 @@ definition {
 	}
 
 	macro addSourceXMLBasicDefinition {
-		var sourceXML = '''
+		var sourceXml = '''
 <?xml version="1.0"?>
 <workflow-definition${line.separator} xmlns="urn:liferay.com:liferay-workflow_6.2.0"${line.separator} xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"${line.separator} xsi:schemaLocation="urn:liferay.com:liferay-workflow_6.2.0 http://www.liferay.com/dtd/liferay-workflow-definition_6_2_0.xsd">${line.separator}
 <name>Workflow Definition Name</name>${line.separator}${line.separator}
@@ -200,7 +200,7 @@ definition {
 
 		Type.typeAceEditorNoMouseOver(
 			locator1 = "KaleoDesignerEditWorkflow#SOURCE_KALEO_XML_CONTENT",
-			value1 = "${sourceXML}");
+			value1 = "${sourceXml}");
 
 		Pause(locator1 = "1000");
 
@@ -552,7 +552,7 @@ definition {
 
 		Click(locator1 = "KaleoDesignerEditWorkflow#SOURCE_KALEO_XML_CONTENT_SPECIFIC_LINE");
 
-		TypeScreen(locator1 = "${kdSourceXML}");
+		TypeScreen(locator1 = "${kdSourceXml}");
 	}
 
 	macro previewDraftWorkflow {
@@ -801,12 +801,12 @@ definition {
 		if ("${invalid}" == "true") {
 			AssertTextNotPresent(
 				locator1 = "KaleoDesignerEditWorkflow#SOURCE_KALEO_XML_CONTENT_SPECIFIC_LINE_CONTENT",
-				value1 = "${kdSourceXML}");
+				value1 = "${kdSourceXml}");
 		}
 		else {
 			AssertTextEquals.assertPartialTextAceEditor(
 				locator1 = "KaleoDesignerEditWorkflow#SOURCE_KALEO_XML_CONTENT_SPECIFIC_LINE_CONTENT",
-				value1 = "${kdSourceXML}");
+				value1 = "${kdSourceXml}");
 		}
 
 		Pause(locator1 = "1000");

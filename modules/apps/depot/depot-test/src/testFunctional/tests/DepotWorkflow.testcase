@@ -69,7 +69,7 @@ definition {
 			locator1 = "DocumentsAndMedia#ICON_DOCUMENT_WORKFLOW_STATUS",
 			value1 = "Pending");
 
-		BlogsNavigator.openToAddEntry(siteURLKey = "site-name");
+		BlogsNavigator.openToAddEntry(siteUrlKey = "site-name");
 
 		BlogsNavigator.gotoSelectFile();
 
@@ -116,7 +116,7 @@ definition {
 			dmDocumentStatus = "Approved",
 			dmDocumentTitle = "Document_1.jpg");
 
-		BlogsNavigator.openToAddEntry(siteURLKey = "site-name");
+		BlogsNavigator.openToAddEntry(siteUrlKey = "site-name");
 
 		BlogsNavigator.gotoSelectFile();
 
@@ -156,7 +156,7 @@ definition {
 			webContentStatus = "Pending",
 			webContentTitle = "Depot WebContent Title");
 
-		WebContentStructures.openWebContentStructuresAdmin(siteURLKey = "site-name");
+		WebContentStructures.openWebContentStructuresAdmin(siteUrlKey = "site-name");
 
 		WebContentStructures.addCP(
 			structureDescription = "WC Structure Description",
@@ -168,7 +168,7 @@ definition {
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
-		WebContentNavigator.openWebContentTemplatesAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentTemplatesAdmin(siteUrlKey = "site-name");
 
 		WebContentTemplates.addCP(
 			structureName = "WC Structure Name",
@@ -176,7 +176,7 @@ definition {
 			templateFieldNames = "Web Content",
 			templateName = "WC Template Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
@@ -185,7 +185,7 @@ definition {
 			depotName = "Test Depot Name",
 			fieldName = "WebContent",
 			structureName = "WC Structure Name",
-			webContentSelectWCFile = "WC Depot WebContent",
+			webContentSelectWcFile = "WC Depot WebContent",
 			webContentTitle = "WC WebContent Title");
 
 		Navigator.openURL();
@@ -208,7 +208,7 @@ definition {
 			webContentStatus = "Approved",
 			webContentTitle = "Depot WebContent Title");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
@@ -217,7 +217,7 @@ definition {
 			fieldName = "WebContent",
 			structureName = "WC Structure Name",
 			templateName = "WC Template Name",
-			webContentSelectWCFile = "Depot WebContent Title",
+			webContentSelectWcFile = "Depot WebContent Title",
 			webContentTitle = "WC WebContent Title");
 
 		PortletEntry.submitForPublication();
@@ -405,7 +405,7 @@ definition {
 			webContentStatus = "Pending",
 			webContentTitle = "Depot WebContent Title");
 
-		WebContentStructures.openWebContentStructuresAdmin(siteURLKey = "site-name");
+		WebContentStructures.openWebContentStructuresAdmin(siteUrlKey = "site-name");
 
 		WebContentStructures.addCP(
 			structureDescription = "WC Structure Description",
@@ -417,7 +417,7 @@ definition {
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
-		WebContentNavigator.openWebContentTemplatesAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentTemplatesAdmin(siteUrlKey = "site-name");
 
 		WebContentTemplates.addCP(
 			structureName = "WC Structure Name",
@@ -425,7 +425,7 @@ definition {
 			templateFieldNames = "Web Content",
 			templateName = "WC Template Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
@@ -435,7 +435,7 @@ definition {
 			fieldName = "WebContent",
 			folderName = "WC Folder Name",
 			structureName = "WC Structure Name",
-			webContentSelectWCFile = "WC Depot WebContent",
+			webContentSelectWcFile = "WC Depot WebContent",
 			webContentTitle = "WC WebContent Title");
 
 		Navigator.openURL();
@@ -462,7 +462,7 @@ definition {
 			webContentStatus = "Approved",
 			webContentTitle = "Depot WebContent Title");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
@@ -472,7 +472,7 @@ definition {
 			folderName = "WC Folder Name",
 			structureName = "WC Structure Name",
 			templateName = "WC Template Name",
-			webContentSelectWCFile = "Depot WebContent Title",
+			webContentSelectWcFile = "Depot WebContent Title",
 			webContentTitle = "WC WebContent Title");
 
 		PortletEntry.publish();
@@ -558,7 +558,7 @@ definition {
 			dmDocumentStatus = "Approved",
 			dmDocumentTitle = "Document_2.jpg");
 
-		WebContentStructures.openWebContentStructuresAdmin(siteURLKey = "site-name");
+		WebContentStructures.openWebContentStructuresAdmin(siteUrlKey = "site-name");
 
 		WebContentStructures.addCP(
 			structureDescription = "WC Structure Description",
@@ -570,7 +570,7 @@ definition {
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
-		WebContentNavigator.openWebContentTemplatesAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentTemplatesAdmin(siteUrlKey = "site-name");
 
 		WebContentTemplates.addCP(
 			structureName = "WC Structure Name",
@@ -578,7 +578,7 @@ definition {
 			templateFieldNames = "Image",
 			templateName = "WC Template Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
@@ -674,7 +674,7 @@ definition {
 			webContentStatus = "Approved",
 			webContentTitle = "Depot WebContent Title Edit");
 
-		WebContentStructures.openWebContentStructuresAdmin(siteURLKey = "site-name");
+		WebContentStructures.openWebContentStructuresAdmin(siteUrlKey = "site-name");
 
 		WebContentStructures.addCP(
 			structureDescription = "WC Structure Description",
@@ -686,7 +686,7 @@ definition {
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
-		WebContentNavigator.openWebContentTemplatesAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentTemplatesAdmin(siteUrlKey = "site-name");
 
 		WebContentTemplates.addCP(
 			structureName = "WC Structure Name",
@@ -694,7 +694,7 @@ definition {
 			templateFieldNames = "Web Content",
 			templateName = "WC Template Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
@@ -703,7 +703,7 @@ definition {
 			fieldName = "WebContent",
 			structureName = "WC Structure Name",
 			templateName = "WC Template Name",
-			webContentSelectWCFile = "Depot WebContent Title Edit",
+			webContentSelectWcFile = "Depot WebContent Title Edit",
 			webContentTitle = "WC WebContent Title");
 
 		PortletEntry.submitForPublication();

@@ -15,12 +15,12 @@ definition {
 		Type(
 			key_text = "HTML Element Name",
 			locator1 = "TextInput#ANY",
-			value1 = "${entryHTMLName}");
+			value1 = "${entryHtmlName}");
 
 		Type(
 			key_id = "customElementURLs",
 			locator1 = "RemoteAppsEntry#URL",
-			value1 = "${entryURL}");
+			value1 = "${entryUrl}");
 	}
 
 	macro addCustomElementAllFields {
@@ -32,17 +32,17 @@ definition {
 		Type(
 			key_text = "HTML Element Name",
 			locator1 = "TextInput#ANY",
-			value1 = "${entryHTMLName}");
+			value1 = "${entryHtmlName}");
 
 		Type(
 			key_id = "customElementURLs",
 			locator1 = "RemoteAppsEntry#URL",
-			value1 = "${entryURL}");
+			value1 = "${entryUrl}");
 
 		Type(
 			key_text = "CSS URL",
 			locator1 = "TextInput#ANY",
-			value1 = "${entryCSSURL}");
+			value1 = "${entryCssurl}");
 
 		Type(
 			locator1 = "RemoteAppsEntry#REMOTE_APPS_PROPERTIES",
@@ -58,7 +58,7 @@ definition {
 		Type(
 			key_text = "HTML Element Name",
 			locator1 = "TextInput#ANY",
-			value1 = "${entryHTMLName}");
+			value1 = "${entryHtmlName}");
 
 		RemoteAppsEntry.addURLRow();
 
@@ -68,25 +68,25 @@ definition {
 			key_id = "customElementURLs",
 			key_index = "1",
 			locator1 = "RemoteAppsEntry#URL_ROW_INDEX",
-			value1 = "${entryURL1}");
+			value1 = "${entryUrl1}");
 
 		Type(
 			key_id = "customElementURLs",
 			key_index = "2",
 			locator1 = "RemoteAppsEntry#URL_ROW_INDEX",
-			value1 = "${entryURL2}");
+			value1 = "${entryUrl2}");
 
 		Type(
 			key_id = "customElementCSSURLs",
 			key_index = "1",
 			locator1 = "RemoteAppsEntry#URL_ROW_INDEX",
-			value1 = "${entryCSSURL1}");
+			value1 = "${entryCssurl1}");
 
 		Type(
 			key_id = "customElementCSSURLs",
 			key_index = "2",
 			locator1 = "RemoteAppsEntry#URL_ROW_INDEX",
-			value1 = "${entryCSSURL2}");
+			value1 = "${entryCssurl2}");
 	}
 
 	macro addEntry {
@@ -98,7 +98,7 @@ definition {
 		Type(
 			key_id = "iFrameURL",
 			locator1 = "RemoteAppsEntry#URL",
-			value1 = "${entryURL}");
+			value1 = "${entryUrl}");
 	}
 
 	macro addPortletCategory {

@@ -47,7 +47,7 @@
 </tr>
 <tr>
 	<td>SLA_CREATED_FORM</td>
-	<td>//a[contains(text(),'${key_workflowSLAName}')]</td>
+	<td>//a[contains(text(),'${key_workflowSlaName}')]</td>
 	<td></td>
 </tr>
 <tr>

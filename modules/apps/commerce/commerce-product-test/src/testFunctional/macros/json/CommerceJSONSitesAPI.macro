@@ -1,10 +1,10 @@
 definition {
 
 	macro _deleteCommerceSites {
-		var baseURL = "${baseURL}";
+		var baseUrl = "${baseUrl}";
 
 		if (!(isSet(baseURL))) {
-			var baseURL = PropsUtil.get("portal.url");
+			var baseUrl = PropsUtil.get("portal.url");
 		}
 
 		var commerceSitesIds = CommerceJSONSitesAPI._getCommerceSites();
@@ -14,7 +14,7 @@ definition {
 				echo("Deleting Commerce Sites with id: ${commerceSitesId}");
 
 				var curl = '''
-					${baseURL}/api/jsonws/group/delete-group \
+					${baseUrl}/api/jsonws/group/delete-group \
 						-u test@liferay.com:test \
 						-d groupId=${commerceSitesId}
 				''';
@@ -28,16 +28,16 @@ definition {
 	}
 
 	macro _getCommerceSites {
-		var baseURL = "${baseURL}";
+		var baseUrl = "${baseUrl}";
 
 		if (!(isSet(baseURL))) {
-			var baseURL = PropsUtil.get("portal.url");
+			var baseUrl = PropsUtil.get("portal.url");
 		}
 
 		var companyId = JSONCompany.getCompanyId();
 
 		var curl = '''
-			  ${baseURL}/api/jsonws/group/get-user-sites-groups \
+			  ${baseUrl}/api/jsonws/group/get-user-sites-groups \
 				  -u test@liferay.com:test \
 		''';
 

@@ -73,7 +73,7 @@ definition {
 			entrySubtitle = "Blogs Entry Subtitle",
 			entryTitle = "Blogs Entry Title",
 			imageFileName = "Document_2.jpg",
-			siteURLKey = "site-name-staging");
+			siteUrlKey = "site-name-staging");
 
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Site Name (Staging)",
@@ -151,7 +151,7 @@ definition {
 			site = "false",
 			widgetName = "Blogs");
 
-		BlogsNavigator.openToAddEntry(siteURLKey = "site-name-staging");
+		BlogsNavigator.openToAddEntry(siteUrlKey = "site-name-staging");
 
 		BlogsEntry.addTitle(entryTitle = "Blogs Entry Title");
 
@@ -174,7 +174,7 @@ definition {
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
 			layoutName = "Test Page",
-			siteURLKey = "site-name");
+			siteUrlKey = "site-name");
 
 		BlogsEntry.viewInlineImage(uploadFileName = "Document_2.jpg");
 
@@ -197,7 +197,7 @@ definition {
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
 			layoutName = "Test Page",
-			siteURLKey = "site-name-staging");
+			siteUrlKey = "site-name-staging");
 
 		BlogsEntry.viewInlineImage(uploadFileName = "Document_2.jpg");
 
@@ -208,7 +208,7 @@ definition {
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
 			layoutName = "Test Page",
-			siteURLKey = "site-name");
+			siteUrlKey = "site-name");
 
 		BlogsEntry.viewInlineImage(uploadFileName = "Document_2.jpg");
 	}
@@ -230,7 +230,7 @@ definition {
 
 		Staging.publishToLive();
 
-		BlogsNavigator.openToAddEntry(siteURLKey = "site-name-staging");
+		BlogsNavigator.openToAddEntry(siteUrlKey = "site-name-staging");
 
 		BlogsEntry.addEntryContent(
 			entryContent = "Blogs Entry Content",
@@ -562,7 +562,7 @@ definition {
 			layoutName = "Test Page",
 			portlet = "Open Graph",
 			site = "false",
-			siteURLKey = "site-name-staging");
+			siteUrlKey = "site-name-staging");
 
 		OpenGraph.configureOpenGraph(
 			customImage = "true",
@@ -583,7 +583,7 @@ definition {
 			groupName = "Site Name",
 			layoutName = "Test Page",
 			portlet = "Open Graph",
-			siteURLKey = "site-name");
+			siteUrlKey = "site-name");
 
 		OpenGraph.viewPreviewImage(imageName = "Document_2.jpg");
 
@@ -608,7 +608,7 @@ definition {
 			layoutName = "Test Page",
 			portlet = "Open Graph",
 			site = "false",
-			siteURLKey = "site-name-staging");
+			siteUrlKey = "site-name-staging");
 
 		OpenGraph.viewNoPreviewImage(imageName = "Document_2.jpg");
 
@@ -624,7 +624,7 @@ definition {
 			groupName = "Site Name",
 			layoutName = "Test Page",
 			portlet = "Open Graph",
-			siteURLKey = "site-name");
+			siteUrlKey = "site-name");
 
 		OpenGraph.viewNoPreviewImage(imageName = "Document_2.jpg");
 	}
@@ -637,7 +637,7 @@ definition {
 
 		VideoShortcut.addCP(
 			videoShortcutTitle = "Test YouTube Video",
-			videoURL = "https://www.youtube.com/watch?v=HOdbzGCI5ME");
+			videoUrl = "https://www.youtube.com/watch?v=HOdbzGCI5ME");
 
 		DepotNavigator.switchStagingStatus(stagingItem = "Publish to Live");
 
@@ -664,7 +664,7 @@ definition {
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
 			layoutName = "Test Page",
-			siteURLKey = "site-name-staging");
+			siteUrlKey = "site-name-staging");
 
 		BlogsEntry.viewEntryPG(
 			embedVideo = "true",
@@ -678,7 +678,7 @@ definition {
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
 			layoutName = "Test Page",
-			siteURLKey = "site-name");
+			siteUrlKey = "site-name");
 
 		BlogsEntry.viewEntryPG(
 			embedVideo = "true",
@@ -702,7 +702,7 @@ definition {
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
 			layoutName = "Test Page",
-			siteURLKey = "site-name-staging");
+			siteUrlKey = "site-name-staging");
 
 		BlogsEntry.viewEntryPG(
 			embedVideo = "true",
@@ -716,7 +716,7 @@ definition {
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
 			layoutName = "Test Page",
-			siteURLKey = "site-name");
+			siteUrlKey = "site-name");
 
 		BlogsEntry.viewEntryPG(
 			embedVideo = "true",
@@ -741,7 +741,7 @@ definition {
 
 		Staging.publishToLive();
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name-staging");
 
 		NavItem.gotoStructures();
 
@@ -753,7 +753,7 @@ definition {
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name-staging");
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
@@ -852,7 +852,7 @@ definition {
 			entrySubtitle = "Blogs Entry Subtitle",
 			entryTitle = "Blogs Entry Title",
 			imageFileName = "Document_2.jpg",
-			siteURLKey = "site-name-staging");
+			siteUrlKey = "site-name-staging");
 
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Site Name (Staging)",
@@ -937,7 +937,7 @@ definition {
 			site = "false",
 			widgetName = "Blogs");
 
-		BlogsNavigator.openToAddEntry(siteURLKey = "site-name-staging");
+		BlogsNavigator.openToAddEntry(siteUrlKey = "site-name-staging");
 
 		BlogsEntry.addTitle(entryTitle = "Blogs Entry Title");
 
@@ -952,7 +952,7 @@ definition {
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
 			layoutName = "Test Page",
-			siteURLKey = "site-name-staging");
+			siteUrlKey = "site-name-staging");
 
 		BlogsEntry.viewInlineImage(uploadFileName = "Document_2.jpg");
 
@@ -963,7 +963,7 @@ definition {
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
 			layoutName = "Test Page",
-			siteURLKey = "site-name");
+			siteUrlKey = "site-name");
 
 		BlogsEntry.viewInlineImage(uploadFileName = "Document_2.jpg");
 
@@ -989,7 +989,7 @@ definition {
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
 			layoutName = "Test Page",
-			siteURLKey = "site-name-staging");
+			siteUrlKey = "site-name-staging");
 
 		BlogsEntry.viewInlineImage(uploadFileName = "Document_1.jpg");
 
@@ -1000,7 +1000,7 @@ definition {
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
 			layoutName = "Test Page",
-			siteURLKey = "site-name");
+			siteUrlKey = "site-name");
 
 		BlogsEntry.viewInlineImage(uploadFileName = "Document_1.jpg");
 	}
@@ -1030,7 +1030,7 @@ definition {
 			site = "false",
 			widgetName = "Blogs");
 
-		BlogsNavigator.openToAddEntry(siteURLKey = "site-name-staging");
+		BlogsNavigator.openToAddEntry(siteUrlKey = "site-name-staging");
 
 		BlogsEntry.addEntryContent(
 			entryContent = "Blogs Entry Content",
@@ -1480,7 +1480,7 @@ definition {
 			layoutName = "Test Page",
 			portlet = "Open Graph",
 			site = "false",
-			siteURLKey = "site-name-staging");
+			siteUrlKey = "site-name-staging");
 
 		OpenGraph.configureOpenGraph(
 			customImage = "true",
@@ -1501,7 +1501,7 @@ definition {
 			groupName = "Site Name",
 			layoutName = "Test Page",
 			portlet = "Open Graph",
-			siteURLKey = "site-name");
+			siteUrlKey = "site-name");
 
 		OpenGraph.viewPreviewImage(imageName = "Document_1.jpg");
 
@@ -1510,7 +1510,7 @@ definition {
 			layoutName = "Test Page",
 			portlet = "Open Graph",
 			site = "false",
-			siteURLKey = "site-name-staging");
+			siteUrlKey = "site-name-staging");
 
 		OpenGraph.configureOpenGraph(
 			customImage = "true",
@@ -1532,7 +1532,7 @@ definition {
 			groupName = "Site Name",
 			layoutName = "Test Page",
 			portlet = "Open Graph",
-			siteURLKey = "site-name");
+			siteUrlKey = "site-name");
 
 		OpenGraph.viewPreviewImage(imageName = "Document_2.jpg");
 	}
@@ -1556,7 +1556,7 @@ definition {
 
 		Staging.publishToLive();
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name-staging");
 
 		NavItem.gotoStructures();
 
@@ -1568,7 +1568,7 @@ definition {
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name-staging");
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
@@ -1611,7 +1611,7 @@ definition {
 		WebContentNavigator.openToEditWCInSite(
 			groupName = "Site Name (Staging)",
 			site = "false",
-			siteURLKey = "site-name",
+			siteUrlKey = "site-name",
 			staging = "true",
 			webContentTitle = "Web Content Title");
 
@@ -1701,7 +1701,7 @@ definition {
 
 		Staging.publishToLive();
 
-		DMNavigator.openToAddDocumentType(siteURLKey = "site-name-staging");
+		DMNavigator.openToAddDocumentType(siteUrlKey = "site-name-staging");
 
 		AssertElementNotPresent(
 			key_menuItem = "DM Document Type Depot",
@@ -1757,7 +1757,7 @@ definition {
 			depotName = "Test Depot Name",
 			noConnectedDepot = "true");
 
-		BlogsNavigator.openToAddEntry(siteURLKey = "site-name-staging");
+		BlogsNavigator.openToAddEntry(siteUrlKey = "site-name-staging");
 
 		BlogsNavigator.gotoSelectFile();
 
@@ -1796,7 +1796,7 @@ definition {
 
 		Staging.publishToLive();
 
-		BlogsNavigator.openToAddEntry(siteURLKey = "site-name-staging");
+		BlogsNavigator.openToAddEntry(siteUrlKey = "site-name-staging");
 
 		BlogsNavigator.gotoSelectFile();
 
@@ -2101,7 +2101,7 @@ definition {
 
 		Staging.publishToLive();
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name-staging");
 
 		DMDocument.addDMShortcutCP(
 			depotName = "Test Depot Name",
@@ -2323,7 +2323,7 @@ definition {
 			entrySubtitle = "Blogs Entry Subtitle",
 			entryTitle = "Blogs Entry Title",
 			imageFileName = "Document_2.jpg",
-			siteURLKey = "site-name-staging");
+			siteUrlKey = "site-name-staging");
 
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Site Name (Staging)",
@@ -2354,7 +2354,7 @@ definition {
 
 		VideoShortcut.addCP(
 			videoShortcutTitle = "Test YouTube Video Name",
-			videoURL = "https://www.youtube.com/watch?v=2ewB-7_VMGU");
+			videoUrl = "https://www.youtube.com/watch?v=2ewB-7_VMGU");
 
 		DepotNavigator.switchStagingStatus(stagingItem = "Publish to Live");
 
@@ -2492,7 +2492,7 @@ definition {
 
 		Staging.publishToLive();
 
-		BlogsNavigator.openToAddEntry(siteURLKey = "site-name-staging");
+		BlogsNavigator.openToAddEntry(siteUrlKey = "site-name-staging");
 
 		BlogsNavigator.gotoSelectFile();
 

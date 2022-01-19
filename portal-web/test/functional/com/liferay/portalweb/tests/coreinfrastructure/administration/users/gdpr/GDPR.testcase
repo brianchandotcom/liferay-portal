@@ -81,7 +81,7 @@ definition {
 			userEmailAddress = "userea@liferay.com",
 			userPassword = "test");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
@@ -119,7 +119,7 @@ definition {
 
 		GDPR.anonymizeDataViaReviewData(allApplications = "true");
 
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+		BlogsNavigator.openBlogsAdmin(siteUrlKey = "guest");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
@@ -129,7 +129,7 @@ definition {
 			entryAuthorFullName = "Anonymous Anonymous",
 			entryTitle = "Blogs Entry Title");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		for (var entryTitle : list "WC GDPR Folder,GDPR Anonymize Article") {
 			WebContent.viewEntryListAuthor(
@@ -145,7 +145,7 @@ definition {
 			author = "Anonymous Anonymous",
 			entryTitle = "GDPR Anonymize Article in Folder");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
 
@@ -155,7 +155,7 @@ definition {
 			locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_UPLOADER_NO_PROFILE",
 			value1 = "Anonymous Anonymous");
 
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteUrlKey = "guest");
 
 		MessageboardsThread.gotoPG(
 			lastPostUserName = "Anonymous Anonymous",
@@ -189,7 +189,7 @@ definition {
 			password = "test",
 			userEmailAddress = "userea@liferay.com");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
@@ -208,7 +208,7 @@ definition {
 
 		GDPR.anonymizeDataViaReviewData(application = "Documents and Media");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
 
@@ -237,7 +237,7 @@ definition {
 			password = "test",
 			userEmailAddress = "userea@liferay.com");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		DMDocument.addMultipleCP(dmDocumentFileList = "Document_1.jpeg,Document_2.docx,Document_3.mp3");
 
@@ -259,7 +259,7 @@ definition {
 		GDPR.viewNoEntryInApplicationCP(applications = "Documents and Media");
 
 		for (var entryTitle : list "Document_1,Document_2,Document_3") {
-			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+			DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 			DMNavigator.gotoDocumentCP(dmDocumentTitle = "${entryTitle}");
 
@@ -294,7 +294,7 @@ definition {
 				userEmailAddress = "userea@liferay.com",
 				userPassword = "test");
 
-			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+			DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 			DMDocument.addCP(
 				dmDocumentFile = "Document_1.txt",
@@ -302,7 +302,7 @@ definition {
 		}
 
 		task ("Create a message board thread") {
-			MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+			MessageBoardsAdmin.openMessageBoardsAdmin(siteUrlKey = "guest");
 
 			MessageboardsThread.addCP(
 				threadBody = "MB Thread Message Body",
@@ -310,7 +310,7 @@ definition {
 		}
 
 		task ("Add the blog entry and document created earlier as Related Assets onto the message board thread") {
-			MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+			MessageBoardsAdmin.openMessageBoardsAdmin(siteUrlKey = "guest");
 
 			LexiconEntry.gotoEntryMenuItemNoError(
 				menuItem = "Edit",
@@ -354,7 +354,7 @@ definition {
 		}
 
 		task ("Assert that both the message board and document have not been anonymized") {
-			MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+			MessageBoardsAdmin.openMessageBoardsAdmin(siteUrlKey = "guest");
 
 			LexiconEntry.gotoEntry(rowEntry = "MB Thread Message Subject");
 
@@ -376,7 +376,7 @@ definition {
 		}
 
 		task ("Assert that the blog post is a related asset with an anonymous author") {
-			MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+			MessageBoardsAdmin.openMessageBoardsAdmin(siteUrlKey = "guest");
 
 			LexiconEntry.gotoEntry(rowEntry = "MB Thread Message Subject");
 
@@ -416,7 +416,7 @@ definition {
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		DMFolder.addCP(dmFolderName = "Folder1");
 
@@ -439,7 +439,7 @@ definition {
 
 		GDPR.anonymizeMultipleEntriesCP(rowEntry = "Folder1,Document_2.docx");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_2");
 
@@ -449,7 +449,7 @@ definition {
 			locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_UPLOADER_NO_PROFILE",
 			value1 = "Anonymous Anonymous");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		DMNavigator.gotoFolder(dmFolderName = "Folder1");
 
@@ -467,7 +467,7 @@ definition {
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+		BlogsNavigator.openBlogsAdmin(siteUrlKey = "guest");
 
 		Blogs.addEntry(
 			entryContent = "Blogs Entry Content",
@@ -494,7 +494,7 @@ definition {
 
 		GDPR.anonymizeSingleEntryViaInfoPanel(rowEntry = "Blogs Entry 1");
 
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+		BlogsNavigator.openBlogsAdmin(siteUrlKey = "guest");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
@@ -519,7 +519,7 @@ definition {
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		DMDocument.addCP(
 			dmDocumentFile = "Document_1.txt",
@@ -584,7 +584,7 @@ definition {
 
 			Navigator.openURL();
 
-			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+			DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 			DMDocument.addCP(
 				dmDocumentDescription = "DM Document Description",
@@ -650,7 +650,7 @@ definition {
 				userEmailAddress = "userea@liferay.com",
 				userPassword = "test");
 
-			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+			DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 			DMDocument.addCP(
 				dmDocumentFile = "Document_1.txt",
@@ -658,7 +658,7 @@ definition {
 		}
 
 		task ("Create a message board thread") {
-			MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+			MessageBoardsAdmin.openMessageBoardsAdmin(siteUrlKey = "guest");
 
 			MessageboardsThread.addCP(
 				threadBody = "MB Thread Message Body",
@@ -666,7 +666,7 @@ definition {
 		}
 
 		task ("Add the blog entry and document created earlier as Related Assets onto the message board thread") {
-			MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+			MessageBoardsAdmin.openMessageBoardsAdmin(siteUrlKey = "guest");
 
 			LexiconEntry.gotoEntryMenuItemNoError(
 				menuItem = "Edit",
@@ -710,7 +710,7 @@ definition {
 		}
 
 		task ("Assert the Related Asset deleted from previous task no longer appears on the message board and the other asset is still displayed") {
-			MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+			MessageBoardsAdmin.openMessageBoardsAdmin(siteUrlKey = "guest");
 
 			LexiconEntry.gotoEntry(rowEntry = "MB Thread Message Subject");
 
@@ -749,7 +749,7 @@ definition {
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		DMFolder.addCP(dmFolderName = "Folder1");
 
@@ -781,7 +781,7 @@ definition {
 			applications = "Documents and Media",
 			totalItemsCount = "3");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		AssertTextNotPresent(value1 = "Folder1");
 
@@ -804,7 +804,7 @@ definition {
 
 			Navigator.openURL();
 
-			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+			DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 			DMDocument.addCP(
 				dmDocumentDescription = "DM Document Description",
@@ -1005,7 +1005,7 @@ definition {
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "A",
@@ -1100,7 +1100,7 @@ definition {
 		JSONAnnouncement.addAnnouncement(
 			announcementContent = "This is an announcement added via json.",
 			announcementTitle = "Announcement Entry Title",
-			announcementURL = "http://www.liferay.com",
+			announcementUrl = "http://www.liferay.com",
 			userEmailAddress = "userea@liferay.com",
 			userPassword = "test");
 
@@ -1241,7 +1241,7 @@ definition {
 
 		GDPR.deleteAllEntriesCP();
 
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
+		BlogsNavigator.openBlogsAdmin(siteUrlKey = "site-name");
 
 		LexiconEntry.viewNoEntry(rowEntry = "Blogs Entry Title");
 	}
@@ -1279,7 +1279,7 @@ definition {
 
 		GDPR.viewNoEntryInApplicationCP(applications = "Blogs");
 
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+		BlogsNavigator.openBlogsAdmin(siteUrlKey = "guest");
 
 		LexiconEntry.viewNoEntry(rowEntry = "Blogs Entry Title");
 	}
@@ -1294,7 +1294,7 @@ definition {
 			password = "test",
 			userEmailAddress = "userea@liferay.com");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
@@ -1344,7 +1344,7 @@ definition {
 				userLoginEmailAddress = "userea@liferay.com",
 				userLoginFullName = "userfn userln");
 
-			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+			DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 			DMFolder.addCP(dmFolderName = "Folder1");
 
@@ -1375,7 +1375,7 @@ definition {
 		}
 
 		task ("Assert Folder1 and Document_2.docx have been anonymized.") {
-			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+			DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 			DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_2");
 
@@ -1385,7 +1385,7 @@ definition {
 				locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_UPLOADER_NO_PROFILE",
 				value1 = "Anonymous Anonymous");
 
-			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+			DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 			DMNavigator.gotoFolder(dmFolderName = "Folder1");
 
@@ -1405,7 +1405,7 @@ definition {
 		}
 
 		task ("Assert Folder1 and Document_2.docx are still anonymous.") {
-			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+			DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 			DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_2");
 
@@ -1415,7 +1415,7 @@ definition {
 				locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_UPLOADER_NO_PROFILE",
 				value1 = "Anonymous Anonymous");
 
-			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+			DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 			DMNavigator.gotoFolder(dmFolderName = "Folder1");
 
@@ -1434,7 +1434,7 @@ definition {
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		DMFolder.addCP(
 			dmFolderDescription = "Folder_1 Description",
@@ -1512,7 +1512,7 @@ definition {
 		JSONAnnouncement.addAnnouncement(
 			announcementContent = "Announcements Entry Content",
 			announcementTitle = "Announcements Entry Title",
-			announcementURL = "http://www.liferay.com",
+			announcementUrl = "http://www.liferay.com",
 			userEmailAddress = "userea@liferay.com",
 			userPassword = "test");
 
@@ -1576,7 +1576,7 @@ definition {
 
 		Navigator.openURL();
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
@@ -1661,7 +1661,7 @@ definition {
 
 			Navigator.openURL();
 
-			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+			DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 			DMDocument.addCP(
 				dmDocumentDescription = "DM Document Description",
@@ -1820,7 +1820,7 @@ definition {
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		DMDocument.addMultipleCP(dmDocumentFileList = "Document_1.jpeg,Document_2.docx,Document_3.mp3,Document_4.txt");
 

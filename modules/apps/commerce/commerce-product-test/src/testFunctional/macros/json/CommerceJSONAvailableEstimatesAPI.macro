@@ -1,10 +1,10 @@
 definition {
 
 	macro _deleteCommerceAvailableEstimates {
-		var baseURL = "${baseURL}";
+		var baseUrl = "${baseUrl}";
 
 		if (!(isSet(baseURL))) {
-			var baseURL = PropsUtil.get("portal.url");
+			var baseUrl = PropsUtil.get("portal.url");
 		}
 
 		var commerceAvailabilityEstimateIds = CommerceJSONAvailableEstimatesAPI._getCommerceAvailableEstimates();
@@ -14,7 +14,7 @@ definition {
 				echo("Deleting Commerce commerceAvailabilityEstimate with id: ${commerceAvailabilityEstimateId}");
 
 				var curl = '''
-					${baseURL}/api/jsonws/commerce.commerceavailabilityestimate/delete-commerce-availability-estimate \
+					${baseUrl}/api/jsonws/commerce.commerceavailabilityestimate/delete-commerce-availability-estimate \
 						-u test@liferay.com:test \
 						-d commerceAvailabilityEstimateId=${commerceAvailabilityEstimateId}
 				''';
@@ -28,16 +28,16 @@ definition {
 	}
 
 	macro _getCommerceAvailableEstimates {
-		var baseURL = "${baseURL}";
+		var baseUrl = "${baseUrl}";
 
 		if (!(isSet(baseURL))) {
-			var baseURL = PropsUtil.get("portal.url");
+			var baseUrl = PropsUtil.get("portal.url");
 		}
 
 		var companyId = JSONCompany.getCompanyId();
 
 		var curl = '''
-			  ${baseURL}/api/jsonws/commerce.commerceavailabilityestimate/get-commerce-availability-estimates/ \
+			  ${baseUrl}/api/jsonws/commerce.commerceavailabilityestimate/get-commerce-availability-estimates/ \
 				  -u test@liferay.com:test \
 				  -d companyId=${companyId} \
 				  -d "start=-1" \

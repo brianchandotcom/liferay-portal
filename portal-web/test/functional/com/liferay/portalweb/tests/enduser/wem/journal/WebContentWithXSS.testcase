@@ -36,7 +36,7 @@ definition {
 
 			var escapedScript = '''&lt;script&gt;alert(123);&lt;/script&gt;''';
 
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 			NavItem.gotoStructures();
 

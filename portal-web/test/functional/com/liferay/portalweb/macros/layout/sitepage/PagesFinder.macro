@@ -27,13 +27,13 @@ definition {
 		if ("${sitePageType}" == "Embedded") {
 			Type(
 				locator1 = "TextInput#URL",
-				value1 = "${pageTypeURL}");
+				value1 = "${pageTypeUrl}");
 		}
 
 		if ("${sitePageType}" == "Link to URL") {
 			Type(
 				locator1 = "TextInput#URL",
-				value1 = "${pageTypeURL}");
+				value1 = "${pageTypeUrl}");
 		}
 
 		if (isSet(inheritChanges)) {
@@ -73,7 +73,7 @@ definition {
 			openGraph = "${openGraph}",
 			pageName = "${pageName}",
 			pageTemplateName = "${pageTemplateName}",
-			pageTypeURL = "${pageTypeURL}",
+			pageTypeUrl = "${pageTypeUrl}",
 			sitePageType = "${sitePageType}",
 			vocabularyName = "${vocabularyName}");
 	}
@@ -191,7 +191,7 @@ definition {
 			openGraph = "${openGraph}",
 			pageName = "${pageName}",
 			pageTemplateName = "${pageTemplateName}",
-			pageTypeURL = "${pageTypeURL}",
+			pageTypeUrl = "${pageTypeUrl}",
 			sitePageType = "${sitePageType}",
 			vocabularyName = "${vocabularyName}");
 	}

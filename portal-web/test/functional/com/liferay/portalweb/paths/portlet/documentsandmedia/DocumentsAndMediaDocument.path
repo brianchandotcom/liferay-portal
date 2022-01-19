@@ -185,7 +185,7 @@
 </tr>
 <tr>
 	<td>DOCUMENT_DETAILS_LATEST_VERSION_URL</td>
-	<td>//input[contains(@id,'urlInput') and contains(@value,'${key_latestVersionURL}')]</td>
+	<td>//input[contains(@id,'urlInput') and contains(@value,'${key_latestVersionUrl}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -225,7 +225,7 @@
 </tr>
 <tr>
 	<td>DOCUMENT_DETAILS_WEBDAV_URL_LINK</td>
-	<td>//input[contains(@id,'webDavURLInput') and contains(@value,'${key_webDAVURL}')]</td>
+	<td>//input[contains(@id,'webDavURLInput') and contains(@value,'${key_webDavurl}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -268,7 +268,7 @@
 <!--DOCUMENT_VIEWPORT-->
 <tr>
 	<td>DOCUMENT_VIEWPORT_PREVIEW</td>
-	<td>//img[contains(@src,'${key_imageSourceURL}')]</td>
+	<td>//img[contains(@src,'${key_imageSourceUrl}')]</td>
 	<td></td>
 </tr>
 <!--MARKETING-->

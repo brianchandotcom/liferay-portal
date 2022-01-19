@@ -40,7 +40,7 @@ definition {
 	@priority = "4"
 	test ChangeLocaleViaLanguageSelector {
 		task ("Add a Language Selector widget to display page template") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 

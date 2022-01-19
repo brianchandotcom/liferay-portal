@@ -158,7 +158,7 @@ definition {
 
 		JSONStaging.enableLocalStaging(groupName = "Site Name");
 
-		Workflow.openWorkflowAdmin(siteURLKey = "site-name-staging");
+		Workflow.openWorkflowAdmin(siteUrlKey = "site-name-staging");
 
 		Workflow.configureWorkflow(
 			workflowDefinition = "Single Approver",

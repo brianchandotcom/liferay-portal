@@ -51,7 +51,7 @@ definition {
 			locator1 = "ACSegments#SEARCH_SEGMENT",
 			value1 = "${segmentField}");
 
-		var key_SegmentField = "${segmentField}";
+		var key_segmentField = "${segmentField}";
 
 		if (!(isSet(index))) {
 			var index = "1";
@@ -74,7 +74,7 @@ definition {
 			locator1 = "ACSegments#SEARCH_SEGMENT",
 			value1 = "${segmentField}");
 
-		var key_SegmentField = "${segmentField}";
+		var key_segmentField = "${segmentField}";
 
 		DragAndDrop.javaScriptDragAndDropToObject(
 			locator1 = "ACSegments#SEGMENT_CRITERION_ITEM",
@@ -82,7 +82,7 @@ definition {
 	}
 
 	macro addStaticMember {
-		var key_TableMember = "${tableMember}";
+		var key_tableMember = "${tableMember}";
 
 		Click(locator1 = "ACSegments#ADD_MEMBERS_BUTTON");
 
@@ -101,7 +101,7 @@ definition {
 		Click(locator1 = "ACSegments#ADD_MEMBERS_BUTTON");
 
 		for (var tableMember : list "${tableMember}") {
-			var key_TableMember = "${tableMember}";
+			var key_tableMember = "${tableMember}";
 
 			ACSegments.searchSegment(findSegment = "${tableMember}");
 
@@ -119,19 +119,19 @@ definition {
 
 	macro assertCriteriaTable {
 		AssertVisible(
-			key_CriteriaName = "${criteriaName}",
+			key_criteriaName = "${criteriaName}",
 			locator1 = "ACSegments#CRITERIA_ROW");
 	}
 
 	macro assertMember {
 		AssertElementPresent(
-			key_TableMember = "${memberName}",
+			key_tableMember = "${memberName}",
 			locator1 = "ACSegments#TABLE_CHECKBOX");
 	}
 
 	macro assertMemberNotPresent {
 		AssertElementNotPresent(
-			key_TableMember = "${memberName}",
+			key_tableMember = "${memberName}",
 			locator1 = "ACSegments#TABLE_CHECKBOX");
 	}
 
@@ -143,13 +143,13 @@ definition {
 	}
 
 	macro assertSegmentAttributeNotPresent {
-		var key_SegmentField = "${segmentField}";
+		var key_segmentField = "${segmentField}";
 
 		AssertElementNotPresent(locator1 = "ACSegments#SEGMENT_CRITERION_ITEM");
 	}
 
 	macro assertSegmentAttributePresent {
-		var key_SegmentField = "${segmentField}";
+		var key_segmentField = "${segmentField}";
 
 		AssertElementPresent(locator1 = "ACSegments#SEGMENT_CRITERION_ITEM");
 	}
@@ -172,14 +172,14 @@ definition {
 	}
 
 	macro clickCheckboxMember {
-		var key_TableMember = "${tableMember}";
+		var key_tableMember = "${tableMember}";
 
 		Click(locator1 = "ACSegments#TABLE_CHECKBOX");
 	}
 
 	macro clickMemberButton {
-		var key_TableMember = "${memberName}";
-		var key_ButtonName = "${buttonName}";
+		var key_tableMember = "${memberName}";
+		var key_buttonName = "${buttonName}";
 
 		Click(locator1 = "ACSegments#MEMBER_GENERIC_BUTTON");
 	}
@@ -287,7 +287,7 @@ definition {
 	}
 
 	macro editFormControlCriterion {
-		var key_Criterion = "${criterionName}";
+		var key_criterion = "${criterionName}";
 
 		Select(
 			locator1 = "ACSegments#FORM_CONTROL_CRITERION",
@@ -477,7 +477,7 @@ definition {
 	}
 
 	macro goToSidebarAttributes {
-		var key_Criterion = "${criterion}";
+		var key_criterion = "${criterion}";
 
 		Click(locator1 = "ACSegments#CRITERION_TYPE_DROPDOWN");
 
@@ -513,7 +513,7 @@ definition {
 	}
 
 	macro removeStaticMember {
-		var key_TableMember = "${tableMember}";
+		var key_tableMember = "${tableMember}";
 
 		Click(locator1 = "ACSegments#TABLE_CHECKBOX");
 
@@ -574,7 +574,7 @@ definition {
 
 	macro selectDocument {
 		var key_indexField = "${indexField}";
-		var key_TableMember = "${documentTitle}";
+		var key_tableMember = "${documentTitle}";
 
 		Click(locator1 = "ACSegments#SELECT_BUTTON");
 
@@ -603,7 +603,7 @@ definition {
 	}
 
 	macro selectSegmentType {
-		var key_SegmentType = "${segmentType}";
+		var key_segmentType = "${segmentType}";
 
 		Click(locator1 = "ACSegments#SELECT_SEGMENT_TYPE");
 	}

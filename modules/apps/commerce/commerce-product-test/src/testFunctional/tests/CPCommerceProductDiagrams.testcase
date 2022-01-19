@@ -478,7 +478,7 @@ definition {
 				pinNumber = "1",
 				quantity = "2",
 				selectType = "Linked to a SKU",
-				SKU = "MIN93015");
+				sku = "MIN93015");
 		}
 
 		task ("Then I should be able to see the updated pin information when I click on the pin") {
@@ -488,7 +488,7 @@ definition {
 				pinNumber = "2",
 				pinType = "SKU",
 				quantity = "2",
-				SKU = "MIN93015");
+				sku = "MIN93015");
 		}
 	}
 
@@ -573,7 +573,7 @@ definition {
 				position = "150,100",
 				quantity = "1",
 				selectType = "Linked to a SKU",
-				SKU = "MIN93015");
+				sku = "MIN93015");
 
 			CommerceDiagram.addPin(
 				diagram = "Diagram T-Shirt 2",

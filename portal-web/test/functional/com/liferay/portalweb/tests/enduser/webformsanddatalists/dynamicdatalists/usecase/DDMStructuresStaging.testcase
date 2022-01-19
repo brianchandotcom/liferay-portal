@@ -70,7 +70,7 @@ definition {
 		Navigator.gotoNavItem(navItem = "Templates");
 
 		WebContentTemplates.addCP(
-			imageSourceURL = "http://localhost:8080/webdav/staging-site-name-staging/document_library/Document_1.jpg",
+			imageSourceUrl = "http://localhost:8080/webdav/staging-site-name-staging/document_library/Document_1.jpg",
 			templateName = "WC Template Name");
 
 		ProductMenu.gotoPortlet(

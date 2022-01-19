@@ -17,7 +17,7 @@ definition {
 		}
 
 		task ("Navigate to fragments admin") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "test-site-name");
 		}
 	}
 
@@ -120,7 +120,7 @@ definition {
 		}
 
 		task ("Add a new fragment") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "test-site-name");
 
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 
@@ -200,7 +200,7 @@ definition {
 		}
 
 		task ("Export the fragment collection") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "test-site-name");
 
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 
@@ -210,7 +210,7 @@ definition {
 		task ("Import the fragment collection into a new site") {
 			JSONGroup.addGroup(groupName = "New Site Name");
 
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "new-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "new-site-name");
 
 			FragmentsAdmin.importCollectionFromTempFolder();
 		}
@@ -253,7 +253,7 @@ definition {
 		}
 
 		task ("Add a new fragment") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "test-site-name");
 
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 
@@ -285,7 +285,7 @@ definition {
 		task ("Import the fragment collection into a new site") {
 			JSONGroup.addGroup(groupName = "New Site Name");
 
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "new-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "new-site-name");
 
 			FragmentsAdmin.importCollectionFromTempFolder();
 		}
@@ -371,7 +371,7 @@ definition {
 		}
 
 		task ("Export the fragment collection") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "test-site-name");
 
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Saved Fragments");
 
@@ -381,7 +381,7 @@ definition {
 		task ("Import the fragment collection into a new site") {
 			JSONGroup.addGroup(groupName = "New Site Name");
 
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "new-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "new-site-name");
 
 			FragmentsAdmin.importCollectionFromTempFolder();
 		}
@@ -486,7 +486,7 @@ definition {
 		}
 
 		task ("Export the fragment collection") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "test-site-name");
 
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Saved Fragments");
 
@@ -496,7 +496,7 @@ definition {
 		task ("Import the fragment collection into a new site") {
 			JSONGroup.addGroup(groupName = "New Site Name");
 
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "new-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "new-site-name");
 
 			FragmentsAdmin.importCollectionFromTempFolder();
 		}
@@ -613,7 +613,7 @@ definition {
 		}
 
 		task ("Export the fragment collection") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "test-site-name");
 
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Saved Fragments");
 
@@ -623,7 +623,7 @@ definition {
 		task ("Import the fragment collection into a new site") {
 			JSONGroup.addGroup(groupName = "New Site Name");
 
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "new-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "new-site-name");
 
 			FragmentsAdmin.importCollectionFromTempFolder();
 		}
@@ -748,7 +748,7 @@ definition {
 		}
 
 		task ("Export the fragment collection") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "test-site-name");
 
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Saved Fragments");
 
@@ -758,7 +758,7 @@ definition {
 		task ("Import the fragment collection into a new site") {
 			JSONGroup.addGroup(groupName = "New Site Name");
 
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "new-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "new-site-name");
 
 			FragmentsAdmin.importCollectionFromTempFolder();
 		}
@@ -836,7 +836,7 @@ definition {
 		task ("View selected page is linked to Card fragment") {
 			AssertVisible(
 				key_append = "[normalize-space(text())='Go Somewhere']",
-				key_URL = "/web/test-site-name/test-widget-page-name",
+				key_url = "/web/test-site-name/test-widget-page-name",
 				locator1 = "Fragment#FRAGMENT_LINK");
 		}
 
@@ -849,7 +849,7 @@ definition {
 		}
 
 		task ("Export the fragment composition") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "test-site-name");
 
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Saved Fragments");
 
@@ -859,7 +859,7 @@ definition {
 		task ("Import the fragment collection into a new site") {
 			JSONGroup.addGroup(groupName = "New Site");
 
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "new-site");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "new-site");
 
 			FragmentsAdmin.importCollectionFromTempFolder();
 		}
@@ -881,7 +881,7 @@ definition {
 
 			AssertVisible(
 				key_append = "[normalize-space(text())='Go Somewhere']",
-				key_URL = "/web/test-site-name/test-widget-page-name",
+				key_url = "/web/test-site-name/test-widget-page-name",
 				locator1 = "Fragment#FRAGMENT_LINK");
 
 			PortletEntry.publish();
@@ -894,7 +894,7 @@ definition {
 
 			Click(
 				key_append = "[normalize-space(text())='Go Somewhere']",
-				key_URL = "/web/test-site-name/test-widget-page-name",
+				key_url = "/web/test-site-name/test-widget-page-name",
 				locator1 = "Fragment#FRAGMENT_LINK");
 		}
 
@@ -981,7 +981,7 @@ definition {
 		}
 
 		task ("Export the fragment collection") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "test-site-name");
 
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Saved Fragments");
 
@@ -991,7 +991,7 @@ definition {
 		task ("Import the fragment collection into a new site") {
 			JSONGroup.addGroup(groupName = "New Site Name");
 
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "new-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "new-site-name");
 
 			FragmentsAdmin.importCollectionFromTempFolder();
 		}
@@ -1105,7 +1105,7 @@ definition {
 		}
 
 		task ("Export the fragment collection") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "test-site-name");
 
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Saved Fragments");
 
@@ -1115,7 +1115,7 @@ definition {
 		task ("Import the fragment collection into a new site") {
 			JSONGroup.addGroup(groupName = "New Site Name");
 
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "new-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "new-site-name");
 
 			FragmentsAdmin.importCollectionFromTempFolder();
 		}
@@ -1215,7 +1215,7 @@ definition {
 		}
 
 		task ("Export the global fragment collection") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "global");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "global");
 
 			FragmentsAdmin.exportCollection(collectionName = "Global Collection Name");
 		}
@@ -1314,7 +1314,7 @@ definition {
 		}
 
 		task ("Export the global fragment") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "global");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "global");
 
 			FragmentsAdmin.exportFragment(
 				collectionName = "Global Collection Name",
@@ -1394,7 +1394,7 @@ definition {
 		}
 
 		task ("Export three new collections") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "test-site-name");
 
 			FragmentsAdminNavigator.gotoExportCollection();
 
@@ -1406,7 +1406,7 @@ definition {
 		task ("Import the fragment collection into a new site") {
 			JSONGroup.addGroup(groupName = "Site Name");
 
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "site-name");
 
 			FragmentsAdmin.importCollectionFromTempFolder();
 		}
@@ -1536,7 +1536,7 @@ definition {
 		}
 
 		task ("Copy the Tabs fragment to new collection") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "test-site-name");
 
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Basic Components");
 
@@ -1612,7 +1612,7 @@ definition {
 		}
 
 		task ("Navigate to Fragments admin") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "test-site-name");
 		}
 
 		task ("Import the fragment collection") {

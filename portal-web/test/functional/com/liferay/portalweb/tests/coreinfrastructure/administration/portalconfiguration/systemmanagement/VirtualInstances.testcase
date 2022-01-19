@@ -80,7 +80,7 @@ definition {
 		User.firstLoginPG(
 			password = "test",
 			userEmailAddress = "test@www.able.com",
-			virtualHostsURL = "http://www.able.com:8080");
+			virtualHostsUrl = "http://www.able.com:8080");
 
 		Navigator.openSpecificURL(url = "http://www.able.com:8080");
 
@@ -97,13 +97,13 @@ definition {
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
 
-		var documentURL = selenium.getLocation();
-		var otherInstanceAccessAttempt = StringUtil.replace("${documentURL}", "able", "baker");
+		var documentUrl = selenium.getLocation();
+		var otherInstanceAccessAttempt = StringUtil.replace("${documentUrl}", "able", "baker");
 
 		User.firstLoginPG(
 			password = "test",
 			userEmailAddress = "test@www.baker.com",
-			virtualHostsURL = "http://www.baker.com:8080");
+			virtualHostsUrl = "http://www.baker.com:8080");
 
 		Navigator.openSpecificURL(url = "${otherInstanceAccessAttempt}");
 
@@ -179,7 +179,7 @@ definition {
 		User.firstLoginPG(
 			password = "test",
 			userEmailAddress = "test@www.able.com",
-			virtualHostsURL = "http://www.able.com:8080");
+			virtualHostsUrl = "http://www.able.com:8080");
 
 		Page.viewNoPG(pageName = "Blogs Page");
 
@@ -240,17 +240,17 @@ definition {
 
 		PortalSettings.editVirtualHostCP(virtualHostName = "www.able.com");
 
-		Site.openSiteSettingsAdmin(siteURLKey = "guest");
+		Site.openSiteSettingsAdmin(siteUrlKey = "guest");
 
 		Site.addVirtualHostsURLCP(
-			publicPageVirtualHostURL = "www.baker.com",
-			publicVirtualHosts = "${publicPageVirtualHostURL}");
+			publicPageVirtualHostUrl = "www.baker.com",
+			publicVirtualHosts = "${publicPageVirtualHostUrl}");
 
-		Site.openSiteSettingsAdmin(siteURLKey = "guest");
+		Site.openSiteSettingsAdmin(siteUrlKey = "guest");
 
 		Site.addVirtualHostsURLCP(
-			privatePageVirtualHostURL = "www.charlie.com",
-			privateVirtualHosts = "${privatePageVirtualHostURL}");
+			privatePageVirtualHostUrl = "www.charlie.com",
+			privateVirtualHosts = "${privatePageVirtualHostUrl}");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
@@ -268,7 +268,7 @@ definition {
 
 		User.loginPG(
 			password = "test",
-			specificURL = "http://www.charlie.com:8080/group/guest",
+			specificUrl = "http://www.charlie.com:8080/group/guest",
 			userEmailAddress = "test@liferay.com");
 
 		AssertTextEquals(
@@ -321,7 +321,7 @@ definition {
 		User.firstLoginPG(
 			password = "test",
 			userEmailAddress = "test@www.able.com",
-			virtualHostsURL = "http://www.able.com:8080");
+			virtualHostsUrl = "http://www.able.com:8080");
 
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "Users",

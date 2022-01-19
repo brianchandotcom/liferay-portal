@@ -32,7 +32,7 @@ definition {
 	@priority = "4"
 	test ViewCollectionPageBasedOnCollectionWithXSSName {
 		task ("Create a manual collection with XSS name for All Types") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+			AssetListsAdmin.openAssetListsAdmin(siteUrlKey = "test-site-name");
 
 			AssetListsAdmin.addManualSelection(assetListTitle = "<script>alert(123)</script>");
 
@@ -40,7 +40,7 @@ definition {
 		}
 
 		task ("Add collection page based on manual collection") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
 
 			ContentPages.addPublicCollectionPage(
 				collectionName = "<script>alert(123)</script>",

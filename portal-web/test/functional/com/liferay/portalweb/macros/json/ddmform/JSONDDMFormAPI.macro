@@ -10,7 +10,7 @@ definition {
 		var groupId = JSONDDMFormSetter.setGroupId(groupName = "${groupName}");
 
 		var curl = '''
-			${portalURL}/api/jsonws/ddm.ddmforminstance/get-form-instances \
+			${portalUrl}/api/jsonws/ddm.ddmforminstance/get-form-instances \
 			  -u test@liferay.com:test \
 			  -d companyId=${companyId} \
 			  -d groupId=${groupId} \
@@ -30,7 +30,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalURL}/api/jsonws/ddm.ddmforminstancerecord/get-form-instance-records \
+			${portalUrl}/api/jsonws/ddm.ddmforminstancerecord/get-form-instance-records \
 			  -u test@liferay.com:test \
 			  -d ddmFormInstanceId=${formInstanceId}
 		''';

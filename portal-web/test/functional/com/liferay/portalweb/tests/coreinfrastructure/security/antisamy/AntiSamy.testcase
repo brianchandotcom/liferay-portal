@@ -69,14 +69,14 @@ definition {
 		}
 
 		task ("Add KB article with dynamic attribute and view it as guest") {
-			KBAdmin.openKBAdmin(siteURLKey = "guest");
+			KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 			KBArticle.addCP(
 				kbArticleAddViaSource = "true",
 				kbArticleContentSource = '''<p data-test="test">Hello Liferay</p>''',
 				kbArticleTitle = "Test AntiSamy");
 
-			KBAdmin.openKBAdmin(siteURLKey = "guest");
+			KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 			KBArticle.viewCP(
 				kbArticleContent = "Hello Liferay",
@@ -84,7 +84,7 @@ definition {
 		}
 
 		task ("Save KB article as Draft") {
-			KBAdmin.openKBAdmin(siteURLKey = "guest");
+			KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 			KBArticle.editCP(
 				kbArticleTitle = "Test AntiSamy",

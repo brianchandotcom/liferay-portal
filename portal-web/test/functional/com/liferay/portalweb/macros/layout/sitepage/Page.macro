@@ -1,52 +1,52 @@
 definition {
 
 	macro assertAlternateURL {
-		var HTML = '''<link data-senna-track="temporary" href="''';
+		var html = '''<link data-senna-track="temporary" href="''';
 
 		if ("${locale}" == "zh") {
 			var zhAlternate = '''" hreflang="zh-CN" rel="alternate">''';
-			var pageSource = StringUtil.add("${HTML}", "${portalURL}/zh/web/guest${zhAlternate}", "");
+			var pageSource = StringUtil.add("${html}", "${portalUrl}/zh/web/guest${zhAlternate}", "");
 		}
 		else if ("${locale}" == "es") {
 			var esAlternate = '''" hreflang="es-ES" rel="alternate">''';
-			var pageSource = StringUtil.add("${HTML}", "${portalURL}/es/web/guest${esAlternate}", "");
+			var pageSource = StringUtil.add("${html}", "${portalUrl}/es/web/guest${esAlternate}", "");
 		}
 
 		AssertHTMLSourceTextPresent(value1 = "${pageSource}");
 	}
 
 	macro assertCanonicalURL {
-		var HTML = '''<link data-senna-track="temporary" href="''';
+		var html = '''<link data-senna-track="temporary" href="''';
 
-		var HTML2 = '''" rel="canonical">''';
+		var Html2 = '''" rel="canonical">''';
 
 		if (isSet(customCanonicalURL)) {
-			var portalURL = "${customCanonicalURL}";
+			var portalUrl = "${customCanonicalUrl}";
 		}
 		else if (isSet(locale)) {
-			var portalURL = "${portalURL}/${locale}/web/guest";
+			var portalUrl = "${portalUrl}/${locale}/web/guest";
 		}
 		else {
-			var portalURL = "${portalURL}/web/guest";
+			var portalUrl = "${portalUrl}/web/guest";
 		}
 
 		if (isSet(pageName)) {
 			var pageName = StringUtil.lowerCase("${pageName}");
-			var pageNameURL = StringUtil.replace("${pageName}", " ", "-");
-			var pageSource = StringUtil.add("${HTML}", "${portalURL}/${pageNameURL}${HTML2}", "");
+			var pageNameUrl = StringUtil.replace("${pageName}", " ", "-");
+			var pageSource = StringUtil.add("${html}", "${portalUrl}/${pageNameUrl}${Html2}", "");
 		}
 		else {
-			var pageSource = StringUtil.add("${HTML}", "${portalURL}${HTML2}", "");
+			var pageSource = StringUtil.add("${html}", "${portalUrl}${Html2}", "");
 		}
 
 		AssertHTMLSourceTextPresent(value1 = "${pageSource}");
 	}
 
 	macro assertDefaultAlternateURL {
-		var HTML = '''<link data-senna-track="temporary" href="''';
+		var html = '''<link data-senna-track="temporary" href="''';
 
-		var HTML2 = '''" hreflang="x-default" rel="alternate">''';
-		var pageSource = StringUtil.add("${HTML}", "${portalURL}${HTML2}", "");
+		var Html2 = '''" hreflang="x-default" rel="alternate">''';
+		var pageSource = StringUtil.add("${html}", "${portalUrl}${Html2}", "");
 
 		AssertHTMLSourceTextPresent(value1 = "${pageSource}");
 	}
@@ -170,9 +170,9 @@ definition {
 	}
 
 	macro openURLLocale {
-		Navigator.openSpecificURL(url = "${localizationPageURL}");
+		Navigator.openSpecificURL(url = "${localizationPageUrl}");
 
-		AssertLocation(value1 = "${localizationPageURL}");
+		AssertLocation(value1 = "${localizationPageUrl}");
 	}
 
 	macro searchInCollectionFilter {
@@ -378,16 +378,16 @@ definition {
 			locator1 = "PagesAdmin#PREVIEW_TITLE",
 			value1 = "${htmlTitle}");
 
-		var pageNameURL = StringUtil.lowerCase("${pageName}");
-		var pageNameURL = StringUtil.replace("${pageNameURL}", " ", "-");
-		var url = "${portalURL}/web/guest/${pageNameURL}";
+		var pageNameUrl = StringUtil.lowerCase("${pageName}");
+		var pageNameUrl = StringUtil.replace("${pageNameUrl}", " ", "-");
+		var url = "${portalUrl}/web/guest/${pageNameUrl}";
 
 		if (isSet(siteNameURL)) {
 			if (isSet(pageName)) {
-				var url = "${portalURL}/web/${siteNameURL}/${pageNameURL}";
+				var url = "${portalUrl}/web/${siteNameUrl}/${pageNameUrl}";
 			}
 			else {
-				var url = "${portalURL}/web/${siteNameURL}";
+				var url = "${portalUrl}/web/${siteNameUrl}";
 			}
 		}
 
@@ -400,10 +400,10 @@ definition {
 
 			if (isSet(openGraph)) {
 				var languageName = StringUtil.upperCase("${languageName}");
-				var portalURL = StringUtil.upperCase("${portalURL}");
+				var portalUrl = StringUtil.upperCase("${portalUrl}");
 			}
 
-			var url = StringUtil.replace("${url}", "${portalURL}", "${portalURL}/${languageName}");
+			var url = StringUtil.replace("${url}", "${portalUrl}", "${portalUrl}/${languageName}");
 		}
 
 		AssertTextEquals(
@@ -416,7 +416,7 @@ definition {
 				value1 = "${description}");
 		}
 
-		if (isSet(truncatedHTMLTitle)) {
+		if (isSet(truncatedHtmlTitle)) {
 			ProductMenuHelper.closeProductMenu();
 
 			takeScreenshot();
@@ -509,9 +509,9 @@ definition {
 	}
 
 	macro viewTranslationsPG {
-		Navigator.openSpecificURL(url = "${sitePageURL}");
+		Navigator.openSpecificURL(url = "${sitePageUrl}");
 
-		AssertLocation(value1 = "${sitePageURL}");
+		AssertLocation(value1 = "${sitePageUrl}");
 
 		Alert.viewLocalizationMessage(
 			defaultLanguageLocalizationMessage = "${defaultLanguageLocalizationMessage}",
@@ -528,7 +528,7 @@ definition {
 				value1 = "${localizationOption}");
 		}
 
-		AssertLocation(value1 = "${localizationPageURL}");
+		AssertLocation(value1 = "${localizationPageUrl}");
 	}
 
 	macro viewWithWorkflowPG {

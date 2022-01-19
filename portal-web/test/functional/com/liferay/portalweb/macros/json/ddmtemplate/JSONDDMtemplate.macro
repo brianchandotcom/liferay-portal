@@ -18,7 +18,7 @@ definition {
 		var nameMap = JSONDDMtemplateSetter.setNameMap(title = "${name}");
 
 		if (("${itemType}" == "Asset") || ("${itemType}" == "Blogs Entry") || ("${itemType}" == "Category") || ("${itemSubtype}" == "Basic Document")) {
-			var classPK = "0";
+			var classPk = "0";
 		}
 		else if ("${itemType}" == "Web Content Article") {
 			if ("${itemSubtype}" == "Basic Web Content") {
@@ -52,7 +52,7 @@ definition {
 
 		var templateKey = JSONDDMtemplateAPI._addInformationTemplate(
 			classNameId = "${classNameId}",
-			classPK = "${classPK}",
+			classPk = "${classPk}",
 			descriptionMap = "${descriptionMap}",
 			groupId = "${groupId}",
 			language = "${language}",

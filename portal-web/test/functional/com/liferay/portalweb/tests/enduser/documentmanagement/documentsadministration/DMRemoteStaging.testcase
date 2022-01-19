@@ -54,7 +54,7 @@ definition {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "DMRemoteStagingDM#AllActionsAreAvailableInRepository";
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
@@ -71,14 +71,14 @@ definition {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "RemoteStagingDM#DeleteDocumentWithCustomType";
 
-		DMNavigator.openDocumentTypesAdmin(siteURLKey = "site-name");
+		DMNavigator.openDocumentTypesAdmin(siteUrlKey = "site-name");
 
 		DMDocumentType.add(
 			dmDocumentTypeDescription = "DM Document Type Description",
 			dmDocumentTypeFieldNames = "Text",
 			dmDocumentTypeName = "DM Document Type Name");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
@@ -99,14 +99,14 @@ definition {
 
 		User.firstLoginUI(
 			password = "test",
-			specificURL = "http://localhost:9080",
+			specificUrl = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
 		DMNavigator.openToEntryInAdmin(
-			baseURL = "http://localhost:9080",
+			baseUrl = "http://localhost:9080",
 			dmDocumentTitle = "DM Document Title",
 			groupName = "Remote Site",
-			siteURLKey = "remote-site");
+			siteUrlKey = "remote-site");
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
 
@@ -115,7 +115,7 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name");
 
 		DMDocument.deleteCP(dmDocumentTitle = "DM Document Title");
 
@@ -131,12 +131,12 @@ definition {
 
 		User.firstLoginUI(
 			password = "test",
-			specificURL = "http://localhost:9080",
+			specificUrl = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
 		DMNavigator.openDocumentsAndMediaAdmin(
-			baseURL = "http://localhost:9080",
-			siteURLKey = "remote-site");
+			baseUrl = "http://localhost:9080",
+			siteUrlKey = "remote-site");
 
 		DMDocument.viewDefault();
 	}
@@ -170,7 +170,7 @@ definition {
 
 		User.firstLoginUI(
 			password = "test",
-			specificURL = "http://localhost:9080",
+			specificUrl = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
 		ApplicationsMenu.gotoPortlet(
@@ -265,14 +265,14 @@ definition {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "RemoteStagingDM#EditDocumentWithCustomType";
 
-		DMNavigator.openDocumentTypesAdmin(siteURLKey = "site-name");
+		DMNavigator.openDocumentTypesAdmin(siteUrlKey = "site-name");
 
 		DMDocumentType.add(
 			dmDocumentTypeDescription = "DM Document Type Description",
 			dmDocumentTypeFieldNames = "Image,Text",
 			dmDocumentTypeName = "DM Document Type Name");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
@@ -293,14 +293,14 @@ definition {
 
 		User.firstLoginUI(
 			password = "test",
-			specificURL = "http://localhost:9080",
+			specificUrl = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
 		DMNavigator.openToEntryInAdmin(
-			baseURL = "http://localhost:9080",
+			baseUrl = "http://localhost:9080",
 			dmDocumentTitle = "DM Document Title",
 			groupName = "Remote Site",
-			siteURLKey = "remote-site");
+			siteUrlKey = "remote-site");
 
 		DMDocument.viewCP(
 			dmDocumentDescription = "DM Document Description",
@@ -313,7 +313,7 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name");
 
 		DMDocument.editCP(
 			dmDocumentDescriptionEdit = "DM Document Description Edit",
@@ -334,12 +334,12 @@ definition {
 
 		User.firstLoginUI(
 			password = "test",
-			specificURL = "http://localhost:9080",
+			specificUrl = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
 		DMNavigator.openDocumentsAndMediaAdmin(
-			baseURL = "http://localhost:9080",
-			siteURLKey = "remote-site");
+			baseUrl = "http://localhost:9080",
+			siteUrlKey = "remote-site");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title Edit");
 
@@ -356,14 +356,14 @@ definition {
 	test PublishEditsToDocumentType {
 		property test.name.skip.portal.instance = "RemoteStagingDM#PublishEditsToDocumentType";
 
-		DMNavigator.openDocumentTypesAdmin(siteURLKey = "site-name");
+		DMNavigator.openDocumentTypesAdmin(siteUrlKey = "site-name");
 
 		DMDocumentType.add(
 			dmDocumentTypeDescription = "DM Document Type Description",
 			dmDocumentTypeFieldNames = "Image",
 			dmDocumentTypeName = "DM Document Type Name");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
@@ -386,14 +386,14 @@ definition {
 
 		User.firstLoginUI(
 			password = "test",
-			specificURL = "http://localhost:9080",
+			specificUrl = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
 		DMNavigator.openToEntryInAdmin(
-			baseURL = "http://localhost:9080",
+			baseUrl = "http://localhost:9080",
 			dmDocumentTitle = "DM Document Title",
 			groupName = "Remote Site",
-			siteURLKey = "remote-site");
+			siteUrlKey = "remote-site");
 
 		DMDocument.viewCP(
 			dmDocumentTitle = "DM Document Title",
@@ -407,7 +407,7 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		DMNavigator.openDocumentTypesAdmin(siteURLKey = "site-name");
+		DMNavigator.openDocumentTypesAdmin(siteUrlKey = "site-name");
 
 		DMDocumentType.edit(
 			dmDocumentTypeFieldNameEdit = "Photo",
@@ -416,7 +416,7 @@ definition {
 			fieldFieldLabel = "Image",
 			fieldFieldLabelEdit = "Photo");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name");
 
 		DMDocument.editCP(
 			dmDocumentTitle = "DM Document Title",
@@ -436,14 +436,14 @@ definition {
 
 		User.firstLoginUI(
 			password = "test",
-			specificURL = "http://localhost:9080",
+			specificUrl = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
 		DMNavigator.openToEntryInAdmin(
-			baseURL = "http://localhost:9080",
+			baseUrl = "http://localhost:9080",
 			dmDocumentTitle = "DM Document Title",
 			groupName = "Remote Site",
-			siteURLKey = "remote-site");
+			siteUrlKey = "remote-site");
 
 		DMDocument.viewCP(
 			dmDocumentTitle = "DM Document Title",
@@ -462,7 +462,7 @@ definition {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "RemoteStagingDM#PublishEditsToDocumentUsingCustomTypeAndSet";
 
-		DMNavigator.openMetadataSetsAdmin(siteURLKey = "site-name");
+		DMNavigator.openMetadataSetsAdmin(siteUrlKey = "site-name");
 
 		DMMetadataSet.addTitle(metadataSetName = "Document Metadata Set Name");
 
@@ -472,7 +472,7 @@ definition {
 
 		DDLDataDefinition.save();
 
-		DMNavigator.openToAddDocumentType(siteURLKey = "site-name");
+		DMNavigator.openToAddDocumentType(siteUrlKey = "site-name");
 
 		PortletEntry.inputName(name = "DM Document Type Name");
 
@@ -484,7 +484,7 @@ definition {
 
 		DDLDataDefinition.save();
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
@@ -505,14 +505,14 @@ definition {
 
 		User.firstLoginUI(
 			password = "test",
-			specificURL = "http://localhost:9080",
+			specificUrl = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
 		DMNavigator.openToEntryInAdmin(
-			baseURL = "http://localhost:9080",
+			baseUrl = "http://localhost:9080",
 			dmDocumentTitle = "DM Document Title",
 			groupName = "Remote Site",
-			siteURLKey = "remote-site");
+			siteUrlKey = "remote-site");
 
 		DMDocument.viewCP(
 			dmDocumentDescription = "DM Document Description",
@@ -521,8 +521,8 @@ definition {
 			previewImage = "Document_1.jpg");
 
 		DMNavigator.openDocumentTypesAdmin(
-			baseURL = "http://localhost:9080",
-			siteURLKey = "remote-site");
+			baseUrl = "http://localhost:9080",
+			siteUrlKey = "remote-site");
 
 		DMDocumentType.viewCP(dmDocumentTypeName = "DM Document Type Name");
 
@@ -531,7 +531,7 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name");
 
 		DMDocument.editCP(
 			dmDocumentDescriptionEdit = "DM Document Description Edit",
@@ -552,14 +552,14 @@ definition {
 
 		User.firstLoginUI(
 			password = "test",
-			specificURL = "http://localhost:9080",
+			specificUrl = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
 		DMNavigator.openToEntryInAdmin(
-			baseURL = "http://localhost:9080",
+			baseUrl = "http://localhost:9080",
 			dmDocumentTitle = "DM Document Title Edit",
 			groupName = "Remote Site",
-			siteURLKey = "remote-site");
+			siteUrlKey = "remote-site");
 
 		DMDocument.viewCP(
 			dmDocumentDescription = "DM Document Description Edit",
@@ -574,7 +574,7 @@ definition {
 	test PublishEditsToMetadataSet {
 		property test.name.skip.portal.instance = "RemoteStagingDM#PublishEditsToMetadataSet";
 
-		DMNavigator.openMetadataSetsAdmin(siteURLKey = "site-name");
+		DMNavigator.openMetadataSetsAdmin(siteUrlKey = "site-name");
 
 		DMMetadataSet.addTitle(metadataSetName = "DM Metadata Set Name");
 
@@ -592,7 +592,7 @@ definition {
 			dmDocumentTypeName = "DM Document Type Name",
 			metadataSetName = "DM Metadata Set Name");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
@@ -629,12 +629,12 @@ definition {
 
 		User.firstLoginUI(
 			password = "test",
-			specificURL = "http://localhost:9080",
+			specificUrl = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
 		DMNavigator.openDocumentsAndMediaAdmin(
-			baseURL = "http://localhost:9080",
-			siteURLKey = "remote-site");
+			baseUrl = "http://localhost:9080",
+			siteUrlKey = "remote-site");
 
 		DMDocument.viewPG(
 			dmDocumentDescription = "DM Document Description",
@@ -651,7 +651,7 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		DMNavigator.openMetadataSetsAdmin(siteURLKey = "site-name");
+		DMNavigator.openMetadataSetsAdmin(siteUrlKey = "site-name");
 
 		DMDocumentType.edit(
 			dmDocumentTypeFieldNameEdit = "Company",
@@ -673,12 +673,12 @@ definition {
 
 		User.firstLoginUI(
 			password = "test",
-			specificURL = "http://localhost:9080",
+			specificUrl = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
 		DMNavigator.openDocumentsAndMediaAdmin(
-			baseURL = "http://localhost:9080",
-			siteURLKey = "remote-site");
+			baseUrl = "http://localhost:9080",
+			siteUrlKey = "remote-site");
 
 		DMDocument.viewPG(
 			dmDocumentDescription = "DM Document Description",
@@ -736,18 +736,18 @@ definition {
 
 		User.firstLoginUI(
 			password = "test",
-			specificURL = "http://localhost:9080",
+			specificUrl = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
 		Navigator.gotoSitePage(
-			baseURL = "http://localhost:9080",
+			baseUrl = "http://localhost:9080",
 			pageName = "Staging DM Page",
 			siteName = "Remote Site");
 
 		var siteID = Site.getSiteId();
 
 		Navigator.gotoSitePage(
-			baseURL = "http://localhost:9080",
+			baseUrl = "http://localhost:9080",
 			pageName = "Staging DM Page",
 			siteName = "Remote Site");
 
@@ -770,7 +770,7 @@ definition {
 		DMDocument.viewLatestVersionURL(
 			dmDocumentFileName = "Document_1.jpg",
 			remoteStaging = "true",
-			siteID = "${siteID}");
+			siteId = "${siteId}");
 
 		DMDocument.viewWebDAVURL(
 			dmDocumentFileName = "Document_1.jpg",
@@ -786,7 +786,7 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name");
 
 		DMDocument.editCP(
 			dmDocumentDescriptionEdit = "DM Document Description Edit",
@@ -807,11 +807,11 @@ definition {
 
 		User.firstLoginUI(
 			password = "test",
-			specificURL = "http://localhost:9080",
+			specificUrl = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
 		Navigator.gotoSitePage(
-			baseURL = "http://localhost:9080",
+			baseUrl = "http://localhost:9080",
 			pageName = "Staging DM Page",
 			siteName = "Remote Site");
 
@@ -834,7 +834,7 @@ definition {
 		DMDocument.viewLatestVersionURL(
 			dmDocumentFileName = "Document_3Edit.png",
 			remoteStaging = "true",
-			siteID = "${siteID}");
+			siteId = "${siteId}");
 
 		DMDocument.viewWebDAVURL(
 			dmDocumentFileName = "Document_3Edit.png",
@@ -865,13 +865,13 @@ definition {
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_2.jpg");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name");
 
 		Staging.publishViaSAP(
 			confirmMessage = "Are you sure you want to publish the selected document?",
 			entry = "Document_2.jpg");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
 
 		NavItem.gotoStructures();
 
@@ -914,11 +914,11 @@ definition {
 
 		User.firstLoginUI(
 			password = "test",
-			specificURL = "http://localhost:9080",
+			specificUrl = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
 		Navigator.gotoSitePage(
-			baseURL = "http://localhost:9080",
+			baseUrl = "http://localhost:9080",
 			pageName = "Staging DM Page",
 			siteName = "Remote Site");
 
@@ -931,11 +931,11 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name");
 
 		DMDocument.deleteCP(dmDocumentTitle = "Document_2.jpg");
 
-		RecycleBin.openRecycleBinAdmin(siteURLKey = "site-name");
+		RecycleBin.openRecycleBinAdmin(siteUrlKey = "site-name");
 
 		RecycleBin.deleteCP(
 			assetName = "Document_2.jpg",
@@ -953,11 +953,11 @@ definition {
 
 		User.firstLoginUI(
 			password = "test",
-			specificURL = "http://localhost:9080",
+			specificUrl = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
 		Navigator.gotoSitePage(
-			baseURL = "http://localhost:9080",
+			baseUrl = "http://localhost:9080",
 			pageName = "Staging DM Page",
 			siteName = "Remote Site");
 
@@ -986,13 +986,13 @@ definition {
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_2.jpg");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name");
 
 		Staging.publishViaSAP(
 			confirmMessage = "Are you sure you want to publish the selected document?",
 			entry = "Document_2.jpg");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
 
 		NavItem.gotoStructures();
 
@@ -1035,11 +1035,11 @@ definition {
 
 		User.firstLoginUI(
 			password = "test",
-			specificURL = "http://localhost:9080",
+			specificUrl = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
 		Navigator.gotoSitePage(
-			baseURL = "http://localhost:9080",
+			baseUrl = "http://localhost:9080",
 			pageName = "Staging DM Page",
 			siteName = "Remote Site");
 
@@ -1052,7 +1052,7 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name");
 
 		DMDocument.editCP(
 			dmDocumentFileEdit = "Document_3.jpg",
@@ -1072,11 +1072,11 @@ definition {
 
 		User.firstLoginUI(
 			password = "test",
-			specificURL = "http://localhost:9080",
+			specificUrl = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
 		Navigator.gotoSitePage(
-			baseURL = "http://localhost:9080",
+			baseUrl = "http://localhost:9080",
 			pageName = "Staging DM Page",
 			siteName = "Remote Site");
 

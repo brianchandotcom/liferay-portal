@@ -40,7 +40,7 @@ definition {
 		Button.clickNext();
 
 		if (isSet(selectAnalyticsCloudField)) {
-			if (IsElementNotPresent(key_FieldName = "${fieldName}", key_index = "${index}", locator1 = "ACSettings#DATA_SOURCE_FIELD_NAME")) {
+			if (IsElementNotPresent(key_fieldName = "${fieldName}", key_index = "${index}", locator1 = "ACSettings#DATA_SOURCE_FIELD_NAME")) {
 				Button.click(button = "Select Analytics Cloud Field");
 
 				if (isSet(newField)) {
@@ -238,8 +238,7 @@ definition {
 			value1 = "${status}");
 	}
 
-	@summary = "Asserts the individuals usage value \
-	@param individualUsageValue"
+	@summary = "Asserts the individuals usage value \  @param individualUsageValue"
 	macro assertIndividualsUsage {
 		AssertTextEquals(
 			locator1 = "ACSettings#INDIVIDUALS_USAGE_METRIC",
@@ -252,7 +251,7 @@ definition {
 
 	macro assertKeywordNotPresent {
 		for (var word : list "${keyword}") {
-			var key_KeywordName = "${word}";
+			var key_keywordName = "${word}";
 
 			AssertElementNotPresent(
 				locator1 = "ACSettings#KEYWORD_NAME",
@@ -262,7 +261,7 @@ definition {
 
 	macro assertKeywords {
 		for (var word : list "${keyword}") {
-			var key_KeywordName = "${word}";
+			var key_keywordName = "${word}";
 
 			AssertTextEquals(
 				locator1 = "ACSettings#KEYWORD_NAME",
@@ -293,8 +292,7 @@ definition {
 		}
 	}
 
-	@summary = "Asserts the page views usage value \
-	@param pageViewsUsageValue"
+	@summary = "Asserts the page views usage value \  @param pageViewsUsageValue"
 	macro assertPageViewsUsage {
 		AssertTextEquals(
 			locator1 = "ACSettings#PAGE_VIEWS_USAGE_METRIC",
@@ -531,8 +529,7 @@ definition {
 		}
 	}
 
-	@summary = "Deletes all properties \
-	@param propertyList the list of properties you want to delete (optional)"
+	@summary = "Deletes all properties \  @param propertyList the list of properties you want to delete (optional)"
 	macro deleteAllProperties {
 		if (IsElementNotPresent(locator1 = "ACSettings#EXIT_SETTINGS_BUTTON")) {
 			ACNavigation.goToSettings();
@@ -557,8 +554,7 @@ definition {
 		}
 	}
 
-	@summary = "Deletes a specific data source \
-	@param dataSourceName the name of the data source you want to delete"
+	@summary = "Deletes a specific data source \  @param dataSourceName the name of the data source you want to delete"
 	macro deleteDataSource {
 		if (IsElementNotPresent(locator1 = "ACSettings#EXIT_SETTINGS_BUTTON")) {
 			ACNavigation.goToSettings();
@@ -624,7 +620,7 @@ definition {
 	}
 
 	macro deleteKeywordCheckbox {
-		var key_KeywordName = "${keyword}";
+		var key_keywordName = "${keyword}";
 
 		if (IsVisible(locator1 = "ACSettings#KEYWORD_NAME")) {
 			KeyPress(
@@ -638,7 +634,7 @@ definition {
 	}
 
 	macro deleteKeywordIcon {
-		var key_KeywordName = "${keyword}";
+		var key_keywordName = "${keyword}";
 
 		if (IsVisible(locator1 = "ACSettings#KEYWORD_NAME")) {
 			Click(locator1 = "ACSettings#KEYWORD_DELETE_ICON");
@@ -829,7 +825,7 @@ definition {
 	}
 
 	macro goToSettingsNavigation {
-		var key_SettingsNavigation = "${settingsNavigation}";
+		var key_settingsNavigation = "${settingsNavigation}";
 
 		Click(locator1 = "ACSettings#SETTINGS_NAVIGATION");
 	}

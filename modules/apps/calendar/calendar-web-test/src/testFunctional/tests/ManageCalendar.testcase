@@ -185,8 +185,8 @@ definition {
 			myCalendarColor = "668CD9");
 
 		CalendarScheduler.viewEventColor(
-			eventBackgroundColorRGB = "(208, 219, 240)",
-			eventFontColorRGB = "(104, 142, 217)",
+			eventBackgroundColorRgb = "(208, 219, 240)",
+			eventFontColorRgb = "(104, 142, 217)",
 			eventTitle = "Calendar Event Regular Title");
 
 		ApplicationsMenu.gotoPortlet(
@@ -229,8 +229,8 @@ definition {
 			myCalendarColor = "668CD9");
 
 		CalendarScheduler.viewEventColor(
-			eventBackgroundColorRGB = "(208, 219, 240)",
-			eventFontColorRGB = "(104, 142, 217)",
+			eventBackgroundColorRgb = "(208, 219, 240)",
+			eventFontColorRgb = "(104, 142, 217)",
 			eventTitle = "Calendar Event Regular Title");
 
 		User.logoutAndLoginPG(
@@ -713,7 +713,7 @@ definition {
 			calendarName = "Site Name",
 			siteName = "Site Name");
 
-		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
+		Site.openSiteSettingsAdmin(siteUrlKey = "site-name");
 
 		Site.editCP(
 			siteName = "Site Name",

@@ -17,7 +17,7 @@ definition {
 		}
 
 		task ("Go to Pages Admin") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
 		}
 	}
 
@@ -79,7 +79,7 @@ definition {
 		}
 
 		task ("Add a child page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
 
 			PagesAdmin.addPublicChildPage(
 				childPageName = "Test Child Page",
@@ -138,7 +138,7 @@ definition {
 		}
 
 		task ("View order of the page actions") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
 
 			PagesAdmin.openPageEllipsisMenu(pageName = "Test Page Name");
 

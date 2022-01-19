@@ -23,7 +23,7 @@
 </tr>
 <tr>
 	<td>GENERIC_SIDEBAR_OPTION</td>
-	<td>//*[contains(@class,'sidebar-item-root')]//*[contains(@href,'${key_SidebarOption}')]</td>
+	<td>//*[contains(@class,'sidebar-item-root')]//*[contains(@href,'${key_sidebarOption}')]</td>
 	<td></td>
 </tr>
 <!-- TABS/OPTIONS AVAILABLE IN DIFFERENT PLACES E.G: ASSETS, SEGMENTS, SITES -->

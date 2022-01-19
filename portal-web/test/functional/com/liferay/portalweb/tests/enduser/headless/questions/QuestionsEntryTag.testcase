@@ -52,7 +52,7 @@ definition {
 		Questions.askQuestionFillingTheMandatoryFields(
 			contentField = "Body AddQuestionWithTheMaximumTags",
 			layoutName = "questions-page",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			tagLocatorList = "Tag1,Tag2,Tag3,Tag4,Tag5",
 			titleField = "Title AddQuestionWithTheMaximumTags",
 			topicName = "questions-test-category");
@@ -72,7 +72,7 @@ definition {
 		Questions.askQuestionFillingTheMandatoryFields(
 			contentField = "Body AddQuestionWithMoreThanTheMaximumTags",
 			layoutName = "questions-page",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			tagLocatorList = "Tag1,Tag2,Tag3,Tag4,Tag5,Tag6",
 			titleField = "Title AddQuestionWithMoreThanTheMaximumTags",
 			topicName = "questions-test-category");
@@ -103,7 +103,7 @@ definition {
 			contentField = "Body AddQuestionWithMoreText",
 			invalidCharacters = "Tag",
 			layoutName = "questions-page",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			tagLocatorList = '''<script>alert(123);</script>''',
 			titleField = "Title AddQuestion",
 			topicName = "questions-test-category");
@@ -145,7 +145,7 @@ definition {
 
 		Questions.openToTagsTab(
 			layoutName = "questions-page",
-			siteURLKey = "guest");
+			siteUrlKey = "guest");
 
 		Questions.subscribeFromTag();
 
@@ -156,7 +156,7 @@ definition {
 		Questions.askQuestionFillingTheMandatoryFields(
 			contentField = "Content AddQuestion New",
 			layoutName = "questions-page",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			tagLocatorList = "tag",
 			titleField = "Title AddQuestion New",
 			topicName = "questions-test-category");
@@ -213,7 +213,7 @@ definition {
 
 		Questions.openToTagsTab(
 			layoutName = "questions-page",
-			siteURLKey = "guest");
+			siteUrlKey = "guest");
 
 		Questions.subscribeFromTag();
 
@@ -256,7 +256,7 @@ definition {
 
 		Questions.openToTagsTab(
 			layoutName = "questions-page",
-			siteURLKey = "guest");
+			siteUrlKey = "guest");
 
 		Questions.viewQuestionViaTag(
 			questionTitle = "Title TagCardRedirectTheUserToTheQuestionsThatAreUsingThisTag",
@@ -274,7 +274,7 @@ definition {
 
 		Questions.openToTagsTab(
 			layoutName = "questions-page",
-			siteURLKey = "guest");
+			siteUrlKey = "guest");
 
 		Questions.viewTags(noTagResults = "true");
 
@@ -295,7 +295,7 @@ definition {
 
 		Questions.openToTagsTab(
 			layoutName = "questions-page",
-			siteURLKey = "guest");
+			siteUrlKey = "guest");
 
 		Questions.configureTagsFilter(filterBy = "Latest Created");
 
@@ -391,7 +391,7 @@ definition {
 
 		Questions.openToTagsTab(
 			layoutName = "questions-page",
-			siteURLKey = "guest");
+			siteUrlKey = "guest");
 
 		Questions.viewTags(
 			amountOfUsedTimes = "2",
@@ -406,7 +406,7 @@ definition {
 
 		Questions.openToTagsTab(
 			layoutName = "questions-page",
-			siteURLKey = "guest");
+			siteUrlKey = "guest");
 
 		Questions.viewTags(
 			amountOfUsedTimes = "3",
@@ -433,7 +433,7 @@ definition {
 
 		Questions.openToTagsTab(
 			layoutName = "questions-page",
-			siteURLKey = "guest");
+			siteUrlKey = "guest");
 
 		Questions.search(
 			searchKey = "tag1",

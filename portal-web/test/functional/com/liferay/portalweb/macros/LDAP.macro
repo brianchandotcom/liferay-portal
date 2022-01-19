@@ -2,16 +2,16 @@ definition {
 
 	@description = "Add Apache DS server and test the connection between it and Liferay DXP"
 	macro addLDAPServerAndTestConnection {
-		PortalSettings.addLDAPServer(LDAPServerName = "${LDAPServerName}");
+		PortalSettings.addLDAPServer(ldapServerName = "${ldapServerName}");
 
-		PortalSettings.editLDAPServer(LDAPServerName = "${LDAPServerName}");
+		PortalSettings.editLDAPServer(ldapServerName = "${ldapServerName}");
 
 		PortalSettings.testLDAPConnection();
 	}
 
 	@description = "Assert no pagination display in the LDAP connection page"
 	macro assertNoPagination {
-		PortalSettings.editLDAPServer(LDAPServerName = "${LDAPServerName}");
+		PortalSettings.editLDAPServer(ldapServerName = "${ldapServerName}");
 
 		AssertClick(
 			locator1 = "PortalSettingsAuthentication#LDAP_SERVER_TEST_LDAP_USERS_BUTTON",

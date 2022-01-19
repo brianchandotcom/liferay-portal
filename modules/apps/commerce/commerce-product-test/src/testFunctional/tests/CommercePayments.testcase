@@ -139,7 +139,7 @@ definition {
 		Refresh();
 
 		AssertElementPresent(
-			key_FilterOption = "Cancelled",
+			key_filterOption = "Cancelled",
 			locator1 = "AppBuilder#CHOOSE_APP_SEARCH_FILTER_BY_OPTION");
 	}
 

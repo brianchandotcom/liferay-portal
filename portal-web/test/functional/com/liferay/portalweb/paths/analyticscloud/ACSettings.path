@@ -34,7 +34,7 @@
 <!-- SETTINGS NAVIGATION -->
 <tr>
 	<td>SETTINGS_NAVIGATION</td>
-	<td>//*[contains(@class, 'btn-link') and contains(@href,'${key_SettingsNavigation}')]</td>
+	<td>//*[contains(@class, 'btn-link') and contains(@href,'${key_settingsNavigation}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -71,22 +71,22 @@
 </tr>
 <tr>
 	<td>KEYWORD_CHECKBOX</td>
-	<td>//h4[text()='${key_KeywordName}']/parent::td/preceding-sibling::td//input</td>
+	<td>//h4[text()='${key_keywordName}']/parent::td/preceding-sibling::td//input</td>
 	<td></td>
 </tr>
 <tr>
 	<td>KEYWORD_NAME_BY_INDEX</td>
-	<td>//tr[${key_index}]//*[contains(@class,'table-title') and (text()='${key_KeywordName}')]</td>
+	<td>//tr[${key_index}]//*[contains(@class,'table-title') and (text()='${key_keywordName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>KEYWORD_DELETE_ICON</td>
-	<td>//h4[text()='${key_KeywordName}']/parent::td/following-sibling::td[contains(@class,'row-inline-actions')]/span/button</td>
+	<td>//h4[text()='${key_keywordName}']/parent::td/following-sibling::td[contains(@class,'row-inline-actions')]/span/button</td>
 	<td></td>
 </tr>
 <tr>
 	<td>KEYWORD_NAME</td>
-	<td>//*[contains(@class,'table-title') and (text()='${key_KeywordName}')]</td>
+	<td>//*[contains(@class,'table-title') and (text()='${key_keywordName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -404,7 +404,7 @@
 <!-- CONFIGURE CSV -->
 <tr>
 	<td>DATA_SOURCE_FIELD_NAME</td>
-	<td>xpath=(//button[contains(@class,'show-caret') and contains(.,'${key_FieldName}')])[${key_index}]</td>
+	<td>xpath=(//button[contains(@class,'show-caret') and contains(.,'${key_fieldName}')])[${key_index}]</td>
 	<td></td>
 </tr>
 </tbody>

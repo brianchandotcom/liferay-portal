@@ -79,7 +79,7 @@ definition {
 			groupName = "Guest",
 			layoutName = "message-boards-page",
 			mbAttachmentFileList = "Document_1.doc,Document_1.jpg,Document_1.pdf,Document_1.png,Document_1.pptx,Document_1.mp4",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			threadBody = "MB Thread Message Body",
 			threadSubject = "MB Thread Message Subject");
 
@@ -138,25 +138,25 @@ definition {
 	test CanConfigureWidgetToAddThreadAsQuestionByDefault {
 		property portal.acceptance = "false";
 
-		MessageboardsThread.viewMarkAsQuestionNotChecked(siteURLKey = "guest");
+		MessageboardsThread.viewMarkAsQuestionNotChecked(siteUrlKey = "guest");
 
 		MessageboardsPortlet.configureGeneralCP(
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			threadAsQuestionByDefaultEnabled = "true");
 
-		MessageboardsThread.viewMarkAsQuestionChecked(siteURLKey = "guest");
+		MessageboardsThread.viewMarkAsQuestionChecked(siteUrlKey = "guest");
 
 		MessageboardsThread.addPG(
 			groupName = "Guest",
 			layoutName = "message-boards-page",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			threadBody = "Thread Body",
 			threadSubject = "Thread Subject");
 
 		MessageboardsThread.openToThread(
 			groupName = "Guest",
 			layoutName = "message-boards-page",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			threadSubject = "Thread Subject");
 
 		MessageboardsThread.replyPG(
@@ -216,7 +216,7 @@ definition {
 			categoryNameEdit = "MB Category Name Edit",
 			groupName = "Guest",
 			layoutName = "message-boards-page",
-			siteURLKey = "guest");
+			siteUrlKey = "guest");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -234,7 +234,7 @@ definition {
 		MessageboardsThread.openToThread(
 			groupName = "Guest",
 			layoutName = "message-boards-page",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			threadSubject = "MB Thread Message Subject");
 
 		MessageboardsThread.editPG(
@@ -259,7 +259,7 @@ definition {
 		MessageboardsThread.addPG(
 			groupName = "Guest",
 			layoutName = "message-boards-page",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			threadBody = "MB Thread Message Body",
 			threadSubject = "MB Thread Message Subject");
 
@@ -273,11 +273,11 @@ definition {
 
 		MessageboardsPortlet.configureMessageAddedEmail(
 			messageAddedEmailEnabled = "false",
-			siteURLKey = "guest");
+			siteUrlKey = "guest");
 
 		MessageboardsPortlet.configureMessageUpdatedEmail(
 			messageUpdatedEmailEnabled = "false",
-			siteURLKey = "guest");
+			siteUrlKey = "guest");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -310,7 +310,7 @@ definition {
 		MessageboardsThread.openToThread(
 			groupName = "Guest",
 			layoutName = "message-boards-page",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			threadSubject = "MB Thread Message Subject");
 
 		MessageboardsThread.downloadAttachmentPG();
@@ -363,7 +363,7 @@ definition {
 		MessageboardsThread.openToAddThread(
 			groupName = "Guest",
 			layoutName = "message-boards-page",
-			siteURLKey = "guest");
+			siteUrlKey = "guest");
 
 		MessageboardsThread.saveNewThreadAsDraft(
 			skipNavigation = "true",
@@ -432,7 +432,7 @@ definition {
 
 		MessageboardsThread.openToEditThread(
 			groupName = "Guest",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			threadSubject = "MB Thread Message Subject");
 
 		Panel.expandPanel(panel = "Categorization");
@@ -471,7 +471,7 @@ definition {
 		MessageboardsThread.openToThread(
 			groupName = "Guest",
 			layoutName = "message-boards-page",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			threadSubject = "MB Thread Message Subject");
 
 		MessageboardsThread.splitThreadPG(
@@ -568,12 +568,12 @@ definition {
 			entryTitle = "MB Thread Message Subject 2",
 			feedSubtitle = "MB Thread Message Subject 2",
 			feedTitle = "MB Thread Message Subject 2",
-			rssURL = "message_boards");
+			rssUrl = "message_boards");
 
 		MessageboardsThread.openToThread(
 			groupName = "Guest",
 			layoutName = "message-boards-page",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			threadSubject = "MB Thread Message Subject 1");
 
 		RSS.viewFeed(
@@ -581,11 +581,11 @@ definition {
 			entryTitle = "MB Thread Message Subject 1",
 			feedSubtitle = "MB Thread Message Subject 1",
 			feedTitle = "MB Thread Message Subject 1",
-			rssURL = "message_boards");
+			rssUrl = "message_boards");
 
 		Click(locator1 = "NavBar#HOME");
 
-		RSS.gotoFeed(rssURL = "message_boards");
+		RSS.gotoFeed(rssUrl = "message_boards");
 
 		RSS.viewFeedEntry(
 			entryContent = "MB Thread Message Body 1,MB Thread Message Body 2",
@@ -666,7 +666,7 @@ definition {
 			categoryName = "MB Category1 Name",
 			groupName = "Guest",
 			layoutName = "message-boards-page",
-			siteURLKey = "guest");
+			siteUrlKey = "guest");
 
 		AssertTextEquals(
 			key_titleName = "Categories",
@@ -730,7 +730,7 @@ definition {
 			categoryName = "MB Subcategory Name",
 			groupName = "Guest",
 			layoutName = "message-boards-page",
-			siteURLKey = "guest");
+			siteUrlKey = "guest");
 
 		MessageboardsCategory.subscribePG(categoryName = "MB Subcategory Name 2");
 
@@ -753,7 +753,7 @@ definition {
 		MessageboardsThread.openToThread(
 			groupName = "Guest",
 			layoutName = "message-boards-page",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			threadSubject = "MB Thread Message Subject");
 
 		MessageboardsThread.viewPG(
@@ -820,14 +820,14 @@ definition {
 
 		MessageboardsThread.viewStatisticsPostsCountPG(
 			layoutName = "message-boards-page",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			threadPostNumber = "1",
 			userName = "Test Test");
 
 		MessageboardsThread.openToThread(
 			groupName = "Guest",
 			layoutName = "message-boards-page",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			threadSubject = "MB Thread1 Message Subject");
 
 		MessageboardsThread.editPG(
@@ -838,7 +838,7 @@ definition {
 
 		MessageboardsThread.viewStatisticsPostsCountDefaultPG(
 			layoutName = "message-boards-page",
-			siteURLKey = "guest");
+			siteUrlKey = "guest");
 
 		MessageboardsThread.editViaMyPosts(
 			threadSubject = "MB Thread1 Message Subject Edit",
@@ -847,7 +847,7 @@ definition {
 		MessageboardsThread.viewStatisticsPostsCountPG(
 			lastPostUserName = "Test Test",
 			layoutName = "message-boards-page",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			startedByUserName = "Test Test",
 			threadPostNumber = "1");
 
@@ -859,7 +859,7 @@ definition {
 		MessageboardsThread.viewStatisticsPostsCountPG(
 			lastPostUserName = "Test Test",
 			layoutName = "message-boards-page",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			startedByUserName = "Test Test",
 			threadPostNumber = "2");
 
@@ -869,7 +869,7 @@ definition {
 
 		MessageboardsThread.viewStatisticsPostsCountPG(
 			layoutName = "message-boards-page",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			threadPostNumber = "1",
 			userName = "Test Test");
 	}
@@ -909,7 +909,7 @@ definition {
 		MessageboardsThread.openToThread(
 			groupName = "Guest",
 			layoutName = "message-boards-page",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			threadSubject = "MB Thread Message Subject 1");
 
 		Click(
@@ -932,7 +932,7 @@ definition {
 			categoryName = " ",
 			categoryWithoutName = "true",
 			layoutName = "message-boards-page",
-			siteURLKey = "guest");
+			siteUrlKey = "guest");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 

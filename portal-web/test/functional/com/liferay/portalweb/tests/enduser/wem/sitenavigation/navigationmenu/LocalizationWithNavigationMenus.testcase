@@ -73,7 +73,7 @@ definition {
 		}
 
 		task ("Add a Spanish translation for the page item") {
-			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteUrlKey = "test-site-name");
 
 			LexiconEntry.gotoEntry(rowEntry = "Navigation Menu Name");
 
@@ -164,7 +164,7 @@ definition {
 		}
 
 		task ("Add a Spanish translation for the page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Configure",
@@ -182,7 +182,7 @@ definition {
 		}
 
 		task ("Add the page to the navigation menu") {
-			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteUrlKey = "test-site-name");
 
 			LexiconEntry.gotoEntry(rowEntry = "Navigation Menu Name");
 

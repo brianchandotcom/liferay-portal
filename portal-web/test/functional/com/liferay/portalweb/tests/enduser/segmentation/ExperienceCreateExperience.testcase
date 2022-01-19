@@ -202,7 +202,7 @@ definition {
 
 		PortalSettings.uncheckStrangersVerifyEmailCheckbox();
 
-		Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+		Segmentation.openSegmentsAdmin(siteUrlKey = "test-site-name");
 
 		LexiconEntry.gotoAdd();
 
@@ -305,7 +305,7 @@ definition {
 
 		PortletEntry.save();
 
-		Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+		Segmentation.openSegmentsAdmin(siteUrlKey = "test-site-name");
 
 		LexiconEntry.gotoAdd();
 
@@ -389,7 +389,7 @@ definition {
 
 		PortalSettings.uncheckStrangersVerifyEmailCheckbox();
 
-		Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+		Segmentation.openSegmentsAdmin(siteUrlKey = "test-site-name");
 
 		LexiconEntry.gotoAdd();
 
@@ -473,7 +473,7 @@ definition {
 
 		PortalSettings.uncheckStrangersVerifyEmailCheckbox();
 
-		Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+		Segmentation.openSegmentsAdmin(siteUrlKey = "test-site-name");
 
 		LexiconEntry.gotoAdd();
 
@@ -559,7 +559,7 @@ definition {
 
 		PortalSettings.uncheckStrangersVerifyEmailCheckbox();
 
-		Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+		Segmentation.openSegmentsAdmin(siteUrlKey = "test-site-name");
 
 		LexiconEntry.gotoAdd();
 
@@ -645,7 +645,7 @@ definition {
 
 		PortalSettings.uncheckStrangersVerifyEmailCheckbox();
 
-		Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+		Segmentation.openSegmentsAdmin(siteUrlKey = "test-site-name");
 
 		LexiconEntry.gotoAdd();
 
@@ -743,7 +743,7 @@ definition {
 			orgName = "Suborganization Name",
 			parentOrgName = "organization Name");
 
-		Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+		Segmentation.openSegmentsAdmin(siteUrlKey = "test-site-name");
 
 		LexiconEntry.gotoAdd();
 
@@ -846,7 +846,7 @@ definition {
 
 		PortletEntry.save();
 
-		Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+		Segmentation.openSegmentsAdmin(siteUrlKey = "test-site-name");
 
 		LexiconEntry.gotoAdd();
 
@@ -943,7 +943,7 @@ definition {
 
 		PortletEntry.save();
 
-		Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+		Segmentation.openSegmentsAdmin(siteUrlKey = "test-site-name");
 
 		LexiconEntry.gotoAdd();
 
@@ -1056,7 +1056,7 @@ definition {
 			organizationName = "United States",
 			userEmailAddress = "userea1@liferay.com");
 
-		Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+		Segmentation.openSegmentsAdmin(siteUrlKey = "test-site-name");
 
 		LexiconEntry.gotoAdd();
 
@@ -1232,7 +1232,7 @@ definition {
 
 		PortalSettings.uncheckStrangersVerifyEmailCheckbox();
 
-		Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+		Segmentation.openSegmentsAdmin(siteUrlKey = "test-site-name");
 
 		LexiconEntry.gotoAdd();
 
@@ -1305,7 +1305,7 @@ definition {
 
 		PortalSettings.uncheckStrangersVerifyEmailCheckbox();
 
-		Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+		Segmentation.openSegmentsAdmin(siteUrlKey = "test-site-name");
 
 		LexiconEntry.gotoAdd();
 
@@ -1378,7 +1378,7 @@ definition {
 
 		PortalSettings.uncheckStrangersVerifyEmailCheckbox();
 
-		Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+		Segmentation.openSegmentsAdmin(siteUrlKey = "test-site-name");
 
 		LexiconEntry.gotoAdd();
 
@@ -1451,7 +1451,7 @@ definition {
 
 		PortalSettings.uncheckStrangersVerifyEmailCheckbox();
 
-		Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+		Segmentation.openSegmentsAdmin(siteUrlKey = "test-site-name");
 
 		LexiconEntry.gotoAdd();
 
@@ -1524,7 +1524,7 @@ definition {
 
 		PortalSettings.uncheckStrangersVerifyEmailCheckbox();
 
-		Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+		Segmentation.openSegmentsAdmin(siteUrlKey = "test-site-name");
 
 		LexiconEntry.gotoAdd();
 
@@ -1596,7 +1596,7 @@ definition {
 		User.firstLoginPG(
 			password = "test",
 			userEmailAddress = "test@www.able.com",
-			virtualHostsURL = "http://www.able.com:8080");
+			virtualHostsUrl = "http://www.able.com:8080");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
@@ -1670,7 +1670,7 @@ definition {
 		User.firstLoginPG(
 			password = "test",
 			userEmailAddress = "userea@liferay.com",
-			virtualHostsURL = "http://www.able.com:8080");
+			virtualHostsUrl = "http://www.able.com:8080");
 
 		Navigator.openSpecificURL(url = "http://www.able.com:8080");
 
@@ -1698,7 +1698,7 @@ definition {
 
 		PortalSettings.uncheckStrangersVerifyEmailCheckbox();
 
-		Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+		Segmentation.openSegmentsAdmin(siteUrlKey = "test-site-name");
 
 		LexiconEntry.gotoAdd();
 
@@ -1769,7 +1769,7 @@ definition {
 
 		PortalSettings.uncheckStrangersVerifyEmailCheckbox();
 
-		Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+		Segmentation.openSegmentsAdmin(siteUrlKey = "test-site-name");
 
 		LexiconEntry.gotoAdd();
 
@@ -1840,7 +1840,7 @@ definition {
 
 		PortalSettings.uncheckStrangersVerifyEmailCheckbox();
 
-		Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+		Segmentation.openSegmentsAdmin(siteUrlKey = "test-site-name");
 
 		LexiconEntry.gotoAdd();
 
@@ -1920,7 +1920,7 @@ definition {
 
 		PortalSettings.uncheckStrangersVerifyEmailCheckbox();
 
-		Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+		Segmentation.openSegmentsAdmin(siteUrlKey = "test-site-name");
 
 		LexiconEntry.gotoAdd();
 
@@ -2076,7 +2076,7 @@ definition {
 
 		PortalSettings.uncheckStrangersVerifyEmailCheckbox();
 
-		Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+		Segmentation.openSegmentsAdmin(siteUrlKey = "test-site-name");
 
 		LexiconEntry.gotoAdd();
 
@@ -2149,7 +2149,7 @@ definition {
 
 		PortalSettings.uncheckStrangersVerifyEmailCheckbox();
 
-		Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+		Segmentation.openSegmentsAdmin(siteUrlKey = "test-site-name");
 
 		LexiconEntry.gotoAdd();
 
@@ -2222,7 +2222,7 @@ definition {
 
 		PortalSettings.uncheckStrangersVerifyEmailCheckbox();
 
-		Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+		Segmentation.openSegmentsAdmin(siteUrlKey = "test-site-name");
 
 		LexiconEntry.gotoAdd();
 
@@ -2296,7 +2296,7 @@ definition {
 
 		PortalSettings.uncheckStrangersVerifyEmailCheckbox();
 
-		Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+		Segmentation.openSegmentsAdmin(siteUrlKey = "test-site-name");
 
 		LexiconEntry.gotoAdd();
 
@@ -2370,7 +2370,7 @@ definition {
 
 		PortalSettings.uncheckStrangersVerifyEmailCheckbox();
 
-		Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+		Segmentation.openSegmentsAdmin(siteUrlKey = "test-site-name");
 
 		LexiconEntry.gotoAdd();
 
@@ -2446,7 +2446,7 @@ definition {
 
 		PortalSettings.uncheckStrangersVerifyEmailCheckbox();
 
-		Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+		Segmentation.openSegmentsAdmin(siteUrlKey = "test-site-name");
 
 		LexiconEntry.gotoAdd();
 
@@ -2522,7 +2522,7 @@ definition {
 
 		PortalSettings.uncheckStrangersVerifyEmailCheckbox();
 
-		Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+		Segmentation.openSegmentsAdmin(siteUrlKey = "test-site-name");
 
 		LexiconEntry.gotoAdd();
 
@@ -2598,7 +2598,7 @@ definition {
 
 		PortalSettings.uncheckStrangersVerifyEmailCheckbox();
 
-		Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+		Segmentation.openSegmentsAdmin(siteUrlKey = "test-site-name");
 
 		LexiconEntry.gotoAdd();
 
@@ -2674,7 +2674,7 @@ definition {
 
 		PortalSettings.uncheckStrangersVerifyEmailCheckbox();
 
-		Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+		Segmentation.openSegmentsAdmin(siteUrlKey = "test-site-name");
 
 		LexiconEntry.gotoAdd();
 
@@ -2750,7 +2750,7 @@ definition {
 
 		PortalSettings.uncheckStrangersVerifyEmailCheckbox();
 
-		Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+		Segmentation.openSegmentsAdmin(siteUrlKey = "test-site-name");
 
 		LexiconEntry.gotoAdd();
 
@@ -2826,7 +2826,7 @@ definition {
 
 		PortalSettings.uncheckStrangersVerifyEmailCheckbox();
 
-		Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+		Segmentation.openSegmentsAdmin(siteUrlKey = "test-site-name");
 
 		LexiconEntry.gotoAdd();
 
@@ -2918,7 +2918,7 @@ definition {
 
 		SearchAdministration.executeReindex();
 
-		Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+		Segmentation.openSegmentsAdmin(siteUrlKey = "test-site-name");
 
 		LexiconEntry.gotoAdd();
 
@@ -2993,7 +2993,7 @@ definition {
 
 		PortalSettings.uncheckStrangersVerifyEmailCheckbox();
 
-		Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+		Segmentation.openSegmentsAdmin(siteUrlKey = "test-site-name");
 
 		LexiconEntry.gotoAdd();
 
@@ -3071,7 +3071,7 @@ definition {
 
 		PortalSettings.uncheckStrangersVerifyEmailCheckbox();
 
-		Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+		Segmentation.openSegmentsAdmin(siteUrlKey = "test-site-name");
 
 		LexiconEntry.gotoAdd();
 
@@ -3146,7 +3146,7 @@ definition {
 
 		PortalSettings.uncheckStrangersVerifyEmailCheckbox();
 
-		Site.openSiteTeamsAdmin(siteURLKey = "test-site-name");
+		Site.openSiteTeamsAdmin(siteUrlKey = "test-site-name");
 
 		Team.addCP(
 			teamDescription = "Site Team Description",
@@ -3156,7 +3156,7 @@ definition {
 			teamName = "Site Team Name",
 			userScreenName = "usersn1");
 
-		Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+		Segmentation.openSegmentsAdmin(siteUrlKey = "test-site-name");
 
 		LexiconEntry.gotoAdd();
 
@@ -3239,7 +3239,7 @@ definition {
 
 		SearchAdministration.executeReindex();
 
-		Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+		Segmentation.openSegmentsAdmin(siteUrlKey = "test-site-name");
 
 		LexiconEntry.gotoAdd();
 
@@ -3310,7 +3310,7 @@ definition {
 
 		PortalSettings.uncheckStrangersVerifyEmailCheckbox();
 
-		Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+		Segmentation.openSegmentsAdmin(siteUrlKey = "test-site-name");
 
 		LexiconEntry.gotoAdd();
 
@@ -4112,7 +4112,7 @@ definition {
 		}
 
 		task ("Go to the pages menu and discard changes") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "Test Site Name");
 
 			PageEditor.clickDiscardDraft(pageName = "Experience Content Page");
 		}
@@ -4161,7 +4161,7 @@ definition {
 		}
 
 		task ("Go to the pages menu and discard changes") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "Test Site Name");
 
 			PageEditor.clickDiscardDraft(pageName = "Experience Content Page");
 		}
@@ -4216,7 +4216,7 @@ definition {
 		}
 
 		task ("Go to the pages menu and discard changes") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "Test Site Name");
 
 			PageEditor.clickDiscardDraft(pageName = "Experience Content Page");
 		}
@@ -4262,7 +4262,7 @@ definition {
 		}
 
 		task ("Go to the pages menu and discard changes") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "Test Site Name");
 
 			PageEditor.clickDiscardDraft(pageName = "Experience Content Page");
 		}

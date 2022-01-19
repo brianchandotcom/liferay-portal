@@ -216,7 +216,7 @@ definition {
 
 	macro assertRelatedObject {
 		AssertElementPresent(
-			key_RelatedObject = "${relatedObject}",
+			key_relatedObject = "${relatedObject}",
 			locator1 = "CreateObject#VIEW_RELATED_OBJECT_ON_RELATIONSHIP_FIELD");
 	}
 

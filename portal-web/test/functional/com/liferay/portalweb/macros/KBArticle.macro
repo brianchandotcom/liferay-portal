@@ -56,7 +56,7 @@ definition {
 		Panel.expandPanel(panel = "Configuration");
 
 		if (isSet(kbArticleFriendlyURL)) {
-			var kbArticleTitleFormatted = StringUtil.lowerCase("${kbArticleFriendlyURL}");
+			var kbArticleTitleFormatted = StringUtil.lowerCase("${kbArticleFriendlyUrl}");
 			var kbArticleTitleFormatted = StringUtil.replace("${kbArticleTitleFormatted}", " ", "-");
 
 			Type(
@@ -111,7 +111,7 @@ definition {
 		Panel.expandPanel(panel = "Configuration");
 
 		if (isSet(kbArticleFriendlyURL)) {
-			var kbArticleTitleFormatted = StringUtil.lowerCase("${kbArticleFriendlyURL}");
+			var kbArticleTitleFormatted = StringUtil.lowerCase("${kbArticleFriendlyUrl}");
 			var kbArticleTitleFormatted = StringUtil.replace("${kbArticleTitleFormatted}", " ", "-");
 
 			Type(
@@ -163,12 +163,12 @@ definition {
 					videoShortcutDescription = "${videoShortcutDescription}",
 					videoShortcutPreview = "${videoShortcutPreview}",
 					videoShortcutTitle = "${videoShortcutTitle}",
-					videoURL = "${videoURL}");
+					videoUrl = "${videoUrl}");
 			}
 			else {
 				ItemSelector.addVideoFromURL(
 					navTab = "${navTab}",
-					videoSourceURL = "${embedVideo}");
+					videoSourceUrl = "${embedVideo}");
 			}
 		}
 
@@ -179,7 +179,7 @@ definition {
 		if (isSet(kbArticleSourceURL)) {
 			Type(
 				locator1 = "CKEditor#SOURCE_URL",
-				value1 = "${kbArticleSourceURL}");
+				value1 = "${kbArticleSourceUrl}");
 		}
 
 		if (isSet(kbArticleSection)) {
@@ -224,7 +224,7 @@ definition {
 				locator1 = "Message#ERROR_1",
 				value1 = "Please enter valid content.");
 		}
-		else if ("${kbArticleDuplicateFriendlyURL}" == "true") {
+		else if ("${kbArticleDuplicateFriendlyUrl}" == "true") {
 			Alert.viewRequestFailedToComplete();
 
 			AssertTextEquals.assertPartialText(
@@ -573,7 +573,7 @@ definition {
 
 		AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
 
-		if (isSet(deleteViaKBArticle)) {
+		if (isSet(deleteViaKbArticle)) {
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#INFO",
 				value1 = "Please configure this portlet to make it visible to all users.");
@@ -909,10 +909,10 @@ definition {
 
 		// You can use this navigation when you need to access the configuration quickly without checking the UI.
 
-		var baseURL = "${baseURL}";
+		var baseUrl = "${baseUrl}";
 
 		if (!(isSet(baseURL))) {
-			var baseURL = PropsUtil.get("portal.url");
+			var baseUrl = PropsUtil.get("portal.url");
 		}
 
 		var groupId = JSONWebcontentSetter.setGroupId(
@@ -927,17 +927,17 @@ definition {
 
 		// Articles accessed in admin will stay in admin after publishing.
 
-		Open(locator1 = "${baseURL}/group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_knowledge_base_web_portlet_AdminPortlet&_com_liferay_knowledge_base_web_portlet_AdminPortlet_mvcPath=%2Fadmin%2Fedit_article.jsp&_com_liferay_knowledge_base_web_portlet_AdminPortlet_redirect=%2Fgroup%2F${siteURLKey}%2F~%2Fcontrol_panel%2Fmanage%3Fp_p_id%3Dcom_liferay_knowledge_base_web_portlet_AdminPortlet%26p_p_lifecycle%3D0%26p_p_state%3Dmaximized%26p_v_l_s_g_id%3D${groupId}%26p_p_auth%3D6eOinWLB&_com_liferay_knowledge_base_web_portlet_AdminPortlet_parentResourceClassNameId=${parentResourceClassNameId}&_com_liferay_knowledge_base_web_portlet_AdminPortlet_parentResourcePrimKey=${parentResourcePrimKey}");
+		Open(locator1 = "${baseUrl}/group/${siteUrlKey}/~/control_panel/manage?p_p_id=com_liferay_knowledge_base_web_portlet_AdminPortlet&_com_liferay_knowledge_base_web_portlet_AdminPortlet_mvcPath=%2Fadmin%2Fedit_article.jsp&_com_liferay_knowledge_base_web_portlet_AdminPortlet_redirect=%2Fgroup%2F${siteUrlKey}%2F~%2Fcontrol_panel%2Fmanage%3Fp_p_id%3Dcom_liferay_knowledge_base_web_portlet_AdminPortlet%26p_p_lifecycle%3D0%26p_p_state%3Dmaximized%26p_v_l_s_g_id%3D${groupId}%26p_p_auth%3D6eOinWLB&_com_liferay_knowledge_base_web_portlet_AdminPortlet_parentResourceClassNameId=${parentResourceClassNameId}&_com_liferay_knowledge_base_web_portlet_AdminPortlet_parentResourcePrimKey=${parentResourcePrimKey}");
 	}
 
 	macro openToKBArticleInSite {
 
 		// You can use this navigation when you need to access the configuration quickly without checking the UI.
 
-		var baseURL = "${baseURL}";
+		var baseUrl = "${baseUrl}";
 
 		if (!(isSet(baseURL))) {
-			var baseURL = PropsUtil.get("portal.url");
+			var baseUrl = PropsUtil.get("portal.url");
 		}
 
 		if (isSet(folderName)) {
@@ -956,7 +956,7 @@ definition {
 
 		var resourceClassNameId = JSONClassname._getClassNameId(value = "com.liferay.knowledge.base.model.KBArticle");
 
-		Open(locator1 = "${baseURL}/group/${siteURLKey}/~/control_panel/manage/-/knowledge_base_admin/article/${resourcePrimKey}/maximized?_com_liferay_knowledge_base_web_portlet_AdminPortlet_resourceClassNameId=${resourceClassNameId}");
+		Open(locator1 = "${baseUrl}/group/${siteUrlKey}/~/control_panel/manage/-/knowledge_base_admin/article/${resourcePrimKey}/maximized?_com_liferay_knowledge_base_web_portlet_AdminPortlet_resourceClassNameId=${resourceClassNameId}");
 	}
 
 	macro selectAllCP {
@@ -1108,7 +1108,7 @@ definition {
 				value1 = "${kbArticleContentAddedDiff}");
 		}
 
-		if ("${viewNoXMLInTitle}" == "true") {
+		if ("${viewNoXmlInTitle}" == "true") {
 			AssertTextNotPresent(
 				locator1 = "KnowledgeBaseArticle#TITLE",
 				value1 = "xml");
@@ -1343,7 +1343,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "KnowledgeBaseArticle#EDIT_FRIENDLY_URL_FIELD",
-			value1 = "${kbArticleFriendlyURL}");
+			value1 = "${kbArticleFriendlyUrl}");
 	}
 
 	macro viewImageViaContentCmd {
@@ -1395,7 +1395,7 @@ definition {
 	}
 
 	macro viewKBDisplayPG {
-		if ("${sourceURL}" == "true") {
+		if ("${sourceUrl}" == "true") {
 			AssertClick(
 				locator1 = "KnowledgeBaseArticle#EDIT_ON_GITHUB",
 				value1 = "Edit On GitHub");
@@ -1543,7 +1543,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "CKEditor#SOURCE_URL",
-			value1 = "${kbArticleSourceURL}");
+			value1 = "${kbArticleSourceUrl}");
 	}
 
 	macro viewSourceURLPG {
@@ -1556,7 +1556,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "CKEditor#SOURCE_URL",
-			value1 = "${kbArticleSourceURL}");
+			value1 = "${kbArticleSourceUrl}");
 	}
 
 	macro viewUploadFailed {

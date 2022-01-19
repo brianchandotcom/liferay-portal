@@ -125,7 +125,7 @@ definition {
 			depotName = "Test Depot Name",
 			webContentTitleNotPresentList = "WC Depot Title");
 
-		BlogsNavigator.openToAddEntry(siteURLKey = "test-site-name");
+		BlogsNavigator.openToAddEntry(siteUrlKey = "test-site-name");
 
 		BlogsNavigator.gotoSelectFile();
 
@@ -264,7 +264,7 @@ definition {
 			entrySubtitle = "Blogs Entry Subtitle",
 			entryTitle = "Blogs Entry Title",
 			imageFileName = "Document_1.jpg",
-			siteURLKey = "test-site-name");
+			siteUrlKey = "test-site-name");
 
 		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
 
@@ -272,7 +272,7 @@ definition {
 			applicationList = "Documents and Media",
 			status = "Disabled");
 
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "test-site-name");
+		BlogsNavigator.openBlogsAdmin(siteUrlKey = "test-site-name");
 
 		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry Title");
 

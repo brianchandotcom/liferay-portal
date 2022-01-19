@@ -21,7 +21,7 @@ definition {
 			layoutName = "Wiki Display Test Page",
 			widgetName = "Wiki Display");
 
-		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
+		WikiNavigator.openWikiAdmin(siteUrlKey = "guest");
 	}
 
 	tearDown {

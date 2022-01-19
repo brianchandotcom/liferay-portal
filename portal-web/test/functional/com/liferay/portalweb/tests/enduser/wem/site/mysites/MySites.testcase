@@ -215,7 +215,7 @@ definition {
 				password = "test",
 				userEmailAddress = "test@liferay.com");
 
-			Site.openSiteMembershipsAdmin(siteURLKey = "site-name");
+			Site.openSiteMembershipsAdmin(siteUrlKey = "site-name");
 
 			Site.approveJoinSiteRestrictedViaMySitesPG(
 				userEmailAddress = "userea@liferay.com",
@@ -353,7 +353,7 @@ definition {
 		}
 
 		task ("Make user a member of home site via Site Settings CP") {
-			Site.openSiteMembershipsAdmin(siteURLKey = "home-site");
+			Site.openSiteMembershipsAdmin(siteUrlKey = "home-site");
 
 			Site.assignUserAsMemberCP(
 				userFirstName = "userfn",
@@ -417,7 +417,7 @@ definition {
 		}
 
 		task ("Deactivate the new site") {
-			Site.openSiteSettingsAdmin(siteURLKey = "site-name");
+			Site.openSiteSettingsAdmin(siteUrlKey = "site-name");
 
 			Site.inactivateCP(siteName = "Site Name");
 		}
@@ -462,7 +462,7 @@ definition {
 		}
 
 		task ("Assign the Administrator role of Home site to new user") {
-			Site.openSiteMembershipsAdmin(siteURLKey = "home-site");
+			Site.openSiteMembershipsAdmin(siteUrlKey = "home-site");
 
 			Site.assignUserAsMemberCP(
 				userFirstName = "userfn",
@@ -592,7 +592,7 @@ definition {
 		task ("Create a new site with tags") {
 			JSONGroup.addGroup(groupName = "Site Name");
 
-			Site.openSiteSettingsAdmin(siteURLKey = "site-name");
+			Site.openSiteSettingsAdmin(siteUrlKey = "site-name");
 
 			for (var tagName : list "apple,banana,mango") {
 				Tag.addViaSiteCP(tagName = "${tagName}");

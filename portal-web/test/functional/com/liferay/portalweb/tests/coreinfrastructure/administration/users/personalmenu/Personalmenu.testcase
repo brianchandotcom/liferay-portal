@@ -287,7 +287,7 @@ definition {
 	@description = "This is a use case for LPS-76106."
 	@priority = "5"
 	test ViewMyAccountUserViaURL {
-		var portalURL = PropsUtil.get("portal.url");
+		var portalUrl = PropsUtil.get("portal.url");
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -308,11 +308,11 @@ definition {
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
-		Navigator.openSpecificURL(url = "${portalURL}/group/control_panel/manage?p_p_id=com_liferay_my_account_web_portlet_MyAccountPortlet&p_p_lifecycle=1");
+		Navigator.openSpecificURL(url = "${portalUrl}/group/control_panel/manage?p_p_id=com_liferay_my_account_web_portlet_MyAccountPortlet&p_p_lifecycle=1");
 
 		MyAccount.view();
 
-		AssertConsoleTextPresent(value1 = "not allowed to access URL ${portalURL}/group/control_panel/manage and portlet com_liferay_my_account_web_portlet_MyAccountPortlet");
+		AssertConsoleTextPresent(value1 = "not allowed to access URL ${portalUrl}/group/control_panel/manage and portlet com_liferay_my_account_web_portlet_MyAccountPortlet");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",

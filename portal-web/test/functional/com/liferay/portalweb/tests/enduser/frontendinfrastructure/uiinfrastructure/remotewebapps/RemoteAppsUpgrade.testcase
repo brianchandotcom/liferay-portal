@@ -10,9 +10,9 @@ definition {
 	setUp {
 		SignIn.signIn();
 
-		var portalURL = PropsUtil.get("portal.url");
+		var portalUrl = PropsUtil.get("portal.url");
 
-		AssertLocation.assertPartialLocation(value1 = "${portalURL}/web/guest");
+		AssertLocation.assertPartialLocation(value1 = "${portalUrl}/web/guest");
 
 		SearchAdministration.executeReindex();
 	}
@@ -58,7 +58,7 @@ definition {
 
 		var remoteAppName = "Test Remote App";
 		var remoteAppType = "IFrame";
-		var remoteAppURL = "http://www.liferay.com";
+		var remoteAppUrl = "http://www.liferay.com";
 
 		task ("Assert remote app is present after upgrade") {
 			RemoteAppsUpgrade.assertRemoteAppEntry(
@@ -69,7 +69,7 @@ definition {
 		task ("Assert remote app fields are saved after upgrade") {
 			RemoteAppsUpgrade.assertRemoteAppEntryFields(
 				upgradeName = "${remoteAppName}",
-				upgradeURL = "${remoteAppURL}");
+				upgradeUrl = "${remoteAppUrl}");
 		}
 	}
 

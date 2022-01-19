@@ -47,7 +47,7 @@ definition {
 
 		Type(
 			locator1 = "TextInput#BLOGS_ENTRY_URL",
-			value1 = "${customURL}");
+			value1 = "${customUrl}");
 	}
 
 	macro addEntryContent {
@@ -85,12 +85,12 @@ definition {
 					videoShortcutDescription = "${videoShortcutDescription}",
 					videoShortcutPreview = "${videoShortcutPreview}",
 					videoShortcutTitle = "${videoShortcutTitle}",
-					videoURL = "${videoURL}");
+					videoUrl = "${videoUrl}");
 			}
 			else {
 				ItemSelector.addVideoFromURL(
 					navTab = "${navTab}",
-					videoSourceURL = "${embedVideo}");
+					videoSourceUrl = "${embedVideo}");
 			}
 		}
 	}
@@ -252,7 +252,7 @@ definition {
 		if ("${virtualHosts}" == "true") {
 			Navigator.gotoSpecificURLPage(
 				pageName = "Blogs Page",
-				url = "${virtualHostsURL}");
+				url = "${virtualHostsUrl}");
 		}
 		else {
 			Navigator.gotoPage(pageName = "Blogs Page");
@@ -310,7 +310,7 @@ definition {
 
 			ItemSelector.addVideoFromURL(
 				navTab = "URL",
-				videoSourceURL = "${embedVideo}");
+				videoSourceUrl = "${embedVideo}");
 		}
 	}
 
@@ -336,9 +336,9 @@ definition {
 				imageFileName = "${uploadedBlogImage}",
 				navTab = "${navTab}");
 		}
-		else if (isSet(uploadedDMImage)) {
+		else if (isSet(uploadedDmImage)) {
 			ItemSelector.selectDMImage(
-				imageFileName = "${uploadedDMImage}",
+				imageFileName = "${uploadedDmImage}",
 				navTab = "${navTab}");
 		}
 		else {
@@ -368,7 +368,7 @@ definition {
 		else {
 			Type(
 				locator1 = "TextInput#BLOGS_ENTRY_URL",
-				value1 = "${customURL}");
+				value1 = "${customUrl}");
 		}
 	}
 
@@ -632,15 +632,15 @@ definition {
 
 	macro removeOldFriendlyURL {
 		MouseOver(
-			key_oldFriendlyURL = "${oldFriendlyURL}",
+			key_oldFriendlyUrl = "${oldFriendlyUrl}",
 			locator1 = "BlogsEntry#FRIENDLY_URL_HISTORY_ITEM");
 
 		Click(
-			key_oldFriendlyURL = "${oldFriendlyURL}",
+			key_oldFriendlyUrl = "${oldFriendlyUrl}",
 			locator1 = "Icon#FRIENDLY_URL_HISTORY_ITEM_DELETE");
 
 		AssertElementNotPresent(
-			key_oldFriendlyURL = "${oldFriendlyURL}",
+			key_oldFriendlyUrl = "${oldFriendlyUrl}",
 			locator1 = "BlogsEntry#FRIENDLY_URL_HISTORY_ITEM");
 
 		Click(locator1 = "Modal#CLOSE_BUTTON");
@@ -686,24 +686,24 @@ definition {
 
 	macro restoreOldFriendlyURL {
 		MouseOver(
-			key_oldFriendlyURL = "${oldFriendlyURL}",
+			key_oldFriendlyUrl = "${oldFriendlyUrl}",
 			locator1 = "BlogsEntry#FRIENDLY_URL_HISTORY_ITEM");
 
 		Click(locator1 = "Icon#FRIENDLY_URL_HISTORY_ITEM_RESTORE");
 
 		AssertVisible(
-			key_activeURL = "${restoredURL}",
+			key_activeUrl = "${restoredUrl}",
 			locator1 = "BlogsEntry#FRIENDLY_URL_ACTIVE_URL");
 
 		AssertVisible(
-			key_oldFriendlyURL = "${activeURL}",
+			key_oldFriendlyUrl = "${activeUrl}",
 			locator1 = "BlogsEntry#FRIENDLY_URL_HISTORY_ITEM");
 
 		Click(locator1 = "Modal#CLOSE_BUTTON");
 
 		AssertVisible(
 			locator1 = "TextInput#BLOGS_ENTRY_URL",
-			value1 = "${restoredURL}");
+			value1 = "${restoredUrl}");
 	}
 
 	macro saveAsDraft {
@@ -850,7 +850,7 @@ definition {
 
 	macro viewActiveURL {
 		AssertVisible(
-			key_activeURL = "${activeURL}",
+			key_activeUrl = "${activeUrl}",
 			locator1 = "BlogsEntry#FRIENDLY_URL_ACTIVE_URL");
 	}
 
@@ -999,7 +999,7 @@ definition {
 				locator1 = "BlogsEntry#CONTENT_LINK",
 				value1 = "${entryContent}");
 
-			AssertLocation(value1 = "${entryExternalURL}/");
+			AssertLocation(value1 = "${entryExternalUrl}/");
 		}
 
 		if (isSet(entryInlineImage)) {
@@ -1013,7 +1013,7 @@ definition {
 			locator1 = "BlogsEntry#CONTENT_LINK");
 
 		AssertElementPresent.pauseAssertVisible(
-			key_imageSourceURL = "${imageSourceURL}",
+			key_imageSourceUrl = "${imageSourceUrl}",
 			locator1 = "DocumentsAndMediaDocument#DOCUMENT_VIEWPORT_PREVIEW");
 	}
 
@@ -1028,7 +1028,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "AlloyEditor#TEXT_FORMATTING_LINK_INPUT",
-			value1 = "${entryExternalURL}");
+			value1 = "${entryExternalUrl}");
 	}
 
 	macro viewEntryPG {
@@ -1098,7 +1098,7 @@ definition {
 		if (isSet(entryContentHTML)) {
 			AssertTextEquals.assertPartialText(
 				locator1 = "BlogsEntry#CONTENT_HTML_H2",
-				value1 = "${entryContentHTML}");
+				value1 = "${entryContentHtml}");
 		}
 
 		if (isSet(entryContentItalics)) {
@@ -1112,7 +1112,7 @@ definition {
 				locator1 = "BlogsEntry#CONTENT_LINK",
 				value1 = "${entryContent}");
 
-			AssertLocation.assertPartialLocation(value1 = "${entryExternalURL}");
+			AssertLocation.assertPartialLocation(value1 = "${entryExternalUrl}");
 		}
 
 		if (isSet(entryInlineImage)) {
@@ -1241,12 +1241,12 @@ definition {
 	macro viewOldFriendlyURL {
 		if (isSet(lastOldFriendlyURL)) {
 			AssertVisible(
-				key_oldFriendlyURL = "${lastOldFriendlyURL}",
+				key_oldFriendlyUrl = "${lastOldFriendlyUrl}",
 				locator1 = "BlogsEntry#FRIENDLY_URL_HISTORY_ITEM_LAST");
 		}
 
 		AssertVisible(
-			key_oldFriendlyURL = "${oldFriendlyURL}",
+			key_oldFriendlyUrl = "${oldFriendlyUrl}",
 			locator1 = "BlogsEntry#FRIENDLY_URL_HISTORY_ITEM");
 	}
 

@@ -32,19 +32,19 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Create a manual asset list") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+			AssetListsAdmin.openAssetListsAdmin(siteUrlKey = "test-site-name");
 
 			AssetListsAdmin.addManualSelection(assetListTitle = "Manual Asset List Test");
 		}
 
 		task ("Create a dynamic asset list") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+			AssetListsAdmin.openAssetListsAdmin(siteUrlKey = "test-site-name");
 
 			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Asset List Test");
 		}
 
 		task ("Assert Asset List Entry names and types") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+			AssetListsAdmin.openAssetListsAdmin(siteUrlKey = "test-site-name");
 
 			AssetListsAdmin.viewAssetList(
 				assetListTitle = "Manual Asset List Test",
@@ -66,7 +66,7 @@ definition {
 		}
 
 		task ("Create an asset list that has the same name as the first asset list") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+			AssetListsAdmin.openAssetListsAdmin(siteUrlKey = "test-site-name");
 
 			LexiconEntry.gotoAddMenuItem(menuItem = "Manual Collection");
 
@@ -166,7 +166,7 @@ definition {
 		}
 
 		task ("Create a first variation for the collection and filter web contents by category") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+			AssetListsAdmin.openAssetListsAdmin(siteUrlKey = "test-site-name");
 
 			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection Test");
 
@@ -298,7 +298,7 @@ definition {
 		}
 
 		task ("Create a first variation for the collection and filter web contents by category") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+			AssetListsAdmin.openAssetListsAdmin(siteUrlKey = "test-site-name");
 
 			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection Test");
 
@@ -419,7 +419,7 @@ definition {
 		}
 
 		task ("Create a first variation for the collection and select web contents") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+			AssetListsAdmin.openAssetListsAdmin(siteUrlKey = "test-site-name");
 
 			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection Test");
 
@@ -517,7 +517,7 @@ definition {
 		}
 
 		task ("Create a first variation for the collection and select web contents") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+			AssetListsAdmin.openAssetListsAdmin(siteUrlKey = "test-site-name");
 
 			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection Test");
 
@@ -579,7 +579,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Add a web content structure with a Select field") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 			NavItem.gotoStructures();
 
@@ -617,7 +617,7 @@ definition {
 		}
 
 		task ("Enable Filter by Field and Choose Select from List field") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+			AssetListsAdmin.openAssetListsAdmin(siteUrlKey = "test-site-name");
 
 			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection");
 
@@ -719,7 +719,7 @@ definition {
 		}
 
 		task ("Naviate to Collection Admin") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+			AssetListsAdmin.openAssetListsAdmin(siteUrlKey = "test-site-name");
 
 			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection Test");
 		}
@@ -781,7 +781,7 @@ definition {
 		}
 
 		task ("Delete both asset lists") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+			AssetListsAdmin.openAssetListsAdmin(siteUrlKey = "test-site-name");
 
 			AssetListsAdmin.deleteEntry(assetListTitle = "Manual Asset List Test");
 
@@ -823,7 +823,7 @@ definition {
 		}
 
 		task ("Add a category filter rule") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+			AssetListsAdmin.openAssetListsAdmin(siteUrlKey = "test-site-name");
 
 			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection");
 
@@ -834,7 +834,7 @@ definition {
 		}
 
 		task ("View only the first web content shown in collection items") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+			AssetListsAdmin.openAssetListsAdmin(siteUrlKey = "test-site-name");
 
 			AssetListsAdmin.viewContent(
 				assetListTitle = "Dynamic Collection",
@@ -858,7 +858,7 @@ definition {
 		}
 
 		task ("View only the second web content shown in collection items") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+			AssetListsAdmin.openAssetListsAdmin(siteUrlKey = "test-site-name");
 
 			AssetListsAdmin.viewContent(
 				assetListTitle = "Dynamic Collection",
@@ -962,7 +962,7 @@ definition {
 		}
 
 		task ("Create a first variation for the collection and filter web contents by category") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+			AssetListsAdmin.openAssetListsAdmin(siteUrlKey = "test-site-name");
 
 			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection Test");
 
@@ -1058,7 +1058,7 @@ definition {
 		}
 
 		task ("Create a first variation for the collection and select web contents") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+			AssetListsAdmin.openAssetListsAdmin(siteUrlKey = "test-site-name");
 
 			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection Test");
 
@@ -1123,7 +1123,7 @@ definition {
 		}
 
 		task ("Add a personalized variation to collection") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+			AssetListsAdmin.openAssetListsAdmin(siteUrlKey = "test-site-name");
 
 			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection Test");
 
@@ -1200,7 +1200,7 @@ definition {
 		}
 
 		task ("Add a personalized variation to collection") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+			AssetListsAdmin.openAssetListsAdmin(siteUrlKey = "test-site-name");
 
 			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection Test");
 
@@ -1250,7 +1250,7 @@ definition {
 		}
 
 		task ("Rename the asset list") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+			AssetListsAdmin.openAssetListsAdmin(siteUrlKey = "test-site-name");
 
 			AssetListsAdmin.renameAssetList(
 				newAssetListTitle = "Manual Asset List Edit",
@@ -1292,7 +1292,7 @@ definition {
 		}
 
 		task ("Navigate to Collection created") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+			AssetListsAdmin.openAssetListsAdmin(siteUrlKey = "test-site-name");
 
 			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection Test");
 		}
@@ -1381,7 +1381,7 @@ definition {
 		}
 
 		task ("Add a personalized variation to collection") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+			AssetListsAdmin.openAssetListsAdmin(siteUrlKey = "test-site-name");
 
 			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection Test");
 
@@ -1495,7 +1495,7 @@ definition {
 		}
 
 		task ("Add a personalized variation to collection") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+			AssetListsAdmin.openAssetListsAdmin(siteUrlKey = "test-site-name");
 
 			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection Test");
 
@@ -1574,7 +1574,7 @@ definition {
 		}
 
 		task ("Add a personalized variation to collection") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+			AssetListsAdmin.openAssetListsAdmin(siteUrlKey = "test-site-name");
 
 			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection Test");
 
@@ -1630,7 +1630,7 @@ definition {
 		}
 
 		task ("Add a personalized variation to collection") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+			AssetListsAdmin.openAssetListsAdmin(siteUrlKey = "test-site-name");
 
 			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection Test");
 
@@ -1648,7 +1648,7 @@ definition {
 	@priority = "4"
 	test ViewAllTwoCategoriesInDynamicCollection {
 		task ("Add a vocabulary with Web Content Article") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 
 			Vocabulary.gotoAddVocabulary();
 
@@ -1666,7 +1666,7 @@ definition {
 		}
 
 		task ("Add a vocabulary with two associated asset types") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 
 			Vocabulary.gotoAddVocabulary();
 
@@ -1695,7 +1695,7 @@ definition {
 		}
 
 		task ("Assert the 2 vocabularies in Collection Category Filter") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+			AssetListsAdmin.openAssetListsAdmin(siteUrlKey = "test-site-name");
 
 			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection");
 
@@ -1729,7 +1729,7 @@ definition {
 		}
 
 		task ("Create a manual asset list") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+			AssetListsAdmin.openAssetListsAdmin(siteUrlKey = "test-site-name");
 
 			AssetListsAdmin.addManualSelection(assetListTitle = "Manual Asset List Test");
 		}
@@ -1747,7 +1747,7 @@ definition {
 		}
 
 		task ("Assert the selected web content article is viewable from the View Content action for the asset list") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+			AssetListsAdmin.openAssetListsAdmin(siteUrlKey = "test-site-name");
 
 			AssetListsAdmin.viewContent(
 				assetListTitle = "Manual Asset List Test",
@@ -1787,7 +1787,7 @@ definition {
 		}
 
 		task ("Assert the created asset list is used exactly once") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+			AssetListsAdmin.openAssetListsAdmin(siteUrlKey = "test-site-name");
 
 			AssetListsAdmin.viewUsages(
 				assetListTitle = "Manual Asset List Test",
@@ -1838,7 +1838,7 @@ definition {
 		}
 
 		task ("Add a personalized variation to collection") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+			AssetListsAdmin.openAssetListsAdmin(siteUrlKey = "test-site-name");
 
 			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection Test");
 
@@ -1920,7 +1920,7 @@ definition {
 			}
 
 			task ("Create filter rule for asset list") {
-				AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+				AssetListsAdmin.openAssetListsAdmin(siteUrlKey = "test-site-name");
 
 				AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Asset List ${queryContains} ${queryAndOperator}");
 
@@ -2029,7 +2029,7 @@ definition {
 			}
 
 			task ("Create filter rule for asset list") {
-				AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+				AssetListsAdmin.openAssetListsAdmin(siteUrlKey = "test-site-name");
 
 				AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Asset List ${queryContains} ${queryAndOperator}");
 

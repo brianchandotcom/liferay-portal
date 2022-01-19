@@ -1,17 +1,17 @@
 definition {
 
 	macro addAndEditExternalApplication {
-		var portalURL = PropsUtil.get("portal.url");
+		var portalUrl = PropsUtil.get("portal.url");
 
 		if (isSet(baseURL)) {
-			var portalURL = "${baseURL}";
+			var portalUrl = "${baseUrl}";
 		}
 
-		OAuth2.openOAuth2Admin(baseURL = "${baseURL}");
+		OAuth2.openOAuth2Admin(baseUrl = "${baseUrl}");
 
 		OAuth2.addApplication(
 			applicationName = "${applicationName}",
-			callbackURI = '''http://martamedio.com/oauth2-tester/?url=${portalURL}&client_id=${clientId}''',
+			callbackUri = '''http://martamedio.com/oauth2-tester/?url=${portalUrl}&client_id=${clientId}''',
 			clientProfile = "Web Application");
 
 		if (isSet(checkboxCheckList)) {
@@ -23,7 +23,7 @@ definition {
 		if (isSet(websiteURL)) {
 			PortletEntry.inputText(
 				fieldLabel = "Website URL",
-				text = "${websiteURL}");
+				text = "${websiteUrl}");
 		}
 
 		OAuth2.inputApplicationValues(
@@ -43,13 +43,13 @@ definition {
 
 		OAuth2.inputApplicationValues(
 			applicationName = "${applicationName}",
-			callbackURI = "${callbackURI}",
+			callbackUri = "${callbackUri}",
 			checkboxCheckList = "${checkboxCheckList}",
 			checkboxUncheckList = "${checkboxUncheckList}",
 			clientProfile = "${clientProfile}",
 			description = "${description}",
-			privacyPolicyURL = "${privacyPolicyURL}",
-			websiteURL = "${websiteURL}");
+			privacyPolicyUrl = "${privacyPolicyUrl}",
+			websiteUrl = "${websiteUrl}");
 
 		AssertTextEquals(
 			locator1 = "Portlet#HEADER",
@@ -179,7 +179,7 @@ definition {
 		if (isSet(portalURL)) {
 			Type(
 				locator1 = "OAuth2#OAUTH2_TESTER_PORTAL_URL",
-				value1 = "${portalURL}");
+				value1 = "${portalUrl}");
 		}
 
 		Type(
@@ -239,7 +239,7 @@ definition {
 
 		var newGeneratedClientSecret = OAuth2.inputApplicationValues(
 			applicationName = "${newApplicationName}",
-			callbackURI = "${callbackURI}",
+			callbackUri = "${callbackUri}",
 			checkboxCheckList = "${checkboxCheckList}",
 			checkboxUncheckList = "${checkboxUncheckList}",
 			clientId = "${clientId}",
@@ -247,8 +247,8 @@ definition {
 			clientSecret = "${clientSecret}",
 			description = "${description}",
 			generateNewSecret = "${generateNewSecret}",
-			privacyPolicyURL = "${privacyPolicyURL}",
-			websiteURL = "${websiteURL}");
+			privacyPolicyUrl = "${privacyPolicyUrl}",
+			websiteUrl = "${websiteUrl}");
 
 		if (isSet(newApplicationName)) {
 			AssertTextEquals(
@@ -368,11 +368,11 @@ definition {
 	}
 
 	macro getAccessToken {
-		var portalURL = PropsUtil.get("portal.url");
+		var portalUrl = PropsUtil.get("portal.url");
 
 		if ("${grantFlow}" == "clientCredentials") {
 			var tokenCurl = '''
-				${portalURL}/o/oauth2/token \
+				${portalUrl}/o/oauth2/token \
 					--data grant_type=client_credentials&client_id=${clientId}&client_secret=${clientSecret}
 			''';
 		}
@@ -388,21 +388,21 @@ definition {
 
 	macro getAuthorizationCode {
 		var generatedClientId = selenium.getElementValue("OAuth2#ADMIN_INPUT_FORM_CLIENT_ID");
-		var portalURL = PropsUtil.get("portal.url");
+		var portalUrl = PropsUtil.get("portal.url");
 
-		Navigator.openSpecificURL(url = "${portalURL}/o/oauth2/authorize?client_id=${generatedClientId}&response_type=code");
+		Navigator.openSpecificURL(url = "${portalUrl}/o/oauth2/authorize?client_id=${generatedClientId}&response_type=code");
 
 		Button.click(button = "Authorize");
 
 		WaitForElementPresent(locator1 = "OAuth2#OAUTH2_TESTER_PORTAL_URL");
 
-		var currentURL = selenium.getCurrentUrl();
+		var currentUrl = selenium.getCurrentUrl();
 
-		echo("## * Current URL: ${currentURL}");
+		echo("## * Current URL: ${currentUrl}");
 
-		return "${currentURL}";
+		return "${currentUrl}";
 
-		var authorizationCode = StringUtil.extractLast("${currentURL}", "code=");
+		var authorizationCode = StringUtil.extractLast("${currentUrl}", "code=");
 
 		echo("## * Authorization Code: ${authorizationCode}");
 
@@ -452,7 +452,7 @@ definition {
 		if (isSet(websiteURL)) {
 			PortletEntry.inputText(
 				fieldLabel = "Website URL",
-				text = "${websiteURL}");
+				text = "${websiteUrl}");
 		}
 
 		if (isSet(description)) {
@@ -462,13 +462,13 @@ definition {
 		if (isSet(callbackURI)) {
 			PortletEntry.inputTextArea(
 				fieldId = "redirectURIs",
-				text = "${callbackURI}");
+				text = "${callbackUri}");
 		}
 
 		if (isSet(privacyPolicyURL)) {
 			PortletEntry.inputText(
 				fieldLabel = "Privacy Policy URL",
-				text = "${privacyPolicyURL}");
+				text = "${privacyPolicyUrl}");
 		}
 
 		if (isSet(clientProfile)) {
@@ -518,7 +518,7 @@ definition {
 		if (isSet(requestURL)) {
 			Type(
 				locator1 = "OAuth2#OAUTH2_TESTER_REQUEST_URL",
-				value1 = "${requestURL}");
+				value1 = "${requestUrl}");
 		}
 
 		Button.click(button = "Launch Request");
@@ -542,7 +542,7 @@ definition {
 
 	macro openOAuth2Admin {
 		Navigator.openWithAppendToBaseURL(
-			baseURL = "${baseURL}",
+			baseUrl = "${baseUrl}",
 			urlAppend = "group/guest/~/control_panel/manage?p_p_id=com_liferay_oauth2_provider_web_internal_portlet_OAuth2AdminPortlet");
 
 		WaitForVisible(locator1 = "Button#PLUS");
@@ -552,10 +552,10 @@ definition {
 	macro postClientCredentialTokenViaCurl {
 		var generatedClientId = selenium.getElementValue("OAuth2#ADMIN_INPUT_FORM_CLIENT_ID");
 		var generatedClientSecret = selenium.getElementValue("OAuth2#ADMIN_INPUT_FORM_CLIENT_SECRET");
-		var portalURL = PropsUtil.get("portal.url");
+		var portalUrl = PropsUtil.get("portal.url");
 
 		var curl = '''
-				${portalURL}/o/oauth2/token \
+				${portalUrl}/o/oauth2/token \
 					-d client_id=${generatedClientId} \
 					-d client_secret=${generatedClientSecret} \
 					-d grant_type=client_credentials
@@ -657,7 +657,7 @@ definition {
 			AssertTextEquals(
 				key_fieldLabel = "Website URL",
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "${websiteURL}");
+				value1 = "${websiteUrl}");
 		}
 
 		if (isSet(description)) {
@@ -670,14 +670,14 @@ definition {
 			AssertTextEquals(
 				key_fieldLabel = "Privacy Policy URL",
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "${privacyPolicyURL}");
+				value1 = "${privacyPolicyUrl}");
 		}
 
 		if (isSet(callbackURI)) {
 			AssertTextEquals.assertPartialText(
 				key_text = "redirectURIs",
 				locator1 = "TextArea#ANY",
-				value1 = "${callbackURI}");
+				value1 = "${callbackUri}");
 		}
 
 		if (isSet(clientProfile)) {

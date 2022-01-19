@@ -28,7 +28,7 @@ definition {
 		}
 
 		var curl = '''
-			${portalURL}/api/jsonws/company/get-company-by-virtual-host/virtual-host/${portalInstanceName} \
+			${portalUrl}/api/jsonws/company/get-company-by-virtual-host/virtual-host/${portalInstanceName} \
 				-u ${creatorEmailAddress}:${creatorPassword}
 		''';
 		var companyId = JSONCurlUtil.get("${curl}", "$['companyId']");
@@ -37,13 +37,13 @@ definition {
 	}
 
 	macro getDefaultPortalURL {
-		var portalURL = PropsUtil.get("default.portal.url");
+		var portalUrl = PropsUtil.get("default.portal.url");
 
-		if (!(contains("${portalURL}", "http"))) {
-			var portalURL = "http://${portalURL}";
+		if (!(contains("${portalUrl}", "http"))) {
+			var portalUrl = "http://${portalUrl}";
 		}
 
-		return "${portalURL}";
+		return "${portalUrl}";
 	}
 
 	macro getPortalInstanceName {
@@ -53,7 +53,7 @@ definition {
 		if (("${testPortalInstance}" == "true") && !(IsTestName(locator1 = "", value1 = "${testNameSkipPortalInstance}"))) {
 			var portalURL = JSONCompany.getPortalURL();
 
-			var portalInstanceName = JSONCompany.parsePortalInstanceURL(portalURL = "${portalURL}");
+			var portalInstanceName = JSONCompany.parsePortalInstanceURL(portalUrl = "${portalUrl}");
 
 			return "${portalInstanceName}";
 		}
@@ -63,15 +63,15 @@ definition {
 	}
 
 	macro getPortalURL {
-		var portalURL = PropsUtil.get("portal.url");
+		var portalUrl = PropsUtil.get("portal.url");
 
-		return "${portalURL}";
+		return "${portalUrl}";
 	}
 
 	macro parsePortalInstanceURL {
-		Variables.assertDefined(parameterList = "${portalURL}");
+		Variables.assertDefined(parameterList = "${portalUrl}");
 
-		var portalInstanceName = StringUtil.replace("${portalURL}", "http://", "");
+		var portalInstanceName = StringUtil.replace("${portalUrl}", "http://", "");
 		var portalInstanceName = StringUtil.replace("${portalInstanceName}", ":8080", "");
 
 		return "${portalInstanceName}";

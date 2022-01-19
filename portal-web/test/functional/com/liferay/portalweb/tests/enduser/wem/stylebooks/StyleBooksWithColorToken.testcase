@@ -121,7 +121,7 @@ definition {
 		}
 
 		task ("Change Success of Theme Colors in Color System form") {
-			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-site-name");
+			StyleBooksAdmin.openStyleBooksAdmin(siteUrlKey = "test-site-name");
 
 			StyleBooksAdmin.gotoStyleBookEllipsisItem(
 				item = "Edit",

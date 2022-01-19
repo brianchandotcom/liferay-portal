@@ -35,7 +35,7 @@ definition {
 			workflowDefinition = "Single Approver",
 			workflowResourceValue = "Translation");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		Workflow.webContentGoToAddCP();
 
@@ -91,7 +91,7 @@ definition {
 			workflowDefinition = "Single Approver",
 			workflowResourceValue = "Translation");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		Workflow.webContentGoToAddCP();
 
@@ -139,7 +139,7 @@ definition {
 			workflowDefinition = "Single Approver",
 			workflowResourceValue = "Translation");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		Workflow.webContentGoToAddCP();
 
@@ -191,7 +191,7 @@ definition {
 			workflowAssetType = "Translation",
 			workflowTask = "Review");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
@@ -214,7 +214,7 @@ definition {
 			workflowDefinition = "Single Approver",
 			workflowResourceValue = "Translation");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		Workflow.webContentGoToAddCP();
 
@@ -259,7 +259,7 @@ definition {
 			workflowAssetType = "Translation",
 			workflowTask = "Review");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
@@ -282,7 +282,7 @@ definition {
 			workflowDefinition = "Single Approver",
 			workflowResourceValue = "Translation");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		Workflow.webContentGoToAddCP();
 

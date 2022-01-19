@@ -190,7 +190,7 @@ definition {
 			locator1 = "RSSFeed#FEED_NAVIGATION_DISPLAY_STYLE",
 			value1 = "${feedTitle}");
 
-		if ("${navigationNullADT}" == "true") {
+		if ("${navigationNullAdt}" == "true") {
 			AssertElementNotPresent(locator1 = "RSSFeed#FEED_PANEL_TOGGLE");
 		}
 	}

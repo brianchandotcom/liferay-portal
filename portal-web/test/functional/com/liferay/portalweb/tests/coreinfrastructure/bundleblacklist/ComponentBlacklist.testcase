@@ -83,8 +83,8 @@ definition {
 		var tempFileDirectory = selenium.getOutputDirName();
 
 		OSGiConfig.copyOSGiConfigFile(
-			OSGiConfigFileBaseDir = "${tempFileDirectory}",
-			OSGiConfigFileName = "com.liferay.portal.component.blacklist.internal.configuration.ComponentBlacklistConfiguration.config");
+			osgiConfigFileBaseDir = "${tempFileDirectory}",
+			osgiConfigFileName = "com.liferay.portal.component.blacklist.internal.configuration.ComponentBlacklistConfiguration.config");
 
 		GogoShell.openGogoShellAdmin();
 
@@ -143,8 +143,8 @@ definition {
 		property test.name.skip.portal.instance = "ComponentBlacklist#EnableBlacklistedComponentAfterShutdown";
 
 		OSGiConfig.deployOSGiConfigFile(
-			OSGiConfigFileName = "com.liferay.portal.component.blacklist.internal.configuration.ComponentBlacklistConfiguration.config",
-			OSGiConfigs = "blacklistComponentNames=[&quot;com.liferay.portal.security.ldap.internal.authenticator.LDAPAuth&quot; ]");
+			osgiConfigFileName = "com.liferay.portal.component.blacklist.internal.configuration.ComponentBlacklistConfiguration.config",
+			osgiConfigs = "blacklistComponentNames=[&quot;com.liferay.portal.security.ldap.internal.authenticator.LDAPAuth&quot; ]");
 
 		Pause(locator1 = "10000");
 
@@ -156,11 +156,11 @@ definition {
 
 		Portlet.shutdownServer();
 
-		OSGiConfig.deleteOSGiConfigFile(OSGiConfigFileName = "com.liferay.portal.component.blacklist.internal.configuration.ComponentBlacklistConfiguration.config");
+		OSGiConfig.deleteOSGiConfigFile(osgiConfigFileName = "com.liferay.portal.component.blacklist.internal.configuration.ComponentBlacklistConfiguration.config");
 
 		Portlet.startServer(
 			deleteLiferayHome = "false",
-			keepOSGiState = "true");
+			keepOsGiState = "true");
 
 		GogoShell.openGogoShellAdmin();
 
@@ -174,8 +174,8 @@ definition {
 		property test.name.skip.portal.instance = "ComponentBlacklist#EnableBlacklistedComponentAtRuntime";
 
 		OSGiConfig.deployOSGiConfigFile(
-			OSGiConfigFileName = "com.liferay.portal.component.blacklist.internal.configuration.ComponentBlacklistConfiguration.config",
-			OSGiConfigs = "blacklistComponentNames=[&quot;com.liferay.portal.security.ldap.internal.authenticator.LDAPAuth&quot; ]");
+			osgiConfigFileName = "com.liferay.portal.component.blacklist.internal.configuration.ComponentBlacklistConfiguration.config",
+			osgiConfigs = "blacklistComponentNames=[&quot;com.liferay.portal.security.ldap.internal.authenticator.LDAPAuth&quot; ]");
 
 		Pause(locator1 = "10000");
 
@@ -188,7 +188,7 @@ definition {
 
 		GogoShell.viewNoOutput(outputContent = "ACTIVE");
 
-		OSGiConfig.deleteOSGiConfigFile(OSGiConfigFileName = "com.liferay.portal.component.blacklist.internal.configuration.ComponentBlacklistConfiguration.config");
+		OSGiConfig.deleteOSGiConfigFile(osgiConfigFileName = "com.liferay.portal.component.blacklist.internal.configuration.ComponentBlacklistConfiguration.config");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",

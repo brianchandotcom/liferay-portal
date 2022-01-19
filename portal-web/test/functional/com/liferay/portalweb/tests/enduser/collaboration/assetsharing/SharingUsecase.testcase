@@ -89,7 +89,7 @@ definition {
 			key_text = "Share",
 			locator1 = "Button#ANY");
 
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "test-site");
+		BlogsNavigator.openBlogsAdmin(siteUrlKey = "test-site");
 
 		LexiconEntry.viewNoEntryMenuItem(
 			menuItem = "Share",
@@ -150,7 +150,7 @@ definition {
 			key_text = "Share",
 			locator1 = "Button#ANY");
 
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "test-site");
+		BlogsNavigator.openBlogsAdmin(siteUrlKey = "test-site");
 
 		LexiconEntry.viewNoEntryMenuItem(
 			menuItem = "Share",
@@ -195,7 +195,7 @@ definition {
 			userEmailAddress = "userea@liferay.com",
 			userName = "userfn userln");
 
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "test-site");
+		BlogsNavigator.openBlogsAdmin(siteUrlKey = "test-site");
 
 		BlogsNavigator.gotoShare(entryTitle = "Blogs Entry Title");
 
@@ -212,7 +212,7 @@ definition {
 
 		Asset.openTosharedContent(
 			navTab = "Shared with Me",
-			siteURLKey = "guest");
+			siteUrlKey = "guest");
 
 		Asset.setFilterAndOrder(
 			assetType = "Document",
@@ -272,7 +272,7 @@ definition {
 			entryTitle = "Blogs Entry Title",
 			groupName = "Test Site");
 
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "test-site");
+		BlogsNavigator.openBlogsAdmin(siteUrlKey = "test-site");
 
 		BlogsNavigator.gotoShare(entryTitle = "Blogs Entry Title");
 
@@ -289,7 +289,7 @@ definition {
 
 		Asset.openTosharedContent(
 			navTab = "Shared with Me",
-			siteURLKey = "guest");
+			siteUrlKey = "guest");
 
 		ManagementBar.setFilterAndOrder(orderBy = "Shared Date");
 

@@ -68,7 +68,7 @@ definition {
 		}
 
 		task ("Select the web content as collection item") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+			AssetListsAdmin.openAssetListsAdmin(siteUrlKey = "test-site-name");
 
 			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection");
 
@@ -219,7 +219,7 @@ definition {
 		}
 
 		task ("Select the web content as collection item") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+			AssetListsAdmin.openAssetListsAdmin(siteUrlKey = "test-site-name");
 
 			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection");
 
@@ -967,7 +967,7 @@ definition {
 				mimeType = "image/jpeg",
 				sourceFileName = "Document_1.jpg");
 
-			BlogsNavigator.openBlogsAdmin(siteURLKey = "test-site-name");
+			BlogsNavigator.openBlogsAdmin(siteUrlKey = "test-site-name");
 
 			Blogs.addWithCustomAbstract(
 				entryAbstractDescription = "Blogs Entry Custom Abstract",
@@ -1045,7 +1045,7 @@ definition {
 				groupName = "Test Site Name",
 				title = "Web Content Title");
 
-			BlogsNavigator.openBlogsAdmin(siteURLKey = "test-site-name");
+			BlogsNavigator.openBlogsAdmin(siteUrlKey = "test-site-name");
 
 			Blogs.addEntryWithUploadedCoverImage(
 				coverImageName = "Document_1",
@@ -1580,7 +1580,7 @@ definition {
 				groupName = "Test Site Name",
 				title = "Web Content Title");
 
-			BlogsNavigator.openBlogsAdmin(siteURLKey = "test-site-name");
+			BlogsNavigator.openBlogsAdmin(siteUrlKey = "test-site-name");
 
 			Blogs.addEntryWithUploadedCoverImage(
 				coverImageName = "Document_1",
@@ -2304,7 +2304,7 @@ definition {
 		}
 
 		task ("Get modified date of Web Content Articles") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 			WebContentNavigator.gotoEntryMenuItem(
 				entry = "First Web Content",
@@ -2314,7 +2314,7 @@ definition {
 
 			var firstModifiedDate = selenium.getAttribute("//td[contains(@class,'modified-date')]/span[contains(@class,'tooltip')]@title");
 
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 			WebContentNavigator.gotoEntryMenuItem(
 				entry = "Second Web Content",
@@ -2324,7 +2324,7 @@ definition {
 
 			var secondModifiedDate = selenium.getAttribute("//td[contains(@class,'modified-date')]/span[contains(@class,'tooltip')]@title");
 
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 			WebContentNavigator.gotoEntryMenuItem(
 				entry = "Third Web Content",
@@ -2442,7 +2442,7 @@ definition {
 		}
 
 		task ("Modify the First Web Content") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "First Web Content");
 
@@ -2453,7 +2453,7 @@ definition {
 		}
 
 		task ("Get modified date of the First Web Content") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 			WebContentNavigator.gotoEntryMenuItem(
 				entry = "First Web Content",

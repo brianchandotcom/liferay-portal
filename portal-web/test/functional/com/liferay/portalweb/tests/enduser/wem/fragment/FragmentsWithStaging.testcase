@@ -23,7 +23,7 @@ definition {
 		}
 
 		task ("Activate local live staging") {
-			Staging.openStagingAdmin(siteURLKey = "test-site-name");
+			Staging.openStagingAdmin(siteUrlKey = "test-site-name");
 
 			Staging.activateStagingCP(siteName = "Test Site Name");
 		}
@@ -69,7 +69,7 @@ definition {
 		}
 
 		task ("Publish the site to live") {
-			Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
+			Staging.openStagingAdmin(siteUrlKey = "test-site-name-staging");
 
 			Staging.publishCustomPublication();
 		}
@@ -137,7 +137,7 @@ definition {
 				name = "Fragment Name",
 				site = "false");
 
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name-staging");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "test-site-name-staging");
 
 			FragmentsAdminNavigator.gotoEntryEllipsisItem(
 				entry = "Fragment Name",
@@ -192,7 +192,7 @@ definition {
 		}
 
 		task ("Copy the Tabs fragment to new collection") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name-staging");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "test-site-name-staging");
 
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Basic Components");
 
@@ -263,13 +263,13 @@ definition {
 		}
 
 		task ("Import the fragment collection") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name-staging");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "test-site-name-staging");
 
 			FragmentsAdmin.importCollectionFromTempFolder();
 		}
 
 		task ("Publish to Live via Staging admin") {
-			Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
+			Staging.openStagingAdmin(siteUrlKey = "test-site-name-staging");
 
 			Staging.publishCustomPublication();
 		}

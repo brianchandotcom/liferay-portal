@@ -4,7 +4,7 @@ definition {
 		Variables.assertDefined(parameterList = "${locale},${userEmailAddress},${userFirstName},${userLastName},${userScreenName}");
 
 		if (isSet(specificURL)) {
-			var portalURL = "${specificURL}";
+			var portalUrl = "${specificUrl}";
 		}
 		else {
 			var portalURL = JSONCompany.getPortalURL();
@@ -13,10 +13,10 @@ definition {
 		var companyId = JSONCompany.getCompanyId(
 			creatorEmailAddress = "${creatorEmailAddress}",
 			portalInstanceName = "${portalInstanceName}",
-			portalURL = "${portalURL}");
+			portalUrl = "${portalUrl}");
 
 		var curl = '''
-			${portalURL}/api/jsonws/user/add-user \
+			${portalUrl}/api/jsonws/user/add-user \
 				-u ${creatorEmailAddress}:${creatorPassword} \
 				-d companyId=${companyId} \
 				-d autoPassword=false \
@@ -53,14 +53,14 @@ definition {
 		Variables.assertDefined(parameterList = "${groupId},${userId}");
 
 		if (isSet(specificURL)) {
-			var portalURL = "${specificURL}";
+			var portalUrl = "${specificUrl}";
 		}
 		else {
 			var portalURL = JSONCompany.getPortalURL();
 		}
 
 		var curl = '''
-			${portalURL}/api/jsonws/user/add-group-users/group-id/${groupId}/user-ids/${userId} \
+			${portalUrl}/api/jsonws/user/add-group-users/group-id/${groupId}/user-ids/${userId} \
 				-u test@liferay.com:test
 		''';
 
@@ -71,14 +71,14 @@ definition {
 		Variables.assertDefined(parameterList = "${userGroupId},${userId}");
 
 		if (isSet(specificURL)) {
-			var portalURL = "${specificURL}";
+			var portalUrl = "${specificUrl}";
 		}
 		else {
 			var portalURL = JSONCompany.getPortalURL();
 		}
 
 		var curl = '''
-			${portalURL}/api/jsonws/user/add-user-group-users/user-group-id/${userGroupId}/user-ids/${userId} \
+			${portalUrl}/api/jsonws/user/add-user-group-users/user-group-id/${userGroupId}/user-ids/${userId} \
 				-u test@liferay.com:test
 		''';
 
@@ -89,21 +89,21 @@ definition {
 		Variables.assertDefined(parameterList = "${userId}");
 
 		if (isSet(specificURL)) {
-			var portalURL = "${specificURL}";
+			var portalUrl = "${specificUrl}";
 		}
 		else {
 			var portalURL = JSONCompany.getPortalURL();
 		}
 
 		var curl = '''
-			${portalURL}/api/jsonws/user/update-agreed-to-terms-of-use/user-id/${userId}/agreed-to-terms-of-use/true \
+			${portalUrl}/api/jsonws/user/update-agreed-to-terms-of-use/user-id/${userId}/agreed-to-terms-of-use/true \
 				-u test@liferay.com:test
 		''';
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 
 		var curl = '''
-			${portalURL}/api/jsonws/user/update-reminder-query/user-id/${userId}/question/what-is-your-father%27s-middle-name/answer/test \
+			${portalUrl}/api/jsonws/user/update-reminder-query/user-id/${userId}/question/what-is-your-father%27s-middle-name/answer/test \
 				-u test@liferay.com:test
 		''';
 
@@ -114,21 +114,21 @@ definition {
 		Variables.assertDefined(parameterList = "${userId}");
 
 		if (isSet(specificURL)) {
-			var portalURL = "${specificURL}";
+			var portalUrl = "${specificUrl}";
 		}
 		else {
 			var portalURL = JSONCompany.getPortalURL();
 		}
 
 		var curl = '''
-			${portalURL}/api/jsonws/user/update-agreed-to-terms-of-use/user-id/${userId}/agreed-to-terms-of-use/true \
+			${portalUrl}/api/jsonws/user/update-agreed-to-terms-of-use/user-id/${userId}/agreed-to-terms-of-use/true \
 				-u test:test
 		''';
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 
 		var curl = '''
-			${portalURL}/api/jsonws/user/update-reminder-query/user-id/${userId}/question/what-is-your-father%27s-middle-name/answer/test \
+			${portalUrl}/api/jsonws/user/update-reminder-query/user-id/${userId}/question/what-is-your-father%27s-middle-name/answer/test \
 				-u test:test
 		''';
 
@@ -139,7 +139,7 @@ definition {
 		Variables.assertDefined(parameterList = "${userId}");
 
 		if (isSet(specificURL)) {
-			var portalURL = "${specificURL}";
+			var portalUrl = "${specificUrl}";
 		}
 		else {
 			var portalURL = JSONCompany.getPortalURL();
@@ -153,7 +153,7 @@ definition {
 		}
 
 		var curl = '''
-			${portalURL}/api/jsonws/user/delete-user \
+			${portalUrl}/api/jsonws/user/delete-user \
 				-u ${userName}:test \
 				-d userId=${userId}
 		''';
@@ -163,7 +163,7 @@ definition {
 
 	macro _disablePasswordChangeRequired {
 		if (isSet(specificURL)) {
-			var portalURL = "${specificURL}";
+			var portalUrl = "${specificUrl}";
 		}
 		else {
 			var portalURL = JSONCompany.getPortalURL();
@@ -172,7 +172,7 @@ definition {
 		var passwordPolicyId = JSONPasswordPolicy.getPasswordPolicyIdByName(passwordPolicyName = "Default Password Policy");
 
 		var curl = '''
-			${portalURL}/api/jsonws/passwordpolicy/update-password-policy \
+			${portalUrl}/api/jsonws/passwordpolicy/update-password-policy \
 				-u test@liferay.com:test \
 				-d passwordPolicyId=${passwordPolicyId} \
 				-d name="Default Password Policy" \
@@ -214,7 +214,7 @@ definition {
 			portalInstanceName = "${portalInstanceName}");
 
 		if (isSet(specificURL)) {
-			var portalURL = "${specificURL}";
+			var portalUrl = "${specificUrl}";
 		}
 		else {
 			var portalURL = JSONCompany.getPortalURL();
@@ -229,7 +229,7 @@ definition {
 		}
 
 		var curl = '''
-			${portalURL}/api/jsonws/user/get-user-by-email-address/company-id/${companyId}/email-address/${userEmailAddress} \
+			${portalUrl}/api/jsonws/user/get-user-by-email-address/company-id/${companyId}/email-address/${userEmailAddress} \
 				-u ${creatorEmailAddress}:${creatorPassword}
 		''';
 		var userId = JSONCurlUtil.get("${curl}", "$['userId']");
@@ -247,7 +247,7 @@ definition {
 			userScreenName = "${userScreenName}");
 
 		if (isSet(specificURL)) {
-			var portalURL = "${specificURL}";
+			var portalUrl = "${specificUrl}";
 		}
 		else {
 			var portalURL = JSONCompany.getPortalURL();
@@ -262,7 +262,7 @@ definition {
 		}
 
 		var curl = '''
-			${portalURL}/api/jsonws/user/get-user-by-screen-name/company-id/${companyId}/screen-name/${userScreenName} \
+			${portalUrl}/api/jsonws/user/get-user-by-screen-name/company-id/${companyId}/screen-name/${userScreenName} \
 				-u ${userScreenName}:${creatorPassword}
 		''';
 		var userId = JSONCurlUtil.get("${curl}", "$['userId']");
@@ -274,7 +274,7 @@ definition {
 		var companyId = JSONCompany.getCompanyId(authenticationMethod = "${authenticationMethod}");
 
 		if (isSet(specificURL)) {
-			var portalURL = "${specificURL}";
+			var portalUrl = "${specificUrl}";
 		}
 		else {
 			var portalURL = JSONCompany.getPortalURL();
@@ -288,7 +288,7 @@ definition {
 		}
 
 		var curl = '''
-			${portalURL}/api/jsonws/user/get-company-users \
+			${portalUrl}/api/jsonws/user/get-company-users \
 			-u ${userName}:test \
 			-d companyId=${companyId} \
 			-d <CURL_DATA[start=-1]CURL_DATA> \
@@ -303,14 +303,14 @@ definition {
 		Variables.assertDefined(parameterList = "${userGroupId},${userId}");
 
 		if (isSet(specificURL)) {
-			var portalURL = "${specificURL}";
+			var portalUrl = "${specificUrl}";
 		}
 		else {
 			var portalURL = JSONCompany.getPortalURL();
 		}
 
 		var curl = '''
-			${portalURL}/api/jsonws/user/unset-user-group-users/user-group-id/${userGroupId}/user-ids/${userId} \
+			${portalUrl}/api/jsonws/user/unset-user-group-users/user-group-id/${userGroupId}/user-ids/${userId} \
 				-u test@liferay.com:test
 		''';
 
@@ -321,14 +321,14 @@ definition {
 		Variables.assertDefined(parameterList = "${userId},${newPassword},${requireReset}");
 
 		if (isSet(specificURL)) {
-			var portalURL = "${specificURL}";
+			var portalUrl = "${specificUrl}";
 		}
 		else {
 			var portalURL = JSONCompany.getPortalURL();
 		}
 
 		var curl = '''
-			${portalURL}/api/jsonws/user/update-password \
+			${portalUrl}/api/jsonws/user/update-password \
 				-u test@liferay.com:test \
 				-d userId=${userId} \
 				-d password1=${newPassword} \
@@ -343,14 +343,14 @@ definition {
 		Variables.assertDefined(parameterList = "${userId},${status}");
 
 		if (isSet(specificURL)) {
-			var portalURL = "${specificURL}";
+			var portalUrl = "${specificUrl}";
 		}
 		else {
 			var portalURL = JSONCompany.getPortalURL();
 		}
 
 		var curl = '''
-			${portalURL}/api/jsonws/user/update-status \
+			${portalUrl}/api/jsonws/user/update-status \
 				-u test@liferay.com:test \
 				-d userId=${userId} \
 				-d status=${status}
@@ -363,14 +363,14 @@ definition {
 		Variables.assertDefined(parameterList = "${screenNameUpdate},${userId},${userEmailAddressUpdate},${userFirstName},${userLastName}");
 
 		if (isSet(specificURL)) {
-			var portalURL = "${specificURL}";
+			var portalUrl = "${specificUrl}";
 		}
 		else {
 			var portalURL = JSONCompany.getPortalURL();
 		}
 
 		var curl = '''
-			${portalURL}/api/jsonws/user/update-user \
+			${portalUrl}/api/jsonws/user/update-user \
 				-u ${creatorEmailAddress}:${creatorPassword} \
 				-d userId=${userId} \
 				-d oldPassword= \

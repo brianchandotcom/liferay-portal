@@ -17,10 +17,10 @@ definition {
 
 		var moduleStatusOutput = selenium.getText("GogoShell#OUTPUT_FIELD");
 		var partialModuleStatusOutput = StringUtil.stripBetween("${moduleStatusOutput}", "START", "Name");
-		var originalmoduleID = StringUtil.extractFirst("${partialModuleStatusOutput}", "|");
-		var moduleID = StringUtil.trim("${originalmoduleID}");
+		var originalmoduleId = StringUtil.extractFirst("${partialModuleStatusOutput}", "|");
+		var moduleId = StringUtil.trim("${originalmoduleId}");
 
-		return "${moduleID}";
+		return "${moduleId}";
 	}
 
 	macro listModuleStatus {
@@ -40,7 +40,7 @@ definition {
 	macro startModule {
 		Type(
 			locator1 = "GogoShell#COMMAND_FIELD",
-			value1 = "start ${moduleID}");
+			value1 = "start ${moduleId}");
 
 		AssertClick(
 			locator1 = "GogoShell#EXECUTE_BUTTON",
@@ -50,7 +50,7 @@ definition {
 	macro stopModule {
 		Type(
 			locator1 = "GogoShell#COMMAND_FIELD",
-			value1 = "stop ${moduleID}");
+			value1 = "stop ${moduleId}");
 
 		AssertClick(
 			locator1 = "GogoShell#EXECUTE_BUTTON",

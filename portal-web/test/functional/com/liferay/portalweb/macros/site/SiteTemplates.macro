@@ -359,12 +359,12 @@ definition {
 
 		var currentURL = Navigator.getCurrentURL();
 
-		var siteTemplateURL = StringUtil.extractFirst("${currentURL}", "/~/");
-		var siteTemplateID = StringUtil.extractLast("${siteTemplateURL}", "/");
+		var siteTemplateUrl = StringUtil.extractFirst("${currentUrl}", "/~/");
+		var siteTemplateId = StringUtil.extractLast("${siteTemplateUrl}", "/");
 
-		echo("siteTemplateID: ${siteTemplateID}");
+		echo("siteTemplateID: ${siteTemplateId}");
 
-		return "${siteTemplateID}";
+		return "${siteTemplateId}";
 	}
 
 	macro gotoSettingsCP {
@@ -407,10 +407,10 @@ definition {
 		var templateID = SiteTemplates.getSiteTemplateID(siteTemplateName = "${siteTemplateName}");
 
 		if (isSet(widgetPage)) {
-			Navigator.openWithAppendToBaseURL(urlAppend = "group/${templateID}");
+			Navigator.openWithAppendToBaseURL(urlAppend = "group/${templateId}");
 		}
 		else {
-			Navigator.openWithAppendToBaseURL(urlAppend = "group/${templateID}?p_l_mode=edit");
+			Navigator.openWithAppendToBaseURL(urlAppend = "group/${templateId}?p_l_mode=edit");
 		}
 	}
 

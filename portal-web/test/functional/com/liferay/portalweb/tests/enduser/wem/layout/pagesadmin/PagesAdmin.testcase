@@ -41,7 +41,7 @@ definition {
 		}
 
 		task ("Add a collection page based on dynamic collection") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
 
 			ContentPages.addPublicCollectionPage(
 				collectionName = "Dynamic Collection",
@@ -138,7 +138,7 @@ definition {
 		}
 
 		task ("Add a collection page based on manual collection") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
 
 			ContentPages.addPublicCollectionPage(
 				collectionName = "Manual Collection",
@@ -176,7 +176,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Add a manual collection when adding a collection page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
 
 			ContentPages.addPublicCollectionPage(
 				collectionName = "Manual Collection Name",
@@ -219,7 +219,7 @@ definition {
 		}
 
 		task ("View Draft label is shown") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
 
 			PagesAdmin.viewPageStatus(
 				pageName = "Test Page Name",
@@ -267,7 +267,7 @@ definition {
 		}
 
 		task ("View the children pages are shown in pages admin") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
 
 			var n = "2";
 
@@ -308,7 +308,7 @@ definition {
 		}
 
 		task ("Add a collection page based on recent content collection") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
 
 			ContentPages.addPublicCollectionPage(
 				collectionName = "Recent Content",
@@ -398,7 +398,7 @@ definition {
 		}
 
 		task ("Select the first page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
 
 			PagesAdmin.expandPageTree(depth = "2");
 
@@ -424,7 +424,7 @@ definition {
 		}
 
 		task ("View parent page by clicking on page name") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
 
 			Click(
 				key_pageName = "Test Page Name 1",
@@ -451,7 +451,7 @@ definition {
 		}
 
 		task ("View child page is shown under parent page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
 
 			PagesAdmin.viewPageItemPresent(
 				depth = "2",
@@ -509,7 +509,7 @@ definition {
 		}
 
 		task ("Move Test Page Name 2 and Child Child Page Name 1 to the same level with Child Page Name 1") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
 
 			for (var name : list "Test,Child") {
 				Click(
@@ -556,7 +556,7 @@ definition {
 		}
 
 		task ("View pages order in Pages admin") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
 
 			PagesAdmin.viewPagesOrder(
 				depth = "2",
@@ -601,7 +601,7 @@ definition {
 		}
 
 		task ("Move Test Page Name 1 and 2 to child level of Test Page Name 3") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
 
 			Click(
 				key_itemName = "Test Page Name 3",
@@ -644,7 +644,7 @@ definition {
 		}
 
 		task ("View pages order in Pages admin") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
 
 			PagesAdmin.viewPagesOrder(
 				depth = "2",
@@ -693,7 +693,7 @@ definition {
 		}
 
 		task ("View child page in Pages admin") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
 
 			PagesAdmin.viewPageItemPresent(
 				depth = "2",
@@ -725,7 +725,7 @@ definition {
 	@priority = "3"
 	test PreviewDraftCollectionPage {
 		task ("Add a collection page based on Highest Rated Assets collection provider") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
 
 			ContentPages.addPublicCollectionPage(
 				collectionName = "Highest Rated Assets",
@@ -734,7 +734,7 @@ definition {
 		}
 
 		task ("Navigate to the Pages admin") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
 		}
 
 		task ("Preview the draft collection page in a new tab") {
@@ -794,7 +794,7 @@ definition {
 		}
 
 		task ("Navigate to the Pages admin") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
 		}
 
 		task ("Preview the draft public content page") {
@@ -853,7 +853,7 @@ definition {
 		}
 
 		task ("Navigate to pages administration") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
 		}
 
 		task ("Search for all three pages and assert they all appear") {
@@ -942,7 +942,7 @@ definition {
 		}
 
 		task ("View the plus icon is shown after check the page in Pages admin") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
 
 			PagesAdmin.expandPageTree(depth = "2");
 
@@ -997,7 +997,7 @@ definition {
 		}
 
 		task ("Add a collection page based on dynamic collection") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
 
 			ContentPages.addPublicCollectionPage(
 				collectionName = "Dynamic Collection",
@@ -1038,7 +1038,7 @@ definition {
 		}
 
 		task ("View header table are shown in collection items via Pages admin") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
 
 			WaitForLiferayEvent.initializeLiferayEventLog();
 
@@ -1081,7 +1081,7 @@ definition {
 		}
 
 		task ("Add a collection page based on highest rated assets collection") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
 
 			ContentPages.addPublicCollectionPage(
 				collectionName = "Highest Rated Assets",
@@ -1142,7 +1142,7 @@ definition {
 		}
 
 		task ("Add a Display Page Content fragment to DPT then publish") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Web Content DPT");
 
@@ -1164,7 +1164,7 @@ definition {
 
 		task ("Select Web Content DPT as Specific Display Page Template") {
 			for (var i : list "1,2,3") {
-				WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+				WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 				WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title ${i}");
 
@@ -1185,7 +1185,7 @@ definition {
 		}
 
 		task ("Select all web contents as collection item") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+			AssetListsAdmin.openAssetListsAdmin(siteUrlKey = "test-site-name");
 
 			AssetListsAdmin.selectAsset(
 				assetListName = "Manual Collection",
@@ -1194,7 +1194,7 @@ definition {
 		}
 
 		task ("Add a collection page based on manual collection") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
 
 			ContentPages.addPublicCollectionPage(
 				collectionName = "Manual Collection",
@@ -1275,7 +1275,7 @@ definition {
 		}
 
 		task ("Select first page in Pages admin") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
 
 			PagesAdmin.selectPageItem(pageName = "Test Page Name 1");
 		}
@@ -1285,7 +1285,7 @@ definition {
 		}
 
 		task ("Select all pages via management bar") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
 
 			ManagementBar.clickSelectAllCheckbox();
 		}

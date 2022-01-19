@@ -788,7 +788,7 @@ definition {
 		User.viewUnableToAssignRoleToUserCP(roleType = "Organization");
 
 		AssertElementNotPresent(
-			key_RoleType = StringUtil.replace("Organization Role", " ", ""),
+			key_roleType = StringUtil.replace("Organization Role", " ", ""),
 			locator1 = "UsersAndOrganizationsEditUser#ROLES_SELECT_LINK",
 			value1 = "Select");
 	}
@@ -813,7 +813,7 @@ definition {
 		User.viewUnableToAssignRoleToUserCP(roleType = "Site");
 
 		AssertElementNotPresent(
-			key_RoleType = StringUtil.replace("Site Role", " ", ""),
+			key_roleType = StringUtil.replace("Site Role", " ", ""),
 			locator1 = "UsersAndOrganizationsEditUser#ROLES_SELECT_LINK",
 			value1 = "Select");
 	}

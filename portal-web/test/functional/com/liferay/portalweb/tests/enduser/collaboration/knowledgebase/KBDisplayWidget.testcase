@@ -64,7 +64,7 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test CanAddMultipleSuggestions {
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 		for (var articleCount : list "1,2") {
 			KBArticle.addCP(
@@ -282,7 +282,7 @@ definition {
 
 		AssertElementNotPresent(locator1 = "KnowledgeBase#HIERARCHY_NAVIGATION_CHILD");
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 		KBArticle.gotoChildArticleDescriptiveDetails(kbArticleTitle = "Knowledge Base Article Title Parent");
 
@@ -426,9 +426,9 @@ definition {
 
 		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
 
-		var kbArticleFriendlyURL = selenium.getAttribute("//div[@class='kbarticle-navigation']/ul/li/a[contains(.,'Knowledge Base Article2 Title')]@href");
+		var kbArticleFriendlyUrl = selenium.getAttribute("//div[@class='kbarticle-navigation']/ul/li/a[contains(.,'Knowledge Base Article2 Title')]@href");
 
-		Navigator.openSpecificURL(url = "${kbArticleFriendlyURL}");
+		Navigator.openSpecificURL(url = "${kbArticleFriendlyUrl}");
 
 		KBArticle.viewViaKBDisplayPG(
 			kbArticleContent = "Knowledge Base Article2 Content",
@@ -507,7 +507,7 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test CanViewArticleViaUserDefinedFriendlyURL {
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 		KBArticle.addCP(
 			kbArticleContent = "Knowledge Base Article Content",
@@ -515,16 +515,16 @@ definition {
 
 		KBArticle.addCP(
 			kbArticleContent = "Knowledge Base Article2 Content",
-			kbArticleFriendlyURL = "Friendly Universal Resource Locator",
+			kbArticleFriendlyUrl = "Friendly Universal Resource Locator",
 			kbArticleTitle = "Knowledge Base Article2 Title");
 
 		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
 
-		var kbAricleFriendlyURL = selenium.getAttribute("//div[@class='kbarticle-navigation']/ul/li/a[contains(.,'Knowledge Base Article2 Title')]@href");
+		var kbAricleFriendlyUrl = selenium.getAttribute("//div[@class='kbarticle-navigation']/ul/li/a[contains(.,'Knowledge Base Article2 Title')]@href");
 
 		Navigator.gotoPage(pageName = "Home");
 
-		Navigator.openSpecificURL(url = "${kbAricleFriendlyURL}");
+		Navigator.openSpecificURL(url = "${kbAricleFriendlyUrl}");
 
 		KBArticle.viewViaKBDisplayPG(
 			kbArticleContent = "Knowledge Base Article2 Content",
@@ -586,7 +586,7 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanViewCustomFriendlyURL {
-		var portalURL = PropsUtil.get("portal.url");
+		var portalUrl = PropsUtil.get("portal.url");
 
 		for (var num : list "1,2") {
 			JSONKnowledgeBase.addkBArticle(
@@ -601,14 +601,14 @@ definition {
 		for (var num : list "1,2") {
 			KBArticle.gotoViaKBDisplayPG(kbArticleTitle = "KB Article Title${num}");
 
-			AssertLocation(value1 = "${portalURL}/web/guest/knowledge-base-display-page/-/knowledge_base/custom-friendly-url${num}");
+			AssertLocation(value1 = "${portalUrl}/web/guest/knowledge-base-display-page/-/knowledge_base/custom-friendly-url${num}");
 		}
 	}
 
 	@priority = "4"
 	@refactordone
 	test CanViewDefaultFriendlyURL {
-		var portalURL = PropsUtil.get("portal.url");
+		var portalUrl = PropsUtil.get("portal.url");
 
 		for (var num : list "1,2") {
 			JSONKnowledgeBase.addkBArticle(
@@ -622,7 +622,7 @@ definition {
 		for (var num : list "1,2") {
 			KBArticle.gotoViaKBDisplayPG(kbArticleTitle = "KB Article Title${num}");
 
-			AssertLocation(value1 = "${portalURL}/web/guest/knowledge-base-display-page/-/knowledge_base/kb-article-title${num}");
+			AssertLocation(value1 = "${portalUrl}/web/guest/knowledge-base-display-page/-/knowledge_base/kb-article-title${num}");
 		}
 	}
 
@@ -634,7 +634,7 @@ definition {
 			kbArticleContent = "KB Article Content",
 			kbArticleTitle = "KB Article Title");
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 		KBArticle.editCP(
 			kbArticleContentEdit = "KB Article Content Edit",
@@ -648,7 +648,7 @@ definition {
 			kbArticleContentAddedDiff = "Edit",
 			kbArticleVersionNew = "2",
 			kbArticleVersionOld = "1",
-			viewNoXMLInTitle = "true");
+			viewNoXmlInTitle = "true");
 	}
 
 	@priority = "4"
@@ -704,15 +704,15 @@ definition {
 	@priority = "3"
 	@refactorneeded
 	test JavascriptIsEscapedFromArticleTitle {
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 		KBArticle.addCP(
 			kbArticleContent = "Knowledge Base Article Content",
-			kbArticleFriendlyURL = "Title",
+			kbArticleFriendlyUrl = "Title",
 			kbArticleTitle = '''><img onerror="alert('xss')" src="xx" /><''',
 			specialCharacters = "true");
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 		KBArticle.addCP(
 			kbArticleContent = "Knowledge Base Article Content",
@@ -730,7 +730,7 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test ViewImportedKBArticlesInHierarchyWithMarkdownFormat {
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 		KBArticle.importCP(
 			applyNumericalPrefix = "true",
@@ -764,7 +764,7 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test ViewImportedKBArticlesWithMultiplePeerHierarchies {
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 		KBArticle.importCP(
 			applyNumericalPrefix = "true",
@@ -790,7 +790,7 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test ViewImportedKBArticleWithImagesAsKBAttachments {
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 		KBArticle.importCP(
 			applyNumericalPrefix = "true",
@@ -806,11 +806,11 @@ definition {
 
 		KBArticle.viewImageViaContentCmd();
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		DMDocument.viewDefault();
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 		KBArticle.gotoChildArticleDescriptiveDetails(kbArticleTitle = "Knowledge Base Article Parent Title 2");
 
@@ -833,7 +833,7 @@ definition {
 
 		SystemSettings.saveConfiguration();
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 		KBArticle.importCP(
 			applyNumericalPrefix = "true",
@@ -848,20 +848,20 @@ definition {
 			kbChildArticleTitle = "Knowledge Base Article Parent Title 2 Child 2");
 
 		KBArticle.viewSourceURLCP(
-			kbArticleSourceURL = "https://github.com/liferay/liferay-docs/blob/master/develop/tutorials/articles/liferayui-taglibs/knowledge-base-article-parent-title-2-child-2.markdown",
+			kbArticleSourceUrl = "https://github.com/liferay/liferay-docs/blob/master/develop/tutorials/articles/liferayui-taglibs/knowledge-base-article-parent-title-2-child-2.markdown",
 			kbChildArticleTitle = "Knowledge Base Article Parent Title 2 Child 2");
 
 		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
 
 		KBArticle.viewSourceURLPG(
-			kbArticleSourceURL = "https://github.com/liferay/liferay-docs/blob/master/develop/tutorials/articles/adt/intro.markdown",
+			kbArticleSourceUrl = "https://github.com/liferay/liferay-docs/blob/master/develop/tutorials/articles/adt/intro.markdown",
 			kbArticleTitle = "Knowledge Base Article Parent Title 1 Child 1");
 	}
 
 	@priority = "3"
 	@refactorneeded
 	test ViewKBArticlesWithTheSamePriorityViaNavigationLinks {
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 		for (var kbCount : list "1,2,3") {
 			KBArticle.addCP(
@@ -955,7 +955,7 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test ViewKBArticleWithKBChildArticleHierarchyNavigation {
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 		for (var articleCount : list "1,2,3") {
 			KBArticle.addCP(
@@ -1013,7 +1013,7 @@ definition {
 	@priority = "3"
 	@refactorneeded
 	test ViewKBArticleWithTheSameTitleAndPriorityInDifferentFolders {
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 		KBFolder.addCP(
 			kbFolderDescription = "KB Folder Description",
@@ -1035,7 +1035,7 @@ definition {
 			kbArticleContent = "Knowledge Base Article Content 2",
 			kbArticleTitle = "Knowledge Base Article Title 2");
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 		KBFolder.gotoCP(kbFolderName = "KB Root Folder");
 
@@ -1081,7 +1081,7 @@ definition {
 	@priority = "3"
 	@refactorneeded
 	test ViewNoDuplicateKBSuggestionAfterRefresh {
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		KBAdmin.openKBAdmin(siteUrlKey = "guest");
 
 		KBArticle.addCP(
 			kbArticleContent = "Knowledge Base Article Content",

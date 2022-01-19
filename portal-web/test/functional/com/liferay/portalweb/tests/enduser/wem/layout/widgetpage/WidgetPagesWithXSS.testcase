@@ -35,7 +35,7 @@ definition {
 		var pageName = '''<script>alert(123);</script>''';
 
 		task ("Add a widget page with XSS page name") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
 
 			PagesAdmin.addPublicPage(pageName = "${pageName}");
 		}
@@ -61,7 +61,7 @@ definition {
 		}
 
 		task ("Navigate to the Pages admin") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "test-site-name");
 		}
 
 		task ("View the alert not shown") {

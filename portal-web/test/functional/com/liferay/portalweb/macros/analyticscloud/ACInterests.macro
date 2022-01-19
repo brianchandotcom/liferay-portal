@@ -1,14 +1,14 @@
 definition {
 
 	macro assertKeywordNotPresentByIndex {
-		var key_KeywordName = "${keywordName}";
+		var key_keywordName = "${keywordName}";
 		var key_index = "${index}";
 
 		AssertElementNotPresent(locator1 = "ACSettings#KEYWORD_NAME_BY_INDEX");
 	}
 
 	macro assertKeywordPresentByIndex {
-		var key_KeywordName = "${keywordName}";
+		var key_keywordName = "${keywordName}";
 		var key_index = "${index}";
 
 		AssertElementPresent(locator1 = "ACSettings#KEYWORD_NAME_BY_INDEX");
@@ -27,7 +27,7 @@ definition {
 	}
 
 	macro clickKeywordCheckbox {
-		var key_KeywordName = "${keyword}";
+		var key_keywordName = "${keyword}";
 
 		if (IsVisible(locator1 = "ACSettings#KEYWORD_NAME")) {
 			KeyPress(

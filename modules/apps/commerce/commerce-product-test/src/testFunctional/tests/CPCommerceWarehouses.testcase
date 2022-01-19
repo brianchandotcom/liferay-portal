@@ -374,7 +374,7 @@ definition {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		Check.checkToggleSwitch(
-			key_productSKU = "MIN93015",
+			key_productSku = "MIN93015",
 			locator1 = "Checkbox#ADD_SHIPMENT_ITEMS_CHECKBOX");
 
 		Button.clickSubmitButton();
@@ -530,7 +530,7 @@ definition {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		Check.checkToggleSwitch(
-			key_productSKU = "MIN55861",
+			key_productSku = "MIN55861",
 			locator1 = "Checkbox#ADD_SHIPMENT_ITEMS_CHECKBOX");
 
 		Button.clickSubmitButton();
@@ -896,7 +896,7 @@ definition {
 			locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
 
 		AssertElementPresent(
-			key_FilterOption = "80 in Stock",
+			key_filterOption = "80 in Stock",
 			locator1 = "AppBuilder#CHOOSE_APP_SEARCH_FILTER_BY_OPTION");
 
 		ApplicationsMenu.gotoSite(site = "Minium2");
@@ -908,7 +908,7 @@ definition {
 			locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
 
 		AssertElementPresent(
-			key_FilterOption = "120 in Stock",
+			key_filterOption = "120 in Stock",
 			locator1 = "AppBuilder#CHOOSE_APP_SEARCH_FILTER_BY_OPTION");
 	}
 
@@ -1072,7 +1072,7 @@ definition {
 
 		// TODO Review
 
-		var portalURL = PropsUtil.get("portal.url");
+		var portalUrl = PropsUtil.get("portal.url");
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -1084,7 +1084,7 @@ definition {
 			key_metadataSetName = "Italy",
 			locator1 = "DocumentsAndMediaMetadataSets#METADATA_SETS_NAME");
 
-		Open.openInTheNewTab(locator1 = "${portalURL}");
+		Open.openInTheNewTab(locator1 = "${portalUrl}");
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 

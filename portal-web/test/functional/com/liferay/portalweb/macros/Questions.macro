@@ -9,7 +9,7 @@ definition {
 	}
 
 	macro _openToAddQuestion {
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/${siteURLKey}/${layoutName}#/questions/${topicName}/new");
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/${siteUrlKey}/${layoutName}#/questions/${topicName}/new");
 	}
 
 	macro addRootTopic {
@@ -97,10 +97,10 @@ definition {
 	}
 
 	macro askQuestionFillingTheMandatoryFields {
-		if (isSet(siteURLKey)) {
+		if (isSet(siteUrlKey)) {
 			Questions._openToAddQuestion(
 				layoutName = "${layoutName}",
-				siteURLKey = "${siteURLKey}",
+				siteUrlKey = "${siteUrlKey}",
 				topicName = "${topicName}");
 		}
 		else {
@@ -163,13 +163,13 @@ definition {
 	}
 
 	macro assertCanonicalURL {
-		var HTML = '''<link href="''';
+		var html = '''<link href="''';
 
-		var HTML2 = '''" rel="canonical" data-react-helmet="true">''';
-		var portalURL = "${portalURL}/web/guest";
+		var Html2 = '''" rel="canonical" data-react-helmet="true">''';
+		var portalUrl = "${portalUrl}/web/guest";
 		var pageName = StringUtil.lowerCase("${pageName}");
-		var pageNameURL = StringUtil.replace("${pageName}", " ", "-");
-		var pageSource = StringUtil.add("${HTML}", "${portalURL}/${pageNameURL}/questions/${category}/${title}${HTML2}", "");
+		var pageNameUrl = StringUtil.replace("${pageName}", " ", "-");
+		var pageSource = StringUtil.add("${html}", "${portalUrl}/${pageNameUrl}/questions/${category}/${title}${Html2}", "");
 
 		AssertHTMLSourceTextPresent(value1 = "${pageSource}");
 	}
@@ -457,11 +457,11 @@ definition {
 	}
 
 	macro editRootTopic {
-		if (isSet(siteURLKey)) {
+		if (isSet(siteUrlKey)) {
 			MessageboardsCategory.openToEditCategory(
 				categoryName = "${categoryName}",
 				groupName = "${groupName}",
-				siteURLKey = "${siteURLKey}");
+				siteUrlKey = "${siteUrlKey}");
 		}
 		else {
 			var key_categoryName = "${categoryName}";
@@ -571,7 +571,7 @@ definition {
 	}
 
 	macro openToConfigInSystemSettings {
-		var baseURL = PropsUtil.get("portal.url");
+		var baseUrl = PropsUtil.get("portal.url");
 
 		if ("${portlet}" == "Message Boards Moderation Workflow") {
 			var portletId = "com.liferay.message.boards.moderation.configuration.MBModerationGroupConfiguration";
@@ -581,31 +581,31 @@ definition {
 			var portletId = "com.liferay.questions.web.internal.configuration.QuestionsConfiguration";
 		}
 
-		Open(locator1 = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_factoryPid=${portletId}&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fedit_configuration");
+		Open(locator1 = "${baseUrl}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_factoryPid=${portletId}&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fedit_configuration");
 	}
 
 	macro openToEditQuestion {
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/${siteURLKey}/${layoutName}#/questions/${topicName}/${questionsTitle}/edit");
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/${siteUrlKey}/${layoutName}#/questions/${topicName}/${questionsTitle}/edit");
 	}
 
 	macro openToQuestionDetails {
 		if (isSet(localization)) {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/${siteURLKey}/${layoutName}#/questions/${topicName}/-");
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/${siteUrlKey}/${layoutName}#/questions/${topicName}/-");
 		}
 		else if (isSet(historyRouter)) {
-			Navigator.openWithAppendToBaseURL(urlAppend = "${friendlyURL}/questions/${topicName}/${questionsTitle}");
+			Navigator.openWithAppendToBaseURL(urlAppend = "${friendlyUrl}/questions/${topicName}/${questionsTitle}");
 		}
 		else {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/${siteURLKey}/${layoutName}#/questions/${topicName}/${questionsTitle}");
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/${siteUrlKey}/${layoutName}#/questions/${topicName}/${questionsTitle}");
 		}
 	}
 
 	macro openToQuestionsTopic {
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/${siteURLKey}/${layoutName}#/questions/${topicName}");
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/${siteUrlKey}/${layoutName}#/questions/${topicName}");
 	}
 
 	macro openToTagsTab {
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/${siteURLKey}/${layoutName}#/tags");
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/${siteUrlKey}/${layoutName}#/tags");
 	}
 
 	macro removeRootTopicConfiguration {

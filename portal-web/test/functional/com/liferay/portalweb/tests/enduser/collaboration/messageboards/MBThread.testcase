@@ -44,14 +44,14 @@ definition {
 			bold = "true",
 			groupName = "Guest",
 			layoutName = "message-boards-page",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			threadBody = "MB Thread Message Body",
 			threadSubject = "MB Thread Message Subject");
 
 		MessageboardsThread.openToThread(
 			groupName = "Guest",
 			layoutName = "message-boards-page",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			threadSubject = "MB Thread Message Subject");
 
 		MessageboardsThread.viewPG(
@@ -73,7 +73,7 @@ definition {
 		MessageboardsThread.addPG(
 			groupName = "Guest",
 			layoutName = "message-boards-page",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			threadBody = "MB Thread Message Body",
 			threadBodyImageName = "Document_4.jpg",
 			threadSubject = "MB Thread Message Subject");
@@ -81,7 +81,7 @@ definition {
 		MessageboardsThread.openToThread(
 			groupName = "Guest",
 			layoutName = "message-boards-page",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			threadSubject = "MB Thread Message Subject");
 
 		MessageboardsThread.viewPG(
@@ -107,7 +107,7 @@ definition {
 			displayTextWithLink = "true",
 			dmDocumentTitle = "Document_1.jpg",
 			fieldLabel = "Body",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			threadSubject = "MB Thread Message Subject");
 
 		MessageboardsThread.viewLinkedEntry(
@@ -125,7 +125,7 @@ definition {
 			displayTextWithLink = "true",
 			fieldLabel = "Body",
 			pageName = "Message Boards Page",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			threadSubject = "MB Thread Message Subject");
 
 		MessageboardsThread.viewLinkedEntry(
@@ -184,14 +184,14 @@ definition {
 			groupName = "Guest",
 			layoutName = "message-boards-page",
 			priority = "Urgent",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			threadBody = "MB Thread Message Body",
 			threadSubject = "MB Thread Message Subject");
 
 		MessageboardsThread.openToThread(
 			groupName = "Guest",
 			layoutName = "message-boards-page",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			threadSubject = "MB Thread Message Subject");
 
 		MessageboardsThread.viewPG(
@@ -210,7 +210,7 @@ definition {
 		MessageboardsThread.openToThread(
 			groupName = "Guest",
 			layoutName = "message-boards-page",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			threadSubject = "Message Boards Thread Subject");
 
 		MessageboardsThread.cancelEdit(
@@ -249,17 +249,17 @@ definition {
 			groupName = "Guest",
 			threadSubject = "MB Thread Message Subject");
 
-		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
+		RecycleBin.openRecycleBinAdmin(siteUrlKey = "guest");
 
 		RecycleBin.deleteCP(
 			assetName = "MB Thread Message Subject",
 			assetType = "Message Boards Thread");
 
-		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
+		RecycleBin.openRecycleBinAdmin(siteUrlKey = "guest");
 
 		RecycleBin.viewDefaultCP(assetName = "MB Thread Message Subject");
 
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteUrlKey = "guest");
 
 		MessageboardsThread.viewDefaultCP(threadSubject = "MB Thread Message Subject");
 	}
@@ -291,7 +291,7 @@ definition {
 
 		AssertConsoleTextNotPresent(value1 = "com.liferay.portlet.documentlibrary.NoSuchFileEntryException");
 
-		RecycleBin.openRecycleBinAdmin(siteURLKey = "site-name");
+		RecycleBin.openRecycleBinAdmin(siteUrlKey = "site-name");
 
 		RecycleBin.deleteCP(
 			assetName = "MB Thread Message Subject",
@@ -307,7 +307,7 @@ definition {
 			groupName = "Guest",
 			layoutName = "message-boards-page",
 			mbAttachmentFileList = "marketplace_icon.png,Commerce_Black.jpg,Document_2.jpeg",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			threadBody = "MB Thread Message Body",
 			threadSubject = "MB Thread Message Subject");
 
@@ -341,7 +341,7 @@ definition {
 			threadBody = "MB Thread Message Body",
 			threadSubject = "MB Thread Message Subject");
 
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteUrlKey = "guest");
 
 		LAR.exportPortlet(larFileName = "ExportMBThread.lar");
 
@@ -351,7 +351,7 @@ definition {
 	@description = "This is a test for LPS-136919. It checks that a thread can be imported."
 	@priority = "3"
 	test CanImportThread {
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteUrlKey = "guest");
 
 		LAR.importPortlet(
 			initializeLiferayEvent = "true",
@@ -400,7 +400,7 @@ definition {
 		MessageboardsThread.lockPG(
 			groupName = "Guest",
 			layoutName = "message-boards-page",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			threadSubject = "Message Boards Thread Subject");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
@@ -410,7 +410,7 @@ definition {
 		MessageboardsThread.unlockPG(
 			groupName = "Guest",
 			layoutName = "message-boards-page",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			threadSubject = "Message Boards Thread Subject");
 
 		JSONMBMessage.addMessageReply(
@@ -459,7 +459,7 @@ definition {
 			categoryName = "MB Category2 Name",
 			groupName = "Guest",
 			layoutName = "message-boards-page",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			threadSubject = "MB Thread Message Subject");
 
 		MessageboardsThread.viewPG(
@@ -504,7 +504,7 @@ definition {
 			categoryName = "MB Category2 Name",
 			groupName = "Guest",
 			layoutName = "message-boards-page",
-			siteURLKey = "guest");
+			siteUrlKey = "guest");
 
 		MessageboardsThread.gotoPG(
 			lastPostUserName = "Test Test",
@@ -528,7 +528,7 @@ definition {
 			groupName = "Guest",
 			invalidCharacters = "true",
 			layoutName = "message-boards-page",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			tagName = '''<script>alert(123);</script>''',
 			threadBody = '''<script>alert(123);</script>''',
 			threadSubject = '''<script>alert(123);</script>''');
@@ -560,7 +560,7 @@ definition {
 			categoryName = "MB Category Name",
 			groupName = "Guest");
 
-		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
+		RecycleBin.openRecycleBinAdmin(siteUrlKey = "guest");
 
 		RecycleBin.restoreCP(
 			assetName = "MB Category Name",
@@ -569,7 +569,7 @@ definition {
 
 		RecycleBin.viewDefaultCP(assetName = "MB Category Name");
 
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteUrlKey = "guest");
 
 		MessageboardsCategory.viewCP(
 			categoryCount = "0",
@@ -619,7 +619,7 @@ definition {
 		MessageboardsThread.openToThread(
 			groupName = "Guest",
 			layoutName = "message-boards-page",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			threadSubject = "MB Thread Message Subject");
 
 		MessageboardsThread.viewBBCodeNoXSS(
@@ -669,7 +669,7 @@ definition {
 		MessageboardsThread.addPG(
 			groupName = "Guest",
 			layoutName = "message-boards-page",
-			siteURLKey = "guest",
+			siteUrlKey = "guest",
 			threadBody = '''<script>alert(123);</script>''',
 			threadSubject = '''<script>alert(123);</script>''');
 

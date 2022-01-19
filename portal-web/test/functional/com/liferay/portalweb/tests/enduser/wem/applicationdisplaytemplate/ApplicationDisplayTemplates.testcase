@@ -32,7 +32,7 @@ definition {
 		property test.name.skip.portal.instance = "ApplicationDisplayTemplates#CannotAddTemplateButCanSaveChangesInExistingTemplateWhenDisableTemplateCreation";
 
 		task ("Add a widget template for Asset Publisher") {
-			ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "test-site-name");
+			ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteUrlKey = "test-site-name");
 
 			ApplicationDisplayTemplates.addCP(
 				adtFile = "adt_asset_publisher_rich_summary.ftl",
@@ -58,7 +58,7 @@ definition {
 		}
 
 		task ("Assert the New button doesn't present") {
-			ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "test-site-name");
+			ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteUrlKey = "test-site-name");
 
 			WaitForPageLoad();
 

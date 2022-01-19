@@ -18,14 +18,14 @@ definition {
 
 		JSONStaging.enableLocalStaging(groupName = "Site Name");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name-staging");
 	}
 
 	@description = "This test covers LPS-126751. It ensures that a user cannot create empty document types or metadata sets."
 	@priority = "4"
 	@refactorneeded
 	test AddCustomTypeWithoutFields {
-		DMNavigator.openToAddDocumentType(siteURLKey = "site-name-staging");
+		DMNavigator.openToAddDocumentType(siteUrlKey = "site-name-staging");
 
 		PortletEntry.inputName(name = "DM Document Type Name");
 
@@ -35,7 +35,7 @@ definition {
 			locator1 = "Message#ERROR",
 			value1 = "Error:At least one field must be added.");
 
-		DMNavigator.openMetadataSetsAdmin(siteURLKey = "site-name-staging");
+		DMNavigator.openMetadataSetsAdmin(siteUrlKey = "site-name-staging");
 
 		DMMetadataSet.addTitle(metadataSetName = "Document Metadata Set Name");
 
@@ -58,7 +58,7 @@ definition {
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_2.jpg");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name-staging");
 
 		DMDocument.editCP(
 			dmDocumentTitle = "Document_2.jpg",
@@ -68,11 +68,11 @@ definition {
 			dmDocumentTitle = "DM Document Title Edit",
 			groupName = "Site Name (Staging)",
 			site = "false",
-			siteURLKey = "site-name-staging");
+			siteUrlKey = "site-name-staging");
 
 		DMDocument.deleteVersion(dmDocumentVersionNumber = "1.1");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name-staging");
 
 		Staging.publishViaSAP(
 			confirmMessage = "Are you sure you want to publish the selected document?",
@@ -81,7 +81,7 @@ definition {
 		DMNavigator.openToEntryInAdmin(
 			dmDocumentTitle = "Document_2.jpg",
 			groupName = "Site Name",
-			siteURLKey = "site-name");
+			siteUrlKey = "site-name");
 
 		DMDocument.viewCP(dmDocumentTitle = "Document_2.jpg");
 	}
@@ -118,7 +118,7 @@ definition {
 
 		Staging.publishToLive();
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name");
 
 		DMFolder.viewCP(dmFolderName = "DM Folder Name");
 
@@ -134,7 +134,7 @@ definition {
 
 		Staging.publishToLive();
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name");
 
 		DMDocument.viewDefault();
 	}
@@ -165,13 +165,13 @@ definition {
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_4.jpg");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name-staging");
 
 		Staging.publishViaSAP(
 			confirmMessage = "Are you sure you want to publish the selected folder?",
 			entry = "DM Folder Name");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name");
 
 		DMFolder.viewCP(dmFolderName = "DM Folder Name");
 	}
@@ -179,7 +179,7 @@ definition {
 	@description = "This is a test for LPS-136828. It checks that multiple metadata sets can be published."
 	@priority = "3"
 	test CanPublishMetadataSets {
-		DMNavigator.openMetadataSetsAdmin(siteURLKey = "site-name-staging");
+		DMNavigator.openMetadataSetsAdmin(siteUrlKey = "site-name-staging");
 
 		for (var n : list "1,2") {
 			DMMetadataSet.addTitle(metadataSetName = "DM Metadata Set Name ${n}");
@@ -199,7 +199,7 @@ definition {
 
 		Staging.publishToLive();
 
-		DMNavigator.openMetadataSetsAdmin(siteURLKey = "site-name");
+		DMNavigator.openMetadataSetsAdmin(siteUrlKey = "site-name");
 
 		for (var n : list "1,2") {
 			DMMetadataSet.viewMetadataSetTitle(metadataSetTitle = "DM Metadata Set Name ${n}");
@@ -231,7 +231,7 @@ definition {
 
 		Staging.publishToLive();
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name-staging");
 
 		DMDocument.editCP(
 			dmDocumentTitle = "Document_1.jpeg",
@@ -246,7 +246,7 @@ definition {
 
 		Staging.publishToLive();
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1.jpeg");
 
@@ -274,7 +274,7 @@ definition {
 			dmDocumentTitle = "DM Document Title",
 			groupName = "Site Name (Staging)",
 			site = "false",
-			siteURLKey = "site-name-staging");
+			siteUrlKey = "site-name-staging");
 
 		RelatedAssets.selectAsset(
 			assetTitle = "Web Content Title",
@@ -293,7 +293,7 @@ definition {
 		DMNavigator.openToEntryInAdmin(
 			dmDocumentTitle = "DM Document Title",
 			groupName = "Site Name",
-			siteURLKey = "site-name");
+			siteUrlKey = "site-name");
 
 		DMDocument.viewCP(
 			dmDocumentTitle = "DM Document Title",
@@ -312,7 +312,7 @@ definition {
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_1.jpg");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name-staging");
 
 		DMDocument.addDMShortcutCP(
 			dmDocumentTitle = "DM Document Title",
@@ -326,7 +326,7 @@ definition {
 
 		Staging.publishToLive();
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
 
@@ -347,7 +347,7 @@ definition {
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_4.jpg");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name-staging");
 
 		DMDocument.addDMShortcutCP(
 			dmDocumentTitle = "DM Document Title",
@@ -357,7 +357,7 @@ definition {
 			confirmMessage = "Are you sure you want to publish the selected document?",
 			entry = "DM Document Title");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
 
@@ -391,7 +391,7 @@ definition {
 
 		Staging.publishToLive();
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1.jpeg");
 
@@ -399,7 +399,7 @@ definition {
 			dmDocumentTitle = "Document_1.jpeg",
 			dmDocumentType = "Basic Document");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name-staging");
 
 		DMDocument.editCP(
 			dmDocumentTitle = "Document_1.jpeg",
@@ -413,7 +413,7 @@ definition {
 
 		Staging.publishToLive();
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1.jpeg");
 
@@ -436,7 +436,7 @@ definition {
 				sourceFileName = "Document_${entryCount}.jpg");
 		}
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name-staging");
 
 		DMDocument.addDMShortcutCP(
 			dmDocumentTitle = "DM Document 1 Title",
@@ -450,13 +450,13 @@ definition {
 
 		Staging.publishToLive();
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document 1 Title");
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document 1 Title");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name-staging");
 
 		DMDocument.editDMShortcutCP(
 			dmDocumentTitle = "DM Document 1 Title",
@@ -471,7 +471,7 @@ definition {
 
 		Staging.publishToLive();
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document 2 Title");
 
@@ -499,11 +499,11 @@ definition {
 		DMNavigator.openToEntryInAdmin(
 			dmDocumentTitle = "DM Document Title",
 			groupName = "Site Name",
-			siteURLKey = "site-name");
+			siteUrlKey = "site-name");
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name-staging");
 
 		DMDocument.editCP(
 			dmDocumentFileEdit = "Document_2.jpg",
@@ -522,7 +522,7 @@ definition {
 		DMNavigator.openToEntryInAdmin(
 			dmDocumentTitle = "DM Document Title Edit",
 			groupName = "Site Name",
-			siteURLKey = "site-name");
+			siteUrlKey = "site-name");
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document Title Edit");
 	}
@@ -641,7 +641,7 @@ definition {
 			dmDocumentTypeFieldNames = "Text",
 			dmDocumentTypeName = "DM Document Type Name");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name-staging");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
@@ -661,11 +661,11 @@ definition {
 		DMNavigator.openToEntryInAdmin(
 			dmDocumentTitle = "DM Document Title",
 			groupName = "Site Name",
-			siteURLKey = "site-name");
+			siteUrlKey = "site-name");
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name-staging");
 
 		DMDocument.deleteCP(dmDocumentTitle = "DM Document Title");
 
@@ -677,7 +677,7 @@ definition {
 
 		Staging.publishToLive();
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name");
 
 		DMDocument.viewDefault();
 	}
@@ -695,7 +695,7 @@ definition {
 			dmDocumentTypeFieldNames = "Image,Text",
 			dmDocumentTypeName = "DM Document Type Name");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name-staging");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
@@ -715,7 +715,7 @@ definition {
 		DMNavigator.openToEntryInAdmin(
 			dmDocumentTitle = "DM Document Title",
 			groupName = "Site Name",
-			siteURLKey = "site-name");
+			siteUrlKey = "site-name");
 
 		DMDocument.viewCP(
 			dmDocumentDescription = "DM Document Description",
@@ -723,7 +723,7 @@ definition {
 			dmDocumentType = "DM Document Type Name",
 			previewImage = "Document_1.jpg");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name-staging");
 
 		DMDocument.editCP(
 			dmDocumentDescriptionEdit = "DM Document Description Edit",
@@ -743,7 +743,7 @@ definition {
 		DMNavigator.openToEntryInAdmin(
 			dmDocumentTitle = "DM Document Title Edit",
 			groupName = "Site Name",
-			siteURLKey = "site-name");
+			siteUrlKey = "site-name");
 
 		DMDocument.viewCP(
 			dmDocumentDescription = "DM Document Description Edit",
@@ -763,7 +763,7 @@ definition {
 			dmFolderName = "DM Folder 1",
 			groupName = "Site Name-staging");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name-staging");
 
 		DMFolder.configureWorkflowCP(
 			dmFolderName = "DM Folder 1",
@@ -773,7 +773,7 @@ definition {
 		DMNavigator.openToFolderInAdmin(
 			dmFolderName = "DM Folder 1",
 			groupName = "Site Name-staging",
-			siteURLKey = "site-name");
+			siteUrlKey = "site-name");
 
 		DMDocument.addWithWorkflowCP(
 			dmDocumentDescription = "DM Document in Folder 1",
@@ -785,13 +785,13 @@ definition {
 			locator1 = "DocumentsAndMedia#ICON_DOCUMENT_WORKFLOW_STATUS",
 			value1 = "Pending");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name-staging");
 
 		Staging.publishViaSAP(
 			confirmMessage = "Are you sure you want to publish the selected folder?",
 			entry = "DM Folder 1");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name");
 
 		DMFolder.viewCP(dmFolderName = "DM Folder 1");
 
@@ -909,7 +909,7 @@ definition {
 			dmDocumentTitle = "DM Document Title",
 			dmDocumentTypeName = "DM Document Type Name");
 
-		DMNavigator.openDocumentTypesAdmin(siteURLKey = "site-name-staging");
+		DMNavigator.openDocumentTypesAdmin(siteUrlKey = "site-name-staging");
 
 		DMDocumentType.edit(
 			dmDocumentTypeFieldRequiredEdit = "Text",
@@ -973,7 +973,7 @@ definition {
 			dmDocumentTypeFieldNames = "Image",
 			dmDocumentTypeName = "DM Document Type Name");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name-staging");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
@@ -995,7 +995,7 @@ definition {
 		DMNavigator.openToEntryInAdmin(
 			dmDocumentTitle = "DM Document Title",
 			groupName = "Site Name",
-			siteURLKey = "site-name");
+			siteUrlKey = "site-name");
 
 		DMDocument.viewCP(
 			dmDocumentTitle = "DM Document Title",
@@ -1004,7 +1004,7 @@ definition {
 
 		DMDocument.viewDocumentTypePG(imageName = "Document_1.jpg");
 
-		DMNavigator.openDocumentTypesAdmin(siteURLKey = "site-name-staging");
+		DMNavigator.openDocumentTypesAdmin(siteUrlKey = "site-name-staging");
 
 		DMDocumentType.edit(
 			dmDocumentTypeFieldNameEdit = "Photo",
@@ -1013,7 +1013,7 @@ definition {
 			fieldFieldLabel = "Image",
 			fieldFieldLabelEdit = "Photo");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name-staging");
 
 		DMDocument.editCP(
 			dmDocumentTitle = "DM Document Title",
@@ -1032,7 +1032,7 @@ definition {
 		DMNavigator.openToEntryInAdmin(
 			dmDocumentTitle = "DM Document Title",
 			groupName = "Site Name",
-			siteURLKey = "site-name");
+			siteUrlKey = "site-name");
 
 		DMDocument.viewCP(
 			dmDocumentTitle = "DM Document Title",
@@ -1060,7 +1060,7 @@ definition {
 
 		DDLDataDefinition.save();
 
-		DMNavigator.openToAddDocumentType(siteURLKey = "site-name-staging");
+		DMNavigator.openToAddDocumentType(siteUrlKey = "site-name-staging");
 
 		PortletEntry.inputName(name = "DM Document Type Name");
 
@@ -1072,7 +1072,7 @@ definition {
 
 		DDLDataDefinition.save();
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name-staging");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
@@ -1092,7 +1092,7 @@ definition {
 		DMNavigator.openToEntryInAdmin(
 			dmDocumentTitle = "DM Document Title",
 			groupName = "Site Name",
-			siteURLKey = "site-name");
+			siteUrlKey = "site-name");
 
 		DMDocument.viewCP(
 			dmDocumentDescription = "DM Document Description",
@@ -1100,11 +1100,11 @@ definition {
 			dmDocumentType = "DM Document Type Name",
 			previewImage = "Document_1.jpg");
 
-		DMNavigator.openDocumentTypesAdmin(siteURLKey = "site-name");
+		DMNavigator.openDocumentTypesAdmin(siteUrlKey = "site-name");
 
 		DMDocumentType.viewCP(dmDocumentTypeName = "DM Document Type Name");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name-staging");
 
 		DMDocument.editCP(
 			dmDocumentDescriptionEdit = "DM Document Description Edit",
@@ -1124,7 +1124,7 @@ definition {
 		DMNavigator.openToEntryInAdmin(
 			dmDocumentTitle = "DM Document Title Edit",
 			groupName = "Site Name",
-			siteURLKey = "site-name");
+			siteUrlKey = "site-name");
 
 		DMDocument.viewCP(
 			dmDocumentDescription = "DM Document Description Edit",
@@ -1155,7 +1155,7 @@ definition {
 			dmDocumentTypeName = "DM Document Type Name",
 			metadataSetName = "DM Metadata Set Name");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name-staging");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
@@ -1188,7 +1188,7 @@ definition {
 
 		Staging.publishToLive();
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name");
 
 		DMDocument.viewPG(
 			dmDocumentDescription = "DM Document Description",
@@ -1200,7 +1200,7 @@ definition {
 			numericValue = "123",
 			textContent = "DM Document Text");
 
-		DMNavigator.openMetadataSetsAdmin(siteURLKey = "site-name-staging");
+		DMNavigator.openMetadataSetsAdmin(siteUrlKey = "site-name-staging");
 
 		DMDocumentType.edit(
 			dmDocumentTypeFieldNameEdit = "Company",
@@ -1218,7 +1218,7 @@ definition {
 
 		Staging.publishToLive();
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name");
 
 		DMDocument.viewPG(
 			dmDocumentDescription = "DM Document Description",
@@ -1258,7 +1258,7 @@ definition {
 			groupName = "Site Name-staging",
 			parentFolderName = "DM Folder 1");
 
-		DMDocument.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
+		DMDocument.openDocumentsAndMediaAdmin(siteUrlKey = "site-name-staging");
 
 		DMFolder.viewCP(
 			dmFolderName = "DM Folder 1",
@@ -1273,7 +1273,7 @@ definition {
 			dmDocumentFile = "Document_2.txt",
 			dmDocumentTitle = "DM Document in Folder 2");
 
-		DMDocument.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
+		DMDocument.openDocumentsAndMediaAdmin(siteUrlKey = "site-name-staging");
 
 		DMFolder.viewCP(dmFolderName = "DM Folder 1");
 
@@ -1292,7 +1292,7 @@ definition {
 			dmDocumentFile = "Document_3.txt",
 			dmDocumentTitle = "DM Document in Folder 3");
 
-		DMDocument.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
+		DMDocument.openDocumentsAndMediaAdmin(siteUrlKey = "site-name-staging");
 
 		Staging.publishViaSAP(
 			confirmMessage = "Are you sure you want to publish the selected folder?",
@@ -1437,7 +1437,7 @@ definition {
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name Empty");
 
-		DMNavigator.openMetadataSetsAdmin(siteURLKey = "site-name-staging");
+		DMNavigator.openMetadataSetsAdmin(siteUrlKey = "site-name-staging");
 
 		DMMetadataSet.addTitle(metadataSetName = "DM Metadata Set Name");
 
@@ -1445,7 +1445,7 @@ definition {
 
 		DDLDataDefinition.save();
 
-		DMNavigator.openDocumentTypesAdmin(siteURLKey = "site-name-staging");
+		DMNavigator.openDocumentTypesAdmin(siteUrlKey = "site-name-staging");
 
 		DMDocumentType.add(
 			dmDocumentTypeDescription = "DM Document Type Description",
@@ -1576,7 +1576,7 @@ definition {
 
 		DMDocument.viewLatestVersionURL(
 			dmDocumentFileName = "Document_1.jpg",
-			siteID = "${siteID}");
+			siteId = "${siteId}");
 
 		DMDocument.viewWebDAVURL(
 			dmDocumentFileName = "Document_1.jpg",
@@ -1586,7 +1586,7 @@ definition {
 			metadataData = "image/jpeg",
 			metadataLabel = "Content Type");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name-staging");
 
 		DMDocument.editCP(
 			dmDocumentDescriptionEdit = "DM Document Description Edit",
@@ -1625,7 +1625,7 @@ definition {
 
 		DMDocument.viewLatestVersionURL(
 			dmDocumentFileName = "Document_3Edit.png",
-			siteID = "${siteID}");
+			siteId = "${siteId}");
 
 		DMDocument.viewWebDAVURL(
 			dmDocumentFileName = "Document_3Edit.png",
@@ -1647,13 +1647,13 @@ definition {
 			dmDocumentFile = "Document_2.jpg",
 			dmDocumentTitle = "Document_2.jpg");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name-staging");
 
 		Staging.publishViaSAP(
 			confirmMessage = "Are you sure you want to publish the selected document?",
 			entry = "Document_2.jpg");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name-staging");
 
 		NavItem.gotoStructures();
 
@@ -1702,11 +1702,11 @@ definition {
 			imageFileName = "Document_2.jpg",
 			webContentTitle = "Web Content Title");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name-staging");
 
 		DMDocument.deleteCP(dmDocumentTitle = "Document_2.jpg");
 
-		RecycleBin.openRecycleBinAdmin(siteURLKey = "site-name-staging");
+		RecycleBin.openRecycleBinAdmin(siteUrlKey = "site-name-staging");
 
 		RecycleBin.deleteCP(
 			assetName = "Document_2.jpg",
@@ -1741,13 +1741,13 @@ definition {
 			dmDocumentFile = "Document_2.jpg",
 			dmDocumentTitle = "Document_2.jpg");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name-staging");
 
 		Staging.publishViaSAP(
 			confirmMessage = "Are you sure you want to publish the selected document?",
 			entry = "Document_2.jpg");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name-staging");
 
 		NavItem.gotoStructures();
 
@@ -1796,7 +1796,7 @@ definition {
 			imageFileName = "Document_2.jpg",
 			webContentTitle = "Web Content Title");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name-staging");
 
 		DMDocument.editCP(
 			dmDocumentFileEdit = "Document_3.jpg",

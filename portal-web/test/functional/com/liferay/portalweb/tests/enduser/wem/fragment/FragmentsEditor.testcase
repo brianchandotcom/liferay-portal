@@ -23,7 +23,7 @@ definition {
 		}
 
 		task ("Navigate to the fragment collection") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "test-site-name");
 
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 		}
@@ -51,46 +51,46 @@ definition {
 		}
 
 		task ("Assert the fragment editor has autocomplete for lfr-editable tags") {
-			var fragmentHTML = '''<lfr-editable id="" type="image">''';
+			var fragmentHtml = '''<lfr-editable id="" type="image">''';
 
 			var htmlSnippet = '''<lfr-''';
 
 			FragmentsEditor.autocompleteFragmentHTML(
 				autocompleteField = "lfr-editable:image",
-				fragmentHTML = "${fragmentHTML}",
+				fragmentHtml = "${fragmentHtml}",
 				htmlSnippet = "${htmlSnippet}");
 		}
 
 		task ("Assert the fragment editor has autocomplete for lfr-widget tags") {
-			var fragmentHTML = '''<lfr-widget-asset-list>''';
+			var fragmentHtml = '''<lfr-widget-asset-list>''';
 
 			var htmlSnippet = '''<lfr-''';
 
 			FragmentsEditor.autocompleteFragmentHTML(
 				autocompleteField = "lfr-widget-asset-list",
-				fragmentHTML = "${fragmentHTML}",
+				fragmentHtml = "${fragmentHtml}",
 				htmlSnippet = "${htmlSnippet}");
 		}
 
 		task ("Assert the fragment editor has autocomplete for variables") {
-			var fragmentHTML = '''${portalUtil''';
+			var fragmentHtml = '''${portalUtil''';
 
 			var htmlSnippet = '''${''';
 
 			FragmentsEditor.autocompleteFragmentHTML(
 				autocompleteField = "portalUtil",
-				fragmentHTML = "${fragmentHTML}",
+				fragmentHtml = "${fragmentHtml}",
 				htmlSnippet = "${htmlSnippet}");
 		}
 
 		task ("Assert the fragment editor has autocomplete for variables") {
-			var fragmentHTML = '''[@liferay_editor''';
+			var fragmentHtml = '''[@liferay_editor''';
 
 			var htmlSnippet = '''[@''';
 
 			FragmentsEditor.autocompleteFragmentHTML(
 				autocompleteField = "liferay_editor",
-				fragmentHTML = "${fragmentHTML}",
+				fragmentHtml = "${fragmentHtml}",
 				htmlSnippet = "${htmlSnippet}");
 		}
 	}
@@ -130,7 +130,7 @@ definition {
 				groupName = "Test Site Name",
 				name = "New Collection Name");
 
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "test-site-name");
 
 			FragmentsAdminNavigator.gotoCollection(collectionName = "New Collection Name");
 		}
@@ -150,7 +150,7 @@ definition {
 
 			var htmlSnippet = '''[resources:''';
 
-			var fragmentHTML = '''[resources:Document_1.jpg''';
+			var fragmentHtml = '''[resources:Document_1.jpg''';
 
 			FragmentsEditor.typeHtmlEditor(content = "");
 
@@ -172,7 +172,7 @@ definition {
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "FragmentEditor#HTML_EDITOR_CONTENT",
-				value1 = "${fragmentHTML}");
+				value1 = "${fragmentHtml}");
 		}
 	}
 

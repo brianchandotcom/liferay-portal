@@ -43,7 +43,7 @@ definition {
 			groupNameMap = "${groupNameMap}",
 			manualMembership = "${manualMembership}",
 			parentGroupId = "${parentGroupId}",
-			portalURL = "${portalURL}",
+			portalUrl = "${portalUrl}",
 			type = "${type}");
 	}
 
@@ -96,11 +96,11 @@ definition {
 
 		var groupId = JSONGroupSetter.setGroupId(
 			groupName = "${groupName}",
-			portalURL = "${portalURL}");
+			portalUrl = "${portalUrl}");
 
 		JSONGroupAPI._deleteGroup(
 			groupId = "${groupId}",
-			portalURL = "${portalURL}");
+			portalUrl = "${portalUrl}");
 	}
 
 }

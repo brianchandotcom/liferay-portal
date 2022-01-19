@@ -45,19 +45,19 @@ definition {
 		}
 
 		task ("Add a fragment with a Web Content Display in it") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "test-site-name");
 
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 
 			FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
 
-			var fragmentHTML = '''<lfr-widget-web-content>''';
+			var fragmentHtml = '''<lfr-widget-web-content>''';
 
 			var htmlSnippet = '''<lfr-''';
 
 			FragmentsEditor.autocompleteFragmentHTML(
 				autocompleteField = "lfr-widget-web-content",
-				fragmentHTML = "${fragmentHTML}",
+				fragmentHtml = "${fragmentHtml}",
 				htmlSnippet = "${htmlSnippet}");
 
 			PortletEntry.publish();
@@ -119,8 +119,8 @@ definition {
 				siteName = "Site Name");
 		}
 
-		task ("	Edit the Web Content on the Original Site") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		task (" Edit the Web Content on the Original Site") {
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
 
@@ -130,7 +130,7 @@ definition {
 				webContentTitleEdit = "WC WebContent New Title");
 		}
 
-		task ("	View the Web Content on the Original Site") {
+		task (" View the Web Content on the Original Site") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Content Page Name",
 				siteName = "Test Site Name");
@@ -138,7 +138,7 @@ definition {
 			WebContentDisplayPortlet.viewContent(webContentContent = "WC WebContent New Content");
 		}
 
-		task ("	View the Web Content doesn't change on the new site") {
+		task (" View the Web Content doesn't change on the new site") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Content Page Name",
 				siteName = "Site Name");
@@ -405,7 +405,7 @@ definition {
 		task ("View selected page is linked to Button fragment") {
 			AssertVisible(
 				key_append = "[normalize-space(text())='Go Somewhere']",
-				key_URL = "/web/test-site-name/test-content-page-name",
+				key_url = "/web/test-site-name/test-content-page-name",
 				locator1 = "Fragment#FRAGMENT_LINK");
 		}
 
@@ -438,7 +438,7 @@ definition {
 
 			Click(
 				key_append = "[normalize-space(text())='Go Somewhere']",
-				key_URL = "/web/site-name/test-content-page-name",
+				key_url = "/web/site-name/test-content-page-name",
 				locator1 = "Fragment#FRAGMENT_LINK");
 		}
 
@@ -455,7 +455,7 @@ definition {
 	@priority = "4"
 	test ExportImportSiteWithStyleBook {
 		task ("Add a style book") {
-			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-site-name");
+			StyleBooksAdmin.openStyleBooksAdmin(siteUrlKey = "test-site-name");
 
 			StyleBooksAdmin.addStyleBooks(styleBookName = "Test Style Book Name");
 		}
@@ -485,7 +485,7 @@ definition {
 		task ("Assert no error and the style book persists") {
 			AssertConsoleTextNotPresent(value1 = "com.liferay.style.book.exception.DuplicateStyleBookEntryKeyException");
 
-			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "site-name");
+			StyleBooksAdmin.openStyleBooksAdmin(siteUrlKey = "site-name");
 
 			StyleBooksAdmin.viewStyleBooksPresent(styleBookName = "Test Style Book Name");
 		}

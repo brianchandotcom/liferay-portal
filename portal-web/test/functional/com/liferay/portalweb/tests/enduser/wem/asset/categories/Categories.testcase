@@ -42,7 +42,7 @@ definition {
 		}
 
 		task ("Add two properties in category") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 
 			Category.addPropertyCP(
 				categoryName = "Category Name",
@@ -71,7 +71,7 @@ definition {
 				vocabularyName = "Vocabulary Name");
 		}
 
-		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+		Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 
 		task ("Add a property in category") {
 			Category.addPropertyCP(
@@ -102,7 +102,7 @@ definition {
 		}
 
 		task ("View the category with Guest view permission") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 
 			Category.viewCategoryViewableByCP(
 				categoryName = "Category Name",
@@ -122,7 +122,7 @@ definition {
 		}
 
 		task ("View the category with Owner view permission") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 
 			Category.viewCategoryViewableByCP(
 				categoryName = "Category Name",
@@ -142,7 +142,7 @@ definition {
 		}
 
 		task ("View the category with Site Member view permission") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 
 			Category.viewCategoryViewableByCP(
 				categoryName = "Category Name",
@@ -170,7 +170,7 @@ definition {
 		}
 
 		task ("Add a property in subcategory") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 
 			Navigator.gotoNavNested(navNested = "Vocabulary Name");
 
@@ -196,7 +196,7 @@ definition {
 	@priority = "3"
 	test AddVocabularyDisallowMultipleCategories {
 		task ("Add a vocabulary disallow multiple categories") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 
 			Vocabulary.addCP(
 				allowMultipleCategories = "false",
@@ -214,7 +214,7 @@ definition {
 	@priority = "3"
 	test AddVocabularyForAllAssetTypes {
 		task ("View the new vocabulary for All Asset Types") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 
 			Vocabulary.viewWithAssociatedAssetTypeCP(
 				vocabularyAssociatedAssetType = "All Asset Types",
@@ -226,7 +226,7 @@ definition {
 	@priority = "3"
 	test AddVocabularyForBlogsEntry {
 		task ("Add a vocabulary for Blogs Entry") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 
 			Vocabulary.addWithAssociatedAssetTypeCP(
 				assetType = "Blogs Entry",
@@ -246,7 +246,7 @@ definition {
 		property portal.release = "false";
 
 		task ("Add a vocabulary for Bookmarks Entry") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 
 			Vocabulary.addWithAssociatedAssetTypeCP(
 				assetType = "Bookmarks Entry",
@@ -264,7 +264,7 @@ definition {
 	@priority = "3"
 	test AddVocabularyForDocument {
 		task ("Add a vocabulary for Document") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 
 			Vocabulary.addWithAssociatedAssetTypeCP(
 				assetType = "Document",
@@ -282,7 +282,7 @@ definition {
 	@priority = "3"
 	test AddVocabularyForUser {
 		task ("Add a vocabulary for User") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 
 			Vocabulary.addWithAssociatedAssetTypeCP(
 				assetType = "User",
@@ -300,7 +300,7 @@ definition {
 	@priority = "3"
 	test AddVocabularyForWebContentArticle {
 		task ("Add a vocabulary for Web Content Article") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 
 			Vocabulary.addWithAssociatedAssetTypeCP(
 				assetType = "Web Content Article",
@@ -318,7 +318,7 @@ definition {
 	@priority = "3"
 	test AddVocabularyForWikiPage {
 		task ("Add a vocabulary for Wiki Page") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 
 			Vocabulary.addWithAssociatedAssetTypeCP(
 				assetType = "Wiki Page",
@@ -336,7 +336,7 @@ definition {
 	@priority = "3"
 	test AddVocabularyWithGuestViewPermission {
 		task ("View the new vocabulary with Guest view permission") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 
 			Vocabulary.viewVocabularyPermissionsCP(
 				viewableBy = "Anyone (Guest Role)",
@@ -348,7 +348,7 @@ definition {
 	@priority = "3"
 	test AddVocabularyWithOwnerViewPermission {
 		task ("View the new vocabulary with Owner view permission") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 
 			Vocabulary.viewVocabularyPermissionsCP(
 				viewableBy = "Owner",
@@ -360,7 +360,7 @@ definition {
 	@priority = "3"
 	test AddVocabularyWithSiteMemberViewPermission {
 		task ("View the new vocabulary with Site Member view permission") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 
 			Vocabulary.viewVocabularyPermissionsCP(
 				viewableBy = "Site Members",
@@ -372,7 +372,7 @@ definition {
 	@priority = "3"
 	test CancelVocabularyCreation {
 		task ("Cancel a vocabulary creation") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 
 			Vocabulary.gotoAddVocabulary();
 
@@ -390,7 +390,7 @@ definition {
 	@priority = "3"
 	test CannotAddCategoryWithNullTitle {
 		task ("View cannot add a category without title") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 
 			Category.addWithNullTitleCP(vocabularyName = "Vocabulary Name");
 		}
@@ -407,7 +407,7 @@ definition {
 		}
 
 		task ("Add a property in category") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 
 			Category.addPropertyCP(
 				categoryName = "Category Name",
@@ -462,7 +462,7 @@ definition {
 		}
 
 		task ("Cannot add a duplciate subcategory") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 
 			Subcategory.addDuplicateCP(
 				categoryName = "Category Name",
@@ -475,7 +475,7 @@ definition {
 	@priority = "3"
 	test CannotAddVocabularyWithNullTitle {
 		task ("View cannot add a vocabulary without title") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 
 			Vocabulary.addVocabularyWithNullTitle();
 		}
@@ -489,7 +489,7 @@ definition {
 		var modifiedText = "The number of characters is 255.The number of characters is 255.The number of characters is 255.The number of characters is 255.The number of characters is 255.The number of characters is 255.The number of characters is 255.The number of characters is 255";
 
 		task ("Can not store 256 characters in name field of category") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 
 			Navigator.gotoNavNested(navNested = "Vocabulary Name");
 
@@ -550,7 +550,7 @@ definition {
 	@priority = "3"
 	test DeleteAssociatedAssetTypeOfVocabulary {
 		task ("Add a vocabulary with two associated asset types") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 
 			Vocabulary.gotoAddVocabulary();
 
@@ -602,7 +602,7 @@ definition {
 		}
 
 		task ("Delete all categories") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 
 			Category.deleteCategoriesCP(vocabularyName = "Vocabulary Name");
 		}
@@ -619,7 +619,7 @@ definition {
 		}
 
 		task ("Add two properties in category") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 
 			Category.addPropertyCP(
 				categoryName = "Category Name",
@@ -661,7 +661,7 @@ definition {
 		}
 
 		task ("Add a property in category") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 
 			Category.addPropertyCP(
 				categoryName = "Category Name",
@@ -705,7 +705,7 @@ definition {
 		}
 
 		task ("Move the category to another vocabulary") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 
 			Category.moveViaEditCP(
 				categoryName = "Category Name",
@@ -743,7 +743,7 @@ definition {
 		}
 
 		task ("Move one subcategory to another category") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 
 			Subcategory.moveCP(
 				categoryName = "dog",
@@ -766,7 +766,7 @@ definition {
 		var inputText = "The number of characters is 254.The number of characters is 254.The number of characters is 254.The number of characters is 254.The number of characters is 254.The number of characters is 254.The number of characters is 254.The number of characters is 25";
 
 		task ("Assert input 254 characters to name field of category") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 
 			Navigator.gotoNavNested(navNested = "Vocabulary Name");
 
@@ -834,7 +834,7 @@ definition {
 		var inputText = "The number of characters is 255.The number of characters is 255.The number of characters is 255.The number of characters is 255.The number of characters is 255.The number of characters is 255.The number of characters is 255.The number of characters is 255";
 
 		task ("Assert input 255 characters to name field of category") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 
 			Navigator.gotoNavNested(navNested = "Vocabulary Name");
 
@@ -929,7 +929,7 @@ definition {
 		}
 
 		task ("View the breadcrumb in vocabulary and category") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 
 			Navigator.gotoNavNested(navNested = "Vocabulary Name");
 
@@ -962,7 +962,7 @@ definition {
 		}
 
 		task ("View the navigation") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteUrlKey = "test-site-name");
 
 			Category.viewNavigationCP(
 				categoryName = "Category Name",

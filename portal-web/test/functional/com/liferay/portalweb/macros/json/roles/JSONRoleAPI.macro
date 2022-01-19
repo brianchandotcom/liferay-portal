@@ -6,7 +6,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalURL}/api/jsonws/role/add-role \
+			${portalUrl}/api/jsonws/role/add-role \
 				-u test@liferay.com:test \
 				-d className=com.liferay.portal.kernel.model.Role \
 				-d classPK=0 \
@@ -26,7 +26,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalURL}/api/jsonws/group/add-role-groups \
+			${portalUrl}/api/jsonws/group/add-role-groups \
 				-u test@liferay.com:test \
 				-d roleId=${roleId} \
 				-d groupIds=${groupId}
@@ -41,7 +41,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalURL}/api/jsonws/user/add-role-users \
+			${portalUrl}/api/jsonws/user/add-role-users \
 				-u test@liferay.com:test \
 				-d roleId=${roleId} \
 				-d userIds=${userId}
@@ -56,7 +56,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalURL}/api/jsonws/usergrouprole/add-user-group-roles \
+			${portalUrl}/api/jsonws/usergrouprole/add-user-group-roles \
 				-u test@liferay.com:test \
 				-d userId=${userId} \
 				-d groupId=${groupId} \
@@ -72,7 +72,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalURL}/api/jsonws/role/delete-role \
+			${portalUrl}/api/jsonws/role/delete-role \
 				-u test@liferay.com:test \
 				-d roleId=${roleId}
 		''';
@@ -88,7 +88,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalURL}/api/jsonws/role/get-role \
+			${portalUrl}/api/jsonws/role/get-role \
 				-u test@liferay.com:test \
 				-d companyId=${companyId} \
 				-d name=${name}

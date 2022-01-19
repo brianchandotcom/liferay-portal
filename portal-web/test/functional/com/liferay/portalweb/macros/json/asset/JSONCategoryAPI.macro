@@ -7,7 +7,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalURL}/api/jsonws/assetcategory/add-category \
+			${portalUrl}/api/jsonws/assetcategory/add-category \
 			-u test@liferay.com:test \
 				-d groupId=${groupId} \
 				-d parentCategoryId=${parentCategoryId} \
@@ -29,7 +29,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalURL}/api/jsonws/assetvocabulary/add-vocabulary \
+			${portalUrl}/api/jsonws/assetvocabulary/add-vocabulary \
 				-u test@liferay.com:test \
 				-d externalReferenceCode = \
 				-d groupId=${groupId} \
@@ -51,7 +51,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalURL}/api/jsonws/assetcategory/delete-category \
+			${portalUrl}/api/jsonws/assetcategory/delete-category \
 				-u test@liferay.com:test \
 				-d categoryId=${categoryId}
 		''';
@@ -66,7 +66,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalURL}/api/jsonws/assetvocabulary/delete-vocabulary \
+			${portalUrl}/api/jsonws/assetvocabulary/delete-vocabulary \
 				-u test@liferay.com:test \
 				-d vocabularyId=${vocabularyId}
 		''';
@@ -81,7 +81,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalURL}/api/jsonws/assetcategory/get-vocabulary-categories \
+			${portalUrl}/api/jsonws/assetcategory/get-vocabulary-categories \
 				-u test@liferay.com:test \
 				-d groupId=${groupId} \
 				-d <CURL_DATA[name=${categoryName}]CURL_DATA> \
@@ -105,7 +105,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-            ${portalURL}/api/jsonws/assetcategory/get-vocabulary-categories \
+            ${portalUrl}/api/jsonws/assetcategory/get-vocabulary-categories \
                 -u test@liferay.com:test \
                 -d vocabularyId=${vocabularyId} \
                 -d "start=-1" \
@@ -131,7 +131,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalURL}/api/jsonws/assetvocabulary/get-group-vocabularies \
+			${portalUrl}/api/jsonws/assetvocabulary/get-group-vocabularies \
 				-u test@liferay.com:test \
 				-d groupId=${groupId}
 		''';
@@ -151,7 +151,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalURL}/api/jsonws/assetcategory/update-category \
+			${portalUrl}/api/jsonws/assetcategory/update-category \
 				-u test@liferay.com:test \
 				-d categoryId=${categoryId} \
 				-d parentCategoryId=${parentCategoryId} \

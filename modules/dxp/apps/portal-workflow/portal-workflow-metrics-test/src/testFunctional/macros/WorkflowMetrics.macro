@@ -135,12 +135,12 @@ definition {
 
 	macro assertChartTotalValuePerformanceByStep {
 		var key_avgCompletionTime = "${avgCompletionTime}";
-		var key_SLABreachedValue = "${slaBreachedValue}";
+		var key_slaBreachedValue = "${slaBreachedValue}";
 		var key_rowName = "${rowName}";
 
 		AssertTextEquals(
 			locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_STEP_SLA_BREACHED_VALUE",
-			value1 = "${key_SLABreachedValue}");
+			value1 = "${key_slaBreachedValue}");
 
 		if ("${key_avgCompletionTime}" != "0min") {
 			AssertTextNotEquals(
@@ -840,11 +840,11 @@ definition {
 	}
 
 	macro goToCreatedSLAForm {
-		var key_workflowSLAName = "${workflowSLAName}";
+		var key_workflowSlaName = "${workflowSlaName}";
 
 		Click(
 			locator1 = "WorkflowMetricsSLA#SLA_CREATED_FORM",
-			value1 = "${workflowSLAName}");
+			value1 = "${workflowSlaName}");
 	}
 
 	macro goToDashboardAllItemsWithFilter {

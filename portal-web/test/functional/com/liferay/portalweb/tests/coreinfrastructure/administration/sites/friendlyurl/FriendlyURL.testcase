@@ -57,11 +57,11 @@ definition {
 
 		Button.clickSave();
 
-		var portalURL = PropsUtil.get("portal.url");
+		var portalUrl = PropsUtil.get("portal.url");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "hu/web/test-site-name/test-page");
 
-		AssertLocation(value1 = "${portalURL}/hu/web/test-site-name/teszt-page");
+		AssertLocation(value1 = "${portalUrl}/hu/web/test-site-name/teszt-page");
 	}
 
 	@priority = "5"
@@ -75,15 +75,15 @@ definition {
 
 		User.logoutPG();
 
-		var portalURL = PropsUtil.get("portal.url");
+		var portalUrl = PropsUtil.get("portal.url");
 
-		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name");
+		Navigator.openSpecificURL(url = "${portalUrl}/web/test-site-name");
 
-		Page.assertCanonicalURL(customCanonicalURL = "${portalURL}/web/test-site-name");
+		Page.assertCanonicalURL(customCanonicalUrl = "${portalUrl}/web/test-site-name");
 
-		Navigator.openSpecificURL(url = "${portalURL}/es/web/test-site-name");
+		Navigator.openSpecificURL(url = "${portalUrl}/es/web/test-site-name");
 
-		Page.assertCanonicalURL(customCanonicalURL = "${portalURL}/web/test-site-name");
+		Page.assertCanonicalURL(customCanonicalUrl = "${portalUrl}/web/test-site-name");
 	}
 
 	@priority = "4"
@@ -104,7 +104,7 @@ definition {
 				widgetName = "Language Selector");
 		}
 
-		Site.openSiteSettingsAdmin(siteURLKey = "france-site-name");
+		Site.openSiteSettingsAdmin(siteUrlKey = "france-site-name");
 
 		Site.configureCurrentLanguagesCP(defaultSiteLanguage = "French (France)");
 
@@ -118,7 +118,7 @@ definition {
 
 		PortletEntry.save();
 
-		Site.openSiteSettingsAdmin(siteURLKey = "canada-site-name");
+		Site.openSiteSettingsAdmin(siteUrlKey = "canada-site-name");
 
 		Site.configureCurrentLanguagesCP(defaultSiteLanguage = "French (Canada)");
 
@@ -132,7 +132,7 @@ definition {
 
 		PortletEntry.save();
 
-		var portalURL = PropsUtil.get("portal.url");
+		var portalUrl = PropsUtil.get("portal.url");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "/web/usa-site-name/test-page");
 
@@ -142,7 +142,7 @@ definition {
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "/web/france-site-name/test-page");
 
-		AssertLocation(value1 = "${portalURL}/fr/web/france-site-name/test-page");
+		AssertLocation(value1 = "${portalUrl}/fr/web/france-site-name/test-page");
 
 		LanguagePortlet.selectLanguagePG(
 			locale = "fr_CA",
@@ -150,14 +150,14 @@ definition {
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "/web/canada-site-name/test-page");
 
-		AssertLocation(value1 = "${portalURL}/fr-CA/web/canada-site-name/test-page");
+		AssertLocation(value1 = "${portalUrl}/fr-CA/web/canada-site-name/test-page");
 	}
 
 	@description = "This is a use case for LRQA-52002. FriendlyURLS should support Unicode characters."
 	@priority = "4"
 	test ViewFriendlyURLWithUnicodeChars {
 		JSONLayout.addPublicLayout(
-			friendlyURL = "/⚽⚽⚽",
+			friendlyUrl = "/⚽⚽⚽",
 			groupName = "Test Site Name",
 			layoutName = "Test Page");
 

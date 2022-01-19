@@ -8,7 +8,7 @@ definition {
 		var companyId = JSONCompany.getCompanyId();
 
 		var curl = '''
-			${portalURL}/api/jsonws/resourcepermission/add-resource-permission \
+			${portalUrl}/api/jsonws/resourcepermission/add-resource-permission \
 				-u test@liferay.com:test \
 				-d groupId=${groupId} \
 				-d companyId=${companyId} \
@@ -30,7 +30,7 @@ definition {
 		var companyId = JSONCompany.getCompanyId();
 
 		var curl = '''
-			${portalURL}/api/jsonws/resourcepermission/remove-resource-permission \
+			${portalUrl}/api/jsonws/resourcepermission/remove-resource-permission \
 				-u test@liferay.com:test \
 				-d groupId=${groupId} \
 				-d companyId=${companyId} \

@@ -108,8 +108,8 @@ definition {
 
 	macro openTagsAdmin {
 		Navigator.openWithAppendToBaseURL(
-			baseURL = "${baseURL}",
-			urlAppend = "group/${siteURLKey}/~/control_panel/manage/-/tags_admin/");
+			baseUrl = "${baseUrl}",
+			urlAppend = "group/${siteUrlKey}/~/control_panel/manage/-/tags_admin/");
 	}
 
 	macro tearDownCP {

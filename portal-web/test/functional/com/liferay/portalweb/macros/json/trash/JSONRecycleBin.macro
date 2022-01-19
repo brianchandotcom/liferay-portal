@@ -27,7 +27,7 @@ definition {
 			site = "${site}");
 
 		var curl = '''
-			${portalURL}/api/jsonws/trash.trashentry/delete-entries \
+			${portalUrl}/api/jsonws/trash.trashentry/delete-entries \
 			-u ${userEmailAddress}:${userPassword} \
 			-d groupId=${groupId}
 		''';

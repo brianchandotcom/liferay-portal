@@ -22,7 +22,7 @@ definition {
 
 			Type(
 				locator1 = "SiteSettingsStaging#REMOTE_STAGING_SITE_ID",
-				value1 = "${siteID}");
+				value1 = "${siteId}");
 		}
 
 		if (!(isSet(remoteStaging))) {
@@ -428,9 +428,9 @@ definition {
 			var displayDateHour = "0${displayDateHour}";
 		}
 
-		var displayDateAMPM = selenium.getAttribute("//input[contains(@id,'schedulerStartDateAmPm')]@value");
-		var displayDateAMPM = StringUtil.replace("${displayDateAMPM}", "0", "AM");
-		var displayDateAMPM = StringUtil.replace("${displayDateAMPM}", "1", "PM");
+		var displayDateAmpm = selenium.getAttribute("//input[contains(@id,'schedulerStartDateAmPm')]@value");
+		var displayDateAmpm = StringUtil.replace("${displayDateAmpm}", "0", "AM");
+		var displayDateAmpm = StringUtil.replace("${displayDateAmpm}", "1", "PM");
 		var displayDateMinute = selenium.getAttribute("//input[contains(@id,'schedulerStartDateMinute')]@value");
 		var displayDateMinuteFuture = ${displayDateMinute} + 3;
 		var displayDateMinuteFutureLength = StringUtil.length("${displayDateMinuteFuture}");
@@ -439,7 +439,7 @@ definition {
 			var displayDateMinuteFuture = "0${displayDateMinuteFuture}";
 		}
 
-		var displayDate = "${displayDateHour}:${displayDateMinuteFuture} ${displayDateAMPM}";
+		var displayDate = "${displayDateHour}:${displayDateMinuteFuture} ${displayDateAmpm}";
 
 		Type(
 			locator1 = "StagingPublishToLive#DATE_SCHEDULE_TIME_INPUT",
@@ -621,12 +621,12 @@ definition {
 
 		var siteID = JSONGroupAPI._getGroupIdByName(
 			groupName = "${groupName}",
-			portalURL = "http://localhost:${remotePort}",
+			portalUrl = "http://localhost:${remotePort}",
 			site = "true");
 
 		Type(
 			locator1 = "SiteSettingsStaging#REMOTE_STAGING_SITE_ID",
-			value1 = "${siteID}");
+			value1 = "${siteId}");
 	}
 
 	macro editSitePageVariationPG {
@@ -796,7 +796,7 @@ definition {
 	}
 
 	macro openStagingAdmin {
-		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_staging_processes_web_portlet_StagingProcessesPortlet");
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteUrlKey}/~/control_panel/manage?p_p_id=com_liferay_staging_processes_web_portlet_StagingProcessesPortlet");
 	}
 
 	macro publishCustomPublication {
@@ -1025,22 +1025,22 @@ definition {
 
 		JSONGroup.addGroup(
 			groupName = "Remote Site",
-			portalURL = "http://localhost:${remotePort}");
+			portalUrl = "http://localhost:${remotePort}");
 
 		var siteID = JSONGroupSetter.setGroupId(
 			groupName = "Remote Site",
-			portalURL = "http://localhost:${remotePort}");
+			portalUrl = "http://localhost:${remotePort}");
 
 		var siteURLKey = ContentPagesNavigator._convertNameToKey(name = "${siteName}");
 
-		Staging.openStagingAdmin(siteURLKey = "${siteURLKey}");
+		Staging.openStagingAdmin(siteUrlKey = "${siteUrlKey}");
 
 		Staging.activateStagingCP(
 			contentName = "${contentName}",
 			pageVersioningEnabled = "${pageVersioningEnabled}",
 			remotePort = "${remotePort}",
 			remoteStaging = "true",
-			siteID = "${siteID}",
+			siteId = "${siteId}",
 			siteName = "${siteName}",
 			uncheckContent = "${uncheckContent}");
 	}
@@ -1052,11 +1052,11 @@ definition {
 
 		JSONGroup.addGroup(
 			groupName = "Remote Site",
-			portalURL = "http://localhost:${remotePort}");
+			portalUrl = "http://localhost:${remotePort}");
 
 		var remoteGroupId = JSONGroupSetter.setGroupId(
 			groupName = "Remote Site",
-			portalURL = "http://localhost:${remotePort}");
+			portalUrl = "http://localhost:${remotePort}");
 
 		JSONStaging.enableRemoteStaging(
 			branchingPrivate = "${branchingPrivate}",
@@ -1515,7 +1515,7 @@ definition {
 	}
 
 	macro viewRepeatingEventDetails {
-		Staging.openStagingAdmin(siteURLKey = "${siteName}");
+		Staging.openStagingAdmin(siteUrlKey = "${siteName}");
 
 		Navigator.gotoNavItem(navItem = "Scheduled");
 

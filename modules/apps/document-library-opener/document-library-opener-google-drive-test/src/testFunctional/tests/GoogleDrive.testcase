@@ -21,12 +21,12 @@ definition {
 			configurationName = "Google Drive",
 			configurationScope = "Virtual Instance Scope");
 
-		var googleClientID = PropsUtil.get("google.client.id.2");
+		var googleClientId = PropsUtil.get("google.client.id.2");
 
 		Type(
 			key_text = "clientId",
 			locator1 = "TextArea#ANY",
-			value1 = "${googleClientID}");
+			value1 = "${googleClientId}");
 
 		var googleClientSecret = PropsUtil.get("google.client.secret.2");
 
@@ -1013,7 +1013,7 @@ definition {
 		DMNavigator.openToEditEntryInSite(
 			dmDocumentTitle = "これは日本語のファイルです",
 			groupName = "Guest",
-			siteURLKey = "guest");
+			siteUrlKey = "guest");
 
 		DMDocument.viewEntryInEdit(
 			dmDocumentFileName = "これは日本語のファイルです.docx",

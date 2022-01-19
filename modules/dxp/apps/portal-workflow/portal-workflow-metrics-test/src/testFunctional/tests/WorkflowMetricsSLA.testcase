@@ -483,44 +483,44 @@ definition {
 	@description = "LPS-89015 - Verify that the multi-select-fields allow to hit enter key to select an option from the dropdown list"
 	@priority = "2"
 	test MultiSelectFieldsAllowHitEnterKeyToSelectOption {
-		var key_testSLADefinitionDays = "1";
-		var key_testSLADefinitionHours = "00:00";
-		var key_testSLADefinitionDescription = "SLA Description";
-		var key_testSLADefinitionEnd = "Process Ends: Approved";
-		var key_testSLADefinitionName = "SLA Name";
-		var key_testSLADefinitionStart = "Process Begins";
+		var key_testSlaDefinitionDays = "1";
+		var key_testSlaDefinitionHours = "00:00";
+		var key_testSlaDefinitionDescription = "SLA Description";
+		var key_testSlaDefinitionEnd = "Process Ends: Approved";
+		var key_testSlaDefinitionName = "SLA Name";
+		var key_testSlaDefinitionStart = "Process Begins";
 
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
 		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
 
 		WorkflowMetrics.fillSLAForm(
-			slaDefinitionDays = "${key_testSLADefinitionDays}",
-			slaDefinitionDescription = "${key_testSLADefinitionDescription}",
-			slaDefinitionEnd = "${key_testSLADefinitionEnd}",
-			slaDefinitionHours = "${key_testSLADefinitionHours}",
-			slaDefinitionName = "${key_testSLADefinitionName}",
-			slaDefinitionStart = "${key_testSLADefinitionStart}");
+			slaDefinitionDays = "${key_testSlaDefinitionDays}",
+			slaDefinitionDescription = "${key_testSlaDefinitionDescription}",
+			slaDefinitionEnd = "${key_testSlaDefinitionEnd}",
+			slaDefinitionHours = "${key_testSlaDefinitionHours}",
+			slaDefinitionName = "${key_testSlaDefinitionName}",
+			slaDefinitionStart = "${key_testSlaDefinitionStart}");
 
 		AssertTextEquals(
 			locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_NAME",
-			value1 = "${key_testSLADefinitionName}");
+			value1 = "${key_testSlaDefinitionName}");
 
 		AssertTextEquals(
 			locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_DESCRIPTION",
-			value1 = "${key_testSLADefinitionDescription}");
+			value1 = "${key_testSlaDefinitionDescription}");
 
 		AssertTextEquals(
 			locator1 = "WorkflowMetricsSLA#SLA_STEPS_START",
-			value1 = "${key_testSLADefinitionStart}");
+			value1 = "${key_testSlaDefinitionStart}");
 
 		AssertTextEquals(
 			locator1 = "WorkflowMetricsSLA#SLA_STEPS_STOP",
-			value1 = "${key_testSLADefinitionEnd}");
+			value1 = "${key_testSlaDefinitionEnd}");
 
 		AssertTextEquals(
 			locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_DAYS",
-			value1 = "${key_testSLADefinitionDays}");
+			value1 = "${key_testSlaDefinitionDays}");
 	}
 
 	@description = "LPS-89015 - Verify that the multi-select-fields allow to navigate from the input field to the dropdown list vertically by using up/down keys"

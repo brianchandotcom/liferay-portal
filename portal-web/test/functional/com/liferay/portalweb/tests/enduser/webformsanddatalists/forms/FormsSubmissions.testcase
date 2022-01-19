@@ -419,7 +419,7 @@ definition {
 
 		FormsAdminNavigator.gotoSettings();
 
-		Form.configureRedirectURL(URL = "${friendlyURL}");
+		Form.configureRedirectURL(url = "${friendlyUrl}");
 
 		Button.clickDone();
 
@@ -435,7 +435,7 @@ definition {
 
 		FormPortlet.submit();
 
-		Form.viewRedirectedURL(friendlyURL = "${friendlyURL}");
+		Form.viewRedirectedURL(friendlyUrl = "${friendlyUrl}");
 
 		Navigator.gotoPage(pageName = "Form Page 1");
 
@@ -496,7 +496,7 @@ definition {
 
 		FormsAdminNavigator.gotoPublishCopyURLLink();
 
-		var publishedFormPublicURL = Form.getPublishedFormPublicURL(publishedFormPublicURL = "${publishedFormPublicURL}");
+		var publishedFormPublicURL = Form.getPublishedFormPublicURL(publishedFormPublicUrl = "${publishedFormPublicUrl}");
 
 		Form.save();
 
@@ -523,7 +523,7 @@ definition {
 				Navigator.gotoPage(pageName = "Form Page");
 			}
 			else if ("${formAccessLevel}" == "public") {
-				Navigator.openSpecificURL(url = "${publishedFormPublicURL}");
+				Navigator.openSpecificURL(url = "${publishedFormPublicUrl}");
 			}
 
 			FormPortlet.waitFormRenderer(text = "Submit");
@@ -569,15 +569,15 @@ definition {
 
 		FormsAdminNavigator.gotoPublishCopyURLLink();
 
-		var publishedFormPublicURL = Form.getPublishedFormPublicURL(publishedFormPublicURL = "${publishedFormPublicURL}");
+		var publishedFormPublicURL = Form.getPublishedFormPublicURL(publishedFormPublicUrl = "${publishedFormPublicUrl}");
 
 		SignOut.signOut();
 
-		Navigator.openSpecificURL(url = "${publishedFormPublicURL}");
+		Navigator.openSpecificURL(url = "${publishedFormPublicUrl}");
 
 		User.viewLoginPG();
 
-		Navigator.openSpecificURL(url = "${publishedFormPublicURL}?SM_USER=test@liferay.com");
+		Navigator.openSpecificURL(url = "${publishedFormPublicUrl}?SM_USER=test@liferay.com");
 
 		AssertElementPresent(
 			key_formName = "Form 1",

@@ -7,7 +7,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalURL}/api/jsonws/sitenavigation.sitenavigationmenu/add-site-navigation-menu \
+			${portalUrl}/api/jsonws/sitenavigation.sitenavigationmenu/add-site-navigation-menu \
 			  -u test@liferay.com:test \
 			  -d groupId=${groupId} \
 			  -d name=${siteNavigationMenuName} \
@@ -25,7 +25,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalURL}/api/jsonws/sitenavigation.sitenavigationmenuitem/add-site-navigation-menu-item \
+			${portalUrl}/api/jsonws/sitenavigation.sitenavigationmenuitem/add-site-navigation-menu-item \
 				-u test@liferay.com:test \
 				-d groupId=${groupId} \
 				-d siteNavigationMenuId=${siteNavigationMenuId} \
@@ -44,7 +44,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalURL}/api/jsonws/sitenavigation.sitenavigationmenu/delete-site-navigation-menu \
+			${portalUrl}/api/jsonws/sitenavigation.sitenavigationmenu/delete-site-navigation-menu \
 			  -u test@liferay.com:test \
 			  -d siteNavigationMenuId=${siteNavigationMenuId}
 		''';
@@ -59,7 +59,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalURL}/api/jsonws/sitenavigation.sitenavigationmenu/get-site-navigation-menus \
+			${portalUrl}/api/jsonws/sitenavigation.sitenavigationmenu/get-site-navigation-menus \
 				-u test@liferay.com:test \
 				-d groupId=${groupId}
 		''';
@@ -75,7 +75,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalURL}/api/jsonws/sitenavigation.sitenavigationmenuitem/get-site-navigation-menu-items \
+			${portalUrl}/api/jsonws/sitenavigation.sitenavigationmenuitem/get-site-navigation-menu-items \
 				-u test@liferay.com:test \
 				-d siteNavigationMenuId=${siteNavigationMenuId}
 		''';

@@ -74,7 +74,7 @@ definition {
 				title = "Web Content Title ${count}");
 		}
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title 2");
 
@@ -162,7 +162,7 @@ definition {
 	@description = "This is a test for LPS-84223."
 	@priority = "3"
 	test DLLinkValidationInWebContent {
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
@@ -173,19 +173,19 @@ definition {
 
 		DMDocument.expandInfo();
 
-		var dmDocumentURL = selenium.getAttribute("//input[contains(@id,'urlInput')]@value");
-		var editDocumentURL = StringUtil.extractFirst("${dmDocumentURL}", "jpg");
-		var entryExternalURL = StringUtil.replace("${editDocumentURL}", "http://", "");
+		var dmDocumentUrl = selenium.getAttribute("//input[contains(@id,'urlInput')]@value");
+		var editDocumentUrl = StringUtil.extractFirst("${dmDocumentUrl}", "jpg");
+		var entryExternalUrl = StringUtil.replace("${editDocumentUrl}", "http://", "");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		WebContentNavigator.gotoAddCP();
 
 		PortletEntry.inputTitle(title = "Web Content Title");
 
 		CKEditor.addEntryExternalURL(
-			displayText = "${editDocumentURL}",
-			entryExternalURL = "${entryExternalURL}",
+			displayText = "${editDocumentUrl}",
+			entryExternalUrl = "${entryExternalUrl}",
 			fieldLabel = "content");
 
 		Button.clickPublish();
@@ -241,7 +241,7 @@ definition {
 			larFileName = "${larFileName}",
 			siteName = "Site Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
@@ -281,7 +281,7 @@ definition {
 			larFileName = "${larFileName}",
 			siteName = "Site Name");
 
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
+		BlogsNavigator.openBlogsAdmin(siteUrlKey = "site-name");
 
 		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry Title");
 
@@ -385,7 +385,7 @@ definition {
 
 		JSONStaging.enableLocalStaging(groupName = "Site Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name-staging");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -397,7 +397,7 @@ definition {
 
 		LAR.exportSiteCP(siteScopeName = "Site Name");
 
-		Staging.openStagingAdmin(siteURLKey = "site-name-staging");
+		Staging.openStagingAdmin(siteUrlKey = "site-name-staging");
 
 		Staging.publishCustomPublication();
 	}
@@ -409,14 +409,14 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Site Name");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.jpg",
 			dmDocumentTitle = "DM Document Title");
 
-		DMNavigator.openDocumentTypesAdmin(siteURLKey = "site-name");
+		DMNavigator.openDocumentTypesAdmin(siteUrlKey = "site-name");
 
 		DMDocumentType.add(
 			dmDocumentTypeDescription = "DM Document Type Description",
@@ -425,7 +425,7 @@ definition {
 
 		DMDocumentType.viewCP(dmDocumentTypeName = "DM Document Type Name");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
@@ -439,7 +439,7 @@ definition {
 			dmDocumentTitle = "DM Document Title",
 			groupName = "Site Name");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name");
 
 		LAR.exportPortlet(larFileName = "DocumentsandMedia_portlet.lar");
 
@@ -456,7 +456,7 @@ definition {
 			groupName = "Site Name",
 			layoutName = "Test Page");
 
-		PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "global");
+		PageTemplatesAdmin.openPageTemplatesAdmin(siteUrlKey = "global");
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -473,7 +473,7 @@ definition {
 
 		DDLDataDefinition.save();
 
-		PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "global");
+		PageTemplatesAdmin.openPageTemplatesAdmin(siteUrlKey = "global");
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -499,7 +499,7 @@ definition {
 
 		PortletEntry.publish();
 
-		PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "global");
+		PageTemplatesAdmin.openPageTemplatesAdmin(siteUrlKey = "global");
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -544,7 +544,7 @@ definition {
 			groupName = "Guest",
 			title = "Web Content Title");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		LAR.exportPortlet(larFileName = "ExportWebContent.lar");
 
@@ -558,21 +558,21 @@ definition {
 			exportIndividualDeletions = "true",
 			larFileName = "ExportWebContentDeletion.lar");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		LAR.importPortlet(larFileName = "ExportWebContent.lar");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		WebContent.viewTitle(webContentTitle = "Web Content Title");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		LAR.importPortlet(
 			importDeletions = "true",
 			larFileName = "ExportWebContentDeletion.lar");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		WebContent.viewNotPresentCP(webContentTitle = "Web Content Title");
 	}
@@ -619,10 +619,10 @@ definition {
 		User.firstLoginPG(
 			password = "test",
 			userEmailAddress = "test@www.able.com",
-			virtualHostsURL = "http://www.able.com:8080");
+			virtualHostsUrl = "http://www.able.com:8080");
 
 		LAR.importSiteCP(
-			baseURL = "http://www.able.com:8080",
+			baseUrl = "http://www.able.com:8080",
 			larFileName = "${larFileName}",
 			siteName = "Global");
 
@@ -673,10 +673,10 @@ definition {
 		User.firstLoginPG(
 			password = "test",
 			userEmailAddress = "test@www.able.com",
-			virtualHostsURL = "http://www.able.com:8080");
+			virtualHostsUrl = "http://www.able.com:8080");
 
 		LAR.importSiteCP(
-			baseURL = "http://www.able.com:8080",
+			baseUrl = "http://www.able.com:8080",
 			larFileName = "${larFileName}",
 			siteName = "Global");
 
@@ -696,7 +696,7 @@ definition {
 				layoutName = "Page ${count}");
 		}
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-a");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-a");
 
 		NavItem.gotoStructures();
 
@@ -710,7 +710,7 @@ definition {
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-a");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-a");
 
 		NavItem.gotoTemplates();
 
@@ -720,7 +720,7 @@ definition {
 			templateFieldNames = "Link to Page",
 			templateName = "WC Template Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-a");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-a");
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
@@ -732,7 +732,7 @@ definition {
 
 		PortletEntry.publish();
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-a");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-a");
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
@@ -815,7 +815,7 @@ definition {
 			layoutName = "Site Child Child Page",
 			parentLayoutName = "Site Child Page");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
 
 		NavItem.gotoStructures();
 
@@ -829,7 +829,7 @@ definition {
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
 
 		NavItem.gotoTemplates();
 
@@ -839,7 +839,7 @@ definition {
 			templateFieldNames = "Link to Page",
 			templateName = "WC Template Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
@@ -851,7 +851,7 @@ definition {
 
 		PortletEntry.publish();
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
@@ -949,7 +949,7 @@ definition {
 
 	@priority = "3"
 	test ExportImportPortletWithADT {
-		ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "guest");
+		ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteUrlKey = "guest");
 
 		ApplicationDisplayTemplates.addCP(
 			adtFile = "adt_blogs_basic.ftl",
@@ -1111,14 +1111,14 @@ definition {
 	test ExportImportSiteWithNestedUploadField {
 		JSONGroup.addGroup(groupName = "Site A");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-a");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-a");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.jpg",
 			dmDocumentTitle = "DM Document Title");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-a");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-a");
 
 		NavItem.gotoStructures();
 
@@ -1137,7 +1137,7 @@ definition {
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-a");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-a");
 
 		NavItem.gotoTemplates();
 
@@ -1147,7 +1147,7 @@ definition {
 			templateFieldNames = "Text,Image",
 			templateName = "WC Template Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-a");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-a");
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
@@ -1180,7 +1180,7 @@ definition {
 			larFileName = "${larFileName}",
 			siteName = "Site B");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-b");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-b");
 
 		WebContent.viewWithStructureCP(
 			webContentImage = "DM Document Title",
@@ -1218,11 +1218,11 @@ definition {
 	test ExportImportThemeSettings {
 		JSONGroup.addGroup(groupName = "Site Name");
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
+		PagesAdmin.openPagesAdmin(siteUrlKey = "Site Name");
 
 		PagesAdmin.addPublicPage(pageName = "Test Page");
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
+		PagesAdmin.openPagesAdmin(siteUrlKey = "Site Name");
 
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "Configure",
@@ -1279,7 +1279,7 @@ definition {
 		property test.name.skip.portal.instance = "ExportImport#ExportImportValidation";
 		property testray.component.names = "Training";
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
@@ -1290,7 +1290,7 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+		BlogsNavigator.openBlogsAdmin(siteUrlKey = "guest");
 
 		BlogsNavigator.gotoEditCP(entryTitle = "Blogs Entry Title");
 
@@ -1328,7 +1328,7 @@ definition {
 	test ExportImportWebContentCircularReference {
 		JSONGroup.addGroup(groupName = "Site Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
 
 		NavItem.gotoStructures();
 
@@ -1342,7 +1342,7 @@ definition {
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
 
 		NavItem.gotoTemplates();
 
@@ -1352,7 +1352,7 @@ definition {
 			templateFieldNames = "Web Content",
 			templateName = "WC Template Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
@@ -1363,7 +1363,7 @@ definition {
 
 		PortletEntry.publish();
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
@@ -1406,7 +1406,7 @@ definition {
 	test ExportImportWebContentFolderWithWorkflow {
 		property portal.acceptance = "true";
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		WebContentFolder.addCP(
 			folderDescription = "WC Folder Description",
@@ -1417,17 +1417,17 @@ definition {
 			workflowDefinition = "Single Approver",
 			workflowRestriction = "Default Workflow");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		LAR.exportPortlet(larFileName = "WebContent_portlet.lar");
 
 		JSONGroup.addGroup(groupName = "Site Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
 
 		LAR.importPortlet(larFileName = "WebContent_portlet.lar");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
 
 		WebContentFolder.viewFolderWorkflow(
 			folderName = "WC Folder Name",
@@ -1439,7 +1439,7 @@ definition {
 	test ExportImportWebcontentWithRepeatField {
 		JSONGroup.addGroup(groupName = "Exported Site");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "exported-site");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "exported-site");
 
 		NavItem.gotoStructures();
 
@@ -1460,7 +1460,7 @@ definition {
 
 		WebContentStructures.saveCP(structureName = "Exported Structure");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "exported-site");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "exported-site");
 
 		NavItem.gotoTemplates();
 
@@ -1470,7 +1470,7 @@ definition {
 			templateFieldNames = "Text",
 			templateName = "Exported Template");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "exported-site");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "exported-site");
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "Exported Structure");
 
@@ -1498,17 +1498,17 @@ definition {
 
 		WebContent.viewTitle(webContentTitle = "Exported Article");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "exported-site");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "exported-site");
 
 		LAR.exportPortlet(larFileName = "WebContent_portlet.lar");
 
 		JSONGroup.addGroup(groupName = "Imported Site");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "imported-site");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "imported-site");
 
 		LAR.importPortlet(larFileName = "WebContent_portlet.lar");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "imported-site");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "imported-site");
 
 		WebContent.viewWithStructureCP(webContentTitle = "Exported Article");
 
@@ -1523,7 +1523,7 @@ definition {
 			locator1 = "WCEditWebContent#ANY_TEXT_INPUT",
 			value1 = "Liferay 1");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "imported-site");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "imported-site");
 
 		NavItem.gotoStructures();
 
@@ -1541,7 +1541,7 @@ definition {
 			key_fieldFieldLabel = "Text",
 			locator1 = "WCEditWebContent#TEXT_INPUT");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "imported-site");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "imported-site");
 
 		NavItem.gotoTemplates();
 
@@ -1607,13 +1607,13 @@ definition {
 
 		LAR.exportSiteCP(siteScopeName = "Guest");
 
-		var downloadURL = selenium.getAttribute("//dl/dd/div/h2/span/a@href");
+		var downloadUrl = selenium.getAttribute("//dl/dd/div/h2/span/a@href");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
-		Navigator.openSpecificURL(url = "${downloadURL}");
+		Navigator.openSpecificURL(url = "${downloadUrl}");
 
 		AssertTextEquals(
 			locator1 = "Home#ERROR_MESSAGE_ALERT_ERROR",
@@ -1631,14 +1631,14 @@ definition {
 			groupName = "Site Name",
 			layoutName = "Test Page");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.jpg",
 			dmDocumentTitle = "DM Document Title");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
 
 		NavItem.gotoStructures();
 
@@ -1650,7 +1650,7 @@ definition {
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
 
 		NavItem.gotoTemplates();
 
@@ -1660,7 +1660,7 @@ definition {
 			templateFieldNames = "Link to Page,Image",
 			templateName = "WC Template Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
@@ -1685,7 +1685,7 @@ definition {
 			groupName = "Site Name",
 			layoutName = "Test Page");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
 
 		LAR.exportPortlet(larFileName = "WebContent_portlet.lar");
 
@@ -1717,7 +1717,7 @@ definition {
 	@description = "This is a test for LPS-135706 - Verified that exporting and importing a Documents & Media URL does not append UUID to the imported URL if it was not there to begin with"
 	@priority = "3"
 	test ImportDMUrlWithoutUUID {
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
@@ -1728,16 +1728,16 @@ definition {
 
 		DMDocument.expandInfo();
 
-		var dmDocumentURL = selenium.getAttribute("//input[contains(@id,'urlInput')]@value");
-		var editDocumentURL = StringUtil.extractFirst("${dmDocumentURL}", "jpg");
+		var dmDocumentUrl = selenium.getAttribute("//input[contains(@id,'urlInput')]@value");
+		var editDocumentUrl = StringUtil.extractFirst("${dmDocumentUrl}", "jpg");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		WebContentNavigator.gotoAddCP();
 
 		PortletEntry.inputTitle(title = "Web Content Title");
 
-		CKEditor.addSourceContent(content = '''<a href="${editDocumentURL}jpg">Link to Document</a>''');
+		CKEditor.addSourceContent(content = '''<a href="${editDocumentUrl}jpg">Link to Document</a>''');
 
 		PortletEntry.publish();
 
@@ -1759,7 +1759,7 @@ definition {
 			larFileName = "${larFileName}",
 			siteName = "Site Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
@@ -1773,7 +1773,7 @@ definition {
 
 		Navigator.openURL();
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		Portlet.gotoPortletOptions(portletOption = "Home Folder Permissions");
 
@@ -1801,7 +1801,7 @@ definition {
 			permissionDefinitionKey = "CONFIGURATION_PERMISSIONS_ADD_FOLDER",
 			roleTitle = "Site Member");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		Refresh();
 
@@ -1809,7 +1809,7 @@ definition {
 			exportPermissions = "true",
 			larFileName = "DM.portlet.lar");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name");
 
 		LAR.importPortlet(
 			importPermissions = "true",
@@ -1846,7 +1846,7 @@ definition {
 
 		JSONStaging.enableLocalStaging(groupName = "Site Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name-staging");
 
 		NavItem.gotoStructures();
 
@@ -1860,7 +1860,7 @@ definition {
 
 		WebContentStructures.saveCP(structureName = "Structure Name A");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name-staging");
 
 		NavItem.gotoTemplates();
 
@@ -1870,7 +1870,7 @@ definition {
 			templateFieldNames = "Link to Page",
 			templateName = "Template Name A");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name-staging");
 
 		NavItem.gotoStructures();
 
@@ -1884,7 +1884,7 @@ definition {
 
 		WebContentStructures.saveCP(structureName = "Structure Name B");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name-staging");
 
 		NavItem.gotoTemplates();
 
@@ -1894,7 +1894,7 @@ definition {
 			templateFieldNames = "Web Content",
 			templateName = "Template Name B");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name-staging");
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure Name A");
 
@@ -1906,7 +1906,7 @@ definition {
 
 		PortletEntry.publish();
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "site-name-staging");
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure Name B");
 
@@ -1934,7 +1934,7 @@ definition {
 
 		WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title 2");
 
-		Staging.openStagingAdmin(siteURLKey = "site-name-staging");
+		Staging.openStagingAdmin(siteUrlKey = "site-name-staging");
 
 		Staging.publishCustomPublication(rangeAll = "true");
 
@@ -2042,7 +2042,7 @@ definition {
 			enableSetting = "false",
 			settingFieldName = "Validate Layout References");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
@@ -2053,22 +2053,22 @@ definition {
 
 		DMDocument.expandInfo();
 
-		var dmDocumentURL = selenium.getAttribute("//input[contains(@id,'urlInput')]@value");
-		var entryExternalURL = StringUtil.replace("${dmDocumentURL}", "http://", "");
+		var dmDocumentUrl = selenium.getAttribute("//input[contains(@id,'urlInput')]@value");
+		var entryExternalUrl = StringUtil.replace("${dmDocumentUrl}", "http://", "");
 
 		JSONDocument.deleteFile(
 			dmDocumentTitle = "DM Document Title",
 			groupName = "Guest");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
 
 		WebContentNavigator.gotoAddCP();
 
 		PortletEntry.inputTitle(title = "WC WebContent Title");
 
 		CKEditor.addEntryExternalURL(
-			displayText = "${dmDocumentURL}",
-			entryExternalURL = "${entryExternalURL}",
+			displayText = "${dmDocumentUrl}",
+			entryExternalUrl = "${entryExternalUrl}",
 			fieldLabel = "content");
 
 		PortletEntry.publish();

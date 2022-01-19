@@ -80,19 +80,19 @@ definition {
 		}
 
 		task ("Get blogs and message boards URL") {
-			var portalURL = PropsUtil.get("portal.url");
+			var portalUrl = PropsUtil.get("portal.url");
 
 			var blogEntryId = JSONBlog.getBlogEntryId(
 				entryTitle = "Blogs Entry Title",
 				groupName = "Test Site Name");
 
-			var blogEntryURL = "${portalURL}/web/test-site-name/test-page-name/-/blogs/${blogEntryId}";
+			var blogEntryUrl = "${portalUrl}/web/test-site-name/test-page-name/-/blogs/${blogEntryId}";
 
 			var messageId = JSONMBMessage.getMessageIdByName(
 				groupName = "Test Site Name",
 				threadSubject = "MB Thread Message Subject");
 
-			var messageBoardsThreadURL = "${portalURL}/web/test-site-name/test-page-name/-/message_boards/message/${messageId}";
+			var messageBoardsThreadUrl = "${portalUrl}/web/test-site-name/test-page-name/-/message_boards/message/${messageId}";
 		}
 
 		task ("Log out") {
@@ -112,7 +112,7 @@ definition {
 		}
 
 		task ("View blogs entry is not shown for Guest") {
-			Navigator.openSpecificURL(url = "${blogEntryURL}");
+			Navigator.openSpecificURL(url = "${blogEntryUrl}");
 
 			Alert.viewRequestFailedToComplete();
 
@@ -122,7 +122,7 @@ definition {
 		}
 
 		task ("View message boards not shown for Guest") {
-			Navigator.openSpecificURL(url = "${messageBoardsThreadURL}");
+			Navigator.openSpecificURL(url = "${messageBoardsThreadUrl}");
 
 			Alert.viewRequestFailedToComplete();
 
@@ -191,19 +191,19 @@ definition {
 		}
 
 		task ("Get blogs and message boards URL") {
-			var portalURL = PropsUtil.get("portal.url");
+			var portalUrl = PropsUtil.get("portal.url");
 
 			var blogEntryId = JSONBlog.getBlogEntryId(
 				entryTitle = "Blogs Entry Title",
 				groupName = "Test Site Name");
 
-			var blogEntryURL = "${portalURL}/web/test-site-name/test-page-name/-/blogs/${blogEntryId}";
+			var blogEntryUrl = "${portalUrl}/web/test-site-name/test-page-name/-/blogs/${blogEntryId}";
 
 			var messageId = JSONMBMessage.getMessageIdByName(
 				groupName = "Test Site Name",
 				threadSubject = "MB Thread Message Subject");
 
-			var messageBoardsThreadURL = "${portalURL}/web/test-site-name/test-page-name/-/message_boards/message/${messageId}";
+			var messageBoardsThreadUrl = "${portalUrl}/web/test-site-name/test-page-name/-/message_boards/message/${messageId}";
 		}
 
 		task ("Sign in as new user") {
@@ -221,7 +221,7 @@ definition {
 		}
 
 		task ("View blogs entry is not shown for new user") {
-			Navigator.openSpecificURL(url = "${blogEntryURL}");
+			Navigator.openSpecificURL(url = "${blogEntryUrl}");
 
 			Alert.viewRequestFailedToComplete();
 
@@ -231,7 +231,7 @@ definition {
 		}
 
 		task ("View message boards is not shown for new user") {
-			Navigator.openSpecificURL(url = "${messageBoardsThreadURL}");
+			Navigator.openSpecificURL(url = "${messageBoardsThreadUrl}");
 
 			Alert.viewRequestFailedToComplete();
 
@@ -301,7 +301,7 @@ definition {
 		}
 
 		task ("Remove View permission of private widget page on Site Member") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "site-name");
 
 			PermissionsInline.gotoSitePageCP(
 				pageName = "Test Page Name",
@@ -341,7 +341,7 @@ definition {
 		}
 
 		task ("Remove View permission of private widget page on Regular Role") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
+			PagesAdmin.openPagesAdmin(siteUrlKey = "site-name");
 
 			PermissionsInline.gotoSitePageCP(
 				pageName = "Test Page Name",
@@ -410,9 +410,9 @@ definition {
 		}
 
 		task ("Access a non existing page") {
-			var portalURL = PropsUtil.get("portal.url");
+			var portalUrl = PropsUtil.get("portal.url");
 
-			Navigator.openSpecificURL(url = "${portalURL}/web/usersn/page-name");
+			Navigator.openSpecificURL(url = "${portalUrl}/web/usersn/page-name");
 		}
 
 		task ("View not found error in home page") {
@@ -493,19 +493,19 @@ definition {
 		}
 
 		task ("Get blogs and message boards URL") {
-			var portalURL = PropsUtil.get("portal.url");
+			var portalUrl = PropsUtil.get("portal.url");
 
 			var blogEntryId = JSONBlog.getBlogEntryId(
 				entryTitle = "Blogs Entry Title",
 				groupName = "Test Site Name");
 
-			var blogEntryURL = "${portalURL}/web/test-site-name/test-page-name/-/blogs/${blogEntryId}";
+			var blogEntryUrl = "${portalUrl}/web/test-site-name/test-page-name/-/blogs/${blogEntryId}";
 
 			var messageId = JSONMBMessage.getMessageIdByName(
 				groupName = "Test Site Name",
 				threadSubject = "MB Thread Message Subject");
 
-			var messageBoardsThreadURL = "${portalURL}/web/test-site-name/test-page-name/-/message_boards/message/${messageId}";
+			var messageBoardsThreadUrl = "${portalUrl}/web/test-site-name/test-page-name/-/message_boards/message/${messageId}";
 		}
 
 		task ("Sign in as new user") {
@@ -523,20 +523,20 @@ definition {
 		}
 
 		task ("View blogs entry is shown for site member") {
-			Navigator.openSpecificURL(url = "${blogEntryURL}");
+			Navigator.openSpecificURL(url = "${blogEntryUrl}");
 
 			BlogsNavigator.gotoPG(
-				blogEntryURL = "${blogEntryURL}",
+				blogEntryUrl = "${blogEntryUrl}",
 				entryContent = "Blogs Entry Content",
 				entryTitle = "Blogs Entry Title");
 		}
 
 		task ("View message boards is shown for site member") {
-			Navigator.openSpecificURL(url = "${messageBoardsThreadURL}");
+			Navigator.openSpecificURL(url = "${messageBoardsThreadUrl}");
 
 			MessageboardsThread.gotoPG(
 				lastPostUserName = "Test Test",
-				messageBoardsThreadURL = "${messageBoardsThreadURL}",
+				messageBoardsThreadUrl = "${messageBoardsThreadUrl}",
 				replyCount = "1",
 				threadBody = "MB Thread Message Body",
 				threadSubject = "MB Thread Message Subject");

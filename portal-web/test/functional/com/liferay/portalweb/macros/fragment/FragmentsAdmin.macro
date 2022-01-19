@@ -141,7 +141,7 @@ definition {
 	}
 
 	macro openFragmentsAdmin {
-		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage/-/fragments");
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteUrlKey}/~/control_panel/manage/-/fragments");
 	}
 
 	macro selectCollection {

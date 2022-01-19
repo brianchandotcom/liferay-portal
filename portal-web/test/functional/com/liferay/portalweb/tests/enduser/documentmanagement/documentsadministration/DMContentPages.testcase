@@ -210,25 +210,25 @@ definition {
 
 		DMDocument.previewImage(dmDocumentFileName = "Document_1.jpg");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		DMDocument.deleteCP(dmDocumentTitle = "Document_1.jpg");
 
 		DMDocument.viewDefault();
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "site-name");
 
 		DMDocument.deleteCP(dmDocumentTitle = "Document_1.jpg");
 
 		DMDocument.viewDefault();
 
-		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
+		RecycleBin.openRecycleBinAdmin(siteUrlKey = "guest");
 
 		LexiconEntry.openEntryMenu(rowEntry = "Document_1.jpg");
 
 		MenuItem.viewNotPresent(menuItem = "Restore");
 
-		RecycleBin.openRecycleBinAdmin(siteURLKey = "site-name");
+		RecycleBin.openRecycleBinAdmin(siteUrlKey = "site-name");
 
 		RecycleBin.restoreCP(
 			assetName = "Document_1.jpg",
@@ -236,7 +236,7 @@ definition {
 
 		RecycleBin.viewDefaultCP(assetName = "Document_1.jpg");
 
-		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
+		RecycleBin.openRecycleBinAdmin(siteUrlKey = "guest");
 
 		RecycleBin.restoreCP(
 			assetName = "Document_1.jpg",
@@ -244,7 +244,7 @@ definition {
 
 		RecycleBin.viewDefaultCP(assetName = "Document_1.jpg");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
 		AssertElementPresent(
 			key_text = "shortcut",

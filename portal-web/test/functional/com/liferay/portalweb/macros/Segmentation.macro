@@ -261,12 +261,12 @@ definition {
 	}
 
 	macro getPortalInstanceDefaultLanguageId {
-		var portalURL = PropsUtil.get("portal.url");
+		var portalUrl = PropsUtil.get("portal.url");
 
 		var companyId = JSONCompany.getCompanyId(portalInstanceName = "${portalInstanceName}");
 
 		var curl = '''
-			${portalURL}/api/jsonws/country/get-company-countries \
+			${portalUrl}/api/jsonws/country/get-company-countries \
 			-u test@liferay.com:test \
 			-d companyId=${companyId} \
 			-d start=0 \
@@ -301,7 +301,7 @@ definition {
 	}
 
 	macro openSegmentsAdmin {
-		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_segments_web_internal_portlet_SegmentsPortlet");
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteUrlKey}/~/control_panel/manage?p_p_id=com_liferay_segments_web_internal_portlet_SegmentsPortlet");
 	}
 
 	macro selectTag {

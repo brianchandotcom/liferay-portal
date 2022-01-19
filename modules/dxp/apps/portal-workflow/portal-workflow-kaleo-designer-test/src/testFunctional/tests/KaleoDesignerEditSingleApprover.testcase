@@ -63,14 +63,14 @@ definition {
 	@priority = "4"
 	test ViewInvalidSourceXMLNotRemainsAfterTabSwitch {
 		KaleoDesigner.editSourceXML(
-			kdSourceXML = "INVALID",
+			kdSourceXml = "INVALID",
 			line = "9");
 
 		KaleoDesigner.viewViewTab();
 
 		KaleoDesigner.viewSourceXMLLine(
 			invalid = "true",
-			kdSourceXML = "INVALID",
+			kdSourceXml = "INVALID",
 			line = "9");
 	}
 

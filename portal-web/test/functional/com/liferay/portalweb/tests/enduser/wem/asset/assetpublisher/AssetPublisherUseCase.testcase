@@ -70,23 +70,23 @@ definition {
 		}
 
 		task ("Define public virtual host and private virtual host") {
-			Site.openSiteSettingsAdmin(siteURLKey = "organization-name");
+			Site.openSiteSettingsAdmin(siteUrlKey = "organization-name");
 
 			Site.addVirtualHostsURLCP(
-				publicPageVirtualHostURL = "www.able.com",
+				publicPageVirtualHostUrl = "www.able.com",
 				publicVirtualHosts = "true");
 
-			Site.openSiteSettingsAdmin(siteURLKey = "organization-name");
+			Site.openSiteSettingsAdmin(siteUrlKey = "organization-name");
 
 			Site.addVirtualHostsURLCP(
-				privatePageVirtualHostURL = "www.baker.com",
+				privatePageVirtualHostUrl = "www.baker.com",
 				privateVirtualHosts = "true");
 		}
 
 		task ("Sign in the prviate virtual host") {
 			User.logoutPG();
 
-			User.firstLoginUI(specificURL = "http://www.baker.com:8080");
+			User.firstLoginUI(specificUrl = "http://www.baker.com:8080");
 		}
 
 		task ("View prviate pages") {
@@ -98,7 +98,7 @@ definition {
 		}
 
 		task ("Sign in the public virtual host") {
-			User.firstLoginUI(specificURL = "http://www.able.com:8080");
+			User.firstLoginUI(specificUrl = "http://www.able.com:8080");
 		}
 
 		task ("View public pages not shown") {
@@ -191,7 +191,7 @@ definition {
 		}
 
 		task ("View the draft web content in Web Content admin") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 			WebContentNavigator.gotoViewStatus(
 				webContentStatus = "DRAFT",
@@ -454,7 +454,7 @@ definition {
 		}
 
 		task ("Add a web content structure with multiple fields") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 			NavItem.gotoStructures();
 
@@ -489,7 +489,7 @@ definition {
 		}
 
 		task ("Add the first web content based on new structure") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
@@ -555,7 +555,7 @@ definition {
 		}
 
 		task ("Add the second structure with Text field") {
-			WebContentStructures.openWebContentStructuresAdmin(siteURLKey = "test-site-name");
+			WebContentStructures.openWebContentStructuresAdmin(siteUrlKey = "test-site-name");
 
 			WebContentStructures.addCP(structureName = "WC Structure1 Name");
 
@@ -576,7 +576,7 @@ definition {
 		}
 
 		task ("Add the fifth web content based on the second structure") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure1 Name");
 
@@ -732,7 +732,7 @@ definition {
 		}
 
 		task ("Disable the Searchable of the first structure's fields") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 			NavItem.gotoStructures();
 
@@ -887,7 +887,7 @@ definition {
 	@priority = "4"
 	test FilterDocumentsByField {
 		task ("Add a document type with a Select from List field") {
-			DMDocument.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
+			DMDocument.openDocumentsAndMediaAdmin(siteUrlKey = "test-site-name");
 
 			DMNavigator.gotoDocumentType();
 
@@ -933,7 +933,7 @@ definition {
 		}
 
 		task ("Filter by Option 1 from Select from List field") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+			AssetListsAdmin.openAssetListsAdmin(siteUrlKey = "test-site-name");
 
 			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection");
 
@@ -994,17 +994,17 @@ definition {
 		property test.name.skip.portal.instance = "AssetPublisherUseCase#RemoveMultipleManualSelectionAssetEntries";
 
 		task ("Stop and start com.liferay.layout.type.controller.portlet bundle via GogoShell") {
-			GogoShell.openGogoShellAdmin(siteURLKey = "test-site-name");
+			GogoShell.openGogoShellAdmin(siteUrlKey = "test-site-name");
 
 			var moduleID = GogoShell.getModuleID(moduleName = "com.liferay.layout.type.controller.portlet");
 
-			GogoShell.stopModule(moduleID = "${moduleID}");
+			GogoShell.stopModule(moduleId = "${moduleId}");
 
 			GogoShell.viewModuleStatus(
 				moduleName = "com.liferay.layout.type.controller.portlet",
 				moduleStatus = "Resolved");
 
-			GogoShell.startModule(moduleID = "${moduleID}");
+			GogoShell.startModule(moduleId = "${moduleId}");
 
 			GogoShell.viewModuleStatus(
 				moduleName = "com.liferay.layout.type.controller.portlet",
@@ -1078,7 +1078,7 @@ definition {
 		}
 
 		task ("Add a web content structure with a Text field") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 			NavItem.gotoStructures();
 
@@ -1131,7 +1131,7 @@ definition {
 		}
 
 		task ("Navigate to the new folder in Web Content admin") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 			WebContentFolder.gotoCP(
 				folderName = "WC Folder Name",
@@ -1191,7 +1191,7 @@ definition {
 		}
 
 		task ("Navigate to the new folder in Web Content admin") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 			WebContentFolder.gotoCP(
 				folderName = "WC Folder Name",
@@ -1458,7 +1458,7 @@ definition {
 	@priority = "4"
 	test ViewDocumentTypeShownInManualSelection {
 		task ("Add a global document type") {
-			DMDocument.openDocumentsAndMediaAdmin(siteURLKey = "global");
+			DMDocument.openDocumentsAndMediaAdmin(siteUrlKey = "global");
 
 			DMNavigator.gotoDocumentType();
 
@@ -1469,7 +1469,7 @@ definition {
 		}
 
 		task ("Add a document type in normal site") {
-			DMDocument.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
+			DMDocument.openDocumentsAndMediaAdmin(siteUrlKey = "test-site-name");
 
 			DMNavigator.gotoDocumentType();
 
@@ -1494,7 +1494,7 @@ definition {
 	@priority = "3"
 	test ViewGlobalWebContentWithCustomStructureInAssetPublisher {
 		task ("Add a web content structure in Global site") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "Global");
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "Global");
 
 			NavItem.gotoStructures();
 
@@ -1510,7 +1510,7 @@ definition {
 		}
 
 		task ("Add a web content based on new structure in global site") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "Global");
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "Global");
 
 			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
@@ -1952,9 +1952,9 @@ catch (Exception e) {
 		}
 
 		task ("View the URL") {
-			var baseURL = PropsUtil.get("portal.url");
+			var baseUrl = PropsUtil.get("portal.url");
 
-			AssertLocation(value1 = "${baseURL}/web/test-site-name/asset-publisher-page");
+			AssertLocation(value1 = "${baseUrl}/web/test-site-name/asset-publisher-page");
 		}
 	}
 
@@ -2033,7 +2033,7 @@ catch (Exception e) {
 		}
 
 		task ("Add a web content") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 			WebContentNavigator.gotoAddCP();
 
@@ -2062,7 +2062,7 @@ catch (Exception e) {
 		}
 
 		task ("Modified the web content") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
 
@@ -2118,7 +2118,7 @@ catch (Exception e) {
 		}
 
 		task ("Select the content page in web content") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title");
 
@@ -2130,7 +2130,7 @@ catch (Exception e) {
 		}
 
 		task ("View web content in associated public page") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 			WebContentNavigator.gotoEntryMenuItem(
 				entry = "Webcontent Title",
@@ -2194,7 +2194,7 @@ catch (Exception e) {
 		}
 
 		task ("View web content in associated public page") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 			WebContentNavigator.gotoEntryMenuItem(
 				entry = "WC WebContent Title",
@@ -2221,7 +2221,7 @@ catch (Exception e) {
 		}
 
 		task ("Add a web content with viewable by Site Members") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 			WebContentNavigator.gotoAddCP();
 

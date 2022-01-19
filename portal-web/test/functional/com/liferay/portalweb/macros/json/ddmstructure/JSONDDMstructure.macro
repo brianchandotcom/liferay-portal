@@ -9,7 +9,7 @@ definition {
 		var companyId = JSONCompany.getCompanyId();
 
 		var curl = '''
-			${portalURL}/api/jsonws/ddm.ddmstructure/get-structures \
+			${portalUrl}/api/jsonws/ddm.ddmstructure/get-structures \
 			  -u test@liferay.com:test \
 			  -d companyId=${companyId} \
 			  -d groupIds=[${groupId}] \
@@ -36,7 +36,7 @@ definition {
 		var companyId = JSONCompany.getCompanyId();
 
 		var curl = '''
-			${portalURL}/api/jsonws/ddm.ddmstructure/get-structures \
+			${portalUrl}/api/jsonws/ddm.ddmstructure/get-structures \
 			  -u test@liferay.com:test \
 			  -d companyId=${companyId} \
 			  -d groupIds=[${groupId}] \

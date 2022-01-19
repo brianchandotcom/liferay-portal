@@ -100,7 +100,7 @@ definition {
 
 		task ("Then the active order type should be automatically assigned to the order") {
 			AssertElementPresent(
-				key_OrderType = "Test Order Type",
+				key_orderType = "Test Order Type",
 				locator1 = "CommerceOrders#PENDING_ORDERS_ORDER_TYPE");
 		}
 	}
@@ -136,7 +136,7 @@ definition {
 
 		task ("Then the active order type should be automatically assigned to the order") {
 			AssertElementPresent(
-				key_OrderType = "Test Order Type",
+				key_orderType = "Test Order Type",
 				locator1 = "CommerceOrders#PENDING_ORDERS_ORDER_TYPE");
 		}
 	}
@@ -167,7 +167,7 @@ definition {
 
 		task ("Then the inactive order type should not be assigned to the order") {
 			AssertElementNotPresent(
-				key_OrderType = "Test Order Type",
+				key_orderType = "Test Order Type",
 				locator1 = "CommerceOrders#PENDING_ORDERS_ORDER_TYPE");
 		}
 	}
@@ -198,7 +198,7 @@ definition {
 
 		task ("Then the inactive order type should not be assigned to the order") {
 			AssertElementNotPresent(
-				key_OrderType = "Test Order Type",
+				key_orderType = "Test Order Type",
 				locator1 = "CommerceOrders#PENDING_ORDERS_ORDER_TYPE");
 		}
 	}
@@ -229,7 +229,7 @@ definition {
 
 		task ("Then the active order type should be automatically assigned to the order") {
 			AssertElementPresent(
-				key_OrderType = "Test Order Type",
+				key_orderType = "Test Order Type",
 				locator1 = "CommerceOrders#PENDING_ORDERS_ORDER_TYPE");
 		}
 	}
@@ -260,7 +260,7 @@ definition {
 
 		task ("Then the active order type should be automatically assigned to the order") {
 			AssertElementPresent(
-				key_OrderType = "Test Order Type",
+				key_orderType = "Test Order Type",
 				locator1 = "CommerceOrders#PENDING_ORDERS_ORDER_TYPE");
 		}
 	}
@@ -363,7 +363,7 @@ definition {
 			Button.click(button = "Add Order");
 
 			AssertElementPresent(
-				key_OrderType = "Test Order Type 2",
+				key_orderType = "Test Order Type 2",
 				locator1 = "CommerceOrders#PENDING_ORDERS_ORDER_TYPE");
 		}
 	}

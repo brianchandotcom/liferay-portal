@@ -240,7 +240,7 @@ definition {
 
 		Asset.openTosharedContent(
 			navTab = "Shared with Me",
-			siteURLKey = "guest");
+			siteUrlKey = "guest");
 
 		LexiconEntry.viewNoEntryMenuItem(
 			menuItem = "Share",
@@ -381,7 +381,7 @@ definition {
 
 		Asset.openTosharedContent(
 			navTab = "Shared with Me",
-			siteURLKey = "guest");
+			siteUrlKey = "guest");
 
 		DMNavigator.gotoShareViaSharedContent(dmDocumentTitle = "DM Document Title");
 
@@ -423,7 +423,7 @@ definition {
 
 		Asset.openTosharedContent(
 			navTab = "Shared with Me",
-			siteURLKey = "guest");
+			siteUrlKey = "guest");
 
 		LexiconEntry.viewNoEntryMenu(rowEntry = "DM Document Title");
 	}
@@ -491,7 +491,7 @@ definition {
 	test CanShareWithSpecialCharacter {
 		DMNavigator.openToAddEntry(
 			groupName = "Guest",
-			siteURLKey = "guest");
+			siteUrlKey = "guest");
 
 		DMDocument.editDocument(
 			dmDocumentDescription = "DM Document Description",
@@ -765,7 +765,7 @@ definition {
 
 		Asset.openTosharedContent(
 			navTab = "Shared with Me",
-			siteURLKey = "guest");
+			siteUrlKey = "guest");
 
 		AssertElementPresent(
 			key_status = "Not Visible",
@@ -787,7 +787,7 @@ definition {
 		property custom.properties = "message.boards.message.formats.default=html${line.separator}pop.server.notifications.enabled=true${line.separator}pop.server.subdomain=${line.separator}mail.session.mail.smtp.auth=true${line.separator}mail.session.mail.store.protocol=pop3${line.separator}mail.session.mail.transport.protocol=smtp";
 		property test.name.skip.portal.instance = "DMSharing#CanViewSharedContentViaEmail";
 
-		var portalURL = PropsUtil.get("portal.url");
+		var portalUrl = PropsUtil.get("portal.url");
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
@@ -799,7 +799,7 @@ definition {
 
 		Gmail.deleteSpecificMail(gmailMessageTitleList = "Test Test has shared DM Document Title with you for viewing.,Your New Account,Your New Password");
 
-		Navigator.openSpecificURL(url = "${portalURL}");
+		Navigator.openSpecificURL(url = "${portalUrl}");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
@@ -964,7 +964,7 @@ definition {
 
 		Asset.openTosharedContent(
 			navTab = "Shared with Me",
-			siteURLKey = "guest");
+			siteUrlKey = "guest");
 
 		DMDocumentSharing.viewSharedFlag(dmDocumentTitle = "DM Document Title");
 

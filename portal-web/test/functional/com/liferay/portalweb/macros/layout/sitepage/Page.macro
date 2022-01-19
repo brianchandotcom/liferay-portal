@@ -18,7 +18,7 @@ definition {
 	macro assertCanonicalURL {
 		var html = '''<link data-senna-track="temporary" href="''';
 
-		var Html2 = '''" rel="canonical">''';
+		var html2 = '''" rel="canonical">''';
 
 		if (isSet(customCanonicalURL)) {
 			var portalUrl = "${customCanonicalUrl}";
@@ -33,10 +33,10 @@ definition {
 		if (isSet(pageName)) {
 			var pageName = StringUtil.lowerCase("${pageName}");
 			var pageNameUrl = StringUtil.replace("${pageName}", " ", "-");
-			var pageSource = StringUtil.add("${html}", "${portalUrl}/${pageNameUrl}${Html2}", "");
+			var pageSource = StringUtil.add("${html}", "${portalUrl}/${pageNameUrl}${html2}", "");
 		}
 		else {
-			var pageSource = StringUtil.add("${html}", "${portalUrl}${Html2}", "");
+			var pageSource = StringUtil.add("${html}", "${portalUrl}${html2}", "");
 		}
 
 		AssertHTMLSourceTextPresent(value1 = "${pageSource}");
@@ -45,8 +45,8 @@ definition {
 	macro assertDefaultAlternateURL {
 		var html = '''<link data-senna-track="temporary" href="''';
 
-		var Html2 = '''" hreflang="x-default" rel="alternate">''';
-		var pageSource = StringUtil.add("${html}", "${portalUrl}${Html2}", "");
+		var html2 = '''" hreflang="x-default" rel="alternate">''';
+		var pageSource = StringUtil.add("${html}", "${portalUrl}${html2}", "");
 
 		AssertHTMLSourceTextPresent(value1 = "${pageSource}");
 	}

@@ -50,9 +50,9 @@ definition {
 			groupName = "Guest",
 			layoutName = "Asset Publisher Page");
 
-		var portalURL = PropsUtil.get("portal.url");
+		var portalUrl = PropsUtil.get("portal.url");
 
-		Navigator.openSpecificURL(url = "${portalURL}/web/guest/asset-publisher-page");
+		Navigator.openSpecificURL(url = "${portalUrl}/web/guest/asset-publisher-page");
 
 		Portlet.addPG(portletName = "Asset Publisher");
 
@@ -86,7 +86,7 @@ definition {
 
 		Portlet.startServer(deleteLiferayHome = "false");
 
-		Navigator.openSpecificURL(url = "${portalURL}/web/guest/asset-publisher-page");
+		Navigator.openSpecificURL(url = "${portalUrl}/web/guest/asset-publisher-page");
 
 		// Workaround for LPS-113094
 
@@ -299,12 +299,12 @@ definition {
 			value1 = "1");
 
 		AssertTextEquals.assertPartialText(
-			key_connectionID = "__SIDECAR__",
+			key_connectionId = "__SIDECAR__",
 			locator1 = "SearchAdmin#NODE_COUNT",
 			value1 = "NODES (1)");
 
 		AssertElementPresent(
-			key_connectionID = "__SIDECAR__",
+			key_connectionId = "__SIDECAR__",
 			key_nodeName = "liferay",
 			locator1 = "SearchAdmin#NODE_NAME");
 
@@ -323,7 +323,7 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		SearchAdministration.openSearchAdmin(baseURL = "http://localhost:9080");
+		SearchAdministration.openSearchAdmin(baseUrl = "http://localhost:9080");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "SearchAdmin#SEARCH_ENGINE_VENDOR",
@@ -334,12 +334,12 @@ definition {
 			value1 = "1");
 
 		AssertTextEquals.assertPartialText(
-			key_connectionID = "__SIDECAR__",
+			key_connectionId = "__SIDECAR__",
 			locator1 = "SearchAdmin#NODE_COUNT",
 			value1 = "NODES (1)");
 
 		AssertElementPresent(
-			key_connectionID = "__SIDECAR__",
+			key_connectionId = "__SIDECAR__",
 			key_nodeName = "liferay",
 			locator1 = "SearchAdmin#NODE_NAME");
 
@@ -424,12 +424,12 @@ definition {
 			value1 = "2");
 
 		AssertTextEquals.assertPartialText(
-			key_connectionID = "__REMOTE__",
+			key_connectionId = "__REMOTE__",
 			locator1 = "SearchAdmin#CLUSTER_NAME",
 			value1 = "LiferayElasticsearchCluster");
 
 		AssertTextEquals.assertPartialText(
-			key_connectionID = "connection2",
+			key_connectionId = "connection2",
 			locator1 = "SearchAdmin#CLUSTER_NAME",
 			value1 = "LiferayElasticsearchClusterTwo");
 
@@ -448,7 +448,7 @@ definition {
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curlSecondConnection}");
 
-		var portalURL = PropsUtil.get("portal.url");
+		var portalUrl = PropsUtil.get("portal.url");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -483,7 +483,7 @@ definition {
 			layoutName = "Multiple Connections Page",
 			widgetName = "Low Level Search Options");
 
-		Navigator.openSpecificURL(url = "${portalURL}/web/guest/multiple-connections-page");
+		Navigator.openSpecificURL(url = "${portalUrl}/web/guest/multiple-connections-page");
 
 		SearchPortlets.configureSearchOptions(allowEmptySearches = "true");
 
@@ -547,9 +547,9 @@ definition {
 			groupName = "Guest",
 			layoutName = "Search Page");
 
-		var portalURL = PropsUtil.get("portal.url");
+		var portalUrl = PropsUtil.get("portal.url");
 
-		Navigator.openSpecificURL(url = "${portalURL}/web/guest/search-page");
+		Navigator.openSpecificURL(url = "${portalUrl}/web/guest/search-page");
 
 		SearchPortlets.addWidgets(searchPortletList = "Custom Filter,Low Level Search Options,Search Results,Search Bar");
 
@@ -598,7 +598,6 @@ definition {
 		WaitForConsoleTextPresent(value1 = "Stopping sidecar Elasticsearch");
 
 		// LRCI-2401
-
 		//Navigator.openSpecificURL(url = "http://localhost:9201");
 		//AssertTextNotPresent(value1 = "cluster_name");
 
@@ -694,7 +693,7 @@ definition {
 		SearchAdministration.openSearchAdmin();
 
 		AssertTextEquals.assertPartialText(
-			key_connectionID = "__SIDECAR__",
+			key_connectionId = "__SIDECAR__",
 			locator1 = "SearchAdmin#CLUSTER_NAME",
 			value1 = "LiferayElasticsearchCluster1");
 

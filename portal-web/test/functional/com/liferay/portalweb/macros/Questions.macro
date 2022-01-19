@@ -165,11 +165,11 @@ definition {
 	macro assertCanonicalURL {
 		var html = '''<link href="''';
 
-		var Html2 = '''" rel="canonical" data-react-helmet="true">''';
+		var html2 = '''" rel="canonical" data-react-helmet="true">''';
 		var portalUrl = "${portalUrl}/web/guest";
 		var pageName = StringUtil.lowerCase("${pageName}");
 		var pageNameUrl = StringUtil.replace("${pageName}", " ", "-");
-		var pageSource = StringUtil.add("${html}", "${portalUrl}/${pageNameUrl}/questions/${category}/${title}${Html2}", "");
+		var pageSource = StringUtil.add("${html}", "${portalUrl}/${pageNameUrl}/questions/${category}/${title}${html2}", "");
 
 		AssertHTMLSourceTextPresent(value1 = "${pageSource}");
 	}

@@ -3149,7 +3149,7 @@ definition {
 		if (isSet(userID)) {
 			AssertTextEquals(
 				locator1 = "UsersAndOrganizationsEditUser#DETAILS_SCREEN_NAME_FIELD",
-				value1 = "${userID}");
+				value1 = "${userId}");
 		}
 	}
 

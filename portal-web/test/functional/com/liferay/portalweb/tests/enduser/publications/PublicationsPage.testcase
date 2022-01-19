@@ -34,7 +34,7 @@ definition {
 
 		JSONPublications.selectPublication(publicationName = "Publication Name");
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
+		PagesAdmin.openPagesAdmin(siteUrlKey = "guest");
 
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "Configure",
@@ -53,11 +53,11 @@ definition {
 			changeType = "Added",
 			changeUser = "Test Test");
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
+		PagesAdmin.openPagesAdmin(siteUrlKey = "guest");
 
 		PagesAdmin.deletePage(pageName = "Test Page");
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
+		PagesAdmin.openPagesAdmin(siteUrlKey = "guest");
 
 		Page.viewNoPG(pageName = "Test Page");
 
@@ -91,19 +91,19 @@ definition {
 			groupName = "Guest",
 			name = "Collection Name");
 
-		FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "Guest");
+		FragmentsAdminNavigator.openFragmentsAdmin(siteUrlKey = "Guest");
 
 		FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 
 		FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
 
-		var fragmentHTML = '''<lfr-widget-asset-list>''';
+		var fragmentHtml = '''<lfr-widget-asset-list>''';
 
 		var htmlSnippet = '''<lfr-''';
 
 		FragmentsEditor.autocompleteFragmentHTML(
 			autocompleteField = "lfr-widget-asset-list",
-			fragmentHTML = "${fragmentHTML}",
+			fragmentHtml = "${fragmentHtml}",
 			htmlSnippet = "${htmlSnippet}");
 
 		PortletEntry.publish();
@@ -113,7 +113,7 @@ definition {
 			groupName = "Guest",
 			title = "WC WebContent Title");
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
+		PagesAdmin.openPagesAdmin(siteUrlKey = "guest");
 
 		ContentPages.addPrivatePage(pageName = "Test Page");
 
@@ -231,7 +231,6 @@ definition {
 			entryTitle = "com.liferay.portal.kernel.model.PortletPreferenceValue");
 
 		// Workaround LPS-124618
-
 		//AssertElementNotPresent(locator1 = "Publications#NEEDS_MANUAL_RESOLUTION_TABLE");
 
 	}
@@ -246,13 +245,13 @@ definition {
 
 		JSONPublications.selectPublication(publicationName = "Publication Name");
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
+		PagesAdmin.openPagesAdmin(siteUrlKey = "guest");
 
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "Configure",
 			pageName = "Test Page");
 
-		PagesAdmin.editFriendlyURL(friendlyURLEdit = "/test-page-edited");
+		PagesAdmin.editFriendlyURL(friendlyUrlEdit = "/test-page-edited");
 
 		AssertTextEquals(
 			key_text = "Friendly URL",
@@ -270,7 +269,7 @@ definition {
 
 		Publications.viewPublicationPublished(publicationName = "Publication Name");
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
+		PagesAdmin.openPagesAdmin(siteUrlKey = "guest");
 
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "Configure",
@@ -285,7 +284,7 @@ definition {
 
 		Publications.revertPublication(publicationName = "Publication Name");
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
+		PagesAdmin.openPagesAdmin(siteUrlKey = "guest");
 
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "Configure",

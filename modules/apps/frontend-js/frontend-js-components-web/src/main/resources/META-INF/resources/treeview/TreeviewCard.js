@@ -27,7 +27,7 @@ export default function TreeviewCard({node}) {
 
 	const path =
 		node.nodePath && filter ? (
-			<div className="font-weight-normal h5 lfr-card-subtitle-text text-default text-truncate treeview-node-name">
+			<div className="font-weight-normal h5 lfr-card-subtitle-text small text-default text-truncate treeview-node-name">
 				{node.nodePath}
 			</div>
 		) : null;

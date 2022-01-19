@@ -52,8 +52,8 @@ const FormActionProvider = ({children, form}) => {
 
 	const {onNext, onPrevious, onSave} = useFormActions({
 		form,
-		nextSection: STEP_ORDERED.at(currentStepIndex + 1),
-		previousSection: STEP_ORDERED.at(currentStepIndex - 1),
+		nextSection: STEP_ORDERED[currentStepIndex + 1],
+		previousSection: STEP_ORDERED[currentStepIndex - 1],
 		saveData: currentStepIndex > 1,
 	});
 

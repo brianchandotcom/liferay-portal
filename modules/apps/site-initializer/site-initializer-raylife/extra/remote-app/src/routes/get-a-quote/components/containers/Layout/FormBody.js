@@ -34,8 +34,7 @@ export function Forms({currentStepIndex, form}) {
 	useEffect(() => {
 		if (backToEdit) {
 			loadSections();
-		}
-		else {
+		} else {
 			setLoadedSections(true);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -56,11 +55,9 @@ export function Forms({currentStepIndex, form}) {
 
 				if (stepBasicName === 'businessInformation') {
 					setSection(AVAILABLE_STEPS.BASICS_BUSINESS_INFORMATION);
-				}
-				else if (stepBasicName === 'business-type') {
+				} else if (stepBasicName === 'business-type') {
 					setSection(AVAILABLE_STEPS.BASICS_BUSINESS_TYPE);
-				}
-				else {
+				} else {
 					setSection(AVAILABLE_STEPS.BASICS_PRODUCT_QUOTE);
 				}
 				break;
@@ -84,7 +81,7 @@ export function Forms({currentStepIndex, form}) {
 	}
 
 	const Component =
-		STEP_ORDERED.at(currentStepIndex)?.Component || (() => <></>);
+		STEP_ORDERED[currentStepIndex]?.Component || (() => <></>);
 
 	return <Component form={form} />;
 }

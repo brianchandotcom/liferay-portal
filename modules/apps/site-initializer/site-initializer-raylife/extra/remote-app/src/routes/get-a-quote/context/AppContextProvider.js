@@ -29,7 +29,7 @@ const initialState = {
 	},
 	selectedProduct: JSON.parse(Storage.getItem(STORAGE_KEYS.APPLICATION_FORM))
 		?.basics?.businessCategoryId,
-	selectedStep: STEP_ORDERED.at(0),
+	selectedStep: STEP_ORDERED[0],
 	selectedTrigger: '',
 	taxonomyVocabulary: {},
 };

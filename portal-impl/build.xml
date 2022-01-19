@@ -768,6 +768,7 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 	<target depends="build-common-java.init-jar" name="init-jar">
 		<ant dir="../util-bridges" inheritAll="false" target="jar" />
 		<ant dir="../util-java" inheritAll="false" target="jar" />
+		<ant dir="../util-slf4j" inheritAll="false" target="jar" />
 		<ant dir="../util-taglib" inheritAll="false" target="jar" />
 
 		<property name="portal.deploy.dependencies.dir" value="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies" />

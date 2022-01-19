@@ -16,7 +16,7 @@ package com.liferay.poshi.core;
 
 import com.liferay.poshi.core.elements.PoshiElement;
 import com.liferay.poshi.core.util.OSDetector;
-import com.liferay.poshi.core.util.PoshiParserUtil;
+import com.liferay.poshi.core.script.PoshiScriptParserUtil;
 import com.liferay.poshi.core.util.PropsUtil;
 import com.liferay.poshi.core.util.StringUtil;
 import com.liferay.poshi.core.util.Validator;
@@ -1036,7 +1036,7 @@ public class PoshiValidation {
 						methodName);
 
 					List<String> parameterList =
-						PoshiParserUtil.getMethodParameters(parameters);
+						PoshiScriptParserUtil.getMethodParameters(parameters);
 
 					if (parameterList.size() != parameterCount) {
 						_exceptions.add(

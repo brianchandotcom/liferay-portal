@@ -18,7 +18,7 @@ import com.liferay.poshi.core.PoshiContext;
 import com.liferay.poshi.core.script.PoshiScriptParserException;
 import com.liferay.poshi.core.util.Dom4JUtil;
 import com.liferay.poshi.core.util.NaturalOrderStringComparator;
-import com.liferay.poshi.core.util.PoshiParserUtil;
+import com.liferay.poshi.core.script.PoshiScriptParserUtil;
 import com.liferay.poshi.core.util.PropsValues;
 import com.liferay.poshi.core.util.RegexUtil;
 import com.liferay.poshi.core.util.StringPool;
@@ -423,7 +423,7 @@ public abstract class PoshiElement
 
 		for (char c : poshiScriptBlock.toCharArray()) {
 			if ((c == '{') &&
-				PoshiParserUtil.isBalancedPoshiScript(sb.toString())) {
+				PoshiScriptParserUtil.isBalancedPoshiScript(sb.toString())) {
 
 				String blockName = sb.toString();
 
@@ -525,7 +525,7 @@ public abstract class PoshiElement
 			char c = chars[i];
 
 			if (tokenIndices.contains(i) &&
-				PoshiParserUtil.isBalancedPoshiScript(sb.toString())) {
+				PoshiScriptParserUtil.isBalancedPoshiScript(sb.toString())) {
 
 				nestedConditions.add(sb.toString());
 
@@ -539,7 +539,7 @@ public abstract class PoshiElement
 			if (i == (chars.length - 1)) {
 				sb.append(c);
 
-				if (PoshiParserUtil.isBalancedPoshiScript(sb.toString()) &&
+				if (PoshiScriptParserUtil.isBalancedPoshiScript(sb.toString()) &&
 					!nestedConditions.isEmpty()) {
 
 					nestedConditions.add(sb.toString());
@@ -658,7 +658,7 @@ public abstract class PoshiElement
 				continue;
 			}
 
-			if (PoshiParserUtil.isBalancedPoshiScript(poshiScriptSnippet)) {
+			if (PoshiScriptParserUtil.isBalancedPoshiScript(poshiScriptSnippet)) {
 				if (splitElseBlocks &&
 					(isValidPoshiScriptBlock(
 						ElseIfPoshiElement.blockNamePattern,

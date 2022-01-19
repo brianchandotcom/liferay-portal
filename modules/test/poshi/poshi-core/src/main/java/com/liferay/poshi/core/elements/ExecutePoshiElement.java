@@ -19,7 +19,7 @@ import com.liferay.poshi.core.script.PoshiScriptParserException;
 import com.liferay.poshi.core.util.CharPool;
 import com.liferay.poshi.core.util.ListUtil;
 import com.liferay.poshi.core.util.NaturalOrderStringComparator;
-import com.liferay.poshi.core.util.PoshiParserUtil;
+import com.liferay.poshi.core.script.PoshiScriptParserUtil;
 import com.liferay.poshi.core.util.RegexUtil;
 import com.liferay.poshi.core.util.StringUtil;
 import com.liferay.poshi.core.util.Validator;
@@ -77,7 +77,7 @@ public class ExecutePoshiElement extends PoshiElement {
 
 			addAttribute("selenium", getCommandName(poshiScript));
 
-			List<String> methodParameters = PoshiParserUtil.getMethodParameters(
+			List<String> methodParameters = PoshiScriptParserUtil.getMethodParameters(
 				poshiScriptParentheticalContent);
 
 			for (int i = 0; i < methodParameters.size(); i++) {
@@ -141,7 +141,7 @@ public class ExecutePoshiElement extends PoshiElement {
 			addAttribute("class", getClassName(poshiScript));
 			addAttribute("method", getCommandName(poshiScript));
 
-			List<String> methodParameters = PoshiParserUtil.getMethodParameters(
+			List<String> methodParameters = PoshiScriptParserUtil.getMethodParameters(
 				poshiScriptParentheticalContent);
 
 			for (String methodParameter : methodParameters) {
@@ -152,7 +152,7 @@ public class ExecutePoshiElement extends PoshiElement {
 		}
 
 		for (String parameter :
-				PoshiParserUtil.getMethodParameters(
+				PoshiScriptParserUtil.getMethodParameters(
 					poshiScriptParentheticalContent,
 					_executeParameterPattern)) {
 
@@ -402,7 +402,7 @@ public class ExecutePoshiElement extends PoshiElement {
 			!isValidPoshiScriptStatement(
 				_utilityInvocationStatementPattern, poshiScript)) {
 
-			return PoshiParserUtil.isBalancedPoshiScript(
+			return PoshiScriptParserUtil.isBalancedPoshiScript(
 				getParentheticalContent(poshiScript));
 		}
 

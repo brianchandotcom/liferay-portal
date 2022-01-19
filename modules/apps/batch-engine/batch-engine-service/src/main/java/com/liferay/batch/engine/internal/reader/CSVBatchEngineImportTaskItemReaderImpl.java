@@ -44,6 +44,8 @@ public class CSVBatchEngineImportTaskItemReaderImpl
 		_delimiterRegex = _getDelimiterRegex(
 			_getEnclosingCharacter(parameters));
 
+		_enclosingCharacter = _getEnclosingCharacter(parameters);
+
 		_inputStream = inputStream;
 
 		_unsyncBufferedReader = new UnsyncBufferedReader(
@@ -60,7 +62,7 @@ public class CSVBatchEngineImportTaskItemReaderImpl
 
 	@Override
 	public Map<String, Object> read() throws Exception {
-		String line = _unsyncBufferedReader.readLine();
+		String line = _trimEnclosingCharacter(_unsyncBufferedReader.readLine());
 
 		if (Validator.isNull(line)) {
 			return null;
@@ -108,15 +110,11 @@ public class CSVBatchEngineImportTaskItemReaderImpl
 		}
 
 		if (Validator.isNull(enclosingCharacter)) {
-			return StringBundler.concat(
-				StringPool.OPEN_BRACKET, escapedDelimiter,
-				StringPool.CLOSE_BRACKET);
+			return escapedDelimiter;
 		}
 
 		return StringBundler.concat(
-			escapedDelimiter, "(?=(?:[^", enclosingCharacter, "]*",
-			enclosingCharacter, "[^", enclosingCharacter, "]*",
-			enclosingCharacter, ")*[^", enclosingCharacter, "]*$)");
+			enclosingCharacter, escapedDelimiter, enclosingCharacter);
 	}
 
 	private String _getEnclosingCharacter(
@@ -129,11 +127,23 @@ public class CSVBatchEngineImportTaskItemReaderImpl
 			return null;
 		}
 
-		if (enclosingCharacter.equals(StringPool.QUOTE)) {
-			return StringPool.BACK_SLASH + enclosingCharacter;
+		return enclosingCharacter;
+	}
+
+	private String _trimEnclosingCharacter(String line) {
+		if ((_enclosingCharacter == null) || Validator.isNull(line)) {
+			return line;
 		}
 
-		return enclosingCharacter;
+		if (line.startsWith(_enclosingCharacter)) {
+			line = line.substring(1);
+		}
+
+		if (line.endsWith(_enclosingCharacter)) {
+			line = line.substring(0, line.length() - 1);
+		}
+
+		return line;
 	}
 
 	private static final String[] _ESCAPED_DELIMITERS = {
@@ -147,6 +157,7 @@ public class CSVBatchEngineImportTaskItemReaderImpl
 
 	private final String _delimiter;
 	private final String _delimiterRegex;
+	private final String _enclosingCharacter;
 	private final String[] _fieldNames;
 	private final InputStream _inputStream;
 	private final UnsyncBufferedReader _unsyncBufferedReader;

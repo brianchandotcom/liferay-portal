@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.object.system.model.listener;
+package com.liferay.object.internal.model.listener;
 
 import com.liferay.object.action.engine.ObjectActionEngine;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
@@ -21,35 +21,46 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.BaseModelListener;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 
+import java.util.Collections;
 import java.util.Map;
 import java.util.function.Function;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class SystemObjectDefinitionMetadataModelListener
-	extends BaseModelListener {
+public class SystemObjectDefinitionMetadataModelListener<T extends BaseModel<T>>
+	extends BaseModelListener<T> {
 
 	public SystemObjectDefinitionMetadataModelListener(
 		JSONFactory jsonFactory, Class<?> modelClass,
 		ObjectActionEngine objectActionEngine,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
-		ObjectEntryLocalService objectEntryLocalService) {
+		ObjectEntryLocalService objectEntryLocalService,
+		UserLocalService userLocalService,
+		DTOConverterRegistry dtoConverterRegistry) {
 
 		_jsonFactory = jsonFactory;
 		_modelClass = modelClass;
 		_objectActionEngine = objectActionEngine;
 		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectEntryLocalService = objectEntryLocalService;
+		_userLocalService = userLocalService;
+		_dtoConverterRegistry = dtoConverterRegistry;
 	}
 
 	@Override
@@ -58,35 +69,29 @@ public class SystemObjectDefinitionMetadataModelListener
 	}
 
 	@Override
-	public void onAfterCreate(BaseModel baseModel)
-		throws ModelListenerException {
-
+	public void onAfterCreate(T baseModel) throws ModelListenerException {
 		_executeObjectActions(
 			ObjectActionTriggerConstants.KEY_ON_AFTER_ADD, null,
-			(BaseModel)baseModel.clone());
+			(T)baseModel.clone());
 	}
 
 	@Override
-	public void onAfterRemove(BaseModel baseModel)
-		throws ModelListenerException {
-
+	public void onAfterRemove(T baseModel) throws ModelListenerException {
 		_executeObjectActions(
 			ObjectActionTriggerConstants.KEY_ON_AFTER_DELETE, null, baseModel);
 	}
 
 	@Override
-	public void onAfterUpdate(BaseModel originalBaseModel, BaseModel baseModel)
+	public void onAfterUpdate(T originalBaseModel, T baseModel)
 		throws ModelListenerException {
 
 		_executeObjectActions(
 			ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE, originalBaseModel,
-			(BaseModel)baseModel.clone());
+			(T)baseModel.clone());
 	}
 
 	@Override
-	public void onBeforeRemove(BaseModel baseModel)
-		throws ModelListenerException {
-
+	public void onBeforeRemove(T baseModel) throws ModelListenerException {
 		try {
 			ObjectDefinition objectDefinition =
 				_objectDefinitionLocalService.fetchObjectDefinitionByClassName(
@@ -106,8 +111,7 @@ public class SystemObjectDefinitionMetadataModelListener
 	}
 
 	private void _executeObjectActions(
-			String objectActionTriggerKey, BaseModel originalBaseModel,
-			BaseModel baseModel)
+			String objectActionTriggerKey, T originalBaseModel, T baseModel)
 		throws ModelListenerException {
 
 		try {
@@ -121,7 +125,8 @@ public class SystemObjectDefinitionMetadataModelListener
 				_modelClass.getName(), _getCompanyId(baseModel),
 				objectActionTriggerKey,
 				_getPayloadJSONObject(
-					objectActionTriggerKey, originalBaseModel, baseModel),
+					objectActionTriggerKey, originalBaseModel, baseModel,
+					userId),
 				userId);
 		}
 		catch (PortalException portalException) {
@@ -129,7 +134,7 @@ public class SystemObjectDefinitionMetadataModelListener
 		}
 	}
 
-	private long _getCompanyId(BaseModel<?> baseModel) {
+	private long _getCompanyId(T baseModel) {
 		Map<String, Function<Object, Object>> functions =
 			(Map<String, Function<Object, Object>>)
 				(Map<String, ?>)baseModel.getAttributeGetterFunctions();
@@ -144,22 +149,53 @@ public class SystemObjectDefinitionMetadataModelListener
 		return (Long)function.apply(baseModel);
 	}
 
+	private String _getExternalModel(T baseModel, long userId)
+		throws PortalException {
+
+		User user = _userLocalService.getUser(userId);
+
+		DefaultDTOConverterContext defaultDTOConverterContext =
+			new DefaultDTOConverterContext(
+				false, Collections.emptyMap(), _dtoConverterRegistry, null,
+				user.getLocale(), null, user);
+
+		DTOConverter<T, ?> dtoConverter =
+			(DTOConverter<T, ?>)_dtoConverterRegistry.getDTOConverter(
+				baseModel.getModelClassName());
+
+		if (dtoConverter == null) {
+			return baseModel.toString();
+		}
+
+		try {
+			Object externalModel = dtoConverter.toDTO(
+				defaultDTOConverterContext, baseModel);
+
+			return _jsonFactory.looseSerializeDeep(externalModel);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+		}
+
+		return baseModel.toString();
+	}
+
 	private JSONObject _getPayloadJSONObject(
-			String objectActionTriggerKey, BaseModel originalBaseModel,
-			BaseModel baseModel)
-		throws JSONException {
+			String objectActionTriggerKey, T originalBaseModel, T baseModel,
+			long userId)
+		throws PortalException {
 
 		return JSONUtil.put(
 			"objectActionTriggerKey", objectActionTriggerKey
 		).put(
 			"model" + _modelClass.getSimpleName(),
-			_jsonFactory.createJSONObject(_jsonFactory.serialize(baseModel))
+			_jsonFactory.createJSONObject(_getExternalModel(baseModel, userId))
 		).put(
 			"original" + _modelClass.getSimpleName(),
 			() -> {
 				if (originalBaseModel != null) {
 					return _jsonFactory.createJSONObject(
-						_jsonFactory.serialize(originalBaseModel));
+						_getExternalModel(originalBaseModel, userId));
 				}
 
 				return null;
@@ -167,7 +203,7 @@ public class SystemObjectDefinitionMetadataModelListener
 		);
 	}
 
-	private long _getUserId(BaseModel<?> baseModel) {
+	private long _getUserId(T baseModel) {
 		Map<String, Function<Object, Object>> functions =
 			(Map<String, Function<Object, Object>>)
 				(Map<String, ?>)baseModel.getAttributeGetterFunctions();
@@ -182,10 +218,15 @@ public class SystemObjectDefinitionMetadataModelListener
 		return (Long)function.apply(baseModel);
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		SystemObjectDefinitionMetadataModelListener.class);
+
+	private final DTOConverterRegistry _dtoConverterRegistry;
 	private final JSONFactory _jsonFactory;
 	private final Class<?> _modelClass;
 	private final ObjectActionEngine _objectActionEngine;
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private final ObjectEntryLocalService _objectEntryLocalService;
+	private final UserLocalService _userLocalService;
 
 }

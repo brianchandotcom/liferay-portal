@@ -33,7 +33,6 @@ const CardSubscription = ({
 		onClose: () => setVisible(false),
 	});
 
-	// eslint-disable-next-line no-console
 	const subscriptionStatus = cardSubscriptionData.subscriptionStatus.toLowerCase();
 
 	const parseAccountSubscriptionTerms = (subscriptionName) =>

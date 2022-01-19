@@ -121,9 +121,9 @@ definition {
 			pageName = "Test Page Name",
 			siteName = "Test Site Name");
 
-		WebContentDisplayPortlet.searchForNoWebContent(
+		WebContentDisplayPortlet.searchWebContent(
 			depotName = "Test Depot Name",
-			webContentTitle = "WC Depot Title");
+			webContentTitleNotPresentList = "WC Depot Title");
 
 		BlogsNavigator.openToAddEntry(siteURLKey = "test-site-name");
 

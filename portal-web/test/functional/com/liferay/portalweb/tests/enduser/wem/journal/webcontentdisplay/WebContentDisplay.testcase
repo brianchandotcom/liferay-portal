@@ -946,29 +946,33 @@ ${httpUtil.URLtoString(request.getAttribute("CTX").getResource(".").toURI().crea
 			pageName = "Web Content Display Page",
 			siteName = "Test Site Name");
 
-		WebContentDisplayPortlet.searchWebContent(webContentTitle = "WC WebContent Title");
-
-		Navigator.gotoSitePage(
-			pageName = "Web Content Display Page",
-			siteName = "Test Site Name");
-
-		WebContentDisplayPortlet.searchForNoWebContent(webContentTitle = "WC2 WebContent2 Title2");
+		WebContentDisplayPortlet.searchWebContent(
+			searchTerm = "WC WebContent Title",
+			webContentTitleList = "WC WebContent Title");
 
 		Navigator.gotoSitePage(
 			pageName = "Web Content Display Page",
 			siteName = "Test Site Name");
 
 		WebContentDisplayPortlet.searchWebContent(
-			webContentSearchValue = "&quot;WC WebContent Title&quot;",
-			webContentTitle = "WC WebContent Title");
+			searchTerm = "WC2 WebContent2 Title2",
+			webContentTitleNotPresentList = "WC2 WebContent2 Title2");
 
 		Navigator.gotoSitePage(
 			pageName = "Web Content Display Page",
 			siteName = "Test Site Name");
 
-		WebContentDisplayPortlet.searchForNoWebContent(
-			webContentSearchValue = "&quot;WC2 WebContent2 Title2&quot;",
-			webContentTitle = "WC2 WebContent2 Title2");
+		WebContentDisplayPortlet.searchWebContent(
+			searchTerm = "&quot;WC WebContent Title&quot;",
+			webContentTitleList = "WC WebContent Title");
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Test Site Name");
+
+		WebContentDisplayPortlet.searchWebContent(
+			searchTerm = "&quot;WC2 WebContent2 Title2&quot;",
+			webContentTitleNotPresentList = "WC2 WebContent2 Title2");
 	}
 
 	@priority = "5"

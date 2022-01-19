@@ -231,106 +231,72 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
-	macro searchForNoWebContent {
+	macro searchWebContent {
 		Portlet.gotoPortletOptions(
-			portletName = "${portletName}",
+			portletName = "Web Content Display",
 			portletOption = "Configuration");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		AssertClick(
-			locator1 = "WCDConfiguration#SELECT_WEB_CONTENT_BUTTON",
+			buttonId = "webContentSelector",
+			locator1 = "Button#BUTTON_ID",
 			value1 = "Select");
+
+		WaitForElementPresent(
+			key_title = "Select Web Content",
+			locator1 = "IFrame#MODAL_ANY");
 
 		SelectFrame.selectSecondFrame(locator1 = "IFrame#MODAL_BODY");
 
-		if (isSet(depotName)) {
-			var key_rowEntry = "${webContentTitle}";
+		if (isSet(webContentTitleNotPresentList)) {
+			if (isSet(depotName)) {
+				Click(
+					key_breadcrumbName = "Sites and Libraries",
+					locator1 = "Breadcrumb#BREADCRUMB_ENTRY");
 
-			AssertClick(
-				key_breadcrumbName = "Sites and Libraries",
-				locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
-				value1 = "Sites and Libraries");
+				Click(
+					key_groupTab = "Asset Library",
+					locator1 = "ItemSelector#NAVIGATION_GROUP_TAB");
 
-			AssertClick(
-				key_groupTab = "Asset Library",
-				locator1 = "ItemSelector#NAVIGATION_GROUP_TAB",
-				value1 = "Asset Library");
+				Click(
+					key_card = "${depotName}",
+					locator1 = "Card#CARD_TITLE");
 
-			Click(
-				key_card = "${depotName}",
-				locator1 = "Card#CARD_TITLE");
+				for (var webContentTitleNotPresent : list "${webContentTitleNotPresentList}") {
+					AssertElementNotPresent(
+						key_contentName = "${webContentTitleNotPresent}",
+						locator1 = "ItemSelector#SELECT_FILE_WEB_CONTENT");
+				}
 
-			AssertElementNotPresent(
-				key_contentName = "${webContentTitle}",
-				locator1 = "ItemSelector#SELECT_FILE_WEB_CONTENT");
+				AssertTextEquals.assertPartialText(
+					locator1 = "Message#INFO",
+					value1 = "Info:Web Content is disabled for this scope.");
+			}
+			else {
+				Search.searchCP(searchTerm = "${searchTerm}");
 
-			AssertTextEquals.assertPartialText(
-				locator1 = "Message#INFO",
-				value1 = "Info:Web Content is disabled for this scope.");
+				LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+				for (var webContentTitleNotPresent : list "${webContentTitleNotPresentList}") {
+					AssertElementNotPresent(
+						key_listEntry = "${webContentTitleNotPresent}",
+						locator1 = "LexiconList#LIST_ENTRY_TITLE");
+				}
+			}
 		}
 		else {
-			Search.searchCP(searchTerm = "${webContentTitle}");
+			Search.searchCP(searchTerm = "${searchTerm}");
 
 			LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
-			var key_webContentTitle = "${webContentTitle}";
-
-			AssertElementNotPresent(
-				key_listEntry = "${webContentTitle}",
-				locator1 = "LexiconList#LIST_ENTRY_TITLE");
+			for (var webContentTitle : list "${webContentTitleList}") {
+				AssertTextEquals(
+					key_listEntry = "${webContentTitle}",
+					locator1 = "LexiconList#LIST_ENTRY_TITLE",
+					value1 = "${webContentTitle}");
+			}
 		}
-
-		SelectFrame(value1 = "relative=top");
-	}
-
-	macro searchWebContent {
-		Portlet.gotoPortletOptions(
-			portletName = "${portletName}",
-			portletOption = "Configuration");
-
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		AssertClick(
-			locator1 = "WCDConfiguration#SELECT_WEB_CONTENT_BUTTON",
-			value1 = "Select");
-
-		SelectFrame.selectSecondFrame(locator1 = "IFrame#MODAL_BODY");
-
-		var searchTerm = "${webContentTitle}";
-
-		if (isSet(webContentSearchValue)) {
-			var searchTerm = "${webContentSearchValue}";
-		}
-
-		Search.searchCP(searchTerm = "${searchTerm}");
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
-		var key_webContentTitle = "${webContentTitle}";
-
-		AssertTextEquals(
-			key_listEntry = "${webContentTitle}",
-			locator1 = "LexiconList#LIST_ENTRY_TITLE",
-			value1 = "${webContentTitle}");
-
-		if ("${addSearchedContent}" == "true") {
-			AssertClick(
-				locator1 = "Button#WEB_CONTENT_CHOOSE",
-				value1 = "Choose");
-
-			SelectFrame(value1 = "relative=top");
-
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-			AssertTextEquals(
-				locator1 = "Message#INFO_ARTICLE",
-				value1 = "${webContentTitle} (Modified)");
-
-			PortletEntry.save();
-		}
-
-		SelectFrame(value1 = "relative=top");
 	}
 
 	macro selectWebContent {

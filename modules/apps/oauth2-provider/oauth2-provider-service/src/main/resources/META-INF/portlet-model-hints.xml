@@ -9,7 +9,9 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="oAuth2ApplicationScopeAliasesId" type="long" />
-		<field name="allowedGrantTypes" type="String" />
+		<field name="allowedGrantTypes" type="String">
+			<hint name="max-length">128</hint>
+		</field>
 		<field name="clientCredentialUserId" type="long" />
 		<field name="clientCredentialUserName" type="String" />
 		<field name="clientId" type="String" />

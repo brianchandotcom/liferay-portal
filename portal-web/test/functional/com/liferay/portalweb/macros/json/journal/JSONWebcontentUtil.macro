@@ -5,13 +5,13 @@ definition {
 		Variables.assertDefined(parameterList = "${content}");
 
 		if (isSet(source)) {
-			var contentXML = '''<root available-locales="en_US" default-locale="en_US">%0A%09<dynamic-element name="content" type="text_area" index-type="text">%0A%09%09<dynamic-content language-id="en_US">%0A%09%09%09<![CDATA[${content}]]>%0A%09%09</dynamic-content>%0A%09</dynamic-element>%0A</root>''';
+			var contentXml = '''<root available-locales="en_US" default-locale="en_US">%0A%09<dynamic-element name="content" type="text_area" index-type="text">%0A%09%09<dynamic-content language-id="en_US">%0A%09%09%09<![CDATA[${content}]]>%0A%09%09</dynamic-content>%0A%09</dynamic-element>%0A</root>''';
 		}
 		else {
-			var contentXML = '''<root available-locales="en_US" default-locale="en_US">%0A%09<dynamic-element name="content" type="text_area" index-type="text">%0A%09%09<dynamic-content language-id="en_US">%0A%09%09%09<![CDATA[<p>${content}</p>]]>%0A%09%09</dynamic-content>%0A%09</dynamic-element>%0A</root>''';
+			var contentXml = '''<root available-locales="en_US" default-locale="en_US">%0A%09<dynamic-element name="content" type="text_area" index-type="text">%0A%09%09<dynamic-content language-id="en_US">%0A%09%09%09<![CDATA[<p>${content}</p>]]>%0A%09%09</dynamic-content>%0A%09</dynamic-element>%0A</root>''';
 		}
 
-		return "${contentXML}";
+		return "${contentXml}";
 	}
 
 	@summary = "Helper function to help input localized content html info"
@@ -42,9 +42,9 @@ definition {
 
 		// Build XML
 
-		var contentXML = '''<root available-locales="${localeList}" default-locale="en_US"> <dynamic-element name="content" type="text_area" index-type="text"> ${dynamicContent} </dynamic-element> </root> ''';
+		var contentXml = '''<root available-locales="${localeList}" default-locale="en_US"> <dynamic-element name="content" type="text_area" index-type="text"> ${dynamicContent} </dynamic-element> </root> ''';
 
-		return "${contentXML}";
+		return "${contentXml}";
 	}
 
 }

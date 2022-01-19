@@ -14,10 +14,12 @@
 
 package com.liferay.dispatch.web.internal.display.context;
 
+import com.liferay.dispatch.constants.DispatchPortletKeys;
 import com.liferay.dispatch.scheduler.SchedulerResponseManager;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerException;
 import com.liferay.portal.kernel.scheduler.TriggerState;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
@@ -64,15 +66,27 @@ public class SchedulerResponseDisplayContext extends BaseDisplayContext {
 	}
 
 	public String getOrderByCol() {
-		return ParamUtil.getString(
-			dispatchRequestHelper.getRequest(),
-			SearchContainer.DEFAULT_ORDER_BY_COL_PARAM, "start-date");
+		if (Validator.isNotNull(_orderByCol)) {
+			return _orderByCol;
+		}
+
+		_orderByCol = SearchOrderByUtil.getOrderByCol(
+			dispatchRequestHelper.getRequest(), DispatchPortletKeys.DISPATCH,
+			"scheduler-response-order-by-col", "start-date");
+
+		return _orderByCol;
 	}
 
 	public String getOrderByType() {
-		return ParamUtil.getString(
-			dispatchRequestHelper.getRequest(),
-			SearchContainer.DEFAULT_ORDER_BY_TYPE_PARAM, "desc");
+		if (Validator.isNotNull(_orderByType)) {
+			return _orderByType;
+		}
+
+		_orderByType = SearchOrderByUtil.getOrderByType(
+			dispatchRequestHelper.getRequest(), DispatchPortletKeys.DISPATCH,
+			"scheduler-response-order-by-type", "desc");
+
+		return _orderByType;
 	}
 
 	public PortletURL getPortletURL() {
@@ -142,6 +156,8 @@ public class SchedulerResponseDisplayContext extends BaseDisplayContext {
 	}
 
 	private final Format _dateFormatDateTime;
+	private String _orderByCol;
+	private String _orderByType;
 	private final SchedulerResponseManager _schedulerResponseManager;
 	private SearchContainer<SchedulerResponse> _searchContainer;
 

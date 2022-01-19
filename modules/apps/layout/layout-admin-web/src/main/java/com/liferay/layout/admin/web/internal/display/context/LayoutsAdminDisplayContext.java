@@ -1377,7 +1377,7 @@ public class LayoutsAdminDisplayContext {
 				layoutFullURL, "p_l_back_url", _getBackURL());
 
 			layoutFullURL = HttpComponentsUtil.setParameter(
-				layoutFullURL, "p_l_skip_redirect", true);
+				layoutFullURL, "skipRedirect", true);
 		}
 		catch (Exception exception) {
 			_log.error(

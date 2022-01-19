@@ -480,7 +480,6 @@ public class PortalImpl implements Portal {
 		_reservedParams.add("p_l_id");
 		_reservedParams.add("p_l_mode");
 		_reservedParams.add("p_l_reset");
-		_reservedParams.add("p_l_skip_redirect");
 
 		// Portal portlet
 
@@ -525,6 +524,7 @@ public class PortalImpl implements Portal {
 
 		_reservedParams.add("saveLastPath");
 		_reservedParams.add("scroll");
+		_reservedParams.add("skipRedirect");
 		_reservedParams.add("switchGroup");
 
 		_servletContextName =

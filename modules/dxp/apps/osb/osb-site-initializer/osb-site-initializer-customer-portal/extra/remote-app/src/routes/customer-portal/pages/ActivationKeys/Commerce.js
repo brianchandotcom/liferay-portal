@@ -130,7 +130,7 @@ const Commerce = ({accountKey, sessionId}) => {
 				/>
 			) : (
 				<Table
-					className="mt-4"
+					className="activation-keys-commerce-table mt-4"
 					columns={columns}
 					isLoading={isLoadingActivationInstructions}
 					itemsPerPage={3}
@@ -148,9 +148,9 @@ const Commerce = ({accountKey, sessionId}) => {
 								></div>
 							),
 							version: (
-								<p className="m-0 table-list-title text-neutral-7 text-paragraph">
+								<span className="m-0 table-list-title text-neutral-7 text-paragraph">
 									{version}
-								</p>
+								</span>
 							),
 						})
 					)}

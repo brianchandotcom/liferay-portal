@@ -38,6 +38,7 @@ import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.search.experiences.blueprint.exception.InvalidElementInstanceException;
 import com.liferay.search.experiences.blueprint.search.request.enhancer.SXPBlueprintSearchRequestEnhancer;
+import com.liferay.search.experiences.exception.NonPublicIPAddressException;
 import com.liferay.search.experiences.exception.SXPExceptionUtil;
 import com.liferay.search.experiences.rest.dto.v1_0.DocumentField;
 import com.liferay.search.experiences.rest.dto.v1_0.Hit;
@@ -212,6 +213,9 @@ public class SearchResponseResourceImpl extends BaseSearchResponseResourceImpl {
 				errorMap.put("sxpElementId", sxpElementId);
 
 				inheritMap.put("sxpElementId", sxpElementId);
+			}
+			else if (throwable1 instanceof NonPublicIPAddressException) {
+				errorMap.put("severity", "WARN");
 			}
 			else {
 				errorMap.put("localizedMessage", "Error");

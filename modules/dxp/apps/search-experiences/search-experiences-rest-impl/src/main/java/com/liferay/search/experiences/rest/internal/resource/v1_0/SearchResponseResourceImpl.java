@@ -107,10 +107,10 @@ public class SearchResponseResourceImpl extends BaseSearchResponseResourceImpl {
 			).withSearchContext(
 				searchContext -> {
 					searchContext.setAttribute(
-						"search.experiences.current.group.id", _getGroupId());
-					searchContext.setAttribute(
 						"search.experiences.ip.address",
 						contextHttpServletRequest.getRemoteAddr());
+					searchContext.setAttribute(
+						"search.experiences.scope.group.id", _getGroupId());
 					searchContext.setTimeZone(contextUser.getTimeZone());
 					searchContext.setUserId(contextUser.getUserId());
 				}

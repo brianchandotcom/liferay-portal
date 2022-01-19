@@ -19,6 +19,7 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileShortcut;
+import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeService;
@@ -53,8 +54,6 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import jodd.net.MimeTypes;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -108,13 +107,13 @@ public class DLFolderServiceTest {
 
 		_dlAppService.addFileEntry(
 			null, _group.getGroupId(), _parentFolder.getFolderId(),
-			StringUtil.randomString(), MimeTypes.MIME_APPLICATION_OCTET_STREAM,
+			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
 			"title2", StringUtil.randomString(), StringPool.BLANK, (byte[])null,
 			null, null, serviceContext);
 
 		_dlAppService.addFileEntry(
 			null, _group.getGroupId(), _parentFolder.getFolderId(),
-			StringUtil.randomString(), MimeTypes.MIME_APPLICATION_OCTET_STREAM,
+			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
 			"title1", StringUtil.randomString(), StringPool.BLANK, (byte[])null,
 			null, null, serviceContext);
 
@@ -154,6 +153,95 @@ public class DLFolderServiceTest {
 	}
 
 	@Test
+	public void testShouldReturnOnlyAcceptedMimeTypesAndFolders()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		List<FileEntry> expectedFileEntries = new ArrayList<>();
+
+		FileEntry fileEntry = _dlAppService.addFileEntry(
+			null, _group.getGroupId(), _parentFolder.getFolderId(),
+			StringUtil.randomString() + ".jpg", ContentTypes.IMAGE_JPEG,
+			"title", StringUtil.randomString(), StringPool.BLANK, (byte[])null,
+			null, null, serviceContext);
+
+		expectedFileEntries.add(fileEntry);
+
+		Folder folder = _dlAppService.addFolder(
+			_group.getGroupId(), _parentFolder.getFolderId(),
+			StringUtil.randomString(), RandomTestUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId()));
+
+		_dlAppService.addFileEntry(
+			null, _group.getGroupId(), folder.getFolderId(),
+			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
+			"title2", StringUtil.randomString(), StringPool.BLANK, (byte[])null,
+			null, null, serviceContext);
+
+		_dlAppService.addFileEntry(
+			null, _group.getGroupId(), folder.getFolderId(),
+			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
+			"title1", StringUtil.randomString(), StringPool.BLANK, (byte[])null,
+			null, null, serviceContext);
+
+		_dlAppService.addFileEntry(
+			null, _group.getGroupId(), folder.getFolderId(),
+			StringUtil.randomString() + ".jpg", ContentTypes.IMAGE_JPEG,
+			"title3", StringUtil.randomString(), StringPool.BLANK, (byte[])null,
+			null, null, serviceContext);
+
+		List<Object> actualFoldersAndFileEntriesAndFileShortcuts =
+			_dlFolderService.getFoldersAndFileEntriesAndFileShortcuts(
+				_group.getGroupId(), _parentFolder.getFolderId(),
+				ArrayUtil.toStringArray(DLUtil.getAllMediaGalleryMimeTypes()),
+				false, WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS,
+				new RepositoryModelTitleComparator<FileEntry>(true));
+
+		Assert.assertEquals(
+			actualFoldersAndFileEntriesAndFileShortcuts.toString(), 2,
+			actualFoldersAndFileEntriesAndFileShortcuts.size());
+
+		List<DLFileEntry> actualFileEntries = new ArrayList<>();
+		int actualFolders = 0;
+
+		for (Object actualFoldersAndFileEntriesAndFileShortcut :
+				actualFoldersAndFileEntriesAndFileShortcuts) {
+
+			if (actualFoldersAndFileEntriesAndFileShortcut instanceof
+					DLFileEntry) {
+
+				actualFileEntries.add(
+					(DLFileEntry)actualFoldersAndFileEntriesAndFileShortcut);
+			}
+			else if (actualFoldersAndFileEntriesAndFileShortcut instanceof
+						DLFolder) {
+
+				actualFolders++;
+			}
+		}
+
+		Assert.assertEquals(actualFolders, 1, actualFolders);
+
+		Assert.assertEquals(
+			actualFileEntries.size(), 1, actualFileEntries.size());
+
+		Assert.assertEquals(
+			expectedFileEntries.toString(), expectedFileEntries.size(),
+			actualFileEntries.size());
+
+		FileEntry expectedFileEntry = expectedFileEntries.get(0);
+		DLFileEntry actualFileEntry = actualFileEntries.get(0);
+
+		Assert.assertEquals(
+			expectedFileEntry.getFileEntryId(),
+			actualFileEntry.getFileEntryId());
+	}
+
+	@Test
 	public void testShouldReturnOrderedByReadCount() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
@@ -166,7 +254,7 @@ public class DLFolderServiceTest {
 
 		FileEntry fileEntry1 = _dlAppService.addFileEntry(
 			null, _group.getGroupId(), _parentFolder.getFolderId(),
-			StringUtil.randomString(), MimeTypes.MIME_APPLICATION_OCTET_STREAM,
+			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
 			"title1", StringUtil.randomString(), StringPool.BLANK, (byte[])null,
 			null, null, serviceContext);
 
@@ -177,7 +265,7 @@ public class DLFolderServiceTest {
 
 		FileEntry fileEntry2 = _dlAppService.addFileEntry(
 			null, _group.getGroupId(), _parentFolder.getFolderId(),
-			StringUtil.randomString(), MimeTypes.MIME_APPLICATION_OCTET_STREAM,
+			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
 			"title2", StringUtil.randomString(), StringPool.BLANK, (byte[])null,
 			null, null, serviceContext);
 
@@ -188,7 +276,7 @@ public class DLFolderServiceTest {
 
 		FileEntry fileEntry3 = _dlAppService.addFileEntry(
 			null, _group.getGroupId(), _parentFolder.getFolderId(),
-			StringUtil.randomString(), MimeTypes.MIME_APPLICATION_OCTET_STREAM,
+			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
 			"title3", StringUtil.randomString(), StringPool.BLANK, (byte[])null,
 			null, null, serviceContext);
 
@@ -205,7 +293,7 @@ public class DLFolderServiceTest {
 
 		FileEntry fileEntry4 = _dlAppService.addFileEntry(
 			null, _group.getGroupId(), hiddenFolder.getFolderId(),
-			StringUtil.randomString(), MimeTypes.MIME_APPLICATION_OCTET_STREAM,
+			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
 			"title4", StringUtil.randomString(), StringPool.BLANK, (byte[])null,
 			null, null, serviceContext);
 
@@ -220,7 +308,7 @@ public class DLFolderServiceTest {
 
 		FileEntry fileEntry5 = _dlAppService.addFileEntry(
 			null, _group.getGroupId(), hiddenFolder.getFolderId(),
-			StringUtil.randomString(), MimeTypes.MIME_APPLICATION_OCTET_STREAM,
+			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
 			"title5", StringUtil.randomString(), StringPool.BLANK, (byte[])null,
 			null, null, serviceContext);
 
@@ -293,19 +381,19 @@ public class DLFolderServiceTest {
 
 		FileEntry fileEntry1 = _dlAppService.addFileEntry(
 			null, _group.getGroupId(), _parentFolder.getFolderId(),
-			StringUtil.randomString(), MimeTypes.MIME_APPLICATION_OCTET_STREAM,
+			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
 			"title2", StringUtil.randomString(), StringPool.BLANK, (byte[])null,
 			null, null, serviceContext);
 
 		FileEntry fileEntry2 = _dlAppService.addFileEntry(
 			null, _group.getGroupId(), _parentFolder.getFolderId(),
-			StringUtil.randomString(), MimeTypes.MIME_APPLICATION_OCTET_STREAM,
+			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
 			"title1", StringUtil.randomString(), StringPool.BLANK, (byte[])null,
 			null, null, serviceContext);
 
 		FileEntry fileEntry3 = _dlAppService.addFileEntry(
 			null, _group.getGroupId(), _parentFolder.getFolderId(),
-			StringUtil.randomString(), MimeTypes.MIME_APPLICATION_OCTET_STREAM,
+			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
 			"title3", StringUtil.randomString(), StringPool.BLANK, (byte[])null,
 			null, null, serviceContext);
 

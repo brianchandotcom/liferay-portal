@@ -2011,7 +2011,9 @@ definition {
 			pageName = "Staging Test Page",
 			siteName = "Site Name");
 
-		WebContentDisplayPortlet.viewImageFieldViaWCD();
+		WebContentDisplayPortlet.viewContent(
+			imageFileName = "Document_2.jpeg",
+			webContentTitle = "WebContent Title");
 
 		Staging.gotoPublishToLive();
 
@@ -2021,7 +2023,9 @@ definition {
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
-		WebContentDisplayPortlet.viewImageFieldViaWCD();
+		WebContentDisplayPortlet.viewContent(
+			imageFileName = "Document_2.jpeg",
+			webContentTitle = "WebContent Title");
 	}
 
 	@description = "This is a use case for LPS-96664."

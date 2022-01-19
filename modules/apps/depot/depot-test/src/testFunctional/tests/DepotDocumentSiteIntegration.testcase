@@ -177,7 +177,9 @@ definition {
 			pageName = "Test Page",
 			siteName = "Site Name");
 
-		WebContentDisplayPortlet.viewImageFieldViaWCD();
+		WebContentDisplayPortlet.viewContent(
+			imageFileName = "Document_2.jpeg",
+			webContentTitle = "WC WebContent Title");
 	}
 
 	@description = "This ensures that a document using a type stored in AL can be removed on a connected site."

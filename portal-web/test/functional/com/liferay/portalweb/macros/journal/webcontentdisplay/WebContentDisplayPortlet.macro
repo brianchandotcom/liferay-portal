@@ -576,10 +576,6 @@ definition {
 		}
 	}
 
-	macro viewImageFieldViaWCD {
-		AssertElementPresent(locator1 = "WCD#WEB_CONTENT_IMAGE_PNG");
-	}
-
 	macro viewLinkedPage {
 		var key_contentText = "${linkName}";
 

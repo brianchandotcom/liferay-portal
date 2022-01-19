@@ -356,7 +356,9 @@ definition {
 
 		Navigator.gotoPage(pageName = "Test Page");
 
-		WebContentDisplayPortlet.viewImageFieldViaWCD();
+		WebContentDisplayPortlet.viewContent(
+			imageFileName = "Document_2.jpeg",
+			webContentTitle = "WC WebContent Title Edit");
 	}
 
 	@description = "Verify that, when a Web Content is moved to a Folder, it's Workflow changes"

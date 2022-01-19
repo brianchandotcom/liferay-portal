@@ -1,10 +1,18 @@
 [
 	{
-		"alternateName": "testAlternateName",
-		"emailAddress": "test.user@liferay.com",
+		"alternateName": "testAlternateName1",
+		"emailAddress": "test.user1@liferay.com",
 		"externalReferenceCode": "TESTACC0001",
-		"familyName": "User",
+		"familyName": "User1",
 		"givenName": "Test",
-		"name": "Test User"
+		"name": "Test User 1"
+	},
+	{
+		"alternateName": "testAlternateName2",
+		"emailAddress": "test.user2@liferay.com",
+		"externalReferenceCode": "TESTACC0002",
+		"familyName": "User2",
+		"givenName": "Test",
+		"name": "Test User 2"
 	}
 ]

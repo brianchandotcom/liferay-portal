@@ -16,7 +16,7 @@ package com.liferay.poshi.core.elements;
 
 import com.liferay.poshi.core.script.PoshiScriptParserException;
 import com.liferay.poshi.core.util.Dom4JUtil;
-import com.liferay.poshi.core.util.PoshiParserUtil;
+import com.liferay.poshi.core.script.PoshiScriptParserUtil;
 import com.liferay.poshi.core.util.StringUtil;
 import com.liferay.poshi.core.util.Validator;
 
@@ -417,7 +417,7 @@ public class VarPoshiElement extends PoshiElement {
 
 		parametersString = parametersString.trim();
 
-		List<String> parameters = PoshiParserUtil.getMethodParameters(
+		List<String> parameters = PoshiScriptParserUtil.getMethodParameters(
 			parametersString);
 
 		for (String parameter : parameters) {

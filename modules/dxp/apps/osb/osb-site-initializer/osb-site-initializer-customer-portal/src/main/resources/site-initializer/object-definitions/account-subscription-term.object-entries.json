@@ -140,5 +140,77 @@
 		"startDate": "2022-12-01 00:00:00.0",
 		"subscriptionStatus": "Future",
 		"subscriptionTermStatus": "Future"
+	},
+	{
+		"accountKey": "ERC-006",
+		"accountSubscriptionERC": "ERC-006_enterprise-search_production",
+		"accountSubscriptionGroupERC": "ERC-006_enterprise-search",
+		"c_accountSubscriptionId": null,
+		"endDate": "2022-04-31 00:00:00.0",
+		"instanceSize": "1",
+		"quantity": 1,
+		"startDate": "2021-01-01 00:00:00.0",
+		"subscriptionStatus": "Future",
+		"subscriptionTermStatus": "Future"
+	},
+	{
+		"accountKey": "ERC-006",
+		"accountSubscriptionERC": "ERC-006_enterprise-search_non-production",
+		"accountSubscriptionGroupERC": "ERC-006_enterprise-search",
+		"c_accountSubscriptionId": null,
+		"endDate": "2027-08-31 00:00:00.0",
+		"instanceSize": "1",
+		"quantity": 1,
+		"startDate": "2021-01-01 00:00:00.0",
+		"subscriptionStatus": "Future",
+		"subscriptionTermStatus": "Future"
+	},
+	{
+		"accountKey": "ERC-006",
+		"accountSubscriptionERC": "ERC-006_enterprise-search_backup",
+		"accountSubscriptionGroupERC": "ERC-006_enterprise-search",
+		"c_accountSubscriptionId": null,
+		"endDate": "2021-03-31 00:00:00.0",
+		"instanceSize": "1",
+		"quantity": 1,
+		"startDate": "2021-01-01 00:00:00.0",
+		"subscriptionStatus": "Future",
+		"subscriptionTermStatus": "Future"
+	},
+	{
+		"accountKey": "ERC-006",
+		"accountSubscriptionERC": "ERC-006_commerce_production",
+		"accountSubscriptionGroupERC": "ERC-006_commerce",
+		"c_accountSubscriptionId": null,
+		"endDate": "2022-04-31 00:00:00.0",
+		"instanceSize": "1",
+		"quantity": 1,
+		"startDate": "2021-01-01 00:00:00.0",
+		"subscriptionStatus": "Future",
+		"subscriptionTermStatus": "Future"
+	},
+	{
+		"accountKey": "ERC-006",
+		"accountSubscriptionERC": "ERC-006_commerce_non-production",
+		"accountSubscriptionGroupERC": "ERC-006_commerce",
+		"c_accountSubscriptionId": null,
+		"endDate": "2027-08-31 00:00:00.0",
+		"instanceSize": "1",
+		"quantity": 1,
+		"startDate": "2021-01-01 00:00:00.0",
+		"subscriptionStatus": "Future",
+		"subscriptionTermStatus": "Future"
+	},
+	{
+		"accountKey": "ERC-006",
+		"accountSubscriptionERC": "ERC-006_commerce_backup",
+		"accountSubscriptionGroupERC": "ERC-006_commerce",
+		"c_accountSubscriptionId": null,
+		"endDate": "2021-03-31 00:00:00.0",
+		"instanceSize": "1",
+		"quantity": 1,
+		"startDate": "2021-01-01 00:00:00.0",
+		"subscriptionStatus": "Future",
+		"subscriptionTermStatus": "Future"
 	}
 ]

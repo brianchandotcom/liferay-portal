@@ -23,5 +23,15 @@
 		"externalReferenceCode": "ERC-005",
 		"name": "Test Account 05",
 		"type": "business"
+	},
+	{
+		"externalReferenceCode": "ERC-006",
+		"name": "Test Account 06",
+		"type": "business"
+	},
+	{
+		"externalReferenceCode": "ERC-007",
+		"name": "Test Account 07",
+		"type": "business"
 	}
 ]

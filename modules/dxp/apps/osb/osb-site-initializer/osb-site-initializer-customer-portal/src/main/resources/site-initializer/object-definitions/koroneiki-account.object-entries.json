@@ -78,5 +78,37 @@
 		"slaCurrentEndDate": "2022-07-24 00:00:00.0",
 		"slaExpired": "",
 		"slaFuture": "Gold Subscription"
+	},
+	{
+		"accountKey": "ERC-006",
+		"code": "PROJECT06",
+		"dxpVersion": "7.1",
+		"liferayContactEmailAddress": "customer-service@liferay.com",
+		"liferayContactName": "Liferay Support",
+		"liferayContactRole": "",
+		"maxRequestors": 2,
+		"name": "Project 06",
+		"partner": false,
+		"region": "Slovenia",
+		"slaCurrent": "Limited Subscription",
+		"slaCurrentEndDate": "2022-07-24 00:00:00.0",
+		"slaExpired": "",
+		"slaFuture": "Platinum Subscription"
+	},
+	{
+		"accountKey": "ERC-007",
+		"code": "PROJECT07",
+		"dxpVersion": "7.3",
+		"liferayContactEmailAddress": "customer-service@liferay.com",
+		"liferayContactName": "Liferay Support",
+		"liferayContactRole": "",
+		"maxRequestors": 4,
+		"name": "Project 07",
+		"partner": false,
+		"region": "Australia",
+		"slaCurrent": "Platinum Subscription",
+		"slaCurrentEndDate": "2022-08-24 00:00:00.0",
+		"slaExpired": "",
+		"slaFuture": "Gold Subscription"
 	}
 ]

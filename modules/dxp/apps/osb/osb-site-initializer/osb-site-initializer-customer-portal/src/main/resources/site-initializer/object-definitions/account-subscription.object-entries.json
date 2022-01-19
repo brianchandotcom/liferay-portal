@@ -152,5 +152,93 @@
 		"quantity": 1,
 		"startDate": "2021-01-01 00:00:00.0",
 		"subscriptionStatus": "Active"
+	},
+	{
+		"accountKey": "ERC-006",
+		"accountSubscriptionGroupERC": "ERC-006_enterprise-search",
+		"c_accountSubscriptionId": null,
+		"endDate": "2027-08-31 00:00:00.0",
+		"instanceSize": "1",
+		"name": "Non-Production",
+		"quantity": 1,
+		"startDate": "2021-01-01 00:00:00.0",
+		"subscriptionStatus": "Active"
+	},
+	{
+		"accountKey": "ERC-006",
+		"accountSubscriptionGroupERC": "ERC-006_enterprise-search",
+		"c_accountSubscriptionId": null,
+		"endDate": "2022-04-31 00:00:00.0",
+		"instanceSize": "1",
+		"name": "Production",
+		"quantity": 1,
+		"startDate": "2021-01-01 00:00:00.0",
+		"subscriptionStatus": "Active"
+	},
+	{
+		"accountKey": "ERC-006",
+		"accountSubscriptionGroupERC": "ERC-006_enterprise-search",
+		"c_accountSubscriptionId": null,
+		"endDate": "2021-03-31 00:00:00.0",
+		"instanceSize": "1",
+		"name": "Backup",
+		"quantity": 1,
+		"startDate": "2021-01-01 00:00:00.0",
+		"subscriptionStatus": "Active"
+	},
+	{
+		"accountKey": "ERC-006",
+		"accountSubscriptionGroupERC": "ERC-006_commerce",
+		"c_accountSubscriptionId": null,
+		"endDate": "2027-08-31 00:00:00.0",
+		"instanceSize": "1",
+		"name": "Non-Production",
+		"quantity": 1,
+		"startDate": "2021-01-01 00:00:00.0",
+		"subscriptionStatus": "Active"
+	},
+	{
+		"accountKey": "ERC-006",
+		"accountSubscriptionGroupERC": "ERC-006_commerce",
+		"c_accountSubscriptionId": null,
+		"endDate": "2022-04-31 00:00:00.0",
+		"instanceSize": "1",
+		"name": "Production",
+		"quantity": 1,
+		"startDate": "2021-01-01 00:00:00.0",
+		"subscriptionStatus": "Active"
+	},
+	{
+		"accountKey": "ERC-006",
+		"accountSubscriptionGroupERC": "ERC-006_commerce",
+		"c_accountSubscriptionId": null,
+		"endDate": "2021-03-31 00:00:00.0",
+		"instanceSize": "1",
+		"name": "Backup",
+		"quantity": 1,
+		"startDate": "2021-01-01 00:00:00.0",
+		"subscriptionStatus": "Active"
+	},
+	{
+		"accountKey": "ERC-006",
+		"accountSubscriptionGroupERC": "ERC-006_dxp-cloud",
+		"c_accountSubscriptionId": null,
+		"endDate": "2023-03-31 00:00:00.0",
+		"instanceSize": "1",
+		"name": "Backup",
+		"quantity": 1,
+		"startDate": "2021-01-01 00:00:00.0",
+		"subscriptionStatus": "Active"
+	},
+	{
+		"accountKey": "ERC-007",
+		"accountSubscriptionGroupERC": "ERC-007_dxp",
+		"c_accountSubscriptionId": null,
+		"endDate": "2024-01-31 00:00:00.0",
+		"instanceSize": "1",
+		"name": "Production",
+		"quantity": 1,
+		"startDate": "2021-10-01 00:00:00.0",
+		"subscriptionStatus": "Active"
 	}
 ]

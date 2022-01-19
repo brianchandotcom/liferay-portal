@@ -1784,6 +1784,12 @@ definition {
 		AssertElementNotPresent(locator1 = "FormFields#PARAGRAPH_TITLE");
 	}
 
+	macro viewParagraphFieldTextBody {
+		AssertVisible(
+			locator1 = "FormFields#PARAGRAPH_BODY_TEXT_PAGES",
+			value1 = "${fieldValue}");
+	}
+
 	macro viewPredefinedValueDropdownContent {
 		AssertElementPresent(
 			key_textContent = "${key_textContent}",

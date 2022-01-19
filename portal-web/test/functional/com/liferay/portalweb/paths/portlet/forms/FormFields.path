@@ -686,6 +686,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PARAGRAPH_BODY_TEXT_PAGES</td>
+	<td>//div[contains(@class,'liferay-ddm-form-field-paragraph-text')]//p[text()='${fieldValue}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PARAGRAPH_BODY_CONTENT_TABLE</td>
 	<td>//div[contains(@class,'${key_fieldName}')]//table</td>
 	<td></td>

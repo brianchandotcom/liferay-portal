@@ -13,6 +13,7 @@ import {createContext, useContext} from 'react';
 
 const defaultProperties = {
 	createSupportRequest: '',
+	deployingActivationKeysURL: '',
 	licenseKeyDownloadURL: '',
 	liferaywebdavurl: '',
 	oktaSessionURL: '',

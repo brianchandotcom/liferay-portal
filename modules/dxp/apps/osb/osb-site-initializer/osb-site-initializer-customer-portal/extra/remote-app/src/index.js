@@ -34,6 +34,9 @@ class CustomerPortalWebComponent extends HTMLElement {
 	connectedCallback() {
 		const properties = {
 			createSupportRequest: super.getAttribute('create-support-request'),
+			deployingActivationKeysURL: super.getAttribute(
+				'deploying-activation-keys-url'
+			),
 			licenseKeyDownloadURL: super.getAttribute(
 				'license-key-download-url'
 			),

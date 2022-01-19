@@ -58,7 +58,13 @@ definition {
 
 		FormsAdminNavigator.gotoPublishedForm();
 
-		FormFields.viewRequiredAsteriskDataField(fieldFieldLabel = "Text");
+		FormPortlet.clickSubmit();
+
+		FormFields.viewFieldValidationErrorMessage(
+			fieldName = "Text",
+			fieldValidationErrorMessage = "This field is required.");
+
+		FormFields.viewFieldNotRequired(fieldLabel = "Numeric");
 
 		FormFields.editText(
 			fieldName = "Text",

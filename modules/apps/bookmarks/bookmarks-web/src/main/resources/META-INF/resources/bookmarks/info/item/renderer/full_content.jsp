@@ -15,6 +15,8 @@
 --%>
 
 <%@ include file="/bookmarks/info/item/renderer/init.jsp" %>
+<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/expando" prefix="liferay-expando" %>
 
 <%
 BookmarksEntry entry = (BookmarksEntry)request.getAttribute(BookmarksWebKeys.BOOKMARKS_ENTRY);

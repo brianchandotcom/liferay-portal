@@ -30,45 +30,45 @@ import javax.servlet.http.HttpServletRequest;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author
+ * @author Yang Cao
  */
 @Component(service = InfoItemSelector.class)
 public class BookmarksEntryInfoItemSelector
-        implements InfoItemSelector<BookmarksEntry> {
+	implements InfoItemSelector<BookmarksEntry> {
 
-    @Override
-    public PortletURL getInfoItemSelectorPortletURL(
-            HttpServletRequest httpServletRequest)
-            throws Exception {
+	@Override
+	public PortletURL getInfoItemSelectorPortletURL(
+			HttpServletRequest httpServletRequest)
+		throws Exception {
 
-        PortletURL infoItemSelectorPortletURL =
-                PortletProviderUtil.getPortletURL(
-                        httpServletRequest, BookmarksEntry.class.getName(),
-                        PortletProvider.Action.BROWSE);
+		PortletURL infoItemSelectorPortletURL =
+			PortletProviderUtil.getPortletURL(
+				httpServletRequest, BookmarksEntry.class.getName(),
+				PortletProvider.Action.BROWSE);
 
-        if (infoItemSelectorPortletURL == null) {
-            return null;
-        }
+		if (infoItemSelectorPortletURL == null) {
+			return null;
+		}
 
-        ThemeDisplay themeDisplay =
-                (ThemeDisplay)httpServletRequest.getAttribute(
-                        WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
-        infoItemSelectorPortletURL.setParameter(
-                "groupId", String.valueOf(themeDisplay.getScopeGroupId()));
-        infoItemSelectorPortletURL.setParameter(
-                "selectedGroupIds", String.valueOf(themeDisplay.getScopeGroupId()));
+		infoItemSelectorPortletURL.setParameter(
+			"groupId", String.valueOf(themeDisplay.getScopeGroupId()));
+		infoItemSelectorPortletURL.setParameter(
+			"selectedGroupIds", String.valueOf(themeDisplay.getScopeGroupId()));
 
-        infoItemSelectorPortletURL.setParameter(
-                "typeSelection", BookmarksEntry.class.getName());
-        infoItemSelectorPortletURL.setParameter(
-                "showNonindexable", String.valueOf(Boolean.TRUE));
-        infoItemSelectorPortletURL.setParameter(
-                "showScheduled", String.valueOf(Boolean.TRUE));
-        infoItemSelectorPortletURL.setPortletMode(PortletMode.VIEW);
-        infoItemSelectorPortletURL.setWindowState(LiferayWindowState.POP_UP);
+		infoItemSelectorPortletURL.setParameter(
+			"typeSelection", BookmarksEntry.class.getName());
+		infoItemSelectorPortletURL.setParameter(
+			"showNonindexable", String.valueOf(Boolean.TRUE));
+		infoItemSelectorPortletURL.setParameter(
+			"showScheduled", String.valueOf(Boolean.TRUE));
+		infoItemSelectorPortletURL.setPortletMode(PortletMode.VIEW);
+		infoItemSelectorPortletURL.setWindowState(LiferayWindowState.POP_UP);
 
-        return infoItemSelectorPortletURL;
-    }
+		return infoItemSelectorPortletURL;
+	}
 
 }

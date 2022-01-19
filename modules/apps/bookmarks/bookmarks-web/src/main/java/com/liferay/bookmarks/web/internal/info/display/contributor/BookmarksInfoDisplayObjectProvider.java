@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import java.util.Locale;
 
 /**
- * @author
+ * @author Yang Cao
  */
 public class BookmarksInfoDisplayObjectProvider
 	implements InfoDisplayObjectProvider<BookmarksEntry> {
@@ -38,8 +38,9 @@ public class BookmarksInfoDisplayObjectProvider
 	public BookmarksInfoDisplayObjectProvider(BookmarksEntry bookmarksEntry)
 		throws PortalException {
 
-		_assetEntry = _getAssetEntry(bookmarksEntry);
 		_bookmarksEntry = bookmarksEntry;
+
+		_assetEntry = _getAssetEntry(bookmarksEntry);
 	}
 
 	@Override
@@ -95,7 +96,7 @@ public class BookmarksInfoDisplayObjectProvider
 
 	@Override
 	public String getURLTitle(Locale locale) {
-		AssetRenderer assetRenderer = _assetEntry.getAssetRenderer();
+		AssetRenderer<?> assetRenderer = _assetEntry.getAssetRenderer();
 
 		return assetRenderer.getUrlTitle(locale);
 	}
@@ -103,11 +104,10 @@ public class BookmarksInfoDisplayObjectProvider
 	private AssetEntry _getAssetEntry(BookmarksEntry bookmarksEntry)
 		throws PortalException {
 
-		long classNameId = PortalUtil.getClassNameId(BookmarksEntry.class);
-
-		AssetRendererFactory assetRendererFactory =
+		AssetRendererFactory<?> assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.
-				getAssetRendererFactoryByClassNameId(classNameId);
+				getAssetRendererFactoryByClassNameId(
+					PortalUtil.getClassNameId(BookmarksEntry.class));
 
 		return assetRendererFactory.getAssetEntry(
 			BookmarksEntry.class.getName(), bookmarksEntry.getEntryId());

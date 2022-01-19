@@ -15,17 +15,14 @@
 package com.liferay.bookmarks.web.internal.constants;
 
 /**
- * @author
+ * @author Yang Cao
  */
 public class BookmarksWebKeys {
 
-    public static final String BOOKMARK_ENTRIES_DISPLAY_CONTEXT =
-            "BOOKMARK_ENTRIES_DISPLAY_CONTEXT";
+	public static final String BOOKMARK_ENTRIES_DISPLAY_CONTEXT =
+		"BOOKMARK_ENTRIES_DISPLAY_CONTEXT";
 
-    public static final String BOOKMARKS_ITEM_SELECTOR_DISPLAY_CONTEXT =
-            "BOOKMARKS_ITEM_SELECTOR_DISPLAY_CONTEXT";
-
-//    public static final String BLOGS_ITEM_SELECTOR_HELPER =
-//            "BLOGS_ITEM_SELECTOR_HELPER";
+	public static final String BOOKMARKS_ITEM_SELECTOR_DISPLAY_CONTEXT =
+		"BOOKMARKS_ITEM_SELECTOR_DISPLAY_CONTEXT";
 
 }

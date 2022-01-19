@@ -24,27 +24,29 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 
 /**
- * @author
+ * @author Yang Cao
  */
 @Component(service = ItemSelectorCriterionHandler.class)
 public class BookmarksItemSelectorCriterionHandler
-        extends BaseItemSelectorCriterionHandler<BookmarksItemSelectorCriterion> {
+	extends BaseItemSelectorCriterionHandler<BookmarksItemSelectorCriterion> {
 
-    @Override
-    public Class<BookmarksItemSelectorCriterion> getItemSelectorCriterionClass() {
-        return BookmarksItemSelectorCriterion.class;
-    }
+	@Override
+	public Class<BookmarksItemSelectorCriterion>
+		getItemSelectorCriterionClass() {
 
-    @Activate
-    @Override
-    protected void activate(BundleContext bundleContext) {
-        super.activate(bundleContext);
-    }
+		return BookmarksItemSelectorCriterion.class;
+	}
 
-    @Deactivate
-    @Override
-    protected void deactivate() {
-        super.deactivate();
-    }
+	@Activate
+	@Override
+	protected void activate(BundleContext bundleContext) {
+		super.activate(bundleContext);
+	}
+
+	@Deactivate
+	@Override
+	protected void deactivate() {
+		super.deactivate();
+	}
 
 }

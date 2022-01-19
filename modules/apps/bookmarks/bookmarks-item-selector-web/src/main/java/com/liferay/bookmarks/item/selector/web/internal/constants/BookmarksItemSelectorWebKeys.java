@@ -15,11 +15,11 @@
 package com.liferay.bookmarks.item.selector.web.internal.constants;
 
 /**
- * @author
+ * @author Yang Cao
  */
 public class BookmarksItemSelectorWebKeys {
 
-    public static final String BOOKMARKS_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT =
-            "BOOKMARKS_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT";
+	public static final String BOOKMARKS_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT =
+		"BOOKMARKS_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT";
 
 }

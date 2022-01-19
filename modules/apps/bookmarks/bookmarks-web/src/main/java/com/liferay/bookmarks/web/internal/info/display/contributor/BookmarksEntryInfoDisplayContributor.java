@@ -18,15 +18,14 @@ import com.liferay.asset.info.display.field.AssetEntryInfoDisplayFieldProvider;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.service.BookmarksEntryService;
-//import com.liferay.bookmarks.service.BookmarksEntryLocalServiceImpl;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayField;
 import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
 import com.liferay.info.display.field.ExpandoInfoDisplayFieldProvider;
 import com.liferay.info.display.field.InfoDisplayFieldProvider;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -35,95 +34,94 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author
+ * @author Yang Cao
  */
 @Component(service = InfoDisplayContributor.class)
 public class BookmarksEntryInfoDisplayContributor
-        implements InfoDisplayContributor<BookmarksEntry> {
+	implements InfoDisplayContributor<BookmarksEntry> {
 
-    @Override
-    public String getClassName() {
-        return BookmarksEntry.class.getName();
-    }
+	@Override
+	public String getClassName() {
+		return BookmarksEntry.class.getName();
+	}
 
-    @Override
-    public Set<InfoDisplayField> getInfoDisplayFields(
-            long classTypeId, Locale locale)
-            throws PortalException {
+	@Override
+	public Set<InfoDisplayField> getInfoDisplayFields(
+			long classTypeId, Locale locale)
+		throws PortalException {
 
-        Set<InfoDisplayField> infoDisplayFields =
-                _infoDisplayFieldProvider.getContributorInfoDisplayFields(
-                        locale, AssetEntry.class.getName(), BookmarksEntry.class.getName());
+		Set<InfoDisplayField> infoDisplayFields =
+			_infoDisplayFieldProvider.getContributorInfoDisplayFields(
+				locale, AssetEntry.class.getName(),
+				BookmarksEntry.class.getName());
 
-        infoDisplayFields.addAll(
-                _expandoInfoDisplayFieldProvider.
-                        getContributorExpandoInfoDisplayFields(
-                                BookmarksEntry.class.getName(), locale));
+		infoDisplayFields.addAll(
+			_expandoInfoDisplayFieldProvider.
+				getContributorExpandoInfoDisplayFields(
+					BookmarksEntry.class.getName(), locale));
 
-        return infoDisplayFields;
-    }
+		return infoDisplayFields;
+	}
 
-    @Override
-    public Map<String, Object> getInfoDisplayFieldsValues(
-            BookmarksEntry bookmarksEntry, Locale locale)
-            throws PortalException {
+	@Override
+	public Map<String, Object> getInfoDisplayFieldsValues(
+			BookmarksEntry bookmarksEntry, Locale locale)
+		throws PortalException {
 
-        Map<String, Object> infoDisplayFieldValues = new HashMap<>();
+		return HashMapBuilder.<String, Object>putAll(
+			_assetEntryInfoDisplayFieldProvider.
+				getAssetEntryInfoDisplayFieldsValues(
+					BookmarksEntry.class.getName(), bookmarksEntry.getEntryId(),
+					locale)
+		).putAll(
+			_expandoInfoDisplayFieldProvider.
+				getContributorExpandoInfoDisplayFieldsValues(
+					BookmarksEntry.class.getName(), bookmarksEntry, locale)
+		).putAll(
+			_infoDisplayFieldProvider.getContributorInfoDisplayFieldsValues(
+				BookmarksEntry.class.getName(), bookmarksEntry, locale)
+		).build();
+	}
 
-        infoDisplayFieldValues.putAll(
-                _assetEntryInfoDisplayFieldProvider.
-                        getAssetEntryInfoDisplayFieldsValues(
-                                BookmarksEntry.class.getName(), bookmarksEntry.getEntryId(),
-                                locale));
-        infoDisplayFieldValues.putAll(
-                _expandoInfoDisplayFieldProvider.
-                        getContributorExpandoInfoDisplayFieldsValues(
-                                BookmarksEntry.class.getName(), bookmarksEntry, locale));
-        infoDisplayFieldValues.putAll(
-                _infoDisplayFieldProvider.getContributorInfoDisplayFieldsValues(
-                        BookmarksEntry.class.getName(), bookmarksEntry, locale));
+	@Override
+	public InfoDisplayObjectProvider<BookmarksEntry>
+			getInfoDisplayObjectProvider(long classPK)
+		throws PortalException {
 
-        return infoDisplayFieldValues;
-    }
+		BookmarksEntry bookmarksEntry = _bookmarksEntryService.getEntry(
+			classPK);
 
-    @Override
-    public InfoDisplayObjectProvider getInfoDisplayObjectProvider(
-            long groupId, String urlTitle)
-            throws PortalException {
+		if (bookmarksEntry.isInTrash()) {
+			return null;
+		}
 
-        return getInfoDisplayObjectProvider(Long.valueOf(urlTitle));
-    }
+		return new BookmarksInfoDisplayObjectProvider(bookmarksEntry);
+	}
 
-    @Override
-    public InfoDisplayObjectProvider<BookmarksEntry> getInfoDisplayObjectProvider(
-            long classPK)
-            throws PortalException {
+	@Override
+	public InfoDisplayObjectProvider<BookmarksEntry>
+			getInfoDisplayObjectProvider(long groupId, String urlTitle)
+		throws PortalException {
 
-        BookmarksEntry bookmarksEntry = _bookmarksEntryService.getEntry(classPK);
+		return getInfoDisplayObjectProvider(Long.valueOf(urlTitle));
+	}
 
-        if (bookmarksEntry.isInTrash()) {
-            return null;
-        }
+	@Override
+	public String getInfoURLSeparator() {
+		return "/b/";
+	}
 
-        return new BookmarksInfoDisplayObjectProvider(bookmarksEntry);
-    }
+	@Reference
+	private AssetEntryInfoDisplayFieldProvider
+		_assetEntryInfoDisplayFieldProvider;
 
-    @Override
-    public String getInfoURLSeparator() {
-        return "/b/";
-    }
+	@Reference
+	private BookmarksEntryService _bookmarksEntryService;
 
-    @Reference
-    private AssetEntryInfoDisplayFieldProvider
-            _assetEntryInfoDisplayFieldProvider;
+	@Reference
+	private ExpandoInfoDisplayFieldProvider _expandoInfoDisplayFieldProvider;
 
-    @Reference
-    private BookmarksEntryService _bookmarksEntryService;
-
-    @Reference
-    private ExpandoInfoDisplayFieldProvider _expandoInfoDisplayFieldProvider;
-
-    @Reference
-    private InfoDisplayFieldProvider _infoDisplayFieldProvider;
+	@Reference
+	private InfoDisplayFieldProvider _infoDisplayFieldProvider;
 
 }

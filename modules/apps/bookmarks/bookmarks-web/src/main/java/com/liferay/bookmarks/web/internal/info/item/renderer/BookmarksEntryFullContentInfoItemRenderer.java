@@ -18,7 +18,6 @@ import com.liferay.bookmarks.constants.BookmarksWebKeys;
 import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.info.item.renderer.InfoItemRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Locale;
 
@@ -31,43 +30,45 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author
+ * @author Yang Cao
  */
 @Component(service = InfoItemRenderer.class)
 public class BookmarksEntryFullContentInfoItemRenderer
-        implements InfoItemRenderer<BookmarksEntry> {
+	implements InfoItemRenderer<BookmarksEntry> {
 
-    @Override
-    public String getLabel(Locale locale) {
-        return LanguageUtil.get(locale, "title");
-    }
+	@Override
+	public String getLabel(Locale locale) {
+		return LanguageUtil.get(locale, "title");
+	}
 
-    @Override
-    public void render(
-            BookmarksEntry entry, HttpServletRequest httpServletRequest,
-            HttpServletResponse httpServletResponse) {
+	@Override
+	public void render(
+		BookmarksEntry entry, HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
-        httpServletRequest.setAttribute(BookmarksWebKeys.BOOKMARKS_ENTRY, entry);
+		httpServletRequest.setAttribute(
+			BookmarksWebKeys.BOOKMARKS_ENTRY, entry);
 
-        RequestDispatcher requestDispatcher =
-                _servletContext.getRequestDispatcher(
-                        "/bookmarks/info/item/renderer/full_content.jsp");
+		RequestDispatcher requestDispatcher =
+			_servletContext.getRequestDispatcher(
+				"/bookmarks/info/item/renderer/full_content.jsp");
 
-        try {
-            requestDispatcher.include(httpServletRequest, httpServletResponse);
-        }
-        catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
+		try {
+			requestDispatcher.include(httpServletRequest, httpServletResponse);
+		}
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
+		}
+	}
 
-    @Reference(
-            target = "(osgi.web.symbolicname=com.liferay.bookmarks.web)", unbind = "-"
-    )
-    public void setServletContext(ServletContext servletContext) {
-        _servletContext = servletContext;
-    }
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.bookmarks.web)",
+		unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		_servletContext = servletContext;
+	}
 
-    private ServletContext _servletContext;
+	private ServletContext _servletContext;
 
 }

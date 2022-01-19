@@ -15,7 +15,7 @@
 package com.liferay.bookmarks.item.selector.constants;
 
 /**
- * @author
+ * @author Yang Cao
  */
 public class BookmarksItemSelectorViewConstants {
 

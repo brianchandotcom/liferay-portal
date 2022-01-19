@@ -17,7 +17,7 @@ package com.liferay.bookmarks.item.selector.criterion;
 import com.liferay.item.selector.BaseItemSelectorCriterion;
 
 /**
- * @author
+ * @author Yang Cao
  */
 public class BookmarksItemSelectorCriterion extends BaseItemSelectorCriterion {
 }

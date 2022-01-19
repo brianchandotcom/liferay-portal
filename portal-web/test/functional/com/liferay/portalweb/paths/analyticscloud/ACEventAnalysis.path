@@ -72,7 +72,7 @@
 </tr>
 <tr>
 	<td>VIEW_ANALYSIS_INFORMATION</td>
-	<td>//span[text()='${key_informationValue}']</td>
+	<td>//tr//*[text()='${key_informationValue}']</td>
 	<td></td>
 </tr>
 <tr>

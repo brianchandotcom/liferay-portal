@@ -148,6 +148,29 @@ definition {
 		Button.clickCancel();
 	}
 
+	macro gotoBulkExportTranslation {
+		for (var exportTranslationEntry : list "${exportTranslationEntry}") {
+			LexiconEntry.selectEntry(rowEntry = "${exportTranslationEntry}");
+		}
+
+		if (isSet(options)) {
+			Click(locator1 = "Icon#TOOLBAR_ELLIPSIS");
+
+			MenuItem.clickNoError(menuItem = "Export for Translation");
+		}
+		else {
+			Click(locator1 = "Icon#EXPORT_FOR_TRANSLATION");
+		}
+	}
+
+	macro gotoBulkImportTranslation {
+		MouseOver.mouseOverNotVisible(locator1 = "Portlet#OPTIONS_ICON");
+
+		Click(locator1 = "Portlet#OPTIONS_ICON");
+
+		MenuItem.click(menuItem = "Import Translation");
+	}
+
 	macro gotoExportTranslation {
 		if (isSet(pageName)) {
 			WaitForPageLoad();

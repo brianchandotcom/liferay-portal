@@ -58,18 +58,6 @@ definition {
 		WaitForSPARefresh();
 	}
 
-	macro addObjectLongFieldEntryViaUI {
-		LexiconEntry.gotoAdd();
-
-		Type(
-			locator1 = "ObjectAdmin#ENTRY_LONG_VALUE_FIELD",
-			value1 = "${entryValue}");
-
-		Button.clickSave();
-
-		WaitForSPARefresh();
-	}
-
 	macro addObjectFieldViaAPI {
 		JSONObject.addObjectField(
 			fieldLabelName = "${fieldLabelName}",
@@ -132,6 +120,18 @@ definition {
 		Button.clickSave();
 
 		WaitForPageLoad();
+	}
+
+	macro addObjectLongFieldEntryViaUI {
+		LexiconEntry.gotoAdd();
+
+		Type(
+			locator1 = "ObjectAdmin#ENTRY_LONG_VALUE_FIELD",
+			value1 = "${entryValue}");
+
+		Button.clickSave();
+
+		WaitForSPARefresh();
 	}
 
 	macro addObjectPicklistFieldEntryViaUI {

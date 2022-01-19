@@ -381,6 +381,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 					_ddmStructureLocalService, _ddmTemplateLocalService,
 					documentsStringUtilReplaceValues, serviceContext,
 					siteNavigationMenuItemSettingsBuilder));
+
+			Map<String, Layout> layouts = _invoke(
+				() -> _addLayouts(serviceContext));
+
 			_invoke(
 				() -> _addLayoutPageTemplates(
 					assetListEntryIdsStringUtilReplaceValues,
@@ -415,9 +419,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 						documentsStringUtilReplaceValues, serviceContext));
 
 			_invoke(
-				() -> _addLayouts(
+				() -> _addLayoutsContent(
 					assetListEntryIdsStringUtilReplaceValues,
-					documentsStringUtilReplaceValues,
+					documentsStringUtilReplaceValues, layouts,
 					remoteAppEntryIdsStringUtilReplaceValues, serviceContext,
 					siteNavigationMenuItemSettingsBuilder.build()));
 		}
@@ -1497,10 +1501,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			siteNavigationMenuItemSettingsBuilder);
 	}
 
-	private void _addLayout(
-			Map<String, String> assetListEntryIdsStringUtilReplaceValues,
-			Map<String, String> documentsStringUtilReplaceValues,
-			Map<String, String> remoteAppEntryIdsStringUtilReplaceValues,
+	private Layout _addLayout(
 			String resourcePath, ServiceContext serviceContext)
 		throws Exception {
 
@@ -1513,7 +1514,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			type = LayoutConstants.TYPE_PORTLET;
 		}
 
-		Layout layout = _layoutLocalService.addLayout(
+		return _layoutLocalService.addLayout(
 			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
 			jsonObject.getBoolean("private"),
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
@@ -1524,6 +1525,17 @@ public class BundleSiteInitializer implements SiteInitializer {
 			_toMap(jsonObject.getString("robots_i18n")), type, null,
 			jsonObject.getBoolean("hidden"), jsonObject.getBoolean("system"),
 			_toMap(jsonObject.getString("friendlyURL_i18n")), serviceContext);
+	}
+
+	private void _addLayoutContent(
+			Map<String, String> assetListEntryIdsStringUtilReplaceValues,
+			Map<String, String> documentsStringUtilReplaceValues, Layout layout,
+			Map<String, String> remoteAppEntryIdsStringUtilReplaceValues,
+			String resourcePath, ServiceContext serviceContext)
+		throws Exception {
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			_read(resourcePath + "page.json"));
 
 		String json = _read(resourcePath + "page-definition.json");
 
@@ -1543,6 +1555,12 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		JSONObject pageDefinitionJSONObject = JSONFactoryUtil.createJSONObject(
 			json);
+
+		String type = StringUtil.toLowerCase(jsonObject.getString("type"));
+
+		if (Objects.equals(type, "widget")) {
+			type = LayoutConstants.TYPE_PORTLET;
+		}
 
 		Layout draftLayout = layout.fetchDraftLayout();
 
@@ -1699,21 +1717,17 @@ public class BundleSiteInitializer implements SiteInitializer {
 			zipWriter.getFile(), false);
 	}
 
-	private void _addLayouts(
-			Map<String, String> assetListEntryIdsStringUtilReplaceValues,
-			Map<String, String> documentsStringUtilReplaceValues,
-			Map<String, String> remoteAppEntryIdsStringUtilReplaceValues,
-			ServiceContext serviceContext,
-			Map<String, SiteNavigationMenuItemSetting>
-				siteNavigationMenuItemSettings)
+	private Map<String, Layout> _addLayouts(ServiceContext serviceContext)
 		throws Exception {
 
 		Set<String> resourcePaths = _servletContext.getResourcePaths(
 			"/site-initializer/layouts");
 
 		if (SetUtil.isEmpty(resourcePaths)) {
-			return;
+			return new HashMap<>();
 		}
+
+		Map<String, Layout> layouts = new HashMap<>();
 
 		Set<String> sortedResourcePaths = new TreeSet<>(
 			new NaturalOrderStringComparator());
@@ -1724,12 +1738,31 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		for (String resourcePath : resourcePaths) {
 			if (resourcePath.endsWith("/")) {
-				_addLayout(
-					assetListEntryIdsStringUtilReplaceValues,
-					documentsStringUtilReplaceValues,
-					remoteAppEntryIdsStringUtilReplaceValues, resourcePath,
-					serviceContext);
+				Layout layout = _addLayout(resourcePath, serviceContext);
+
+				layouts.put(resourcePath, layout);
 			}
+		}
+
+		return layouts;
+	}
+
+	private void _addLayoutsContent(
+			Map<String, String> assetListEntryIdsStringUtilReplaceValues,
+			Map<String, String> documentsStringUtilReplaceValues,
+			Map<String, Layout> layouts,
+			Map<String, String> remoteAppEntryIdsStringUtilReplaceValues,
+			ServiceContext serviceContext,
+			Map<String, SiteNavigationMenuItemSetting>
+				siteNavigationMenuItemSettings)
+		throws Exception {
+
+		for (Map.Entry<String, Layout> entry : layouts.entrySet()) {
+			_addLayoutContent(
+				assetListEntryIdsStringUtilReplaceValues,
+				documentsStringUtilReplaceValues, entry.getValue(),
+				remoteAppEntryIdsStringUtilReplaceValues, entry.getKey(),
+				serviceContext);
 		}
 
 		_addSiteNavigationMenus(serviceContext, siteNavigationMenuItemSettings);

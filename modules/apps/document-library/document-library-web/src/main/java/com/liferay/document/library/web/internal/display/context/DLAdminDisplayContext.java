@@ -501,30 +501,30 @@ public class DLAdminDisplayContext {
 			}
 		}
 
+		String emptyResultsMessage = null;
+
+		if (fileEntryTypeId >= 0) {
+			emptyResultsMessage = LanguageUtil.format(
+				_httpServletRequest,
+				"there-are-no-documents-or-media-files-of-type-x",
+				HtmlUtil.escape(dlFileEntryTypeName));
+		}
+		else {
+			emptyResultsMessage =
+				"there-are-no-documents-or-media-files-in-this-folder";
+		}
+
 		SearchContainer<RepositoryEntry> dlSearchContainer =
 			new SearchContainer<>(
 				_liferayPortletRequest, null, null, "curEntry",
 				_dlPortletInstanceSettings.getEntriesPerPage(), portletURL,
-				null, null);
-
-		if (fileEntryTypeId >= 0) {
-			dlSearchContainer.setEmptyResultsMessage(
-				LanguageUtil.format(
-					_httpServletRequest,
-					"there-are-no-documents-or-media-files-of-type-x",
-					HtmlUtil.escape(dlFileEntryTypeName)));
-		}
-		else {
-			dlSearchContainer.setEmptyResultsMessage(
-				"there-are-no-documents-or-media-files-in-this-folder");
-		}
+				null, emptyResultsMessage);
 
 		dlSearchContainer.setHeaderNames(
 			ListUtil.fromArray(
 				_dlPortletInstanceSettingsHelper.getEntryColumns()));
 
-		String orderByCol = getOrderByCol();
-		String orderByType = getOrderByType();
+		dlSearchContainer.setOrderByCol(getOrderByCol());
 
 		boolean orderByModel = false;
 
@@ -534,15 +534,14 @@ public class DLAdminDisplayContext {
 
 		OrderByComparator<RepositoryEntry> orderByComparator =
 			DLUtil.getRepositoryModelOrderByComparator(
-				orderByCol, orderByType, orderByModel);
+				getOrderByCol(), getOrderByType(), orderByModel);
 
 		if (navigation.equals("recent")) {
 			orderByComparator = new RepositoryModelModifiedDateComparator();
 		}
 
-		dlSearchContainer.setOrderByCol(orderByCol);
 		dlSearchContainer.setOrderByComparator(orderByComparator);
-		dlSearchContainer.setOrderByType(orderByType);
+		dlSearchContainer.setOrderByType(getOrderByType());
 
 		List<RepositoryEntry> results = new ArrayList<>();
 
@@ -561,25 +560,24 @@ public class DLAdminDisplayContext {
 			}
 
 			int type = Sort.STRING_TYPE;
-			String fieldName = orderByCol;
+			String fieldName = getOrderByCol();
 
-			if (orderByCol.equals("creationDate")) {
+			if (Objects.equals(getOrderByCol(), "creationDate")) {
 				fieldName = Field.CREATE_DATE;
 				type = Sort.LONG_TYPE;
 			}
-			else if (orderByCol.equals("modifiedDate")) {
+			else if (Objects.equals(getOrderByCol(), "modifiedDate")) {
 				fieldName = Field.MODIFIED_DATE;
 				type = Sort.LONG_TYPE;
 			}
-			else if (orderByCol.equals("size")) {
+			else if (Objects.equals(getOrderByCol(), "size")) {
 				type = Sort.LONG_TYPE;
 			}
 
-			Sort sort = new Sort(
-				fieldName, type,
-				!StringUtil.equalsIgnoreCase(orderByType, "asc"));
-
-			searchContext.setSorts(sort);
+			searchContext.setSorts(
+				new Sort(
+					fieldName, type,
+					!StringUtil.equalsIgnoreCase(getOrderByType(), "asc")));
 
 			searchContext.setStart(dlSearchContainer.getStart());
 
@@ -683,7 +681,7 @@ public class DLAdminDisplayContext {
 
 				OrderByComparator<FileEntry> fileEntryOrderByComparator =
 					DLUtil.getRepositoryModelOrderByComparator(
-						orderByCol, orderByType, orderByModel);
+						getOrderByCol(), getOrderByType(), orderByModel);
 
 				int dlAppStatus = status;
 
@@ -728,10 +726,10 @@ public class DLAdminDisplayContext {
 		searchContext.setAttribute("searchRepositoryId", searchRepositoryId);
 		searchContext.setEnd(searchContainer.getEnd());
 
-		long searchFolderId = ParamUtil.getLong(
-			_httpServletRequest, "searchFolderId");
-
-		searchContext.setFolderIds(new long[] {searchFolderId});
+		searchContext.setFolderIds(
+			new long[] {
+				ParamUtil.getLong(_httpServletRequest, "searchFolderId")
+			});
 
 		searchContext.setIncludeDiscussions(true);
 		searchContext.setIncludeInternalAssetCategories(true);

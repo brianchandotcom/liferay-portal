@@ -392,11 +392,6 @@ public class DDLViewRecordsDisplayContext {
 			getDDLRecordOrderByComparator(getOrderByCol(), getOrderByType()));
 		recordSearch.setOrderByType(getOrderByType());
 
-		if (!_user.isDefaultUser()) {
-			recordSearch.setRowChecker(
-				new EmptyOnClickRowChecker(_liferayPortletResponse));
-		}
-
 		DisplayTerms displayTerms = recordSearch.getDisplayTerms();
 
 		int status = WorkflowConstants.STATUS_APPROVED;
@@ -422,6 +417,11 @@ public class DDLViewRecordsDisplayContext {
 
 			recordSearch.setResultsAndTotal(
 				DDLRecordLocalServiceUtil.searchDDLRecords(searchContext));
+		}
+
+		if (!_user.isDefaultUser()) {
+			recordSearch.setRowChecker(
+				new EmptyOnClickRowChecker(_liferayPortletResponse));
 		}
 
 		return recordSearch;

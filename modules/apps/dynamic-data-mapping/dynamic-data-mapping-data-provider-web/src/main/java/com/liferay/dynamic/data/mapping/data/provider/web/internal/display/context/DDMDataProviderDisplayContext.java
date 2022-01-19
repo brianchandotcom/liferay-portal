@@ -122,12 +122,9 @@ public class DDMDataProviderDisplayContext {
 			return _ddmDataProviderInstance;
 		}
 
-		long dataProviderInstanceId = ParamUtil.getLong(
-			_renderRequest, "dataProviderInstanceId");
-
 		_ddmDataProviderInstance =
 			_ddmDataProviderInstanceService.fetchDataProviderInstance(
-				dataProviderInstanceId);
+				ParamUtil.getLong(_renderRequest, "dataProviderInstanceId"));
 
 		return _ddmDataProviderInstance;
 	}
@@ -189,12 +186,9 @@ public class DDMDataProviderDisplayContext {
 			DDMFormValues ddmFormValues = _deserialize(
 				ddmDataProviderInstance.getDefinition(), ddmForm);
 
-			Set<String> passwordDDMFormFieldNames =
-				DDMDataProviderPortletUtil.getDDMFormFieldNamesByType(
-					ddmForm, "password");
-
 			_obfuscateDDMFormFieldValues(
-				passwordDDMFormFieldNames,
+				DDMDataProviderPortletUtil.getDDMFormFieldNamesByType(
+					ddmForm, "password"),
 				ddmFormValues.getDDMFormFieldValues());
 
 			ddmFormRenderingContext.setDDMFormValues(ddmFormValues);
@@ -268,11 +262,8 @@ public class DDMDataProviderDisplayContext {
 			return StringPool.BLANK;
 		}
 
-		HttpServletRequest httpServletRequest =
-			_ddmDataProviderRequestHelper.getRequest();
-
 		return LanguageUtil.get(
-			httpServletRequest,
+			_ddmDataProviderRequestHelper.getRequest(),
 			"create-a-data-provider-to-automatically-populate-your-select-" +
 				"fields");
 	}
@@ -280,11 +271,9 @@ public class DDMDataProviderDisplayContext {
 	public String getEmptyResultsMessage() {
 		SearchContainer<?> search = getSearch();
 
-		HttpServletRequest httpServletRequest =
-			_ddmDataProviderRequestHelper.getRequest();
-
 		return LanguageUtil.get(
-			httpServletRequest, search.getEmptyResultsMessage());
+			_ddmDataProviderRequestHelper.getRequest(),
+			search.getEmptyResultsMessage());
 	}
 
 	public List<DropdownItem> getFilterItemsDropdownItems() {

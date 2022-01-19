@@ -58,11 +58,10 @@ public class DispatchTriggerDisplayContext extends BaseDisplayContext {
 	public String getDispatchTaskExecutorName(
 		String dispatchTaskExecutorType, Locale locale) {
 
-		String name =
+		return LanguageUtil.get(
+			locale,
 			_dispatchTaskExecutorRegistry.fetchDispatchTaskExecutorName(
-				dispatchTaskExecutorType);
-
-		return LanguageUtil.get(locale, name);
+				dispatchTaskExecutorType));
 	}
 
 	public Set<String> getDispatchTaskExecutorTypes() {
@@ -148,18 +147,16 @@ public class DispatchTriggerDisplayContext extends BaseDisplayContext {
 			null, null);
 
 		_searchContainer.setEmptyResultsMessage("no-items-were-found");
-
 		_searchContainer.setOrderByCol(getOrderByCol());
 		_searchContainer.setOrderByComparator(null);
 		_searchContainer.setOrderByType(getOrderByType());
-		_searchContainer.setRowChecker(getRowChecker());
-
 		_searchContainer.setResultsAndTotal(
 			() -> _dispatchTriggerLocalService.getDispatchTriggers(
 				dispatchRequestHelper.getCompanyId(),
 				_searchContainer.getStart(), _searchContainer.getEnd()),
 			_dispatchTriggerLocalService.getDispatchTriggersCount(
 				dispatchRequestHelper.getCompanyId()));
+		_searchContainer.setRowChecker(getRowChecker());
 
 		return _searchContainer;
 	}

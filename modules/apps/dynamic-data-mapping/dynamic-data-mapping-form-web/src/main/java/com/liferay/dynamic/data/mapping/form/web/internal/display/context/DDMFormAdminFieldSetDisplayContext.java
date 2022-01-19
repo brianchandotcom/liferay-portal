@@ -227,11 +227,8 @@ public class DDMFormAdminFieldSetDisplayContext
 			return StringPool.BLANK;
 		}
 
-		HttpServletRequest httpServletRequest =
-			ddmFormAdminRequestHelper.getRequest();
-
 		return LanguageUtil.get(
-			httpServletRequest,
+			ddmFormAdminRequestHelper.getRequest(),
 			"accelerate-form-creation-with-reusable-field-groupings");
 	}
 
@@ -362,16 +359,6 @@ public class DDMFormAdminFieldSetDisplayContext
 		FieldSetSearch fieldSetSearch = new FieldSetSearch(
 			renderRequest, portletURL);
 
-		String orderByCol = getOrderByCol();
-		String orderByType = getOrderByType();
-
-		OrderByComparator<DDMStructure> orderByComparator =
-			_getDDMStructureOrderByComparator(orderByCol, orderByType);
-
-		fieldSetSearch.setOrderByCol(orderByCol);
-		fieldSetSearch.setOrderByComparator(orderByComparator);
-		fieldSetSearch.setOrderByType(orderByType);
-
 		if (fieldSetSearch.isSearch()) {
 			fieldSetSearch.setEmptyResultsMessage("no-element-sets-were-found");
 		}
@@ -379,7 +366,11 @@ public class DDMFormAdminFieldSetDisplayContext
 			fieldSetSearch.setEmptyResultsMessage("there-are-no-element-sets");
 		}
 
-		fieldSetSearch.setRowChecker(new FieldSetRowChecker(renderResponse));
+		fieldSetSearch.setOrderByCol(getOrderByCol());
+		fieldSetSearch.setOrderByComparator(
+			_getDDMStructureOrderByComparator(
+				getOrderByCol(), getOrderByType()));
+		fieldSetSearch.setOrderByType(getOrderByType());
 
 		FieldSetSearchTerms fieldSetSearchTerms =
 			(FieldSetSearchTerms)fieldSetSearch.getSearchTerms();
@@ -400,6 +391,8 @@ public class DDMFormAdminFieldSetDisplayContext
 				fieldSetSearchTerms.getKeywords(),
 				DDMStructureConstants.TYPE_FRAGMENT,
 				WorkflowConstants.STATUS_ANY));
+
+		fieldSetSearch.setRowChecker(new FieldSetRowChecker(renderResponse));
 
 		return fieldSetSearch;
 	}

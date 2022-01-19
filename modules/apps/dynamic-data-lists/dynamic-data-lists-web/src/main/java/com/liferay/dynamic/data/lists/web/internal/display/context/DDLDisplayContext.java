@@ -114,9 +114,7 @@ public class DDLDisplayContext {
 			return;
 		}
 
-		DDLRecordSet recordSet = getRecordSet();
-
-		if ((recordSet == null) || !_hasViewPermission()) {
+		if ((getRecordSet() == null) || !_hasViewPermission()) {
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
 		}
@@ -478,7 +476,6 @@ public class DDLDisplayContext {
 			getDDLRecordSetOrderByComparator(
 				getOrderByCol(), getOrderByType()));
 		recordSetSearch.setOrderByType(getOrderByType());
-
 		recordSetSearch.setResultsAndTotal(
 			() -> _ddlRecordSetLocalService.search(
 				_ddlRequestHelper.getCompanyId(),

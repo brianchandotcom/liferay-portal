@@ -166,16 +166,14 @@ public class GroupSelectorDisplayContext {
 	private PortletURL _getItemSelectorURL() {
 		ItemSelector itemSelector = _getItemSelector();
 
-		String itemSelectedEventName = ParamUtil.getString(
-			_liferayPortletRequest, "itemSelectedEventName");
-
 		List<ItemSelectorCriterion> itemSelectorCriteria =
 			itemSelector.getItemSelectorCriteria(
 				_liferayPortletRequest.getParameterMap());
 
 		return itemSelector.getItemSelectorURL(
 			RequestBackedPortletURLFactoryUtil.create(_liferayPortletRequest),
-			itemSelectedEventName,
+			ParamUtil.getString(
+				_liferayPortletRequest, "itemSelectedEventName"),
 			itemSelectorCriteria.toArray(new ItemSelectorCriterion[0]));
 	}
 

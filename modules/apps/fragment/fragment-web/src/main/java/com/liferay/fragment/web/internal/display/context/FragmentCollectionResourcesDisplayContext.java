@@ -74,9 +74,6 @@ public class FragmentCollectionResourcesDisplayContext {
 		SearchContainer<FileEntry> searchContainer = new SearchContainer(
 			_renderRequest, portletURL, null, "there-are-no-resources");
 
-		searchContainer.setRowChecker(
-			new EmptyOnClickRowChecker(_renderResponse));
-
 		searchContainer.setResultsAndTotal(
 			() -> PortletFileRepositoryUtil.getPortletFileEntries(
 				_themeDisplay.getScopeGroupId(), _getFolderId(),
@@ -85,6 +82,8 @@ public class FragmentCollectionResourcesDisplayContext {
 				searchContainer.getOrderByComparator()),
 			PortletFileRepositoryUtil.getPortletFileEntriesCount(
 				_themeDisplay.getScopeGroupId(), _getFolderId()));
+		searchContainer.setRowChecker(
+			new EmptyOnClickRowChecker(_renderResponse));
 
 		_searchContainer = searchContainer;
 

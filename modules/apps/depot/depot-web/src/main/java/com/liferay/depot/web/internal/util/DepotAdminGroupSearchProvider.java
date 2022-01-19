@@ -86,6 +86,9 @@ public class DepotAdminGroupSearchProvider {
 
 		GroupSearch groupSearch = new GroupSearch(portletRequest, portletURL);
 
+		groupSearch.setEmptyResultsMessage(
+			LanguageUtil.get(
+				portletRequest.getLocale(), "no-asset-libraries-were-found"));
 		groupSearch.setResultsAndTotal(
 			() -> {
 				List<DepotEntry> depotEntries =
@@ -103,10 +106,6 @@ public class DepotAdminGroupSearchProvider {
 			},
 			_depotEntryService.getGroupConnectedDepotEntriesCount(
 				themeDisplay.getScopeGroupId()));
-
-		groupSearch.setEmptyResultsMessage(
-			LanguageUtil.get(
-				portletRequest.getLocale(), "no-asset-libraries-were-found"));
 
 		return groupSearch;
 	}

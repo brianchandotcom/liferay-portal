@@ -134,24 +134,20 @@ public class ExportTemplatesToolbarDisplayContext
 			new ExportImportConfigurationNameComparator(
 				Objects.equals(getOrderByType(), "asc")));
 		searchContainer.setOrderByType(getOrderByType());
-
-		int exportImportConfigurationType =
-			ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT;
-
 		searchContainer.setResultsAndTotal(
 			() ->
 				ExportImportConfigurationLocalServiceUtil.
 					getExportImportConfigurations(
 						company.getCompanyId(), liveGroupId,
 						exportImportConfigurationSearchTerms.getKeywords(),
-						exportImportConfigurationType,
+						ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
 						searchContainer.getStart(), searchContainer.getEnd(),
 						searchContainer.getOrderByComparator()),
 			ExportImportConfigurationLocalServiceUtil.
 				getExportImportConfigurationsCount(
 					company.getCompanyId(), liveGroupId,
 					exportImportConfigurationSearchTerms.getKeywords(),
-					exportImportConfigurationType));
+					ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT));
 
 		return searchContainer;
 	}

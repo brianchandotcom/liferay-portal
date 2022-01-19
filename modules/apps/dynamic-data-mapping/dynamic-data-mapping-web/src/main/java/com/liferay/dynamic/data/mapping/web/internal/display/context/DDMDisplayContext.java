@@ -66,7 +66,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -134,13 +133,10 @@ public class DDMDisplayContext {
 
 		String expectedTemplateTypeValue = _getTemplateTypeValue();
 
-		long scopeClassNameId = PortalUtil.getClassNameId(
-			ddmDisplay.getStructureType());
-
 		if (DDMTemplatePermission.containsAddTemplatePermission(
 				_ddmWebRequestHelper.getPermissionChecker(),
 				_ddmWebRequestHelper.getScopeGroupId(), _getClassNameId(),
-				scopeClassNameId) &&
+				PortalUtil.getClassNameId(ddmDisplay.getStructureType())) &&
 			(Validator.isNull(expectedTemplateTypeValue) ||
 			 expectedTemplateTypeValue.equals(actualTemplateTypeValue))) {
 
@@ -614,23 +610,18 @@ public class DDMDisplayContext {
 		TemplateSearch templateSearch = new TemplateSearch(
 			_renderRequest, _getPortletURL());
 
-		String orderByCol = getOrderByCol();
-		String orderByType = getOrderByType();
-
-		OrderByComparator<DDMTemplate> orderByComparator =
-			DDMUtil.getTemplateOrderByComparator(
-				getOrderByCol(), getOrderByType());
-
-		templateSearch.setOrderByCol(orderByCol);
-		templateSearch.setOrderByComparator(orderByComparator);
-		templateSearch.setOrderByType(orderByType);
-
 		if (templateSearch.isSearch()) {
 			templateSearch.setEmptyResultsMessage("no-templates-were-found");
 		}
 		else {
 			templateSearch.setEmptyResultsMessage("there-are-no-templates");
 		}
+
+		templateSearch.setOrderByCol(getOrderByCol());
+		templateSearch.setOrderByComparator(
+			DDMUtil.getTemplateOrderByComparator(
+				getOrderByCol(), getOrderByType()));
+		templateSearch.setOrderByType(getOrderByType());
 
 		TemplateSearchTerms searchTerms =
 			(TemplateSearchTerms)templateSearch.getSearchTerms();

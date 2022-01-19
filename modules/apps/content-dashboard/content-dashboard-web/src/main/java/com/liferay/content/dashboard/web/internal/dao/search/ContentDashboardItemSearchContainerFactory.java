@@ -223,10 +223,11 @@ public class ContentDashboardItemSearchContainerFactory {
 		}
 
 		if (orderByCol.equals("title")) {
-			String sortFieldName = Field.getSortableFieldName(
-				"localized_title_".concat(LocaleUtil.toLanguageId(_locale)));
-
-			return new Sort(sortFieldName, Sort.STRING_TYPE, !orderByAsc);
+			return new Sort(
+				Field.getSortableFieldName(
+					"localized_title_".concat(
+						LocaleUtil.toLanguageId(_locale))),
+				Sort.STRING_TYPE, !orderByAsc);
 		}
 
 		return new Sort(Field.MODIFIED_DATE, Sort.LONG_TYPE, !orderByAsc);

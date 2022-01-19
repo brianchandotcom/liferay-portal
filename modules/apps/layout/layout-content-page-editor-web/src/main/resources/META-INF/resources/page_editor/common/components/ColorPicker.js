@@ -72,9 +72,14 @@ export function ColorPicker({
 		value ? tokenValues[value]?.label : Liferay.Language.get('default')
 	);
 
-	const tokenColorValues = Object.values(tokenValues).filter(
-		(token) => token.editorType === 'ColorPicker'
-	);
+	const tokenColorValues = Object.values(tokenValues)
+		.filter((token) => token.editorType === 'ColorPicker')
+		.map((token) => ({
+			...token,
+			disabled:
+				token.name === field.name ||
+				editedTokenValues?.[token.name]?.name === field.name,
+		}));
 
 	const filteredTokenValues = tokenColorValues.filter((token) =>
 		token.label.toLowerCase().includes(color)
@@ -82,13 +87,14 @@ export function ColorPicker({
 
 	tokenColorValues.forEach(
 		({
+			disabled,
 			label,
 			name,
 			tokenCategoryLabel: category,
 			tokenSetLabel: tokenSet,
 			value,
 		}) => {
-			const color = {label, name, value};
+			const color = {disabled, label, name, value};
 
 			if (Object.keys(colors).includes(category)) {
 				if (Object.keys(colors[category]).includes(tokenSet)) {
@@ -233,7 +239,6 @@ export function ColorPicker({
 								active={activeColorPicker}
 								colors={colors}
 								config={config}
-								fieldName={field.name}
 								label={tokenLabel}
 								onSetActive={setActiveColorPicker}
 								onValueChange={({label, name, value}) =>
@@ -331,13 +336,7 @@ export function ColorPicker({
 																	index
 																}
 																disabled={
-																	token.name ===
-																		field.name ||
-																	editedTokenValues?.[
-																		token
-																			.name
-																	]?.name ===
-																		field.name
+																	token.disabled
 																}
 																key={token.name}
 																onClick={() =>
@@ -434,7 +433,6 @@ export function ColorPicker({
 										active={activeColorPicker}
 										colors={colors}
 										config={config}
-										fieldName={field.name}
 										onSetActive={setActiveColorPicker}
 										onValueChange={({label, name, value}) =>
 											onSetValue(value, label, name)

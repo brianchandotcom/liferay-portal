@@ -59,7 +59,7 @@ export function FormBasicProductQuote({form}) {
 
 	return (
 		<div className="card-content d-flex">
-			<div className="ccol-12 d-flex flex-wrap p-0">
+			<div className="col-12 d-flex flex-wrap p-0">
 				<div
 					className={classNames('mb-4 d-flex col-12', {
 						'd-flex justify-content-start': !isMobileDevice,

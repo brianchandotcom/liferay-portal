@@ -17,3 +17,10 @@ export const DEVICES = {
 	PHONE: 'PHONE',
 	TABLET: 'TABLET',
 };
+
+export const RAYLIFE_PAGES = {
+	GET_IN_TOUCH: 'get-in-touch',
+	HANG_TIGHT: 'hang-tight',
+	HOME: '',
+	SELECTED_QUOTE: 'selected-quote',
+};

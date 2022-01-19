@@ -48,7 +48,7 @@ const FormFooterDesktop = ({
 	return (
 		<div
 			className={classNames({
-				'col-12 mt-5': isMobileDevice,
+				'col-12 mt-5 px-0': isMobileDevice,
 			})}
 		>
 			<WarningMessage

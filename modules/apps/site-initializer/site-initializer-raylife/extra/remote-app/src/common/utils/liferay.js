@@ -12,6 +12,8 @@
  * details.
  */
 
+const pagePreviewEnabled = false;
+
 export const Liferay = window.Liferay || {
 	BREAKPOINTS: {
 		PHONE: 0,
@@ -36,4 +38,10 @@ export function getLiferaySiteName() {
 	siteName = `/${pathSplit.slice(0, pathSplit.length - 1).join('/')}`;
 
 	return siteName;
+}
+
+export function redirectTo(url = '', currentSiteName = getLiferaySiteName()) {
+	const queryParams = pagePreviewEnabled ? '?p_l_mode=preview' : '';
+
+	window.location.href = `${currentSiteName}/${url}${queryParams}`;
 }

@@ -15,14 +15,13 @@
 import {useCallback, useEffect, useState} from 'react';
 import {useFormContext} from 'react-hook-form';
 import {STORAGE_KEYS, Storage} from '../../../common/services/liferay/storage';
+import {RAYLIFE_PAGES} from '../../../common/utils/constants';
 import {clearExitAlert} from '../../../common/utils/exitAlert';
-import {getLiferaySiteName} from '../../../common/utils/liferay';
+import {redirectTo} from '../../../common/utils/liferay';
 import {smoothScroll} from '../../../common/utils/scroll';
 import {useStepWizard} from '../hooks/useStepWizard';
 import {createOrUpdateRaylifeApplication} from '../services/RaylifeApplication';
 import {verifyInputAgentPage} from '../utils/contact-agent';
-
-const liferaySiteName = getLiferaySiteName();
 
 /**
  *
@@ -69,10 +68,9 @@ const useFormActions = ({
 
 		if (phraseAgentPage) {
 			Storage.setItem(STORAGE_KEYS.CONTEXTUAL_MESSAGE, phraseAgentPage);
-			window.location.href = `${liferaySiteName}/get-in-touch`;
+			redirectTo(RAYLIFE_PAGES.GET_IN_TOUCH);
 			validated = false;
-		}
-		else {
+		} else {
 			Storage.removeItem(STORAGE_KEYS.CONTEXTUAL_MESSAGE);
 		}
 
@@ -92,8 +90,7 @@ const useFormActions = ({
 			setApplicationId(response.data.id);
 
 			return response;
-		}
-		catch (error) {
+		} catch (error) {
 			setError('continueButton', {
 				message:
 					errorMessage ||
@@ -133,7 +130,7 @@ const useFormActions = ({
 				return smoothScroll();
 			}
 
-			window.location.href = `${liferaySiteName}/hang-tight`;
+			redirectTo(RAYLIFE_PAGES.HANG_TIGHT);
 		}
 	}, [_onValidation, nextSection, onSave, setSection]);
 

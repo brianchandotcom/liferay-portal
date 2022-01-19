@@ -2,7 +2,6 @@
 	{
 		"accountKey": "ERC-001",
 		"accountSubscriptionGroupERC": "ERC-001_portal",
-		"c_accountSubscriptionId": null,
 		"endDate": "2024-03-31 00:00:00.0",
 		"instanceSize": "1",
 		"name": "Non-Production",
@@ -13,7 +12,6 @@
 	{
 		"accountKey": "ERC-001",
 		"accountSubscriptionGroupERC": "ERC-001_portal",
-		"c_accountSubscriptionId": null,
 		"endDate": "2021-03-31 00:00:00.0",
 		"instanceSize": "1",
 		"name": "Production",
@@ -24,7 +22,6 @@
 	{
 		"accountKey": "ERC-001",
 		"accountSubscriptionGroupERC": "ERC-001_dxp-cloud",
-		"c_accountSubscriptionId": null,
 		"endDate": "2022-03-31 00:00:00.0",
 		"instanceSize": "1",
 		"name": "Non-Production",
@@ -35,7 +32,6 @@
 	{
 		"accountKey": "ERC-001",
 		"accountSubscriptionGroupERC": "ERC-001_dxp-cloud",
-		"c_accountSubscriptionId": null,
 		"endDate": "2025-03-31 00:00:00.0",
 		"instanceSize": "1",
 		"name": "Production",
@@ -46,7 +42,6 @@
 	{
 		"accountKey": "ERC-002",
 		"accountSubscriptionGroupERC": "ERC-002_partnership",
-		"c_accountSubscriptionId": null,
 		"endDate": "2021-06-31 00:00:00.0",
 		"instanceSize": "1",
 		"name": "Developer Tools",
@@ -57,7 +52,6 @@
 	{
 		"accountKey": "ERC-002",
 		"accountSubscriptionGroupERC": "ERC-002_dxp",
-		"c_accountSubscriptionId": null,
 		"endDate": "2028-01-14 00:00:00.0",
 		"instanceSize": "",
 		"name": "Production",
@@ -68,7 +62,6 @@
 	{
 		"accountKey": "ERC-002",
 		"accountSubscriptionGroupERC": "ERC-002_partnership",
-		"c_accountSubscriptionId": null,
 		"endDate": "2028-01-14 00:00:00.0",
 		"instanceSize": "",
 		"name": "Backup",
@@ -79,7 +72,6 @@
 	{
 		"accountKey": "ERC-002",
 		"accountSubscriptionGroupERC": "ERC-002_dxp",
-		"c_accountSubscriptionId": null,
 		"endDate": "2028-01-14 00:00:00.0",
 		"instanceSize": "1",
 		"name": "Non-Production",
@@ -90,7 +82,6 @@
 	{
 		"accountKey": "ERC-003",
 		"accountSubscriptionGroupERC": "ERC-003_analytics-cloud",
-		"c_accountSubscriptionId": null,
 		"endDate": "2028-01-14 00:00:00.0",
 		"instanceSize": "1",
 		"name": "Production",
@@ -101,7 +92,6 @@
 	{
 		"accountKey": "ERC-004",
 		"accountSubscriptionGroupERC": "ERC-004_portal",
-		"c_accountSubscriptionId": null,
 		"endDate": "2028-01-14 00:00:00.0",
 		"instanceSize": "1",
 		"name": "Backup",
@@ -112,7 +102,6 @@
 	{
 		"accountKey": "ERC-004",
 		"accountSubscriptionGroupERC": "ERC-004_commerce",
-		"c_accountSubscriptionId": null,
 		"endDate": "2021-03-14 00:00:00.0",
 		"instanceSize": "1",
 		"name": "Developer Tools",
@@ -123,7 +112,6 @@
 	{
 		"accountKey": "ERC-004",
 		"accountSubscriptionGroupERC": "ERC-004_portal",
-		"c_accountSubscriptionId": null,
 		"endDate": "2022-12-31 00:00:00.0",
 		"instanceSize": "",
 		"name": "Service Partnership",
@@ -134,7 +122,6 @@
 	{
 		"accountKey": "ERC-004",
 		"accountSubscriptionGroupERC": "ERC-004_portal",
-		"c_accountSubscriptionId": null,
 		"endDate": "2021-03-31 00:00:00.0",
 		"instanceSize": "1",
 		"name": "Non-Production",
@@ -145,7 +132,6 @@
 	{
 		"accountKey": "ERC-004",
 		"accountSubscriptionGroupERC": "ERC-004_dxp",
-		"c_accountSubscriptionId": null,
 		"endDate": "2023-03-31 00:00:00.0",
 		"instanceSize": "1",
 		"name": "Production",
@@ -156,7 +142,6 @@
 	{
 		"accountKey": "ERC-006",
 		"accountSubscriptionGroupERC": "ERC-006_enterprise-search",
-		"c_accountSubscriptionId": null,
 		"endDate": "2027-08-31 00:00:00.0",
 		"instanceSize": "1",
 		"name": "Non-Production",
@@ -167,7 +152,6 @@
 	{
 		"accountKey": "ERC-006",
 		"accountSubscriptionGroupERC": "ERC-006_enterprise-search",
-		"c_accountSubscriptionId": null,
 		"endDate": "2022-04-31 00:00:00.0",
 		"instanceSize": "1",
 		"name": "Production",
@@ -178,7 +162,6 @@
 	{
 		"accountKey": "ERC-006",
 		"accountSubscriptionGroupERC": "ERC-006_enterprise-search",
-		"c_accountSubscriptionId": null,
 		"endDate": "2021-03-31 00:00:00.0",
 		"instanceSize": "1",
 		"name": "Backup",
@@ -189,7 +172,6 @@
 	{
 		"accountKey": "ERC-006",
 		"accountSubscriptionGroupERC": "ERC-006_commerce",
-		"c_accountSubscriptionId": null,
 		"endDate": "2027-08-31 00:00:00.0",
 		"instanceSize": "1",
 		"name": "Non-Production",
@@ -200,7 +182,6 @@
 	{
 		"accountKey": "ERC-006",
 		"accountSubscriptionGroupERC": "ERC-006_commerce",
-		"c_accountSubscriptionId": null,
 		"endDate": "2022-04-31 00:00:00.0",
 		"instanceSize": "1",
 		"name": "Production",
@@ -211,7 +192,6 @@
 	{
 		"accountKey": "ERC-006",
 		"accountSubscriptionGroupERC": "ERC-006_commerce",
-		"c_accountSubscriptionId": null,
 		"endDate": "2021-03-31 00:00:00.0",
 		"instanceSize": "1",
 		"name": "Backup",
@@ -222,7 +202,6 @@
 	{
 		"accountKey": "ERC-006",
 		"accountSubscriptionGroupERC": "ERC-006_dxp-cloud",
-		"c_accountSubscriptionId": null,
 		"endDate": "2023-03-31 00:00:00.0",
 		"instanceSize": "1",
 		"name": "Backup",
@@ -233,7 +212,6 @@
 	{
 		"accountKey": "ERC-007",
 		"accountSubscriptionGroupERC": "ERC-007_dxp",
-		"c_accountSubscriptionId": null,
 		"endDate": "2024-01-31 00:00:00.0",
 		"instanceSize": "1",
 		"name": "Production",

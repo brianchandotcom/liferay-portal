@@ -2,34 +2,26 @@
 	{
 		"accountKey": "ERC-001",
 		"code": "PROJECT01",
-		"dxpVersion": "",
 		"liferayContactEmailAddress": "customer-service@liferay.com",
 		"liferayContactName": "Liferay Support",
-		"liferayContactRole": "",
 		"maxRequestors": 3,
 		"name": "Project 01",
 		"partner": false,
 		"region": "Brazil",
 		"slaCurrent": "Platinum Subscription",
-		"slaCurrentEndDate": "2022-01-12 00:00:00.0",
-		"slaExpired": "",
-		"slaFuture": ""
+		"slaCurrentEndDate": "2022-01-12 00:00:00.0"
 	},
 	{
 		"accountKey": "ERC-002",
 		"code": "PROJECT02",
-		"dxpVersion": "",
 		"liferayContactEmailAddress": "customer-service@liferay.com",
 		"liferayContactName": "Liferay Support",
-		"liferayContactRole": "",
 		"maxRequestors": 3,
 		"name": "Project 02",
 		"partner": false,
 		"region": "Brazil",
 		"slaCurrent": "Platinum Subscription",
-		"slaCurrentEndDate": "2026-02-25 00:00:00.0",
-		"slaExpired": "",
-		"slaFuture": ""
+		"slaCurrentEndDate": "2026-02-25 00:00:00.0"
 	},
 	{
 		"accountKey": "ERC-003",
@@ -37,12 +29,10 @@
 		"dxpVersion": "7.2",
 		"liferayContactEmailAddress": "customer-service@liferay.com",
 		"liferayContactName": "Liferay Support",
-		"liferayContactRole": "",
 		"maxRequestors": 2,
 		"name": "Project 03",
 		"partner": false,
 		"region": "India",
-		"slaCurrent": "",
 		"slaCurrentEndDate": "2021-01-14 00:00:00.0",
 		"slaExpired": "Gold Subscription",
 		"slaFuture": ""
@@ -50,33 +40,25 @@
 	{
 		"accountKey": "ERC-004",
 		"code": "PROJECT04",
-		"dxpVersion": "",
 		"liferayContactEmailAddress": "customer-service@liferay.com",
 		"liferayContactName": "Liferay Support",
-		"liferayContactRole": "",
 		"maxRequestors": 2,
 		"name": "Project 04",
 		"partner": false,
 		"region": "Hungary",
 		"slaCurrent": "Gold Subscription",
-		"slaCurrentEndDate": "2022-03-31 00:00:00.0",
-		"slaExpired": "",
-		"slaFuture": ""
+		"slaCurrentEndDate": "2022-03-31 00:00:00.0"
 	},
 	{
 		"accountKey": "ERC-005",
 		"code": "PROJECT05",
-		"dxpVersion": "",
 		"liferayContactEmailAddress": "customer-service@liferay.com",
 		"liferayContactName": "Liferay Support",
-		"liferayContactRole": "",
 		"maxRequestors": 2,
 		"name": "Project 05",
 		"partner": false,
 		"region": "India",
-		"slaCurrent": "",
 		"slaCurrentEndDate": "2022-07-24 00:00:00.0",
-		"slaExpired": "",
 		"slaFuture": "Gold Subscription"
 	},
 	{
@@ -85,14 +67,12 @@
 		"dxpVersion": "7.1",
 		"liferayContactEmailAddress": "customer-service@liferay.com",
 		"liferayContactName": "Liferay Support",
-		"liferayContactRole": "",
 		"maxRequestors": 2,
 		"name": "Project 06",
 		"partner": false,
 		"region": "Slovenia",
 		"slaCurrent": "Limited Subscription",
 		"slaCurrentEndDate": "2022-07-24 00:00:00.0",
-		"slaExpired": "",
 		"slaFuture": "Platinum Subscription"
 	},
 	{
@@ -101,14 +81,12 @@
 		"dxpVersion": "7.3",
 		"liferayContactEmailAddress": "customer-service@liferay.com",
 		"liferayContactName": "Liferay Support",
-		"liferayContactRole": "",
 		"maxRequestors": 4,
 		"name": "Project 07",
 		"partner": false,
 		"region": "Australia",
 		"slaCurrent": "Platinum Subscription",
 		"slaCurrentEndDate": "2022-08-24 00:00:00.0",
-		"slaExpired": "",
 		"slaFuture": "Gold Subscription"
 	}
 ]

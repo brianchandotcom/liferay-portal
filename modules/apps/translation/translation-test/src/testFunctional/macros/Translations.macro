@@ -219,7 +219,7 @@ definition {
 		if (isSet(pageName)) {
 			Translations.gotoImportTranslation(pageName = "${pageName}");
 		}
-		else {
+		else if (isSet(webContentTitle)) {
 			Translations.gotoImportTranslation(webContentTitle = "${webContentTitle}");
 		}
 

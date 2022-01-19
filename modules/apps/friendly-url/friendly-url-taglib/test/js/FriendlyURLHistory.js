@@ -23,7 +23,7 @@ const activeUrl = '/test';
 const defaultProps = {
 	defaultLanguageId: 'en_US',
 	elementId: 'elementId',
-	friendlyURLEntryURL: 'friendly_url_history',
+	friendlyURLEntryURL: '/o/friendly_url_history',
 	localizable: true,
 };
 

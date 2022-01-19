@@ -22,6 +22,10 @@
  */
 
 export default function defaultFetch(resource, init = {}) {
+	if (!resource) {
+		resource = '/o/';
+	}
+
 	let resourceLocation = resource.url ? resource.url : resource.toString();
 
 	if (resourceLocation.startsWith('/')) {

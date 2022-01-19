@@ -57,10 +57,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -148,7 +150,7 @@ public class LiferayOAuthDataProvider
 
 		accessTokenRegistration.setApprovedScope(approvedScope);
 
-		if (!OAuthConstants.CLIENT_CREDENTIALS_GRANT.equals(
+		if (!_refreshTokenIncompatibleGrants.contains(
 				accessTokenRegistration.getGrantType())) {
 
 			approvedScope.add(OAuthConstants.REFRESH_TOKEN_SCOPE);
@@ -1213,6 +1215,15 @@ public class LiferayOAuthDataProvider
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LiferayOAuthDataProvider.class);
+
+	private static final Set<String> _refreshTokenIncompatibleGrants =
+		Stream.of(
+			OAuthConstants.CLIENT_CREDENTIALS_GRANT, Constants.JWT_BEARER_GRANT,
+			HttpUtils.urlEncode(
+				Constants.JWT_BEARER_GRANT, StandardCharsets.UTF_8.name())
+		).collect(
+			Collectors.toCollection(HashSet::new)
+		);
 
 	@Reference(
 		policy = ReferencePolicy.DYNAMIC,

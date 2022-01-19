@@ -153,7 +153,9 @@ definition {
 
 		IFrame.closeFrame();
 
-		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
+		WebContentDisplayPortlet.viewContent(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
@@ -161,9 +163,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Test Page");
 
-		WebContent.viewPGViaWCD(
-			expiredContent = "true",
-			webContentTitle = "WC WebContent Title");
+		WebContentDisplayPortlet.viewContent(expiredWebContentTitle = "WC WebContent Title");
 
 		JSONPublications.publishPublication(publicationName = "Publication Name");
 
@@ -171,9 +171,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Test Page");
 
-		WebContent.viewPGViaWCD(
-			expiredContent = "true",
-			webContentTitle = "WC WebContent Title");
+		WebContentDisplayPortlet.viewContent(expiredWebContentTitle = "WC WebContent Title");
 	}
 
 	@priority = "4"

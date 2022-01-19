@@ -90,7 +90,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Web Content Display Page");
 
-		WebContent.viewPGViaWCD(
+		WebContentDisplayPortlet.viewContent(
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WC WebContent Title");
 	}

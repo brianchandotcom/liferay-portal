@@ -491,6 +491,28 @@ definition {
 			value1 = "${scopeSelection}");
 	}
 
+	macro viewContent {
+		if (isSet(draftWebContentTitle)) {
+			AssertTextEquals(
+				locator1 = "Message#ERROR_3",
+				value1 = "${draftWebContentTitle} is not approved.");
+		}
+		else if (isSet(expiredWebContentTitle)) {
+			AssertTextEquals(
+				locator1 = "Message#ERROR_3",
+				value1 = "${expiredWebContentTitle} is expired.");
+		}
+		else {
+			AssertTextEquals(
+				locator1 = "WCD#WEB_CONTENT_TITLE",
+				value1 = "${webContentTitle}");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "WCD#WEB_CONTENT_CONTENT",
+				value1 = "${webContentContent}");
+		}
+	}
+
 	macro viewContentPageBreak {
 		AssertClick(
 			locator1 = "Pagination#PAGE_2",

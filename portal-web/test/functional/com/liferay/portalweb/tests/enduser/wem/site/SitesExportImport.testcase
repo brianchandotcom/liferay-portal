@@ -98,7 +98,9 @@ definition {
 				pageName = "Test Content Page Name",
 				siteName = "Test Site Name");
 
-			WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
+			WebContentDisplayPortlet.viewContent(
+				webContentContent = "WC WebContent Content",
+				webContentTitle = "WC WebContent Title");
 		}
 
 		task ("Expoet site and download site lar") {
@@ -135,7 +137,9 @@ definition {
 				pageName = "Test Content Page Name",
 				siteName = "Test Site Name");
 
-			WebContent.viewPGViaWCD(webContentContent = "WC WebContent New Content");
+			WebContentDisplayPortlet.viewContent(
+				webContentContent = "WC WebContent New Content",
+				webContentTitle = "WC WebContent New Title");
 		}
 
 		task ("	View the Web Content doesn't change on the new site") {
@@ -143,7 +147,9 @@ definition {
 				pageName = "Test Content Page Name",
 				siteName = "Site Name");
 
-			WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
+			WebContentDisplayPortlet.viewContent(
+				webContentContent = "WC WebContent Content",
+				webContentTitle = "WC WebContent Title");
 		}
 	}
 

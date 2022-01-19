@@ -413,7 +413,9 @@ definition {
 			/*
 			Refresh();
 
-			WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content Default Company");*/
+			WebContentDisplayPortlet.viewContent(
+				webContentContent = "WC WebContent Content Default Company",
+				webContentTitle = "WC WebContent Title Default Company");*/
 		}
 
 		task ("New Company publish it's WebContent Article") {
@@ -432,7 +434,9 @@ definition {
 
 			Refresh();
 
-			WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content New Company");
+			WebContentDisplayPortlet.viewContent(
+				webContentContent = "WC WebContent Content New Company",
+				webContentTitle = "WC WebContent Title New Company");
 		}
 
 		// Disable Check on Default company until LPS-116111 is resolved
@@ -445,7 +449,9 @@ definition {
 
 			Navigator.gotoPage(pageName = "Web Content Display Page");
 
-			WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content Default Company");
+			WebContentDisplayPortlet.viewContent(
+				webContentContent = "WC WebContent Content Default Company",
+				webContentTitle = "WC WebContent Title Default Company");
 		}*/
 	}
 

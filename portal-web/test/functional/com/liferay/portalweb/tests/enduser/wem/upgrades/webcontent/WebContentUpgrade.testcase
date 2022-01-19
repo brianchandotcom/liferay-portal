@@ -184,7 +184,9 @@ definition {
 			var i = "1";
 
 			while ("${i}" != "31") {
-				WebContent.viewPGViaWCD(webContentContent = "text${i}");
+				WebContentDisplayPortlet.viewContent(
+					webContentContent = "text${i}",
+					webContentTitle = "Web Content Complex Title 1");
 
 				var i = ${i} + 1;
 			}
@@ -572,7 +574,9 @@ definition {
 			var i = "1";
 
 			while ("${i}" != "121") {
-				WebContent.viewPGViaWCD(webContentContent = "text${i}");
+				WebContentDisplayPortlet.viewContent(
+					webContentContent = "text${i}",
+					webContentTitle = "Web Content Complex Title 1");
 
 				var i = ${i} + 1;
 			}

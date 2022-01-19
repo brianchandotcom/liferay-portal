@@ -85,7 +85,7 @@ definition {
 			assetTitle = "DHS Title",
 			webContentContent = "DHS Content");
 
-		WebContent.viewPGViaWCD(
+		WebContentDisplayPortlet.viewContent(
 			webContentContent = "DHS Content",
 			webContentTitle = "DHS Title");
 

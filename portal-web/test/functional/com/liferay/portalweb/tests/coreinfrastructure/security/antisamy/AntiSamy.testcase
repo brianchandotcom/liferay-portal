@@ -127,7 +127,7 @@ definition {
 		}
 
 		task ("Assert that script is sanitized so page content remains unchanged") {
-			WebContent.viewPGViaWCD(
+			WebContentDisplayPortlet.viewContent(
 				webContentContent = "PASS",
 				webContentTitle = "Web Content Title");
 		}

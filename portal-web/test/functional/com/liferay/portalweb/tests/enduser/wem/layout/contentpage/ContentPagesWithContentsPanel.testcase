@@ -347,7 +347,9 @@ definition {
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
-			WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content Edit");
+			WebContentDisplayPortlet.viewContent(
+				webContentContent = "WC WebContent Content Edit",
+				webContentTitle = "WC WebContent Title Edit");
 		}
 	}
 

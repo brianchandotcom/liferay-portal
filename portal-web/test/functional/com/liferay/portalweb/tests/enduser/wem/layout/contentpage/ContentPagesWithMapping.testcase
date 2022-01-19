@@ -1430,7 +1430,9 @@ definition {
 
 			IFrame.closeFrame();
 
-			WebContent.viewPGViaWCD(webContentContent = "Web Content Content 1");
+			WebContentDisplayPortlet.viewContent(
+				webContentContent = "Web Content Content 1",
+				webContentTitle = "Web Content Title 1");
 		}
 
 		task ("Add a Heading") {

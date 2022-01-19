@@ -53,7 +53,9 @@ definition {
 
 		IFrame.closeFrame();
 
-		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
+		WebContentDisplayPortlet.viewContent(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title");
 
 		Staging.openStagingAdmin(siteURLKey = "test-site-name");
 
@@ -65,7 +67,9 @@ definition {
 
 		Staging.viewStagingLocalLivePG();
 
-		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
+		WebContentDisplayPortlet.viewContent(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name-staging");
 
@@ -85,9 +89,7 @@ definition {
 			pageName = "Staging Test Page",
 			siteName = "Test Site Name");
 
-		WebContent.viewPGViaWCD(
-			expiredContent = "true",
-			webContentTitle = "WC WebContent Title");
+		WebContentDisplayPortlet.viewContent(expiredWebContentTitle = "WC WebContent Title");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name-staging");
 
@@ -287,7 +289,9 @@ definition {
 			pageName = "Web Content Page",
 			siteName = "Site Name");
 
-		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
+		WebContentDisplayPortlet.viewContent(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title");
 
 		Comments.addPG(entryComment = "WC WebContent Content Comment");
 

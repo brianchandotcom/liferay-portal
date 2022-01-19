@@ -87,7 +87,9 @@ definition {
 			pageName = "Test New Page Name",
 			siteName = "Site Name");
 
-		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Depot 2");
+		WebContentDisplayPortlet.viewContent(
+			webContentContent = "WC WebContent Depot 2",
+			webContentTitle = "WC WebContent Title 2");
 	}
 
 	@description = "This ensures that web content using a structure stored in AL can be removed on a connected site."
@@ -284,7 +286,9 @@ definition {
 			pageName = "Page Name",
 			siteName = "Site Name");
 
-		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
+		WebContentDisplayPortlet.viewContent(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC Depot WebContent");
 	}
 
 	@description = "This test covers LPS-105119. It ensures that a web content in a depot can be selected through the field."
@@ -358,7 +362,9 @@ definition {
 			pageName = "Page Name",
 			siteName = "Site Name");
 
-		WebContent.viewPGViaWCD(webContentContent = "WC Depot WebContent");
+		WebContentDisplayPortlet.viewContent(
+			webContentContent = "WC Depot WebContent",
+			webContentTitle = "WC WebContent Title");
 	}
 
 	@description = "This ensures that a depot web content can be selected through the fragment in a content page on a connected site."
@@ -493,7 +499,9 @@ definition {
 			pageName = "Test Page",
 			siteName = "Site Name");
 
-		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Depot");
+		WebContentDisplayPortlet.viewContent(
+			webContentContent = "WC WebContent Depot",
+			webContentTitle = "WC WebContent Title");
 	}
 
 	@description = "This ensures that a depot web content can be selected through WCD in a content page on a connected site."
@@ -525,7 +533,9 @@ definition {
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/site-name/test-content-page-name");
 
-		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Depot");
+		WebContentDisplayPortlet.viewContent(
+			webContentContent = "WC WebContent Depot",
+			webContentTitle = "WC WebContent Title");
 	}
 
 	@description = "This ensures that a depot web content can be selected through WCD in a display page template on a connected site."
@@ -558,7 +568,9 @@ definition {
 
 		Refresh();
 
-		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Depot");
+		WebContentDisplayPortlet.viewContent(
+			webContentContent = "WC WebContent Depot",
+			webContentTitle = "WC WebContent Title");
 	}
 
 	@description = "This ensures that a user can use a structure stored in AL to create a template on a connected site."
@@ -747,7 +759,9 @@ definition {
 			pageName = "Page Name",
 			siteName = "Site Name");
 
-		WebContent.viewPGViaWCD(webContentContent = "Web Content Text");
+		WebContentDisplayPortlet.viewContent(
+			webContentContent = "Web Content Text",
+			webContentTitle = "WC WebContent Title");
 	}
 
 	@description = "This ensures that a user can see information of WC structure from more iframe about which AL owns it."

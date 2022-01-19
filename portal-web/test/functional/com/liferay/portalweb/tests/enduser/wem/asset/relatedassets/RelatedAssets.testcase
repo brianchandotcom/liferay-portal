@@ -75,7 +75,9 @@ definition {
 				webContentContent = "Web Content Content",
 				webContentTitle = "Web Content Title");
 
-			WebContent.viewPGViaWCD(webContentContent = "Web Content Content");
+			WebContentDisplayPortlet.viewContent(
+				webContentContent = "Web Content Content",
+				webContentTitle = "Web Content Title");
 		}
 
 		task ("Add Blogs portlet to Page 2 and create a blog") {

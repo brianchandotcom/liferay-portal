@@ -463,7 +463,9 @@ definition {
 
 		Content.addPG(assetTitle = "WC WebContent Title");
 
-		WebContent.viewPGViaWCD(webContentContent = "FFFFFF");
+		WebContentDisplayPortlet.viewContent(
+			webContentContent = "FFFFFF",
+			webContentTitle = "WC WebContent Title");
 	}
 
 	@priority = "3"
@@ -773,9 +775,11 @@ definition {
 		}
 
 		task ("Assert the content shown in Web Content Display") {
-			WebContent.viewPGViaWCD(webContentContent = "This is the first HTML field");
-
-			WebContent.viewPGViaWCD(webContentContent = "This is the second HTML field");
+			for (var ordinalNumber : list "first,second") {
+				WebContentDisplayPortlet.viewContent(
+					webContentContent = "This is the ${ordinalNumber} HTML field",
+					webContentTitle = "Web Content Title");
+			}
 		}
 	}
 

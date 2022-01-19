@@ -265,7 +265,9 @@ definition {
 			pageName = "Test Page Name",
 			siteName = "Site Name");
 
-		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Depot");
+		WebContentDisplayPortlet.viewContent(
+			webContentContent = "WC WebContent Depot",
+			webContentTitle = "WC WebContent Title");
 
 		WebContentDisplayPortletNavigator.gotoArticleEllipsisMenu(webContentTitle = "WC WebContent Title");
 

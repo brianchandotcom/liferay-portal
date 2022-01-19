@@ -320,7 +320,9 @@ definition {
 
 		SelectFrame(value1 = "relative=top");
 
-		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
+		WebContentDisplayPortlet.viewContent(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title");
 
 		User.logoutPG();
 

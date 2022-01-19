@@ -1580,7 +1580,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Web Content Display");
 
-		WebContent.viewPGViaWCD(
+		WebContentDisplayPortlet.viewContent(
 			webContentContent = "This is a Text field Edit",
 			webContentTitle = "Web Content Title Edit");
 
@@ -1608,7 +1608,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Web Content Display");
 
-		WebContent.viewPGViaWCD(
+		WebContentDisplayPortlet.viewContent(
 			webContentContent = "This is a Text field Edit",
 			webContentTitle = "Web Content Title Edit");
 
@@ -2136,7 +2136,7 @@ definition {
 
 		ProductMenu.gotoStagingSite(site = "Staging Site");
 
-		WebContent.viewPGViaWCD(
+		WebContentDisplayPortlet.viewContent(
 			webContentContent = "Web Content Content",
 			webContentTitle = "Web Content Title");
 
@@ -2146,7 +2146,7 @@ definition {
 
 		ProductMenu.gotoLiveSite(site = "Staging Site");
 
-		WebContent.viewPGViaWCD(
+		WebContentDisplayPortlet.viewContent(
 			webContentContent = "Web Content Content",
 			webContentTitle = "Web Content Title");
 	}
@@ -5013,7 +5013,9 @@ definition {
 			pageName = "Web Content Page",
 			siteName = "Site Name 1");
 
-		WebContent.viewPGViaWCD(webContentContent = "Web Content Content");
+		WebContentDisplayPortlet.viewContent(
+			webContentContent = "Web Content Content",
+			webContentTitle = "Web Content Title");
 
 		Navigator.openSpecificURL(url = "http://localhost:8080/web/site-name-2/blogs-page");
 
@@ -5551,7 +5553,9 @@ definition {
 	macro viewUpgrade {
 		Navigator.gotoPage(pageName = "Web Content");
 
-		WebContent.viewPGViaWCD(webContentContent = "Web Content Content");
+		WebContentDisplayPortlet.viewContent(
+			webContentContent = "Web Content Content",
+			webContentTitle = "Web Content Title");
 
 		Navigator.gotoPage(pageName = "Document");
 
@@ -5631,7 +5635,9 @@ definition {
 
 		Navigator.gotoPage(pageName = "Web Content");
 
-		WebContent.viewPGViaWCD(webContentContent = "Web Content Content");
+		WebContentDisplayPortlet.viewContent(
+			webContentContent = "Web Content Content",
+			webContentTitle = "Web Content Title");
 
 		Navigator.gotoPage(pageName = "Document");
 
@@ -5881,7 +5887,9 @@ definition {
 
 		Navigator.gotoPage(pageName = "Web Content Display");
 
-		WebContent.viewPGViaWCD(webContentContent = "This is a Text Box field");
+		WebContentDisplayPortlet.viewContent(
+			webContentContent = "This is a Text Box field",
+			webContentTitle = "Web Content Title");
 
 		Navigator.gotoPage(pageName = "Asset Publisher");
 

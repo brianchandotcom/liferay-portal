@@ -191,7 +191,9 @@ definition {
 				webContentContent = "WC Content",
 				webContentTitle = "WC Title");
 
-			WebContent.viewPGViaWCD(webContentContent = "WC Content");
+			WebContentDisplayPortlet.viewContent(
+				webContentContent = "WC Content",
+				webContentTitle = "WC Title");
 		}
 
 		task ("Enbale local staging without web content") {

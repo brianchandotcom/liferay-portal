@@ -15,7 +15,17 @@
 --%>
 
 <div class="float-right">
+
+	<%
+	String updateLanguageFormAction = HttpUtil.addParameter(themeDisplay.getPathMain() + "/portal/update_language", "p_l_id", themeDisplay.getPlid());
+
+	String updateLanguageRedirect = HttpUtil.addParameter(PortalUtil.getCurrentURL(request), "ticketKey", ParamUtil.getString(request, "ticketKey"));
+
+	updateLanguageFormAction = HttpUtil.addParameter(updateLanguageFormAction, "redirect", updateLanguageRedirect);
+	%>
+
 	<liferay-ui:language
+		formAction="<%= updateLanguageFormAction %>"
 		languageId="<%= themeDisplay.getLanguageId() %>"
 		languageIds="<%= LocaleUtil.toLanguageIds(LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId())) %>"
 	/>

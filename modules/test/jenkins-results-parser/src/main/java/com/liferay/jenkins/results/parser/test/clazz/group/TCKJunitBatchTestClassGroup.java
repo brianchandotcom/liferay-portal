@@ -128,6 +128,15 @@ public class TCKJunitBatchTestClassGroup extends BatchTestClassGroup {
 			testClasses.add(TestClassFactory.newTestClass(this, tckTestFile));
 		}
 
+		if (testClasses.isEmpty()) {
+			File buildTestBatchFile = new File(
+				portalGitWorkingDirectory.getWorkingDirectory(),
+				"build-test-batch.xml");
+
+			testClasses.add(
+				TestClassFactory.newTestClass(this, buildTestBatchFile));
+		}
+
 		Collections.sort(testClasses);
 	}
 

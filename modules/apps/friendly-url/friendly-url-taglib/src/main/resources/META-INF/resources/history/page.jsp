@@ -18,6 +18,7 @@
 
 <%
 String defaultLanguageId = (String)request.getAttribute("liferay-friendly-url:history:defaultLanguageId");
+boolean disabled = (boolean)request.getAttribute("liferay-friendly-url:history:disabled");
 String elementId = (String)request.getAttribute("liferay-friendly-url:history:elementId");
 String friendlyURLEntryURL = (String)request.getAttribute("liferay-friendly-url:history:friendlyURLEntryURL");
 boolean localizable = (boolean)request.getAttribute("liferay-friendly-url:history:localizable");
@@ -35,6 +36,8 @@ boolean localizable = (boolean)request.getAttribute("liferay-friendly-url:histor
 		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"defaultLanguageId", defaultLanguageId
+			).put(
+				"disabled", disabled
 			).put(
 				"elementId", elementId
 			).put(

@@ -45,6 +45,10 @@ public class HistoryTag extends IncludeTag {
 		return _elementId;
 	}
 
+	public boolean isDisabled() {
+		return _disabled;
+	}
+
 	public boolean isLocalizable() {
 		return _localizable;
 	}
@@ -55,6 +59,10 @@ public class HistoryTag extends IncludeTag {
 
 	public void setClassPK(long classPK) {
 		_classPK = classPK;
+	}
+
+	public void setDisabled(boolean disabled) {
+		_disabled = disabled;
 	}
 
 	public void setElementId(String elementId) {
@@ -78,6 +86,7 @@ public class HistoryTag extends IncludeTag {
 
 		_className = null;
 		_classPK = 0;
+		_disabled = false;
 		_elementId = null;
 		_localizable = true;
 	}
@@ -94,6 +103,8 @@ public class HistoryTag extends IncludeTag {
 		httpServletRequest.setAttribute(
 			"liferay-friendly-url:history:defaultLanguageId",
 			_getDefaultLanguageId(httpServletRequest));
+		httpServletRequest.setAttribute(
+			"liferay-friendly-url:history:disabled", isDisabled());
 		httpServletRequest.setAttribute(
 			"liferay-friendly-url:history:elementId", getElementId());
 		httpServletRequest.setAttribute(
@@ -136,6 +147,7 @@ public class HistoryTag extends IncludeTag {
 
 	private String _className;
 	private long _classPK;
+	private boolean _disabled;
 	private String _elementId;
 	private boolean _localizable = true;
 

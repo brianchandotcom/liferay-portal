@@ -25,6 +25,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>disabled</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>elementId</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>

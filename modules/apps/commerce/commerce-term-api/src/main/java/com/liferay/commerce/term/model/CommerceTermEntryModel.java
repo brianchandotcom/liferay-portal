@@ -15,16 +15,13 @@
 package com.liferay.commerce.term.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
-import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.model.AuditedModel;
 import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.model.LocalizedModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.WorkflowedModel;
 
 import java.util.Date;
-import java.util.Locale;
 import java.util.Map;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -42,8 +39,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface CommerceTermEntryModel
-	extends AuditedModel, BaseModel<CommerceTermEntry>, LocalizedModel,
-			MVCCModel, ShardedModel, WorkflowedModel {
+	extends AuditedModel, BaseModel<CommerceTermEntry>, MVCCModel, ShardedModel,
+			WorkflowedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -95,6 +92,21 @@ public interface CommerceTermEntryModel
 	 * @param externalReferenceCode the external reference code of this commerce term entry
 	 */
 	public void setExternalReferenceCode(String externalReferenceCode);
+
+	/**
+	 * Returns the default language ID of this commerce term entry.
+	 *
+	 * @return the default language ID of this commerce term entry
+	 */
+	@AutoEscape
+	public String getDefaultLanguageId();
+
+	/**
+	 * Sets the default language ID of this commerce term entry.
+	 *
+	 * @param defaultLanguageId the default language ID of this commerce term entry
+	 */
+	public void setDefaultLanguageId(String defaultLanguageId);
 
 	/**
 	 * Returns the commerce term entry ID of this commerce term entry.
@@ -229,21 +241,6 @@ public interface CommerceTermEntryModel
 	public void setActive(boolean active);
 
 	/**
-	 * Returns the description of this commerce term entry.
-	 *
-	 * @return the description of this commerce term entry
-	 */
-	@AutoEscape
-	public String getDescription();
-
-	/**
-	 * Sets the description of this commerce term entry.
-	 *
-	 * @param description the description of this commerce term entry
-	 */
-	public void setDescription(String description);
-
-	/**
 	 * Returns the display date of this commerce term entry.
 	 *
 	 * @return the display date of this commerce term entry
@@ -270,105 +267,6 @@ public interface CommerceTermEntryModel
 	 * @param expirationDate the expiration date of this commerce term entry
 	 */
 	public void setExpirationDate(Date expirationDate);
-
-	/**
-	 * Returns the label of this commerce term entry.
-	 *
-	 * @return the label of this commerce term entry
-	 */
-	public String getLabel();
-
-	/**
-	 * Returns the localized label of this commerce term entry in the language. Uses the default language if no localization exists for the requested language.
-	 *
-	 * @param locale the locale of the language
-	 * @return the localized label of this commerce term entry
-	 */
-	@AutoEscape
-	public String getLabel(Locale locale);
-
-	/**
-	 * Returns the localized label of this commerce term entry in the language, optionally using the default language if no localization exists for the requested language.
-	 *
-	 * @param locale the local of the language
-	 * @param useDefault whether to use the default language if no localization exists for the requested language
-	 * @return the localized label of this commerce term entry. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
-	 */
-	@AutoEscape
-	public String getLabel(Locale locale, boolean useDefault);
-
-	/**
-	 * Returns the localized label of this commerce term entry in the language. Uses the default language if no localization exists for the requested language.
-	 *
-	 * @param languageId the ID of the language
-	 * @return the localized label of this commerce term entry
-	 */
-	@AutoEscape
-	public String getLabel(String languageId);
-
-	/**
-	 * Returns the localized label of this commerce term entry in the language, optionally using the default language if no localization exists for the requested language.
-	 *
-	 * @param languageId the ID of the language
-	 * @param useDefault whether to use the default language if no localization exists for the requested language
-	 * @return the localized label of this commerce term entry
-	 */
-	@AutoEscape
-	public String getLabel(String languageId, boolean useDefault);
-
-	@AutoEscape
-	public String getLabelCurrentLanguageId();
-
-	@AutoEscape
-	public String getLabelCurrentValue();
-
-	/**
-	 * Returns a map of the locales and localized labels of this commerce term entry.
-	 *
-	 * @return the locales and localized labels of this commerce term entry
-	 */
-	public Map<Locale, String> getLabelMap();
-
-	/**
-	 * Sets the label of this commerce term entry.
-	 *
-	 * @param label the label of this commerce term entry
-	 */
-	public void setLabel(String label);
-
-	/**
-	 * Sets the localized label of this commerce term entry in the language.
-	 *
-	 * @param label the localized label of this commerce term entry
-	 * @param locale the locale of the language
-	 */
-	public void setLabel(String label, Locale locale);
-
-	/**
-	 * Sets the localized label of this commerce term entry in the language, and sets the default locale.
-	 *
-	 * @param label the localized label of this commerce term entry
-	 * @param locale the locale of the language
-	 * @param defaultLocale the default locale
-	 */
-	public void setLabel(String label, Locale locale, Locale defaultLocale);
-
-	public void setLabelCurrentLanguageId(String languageId);
-
-	/**
-	 * Sets the localized labels of this commerce term entry from the map of locales and localized labels.
-	 *
-	 * @param labelMap the locales and localized labels of this commerce term entry
-	 */
-	public void setLabelMap(Map<Locale, String> labelMap);
-
-	/**
-	 * Sets the localized labels of this commerce term entry from the map of locales and localized labels, and sets the default locale.
-	 *
-	 * @param labelMap the locales and localized labels of this commerce term entry
-	 * @param defaultLocale the default locale
-	 */
-	public void setLabelMap(Map<Locale, String> labelMap, Locale defaultLocale);
 
 	/**
 	 * Returns the name of this commerce term entry.
@@ -524,6 +422,28 @@ public interface CommerceTermEntryModel
 	@Override
 	public void setStatusDate(Date statusDate);
 
+	public String[] getAvailableLanguageIds();
+
+	public String getDescription();
+
+	public String getDescription(String languageId);
+
+	public String getDescription(String languageId, boolean useDefault);
+
+	public String getDescriptionMapAsXML();
+
+	public Map<String, String> getLanguageIdToDescriptionMap();
+
+	public String getLabel();
+
+	public String getLabel(String languageId);
+
+	public String getLabel(String languageId, boolean useDefault);
+
+	public String getLabelMapAsXML();
+
+	public Map<String, String> getLanguageIdToLabelMap();
+
 	/**
 	 * Returns <code>true</code> if this commerce term entry is approved.
 	 *
@@ -587,19 +507,6 @@ public interface CommerceTermEntryModel
 	 */
 	@Override
 	public boolean isScheduled();
-
-	@Override
-	public String[] getAvailableLanguageIds();
-
-	@Override
-	public String getDefaultLanguageId();
-
-	@Override
-	public void prepareLocalizedFieldsForImport() throws LocaleException;
-
-	@Override
-	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
-		throws LocaleException;
 
 	@Override
 	public CommerceTermEntry cloneWithOriginalValues();

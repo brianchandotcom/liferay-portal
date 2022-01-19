@@ -182,6 +182,67 @@ public interface CommerceTermEntryPersistence
 		throws NoSuchTermEntryException;
 
 	/**
+	 * Returns all the commerce term entries that the user has permission to view where companyId = &#63; and active = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @return the matching commerce term entries that the user has permission to view
+	 */
+	public java.util.List<CommerceTermEntry> filterFindByC_A(
+		long companyId, boolean active);
+
+	/**
+	 * Returns a range of all the commerce term entries that the user has permission to view where companyId = &#63; and active = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceTermEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param start the lower bound of the range of commerce term entries
+	 * @param end the upper bound of the range of commerce term entries (not inclusive)
+	 * @return the range of matching commerce term entries that the user has permission to view
+	 */
+	public java.util.List<CommerceTermEntry> filterFindByC_A(
+		long companyId, boolean active, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the commerce term entries that the user has permissions to view where companyId = &#63; and active = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceTermEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param start the lower bound of the range of commerce term entries
+	 * @param end the upper bound of the range of commerce term entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce term entries that the user has permission to view
+	 */
+	public java.util.List<CommerceTermEntry> filterFindByC_A(
+		long companyId, boolean active, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CommerceTermEntry>
+			orderByComparator);
+
+	/**
+	 * Returns the commerce term entries before and after the current commerce term entry in the ordered set of commerce term entries that the user has permission to view where companyId = &#63; and active = &#63;.
+	 *
+	 * @param commerceTermEntryId the primary key of the current commerce term entry
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce term entry
+	 * @throws NoSuchTermEntryException if a commerce term entry with the primary key could not be found
+	 */
+	public CommerceTermEntry[] filterFindByC_A_PrevAndNext(
+			long commerceTermEntryId, long companyId, boolean active,
+			com.liferay.portal.kernel.util.OrderByComparator<CommerceTermEntry>
+				orderByComparator)
+		throws NoSuchTermEntryException;
+
+	/**
 	 * Removes all the commerce term entries where companyId = &#63; and active = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -197,6 +258,65 @@ public interface CommerceTermEntryPersistence
 	 * @return the number of matching commerce term entries
 	 */
 	public int countByC_A(long companyId, boolean active);
+
+	/**
+	 * Returns the number of commerce term entries that the user has permission to view where companyId = &#63; and active = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @return the number of matching commerce term entries that the user has permission to view
+	 */
+	public int filterCountByC_A(long companyId, boolean active);
+
+	/**
+	 * Returns the commerce term entry where companyId = &#63; and name = &#63; or throws a <code>NoSuchTermEntryException</code> if it could not be found.
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @return the matching commerce term entry
+	 * @throws NoSuchTermEntryException if a matching commerce term entry could not be found
+	 */
+	public CommerceTermEntry findByC_N(long companyId, String name)
+		throws NoSuchTermEntryException;
+
+	/**
+	 * Returns the commerce term entry where companyId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @return the matching commerce term entry, or <code>null</code> if a matching commerce term entry could not be found
+	 */
+	public CommerceTermEntry fetchByC_N(long companyId, String name);
+
+	/**
+	 * Returns the commerce term entry where companyId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching commerce term entry, or <code>null</code> if a matching commerce term entry could not be found
+	 */
+	public CommerceTermEntry fetchByC_N(
+		long companyId, String name, boolean useFinderCache);
+
+	/**
+	 * Removes the commerce term entry where companyId = &#63; and name = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @return the commerce term entry that was removed
+	 */
+	public CommerceTermEntry removeByC_N(long companyId, String name)
+		throws NoSuchTermEntryException;
+
+	/**
+	 * Returns the number of commerce term entries where companyId = &#63; and name = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @return the number of matching commerce term entries
+	 */
+	public int countByC_N(long companyId, String name);
 
 	/**
 	 * Returns all the commerce term entries where companyId = &#63; and type LIKE &#63;.
@@ -337,6 +457,67 @@ public interface CommerceTermEntryPersistence
 		throws NoSuchTermEntryException;
 
 	/**
+	 * Returns all the commerce term entries that the user has permission to view where companyId = &#63; and type LIKE &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param type the type
+	 * @return the matching commerce term entries that the user has permission to view
+	 */
+	public java.util.List<CommerceTermEntry> filterFindByC_LikeType(
+		long companyId, String type);
+
+	/**
+	 * Returns a range of all the commerce term entries that the user has permission to view where companyId = &#63; and type LIKE &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceTermEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param type the type
+	 * @param start the lower bound of the range of commerce term entries
+	 * @param end the upper bound of the range of commerce term entries (not inclusive)
+	 * @return the range of matching commerce term entries that the user has permission to view
+	 */
+	public java.util.List<CommerceTermEntry> filterFindByC_LikeType(
+		long companyId, String type, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the commerce term entries that the user has permissions to view where companyId = &#63; and type LIKE &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceTermEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param type the type
+	 * @param start the lower bound of the range of commerce term entries
+	 * @param end the upper bound of the range of commerce term entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce term entries that the user has permission to view
+	 */
+	public java.util.List<CommerceTermEntry> filterFindByC_LikeType(
+		long companyId, String type, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CommerceTermEntry>
+			orderByComparator);
+
+	/**
+	 * Returns the commerce term entries before and after the current commerce term entry in the ordered set of commerce term entries that the user has permission to view where companyId = &#63; and type LIKE &#63;.
+	 *
+	 * @param commerceTermEntryId the primary key of the current commerce term entry
+	 * @param companyId the company ID
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce term entry
+	 * @throws NoSuchTermEntryException if a commerce term entry with the primary key could not be found
+	 */
+	public CommerceTermEntry[] filterFindByC_LikeType_PrevAndNext(
+			long commerceTermEntryId, long companyId, String type,
+			com.liferay.portal.kernel.util.OrderByComparator<CommerceTermEntry>
+				orderByComparator)
+		throws NoSuchTermEntryException;
+
+	/**
 	 * Removes all the commerce term entries where companyId = &#63; and type LIKE &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -352,6 +533,15 @@ public interface CommerceTermEntryPersistence
 	 * @return the number of matching commerce term entries
 	 */
 	public int countByC_LikeType(long companyId, String type);
+
+	/**
+	 * Returns the number of commerce term entries that the user has permission to view where companyId = &#63; and type LIKE &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param type the type
+	 * @return the number of matching commerce term entries that the user has permission to view
+	 */
+	public int filterCountByC_LikeType(long companyId, String type);
 
 	/**
 	 * Returns all the commerce term entries where displayDate &lt; &#63; and status = &#63;.
@@ -492,6 +682,67 @@ public interface CommerceTermEntryPersistence
 		throws NoSuchTermEntryException;
 
 	/**
+	 * Returns all the commerce term entries that the user has permission to view where displayDate &lt; &#63; and status = &#63;.
+	 *
+	 * @param displayDate the display date
+	 * @param status the status
+	 * @return the matching commerce term entries that the user has permission to view
+	 */
+	public java.util.List<CommerceTermEntry> filterFindByLtD_S(
+		Date displayDate, int status);
+
+	/**
+	 * Returns a range of all the commerce term entries that the user has permission to view where displayDate &lt; &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceTermEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param displayDate the display date
+	 * @param status the status
+	 * @param start the lower bound of the range of commerce term entries
+	 * @param end the upper bound of the range of commerce term entries (not inclusive)
+	 * @return the range of matching commerce term entries that the user has permission to view
+	 */
+	public java.util.List<CommerceTermEntry> filterFindByLtD_S(
+		Date displayDate, int status, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the commerce term entries that the user has permissions to view where displayDate &lt; &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceTermEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param displayDate the display date
+	 * @param status the status
+	 * @param start the lower bound of the range of commerce term entries
+	 * @param end the upper bound of the range of commerce term entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce term entries that the user has permission to view
+	 */
+	public java.util.List<CommerceTermEntry> filterFindByLtD_S(
+		Date displayDate, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CommerceTermEntry>
+			orderByComparator);
+
+	/**
+	 * Returns the commerce term entries before and after the current commerce term entry in the ordered set of commerce term entries that the user has permission to view where displayDate &lt; &#63; and status = &#63;.
+	 *
+	 * @param commerceTermEntryId the primary key of the current commerce term entry
+	 * @param displayDate the display date
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce term entry
+	 * @throws NoSuchTermEntryException if a commerce term entry with the primary key could not be found
+	 */
+	public CommerceTermEntry[] filterFindByLtD_S_PrevAndNext(
+			long commerceTermEntryId, Date displayDate, int status,
+			com.liferay.portal.kernel.util.OrderByComparator<CommerceTermEntry>
+				orderByComparator)
+		throws NoSuchTermEntryException;
+
+	/**
 	 * Removes all the commerce term entries where displayDate &lt; &#63; and status = &#63; from the database.
 	 *
 	 * @param displayDate the display date
@@ -507,6 +758,15 @@ public interface CommerceTermEntryPersistence
 	 * @return the number of matching commerce term entries
 	 */
 	public int countByLtD_S(Date displayDate, int status);
+
+	/**
+	 * Returns the number of commerce term entries that the user has permission to view where displayDate &lt; &#63; and status = &#63;.
+	 *
+	 * @param displayDate the display date
+	 * @param status the status
+	 * @return the number of matching commerce term entries that the user has permission to view
+	 */
+	public int filterCountByLtD_S(Date displayDate, int status);
 
 	/**
 	 * Returns all the commerce term entries where expirationDate &lt; &#63; and status = &#63;.
@@ -647,6 +907,67 @@ public interface CommerceTermEntryPersistence
 		throws NoSuchTermEntryException;
 
 	/**
+	 * Returns all the commerce term entries that the user has permission to view where expirationDate &lt; &#63; and status = &#63;.
+	 *
+	 * @param expirationDate the expiration date
+	 * @param status the status
+	 * @return the matching commerce term entries that the user has permission to view
+	 */
+	public java.util.List<CommerceTermEntry> filterFindByLtE_S(
+		Date expirationDate, int status);
+
+	/**
+	 * Returns a range of all the commerce term entries that the user has permission to view where expirationDate &lt; &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceTermEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param expirationDate the expiration date
+	 * @param status the status
+	 * @param start the lower bound of the range of commerce term entries
+	 * @param end the upper bound of the range of commerce term entries (not inclusive)
+	 * @return the range of matching commerce term entries that the user has permission to view
+	 */
+	public java.util.List<CommerceTermEntry> filterFindByLtE_S(
+		Date expirationDate, int status, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the commerce term entries that the user has permissions to view where expirationDate &lt; &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceTermEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param expirationDate the expiration date
+	 * @param status the status
+	 * @param start the lower bound of the range of commerce term entries
+	 * @param end the upper bound of the range of commerce term entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce term entries that the user has permission to view
+	 */
+	public java.util.List<CommerceTermEntry> filterFindByLtE_S(
+		Date expirationDate, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CommerceTermEntry>
+			orderByComparator);
+
+	/**
+	 * Returns the commerce term entries before and after the current commerce term entry in the ordered set of commerce term entries that the user has permission to view where expirationDate &lt; &#63; and status = &#63;.
+	 *
+	 * @param commerceTermEntryId the primary key of the current commerce term entry
+	 * @param expirationDate the expiration date
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce term entry
+	 * @throws NoSuchTermEntryException if a commerce term entry with the primary key could not be found
+	 */
+	public CommerceTermEntry[] filterFindByLtE_S_PrevAndNext(
+			long commerceTermEntryId, Date expirationDate, int status,
+			com.liferay.portal.kernel.util.OrderByComparator<CommerceTermEntry>
+				orderByComparator)
+		throws NoSuchTermEntryException;
+
+	/**
 	 * Removes all the commerce term entries where expirationDate &lt; &#63; and status = &#63; from the database.
 	 *
 	 * @param expirationDate the expiration date
@@ -662,6 +983,15 @@ public interface CommerceTermEntryPersistence
 	 * @return the number of matching commerce term entries
 	 */
 	public int countByLtE_S(Date expirationDate, int status);
+
+	/**
+	 * Returns the number of commerce term entries that the user has permission to view where expirationDate &lt; &#63; and status = &#63;.
+	 *
+	 * @param expirationDate the expiration date
+	 * @param status the status
+	 * @return the number of matching commerce term entries that the user has permission to view
+	 */
+	public int filterCountByLtE_S(Date expirationDate, int status);
 
 	/**
 	 * Returns all the commerce term entries where companyId = &#63; and active = &#63; and type LIKE &#63;.
@@ -812,6 +1142,72 @@ public interface CommerceTermEntryPersistence
 		throws NoSuchTermEntryException;
 
 	/**
+	 * Returns all the commerce term entries that the user has permission to view where companyId = &#63; and active = &#63; and type LIKE &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param type the type
+	 * @return the matching commerce term entries that the user has permission to view
+	 */
+	public java.util.List<CommerceTermEntry> filterFindByC_A_LikeType(
+		long companyId, boolean active, String type);
+
+	/**
+	 * Returns a range of all the commerce term entries that the user has permission to view where companyId = &#63; and active = &#63; and type LIKE &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceTermEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param type the type
+	 * @param start the lower bound of the range of commerce term entries
+	 * @param end the upper bound of the range of commerce term entries (not inclusive)
+	 * @return the range of matching commerce term entries that the user has permission to view
+	 */
+	public java.util.List<CommerceTermEntry> filterFindByC_A_LikeType(
+		long companyId, boolean active, String type, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the commerce term entries that the user has permissions to view where companyId = &#63; and active = &#63; and type LIKE &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceTermEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param type the type
+	 * @param start the lower bound of the range of commerce term entries
+	 * @param end the upper bound of the range of commerce term entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce term entries that the user has permission to view
+	 */
+	public java.util.List<CommerceTermEntry> filterFindByC_A_LikeType(
+		long companyId, boolean active, String type, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CommerceTermEntry>
+			orderByComparator);
+
+	/**
+	 * Returns the commerce term entries before and after the current commerce term entry in the ordered set of commerce term entries that the user has permission to view where companyId = &#63; and active = &#63; and type LIKE &#63;.
+	 *
+	 * @param commerceTermEntryId the primary key of the current commerce term entry
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce term entry
+	 * @throws NoSuchTermEntryException if a commerce term entry with the primary key could not be found
+	 */
+	public CommerceTermEntry[] filterFindByC_A_LikeType_PrevAndNext(
+			long commerceTermEntryId, long companyId, boolean active,
+			String type,
+			com.liferay.portal.kernel.util.OrderByComparator<CommerceTermEntry>
+				orderByComparator)
+		throws NoSuchTermEntryException;
+
+	/**
 	 * Removes all the commerce term entries where companyId = &#63; and active = &#63; and type LIKE &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -830,6 +1226,75 @@ public interface CommerceTermEntryPersistence
 	 * @return the number of matching commerce term entries
 	 */
 	public int countByC_A_LikeType(long companyId, boolean active, String type);
+
+	/**
+	 * Returns the number of commerce term entries that the user has permission to view where companyId = &#63; and active = &#63; and type LIKE &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param type the type
+	 * @return the number of matching commerce term entries that the user has permission to view
+	 */
+	public int filterCountByC_A_LikeType(
+		long companyId, boolean active, String type);
+
+	/**
+	 * Returns the commerce term entry where companyId = &#63; and priority = &#63; and type = &#63; or throws a <code>NoSuchTermEntryException</code> if it could not be found.
+	 *
+	 * @param companyId the company ID
+	 * @param priority the priority
+	 * @param type the type
+	 * @return the matching commerce term entry
+	 * @throws NoSuchTermEntryException if a matching commerce term entry could not be found
+	 */
+	public CommerceTermEntry findByC_P_T(
+			long companyId, double priority, String type)
+		throws NoSuchTermEntryException;
+
+	/**
+	 * Returns the commerce term entry where companyId = &#63; and priority = &#63; and type = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param priority the priority
+	 * @param type the type
+	 * @return the matching commerce term entry, or <code>null</code> if a matching commerce term entry could not be found
+	 */
+	public CommerceTermEntry fetchByC_P_T(
+		long companyId, double priority, String type);
+
+	/**
+	 * Returns the commerce term entry where companyId = &#63; and priority = &#63; and type = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param priority the priority
+	 * @param type the type
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching commerce term entry, or <code>null</code> if a matching commerce term entry could not be found
+	 */
+	public CommerceTermEntry fetchByC_P_T(
+		long companyId, double priority, String type, boolean useFinderCache);
+
+	/**
+	 * Removes the commerce term entry where companyId = &#63; and priority = &#63; and type = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param priority the priority
+	 * @param type the type
+	 * @return the commerce term entry that was removed
+	 */
+	public CommerceTermEntry removeByC_P_T(
+			long companyId, double priority, String type)
+		throws NoSuchTermEntryException;
+
+	/**
+	 * Returns the number of commerce term entries where companyId = &#63; and priority = &#63; and type = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param priority the priority
+	 * @param type the type
+	 * @return the number of matching commerce term entries
+	 */
+	public int countByC_P_T(long companyId, double priority, String type);
 
 	/**
 	 * Returns the commerce term entry where companyId = &#63; and externalReferenceCode = &#63; or throws a <code>NoSuchTermEntryException</code> if it could not be found.

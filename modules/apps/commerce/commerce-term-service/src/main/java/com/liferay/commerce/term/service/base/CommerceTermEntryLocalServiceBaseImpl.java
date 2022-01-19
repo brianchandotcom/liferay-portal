@@ -14,10 +14,13 @@
 
 package com.liferay.commerce.term.service.base;
 
+import com.liferay.commerce.term.model.CTermEntryLocalization;
 import com.liferay.commerce.term.model.CommerceTermEntry;
 import com.liferay.commerce.term.service.CommerceTermEntryLocalService;
 import com.liferay.commerce.term.service.CommerceTermEntryLocalServiceUtil;
+import com.liferay.commerce.term.service.persistence.CTermEntryLocalizationPersistence;
 import com.liferay.commerce.term.service.persistence.CommerceTermEntryPersistence;
+import com.liferay.commerce.term.service.persistence.CommerceTermEntryRelPersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -47,7 +50,10 @@ import java.io.Serializable;
 
 import java.lang.reflect.Field;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.sql.DataSource;
 
@@ -136,11 +142,13 @@ public abstract class CommerceTermEntryLocalServiceBaseImpl
 	 *
 	 * @param commerceTermEntry the commerce term entry
 	 * @return the commerce term entry that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public CommerceTermEntry deleteCommerceTermEntry(
-		CommerceTermEntry commerceTermEntry) {
+			CommerceTermEntry commerceTermEntry)
+		throws PortalException {
 
 		return commerceTermEntryPersistence.remove(commerceTermEntry);
 	}
@@ -434,6 +442,177 @@ public abstract class CommerceTermEntryLocalServiceBaseImpl
 		return commerceTermEntryPersistence.update(commerceTermEntry);
 	}
 
+	@Override
+	public CTermEntryLocalization fetchCTermEntryLocalization(
+		long commerceTermEntryId, String languageId) {
+
+		return cTermEntryLocalizationPersistence.
+			fetchByCommerceTermEntryId_LanguageId(
+				commerceTermEntryId, languageId);
+	}
+
+	@Override
+	public CTermEntryLocalization getCTermEntryLocalization(
+			long commerceTermEntryId, String languageId)
+		throws PortalException {
+
+		return cTermEntryLocalizationPersistence.
+			findByCommerceTermEntryId_LanguageId(
+				commerceTermEntryId, languageId);
+	}
+
+	@Override
+	public List<CTermEntryLocalization> getCTermEntryLocalizations(
+		long commerceTermEntryId) {
+
+		return cTermEntryLocalizationPersistence.findByCommerceTermEntryId(
+			commerceTermEntryId);
+	}
+
+	@Override
+	public CTermEntryLocalization updateCTermEntryLocalization(
+			CommerceTermEntry commerceTermEntry, String languageId,
+			String description, String label)
+		throws PortalException {
+
+		commerceTermEntry = commerceTermEntryPersistence.findByPrimaryKey(
+			commerceTermEntry.getPrimaryKey());
+
+		CTermEntryLocalization cTermEntryLocalization =
+			cTermEntryLocalizationPersistence.
+				fetchByCommerceTermEntryId_LanguageId(
+					commerceTermEntry.getCommerceTermEntryId(), languageId);
+
+		return _updateCTermEntryLocalization(
+			commerceTermEntry, cTermEntryLocalization, languageId, description,
+			label);
+	}
+
+	@Override
+	public List<CTermEntryLocalization> updateCTermEntryLocalizations(
+			CommerceTermEntry commerceTermEntry,
+			Map<String, String> descriptionMap, Map<String, String> labelMap)
+		throws PortalException {
+
+		commerceTermEntry = commerceTermEntryPersistence.findByPrimaryKey(
+			commerceTermEntry.getPrimaryKey());
+
+		Map<String, String[]> localizedValuesMap =
+			new HashMap<String, String[]>();
+
+		for (Map.Entry<String, String> entry : descriptionMap.entrySet()) {
+			String languageId = entry.getKey();
+
+			String[] localizedValues = localizedValuesMap.get(languageId);
+
+			if (localizedValues == null) {
+				localizedValues = new String[2];
+
+				localizedValuesMap.put(languageId, localizedValues);
+			}
+
+			localizedValues[0] = entry.getValue();
+		}
+
+		for (Map.Entry<String, String> entry : labelMap.entrySet()) {
+			String languageId = entry.getKey();
+
+			String[] localizedValues = localizedValuesMap.get(languageId);
+
+			if (localizedValues == null) {
+				localizedValues = new String[2];
+
+				localizedValuesMap.put(languageId, localizedValues);
+			}
+
+			localizedValues[1] = entry.getValue();
+		}
+
+		List<CTermEntryLocalization> cTermEntryLocalizations =
+			new ArrayList<CTermEntryLocalization>(localizedValuesMap.size());
+
+		for (CTermEntryLocalization cTermEntryLocalization :
+				cTermEntryLocalizationPersistence.findByCommerceTermEntryId(
+					commerceTermEntry.getCommerceTermEntryId())) {
+
+			String[] localizedValues = localizedValuesMap.remove(
+				cTermEntryLocalization.getLanguageId());
+
+			if (localizedValues == null) {
+				cTermEntryLocalizationPersistence.remove(
+					cTermEntryLocalization);
+			}
+			else {
+				cTermEntryLocalization.setCompanyId(
+					commerceTermEntry.getCompanyId());
+
+				cTermEntryLocalization.setDescription(localizedValues[0]);
+				cTermEntryLocalization.setLabel(localizedValues[1]);
+
+				cTermEntryLocalizations.add(
+					cTermEntryLocalizationPersistence.update(
+						cTermEntryLocalization));
+			}
+		}
+
+		long batchCounter =
+			counterLocalService.increment(
+				CTermEntryLocalization.class.getName(),
+				localizedValuesMap.size()) - localizedValuesMap.size();
+
+		for (Map.Entry<String, String[]> entry :
+				localizedValuesMap.entrySet()) {
+
+			String languageId = entry.getKey();
+			String[] localizedValues = entry.getValue();
+
+			CTermEntryLocalization cTermEntryLocalization =
+				cTermEntryLocalizationPersistence.create(++batchCounter);
+
+			cTermEntryLocalization.setCommerceTermEntryId(
+				commerceTermEntry.getCommerceTermEntryId());
+			cTermEntryLocalization.setCompanyId(
+				commerceTermEntry.getCompanyId());
+
+			cTermEntryLocalization.setLanguageId(languageId);
+
+			cTermEntryLocalization.setDescription(localizedValues[0]);
+			cTermEntryLocalization.setLabel(localizedValues[1]);
+
+			cTermEntryLocalizations.add(
+				cTermEntryLocalizationPersistence.update(
+					cTermEntryLocalization));
+		}
+
+		return cTermEntryLocalizations;
+	}
+
+	private CTermEntryLocalization _updateCTermEntryLocalization(
+			CommerceTermEntry commerceTermEntry,
+			CTermEntryLocalization cTermEntryLocalization, String languageId,
+			String description, String label)
+		throws PortalException {
+
+		if (cTermEntryLocalization == null) {
+			long cTermEntryLocalizationId = counterLocalService.increment(
+				CTermEntryLocalization.class.getName());
+
+			cTermEntryLocalization = cTermEntryLocalizationPersistence.create(
+				cTermEntryLocalizationId);
+
+			cTermEntryLocalization.setCommerceTermEntryId(
+				commerceTermEntry.getCommerceTermEntryId());
+			cTermEntryLocalization.setLanguageId(languageId);
+		}
+
+		cTermEntryLocalization.setCompanyId(commerceTermEntry.getCompanyId());
+
+		cTermEntryLocalization.setDescription(description);
+		cTermEntryLocalization.setLabel(label);
+
+		return cTermEntryLocalizationPersistence.update(cTermEntryLocalization);
+	}
+
 	@Deactivate
 	protected void deactivate() {
 		_setLocalServiceUtilService(null);
@@ -518,6 +697,13 @@ public abstract class CommerceTermEntryLocalServiceBaseImpl
 
 	@Reference
 	protected CommerceTermEntryPersistence commerceTermEntryPersistence;
+
+	@Reference
+	protected CommerceTermEntryRelPersistence commerceTermEntryRelPersistence;
+
+	@Reference
+	protected CTermEntryLocalizationPersistence
+		cTermEntryLocalizationPersistence;
 
 	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService

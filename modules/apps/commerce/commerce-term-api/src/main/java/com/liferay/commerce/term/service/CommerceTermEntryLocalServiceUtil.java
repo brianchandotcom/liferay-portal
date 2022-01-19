@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the local service utility for CommerceTermEntry. This utility wraps
@@ -61,6 +62,31 @@ public class CommerceTermEntryLocalServiceUtil {
 		return getService().addCommerceTermEntry(commerceTermEntry);
 	}
 
+	public static CommerceTermEntry addCommerceTermEntry(
+			String externalReferenceCode, long userId, boolean active,
+			Map<java.util.Locale, String> descriptionMap, int displayDateMonth,
+			int displayDateDay, int displayDateYear, int displayDateHour,
+			int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, Map<java.util.Locale, String> labelMap,
+			String name, double priority, String type, String typeSettings,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addCommerceTermEntry(
+			externalReferenceCode, userId, active, descriptionMap,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, labelMap, name, priority, type, typeSettings,
+			serviceContext);
+	}
+
+	public static void checkCommerceTermEntries() throws PortalException {
+		getService().checkCommerceTermEntries();
+	}
+
 	/**
 	 * Creates a new commerce term entry with the primary key. Does not add the commerce term entry to the database.
 	 *
@@ -92,9 +118,11 @@ public class CommerceTermEntryLocalServiceUtil {
 	 *
 	 * @param commerceTermEntry the commerce term entry
 	 * @return the commerce term entry that was removed
+	 * @throws PortalException
 	 */
 	public static CommerceTermEntry deleteCommerceTermEntry(
-		CommerceTermEntry commerceTermEntry) {
+			CommerceTermEntry commerceTermEntry)
+		throws PortalException {
 
 		return getService().deleteCommerceTermEntry(commerceTermEntry);
 	}
@@ -244,6 +272,14 @@ public class CommerceTermEntryLocalServiceUtil {
 			companyId, externalReferenceCode);
 	}
 
+	public static com.liferay.commerce.term.model.CTermEntryLocalization
+		fetchCTermEntryLocalization(
+			long commerceTermEntryId, String languageId) {
+
+		return getService().fetchCTermEntryLocalization(
+			commerceTermEntryId, languageId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -306,6 +342,28 @@ public class CommerceTermEntryLocalServiceUtil {
 			companyId, externalReferenceCode);
 	}
 
+	public static com.liferay.commerce.term.model.CTermEntryLocalization
+			getCTermEntryLocalization(
+				long commerceTermEntryId, String languageId)
+		throws PortalException {
+
+		return getService().getCTermEntryLocalization(
+			commerceTermEntryId, languageId);
+	}
+
+	public static List<String> getCTermEntryLocalizationLanguageIds(
+		long commerceTermEntryId) {
+
+		return getService().getCTermEntryLocalizationLanguageIds(
+			commerceTermEntryId);
+	}
+
+	public static List<com.liferay.commerce.term.model.CTermEntryLocalization>
+		getCTermEntryLocalizations(long commerceTermEntryId) {
+
+		return getService().getCTermEntryLocalizations(commerceTermEntryId);
+	}
+
 	public static
 		com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 			getIndexableActionableDynamicQuery() {
@@ -345,6 +403,66 @@ public class CommerceTermEntryLocalServiceUtil {
 		CommerceTermEntry commerceTermEntry) {
 
 		return getService().updateCommerceTermEntry(commerceTermEntry);
+	}
+
+	public static CommerceTermEntry updateCommerceTermEntry(
+			long userId, long commerceTermEntryId, boolean active,
+			Map<java.util.Locale, String> descriptionMap, int displayDateMonth,
+			int displayDateDay, int displayDateYear, int displayDateHour,
+			int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, Map<java.util.Locale, String> labelMap,
+			String name, double priority, String typeSettings,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().updateCommerceTermEntry(
+			userId, commerceTermEntryId, active, descriptionMap,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, labelMap, name, priority, typeSettings,
+			serviceContext);
+	}
+
+	public static CommerceTermEntry
+			updateCommerceTermEntryExternalReferenceCode(
+				String externalReferenceCode, long commerceTermEntryId)
+		throws PortalException {
+
+		return getService().updateCommerceTermEntryExternalReferenceCode(
+			externalReferenceCode, commerceTermEntryId);
+	}
+
+	public static com.liferay.commerce.term.model.CTermEntryLocalization
+			updateCTermEntryLocalization(
+				CommerceTermEntry commerceTermEntry, String languageId,
+				String description, String label)
+		throws PortalException {
+
+		return getService().updateCTermEntryLocalization(
+			commerceTermEntry, languageId, description, label);
+	}
+
+	public static List<com.liferay.commerce.term.model.CTermEntryLocalization>
+			updateCTermEntryLocalizations(
+				CommerceTermEntry commerceTermEntry,
+				Map<String, String> descriptionMap,
+				Map<String, String> labelMap)
+		throws PortalException {
+
+		return getService().updateCTermEntryLocalizations(
+			commerceTermEntry, descriptionMap, labelMap);
+	}
+
+	public static CommerceTermEntry updateStatus(
+			long userId, long commerceTermEntryId, int status,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().updateStatus(
+			userId, commerceTermEntryId, status, serviceContext);
 	}
 
 	public static CommerceTermEntryLocalService getService() {

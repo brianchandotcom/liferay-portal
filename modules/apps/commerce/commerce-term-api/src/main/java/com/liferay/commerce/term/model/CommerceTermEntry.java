@@ -60,4 +60,8 @@ public interface CommerceTermEntry
 
 			};
 
+	public void setTypeSettingsUnicodeProperties(
+		com.liferay.portal.kernel.util.UnicodeProperties
+			typeSettingsUnicodeProperties);
+
 }

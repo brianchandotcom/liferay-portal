@@ -78,12 +78,14 @@ public class CommerceTermEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(45);
+		StringBundler sb = new StringBundler(43);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
 		sb.append(", externalReferenceCode=");
 		sb.append(externalReferenceCode);
+		sb.append(", defaultLanguageId=");
+		sb.append(defaultLanguageId);
 		sb.append(", commerceTermEntryId=");
 		sb.append(commerceTermEntryId);
 		sb.append(", companyId=");
@@ -98,14 +100,10 @@ public class CommerceTermEntryCacheModel
 		sb.append(modifiedDate);
 		sb.append(", active=");
 		sb.append(active);
-		sb.append(", description=");
-		sb.append(description);
 		sb.append(", displayDate=");
 		sb.append(displayDate);
 		sb.append(", expirationDate=");
 		sb.append(expirationDate);
-		sb.append(", label=");
-		sb.append(label);
 		sb.append(", name=");
 		sb.append(name);
 		sb.append(", priority=");
@@ -144,6 +142,13 @@ public class CommerceTermEntryCacheModel
 				externalReferenceCode);
 		}
 
+		if (defaultLanguageId == null) {
+			commerceTermEntryImpl.setDefaultLanguageId("");
+		}
+		else {
+			commerceTermEntryImpl.setDefaultLanguageId(defaultLanguageId);
+		}
+
 		commerceTermEntryImpl.setCommerceTermEntryId(commerceTermEntryId);
 		commerceTermEntryImpl.setCompanyId(companyId);
 		commerceTermEntryImpl.setUserId(userId);
@@ -171,13 +176,6 @@ public class CommerceTermEntryCacheModel
 
 		commerceTermEntryImpl.setActive(active);
 
-		if (description == null) {
-			commerceTermEntryImpl.setDescription("");
-		}
-		else {
-			commerceTermEntryImpl.setDescription(description);
-		}
-
 		if (displayDate == Long.MIN_VALUE) {
 			commerceTermEntryImpl.setDisplayDate(null);
 		}
@@ -190,13 +188,6 @@ public class CommerceTermEntryCacheModel
 		}
 		else {
 			commerceTermEntryImpl.setExpirationDate(new Date(expirationDate));
-		}
-
-		if (label == null) {
-			commerceTermEntryImpl.setLabel("");
-		}
-		else {
-			commerceTermEntryImpl.setLabel(label);
 		}
 
 		if (name == null) {
@@ -252,11 +243,10 @@ public class CommerceTermEntryCacheModel
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput)
-		throws ClassNotFoundException, IOException {
-
+	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
 		externalReferenceCode = objectInput.readUTF();
+		defaultLanguageId = objectInput.readUTF();
 
 		commerceTermEntryId = objectInput.readLong();
 
@@ -268,10 +258,8 @@ public class CommerceTermEntryCacheModel
 		modifiedDate = objectInput.readLong();
 
 		active = objectInput.readBoolean();
-		description = (String)objectInput.readObject();
 		displayDate = objectInput.readLong();
 		expirationDate = objectInput.readLong();
-		label = objectInput.readUTF();
 		name = objectInput.readUTF();
 
 		priority = objectInput.readDouble();
@@ -297,6 +285,13 @@ public class CommerceTermEntryCacheModel
 			objectOutput.writeUTF(externalReferenceCode);
 		}
 
+		if (defaultLanguageId == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(defaultLanguageId);
+		}
+
 		objectOutput.writeLong(commerceTermEntryId);
 
 		objectOutput.writeLong(companyId);
@@ -314,23 +309,8 @@ public class CommerceTermEntryCacheModel
 		objectOutput.writeLong(modifiedDate);
 
 		objectOutput.writeBoolean(active);
-
-		if (description == null) {
-			objectOutput.writeObject("");
-		}
-		else {
-			objectOutput.writeObject(description);
-		}
-
 		objectOutput.writeLong(displayDate);
 		objectOutput.writeLong(expirationDate);
-
-		if (label == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(label);
-		}
 
 		if (name == null) {
 			objectOutput.writeUTF("");
@@ -373,6 +353,7 @@ public class CommerceTermEntryCacheModel
 
 	public long mvccVersion;
 	public String externalReferenceCode;
+	public String defaultLanguageId;
 	public long commerceTermEntryId;
 	public long companyId;
 	public long userId;
@@ -380,10 +361,8 @@ public class CommerceTermEntryCacheModel
 	public long createDate;
 	public long modifiedDate;
 	public boolean active;
-	public String description;
 	public long displayDate;
 	public long expirationDate;
-	public String label;
 	public String name;
 	public double priority;
 	public String type;

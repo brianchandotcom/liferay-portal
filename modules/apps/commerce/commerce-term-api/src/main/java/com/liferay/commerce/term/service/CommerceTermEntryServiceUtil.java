@@ -14,6 +14,11 @@
 
 package com.liferay.commerce.term.service;
 
+import com.liferay.commerce.term.model.CommerceTermEntry;
+import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.Map;
+
 /**
  * Provides the remote service utility for CommerceTermEntry. This utility wraps
  * <code>com.liferay.commerce.term.service.impl.CommerceTermEntryServiceImpl</code> and is an
@@ -33,14 +38,91 @@ public class CommerceTermEntryServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.term.service.impl.CommerceTermEntryServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static CommerceTermEntry addCommerceTermEntry(
+			String externalReferenceCode, boolean active,
+			Map<java.util.Locale, String> descriptionMap, int displayDateMonth,
+			int displayDateDay, int displayDateYear, int displayDateHour,
+			int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, Map<java.util.Locale, String> labelMap,
+			String name, double priority, String type, String typeSettings,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addCommerceTermEntry(
+			externalReferenceCode, active, descriptionMap, displayDateMonth,
+			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, neverExpire, labelMap,
+			name, priority, type, typeSettings, serviceContext);
+	}
+
+	public static CommerceTermEntry deleteCommerceTermEntry(
+			long commerceTermEntryId)
+		throws PortalException {
+
+		return getService().deleteCommerceTermEntry(commerceTermEntryId);
+	}
+
+	public static CommerceTermEntry fetchByExternalReferenceCode(
+			long companyId, String externalReferenceCode)
+		throws PortalException {
+
+		return getService().fetchByExternalReferenceCode(
+			companyId, externalReferenceCode);
+	}
+
+	public static CommerceTermEntry fetchCommerceTermEntry(
+			long commerceTermEntryId)
+		throws PortalException {
+
+		return getService().fetchCommerceTermEntry(commerceTermEntryId);
+	}
+
+	public static CommerceTermEntry getCommerceTermEntry(
+			long commerceTermEntryId)
+		throws PortalException {
+
+		return getService().getCommerceTermEntry(commerceTermEntryId);
+	}
 
 	/**
 	 * Returns the OSGi service identifier.
 	 *
 	 * @return the OSGi service identifier
 	 */
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static CommerceTermEntry updateCommerceTermEntry(
+			long commerceTermEntryId, boolean active,
+			Map<java.util.Locale, String> descriptionMap, int displayDateMonth,
+			int displayDateDay, int displayDateYear, int displayDateHour,
+			int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, Map<java.util.Locale, String> labelMap,
+			String name, double priority, String typeSettings,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().updateCommerceTermEntry(
+			commerceTermEntryId, active, descriptionMap, displayDateMonth,
+			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, neverExpire, labelMap,
+			name, priority, typeSettings, serviceContext);
+	}
+
+	public static CommerceTermEntry
+			updateCommerceTermEntryExternalReferenceCode(
+				String externalReferenceCode, long commerceTermEntryId)
+		throws PortalException {
+
+		return getService().updateCommerceTermEntryExternalReferenceCode(
+			externalReferenceCode, commerceTermEntryId);
 	}
 
 	public static CommerceTermEntryService getService() {

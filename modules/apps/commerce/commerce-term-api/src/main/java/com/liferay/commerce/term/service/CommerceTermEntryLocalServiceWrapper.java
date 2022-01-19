@@ -57,6 +57,37 @@ public class CommerceTermEntryLocalServiceWrapper
 			commerceTermEntry);
 	}
 
+	@Override
+	public com.liferay.commerce.term.model.CommerceTermEntry
+			addCommerceTermEntry(
+				String externalReferenceCode, long userId, boolean active,
+				java.util.Map<java.util.Locale, String> descriptionMap,
+				int displayDateMonth, int displayDateDay, int displayDateYear,
+				int displayDateHour, int displayDateMinute,
+				int expirationDateMonth, int expirationDateDay,
+				int expirationDateYear, int expirationDateHour,
+				int expirationDateMinute, boolean neverExpire,
+				java.util.Map<java.util.Locale, String> labelMap, String name,
+				double priority, String type, String typeSettings,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceTermEntryLocalService.addCommerceTermEntry(
+			externalReferenceCode, userId, active, descriptionMap,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, labelMap, name, priority, type, typeSettings,
+			serviceContext);
+	}
+
+	@Override
+	public void checkCommerceTermEntries()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_commerceTermEntryLocalService.checkCommerceTermEntries();
+	}
+
 	/**
 	 * Creates a new commerce term entry with the primary key. Does not add the commerce term entry to the database.
 	 *
@@ -92,12 +123,14 @@ public class CommerceTermEntryLocalServiceWrapper
 	 *
 	 * @param commerceTermEntry the commerce term entry
 	 * @return the commerce term entry that was removed
+	 * @throws PortalException
 	 */
 	@Override
 	public com.liferay.commerce.term.model.CommerceTermEntry
-		deleteCommerceTermEntry(
-			com.liferay.commerce.term.model.CommerceTermEntry
-				commerceTermEntry) {
+			deleteCommerceTermEntry(
+				com.liferay.commerce.term.model.CommerceTermEntry
+					commerceTermEntry)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceTermEntryLocalService.deleteCommerceTermEntry(
 			commerceTermEntry);
@@ -278,6 +311,15 @@ public class CommerceTermEntryLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.commerce.term.model.CTermEntryLocalization
+		fetchCTermEntryLocalization(
+			long commerceTermEntryId, String languageId) {
+
+		return _commerceTermEntryLocalService.fetchCTermEntryLocalization(
+			commerceTermEntryId, languageId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -349,6 +391,33 @@ public class CommerceTermEntryLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.commerce.term.model.CTermEntryLocalization
+			getCTermEntryLocalization(
+				long commerceTermEntryId, String languageId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceTermEntryLocalService.getCTermEntryLocalization(
+			commerceTermEntryId, languageId);
+	}
+
+	@Override
+	public java.util.List<String> getCTermEntryLocalizationLanguageIds(
+		long commerceTermEntryId) {
+
+		return _commerceTermEntryLocalService.
+			getCTermEntryLocalizationLanguageIds(commerceTermEntryId);
+	}
+
+	@Override
+	public java.util.List
+		<com.liferay.commerce.term.model.CTermEntryLocalization>
+			getCTermEntryLocalizations(long commerceTermEntryId) {
+
+		return _commerceTermEntryLocalService.getCTermEntryLocalizations(
+			commerceTermEntryId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 		getIndexableActionableDynamicQuery() {
 
@@ -395,6 +464,77 @@ public class CommerceTermEntryLocalServiceWrapper
 
 		return _commerceTermEntryLocalService.updateCommerceTermEntry(
 			commerceTermEntry);
+	}
+
+	@Override
+	public com.liferay.commerce.term.model.CommerceTermEntry
+			updateCommerceTermEntry(
+				long userId, long commerceTermEntryId, boolean active,
+				java.util.Map<java.util.Locale, String> descriptionMap,
+				int displayDateMonth, int displayDateDay, int displayDateYear,
+				int displayDateHour, int displayDateMinute,
+				int expirationDateMonth, int expirationDateDay,
+				int expirationDateYear, int expirationDateHour,
+				int expirationDateMinute, boolean neverExpire,
+				java.util.Map<java.util.Locale, String> labelMap, String name,
+				double priority, String typeSettings,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceTermEntryLocalService.updateCommerceTermEntry(
+			userId, commerceTermEntryId, active, descriptionMap,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, labelMap, name, priority, typeSettings,
+			serviceContext);
+	}
+
+	@Override
+	public com.liferay.commerce.term.model.CommerceTermEntry
+			updateCommerceTermEntryExternalReferenceCode(
+				String externalReferenceCode, long commerceTermEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceTermEntryLocalService.
+			updateCommerceTermEntryExternalReferenceCode(
+				externalReferenceCode, commerceTermEntryId);
+	}
+
+	@Override
+	public com.liferay.commerce.term.model.CTermEntryLocalization
+			updateCTermEntryLocalization(
+				com.liferay.commerce.term.model.CommerceTermEntry
+					commerceTermEntry,
+				String languageId, String description, String label)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceTermEntryLocalService.updateCTermEntryLocalization(
+			commerceTermEntry, languageId, description, label);
+	}
+
+	@Override
+	public java.util.List
+		<com.liferay.commerce.term.model.CTermEntryLocalization>
+				updateCTermEntryLocalizations(
+					com.liferay.commerce.term.model.CommerceTermEntry
+						commerceTermEntry,
+					java.util.Map<String, String> descriptionMap,
+					java.util.Map<String, String> labelMap)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceTermEntryLocalService.updateCTermEntryLocalizations(
+			commerceTermEntry, descriptionMap, labelMap);
+	}
+
+	@Override
+	public com.liferay.commerce.term.model.CommerceTermEntry updateStatus(
+			long userId, long commerceTermEntryId, int status,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceTermEntryLocalService.updateStatus(
+			userId, commerceTermEntryId, status, serviceContext);
 	}
 
 	@Override

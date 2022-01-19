@@ -11,6 +11,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 package com.liferay.commerce.term.exception;
 
 import com.liferay.portal.kernel.exception.PortalException;
@@ -27,7 +28,9 @@ public class CommerceTermExpirationDateException extends PortalException {
 		super(msg);
 	}
 
-	public CommerceTermExpirationDateException(String msg, Throwable throwable) {
+	public CommerceTermExpirationDateException(
+		String msg, Throwable throwable) {
+
 		super(msg, throwable);
 	}
 

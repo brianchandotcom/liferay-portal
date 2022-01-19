@@ -131,6 +131,9 @@ public class CommerceTermEntryPersistenceTest {
 		newCommerceTermEntry.setExternalReferenceCode(
 			RandomTestUtil.randomString());
 
+		newCommerceTermEntry.setDefaultLanguageId(
+			RandomTestUtil.randomString());
+
 		newCommerceTermEntry.setCompanyId(RandomTestUtil.nextLong());
 
 		newCommerceTermEntry.setUserId(RandomTestUtil.nextLong());
@@ -143,13 +146,9 @@ public class CommerceTermEntryPersistenceTest {
 
 		newCommerceTermEntry.setActive(RandomTestUtil.randomBoolean());
 
-		newCommerceTermEntry.setDescription(RandomTestUtil.randomString());
-
 		newCommerceTermEntry.setDisplayDate(RandomTestUtil.nextDate());
 
 		newCommerceTermEntry.setExpirationDate(RandomTestUtil.nextDate());
-
-		newCommerceTermEntry.setLabel(RandomTestUtil.randomString());
 
 		newCommerceTermEntry.setName(RandomTestUtil.randomString());
 
@@ -181,6 +180,9 @@ public class CommerceTermEntryPersistenceTest {
 			existingCommerceTermEntry.getExternalReferenceCode(),
 			newCommerceTermEntry.getExternalReferenceCode());
 		Assert.assertEquals(
+			existingCommerceTermEntry.getDefaultLanguageId(),
+			newCommerceTermEntry.getDefaultLanguageId());
+		Assert.assertEquals(
 			existingCommerceTermEntry.getCommerceTermEntryId(),
 			newCommerceTermEntry.getCommerceTermEntryId());
 		Assert.assertEquals(
@@ -202,18 +204,12 @@ public class CommerceTermEntryPersistenceTest {
 			existingCommerceTermEntry.isActive(),
 			newCommerceTermEntry.isActive());
 		Assert.assertEquals(
-			existingCommerceTermEntry.getDescription(),
-			newCommerceTermEntry.getDescription());
-		Assert.assertEquals(
 			Time.getShortTimestamp(existingCommerceTermEntry.getDisplayDate()),
 			Time.getShortTimestamp(newCommerceTermEntry.getDisplayDate()));
 		Assert.assertEquals(
 			Time.getShortTimestamp(
 				existingCommerceTermEntry.getExpirationDate()),
 			Time.getShortTimestamp(newCommerceTermEntry.getExpirationDate()));
-		Assert.assertEquals(
-			existingCommerceTermEntry.getLabel(),
-			newCommerceTermEntry.getLabel());
 		Assert.assertEquals(
 			existingCommerceTermEntry.getName(),
 			newCommerceTermEntry.getName());
@@ -250,6 +246,15 @@ public class CommerceTermEntryPersistenceTest {
 			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());
 
 		_persistence.countByC_A(0L, RandomTestUtil.randomBoolean());
+	}
+
+	@Test
+	public void testCountByC_N() throws Exception {
+		_persistence.countByC_N(RandomTestUtil.nextLong(), "");
+
+		_persistence.countByC_N(0L, "null");
+
+		_persistence.countByC_N(0L, (String)null);
 	}
 
 	@Test
@@ -290,6 +295,16 @@ public class CommerceTermEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_P_T() throws Exception {
+		_persistence.countByC_P_T(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextDouble(), "");
+
+		_persistence.countByC_P_T(0L, 0D, "null");
+
+		_persistence.countByC_P_T(0L, 0D, (String)null);
+	}
+
+	@Test
 	public void testCountByC_ERC() throws Exception {
 		_persistence.countByC_ERC(RandomTestUtil.nextLong(), "");
 
@@ -324,11 +339,11 @@ public class CommerceTermEntryPersistenceTest {
 	protected OrderByComparator<CommerceTermEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
 			"CommerceTermEntry", "mvccVersion", true, "externalReferenceCode",
-			true, "commerceTermEntryId", true, "companyId", true, "userId",
-			true, "userName", true, "createDate", true, "modifiedDate", true,
-			"active", true, "displayDate", true, "expirationDate", true,
-			"label", true, "name", true, "priority", true, "type", true,
-			"typeSettings", true, "lastPublishDate", true, "status", true,
+			true, "defaultLanguageId", true, "commerceTermEntryId", true,
+			"companyId", true, "userId", true, "userName", true, "createDate",
+			true, "modifiedDate", true, "active", true, "displayDate", true,
+			"expirationDate", true, "name", true, "priority", true, "type",
+			true, "typeSettings", true, "lastPublishDate", true, "status", true,
 			"statusByUserId", true, "statusByUserName", true, "statusDate",
 			true);
 	}
@@ -612,6 +627,33 @@ public class CommerceTermEntryPersistenceTest {
 				commerceTermEntry, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "companyId"));
 		Assert.assertEquals(
+			commerceTermEntry.getName(),
+			ReflectionTestUtil.invoke(
+				commerceTermEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "name"));
+
+		Assert.assertEquals(
+			Long.valueOf(commerceTermEntry.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(
+				commerceTermEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "companyId"));
+		AssertUtils.assertEquals(
+			commerceTermEntry.getPriority(),
+			ReflectionTestUtil.<Double>invoke(
+				commerceTermEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "priority"));
+		Assert.assertEquals(
+			commerceTermEntry.getType(),
+			ReflectionTestUtil.invoke(
+				commerceTermEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "type_"));
+
+		Assert.assertEquals(
+			Long.valueOf(commerceTermEntry.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(
+				commerceTermEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "companyId"));
+		Assert.assertEquals(
 			commerceTermEntry.getExternalReferenceCode(),
 			ReflectionTestUtil.invoke(
 				commerceTermEntry, "getColumnOriginalValue",
@@ -628,6 +670,8 @@ public class CommerceTermEntryPersistenceTest {
 		commerceTermEntry.setExternalReferenceCode(
 			RandomTestUtil.randomString());
 
+		commerceTermEntry.setDefaultLanguageId(RandomTestUtil.randomString());
+
 		commerceTermEntry.setCompanyId(RandomTestUtil.nextLong());
 
 		commerceTermEntry.setUserId(RandomTestUtil.nextLong());
@@ -640,13 +684,9 @@ public class CommerceTermEntryPersistenceTest {
 
 		commerceTermEntry.setActive(RandomTestUtil.randomBoolean());
 
-		commerceTermEntry.setDescription(RandomTestUtil.randomString());
-
 		commerceTermEntry.setDisplayDate(RandomTestUtil.nextDate());
 
 		commerceTermEntry.setExpirationDate(RandomTestUtil.nextDate());
-
-		commerceTermEntry.setLabel(RandomTestUtil.randomString());
 
 		commerceTermEntry.setName(RandomTestUtil.randomString());
 

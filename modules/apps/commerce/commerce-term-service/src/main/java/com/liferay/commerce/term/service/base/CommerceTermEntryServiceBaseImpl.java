@@ -17,7 +17,9 @@ package com.liferay.commerce.term.service.base;
 import com.liferay.commerce.term.model.CommerceTermEntry;
 import com.liferay.commerce.term.service.CommerceTermEntryService;
 import com.liferay.commerce.term.service.CommerceTermEntryServiceUtil;
+import com.liferay.commerce.term.service.persistence.CTermEntryLocalizationPersistence;
 import com.liferay.commerce.term.service.persistence.CommerceTermEntryPersistence;
+import com.liferay.commerce.term.service.persistence.CommerceTermEntryRelPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -141,6 +143,13 @@ public abstract class CommerceTermEntryServiceBaseImpl
 
 	@Reference
 	protected CommerceTermEntryPersistence commerceTermEntryPersistence;
+
+	@Reference
+	protected CommerceTermEntryRelPersistence commerceTermEntryRelPersistence;
+
+	@Reference
+	protected CTermEntryLocalizationPersistence
+		cTermEntryLocalizationPersistence;
 
 	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService

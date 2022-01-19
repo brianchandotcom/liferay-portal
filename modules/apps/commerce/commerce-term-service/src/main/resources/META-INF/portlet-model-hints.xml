@@ -4,6 +4,7 @@
 	<model name="com.liferay.commerce.term.model.CommerceTermEntry">
 		<field name="mvccVersion" type="long" />
 		<field name="externalReferenceCode" type="String" />
+		<field name="defaultLanguageId" type="String" />
 		<field name="commerceTermEntryId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
@@ -11,12 +12,8 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="active" type="boolean" />
-		<field name="description" type="String">
-			<hint-collection name="CLOB" />
-		</field>
 		<field name="displayDate" type="Date" />
 		<field name="expirationDate" type="Date" />
-		<field localized="true" name="label" type="String" />
 		<field name="name" type="String" />
 		<field name="priority" type="double" />
 		<field name="type" type="String" />
@@ -26,5 +23,29 @@
 		<field name="statusByUserId" type="long" />
 		<field name="statusByUserName" type="String" />
 		<field name="statusDate" type="Date" />
+	</model>
+	<model name="com.liferay.commerce.term.model.CommerceTermEntryRel">
+		<field name="mvccVersion" type="long" />
+		<field name="commerceTermEntryRelId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
+		<field name="commerceTermEntryId" type="long" />
+	</model>
+	<model name="com.liferay.commerce.term.model.CTermEntryLocalization">
+		<field name="mvccVersion" type="long" />
+		<field name="cTermEntryLocalizationId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="commerceTermEntryId" type="long" />
+		<field name="languageId" type="String" />
+		<field name="description" type="String">
+			<hint-collection name="CLOB" />
+			<sanitize content-type="text/html" modes="ALL" />
+		</field>
+		<field name="label" type="String" />
 	</model>
 </model-hints>

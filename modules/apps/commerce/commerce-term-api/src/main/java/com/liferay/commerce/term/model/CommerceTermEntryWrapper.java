@@ -44,6 +44,7 @@ public class CommerceTermEntryWrapper
 
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("externalReferenceCode", getExternalReferenceCode());
+		attributes.put("defaultLanguageId", getDefaultLanguageId());
 		attributes.put("commerceTermEntryId", getCommerceTermEntryId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
@@ -51,10 +52,8 @@ public class CommerceTermEntryWrapper
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("active", isActive());
-		attributes.put("description", getDescription());
 		attributes.put("displayDate", getDisplayDate());
 		attributes.put("expirationDate", getExpirationDate());
-		attributes.put("label", getLabel());
 		attributes.put("name", getName());
 		attributes.put("priority", getPriority());
 		attributes.put("type", getType());
@@ -81,6 +80,12 @@ public class CommerceTermEntryWrapper
 
 		if (externalReferenceCode != null) {
 			setExternalReferenceCode(externalReferenceCode);
+		}
+
+		String defaultLanguageId = (String)attributes.get("defaultLanguageId");
+
+		if (defaultLanguageId != null) {
+			setDefaultLanguageId(defaultLanguageId);
 		}
 
 		Long commerceTermEntryId = (Long)attributes.get("commerceTermEntryId");
@@ -125,12 +130,6 @@ public class CommerceTermEntryWrapper
 			setActive(active);
 		}
 
-		String description = (String)attributes.get("description");
-
-		if (description != null) {
-			setDescription(description);
-		}
-
 		Date displayDate = (Date)attributes.get("displayDate");
 
 		if (displayDate != null) {
@@ -141,12 +140,6 @@ public class CommerceTermEntryWrapper
 
 		if (expirationDate != null) {
 			setExpirationDate(expirationDate);
-		}
-
-		String label = (String)attributes.get("label");
-
-		if (label != null) {
-			setLabel(label);
 		}
 
 		String name = (String)attributes.get("name");
@@ -254,19 +247,34 @@ public class CommerceTermEntryWrapper
 		return model.getCreateDate();
 	}
 
+	/**
+	 * Returns the default language ID of this commerce term entry.
+	 *
+	 * @return the default language ID of this commerce term entry
+	 */
 	@Override
 	public String getDefaultLanguageId() {
 		return model.getDefaultLanguageId();
 	}
 
-	/**
-	 * Returns the description of this commerce term entry.
-	 *
-	 * @return the description of this commerce term entry
-	 */
 	@Override
 	public String getDescription() {
 		return model.getDescription();
+	}
+
+	@Override
+	public String getDescription(String languageId) {
+		return model.getDescription(languageId);
+	}
+
+	@Override
+	public String getDescription(String languageId, boolean useDefault) {
+		return model.getDescription(languageId, useDefault);
+	}
+
+	@Override
+	public String getDescriptionMapAsXML() {
+		return model.getDescriptionMapAsXML();
 	}
 
 	/**
@@ -299,80 +307,34 @@ public class CommerceTermEntryWrapper
 		return model.getExternalReferenceCode();
 	}
 
-	/**
-	 * Returns the label of this commerce term entry.
-	 *
-	 * @return the label of this commerce term entry
-	 */
 	@Override
 	public String getLabel() {
 		return model.getLabel();
 	}
 
-	/**
-	 * Returns the localized label of this commerce term entry in the language. Uses the default language if no localization exists for the requested language.
-	 *
-	 * @param locale the locale of the language
-	 * @return the localized label of this commerce term entry
-	 */
-	@Override
-	public String getLabel(java.util.Locale locale) {
-		return model.getLabel(locale);
-	}
-
-	/**
-	 * Returns the localized label of this commerce term entry in the language, optionally using the default language if no localization exists for the requested language.
-	 *
-	 * @param locale the local of the language
-	 * @param useDefault whether to use the default language if no localization exists for the requested language
-	 * @return the localized label of this commerce term entry. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
-	 */
-	@Override
-	public String getLabel(java.util.Locale locale, boolean useDefault) {
-		return model.getLabel(locale, useDefault);
-	}
-
-	/**
-	 * Returns the localized label of this commerce term entry in the language. Uses the default language if no localization exists for the requested language.
-	 *
-	 * @param languageId the ID of the language
-	 * @return the localized label of this commerce term entry
-	 */
 	@Override
 	public String getLabel(String languageId) {
 		return model.getLabel(languageId);
 	}
 
-	/**
-	 * Returns the localized label of this commerce term entry in the language, optionally using the default language if no localization exists for the requested language.
-	 *
-	 * @param languageId the ID of the language
-	 * @param useDefault whether to use the default language if no localization exists for the requested language
-	 * @return the localized label of this commerce term entry
-	 */
 	@Override
 	public String getLabel(String languageId, boolean useDefault) {
 		return model.getLabel(languageId, useDefault);
 	}
 
 	@Override
-	public String getLabelCurrentLanguageId() {
-		return model.getLabelCurrentLanguageId();
+	public String getLabelMapAsXML() {
+		return model.getLabelMapAsXML();
 	}
 
 	@Override
-	public String getLabelCurrentValue() {
-		return model.getLabelCurrentValue();
+	public Map<String, String> getLanguageIdToDescriptionMap() {
+		return model.getLanguageIdToDescriptionMap();
 	}
 
-	/**
-	 * Returns a map of the locales and localized labels of this commerce term entry.
-	 *
-	 * @return the locales and localized labels of this commerce term entry
-	 */
 	@Override
-	public Map<java.util.Locale, String> getLabelMap() {
-		return model.getLabelMap();
+	public Map<String, String> getLanguageIdToLabelMap() {
+		return model.getLanguageIdToLabelMap();
 	}
 
 	/**
@@ -630,21 +592,6 @@ public class CommerceTermEntryWrapper
 		model.persist();
 	}
 
-	@Override
-	public void prepareLocalizedFieldsForImport()
-		throws com.liferay.portal.kernel.exception.LocaleException {
-
-		model.prepareLocalizedFieldsForImport();
-	}
-
-	@Override
-	public void prepareLocalizedFieldsForImport(
-			java.util.Locale defaultImportLocale)
-		throws com.liferay.portal.kernel.exception.LocaleException {
-
-		model.prepareLocalizedFieldsForImport(defaultImportLocale);
-	}
-
 	/**
 	 * Sets whether this commerce term entry is active.
 	 *
@@ -686,13 +633,13 @@ public class CommerceTermEntryWrapper
 	}
 
 	/**
-	 * Sets the description of this commerce term entry.
+	 * Sets the default language ID of this commerce term entry.
 	 *
-	 * @param description the description of this commerce term entry
+	 * @param defaultLanguageId the default language ID of this commerce term entry
 	 */
 	@Override
-	public void setDescription(String description) {
-		model.setDescription(description);
+	public void setDefaultLanguageId(String defaultLanguageId) {
+		model.setDefaultLanguageId(defaultLanguageId);
 	}
 
 	/**
@@ -723,70 +670,6 @@ public class CommerceTermEntryWrapper
 	@Override
 	public void setExternalReferenceCode(String externalReferenceCode) {
 		model.setExternalReferenceCode(externalReferenceCode);
-	}
-
-	/**
-	 * Sets the label of this commerce term entry.
-	 *
-	 * @param label the label of this commerce term entry
-	 */
-	@Override
-	public void setLabel(String label) {
-		model.setLabel(label);
-	}
-
-	/**
-	 * Sets the localized label of this commerce term entry in the language.
-	 *
-	 * @param label the localized label of this commerce term entry
-	 * @param locale the locale of the language
-	 */
-	@Override
-	public void setLabel(String label, java.util.Locale locale) {
-		model.setLabel(label, locale);
-	}
-
-	/**
-	 * Sets the localized label of this commerce term entry in the language, and sets the default locale.
-	 *
-	 * @param label the localized label of this commerce term entry
-	 * @param locale the locale of the language
-	 * @param defaultLocale the default locale
-	 */
-	@Override
-	public void setLabel(
-		String label, java.util.Locale locale, java.util.Locale defaultLocale) {
-
-		model.setLabel(label, locale, defaultLocale);
-	}
-
-	@Override
-	public void setLabelCurrentLanguageId(String languageId) {
-		model.setLabelCurrentLanguageId(languageId);
-	}
-
-	/**
-	 * Sets the localized labels of this commerce term entry from the map of locales and localized labels.
-	 *
-	 * @param labelMap the locales and localized labels of this commerce term entry
-	 */
-	@Override
-	public void setLabelMap(Map<java.util.Locale, String> labelMap) {
-		model.setLabelMap(labelMap);
-	}
-
-	/**
-	 * Sets the localized labels of this commerce term entry from the map of locales and localized labels, and sets the default locale.
-	 *
-	 * @param labelMap the locales and localized labels of this commerce term entry
-	 * @param defaultLocale the default locale
-	 */
-	@Override
-	public void setLabelMap(
-		Map<java.util.Locale, String> labelMap,
-		java.util.Locale defaultLocale) {
-
-		model.setLabelMap(labelMap, defaultLocale);
 	}
 
 	/**
@@ -917,6 +800,14 @@ public class CommerceTermEntryWrapper
 	@Override
 	public void setTypeSettings(String typeSettings) {
 		model.setTypeSettings(typeSettings);
+	}
+
+	@Override
+	public void setTypeSettingsUnicodeProperties(
+		com.liferay.portal.kernel.util.UnicodeProperties
+			typeSettingsUnicodeProperties) {
+
+		model.setTypeSettingsUnicodeProperties(typeSettingsUnicodeProperties);
 	}
 
 	/**

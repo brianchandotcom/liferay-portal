@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.term.service;
 
+import com.liferay.commerce.term.model.CTermEntryLocalization;
 import com.liferay.commerce.term.model.CommerceTermEntry;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -23,10 +24,13 @@ import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -35,6 +39,8 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -76,6 +82,21 @@ public interface CommerceTermEntryLocalService
 	public CommerceTermEntry addCommerceTermEntry(
 		CommerceTermEntry commerceTermEntry);
 
+	@Indexable(type = IndexableType.REINDEX)
+	public CommerceTermEntry addCommerceTermEntry(
+			String externalReferenceCode, long userId, boolean active,
+			Map<Locale, String> descriptionMap, int displayDateMonth,
+			int displayDateDay, int displayDateYear, int displayDateHour,
+			int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, Map<Locale, String> labelMap, String name,
+			double priority, String type, String typeSettings,
+			ServiceContext serviceContext)
+		throws PortalException;
+
+	public void checkCommerceTermEntries() throws PortalException;
+
 	/**
 	 * Creates a new commerce term entry with the primary key. Does not add the commerce term entry to the database.
 	 *
@@ -100,10 +121,13 @@ public interface CommerceTermEntryLocalService
 	 *
 	 * @param commerceTermEntry the commerce term entry
 	 * @return the commerce term entry that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public CommerceTermEntry deleteCommerceTermEntry(
-		CommerceTermEntry commerceTermEntry);
+			CommerceTermEntry commerceTermEntry)
+		throws PortalException;
 
 	/**
 	 * Deletes the commerce term entry with the primary key from the database. Also notifies the appropriate model listeners.
@@ -222,6 +246,10 @@ public interface CommerceTermEntryLocalService
 		long companyId, String externalReferenceCode);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CTermEntryLocalization fetchCTermEntryLocalization(
+		long commerceTermEntryId, String languageId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**
@@ -271,6 +299,19 @@ public interface CommerceTermEntryLocalService
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CTermEntryLocalization getCTermEntryLocalization(
+			long commerceTermEntryId, String languageId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<String> getCTermEntryLocalizationLanguageIds(
+		long commerceTermEntryId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CTermEntryLocalization> getCTermEntryLocalizations(
+		long commerceTermEntryId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
@@ -301,5 +342,38 @@ public interface CommerceTermEntryLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceTermEntry updateCommerceTermEntry(
 		CommerceTermEntry commerceTermEntry);
+
+	@Indexable(type = IndexableType.REINDEX)
+	public CommerceTermEntry updateCommerceTermEntry(
+			long userId, long commerceTermEntryId, boolean active,
+			Map<Locale, String> descriptionMap, int displayDateMonth,
+			int displayDateDay, int displayDateYear, int displayDateHour,
+			int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, Map<Locale, String> labelMap, String name,
+			double priority, String typeSettings, ServiceContext serviceContext)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public CommerceTermEntry updateCommerceTermEntryExternalReferenceCode(
+			String externalReferenceCode, long commerceTermEntryId)
+		throws PortalException;
+
+	public CTermEntryLocalization updateCTermEntryLocalization(
+			CommerceTermEntry commerceTermEntry, String languageId,
+			String description, String label)
+		throws PortalException;
+
+	public List<CTermEntryLocalization> updateCTermEntryLocalizations(
+			CommerceTermEntry commerceTermEntry,
+			Map<String, String> descriptionMap, Map<String, String> labelMap)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public CommerceTermEntry updateStatus(
+			long userId, long commerceTermEntryId, int status,
+			ServiceContext serviceContext)
+		throws PortalException;
 
 }

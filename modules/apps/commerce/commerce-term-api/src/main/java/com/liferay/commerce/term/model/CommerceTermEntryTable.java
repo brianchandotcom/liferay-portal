@@ -17,7 +17,6 @@ package com.liferay.commerce.term.model;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.base.BaseTable;
 
-import java.sql.Clob;
 import java.sql.Types;
 
 import java.util.Date;
@@ -41,6 +40,10 @@ public class CommerceTermEntryTable extends BaseTable<CommerceTermEntryTable> {
 		createColumn(
 			"externalReferenceCode", String.class, Types.VARCHAR,
 			Column.FLAG_DEFAULT);
+	public final Column<CommerceTermEntryTable, String> defaultLanguageId =
+		createColumn(
+			"defaultLanguageId", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 	public final Column<CommerceTermEntryTable, Long> commerceTermEntryId =
 		createColumn(
 			"commerceTermEntryId", Long.class, Types.BIGINT,
@@ -58,17 +61,12 @@ public class CommerceTermEntryTable extends BaseTable<CommerceTermEntryTable> {
 			"modifiedDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 	public final Column<CommerceTermEntryTable, Boolean> active = createColumn(
 		"active_", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
-	public final Column<CommerceTermEntryTable, Clob> description =
-		createColumn(
-			"description", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 	public final Column<CommerceTermEntryTable, Date> displayDate =
 		createColumn(
 			"displayDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 	public final Column<CommerceTermEntryTable, Date> expirationDate =
 		createColumn(
 			"expirationDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
-	public final Column<CommerceTermEntryTable, String> label = createColumn(
-		"label", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<CommerceTermEntryTable, String> name = createColumn(
 		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<CommerceTermEntryTable, Double> priority = createColumn(

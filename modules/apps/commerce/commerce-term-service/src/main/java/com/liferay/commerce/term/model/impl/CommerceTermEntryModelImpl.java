@@ -14,14 +14,15 @@
 
 package com.liferay.commerce.term.model.impl;
 
+import com.liferay.commerce.term.model.CTermEntryLocalization;
 import com.liferay.commerce.term.model.CommerceTermEntry;
 import com.liferay.commerce.term.model.CommerceTermEntryModel;
 import com.liferay.commerce.term.model.CommerceTermEntrySoap;
+import com.liferay.commerce.term.service.CommerceTermEntryLocalServiceUtil;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
-import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -31,11 +32,9 @@ import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
@@ -52,11 +51,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
-import java.util.TreeSet;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
@@ -84,12 +80,12 @@ public class CommerceTermEntryModelImpl
 
 	public static final Object[][] TABLE_COLUMNS = {
 		{"mvccVersion", Types.BIGINT}, {"externalReferenceCode", Types.VARCHAR},
+		{"defaultLanguageId", Types.VARCHAR},
 		{"commerceTermEntryId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"active_", Types.BOOLEAN}, {"description", Types.CLOB},
-		{"displayDate", Types.TIMESTAMP}, {"expirationDate", Types.TIMESTAMP},
-		{"label", Types.VARCHAR}, {"name", Types.VARCHAR},
+		{"active_", Types.BOOLEAN}, {"displayDate", Types.TIMESTAMP},
+		{"expirationDate", Types.TIMESTAMP}, {"name", Types.VARCHAR},
 		{"priority", Types.DOUBLE}, {"type_", Types.VARCHAR},
 		{"typeSettings", Types.VARCHAR}, {"lastPublishDate", Types.TIMESTAMP},
 		{"status", Types.INTEGER}, {"statusByUserId", Types.BIGINT},
@@ -102,6 +98,7 @@ public class CommerceTermEntryModelImpl
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("defaultLanguageId", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("commerceTermEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
@@ -109,10 +106,8 @@ public class CommerceTermEntryModelImpl
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("active_", Types.BOOLEAN);
-		TABLE_COLUMNS_MAP.put("description", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("displayDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("expirationDate", Types.TIMESTAMP);
-		TABLE_COLUMNS_MAP.put("label", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("priority", Types.DOUBLE);
 		TABLE_COLUMNS_MAP.put("type_", Types.VARCHAR);
@@ -125,7 +120,7 @@ public class CommerceTermEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceTermEntry (mvccVersion LONG default 0 not null,externalReferenceCode VARCHAR(75) null,commerceTermEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,active_ BOOLEAN,description TEXT null,displayDate DATE null,expirationDate DATE null,label STRING null,name VARCHAR(75) null,priority DOUBLE,type_ VARCHAR(75) null,typeSettings VARCHAR(75) null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+		"create table CommerceTermEntry (mvccVersion LONG default 0 not null,externalReferenceCode VARCHAR(75) null,defaultLanguageId VARCHAR(75) null,commerceTermEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,active_ BOOLEAN,displayDate DATE null,expirationDate DATE null,name VARCHAR(75) null,priority DOUBLE,type_ VARCHAR(75) null,typeSettings VARCHAR(75) null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table CommerceTermEntry";
 
@@ -175,20 +170,25 @@ public class CommerceTermEntryModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long STATUS_COLUMN_BITMASK = 32L;
+	public static final long NAME_COLUMN_BITMASK = 32L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long TYPE_COLUMN_BITMASK = 64L;
+	public static final long PRIORITY_COLUMN_BITMASK = 64L;
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *		#getColumnBitmask(String)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long PRIORITY_COLUMN_BITMASK = 128L;
+	public static final long STATUS_COLUMN_BITMASK = 128L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long TYPE_COLUMN_BITMASK = 256L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -221,6 +221,7 @@ public class CommerceTermEntryModelImpl
 
 		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setExternalReferenceCode(soapModel.getExternalReferenceCode());
+		model.setDefaultLanguageId(soapModel.getDefaultLanguageId());
 		model.setCommerceTermEntryId(soapModel.getCommerceTermEntryId());
 		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
@@ -228,10 +229,8 @@ public class CommerceTermEntryModelImpl
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setActive(soapModel.isActive());
-		model.setDescription(soapModel.getDescription());
 		model.setDisplayDate(soapModel.getDisplayDate());
 		model.setExpirationDate(soapModel.getExpirationDate());
-		model.setLabel(soapModel.getLabel());
 		model.setName(soapModel.getName());
 		model.setPriority(soapModel.getPriority());
 		model.setType(soapModel.getType());
@@ -411,6 +410,12 @@ public class CommerceTermEntryModelImpl
 			(BiConsumer<CommerceTermEntry, String>)
 				CommerceTermEntry::setExternalReferenceCode);
 		attributeGetterFunctions.put(
+			"defaultLanguageId", CommerceTermEntry::getDefaultLanguageId);
+		attributeSetterBiConsumers.put(
+			"defaultLanguageId",
+			(BiConsumer<CommerceTermEntry, String>)
+				CommerceTermEntry::setDefaultLanguageId);
+		attributeGetterFunctions.put(
 			"commerceTermEntryId", CommerceTermEntry::getCommerceTermEntryId);
 		attributeSetterBiConsumers.put(
 			"commerceTermEntryId",
@@ -450,12 +455,6 @@ public class CommerceTermEntryModelImpl
 			(BiConsumer<CommerceTermEntry, Boolean>)
 				CommerceTermEntry::setActive);
 		attributeGetterFunctions.put(
-			"description", CommerceTermEntry::getDescription);
-		attributeSetterBiConsumers.put(
-			"description",
-			(BiConsumer<CommerceTermEntry, String>)
-				CommerceTermEntry::setDescription);
-		attributeGetterFunctions.put(
 			"displayDate", CommerceTermEntry::getDisplayDate);
 		attributeSetterBiConsumers.put(
 			"displayDate",
@@ -467,10 +466,6 @@ public class CommerceTermEntryModelImpl
 			"expirationDate",
 			(BiConsumer<CommerceTermEntry, Date>)
 				CommerceTermEntry::setExpirationDate);
-		attributeGetterFunctions.put("label", CommerceTermEntry::getLabel);
-		attributeSetterBiConsumers.put(
-			"label",
-			(BiConsumer<CommerceTermEntry, String>)CommerceTermEntry::setLabel);
 		attributeGetterFunctions.put("name", CommerceTermEntry::getName);
 		attributeSetterBiConsumers.put(
 			"name",
@@ -527,6 +522,158 @@ public class CommerceTermEntryModelImpl
 			(Map)attributeSetterBiConsumers);
 	}
 
+	@Override
+	public String[] getAvailableLanguageIds() {
+		List<CTermEntryLocalization> cTermEntryLocalizations =
+			CommerceTermEntryLocalServiceUtil.getCTermEntryLocalizations(
+				getPrimaryKey());
+
+		String[] availableLanguageIds =
+			new String[cTermEntryLocalizations.size()];
+
+		for (int i = 0; i < availableLanguageIds.length; i++) {
+			CTermEntryLocalization cTermEntryLocalization =
+				cTermEntryLocalizations.get(i);
+
+			availableLanguageIds[i] = cTermEntryLocalization.getLanguageId();
+		}
+
+		return availableLanguageIds;
+	}
+
+	@Override
+	public String getDescription() {
+		return getDescription(getDefaultLanguageId(), false);
+	}
+
+	@Override
+	public String getDescription(String languageId) {
+		return getDescription(languageId, true);
+	}
+
+	@Override
+	public String getDescription(String languageId, boolean useDefault) {
+		if (useDefault) {
+			return LocalizationUtil.getLocalization(
+				new Function<String, String>() {
+
+					@Override
+					public String apply(String languageId) {
+						return _getDescription(languageId);
+					}
+
+				},
+				languageId, getDefaultLanguageId());
+		}
+
+		return _getDescription(languageId);
+	}
+
+	@Override
+	public String getDescriptionMapAsXML() {
+		return LocalizationUtil.getXml(
+			getLanguageIdToDescriptionMap(), getDefaultLanguageId(),
+			"Description");
+	}
+
+	@Override
+	public Map<String, String> getLanguageIdToDescriptionMap() {
+		Map<String, String> languageIdToDescriptionMap =
+			new HashMap<String, String>();
+
+		List<CTermEntryLocalization> cTermEntryLocalizations =
+			CommerceTermEntryLocalServiceUtil.getCTermEntryLocalizations(
+				getPrimaryKey());
+
+		for (CTermEntryLocalization cTermEntryLocalization :
+				cTermEntryLocalizations) {
+
+			languageIdToDescriptionMap.put(
+				cTermEntryLocalization.getLanguageId(),
+				cTermEntryLocalization.getDescription());
+		}
+
+		return languageIdToDescriptionMap;
+	}
+
+	private String _getDescription(String languageId) {
+		CTermEntryLocalization cTermEntryLocalization =
+			CommerceTermEntryLocalServiceUtil.fetchCTermEntryLocalization(
+				getPrimaryKey(), languageId);
+
+		if (cTermEntryLocalization == null) {
+			return "";
+		}
+
+		return cTermEntryLocalization.getDescription();
+	}
+
+	@Override
+	public String getLabel() {
+		return getLabel(getDefaultLanguageId(), false);
+	}
+
+	@Override
+	public String getLabel(String languageId) {
+		return getLabel(languageId, true);
+	}
+
+	@Override
+	public String getLabel(String languageId, boolean useDefault) {
+		if (useDefault) {
+			return LocalizationUtil.getLocalization(
+				new Function<String, String>() {
+
+					@Override
+					public String apply(String languageId) {
+						return _getLabel(languageId);
+					}
+
+				},
+				languageId, getDefaultLanguageId());
+		}
+
+		return _getLabel(languageId);
+	}
+
+	@Override
+	public String getLabelMapAsXML() {
+		return LocalizationUtil.getXml(
+			getLanguageIdToLabelMap(), getDefaultLanguageId(), "Label");
+	}
+
+	@Override
+	public Map<String, String> getLanguageIdToLabelMap() {
+		Map<String, String> languageIdToLabelMap =
+			new HashMap<String, String>();
+
+		List<CTermEntryLocalization> cTermEntryLocalizations =
+			CommerceTermEntryLocalServiceUtil.getCTermEntryLocalizations(
+				getPrimaryKey());
+
+		for (CTermEntryLocalization cTermEntryLocalization :
+				cTermEntryLocalizations) {
+
+			languageIdToLabelMap.put(
+				cTermEntryLocalization.getLanguageId(),
+				cTermEntryLocalization.getLabel());
+		}
+
+		return languageIdToLabelMap;
+	}
+
+	private String _getLabel(String languageId) {
+		CTermEntryLocalization cTermEntryLocalization =
+			CommerceTermEntryLocalServiceUtil.fetchCTermEntryLocalization(
+				getPrimaryKey(), languageId);
+
+		if (cTermEntryLocalization == null) {
+			return "";
+		}
+
+		return cTermEntryLocalization.getLabel();
+	}
+
 	@JSON
 	@Override
 	public long getMvccVersion() {
@@ -569,6 +716,26 @@ public class CommerceTermEntryModelImpl
 	@Deprecated
 	public String getOriginalExternalReferenceCode() {
 		return getColumnOriginalValue("externalReferenceCode");
+	}
+
+	@JSON
+	@Override
+	public String getDefaultLanguageId() {
+		if (_defaultLanguageId == null) {
+			return "";
+		}
+		else {
+			return _defaultLanguageId;
+		}
+	}
+
+	@Override
+	public void setDefaultLanguageId(String defaultLanguageId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_defaultLanguageId = defaultLanguageId;
 	}
 
 	@JSON
@@ -731,26 +898,6 @@ public class CommerceTermEntryModelImpl
 
 	@JSON
 	@Override
-	public String getDescription() {
-		if (_description == null) {
-			return "";
-		}
-		else {
-			return _description;
-		}
-	}
-
-	@Override
-	public void setDescription(String description) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_description = description;
-	}
-
-	@JSON
-	@Override
 	public Date getDisplayDate() {
 		return _displayDate;
 	}
@@ -799,115 +946,6 @@ public class CommerceTermEntryModelImpl
 
 	@JSON
 	@Override
-	public String getLabel() {
-		if (_label == null) {
-			return "";
-		}
-		else {
-			return _label;
-		}
-	}
-
-	@Override
-	public String getLabel(Locale locale) {
-		String languageId = LocaleUtil.toLanguageId(locale);
-
-		return getLabel(languageId);
-	}
-
-	@Override
-	public String getLabel(Locale locale, boolean useDefault) {
-		String languageId = LocaleUtil.toLanguageId(locale);
-
-		return getLabel(languageId, useDefault);
-	}
-
-	@Override
-	public String getLabel(String languageId) {
-		return LocalizationUtil.getLocalization(getLabel(), languageId);
-	}
-
-	@Override
-	public String getLabel(String languageId, boolean useDefault) {
-		return LocalizationUtil.getLocalization(
-			getLabel(), languageId, useDefault);
-	}
-
-	@Override
-	public String getLabelCurrentLanguageId() {
-		return _labelCurrentLanguageId;
-	}
-
-	@JSON
-	@Override
-	public String getLabelCurrentValue() {
-		Locale locale = getLocale(_labelCurrentLanguageId);
-
-		return getLabel(locale);
-	}
-
-	@Override
-	public Map<Locale, String> getLabelMap() {
-		return LocalizationUtil.getLocalizationMap(getLabel());
-	}
-
-	@Override
-	public void setLabel(String label) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_label = label;
-	}
-
-	@Override
-	public void setLabel(String label, Locale locale) {
-		setLabel(label, locale, LocaleUtil.getDefault());
-	}
-
-	@Override
-	public void setLabel(String label, Locale locale, Locale defaultLocale) {
-		String languageId = LocaleUtil.toLanguageId(locale);
-		String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
-
-		if (Validator.isNotNull(label)) {
-			setLabel(
-				LocalizationUtil.updateLocalization(
-					getLabel(), "Label", label, languageId, defaultLanguageId));
-		}
-		else {
-			setLabel(
-				LocalizationUtil.removeLocalization(
-					getLabel(), "Label", languageId));
-		}
-	}
-
-	@Override
-	public void setLabelCurrentLanguageId(String languageId) {
-		_labelCurrentLanguageId = languageId;
-	}
-
-	@Override
-	public void setLabelMap(Map<Locale, String> labelMap) {
-		setLabelMap(labelMap, LocaleUtil.getDefault());
-	}
-
-	@Override
-	public void setLabelMap(
-		Map<Locale, String> labelMap, Locale defaultLocale) {
-
-		if (labelMap == null) {
-			return;
-		}
-
-		setLabel(
-			LocalizationUtil.updateLocalization(
-				labelMap, getLabel(), "Label",
-				LocaleUtil.toLanguageId(defaultLocale)));
-	}
-
-	@JSON
-	@Override
 	public String getName() {
 		if (_name == null) {
 			return "";
@@ -926,6 +964,15 @@ public class CommerceTermEntryModelImpl
 		_name = name;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalName() {
+		return getColumnOriginalValue("name");
+	}
+
 	@JSON
 	@Override
 	public double getPriority() {
@@ -939,6 +986,16 @@ public class CommerceTermEntryModelImpl
 		}
 
 		_priority = priority;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public double getOriginalPriority() {
+		return GetterUtil.getDouble(
+			this.<Double>getColumnOriginalValue("priority"));
 	}
 
 	@JSON
@@ -1214,72 +1271,6 @@ public class CommerceTermEntryModelImpl
 	}
 
 	@Override
-	public String[] getAvailableLanguageIds() {
-		Set<String> availableLanguageIds = new TreeSet<String>();
-
-		Map<Locale, String> labelMap = getLabelMap();
-
-		for (Map.Entry<Locale, String> entry : labelMap.entrySet()) {
-			Locale locale = entry.getKey();
-			String value = entry.getValue();
-
-			if (Validator.isNotNull(value)) {
-				availableLanguageIds.add(LocaleUtil.toLanguageId(locale));
-			}
-		}
-
-		return availableLanguageIds.toArray(
-			new String[availableLanguageIds.size()]);
-	}
-
-	@Override
-	public String getDefaultLanguageId() {
-		String xml = getLabel();
-
-		if (xml == null) {
-			return "";
-		}
-
-		Locale defaultLocale = LocaleUtil.getDefault();
-
-		return LocalizationUtil.getDefaultLanguageId(xml, defaultLocale);
-	}
-
-	@Override
-	public void prepareLocalizedFieldsForImport() throws LocaleException {
-		Locale defaultLocale = LocaleUtil.fromLanguageId(
-			getDefaultLanguageId());
-
-		Locale[] availableLocales = LocaleUtil.fromLanguageIds(
-			getAvailableLanguageIds());
-
-		Locale defaultImportLocale = LocalizationUtil.getDefaultImportLocale(
-			CommerceTermEntry.class.getName(), getPrimaryKey(), defaultLocale,
-			availableLocales);
-
-		prepareLocalizedFieldsForImport(defaultImportLocale);
-	}
-
-	@Override
-	@SuppressWarnings("unused")
-	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
-		throws LocaleException {
-
-		Locale defaultLocale = LocaleUtil.getDefault();
-
-		String modelDefaultLanguageId = getDefaultLanguageId();
-
-		String label = getLabel(defaultLocale);
-
-		if (Validator.isNull(label)) {
-			setLabel(getLabel(modelDefaultLanguageId), defaultLocale);
-		}
-		else {
-			setLabel(getLabel(defaultLocale), defaultLocale, defaultLocale);
-		}
-	}
-
-	@Override
 	public CommerceTermEntry toEscapedModel() {
 		if (_escapedModel == null) {
 			Function<InvocationHandler, CommerceTermEntry>
@@ -1302,6 +1293,7 @@ public class CommerceTermEntryModelImpl
 		commerceTermEntryImpl.setMvccVersion(getMvccVersion());
 		commerceTermEntryImpl.setExternalReferenceCode(
 			getExternalReferenceCode());
+		commerceTermEntryImpl.setDefaultLanguageId(getDefaultLanguageId());
 		commerceTermEntryImpl.setCommerceTermEntryId(getCommerceTermEntryId());
 		commerceTermEntryImpl.setCompanyId(getCompanyId());
 		commerceTermEntryImpl.setUserId(getUserId());
@@ -1309,10 +1301,8 @@ public class CommerceTermEntryModelImpl
 		commerceTermEntryImpl.setCreateDate(getCreateDate());
 		commerceTermEntryImpl.setModifiedDate(getModifiedDate());
 		commerceTermEntryImpl.setActive(isActive());
-		commerceTermEntryImpl.setDescription(getDescription());
 		commerceTermEntryImpl.setDisplayDate(getDisplayDate());
 		commerceTermEntryImpl.setExpirationDate(getExpirationDate());
-		commerceTermEntryImpl.setLabel(getLabel());
 		commerceTermEntryImpl.setName(getName());
 		commerceTermEntryImpl.setPriority(getPriority());
 		commerceTermEntryImpl.setType(getType());
@@ -1337,6 +1327,8 @@ public class CommerceTermEntryModelImpl
 			this.<Long>getColumnOriginalValue("mvccVersion"));
 		commerceTermEntryImpl.setExternalReferenceCode(
 			this.<String>getColumnOriginalValue("externalReferenceCode"));
+		commerceTermEntryImpl.setDefaultLanguageId(
+			this.<String>getColumnOriginalValue("defaultLanguageId"));
 		commerceTermEntryImpl.setCommerceTermEntryId(
 			this.<Long>getColumnOriginalValue("commerceTermEntryId"));
 		commerceTermEntryImpl.setCompanyId(
@@ -1351,14 +1343,10 @@ public class CommerceTermEntryModelImpl
 			this.<Date>getColumnOriginalValue("modifiedDate"));
 		commerceTermEntryImpl.setActive(
 			this.<Boolean>getColumnOriginalValue("active_"));
-		commerceTermEntryImpl.setDescription(
-			this.<String>getColumnOriginalValue("description"));
 		commerceTermEntryImpl.setDisplayDate(
 			this.<Date>getColumnOriginalValue("displayDate"));
 		commerceTermEntryImpl.setExpirationDate(
 			this.<Date>getColumnOriginalValue("expirationDate"));
-		commerceTermEntryImpl.setLabel(
-			this.<String>getColumnOriginalValue("label"));
 		commerceTermEntryImpl.setName(
 			this.<String>getColumnOriginalValue("name"));
 		commerceTermEntryImpl.setPriority(
@@ -1477,6 +1465,15 @@ public class CommerceTermEntryModelImpl
 			commerceTermEntryCacheModel.externalReferenceCode = null;
 		}
 
+		commerceTermEntryCacheModel.defaultLanguageId = getDefaultLanguageId();
+
+		String defaultLanguageId =
+			commerceTermEntryCacheModel.defaultLanguageId;
+
+		if ((defaultLanguageId != null) && (defaultLanguageId.length() == 0)) {
+			commerceTermEntryCacheModel.defaultLanguageId = null;
+		}
+
 		commerceTermEntryCacheModel.commerceTermEntryId =
 			getCommerceTermEntryId();
 
@@ -1512,14 +1509,6 @@ public class CommerceTermEntryModelImpl
 
 		commerceTermEntryCacheModel.active = isActive();
 
-		commerceTermEntryCacheModel.description = getDescription();
-
-		String description = commerceTermEntryCacheModel.description;
-
-		if ((description != null) && (description.length() == 0)) {
-			commerceTermEntryCacheModel.description = null;
-		}
-
 		Date displayDate = getDisplayDate();
 
 		if (displayDate != null) {
@@ -1537,14 +1526,6 @@ public class CommerceTermEntryModelImpl
 		}
 		else {
 			commerceTermEntryCacheModel.expirationDate = Long.MIN_VALUE;
-		}
-
-		commerceTermEntryCacheModel.label = getLabel();
-
-		String label = commerceTermEntryCacheModel.label;
-
-		if ((label != null) && (label.length() == 0)) {
-			commerceTermEntryCacheModel.label = null;
 		}
 
 		commerceTermEntryCacheModel.name = getName();
@@ -1697,6 +1678,7 @@ public class CommerceTermEntryModelImpl
 
 	private long _mvccVersion;
 	private String _externalReferenceCode;
+	private String _defaultLanguageId;
 	private long _commerceTermEntryId;
 	private long _companyId;
 	private long _userId;
@@ -1705,11 +1687,8 @@ public class CommerceTermEntryModelImpl
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private boolean _active;
-	private String _description;
 	private Date _displayDate;
 	private Date _expirationDate;
-	private String _label;
-	private String _labelCurrentLanguageId;
 	private String _name;
 	private double _priority;
 	private String _type;
@@ -1752,6 +1731,7 @@ public class CommerceTermEntryModelImpl
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
 		_columnOriginalValues.put(
 			"externalReferenceCode", _externalReferenceCode);
+		_columnOriginalValues.put("defaultLanguageId", _defaultLanguageId);
 		_columnOriginalValues.put("commerceTermEntryId", _commerceTermEntryId);
 		_columnOriginalValues.put("companyId", _companyId);
 		_columnOriginalValues.put("userId", _userId);
@@ -1759,10 +1739,8 @@ public class CommerceTermEntryModelImpl
 		_columnOriginalValues.put("createDate", _createDate);
 		_columnOriginalValues.put("modifiedDate", _modifiedDate);
 		_columnOriginalValues.put("active_", _active);
-		_columnOriginalValues.put("description", _description);
 		_columnOriginalValues.put("displayDate", _displayDate);
 		_columnOriginalValues.put("expirationDate", _expirationDate);
-		_columnOriginalValues.put("label", _label);
 		_columnOriginalValues.put("name", _name);
 		_columnOriginalValues.put("priority", _priority);
 		_columnOriginalValues.put("type_", _type);
@@ -1800,45 +1778,43 @@ public class CommerceTermEntryModelImpl
 
 		columnBitmasks.put("externalReferenceCode", 2L);
 
-		columnBitmasks.put("commerceTermEntryId", 4L);
+		columnBitmasks.put("defaultLanguageId", 4L);
 
-		columnBitmasks.put("companyId", 8L);
+		columnBitmasks.put("commerceTermEntryId", 8L);
 
-		columnBitmasks.put("userId", 16L);
+		columnBitmasks.put("companyId", 16L);
 
-		columnBitmasks.put("userName", 32L);
+		columnBitmasks.put("userId", 32L);
 
-		columnBitmasks.put("createDate", 64L);
+		columnBitmasks.put("userName", 64L);
 
-		columnBitmasks.put("modifiedDate", 128L);
+		columnBitmasks.put("createDate", 128L);
 
-		columnBitmasks.put("active_", 256L);
+		columnBitmasks.put("modifiedDate", 256L);
 
-		columnBitmasks.put("description", 512L);
+		columnBitmasks.put("active_", 512L);
 
 		columnBitmasks.put("displayDate", 1024L);
 
 		columnBitmasks.put("expirationDate", 2048L);
 
-		columnBitmasks.put("label", 4096L);
+		columnBitmasks.put("name", 4096L);
 
-		columnBitmasks.put("name", 8192L);
+		columnBitmasks.put("priority", 8192L);
 
-		columnBitmasks.put("priority", 16384L);
+		columnBitmasks.put("type_", 16384L);
 
-		columnBitmasks.put("type_", 32768L);
+		columnBitmasks.put("typeSettings", 32768L);
 
-		columnBitmasks.put("typeSettings", 65536L);
+		columnBitmasks.put("lastPublishDate", 65536L);
 
-		columnBitmasks.put("lastPublishDate", 131072L);
+		columnBitmasks.put("status", 131072L);
 
-		columnBitmasks.put("status", 262144L);
+		columnBitmasks.put("statusByUserId", 262144L);
 
-		columnBitmasks.put("statusByUserId", 524288L);
+		columnBitmasks.put("statusByUserName", 524288L);
 
-		columnBitmasks.put("statusByUserName", 1048576L);
-
-		columnBitmasks.put("statusDate", 2097152L);
+		columnBitmasks.put("statusDate", 1048576L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

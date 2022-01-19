@@ -35,6 +35,7 @@ public class CommerceTermEntrySoap implements Serializable {
 
 		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setExternalReferenceCode(model.getExternalReferenceCode());
+		soapModel.setDefaultLanguageId(model.getDefaultLanguageId());
 		soapModel.setCommerceTermEntryId(model.getCommerceTermEntryId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
@@ -42,10 +43,8 @@ public class CommerceTermEntrySoap implements Serializable {
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setActive(model.isActive());
-		soapModel.setDescription(model.getDescription());
 		soapModel.setDisplayDate(model.getDisplayDate());
 		soapModel.setExpirationDate(model.getExpirationDate());
-		soapModel.setLabel(model.getLabel());
 		soapModel.setName(model.getName());
 		soapModel.setPriority(model.getPriority());
 		soapModel.setType(model.getType());
@@ -132,6 +131,14 @@ public class CommerceTermEntrySoap implements Serializable {
 		_externalReferenceCode = externalReferenceCode;
 	}
 
+	public String getDefaultLanguageId() {
+		return _defaultLanguageId;
+	}
+
+	public void setDefaultLanguageId(String defaultLanguageId) {
+		_defaultLanguageId = defaultLanguageId;
+	}
+
 	public long getCommerceTermEntryId() {
 		return _commerceTermEntryId;
 	}
@@ -192,14 +199,6 @@ public class CommerceTermEntrySoap implements Serializable {
 		_active = active;
 	}
 
-	public String getDescription() {
-		return _description;
-	}
-
-	public void setDescription(String description) {
-		_description = description;
-	}
-
 	public Date getDisplayDate() {
 		return _displayDate;
 	}
@@ -214,14 +213,6 @@ public class CommerceTermEntrySoap implements Serializable {
 
 	public void setExpirationDate(Date expirationDate) {
 		_expirationDate = expirationDate;
-	}
-
-	public String getLabel() {
-		return _label;
-	}
-
-	public void setLabel(String label) {
-		_label = label;
 	}
 
 	public String getName() {
@@ -298,6 +289,7 @@ public class CommerceTermEntrySoap implements Serializable {
 
 	private long _mvccVersion;
 	private String _externalReferenceCode;
+	private String _defaultLanguageId;
 	private long _commerceTermEntryId;
 	private long _companyId;
 	private long _userId;
@@ -305,10 +297,8 @@ public class CommerceTermEntrySoap implements Serializable {
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _active;
-	private String _description;
 	private Date _displayDate;
 	private Date _expirationDate;
-	private String _label;
 	private String _name;
 	private double _priority;
 	private String _type;

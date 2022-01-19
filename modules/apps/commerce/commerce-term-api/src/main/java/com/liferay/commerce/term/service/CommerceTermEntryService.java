@@ -14,13 +14,19 @@
 
 package com.liferay.commerce.term.service;
 
+import com.liferay.commerce.term.model.CommerceTermEntry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
+import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+
+import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -47,6 +53,33 @@ public interface CommerceTermEntryService extends BaseService {
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.commerce.term.service.impl.CommerceTermEntryServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the commerce term entry remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link CommerceTermEntryServiceUtil} if injection and service tracking are not available.
 	 */
+	public CommerceTermEntry addCommerceTermEntry(
+			String externalReferenceCode, boolean active,
+			Map<Locale, String> descriptionMap, int displayDateMonth,
+			int displayDateDay, int displayDateYear, int displayDateHour,
+			int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, Map<Locale, String> labelMap, String name,
+			double priority, String type, String typeSettings,
+			ServiceContext serviceContext)
+		throws PortalException;
+
+	public CommerceTermEntry deleteCommerceTermEntry(long commerceTermEntryId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceTermEntry fetchByExternalReferenceCode(
+			long companyId, String externalReferenceCode)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceTermEntry fetchCommerceTermEntry(long commerceTermEntryId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceTermEntry getCommerceTermEntry(long commerceTermEntryId)
+		throws PortalException;
 
 	/**
 	 * Returns the OSGi service identifier.
@@ -54,5 +87,20 @@ public interface CommerceTermEntryService extends BaseService {
 	 * @return the OSGi service identifier
 	 */
 	public String getOSGiServiceIdentifier();
+
+	public CommerceTermEntry updateCommerceTermEntry(
+			long commerceTermEntryId, boolean active,
+			Map<Locale, String> descriptionMap, int displayDateMonth,
+			int displayDateDay, int displayDateYear, int displayDateHour,
+			int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, Map<Locale, String> labelMap, String name,
+			double priority, String typeSettings, ServiceContext serviceContext)
+		throws PortalException;
+
+	public CommerceTermEntry updateCommerceTermEntryExternalReferenceCode(
+			String externalReferenceCode, long commerceTermEntryId)
+		throws PortalException;
 
 }

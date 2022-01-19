@@ -14,9 +14,19 @@
 
 package com.liferay.commerce.term.service.http;
 
+import com.liferay.commerce.term.service.CommerceTermEntryServiceUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
+
+import java.rmi.RemoteException;
+
+import java.util.Locale;
+import java.util.Map;
+
 /**
  * Provides the SOAP utility for the
- * <code>com.liferay.commerce.term.service.CommerceTermEntryServiceUtil</code> service
+ * <code>CommerceTermEntryServiceUtil</code> service
  * utility. The static methods of this class call the same methods of the
  * service utility. However, the signatures are different because it is
  * difficult for SOAP to support certain types.
@@ -56,4 +66,188 @@ package com.liferay.commerce.term.service.http;
  */
 @Deprecated
 public class CommerceTermEntryServiceSoap {
+
+	public static com.liferay.commerce.term.model.CommerceTermEntrySoap
+			addCommerceTermEntry(
+				String externalReferenceCode, boolean active,
+				String[] descriptionMapLanguageIds,
+				String[] descriptionMapValues, int displayDateMonth,
+				int displayDateDay, int displayDateYear, int displayDateHour,
+				int displayDateMinute, int expirationDateMonth,
+				int expirationDateDay, int expirationDateYear,
+				int expirationDateHour, int expirationDateMinute,
+				boolean neverExpire, String[] labelMapLanguageIds,
+				String[] labelMapValues, String name, double priority,
+				String type, String typeSettings,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+
+		try {
+			Map<Locale, String> descriptionMap =
+				LocalizationUtil.getLocalizationMap(
+					descriptionMapLanguageIds, descriptionMapValues);
+			Map<Locale, String> labelMap = LocalizationUtil.getLocalizationMap(
+				labelMapLanguageIds, labelMapValues);
+
+			com.liferay.commerce.term.model.CommerceTermEntry returnValue =
+				CommerceTermEntryServiceUtil.addCommerceTermEntry(
+					externalReferenceCode, active, descriptionMap,
+					displayDateMonth, displayDateDay, displayDateYear,
+					displayDateHour, displayDateMinute, expirationDateMonth,
+					expirationDateDay, expirationDateYear, expirationDateHour,
+					expirationDateMinute, neverExpire, labelMap, name, priority,
+					type, typeSettings, serviceContext);
+
+			return com.liferay.commerce.term.model.CommerceTermEntrySoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.term.model.CommerceTermEntrySoap
+			deleteCommerceTermEntry(long commerceTermEntryId)
+		throws RemoteException {
+
+		try {
+			com.liferay.commerce.term.model.CommerceTermEntry returnValue =
+				CommerceTermEntryServiceUtil.deleteCommerceTermEntry(
+					commerceTermEntryId);
+
+			return com.liferay.commerce.term.model.CommerceTermEntrySoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.term.model.CommerceTermEntrySoap
+			fetchByExternalReferenceCode(
+				long companyId, String externalReferenceCode)
+		throws RemoteException {
+
+		try {
+			com.liferay.commerce.term.model.CommerceTermEntry returnValue =
+				CommerceTermEntryServiceUtil.fetchByExternalReferenceCode(
+					companyId, externalReferenceCode);
+
+			return com.liferay.commerce.term.model.CommerceTermEntrySoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.term.model.CommerceTermEntrySoap
+			fetchCommerceTermEntry(long commerceTermEntryId)
+		throws RemoteException {
+
+		try {
+			com.liferay.commerce.term.model.CommerceTermEntry returnValue =
+				CommerceTermEntryServiceUtil.fetchCommerceTermEntry(
+					commerceTermEntryId);
+
+			return com.liferay.commerce.term.model.CommerceTermEntrySoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.term.model.CommerceTermEntrySoap
+			getCommerceTermEntry(long commerceTermEntryId)
+		throws RemoteException {
+
+		try {
+			com.liferay.commerce.term.model.CommerceTermEntry returnValue =
+				CommerceTermEntryServiceUtil.getCommerceTermEntry(
+					commerceTermEntryId);
+
+			return com.liferay.commerce.term.model.CommerceTermEntrySoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.term.model.CommerceTermEntrySoap
+			updateCommerceTermEntry(
+				long commerceTermEntryId, boolean active,
+				String[] descriptionMapLanguageIds,
+				String[] descriptionMapValues, int displayDateMonth,
+				int displayDateDay, int displayDateYear, int displayDateHour,
+				int displayDateMinute, int expirationDateMonth,
+				int expirationDateDay, int expirationDateYear,
+				int expirationDateHour, int expirationDateMinute,
+				boolean neverExpire, String[] labelMapLanguageIds,
+				String[] labelMapValues, String name, double priority,
+				String typeSettings,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+
+		try {
+			Map<Locale, String> descriptionMap =
+				LocalizationUtil.getLocalizationMap(
+					descriptionMapLanguageIds, descriptionMapValues);
+			Map<Locale, String> labelMap = LocalizationUtil.getLocalizationMap(
+				labelMapLanguageIds, labelMapValues);
+
+			com.liferay.commerce.term.model.CommerceTermEntry returnValue =
+				CommerceTermEntryServiceUtil.updateCommerceTermEntry(
+					commerceTermEntryId, active, descriptionMap,
+					displayDateMonth, displayDateDay, displayDateYear,
+					displayDateHour, displayDateMinute, expirationDateMonth,
+					expirationDateDay, expirationDateYear, expirationDateHour,
+					expirationDateMinute, neverExpire, labelMap, name, priority,
+					typeSettings, serviceContext);
+
+			return com.liferay.commerce.term.model.CommerceTermEntrySoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.term.model.CommerceTermEntrySoap
+			updateCommerceTermEntryExternalReferenceCode(
+				String externalReferenceCode, long commerceTermEntryId)
+		throws RemoteException {
+
+		try {
+			com.liferay.commerce.term.model.CommerceTermEntry returnValue =
+				CommerceTermEntryServiceUtil.
+					updateCommerceTermEntryExternalReferenceCode(
+						externalReferenceCode, commerceTermEntryId);
+
+			return com.liferay.commerce.term.model.CommerceTermEntrySoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		CommerceTermEntryServiceSoap.class);
+
 }

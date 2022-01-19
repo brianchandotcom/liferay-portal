@@ -231,12 +231,22 @@ public class BundleSiteInitializerTest {
 			serviceContext.fetchUser()
 		).build();
 
+		UserAccountResource.Builder userAccountResourceBuilder =
+			_userAccountResourceFactory.create();
+
+		UserAccountResource userAccountResource =
+			userAccountResourceBuilder.user(
+				serviceContext.fetchUser()
+			).build();
+
 		Account account1 = accountResource.getAccountByExternalReferenceCode(
 			"TESTACC0001");
 
 		Assert.assertNotNull(account1);
 		Assert.assertEquals("Test Account 1", account1.getName());
 		Assert.assertEquals("business", account1.getType());
+
+		_assertUserAccounts(account1.getId(), 1, userAccountResource);
 
 		Account account2 = accountResource.getAccountByExternalReferenceCode(
 			"TESTACC0002");
@@ -245,6 +255,8 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals("Test Account 2", account2.getName());
 		Assert.assertEquals("guest", account2.getType());
 
+		_assertUserAccounts(account2.getId(), 1, userAccountResource);
+
 		Account account3 = accountResource.getAccountByExternalReferenceCode(
 			"TESTACC0003");
 
@@ -252,7 +264,7 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals("Test Account 3", account3.getName());
 		Assert.assertEquals("person", account3.getType());
 
-		_assertUserAccounts(account3.getId(), 0, serviceContext);
+		_assertUserAccounts(account3.getId(), 0, userAccountResource);
 	}
 
 	private void _assertAssetCategories(Group group) throws Exception {
@@ -897,20 +909,12 @@ public class BundleSiteInitializerTest {
 	}
 
 	private void _assertUserAccounts(
-			Long accountId, int expected, ServiceContext serviceContext)
+			Long accountId, int expected,
+			UserAccountResource userAccountResource)
 		throws Exception {
 
-		UserAccountResource.Builder userAccountResourceBuilder =
-			_userAccountResourceFactory.create();
-
-		UserAccountResource userAccountResource =
-			userAccountResourceBuilder.user(
-				serviceContext.fetchUser()
-			).build();
-
-		Page<UserAccount> page =
-			userAccountResource.getAccountUserAccountsPage(
-				accountId, null, null, null, null);
+		Page<UserAccount> page = userAccountResource.getAccountUserAccountsPage(
+			accountId, null, null, null, null);
 
 		Assert.assertNotNull(page);
 		Assert.assertEquals(expected, page.totalCount());

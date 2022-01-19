@@ -15,12 +15,14 @@
 package com.liferay.search.experiences.internal.blueprint.parameter.contributor;
 
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.search.experiences.blueprint.parameter.SXPParameter;
 import com.liferay.search.experiences.blueprint.parameter.contributor.SXPParameterContributorDefinition;
 import com.liferay.search.experiences.internal.blueprint.parameter.BooleanSXPParameter;
@@ -100,21 +102,24 @@ public class ContextSXPParameterContributor implements SXPParameterContributor {
 				new LongSXPParameter("plid", true, layout.getPlid()));
 		}
 
-		Long scopeGroupId = (Long)searchContext.getAttribute(
-			"search.experiences.current.group.id");
+		long scopeGroupId = GetterUtil.getLong(
+			searchContext.getAttribute("search.experiences.scope.group.id"));
 
-		if (scopeGroupId != null) {
+		if (scopeGroupId != 0) {
 			sxpParameters.add(
 				new LongSXPParameter(
 					"context.scope_group_id", true, scopeGroupId));
 
-			Group group = _groupLocalService.fetchGroup(scopeGroupId);
+			try {
+				Group group = _groupLocalService.getGroup(scopeGroupId);
 
-			if (group != null) {
 				sxpParameters.add(
 					new BooleanSXPParameter(
 						"context.is_staging_group", true,
 						group.isStagingGroup()));
+			}
+			catch (PortalException portalException) {
+				exceptionListener.exceptionThrown(portalException);
 			}
 		}
 	}

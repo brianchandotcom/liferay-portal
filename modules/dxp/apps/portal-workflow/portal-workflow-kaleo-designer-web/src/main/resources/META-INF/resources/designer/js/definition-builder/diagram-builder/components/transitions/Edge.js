@@ -168,13 +168,13 @@ Edge.propTypes = {
 	id: PropTypes.string.isRequired,
 	source: PropTypes.string,
 	sourcePosition: PropTypes.string,
-	sourceX: PropTypes.string,
-	sourceY: PropTypes.string,
+	sourceX: PropTypes.number,
+	sourceY: PropTypes.number,
 	style: PropTypes.object,
 	target: PropTypes.string,
 	targetPosition: PropTypes.string,
-	targetX: PropTypes.string,
-	targetY: PropTypes.string,
+	targetX: PropTypes.number,
+	targetY: PropTypes.number,
 };
 
 const edgeTypes = {

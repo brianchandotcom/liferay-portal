@@ -225,7 +225,7 @@ definition {
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Site Name",
 			layoutName = "Page Name",
-			widgetName = "Categories Navigation");
+			widgetName = "Category Filter");
 
 		var categoryId = JSONCategory.addCategory(
 			groupName = "Test Depot Name",
@@ -249,7 +249,7 @@ definition {
 	@description = "This ensures that a depot category can be selected in Category Navigation on a connected site."
 	@priority = "5"
 	test CanSelectCategoryInCategoriesNavigation {
-		for (var portletName : list "Asset Publisher,Categories Navigation") {
+		for (var portletName : list "Asset Publisher,Category Filter") {
 			JSONLayout.addWidgetToPublicLayout(
 				groupName = "Site Name",
 				layoutName = "Page Name",

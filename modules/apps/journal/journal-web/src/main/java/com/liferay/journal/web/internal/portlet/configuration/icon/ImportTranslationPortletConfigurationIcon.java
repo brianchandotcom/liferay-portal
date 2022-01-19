@@ -56,7 +56,8 @@ public class ImportTranslationPortletConfigurationIcon
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
 		return LanguageUtil.get(
-			getResourceBundle(getLocale(portletRequest)), "import-translation");
+			getResourceBundle(getLocale(portletRequest)),
+			"import-translations");
 	}
 
 	@Override

@@ -137,7 +137,7 @@ public class JournalManagementToolbarDisplayContext
 							dropdownItem.setLabel(
 								LanguageUtil.get(
 									httpServletRequest,
-									"export-for-translation"));
+									"export-for-translations"));
 							dropdownItem.setQuickAction(true);
 						}
 					).build());

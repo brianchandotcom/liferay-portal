@@ -114,7 +114,7 @@ public class LayoutsAdminManagementToolbarDisplayContext
 				dropdownItem.setIcon("import-export");
 				dropdownItem.setLabel(
 					LanguageUtil.get(
-						httpServletRequest, "export-for-translation"));
+						httpServletRequest, "export-for-translations"));
 				dropdownItem.setQuickAction(true);
 			}
 		).add(

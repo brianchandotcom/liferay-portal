@@ -147,8 +147,8 @@ const InvitesPage = ({
 			const isPartner = project.partner;
 
 			if (
-				SLA_CURRENT.includes(SLA.gold) ||
-				SLA_CURRENT.includes(SLA.platinum)
+				SLA_CURRENT?.includes(SLA.gold) ||
+				SLA_CURRENT?.includes(SLA.platinum)
 			) {
 				const requestorIndex = filterRoles.findIndex(
 					(label) => label === roles.REQUESTOR.key
@@ -319,8 +319,8 @@ const InvitesPage = ({
 				<div className="mx-3 pt-3">
 					<h5 className="text-neutral-7">
 						{`${
-							project.slaCurrent.includes(SLA.gold) ||
-							project.slaCurrent.includes(SLA.platinum)
+							project?.slaCurrent?.includes(SLA.gold) ||
+							project?.slaCurrent?.includes(SLA.platinum)
 								? roles.REQUESTOR.name
 								: roles.ADMIN.name
 						}	roles available: ${availableAdminsRoles} of ${maxRequestors}`}

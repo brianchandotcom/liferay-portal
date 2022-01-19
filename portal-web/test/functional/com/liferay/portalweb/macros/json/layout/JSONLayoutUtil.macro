@@ -59,6 +59,9 @@ definition {
 		else if ("${widgetName}" == "Category filter") {
 			var portletId = "com_liferay_asset_categories_navigation_web_portlet_AssetCategoriesNavigationPortlet";
 		}
+		else if ("${widgetName}" == "Category Content") {
+			var portletId = "com_liferay_commerce_product_content_web_internal_portlet_CPCategoryContentPortlet";
+		}
 		else if ("${widgetName}" == "Clay Sample") {
 			var portletId = "com_liferay_clay_sample_web_portlet_ClaySamplePortlet";
 		}

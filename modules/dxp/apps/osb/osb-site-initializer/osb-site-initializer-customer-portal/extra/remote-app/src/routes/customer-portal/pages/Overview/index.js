@@ -119,7 +119,7 @@ const Overview = ({project, subscriptionGroups}) => {
 
 			<div
 				className={classNames('align-items-center d-flex', {
-					'justify-content-between': subscriptionGroups.length <= 4,
+					'justify-content-between': subscriptionGroups.length < 5,
 					'justify-content-evenly': subscriptionGroups.length > 4,
 				})}
 			>

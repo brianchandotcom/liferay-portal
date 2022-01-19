@@ -12,7 +12,7 @@
 <tbody>
 <tr>
 	<td>ACTIVE_NAV_NESTED_LINK</td>
-	<td>//ul[contains(@class,'nav-nested')]//a[contains(@class,'active') and normalize-space()='${key_navNested}'] | //ul[contains(@class,'nav-nested')]//a[contains(@class,'active')]//*[normalize-space()='${key_navNested}']</td>
+	<td>//ul[contains(@class,'nav-nested')]//*[self::a or self::button][contains(@class,'active') and normalize-space()='${key_navNested}'] | //ul[contains(@class,'nav-nested')]//a[contains(@class,'active')]//*[normalize-space()='${key_navNested}']</td>
 	<td></td>
 </tr>
 <tr>

@@ -181,6 +181,17 @@ definition {
 				value1 = "${indexes}");
 		}
 
+		if (isSet(attributesKey)) {
+			Type(
+				locator1 = "TextInput#KEY",
+				value1 = "${attributesKey}");
+
+			Type(
+				key_fieldLabel = "Value",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "${attributesValue}");
+		}
+
 		PortletEntry.save();
 
 		IFrame.closeFrame();

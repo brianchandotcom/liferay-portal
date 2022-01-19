@@ -57,6 +57,12 @@ definition {
 		MenuItem.click(menuItem = "Move to Recycle Bin");
 	}
 
+	macro create {
+		Button.clickCreate();
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro deleteViaMenuItem {
 		LexiconEntry.gotoEntryMenuItemNoError(
 			menuItem = "Delete",

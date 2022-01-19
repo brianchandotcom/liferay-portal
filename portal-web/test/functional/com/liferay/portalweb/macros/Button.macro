@@ -44,6 +44,10 @@ definition {
 		Click(locator1 = "Button#CONFIRM");
 	}
 
+	macro clickCreate {
+		Button.click(button = "Create");
+	}
+
 	macro clickDelete {
 		Button.click(button = "Delete");
 	}

@@ -32,7 +32,7 @@
 </tr>
 <tr>
 	<td>PREVIOUS_LINK</td>
-	<td>//ul[contains(@class,'pagination')]/li/a[contains(.,'2')] | //ul[contains(@class,'pagination')]/li/a[contains(.,'Previous')] | //ul[contains(@class,'pagination')]/li/a/span[contains(@class,'icon-caret-left')]</td>
+	<td>//ul[contains(@class,'pagination')]/li/a[contains(.,'2')] | //ul[contains(@class,'pagination')]/li/a[contains(.,'Previous')] | //ul[contains(@class,'pagination')]/li/a/span[contains(@class,'icon-caret-left')] | //button[contains(@class, 'page-link')]//*[contains(@class,'left')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -92,7 +92,7 @@
 </tr>
 <tr>
 	<td>ITEMS_PER_PAGE_SELECT</td>
-	<td>//div[contains(@class,'pagination-items-per-page')]/a[contains(@class,'toggle')]</td>
+	<td>//div[contains(@class,'pagination-items-per-page')]/*[self::a or self::button][contains(@class,'toggle')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -102,12 +102,7 @@
 </tr>
 <tr>
 	<td>RESULTS</td>
-	<td>//p[@class='pagination-results']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>RESULTS_2</td>
-	<td>//div[@class='pagination-results']</td>
+	<td>xpath=(//div|//p)[@class='pagination-results']</td>
 	<td></td>
 </tr>
 <tr>

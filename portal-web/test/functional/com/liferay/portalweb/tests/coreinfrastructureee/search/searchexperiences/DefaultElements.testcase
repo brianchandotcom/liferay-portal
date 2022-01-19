@@ -1,0 +1,836 @@
+@component-name = "portal-search"
+definition {
+
+	property portal.release = "true";
+	property portal.suite.search.engine = "elasticsearch7";
+	property portal.upstream = "true";
+	property test.assert.warning.exceptions = "true";
+	property testray.main.component.name = "Search Experiences";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		Blueprints.openBlueprintsAdmin();
+
+		Blueprints.createBlueprint(title = "Test Blueprint");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	test BoostAllKeywordsMatch {
+		var element = "Boost All Keywords Match";
+
+		Blueprints.addElement(element = "${element}");
+
+		Blueprints.searchBlueprintsPreview(searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "//div[contains(@class,'alert-danger') and contains(.,'An unexpected error occurred')]");
+
+		PortletEntry.save();
+
+		Search.openSearchPage();
+
+		Blueprints.applyBlueprintViaOptionsWidget(blueprintTitle = "Test Blueprint");
+
+		SearchPortlets.searchEmbedded(searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "Message#ERROR");
+	}
+
+	test BoostAssetType {
+		var element = "Boost Asset Type";
+
+		Blueprints.addElement(element = "${element}");
+
+		Blueprints.searchBlueprintsPreview(searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "//div[contains(@class,'alert-danger') and contains(.,'An unexpected error occurred')]");
+
+		PortletEntry.save();
+
+		Search.openSearchPage();
+
+		Blueprints.applyBlueprintViaOptionsWidget(blueprintTitle = "Test Blueprint");
+
+		SearchPortlets.searchEmbedded(searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "Message#ERROR");
+	}
+
+	test BoostContentsForTheCurrentLanguage {
+		var element = "Boost Contents for the Current Language";
+
+		Blueprints.addElement(element = "${element}");
+
+		Blueprints.searchBlueprintsPreview(searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "//div[contains(@class,'alert-danger') and contains(.,'An unexpected error occurred')]");
+
+		PortletEntry.save();
+
+		Search.openSearchPage();
+
+		Blueprints.applyBlueprintViaOptionsWidget(blueprintTitle = "Test Blueprint");
+
+		SearchPortlets.searchEmbedded(searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "Message#ERROR");
+	}
+
+	test BoostContentsInACategory {
+		var element = "Boost Contents in a Category";
+
+		Blueprints.addElement(element = "${element}");
+
+		Blueprints.searchBlueprintsPreview(searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "//div[contains(@class,'alert-danger') and contains(.,'An unexpected error occurred')]");
+
+		PortletEntry.save();
+
+		Search.openSearchPage();
+
+		Blueprints.applyBlueprintViaOptionsWidget(blueprintTitle = "Test Blueprint");
+
+		SearchPortlets.searchEmbedded(searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "Message#ERROR");
+	}
+
+	test BoostContentsInACategoryByKeywordMatch {
+		var element = "Boost Contents in a Category by Keyword Match";
+
+		Blueprints.addElement(element = "${element}");
+
+		Blueprints.searchBlueprintsPreview(searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "//div[contains(@class,'alert-danger') and contains(.,'An unexpected error occurred')]");
+
+		PortletEntry.save();
+
+		Search.openSearchPage();
+
+		Blueprints.applyBlueprintViaOptionsWidget(blueprintTitle = "Test Blueprint");
+
+		SearchPortlets.searchEmbedded(searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "Message#ERROR");
+	}
+
+	test BoostContentsInACategoryForAPeriodOfTime {
+		var element = "Boost Contents in a Category for a Period of Time";
+
+		Blueprints.addElement(element = "${element}");
+
+		Blueprints.searchBlueprintsPreview(searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "//div[contains(@class,'alert-danger') and contains(.,'An unexpected error occurred')]");
+
+		PortletEntry.save();
+
+		Search.openSearchPage();
+
+		Blueprints.applyBlueprintViaOptionsWidget(blueprintTitle = "Test Blueprint");
+
+		SearchPortlets.searchEmbedded(searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "Message#ERROR");
+	}
+
+	test BoostContentsInACategoryForAUserSegment {
+		var element = "Boost Contents in a Category for a User Segment";
+
+		Blueprints.addElement(element = "${element}");
+
+		Blueprints.searchBlueprintsPreview(searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "//div[contains(@class,'alert-danger') and contains(.,'An unexpected error occurred')]");
+
+		PortletEntry.save();
+
+		Search.openSearchPage();
+
+		Blueprints.applyBlueprintViaOptionsWidget(blueprintTitle = "Test Blueprint");
+
+		SearchPortlets.searchEmbedded(searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "Message#ERROR");
+	}
+
+	test BoostContentsInACategoryForGuestUsers {
+		var element = "Boost Contents in a Category for Guest Users";
+
+		Blueprints.addElement(element = "${element}");
+
+		Blueprints.searchBlueprintsPreview(searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "//div[contains(@class,'alert-danger') and contains(.,'An unexpected error occurred')]");
+
+		PortletEntry.save();
+
+		Search.openSearchPage();
+
+		Blueprints.applyBlueprintViaOptionsWidget(blueprintTitle = "Test Blueprint");
+
+		SearchPortlets.searchEmbedded(searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "Message#ERROR");
+	}
+
+	test BoostContentsInACategoryForNewUserAccounts {
+		var element = "Boost Contents in a Category for New User Accounts";
+
+		Blueprints.addElement(element = "${element}");
+
+		Blueprints.searchBlueprintsPreview(searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "//div[contains(@class,'alert-danger') and contains(.,'An unexpected error occurred')]");
+
+		PortletEntry.save();
+
+		Search.openSearchPage();
+
+		Blueprints.applyBlueprintViaOptionsWidget(blueprintTitle = "Test Blueprint");
+
+		SearchPortlets.searchEmbedded(searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "Message#ERROR");
+	}
+
+	test BoostContentsInACategoryForTheTimeOfDay {
+		var element = "Boost Contents in a Category for the Time of Day";
+
+		Blueprints.addElement(element = "${element}");
+
+		Blueprints.searchBlueprintsPreview(searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "//div[contains(@class,'alert-danger') and contains(.,'An unexpected error occurred')]");
+
+		PortletEntry.save();
+
+		Search.openSearchPage();
+
+		Blueprints.applyBlueprintViaOptionsWidget(blueprintTitle = "Test Blueprint");
+
+		SearchPortlets.searchEmbedded(searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "Message#ERROR");
+	}
+
+	test BoostContentsOnMySites {
+		var element = "Boost Contents on My Sites";
+
+		Blueprints.addElement(element = "${element}");
+
+		Blueprints.searchBlueprintsPreview(searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "//div[contains(@class,'alert-danger') and contains(.,'An unexpected error occurred')]");
+
+		PortletEntry.save();
+
+		Search.openSearchPage();
+
+		Blueprints.applyBlueprintViaOptionsWidget(blueprintTitle = "Test Blueprint");
+
+		SearchPortlets.searchEmbedded(searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "Message#ERROR");
+	}
+
+	test BoostContentsWithMoreVersions {
+		var element = "Boost Contents With More Versions";
+
+		Blueprints.addElement(element = "${element}");
+
+		Blueprints.searchBlueprintsPreview(searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "//div[contains(@class,'alert-danger') and contains(.,'An unexpected error occurred')]");
+
+		PortletEntry.save();
+
+		Search.openSearchPage();
+
+		Blueprints.applyBlueprintViaOptionsWidget(blueprintTitle = "Test Blueprint");
+
+		SearchPortlets.searchEmbedded(searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "Message#ERROR");
+	}
+
+	test BoostFreshness {
+		var element = "Boost Freshness";
+
+		Blueprints.addElement(element = "${element}");
+
+		Blueprints.searchBlueprintsPreview(searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "//div[contains(@class,'alert-danger') and contains(.,'An unexpected error occurred')]");
+
+		PortletEntry.save();
+
+		Search.openSearchPage();
+
+		Blueprints.applyBlueprintViaOptionsWidget(blueprintTitle = "Test Blueprint");
+
+		SearchPortlets.searchEmbedded(searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "Message#ERROR");
+	}
+
+	test BoostLongerContents {
+		var element = "Boost Longer Contents";
+
+		Blueprints.addElement(element = "${element}");
+
+		Blueprints.searchBlueprintsPreview(searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "//div[contains(@class,'alert-danger') and contains(.,'An unexpected error occurred')]");
+
+		PortletEntry.save();
+
+		Search.openSearchPage();
+
+		Blueprints.applyBlueprintViaOptionsWidget(blueprintTitle = "Test Blueprint");
+
+		SearchPortlets.searchEmbedded(searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "Message#ERROR");
+	}
+
+	test BoostProximity {
+		var element = "Boost Proximity";
+
+		Blueprints.addElement(element = "${element}");
+
+		Blueprints.searchBlueprintsPreview(searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "//div[contains(@class,'alert-danger') and contains(.,'An unexpected error occurred')]");
+
+		PortletEntry.save();
+
+		Search.openSearchPage();
+
+		Blueprints.applyBlueprintViaOptionsWidget(blueprintTitle = "Test Blueprint");
+
+		SearchPortlets.searchEmbedded(searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "Message#ERROR");
+	}
+
+	test BoostTaggedContents {
+		var element = "Boost Tagged Contents";
+
+		Blueprints.addElement(element = "${element}");
+
+		Blueprints.searchBlueprintsPreview(searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "//div[contains(@class,'alert-danger') and contains(.,'An unexpected error occurred')]");
+
+		PortletEntry.save();
+
+		Search.openSearchPage();
+
+		Blueprints.applyBlueprintViaOptionsWidget(blueprintTitle = "Test Blueprint");
+
+		SearchPortlets.searchEmbedded(searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "Message#ERROR");
+	}
+
+	test BoostTagsMatch {
+		var element = "Boost Tags Match";
+
+		Blueprints.addElement(element = "${element}");
+
+		Blueprints.searchBlueprintsPreview(searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "//div[contains(@class,'alert-danger') and contains(.,'An unexpected error occurred')]");
+
+		PortletEntry.save();
+
+		Search.openSearchPage();
+
+		Blueprints.applyBlueprintViaOptionsWidget(blueprintTitle = "Test Blueprint");
+
+		SearchPortlets.searchEmbedded(searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "Message#ERROR");
+	}
+
+	test BoostWebContentsByKeywordMatch {
+		var element = "Boost Web Contents by Keyword Match";
+
+		Blueprints.addElement(element = "${element}");
+
+		Blueprints.searchBlueprintsPreview(searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "//div[contains(@class,'alert-danger') and contains(.,'An unexpected error occurred')]");
+
+		PortletEntry.save();
+
+		Search.openSearchPage();
+
+		Blueprints.applyBlueprintViaOptionsWidget(blueprintTitle = "Test Blueprint");
+
+		SearchPortlets.searchEmbedded(searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "Message#ERROR");
+	}
+
+	test CustomJSONElement {
+		var element = "Custom JSON Element";
+
+		Blueprints.addElement(element = "${element}");
+
+		Blueprints.searchBlueprintsPreview(searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "//div[contains(@class,'alert-danger') and contains(.,'An unexpected error occurred')]");
+
+		PortletEntry.save();
+
+		Search.openSearchPage();
+
+		Blueprints.applyBlueprintViaOptionsWidget(blueprintTitle = "Test Blueprint");
+
+		SearchPortlets.searchEmbedded(searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "Message#ERROR");
+	}
+
+	test FilterByExactTermsMatch {
+		var element = "Filter by Exact Terms Match";
+
+		Blueprints.addElement(element = "${element}");
+
+		Type(
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_FIELD_MAPPING_FIELD",
+			value1 = "firstName");
+
+		KeyPress(
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_FIELD_MAPPING_FIELD",
+			value1 = "\ESCAPE");
+
+		Type(
+			elementName = "${element}",
+			fieldLabel = "Values",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
+			value1 = "test");
+
+		Blueprints.searchBlueprintsPreview(searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "//div[contains(@class,'alert-danger') and contains(.,'An unexpected error occurred')]");
+
+		PortletEntry.save();
+
+		Search.openSearchPage();
+
+		Blueprints.applyBlueprintViaOptionsWidget(blueprintTitle = "Test Blueprint");
+
+		SearchPortlets.searchEmbedded(searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "Message#ERROR");
+	}
+
+	test HideByExactTermMatch {
+		var element = "Hide by Exact Term Match";
+
+		Blueprints.addElement(element = "${element}");
+
+		Type(
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_FIELD_MAPPING_FIELD",
+			value1 = "firstName");
+
+		KeyPress(
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_FIELD_MAPPING_FIELD",
+			value1 = "\ESCAPE");
+
+		Type(
+			elementName = "${element}",
+			fieldLabel = "Value",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
+			value1 = "test");
+
+		Blueprints.searchBlueprintsPreview(searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "//div[contains(@class,'alert-danger') and contains(.,'An unexpected error occurred')]");
+
+		PortletEntry.save();
+
+		Search.openSearchPage();
+
+		Blueprints.applyBlueprintViaOptionsWidget(blueprintTitle = "Test Blueprint");
+
+		SearchPortlets.searchEmbedded(searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "Message#ERROR");
+	}
+
+	test HideComments {
+		var element = "Hide Comments";
+
+		Blueprints.addElement(element = "${element}");
+
+		Blueprints.searchBlueprintsPreview(searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "//div[contains(@class,'alert-danger') and contains(.,'An unexpected error occurred')]");
+
+		PortletEntry.save();
+
+		Search.openSearchPage();
+
+		Blueprints.applyBlueprintViaOptionsWidget(blueprintTitle = "Test Blueprint");
+
+		SearchPortlets.searchEmbedded(searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "Message#ERROR");
+	}
+
+	test HideContentsInACategory {
+		var element = "Hide Contents in a Category";
+
+		Blueprints.addElement(element = "${element}");
+
+		Blueprints.searchBlueprintsPreview(searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "//div[contains(@class,'alert-danger') and contains(.,'An unexpected error occurred')]");
+
+		PortletEntry.save();
+
+		Search.openSearchPage();
+
+		Blueprints.applyBlueprintViaOptionsWidget(blueprintTitle = "Test Blueprint");
+
+		SearchPortlets.searchEmbedded(searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "Message#ERROR");
+	}
+
+	test HideContentsInACategoryForGuestUsers {
+		var element = "Hide Contents in a Category for Guest Users";
+
+		Blueprints.addElement(element = "${element}");
+
+		Blueprints.searchBlueprintsPreview(searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "//div[contains(@class,'alert-danger') and contains(.,'An unexpected error occurred')]");
+
+		PortletEntry.save();
+
+		Search.openSearchPage();
+
+		Blueprints.applyBlueprintViaOptionsWidget(blueprintTitle = "Test Blueprint");
+
+		SearchPortlets.searchEmbedded(searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "Message#ERROR");
+	}
+
+	test HideHiddenContents {
+		var element = "Hide Hidden Contents";
+
+		Blueprints.addElement(element = "${element}");
+
+		Blueprints.searchBlueprintsPreview(searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "//div[contains(@class,'alert-danger') and contains(.,'An unexpected error occurred')]");
+
+		PortletEntry.save();
+
+		Search.openSearchPage();
+
+		Blueprints.applyBlueprintViaOptionsWidget(blueprintTitle = "Test Blueprint");
+
+		SearchPortlets.searchEmbedded(searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "Message#ERROR");
+	}
+
+	test HideTaggedContents {
+		var element = "Hide Tagged Contents";
+
+		Blueprints.addElement(element = "${element}");
+
+		Blueprints.searchBlueprintsPreview(searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "//div[contains(@class,'alert-danger') and contains(.,'An unexpected error occurred')]");
+
+		PortletEntry.save();
+
+		Search.openSearchPage();
+
+		Blueprints.applyBlueprintViaOptionsWidget(blueprintTitle = "Test Blueprint");
+
+		SearchPortlets.searchEmbedded(searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "Message#ERROR");
+	}
+
+	test LimitSearchToContentsCreatedWithinAPeriodOfTime {
+		var element = "Limit Search to Contents Created Within a Period of Time";
+
+		Blueprints.addElement(element = "${element}");
+
+		Blueprints.searchBlueprintsPreview(searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "//div[contains(@class,'alert-danger') and contains(.,'An unexpected error occurred')]");
+
+		PortletEntry.save();
+
+		Search.openSearchPage();
+
+		Blueprints.applyBlueprintViaOptionsWidget(blueprintTitle = "Test Blueprint");
+
+		SearchPortlets.searchEmbedded(searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "Message#ERROR");
+	}
+
+	test LimitSearchToHEADVersion {
+		var element = "Limit Search to HEAD Version";
+
+		Blueprints.addElement(element = "${element}");
+
+		Blueprints.searchBlueprintsPreview(searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "//div[contains(@class,'alert-danger') and contains(.,'An unexpected error occurred')]");
+
+		PortletEntry.save();
+
+		Search.openSearchPage();
+
+		Blueprints.applyBlueprintViaOptionsWidget(blueprintTitle = "Test Blueprint");
+
+		SearchPortlets.searchEmbedded(searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "Message#ERROR");
+	}
+
+	test LimitSearchToMyContents {
+		var element = "Limit Search to My Contents";
+
+		Blueprints.addElement(element = "${element}");
+
+		Blueprints.searchBlueprintsPreview(searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "//div[contains(@class,'alert-danger') and contains(.,'An unexpected error occurred')]");
+
+		PortletEntry.save();
+
+		Search.openSearchPage();
+
+		Blueprints.applyBlueprintViaOptionsWidget(blueprintTitle = "Test Blueprint");
+
+		SearchPortlets.searchEmbedded(searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "Message#ERROR");
+	}
+
+	test LimitSearchToMySites {
+		var element = "Limit Search to My Sites";
+
+		Blueprints.addElement(element = "${element}");
+
+		Blueprints.searchBlueprintsPreview(searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "//div[contains(@class,'alert-danger') and contains(.,'An unexpected error occurred')]");
+
+		PortletEntry.save();
+
+		Search.openSearchPage();
+
+		Blueprints.applyBlueprintViaOptionsWidget(blueprintTitle = "Test Blueprint");
+
+		SearchPortlets.searchEmbedded(searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "Message#ERROR");
+	}
+
+	test LimitSearchToPDFFiles {
+		var element = "Limit Search to PDF files";
+
+		Blueprints.addElement(element = "${element}");
+
+		Blueprints.searchBlueprintsPreview(searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "//div[contains(@class,'alert-danger') and contains(.,'An unexpected error occurred')]");
+
+		PortletEntry.save();
+
+		Search.openSearchPage();
+
+		Blueprints.applyBlueprintViaOptionsWidget(blueprintTitle = "Test Blueprint");
+
+		SearchPortlets.searchEmbedded(searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "Message#ERROR");
+	}
+
+	test LimitSearchToPublishedContents {
+		var element = "Limit Search to Published Contents";
+
+		Blueprints.addElement(element = "${element}");
+
+		Blueprints.searchBlueprintsPreview(searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "//div[contains(@class,'alert-danger') and contains(.,'An unexpected error occurred')]");
+
+		PortletEntry.save();
+
+		Search.openSearchPage();
+
+		Blueprints.applyBlueprintViaOptionsWidget(blueprintTitle = "Test Blueprint");
+
+		SearchPortlets.searchEmbedded(searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "Message#ERROR");
+	}
+
+	test LimitSearchToTheCurrentSite {
+		var element = "Limit Search to the Current Site";
+
+		Blueprints.addElement(element = "${element}");
+
+		Blueprints.searchBlueprintsPreview(searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "//div[contains(@class,'alert-danger') and contains(.,'An unexpected error occurred')]");
+
+		PortletEntry.save();
+
+		Search.openSearchPage();
+
+		Blueprints.applyBlueprintViaOptionsWidget(blueprintTitle = "Test Blueprint");
+
+		SearchPortlets.searchEmbedded(searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "Message#ERROR");
+	}
+
+	test LimitSearchToTheseSites {
+		var element = "Limit Search to These Sites";
+
+		Blueprints.addElement(element = "${element}");
+
+		Blueprints.searchBlueprintsPreview(searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "//div[contains(@class,'alert-danger') and contains(.,'An unexpected error occurred')]");
+
+		PortletEntry.save();
+
+		Search.openSearchPage();
+
+		Blueprints.applyBlueprintViaOptionsWidget(blueprintTitle = "Test Blueprint");
+
+		SearchPortlets.searchEmbedded(searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "Message#ERROR");
+	}
+
+	test PasteAnyElasticsearchQuery {
+		var element = "Paste Any Elasticsearch Query";
+
+		Blueprints.addElement(element = "${element}");
+
+		Blueprints.searchBlueprintsPreview(searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "//div[contains(@class,'alert-danger') and contains(.,'An unexpected error occurred')]");
+
+		PortletEntry.save();
+
+		Search.openSearchPage();
+
+		Blueprints.applyBlueprintViaOptionsWidget(blueprintTitle = "Test Blueprint");
+
+		SearchPortlets.searchEmbedded(searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "Message#ERROR");
+	}
+
+	test SchedulingAware {
+		var element = "Scheduling Aware";
+
+		Blueprints.addElement(element = "${element}");
+
+		Blueprints.searchBlueprintsPreview(searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "//div[contains(@class,'alert-danger') and contains(.,'An unexpected error occurred')]");
+
+		PortletEntry.save();
+
+		Search.openSearchPage();
+
+		Blueprints.applyBlueprintViaOptionsWidget(blueprintTitle = "Test Blueprint");
+
+		SearchPortlets.searchEmbedded(searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "Message#ERROR");
+	}
+
+	test SearchWithTheLuceneSyntax {
+		var element = "Search with the Lucene Syntax";
+
+		Blueprints.addElement(element = "${element}");
+
+		Blueprints.searchBlueprintsPreview(searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "//div[contains(@class,'alert-danger') and contains(.,'An unexpected error occurred')]");
+
+		PortletEntry.save();
+
+		Search.openSearchPage();
+
+		Blueprints.applyBlueprintViaOptionsWidget(blueprintTitle = "Test Blueprint");
+
+		SearchPortlets.searchEmbedded(searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "Message#ERROR");
+	}
+
+	test StagingAware {
+		var element = "Staging Aware";
+
+		Blueprints.addElement(element = "${element}");
+
+		Blueprints.searchBlueprintsPreview(searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "//div[contains(@class,'alert-danger') and contains(.,'An unexpected error occurred')]");
+
+		PortletEntry.save();
+
+		Search.openSearchPage();
+
+		Blueprints.applyBlueprintViaOptionsWidget(blueprintTitle = "Test Blueprint");
+
+		SearchPortlets.searchEmbedded(searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "Message#ERROR");
+	}
+
+	test TextMatchOverMultipleFields {
+		var element = "Text Match Over Multiple Fields";
+
+		Blueprints.addElement(element = "${element}");
+
+		Blueprints.searchBlueprintsPreview(searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "//div[contains(@class,'alert-danger') and contains(.,'An unexpected error occurred')]");
+
+		PortletEntry.save();
+
+		Search.openSearchPage();
+
+		Blueprints.applyBlueprintViaOptionsWidget(blueprintTitle = "Test Blueprint");
+
+		SearchPortlets.searchEmbedded(searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "Message#ERROR");
+	}
+
+}

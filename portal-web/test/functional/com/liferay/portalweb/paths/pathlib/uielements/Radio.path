@@ -11,6 +11,11 @@
 
 <tbody>
 <tr>
+	<td>ANY</td>
+	<td>//label[contains(.,'${radioLabel}')]/input</td>
+	<td></td>
+</tr>
+<tr>
 	<td>APPEND</td>
 	<td>//label[contains(.,'Append')]/input</td>
 	<td></td>

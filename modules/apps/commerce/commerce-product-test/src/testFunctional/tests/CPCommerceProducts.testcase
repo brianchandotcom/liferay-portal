@@ -1106,9 +1106,7 @@ definition {
 			locator1 = "Pagination#PAGINATION_ITEMS_PER_PAGE",
 			value1 = "10 items");
 
-		AssertTextEquals(
-			locator1 = "Pagination#RESULTS_2",
-			value1 = "Showing 11 to 20 of 50");
+		Pagination.viewResults(results = "Showing 11 to 20 of 50");
 
 		CommerceProducts.searchProduct(search = "U-Joint");
 
@@ -1116,9 +1114,7 @@ definition {
 
 		AssertElementPresent(locator1 = "//a[contains(text(),'U-Joint')]");
 
-		AssertTextEquals(
-			locator1 = "Pagination#RESULTS_2",
-			value1 = "Showing 1 to 2 of 2");
+		Pagination.viewResults(results = "Showing 1 to 2 of 2");
 	}
 
 	@description = "This is a test for COMMERCE-5801. UseSkuSearchBarAndPagination"

@@ -342,7 +342,7 @@
 </tr>
 <tr>
 	<td>KEY</td>
-	<td>//div[label[contains(.,'Key')]]//input[@type='text']</td>
+	<td>//div[label[normalize-space(text())='Key']]//input[@type='text']</td>
 	<td></td>
 </tr>
 <tr>

@@ -11,12 +11,11 @@
 
 import {useModal} from '@clayui/modal';
 import {useState} from 'react';
-import { useCustomerPortal } from '../../context';
+import {useCustomerPortal} from '../../context';
 import {status as statusCard} from '../../utils/constants';
 import getDateCustomFormat from '../../utils/dateCustomFormat';
 import ModalCardSubscription from '../ModalCardSubscription';
 import StatusTag from '../StatusTag';
-
 
 const dateFormat = {
 	day: '2-digit',
@@ -44,14 +43,14 @@ const CardSubscription = ({
 		cardSubscriptionData.accountSubscriptionGroupERC
 	}_${parseAccountSubscriptionTerms(cardSubscriptionData.name)}`;
 
-	const subscriptionImage =  {
+	const subscriptionImage = {
 		'Analytics': 'analytics_icon.svg',
 		'Commerce': 'commerce.icon.svg',
 		'DXP': 'dxp_icon.svg',
 		'DXP Cloud': 'dxp_icon.svg',
 		'Enterprise Search': 'enterprise_icon.svg',
-		'Portal': 'portal_icon.svg'
-	} 
+		'Portal': 'portal_icon.svg',
+	};
 
 	return (
 		<>
@@ -67,8 +66,14 @@ const CardSubscription = ({
 			<div
 				className="align-items-center card-subscription d-flex flex-column justify-content-center mr-4"
 				onClick={() => setVisible(true)}
-			>	
-				<img className="mb-4 mt-5 w-25" src={`${assetsPath}/assets/navigation-menu/${subscriptionImage[selectedSubscriptionGroup] || 'portal_icon.svg'}`} />
+			>
+				<img
+					className="mb-4 mt-5 w-25"
+					src={`${assetsPath}/assets/navigation-menu/${
+						subscriptionImage[selectedSubscriptionGroup] ||
+						'portal_icon.svg'
+					}`}
+				/>
 
 				<div className="align-self-center d-flex flex-column mx-auto pb-4 pt-3 px-4">
 					<div
@@ -101,7 +106,9 @@ const CardSubscription = ({
 					</div>
 
 					<div className="d-flex justify-content-center mb-3">
-						<StatusTag currentStatus={statusCard[subscriptionStatus]} />
+						<StatusTag
+							currentStatus={statusCard[subscriptionStatus]}
+						/>
 					</div>
 				</div>
 			</div>

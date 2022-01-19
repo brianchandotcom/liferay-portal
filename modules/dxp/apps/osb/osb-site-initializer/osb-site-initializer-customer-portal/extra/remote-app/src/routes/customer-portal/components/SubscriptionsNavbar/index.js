@@ -11,155 +11,177 @@
  */
 
 import ClayButton from '@clayui/button';
-import { DropDown } from '@clayui/core';
+import {DropDown} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {useCustomerPortal} from '../../context';
 
 const SubscriptionsNavbar = ({
-  selectedSubscriptionGroup,
-  setSelectedSubscriptionGroup,
-  subscriptionGroups
+	selectedSubscriptionGroup,
+	setSelectedSubscriptionGroup,
+	subscriptionGroups,
 }) => {
+	const [active, setActive] = useState(false);
+	const [selectedButton, setSelectedButton] = useState(
+		subscriptionGroups[0]?.name
+	);
+	const [showDropDown, setShowDropDown] = useState(false);
+	const [{isQuickLinksExpanded}] = useCustomerPortal();
 
-  const [active, setActive] = useState(false);
-  const [selectedButton, setSelectedButton] = useState(subscriptionGroups[0]?.name);
-  const [showDropDown, setShowDropDown] = useState(false);
-  const [{isQuickLinksExpanded}] = useCustomerPortal();
+	const subscriptionNavbarRef = useRef();
 
-  const subscriptionNavbarRef = useRef();
+	const handleClick = useCallback(
+		(event) => {
+			setSelectedSubscriptionGroup(event.target.value);
+			setSelectedButton(event.target.value);
+		},
+		[setSelectedSubscriptionGroup]
+	);
 
-  const handleClick = useCallback((event) => {
-    setSelectedSubscriptionGroup(event.target.value);
-    setSelectedButton(event.target.value);
-  }, [setSelectedSubscriptionGroup])
+	useEffect(() => {
+		setSelectedSubscriptionGroup(subscriptionGroups[0]?.name);
+		setSelectedButton(subscriptionGroups[0]?.name);
+	}, [setSelectedSubscriptionGroup, subscriptionGroups]);
 
-  useEffect(() => {
-    setSelectedSubscriptionGroup(subscriptionGroups[0]?.name);
-    setSelectedButton(subscriptionGroups[0]?.name);
-  }, [setSelectedSubscriptionGroup, subscriptionGroups]);
+	useEffect(() => {
+		const updateShowDropDown = () => {
+			setShowDropDown(
+				isQuickLinksExpanded
+					? subscriptionNavbarRef.current.offsetWidth < 500
+					: subscriptionNavbarRef.current.offsetWidth < 570
+			);
+		};
 
-  useEffect(() => {
-    const updateShowDropDown = () => {
-      setShowDropDown(isQuickLinksExpanded ? subscriptionNavbarRef.current.offsetWidth < 500 : subscriptionNavbarRef.current.offsetWidth < 570);
-    };
+		updateShowDropDown();
+		window.addEventListener('resize', updateShowDropDown);
+	}, [isQuickLinksExpanded]);
 
-    updateShowDropDown();
-    window.addEventListener("resize", updateShowDropDown);
-  }, [isQuickLinksExpanded]);
+	return (
+		<div className="d-flex rounded-pill w-100" ref={subscriptionNavbarRef}>
+			<nav className="mb-2 mt-4 pt-2">
+				{subscriptionGroups.length === 1 &&
+					subscriptionGroups.map((tag) => (
+						<span className="h5 text-brand-primary" key={tag.name}>
+							{tag.name}
+						</span>
+					))}
 
- 
+				{subscriptionGroups.length > 1 &&
+					subscriptionGroups.length <= 4 && (
+						<>
+							{showDropDown && (
+								<div className="align-items-center d-flex mt-4 pb-3 subscription-navbar-dropdown">
+									<h6>Type:</h6>
 
-  return (
-    <div className="d-flex rounded-pill w-100" ref={subscriptionNavbarRef}>
-      <nav className="mb-2 mt-4 pt-2">
-        {subscriptionGroups.length === 1 && subscriptionGroups.map((tag) => (
-          <span
-            className="h5 text-brand-primary"
-            key={tag.name}
-          >
-            {tag.name}
-          </span>
-        ))}
+									<DropDown
+										active={active}
+										closeOnClickOutside
+										menuElementAttrs={{
+											className:
+												'subscription-group-filter',
+										}}
+										onActiveChange={setActive}
+										trigger={
+											<ClayButton
+												className="font-weight-semi-bold ml-2 pb-2 shadow-none text-brand-primary"
+												displayType="unstyled"
+											>
+												{selectedSubscriptionGroup}
+												<></>
+												<ClayIcon symbol="caret-bottom" />
+											</ClayButton>
+										}
+									>
+										{subscriptionGroups.map((tag) => (
+											<DropDown.Item
+												key={tag.name}
+												onClick={(event) =>
+													setSelectedSubscriptionGroup(
+														event.target.value
+													)
+												}
+												value={tag.name}
+											>
+												{tag.name}
+											</DropDown.Item>
+										))}
+									</DropDown>
+								</div>
+							)}
 
-        {subscriptionGroups.length > 1 && subscriptionGroups.length <= 4 &&
-          <>
-            {showDropDown && 
-              <div className="align-items-center d-flex mt-4 pb-3 subscription-navbar-dropdown">
-                <h6>Type:</h6>
+							{!showDropDown && (
+								<div
+									className="bg-neutral-1 btn-group rounded-pill subscription-navbar"
+									id="subscription-navbar"
+									role="group"
+								>
+									{subscriptionGroups.map((tag) => (
+										<button
+											className={classNames(
+												'btn px-4 text-neutral-4 rounded-pill',
+												{
+													'btn-subscription-group':
+														selectedButton !==
+														tag.name,
+													'btn-subscription-group-selected label-primary':
+														selectedButton ===
+														tag.name,
+												}
+											)}
+											key={tag.name}
+											onClick={handleClick}
+											value={tag.name}
+										>
+											{tag.name}
+										</button>
+									))}
+								</div>
+							)}
+						</>
+					)}
 
-                <DropDown
-                  active={active}
-                  closeOnClickOutside
-                  menuElementAttrs={{
-                    className: 'subscription-group-filter',
-                  }}
-                  onActiveChange={setActive}
-                  trigger={
-                    <ClayButton
-                      className="font-weight-semi-bold ml-2 pb-2 shadow-none text-brand-primary"
-                      displayType="unstyled"
-                    >
-                      {selectedSubscriptionGroup}
-                      <></>
-                      <ClayIcon symbol="caret-bottom" />
-                    </ClayButton>
-                  }
-                >
-                  {subscriptionGroups.map((tag) => (
-                    <DropDown.Item
-                      key={tag.name}
-                      onClick={(event) => setSelectedSubscriptionGroup(event.target.value)}
-                      value={tag.name}
-                    >
-                      {tag.name}
-                    </DropDown.Item>
-                  ))}
-                </DropDown>
-              </div>
-            } 
+				{subscriptionGroups.length > 4 && (
+					<div className="align-items-center d-flex mr-4 mt-4 pb-3">
+						<h6>Type:</h6>
 
-            {!showDropDown && 
-              <div
-                className="bg-neutral-1 btn-group rounded-pill subscription-navbar"
-                id="subscription-navbar"
-                role="group"
-              >
-                {subscriptionGroups.map((tag) => (
-                  <button
-                    className={classNames('btn px-4 text-neutral-4 rounded-pill', {
-                      'btn-subscription-group': selectedButton !== tag.name, 
-                      'btn-subscription-group-selected label-primary': selectedButton === tag.name})}
-                    key={tag.name}
-                    onClick={handleClick}
-                    value={tag.name}
-                  >
-                    {tag.name}
-                  </button>
-                ))}
-              </div>
-            }            
-          </>
-        }
-
-        {subscriptionGroups.length > 4 &&
-          <div className="align-items-center d-flex mr-4 mt-4 pb-3">
-            <h6>Type:</h6>
-
-            <DropDown
-              active={active}
-              closeOnClickOutside
-              menuElementAttrs={{
-                className: 'subscription-group-filter',
-              }}
-              onActiveChange={setActive}
-              trigger={
-                <ClayButton
-                  className="font-weight-semi-bold ml-2 pb-2 shadow-none text-brand-primary"
-                  displayType="unstyled"
-                >
-                  {selectedSubscriptionGroup}
-                  <></>
-                  <ClayIcon symbol="caret-bottom" />
-                </ClayButton>
-              }
-            >
-              {subscriptionGroups.map((tag) => (
-                <DropDown.Item
-                  key={tag.name}
-                  onClick={(event) => setSelectedSubscriptionGroup(event.target.value)}
-                  value={tag.name}
-                >
-                  {tag.name}
-                </DropDown.Item>
-              ))}
-            </DropDown>
-          </div>
-        }
-      </nav>
-    </div>
-  );
+						<DropDown
+							active={active}
+							closeOnClickOutside
+							menuElementAttrs={{
+								className: 'subscription-group-filter',
+							}}
+							onActiveChange={setActive}
+							trigger={
+								<ClayButton
+									className="font-weight-semi-bold ml-2 pb-2 shadow-none text-brand-primary"
+									displayType="unstyled"
+								>
+									{selectedSubscriptionGroup}
+									<></>
+									<ClayIcon symbol="caret-bottom" />
+								</ClayButton>
+							}
+						>
+							{subscriptionGroups.map((tag) => (
+								<DropDown.Item
+									key={tag.name}
+									onClick={(event) =>
+										setSelectedSubscriptionGroup(
+											event.target.value
+										)
+									}
+									value={tag.name}
+								>
+									{tag.name}
+								</DropDown.Item>
+							))}
+						</DropDown>
+					</div>
+				)}
+			</nav>
+		</div>
+	);
 };
 
 export default SubscriptionsNavbar;

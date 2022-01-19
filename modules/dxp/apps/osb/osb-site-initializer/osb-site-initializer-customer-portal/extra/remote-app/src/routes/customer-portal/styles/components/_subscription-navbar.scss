@@ -1,29 +1,19 @@
 .subscription-navbar {
-    border: 1px solid #c3c5c9;
-    height: 36px;
+	border: 1px solid #c3c5c9;
+	height: 36px;
 
-    button {
-        padding: 0;
-    }
-
-    .hide {
-        display: none;
-    }
-}
-
-.subscription-navbar-dropdown {
-    .hide {
-        display: none;
-    }
+	button {
+		padding: 0;
+	}
 }
 
 .btn-subscription-group-selected {
-    color: #004ad7 !important;
-    background-color: #fff;
+	color: #004ad7 !important;
+	background-color: #fff;
 
-    &:focus {
-    background-color: #fff;
-    box-shadow: none;
-    border: 1px solid #004ad7;
-    }
+	&:focus {
+		background-color: #fff;
+		box-shadow: none;
+		border: 1px solid #004ad7;
+	}
 }

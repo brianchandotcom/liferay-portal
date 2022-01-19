@@ -30,7 +30,10 @@ DOMPurify.addHook('afterSanitizeAttributes', (node) => {
 });
 
 const QuickLinksPanel = ({accountKey}) => {
-	const [{isQuickLinksExpanded, quickLinks, structuredContents}, dispatch] = useCustomerPortal();
+	const [
+		{isQuickLinksExpanded, quickLinks, structuredContents},
+		dispatch,
+	] = useCustomerPortal();
 	const [quickLinksContents, setQuickLinksContents] = useState([]);
 
 	useEffect(() => {
@@ -44,7 +47,7 @@ const QuickLinksPanel = ({accountKey}) => {
 				type: actionTypes.UPDATE_QUICK_LINKS_EXPANDED_PANEL,
 			});
 		}
-	// eslint-disable-next-line react-hooks/exhaustive-deps
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	const fetchQuickLinksPanelContent = useCallback(async () => {
@@ -110,7 +113,8 @@ const QuickLinksPanel = ({accountKey}) => {
 							onClick={() => {
 								dispatch({
 									payload: !isQuickLinksExpanded,
-									type: actionTypes.UPDATE_QUICK_LINKS_EXPANDED_PANEL,
+									type:
+										actionTypes.UPDATE_QUICK_LINKS_EXPANDED_PANEL,
 								});
 								Storage.setItem(
 									STORAGE_KEYS.QUICK_LINKS_EXPANDED,
@@ -121,7 +125,9 @@ const QuickLinksPanel = ({accountKey}) => {
 							<ClayIcon
 								className="mr-1"
 								symbol={
-									isQuickLinksExpanded ? 'hr' : 'order-arrow-left'
+									isQuickLinksExpanded
+										? 'hr'
+										: 'order-arrow-left'
 								}
 							/>
 

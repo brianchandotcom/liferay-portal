@@ -117,10 +117,11 @@ const Overview = ({project, subscriptionGroups}) => {
 		<div className="d-flex flex-column">
 			<h3>Subscriptions</h3>
 
-			<div className={classNames('align-items-center d-flex', {
-				'justify-content-between': subscriptionGroups.length <= 4,
-				'justify-content-evenly': subscriptionGroups.length > 4,
-			})}
+			<div
+				className={classNames('align-items-center d-flex', {
+					'justify-content-between': subscriptionGroups.length <= 4,
+					'justify-content-evenly': subscriptionGroups.length > 4,
+				})}
 			>
 				<SubscriptionsNavbar
 					selectedSubscriptionGroup={selectedSubscriptionGroup}

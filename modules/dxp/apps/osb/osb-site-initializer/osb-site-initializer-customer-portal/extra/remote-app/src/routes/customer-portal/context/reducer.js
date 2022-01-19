@@ -44,7 +44,7 @@ const reducer = (state, action) => {
 			return {
 				...state,
 				isQuickLinksExpanded: action.payload,
-			}
+			};
 		}
 		case actionTypes.UPDATE_STRUCTURED_CONTENTS: {
 			return {

@@ -5,14 +5,14 @@
 	"name": "TestObjectDefinition3",
 	"objectFields": [
 		{
-			"DBType": "String",
 			"indexed": false,
 			"indexedAsKeyword": false,
 			"label": {
 				"en_US": "Field 1"
 			},
 			"name": "field1",
-			"required": false
+			"required": false,
+			"type": "String"
 		}
 	],
 	"pluralLabel": {

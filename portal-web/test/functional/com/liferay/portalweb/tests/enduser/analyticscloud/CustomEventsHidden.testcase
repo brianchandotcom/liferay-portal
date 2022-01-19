@@ -228,7 +228,7 @@ definition {
 	@description = "Feature ID: LRAC-7865 | Automation ID: LRAC-10233 | Test Summary: Unhide a default event and unhide a custom event"
 	@priority = "5"
 	test CanUnhideDefaultAndCustomEvent {
-		var defaultEventName = "assetDownloaded";
+		var defaultEventName = "assetDepthReached";
 		var defaultEventNameList = "${defaultEventName},assetClicked,assetSubmitted";
 
 		task ("Fill fields and create custom event") {

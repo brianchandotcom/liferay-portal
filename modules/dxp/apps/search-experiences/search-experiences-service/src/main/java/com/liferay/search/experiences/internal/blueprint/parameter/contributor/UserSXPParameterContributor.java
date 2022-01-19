@@ -163,33 +163,31 @@ public class UserSXPParameterContributor implements SXPParameterContributor {
 			return;
 		}
 
-		Long scopeGroupId = (Long)searchContext.getAttribute(
-			"search.experiences.current.group.id");
+		long[] segmentsEntryIds = new long[0];
 
-		if (scopeGroupId != null) {
-			long[] segmentsEntryIds =
-				_segmentsEntryRetriever.getSegmentsEntryIds(
-					scopeGroupId, user.getUserId(),
-					new Context() {
-						{
-							put(
-								Context.LANGUAGE_ID,
-								_language.getLanguageId(
-									searchContext.getLocale()));
-							put(Context.SIGNED_IN, !user.isDefaultUser());
-						}
-					});
+		long scopeGroupId = GetterUtil.getLong(
+			searchContext.getAttribute("search.experiences.scope.group.id"));
+
+		if (scopeGroupId != 0) {
+			segmentsEntryIds = _segmentsEntryRetriever.getSegmentsEntryIds(
+				scopeGroupId, user.getUserId(),
+				new Context() {
+					{
+						put(
+							Context.LANGUAGE_ID,
+							_language.getLanguageId(searchContext.getLocale()));
+						put(Context.SIGNED_IN, !user.isDefaultUser());
+					}
+				});
 
 			segmentsEntryIds = ArrayUtil.filter(
 				segmentsEntryIds, segmentsEntryId -> segmentsEntryId > 0);
-
-			if (segmentsEntryIds.length > 0) {
-				sxpParameters.add(
-					new LongArraySXPParameter(
-						"user.active_segment_entry_ids", true,
-						ArrayUtil.toLongArray(segmentsEntryIds)));
-			}
 		}
+
+		sxpParameters.add(
+			new LongArraySXPParameter(
+				"user.active_segment_entry_ids", true,
+				ArrayUtil.toLongArray(segmentsEntryIds)));
 
 		sxpParameters.add(
 			new IntegerSXPParameter(

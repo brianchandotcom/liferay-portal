@@ -1,17 +1,17 @@
 [
 	{
-		"key": "Key1",
-		"name": "Test Integration Entry",
+		"key": "test-list-type-entry-1",
+		"name": "Test List Type Entry 1",
 		"name_i18n": {
-			"en-US": "Test Integration Entry"
+			"en-US": "Test List Type Entry 1"
 		},
 		"type": "string"
 	},
 	{
-		"key": "Key2",
-		"name": "Test Integration Entry",
+		"key": "test-list-type-entry-2",
+		"name": "Test List Type Entry 2",
 		"name_i18n": {
-			"en-US": "Test Integration Entry"
+			"en-US": "Test List Type Entry 2"
 		},
 		"type": "string"
 	}

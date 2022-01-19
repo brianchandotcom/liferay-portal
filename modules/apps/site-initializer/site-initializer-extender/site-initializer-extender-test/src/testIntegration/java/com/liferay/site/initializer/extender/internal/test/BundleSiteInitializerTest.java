@@ -613,7 +613,7 @@ public class BundleSiteInitializerTest {
 			listTypeDefinitionResource.getListTypeDefinitionsPage(
 				null, null,
 				listTypeDefinitionResource.toFilter(
-					"name eq 'Test Integration'"),
+					"name eq 'Test List Type Definition'"),
 				null, null);
 
 		ListTypeDefinition listTypeDefinition =
@@ -630,9 +630,9 @@ public class BundleSiteInitializerTest {
 		Assert.assertNotNull(listTypeEntry1);
 		Assert.assertNotNull(listTypeEntry2);
 
-		Assert.assertEquals("Key1", listTypeEntry1.getKey());
+		Assert.assertEquals("test-list-type-entry-1", listTypeEntry1.getKey());
 
-		Assert.assertEquals("Key2", listTypeEntry2.getKey());
+		Assert.assertEquals("test-list-type-entry-2", listTypeEntry2.getKey());
 	}
 
 	private void _assertObjectDefinitions(

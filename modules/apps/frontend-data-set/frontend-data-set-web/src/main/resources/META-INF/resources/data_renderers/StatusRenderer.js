@@ -52,7 +52,6 @@ function StatusRenderer(props) {
 
 StatusRenderer.propTypes = {
 	value: PropTypes.shape({
-		code: PropTypes.number,
 		label: PropTypes.string,
 		label_i18n: PropTypes.string,
 	}),

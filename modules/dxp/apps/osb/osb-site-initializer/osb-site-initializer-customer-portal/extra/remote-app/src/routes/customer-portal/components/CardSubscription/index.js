@@ -23,6 +23,15 @@ const dateFormat = {
 	year: 'numeric',
 };
 
+const SUBSCRIPTION_IMAGE_FILE = {
+	'Analytics': 'analytics_icon.svg',
+	'Commerce': 'commerce.icon.svg',
+	'DXP': 'dxp_icon.svg',
+	'DXP Cloud': 'dxp_icon.svg',
+	'Enterprise Search': 'enterprise_icon.svg',
+	'Portal': 'portal_icon.svg',
+};
+
 const CardSubscription = ({
 	cardSubscriptionData,
 	selectedSubscriptionGroup,
@@ -42,15 +51,6 @@ const CardSubscription = ({
 		cardSubscriptionData.accountSubscriptionGroupERC
 	}_${parseAccountSubscriptionTerms(cardSubscriptionData.name)}`;
 
-	const subscriptionImage = {
-		'Analytics': 'analytics_icon.svg',
-		'Commerce': 'commerce.icon.svg',
-		'DXP': 'dxp_icon.svg',
-		'DXP Cloud': 'dxp_icon.svg',
-		'Enterprise Search': 'enterprise_icon.svg',
-		'Portal': 'portal_icon.svg',
-	};
-
 	return (
 		<>
 			{visible && (
@@ -69,14 +69,14 @@ const CardSubscription = ({
 				<img
 					className="mb-4 mt-5 w-25"
 					src={`${assetsPath}/assets/navigation-menu/${
-						subscriptionImage[selectedSubscriptionGroup] ||
+						SUBSCRIPTION_IMAGE_FILE[selectedSubscriptionGroup] ||
 						'portal_icon.svg'
 					}`}
 				/>
 
 				<div className="align-self-center d-flex flex-column mx-auto pb-4 pt-3 px-4">
 					<div
-						className="d-flex head-text justify-content-center mb-4 mw-25 row text-center"
+						className="d-flex head-text justify-content-center mb-4 text-center"
 						type="text"
 					>
 						{cardSubscriptionData?.name || ' - '}

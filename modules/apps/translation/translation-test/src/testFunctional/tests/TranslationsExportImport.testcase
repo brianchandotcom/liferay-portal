@@ -26,6 +26,31 @@ definition {
 	@description = "This ensures that a translated zip file with all available language can be exported."
 	@priority = "5"
 	@refactordone
+	test CanExportMultipleWCsWithMultipleLanguages {
+		for (var i : list "1,2,3") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content${i}",
+				description = "Description${i}",
+				groupName = "Guest",
+				title = "Web Content Title${i}");
+		}
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		Translations.gotoBulkExportTranslation(
+			exportTranslationEntry = "Web Content Title1,Web Content Title3",
+			toolbarOptions = "true");
+
+		Translations.exportTranslation(
+			defaultLanguage = "English (United States)",
+			languageList = "French (France),Japanese (Japan),Spanish (Spain)");
+
+		Translations.assertFileNameFromTempFolder(webContentTitle = "Web Content Title3");
+	}
+
+	@description = "This ensures that a translated zip file with all available language can be exported."
+	@priority = "5"
+	@refactordone
 	test CanExportWCWithAllLanguages {
 		JSONWebcontent.addWebContent(
 			content = "Web Content Content",
@@ -152,6 +177,76 @@ definition {
 			webContentContent = "Contenidoweb",
 			webContentDescription = "Descripcion",
 			webContentTitle = "Titulodelcontenidoweb");
+	}
+
+	@description = "This ensures that the translation files contians multiple web contents can be imported from a zip."
+	@priority = "5"
+	@refactordone
+	test CanImportMultipleWCs {
+		for (var i : list "1,2,3") {
+			JSONWebcontent.addWebContent(
+				content = "WebContent${i}",
+				description = "Description${i}",
+				groupName = "Guest",
+				title = "WebContentTitle${i}");
+		}
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		Translations.gotoBulkExportTranslation(exportTranslationEntry = "WebContentTitle1,WebContentTitle3");
+
+		Translations.exportTranslation(
+			defaultLanguage = "English (United States)",
+			languageList = "Spanish (Spain)");
+
+		Translations.translateFile(
+			contentTranslation = "Contenidoweb1",
+			descriptionTranslation = "Descripcion1",
+			encoding = "false",
+			operation = "unzip",
+			titleTranslation = "Titulodelcontenidoweb1",
+			translationFileName = "WebContentTitle1-en_US-es_ES",
+			translationZipFileName = "WebContentTitle3-en_US",
+			webContentContent = "WebContent1",
+			webContentDescription = "Description1",
+			webContentTitle = "WebContentTitle1");
+
+		Translations.translateFile(
+			contentTranslation = "Contenidoweb3",
+			descriptionTranslation = "Descripcion3",
+			encoding = "false",
+			operation = "zip",
+			titleTranslation = "Titulodelcontenidoweb3",
+			translationFileName = "WebContentTitle3-en_US-es_ES",
+			translationZipFileName = "WebContentTitle3-en_US-es_ES",
+			webContentContent = "WebContent3",
+			webContentDescription = "Description3",
+			webContentTitle = "WebContentTitle3");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		Translations.gotoBulkImportTranslation();
+
+		Translations.importTranslation(
+			fileName = "WebContentTitle3-en_US_translated.zip",
+			filePath = "");
+
+		for (var i : list "1,3") {
+			WebContentNavigator.gotoEditCP(webContentTitle = "WebContentTitle${i}");
+
+			PortletEntry.changeLocale(locale = "es-ES");
+
+			WebContent.viewCP(
+				webContentContent = "Contenidoweb${i}",
+				webContentDescription = "Descripcion${i}",
+				webContentTitle = "Titulodelcontenidoweb${i}");
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		}
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WebContentTitle2");
+
+		Translations.viewUntranslatedStatus(locale = "es-ES");
 	}
 
 	@description = "This ensures that the translation files can be imported from a zip."
@@ -453,6 +548,104 @@ definition {
 			webContentContent = "Contenidoweb@!#",
 			webContentDescription = "Descripcion@!#",
 			webContentTitle = "Titulodelcontenidoweb@!&#");
+	}
+
+	@description = "This ensures that only the valid translation files can be imported from a zip."
+	@priority = "5"
+	@refactordone
+	test CanPartiallyImportMultipleWCs {
+		for (var i : list "1,2,3") {
+			JSONWebcontent.addWebContent(
+				content = "WebContent${i}",
+				description = "Description${i}",
+				groupName = "Guest",
+				title = "WebContentTitle${i}");
+		}
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		Translations.gotoBulkExportTranslation(exportTranslationEntry = "WebContentTitle1,WebContentTitle3");
+
+		Translations.exportTranslation(
+			defaultLanguage = "English (United States)",
+			languageList = "German (Germany),Spanish (Spain)");
+
+		Translations.translateFile(
+			contentTranslation = "Contenidoweb1",
+			descriptionTranslation = "Descripcion1",
+			encoding = "false",
+			operation = "unzip",
+			titleTranslation = "Titulodelcontenidoweb1",
+			translationFileName = "WebContentTitle1-en_US-es_ES",
+			translationZipFileName = "WebContentTitle3-en_US",
+			webContentContent = "WebContent1",
+			webContentDescription = "Description1",
+			webContentTitle = "WebContentTitle1");
+
+		Translations.updateTranslateFileID(
+			translationEntryType = "JournalArticle",
+			translationFileName = "WebContentTitle1-en_US-de_DE",
+			translationZipFileName = "WebContentTitle3-en_US");
+
+		Translations.translateFile(
+			contentTranslation = "Internetinhalt3",
+			descriptionTranslation = "Beschreibung3",
+			encoding = "false",
+			operation = "false",
+			titleTranslation = "TiteldesWebinhalts3",
+			translationFileName = "WebContentTitle3-en_US-de_DE",
+			translationZipFileName = "WebContentTitle3-en_US-es_ES",
+			webContentContent = "WebContent3",
+			webContentDescription = "Description3",
+			webContentTitle = "WebContentTitle3");
+
+		Translations.translateFile(
+			contentTranslation = "Contenidoweb3",
+			descriptionTranslation = "Descripcion3",
+			encoding = "false",
+			operation = "zip",
+			titleTranslation = "Titulodelcontenidoweb3",
+			translationFileName = "WebContentTitle3-en_US-es_ES",
+			translationZipFileName = "WebContentTitle3-en_US-es_ES",
+			webContentContent = "WebContent3",
+			webContentDescription = "Description3",
+			webContentTitle = "WebContentTitle3");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		Translations.gotoBulkImportTranslation();
+
+		Translations.importTranslation(
+			fileName = "WebContentTitle3-en_US_translated.zip",
+			filePath = "");
+
+		for (var i : list "1,3") {
+			WebContentNavigator.gotoEditCP(webContentTitle = "WebContentTitle${i}");
+
+			PortletEntry.changeLocale(locale = "es-ES");
+
+			WebContent.viewCP(
+				webContentContent = "Contenidoweb${i}",
+				webContentDescription = "Descripcion${i}",
+				webContentTitle = "Titulodelcontenidoweb${i}");
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		}
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WebContentTitle1");
+
+		Translations.viewUntranslatedStatus(locale = "de-DE");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WebContentTitle3");
+
+		PortletEntry.changeLocale(locale = "de-DE");
+
+		WebContent.viewCP(
+			webContentContent = "Internetinhalt3",
+			webContentDescription = "Beschreibung3",
+			webContentTitle = "TiteldesWebinhalts3");
 	}
 
 }

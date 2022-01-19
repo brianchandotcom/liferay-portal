@@ -1,0 +1,71 @@
+@component-name = "portal-object"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Object";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			ObjectAdmin.deleteAllCustomObjectsViaAPI();
+		}
+	}
+
+	@description = "LPS-143122 - Verify that it is possible to add an Object portlet as a widget on a page"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanAddObjectPortletWidget {
+		property portal.acceptance = "true";
+
+		// TODO LPS-145675 CanAddObjectPortletWidget pending implementation
+
+	}
+
+	@description = "LPS-143122 - Verify that a widget button is displayed on the Objects details page"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanDisplayWidgetButton {
+
+		// TODO LPS-145671 CanDisplayWidgetButton pending implementation
+
+	}
+
+	@description = "LPS-143122 - Verify that when the widget button is disabled it is not possible to add an Object portlet as a widget on a page"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CannotAddObjectPortletWhenWidgetDisabled {
+
+		// TODO LPS-145676 CannotAddObjectPortletWhenWidgetDisabled pending implementation
+
+	}
+
+	@description = "LPS-143122 - Verify that when widget button is disabled the Object portlet widget disappears from the page"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ObjectPortletWidgetDisappearsWhenWidgetDisabled {
+
+		// TODO LPS-145677 ObjectPortletWidgetDisappearsWhenWidgetDisabled pending implementation
+
+	}
+
+	@description = "LPS-143122 - Verify that by default the widget button is disabled"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test WidgetButtonDisabledByDefault {
+
+		// TODO LPS-145674 WidgetButtonDisabledByDefault pending implementation
+
+	}
+
+}

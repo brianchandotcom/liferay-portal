@@ -1,0 +1,34 @@
+@component-name = "portal-object"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Object";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			ObjectAdmin.deleteAllCustomObjectsViaAPI();
+		}
+	}
+
+	@description = "LPS-143021 - Verify it is possible to view and add entries on an Object after creating a Relationship One to Many for it"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewAndAddObjectEntriesAfterCreateRelationship {
+
+		// TODO LPS-145745 CanViewAndAddObjectEntriesAfterCreateRelationship pending implementation
+
+	}
+
+}

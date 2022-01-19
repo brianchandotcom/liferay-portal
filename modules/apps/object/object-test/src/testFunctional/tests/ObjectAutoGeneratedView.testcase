@@ -1,0 +1,70 @@
+@component-name = "portal-object"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Object";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			ObjectAdmin.deleteAllCustomObjectsViaAPI();
+		}
+	}
+
+	@description = "LPS-142659 - Verify that the user is able to add an entry of long text and view the entry"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanAddClobLongText {
+
+		// TODO LPS-145699 CanAddClobLongText pending implementation
+
+	}
+
+	@description = "LPS-142659 - Verify it is possible to edit a entry of Clob field and view the update on entry table"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanEditClobField {
+
+		// TODO LPS-145702 CanEditClobField pending implementation
+
+	}
+
+	@description = "LPS-142659 - Verify that a Clob entry is correctly displayed on the auto-generated table on the Custom Object Portlet"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ClobDisplayed {
+
+		// TODO LPS-145701 ClobDisplayed pending implementation
+
+	}
+
+	@description = "LPS-142659 - Text will be truncated on the Object portlet table view if it has more than 56 characters"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ClobLongTextWillTruncate {
+
+		// TODO LPS-145700 ClobLongTextWillTruncate pending implementation
+
+	}
+
+	@description = "LPS-136595 - Verify that a Picklist entry is correctly displayed on the auto-generated table on the Custom Object Portlet"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test PicklistDisplayed {
+
+		// TODO LPS-145746 PicklistDisplayed pending implementation
+
+	}
+
+}

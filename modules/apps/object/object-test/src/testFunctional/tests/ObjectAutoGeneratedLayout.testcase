@@ -1,0 +1,43 @@
+@component-name = "portal-object"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Object";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			ObjectAdmin.deleteAllCustomObjectsViaAPI();
+		}
+	}
+
+	@description = "LPS-142659 - Verify it is possible to view a Clob entry and label on layout"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewClobEntryOnLayout {
+
+		// TODO LPS-145698 CanViewClobEntryOnLayout pending implementation
+
+	}
+
+	@description = "LPS-142659 - Verify if the Object Entry Title of a Clob type is displayed on the Relationship field when adding an entry"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewObjectEntryTitleClobOnRelationshipField {
+
+		// TODO LPS-145697 CanViewObjectEntryTitleClobOnRelationshipField pending implementation
+
+	}
+
+}

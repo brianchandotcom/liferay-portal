@@ -2598,6 +2598,29 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>com.liferay.portal.ccpp.api.jar!ccpp.jar</file-name>
+				<version>1.0</version>
+				<project-name>CC/PP API</project-name>
+				<project-url>http://www.jcp.org/en/jsr/detail?id=188</project-url>
+				<licenses>
+					<license>
+						<license-name>Sun Microsystems, Inc. Binary Code License Agreement</license-name>
+						<license-url>http://java.sun.com/j2ee/ccpp</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.ccpp.impl.jar!oro.jar</file-name>
+				<version>2.0.8</version>
+				<project-name>oro:oro</project-name>
+				<licenses>
+					<license>
+						<license-name>Apache Software License, Version 1.1</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-1.1</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>com.liferay.portal.change.tracking.jar!com.github.jsqlparser.jar</file-name>
 				<version>2.1.LIFERAY-PATCHED-1</version>
 				<project-name>JSQLParser library</project-name>

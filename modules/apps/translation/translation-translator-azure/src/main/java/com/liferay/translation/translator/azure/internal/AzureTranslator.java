@@ -15,8 +15,8 @@
 package com.liferay.translation.translator.azure.internal;
 
 import com.liferay.petra.apache.http.components.URIBuilder;
-import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -25,7 +25,9 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.translation.translator.Translator;
 import com.liferay.translation.translator.TranslatorPacket;
 import com.liferay.translation.translator.azure.internal.configuration.AzureTranslatorConfiguration;
@@ -38,19 +40,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpHeaders;
-import org.apache.http.HttpStatus;
-import org.apache.http.StatusLine;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
@@ -70,10 +63,21 @@ public class AzureTranslator implements Translator {
 	public TranslatorPacket translate(TranslatorPacket translatorPacket)
 		throws PortalException {
 
-		try (CloseableHttpClient closeableHttpClient =
-				HttpClients.createDefault()) {
+		try {
+			Http.Options options = new Http.Options();
 
-			HttpPost httpPost = new HttpPost(
+			options.addHeader(
+				"Ocp-Apim-Subscription-Key",
+				_azureTranslatorConfiguration.subscriptionKey());
+			options.addHeader(
+				"Ocp-Apim-Subscription-Region",
+				_azureTranslatorConfiguration.resourceLocation());
+			options.addHeader(
+				HttpHeaders.CONTENT_TYPE, ContentTypes.APPLICATION_JSON);
+			options.setBody(
+				_getTranslatorPacketPayload(translatorPacket),
+				ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+			options.setLocation(
 				URIBuilder.create(
 					"https://api.cognitive.microsofttranslator.com/translate"
 				).addParameter(
@@ -84,62 +88,47 @@ public class AzureTranslator implements Translator {
 				).addParameter(
 					"to",
 					_getLanguageCode(translatorPacket.getTargetLanguageId())
-				).build());
+				).build(
+				).toString());
+			options.setPost(true);
 
-			httpPost.addHeader(
-				"Ocp-Apim-Subscription-Key",
-				_azureTranslatorConfiguration.subscriptionKey());
-			httpPost.addHeader(
-				"Ocp-Apim-Subscription-Region",
-				_azureTranslatorConfiguration.resourceLocation());
-			httpPost.addHeader(
-				HttpHeaders.CONTENT_TYPE, ContentTypes.APPLICATION_JSON);
+			String responseJSONString = _http.URLtoString(options);
 
-			httpPost.setEntity(
-				new StringEntity(
-					_getTranslatorPacketPayload(translatorPacket)));
+			Http.Response response = options.getResponse();
 
-			try (CloseableHttpResponse closeableHttpResponse =
-					closeableHttpClient.execute(httpPost)) {
+			if (response.getResponseCode() != 200) {
+				throw new PortalException(
+					"Azure Translate service failed with code " +
+						response.getResponseCode());
+			}
 
-				StatusLine statusLine = closeableHttpResponse.getStatusLine();
+			Map<String, String> translatedFieldsMap = _getTranslatedFieldsMap(
+				translatorPacket.getFieldsMap(),
+				JSONFactoryUtil.createJSONArray(responseJSONString));
 
-				if (statusLine.getStatusCode() != HttpStatus.SC_OK) {
-					throw new PortalException(statusLine.getReasonPhrase());
+			return new TranslatorPacket() {
+
+				@Override
+				public long getCompanyId() {
+					return translatorPacket.getCompanyId();
 				}
 
-				HttpEntity entity = closeableHttpResponse.getEntity();
+				@Override
+				public Map<String, String> getFieldsMap() {
+					return translatedFieldsMap;
+				}
 
-				Map<String, String> translatedFieldsMap =
-					_getTranslatedFieldsMap(
-						translatorPacket.getFieldsMap(),
-						JSONFactoryUtil.createJSONArray(
-							StreamUtil.toString(entity.getContent())));
+				@Override
+				public String getSourceLanguageId() {
+					return translatorPacket.getSourceLanguageId();
+				}
 
-				return new TranslatorPacket() {
+				@Override
+				public String getTargetLanguageId() {
+					return translatorPacket.getTargetLanguageId();
+				}
 
-					@Override
-					public long getCompanyId() {
-						return translatorPacket.getCompanyId();
-					}
-
-					@Override
-					public Map<String, String> getFieldsMap() {
-						return translatedFieldsMap;
-					}
-
-					@Override
-					public String getSourceLanguageId() {
-						return translatorPacket.getSourceLanguageId();
-					}
-
-					@Override
-					public String getTargetLanguageId() {
-						return translatorPacket.getTargetLanguageId();
-					}
-
-				};
-			}
+			};
 		}
 		catch (IOException | URISyntaxException exception) {
 			throw new PortalException(exception);
@@ -198,5 +187,8 @@ public class AzureTranslator implements Translator {
 	}
 
 	private volatile AzureTranslatorConfiguration _azureTranslatorConfiguration;
+
+	@Reference
+	private Http _http;
 
 }

@@ -178,6 +178,7 @@ export function ColorPicker({
 	};
 
 	const onClickAutocompleteItem = ({label, name, value}) => {
+		setActiveAutocomplete(false);
 		onSetValue(value, label, name);
 	};
 

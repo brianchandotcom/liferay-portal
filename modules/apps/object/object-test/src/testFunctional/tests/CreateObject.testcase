@@ -126,7 +126,7 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
 
 		ObjectAdmin.goToLayoutsTab();
 
@@ -708,7 +708,7 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
 
 		ObjectAdmin.goToLayoutsTab();
 
@@ -1021,7 +1021,7 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
+		ObjectPortlet.selectCustomObject(label = "Object A");
 
 		ObjectAdmin.gotoRelationshipsTab();
 
@@ -1081,7 +1081,7 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
 
 		ObjectAdmin.goToFieldsTab();
 
@@ -1444,7 +1444,7 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
 
 		ObjectAdmin.gotoRelationshipsTab();
 
@@ -1660,7 +1660,7 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
 
 		ObjectAdmin.gotoRelationshipsTab();
 
@@ -1879,7 +1879,7 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
 
 		ObjectAdmin.gotoRelationshipsTab();
 
@@ -1923,7 +1923,7 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
 
 		ObjectAdmin.gotoRelationshipsTab();
 
@@ -2964,7 +2964,7 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
 
 		ObjectAdmin.goToLayoutsTab();
 
@@ -3444,7 +3444,7 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
 
 		ObjectAdmin.gotoRelationshipsTab();
 
@@ -3494,7 +3494,7 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
 
 		ObjectAdmin.goToLayoutsTab();
 
@@ -3582,7 +3582,7 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
 
 		ObjectAdmin.goToLayoutsTab();
 
@@ -3648,7 +3648,7 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
 
 		ObjectAdmin.goToLayoutsTab();
 
@@ -3699,7 +3699,7 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
 
 		ObjectAdmin.gotoRelationshipsTab();
 
@@ -4327,7 +4327,7 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
 
 		ObjectAdmin.assertObjectDetailsPage();
 	}
@@ -4377,7 +4377,7 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
 
 		ObjectAdmin.gotoRelationshipsTab();
 
@@ -4416,7 +4416,7 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
 
 		ObjectAdmin.goToLayoutsTab();
 
@@ -4999,7 +4999,7 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
 
 		ObjectAdmin.gotoRelationshipsTab();
 

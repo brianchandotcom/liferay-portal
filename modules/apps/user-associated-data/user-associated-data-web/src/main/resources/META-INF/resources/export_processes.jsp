@@ -48,7 +48,7 @@ UADExportProcessDisplayContext uadExportProcessDisplayContext = new UADExportPro
 		%>
 
 		<liferay-ui:search-container-column-text
-			cssClass="lfr-create-date-column table-cell-expand"
+			cssClass="lfr-create-date-column table-cell-expand text-nowrap"
 		>
 			<%= LanguageUtil.get(request, "create-date") + ": " + dateFormat.format(backgroundTask.getCreateDate()) %>
 
@@ -65,7 +65,7 @@ UADExportProcessDisplayContext uadExportProcessDisplayContext = new UADExportPro
 		</liferay-ui:search-container-column-text>
 
 		<liferay-ui:search-container-column-text
-			cssClass="lfr-completion-date-column table-cell-expand"
+			cssClass="lfr-completion-date-column table-cell-expand text-nowrap"
 		>
 			<c:choose>
 				<c:when test="<%= backgroundTask.isCompleted() %>">

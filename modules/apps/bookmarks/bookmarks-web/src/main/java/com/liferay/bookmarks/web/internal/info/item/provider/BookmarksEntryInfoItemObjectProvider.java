@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Yang Cao
  */
 @Component(
-	immediate = true,
+	enabled = false, immediate = true,
 	property = {
 		"info.item.identifier=com.liferay.info.item.ClassPKInfoItemIdentifier",
 		"item.class.name=com.liferay.bookmarks.model.BookmarksEntry",

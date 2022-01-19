@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Yang Cao
  */
-@Component(service = InfoItemRenderer.class)
+@Component(enabled = false, service = InfoItemRenderer.class)
 public class BookmarksEntryFullContentInfoItemRenderer
 	implements InfoItemRenderer<BookmarksEntry> {
 

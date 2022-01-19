@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Yang Cao
  */
-@Component(service = InfoDisplayContributor.class)
+@Component(enabled = false, service = InfoDisplayContributor.class)
 public class BookmarksEntryInfoDisplayContributor
 	implements InfoDisplayContributor<BookmarksEntry> {
 

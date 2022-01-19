@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Yang Cao
  */
-@Component(service = ItemSelectorCriterionHandler.class)
+@Component(enabled = false, service = ItemSelectorCriterionHandler.class)
 public class BookmarksEntryItemSelectorCriterionHandler
 	extends BaseItemSelectorCriterionHandler<InfoItemItemSelectorCriterion> {
 

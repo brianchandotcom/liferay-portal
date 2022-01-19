@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Yang Cao
  */
-@Component(service = InfoItemSelector.class)
+@Component(enabled = false, service = InfoItemSelector.class)
 public class BookmarksEntryInfoItemSelector
 	implements InfoItemSelector<BookmarksEntry> {
 

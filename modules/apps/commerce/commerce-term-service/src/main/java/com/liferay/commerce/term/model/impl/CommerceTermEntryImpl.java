@@ -14,8 +14,19 @@
 
 package com.liferay.commerce.term.model.impl;
 
+import com.liferay.portal.kernel.util.UnicodeProperties;
+
 /**
  * @author Luca Pellizzon
+ * @author Alessio Antonio Rendina
  */
 public class CommerceTermEntryImpl extends CommerceTermEntryBaseImpl {
+
+	@Override
+	public void setTypeSettingsUnicodeProperties(
+		UnicodeProperties typeSettingsUnicodeProperties) {
+
+		super.setTypeSettings(typeSettingsUnicodeProperties.toString());
+	}
+
 }

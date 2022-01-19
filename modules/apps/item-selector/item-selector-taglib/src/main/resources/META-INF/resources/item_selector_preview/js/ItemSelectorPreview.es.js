@@ -219,6 +219,10 @@ const ItemSelectorPreview = ({
 				width: '320px',
 			});
 		}
+
+		return () => {
+			Liferay.SideNavigation.destroy(sidenavToggle);
+		};
 	}, [infoButtonRef]);
 
 	useEffect(() => {

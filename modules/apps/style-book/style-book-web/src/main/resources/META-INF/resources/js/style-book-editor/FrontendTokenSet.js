@@ -24,7 +24,10 @@ import ColorFrontendToken from './frontend_tokens/ColorFrontendToken';
 import SelectFrontendToken from './frontend_tokens/SelectFrontendToken';
 import TextFrontendToken from './frontend_tokens/TextFrontendToken';
 
-const getColorFrontendTokens = ({frontendTokenCategories}) => {
+const getColorFrontendTokens = (
+	{frontendTokenCategories},
+	frontendTokensValues
+) => {
 	let tokens = {};
 
 	for (const category of frontendTokenCategories) {
@@ -38,7 +41,9 @@ const getColorFrontendTokens = ({frontendTokenCategories}) => {
 						name: token.name,
 						tokenCategoryLabel: category.label,
 						tokenSetLabel: tokenSet.label,
-						value: token.defaultValue,
+						value:
+							frontendTokensValues[token.name]?.value ||
+							token.defaultValue,
 						[token.mappings[0].type]: token.mappings[0].value,
 					},
 				};
@@ -54,7 +59,10 @@ export default function FrontendTokenSet({frontendTokens, label}) {
 		StyleBookContext
 	);
 
-	const tokenValues = getColorFrontendTokens(config.frontendTokenDefinition);
+	const tokenValues = getColorFrontendTokens(
+		config.frontendTokenDefinition,
+		frontendTokensValues
+	);
 
 	const updateFrontendTokensValues = (frontendToken, value) => {
 		const {mappings = [], name} = frontendToken;

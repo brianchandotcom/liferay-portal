@@ -156,7 +156,7 @@ const ActivationKeysInputs = ({
 							{accountSubscriptions.map((accountSubscription) => (
 								<ClaySelect.Option
 									key={
-										accountSubscription.accountSubscriptionGroupERC
+										accountSubscription.accountSubscriptionId
 									}
 									label={accountSubscription.name}
 									value={accountSubscription.name}

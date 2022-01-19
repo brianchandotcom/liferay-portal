@@ -54,7 +54,7 @@ const getYearlyTerms = ({endDate, startDate}) => {
 		return yearDateSplitted;
 	}
 
-	return [{endDate, startDate}];
+	return [{endDate: new Date(endDate), startDate: new Date(startDate)}];
 };
 
 export {getYearlyTerms};

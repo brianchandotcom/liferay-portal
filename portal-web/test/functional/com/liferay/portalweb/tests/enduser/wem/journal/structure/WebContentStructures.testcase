@@ -524,18 +524,10 @@ definition {
 			WebContentDisplayPortlet.selectWebContent(webContentTitle = "Web Content Title");
 		}
 
-		task ("Click the link in Web Content Display") {
-			WebContent.viewPGViaWCD(
-				linkName = "Link to Page",
-				linkToPage = "true");
-
-			Click(
-				key_contentText = "Link to Page",
-				locator1 = "WCD#WEB_CONTENT_TEXT_LINK_URL");
-		}
-
 		task ("Assert the page redirects to the great grand child page") {
-			ControlMenu.viewHeaderTitle(headerTitle = "Test Great Grand Child Page");
+			WebContentDisplayPortlet.viewLinkedPage(
+				linkedPageName = "Test Great Grand Child Page",
+				linkName = "Link to Page");
 		}
 	}
 

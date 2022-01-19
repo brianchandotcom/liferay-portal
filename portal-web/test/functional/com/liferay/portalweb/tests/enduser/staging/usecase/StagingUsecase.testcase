@@ -183,9 +183,9 @@ definition {
 
 		WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title 2");
 
-		WebContent.viewPGViaWCD(
-			linkName = "Link to Page",
-			linkToPage = "true");
+		WebContentDisplayPortlet.viewLinkedPage(
+			linkedPageName = "Second Test Page",
+			linkName = "Link to Page");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",

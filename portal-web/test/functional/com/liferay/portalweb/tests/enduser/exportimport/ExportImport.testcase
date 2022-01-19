@@ -755,10 +755,6 @@ definition {
 				siteName = "Site A");
 
 			WebContentDisplayPortlet.selectWebContent(webContentTitle = "Web Content Title ${count}");
-
-			WebContent.viewPGViaWCD(
-				linkName = "Link to Page",
-				linkToPage = "true");
 		}
 
 		LAR.exportSiteCP(siteScopeName = "Site A");
@@ -787,11 +783,11 @@ definition {
 			pageName = "Page A",
 			siteName = "Site B");
 
-		WebContentDisplayPortlet.viewLinkToPageFieldViaWCD(
+		WebContentDisplayPortlet.viewLinkedPage(
 			linkedPageName = "Page B",
 			linkName = "Link to Page");
 
-		WebContentDisplayPortlet.viewLinkToPageFieldViaWCD(
+		WebContentDisplayPortlet.viewLinkedPage(
 			linkedPageName = "Page C",
 			linkName = "Link to Page");
 	}
@@ -876,9 +872,9 @@ definition {
 
 		WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title 2");
 
-		WebContent.viewPGViaWCD(
-			linkName = "Link to Page",
-			linkToPage = "true");
+		WebContentDisplayPortlet.viewLinkedPage(
+			linkedPageName = "Site Child Child Page",
+			linkName = "Link to Page");
 
 		LAR.exportSiteCP(siteScopeName = "Site Name");
 
@@ -1943,13 +1939,9 @@ definition {
 			pageName = "Page A",
 			siteName = "Site Name");
 
-		WebContent.viewPGViaWCD(
-			linkName = "Link to Page",
-			linkToPage = "true");
-
-		Navigator.gotoSitePage(
-			pageName = "Page B",
-			siteName = "Site Name");
+		WebContentDisplayPortlet.viewLinkedPage(
+			linkedPageName = "Page B",
+			linkName = "Link to Page");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "WCD#WEB_CONTENT_TITLE",

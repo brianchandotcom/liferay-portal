@@ -580,9 +580,8 @@ definition {
 		AssertElementPresent(locator1 = "WCD#WEB_CONTENT_IMAGE_PNG");
 	}
 
-	macro viewLinkToPageFieldViaWCD {
+	macro viewLinkedPage {
 		var key_contentText = "${linkName}";
-		var key_pageName = "${linkedPageName}";
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "WCD#WEB_CONTENT_TEXT_LINK_URL",
@@ -592,7 +591,7 @@ definition {
 			locator1 = "WCD#WEB_CONTENT_TEXT_LINK_URL",
 			value1 = "${linkName}");
 
-		AssertVisible(locator1 = "Home#PAGE_ACTIVE");
+		ControlMenu.viewHeaderTitle(headerTitle = "${linkedPageName}");
 	}
 
 	macro viewRecycleBinMessage {

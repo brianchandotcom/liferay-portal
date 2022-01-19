@@ -71,16 +71,21 @@ const renderPreviewComponent = (props) =>
 describe('ItemSelectorPreview', () => {
 	beforeAll(() => {
 		Liferay.component = jest.fn();
-		Liferay.SideNavigation = jest.fn();
-		Liferay.SideNavigation.initialize = jest.fn();
+		Liferay.SideNavigation = {
+			destroy: jest.fn(),
+			initialize: jest.fn(),
+		};
 	});
 
 	afterEach(cleanup);
 
-	it('initialize the sidebar only once', () => {
+	it('initialize/destroy the sidebar properly', () => {
 		renderPreviewComponent(previewProps);
 
-		expect(Liferay.SideNavigation.initialize).toHaveBeenCalledTimes(1);
+		expect(
+			Liferay.SideNavigation.initialize.mock.calls.length -
+				Liferay.SideNavigation.destroy.mock.calls.length
+		).toBe(1);
 	});
 
 	it('renders the ItemSelectorPreview component with the fullscreen class', () => {

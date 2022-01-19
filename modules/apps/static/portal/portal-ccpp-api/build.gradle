@@ -1,0 +1,3 @@
+dependencies {
+	compileInclude group: "javax.ccpp", name: "ccpp", version: "1.0"
+}

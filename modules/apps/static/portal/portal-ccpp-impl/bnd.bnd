@@ -1,0 +1,14 @@
+Bundle-Name: Liferay Portal CCPP Implementation
+Bundle-SymbolicName: com.liferay.portal.ccpp.impl
+Bundle-Version: 1.0.0
+Import-Package:\
+	com.liferay.portal.ccpp,\
+	\
+	javax.ccpp,\
+	javax.ccpp.uaprof,\
+	\
+	javax.servlet.http,\
+	\
+	javax.xml.parsers,\
+	\
+	org.xml.sax

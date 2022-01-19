@@ -14,72 +14,13 @@
 
 package com.liferay.portal.ccpp;
 
-import com.sun.ccpp.ProfileFactoryImpl;
-
-import java.util.Set;
-
-import javax.ccpp.Attribute;
-import javax.ccpp.Component;
-import javax.ccpp.Profile;
-import javax.ccpp.ProfileDescription;
-import javax.ccpp.ProfileFactory;
-import javax.ccpp.ValidationMode;
-
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class PortalProfileFactory {
+public interface PortalProfileFactory {
 
-	public static Object getCCPPProfile(
-		HttpServletRequest httpServletRequest) {
-
-		ProfileFactory profileFactory = ProfileFactory.getInstance();
-
-		if (profileFactory == null) {
-			profileFactory = ProfileFactoryImpl.getInstance();
-
-			ProfileFactory.setInstance(profileFactory);
-		}
-
-		Profile profile = profileFactory.newProfile(
-			httpServletRequest, ValidationMode.VALIDATIONMODE_NONE);
-
-		if (profile == null) {
-			profile = _profile;
-		}
-
-		return profile;
-	}
-
-	private static final Profile _profile = new Profile() {
-
-		@Override
-		public Attribute getAttribute(String name) {
-			return null;
-		}
-
-		@Override
-		public Set<Attribute> getAttributes() {
-			return null;
-		}
-
-		@Override
-		public Component getComponent(String localtype) {
-			return null;
-		}
-
-		@Override
-		public Set<Component> getComponents() {
-			return null;
-		}
-
-		@Override
-		public ProfileDescription getDescription() {
-			return null;
-		}
-
-	};
+	public Object getCCPPProfile(HttpServletRequest httpServletRequest);
 
 }

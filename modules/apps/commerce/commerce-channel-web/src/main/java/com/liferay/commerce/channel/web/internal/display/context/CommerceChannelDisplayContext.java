@@ -398,6 +398,22 @@ public class CommerceChannelDisplayContext
 		return false;
 	}
 
+	public boolean isCheckoutRequestedDeliveryDateEnabled()
+		throws PortalException {
+
+		CommerceChannel commerceChannel = getCommerceChannel();
+
+		CommerceOrderCheckoutConfiguration commerceOrderCheckoutConfiguration =
+			_configurationProvider.getConfiguration(
+				CommerceOrderCheckoutConfiguration.class,
+				new GroupServiceSettingsLocator(
+					commerceChannel.getGroupId(),
+					CommerceConstants.SERVICE_NAME_COMMERCE_ORDER));
+
+		return commerceOrderCheckoutConfiguration.
+			checkoutRequestedDeliveryDateEnabled();
+	}
+
 	public boolean isGuestCheckoutEnabled() throws PortalException {
 		CommerceChannel commerceChannel = getCommerceChannel();
 

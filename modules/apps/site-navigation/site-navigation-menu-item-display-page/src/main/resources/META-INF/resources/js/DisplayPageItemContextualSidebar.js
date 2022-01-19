@@ -20,6 +20,8 @@ import {fetch, objectToFormData, openSelectionModal} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useMemo, useState} from 'react';
 
+import '../css/main.scss';
+
 function DisplayPageItemContextualSidebar({
 	chooseItemProps,
 	defaultLanguageId,
@@ -151,7 +153,10 @@ function DisplayPageItemContextualSidebar({
 						/>
 					</ClayInput.GroupItem>
 
-					<ClayInput.GroupItem shrink>
+					<ClayInput.GroupItem
+						className="site-navigation-language-selector"
+						shrink
+					>
 						<TranslationAdminSelector
 							activeLanguageIds={locales.map(
 								(locale) => locale.id
@@ -171,14 +176,13 @@ function DisplayPageItemContextualSidebar({
 					{Liferay.Language.get('item')}
 				</label>
 
-				<ClayInput.Group>
+				<ClayInput.Group className="site-navigation-item-selector">
 					<ClayInput.GroupItem>
 						<ClayInput
 							className="text-secondary"
 							id={`${namespace}_itemInput`}
 							onClick={openChooseItemModal}
 							readOnly
-							style={{cursor: 'pointer'}}
 							type="text"
 							value={selectedItem.title}
 						/>

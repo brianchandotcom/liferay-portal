@@ -1,0 +1,17 @@
+@import 'cadmin-variables';
+
+.site-navigation-item-selector {
+	.btn {
+		border-color: $cadmin-secondary-l3;
+	}
+
+	input {
+		cursor: pointer;
+	}
+}
+
+.site-navigation-language-selector {
+	.btn {
+		border-color: $cadmin-secondary-l3;
+	}
+}

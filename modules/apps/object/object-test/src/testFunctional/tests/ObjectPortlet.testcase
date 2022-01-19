@@ -1014,12 +1014,52 @@ definition {
 	}
 
 	@description = "LPS-135396 - Verify it is possible to edit a Picklist entry on layout"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanEditPicklistEntryOnLayout {
+		Picklist.addPicklistViaAPI(picklistName = "Custom Picklist");
 
-		// TODO LPS-140560 CanEditPicklistEntryOnLayout pending implementation
+		for (var itemsName : list "1,2") {
+			Picklist.addPicklistItemViaAPI(
+				itemKey = "${itemsName}",
+				itemName = "Item Test ${itemsName}",
+				picklistName = "Custom Picklist");
+		}
 
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+		ObjectAdmin.goToFieldsTab();
+
+		ObjectAdmin.addObjectFieldViaUI(
+			fieldLabel = "Field Picklist",
+			fieldPicklist = "Custom Picklist",
+			fieldType = "Picklist");
+
+		Navigator.openURL();
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+		ObjectAdmin.addObjectPicklistFieldEntryViaUI(picklistOption = "Item Test 1");
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+		ObjectPortlet.viewEntryDetails(entry = "Item Test 1");
+
+		ObjectAdmin.changePicklistFieldEntry(
+			entrySelected = "Item Test 1",
+			newPicklistOption = "Item Test 2");
+
+		ObjectPortlet.assertEntryDetailsValueSelected(entrySelected = "Item Test 2");
+
+		ObjectPortlet.assertEntryDetailsNotPresent(entryNotSelected = "Item Test 1");
 	}
 
 	@description = "LPS-135396 - Verify it is possible to edit a String entry on layout"

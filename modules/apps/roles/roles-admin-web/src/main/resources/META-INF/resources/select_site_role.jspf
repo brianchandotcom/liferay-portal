@@ -159,6 +159,20 @@ SearchContainer<Role> roleSearchContainer = selectRoleManagementToolbarDisplayCo
 		<c:when test="<%= step == 2 %>">
 
 			<%
+			String groupEventName = ParamUtil.getString(request, "groupEventName");
+			%>
+
+			<c:if test="<%= Validator.isNotNull(groupEventName) %>">
+				<aui:script>
+					const openingLiferay = Liferay.Util.getOpener().Liferay;
+
+					openingLiferay.fire('<%= HtmlUtil.escapeJS(groupEventName) %>', {
+						data: '<%= groupId %>',
+					});
+				</aui:script>
+			</c:if>
+
+			<%
 			Group group = GroupServiceUtil.getGroup(groupId);
 
 			portletURL.setParameter("groupId", String.valueOf(groupId));

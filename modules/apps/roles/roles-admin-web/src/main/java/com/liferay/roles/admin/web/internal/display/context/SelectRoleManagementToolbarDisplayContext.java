@@ -91,6 +91,9 @@ public class SelectRoleManagementToolbarDisplayContext {
 			"roleType", String.valueOf(_currentRoleTypeContributor.getType()));
 
 		portletURL.setParameter("eventName", _eventName);
+		portletURL.setParameter(
+			"groupEventName",
+			ParamUtil.getString(_httpServletRequest, "groupEventName"));
 
 		String[] keywords = ParamUtil.getStringValues(
 			_httpServletRequest, "keywords");

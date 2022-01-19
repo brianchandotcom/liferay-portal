@@ -1304,7 +1304,7 @@ definition {
 		task ("View error message is shown when save site settings") {
 			Button.click(button = "Save");
 
-			Alert.viewErrorMessage(errorMessage = "Error: Please select at least one category for Vocabulary Name 1.");
+			Alert.viewErrorMessage(errorMessage = "Error: Please select at least one category for Vocabulary Name.");
 		}
 	}
 

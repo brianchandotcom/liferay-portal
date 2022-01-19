@@ -14,8 +14,6 @@
 
 package com.liferay.source.formatter.checkstyle.checks;
 
-import com.beust.jcommander.internal.Lists;
-
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -28,6 +26,7 @@ import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -147,7 +146,7 @@ public class UpgradeUnusedAPICheck extends BaseAPICheck {
 						jsonObject.getString("methodName")));
 			}
 			else {
-				List<String> parameters = Lists.newArrayList(
+				List<String> parameters = Arrays.asList(
 					StringUtil.split(parameterNamesString, ' '));
 
 				_upgradUnusedMethodNames.add(

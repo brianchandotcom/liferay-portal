@@ -139,7 +139,7 @@ const AddModal = ({
 							className="control-label"
 							htmlFor={`${portletNamespace}title`}
 						>
-							{Liferay.Language.get('name')}
+							{Liferay.Language.get('title')}
 
 							<span className="reference-mark">
 								<ClayIcon symbol="asterisk" />

@@ -252,7 +252,7 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals("Test Account 3", account3.getName());
 		Assert.assertEquals("person", account3.getType());
 
-		_assertUserAccounts(account.getId(), serviceContext);
+		_assertUserAccounts(account3.getId(), 0, serviceContext);
 	}
 
 	private void _assertAssetCategories(Group group) throws Exception {
@@ -897,7 +897,7 @@ public class BundleSiteInitializerTest {
 	}
 
 	private void _assertUserAccounts(
-			Long accountId, ServiceContext serviceContext)
+			Long accountId, int expected, ServiceContext serviceContext)
 		throws Exception {
 
 		UserAccountResource.Builder userAccountResourceBuilder =
@@ -908,15 +908,12 @@ public class BundleSiteInitializerTest {
 				serviceContext.fetchUser()
 			).build();
 
-		Page<UserAccount> userAccountsPage =
+		Page<UserAccount> page =
 			userAccountResource.getAccountUserAccountsPage(
-				accountId, null,
-				userAccountResource.toFilter("name eq 'Test User'"), null,
-				null);
+				accountId, null, null, null, null);
 
-		UserAccount userAccount = userAccountsPage.fetchFirstItem();
-
-		Assert.assertNotNull(userAccount);
+		Assert.assertNotNull(page);
+		Assert.assertEquals(expected, page.totalCount());
 	}
 
 	private Bundle _installBundle(BundleContext bundleContext, String location)

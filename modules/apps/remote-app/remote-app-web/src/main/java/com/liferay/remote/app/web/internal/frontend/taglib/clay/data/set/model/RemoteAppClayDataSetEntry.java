@@ -45,9 +45,7 @@ public class RemoteAppClayDataSetEntry {
 		String label = WorkflowConstants.getStatusLabel(
 			_remoteAppEntry.getStatus());
 
-		return new StatusInfo(
-			_remoteAppEntry.getStatus(), label,
-			LanguageUtil.get(_locale, label));
+		return new StatusInfo(label, LanguageUtil.get(_locale, label));
 	}
 
 	public String getType() {

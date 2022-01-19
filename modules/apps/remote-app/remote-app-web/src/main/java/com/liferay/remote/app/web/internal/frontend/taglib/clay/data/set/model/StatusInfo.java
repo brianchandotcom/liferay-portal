@@ -19,15 +19,10 @@ package com.liferay.remote.app.web.internal.frontend.taglib.clay.data.set.model;
  */
 public class StatusInfo {
 
-	public StatusInfo(int code, String label, String localizedLabel) {
-		_code = code;
+	public StatusInfo(String label, String localizedLabel) {
 		_label = label;
 
 		_label_i18n = localizedLabel;
-	}
-
-	public int getCode() {
-		return _code;
 	}
 
 	public String getLabel() {
@@ -38,7 +33,6 @@ public class StatusInfo {
 		return _label_i18n;
 	}
 
-	private final int _code;
 	private final String _label;
 	private final String _label_i18n;
 

@@ -28,12 +28,19 @@ export default function BaseNode({
 	className,
 	description,
 	descriptionSidebar,
+	dragHandle,
 	icon,
 	id,
+	isConnectable,
+	isDragging,
 	label,
 	newNode,
 	script,
+	sourcePosition,
+	targetPosition,
 	type,
+	xPos,
+	yPos,
 	...otherProps
 }) {
 	const sourcehandlesRef = useRef();
@@ -185,6 +192,9 @@ export default function BaseNode({
 
 			<div
 				className={`node ${className}`}
+				draghandle={dragHandle}
+				isconnectable={isConnectable?.toString()}
+				isdragging={isDragging?.toString()}
 				onClick={() => {
 					if (!descriptionSidebar) {
 						setSelectedItem({
@@ -198,9 +208,13 @@ export default function BaseNode({
 						});
 					}
 				}}
+				sourceposition={sourcePosition}
 				style={{
 					position: displayBorderArea ? 'absolute' : 'unset',
 				}}
+				targetposition={targetPosition}
+				xpos={xPos}
+				ypos={yPos}
 				{...otherProps}
 			>
 				{descriptionSidebar && (
@@ -232,7 +246,7 @@ BaseNode.propTypes = {
 	description: PropTypes.string,
 	descriptionSidebar: PropTypes.string,
 	icon: PropTypes.string.isRequired,
-	id: PropTypes.string.isRequired,
+	id: PropTypes.string,
 	label: PropTypes.object,
 	type: PropTypes.string.isRequired,
 };

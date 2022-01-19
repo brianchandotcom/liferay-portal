@@ -1,0 +1,448 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"layout": {
+						"borderWidth": 0,
+						"marginBottom": 0,
+						"marginLeft": 0,
+						"marginRight": 0,
+						"marginTop": 0,
+						"paddingBottom": 0,
+						"paddingLeft": 0,
+						"paddingRight": 0,
+						"paddingTop": 0,
+						"widthType": "Fluid"
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"fragment": {
+								"key": "business-home-cover"
+							},
+							"fragmentConfig": {
+							},
+							"fragmentFields": [
+							],
+							"fragmentStyle": {
+								"borderWidth": "0",
+								"marginBottom": "",
+								"marginLeft": "",
+								"marginRight": "",
+								"marginTop": "",
+								"opacity": "100",
+								"paddingBottom": "",
+								"paddingLeft": "",
+								"paddingRight": "",
+								"paddingTop": ""
+							}
+						},
+						"type": "Fragment"
+					},
+					{
+						"definition": {
+							"fragmentStyle": {
+								"marginBottom": "10",
+								"marginTop": "7"
+							},
+							"layout": {
+								"borderWidth": 0,
+								"marginBottom": 0,
+								"marginLeft": 0,
+								"marginRight": 0,
+								"marginTop": 8,
+								"paddingBottom": 0,
+								"paddingLeft": 0,
+								"paddingRight": 0,
+								"paddingTop": 0,
+								"widthType": "Fluid"
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragment": {
+										"key": "our-philosophy"
+									},
+									"fragmentConfig": {
+									},
+									"fragmentFields": [
+									],
+									"fragmentStyle": {
+										"borderWidth": "0",
+										"marginBottom": "",
+										"marginLeft": "",
+										"marginRight": "",
+										"marginTop": "",
+										"opacity": "100",
+										"paddingBottom": "",
+										"paddingLeft": "",
+										"paddingRight": ""
+									}
+								},
+								"type": "Fragment"
+							}
+						],
+						"type": "Section"
+					},
+					{
+						"definition": {
+							"fragmentStyle": {
+								"borderWidth": "0",
+								"marginBottom": "6"
+							},
+							"fragmentViewports": [
+								{
+									"fragmentViewportStyle": {
+										"paddingLeft": "5",
+										"paddingRight": "5"
+									},
+									"id": "tablet"
+								}
+							],
+							"layout": {
+								"borderWidth": 0,
+								"marginBottom": 6,
+								"marginLeft": 0,
+								"marginRight": 0,
+								"marginTop": 0,
+								"paddingBottom": 0,
+								"paddingLeft": 0,
+								"paddingRight": 0,
+								"paddingTop": 0,
+								"widthType": "Fixed"
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragment": {
+										"key": "colorful-head"
+									},
+									"fragmentConfig": {
+									},
+									"fragmentFields": [
+										{
+											"id": "sub-content",
+											"value": {
+												"fragmentLink": {
+													"value_i18n": {
+													}
+												}
+											}
+										},
+										{
+											"id": "main-content",
+											"value": {
+												"fragmentLink": {
+													"value_i18n": {
+													}
+												}
+											}
+										}
+									],
+									"fragmentStyle": {
+										"marginBottom": "6"
+									}
+								},
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "insurance-faq"
+									},
+									"fragmentConfig": {
+									},
+									"fragmentFields": [
+										{
+											"id": "main-image",
+											"value": {
+												"fragmentImage": {
+													"url": {
+														"value_i18n": {
+														}
+													}
+												},
+												"fragmentLink": {
+													"value_i18n": {
+													}
+												}
+											}
+										},
+										{
+											"id": "main-text",
+											"value": {
+												"fragmentLink": {
+													"value_i18n": {
+													}
+												}
+											}
+										}
+									]
+								},
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "insurance-faq"
+									},
+									"fragmentConfig": {
+									},
+									"fragmentFields": [
+										{
+											"id": "main-image",
+											"value": {
+												"fragmentImage": {
+													"url": {
+														"value_i18n": {
+														}
+													}
+												},
+												"fragmentLink": {
+													"value_i18n": {
+													}
+												}
+											}
+										},
+										{
+											"id": "main-text",
+											"value": {
+												"fragmentLink": {
+													"value_i18n": {
+													}
+												},
+												"text": {
+													"value_i18n": {
+														"en_US": "Nibh varius malesuada nisl donec dolor at pellentesque nulla."
+													}
+												}
+											}
+										}
+									]
+								},
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "insurance-faq"
+									},
+									"fragmentConfig": {
+									},
+									"fragmentFields": [
+										{
+											"id": "main-image",
+											"value": {
+												"fragmentImage": {
+													"url": {
+														"value_i18n": {
+														}
+													}
+												},
+												"fragmentLink": {
+													"value_i18n": {
+													}
+												}
+											}
+										},
+										{
+											"id": "main-text",
+											"value": {
+												"fragmentLink": {
+													"value_i18n": {
+													}
+												},
+												"text": {
+													"value_i18n": {
+														"en_US": "Consequat urna consectetur scelerisque sollicitudin."
+													}
+												}
+											}
+										}
+									]
+								},
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "insurance-faq"
+									},
+									"fragmentConfig": {
+									},
+									"fragmentFields": [
+										{
+											"id": "main-image",
+											"value": {
+												"fragmentImage": {
+													"url": {
+														"value_i18n": {
+														}
+													}
+												},
+												"fragmentLink": {
+													"value_i18n": {
+													}
+												}
+											}
+										},
+										{
+											"id": "main-text",
+											"value": {
+												"fragmentLink": {
+													"value_i18n": {
+													}
+												},
+												"text": {
+													"value_i18n": {
+														"en_US": "Facilisis mi enim, a vitae ut neque, quisque arcu."
+													}
+												}
+											}
+										}
+									]
+								},
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "insurance-faq"
+									},
+									"fragmentConfig": {
+									},
+									"fragmentFields": [
+										{
+											"id": "main-image",
+											"value": {
+												"fragmentImage": {
+													"url": {
+														"value_i18n": {
+														}
+													}
+												},
+												"fragmentLink": {
+													"value_i18n": {
+													}
+												}
+											}
+										},
+										{
+											"id": "main-text",
+											"value": {
+												"fragmentLink": {
+													"value_i18n": {
+													}
+												},
+												"text": {
+													"value_i18n": {
+														"en_US": "Consequat urna consectetur scelerisque sollicitudin."
+													}
+												}
+											}
+										}
+									]
+								},
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "insurance-faq"
+									},
+									"fragmentConfig": {
+									},
+									"fragmentFields": [
+										{
+											"id": "main-image",
+											"value": {
+												"fragmentImage": {
+													"url": {
+														"value_i18n": {
+														}
+													}
+												},
+												"fragmentLink": {
+													"value_i18n": {
+													}
+												}
+											}
+										},
+										{
+											"id": "main-text",
+											"value": {
+												"fragmentLink": {
+													"value_i18n": {
+													}
+												},
+												"text": {
+													"value_i18n": {
+														"en_US": "Purus pretium dui neque, scelerisque vulputate."
+													}
+												}
+											}
+										}
+									]
+								},
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "insurance-faq"
+									},
+									"fragmentConfig": {
+									},
+									"fragmentFields": [
+										{
+											"id": "main-image",
+											"value": {
+												"fragmentImage": {
+													"url": {
+														"value_i18n": {
+														}
+													}
+												},
+												"fragmentLink": {
+													"value_i18n": {
+													}
+												}
+											}
+										},
+										{
+											"id": "main-text",
+											"value": {
+												"fragmentLink": {
+													"value_i18n": {
+													}
+												},
+												"text": {
+													"value_i18n": {
+														"en_US": "Facilisis mi enim, a vitae ut neque, quisque arcu."
+													}
+												}
+											}
+										}
+									]
+								},
+								"type": "Fragment"
+							}
+						],
+						"type": "Section"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"masterPage": {
+			"key": "public"
+		}
+	}
+}

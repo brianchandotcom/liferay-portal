@@ -55,12 +55,6 @@ html#{$cadmin-selector} {
 			}
 
 			.sidebar-body {
-				.chart-loading-indicator {
-					position: absolute;
-					transform: translate(80%, 100%);
-					z-index: 1;
-				}
-
 				.loading-animation {
 					left: 0;
 					position: absolute;

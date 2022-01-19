@@ -90,47 +90,6 @@ definition {
 		Translations.assertFileNameFromTempFolder(webContentTitle = "Web Content Title");
 	}
 
-	@description = "This is a test for LPS-136977. It checks that a user can export translation with long inputs."
-	@priority = "4"
-	test CanExportWithLongInputs {
-		JSONWebcontent.addWebContent(
-			content = "Since 2004 Liferay has been helping its customers, employees, partners, and community reach their full potential to serve others. With open source roots, Liferay has grown to over 900 employees in 23 offices across the globe. Serving a wide range of enterprises, we strive to stay true to our core values: Produce Excellence, Lead by Serving, Value People, Grow and Get Better.",
-			groupName = "Guest",
-			title = "Long Inputs For Web Content Title To Check The Translations Exporting Process");
-
-		WebContentNavigator.openWebContentAdmin(siteUrlKey = "guest");
-
-		Translations.gotoExportTranslation(webContentTitle = "Long Inputs For Web Content Title To Check The Translations Exporting Process");
-
-		Translations.exportTranslation(
-			defaultLanguage = "English (United States)",
-			languageList = "Spanish (Spain)");
-
-		Translations.assertFileNameFromTempFolder(webContentTitle = "Long Inputs For Web Content Title To Check The Translations Exporting Process");
-	}
-
-	@description = "This is a test for LPS-136978. It checks that a user can export translation with special characters."
-	@priority = "4"
-	test CanExportWithSpecialCharacters {
-		WebContentNavigator.openToAddBasicArticle(
-			groupName = "Guest",
-			siteUrlKey = "guest");
-
-		WebContent.addCP(
-			webContentContent = '''Web Content Content &gt;!&#<>''',
-			webContentTitle = '''Web Content Title &gt;!&#<>''');
-
-		PortletEntry.publish();
-
-		Translations.gotoExportTranslation(webContentTitle = "Web Content Title");
-
-		Translations.exportTranslation(
-			defaultLanguage = "English (United States)",
-			languageList = "Spanish (Spain)");
-
-		Translations.assertFileNameFromTempFolder(webContentTitle = '''Web Content Title &gt;!&#''');
-	}
-
 	@description = "This ensures that user can import the exported xliff file with 1.2 version."
 	@priority = "5"
 	@refactordone

@@ -14,6 +14,8 @@
 
 package com.liferay.commerce.checkout.web.internal.display.context;
 
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.constants.CommerceCheckoutWebKeys;
 import com.liferay.commerce.model.CommerceAddress;
@@ -22,6 +24,8 @@ import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.commerce.util.comparator.CommerceAddressNameComparator;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 
 import java.util.List;
 
@@ -34,9 +38,15 @@ import javax.servlet.http.HttpServletRequest;
 public abstract class BaseAddressCheckoutStepDisplayContext {
 
 	public BaseAddressCheckoutStepDisplayContext(
+		AccountRoleLocalService accountRoleLocalService,
+		ModelResourcePermission<AccountEntry>
+			accountEntryModelResourcePermission,
 		CommerceAddressService commerceAddressService,
 		HttpServletRequest httpServletRequest) {
 
+		this.accountRoleLocalService = accountRoleLocalService;
+		this.accountEntryModelResourcePermission =
+			accountEntryModelResourcePermission;
 		this.commerceAddressService = commerceAddressService;
 
 		_commerceOrder = (CommerceOrder)httpServletRequest.getAttribute(
@@ -70,6 +80,22 @@ public abstract class BaseAddressCheckoutStepDisplayContext {
 
 	public abstract String getTitle();
 
+	public boolean hasPermission(
+			PermissionChecker permissionChecker,
+			CommerceAccount commerceAccount, String actionId)
+		throws PortalException {
+
+		if (commerceAccount.isPersonalAccount() ||
+			accountEntryModelResourcePermission.contains(
+				permissionChecker, commerceAccount.getCommerceAccountId(),
+				actionId)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isShippingUsedAsBilling() throws PortalException {
 		CommerceAccount commerceAccount = _commerceOrder.getCommerceAccount();
 		CommerceAddress shippingAddress = _commerceOrder.getShippingAddress();
@@ -89,6 +115,9 @@ public abstract class BaseAddressCheckoutStepDisplayContext {
 		return false;
 	}
 
+	protected final ModelResourcePermission<AccountEntry>
+		accountEntryModelResourcePermission;
+	protected final AccountRoleLocalService accountRoleLocalService;
 	protected final CommerceAddressService commerceAddressService;
 
 	private final CommerceOrder _commerceOrder;

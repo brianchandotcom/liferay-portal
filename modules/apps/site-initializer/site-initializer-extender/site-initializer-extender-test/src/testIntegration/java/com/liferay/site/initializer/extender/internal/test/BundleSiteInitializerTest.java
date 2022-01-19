@@ -229,12 +229,26 @@ public class BundleSiteInitializerTest {
 			serviceContext.fetchUser()
 		).build();
 
-		Account account = accountResource.getAccountByExternalReferenceCode(
+		Account account1 = accountResource.getAccountByExternalReferenceCode(
 			"TESTACC0001");
 
-		Assert.assertNotNull(account);
+		Assert.assertNotNull(account1);
+		Assert.assertEquals("Test Account 1", account1.getName());
+		Assert.assertEquals("business", account1.getType());
 
-		Assert.assertEquals("Test Account", account.getName());
+		Account account2 = accountResource.getAccountByExternalReferenceCode(
+			"TESTACC0002");
+
+		Assert.assertNotNull(account2);
+		Assert.assertEquals("Test Account 2", account2.getName());
+		Assert.assertEquals("guest", account2.getType());
+
+		Account account3 = accountResource.getAccountByExternalReferenceCode(
+			"TESTACC0003");
+
+		Assert.assertNotNull(account3);
+		Assert.assertEquals("Test Account 3", account3.getName());
+		Assert.assertEquals("person", account3.getType());
 	}
 
 	private void _assertAssetCategories(Group group) throws Exception {

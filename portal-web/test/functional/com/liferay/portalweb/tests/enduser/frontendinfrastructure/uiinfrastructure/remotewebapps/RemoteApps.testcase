@@ -404,8 +404,7 @@ definition {
 		task ("Add a public page with JSON") {
 			JSONLayout.addPublicLayout(
 				groupName = "Guest",
-				layoutName = "Test Page",
-				type = "content");
+				layoutName = "Test Page");
 		}
 
 		task ("Create Vanilla Counter as a Custom Element") {
@@ -418,21 +417,21 @@ definition {
 		}
 
 		task ("Add Vanilla Counter to Test Page") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Page",
-				siteName = "Guest");
+			var remoteAppEntryIdValue = RemoteApps.getRemoteAppEntryIdValue();
 
-			PageEditor.addWidget(portletName = "Vanilla Counter");
-
-			PageEditor.clickPublish();
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Guest",
+				layoutName = "Test Page",
+				remoteAppEntryId = "${remoteAppEntryIdValue}",
+				widgetName = "Vanilla Counter");
 		}
 
 		task ("Assert Vanilla Counter's property is present") {
 			Navigator.gotoPage(pageName = "Test Page");
 
-			AssertElementPresent(locator1 = "RemoteApps#VANILLA_COUNTER_REMOTE_APP");
-
-			AssertElementPresent(locator1 = "RemoteApps#REMOTE_APP_PROPERTY_HTML");
+			AssertElementPresent(
+				key_customElementProperty = "QAuser",
+				locator1 = "RemoteApps#REMOTE_APP_PROPERTY_HTML");
 		}
 	}
 

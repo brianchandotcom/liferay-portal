@@ -24,7 +24,7 @@ SXPBlueprint sxpBlueprint = SXPBlueprintLocalServiceUtil.fetchSXPBlueprint(sxpBl
 
 <div class="alert alert-info text-center">
 	<aui:a href="javascript:;" onClick="<%= portletDisplay.getURLConfigurationJS() %>">
-		<liferay-ui:message key="configure-blueprint-options-in-this-page" />
+		<liferay-ui:message key="configure-blueprints-options-in-this-page" />
 
 		<c:if test="<%= sxpBlueprint != null %>">
 			<liferay-ui:message arguments="<%= HtmlUtil.escape(sxpBlueprint.getTitle(locale)) %>" key="blueprint-x" />

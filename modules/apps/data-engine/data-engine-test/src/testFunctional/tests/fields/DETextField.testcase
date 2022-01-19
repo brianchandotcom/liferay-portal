@@ -113,6 +113,10 @@ definition {
 
 		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
 
+		DataEngine.editFieldType(
+			fieldLabel = "Text",
+			fieldLineType = "Single Line");
+
 		DataEngine.viewFieldType(
 			fieldLabel = "Text",
 			fieldLineType = "Single Line");

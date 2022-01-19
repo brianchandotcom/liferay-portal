@@ -3844,8 +3844,7 @@ definition {
 
 		Button.clickSave();
 
-		ObjectAdmin.addObjectSingleFieldNumericAndBooleanEntryViaAPI(
-			fieldName = "customObjectField",
+		ObjectAdmin.addObjectBoleanFieldEntryViaUI(
 			objectName = "CustomObject",
 			value = "true");
 

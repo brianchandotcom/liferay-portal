@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.poshi.core.util;
+package com.liferay.poshi.core.script;
 
 import com.liferay.poshi.core.script.PoshiScriptParserException;
 import com.liferay.poshi.core.script.UnbalancedCodeException;
@@ -28,7 +28,7 @@ import java.util.regex.Pattern;
 /**
  * @author Calum Ragan
  */
-public class PoshiParserUtil {
+public class PoshiScriptParserUtil {
 
 	public static List<String> getMethodParameters(String content) {
 		try {

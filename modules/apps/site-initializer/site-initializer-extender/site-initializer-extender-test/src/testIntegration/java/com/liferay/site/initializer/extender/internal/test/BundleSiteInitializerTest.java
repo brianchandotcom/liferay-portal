@@ -244,7 +244,7 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertNotNull(account1);
 		Assert.assertEquals("Test Account 1", account1.getName());
-		Assert.assertEquals("business", account1.getType());
+		Assert.assertEquals("business", account1.getTypeAsString());
 
 		_assertUserAccounts(account1.getId(), 1, userAccountResource);
 
@@ -253,7 +253,7 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertNotNull(account2);
 		Assert.assertEquals("Test Account 2", account2.getName());
-		Assert.assertEquals("guest", account2.getType());
+		Assert.assertEquals("guest", account2.getTypeAsString());
 
 		_assertUserAccounts(account2.getId(), 1, userAccountResource);
 
@@ -262,7 +262,7 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertNotNull(account3);
 		Assert.assertEquals("Test Account 3", account3.getName());
-		Assert.assertEquals("person", account3.getType());
+		Assert.assertEquals("person", account3.getTypeAsString());
 
 		_assertUserAccounts(account3.getId(), 0, userAccountResource);
 	}
@@ -917,7 +917,7 @@ public class BundleSiteInitializerTest {
 			accountId, null, null, null, null);
 
 		Assert.assertNotNull(page);
-		Assert.assertEquals(expected, page.totalCount());
+		Assert.assertEquals(expected, page.getTotalCount());
 	}
 
 	private Bundle _installBundle(BundleContext bundleContext, String location)

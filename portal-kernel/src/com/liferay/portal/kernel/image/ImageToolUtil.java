@@ -53,7 +53,7 @@ public class ImageToolUtil {
 	public static Future<RenderedImage> convertCMYKtoRGB(
 		byte[] bytes, String type) {
 
-		return _cmykImageTool.convertCMYKtoRGB(bytes, type);
+		return CMYKImageToolHolder._cmykImageTool.convertCMYKtoRGB(bytes, type);
 	}
 
 	/**
@@ -290,9 +290,15 @@ public class ImageToolUtil {
 		_imageTool = imageTool;
 	}
 
-	private static volatile CMYKImageTool _cmykImageTool =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			CMYKImageTool.class, ImageToolUtil.class, "_cmykImageTool", true);
 	private static ImageTool _imageTool;
+
+	private static class CMYKImageToolHolder {
+
+		private static volatile CMYKImageTool _cmykImageTool =
+			ServiceProxyFactory.newServiceTrackedInstance(
+				CMYKImageTool.class, CMYKImageToolHolder.class,
+				"_cmykImageTool", true);
+
+	}
 
 }

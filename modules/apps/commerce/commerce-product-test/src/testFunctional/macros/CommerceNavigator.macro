@@ -1,5 +1,22 @@
 definition {
 
+	macro changeVocabulary {
+		SelectFrame(
+			key_title = "Commerce Categories Navigation",
+			locator1 = "IFrame#MODAL_ANY");
+
+		Select(
+			key_title = "Vocabulary",
+			locator1 = "CommerceEntry#CATALOGS_FORM",
+			value1 = "${newVocabularyName}");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		IFrame.closeFrame();
+	}
+
 	macro editMiniCartItemQuantity {
 		Type(
 			key_cartItemSKU = "${cartItemSKU}",

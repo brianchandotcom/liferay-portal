@@ -176,6 +176,8 @@ definition {
 			webContentStatus = "DRAFT",
 			webContentTitle = "Digital Transformation or Digital Experience");
 
+		WaitForVisible(locator1 = "WC#SIDEBAR_BODY");
+
 		PortletEntry.publish();
 
 		WebContentNavigator.openToEditWCInSite(

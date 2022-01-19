@@ -168,7 +168,7 @@ definition {
 
 	macro assertObjectNotPresent {
 		AssertElementNotPresent(
-			key_tabName = "${objectName}",
+			key_tabName = "${objectLabel}",
 			locator1 = "ObjectAdmin#ANY_TAB_ON_ENTRY");
 	}
 
@@ -254,8 +254,8 @@ definition {
 
 	macro deleteObjectViaUI {
 		Click(
-			key_text = "${objectName}",
-			locator1 = "Icon#ANY_VERTICAL_ELLIPSIS");
+			key_objectLabel = "${objectLabel}",
+			locator1 = "ObjectAdmin#OBJECT_KEBAB_MENU");
 
 		MenuItem.clickNoError(menuItem = "Delete");
 	}

@@ -648,12 +648,12 @@ public class BundleSiteInitializerTest {
 		ListTypeEntry listTypeEntry1 = listTypeEntries[0];
 
 		Assert.assertNotNull(listTypeEntry1);
-		Assert.assertEquals("test-list-type-entry-1", listTypeEntry1.getKey());
+		Assert.assertEquals("testlisttypeentry1", listTypeEntry1.getKey());
 
 		ListTypeEntry listTypeEntry2 = listTypeEntries[1];
 
 		Assert.assertNotNull(listTypeEntry2);
-		Assert.assertEquals("test-list-type-entry-2", listTypeEntry2.getKey());
+		Assert.assertEquals("testlisttypeentry2", listTypeEntry2.getKey());
 	}
 
 	private void _assertObjectDefinitions(

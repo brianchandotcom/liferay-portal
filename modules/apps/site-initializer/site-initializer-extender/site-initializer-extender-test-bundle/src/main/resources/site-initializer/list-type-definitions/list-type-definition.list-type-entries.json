@@ -1,6 +1,6 @@
 [
 	{
-		"key": "test-list-type-entry-1",
+		"key": "testlisttypeentry1",
 		"name": "Test List Type Entry 1",
 		"name_i18n": {
 			"en-US": "Test List Type Entry 1"
@@ -8,7 +8,7 @@
 		"type": "string"
 	},
 	{
-		"key": "test-list-type-entry-2",
+		"key": "testlisttypeentry2",
 		"name": "Test List Type Entry 2",
 		"name_i18n": {
 			"en-US": "Test List Type Entry 2"

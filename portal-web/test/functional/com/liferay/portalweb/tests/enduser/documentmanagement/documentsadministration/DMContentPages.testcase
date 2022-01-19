@@ -208,9 +208,7 @@ definition {
 
 		DMNavigator.gotoDocumentPG(dmDocumentTitle = "Document_1.jpg");
 
-		AssertVisible(
-			key_dmDocumentFileName = "Document_1.jpg",
-			locator1 = "DocumentsAndMediaDocument#DOCUMENT_DETAILS_IMAGE_PREVIEW");
+		DMDocument.previewImage(dmDocumentFileName = "Document_1.jpg");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 

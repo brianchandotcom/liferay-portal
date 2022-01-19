@@ -1912,6 +1912,12 @@ definition {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_document_library_web_portlet_DLAdminPortlet");
 	}
 
+	macro previewImage {
+		while (IsElementNotPresent(key_dmDocumentFileName = "${dmDocumentFileName}", locator1 = "DocumentsAndMediaDocument#DOCUMENT_DETAILS_IMAGE_PREVIEW")) {
+			Refresh();
+		}
+	}
+
 	macro publishExpiredDocument {
 		AssertTextEquals(
 			locator1 = "TextInput#TITLE",

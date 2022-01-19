@@ -17,13 +17,30 @@ import ClayLabel from '@clayui/label';
 import ClayPanel from '@clayui/panel';
 import ClaySticker from '@clayui/sticker';
 import classnames from 'classnames';
-import React from 'react';
+import React, {Fragment} from 'react';
 
 import Sidebar from '../Sidebar';
 import CollapsibleSection from './CollapsibleSection';
 import DocumentPreview from './DocumentPreview';
 import FileUrlCopyButton from './FileUrlCopyButton';
 import ItemLanguages from './ItemLanguages';
+
+const getVocabulariesByVisibility = (vocabularies) => {
+	return Object.values(vocabularies).reduce(
+		([internalVocabularies, publicVocabularies], vocabulary) => {
+			(vocabulary.isPublic
+				? publicVocabularies
+				: internalVocabularies
+			).push(vocabulary);
+
+			return [internalVocabularies, publicVocabularies];
+		},
+		[[], []]
+	);
+};
+
+const getCategoriesCountFromVocabularies = (vocabularies) =>
+	vocabularies.reduce((total, {categories}) => total + categories.length, 0);
 
 const formatDate = (date, languageTag) => {
 	return (
@@ -40,8 +57,38 @@ const formatDate = (date, languageTag) => {
 	);
 };
 
+const RenderVocabularies = ({cssClassNames = '', title, vocabularies}) => (
+	<div className={`c-mb-4 sidebar-dl sidebar-section ${cssClassNames}`}>
+		<h6 className="font-weight-semi-bold sidebar-section-subtitle-sm text-secondary text-uppercase">
+			{title}
+		</h6>
+
+		<div>
+			{vocabularies.map(({categories, groupName, vocabularyName}) => (
+				<Fragment key={vocabularyName}>
+					<h5 className="c-mb-2 font-weight-semi-bold">
+						{vocabularyName} {groupName ? `(${groupName})` : ''}
+					</h5>
+
+					<p>
+						{categories.map((category) => (
+							<ClayLabel
+								className="c-mb-2 c-mr-2"
+								displayType="secondary"
+								key={category}
+								large
+							>
+								{category}
+							</ClayLabel>
+						))}
+					</p>
+				</Fragment>
+			))}
+		</div>
+	</div>
+);
+
 const SidebarPanelInfoView = ({
-	categories = [],
 	className,
 	classPK,
 	createDate,
@@ -55,8 +102,22 @@ const SidebarPanelInfoView = ({
 	user,
 	versions = [],
 	viewURLs = [],
+	vocabularies = {},
 }) => {
 	const stickerColor = parseInt(user.userId, 10) % 10;
+
+	const [
+		internalVocabularies,
+		publicVocabularies,
+	] = getVocabulariesByVisibility(vocabularies);
+
+	const internalCategoriesCount = getCategoriesCountFromVocabularies(
+		internalVocabularies
+	);
+
+	const publicCategoriesCount = getCategoriesCountFromVocabularies(
+		publicVocabularies
+	);
 
 	const {
 		description,
@@ -107,7 +168,8 @@ const SidebarPanelInfoView = ({
 
 	const documentUsesPreview = !!previewImageURL || documentIsAFile;
 
-	const showTaxonomies = !!categories?.length || !!tags?.length;
+	const showTaxonomies =
+		!!internalCategoriesCount || !!publicCategoriesCount || !!tags?.length;
 
 	return (
 		<>
@@ -188,24 +250,23 @@ const SidebarPanelInfoView = ({
 							expanded={true}
 							title={Liferay.Language.get('categorization')}
 						>
-							{!!categories.length && (
-								<div className="c-mb-4 sidebar-dl sidebar-section">
-									<h5 className="c-mb-1 font-weight-semi-bold">
-										{Liferay.Language.get('categories')}
-									</h5>
+							{!!publicCategoriesCount && (
+								<RenderVocabularies
+									title={Liferay.Language.get(
+										'public-categories'
+									)}
+									vocabularies={publicVocabularies}
+								/>
+							)}
 
-									<p>
-										{categories.map((category) => (
-											<ClayLabel
-												displayType="secondary"
-												key={category}
-												large
-											>
-												{category}
-											</ClayLabel>
-										))}
-									</p>
-								</div>
+							{!!internalCategoriesCount && (
+								<RenderVocabularies
+									cssClassNames="c-mt-4"
+									title={Liferay.Language.get(
+										'internal-categories'
+									)}
+									vocabularies={internalVocabularies}
+								/>
 							)}
 
 							{!!tags.length && (
@@ -217,6 +278,7 @@ const SidebarPanelInfoView = ({
 									<p>
 										{tags.map((tag) => (
 											<ClayLabel
+												className="c-mb-2 c-mr-2"
 												displayType="secondary"
 												key={tag}
 												large

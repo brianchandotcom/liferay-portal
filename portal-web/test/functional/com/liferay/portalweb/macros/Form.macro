@@ -826,6 +826,19 @@ definition {
 		Click(locator1 = "Translation#UNSELECTED_LOCALE_ICON");
 	}
 
+	macro submitAgain {
+		if (isSet(key_submitAgainButton)) {
+			Click(
+				key_submitAgainButton = "${key_submitButton}",
+				locator1 = "Form#SUBMIT_AGAIN_BUTTON");
+		}
+		else {
+			Click(
+				key_submitAgainButton = "Submit Again",
+				locator1 = "Form#SUBMIT_AGAIN_BUTTON");
+		}
+	}
+
 	macro submitFormPublish {
 		Form.viewFormPublish(
 			fieldLabel = "${fieldLabel}",

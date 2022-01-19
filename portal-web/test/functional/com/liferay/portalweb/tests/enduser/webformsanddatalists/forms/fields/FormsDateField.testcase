@@ -575,6 +575,573 @@ definition {
 
 	}
 
+	@description = "Verify that the Dutch Netherlands Date Notation is correct"
+	@priority = "5"
+	test DateNotationDutchNetherlands {
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Date");
+
+		Form.editFieldLabelMetal(fieldValue = "My Date");
+
+		FormFields.viewLabel(
+			fieldLabel = "My Date",
+			fieldName = "My Date");
+
+		Form.addTranslation(localizedLanguage = "Dutch (Netherlands)");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormPortlet.changeLocale(locale = "nederlands-Nederland");
+
+		FormFields.editDate(
+			fieldName = "Date",
+			fieldValue = "01-01-0010");
+
+		FormFields.viewDateValue(
+			fieldLabel = "My Date",
+			fieldName = "Date",
+			fieldValue = "01-01-0010");
+
+		FormPortlet.submitLocalizedSuccessfully(buttonName = "Versturen");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoViewEntries();
+
+		FormsAdmin.viewFormTableEntry(
+			fieldLabel = "My Date",
+			fieldValue = "01/01/0010");
+
+		FormsAdminNavigator.gotoView();
+
+		FormsAdmin.viewDateEntry(
+			fieldLabel = "My Date",
+			fieldName = "Date",
+			fieldValue = "01-01-0010");
+	}
+
+	@description = "Verify that the English United States Date Notation is correct"
+	@priority = "5"
+	test DateNotationEnglishUnitedStates {
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Date");
+
+		Form.editFieldLabelMetal(fieldValue = "My Date");
+
+		FormFields.viewLabel(
+			fieldLabel = "My Date",
+			fieldName = "My Date");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.editDate(
+			fieldName = "Date",
+			fieldValue = "01/01/0010");
+
+		FormFields.viewDateValue(
+			fieldLabel = "My Date",
+			fieldName = "Date",
+			fieldValue = "01/01/0010");
+
+		FormPortlet.submitSuccessfully();
+
+		Form.submitAgain();
+
+		FormFields.editDate(
+			fieldName = "Date",
+			fieldValue = "01/01/1000");
+
+		FormFields.viewDateValue(
+			fieldLabel = "My Date",
+			fieldName = "Date",
+			fieldValue = "01/01/1000");
+
+		FormPortlet.submitSuccessfully();
+
+		Form.submitAgain();
+
+		FormFields.editDate(
+			fieldName = "Date",
+			fieldValue = "01/01/0100");
+
+		FormFields.viewDateValue(
+			fieldLabel = "My Date",
+			fieldName = "Date",
+			fieldValue = "01/01/0100");
+
+		FormPortlet.submitSuccessfully();
+
+		Form.submitAgain();
+
+		FormFields.editDate(
+			fieldName = "Date",
+			fieldValue = "01/01/0001");
+
+		FormFields.viewDateValue(
+			fieldLabel = "My Date",
+			fieldName = "Date",
+			fieldValue = "01/01/0001");
+
+		FormPortlet.submitSuccessfully();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoViewEntries();
+
+		FormsAdmin.viewFormTableEntry(
+			fieldLabel = "My Date",
+			fieldValue = "01/01/0010");
+
+		FormsAdmin.viewFormTableEntry(
+			fieldLabel = "My Date",
+			fieldValue = "01/01/1000");
+
+		FormsAdmin.viewFormTableEntry(
+			fieldLabel = "My Date",
+			fieldValue = "01/01/0100");
+
+		FormsAdmin.viewFormTableEntry(
+			fieldLabel = "My Date",
+			fieldValue = "01/01/0001");
+	}
+
+	@description = "Verify that the Hungarian Hungary Date Notation is correct"
+	@priority = "5"
+	test DateNotationFinishFinland {
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Date");
+
+		Form.editFieldLabelMetal(fieldValue = "My Date");
+
+		FormFields.viewLabel(
+			fieldLabel = "My Date",
+			fieldName = "My Date");
+
+		Form.addTranslation(localizedLanguage = "Finnish (Finland)");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormPortlet.changeLocale(locale = "suomi-Suomi");
+
+		FormFields.editDate(
+			fieldName = "Date",
+			fieldValue = "01.01.0010");
+
+		FormFields.viewDateValue(
+			fieldLabel = "My Date",
+			fieldName = "Date",
+			fieldValue = "01.01.0010");
+
+		FormPortlet.submitLocalizedSuccessfully(buttonName = "Lähetä");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoViewEntries();
+
+		FormsAdmin.viewFormTableEntry(
+			fieldLabel = "My Date",
+			fieldValue = "01/01/0010");
+
+		FormsAdminNavigator.gotoView();
+
+		FormsAdmin.viewDateEntry(
+			fieldLabel = "My Date",
+			fieldName = "Date",
+			fieldValue = "01.01.0010");
+	}
+
+	@description = "Verify that the German Germany Date Notation is correct"
+	@priority = "5"
+	test DateNotationGermanGermany {
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Date");
+
+		Form.editFieldLabelMetal(fieldValue = "My Date");
+
+		FormFields.viewLabel(
+			fieldLabel = "My Date",
+			fieldName = "My Date");
+
+		Form.addTranslation(localizedLanguage = "German (Germany)");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormPortlet.changeLocale(locale = "deutsch-Deutschland");
+
+		FormFields.editDate(
+			fieldName = "Date",
+			fieldValue = "01.01.0010");
+
+		FormFields.viewDateValue(
+			fieldLabel = "My Date",
+			fieldName = "Date",
+			fieldValue = "01.01.0010");
+
+		FormPortlet.submitLocalizedSuccessfully(buttonName = "Senden");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoViewEntries();
+
+		FormsAdmin.viewFormTableEntry(
+			fieldLabel = "My Date",
+			fieldValue = "01/01/0010");
+
+		FormsAdminNavigator.gotoView();
+
+		FormsAdmin.viewDateEntry(
+			fieldLabel = "My Date",
+			fieldName = "Date",
+			fieldValue = "01.01.0010");
+	}
+
+	@description = "Verify that the Hungarian Hungary Date Notation is correct"
+	@priority = "5"
+	test DateNotationHungarianHungary {
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Date");
+
+		Form.editFieldLabelMetal(fieldValue = "My Date");
+
+		FormFields.viewLabel(
+			fieldLabel = "My Date",
+			fieldName = "My Date");
+
+		Form.addTranslation(localizedLanguage = "Hungarian (Hungary)");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormPortlet.changeLocale(locale = "magyar-Magyarország");
+
+		FormFields.editDate(
+			fieldName = "Date",
+			fieldValue = "0010.01.01.");
+
+		FormFields.viewDateValue(
+			fieldLabel = "My Date",
+			fieldName = "Date",
+			fieldValue = "0010.01.01.");
+
+		FormPortlet.submitLocalizedSuccessfully(buttonName = "Elküldés");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoViewEntries();
+
+		FormsAdmin.viewFormTableEntry(
+			fieldLabel = "My Date",
+			fieldValue = "01/01/0010");
+
+		FormsAdminNavigator.gotoView();
+
+		FormsAdmin.viewDateEntry(
+			fieldLabel = "My Date",
+			fieldName = "Date",
+			fieldValue = "0010.01.01.");
+	}
+
+	@description = "Verify that the Japanese Japan Date Notation is correct"
+	@priority = "5"
+	test DateNotationJapaneseJapan {
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Date");
+
+		Form.editFieldLabelMetal(fieldValue = "My Date");
+
+		FormFields.viewLabel(
+			fieldLabel = "My Date",
+			fieldName = "My Date");
+
+		Form.addTranslation(localizedLanguage = "Japanese (Japan)");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormPortlet.changeLocale(locale = "日本語-日本");
+
+		FormFields.editDate(
+			fieldName = "Date",
+			fieldValue = "0010/01/01");
+
+		FormFields.viewDateValue(
+			fieldLabel = "My Date",
+			fieldName = "Date",
+			fieldValue = "0010/01/01");
+
+		FormPortlet.submitLocalizedSuccessfully(buttonName = "送信");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoViewEntries();
+
+		FormsAdmin.viewFormTableEntry(
+			fieldLabel = "My Date",
+			fieldValue = "01/01/0010");
+
+		FormsAdminNavigator.gotoView();
+
+		FormsAdmin.viewDateEntry(
+			fieldLabel = "My Date",
+			fieldName = "Date",
+			fieldValue = "0010/01/01");
+	}
+
+	@description = "Verify that the Portuguese Brazil Date Notation is correct"
+	@priority = "5"
+	test DateNotationPortugueseBrazil {
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Date");
+
+		Form.editFieldLabelMetal(fieldValue = "My Date");
+
+		FormFields.viewLabel(
+			fieldLabel = "My Date",
+			fieldName = "My Date");
+
+		Form.addTranslation(localizedLanguage = "Portuguese (Brazil)");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormPortlet.changeLocale(locale = "português-Brasil");
+
+		FormFields.editDate(
+			fieldName = "Date",
+			fieldValue = "01/01/0001");
+
+		FormFields.viewDateValue(
+			fieldLabel = "My Date",
+			fieldName = "Date",
+			fieldValue = "01/01/0001");
+
+		FormPortlet.submitLocalizedSuccessfully(buttonName = "Submeter");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoViewEntries();
+
+		FormsAdmin.viewFormTableEntry(
+			fieldLabel = "My Date",
+			fieldValue = "01/01/0001");
+
+		FormsAdminNavigator.gotoView();
+
+		FormsAdmin.viewDateEntry(
+			fieldLabel = "My Date",
+			fieldName = "Date",
+			fieldValue = "01/01/0001");
+	}
+
+	@description = "Verify that the Swedish Sweden	 Date Notation is correct"
+	@priority = "5"
+	test DateNotationSwedishSweden {
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Date");
+
+		Form.editFieldLabelMetal(fieldValue = "My Date");
+
+		FormFields.viewLabel(
+			fieldLabel = "My Date",
+			fieldName = "My Date");
+
+		Form.addTranslation(localizedLanguage = "Swedish (Sweden)");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormPortlet.changeLocale(locale = "svenska-Sverige");
+
+		FormFields.editDate(
+			fieldName = "Date",
+			fieldValue = "0010-01-01");
+
+		FormFields.viewDateValue(
+			fieldLabel = "My Date",
+			fieldName = "Date",
+			fieldValue = "0010-01-01");
+
+		FormPortlet.submitLocalizedSuccessfully(buttonName = "Skicka");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoViewEntries();
+
+		FormsAdmin.viewFormTableEntry(
+			fieldLabel = "My Date",
+			fieldValue = "01/01/0010");
+
+		FormsAdminNavigator.gotoView();
+
+		FormsAdmin.viewDateEntry(
+			fieldLabel = "My Date",
+			fieldName = "Date",
+			fieldValue = "0010-01-01");
+	}
+
+	@description = "Verify that date value after translation change"
+	@priority = "5"
+	test DateValueAfterChangeTranslation {
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Date");
+
+		Form.editFieldLabelMetal(fieldValue = "My Date");
+
+		FormFields.viewLabel(
+			fieldLabel = "My Date",
+			fieldName = "My Date");
+
+		Form.gotoAdvancedTab();
+
+		FormViewBuilder.setFieldPredefinedDate(fieldValue = "01/01/0010");
+
+		Form.addTranslation(localizedLanguage = "Portuguese (Brazil)");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.viewDateValue(
+			fieldLabel = "My Date",
+			fieldName = "Date",
+			fieldValue = "01/01/0010");
+
+		FormPortlet.changeLocale(locale = "português-Brasil");
+
+		FormFields.viewDateValue(
+			fieldLabel = "My Date",
+			fieldName = "Date",
+			fieldValue = "01/01/0010");
+
+		FormPortlet.submitLocalizedSuccessfully(buttonName = "Submeter");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoViewEntries();
+
+		FormsAdmin.viewFormTableEntry(
+			fieldLabel = "My Date",
+			fieldValue = "01/01/0010");
+
+		FormsAdminNavigator.gotoView();
+
+		FormsAdmin.viewDateEntry(
+			fieldLabel = "My Date",
+			fieldName = "Date",
+			fieldValue = "01/01/0010");
+	}
+
 	@description = "Verify that a help text can be added"
 	@priority = "5"
 	test HelpTextCanBeAdded {

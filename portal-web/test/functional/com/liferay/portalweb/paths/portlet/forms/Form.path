@@ -76,6 +76,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SUBMIT_AGAIN_BUTTON</td>
+	<td>//button[@type='button' and text()='${key_submitAgainButton}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NAME_FIELD</td>
 	<td>//div[contains(@class,'ddm-form-basic-info')]//div//div[contains(@class,'form-group')]//textarea[contains(@id, 'nameEditor')]</td>
 	<td></td>

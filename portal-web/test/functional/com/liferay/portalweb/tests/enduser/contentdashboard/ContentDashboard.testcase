@@ -1326,7 +1326,7 @@ definition {
 	Then the Content Performance panel is closed"
 	@ignore = "false"
 	@priority = "3"
-	test CloseContentPerformancePanel {
+	test CloseMetricsPanel {
 		task ("Connect to AC") {
 			ACUtils.launchAC();
 

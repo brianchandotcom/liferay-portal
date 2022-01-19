@@ -102,17 +102,15 @@ const SubscriptionsNavbar = ({
 
             {!showDropDown && 
               <div
-                className={classNames('bg-neutral-1 btn-group rounded-pill subscription-navbar')}
+                className="bg-neutral-1 btn-group rounded-pill subscription-navbar"
                 id="subscription-navbar"
                 role="group"
               >
                 {subscriptionGroups.map((tag) => (
                   <button
-                    className={selectedButton === tag.name
-                      ?
-                      "btn btn-subscription-group-selected label-primary px-4 rounded-pill text-neutral-4"
-                      :
-                      "btn btn-subscription-group px-4 rounded-pill text-neutral-4"}
+                    className={classNames('btn px-4 text-neutral-4 rounded-pill', {
+                      'btn-subscription-group': selectedButton !== tag.name, 
+                      'btn-subscription-group-selected label-primary': selectedButton === tag.name})}
                     key={tag.name}
                     onClick={handleClick}
                     value={tag.name}

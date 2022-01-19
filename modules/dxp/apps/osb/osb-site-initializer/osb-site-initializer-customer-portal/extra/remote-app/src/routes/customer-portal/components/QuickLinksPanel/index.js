@@ -92,7 +92,8 @@ const QuickLinksPanel = ({accountKey}) => {
 					className={classNames(
 						'link-body quick-links-container rounded',
 						{
-							'position-absolute': !isQuickLinksExpanded,
+							'p-4': isQuickLinksExpanded,
+							'position-absolute px-3 py-4': !isQuickLinksExpanded,
 						}
 					)}
 				>

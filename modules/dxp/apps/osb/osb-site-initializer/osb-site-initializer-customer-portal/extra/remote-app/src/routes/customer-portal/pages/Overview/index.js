@@ -9,6 +9,7 @@
  * distribution rights of the Software.
  */
 
+import classNames from 'classnames';
 import {useEffect, useState} from 'react';
 import client from '../../../../apolloClient';
 import {getAccountSubscriptions} from '../../../../common/services/liferay/graphql/queries';
@@ -116,7 +117,11 @@ const Overview = ({project, subscriptionGroups}) => {
 		<div className="d-flex flex-column">
 			<h3>Subscriptions</h3>
 
-			<div className={subscriptionGroups.length <= 5 ? "align-items-center d-flex justify-content-between" : "align-items-center d-flex justify-content-evenly"}>
+			<div className={classNames('align-items-center d-flex', {
+				'justify-content-between': subscriptionGroups.length <= 4,
+				'justify-content-evenly': subscriptionGroups.length > 4,
+			})}
+			>
 				<SubscriptionsNavbar
 					selectedSubscriptionGroup={selectedSubscriptionGroup}
 					setSelectedSubscriptionGroup={setSelectedSubscriptionGroup}

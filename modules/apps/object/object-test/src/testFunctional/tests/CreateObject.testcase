@@ -4011,10 +4011,10 @@ definition {
 
 		Button.clickSave();
 
-		ObjectAdmin.addObjectSingleFieldNumericAndBooleanEntryViaAPI(
-			fieldName = "customObjectField",
-			objectName = "CustomObject",
-			value = "12345678912345678");
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+		ObjectAdmin.addObjectLongFieldEntryViaUI(
+			entryValue = "12345678912345678");
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 

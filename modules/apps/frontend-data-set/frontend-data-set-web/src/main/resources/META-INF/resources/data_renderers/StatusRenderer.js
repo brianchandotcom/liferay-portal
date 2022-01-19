@@ -15,12 +15,33 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
+function getLabelType(label) {
+	switch (label) {
+		case 'approved':
+			return 'success';
+		case 'denied':
+			return 'danger';
+		case 'expired':
+			return 'warning';
+		case 'draft':
+		case 'pending':
+		case 'scheduled':
+			return 'info';
+		default:
+			return '';
+	}
+}
+
 function StatusRenderer(props) {
 	return props.value ? (
 		<span className="taglib-workflow-status">
 			<span className="workflow-status">
 				<strong
-					className={`label status workflow-status-data-renderer workflow-status-${props.value.label} ${props.value.label} workflow-value`}
+					className={`label label-${getLabelType(
+						props.value.label
+					)} text-uppercase workflow-status-${props.value.label} ${
+						props.value.label
+					} workflow-value`}
 				>
 					{props.value.label_i18n}
 				</strong>

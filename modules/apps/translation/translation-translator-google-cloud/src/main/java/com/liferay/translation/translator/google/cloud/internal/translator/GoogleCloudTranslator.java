@@ -24,11 +24,8 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.translation.exception.TranslatorException;
 import com.liferay.translation.translator.Translator;
@@ -59,23 +56,6 @@ import org.osgi.service.component.annotations.Reference;
 	service = Translator.class
 )
 public class GoogleCloudTranslator implements Translator {
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #isEnabled(long)}
-	 */
-	@Deprecated
-	public boolean isEnabled() {
-		try {
-			return isEnabled(CompanyThreadLocal.getCompanyId());
-		}
-		catch (ConfigurationException configurationException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(configurationException, configurationException);
-			}
-		}
-
-		return false;
-	}
 
 	@Override
 	public boolean isEnabled(long companyId) throws ConfigurationException {
@@ -214,9 +194,6 @@ public class GoogleCloudTranslator implements Translator {
 				serviceAccountCredentials
 			).build());
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		GoogleCloudTranslator.class);
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

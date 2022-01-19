@@ -24,10 +24,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.translation.translator.Translator;
 import com.liferay.translation.translator.TranslatorPacket;
@@ -63,23 +60,6 @@ import org.osgi.service.component.annotations.Modified;
 	service = Translator.class
 )
 public class AzureTranslator implements Translator {
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #isEnabled(long)}
-	 */
-	@Deprecated
-	public boolean isEnabled() {
-		try {
-			return isEnabled(CompanyThreadLocal.getCompanyId());
-		}
-		catch (ConfigurationException configurationException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(configurationException, configurationException);
-			}
-		}
-
-		return false;
-	}
 
 	@Override
 	public boolean isEnabled(long companyId) throws ConfigurationException {
@@ -216,9 +196,6 @@ public class AzureTranslator implements Translator {
 
 		return jsonArray.toString();
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		AzureTranslator.class);
 
 	private volatile AzureTranslatorConfiguration _azureTranslatorConfiguration;
 

@@ -243,30 +243,6 @@ public class CSVBatchEngineImportTaskItemReaderImplTest
 		}
 	}
 
-	@Test
-	public void testReadRowsWithCommaInsideQuotes() throws Exception {
-		try (CSVBatchEngineImportTaskItemReaderImpl
-				csvBatchEngineImportTaskItemReaderImpl =
-					_getCSVBatchEngineImportTaskItemReader(
-						FIELD_NAMES, StringPool.SEMICOLON, null,
-						new Object[][] {
-							{
-								createDateString, "hey, here is comma inside",
-								1, "sample name", "naziv"
-							}
-						})) {
-
-			validate(
-				createDateString, "hey, here is comma inside", 1L,
-				Collections.emptyMap(),
-				csvBatchEngineImportTaskItemReaderImpl.read(),
-				HashMapBuilder.put(
-					"en", "sample name"
-				).put(
-					"hr", "naziv"
-				).build());
-		}
-	}
 
 	@Test
 	public void testReadRowsWithEnclosingCharacter() throws Exception {

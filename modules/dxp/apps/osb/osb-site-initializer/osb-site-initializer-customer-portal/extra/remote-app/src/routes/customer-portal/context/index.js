@@ -57,6 +57,7 @@ const AppContextProvider = ({assetsPath, children, page}) => {
 
 	const [state, dispatch] = useReducer(reducer, {
 		assetsPath,
+		isQuickLinksExpanded: true,
 		page,
 		project: undefined,
 		quickLinks: undefined,

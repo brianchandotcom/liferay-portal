@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,7 +13,9 @@
 import ClayButton from '@clayui/button';
 import { DropDown } from '@clayui/core';
 import ClayIcon from '@clayui/icon';
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import classNames from 'classnames';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import {useCustomerPortal} from '../../context';
 
 const SubscriptionsNavbar = ({
   selectedSubscriptionGroup,
@@ -22,7 +25,8 @@ const SubscriptionsNavbar = ({
 
   const [active, setActive] = useState(false);
   const [selectedButton, setSelectedButton] = useState(subscriptionGroups[0]?.name);
-  const [showDropDown, setShowDropDown] = useState(subscriptionNavbarRef.firstChild.offsetTop !== subscriptionNavbarRef.lastChild.offsetTop);
+  const [showDropDown, setShowDropDown] = useState(false);
+  const [{isQuickLinksExpanded}] = useCustomerPortal();
 
   const subscriptionNavbarRef = useRef();
 
@@ -31,82 +35,24 @@ const SubscriptionsNavbar = ({
     setSelectedButton(event.target.value);
   }, [setSelectedSubscriptionGroup])
 
-  const menuDropDownComponent = useMemo(() => (
-    <div className="align-items-center d-flex mr-4 mt-4 pb-3">
-      <h6>Type:</h6>
-
-      <DropDown
-        active={active}
-        closeOnClickOutside
-        menuElementAttrs={{
-          className: 'subscription-group-filter',
-        }}
-        onActiveChange={setActive}
-        trigger={
-          <ClayButton
-            className="font-weight-semi-bold ml-2 pb-2 shadow-none text-brand-primary"
-            displayType="unstyled"
-          >
-            {selectedSubscriptionGroup}
-            <></>
-            <ClayIcon symbol="caret-bottom" />
-          </ClayButton>
-        }
-      >
-        {subscriptionGroups.map((tag) => (
-          <DropDown.Item
-            key={tag.name}
-            onClick={(event) => setSelectedSubscriptionGroup(event.target.value)}
-            value={tag.name}
-          >
-            {tag.name}
-          </DropDown.Item>
-        ))}
-      </DropDown>
-    </div>
-  ), [active, selectedSubscriptionGroup, setSelectedSubscriptionGroup, subscriptionGroups]);
-
-  const menuNavbarComponent = useMemo(() => (
-    <div
-      className="bg-neutral-1 btn-group rounded-pill subscription-navbar"
-      ref={subscriptionNavbarRef}
-      role="group"
-    >
-      {subscriptionGroups.map((tag) => (
-        <button
-          className={selectedButton === tag.name
-            ?
-            "btn btn-subscription-group-selected label-primary px-4 rounded-pill text-neutral-4"
-            :
-            "btn btn-subscription-group px-4 rounded-pill text-neutral-4"}
-          key={tag.name}
-          onClick={handleClick}
-          value={tag.name}
-        >
-          {tag.name}
-        </button>
-      ))}
-    </div>
-  ), [handleClick, selectedButton, subscriptionGroups]);
-
   useEffect(() => {
     setSelectedSubscriptionGroup(subscriptionGroups[0]?.name);
     setSelectedButton(subscriptionGroups[0]?.name);
   }, [setSelectedSubscriptionGroup, subscriptionGroups]);
 
   useEffect(() => {
-    const getListSize = () => {
-      const { current: { firstChild, lastChild } } = subscriptionNavbarRef;
-
-      setShowDropDown(firstChild.offsetTop !== lastChild.offsetTop);
+    const updateShowDropDown = () => {
+      setShowDropDown(isQuickLinksExpanded ? subscriptionNavbarRef.current.offsetWidth < 500 : subscriptionNavbarRef.current.offsetWidth < 570);
     };
-    window.addEventListener("resize", getListSize);
-  }, []);
 
+    updateShowDropDown();
+    window.addEventListener("resize", updateShowDropDown);
+  }, [isQuickLinksExpanded]);
+
+ 
 
   return (
-
-    <div className="rounded-pill">
+    <div className="d-flex rounded-pill w-100" ref={subscriptionNavbarRef}>
       <nav className="mb-2 mt-4 pt-2">
         {subscriptionGroups.length === 1 && subscriptionGroups.map((tag) => (
           <span
@@ -117,13 +63,69 @@ const SubscriptionsNavbar = ({
           </span>
         ))}
 
-        {subscriptionGroups.length > 1 && subscriptionGroups.length <= 5 &&
+        {subscriptionGroups.length > 1 && subscriptionGroups.length <= 4 &&
           <>
-            {showDropDown ? menuDropDownComponent : menuNavbarComponent}
+            {showDropDown && 
+              <div className="align-items-center d-flex mt-4 pb-3 subscription-navbar-dropdown">
+                <h6>Type:</h6>
+
+                <DropDown
+                  active={active}
+                  closeOnClickOutside
+                  menuElementAttrs={{
+                    className: 'subscription-group-filter',
+                  }}
+                  onActiveChange={setActive}
+                  trigger={
+                    <ClayButton
+                      className="font-weight-semi-bold ml-2 pb-2 shadow-none text-brand-primary"
+                      displayType="unstyled"
+                    >
+                      {selectedSubscriptionGroup}
+                      <></>
+                      <ClayIcon symbol="caret-bottom" />
+                    </ClayButton>
+                  }
+                >
+                  {subscriptionGroups.map((tag) => (
+                    <DropDown.Item
+                      key={tag.name}
+                      onClick={(event) => setSelectedSubscriptionGroup(event.target.value)}
+                      value={tag.name}
+                    >
+                      {tag.name}
+                    </DropDown.Item>
+                  ))}
+                </DropDown>
+              </div>
+            } 
+
+            {!showDropDown && 
+              <div
+                className={classNames('bg-neutral-1 btn-group rounded-pill subscription-navbar')}
+                id="subscription-navbar"
+                role="group"
+              >
+                {subscriptionGroups.map((tag) => (
+                  <button
+                    className={selectedButton === tag.name
+                      ?
+                      "btn btn-subscription-group-selected label-primary px-4 rounded-pill text-neutral-4"
+                      :
+                      "btn btn-subscription-group px-4 rounded-pill text-neutral-4"}
+                    key={tag.name}
+                    onClick={handleClick}
+                    value={tag.name}
+                  >
+                    {tag.name}
+                  </button>
+                ))}
+              </div>
+            }            
           </>
         }
 
-        {subscriptionGroups.length > 5 &&
+        {subscriptionGroups.length > 4 &&
           <div className="align-items-center d-flex mr-4 mt-4 pb-3">
             <h6>Type:</h6>
 

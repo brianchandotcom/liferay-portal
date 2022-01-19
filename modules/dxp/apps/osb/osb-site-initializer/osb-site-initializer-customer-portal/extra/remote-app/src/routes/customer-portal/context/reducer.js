@@ -13,6 +13,7 @@ export const actionTypes = {
 	UPDATE_PAGE: 'UPDATE_PAGE',
 	UPDATE_PROJECT: 'UPDATE_PROJECT',
 	UPDATE_QUICK_LINKS: 'UPDATE_QUICK_LINKS',
+	UPDATE_QUICK_LINKS_EXPANDED_PANEL: 'UPDATE_QUICK_LINKS_EXPANDED_PANEL',
 	UPDATE_SESSION_ID: 'UPDATE_SESSION_ID',
 	UPDATE_STRUCTURED_CONTENTS: 'UPDATE_STRUCTURED_CONTENTS',
 	UPDATE_SUBSCRIPTION_GROUPS: 'UPDATE_SUBSCRIPTION_GROUPS',
@@ -38,6 +39,12 @@ const reducer = (state, action) => {
 				...state,
 				quickLinks: action.payload,
 			};
+		}
+		case actionTypes.UPDATE_QUICK_LINKS_EXPANDED_PANEL: {
+			return {
+				...state,
+				isQuickLinksExpanded: action.payload,
+			}
 		}
 		case actionTypes.UPDATE_STRUCTURED_CONTENTS: {
 			return {

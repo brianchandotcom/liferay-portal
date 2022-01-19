@@ -19,6 +19,7 @@ import {
 	Storage,
 } from '../../../../common/services/liferay/storage';
 import {useCustomerPortal} from '../../context';
+import {actionTypes} from '../../context/reducer';
 import QuickLinksSkeleton from './Skeleton';
 
 DOMPurify.addHook('afterSanitizeAttributes', (node) => {
@@ -29,8 +30,7 @@ DOMPurify.addHook('afterSanitizeAttributes', (node) => {
 });
 
 const QuickLinksPanel = ({accountKey}) => {
-	const [{quickLinks, structuredContents}] = useCustomerPortal();
-	const [expandedPanel, setExpandedPanel] = useState(true);
+	const [{isQuickLinksExpanded, quickLinks, structuredContents}, dispatch] = useCustomerPortal();
 	const [quickLinksContents, setQuickLinksContents] = useState([]);
 
 	useEffect(() => {
@@ -39,8 +39,12 @@ const QuickLinksPanel = ({accountKey}) => {
 		);
 
 		if (quickLinksExpandedStorage) {
-			setExpandedPanel(JSON.parse(quickLinksExpandedStorage));
+			dispatch({
+				payload: JSON.parse(quickLinksExpandedStorage),
+				type: actionTypes.UPDATE_QUICK_LINKS_EXPANDED_PANEL,
+			});
 		}
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	const fetchQuickLinksPanelContent = useCallback(async () => {
@@ -88,8 +92,7 @@ const QuickLinksPanel = ({accountKey}) => {
 					className={classNames(
 						'link-body quick-links-container rounded',
 						{
-							'p-4': expandedPanel,
-							'position-absolute px-3 py-4': !expandedPanel,
+							'position-absolute': !isQuickLinksExpanded,
 						}
 					)}
 				>
@@ -100,27 +103,32 @@ const QuickLinksPanel = ({accountKey}) => {
 							className={classNames(
 								'btn font-weight-bold p-2 text-neutral-8 text-paragraph-sm',
 								{
-									'pl-3': !expandedPanel,
+									'pl-3': !isQuickLinksExpanded,
 								}
 							)}
 							onClick={() => {
-								setExpandedPanel(!expandedPanel);
+								dispatch({
+									payload: !isQuickLinksExpanded,
+									type: actionTypes.UPDATE_QUICK_LINKS_EXPANDED_PANEL,
+								});
 								Storage.setItem(
 									STORAGE_KEYS.QUICK_LINKS_EXPANDED,
-									JSON.stringify(!expandedPanel)
+									JSON.stringify(!isQuickLinksExpanded)
 								);
 							}}
 						>
 							<ClayIcon
 								className="mr-1"
-								symbol={expandedPanel ? 'hr' : 'plus'}
+								symbol={
+									isQuickLinksExpanded ? 'hr' : 'order-arrow-left'
+								}
 							/>
 
-							{expandedPanel ? 'Hide' : ''}
+							{isQuickLinksExpanded ? 'Hide' : 'Show'}
 						</a>
 					</div>
 
-					{expandedPanel && (
+					{isQuickLinksExpanded && (
 						<div>
 							{quickLinksContents.map((quickLinkContent) => (
 								<div

@@ -93,6 +93,39 @@ public class DLFolderServiceTest {
 			StringUtil.randomString(),
 			new long[] {_ddmStructure.getStructureId()},
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		_alternativeGroup = GroupTestUtil.addGroup();
+	}
+
+	@Test
+	public void testShouldNotReturnContentOfFolderNotInGroup()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		serviceContext.setAttribute(
+			"fileEntryTypeId", _dlFileEntryType.getFileEntryTypeId());
+
+		_dlAppService.addFileEntry(
+			null, _group.getGroupId(), _parentFolder.getFolderId(),
+			StringUtil.randomString() + ".jpg", ContentTypes.IMAGE_JPEG,
+			"title1", StringUtil.randomString(), StringPool.BLANK, (byte[])null,
+			null, null, serviceContext);
+
+		_dlAppService.addFileEntry(
+			null, _group.getGroupId(), _parentFolder.getFolderId(),
+			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
+			"title2", StringUtil.randomString(), StringPool.BLANK, (byte[])null,
+			null, null, serviceContext);
+
+		Assert.assertEquals(
+			0,
+			_dlFolderService.getFoldersAndFileEntriesAndFileShortcutsCount(
+				_alternativeGroup.getGroupId(), _parentFolder.getFolderId(),
+				WorkflowConstants.STATUS_APPROVED,
+				ArrayUtil.toStringArray(DLUtil.getAllMediaGalleryMimeTypes()),
+				false));
 	}
 
 	@Test
@@ -438,6 +471,9 @@ public class DLFolderServiceTest {
 
 	@Inject
 	private static ViewCountManager _viewCountManager;
+
+	@DeleteAfterTestRun
+	private Group _alternativeGroup;
 
 	@DeleteAfterTestRun
 	private DDMStructure _ddmStructure;

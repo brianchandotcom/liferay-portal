@@ -7,15 +7,27 @@ definition {
 	property testray.main.component.name = "Segmentation";
 
 	setUp {
-		ACUtils.launchAC();
+		task ("Open Analytics Cloud") {
+			var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
 
-		ACSettings.takeTokenFromAnalyticsCloud();
+			Navigator.openURL(baseURL = "${analyticsCloudURL}");
+		}
 
-		TestCase.setUpPortalInstance();
+		task ("Take token from Analytics Cloud") {
+			AnalyticsCloud.loginAnalyticsCloud(
+				emailAddress = "test@liferay.com",
+				password = "test");
 
-		ACUtils.launchDXP();
+			AnalyticsCloud.takeTokenFromAnalyticsCloud();
+		}
 
-		task ("Create content page") {
+		task ("Go to DXP portal, login and create site") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+
+			Navigator.openURL();
+
 			JSONGroup.addGroup(groupName = "Test Site Name");
 
 			JSONLayout.addPublicLayout(
@@ -108,12 +120,54 @@ definition {
 	}
 
 	@description = "LPS-111465 When a default virtual instance/company is not synced to AC, none of the segments created on AC for other virtual instances are listed in People > Segments"
-	@ignore = "true"
 	@priority = "5"
 	test DefaultInstanceNotSynchronizedWithAC {
+		property portal.acceptance = "true";
 
-		// TODO LPS-111464 DefaultInstanceNotSynchronizedWithAC pending implementation
+		task ("Update Segments Analytics Cloud in System Settings") {
+			Segmentation.updateACSegmentSystemSettings();
+		}
 
+		task ("Create a new virtual Instance") {
+			PortalInstances.openVirtualInstancesAdmin();
+
+			PortalInstances.addCP(
+				mailDomain = "www.able.com",
+				virtualHost = "www.able.com",
+				webId = "www.able.com");
+		}
+
+		task ("Go to Virtual Instance Created") {
+			User.firstLoginUI(
+				password = "test",
+				specificURL = "http://www.able.com:8080",
+				userEmailAddress = "test@www.able.com");
+
+			Navigator.openSpecificURL(url = "http://www.able.com:8080");
+		}
+
+		task ("Assert that the Virtual Instance is not connected with AC") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			Click(locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_DXP_BUTTON");
+
+			AssertElementPresent(locator1 = "ACDXPSettings#CONNECT_DISCONNECT_BUTTON_DISABLED");
+
+			Navigator.openSpecificURL(url = "http://www.able.com:8080");
+		}
+
+		task ("Go to segments page and assert that the segment created is not present") {
+			ProductMenu.gotoPortlet(
+				category = "People",
+				portlet = "Segments");
+
+			AssertElementNotPresent(
+				key_tableEntry = "Static Segment Test",
+				locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
+		}
 	}
 
 	@description = "LPS-111465 When a non-default virtual instance/company is synced to AC, all the segments created on AC with more than one member are listed in People > Segments"

@@ -28,6 +28,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONNECT_DISCONNECT_BUTTON_DISABLED</td>
+	<td>//button[@disabled='' and contains(@class,'btn-primary')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ANALYTICS_CLOUD_CONNECTED_CONFIRMATION_MESSAGE</td>
 	<td>//*[contains(@class, 'control-label') and contains(text(), 'Your DXP instance is connected to Analytics Cloud.')]</td>
 	<td></td>

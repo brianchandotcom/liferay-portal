@@ -52,10 +52,26 @@ definition {
 			locator1 = "ObjectPortlet#VIEW_ENTRY_DETAILS_LABEL");
 	}
 
+	macro assertEntryDetailsNotPresent {
+		SelectFrameTop();
+
+		AssertElementNotPresent(
+			key_entrySelected = "${entryNotSelected}",
+			locator1 = "ObjectPortlet#OBJECT_FIELD_SELECTED");
+	}
+
 	macro assertEntryDetailsValuePresent {
 		AssertElementPresent(
 			key_entryValue = "${entryValue}",
 			locator1 = "ObjectPortlet#VIEW_ENTRY_DETAILS_VALUE");
+	}
+
+	macro assertEntryDetailsValueSelected {
+		SelectFrameTop();
+
+		AssertElementPresent(
+			key_entrySelected = "${entrySelected}",
+			locator1 = "ObjectPortlet#OBJECT_FIELD_SELECTED");
 	}
 
 	macro assertEntryNotPresent {

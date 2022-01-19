@@ -123,11 +123,12 @@ definition {
 			value1 = "Space Program 大学生涯教育 地球から、宇宙の果てへ");
 	}
 
+	@description = "This test is assigned as usecase test for CKEditor and localization in LPS-141232."
 	@priority = "5"
 	test AddWCWithTranslation {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "LocalizationWithWebContent#AddWCWithTranslation";
-		property testray.component.names = "Localization,Web Content Administration";
+		property testray.component.names = "Localization,Web Content Administration,WYSIWYG";
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 

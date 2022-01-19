@@ -74,7 +74,10 @@ definition {
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "${webTitle}");
 
-		AssertElementNotPresent(locator1 = "WCD#WEB_CONTENT_CONTENT_IMAGE");
+		AssertElementNotPresent(
+			key_fieldFieldLabel = "Image",
+			key_image = "Document_1.jpg",
+			locator1 = "WCEditWebContent#IMAGE_PICKER_PREVIEW");
 	}
 
 	@description = "This test ensures that a user can add the image field to the builder."
@@ -426,9 +429,10 @@ definition {
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "${webTitle}");
 
-		WebContent.viewPGViaWCD(
-			image = "true",
-			key_image = "Document_1.jpg");
+		AssertElementPresent(
+			key_fieldFieldLabel = "Image",
+			key_image = "Document_1.jpg",
+			locator1 = "WCEditWebContent#IMAGE_PICKER_PREVIEW");
 	}
 
 }

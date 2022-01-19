@@ -681,9 +681,9 @@ definition {
 			pageName = "Staging Test Page",
 			siteName = "Site Name");
 
-		WebContent.viewPGViaWCD(
-			imageOnLive = "true",
-			webContentContent = "Web Content Content");
+		WebContentDisplayPortlet.viewContent(
+			imageFileName = "Document_1.jpg",
+			webContentTitle = "Web Content Title");
 	}
 
 	@description = "This is a use case for LPS-80295."

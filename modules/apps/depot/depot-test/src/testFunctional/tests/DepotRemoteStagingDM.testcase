@@ -1030,9 +1030,9 @@ definition {
 			pageName = "Test Page",
 			siteName = "Remote Site");
 
-		WebContent.viewPGViaWCD(
-			image = "true",
-			key_image = "Document_1.jpg");
+		WebContentDisplayPortlet.viewContent(
+			imageFileName = "Document_1.jpg",
+			webContentTitle = "Web Content Title");
 
 		User.loginPG(
 			nodePort = "8080",
@@ -1076,8 +1076,9 @@ definition {
 			siteName = "Remote Site");
 
 		AssertElementNotPresent(
-			key_image = "Document_1.jpg",
-			locator1 = "WCD#WEB_CONTENT_CONTENT_IMAGE");
+			key_imageFileName = "Document_1.jpg",
+			key_webContentTitle = "Web Content Title",
+			locator1 = "WCD#WEB_CONTENT_IMAGE");
 	}
 
 	@description = "This ensures that the blog image from a depot can be edited and republished when enabling remote staging."
@@ -2096,9 +2097,9 @@ definition {
 			pageName = "Test Page",
 			siteName = "Remote Site");
 
-		WebContent.viewPGViaWCD(
-			image = "true",
-			key_image = "Document_1.jpg");
+		WebContentDisplayPortlet.viewContent(
+			imageFileName = "Document_1.jpg",
+			webContentTitle = "Web Content Title");
 
 		User.loginPG(
 			nodePort = "8080",
@@ -2142,9 +2143,9 @@ definition {
 			pageName = "Test Page",
 			siteName = "Remote Site");
 
-		WebContent.viewPGViaWCD(
-			image = "true",
-			key_image = "Document_2.jpg");
+		WebContentDisplayPortlet.viewContent(
+			imageFileName = "Document_2.jpg",
+			webContentTitle = "Web Content Title");
 	}
 
 	@description = "This ensures that a document pending review cannot be searched for in a staged site when enabling remote staging."

@@ -603,9 +603,9 @@ definition {
 		}
 
 		task ("Assert the image is shown in Web Content Display") {
-			WebContent.viewPGViaWCD(
-				image = "true",
-				key_image = "Document_1.jpg");
+			WebContentDisplayPortlet.viewContent(
+				imageFileName = "Document_1.jpg",
+				webContentTitle = "Web Content Title");
 		}
 	}
 

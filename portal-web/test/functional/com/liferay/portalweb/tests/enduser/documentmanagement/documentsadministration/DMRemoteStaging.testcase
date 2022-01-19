@@ -922,9 +922,9 @@ definition {
 			pageName = "Staging DM Page",
 			siteName = "Remote Site");
 
-		WebContent.viewPGViaWCD(
-			image = "true",
-			key_image = "Document_2.jpg");
+		WebContentDisplayPortlet.viewContent(
+			imageFileName = "Document_2.jpg",
+			webContentTitle = "Web Content Title");
 
 		User.loginPG(
 			nodePort = "8080",
@@ -962,8 +962,9 @@ definition {
 			siteName = "Remote Site");
 
 		AssertElementNotPresent(
-			key_image = "Document_2.jpg",
-			locator1 = "WCD#WEB_CONTENT_CONTENT_IMAGE");
+			key_imageFileName = "Document_2.jpg",
+			key_webContentTitle = "Web Content Title",
+			locator1 = "WCD#WEB_CONTENT_IMAGE");
 	}
 
 	@description = "This ensures that the image can be edited and republished in web content."
@@ -1042,9 +1043,9 @@ definition {
 			pageName = "Staging DM Page",
 			siteName = "Remote Site");
 
-		WebContent.viewPGViaWCD(
-			image = "true",
-			key_image = "Document_2.jpg");
+		WebContentDisplayPortlet.viewContent(
+			imageFileName = "Document_2.jpg",
+			webContentTitle = "Web Content Title");
 
 		User.loginPG(
 			nodePort = "8080",
@@ -1079,9 +1080,9 @@ definition {
 			pageName = "Staging DM Page",
 			siteName = "Remote Site");
 
-		WebContent.viewPGViaWCD(
-			image = "true",
-			key_image = "Document_3.jpg");
+		WebContentDisplayPortlet.viewContent(
+			imageFileName = "Document_3.jpg",
+			webContentTitle = "Web Content Title");
 	}
 
 }

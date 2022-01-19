@@ -2016,10 +2016,6 @@ definition {
 			value1 = "APPROVED");
 	}
 
-	macro viewAudioViaWCD {
-		AssertElementPresent(locator1 = "WCD#WEB_CONTENT_AUDIO");
-	}
-
 	macro viewAvailableLanguages {
 		Click(locator1 = "Button#LOCALIZATION_GENERIC");
 
@@ -2658,16 +2654,6 @@ definition {
 		AssertVisible(
 			key_service = "${service}",
 			locator1 = "WCPreview#BODY_FIELD_VIDEO");
-	}
-
-	macro viewVideoViaWCD {
-		SelectFrame(locator1 = "IFrame#IFRAME");
-
-		AssertElementPresent(
-			key_videoShortcutTitle = "${videoShortcutTitle}",
-			locator1 = "WCD#WEB_CONTENT_VIDEO");
-
-		SelectFrame(value1 = "relative=top");
 	}
 
 	macro viewWCViewableByPermissions {

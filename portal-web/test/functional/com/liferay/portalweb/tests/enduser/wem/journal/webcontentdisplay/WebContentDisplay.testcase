@@ -93,7 +93,9 @@ definition {
 
 		IFrame.closeFrame();
 
-		WebContent.viewAudioViaWCD();
+		WebContentDisplayPortlet.viewContent(
+			audioFileName = "Document_1.mp3",
+			webContentTitle = "WC WebContent Title");
 	}
 
 	@priority = "4"
@@ -201,10 +203,8 @@ definition {
 		IFrame.closeFrame();
 
 		WebContentDisplayPortlet.viewContent(
-			webContentContent = "WC WebContent Content",
+			imageFileName = "Document_3.png",
 			webContentTitle = "WC WebContent Title");
-
-		AssertElementPresent(locator1 = "WCD#WEB_CONTENT_INLINE_IMAGE");
 	}
 
 	@priority = "4"
@@ -273,9 +273,9 @@ definition {
 
 		IFrame.closeFrame();
 
-		WaitForElementPresent(locator1 = "YoutubePortlet#VIDEO_IFRAME");
-
-		WebContent.viewVideoViaWCD(videoShortcutTitle = "Liferay Digital Experience Platform");
+		WebContentDisplayPortlet.viewContent(
+			videoShortcutTitle = "Liferay Digital Experience Platform",
+			webContentTitle = "WC WebContent Title");
 	}
 
 	@priority = "5"

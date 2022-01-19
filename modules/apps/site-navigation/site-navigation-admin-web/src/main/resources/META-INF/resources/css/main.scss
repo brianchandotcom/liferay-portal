@@ -1,1 +1,17 @@
 @import '../site_navigation_menu_editor/components/App';
+
+.lfr-card-actions-column {
+	.card-row-layout-fixed & {
+		width: 32px;
+	}
+
+	.dropdown {
+		margin-right: -8px;
+		margin-top: -5px;
+
+		.card-row-layout-fixed & {
+			margin-left: 8px;
+			margin-right: 0;
+		}
+	}
+}

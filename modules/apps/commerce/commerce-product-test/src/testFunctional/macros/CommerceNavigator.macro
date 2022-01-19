@@ -148,6 +148,12 @@ definition {
 			value1 = "\RETURN");
 	}
 
+	macro selectItemFromTreeNode {
+		var key_itemName = "${itemName}";
+
+		Click(locator1 = "Treeview#NODE_LIST_ITEM");
+	}
+
 	macro sortField {
 		Click(
 			key_sortFieldName = "${sortFieldName}",

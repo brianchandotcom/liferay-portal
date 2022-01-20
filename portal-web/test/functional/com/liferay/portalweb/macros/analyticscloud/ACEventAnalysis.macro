@@ -71,6 +71,11 @@ definition {
 				locator1 = "ACSegments#MONTH_AND_YEAR_CALENDAR",
 				value1 = "${month}");
 
+			Select(
+				key_indexCalendar = "2",
+				locator1 = "ACSegments#MONTH_AND_YEAR_CALENDAR",
+				value1 = "${year}");
+
 			Click(
 				key_day = "${inputValue}",
 				locator1 = "ACSegments#DAY_CALENDAR_OPTION");

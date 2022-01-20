@@ -481,10 +481,25 @@ definition {
 			panel = "Control Panel",
 			portlet = "Audit");
 
+		AssertTextEquals(
+			key_resourceAction = "LOGIN",
+			key_resourceName = "User",
+			locator1 = "AuditReports#REPORTS_TABLE_RESOURCE_ACTION",
+			value1 = "LOGIN");
+
+		Navigator.openURL();
+
+		Pause(locator1 = "3000");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Security",
+			panel = "Control Panel",
+			portlet = "Audit");
+
 		Audit.searchCP(
 			match = "All",
-			resourceAction = "Login",
-			searchTerm = "Login",
+			resourceAction = "LOGIN",
+			searchTerm = "LOGIN",
 			userName = "Test Test");
 
 		AssertTextEquals(
@@ -500,7 +515,7 @@ definition {
 
 		Audit.searchCP(
 			match = "Any",
-			resourceAction = "Login",
+			resourceAction = "LOGIN",
 			resourceName = "com.liferay.portal.kernel.model.User",
 			searchTerm = "com.liferay.portal.kernel.model.User");
 
@@ -517,7 +532,7 @@ definition {
 
 		Audit.searchCP(
 			match = "All",
-			resourceAction = "Login",
+			resourceAction = "LOGIN",
 			resourceName = "com.liferay.portal.kernel.model.User",
 			searchTerm = "Test Test",
 			userName = "Test Test");

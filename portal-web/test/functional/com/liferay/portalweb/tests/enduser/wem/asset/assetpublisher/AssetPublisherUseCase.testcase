@@ -1203,6 +1203,36 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-137055.'Show only assets with [display page] as its display page template' is shown on Display Page Templates."
+	@priority = "4"
+	test ShowOnlyAssetsWithDisplayPageAsDisplayPageTemplateShownOnDisplayPageTemplates {
+		task ("Add a display page template for Web Content Article and Basic Web Content") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name",
+				subType = "Basic Web Content");
+		}
+
+		task ("Add an Asset Publisher widget on the Template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			PageEditor.addWidget(portletName = "Asset Publisher");
+		}
+
+		task ("Check if 'Show only assets with Display Page Name as its display page template' is present in Asset Publisher's configuration") {
+			AssetPublisherPortlet.gotoConfigurationPG();
+
+			Navigator.gotoNavTab(navTab = "Display Settings");
+
+			Panel.expandPanel(panel = "Set and Enable");
+
+			AssertTextNotPresent(value1 = "Show only assets with Display Page Name as its display page template.");
+		}
+	}
+
 	@description = "View assets filter by tag or category in Asset Publisher."
 	@priority = "4"
 	test ViewAssetsFilterByTagOrCategoryInAssetPublisher {

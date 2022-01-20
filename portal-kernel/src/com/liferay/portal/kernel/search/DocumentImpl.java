@@ -403,9 +403,11 @@ public class DocumentImpl implements Document {
 
 		Stream<String> valuesStream = Arrays.stream(values);
 
-		valuesStream.filter(value -> Validator.isNotNull(value));
-
-		String[] filteredValues = valuesStream.toArray(String[]::new);
+		String[] filteredValues = valuesStream.filter(
+			value -> Validator.isNotNull(value)
+		).toArray(
+			String[]::new
+		);
 
 		if (ArrayUtil.isEmpty(filteredValues)) {
 			return;

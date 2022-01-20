@@ -17,7 +17,7 @@ import {delegate} from 'frontend-js-web';
 const ANY = 'any';
 const SELECT_MORE_THAN_ONE = 'select-more-than-one';
 
-export default function ({classTypes, namespace}) {
+export default function ({assetPublisherNamespace, classTypes, namespace}) {
 	const mapDDMStructures = {};
 
 	const assetMultipleSelector = document.getElementById(
@@ -358,19 +358,19 @@ export default function ({classTypes, namespace}) {
 		let url = delegateTarget.dataset.href;
 
 		url = Liferay.Util.addParams(
-			`${namespace}ddmStructureDisplayFieldValue=${encodeURIComponent(
+			`_${assetPublisherNamespace}_ddmStructureDisplayFieldValue=${encodeURIComponent(
 				ddmStructureDisplayFieldValueInput.value
 			)}`,
 			url
 		);
 		url = Liferay.Util.addParams(
-			`${namespace}ddmStructureFieldName=${encodeURIComponent(
+			`_${assetPublisherNamespace}_ddmStructureFieldName=${encodeURIComponent(
 				ddmStructureFieldNameInput.value
 			)}`,
 			url
 		);
 		url = Liferay.Util.addParams(
-			`${namespace}ddmStructureFieldValue=${encodeURIComponent(
+			`_${assetPublisherNamespace}_ddmStructureFieldValue=${encodeURIComponent(
 				ddmStructureFieldValueInput.value
 			)}`,
 			url

@@ -295,6 +295,8 @@ List<Map<String, Object>> classTypesList = new ArrayList<>();
 			componentId='<%= liferayPortletResponse.getNamespace() + "selectDDMStructureField" %>'
 			context='<%=
 				HashMapBuilder.<String, Object>put(
+					"assetPublisherNamespace", HtmlUtil.escapeJS(assetPublisherDisplayContext.getPortletResource())
+				).put(
 					"classTypes", classTypesList
 				).build()
 			%>'

@@ -78,7 +78,7 @@ public class ExecutePoshiElement extends PoshiElement {
 			addAttribute("selenium", getCommandName(poshiScript));
 
 			List<String> methodParameters =
-				PoshiScriptParserUtil.getMethodParameters(
+				PoshiScriptParserUtil.getMethodParameterValues(
 					poshiScriptParentheticalContent);
 
 			for (int i = 0; i < methodParameters.size(); i++) {
@@ -142,31 +142,30 @@ public class ExecutePoshiElement extends PoshiElement {
 			addAttribute("class", getClassName(poshiScript));
 			addAttribute("method", getCommandName(poshiScript));
 
-			List<String> methodParameters =
-				PoshiScriptParserUtil.getMethodParameters(
-					poshiScriptParentheticalContent);
+			for (String methodParameter :
+					PoshiScriptParserUtil.getMethodParameterValues(
+						poshiScriptParentheticalContent)) {
 
-			for (String methodParameter : methodParameters) {
 				add(PoshiNodeFactory.newPoshiNode(this, methodParameter));
 			}
 
 			return;
 		}
 
-		for (String parameter :
-				PoshiScriptParserUtil.getMethodParameters(
+		for (String methodParameter :
+				PoshiScriptParserUtil.getMethodParameterValues(
 					poshiScriptParentheticalContent,
 					_executeParameterPattern)) {
 
-			parameter = parameter.trim();
+			methodParameter = methodParameter.trim();
 
 			boolean functionAttributeAdded = false;
 
 			for (String functionAttributeName : _functionAttributeNames) {
-				String name = getNameFromAssignment(parameter);
+				String name = getNameFromAssignment(methodParameter);
 
 				if (name.equals(functionAttributeName)) {
-					String value = getValueFromAssignment(parameter);
+					String value = getValueFromAssignment(methodParameter);
 
 					Matcher matcher = quotedPattern.matcher(value);
 
@@ -177,7 +176,7 @@ public class ExecutePoshiElement extends PoshiElement {
 						sb.append("match: (locator|value)(1|2) = \".*\"");
 
 						throw new PoshiScriptParserException(
-							sb.toString(), parameter,
+							sb.toString(), methodParameter,
 							(PoshiElement)getParent());
 					}
 
@@ -185,7 +184,9 @@ public class ExecutePoshiElement extends PoshiElement {
 
 					value = StringEscapeUtils.unescapeXml(value);
 
-					add(new PoshiElementAttribute(name, value, parameter));
+					add(
+						new PoshiElementAttribute(
+							name, value, methodParameter));
 
 					functionAttributeAdded = true;
 
@@ -197,7 +198,7 @@ public class ExecutePoshiElement extends PoshiElement {
 				continue;
 			}
 
-			add(PoshiNodeFactory.newPoshiNode(this, parameter));
+			add(PoshiNodeFactory.newPoshiNode(this, methodParameter));
 		}
 	}
 

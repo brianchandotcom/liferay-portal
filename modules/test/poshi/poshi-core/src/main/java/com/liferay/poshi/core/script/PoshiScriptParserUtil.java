@@ -27,9 +27,9 @@ import java.util.regex.Pattern;
  */
 public class PoshiScriptParserUtil {
 
-	public static List<String> getMethodParameters(String content) {
+	public static List<String> getMethodParameterValues(String content) {
 		try {
-			return getMethodParameters(content, null);
+			return getMethodParameterValues(content, null);
 		}
 		catch (PoshiScriptParserException poshiScriptParserException) {
 			poshiScriptParserException.printStackTrace();
@@ -38,7 +38,7 @@ public class PoshiScriptParserUtil {
 		}
 	}
 
-	public static List<String> getMethodParameters(
+	public static List<String> getMethodParameterValues(
 			String content, Pattern parameterPattern)
 		throws PoshiScriptParserException {
 

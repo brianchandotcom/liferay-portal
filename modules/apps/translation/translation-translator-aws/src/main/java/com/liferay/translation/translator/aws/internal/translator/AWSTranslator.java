@@ -18,10 +18,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.translation.translator.Translator;
 import com.liferay.translation.translator.TranslatorPacket;
@@ -49,21 +46,6 @@ import software.amazon.awssdk.services.translate.model.TranslateTextResponse;
 	service = Translator.class
 )
 public class AWSTranslator implements Translator {
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #isEnabled(long)}
-	 */
-	@Deprecated
-	public boolean isEnabled() {
-		try {
-			return isEnabled(CompanyThreadLocal.getCompanyId());
-		}
-		catch (ConfigurationException configurationException) {
-			_log.error(configurationException, configurationException);
-		}
-
-		return false;
-	}
 
 	@Override
 	public boolean isEnabled(long companyId) throws ConfigurationException {
@@ -155,8 +137,6 @@ public class AWSTranslator implements Translator {
 
 		return translateTextResponse.translatedText();
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(AWSTranslator.class);
 
 	private volatile AWSTranslatorConfiguration _awsTranslatorConfiguration;
 	private volatile TranslateClient _translateClient;

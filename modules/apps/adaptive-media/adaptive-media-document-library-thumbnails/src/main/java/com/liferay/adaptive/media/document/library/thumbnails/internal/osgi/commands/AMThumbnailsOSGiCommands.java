@@ -27,7 +27,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.image.ImageBag;
-import com.liferay.portal.kernel.image.ImageToolUtil;
+import com.liferay.portal.kernel.image.ImageTool;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -311,7 +311,7 @@ public class AMThumbnailsOSGiCommands {
 				fileVersion.getCompanyId(),
 				DLPreviewableProcessor.REPOSITORY_ID, fileName);
 
-			ImageBag imageBag = ImageToolUtil.read(bytes);
+			ImageBag imageBag = _imageTool.read(bytes);
 
 			RenderedImage renderedImage = imageBag.getRenderedImage();
 
@@ -352,5 +352,8 @@ public class AMThumbnailsOSGiCommands {
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;
+
+	@Reference
+	private ImageTool _imageTool;
 
 }

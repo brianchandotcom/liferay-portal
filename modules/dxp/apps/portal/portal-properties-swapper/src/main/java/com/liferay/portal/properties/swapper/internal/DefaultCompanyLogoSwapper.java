@@ -15,7 +15,6 @@
 package com.liferay.portal.properties.swapper.internal;
 
 import com.liferay.portal.kernel.image.ImageTool;
-import com.liferay.portal.kernel.image.ImageToolUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -27,6 +26,7 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Shuyang Zhou
@@ -50,14 +50,12 @@ public class DefaultCompanyLogoSwapper {
 				";com/liferay/portal/properties/swapper/internal" +
 					"/default_company_logo.png");
 
-		ImageTool imageTool = ImageToolUtil.getImageTool();
-
-		Class<?> clazz = imageTool.getClass();
+		Class<?> clazz = _imageTool.getClass();
 
 		try {
 			Method method = clazz.getMethod("afterPropertiesSet");
 
-			method.invoke(imageTool);
+			method.invoke(_imageTool);
 		}
 		catch (ReflectiveOperationException reflectiveOperationException) {
 			if (_log.isWarnEnabled()) {
@@ -70,5 +68,8 @@ public class DefaultCompanyLogoSwapper {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultCompanyLogoSwapper.class);
+
+	@Reference
+	private ImageTool _imageTool;
 
 }

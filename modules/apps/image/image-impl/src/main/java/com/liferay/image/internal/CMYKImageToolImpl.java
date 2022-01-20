@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.exception.ImageResolutionException;
 import com.liferay.portal.kernel.image.CMYKImageTool;
 import com.liferay.portal.kernel.image.ImageBag;
 import com.liferay.portal.kernel.image.ImageMagick;
-import com.liferay.portal.kernel.image.ImageToolUtil;
+import com.liferay.portal.kernel.image.ImageTool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -87,7 +87,7 @@ public class CMYKImageToolImpl implements CMYKImageTool {
 						RenderedImage renderedImage = null;
 
 						try {
-							ImageBag imageBag = ImageToolUtil.read(
+							ImageBag imageBag = _imageTool.read(
 								_fileImpl.getBytes(outputFile));
 
 							renderedImage = imageBag.getRenderedImage();
@@ -125,5 +125,8 @@ public class CMYKImageToolImpl implements CMYKImageTool {
 
 	@Reference
 	private ImageMagick _imageMagick;
+
+	@Reference
+	private ImageTool _imageTool;
 
 }

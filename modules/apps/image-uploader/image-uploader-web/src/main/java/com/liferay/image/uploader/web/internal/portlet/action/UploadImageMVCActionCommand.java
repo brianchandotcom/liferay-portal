@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.exception.ImageTypeException;
 import com.liferay.portal.kernel.exception.NoSuchRepositoryException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.image.ImageBag;
-import com.liferay.portal.kernel.image.ImageToolUtil;
+import com.liferay.portal.kernel.image.ImageTool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -337,7 +337,7 @@ public class UploadImageMVCActionCommand extends BaseMVCActionCommand {
 			try (InputStream tempImageInputStream =
 					tempFileEntry.getContentStream()) {
 
-				ImageBag imageBag = ImageToolUtil.read(tempImageInputStream);
+				ImageBag imageBag = _imageTool.read(tempImageInputStream);
 
 				RenderedImage renderedImage = imageBag.getRenderedImage();
 
@@ -368,11 +368,11 @@ public class UploadImageMVCActionCommand extends BaseMVCActionCommand {
 						width = renderedImage.getWidth() - x;
 					}
 
-					renderedImage = ImageToolUtil.crop(
+					renderedImage = _imageTool.crop(
 						renderedImage, height, width, x, y);
 				}
 
-				byte[] bytes = ImageToolUtil.getBytes(
+				byte[] bytes = _imageTool.getBytes(
 					renderedImage, imageBag.getType());
 
 				ThemeDisplay themeDisplay =
@@ -413,6 +413,9 @@ public class UploadImageMVCActionCommand extends BaseMVCActionCommand {
 		UploadImageMVCActionCommand.class);
 
 	private volatile DLConfiguration _dlConfiguration;
+
+	@Reference
+	private ImageTool _imageTool;
 
 	@Reference
 	private Portal _portal;

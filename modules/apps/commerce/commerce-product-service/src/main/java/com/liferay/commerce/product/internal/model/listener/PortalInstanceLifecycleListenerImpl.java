@@ -21,7 +21,7 @@ import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.image.ImageToolUtil;
+import com.liferay.portal.kernel.image.ImageTool;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -107,7 +107,7 @@ public class PortalInstanceLifecycleListenerImpl
 					PropsKeys.IMAGE_DEFAULT_COMPANY_LOGO, null, null,
 					new UnicodeProperties(), true, serviceContext);
 
-				Image image = ImageToolUtil.getDefaultCompanyLogo();
+				Image image = _imageTool.getDefaultCompanyLogo();
 
 				File file = FileUtil.createTempFile(image.getTextObj());
 
@@ -139,6 +139,9 @@ public class PortalInstanceLifecycleListenerImpl
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;
+
+	@Reference
+	private ImageTool _imageTool;
 
 	@Reference
 	private Portal _portal;

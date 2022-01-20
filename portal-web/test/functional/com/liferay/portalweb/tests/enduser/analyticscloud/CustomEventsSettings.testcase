@@ -211,6 +211,8 @@ definition {
 		}
 
 		task ("Edit the new custom event") {
+			ACUtils.searchBar(searchItem = "${customEventName}");
+
 			ACNavigation.openItem(itemName = "${customEventName}");
 
 			ACUtils.clickAnyButton(button = "Edit");

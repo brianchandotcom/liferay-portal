@@ -92,6 +92,8 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.security.service.access.policy.model.SAPEntry;
+import com.liferay.portal.security.service.access.policy.service.SAPEntryLocalService;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -178,6 +180,7 @@ public class BundleSiteInitializerTest {
 			_assertListTypeDefinitions(serviceContext);
 			_assertObjectDefinitions(group, serviceContext);
 			_assertPermissions(group);
+			_assertSapEntries(group);
 			_assertSiteNavigationMenu(group);
 			_assertStyleBookEntry(group);
 			_assertUserRoles(group);
@@ -836,6 +839,18 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals(2, role4.getType());
 	}
 
+	private void _assertSapEntries(Group group) {
+		SAPEntry sapEntryLocalService = _sapEntryLocalService.fetchSAPEntry(
+			group.getCompanyId(), "TEST_API_GUEST_ACCESS");
+
+		Assert.assertNotNull(sapEntryLocalService);
+		Assert.assertEquals(
+			"com.liferay.object.rest*",
+			sapEntryLocalService.getAllowedServiceSignatures());
+		Assert.assertTrue(sapEntryLocalService.isDefaultSAPEntry());
+		Assert.assertTrue(sapEntryLocalService.isEnabled());
+	}
+
 	private void _assertSiteNavigationMenu(Group group) {
 		SiteNavigationMenu siteNavigationMenu =
 			_siteNavigationMenuLocalService.fetchSiteNavigationMenuByName(
@@ -1057,6 +1072,9 @@ public class BundleSiteInitializerTest {
 
 	@Inject
 	private RoleLocalService _roleLocalService;
+
+	@Inject
+	private SAPEntryLocalService _sapEntryLocalService;
 
 	@Inject
 	private ServletContext _servletContext;

@@ -562,7 +562,7 @@ definition {
 		task ("Assert that 'View metrics' option is not displayed") {
 			Click.clickNoMouseOver(locator1 = "ContentDashboard#ROW_PANEL_WC");
 
-			AssertNotVisible(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_BUTTON");
+			AssertElementNotPresent(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_BUTTON");
 		}
 	}
 

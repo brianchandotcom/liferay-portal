@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Gabriel Albuquerque
  */
 @Component(
-	property = "frontend.data.set.name=" + ListTypeFDSNames.LIST_TYPE_DEFINITIONS,
+	property = "fds.name=" + ListTypeFDSNames.LIST_TYPE_DEFINITIONS,
 	service = FDSView.class
 )
 public class ListTypeDefinitionsTableFDSView extends BaseTableFDSView {

@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marco Leo
  */
 @Component(
-	property = "frontend.data.set.name=" + ObjectDefinitionsFDSNames.OBJECT_RELATIONSHIPS,
+	property = "fds.name=" + ObjectDefinitionsFDSNames.OBJECT_RELATIONSHIPS,
 	service = FDSView.class
 )
 public class ObjectRelationshipsTableFDSView extends BaseTableFDSView {

@@ -107,12 +107,12 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					_fdsTableSchemaBuilderFactory, objectDefinition,
 					_objectFieldLocalService),
 				HashMapDictionaryBuilder.put(
-					"frontend.data.set.name", objectDefinition.getPortletId()
+					"fds.name", objectDefinition.getPortletId()
 				).build()),
 			_bundleContext.registerService(
 				FDSFilter.class, new ObjectEntryStatusCheckBoxFDSFilter(),
 				HashMapDictionaryBuilder.put(
-					"frontend.data.set.name", objectDefinition.getPortletId()
+					"fds.name", objectDefinition.getPortletId()
 				).build()),
 			_bundleContext.registerService(
 				InfoItemCapabilitiesProvider.class,

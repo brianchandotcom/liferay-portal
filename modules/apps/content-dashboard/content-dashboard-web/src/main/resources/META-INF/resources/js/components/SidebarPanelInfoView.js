@@ -14,6 +14,8 @@
 
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
+import ClayLayout from '@clayui/layout';
+import ClayPanel from '@clayui/panel';
 import ClaySticker from '@clayui/sticker';
 import classnames from 'classnames';
 import React from 'react';
@@ -180,93 +182,137 @@ const SidebarPanelInfoView = ({
 					</div>
 				)}
 
-				{showTaxonomies && (
-					<h6 className="font-weight-semi-bold sidebar-section-subtitle text-uppercase">
-						{Liferay.Language.get('categorization')}
-					</h6>
-				)}
+				<ClayPanel.Group className="panel-group-flush panel-group-sm">
+					{showTaxonomies && (
+						<ClayPanel
+							collapsable
+							displayTitle={
+								<span className="c-inner" tabIndex="-1">
+									<ClayPanel.Title>
+										<ClayLayout.ContentRow>
+											<ClayLayout.ContentCol
+												className="align-self-center panel-title"
+												expand
+											>
+												{Liferay.Language.get(
+													'categorization'
+												)}
+											</ClayLayout.ContentCol>
+										</ClayLayout.ContentRow>
+									</ClayPanel.Title>
+								</span>
+							}
+							displayType="unstyled"
+							showCollapseIcon={true}
+						>
+							<ClayPanel.Body>
+								{!!categories.length && (
+									<div className="c-mb-4 sidebar-dl sidebar-section">
+										<h5 className="c-mb-1 font-weight-semi-bold">
+											{Liferay.Language.get('categories')}
+										</h5>
 
-				{!!categories.length && (
-					<div className="c-mb-4 sidebar-dl sidebar-section">
-						<h5 className="c-mb-1 font-weight-semi-bold">
-							{Liferay.Language.get('categories')}
-						</h5>
+										<p>
+											{categories.map((category) => (
+												<ClayLabel
+													displayType="secondary"
+													key={category}
+													large
+												>
+													{category}
+												</ClayLabel>
+											))}
+										</p>
+									</div>
+								)}
 
-						<p>
-							{categories.map((category) => (
-								<ClayLabel
-									displayType="secondary"
-									key={category}
-									large
-								>
-									{category}
-								</ClayLabel>
-							))}
-						</p>
-					</div>
-				)}
+								{!!tags.length && (
+									<div className="c-mb-4 sidebar-dl sidebar-section">
+										<h5 className="c-mb-1 font-weight-semi-bold">
+											{Liferay.Language.get('tags')}
+										</h5>
 
-				{!!tags.length && (
-					<div className="c-mb-4 sidebar-dl sidebar-section">
-						<h5 className="c-mb-1 font-weight-semi-bold">
-							{Liferay.Language.get('tags')}
-						</h5>
-
-						<p>
-							{tags.map((tag) => (
-								<ClayLabel
-									displayType="secondary"
-									key={tag}
-									large
-								>
-									{tag}
-								</ClayLabel>
-							))}
-						</p>
-					</div>
-				)}
-
-				<h6 className="font-weight-semi-bold sidebar-section-subtitle text-uppercase">
-					{Liferay.Language.get('details')}
-				</h6>
-
-				{documentIsAFile && (
-					<div className="sidebar-section">
-						<h5 className="c-mb-1 font-weight-semi-bold">
-							{Liferay.Language.get('extension')}
-						</h5>
-
-						<p className="text-secondary">{extension}</p>
-
-						<h5 className="c-mb-1 font-weight-semi-bold">
-							{Liferay.Language.get('size')}
-						</h5>
-
-						<p className="text-secondary">{size}</p>
-					</div>
-				)}
-
-				{!!itemDates.length &&
-					itemDates.map(
-						({text, title}) =>
-							text &&
-							title && (
-								<div
-									className="c-mb-4 sidebar-dl sidebar-section"
-									key={title}
-								>
-									<h5 className="c-mb-1 font-weight-semi-bold">
-										{title}
-									</h5>
-
-									<p className="text-secondary">{text}</p>
-								</div>
-							)
+										<p>
+											{tags.map((tag) => (
+												<ClayLabel
+													displayType="secondary"
+													key={tag}
+													large
+												>
+													{tag}
+												</ClayLabel>
+											))}
+										</p>
+									</div>
+								)}
+							</ClayPanel.Body>
+						</ClayPanel>
 					)}
 
-				{!!viewURLs.length && !isADocument && (
-					<ItemLanguages urls={viewURLs} />
-				)}
+					<ClayPanel
+						collapsable
+						displayTitle={
+							<span className="c-inner" tabIndex="-1">
+								<ClayPanel.Title>
+									<ClayLayout.ContentRow>
+										<ClayLayout.ContentCol
+											className="align-self-center panel-title"
+											expand
+										>
+											{Liferay.Language.get('details')}
+										</ClayLayout.ContentCol>
+									</ClayLayout.ContentRow>
+								</ClayPanel.Title>
+							</span>
+						}
+						displayType="unstyled"
+						showCollapseIcon={true}
+					>
+						<ClayPanel.Body>
+							{documentIsAFile && (
+								<div className="sidebar-section">
+									<h5 className="c-mb-1 font-weight-semi-bold">
+										{Liferay.Language.get('extension')}
+									</h5>
+
+									<p className="text-secondary">
+										{extension}
+									</p>
+
+									<h5 className="c-mb-1 font-weight-semi-bold">
+										{Liferay.Language.get('size')}
+									</h5>
+
+									<p className="text-secondary">{size}</p>
+								</div>
+							)}
+
+							{!!itemDates.length &&
+								itemDates.map(
+									({text, title}) =>
+										text &&
+										title && (
+											<div
+												className="c-mb-4 sidebar-dl sidebar-section"
+												key={title}
+											>
+												<h5 className="c-mb-1 font-weight-semi-bold">
+													{title}
+												</h5>
+
+												<p className="text-secondary">
+													{text}
+												</p>
+											</div>
+										)
+								)}
+
+							{!!viewURLs.length && !isADocument && (
+								<ItemLanguages urls={viewURLs} />
+							)}
+						</ClayPanel.Body>
+					</ClayPanel>
+				</ClayPanel.Group>
 			</Sidebar.Body>
 		</>
 	);

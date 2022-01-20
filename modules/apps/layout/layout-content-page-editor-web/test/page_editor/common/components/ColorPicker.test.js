@@ -13,7 +13,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {cleanup, fireEvent, render, waitFor} from '@testing-library/react';
+import {fireEvent, render, waitFor} from '@testing-library/react';
 import React from 'react';
 
 import {StoreContextProvider} from '../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
@@ -32,6 +32,14 @@ const TOKEN_VALUES = {
 		tokenCategoryLabel: 'Category1',
 		tokenSetLabel: 'TokenSet 1',
 		value: '#4b9fff',
+	},
+	darkBlue: {
+		editorType: 'ColorPicker',
+		label: 'Dark Blue',
+		name: 'darkBlue',
+		tokenCategoryLabel: 'Category1',
+		tokenSetLabel: 'TokenSet 1',
+		value: '#00008b',
 	},
 	green: {
 		editorType: 'ColorPicker',
@@ -81,10 +89,6 @@ const onTypeValue = (input, value) => {
 };
 
 describe('ColorPicker', () => {
-	afterEach(() => {
-		cleanup();
-	});
-
 	it('renders the ColorPicker', () => {
 		const {baseElement} = renderColorPicker({});
 
@@ -159,6 +163,39 @@ describe('ColorPicker', () => {
 				queryByTitle('value-from-stylebook')
 			).not.toBeInTheDocument();
 		});
+
+		it('disabled the color when the token references itself', async () => {
+			const {getByTitle} = renderColorPicker({
+				field: {...FIELD, name: 'orange'},
+				value: '#fff',
+			});
+
+			fireEvent.click(getByTitle('value-from-stylebook'));
+
+			await waitFor(() => {
+				expect(getByTitle('Orange')).toBeDisabled();
+			});
+		});
+
+		it('disables the colors when the tokens are mutually referenced', async () => {
+			const {getByTitle} = renderColorPicker({
+				editedTokenValues: {
+					orange: {
+						name: 'blue',
+						value: '#ffb46e',
+					},
+				},
+				field: {...FIELD, name: 'blue'},
+				value: '#fff',
+			});
+
+			fireEvent.click(getByTitle('value-from-stylebook'));
+
+			await waitFor(() => {
+				expect(getByTitle('Orange')).toBeDisabled();
+				expect(getByTitle('Blue')).toBeDisabled();
+			});
+		});
 	});
 
 	describe('When the value is an hexadecimal', () => {
@@ -219,12 +256,12 @@ describe('ColorPicker', () => {
 
 		it('disables autocomplete dropdown option when the token references itself', async () => {
 			const {getByRole} = renderColorPicker({
-				field: {...FIELD, name: 'blue'},
+				field: {...FIELD, name: 'green'},
 				value: '#fff',
 			});
 
 			fireEvent.change(getByRole('combobox'), {
-				target: {value: 'blu'},
+				target: {value: 'gree'},
 			});
 
 			await waitFor(() => {
@@ -233,9 +270,9 @@ describe('ColorPicker', () => {
 		});
 
 		it('disables autocomplete dropdown options when the tokens are mutually referenced', async () => {
-			const {getByRole} = renderColorPicker({
+			const {getAllByRole, getByRole} = renderColorPicker({
 				editedTokenValues: {
-					orange: {
+					darkBlue: {
 						name: 'blue',
 						value: '#ffb46e',
 					},
@@ -245,11 +282,13 @@ describe('ColorPicker', () => {
 			});
 
 			fireEvent.change(getByRole('combobox'), {
-				target: {value: 'ora'},
+				target: {value: 'blu'},
 			});
 
 			await waitFor(() => {
-				expect(getByRole('option')).toBeDisabled();
+				getAllByRole('option').forEach((option) =>
+					expect(option).toBeDisabled()
+				);
 			});
 		});
 

@@ -1,11 +1,25 @@
 .account-selector {
 	.btn-account-selector {
+		align-items: center;
+		display: grid;
 		font-size: 0.75rem;
+		gap: 12px;
+		grid-template-columns: auto min-content;
+		height: 70px;
 		margin: 0 0.75rem;
 		max-width: 16rem;
+		width: 300px;
 
 		&:focus {
 			box-shadow: none !important;
+		}
+
+		&.account-selected {
+			grid-template-columns: min-content minmax(0, 1fr) min-content;
+		}
+
+		.current-info-container {
+			text-align: left;
 		}
 
 		.account-name,
@@ -13,6 +27,11 @@
 			font-size: 0.875rem;
 			font-weight: 500;
 			text-transform: capitalize;
+		}
+
+		.no-account-selected-placeholder {
+			margin: 0;
+			text-align: left;
 		}
 	}
 
@@ -26,6 +45,11 @@
 		min-height: 28.65rem !important;
 		min-width: 25rem !important;
 		position: fixed;
+
+		&.dropdown-menu {
+			max-width: 300px;
+			min-width: 300px;
+		}
 
 		.item-list-head {
 			align-items: center;

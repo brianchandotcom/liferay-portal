@@ -25,7 +25,7 @@ ObjectView objectView = (ObjectView)request.getAttribute(ObjectWebKeys.OBJECT_VI
 	title='<%= LanguageUtil.get(request, "custom-view") %>'
 >
 	<react:component
-		module="js/components/custom-view/index"
+		module="js/components/object-view/index"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"isViewOnly", !objectDefinitionsViewsDisplayContext.hasUpdateObjectDefinitionPermission()

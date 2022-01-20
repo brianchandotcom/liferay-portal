@@ -30,6 +30,10 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro openLanguageOverridePortlet {
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/control_panel/manage?p_p_id=com_liferay_portal_language_override_web_internal_portlet_PLOPortlet");
+	}
+
 	macro removeAllTranslationOverrides {
 		LexiconEntry.gotoEntryMenuItemNoError(
 			menuItem = "Remove all translation overrides",
@@ -41,6 +45,3 @@ definition {
 	}
 
 }
-
-
-

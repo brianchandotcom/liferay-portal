@@ -12,10 +12,8 @@
  * details.
  */
 
-const HelloWorld = () => (
-	<div className="hello-world">
-		<h1>Hello World</h1>
-	</div>
-);
-
-export default HelloWorld;
+module.exports = {
+	rules: {
+		'@liferay/portal/no-react-dom-render': 'off',
+	},
+};

@@ -1,22 +1,37 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
 import ReactDOM from 'react-dom';
+import {HashRouter, Route, Routes} from 'react-router-dom';
 
 import HelloBar from './routes/hello-bar/pages/HelloBar';
 import HelloFoo from './routes/hello-foo/pages/HelloFoo';
 import HelloWorld from './routes/hello-world/pages/HelloWorld';
-import {HashRouter, Route, Routes} from 'react-router-dom';
+
 import './common/styles/index.scss';
 
-const App = () => {
-	return (
-		<HashRouter>
-			<Routes>
-				<Route index element={<HelloWorld />} />
-				<Route path="/hello-foo" element={<HelloFoo />} />
-				<Route path="/hello-bar" element={<HelloBar />} />
-			</Routes>
-		</HashRouter>
-	);
-};
+const App = () => (
+	<HashRouter>
+		<Routes>
+			<Route element={<HelloWorld />} index />
+
+			<Route element={<HelloFoo />} path="/hello-foo" />
+
+			<Route element={<HelloBar />} path="/hello-bar" />
+		</Routes>
+	</HashRouter>
+);
 
 class WebComponent extends HTMLElement {
 	connectedCallback() {

@@ -35,7 +35,7 @@ definition {
 			LanguageOverride.addLanguageKey(
 				languageKey = "text-contains-error",
 				translationOverrideList = "en-US,fr-FR,pt-BR,es-ES",
-				translationOverrideValueList = "Text contains error,Le texte contient une erreur,O texto contÃ©m erro,El texto contiene error");
+				translationOverrideValueList = "Text contains error,Le texte contient une erreur,O texto contÃƒÂ©m erro,El texto contiene error");
 		}
 
 		task ("Then the language key is successfully saved and can be viewed in the View page") {

@@ -251,7 +251,7 @@
 </tr>
 <tr>
 	<td>INFO_PANEL_TITLE</td>
-	<td>//*[contains(@class, 'text-truncate') and contains(text(),'Content Info')]</td>
+	<td>//section[contains(@class,'sidebar-header')]/descendant-or-self::p</td>
 	<td></td>
 </tr>
 <tr>

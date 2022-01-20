@@ -32,6 +32,7 @@ renderResponse.setTitle(editDisplayContext.getPageTitle());
 		action="<%= editPLOEntryURL %>"
 		method="POST"
 		name="editPLOEntryFm"
+		onSubmit='<%= Validator.isNull(editDisplayContext.getKey()) ? "event.preventDefault();" + liferayPortletResponse.getNamespace() + "validateForm(event);" : StringPool.BLANK %>'
 	>
 		<aui:input name="redirect" type="hidden" value="<%= editDisplayContext.getBackURL() %>" />
 
@@ -172,3 +173,31 @@ renderResponse.setTitle(editDisplayContext.getPageTitle());
 		</liferay-frontend:edit-form-footer>
 	</liferay-frontend:edit-form>
 </clay:container-fluid>
+
+<c:if test="<%= Validator.isNull(editDisplayContext.getKey()) %>">
+	<aui:script>
+		function <portlet:namespace />validateForm(event) {
+			const form = document.getElementById('<portlet:namespace />editPLOEntryFm');
+
+			const inputs = form.querySelectorAll("input[name^='<portlet:namespace />value']");
+
+			for (const input of inputs) {
+				if (!!input.value) {
+					submitForm(form);
+
+					return;
+				}
+			}
+
+			const keyField = form.querySelector("input[name='<portlet:namespace />key']");
+
+			keyField.focus();
+
+			Liferay.Util.openToast({
+				message:
+					'<%= LanguageUtil.get(request, "at-least-one-translation-is-required-with-a-new-language-key") %>',
+				type: 'danger',
+			});
+		}
+	</aui:script>
+</c:if>

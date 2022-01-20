@@ -205,12 +205,12 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 
 		_rootWorkingDirectory = portalGitWorkingDirectory.getWorkingDirectory();
 
-		_setAutoBalanceTestFiles();
-
 		setTestClassNamesExcludesRelativeGlobs();
 		_setTestClassNamesIncludesRelativeGlobs();
 
 		setTestClasses();
+
+		_setAutoBalanceTestFiles();
 
 		_setIncludeAutoBalanceTests();
 
@@ -739,16 +739,33 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 	}
 
 	private void _setAutoBalanceTestFiles() {
-		String propertyName = "test.class.names.auto.balance";
+		JobProperty jobProperty = getJobProperty(
+			"test.class.names.auto.balance");
 
-		String autoBalanceTestNames = getFirstPropertyValue(propertyName);
+		String jobPropertyValue = jobProperty.getValue();
 
-		if ((autoBalanceTestNames != null) &&
-			!autoBalanceTestNames.equals("")) {
+		if (JenkinsResultsParserUtil.isNullOrEmpty(jobPropertyValue)) {
+			return;
+		}
 
-			for (String autoBalanceTestName : autoBalanceTestNames.split(",")) {
-				_autoBalanceTestFiles.add(new File(autoBalanceTestName));
+		for (String autoBalanceTestName : jobPropertyValue.split(",")) {
+			String fullClassName = autoBalanceTestName.replaceAll(
+				".*\\/?(com\\/.*)\\.(class|java)", "$1");
+
+			fullClassName = fullClassName.replaceAll("/", "\\.");
+
+			File javaTestClassFile =
+				portalGitWorkingDirectory.getJavaFileFromFullClassName(
+					fullClassName);
+
+			if (!JenkinsResultsParserUtil.isFileIncluded(
+					null, getPathMatchers(getFilterJobProperties()),
+					javaTestClassFile)) {
+
+				continue;
 			}
+
+			_autoBalanceTestFiles.add(javaTestClassFile);
 		}
 	}
 

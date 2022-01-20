@@ -67,7 +67,7 @@ public class FDSFilterRegistryImpl implements FDSFilterRegistry {
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
-			bundleContext, FDSFilter.class, "frontend.data.set.name",
+			bundleContext, FDSFilter.class, "fds.name",
 			ServiceTrackerCustomizerFactory.<FDSFilter>serviceWrapper(
 				bundleContext));
 	}

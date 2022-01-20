@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Javier de Arcos
  */
 @Component(
-	property = "frontend.data.set.name=" + FDSSampleFDSNames.FDS_SAMPLES,
+	property = "fds.name=" + FDSSampleFDSNames.FDS_SAMPLES,
 	service = FDSFilter.class
 )
 public class SampleDateRangeFDSFilter extends BaseDateRangeFDSFilter {

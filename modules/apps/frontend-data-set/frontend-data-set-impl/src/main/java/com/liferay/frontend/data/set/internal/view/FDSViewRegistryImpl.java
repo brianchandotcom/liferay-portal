@@ -66,7 +66,7 @@ public class FDSViewRegistryImpl implements FDSViewRegistry {
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
-			bundleContext, FDSView.class, "frontend.data.set.name",
+			bundleContext, FDSView.class, "fds.name",
 			ServiceTrackerCustomizerFactory.<FDSView>serviceWrapper(
 				bundleContext));
 	}

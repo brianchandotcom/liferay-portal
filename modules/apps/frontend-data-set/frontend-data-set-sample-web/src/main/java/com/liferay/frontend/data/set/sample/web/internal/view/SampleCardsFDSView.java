@@ -24,8 +24,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Javier de Arcos
  */
 @Component(
-	enabled = false,
-	property = "frontend.data.set.name=" + FDSSampleFDSNames.FDS_SAMPLES,
+	enabled = false, property = "fds.name=" + FDSSampleFDSNames.FDS_SAMPLES,
 	service = FDSView.class
 )
 public class SampleCardsFDSView extends BaseCardsFDSView {

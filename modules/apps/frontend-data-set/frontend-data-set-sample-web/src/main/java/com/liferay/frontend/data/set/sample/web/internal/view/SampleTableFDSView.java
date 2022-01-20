@@ -32,8 +32,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Javier de Arcos
  */
 @Component(
-	enabled = true,
-	property = "frontend.data.set.name=" + FDSSampleFDSNames.FDS_SAMPLES,
+	enabled = true, property = "fds.name=" + FDSSampleFDSNames.FDS_SAMPLES,
 	service = FDSView.class
 )
 public class SampleTableFDSView extends BaseTableFDSView {

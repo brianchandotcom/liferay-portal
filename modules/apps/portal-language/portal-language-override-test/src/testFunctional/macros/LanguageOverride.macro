@@ -30,4 +30,17 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro removeAllTranslationOverrides {
+		LexiconEntry.gotoEntryMenuItemNoError(
+			menuItem = "Remove all translation overrides",
+			rowEntry = "${languageKey}");
+
+		AssertConfirm(value1 = "Do you want to reset all translation overrides?");
+
+		Alert.viewSuccessMessage();
+	}
+
 }
+
+
+

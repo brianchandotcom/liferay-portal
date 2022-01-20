@@ -33,6 +33,13 @@ const FilterOrderControls = ({
 }) => {
 	const {showDesignImprovements} = useContext(FeatureFlagContext);
 
+	const hasOnlyOneOrderDropdownItem =
+		orderDropdownItems && orderDropdownItems.length === 1;
+	const hasNoOrderDropdownItems =
+		!orderDropdownItems || orderDropdownItems.length === 0;
+	const showOrderToggle =
+		sortingURL && (hasOnlyOneOrderDropdownItem || hasNoOrderDropdownItems);
+
 	return (
 		<>
 			{filterDropdownItems && (
@@ -196,9 +203,7 @@ const FilterOrderControls = ({
 				)}
 
 			{((!showDesignImprovements && sortingURL) ||
-				(showDesignImprovements &&
-					((orderDropdownItems && orderDropdownItems.length === 1) ||
-						sortingURL))) && (
+				(showDesignImprovements && showOrderToggle)) && (
 				<ClayManagementToolbar.Item>
 					<LinkOrButton
 						className="nav-link nav-link-monospaced"
@@ -210,7 +215,13 @@ const FilterOrderControls = ({
 							'order-list-up':
 								sortingOrder === 'asc' || sortingOrder === null,
 						})}
-						title={Liferay.Language.get('reverse-sort-direction')}
+						title={
+							showDesignImprovements
+								? Liferay.Language.get(
+										'reverse-order-direction'
+								  )
+								: Liferay.Language.get('reverse-sort-direction')
+						}
 					/>
 				</ClayManagementToolbar.Item>
 			)}

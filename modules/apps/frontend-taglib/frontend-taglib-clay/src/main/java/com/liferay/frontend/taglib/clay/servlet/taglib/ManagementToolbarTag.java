@@ -887,8 +887,11 @@ public class ManagementToolbarTag extends BaseContainerTag {
 			jspWriter.write("</span></button></div></li>");
 		}
 
+		List<DropdownItem> orderDropdownItems = getOrderDropdownItems();
+
 		if (FFManagementToolbarConfigurationUtil.showDesignImprovements() &&
-			!active && (getOrderDropdownItems() != null)) {
+			!active && (orderDropdownItems != null) &&
+			(orderDropdownItems.size() > 1)) {
 
 			jspWriter.write("<li class=\"nav-item\"><div class=\"dropdown\">");
 			jspWriter.write("<button class=\"btn btn-unstyled dropdown-toggle");
@@ -938,8 +941,16 @@ public class ManagementToolbarTag extends BaseContainerTag {
 			jspWriter.write("</span></button></div></li>");
 		}
 
-		if (!FFManagementToolbarConfigurationUtil.showDesignImprovements() &&
-			(getSortingURL() != null)) {
+		Boolean hasOneOrderDropdownItem =
+			(orderDropdownItems != null) && (orderDropdownItems.size() == 1);
+
+		Boolean hasNoOrderDropdownItems = ListUtil.isEmpty(orderDropdownItems);
+
+		if ((!FFManagementToolbarConfigurationUtil.showDesignImprovements() &&
+			 (getSortingURL() != null)) ||
+			(FFManagementToolbarConfigurationUtil.showDesignImprovements() &&
+			 (getSortingURL() != null) &&
+			 (hasOneOrderDropdownItem || hasNoOrderDropdownItems))) {
 
 			jspWriter.write("<li class=\"nav-item\">");
 

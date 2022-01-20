@@ -668,6 +668,10 @@ public class DBPartitionUtil {
 			PropsUtil.get("database.partition.schema.name.prefix"),
 			"lpartition_");
 
+	private static final boolean _DATABASE_PARTITION_THREAD_POOL_ENABLED =
+		GetterUtil.getBoolean(
+			PropsUtil.get("database.partition.thread.pool.enabled"));
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		DBPartitionUtil.class);
 

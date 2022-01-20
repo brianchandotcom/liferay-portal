@@ -16,4 +16,4 @@
 
 <%@ include file="/fieldset_group/init.jsp" %>
 
-<div aria-multiselectable="true" role="tablist">
+<div aria-multiselectable="true">

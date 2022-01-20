@@ -127,7 +127,7 @@
 		}
 		%>
 
-		<div class="input-group-item input-group-item-shrink input-localized-content" role="menu">
+		<div class="input-group-item input-group-item-shrink input-localized-content">
 
 			<%
 			String normalizedSelectedLanguageId = StringUtil.replace(selectedLanguageId, '_', '-');

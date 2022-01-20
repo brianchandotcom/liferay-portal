@@ -1735,6 +1735,12 @@
 		</attribute>
 		<attribute>
 			<description></description>
+			<name>orderDropdownItems</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
 			<name>propsTransformer</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

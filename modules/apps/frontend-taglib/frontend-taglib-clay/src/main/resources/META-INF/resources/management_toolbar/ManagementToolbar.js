@@ -50,8 +50,10 @@ function ManagementToolbar({
 	onCreationMenuItemClick = () => {},
 	onInfoButtonClick = () => {},
 	onFilterDropdownItemClick = () => {},
+	onOrderDropdownItemClick = () => {},
 	onSelectAllButtonClick = () => {},
 	onShowMoreButtonClick,
+	orderDropdownItems,
 	searchActionURL,
 	searchContainerId,
 	searchData,
@@ -124,6 +126,8 @@ function ManagementToolbar({
 							onFilterDropdownItemClick={
 								onFilterDropdownItemClick
 							}
+							onOrderDropdownItemClick={onOrderDropdownItemClick}
+							orderDropdownItems={orderDropdownItems}
 							sortingOrder={sortingOrder}
 							sortingURL={sortingURL}
 						/>
@@ -282,6 +286,7 @@ ManagementToolbar.propTypes = {
 	onCreateButtonClick: PropTypes.func,
 	onInfoButtonClick: PropTypes.func,
 	onViewTypeSelect: PropTypes.func,
+	orderDropdownItems: PropTypes.array,
 	searchActionURL: PropTypes.string,
 	searchContainerId: PropTypes.string,
 	searchData: PropTypes.object,

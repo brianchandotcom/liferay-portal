@@ -14,6 +14,7 @@
 
 package com.liferay.frontend.taglib.clay.servlet.taglib.display.context;
 
+import com.liferay.frontend.taglib.clay.internal.configuration.FFManagementToolbarConfigurationUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
@@ -77,6 +78,10 @@ public class BaseManagementToolbarDisplayContext
 
 	@Override
 	public List<DropdownItem> getFilterDropdownItems() {
+		if (FFManagementToolbarConfigurationUtil.showDesignImprovements()) {
+			return getFilterNavigationDropdownItems();
+		}
+
 		List<DropdownItem> filterNavigationDropdownItems =
 			getFilterNavigationDropdownItems();
 		List<DropdownItem> orderByDropdownItems = getOrderByDropdownItems();
@@ -107,6 +112,11 @@ public class BaseManagementToolbarDisplayContext
 	@Override
 	public String getNamespace() {
 		return liferayPortletResponse.getNamespace();
+	}
+
+	@Override
+	public List<DropdownItem> getOrderDropdownItems() {
+		return getOrderByDropdownItems();
 	}
 
 	@Override

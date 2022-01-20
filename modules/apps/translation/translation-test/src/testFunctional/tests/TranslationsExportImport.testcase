@@ -183,7 +183,7 @@ definition {
 			operation = "zip",
 			titleTranslation = "Titulodelcontenidoweb3",
 			translationFileName = "WebContentTitle3-en_US-es_ES",
-			translationZipFileName = "WebContentTitle3-en_US-es_ES",
+			translationZipFileName = "WebContentTitle3-en_US",
 			webContentContent = "WebContent3",
 			webContentDescription = "Description3",
 			webContentTitle = "WebContentTitle3");
@@ -539,7 +539,7 @@ definition {
 
 		Translations.exportTranslation(
 			defaultLanguage = "English (United States)",
-			languageList = "German (Germany),Spanish (Spain)");
+			languageList = "Japanese (Japan),Spanish (Spain)");
 
 		Translations.translateFile(
 			contentTranslation = "Contenidoweb1",
@@ -555,17 +555,17 @@ definition {
 
 		Translations.updateTranslateFileID(
 			translationEntryType = "JournalArticle",
-			translationFileName = "WebContentTitle1-en_US-de_DE",
+			translationFileName = "WebContentTitle1-en_US-ja_JP",
 			translationZipFileName = "WebContentTitle3-en_US");
 
 		Translations.translateFile(
-			contentTranslation = "Internetinhalt3",
-			descriptionTranslation = "Beschreibung3",
-			encoding = "false",
+			contentTranslation = "Webコンテンツ3",
+			descriptionTranslation = "説明3",
+			encoding = "utf8",
 			operation = "false",
-			titleTranslation = "TiteldesWebinhalts3",
-			translationFileName = "WebContentTitle3-en_US-de_DE",
-			translationZipFileName = "WebContentTitle3-en_US-es_ES",
+			titleTranslation = "Webコンテンツのタイトル3",
+			translationFileName = "WebContentTitle3-en_US-ja_JP",
+			translationZipFileName = "WebContentTitle3-en_US",
 			webContentContent = "WebContent3",
 			webContentDescription = "Description3",
 			webContentTitle = "WebContentTitle3");
@@ -577,7 +577,7 @@ definition {
 			operation = "zip",
 			titleTranslation = "Titulodelcontenidoweb3",
 			translationFileName = "WebContentTitle3-en_US-es_ES",
-			translationZipFileName = "WebContentTitle3-en_US-es_ES",
+			translationZipFileName = "WebContentTitle3-en_US",
 			webContentContent = "WebContent3",
 			webContentDescription = "Description3",
 			webContentTitle = "WebContentTitle3");
@@ -605,18 +605,18 @@ definition {
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "WebContentTitle1");
 
-		Translations.viewUntranslatedStatus(locale = "de-DE");
+		Translations.viewUntranslatedStatus(locale = "ja-JP");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "WebContentTitle3");
 
-		PortletEntry.changeLocale(locale = "de-DE");
+		PortletEntry.changeLocale(locale = "ja-JP");
 
 		WebContent.viewCP(
-			webContentContent = "Internetinhalt3",
-			webContentDescription = "Beschreibung3",
-			webContentTitle = "TiteldesWebinhalts3");
+			webContentContent = "Webコンテンツ3",
+			webContentDescription = "説明3",
+			webContentTitle = "Webコンテンツのタイトル3");
 	}
 
 }

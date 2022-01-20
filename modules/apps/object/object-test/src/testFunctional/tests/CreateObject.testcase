@@ -3497,12 +3497,85 @@ definition {
 	}
 
 	@description = "LPS-140342 - Verify it is possible to view and edit its own Object with only the Add Object Definition permission"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanViewAndEditObjectWithAddObjectPermission {
+		JSONRole.addRegularRole(
+			roleKey = "Regular Role",
+			roleTitle = "Regular Role");
 
-		// TODO LPS-141688 CanViewAndEditObjectWithAddObjectPermission pending implementation
+		for (var resourceAction : list "ACCESS_IN_CONTROL_PANEL,VIEW") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceAction}",
+				resourceName = "com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet",
+				roleTitle = "Regular Role");
+		}
 
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ADD_OBJECT_DEFINITION",
+			resourceName = "com.liferay.object",
+			roleTitle = "Regular Role");
+
+		for (var resourceAction : list "UPDATE,VIEW") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceAction}",
+				resourceName = "com.liferay.object.model.ObjectDefinition",
+				roleTitle = "Regular Role");
+		}
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Regular Role",
+			userEmailAddress = "userea@liferay.com");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectAdmin.addNewObject(
+			fieldLabelName = "Custom Object",
+			fieldName = "CustomObject",
+			pluralLabelName = "Custom Objects");
+
+		ObjectAdmin.saveCustomObject();
+
+		CreateObject.assertCustomObject(labelName = "Custom Object");
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+		ObjectAdmin.editCustomObject(
+			fieldLabelName = "Object Edit",
+			fieldName = "ObjectEdit",
+			pluralLabelName = "Objects Edit");
+
+		CreateObject.selectTitleField(fieldLabel = "ID");
+
+		ObjectAdmin.selectObjectScope(fieldOption = "Company");
+
+		CreateObject.selectPanelCategoryKey(panelCategoryKey = "Control Panel > Object");
+
+		CreateObject.saveObject();
+
+		for (var valueFieldLabel : list "ObjectEdit,Object Edit,Objects Edit") {
+			CreateObject.assertValuesOnObjectData(fieldLabel = "${valueFieldLabel}");
+		}
+
+		CreateObject.assertTitleFieldIsSelected(fieldLabel = "Custom Field");
+
+		CreateObject.assertValuesOnScope(
+			valuePanelCategory = "Control Panel > Object",
+			valueScope = "Company");
 	}
 
 	@description = "LPS-135397 - Verify if it's possible to view Entries with Custom Layout Created"

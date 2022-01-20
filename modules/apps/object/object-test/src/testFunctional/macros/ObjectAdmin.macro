@@ -610,7 +610,7 @@ definition {
 		if (isSet(fieldLabelName)) {
 			Type(
 				locator1 = "ObjectAdmin#DETAILS_LABEL_CUSTOM_OBJECT",
-				value1 = "${labelName}");
+				value1 = "${fieldLabelName}");
 		}
 
 		if (isSet(pluralLabelName)) {

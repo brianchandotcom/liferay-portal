@@ -54,22 +54,15 @@ export function PreviewModalWithCopyDownload({
 	title,
 	type = 'application/json',
 }) {
-	const _handleCopyToClipboard = () => {
-		navigator.clipboard.writeText(text);
-
-		openSuccessToast({
-			message: Liferay.Language.get('copied-to-clipboard'),
-		});
-	};
-
 	return (
 		<PreviewModal
 			body={
 				<>
 					<ClayButton.Group spaced>
 						<ClayButton
+							className="sxp-copy-button"
+							data-clipboard-text={text}
 							displayType="secondary"
-							onClick={_handleCopyToClipboard}
 							small
 						>
 							<span className="inline-item inline-item-before">

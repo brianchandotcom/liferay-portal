@@ -14,6 +14,7 @@ import React, {useEffect, useState} from 'react';
 import ErrorBoundary from '../shared/ErrorBoundary';
 import ThemeContext from '../shared/ThemeContext';
 import {fetchData} from '../utils/fetch';
+import useClipboardJS from '../utils/useClipboardJS';
 import EditSXPBlueprintForm from './EditSXPBlueprintForm';
 
 export default function ({
@@ -25,6 +26,8 @@ export default function ({
 	sxpBlueprintId,
 }) {
 	const [resource, setResource] = useState(null);
+
+	useClipboardJS('.sxp-copy-button');
 
 	useEffect(() => {
 		fetchData(

@@ -1211,7 +1211,7 @@ definition {
 
 		FormsAdminNavigator.gotoPublishCopyURLLink();
 
-		var publishedFormPublicURL = Form.getPublishedFormPublicURL(publishedFormPublicUrl = "${publishedFormPublicUrl}");
+		var publishedFormPublicUrl = Form.getPublishedFormPublicURL(publishedFormPublicUrl = "${publishedFormPublicUrl}");
 
 		Navigator.openSpecificURL(url = "${publishedFormPublicUrl}");
 

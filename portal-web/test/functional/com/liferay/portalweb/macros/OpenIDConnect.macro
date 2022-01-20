@@ -21,7 +21,7 @@ definition {
 	}
 
 	macro accountSignIn {
-		if (!(isSet(specificURL))) {
+		if (!(isSet(specificUrl))) {
 			Navigator.openURL();
 		}
 		else {

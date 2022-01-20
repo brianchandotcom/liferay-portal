@@ -3,7 +3,7 @@ definition {
 	macro _enableLocalStaging {
 		Variables.assertDefined(parameterList = "${groupId},${branchingPublic},${branchingPrivate}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var attributes = JSONStagingSetter.setAttributes(unCheckedContent = "${unCheckedContent}");
 
@@ -24,7 +24,7 @@ definition {
 	macro _enableRemoteStaging {
 		Variables.assertDefined(parameterList = "${groupId},${remoteGroupId}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var attributes = JSONStagingSetter.setAttributes();
 

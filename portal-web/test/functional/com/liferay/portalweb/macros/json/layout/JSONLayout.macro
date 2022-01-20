@@ -4,7 +4,7 @@ definition {
 	macro addPrivateLayout {
 		Variables.assertDefined(parameterList = "${groupName},${layoutName}");
 
-		var friendlyURL = JSONLayoutSetter.setFriendlyURL(friendlyUrl = "${friendlyUrl}");
+		var friendlyUrl = JSONLayoutSetter.setFriendlyURL(friendlyUrl = "${friendlyUrl}");
 
 		var groupId = JSONLayoutSetter.setGroupId(
 			grandParentGroupName = "${grandParentGroupName}",
@@ -41,7 +41,7 @@ definition {
 	macro addPublicLayout {
 		Variables.assertDefined(parameterList = "${groupName},${layoutName}");
 
-		var friendlyURL = JSONLayoutSetter.setFriendlyURL(friendlyUrl = "${friendlyUrl}");
+		var friendlyUrl = JSONLayoutSetter.setFriendlyURL(friendlyUrl = "${friendlyUrl}");
 
 		var groupId = JSONLayoutSetter.setGroupId(
 			grandParentGroupName = "${grandParentGroupName}",

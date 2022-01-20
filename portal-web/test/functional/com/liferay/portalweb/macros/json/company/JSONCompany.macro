@@ -5,8 +5,8 @@ definition {
 			var portalInstanceName = JSONCompany.getPortalInstanceName();
 		}
 
-		if (!(isSet(portalURL))) {
-			var portalURL = JSONCompany.getPortalURL();
+		if (!(isSet(portalUrl))) {
+			var portalUrl = JSONCompany.getPortalURL();
 		}
 
 		if (!(isSet(creatorEmailAddress))) {
@@ -51,7 +51,7 @@ definition {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
 		if (("${testPortalInstance}" == "true") && !(IsTestName(locator1 = "", value1 = "${testNameSkipPortalInstance}"))) {
-			var portalURL = JSONCompany.getPortalURL();
+			var portalUrl = JSONCompany.getPortalURL();
 
 			var portalInstanceName = JSONCompany.parsePortalInstanceURL(portalUrl = "${portalUrl}");
 

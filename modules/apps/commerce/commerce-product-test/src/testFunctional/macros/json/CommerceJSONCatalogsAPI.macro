@@ -3,7 +3,7 @@ definition {
 	macro _deleteAllNoSystemCommerceCatalogs {
 		var baseUrl = "${baseUrl}";
 
-		if (!(isSet(baseURL))) {
+		if (!(isSet(baseUrl))) {
 			var baseUrl = PropsUtil.get("portal.url");
 		}
 
@@ -31,7 +31,7 @@ definition {
 		var baseUrl = "${baseUrl}";
 		var masterCatalogName = "Master";
 
-		if (!(isSet(baseURL))) {
+		if (!(isSet(baseUrl))) {
 			var baseUrl = PropsUtil.get("portal.url");
 		}
 
@@ -59,7 +59,7 @@ definition {
 		var baseUrl = "${baseUrl}";
 		var masterCatalogName = "Master";
 
-		if (!(isSet(baseURL))) {
+		if (!(isSet(baseUrl))) {
 			var baseUrl = PropsUtil.get("portal.url");
 		}
 

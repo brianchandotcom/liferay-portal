@@ -4,7 +4,7 @@ definition {
 	macro _getFolderIdByFolderName {
 		Variables.assertDefined(parameterList = "${groupName},${name}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var repositoryId = JSONGroupAPI._getSiteIdByGroupKey(groupName = "${groupName}");
 
@@ -37,7 +37,7 @@ definition {
 			var site = "true";
 		}
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var groupId = JSONGroupAPI._getGroupIdByName(
 			groupName = "${groupName}",

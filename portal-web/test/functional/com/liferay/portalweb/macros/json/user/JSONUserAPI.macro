@@ -3,11 +3,11 @@ definition {
 	macro _addUser {
 		Variables.assertDefined(parameterList = "${locale},${userEmailAddress},${userFirstName},${userLastName},${userScreenName}");
 
-		if (isSet(specificURL)) {
+		if (isSet(specificUrl)) {
 			var portalUrl = "${specificUrl}";
 		}
 		else {
-			var portalURL = JSONCompany.getPortalURL();
+			var portalUrl = JSONCompany.getPortalURL();
 		}
 
 		var companyId = JSONCompany.getCompanyId(
@@ -52,11 +52,11 @@ definition {
 	macro _addUserToSite {
 		Variables.assertDefined(parameterList = "${groupId},${userId}");
 
-		if (isSet(specificURL)) {
+		if (isSet(specificUrl)) {
 			var portalUrl = "${specificUrl}";
 		}
 		else {
-			var portalURL = JSONCompany.getPortalURL();
+			var portalUrl = JSONCompany.getPortalURL();
 		}
 
 		var curl = '''
@@ -70,11 +70,11 @@ definition {
 	macro _addUserToUserGroup {
 		Variables.assertDefined(parameterList = "${userGroupId},${userId}");
 
-		if (isSet(specificURL)) {
+		if (isSet(specificUrl)) {
 			var portalUrl = "${specificUrl}";
 		}
 		else {
-			var portalURL = JSONCompany.getPortalURL();
+			var portalUrl = JSONCompany.getPortalURL();
 		}
 
 		var curl = '''
@@ -88,11 +88,11 @@ definition {
 	macro _agreeToTermsAndAnswerReminderQuery {
 		Variables.assertDefined(parameterList = "${userId}");
 
-		if (isSet(specificURL)) {
+		if (isSet(specificUrl)) {
 			var portalUrl = "${specificUrl}";
 		}
 		else {
-			var portalURL = JSONCompany.getPortalURL();
+			var portalUrl = JSONCompany.getPortalURL();
 		}
 
 		var curl = '''
@@ -113,11 +113,11 @@ definition {
 	macro _agreeToTermsAndAnswerReminderQueryByScreenName {
 		Variables.assertDefined(parameterList = "${userId}");
 
-		if (isSet(specificURL)) {
+		if (isSet(specificUrl)) {
 			var portalUrl = "${specificUrl}";
 		}
 		else {
-			var portalURL = JSONCompany.getPortalURL();
+			var portalUrl = JSONCompany.getPortalURL();
 		}
 
 		var curl = '''
@@ -138,11 +138,11 @@ definition {
 	macro _deleteUser {
 		Variables.assertDefined(parameterList = "${userId}");
 
-		if (isSet(specificURL)) {
+		if (isSet(specificUrl)) {
 			var portalUrl = "${specificUrl}";
 		}
 		else {
-			var portalURL = JSONCompany.getPortalURL();
+			var portalUrl = JSONCompany.getPortalURL();
 		}
 
 		if ("${authenticationMethod}" == "By Screen Name") {
@@ -162,11 +162,11 @@ definition {
 	}
 
 	macro _disablePasswordChangeRequired {
-		if (isSet(specificURL)) {
+		if (isSet(specificUrl)) {
 			var portalUrl = "${specificUrl}";
 		}
 		else {
-			var portalURL = JSONCompany.getPortalURL();
+			var portalUrl = JSONCompany.getPortalURL();
 		}
 
 		var passwordPolicyId = JSONPasswordPolicy.getPasswordPolicyIdByName(passwordPolicyName = "Default Password Policy");
@@ -213,11 +213,11 @@ definition {
 			creatorPassword = "${creatorPassword}",
 			portalInstanceName = "${portalInstanceName}");
 
-		if (isSet(specificURL)) {
+		if (isSet(specificUrl)) {
 			var portalUrl = "${specificUrl}";
 		}
 		else {
-			var portalURL = JSONCompany.getPortalURL();
+			var portalUrl = JSONCompany.getPortalURL();
 		}
 
 		if (!(isSet(creatorEmailAddress))) {
@@ -246,11 +246,11 @@ definition {
 			portalInstanceName = "${portalInstanceName}",
 			userScreenName = "${userScreenName}");
 
-		if (isSet(specificURL)) {
+		if (isSet(specificUrl)) {
 			var portalUrl = "${specificUrl}";
 		}
 		else {
-			var portalURL = JSONCompany.getPortalURL();
+			var portalUrl = JSONCompany.getPortalURL();
 		}
 
 		if (!(isSet(userScreenName))) {
@@ -273,11 +273,11 @@ definition {
 	macro _getUserIds {
 		var companyId = JSONCompany.getCompanyId(authenticationMethod = "${authenticationMethod}");
 
-		if (isSet(specificURL)) {
+		if (isSet(specificUrl)) {
 			var portalUrl = "${specificUrl}";
 		}
 		else {
-			var portalURL = JSONCompany.getPortalURL();
+			var portalUrl = JSONCompany.getPortalURL();
 		}
 
 		if ("${authenticationMethod}" == "By Screen Name") {
@@ -302,11 +302,11 @@ definition {
 	macro _removeUserFromUserGroup {
 		Variables.assertDefined(parameterList = "${userGroupId},${userId}");
 
-		if (isSet(specificURL)) {
+		if (isSet(specificUrl)) {
 			var portalUrl = "${specificUrl}";
 		}
 		else {
-			var portalURL = JSONCompany.getPortalURL();
+			var portalUrl = JSONCompany.getPortalURL();
 		}
 
 		var curl = '''
@@ -320,11 +320,11 @@ definition {
 	macro _updatePassword {
 		Variables.assertDefined(parameterList = "${userId},${newPassword},${requireReset}");
 
-		if (isSet(specificURL)) {
+		if (isSet(specificUrl)) {
 			var portalUrl = "${specificUrl}";
 		}
 		else {
-			var portalURL = JSONCompany.getPortalURL();
+			var portalUrl = JSONCompany.getPortalURL();
 		}
 
 		var curl = '''
@@ -342,11 +342,11 @@ definition {
 	macro _updateStatus {
 		Variables.assertDefined(parameterList = "${userId},${status}");
 
-		if (isSet(specificURL)) {
+		if (isSet(specificUrl)) {
 			var portalUrl = "${specificUrl}";
 		}
 		else {
-			var portalURL = JSONCompany.getPortalURL();
+			var portalUrl = JSONCompany.getPortalURL();
 		}
 
 		var curl = '''
@@ -362,11 +362,11 @@ definition {
 	macro _updateUser {
 		Variables.assertDefined(parameterList = "${screenNameUpdate},${userId},${userEmailAddressUpdate},${userFirstName},${userLastName}");
 
-		if (isSet(specificURL)) {
+		if (isSet(specificUrl)) {
 			var portalUrl = "${specificUrl}";
 		}
 		else {
-			var portalURL = JSONCompany.getPortalURL();
+			var portalUrl = JSONCompany.getPortalURL();
 		}
 
 		var curl = '''

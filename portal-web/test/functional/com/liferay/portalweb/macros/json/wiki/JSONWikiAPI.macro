@@ -4,7 +4,7 @@ definition {
 	macro _addAttachmentToWikiPage {
 		Variables.assertDefined(parameterList = "${nodeId},${title},${mimeType},${fileName}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var baseDir = PropsUtil.get("test.base.dir.name");
 		var dependenciesDir = PropsUtil.get("test.dependencies.dir.name");
@@ -33,7 +33,7 @@ definition {
 	macro _addWikiChildPage {
 		Variables.assertDefined(parameterList = "${parentResourcePrimKey},${headline}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		if (isSet(viewableBy)) {
 			var viewableBy = "${viewableBy}";
@@ -85,7 +85,7 @@ definition {
 	macro _addWikiNode {
 		Variables.assertDefined(parameterList = "${name}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		if (isSet(description)) {
 			var description = "${description}";
@@ -109,7 +109,7 @@ definition {
 	macro _addWikiPage {
 		Variables.assertDefined(parameterList = "${nodeId},${headline}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		if (isSet(viewableBy)) {
 			var viewableBy = "${viewableBy}";
@@ -160,8 +160,8 @@ definition {
 	macro _getNodeIdByName {
 		Variables.assertDefined(parameterList = "${groupId},${name}");
 
-		if (!(isSet(portalURL))) {
-			var portalURL = JSONCompany.getPortalURL();
+		if (!(isSet(portalUrl))) {
+			var portalUrl = JSONCompany.getPortalURL();
 		}
 
 		var curl = '''
@@ -183,8 +183,8 @@ definition {
 	macro _getPageIdByName {
 		Variables.assertDefined(parameterList = "${nodeId},${title}");
 
-		if (!(isSet(portalURL))) {
-			var portalURL = JSONCompany.getPortalURL();
+		if (!(isSet(portalUrl))) {
+			var portalUrl = JSONCompany.getPortalURL();
 		}
 
 		var curl = '''
@@ -208,8 +208,8 @@ definition {
 	macro _getPageResourcePrimKey {
 		Variables.assertDefined(parameterList = "${nodeId},${title}");
 
-		if (!(isSet(portalURL))) {
-			var portalURL = JSONCompany.getPortalURL();
+		if (!(isSet(portalUrl))) {
+			var portalUrl = JSONCompany.getPortalURL();
 		}
 
 		var curl = '''
@@ -233,7 +233,7 @@ definition {
 	macro _movePageToTrash {
 		Variables.assertDefined(parameterList = "${title},${nodeId}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/wiki.wikipage/move-page-to-trash \
@@ -248,7 +248,7 @@ definition {
 	macro _updateWikiPage {
 		Variables.assertDefined(parameterList = "${resourcePrimKey}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		if (isSet(viewableBy)) {
 			var viewableBy = "${viewableBy}";

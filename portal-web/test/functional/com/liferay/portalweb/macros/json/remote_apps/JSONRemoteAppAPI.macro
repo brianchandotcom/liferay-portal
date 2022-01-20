@@ -9,7 +9,7 @@ definition {
 		var nameModified = StringUtil.replace("${customElementName}", " ", "%20");
 		var propertiesModified = StringUtil.replace("${customElementProperties}", " ", "%20");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/remoteapp.remoteappentry/add-custom-element-remote-app-entry \
@@ -38,7 +38,7 @@ definition {
 		var nameModified = StringUtil.replace("${customElementName}", " ", "%20");
 		var htmlNameModified = StringUtil.replace("${customElementHtmlName}", " ", "%20");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/remoteapp.remoteappentry/add-custom-element-remote-app-entry \
@@ -66,7 +66,7 @@ definition {
 		var iFrameUrlModified = StringUtil.replace("${iFrameUrl}", ":", "%3A");
 		var nameModified = StringUtil.replace("${name}", " ", "%20");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/remoteapp.remoteappentry/add-i-frame-remote-app-entry \
@@ -88,7 +88,7 @@ definition {
 	macro _deleteIFrameRemoteAppEntry {
 		Variables.assertDefined(parameterList = "${remoteAppEntryId}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/remoteapp.remoteappentry/delete-remote-app-entry \

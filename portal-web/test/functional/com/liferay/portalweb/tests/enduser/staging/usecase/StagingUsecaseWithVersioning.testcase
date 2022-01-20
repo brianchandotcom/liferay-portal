@@ -1139,7 +1139,7 @@ definition {
 
 		SearchPortlets.searchWidget(searchTerm = "test");
 
-		var currentURL = Navigator.getCurrentURL();
+		var currentUrl = Navigator.getCurrentURL();
 
 		var keywordsParameterName = StringUtil.extractLast("${currentUrl}", "?");
 		var keywordsParameter = StringUtil.extractFirst("${keywordsParameterName}", "=");

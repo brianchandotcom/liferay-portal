@@ -1891,7 +1891,7 @@ definition {
 
 	@summary = "Log into Liferay via '${userScreenName}' using URL navigation"
 	macro firstLoginByScreenNamePG {
-		if (isSet(virtualHostsURL)) {
+		if (isSet(virtualHostsUrl)) {
 			Navigator.openSpecificURL(url = "${virtualHostsUrl}");
 		}
 		else {
@@ -1904,7 +1904,7 @@ definition {
 			portalUrl = "${virtualHostsUrl}",
 			userScreenName = "${userScreenName}");
 
-		if (isSet(virtualHostsURL)) {
+		if (isSet(virtualHostsUrl)) {
 			Navigator.openSpecificURL(url = "${virtualHostsUrl}/web/guest?SM_USER=${userEmailAddress}");
 		}
 		else {
@@ -1929,7 +1929,7 @@ definition {
 
 	@summary = "Log into Liferay using URL navigation"
 	macro firstLoginPG {
-		if (isSet(virtualHostsURL)) {
+		if (isSet(virtualHostsUrl)) {
 			Navigator.openSpecificURL(url = "${virtualHostsUrl}");
 		}
 		else {
@@ -1942,7 +1942,7 @@ definition {
 			portalUrl = "${virtualHostsUrl}",
 			userEmailAddress = "${userEmailAddress}");
 
-		if (isSet(virtualHostsURL)) {
+		if (isSet(virtualHostsUrl)) {
 			Navigator.openSpecificURL(url = "${virtualHostsUrl}/web/guest?SM_USER=${userEmailAddress}");
 		}
 		else {
@@ -1980,7 +1980,7 @@ definition {
 
 	@summary = "Log into Liferay using the UI"
 	macro firstLoginUI {
-		if (isSet(specificURL)) {
+		if (isSet(specificUrl)) {
 			Navigator.openSpecificURL(url = "${specificUrl}");
 		}
 		else {
@@ -2104,7 +2104,7 @@ definition {
 			portalUrl = "${virtualHostsUrl}",
 			userScreenName = "${userScreenName}");
 
-		if (isSet(virtualHostsURL)) {
+		if (isSet(virtualHostsUrl)) {
 			Navigator.openSpecificURL(url = "${virtualHostsUrl}/web/guest?SM_USER=${userScreenName}");
 		}
 		else {
@@ -2133,7 +2133,7 @@ definition {
 			portalUrl = "${virtualHostsUrl}",
 			userEmailAddress = "${userEmailAddress}");
 
-		if (isSet(virtualHostsURL)) {
+		if (isSet(virtualHostsUrl)) {
 			Navigator.openSpecificURL(url = "${virtualHostsUrl}/web/guest?SM_USER=${userEmailAddress}");
 		}
 		else if (isSet(nodePort)) {
@@ -2420,7 +2420,7 @@ definition {
 
 	@description = "Log out of Liferay Portal."
 	macro logoutPG {
-		if (isSet(specificURL)) {
+		if (isSet(specificUrl)) {
 			Navigator.openSpecificURL(url = "${specificUrl}");
 		}
 		else {
@@ -3146,7 +3146,7 @@ definition {
 				value1 = "${userJobTitle}");
 		}
 
-		if (isSet(userID)) {
+		if (isSet(userId)) {
 			AssertTextEquals(
 				locator1 = "UsersAndOrganizationsEditUser#DETAILS_SCREEN_NAME_FIELD",
 				value1 = "${userId}");

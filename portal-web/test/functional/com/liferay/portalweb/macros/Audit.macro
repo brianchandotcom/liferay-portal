@@ -1,7 +1,7 @@
 definition {
 
 	macro openAuditAdmin {
-		if (!(isSet(baseURL))) {
+		if (!(isSet(baseUrl))) {
 			var baseUrl = PropsUtil.get("portal.url");
 		}
 
@@ -85,7 +85,7 @@ definition {
 			locator1 = "AuditReports#REPORTS_DETAIL_ADDITIONAL_INFORMATION",
 			value1 = "${additionalInformation}");
 
-		if (isSet(clientIP)) {
+		if (isSet(clientIp)) {
 			AssertTextEquals.assertPartialText(
 				locator1 = "AuditReports#REPORTS_DETAIL_CLIENT_IP",
 				value1 = "${clientIp}");

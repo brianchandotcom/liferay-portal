@@ -172,7 +172,7 @@ definition {
 	macro gotoPublishedForm {
 		FormsAdminNavigator.gotoPublishCopyURLLink();
 
-		var publishedFormPublicURL = Form.getPublishedFormPublicURL(publishedFormPublicUrl = "${publishedFormPublicUrl}");
+		var publishedFormPublicUrl = Form.getPublishedFormPublicURL(publishedFormPublicUrl = "${publishedFormPublicUrl}");
 
 		Navigator.openSpecificURL(url = "${publishedFormPublicUrl}");
 	}
@@ -212,7 +212,7 @@ definition {
 	macro openPublishURL {
 		FormsAdminNavigator.gotoPublishCopyURLLink();
 
-		var publishFormURL = Form.getPublishedFormPublicURL();
+		var publishFormUrl = Form.getPublishedFormPublicURL();
 
 		Navigator.openSpecificURL(url = "${publishFormUrl}");
 	}

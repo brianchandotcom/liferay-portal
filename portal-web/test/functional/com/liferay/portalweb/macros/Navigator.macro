@@ -16,7 +16,7 @@ definition {
 	}
 
 	macro _isLocalizedURL {
-		var currentURL = Navigator.getCurrentURL();
+		var currentUrl = Navigator.getCurrentURL();
 
 		var portalUrl = PropsUtil.get("portal.url");
 		var isLocalizedUrl = "false";
@@ -39,10 +39,10 @@ definition {
 	}
 
 	macro ensureLocaleURL {
-		var isLocalizedURL = Navigator._isLocalizedURL(locale = "${locale}");
+		var isLocalizedUrl = Navigator._isLocalizedURL(locale = "${locale}");
 
 		if ("${isLocalizedUrl}" == "false") {
-			var currentURL = Navigator.getCurrentURL();
+			var currentUrl = Navigator.getCurrentURL();
 
 			var portalUrl = PropsUtil.get("portal.url");
 
@@ -211,7 +211,7 @@ definition {
 		var pageNameUrl = StringUtil.lowerCase("${pageNameUrl}");
 		var baseUrl = "${baseUrl}";
 
-		if (!(isSet(baseURL))) {
+		if (!(isSet(baseUrl))) {
 			var baseUrl = PropsUtil.get("portal.url");
 		}
 
@@ -223,7 +223,7 @@ definition {
 		var siteNameUrl = StringUtil.lowerCase("${siteNameUrl}");
 		var baseUrl = "${baseUrl}";
 
-		if (!(isSet(baseURL))) {
+		if (!(isSet(baseUrl))) {
 			var baseUrl = PropsUtil.get("portal.url");
 		}
 
@@ -235,7 +235,7 @@ definition {
 		var siteNameUrl = StringUtil.lowerCase("${siteNameUrl}");
 		var baseUrl = "${baseUrl}";
 
-		if (!(isSet(baseURL))) {
+		if (!(isSet(baseUrl))) {
 			var baseUrl = PropsUtil.get("portal.url");
 		}
 
@@ -245,7 +245,7 @@ definition {
 	macro openPrivateURL {
 		var baseUrl = "${baseUrl}";
 
-		if (!(isSet(baseURL))) {
+		if (!(isSet(baseUrl))) {
 			var baseUrl = PropsUtil.get("portal.url");
 		}
 
@@ -257,7 +257,7 @@ definition {
 		var siteNameUrl = StringUtil.lowerCase("${siteNameUrl}");
 		var baseUrl = "${baseUrl}";
 
-		if (!(isSet(baseURL))) {
+		if (!(isSet(baseUrl))) {
 			var baseUrl = PropsUtil.get("portal.url");
 		}
 
@@ -272,7 +272,7 @@ definition {
 		var siteNameUrl = StringUtil.lowerCase("${siteNameUrl}");
 		var baseUrl = "${baseUrl}";
 
-		if (!(isSet(baseURL))) {
+		if (!(isSet(baseUrl))) {
 			var baseUrl = PropsUtil.get("portal.url");
 		}
 
@@ -284,7 +284,7 @@ definition {
 		var siteNameUrl = StringUtil.lowerCase("${siteNameUrl}");
 		var baseUrl = "${baseUrl}";
 
-		if (!(isSet(baseURL))) {
+		if (!(isSet(baseUrl))) {
 			var baseUrl = PropsUtil.get("portal.url");
 		}
 
@@ -302,7 +302,7 @@ definition {
 		var siteNameUrl = StringUtil.lowerCase("${siteNameUrl}");
 		var baseUrl = "${baseUrl}";
 
-		if (!(isSet(baseURL))) {
+		if (!(isSet(baseUrl))) {
 			var baseUrl = PropsUtil.get("portal.url");
 		}
 
@@ -335,7 +335,7 @@ definition {
 
 		var baseUrl = "${baseUrl}";
 
-		if (!(isSet(baseURL))) {
+		if (!(isSet(baseUrl))) {
 			var baseUrl = PropsUtil.get("portal.url");
 		}
 
@@ -347,7 +347,7 @@ definition {
 
 		var baseUrl = "${baseUrl}";
 
-		if (!(isSet(baseURL))) {
+		if (!(isSet(baseUrl))) {
 			var baseUrl = PropsUtil.get("portal.url");
 		}
 
@@ -355,7 +355,7 @@ definition {
 	}
 
 	macro openWithAppendToBaseURL {
-		if (!(isSet(baseURL))) {
+		if (!(isSet(baseUrl))) {
 			var baseUrl = PropsUtil.get("portal.url");
 		}
 

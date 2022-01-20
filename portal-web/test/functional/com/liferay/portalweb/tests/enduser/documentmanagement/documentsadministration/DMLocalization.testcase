@@ -51,7 +51,7 @@ definition {
 	test CanDownloadJapaneseFileByFileName {
 		var portalUrl = PropsUtil.get("portal.url");
 
-		var siteID = JSONGroupAPI._getGroupIdByName(
+		var siteId = JSONGroupAPI._getGroupIdByName(
 			groupName = "Guest",
 			site = "true");
 
@@ -76,7 +76,7 @@ definition {
 	test CanDownloadJapaneseFileByTitle {
 		var portalUrl = PropsUtil.get("portal.url");
 
-		var siteID = JSONGroupAPI._getGroupIdByName(
+		var siteId = JSONGroupAPI._getGroupIdByName(
 			groupName = "Guest",
 			site = "true");
 

@@ -60,7 +60,7 @@ definition {
 		if ("${enableIp}" == "true") {
 			FormFields.enableCheckbox(fieldName = "enabled");
 
-			if (isSet(allowedIP)) {
+			if (isSet(allowedIp)) {
 				Type(
 					locator1 = "MultiFactorAuthentication#IP_ADDRESS_CONFIGURATION_ALLOWED_IP_FIELD_1",
 					value1 = "${allowedIp}");
@@ -201,7 +201,7 @@ definition {
 	}
 
 	macro openToConfigInInstanceSettings {
-		if (!(isSet(baseURL))) {
+		if (!(isSet(baseUrl))) {
 			var baseUrl = PropsUtil.get("portal.url");
 		}
 
@@ -275,7 +275,7 @@ definition {
 	}
 
 	macro verifyCustomOTP {
-		if (isSet(specificURL)) {
+		if (isSet(specificUrl)) {
 			Navigator.openSpecificURL(url = "${specificUrl}");
 		}
 		else {
@@ -327,7 +327,7 @@ definition {
 				specificText = "Your one-time password is: <pre>",
 				subject = "${portalUrl}: Your One-Time Password");
 
-			if (isSet(specificURL)) {
+			if (isSet(specificUrl)) {
 				User.firstLoginUI(
 					password = "${userPassword}",
 					specificUrl = "${specificUrl}",

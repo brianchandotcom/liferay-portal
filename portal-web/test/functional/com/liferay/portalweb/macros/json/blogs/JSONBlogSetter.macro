@@ -1,7 +1,7 @@
 definition {
 
 	macro setContentXML {
-		var contentXML = JSONBlogUtil._convertToXML(content = "${content}");
+		var contentXml = JSONBlogUtil._convertToXML(content = "${content}");
 
 		return "${contentXml}";
 	}

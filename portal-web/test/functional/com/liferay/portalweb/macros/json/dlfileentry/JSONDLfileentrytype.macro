@@ -4,7 +4,7 @@ definition {
 	macro _getFileEntryTypeId {
 		Variables.assertDefined(parameterList = "${fileEntryTypeName},${groupId}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/dlfileentrytype/get-file-entry-types \
@@ -24,7 +24,7 @@ definition {
 	macro _getFileEntryTypeIds {
 		Variables.assertDefined(parameterList = "${groupId}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/dlfileentrytype/get-file-entry-types \

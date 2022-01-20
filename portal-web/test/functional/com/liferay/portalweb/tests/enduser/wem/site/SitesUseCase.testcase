@@ -674,7 +674,7 @@ definition {
 		}
 
 		task ("Get Email Address Verification URL from email") {
-			var emailAddressVerificationURL = MockMock.getHTMLBodyFormattedText(
+			var emailAddressVerificationUrl = MockMock.getHTMLBodyFormattedText(
 				newTab = "true",
 				recipient = "user2@",
 				sender = "Joe Bloggs",

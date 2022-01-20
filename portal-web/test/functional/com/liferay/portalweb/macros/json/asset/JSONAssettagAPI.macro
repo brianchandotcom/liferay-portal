@@ -4,7 +4,7 @@ definition {
 	macro _addTag {
 		Variables.assertDefined(parameterList = "${groupId},${tagName}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/assettag/add-tag \

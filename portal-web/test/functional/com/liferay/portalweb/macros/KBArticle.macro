@@ -55,7 +55,7 @@ definition {
 
 		Panel.expandPanel(panel = "Configuration");
 
-		if (isSet(kbArticleFriendlyURL)) {
+		if (isSet(kbArticleFriendlyUrl)) {
 			var kbArticleTitleFormatted = StringUtil.lowerCase("${kbArticleFriendlyUrl}");
 			var kbArticleTitleFormatted = StringUtil.replace("${kbArticleTitleFormatted}", " ", "-");
 
@@ -110,7 +110,7 @@ definition {
 
 		Panel.expandPanel(panel = "Configuration");
 
-		if (isSet(kbArticleFriendlyURL)) {
+		if (isSet(kbArticleFriendlyUrl)) {
 			var kbArticleTitleFormatted = StringUtil.lowerCase("${kbArticleFriendlyUrl}");
 			var kbArticleTitleFormatted = StringUtil.replace("${kbArticleTitleFormatted}", " ", "-");
 
@@ -157,7 +157,7 @@ definition {
 					DMDocument.viewInternalVideoPreview(videoName = "${videoName}");
 				}
 			}
-			else if (isSet(videoURL)) {
+			else if (isSet(videoUrl)) {
 				ItemSelector.addVideo(
 					extractedVideoShortcutTitle = "${extractedVideoShortcutTitle}",
 					videoShortcutDescription = "${videoShortcutDescription}",
@@ -176,7 +176,7 @@ definition {
 			KBArticle.selectAttachmentCP(kbArticleAttachment = "${kbArticleAttachment}");
 		}
 
-		if (isSet(kbArticleSourceURL)) {
+		if (isSet(kbArticleSourceUrl)) {
 			Type(
 				locator1 = "CKEditor#SOURCE_URL",
 				value1 = "${kbArticleSourceUrl}");
@@ -911,7 +911,7 @@ definition {
 
 		var baseUrl = "${baseUrl}";
 
-		if (!(isSet(baseURL))) {
+		if (!(isSet(baseUrl))) {
 			var baseUrl = PropsUtil.get("portal.url");
 		}
 
@@ -936,7 +936,7 @@ definition {
 
 		var baseUrl = "${baseUrl}";
 
-		if (!(isSet(baseURL))) {
+		if (!(isSet(baseUrl))) {
 			var baseUrl = PropsUtil.get("portal.url");
 		}
 

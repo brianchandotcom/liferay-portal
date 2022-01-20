@@ -768,7 +768,7 @@ definition {
 
 		OpenGraph.viewPreviewImage(imageName = "Document_2.jpg");
 
-		var groupID = Depot.getGroupID(depotName = "Remote Depot");
+		var groupId = Depot.getGroupID(depotName = "Remote Depot");
 
 		User.logoutPG();
 
@@ -830,7 +830,7 @@ definition {
 
 		OpenGraph.viewNoPreviewImage(imageName = "Document_2.jpg");
 
-		var groupID = Depot.getGroupID(depotName = "Remote Depot");
+		var groupId = Depot.getGroupID(depotName = "Remote Depot");
 
 		User.logoutPG();
 
@@ -1960,7 +1960,7 @@ definition {
 
 		OpenGraph.viewPreviewImage(imageName = "Document_1.jpg");
 
-		var groupID = Depot.getGroupID(depotName = "Remote Depot");
+		var groupId = Depot.getGroupID(depotName = "Remote Depot");
 
 		User.logoutPG();
 
@@ -2012,7 +2012,7 @@ definition {
 
 		OpenGraph.viewPreviewImage(imageName = "Document_2.jpg");
 
-		var groupID = Depot.getGroupID(depotName = "Remote Depot");
+		var groupId = Depot.getGroupID(depotName = "Remote Depot");
 
 		User.logoutPG();
 

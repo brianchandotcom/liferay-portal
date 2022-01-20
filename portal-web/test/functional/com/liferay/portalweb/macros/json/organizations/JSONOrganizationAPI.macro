@@ -23,7 +23,7 @@ definition {
 			var organizationType = "organization";
 		}
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/organization/add-organization \
@@ -44,7 +44,7 @@ definition {
 	macro _addOrganizationToSite {
 		Variables.assertDefined(parameterList = "${groupId},${organizationId}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/organization/add-group-organizations/group-id/${groupId}/organization-ids/${organizationId} \
@@ -57,7 +57,7 @@ definition {
 	macro _assignPasswordPolicyToOrganization {
 		Variables.assertDefined(parameterList = "${organizationId},${passwordPolicyId}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/organization/add-password-policy-organizations \
@@ -72,7 +72,7 @@ definition {
 	macro _assignUserToOrganization {
 		Variables.assertDefined(parameterList = "${organizationId},${userId}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/user/add-organization-users \
@@ -87,7 +87,7 @@ definition {
 	macro _deleteOrganization {
 		Variables.assertDefined(parameterList = "${organizationId}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/organization/delete-organization \

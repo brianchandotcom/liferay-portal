@@ -8,7 +8,7 @@ definition {
 			groupName = "${groupName}",
 			portalUrl = "${baseUrl}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		if (!(isSet(parentCommentId))) {
 			var parentCommentId = "0";
@@ -36,7 +36,7 @@ definition {
 
 	@summary = "This calls the JSON WS API to add a Document entry"
 	macro addFile {
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var repositoryId = JSONGroupAPI._getSiteIdByGroupKey(groupName = "${groupName}");
 
@@ -98,7 +98,7 @@ definition {
 	macro addFileWithUploadedFile {
 		Variables.assertDefined(parameterList = "${groupName},${mimeType},${sourceFileName}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var repositoryId = JSONGroupAPI._getSiteIdByGroupKey(groupName = "${groupName}");
 
@@ -220,7 +220,7 @@ definition {
 
 	@summary = "This calls the JSON WS API to delete a Document entry"
 	macro deleteFile {
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		if (!(isSet(site))) {
 			var site = "true";
@@ -251,8 +251,8 @@ definition {
 	}
 
 	macro getFileEntryId {
-		if (!(isSet(portalURL))) {
-			var portalURL = JSONCompany.getPortalURL();
+		if (!(isSet(portalUrl))) {
+			var portalUrl = JSONCompany.getPortalURL();
 		}
 
 		if (!(isSet(site))) {
@@ -283,8 +283,8 @@ definition {
 	}
 
 	macro getFileEntryUUID {
-		if (!(isSet(portalURL))) {
-			var portalURL = JSONCompany.getPortalURL();
+		if (!(isSet(portalUrl))) {
+			var portalUrl = JSONCompany.getPortalURL();
 		}
 
 		if (!(isSet(site))) {
@@ -320,7 +320,7 @@ definition {
 			groupName = "${groupName}",
 			portalUrl = "${baseUrl}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var newFolderId = JSONDocumentAPI._getFolderIdByFolderName(
 			groupName = "${groupName}",
@@ -338,7 +338,7 @@ definition {
 
 	@summary = "This calls the JSON WS API to move a document to a trash"
 	macro moveToRecycleBin {
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		if (isSet(folderName)) {
 			var folderId = JSONDocumentAPI._getFolderIdByFolderName(
@@ -355,7 +355,7 @@ definition {
 			groupName = "${groupName}",
 			portalUrl = "${baseUrl}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/dltrash/move-file-entry-to-trash \
@@ -372,8 +372,8 @@ definition {
 			groupName = "${groupName}",
 			name = "${dmFolderName}");
 
-		if (!(isSet(portalURL))) {
-			var portalURL = JSONCompany.getPortalURL();
+		if (!(isSet(portalUrl))) {
+			var portalUrl = JSONCompany.getPortalURL();
 		}
 
 		if (!(isSet(site))) {

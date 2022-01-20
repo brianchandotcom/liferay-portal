@@ -1269,7 +1269,7 @@ definition {
 
 		Pause(locator1 = "1000");
 
-		var adminViewURL = Navigator.getCurrentURL(adminViewUrl = "${adminViewUrl}");
+		var adminViewUrl = Navigator.getCurrentURL(adminViewUrl = "${adminViewUrl}");
 
 		Navigator.gotoPage(pageName = "Dynamic Data Lists Display Page");
 
@@ -1277,7 +1277,7 @@ definition {
 
 		Pause(locator1 = "1000");
 
-		var adminEditURL = Navigator.getCurrentURL(adminEditUrl = "${adminEditUrl}");
+		var adminEditUrl = Navigator.getCurrentURL(adminEditUrl = "${adminEditUrl}");
 
 		User.logoutPG();
 

@@ -229,7 +229,7 @@ definition {
 	@description = "LPS-96038 - Global Categories do not appear as filters in Asset Publisher Configuration."
 	@priority = "4"
 	test ConfigureAPPortletDisplaysGlobalCategoriesAsFilters {
-		Category.openCategoriesAdmin(siteURLKey = "global");
+		Category.openCategoriesAdmin(siteUrlKey = "global");
 
 		Category.addCP(
 			categoryName = "Category Name",

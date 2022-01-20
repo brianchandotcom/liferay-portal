@@ -3,7 +3,7 @@ definition {
 	macro _deleteAllCommerceSpecifications {
 		var baseUrl = "${baseUrl}";
 
-		if (!(isSet(baseURL))) {
+		if (!(isSet(baseUrl))) {
 			var baseUrl = PropsUtil.get("portal.url");
 		}
 
@@ -32,7 +32,7 @@ definition {
 	macro _getCommerceSpecificationIds {
 		var baseUrl = "${baseUrl}";
 
-		if (!(isSet(baseURL))) {
+		if (!(isSet(baseUrl))) {
 			var baseUrl = PropsUtil.get("portal.url");
 		}
 
@@ -56,7 +56,7 @@ definition {
 	macro _getCommerceSpecificationsCount {
 		var baseUrl = "${baseUrl}";
 
-		if (!(isSet(baseURL))) {
+		if (!(isSet(baseUrl))) {
 			var baseUrl = PropsUtil.get("portal.url");
 		}
 

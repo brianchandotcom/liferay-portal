@@ -21,7 +21,7 @@ definition {
 			locator1 = "TextInput#REDIRECT_DESTINATION_URL",
 			value1 = "${destinationUrl}");
 
-		if (isSet(checkDestinationURL)) {
+		if (isSet(checkDestinationUrl)) {
 			Click(locator1 = "Button#TRY_REDIRECTION");
 
 			SelectWindow(locator1 = "title=${destinationPageName} - ${groupName} - ${portalName}");
@@ -93,7 +93,7 @@ definition {
 
 		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
 
-		if (isSet(ignoredURL)) {
+		if (isSet(ignoredUrl)) {
 			MenuItem.click(menuItem = "Ignored URLs");
 
 			Redirect.gotoEntryMenuItem(
@@ -306,7 +306,7 @@ definition {
 	macro openToAddEntry {
 		var baseUrl = "${baseUrl}";
 
-		if (!(isSet(baseURL))) {
+		if (!(isSet(baseUrl))) {
 			var baseUrl = PropsUtil.get("portal.url");
 		}
 
@@ -326,7 +326,7 @@ definition {
 
 		var baseUrl = "${baseUrl}";
 
-		if (!(isSet(baseURL))) {
+		if (!(isSet(baseUrl))) {
 			var baseUrl = PropsUtil.get("portal.url");
 		}
 
@@ -334,7 +334,7 @@ definition {
 	}
 
 	macro view404URLs {
-		if (isSet(activeIgnoreURL)) {
+		if (isSet(activeIgnoreUrl)) {
 			AssertClick(
 				key_navItem = "404 URLs",
 				locator1 = "NavBar#NAV_ITEM_REDIRECTION",

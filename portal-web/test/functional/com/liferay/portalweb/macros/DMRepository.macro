@@ -30,7 +30,7 @@ definition {
 				value1 = "${dmServerVersion}");
 		}
 
-		if (isSet(dmRepositorySiteAbsoluteURL)) {
+		if (isSet(dmRepositorySiteAbsoluteUrl)) {
 			Type(
 				key_fieldLabel = "Site Absolute URL",
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",

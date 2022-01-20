@@ -215,7 +215,7 @@ definition {
 
 		// Configure IdP (Identity Provider) on specific Portal URL or default to current URL
 
-		if (isSet(idpURL)) {
+		if (isSet(idpUrl)) {
 			if (isSet(userEmailAddress)) {
 				User.firstLoginUI(
 					password = "test",

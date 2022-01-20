@@ -85,7 +85,7 @@ definition {
 	}
 
 	macro openVirtualInstancesAdmin {
-		if (isSet(baseURL)) {
+		if (isSet(baseUrl)) {
 			var baseUrl = "${baseUrl}";
 
 			Navigator.openWithAppendToBaseURL(

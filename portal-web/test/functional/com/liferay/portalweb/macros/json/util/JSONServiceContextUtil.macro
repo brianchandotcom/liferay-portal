@@ -3,11 +3,11 @@ definition {
 	macro _addAssetCategoryIds {
 		Variables.assertDefined(parameterList = "${json},${assetCategoryIds}");
 
-		var JSON = JSONUtil2._addJSONArray(
+		var json = JSONUtil2._addJSONArray(
 			json = "${json}",
 			key = "assetCategoryIds");
 
-		var JSON = JSONUtil2._addJSONArrayValues(
+		var json = JSONUtil2._addJSONArrayValues(
 			json = "${json}",
 			key = "assetCategoryIds",
 			values = "${assetCategoryIds}");
@@ -18,11 +18,11 @@ definition {
 	macro _addAssetTagNames {
 		Variables.assertDefined(parameterList = "${json},${assetTagNames}");
 
-		var JSON = JSONUtil2._addJSONArray(
+		var json = JSONUtil2._addJSONArray(
 			json = "${json}",
 			key = "assetTagNames");
 
-		var JSON = JSONUtil2._addJSONArrayValues(
+		var json = JSONUtil2._addJSONArrayValues(
 			json = "${json}",
 			key = "assetTagNames",
 			values = "${assetTagNames}");
@@ -33,7 +33,7 @@ definition {
 	macro _addAttributes {
 		Variables.assertDefined(parameterList = "${json},${attributes}");
 
-		var JSON = JSONUtil2._addJSONObject(
+		var json = JSONUtil2._addJSONObject(
 			json = "${json}",
 			key = "attributes",
 			value = "${attributes}");
@@ -52,7 +52,7 @@ definition {
 			groupName = "${groupName}",
 			site = "${site}");
 
-		var JSON = JSONUtil2._addJSONObject(
+		var json = JSONUtil2._addJSONObject(
 			json = "${json}",
 			key = "scopeGroupId",
 			value = "${groupId}");
@@ -67,7 +67,7 @@ definition {
 			fail("Invalid addGroupPermissions: '${addGroupPermissions}' specified. Allowed values are 'true' or 'false'.");
 		}
 
-		var JSON = JSONUtil2._addJSONObject(
+		var json = JSONUtil2._addJSONObject(
 			json = "${json}",
 			key = "addGroupPermissions",
 			value = "${addGroupPermissions}");
@@ -82,7 +82,7 @@ definition {
 			fail("Invalid addGuestPermissions: '${addGuestPermissions}' specified. Allowed values are 'true' or 'false'.");
 		}
 
-		var JSON = JSONUtil2._addJSONObject(
+		var json = JSONUtil2._addJSONObject(
 			json = "${json}",
 			key = "addGuestPermissions",
 			value = "${addGuestPermissions}");
@@ -104,7 +104,7 @@ definition {
 			fail("Invalid workflowAction: '${workflowAction}' specified. Allowed values are 'DRAFT' or 'PUBLISH'.");
 		}
 
-		var JSON = JSONUtil2._addJSONObject(
+		var json = JSONUtil2._addJSONObject(
 			json = "${json}",
 			key = "workflowAction",
 			value = "${workflowActionNumber}");

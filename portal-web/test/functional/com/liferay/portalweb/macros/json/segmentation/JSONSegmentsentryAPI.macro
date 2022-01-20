@@ -4,7 +4,7 @@ definition {
 	macro _addSegment {
 		Variables.assertDefined(parameterList = "${criteria},${descriptionMap},${nameMap},${serviceContext}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/segments.segmentsentry/add-segments-entry \

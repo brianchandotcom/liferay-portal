@@ -2,7 +2,7 @@ definition {
 
 	@summary = "This calls the JSON WS API to empty recycle bin"
 	macro emptyRecycleBin {
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		if (!(isSet(groupName))) {
 			var groupName = "Guest";

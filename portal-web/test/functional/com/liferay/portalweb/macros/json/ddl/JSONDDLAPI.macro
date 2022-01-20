@@ -1,7 +1,7 @@
 definition {
 
 	macro _getRecordId {
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/ddl.ddlrecord/get-records \
@@ -20,7 +20,7 @@ definition {
 	macro _getRecordSetId {
 		Variables.assertDefined(parameterList = "${groupName},${ddlListName}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var groupId = JSONDDLSetter.setGroupId(groupName = "${groupName}");
 

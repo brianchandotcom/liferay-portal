@@ -68,7 +68,7 @@ definition {
 				locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_USE_TO_MATCH_USERS_RADIO");
 		}
 
-		if (isSet(idpKeepAliveURL)) {
+		if (isSet(idpKeepAliveUrl)) {
 			Type(
 				locator1 = "CPSAMLAdmin#SAML_KEEP_ALIVE_URL",
 				value1 = "${idpKeepAliveUrl}");
@@ -202,7 +202,7 @@ definition {
 				value1 = "${spAttributes}");
 		}
 
-		if (isSet(spKeepAliveURL)) {
+		if (isSet(spKeepAliveUrl)) {
 			Type(
 				locator1 = "CPSAMLAdmin#SAML_KEEP_ALIVE_URL",
 				value1 = "${spKeepAliveUrl}");

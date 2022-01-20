@@ -287,7 +287,7 @@ definition {
 	macro previewEmbeddedVideo {
 		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
 
-		if (isSet(invalidURL)) {
+		if (isSet(invalidUrl)) {
 			if (contains("${invalidUrl}", "youtube")) {
 				SelectFrame.selectFrameNoLoading(locator1 = "IFrame#EXTERNAL_VIDEO_IFRAME");
 
@@ -1083,7 +1083,7 @@ definition {
 			}
 		}
 
-		if (isSet(viewFolderWC)) {
+		if (isSet(viewFolderWc)) {
 			Click(
 				key_rowEntry = "${wcFolderName}",
 				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");

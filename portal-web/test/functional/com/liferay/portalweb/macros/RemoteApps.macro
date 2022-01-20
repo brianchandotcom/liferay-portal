@@ -1,7 +1,7 @@
 definition {
 
 	macro _deleteRemoteAppAPI {
-		var currentURL = Navigator.getCurrentURL();
+		var currentUrl = Navigator.getCurrentURL();
 
 		var findWhereIdBegins = StringUtil.extractLast("${currentUrl}", "remoteAppEntryId=");
 		var remoteAppEntryIdValue = StringUtil.extractFirst("${findWhereIdBegins}", "&_com_liferay_remote_app_admin_web_portlet_RemoteAppAdminPortlet_redirect");
@@ -211,7 +211,7 @@ definition {
 			key_tableEntryName = "Vanilla Counter",
 			locator1 = "RemoteApps#TABLE_ENTRY_NAME_REMOTE_TABLE");
 
-		var currentURL = Navigator.getCurrentURL();
+		var currentUrl = Navigator.getCurrentURL();
 
 		var findWhereIdBegins = StringUtil.extractLast("${currentUrl}", "remoteAppEntryId=");
 		var remoteAppEntryIdValue = StringUtil.extractFirst("${findWhereIdBegins}", "&_com_liferay_remote_app_admin_web_portlet_RemoteAppAdminPortlet_redirect");

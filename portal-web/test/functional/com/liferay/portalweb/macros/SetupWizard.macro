@@ -74,7 +74,7 @@ definition {
 			base_branch = "${base_branch}",
 			deleteLiferayHome = "false");
 
-		if (isSet(virtualHostsURL)) {
+		if (isSet(virtualHostsUrl)) {
 			Navigator.openSpecificURL(url = "${virtualHostsUrl}");
 		}
 		else {
@@ -133,7 +133,7 @@ definition {
 
 		SetupWizard.viewConfiguredDatabaseInConsole(databaseType = "${databaseType}");
 
-		if (isSet(virtualHostsURL)) {
+		if (isSet(virtualHostsUrl)) {
 			Navigator.openSpecificURL(url = "${virtualHostsUrl}");
 		}
 		else {

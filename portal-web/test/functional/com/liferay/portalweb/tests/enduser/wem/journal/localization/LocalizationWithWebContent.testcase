@@ -31,7 +31,7 @@ definition {
 	@description = "LPS-100416 - Non-Repeatable text fields show incorrect translation on label at first load."
 	@priority = "4"
 	test AddNonRepeatableTextFieldWithTranslation {
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 		NavItem.gotoStructures();
 
@@ -81,7 +81,7 @@ definition {
 
 		PortalSettings.configureCurrentLanguagesCP(defaultPortalLanguage = "German (Germany)");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteUrlKey = "test-site-name");
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 

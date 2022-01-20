@@ -47,7 +47,7 @@ definition {
 			Check.checkNotVisible(locator1 = "Checkbox#ADD_HIGH_DENSITY_DISPLAY");
 		}
 
-		if (isSet(customID)) {
+		if (isSet(customId)) {
 			Click.clickAtNotVisible(locator1 = "Radio#CUSTOM_URL");
 
 			Type(
@@ -231,7 +231,7 @@ definition {
 	macro openToAddImageResolution {
 		var baseUrl = "${baseUrl}";
 
-		if (!(isSet(baseURL))) {
+		if (!(isSet(baseUrl))) {
 			var baseUrl = PropsUtil.get("portal.url");
 		}
 

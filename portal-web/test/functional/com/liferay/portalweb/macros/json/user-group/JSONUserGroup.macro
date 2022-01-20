@@ -4,7 +4,7 @@ definition {
 	macro addLayout {
 		Variables.assertDefined(parameterList = "${userGroupName},${layoutName}");
 
-		var friendlyURL = JSONLayoutSetter.setFriendlyURL(friendlyUrl = "${friendlyUrl}");
+		var friendlyUrl = JSONLayoutSetter.setFriendlyURL(friendlyUrl = "${friendlyUrl}");
 
 		var privateLayout = JSONLayoutSetter.setPrivateLayout(privateLayout = "${privateLayout}");
 
@@ -12,7 +12,7 @@ definition {
 
 		var companyId = JSONCompany.getCompanyId();
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/group/get-groups/company-id/${companyId}/parent-group-id/0/site/false \

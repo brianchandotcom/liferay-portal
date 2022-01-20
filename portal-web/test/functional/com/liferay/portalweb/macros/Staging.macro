@@ -619,7 +619,7 @@ definition {
 	macro editPublishTemplateRemoteSiteID {
 		Panel.expandPanel(panel = "Remote Live Connection Settings");
 
-		var siteID = JSONGroupAPI._getGroupIdByName(
+		var siteId = JSONGroupAPI._getGroupIdByName(
 			groupName = "${groupName}",
 			portalUrl = "http://localhost:${remotePort}",
 			site = "true");
@@ -1027,11 +1027,11 @@ definition {
 			groupName = "Remote Site",
 			portalUrl = "http://localhost:${remotePort}");
 
-		var siteID = JSONGroupSetter.setGroupId(
+		var siteId = JSONGroupSetter.setGroupId(
 			groupName = "Remote Site",
 			portalUrl = "http://localhost:${remotePort}");
 
-		var siteURLKey = ContentPagesNavigator._convertNameToKey(name = "${siteName}");
+		var siteUrlKey = ContentPagesNavigator._convertNameToKey(name = "${siteName}");
 
 		Staging.openStagingAdmin(siteUrlKey = "${siteUrlKey}");
 

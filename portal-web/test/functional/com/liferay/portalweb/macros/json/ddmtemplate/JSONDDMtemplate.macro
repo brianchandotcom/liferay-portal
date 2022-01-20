@@ -22,13 +22,13 @@ definition {
 		}
 		else if ("${itemType}" == "Web Content Article") {
 			if ("${itemSubtype}" == "Basic Web Content") {
-				var classPK = JSONDDMstructure._getStructureId(
+				var classPk = JSONDDMstructure._getStructureId(
 					classNameId = "${classNameId}",
 					groupId = "${globalGroupId}",
 					structureName = "Basic Web Content");
 			}
 			else {
-				var classPK = JSONDDMstructure._getStructureId(
+				var classPk = JSONDDMstructure._getStructureId(
 					classNameId = "${classNameId}",
 					groupId = "${groupId}",
 					structureName = "${itemSubtype}");
@@ -36,18 +36,18 @@ definition {
 		}
 		else if ("${itemType}" == "Document") {
 			if ("${itemSubtype}" == "Basic Web Content") {
-				var classPK = JSONDLfileentrytype._getFileEntryTypeId(
+				var classPk = JSONDLfileentrytype._getFileEntryTypeId(
 					fileEntryTypeName = "Google Drive Shortcut",
 					groupId = "${globalGroupId}");
 			}
 			else {
-				var classPK = JSONDLfileentrytype._getFileEntryTypeId(
+				var classPk = JSONDLfileentrytype._getFileEntryTypeId(
 					fileEntryTypeName = "${itemSubtype}",
 					groupId = "${groupId}");
 			}
 		}
 		else if ("${itemType}" == "Object") {
-			var classPK = JSONObject.getObjectDefinitionId(name = "${itemSubtype}");
+			var classPk = JSONObject.getObjectDefinitionId(name = "${itemSubtype}");
 		}
 
 		var templateKey = JSONDDMtemplateAPI._addInformationTemplate(

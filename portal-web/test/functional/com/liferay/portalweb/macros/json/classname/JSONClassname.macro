@@ -4,7 +4,7 @@ definition {
 	macro _getClassNameId {
 		Variables.assertDefined(parameterList = "${value}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/classname/fetch-class-name \

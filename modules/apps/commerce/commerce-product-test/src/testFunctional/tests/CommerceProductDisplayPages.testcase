@@ -101,7 +101,7 @@ definition {
 		}
 
 		task ("Then I should be redirected to the content page with the Product Details widget showing the product details") {
-			FrontStore.viewProductDetail(FSProductName = "U-Joint");
+			FrontStore.viewProductDetail(fsProductName = "U-Joint");
 
 			ControlMenu.viewHeaderTitle(headerTitle = "Test Private Content Page");
 
@@ -138,7 +138,7 @@ definition {
 		}
 
 		task ("Then I should be redirected to the widget page with the Product Details widget showing the product details") {
-			FrontStore.viewProductDetail(FSProductName = "U-Joint");
+			FrontStore.viewProductDetail(fsProductName = "U-Joint");
 
 			ControlMenu.viewHeaderTitle(headerTitle = "Test Private Widget Page");
 
@@ -189,7 +189,7 @@ definition {
 		}
 
 		task ("Then I should be redirected to the content page with the Product Details widget showing the product details") {
-			FrontStore.viewProductDetail(FSProductName = "U-Joint");
+			FrontStore.viewProductDetail(fsProductName = "U-Joint");
 
 			ControlMenu.viewHeaderTitle(headerTitle = "Test Public Content Page");
 

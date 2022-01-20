@@ -6,7 +6,7 @@ definition {
 
 		var groupId = JSONWebcontentSetter.setGroupId(groupName = "${groupName}");
 
-		var contentXML = JSONWebcontentSetter.setContentXML(
+		var contentXml = JSONWebcontentSetter.setContentXML(
 			content = "${content}",
 			contentMap = "${contentMap}");
 
@@ -66,7 +66,7 @@ definition {
 			groupName = "${groupName}",
 			site = "${site}");
 
-		var contentXML = JSONWebcontentSetter.setContentXML(
+		var contentXml = JSONWebcontentSetter.setContentXML(
 			content = "${content}",
 			source = "${source}");
 
@@ -159,7 +159,7 @@ definition {
 	macro restoreWebContentFromTrashViaResourcePrimKey {
 		var resourcePrimKey = "${resourcePrimKey}";
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/journal.journalarticle/restore-article-from-trash \

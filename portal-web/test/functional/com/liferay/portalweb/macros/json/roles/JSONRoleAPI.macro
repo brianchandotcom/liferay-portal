@@ -3,7 +3,7 @@ definition {
 	macro _addRole {
 		Variables.assertDefined(parameterList = "${name},${titleMap},${descriptionMap},${type}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/role/add-role \
@@ -23,7 +23,7 @@ definition {
 	macro _assignRoleToGroup {
 		Variables.assertDefined(parameterList = "${groupId},${roleId}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/group/add-role-groups \
@@ -38,7 +38,7 @@ definition {
 	macro _assignRoleToUser {
 		Variables.assertDefined(parameterList = "${roleId},${userId}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/user/add-role-users \
@@ -53,7 +53,7 @@ definition {
 	macro _assignSiteRoleToUser {
 		Variables.assertDefined(parameterList = "${groupId},${roleId},${userId}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/usergrouprole/add-user-group-roles \
@@ -69,7 +69,7 @@ definition {
 	macro _deleteRoleById {
 		Variables.assertDefined(parameterList = "${roleId}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/role/delete-role \
@@ -85,7 +85,7 @@ definition {
 
 		var companyId = JSONCompany.getCompanyId();
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/role/get-role \

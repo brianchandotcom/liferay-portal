@@ -7,7 +7,7 @@ definition {
 	macro checkFacetAndViewURL {
 		SearchFacetPortlet.checkFacet(facetValueName = "${facetValueName}");
 
-		var searchURL = SearchFacetPortlet.generateFacetCheckedURL(
+		var searchUrl = SearchFacetPortlet.generateFacetCheckedURL(
 			facetClass = "${facetClass}",
 			facetValue = "${facetValue}",
 			facetValueName = "${facetValueName}",
@@ -24,7 +24,7 @@ definition {
 		while (IsElementPresent(locator1 = "SearchResults#FACET_PORTLET_CLEAR_GENERIC")) {
 			var facetClearClass = selenium.getText("SearchResults#FACET_PORTLET_CLEAR_PANEL_TITLE");
 
-			var searchURL = SearchFacetPortlet.clearFacetAndViewURL(
+			var searchUrl = SearchFacetPortlet.clearFacetAndViewURL(
 				facetClass = "${facetClearClass}",
 				searchUrl = "${searchUrl}");
 		}
@@ -53,7 +53,7 @@ definition {
 		if (isSet(facetClass)) {
 			SearchFacetPortlet.clearFacet(facetClass = "${facetClass}");
 
-			var searchURL = SearchFacetPortlet.generateFacetClearedURL(
+			var searchUrl = SearchFacetPortlet.generateFacetClearedURL(
 				facetClass = "${facetClass}",
 				searchUrl = "${searchUrl}");
 
@@ -85,8 +85,8 @@ definition {
 	}
 
 	macro generateFacetCheckedURL {
-		if (!(isSet(searchURL))) {
-			var searchURL = SearchPortlets.getSearchTermURL(
+		if (!(isSet(searchUrl))) {
+			var searchUrl = SearchPortlets.getSearchTermURL(
 				searchPage = "${searchPage}",
 				searchTerm = "${searchTerm}");
 		}
@@ -225,7 +225,7 @@ definition {
 	macro uncheckFacetAndViewURL {
 		SearchFacetPortlet.uncheckFacet(facetValueName = "${facetValueName}");
 
-		var searchURL = SearchFacetPortlet.generateFacetUncheckedURL(
+		var searchUrl = SearchFacetPortlet.generateFacetUncheckedURL(
 			facetClass = "${facetClass}",
 			facetValue = "${facetValue}",
 			facetValueName = "${facetValueName}",

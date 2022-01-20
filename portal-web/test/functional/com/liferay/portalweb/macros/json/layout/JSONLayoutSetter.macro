@@ -9,7 +9,7 @@ definition {
 	}
 
 	macro setFriendlyURL {
-		if (!(isSet(friendlyURL))) {
+		if (!(isSet(friendlyUrl))) {
 			var friendlyUrl = "";
 		}
 

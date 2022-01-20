@@ -409,11 +409,11 @@ definition {
 
 		task ("Create Vanilla Counter as a Custom Element") {
 			JSONRemoteApp.addCustomElementRemoteAppAllFields(
-				customElementCSSURL = "http://remote-component-test.wincent.com/index.css",
-				customElementHTMLName = "vanilla-counter",
+				customElementCssurl = "http://remote-component-test.wincent.com/index.css",
+				customElementHtmlName = "vanilla-counter",
 				customElementName = "Vanilla Counter",
 				customElementProperties = "test-data-user=QAuser",
-				customElementURL = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js");
+				customElementUrl = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js");
 		}
 
 		task ("Add Vanilla Counter to Test Page") {
@@ -430,7 +430,7 @@ definition {
 			Navigator.gotoPage(pageName = "Test Page");
 
 			AssertElementPresent(
-				key_customElementHTMLName = "vanilla-counter",
+				key_customElementHtmlName = "vanilla-counter",
 				key_customElementProperty = "QAuser",
 				locator1 = "RemoteApps#REMOTE_APP_PROPERTY_HTML");
 		}

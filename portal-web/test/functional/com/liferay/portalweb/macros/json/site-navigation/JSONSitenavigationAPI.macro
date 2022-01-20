@@ -4,7 +4,7 @@ definition {
 	macro _addSiteNavigationMenu {
 		Variables.assertDefined(parameterList = "${auto},${groupId},${siteNavigationMenuName}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/sitenavigation.sitenavigationmenu/add-site-navigation-menu \
@@ -22,7 +22,7 @@ definition {
 	macro _addSiteNavigationMenuItem {
 		Variables.assertDefined(parameterList = "${groupId},${parentSiteNavigationMenuItemId},${siteNavigationMenuId},${type},${typeSettings}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/sitenavigation.sitenavigationmenuitem/add-site-navigation-menu-item \
@@ -41,7 +41,7 @@ definition {
 	macro _deleteSiteNavigationMenu {
 		Variables.assertDefined(parameterList = "${siteNavigationMenuId}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/sitenavigation.sitenavigationmenu/delete-site-navigation-menu \
@@ -56,7 +56,7 @@ definition {
 	macro _getSiteNavigationMenuIdByName {
 		Variables.assertDefined(parameterList = "${groupId},${siteNavigationMenuName}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/sitenavigation.sitenavigationmenu/get-site-navigation-menus \
@@ -72,7 +72,7 @@ definition {
 	macro _getSiteNavigationMenuItemIdByName {
 		Variables.assertDefined(parameterList = "${siteNavigationMenuId},${siteNavigationMenuItemName}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/sitenavigation.sitenavigationmenuitem/get-site-navigation-menu-items \

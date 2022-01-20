@@ -1552,7 +1552,7 @@ definition {
 			pageName = "Staging DM Page",
 			siteName = "Site Name");
 
-		var siteID = Site.getSiteId();
+		var siteId = Site.getSiteId();
 
 		Navigator.gotoSitePage(
 			pageName = "Staging DM Page",

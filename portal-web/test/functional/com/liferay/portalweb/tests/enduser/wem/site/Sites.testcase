@@ -206,7 +206,7 @@ definition {
 		}
 
 		task ("View the the end of firend URL changes to site ID") {
-			var siteID = JSONGroupAPI._getGroupIdByName(
+			var siteId = JSONGroupAPI._getGroupIdByName(
 				groupName = "Site Name",
 				site = "true");
 

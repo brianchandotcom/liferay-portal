@@ -4,7 +4,7 @@ definition {
 	macro _hasPortlet {
 		Variables.assertDefined(parameterList = "${portletId}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var companyId = JSONCompany.getCompanyId();
 

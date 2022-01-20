@@ -178,7 +178,7 @@ definition {
 		}
 
 		task ("Get fileEntryUUID of document") {
-			var fileEntryUUID = JSONDocument.getFileEntryUUID(
+			var fileEntryUuid = JSONDocument.getFileEntryUUID(
 				dmDocumentTitle = "New Document",
 				groupName = "Site Name");
 		}

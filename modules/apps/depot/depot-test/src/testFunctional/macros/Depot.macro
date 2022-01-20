@@ -632,7 +632,7 @@ definition {
 
 		Depot.addDepot(depotName = "Remote Depot");
 
-		var groupID = Depot.getGroupID(depotName = "Remote Depot");
+		var groupId = Depot.getGroupID(depotName = "Remote Depot");
 
 		if (isSet(remotePort)) {
 			User.loginPG(

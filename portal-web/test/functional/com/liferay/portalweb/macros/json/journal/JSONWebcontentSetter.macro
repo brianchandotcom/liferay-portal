@@ -25,10 +25,10 @@ definition {
 			failMessage = "Please only set 'content' or only 'contentMap' but not both or none.");
 
 		if (isSet(contentMap)) {
-			var contentXML = JSONWebcontentUtil._localizedConvertToXML(contentMap = "${contentMap}");
+			var contentXml = JSONWebcontentUtil._localizedConvertToXML(contentMap = "${contentMap}");
 		}
 		else {
-			var contentXML = JSONWebcontentUtil._convertToXML(
+			var contentXml = JSONWebcontentUtil._convertToXML(
 				content = "${content}",
 				source = "${source}");
 		}

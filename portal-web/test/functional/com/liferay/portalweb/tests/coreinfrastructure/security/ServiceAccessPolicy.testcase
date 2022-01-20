@@ -33,7 +33,7 @@ definition {
 		task ("Assert access denied for viewing liferay email") {
 			var companyId = JSONCompany.getCompanyId();
 
-			var portalURL = JSONCompany.getPortalURL();
+			var portalUrl = JSONCompany.getPortalURL();
 
 			var curl = '''
 				${portalUrl}/api/jsonws/user/get-user-by-email-address \

@@ -3298,7 +3298,7 @@ definition {
 	macro viewAndEditOpenGraph {
 		var portalUrl = PropsUtil.get("portal.url");
 
-		var siteID = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
+		var siteId = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
 
 		Navigator.openToGroupPagesPortlet(
 			groupName = "Test Site Name",
@@ -4229,7 +4229,7 @@ definition {
 	macro viewDocuments {
 		var portalUrl = PropsUtil.get("portal.url");
 
-		var siteID = JSONGroupAPI._getGroupIdByName(
+		var siteId = JSONGroupAPI._getGroupIdByName(
 			groupName = "Guest",
 			site = "true");
 

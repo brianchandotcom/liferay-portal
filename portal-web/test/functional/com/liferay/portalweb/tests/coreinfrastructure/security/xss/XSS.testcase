@@ -205,7 +205,7 @@ definition {
 
 			AssertElementPresent.assertElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
 
-			var currentURL = Navigator.getCurrentURL();
+			var currentUrl = Navigator.getCurrentURL();
 
 			var p_p_authParam = StringUtil.extractLast("${currentUrl}", "=");
 		}

@@ -7,7 +7,7 @@ definition {
 			friendlyUrl = "${friendlyUrl}",
 			groupName = "${groupName}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		if (!(isSet(parentCommentId))) {
 			var parentCommentId = "0";
@@ -45,9 +45,9 @@ definition {
 	macro addEntry {
 		Variables.assertDefined(parameterList = "${entryContent},${entryTitle}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
-		var contentXML = JSONBlogSetter.setContentXML(content = "${entryContent}");
+		var contentXml = JSONBlogSetter.setContentXML(content = "${entryContent}");
 
 		if (!(isSet(entrySubtitle))) {
 			var entrySubtitle = "";
@@ -61,7 +61,7 @@ definition {
 			var guestPermissions = "true";
 		}
 
-		if (!(isSet(friendlyURL))) {
+		if (!(isSet(friendlyUrl))) {
 			var friendlyUrl = "";
 		}
 
@@ -141,7 +141,7 @@ definition {
 	macro addEntryWithImage {
 		Variables.assertDefined(parameterList = "${entryContent},${entryTitle},${groupName}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		if (!(isSet(site))) {
 			var site = "true";
@@ -230,9 +230,9 @@ definition {
 			groupName = "${groupName}",
 			site = "${site}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
-		if (isSet(friendlyURL)) {
+		if (isSet(friendlyUrl)) {
 			var curl = '''
 				${portalUrl}/api/jsonws/blogs.blogsentry/get-entry \
 			 	-u test@liferay.com:test \
@@ -263,7 +263,7 @@ definition {
 			var site = "true";
 		}
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var groupId = JSONGroupAPI._getGroupIdByName(
 			groupName = "${groupName}",
@@ -287,7 +287,7 @@ definition {
 			friendlyUrl = "${friendlyUrl}",
 			groupName = "${groupName}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		if (!(isSet(userEmailAddress))) {
 			var userEmailAddress = "test@liferay.com";
@@ -308,7 +308,7 @@ definition {
 	macro removeBlogImage {
 		Variables.assertDefined(parameterList = "${groupName},${imageTitle}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var imageId = JSONBlog.getBlogImageId(
 			groupName = "${groupName}",
@@ -328,7 +328,7 @@ definition {
 	macro updateEntry {
 		Variables.assertDefined(parameterList = "${entryTitle},${groupName}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		if (!(isSet(site))) {
 			var site = "true";
@@ -342,11 +342,11 @@ definition {
 			var entrySubtitle = "";
 		}
 
-		if (!(isSet(newFriendlyURL))) {
+		if (!(isSet(newFriendlyUrl))) {
 			var newFriendlyUrl = "";
 		}
 
-		var contentXML = JSONBlogSetter.setContentXML(content = "${entryContent}");
+		var contentXml = JSONBlogSetter.setContentXML(content = "${entryContent}");
 
 		var entryId = JSONBlog.getBlogEntryId(
 			entryTitle = "${entryTitle}",
@@ -421,7 +421,7 @@ definition {
 	macro updateEntryCoverImage {
 		Variables.assertDefined(parameterList = "${entryTitle},${entryContent},${groupName}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		if (!(isSet(site))) {
 			var site = "true";
@@ -469,7 +469,7 @@ definition {
 	macro uploadBlogImage {
 		Variables.assertDefined(parameterList = "${groupName},${sourceFileName}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		if (!(isSet(site))) {
 			var site = "true";

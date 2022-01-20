@@ -38,7 +38,7 @@ definition {
 
 		SetupWizard.viewConfiguredDatabaseInConsole(databaseType = "${databaseType}");
 
-		if (isSet(virtualHostsURL)) {
+		if (isSet(virtualHostsUrl)) {
 			Navigator.openSpecificURL(url = "${virtualHostsUrl}");
 		}
 		else {

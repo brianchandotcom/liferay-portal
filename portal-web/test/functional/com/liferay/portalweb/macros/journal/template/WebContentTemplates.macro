@@ -211,7 +211,7 @@ definition {
 
 		WebContentTemplates._inputDescription(templateDescription = "${templateDescription}");
 
-		if (isSet(imageSourceURL)) {
+		if (isSet(imageSourceUrl)) {
 			Navigator.gotoSidebarTab(tabName = "Properties");
 
 			WebContent.addFeaturedImageFromURL(imageSourceUrl = "${imageSourceUrl}");

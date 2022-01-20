@@ -4,7 +4,7 @@ definition {
 	macro _addLayout {
 		Variables.assertDefined(parameterList = "${friendlyUrl},${groupId},${privateLayout},${parentLayoutId},${layoutName},${serviceContext}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/layout/add-layout \
@@ -29,7 +29,7 @@ definition {
 	macro _deleteLayout {
 		Variables.assertDefined(parameterList = "${groupId},${layoutId},${privateLayout},${serviceContext}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/layout/delete-layout \
@@ -47,7 +47,7 @@ definition {
 	macro _getDefaultPlidByGroupId {
 		Variables.assertDefined(parameterList = "${groupId},${privateLayout}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/layout/get-default-plid \
@@ -69,7 +69,7 @@ definition {
 	macro _getLayoutIdByName {
 		Variables.assertDefined(parameterList = "${groupId},${layoutName},${privateLayout}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/layout/get-layouts \
@@ -90,8 +90,8 @@ definition {
 	macro _getPlidByName {
 		Variables.assertDefined(parameterList = "${groupId},${layoutName},${privateLayout}");
 
-		if (!(isSet(portalURL))) {
-			var portalURL = JSONCompany.getPortalURL();
+		if (!(isSet(portalUrl))) {
+			var portalUrl = JSONCompany.getPortalURL();
 		}
 
 		var curl = '''
@@ -113,7 +113,7 @@ definition {
 	macro _getTypeSettingsByName {
 		Variables.assertDefined(parameterList = "${groupId},${layoutName},${privateLayout}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/layout/get-layouts \
@@ -134,7 +134,7 @@ definition {
 	macro _getUuidByName {
 		Variables.assertDefined(parameterList = "${groupId},${layoutName},${privateLayout}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/layout/get-layouts \
@@ -155,7 +155,7 @@ definition {
 	macro _publishLayoutByPlid {
 		Variables.assertDefined(parameterList = "${plid}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/layout/publish-layout \
@@ -170,7 +170,7 @@ definition {
 	macro _updateTypeSettings {
 		Variables.assertDefined(parameterList = "${groupId},${privateLayout},${layoutId},${typeSettings}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/layout/update-layout \

@@ -87,7 +87,7 @@ definition {
 		task ("Go to Gogo Shell Admin and Stop Raylife Module") {
 			GogoShell.openGogoShellAdmin();
 
-			var moduleID = GogoShell.getModuleID(moduleName = "com.liferay.site.initializer.raylife");
+			var moduleId = GogoShell.getModuleID(moduleName = "com.liferay.site.initializer.raylife");
 
 			GogoShell.stopModule(moduleId = "${moduleId}");
 

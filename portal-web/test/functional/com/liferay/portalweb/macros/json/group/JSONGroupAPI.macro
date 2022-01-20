@@ -4,8 +4,8 @@ definition {
 	macro _addGroup {
 		Variables.assertDefined(parameterList = "${groupDescriptionMap},${groupNameMap},${manualMembership},${parentGroupId},${type}");
 
-		if (!(isSet(portalURL))) {
-			var portalURL = JSONCompany.getPortalURL();
+		if (!(isSet(portalUrl))) {
+			var portalUrl = JSONCompany.getPortalURL();
 		}
 
 		var curl = '''
@@ -31,7 +31,7 @@ definition {
 	macro _assignGroupRoleToUser {
 		Variables.assertDefined(parameterList = "${groupId},${roleId},${userId}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/usergrouprole/add-user-group-roles \
@@ -48,7 +48,7 @@ definition {
 	macro _assignUserGroupToGroup {
 		Variables.assertDefined(parameterList = "${groupId},${userGroupId}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/usergroup/add-group-user-groups/group-id/${groupId}/user-group-ids/${userGroupId} \
@@ -62,7 +62,7 @@ definition {
 	macro _assignUserToGroup {
 		Variables.assertDefined(parameterList = "${groupId},${userId}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/user/add-group-users \
@@ -78,8 +78,8 @@ definition {
 	macro _deleteGroup {
 		Variables.assertDefined(parameterList = "${groupId}");
 
-		if (!(isSet(portalURL))) {
-			var portalURL = JSONCompany.getPortalURL();
+		if (!(isSet(portalUrl))) {
+			var portalUrl = JSONCompany.getPortalURL();
 		}
 
 		var curl = '''
@@ -97,7 +97,7 @@ definition {
 
 		var companyId = JSONCompany.getCompanyId();
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var groupId = JSONGroupAPI._getGroupIdByName(
 			groupName = "${groupName}",
@@ -125,7 +125,7 @@ definition {
 
 		var companyId = JSONCompany.getCompanyId();
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		if (!(isSet(defaultLocale))) {
 			var defaultLocale = "en_US";
@@ -155,7 +155,7 @@ definition {
 
 		var companyId = JSONCompany.getCompanyId();
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		if (!(isSet(site))) {
 			var site = "true";
@@ -187,7 +187,7 @@ definition {
 			grandParentGroupName = "${grandParentGroupName}",
 			parentGroupName = "${parentGroupName}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/group/get-groups/company-id/${companyId}/parent-group-id/${parentGroupId}/site/${site} \
@@ -206,8 +206,8 @@ definition {
 	macro _getGroupIdByName {
 		Variables.assertDefined(parameterList = "${groupName},${site}");
 
-		if (!(isSet(portalURL))) {
-			var portalURL = JSONCompany.getPortalURL();
+		if (!(isSet(portalUrl))) {
+			var portalUrl = JSONCompany.getPortalURL();
 		}
 
 		var companyId = JSONCompany.getCompanyId(portalUrl = "${portalUrl}");
@@ -237,7 +237,7 @@ definition {
 
 		var companyId = JSONCompany.getCompanyId();
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/group/get-group/group-id/${groupId} \
@@ -256,7 +256,7 @@ definition {
 
 		var grandParentGroupId = JSONGroupSetter.setGrandParentGroupId(grandParentGroupName = "${grandParentGroupName}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/group/get-groups/company-id/${companyId}/parent-group-id/${grandParentGroupId}/site/true \
@@ -275,8 +275,8 @@ definition {
 	macro _getSiteIdByGroupKey {
 		Variables.assertDefined(parameterList = "${groupName}");
 
-		if (!(isSet(portalURL))) {
-			var portalURL = JSONCompany.getPortalURL();
+		if (!(isSet(portalUrl))) {
+			var portalUrl = JSONCompany.getPortalURL();
 		}
 
 		var companyId = JSONCompany.getCompanyId(portalUrl = "${portalUrl}");

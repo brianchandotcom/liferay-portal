@@ -81,7 +81,7 @@ definition {
 
 			FormsAdminNavigator.gotoPublishCopyURLLink();
 
-			var publishedFormURL = Form.getPublishedFormPublicURL();
+			var publishedFormUrl = Form.getPublishedFormPublicURL();
 		}
 
 		task ("Sign out") {
@@ -387,7 +387,7 @@ definition {
 
 			FormsAdminNavigator.gotoPublishCopyURLLink();
 
-			var publishedFormURL = Form.getPublishedFormPublicURL();
+			var publishedFormUrl = Form.getPublishedFormPublicURL();
 		}
 
 		task ("Sign out") {
@@ -552,7 +552,7 @@ definition {
 
 			FormsAdminNavigator.gotoPublishCopyURLLink();
 
-			var publishedFormURL = Form.getPublishedFormPublicURL();
+			var publishedFormUrl = Form.getPublishedFormPublicURL();
 		}
 
 		task ("Sign out") {
@@ -631,7 +631,7 @@ definition {
 
 			FormsAdminNavigator.gotoPublishCopyURLLink();
 
-			var publishedFormURL = Form.getPublishedFormPublicURL();
+			var publishedFormUrl = Form.getPublishedFormPublicURL();
 		}
 
 		task ("Sign out") {

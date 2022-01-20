@@ -357,7 +357,7 @@ definition {
 
 		Pause(locator1 = "1000");
 
-		var currentURL = Navigator.getCurrentURL();
+		var currentUrl = Navigator.getCurrentURL();
 
 		var siteTemplateUrl = StringUtil.extractFirst("${currentUrl}", "/~/");
 		var siteTemplateId = StringUtil.extractLast("${siteTemplateUrl}", "/");
@@ -404,7 +404,7 @@ definition {
 	}
 
 	macro openSiteTemplateInEditMode {
-		var templateID = SiteTemplates.getSiteTemplateID(siteTemplateName = "${siteTemplateName}");
+		var templateId = SiteTemplates.getSiteTemplateID(siteTemplateName = "${siteTemplateName}");
 
 		if (isSet(widgetPage)) {
 			Navigator.openWithAppendToBaseURL(urlAppend = "group/${templateId}");

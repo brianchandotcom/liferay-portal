@@ -82,7 +82,7 @@ definition {
 
 		var basicDocumentClassTypeId = "0";
 
-		var classTypeIdsDLFileEntry = JSONDLfileentrytype._getFileEntryTypeIds(groupId = "${groupId}");
+		var classTypeIdsDlFileEntry = JSONDLfileentrytype._getFileEntryTypeIds(groupId = "${groupId}");
 
 		if ("${classTypeIdsDlFileEntry}" == "") {
 			if ("${googleDriveShortcutClassTypeId}" != "") {
@@ -108,7 +108,7 @@ definition {
 			groupId = "${globalGroupId}",
 			structureName = "Basic Web Content");
 
-		var classTypeIdsDDMStructure = JSONDDMstructure._getStructureIds(
+		var classTypeIdsDdmStructure = JSONDDMstructure._getStructureIds(
 			classNameId = "${classNameId}",
 			groupId = "${groupId}");
 

@@ -3,7 +3,7 @@ definition {
 	macro _addUserGroup {
 		Variables.assertDefined(parameterList = "${userGroupName}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/usergroup/add-user-group \
@@ -19,7 +19,7 @@ definition {
 	macro _assignGroupRoleToUserGroup {
 		Variables.assertDefined(parameterList = "${groupId},${roleId},${userGroupId}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/usergroupgrouprole/add-user-group-group-roles \
@@ -36,7 +36,7 @@ definition {
 	macro _getUserGroupIdByName {
 		Variables.assertDefined(parameterList = "${userGroupName}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/usergroup/get-user-group \

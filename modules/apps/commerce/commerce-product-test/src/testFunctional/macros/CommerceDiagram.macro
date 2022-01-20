@@ -89,7 +89,7 @@ definition {
 				locator1 = "CommerceDiagrams#DIAGRAM_ADMIN_TOOLTIP_QUANTITY");
 		}
 
-		if (isSet(SKU)) {
+		if (isSet(sku)) {
 			var key_inputItem = "${sku}";
 		}
 		else if (isSet(diagram)) {

@@ -717,7 +717,7 @@ definition {
 	macro getFriendlyURL {
 		var baseUrl = "${baseUrl}";
 
-		if (!(isSet(baseURL))) {
+		if (!(isSet(baseUrl))) {
 			var baseUrl = PropsUtil.get("portal.url");
 		}
 
@@ -1056,7 +1056,7 @@ definition {
 	}
 
 	macro viewFriendlyURL {
-		if (isSet(localizedFriendlyURL)) {
+		if (isSet(localizedFriendlyUrl)) {
 			PortletEntry.changeLocale(
 				fieldName = "Friendly URL",
 				locale = "${localizedFriendlyUrl}");
@@ -1069,7 +1069,7 @@ definition {
 	}
 
 	macro viewOldFriendlyURL {
-		if (isSet(lastOldFriendlyURL)) {
+		if (isSet(lastOldFriendlyUrl)) {
 			AssertVisible(
 				key_oldFriendlyUrl = "${lastOldFriendlyUrl}",
 				locator1 = "PagesAdmin#FRIENDLY_URL_HISTORY_ITEM_LAST");

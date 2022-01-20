@@ -643,7 +643,7 @@ definition {
 	}
 
 	macro goToCustomObject {
-		var objectID = JSONObject.getObjectId(
+		var objectId = JSONObject.getObjectId(
 			objectName = "${objectName}",
 			userEmailAddress = "${userEmailAddress}",
 			userPassword = "${userPassword}");

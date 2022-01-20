@@ -3,7 +3,7 @@ definition {
 	macro _addPublication {
 		Variables.assertDefined(parameterList = "${publicationDescription},${publicationName}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var companyId = JSONCompany.getCompanyId();
 
@@ -22,7 +22,7 @@ definition {
 	}
 
 	macro _enablePublications {
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var companyId = JSONCompany.getCompanyId();
 
@@ -40,7 +40,7 @@ definition {
 	macro _getCTCollectionId {
 		Variables.assertDefined(parameterList = "${publicationName}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var companyId = JSONCompany.getCompanyId();
 
@@ -65,7 +65,7 @@ definition {
 	macro _publishPublication {
 		Variables.assertDefined(parameterList = "${ctCollectionId}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var companyId = JSONCompany.getCompanyId();
 
@@ -84,7 +84,7 @@ definition {
 	macro _selectPublication {
 		Variables.assertDefined(parameterList = "${ctCollectionId}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var companyId = JSONCompany.getCompanyId();
 

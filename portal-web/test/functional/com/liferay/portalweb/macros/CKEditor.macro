@@ -116,7 +116,7 @@ definition {
 				value1 = "${pageName}");
 		}
 
-		if (isSet(entryExternalURL)) {
+		if (isSet(entryExternalUrl)) {
 			AssertTextEquals(
 				key_text = "URL",
 				locator1 = "TextInput#ANY",

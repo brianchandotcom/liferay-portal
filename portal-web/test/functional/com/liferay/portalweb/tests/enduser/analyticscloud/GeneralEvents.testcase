@@ -89,7 +89,7 @@ definition {
 		}
 
 		task ("Get fileEntryUUID of document") {
-			var fileEntryUUID = JSONDocument.getFileEntryUUID(
+			var fileEntryUuid = JSONDocument.getFileEntryUUID(
 				dmDocumentTitle = "DM AC Title",
 				groupName = "Site Name");
 		}
@@ -119,7 +119,7 @@ definition {
 
 			FormsAdminNavigator.gotoPublishCopyURLLink();
 
-			var publishedFormURL = Form.getPublishedFormPublicURL();
+			var publishedFormUrl = Form.getPublishedFormPublicURL();
 		}
 
 		task ("Connect the DXP to AC") {

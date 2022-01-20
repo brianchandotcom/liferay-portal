@@ -92,7 +92,7 @@ definition {
 
 		var companyId = JSONCompany.getCompanyId();
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		if (!(isSet(parentOrganizationId))) {
 			var parentOrganizationId = "0";
@@ -110,7 +110,7 @@ definition {
 	macro getOrganizationName {
 		Variables.assertDefined(parameterList = "${organizationId}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/organization/get-organization/organization-id/${organizationId} \

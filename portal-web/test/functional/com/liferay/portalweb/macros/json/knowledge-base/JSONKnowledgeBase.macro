@@ -10,7 +10,7 @@ definition {
 			groupName = "${groupName}",
 			site = "${site}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		if (isSet(folderName)) {
 			var parentResourcePrimKey = JSONKnowledgeBase._getKBResourcePrimKey(
@@ -63,7 +63,7 @@ definition {
 			groupName = "${groupName}",
 			site = "${site}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/kb.kbarticle/get-kb-articles \
@@ -87,7 +87,7 @@ definition {
 
 	@summary = "This calls the JSON WS API to add a kB article"
 	macro addkBArticle {
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		if (isSet(folderName)) {
 			Variables.assertDefined(parameterList = "${folderName},${groupName}");
@@ -141,7 +141,7 @@ definition {
 
 	@summary = "This calls the JSON WS API to add a kB child article"
 	macro addkBChildArticle {
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var parentResourceClassNameId = JSONClassname._getClassNameId(value = "com.liferay.knowledge.base.model.KBArticle");
 
@@ -184,7 +184,7 @@ definition {
 
 	@summary = "This calls the JSON WS API to add a kB folder"
 	macro addkBFolder {
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		if (isSet(parentFolderName)) {
 			Variables.assertDefined(parameterList = "${parentFolderName},${groupName}");
@@ -233,7 +233,7 @@ definition {
 
 	@summary = "This calls the JSON WS API to add a kB grandchild article"
 	macro addkBGrandchildArticle {
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var parentResourceClassNameId = JSONClassname._getClassNameId(value = "com.liferay.knowledge.base.model.KBArticle");
 
@@ -278,7 +278,7 @@ definition {
 
 	@summary = "This calls the JSON WS API to add a kB template"
 	macro addkBTemplate {
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/kb.kbtemplate/add-kb-template \
@@ -307,7 +307,7 @@ definition {
 			groupName = "${groupName}",
 			site = "${site}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/kb.kbfolder/get-kb-folders \

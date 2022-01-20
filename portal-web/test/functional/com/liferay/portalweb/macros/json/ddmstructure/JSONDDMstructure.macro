@@ -4,7 +4,7 @@ definition {
 	macro _getStructureId {
 		Variables.assertDefined(parameterList = "${classNameId},${groupId},${structureName}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var companyId = JSONCompany.getCompanyId();
 
@@ -31,7 +31,7 @@ definition {
 	macro _getStructureIds {
 		Variables.assertDefined(parameterList = "${classNameId},${groupId}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var companyId = JSONCompany.getCompanyId();
 

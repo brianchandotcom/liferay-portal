@@ -20,7 +20,7 @@ definition {
 
 		var html2 = '''" rel="canonical">''';
 
-		if (isSet(customCanonicalURL)) {
+		if (isSet(customCanonicalUrl)) {
 			var portalUrl = "${customCanonicalUrl}";
 		}
 		else if (isSet(locale)) {
@@ -382,7 +382,7 @@ definition {
 		var pageNameUrl = StringUtil.replace("${pageNameUrl}", " ", "-");
 		var url = "${portalUrl}/web/guest/${pageNameUrl}";
 
-		if (isSet(siteNameURL)) {
+		if (isSet(siteNameUrl)) {
 			if (isSet(pageName)) {
 				var url = "${portalUrl}/web/${siteNameUrl}/${pageNameUrl}";
 			}
@@ -433,7 +433,7 @@ definition {
 			}
 		}
 
-		if (isSet(truncatedURL)) {
+		if (isSet(truncatedUrl)) {
 			if (isSet(openGraph)) {
 				SikuliAssertElementPresent(locator1 = "PagesAdmin#PREVIEW_URL_ELLIPSES_OG");
 			}

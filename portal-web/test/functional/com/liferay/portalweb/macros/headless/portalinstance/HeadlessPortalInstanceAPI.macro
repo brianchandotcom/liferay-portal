@@ -2,7 +2,7 @@ definition {
 
 	@summary = "Get all current companies in a JSON format"
 	macro _getPortalInstances {
-		var portalURL = JSONCompany.getDefaultPortalURL();
+		var portalUrl = JSONCompany.getDefaultPortalURL();
 
 		if ("${authenticationMethod}" == "By Screen Name") {
 			var userName = "test";
@@ -25,7 +25,7 @@ definition {
 	macro addPortalInstance {
 		Variables.assertDefined(parameterList = "${domain},${virtualHost},${portalInstanceId}");
 
-		var portalURL = JSONCompany.getDefaultPortalURL();
+		var portalUrl = JSONCompany.getDefaultPortalURL();
 
 		var parameters = JSONUtil2._addJSONObject(
 			json = "{}",
@@ -63,7 +63,7 @@ definition {
 	macro addPortalInstanceWithVirtualInstanceInitializer {
 		Variables.assertDefined(parameterList = "${domain},${virtualHost},${portalInstanceId},${siteInitializerKey}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var parameters = JSONUtil2._addJSONObject(
 			json = "{}",
@@ -104,7 +104,7 @@ definition {
 
 	@summary = "Clean up all Portal Instances that are not the default using Headless"
 	macro cleanAllPortalInstances {
-		var portalInstanceJSON = HeadlessPortalInstanceAPI._getPortalInstances(authenticationMethod = "${authenticationMethod}");
+		var portalInstanceJson = HeadlessPortalInstanceAPI._getPortalInstances(authenticationMethod = "${authenticationMethod}");
 
 		var portalInstanceIds = JSONUtil.getWithJSONPath("${portalInstanceJson}", "$.items..portalInstanceId");
 
@@ -121,7 +121,7 @@ definition {
 	macro deletePortalInstance {
 		Variables.assertDefined(parameterList = "${portalInstanceId}");
 
-		var portalURL = JSONCompany.getDefaultPortalURL();
+		var portalUrl = JSONCompany.getDefaultPortalURL();
 
 		var portalInstanceId = StringUtil.replace("${portalInstanceId}", " ", "%20");
 

@@ -2,7 +2,7 @@ definition {
 
 	@summary = "This calls the JSON WS API to add an object"
 	macro addObject {
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		if (!(isSet(userEmailAddress))) {
 			var userEmailAddress = "test@liferay.com";
@@ -43,9 +43,9 @@ definition {
 
 	@summary = "This calls the JSON WS API to add a field in an object"
 	macro addObjectField {
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
-		var objectID = JSONObject.getObjectId(
+		var objectId = JSONObject.getObjectId(
 			objectName = "${objectName}",
 			userEmailAddress = "${userEmailAddress}",
 			userPassword = "${userPassword}");
@@ -98,9 +98,9 @@ definition {
 
 	@summary = "This calls the JSON WS API to add a layout in an object"
 	macro addObjectLayout {
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
-		var objectID = JSONObject.getObjectId(
+		var objectId = JSONObject.getObjectId(
 			objectName = "${objectName}",
 			userEmailAddress = "${userEmailAddress}",
 			userPassword = "${userPassword}");
@@ -131,7 +131,7 @@ definition {
 
 	@summary = "This calls the JSON WS API to add a relationship in an object"
 	macro addObjectRelationship {
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var objectID_1 = JSONObject.getObjectId(
 			objectName = "${objectName_1}",
@@ -177,7 +177,7 @@ definition {
 
 	@summary = "This calls the JSON WS API to add a single field entry in an object"
 	macro addObjectSingleFieldEntry {
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		if (!(isSet(userEmailAddress))) {
 			var userEmailAddress = "test@liferay.com";
@@ -203,7 +203,7 @@ definition {
 
 	@summary = "This calls the JSON WS API to add a single field numeric and boolean entry in an object"
 	macro addObjectSingleFieldNumericAndBooleanEntry {
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		if (!(isSet(userEmailAddress))) {
 			var userEmailAddress = "test@liferay.com";
@@ -229,7 +229,7 @@ definition {
 
 	@summary = "This calls the JSON WS API to add a picklist"
 	macro addPicklist {
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		if (!(isSet(userEmailAddress))) {
 			var userEmailAddress = "test@liferay.com";
@@ -256,7 +256,7 @@ definition {
 
 	@summary = "This calls the JSON WS API to add a picklist item"
 	macro addPicklistItem {
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var picklistId = JSONObject.getPicklistId(
 			picklistName = "${picklistName}",
@@ -289,7 +289,7 @@ definition {
 
 	@summary = "This calls the JSON WS API to delete all custom objects"
 	macro deleteAllCustomObjects {
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		if (!(isSet(userEmailAddress))) {
 			var userEmailAddress = "test@liferay.com";
@@ -319,7 +319,7 @@ definition {
 
 	@summary = "This calls the JSON WS API to delete all picklists"
 	macro deleteAllPicklists {
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		if (!(isSet(userEmailAddress))) {
 			var userEmailAddress = "test@liferay.com";
@@ -349,9 +349,9 @@ definition {
 
 	@summary = "This calls the JSON WS API to delete an object"
 	macro deleteObject {
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
-		var objectID = JSONObject.getObjectId(
+		var objectId = JSONObject.getObjectId(
 			objectName = "${objectName}",
 			userEmailAddress = "${userEmailAddress}",
 			userPassword = "${userPassword}");
@@ -374,7 +374,7 @@ definition {
 
 	@summary = "This calls the JSON WS API to delete an entry in an object"
 	macro deleteObjectEntry {
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var entryId = JSONObject.getObjectEntryId(
 			entryValue = "${value}",
@@ -403,7 +403,7 @@ definition {
 
 	@summary = "This calls the JSON WS API to delete a picklist"
 	macro deletePicklist {
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var picklistId = JSONObject.getPicklistId(
 			picklistName = "${picklistName}",
@@ -430,7 +430,7 @@ definition {
 	macro getObjectDefinitionId {
 		Variables.assertDefined(parameterList = "${name}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/object.objectdefinition/get-object-definitions \
@@ -448,7 +448,7 @@ definition {
 	}
 
 	macro getObjectEntryId {
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		if (!(isSet(userEmailAddress))) {
 			var userEmailAddress = "test@liferay.com";
@@ -470,7 +470,7 @@ definition {
 	}
 
 	macro getObjectId {
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		if (!(isSet(userEmailAddress))) {
 			var userEmailAddress = "test@liferay.com";
@@ -490,7 +490,7 @@ definition {
 	}
 
 	macro getPicklistId {
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		if (!(isSet(userEmailAddress))) {
 			var userEmailAddress = "test@liferay.com";
@@ -511,9 +511,9 @@ definition {
 
 	@summary = "This calls the JSON WS API to publish an object"
 	macro publishObject {
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
-		var objectID = JSONObject.getObjectId(
+		var objectId = JSONObject.getObjectId(
 			objectName = "${objectName}",
 			userEmailAddress = "${userEmailAddress}",
 			userPassword = "${userPassword}");

@@ -1046,7 +1046,7 @@ ${httpUtil.URLtoString(request.getAttribute("CTX").getResource(".").toURI().crea
 
 		GogoShell.openGogoShellAdmin();
 
-		var moduleID = GogoShell.getModuleID(moduleName = "com.liferay.journal.content.web");
+		var moduleId = GogoShell.getModuleID(moduleName = "com.liferay.journal.content.web");
 
 		GogoShell.stopModule(moduleId = "${moduleId}");
 

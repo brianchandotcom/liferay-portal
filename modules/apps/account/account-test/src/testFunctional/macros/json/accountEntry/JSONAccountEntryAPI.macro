@@ -5,7 +5,7 @@ definition {
 
 		var companyId = JSONCompany.getCompanyId();
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var userId = JSONUserSetter.setUserId(userEmailAddress = "${creatorEmailAddress}");
 
@@ -41,7 +41,7 @@ definition {
 
 		var companyId = JSONCompany.getCompanyId();
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var userId = JSONUserSetter.setUserId(userEmailAddress = "${creatorEmailAddress}");
 

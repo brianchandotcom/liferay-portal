@@ -996,7 +996,7 @@ definition {
 		task ("Stop and start com.liferay.layout.type.controller.portlet bundle via GogoShell") {
 			GogoShell.openGogoShellAdmin(siteUrlKey = "test-site-name");
 
-			var moduleID = GogoShell.getModuleID(moduleName = "com.liferay.layout.type.controller.portlet");
+			var moduleId = GogoShell.getModuleID(moduleName = "com.liferay.layout.type.controller.portlet");
 
 			GogoShell.stopModule(moduleId = "${moduleId}");
 

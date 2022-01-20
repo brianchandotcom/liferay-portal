@@ -402,7 +402,7 @@ definition {
 			SelectFrame(value1 = "relative=top");
 		}
 
-		if (isSet(webContentSourceHTML)) {
+		if (isSet(webContentSourceHtml)) {
 			Click(locator1 = "CKEditor#TOOLBAR_SOURCE_BUTTON_2");
 
 			Type.typeCodeMirrorEditorNoError(
@@ -690,7 +690,7 @@ definition {
 			SelectFrame(value1 = "relative=top");
 		}
 
-		if (isSet(webContentHTML)) {
+		if (isSet(webContentHtml)) {
 			SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");
 
 			AssertTextEquals.assertPartialText(

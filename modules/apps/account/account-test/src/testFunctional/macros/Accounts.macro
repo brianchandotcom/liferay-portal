@@ -245,7 +245,7 @@ definition {
 			User.changeProfileImage(imageName = "${accountLogo}");
 		}
 
-		if (isSet(accountTaxID)) {
+		if (isSet(accountTaxId)) {
 			PortletEntry.inputText(
 				fieldLabel = "Tax ID",
 				text = "${accountTaxId}");
@@ -587,7 +587,7 @@ definition {
 			User.changeProfileImage(imageName = "${accountLogo}");
 		}
 
-		if (isSet(accountTaxID)) {
+		if (isSet(accountTaxId)) {
 			PortletEntry.inputText(
 				fieldLabel = "Tax ID",
 				text = "${accountTaxId}");
@@ -1273,7 +1273,7 @@ definition {
 			key_selectFieldLabel = "Type",
 			locator1 = "TextInput#ANY_DISABLED");
 
-		if (isSet(accountTaxID)) {
+		if (isSet(accountTaxId)) {
 			AssertTextEquals(
 				key_fieldLabel = "Tax ID",
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",

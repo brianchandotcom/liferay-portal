@@ -1095,7 +1095,7 @@ definition {
 
 		var companyId = JSONCompany.getCompanyId(portalUrl = "http://localhost:9080");
 
-		var siteID = JSONGroupAPI._getSiteIdByGroupKey(groupName = "${companyId}");
+		var siteId = JSONGroupAPI._getSiteIdByGroupKey(groupName = "${companyId}");
 
 		Staging.openStagingAdmin(siteUrlKey = "global");
 

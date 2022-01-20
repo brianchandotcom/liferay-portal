@@ -407,11 +407,11 @@ definition {
 		}
 
 		task ("Assert that the properties ID aren't incremental") {
-			var propertyID1 = ACSettings.getPropertyId(propertyName = "Name of property 1");
+			var propertyId1 = ACSettings.getPropertyId(propertyName = "Name of property 1");
 
-			var propertyID2 = ACSettings.getPropertyId(propertyName = "Name of property 2");
+			var propertyId2 = ACSettings.getPropertyId(propertyName = "Name of property 2");
 
-			var propertyID3 = ACSettings.getPropertyId(propertyName = "Name of property 3");
+			var propertyId3 = ACSettings.getPropertyId(propertyName = "Name of property 3");
 
 			var differenceId2 = ${propertyId2} - ${propertyId1};
 			var differenceId3 = ${propertyId3} - ${propertyId2};
@@ -520,7 +520,7 @@ definition {
 		}
 
 		task ("Get property URL") {
-			var propertyURL = Navigator.getCurrentURL();
+			var propertyUrl = Navigator.getCurrentURL();
 		}
 
 		task ("Exit Settings") {

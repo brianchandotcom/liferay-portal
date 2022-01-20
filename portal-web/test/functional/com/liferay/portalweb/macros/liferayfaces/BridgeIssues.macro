@@ -132,7 +132,7 @@ definition {
 				locator1 = "BridgeIssues#DETAIL_VALUE");
 		}
 
-		if (isSet(validURL)) {
+		if (isSet(validUrl)) {
 			Click(
 				key_validUrl = "${validUrl}",
 				locator1 = "BridgeIssues#VALID_URL");
@@ -150,7 +150,7 @@ definition {
 				locator1 = "BridgeIssues#DETAIL_VALUE");
 		}
 
-		if (isSet(inValidURL)) {
+		if (isSet(inValidUrl)) {
 			Click(
 				key_inValidUrl = "${inValidUrl}",
 				locator1 = "BridgeIssues#INVALID_URL");

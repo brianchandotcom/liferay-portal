@@ -23,11 +23,11 @@ definition {
 	macro applyBlueprintViaLLSO {
 		SearchPortlets.addWidgets(searchPortletList = "Low Level Search Options");
 
-		var blueprintID = Blueprints.getBlueprintID(title = "${blueprintTitle}");
+		var blueprintId = Blueprints.getBlueprintID(title = "${blueprintTitle}");
 
 		SearchPortlets.configureLowLevelSearchOptions(
 			attributesKey = "search.experiences.blueprint.id",
-			attributesValue = "${blueprintID}");
+			attributesValue = "${blueprintId}");
 	}
 
 	macro applyBlueprintViaOptionsWidget {
@@ -92,10 +92,10 @@ definition {
 
 		Button.click(button = "Create");
 
-		if (isSet(elementSourceJSON)) {
+		if (isSet(elementSourceJson)) {
 			Type.typeCodeMirrorEditorNoError(
 				locator1 = "Blueprints#CODE_MIRROR_EDITOR",
-				value1 = "${elementSourceJSON}");
+				value1 = "${elementSourceJson}");
 		}
 
 		PortletEntry.save();
@@ -138,22 +138,22 @@ definition {
 	macro getBlueprintID {
 		Variables.assertDefined(parameterList = "${title}");
 
-		var groupID = JSONGroupAPI._getGroupIdByName(
+		var groupId = JSONGroupAPI._getGroupIdByName(
 			groupName = "Global",
 			site = "true");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
-				${portalURL}/o/search-experiences-rest/v1.0/sxp-blueprints \
+				${portalUrl}/o/search-experiences-rest/v1.0/sxp-blueprints \
 				-H 'accept: application/json' \
 				-u test@liferay.com:test
 		''';
-		var blueprintID = JSONCurlUtil.get("${curl}", "$.items[?(@['title'] == '${title}')]['id']");
+		var blueprintId = JSONCurlUtil.get("${curl}", "$.items[?(@['title'] == '${title}')]['id']");
 
-		echo("## ID for Blueprint ${title}: ${blueprintID}");
+		echo("## ID for Blueprint ${title}: ${blueprintId}");
 
-		return "${blueprintID}";
+		return "${blueprintId}";
 	}
 
 	macro gotoEntryMenuItem {
@@ -163,11 +163,11 @@ definition {
 	}
 
 	macro openBlueprintsAdmin {
-		if (!(isSet(siteURLKey))) {
-			var siteURLKey = "guest";
+		if (!(isSet(siteUrlKey))) {
+			var siteUrlKey = "guest";
 		}
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_search_experiences_web_internal_blueprint_admin_portlet_SXPBlueprintAdminPortlet");
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteUrlKey}/~/control_panel/manage?p_p_id=com_liferay_search_experiences_web_internal_blueprint_admin_portlet_SXPBlueprintAdminPortlet");
 	}
 
 	macro openEntryMenu {
@@ -210,7 +210,7 @@ definition {
 	macro viewCopiedContent {
 		WebContentNavigator.openToAddBasicArticle(
 			groupName = "Guest",
-			siteURLKey = "guest");
+			siteUrlKey = "guest");
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");
 

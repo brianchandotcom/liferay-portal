@@ -12,7 +12,7 @@ definition {
 			groupName = "${groupName}",
 			site = "${site}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var destinationUrl = StringUtil.replace("${destinationUrl}", ":", "%3A");
 
@@ -57,7 +57,7 @@ definition {
 			destinationUrl = "${destinationUrl}",
 			groupName = "${groupName}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		if (!(isSet(userEmailAddress))) {
 			var userEmailAddress = "test@liferay.com";
@@ -80,7 +80,7 @@ definition {
 	macro getRedirectEntryId {
 		Variables.assertDefined(parameterList = "${destinationUrl},${groupName}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var groupId = JSONGroupSetter.setGroupId(groupName = "${groupName}");
 
@@ -107,7 +107,7 @@ definition {
 			destinationUrl = "${destinationUrl}",
 			groupName = "${groupName}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var destinationUrl = StringUtil.replace("${destinationUrl}", ":", "%3A");
 

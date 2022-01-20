@@ -4,7 +4,7 @@ definition {
 	macro _addCategory {
 		Variables.assertDefined(parameterList = "${groupId},${parentCategoryId},${titleMap},${descriptionMap},${vocabularyId},${serviceContext}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/assetcategory/add-category \
@@ -26,7 +26,7 @@ definition {
 	macro _addVocabulary {
 		Variables.assertDefined(parameterList = "${groupId},${titleMap},${descriptionMap},${serviceContext},${visibilityType}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/assetvocabulary/add-vocabulary \
@@ -48,7 +48,7 @@ definition {
 	macro _deleteCategory {
 		Variables.assertDefined(parameterList = "${categoryId}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/assetcategory/delete-category \
@@ -63,7 +63,7 @@ definition {
 	macro _deleteVocabulary {
 		Variables.assertDefined(parameterList = "${vocabularyId}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/assetvocabulary/delete-vocabulary \
@@ -78,7 +78,7 @@ definition {
 	macro _getCategoryIdByName {
 		Variables.assertDefined(parameterList = "${groupId},${categoryName},${vocabularyId}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/assetcategory/get-vocabulary-categories \
@@ -102,7 +102,7 @@ definition {
 	macro _getVocabularyCategoriesIds {
 		Variables.assertDefined(parameterList = "${vocabularyId}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
             ${portalUrl}/api/jsonws/assetcategory/get-vocabulary-categories \
@@ -128,7 +128,7 @@ definition {
 	macro _getVocabularyIdByName {
 		Variables.assertDefined(parameterList = "${groupId},${vocabularyName}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/assetvocabulary/get-group-vocabularies \
@@ -148,7 +148,7 @@ definition {
 	macro _updateCategory {
 		Variables.assertDefined(parameterList = "${categoryId},${parentCategoryId},${titleMap},${descriptionMap},${vocabularyId}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/assetcategory/update-category \

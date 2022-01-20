@@ -17,7 +17,7 @@ definition {
 
 	macro openEditContentPage {
 		if (!(isSet(siteUrlKey))) {
-			var siteURLKey = ContentPagesNavigator._convertNameToKey(name = "${siteName}");
+			var siteUrlKey = ContentPagesNavigator._convertNameToKey(name = "${siteName}");
 		}
 
 		if (!(isSet(pageFriendlyUrl))) {
@@ -38,7 +38,7 @@ definition {
 
 	macro openViewContentPage {
 		if (!(isSet(siteUrlKey))) {
-			var siteURLKey = ContentPagesNavigator._convertNameToKey(name = "${siteName}");
+			var siteUrlKey = ContentPagesNavigator._convertNameToKey(name = "${siteName}");
 		}
 
 		if (!(isSet(pageFriendlyUrl))) {

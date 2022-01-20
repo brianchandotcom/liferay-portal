@@ -4,7 +4,7 @@ definition {
 	macro _addWebContent {
 		Variables.assertDefined(parameterList = "${content},${title}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		if (!(isSet(userEmailAddress))) {
 			var userEmailAddress = "test@liferay.com";

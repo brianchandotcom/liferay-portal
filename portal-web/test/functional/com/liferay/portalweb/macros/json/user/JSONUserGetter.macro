@@ -5,7 +5,7 @@ definition {
 
 		var companyId = JSONCompany.getCompanyId(authenticationMethod = "${authenticationMethod}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		if ("${authenticationMethod}" == "By Screen Name") {
 			var userName = "test";

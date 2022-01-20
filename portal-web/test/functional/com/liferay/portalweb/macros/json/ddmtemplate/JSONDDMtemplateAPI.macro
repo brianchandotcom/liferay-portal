@@ -3,7 +3,7 @@ definition {
 	macro _addInformationTemplate {
 		Variables.assertDefined(parameterList = "${classNameId},${classPk},${groupId},${nameMap}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		if (!(isSet(script))) {
 			var script = "%3C%23--%0AAdd elements from the sidebar to define your template. Type %22%24%7B%22 to use the%0Aautocomplete feature.%0A--%3E";

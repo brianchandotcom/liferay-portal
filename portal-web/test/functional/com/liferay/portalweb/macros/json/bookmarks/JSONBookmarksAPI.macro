@@ -4,7 +4,7 @@ definition {
 	macro _addBookmarks {
 		Variables.assertDefined(parameterList = "${groupId},${folderId},${serviceContext},${url}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		if (isSet(description)) {
 			var description = "${description}";
@@ -32,7 +32,7 @@ definition {
 	macro _addFolder {
 		Variables.assertDefined(parameterList = "${folderName},${parentFolderId},${serviceContext}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		if (isSet(folderDescription)) {
 			var description = "${folderDescription}";
@@ -57,7 +57,7 @@ definition {
 	macro _getFolderIdByFolderName {
 		Variables.assertDefined(parameterList = "${groupId},${folderName}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/bookmarks.bookmarksfolder/get-folders \

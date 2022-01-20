@@ -337,7 +337,7 @@ definition {
 	@priority = "3"
 	test LoggedUserAcessesDirectlyInexistentWorkspace {
 		task ("Change URL to a workspace that doesn't exist") {
-			var workspaceURL = Navigator.getCurrentURL();
+			var workspaceUrl = Navigator.getCurrentURL();
 
 			var workspaceUrl = StringUtil.extractFirst("${workspaceUrl}", "workspace");
 			var workspaceUrl = StringUtil.add("${workspaceUrl}", "workspace/0000", "");
@@ -821,7 +821,7 @@ definition {
 	@priority = "3"
 	test UserNotLoggedAccessACURLPassingWorkspaceParameter {
 		task ("Copy current URL and SignOut") {
-			var workspaceURL = Navigator.getCurrentURL();
+			var workspaceUrl = Navigator.getCurrentURL();
 
 			ACWorkspace.signOut();
 		}

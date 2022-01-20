@@ -153,13 +153,13 @@ definition {
 			pageName = "Display Page Template Name",
 			siteUrlKey = "test-site-name");
 
-		var dmFileEntryID = JSONDocument.getFileEntryId(
+		var dmFileEntryId = JSONDocument.getFileEntryId(
 			dmDocumentTitle = "Document_1.jpg",
 			groupName = "Test Site Name");
 
 		var portalUrl = PropsUtil.get("portal.url");
 
-		var siteID = JSONGroupAPI._getGroupIdByName(
+		var siteId = JSONGroupAPI._getGroupIdByName(
 			groupName = "Test Site Name",
 			site = "true");
 

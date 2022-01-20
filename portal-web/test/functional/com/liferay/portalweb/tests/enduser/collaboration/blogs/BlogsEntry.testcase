@@ -61,7 +61,7 @@ definition {
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteUrlKey = "guest");
 
-		var dmDocument1URL = DMDocument.getDMLatestVersionURL(
+		var dmDocument1Url = DMDocument.getDMLatestVersionURL(
 			dmDocumentTitle = "Document_1.jpg",
 			siteUrlKey = "guest");
 
@@ -71,7 +71,7 @@ definition {
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_2.jpg");
 
-		var dmDocument2URL = DMDocument.getDMLatestVersionURL(
+		var dmDocument2Url = DMDocument.getDMLatestVersionURL(
 			dmDocumentTitle = "Document_2.jpg",
 			siteUrlKey = "guest");
 

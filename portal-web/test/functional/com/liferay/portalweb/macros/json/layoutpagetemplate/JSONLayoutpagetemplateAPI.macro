@@ -4,7 +4,7 @@ definition {
 	macro _addDisplayPageTemplateEntry {
 		Variables.assertDefined(parameterList = "${classNameId},${classTypeId},${displayPageTemplateEntryName},${groupId},${masterLayoutPlid},${serviceContext}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/layout.layoutpagetemplateentry/add-layout-page-template-entry \
@@ -26,7 +26,7 @@ definition {
 	macro _addGlobalPageTemplateEntry {
 		Variables.assertDefined(parameterList = "${active},${descriptionMap},${nameMap},${serviceContext}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/layoutprototype/add-layout-prototype \
@@ -44,7 +44,7 @@ definition {
 	macro _addLayoutPageTemplateCollection {
 		Variables.assertDefined(parameterList = "${description},${groupId},${layoutPageTemplateCollectionName},${serviceContext}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/layout.layoutpagetemplatecollection/add-layout-page-template-collection \
@@ -62,7 +62,7 @@ definition {
 	macro _addLayoutPageTemplateEntry {
 		Variables.assertDefined(parameterList = "${groupId},${layoutPageTemplateCollectionId},${layoutPageTemplateEntryName},${masterLayoutPlid},${serviceContext},${status},${type}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/layout.layoutpagetemplateentry/add-layout-page-template-entry \
@@ -83,7 +83,7 @@ definition {
 	macro _addMasterPageTemplateEntry {
 		Variables.assertDefined(parameterList = "${groupId},${masterPageTemplateEntryName},${serviceContext}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/layout.layoutpagetemplateentry/add-layout-page-template-entry \
@@ -103,7 +103,7 @@ definition {
 	macro _deleteLayoutPageTemplateEntry {
 		Variables.assertDefined(parameterList = "${layoutPageTemplateEntryId}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/layout.layoutpagetemplateentry/delete-layout-page-template-entry \
@@ -118,7 +118,7 @@ definition {
 	macro _getLayoutPageTemplateCollectionIdByName {
 		Variables.assertDefined(parameterList = "${groupId},${layoutPageTemplateCollectionName}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/layout.layoutpagetemplatecollection/get-layout-page-template-collections \
@@ -138,7 +138,7 @@ definition {
 	macro _getLayoutPageTemplateEntryIdByName {
 		Variables.assertDefined(parameterList = "${groupId},${layoutPageTemplateEntryName},${type}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/layout.layoutpagetemplateentry/get-layout-page-template-entries \
@@ -162,7 +162,7 @@ definition {
 	macro _getMasterLayoutPlidByName {
 		Variables.assertDefined(parameterList = "${groupId},${masterLayoutEntryName}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/layout.layoutpagetemplateentry/get-layout-page-template-entries \

@@ -7,7 +7,7 @@ definition {
 			groupName = "${groupName}",
 			threadSubject = "${threadSubject}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var baseDir = PropsUtil.get("test.base.dir.name");
 		var dependenciesDir = PropsUtil.get("test.dependencies.dir.name");
@@ -31,7 +31,7 @@ definition {
 
 	@summary = "This calls the JSON WS API to add a MB category"
 	macro addCategory {
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var userId = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = "${userEmailAddress}");
 
@@ -89,7 +89,7 @@ definition {
 			groupName = "${groupName}",
 			site = "${site}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		if (!(isSet(addGuestPermissions))) {
 			var addGuestPermissions = "true";
@@ -170,7 +170,7 @@ definition {
 			var addGuestPermissions = "true";
 		}
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var serviceContext = JSONServiceContextUtil.setServiceContext(
 			addGroupPermissions = "true",
@@ -209,7 +209,7 @@ definition {
 			categoryName = "${categoryName}",
 			groupName = "${groupName}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var groupId = JSONGroupSetter.setGroupId(groupName = "${groupName}");
 
@@ -230,7 +230,7 @@ definition {
 			groupName = "${groupName}",
 			threadSubject = "${threadSubject}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/mb.mbmessage/delete-message \
@@ -254,7 +254,7 @@ definition {
 	macro getCategoryIdByName {
 		Variables.assertDefined(parameterList = "${categoryName},${groupName}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var groupId = JSONGroupSetter.setGroupId(groupName = "${groupName}");
 
@@ -292,7 +292,7 @@ definition {
 			var categoryId = "0";
 		}
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var groupId = JSONGroupSetter.setGroupId(groupName = "${groupName}");
 
@@ -326,7 +326,7 @@ definition {
 			var categoryId = "0";
 		}
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var groupId = JSONGroupSetter.setGroupId(groupName = "${groupName}");
 
@@ -355,7 +355,7 @@ definition {
 			categoryName = "${categoryName}",
 			groupName = "${groupName}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/mb.mbcategory/move-category-to-trash \
@@ -373,7 +373,7 @@ definition {
 			groupName = "${groupName}",
 			threadSubject = "${threadSubject}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/mb.mbthread/move-thread-to-trash \
@@ -391,7 +391,7 @@ definition {
 			groupName = "${groupName}",
 			threadSubject = "${threadSubject}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/mb.mbthread/split-thread \
@@ -412,7 +412,7 @@ definition {
 			groupName = "${groupName}",
 			threadSubject = "${threadSubject}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		if (!(isSet(userEmailAddress))) {
 			var userEmailAddress = "test@liferay.com";
@@ -438,7 +438,7 @@ definition {
 			groupName = "${groupName}",
 			threadSubject = "${threadSubject}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/mb.mbmessage/update-message \

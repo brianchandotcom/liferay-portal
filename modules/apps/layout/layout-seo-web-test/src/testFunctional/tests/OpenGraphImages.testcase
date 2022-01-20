@@ -36,7 +36,7 @@ definition {
 	test CanChangeImageTag {
 		var portalUrl = PropsUtil.get("portal.url");
 
-		var siteID = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
+		var siteId = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
 
 		Navigator.openToGroupPagesPortlet(
 			groupName = "Test Site Name",
@@ -69,7 +69,7 @@ definition {
 
 		var portalUrl = PropsUtil.get("portal.url");
 
-		var siteID = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
+		var siteId = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
 
 		for (var imageNumber : list "1,2") {
 			Site.openToSiteSettingsPages(
@@ -104,7 +104,7 @@ definition {
 	test CanClearImageAtPageLevel {
 		var portalUrl = PropsUtil.get("portal.url");
 
-		var siteID = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
+		var siteId = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
 
 		Site.openToSiteSettingsPages(
 			portlet = "Open Graph",
@@ -147,7 +147,7 @@ definition {
 	test CanClearImageAtSiteLevel {
 		var portalUrl = PropsUtil.get("portal.url");
 
-		var siteID = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
+		var siteId = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
 
 		Site.openToSiteSettingsPages(
 			portlet = "Open Graph",
@@ -237,7 +237,7 @@ definition {
 	test CanConfigurePageSpecificImage {
 		var portalUrl = PropsUtil.get("portal.url");
 
-		var siteID = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
+		var siteId = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
 
 		Site.openToSiteSettingsPages(
 			portlet = "Open Graph",

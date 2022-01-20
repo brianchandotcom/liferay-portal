@@ -991,7 +991,7 @@ definition {
 
 		Click(locator1 = "Form#PUBLISH_ICON");
 
-		var publishFormURL = Form.getPublishedFormPublicURL();
+		var publishFormUrl = Form.getPublishedFormPublicURL();
 
 		Form.unpublishForm();
 

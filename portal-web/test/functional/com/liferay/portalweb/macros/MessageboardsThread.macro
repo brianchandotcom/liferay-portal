@@ -701,7 +701,7 @@ definition {
 		var key_threadSubject = "${threadSubject}";
 		var key_userName = "${lastPostUserName}";
 
-		if (isSet(messageBoardsThreadURL)) {
+		if (isSet(messageBoardsThreadUrl)) {
 			AssertLocation(value1 = "${messageBoardsThreadUrl}");
 		}
 		else {
@@ -843,7 +843,7 @@ definition {
 	macro openToAddThread {
 		var baseUrl = "${baseUrl}";
 
-		if (!(isSet(baseURL))) {
+		if (!(isSet(baseUrl))) {
 			var baseUrl = PropsUtil.get("portal.url");
 		}
 
@@ -875,7 +875,7 @@ definition {
 		if (isSet(layoutName)) {
 			var baseUrl = "${baseUrl}";
 
-			if (!(isSet(baseURL))) {
+			if (!(isSet(baseUrl))) {
 				var baseUrl = PropsUtil.get("portal.url");
 			}
 

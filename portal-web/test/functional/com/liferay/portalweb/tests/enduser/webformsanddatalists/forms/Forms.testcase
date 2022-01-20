@@ -364,7 +364,7 @@ definition {
 
 		FormsAdminNavigator.gotoPublishCopyURLLink();
 
-		var publishedFormPublicURL = Form.getPublishedFormPublicURL(publishedFormPublicUrl = "${publishedFormPublicUrl}");
+		var publishedFormPublicUrl = Form.getPublishedFormPublicURL(publishedFormPublicUrl = "${publishedFormPublicUrl}");
 
 		Navigator.openSpecificURL(url = "${publishedFormPublicUrl}");
 
@@ -830,7 +830,7 @@ definition {
 
 		FormsAdminNavigator.gotoPublishCopyURLLink();
 
-		var publishedFormPublicURL = Form.getPublishedFormPublicURL(publishedFormPublicUrl = "${publishedFormPublicUrl}");
+		var publishedFormPublicUrl = Form.getPublishedFormPublicURL(publishedFormPublicUrl = "${publishedFormPublicUrl}");
 
 		Form.unpublishForm();
 
@@ -1059,7 +1059,7 @@ definition {
 
 		FormsAdminNavigator.gotoPublishCopyURLLink();
 
-		var publishedFormPublicURL = Form.getPublishedFormPublicURL(publishedFormPublicUrl = "${publishedFormPublicUrl}");
+		var publishedFormPublicUrl = Form.getPublishedFormPublicURL(publishedFormPublicUrl = "${publishedFormPublicUrl}");
 
 		Navigator.openSpecificURL(url = "${publishedFormPublicUrl}");
 
@@ -1478,7 +1478,7 @@ definition {
 
 		FormsAdminNavigator.gotoPublishCopyURLLink();
 
-		var publishedFormPublicURL = Form.getPublishedFormPublicURL(publishedFormPublicUrl = "${publishedFormPublicUrl}");
+		var publishedFormPublicUrl = Form.getPublishedFormPublicURL(publishedFormPublicUrl = "${publishedFormPublicUrl}");
 
 		Navigator.openSpecificURL(url = "${publishedFormPublicUrl}");
 

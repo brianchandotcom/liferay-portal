@@ -4,7 +4,7 @@ definition {
 	macro _addFragmentCollection {
 		Variables.assertDefined(parameterList = "${groupId},${name}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		if (isSet(description)) {
 			var description = "${description}";
@@ -28,7 +28,7 @@ definition {
 	macro _addSection {
 		Variables.assertDefined(parameterList = "${groupId},${collectionId},${name},${html},${configuration},${type},${status}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/fragment.fragmententry/add-fragment-entry \
@@ -56,7 +56,7 @@ definition {
 	macro _deleteCollection {
 		Variables.assertDefined(parameterList = "${collectionId}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/fragment.fragmentcollection/delete-fragment-collection \
@@ -71,7 +71,7 @@ definition {
 	macro _getCollectionIdByName {
 		Variables.assertDefined(parameterList = "${groupId},${collectionName}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/fragment.fragmentcollection/get-fragment-collections \
@@ -93,7 +93,7 @@ definition {
 
 	@summary = "Get the collectionName by using collectionName"
 	macro _getCollectionName {
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/fragment.fragmentcollection/get-fragment-collections \
@@ -111,7 +111,7 @@ definition {
 
 	@summary = "Get the fragmentName from a fragmentCollection by using fragmentName "
 	macro _getFragmentName {
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/fragment.fragmententry/get-fragment-entries \

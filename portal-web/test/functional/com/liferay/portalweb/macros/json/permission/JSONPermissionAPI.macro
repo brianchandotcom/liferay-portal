@@ -3,7 +3,7 @@ definition {
 	macro _addResourcePermission {
 		Variables.assertDefined(parameterList = "${groupId},${name},${scope},${primKey},${roleId},${actionId}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var companyId = JSONCompany.getCompanyId();
 
@@ -25,7 +25,7 @@ definition {
 	macro _removeResourcePermission {
 		Variables.assertDefined(parameterList = "${groupId},${name},${scope},${primKey},${roleId},${actionId}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var companyId = JSONCompany.getCompanyId();
 

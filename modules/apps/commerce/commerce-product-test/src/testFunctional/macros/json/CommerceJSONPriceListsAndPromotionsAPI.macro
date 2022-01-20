@@ -3,7 +3,7 @@ definition {
 	macro _deleteAllNoMasterPriceListsAndPromotions {
 		var baseUrl = "${baseUrl}";
 
-		if (!(isSet(baseURL))) {
+		if (!(isSet(baseUrl))) {
 			var baseUrl = PropsUtil.get("portal.url");
 		}
 
@@ -28,7 +28,7 @@ definition {
 	macro _getCommerceNoMasterPriceListsAndPromotions {
 		var baseUrl = "${baseUrl}";
 
-		if (!(isSet(baseURL))) {
+		if (!(isSet(baseUrl))) {
 			var baseUrl = PropsUtil.get("portal.url");
 		}
 

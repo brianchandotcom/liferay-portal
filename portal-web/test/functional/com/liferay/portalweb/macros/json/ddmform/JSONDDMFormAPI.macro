@@ -3,7 +3,7 @@ definition {
 	macro _getFormInstanceId {
 		Variables.assertDefined(parameterList = "${groupName},${formName}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var companyId = JSONCompany.getCompanyId();
 
@@ -27,7 +27,7 @@ definition {
 	}
 
 	macro _getFormInstanceRecordId {
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/ddm.ddmforminstancerecord/get-form-instance-records \

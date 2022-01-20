@@ -189,7 +189,7 @@ definition {
 		}
 
 		task ("Assert the mapped custom field is shown in display page template") {
-			var fileEntryID = JSONDocument.getFileEntryId(
+			var fileEntryId = JSONDocument.getFileEntryId(
 				dmDocumentTitle = "DM Title",
 				groupName = "Test Site Name");
 

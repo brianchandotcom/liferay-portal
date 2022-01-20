@@ -2,8 +2,8 @@ definition {
 
 	@summary = "This calls the JSON WS API to add a Depot entry"
 	macro addDepot {
-		if (!(isSet(portalURL))) {
-			var portalURL = JSONCompany.getPortalURL();
+		if (!(isSet(portalUrl))) {
+			var portalUrl = JSONCompany.getPortalURL();
 		}
 
 		var curl = '''
@@ -34,7 +34,7 @@ definition {
 			groupName = "${groupName}",
 			site = "${site}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/depot.depotentrygrouprel/add-depot-entry-group-rel \
@@ -56,7 +56,7 @@ definition {
 	macro deleteDepot {
 		var depotId = JSONGroupAPI._getDepotIdByName(depotName = "${depotName}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/depot.depotentry/delete-depot-entry \
@@ -81,7 +81,7 @@ definition {
 			groupName = "${groupName}",
 			site = "${site}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/depot.depotentrygrouprel/delete-depot-entry-group-rel \
@@ -140,7 +140,7 @@ definition {
 			groupName = "${groupName}",
 			site = "${site}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalUrl = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalUrl}/api/jsonws/depot.depotentrygrouprel/update-ddm-structures-available \

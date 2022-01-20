@@ -227,6 +227,26 @@ definition {
 		AssertChecked.assertCheckedNotVisible(locator1 = "ObjectAdmin#OBJECT_FIELDS_MANDATORY_TOGGLE_SWITCH");
 	}
 
+	macro assertValuesOnObjectData {
+		var key_fieldType = "form-control";
+
+		AssertElementPresent(
+			fieldLabel = "${fieldLabel}",
+			locator1 = "CreateObject#FIELD_VALUE");
+	}
+
+	macro assertValuesOnScope {
+		AssertElementPresent(
+			key_fieldLabel = "Scope",
+			key_value = "${valueScope}",
+			locator1 = "CommerceEntry#SELECT_ASSERT_SELECTED_VALUE");
+
+		AssertElementPresent(
+			key_fieldLabel = "Panel Category Key",
+			key_value = "${valuePanelCategory}",
+			locator1 = "CommerceEntry#SELECT_ASSERT_SELECTED_VALUE");
+	}
+
 	macro checkToggleActive {
 		Check.checkToggleSwitch(locator1 = "CreateObject#TOGGLE_ACTIVE");
 	}

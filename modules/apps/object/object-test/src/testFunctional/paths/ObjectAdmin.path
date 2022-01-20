@@ -72,7 +72,7 @@
 	</tr>
 	<tr>
 		<td>DETAILS_LABEL_CUSTOM_OBJECT</td>
-		<td>>//input[@id='_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_label']</td>
+		<td>//input[@id='_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_label']</td>
 		<td></td>
 	</tr>
 	<tr>

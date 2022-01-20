@@ -7532,12 +7532,48 @@ definition {
 	}
 
 	@description = "LPS-138213 - Verify that updated data is kept when clicking on the Publish button"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test UpdatedDataIsKeptWhenPublishing {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-		// TODO LPS-141685 UpdatedDataIsKeptWhenPublishing pending implementation
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "Custom Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject");
 
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+		ObjectAdmin.editCustomObject(
+			fieldLabelName = "Object Edit",
+			fieldName = "ObjectEdit",
+			pluralLabelName = "Objects Edit");
+
+		ObjectAdmin.selectObjectScope(fieldOption = "Site");
+
+		CreateObject.selectPanelCategoryKey(panelCategoryKey = "Site Administration > Site Builder");
+
+		Button.clickPublish();
+
+		Navigator.openURL();
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Object Edit");
+
+		for (var valueFieldLabel : list "ObjectEdit,Object Edit,Objects Edit") {
+			CreateObject.assertValuesOnObjectData(fieldLabel = "${valueFieldLabel}");
+		}
+
+		CreateObject.assertValuesOnScope(
+			valuePanelCategory = "Site Administration > Site Builder",
+			valueScope = "Site");
 	}
 
 	@description = "LPS-135548 - Verify that user can view custom objects"
